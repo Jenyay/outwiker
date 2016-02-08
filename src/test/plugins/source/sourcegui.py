@@ -26,7 +26,7 @@ class SourceGuiPluginTest (unittest.TestCase):
         self.__createWiki()
 
         dirlist = [u"../plugins/source"]
-        self._stylesCount = 23
+        self._stylesCount = 26
 
         self.loader = PluginsLoader(Application)
         self.loader.load (dirlist)
@@ -330,12 +330,12 @@ class SourceGuiPluginTest (unittest.TestCase):
         self.controller.showDialog()
         self.dialog.styleComboBox.SetSelection (0)
 
-        self.assertEqual (self.dialog.styleComboBox.GetValue(), "autumn")
-        self.assertEqual (self.dialog.style, "autumn")
+        self.assertEqual (self.dialog.styleComboBox.GetValue(), "algol")
+        self.assertEqual (self.dialog.style, "algol")
 
         result = self.controller.getCommandStrings()
 
-        self.assertEqual (result, (u'(:source lang="python" style="autumn":)\n', u'\n(:sourceend:)'))
+        self.assertEqual (result, (u'(:source lang="python" style="algol":)\n', u'\n(:sourceend:)'))
 
 
     def testDialogStyleFile (self):
@@ -352,12 +352,12 @@ class SourceGuiPluginTest (unittest.TestCase):
         self.dialog.styleComboBox.SetSelection (0)
         self.dialog.attachmentComboBox.SetSelection (0)
 
-        self.assertEqual (self.dialog.styleComboBox.GetValue(), "autumn")
-        self.assertEqual (self.dialog.style, "autumn")
+        self.assertEqual (self.dialog.styleComboBox.GetValue(), "algol")
+        self.assertEqual (self.dialog.style, "algol")
 
         result = self.controller.getCommandStrings()
 
-        self.assertEqual (result, (u'(:source file="Attach:source_cp1251.cs" lang="python" style="autumn":)', u'(:sourceend:)'))
+        self.assertEqual (result, (u'(:source file="Attach:source_cp1251.cs" lang="python" style="algol":)', u'(:sourceend:)'))
 
 
     def testDialogStyleFile2 (self):
@@ -375,12 +375,12 @@ class SourceGuiPluginTest (unittest.TestCase):
         self.dialog.attachmentComboBox.SetSelection (0)
         self.dialog.languageComboBox.SetSelection (0)
 
-        self.assertEqual (self.dialog.styleComboBox.GetValue(), "autumn")
-        self.assertEqual (self.dialog.style, "autumn")
+        self.assertEqual (self.dialog.styleComboBox.GetValue(), "algol")
+        self.assertEqual (self.dialog.style, "algol")
 
         result = self.controller.getCommandStrings()
 
-        self.assertEqual (result, (u'(:source file="Attach:source_cp1251.cs" style="autumn":)', u'(:sourceend:)'))
+        self.assertEqual (result, (u'(:source file="Attach:source_cp1251.cs" style="algol":)', u'(:sourceend:)'))
 
 
     def testDialogStyleText2 (self):
@@ -391,12 +391,12 @@ class SourceGuiPluginTest (unittest.TestCase):
         self.dialog.styleComboBox.SetSelection (0)
         self.dialog.tabWidthSpin.SetValue (5)
 
-        self.assertEqual (self.dialog.styleComboBox.GetValue(), "autumn")
-        self.assertEqual (self.dialog.style, "autumn")
+        self.assertEqual (self.dialog.styleComboBox.GetValue(), "algol")
+        self.assertEqual (self.dialog.style, "algol")
 
         result = self.controller.getCommandStrings()
 
-        self.assertEqual (result, (u'(:source lang="python" tabwidth="5" style="autumn":)\n', u'\n(:sourceend:)'))
+        self.assertEqual (result, (u'(:source lang="python" tabwidth="5" style="algol":)\n', u'\n(:sourceend:)'))
 
 
     def testStyleConfig1 (self):

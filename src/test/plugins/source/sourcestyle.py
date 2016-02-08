@@ -77,7 +77,7 @@ def hello (count):
 
         innerString1 = u".highlight-default .c"
         innerString2 = u".highlight-default .c { color: #408080; font-style: italic } /* Comment */"
-        innerString3 = u'        <span class="k">print</span> <span class="s">&quot;Hello world!!!&quot;</span>'
+        innerString3 = u'        <span class="k">print</span> <span class="s2">&quot;Hello world!!!&quot;</span>'
         innerString4 = u'<span class="kn">import</span> <span class="nn">os</span>'
 
         self.assertTrue (innerString1 in result)
@@ -98,7 +98,7 @@ def hello (count):
 
         innerString1 = u".highlight-default .c"
         innerString2 = u".highlight-default .c { color: #408080; font-style: italic } /* Comment */"
-        innerString3 = u'        <span class="k">print</span> <span class="s">&quot;Hello world!!!&quot;</span>'
+        innerString3 = u'        <span class="k">print</span> <span class="s2">&quot;Hello world!!!&quot;</span>'
         innerString4 = u'<span class="kn">import</span> <span class="nn">os</span>'
 
         self.assertTrue (innerString1 in result)
@@ -119,7 +119,7 @@ def hello (count):
 
         innerString1 = u".highlight-default .c"
         innerString2 = u".highlight-default .c { color: #408080; font-style: italic } /* Comment */"
-        innerString3 = u'        <span class="k">print</span> <span class="s">&quot;Hello world!!!&quot;</span>'
+        innerString3 = u'        <span class="k">print</span> <span class="s2">&quot;Hello world!!!&quot;</span>'
         innerString4 = u'<span class="kn">import</span> <span class="nn">os</span>'
 
         self.assertTrue (innerString1 in result)
@@ -140,7 +140,7 @@ def hello (count):
 
         innerString1 = u".highlight-vim .c"
         innerString2 = u".highlight-vim .c { color: #000080 } /* Comment */"
-        innerString3 = u'        <span class="k">print</span> <span class="s">&quot;Hello world!!!&quot;</span>'
+        innerString3 = u'        <span class="k">print</span> <span class="s2">&quot;Hello world!!!&quot;</span>'
         innerString4 = u'<span class="kn">import</span> <span class="nn">os</span>'
 
         self.assertTrue (innerString1 in result)
@@ -159,7 +159,7 @@ def hello (count):
 
         innerString1 = u".highlight-default .c"
         innerString2 = u".highlight-default .c { color: #408080; font-style: italic } /* Comment */"
-        innerString3 = u'        <span class="k">print</span> <span class="s">&quot;Hello world!!!&quot;</span>'
+        innerString3 = u'        <span class="k">print</span> <span class="s2">&quot;Hello world!!!&quot;</span>'
         innerString4 = u'<span class="kn">import</span> <span class="nn">os</span>'
 
         self.assertTrue (innerString1 in result)
@@ -178,7 +178,7 @@ def hello (count):
 
         innerString1 = u".highlight-vim .c"
         innerString2 = u".highlight-vim .c { color: #000080 } /* Comment */"
-        innerString3 = u'        <span class="k">print</span> <span class="s">&quot;Hello world!!!&quot;</span>'
+        innerString3 = u'        <span class="k">print</span> <span class="s2">&quot;Hello world!!!&quot;</span>'
         innerString4 = u'<span class="kn">import</span> <span class="nn">os</span>'
 
         self.assertTrue (innerString1 in result)
@@ -199,7 +199,7 @@ def hello (count):
 
         innerString1 = u".highlight-vim .c"
         innerString2 = u".highlight-vim .c { color: #000080 } /* Comment */"
-        innerString3 = u'        <span class="k">print</span> <span class="s">&quot;Hello world!!!&quot;</span>'
+        innerString3 = u'        <span class="k">print</span> <span class="s2">&quot;Hello world!!!&quot;</span>'
         innerString4 = u'<span class="kn">import</span> <span class="nn">os</span>'
         innerString5 = u".highlight-default .c"
         innerString6 = u".highlight-default .c { color: #408080; font-style: italic } /* Comment */"

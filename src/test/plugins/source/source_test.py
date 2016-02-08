@@ -73,12 +73,12 @@ class SourcePluginTest (unittest.TestCase):
     Пока Выборка.Следующий() Цикл
         //УстановитьФизическоеЛицо
         ФизическоеЛицо = Справочники.ФизическиеЛица.НайтиПоНаименованию(Выборка.Ссылка);
-        Пользователь = Выборка.Ссылка.ПолучитьОбъект();        
+        Пользователь = Выборка.Ссылка.ПолучитьОбъект();
         Пользователь.ФизическоеЛицо = ФизическоеЛицо;
         Пользователь.Записать();
         Сообщить("" + Пользователь + " " + Пользователь.ФизическоеЛицо + "-[ОК!]");
     КонецЦикла;
-КонецФункции     
+КонецФункции
 (:sourceend:)'''
 
         self.testPage.content = text
@@ -110,7 +110,7 @@ def hello (count):
         result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
         innerString1 = u".highlight-default .go { color: #888888 } /* Generic.Output */"
-        innerString2 = u'          <span class="k">print</span> <span class="s">&quot;Hello world!!!&quot;</span>'
+        innerString2 = u'          <span class="k">print</span> <span class="s2">&quot;Hello world!!!&quot;</span>'
         innerString3 = u'<span class="kn">import</span> <span class="nn">os</span>'
 
         self.assertTrue (innerString1 in result)
@@ -138,7 +138,7 @@ def hello (count):
         result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
         innerString1 = u".highlight-default .go { color: #888888 } /* Generic.Output */"
-        innerString2 = u'       <span class="k">print</span> <span class="s">&quot;Hello world!!!&quot;</span>'
+        innerString2 = u'       <span class="k">print</span> <span class="s2">&quot;Hello world!!!&quot;</span>'
         innerString3 = u'<span class="kn">import</span> <span class="nn">os</span>'
 
         self.assertTrue (innerString1 in result)
@@ -167,7 +167,7 @@ def hello (count):
         result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
         innerString1 = u".highlight-default .go { color: #888888 } /* Generic.Output */"
-        innerString2 = u'       <span class="k">print</span> <span class="s">&quot;Hello world!!!&quot;</span>'
+        innerString2 = u'       <span class="k">print</span> <span class="s2">&quot;Hello world!!!&quot;</span>'
         innerString3 = u'<span class="kn">import</span> <span class="nn">os</span>'
 
         self.assertTrue (innerString1 in result)
@@ -297,7 +297,7 @@ def hello (count):
         innerString1 = u".highlight-default .go { color: #888888 } /* Generic.Output */"
         innerString2 = u'        print &quot;Hello world!!!&quot;'
         innerString3 = u'def hello (count):'
-        innerString4 = u'       <span class="k">print</span> <span class="s">&quot;Hello world!!!&quot;</span>'
+        innerString4 = u'       <span class="k">print</span> <span class="s2">&quot;Hello world!!!&quot;</span>'
         innerString5 = u'<span class="kn">import</span> <span class="nn">os</span>'
 
         self.assertTrue (innerString1 in result)
