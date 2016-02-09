@@ -1,6 +1,10 @@
 # -*- coding: UTF-8 -*-
 
+from datetime import datetime
+
 from outwiker.gui.baseaction import BaseAction
+
+from .config import OrganizerConfig
 from .i18n import get_
 
 
@@ -28,4 +32,13 @@ class OrgAction (BaseAction):
 
 
     def run (self, params):
-        print "Run!"
+        dateFormat = OrganizerConfig(self._application.config).dateTimeFormat.value
+
+        leftText = u'(:org date={date}:)\n'.format (date = datetime.now().strftime (dateFormat))
+        rightText = u'\n(:orgend:)'
+
+        self._getEditor().turnText (leftText, rightText)
+
+
+    def _getEditor (self):
+        return self._application.mainWindow.pagePanel.pageView.codeEditor
