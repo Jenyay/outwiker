@@ -34,7 +34,7 @@ class OrgAction (BaseAction):
     def run (self, params):
         dateFormat = OrganizerConfig(self._application.config).dateTimeFormat.value
 
-        leftText = u'(:org date={date}:)\n'.format (date = datetime.now().strftime (dateFormat))
+        leftText = u'(:org date="{date}":)\n'.format (date = datetime.now().strftime (dateFormat))
         rightText = u'\n(:orgend:)'
 
         self._getEditor().turnText (leftText, rightText)
