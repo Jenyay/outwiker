@@ -55,18 +55,15 @@ def textsize(string, font):
     return Size(int(math.ceil(width)), font.size)
 
 
-def cached(fn):
+def memoize(fn):
+    fn.cache = {}
+
     @wraps(fn)
-    def func(self, *args, **kwargs):
-        name = fn.__name__
-        key = args + tuple(kwargs.values())
+    def func(*args, **kwargs):
+        key = str(args) + str(kwargs)
+        if key not in fn.cache:
+            fn.cache[key] = fn(*args, **kwargs)
 
-        if name not in self._method_cache:
-            self._method_cache[name] = {}
-
-        if key not in self._method_cache[name]:
-            self._method_cache[name][key] = fn(self, *args, **kwargs)
-
-        return self._method_cache[name][key]
+        return fn.cache[key]
 
     return func

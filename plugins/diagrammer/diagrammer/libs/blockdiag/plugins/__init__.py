@@ -13,7 +13,9 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
+from blockdiag.utils.logging import warning
 
+loaded_plugins = []
 node_handlers = []
 general_handlers = {}
 
@@ -21,8 +23,13 @@ general_handlers = {}
 def load(plugins, diagram, **kwargs):
     from pkg_resources import iter_entry_points
     for name in plugins:
+        if name in loaded_plugins:
+            warning('plugin "%s" is already loaded. ignored.', name)
+            return
+
         for ep in iter_entry_points('blockdiag_plugins', name):
             module = ep.load()
+            loaded_plugins.append(name)
             if hasattr(module, 'setup'):
                 module.setup(module, diagram, **kwargs)
             break
@@ -55,6 +62,7 @@ def fire_node_event(node, name, *args):
 class NodeHandler(object):
     def __init__(self, diagram, **kwargs):
         self.diagram = diagram
+        self.config = kwargs.get('config')
 
     def fire(self, name, *args):
         return getattr(self, "on_" + name)(*args)
@@ -67,3 +75,23 @@ class NodeHandler(object):
 
     def on_attr_changed(self, node, attr):
         return True
+
+    def on_build_finished(self, node):
+        return True
+
+
+def cleanup():
+    fire_general_event('cleanup')
+
+    for name in list(general_handlers.keys()):
+        del general_handlers[name]
+
+    for handler in node_handlers[:]:
+        node_handlers.remove(handler)
+
+    for plugin in loaded_plugins[:]:
+        loaded_plugins.remove(plugin)
+
+
+def setup(app):
+    app.register_cleanup_handler(cleanup)

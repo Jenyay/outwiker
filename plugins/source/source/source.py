@@ -10,7 +10,7 @@ from outwiker.core.version import Version
 
 from .i18n import set_
 
-__version__ = u"1.13"
+__version__ = u"1.14"
 
 
 # Для работы этого плагина требуется OutWiker 1.8.1
@@ -42,7 +42,7 @@ else:
             cmd_folder = unicode (os.path.dirname(os.path.abspath(__file__)), getOS().filesEncoding)
 
             syspath = [unicode (item, getOS().filesEncoding)
-                       if type (item) != type(u"")
+                       if not isinstance (item, unicode)
                        else item for item in sys.path]
 
             if cmd_folder not in syspath:

@@ -1,6 +1,0 @@
-diagram {
-  A -> D
-  B -> D
-  C -> D
-  Z
-}

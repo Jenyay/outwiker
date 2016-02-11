@@ -1,9 +1,0 @@
-{
-  group hoge{
-    A -> B;
-  }
-  group hoge{
-    C -> D;
-  }
-  Z;
-}

@@ -1,6 +1,0 @@
-diagram {
-  A -> group {
-    B
-  }
-  Z
-}

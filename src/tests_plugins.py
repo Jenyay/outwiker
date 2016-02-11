@@ -121,4 +121,7 @@ if __name__ == '__main__':
     from test.plugins.webpage.test_real import RealTest
     from test.plugins.webpage.test_loading import WebPageLoadingTest
 
+    from test.plugins.organizer.test_organizer import OrganizerTest
+    from test.plugins.organizer.test_loading import OrganizerLoadingTest
+
     unittest.main()

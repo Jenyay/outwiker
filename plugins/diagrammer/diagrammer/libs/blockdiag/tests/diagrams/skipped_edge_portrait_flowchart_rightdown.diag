@@ -1,8 +1,0 @@
-{
-  orientation = portrait;
-  edge_layout = flowchart;
-
-  A -> B, C;
-  C -> D;
-  A -> D;
-}

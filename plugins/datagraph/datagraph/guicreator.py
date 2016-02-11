@@ -26,6 +26,10 @@ class GuiCreator (object):
         # Сюда добавить все Actions
         self._actions = [PlotAction, OpenHelpAction]
 
+        # Actions, которые должны быть задизаблены в режиме только для чтения
+        # и просмотра
+        self._disabledActions = [PlotAction]
+
         # MenuItem создаваемого подменю
         self._submenuItem = None
 
@@ -135,10 +139,12 @@ class GuiCreator (object):
 
     def _enableTools (self):
         pageView = self._getPageView()
-        enabled = (pageView.selectedPageIndex == pageView.CODE_PAGE_INDEX)
+        enabled = (pageView.selectedPageIndex == pageView.CODE_PAGE_INDEX and
+                   not self._application.selectedPage.readonly)
 
-        map (lambda action: self._application.actionController.enableTools (action.stringId, enabled),
-             self._actions)
+        map (lambda action: self._application.actionController.enableTools (action.stringId,
+                                                                            enabled),
+             self._disabledActions)
 
 
     def _getPageView (self):

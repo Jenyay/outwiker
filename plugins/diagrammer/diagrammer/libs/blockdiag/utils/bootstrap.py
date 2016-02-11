@@ -16,11 +16,12 @@
 import os
 import re
 import sys
-import codecs
 import traceback
 from optparse import OptionParser, SUPPRESS_HELP
 from blockdiag import imagedraw
 from blockdiag import plugins
+from blockdiag.utils import images
+from blockdiag.utils.compat import codecs
 from blockdiag.utils.config import ConfigParser
 from blockdiag.utils.fontmap import parse_fontpath, FontMap
 from blockdiag.utils.logging import warning, error
@@ -30,10 +31,24 @@ class Application(object):
     module = None
     options = None
 
+    def __init__(self):
+        self.cleanup_handlers = []
+
+    def __enter__(self):
+        self.setup()
+        return self
+
+    def __exit__(self, *args):
+        self.cleanup()
+
+    def register_cleanup_handler(self, handler):
+        self.cleanup_handlers.append(handler)
+
     def run(self, args):
         try:
             self.parse_options(args)
             self.create_fontmap()
+            self.setup()
 
             parsed = self.parse_diagram()
             return self.build_diagram(parsed)
@@ -49,13 +64,17 @@ class Application(object):
                 error("%s" % e)
             return -1
         finally:
-            plugins.fire_general_event('cleanup')
+            self.cleanup()
 
     def parse_options(self, args):
         self.options = Options(self.module).parse(args)
 
     def create_fontmap(self):
         self.fontmap = create_fontmap(self.options)
+
+    def setup(self):
+        images.setup(self)
+        plugins.setup(self)
 
     def parse_diagram(self):
         if self.options.input == '-':
@@ -68,10 +87,13 @@ class Application(object):
         return self.module.parser.parse_string(self.code)
 
     def build_diagram(self, tree):
+        ScreenNodeBuilder = self.module.builder.ScreenNodeBuilder
+        try:
+            diagram = ScreenNodeBuilder.build(tree, self.options)
+        except:
+            diagram = ScreenNodeBuilder.build(tree)  # old interface
+
         DiagramDraw = self.module.drawer.DiagramDraw
-
-        diagram = self.module.builder.ScreenNodeBuilder.build(tree)
-
         drawer = DiagramDraw(self.options.type, diagram,
                              self.options.output, fontmap=self.fontmap,
                              code=self.code, antialias=self.options.antialias,
@@ -85,6 +107,15 @@ class Application(object):
             drawer.save()
 
         return 0
+
+    def cleanup(self):
+        for handler in self.cleanup_handlers[:]:
+            try:
+                handler()
+            except Exception as exc:
+                error("%s" % exc)
+            finally:
+                self.cleanup_handlers.remove(handler)
 
 
 class Options(object):

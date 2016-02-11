@@ -5,7 +5,7 @@
 
     Pygments lexers for JVM languages.
 
-    :copyright: Copyright 2006-2014 by the Pygments team, see AUTHORS.
+    :copyright: Copyright 2006-2015 by the Pygments team, see AUTHORS.
     :license: BSD, see LICENSE for details.
 """
 
@@ -66,10 +66,19 @@ class JavaLexer(RegexLexer):
             (r'(\.)((?:[^\W\d]|\$)[\w$]*)', bygroups(Operator, Name.Attribute)),
             (r'^\s*([^\W\d]|\$)[\w$]*:', Name.Label),
             (r'([^\W\d]|\$)[\w$]*', Name),
+            (r'([0-9](_*[0-9]+)*\.([0-9](_*[0-9]+)*)?|'
+             r'([0-9](_*[0-9]+)*)?\.[0-9](_*[0-9]+)*)'
+             r'([eE][+\-]?[0-9](_*[0-9]+)*)?[fFdD]?|'
+             r'[0-9][eE][+\-]?[0-9](_*[0-9]+)*[fFdD]?|'
+             r'[0-9]([eE][+\-]?[0-9](_*[0-9]+)*)?[fFdD]|'
+             r'0[xX]([0-9a-fA-F](_*[0-9a-fA-F]+)*\.?|'
+             r'([0-9a-fA-F](_*[0-9a-fA-F]+)*)?\.[0-9a-fA-F](_*[0-9a-fA-F]+)*)'
+             r'[pP][+\-]?[0-9](_*[0-9]+)*[fFdD]?', Number.Float),
+            (r'0[xX][0-9a-fA-F](_*[0-9a-fA-F]+)*[lL]?', Number.Hex),
+            (r'0[bB][01](_*[01]+)*[lL]?', Number.Bin),
+            (r'0(_*[0-7]+)+[lL]?', Number.Oct),
+            (r'0|[1-9](_*[0-9]+)*[lL]?', Number.Integer),
             (r'[~^*!%&\[\](){}<>|+=:;,./?-]', Operator),
-            (r'[0-9][0-9]*\.[0-9]+([eE][0-9]+)?[fd]?', Number.Float),
-            (r'0x[0-9a-fA-F]+', Number.Hex),
-            (r'[0-9]+(_+[0-9]+)*L?', Number.Integer),
             (r'\n', Text)
         ],
         'class': [
@@ -252,7 +261,6 @@ class ScalaLexer(RegexLexer):
         'root': [
             # method names
             (r'(class|trait|object)(\s+)', bygroups(Keyword, Text), 'class'),
-            (u"'%s" % idrest, Text.Symbol),
             (r'[^\S\n]+', Text),
             (r'//.*?\n', Comment.Single),
             (r'/\*', Comment.Multiline, 'comment'),
@@ -271,6 +279,7 @@ class ScalaLexer(RegexLexer):
             (r'""".*?"""(?!")', String),
             (r'"(\\\\|\\"|[^"])*"', String),
             (r"'\\.'|'[^\\]'|'\\u[0-9a-fA-F]{4}'", String.Char),
+            (u"'%s" % idrest, Text.Symbol),
             (r'[fs]"""', String, 'interptriplestring'),  # interpolated strings
             (r'[fs]"', String, 'interpstring'),  # interpolated strings
             (r'raw"(\\\\|\\"|[^"])*"', String),  # raw strings
@@ -457,7 +466,7 @@ class GroovyLexer(RegexLexer):
 
     name = 'Groovy'
     aliases = ['groovy']
-    filenames = ['*.groovy']
+    filenames = ['*.groovy','*.gradle']
     mimetypes = ['text/x-groovy']
 
     flags = re.MULTILINE | re.DOTALL
@@ -935,17 +944,17 @@ class CeylonLexer(RegexLexer):
             (r'[^\S\n]+', Text),
             (r'//.*?\n', Comment.Single),
             (r'/\*', Comment.Multiline, 'comment'),
-            (r'(variable|shared|abstract|doc|by|formal|actual|late|native)',
-             Name.Decorator),
-            (r'(break|case|catch|continue|default|else|finally|for|in|'
-             r'variable|if|return|switch|this|throw|try|while|is|exists|dynamic|'
-             r'nonempty|then|outer|assert)\b', Keyword),
-            (r'(abstracts|extends|satisfies|adapts|'
-             r'super|given|of|out|assign|'
-             r'transient|volatile)\b', Keyword.Declaration),
-            (r'(function|value|void)\b',
+            (r'(shared|abstract|formal|default|actual|variable|deprecated|small|'
+             r'late|literal|doc|by|see|throws|optional|license|tagged|final|native|'
+             r'annotation|sealed)\b', Name.Decorator),
+            (r'(break|case|catch|continue|else|finally|for|in|'
+             r'if|return|switch|this|throw|try|while|is|exists|dynamic|'
+             r'nonempty|then|outer|assert|let)\b', Keyword),
+            (r'(abstracts|extends|satisfies|'
+             r'super|given|of|out|assign)\b', Keyword.Declaration),
+            (r'(function|value|void|new)\b',
              Keyword.Type),
-            (r'(package)(\s+)', bygroups(Keyword.Namespace, Text)),
+            (r'(assembly|module|package)(\s+)', bygroups(Keyword.Namespace, Text)),
             (r'(true|false|null)\b', Keyword.Constant),
             (r'(class|interface|object|alias)(\s+)',
              bygroups(Keyword.Declaration, Text), 'class'),
@@ -990,7 +999,7 @@ class CeylonLexer(RegexLexer):
 
 class KotlinLexer(RegexLexer):
     """
-    For `Kotlin <http://kotlin.jetbrains.org/>`_
+    For `Kotlin <http://kotlinlang.org/>`_
     source code.
 
     .. versionadded:: 1.5
@@ -1025,15 +1034,17 @@ class KotlinLexer(RegexLexer):
             (r"[0-9](\.[0-9]*)?([eE][+-][0-9]+)?[flFL]?|"
              r"0[xX][0-9a-fA-F]+[Ll]?", Number),
             (r'(class)(\s+)(object)', bygroups(Keyword, Text, Keyword)),
-            (r'(class|trait|object)(\s+)', bygroups(Keyword, Text), 'class'),
+            (r'(class|interface|object)(\s+)', bygroups(Keyword, Text), 'class'),
             (r'(package|import)(\s+)', bygroups(Keyword, Text), 'package'),
             (r'(val|var)(\s+)', bygroups(Keyword, Text), 'property'),
             (r'(fun)(\s+)', bygroups(Keyword, Text), 'function'),
-            (r'(abstract|annotation|as|break|by|catch|class|continue|do|else|'
-             r'enum|false|final|finally|for|fun|get|if|import|in|inner|'
-             r'internal|is|null|object|open|out|override|package|private|'
-             r'protected|public|reified|return|set|super|this|throw|trait|'
-             r'true|try|type|val|var|vararg|when|where|while|This)\b', Keyword),
+            (r'(abstract|annotation|as|break|by|catch|class|companion|const|'
+             r'constructor|continue|crossinline|data|do|dynamic|else|enum|'
+             r'external|false|final|finally|for|fun|get|if|import|in|infix|'
+             r'inline|inner|interface|internal|is|lateinit|noinline|null|'
+             r'object|open|operator|out|override|package|private|protected|'
+             r'public|reified|return|sealed|set|super|tailrec|this|throw|'
+             r'true|try|val|var|vararg|when|where|while)\b', Keyword),
             (kt_id, Name),
         ],
         'package': [

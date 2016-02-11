@@ -1,3 +1,15 @@
+outwiker (1.9.0+784~wily) wily; urgency=medium
+
+  * Bug fixes
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Thu, 11 Feb 2016 09:29:41 +0300
+
+outwiker (1.9.0+783~wily) wily; urgency=medium
+
+  * Next version
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Mon, 08 Feb 2016 09:48:35 +0300
+
 outwiker (1.9.0+782~wily) wily; urgency=medium
 
   * Added [!...!] wiki command.

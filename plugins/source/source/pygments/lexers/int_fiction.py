@@ -5,7 +5,7 @@
 
     Lexers for interactive fiction languages.
 
-    :copyright: Copyright 2006-2014 by the Pygments team, see AUTHORS.
+    :copyright: Copyright 2006-2015 by the Pygments team, see AUTHORS.
     :license: BSD, see LICENSE for details.
 """
 
@@ -285,6 +285,7 @@ class Inform6Lexer(RegexLexer):
             include('_whitespace'),
             (r';', Punctuation, '#pop'),
             (r'\*', Punctuation),
+            (r'"', String.Double, 'plain-string'),
             (_name, Name.Variable)
         ],
         # Array

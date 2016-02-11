@@ -21,30 +21,32 @@ class LazyReceiver(object):
     def __init__(self, target):
         self.target = target
         self.calls = []
-        self.nested = []
 
     def __getattr__(self, name):
         return self.get_lazy_method(name)
 
     def get_lazy_method(self, name):
-        method = self._find_method(name)
-
-        def _(*args, **kwargs):
-            if name in self.target.self_generative_methods:
-                ret = method(self.target, *args, **kwargs)
-                receiver = LazyReceiver(ret)
-                self.nested.append(receiver)
+        if name in self.target.nosideeffect_methods:
+            method = self._find_method(name)
+            return functools.partial(method, self.target)
+        elif name in self.target.self_generative_methods:
+            def _(*args, **kwargs):
+                receiver = LazySubReceiver(name, self.target, *args, **kwargs)
+                self.calls.append((receiver, args, kwargs))
                 return receiver
-            else:
-                self.calls.append((method, args, kwargs))
+
+            return _
+        else:
+            def _(*args, **kwargs):
+                self.calls.append((name, args, kwargs))
                 return self
 
-        if method.__name__ in self.target.nosideeffect_methods:
-            return functools.partial(method, self.target)
-        else:
             return _
 
     def _find_method(self, name):
+        if isinstance(name, LazyReceiver):
+            return name
+
         for p in self.target.__class__.__mro__:
             if name in p.__dict__:
                 return p.__dict__[name]
@@ -53,11 +55,22 @@ class LazyReceiver(object):
                              (self.target.__class__.__name__, name))
 
     def _run(self):
-        for recv in self.nested:
-            recv._run()
-
-        for method, args, kwargs in self.calls:
+        for name, args, kwargs in self.calls:
+            method = self._find_method(name)
             method(self.target, *args, **kwargs)
+
+
+class LazySubReceiver(LazyReceiver):
+    def __init__(self, name, target, *args, **kwargs):
+        self.name = name
+        self.args = args
+        self.kwargs = kwargs
+        super(LazySubReceiver, self).__init__(target)
+
+    def __call__(self, target, *args, **kwargs):
+        method = self._find_method(self.name)
+        self.target = method(self.target, *self.args, **self.kwargs)
+        self._run()
 
 
 class LineJumpDrawFilter(LazyReceiver):
@@ -81,12 +94,8 @@ class LineJumpDrawFilter(LazyReceiver):
             self.jump_shift = kwargs['jump_shift']
 
     def _run(self):
-        for recv in self.nested:
-            recv._run()
-
-        line_method = self._find_method("line")
-        for method, args, kwargs in self.calls:
-            if method == line_method and kwargs.get('jump'):
+        for name, args, kwargs in self.calls:
+            if name == 'line' and kwargs.get('jump'):
                 ((x1, y1), (x2, y2)) = args[0]
                 if self.forward == 'holizonal' and y1 == y2:
                     self._holizonal_jumpline(x1, y1, x2, y2, **kwargs)
@@ -95,6 +104,7 @@ class LineJumpDrawFilter(LazyReceiver):
                     self._vertical_jumpline(x1, y1, x2, y2, **kwargs)
                     continue
 
+            method = self._find_method(name)
             method(self.target, *args, **kwargs)
 
     def _holizonal_jumpline(self, x1, y1, x2, y2, **kwargs):

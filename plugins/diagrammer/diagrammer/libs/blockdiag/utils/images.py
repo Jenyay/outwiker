@@ -15,6 +15,7 @@
 
 from __future__ import division
 import io
+import os
 import re
 from PIL import Image
 from tempfile import NamedTemporaryFile
@@ -30,16 +31,25 @@ def urlopen(url, *args, **kwargs):
     from blockdiag.utils.compat import urlopen as orig_urlopen
 
     if url not in urlopen_cache:
-        tmpfile = NamedTemporaryFile()
-        tmpfile.write(orig_urlopen(url, *args, **kwargs).read())
-        tmpfile.flush()
-        urlopen_cache[url] = tmpfile
+        with NamedTemporaryFile(delete=False) as tmpfile:
+            tmpfile.write(orig_urlopen(url, *args, **kwargs).read())
+            tmpfile.flush()
+            urlopen_cache[url] = tmpfile.name
 
-    return io.open(urlopen_cache[url].name, 'rb')
+    return io.open(urlopen_cache[url], 'rb')
 
 
-def get_image_size(filename):
-    return open(filename).size
+def get_image_size(image):
+    if isinstance(image, Image.Image):
+        return image.size
+    else:
+        stream = None
+        try:
+            stream = open(image)
+            return stream.size
+        finally:
+            if stream and hasattr(stream, 'close'):
+                stream.close()
 
 
 def calc_image_size(size, bounded):
@@ -114,9 +124,27 @@ def open(url, mode='Pillow'):
         # stream will be closed by GC
         return image
     else:  # mode == 'png'
-        png_image = io.BytesIO()
-        image.save(png_image, 'PNG')
-        stream.close()
+        try:
+            png_image = io.BytesIO()
+            image.save(png_image, 'PNG')
+            if hasattr(stream, 'close'):  # close() is implemented on Pillow
+                stream.close()
+        except:
+            warning(u("Could not convert image: %s"), url)
+            raise IOError
 
         png_image.seek(0)
         return png_image
+
+
+def cleanup():
+    for url in list(urlopen_cache.keys()):
+        path = urlopen_cache.pop(url)
+        try:
+            os.remove(path)
+        except:
+            pass
+
+
+def setup(app):
+    app.register_cleanup_handler(cleanup)

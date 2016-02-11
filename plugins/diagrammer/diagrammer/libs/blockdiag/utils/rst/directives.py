@@ -16,13 +16,14 @@
 import os
 import io
 from hashlib import sha1
+from functools import wraps
 from collections import namedtuple
 from docutils import nodes
 from docutils.parsers import rst
 from docutils.parsers.rst.roles import set_classes
 from docutils.statemachine import ViewList
 
-from blockdiag.utils.bootstrap import create_fontmap
+from blockdiag.utils.bootstrap import create_fontmap, Application
 from blockdiag.utils.compat import string_types
 from blockdiag.utils.rst.nodes import blockdiag as blockdiag_node
 
@@ -44,6 +45,15 @@ def relfn2path(env, filename):
         relfn = os.path.join(os.path.dirname(path), filename)
 
     return relfn, os.path.join(env.srcdir, relfn)
+
+
+def with_blockdiag(fn):
+    @wraps(fn)
+    def decorator(*args):
+        with Application():
+            return fn(*args)
+
+    return decorator
 
 
 def align(argument):
@@ -142,6 +152,7 @@ class BlockdiagDirectiveBase(rst.Directive):
 class BlockdiagDirective(BlockdiagDirectiveBase):
     processor = None  # backward compatibility for 1.4.0
 
+    @with_blockdiag
     def run(self):
         figwidth = self.options.pop('figwidth', None)
         figclasses = self.options.pop('figclass', None)
@@ -168,9 +179,17 @@ class BlockdiagDirective(BlockdiagDirectiveBase):
         self.add_name(results[0])
 
         if node.get('caption'):
+            elem = nodes.Element()
+            self.state.nested_parse(ViewList([node['caption']], source=''),
+                                    self.content_offset, elem)
+            caption_node = nodes.caption(elem[0].rawsource, '',
+                                         *elem[0].children)
+            caption_node.source = elem[0].source
+            caption_node.line = elem[0].line
+
             fig = nodes.figure()
             fig += results[0]
-            fig += nodes.caption(text=node['caption'])
+            fig += caption_node
 
             if figwidth == 'image':
                 width = self.get_actual_width(node, diagram)

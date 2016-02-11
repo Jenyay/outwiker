@@ -8,6 +8,9 @@ from outwiker.core.version import Version
 from outwiker.core.system import getOS
 
 
+__version__ = u'1.0.3'
+
+
 if getCurrentVersion() < Version (1, 8, 0, 750):
     print ("DataGraph plugin. OutWiker version requirement: 1.8.0.750")
 else:
@@ -44,7 +47,7 @@ else:
 
         @property
         def version (self):
-            return u"1.0.2"
+            return __version__
 
 
         @property

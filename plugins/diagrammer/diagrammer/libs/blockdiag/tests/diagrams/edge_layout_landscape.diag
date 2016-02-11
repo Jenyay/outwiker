@@ -1,6 +1,0 @@
-{
-  edge_layout = flowchart;
-
-  A [shape = diamond];
-  A -> B, C;
-}

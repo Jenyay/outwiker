@@ -1,9 +1,0 @@
-{
-  A [href = "http://www.yahoo.co.jp/"];
-  B [href = "http://www.yahoo.co.jp/"];
-
-  group {
-    href = "http://www.disney.co.jp";
-    C; D;
-  }
-}

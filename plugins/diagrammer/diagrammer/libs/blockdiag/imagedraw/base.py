@@ -24,8 +24,6 @@ class ImageDraw(object):
     supported_path = False
     baseline_text_rendering = False
 
-    _method_cache = {}
-
     def set_canvas_size(self, size):
         pass
 

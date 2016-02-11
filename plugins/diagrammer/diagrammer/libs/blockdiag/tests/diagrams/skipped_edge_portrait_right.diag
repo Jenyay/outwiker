@@ -1,6 +1,0 @@
-{
-  orientation = portrait;
-
-  A; B; C;
-  A -> C [folded];
-}
