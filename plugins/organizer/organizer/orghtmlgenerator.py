@@ -10,9 +10,10 @@ from defines import (HTML_ORG_DIV_DATE_CLASS,
 
 class OrgHTMLGenerator (object):
     """It is HTML generator for (:org:) command"""
-    def __init__ (self, config):
+    def __init__ (self, config, parser):
         self._dateConfig = config.dateTimeFormat.value
         self._styles = config.orgStyles.value
+        self._parser = parser
 
 
     def getHTML (self, dayDescription):
@@ -61,7 +62,7 @@ class OrgHTMLGenerator (object):
             builder.write ('<td>')
             item = record[header]
             if item is not None:
-                builder.write (item)
+                builder.write (self._parser.parseWikiMarkup (item))
             else:
                 builder.write (HTML_EMPTY_CELL_CONTENT)
             builder.write ('</td>')

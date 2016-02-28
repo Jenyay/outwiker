@@ -26,7 +26,7 @@ class CommandOrg (Command):
         config = OrganizerConfig (Application.config)
 
         self._dateFormat = config.dateTimeFormat.value
-        self._htmlGenerator = OrgHTMLGenerator (config)
+        self._htmlGenerator = OrgHTMLGenerator (config, self.parser)
 
 
     @property
