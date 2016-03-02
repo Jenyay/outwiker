@@ -838,6 +838,12 @@ def registerActions (application):
         None)
 
 
+    from outwiker.actions.moving import GoToParentAction
+    application.actionController.register (
+        GoToParentAction (application),
+        HotKey ("Left", ctrl=True))
+
+
     _registerPolyActions (application)
 
 

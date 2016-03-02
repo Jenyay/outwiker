@@ -48,5 +48,6 @@ if __name__ == '__main__':
     from test.actions.description import DescriptionActionTest
     from test.actions.applystyle import ApplyStyleActionTest
     from test.actions.moveupdown import MovePageUpDownActionTest
+    from test.actions.moving import MovingActionTest
 
     unittest.main()
