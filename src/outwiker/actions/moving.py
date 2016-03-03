@@ -14,7 +14,7 @@ class GoToParentAction (BaseAction):
 
     @property
     def title (self):
-        return _(u"Go to parent")
+        return _(u"Go to parent page")
 
 
     @property
@@ -42,7 +42,7 @@ class GoToFirstChildAction (BaseAction):
 
     @property
     def title (self):
-        return _(u"Go to first child")
+        return _(u"Go to first child page")
 
 
     @property
