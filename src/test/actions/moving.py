@@ -5,7 +5,7 @@ import wx
 from test.guitests.basemainwnd import BaseMainWndTest
 from outwiker.core.application import Application
 from outwiker.pages.text.textpage import TextPageFactory
-from outwiker.actions.moving import GoToParentAction
+from outwiker.actions.moving import GoToParentAction, GoToFirstChildAction
 
 
 class MovingActionTest (BaseMainWndTest):
@@ -74,6 +74,55 @@ class MovingActionTest (BaseMainWndTest):
 
         Application.actionController.getAction (GoToParentAction.stringId).run(None)
         self.assertEqual (Application.selectedPage, None)
+
+
+    def test_goToFirstChild_01 (self):
+        Application.wikiroot = None
+        Application.actionController.getAction (GoToFirstChildAction.stringId).run(None)
+        self.assertEqual (Application.selectedPage, None)
+
+
+    def test_goToFirstChild_02 (self):
+        self._createWikiPages()
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = None
+
+        Application.actionController.getAction (GoToFirstChildAction.stringId).run(None)
+        self.assertEqual (Application.selectedPage, Application.wikiroot[u"Страница 1"])
+
+
+    def test_goToFirstChild_03 (self):
+        self._createWikiPages()
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = None
+
+        Application.actionController.getAction (GoToFirstChildAction.stringId).run(None)
+        self.assertEqual (Application.selectedPage, Application.wikiroot[u"Страница 1"])
+
+        Application.actionController.getAction (GoToFirstChildAction.stringId).run(None)
+        self.assertEqual (Application.selectedPage, Application.wikiroot[u"Страница 1/Страница 1 - 1"])
+
+
+    def test_goToFirstChild_04 (self):
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = None
+
+        Application.actionController.getAction (GoToFirstChildAction.stringId).run(None)
+        self.assertEqual (Application.selectedPage, None)
+
+
+    def test_goToFirstChild_05 (self):
+        self._createWikiPages()
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = self.wikiroot[u"Страница 1/Страница 1 - 4"]
+
+        Application.actionController.getAction (GoToFirstChildAction.stringId).run(None)
+        self.assertEqual (Application.selectedPage,
+                          self.wikiroot[u"Страница 1/Страница 1 - 4/Страница 1 - 4 - 1"])
+
+        Application.actionController.getAction (GoToFirstChildAction.stringId).run(None)
+        self.assertEqual (Application.selectedPage,
+                          self.wikiroot[u"Страница 1/Страница 1 - 4/Страница 1 - 4 - 1"])
 
 
     def _createWikiPages (self):
