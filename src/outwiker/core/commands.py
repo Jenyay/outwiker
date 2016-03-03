@@ -839,7 +839,9 @@ def registerActions (application):
 
 
     # Moving on pages
-    from outwiker.actions.moving import GoToParentAction, GoToFirstChildAction
+    from outwiker.actions.moving import (GoToParentAction,
+                                         GoToFirstChildAction,
+                                         GoToNextSiblingAction)
     application.actionController.register (
         GoToParentAction (application),
         HotKey ("Left", ctrl=True))
@@ -847,6 +849,11 @@ def registerActions (application):
     application.actionController.register (
         GoToFirstChildAction (application),
         HotKey ("Right", ctrl=True))
+
+
+    application.actionController.register (
+        GoToNextSiblingAction (application),
+        HotKey ("Down", ctrl=True))
 
 
     _registerPolyActions (application)
