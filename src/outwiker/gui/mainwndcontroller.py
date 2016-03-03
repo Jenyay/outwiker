@@ -31,7 +31,12 @@ from outwiker.actions.attachfiles import AttachFilesAction
 import outwiker.actions.clipboard as clipboard
 import outwiker.actions.tags as tags
 from outwiker.actions.reloadwiki import ReloadWikiAction
-
+from outwiker.actions.moving import (GoToParentAction,
+                                     GoToFirstChildAction,
+                                     GoToNextSiblingAction,
+                                     GoToPrevSiblingAction)
+from outwiker.actions.openattachfolder import OpenAttachFolderAction
+from outwiker.actions.applystyle import SetStyleToBranchAction
 
 
 class MainWndController (object):
@@ -85,6 +90,12 @@ class MainWndController (object):
             tags.RemoveTagsFromBranchAction,
             tags.RenameTagAction,
             ReloadWikiAction,
+            GoToParentAction,
+            GoToFirstChildAction,
+            GoToNextSiblingAction,
+            GoToPrevSiblingAction,
+            OpenAttachFolderAction,
+            SetStyleToBranchAction,
         ]
 
         # Идентификаторы для пунктов меню последних открытых вики
