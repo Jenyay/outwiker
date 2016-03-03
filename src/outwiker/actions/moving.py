@@ -93,3 +93,37 @@ class GoToNextSiblingAction (BaseAction):
 
         if self_pos < len(siblings) - 1:
             self._application.selectedPage = siblings[self_pos + 1]
+
+
+
+class GoToPrevSiblingAction (BaseAction):
+    """
+    Go to previous sibling page action
+    """
+    stringId = u"GoToPrevSibling"
+
+    def __init__ (self, application):
+        self._application = application
+
+
+    @property
+    def title (self):
+        return _(u"Go to previous page")
+
+
+    @property
+    def description (self):
+        return _(u'Open previous page')
+
+
+    def run (self, params):
+        if (self._application.wikiroot is None or
+                self._application.selectedPage is None or
+                self._application.selectedPage.parent is None):
+            return
+
+        siblings = self._application.selectedPage.parent.children
+        self_pos = siblings.index(self._application.selectedPage)
+
+        if self_pos != 0:
+            self._application.selectedPage = siblings[self_pos - 1]
