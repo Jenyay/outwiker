@@ -27,7 +27,6 @@ install:
 	cp "src/runoutwiker.py" $(outwiker_dir)
 	cp "src/version.txt" $(outwiker_dir)
 	cp "copyright.txt" $(outwiker_dir)
-	cp "LICENSE.txt" $(outwiker_dir)
 	cp "README" $(outwiker_dir)
 	cp "outwiker" $(DESTDIR)/usr/bin/
 	cp "images/outwiker_16.png" $(DESTDIR)/usr/share/icons/hicolor/16x16/apps/outwiker.png
