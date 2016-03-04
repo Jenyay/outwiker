@@ -26,6 +26,7 @@ OutputBaseFilename=outwiker_win_unstable
 OutputDir=build
 Compression=lzma
 SolidCompression=yes
+LicenseFile=LICENSE.txt
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
