@@ -18,6 +18,7 @@ from outwiker.actions.movepageup import MovePageUpAction
 from outwiker.actions.movepagedown import MovePageDownAction
 from outwiker.actions.removepage import RemovePageAction
 from outwiker.actions.editpageprop import EditPagePropertiesAction
+from outwiker.actions.moving import GoToParentAction
 from outwiker.core.events import PAGE_UPDATE_ICON
 from outwiker.core.defines import ICON_WIDTH, ICON_HEIGHT
 
@@ -604,6 +605,12 @@ class NotesTree(wx.Panel):
         """
         imagesDir = outwiker.core.system.getImagesDir()
         actionController = Application.actionController
+
+        actionController.appendToolbarButton (GoToParentAction.stringId,
+                                              self.toolbar,
+                                              os.path.join (imagesDir, "go_to_parent.png"),
+                                              False)
+        self.toolbar.AddSeparator()
 
         actionController.appendToolbarButton (MovePageDownAction.stringId,
                                               self.toolbar,
