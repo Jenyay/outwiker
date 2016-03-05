@@ -110,6 +110,7 @@ class GuiCreator (object):
 
     def removeTools (self):
         if self._application.mainWindow is not None:
+            self._application.mainWindow.toolbars.updatePanesInfo ()
             map (lambda action: self._application.actionController.removeMenuItem (action.stringId),
                  self._actions)
 

@@ -71,8 +71,8 @@ class GuiController (object):
 
 
     def _onPageSelect (self, page):
-        if (page is not None
-                and page.getTypeString() == WebNotePage.getTypeString()):
+        if (page is not None and
+                page.getTypeString() == WebNotePage.getTypeString()):
             self._application.actionController.check (DisableScriptsAction.stringId,
                                                       page.disableScripts)
 
@@ -174,6 +174,9 @@ class GuiController (object):
             actionController.removeMenuItem (ShowPageInfoAction.stringId)
             actionController.removeMenuItem (SwitchCodeResultAction.stringId)
             actionController.removeMenuItem (DisableScriptsAction.stringId)
+
+            if panelName in self._application.mainWindow.toolbars:
+                self._application.mainWindow.toolbars.updatePanesInfo ()
 
             self._removePolyActionTools()
             if panelName in self._application.mainWindow.toolbars:

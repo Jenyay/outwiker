@@ -95,7 +95,6 @@ class ToolBarsController (object):
         self._parent.UpdateAuiManager()
 
 
-
     def destroyAllToolBars (self):
         """
         Уничтожить все панели инструментов.

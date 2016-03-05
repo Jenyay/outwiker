@@ -149,6 +149,7 @@ class BaseWikiPageView (BaseHtmlPanel):
         self.Unbind (EVT_PAGE_TAB_CHANGED, handler=self.onTabChanged)
 
         if self._getName() in self.mainWindow.toolbars:
+            self.mainWindow.toolbars.updatePanesInfo()
             self.mainWindow.toolbars.destroyToolBar (self._getName())
 
         super (BaseWikiPageView, self).Clear()

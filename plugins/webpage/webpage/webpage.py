@@ -11,7 +11,7 @@ from .controller import Controller
 from .i18n import set_
 
 
-__version__ = u'1.0'
+__version__ = u'1.0.1'
 
 
 if getCurrentVersion() < Version (1, 9, 0, 781, status=StatusSet.DEV):

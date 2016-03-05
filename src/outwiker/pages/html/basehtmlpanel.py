@@ -347,14 +347,14 @@ class BaseHtmlPanel(BaseTextPanel):
         actionController.enableTools (SearchNextAction.stringId, searchEnabled)
         actionController.enableTools (SearchPrevAction.stringId, searchEnabled)
 
-        actionController.enableTools (SearchAndReplaceAction.stringId, searchEnabled
-                                      and not self._application.selectedPage.readonly)
+        actionController.enableTools (SearchAndReplaceAction.stringId,
+                                      searchEnabled and not self._application.selectedPage.readonly)
 
-        actionController.enableTools (AttachFilesAction.stringId, searchEnabled
-                                      and not self._application.selectedPage.readonly)
+        actionController.enableTools (AttachFilesAction.stringId,
+                                      searchEnabled and not self._application.selectedPage.readonly)
 
-        actionController.enableTools (GlobalSearchAction.stringId, searchEnabled
-                                      and not self._application.selectedPage.readonly)
+        actionController.enableTools (GlobalSearchAction.stringId,
+                                      searchEnabled and not self._application.selectedPage.readonly)
 
         self.mainWindow.UpdateAuiManager()
 
