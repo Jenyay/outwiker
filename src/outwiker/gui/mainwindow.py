@@ -590,6 +590,7 @@ class MainWindow(wx.Frame):
         Убрать за собой
         """
         self.__saveParams()
+        self.toolbars.updatePanesInfo()
         self.destroyPagePanel (True)
         Application.actionController.saveHotKeys()
 
@@ -598,8 +599,8 @@ class MainWindow(wx.Frame):
         self.__unbindGuiEvents()
         self._dropTarget.destroy()
 
-        self.tabsController.destroy()
         self.toolbars.destroyAllToolBars()
+        self.tabsController.destroy()
 
         self.auiManager.UnInit()
 
