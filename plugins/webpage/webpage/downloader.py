@@ -62,7 +62,7 @@ class Downloader (BaseDownloader):
         self._success = False
         obj = self.download (url)
         html = obj.read()
-        self._soup = BeautifulSoup (html, "html.parser")
+        self._soup = BeautifulSoup (html, "html5")
         self._contentSrc = self._soup.prettify()
 
         if self._soup.title is not None:
@@ -230,7 +230,8 @@ class DownloadController (BaseDownloadController):
 
 
     def processImg (self, startUrl, url, node):
-        self._process (startUrl, url, node, self._processFuncNone)
+        if not (url.startswith (u'data:') or url.startswith (u'mhtml:')):
+            self._process (startUrl, url, node, self._processFuncNone)
 
 
     def processCSS (self, startUrl, url, node):
@@ -291,7 +292,9 @@ class DownloadController (BaseDownloadController):
             url_found = url_found.replace (u'"', u'')
             url_found = url_found.replace (u"'", u'')
 
-            if url_found.startswith (u'/') or u'://' in url_found:
+            if url_found.startswith(u'data:') or url_found.startswith(u'mhtml:'):
+                continue
+            elif url_found.startswith (u'/') or u'://' in url_found:
                 relativeurl = url_found
             else:
                 relativeurl = os.path.join (os.path.dirname (url), url_found)
@@ -326,7 +329,6 @@ class DownloadController (BaseDownloadController):
         # Create dir for downloading
         if not os.path.exists (self._fullStaticDir):
             os.mkdir (self._fullStaticDir)
-
 
         fullUrl = self.urljoin (startUrl, url)
 
