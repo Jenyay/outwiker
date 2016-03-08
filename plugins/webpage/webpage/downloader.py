@@ -67,27 +67,36 @@ class Downloader (BaseDownloader):
         if self._soup.title is not None:
             self._pageTitle = self._soup.title.string
 
-        self._downloadImages (self._soup, controller, url)
-        self._downloadCSS (self._soup, controller, url)
-        self._downloadScripts (self._soup, controller, url)
-        self._downloadFavicon (self._soup, controller, url)
+        baseUrl = self._getBaseUrl (self._soup, url)
+
+        self._downloadImages (self._soup, controller, baseUrl)
+        self._downloadCSS (self._soup, controller, baseUrl)
+        self._downloadScripts (self._soup, controller, baseUrl)
+        self._downloadFavicon (self._soup, controller, baseUrl)
 
         self._faviconPath = controller.favicon
 
-        self._improveResult (self._soup, url)
+        self._improveResult (self._soup, baseUrl)
 
         self._contentResult = unicode (self._soup)
         self._success = True
 
 
-    def _improveResult (self, soup, url):
-        self._disableBaseTag (soup)
-
-
-    def _disableBaseTag (self, soup):
+    def _getBaseUrl (self, soup, url):
+        result = url
         for basetag in soup.find_all (u'base'):
             if basetag.has_attr (u'href'):
-                basetag[u'href'] = u''
+                result = basetag[u'href']
+        return result
+
+
+    def _improveResult (self, soup, url):
+        self._removeBaseTag (soup)
+
+
+    def _removeBaseTag (self, soup):
+        for basetag in soup.find_all (u'base'):
+            basetag.extract()
 
 
     @property
