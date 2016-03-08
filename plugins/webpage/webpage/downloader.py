@@ -11,6 +11,9 @@ import gzip
 
 import wx
 
+import html5lib
+from html5lib.constants import namespaces
+
 from bs4 import BeautifulSoup, UnicodeDammit
 from events import UpdateLogEvent
 
@@ -62,7 +65,7 @@ class Downloader (BaseDownloader):
         self._success = False
         obj = self.download (url)
         html = obj.read()
-        self._soup = BeautifulSoup (html, "html5")
+        self._soup = BeautifulSoup (html, "html5lib")
         self._contentSrc = self._soup.prettify()
 
         if self._soup.title is not None:
