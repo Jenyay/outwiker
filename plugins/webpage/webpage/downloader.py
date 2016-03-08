@@ -23,6 +23,8 @@ class BaseDownloader (object):
         global _
         _ = get_()
 
+        self._encoding = None
+
 
     def download (self, url):
         opener = urllib2.build_opener()
@@ -60,7 +62,6 @@ class Downloader (BaseDownloader):
         self._success = False
         obj = self.download (url)
         html = obj.read()
-        html = self.toUnicode (html)
         self._soup = BeautifulSoup (html, "html.parser")
         self._contentSrc = self._soup.prettify()
 
