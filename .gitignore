@@ -58,3 +58,4 @@ doc/coverage
 tests_win
 *.sublime-*
 .idea/
+Thumbs.db
