@@ -325,8 +325,11 @@ class DownloadThread (Thread):
             if iconname.endswith (ico_ext):
                 iconname = iconname[:-len (ico_ext)] + u'.png'
             iconmaker = IconMaker ()
-            iconmaker.create (favicon_src, iconname)
-            return iconname
+            try:
+                iconmaker.create (favicon_src, iconname)
+                return iconname
+            except IOError:
+                pass
 
 
     def _log (self, text):
