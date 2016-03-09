@@ -11,9 +11,6 @@ import gzip
 
 import wx
 
-import html5lib
-from html5lib.constants import namespaces
-
 from bs4 import BeautifulSoup, UnicodeDammit
 from events import UpdateLogEvent
 
