@@ -1,5 +1,7 @@
 # -*- coding: UTF-8 -*-
 
+import cgi
+
 from outwiker.gui.guiconfig import GeneralGuiConfig
 from outwiker.core.system import getOS
 
@@ -47,7 +49,7 @@ class HtmlReport (object):
         """
         Вернуть представление для одной страницы
         """
-        item = u"<b><a href='/%s'>%s</a></b>" % (page.subpath, page.title)
+        item = u'<b><a href="/%s">%s</a></b>' % (cgi.escape (page.subpath, True), page.title)
         if page.parent.parent is not None:
             item += u" (%s)" % page.parent.subpath
 
