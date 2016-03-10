@@ -9,11 +9,11 @@ from outwiker.core.version import Version, StatusSet
 from outwiker.core.system import getOS
 
 
-__version__ = u'1.0.1'
+__version__ = u'1.0.2'
 
 
 if getCurrentVersion() < Version (1, 9, 0, 777, status=StatusSet.DEV):
-    logging.warning ("PluginName plugin. OutWiker version requirement: 1.9.0.777")
+    logging.warning ("PageTypeColor plugin. OutWiker version requirement: 1.9.0.777")
 else:
     from .i18n import set_
     from .controller import Controller
