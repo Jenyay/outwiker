@@ -1,3 +1,9 @@
+outwiker (1.9.0+789~wily) wily; urgency=medium
+
+  * Next version
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Thu, 10 Mar 2016 20:57:57 +0300
+
 outwiker (1.9.0+788~wily) wily; urgency=medium
 
   * Added menu items and hot keys to moving to pages
