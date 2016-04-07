@@ -105,6 +105,7 @@ class OutwikerTrayIcon (wx.TaskBarIcon):
         if self.config.minimizeToTray.value:
             # В трей добавим иконку, а окно спрячем
             self.ShowTrayIcon()
+            self.mainWnd.Show()
             self.mainWnd.Hide()
 
 
@@ -128,7 +129,6 @@ class OutwikerTrayIcon (wx.TaskBarIcon):
 
 
     def restoreWindow (self):
-        self.mainWnd.Show ()
         self.mainWnd.Iconize (False)
         if not self.config.alwaysShowTrayIcon.value:
             self.removeTrayIcon()

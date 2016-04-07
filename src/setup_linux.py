@@ -29,6 +29,8 @@ includefiles = ['images',
                 'iconset',
                 'plugins',
                 'spell',
+                ('../LICENSE.txt', 'LICENSE.txt'),
+                ('../copyright.txt', 'copyright.txt'),
                 ]
 
 includes = []

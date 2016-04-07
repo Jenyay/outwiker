@@ -127,6 +127,7 @@ class HtmlPageView (BaseHtmlPanel):
         self._removeActionTools()
 
         if self._htmlPanelName in self.mainWindow.toolbars:
+            self.mainWindow.toolbars.updatePanesInfo()
             self.mainWindow.toolbars.destroyToolBar (self._htmlPanelName)
 
         super (HtmlPageView, self).Clear()

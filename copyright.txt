@@ -4,7 +4,7 @@ Author:
 
 Files: *
 Copyright:
-    2010, Eugeniy Ilin (aka Jenyay)
+    2010-2016, Eugeniy Ilin (aka Jenyay)
 License: GPL3
 
 License: GPL3

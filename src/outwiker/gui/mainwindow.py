@@ -57,6 +57,10 @@ from outwiker.actions.openattachfolder import OpenAttachFolderAction
 from outwiker.actions.history import HistoryBackAction, HistoryForwardAction
 from outwiker.actions.applystyle import SetStyleToBranchAction
 from outwiker.actions.openpluginsfolder import OpenPluginsFolderAction
+from outwiker.actions.moving import (GoToParentAction,
+                                     GoToFirstChildAction,
+                                     GoToNextSiblingAction,
+                                     GoToPrevSiblingAction)
 
 from outwiker.pages.wiki.wikipagecontroller import WikiPageController
 from outwiker.pages.html.htmlpagecontroller import HtmlPageController
@@ -275,6 +279,25 @@ class MainWindow(wx.Frame):
 
         actionController.appendMenuItem (
             SortSiblingsAlphabeticalAction.stringId,
+            menu)
+
+        menu.AppendSeparator()
+
+        actionController.appendMenuItem (
+            GoToParentAction.stringId,
+            menu)
+
+        actionController.appendMenuItem (
+            GoToFirstChildAction.stringId,
+            menu)
+
+
+        actionController.appendMenuItem (
+            GoToPrevSiblingAction.stringId,
+            menu)
+
+        actionController.appendMenuItem (
+            GoToNextSiblingAction.stringId,
             menu)
 
         menu.AppendSeparator()
@@ -567,6 +590,7 @@ class MainWindow(wx.Frame):
         Убрать за собой
         """
         self.__saveParams()
+        self.toolbars.updatePanesInfo()
         self.destroyPagePanel (True)
         Application.actionController.saveHotKeys()
 
@@ -575,8 +599,8 @@ class MainWindow(wx.Frame):
         self.__unbindGuiEvents()
         self._dropTarget.destroy()
 
-        self.tabsController.destroy()
         self.toolbars.destroyAllToolBars()
+        self.tabsController.destroy()
 
         self.auiManager.UnInit()
 

@@ -1,22 +1,24 @@
 # -*- coding: UTF-8 -*-
 
 import os.path
+import logging
 
 from outwiker.core.pluginbase import Plugin
 from outwiker.core.commands import getCurrentVersion
 from outwiker.core.version import Version, StatusSet
 from outwiker.core.system import getOS
 
-from .controller import Controller
 from .i18n import set_
 
 
-__version__ = u'1.0'
+__version__ = u'1.0.1'
 
 
 if getCurrentVersion() < Version (1, 9, 0, 781, status=StatusSet.DEV):
-    print u"WebPage plugin. OutWiker version requirement: 1.9.0.781"
+    logging.warning (u"WebPage plugin. OutWiker version requirement: 1.9.0.781")
 else:
+    from .controller import Controller
+
     class PluginWebPage (Plugin):
         def __init__ (self, application):
             """

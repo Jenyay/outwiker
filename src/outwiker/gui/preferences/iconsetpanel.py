@@ -58,7 +58,7 @@ class IconsetPanel (BasePrefPanel):
         self._groups = wx.TreeCtrl (
             self,
             style = wx.TR_HAS_BUTTONS | wx.TR_EDIT_LABELS | wx.SUNKEN_BORDER)
-        self._groups.SetMinSize ((200, -1))
+        self._groups.SetMinSize ((200, 200))
 
         self._imagelist = wx.ImageList(ICON_WIDTH, ICON_HEIGHT)
         self._groups.AssignImageList (self._imagelist)
@@ -106,6 +106,7 @@ class IconsetPanel (BasePrefPanel):
         iconsSizer.AddGrowableCol (0)
 
         self._iconsList = IconListCtrl (self, True)
+        self._iconsList.SetMinSize((200, 150))
 
         # Buttons for icons in the group
         iconsButtonsSizer = wx.BoxSizer (wx.HORIZONTAL)

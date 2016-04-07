@@ -20,7 +20,7 @@ class HotkeyEditor (wx.Panel):
 A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
 Insert Enter Delete Home End Pageup Pagedown
 Up Down Left Right
-/ \ * - + . _ = ` , ?"""
+/ \ * - + . _ = ` , ? [ ]"""
 
         self._hotkeysList = [_("None")] + [item for item in hotkeys.split() if len (item) != 0]
 

@@ -23,6 +23,8 @@ class BaseDownloader (object):
         global _
         _ = get_()
 
+        self._encoding = None
+
 
     def download (self, url):
         opener = urllib2.build_opener()
@@ -60,34 +62,42 @@ class Downloader (BaseDownloader):
         self._success = False
         obj = self.download (url)
         html = obj.read()
-        html = self.toUnicode (html)
-        self._soup = BeautifulSoup (html, "html.parser")
+        self._soup = BeautifulSoup (html, "html5lib")
         self._contentSrc = self._soup.prettify()
 
         if self._soup.title is not None:
             self._pageTitle = self._soup.title.string
 
-        self._downloadImages (self._soup, controller, url)
-        self._downloadCSS (self._soup, controller, url)
-        self._downloadScripts (self._soup, controller, url)
-        self._downloadFavicon (self._soup, controller, url)
+        baseUrl = self._getBaseUrl (self._soup, url)
+
+        self._downloadImages (self._soup, controller, baseUrl)
+        self._downloadCSS (self._soup, controller, baseUrl)
+        self._downloadScripts (self._soup, controller, baseUrl)
+        self._downloadFavicon (self._soup, controller, baseUrl)
 
         self._faviconPath = controller.favicon
 
-        self._improveResult (self._soup, url)
+        self._improveResult (self._soup, baseUrl)
 
         self._contentResult = unicode (self._soup)
         self._success = True
 
 
-    def _improveResult (self, soup, url):
-        self._disableBaseTag (soup)
-
-
-    def _disableBaseTag (self, soup):
+    def _getBaseUrl (self, soup, url):
+        result = url
         for basetag in soup.find_all (u'base'):
             if basetag.has_attr (u'href'):
-                basetag[u'href'] = u''
+                result = basetag[u'href']
+        return result
+
+
+    def _improveResult (self, soup, url):
+        self._removeBaseTag (soup)
+
+
+    def _removeBaseTag (self, soup):
+        for basetag in soup.find_all (u'base'):
+            basetag.extract()
 
 
     @property
@@ -220,7 +230,8 @@ class DownloadController (BaseDownloadController):
 
 
     def processImg (self, startUrl, url, node):
-        self._process (startUrl, url, node, self._processFuncNone)
+        if not (url.startswith (u'data:') or url.startswith (u'mhtml:')):
+            self._process (startUrl, url, node, self._processFuncNone)
 
 
     def processCSS (self, startUrl, url, node):
@@ -281,7 +292,9 @@ class DownloadController (BaseDownloadController):
             url_found = url_found.replace (u'"', u'')
             url_found = url_found.replace (u"'", u'')
 
-            if url_found.startswith (u'/') or u'://' in url_found:
+            if url_found.startswith(u'data:') or url_found.startswith(u'mhtml:'):
+                continue
+            elif url_found.startswith (u'/') or u'://' in url_found:
                 relativeurl = url_found
             else:
                 relativeurl = os.path.join (os.path.dirname (url), url_found)
@@ -316,7 +329,6 @@ class DownloadController (BaseDownloadController):
         # Create dir for downloading
         if not os.path.exists (self._fullStaticDir):
             os.mkdir (self._fullStaticDir)
-
 
         fullUrl = self.urljoin (startUrl, url)
 

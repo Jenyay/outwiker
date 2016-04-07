@@ -18,6 +18,7 @@ from outwiker.actions.movepageup import MovePageUpAction
 from outwiker.actions.movepagedown import MovePageDownAction
 from outwiker.actions.removepage import RemovePageAction
 from outwiker.actions.editpageprop import EditPagePropertiesAction
+from outwiker.actions.moving import GoToParentAction
 from outwiker.core.events import PAGE_UPDATE_ICON
 from outwiker.core.defines import ICON_WIDTH, ICON_HEIGHT
 
@@ -175,16 +176,7 @@ class NotesTree(wx.Panel):
         # Сворачивание/разворачивание элементов
         self.treeCtrl.Bind (wx.EVT_TREE_ITEM_COLLAPSED, self.__onTreeStateChanged)
         self.treeCtrl.Bind (wx.EVT_TREE_ITEM_EXPANDED, self.__onTreeStateChanged)
-
         self.treeCtrl.Bind (wx.EVT_TREE_ITEM_ACTIVATED, self.__onTreeItemActivated)
-
-        self.Bind(wx.EVT_MENU, self.__onMoveUp, id=self.ID_MOVE_UP)
-        self.Bind(wx.EVT_MENU, self.__onMoveDown, id=self.ID_MOVE_DOWN)
-        self.Bind(wx.EVT_MENU, self.__onAddSiblingPage, id=self.ID_ADD_SIBLING_PAGE)
-        self.Bind(wx.EVT_MENU, self.__onAddChildPage, id=self.ID_ADD_CHILD_PAGE)
-        self.Bind(wx.EVT_MENU, self.__onRemovePage, id=self.ID_REMOVE_PAGE)
-
-        self.Bind(wx.EVT_MENU, self.__onPropertiesButton, id=self.ID_PROPERTIES_BUTTON)
 
         self.Bind (wx.EVT_CLOSE, self.__onClose)
 
@@ -218,32 +210,6 @@ class NotesTree(wx.Panel):
             assert item.IsOk()
 
             self.expand (newpage)
-
-
-    def __onPropertiesButton (self, event):
-        Application.actionController.getAction (EditPagePropertiesAction.stringId).run (None)
-
-
-    def __onAddSiblingPage (self, event):
-        Application.actionController.getAction (AddSiblingPageAction.stringId).run (None)
-
-
-    def __onAddChildPage (self, event):
-        Application.actionController.getAction (AddChildPageAction.stringId).run (None)
-
-
-    def __onRemovePage (self, event):
-        Application.actionController.getAction (RemovePageAction.stringId).run (None)
-
-
-    def __onMoveUp (self, event):
-        if Application.wikiroot.selectedPage is not None:
-            Application.actionController.getAction (MovePageUpAction.stringId).run (None)
-
-
-    def __onMoveDown (self, event):
-        if Application.wikiroot.selectedPage is not None:
-            Application.actionController.getAction (MovePageDownAction.stringId).run (None)
 
 
     def __onPageRemove (self, page):
@@ -635,78 +601,49 @@ class NotesTree(wx.Panel):
 
     def addButtons (self):
         """
-        Добавить кнопки на панель
-        Т.к. текст подсказок берется из Actions, этот метод вызывается после создания окна
+        Add the buttons to notes tree panel.
         """
         imagesDir = outwiker.core.system.getImagesDir()
         actionController = Application.actionController
 
-        moveDownTitle = actionController.getTitle (MovePageDownAction.stringId)
-        self.toolbar.AddLabelTool(self.ID_MOVE_DOWN,
-                                  moveDownTitle,
-                                  wx.Bitmap(os.path.join (imagesDir, "move_down.png"),
-                                            wx.BITMAP_TYPE_ANY),
-                                  wx.NullBitmap,
-                                  wx.ITEM_NORMAL,
-                                  moveDownTitle,
-                                  "")
-
-
-        moveUpTitle = actionController.getTitle (MovePageUpAction.stringId)
-        self.toolbar.AddLabelTool(self.ID_MOVE_UP,
-                                  moveUpTitle,
-                                  wx.Bitmap(os.path.join (imagesDir, "move_up.png"),
-                                            wx.BITMAP_TYPE_ANY),
-                                  wx.NullBitmap,
-                                  wx.ITEM_NORMAL,
-                                  moveUpTitle,
-                                  "")
+        actionController.appendToolbarButton (GoToParentAction.stringId,
+                                              self.toolbar,
+                                              os.path.join (imagesDir, "go_to_parent.png"),
+                                              False)
         self.toolbar.AddSeparator()
 
-
-        siblingTitle = actionController.getTitle (AddSiblingPageAction.stringId)
-        self.toolbar.AddLabelTool(self.ID_ADD_SIBLING_PAGE,
-                                  siblingTitle,
-                                  wx.Bitmap(os.path.join (imagesDir, "node-insert-next.png"),
-                                            wx.BITMAP_TYPE_ANY),
-                                  wx.NullBitmap,
-                                  wx.ITEM_NORMAL,
-                                  siblingTitle,
-                                  "")
+        actionController.appendToolbarButton (MovePageDownAction.stringId,
+                                              self.toolbar,
+                                              os.path.join (imagesDir, "move_down.png"),
+                                              False)
 
 
-        childTitle = actionController.getTitle (AddChildPageAction.stringId)
-        self.toolbar.AddLabelTool(self.ID_ADD_CHILD_PAGE,
-                                  childTitle,
-                                  wx.Bitmap(os.path.join (imagesDir, "node-insert-child.png"),
-                                            wx.BITMAP_TYPE_ANY),
-                                  wx.NullBitmap,
-                                  wx.ITEM_NORMAL,
-                                  childTitle,
-                                  "")
-
-
-        removeTitle = actionController.getTitle (RemovePageAction.stringId)
-        self.toolbar.AddLabelTool(self.ID_REMOVE_PAGE,
-                                  removeTitle,
-                                  wx.Bitmap(os.path.join (imagesDir, "node-delete.png"),
-                                            wx.BITMAP_TYPE_ANY),
-                                  wx.NullBitmap,
-                                  wx.ITEM_NORMAL,
-                                  removeTitle,
-                                  "")
-
+        actionController.appendToolbarButton (MovePageUpAction.stringId,
+                                              self.toolbar,
+                                              os.path.join (imagesDir, "move_up.png"),
+                                              False)
         self.toolbar.AddSeparator()
 
+        actionController.appendToolbarButton (AddSiblingPageAction.stringId,
+                                              self.toolbar,
+                                              os.path.join (imagesDir, "node-insert-next.png"),
+                                              False)
 
-        propertiesTitle = actionController.getTitle (EditPagePropertiesAction.stringId)
-        self.toolbar.AddLabelTool(self.ID_PROPERTIES_BUTTON,
-                                  propertiesTitle,
-                                  wx.Bitmap(os.path.join (imagesDir, "edit.png"),
-                                            wx.BITMAP_TYPE_ANY),
-                                  wx.NullBitmap,
-                                  wx.ITEM_NORMAL,
-                                  propertiesTitle,
-                                  "")
+
+        actionController.appendToolbarButton (AddChildPageAction.stringId,
+                                              self.toolbar,
+                                              os.path.join (imagesDir, "node-insert-child.png"),
+                                              False)
+
+        actionController.appendToolbarButton (RemovePageAction.stringId,
+                                              self.toolbar,
+                                              os.path.join (imagesDir, "node-delete.png"),
+                                              False)
+        self.toolbar.AddSeparator()
+
+        actionController.appendToolbarButton (EditPagePropertiesAction.stringId,
+                                              self.toolbar,
+                                              os.path.join (imagesDir, "edit.png"),
+                                              False)
 
         self.toolbar.Realize()

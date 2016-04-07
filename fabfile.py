@@ -9,7 +9,7 @@ import glob
 from fabric.api import local, lcd, settings
 
 # Supported Ubuntu releases
-distribs = ["wily", "trusty"]
+distribs = ["wily", "trusty", "xenial"]
 
 # List of the supported plugins
 plugins_list = [
