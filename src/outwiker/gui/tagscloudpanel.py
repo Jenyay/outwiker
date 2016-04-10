@@ -11,13 +11,10 @@ class TagsCloudPanel (wx.Panel):
     def __init__ (self, parent, application):
         wx.Panel.__init__ (self, parent)
         self.__application = application
-
         self.__tagscloud = TagsCloud (self)
 
         self.__popupWidth = 300
         self.__popupHeight = 200
-        self.__pageListPopup = PageListPopup (self)
-        self.__pageListPopup.SetSize ((self.__popupWidth, self.__popupHeight))
 
         self.__layout()
 
@@ -25,8 +22,10 @@ class TagsCloudPanel (wx.Panel):
 
 
     def showPopup (self, pages):
-        self.__pageListPopup.setPageList (pages)
-        self.__pageListPopup.Popup()
+        pageListPopup = PageListPopup (self)
+        pageListPopup.SetSize ((self.__popupWidth, self.__popupHeight))
+        pageListPopup.setPageList (pages)
+        pageListPopup.Popup()
 
 
     def clearTags (self):

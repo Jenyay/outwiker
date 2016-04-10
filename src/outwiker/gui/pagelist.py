@@ -9,12 +9,11 @@ PageClickEvent, EVT_PAGE_CLICK = wx.lib.newevent.NewEvent()
 
 class PageList (wx.ScrolledWindow):
     def __init__ (self, parent):
-        super (PageList, self).__init__ (parent, style=wx.ALWAYS_SHOW_SB | wx.BORDER_SIMPLE)
+        super (PageList, self).__init__ (parent, style=wx.BORDER_SIMPLE | wx.HSCROLL)
 
         self.__space = 4
 
         self.SetBackgroundColour (wx.Colour (255, 255, 255))
-        # self.SetScrollRate (0, 0)
 
         # Список отображаемых элементов
         self.__titleItems = []
