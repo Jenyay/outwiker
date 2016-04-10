@@ -132,11 +132,6 @@ class Unix (System):
         import gobject
         gobject.threads_init()
 
-        import pygtk
-        pygtk.require('2.0')
-        import gtk
-        import gtk.gdk
-
 
     def startFile (self, path):
         """
