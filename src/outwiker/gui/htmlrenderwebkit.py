@@ -64,7 +64,10 @@ class HtmlRenderWebKit(HtmlRender):
 
         self.ctrl = ctrl = webkit.WebView()
 
+        # parent.AddChild (ctrl)
         scrolled_window.add(ctrl)
+        # scrolled_window.remove_page(0)
+        # scrolled_window.set_tab_label_text (ctrl, '111')
         scrolled_window.show_all()
 
         self.canOpenUrl = False                # Можно ли открывать ссылки
