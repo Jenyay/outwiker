@@ -151,6 +151,17 @@ def ppaunstable ():
             local ("dput ppa:outwiker-team/unstable outwiker_{}+{}~{}_source.changes".format (version[0], version[1], distname))
 
 
+# def ppastable ():
+#     """
+#     Upload the current OutWiker version in PPA (unstable)
+#     """
+#     version = _getVersion()
+#
+#     for distname in distribs:
+#         with lcd ("build".format (_getDebSourceDirName())):
+#             local ("dput ppa:outwiker-team/ppa outwiker_{}+{}~{}_source.changes".format (version[0], version[1], distname))
+
+
 def plugins():
     """
     Create an archive with plugins (7z required)
