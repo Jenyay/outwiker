@@ -1,17 +1,17 @@
 # -*- coding: UTF-8 -*-
 
-import os
-import os.path
+# import os
+# import os.path
 import urllib
 
 import wx
 
-import gtk
-import gtk.gdk
+# import gtk
+# import gtk.gdk
 
 # pywebkitgtk (http://code.google.com/p/pywebkitgtk/)
 # http://webkitgtk.org/reference/webkitgtk/stable/webkitgtk-webkitwebview.html
-import webkit
+# import webkit
 
 import outwiker.core.system
 import outwiker.core.commands
@@ -49,82 +49,93 @@ class HtmlRenderWebKit(HtmlRender):
     def __init__(self, parent):
         HtmlRender.__init__(self, parent)
 
+        import wx.html2 as webview
+        self.ctrl = webview.WebView.New(self)
+
+        sizer = wx.FlexGridSizer (1)
+        sizer.AddGrowableCol (0)
+        sizer.AddGrowableRow (0)
+        sizer.Add (self.ctrl, 0, wx.EXPAND)
+        self.SetSizer (sizer)
+
         # Here is where we do the "magic" to embed webkit into wxGTK.
-        whdl = self.GetHandle()
-
-        window = gtk.gdk.window_lookup(whdl)
-
-        # We must keep a reference of "pizza". Otherwise we get a crash.
-        self.pizza = pizza = window.get_user_data()
-
-        self.scrolled_window = scrolled_window = pizza.parent
-
-        # Removing pizza to put a webview in it's place
-        scrolled_window.remove(pizza)
-
-        self.ctrl = ctrl = webkit.WebView()
-
-        # parent.AddChild (ctrl)
-        scrolled_window.add(ctrl)
-        # scrolled_window.remove_page(0)
-        # scrolled_window.set_tab_label_text (ctrl, '111')
-        scrolled_window.show_all()
+        # whdl = self.GetHandle()
+        #
+        # window = gtk.gdk.window_lookup(whdl)
+        #
+        # # We must keep a reference of "pizza". Otherwise we get a crash.
+        # self.pizza = pizza = window.get_user_data()
+        #
+        # self.scrolled_window = scrolled_window = pizza.parent
+        #
+        # # Removing pizza to put a webview in it's place
+        # scrolled_window.remove(pizza)
+        #
+        # self.ctrl = ctrl = webkit.WebView()
+        #
+        # # parent.AddChild (ctrl)
+        # scrolled_window.add(ctrl)
+        # # scrolled_window.remove_page(0)
+        # # scrolled_window.set_tab_label_text (ctrl, '111')
+        # scrolled_window.show_all()
 
         self.canOpenUrl = False                # Можно ли открывать ссылки
 
         # Disable console output
-        self.ctrl.connect("console-message", self._javascript_console_message)
-
-        self.ctrl.connect("navigation-policy-decision-requested", self.__onNavigate)
-        self.ctrl.connect("hovering-over-link", self.__onHoveredOverLink)
-        self.ctrl.connect("notify::load-status", self.__onLoadStatus)
+        # self.ctrl.connect("console-message", self._javascript_console_message)
+        #
+        # self.ctrl.connect("navigation-policy-decision-requested", self.__onNavigate)
+        # self.ctrl.connect("hovering-over-link", self.__onHoveredOverLink)
+        # self.ctrl.connect("notify::load-status", self.__onLoadStatus)
 
         self.Bind (wx.EVT_MENU, self.__onCopyFromHtml, id = wx.ID_COPY)
         self.Bind (wx.EVT_MENU, self.__onCopyFromHtml, id = wx.ID_CUT)
 
-        self.ctrl.get_settings().set_property("tab-key-cycles-through-elements", False)
+        # self.ctrl.get_settings().set_property("tab-key-cycles-through-elements", False)
 
         self._path = None
 
 
-    def _javascript_console_message(self, view, message, line, sourceid):
-        return True
+    # def _javascript_console_message(self, view, message, line, sourceid):
+    #     return True
 
 
-    def __onLoadStatus (self, frame, status):
-        loadstatus = self.ctrl.get_load_status()
-
-        if Application.anchor is not None and loadstatus.value_nick == "finished":
-            assert self._path is not None
-            self.ctrl.load_uri (self._path + "{}".format (Application.anchor))
-            Application.anchor = None
+    # def __onLoadStatus (self, frame, status):
+    #     loadstatus = self.ctrl.get_load_status()
+    #
+    #     if Application.anchor is not None and loadstatus.value_nick == "finished":
+    #         assert self._path is not None
+    #         self.ctrl.load_uri (self._path + "{}".format (Application.anchor))
+    #         Application.anchor = None
 
 
     def Print (self):
-        self.ctrl.get_main_frame().print_()
+        self.ctrl.Print()
 
 
     def LoadPage (self, fname):
         self.canOpenUrl = True
 
-        try:
-            with open (fname) as fp:
-                text = fp.read()
-        except IOError:
-            text = _(u"Can't read file %s") % (fname)
+        # try:
+        #     with open (fname) as fp:
+        #         text = fp.read()
+        # except IOError:
+        #     text = _(u"Can't read file %s") % (fname)
 
-        self.SetPage (text, os.path.dirname (fname))
+        # self.SetPage (text, os.path.dirname (fname))
+        self._path = "file://" + urllib.quote (fname.encode ("utf8")) + "/"
+        self.ctrl.LoadURL (self._path)
         self.canOpenUrl = False
 
 
     def SetPage (self, htmltext, basepath):
-        self.canOpenUrl = True
+        self.canOpexnUrl = True
         self._path = "file://" + urllib.quote (basepath.encode ("utf8")) + "/"
 
-        self.ctrl.load_string (htmltext,
-                               "text/html",
-                               "utf8",
-                               self._path)
+        # self.ctrl.load_string (htmltext,
+        #                        "text/html",
+        #                        "utf8",
+        #                        self._path)
         self.canOpenUrl = False
 
 
