@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-# import os
+import os
 # import os.path
 import urllib
 
@@ -58,6 +58,10 @@ class HtmlRenderWebKit(HtmlRender):
         sizer.Add (self.ctrl, 0, wx.EXPAND)
         self.SetSizer (sizer)
 
+        # native_ctrl = self.ctrl.GetNativeBackend()
+        # print type (native_ctrl.next())
+        # print dir (native_ctrl)
+
         # Here is where we do the "magic" to embed webkit into wxGTK.
         # whdl = self.GetHandle()
         #
@@ -90,6 +94,7 @@ class HtmlRenderWebKit(HtmlRender):
 
         self.Bind (wx.EVT_MENU, self.__onCopyFromHtml, id = wx.ID_COPY)
         self.Bind (wx.EVT_MENU, self.__onCopyFromHtml, id = wx.ID_CUT)
+        self.Bind (webview.EVT_WEBVIEW_NAVIGATING, self.__onNavigate)
 
         # self.ctrl.get_settings().set_property("tab-key-cycles-through-elements", False)
 
@@ -116,31 +121,32 @@ class HtmlRenderWebKit(HtmlRender):
     def LoadPage (self, fname):
         self.canOpenUrl = True
 
-        # try:
-        #     with open (fname) as fp:
-        #         text = fp.read()
-        # except IOError:
-        #     text = _(u"Can't read file %s") % (fname)
+        try:
+            with open (fname) as fp:
+                text = fp.read()
+        except IOError:
+            text = _(u"Can't read file %s") % (fname)
 
-        # self.SetPage (text, os.path.dirname (fname))
-        self._path = "file://" + urllib.quote (fname.encode ("utf8")) + "/"
-        self.ctrl.LoadURL (self._path)
+        self.SetPage (text, os.path.dirname (fname))
+        # self._path = "file://" + urllib.quote (fname.encode ("utf8")) + "/"
+        # self.ctrl.LoadURL (self._path)
         self.canOpenUrl = False
 
 
     def SetPage (self, htmltext, basepath):
-        self.canOpexnUrl = True
+        self.canOpenUrl = True
         self._path = "file://" + urllib.quote (basepath.encode ("utf8")) + "/"
 
         # self.ctrl.load_string (htmltext,
         #                        "text/html",
         #                        "utf8",
         #                        self._path)
+        self.ctrl.SetPage (htmltext, self._path)
         self.canOpenUrl = False
 
 
     def __onCopyFromHtml(self, event):
-        self.ctrl.copy_clipboard ()
+        self.ctrl.Copy()
         event.Skip()
 
 
@@ -148,10 +154,10 @@ class HtmlRenderWebKit(HtmlRender):
         """
         Определить тип ссылки и вернуть кортеж (url, page, filename)
         """
-        uri = self.ctrl.get_main_frame().get_uri()
+        uri = self.ctrl.GetCurrentURL()
 
         if uri is not None:
-            basepath = unicode (urllib.unquote (self.ctrl.get_main_frame().get_uri()), "utf8")
+            basepath = urllib.unquote (uri)
             identifier = UriIdentifierWebKit (self._currentPage, basepath)
 
             return identifier.identify (href)
@@ -195,30 +201,48 @@ class HtmlRenderWebKit(HtmlRender):
         self.setStatusText (href, u"")
 
 
-    def __onNavigate (self, view, frame, request, action, decision):
+    def __onNavigate (self, event):
         # Проверка на то, что мы не пытаемся открыть вложенный фрейм
-        if frame != self.ctrl.get_main_frame():
-            return False
+        frame = event.GetTarget()
+        href = event.GetURL()
+        curr_href = self.ctrl.GetCurrentURL()
+        print "***"
+        print frame
+        print href
+        print curr_href
+        print "***"
+
+        # native_ctrl = self.ctrl.GetNativeBackend()
+
+        # if frame != native_ctrl.get_main_frame():
+        #     return False
 
         # Проверка на перезагрузку страницы
-        if action.get_reason().value_nick == "reload":
-            return True
+        # if action.get_reason().value_nick == "reload":
+        #     return True
 
-        curr_href = self.ctrl.get_main_frame().get_uri()
+        # if not self.canOpenUrl and href != curr_href:
+        #     event.Veto()
 
-        try:
-            href = unicode (urllib.unquote (request.get_uri()), "utf8")
-        except UnicodeDecodeError:
-            return True
+        # curr_href = native_ctrl.get_main_frame().get_uri()
+
+        # try:
+        #     href = unicode (urllib.unquote (event.GetURL()), "utf8")
+        # except UnicodeDecodeError:
+        #     return True
 
         if self.canOpenUrl or href == curr_href:
             # Если вызов uri осуществляется из программы или это запрос на обновление, то
             # разрешить обработать запрос компоненту
-            return False
+            # event.Veto()
+            pass
         else:
-            button = action.get_button()
-            modifier = action.get_modifier_state()
-            return self.__onLinkClicked (href, button, modifier)
+            # button = action.get_button()
+            # modifier = action.get_modifier_state()
+            button = 1
+            modifier = 0
+            if self.__onLinkClicked (href, button, modifier):
+                event.Veto()
 
 
     def __gtk2OutWikerKeyCode (self, gtk_key_modifier):
