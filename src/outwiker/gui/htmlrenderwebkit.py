@@ -206,11 +206,6 @@ class HtmlRenderWebKit(HtmlRender):
         frame = event.GetTarget()
         href = event.GetURL()
         curr_href = self.ctrl.GetCurrentURL()
-        print "***"
-        print frame
-        print href
-        print curr_href
-        print "***"
 
         # native_ctrl = self.ctrl.GetNativeBackend()
 
@@ -293,6 +288,8 @@ class HtmlRenderWebKit(HtmlRender):
         gtk_mouse_button - кнопка мыши, с помощью которой кликнули по ссылке (1 - левая, 2 - средняя, 3 - правая, -1 - не известно)
         gtk_key_modifier - зажатые клавиши (1 - Shift, 4 - Ctrl)
         """
+        href = urllib.unquote (href.encode('ascii')).decode ('utf8')
+
         (url, page, filename, anchor) = self.__identifyUri (href)
 
         modifier = self.__gtk2OutWikerKeyCode (gtk_key_modifier)
