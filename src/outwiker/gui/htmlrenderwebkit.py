@@ -288,14 +288,16 @@ class HtmlRenderWebKit(HtmlRender):
         gtk_mouse_button - кнопка мыши, с помощью которой кликнули по ссылке (1 - левая, 2 - средняя, 3 - правая, -1 - не известно)
         gtk_key_modifier - зажатые клавиши (1 - Shift, 4 - Ctrl)
         """
+        source_href = href
         href = urllib.unquote (href.encode('ascii')).decode ('utf8')
+        href = self._decodeIDNA (href)
 
         (url, page, filename, anchor) = self.__identifyUri (href)
 
         modifier = self.__gtk2OutWikerKeyCode (gtk_key_modifier)
         mouse_button = self.__gtk2OutWikerMouseButtonCode (gtk_mouse_button)
 
-        params = self._getClickParams (self._decodeIDNA (href),
+        params = self._getClickParams (source_href.encode('ascii'),
                                        mouse_button,
                                        modifier,
                                        url,
