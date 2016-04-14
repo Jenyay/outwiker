@@ -4,7 +4,11 @@
 from cx_Freeze import setup, Executable
 import os
 
-import outwiker.core.system
+from outwiker.core.defines import WX_VERSION
+import wxversion
+wxversion.select(WX_VERSION)
+
+from outwiker.core.system import getCurrentDir
 
 
 def getCurrentVersion ():
@@ -12,7 +16,7 @@ def getCurrentVersion ():
     Получить текущую версию для файла
     """
     fname = "version.txt"
-    path = os.path.join (outwiker.core.system.getCurrentDir(), fname)
+    path = os.path.join (getCurrentDir(), fname)
 
     with open (path) as fp:
         lines = fp.readlines()

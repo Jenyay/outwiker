@@ -269,7 +269,7 @@ def linux ():
 
     # Build by cx_Freeze
     with lcd ("src"):
-        local ("python setup_linux.py build")
+        local ("python setup_linux.py build --build-exe ../{}".format (linux_build_dir))
 
     map (_remove, toRemove)
 
