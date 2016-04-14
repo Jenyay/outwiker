@@ -81,7 +81,7 @@ def _source():
     dirname = os.path.join ("build", _getDebSourceDirName())
     os.mkdir (dirname)
 
-    local ("rsync -avz --exclude=.bzr --exclude=distrib --exclude=build --exclude=*.pyc --exclude=*.dll --exclude=*.exe * --exclude=src/.ropeproject --exclude=src/test --exclude=src/setup_win.py --exclude=src/setup_tests.py --exclude=src/profile.py --exclude=src/tests.py --exclude=src/Microsoft.VC90.CRT.manifest --exclude=src/profiles --exclude=src/tools --exclude=doc --exclude=plugins --exclude=profiles --exclude=test --exclude=_update_version_bzr.py --exclude=outwiker_setup.iss --exclude=updateversion --exclude=updateversion.py --exclude=debian_tmp {dirname}/".format (dirname=dirname))
+    local ("rsync -avz --exclude=.bzr --exclude=distrib --exclude=build --exclude=*.pyc --exclude=*.dll --exclude=*.exe * --exclude=src/.ropeproject --exclude=src/test --exclude=src/setup.py --exclude=src/setup_tests.py --exclude=src/profile.py --exclude=src/tests.py --exclude=src/Microsoft.VC90.CRT.manifest --exclude=src/profiles --exclude=src/tools --exclude=doc --exclude=plugins --exclude=profiles --exclude=test --exclude=_update_version_bzr.py --exclude=outwiker_setup.iss --exclude=updateversion --exclude=updateversion.py --exclude=debian_tmp {dirname}/".format (dirname=dirname))
 
 
 def _orig (distname):
@@ -151,6 +151,17 @@ def ppaunstable ():
             local ("dput ppa:outwiker-team/unstable outwiker_{}+{}~{}_source.changes".format (version[0], version[1], distname))
 
 
+# def ppastable ():
+#     """
+#     Upload the current OutWiker version in PPA (unstable)
+#     """
+#     version = _getVersion()
+#
+#     for distname in distribs:
+#         with lcd ("build".format (_getDebSourceDirName())):
+#             local ("dput ppa:outwiker-team/ppa outwiker_{}+{}~{}_source.changes".format (version[0], version[1], distname))
+
+
 def plugins():
     """
     Create an archive with plugins (7z required)
@@ -185,7 +196,7 @@ def source ():
     local ('git archive --prefix=outwiker-{}.{}/ -o "{}/{}" HEAD'.format (version[0], version[1], sourcesdir, fullfname))
 
     with lcd ("src"):
-        local ("7z a -r -aoa -xr!*.pyc -xr!.ropeproject -xr!tests.py -xr!profile.py -xr!setup_tests.py -xr!setup_win.py -xr!test -xr!profiles ../{}/{} ./*".format (sourcesdir, srcfname))
+        local ("7z a -r -aoa -xr!*.pyc -xr!.ropeproject -xr!tests.py -xr!profile.py -xr!setup_tests.py -xr!setup.py -xr!test -xr!profiles ../{}/{} ./*".format (sourcesdir, srcfname))
 
 
 def win (skipinstaller=False):
@@ -204,7 +215,7 @@ def win (skipinstaller=False):
 
     # Build by cx_Freeze
     with lcd ("src"):
-        local ("python setup_win.py build")
+        local ("python setup.py build --build-exe ../{}".format (win_build_dir))
 
     _remove (build_pluginsdir)
     os.mkdir (build_pluginsdir)
@@ -258,7 +269,7 @@ def linux ():
 
     # Build by cx_Freeze
     with lcd ("src"):
-        local ("python setup_linux.py build")
+        local ("python setup.py build --build-exe ../{}".format (linux_build_dir))
 
     map (_remove, toRemove)
 
