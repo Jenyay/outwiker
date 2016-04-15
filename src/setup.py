@@ -15,16 +15,17 @@ class BaseBuilder (object):
 
 
     @abstractmethod
-    def _getIncludeFiles (self):
+    def _getExecutable (self):
         pass
 
 
-    @abstractmethod
-    def _getTargetName (self):
-        pass
+    def _getExtraIncludeFiles (self):
+        return []
 
 
-    def _getAdvancedBuildExeOptions (self):
+
+
+    def _getExtraBuildExeOptions (self):
         return {}
 
 
@@ -58,7 +59,7 @@ class BaseBuilder (object):
 
     def _getCurrentVersion (self):
         """
-        Получить текущую версию для файла
+        Get current version from file
         """
         from outwiker.core.system import getCurrentDir
 
@@ -73,30 +74,7 @@ class BaseBuilder (object):
 
 
     def build (self):
-        build_exe_options = {
-            'excludes': self._getExcludes(),
-            'packages': self._getPackages(),
-            'include_files': self._getIncludeFiles(),
-            }
-        build_exe_options.update (self._getAdvancedBuildExeOptions())
-
-        setup (
-            name = "OutWiker",
-            version = self._getCurrentVersion(),
-            description = "Wiki + Outliner",
-            options = {'build_exe': build_exe_options},
-            executables = [Executable(
-                                "runoutwiker.py",
-                                icon = "images/outwiker.ico",
-                                targetName=self._getTargetName()
-                                )
-                           ]
-            )
-
-
-class WindowsBuilder (BaseBuilder):
-    def _getIncludeFiles (self):
-        return [
+        includeFiles = [
             'images',
             'help',
             'locale',
@@ -107,6 +85,30 @@ class WindowsBuilder (BaseBuilder):
             'spell',
             ('../LICENSE.txt', 'LICENSE.txt'),
             ('../copyright.txt', 'copyright.txt'),
+        ] + self._getExtraIncludeFiles()
+
+        build_exe_options = {
+            'excludes': self._getExcludes(),
+            'packages': self._getPackages(),
+            'include_files': includeFiles,
+        }
+        build_exe_options.update (self._getExtraBuildExeOptions())
+
+        executable = self._getExecutable()
+
+        setup (
+            name = "OutWiker",
+            version = self._getCurrentVersion(),
+            description = "Wiki + Outliner",
+            options = {'build_exe': build_exe_options},
+            executables = [executable]
+            )
+
+
+
+class WindowsBuilder (BaseBuilder):
+    def _getExtraIncludeFiles (self):
+        return [
             ('../libs/lib', 'lib'),
             ('../libs/libenchant-1.dll', 'libenchant-1.dll'),
             ('../libs/libglib-2.0-0.dll', 'libglib-2.0-0.dll'),
@@ -114,34 +116,25 @@ class WindowsBuilder (BaseBuilder):
         ]
 
 
-    def _getTargetName (self):
-        return u'outwiker.exe'
-
-
-    def _getAdvancedBuildExeOptions (self):
+    def _getExtraBuildExeOptions (self):
         return {
             'include_msvcr': True,
             }
 
 
+    def _getExecutable (self):
+        return Executable("runoutwiker.py",
+                          base = 'Win32GUI',
+                          icon = "images/outwiker.ico",
+                          targetName="outwiker.exe")
+
+
+
 class LinuxBuilder (BaseBuilder):
-    def _getIncludeFiles (self):
-        return [
-            'images',
-            'help',
-            'locale',
-            'version.txt',
-            'styles',
-            'iconset',
-            'plugins',
-            'spell',
-            ('../LICENSE.txt', 'LICENSE.txt'),
-            ('../copyright.txt', 'copyright.txt'),
-        ]
-
-
-    def _getTargetName (self):
-        return u'outwiker'
+    def _getExecutable (self):
+        return Executable("runoutwiker.py",
+                          icon = "images/outwiker.ico",
+                          targetName="outwiker")
 
 
 
