@@ -3,22 +3,23 @@
 import wx
 import wx.lib.newevent
 
+from outwiker.gui.hyperlink import HyperLinkCtrl, EVT_HYPERLINK_LEFT, EVT_HYPERLINK_RIGHT
+
 TagLeftClickEvent, EVT_TAG_LEFT_CLICK = wx.lib.newevent.NewEvent()
 TagMiddleClickEvent, EVT_TAG_MIDDLE_CLICK = wx.lib.newevent.NewEvent()
 
 
-class TagLabel (wx.HyperlinkCtrl):
+class TagLabel (HyperLinkCtrl):
     """
     Класс для представления одной метки
     """
     def __init__ (self, parent, title):
         super (TagLabel, self).__init__ (parent,
-                                         wx.ID_ANY,
-                                         title,
-                                         title,
+                                         label = title,
                                          style=wx.HL_ALIGN_CENTRE | wx.NO_BORDER)
 
         self.__propagationLevel = 10
+        self.AutoBrowse(False)
 
         self.__minFontSize = 8
         self.__maxFontSize = 15
@@ -33,8 +34,8 @@ class TagLabel (wx.HyperlinkCtrl):
 
         self.__isMarked = False
         self.updateColors()
-        self.Bind (wx.EVT_HYPERLINK, self.__onMouseLeftDown)
-        self.Bind (wx.EVT_MIDDLE_DOWN, self.__onMouseMiddleDown)
+        self.Bind (EVT_HYPERLINK_LEFT, self.__onMouseLeftDown)
+        self.Bind (EVT_HYPERLINK_RIGHT, self.__onMouseMiddleDown)
 
 
     @property
@@ -95,14 +96,14 @@ class TagLabel (wx.HyperlinkCtrl):
     def updateColors (self):
         if self.__isMarked:
             self.SetBackgroundColour(self.__markedBackColor)
-            self.SetNormalColour (self.__markedFontColor)
-            self.SetHoverColour (self.__markedHoverFontColor)
+            # self.SetNormalColour (self.__markedFontColor)
+            # self.SetHoverColour (self.__markedHoverFontColor)
         else:
             self.SetBackgroundColour(self.__normalBackColor)
-            self.SetNormalColour (self.__normalFontColor)
-            self.SetHoverColour (self.__normalHoverFontColor)
+            # self.SetNormalColour (self.__normalFontColor)
+            # self.SetHoverColour (self.__normalHoverFontColor)
 
-        self.SetVisitedColour (self.GetNormalColour())
+        # self.SetVisitedColour (self.GetNormalColour())
         self.Refresh()
 
 
