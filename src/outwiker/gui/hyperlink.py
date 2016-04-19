@@ -23,6 +23,7 @@
 #
 # Tags:        phoenix-port, unittest, documented, py3-port
 #
+# Modified for OutWiker by Eugeniy Ilin (April 19, 2016)
 # End Of Comments
 # --------------------------------------------------------------------------- #
 
@@ -134,11 +135,6 @@ webbrowser.PROCESS_CREATION_DELAY = 0
 wxHYPERLINKS_POPUP_COPY = 1000
 """ Flag used to show a popup that copies the hyperlinks on the clipboard. """
 
-
-#-----------------------------------#
-#        HyperLinksEvents
-#-----------------------------------#
-
 # wxEVT_HYPERLINK_LEFT: Respond To A Left Mouse Button Event
 # wxEVT_HYPERLINK_MIDDLE: Respond To A Middle Mouse Button Event
 # wxEVT_HYPERLINK_RIGHT: Respond To A Right Mouse Button Event
@@ -148,13 +144,13 @@ wxEVT_HYPERLINK_MIDDLE = wx.NewEventType()
 wxEVT_HYPERLINK_RIGHT = wx.NewEventType()
 
 EVT_HYPERLINK_LEFT = wx.PyEventBinder(wxEVT_HYPERLINK_LEFT, 1)
-""" Responds to a left mouse button event. Sent when the left mouse button is""" \
-""" clicked, but only if `AutoBrowse` is set to ``False``. """
+""" Responds to a left mouse button event. Sent when the left mouse button is
+clicked, but only if `AutoBrowse` is set to ``False``. """
 EVT_HYPERLINK_MIDDLE = wx.PyEventBinder(wxEVT_HYPERLINK_MIDDLE, 1)
 """ Responds to a middle mouse button event. Sent when the middle mouse button is clicked. """
 EVT_HYPERLINK_RIGHT = wx.PyEventBinder(wxEVT_HYPERLINK_RIGHT, 1)
-""" Handles a right mouse button event. Sent when the right mouse button is""" \
-""" clicked, but only if `DoPopup` is set to ``False``. """
+""" Handles a right mouse button event. Sent when the right mouse button is
+clicked, but only if `DoPopup` is set to ``False``. """
 
 
 # ------------------------------------------------------------
@@ -259,7 +255,7 @@ class HyperLinkCtrl(StaticText):
         self.SetBold()
 
         # default: wx.CURSOR_HAND
-        # self.SetLinkCursor()
+        self.SetLinkCursor()
 
         # default True
         self.AutoBrowse()
@@ -287,7 +283,6 @@ class HyperLinkCtrl(StaticText):
         :param `NotSameWinIfPossible`: Use ``True`` to attempt to open the URL
          in new browser window.
         """
-
         logOff = wx.LogNull()
 
         try:
@@ -312,7 +307,7 @@ class HyperLinkCtrl(StaticText):
         if event.Moving():
             # Mouse Is Moving On The StaticText
             # Set The Hand Cursor On The Link
-            # self.SetCursor(self._CursorHand)
+            self.SetCursor(self._CursorHand)
 
             if self._EnableRollover:
                 fontTemp = self.GetFont()
@@ -500,19 +495,20 @@ class HyperLinkCtrl(StaticText):
         return self._LinkUnderline, self._RolloverUnderline, self._VisitedUnderline
 
 
-    # def SetLinkCursor(self, cur=wx.CURSOR_HAND):
-    #     """
-    #     Sets link cursor properties.
-    #
-    #     :param `cur`: an integer representing a :ref:`Cursor` constant.
-    #     """
-    #     self._CursorHand = wx.Cursor(cur, wx.CURSOR_DEFAULT_TYPE)
+    def SetLinkCursor(self, cur=wx.CURSOR_HAND):
+        """
+        Sets link cursor properties.
+
+        :param `cur`: an integer representing a :ref:`Cursor` constant.
+        """
+        # self._CursorHand = wx.Cursor(cur, wx.CURSOR_DEFAULT_TYPE)
+        self._CursorHand = wx.StockCursor(cur)
 
 
-    # def GetLinkCursor(self):
-    #     "``"" Gets the link cursor. """
-    #
-    #     return self._CursorHand
+    def GetLinkCursor(self):
+        "``"" Gets the link cursor. """
+
+        return self._CursorHand
 
 
     def SetVisited(self, Visited=False):
