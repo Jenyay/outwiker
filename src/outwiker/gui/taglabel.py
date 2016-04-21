@@ -25,6 +25,8 @@ class TagLabel (HyperLinkCtrl):
         self.AutoBrowse (False)
         self.DoPopup (False)
         self.ReportErrors(False)
+        self.EnableRollover (True)
+        self.SetUnderlines (False, False, False)
 
         self.__minFontSize = 8
         self.__maxFontSize = 15
