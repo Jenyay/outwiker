@@ -291,10 +291,77 @@ class HyperLinkCtrl(StaticText):
             self.UpdateLink(True)
 
             return True
-
         except:
             self.DisplayError("Unable To Launch Browser.", ReportErrors)
             return False
+        finally:
+            del logOff
+
+
+    def __mouseMoving (self, event):
+        # Mouse Is Moving On The StaticText
+        # Set The Hand Cursor On The Link
+        self.SetCursor(self._CursorHand)
+
+        if self._EnableRollover:
+            fontTemp = self.GetFont()
+            fontTemp.SetUnderlined(self._RolloverUnderline)
+            if self._Bold:
+                fontTemp.SetWeight(wx.BOLD)
+
+            needRefresh = False
+
+            if self.GetFont() != fontTemp:
+                self.SetFont(fontTemp)
+                needRefresh = True
+
+            if self.GetForegroundColour() != self._LinkRolloverColour:
+                self.SetForegroundColour(self._LinkRolloverColour)
+                needRefresh = True
+
+            if needRefresh:
+                self.Refresh()
+
+
+    def __mouseLeftButtonUp (self, event):
+        # Left Button Was Pressed
+        if self._AutoBrowse:
+            self.GotoURL(self._URL, self._ReportErrors,
+                         self._NotSameWinIfPossible)
+
+        else:
+            eventOut = HyperLinkEvent(wxEVT_HYPERLINK_LEFT, self.GetId())
+            eventOut.SetEventObject(self)
+            eventOut.SetPosition(event.GetPosition())
+            self.GetEventHandler().ProcessEvent(eventOut)
+
+        self.SetVisited(True)
+
+
+    def __mouseRightButtonUp (self, event):
+        # Right Button Was Pressed
+        if self._DoPopup:
+            # Popups A Menu With The "Copy HyperLynks" Feature
+            menuPopUp = wx.Menu("", wx.MENU_TEAROFF)
+            menuPopUp.Append(wxHYPERLINKS_POPUP_COPY, "Copy HyperLink")
+            self.Bind(wx.EVT_MENU, self.OnPopUpCopy, id=wxHYPERLINKS_POPUP_COPY)
+            self.PopupMenu(menuPopUp, wx.Point(event.x, event.y))
+            menuPopUp.Destroy()
+            self.Unbind(wx.EVT_MENU, id=wxHYPERLINKS_POPUP_COPY)
+
+        else:
+            eventOut = HyperLinkEvent(wxEVT_HYPERLINK_RIGHT, self.GetId())
+            eventOut.SetEventObject(self)
+            eventOut.SetPosition(event.GetPosition())
+            self.GetEventHandler().ProcessEvent(eventOut)
+
+
+    def __mouseMiddleButtonUp (self, event):
+        # Middle Button Was Pressed
+        eventOut = HyperLinkEvent(wxEVT_HYPERLINK_MIDDLE, self.GetId())
+        eventOut.SetEventObject(self)
+        eventOut.SetPosition(event.GetPosition())
+        self.GetEventHandler().ProcessEvent(eventOut)
 
 
     def OnMouseEvent(self, event):
@@ -303,31 +370,8 @@ class HyperLinkCtrl(StaticText):
 
         :param `event`: a :class:`MouseEvent` event to be processed.
         """
-
         if event.Moving():
-            # Mouse Is Moving On The StaticText
-            # Set The Hand Cursor On The Link
-            self.SetCursor(self._CursorHand)
-
-            if self._EnableRollover:
-                fontTemp = self.GetFont()
-                fontTemp.SetUnderlined(self._RolloverUnderline)
-                if self._Bold:
-                    fontTemp.SetWeight(wx.BOLD)
-
-                needRefresh = False
-
-                if self.GetFont() != fontTemp:
-                    self.SetFont(fontTemp)
-                    needRefresh = True
-
-                if self.GetForegroundColour() != self._LinkRolloverColour:
-                    self.SetForegroundColour(self._LinkRolloverColour)
-                    needRefresh = True
-
-                if needRefresh:
-                    self.Refresh()
-
+            self.__mouseMoving (event)
         else:
             # Restore The Original Cursor
             self.SetCursor(wx.NullCursor)
@@ -335,42 +379,11 @@ class HyperLinkCtrl(StaticText):
                 self.UpdateLink(True)
 
             if event.LeftUp():
-                # Left Button Was Pressed
-                if self._AutoBrowse:
-                    self.GotoURL(self._URL, self._ReportErrors,
-                                 self._NotSameWinIfPossible)
-
-                else:
-                    eventOut = HyperLinkEvent(wxEVT_HYPERLINK_LEFT, self.GetId())
-                    eventOut.SetEventObject(self)
-                    eventOut.SetPosition(event.GetPosition())
-                    self.GetEventHandler().ProcessEvent(eventOut)
-
-                self.SetVisited(True)
-
+                self.__mouseLeftButtonUp (event)
             elif event.RightUp():
-                # Right Button Was Pressed
-                if self._DoPopup:
-                    # Popups A Menu With The "Copy HyperLynks" Feature
-                    menuPopUp = wx.Menu("", wx.MENU_TEAROFF)
-                    menuPopUp.Append(wxHYPERLINKS_POPUP_COPY, "Copy HyperLink")
-                    self.Bind(wx.EVT_MENU, self.OnPopUpCopy, id=wxHYPERLINKS_POPUP_COPY)
-                    self.PopupMenu(menuPopUp, wx.Point(event.x, event.y))
-                    menuPopUp.Destroy()
-                    self.Unbind(wx.EVT_MENU, id=wxHYPERLINKS_POPUP_COPY)
-
-                else:
-                    eventOut = HyperLinkEvent(wxEVT_HYPERLINK_RIGHT, self.GetId())
-                    eventOut.SetEventObject(self)
-                    eventOut.SetPosition(event.GetPosition())
-                    self.GetEventHandler().ProcessEvent(eventOut)
-
+                self.__mouseRightButtonUp (event)
             elif event.MiddleUp():
-                # Middle Button Was Pressed
-                eventOut = HyperLinkEvent(wxEVT_HYPERLINK_MIDDLE, self.GetId())
-                eventOut.SetEventObject(self)
-                eventOut.SetPosition(event.GetPosition())
-                self.GetEventHandler().ProcessEvent(eventOut)
+                self.__mouseMiddleButtonUp (event)
 
         event.Skip()
 
@@ -383,7 +396,6 @@ class HyperLinkCtrl(StaticText):
 
         :note: This method copies the data from the :class:`HyperLinkCtrl` to the clipboard.
         """
-
         wx.TheClipboard.UsePrimarySelection(False)
         if not wx.TheClipboard.Open():
             return
@@ -403,7 +415,6 @@ class HyperLinkCtrl(StaticText):
         :param `OnRefresh`: ``True`` to refresh the control, ``False`` otherwise.
 
         """
-
         fontTemp = self.GetFont()
 
         if self._Visited:
@@ -614,46 +625,3 @@ class HyperLinkCtrl(StaticText):
         """
 
         self._DoPopup = DoPopup
-
-
-
-if __name__ == '__main__':
-
-    import wx
-
-    class MyFrame(wx.Frame):
-
-        def __init__(self, parent):
-
-            wx.Frame.__init__(self, parent, -1, "HyperLink Demo")
-
-            panel = wx.Panel(self, -1)
-
-            # Default Web links:
-            hyper1 = HyperLinkCtrl(panel, -1, "wxPython Main Page", pos=(100, 100),
-                                   URL="http://www.wxpython.org/")
-
-
-            # Web link with underline rollovers, opens in same window
-            hyper2 = HyperLinkCtrl(panel, -1, "My Home Page", pos=(100, 150),
-                                   URL="http://xoomer.virgilio.it/infinity77/")
-
-            hyper2.AutoBrowse(False)
-            hyper2.SetColours("BLUE", "BLUE", "BLUE")
-            hyper2.EnableRollover(True)
-            hyper2.SetUnderlines(False, False, True)
-            hyper2.SetBold(True)
-            hyper2.OpenInSameWindow(True)
-            hyper2.SetToolTip(wx.ToolTip("Hello World!"))
-            hyper2.UpdateLink()
-
-
-    # our normal wxApp-derived class, as usual
-
-    app = wx.App(0)
-
-    frame = MyFrame(None)
-    app.SetTopWindow(frame)
-    frame.Show()
-
-    app.MainLoop()
