@@ -39,6 +39,10 @@ plugins_list = [
 ]
 
 
+DEB_SOURCE_BUILD_DIR = os.path.join ('build', 'deb_source')
+DEB_BINARY_BUILD_DIR = os.path.join ('build', 'deb_binary')
+
+
 def _getVersion():
     """
     Return a tuple: (version number, build number)
@@ -78,7 +82,9 @@ def _debclean():
     """
     Clean build/<distversion> folder
     """
-    local ('rm -rf build/{}'.format (_getDebSourceDirName()))
+    dirname = os.path.join (DEB_SOURCE_BUILD_DIR, _getDebSourceDirName())
+    if os.path.exists (dirname):
+        shutil.rmtree (dirname)
 
 
 def _source():
@@ -87,8 +93,8 @@ def _source():
     """
     _debclean()
 
-    dirname = os.path.join ("build", _getDebSourceDirName())
-    os.mkdir (dirname)
+    dirname = os.path.join (DEB_SOURCE_BUILD_DIR, _getDebSourceDirName())
+    os.makedirs (dirname)
 
     local ("rsync -avz --exclude=.bzr --exclude=distrib --exclude=build --exclude=*.pyc --exclude=*.dll --exclude=*.exe * --exclude=src/.ropeproject --exclude=src/test --exclude=src/setup.py --exclude=src/setup_tests.py --exclude=src/profile.py --exclude=src/tests.py --exclude=src/Microsoft.VC90.CRT.manifest --exclude=src/profiles --exclude=src/tools --exclude=doc --exclude=plugins --exclude=profiles --exclude=test --exclude=_update_version_bzr.py --exclude=outwiker_setup.iss --exclude=updateversion --exclude=updateversion.py --exclude=debian_tmp {dirname}/".format (dirname=dirname))
 
@@ -102,10 +108,11 @@ def _orig (distname):
 
     origname = _getOrigName(distname)
 
-    with lcd ("build"):
+    with lcd (DEB_SOURCE_BUILD_DIR):
         local ("tar -cvf {} {}".format (origname, _getDebSourceDirName()))
 
-    local ("gzip -f build/{}".format (origname))
+    orig_dirname = os.path.join (DEB_SOURCE_BUILD_DIR, origname)
+    local ("gzip -f {}".format (orig_dirname))
 
 
 def debsource():
@@ -142,8 +149,11 @@ def _debuild (command, distriblist):
         _makechangelog (current_distrib_name, distname)
 
         _orig(distname)
+        current_debian_dirname = os.path.join (DEB_SOURCE_BUILD_DIR,
+                                               _getDebSourceDirName(),
+                                               'debian')
 
-        with lcd ("build/{}/debian".format (_getDebSourceDirName())):
+        with lcd (current_debian_dirname):
             local (command)
 
         # Return the source release name
@@ -157,7 +167,7 @@ def ppaunstable ():
     version = _getVersion()
 
     for distname in distribs:
-        with lcd ("build".format (_getDebSourceDirName())):
+        with lcd (DEB_SOURCE_BUILD_DIR):
             local ("dput ppa:outwiker-team/unstable outwiker_{}+{}~{}_source.changes".format (version[0], version[1], distname))
 
 
@@ -168,7 +178,7 @@ def ppaunstable ():
 #     version = _getVersion()
 #
 #     for distname in distribs:
-#         with lcd ("build".format (_getDebSourceDirName())):
+#         with lcd (DEB_SOURCE_BUILD_DIR):
 #             local ("dput ppa:outwiker-team/ppa outwiker_{}+{}~{}_source.changes".format (version[0], version[1], distname))
 
 
@@ -195,7 +205,7 @@ def source ():
     sourcesdir = os.path.join ("build", "sources")
 
     if not os.path.exists (sourcesdir):
-        os.mkdir (sourcesdir)
+        os.makedirs (sourcesdir)
 
     fullfname = u"outwiker-src-full.zip"
     srcfname = u"outwiker-src-min.zip"
@@ -325,7 +335,7 @@ def debinstall():
 
     version = _getVersion()
 
-    with lcd ("build"):
+    with lcd (DEB_SOURCE_BUILD_DIR):
         local ("sudo dpkg -i outwiker_{}+{}~{}_all.deb".format (
             version[0],
             version[1],
