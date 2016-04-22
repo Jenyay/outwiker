@@ -9,7 +9,7 @@ import glob
 from fabric.api import local, lcd, settings
 
 # Supported Ubuntu releases
-distribs = ["wily", "trusty", "xenial"]
+distribs = ["wily", "trusty"]
 
 # List of the supported plugins
 plugins_list = [
@@ -50,6 +50,15 @@ def _getVersion():
         lines = fp_in.readlines()
 
     return (lines[0].strip(), lines[1].strip())
+
+
+def _getCurrentUbuntuDistribName ():
+    with open ('/etc/lsb-release') as fp:
+        for line in fp:
+            line = line.strip()
+            if line.startswith (u'DISTRIB_CODENAME'):
+                codename = line.split(u'=')[1].strip()
+                return codename
 
 
 def _getDebSourceDirName():
@@ -117,19 +126,20 @@ def deb():
 
 def debsingle():
     """
-    Assemble the deb package for the first Ubuntu release in the distribs list
+    Assemble the deb package for the current Ubuntu release
     """
     _debuild ("debuild --source-option=--include-binaries --source-option=--auto-commit",
-              [distribs[0]])
+              [_getCurrentUbuntuDistribName()])
 
 
 def _debuild (command, distriblist):
     """
     Run command with debuild. The function assembles the deb packages for all releases in distriblist.
     """
+    current_distrib_name = _getCurrentUbuntuDistribName()
     for distname in distriblist:
         # Change release name in the changelog file
-        _makechangelog (distribs[0], distname)
+        _makechangelog (current_distrib_name, distname)
 
         _orig(distname)
 
@@ -137,7 +147,7 @@ def _debuild (command, distriblist):
             local (command)
 
         # Return the source release name
-        _makechangelog (distname, distribs[0])
+        _makechangelog (distname, current_distrib_name)
 
 
 def ppaunstable ():
@@ -301,20 +311,25 @@ def nextversion():
     with open (fname, "w") as fp_out:
         fp_out.write (result)
 
-    local ('dch -v "{}+{}~{}"'.format (lines[0].strip(), lines[1].strip(), distribs[0]))
+    local ('dch -v "{}+{}~{}"'.format (lines[0].strip(),
+                                       lines[1].strip(),
+                                       _getCurrentUbuntuDistribName()))
 
 
 
 def debinstall():
     """
-    Assemble the first deb package in distribs and install it.
+    Assemble deb package for current Ubuntu release
     """
     debsingle()
 
     version = _getVersion()
 
     with lcd ("build"):
-        local ("sudo dpkg -i outwiker_{}+{}~{}_all.deb".format (version[0], version[1], distribs[0]))
+        local ("sudo dpkg -i outwiker_{}+{}~{}_all.deb".format (
+            version[0],
+            version[1],
+            _getCurrentUbuntuDistribName()))
 
 
 def locale():
