@@ -96,7 +96,13 @@ def _source():
     dirname = os.path.join (DEB_SOURCE_BUILD_DIR, _getDebSourceDirName())
     os.makedirs (dirname)
 
-    local ("rsync -avz --exclude=.bzr --exclude=distrib --exclude=build --exclude=*.pyc --exclude=*.dll --exclude=*.exe * --exclude=src/.ropeproject --exclude=src/test --exclude=src/setup.py --exclude=src/setup_tests.py --exclude=src/profile.py --exclude=src/tests.py --exclude=src/Microsoft.VC90.CRT.manifest --exclude=src/profiles --exclude=src/tools --exclude=doc --exclude=plugins --exclude=profiles --exclude=test --exclude=_update_version_bzr.py --exclude=outwiker_setup.iss --exclude=updateversion --exclude=updateversion.py --exclude=debian_tmp {dirname}/".format (dirname=dirname))
+    local ("rsync -avz * --exclude=.bzr --exclude=distrib --exclude=build --exclude=*.pyc --exclude=*.dll --exclude=*.exe --exclude=src/.ropeproject --exclude=src/test --exclude=src/setup.py --exclude=src/setup_tests.py --exclude=src/profile.py --exclude=src/tests.py --exclude=src/Microsoft.VC90.CRT.manifest --exclude=src/profiles --exclude=src/tools --exclude=doc --exclude=plugins --exclude=profiles --exclude=test --exclude=_update_version_bzr.py --exclude=outwiker_setup.iss --exclude=updateversion --exclude=updateversion.py --exclude=debian_tmp --exclude=Makefile_debbinary --exclude=debian_debbinary {dirname}/".format (dirname=dirname))
+
+    os.rename (os.path.join (dirname, u'Makefile_debsource'),
+               os.path.join (dirname, u'Makefile'))
+
+    os.rename (os.path.join (dirname, u'debian_debsource'),
+               os.path.join (dirname, u'debian'))
 
 
 def _orig (distname):
@@ -144,20 +150,21 @@ def _debuild (command, distriblist):
     Run command with debuild. The function assembles the deb packages for all releases in distriblist.
     """
     current_distrib_name = _getCurrentUbuntuDistribName()
-    for distname in distriblist:
-        # Change release name in the changelog file
-        _makechangelog (current_distrib_name, distname)
-
-        _orig(distname)
+    for distrib_name in distriblist:
+        _orig(distrib_name)
         current_debian_dirname = os.path.join (DEB_SOURCE_BUILD_DIR,
                                                _getDebSourceDirName(),
                                                'debian')
+
+        # Change release name in the changelog file
+        changelog_path = os.path.join (current_debian_dirname, u'changelog')
+        _makechangelog (changelog_path, current_distrib_name, distrib_name)
 
         with lcd (current_debian_dirname):
             local (command)
 
         # Return the source release name
-        _makechangelog (distname, current_distrib_name)
+        _makechangelog (changelog_path, distrib_name, current_distrib_name)
 
 
 def ppaunstable ():
@@ -385,18 +392,16 @@ def test (section=u'', params=u''):
                     local ("python {}".format (fname, params))
 
 
-def _makechangelog (distrib_src, distrib_new):
+def _makechangelog (changelog_path, distrib_src, distrib_new):
     """
     Update the changelog file for current Ubuntu release.
     """
-    fname = "debian/changelog"
-
-    with open (fname) as fp:
+    with open (changelog_path) as fp:
         lines = fp.readlines()
 
     lines[0] = lines[0].replace (distrib_src, distrib_new)
 
-    with open (fname, "w") as fp:
+    with open (changelog_path, "w") as fp:
         fp.write (u"".join (lines))
 
 
