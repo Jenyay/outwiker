@@ -399,6 +399,21 @@ def _getDebArchitecture ():
     return result.strip()
 
 
+def _debbinary_move_shared (destdir):
+    """Move images, help etc to /usr/share folder."""
+    dir_names = [u'help', u'iconset', u'images', u'locale', u'spell', u'styles']
+
+    share_dir = os.path.join (destdir, u'usr', u'share', u'outwiker')
+    os.makedirs (share_dir)
+
+    for dir_name in dir_names:
+        src_dir = os.path.join (destdir, u'usr', u'lib', u'outwiker', dir_name)
+        dst_dir = os.path.join (share_dir, dir_name)
+        shutil.move (src_dir, dst_dir)
+        with lcd (destdir):
+            local (u'ln -s ../../share/outwiker/{dirname} usr/lib/outwiker'.format (dirname = dir_name))
+
+
 def _debbinary_copy_accessories (destdir):
     """Copy icons files for deb package"""
     # Make link to bin file
@@ -497,6 +512,9 @@ def debbinary ():
 
     _debbinary_copy_accessories (os.path.join (DEB_BINARY_BUILD_DIR,
                                                deb_dirname))
+
+    _debbinary_move_shared (os.path.join (DEB_BINARY_BUILD_DIR,
+                                          deb_dirname))
 
     for par, dirs, files in os.walk(os.path.join (DEB_BINARY_BUILD_DIR, deb_dirname)):
         for d in dirs:
