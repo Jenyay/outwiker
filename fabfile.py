@@ -38,9 +38,10 @@ plugins_list = [
     "webpage",
 ]
 
-
-DEB_SOURCE_BUILD_DIR = os.path.join ('build', 'deb_source')
-DEB_BINARY_BUILD_DIR = os.path.join ('build', 'deb_binary')
+BUILD_DIR = u'build'
+LINUX_BUILD_DIR = os.path.join (BUILD_DIR, u"outwiker_linux")
+DEB_SOURCE_BUILD_DIR = os.path.join (BUILD_DIR, 'deb_source')
+DEB_BINARY_BUILD_DIR = os.path.join (BUILD_DIR, 'deb_binary')
 
 
 def _getVersion():
@@ -273,42 +274,42 @@ def win (skipinstaller=False):
         local ("7z a ..\outwiker_win_unstable_all_plugins.7z .\* .\plugins -r -aoa -xr!*.pyc -xr!.ropeproject")
 
 
-def linux ():
+def linux (create_archives=True):
     """
-    Assemble builds under Windows
+    Assemble builds under Linux
     """
-    build_dir = u'build'
     pluginsdir = os.path.join ("src", "plugins")
-    linux_build_dir = os.path.join (build_dir, u"outwiker_linux")
-    build_pluginsdir = os.path.join (linux_build_dir, u'plugins')
+    build_pluginsdir = os.path.join (LINUX_BUILD_DIR, u'plugins')
 
     toRemove = [
-        os.path.join (linux_build_dir, u'tcl'),
-        os.path.join (linux_build_dir, u'tk'),
-        os.path.join (linux_build_dir, u'PyQt4.QtCore.so'),
-        os.path.join (linux_build_dir, u'PyQt4.QtGui.so'),
-        os.path.join (linux_build_dir, u'_tkinter.so'),
+        os.path.join (LINUX_BUILD_DIR, u'tcl'),
+        os.path.join (LINUX_BUILD_DIR, u'tk'),
+        os.path.join (LINUX_BUILD_DIR, u'PyQt4.QtCore.so'),
+        os.path.join (LINUX_BUILD_DIR, u'PyQt4.QtGui.so'),
+        os.path.join (LINUX_BUILD_DIR, u'_tkinter.so'),
     ]
 
     # Create the plugins folder (it is not appened to the git repository)
+    _remove (LINUX_BUILD_DIR)
     _remove (pluginsdir)
     os.mkdir (pluginsdir)
 
     # Build by cx_Freeze
     with lcd ("src"):
-        local ("python setup.py build --build-exe ../{}".format (linux_build_dir))
+        local ("python setup.py build --build-exe ../{}".format (LINUX_BUILD_DIR))
 
     map (_remove, toRemove)
 
     _remove (build_pluginsdir)
     os.mkdir (build_pluginsdir)
 
-    # Remove old versions
-    _remove ("build/outwiker_linux_unstable_x64.7z")
+    if create_archives:
+        # Remove old versions
+        _remove (os.path.join (BUILD_DIR, 'outwiker_linux_unstable_x64.7z'))
 
-    # Create archive without plugins
-    with lcd (linux_build_dir):
-        local ("7z a ../outwiker_linux_unstable_x64.7z ./* ./plugins -r -aoa")
+        # Create archive without plugins
+        with lcd (LINUX_BUILD_DIR):
+            local ("7z a ../outwiker_linux_unstable_x64.7z ./* ./plugins -r -aoa")
 
 
 def nextversion():
@@ -390,6 +391,10 @@ def test (section=u'', params=u''):
             with settings (warn_only=True):
                 for fname in files:
                     local ("python {}".format (fname, params))
+
+
+def debbinary ():
+    linux(create_archives=False)
 
 
 def _makechangelog (changelog_path, distrib_src, distrib_new):
