@@ -486,6 +486,20 @@ def _debbinary_copy_accessories (destdir):
     with lcd (os.path.join (share_dir, u'man', u'ru', u'man1')):
         local (u'gzip --best -n outwiker.1')
 
+    # Create doc files
+    doc_dir = os.path.join (destdir,
+                            u'usr',
+                            u'share',
+                            u'doc',
+                            u'outwiker')
+    os.makedirs (doc_dir)
+    shutil.copyfile (u'copyright.txt', os.path.join (doc_dir, u'copyright'))
+    shutil.copyfile (os.path.join (u'debian_debsource', u'changelog'),
+                     os.path.join (doc_dir, u'changelog'))
+    with lcd (doc_dir):
+        local (u'gzip --best -n -c changelog > changelog.Debian.gz')
+        local (u'rm changelog')
+
 
 def debbinary ():
     _remove (DEB_BINARY_BUILD_DIR)
@@ -502,6 +516,7 @@ def debbinary ():
                              u'lib',
                              u'outwiker')
     linux(create_archives=False, build_dir=dest_dir)
+    _remove (os.path.join (dest_dir, u'LICENSE.txt'))
 
     debian_dir = os.path.join (DEB_BINARY_BUILD_DIR,
                                deb_dirname,
@@ -518,9 +533,15 @@ def debbinary ():
 
     for par, dirs, files in os.walk(os.path.join (DEB_BINARY_BUILD_DIR, deb_dirname)):
         for d in dirs:
-            os.chmod(os.path.join (par, d), 0o755)
+            try:
+                os.chmod(os.path.join (par, d), 0o755)
+            except OSError:
+                continue
         for f in files:
-            os.chmod(os.path.join (par, f), 0o644)
+            try:
+                os.chmod(os.path.join (par, f), 0o644)
+            except OSError:
+                continue
 
     os.chmod(os.path.join (dest_dir, u'outwiker'), 0o755)
     os.chmod(os.path.join (DEB_BINARY_BUILD_DIR,

@@ -23,3 +23,4 @@ License: GPL3
 
 On Debian systems, the complete text of the GNU General
 Public License can be found in 'http://www.gnu.org/licenses/gpl.html'.
+See /usr/share/common-licenses/GPL-3
