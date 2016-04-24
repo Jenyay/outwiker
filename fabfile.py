@@ -66,7 +66,7 @@ def _getCurrentUbuntuDistribName ():
                 return codename
 
 
-def _getDebSourceDirName():
+def _getDebDirName():
     """
     Return a folder name for sources for building the deb package
     """
@@ -83,7 +83,7 @@ def _debclean():
     """
     Clean build/<distversion> folder
     """
-    dirname = os.path.join (DEB_SOURCE_BUILD_DIR, _getDebSourceDirName())
+    dirname = os.path.join (DEB_SOURCE_BUILD_DIR, _getDebDirName())
     if os.path.exists (dirname):
         shutil.rmtree (dirname)
 
@@ -94,7 +94,7 @@ def _source():
     """
     _debclean()
 
-    dirname = os.path.join (DEB_SOURCE_BUILD_DIR, _getDebSourceDirName())
+    dirname = os.path.join (DEB_SOURCE_BUILD_DIR, _getDebDirName())
     os.makedirs (dirname)
 
     local ("rsync -avz * --exclude=.bzr --exclude=distrib --exclude=build --exclude=*.pyc --exclude=*.dll --exclude=*.exe --exclude=src/.ropeproject --exclude=src/test --exclude=src/setup.py --exclude=src/setup_tests.py --exclude=src/profile.py --exclude=src/tests.py --exclude=src/Microsoft.VC90.CRT.manifest --exclude=src/profiles --exclude=src/tools --exclude=doc --exclude=plugins --exclude=profiles --exclude=test --exclude=_update_version_bzr.py --exclude=outwiker_setup.iss --exclude=updateversion --exclude=updateversion.py --exclude=debian_tmp --exclude=Makefile_debbinary --exclude=debian_debbinary {dirname}/".format (dirname=dirname))
@@ -116,7 +116,7 @@ def _orig (distname):
     origname = _getOrigName(distname)
 
     with lcd (DEB_SOURCE_BUILD_DIR):
-        local ("tar -cvf {} {}".format (origname, _getDebSourceDirName()))
+        local ("tar -cvf {} {}".format (origname, _getDebDirName()))
 
     orig_dirname = os.path.join (DEB_SOURCE_BUILD_DIR, origname)
     local ("gzip -f {}".format (orig_dirname))
@@ -154,7 +154,7 @@ def _debuild (command, distriblist):
     for distrib_name in distriblist:
         _orig(distrib_name)
         current_debian_dirname = os.path.join (DEB_SOURCE_BUILD_DIR,
-                                               _getDebSourceDirName(),
+                                               _getDebDirName(),
                                                'debian')
 
         # Change release name in the changelog file
@@ -274,29 +274,29 @@ def win (skipinstaller=False):
         local ("7z a ..\outwiker_win_unstable_all_plugins.7z .\* .\plugins -r -aoa -xr!*.pyc -xr!.ropeproject")
 
 
-def linux (create_archives=True):
+def linux (create_archives=True, build_dir=LINUX_BUILD_DIR):
     """
     Assemble builds under Linux
     """
     pluginsdir = os.path.join ("src", "plugins")
-    build_pluginsdir = os.path.join (LINUX_BUILD_DIR, u'plugins')
+    build_pluginsdir = os.path.join (build_dir, u'plugins')
 
     toRemove = [
-        os.path.join (LINUX_BUILD_DIR, u'tcl'),
-        os.path.join (LINUX_BUILD_DIR, u'tk'),
-        os.path.join (LINUX_BUILD_DIR, u'PyQt4.QtCore.so'),
-        os.path.join (LINUX_BUILD_DIR, u'PyQt4.QtGui.so'),
-        os.path.join (LINUX_BUILD_DIR, u'_tkinter.so'),
+        os.path.join (build_dir, u'tcl'),
+        os.path.join (build_dir, u'tk'),
+        os.path.join (build_dir, u'PyQt4.QtCore.so'),
+        os.path.join (build_dir, u'PyQt4.QtGui.so'),
+        os.path.join (build_dir, u'_tkinter.so'),
     ]
 
     # Create the plugins folder (it is not appened to the git repository)
-    _remove (LINUX_BUILD_DIR)
+    _remove (build_dir)
     _remove (pluginsdir)
     os.mkdir (pluginsdir)
 
     # Build by cx_Freeze
     with lcd ("src"):
-        local ("python setup.py build --build-exe ../{}".format (LINUX_BUILD_DIR))
+        local ("python setup.py build --build-exe ../{}".format (build_dir))
 
     map (_remove, toRemove)
 
@@ -308,7 +308,7 @@ def linux (create_archives=True):
         _remove (os.path.join (BUILD_DIR, 'outwiker_linux_unstable_x64.7z'))
 
         # Create archive without plugins
-        with lcd (LINUX_BUILD_DIR):
+        with lcd (build_dir):
             local ("7z a ../outwiker_linux_unstable_x64.7z ./* ./plugins -r -aoa")
 
 
@@ -393,8 +393,120 @@ def test (section=u'', params=u''):
                     local ("python {}".format (fname, params))
 
 
+def _getDebArchitecture ():
+    result = local (u'dpkg --print-architecture', capture=True)
+    result = u''.join (result)
+    return result.strip()
+
+
+def _debbinary_copy_accessories (destdir):
+    """Copy icons files for deb package"""
+    # Make link to bin file
+    # bin_dir = os.path.join (destdir, u'usr', u'bin')
+    # os.makedirs (bin_dir)
+    #
+    # bin_file = u'../lib/outwiker/outwiker'
+    # local (u'ln -s {} {}'.format (bin_file,
+    #                               os.path.join (bin_dir, u'outwiker')))
+
+    # Copy png icons
+    png_sizes = [16, 22, 24, 32, 48, 64, 128, 256]
+    for size in png_sizes:
+        fname_src = os.path.join (u'images',
+                                  u'outwiker_{}.png'.format(size))
+        imagedir = os.path.join (destdir,
+                                 u'usr',
+                                 u'share',
+                                 u'icons',
+                                 u'hicolor',
+                                 u'{size}x{size}'.format (size=size),
+                                 u'apps')
+        destfile = os.path.join (imagedir, u'outwiker.png')
+        os.makedirs (imagedir)
+        shutil.copyfile (fname_src, destfile)
+
+    # Copy SVG icon
+    scalable_fname_src = os.path.join (u'images', u'outwiker.svg')
+    scalable_dir = os.path.join (destdir,
+                                 u'usr',
+                                 u'share',
+                                 u'icons',
+                                 u'hicolor',
+                                 u'scalable',
+                                 u'apps')
+    os.makedirs (scalable_dir)
+    scalable_destfile = os.path.join (scalable_dir, u'outwiker.svg')
+    shutil.copyfile (scalable_fname_src, scalable_destfile)
+
+    # Copy pixmaps icons
+    pixmaps_dir = os.path.join (destdir,
+                                u'usr',
+                                u'share',
+                                u'pixmaps')
+    os.makedirs (pixmaps_dir)
+    shutil.copyfile (os.path.join (u'images', u'outwiker_48.png'),
+                     os.path.join (pixmaps_dir, u'outwiker.png'))
+    shutil.copyfile (os.path.join (u'images', u'outwiker.xpm'),
+                     os.path.join (pixmaps_dir, u'outwiker.xpm'))
+
+    # Copy desktop file
+    desktop_dir = os.path.join (destdir,
+                                u'usr',
+                                u'share',
+                                u'applications')
+    os.makedirs (desktop_dir)
+    shutil.copy (u'outwiker.desktop', desktop_dir)
+
+    # Create man files
+    share_dir = os.path.join (destdir,
+                              u'usr',
+                              u'share')
+    shutil.copytree (u'man', os.path.join (share_dir, u'man'))
+
+    with lcd (os.path.join (share_dir, u'man', u'man1')):
+        local (u'gzip --best -n outwiker.1')
+
+    with lcd (os.path.join (share_dir, u'man', u'ru', u'man1')):
+        local (u'gzip --best -n outwiker.1')
+
+
 def debbinary ():
-    linux(create_archives=False)
+    _remove (DEB_BINARY_BUILD_DIR)
+    os.mkdir (DEB_BINARY_BUILD_DIR)
+
+    architecture = _getDebArchitecture()
+    deb_dirname = _getDebDirName() + '_' + architecture
+    _remove (deb_dirname)
+    _remove (deb_dirname + u'.deb')
+
+    dest_dir = os.path.join (DEB_BINARY_BUILD_DIR,
+                             deb_dirname,
+                             u'usr',
+                             u'lib',
+                             u'outwiker')
+    linux(create_archives=False, build_dir=dest_dir)
+
+    debian_dir = os.path.join (DEB_BINARY_BUILD_DIR,
+                               deb_dirname,
+                               u'DEBIAN')
+    os.mkdir (debian_dir)
+    shutil.copyfile (os.path.join (u'debian_debbinary', u'control'),
+                     os.path.join (debian_dir, u'control'))
+
+    _debbinary_copy_accessories (os.path.join (DEB_BINARY_BUILD_DIR,
+                                               deb_dirname))
+
+    for par, dirs, files in os.walk(os.path.join (DEB_BINARY_BUILD_DIR, deb_dirname)):
+        for d in dirs:
+            os.chmod(os.path.join (par, d), 0o755)
+        for f in files:
+            os.chmod(os.path.join (par, f), 0o644)
+
+    os.chmod(os.path.join (dest_dir, u'outwiker'), 0o755)
+
+    with lcd (DEB_BINARY_BUILD_DIR):
+        local (u'fakeroot dpkg-deb --build {}'.format (deb_dirname))
+        local (u'lintian {}.deb'.format (deb_dirname))
 
 
 def _makechangelog (changelog_path, distrib_src, distrib_new):
