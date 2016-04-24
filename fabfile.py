@@ -402,12 +402,14 @@ def _getDebArchitecture ():
 def _debbinary_copy_accessories (destdir):
     """Copy icons files for deb package"""
     # Make link to bin file
-    # bin_dir = os.path.join (destdir, u'usr', u'bin')
-    # os.makedirs (bin_dir)
-    #
-    # bin_file = u'../lib/outwiker/outwiker'
-    # local (u'ln -s {} {}'.format (bin_file,
-    #                               os.path.join (bin_dir, u'outwiker')))
+    bin_dir = os.path.join (destdir, u'usr', u'bin')
+    os.makedirs (bin_dir)
+
+    exe_file = os.path.join (bin_dir, u'outwiker')
+    src_bin_file = u'../lib/outwiker/outwiker'
+    with open (exe_file, 'w') as fp:
+        fp.write ('#!/bin/sh\n')
+        fp.write (src_bin_file)
 
     # Copy png icons
     png_sizes = [16, 22, 24, 32, 48, 64, 128, 256]
@@ -503,6 +505,11 @@ def debbinary ():
             os.chmod(os.path.join (par, f), 0o644)
 
     os.chmod(os.path.join (dest_dir, u'outwiker'), 0o755)
+    os.chmod(os.path.join (DEB_BINARY_BUILD_DIR,
+                           deb_dirname,
+                           u'usr',
+                           u'bin',
+                           u'outwiker'), 0o755)
 
     with lcd (DEB_BINARY_BUILD_DIR):
         local (u'fakeroot dpkg-deb --build {}'.format (deb_dirname))
