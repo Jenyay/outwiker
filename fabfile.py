@@ -97,7 +97,7 @@ def _source():
     dirname = os.path.join (DEB_SOURCE_BUILD_DIR, _getDebDirName())
     os.makedirs (dirname)
 
-    local ("rsync -avz * --exclude=.bzr --exclude=distrib --exclude=build --exclude=*.pyc --exclude=*.dll --exclude=*.exe --exclude=src/.ropeproject --exclude=src/test --exclude=src/setup.py --exclude=src/setup_tests.py --exclude=src/profile.py --exclude=src/tests.py --exclude=src/Microsoft.VC90.CRT.manifest --exclude=src/profiles --exclude=src/tools --exclude=doc --exclude=plugins --exclude=profiles --exclude=test --exclude=_update_version_bzr.py --exclude=outwiker_setup.iss --exclude=updateversion --exclude=updateversion.py --exclude=debian_tmp --exclude=Makefile_debbinary --exclude=debian_debbinary {dirname}/".format (dirname=dirname))
+    local ("rsync -avz * --exclude=.bzr --exclude=distrib --exclude=build --exclude=*.pyc --exclude=*.dll --exclude=*.exe --exclude=src/.ropeproject --exclude=src/test --exclude=src/setup.py --exclude=src/setup_tests.py --exclude=src/profile.py --exclude=src/tests.py --exclude=src/Microsoft.VC90.CRT.manifest --exclude=src/profiles --exclude=src/tools --exclude=doc --exclude=plugins --exclude=profiles --exclude=test --exclude=_update_version_bzr.py --exclude=outwiker_setup.iss --exclude=updateversion --exclude=updateversion.py --exclude=debian_tmp --exclude=Makefile_debbinary --exclude=need_for_build {dirname}/".format (dirname=dirname))
 
     os.rename (os.path.join (dirname, u'Makefile_debsource'),
                os.path.join (dirname, u'Makefile'))
@@ -399,7 +399,7 @@ def _getDebArchitecture ():
     return result.strip()
 
 
-def _debbinary_move_shared (destdir):
+def _debbinary_move_to_share (destdir):
     """Move images, help etc to /usr/share folder."""
     dir_names = [u'help', u'iconset', u'images', u'locale', u'spell', u'styles']
 
@@ -414,86 +414,27 @@ def _debbinary_move_shared (destdir):
             local (u'ln -s ../../share/outwiker/{dirname} usr/lib/outwiker'.format (dirname = dir_name))
 
 
-def _debbinary_copy_accessories (destdir):
+def _debbinary_copy_share (destdir):
     """Copy icons files for deb package"""
-    # Make link to bin file
+    share_dir = os.path.join (destdir, u'usr', u'share')
     bin_dir = os.path.join (destdir, u'usr', u'bin')
+
+    debian_dir = os.path.join (u'need_for_build', u'debian')
+    shutil.copytree (os.path.join (debian_dir, u'usr', u'share'), share_dir)
+
+    # Make link to bin file
     os.makedirs (bin_dir)
 
     exe_file = os.path.join (bin_dir, u'outwiker')
-    src_bin_file = u'../lib/outwiker/outwiker'
+    src_bin_file = u'/usr/lib/outwiker/outwiker'
     with open (exe_file, 'w') as fp:
         fp.write ('#!/bin/sh\n')
         fp.write (src_bin_file)
 
-    # Copy png icons
-    png_sizes = [16, 22, 24, 32, 48, 64, 128, 256]
-    for size in png_sizes:
-        fname_src = os.path.join (u'images',
-                                  u'outwiker_{}.png'.format(size))
-        imagedir = os.path.join (destdir,
-                                 u'usr',
-                                 u'share',
-                                 u'icons',
-                                 u'hicolor',
-                                 u'{size}x{size}'.format (size=size),
-                                 u'apps')
-        destfile = os.path.join (imagedir, u'outwiker.png')
-        os.makedirs (imagedir)
-        shutil.copyfile (fname_src, destfile)
-
-    # Copy SVG icon
-    scalable_fname_src = os.path.join (u'images', u'outwiker.svg')
-    scalable_dir = os.path.join (destdir,
-                                 u'usr',
-                                 u'share',
-                                 u'icons',
-                                 u'hicolor',
-                                 u'scalable',
-                                 u'apps')
-    os.makedirs (scalable_dir)
-    scalable_destfile = os.path.join (scalable_dir, u'outwiker.svg')
-    shutil.copyfile (scalable_fname_src, scalable_destfile)
-
-    # Copy pixmaps icons
-    pixmaps_dir = os.path.join (destdir,
-                                u'usr',
-                                u'share',
-                                u'pixmaps')
-    os.makedirs (pixmaps_dir)
-    shutil.copyfile (os.path.join (u'images', u'outwiker_48.png'),
-                     os.path.join (pixmaps_dir, u'outwiker.png'))
-    shutil.copyfile (os.path.join (u'images', u'outwiker.xpm'),
-                     os.path.join (pixmaps_dir, u'outwiker.xpm'))
-
-    # Copy desktop file
-    desktop_dir = os.path.join (destdir,
-                                u'usr',
-                                u'share',
-                                u'applications')
-    os.makedirs (desktop_dir)
-    shutil.copy (u'outwiker.desktop', desktop_dir)
-
-    # Create man files
-    share_dir = os.path.join (destdir,
-                              u'usr',
-                              u'share')
-    shutil.copytree (u'man', os.path.join (share_dir, u'man'))
-
-    with lcd (os.path.join (share_dir, u'man', u'man1')):
-        local (u'gzip --best -n outwiker.1')
-
-    with lcd (os.path.join (share_dir, u'man', u'ru', u'man1')):
-        local (u'gzip --best -n outwiker.1')
-
-    # Create doc files
-    doc_dir = os.path.join (destdir,
-                            u'usr',
-                            u'share',
+    doc_dir = os.path.join (share_dir,
                             u'doc',
                             u'outwiker')
-    os.makedirs (doc_dir)
-    shutil.copyfile (u'copyright.txt', os.path.join (doc_dir, u'copyright'))
+
     shutil.copyfile (os.path.join (u'debian_debsource', u'changelog'),
                      os.path.join (doc_dir, u'changelog'))
     with lcd (doc_dir):
@@ -518,18 +459,26 @@ def debbinary ():
     linux(create_archives=False, build_dir=dest_dir)
     _remove (os.path.join (dest_dir, u'LICENSE.txt'))
 
-    debian_dir = os.path.join (DEB_BINARY_BUILD_DIR,
-                               deb_dirname,
-                               u'DEBIAN')
-    os.mkdir (debian_dir)
-    shutil.copyfile (os.path.join (u'debian_debbinary', u'control'),
-                     os.path.join (debian_dir, u'control'))
+    debian_src_dir = os.path.join (u'need_for_build',
+                                   u'debian_debbinary',
+                                   u'debian')
 
-    _debbinary_copy_accessories (os.path.join (DEB_BINARY_BUILD_DIR,
-                                               deb_dirname))
+    debian_dest_dir = os.path.join (DEB_BINARY_BUILD_DIR,
+                                    deb_dirname,
+                                    u'DEBIAN')
+    os.mkdir (debian_dest_dir)
+    shutil.copyfile (os.path.join (debian_src_dir, u'control'),
+                     os.path.join (debian_dest_dir, u'control'))
 
-    _debbinary_move_shared (os.path.join (DEB_BINARY_BUILD_DIR,
-                                          deb_dirname))
+    shutil.copyfile (os.path.join (debian_src_dir, u'postinst'),
+                     os.path.join (debian_dest_dir, u'postinst'))
+
+    shutil.copyfile (os.path.join (debian_src_dir, u'postrm'),
+                     os.path.join (debian_dest_dir, u'postrm'))
+
+    _debbinary_copy_share (os.path.join (DEB_BINARY_BUILD_DIR, deb_dirname))
+    _debbinary_move_to_share (os.path.join (DEB_BINARY_BUILD_DIR, deb_dirname))
+
 
     for par, dirs, files in os.walk(os.path.join (DEB_BINARY_BUILD_DIR, deb_dirname)):
         for d in dirs:
@@ -544,6 +493,8 @@ def debbinary ():
                 continue
 
     os.chmod(os.path.join (dest_dir, u'outwiker'), 0o755)
+    os.chmod(os.path.join (debian_dest_dir, u'postinst'), 0o755)
+    os.chmod(os.path.join (debian_dest_dir, u'postrm'), 0o755)
     os.chmod(os.path.join (DEB_BINARY_BUILD_DIR,
                            deb_dirname,
                            u'usr',

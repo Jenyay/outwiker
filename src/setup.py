@@ -23,6 +23,8 @@ class BaseBuilder (object):
         return []
 
 
+    def _getPathIncludes (self):
+        return []
 
 
     def _getExtraBuildExeOptions (self):
@@ -91,6 +93,7 @@ class BaseBuilder (object):
             'excludes': self._getExcludes(),
             'packages': self._getPackages(),
             'include_files': includeFiles,
+            "bin_path_includes": self._getPathIncludes(),
         }
         build_exe_options.update (self._getExtraBuildExeOptions())
 
@@ -135,6 +138,10 @@ class LinuxBuilder (BaseBuilder):
         return Executable("runoutwiker.py",
                           icon = "images/outwiker.ico",
                           targetName="outwiker")
+
+
+    def _getPathIncludes (self):
+        return ["/usr/lib"]
 
 
 
