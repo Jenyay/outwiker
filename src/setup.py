@@ -141,7 +141,14 @@ class LinuxBuilder (BaseBuilder):
 
 
     def _getPathIncludes (self):
-        return ["/usr/lib"]
+        return [u'/usr/lib']
+
+
+    def _getExtraIncludeFiles (self):
+        return [
+            ('../need_for_build/linux/libs_amd64/libgcrypt.so.20', 'libgcrypt.so.20'),
+            ('../need_for_build/linux/libs_amd64/libglib-2.0.so.0', 'libglib-2.0.so.0'),
+        ]
 
 
 
