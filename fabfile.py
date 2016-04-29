@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
+from abc import ABCMeta, abstractmethod
 import os
 import os.path
 import shutil
@@ -39,7 +40,7 @@ plugins_list = [
 ]
 
 BUILD_DIR = u'build'
-LINUX_BUILD_DIR = os.path.join (BUILD_DIR, u"outwiker_linux")
+LINUX_BUILD_DIR = u"outwiker_linux"
 DEB_SOURCE_BUILD_DIR = os.path.join (BUILD_DIR, 'deb_source')
 DEB_BINARY_BUILD_DIR = os.path.join (BUILD_DIR, 'deb_binary')
 
@@ -55,6 +56,118 @@ def _getVersion():
         lines = fp_in.readlines()
 
     return (lines[0].strip(), lines[1].strip())
+
+
+class BuilderBase (object):
+    """
+    Base class for all builders.
+    """
+    __metaclass__ = ABCMeta
+
+    def __init__ (self, subdir_name):
+        self._root_build_dir = BUILD_DIR
+        self._build_dir = os.path.join (self._root_build_dir, subdir_name)
+
+
+    @abstractmethod
+    def build (self):
+        pass
+
+
+    def clear (self):
+        self._remove (self._build_dir)
+
+
+    def _createRootDir (self):
+        if not os.path.exists (self._root_build_dir):
+            os.mkdir (self._root_build_dir)
+
+
+    def _getSubpath (self, subdir):
+        """
+        Return subpath inside current build path (inside 'build' subpath)
+        """
+        return os.path.join (self._build_dir, subdir)
+
+
+    def _remove (self, path):
+        """
+        Remove the fname file if it exists. The function not catch any exceptions.
+        """
+        if os.path.exists (path):
+            if os.path.isfile (path):
+                os.remove (path)
+            elif os.path.isdir (path):
+                shutil.rmtree (path)
+
+
+class BuilderLinuxBinaryBase (BuilderBase):
+    """
+    Base class for all Linux binary builders.
+    """
+    def __init__ (self, build_dir, create_archives):
+        super (BuilderLinuxBinaryBase, self).__init__ (build_dir)
+
+        self._create_archives = create_archives
+        self._toRemove = [
+            self._getSubpath (u'tcl'),
+            self._getSubpath (u'tk'),
+            self._getSubpath (u'PyQt4.QtCore.so'),
+            self._getSubpath (u'PyQt4.QtGui.so'),
+            self._getSubpath (u'_tkinter.so'),
+        ]
+
+
+    def _build_binary (self):
+        """
+        Build with cx_Freeze
+        """
+        with lcd ("src"):
+            local ("python setup.py build --build-exe ../{}".format (self._build_dir))
+
+            map (self._remove, self._toRemove)
+
+
+    def _create_plugins_dir (self):
+        """
+        Create empty 'plugins' dir if it not exists
+        """
+        pluginsdir = os.path.join ("src", "plugins")
+
+        # Create the plugins folder (it is not appened to the git repository)
+        if not os.path.exists (pluginsdir):
+            os.mkdir (pluginsdir)
+
+
+class BuilderLinuxBinary (BuilderLinuxBinaryBase):
+    """
+    Class for making simple Linux binary build
+    """
+    def __init__ (self, build_dir, create_archives):
+        super (BuilderLinuxBinary, self).__init__ (build_dir, create_archives)
+        self._archiveFullName = os.path.join (self._root_build_dir,
+                                              'outwiker_linux_unstable_x64.7z')
+
+
+    def build (self):
+        self._createRootDir()
+        self.clear()
+        self._create_plugins_dir()
+        self._build_binary()
+
+        if self._create_archives:
+            self._build_archives()
+
+
+    def clear (self):
+        super (BuilderLinuxBinary, self).clear()
+        self._remove (self._archiveFullName)
+
+
+    def _build_archives (self):
+        # Create archive without plugins
+        with lcd (self._build_dir):
+            local ("7z a ../outwiker_linux_unstable_x64.7z ./* ./plugins -r -aoa")
 
 
 def _getCurrentUbuntuDistribName ():
@@ -278,38 +391,8 @@ def linux (create_archives=True, build_dir=LINUX_BUILD_DIR):
     """
     Assemble builds under Linux
     """
-    pluginsdir = os.path.join ("src", "plugins")
-    build_pluginsdir = os.path.join (build_dir, u'plugins')
-
-    toRemove = [
-        os.path.join (build_dir, u'tcl'),
-        os.path.join (build_dir, u'tk'),
-        os.path.join (build_dir, u'PyQt4.QtCore.so'),
-        os.path.join (build_dir, u'PyQt4.QtGui.so'),
-        os.path.join (build_dir, u'_tkinter.so'),
-    ]
-
-    # Create the plugins folder (it is not appened to the git repository)
-    _remove (build_dir)
-    _remove (pluginsdir)
-    os.mkdir (pluginsdir)
-
-    # Build by cx_Freeze
-    with lcd ("src"):
-        local ("python setup.py build --build-exe ../{}".format (build_dir))
-
-    map (_remove, toRemove)
-
-    _remove (build_pluginsdir)
-    os.mkdir (build_pluginsdir)
-
-    if create_archives:
-        # Remove old versions
-        _remove (os.path.join (BUILD_DIR, 'outwiker_linux_unstable_x64.7z'))
-
-        # Create archive without plugins
-        with lcd (build_dir):
-            local ("7z a ../outwiker_linux_unstable_x64.7z ./* ./plugins -r -aoa")
+    builder = BuilderLinuxBinary (build_dir, create_archives)
+    builder.build()
 
 
 def nextversion():
