@@ -9,7 +9,7 @@ import glob
 from fabric.api import local, lcd, settings
 
 # Supported Ubuntu releases
-distribs = ["wily", "trusty", "xenial"]
+distribs = ["wily", "trusty"]
 
 # List of the supported plugins
 plugins_list = [
@@ -38,6 +38,11 @@ plugins_list = [
     "webpage",
 ]
 
+BUILD_DIR = u'build'
+LINUX_BUILD_DIR = os.path.join (BUILD_DIR, u"outwiker_linux")
+DEB_SOURCE_BUILD_DIR = os.path.join (BUILD_DIR, 'deb_source')
+DEB_BINARY_BUILD_DIR = os.path.join (BUILD_DIR, 'deb_binary')
+
 
 def _getVersion():
     """
@@ -52,7 +57,16 @@ def _getVersion():
     return (lines[0].strip(), lines[1].strip())
 
 
-def _getDebSourceDirName():
+def _getCurrentUbuntuDistribName ():
+    with open ('/etc/lsb-release') as fp:
+        for line in fp:
+            line = line.strip()
+            if line.startswith (u'DISTRIB_CODENAME'):
+                codename = line.split(u'=')[1].strip()
+                return codename
+
+
+def _getDebDirName():
     """
     Return a folder name for sources for building the deb package
     """
@@ -69,7 +83,9 @@ def _debclean():
     """
     Clean build/<distversion> folder
     """
-    local ('rm -rf build/{}'.format (_getDebSourceDirName()))
+    dirname = os.path.join (DEB_SOURCE_BUILD_DIR, _getDebDirName())
+    if os.path.exists (dirname):
+        shutil.rmtree (dirname)
 
 
 def _source():
@@ -78,10 +94,16 @@ def _source():
     """
     _debclean()
 
-    dirname = os.path.join ("build", _getDebSourceDirName())
-    os.mkdir (dirname)
+    dirname = os.path.join (DEB_SOURCE_BUILD_DIR, _getDebDirName())
+    os.makedirs (dirname)
 
-    local ("rsync -avz --exclude=.bzr --exclude=distrib --exclude=build --exclude=*.pyc --exclude=*.dll --exclude=*.exe * --exclude=src/.ropeproject --exclude=src/test --exclude=src/setup.py --exclude=src/setup_tests.py --exclude=src/profile.py --exclude=src/tests.py --exclude=src/Microsoft.VC90.CRT.manifest --exclude=src/profiles --exclude=src/tools --exclude=doc --exclude=plugins --exclude=profiles --exclude=test --exclude=_update_version_bzr.py --exclude=outwiker_setup.iss --exclude=updateversion --exclude=updateversion.py --exclude=debian_tmp {dirname}/".format (dirname=dirname))
+    local ("rsync -avz * --exclude=.bzr --exclude=distrib --exclude=build --exclude=*.pyc --exclude=*.dll --exclude=*.exe --exclude=src/.ropeproject --exclude=src/test --exclude=src/setup.py --exclude=src/setup_tests.py --exclude=src/profile.py --exclude=src/tests.py --exclude=src/Microsoft.VC90.CRT.manifest --exclude=src/profiles --exclude=src/tools --exclude=doc --exclude=plugins --exclude=profiles --exclude=test --exclude=_update_version_bzr.py --exclude=outwiker_setup.iss --exclude=updateversion --exclude=updateversion.py --exclude=debian_tmp --exclude=Makefile_debbinary --exclude=need_for_build {dirname}/".format (dirname=dirname))
+
+    os.rename (os.path.join (dirname, u'Makefile_debsource'),
+               os.path.join (dirname, u'Makefile'))
+
+    os.rename (os.path.join (dirname, u'debian_debsource'),
+               os.path.join (dirname, u'debian'))
 
 
 def _orig (distname):
@@ -93,10 +115,11 @@ def _orig (distname):
 
     origname = _getOrigName(distname)
 
-    with lcd ("build"):
-        local ("tar -cvf {} {}".format (origname, _getDebSourceDirName()))
+    with lcd (DEB_SOURCE_BUILD_DIR):
+        local ("tar -cvf {} {}".format (origname, _getDebDirName()))
 
-    local ("gzip -f build/{}".format (origname))
+    orig_dirname = os.path.join (DEB_SOURCE_BUILD_DIR, origname)
+    local ("gzip -f {}".format (orig_dirname))
 
 
 def debsource():
@@ -117,27 +140,32 @@ def deb():
 
 def debsingle():
     """
-    Assemble the deb package for the first Ubuntu release in the distribs list
+    Assemble the deb package for the current Ubuntu release
     """
     _debuild ("debuild --source-option=--include-binaries --source-option=--auto-commit",
-              [distribs[0]])
+              [_getCurrentUbuntuDistribName()])
 
 
 def _debuild (command, distriblist):
     """
     Run command with debuild. The function assembles the deb packages for all releases in distriblist.
     """
-    for distname in distriblist:
+    current_distrib_name = _getCurrentUbuntuDistribName()
+    for distrib_name in distriblist:
+        _orig(distrib_name)
+        current_debian_dirname = os.path.join (DEB_SOURCE_BUILD_DIR,
+                                               _getDebDirName(),
+                                               'debian')
+
         # Change release name in the changelog file
-        _makechangelog (distribs[0], distname)
+        changelog_path = os.path.join (current_debian_dirname, u'changelog')
+        _makechangelog (changelog_path, current_distrib_name, distrib_name)
 
-        _orig(distname)
-
-        with lcd ("build/{}/debian".format (_getDebSourceDirName())):
+        with lcd (current_debian_dirname):
             local (command)
 
         # Return the source release name
-        _makechangelog (distname, distribs[0])
+        _makechangelog (changelog_path, distrib_name, current_distrib_name)
 
 
 def ppaunstable ():
@@ -147,7 +175,7 @@ def ppaunstable ():
     version = _getVersion()
 
     for distname in distribs:
-        with lcd ("build".format (_getDebSourceDirName())):
+        with lcd (DEB_SOURCE_BUILD_DIR):
             local ("dput ppa:outwiker-team/unstable outwiker_{}+{}~{}_source.changes".format (version[0], version[1], distname))
 
 
@@ -158,7 +186,7 @@ def ppaunstable ():
 #     version = _getVersion()
 #
 #     for distname in distribs:
-#         with lcd ("build".format (_getDebSourceDirName())):
+#         with lcd (DEB_SOURCE_BUILD_DIR):
 #             local ("dput ppa:outwiker-team/ppa outwiker_{}+{}~{}_source.changes".format (version[0], version[1], distname))
 
 
@@ -185,7 +213,7 @@ def source ():
     sourcesdir = os.path.join ("build", "sources")
 
     if not os.path.exists (sourcesdir):
-        os.mkdir (sourcesdir)
+        os.makedirs (sourcesdir)
 
     fullfname = u"outwiker-src-full.zip"
     srcfname = u"outwiker-src-min.zip"
@@ -246,42 +274,42 @@ def win (skipinstaller=False):
         local ("7z a ..\outwiker_win_unstable_all_plugins.7z .\* .\plugins -r -aoa -xr!*.pyc -xr!.ropeproject")
 
 
-def linux ():
+def linux (create_archives=True, build_dir=LINUX_BUILD_DIR):
     """
-    Assemble builds under Windows
+    Assemble builds under Linux
     """
-    build_dir = u'build'
     pluginsdir = os.path.join ("src", "plugins")
-    linux_build_dir = os.path.join (build_dir, u"outwiker_linux")
-    build_pluginsdir = os.path.join (linux_build_dir, u'plugins')
+    build_pluginsdir = os.path.join (build_dir, u'plugins')
 
     toRemove = [
-        os.path.join (linux_build_dir, u'tcl'),
-        os.path.join (linux_build_dir, u'tk'),
-        os.path.join (linux_build_dir, u'PyQt4.QtCore.so'),
-        os.path.join (linux_build_dir, u'PyQt4.QtGui.so'),
-        os.path.join (linux_build_dir, u'_tkinter.so'),
+        os.path.join (build_dir, u'tcl'),
+        os.path.join (build_dir, u'tk'),
+        os.path.join (build_dir, u'PyQt4.QtCore.so'),
+        os.path.join (build_dir, u'PyQt4.QtGui.so'),
+        os.path.join (build_dir, u'_tkinter.so'),
     ]
 
     # Create the plugins folder (it is not appened to the git repository)
+    _remove (build_dir)
     _remove (pluginsdir)
     os.mkdir (pluginsdir)
 
     # Build by cx_Freeze
     with lcd ("src"):
-        local ("python setup.py build --build-exe ../{}".format (linux_build_dir))
+        local ("python setup.py build --build-exe ../{}".format (build_dir))
 
     map (_remove, toRemove)
 
     _remove (build_pluginsdir)
     os.mkdir (build_pluginsdir)
 
-    # Remove old versions
-    _remove ("build/outwiker_linux_unstable_x64.7z")
+    if create_archives:
+        # Remove old versions
+        _remove (os.path.join (BUILD_DIR, 'outwiker_linux_unstable_x64.7z'))
 
-    # Create archive without plugins
-    with lcd (linux_build_dir):
-        local ("7z a ../outwiker_linux_unstable_x64.7z ./* ./plugins -r -aoa")
+        # Create archive without plugins
+        with lcd (build_dir):
+            local ("7z a ../outwiker_linux_unstable_x64.7z ./* ./plugins -r -aoa")
 
 
 def nextversion():
@@ -301,20 +329,25 @@ def nextversion():
     with open (fname, "w") as fp_out:
         fp_out.write (result)
 
-    local ('dch -v "{}+{}~{}"'.format (lines[0].strip(), lines[1].strip(), distribs[0]))
+    local ('dch -v "{}+{}~{}"'.format (lines[0].strip(),
+                                       lines[1].strip(),
+                                       _getCurrentUbuntuDistribName()))
 
 
 
 def debinstall():
     """
-    Assemble the first deb package in distribs and install it.
+    Assemble deb package for current Ubuntu release
     """
     debsingle()
 
     version = _getVersion()
 
-    with lcd ("build"):
-        local ("sudo dpkg -i outwiker_{}+{}~{}_all.deb".format (version[0], version[1], distribs[0]))
+    with lcd (DEB_SOURCE_BUILD_DIR):
+        local ("sudo dpkg -i outwiker_{}+{}~{}_all.deb".format (
+            version[0],
+            version[1],
+            _getCurrentUbuntuDistribName()))
 
 
 def locale():
@@ -360,18 +393,129 @@ def test (section=u'', params=u''):
                     local ("python {}".format (fname, params))
 
 
-def _makechangelog (distrib_src, distrib_new):
+def _getDebArchitecture ():
+    result = local (u'dpkg --print-architecture', capture=True)
+    result = u''.join (result)
+    return result.strip()
+
+
+def _debbinary_move_to_share (destdir):
+    """Move images, help etc to /usr/share folder."""
+    dir_names = [u'help', u'iconset', u'images', u'locale', u'spell', u'styles']
+
+    share_dir = os.path.join (destdir, u'usr', u'share', u'outwiker')
+    os.makedirs (share_dir)
+
+    for dir_name in dir_names:
+        src_dir = os.path.join (destdir, u'usr', u'lib', u'outwiker', dir_name)
+        dst_dir = os.path.join (share_dir, dir_name)
+        shutil.move (src_dir, dst_dir)
+        with lcd (destdir):
+            local (u'ln -s ../../share/outwiker/{dirname} usr/lib/outwiker'.format (dirname = dir_name))
+
+
+def _debbinary_copy_share (destdir):
+    """Copy icons files for deb package"""
+    share_dir = os.path.join (destdir, u'usr', u'share')
+    bin_dir = os.path.join (destdir, u'usr', u'bin')
+
+    debian_dir = os.path.join (u'need_for_build', u'debian')
+    shutil.copytree (os.path.join (debian_dir, u'usr', u'share'), share_dir)
+
+    # Make link to bin file
+    os.makedirs (bin_dir)
+
+    exe_file = os.path.join (bin_dir, u'outwiker')
+    src_bin_file = u'/usr/lib/outwiker/outwiker'
+    with open (exe_file, 'w') as fp:
+        fp.write ('#!/bin/sh\n')
+        fp.write (src_bin_file)
+
+    doc_dir = os.path.join (share_dir,
+                            u'doc',
+                            u'outwiker')
+
+    shutil.copyfile (os.path.join (u'debian_debsource', u'changelog'),
+                     os.path.join (doc_dir, u'changelog'))
+    with lcd (doc_dir):
+        local (u'gzip --best -n -c changelog > changelog.Debian.gz')
+        local (u'rm changelog')
+
+
+def debbinary ():
+    _remove (DEB_BINARY_BUILD_DIR)
+    os.mkdir (DEB_BINARY_BUILD_DIR)
+
+    architecture = _getDebArchitecture()
+    deb_dirname = _getDebDirName() + '_' + architecture
+    _remove (deb_dirname)
+    _remove (deb_dirname + u'.deb')
+
+    dest_dir = os.path.join (DEB_BINARY_BUILD_DIR,
+                             deb_dirname,
+                             u'usr',
+                             u'lib',
+                             u'outwiker')
+    linux(create_archives=False, build_dir=dest_dir)
+    _remove (os.path.join (dest_dir, u'LICENSE.txt'))
+
+    debian_src_dir = os.path.join (u'need_for_build',
+                                   u'debian_debbinary',
+                                   u'debian')
+
+    debian_dest_dir = os.path.join (DEB_BINARY_BUILD_DIR,
+                                    deb_dirname,
+                                    u'DEBIAN')
+    os.mkdir (debian_dest_dir)
+    shutil.copyfile (os.path.join (debian_src_dir, u'control'),
+                     os.path.join (debian_dest_dir, u'control'))
+
+    shutil.copyfile (os.path.join (debian_src_dir, u'postinst'),
+                     os.path.join (debian_dest_dir, u'postinst'))
+
+    shutil.copyfile (os.path.join (debian_src_dir, u'postrm'),
+                     os.path.join (debian_dest_dir, u'postrm'))
+
+    _debbinary_copy_share (os.path.join (DEB_BINARY_BUILD_DIR, deb_dirname))
+    _debbinary_move_to_share (os.path.join (DEB_BINARY_BUILD_DIR, deb_dirname))
+
+
+    for par, dirs, files in os.walk(os.path.join (DEB_BINARY_BUILD_DIR, deb_dirname)):
+        for d in dirs:
+            try:
+                os.chmod(os.path.join (par, d), 0o755)
+            except OSError:
+                continue
+        for f in files:
+            try:
+                os.chmod(os.path.join (par, f), 0o644)
+            except OSError:
+                continue
+
+    os.chmod(os.path.join (dest_dir, u'outwiker'), 0o755)
+    os.chmod(os.path.join (debian_dest_dir, u'postinst'), 0o755)
+    os.chmod(os.path.join (debian_dest_dir, u'postrm'), 0o755)
+    os.chmod(os.path.join (DEB_BINARY_BUILD_DIR,
+                           deb_dirname,
+                           u'usr',
+                           u'bin',
+                           u'outwiker'), 0o755)
+
+    with lcd (DEB_BINARY_BUILD_DIR):
+        local (u'fakeroot dpkg-deb --build {}'.format (deb_dirname))
+        local (u'lintian {}.deb'.format (deb_dirname))
+
+
+def _makechangelog (changelog_path, distrib_src, distrib_new):
     """
     Update the changelog file for current Ubuntu release.
     """
-    fname = "debian/changelog"
-
-    with open (fname) as fp:
+    with open (changelog_path) as fp:
         lines = fp.readlines()
 
     lines[0] = lines[0].replace (distrib_src, distrib_new)
 
-    with open (fname, "w") as fp:
+    with open (changelog_path, "w") as fp:
         fp.write (u"".join (lines))
 
 
