@@ -125,7 +125,7 @@ class BuilderLinuxBinaryBase (BuilderBase):
         with lcd ("src"):
             local ("python setup.py build --build-exe ../{}".format (self._build_dir))
 
-            map (self._remove, self._toRemove)
+        map (self._remove, self._toRemove)
 
 
     def _create_plugins_dir (self):
