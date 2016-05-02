@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-from abc import ABCMeta, abstractmethod
+import abc
 import os
 import os.path
 import shutil
@@ -60,11 +60,11 @@ def _getVersion():
     return (lines[0].strip(), lines[1].strip())
 
 
-class BuilderBase (object):
+class _BuilderBase (object):
     """
     Base class for all builders.
     """
-    __metaclass__ = ABCMeta
+    __metaclass__ = abc.ABCMeta
 
     def __init__ (self, subdir_name):
         self._root_build_dir = BUILD_DIR
@@ -72,7 +72,7 @@ class BuilderBase (object):
         self._build_dir = os.path.join (self._root_build_dir, self._subdir_name)
 
 
-    @abstractmethod
+    @abc.abstractmethod
     def _build (self):
         pass
 
@@ -125,12 +125,12 @@ class BuilderBase (object):
         return (lines[0].strip(), lines[1].strip())
 
 
-class BuilderLinuxBinaryBase (BuilderBase):
+class _BuilderLinuxBinaryBase (_BuilderBase):
     """
     Base class for all Linux binary builders.
     """
     def __init__ (self, build_dir, create_archives):
-        super (BuilderLinuxBinaryBase, self).__init__ (build_dir)
+        super (_BuilderLinuxBinaryBase, self).__init__ (build_dir)
 
         self._create_archives = create_archives
         self._toRemove = [
@@ -163,12 +163,12 @@ class BuilderLinuxBinaryBase (BuilderBase):
             os.mkdir (pluginsdir)
 
 
-class BuilderLinuxBinary (BuilderLinuxBinaryBase):
+class _BuilderLinuxBinary (_BuilderLinuxBinaryBase):
     """
     Class for making simple Linux binary build
     """
     def __init__ (self, build_dir, create_archives):
-        super (BuilderLinuxBinary, self).__init__ (build_dir, create_archives)
+        super (_BuilderLinuxBinary, self).__init__ (build_dir, create_archives)
         self._archiveFullName = os.path.join (self._root_build_dir,
                                               'outwiker_linux_unstable_x64.7z')
 
@@ -182,7 +182,7 @@ class BuilderLinuxBinary (BuilderLinuxBinaryBase):
 
 
     def clear (self):
-        super (BuilderLinuxBinary, self).clear()
+        super (_BuilderLinuxBinary, self).clear()
         self._remove (self._archiveFullName)
 
 
@@ -193,16 +193,16 @@ class BuilderLinuxBinary (BuilderLinuxBinaryBase):
 
 
 
-class BuilderLinuxDebBinary (BuilderBase):
+class _BuilderLinuxDebBinary (_BuilderBase):
     def __init__ (self, subdir_name):
-        super (BuilderLinuxDebBinary, self).__init__ (subdir_name)
+        super (_BuilderLinuxDebBinary, self).__init__ (subdir_name)
         version = self._getVersion()
         self._architecture = self._getDebArchitecture()
         self._debName = "outwiker-{}+{}_{}".format (version[0], version[1], self._architecture)
 
 
     def clear (self):
-        super (BuilderLinuxDebBinary, self).clear ()
+        super (_BuilderLinuxDebBinary, self).clear ()
         deb_result_filename = self._getDebFileName()
         self._remove (os.path.join (self._root_build_dir, deb_result_filename))
 
@@ -221,7 +221,7 @@ class BuilderLinuxDebBinary (BuilderBase):
 
         dest_dir = os.path.join (self._root_build_dir, dest_subdir)
 
-        linuxBuilder = BuilderLinuxBinary (dest_subdir, create_archives=False)
+        linuxBuilder = _BuilderLinuxBinary (dest_subdir, create_archives=False)
         linuxBuilder.build()
         self._remove (os.path.join (dest_dir, u'LICENSE.txt'))
 
@@ -337,12 +337,12 @@ class BuilderLinuxDebBinary (BuilderBase):
         return u'{}.deb'.format (self._debName)
 
 
-class BuilderBaseDebSource (BuilderBase):
+class _BuilderBaseDebSource (_BuilderBase):
     """
     The base class for source deb packages assebbling.
     """
     def __init__ (self, subdir_name):
-        super (BuilderBaseDebSource, self).__init__ (subdir_name)
+        super (_BuilderBaseDebSource, self).__init__ (subdir_name)
 
 
     def _debuild (self, command, distriblist):
@@ -447,9 +447,9 @@ class BuilderBaseDebSource (BuilderBase):
 
 
 
-class BuilderDebSource (BuilderBaseDebSource):
+class _BuilderDebSource (_BuilderBaseDebSource):
     def __init__ (self, subdir_name, release_names):
-        super (BuilderBaseDebSource, self).__init__ (subdir_name)
+        super (_BuilderBaseDebSource, self).__init__ (subdir_name)
         self._release_names = release_names
 
 
@@ -458,9 +458,9 @@ class BuilderDebSource (BuilderBaseDebSource):
                        self._release_names)
 
 
-class BuilderDebSourcesIncluded (BuilderBaseDebSource):
+class _BuilderDebSourcesIncluded (_BuilderBaseDebSource):
     def __init__ (self, subdir_name, release_names):
-        super (BuilderDebSourcesIncluded, self).__init__ (subdir_name)
+        super (_BuilderDebSourcesIncluded, self).__init__ (subdir_name)
         self._release_names = release_names
 
 
@@ -469,12 +469,12 @@ class BuilderDebSourcesIncluded (BuilderBaseDebSource):
                        self._release_names)
 
 
-class BuilderSources (BuilderBase):
+class _BuilderSources (_BuilderBase):
     """
     Create archives with sources
     """
     def __init__ (self, build_dir):
-        super (BuilderSources, self).__init__ (build_dir)
+        super (_BuilderSources, self).__init__ (build_dir)
         self._fullfname = os.path.join (self._root_build_dir,
                                         u"outwiker-src-full.zip")
         self._minfname = os.path.join (self._root_build_dir,
@@ -482,7 +482,7 @@ class BuilderSources (BuilderBase):
 
 
     def clear (self):
-        super (BuilderSources, self).clear()
+        super (_BuilderSources, self).clear()
         self._remove (self._fullfname)
         self._remove (self._minfname)
 
@@ -501,18 +501,18 @@ class BuilderSources (BuilderBase):
         self._remove (self._build_dir)
 
 
-class BuilderPlugins (BuilderBase):
+class _BuilderPlugins (_BuilderBase):
     """
     Create archives with plug-ins
     """
     def __init__ (self, build_dir, plugins_list):
-        super (BuilderPlugins, self).__init__ (build_dir)
+        super (_BuilderPlugins, self).__init__ (build_dir)
         self._all_plugins_fname = u'outwiker-plugins-all.zip'
         self._plugins_list = plugins_list
 
 
     def clear (self):
-        super (BuilderPlugins, self).clear()
+        super (_BuilderPlugins, self).clear()
         self._remove (self._getSubpath (self._all_plugins_fname))
 
 
@@ -542,7 +542,7 @@ def deb_sources_included():
     """
     Create files for uploading in PPA (including sources)
     """
-    builder = BuilderDebSourcesIncluded (DEB_SOURCE_BUILD_DIR, distribs)
+    builder = _BuilderDebSourcesIncluded (DEB_SOURCE_BUILD_DIR, distribs)
     builder.build()
 
 
@@ -550,7 +550,7 @@ def deb():
     """
     Assemble the deb package
     """
-    builder = BuilderDebSource (DEB_SOURCE_BUILD_DIR, distribs)
+    builder = _BuilderDebSource (DEB_SOURCE_BUILD_DIR, distribs)
     builder.build()
 
 
@@ -558,8 +558,8 @@ def debsingle():
     """
     Assemble the deb package for the current Ubuntu release
     """
-    builder = BuilderDebSource (DEB_SOURCE_BUILD_DIR,
-                                [_getCurrentUbuntuDistribName()])
+    builder = _BuilderDebSource (DEB_SOURCE_BUILD_DIR,
+                                 [_getCurrentUbuntuDistribName()])
     builder.build()
 
 
@@ -589,7 +589,7 @@ def plugins():
     """
     Create an archive with plugins (7z required)
     """
-    builder = BuilderPlugins (PLUGINS_DIR, plugins_list)
+    builder = _BuilderPlugins (PLUGINS_DIR, plugins_list)
     builder.build()
 
 
@@ -597,7 +597,7 @@ def sources ():
     """
     Create the sources archives.
     """
-    builder = BuilderSources (SOURCES_DIR)
+    builder = _BuilderSources (SOURCES_DIR)
     builder.build()
 
 
@@ -652,7 +652,7 @@ def linux (create_archives=True, build_dir=LINUX_BUILD_DIR):
     """
     Assemble binary builds under Linux
     """
-    builder = BuilderLinuxBinary (build_dir, create_archives)
+    builder = _BuilderLinuxBinary (build_dir, create_archives)
     builder.build()
 
 
@@ -739,7 +739,7 @@ def test (section=u'', params=u''):
 
 
 def deb_binary ():
-    builder = BuilderLinuxDebBinary (DEB_BINARY_BUILD_DIR)
+    builder = _BuilderLinuxDebBinary (DEB_BINARY_BUILD_DIR)
     builder.build()
 
 
