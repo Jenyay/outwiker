@@ -210,7 +210,7 @@ class BuilderLinuxDebBinary (BuilderBase):
     def _build (self):
         self._buildBinaries()
         self._copyDebianFiles()
-        self._copy_share (self._getSubpath (self._debName))
+        self._copy_usr_files (self._getSubpath (self._debName))
         self._move_to_share (self._getSubpath (self._debName))
         self._setPermissions()
         self._buildDeb()
@@ -244,16 +244,7 @@ class BuilderLinuxDebBinary (BuilderBase):
                                        u'debian')
 
         debian_dest_dir = self._getDEBIANPath()
-
-        os.mkdir (debian_dest_dir)
-        shutil.copyfile (os.path.join (debian_src_dir, u'control'),
-                         os.path.join (debian_dest_dir, u'control'))
-
-        shutil.copyfile (os.path.join (debian_src_dir, u'postinst'),
-                         os.path.join (debian_dest_dir, u'postinst'))
-
-        shutil.copyfile (os.path.join (debian_src_dir, u'postrm'),
-                         os.path.join (debian_dest_dir, u'postrm'))
+        shutil.copytree (debian_src_dir, debian_dest_dir)
 
 
     def _setPermissions (self):
@@ -312,30 +303,23 @@ class BuilderLinuxDebBinary (BuilderBase):
                 local (u'ln -s ../../share/outwiker/{dirname} usr/lib/outwiker'.format (dirname = dir_name))
 
 
-    def _copy_share (self, destdir):
+    def _copy_usr_files (self, destdir):
         """Copy icons files for deb package"""
-        share_dir = os.path.join (destdir, u'usr', u'share')
-        bin_dir = os.path.join (destdir, u'usr', u'bin')
+        dest_usr_dir = os.path.join (destdir, u'usr')
+        dest_share_dir = os.path.join (dest_usr_dir, u'share')
+        dest_bin_dir = os.path.join (dest_usr_dir, u'bin')
 
-        debian_dir = os.path.join (u'need_for_build', u'debian')
-        shutil.copytree (os.path.join (debian_dir, u'usr', u'share'), share_dir)
+        root_dir = os.path.join (u'need_for_build', u'debian_debbinary', u'root')
+        shutil.copytree (os.path.join (root_dir, u'usr', u'share'), dest_share_dir)
+        shutil.copytree (os.path.join (root_dir, u'usr', u'bin'), dest_bin_dir)
 
-        # Make link to bin file
-        os.makedirs (bin_dir)
+        dest_doc_dir = os.path.join (dest_share_dir,
+                                     u'doc',
+                                     u'outwiker')
 
-        exe_file = os.path.join (bin_dir, u'outwiker')
-        src_bin_file = u'/usr/lib/outwiker/outwiker'
-        with open (exe_file, 'w') as fp:
-            fp.write ('#!/bin/sh\n')
-            fp.write (src_bin_file)
-
-        doc_dir = os.path.join (share_dir,
-                                u'doc',
-                                u'outwiker')
-
-        shutil.copyfile (os.path.join (u'debian_debsource', u'changelog'),
-                         os.path.join (doc_dir, u'changelog'))
-        with lcd (doc_dir):
+        shutil.copyfile (os.path.join (u'need_for_build', u'debian_debsource', u'debian', u'changelog'),
+                         os.path.join (dest_doc_dir, u'changelog'))
+        with lcd (dest_doc_dir):
             local (u'gzip --best -n -c changelog > changelog.Debian.gz')
             local (u'rm changelog')
 
@@ -368,7 +352,7 @@ class BuilderBaseDebSource (BuilderBase):
         """
         current_distrib_name = _getCurrentUbuntuDistribName()
         for distrib_name in distriblist:
-            self._orig(distrib_name)
+            self._orig (distrib_name)
             current_debian_dirname = os.path.join (self._build_dir,
                                                    self._getDebName(),
                                                    'debian')
@@ -406,16 +390,25 @@ class BuilderBaseDebSource (BuilderBase):
         """
         self._debclean()
 
-        dirname = os.path.join (self._build_dir, self._getDebName())
+        dirname = self._getSubpath (self._getDebName())
         os.makedirs (dirname)
 
-        local ("rsync -avz * --exclude=.bzr --exclude=distrib --exclude=build --exclude=*.pyc --exclude=*.dll --exclude=*.exe --exclude=src/.ropeproject --exclude=src/test --exclude=src/setup.py --exclude=src/setup_tests.py --exclude=src/profile.py --exclude=src/tests.py --exclude=src/Microsoft.VC90.CRT.manifest --exclude=src/profiles --exclude=src/tools --exclude=doc --exclude=plugins --exclude=profiles --exclude=test --exclude=_update_version_bzr.py --exclude=outwiker_setup.iss --exclude=updateversion --exclude=updateversion.py --exclude=debian_tmp --exclude=Makefile_debbinary --exclude=need_for_build {dirname}/".format (dirname=dirname))
+        local ("rsync -avz * --exclude=.bzr --exclude=distrib --exclude=build --exclude=*.pyc --exclude=*.dll --exclude=*.exe --exclude=src/.ropeproject --exclude=src/test --exclude=src/setup.py --exclude=src/setup_tests.py --exclude=src/profile.py --exclude=src/tests.py --exclude=src/Microsoft.VC90.CRT.manifest --exclude=src/profiles --exclude=src/tools --exclude=doc --exclude=plugins --exclude=profiles --exclude=test --exclude=_update_version_bzr.py --exclude=outwiker_setup.iss --exclude=updateversion --exclude=updateversion.py --exclude=debian_tmp --exclude=Makefile_debbinary  --exclude=need_for_build {dirname}/".format (dirname=dirname))
 
-        os.rename (os.path.join (dirname, u'Makefile_debsource'),
-                   os.path.join (dirname, u'Makefile'))
+        shutil.copytree (os.path.join (u'need_for_build', u'debian_debsource', u'debian'),
+                         os.path.join (dirname, u'debian'))
 
-        os.rename (os.path.join (dirname, u'debian_debsource'),
-                   os.path.join (dirname, u'debian'))
+        shutil.copyfile (os.path.join (u'need_for_build', u'debian_debsource', u'Makefile'),
+                         os.path.join (dirname, u'Makefile'))
+
+        shutil.copyfile (os.path.join (u'need_for_build', u'debian_debsource', u'outwiker.desktop'),
+                         os.path.join (dirname, u'outwiker.desktop'))
+
+        shutil.copyfile (os.path.join (u'need_for_build', u'debian_debsource', u'outwiker'),
+                         os.path.join (dirname, u'outwiker'))
+
+        shutil.copytree (os.path.join (u'need_for_build', u'debian_debsource', u'man'),
+                         os.path.join (dirname, u'man'))
 
 
     def _debclean(self):
