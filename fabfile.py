@@ -41,8 +41,9 @@ plugins_list = [
 
 BUILD_DIR = u'build'
 LINUX_BUILD_DIR = u"outwiker_linux"
-DEB_SOURCE_BUILD_DIR = os.path.join (BUILD_DIR, u'deb_source')
 DEB_BINARY_BUILD_DIR = u'deb_binary'
+DEB_SOURCE_BUILD_DIR = u'deb_source'
+SOURCES_DIR = u'sources'
 
 
 def _getVersion():
@@ -71,12 +72,20 @@ class BuilderBase (object):
 
 
     @abstractmethod
-    def build (self):
+    def _build (self):
         pass
 
 
     def clear (self):
         self._remove (self._build_dir)
+
+
+    def build (self):
+        self._createRootDir()
+        self.clear()
+        os.makedirs (self._build_dir)
+
+        self._build()
 
 
     def _createRootDir (self):
@@ -163,9 +172,7 @@ class BuilderLinuxBinary (BuilderLinuxBinaryBase):
                                               'outwiker_linux_unstable_x64.7z')
 
 
-    def build (self):
-        self._createRootDir()
-        self.clear()
+    def _build (self):
         self._create_plugins_dir()
         self._build_binary()
 
@@ -199,11 +206,7 @@ class BuilderLinuxDebBinary (BuilderBase):
         self._remove (os.path.join (self._root_build_dir, deb_result_filename))
 
 
-    def build (self):
-        self._createRootDir()
-        self.clear()
-        os.mkdir (self._build_dir)
-
+    def _build (self):
         self._buildBinaries()
         self._copyDebianFiles()
         self._copy_share (self._getSubpath (self._debName))
@@ -349,6 +352,128 @@ class BuilderLinuxDebBinary (BuilderBase):
         return u'{}.deb'.format (self._debName)
 
 
+class BuilderBaseDebSource (BuilderBase):
+    """
+    The base class for source deb packages assebbling.
+    """
+    def __init__ (self, subdir_name):
+        super (BuilderBaseDebSource, self).__init__ (subdir_name)
+
+
+    def _debuild (self, command, distriblist):
+        """
+        Run command with debuild.
+        The function assembles the deb packages for all releases in distriblist.
+        """
+        current_distrib_name = _getCurrentUbuntuDistribName()
+        for distrib_name in distriblist:
+            self._orig(distrib_name)
+            current_debian_dirname = os.path.join (self._build_dir,
+                                                   self._getDebName(),
+                                                   'debian')
+
+            # Change release name in the changelog file
+            changelog_path = os.path.join (current_debian_dirname, u'changelog')
+            self._makechangelog (changelog_path, current_distrib_name, distrib_name)
+
+            with lcd (current_debian_dirname):
+                local (command)
+
+            # Return the source release name
+            self._makechangelog (changelog_path, distrib_name, current_distrib_name)
+
+
+    def _orig (self, distname):
+        """
+        Create an archive for "original" sources for building the deb package
+        distname - Ubuntu release name
+        """
+        self._source()
+
+        origname = self._getOrigName(distname)
+
+        with lcd (self._build_dir):
+            local ("tar -cvf {} {}".format (origname, self._getDebName()))
+
+        orig_dirname = os.path.join (self._build_dir, origname)
+        local ("gzip -f {}".format (orig_dirname))
+
+
+    def _source(self):
+        """
+        Create a sources folder for building the deb package
+        """
+        self._debclean()
+
+        dirname = os.path.join (self._build_dir, self._getDebName())
+        os.makedirs (dirname)
+
+        local ("rsync -avz * --exclude=.bzr --exclude=distrib --exclude=build --exclude=*.pyc --exclude=*.dll --exclude=*.exe --exclude=src/.ropeproject --exclude=src/test --exclude=src/setup.py --exclude=src/setup_tests.py --exclude=src/profile.py --exclude=src/tests.py --exclude=src/Microsoft.VC90.CRT.manifest --exclude=src/profiles --exclude=src/tools --exclude=doc --exclude=plugins --exclude=profiles --exclude=test --exclude=_update_version_bzr.py --exclude=outwiker_setup.iss --exclude=updateversion --exclude=updateversion.py --exclude=debian_tmp --exclude=Makefile_debbinary --exclude=need_for_build {dirname}/".format (dirname=dirname))
+
+        os.rename (os.path.join (dirname, u'Makefile_debsource'),
+                   os.path.join (dirname, u'Makefile'))
+
+        os.rename (os.path.join (dirname, u'debian_debsource'),
+                   os.path.join (dirname, u'debian'))
+
+
+    def _debclean(self):
+        """
+        Clean build/<distversion> folder
+        """
+        dirname = os.path.join (self._build_dir, self._getDebName())
+        if os.path.exists (dirname):
+            shutil.rmtree (dirname)
+
+
+    def _getDebName(self):
+        """
+        Return a folder name for sources for building the deb package
+        """
+        version = self._getVersion()
+        return "outwiker-{}+{}".format (version[0], version[1])
+
+
+    def _getOrigName (self, distname):
+        version = self._getVersion()
+        return "outwiker_{}+{}~{}.orig.tar".format (version[0], version[1], distname)
+
+
+    def _makechangelog (self, changelog_path, distrib_src, distrib_new):
+        """
+        Update the changelog file for current Ubuntu release.
+        """
+        with open (changelog_path) as fp:
+            lines = fp.readlines()
+
+        lines[0] = lines[0].replace (distrib_src, distrib_new)
+
+        with open (changelog_path, "w") as fp:
+            fp.write (u"".join (lines))
+
+
+
+class BuilderDebSource (BuilderBaseDebSource):
+    def __init__ (self, subdir_name, release_names):
+        super (BuilderBaseDebSource, self).__init__ (subdir_name)
+        self._release_names = release_names
+
+
+    def _build (self):
+        self._debuild ("debuild --source-option=--include-binaries --source-option=--auto-commit",
+                       self._release_names)
+
+
+class BuilderDebSourcesIncluded (BuilderBaseDebSource):
+    def __init__ (self, subdir_name, release_names):
+        super (BuilderDebSourcesIncluded, self).__init__ (subdir_name)
+        self._release_names = release_names
+
+
+    def _build (self):
+        self._debuild ("debuild -S -sa --source-option=--include-binaries --source-option=--auto-commit",
+                       self._release_names)
+
 
 def _getCurrentUbuntuDistribName ():
     with open ('/etc/lsb-release') as fp:
@@ -359,106 +484,29 @@ def _getCurrentUbuntuDistribName ():
                 return codename
 
 
-def _getDebName():
-    """
-    Return a folder name for sources for building the deb package
-    """
-    version = _getVersion()
-    return "outwiker-{}+{}".format (version[0], version[1])
-
-
-def _getOrigName (distname):
-    version = _getVersion()
-    return "outwiker_{}+{}~{}.orig.tar".format (version[0], version[1], distname)
-
-
-def _debclean():
-    """
-    Clean build/<distversion> folder
-    """
-    dirname = os.path.join (DEB_SOURCE_BUILD_DIR, _getDebName())
-    if os.path.exists (dirname):
-        shutil.rmtree (dirname)
-
-
-def _source():
-    """
-    Create a sources folder for building the deb package
-    """
-    _debclean()
-
-    dirname = os.path.join (DEB_SOURCE_BUILD_DIR, _getDebName())
-    os.makedirs (dirname)
-
-    local ("rsync -avz * --exclude=.bzr --exclude=distrib --exclude=build --exclude=*.pyc --exclude=*.dll --exclude=*.exe --exclude=src/.ropeproject --exclude=src/test --exclude=src/setup.py --exclude=src/setup_tests.py --exclude=src/profile.py --exclude=src/tests.py --exclude=src/Microsoft.VC90.CRT.manifest --exclude=src/profiles --exclude=src/tools --exclude=doc --exclude=plugins --exclude=profiles --exclude=test --exclude=_update_version_bzr.py --exclude=outwiker_setup.iss --exclude=updateversion --exclude=updateversion.py --exclude=debian_tmp --exclude=Makefile_debbinary --exclude=need_for_build {dirname}/".format (dirname=dirname))
-
-    os.rename (os.path.join (dirname, u'Makefile_debsource'),
-               os.path.join (dirname, u'Makefile'))
-
-    os.rename (os.path.join (dirname, u'debian_debsource'),
-               os.path.join (dirname, u'debian'))
-
-
-def _orig (distname):
-    """
-    Create an archive for "original" sources for building the deb package
-    distname - Ubuntu release name
-    """
-    _source()
-
-    origname = _getOrigName(distname)
-
-    with lcd (DEB_SOURCE_BUILD_DIR):
-        local ("tar -cvf {} {}".format (origname, _getDebName()))
-
-    orig_dirname = os.path.join (DEB_SOURCE_BUILD_DIR, origname)
-    local ("gzip -f {}".format (orig_dirname))
-
-
-def debsource():
+def deb_sources_included():
     """
     Create files for uploading in PPA (including sources)
     """
-    _debuild ("debuild -S -sa --source-option=--include-binaries --source-option=--auto-commit",
-              distribs)
+    builder = BuilderDebSourcesIncluded (DEB_SOURCE_BUILD_DIR, distribs)
+    builder.build()
 
 
 def deb():
     """
     Assemble the deb package
     """
-    _debuild ("debuild --source-option=--include-binaries --source-option=--auto-commit",
-              distribs)
+    builder = BuilderDebSource (DEB_SOURCE_BUILD_DIR, distribs)
+    builder.build()
 
 
 def debsingle():
     """
     Assemble the deb package for the current Ubuntu release
     """
-    _debuild ("debuild --source-option=--include-binaries --source-option=--auto-commit",
-              [_getCurrentUbuntuDistribName()])
-
-
-def _debuild (command, distriblist):
-    """
-    Run command with debuild. The function assembles the deb packages for all releases in distriblist.
-    """
-    current_distrib_name = _getCurrentUbuntuDistribName()
-    for distrib_name in distriblist:
-        _orig(distrib_name)
-        current_debian_dirname = os.path.join (DEB_SOURCE_BUILD_DIR,
-                                               _getDebName(),
-                                               'debian')
-
-        # Change release name in the changelog file
-        changelog_path = os.path.join (current_debian_dirname, u'changelog')
-        _makechangelog (changelog_path, current_distrib_name, distrib_name)
-
-        with lcd (current_debian_dirname):
-            local (command)
-
-        # Return the source release name
-        _makechangelog (changelog_path, distrib_name, current_distrib_name)
+    builder = BuilderDebSource (DEB_SOURCE_BUILD_DIR,
+                                [_getCurrentUbuntuDistribName()])
+    builder.build()
 
 
 def ppaunstable ():
@@ -468,7 +516,7 @@ def ppaunstable ():
     version = _getVersion()
 
     for distname in distribs:
-        with lcd (DEB_SOURCE_BUILD_DIR):
+        with lcd (os.path.join (BUILD_DIR, DEB_SOURCE_BUILD_DIR)):
             local ("dput ppa:outwiker-team/unstable outwiker_{}+{}~{}_source.changes".format (version[0], version[1], distname))
 
 
@@ -479,7 +527,7 @@ def ppaunstable ():
 #     version = _getVersion()
 #
 #     for distname in distribs:
-#         with lcd (DEB_SOURCE_BUILD_DIR):
+#         with lcd (os.path.join (BUILD_DIR, DEB_SOURCE_BUILD_DIR)):
 #             local ("dput ppa:outwiker-team/ppa outwiker_{}+{}~{}_source.changes".format (version[0], version[1], distname))
 
 
@@ -497,27 +545,27 @@ def plugins():
             local ("7z a -r -aoa -xr!*.pyc -xr!.ropeproject -w../ ../../build/plugins/outwiker-plugins-all.zip ./*".format (plugin))
 
 
-def source ():
+def sources ():
     """
     Create the sources archives.
     """
     version = _getVersion()
 
-    sourcesdir = os.path.join ("build", "sources")
+    sourcesdir = os.path.join ("build", SOURCES_DIR)
 
     if not os.path.exists (sourcesdir):
         os.makedirs (sourcesdir)
 
     fullfname = u"outwiker-src-full.zip"
-    srcfname = u"outwiker-src-min.zip"
+    minfname = u"outwiker-src-min.zip"
 
     _remove (fullfname)
-    _remove (srcfname)
+    _remove (minfname)
 
     local ('git archive --prefix=outwiker-{}.{}/ -o "{}/{}" HEAD'.format (version[0], version[1], sourcesdir, fullfname))
 
     with lcd ("src"):
-        local ("7z a -r -aoa -xr!*.pyc -xr!.ropeproject -xr!tests.py -xr!profile.py -xr!setup_tests.py -xr!setup.py -xr!test -xr!profiles ../{}/{} ./*".format (sourcesdir, srcfname))
+        local ("7z a -r -aoa -xr!*.pyc -xr!.ropeproject -xr!tests.py -xr!profile.py -xr!setup_tests.py -xr!setup.py -xr!test -xr!profiles ../{}/{} ./*".format (sourcesdir, minfname))
 
 
 def win (skipinstaller=False):
@@ -606,7 +654,7 @@ def debinstall():
 
     version = _getVersion()
 
-    with lcd (DEB_SOURCE_BUILD_DIR):
+    with lcd (os.path.join (BUILD_DIR, DEB_SOURCE_BUILD_DIR)):
         local ("sudo dpkg -i outwiker_{}+{}~{}_all.deb".format (
             version[0],
             version[1],
@@ -660,19 +708,6 @@ def test (section=u'', params=u''):
 def debbinary ():
     builder = BuilderLinuxDebBinary (DEB_BINARY_BUILD_DIR)
     builder.build()
-
-
-def _makechangelog (changelog_path, distrib_src, distrib_new):
-    """
-    Update the changelog file for current Ubuntu release.
-    """
-    with open (changelog_path) as fp:
-        lines = fp.readlines()
-
-    lines[0] = lines[0].replace (distrib_src, distrib_new)
-
-    with open (changelog_path, "w") as fp:
-        fp.write (u"".join (lines))
 
 
 def _remove (path):
