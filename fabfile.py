@@ -475,6 +475,38 @@ class BuilderDebSourcesIncluded (BuilderBaseDebSource):
                        self._release_names)
 
 
+class BuilderSources (BuilderBase):
+    """
+    Create archives with sources
+    """
+    def __init__ (self, build_dir):
+        super (BuilderSources, self).__init__ (build_dir)
+        self._fullfname = os.path.join (self._root_build_dir,
+                                        u"outwiker-src-full.zip")
+        self._minfname = os.path.join (self._root_build_dir,
+                                       u"outwiker-src-min.zip")
+
+
+    def clear (self):
+        super (BuilderSources, self).clear()
+        self._remove (self._fullfname)
+        self._remove (self._minfname)
+
+
+    def _build (self):
+        version = self._getVersion()
+
+        local ('git archive --prefix=outwiker-{}.{}/ -o "{}" HEAD'.format (
+            version[0],
+            version[1],
+            self._fullfname))
+
+        with lcd ("src"):
+            local ("7z a -r -aoa -xr!*.pyc -xr!.ropeproject -xr!tests.py -xr!profile.py -xr!setup_tests.py -xr!setup.py -xr!test -xr!profiles ../{} ./*".format (self._minfname))
+
+        self._remove (self._build_dir)
+
+
 def _getCurrentUbuntuDistribName ():
     with open ('/etc/lsb-release') as fp:
         for line in fp:
@@ -549,23 +581,8 @@ def sources ():
     """
     Create the sources archives.
     """
-    version = _getVersion()
-
-    sourcesdir = os.path.join ("build", SOURCES_DIR)
-
-    if not os.path.exists (sourcesdir):
-        os.makedirs (sourcesdir)
-
-    fullfname = u"outwiker-src-full.zip"
-    minfname = u"outwiker-src-min.zip"
-
-    _remove (fullfname)
-    _remove (minfname)
-
-    local ('git archive --prefix=outwiker-{}.{}/ -o "{}/{}" HEAD'.format (version[0], version[1], sourcesdir, fullfname))
-
-    with lcd ("src"):
-        local ("7z a -r -aoa -xr!*.pyc -xr!.ropeproject -xr!tests.py -xr!profile.py -xr!setup_tests.py -xr!setup.py -xr!test -xr!profiles ../{}/{} ./*".format (sourcesdir, minfname))
+    builder = BuilderSources (SOURCES_DIR)
+    builder.build()
 
 
 def win (skipinstaller=False):
