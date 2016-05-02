@@ -44,6 +44,7 @@ LINUX_BUILD_DIR = u"outwiker_linux"
 DEB_BINARY_BUILD_DIR = u'deb_binary'
 DEB_SOURCE_BUILD_DIR = u'deb_source'
 SOURCES_DIR = u'sources'
+PLUGINS_DIR = u'plugins'
 
 
 def _getVersion():
@@ -507,6 +508,34 @@ class BuilderSources (BuilderBase):
         self._remove (self._build_dir)
 
 
+class BuilderPlugins (BuilderBase):
+    """
+    Create archives with plug-ins
+    """
+    def __init__ (self, build_dir, plugins_list):
+        super (BuilderPlugins, self).__init__ (build_dir)
+        self._all_plugins_fname = u'outwiker-plugins-all.zip'
+        self._plugins_list = plugins_list
+
+
+    def clear (self):
+        super (BuilderPlugins, self).clear()
+        self._remove (self._getSubpath (self._all_plugins_fname))
+
+
+    def _build (self):
+        for plugin in self._plugins_list:
+            archive_name = plugin + u'.zip'
+            archive_path = self._getSubpath (archive_name)
+            full_archive_path = self._getSubpath (self._all_plugins_fname)
+            self._remove (archive_path)
+
+            with lcd ("plugins/{}".format (plugin)):
+                local ("7z a -r -aoa -xr!*.pyc -xr!.ropeproject ../../{} ./*".format (archive_path))
+                local ("7z a -r -aoa -xr!*.pyc -xr!.ropeproject -w../ ../../{} ./*".format (full_archive_path))
+
+
+
 def _getCurrentUbuntuDistribName ():
     with open ('/etc/lsb-release') as fp:
         for line in fp:
@@ -567,14 +596,8 @@ def plugins():
     """
     Create an archive with plugins (7z required)
     """
-    _remove (u"build/plugins/outwiker-plugins-all.zip")
-
-    for plugin in plugins_list:
-        _remove (u"build/plugins/{}.zip".format (plugin))
-
-        with lcd ("plugins/{}".format (plugin)):
-            local ("7z a -r -aoa -xr!*.pyc -xr!.ropeproject ../../build/plugins/{}.zip ./*".format (plugin))
-            local ("7z a -r -aoa -xr!*.pyc -xr!.ropeproject -w../ ../../build/plugins/outwiker-plugins-all.zip ./*".format (plugin))
+    builder = BuilderPlugins (PLUGINS_DIR, plugins_list)
+    builder.build()
 
 
 def sources ():
@@ -722,7 +745,7 @@ def test (section=u'', params=u''):
 
 
 
-def debbinary ():
+def deb_binary ():
     builder = BuilderLinuxDebBinary (DEB_BINARY_BUILD_DIR)
     builder.build()
 
