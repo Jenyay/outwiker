@@ -10,10 +10,10 @@ import glob
 from fabric.api import local, lcd, settings
 
 # Supported Ubuntu releases
-distribs = ["wily", "trusty"]
+UBUNTU_RELEASE_NAMES = ["wily", "trusty"]
 
 # List of the supported plugins
-plugins_list = [
+PLUGINS_LIST = [
     "autorenamer",
     "changepageuid",
     "counter",
@@ -168,7 +168,7 @@ class _BuilderLinuxBinary (_BuilderLinuxBinaryBase):
     """
     Class for making simple Linux binary build
     """
-    def __init__ (self, build_dir, create_archive=True):
+    def __init__ (self, build_dir=LINUX_BUILD_DIR, create_archive=True):
         super (_BuilderLinuxBinary, self).__init__ (build_dir, create_archive)
         self._archiveFullName = os.path.join (self._root_build_dir,
                                               'outwiker_linux_unstable_x64.7z')
@@ -195,7 +195,7 @@ class _BuilderLinuxBinary (_BuilderLinuxBinaryBase):
 
 
 class _BuilderLinuxDebBinary (_BuilderBase):
-    def __init__ (self, subdir_name):
+    def __init__ (self, subdir_name=DEB_BINARY_BUILD_DIR):
         super (_BuilderLinuxDebBinary, self).__init__ (subdir_name)
         version = self._getVersion()
         self._architecture = self._getDebArchitecture()
@@ -223,7 +223,7 @@ class _BuilderLinuxDebBinary (_BuilderBase):
         dest_dir = os.path.join (self._root_build_dir, dest_subdir)
         os.makedirs (self._getSubpath (self._debName, u'usr', u'lib'))
 
-        linuxBuilder = _BuilderLinuxBinary (dest_subdir, create_archives=False)
+        linuxBuilder = _BuilderLinuxBinary (dest_subdir, create_archive=False)
         linuxBuilder.build()
         self._remove (os.path.join (dest_dir, u'LICENSE.txt'))
 
@@ -475,7 +475,7 @@ class _BuilderSources (_BuilderBase):
     """
     Create archives with sources
     """
-    def __init__ (self, build_dir):
+    def __init__ (self, build_dir=SOURCES_DIR):
         super (_BuilderSources, self).__init__ (build_dir)
         self._fullfname = os.path.join (self._root_build_dir,
                                         u"outwiker-src-full.zip")
@@ -507,7 +507,7 @@ class _BuilderPlugins (_BuilderBase):
     """
     Create archives with plug-ins
     """
-    def __init__ (self, build_dir, plugins_list):
+    def __init__ (self, build_dir=PLUGINS_DIR, plugins_list=PLUGINS_LIST):
         super (_BuilderPlugins, self).__init__ (build_dir)
         self._all_plugins_fname = u'outwiker-plugins-all.zip'
         self._plugins_list = plugins_list
@@ -534,7 +534,7 @@ class _BuilderWindows (_BuilderBase):
     """
     Build for Windows
     """
-    def __init__ (self, build_dir, create_installer=True):
+    def __init__ (self, build_dir=WINDOWS_BUILD_DIR, create_installer=True):
         super (_BuilderWindows, self).__init__ (build_dir)
         self._create_installer = create_installer
 
@@ -611,7 +611,7 @@ class _BuilderWindows (_BuilderBase):
         Copy plugins to build folder
         """
         src_pluginsdir = u"plugins"
-        for plugin in plugins_list:
+        for plugin in self._plugins_list:
             shutil.copytree (
                 os.path.join (src_pluginsdir, plugin, plugin),
                 os.path.join (self._dest_plugins_dir, plugin),
@@ -632,7 +632,7 @@ def deb_sources_included():
     """
     Create files for uploading in PPA (including sources)
     """
-    builder = _BuilderDebSourcesIncluded (DEB_SOURCE_BUILD_DIR, distribs)
+    builder = _BuilderDebSourcesIncluded (DEB_SOURCE_BUILD_DIR, UBUNTU_RELEASE_NAMES)
     builder.build()
 
 
@@ -641,7 +641,7 @@ def deb():
     """
     Assemble the deb packages
     """
-    builder = _BuilderDebSource (DEB_SOURCE_BUILD_DIR, distribs)
+    builder = _BuilderDebSource (DEB_SOURCE_BUILD_DIR, UBUNTU_RELEASE_NAMES)
     builder.build()
 
 
@@ -649,7 +649,7 @@ def deb_clear():
     """
     Remove the deb packages
     """
-    builder = _BuilderDebSource (DEB_SOURCE_BUILD_DIR, distribs)
+    builder = _BuilderDebSource (DEB_SOURCE_BUILD_DIR, UBUNTU_RELEASE_NAMES)
     builder.clear()
 
 
@@ -669,7 +669,7 @@ def ppaunstable ():
     """
     version = _getVersion()
 
-    for distname in distribs:
+    for distname in UBUNTU_RELEASE_NAMES:
         with lcd (os.path.join (BUILD_DIR, DEB_SOURCE_BUILD_DIR)):
             local ("dput ppa:outwiker-team/unstable outwiker_{}+{}~{}_source.changes".format (version[0], version[1], distname))
 
@@ -680,7 +680,7 @@ def ppaunstable ():
 #     """
 #     version = _getVersion()
 #
-#     for distname in distribs:
+#     for distname in UBUNTU_RELEASE_NAMES:
 #         with lcd (os.path.join (BUILD_DIR, DEB_SOURCE_BUILD_DIR)):
 #             local ("dput ppa:outwiker-team/ppa outwiker_{}+{}~{}_source.changes".format (version[0], version[1], distname))
 
@@ -689,15 +689,23 @@ def plugins():
     """
     Create an archive with plugins (7z required)
     """
-    builder = _BuilderPlugins (PLUGINS_DIR, plugins_list)
+    builder = _BuilderPlugins ()
     builder.build()
+
+
+def plugins_clear():
+    """
+    Remove an archive with plugins (7z required)
+    """
+    builder = _BuilderPlugins ()
+    builder.clear()
 
 
 def sources ():
     """
     Create the sources archives.
     """
-    builder = _BuilderSources (SOURCES_DIR)
+    builder = _BuilderSources ()
     builder.build()
 
 
@@ -705,7 +713,7 @@ def sources_clear ():
     """
     Remove the sources archives.
     """
-    builder = _BuilderSources (SOURCES_DIR)
+    builder = _BuilderSources ()
     builder.clear()
 
 
@@ -713,7 +721,7 @@ def win (skipinstaller=False):
     """
     Build assemblies under Windows
     """
-    builder = _BuilderWindows (WINDOWS_BUILD_DIR, not skipinstaller)
+    builder = _BuilderWindows (create_installer = not skipinstaller)
     builder.build()
 
 
@@ -721,7 +729,7 @@ def win_clear ():
     """
     Remove assemblies under Windows
     """
-    builder = _BuilderWindows (WINDOWS_BUILD_DIR)
+    builder = _BuilderWindows ()
     builder.clear()
 
 
@@ -729,7 +737,7 @@ def linux (create_archive=True):
     """
     Assemble binary builds for Linux
     """
-    builder = _BuilderLinuxBinary (LINUX_BUILD_DIR, create_archive)
+    builder = _BuilderLinuxBinary (create_archive=create_archive)
     builder.build()
 
 
@@ -737,7 +745,7 @@ def linux_clear ():
     """
     Remove binary builds for Linux
     """
-    builder = _BuilderLinuxBinary (LINUX_BUILD_DIR)
+    builder = _BuilderLinuxBinary ()
     builder.clear()
 
 
@@ -824,10 +832,10 @@ def test (section=u'', params=u''):
 
 
 def deb_binary ():
-    builder = _BuilderLinuxDebBinary (DEB_BINARY_BUILD_DIR)
+    builder = _BuilderLinuxDebBinary ()
     builder.build()
 
 
 def deb_binary_clear ():
-    builder = _BuilderLinuxDebBinary (DEB_BINARY_BUILD_DIR)
+    builder = _BuilderLinuxDebBinary ()
     builder.clear()
