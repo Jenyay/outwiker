@@ -112,10 +112,10 @@ class BaseBuilder (object):
 class WindowsBuilder (BaseBuilder):
     def _getExtraIncludeFiles (self):
         return [
-            ('../libs/lib', 'lib'),
-            ('../libs/libenchant-1.dll', 'libenchant-1.dll'),
-            ('../libs/libglib-2.0-0.dll', 'libglib-2.0-0.dll'),
-            ('../libs/libgmodule-2.0-0.dll', 'libgmodule-2.0-0.dll'),
+            ('../need_for_build/windows/libs/lib', 'lib'),
+            ('../need_for_build/windows/libs/libenchant-1.dll', 'libenchant-1.dll'),
+            ('../need_for_build/windows/libs/libglib-2.0-0.dll', 'libglib-2.0-0.dll'),
+            ('../need_for_build/windows/libs/libgmodule-2.0-0.dll', 'libgmodule-2.0-0.dll'),
         ]
 
 
