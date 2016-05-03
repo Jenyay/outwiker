@@ -808,7 +808,10 @@ def run ():
     Run OutWiker from sources
     """
     with lcd ("src"):
-        local ("python runoutwiker.py")
+        if os.name == 'posix':
+            local (u'LD_PRELOAD=libwx_gtk2u_webview-3.0.so.0 python2.7 runoutwiker.py')
+        else:
+            local ("python runoutwiker.py")
 
 
 def test (section=u'', params=u''):
