@@ -130,10 +130,10 @@ class _BuilderLinuxBinaryBase (_BuilderBase):
     """
     Base class for all Linux binary builders.
     """
-    def __init__ (self, build_dir, create_archives):
+    def __init__ (self, build_dir, create_archive):
         super (_BuilderLinuxBinaryBase, self).__init__ (build_dir)
 
-        self._create_archives = create_archives
+        self._create_archive = create_archive
         self._toRemove = [
             self._getSubpath (u'tcl'),
             self._getSubpath (u'tk'),
@@ -168,8 +168,8 @@ class _BuilderLinuxBinary (_BuilderLinuxBinaryBase):
     """
     Class for making simple Linux binary build
     """
-    def __init__ (self, build_dir, create_archives):
-        super (_BuilderLinuxBinary, self).__init__ (build_dir, create_archives)
+    def __init__ (self, build_dir, create_archive=True):
+        super (_BuilderLinuxBinary, self).__init__ (build_dir, create_archive)
         self._archiveFullName = os.path.join (self._root_build_dir,
                                               'outwiker_linux_unstable_x64.7z')
 
@@ -178,8 +178,8 @@ class _BuilderLinuxBinary (_BuilderLinuxBinaryBase):
         self._create_plugins_dir()
         self._build_binary()
 
-        if self._create_archives:
-            self._build_archives()
+        if self._create_archive:
+            self._build_archive()
 
 
     def clear (self):
@@ -187,7 +187,7 @@ class _BuilderLinuxBinary (_BuilderLinuxBinaryBase):
         self._remove (self._archiveFullName)
 
 
-    def _build_archives (self):
+    def _build_archive (self):
         # Create archive without plugins
         with lcd (self._build_dir):
             local ("7z a ../outwiker_linux_unstable_x64.7z ./* ./plugins -r -aoa")
@@ -636,12 +636,22 @@ def deb_sources_included():
     builder.build()
 
 
+
 def deb():
     """
-    Assemble the deb package
+    Assemble the deb packages
     """
     builder = _BuilderDebSource (DEB_SOURCE_BUILD_DIR, distribs)
     builder.build()
+
+
+def deb_clear():
+    """
+    Remove the deb packages
+    """
+    builder = _BuilderDebSource (DEB_SOURCE_BUILD_DIR, distribs)
+    builder.clear()
+
 
 
 def debsingle():
@@ -691,6 +701,14 @@ def sources ():
     builder.build()
 
 
+def sources_clear ():
+    """
+    Remove the sources archives.
+    """
+    builder = _BuilderSources (SOURCES_DIR)
+    builder.clear()
+
+
 def win (skipinstaller=False):
     """
     Build assemblies under Windows
@@ -707,12 +725,20 @@ def win_clear ():
     builder.clear()
 
 
-def linux (create_archives=True, build_dir=LINUX_BUILD_DIR):
+def linux (create_archive=True):
     """
-    Assemble binary builds under Linux
+    Assemble binary builds for Linux
     """
-    builder = _BuilderLinuxBinary (build_dir, create_archives)
+    builder = _BuilderLinuxBinary (LINUX_BUILD_DIR, create_archive)
     builder.build()
+
+
+def linux_clear ():
+    """
+    Remove binary builds for Linux
+    """
+    builder = _BuilderLinuxBinary (LINUX_BUILD_DIR)
+    builder.clear()
 
 
 def nextversion():
@@ -800,3 +826,8 @@ def test (section=u'', params=u''):
 def deb_binary ():
     builder = _BuilderLinuxDebBinary (DEB_BINARY_BUILD_DIR)
     builder.build()
+
+
+def deb_binary_clear ():
+    builder = _BuilderLinuxDebBinary (DEB_BINARY_BUILD_DIR)
+    builder.clear()
