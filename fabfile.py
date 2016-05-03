@@ -221,6 +221,7 @@ class _BuilderLinuxDebBinary (_BuilderBase):
         dest_subdir = self._getExecutableDir()
 
         dest_dir = os.path.join (self._root_build_dir, dest_subdir)
+        os.makedirs (self._getSubpath (self._debName, u'usr', u'lib'))
 
         linuxBuilder = _BuilderLinuxBinary (dest_subdir, create_archives=False)
         linuxBuilder.build()
