@@ -41,6 +41,7 @@ plugins_list = [
 
 BUILD_DIR = u'build'
 LINUX_BUILD_DIR = u"outwiker_linux"
+WINDOWS_BUILD_DIR = u"outwiker_win"
 DEB_BINARY_BUILD_DIR = u'deb_binary'
 DEB_SOURCE_BUILD_DIR = u'deb_source'
 SOURCES_DIR = u'sources'
@@ -84,7 +85,7 @@ class _BuilderBase (object):
     def build (self):
         self._createRootDir()
         self.clear()
-        os.makedirs (self._build_dir)
+        os.mkdir (self._build_dir)
 
         self._build()
 
@@ -528,6 +529,94 @@ class _BuilderPlugins (_BuilderBase):
                 local ("7z a -r -aoa -xr!*.pyc -xr!.ropeproject -w../ ../../{} ./*".format (full_archive_path))
 
 
+class _BuilderWindows (_BuilderBase):
+    """
+    Build for Windows
+    """
+    def __init__ (self, build_dir, create_installer=True):
+        super (_BuilderWindows, self).__init__ (build_dir)
+        self._create_installer = create_installer
+
+        self._resultBaseName = u'outwiker_win_unstable'
+        self._resultWithPluginsBaseName = u'outwiker_win_unstable_all_plugins'
+
+        # Path to copy plugins
+        self._dest_plugins_dir = os.path.join (self._build_dir, u'plugins')
+
+
+    def clear (self):
+        super (_BuilderWindows, self).clear()
+        toRemove = [
+            os.path.join (self._root_build_dir, self._resultBaseName + u'.7z'),
+            os.path.join (self._root_build_dir, self._resultBaseName + u'.exe'),
+            os.path.join (self._root_build_dir, self._resultBaseName + u'.zip'),
+            os.path.join (self._root_build_dir, self._resultWithPluginsBaseName + u'.7z'),
+            os.path.join (self._root_build_dir, self._resultWithPluginsBaseName + u'.zip'),
+        ]
+        map (self._remove, toRemove)
+
+
+    def _build (self):
+        self._create_plugins_dir()
+        self._build_binary()
+        self._clear_dest_plugins_dir()
+
+        # Create archive without plugins
+        with lcd (self._build_dir):
+            local ("7z a ..\outwiker_win_unstable.zip .\* .\plugins -r -aoa")
+            local ("7z a ..\outwiker_win_unstable.7z .\* .\plugins -r -aoa")
+
+        # Compile installer
+        if self._create_installer:
+            self._build_installer()
+
+        # Copy plugins to build folder
+        self._copy_plugins()
+
+        # Archive versions with plugins
+        with lcd (self._build_dir):
+            local ("7z a ..\outwiker_win_unstable_all_plugins.zip .\* .\plugins -r -aoa -xr!*.pyc -xr!.ropeproject")
+            local ("7z a ..\outwiker_win_unstable_all_plugins.7z .\* .\plugins -r -aoa -xr!*.pyc -xr!.ropeproject")
+
+
+    def _build_binary (self):
+        """
+        Build with cx_Freeze
+        """
+        with lcd ("src"):
+            local ("python setup.py build --build-exe ../{}".format (self._build_dir))
+
+
+    def _create_plugins_dir (self):
+        """
+        Create the plugins folder (it is not appened to the git repository)
+        """
+        pluginsdir = os.path.join ("src", "plugins")
+        if not os.path.exists (pluginsdir):
+            os.mkdir (pluginsdir)
+
+
+    def _clear_dest_plugins_dir (self):
+        self._remove (self._dest_plugins_dir)
+        os.mkdir (self._dest_plugins_dir)
+
+
+    def _build_installer (self):
+        local ("iscc outwiker_setup.iss")
+
+
+    def _copy_plugins (self):
+        """
+        Copy plugins to build folder
+        """
+        src_pluginsdir = u"plugins"
+        for plugin in plugins_list:
+            shutil.copytree (
+                os.path.join (src_pluginsdir, plugin, plugin),
+                os.path.join (self._dest_plugins_dir, plugin),
+            )
+
+
 
 def _getCurrentUbuntuDistribName ():
     with open ('/etc/lsb-release') as fp:
@@ -603,49 +692,18 @@ def sources ():
 
 def win (skipinstaller=False):
     """
-    Assemble builds under Windows
+    Build assemblies under Windows
     """
-    build_dir = u'build'
-    src_pluginsdir = u"plugins"
-    pluginsdir = os.path.join ("src", "plugins")
-    win_build_dir = os.path.join (build_dir, u"outwiker_win")
-    build_pluginsdir = os.path.join (win_build_dir, u'plugins')
+    builder = _BuilderWindows (WINDOWS_BUILD_DIR, not skipinstaller)
+    builder.build()
 
-    # Create the plugins folder (it is not appened to the git repository)
-    _remove (pluginsdir)
-    os.mkdir (pluginsdir)
 
-    # Build by cx_Freeze
-    with lcd ("src"):
-        local ("python setup.py build --build-exe ../{}".format (win_build_dir))
-
-    _remove (build_pluginsdir)
-    os.mkdir (build_pluginsdir)
-
-    # Remove old versions
-    _remove ("build/outwiker_win_unstable.zip")
-    _remove ("build/outwiker_win_unstable.7z")
-
-    # Create archive without plugins
-    with lcd (win_build_dir):
-        local ("7z a ..\outwiker_win_unstable.zip .\* .\plugins -r -aoa")
-        local ("7z a ..\outwiker_win_unstable.7z .\* .\plugins -r -aoa")
-
-    # Compile installer
-    if not skipinstaller:
-        local ("iscc outwiker_setup.iss")
-
-    # Copy plugins to build folder
-    for plugin in plugins_list:
-        shutil.copytree (
-            os.path.join (src_pluginsdir, plugin, plugin),
-            os.path.join (build_pluginsdir, plugin),
-        )
-
-    # Archive versions with plugins
-    with lcd (win_build_dir):
-        local ("7z a ..\outwiker_win_unstable_all_plugins.zip .\* .\plugins -r -aoa -xr!*.pyc -xr!.ropeproject")
-        local ("7z a ..\outwiker_win_unstable_all_plugins.7z .\* .\plugins -r -aoa -xr!*.pyc -xr!.ropeproject")
+def win_clear ():
+    """
+    Remove assemblies under Windows
+    """
+    builder = _BuilderWindows (WINDOWS_BUILD_DIR)
+    builder.clear()
 
 
 def linux (create_archives=True, build_dir=LINUX_BUILD_DIR):
@@ -741,14 +799,3 @@ def test (section=u'', params=u''):
 def deb_binary ():
     builder = _BuilderLinuxDebBinary (DEB_BINARY_BUILD_DIR)
     builder.build()
-
-
-def _remove (path):
-    """
-    Remove the fname file if it exists. The function not catch exceptions.
-    """
-    if os.path.exists (path):
-        if os.path.isfile (path):
-            os.remove (path)
-        elif os.path.isdir (path):
-            shutil.rmtree (path)
