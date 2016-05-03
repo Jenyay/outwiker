@@ -3,13 +3,19 @@
 import wx
 import wx.lib.newevent
 
+from outwiker.gui.hyperlink import (HyperLinkCtrl,
+                                    EVT_HYPERLINK_LEFT)
+
 # Событие, возникающее при клике по элементу, описывающий страницу
 PageClickEvent, EVT_PAGE_CLICK = wx.lib.newevent.NewEvent()
 
 
 class PageList (wx.ScrolledWindow):
     def __init__ (self, parent):
-        super (PageList, self).__init__ (parent, style=wx.BORDER_SIMPLE | wx.HSCROLL)
+        super (PageList, self).__init__ (
+            parent,
+            style=wx.BORDER_SIMPLE | wx.HSCROLL | wx.VSCROLL
+        )
 
         self.__space = 4
 
@@ -98,7 +104,7 @@ class PageTitleItem (wx.Panel):
         super (PageTitleItem, self).__init__ (parent)
         self.__page = page
 
-        self.__color = wx.Colour (0, 0, 0)
+        self.__color = wx.Colour (0, 0, 255)
         self.__fontSize = 10
         self.__propagationLevel = 15
         self.__backColor = wx.Colour (255, 255, 255)
@@ -106,14 +112,13 @@ class PageTitleItem (wx.Panel):
         self.SetBackgroundColour (self.__backColor)
 
         url = "/" + page.subpath
-        self.__label = wx.HyperlinkCtrl (self,
-                                         -1,
-                                         page.title,
-                                         url,
-                                         style=wx.HL_ALIGN_CENTRE | wx.NO_BORDER)
+        self.__label = HyperLinkCtrl (self,
+                                      label = page.title,
+                                      URL=url,
+                                      style=wx.HL_ALIGN_CENTRE | wx.NO_BORDER)
 
         self.__formatLabel (self.__label)
-        self.__label.Bind (wx.EVT_HYPERLINK, self.__pageClicked)
+        self.__label.Bind (EVT_HYPERLINK_LEFT, self.__pageClicked)
         self.Fit()
 
 
@@ -138,5 +143,10 @@ class PageTitleItem (wx.Panel):
         label.SetFont (font)
         label.SetToolTipString (self.__page.subpath.replace ("/", " / "))
         label.SetBackgroundColour (self.__backColor)
-        label.SetVisitedColour (label.GetNormalColour())
+        label.SetColours (self.__color, self.__color, self.__color)
+        label.AutoBrowse (False)
+        label.DoPopup (False)
+        label.ReportErrors(False)
+        label.EnableRollover (True)
+        label.SetUnderlines (False, False, False)
         label.SetSize (label.GetBestSize())
