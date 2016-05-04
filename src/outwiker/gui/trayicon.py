@@ -16,14 +16,16 @@ class OutwikerTrayIcon (wx.TaskBarIcon):
     Класс для работы с иконкой в трее
     """
     def __init__ (self, mainWnd):
-        wx.TaskBarIcon.__init__ (self)
+        super (OutwikerTrayIcon, self).__init__()
         self.mainWnd = mainWnd
         self.config = TrayConfig (Application.config)
 
         self.ID_RESTORE = wx.NewId()
         self.ID_EXIT = wx.NewId()
 
-        self.icon = wx.Icon(os.path.join (outwiker.core.system.getImagesDir(), "outwiker.ico"), wx.BITMAP_TYPE_ANY)
+        self.icon = wx.Icon(os.path.join (outwiker.core.system.getImagesDir(),
+                                          "outwiker.ico"),
+                            wx.BITMAP_TYPE_ANY)
 
         self.__bind()
 
@@ -89,7 +91,7 @@ class OutwikerTrayIcon (wx.TaskBarIcon):
 
 
     def __onIconize (self, event):
-        if event.Iconized():
+        if event.IsIconized():
             # Окно свернули
             self.__iconizeWindow ()
         else:
