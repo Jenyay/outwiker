@@ -2,7 +2,7 @@
 
 import wx
 
-from .pagelist import PageList, EVT_PAGE_CLICK
+from .pagelist import PageList
 
 
 class PageListPopup (wx.PopupTransientWindow):
@@ -11,12 +11,6 @@ class PageListPopup (wx.PopupTransientWindow):
 
         self.__pagelist = PageList (self)
         self.__layout ()
-        self.Bind (EVT_PAGE_CLICK, self.__onPageClick)
-
-
-    def __onPageClick (self, event):
-        event.Skip()
-        self.Dismiss()
 
 
     def __layout (self):

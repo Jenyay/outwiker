@@ -184,8 +184,6 @@ class ActionController (object):
             else:
                 raise ValueError (u'Invalid toolbar type')
 
-            toolbar.Realize()
-
             self._mainWindow.Unbind (wx.EVT_TOOL, id=toolid)
             actionInfo.toolbar = None
             actionInfo.toolItemId = None
@@ -253,10 +251,7 @@ class ActionController (object):
 
         toolbar = self._actionsInfo[action.stringId].toolbar
         if toolbar is not None:
-            toolbar.Freeze()
             toolbar.ToggleTool (self._actionsInfo[action.stringId].toolItemId, checked)
-            toolbar.Realize()
-            toolbar.Thaw()
 
         action.run (checked)
 
@@ -298,7 +293,6 @@ class ActionController (object):
 
         if actionInfo.toolItemId is not None:
             actionInfo.toolbar.EnableTool (actionInfo.toolItemId, enabled)
-            actionInfo.toolbar.Realize()
 
         if actionInfo.menuItem is not None:
             actionInfo.menuItem.Enable (enabled)

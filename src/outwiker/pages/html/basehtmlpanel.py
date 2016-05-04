@@ -22,6 +22,24 @@ from outwiker.gui.guiconfig import GeneralGuiConfig
 PageTabChangedEvent, EVT_PAGE_TAB_CHANGED = wx.lib.newevent.NewEvent()
 
 
+# class HtmlWindowPanel (wx.Panel):
+#     def __init__ (self, parent):
+#         super (HtmlWindowPanel, self).__init__ (parent)
+#         self._htmlWindow = getOS().getHtmlRender (self)
+#
+#         sizer = wx.FlexGridSizer (1)
+#         sizer.AddGrowableCol (0)
+#         sizer.AddGrowableRow (0)
+#         sizer.Add (self._htmlWindow, 0, wx.EXPAND)
+#         self.SetSizer (sizer)
+#         self.Layout()
+#
+#
+#     def getHtmlWindow (self):
+#         assert self._htmlWindow is not None
+#         return self._htmlWindow
+
+
 class BaseHtmlPanel(BaseTextPanel):
     __metaclass__ = ABCMeta
 
@@ -48,6 +66,8 @@ class BaseHtmlPanel(BaseTextPanel):
 
         self.notebook = wx.Notebook(self, -1, style=wx.NB_BOTTOM)
         self._codeEditor = self.getTextEditor()(self.notebook)
+
+        # self.htmlWindowPanel = HtmlWindowPanel (self.notebook)
         self.htmlWindow = getOS().getHtmlRender (self.notebook)
 
         self.__do_layout()
@@ -55,6 +75,10 @@ class BaseHtmlPanel(BaseTextPanel):
         self.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED, self._onTabChanged, self.notebook)
         self.Bind (self.EVT_SPELL_ON_OFF, handler=self._onSpellOnOff)
 
+
+    # @property
+    # def htmlWindow (self):
+    #     return self.htmlWindowPanel.getHtmlWindow()
 
     def Clear (self):
         self.Unbind(wx.EVT_NOTEBOOK_PAGE_CHANGED, source=self.notebook, handler=self._onTabChanged)
@@ -196,6 +220,12 @@ class BaseHtmlPanel(BaseTextPanel):
     def __do_layout(self):
         self.addPage(self.codeEditor, _("HTML"))
         self.addPage(self.htmlWindow, _("Preview"))
+        # self.addPage(self.htmlWindowPanel, _("Preview"))
+        # self.htmlWindow.Hide()
+        # self.htmlWindow.Show()
+
+        # self.htmlWindowPanel.Hide()
+        # self.htmlWindowPanel.Show()
 
         mainSizer = wx.FlexGridSizer(1, 1, 0, 0)
         mainSizer.Add(self.notebook, 1, wx.EXPAND, 0)

@@ -1,0 +1,6 @@
+?package(outwiker):needs="X11"\
+ section="Applications/Office"\
+ title="OutWiker"\
+ description="Personal outliner and wiki"\
+ command="/usr/bin/outwiker"\
+ icon="/usr/share/pixmaps/outwiker.xpm"

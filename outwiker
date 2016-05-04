@@ -1,4 +1,0 @@
-#!/bin/sh
-
-cd /usr/share/outwiker
-python2.7 runoutwiker.py "$@"

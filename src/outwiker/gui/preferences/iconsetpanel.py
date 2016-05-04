@@ -204,8 +204,9 @@ class IconsetPanel (BasePrefPanel):
         if not selItem.IsOk():
             return
 
-        group = self._groups.GetItemData (selItem).GetData()
-        self.__showIcons (group)
+        group_data = self._groups.GetItemData (selItem)
+        if group_data is not None:
+            self.__showIcons (group_data.GetData())
 
 
     def __onAddGroup (self, event):

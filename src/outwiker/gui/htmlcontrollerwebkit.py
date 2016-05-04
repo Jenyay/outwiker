@@ -1,5 +1,7 @@
 # -*- coding: UTF-8 -*-
 
+import urllib
+
 from .htmlcontroller import UriIdentifier
 
 
@@ -37,7 +39,8 @@ class UriIdentifierWebKit (UriIdentifier):
 
 
     def _prepareHref (self, href):
-        return self.__removeFileProtokol (href)
+        result = self.__removeFileProtokol (href)
+        return result
 
 
     def __removeFileProtokol (self, href):

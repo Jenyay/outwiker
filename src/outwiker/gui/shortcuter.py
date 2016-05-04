@@ -185,7 +185,7 @@ class Shortcuter (object):
         if isinstance (menuitem, wx.MenuItem):
             menuitem.SetItemLabel (title)
             checkable = menuitem.IsCheckable()
-            checked = menuitem.IsChecked()
+            checked = menuitem.IsChecked() if checkable else False
             enabled = menuitem.IsEnabled()
 
             # Без удаления пункта не хотят появляться подчеркивания
