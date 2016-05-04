@@ -11,7 +11,6 @@ from outwiker.core.application import Application
 from .guiconfig import MainWindowConfig
 
 from .mainmenu import MainMenu
-from .trayicon import OutwikerTrayIcon
 from .mainwndcontroller import MainWndController
 from .mainpanescontroller import MainPanesController
 from .shortcuter import Shortcuter
@@ -20,6 +19,7 @@ from outwiker.gui.mainpanes.attachmainpane import AttachMainPane
 from outwiker.gui.mainpanes.treemainpane import TreeMainPane
 from outwiker.gui.mainpanes.pagemainpane import PageMainPane
 from outwiker.gui.tabscontroller import TabsController
+from outwiker.gui.trayicon import getTrayIconController
 from outwiker.core.system import getImagesDir
 
 from toolbars.generaltoolbar import GeneralToolBar
@@ -114,7 +114,9 @@ class MainWindow(wx.Frame):
         if self.mainWindowConfig.maximized.value:
             self.Maximize()
 
-        self.taskBarIcon = OutwikerTrayIcon(self)
+        self.taskBarIcon = getTrayIconController(self)
+        self.taskBarIcon.initialize()
+
         self.tabsController = TabsController (self.pagePanel.panel.tabsCtrl,
                                               Application)
 

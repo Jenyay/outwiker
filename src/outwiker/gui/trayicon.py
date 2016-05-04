@@ -4,29 +4,37 @@ import os
 
 import wx
 
-import outwiker.core.system
+from outwiker.core.system import getImagesDir
 import outwiker.core.commands
 from outwiker.core.application import Application
 from .guiconfig import TrayConfig
 from outwiker.actions.exit import ExitAction
 
 
-class OutwikerTrayIcon (wx.TaskBarIcon):
+def getTrayIconController (parentWnd):
+    if os.name == "nt":
+        return TrayIconWindows(parentWnd)
+    else:
+        return TrayIconLinux(parentWnd)
+
+
+class TrayIconWindows (wx.TaskBarIcon):
     """
     Класс для работы с иконкой в трее
     """
     def __init__ (self, mainWnd):
-        super (OutwikerTrayIcon, self).__init__()
+        super (TrayIconWindows, self).__init__()
         self.mainWnd = mainWnd
         self.config = TrayConfig (Application.config)
 
         self.ID_RESTORE = wx.NewId()
         self.ID_EXIT = wx.NewId()
 
-        self.icon = wx.Icon(os.path.join (outwiker.core.system.getImagesDir(),
-                                          "outwiker.ico"),
+        self.icon = wx.Icon(os.path.join (getImagesDir(), "outwiker.ico"),
                             wx.BITMAP_TYPE_ANY)
 
+
+    def initialize (self):
         self.__bind()
 
 
@@ -156,9 +164,23 @@ class OutwikerTrayIcon (wx.TaskBarIcon):
     def Destroy (self):
         self.removeTrayIcon()
         self.__unbind()
-        super (OutwikerTrayIcon, self).Destroy()
+        super (TrayIconWindows, self).Destroy()
 
 
     def ShowTrayIcon (self):
         tooltip = outwiker.core.commands.getMainWindowTitle (Application)
         self.SetIcon(self.icon, tooltip)
+
+
+
+class TrayIconLinux (object):
+    def __init__ (self, mainWnd):
+        pass
+
+
+    def initialize (self):
+        pass
+
+
+    def Destroy (self):
+        pass

@@ -118,7 +118,6 @@ class Windows (System):
         return HtmlRenderIE (parent)
 
 
-
 class Unix (System):
     @property
     def name (self):
@@ -215,8 +214,6 @@ class Unix (System):
     def getHtmlRender (self, parent):
         from outwiker.gui.htmlrenderwebkit import HtmlRenderWebKit
         return HtmlRenderWebKit (parent)
-        # import wx.html2 as webview
-        # return webview.WebView.New(parent)
 
 
 def getOS ():
