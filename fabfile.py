@@ -10,7 +10,7 @@ import glob
 from fabric.api import local, lcd, settings
 
 # Supported Ubuntu releases
-UBUNTU_RELEASE_NAMES = ["wily", "trusty"]
+UBUNTU_RELEASE_NAMES = [u"wily", u"trusty", u"xenial"]
 
 # List of the supported plugins
 PLUGINS_LIST = [
@@ -767,9 +767,10 @@ def nextversion():
     with open (fname, "w") as fp_out:
         fp_out.write (result)
 
-    local ('dch -v "{}+{}~{}"'.format (lines[0].strip(),
-                                       lines[1].strip(),
-                                       _getCurrentUbuntuDistribName()))
+    with lcd (os.path.join (u'need_for_build', u'debian_debsource')):
+        local ('dch -v "{}+{}~{}"'.format (lines[0].strip(),
+                                           lines[1].strip(),
+                                           _getCurrentUbuntuDistribName()))
 
 
 
