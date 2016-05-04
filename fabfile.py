@@ -540,6 +540,7 @@ class _BuilderWindows (_BuilderBase):
 
         self._resultBaseName = u'outwiker_win_unstable'
         self._resultWithPluginsBaseName = u'outwiker_win_unstable_all_plugins'
+        self._plugins_list = PLUGINS_LIST
 
         # Path to copy plugins
         self._dest_plugins_dir = os.path.join (self._build_dir, u'plugins')
