@@ -125,19 +125,17 @@ class Unix (System):
 
 
     def init (self):
-        """
-        Активировать дополнительные библиотеки, в частности, pyGTK
-        """
-        import gobject
-        gobject.threads_init()
+        pass
 
 
     def startFile (self, path):
         """
         Запустить программу по умолчанию для path
         """
-        runcmd = "xdg-open '%s'" % path
-        wx.Execute (runcmd)
+        env = os.environ.copy()
+        if 'LD_PRELOAD' in env:
+            del env['LD_PRELOAD']
+        subprocess.Popen ([u'xdg-open', path], env=env)
 
 
     @property
