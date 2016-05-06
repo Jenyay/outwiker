@@ -125,17 +125,15 @@ class Unix (System):
 
 
     def init (self):
-        pass
+        if 'LD_PRELOAD' in os.environ:
+            del os.environ['LD_PRELOAD']
 
 
     def startFile (self, path):
         """
         Запустить программу по умолчанию для path
         """
-        env = os.environ.copy()
-        if 'LD_PRELOAD' in env:
-            del env['LD_PRELOAD']
-        subprocess.Popen ([u'xdg-open', path], env=env)
+        subprocess.Popen ([u'xdg-open', path])
 
 
     @property
