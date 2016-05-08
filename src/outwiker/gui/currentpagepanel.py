@@ -28,7 +28,11 @@ class CurrentPagePanel(wx.Panel):
         wx.Panel.__init__(self, *args, **kwds)
 
         self.tabsCtrl = TabsCtrl (self)
-        self.bookmarkButton = wx.BitmapButton(self, -1, wx.Bitmap(os.path.join (self.imagesDir, "star_gray.png"), wx.BITMAP_TYPE_ANY))
+        self.tabsCtrl.SetMinSize ((1, 1))
+        self.bookmarkButton = wx.BitmapButton(self,
+                                              -1,
+                                              wx.Bitmap(os.path.join (self.imagesDir, "star_gray.png"),
+                                                        wx.BITMAP_TYPE_ANY))
 
         self.__set_properties()
         self.__do_layout()
@@ -85,11 +89,9 @@ class CurrentPagePanel(wx.Panel):
             Application.selectedPage = None
             return
 
-        self.Freeze()
         self.__updatePageView (page)
         self.__updatePageInfo (page)
         self.bookmarkButton.Enable (page is not None)
-        self.Thaw()
 
 
     def __onPageUpdate (self, page, **kwargs):
@@ -137,7 +139,8 @@ class CurrentPagePanel(wx.Panel):
         """
         if page is not None:
             factory = FactorySelector.getFactory (page.getTypeString())
-            self.__pageView = factory.getPageView (self)
+            pageView = factory.getPageView (self)
+            self.__pageView = pageView
             self.__pageView.page = page
 
             assert self.__pageView is not None

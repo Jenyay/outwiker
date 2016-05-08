@@ -810,13 +810,17 @@ def run ():
     Run OutWiker from sources
     """
     with lcd ("src"):
-        if os.name == 'posix':
-            local (u'LD_PRELOAD=libwx_gtk2u_webview-3.0.so.0 python2.7 runoutwiker.py')
-        else:
-            local ("python runoutwiker.py")
+        _run (u'python2.7 runoutwiker.py')
 
 
-def test (section=u'', params=u''):
+def _run (command):
+    if os.name == 'posix':
+        local (u'LD_PRELOAD=libwx_gtk2u_webview-3.0.so.0 ' + command)
+    else:
+        local (command)
+
+
+def test (section=u'', *args):
     """
     Run the unit tests
     """
@@ -828,11 +832,11 @@ def test (section=u'', params=u''):
 
     with lcd ("src"):
         if section:
-            local ("python tests_{}.py {}".format (section, params))
+            _run ("python tests_{}.py {}".format (section, u' '.join (args)))
         else:
             with settings (warn_only=True):
                 for fname in files:
-                    local ("python {}".format (fname, params))
+                    _run ("python {}".format (fname, u' '.join (args)))
 
 
 

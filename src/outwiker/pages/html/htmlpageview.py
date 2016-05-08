@@ -91,7 +91,6 @@ class HtmlPageView (BaseHtmlPanel):
         ]
 
         self.__createCustomTools()
-        self._application.mainWindow.updateShortcuts()
         self.mainWindow.UpdateAuiManager()
 
         self._application.onPageUpdate += self.__onPageUpdate

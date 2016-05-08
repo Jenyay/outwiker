@@ -25,7 +25,7 @@ if __name__ == '__main__':
     from outwiker.core.application import Application
     Application.init ("../test/testconfig.ini")
 
-    app = wx.PySimpleApp(redirect=False)
+    app = wx.App(redirect=False)
 
     def emptyFunc():
         pass

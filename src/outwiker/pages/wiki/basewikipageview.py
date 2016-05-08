@@ -53,7 +53,6 @@ class BaseWikiPageView (BaseHtmlPanel):
         self._createCommonTools()
         self._createWikiTools()
 
-        self._application.mainWindow.updateShortcuts()
         self.mainWindow.UpdateAuiManager()
 
         if self._isHtmlCodeShown():

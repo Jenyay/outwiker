@@ -53,12 +53,10 @@ class BaseToolBar (wx.aui.AuiToolBar):
 
 
     def DeleteTool (self, toolid, fullUpdate=True):
-        self.Freeze()
         super (BaseToolBar, self).DeleteTool (toolid)
         self.UpdateToolBar()
         if fullUpdate:
             self._parent.UpdateAuiManager()
-        self.Thaw()
 
 
     def AddTool(self,
@@ -68,13 +66,12 @@ class BaseToolBar (wx.aui.AuiToolBar):
                 short_help_string=wx.EmptyString,
                 kind=wx.ITEM_NORMAL,
                 fullUpdate=True):
-        self.Freeze()
-        super (BaseToolBar, self).AddTool (tool_id, label, bitmap, short_help_string, kind)
+        item = super (BaseToolBar, self).AddTool (tool_id, label, bitmap, short_help_string, kind)
         self.UpdateToolBar()
         if fullUpdate:
             self._parent.UpdateAuiManager()
             self.updatePaneInfo()
-        self.Thaw()
+        return item
 
 
     @property

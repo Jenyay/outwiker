@@ -194,6 +194,3 @@ class HotKeysPanel (BasePrefPanel):
             except KeyError:
                 # Плагин могли уже отключить
                 pass
-
-        if Application.mainWindow is not None:
-            Application.mainWindow.updateShortcuts()

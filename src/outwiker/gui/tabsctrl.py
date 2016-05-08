@@ -12,9 +12,10 @@ class TabsCtrl (wx.Panel):
     def __init__ (self, parent):
         super (TabsCtrl, self).__init__ (parent)
 
-        self._tabs = fnb.FlatNotebook (self, agwStyle = (fnb.FNB_MOUSE_MIDDLE_CLOSES_TABS | 
-            fnb.FNB_X_ON_TAB |
-            fnb.FNB_DROPDOWN_TABS_LIST))
+        self._tabs = fnb.FlatNotebook (self,
+                                       agwStyle = (fnb.FNB_MOUSE_MIDDLE_CLOSES_TABS | 
+                                                   fnb.FNB_X_ON_TAB |
+                                                   fnb.FNB_DROPDOWN_TABS_LIST))
 
         self.__layout()
 

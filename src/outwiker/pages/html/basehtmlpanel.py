@@ -22,24 +22,6 @@ from outwiker.gui.guiconfig import GeneralGuiConfig
 PageTabChangedEvent, EVT_PAGE_TAB_CHANGED = wx.lib.newevent.NewEvent()
 
 
-# class HtmlWindowPanel (wx.Panel):
-#     def __init__ (self, parent):
-#         super (HtmlWindowPanel, self).__init__ (parent)
-#         self._htmlWindow = getOS().getHtmlRender (self)
-#
-#         sizer = wx.FlexGridSizer (1)
-#         sizer.AddGrowableCol (0)
-#         sizer.AddGrowableRow (0)
-#         sizer.Add (self._htmlWindow, 0, wx.EXPAND)
-#         self.SetSizer (sizer)
-#         self.Layout()
-#
-#
-#     def getHtmlWindow (self):
-#         assert self._htmlWindow is not None
-#         return self._htmlWindow
-
-
 class BaseHtmlPanel(BaseTextPanel):
     __metaclass__ = ABCMeta
 
@@ -362,8 +344,6 @@ class BaseHtmlPanel(BaseTextPanel):
         """
         Активировать или дезактивировать инструменты (пункты меню и кнопки) в зависимости от текущей выбранной вкладки
         """
-        self.mainWindow.Freeze()
-
         for tool in self.allTools:
             self.enableTool (tool, self._isEnabledTool (tool))
 
@@ -387,8 +367,6 @@ class BaseHtmlPanel(BaseTextPanel):
                                       searchEnabled and not self._application.selectedPage.readonly)
 
         self.mainWindow.UpdateAuiManager()
-
-        self.mainWindow.Thaw()
 
 
     def _isEnabledTool (self, tool):

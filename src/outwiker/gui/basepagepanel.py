@@ -16,9 +16,8 @@ class BasePagePanel (wx.Panel):
     """
     __metaclass__ = ABCMeta
 
-    def __init__ (self, parent, *args, **kwds):
-        kwds["style"] = wx.TAB_TRAVERSAL
-        wx.Panel.__init__(self, parent, *args, **kwds)
+    def __init__ (self, parent):
+        super (BasePagePanel, self).__init__ (parent, style=wx.TAB_TRAVERSAL)
 
         self._currentpage = None
         self.mainWindow = Application.mainWindow
@@ -210,5 +209,5 @@ class BasePagePanel (wx.Panel):
         Закрытие панели без сохранения.
         """
         self.Clear()
-        wx.Panel.Close (self)
+        super (BasePagePanel, self).Close()
         self.Destroy()

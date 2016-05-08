@@ -217,7 +217,7 @@ class UpdateNotifierTest (unittest.TestCase):
         verlist.updateVersions()
 
         self.assertTrue (verlist.getPluginVersion (u"Debug Plugin") == Version (0, 6))
-        self.assertTrue (verlist.stableVersion == Version (1, 8, 1))
+        self.assertTrue (verlist.stableVersion == Version (1, 9), verlist.stableVersion)
 
 
     def testVersionList_2 (self):

@@ -132,13 +132,12 @@ class ActionController (object):
         Добавить действие в меню menu
         Действие должно быть уже зарегистрировано с помощью метода register
         """
-        newid = wx.NewId()
         action = self._actionsInfo[strid].action
 
-        menuItem = menu.Append (newid, self._getMenuItemTitle (strid))
+        menuItem = menu.Append (wx.ID_ANY, self._getMenuItemTitle (strid))
         self._actionsInfo[strid].menuItem = menuItem
 
-        self._mainWindow.Bind (wx.EVT_MENU, handler=lambda event: action.run(None), id=newid)
+        self._mainWindow.Bind (wx.EVT_MENU, handler=lambda event: action.run(None), id=menuItem.GetId())
 
 
     def appendMenuCheckItem (self, strid, menu):
@@ -146,13 +145,12 @@ class ActionController (object):
         Добавить действие в меню menu
         Действие должно быть уже зарегистрировано с помощью метода register
         """
-        newid = wx.NewId()
         action = self._actionsInfo[strid].action
 
-        menuItem = menu.AppendCheckItem (newid, self._getMenuItemTitle (strid))
+        menuItem = menu.AppendCheckItem (wx.ID_ANY, self._getMenuItemTitle (strid))
         self._actionsInfo[strid].menuItem = menuItem
 
-        self._mainWindow.Bind (wx.EVT_MENU, handler=lambda event: self._onCheck (action, event.Checked()), id=newid)
+        self._mainWindow.Bind (wx.EVT_MENU, handler=lambda event: self._onCheck (action, event.Checked()), id=menuItem.GetId())
 
 
     def removeAction (self, strid):
@@ -207,12 +205,20 @@ class ActionController (object):
         image - путь до картинки, которая будет помещена на кнопку
         fullUpdate - нужно ли полностью обновить панель после добавления кнопки
         """
-        actionid = wx.NewId()
+        actionid = wx.ID_ANY
         buttonType = wx.ITEM_NORMAL
         action = self._actionsInfo[strid].action
 
-        self._appendToolbarItem (strid, toolbar, image, buttonType, actionid, fullUpdate)
-        self._mainWindow.Bind (wx.EVT_TOOL, handler=lambda event: action.run(None), id=actionid)
+        toolbarItem = self._appendToolbarItem (strid,
+                                               toolbar,
+                                               image,
+                                               buttonType,
+                                               actionid,
+                                               fullUpdate)
+
+        self._mainWindow.Bind (wx.EVT_TOOL,
+                               handler=lambda event: action.run(None),
+                               id=toolbarItem.GetId())
 
 
     def appendToolbarCheckButton (self, strid, toolbar, image, fullUpdate=False):
@@ -224,13 +230,20 @@ class ActionController (object):
         image - путь до картинки, которая будет помещена на кнопку
         fullUpdate - нужно ли полностью обновить панель после добавления кнопки
         """
-        actionid = wx.NewId()
+        actionid = wx.ID_ANY
         buttonType = wx.ITEM_CHECK
         action = self._actionsInfo[strid].action
 
-        self._appendToolbarItem (strid, toolbar, image, buttonType, actionid, fullUpdate)
+        toolbarItem = self._appendToolbarItem (strid,
+                                               toolbar,
+                                               image,
+                                               buttonType,
+                                               actionid,
+                                               fullUpdate)
 
-        self._mainWindow.Bind (wx.EVT_TOOL, handler=lambda event: self._onCheck (action, event.Checked()), id=actionid)
+        self._mainWindow.Bind (wx.EVT_TOOL,
+                               handler=lambda event: self._onCheck (action, event.Checked()),
+                               id=toolbarItem.GetId())
 
 
     def check (self, strid, checked):
@@ -256,7 +269,7 @@ class ActionController (object):
         action.run (checked)
 
 
-    def _appendToolbarItem (self, strid, toolbar, image, buttonType, actionid, fullUpdate=True):
+    def _appendToolbarItem (self, strid, toolbar, image, buttonType, actionid=wx.ID_ANY, fullUpdate=True):
         """
         Общий метод для добавления кнопки на панель инструментов
         toolbar - панель инструментов, куда будет добавлена кнопка (класс, производный от BaseToolBar)
@@ -267,25 +280,26 @@ class ActionController (object):
         bitmap = wx.Bitmap (image)
 
         if issubclass (type (toolbar), BaseToolBar):
-            toolbar.AddTool(actionid,
-                            title,
-                            bitmap,
-                            short_help_string=title,
-                            kind=buttonType,
-                            fullUpdate=fullUpdate)
+            toolbarItem = toolbar.AddTool(actionid,
+                                          title,
+                                          bitmap,
+                                          short_help_string=title,
+                                          kind=buttonType,
+                                          fullUpdate=fullUpdate)
         elif issubclass (type (toolbar), wx.ToolBar):
-            toolbar.AddLabelTool(actionid,
-                                 title,
-                                 bitmap,
-                                 wx.NullBitmap,
-                                 wx.ITEM_NORMAL,
-                                 title,
-                                 "")
+            toolbarItem = toolbar.AddLabelTool(actionid,
+                                               title,
+                                               bitmap,
+                                               wx.NullBitmap,
+                                               wx.ITEM_NORMAL,
+                                               title,
+                                               "")
         else:
             raise ValueError (u'Invalid toolbar type')
 
         self._actionsInfo[strid].toolbar = toolbar
-        self._actionsInfo[strid].toolItemId = actionid
+        self._actionsInfo[strid].toolItemId = toolbarItem.GetId()
+        return toolbarItem
 
 
     def enableTools (self, strid, enabled=True):

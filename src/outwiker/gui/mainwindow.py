@@ -13,7 +13,6 @@ from .guiconfig import MainWindowConfig
 from .mainmenu import MainMenu
 from .mainwndcontroller import MainWndController
 from .mainpanescontroller import MainPanesController
-from .shortcuter import Shortcuter
 from outwiker.gui.mainpanes.tagscloudmainpane import TagsCloudMainPane
 from outwiker.gui.mainpanes.attachmainpane import AttachMainPane
 from outwiker.gui.mainpanes.treemainpane import TreeMainPane
@@ -150,7 +149,6 @@ class MainWindow(wx.Frame):
         self.controller.updateRecentMenu()
         self.__panesController.updateViewMenu()
         self.treePanel.panel.addButtons()
-        self.updateShortcuts()
 
         if self.mainWindowConfig.fullscreen.value:
             Application.actionController.check (FullScreenAction.stringId, True)
@@ -466,11 +464,16 @@ class MainWindow(wx.Frame):
         return self.toolbars[self.GENERAL_TOOLBAR_STR]
 
 
+    # Оставлено, чтобы не ломать совместимость с плагином WebPage
     def updateShortcuts (self):
-        """
-        Обновить шорткаты (буквы с подчеркиванием) в меню
-        """
-        Shortcuter (self.mainMenu).assignShortcuts()
+        pass
+
+
+    # def updateShortcuts (self):
+    #     """
+    #     Обновить шорткаты (буквы с подчеркиванием) в меню
+    #     """
+    #     Shortcuter (self.mainMenu).assignShortcuts()
 
 
     def UpdateAuiManager (self):

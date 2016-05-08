@@ -45,8 +45,6 @@ class BookmarksController (object):
                 self.controller.mainMenu.bookmarksMenu.Append (id, label, "", wx.ITEM_NORMAL)
                 self.controller.mainWindow.Bind(wx.EVT_MENU, self.__onSelectBookmark, id=id)
 
-            self.controller.mainWindow.updateShortcuts()
-
 
     def __onSelectBookmark (self, event):
         subpath = self._bookmarksId[event.Id]
