@@ -42,10 +42,10 @@ class OrgHTMLGenerator (object):
 
         if headers:
             # Append headers
-            builder.write ('<tr>')
+            builder.write (u'<tr>')
             for header in headers:
-                builder.write ('<th>{}</th>'.format (header))
-            builder.write ('</tr>\n')
+                builder.write (u'<th>{}</th>'.format (header))
+            builder.write (u'</tr>\n')
 
             # Append rows
             for record in dayDescription:
