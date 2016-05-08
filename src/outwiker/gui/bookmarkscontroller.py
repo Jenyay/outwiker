@@ -26,7 +26,7 @@ class BookmarksController (object):
 
         if Application.wikiroot is not None:
             for n in range (len (Application.wikiroot.bookmarks)):
-                id = wx.NewId()
+                id = wx.Window.NewControlId()
                 page = Application.wikiroot.bookmarks[n]
                 if page is None:
                     continue

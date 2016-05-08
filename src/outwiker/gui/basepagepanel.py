@@ -91,7 +91,7 @@ class BasePagePanel (wx.Panel):
         """
         assert idstring not in self._tools
 
-        id = wx.NewId()
+        id = wx.Window.NewControlId()
         tool = ToolsInfo (id, alwaysEnabled, menu, panelname)
         self._tools[idstring] = tool
 

@@ -18,7 +18,6 @@ class TagsSelector (wx.Panel):
     def __init__ (self, parent):
         super (TagsSelector, self).__init__ (parent)
 
-        self.__ID_TAGS_BUTTON = wx.NewId()
         self.__tagsWidth = 350
         self.__tagsHeight = 150
 

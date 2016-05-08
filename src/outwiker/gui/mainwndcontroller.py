@@ -325,7 +325,7 @@ class MainWndController (object):
         self._recentId = {}
 
         for n in range (len (Application.recentWiki)):
-            id = wx.NewId()
+            id = wx.Window.NewControlId()
             path = Application.recentWiki[n]
             self._recentId[id] = path
 

@@ -47,7 +47,7 @@ class ToolBarsController (object):
 
 
     def _addMenu (self, toolbar):
-        newitem = self._toolbarsMenu.AppendCheckItem (wx.NewId(), toolbar.caption)
+        newitem = self._toolbarsMenu.AppendCheckItem (wx.ID_ANY, toolbar.caption)
         newitem.Check (toolbar.pane.IsShown())
 
         self._parent.Bind(wx.EVT_MENU, self.__onToolBarMenuClick, newitem)

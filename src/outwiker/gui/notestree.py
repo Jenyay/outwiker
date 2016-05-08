@@ -25,13 +25,6 @@ from outwiker.core.defines import ICON_WIDTH, ICON_HEIGHT
 
 class NotesTree(wx.Panel):
     def __init__(self, *args, **kwds):
-        self.ID_PROPERTIES_BUTTON = wx.NewId()
-        self.ID_MOVE_UP = wx.NewId()
-        self.ID_MOVE_DOWN = wx.NewId()
-        self.ID_ADD_SIBLING_PAGE = wx.NewId()
-        self.ID_ADD_CHILD_PAGE = wx.NewId()
-        self.ID_REMOVE_PAGE = wx.NewId()
-
         # Переключатель, устанавливается в True, если "внезапно" изменяется текущая страница
         self.__externalPageSelect = False
 

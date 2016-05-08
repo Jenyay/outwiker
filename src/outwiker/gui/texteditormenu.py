@@ -5,12 +5,12 @@ import wx.stc
 
 
 def _getIdSuggests (count):
-    return [wx.NewId() for n in xrange(count)]
+    return [wx.Window.NewControlId() for n in xrange(count)]
 
 
 class TextEditorMenu (wx.Menu):
-    ID_ADD_WORD = wx.NewId()
-    ID_ADD_WORD_LOWER = wx.NewId()
+    ID_ADD_WORD = wx.Window.NewControlId()
+    ID_ADD_WORD_LOWER = wx.Window.NewControlId()
     ID_SUGGESTS = _getIdSuggests(10)
 
 

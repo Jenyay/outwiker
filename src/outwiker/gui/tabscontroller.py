@@ -26,8 +26,6 @@ class TabsController (object):
         self._tabSelectedSection = RootWikiPage.sectionGeneral
         self._tabSelectedOption = u"selectedtab"
 
-        self.NEXT_TAB = wx.NewId()
-
         self.__bindEvents()
 
 
