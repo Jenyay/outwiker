@@ -810,7 +810,10 @@ def run ():
     Run OutWiker from sources
     """
     with lcd ("src"):
-        _run (u'python2.7 runoutwiker.py')
+        if os.name == 'posix':
+            _run (u'python2.7 runoutwiker.py')
+        else:
+            _run (u'python runoutwiker.py')
 
 
 def _run (command):
