@@ -1,17 +1,9 @@
 # -*- coding: UTF-8 -*-
 
 import os
-# import os.path
 import urllib
 
 import wx
-
-# import gtk
-# import gtk.gdk
-
-# pywebkitgtk (http://code.google.com/p/pywebkitgtk/)
-# http://webkitgtk.org/reference/webkitgtk/stable/webkitgtk-webkitwebview.html
-# import webkit
 
 import outwiker.core.system
 import outwiker.core.commands
@@ -58,31 +50,6 @@ class HtmlRenderWebKit(HtmlRender):
         sizer.Add (self.ctrl, 0, wx.EXPAND)
         self.SetSizer (sizer)
 
-        # native_ctrl = self.ctrl.GetNativeBackend()
-        # print type (native_ctrl.next())
-        # print dir (native_ctrl)
-
-        # Here is where we do the "magic" to embed webkit into wxGTK.
-        # whdl = self.GetHandle()
-        #
-        # window = gtk.gdk.window_lookup(whdl)
-        #
-        # # We must keep a reference of "pizza". Otherwise we get a crash.
-        # self.pizza = pizza = window.get_user_data()
-        #
-        # self.scrolled_window = scrolled_window = pizza.parent
-        #
-        # # Removing pizza to put a webview in it's place
-        # scrolled_window.remove(pizza)
-        #
-        # self.ctrl = ctrl = webkit.WebView()
-        #
-        # # parent.AddChild (ctrl)
-        # scrolled_window.add(ctrl)
-        # # scrolled_window.remove_page(0)
-        # # scrolled_window.set_tab_label_text (ctrl, '111')
-        # scrolled_window.show_all()
-
         self.canOpenUrl = False                # Можно ли открывать ссылки
 
         # Disable console output
@@ -128,8 +95,6 @@ class HtmlRenderWebKit(HtmlRender):
             text = _(u"Can't read file %s") % (fname)
 
         self.SetPage (text, os.path.dirname (fname))
-        # self._path = "file://" + urllib.quote (fname.encode ("utf8")) + "/"
-        # self.ctrl.LoadURL (self._path)
         self.canOpenUrl = False
 
 
@@ -137,10 +102,6 @@ class HtmlRenderWebKit(HtmlRender):
         self.canOpenUrl = True
         self._path = "file://" + urllib.quote (basepath.encode ("utf8")) + "/"
 
-        # self.ctrl.load_string (htmltext,
-        #                        "text/html",
-        #                        "utf8",
-        #                        self._path)
         self.ctrl.SetPage (htmltext, self._path)
         self.canOpenUrl = False
 
@@ -152,12 +113,12 @@ class HtmlRenderWebKit(HtmlRender):
 
     def __identifyUri (self, href):
         """
-        Определить тип ссылки и вернуть кортеж (url, page, filename)
+        Определить тип ссылки и вернуть кортеж (url, page, filename, anchor)
         """
         uri = self.ctrl.GetCurrentURL()
 
         if uri is not None:
-            basepath = urllib.unquote (uri)
+            basepath = urllib.unquote (uri.encode('ascii')).decode ('utf8')
             identifier = UriIdentifierWebKit (self._currentPage, basepath)
 
             return identifier.identify (href)
@@ -165,40 +126,40 @@ class HtmlRenderWebKit(HtmlRender):
         return (None, None, None, None)
 
 
-    def __onHoveredOverLink (self, view, title, uri):
-        if uri is None:
-            self.setStatusText (uri, u"")
-            return
-
-        try:
-            href = unicode (urllib.unquote (uri), "utf8")
-        except UnicodeDecodeError:
-            self.setStatusText (uri, u"")
-            return
-
-        (url, page, filename, anchor) = self.__identifyUri (href)
-
-        if url is not None:
-            self.setStatusText (href, url)
-            return
-
-        if page is not None:
-            text = page.subpath
-            if anchor is not None:
-                text += "/" + anchor
-
-            self.setStatusText (href, text)
-            return
-
-        if filename is not None:
-            self.setStatusText (href, filename)
-            return
-
-        if anchor is not None:
-            self.setStatusText (href, anchor)
-            return
-
-        self.setStatusText (href, u"")
+    # def __onHoveredOverLink (self, view, title, uri):
+    #     if uri is None:
+    #         self.setStatusText (uri, u"")
+    #         return
+    #
+    #     try:
+    #         href = urllib.unquote (uri.encode('ascii')).decode ('utf8')
+    #     except UnicodeDecodeError:
+    #         self.setStatusText (uri, u"")
+    #         return
+    #
+    #     (url, page, filename, anchor) = self.__identifyUri (href)
+    #
+    #     if url is not None:
+    #         self.setStatusText (href, url)
+    #         return
+    #
+    #     if page is not None:
+    #         text = page.subpath
+    #         if anchor is not None:
+    #             text += "/" + anchor
+    #
+    #         self.setStatusText (href, text)
+    #         return
+    #
+    #     if filename is not None:
+    #         self.setStatusText (href, filename)
+    #         return
+    #
+    #     if anchor is not None:
+    #         self.setStatusText (href, anchor)
+    #         return
+    #
+    #     self.setStatusText (href, u"")
 
 
     def __onNavigate (self, event):
