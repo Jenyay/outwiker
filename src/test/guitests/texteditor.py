@@ -226,10 +226,6 @@ class TextEditorTest (BaseMainWndTest):
         self.assertEqual (self._getEditor().GetSelectionStart(), 0)
         self.assertEqual (self._getEditor().GetSelectionEnd(), 1)
 
-        self._getEditor().SetSelection (1, 0)
-        self.assertEqual (self._getEditor().GetSelectionStart(), 0)
-        self.assertEqual (self._getEditor().GetSelectionEnd(), 1)
-
         self._getEditor().SetSelection (10, 10)
         self.assertEqual (self._getEditor().GetSelectionStart(), 10)
         self.assertEqual (self._getEditor().GetSelectionEnd(), 10)
