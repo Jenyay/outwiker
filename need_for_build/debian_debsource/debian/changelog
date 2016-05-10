@@ -1,3 +1,9 @@
+outwiker (2.0.0+793~wily) wily; urgency=medium
+
+  * Next version
+
+ -- Eugeniy Ilin <jenyay.ilin@gmail.com>  Tue, 10 May 2016 22:20:25 +0300
+
 outwiker (2.0.0+792~wily) wily; urgency=medium
 
   * First version for wxPython 3.0.
