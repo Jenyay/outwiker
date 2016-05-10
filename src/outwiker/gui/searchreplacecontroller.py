@@ -1,5 +1,7 @@
 # -*- coding: UTF-8 -*-
 
+import wx
+
 
 class SearchReplaceController (object):
     _recentSearch = u""
@@ -16,6 +18,13 @@ class SearchReplaceController (object):
         self._searcher = LocalSearcher()
 
         self.setSearchPhrase (SearchReplaceController._recentSearch)
+        self.panel.Bind (wx.EVT_CLOSE, self.__onClose)
+
+
+    def __onClose (self, event):
+        self.editor.SetFocus()
+        self.panel.Hide()
+        self.panel.GetParent().Layout()
 
 
     def nextSearch (self):
@@ -23,6 +32,8 @@ class SearchReplaceController (object):
         Искать следующее вхождение фразы
         """
         self._searchTo (self._findNext)
+        if self.getSearchPhrase():
+            self.editor.SetFocus()
 
 
     def prevSearch (self):
@@ -30,7 +41,8 @@ class SearchReplaceController (object):
         Искать предыдущее вхождение фразы
         """
         self._searchTo (self._findPrev)
-        self.editor.SetFocus()
+        if self.getSearchPhrase():
+            self.editor.SetFocus()
 
 
     def replace (self):
@@ -170,6 +182,8 @@ class SearchReplaceController (object):
         if result is not None:
             self.panel.resultLabel.SetLabel (u"")
             self.editor.SetSelection (result.position, result.position + len (result.phrase))
+            line = self.editor.GetCurrentLine()
+            self.editor.ScrollToLine (line)
         else:
             self.panel.resultLabel.SetLabel (_(u"Not found"))
 

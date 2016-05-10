@@ -386,6 +386,14 @@ class TextEditor(wx.Panel):
         return self.textCtrl.GetSelectedText()
 
 
+    def GetCurrentLine (self):
+        return self.textCtrl.GetCurrentLine()
+
+
+    def ScrollToLine (self, line):
+        self.textCtrl.ScrollToLine (line)
+
+
     def SetSelection (self, start, end):
         """
         start и end в символах, а не в байтах, в отличие от исходного StyledTextCtrl

@@ -63,7 +63,6 @@ class SearchReplacePanel (wx.Panel):
         self.Bind(wx.EVT_TEXT, self.__onSearchTextChange, self._searchText)
         self.Bind(wx.EVT_BUTTON, self.__onNextSearch, self._nextSearchBtn)
         self.Bind(wx.EVT_BUTTON, self.__onPrevSearch, self._prevSearchBtn)
-        self.Bind (wx.EVT_CLOSE, self.__onClose)
 
         self.Bind(wx.EVT_BUTTON, self.__onReplace, self._replaceBtn)
         self.Bind(wx.EVT_BUTTON, self.__onReplaceAll, self._replaceAllBtn)
@@ -162,11 +161,6 @@ class SearchReplacePanel (wx.Panel):
     def __onSearchTextChange (self, event):
         if self._controller is not None:
             self._controller.enterSearchPhrase()
-
-
-    def __onClose(self, event):
-        self.Hide()
-        self.GetParent().Layout()
 
 
     def __onKeyPressed (self, event):
