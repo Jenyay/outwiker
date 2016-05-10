@@ -810,10 +810,14 @@ def run ():
     Run OutWiker from sources
     """
     with lcd ("src"):
-        if os.name == 'posix':
-            _run (u'python2.7 runoutwiker.py')
-        else:
-            _run (u'python runoutwiker.py')
+        _run (u'{} runoutwiker.py'.format (_getPython()))
+
+
+def _getPython ():
+    if os.name == 'posix':
+       return u'python2.7'
+    else:
+        return u'python'
 
 
 def _run (command):
@@ -835,11 +839,11 @@ def test (section=u'', *args):
 
     with lcd ("src"):
         if section:
-            _run ("python tests_{}.py {}".format (section, u' '.join (args)))
+            _run ("{} tests_{}.py {}".format (_getPython(), section, u' '.join (args)))
         else:
             with settings (warn_only=True):
                 for fname in files:
-                    _run ("python {}".format (fname, u' '.join (args)))
+                    _run ("{} {}".format (_getPython(), fname, u' '.join (args)))
 
 
 
