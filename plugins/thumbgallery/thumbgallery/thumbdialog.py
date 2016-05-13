@@ -92,7 +92,7 @@ class ThumbDialog (wx.Dialog):
                           border = 2)
 
 
-        attachSizer = wx.FlexGridSizer (1, 1)
+        attachSizer = wx.FlexGridSizer (cols=1)
         attachSizer.AddGrowableCol (0)
         attachSizer.AddGrowableRow (0)
 

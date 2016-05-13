@@ -10,7 +10,7 @@ from outwiker.core.version import Version, StatusSet
 from .controller import Controller
 
 
-__version__ = u"1.1.2"
+__version__ = u"1.1.3"
 
 
 # Для работы этого плагина требуется OutWiker 1.6.0.632
