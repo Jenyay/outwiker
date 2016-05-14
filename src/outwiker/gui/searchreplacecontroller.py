@@ -181,9 +181,8 @@ class SearchReplaceController (object):
         result = direction (text, phrase)
         if result is not None:
             self.panel.resultLabel.SetLabel (u"")
+            self.editor.GotoPos (result.position)
             self.editor.SetSelection (result.position, result.position + len (result.phrase))
-            line = self.editor.GetCurrentLine()
-            self.editor.ScrollToLine (line)
         else:
             self.panel.resultLabel.SetLabel (_(u"Not found"))
 

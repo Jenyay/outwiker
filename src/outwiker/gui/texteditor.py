@@ -407,6 +407,11 @@ class TextEditor(wx.Panel):
         self.textCtrl.SetSelection (firstByte, endByte)
 
 
+    def GotoPos (self, pos):
+        pos_bytes = self._helper.calcBytePos (self.GetText(), pos)
+        self.textCtrl.GotoPos (pos_bytes)
+
+
     def GetCurrentPosition (self):
         """
         Возвращает номер символа (а не байта), перед которых находится курсор
