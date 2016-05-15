@@ -44,7 +44,8 @@ class TextEditor(wx.Panel):
         self._spellErrorText = None
         self._spellSuggestList = []
 
-        self._spellMaxSuggest = len (TextEditorMenu.ID_SUGGESTS)
+        self._spellMaxSuggest = 10
+        self._suggestMenuItems = []
         self._spellStartByteError = -1
         self._spellEndByteError = -1
 
@@ -63,8 +64,6 @@ class TextEditor(wx.Panel):
         self._lastEdit = datetime.now() - self._DELAY * 2
 
         self.textCtrl = StyledTextCtrl(self, -1)
-
-        self._popupMenu = TextEditorMenu(self)
 
         # Создание панели поиска и ее контроллера
         self._searchPanel = SearchReplacePanel (self)
@@ -88,12 +87,6 @@ class TextEditor(wx.Panel):
         self.textCtrl.Bind(wx.EVT_MENU, self.__onUndo, id = wx.ID_UNDO)
         self.textCtrl.Bind(wx.EVT_MENU, self.__onRedo, id = wx.ID_REDO)
         self.textCtrl.Bind(wx.EVT_MENU, self.__onSelectAll, id = wx.ID_SELECTALL)
-
-        self.textCtrl.Bind(wx.EVT_MENU, self.__onAddWordToDict, id = TextEditorMenu.ID_ADD_WORD)
-        self.textCtrl.Bind(wx.EVT_MENU, self.__onAddWordLowerToDict, id = TextEditorMenu.ID_ADD_WORD_LOWER)
-
-        for suggestId in TextEditorMenu.ID_SUGGESTS:
-            self.textCtrl.Bind(wx.EVT_MENU, self.__onSpellSuggest, id = suggestId)
 
         self.textCtrl.Bind (wx.EVT_CHAR, self.__OnChar_ImeWorkaround)
         self.textCtrl.Bind (wx.EVT_KEY_DOWN, self.__onKeyDown)
@@ -523,20 +516,12 @@ class TextEditor(wx.Panel):
                 if item.strip()]
 
 
-    def _getMenu (self):
-        """
-        pos_byte - nearest text position (in bytes) where was produce a click
-        """
-        self._popupMenu.RefreshItems ()
-        return self._popupMenu
-
-
     def __onContextMenu (self, event):
         point = self.textCtrl.ScreenToClient (event.GetPosition())
         pos_byte = self.textCtrl.PositionFromPoint(point)
 
-        popupMenu = self._getMenu ()
-        self._appendSpellItems (popupMenu, pos_byte)
+        popupMenu = TextEditorMenu ()
+        self._appendSpellMenuItems (popupMenu, pos_byte)
 
         Application.onEditorPopupMenu (
             Application.selectedPage,
@@ -544,6 +529,7 @@ class TextEditor(wx.Panel):
         )
 
         self.textCtrl.PopupMenu(popupMenu)
+        popupMenu.Destroy()
 
 
     def getCachedStyleBytes (self):
@@ -566,7 +552,7 @@ class TextEditor(wx.Panel):
         self._styleSet = False
 
 
-    def _appendSpellItems (self, menu, pos_byte):
+    def _appendSpellMenuItems (self, menu, pos_byte):
         stylebytes = self.getCachedStyleBytes()
         if stylebytes is None:
             return
@@ -591,18 +577,30 @@ class TextEditor(wx.Panel):
 
         self._spellStartByteError = startSpellError + 1
         self._spellEndByteError = endSpellError
-        self._spellErrorText = self.textCtrl.GetTextRange (self._spellStartByteError, self._spellEndByteError)
+        self._spellErrorText = self.textCtrl.GetTextRange (self._spellStartByteError,
+                                                           self._spellEndByteError)
+
         self._spellSuggestList = self._spellChecker.getSuggest (self._spellErrorText)[:self._spellMaxSuggest]
 
         menu.AppendSeparator()
-        menu.AppendSpellSubmenu (self._spellErrorText, self._spellSuggestList)
+        self._suggestMenuItems = menu.AppendSpellSubmenu (self._spellErrorText,
+                                                          self._spellSuggestList)
+
+        for menuItem in self._suggestMenuItems:
+            self.textCtrl.Bind(wx.EVT_MENU, self.__onSpellSuggest, menuItem)
+
+        self.textCtrl.Bind(wx.EVT_MENU,
+                           self.__onAddWordToDict,
+                           id = menu.ID_ADD_WORD)
+
+        self.textCtrl.Bind(wx.EVT_MENU,
+                           self.__onAddWordLowerToDict,
+                           id = menu.ID_ADD_WORD_LOWER)
+
 
 
     def __onSpellSuggest (self, event):
-        assert event.GetId() in TextEditorMenu.ID_SUGGESTS
-
-        index = TextEditorMenu.ID_SUGGESTS.index (event.GetId())
-        word = self._spellSuggestList[index]
+        word = event.GetEventObject().GetLabelText (event.GetId())
 
         self.textCtrl.SetSelection (self._spellStartByteError, self._spellEndByteError)
         self.textCtrl.ReplaceSelection (word)

@@ -4,27 +4,9 @@ import wx
 import wx.stc
 
 
-def _getIdSuggests (count):
-    return [wx.Window.NewControlId() for n in xrange(count)]
-
-
 class TextEditorMenu (wx.Menu):
-    ID_ADD_WORD = wx.Window.NewControlId()
-    ID_ADD_WORD_LOWER = wx.Window.NewControlId()
-    ID_SUGGESTS = _getIdSuggests(10)
-
-
-    def __init__ (self, editor):
+    def __init__ (self):
         super (type (self), self).__init__()
-        self._editor = editor
-
-
-    def RefreshItems (self):
-        """
-        Remove all items and add standard items
-        """
-        for item in self.GetMenuItems():
-            self.RemoveItem (item)
 
         self.Append (wx.ID_UNDO, _(u'Undo'))
         self.Append (wx.ID_REDO, _(u'Redo'))
@@ -35,19 +17,23 @@ class TextEditorMenu (wx.Menu):
         self.AppendSeparator ()
         self.Append (wx.ID_SELECTALL, _(u'Select All'))
 
+        self.ID_ADD_WORD = wx.Window.NewControlId()
+        self.ID_ADD_WORD_LOWER = wx.Window.NewControlId()
+
 
     def AppendSpellSubmenu (self, word, suggestList):
-        assert len (suggestList) <= len (self.ID_SUGGESTS)
-
-        spellMenu = wx.Menu()
-        spellMenu.Append (self.ID_ADD_WORD, _(u'Add "{}" to dictionary').format (word))
+        self._spellMenu = wx.Menu()
+        self._spellMenu.Append (self.ID_ADD_WORD, _(u'Add "{}" to dictionary').format (word))
 
         if word.lower() != word:
-            spellMenu.Append (self.ID_ADD_WORD_LOWER, _(u'Add "{}" to dictionary').format (word.lower()))
+            self._spellMenu.Append (self.ID_ADD_WORD_LOWER, _(u'Add "{}" to dictionary').format (word.lower()))
 
+        suggestMenuItems = []
         if suggestList:
-            spellMenu.AppendSeparator()
+            self._spellMenu.AppendSeparator()
             for n, suggest in enumerate (suggestList):
-                spellMenu.Append (self.ID_SUGGESTS[n], suggest)
+                menuItem = self._spellMenu.Append (wx.ID_ANY, suggest)
+                suggestMenuItems.append (menuItem)
 
-        self.AppendSubMenu (spellMenu, _(u'Spell'))
+        self.AppendSubMenu (self._spellMenu, _(u'Spell'))
+        return suggestMenuItems
