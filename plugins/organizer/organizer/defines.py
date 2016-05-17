@@ -10,3 +10,9 @@ HTML_ORG_DIV_DATE_CLASS = u'org-date'
 HTML_ORG_TABLE_CLASS = u'org-table'
 
 HTML_EMPTY_CELL_CONTENT = u'-'
+
+RECORD_TAGS = u'Tags'
+
+
+if __name__ == '__name__':
+    _(u'Tags')

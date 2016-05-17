@@ -139,7 +139,7 @@ class OrganizerTest (unittest.TestCase):
     Теги: тег 1, тег 2, тег 3
 
     Описание: бла-бла-бла
-    теги:   тег 4
+    Теги:   тег 4
         (:orgend:)'''
 
         self.testPage.content = text
@@ -162,7 +162,7 @@ class OrganizerTest (unittest.TestCase):
     Tags:   тег 4
 
     Описание: бла-бла-бла
-    теги: тег 5
+    Теги: тег 5
         (:orgend:)'''
 
         self.testPage.content = text
@@ -175,3 +175,29 @@ class OrganizerTest (unittest.TestCase):
         self.assertIn (u'тег 3', self.testPage.tags)
         self.assertIn (u'тег 4', self.testPage.tags)
         self.assertIn (u'тег 5', self.testPage.tags)
+
+
+    def test_add_tags_08 (self):
+        text = u'''(:org:)
+    Description: бла-бла-бла
+    Теги: -
+        (:orgend:)'''
+
+        self.testPage.content = text
+
+        generator = HtmlGenerator (self.testPage)
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
+
+        self.assertNotIn (u'-', self.testPage.tags)
+
+
+    def test_add_tags_09 (self):
+        text = u'''(:org:)
+    Description: бла-бла-бла
+        (:orgend:)'''
+
+        self.testPage.content = text
+
+        generator = HtmlGenerator (self.testPage)
+        result = generator.makeHtml (Style().getPageStyle (self.testPage))
+        self.assertIn (u'<table', result)

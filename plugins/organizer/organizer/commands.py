@@ -9,9 +9,12 @@ from outwiker.core.application import Application
 from .config import OrganizerConfig
 from .defines import (DATE_ORG_PARAM_NANE,
                       HTML_STYLES_COMMENT_START,
-                      HTML_STYLES_COMMENT_END)
+                      HTML_STYLES_COMMENT_END,
+                      RECORD_TAGS)
 from .orgitems import DayDescription, Record
 from .orghtmlgenerator import OrgHTMLGenerator
+from .localizer import Localizer
+from .utils import splitTags
 
 
 class CommandOrg (Command):
@@ -60,13 +63,30 @@ class CommandOrg (Command):
             self.parser.appendToHead (u'</style>')
             self.parser.appendToHead (HTML_STYLES_COMMENT_END)
 
+        self._addTagsToPage (dayDescription)
         return self._htmlGenerator.getHTML (dayDescription)
+
+
+    def _addTagsToPage (self, dayDescription):
+        localizer = Localizer()
+        tagsList = []
+        for record in dayDescription:
+            tagsStr = localizer.getRecordValue (record, RECORD_TAGS)
+            if tagsStr:
+                tags = splitTags (tagsStr)
+                if u'-' in tags:
+                    tags.remove (u'-')
+                tagsList += tags
+
+        tags = list (set (tagsList + self.parser.page.tags))
+        self.parser.page.tags = tags
+            
 
 
     def _fillDayDescription (self, dayDescription, content):
         content = content.replace ('\r\n', '\n')
         job_list = content.split ('\n\n')
-        detail_regex = re.compile (r'(?P<title>.*?):\s*(?P<description>.*)',
+        detail_regex = re.compile (r'\s*(?P<title>.*?):\s*(?P<description>.*)',
                                    re.U | re.M)
 
         for job in job_list:
