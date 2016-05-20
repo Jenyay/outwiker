@@ -13,10 +13,12 @@ from outwiker.gui.testeddialog import TestedDialog
 from outwiker.gui.tagsselector import TagsSelector
 from outwiker.core.commands import MessageBox
 from outwiker.core.iconmaker import IconMaker
+from outwiker.core.commands import getClipboardText
 
 import webpage.events
 from webpage.downloader import Downloader, WebPageDownloadController
 from webpage.webnotepage import STATIC_DIR_NAME, WebPageFactory
+from webpage.utils import isLink
 
 from webpage.i18n import get_
 
@@ -167,6 +169,11 @@ class DownloadDialogController (object):
         self._dialog.setTagsList (tagslist)
         if self._parentPage is not None and self._parentPage.parent is not None:
             self._dialog.tags = self._parentPage.tags
+
+        clipboardText = getClipboardText()
+        if clipboardText is not None and isLink (clipboardText):
+            self._dialog.url = clipboardText.lower()
+            self._dialog.urlText.SetSelection (0, len (clipboardText))
 
 
     def _saveState (self):

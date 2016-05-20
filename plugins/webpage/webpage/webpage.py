@@ -11,7 +11,7 @@ from outwiker.core.system import getOS
 from .i18n import set_
 
 
-__version__ = u'1.0.1'
+__version__ = u'1.1'
 
 
 if getCurrentVersion() < Version (1, 9, 0, 781, status=StatusSet.DEV):
