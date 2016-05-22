@@ -30,6 +30,7 @@ from outwiker.gui.actioncontroller import ActionController
 class OutWiker(wx.App):
     def __init__(self, *args, **kwds):
         self.logFileName = u"outwiker.log"
+        self._locale = None
 
         wx.App.__init__ (self, *args, **kwds)
 
@@ -38,6 +39,7 @@ class OutWiker(wx.App):
         getOS().migrateConfig()
         self._fullConfigPath = getConfigPath ()
         Application.init(self._fullConfigPath)
+        self._locale = wx.Locale (wx.LANGUAGE_DEFAULT)
 
         try:
             starter = Starter()
