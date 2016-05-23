@@ -167,7 +167,7 @@ class IconsetPanel (BasePrefPanel):
         # Add the root element
         rootimage = collection.getCover (None)
         imageIndex = -1 if rootimage is None else self._imagelist.Add (wx.Bitmap (rootimage))
-        rootItem = self._groups.AddRoot (_(u"Not in groups"), imageIndex)
+        rootItem = self._groups.AddRoot (_(u"Not in groups"), imageIndex, data = wx.TreeItemData(None))
 
         # Add child groups
         for group in collection.getGroups():
@@ -188,7 +188,7 @@ class IconsetPanel (BasePrefPanel):
     def __showIcons (self, groupname):
         """
         Show icons from group groupname.
-        If groupname is None then icons from root will be showned
+        If groupname is None then icons from root will be showed
         """
         self._iconsList.clear()
         collection = self.__getIconsCollection()
@@ -204,9 +204,8 @@ class IconsetPanel (BasePrefPanel):
         if not selItem.IsOk():
             return
 
-        group_data = self._groups.GetItemData (selItem)
-        if group_data is not None:
-            self.__showIcons (group_data.GetData())
+        group = self._groups.GetItemData (selItem).GetData()
+        self.__showIcons (group)
 
 
     def __onAddGroup (self, event):
