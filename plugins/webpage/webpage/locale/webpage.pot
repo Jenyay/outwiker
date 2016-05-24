@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-03 20:43+0300\n"
+"POT-Creation-Date: 2016-05-24 21:05+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,23 +17,23 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: webpage.py:44
+#: webpage.py:46
 msgid "Download HTML pages from web"
 msgstr ""
 
-#: webpage.py:54
+#: webpage.py:56
 msgid "http://jenyay.net/Outwiker/WebPageEn"
 msgstr ""
 
-#: downloader.py:227
+#: downloader.py:238
 msgid "Processing: {}\n"
 msgstr ""
 
-#: downloader.py:328
+#: downloader.py:340
 msgid "Download: {}\n"
 msgstr ""
 
-#: downloader.py:338
+#: downloader.py:350
 msgid "Can't download {}\n"
 msgstr ""
 
@@ -109,78 +109,90 @@ msgstr ""
 msgid "Source URL"
 msgstr ""
 
-#: gui/infodialog.py:50 gui/downloaddialog.py:55
+#: gui/infodialog.py:50
 msgid "Link"
 msgstr ""
 
-#: gui/guicontroller.py:234
+#: gui/guicontroller.py:237
 msgid "Heading"
 msgstr ""
 
-#: gui/guicontroller.py:239
+#: gui/guicontroller.py:242
 msgid "Font"
 msgstr ""
 
-#: gui/guicontroller.py:244
+#: gui/guicontroller.py:247
 msgid "Alignment"
 msgstr ""
 
-#: gui/guicontroller.py:249
+#: gui/guicontroller.py:252
 msgid "Formatting"
 msgstr ""
 
-#: gui/guicontroller.py:254
+#: gui/guicontroller.py:257
 msgid "Lists"
 msgstr ""
 
-#: gui/guicontroller.py:259
+#: gui/guicontroller.py:262
 msgid "Tables"
 msgstr ""
 
-#: gui/downloaddialog.py:46
+#: gui/downloaddialog.py:49
 msgid "Download web page"
 msgstr ""
 
-#: gui/downloaddialog.py:185
+#: gui/downloaddialog.py:59
+msgid "URL or local file"
+msgstr ""
+
+#: gui/downloaddialog.py:61
+msgid "..."
+msgstr ""
+
+#: gui/downloaddialog.py:198
 msgid "Can't remove temp directory"
 msgstr ""
 
-#: gui/downloaddialog.py:193
+#: gui/downloaddialog.py:206
 msgid "Enter link for downloading"
 msgstr ""
 
-#: gui/downloaddialog.py:194
+#: gui/downloaddialog.py:207
 msgid "Error"
 msgstr ""
 
-#: gui/downloaddialog.py:229 gui/downloaddialog.py:250
+#: gui/downloaddialog.py:240
+msgid "HTML files (*.html; *.htm)|*.html;*.htm|All files|*.*"
+msgstr ""
+
+#: gui/downloaddialog.py:255 gui/downloaddialog.py:276
 msgid "Page creation is canceled."
 msgstr ""
 
-#: gui/downloaddialog.py:243
+#: gui/downloaddialog.py:269
 msgid "Enter a title for the page"
 msgstr ""
 
-#: gui/downloaddialog.py:244
+#: gui/downloaddialog.py:270
 msgid "Page title"
 msgstr ""
 
-#: gui/downloaddialog.py:266
+#: gui/downloaddialog.py:292
 msgid "Can't create the page. Perhaps the title of the page is too long."
 msgstr ""
 
-#: gui/downloaddialog.py:294
+#: gui/downloaddialog.py:320
 msgid "Start downloading\n"
 msgstr ""
 
-#: gui/downloaddialog.py:299
+#: gui/downloaddialog.py:325
 msgid "Download error: {}\n"
 msgstr ""
 
-#: gui/downloaddialog.py:303
+#: gui/downloaddialog.py:329
 msgid "Invalid URL or file format\n"
 msgstr ""
 
-#: gui/downloaddialog.py:306
+#: gui/downloaddialog.py:332
 msgid "Finish downloading\n"
 msgstr ""

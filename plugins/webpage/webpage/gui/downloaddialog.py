@@ -14,6 +14,7 @@ from outwiker.gui.tagsselector import TagsSelector
 from outwiker.core.commands import MessageBox
 from outwiker.core.iconmaker import IconMaker
 from outwiker.core.commands import getClipboardText
+from outwiker.gui.testeddialog import TestedFileDialog
 
 import webpage.events
 from webpage.downloader import Downloader, WebPageDownloadController
@@ -51,14 +52,18 @@ class DownloadDialog (TestedDialog):
 
 
     def _addUrlGui (self, mainSizer):
-        urlSizer = wx.FlexGridSizer (cols=2)
+
+        urlSizer = wx.FlexGridSizer (cols=3)
         urlSizer.AddGrowableCol (1)
 
-        urlLabel = wx.StaticText (self, label = _(u'Link'))
+        urlLabel = wx.StaticText (self, label = _(u'URL or local file'))
         self.urlText = wx.TextCtrl (self)
+        self.selectFileButton = wx.Button (self, label = _(u'...'))
+        self.selectFileButton.SetMinSize ((30, -1))
 
-        urlSizer.Add (urlLabel, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
+        urlSizer.Add (urlLabel, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=4)
         urlSizer.Add (self.urlText, 0, wx.ALL | wx.EXPAND, border=2)
+        urlSizer.Add (self.selectFileButton, 0, wx.ALL | wx.ALIGN_RIGHT, border=2)
 
         mainSizer.Add (urlSizer, 0, wx.ALL | wx.EXPAND, border=2)
 
@@ -126,6 +131,7 @@ class DownloadDialogController (object):
 
         self._dialog.Bind (wx.EVT_BUTTON, self._onOk, id=wx.ID_OK)
         self._dialog.Bind (wx.EVT_BUTTON, self._onCancel, id=wx.ID_CANCEL)
+        self._dialog.selectFileButton.Bind (wx.EVT_BUTTON, self._onSelectFile)
 
         self._dialog.Bind (webpage.events.EVT_UPDATE_LOG, self._onLogUpdate)
         self._dialog.Bind (webpage.events.EVT_DOWNLOAD_ERROR, self._onDownloadError)
@@ -172,7 +178,7 @@ class DownloadDialogController (object):
 
         clipboardText = getClipboardText()
         if clipboardText is not None and isLink (clipboardText):
-            self._dialog.url = clipboardText.lower()
+            self._dialog.url = clipboardText
             self._dialog.urlText.SetSelection (0, len (clipboardText))
 
 
@@ -203,6 +209,10 @@ class DownloadDialogController (object):
             self._dialog.urlText.SetFocus()
             return
 
+        if os.path.isfile (url):
+            url = url.replace (u'\\', u'/')
+            url = u'file://' + url
+
         if self._thread is None:
             self._removeDownloadDir()
             self._downloadDir = mkdtemp (prefix=u'webpage_tmp_')
@@ -222,6 +232,15 @@ class DownloadDialogController (object):
 
         self._removeDownloadDir()
         event.Skip()
+
+
+    def _onSelectFile (self, event):
+        with TestedFileDialog (
+                self._dialog,
+                wildcard = _("HTML files (*.html; *.htm)|*.html;*.htm|All files|*.*"),
+                style = wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as fileDialog:
+            if fileDialog.ShowModal() == wx.ID_OK:
+                self._dialog.url = fileDialog.GetPath()
 
 
     def _onDownloadError (self, event):
