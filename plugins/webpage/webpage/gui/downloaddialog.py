@@ -269,6 +269,7 @@ class DownloadDialogController (object):
                                        _(u'Enter a title for the page'),
                                        _(u'Page title'),
                                        title)
+        titleDlg.SetMinSize ((450, 150))
 
         if titleDlg.ShowModal() == wx.ID_OK:
             title = titleDlg.GetValue()
