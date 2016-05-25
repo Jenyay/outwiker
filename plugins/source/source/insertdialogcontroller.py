@@ -223,7 +223,7 @@ class InsertDialogController (object):
         dialogWidth = max (self._config.dialogWidth.value, currentWidth)
         dialogHeight = max (self._config.dialogHeight.value, currentHeight)
 
-        self._dialog.SetSizeWH (dialogWidth, dialogHeight)
+        self._dialog.SetClientSizeWH (dialogWidth, dialogHeight)
 
 
     def _loadAttachmentState (self):
@@ -290,7 +290,7 @@ class InsertDialogController (object):
                 self._dialog.languageComboBox.GetSelection() != 0):
             self._config.defaultLanguage.value = self._dialog.language
 
-        currentWidth, currentHeight = self._dialog.GetSizeTuple ()
+        currentWidth, currentHeight = self._dialog.GetClientSizeTuple ()
         self._config.dialogWidth.value = currentWidth
         self._config.dialogHeight.value = currentHeight
         self._config.style.value = self._dialog.style

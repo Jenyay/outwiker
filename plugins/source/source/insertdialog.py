@@ -104,7 +104,7 @@ class InsertDialog (wx.Dialog):
     def __createGeneralPanel (self):
         generalPanel = wx.Panel (self.notebook)
 
-        generalSizer = wx.FlexGridSizer (0, 1)
+        generalSizer = wx.FlexGridSizer (cols=1)
         generalSizer.AddGrowableCol(0)
         generalPanel.SetSizer (generalSizer)
 
@@ -117,7 +117,7 @@ class InsertDialog (wx.Dialog):
     def __createAppearancePanel (self):
         appearancePanel = wx.Panel (self.notebook)
 
-        appearanceSizer = wx.FlexGridSizer (0, 1)
+        appearanceSizer = wx.FlexGridSizer (cols=1)
         appearanceSizer.AddGrowableCol(0)
         appearancePanel.SetSizer (appearanceSizer)
 
@@ -292,7 +292,7 @@ class InsertDialog (wx.Dialog):
             border=2
         )
 
-        fileSizer = wx.FlexGridSizer (0, 4)
+        fileSizer = wx.FlexGridSizer (cols=4)
         fileSizer.AddGrowableCol (2)
 
         # Список для выбора прикрепленных файлов
