@@ -32,6 +32,7 @@ class PluginDebug (Plugin):
         self.ID_BUTTONSDIALOG = wx.NewId()
         self.ID_START_WATCH_EVENTS = wx.NewId()
         self.ID_STOP_WATCH_EVENTS = wx.NewId()
+        self.ID_RAISE_EXCEPTION = wx.NewId()
 
 
     def enableFeatures (self):
@@ -151,6 +152,7 @@ class PluginDebug (Plugin):
         self.menu.Append (self.ID_BUTTONSDIALOG, _(u"ButtonsDialog"))
         self.menu.Append (self.ID_START_WATCH_EVENTS, _(u"Start watch events"))
         self.menu.Append (self.ID_STOP_WATCH_EVENTS, _(u"Stop watch events"))
+        self.menu.Append (self.ID_RAISE_EXCEPTION, _(u"Raise exception"))
 
         self._application.mainWindow.mainMenu.Append (self.menu, self.__menuName)
 
@@ -169,6 +171,10 @@ class PluginDebug (Plugin):
         self._application.mainWindow.Bind(wx.EVT_MENU,
                                           self.__onStopWatchEvents,
                                           id=self.ID_STOP_WATCH_EVENTS)
+
+        self._application.mainWindow.Bind(wx.EVT_MENU,
+                                          self.__onRaiseException,
+                                          id=self.ID_RAISE_EXCEPTION)
 
 
     def __createTestAction (self):
@@ -220,6 +226,10 @@ class PluginDebug (Plugin):
             menu.Bind(wx.EVT_MENU,
                       lambda event: MessageBox (_("Text Message"), _(u"This is Text page")),
                       id=self.__ID_TREE_POPUP)
+
+
+    def __onRaiseException (self, event):
+        raise IOError
 
 
     def __onTrayPopupMenu (self, menu, tray):
