@@ -211,6 +211,9 @@ class DownloadDialogController (object):
 
         if os.path.isfile (url):
             url = url.replace (u'\\', u'/')
+            if not url.startswith(u'/'):
+                url = u'/' + url
+
             url = u'file://' + url
 
         if self._thread is None:
@@ -257,7 +260,7 @@ class DownloadDialogController (object):
             return
 
         parentPage = self._parentPage
-        title = event.title
+        title = event.title if event.title is not None else _(u'Web page')
         favicon = event.favicon
         tags = self._dialog.tags
         content = event.content
