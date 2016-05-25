@@ -49,6 +49,7 @@ class OutWiker(wx.App):
 
         redirector = LogRedirector (self.getLogFileName (self._fullConfigPath))
         redirector.init()
+        wx.Log.SetLogLevel(0)
 
         from outwiker.gui.mainwindow import MainWindow
 
