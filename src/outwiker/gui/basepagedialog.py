@@ -39,7 +39,8 @@ class BasePageDialog (TestedDialog):
         self._application.onPageDialogInit (self._application.selectedPage,
                                             PageDialogInitParams (self))
 
-        self.SetSizeWH (self._config.width.value, self._config.height.value)
+        self.SetClientSize ((self._config.width.value, self._config.height.value))
+
         self.Center(wx.CENTRE_ON_SCREEN)
         self._generalPanel.titleTextCtrl.SetFocus()
 
@@ -143,18 +144,17 @@ class BasePageDialog (TestedDialog):
 
 
     def __do_layout(self):
-        mainSizer = wx.FlexGridSizer(rows=2)
+        mainSizer = wx.FlexGridSizer(cols=1)
         mainSizer.AddGrowableCol(0)
         mainSizer.AddGrowableRow(0)
         mainSizer.Add (self._notebook, 0, wx.EXPAND, 0)
         self._createOkCancelButtons (mainSizer)
         self.SetSizer(mainSizer)
-
         self.Layout()
 
 
     def saveParams (self):
-        width, height = self.GetSizeTuple()
+        width, height = self.GetClientSizeTuple()
         self._config.width.value = width
         self._config.height.value = height
 
