@@ -137,7 +137,9 @@ class ActionController (object):
         menuItem = menu.Append (wx.ID_ANY, self._getMenuItemTitle (strid))
         self._actionsInfo[strid].menuItem = menuItem
 
-        self._mainWindow.Bind (wx.EVT_MENU, handler=lambda event: action.run(None), id=menuItem.GetId())
+        self._mainWindow.Bind (wx.EVT_MENU,
+                               handler=lambda event: action.run(None),
+                               id=menuItem.GetId())
 
 
     def appendMenuCheckItem (self, strid, menu):
@@ -150,7 +152,9 @@ class ActionController (object):
         menuItem = menu.AppendCheckItem (wx.ID_ANY, self._getMenuItemTitle (strid))
         self._actionsInfo[strid].menuItem = menuItem
 
-        self._mainWindow.Bind (wx.EVT_MENU, handler=lambda event: self._onCheck (action, event.Checked()), id=menuItem.GetId())
+        self._mainWindow.Bind (wx.EVT_MENU,
+                               handler=lambda event: self._onCheck (action, event.IsChecked()),
+                               id=menuItem.GetId())
 
 
     def removeAction (self, strid):
@@ -242,7 +246,7 @@ class ActionController (object):
                                                fullUpdate)
 
         self._mainWindow.Bind (wx.EVT_TOOL,
-                               handler=lambda event: self._onCheck (action, event.Checked()),
+                               handler=lambda event: self._onCheck (action, event.IsChecked()),
                                id=toolbarItem.GetId())
 
 
@@ -265,6 +269,7 @@ class ActionController (object):
         toolbar = self._actionsInfo[action.stringId].toolbar
         if toolbar is not None:
             toolbar.ToggleTool (self._actionsInfo[action.stringId].toolItemId, checked)
+            toolbar.Refresh()
 
         action.run (checked)
 
