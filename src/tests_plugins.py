@@ -124,4 +124,7 @@ if __name__ == '__main__':
     from test.plugins.organizer.test_organizer import OrganizerTest
     from test.plugins.organizer.test_loading import OrganizerLoadingTest
 
+    from test.plugins.markdown.test_markdown import MarkdownTest
+    from test.plugins.markdown.test_loading import MarkdownLoadingTest
+
     unittest.main()
