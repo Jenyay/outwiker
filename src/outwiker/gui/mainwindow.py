@@ -66,6 +66,7 @@ from outwiker.pages.html.htmlpagecontroller import HtmlPageController
 from outwiker.pages.text.textpagecontroller import TextPageController
 from outwiker.pages.search.searchpagecontroller import SearchPageController
 from outwiker.gui.preferences.prefcontroller import PrefController
+from outwiker.core.system import getOS
 
 
 class MainWindow(wx.Frame):
@@ -669,10 +670,12 @@ class MainWindow(wx.Frame):
         Переключение в полноэкранный режим
         """
         self.__panesController.savePanesParams()
-        self.ShowFullScreen(True,
-                            (wx.FULLSCREEN_NOTOOLBAR |
-                             wx.FULLSCREEN_NOBORDER |
-                             wx.FULLSCREEN_NOCAPTION))
+        # The bug (?) in wxPython under Ubuntu spoils check items after full screen mode
+        if getOS().name != 'unix':
+            self.ShowFullScreen(True,
+                                (wx.FULLSCREEN_NOTOOLBAR |
+                                 wx.FULLSCREEN_NOBORDER |
+                                 wx.FULLSCREEN_NOCAPTION))
 
         self.__panesController.hidePanes()
         self.__panesController.updateViewMenu()
@@ -683,7 +686,9 @@ class MainWindow(wx.Frame):
         Возврат из полноэкранного режима
         """
         self.controller.loadMainWindowParams()
-        self.ShowFullScreen(False)
+        # The bug (?) in wxPython under Ubuntu spoils check items after full screen mode
+        if getOS().name != 'unix':
+            self.ShowFullScreen(False)
 
         self.__panesController.showPanes()
         self.__panesController.loadPanesSize ()

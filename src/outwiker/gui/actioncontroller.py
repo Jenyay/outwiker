@@ -254,10 +254,6 @@ class ActionController (object):
         """
         Установить или снять флажок и нажать/отжать кнопку, соответствующие действию
         """
-        # Установим флажки на соответствующем пункте меню
-        menuItem = self._actionsInfo[strid].menuItem
-        if (menuItem is not None):
-            menuItem.Check (checked)
         self._onCheck (self._actionsInfo[strid].action, checked)
 
 
@@ -278,7 +274,6 @@ class ActionController (object):
         assert actionInfo is not None
 
         self._onCheck (actionInfo.action, event.IsChecked())
-        event.Skip()
 
 
     def _onCheckToolItemHandler (self, event):
@@ -286,13 +281,17 @@ class ActionController (object):
         assert actionInfo is not None
 
         self._onCheck (actionInfo.action, event.IsChecked())
-        event.Skip()
 
 
     def _onCheck (self, action, checked):
         """
         Run the checked action and refresh tool item
         """
+        # Установим флажки на соответствующем пункте меню
+        menuItem = self._actionsInfo[action.stringId].menuItem
+        if (menuItem is not None):
+            menuItem.Check (checked)
+
         toolbar = self._actionsInfo[action.stringId].toolbar
         if toolbar is not None:
             toolbar.ToggleTool (self._actionsInfo[action.stringId].toolItemId, checked)
