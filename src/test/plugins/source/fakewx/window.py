@@ -14,7 +14,15 @@ class Window (EvtHandler):
         return (0, 0)
 
 
+    def GetClientSizeTuple (self):
+        return (0, 0)
+
+
     def SetSizeWH (self, width, height):
+        pass
+
+
+    def SetClientSizeWH (self, width, height):
         pass
 
 
