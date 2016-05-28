@@ -354,8 +354,12 @@ def openInNewWindow (path, readonly=False):
     if readonly:
         params += ['--readonly']
 
+    env = os.environ.copy()
+    if getOS().name == 'unix':
+        env['LD_PRELOAD'] = 'libwx_gtk2u_webview-3.0.so.0'
+
     if exeFile.endswith (".exe"):
         DETACHED_PROCESS = 0x00000008
-        subprocess.Popen (params, creationflags=DETACHED_PROCESS)
+        subprocess.Popen (params, creationflags=DETACHED_PROCESS, env=env)
     else:
-        subprocess.Popen (["python"] + params)
+        subprocess.Popen (["python"] + params, env=env)
