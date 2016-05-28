@@ -6,6 +6,7 @@ from outwiker.actions.showhidetags import ShowHideTagsAction
 from outwiker.actions.fullscreen import FullScreenAction
 
 from outwiker.core.application import Application
+from outwiker.core.system import getOS
 from basemainwnd import BaseMainWndTest
 
 
@@ -13,7 +14,9 @@ class FullScreenTest (BaseMainWndTest):
     def testFullScreenStart (self):
         fullScreenActionInfo = Application.actionController.getActionInfo (FullScreenAction.stringId)
 
-        self.assertFalse (self.wnd.IsFullScreen())
+        if getOS().name == 'windows':
+            self.assertFalse (self.wnd.IsFullScreen())
+
         self.assertFalse (fullScreenActionInfo.menuItem.IsChecked())
         self.assertTrue (self.wnd.treePanel.isShown())
         self.assertTrue (self.wnd.attachPanel.isShown())
@@ -27,7 +30,9 @@ class FullScreenTest (BaseMainWndTest):
 
         Application.actionController.check (FullScreenAction.stringId, True)
 
-        self.assertTrue (self.wnd.IsFullScreen())
+        if getOS().name == 'windows':
+            self.assertTrue (self.wnd.IsFullScreen())
+
         self.assertFalse (self.wnd.treePanel.isShown())
         self.assertFalse (self.wnd.attachPanel.isShown())
         self.assertFalse (self.wnd.tagsCloudPanel.isShown())
@@ -38,7 +43,9 @@ class FullScreenTest (BaseMainWndTest):
 
         Application.actionController.check (FullScreenAction.stringId, False)
 
-        self.assertFalse (self.wnd.IsFullScreen())
+        if getOS().name == 'windows':
+            self.assertFalse (self.wnd.IsFullScreen())
+
         self.assertTrue (self.wnd.treePanel.isShown())
         self.assertTrue (self.wnd.attachPanel.isShown())
         self.assertTrue (self.wnd.tagsCloudPanel.isShown())
