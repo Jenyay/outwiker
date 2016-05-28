@@ -153,7 +153,7 @@ class ActionController (object):
         self._actionsInfo[strid].menuItem = menuItem
 
         self._mainWindow.Bind (wx.EVT_MENU,
-                               handler=lambda event: self._onCheck (action, event.IsChecked()),
+                               handler=self._onCheckMenuItemHandler,
                                id=menuItem.GetId())
 
 
@@ -246,7 +246,7 @@ class ActionController (object):
                                                fullUpdate)
 
         self._mainWindow.Bind (wx.EVT_TOOL,
-                               handler=lambda event: self._onCheck (action, event.IsChecked()),
+                               handler=self._onCheckToolItemHandler,
                                id=toolbarItem.GetId())
 
 
@@ -254,18 +254,45 @@ class ActionController (object):
         """
         Установить или снять флажок и нажать/отжать кнопку, соответствующие действию
         """
+        # Установим флажки на соответствующем пункте меню
+        menuItem = self._actionsInfo[strid].menuItem
+        if (menuItem is not None):
+            menuItem.Check (checked)
         self._onCheck (self._actionsInfo[strid].action, checked)
+
+
+    def _getActionInfoByMenuItemId (self, menuItemId):
+        for actionInfo in self._actionsInfo.values():
+            if actionInfo.menuItem is not None and actionInfo.menuItem.GetId() == menuItemId:
+                return actionInfo
+
+
+    def _getActionInfoByToolItemId (self, toolItemId):
+        for actionInfo in self._actionsInfo.values():
+            if actionInfo.toolItemId is not None and actionInfo.toolItemId == toolItemId:
+                return actionInfo
+
+
+    def _onCheckMenuItemHandler (self, event):
+        actionInfo = self._getActionInfoByMenuItemId (event.GetId())
+        assert actionInfo is not None
+
+        self._onCheck (actionInfo.action, event.IsChecked())
+        event.Skip()
+
+
+    def _onCheckToolItemHandler (self, event):
+        actionInfo = self._getActionInfoByToolItemId (event.GetId())
+        assert actionInfo is not None
+
+        self._onCheck (actionInfo.action, event.IsChecked())
+        event.Skip()
 
 
     def _onCheck (self, action, checked):
         """
-        Обработчик события нажатия залипающей кнопки или пункта меню с чекбоксом
+        Run the checked action and refresh tool item
         """
-        # Установим флажки на соответствующем пункте меню и зажмем соответствующую кнопку
-        menuItem = self._actionsInfo[action.stringId].menuItem
-        if (menuItem is not None):
-            menuItem.Check (checked)
-
         toolbar = self._actionsInfo[action.stringId].toolbar
         if toolbar is not None:
             toolbar.ToggleTool (self._actionsInfo[action.stringId].toolItemId, checked)
