@@ -138,7 +138,7 @@ class ActionController (object):
         self._actionsInfo[strid].menuItem = menuItem
 
         self._mainWindow.Bind (wx.EVT_MENU,
-                               handler=lambda event: action.run(None),
+                               handler=self._onMenuItemHandler,
                                id=menuItem.GetId())
 
 
@@ -221,7 +221,7 @@ class ActionController (object):
                                                fullUpdate)
 
         self._mainWindow.Bind (wx.EVT_TOOL,
-                               handler=lambda event: action.run(None),
+                               handler=self._onToolItemHandler,
                                id=toolbarItem.GetId())
 
 
@@ -281,6 +281,18 @@ class ActionController (object):
         assert actionInfo is not None
 
         self._onCheck (actionInfo.action, event.IsChecked())
+
+
+    def _onMenuItemHandler (self, event):
+        actionInfo = self._getActionInfoByMenuItemId (event.GetId())
+        assert actionInfo is not None
+        actionInfo.action.run (None)
+
+
+    def _onToolItemHandler (self, event):
+        actionInfo = self._getActionInfoByToolItemId (event.GetId())
+        assert actionInfo is not None
+        actionInfo.action.run (None)
 
 
     def _onCheck (self, action, checked):
