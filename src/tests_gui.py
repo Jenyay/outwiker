@@ -21,8 +21,6 @@ except wxversion.VersionError:
 import wx
 
 
-
-
 if __name__ == '__main__':
     from outwiker.core.application import Application
     Application.init ("../test/testconfig.ini")
@@ -36,6 +34,7 @@ if __name__ == '__main__':
     app.unbindActivateApp = emptyFunc
     loop = wx.EventLoop()
     wx.EventLoop.SetActive(loop)
+    wx.Log.SetLogLevel(0)
 
     import unittest
 

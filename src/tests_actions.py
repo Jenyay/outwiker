@@ -34,6 +34,7 @@ if __name__ == '__main__':
     app.unbindActivateApp = emptyFunc
     loop = wx.EventLoop()
     wx.EventLoop.SetActive(loop)
+    wx.Log.SetLogLevel(0)
 
     import unittest
 
