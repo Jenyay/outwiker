@@ -252,7 +252,7 @@ class ApplicationParams (object):
         self.onPageDialogPageTagsChanged = Event()
 
 
-        # Event occurs during page dialog initialoztion,
+        # Event occurs during page dialog initialization,
         # during general panel creation. Evens sender expect what event
         # handlers will fill the page factories list with addPageFactory method.
         # Parameters:
