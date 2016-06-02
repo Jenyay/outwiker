@@ -24,7 +24,9 @@ class PageUidDepotTest (unittest.TestCase):
         factory.create (self.wikiroot, u"Страница 1", [])
         factory.create (self.wikiroot, u"Страница 2", [])
         factory.create (self.wikiroot[u"Страница 2"], u"Страница 3", [])
-        factory.create (self.wikiroot[u"Страница 2/Страница 3"], u"Страница 4", [])
+        factory.create (self.wikiroot[u"Страница 2/Страница 3"],
+                        u"Страница 4",
+                        [])
         factory.create (self.wikiroot[u"Страница 1"], u"Страница 5", [])
 
         Application.wikiroot = None
@@ -71,7 +73,9 @@ class PageUidDepotTest (unittest.TestCase):
 
     def testSaveLoad_02 (self):
         depot = PageUidDepot()
-        uid = depot.createUid (self.wikiroot[u"Страница 2/Страница 3/Страница 4"])
+        uid = depot.createUid (
+            self.wikiroot[u"Страница 2/Страница 3/Страница 4"]
+        )
 
         depot_new = PageUidDepot(self.wikiroot)
 
@@ -155,7 +159,9 @@ class PageUidDepotTest (unittest.TestCase):
         depot.changeUid (page, new_uid)
 
         self.assertRaises (KeyError,
-                           depot.changeUid, self.wikiroot[u"Страница 1"], new_uid)
+                           depot.changeUid,
+                           self.wikiroot[u"Страница 1"],
+                           new_uid)
 
 
     def testChangeUid_04 (self):
@@ -166,7 +172,9 @@ class PageUidDepotTest (unittest.TestCase):
         depot.changeUid (page, new_uid)
 
         self.assertRaises (ValueError,
-                           depot.changeUid, self.wikiroot[u"Страница 1"], u"")
+                           depot.changeUid,
+                           self.wikiroot[u"Страница 1"],
+                           u"")
 
 
     def testChangeUid_05 (self):
@@ -185,7 +193,10 @@ class PageUidDepotTest (unittest.TestCase):
         page = self.wikiroot[u"Страница 2/Страница 3"]
 
         new_uid = u"  "
-        self.assertRaises (ValueError, depot.changeUid, page, new_uid)
+        self.assertRaises (ValueError,
+                           depot.changeUid,
+                           page,
+                           new_uid)
 
 
     def testChangeUid_07 (self):
@@ -194,7 +205,10 @@ class PageUidDepotTest (unittest.TestCase):
 
         # Запрещено использовать "/" в идентификаторах
         new_uid = u"Абырвалг/фвыафыва"
-        self.assertRaises (ValueError, depot.changeUid, page, new_uid)
+        self.assertRaises (ValueError,
+                           depot.changeUid,
+                           page,
+                           new_uid)
 
 
     def testChangeUid_08 (self):
@@ -262,7 +276,8 @@ class PageUidDepotTest (unittest.TestCase):
         uid = Application.pageUidDepot.createUid (page)
 
         page.title = u"Новый заголовок"
-        self.assertEqual (Application.pageUidDepot[uid].title, u"Новый заголовок")
+        self.assertEqual (Application.pageUidDepot[uid].title,
+                          u"Новый заголовок")
 
 
     def testApplicationRemovePage (self):

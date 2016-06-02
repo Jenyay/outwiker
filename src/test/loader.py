@@ -23,23 +23,28 @@ class PluginsLoaderTest(unittest.TestCase):
 
 
     def testLoad (self):
-        dirlist = [u"../plugins/testempty1", u"../plugins/testempty2", u"../plugins/testempty2"]
+        dirlist = [u"../plugins/testempty1",
+                   u"../plugins/testempty2",
+                   u"../plugins/testempty2"]
         loader = PluginsLoader(Application)
         loader.load (dirlist)
 
         self.assertEqual (len (loader), 2)
         self.assertEqual (loader[u"TestEmpty1"].name, u"TestEmpty1")
         self.assertEqual (loader[u"TestEmpty1"].version, u"0.1")
-        self.assertEqual (loader[u"TestEmpty1"].description, u"This plugin is empty")
+        self.assertEqual (loader[u"TestEmpty1"].description,
+                          u"This plugin is empty")
         self.assertEqual (loader[u"TestEmpty1"].application, Application)
 
         self.assertEqual (loader[u"TestEmpty2"].name, u"TestEmpty2")
         self.assertEqual (loader[u"TestEmpty2"].version, u"0.1")
-        self.assertEqual (loader[u"TestEmpty2"].description, u"This plugin is empty")
+        self.assertEqual (loader[u"TestEmpty2"].description,
+                          u"This plugin is empty")
 
         # Проверим, как работает итерация
         for plugin in loader:
-            self.assertTrue (plugin == loader[u"TestEmpty1"] or plugin == loader[u"TestEmpty2"])
+            self.assertTrue (plugin == loader[u"TestEmpty1"] or
+                             plugin == loader[u"TestEmpty2"])
 
         loader.clear()
         self.assertEqual (len (loader), 0)
@@ -66,11 +71,13 @@ class PluginsLoaderTest(unittest.TestCase):
         self.assertEqual (len (loader), 3)
         self.assertEqual (loader[u"TestEmpty1"].name, u"TestEmpty1")
         self.assertEqual (loader[u"TestEmpty1"].version, u"0.1")
-        self.assertEqual (loader[u"TestEmpty1"].description, u"This plugin is empty")
+        self.assertEqual (loader[u"TestEmpty1"].description,
+                          u"This plugin is empty")
 
         self.assertEqual (loader[u"TestEmpty2"].name, u"TestEmpty2")
         self.assertEqual (loader[u"TestEmpty2"].version, u"0.1")
-        self.assertEqual (loader[u"TestEmpty2"].description, u"This plugin is empty")
+        self.assertEqual (loader[u"TestEmpty2"].description,
+                          u"This plugin is empty")
 
         self.assertEqual (loader[u"TestWikiCommand"].name, u"TestWikiCommand")
         self.assertEqual (loader[u"TestWikiCommand"].version, u"0.1")
@@ -90,15 +97,20 @@ class PluginsLoaderTest(unittest.TestCase):
         self.assertEqual (len (loader), 2)
         self.assertEqual (loader[u"TestEmpty2"].name, u"TestEmpty2")
         self.assertEqual (loader[u"TestEmpty2"].version, u"0.1")
-        self.assertEqual (loader[u"TestEmpty2"].description, u"This plugin is empty")
+        self.assertEqual (loader[u"TestEmpty2"].description,
+                          u"This plugin is empty")
 
         self.assertEqual (loader[u"TestWikiCommand"].name, u"TestWikiCommand")
         self.assertEqual (loader[u"TestWikiCommand"].version, u"0.1")
 
         self.assertEqual (len (loader.disabledPlugins), 1)
-        self.assertEqual (loader.disabledPlugins[u"TestEmpty1"].name, u"TestEmpty1")
-        self.assertEqual (loader.disabledPlugins[u"TestEmpty1"].version, u"0.1")
-        self.assertEqual (loader.disabledPlugins[u"TestEmpty1"].description, u"This plugin is empty")
+        self.assertEqual (loader.disabledPlugins[u"TestEmpty1"].name,
+                          u"TestEmpty1")
+        self.assertEqual (
+            loader.disabledPlugins[u"TestEmpty1"].version, u"0.1"
+        )
+        self.assertEqual (loader.disabledPlugins[u"TestEmpty1"].description,
+                          u"This plugin is empty")
 
 
     def testOnOffPlugins1 (self):
@@ -121,7 +133,8 @@ class PluginsLoaderTest(unittest.TestCase):
         self.assertEqual (len (loader.disabledPlugins), 1)
 
         self.assertEqual (loader[u"TestEmpty2"].name, u"TestEmpty2")
-        self.assertEqual (loader.disabledPlugins[u"TestEmpty1"].name, u"TestEmpty1")
+        self.assertEqual (loader.disabledPlugins[u"TestEmpty1"].name,
+                          u"TestEmpty1")
 
 
     def testOnOffPlugins2 (self):
@@ -170,7 +183,9 @@ class PluginsLoaderTest(unittest.TestCase):
                    u"../plugins/testwikicommand"]
 
         # Сразу заблокируем все плагины
-        self.config.disabledPlugins.value = [u"TestEmpty1", u"TestEmpty2", u"TestWikiCommand"]
+        self.config.disabledPlugins.value = [u"TestEmpty1",
+                                             u"TestEmpty2",
+                                             u"TestWikiCommand"]
 
         loader = PluginsLoader(Application)
         loader.load (dirlist)
@@ -192,7 +207,9 @@ class PluginsLoaderTest(unittest.TestCase):
                    u"../plugins/testwikicommand"]
 
         # Сразу заблокируем все плагины
-        self.config.disabledPlugins.value = [u"TestEmpty1", u"TestEmpty2", u"TestWikiCommand"]
+        self.config.disabledPlugins.value = [u"TestEmpty1",
+                                             u"TestEmpty2",
+                                             u"TestWikiCommand"]
 
         loader = PluginsLoader(Application)
         loader.load (dirlist)

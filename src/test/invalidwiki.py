@@ -14,8 +14,6 @@ from outwiker.core.attachment import Attachment
 from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
 from test.utils import removeDir
-from outwiker.core.exceptions import RootFormatError
-
 
 
 class InvalidWikiTest (unittest.TestCase):
@@ -107,7 +105,10 @@ class InvalidWikiTest (unittest.TestCase):
         wiki = WikiDocument.load (self.path)
         Attachment (wiki[u"Страница без аттачей"]).attach (attaches)
 
-        self.assertEqual (len (Attachment (wiki[u"Страница без аттачей"]).attachmentFull), 3)
+        self.assertEqual (
+            len (Attachment (wiki[u"Страница без аттачей"]).attachmentFull),
+            3
+        )
 
         # Удалим прикрепленные файлы
         attachPath = Attachment (wiki[u"Страница без аттачей"]).getAttachPath()

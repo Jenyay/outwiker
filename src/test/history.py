@@ -76,7 +76,8 @@ class HistoryTest (unittest.TestCase):
         self.assertEqual (history.backLength, 0)
         self.assertEqual (history.forwardLength, 0)
 
-        # Если пытаемся добавить ту же самую страницу, что уже была до этого, ничего не делаем
+        # Если пытаемся добавить ту же самую страницу,
+        # что уже была до этого, ничего не делаем
         history.goto (self.wiki[u"Страница 1"])
         self.assertEqual (history.backLength, 0)
         self.assertEqual (history.forwardLength, 0)
@@ -117,7 +118,8 @@ class HistoryTest (unittest.TestCase):
         self.assertEqual (history.backLength, 2)
         self.assertEqual (history.forwardLength, 1)
         self.assertEqual (page, self.wiki[u"Страница 2/Страница 3"])
-        self.assertEqual (history.currentPage, self.wiki[u"Страница 2/Страница 3"])
+        self.assertEqual (history.currentPage,
+                          self.wiki[u"Страница 2/Страница 3"])
 
         page = history.back()
 
@@ -146,14 +148,16 @@ class HistoryTest (unittest.TestCase):
         self.assertEqual (history.backLength, 2)
         self.assertEqual (history.forwardLength, 1)
         self.assertEqual (page, self.wiki[u"Страница 2/Страница 3"])
-        self.assertEqual (history.currentPage, self.wiki[u"Страница 2/Страница 3"])
+        self.assertEqual (history.currentPage,
+                          self.wiki[u"Страница 2/Страница 3"])
 
         page = history.forward()
 
         self.assertEqual (history.backLength, 3)
         self.assertEqual (history.forwardLength, 0)
         self.assertEqual (page, self.wiki[u"Страница 2/Страница 3/Страница 4"])
-        self.assertEqual (history.currentPage, self.wiki[u"Страница 2/Страница 3/Страница 4"])
+        self.assertEqual (history.currentPage,
+                          self.wiki[u"Страница 2/Страница 3/Страница 4"])
 
 
     def testBackForward_03 (self):
@@ -225,7 +229,8 @@ class HistoryTest (unittest.TestCase):
         history.goto (None)
         page = history.back()
 
-        self.assertEqual (page, self.wiki[u"Страница 2/Страница 3/Новый заголовок"])
+        self.assertEqual (page,
+                          self.wiki[u"Страница 2/Страница 3/Новый заголовок"])
 
 
     def testRemove_01 (self):
