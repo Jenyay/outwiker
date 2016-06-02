@@ -3,27 +3,40 @@
 	<meta>
 		<name>Markdown</name>
 		<version number="1.0"/>
-		<url lang="ru_RU">http://jenyay.net/Outwiker/Markdown</url>
-		<url lang="en">http://jenyay.net/Outwiker/MarkdownEn</url>
-		<description lang="en">The Markdown plug-in add a new page type with Markdown notation</description>
+	</meta>
+
+	<data lang="en">
+		<url>http://jenyay.net/Outwiker/MarkdownEn</url>
+		<description>The Markdown plug-in add a new page type with Markdown notation.</description>
 
 		<author>
 			<name>Eugene Ilin (aka Jenyay)</name>
 			<email>jenyay.ilin@gmail.com</email>
 			<site>http://jenyay.net</site>
 		</author>
-	</meta>
 
-	<changelog lang="ru_RU">
-		<version number="1.0">
-			<change>Первая версия</change>
-		</version>
-	</changelog>
+		<changelog>
+			<version number="1.0" download="http://jenyay.net/Outwiker/Markdown/markdown-1.0.zip">
+				<change>The first version</change>
+			</version>
+		</changelog>
+	</data>
 
-	<changelog lang="en">
-		<version number="1.0">
-			<change>The first version</change>
-		</version>
-	</changelog>
+	<data lang="ru_RU">
+		<url>http://jenyay.net/Outwiker/Markdown</url>
+		<description>Плагин Markdown добавляет новый тип страниц, который использует нотацию Markdown.</description>
+
+		<author>
+			<name>Евгений Ильин (aka Jenyay)</name>
+			<email>jenyay.ilin@gmail.com</email>
+			<site>http://jenyay.net</site>
+		</author>
+
+		<changelog>
+			<version number="1.0" download="http://jenyay.net/Outwiker/Markdown/markdown-1.0.zip">
+				<change>Первая версия</change>
+			</version>
+		</changelog>
+	</data>
 
 </info>
