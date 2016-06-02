@@ -1,0 +1,29 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+<info>
+	<meta>
+		<name>Markdown</name>
+		<version number="1.0"/>
+		<url lang="ru_RU">http://jenyay.net/Outwiker/Markdown</url>
+		<url lang="en">http://jenyay.net/Outwiker/MarkdownEn</url>
+		<description lang="en">The Markdown plug-in add a new page type with Markdown notation</description>
+
+		<author>
+			<name>Eugene Ilin (aka Jenyay)</name>
+			<email>jenyay.ilin@gmail.com</email>
+			<site>http://jenyay.net</site>
+		</author>
+	</meta>
+
+	<changelog lang="ru_RU">
+		<version number="1.0">
+			<change>Первая версия</change>
+		</version>
+	</changelog>
+
+	<changelog lang="en">
+		<version number="1.0">
+			<change>The first version</change>
+		</version>
+	</changelog>
+
+</info>
