@@ -1,14 +1,12 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <info>
-	<meta>
-		<version number="2.0.0.795" status="dev"/>
-	</meta>
+	<name>OutWiker</name>
 
 	<data lang="ru_RU">
-		<url>http://jenyay.net/Outwiker/Unstable</url>
+		<website>http://jenyay.net/Outwiker/Unstable</website>
 
 		<changelog>
-			<version number="2.0.0.796" status="dev">
+			<version number="2.0.0.795" status="dev" hidden >
 			</version>
 
 			<version number="2.0.0.794" status="dev">
@@ -22,10 +20,10 @@
 	</data>
 
 	<data lang="en">
-		<url>http://jenyay.net/Outwiker/UnstableEn</url>
+		<website>http://jenyay.net/Outwiker/UnstableEn</website>
 
 		<changelog>
-			<version number="2.0.0.796" status="dev">
+			<version number="2.0.0.795" status="dev" hidden >
 			</version>
 
 			<version number="2.0.0.794" status="dev">

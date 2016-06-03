@@ -1,12 +1,9 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <info>
-	<meta>
-		<name>Markdown</name>
-		<version number="1.0"/>
-	</meta>
+	<name>Markdown</name>
 
 	<data lang="en">
-		<url>http://jenyay.net/Outwiker/MarkdownEn</url>
+		<website>http://jenyay.net/Outwiker/MarkdownEn</website>
 		<description>The Markdown plug-in add a new page type with Markdown notation.</description>
 
 		<author>
@@ -23,7 +20,7 @@
 	</data>
 
 	<data lang="ru_RU">
-		<url>http://jenyay.net/Outwiker/Markdown</url>
+		<website>http://jenyay.net/Outwiker/Markdown</website>
 		<description>Плагин Markdown добавляет новый тип страниц, который использует нотацию Markdown.</description>
 
 		<author>
@@ -38,5 +35,4 @@
 			</version>
 		</changelog>
 	</data>
-
 </info>
