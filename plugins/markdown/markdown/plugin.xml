@@ -1,6 +1,7 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <info>
 	<name>Markdown</name>
+    <updates>http://jenyay.net/Outwiker/Markdown/plugin.xml</updates>
 
 	<data lang="en">
 		<website>http://jenyay.net/Outwiker/MarkdownEn</website>
