@@ -14,7 +14,8 @@
 		</author>
 
 		<changelog>
-			<version number="1.0" download="http://jenyay.net/Outwiker/Markdown/markdown-1.0.zip">
+			<version number="1.0">
+                <download os="all">http://jenyay.net/Outwiker/Markdown/markdown-1.0.zip</download>
 				<change>The first version</change>
 			</version>
 		</changelog>
@@ -31,7 +32,8 @@
 		</author>
 
 		<changelog>
-			<version number="1.0" download="http://jenyay.net/Outwiker/Markdown/markdown-1.0.zip">
+			<version number="1.0">
+                <download os="all">http://jenyay.net/Outwiker/Markdown/markdown-1.0.zip</download>
 				<change>Первая версия</change>
 			</version>
 		</changelog>

@@ -3,7 +3,7 @@
 import unittest
 
 from outwiker.core.xmlversionparser import XmlVersionParser
-from outwiker.core.appinfo import AppInfo
+from outwiker.core.appinfo import AppInfo, AuthorInfo
 
 
 class XmlVersionParserTest (unittest.TestCase):
@@ -208,3 +208,113 @@ class XmlVersionParserTest (unittest.TestCase):
         self.assertEqual(result.description, u"")
         self.assertEqual(result.appwebsite, u"http://example.com/en/")
         self.assertEqual(result.updatesUrl, u"")
+
+    def test_author_empty(self):
+        text = u'''<?xml version="1.1" encoding="UTF-8" ?>
+            <info>
+                <data lang="en">
+                    <author></author>
+                </data>
+            </info>'''
+        result = XmlVersionParser().parse(text)
+
+        self.assertTrue(isinstance (result.author, AuthorInfo))
+        self.assertEqual(result.author.name, u'')
+        self.assertEqual(result.author.email, u'')
+        self.assertEqual(result.author.website, u'')
+
+    def test_author_01(self):
+        text = u'''<?xml version="1.1" encoding="UTF-8" ?>
+            <info>
+                <data lang="en">
+                    <author>
+                        <name>Eugeniy Ilin</name>
+                        <email>en@example.com</email>
+                        <website>http://example.com/en/</website>
+                    </author>
+                </data>
+            </info>'''
+        result = XmlVersionParser([u'en']).parse(text)
+
+        self.assertTrue(isinstance (result.author, AuthorInfo))
+        self.assertEqual(result.author.name, u'Eugeniy Ilin')
+        self.assertEqual(result.author.email, u'en@example.com')
+        self.assertEqual(result.author.website, u'http://example.com/en/')
+
+    def test_author_02(self):
+        text = u'''<?xml version="1.1" encoding="UTF-8" ?>
+            <info>
+                <data lang="en">
+                    <author>
+                        <name>Eugeniy Ilin</name>
+                        <email>en@example.com</email>
+                        <website>http://example.com/en/</website>
+                    </author>
+                </data>
+
+                <data lang="ru">
+                    <author>
+                        <name>Евгений Ильин</name>
+                        <email>ru@example.com</email>
+                        <website>http://example.com/ru/</website>
+                    </author>
+                </data>
+            </info>'''
+        result = XmlVersionParser([u'en']).parse(text)
+
+        self.assertTrue(isinstance (result.author, AuthorInfo))
+        self.assertEqual(result.author.name, u'Eugeniy Ilin')
+        self.assertEqual(result.author.email, u'en@example.com')
+        self.assertEqual(result.author.website, u'http://example.com/en/')
+
+    def test_author_03(self):
+        text = u'''<?xml version="1.1" encoding="UTF-8" ?>
+            <info>
+                <data lang="en">
+                    <author>
+                        <name>Eugeniy Ilin</name>
+                        <email>en@example.com</email>
+                        <website>http://example.com/en/</website>
+                    </author>
+                </data>
+
+                <data lang="ru_RU">
+                    <author>
+                        <name>Евгений Ильин</name>
+                        <email>ru@example.com</email>
+                        <website>http://example.com/ru/</website>
+                    </author>
+                </data>
+            </info>'''
+        result = XmlVersionParser([u'ru_RU']).parse(text)
+
+        self.assertTrue(isinstance (result.author, AuthorInfo))
+        self.assertEqual(result.author.name, u'Евгений Ильин')
+        self.assertEqual(result.author.email, u'ru@example.com')
+        self.assertEqual(result.author.website, u'http://example.com/ru/')
+
+    def test_author_03(self):
+        text = u'''<?xml version="1.1" encoding="UTF-8" ?>
+            <info>
+                <data lang="en">
+                    <author>
+                        <name>Eugeniy Ilin</name>
+                        <email>en@example.com</email>
+                        <website>http://example.com/en/</website>
+                    </author>
+                </data>
+
+                <data lang="ru_RU">
+                    <author>
+                        <name>Евгений Ильин</name>
+                        <email>ru@example.com</email>
+                        <website>http://example.com/ru/</website>
+                    </author>
+                </data>
+            </info>'''
+        result = XmlVersionParser([u'ru_RU', u'en']).parse(text)
+
+        self.assertTrue(isinstance (result.author, AuthorInfo))
+        self.assertEqual(result.author.name, u'Евгений Ильин')
+        self.assertEqual(result.author.email, u'ru@example.com')
+        self.assertEqual(result.author.website, u'http://example.com/ru/')

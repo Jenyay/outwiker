@@ -4,6 +4,8 @@
 class AppInfo (object):
     """
     Common for OutWiker and plug-ins items.
+
+    Added in OutWiker 2.0.0.795.
     """
     def __init__(self,
                  appname,
@@ -43,14 +45,17 @@ class VersionInfo (object):
     """
     Information about single version (version, change log, URL to download)
     """
-    def __init__(self, version, download=u"", changes=[], hidden=False):
+    def __init__(self, version, date_str=u"", downloads={}, changes=[], hidden=False):
         """
-        version - instance of the Version class.
-        download - URL to download this version.
-        changes - list of the string with changes in current version.
-        hidden - hide this version to users?
+        version   - instance of the Version class.
+        date_str  - release date (string)
+        downloads - dict with downloads links
+                      (key - OS (name from the System class), value - URL)
+        changes   - list of the string with changes in current version.
+        hidden    - hide this version to users?
         """
         self.version = version
-        self.download = download
+        self.date_str = date_str
+        self.downloads = download.copy()
         self.changes = changes[:]
         self.hidden = hidden

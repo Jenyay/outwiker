@@ -7,14 +7,14 @@
 		<website>http://jenyay.net/Outwiker/Unstable</website>
 
 		<changelog>
-			<version number="2.0.0.795" status="dev" hidden >
+			<version hidden number="2.0.0.795" status="dev">
 			</version>
 
-			<version number="2.0.0.794" status="dev">
+			<version number="2.0.0.794" status="dev" date="30.05.2016">
 				<change>Исправление ошибок, возникших после перехода на wxPython 3.0.</change>
 			</version>
 
-			<version number="2.0.0.792" status="dev">
+			<version number="2.0.0.792" status="dev" date="10.05.2016">
 				<change>The program now uses wxPython 3.0 library.</change>
 			</version>
 		</changelog>
@@ -24,14 +24,14 @@
 		<website>http://jenyay.net/Outwiker/UnstableEn</website>
 
 		<changelog>
-			<version number="2.0.0.795" status="dev" hidden >
+			<version hidden number="2.0.0.795" status="dev">
 			</version>
 
-			<version number="2.0.0.794" status="dev">
+			<version number="2.0.0.794" status="dev" date="May 30, 2016">
 				<change>Fixed errors related with migration to wxPython 3.0.</change>
 			</version>
 
-			<version number="2.0.0.792" status="dev">
+			<version number="2.0.0.792" status="dev" date="May 10, 2016">
 				<change>Переход на библиотеку wxPython 3.0.</change>
 			</version>
 		</changelog>
