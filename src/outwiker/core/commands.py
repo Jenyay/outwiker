@@ -12,12 +12,14 @@ import wx
 
 import outwiker.core.exceptions
 from outwiker.actions.polyactionsid import *
-from outwiker.core.system import getOS
+from outwiker.core.system import getOS, readTextFile, getCurrentDir
 from outwiker.core.version import Version
 from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
 from outwiker.core.pagetitletester import PageTitleError, PageTitleWarning
+from outwiker.core.defines import VERSION_FILE_NAME, VERSIONS_LANG
+from outwiker.core.xmlversionparser import XmlVersionParser
 from outwiker.gui.overwritedialog import OverwriteDialog
 from outwiker.gui.longprocessrunner import LongProcessRunner
 from outwiker.gui.hotkey import HotKey
@@ -368,29 +370,15 @@ def setStatusText (text, index = 0):
 
 
 def getCurrentVersion ():
-    fname = "version.txt"
-    path = os.path.join (outwiker.core.system.getCurrentDir(), fname)
+    path = os.path.join (getCurrentDir(), VERSION_FILE_NAME)
 
     try:
-        with open (path) as fp:
-            lines = fp.readlines()
-    except IOError:
-        MessageBox (_(u"Can't open file %s") % fname, _(u"Error"), wx.ICON_ERROR | wx.OK)
-        return
+        text = readTextFile(path)
+        versionInfo = XmlVersionParser([_(VERSIONS_LANG), u'en']).parse(text)
+    except EnvironmentError:
+        return None
 
-    version_str = "%s.%s %s" % (lines[0].strip(),
-                                lines[1].strip(),
-                                lines[2].strip())
-
-    try:
-        version = Version.parse (version_str)
-    except ValueError:
-        MessageBox (_(u"Can't parse version"),
-                    _(u"Error"),
-                    wx.ICON_ERROR | wx.OK)
-        version = Version(0, 0)
-
-    return version
+    return versionInfo.currentVersion
 
 
 @testreadonly

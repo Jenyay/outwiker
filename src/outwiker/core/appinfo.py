@@ -32,6 +32,12 @@ class AppInfo (object):
         self.updatesUrl = updatesUrl
         self.requirements = requirements
 
+    @property
+    def currentVersion(self):
+        if len(self.versionsList) == 0:
+            return None
+        return self.versionsList[0].version
+
 
 class AuthorInfo (object):
     """
