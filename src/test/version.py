@@ -165,6 +165,9 @@ class VersionTest(unittest.TestCase):
         self.assertEqual(version[1], 2)
         self.assertEqual(version[2], 3)
         self.assertEqual(version[3], 4)
+        self.assertEqual(version[-1], 4)
+        self.assertEqual(version[: 2], [1, 2])
+        self.assertEqual(version[: -1], [1, 2, 3])
 
 
     def testItems_02(self):

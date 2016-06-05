@@ -6,6 +6,7 @@ import os
 import os.path
 import shutil
 import glob
+import sys
 
 from fabric.api import local, lcd, settings
 
@@ -48,17 +49,41 @@ SOURCES_DIR = u'sources'
 PLUGINS_DIR = u'plugins'
 
 
+
+def _correctSysPath ():
+    """
+    Add src path to sys.path to use outwiker modules
+    """
+    encoding = sys.getfilesystemencoding()
+    cmd_folder = unicode (os.path.abspath('src'), encoding)
+
+    syspath = [unicode (item, encoding)
+               if not isinstance (item, unicode)
+               else item for item in sys.path]
+
+    if cmd_folder not in syspath:
+        sys.path.insert(0, cmd_folder)
+
+
+_correctSysPath()
+import outwiker
+
+
 def _getVersion():
     """
     Return a tuple: (version number, build number)
     """
-    # The file with version number
-    fname = u"src/version.txt"
+    from outwiker.core.xmlversionparser import XmlVersionParser
+    from outwiker.core.system import readTextFile
 
-    with open (fname) as fp_in:
-        lines = fp_in.readlines()
+    # The file with the version number
+    fname = u"src/versions.xml"
+    text = readTextFile(fname)
+    version = XmlVersionParser([u'en']).parse(text).currentVersion
+    version_major = u'.'.join([unicode(item) for item in version[:-1]])
+    version_build = unicode(version[-1])
 
-    return (lines[0].strip(), lines[1].strip())
+    return (version_major, version_build)
 
 
 class _BuilderBase (object):
@@ -111,19 +136,6 @@ class _BuilderBase (object):
                 os.remove (path)
             elif os.path.isdir (path):
                 shutil.rmtree (path)
-
-
-    def _getVersion(self):
-        """
-        Return a tuple: (version number, build number)
-        """
-        # The file with version number
-        fname = u"src/version.txt"
-
-        with open (fname) as fp_in:
-            lines = fp_in.readlines()
-
-        return (lines[0].strip(), lines[1].strip())
 
 
 class _BuilderLinuxBinaryBase (_BuilderBase):
@@ -197,7 +209,7 @@ class _BuilderLinuxBinary (_BuilderLinuxBinaryBase):
 class _BuilderLinuxDebBinary (_BuilderBase):
     def __init__ (self, subdir_name=DEB_BINARY_BUILD_DIR):
         super (_BuilderLinuxDebBinary, self).__init__ (subdir_name)
-        version = self._getVersion()
+        version = _getVersion()
         self._architecture = self._getDebArchitecture()
         self._debName = "outwiker-{}+{}_{}".format (version[0], version[1], self._architecture)
 
@@ -426,12 +438,12 @@ class _BuilderBaseDebSource (_BuilderBase):
         """
         Return a folder name for sources for building the deb package
         """
-        version = self._getVersion()
+        version = _getVersion()
         return "outwiker-{}+{}".format (version[0], version[1])
 
 
     def _getOrigName (self, distname):
-        version = self._getVersion()
+        version = _getVersion()
         return "outwiker_{}+{}~{}.orig.tar".format (version[0], version[1], distname)
 
 
@@ -490,7 +502,7 @@ class _BuilderSources (_BuilderBase):
 
 
     def _build (self):
-        version = self._getVersion()
+        version = _getVersion()
 
         local ('git archive --prefix=outwiker-{}.{}/ -o "{}" HEAD'.format (
             version[0],
@@ -752,25 +764,18 @@ def linux_clear ():
 
 def nextversion():
     """
-    Increment a version number (execute under Linux only, incremented the deb package version also)
+    Increment a version number (execute under Linux only,
+    incremented the deb package version also)
     """
-    # The file with version number
-    fname = u"src/version.txt"
-
-    with open (fname) as fp_in:
-        lines = fp_in.readlines()
-
-    lines[1] = str (int (lines[1]) + 1) + "\n"
-
-    result = u"".join (lines)
-
-    with open (fname, "w") as fp_out:
-        fp_out.write (result)
+    (version_major, version_build) = _getVersion()
+    version_build = unicode(int (version_build) + 1)
 
     with lcd (os.path.join (u'need_for_build', u'debian_debsource')):
-        local ('dch -v "{}+{}~{}"'.format (lines[0].strip(),
-                                           lines[1].strip(),
-                                           _getCurrentUbuntuDistribName()))
+        local ('dch -v "{major}+{build}~{distrib}" -D {distrib}'.format (
+            major=version_major,
+            build=version_build,
+            distrib=_getCurrentUbuntuDistribName())
+        )
 
 
 

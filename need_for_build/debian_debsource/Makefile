@@ -25,7 +25,7 @@ install:
 	# cp -r "src/plugins" $(outwiker_dir)
 	cp -r "src/styles" $(outwiker_dir)
 	cp "src/runoutwiker.py" $(outwiker_dir)
-	cp "src/version.txt" $(outwiker_dir)
+	cp "src/versions.xml" $(outwiker_dir)
 	cp "copyright.txt" $(outwiker_dir)
 	cp "README" $(outwiker_dir)
 	cp "outwiker" $(DESTDIR)/usr/bin/
