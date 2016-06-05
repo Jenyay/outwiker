@@ -73,7 +73,25 @@ class XmlVersionParser (object):
         if version is None:
             return None
 
-        return VersionInfo(version)
+        date = version_tag.get(u'date', u'')
+        hidden = False
+        try:
+            hidden = bool(version_tag.get(u'hidden'))
+        except ValueError:
+            pass
+        changes = self._getChanges(version_tag)
+
+        return VersionInfo(version, date_str=date, changes=changes, hidden=hidden)
+
+    def _getChanges (self, version_tag):
+        assert version_tag is not None
+        changes = []
+        for change_tag in version_tag.findall(u'change'):
+            text = change_tag.text
+            if text is None:
+                text = u''
+            changes.append(text)
+        return changes
     
     def _getVersion(self, version_tag):
         """

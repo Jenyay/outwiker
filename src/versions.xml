@@ -7,7 +7,7 @@
 		<website>http://jenyay.net/Outwiker/Unstable</website>
 
 		<changelog>
-			<version hidden number="2.0.0.795" status="dev">
+			<version hidden="true" number="2.0.0.795" status="dev">
 			</version>
 
 			<version number="2.0.0.794" status="dev" date="30.05.2016">
@@ -24,7 +24,7 @@
 		<website>http://jenyay.net/Outwiker/UnstableEn</website>
 
 		<changelog>
-			<version hidden number="2.0.0.795" status="dev">
+			<version hidden="true" number="2.0.0.795" status="dev">
 			</version>
 
 			<version number="2.0.0.794" status="dev" date="May 30, 2016">

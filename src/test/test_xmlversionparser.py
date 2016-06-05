@@ -359,6 +359,9 @@ class XmlVersionParserTest (unittest.TestCase):
 
         self.assertEqual(len (result.versionsList), 1)
         self.assertEqual(result.versionsList[0].version, Version(1, 0))
+        self.assertEqual(result.versionsList[0].date_str, u'')
+        self.assertEqual(result.versionsList[0].hidden, False)
+        self.assertEqual(len (result.versionsList[0].changes), 0)
 
     def test_versions_02(self):
         text = u'''<?xml version="1.1" encoding="UTF-8" ?>
@@ -374,6 +377,9 @@ class XmlVersionParserTest (unittest.TestCase):
 
         self.assertEqual(len (result.versionsList), 1)
         self.assertEqual(result.versionsList[0].version, Version(1, 0, status=StatusSet.BETA))
+        self.assertEqual(result.versionsList[0].date_str, u'')
+        self.assertEqual(result.versionsList[0].hidden, False)
+        self.assertEqual(len (result.versionsList[0].changes), 0)
 
     def test_versions_03(self):
         text = u'''<?xml version="1.1" encoding="UTF-8" ?>
@@ -389,6 +395,9 @@ class XmlVersionParserTest (unittest.TestCase):
 
         self.assertEqual(len (result.versionsList), 1)
         self.assertEqual(result.versionsList[0].version, Version(1, 2, 3, 4, status=StatusSet.DEV))
+        self.assertEqual(result.versionsList[0].date_str, u'')
+        self.assertEqual(result.versionsList[0].hidden, False)
+        self.assertEqual(len (result.versionsList[0].changes), 0)
 
     def test_versions_04(self):
         text = u'''<?xml version="1.1" encoding="UTF-8" ?>
@@ -407,3 +416,159 @@ class XmlVersionParserTest (unittest.TestCase):
         self.assertEqual(result.versionsList[0].version, Version(1, 3))
         self.assertEqual(result.versionsList[1].version, Version(1, 2))
         self.assertEqual(result.versionsList[2].version, Version(1, 1))
+        self.assertEqual(len (result.versionsList[0].changes), 0)
+        self.assertEqual(len (result.versionsList[1].changes), 0)
+        self.assertEqual(len (result.versionsList[2].changes), 0)
+
+    def test_date(self):
+        text = u'''<?xml version="1.1" encoding="UTF-8" ?>
+            <info>
+                <data lang="ru">
+                    <changelog>
+			<version number="1.2" date="15 июня 2016">
+			</version>
+                    </changelog>
+                </data>
+            </info>'''
+        result = XmlVersionParser([u'ru']).parse(text)
+
+        self.assertEqual(len (result.versionsList), 1)
+        self.assertEqual(result.versionsList[0].version, Version(1, 2))
+        self.assertEqual(result.versionsList[0].date_str, u'15 июня 2016')
+        self.assertEqual(result.versionsList[0].hidden, False)
+        self.assertEqual(len (result.versionsList[0].changes), 0)
+
+    def test_hidden_01(self):
+        text = u'''<?xml version="1.1" encoding="UTF-8" ?>
+            <info>
+                <data lang="ru">
+                    <changelog>
+			<version number="1.2" hidden="true">
+			</version>
+                    </changelog>
+                </data>
+            </info>'''
+        result = XmlVersionParser([u'ru']).parse(text)
+
+        self.assertEqual(len (result.versionsList), 1)
+        self.assertEqual(result.versionsList[0].version, Version(1, 2))
+        self.assertEqual(result.versionsList[0].date_str, u'')
+        self.assertEqual(result.versionsList[0].hidden, True)
+        self.assertEqual(len (result.versionsList[0].changes), 0)
+
+    def test_hidden_02(self):
+        text = u'''<?xml version="1.1" encoding="UTF-8" ?>
+            <info>
+                <data lang="ru">
+                    <changelog>
+			<version number="1.2" hidden="1">
+			</version>
+                    </changelog>
+                </data>
+            </info>'''
+        result = XmlVersionParser([u'ru']).parse(text)
+
+        self.assertEqual(len (result.versionsList), 1)
+        self.assertEqual(result.versionsList[0].version, Version(1, 2))
+        self.assertEqual(result.versionsList[0].date_str, u'')
+        self.assertEqual(result.versionsList[0].hidden, True)
+        self.assertEqual(len (result.versionsList[0].changes), 0)
+
+    def test_hidden_03(self):
+        text = u'''<?xml version="1.1" encoding="UTF-8" ?>
+            <info>
+                <data lang="ru">
+                    <changelog>
+			<version number="1.2" hidden="True">
+			</version>
+                    </changelog>
+                </data>
+            </info>'''
+        result = XmlVersionParser([u'ru']).parse(text)
+
+        self.assertEqual(len (result.versionsList), 1)
+        self.assertEqual(result.versionsList[0].version, Version(1, 2))
+        self.assertEqual(result.versionsList[0].date_str, u'')
+        self.assertEqual(result.versionsList[0].hidden, True)
+        self.assertEqual(len (result.versionsList[0].changes), 0)
+
+    def test_changes_01(self):
+        text = u'''<?xml version="1.1" encoding="UTF-8" ?>
+            <info>
+                <data lang="ru">
+                    <changelog>
+			<version number="1.2">
+                            <change>Изменение 1</change>
+			</version>
+                    </changelog>
+                </data>
+            </info>'''
+        result = XmlVersionParser([u'ru']).parse(text)
+
+        self.assertEqual(len (result.versionsList), 1)
+        self.assertEqual(result.versionsList[0].version, Version(1, 2))
+        self.assertEqual(result.versionsList[0].date_str, u'')
+        self.assertEqual(result.versionsList[0].hidden, False)
+        self.assertEqual(len (result.versionsList[0].changes), 1)
+        self.assertEqual(result.versionsList[0].changes[0], u'Изменение 1')
+
+    def test_changes_02(self):
+        text = u'''<?xml version="1.1" encoding="UTF-8" ?>
+            <info>
+                <data lang="ru">
+                    <changelog>
+			<version number="1.2">
+                            <change>Изменение 1</change>
+                            <change>Изменение 2</change>
+                            <change>Изменение 3</change>
+			</version>
+                    </changelog>
+                </data>
+            </info>'''
+        result = XmlVersionParser([u'ru']).parse(text)
+
+        self.assertEqual(len (result.versionsList), 1)
+        self.assertEqual(result.versionsList[0].version, Version(1, 2))
+        self.assertEqual(result.versionsList[0].date_str, u'')
+        self.assertEqual(result.versionsList[0].hidden, False)
+        self.assertEqual(len (result.versionsList[0].changes), 3)
+        self.assertEqual(result.versionsList[0].changes[0], u'Изменение 1')
+        self.assertEqual(result.versionsList[0].changes[1], u'Изменение 2')
+        self.assertEqual(result.versionsList[0].changes[2], u'Изменение 3')
+
+    def test_changes_02(self):
+        text = u'''<?xml version="1.1" encoding="UTF-8" ?>
+            <info>
+                <data lang="ru">
+                    <changelog>
+			<version number="1.2">
+                            <change>Изменение 1</change>
+                            <change>Изменение 2</change>
+                            <change>Изменение 3</change>
+			</version>
+
+			<version number="1.3">
+                            <change>Изменение 4</change>
+                            <change>Изменение 5</change>
+			</version>
+                    </changelog>
+                </data>
+            </info>'''
+        result = XmlVersionParser([u'ru']).parse(text)
+
+        self.assertEqual(len (result.versionsList), 2)
+
+        self.assertEqual(result.versionsList[0].version, Version(1, 3))
+        self.assertEqual(result.versionsList[0].date_str, u'')
+        self.assertEqual(result.versionsList[0].hidden, False)
+        self.assertEqual(len (result.versionsList[0].changes), 2)
+        self.assertEqual(result.versionsList[0].changes[0], u'Изменение 4')
+        self.assertEqual(result.versionsList[0].changes[1], u'Изменение 5')
+
+        self.assertEqual(result.versionsList[1].version, Version(1, 2))
+        self.assertEqual(result.versionsList[1].date_str, u'')
+        self.assertEqual(result.versionsList[1].hidden, False)
+        self.assertEqual(len (result.versionsList[1].changes), 3)
+        self.assertEqual(result.versionsList[1].changes[0], u'Изменение 1')
+        self.assertEqual(result.versionsList[1].changes[1], u'Изменение 2')
+        self.assertEqual(result.versionsList[1].changes[2], u'Изменение 3')
