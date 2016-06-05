@@ -2,7 +2,10 @@
 
 from xml.etree import ElementTree
 
-from outwiker.core.appinfo import AppInfo, AuthorInfo, VersionInfo
+from outwiker.core.appinfo import (AppInfo,
+                                   AuthorInfo,
+                                   VersionInfo,
+                                   RequirementsInfo)
 from version import Version
 
 
@@ -30,6 +33,7 @@ class XmlVersionParser (object):
 
         name = self._getTextValue(root, u'name')
         updatesUrl = self._getTextValue(root, u'updates')
+        requirements = self._getRequirements(root)
 
         # Get data tag for selected language
         data_tag = self._getDataTag (root)
@@ -43,8 +47,31 @@ class XmlVersionParser (object):
                           versionsList=versionsList,
                           appwebsite=appwebsite,
                           description=description,
-                          updatesUrl=updatesUrl)
+                          updatesUrl=updatesUrl,
+                          requirements=requirements)
         return appinfo
+
+    def _getRequirements(self, root):
+        assert root is not None
+        requirements_tag = root.find(u'requirements')
+        if requirements_tag is None:
+            return None
+
+        outwiker_version=None
+        try:
+            outwiker_version = Version.parse(self._getTextValue(requirements_tag, u'outwiker'))
+        except ValueError:
+            pass
+
+        os_str = self._getTextValue(requirements_tag, u'os')
+        if os_str is None:
+            os_str = u''
+
+        os_list = [current_os.strip()
+                   for current_os
+                   in os_str.split(u',')
+                   if len(current_os.strip()) != 0]
+        return RequirementsInfo(outwiker_version, os_list)
 
     def _getVersionsList(self, data_tag):
         """

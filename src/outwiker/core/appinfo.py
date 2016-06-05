@@ -13,7 +13,8 @@ class AppInfo (object):
                  versionsList=[],
                  description=u"",
                  appwebsite=u"",
-                 updatesUrl=u""):
+                 updatesUrl=u"",
+                 requirements=None):
         """
         appname - application or plug-in name.
         author - author info. It is instance of the AuthorInfo class.
@@ -29,6 +30,7 @@ class AppInfo (object):
         self.description = description
         self.appwebsite = appwebsite
         self.updatesUrl = updatesUrl
+        self.requirements = requirements
 
 
 class AuthorInfo (object):
@@ -59,3 +61,16 @@ class VersionInfo (object):
         self.downloads = downloads.copy()
         self.changes = changes[:]
         self.hidden = hidden
+
+
+class RequirementsInfo (object):
+    """
+    Plug-in's requirements
+    """
+    def __init__(self, outwiker_version, os_list):
+        """
+        outwiker_version - instance of the Version
+        os_list - list of the supported OS
+        """
+        self.outwiker_version = outwiker_version
+        self.os = os_list[:]

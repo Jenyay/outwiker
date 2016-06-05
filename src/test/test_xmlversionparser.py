@@ -3,7 +3,7 @@
 import unittest
 
 from outwiker.core.xmlversionparser import XmlVersionParser
-from outwiker.core.appinfo import AppInfo, AuthorInfo
+from outwiker.core.appinfo import AppInfo, AuthorInfo, RequirementsInfo
 from outwiker.core.version import Version, StatusSet
 
 
@@ -19,6 +19,7 @@ class XmlVersionParserTest (unittest.TestCase):
         self.assertEqual(result.description, u"")
         self.assertEqual(result.appwebsite, u"")
         self.assertEqual(result.updatesUrl, u"")
+        self.assertEqual(result.requirements, None)
 
     def test_empty_02(self):
         text = u'<?xml version="1.1" encoding="UTF-8" ?>'
@@ -617,3 +618,80 @@ class XmlVersionParserTest (unittest.TestCase):
                          {u'windows': u'http://example.com/1.0/windows/',
                           u'unix': u'http://example.com/1.0/unix/'
                           })
+
+    def test_requirements_empty(self):
+        text = u'''<?xml version="1.1" encoding="UTF-8" ?>
+            <info>
+                <requirements>
+                </requirements>
+            </info>'''
+        result = XmlVersionParser().parse(text)
+
+        self.assertTrue(isinstance(result.requirements, RequirementsInfo))
+        self.assertEqual(result.requirements.os, [])
+        self.assertEqual(result.requirements.outwiker_version, None)
+
+    def test_requirements_version_01(self):
+        text = u'''<?xml version="1.1" encoding="UTF-8" ?>
+            <info>
+                <requirements>
+                    <outwiker>2.0</outwiker>
+                </requirements>
+            </info>'''
+        result = XmlVersionParser().parse(text)
+
+        self.assertTrue(isinstance(result.requirements, RequirementsInfo))
+        self.assertEqual(result.requirements.os, [])
+        self.assertEqual(result.requirements.outwiker_version, Version(2, 0))
+
+    def test_requirements_version_02(self):
+        text = u'''<?xml version="1.1" encoding="UTF-8" ?>
+            <info>
+                <requirements>
+                    <outwiker>2.0 dev</outwiker>
+                </requirements>
+            </info>'''
+        result = XmlVersionParser().parse(text)
+
+        self.assertTrue(isinstance(result.requirements, RequirementsInfo))
+        self.assertEqual(result.requirements.os, [])
+        self.assertEqual(result.requirements.outwiker_version, Version(2, 0, status=StatusSet.DEV))
+
+    def test_requirements_os_01(self):
+        text = u'''<?xml version="1.1" encoding="UTF-8" ?>
+            <info>
+                <requirements>
+                    <os>Linux</os>
+                </requirements>
+            </info>'''
+        result = XmlVersionParser().parse(text)
+
+        self.assertTrue(isinstance(result.requirements, RequirementsInfo))
+        self.assertEqual(result.requirements.os, [u'Linux'])
+        self.assertEqual(result.requirements.outwiker_version, None)
+
+    def test_requirements_os_02(self):
+        text = u'''<?xml version="1.1" encoding="UTF-8" ?>
+            <info>
+                <requirements>
+                    <os>Linux, Windows</os>
+                </requirements>
+            </info>'''
+        result = XmlVersionParser().parse(text)
+
+        self.assertTrue(isinstance(result.requirements, RequirementsInfo))
+        self.assertEqual(result.requirements.os, [u'Linux', 'Windows'])
+        self.assertEqual(result.requirements.outwiker_version, None)
+
+    def test_requirements_os_03(self):
+        text = u'''<?xml version="1.1" encoding="UTF-8" ?>
+            <info>
+                <requirements>
+                    <os></os>
+                </requirements>
+            </info>'''
+        result = XmlVersionParser().parse(text)
+
+        self.assertTrue(isinstance(result.requirements, RequirementsInfo))
+        self.assertEqual(result.requirements.os, [])
+        self.assertEqual(result.requirements.outwiker_version, None)
