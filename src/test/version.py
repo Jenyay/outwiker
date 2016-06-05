@@ -157,3 +157,23 @@ class VersionTest(unittest.TestCase):
     def testParse4(self):
         self.assertRaises(ValueError, Version.parse, "abyrvalg")
         self.assertRaises(ValueError, Version.parse, ".10.2.0")
+
+
+    def testItems_01(self):
+        version = Version(1, 2, 3, 4)
+        self.assertEqual(version[0], 1)
+        self.assertEqual(version[1], 2)
+        self.assertEqual(version[2], 3)
+        self.assertEqual(version[3], 4)
+
+
+    def testItems_02(self):
+        version = Version(1, 2, 3, 4)
+        version[0] = 10
+        version[1] = 11
+        version[2] = 12
+        version[3] = 13
+        self.assertEqual(version[0], 10)
+        self.assertEqual(version[1], 11)
+        self.assertEqual(version[2], 12)
+        self.assertEqual(version[3], 13)

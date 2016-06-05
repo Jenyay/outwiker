@@ -119,6 +119,19 @@ class Version (object):
         """
         return self.__str__()
 
+    def __getitem__(self, index):
+        """
+        Added in OutWiker 2.0.0.795
+        """
+        return self.version[index]
+
+
+    def __setitem__(self, index, value):
+        """
+        Added in OutWiker 2.0.0.795
+        """
+        self.version[index] = value
+
 
     @staticmethod
     def parseStatus (string):
