@@ -69,8 +69,7 @@ class StatusSet (object):
     RC4 = Status ("RC4", 340)
     RC5 = Status ("RC5", 350)
 
-    RELEASE = Status ("release", 400)
-    STABLE = Status ("stable", 500)
+    RELEASE = Status ("", 400)
 
     def __init__ (self):
         pass
@@ -78,9 +77,8 @@ class StatusSet (object):
 
 class Version (object):
     def __init__ (self, major, *args, **kwargs):
-        self.NONSTATUS = Status (u"", 10000)
         self.version = [major] + [int (arg) for arg in args]
-        self.status = kwargs["status"] if "status" in kwargs else self.NONSTATUS
+        self.status = kwargs["status"] if "status" in kwargs else StatusSet.RELEASE
 
 
     def __eq__ (self, other):

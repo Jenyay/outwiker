@@ -17,7 +17,7 @@ class StatusTest(unittest.TestCase):
 
     def testNotEqual(self):
         self.assertTrue(StatusSet.DEV != StatusSet.BETA)
-        self.assertTrue(StatusSet.STABLE != StatusSet.BETA)
+        self.assertTrue(StatusSet.RELEASE != StatusSet.BETA)
 
 
     def testCustomCompare(self):
@@ -29,25 +29,25 @@ class StatusTest(unittest.TestCase):
 
 
     def testLess(self):
-        self.assertTrue(StatusSet.BETA < StatusSet.STABLE)
+        self.assertTrue(StatusSet.BETA < StatusSet.RELEASE)
         self.assertTrue(StatusSet.DEV < StatusSet.ALPHA)
         self.assertTrue(StatusSet.ALPHA < StatusSet.ALPHA2)
         self.assertTrue(StatusSet.ALPHA2 < StatusSet.BETA)
         self.assertTrue(StatusSet.BETA < StatusSet.BETA2)
         self.assertTrue(StatusSet.BETA2 < StatusSet.RC)
         self.assertTrue(StatusSet.RC < StatusSet.RC2)
-        self.assertTrue(StatusSet.RC2 < StatusSet.STABLE)
+        self.assertTrue(StatusSet.RC2 < StatusSet.RELEASE)
 
 
     def testLessEqual(self):
-        self.assertTrue(StatusSet.BETA <= StatusSet.STABLE)
+        self.assertTrue(StatusSet.BETA <= StatusSet.RELEASE)
         self.assertTrue(StatusSet.DEV <= StatusSet.ALPHA)
         self.assertTrue(StatusSet.ALPHA <= StatusSet.ALPHA2)
         self.assertTrue(StatusSet.ALPHA2 <= StatusSet.BETA)
         self.assertTrue(StatusSet.BETA <= StatusSet.BETA2)
         self.assertTrue(StatusSet.BETA2 <= StatusSet.RC)
         self.assertTrue(StatusSet.RC <= StatusSet.RC2)
-        self.assertTrue(StatusSet.RC2 <= StatusSet.STABLE)
+        self.assertTrue(StatusSet.RC2 <= StatusSet.RELEASE)
 
 
     def testGreatEqual(self):
@@ -98,7 +98,7 @@ class VersionTest(unittest.TestCase):
         self.assertTrue(Version(2) > Version(1))
         self.assertTrue(Version(1, 2, 4) > Version(1, 2, 3))
         self.assertTrue(Version(2, 2, 4) > Version(1, 2, 3))
-        self.assertTrue(Version(1, 2, 3, status=StatusSet.STABLE) >
+        self.assertTrue(Version(1, 2, 3, status=StatusSet.RELEASE) >
                         Version(1, 2, 3, status=StatusSet.BETA))
         self.assertTrue(Version(2, 2, 3, status=StatusSet.ALPHA) >
                         Version(1, 2, 3, status=StatusSet.BETA))
@@ -108,7 +108,7 @@ class VersionTest(unittest.TestCase):
         self.assertTrue(Version(2) >= Version(1))
         self.assertTrue(Version(1, 2, 4) >= Version(1, 2, 3))
         self.assertTrue(Version(2, 2, 4) >= Version(1, 2, 3))
-        self.assertTrue(Version(1, 2, 3, status=StatusSet.STABLE) >=
+        self.assertTrue(Version(1, 2, 3, status=StatusSet.RELEASE) >=
                         Version(1, 2, 3, status=StatusSet.BETA))
         self.assertTrue(Version(2, 2, 3, status=StatusSet.ALPHA) >=
                         Version(1, 2, 3, status=StatusSet.BETA))
@@ -148,8 +148,10 @@ class VersionTest(unittest.TestCase):
                         Version(1, 2, 3, status=StatusSet.BETA))
         self.assertTrue(Version.parse(" 1.2.3 dev") ==
                         Version(1, 2, 3, status=StatusSet.DEV))
-        self.assertTrue(Version.parse("1.2.3  stable ") ==
-                        Version(1, 2, 3, status=StatusSet.STABLE))
+        self.assertTrue(Version.parse("1.2.3  release ") ==
+                        Version(1, 2, 3, status=StatusSet.RELEASE))
+        self.assertTrue(Version.parse("1.2.3") ==
+                        Version(1, 2, 3, status=StatusSet.RELEASE))
 
 
     def testParse4(self):
