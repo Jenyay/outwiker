@@ -572,3 +572,48 @@ class XmlVersionParserTest (unittest.TestCase):
         self.assertEqual(result.versionsList[1].changes[0], u'Изменение 1')
         self.assertEqual(result.versionsList[1].changes[1], u'Изменение 2')
         self.assertEqual(result.versionsList[1].changes[2], u'Изменение 3')
+
+    def test_downloads_01(self):
+        text = u'''<?xml version="1.1" encoding="UTF-8" ?>
+            <info>
+                <data lang="ru">
+                    <changelog>
+			<version number="1.0">
+                            <download>http://example.com/1.0/</download>
+			</version>
+                    </changelog>
+                </data>
+            </info>'''
+        result = XmlVersionParser([u'ru']).parse(text)
+
+        self.assertEqual(len (result.versionsList), 1)
+        self.assertEqual(result.versionsList[0].version, Version(1, 0))
+        self.assertEqual(result.versionsList[0].date_str, u'')
+        self.assertEqual(result.versionsList[0].hidden, False)
+        self.assertEqual(len (result.versionsList[0].changes), 0)
+        self.assertEqual(result.versionsList[0].downloads,
+                         {u'all': u'http://example.com/1.0/'})
+
+    def test_downloads_02(self):
+        text = u'''<?xml version="1.1" encoding="UTF-8" ?>
+            <info>
+                <data lang="ru">
+                    <changelog>
+			<version number="1.0">
+                            <download os="windows">http://example.com/1.0/windows/</download>
+                            <download os="unix">http://example.com/1.0/unix/</download>
+			</version>
+                    </changelog>
+                </data>
+            </info>'''
+        result = XmlVersionParser([u'ru']).parse(text)
+
+        self.assertEqual(len (result.versionsList), 1)
+        self.assertEqual(result.versionsList[0].version, Version(1, 0))
+        self.assertEqual(result.versionsList[0].date_str, u'')
+        self.assertEqual(result.versionsList[0].hidden, False)
+        self.assertEqual(len (result.versionsList[0].changes), 0)
+        self.assertEqual(result.versionsList[0].downloads,
+                         {u'windows': u'http://example.com/1.0/windows/',
+                          u'unix': u'http://example.com/1.0/unix/'
+                          })

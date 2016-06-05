@@ -80,10 +80,25 @@ class XmlVersionParser (object):
         except ValueError:
             pass
         changes = self._getChanges(version_tag)
+        downloads = self._getDownloads(version_tag)
 
-        return VersionInfo(version, date_str=date, changes=changes, hidden=hidden)
+        return VersionInfo(version,
+                           date_str=date,
+                           downloads=downloads,
+                           changes=changes,
+                           hidden=hidden)
 
-    def _getChanges (self, version_tag):
+    def _getDownloads(self, version_tag):
+        assert version_tag is not None
+        downloads = {}
+        for download in version_tag.findall(u'download'):
+            os = download.get(u'os', u'all')
+            url = download.text
+            if url is not None:
+                downloads[os] = url
+        return downloads
+
+    def _getChanges(self, version_tag):
         assert version_tag is not None
         changes = []
         for change_tag in version_tag.findall(u'change'):
@@ -103,8 +118,7 @@ class XmlVersionParser (object):
             status = version_tag.get(u'status')
             if number is None:
                 raise ValueError
-            full_number = (u' '.join([number, status])
-                           if status is not None
+            full_number = (u' '.join([number, status]) if status is not None
                            else number)
             version = Version.parse(full_number)
         except ValueError:
