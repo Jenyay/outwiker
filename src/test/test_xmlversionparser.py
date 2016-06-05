@@ -4,6 +4,7 @@ import unittest
 
 from outwiker.core.xmlversionparser import XmlVersionParser
 from outwiker.core.appinfo import AppInfo, AuthorInfo
+from outwiker.core.version import Version, StatusSet
 
 
 class XmlVersionParserTest (unittest.TestCase):
@@ -318,3 +319,91 @@ class XmlVersionParserTest (unittest.TestCase):
         self.assertEqual(result.author.name, u'Евгений Ильин')
         self.assertEqual(result.author.email, u'ru@example.com')
         self.assertEqual(result.author.website, u'http://example.com/ru/')
+
+    def test_versions_list_empty(self):
+        text = u'''<?xml version="1.1" encoding="UTF-8" ?>
+            <info>
+                <data lang="en">
+                    <changelog></changelog>
+                </data>
+            </info>'''
+        result = XmlVersionParser().parse(text)
+
+        self.assertEqual(result.versionsList, [])
+
+    def test_versions_invalid(self):
+        text = u'''<?xml version="1.1" encoding="UTF-8" ?>
+            <info>
+                <data lang="en">
+                    <changelog>
+			<version>
+			</version>
+                    </changelog>
+                </data>
+            </info>'''
+        result = XmlVersionParser().parse(text)
+
+        self.assertEqual(len (result.versionsList), 0)
+
+    def test_versions_01(self):
+        text = u'''<?xml version="1.1" encoding="UTF-8" ?>
+            <info>
+                <data lang="en">
+                    <changelog>
+			<version number="1.0">
+			</version>
+                    </changelog>
+                </data>
+            </info>'''
+        result = XmlVersionParser().parse(text)
+
+        self.assertEqual(len (result.versionsList), 1)
+        self.assertEqual(result.versionsList[0].version, Version(1, 0))
+
+    def test_versions_02(self):
+        text = u'''<?xml version="1.1" encoding="UTF-8" ?>
+            <info>
+                <data lang="en">
+                    <changelog>
+			<version number="1.0" status="beta">
+			</version>
+                    </changelog>
+                </data>
+            </info>'''
+        result = XmlVersionParser().parse(text)
+
+        self.assertEqual(len (result.versionsList), 1)
+        self.assertEqual(result.versionsList[0].version, Version(1, 0, status=StatusSet.BETA))
+
+    def test_versions_03(self):
+        text = u'''<?xml version="1.1" encoding="UTF-8" ?>
+            <info>
+                <data lang="en">
+                    <changelog>
+			<version number="1.2.3.4" status="dev">
+			</version>
+                    </changelog>
+                </data>
+            </info>'''
+        result = XmlVersionParser().parse(text)
+
+        self.assertEqual(len (result.versionsList), 1)
+        self.assertEqual(result.versionsList[0].version, Version(1, 2, 3, 4, status=StatusSet.DEV))
+
+    def test_versions_04(self):
+        text = u'''<?xml version="1.1" encoding="UTF-8" ?>
+            <info>
+                <data lang="en">
+                    <changelog>
+			<version number="1.2"></version>
+			<version number="1.1"></version>
+			<version number="1.3"></version>
+                    </changelog>
+                </data>
+            </info>'''
+        result = XmlVersionParser().parse(text)
+
+        self.assertEqual(len (result.versionsList), 3)
+        self.assertEqual(result.versionsList[0].version, Version(1, 3))
+        self.assertEqual(result.versionsList[1].version, Version(1, 2))
+        self.assertEqual(result.versionsList[2].version, Version(1, 1))

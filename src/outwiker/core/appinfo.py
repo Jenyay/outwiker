@@ -56,6 +56,6 @@ class VersionInfo (object):
         """
         self.version = version
         self.date_str = date_str
-        self.downloads = download.copy()
+        self.downloads = downloads.copy()
         self.changes = changes[:]
         self.hidden = hidden

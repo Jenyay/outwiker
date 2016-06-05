@@ -3,7 +3,7 @@
 from xml.etree import ElementTree
 
 from outwiker.core.appinfo import AppInfo, AuthorInfo, VersionInfo
-from version import Version, Status
+from version import Version
 
 
 class XmlVersionParser (object):
@@ -36,13 +36,62 @@ class XmlVersionParser (object):
         appwebsite = self._getAppWebsite (data_tag)
         description = self._getDescription (data_tag)
         author = self._getAuthorInfo(data_tag)
+        versionsList = self._getVersionsList(data_tag)
 
         appinfo = AppInfo(name,
                           author=author,
+                          versionsList=versionsList,
                           appwebsite=appwebsite,
                           description=description,
                           updatesUrl=updatesUrl)
         return appinfo
+
+    def _getVersionsList(self, data_tag):
+        """
+        Return list of VersionInfo instance. List sorted by version (last version is first)
+        """
+        result = []
+        if data_tag is None:
+            return result
+
+        changelog_tag = data_tag.find(u'changelog')
+        if changelog_tag is None:
+            return result
+
+        for version_tag in changelog_tag.findall(u'version[@number]'):
+            version = self._getVersionInfo(version_tag)
+            if version is not None:
+                result.append(version)
+
+        result.sort(key=lambda x: x.version, reverse=True)
+
+        return result
+
+    def _getVersionInfo(self, version_tag):
+        assert version_tag is not None
+        version = self._getVersion(version_tag)
+        if version is None:
+            return None
+
+        return VersionInfo(version)
+    
+    def _getVersion(self, version_tag):
+        """
+        Return Version instance or None if version number is not exists.
+        """
+        assert version_tag is not None
+        try:
+            number = version_tag.get(u'number')
+            status = version_tag.get(u'status')
+            if number is None:
+                raise ValueError
+            full_number = (u' '.join([number, status])
+                           if status is not None
+                           else number)
+            version = Version.parse(full_number)
+        except ValueError:
+            return None
+        return version
 
     def _getAuthorInfo(self, data_tag):
         """

@@ -115,6 +115,13 @@ class Version (object):
         return result.strip()[1:]
 
 
+    def __repr__ (self):
+        """
+        Added in OutWiker 2.0.0.795
+        """
+        return self.__str__()
+
+
     @staticmethod
     def parseStatus (string):
         result = None
