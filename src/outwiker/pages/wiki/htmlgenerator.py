@@ -3,7 +3,7 @@
 from outwiker.core.htmlimproverfactory import HtmlImproverFactory
 from outwiker.core.htmltemplate import HtmlTemplate
 from outwiker.core.application import Application
-from outwiker.core.system import readTextFile
+from outwiker.utilites.textfile import readTextFile
 from outwiker.core.events import (PreprocessingParams,
                                   PreHtmlImprovingParams,
                                   PostprocessingParams

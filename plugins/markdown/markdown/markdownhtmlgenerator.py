@@ -2,7 +2,7 @@
 
 from outwiker.core.htmlimprover import BrHtmlImprover
 from outwiker.core.htmltemplate import HtmlTemplate
-from outwiker.core.system import readTextFile
+from outwiker.utilites.textfile import readTextFile
 
 from markdownparser.parser import Parser
 

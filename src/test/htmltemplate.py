@@ -5,9 +5,10 @@ import unittest
 
 from outwiker.core.application import Application
 from outwiker.core.htmltemplate import HtmlTemplate
-from outwiker.core.system import getTemplatesDir, readTextFile
+from outwiker.core.system import getTemplatesDir
 from outwiker.core.htmlimprover import BrHtmlImprover
 from outwiker.gui.guiconfig import HtmlRenderConfig
+from outwiker.utilites.textfile import readTextFile
 
 
 class HtmlTemplateTest(unittest.TestCase):

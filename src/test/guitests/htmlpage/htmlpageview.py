@@ -7,7 +7,7 @@ import wx
 from test.guitests.basemainwnd import BaseMainWndTest
 from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
-from outwiker.core.system import readTextFile
+from outwiker.utilites.textfile import readTextFile
 from outwiker.core.defines import PAGE_RESULT_HTML
 
 from outwiker.pages.html.htmlpage import HtmlPageFactory

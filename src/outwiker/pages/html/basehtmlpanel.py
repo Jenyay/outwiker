@@ -14,7 +14,8 @@ from outwiker.core.system import getImagesDir
 from outwiker.core.attachment import Attachment
 from outwiker.core.config import IntegerOption
 from outwiker.core.defines import PAGE_RESULT_HTML
-from outwiker.core.system import writeTextFile, getOS
+from outwiker.core.system import getOS
+from outwiker.utilites.textfile import writeTextFile
 from outwiker.gui.basetextpanel import BaseTextPanel
 from outwiker.gui.guiconfig import GeneralGuiConfig
 

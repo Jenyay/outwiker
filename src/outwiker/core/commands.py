@@ -12,7 +12,8 @@ import wx
 
 import outwiker.core.exceptions
 from outwiker.actions.polyactionsid import *
-from outwiker.core.system import getOS, readTextFile, getCurrentDir
+from outwiker.core.system import getOS, getCurrentDir
+from outwiker.utilites.textfile import readTextFile
 from outwiker.core.version import Version
 from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application

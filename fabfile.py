@@ -66,12 +66,11 @@ def _correctSysPath ():
 
 
 _correctSysPath()
-import outwiker
+from outwiker.core.xmlversionparser import XmlVersionParser
+from outwiker.utilites.textfile import readTextFile
 
 
 def _readAppInfo(fname):
-    from outwiker.core.xmlversionparser import XmlVersionParser
-    from outwiker.core.system import readTextFile
     text = readTextFile(fname)
     return XmlVersionParser([u'en']).parse(text)
 

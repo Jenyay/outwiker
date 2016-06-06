@@ -5,7 +5,8 @@ import os.path
 import wx
 
 from outwiker.core.application import Application
-from outwiker.core.system import getSpellDirList, writeTextFile, readTextFile
+from outwiker.core.system import getSpellDirList
+from outwiker.utilites.textfile import writeTextFile, readTextFile
 from outwiker.core.spellchecker.defines import CUSTOM_DICT_FILE_NAME
 from outwiker.core.spellchecker.dictsfinder import DictsFinder
 from outwiker.gui.guiconfig import EditorConfig

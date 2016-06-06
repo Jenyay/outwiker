@@ -9,7 +9,7 @@ from outwiker.core.style import Style
 
 from outwiker.gui.htmltexteditor import HtmlTextEditor
 from outwiker.pages.html.basehtmlpanel import BaseHtmlPanel, EVT_PAGE_TAB_CHANGED
-from outwiker.core.system import readTextFile
+from outwiker.utilites.textfile import readTextFile
 
 from actions.openhtmlcode import WikiOpenHtmlCodeAction
 from actions.updatehtml import WikiUpdateHtmlAction
