@@ -15,29 +15,30 @@ UBUNTU_RELEASE_NAMES = [u"wily", u"trusty", u"xenial"]
 
 # List of the supported plugins
 PLUGINS_LIST = [
-    "autorenamer",
-    "changepageuid",
-    "counter",
-    "diagrammer",
-    "datagraph",
-    "export2html",
-    "externaltools",
-    "htmlformatter",
-    "htmlheads",
-    "lightbox",
-    "livejournal",
-    "pagetypecolor",
-    "readingmode",
-    "sessions",
-    "source",
-    "spoiler",
-    "statistics",
-    "style",
-    "thumbgallery",
-    "tableofcontents",
-    "texequation",
-    "updatenotifier",
-    "webpage",
+    u"autorenamer",
+    u"changepageuid",
+    u"counter",
+    u"diagrammer",
+    u"datagraph",
+    u"export2html",
+    u"externaltools",
+    u"htmlformatter",
+    u"htmlheads",
+    u"lightbox",
+    u"livejournal",
+    u"markdown",
+    u"pagetypecolor",
+    u"readingmode",
+    u"sessions",
+    u"source",
+    u"spoiler",
+    u"statistics",
+    u"style",
+    u"thumbgallery",
+    u"tableofcontents",
+    u"texequation",
+    u"updatenotifier",
+    u"webpage",
 ]
 
 BUILD_DIR = u'build'
@@ -47,6 +48,7 @@ DEB_BINARY_BUILD_DIR = u'deb_binary'
 DEB_SOURCE_BUILD_DIR = u'deb_source'
 SOURCES_DIR = u'sources'
 PLUGINS_DIR = u'plugins'
+PLUGIN_VERSIONS_FILENAME = u'plugin.xml'
 
 
 
@@ -571,10 +573,34 @@ class _BuilderPlugins (_BuilderBase):
 
     def _build (self):
         for plugin in self._plugins_list:
-            archive_name = plugin + u'.zip'
-            archive_path = self._getSubpath (archive_name)
+            # Path to plugin.xml for current plugin
+            xmlplugin_path = u'plugins/{plugin}/{plugin}/plugin.xml'.format(plugin=plugin)
+            try:
+                appInfo = _readAppInfo(xmlplugin_path)
+            except EnvironmentError:
+                appInfo = None
+
+            # Future plug-in archive name
+            if appInfo is None or appInfo.currentVersion is None:
+                archive_name = plugin + u'.zip'
+            else:
+                version = unicode(appInfo.currentVersion)
+                archive_name = u'{}-{}.zip'.format(plugin, version)
+
+            # Subpath to current plug-in archive
+            plugin_dir_path = self._getSubpath(plugin)
+
+            # Path to future archive
+            archive_path = self._getSubpath (plugin, archive_name)
+
+            # Path to archive with all plug-ins
             full_archive_path = self._getSubpath (self._all_plugins_fname)
-            self._remove (archive_path)
+            self._remove(plugin_dir_path)
+            self._remove(archive_path)
+
+            os.mkdir(plugin_dir_path)
+            if appInfo is not None:
+                shutil.copy(xmlplugin_path, plugin_dir_path)
 
             with lcd ("plugins/{}".format (plugin)):
                 local ("7z a -r -aoa -xr!*.pyc -xr!.ropeproject ../../{} ./*".format (archive_path))
