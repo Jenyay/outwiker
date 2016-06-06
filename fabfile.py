@@ -69,17 +69,20 @@ _correctSysPath()
 import outwiker
 
 
+def _readAppInfo(fname):
+    from outwiker.core.xmlversionparser import XmlVersionParser
+    from outwiker.core.system import readTextFile
+    text = readTextFile(fname)
+    return XmlVersionParser([u'en']).parse(text)
+
+
 def _getVersion():
     """
     Return a tuple: (version number, build number)
     """
-    from outwiker.core.xmlversionparser import XmlVersionParser
-    from outwiker.core.system import readTextFile
-
     # The file with the version number
     fname = u"src/versions.xml"
-    text = readTextFile(fname)
-    version = XmlVersionParser([u'en']).parse(text).currentVersion
+    version = _readAppInfo(fname).currentVersion
     version_major = u'.'.join([unicode(item) for item in version[:-1]])
     version_build = unicode(version[-1])
 
