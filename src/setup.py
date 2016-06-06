@@ -65,7 +65,7 @@ class BaseBuilder (object):
         """
         from outwiker.core.system import getCurrentDir
 
-        fname = "version.txt"
+        fname = "versions.xml"
         path = os.path.join (getCurrentDir(), fname)
 
         with open (path) as fp:
@@ -80,7 +80,7 @@ class BaseBuilder (object):
             'images',
             'help',
             'locale',
-            'version.txt',
+            'versions.xml',
             'styles',
             'iconset',
             'plugins',
