@@ -98,7 +98,8 @@ class _BuilderBase (object):
     def __init__ (self, subdir_name):
         self._root_build_dir = BUILD_DIR
         self._subdir_name = subdir_name
-        self._build_dir = os.path.join (self._root_build_dir, self._subdir_name)
+        self._build_dir = os.path.join (self._root_build_dir,
+                                        self._subdir_name)
 
 
     @abc.abstractmethod
@@ -132,7 +133,8 @@ class _BuilderBase (object):
 
     def _remove (self, path):
         """
-        Remove the fname file if it exists. The function not catch any exceptions.
+        Remove the fname file if it exists.
+        The function not catch any exceptions.
         """
         if os.path.exists (path):
             if os.path.isfile (path):
@@ -214,7 +216,9 @@ class _BuilderLinuxDebBinary (_BuilderBase):
         super (_BuilderLinuxDebBinary, self).__init__ (subdir_name)
         version = _getVersion()
         self._architecture = self._getDebArchitecture()
-        self._debName = "outwiker-{}+{}_{}".format (version[0], version[1], self._architecture)
+        self._debName = "outwiker-{}+{}_{}".format (version[0],
+                                                    version[1],
+                                                    self._architecture)
 
 
     def clear (self):
@@ -307,17 +311,26 @@ class _BuilderLinuxDebBinary (_BuilderBase):
 
     def _move_to_share (self, destdir):
         """Move images, help etc to /usr/share folder."""
-        dir_names = [u'help', u'iconset', u'images', u'locale', u'spell', u'styles']
+        dir_names = [u'help',
+                     u'iconset',
+                     u'images',
+                     u'locale',
+                     u'spell',
+                     u'styles']
 
         share_dir = os.path.join (destdir, u'usr', u'share', u'outwiker')
         os.makedirs (share_dir)
 
         for dir_name in dir_names:
-            src_dir = os.path.join (destdir, u'usr', u'lib', u'outwiker', dir_name)
+            src_dir = os.path.join (destdir,
+                                    u'usr',
+                                    u'lib',
+                                    u'outwiker',
+                                    dir_name)
             dst_dir = os.path.join (share_dir, dir_name)
             shutil.move (src_dir, dst_dir)
             with lcd (destdir):
-                local (u'ln -s ../../share/outwiker/{dirname} usr/lib/outwiker'.format (dirname = dir_name))
+                local (u'ln -s ../../share/outwiker/{dirname} usr/lib/outwiker'.format (dirname=dir_name))
 
 
     def _copy_usr_files (self, destdir):
@@ -326,15 +339,22 @@ class _BuilderLinuxDebBinary (_BuilderBase):
         dest_share_dir = os.path.join (dest_usr_dir, u'share')
         dest_bin_dir = os.path.join (dest_usr_dir, u'bin')
 
-        root_dir = os.path.join (u'need_for_build', u'debian_debbinary', u'root')
-        shutil.copytree (os.path.join (root_dir, u'usr', u'share'), dest_share_dir)
-        shutil.copytree (os.path.join (root_dir, u'usr', u'bin'), dest_bin_dir)
+        root_dir = os.path.join (u'need_for_build',
+                                 u'debian_debbinary',
+                                 u'root')
+        shutil.copytree (os.path.join (root_dir, u'usr', u'share'),
+                         dest_share_dir)
+        shutil.copytree (os.path.join (root_dir, u'usr', u'bin'),
+                         dest_bin_dir)
 
         dest_doc_dir = os.path.join (dest_share_dir,
                                      u'doc',
                                      u'outwiker')
 
-        shutil.copyfile (os.path.join (u'need_for_build', u'debian_debsource', u'debian', u'changelog'),
+        shutil.copyfile (os.path.join (u'need_for_build',
+                                       u'debian_debsource',
+                                       u'debian',
+                                       u'changelog'),
                          os.path.join (dest_doc_dir, u'changelog'))
         with lcd (dest_doc_dir):
             local (u'gzip --best -n -c changelog > changelog.Debian.gz')
@@ -365,7 +385,7 @@ class _BuilderBaseDebSource (_BuilderBase):
     def _debuild (self, command, distriblist):
         """
         Run command with debuild.
-        The function assembles the deb packages for all releases in distriblist.
+        The function assembles the deb packages for all releases in distriblist
         """
         current_distrib_name = _getCurrentUbuntuDistribName()
         for distrib_name in distriblist:
@@ -375,14 +395,19 @@ class _BuilderBaseDebSource (_BuilderBase):
                                                    'debian')
 
             # Change release name in the changelog file
-            changelog_path = os.path.join (current_debian_dirname, u'changelog')
-            self._makechangelog (changelog_path, current_distrib_name, distrib_name)
+            changelog_path = os.path.join (current_debian_dirname,
+                                           u'changelog')
+            self._makechangelog (changelog_path,
+                                 current_distrib_name,
+                                 distrib_name)
 
             with lcd (current_debian_dirname):
                 local (command)
 
             # Return the source release name
-            self._makechangelog (changelog_path, distrib_name, current_distrib_name)
+            self._makechangelog (changelog_path,
+                                 distrib_name,
+                                 current_distrib_name)
 
 
     def _orig (self, distname):
@@ -412,19 +437,29 @@ class _BuilderBaseDebSource (_BuilderBase):
 
         local ("rsync -avz * --exclude=.bzr --exclude=distrib --exclude=build --exclude=*.pyc --exclude=*.dll --exclude=*.exe --exclude=src/.ropeproject --exclude=src/test --exclude=src/setup.py --exclude=src/setup_tests.py --exclude=src/profile.py --exclude=src/tests.py --exclude=src/Microsoft.VC90.CRT.manifest --exclude=src/profiles --exclude=src/tools --exclude=doc --exclude=plugins --exclude=profiles --exclude=test --exclude=_update_version_bzr.py --exclude=outwiker_setup.iss --exclude=updateversion --exclude=updateversion.py --exclude=debian_tmp --exclude=Makefile_debbinary  --exclude=need_for_build {dirname}/".format (dirname=dirname))
 
-        shutil.copytree (os.path.join (u'need_for_build', u'debian_debsource', u'debian'),
+        shutil.copytree (os.path.join (u'need_for_build',
+                                       u'debian_debsource',
+                                       u'debian'),
                          os.path.join (dirname, u'debian'))
 
-        shutil.copyfile (os.path.join (u'need_for_build', u'debian_debsource', u'Makefile'),
+        shutil.copyfile (os.path.join (u'need_for_build',
+                                       u'debian_debsource',
+                                       u'Makefile'),
                          os.path.join (dirname, u'Makefile'))
 
-        shutil.copyfile (os.path.join (u'need_for_build', u'debian_debsource', u'outwiker.desktop'),
+        shutil.copyfile (os.path.join (u'need_for_build',
+                                       u'debian_debsource',
+                                       u'outwiker.desktop'),
                          os.path.join (dirname, u'outwiker.desktop'))
 
-        shutil.copyfile (os.path.join (u'need_for_build', u'debian_debsource', u'outwiker'),
+        shutil.copyfile (os.path.join (u'need_for_build',
+                                       u'debian_debsource',
+                                       u'outwiker'),
                          os.path.join (dirname, u'outwiker'))
 
-        shutil.copytree (os.path.join (u'need_for_build', u'debian_debsource', u'man'),
+        shutil.copytree (os.path.join (u'need_for_build',
+                                       u'debian_debsource',
+                                       u'man'),
                          os.path.join (dirname, u'man'))
 
 
@@ -447,7 +482,9 @@ class _BuilderBaseDebSource (_BuilderBase):
 
     def _getOrigName (self, distname):
         version = _getVersion()
-        return "outwiker_{}+{}~{}.orig.tar".format (version[0], version[1], distname)
+        return "outwiker_{}+{}~{}.orig.tar".format (version[0],
+                                                    version[1],
+                                                    distname)
 
 
     def _makechangelog (self, changelog_path, distrib_src, distrib_new):
@@ -567,8 +604,10 @@ class _BuilderWindows (_BuilderBase):
             os.path.join (self._root_build_dir, self._resultBaseName + u'.7z'),
             os.path.join (self._root_build_dir, self._resultBaseName + u'.exe'),
             os.path.join (self._root_build_dir, self._resultBaseName + u'.zip'),
-            os.path.join (self._root_build_dir, self._resultWithPluginsBaseName + u'.7z'),
-            os.path.join (self._root_build_dir, self._resultWithPluginsBaseName + u'.zip'),
+            os.path.join (self._root_build_dir,
+                          self._resultWithPluginsBaseName + u'.7z'),
+            os.path.join (self._root_build_dir,
+                          self._resultWithPluginsBaseName + u'.zip'),
         ]
         map (self._remove, toRemove)
 
@@ -648,7 +687,8 @@ def deb_sources_included():
     """
     Create files for uploading in PPA (including sources)
     """
-    builder = _BuilderDebSourcesIncluded (DEB_SOURCE_BUILD_DIR, UBUNTU_RELEASE_NAMES)
+    builder = _BuilderDebSourcesIncluded (DEB_SOURCE_BUILD_DIR,
+                                          UBUNTU_RELEASE_NAMES)
     builder.build()
 
 
@@ -737,7 +777,7 @@ def win (skipinstaller=False):
     """
     Build assemblies under Windows
     """
-    builder = _BuilderWindows (create_installer = not skipinstaller)
+    builder = _BuilderWindows (create_installer=not skipinstaller)
     builder.build()
 
 
@@ -823,7 +863,7 @@ def run ():
 
 def _getPython ():
     if os.name == 'posix':
-       return u'python2.7'
+        return u'python2.7'
     else:
         return u'python'
 
@@ -847,11 +887,15 @@ def test (section=u'', *args):
 
     with lcd ("src"):
         if section:
-            _run ("{} tests_{}.py {}".format (_getPython(), section, u' '.join (args)))
+            _run ("{} tests_{}.py {}".format (_getPython(),
+                                              section,
+                                              u' '.join (args)))
         else:
             with settings (warn_only=True):
                 for fname in files:
-                    _run ("{} {}".format (_getPython(), fname, u' '.join (args)))
+                    _run ("{} {}".format (_getPython(),
+                                          fname,
+                                          u' '.join (args)))
 
 
 

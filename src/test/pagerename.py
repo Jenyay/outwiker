@@ -33,16 +33,13 @@ class RenameTest(unittest.TestCase):
 
         Application.wikiroot = None
 
-
     def __onPageRename(self, page, oldSubpath):
         self.treeUpdateCount += 1
         self.eventSender = page
 
-
     def tearDown(self):
         Application.wikiroot = None
         removeDir(self.path)
-
 
     def testRename1(self):
         page = self.wikiroot[u"Страница 1"]
@@ -54,7 +51,6 @@ class RenameTest(unittest.TestCase):
         self.assertEqual(self.wikiroot[u"Страница 1"], None)
         self.assertTrue(os.path.exists(self.wikiroot[u"Страница 1 new"].path))
 
-
     def testEvent(self):
         Application.onPageRename += self.__onPageRename
         Application.wikiroot = self.wikiroot
@@ -65,9 +61,7 @@ class RenameTest(unittest.TestCase):
         self.assertEqual(self.treeUpdateCount, 1)
         self.assertEqual(self.eventSender, self.wikiroot[u"Страница 1 new"])
         self.assertEqual(self.eventSender, page)
-
         Application.onPageRename -= self.__onPageRename
-
 
     def testNoEvent(self):
         Application.onPageRename += self.__onPageRename
@@ -77,9 +71,7 @@ class RenameTest(unittest.TestCase):
 
         self.assertEqual(self.treeUpdateCount, 0)
         self.assertEqual(self.eventSender, None)
-
         Application.onPageRename -= self.__onPageRename
-
 
     def testInvalidRename(self):
         def rename(page, newtitle):
@@ -87,7 +79,6 @@ class RenameTest(unittest.TestCase):
 
         self.assertRaises(DublicateTitle, rename,
                           self.wikiroot[u"Страница 1"], u"СтраНица 6")
-
 
     def testRename2(self):
         page = self.wikiroot[u"Страница 2/Страница 3"]
@@ -97,7 +88,6 @@ class RenameTest(unittest.TestCase):
         self.assertEqual(self.wikiroot[u"Страница 2/Страница 3 new"], page)
         self.assertEqual(page.subpath, u"Страница 2/Страница 3 new")
         self.assertEqual(self.wikiroot[u"Страница 2/Страница 3"], None)
-
 
     def testRename3(self):
         page3 = self.wikiroot[u"Страница 2/Страница 3"]
@@ -111,7 +101,6 @@ class RenameTest(unittest.TestCase):
             page4
         )
 
-
     def testRename4(self):
         page = self.wikiroot[u"Страница 1"]
         page.title = u"СтрАницА 1"
@@ -119,7 +108,6 @@ class RenameTest(unittest.TestCase):
         self.assertEqual(page.title, u"СтрАницА 1")
         self.assertEqual(self.wikiroot[u"СтрАницА 1"], page)
         self.assertEqual(page.subpath, u"СтрАницА 1")
-
 
     def testLoad(self):
         page = self.wikiroot[u"Страница 1"]
@@ -129,14 +117,12 @@ class RenameTest(unittest.TestCase):
         self.assertNotEqual(wiki[u"Страница 1 new"], None)
         self.assertEqual(wiki[u"Страница 1"], None)
 
-
     def testBookmarks1(self):
         page = self.wikiroot[u"Страница 6"]
         self.wikiroot.bookmarks.add(page)
         page.title = u"Страница 6 new"
 
         self.assertTrue(self.wikiroot.bookmarks.pageMarked(page))
-
 
     def testBookmarks2(self):
         page2 = self.wikiroot[u"Страница 2"]
@@ -152,7 +138,6 @@ class RenameTest(unittest.TestCase):
         self.assertTrue(self.wikiroot.bookmarks.pageMarked(page2))
         self.assertTrue(self.wikiroot.bookmarks.pageMarked(page3))
         self.assertTrue(self.wikiroot.bookmarks.pageMarked(page4))
-
 
     def testPath(self):
         page2 = self.wikiroot[u"Страница 2"]
@@ -175,7 +160,6 @@ class RenameTest(unittest.TestCase):
                                       u"Страница 4")
                          )
 
-
     def testConfig(self):
         page2 = self.wikiroot[u"Страница 2"]
         page3 = self.wikiroot[u"Страница 2/Страница 3"]
@@ -190,7 +174,6 @@ class RenameTest(unittest.TestCase):
         self.assertEqual(page2.tags[0], u"тег 1")
         self.assertEqual(page3.tags[0], u"тег 2")
         self.assertEqual(page4.tags[0], u"тег 3")
-
 
     def testRenameError(self):
         page = self.wikiroot[u"Страница 2"]

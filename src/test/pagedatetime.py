@@ -24,10 +24,8 @@ class PageDateTimeTest(unittest.TestCase):
 
         self.wikiroot = WikiDocument.create(self.path)
 
-
     def tearDown(self):
         removeDir(self.path)
-
 
     def testDeleteDate(self):
         TextPageFactory().create(self.wikiroot, u"Страница 1", [])
@@ -36,7 +34,6 @@ class PageDateTimeTest(unittest.TestCase):
             PageConfig.datetimeParamName
         )
         self.assertEqual(self.wikiroot[u"Страница 1"].datetime, None)
-
 
     def testCreateDate_01(self):
         now = datetime.datetime.now()
@@ -52,7 +49,6 @@ class PageDateTimeTest(unittest.TestCase):
         delta = now - self.wikiroot[u"Страница 1"].creationdatetime
         self.assertLess(delta, self._maxDelta)
 
-
     def testCreateDate_02(self):
         page = TextPageFactory().create(self.wikiroot, u"Страница 1", [])
 
@@ -60,7 +56,6 @@ class PageDateTimeTest(unittest.TestCase):
         page.content = u"Абырвалг"
 
         self.assertNotEqual(page.datetime, page.creationdatetime)
-
 
     def testCreateDate_03(self):
         page = TextPageFactory().create(self.wikiroot, u"Страница 1", [])
@@ -71,7 +66,6 @@ class PageDateTimeTest(unittest.TestCase):
         newwiki = WikiDocument.load(self.path, False)
         self.assertEqual(creationDateTime,
                          newwiki[u"Страница 1"].creationdatetime)
-
 
     def testCreateDate_04(self):
         page = TextPageFactory().create(self.wikiroot, u"Страница 1", [])
@@ -84,7 +78,6 @@ class PageDateTimeTest(unittest.TestCase):
 
         self.assertEqual(creationDateTime,
                          newwiki[u"Страница 1"].creationdatetime)
-
 
     def testCreateDate_05(self):
         page = TextPageFactory().create(self.wikiroot, u"Страница 1", [])
@@ -99,7 +92,6 @@ class PageDateTimeTest(unittest.TestCase):
         self.assertEqual(creationDateTime,
                          newwiki[u"Страница 1"].creationdatetime)
 
-
     def testCreateDate_06(self):
         page = TextPageFactory().create(self.wikiroot, u"Страница 1", [])
         page.params.creationDatetimeOption.remove_option()
@@ -111,7 +103,6 @@ class PageDateTimeTest(unittest.TestCase):
         self.assertEqual(
             newwiki[u"Страница 1"].params.creationDatetimeOption.value, date
         )
-
 
     def testCreateDateReadonly(self):
         page = TextPageFactory().create(self.wikiroot, u"Страница 1", [])
@@ -125,14 +116,12 @@ class PageDateTimeTest(unittest.TestCase):
             newwiki[u"Страница 1"].params.creationDatetimeOption.value,
             None)
 
-
     def testSetDate(self):
         TextPageFactory().create(self.wikiroot, u"Страница 1", [])
         newdate = datetime.datetime(2012, 8, 24)
         self.wikiroot[u"Страница 1"].datetime = newdate
 
         self.assertEqual(self.wikiroot[u"Страница 1"].datetime, newdate)
-
 
     def testChangeContent(self):
         TextPageFactory().create(self.wikiroot, u"Страница 1", [])
@@ -146,7 +135,6 @@ class PageDateTimeTest(unittest.TestCase):
         delta = datetime.datetime.now() - self.wikiroot[u"Страница 1"].datetime
         self.assertLess(delta, self._maxDelta)
 
-
     def testLoadWiki(self):
         TextPageFactory().create(self.wikiroot, u"Страница 1", [])
         newdate = datetime.datetime(2012, 8, 24)
@@ -154,7 +142,6 @@ class PageDateTimeTest(unittest.TestCase):
 
         newroot = WikiDocument.load(self.path)
         self.assertEqual(newroot[u"Страница 1"].datetime, newdate)
-
 
     def testOldContent(self):
         newdate = datetime.datetime(2012, 8, 24)
@@ -174,7 +161,6 @@ class PageDateTimeTest(unittest.TestCase):
         delta = now - self.wikiroot[u"Страница 1"].datetime
         self.assertLess(delta, self._maxDelta)
 
-
     def testsavePage(self):
         newdate = datetime.datetime(2012, 8, 24)
 
@@ -184,7 +170,6 @@ class PageDateTimeTest(unittest.TestCase):
 
         self.wikiroot[u"Страница 1"].save()
         self.assertEqual(self.wikiroot[u"Страница 1"].datetime, newdate)
-
 
     def testChangeOrder(self):
         newdate = datetime.datetime(2012, 8, 24)
@@ -202,7 +187,6 @@ class PageDateTimeTest(unittest.TestCase):
         self.wikiroot[u"Страница 1"].order += 1
         self.assertEqual(self.wikiroot[u"Страница 1"].datetime, newdate)
 
-
     def testChangeIcon(self):
         newdate = datetime.datetime(2012, 8, 24)
 
@@ -215,7 +199,6 @@ class PageDateTimeTest(unittest.TestCase):
 
         delta = datetime.datetime.now() - self.wikiroot[u"Страница 1"].datetime
         self.assertLess(delta, self._maxDelta)
-
 
     def testChangeTags(self):
         newdate = datetime.datetime(2012, 8, 24)
@@ -240,7 +223,6 @@ class PageDateTimeTest(unittest.TestCase):
         delta = datetime.datetime.now() - self.wikiroot[u"Страница 1"].datetime
         self.assertLess(delta, self._maxDelta)
 
-
     def testChangeStyle(self):
         exampleStyleDir = u"../test/styles/example_jblog/example_jblog"
         newdate = datetime.datetime(2012, 8, 24)
@@ -253,7 +235,6 @@ class PageDateTimeTest(unittest.TestCase):
 
         delta = datetime.datetime.now() - self.wikiroot[u"Страница 1"].datetime
         self.assertLess(delta, self._maxDelta)
-
 
     def testChild(self):
         """
@@ -275,7 +256,6 @@ class PageDateTimeTest(unittest.TestCase):
 
         self.wikiroot[u"Страница 1/Страница 2"].content = u"Бла-бла"
         self.assertEqual(self.wikiroot[u"Страница 1"].datetime, newdate)
-
 
     def testAttachment(self):
         newdate = datetime.datetime(2012, 8, 24)

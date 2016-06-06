@@ -27,7 +27,6 @@ class LocalSearchTest(unittest.TestCase):
         self.assertEqual(searcher.result[3].position, 25)
         self.assertEqual(searcher.result[3].phrase, phrase)
 
-
     def test2(self):
         text = u"1111 sdf sdf 111 657 111 1111 sdf sdf1243"
         phrase = u"222"
@@ -36,7 +35,6 @@ class LocalSearchTest(unittest.TestCase):
         searcher.search(text, phrase)
 
         self.assertEqual(len(searcher.result), 0)
-
 
     def test3(self):
         text = u"бЛабл sdf sdf Бла 657 бла блА sdf sdf1243"
@@ -58,7 +56,6 @@ class LocalSearchTest(unittest.TestCase):
 
         self.assertEqual(searcher.result[3].position, 26)
         self.assertEqual(searcher.result[3].phrase.lower(), phrase.lower())
-
 
     def test4(self):
         text = u"111 бла-Бла-блА"

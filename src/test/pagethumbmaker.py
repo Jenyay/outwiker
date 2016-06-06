@@ -30,10 +30,8 @@ class PageThumbmakerTest(unittest.TestCase):
                        [])
         factory.create(self.wikiroot[u"Страница 1"], u"Страница 5", [])
 
-
     def tearDown(self):
         removeDir(self.path)
-
 
     def testThumbByWidthJpeg(self):
         images_dir = "../test/images"
@@ -57,7 +55,6 @@ class PageThumbmakerTest(unittest.TestCase):
         self.assertEqual(width, newwidth)
         self.assertEqual(height, newheight)
 
-
     def testThumbByWidthPng(self):
         images_dir = "../test/images"
 
@@ -79,7 +76,6 @@ class PageThumbmakerTest(unittest.TestCase):
         self.assertTrue(os.path.exists(thumb_path), thumb_path)
         self.assertEqual(width, newwidth)
         self.assertEqual(height, newheight)
-
 
     def testThumbByHeightJpeg(self):
         images_dir = "../test/images"
@@ -103,7 +99,6 @@ class PageThumbmakerTest(unittest.TestCase):
         self.assertEqual(width, newwidth)
         self.assertEqual(height, newheight)
 
-
     def testThumbByHeightPng(self):
         images_dir = "../test/images"
 
@@ -125,7 +120,6 @@ class PageThumbmakerTest(unittest.TestCase):
         self.assertTrue(os.path.exists(thumb_path), thumb_path)
         self.assertEqual(width, newwidth)
         self.assertEqual(height, newheight)
-
 
     def testThumbByMaxSizeJpeg1(self):
         images_dir = "../test/images"
@@ -151,7 +145,6 @@ class PageThumbmakerTest(unittest.TestCase):
         self.assertEqual(width, newwidth)
         self.assertEqual(height, newheight)
 
-
     def testThumbByMaxSizeJpeg2(self):
         images_dir = "../test/images"
 
@@ -175,7 +168,6 @@ class PageThumbmakerTest(unittest.TestCase):
         self.assertTrue(os.path.exists(thumb_path), thumb_path)
         self.assertEqual(width, newwidth)
         self.assertEqual(height, newheight)
-
 
     def testThumbByMaxSizePng(self):
         images_dir = "../test/images"

@@ -6,7 +6,13 @@ from tempfile import mkdtemp
 from outwiker.core.tagslist import TagsList
 from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
-from outwiker.core.tagscommands import parseTagsList, appendTag, removeTag, tagBranch, appendTagsList, removeTagsFromBranch, renameTag
+from outwiker.core.tagscommands import (parseTagsList,
+                                        appendTag,
+                                        removeTag,
+                                        tagBranch,
+                                        appendTagsList,
+                                        removeTagsFromBranch,
+                                        renameTag)
 
 from .utils import removeDir
 
@@ -21,8 +27,12 @@ class TagsListTest (unittest.TestCase):
         factory = TextPageFactory()
         factory.create (self.wikiroot, u"page 1", [u"Метка 1", u"Метка 2"])
         factory.create (self.wikiroot, u"Страница 2", [u"Метка 1", u"Метка 3"])
-        factory.create (self.wikiroot[u"Страница 2"], u"Страница 3", [u"Метка 2"])
-        factory.create (self.wikiroot[u"Страница 2/Страница 3"], u"Страница 4", [u"Метка 1"])
+        factory.create (self.wikiroot[u"Страница 2"],
+                        u"Страница 3",
+                        [u"Метка 2"])
+        factory.create (self.wikiroot[u"Страница 2/Страница 3"],
+                        u"Страница 4",
+                        [u"Метка 1"])
         factory.create (self.wikiroot[u"page 1"], u"page 5", [u"Метка 4"])
 
 
@@ -63,7 +73,8 @@ class TagsListTest (unittest.TestCase):
 
 
     def testAppendTagsList (self):
-        appendTagsList (self.wikiroot[u"Страница 2"], [u"Метка 111", u"Метка 222", u"Метка 333"])
+        appendTagsList (self.wikiroot[u"Страница 2"],
+                        [u"Метка 111", u"Метка 222", u"Метка 333"])
 
         self.assertEqual (len (self.wikiroot[u"Страница 2"].tags), 5)
         self.assertTrue (u"Метка 111".lower() in self.wikiroot[u"Страница 2"].tags)
