@@ -1,0 +1,80 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+<info>
+	<name>Counter</name>
+	<updates>http://jenyay.net/Outwiker/Counter/plugin.xml</updates>
+    <requirements>
+        <outwiker>1.8.0.730 dev</outwiker>
+        <os>Windows, Linux</os>
+    </requirements>
+
+	<data lang="en">
+		<website>http://jenyay.net/Outwiker/CounterEn</website>
+		<description>Plugin adds wiki-command (:counter:), allowing the automatic numbering anything on the page.</description>
+
+		<author>
+			<name>Eugene Ilin (aka Jenyay)</name>
+			<email>jenyay.ilin@gmail.com</email>
+			<site>http://jenyay.net</site>
+		</author>
+		<changelog>
+			<version number="1.0.3">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Counter/counter-1.0.3.zip</download>
+				<change>Minor interface improvements.</change>
+				<change>Bug fixes.</change>
+				<change>Cleanup code.</change>
+			</version>
+
+			<version number="1.0.2">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Counter/counter-1.0.2.zip</download>
+				<change>Added the Italian localization.</change>
+				<change>Bug fixes.</change>
+			</version>
+
+			<version number="1.0.1">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Counter/counter-1.0.1.zip</download>
+				<change>Fixed output error when trying to use a plug-in with unsupported versions OutWiker.</change>
+			</version>
+
+			<version number="1.0">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Counter/counter-1.0.zip</download>
+				<change>The first version</change>
+			</version>
+		</changelog>
+	</data>
+
+	<data lang="ru">
+		<website>http://jenyay.net/Outwiker/Counter</website>
+		<description>Плагин добавляет команду (:counter:), позволяющую создавать автоматическую нумерацию на викистранице.</description>
+
+		<author>
+			<name>Евгений Ильин (aka Jenyay)</name>
+			<email>jenyay.ilin@gmail.com</email>
+			<site>http://jenyay.net</site>
+		</author>
+
+		<changelog>
+			<version number="1.0.3">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Counter/counter-1.0.3.zip</download>
+				<change>Небольшие улучшения в интерфейсе.</change>
+				<change>Исправление ошибок.</change>
+				<change>Подчистка кода.</change>
+			</version>
+
+			<version number="1.0.2">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Counter/counter-1.0.2.zip</download>
+				<change>Добавлена итальянская локализация</change>
+				<change>Исправление ошибок.</change>
+			</version>
+
+			<version number="1.0.1">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Counter/counter-1.0.1.zip</download>
+				<change>Исправлен вывод ошибок при попытке использования плагина в неподдерживаемых версиях OutWiker.</change>
+			</version>
+
+			<version number="1.0">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Counter/counter-1.0.zip</download>
+				<change>Первая версия</change>
+			</version>
+		</changelog>
+	</data>
+</info>

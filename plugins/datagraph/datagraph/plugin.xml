@@ -1,0 +1,85 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+<info>
+	<name>DataGraph</name>
+	<updates>http://jenyay.net/Outwiker/DataGraph/plugin.xml</updates>
+    <requirements>
+        <outwiker>1.8.0.750 dev</outwiker>
+        <os>Windows, Linux</os>
+    </requirements>
+
+	<data lang="en">
+		<website>http://jenyay.net/Outwiker/DataGraphEn</website>
+		<description>DataGraph plug-in designed for creation a charts by text data.</description>
+
+		<author>
+			<name>Eugene Ilin (aka Jenyay)</name>
+			<email>jenyay.ilin@gmail.com</email>
+			<site>http://jenyay.net</site>
+		</author>
+
+		<changelog>
+			<version number="1.0.4">
+                <download os="all">http://jenyay.net/uploads/Outwiker/DataGraph/datagraph-1.0.4.zip</download>
+				<change>Bug fixes.</change>
+			</version>
+
+			<version number="1.0.3">
+                <download os="all">http://jenyay.net/uploads/Outwiker/DataGraph/datagraph-1.0.3.zip</download>
+				<change>Minor design changes.</change>
+			</version>
+
+			<version number="1.0.2">
+                <download os="all">http://jenyay.net/uploads/Outwiker/DataGraph/datagraph-1.0.2.zip</download>
+				<change>Added the Italian localization.</change>
+			</version>
+
+			<version number="1.0.1">
+                <download os="all">http://jenyay.net/uploads/Outwiker/DataGraph/datagraph-1.0.1.zip</download>
+				<change>Bug fixes.</change>
+			</version>
+
+			<version number="1.0">
+                <download os="all">http://jenyay.net/uploads/Outwiker/DataGraph/datagraph-1.0.zip</download>
+				<change>The first version</change>
+			</version>
+		</changelog>
+	</data>
+
+	<data lang="ru">
+		<website>http://jenyay.net/Outwiker/DataGraph</website>
+		<description>Плагин DataGraph предназначен для построения графиков по текстовым данным.</description>
+
+		<author>
+			<name>Евгений Ильин (aka Jenyay)</name>
+			<email>jenyay.ilin@gmail.com</email>
+			<site>http://jenyay.net</site>
+		</author>
+
+		<changelog>
+			<version number="1.0.4">
+                <download os="all">http://jenyay.net/uploads/Outwiker/DataGraph/datagraph-1.0.4.zip</download>
+				<change>Исправления ошибок.</change>
+			</version>
+
+			<version number="1.0.3">
+                <download os="all">http://jenyay.net/uploads/Outwiker/DataGraph/datagraph-1.0.3.zip</download>
+				<change>Незначительные исправления в оформлении.</change>
+			</version>
+
+			<version number="1.0.2">
+                <download os="all">http://jenyay.net/uploads/Outwiker/DataGraph/datagraph-1.0.2.zip</download>
+				<change>Добавлена итальянская локализация</change>
+			</version>
+
+			<version number="1.0.1">
+                <download os="all">http://jenyay.net/uploads/Outwiker/DataGraph/datagraph-1.0.1.zip</download>
+				<change>Исправление ошибок.</change>
+			</version>
+
+			<version number="1.0">
+                <download os="all">http://jenyay.net/uploads/Outwiker/DataGraph/datagraph-1.0.zip</download>
+				<change>Первая версия</change>
+			</version>
+		</changelog>
+	</data>
+</info>
