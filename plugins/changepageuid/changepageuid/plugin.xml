@@ -18,24 +18,24 @@
 		</author>
 
 		<changelog>
-			<version number="1.0.3">
+			<version number="1.0.3" date="January 20, 2015">
                 <download os="all">http://jenyay.net/uploads/Outwiker/ChangePageUid/changepageuid-1.0.3.zip</download>
 				<change>Bug fixes.</change>
 			</version>
 
-			<version number="1.0.2">
+			<version number="1.0.2" date="September 11, 2014">
                 <download os="all">http://jenyay.net/uploads/Outwiker/ChangePageUid/changepageuid-1.0.2.zip</download>
 				<change>Added the Italian localization.</change>
 			</version>
 
-			<version number="1.0.1">
+			<version number="1.0.1" date="August 25, 2014">
                 <download os="all">http://jenyay.net/uploads/Outwiker/ChangePageUid/changepageuid-1.0.1.zip</download>
 				<change>Spaces will replace to underline during the enter a new identifier.</change>
 				<change>Correction of the design.</change>
 				<change>Bug fixes.</change>
 			</version>
 
-			<version number="1.0">
+			<version number="1.0" date="July 07, 2014">
                 <download os="all">http://jenyay.net/uploads/Outwiker/ChangePageUid/changepageuid-1.0.zip</download>
 				<change>The first version</change>
 			</version>
@@ -53,24 +53,24 @@
 		</author>
 
 		<changelog>
-			<version number="1.0.3">
+			<version number="1.0.3" date="20.01.2015">
                 <download os="all">http://jenyay.net/uploads/Outwiker/ChangePageUid/changepageuid-1.0.3.zip</download>
 				<change>Исправление ошибок.</change>
 			</version>
 
-			<version number="1.0.2">
+			<version number="1.0.2" date="11.09.2014">
                 <download os="all">http://jenyay.net/uploads/Outwiker/ChangePageUid/changepageuid-1.0.2.zip</download>
 				<change>Добавлена итальянская локализация</change>
 			</version>
 
-			<version number="1.0.1">
+			<version number="1.0.1" date="25.08.2014">
                 <download os="all">http://jenyay.net/uploads/Outwiker/ChangePageUid/changepageuid-1.0.1.zip</download>
 				<change>При вводе нового идентификатора пробелы автоматически заменяются на подчеркивания.</change>
 				<change>Оформительские исправления.</change>
 				<change>Исправление ошибок.</change>
 			</version>
 
-			<version number="1.0">
+			<version number="1.0" date="07.07.2014">
                 <download os="all">http://jenyay.net/uploads/Outwiker/ChangePageUid/changepageuid-1.0.zip</download>
 				<change>Первая версия</change>
 			</version>

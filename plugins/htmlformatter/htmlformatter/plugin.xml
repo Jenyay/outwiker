@@ -1,0 +1,53 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+<info>
+	<name>HtmlFormatter</name>
+	<updates>http://jenyay.net/Outwiker/HtmlFormatter/plugin.xml</updates>
+    <requirements>
+        <outwiker>1.9.0.765 dev</outwiker>
+        <os>Windows, Linux</os>
+    </requirements>
+
+	<data lang="en">
+		<website>http://jenyay.net/Outwiker/HtmlFormatterEn</website>
+		<description>Plugin for more punctual HTML generation.</description>
+
+		<author>
+			<name>Eugene Ilin (aka Jenyay)</name>
+			<email>jenyay.ilin@gmail.com</email>
+			<site>http://jenyay.net</site>
+		</author>
+
+		<changelog>
+			<version number="1.1" date="October 10, 2015">
+                <download os="all">http://jenyay.net/uploads/Outwiker/HtmlFormatter/htmlformatter-1.1.zip</download>
+			</version>
+
+			<version number="1.0" date="March 26, 2015">
+                <download os="all">http://jenyay.net/uploads/Outwiker/HtmlFormatter/htmlformatter-1.0.zip</download>
+				<change>The first version.</change>
+			</version>
+		</changelog>
+	</data>
+
+	<data lang="ru">
+		<website>http://jenyay.net/Outwiker/HtmlFormatter</website>
+		<description>Плагин для генерации более аккуратного HTML-кода страниц.</description>
+
+		<author>
+			<name>Евгений Ильин (aka Jenyay)</name>
+			<email>jenyay.ilin@gmail.com</email>
+			<site>http://jenyay.net</site>
+		</author>
+
+		<changelog>
+			<version number="1.1" date="14.10.2015">
+                <download os="all">http://jenyay.net/uploads/Outwiker/HtmlFormatter/htmlformatter-1.1.zip</download>
+			</version>
+
+			<version number="1.0" date="26.03.2015">
+                <download os="all">http://jenyay.net/uploads/Outwiker/HtmlFormatter/htmlformatter-1.0.zip</download>
+				<change>Первая версия</change>
+			</version>
+		</changelog>
+	</data>
+</info>

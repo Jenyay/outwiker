@@ -1,0 +1,79 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+<info>
+	<name>ExternalTools</name>
+	<updates>http://jenyay.net/Outwiker/ExternalTools/plugin.xml</updates>
+    <requirements>
+        <outwiker>1.8.0</outwiker>
+        <os>Windows, Linux</os>
+    </requirements>
+
+	<data lang="en">
+		<website>http://jenyay.net/Outwiker/ExternalToolsEn</website>
+		<description>Plug-in to open notes files with external editor and execute external applications from pages with (:exec:) command.</description>
+
+		<author>
+			<name>Eugene Ilin (aka Jenyay)</name>
+			<email>jenyay.ilin@gmail.com</email>
+			<site>http://jenyay.net</site>
+		</author>
+
+		<changelog>
+			<version number="1.3" date="May 21, 2015">
+                <download os="all">http://jenyay.net/uploads/Outwiker/ExternalTools/externaltools-1.3.zip</download>
+				<change>Added the (:exec:) command for creation of a link or a button to execute application(s).</change>
+				<change>Bug fixes.</change>
+			</version>
+
+			<version number="1.2.2" date="January 20, 2015">
+                <download os="all">http://jenyay.net/uploads/Outwiker/ExternalTools/externaltools-1.2.1.zip</download>
+				<change>Minor interface improvements.</change>
+				<change>Cleanup code.</change>
+			</version>
+
+			<version number="1.2.1" date="September 11, 2014">
+                <download os="all">http://jenyay.net/uploads/Outwiker/ExternalTools/externaltools-1.2.1.zip</download>
+				<change>Updated the Italian localization.</change>
+			</version>
+
+			<version number="1.0" date="July 30, 2012">
+                <download os="all">http://jenyay.net/uploads/Outwiker/ExternalTools/externaltools.zip</download>
+				<change>The first version.</change>
+			</version>
+		</changelog>
+	</data>
+
+	<data lang="ru">
+		<website>http://jenyay.net/Outwiker/ExternalTools</website>
+		<description>Плагин для открытия заметок во внешнем редакторе и для запуска сторонних приложений со страницы с помощью команды (:exec:).</description>
+
+		<author>
+			<name>Евгений Ильин (aka Jenyay)</name>
+			<email>jenyay.ilin@gmail.com</email>
+			<site>http://jenyay.net</site>
+		</author>
+
+		<changelog>
+			<version number="1.3" date="21.05.2015">
+                <download os="all">http://jenyay.net/uploads/Outwiker/ExternalTools/externaltools-1.3.zip</download>
+				<change>Добавлена викикоманда (:exec:) для создания ссылки или кнопки для запуска приложений.</change>
+				<change>Исправление ошибок.</change>
+			</version>
+
+			<version number="1.2.2" date="20.01.2015">
+                <download os="all">http://jenyay.net/uploads/Outwiker/ExternalTools/externaltools-1.2.1.zip</download>
+				<change>Небольшие улучшения в интерфейсе.</change>
+				<change>Подчистка кода.</change>
+			</version>
+
+			<version number="1.2.1" date="11.09.2014">
+                <download os="all">http://jenyay.net/uploads/Outwiker/ExternalTools/externaltools-1.2.1.zip</download>
+				<change>Обновление итальянской локализации.</change>
+			</version>
+
+			<version number="1.0" date="30.07.2012">
+                <download os="all">http://jenyay.net/uploads/Outwiker/ExternalTools/externaltools.zip</download>
+				<change>Первая версия</change>
+			</version>
+		</changelog>
+	</data>
+</info>

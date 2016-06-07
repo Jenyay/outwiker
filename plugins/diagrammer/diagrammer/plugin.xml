@@ -18,25 +18,25 @@
 		</author>
 
 		<changelog>
-			<version number="1.0.3">
+			<version number="1.0.3" date="February 11, 2016">
                 <download os="all">http://jenyay.net/uploads/Outwiker/Diagrammer/diagrammer-1.0.3.zip</download>
 				<change>Updated the <a href="http://blockdiag.com/en/">blockdiag</a> library.</change>
 			</version>
 
-			<version number="1.0.2">
+			<version number="1.0.2" date="January 20, 2015">
                 <download os="all">http://jenyay.net/uploads/Outwiker/Diagrammer/diagrammer-1.0.2.zip</download>
 				<change>Minor interface improvements.</change>
 				<change>Bug fixes.</change>
 				<change>Cleanup code.</change>
 			</version>
 
-			<version number="1.0.1">
+			<version number="1.0.1" date="September 11, 2014">
                 <download os="all">http://jenyay.net/uploads/Outwiker/Diagrammer/diagrammer-1.0.1.zip</download>
 				<change>Added the Italian localization.</change>
 				<change>Bug fixes.</change>
 			</version>
 
-			<version number="1.0">
+			<version number="1.0" date="August 22, 2014">
                 <download os="all">http://jenyay.net/uploads/Outwiker/Diagrammer/diagrammer-1.0.zip</download>
 				<change>The first version.</change>
 			</version>
@@ -54,25 +54,25 @@
 		</author>
 
 		<changelog>
-			<version number="1.0.3">
+			<version number="1.0.3" date="11.02.2016">
                 <download os="all">http://jenyay.net/uploads/Outwiker/Diagrammer/diagrammer-1.0.3.zip</download>
 				<change>Обновление используемой библиотеки <a href="http://blockdiag.com/en/">blockdiag</a>.</change>
 			</version>
 
-			<version number="1.0.2">
+			<version number="1.0.2" date="20.01.2015">
                 <download os="all">http://jenyay.net/uploads/Outwiker/Diagrammer/diagrammer-1.0.2.zip</download>
 				<change>Небольшие улучшения в интерфейсе.</change>
 				<change>Исправление ошибок.</change>
 				<change>Подчистка кода.</change>
 			</version>
 
-			<version number="1.0.1">
+			<version number="1.0.1" date="11.09.2014">
                 <download os="all">http://jenyay.net/uploads/Outwiker/Diagrammer/diagrammer-1.0.1.zip</download>
 				<change>Добавлена итальянская локализация.</change>
 				<change>Исправление ошибок.</change>
 			</version>
 
-			<version number="1.0">
+			<version number="1.0" date="22.08.2014">
                 <download os="all">http://jenyay.net/uploads/Outwiker/Diagrammer/diagrammer-1.0.zip</download>
 				<change>Первая версия.</change>
 			</version>

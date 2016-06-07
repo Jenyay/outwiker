@@ -18,27 +18,27 @@
 		</author>
 
 		<changelog>
-			<version number="1.0.4">
+			<version number="1.0.4" date="March 10, 2016">
                 <download os="all">http://jenyay.net/uploads/Outwiker/DataGraph/datagraph-1.0.4.zip</download>
 				<change>Bug fixes.</change>
 			</version>
 
-			<version number="1.0.3">
+			<version number="1.0.3" date="February 11, 2016">
                 <download os="all">http://jenyay.net/uploads/Outwiker/DataGraph/datagraph-1.0.3.zip</download>
 				<change>Minor design changes.</change>
 			</version>
 
-			<version number="1.0.2">
+			<version number="1.0.2" date="June 22, 2015">
                 <download os="all">http://jenyay.net/uploads/Outwiker/DataGraph/datagraph-1.0.2.zip</download>
 				<change>Added the Italian localization.</change>
 			</version>
 
-			<version number="1.0.1">
+			<version number="1.0.1" date="February 09, 2015">
                 <download os="all">http://jenyay.net/uploads/Outwiker/DataGraph/datagraph-1.0.1.zip</download>
 				<change>Bug fixes.</change>
 			</version>
 
-			<version number="1.0">
+			<version number="1.0" date="January 22, 2015">
                 <download os="all">http://jenyay.net/uploads/Outwiker/DataGraph/datagraph-1.0.zip</download>
 				<change>The first version</change>
 			</version>
@@ -56,27 +56,27 @@
 		</author>
 
 		<changelog>
-			<version number="1.0.4">
+			<version number="1.0.4" date="10.03.2016">
                 <download os="all">http://jenyay.net/uploads/Outwiker/DataGraph/datagraph-1.0.4.zip</download>
 				<change>Исправления ошибок.</change>
 			</version>
 
-			<version number="1.0.3">
+			<version number="1.0.3" date="11.02.2016">
                 <download os="all">http://jenyay.net/uploads/Outwiker/DataGraph/datagraph-1.0.3.zip</download>
 				<change>Незначительные исправления в оформлении.</change>
 			</version>
 
-			<version number="1.0.2">
+			<version number="1.0.2" date="22.06.2015">
                 <download os="all">http://jenyay.net/uploads/Outwiker/DataGraph/datagraph-1.0.2.zip</download>
 				<change>Добавлена итальянская локализация</change>
 			</version>
 
-			<version number="1.0.1">
+			<version number="1.0.1" date="09.02.2015">
                 <download os="all">http://jenyay.net/uploads/Outwiker/DataGraph/datagraph-1.0.1.zip</download>
 				<change>Исправление ошибок.</change>
 			</version>
 
-			<version number="1.0">
+			<version number="1.0" date="22.01.2015">
                 <download os="all">http://jenyay.net/uploads/Outwiker/DataGraph/datagraph-1.0.zip</download>
 				<change>Первая версия</change>
 			</version>

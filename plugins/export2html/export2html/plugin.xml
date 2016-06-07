@@ -1,0 +1,117 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+<info>
+	<name>Export2Html</name>
+	<updates>http://jenyay.net/Outwiker/Export2HtmlPluginEn/plugin.xml</updates>
+    <requirements>
+        <outwiker>1.7.0</outwiker>
+        <os>Windows, Linux</os>
+    </requirements>
+
+	<data lang="en">
+		<website>http://jenyay.net/Outwiker/Export2HtmlPluginEn</website>
+		<description>Export pages to HTML.</description>
+
+		<author>
+			<name>Eugene Ilin (aka Jenyay)</name>
+			<email>jenyay.ilin@gmail.com</email>
+			<site>http://jenyay.net</site>
+		</author>
+
+		<changelog>
+			<version number="1.3.3" date="June 23, 2015">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Export2HtmlPlugin/export2html-1.3.3.zip</download>
+				<change>Bug fixes.</change>
+			</version>
+
+			<version number="1.3.2" date="February 09, 2015">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Export2HtmlPlugin/export2html-1.3.2.zip</download>
+				<change>Bug fixes.</change>
+			</version>
+
+			<version number="1.3.1" date="January 20, 2015">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Export2HtmlPlugin/export2html-1.3.1.zip</download>
+				<change>Bug fixes.</change>
+				<change>Cleanup code.</change>
+			</version>
+
+			<version number="1.3" date="July 13, 2014">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Export2HtmlPlugin/export2html-1.3.zip</download>
+				<change>For OutWiker 1.8 was added supporting for links like page://...</change>
+			</version>
+
+			<version number="1.2.1" date="November 24, 2012">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Export2HtmlPlugin/export2html-1.2.1.zip</download>
+				<change>Corrected Ukrainian localization.</change>
+			</version>
+
+			<version number="1.2" date="May 30, 2012">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Export2HtmlPlugin/export2html-1.2.zip</download>
+				<change>Added the Ukrainian localization.</change>
+			</version>
+
+			<version number="1.1">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Export2HtmlPlugin/export2html.zip</download>
+				<change>When you export a __index.html file created for easy viewing received result.</change>
+			</version>
+
+			<version number="1.0">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Export2HtmlPlugin/export2html.zip</download>
+				<change>The first version.</change>
+			</version>
+		</changelog>
+	</data>
+
+	<data lang="ru">
+		<website>http://jenyay.net/Outwiker/Export2HtmlPlugin</website>
+		<description>Экспорт страниц в HTML.</description>
+
+		<author>
+			<name>Евгений Ильин (aka Jenyay)</name>
+			<email>jenyay.ilin@gmail.com</email>
+			<site>http://jenyay.net</site>
+		</author>
+
+		<changelog>
+			<version number="1.3.3" date="23.06.2015">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Export2HtmlPlugin/export2html-1.3.3.zip</download>
+				<change>Исправление ошибок.</change>
+			</version>
+
+			<version number="1.3.2" date="09.02.2015">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Export2HtmlPlugin/export2html-1.3.2.zip</download>
+				<change>Исправление ошибок.</change>
+			</version>
+
+			<version number="1.3.1" date="20.01.2015">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Export2HtmlPlugin/export2html-1.3.1.zip</download>
+				<change>Исправление ошибок.</change>
+				<change>Подчистка кода.</change>
+			</version>
+
+			<version number="1.3" date="13.07.2014">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Export2HtmlPlugin/export2html-1.3.zip</download>
+				<change>Для OutWiker 1.8 добавлена поддержка ссылок вида page://...</change>
+			</version>
+
+			<version number="1.2.1" date="24.11.2012">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Export2HtmlPlugin/export2html-1.2.1.zip</download>
+				<change>Исправления в украинской локализации.</change>
+			</version>
+
+			<version number="1.2" date="30.05.2012">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Export2HtmlPlugin/export2html-1.2.zip</download>
+				<change>Добавлена украинская локализация.</change>
+			</version>
+
+			<version number="1.1">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Export2HtmlPlugin/export2html.zip</download>
+				<change>Теперь при экспорте создается файл __index.html для удобного просмотра полученных HTML-файлов.</change>
+			</version>
+
+			<version number="1.0">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Export2HtmlPlugin/export2html.zip</download>
+				<change>Первая версия</change>
+			</version>
+		</changelog>
+	</data>
+</info>
