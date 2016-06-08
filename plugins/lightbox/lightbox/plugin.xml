@@ -1,0 +1,75 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+<info>
+	<name>Lightbox</name>
+	<updates>http://jenyay.net/Outwiker/Lightbox/plugin.xml</updates>
+    <requirements>
+        <outwiker>1.7.0</outwiker>
+        <os>Windows, Linux</os>
+    </requirements>
+
+	<data lang="en">
+		<website>http://jenyay.net/Outwiker/LightboxEn</website>
+		<description>Open links to images in the preview window, not an external program.</description>
+
+		<author>
+			<name>Eugene Ilin (aka Jenyay)</name>
+			<email>jenyay.ilin@gmail.com</email>
+			<site>http://jenyay.net</site>
+		</author>
+
+		<changelog>
+			<version number="1.1.2" date="January 20, 2015">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Lightbox/lightbox-1.1.2.zip</download>
+				<change>Minor interface improvements.</change>
+				<change>Bug fixes.</change>
+				<change>Code cleanup.</change>
+			</version>
+
+			<version number="1.1.1" date="November 17, 2012">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Lightbox/lightbox-1.1.1.zip</download>
+			</version>
+
+			<version number="1.1" date="August 08, 2012">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Lightbox/lightbox-1.1.zip</download>
+			</version>
+
+			<version number="1.0" date="June 06, 2012">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Lightbox/lightbox.zip</download>
+				<change>Первая версия</change>
+			</version>
+		</changelog>
+	</data>
+
+	<data lang="ru">
+		<website>http://jenyay.net/Outwiker/LightboxEn</website>
+		<description>Открытие ссылок на изображения в окне просмотра, а не во внешней программе.</description>
+
+		<author>
+			<name>Евгений Ильин (aka Jenyay)</name>
+			<email>jenyay.ilin@gmail.com</email>
+			<site>http://jenyay.net</site>
+		</author>
+
+		<changelog>
+			<version number="1.1.2" date="20.01.2015">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Lightbox/lightbox-1.1.2.zip</download>
+				<change>Подчистка кода.</change>
+				<change>Небольшие улучшения в интерфейсе.</change>
+				<change>Исправление ошибок.</change>
+			</version>
+
+			<version number="1.1.1" date="17.11.2012">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Lightbox/lightbox-1.1.1.zip</download>
+			</version>
+
+			<version number="1.1" date="08.08.2012">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Lightbox/lightbox-1.1.zip</download>
+			</version>
+
+			<version number="1.0" date="24.06.2012">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Lightbox/lightbox.zip</download>
+				<change>Первая версия</change>
+			</version>
+		</changelog>
+	</data>
+</info>
