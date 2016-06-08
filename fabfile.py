@@ -52,12 +52,12 @@ PLUGIN_VERSIONS_FILENAME = u'plugin.xml'
 
 
 
-def _correctSysPath ():
+def _addToSysPath (path):
     """
     Add src path to sys.path to use outwiker modules
     """
     encoding = sys.getfilesystemencoding()
-    cmd_folder = unicode (os.path.abspath('src'), encoding)
+    cmd_folder = os.path.abspath(path)
 
     syspath = [unicode (item, encoding)
                if not isinstance (item, unicode)
@@ -67,7 +67,7 @@ def _correctSysPath ():
         sys.path.insert(0, cmd_folder)
 
 
-_correctSysPath()
+_addToSysPath(u'src')
 from outwiker.core.xmlversionparser import XmlVersionParser
 from outwiker.utilites.textfile import readTextFile
 
@@ -77,7 +77,7 @@ def _readAppInfo(fname):
     return XmlVersionParser([u'en']).parse(text)
 
 
-def _getVersion():
+def _getOutwikerVersion():
     """
     Return a tuple: (version number, build number)
     """
@@ -215,7 +215,7 @@ class _BuilderLinuxBinary (_BuilderLinuxBinaryBase):
 class _BuilderLinuxDebBinary (_BuilderBase):
     def __init__ (self, subdir_name=DEB_BINARY_BUILD_DIR):
         super (_BuilderLinuxDebBinary, self).__init__ (subdir_name)
-        version = _getVersion()
+        version = _getOutwikerVersion()
         self._architecture = self._getDebArchitecture()
         self._debName = "outwiker-{}+{}_{}".format (version[0],
                                                     version[1],
@@ -477,12 +477,12 @@ class _BuilderBaseDebSource (_BuilderBase):
         """
         Return a folder name for sources for building the deb package
         """
-        version = _getVersion()
+        version = _getOutwikerVersion()
         return "outwiker-{}+{}".format (version[0], version[1])
 
 
     def _getOrigName (self, distname):
-        version = _getVersion()
+        version = _getOutwikerVersion()
         return "outwiker_{}+{}~{}.orig.tar".format (version[0],
                                                     version[1],
                                                     distname)
@@ -543,7 +543,7 @@ class _BuilderSources (_BuilderBase):
 
 
     def _build (self):
-        version = _getVersion()
+        version = _getOutwikerVersion()
 
         local ('git archive --prefix=outwiker-{}.{}/ -o "{}" HEAD'.format (
             version[0],
@@ -611,9 +611,13 @@ class _BuilderWindows (_BuilderBase):
     """
     Build for Windows
     """
-    def __init__ (self, build_dir=WINDOWS_BUILD_DIR, create_installer=True):
+    def __init__ (self,
+                  build_dir=WINDOWS_BUILD_DIR,
+                  create_installer=True,
+                  create_archives=True):
         super (_BuilderWindows, self).__init__ (build_dir)
         self._create_installer = create_installer
+        self._create_archives = create_archives
 
         self._resultBaseName = u'outwiker_win_unstable'
         self._resultWithPluginsBaseName = u'outwiker_win_unstable_all_plugins'
@@ -642,10 +646,11 @@ class _BuilderWindows (_BuilderBase):
         self._build_binary()
         self._clear_dest_plugins_dir()
 
-        # Create archive without plugins
-        with lcd (self._build_dir):
-            local ("7z a ..\outwiker_win_unstable.zip .\* .\plugins -r -aoa")
-            local ("7z a ..\outwiker_win_unstable.7z .\* .\plugins -r -aoa")
+        # Create archives without plugins
+        if self._create_archives:
+            with lcd (self._build_dir):
+                local ("7z a ..\outwiker_win_unstable.zip .\* .\plugins -r -aoa")
+                local ("7z a ..\outwiker_win_unstable.7z .\* .\plugins -r -aoa")
 
         # Compile installer
         if self._create_installer:
@@ -655,9 +660,10 @@ class _BuilderWindows (_BuilderBase):
         self._copy_plugins()
 
         # Archive versions with plugins
-        with lcd (self._build_dir):
-            local ("7z a ..\outwiker_win_unstable_all_plugins.zip .\* .\plugins -r -aoa -xr!*.pyc -xr!.ropeproject")
-            local ("7z a ..\outwiker_win_unstable_all_plugins.7z .\* .\plugins -r -aoa -xr!*.pyc -xr!.ropeproject")
+        if self._create_archives:
+            with lcd (self._build_dir):
+                local ("7z a ..\outwiker_win_unstable_all_plugins.zip .\* .\plugins -r -aoa -xr!*.pyc -xr!.ropeproject")
+                local ("7z a ..\outwiker_win_unstable_all_plugins.7z .\* .\plugins -r -aoa -xr!*.pyc -xr!.ropeproject")
 
 
     def _build_binary (self):
@@ -748,7 +754,7 @@ def ppaunstable ():
     """
     Upload the current OutWiker version in PPA (unstable)
     """
-    version = _getVersion()
+    version = _getOutwikerVersion()
 
     for distname in UBUNTU_RELEASE_NAMES:
         with lcd (os.path.join (BUILD_DIR, DEB_SOURCE_BUILD_DIR)):
@@ -759,7 +765,7 @@ def ppaunstable ():
 #     """
 #     Upload the current OutWiker version in PPA (unstable)
 #     """
-#     version = _getVersion()
+#     version = _getOutwikerVersion()
 #
 #     for distname in UBUNTU_RELEASE_NAMES:
 #         with lcd (os.path.join (BUILD_DIR, DEB_SOURCE_BUILD_DIR)):
@@ -798,11 +804,12 @@ def sources_clear ():
     builder.clear()
 
 
-def win (skipinstaller=False):
+def win (skipinstaller=False, skiparchives=False):
     """
     Build assemblies under Windows
     """
-    builder = _BuilderWindows (create_installer=not skipinstaller)
+    builder = _BuilderWindows (create_installer=not skipinstaller,
+                               create_archives=not skiparchives)
     builder.build()
 
 
@@ -835,7 +842,7 @@ def nextversion():
     Increment a version number (execute under Linux only,
     incremented the deb package version also)
     """
-    (version_major, version_build) = _getVersion()
+    (version_major, version_build) = _getOutwikerVersion()
     version_build = unicode(int (version_build) + 1)
 
     with lcd (os.path.join (u'need_for_build', u'debian_debsource')):
@@ -853,7 +860,7 @@ def debinstall():
     """
     debsingle()
 
-    version = _getVersion()
+    version = _getOutwikerVersion()
 
     with lcd (os.path.join (BUILD_DIR, DEB_SOURCE_BUILD_DIR)):
         local ("sudo dpkg -i outwiker_{}+{}~{}_all.deb".format (
