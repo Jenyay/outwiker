@@ -8,7 +8,7 @@ import shutil
 import glob
 import sys
 
-from fabric.api import local, lcd, settings
+from fabric.api import local, lcd, settings, task
 
 # Supported Ubuntu releases
 UBUNTU_RELEASE_NAMES = [u"wily", u"trusty", u"xenial"]
@@ -52,7 +52,7 @@ PLUGIN_VERSIONS_FILENAME = u'plugin.xml'
 
 
 
-def _addToSysPath (path):
+def addToSysPath (path):
     """
     Add src path to sys.path to use outwiker modules
     """
@@ -67,30 +67,30 @@ def _addToSysPath (path):
         sys.path.insert(0, cmd_folder)
 
 
-_addToSysPath(u'src')
+addToSysPath(u'src')
 from outwiker.core.xmlversionparser import XmlVersionParser
 from outwiker.utilites.textfile import readTextFile
 
 
-def _readAppInfo(fname):
+def readAppInfo(fname):
     text = readTextFile(fname)
     return XmlVersionParser([u'en']).parse(text)
 
 
-def _getOutwikerVersion():
+def getOutwikerVersion():
     """
     Return a tuple: (version number, build number)
     """
     # The file with the version number
     fname = u"src/versions.xml"
-    version = _readAppInfo(fname).currentVersion
+    version = readAppInfo(fname).currentVersion
     version_major = u'.'.join([unicode(item) for item in version[:-1]])
     version_build = unicode(version[-1])
 
     return (version_major, version_build)
 
 
-class _BuilderBase (object):
+class BuilderBase (object):
     """
     Base class for all builders.
     """
@@ -144,12 +144,12 @@ class _BuilderBase (object):
                 shutil.rmtree (path)
 
 
-class _BuilderLinuxBinaryBase (_BuilderBase):
+class BuilderLinuxBinaryBase (BuilderBase):
     """
     Base class for all Linux binary builders.
     """
     def __init__ (self, build_dir, create_archive):
-        super (_BuilderLinuxBinaryBase, self).__init__ (build_dir)
+        super (BuilderLinuxBinaryBase, self).__init__ (build_dir)
 
         self._create_archive = create_archive
         self._toRemove = [
@@ -182,12 +182,12 @@ class _BuilderLinuxBinaryBase (_BuilderBase):
             os.mkdir (pluginsdir)
 
 
-class _BuilderLinuxBinary (_BuilderLinuxBinaryBase):
+class BuilderLinuxBinary (BuilderLinuxBinaryBase):
     """
     Class for making simple Linux binary build
     """
     def __init__ (self, build_dir=LINUX_BUILD_DIR, create_archive=True):
-        super (_BuilderLinuxBinary, self).__init__ (build_dir, create_archive)
+        super (BuilderLinuxBinary, self).__init__ (build_dir, create_archive)
         self._archiveFullName = os.path.join (self._root_build_dir,
                                               'outwiker_linux_unstable_x64.7z')
 
@@ -201,7 +201,7 @@ class _BuilderLinuxBinary (_BuilderLinuxBinaryBase):
 
 
     def clear (self):
-        super (_BuilderLinuxBinary, self).clear()
+        super (BuilderLinuxBinary, self).clear()
         self._remove (self._archiveFullName)
 
 
@@ -212,10 +212,10 @@ class _BuilderLinuxBinary (_BuilderLinuxBinaryBase):
 
 
 
-class _BuilderLinuxDebBinary (_BuilderBase):
+class BuilderLinuxDebBinary (BuilderBase):
     def __init__ (self, subdir_name=DEB_BINARY_BUILD_DIR):
-        super (_BuilderLinuxDebBinary, self).__init__ (subdir_name)
-        version = _getOutwikerVersion()
+        super (BuilderLinuxDebBinary, self).__init__ (subdir_name)
+        version = getOutwikerVersion()
         self._architecture = self._getDebArchitecture()
         self._debName = "outwiker-{}+{}_{}".format (version[0],
                                                     version[1],
@@ -223,7 +223,7 @@ class _BuilderLinuxDebBinary (_BuilderBase):
 
 
     def clear (self):
-        super (_BuilderLinuxDebBinary, self).clear ()
+        super (BuilderLinuxDebBinary, self).clear ()
         deb_result_filename = self._getDebFileName()
         self._remove (os.path.join (self._root_build_dir, deb_result_filename))
 
@@ -243,7 +243,7 @@ class _BuilderLinuxDebBinary (_BuilderBase):
         dest_dir = os.path.join (self._root_build_dir, dest_subdir)
         os.makedirs (self._getSubpath (self._debName, u'usr', u'lib'))
 
-        linuxBuilder = _BuilderLinuxBinary (dest_subdir, create_archive=False)
+        linuxBuilder = BuilderLinuxBinary (dest_subdir, create_archive=False)
         linuxBuilder.build()
         self._remove (os.path.join (dest_dir, u'LICENSE.txt'))
 
@@ -375,12 +375,12 @@ class _BuilderLinuxDebBinary (_BuilderBase):
         return u'{}.deb'.format (self._debName)
 
 
-class _BuilderBaseDebSource (_BuilderBase):
+class BuilderBaseDebSource (BuilderBase):
     """
     The base class for source deb packages assebbling.
     """
     def __init__ (self, subdir_name):
-        super (_BuilderBaseDebSource, self).__init__ (subdir_name)
+        super (BuilderBaseDebSource, self).__init__ (subdir_name)
 
 
     def _debuild (self, command, distriblist):
@@ -477,12 +477,12 @@ class _BuilderBaseDebSource (_BuilderBase):
         """
         Return a folder name for sources for building the deb package
         """
-        version = _getOutwikerVersion()
+        version = getOutwikerVersion()
         return "outwiker-{}+{}".format (version[0], version[1])
 
 
     def _getOrigName (self, distname):
-        version = _getOutwikerVersion()
+        version = getOutwikerVersion()
         return "outwiker_{}+{}~{}.orig.tar".format (version[0],
                                                     version[1],
                                                     distname)
@@ -502,9 +502,9 @@ class _BuilderBaseDebSource (_BuilderBase):
 
 
 
-class _BuilderDebSource (_BuilderBaseDebSource):
+class BuilderDebSource (BuilderBaseDebSource):
     def __init__ (self, subdir_name, release_names):
-        super (_BuilderBaseDebSource, self).__init__ (subdir_name)
+        super (BuilderBaseDebSource, self).__init__ (subdir_name)
         self._release_names = release_names
 
 
@@ -513,9 +513,9 @@ class _BuilderDebSource (_BuilderBaseDebSource):
                        self._release_names)
 
 
-class _BuilderDebSourcesIncluded (_BuilderBaseDebSource):
+class BuilderDebSourcesIncluded (BuilderBaseDebSource):
     def __init__ (self, subdir_name, release_names):
-        super (_BuilderDebSourcesIncluded, self).__init__ (subdir_name)
+        super (BuilderDebSourcesIncluded, self).__init__ (subdir_name)
         self._release_names = release_names
 
 
@@ -524,12 +524,12 @@ class _BuilderDebSourcesIncluded (_BuilderBaseDebSource):
                        self._release_names)
 
 
-class _BuilderSources (_BuilderBase):
+class BuilderSources (BuilderBase):
     """
     Create archives with sources
     """
     def __init__ (self, build_dir=SOURCES_DIR):
-        super (_BuilderSources, self).__init__ (build_dir)
+        super (BuilderSources, self).__init__ (build_dir)
         self._fullfname = os.path.join (self._root_build_dir,
                                         u"outwiker-src-full.zip")
         self._minfname = os.path.join (self._root_build_dir,
@@ -537,13 +537,13 @@ class _BuilderSources (_BuilderBase):
 
 
     def clear (self):
-        super (_BuilderSources, self).clear()
+        super (BuilderSources, self).clear()
         self._remove (self._fullfname)
         self._remove (self._minfname)
 
 
     def _build (self):
-        version = _getOutwikerVersion()
+        version = getOutwikerVersion()
 
         local ('git archive --prefix=outwiker-{}.{}/ -o "{}" HEAD'.format (
             version[0],
@@ -556,18 +556,18 @@ class _BuilderSources (_BuilderBase):
         self._remove (self._build_dir)
 
 
-class _BuilderPlugins (_BuilderBase):
+class BuilderPlugins (BuilderBase):
     """
     Create archives with plug-ins
     """
     def __init__ (self, build_dir=PLUGINS_DIR, plugins_list=PLUGINS_LIST):
-        super (_BuilderPlugins, self).__init__ (build_dir)
+        super (BuilderPlugins, self).__init__ (build_dir)
         self._all_plugins_fname = u'outwiker-plugins-all.zip'
         self._plugins_list = plugins_list
 
 
     def clear (self):
-        super (_BuilderPlugins, self).clear()
+        super (BuilderPlugins, self).clear()
         self._remove (self._getSubpath (self._all_plugins_fname))
 
 
@@ -576,7 +576,7 @@ class _BuilderPlugins (_BuilderBase):
             # Path to plugin.xml for current plugin
             xmlplugin_path = u'plugins/{plugin}/{plugin}/plugin.xml'.format(plugin=plugin)
             try:
-                appInfo = _readAppInfo(xmlplugin_path)
+                appInfo = readAppInfo(xmlplugin_path)
             except EnvironmentError:
                 appInfo = None
 
@@ -607,7 +607,7 @@ class _BuilderPlugins (_BuilderBase):
                 local ("7z a -r -aoa -xr!*.pyc -xr!.ropeproject -w../ ../../{} ./*".format (full_archive_path))
 
 
-class _BuilderWindows (_BuilderBase):
+class BuilderWindows (BuilderBase):
     """
     Build for Windows
     """
@@ -615,7 +615,7 @@ class _BuilderWindows (_BuilderBase):
                   build_dir=WINDOWS_BUILD_DIR,
                   create_installer=True,
                   create_archives=True):
-        super (_BuilderWindows, self).__init__ (build_dir)
+        super (BuilderWindows, self).__init__ (build_dir)
         self._create_installer = create_installer
         self._create_archives = create_archives
 
@@ -628,7 +628,7 @@ class _BuilderWindows (_BuilderBase):
 
 
     def clear (self):
-        super (_BuilderWindows, self).clear()
+        super (BuilderWindows, self).clear()
         toRemove = [
             os.path.join (self._root_build_dir, self._resultBaseName + u'.7z'),
             os.path.join (self._root_build_dir, self._resultBaseName + u'.exe'),
@@ -714,135 +714,150 @@ def _getCurrentUbuntuDistribName ():
                 return codename
 
 
+@task
 def deb_sources_included():
     """
     Create files for uploading in PPA (including sources)
     """
-    builder = _BuilderDebSourcesIncluded (DEB_SOURCE_BUILD_DIR,
+    builder = BuilderDebSourcesIncluded (DEB_SOURCE_BUILD_DIR,
                                           UBUNTU_RELEASE_NAMES)
     builder.build()
 
 
 
+@task
 def deb():
     """
     Assemble the deb packages
     """
-    builder = _BuilderDebSource (DEB_SOURCE_BUILD_DIR, UBUNTU_RELEASE_NAMES)
+    builder = BuilderDebSource (DEB_SOURCE_BUILD_DIR, UBUNTU_RELEASE_NAMES)
     builder.build()
 
 
+@task
 def deb_clear():
     """
     Remove the deb packages
     """
-    builder = _BuilderDebSource (DEB_SOURCE_BUILD_DIR, UBUNTU_RELEASE_NAMES)
+    builder = BuilderDebSource (DEB_SOURCE_BUILD_DIR, UBUNTU_RELEASE_NAMES)
     builder.clear()
 
 
 
+@task
 def debsingle():
     """
     Assemble the deb package for the current Ubuntu release
     """
-    builder = _BuilderDebSource (DEB_SOURCE_BUILD_DIR,
+    builder = BuilderDebSource (DEB_SOURCE_BUILD_DIR,
                                  [_getCurrentUbuntuDistribName()])
     builder.build()
 
 
+@task
 def ppaunstable ():
     """
     Upload the current OutWiker version in PPA (unstable)
     """
-    version = _getOutwikerVersion()
+    version = getOutwikerVersion()
 
     for distname in UBUNTU_RELEASE_NAMES:
         with lcd (os.path.join (BUILD_DIR, DEB_SOURCE_BUILD_DIR)):
             local ("dput ppa:outwiker-team/unstable outwiker_{}+{}~{}_source.changes".format (version[0], version[1], distname))
 
 
+# @task
 # def ppastable ():
 #     """
 #     Upload the current OutWiker version in PPA (unstable)
 #     """
-#     version = _getOutwikerVersion()
+#     version = getOutwikerVersion()
 #
 #     for distname in UBUNTU_RELEASE_NAMES:
 #         with lcd (os.path.join (BUILD_DIR, DEB_SOURCE_BUILD_DIR)):
 #             local ("dput ppa:outwiker-team/ppa outwiker_{}+{}~{}_source.changes".format (version[0], version[1], distname))
 
 
+@task
 def plugins():
     """
     Create an archive with plugins (7z required)
     """
-    builder = _BuilderPlugins ()
+    builder = BuilderPlugins ()
     builder.build()
 
 
+@task
 def plugins_clear():
     """
     Remove an archive with plugins (7z required)
     """
-    builder = _BuilderPlugins ()
+    builder = BuilderPlugins ()
     builder.clear()
 
 
+@task
 def sources ():
     """
     Create the sources archives.
     """
-    builder = _BuilderSources ()
+    builder = BuilderSources ()
     builder.build()
 
 
+@task
 def sources_clear ():
     """
     Remove the sources archives.
     """
-    builder = _BuilderSources ()
+    builder = BuilderSources ()
     builder.clear()
 
 
+@task
 def win (skipinstaller=False, skiparchives=False):
     """
     Build assemblies under Windows
     """
-    builder = _BuilderWindows (create_installer=not skipinstaller,
+    builder = BuilderWindows (create_installer=not skipinstaller,
                                create_archives=not skiparchives)
     builder.build()
 
 
+@task
 def win_clear ():
     """
     Remove assemblies under Windows
     """
-    builder = _BuilderWindows ()
+    builder = BuilderWindows ()
     builder.clear()
 
 
+@task
 def linux (create_archive=True):
     """
     Assemble binary builds for Linux
     """
-    builder = _BuilderLinuxBinary (create_archive=create_archive)
+    builder = BuilderLinuxBinary (create_archive=create_archive)
     builder.build()
 
 
+@task
 def linux_clear ():
     """
     Remove binary builds for Linux
     """
-    builder = _BuilderLinuxBinary ()
+    builder = BuilderLinuxBinary ()
     builder.clear()
 
 
+@task
 def nextversion():
     """
     Increment a version number (execute under Linux only,
     incremented the deb package version also)
     """
-    (version_major, version_build) = _getOutwikerVersion()
+    (version_major, version_build) = getOutwikerVersion()
     version_build = unicode(int (version_build) + 1)
 
     with lcd (os.path.join (u'need_for_build', u'debian_debsource')):
@@ -854,13 +869,14 @@ def nextversion():
 
 
 
+@task
 def debinstall():
     """
     Assemble deb package for current Ubuntu release
     """
     debsingle()
 
-    version = _getOutwikerVersion()
+    version = getOutwikerVersion()
 
     with lcd (os.path.join (BUILD_DIR, DEB_SOURCE_BUILD_DIR)):
         local ("sudo dpkg -i outwiker_{}+{}~{}_all.deb".format (
@@ -869,6 +885,7 @@ def debinstall():
             _getCurrentUbuntuDistribName()))
 
 
+@task
 def locale():
     """
     Update the localization file (outwiker.pot)
@@ -877,6 +894,7 @@ def locale():
         local (r'find . -iname "*.py" | xargs xgettext -o locale/outwiker.pot')
 
 
+@task
 def localeplugin (pluginname):
     """
     Create or update the localization file for pluginname plug-in
@@ -885,6 +903,7 @@ def localeplugin (pluginname):
         local (r'find . -iname "*.py" | xargs xgettext -o locale/{}.pot'.format (pluginname))
 
 
+@task
 def run ():
     """
     Run OutWiker from sources
@@ -907,6 +926,7 @@ def _run (command):
         local (command)
 
 
+@task
 def test (section=u'', *args):
     """
     Run the unit tests
@@ -931,11 +951,22 @@ def test (section=u'', *args):
 
 
 
-def deb_binary ():
-    builder = _BuilderLinuxDebBinary ()
+@task
+def deb_binary():
+    builder = BuilderLinuxDebBinary()
     builder.build()
 
 
-def deb_binary_clear ():
-    builder = _BuilderLinuxDebBinary ()
+@task
+def deb_binary_clear():
+    builder = BuilderLinuxDebBinary()
     builder.clear()
+
+
+@task
+def clear():
+    deb_clear()
+    linux_clear()
+    plugins_clear()
+    sources_clear()
+    win_clear()
