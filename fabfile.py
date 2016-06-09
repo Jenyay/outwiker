@@ -1,7 +1,6 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-import abc
 import os
 import os.path
 import shutil
@@ -12,71 +11,16 @@ from fabric.api import local, lcd, settings, task
 # from buildtools.utilites import addToSysPath
 from buildtools.defines import(
     UBUNTU_RELEASE_NAMES,
-    PLUGINS_LIST,
     BUILD_DIR,
     LINUX_BUILD_DIR,
-    WINDOWS_BUILD_DIR,
     DEB_BINARY_BUILD_DIR,
     DEB_SOURCE_BUILD_DIR,
-    SOURCES_DIR,
-    PLUGINS_DIR,
-    PLUGIN_VERSIONS_FILENAME,
 )
-from buildtools.versions import readAppInfo, getOutwikerVersion
-
-
-class BuilderBase(object):
-    """
-    Base class for all builders.
-    """
-    __metaclass__ = abc.ABCMeta
-
-    def __init__(self, subdir_name):
-        self._root_build_dir = BUILD_DIR
-        self._subdir_name = subdir_name
-        self._build_dir = os.path.join(self._root_build_dir,
-                                       self._subdir_name)
-
-
-    @abc.abstractmethod
-    def _build(self):
-        pass
-
-
-    def clear(self):
-        self._remove(self._build_dir)
-
-
-    def build(self):
-        self._createRootDir()
-        self.clear()
-        os.mkdir(self._build_dir)
-
-        self._build()
-
-
-    def _createRootDir(self):
-        if not os.path.exists(self._root_build_dir):
-            os.mkdir(self._root_build_dir)
-
-
-    def _getSubpath(self, *args):
-        """
-        Return subpath inside current build path(inside 'build' subpath)
-        """
-        return os.path.join(self._build_dir, *args)
-
-
-    def _remove(self, path):
-        """
-        Remove the fname file if it exists.
-        The function not catch any exceptions.
-        """
-        if os.path.exists(path):
-            if os.path.isfile(path):
-                os.remove(path)
-            elif os.path.isdir(path):
-                shutil.rmtree(path)
+from buildtools.versions import getOutwikerVersion
+from buildtools.builders import (BuilderBase,
+                                 BuilderWindows,
+                                 BuilderSources,
+                                 BuilderPlugins)
 
 
 class BuilderLinuxBinaryBase(BuilderBase):
@@ -457,189 +401,6 @@ class BuilderDebSourcesIncluded(BuilderBaseDebSource):
     def _build(self):
         self._debuild("debuild -S -sa --source-option=--include-binaries --source-option=--auto-commit",
                       self._release_names)
-
-
-class BuilderSources(BuilderBase):
-    """
-    Create archives with sources
-    """
-    def __init__(self, build_dir=SOURCES_DIR):
-        super(BuilderSources, self).__init__(build_dir)
-        self._fullfname = os.path.join(self._root_build_dir,
-                                       u"outwiker-src-full.zip")
-        self._minfname = os.path.join(self._root_build_dir,
-                                      u"outwiker-src-min.zip")
-
-
-    def clear(self):
-        super(BuilderSources, self).clear()
-        self._remove(self._fullfname)
-        self._remove(self._minfname)
-
-
-    def _build(self):
-        version = getOutwikerVersion()
-
-        local('git archive --prefix=outwiker-{}.{}/ -o "{}" HEAD'.format(
-            version[0],
-            version[1],
-            self._fullfname))
-
-        with lcd("src"):
-            local("7z a -r -aoa -xr!*.pyc -xr!.ropeproject -xr!tests.py -xr!profile.py -xr!setup_tests.py -xr!setup.py -xr!test -xr!profiles ../{} ./*".format(self._minfname))
-
-        self._remove(self._build_dir)
-
-
-class BuilderPlugins(BuilderBase):
-    """
-    Create archives with plug-ins
-    """
-    def __init__(self, build_dir=PLUGINS_DIR, plugins_list=PLUGINS_LIST):
-        super(BuilderPlugins, self).__init__(build_dir)
-        self._all_plugins_fname = u'outwiker-plugins-all.zip'
-        self._plugins_list = plugins_list
-
-
-    def clear(self):
-        super(BuilderPlugins, self).clear()
-        self._remove(self._getSubpath(self._all_plugins_fname))
-
-
-    def _build(self):
-        for plugin in self._plugins_list:
-            # Path to plugin.xml for current plugin
-            xmlplugin_path = u'plugins/{plugin}/{plugin}/{pluginxml}'.format(
-                plugin=plugin,
-                pluginxml=PLUGIN_VERSIONS_FILENAME)
-            try:
-                appInfo = readAppInfo(xmlplugin_path)
-            except EnvironmentError:
-                appInfo = None
-
-            # Future plug-in archive name
-            if appInfo is None or appInfo.currentVersion is None:
-                archive_name = plugin + u'.zip'
-            else:
-                version = unicode(appInfo.currentVersion)
-                archive_name = u'{}-{}.zip'.format(plugin, version)
-
-            # Subpath to current plug-in archive
-            plugin_dir_path = self._getSubpath(plugin)
-
-            # Path to future archive
-            archive_path = self._getSubpath(plugin, archive_name)
-
-            # Path to archive with all plug-ins
-            full_archive_path = self._getSubpath(self._all_plugins_fname)
-            self._remove(plugin_dir_path)
-            self._remove(archive_path)
-
-            os.mkdir(plugin_dir_path)
-            if appInfo is not None:
-                shutil.copy(xmlplugin_path, plugin_dir_path)
-
-            with lcd("plugins/{}".format(plugin)):
-                local("7z a -r -aoa -xr!*.pyc -xr!.ropeproject ../../{} ./*".format(archive_path))
-                local("7z a -r -aoa -xr!*.pyc -xr!.ropeproject -w../ ../../{} ./*".format(full_archive_path))
-
-
-class BuilderWindows(BuilderBase):
-    """
-    Build for Windows
-    """
-    def __init__(self,
-                 build_dir=WINDOWS_BUILD_DIR,
-                 create_installer=True,
-                 create_archives=True):
-        super(BuilderWindows, self).__init__(build_dir)
-        self._create_installer = create_installer
-        self._create_archives = create_archives
-
-        self._resultBaseName = u'outwiker_win_unstable'
-        self._resultWithPluginsBaseName = u'outwiker_win_unstable_all_plugins'
-        self._plugins_list = PLUGINS_LIST
-
-        # Path to copy plugins
-        self._dest_plugins_dir = os.path.join(self._build_dir, u'plugins')
-
-
-    def clear(self):
-        super(BuilderWindows, self).clear()
-        toRemove = [
-            os.path.join(self._root_build_dir, self._resultBaseName + u'.7z'),
-            os.path.join(self._root_build_dir, self._resultBaseName + u'.exe'),
-            os.path.join(self._root_build_dir, self._resultBaseName + u'.zip'),
-            os.path.join(self._root_build_dir,
-                         self._resultWithPluginsBaseName + u'.7z'),
-            os.path.join(self._root_build_dir,
-                         self._resultWithPluginsBaseName + u'.zip'),
-        ]
-        map(self._remove, toRemove)
-
-
-    def _build(self):
-        self._create_plugins_dir()
-        self._build_binary()
-        self._clear_dest_plugins_dir()
-
-        # Create archives without plugins
-        if self._create_archives:
-            with lcd(self._build_dir):
-                local("7z a ..\outwiker_win_unstable.zip .\* .\plugins -r -aoa")
-                local("7z a ..\outwiker_win_unstable.7z .\* .\plugins -r -aoa")
-
-        # Compile installer
-        if self._create_installer:
-            self._build_installer()
-
-        # Copy plugins to build folder
-        self._copy_plugins()
-
-        # Archive versions with plugins
-        if self._create_archives:
-            with lcd(self._build_dir):
-                local("7z a ..\outwiker_win_unstable_all_plugins.zip .\* .\plugins -r -aoa -xr!*.pyc -xr!.ropeproject")
-                local("7z a ..\outwiker_win_unstable_all_plugins.7z .\* .\plugins -r -aoa -xr!*.pyc -xr!.ropeproject")
-
-
-    def _build_binary(self):
-        """
-        Build with cx_Freeze
-        """
-        with lcd("src"):
-            local("python setup.py build --build-exe ../{}".format(self._build_dir))
-
-
-    def _create_plugins_dir(self):
-        """
-        Create the plugins folder(it is not appened to the git repository)
-        """
-        pluginsdir = os.path.join("src", "plugins")
-        if not os.path.exists(pluginsdir):
-            os.mkdir(pluginsdir)
-
-
-    def _clear_dest_plugins_dir(self):
-        self._remove(self._dest_plugins_dir)
-        os.mkdir(self._dest_plugins_dir)
-
-
-    def _build_installer(self):
-        local("iscc outwiker_setup.iss")
-
-
-    def _copy_plugins(self):
-        """
-        Copy plugins to build folder
-        """
-        src_pluginsdir = u"plugins"
-        for plugin in self._plugins_list:
-            shutil.copytree(
-                os.path.join(src_pluginsdir, plugin, plugin),
-                os.path.join(self._dest_plugins_dir, plugin),
-            )
-
 
 
 def _getCurrentUbuntuDistribName():
