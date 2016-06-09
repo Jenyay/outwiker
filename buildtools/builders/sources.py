@@ -20,12 +20,10 @@ class BuilderSources(BuilderBase):
         self._minfname = os.path.join(self._root_build_dir,
                                       u"outwiker-src-min.zip")
 
-
     def clear(self):
         super(BuilderSources, self).clear()
         self._remove(self._fullfname)
         self._remove(self._minfname)
-
 
     def _build(self):
         version = getOutwikerVersion()

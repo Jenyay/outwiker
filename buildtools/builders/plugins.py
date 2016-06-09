@@ -21,11 +21,9 @@ class BuilderPlugins(BuilderBase):
         self._all_plugins_fname = u'outwiker-plugins-all.zip'
         self._plugins_list = plugins_list
 
-
     def clear(self):
         super(BuilderPlugins, self).clear()
         self._remove(self._getSubpath(self._all_plugins_fname))
-
 
     def _build(self):
         for plugin in self._plugins_list:

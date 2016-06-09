@@ -25,7 +25,6 @@ class BuilderLinuxBinaryBase(BuilderBase):
             self._getSubpath(u'_tkinter.so'),
         ]
 
-
     def _build_binary(self):
         """
         Build with cx_Freeze
@@ -34,7 +33,6 @@ class BuilderLinuxBinaryBase(BuilderBase):
             local("python setup.py build --build-exe ../{}".format(self._build_dir))
 
         map(self._remove, self._toRemove)
-
 
     def _create_plugins_dir(self):
         """
@@ -56,7 +54,6 @@ class BuilderLinuxBinary(BuilderLinuxBinaryBase):
         self._archiveFullName = os.path.join(self._root_build_dir,
                                              'outwiker_linux_unstable_x64.7z')
 
-
     def _build(self):
         self._create_plugins_dir()
         self._build_binary()
@@ -64,11 +61,9 @@ class BuilderLinuxBinary(BuilderLinuxBinaryBase):
         if self._create_archive:
             self._build_archive()
 
-
     def clear(self):
         super(BuilderLinuxBinary, self).clear()
         self._remove(self._archiveFullName)
-
 
     def _build_archive(self):
         # Create archive without plugins

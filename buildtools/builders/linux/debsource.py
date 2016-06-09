@@ -17,7 +17,6 @@ class BuilderBaseDebSource(BuilderBase):
     def __init__(self, subdir_name):
         super(BuilderBaseDebSource, self).__init__(subdir_name)
 
-
     def _debuild(self, command, distriblist):
         """
         Run command with debuild.
@@ -45,7 +44,6 @@ class BuilderBaseDebSource(BuilderBase):
                                 distrib_name,
                                 current_distrib_name)
 
-
     def _orig(self, distname):
         """
         Create an archive for "original" sources for building the deb package
@@ -60,7 +58,6 @@ class BuilderBaseDebSource(BuilderBase):
 
         orig_dirname = os.path.join(self._build_dir, origname)
         local("gzip -f {}".format(orig_dirname))
-
 
     def _source(self):
         """
@@ -98,7 +95,6 @@ class BuilderBaseDebSource(BuilderBase):
                                      u'man'),
                         os.path.join(dirname, u'man'))
 
-
     def _debclean(self):
         """
         Clean build/<distversion> folder
@@ -107,7 +103,6 @@ class BuilderBaseDebSource(BuilderBase):
         if os.path.exists(dirname):
             shutil.rmtree(dirname)
 
-
     def _getDebName(self):
         """
         Return a folder name for sources for building the deb package
@@ -115,13 +110,11 @@ class BuilderBaseDebSource(BuilderBase):
         version = getOutwikerVersion()
         return "outwiker-{}+{}".format(version[0], version[1])
 
-
     def _getOrigName(self, distname):
         version = getOutwikerVersion()
         return "outwiker_{}+{}~{}.orig.tar".format(version[0],
                                                    version[1],
                                                    distname)
-
 
     def _makechangelog(self, changelog_path, distrib_src, distrib_new):
         """
@@ -136,12 +129,10 @@ class BuilderBaseDebSource(BuilderBase):
             fp.write(u"".join(lines))
 
 
-
 class BuilderDebSource(BuilderBaseDebSource):
     def __init__(self, subdir_name, release_names):
         super(BuilderBaseDebSource, self).__init__(subdir_name)
         self._release_names = release_names
-
 
     def _build(self):
         self._debuild("debuild --source-option=--include-binaries --source-option=--auto-commit",
@@ -152,7 +143,6 @@ class BuilderDebSourcesIncluded(BuilderBaseDebSource):
     def __init__(self, subdir_name, release_names):
         super(BuilderDebSourcesIncluded, self).__init__(subdir_name)
         self._release_names = release_names
-
 
     def _build(self):
         self._debuild("debuild -S -sa --source-option=--include-binaries --source-option=--auto-commit",

@@ -28,7 +28,6 @@ class BuilderWindows(BuilderBase):
         # Path to copy plugins
         self._dest_plugins_dir = os.path.join(self._build_dir, u'plugins')
 
-
     def clear(self):
         super(BuilderWindows, self).clear()
         toRemove = [
@@ -41,7 +40,6 @@ class BuilderWindows(BuilderBase):
                          self._resultWithPluginsBaseName + u'.zip'),
         ]
         map(self._remove, toRemove)
-
 
     def _build(self):
         self._create_plugins_dir()
@@ -67,14 +65,12 @@ class BuilderWindows(BuilderBase):
                 local("7z a ..\outwiker_win_unstable_all_plugins.zip .\* .\plugins -r -aoa -xr!*.pyc -xr!.ropeproject")
                 local("7z a ..\outwiker_win_unstable_all_plugins.7z .\* .\plugins -r -aoa -xr!*.pyc -xr!.ropeproject")
 
-
     def _build_binary(self):
         """
         Build with cx_Freeze
         """
         with lcd("src"):
             local("python setup.py build --build-exe ../{}".format(self._build_dir))
-
 
     def _create_plugins_dir(self):
         """
@@ -84,15 +80,12 @@ class BuilderWindows(BuilderBase):
         if not os.path.exists(pluginsdir):
             os.mkdir(pluginsdir)
 
-
     def _clear_dest_plugins_dir(self):
         self._remove(self._dest_plugins_dir)
         os.mkdir(self._dest_plugins_dir)
 
-
     def _build_installer(self):
         local("iscc outwiker_setup.iss")
-
 
     def _copy_plugins(self):
         """

@@ -39,7 +39,6 @@ def deb_sources_included():
     builder.build()
 
 
-
 @task
 def deb():
     """
@@ -56,7 +55,6 @@ def deb_clear():
     """
     builder = BuilderDebSource(DEB_SOURCE_BUILD_DIR, UBUNTU_RELEASE_NAMES)
     builder.clear()
-
 
 
 @task
@@ -181,7 +179,6 @@ def nextversion():
             build=version_build,
             distrib=getCurrentUbuntuDistribName())
         )
-
 
 
 @task
