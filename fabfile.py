@@ -8,7 +8,10 @@ import glob
 
 from fabric.api import local, lcd, settings, task
 
-# from buildtools.utilites import addToSysPath
+from buildtools.utilites import (getPython,
+                                 execute,
+                                 getCurrentUbuntuDistribName,
+                                 )
 from buildtools.defines import(
     UBUNTU_RELEASE_NAMES,
     BUILD_DIR,
@@ -267,7 +270,7 @@ class BuilderBaseDebSource(BuilderBase):
         Run command with debuild.
         The function assembles the deb packages for all releases in distriblist
         """
-        current_distrib_name = _getCurrentUbuntuDistribName()
+        current_distrib_name = getCurrentUbuntuDistribName()
         for distrib_name in distriblist:
             self._orig(distrib_name)
             current_debian_dirname = os.path.join(self._build_dir,
@@ -403,15 +406,6 @@ class BuilderDebSourcesIncluded(BuilderBaseDebSource):
                       self._release_names)
 
 
-def _getCurrentUbuntuDistribName():
-    with open('/etc/lsb-release') as fp:
-        for line in fp:
-            line = line.strip()
-            if line.startswith(u'DISTRIB_CODENAME'):
-                codename = line.split(u'=')[1].strip()
-                return codename
-
-
 @task
 def deb_sources_included():
     """
@@ -448,7 +442,7 @@ def debsingle():
     Assemble the deb package for the current Ubuntu release
     """
     builder = BuilderDebSource(DEB_SOURCE_BUILD_DIR,
-                               [_getCurrentUbuntuDistribName()])
+                               [getCurrentUbuntuDistribName()])
     builder.build()
 
 
@@ -562,7 +556,7 @@ def nextversion():
         local('dch -v "{major}+{build}~{distrib}" -D {distrib}'.format(
             major=version_major,
             build=version_build,
-            distrib=_getCurrentUbuntuDistribName())
+            distrib=getCurrentUbuntuDistribName())
         )
 
 
@@ -580,7 +574,7 @@ def debinstall():
         local("sudo dpkg -i outwiker_{}+{}~{}_all.deb".format(
             version[0],
             version[1],
-            _getCurrentUbuntuDistribName()))
+            getCurrentUbuntuDistribName()))
 
 
 @task
@@ -607,21 +601,7 @@ def run():
     Run OutWiker from sources
     """
     with lcd("src"):
-        _run(u'{} runoutwiker.py'.format(_getPython()))
-
-
-def _getPython():
-    if os.name == 'posix':
-        return u'python2.7'
-    else:
-        return u'python'
-
-
-def _run(command):
-    if os.name == 'posix':
-        local(u'LD_PRELOAD=libwx_gtk2u_webview-3.0.so.0 ' + command)
-    else:
-        local(command)
+        execute(u'{} runoutwiker.py'.format(getPython()))
 
 
 @task
@@ -637,16 +617,15 @@ def test(section=u'', *args):
 
     with lcd("src"):
         if section:
-            _run("{} tests_{}.py {}".format(_getPython(),
-                                            section,
-                                            u' '.join(args)))
+            execute("{} tests_{}.py {}".format(getPython(),
+                                               section,
+                                               u' '.join(args)))
         else:
             with settings(warn_only=True):
                 for fname in files:
-                    _run("{} {}".format(_getPython(),
-                                        fname,
-                                        u' '.join(args)))
-
+                    execute("{} {}".format(getPython(),
+                                           fname,
+                                           u' '.join(args)))
 
 
 @task

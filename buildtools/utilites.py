@@ -3,6 +3,8 @@
 import sys
 import os
 
+from fabric.api import local
+
 
 def addToSysPath(path):
     """
@@ -17,3 +19,26 @@ def addToSysPath(path):
 
     if cmd_folder not in syspath:
         sys.path.insert(0, cmd_folder)
+
+
+def getPython():
+    if os.name == 'posix':
+        return u'python2.7'
+    else:
+        return u'python'
+
+
+def execute(command):
+    if os.name == 'posix':
+        local(u'LD_PRELOAD=libwx_gtk2u_webview-3.0.so.0 ' + command)
+    else:
+        local(command)
+
+
+def getCurrentUbuntuDistribName():
+    with open('/etc/lsb-release') as fp:
+        for line in fp:
+            line = line.strip()
+            if line.startswith(u'DISTRIB_CODENAME'):
+                codename = line.split(u'=')[1].strip()
+                return codename
