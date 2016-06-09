@@ -262,9 +262,12 @@ def deb_binary_clear():
 
 @task
 def clear():
-    deb_clear()
-    deb_binary_clear()
-    linux_clear()
     plugins_clear()
     sources_clear()
-    win_clear()
+
+    if os.name == 'posix':
+        linux_clear()
+        deb_clear()
+        deb_binary_clear()
+    elif os.name == 'nt':
+        win_clear()
