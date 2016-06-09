@@ -1,0 +1,67 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+<info>
+	<name>Sessions</name>
+	<updates>http://jenyay.net/Outwiker/Sessions/plugin.xml</updates>
+    <requirements>
+        <outwiker>1.8.0.732 dev</outwiker>
+        <os>Windows, Linux</os>
+    </requirements>
+
+	<data lang="en">
+		<website>http://jenyay.net/Outwiker/SessionsEn</website>
+		<description>Save the opened tabs.</description>
+
+		<author>
+			<name>Eugene Ilin (aka Jenyay)</name>
+			<email>jenyay.ilin@gmail.com</email>
+			<site>http://jenyay.net</site>
+		</author>
+
+		<changelog>
+			<version number="1.0.2" date="January 20, 2015">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Sessions/sessions-1.0.2.zip</download>
+				<change>Bug fixes.</change>
+			</version>
+
+			<version number="1.0.1" date="September 11, 2014">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Sessions/sessions-1.0.1.zip</download>
+				<change>Added the Italian localization.</change>
+				<change>Bug fixes.</change>
+			</version>
+
+			<version number="1.0" date="July 29, 2014">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Sessions/sessions-1.0.zip</download>
+				<change>The first version.</change>
+			</version>
+		</changelog>
+	</data>
+
+	<data lang="ru">
+		<website>http://jenyay.net/Outwiker/Sessions</website>
+		<description>Сохранение открытых вкладок.</description>
+
+		<author>
+			<name>Евгений Ильин (aka Jenyay)</name>
+			<email>jenyay.ilin@gmail.com</email>
+			<site>http://jenyay.net</site>
+		</author>
+
+		<changelog>
+			<version number="1.0.2" date="20.01.2015">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Sessions/sessions-1.0.2.zip</download>
+				<change>Исправление ошибок.</change>
+			</version>
+
+			<version number="1.0.1" date="11.09.2014">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Sessions/sessions-1.0.1.zip</download>
+				<change>Добавлена итальянская локализация</change>
+				<change>Исправление ошибок.</change>
+			</version>
+
+			<version number="1.0" date="29.07.2014">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Sessions/sessions-1.0.zip</download>
+				<change>Первая версия</change>
+			</version>
+		</changelog>
+	</data>
+</info>
