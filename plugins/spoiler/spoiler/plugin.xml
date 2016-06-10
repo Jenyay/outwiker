@@ -1,0 +1,74 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+<info>
+	<name>Spoiler</name>
+	<updates>http://jenyay.net/Outwiker/Spoiler/plugin.xml</updates>
+    <requirements>
+        <outwiker>1.6.0.632 dev</outwiker>
+        <os>Windows, Linux</os>
+    </requirements>
+
+	<data lang="en">
+		<website>http://jenyay.net/Outwiker/SpoilerEn</website>
+		<description>Insert spoiler on the page.</description>
+
+		<author>
+			<name>Eugene Ilin (aka Jenyay)</name>
+			<email>jenyay.ilin@gmail.com</email>
+			<site>http://jenyay.net</site>
+		</author>
+		<changelog>
+			<version number="1.4.2" date="Janyary 20 2015">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Spoiler/spoiler-1.4.2.zip</download>
+				<change>Minor interface changes.</change>
+				<change>Cleanup code.</change>
+				<change>Bug fixes.</change>
+			</version>
+
+			<version number="1.4.1" date="November 17 2012">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Spoiler/spoiler-1.4.1.zip</download>
+			</version>
+
+			<version number="1.4" date="May 30 2012">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Spoiler/spoiler-1.4.zip</download>
+			</version>
+
+			<version number="1.0">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Spoiler/spoiler.zip</download>
+				<change>The first version</change>
+			</version>
+		</changelog>
+	</data>
+
+	<data lang="ru">
+		<website>http://jenyay.net/Outwiker/Spoiler</website>
+		<description>Сокрытие части текста на странице (вставка спойлеров).</description>
+
+		<author>
+			<name>Евгений Ильин (aka Jenyay)</name>
+			<email>jenyay.ilin@gmail.com</email>
+			<site>http://jenyay.net</site>
+		</author>
+
+		<changelog>
+			<version number="1.4.2" date="20.01.2015">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Spoiler/spoiler-1.4.2.zip</download>
+				<change>Небольшие улучшения в интерфейсе.</change>
+				<change>Подчистка кода.</change>
+				<change>Исправление ошибок.</change>
+			</version>
+
+			<version number="1.4.1" date="17.11.2012">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Spoiler/spoiler-1.4.1.zip</download>
+			</version>
+
+			<version number="1.4" date="30.05.2012">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Spoiler/spoiler-1.4.zip</download>
+			</version>
+
+			<version number="1.0">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Spoiler/spoiler.zip</download>
+				<change>Первая версия</change>
+			</version>
+		</changelog>
+	</data>
+</info>

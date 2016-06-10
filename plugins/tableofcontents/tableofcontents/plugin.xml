@@ -1,0 +1,65 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+<info>
+	<name>TableOfContents</name>
+	<updates>http://jenyay.net/Outwiker/Contents/plugin.xml</updates>
+    <requirements>
+        <outwiker>1.8.0.731 dev</outwiker>
+        <os>Windows, Linux</os>
+    </requirements>
+
+	<data lang="en">
+		<website>http://jenyay.net/Outwiker/ContentsEn</website>
+		<description>Create a table of contents for the wiki page.</description>
+
+		<author>
+			<name>Eugene Ilin (aka Jenyay)</name>
+			<email>jenyay.ilin@gmail.com</email>
+			<site>http://jenyay.net</site>
+		</author>
+
+		<changelog>
+			<version number="1.0.2" date="20.01.2015">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Contents/tableofcontents-1.0.2.zip</download>
+				<change>Bug fixes.</change>
+			</version>
+
+			<version number="1.0.1" date="11.09.2014">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Contents/tableofcontents-1.0.1.zip</download>
+				<change>Updated the Italian localization.</change>
+			</version>
+
+			<version number="1.0" date="30.08.2014">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Contents/tableofcontents-1.0.zip</download>
+				<change>The first version</change>
+			</version>
+		</changelog>
+	</data>
+
+	<data lang="ru">
+		<website>http://jenyay.net/Outwiker/Contents</website>
+		<description>Создание оглавления на странице.</description>
+
+		<author>
+			<name>Евгений Ильин (aka Jenyay)</name>
+			<email>jenyay.ilin@gmail.com</email>
+			<site>http://jenyay.net</site>
+		</author>
+
+		<changelog>
+			<version number="1.0.2" date="20.01.2015">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Contents/tableofcontents-1.0.2.zip</download>
+				<change>Исправление ошибок.</change>
+			</version>
+
+			<version number="1.0.1" date="11.09.2014">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Contents/tableofcontents-1.0.1.zip</download>
+				<change>Обновление итальянской локализации.</change>
+			</version>
+
+			<version number="1.0" date="30.08.2014">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Contents/tableofcontents-1.0.zip</download>
+				<change>Первая версия</change>
+			</version>
+		</changelog>
+	</data>
+</info>
