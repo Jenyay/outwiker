@@ -1,0 +1,42 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+<info>
+	<name>AutoRenamer</name>
+	<updates>http://jenyay.net/Outwiker/AutoRenamer/plugin.xml</updates>
+    <requirements>
+        <outwiker>1.8.1</outwiker>
+        <os>Windows, Linux</os>
+    </requirements>
+
+	<data lang="en">
+		<website>http://jenyay.net/Outwiker/AutoRenamerEn</website>
+		<description>Plugin for automatic page renaming.</description>
+
+		<author>
+			<name>Vitalii Koshura</name>
+			<site>https://github.com/AenBleidd</site>
+		</author>
+		<changelog>
+			<version number="0.0.0.2" date="April 26, 2015">
+                <download os="all">http://jenyay.net/uploads/Outwiker/AutoRenamer/AutoRenamer.zip</download>
+				<change>The first version.</change>
+			</version>
+		</changelog>
+	</data>
+
+	<data lang="ru">
+		<website>http://jenyay.net/Outwiker/AutoRenamer</website>
+		<description>Плагин для автоматического переименовывания заметок.</description>
+
+		<author>
+			<name>Виталий Кошура</name>
+			<site>https://github.com/AenBleidd</site>
+		</author>
+
+		<changelog>
+			<version number="0.0.0.2" date="26.04.2015">
+                <download os="all">http://jenyay.net/uploads/Outwiker/AutoRenamer/AutoRenamer.zip</download>
+				<change>Первая версия.</change>
+			</version>
+		</changelog>
+	</data>
+</info>

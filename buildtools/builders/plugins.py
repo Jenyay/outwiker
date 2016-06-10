@@ -31,17 +31,13 @@ class BuilderPlugins(BuilderBase):
             xmlplugin_path = u'plugins/{plugin}/{plugin}/{pluginxml}'.format(
                 plugin=plugin,
                 pluginxml=PLUGIN_VERSIONS_FILENAME)
-            try:
-                appInfo = readAppInfo(xmlplugin_path)
-            except EnvironmentError:
-                appInfo = None
 
-            # Future plug-in archive name
-            if appInfo is None or appInfo.currentVersion is None:
-                archive_name = plugin + u'.zip'
-            else:
-                version = unicode(appInfo.currentVersion)
-                archive_name = u'{}-{}.zip'.format(plugin, version)
+            appInfo = readAppInfo(xmlplugin_path)
+            assert appInfo is not None
+            assert appInfo.currentVersion is not None
+
+            version = unicode(appInfo.currentVersion)
+            archive_name = u'{}-{}.zip'.format(plugin, version)
 
             # Subpath to current plug-in archive
             plugin_dir_path = self._getSubpath(plugin)

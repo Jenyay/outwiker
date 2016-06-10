@@ -1,0 +1,68 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+<info>
+	<name>WebPage</name>
+	<updates>http://jenyay.net/Outwiker/WebPage/plugin.xml</updates>
+    <requirements>
+        <outwiker>1.9.0.782 dev</outwiker>
+        <os>Windows, Linux</os>
+    </requirements>
+
+	<data lang="en">
+		<website>http://jenyay.net/Outwiker/WebPageEn</website>
+		<description>Download pages from Internet.</description>
+
+		<author>
+			<name>Eugene Ilin (aka Jenyay)</name>
+			<email>jenyay.ilin@gmail.com</email>
+			<site>http://jenyay.net</site>
+		</author>
+		<changelog>
+			<version number="1.1" date="May 30, 2016">
+                <download os="all">http://jenyay.net/uploads/Outwiker/WebPage/webpage-1.1.zip</download>
+				<change>Added the ability to import local files.</change>
+				<change>Small design improvements.</change>
+			</version>
+
+			<version number="1.0.1" date="March 10, 2016">
+                <download os="all">http://jenyay.net/uploads/Outwiker/WebPage/webpage-1.0.1.zip</download>
+				<change>Improved downloaded page parsing.</change>
+				<change>Bug fixes.</change>
+			</version>
+
+			<version number="1.0" date="February 04, 2016">
+                <download os="all">http://jenyay.net/uploads/Outwiker/WebPage/webpage-1.0.zip</download>
+				<change>First public version.</change>
+			</version>
+		</changelog>
+	</data>
+
+	<data lang="ru">
+		<website>http://jenyay.net/Outwiker/WebPage</website>
+		<description>Скачивание страниц из интернета.</description>
+
+		<author>
+			<name>Евгений Ильин (aka Jenyay)</name>
+			<email>jenyay.ilin@gmail.com</email>
+			<site>http://jenyay.net</site>
+		</author>
+
+		<changelog>
+			<version number="1.1" date="30.05.2016">
+                <download os="all">http://jenyay.net/uploads/Outwiker/WebPage/webpage-1.1.zip</download>
+				<change>Добавлена возможность импорта локальных файлов.</change>
+				<change>Оформительские исправления.</change>
+			</version>
+
+			<version number="1.0.1" date="10.03.2016">
+                <download os="all">http://jenyay.net/uploads/Outwiker/WebPage/webpage-1.0.1.zip</download>
+				<change>Улучшен разбор скачиваемых страниц.</change>
+				<change>Исправление ошибок.</change>
+			</version>
+
+			<version number="1.0" date="06.02.2016">
+                <download os="all">http://jenyay.net/uploads/Outwiker/WebPage/webpage-1.0.zip</download>
+				<change>Первая версия.</change>
+			</version>
+		</changelog>
+	</data>
+</info>

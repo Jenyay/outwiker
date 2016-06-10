@@ -1,0 +1,40 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+<info>
+	<name>ReadingMode</name>
+	<updates>http://jenyay.net/Outwiker/ReadingMode/plugin.xml</updates>
+    <requirements>
+        <outwiker>1.8.0</outwiker>
+        <os>Windows, Linux</os>
+    </requirements>
+
+	<data lang="en">
+		<website>http://jenyay.net/Outwiker/ReadingModeEn</website>
+		<description>Switch OutWiker to reading mode.</description>
+
+		<author>
+			<name>Roman Sobolev</name>
+		</author>
+		<changelog>
+			<version number="1.0" date="October 14, 2015">
+                <download os="all">http://jenyay.net/uploads/Outwiker/ReadingMode/readingmode-1.0.zip</download>
+				<change>The first version.</change>
+			</version>
+		</changelog>
+	</data>
+
+	<data lang="ru">
+		<website>http://jenyay.net/Outwiker/ReadingMode</website>
+		<description>Переключение OutWiker в режим для чтения.</description>
+
+		<author>
+			<name>Роман Соболев</name>
+		</author>
+
+		<changelog>
+			<version number="1.0" date="14.10.2015">
+                <download os="all">http://jenyay.net/uploads/Outwiker/ReadingMode/readingmode-1.0.zip</download>
+				<change>Первая версия.</change>
+			</version>
+		</changelog>
+	</data>
+</info>

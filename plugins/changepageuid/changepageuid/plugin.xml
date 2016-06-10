@@ -37,7 +37,7 @@
 
 			<version number="1.0" date="July 07, 2014">
                 <download os="all">http://jenyay.net/uploads/Outwiker/ChangePageUid/changepageuid-1.0.zip</download>
-				<change>The first version</change>
+				<change>The first version.</change>
 			</version>
 		</changelog>
 	</data>
@@ -60,7 +60,7 @@
 
 			<version number="1.0.2" date="11.09.2014">
                 <download os="all">http://jenyay.net/uploads/Outwiker/ChangePageUid/changepageuid-1.0.2.zip</download>
-				<change>Добавлена итальянская локализация</change>
+				<change>Добавлена итальянская локализация.</change>
 			</version>
 
 			<version number="1.0.1" date="25.08.2014">
@@ -72,7 +72,7 @@
 
 			<version number="1.0" date="07.07.2014">
                 <download os="all">http://jenyay.net/uploads/Outwiker/ChangePageUid/changepageuid-1.0.zip</download>
-				<change>Первая версия</change>
+				<change>Первая версия.</change>
 			</version>
 		</changelog>
 	</data>

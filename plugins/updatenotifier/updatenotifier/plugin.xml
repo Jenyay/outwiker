@@ -1,0 +1,68 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+<info>
+	<name>UpdateNotifier</name>
+	<updates>http://jenyay.net/Outwiker/UpdateNotifier/plugin.xml</updates>
+    <requirements>
+        <outwiker>1.7.0 dev</outwiker>
+        <os>Windows, Linux</os>
+    </requirements>
+
+	<data lang="en">
+		<website>http://jenyay.net/Outwiker/UpdateNotifierEn</website>
+		<description>Notification of version releases OutWiker and plug-ins.</description>
+
+		<author>
+			<name>Eugene Ilin (aka Jenyay)</name>
+			<email>jenyay.ilin@gmail.com</email>
+			<site>http://jenyay.net</site>
+		</author>
+		<changelog>
+			<version number="1.1.1" date="January 20, 2015">
+                <download os="all">http://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-1.1.1.zip</download>
+				<change>Bug fixes.</change>
+				<change>Code cleanup.</change>
+			</version>
+
+			<version number="1.1" date="January 09, 2014">
+                <download os="all">http://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-1.1.zip</download>
+				<change>When using OutWiker 1.8 you can set a hotkey to check for updates.</change>
+				<change>Bug fixes.</change>
+			</version>
+
+			<version number="1.0" date="July 18, 2013">
+                <download os="all">http://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-1.0.zip</download>
+				<change>First version.</change>
+			</version>
+		</changelog>
+	</data>
+
+	<data lang="ru">
+		<website>http://jenyay.net/Outwiker/UpdateNotifier</website>
+		<description>Оповещения о новых версиях OutWiker и плагинов.</description>
+
+		<author>
+			<name>Евгений Ильин (aka Jenyay)</name>
+			<email>jenyay.ilin@gmail.com</email>
+			<site>http://jenyay.net</site>
+		</author>
+
+		<changelog>
+			<version number="1.1.1" date="20.01.2015">
+                <download os="all">http://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-1.1.1.zip</download>
+				<change>Исправление ошибок.</change>
+				<change>Подчистка кода.</change>
+			</version>
+
+			<version number="1.1" date="09.01.2014">
+                <download os="all">http://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-1.1.zip</download>
+				<change>При использовании OutWiker 1.8 можно задавать горячую клавишу для проверки обновлений.</change>
+				<change>Исправление ошибок.</change>
+			</version>
+
+			<version number="1.0" date="18.07.2013">
+                <download os="all">http://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-1.0.zip</download>
+				<change>Первая версия</change>
+			</version>
+		</changelog>
+	</data>
+</info>
