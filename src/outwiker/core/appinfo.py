@@ -27,6 +27,7 @@ class AppInfo (object):
         self.appname = appname
         self.author = author
         self.versionsList = versionsList[:]
+        self.versionsList.sort(key=lambda v: v.version, reverse=True)
         self.description = description
         self.appwebsite = appwebsite
         self.updatesUrl = updatesUrl

@@ -39,7 +39,7 @@ class BuilderBaseDebSource(BuilderBase):
             with lcd(current_debian_dirname):
                 local(command)
 
-            # Return the source release name
+            # Restore the source release name
             self._makechangelog(changelog_path,
                                 distrib_name,
                                 current_distrib_name)

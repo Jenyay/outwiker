@@ -1,5 +1,7 @@
 # -*- coding: UTF-8 -*-
 
+import os
+
 
 # Supported Ubuntu releases
 UBUNTU_RELEASE_NAMES = [u"wily", u"trusty", u"xenial"]
@@ -40,3 +42,14 @@ DEB_SOURCE_BUILD_DIR = u'deb_source'
 SOURCES_DIR = u'sources'
 PLUGINS_DIR = u'plugins'
 PLUGIN_VERSIONS_FILENAME = u'plugin.xml'
+
+# Parameters for deb building
+try:
+    MAINTAINER = os.environ['DEBFULLNAME']
+except KeyError:
+    MAINTAINER = u'Eugeniy Ilin'
+
+try:
+    MAINTAINER_EMAIL = os.environ['DEBEMAIL']
+except KeyError:
+    MAINTAINER_EMAIL = u'jenyay.ilin@gmail.com'
