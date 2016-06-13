@@ -229,23 +229,32 @@ def test(section=u'', *args):
     """
     Run the unit tests
     """
-    testdir = u'src'
+    _runTest(u'src', u'tests_', section, *args)
+
+
+def _runTest(testdir, prefix, section=u'', *args):
     files = [fname[len(testdir) + 1:]
              for fname
-             in glob.glob(u'{}/tests_*.py'.format(testdir))]
+             in glob.glob(u'{path}/{prefix}*.py'.format(path=testdir,
+                                                        prefix=prefix))]
     files.sort()
 
-    with lcd("src"):
+    with lcd(testdir):
         if section:
-            execute("{} tests_{}.py {}".format(getPython(),
-                                               section,
-                                               u' '.join(args)))
+            execute("{python} {prefix}{section}.py {params}".format(
+                python=getPython(),
+                prefix=prefix,
+                section=section,
+                params=u' '.join(args))
+            )
         else:
             with settings(warn_only=True):
                 for fname in files:
-                    execute("{} {}".format(getPython(),
-                                           fname,
-                                           u' '.join(args)))
+                    execute("{python} {fname} {params}".format(
+                        python=getPython(),
+                        fname=fname,
+                        params=u' '.join(args))
+                    )
 
 
 @task
