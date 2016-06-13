@@ -3,7 +3,7 @@
 from StringIO import StringIO
 
 
-class ChangelogGenerator(object):
+class SiteChangelogGenerator(object):
     """
     Content generator for jenyay.net site
     """

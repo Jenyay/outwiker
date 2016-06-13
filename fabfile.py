@@ -20,7 +20,7 @@ from buildtools.defines import(
     PLUGIN_VERSIONS_FILENAME,
 )
 from buildtools.versions import getOutwikerVersion
-from buildtools.contentgenerators import ChangelogGenerator
+from buildtools.contentgenerators import SiteChangelogGenerator
 from buildtools.builders import (BuilderBase,
                                  BuilderWindows,
                                  BuilderSources,
@@ -303,6 +303,6 @@ def plugin_changelog(plugin, lang):
     xml_content = readTextFile(path_to_xml)
     parser = XmlVersionParser([lang])
     appinfo = parser.parse(xml_content)
-    generator = ChangelogGenerator(appinfo)
+    generator = SiteChangelogGenerator(appinfo)
     changelog = generator.make()
     print changelog.encode(u'utf8')

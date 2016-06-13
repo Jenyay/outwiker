@@ -2,7 +2,7 @@
 
 import unittest
 
-from buildtools.contentgenerators import ChangelogGenerator
+from buildtools.contentgenerators import SiteChangelogGenerator
 from outwiker.core.appinfo import AppInfo, VersionInfo
 from outwiker.core.version import Version
 
@@ -14,14 +14,14 @@ class SiteContentTest (unittest.TestCase):
 
     def test_changelog_None(self):
         appinfo = None
-        generator = ChangelogGenerator(appinfo)
+        generator = SiteChangelogGenerator(appinfo)
         changelog = generator.make()
         self.assertEqual(changelog, u'')
 
     def test_changelog_empty(self):
         changelog = []
         appinfo = AppInfo(self._appname, self._author, changelog)
-        generator = ChangelogGenerator(appinfo)
+        generator = SiteChangelogGenerator(appinfo)
         changelog = generator.make()
         self.assertEqual(changelog, u'')
 
@@ -29,7 +29,7 @@ class SiteContentTest (unittest.TestCase):
         version_1 = VersionInfo(Version(1))
         changelog = [version_1]
         appinfo = AppInfo(self._appname, self._author, changelog)
-        generator = ChangelogGenerator(appinfo)
+        generator = SiteChangelogGenerator(appinfo)
         changelog = generator.make()
 
         right_result = u'''!!!! 1'''
@@ -40,7 +40,7 @@ class SiteContentTest (unittest.TestCase):
         version_1 = VersionInfo(Version(1, 0))
         changelog = [version_1]
         appinfo = AppInfo(self._appname, self._author, changelog)
-        generator = ChangelogGenerator(appinfo)
+        generator = SiteChangelogGenerator(appinfo)
         changelog = generator.make()
 
         right_result = u'''!!!! 1.0'''
@@ -50,7 +50,7 @@ class SiteContentTest (unittest.TestCase):
         version_1 = VersionInfo(Version.parse(u'1.2.3 beta'))
         changelog = [version_1]
         appinfo = AppInfo(self._appname, self._author, changelog)
-        generator = ChangelogGenerator(appinfo)
+        generator = SiteChangelogGenerator(appinfo)
         changelog = generator.make()
 
         right_result = u'''!!!! 1.2.3 beta'''
@@ -61,7 +61,7 @@ class SiteContentTest (unittest.TestCase):
                                 date_str=u'13.06.2016')
         changelog = [version_1]
         appinfo = AppInfo(self._appname, self._author, changelog)
-        generator = ChangelogGenerator(appinfo)
+        generator = SiteChangelogGenerator(appinfo)
         changelog = generator.make()
 
         right_result = u'''!!!! 1.2.3 beta (13.06.2016)'''
@@ -73,7 +73,7 @@ class SiteContentTest (unittest.TestCase):
                                 changes=changes)
         changelog = [version_1]
         appinfo = AppInfo(self._appname, self._author, changelog)
-        generator = ChangelogGenerator(appinfo)
+        generator = SiteChangelogGenerator(appinfo)
         changelog = generator.make()
 
         right_result = u'''!!!! 1.0
@@ -88,7 +88,7 @@ class SiteContentTest (unittest.TestCase):
                                 changes=changes)
         changelog = [version_1]
         appinfo = AppInfo(self._appname, self._author, changelog)
-        generator = ChangelogGenerator(appinfo)
+        generator = SiteChangelogGenerator(appinfo)
         changelog = generator.make()
 
         right_result = u'''!!!! 1.0
@@ -105,7 +105,7 @@ class SiteContentTest (unittest.TestCase):
                                 changes=changes)
         changelog = [version_1]
         appinfo = AppInfo(self._appname, self._author, changelog)
-        generator = ChangelogGenerator(appinfo)
+        generator = SiteChangelogGenerator(appinfo)
         changelog = generator.make()
 
         right_result = u'''!!!! 1.0 (1 мая 2016)
@@ -125,7 +125,7 @@ class SiteContentTest (unittest.TestCase):
                                 changes=changes_2)
         changelog = [version_1, version_2]
         appinfo = AppInfo(self._appname, self._author, changelog)
-        generator = ChangelogGenerator(appinfo)
+        generator = SiteChangelogGenerator(appinfo)
         changelog = generator.make()
 
         right_result = u'''!!!! 1.1
@@ -150,7 +150,7 @@ class SiteContentTest (unittest.TestCase):
                                 changes=changes_2)
         changelog = [version_2, version_1]
         appinfo = AppInfo(self._appname, self._author, changelog)
-        generator = ChangelogGenerator(appinfo)
+        generator = SiteChangelogGenerator(appinfo)
         changelog = generator.make()
 
         right_result = u'''!!!! 1.1
