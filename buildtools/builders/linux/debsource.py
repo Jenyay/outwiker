@@ -2,12 +2,19 @@
 
 import os
 import shutil
+import datetime
 
 from fabric.api import local, lcd
 
 from ..base import BuilderBase
-from buildtools.versions import getOutwikerVersion
+from buildtools.versions import getOutwikerVersion, getOutwikerAppInfo
 from buildtools.utilites import getCurrentUbuntuDistribName
+from buildtools.contentgenerators import DebChangelogGenerator
+from buildtools.defines import (TIMEZONE,
+                                DEB_MAINTAINER,
+                                DEB_MAINTAINER_EMAIL,
+                                )
+from outwiker.utilites.textfile import writeTextFile
 
 
 class BuilderBaseDebSource(BuilderBase):
@@ -22,9 +29,17 @@ class BuilderBaseDebSource(BuilderBase):
         Run command with debuild.
         The function assembles the deb packages for all releases in distriblist
         """
+        date = datetime.datetime.now()
+        date_str = date.strftime(u'%a, %d %b %Y %H:%M:%S ' + TIMEZONE)
         current_distrib_name = getCurrentUbuntuDistribName()
+        outwiker_appinfo = getOutwikerAppInfo()
+        changelog_generator = DebChangelogGenerator(outwiker_appinfo,
+                                                    DEB_MAINTAINER,
+                                                    DEB_MAINTAINER_EMAIL)
+
         for distrib_name in distriblist:
             self._orig(distrib_name)
+            changelog = changelog_generator.make(distrib_name, date_str)
             current_debian_dirname = os.path.join(self._build_dir,
                                                   self._getDebName(),
                                                   'debian')
@@ -32,17 +47,10 @@ class BuilderBaseDebSource(BuilderBase):
             # Change release name in the changelog file
             changelog_path = os.path.join(current_debian_dirname,
                                           u'changelog')
-            self._makechangelog(changelog_path,
-                                current_distrib_name,
-                                distrib_name)
+            writeTextFile(changelog_path, changelog)
 
             with lcd(current_debian_dirname):
                 local(command)
-
-            # Restore the source release name
-            self._makechangelog(changelog_path,
-                                distrib_name,
-                                current_distrib_name)
 
     def _orig(self, distname):
         """
@@ -115,18 +123,6 @@ class BuilderBaseDebSource(BuilderBase):
         return "outwiker_{}+{}~{}.orig.tar".format(version[0],
                                                    version[1],
                                                    distname)
-
-    def _makechangelog(self, changelog_path, distrib_src, distrib_new):
-        """
-        Update the changelog file for current Ubuntu release.
-        """
-        with open(changelog_path) as fp:
-            lines = fp.readlines()
-
-        lines[0] = lines[0].replace(distrib_src, distrib_new)
-
-        with open(changelog_path, "w") as fp:
-            fp.write(u"".join(lines))
 
 
 class BuilderDebSource(BuilderBaseDebSource):

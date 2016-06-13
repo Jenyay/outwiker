@@ -44,12 +44,13 @@ PLUGINS_DIR = u'plugins'
 PLUGIN_VERSIONS_FILENAME = u'plugin.xml'
 
 # Parameters for deb building
+TIMEZONE = '+0300'
 try:
-    MAINTAINER = os.environ['DEBFULLNAME']
+    DEB_MAINTAINER = os.environ['DEBFULLNAME']
 except KeyError:
-    MAINTAINER = u'Eugeniy Ilin'
+    DEB_MAINTAINER = u'Eugeniy Ilin'
 
 try:
-    MAINTAINER_EMAIL = os.environ['DEBEMAIL']
+    DEB_MAINTAINER_EMAIL = os.environ['DEBEMAIL']
 except KeyError:
-    MAINTAINER_EMAIL = u'jenyay.ilin@gmail.com'
+    DEB_MAINTAINER_EMAIL = u'jenyay.ilin@gmail.com'

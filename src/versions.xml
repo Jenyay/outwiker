@@ -8,6 +8,7 @@
 
 		<changelog>
 			<version hidden="true" number="2.0.0.795" status="dev">
+				<change>Рефакторинг системы сборки.</change>
 			</version>
 
 			<version number="2.0.0.794" status="dev" date="30.05.2016">
@@ -25,6 +26,7 @@
 
 		<changelog>
 			<version hidden="true" number="2.0.0.795" status="dev">
+				<change>Build system refactoring.</change>
 			</version>
 
 			<version number="2.0.0.794" status="dev" date="May 30, 2016">

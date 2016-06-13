@@ -171,23 +171,6 @@ def linux_clear():
 
 
 @task
-def nextversion():
-    """
-    Increment a version number(execute under Linux only,
-    incremented the deb package version also)
-    """
-    (version_major, version_build) = getOutwikerVersion()
-    version_build = unicode(int(version_build) + 1)
-
-    with lcd(os.path.join(u'need_for_build', u'debian_debsource')):
-        local('dch -v "{major}+{build}~{distrib}" -D {distrib}'.format(
-            major=version_major,
-            build=version_build,
-            distrib=getCurrentUbuntuDistribName())
-        )
-
-
-@task
 def debinstall():
     """
     Assemble deb package for current Ubuntu release
@@ -285,6 +268,9 @@ def deb_binary_clear():
 
 @task
 def clear():
+    """
+    Remove artifacts after all assemblies
+    """
     plugins_clear()
     sources_clear()
 
@@ -298,6 +284,9 @@ def clear():
 
 @task
 def plugin_changelog(plugin, lang):
+    """
+    Generate plugin changelog for the site
+    """
     path_to_xml = os.path.join(getPathToPlugin(plugin),
                                PLUGIN_VERSIONS_FILENAME)
     xml_content = readTextFile(path_to_xml)
