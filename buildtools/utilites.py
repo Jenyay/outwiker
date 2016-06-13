@@ -42,3 +42,7 @@ def getCurrentUbuntuDistribName():
             if line.startswith(u'DISTRIB_CODENAME'):
                 codename = line.split(u'=')[1].strip()
                 return codename
+
+
+def getPathToPlugin(plugin_name):
+    return os.path.join(u'plugins', plugin_name, plugin_name)

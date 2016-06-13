@@ -19,7 +19,7 @@ class AppInfo (object):
         appname - application or plug-in name.
         author - author info. It is instance of the AuthorInfo class.
         versionsList - information about every version.
-                       It is a instance of the VersionInfo class.
+                       It is a list of the VersionInfo class.
         description - application's or plug-in's description.
         appwebsite - application or plug-in web site.
         updatesUrl - URL to XML file with updates information.
@@ -53,7 +53,8 @@ class VersionInfo (object):
     """
     Information about single version (version, change log, URL to download)
     """
-    def __init__(self, version, date_str=u"", downloads={}, changes=[], hidden=False):
+    def __init__(self, version, date_str=u"",
+                 downloads={}, changes=[], hidden=False):
         """
         version   - instance of the Version class.
         date_str  - release date (string)

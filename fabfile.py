@@ -11,13 +11,16 @@ from fabric.api import local, lcd, settings, task
 from buildtools.utilites import (getPython,
                                  execute,
                                  getCurrentUbuntuDistribName,
+                                 getPathToPlugin
                                  )
 from buildtools.defines import(
     UBUNTU_RELEASE_NAMES,
     BUILD_DIR,
     DEB_SOURCE_BUILD_DIR,
+    PLUGIN_VERSIONS_FILENAME,
 )
 from buildtools.versions import getOutwikerVersion
+from buildtools.contentgenerators import ChangelogGenerator
 from buildtools.builders import (BuilderBase,
                                  BuilderWindows,
                                  BuilderSources,
@@ -27,6 +30,9 @@ from buildtools.builders import (BuilderBase,
                                  BuilderDebSource,
                                  BuilderDebSourcesIncluded,
                                  )
+
+from outwiker.utilites.textfile import readTextFile
+from outwiker.core.xmlversionparser import XmlVersionParser
 
 
 @task
@@ -229,10 +235,18 @@ def test(section=u'', *args):
     """
     Run the unit tests
     """
-    _runTest(u'src', u'tests_', section, *args)
+    _runTests(u'src', u'tests_', section, *args)
 
 
-def _runTest(testdir, prefix, section=u'', *args):
+@task
+def test_build(section=u'', *args):
+    """
+    Run the unit tests
+    """
+    _runTests(u'.', u'test_build_', section, *args)
+
+
+def _runTests(testdir, prefix, section=u'', *args):
     files = [fname[len(testdir) + 1:]
              for fname
              in glob.glob(u'{path}/{prefix}*.py'.format(path=testdir,
@@ -280,3 +294,15 @@ def clear():
         deb_binary_clear()
     elif os.name == 'nt':
         win_clear()
+
+
+@task
+def plugin_changelog(plugin, lang):
+    path_to_xml = os.path.join(getPathToPlugin(plugin),
+                               PLUGIN_VERSIONS_FILENAME)
+    xml_content = readTextFile(path_to_xml)
+    parser = XmlVersionParser([lang])
+    appinfo = parser.parse(xml_content)
+    generator = ChangelogGenerator(appinfo)
+    changelog = generator.make()
+    print changelog.encode(u'utf8')
