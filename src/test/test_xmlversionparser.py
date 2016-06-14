@@ -295,7 +295,7 @@ class XmlVersionParserTest (unittest.TestCase):
         self.assertEqual(result.author.email, u'ru@example.com')
         self.assertEqual(result.author.website, u'http://example.com/ru/')
 
-    def test_author_03(self):
+    def test_author_04(self):
         text = u'''<?xml version="1.1" encoding="UTF-8" ?>
             <info>
                 <data lang="en">
@@ -338,8 +338,8 @@ class XmlVersionParserTest (unittest.TestCase):
             <info>
                 <data lang="en">
                     <changelog>
-			<version>
-			</version>
+            <version>
+            </version>
                     </changelog>
                 </data>
             </info>'''
@@ -353,8 +353,8 @@ class XmlVersionParserTest (unittest.TestCase):
             <info>
                 <data lang="en">
                     <changelog>
-			<version number="1.0">
-			</version>
+            <version number="1.0">
+            </version>
                     </changelog>
                 </data>
             </info>'''
@@ -372,8 +372,8 @@ class XmlVersionParserTest (unittest.TestCase):
             <info>
                 <data lang="en">
                     <changelog>
-			<version number="1.0" status="beta">
-			</version>
+            <version number="1.0" status="beta">
+            </version>
                     </changelog>
                 </data>
             </info>'''
@@ -391,8 +391,8 @@ class XmlVersionParserTest (unittest.TestCase):
             <info>
                 <data lang="en">
                     <changelog>
-			<version number="1.2.3.4" status="dev">
-			</version>
+            <version number="1.2.3.4" status="dev">
+            </version>
                     </changelog>
                 </data>
             </info>'''
@@ -410,9 +410,9 @@ class XmlVersionParserTest (unittest.TestCase):
             <info>
                 <data lang="en">
                     <changelog>
-			<version number="1.2"></version>
-			<version number="1.1"></version>
-			<version number="1.3"></version>
+            <version number="1.2"></version>
+            <version number="1.1"></version>
+            <version number="1.3"></version>
                     </changelog>
                 </data>
             </info>'''
@@ -432,8 +432,8 @@ class XmlVersionParserTest (unittest.TestCase):
             <info>
                 <data lang="ru">
                     <changelog>
-			<version number="1.2" date="15 июня 2016">
-			</version>
+            <version number="1.2" date="15 июня 2016">
+            </version>
                     </changelog>
                 </data>
             </info>'''
@@ -451,8 +451,8 @@ class XmlVersionParserTest (unittest.TestCase):
             <info>
                 <data lang="ru">
                     <changelog>
-			<version number="1.2" hidden="true">
-			</version>
+            <version number="1.2" hidden="true">
+            </version>
                     </changelog>
                 </data>
             </info>'''
@@ -470,8 +470,8 @@ class XmlVersionParserTest (unittest.TestCase):
             <info>
                 <data lang="ru">
                     <changelog>
-			<version number="1.2" hidden="1">
-			</version>
+            <version number="1.2" hidden="1">
+            </version>
                     </changelog>
                 </data>
             </info>'''
@@ -489,8 +489,8 @@ class XmlVersionParserTest (unittest.TestCase):
             <info>
                 <data lang="ru">
                     <changelog>
-			<version number="1.2" hidden="True">
-			</version>
+            <version number="1.2" hidden="True">
+            </version>
                     </changelog>
                 </data>
             </info>'''
@@ -508,9 +508,9 @@ class XmlVersionParserTest (unittest.TestCase):
             <info>
                 <data lang="ru">
                     <changelog>
-			<version number="1.2">
+            <version number="1.2">
                             <change>Изменение 1</change>
-			</version>
+            </version>
                     </changelog>
                 </data>
             </info>'''
@@ -528,11 +528,11 @@ class XmlVersionParserTest (unittest.TestCase):
             <info>
                 <data lang="ru">
                     <changelog>
-			<version number="1.2">
+            <version number="1.2">
                             <change>Изменение 1</change>
                             <change>Изменение 2</change>
                             <change>Изменение 3</change>
-			</version>
+            </version>
                     </changelog>
                 </data>
             </info>'''
@@ -547,21 +547,21 @@ class XmlVersionParserTest (unittest.TestCase):
         self.assertEqual(result.versionsList[0].changes[1], u'Изменение 2')
         self.assertEqual(result.versionsList[0].changes[2], u'Изменение 3')
 
-    def test_changes_02(self):
+    def test_changes_03(self):
         text = u'''<?xml version="1.1" encoding="UTF-8" ?>
             <info>
                 <data lang="ru">
                     <changelog>
-			<version number="1.2">
+            <version number="1.2">
                             <change>Изменение 1</change>
                             <change>Изменение 2</change>
                             <change>Изменение 3</change>
-			</version>
+            </version>
 
-			<version number="1.3">
+            <version number="1.3">
                             <change>Изменение 4</change>
                             <change>Изменение 5</change>
-			</version>
+            </version>
                     </changelog>
                 </data>
             </info>'''
@@ -589,9 +589,9 @@ class XmlVersionParserTest (unittest.TestCase):
             <info>
                 <data lang="ru">
                     <changelog>
-			<version number="1.0">
+            <version number="1.0">
                             <download>http://example.com/1.0/</download>
-			</version>
+            </version>
                     </changelog>
                 </data>
             </info>'''
@@ -610,10 +610,10 @@ class XmlVersionParserTest (unittest.TestCase):
             <info>
                 <data lang="ru">
                     <changelog>
-			<version number="1.0">
+            <version number="1.0">
                             <download os="windows">http://example.com/1.0/windows/</download>
                             <download os="unix">http://example.com/1.0/unix/</download>
-			</version>
+            </version>
                     </changelog>
                 </data>
             </info>'''

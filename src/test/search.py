@@ -56,7 +56,8 @@ class SearcherTest(unittest.TestCase):
                       u"anchor.png",
                       u"файл с пробелами.tmp",
                       u"dir"]
-        self.fullFilesPath = [os.path.join(filesPath, fname) for fname in self.files]
+        self.fullFilesPath = [os.path.join(filesPath, fname)
+                              for fname in self.files]
 
         Attachment(self.wikiroot[u"page 1"]).attach(self.fullFilesPath)
         Attachment(self.wikiroot[u"Страница 2/Страница 3"]).attach(self.fullFilesPath[0:3])
@@ -322,7 +323,7 @@ class SearchPageTest(unittest.TestCase):
         self.assertEqual(page.strategy, AllTagsSearchStrategy)
 
     def testCreateSearchTagsPage(self):
-        GlobalSearch.create(self.wikiroot, tags = [u"Метка 1", u"Метка 2"])
+        GlobalSearch.create(self.wikiroot, tags=[u"Метка 1", u"Метка 2"])
         page = self.wikiroot[GlobalSearch.pageTitle]
 
         self.assertNotEqual(page, None)
@@ -334,7 +335,7 @@ class SearchPageTest(unittest.TestCase):
         self.assertEqual(page.strategy, AllTagsSearchStrategy)
 
     def testCreateSearchPhrasePage(self):
-        GlobalSearch.create(self.wikiroot, phrase = u"декабрь")
+        GlobalSearch.create(self.wikiroot, phrase=u"декабрь")
         page = self.wikiroot[GlobalSearch.pageTitle]
 
         self.assertNotEqual(page, None)
@@ -345,9 +346,9 @@ class SearchPageTest(unittest.TestCase):
 
     def testCreateSearchAllPage(self):
         GlobalSearch.create(self.wikiroot,
-                             phrase = u"декабрь",
-                             tags = [u"Метка 1", u"Метка 2"],
-                             strategy = AllTagsSearchStrategy)
+                            phrase=u"декабрь",
+                            tags=[u"Метка 1", u"Метка 2"],
+                            strategy=AllTagsSearchStrategy)
 
         page = self.wikiroot[GlobalSearch.pageTitle]
 
@@ -361,9 +362,9 @@ class SearchPageTest(unittest.TestCase):
 
     def testLoadSearchPage(self):
         GlobalSearch.create(self.wikiroot,
-                             phrase = u"декабрь",
-                             tags = [u"Метка 1", u"Метка 2"],
-                             strategy = AllTagsSearchStrategy)
+                            phrase=u"декабрь",
+                            tags=[u"Метка 1", u"Метка 2"],
+                            strategy=AllTagsSearchStrategy)
 
         wiki = WikiDocument.load(self.path)
         page = wiki[GlobalSearch.pageTitle]
@@ -379,9 +380,9 @@ class SearchPageTest(unittest.TestCase):
         GlobalSearch.create(self.wikiroot)
 
         GlobalSearch.create(self.wikiroot,
-                             phrase = u"декабрь",
-                             tags = [u"Метка 1", u"Метка 2"],
-                             strategy = AllTagsSearchStrategy)
+                            phrase=u"декабрь",
+                            tags=[u"Метка 1", u"Метка 2"],
+                            strategy=AllTagsSearchStrategy)
 
         wiki = WikiDocument.load(self.path)
         page = wiki[GlobalSearch.pageTitle]
@@ -398,9 +399,9 @@ class SearchPageTest(unittest.TestCase):
         TextPageFactory().create(self.wikiroot, GlobalSearch.pageTitle, [])
 
         GlobalSearch.create(self.wikiroot,
-                             phrase = u"декабрь",
-                             tags = [u"Метка 1", u"Метка 2"],
-                             strategy = AllTagsSearchStrategy)
+                            phrase=u"декабрь",
+                            tags=[u"Метка 1", u"Метка 2"],
+                            strategy=AllTagsSearchStrategy)
 
         wiki = WikiDocument.load(self.path)
         page = wiki[GlobalSearch.pageTitle + u" 2"]
@@ -420,9 +421,9 @@ class SearchPageTest(unittest.TestCase):
         factory.create(self.wikiroot, GlobalSearch.pageTitle + u" 4", [])
 
         GlobalSearch.create(self.wikiroot,
-                             phrase = u"декабрь",
-                             tags = [u"Метка 1", u"Метка 2"],
-                             strategy = AllTagsSearchStrategy)
+                            phrase=u"декабрь",
+                            tags=[u"Метка 1", u"Метка 2"],
+                            strategy=AllTagsSearchStrategy)
 
         wiki = WikiDocument.load(self.path)
         page = wiki[GlobalSearch.pageTitle + u" 5"]
