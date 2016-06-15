@@ -8,5 +8,5 @@ class Parser (object):
         pass
 
     def convert(self, text):
-        result = markdown(text)
+        result = markdown(text, output_format='html5')
         return result
