@@ -4,13 +4,14 @@ import os.path
 
 import wx
 
-from outwiker.core.system import getImagesDir, getIconsDirList
-from outwiker.gui.iconlistctrl import IconListCtrl
-from outwiker.core.iconscollection import IconsCollection, DuplicateGroupError
-from outwiker.core.commands import MessageBox
-from outwiker.gui.testeddialog import TestedFileDialog
 from outwiker.core.defines import ICON_WIDTH, ICON_HEIGHT
+from outwiker.core.commands import MessageBox
+from outwiker.core.system import getImagesDir, getIconsDirList
+from outwiker.core.iconscollection import IconsCollection, DuplicateGroupError
+from outwiker.gui.testeddialog import TestedFileDialog
+from outwiker.gui.iconlistctrl import IconListCtrl
 from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
+from outwiker.gui.controls.safeimagelist import SafeImageList
 
 
 class IconsetPanel (BasePrefPanel):
@@ -60,7 +61,7 @@ class IconsetPanel (BasePrefPanel):
             style = wx.TR_HAS_BUTTONS | wx.TR_EDIT_LABELS | wx.SUNKEN_BORDER)
         self._groups.SetMinSize ((200, 200))
 
-        self._imagelist = wx.ImageList(ICON_WIDTH, ICON_HEIGHT)
+        self._imagelist = SafeImageList(ICON_WIDTH, ICON_HEIGHT)
         self._groups.AssignImageList (self._imagelist)
 
         imagesDir = getImagesDir()

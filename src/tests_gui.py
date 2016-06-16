@@ -66,6 +66,7 @@ if __name__ == '__main__':
     from test.guitests.fileicons import FileIconsTestWindows
     from test.guitests.uriidentifiers import UriIdentifierIETest
     from test.guitests.uriidentifiers import UriIdentifierWebKitTest
+    from test.guitests.test_safeimagelist import SafeImageListTest
 
     from test.guitests.htmlpage.htmlpageview import HtmlPageViewTest
     from test.guitests.htmlpage.htmltabledialog import HtmlTableDialogTest
