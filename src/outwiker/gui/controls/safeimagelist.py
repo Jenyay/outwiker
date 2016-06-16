@@ -5,7 +5,8 @@ import wx
 
 class SafeImageList (wx.ImageList):
     """
-    ImageList which can accept any bitmap size
+    ImageList which can accept any bitmap size.
+    Added in OutWiker 2.0.0.795
     """
     def __init__(self, width, height):
         super(SafeImageList, self).__init__(width, height)
