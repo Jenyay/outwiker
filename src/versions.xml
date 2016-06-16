@@ -7,8 +7,9 @@
 		<website>http://jenyay.net/Outwiker/Unstable</website>
 
 		<changelog>
-			<version hidden="true" number="2.0.0.795" status="dev">
+			<version number="2.0.0.795" status="dev">
 				<change>Рефакторинг системы сборки.</change>
+				<change>Исправление ошибок.</change>
 			</version>
 
 			<version number="2.0.0.794" status="dev" date="30.05.2016">
@@ -16,7 +17,7 @@
 			</version>
 
 			<version number="2.0.0.792" status="dev" date="10.05.2016">
-				<change>The program now uses wxPython 3.0 library.</change>
+				<change>Переход на библиотеку wxPython 3.0.</change>
 			</version>
 		</changelog>
 	</data>
@@ -25,7 +26,7 @@
 		<website>http://jenyay.net/Outwiker/UnstableEn</website>
 
 		<changelog>
-			<version hidden="true" number="2.0.0.795" status="dev">
+			<version number="2.0.0.795" status="dev">
 				<change>Build system refactoring.</change>
 			</version>
 
@@ -34,7 +35,8 @@
 			</version>
 
 			<version number="2.0.0.792" status="dev" date="May 10, 2016">
-				<change>Переход на библиотеку wxPython 3.0.</change>
+				<change>The program now uses wxPython 3.0 library.</change>
+				<change>Bug fixes.</change>
 			</version>
 		</changelog>
 	</data>
