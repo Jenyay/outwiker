@@ -54,28 +54,36 @@ class MarkdownTest(unittest.TestCase):
         text = u"бла-бла-бла **полужирный шрифт** бла-бла"
         right_result = u"бла-бла-бла <strong>полужирный шрифт</strong> бла-бла"
         result = self.__getHtmlByText(text)
-
         self.assertIn(right_result, result)
 
     def test_strong_02(self):
         text = u"бла-бла-бла __полужирный шрифт__ бла-бла"
         right_result = u"бла-бла-бла <strong>полужирный шрифт</strong> бла-бла"
         result = self.__getHtmlByText(text)
-
         self.assertIn(right_result, result)
 
     def test_italic_01(self):
         text = u"бла-бла-бла *курсивный шрифт* бла-бла"
         right_result = u"бла-бла-бла <em>курсивный шрифт</em> бла-бла"
         result = self.__getHtmlByText(text)
-
         self.assertIn(right_result, result)
 
     def test_italic_02(self):
         text = u"бла-бла-бла _курсивный шрифт_ бла-бла"
         right_result = u"бла-бла-бла <em>курсивный шрифт</em> бла-бла"
         result = self.__getHtmlByText(text)
+        self.assertIn(right_result, result)
 
+    def test_strong_italic_01(self):
+        text = u"бла-бла-бла ***полужирный курсив*** бла-бла"
+        right_result = u"бла-бла-бла <strong><em>полужирный курсив</em></strong> бла-бла"
+        result = self.__getHtmlByText(text)
+        self.assertIn(right_result, result)
+
+    def test_strong_italic_02(self):
+        text = u"бла-бла-бла **_полужирный курсив_** бла-бла"
+        right_result = u"бла-бла-бла <strong><em>полужирный курсив</em></strong> бла-бла"
+        result = self.__getHtmlByText(text)
         self.assertIn(right_result, result)
 
     def test_header_01(self):

@@ -100,7 +100,7 @@ class MarkdownPageView(BaseWikiPageView):
         # Bold italic
         bold_italic_action = self._application.actionController.getAction(
             BOLD_ITALIC_STR_ID)
-        bold_italic_action.setFunc(lambda param: self.turnText(u"***", u"***"))
+        bold_italic_action.setFunc(lambda param: self.turnText(u"**_", u"_**"))
 
         self._application.actionController.appendMenuItem(BOLD_ITALIC_STR_ID,
                                                           menu)
