@@ -598,3 +598,195 @@ class TextEditorTest (BaseMainWndTest):
         self.assertEqual(editor.GetLine(0), u'Строка 1\n')
         self.assertEqual(editor.GetLine(1), u'Строка 2\n')
         self.assertEqual(editor.GetLine(2), u'Строка 3')
+
+    def testGetSelectionLines_01(self):
+        editor = self._getEditor()
+        editor.SetText(u'')
+        editor.SetSelection(0, 0)
+        start, end = editor.GetSelectionLines()
+        self.assertEqual(start, 0)
+        self.assertEqual(end, 0)
+
+    def testGetSelectionLines_02(self):
+        editor = self._getEditor()
+        editor.SetText(u'''Проверка\n''')
+        editor.SetSelection(0, 8)
+        start, end = editor.GetSelectionLines()
+        self.assertEqual(start, 0)
+        self.assertEqual(end, 0)
+
+    def testGetSelectionLines_03(self):
+        editor = self._getEditor()
+        editor.SetText(u'''Проверка\n''')
+        editor.SetSelection(0, 9)
+        start, end = editor.GetSelectionLines()
+        self.assertEqual(start, 0)
+        self.assertEqual(end, 1)
+
+    def testGetSelectionLines_04(self):
+        editor = self._getEditor()
+        editor.SetText(u'''Проверка\nПроверка\nПроверка''')
+        editor.SetSelection(9, 18)
+        start, end = editor.GetSelectionLines()
+        self.assertEqual(start, 1)
+        self.assertEqual(end, 2)
+
+    def test_toddleLinePrefix_01(self):
+        editor = self._getEditor()
+        editor.SetText(u'')
+
+        editor.toddleLinePrefix(0, u'Тест ')
+        self.assertEqual(editor.GetText(), u'Тест ')
+
+        editor.toddleLinePrefix(0, u'Тест ')
+        self.assertEqual(editor.GetText(), u'')
+
+    def test_toddleLinePrefix_02(self):
+        editor = self._getEditor()
+        editor.SetText(u'Проверка')
+
+        editor.toddleLinePrefix(0, u'Тест ')
+        self.assertEqual(editor.GetText(), u'Тест Проверка')
+
+        editor.toddleLinePrefix(0, u'Тест ')
+        self.assertEqual(editor.GetText(), u'Проверка')
+
+    def test_toddleLinePrefix_03(self):
+        editor = self._getEditor()
+        editor.SetText(u'''Проверка
+Проверка
+Проверка''')
+
+        editor.toddleLinePrefix(0, u'Тест ')
+        self.assertEqual(editor.GetText(),
+                         u'''Тест Проверка
+Проверка
+Проверка''')
+
+        editor.toddleLinePrefix(0, u'Тест ')
+        self.assertEqual(editor.GetText(),
+                         u'''Проверка
+Проверка
+Проверка''')
+
+    def test_toddleLinePrefix_04(self):
+        editor = self._getEditor()
+        editor.SetText(u'''Проверка
+Проверка
+Проверка''')
+
+        editor.toddleLinePrefix(1, u'Тест ')
+        self.assertEqual(editor.GetText(),
+                         u'''Проверка
+Тест Проверка
+Проверка''')
+
+        editor.toddleLinePrefix(1, u'Тест ')
+        self.assertEqual(editor.GetText(),
+                         u'''Проверка
+Проверка
+Проверка''')
+
+    def test_toddleLinePrefix_05(self):
+        editor = self._getEditor()
+        editor.SetText(u'''Проверка
+Проверка
+Проверка''')
+
+        editor.toddleLinePrefix(2, u'Тест ')
+        self.assertEqual(editor.GetText(),
+                         u'''Проверка
+Проверка
+Тест Проверка''')
+
+        editor.toddleLinePrefix(2, u'Тест ')
+        self.assertEqual(editor.GetText(),
+                         u'''Проверка
+Проверка
+Проверка''')
+
+    def test_GetLineStartPosition_01(self):
+        editor = self._getEditor()
+        editor.SetText(u'')
+        lineStart = editor.GetLineStartPosition(0)
+        self.assertEqual(lineStart, 0)
+
+    def test_GetLineStartPosition_02(self):
+        editor = self._getEditor()
+        editor.SetText(u'Проверка')
+        lineStart = editor.GetLineStartPosition(0)
+        self.assertEqual(lineStart, 0)
+
+    def test_GetLineStartPosition_03(self):
+        editor = self._getEditor()
+        editor.SetText(u'Проверка\nПроверка')
+        lineStart = editor.GetLineStartPosition(1)
+        self.assertEqual(lineStart, 9)
+
+    def test_GetLineEndPosition_01(self):
+        editor = self._getEditor()
+        editor.SetText(u'')
+        lineEnd = editor.GetLineEndPosition(0)
+        self.assertEqual(lineEnd, 0)
+
+    def test_GetLineEndPosition_02(self):
+        editor = self._getEditor()
+        editor.SetText(u'Проверка')
+        lineEnd = editor.GetLineEndPosition(0)
+        self.assertEqual(lineEnd, 8)
+
+    def test_GetLineEndPosition_03(self):
+        editor = self._getEditor()
+        editor.SetText(u'Проверка\n')
+        lineEnd = editor.GetLineEndPosition(0)
+        self.assertEqual(lineEnd, 8)
+
+    def test_GetLineEndPosition_04(self):
+        editor = self._getEditor()
+        editor.SetText(u'Проверка\nПроверка')
+        lineEnd = editor.GetLineEndPosition(1)
+        self.assertEqual(lineEnd, 17)
+
+    def test_toddleSelectedLinesPrefix_01(self):
+        editor = self._getEditor()
+        editor.SetText(u'')
+        editor.SetSelection(0, 0)
+
+        editor.toddleSelectedLinesPrefix(u'Тест ')
+        self.assertEqual(editor.GetText(), u'Тест ')
+
+        editor.toddleSelectedLinesPrefix(u'Тест ')
+        self.assertEqual(editor.GetText(), u'')
+
+    def test_toddleSelectedLinesPrefix_02(self):
+        editor = self._getEditor()
+        editor.SetText(u'Проверка')
+        editor.SetSelection(0, 0)
+
+        editor.toddleSelectedLinesPrefix(u'Тест ')
+        self.assertEqual(editor.GetText(), u'Тест Проверка')
+
+        editor.toddleSelectedLinesPrefix(u'Тест ')
+        self.assertEqual(editor.GetText(), u'Проверка')
+
+    def test_toddleSelectedLinesPrefix_03(self):
+        editor = self._getEditor()
+        editor.SetText(u'Проверка\nПроверка')
+        editor.SetSelection(2, 5)
+
+        editor.toddleSelectedLinesPrefix(u'Тест ')
+        self.assertEqual(editor.GetText(), u'Тест Проверка\nПроверка')
+
+        editor.toddleSelectedLinesPrefix(u'Тест ')
+        self.assertEqual(editor.GetText(), u'Проверка\nПроверка')
+
+    def test_toddleSelectedLinesPrefix_04(self):
+        editor = self._getEditor()
+        editor.SetText(u'Проверка\nПроверка')
+        editor.SetSelection(2, 9)
+
+        editor.toddleSelectedLinesPrefix(u'Тест ')
+        self.assertEqual(editor.GetText(), u'Тест Проверка\nТест Проверка')
+
+        editor.toddleSelectedLinesPrefix(u'Тест ')
+        self.assertEqual(editor.GetText(), u'Проверка\nПроверка')

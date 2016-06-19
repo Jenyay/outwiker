@@ -408,6 +408,35 @@ class TextEditor(wx.Panel):
     def replaceText(self, text):
         self.textCtrl.ReplaceSelection(text)
 
+    def toddleLinePrefix(self, line, prefix):
+        """
+        If line with number "line" starts with prefix, prefix will be removed
+        else prefix will be added.
+
+        Added in OutWiker 2.0.0.795.
+        """
+        assert line < self.GetLineCount()
+        line_text = self.GetLine(line)
+        if line_text.startswith(prefix):
+            line_text = line_text[len(prefix):]
+        else:
+            line_text = prefix + line_text
+        self.SetLine(line, line_text)
+
+    def toddleSelectedLinesPrefix(self, prefix):
+        """
+        Apply toddleLinePrefix method to selected lines
+
+        Added in OutWiker 2.0.0.795.
+        """
+        first_line, last_line = self.GetSelectionLines()
+        map(lambda n: self.toddleLinePrefix(n, prefix),
+            xrange(first_line, last_line + 1))
+
+        new_sel_start = self.GetLineStartPosition(first_line)
+        new_sel_end = self.GetLineEndPosition(last_line)
+        self.SetSelection(new_sel_start, new_sel_end)
+
     def turnText(self, lefttext, righttext):
         selText = self.textCtrl.GetSelectedText()
         newtext = lefttext + selText + righttext
@@ -470,7 +499,6 @@ class TextEditor(wx.Panel):
         pos_bytes = self._helper.calcBytePos(self.GetText(), pos)
         self.textCtrl.GotoPos(pos_bytes)
 
-
     def GetCurrentPosition(self):
         """
         Возвращает номер символа(а не байта), перед которых находится курсор
@@ -482,6 +510,17 @@ class TextEditor(wx.Panel):
         Возвращает позицию начала выбранной области в символах, а не в байтах
         """
         return self.__calcCharPos(self.textCtrl.GetSelectionStart())
+
+    def GetSelectionLines(self):
+        """
+        Return tuple (first selected line, last selected line)
+
+        Added in OutWiker 2.0.0.795.
+        """
+        start_bytes = self.textCtrl.GetSelectionStart()
+        end_bytes = self.textCtrl.GetSelectionEnd()
+        return (self.textCtrl.LineFromPosition(start_bytes),
+                self.textCtrl.LineFromPosition(end_bytes))
 
     def GetSelectionEnd(self):
         """
@@ -504,14 +543,35 @@ class TextEditor(wx.Panel):
         """
         Replace line with the number "line" newline.
         Newline will be ended with "\n" else line will be joined with next line
+
         Added in OutWiker 2.0.0.795
         """
-        linecount = self.textCtrl.GetLineCount()
+        linecount = self.GetLineCount()
         assert line < linecount
 
         line_start_bytes = self.textCtrl.PositionFromLine(line)
         line_end_bytes = self.textCtrl.PositionFromLine(line + 1)
         self.textCtrl.Replace(line_start_bytes, line_end_bytes, newline)
+
+    def GetLineCount(self):
+        return self.textCtrl.GetLineCount()
+
+    def GetLineStartPosition(self, line):
+        """
+        Retrieve the position at the start of a line in symbols (not bytes)
+
+        Added in OutWiker 2.0.0.795
+        """
+        return self.__calcCharPos(self.textCtrl.PositionFromLine(line))
+
+    def GetLineEndPosition(self, line):
+        """
+        Get the position after the last visible characters on a line
+            in symbols (not bytes)
+
+        Added in OutWiker 2.0.0.795
+        """
+        return self.__calcCharPos(self.textCtrl.GetLineEndPosition(line))
 
     def __calcCharPos(self, pos_bytes):
         """

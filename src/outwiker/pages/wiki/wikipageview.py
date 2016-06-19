@@ -305,12 +305,12 @@ class WikiPageView(BaseWikiPageView):
         toolbar = self.mainWindow.toolbars[self._getName()]
         menu = self._headingMenu
 
-        self._application.actionController.getAction(HEADING_1_STR_ID).setFunc(lambda param: self.turnText(u"!! ", u""))
-        self._application.actionController.getAction(HEADING_2_STR_ID).setFunc(lambda param: self.turnText(u"!!! ", u""))
-        self._application.actionController.getAction(HEADING_3_STR_ID).setFunc(lambda param: self.turnText(u"!!!! ", u""))
-        self._application.actionController.getAction(HEADING_4_STR_ID).setFunc(lambda param: self.turnText(u"!!!!! ", u""))
-        self._application.actionController.getAction(HEADING_5_STR_ID).setFunc(lambda param: self.turnText(u"!!!!!! ", u""))
-        self._application.actionController.getAction(HEADING_6_STR_ID).setFunc(lambda param: self.turnText(u"!!!!!!! ", u""))
+        self._application.actionController.getAction(HEADING_1_STR_ID).setFunc(lambda param: self._toddleSelectedLinesPrefix(u"!! "))
+        self._application.actionController.getAction(HEADING_2_STR_ID).setFunc(lambda param: self._toddleSelectedLinesPrefix(u"!!! "))
+        self._application.actionController.getAction(HEADING_3_STR_ID).setFunc(lambda param: self._toddleSelectedLinesPrefix(u"!!!! "))
+        self._application.actionController.getAction(HEADING_4_STR_ID).setFunc(lambda param: self._toddleSelectedLinesPrefix(u"!!!!! "))
+        self._application.actionController.getAction(HEADING_5_STR_ID).setFunc(lambda param: self._toddleSelectedLinesPrefix(u"!!!!!! "))
+        self._application.actionController.getAction(HEADING_6_STR_ID).setFunc(lambda param: self._toddleSelectedLinesPrefix(u"!!!!!!! "))
 
         self._application.actionController.appendMenuItem(HEADING_1_STR_ID, menu)
         self._application.actionController.appendToolbarButton(HEADING_1_STR_ID,
@@ -526,6 +526,10 @@ class WikiPageView(BaseWikiPageView):
     def _addSeparator(self):
         toolbar = self.mainWindow.toolbars[self._getName()]
         toolbar.AddSeparator()
+
+    def _toddleSelectedLinesPrefix(self, prefix):
+        editor = self._application.mainWindow.pagePanel.pageView.codeEditor
+        editor.toddleSelectedLinesPrefix(prefix)
 
     def _turnList(self, symbol):
         editor = self._application.mainWindow.pagePanel.pageView.codeEditor
