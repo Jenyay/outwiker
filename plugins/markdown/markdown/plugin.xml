@@ -3,7 +3,7 @@
 	<name>Markdown</name>
     <updates>http://jenyay.net/Outwiker/Markdown/plugin.xml</updates>
     <requirements>
-        <outwiker>1.9.0.795 dev</outwiker>
+        <outwiker>2.0.0.795 dev</outwiker>
         <os>Windows, Linux</os>
     </requirements>
 

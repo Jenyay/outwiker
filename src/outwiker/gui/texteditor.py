@@ -429,12 +429,19 @@ class TextEditor(wx.Panel):
 
         Added in OutWiker 2.0.0.795.
         """
+        old_sel_start = self.GetSelectionStart()
+        old_sel_end = self.GetSelectionEnd()
+
         first_line, last_line = self.GetSelectionLines()
         map(lambda n: self.toddleLinePrefix(n, prefix),
             xrange(first_line, last_line + 1))
 
-        new_sel_start = self.GetLineStartPosition(first_line)
-        new_sel_end = self.GetLineEndPosition(last_line)
+        if old_sel_start != old_sel_end:
+            new_sel_start = self.GetLineStartPosition(first_line)
+            new_sel_end = self.GetLineEndPosition(last_line)
+        else:
+            new_sel_start = new_sel_end = self.GetLineEndPosition(last_line)
+
         self.SetSelection(new_sel_start, new_sel_end)
 
     def turnText(self, lefttext, righttext):

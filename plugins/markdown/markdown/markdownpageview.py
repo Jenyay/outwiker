@@ -2,6 +2,8 @@
 
 import os
 
+import wx
+
 from outwiker.core.system import getImagesDir
 from outwiker.gui.texteditor import TextEditor
 from outwiker.pages.wiki.basewikipageview import BaseWikiPageView
@@ -43,12 +45,12 @@ class MarkdownPageView(BaseWikiPageView):
             BOLD_STR_ID,
             ITALIC_STR_ID,
             BOLD_ITALIC_STR_ID,
-            # HEADING_1_STR_ID,
-            # HEADING_2_STR_ID,
-            # HEADING_3_STR_ID,
-            # HEADING_4_STR_ID,
-            # HEADING_5_STR_ID,
-            # HEADING_6_STR_ID,
+            HEADING_1_STR_ID,
+            HEADING_2_STR_ID,
+            HEADING_3_STR_ID,
+            HEADING_4_STR_ID,
+            HEADING_5_STR_ID,
+            HEADING_6_STR_ID,
             # PREFORMAT_STR_ID,
             # CODE_STR_ID,
             # HORLINE_STR_ID,
@@ -67,9 +69,11 @@ class MarkdownPageView(BaseWikiPageView):
 
     def _createWikiTools(self):
         assert self.mainWindow is not None
+
         self._addFontTools()
-        self.toolsMenu.AppendSeparator()
         self._addToolbarSeparator()
+        self._addHeadingTools()
+
 
     def _addFontTools(self):
         toolbar = self.mainWindow.toolbars[self._getName()]
@@ -110,6 +114,64 @@ class MarkdownPageView(BaseWikiPageView):
             os.path.join(self.imagesDir, "text_bold_italic.png"),
             fullUpdate=False)
 
+    def _addHeadingTools(self):
+        """
+        Added headings buttons
+        """
+        self._headingMenu = wx.Menu()
+        self.toolsMenu.AppendSeparator()
+        self.toolsMenu.AppendSubMenu(self._headingMenu, _(u"Heading"))
+
+        toolbar = self.mainWindow.toolbars[self._getName()]
+        menu = self._headingMenu
+
+        self._application.actionController.getAction(HEADING_1_STR_ID).setFunc(lambda param: self._toddleSelectedLinesPrefix(u"# "))
+        self._application.actionController.getAction(HEADING_2_STR_ID).setFunc(lambda param: self._toddleSelectedLinesPrefix(u"## "))
+        self._application.actionController.getAction(HEADING_3_STR_ID).setFunc(lambda param: self._toddleSelectedLinesPrefix(u"### "))
+        self._application.actionController.getAction(HEADING_4_STR_ID).setFunc(lambda param: self._toddleSelectedLinesPrefix(u"#### "))
+        self._application.actionController.getAction(HEADING_5_STR_ID).setFunc(lambda param: self._toddleSelectedLinesPrefix(u"##### "))
+        self._application.actionController.getAction(HEADING_6_STR_ID).setFunc(lambda param: self._toddleSelectedLinesPrefix(u"###### "))
+
+        self._application.actionController.appendMenuItem(HEADING_1_STR_ID, menu)
+        self._application.actionController.appendToolbarButton(HEADING_1_STR_ID,
+                                                               toolbar,
+                                                               os.path.join(self.imagesDir, "text_heading_1.png"),
+                                                               fullUpdate=False)
+
+        self._application.actionController.appendMenuItem(HEADING_2_STR_ID, menu)
+        self._application.actionController.appendToolbarButton(HEADING_2_STR_ID,
+                                                               toolbar,
+                                                               os.path.join(self.imagesDir, "text_heading_2.png"),
+                                                               fullUpdate=False)
+
+        self._application.actionController.appendMenuItem(HEADING_3_STR_ID, menu)
+        self._application.actionController.appendToolbarButton(HEADING_3_STR_ID,
+                                                               toolbar,
+                                                               os.path.join(self.imagesDir, "text_heading_3.png"),
+                                                               fullUpdate=False)
+
+        self._application.actionController.appendMenuItem(HEADING_4_STR_ID, menu)
+        self._application.actionController.appendToolbarButton(HEADING_4_STR_ID,
+                                                               toolbar,
+                                                               os.path.join(self.imagesDir, "text_heading_4.png"),
+                                                               fullUpdate=False)
+
+        self._application.actionController.appendMenuItem(HEADING_5_STR_ID, menu)
+        self._application.actionController.appendToolbarButton(HEADING_5_STR_ID,
+                                                               toolbar,
+                                                               os.path.join(self.imagesDir, "text_heading_5.png"),
+                                                               fullUpdate=False)
+
+        self._application.actionController.appendMenuItem(HEADING_6_STR_ID, menu)
+        self._application.actionController.appendToolbarButton(HEADING_6_STR_ID,
+                                                               toolbar,
+                                                               os.path.join(self.imagesDir, "text_heading_6.png"),
+                                                               fullUpdate=False)
+
     def _addToolbarSeparator(self):
         toolbar = self.mainWindow.toolbars[self._getName()]
         toolbar.AddSeparator()
+
+    def _toddleSelectedLinesPrefix(self, prefix):
+        editor = self._application.mainWindow.pagePanel.pageView.codeEditor
+        editor.toddleSelectedLinesPrefix(prefix)

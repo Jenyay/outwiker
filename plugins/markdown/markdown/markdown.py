@@ -5,12 +5,12 @@ import sys
 
 from outwiker.core.pluginbase import Plugin
 from outwiker.core.commands import getCurrentVersion
-from outwiker.core.version import Version
+from outwiker.core.version import Version, StatusSet
 from outwiker.core.system import getOS
 
 
-if getCurrentVersion() < Version (1, 9, 0, 790):
-    print ("Markdown plugin. OutWiker version requirement: 1.9.0.790")
+if getCurrentVersion() < Version (2, 0, 0, 795, status=StatusSet.DEV):
+    print ("Markdown plugin. OutWiker version requirement: 2.0.0.795")
 else:
     class PluginMarkdown (Plugin):
         def __init__ (self, application):
