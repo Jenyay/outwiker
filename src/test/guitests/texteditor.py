@@ -522,3 +522,79 @@ class TextEditorTest (BaseMainWndTest):
         searchController.replaceAll()
 
         self.assertEqual (editor.GetText(), u"Абырвалг проверка Абырвалг")
+
+    def testSetLine_01(self):
+        editor = self._getEditor()
+        editor.SetText(u"Абырвалг Абырвалг")
+        editor.SetLine(0, u'Проверка')
+
+        self.assertEqual (editor.GetText(), u"Проверка")
+
+    def testSetLine_02(self):
+        editor = self._getEditor()
+        editor.SetText(u"""Строка 1
+Строка 2
+Строка 3""")
+        editor.SetLine(0, u'Проверка\n')
+
+        self.assertEqual (editor.GetText(), u"""Проверка
+Строка 2
+Строка 3""")
+
+    def testSetLine_03(self):
+        editor = self._getEditor()
+        editor.SetText(u"""Строка 1
+Строка 2
+Строка 3""")
+        editor.SetLine(1, u'Проверка\n')
+
+        self.assertEqual (editor.GetText(), u"""Строка 1
+Проверка
+Строка 3""")
+
+    def testSetLine_04(self):
+        editor = self._getEditor()
+        editor.SetText(u"""Строка 1
+Строка 2
+Строка 3""")
+        editor.SetLine(2, u'Проверка')
+
+        self.assertEqual (editor.GetText(), u"""Строка 1
+Строка 2
+Проверка""")
+
+    def testSetLine_05(self):
+        editor = self._getEditor()
+        editor.SetText(u'')
+        editor.SetLine(0, u'Проверка')
+        self.assertEqual (editor.GetText(), u'Проверка')
+
+    def testSetLine_06(self):
+        editor = self._getEditor()
+        editor.SetText(u"""Строка 1
+Строка 2
+Строка 3""")
+        editor.SetLine(0, u'Проверка')
+
+        self.assertEqual (editor.GetText(), u"""ПроверкаСтрока 2
+Строка 3""")
+
+    def testSetLine_07(self):
+        editor = self._getEditor()
+        editor.SetText(u"""Строка 1
+Строка 2
+Строка 3""")
+        editor.SetLine(2, u'Проверка')
+
+        self.assertEqual (editor.GetText(), u"""Строка 1
+Строка 2
+Проверка""")
+
+    def testGetLine_01(self):
+        editor = self._getEditor()
+        editor.SetText(u"""Строка 1
+Строка 2
+Строка 3""")
+        self.assertEqual(editor.GetLine(0), u'Строка 1\n')
+        self.assertEqual(editor.GetLine(1), u'Строка 2\n')
+        self.assertEqual(editor.GetLine(2), u'Строка 3')

@@ -493,6 +493,26 @@ class TextEditor(wx.Panel):
         self.textCtrl.SetFocus()
         self.textCtrl.SetSTCFocus(True)
 
+    def GetLine(self, line):
+        """
+        Return line with the "line" number. \n included.
+        Added in OutWiker 2.0.0.795
+        """
+        return self.textCtrl.GetLine(line)
+
+    def SetLine(self, line, newline):
+        """
+        Replace line with the number "line" newline.
+        Newline will be ended with "\n" else line will be joined with next line
+        Added in OutWiker 2.0.0.795
+        """
+        linecount = self.textCtrl.GetLineCount()
+        assert line < linecount
+
+        line_start_bytes = self.textCtrl.PositionFromLine(line)
+        line_end_bytes = self.textCtrl.PositionFromLine(line + 1)
+        self.textCtrl.Replace(line_start_bytes, line_end_bytes, newline)
+
     def __calcCharPos(self, pos_bytes):
         """
         Пересчет позиции в байтах в позицию в символах
