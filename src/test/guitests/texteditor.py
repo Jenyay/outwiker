@@ -19,10 +19,8 @@ class TextEditorTest (BaseMainWndTest):
         Application.wikiroot = self.wikiroot
         Application.selectedPage = self.testpage
 
-
     def _getEditor (self):
         return Application.mainWindow.pagePanel.pageView.textEditor
-
 
     def testGetSetText (self):
         sourceText = u"000 Проверка 111"
@@ -34,10 +32,8 @@ class TextEditorTest (BaseMainWndTest):
         self.assertEqual (text, sourceText)
         self.assertEqual (text[:10], sourceText[:10])
 
-
     def testGetTextEmpty (self):
         self.assertEqual (len (self._getEditor().GetText()), 0)
-
 
     def testAddText (self):
         self._getEditor().AddText(u"Абырвалг")
@@ -46,10 +42,8 @@ class TextEditorTest (BaseMainWndTest):
         self._getEditor().AddText(u"\nРаз два три")
         self.assertEqual (self._getEditor().GetText(), u"Абырвалг\nРаз два три")
 
-
     def testGetSelectionEmpty (self):
         self.assertEqual (len (self._getEditor().GetText()), 0)
-
 
     def testSelection (self):
         text = u"""Абырвалг
@@ -74,7 +68,6 @@ class TextEditorTest (BaseMainWndTest):
 
         self._getEditor().SetSelection (11, 16)
         self.assertEqual (self._getEditor().GetSelectedText(), text[11: 16])
-
 
     def testReplaceText (self):
         text = u"""Абырвалг
@@ -113,11 +106,9 @@ class TextEditorTest (BaseMainWndTest):
 четыре
 """)
 
-
     def testEscapeHtmlEmpty (self):
         self._getEditor().escapeHtml()
         self.assertEqual (len (self._getEditor().GetText()), 0)
-
 
     def testEscapeHtml (self):
         text = u"Проверка > тест < 1234"
@@ -136,11 +127,9 @@ class TextEditorTest (BaseMainWndTest):
         self._getEditor().escapeHtml()
         self.assertEqual (self._getEditor().GetText(), u"Проверка &gt; тест &lt; 1234")
 
-
     def testTurnTextEmpty (self):
         self._getEditor().turnText (u"Лево", u"Право")
         self.assertEqual (self._getEditor().GetText(), u"ЛевоПраво")
-
 
     def testTurnText (self):
         text = u"Проверка абырвалг"
@@ -160,7 +149,6 @@ class TextEditorTest (BaseMainWndTest):
         self._getEditor().turnText (u"Лево", u"Право")
         self.assertEqual (self._getEditor().GetText(), u"ЛевоПроверка абырвалгПраво")
 
-
     def testTurnTextSelection_01 (self):
         text = u"Проверка абырвалг"
 
@@ -174,7 +162,6 @@ class TextEditorTest (BaseMainWndTest):
         self.assertEqual (self._getEditor().GetSelectedText (), u"абырвалг")
 
         self.assertEqual (self._getEditor().GetText(), u"Проверка Лево абырвалг Право")
-
 
     def testTurnTextSelection_02 (self):
         text = u"Проверка  абырвалг"
@@ -190,10 +177,8 @@ class TextEditorTest (BaseMainWndTest):
 
         self.assertEqual (self._getEditor().GetText(), u"Проверка Лево  Право абырвалг")
 
-
     def testGetCurrentPositionEmpty (self):
         self.assertEqual (self._getEditor().GetCurrentPosition(), 0)
-
 
     def testGetCurrentPosition (self):
         text = u"Проверка абырвалг"
@@ -208,11 +193,9 @@ class TextEditorTest (BaseMainWndTest):
         self._getEditor().SetSelection (10, 10)
         self.assertEqual (self._getEditor().GetCurrentPosition(), 10)
 
-
     def testGetSelectionPosEmpty (self):
         self.assertEqual (self._getEditor().GetSelectionStart(), 0)
         self.assertEqual (self._getEditor().GetSelectionEnd(), 0)
-
 
     def testGetSelectionPos (self):
         text = u"Проверка абырвалг"
@@ -235,13 +218,11 @@ class TextEditorTest (BaseMainWndTest):
         self.assertEqual (self._getEditor().GetSelectionEnd(), len (text))
         self.assertEqual (self._getEditor().GetSelectedText(), text)
 
-
     def testGetSetSearchPhrase (self):
         searchController = self._getEditor().searchPanel
 
         searchController.setSearchPhrase (u"Абырвалг")
         self.assertEqual (searchController.getSearchPhrase(), u"Абырвалг")
-
 
     def testSearchNext (self):
         editor = self._getEditor()
@@ -261,7 +242,6 @@ class TextEditorTest (BaseMainWndTest):
         searchController.nextSearch()
         self.assertEqual (editor.GetSelectionStart(), 0)
         self.assertEqual (editor.GetSelectionEnd(), 8)
-
 
     def testSearchPrev (self):
         editor = self._getEditor()
@@ -283,7 +263,6 @@ class TextEditorTest (BaseMainWndTest):
         searchController.prevSearch()
         self.assertEqual (editor.GetSelectionStart(), 18)
         self.assertEqual (editor.GetSelectionEnd(), 26)
-
 
     def testSearchSiblingsNext (self):
         editor = self._getEditor()
@@ -308,7 +287,6 @@ class TextEditorTest (BaseMainWndTest):
         self.assertEqual (editor.GetSelectionStart(), 0)
         self.assertEqual (editor.GetSelectionEnd(), 3)
 
-
     def testSearchSiblingsPrev (self):
         editor = self._getEditor()
         editor.SetText (u"ыыыыыыыыы")
@@ -329,7 +307,6 @@ class TextEditorTest (BaseMainWndTest):
         self.assertEqual (editor.GetSelectionStart(), 0)
         self.assertEqual (editor.GetSelectionEnd(), 3)
 
-
     def testGetSetReplacePhrase (self):
         editor = self._getEditor()
         searchController = editor.searchPanel
@@ -339,7 +316,6 @@ class TextEditorTest (BaseMainWndTest):
 
         searchController.setReplacePhrase (u"Абырвалг")
         self.assertEqual (searchController.getReplacePhrase(), u"Абырвалг")
-
 
     def testReplace1 (self):
         editor = self._getEditor()
@@ -352,7 +328,6 @@ class TextEditorTest (BaseMainWndTest):
         searchController.replace()
 
         self.assertEqual (editor.GetText(), u"Абырвалг проверка абырвалг")
-
 
     def testReplace2 (self):
         editor = self._getEditor()
@@ -373,7 +348,6 @@ class TextEditorTest (BaseMainWndTest):
         self.assertEqual (editor.GetText(), u"Проверка111 проверка Проверка111")
         self.assertEqual (editor.GetSelectionStart(), 32)
         self.assertEqual (editor.GetSelectionEnd(), 32)
-
 
     def testReplace3 (self):
         editor = self._getEditor()
@@ -399,7 +373,6 @@ class TextEditorTest (BaseMainWndTest):
         self.assertEqual (editor.GetSelectionStart(), 11)
         self.assertEqual (editor.GetSelectionEnd(), 11)
 
-
     def testReplace4 (self):
         editor = self._getEditor()
         editor.SetText (u"АбыРваЛг проверка абыРВАлг")
@@ -420,7 +393,6 @@ class TextEditorTest (BaseMainWndTest):
         self.assertEqual (editor.GetSelectionStart(), 10)
         self.assertEqual (editor.GetSelectionEnd(), 10)
 
-
     def testReplaceAll1 (self):
         editor = self._getEditor()
         editor.SetText (u"АбыРваЛг проверка абыРВАлг")
@@ -433,7 +405,6 @@ class TextEditorTest (BaseMainWndTest):
         searchController.replaceAll()
 
         self.assertEqual (editor.GetText(), u"Проверка111 проверка Проверка111")
-
 
     def testReplaceAll2 (self):
         editor = self._getEditor()
@@ -448,7 +419,6 @@ class TextEditorTest (BaseMainWndTest):
 
         self.assertEqual (editor.GetText(), u"Проверка111 проверка Проверка111")
 
-
     def testReplaceAll3 (self):
         editor = self._getEditor()
         editor.SetText (u"qqq АбыРваЛг проверка абыРВАлг qqq")
@@ -461,7 +431,6 @@ class TextEditorTest (BaseMainWndTest):
         searchController.replaceAll()
 
         self.assertEqual (editor.GetText(), u"qqq Абырвалг111 проверка Абырвалг111 qqq")
-
 
     def testReplaceAll4 (self):
         editor = self._getEditor()
@@ -476,7 +445,6 @@ class TextEditorTest (BaseMainWndTest):
 
         self.assertEqual (editor.GetText(), u"qqq 111Абырвалг проверка 111Абырвалг qqq")
 
-
     def testReplaceAll5 (self):
         editor = self._getEditor()
         editor.SetText (u"qqq АбыРваЛг проверка абыРВАлг qqq")
@@ -489,7 +457,6 @@ class TextEditorTest (BaseMainWndTest):
         searchController.replaceAll()
 
         self.assertEqual (editor.GetText(), u"qqq Абырвалг проверка Абырвалг qqq")
-
 
     def testReplaceAll6 (self):
         editor = self._getEditor()
@@ -504,7 +471,6 @@ class TextEditorTest (BaseMainWndTest):
 
         self.assertEqual (editor.GetText(), u"111Абырвалг проверка 111Абырвалг qqq")
 
-
     def testReplaceAll7 (self):
         editor = self._getEditor()
         editor.SetText (u"АбыРваЛг проверка абыРВАлг qqq")
@@ -517,7 +483,6 @@ class TextEditorTest (BaseMainWndTest):
         searchController.replaceAll()
 
         self.assertEqual (editor.GetText(), u"Абырвалг111 проверка Абырвалг111 qqq")
-
 
     def testReplaceAll8 (self):
         editor = self._getEditor()
@@ -532,7 +497,6 @@ class TextEditorTest (BaseMainWndTest):
 
         self.assertEqual (editor.GetText(), u"ыыы 111Абырвалг проверка 111Абырвалг")
 
-
     def testReplaceAll9 (self):
         editor = self._getEditor()
         editor.SetText (u"ыыы АбыРваЛг проверка абыРВАлг")
@@ -545,7 +509,6 @@ class TextEditorTest (BaseMainWndTest):
         searchController.replaceAll()
 
         self.assertEqual (editor.GetText(), u"ыыы Абырвалг111 проверка Абырвалг111")
-
 
     def testReplaceAll10 (self):
         editor = self._getEditor()

@@ -34,7 +34,7 @@ class TextEditor(wx.Panel):
         kwds["style"] = wx.TAB_TRAVERSAL
         wx.Panel.__init__(self, *args, **kwds)
 
-        self._config = EditorConfig (Application.config)
+        self._config = EditorConfig(Application.config)
 
         self._enableSpellChecking = True
         self._spellChecker = None
@@ -49,26 +49,28 @@ class TextEditor(wx.Panel):
         self._spellStartByteError = -1
         self._spellEndByteError = -1
 
-        # Уже были установлены стили текста (раскраска)
+        # Уже были установлены стили текста(раскраска)
         self._styleSet = False
 
         self.__stylebytes = None
         self.__indicatorsbytes = None
 
-        # Начинаем раскраску кода не менее чем через это время с момента его изменения
-        self._DELAY = timedelta (milliseconds=300)
+        # Начинаем раскраску кода не менее чем через это время
+        # с момента его изменения
+        self._DELAY = timedelta(milliseconds=300)
 
         # Время последней модификации текста страницы.
-        # Используется для замера времени после модификации, чтобы не парсить текст
-        # после каждой введенной буквы
+        # Используется для замера времени после модификации,
+        # чтобы не парсить текст после каждой введенной буквы
         self._lastEdit = datetime.now() - self._DELAY * 2
 
         self.textCtrl = StyledTextCtrl(self, -1)
 
         # Создание панели поиска и ее контроллера
-        self._searchPanel = SearchReplacePanel (self)
-        self._searchPanelController = SearchReplaceController (self._searchPanel, self)
-        self._searchPanel.setController (self._searchPanelController)
+        self._searchPanel = SearchReplacePanel(self)
+        self._searchPanelController = SearchReplaceController(
+            self._searchPanel, self)
+        self._searchPanel.setController(self._searchPanelController)
 
         self.__do_layout()
         self.__createCoders()
@@ -80,88 +82,87 @@ class TextEditor(wx.Panel):
         self.__bindEvents()
 
 
-    def __bindEvents (self):
-        self.textCtrl.Bind(wx.EVT_MENU, self.__onCopyFromEditor, id = wx.ID_COPY)
-        self.textCtrl.Bind(wx.EVT_MENU, self.__onCutFromEditor, id = wx.ID_CUT)
-        self.textCtrl.Bind(wx.EVT_MENU, self.__onPasteToEditor, id = wx.ID_PASTE)
-        self.textCtrl.Bind(wx.EVT_MENU, self.__onUndo, id = wx.ID_UNDO)
-        self.textCtrl.Bind(wx.EVT_MENU, self.__onRedo, id = wx.ID_REDO)
-        self.textCtrl.Bind(wx.EVT_MENU, self.__onSelectAll, id = wx.ID_SELECTALL)
+    def __bindEvents(self):
+        self.textCtrl.Bind(wx.EVT_MENU,
+                           self.__onCopyFromEditor,
+                           id=wx.ID_COPY)
+        self.textCtrl.Bind(wx.EVT_MENU,
+                           self.__onCutFromEditor,
+                           id=wx.ID_CUT)
+        self.textCtrl.Bind(wx.EVT_MENU,
+                           self.__onPasteToEditor,
+                           id=wx.ID_PASTE)
+        self.textCtrl.Bind(wx.EVT_MENU,
+                           self.__onUndo,
+                           id=wx.ID_UNDO)
+        self.textCtrl.Bind(wx.EVT_MENU,
+                           self.__onRedo,
+                           id=wx.ID_REDO)
+        self.textCtrl.Bind(wx.EVT_MENU,
+                           self.__onSelectAll,
+                           id=wx.ID_SELECTALL)
 
-        self.textCtrl.Bind (wx.EVT_CHAR, self.__OnChar_ImeWorkaround)
-        self.textCtrl.Bind (wx.EVT_KEY_DOWN, self.__onKeyDown)
-        self.textCtrl.Bind (wx.EVT_CONTEXT_MENU, self.__onContextMenu)
+        self.textCtrl.Bind(wx.EVT_CHAR, self.__OnChar_ImeWorkaround)
+        self.textCtrl.Bind(wx.EVT_KEY_DOWN, self.__onKeyDown)
+        self.textCtrl.Bind(wx.EVT_CONTEXT_MENU, self.__onContextMenu)
 
-        # self.textCtrl.Bind (wx.stc.EVT_STC_STYLENEEDED, self._onStyleNeeded)
-        self.textCtrl.Bind (wx.EVT_IDLE, self._onStyleNeeded)
-        self.Bind (EVT_APPLY_STYLE, self._onApplyStyle)
+        # self.textCtrl.Bind(wx.stc.EVT_STC_STYLENEEDED, self._onStyleNeeded)
+        self.textCtrl.Bind(wx.EVT_IDLE, self._onStyleNeeded)
+        self.Bind(EVT_APPLY_STYLE, self._onApplyStyle)
 
-        # При перехвате этого сообщения в других классах, нужно вызывать event.Skip(),
-        # чтобы это сообщение дошло досюда
-        self.textCtrl.Bind (wx.stc.EVT_STC_CHANGE, self.__onChange)
-
+        # При перехвате этого сообщения в других классах,
+        # нужно вызывать event.Skip(), чтобы это сообщение дошло сюда
+        self.textCtrl.Bind(wx.stc.EVT_STC_CHANGE, self.__onChange)
 
     @property
-    def config (self):
+    def config(self):
         return self._config
 
-
     @property
-    def enableSpellChecking (self):
+    def enableSpellChecking(self):
         return self._enableSpellChecking
 
-
     @enableSpellChecking.setter
-    def enableSpellChecking (self, value):
+    def enableSpellChecking(self, value):
         self._enableSpellChecking = value
         self._styleSet = False
 
-
-    def __onChange (self, event):
+    def __onChange(self, event):
         self._styleSet = False
         self._lastEdit = datetime.now()
-        self.__setMarginWidth (self.textCtrl)
-
+        self.__setMarginWidth(self.textCtrl)
 
     @property
-    def searchPanel (self):
+    def searchPanel(self):
         """
         Возвращает контроллер панели поиска
         """
         return self._searchPanelController
 
-
-    def Print (self):
+    def Print(self):
         selectedtext = self.textCtrl.GetSelectedText()
         text = self.textCtrl.GetText()
 
-        printer = TextPrinter (self)
-        printer.printout (text if len (selectedtext) == 0 else selectedtext)
+        printer = TextPrinter(self)
+        printer.printout(text if len(selectedtext) == 0 else selectedtext)
 
-
-    def __onCopyFromEditor (self, event):
+    def __onCopyFromEditor(self, event):
         self.textCtrl.Copy()
 
-
-    def __onCutFromEditor (self, event):
+    def __onCutFromEditor(self, event):
         self.textCtrl.Cut()
 
-
-    def __onPasteToEditor (self, event):
+    def __onPasteToEditor(self, event):
         self.textCtrl.Paste()
 
-
-    def __onUndo (self, event):
+    def __onUndo(self, event):
         self.textCtrl.Undo()
 
-
-    def __onRedo (self, event):
+    def __onRedo(self, event):
         self.textCtrl.Redo()
 
-
-    def __onSelectAll (self, event):
+    def __onSelectAll(self, event):
         self.textCtrl.SelectAll()
-
 
     def __do_layout(self):
         mainSizer = wx.FlexGridSizer(rows=2)
@@ -175,8 +176,7 @@ class TextEditor(wx.Panel):
         self._searchPanel.Hide()
         self.Layout()
 
-
-    def setDefaultSettings (self):
+    def setDefaultSettings(self):
         """
         Установить стили и настройки по умолчанию в контрол StyledTextCtrl
         """
@@ -190,44 +190,38 @@ class TextEditor(wx.Panel):
         backColor = self._config.backColor.value
 
         self.__showlinenumbers = self._config.lineNumbers.value
-        self.textCtrl.SetEndAtLastLine (False)
+        self.textCtrl.SetEndAtLastLine(False)
 
-        self.textCtrl.StyleSetSize (wx.stc.STC_STYLE_DEFAULT, size)
-        self.textCtrl.StyleSetFaceName (wx.stc.STC_STYLE_DEFAULT, faceName)
-        self.textCtrl.StyleSetBold (wx.stc.STC_STYLE_DEFAULT, isBold)
-        self.textCtrl.StyleSetItalic (wx.stc.STC_STYLE_DEFAULT, isItalic)
-        self.textCtrl.StyleSetForeground (wx.stc.STC_STYLE_DEFAULT, fontColor)
-        self.textCtrl.StyleSetBackground (wx.stc.STC_STYLE_DEFAULT, backColor)
+        self.textCtrl.StyleSetSize(wx.stc.STC_STYLE_DEFAULT, size)
+        self.textCtrl.StyleSetFaceName(wx.stc.STC_STYLE_DEFAULT, faceName)
+        self.textCtrl.StyleSetBold(wx.stc.STC_STYLE_DEFAULT, isBold)
+        self.textCtrl.StyleSetItalic(wx.stc.STC_STYLE_DEFAULT, isItalic)
+        self.textCtrl.StyleSetForeground(wx.stc.STC_STYLE_DEFAULT, fontColor)
+        self.textCtrl.StyleSetBackground(wx.stc.STC_STYLE_DEFAULT, backColor)
 
         self.textCtrl.StyleClearAll()
 
-        self.textCtrl.SetCaretForeground (fontColor)
-        self.textCtrl.SetCaretLineBack (backColor)
-        self.textCtrl.SetWrapMode (wx.stc.STC_WRAP_WORD)
-        self.textCtrl.SetWrapVisualFlags (wx.stc.STC_WRAPVISUALFLAG_END)
+        self.textCtrl.SetCaretForeground(fontColor)
+        self.textCtrl.SetCaretLineBack(backColor)
+        self.textCtrl.SetWrapMode(wx.stc.STC_WRAP_WORD)
+        self.textCtrl.SetWrapVisualFlags(wx.stc.STC_WRAPVISUALFLAG_END)
 
         self._setDefaultHotKeys()
 
-        self.__setMarginWidth (self.textCtrl)
-        self.textCtrl.SetTabWidth (self._config.tabWidth.value)
+        self.__setMarginWidth(self.textCtrl)
+        self.textCtrl.SetTabWidth(self._config.tabWidth.value)
 
         self.enableSpellChecking = self._config.spellEnabled.value
         self._spellChecker.skipWordsWithNumbers = self.config.spellSkipDigits.value
 
 
-        self.textCtrl.IndicatorSetStyle(self.SPELL_ERROR_INDICATOR, wx.stc.STC_INDIC_SQUIGGLE)
+        self.textCtrl.IndicatorSetStyle(self.SPELL_ERROR_INDICATOR,
+                                        wx.stc.STC_INDIC_SQUIGGLE)
         self.textCtrl.IndicatorSetForeground(self.SPELL_ERROR_INDICATOR, "red")
         self._styleSet = False
 
 
-    def _setDefaultHotKeys (self):
-        # self.textCtrl.CmdKeyClear (ord ("D"), wx.stc.STC_SCMOD_CTRL)
-        # self.textCtrl.CmdKeyClear (ord ("L"), wx.stc.STC_SCMOD_CTRL)
-        # self.textCtrl.CmdKeyClear (ord ("L"), wx.stc.STC_SCMOD_CTRL | wx.stc.STC_SCMOD_SHIFT)
-        # self.textCtrl.CmdKeyClear (ord ("T"), wx.stc.STC_SCMOD_CTRL | wx.stc.STC_SCMOD_SHIFT)
-        # self.textCtrl.CmdKeyClear (ord ("T"), wx.stc.STC_SCMOD_CTRL)
-        # self.textCtrl.CmdKeyClear (ord ("U"), wx.stc.STC_SCMOD_CTRL)
-        # self.textCtrl.CmdKeyClear (ord ("U"), wx.stc.STC_SCMOD_CTRL | wx.stc.STC_SCMOD_SHIFT)
+    def _setDefaultHotKeys(self):
         self.textCtrl.CmdKeyClearAll()
 
         # Code from Wikidpad sources
@@ -289,13 +283,13 @@ class TextEditor(wx.Panel):
             (wx.stc.STC_KEY_ADD,         wx.stc.STC_SCMOD_CTRL,    wx.stc.STC_CMD_ZOOMIN),
             (wx.stc.STC_KEY_SUBTRACT,    wx.stc.STC_SCMOD_CTRL,    wx.stc.STC_CMD_ZOOMOUT),
             # (wx.stc.STC_KEY_DIVIDE,    wx.stc.STC_SCMOD_CTRL,    wx.stc.STC_CMD_SETZOOM),
-#         (ord('L'),             wx.stc.STC_SCMOD_CTRL,    wx.stc.STC_CMD_LINECUT),
-#         (ord('L'),             wx.stc.STC_SCMOD_SHIFT | wx.stc.STC_SCMOD_CTRL,    wx.stc.STC_CMD_LINEDELETE),
-#         (ord('T'),             wx.stc.STC_SCMOD_SHIFT | wx.stc.STC_SCMOD_CTRL,    wx.stc.STC_CMD_LINECOPY),
-#         (ord('T'),             wx.stc.STC_SCMOD_CTRL,    wx.stc.STC_CMD_LINETRANSPOSE),
-#         (ord('D'),             wx.stc.STC_SCMOD_CTRL,    wx.stc.STC_CMD_SELECTIONDUPLICATE),
-#         (ord('U'),             wx.stc.STC_SCMOD_CTRL,    wx.stc.STC_CMD_LOWERCASE),
-#         (ord('U'),             wx.stc.STC_SCMOD_SHIFT | wx.stc.STC_SCMOD_CTRL,    wx.stc.STC_CMD_UPPERCASE),
+            #        (ord('L'),             wx.stc.STC_SCMOD_CTRL,    wx.stc.STC_CMD_LINECUT),
+            #        (ord('L'),             wx.stc.STC_SCMOD_SHIFT | wx.stc.STC_SCMOD_CTRL,    wx.stc.STC_CMD_LINEDELETE),
+            #        (ord('T'),             wx.stc.STC_SCMOD_SHIFT | wx.stc.STC_SCMOD_CTRL,    wx.stc.STC_CMD_LINECOPY),
+            #        (ord('T'),             wx.stc.STC_SCMOD_CTRL,    wx.stc.STC_CMD_LINETRANSPOSE),
+            #        (ord('D'),             wx.stc.STC_SCMOD_CTRL,    wx.stc.STC_CMD_SELECTIONDUPLICATE),
+            #        (ord('U'),             wx.stc.STC_SCMOD_CTRL,    wx.stc.STC_CMD_LOWERCASE),
+            #        (ord('U'),             wx.stc.STC_SCMOD_SHIFT | wx.stc.STC_SCMOD_CTRL,    wx.stc.STC_CMD_UPPERCASE),
             (wx.stc.STC_KEY_DOWN,        wx.stc.STC_SCMOD_SHIFT | wx.stc.STC_SCMOD_ALT,    wx.stc.STC_CMD_LINEDOWNRECTEXTEND),
             (wx.stc.STC_KEY_UP,        wx.stc.STC_SCMOD_SHIFT | wx.stc.STC_SCMOD_ALT,    wx.stc.STC_CMD_LINEUPRECTEXTEND),
             (wx.stc.STC_KEY_LEFT,        wx.stc.STC_SCMOD_SHIFT | wx.stc.STC_SCMOD_ALT,    wx.stc.STC_CMD_CHARLEFTRECTEXTEND),
@@ -304,85 +298,82 @@ class TextEditor(wx.Panel):
             (wx.stc.STC_KEY_END,        wx.stc.STC_SCMOD_SHIFT | wx.stc.STC_SCMOD_ALT,    wx.stc.STC_CMD_LINEENDRECTEXTEND),
             (wx.stc.STC_KEY_PRIOR,        wx.stc.STC_SCMOD_SHIFT | wx.stc.STC_SCMOD_ALT,    wx.stc.STC_CMD_PAGEUPRECTEXTEND),
             (wx.stc.STC_KEY_NEXT,        wx.stc.STC_SCMOD_SHIFT | wx.stc.STC_SCMOD_ALT,    wx.stc.STC_CMD_PAGEDOWNRECTEXTEND),
-    )
+        )
 
-        map (lambda key: self.textCtrl.CmdKeyAssign (key[0], key[1], key[2]), defaultHotKeys)
+        map(lambda key: self.textCtrl.CmdKeyAssign(key[0], key[1], key[2]),
+            defaultHotKeys)
 
         if self._config.homeEndKeys.value == EditorConfig.HOME_END_OF_LINE:
             # Клавиши Home / End переносят курсор на начало / конец строки
-            self.textCtrl.CmdKeyAssign (wx.stc.STC_KEY_HOME,
-                                        0,
-                                        wx.stc.STC_CMD_HOMEDISPLAY)
+            self.textCtrl.CmdKeyAssign(wx.stc.STC_KEY_HOME,
+                                       0,
+                                       wx.stc.STC_CMD_HOMEDISPLAY)
 
-            self.textCtrl.CmdKeyAssign (wx.stc.STC_KEY_HOME,
-                                        wx.stc.STC_SCMOD_ALT,
-                                        wx.stc.STC_CMD_HOME)
+            self.textCtrl.CmdKeyAssign(wx.stc.STC_KEY_HOME,
+                                       wx.stc.STC_SCMOD_ALT,
+                                       wx.stc.STC_CMD_HOME)
 
-            self.textCtrl.CmdKeyAssign (wx.stc.STC_KEY_END,
-                                        0,
-                                        wx.stc.STC_CMD_LINEENDDISPLAY)
+            self.textCtrl.CmdKeyAssign(wx.stc.STC_KEY_END,
+                                       0,
+                                       wx.stc.STC_CMD_LINEENDDISPLAY)
 
-            self.textCtrl.CmdKeyAssign (wx.stc.STC_KEY_END,
-                                        wx.stc.STC_SCMOD_ALT,
-                                        wx.stc.STC_CMD_LINEEND)
+            self.textCtrl.CmdKeyAssign(wx.stc.STC_KEY_END,
+                                       wx.stc.STC_SCMOD_ALT,
+                                       wx.stc.STC_CMD_LINEEND)
         else:
             # Клавиши Home / End переносят курсор на начало / конец абзаца
-            self.textCtrl.CmdKeyAssign (wx.stc.STC_KEY_HOME,
-                                        0,
-                                        wx.stc.STC_CMD_HOME)
+            self.textCtrl.CmdKeyAssign(wx.stc.STC_KEY_HOME,
+                                       0,
+                                       wx.stc.STC_CMD_HOME)
 
-            self.textCtrl.CmdKeyAssign (wx.stc.STC_KEY_HOME,
-                                        wx.stc.STC_SCMOD_ALT,
-                                        wx.stc.STC_CMD_HOMEDISPLAY)
+            self.textCtrl.CmdKeyAssign(wx.stc.STC_KEY_HOME,
+                                       wx.stc.STC_SCMOD_ALT,
+                                       wx.stc.STC_CMD_HOMEDISPLAY)
 
-            self.textCtrl.CmdKeyAssign (wx.stc.STC_KEY_END,
-                                        0,
-                                        wx.stc.STC_CMD_LINEEND)
+            self.textCtrl.CmdKeyAssign(wx.stc.STC_KEY_END,
+                                       0,
+                                       wx.stc.STC_CMD_LINEEND)
 
-            self.textCtrl.CmdKeyAssign (wx.stc.STC_KEY_END,
-                                        wx.stc.STC_SCMOD_ALT,
-                                        wx.stc.STC_CMD_LINEENDDISPLAY)
+            self.textCtrl.CmdKeyAssign(wx.stc.STC_KEY_END,
+                                       wx.stc.STC_SCMOD_ALT,
+                                       wx.stc.STC_CMD_LINEENDDISPLAY)
 
-
-    def __setMarginWidth (self, editor):
+    def __setMarginWidth(self, editor):
         """
-        Установить размер левой области, где пишутся номера строк в зависимости от шрифта
+        Установить размер левой области, где пишутся номера строк в
+        зависимости от шрифта
         """
         if self.__showlinenumbers:
-            editor.SetMarginWidth (0, self.__getMarginWidth())
-            editor.SetMarginWidth (1, 5)
+            editor.SetMarginWidth(0, self.__getMarginWidth())
+            editor.SetMarginWidth(1, 5)
         else:
-            editor.SetMarginWidth (0, 0)
-            editor.SetMarginWidth (1, 8)
+            editor.SetMarginWidth(0, 0)
+            editor.SetMarginWidth(1, 8)
 
-
-    def __getMarginWidth (self):
+    def __getMarginWidth(self):
         """
         Расчет размера серой области с номером строк
         """
         fontSize = self._config.fontSize.value
-        linescount = len (self.GetText().split("\n"))
+        linescount = len(self.GetText().split("\n"))
 
         if linescount == 0:
             width = 10
         else:
             # Количество десятичных цифр в числе строк
-            digits = int (math.log10 (linescount) + 1)
-            width = int (1.2 * fontSize * digits)
+            digits = int(math.log10(linescount) + 1)
+            width = int(1.2 * fontSize * digits)
 
         return width
 
+    def getPosChar(self, posBytes):
+        return len(self.textCtrl.GetTextRange(0, posBytes))
 
-    def getPosChar (self, posBytes):
-        return len (self.textCtrl.GetTextRange (0, posBytes))
-
-
-    def __createCoders (self):
+    def __createCoders(self):
         encoding = outwiker.core.system.getOS().inputEncoding
         self.mbcsEnc = codecs.getencoder(encoding)
 
-
-    def __onKeyDown (self, event):
+    def __onKeyDown(self, event):
         key = event.GetKeyCode()
 
         if key == wx.WXK_ESCAPE:
@@ -390,16 +381,16 @@ class TextEditor(wx.Panel):
 
         event.Skip()
 
-
     def __OnChar_ImeWorkaround(self, evt):
         """
-        Обработка клавиш вручную, чтобы не было проблем с вводом русских букв в Linux.
-        Основа кода взята из Wikidpad (WikiTxtCtrl.py -> OnChar_ImeWorkaround)
+        Обработка клавиш вручную, чтобы не было проблем
+        с вводом русских букв в Linux.
+        Основа кода взята из Wikidpad(WikiTxtCtrl.py -> OnChar_ImeWorkaround)
         """
         key = evt.GetKeyCode()
 
         # Return if this doesn't seem to be a real character input
-        if evt.ControlDown() or (0 < key < 32):
+        if evt.ControlDown() or(0 < key < 32):
             evt.Skip()
             return
 
@@ -409,159 +400,138 @@ class TextEditor(wx.Panel):
 
         unichar = unichr(evt.GetUnicodeKey())
 
-        self.textCtrl.ReplaceSelection(self.mbcsEnc (unichar, "replace")[0])
+        self.textCtrl.ReplaceSelection(self.mbcsEnc(unichar, "replace")[0])
 
+    def AddText(self, text):
+        self.textCtrl.AddText(text)
 
-    def AddText (self, text):
-        self.textCtrl.AddText (text)
+    def replaceText(self, text):
+        self.textCtrl.ReplaceSelection(text)
 
-
-    def replaceText (self, text):
-        self.textCtrl.ReplaceSelection (text)
-
-
-    def turnText (self, lefttext, righttext):
+    def turnText(self, lefttext, righttext):
         selText = self.textCtrl.GetSelectedText()
         newtext = lefttext + selText + righttext
-        self.textCtrl.ReplaceSelection (newtext)
+        self.textCtrl.ReplaceSelection(newtext)
 
         currPos = self.GetSelectionEnd()
-        if len (selText) == 0:
+        if len(selText) == 0:
             """
             Если не оборачиваем текст, а делаем пустой тег, то поместим каретку до закрывающегося тега
             """
-            newpos = currPos - len (righttext)
-            self.SetSelection (newpos, newpos)
+            newpos = currPos - len(righttext)
+            self.SetSelection(newpos, newpos)
         else:
-            self.SetSelection (currPos - len (selText) - len (righttext),
-                               currPos - len (righttext))
+            self.SetSelection(currPos - len(selText) - len(righttext),
+                              currPos - len(righttext))
 
-
-    def escapeHtml (self):
+    def escapeHtml(self):
         selText = self.textCtrl.GetSelectedText()
-        text = cgi.escape (selText, quote=False)
-        self.textCtrl.ReplaceSelection (text)
+        text = cgi.escape(selText, quote=False)
+        self.textCtrl.ReplaceSelection(text)
 
+    def SetReadOnly(self, readonly):
+        self.textCtrl.SetReadOnly(readonly)
 
-    def SetReadOnly (self, readonly):
-        self.textCtrl.SetReadOnly (readonly)
-
-
-    def GetReadOnly (self):
+    def GetReadOnly(self):
         return self.textCtrl.GetReadOnly()
-
 
     def GetText(self):
         return self.textCtrl.GetText()
 
+    def SetText(self, text):
+        self.textCtrl.SetText(text)
 
-    def SetText (self, text):
-        self.textCtrl.SetText (text)
-
-
-    def EmptyUndoBuffer (self):
+    def EmptyUndoBuffer(self):
         self.textCtrl.EmptyUndoBuffer()
 
-
-    def GetSelectedText (self):
+    def GetSelectedText(self):
         return self.textCtrl.GetSelectedText()
 
-
-    def GetCurrentLine (self):
+    def GetCurrentLine(self):
         return self.textCtrl.GetCurrentLine()
 
+    def ScrollToLine(self, line):
+        self.textCtrl.ScrollToLine(line)
 
-    def ScrollToLine (self, line):
-        self.textCtrl.ScrollToLine (line)
-
-
-    def SetSelection (self, start, end):
+    def SetSelection(self, start, end):
         """
-        start и end в символах, а не в байтах, в отличие от исходного StyledTextCtrl
+        start и end в символах, а не в байтах, в отличие от исходного
+        StyledTextCtrl
         """
         startText = self.GetText()[:start]
         endText = self.GetText()[:end]
 
-        firstByte = self._helper.calcByteLen (startText)
-        endByte = self._helper.calcByteLen (endText)
+        firstByte = self._helper.calcByteLen(startText)
+        endByte = self._helper.calcByteLen(endText)
 
-        self.textCtrl.SetSelection (firstByte, endByte)
+        self.textCtrl.SetSelection(firstByte, endByte)
+
+    def GotoPos(self, pos):
+        pos_bytes = self._helper.calcBytePos(self.GetText(), pos)
+        self.textCtrl.GotoPos(pos_bytes)
 
 
-    def GotoPos (self, pos):
-        pos_bytes = self._helper.calcBytePos (self.GetText(), pos)
-        self.textCtrl.GotoPos (pos_bytes)
-
-
-    def GetCurrentPosition (self):
+    def GetCurrentPosition(self):
         """
-        Возвращает номер символа (а не байта), перед которых находится курсор
+        Возвращает номер символа(а не байта), перед которых находится курсор
         """
-        return self.__calcCharPos (self.textCtrl.GetCurrentPos())
+        return self.__calcCharPos(self.textCtrl.GetCurrentPos())
 
-
-    def GetSelectionStart (self):
+    def GetSelectionStart(self):
         """
         Возвращает позицию начала выбранной области в символах, а не в байтах
         """
-        return self.__calcCharPos (self.textCtrl.GetSelectionStart())
+        return self.__calcCharPos(self.textCtrl.GetSelectionStart())
 
-
-    def GetSelectionEnd (self):
+    def GetSelectionEnd(self):
         """
         Возвращает позицию конца выбранной области в символах, а не в байтах
         """
-        return self.__calcCharPos (self.textCtrl.GetSelectionEnd())
+        return self.__calcCharPos(self.textCtrl.GetSelectionEnd())
 
-
-    def SetFocus (self):
+    def SetFocus(self):
         self.textCtrl.SetFocus()
         self.textCtrl.SetSTCFocus(True)
 
-
-    def __calcCharPos (self, pos_bytes):
+    def __calcCharPos(self, pos_bytes):
         """
         Пересчет позиции в байтах в позицию в символах
         """
-        text_left = self.textCtrl.GetTextRange (0, pos_bytes)
-        currpos = len (text_left)
+        text_left = self.textCtrl.GetTextRange(0, pos_bytes)
+        currpos = len(text_left)
         return currpos
 
-
-    def _getTextForParse (self):
+    def _getTextForParse(self):
         # Табуляция в редакторе считается за несколько символов
-        return self.textCtrl.GetText().replace ("\t", " ")
+        return self.textCtrl.GetText().replace("\t", " ")
 
-
-    def runSpellChecking (self, stylelist, fullText, start, end):
-        errors = self._spellChecker.findErrors (fullText[start: end])
+    def runSpellChecking(self, stylelist, fullText, start, end):
+        errors = self._spellChecker.findErrors(fullText[start: end])
 
         for word, err_start, err_end in errors:
-            self._helper.setSpellError (stylelist,
-                                        fullText,
-                                        err_start + start,
-                                        err_end + start)
+            self._helper.setSpellError(stylelist,
+                                       fullText,
+                                       err_start + start,
+                                       err_end + start)
 
-
-    def _onStyleNeeded (self, event):
+    def _onStyleNeeded(self, event):
         if (not self._styleSet and
                 datetime.now() - self._lastEdit >= self._DELAY):
             page = Application.selectedPage
             text = self._getTextForParse()
-            params = EditorStyleNeededParams (self,
-                                              text,
-                                              self._enableSpellChecking)
-            Application.onEditorStyleNeeded (page, params)
+            params = EditorStyleNeededParams(self,
+                                             text,
+                                             self._enableSpellChecking)
+            Application.onEditorStyleNeeded(page, params)
             self._styleSet = True
 
-
-    def _onApplyStyle (self, event):
+    def _onApplyStyle(self, event):
         if event.text == self._getTextForParse():
-            startByte = self._helper.calcBytePos (event.text, event.start)
-            endByte = self._helper.calcBytePos (event.text, event.end)
+            startByte = self._helper.calcBytePos(event.text, event.start)
+            endByte = self._helper.calcBytePos(event.text, event.end)
             lenBytes = endByte - startByte
 
-            textlength = self._helper.calcByteLen (event.text)
+            textlength = self._helper.calcByteLen(event.text)
             self.__stylebytes = [0] * textlength
 
             if event.stylebytes is not None:
@@ -570,82 +540,78 @@ class TextEditor(wx.Panel):
             if event.indicatorsbytes is not None:
                 self.__stylebytes = [item1 | item2
                                      for item1, item2
-                                     in zip (self.__stylebytes, event.indicatorsbytes)]
+                                     in zip(self.__stylebytes,
+                                            event.indicatorsbytes)]
 
-            stylebytesstr = "".join ([chr(byte) for byte in self.__stylebytes])
+            stylebytesstr = "".join([chr(byte) for byte in self.__stylebytes])
 
 
             if event.stylebytes is not None:
-                self.textCtrl.StartStyling (startByte, 0xff ^ wx.stc.STC_INDICS_MASK)
-                self.textCtrl.SetStyleBytes (lenBytes, stylebytesstr[startByte:endByte])
+                self.textCtrl.StartStyling(startByte,
+                                           0xff ^ wx.stc.STC_INDICS_MASK)
+                self.textCtrl.SetStyleBytes(lenBytes,
+                                            stylebytesstr[startByte:endByte])
 
             if event.indicatorsbytes is not None:
-                self.textCtrl.StartStyling (startByte, wx.stc.STC_INDICS_MASK)
-                self.textCtrl.SetStyleBytes (lenBytes, stylebytesstr[startByte:endByte])
+                self.textCtrl.StartStyling(startByte, wx.stc.STC_INDICS_MASK)
+                self.textCtrl.SetStyleBytes(lenBytes,
+                                            stylebytesstr[startByte:endByte])
 
             self._styleSet = True
 
-
-    def getSpellChecker (self):
+    def getSpellChecker(self):
         langlist = self._getDictsFromConfig()
         spellDirList = outwiker.core.system.getSpellDirList()
 
-        spellChecker = SpellChecker (Application, langlist, spellDirList)
-        spellChecker.addCustomDict (os.path.join (spellDirList[-1], CUSTOM_DICT_FILE_NAME))
+        spellChecker = SpellChecker(Application, langlist, spellDirList)
+        spellChecker.addCustomDict(os.path.join(spellDirList[-1], CUSTOM_DICT_FILE_NAME))
 
         return spellChecker
 
-
-    def _getDictsFromConfig (self):
+    def _getDictsFromConfig(self):
         dictsStr = self._config.spellCheckerDicts.value
         return [item.strip()
                 for item
                 in dictsStr.split(',')
                 if item.strip()]
 
-
-    def __onContextMenu (self, event):
-        point = self.textCtrl.ScreenToClient (event.GetPosition())
+    def __onContextMenu(self, event):
+        point = self.textCtrl.ScreenToClient(event.GetPosition())
         pos_byte = self.textCtrl.PositionFromPoint(point)
 
-        popupMenu = TextEditorMenu ()
-        self._appendSpellMenuItems (popupMenu, pos_byte)
+        popupMenu = TextEditorMenu()
+        self._appendSpellMenuItems(popupMenu, pos_byte)
 
-        Application.onEditorPopupMenu (
+        Application.onEditorPopupMenu(
             Application.selectedPage,
-            EditorPopupMenuParams (self, popupMenu, point, pos_byte)
+            EditorPopupMenuParams(self, popupMenu, point, pos_byte)
         )
 
         self.textCtrl.PopupMenu(popupMenu)
         popupMenu.Destroy()
 
-
-    def getCachedStyleBytes (self):
+    def getCachedStyleBytes(self):
         return self.__stylebytes
 
-
-    def __onAddWordToDict (self, event):
+    def __onAddWordToDict(self, event):
         if self._spellErrorText is not None:
-            self.__addWordToDict (self._spellErrorText)
+            self.__addWordToDict(self._spellErrorText)
 
-
-    def __onAddWordLowerToDict (self, event):
+    def __onAddWordLowerToDict(self, event):
         if self._spellErrorText is not None:
-            self.__addWordToDict (self._spellErrorText.lower())
+            self.__addWordToDict(self._spellErrorText.lower())
 
-
-    def __addWordToDict (self, word):
-        self._spellChecker.addToCustomDict (0, word)
+    def __addWordToDict(self, word):
+        self._spellChecker.addToCustomDict(0, word)
         self._spellErrorText = None
         self._styleSet = False
 
-
-    def _appendSpellMenuItems (self, menu, pos_byte):
+    def _appendSpellMenuItems(self, menu, pos_byte):
         stylebytes = self.getCachedStyleBytes()
         if stylebytes is None:
             return
 
-        stylebytes_len = len (stylebytes)
+        stylebytes_len = len(stylebytes)
 
         if (stylebytes is None or
                 pos_byte >= stylebytes_len or
@@ -665,30 +631,31 @@ class TextEditor(wx.Panel):
 
         self._spellStartByteError = startSpellError + 1
         self._spellEndByteError = endSpellError
-        self._spellErrorText = self.textCtrl.GetTextRange (self._spellStartByteError,
-                                                           self._spellEndByteError)
+        self._spellErrorText = self.textCtrl.GetTextRange(
+            self._spellStartByteError,
+            self._spellEndByteError)
 
-        self._spellSuggestList = self._spellChecker.getSuggest (self._spellErrorText)[:self._spellMaxSuggest]
+        self._spellSuggestList = self._spellChecker.getSuggest(self._spellErrorText)[:self._spellMaxSuggest]
 
         menu.AppendSeparator()
-        self._suggestMenuItems = menu.AppendSpellSubmenu (self._spellErrorText,
-                                                          self._spellSuggestList)
+        self._suggestMenuItems = menu.AppendSpellSubmenu(self._spellErrorText,
+                                                         self._spellSuggestList)
 
         for menuItem in self._suggestMenuItems:
             self.textCtrl.Bind(wx.EVT_MENU, self.__onSpellSuggest, menuItem)
 
         self.textCtrl.Bind(wx.EVT_MENU,
                            self.__onAddWordToDict,
-                           id = menu.ID_ADD_WORD)
+                           id=menu.ID_ADD_WORD)
 
         self.textCtrl.Bind(wx.EVT_MENU,
                            self.__onAddWordLowerToDict,
-                           id = menu.ID_ADD_WORD_LOWER)
+                           id=menu.ID_ADD_WORD_LOWER)
 
 
+    def __onSpellSuggest(self, event):
+        word = event.GetEventObject().GetLabelText(event.GetId())
 
-    def __onSpellSuggest (self, event):
-        word = event.GetEventObject().GetLabelText (event.GetId())
-
-        self.textCtrl.SetSelection (self._spellStartByteError, self._spellEndByteError)
-        self.textCtrl.ReplaceSelection (word)
+        self.textCtrl.SetSelection(self._spellStartByteError,
+                                   self._spellEndByteError)
+        self.textCtrl.ReplaceSelection(word)
