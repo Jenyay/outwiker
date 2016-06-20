@@ -9,6 +9,7 @@
 		<changelog>
 			<version number="2.0.0.795" status="dev">
 				<change>Рефакторинг системы сборки.</change>
+				<change>Улучшена вставка заголовков на викистраницы.</change>
 				<change>Исправление ошибок.</change>
 			</version>
 
@@ -28,6 +29,8 @@
 		<changelog>
 			<version number="2.0.0.795" status="dev">
 				<change>Build system refactoring.</change>
+				<change>Improved heading inserting in wiki pages.</change>
+				<change>Bug fixes.</change>
 			</version>
 
 			<version number="2.0.0.794" status="dev" date="May 30, 2016">
