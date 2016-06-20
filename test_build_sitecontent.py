@@ -7,7 +7,7 @@ from outwiker.core.appinfo import AppInfo, VersionInfo
 from outwiker.core.version import Version
 
 
-class SiteContentTest (unittest.TestCase):
+class ChangelogContentTest (unittest.TestCase):
     def setUp(self):
         self._appname = u'Test'
         self._author = None

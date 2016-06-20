@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
+from __future__ import print_function
 import os
 import os.path
 import glob
@@ -217,6 +218,8 @@ def test(section=u'', *args):
     Run the unit tests
     """
     _runTests(u'src', u'tests_', section, *args)
+    if len(section) == 0:
+        test_build(section, *args)
 
 
 @task
@@ -305,4 +308,4 @@ def _print_changelog(path_to_xml, lang):
     appinfo = parser.parse(xml_content)
     generator = SiteChangelogGenerator(appinfo)
     changelog = generator.make()
-    print changelog
+    print(changelog)
