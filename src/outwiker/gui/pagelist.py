@@ -3,8 +3,8 @@
 import wx
 import wx.lib.newevent
 
-from outwiker.gui.hyperlink import (HyperLinkCtrl,
-                                    EVT_HYPERLINK_LEFT)
+from outwiker.gui.controls.hyperlink import (HyperLinkCtrl,
+                                             EVT_HYPERLINK_LEFT)
 
 # Событие, возникающее при клике по элементу, описывающий страницу
 PageClickEvent, EVT_PAGE_CLICK = wx.lib.newevent.NewEvent()
