@@ -17,10 +17,13 @@ from buildtools.defines import(
     UBUNTU_RELEASE_NAMES,
     BUILD_DIR,
     DEB_SOURCE_BUILD_DIR,
+    PLUGINS_DIR,
+    PLUGINS_LIST,
     PLUGIN_VERSIONS_FILENAME,
 )
 from buildtools.versions import getOutwikerVersion
-from buildtools.contentgenerators import SiteChangelogGenerator
+from buildtools.contentgenerators import (SiteChangelogGenerator,
+                                          SitePluginsTableGenerator)
 from buildtools.builders import (BuilderWindows,
                                  BuilderSources,
                                  BuilderPlugins,
@@ -309,3 +312,21 @@ def _print_changelog(path_to_xml, lang):
     generator = SiteChangelogGenerator(appinfo)
     changelog = generator.make()
     print(changelog)
+
+
+@task
+def plugins_list(lang):
+    appinfo_list = []
+    for plugin_name in PLUGINS_LIST:
+        path_to_xml = os.path.join(PLUGINS_DIR,
+                                   plugin_name,
+                                   plugin_name,
+                                   PLUGIN_VERSIONS_FILENAME)
+        xml_content = readTextFile(path_to_xml)
+        parser = XmlVersionParser([lang])
+        appinfo = parser.parse(xml_content)
+        appinfo_list.append(appinfo)
+
+    generator = SitePluginsTableGenerator(appinfo_list)
+    text = generator.make()
+    print(text)

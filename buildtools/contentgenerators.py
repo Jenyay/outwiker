@@ -95,3 +95,42 @@ class SiteChangelogGenerator(object):
 
         if verinfo.changes:
             buf.write(u'\n')
+
+
+class SitePluginsTableGenerator (object):
+    def __init__ (self, appInfoList):
+        self._appInfoList = appInfoList[:]
+        self._appInfoList.sort(key=lambda x: x.appname)
+
+    def make(self):
+        buf = StringIO()
+        for appinfo in self._appInfoList:
+            assert appinfo.requirements is not None
+            self._appendAppInfo(buf, appinfo)
+        return buf.getvalue().strip()
+
+    def _appendAppInfo(self, buf, appinfo):
+        # Append plugin name and link
+        name_text = u'||[[{name} -> {link}]] '.format(name=appinfo.appname,
+                                                      link=appinfo.appwebsite)
+        buf.write(name_text)
+
+        # Append description
+        description_text = u'||{} '.format(appinfo.description)
+        buf.write(description_text)
+
+        # OS
+        os_list = appinfo.requirements.os[:]
+        os_list.sort(reverse=True)
+        os_list_text = u', '.join(os_list)
+        os_text = u'|| {} '.format(os_list_text)
+        buf.write(os_text)
+
+        # OutWiker version
+        version_text = u'|| {}.{}.{} ||'.format(
+            appinfo.requirements.outwiker_version[0],
+            appinfo.requirements.outwiker_version[1],
+            appinfo.requirements.outwiker_version[2],
+        )
+        buf.write(version_text)
+        buf.write(u'\n')
