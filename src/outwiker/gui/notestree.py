@@ -128,13 +128,13 @@ class NotesTree(wx.Panel):
         Добавляет иконку страницы в ImageList и возвращает ее идентификатор.
         Если иконки нет, то возвращает идентификатор иконки по умолчанию
         """
+        imageId = self.defaultImageId
         icon = page.icon
 
         if icon is not None:
-            image = wx.Bitmap (icon)
-            imageId = self.imagelist.Add (image)
-        else:
-            imageId = self.defaultImageId
+            image = wx.Bitmap(icon)
+            if image.IsOk():
+                imageId = self.imagelist.Add(image)
 
         return imageId
 

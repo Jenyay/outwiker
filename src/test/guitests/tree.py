@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-from os.path import basename
+import os
 
 from basemainwnd import BaseMainWndTest
 from outwiker.pages.text.textpage import TextPageFactory
@@ -111,7 +111,8 @@ class TreeTest (BaseMainWndTest):
         Application.wikiroot = self.wikiroot
 
         rootitem = tree.GetRootItem()
-        self.assertEqual (tree.GetItemText (rootitem), basename (self.path))
+        self.assertEqual (tree.GetItemText (rootitem),
+                          os.path.basename (self.path))
         self.assertEqual (tree.GetChildrenCount (rootitem), 0)
         self.assertEqual (tree.GetItemData(rootitem).GetData(), self.wikiroot)
 
@@ -310,3 +311,14 @@ class TreeTest (BaseMainWndTest):
         self.assertEqual (tree.GetChildrenCount (newPageItem, True), 1)
         self.assertEqual (tree.GetItemData(newPageItem).GetData(), self.wikiroot[u"Переименованная страница"])
         self.assertEqual (tree.GetItemText (newPageItem), u"Переименованная страница")
+
+    def testInvalidIcon (self):
+        tree = self._getTreeCtrl()
+        Application.wikiroot = self.wikiroot
+
+        factory = TextPageFactory()
+        page = factory.create (self.wikiroot, u"Страница 1", [])
+        icon_name = u'../test/images/invalid.png'
+        assert os.path.exists(icon_name)
+
+        page.icon = icon_name
