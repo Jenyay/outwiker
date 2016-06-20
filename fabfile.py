@@ -3,7 +3,6 @@
 
 import os
 import os.path
-import shutil
 import glob
 
 from fabric.api import local, lcd, settings, task
@@ -21,8 +20,7 @@ from buildtools.defines import(
 )
 from buildtools.versions import getOutwikerVersion
 from buildtools.contentgenerators import SiteChangelogGenerator
-from buildtools.builders import (BuilderBase,
-                                 BuilderWindows,
+from buildtools.builders import (BuilderWindows,
                                  BuilderSources,
                                  BuilderPlugins,
                                  BuilderLinuxBinary,
@@ -285,13 +283,26 @@ def clear():
 @task
 def plugin_changelog(plugin, lang):
     """
-    Generate plugin changelog for the site
+    Generate plugin's changelog for the site
     """
     path_to_xml = os.path.join(getPathToPlugin(plugin),
                                PLUGIN_VERSIONS_FILENAME)
+    _print_changelog(path_to_xml, lang)
+
+
+@task
+def outwiker_changelog(lang):
+    """
+    Generate OutWiker's changelog for the site
+    """
+    path_to_xml = os.path.join(u'src', 'versions.xml')
+    _print_changelog(path_to_xml, lang)
+
+
+def _print_changelog(path_to_xml, lang):
     xml_content = readTextFile(path_to_xml)
     parser = XmlVersionParser([lang])
     appinfo = parser.parse(xml_content)
     generator = SiteChangelogGenerator(appinfo)
     changelog = generator.make()
-    print changelog.encode(u'utf8')
+    print changelog
