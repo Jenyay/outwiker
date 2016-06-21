@@ -482,11 +482,11 @@ class WikiPageView(BaseWikiPageView):
         """
         Добавить остальные инструменты
         """
-        # Добавить миниатюру
         toolbar = self.mainWindow.toolbars[self._getName()]
         menu = self.toolsMenu
         actionController = self._application.actionController
 
+        # Добавить миниатюру
         actionController.appendMenuItem(WikiThumbAction.stringId, menu)
         actionController.appendToolbarButton(
             WikiThumbAction.stringId,
@@ -527,7 +527,7 @@ class WikiPageView(BaseWikiPageView):
             os.path.join(self.imagesDir, "text_horizontalrule.png"),
             fullUpdate=False)
 
-        # Вставка разрыва страницы
+        # Вставка разрыва строки
         actionController.getAction(LINE_BREAK_STR_ID).setFunc(
             lambda param: self.replaceText(u"[[<<]]"))
 

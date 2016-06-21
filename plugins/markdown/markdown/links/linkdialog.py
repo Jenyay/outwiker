@@ -28,7 +28,7 @@ class LinkDialog(TestedDialog):
     def _createGui(self):
         mainSizer = wx.FlexGridSizer(cols=2)
         mainSizer.AddGrowableCol(1)
-        mainSizer.AddGrowableRow(2)
+        mainSizer.AddGrowableRow(3)
 
         # Link
         linkLabel = wx.StaticText(self, label=_(u"Link"))
@@ -51,6 +51,18 @@ class LinkDialog(TestedDialog):
                       flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
                       border=4)
         mainSizer.Add(self.commentText,
+                      flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND,
+                      border=4)
+
+        # Title
+        titleLabel = wx.StaticText(self, label=_(u"Title"))
+        self.titleText = wx.TextCtrl(self)
+        self.titleText.SetMinSize((self.textWidth, -1))
+
+        mainSizer.Add(titleLabel,
+                      flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+                      border=4)
+        mainSizer.Add(self.titleText,
                       flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND,
                       border=4)
 
@@ -80,3 +92,11 @@ class LinkDialog(TestedDialog):
     @link.setter
     def link(self, value):
         self.linkText.SetValue(value)
+
+    @property
+    def title(self):
+        return self.titleText.GetValue()
+
+    @title.setter
+    def title(self, value):
+        self.titleText.SetValue(value)
