@@ -582,6 +582,32 @@ class TextEditor(wx.Panel):
         """
         return self.__calcCharPos(self.textCtrl.GetLineEndPosition(line))
 
+    def MoveSelectedLinesUp(self):
+        """
+        Move the selected lines up one line,
+        shifting the line above after the selection.
+
+        Added in OutWiker 2.0.0.795
+        """
+        self.textCtrl.MoveSelectedLinesUp()
+
+    def MoveSelectedLinesDown(self):
+        """
+        Move the selected lines down one line,
+        shifting the line below before the selection.
+
+        Added in OutWiker 2.0.0.795
+        """
+        self.textCtrl.MoveSelectedLinesDown()
+
+    def LineDuplicate(self):
+        """
+        Duplicate the current line.
+
+        Added in OutWiker 2.0.0.795
+        """
+        self.textCtrl.LineDuplicate()
+
     def __calcCharPos(self, pos_bytes):
         """
         Пересчет позиции в байтах в позицию в символах

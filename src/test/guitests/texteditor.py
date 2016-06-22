@@ -804,3 +804,75 @@ class TextEditorTest(BaseMainWndTest):
 
         editor.toddleSelectedLinesPrefix(u'Тест ')
         self.assertEqual(editor.GetText(), u'Проверка\nПроверка')
+
+    def test_MoveSelectedLinesDown_01(self):
+        editor = self._getEditor()
+        editor.SetText(u'Строка 1\nСтрока 2\nСтрока 3\nСтрока 4')
+        editor.SetSelection(0, 0)
+
+        editor.MoveSelectedLinesDown()
+        self.assertEqual(editor.GetText(),
+                         u'Строка 2\nСтрока 1\nСтрока 3\nСтрока 4')
+
+    def test_MoveSelectedLinesDown_02(self):
+        editor = self._getEditor()
+        editor.SetText(u'Строка 1\nСтрока 2\nСтрока 3\nСтрока 4')
+        editor.SetSelection(9, 9)
+
+        editor.MoveSelectedLinesDown()
+        self.assertEqual(editor.GetText(),
+                         u'Строка 1\nСтрока 3\nСтрока 2\nСтрока 4')
+
+    def test_MoveSelectedLinesDown_03(self):
+        editor = self._getEditor()
+        editor.SetText(u'Строка 1\nСтрока 2\nСтрока 3\nСтрока 4')
+        editor.SetSelection(0, 10)
+
+        editor.MoveSelectedLinesDown()
+        self.assertEqual(editor.GetText(),
+                         u'Строка 3\nСтрока 1\nСтрока 2\nСтрока 4')
+
+    def test_MoveSelectedLinesDown_04(self):
+        editor = self._getEditor()
+        editor.SetText(u'Строка 1\nСтрока 2\nСтрока 3\nСтрока 4')
+        editor.SetSelection(0, 18)
+
+        editor.MoveSelectedLinesDown()
+        self.assertEqual(editor.GetText(),
+                         u'Строка 3\nСтрока 1\nСтрока 2\nСтрока 4')
+
+    def test_MoveSelectedLinesUp_01(self):
+        editor = self._getEditor()
+        editor.SetText(u'Строка 1\nСтрока 2\nСтрока 3\nСтрока 4')
+        editor.SetSelection(9, 9)
+
+        editor.MoveSelectedLinesUp()
+        self.assertEqual(editor.GetText(),
+                         u'Строка 2\nСтрока 1\nСтрока 3\nСтрока 4')
+
+    def test_MoveSelectedLinesUp_02(self):
+        editor = self._getEditor()
+        editor.SetText(u'Строка 1\nСтрока 2\nСтрока 3\nСтрока 4')
+        editor.SetSelection(9, 23)
+
+        editor.MoveSelectedLinesUp()
+        self.assertEqual(editor.GetText(),
+                         u'Строка 2\nСтрока 3\nСтрока 1\nСтрока 4')
+
+    def test_LineDuplicate_01(self):
+        editor = self._getEditor()
+        editor.SetText(u'Строка 1\nСтрока 2\nСтрока 3\nСтрока 4')
+        editor.SetSelection(0, 0)
+
+        editor.LineDuplicate()
+        self.assertEqual(editor.GetText().replace(u'\r\n', u'\n'),
+                         u'Строка 1\nСтрока 1\nСтрока 2\nСтрока 3\nСтрока 4')
+
+    def test_LineDuplicate_02(self):
+        editor = self._getEditor()
+        editor.SetText(u'Строка 1\nСтрока 2\nСтрока 3\nСтрока 4')
+        editor.SetSelection(9, 9)
+
+        editor.LineDuplicate()
+        self.assertEqual(editor.GetText().replace(u'\r\n', u'\n'),
+                         u'Строка 1\nСтрока 2\nСтрока 2\nСтрока 3\nСтрока 4')
