@@ -83,6 +83,9 @@ class BaseHtmlPanel(BaseTextPanel):
         """
         return self.codeEditor.GetCurrentPosition()
 
+    def _onLineDuplicate(self, params):
+        self.codeEditor.LineDuplicate()
+
 
     @property
     def codeEditor (self):

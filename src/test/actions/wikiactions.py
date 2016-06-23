@@ -645,8 +645,8 @@ class WikiActionsTest(BaseMainWndTest):
     def test_heading1_01(self):
         editor = self._getEditor()
         actionController = Application.actionController
+        text = u''
         for action_str, syntax in self._headingsSyntax:
-            text = u''
             result = u'{} '.format(syntax)
 
             editor.SetText(text)
@@ -663,8 +663,8 @@ class WikiActionsTest(BaseMainWndTest):
     def test_heading1_02(self):
         editor = self._getEditor()
         actionController = Application.actionController
+        text = u'Строка 1\nСтрока 2\nСтрока 3'
         for action_str, syntax in self._headingsSyntax:
-            text = u'Строка 1\nСтрока 2\nСтрока 3'
             result = u'{} Строка 1\nСтрока 2\nСтрока 3'.format(syntax)
 
             editor.SetText(text)
@@ -681,8 +681,8 @@ class WikiActionsTest(BaseMainWndTest):
     def test_heading1_03(self):
         editor = self._getEditor()
         actionController = Application.actionController
+        text = u'Строка 1\nСтрока 2\nСтрока 3'
         for action_str, syntax in self._headingsSyntax:
-            text = u'Строка 1\nСтрока 2\nСтрока 3'
             result = u'Строка 1\n{} Строка 2\nСтрока 3'.format(syntax)
 
             editor.SetText(text)
@@ -699,8 +699,8 @@ class WikiActionsTest(BaseMainWndTest):
     def test_heading1_04(self):
         editor = self._getEditor()
         actionController = Application.actionController
+        text = u'Строка 1\nСтрока 2\nСтрока 3'
         for action_str, syntax in self._headingsSyntax:
-            text = u'Строка 1\nСтрока 2\nСтрока 3'
             result = u'{syntax} Строка 1\n{syntax} Строка 2\nСтрока 3'.format(
                 syntax=syntax)
 
@@ -714,3 +714,42 @@ class WikiActionsTest(BaseMainWndTest):
             actionController.getAction(action_str).run(None)
             self.assertEqual(editor.GetText().replace(u'\r\n', u'\n'),
                              text)
+
+    def test_LineDuplicate_01(self):
+        editor = self._getEditor()
+        actionController = Application.actionController
+        text = u'Строка 1\nСтрока 2\nСтрока 3'
+        editor.SetText(text)
+        editor.SetSelection(0, 0)
+
+        result = u'Строка 1\nСтрока 1\nСтрока 2\nСтрока 3'
+
+        actionController.getAction(LINE_DUPLICATE_ID).run(None)
+        self.assertEqual(editor.GetText().replace(u'\r\n', u'\n'),
+                         result)
+
+    def test_LineDuplicate_02(self):
+        editor = self._getEditor()
+        actionController = Application.actionController
+        text = u'Строка 1\nСтрока 2\nСтрока 3'
+        editor.SetText(text)
+        editor.SetSelection(15, 15)
+
+        result = u'Строка 1\nСтрока 2\nСтрока 2\nСтрока 3'
+
+        actionController.getAction(LINE_DUPLICATE_ID).run(None)
+        self.assertEqual(editor.GetText().replace(u'\r\n', u'\n'),
+                         result)
+
+    def test_LineDuplicate_03(self):
+        editor = self._getEditor()
+        actionController = Application.actionController
+        text = u''
+        editor.SetText(text)
+        editor.SetSelection(0, 0)
+
+        result = u'\n'
+
+        actionController.getAction(LINE_DUPLICATE_ID).run(None)
+        self.assertEqual(editor.GetText().replace(u'\r\n', u'\n'),
+                         result)

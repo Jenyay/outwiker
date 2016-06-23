@@ -1068,3 +1068,9 @@ def _registerPolyActions (application):
                                                        _(u"Spell checking"),
                                                        _(u"Enable / disable spell checking")),
                                            HotKey ("F7"))
+
+    application.actionController.register (PolyAction (application,
+                                                       LINE_DUPLICATE_ID,
+                                                       _(u"Duplicate line"),
+                                                       _(u"Duplicate current line")),
+                                           None)

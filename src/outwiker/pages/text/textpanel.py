@@ -17,6 +17,9 @@ class TextPanel (BaseTextPanel):
         self.__createGui()
         self.Bind (self.EVT_SPELL_ON_OFF, handler=self._onSpellOnOff)
 
+    def _onLineDuplicate(self, params):
+        self.textEditor.LineDuplicate()
+
 
     def Clear (self):
         self.Unbind (self.EVT_SPELL_ON_OFF, handler=self._onSpellOnOff)

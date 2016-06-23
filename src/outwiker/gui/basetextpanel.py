@@ -7,7 +7,8 @@ import wx
 import wx.lib.newevent
 
 from outwiker.actions.search import SearchAction, SearchNextAction, SearchPrevAction, SearchAndReplaceAction
-from outwiker.actions.polyactionsid import SPELL_ON_OFF_ID
+from outwiker.actions.polyactionsid import (SPELL_ON_OFF_ID,
+                                            LINE_DUPLICATE_ID)
 from outwiker.core.system import getImagesDir
 from outwiker.core.commands import MessageBox, pageExists
 from outwiker.core.attachment import Attachment
@@ -32,14 +33,12 @@ class BaseTextPanel (BasePagePanel):
         """
         pass
 
-
     @abstractmethod
     def GetSearchPanel (self):
         """
         Вернуть панель поиска
         """
         pass
-
 
     @abstractmethod
     def SetCursorPosition (self, position):
@@ -48,7 +47,6 @@ class BaseTextPanel (BasePagePanel):
         """
         pass
 
-
     @abstractmethod
     def GetCursorPosition (self):
         """
@@ -56,6 +54,12 @@ class BaseTextPanel (BasePagePanel):
         """
         pass
 
+    @abstractmethod
+    def _onLineDuplicate(self, params):
+        """
+        Handler of the LINE_DUPLICATE_ID polyaction
+        """
+        pass
 
 
     def __init__ (self, parent, *args, **kwds):
@@ -79,6 +83,7 @@ class BaseTextPanel (BasePagePanel):
 
         self._addSearchTools ()
         self._addSpellTools ()
+        self._addEditTools ()
 
         self._application.onAttachmentPaste += self.onAttachmentPaste
         self._application.onPreferencesDialogClose += self.onPreferencesDialogClose
@@ -234,6 +239,7 @@ class BaseTextPanel (BasePagePanel):
         Убрать за собой
         """
         self._application.actionController.getAction (SPELL_ON_OFF_ID).setFunc (None)
+        self._application.actionController.getAction (LINE_DUPLICATE_ID).setFunc (None)
 
         self._application.onAttachmentPaste -= self.onAttachmentPaste
         self._application.onPreferencesDialogClose -= self.onPreferencesDialogClose
@@ -256,6 +262,7 @@ class BaseTextPanel (BasePagePanel):
         self._application.actionController.removeMenuItem (SearchNextAction.stringId)
         self._application.actionController.removeMenuItem (SearchPrevAction.stringId)
         self._application.actionController.removeMenuItem (SPELL_ON_OFF_ID)
+        self._application.actionController.removeMenuItem (LINE_DUPLICATE_ID)
 
         if self.mainWindow.GENERAL_TOOLBAR_STR in self.mainWindow.toolbars:
             self._application.actionController.removeToolbarButton (SearchAction.stringId)
@@ -316,6 +323,13 @@ class BaseTextPanel (BasePagePanel):
         enableSpell = EditorConfig (Application.config).spellEnabled.value
         self._application.actionController.check (SPELL_ON_OFF_ID, enableSpell)
 
+    def _addEditTools (self):
+        self._application.actionController.getAction (LINE_DUPLICATE_ID).setFunc (self._onLineDuplicate)
+
+        self._application.actionController.appendMenuItem (
+            LINE_DUPLICATE_ID,
+            self._application.mainWindow.mainMenu.editMenu
+        )
 
     def _spellOnOff (self, checked):
         EditorConfig (self._application.config).spellEnabled.value = checked

@@ -94,3 +94,6 @@ SPELL_ON_OFF_ID = "SpellChecking"
 
 # Mark text
 MARK_STR_ID = "Mark"
+
+# Duplicate current line
+LINE_DUPLICATE_ID = "LineDuplicate"
