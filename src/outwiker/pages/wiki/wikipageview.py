@@ -100,6 +100,7 @@ class WikiPageView(BaseWikiPageView):
             TABLE_ROW_STR_ID,
             TABLE_CELL_STR_ID,
             MARK_STR_ID,
+            LINE_DUPLICATE_ID,
         ]
 
     def _getSpecificActions(self):
