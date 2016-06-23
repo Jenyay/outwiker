@@ -35,6 +35,15 @@ class WikiActionsTest(BaseMainWndTest):
             (HORLINE_STR_ID, u"----"),
         ]
 
+        self._headingsSyntax = [
+            (HEADING_1_STR_ID, u'!!'),
+            (HEADING_2_STR_ID, u'!!!'),
+            (HEADING_3_STR_ID, u'!!!!'),
+            (HEADING_4_STR_ID, u'!!!!!'),
+            (HEADING_5_STR_ID, u'!!!!!!'),
+            (HEADING_6_STR_ID, u'!!!!!!!'),
+        ]
+
         WikiPageFactory().create(self.wikiroot, u"Викистраница", [])
         WikiPageFactory().create(self.wikiroot, u"temp", [])
 
@@ -632,3 +641,76 @@ class WikiActionsTest(BaseMainWndTest):
         self.assertEqual(self._getEditor().GetText(),
                          result,
                          self._getEditor().GetText())
+
+    def test_heading1_01(self):
+        editor = self._getEditor()
+        actionController = Application.actionController
+        for action_str, syntax in self._headingsSyntax:
+            text = u''
+            result = u'{} '.format(syntax)
+
+            editor.SetText(text)
+            editor.SetSelection(0, 0)
+
+            actionController.getAction(action_str).run(None)
+            self.assertEqual(editor.GetText().replace(u'\r\n', u'\n'),
+                             result)
+
+            actionController.getAction(action_str).run(None)
+            self.assertEqual(editor.GetText().replace(u'\r\n', u'\n'),
+                             text)
+
+    def test_heading1_02(self):
+        editor = self._getEditor()
+        actionController = Application.actionController
+        for action_str, syntax in self._headingsSyntax:
+            text = u'Строка 1\nСтрока 2\nСтрока 3'
+            result = u'{} Строка 1\nСтрока 2\nСтрока 3'.format(syntax)
+
+            editor.SetText(text)
+            editor.SetSelection(5, 5)
+
+            actionController.getAction(action_str).run(None)
+            self.assertEqual(editor.GetText().replace(u'\r\n', u'\n'),
+                             result)
+
+            actionController.getAction(action_str).run(None)
+            self.assertEqual(editor.GetText().replace(u'\r\n', u'\n'),
+                             text)
+
+    def test_heading1_03(self):
+        editor = self._getEditor()
+        actionController = Application.actionController
+        for action_str, syntax in self._headingsSyntax:
+            text = u'Строка 1\nСтрока 2\nСтрока 3'
+            result = u'Строка 1\n{} Строка 2\nСтрока 3'.format(syntax)
+
+            editor.SetText(text)
+            editor.SetSelection(10, 10)
+
+            actionController.getAction(action_str).run(None)
+            self.assertEqual(editor.GetText().replace(u'\r\n', u'\n'),
+                             result)
+
+            actionController.getAction(action_str).run(None)
+            self.assertEqual(editor.GetText().replace(u'\r\n', u'\n'),
+                             text)
+
+    def test_heading1_04(self):
+        editor = self._getEditor()
+        actionController = Application.actionController
+        for action_str, syntax in self._headingsSyntax:
+            text = u'Строка 1\nСтрока 2\nСтрока 3'
+            result = u'{syntax} Строка 1\n{syntax} Строка 2\nСтрока 3'.format(
+                syntax=syntax)
+
+            editor.SetText(text)
+            editor.SetSelection(0, 10)
+
+            actionController.getAction(action_str).run(None)
+            self.assertEqual(editor.GetText().replace(u'\r\n', u'\n'),
+                             result)
+
+            actionController.getAction(action_str).run(None)
+            self.assertEqual(editor.GetText().replace(u'\r\n', u'\n'),
+                             text)
