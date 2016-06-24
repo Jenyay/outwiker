@@ -6,9 +6,9 @@ from outwiker.core.tagslist import TagsList
 from .tagsselector import TagsSelector
 
 
-class TagsDialog (wx.Dialog):
-    def __init__ (self, parent, application):
-        super (TagsDialog, self).__init__ (
+class TagsDialog(wx.Dialog):
+    def __init__(self, parent, application):
+        super(TagsDialog, self).__init__(
             parent,
             style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.THICK_FRAME)
 
@@ -19,30 +19,31 @@ class TagsDialog (wx.Dialog):
         self.__tagsSelector.SetFocus()
         self.Center(wx.CENTRE_ON_SCREEN)
 
-
-    def __setTagsList (self):
+    def __setTagsList(self):
         assert self.__application.wikiroot is not None
 
-        tagslist = TagsList (self.__application.wikiroot)
-        self.__tagsSelector.setTagsList (tagslist)
+        tagslist = TagsList(self.__application.wikiroot)
+        self.__tagsSelector.setTagsList(tagslist)
 
+    def __createControls(self):
+        self.__tagsSelector = TagsSelector(self)
+        buttonsSizer = self.CreateButtonSizer(wx.OK | wx.CANCEL)
 
-    def __createControls (self):
-        self.__tagsSelector = TagsSelector (self)
-        buttonsSizer = self.CreateButtonSizer (wx.OK | wx.CANCEL)
+        mainSizer = wx.FlexGridSizer(2, 1, 0, 0)
+        mainSizer.AddGrowableRow(0)
+        mainSizer.AddGrowableCol(0)
 
-        mainSizer = wx.FlexGridSizer (2, 1, 0, 0)
-        mainSizer.AddGrowableRow (0)
-        mainSizer.AddGrowableCol (0)
+        mainSizer.Add(self.__tagsSelector,
+                      flag=wx.EXPAND | wx.ALL,
+                      border=2)
+        mainSizer.Add(buttonsSizer,
+                      flag=wx.ALIGN_RIGHT | wx.ALL,
+                      border=2)
 
-        mainSizer.Add (self.__tagsSelector, 1, wx.EXPAND | wx.BORDER, 4)
-        mainSizer.Add (buttonsSizer, 1, wx.ALIGN_RIGHT | wx.BORDER, 4)
-
-        self.SetSizer (mainSizer)
+        self.SetSizer(mainSizer)
         self.Fit()
         self.Layout()
 
-
     @property
-    def tags (self):
+    def tags(self):
         return self.__tagsSelector.tags
