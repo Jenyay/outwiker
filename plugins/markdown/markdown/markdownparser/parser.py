@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-from libs.markdown import markdown
+from markdown_plugin_libs.markdown import markdown
 
 
 class Parser (object):
