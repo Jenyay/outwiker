@@ -8,8 +8,10 @@
 
 		<changelog>
 			<version number="2.0.0.795" status="dev">
-				<change>Рефакторинг системы сборки.</change>
+				<change>В редактор добавлена возможность дублировать текущую строку.</change>
+				<change>В редактор добавлена возможность перемещения строк вверх / вниз.</change>
 				<change>Улучшена вставка заголовков на викистраницы.</change>
+				<change>Рефакторинг системы сборки.</change>
 				<change>Исправление ошибок.</change>
 			</version>
 
@@ -28,8 +30,10 @@
 
 		<changelog>
 			<version number="2.0.0.795" status="dev">
-				<change>Build system refactoring.</change>
+				<change>The editor adds the ability to duplicate the current line.</change>
+				<change>The editor adds the ability to move lines up / down.</change>
 				<change>Improved heading inserting in wiki pages.</change>
+				<change>Build system refactoring.</change>
 				<change>Bug fixes.</change>
 			</version>
 
