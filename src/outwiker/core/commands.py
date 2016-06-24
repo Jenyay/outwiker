@@ -1077,12 +1077,12 @@ def _registerPolyActions (application):
 
     application.actionController.register (PolyAction (application,
                                                        MOVE_SELECTED_LINES_UP_ID,
-                                                       _(u"Move selected lines down"),
-                                                       _(u"Move the selected lines down one line")),
+                                                       _(u"Move selected lines up"),
+                                                       _(u"Move the selected lines up one line")),
                                            None)
 
     application.actionController.register (PolyAction (application,
                                                        MOVE_SELECTED_LINES_DOWN_ID,
-                                                       _(u"Move selected lines up"),
-                                                       _(u"Move the selected lines up one line")),
+                                                       _(u"Move selected lines down"),
+                                                       _(u"Move the selected lines down one line")),
                                            None)

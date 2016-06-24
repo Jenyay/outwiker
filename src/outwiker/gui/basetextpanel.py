@@ -73,7 +73,7 @@ class BaseTextPanel (BasePagePanel):
     @abstractmethod
     def _onMoveSelectedLinesDown(self, params):
         """
-        Handler for the MOVE_SELECTED_LINES_Down_ID polyaction
+        Handler for the MOVE_SELECTED_LINES_DOWN_ID polyaction
         """
         pass
 
