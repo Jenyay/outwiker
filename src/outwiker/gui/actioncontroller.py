@@ -121,7 +121,6 @@ class ActionController (object):
 
             if actionInfo.toolbar is not None and actionInfo.toolItemId is not None:
                 title = self._getToolbarItemTitle (strid)
-                actionInfo.toolbar.SetToolLabel (actionInfo.toolItemId, title)
                 actionInfo.toolbar.SetToolShortHelp (actionInfo.toolItemId, title)
 
         self.saveHotKeys()

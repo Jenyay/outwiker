@@ -20,6 +20,17 @@ class TextPanel (BaseTextPanel):
     def _onLineDuplicate(self, params):
         self.textEditor.LineDuplicate()
 
+    def _onMoveSelectedLinesUp(self, params):
+        """
+        Handler for the MOVE_SELECTED_LINES_UP_ID polyaction
+        """
+        self.textEditor.MoveSelectedLinesUp()
+
+    def _onMoveSelectedLinesDown(self, params):
+        """
+        Handler for the MOVE_SELECTED_LINES_Down_ID polyaction
+        """
+        self.textEditor.MoveSelectedLinesUp()
 
     def Clear (self):
         self.Unbind (self.EVT_SPELL_ON_OFF, handler=self._onSpellOnOff)

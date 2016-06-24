@@ -8,7 +8,9 @@ import wx.lib.newevent
 
 from outwiker.actions.search import SearchAction, SearchNextAction, SearchPrevAction, SearchAndReplaceAction
 from outwiker.actions.polyactionsid import (SPELL_ON_OFF_ID,
-                                            LINE_DUPLICATE_ID)
+                                            LINE_DUPLICATE_ID,
+                                            MOVE_SELECTED_LINES_UP_ID,
+                                            MOVE_SELECTED_LINES_DOWN_ID)
 from outwiker.core.system import getImagesDir
 from outwiker.core.commands import MessageBox, pageExists
 from outwiker.core.attachment import Attachment
@@ -57,7 +59,21 @@ class BaseTextPanel (BasePagePanel):
     @abstractmethod
     def _onLineDuplicate(self, params):
         """
-        Handler of the LINE_DUPLICATE_ID polyaction
+        Handler for the LINE_DUPLICATE_ID polyaction
+        """
+        pass
+
+    @abstractmethod
+    def _onMoveSelectedLinesUp(self, params):
+        """
+        Handler for the MOVE_SELECTED_LINES_UP_ID polyaction
+        """
+        pass
+
+    @abstractmethod
+    def _onMoveSelectedLinesDown(self, params):
+        """
+        Handler for the MOVE_SELECTED_LINES_Down_ID polyaction
         """
         pass
 
@@ -240,6 +256,8 @@ class BaseTextPanel (BasePagePanel):
         """
         self._application.actionController.getAction (SPELL_ON_OFF_ID).setFunc (None)
         self._application.actionController.getAction (LINE_DUPLICATE_ID).setFunc (None)
+        self._application.actionController.getAction (MOVE_SELECTED_LINES_UP_ID).setFunc (None)
+        self._application.actionController.getAction (MOVE_SELECTED_LINES_DOWN_ID).setFunc (None)
 
         self._application.onAttachmentPaste -= self.onAttachmentPaste
         self._application.onPreferencesDialogClose -= self.onPreferencesDialogClose
@@ -263,6 +281,8 @@ class BaseTextPanel (BasePagePanel):
         self._application.actionController.removeMenuItem (SearchPrevAction.stringId)
         self._application.actionController.removeMenuItem (SPELL_ON_OFF_ID)
         self._application.actionController.removeMenuItem (LINE_DUPLICATE_ID)
+        self._application.actionController.removeMenuItem (MOVE_SELECTED_LINES_UP_ID)
+        self._application.actionController.removeMenuItem (MOVE_SELECTED_LINES_DOWN_ID)
 
         if self.mainWindow.GENERAL_TOOLBAR_STR in self.mainWindow.toolbars:
             self._application.actionController.removeToolbarButton (SearchAction.stringId)
@@ -324,10 +344,27 @@ class BaseTextPanel (BasePagePanel):
         self._application.actionController.check (SPELL_ON_OFF_ID, enableSpell)
 
     def _addEditTools (self):
+        # Duplicate line
         self._application.actionController.getAction (LINE_DUPLICATE_ID).setFunc (self._onLineDuplicate)
 
         self._application.actionController.appendMenuItem (
             LINE_DUPLICATE_ID,
+            self._application.mainWindow.mainMenu.editMenu
+        )
+
+        # Move selected lines up
+        self._application.actionController.getAction (MOVE_SELECTED_LINES_UP_ID).setFunc (self._onMoveSelectedLinesUp)
+
+        self._application.actionController.appendMenuItem (
+            MOVE_SELECTED_LINES_UP_ID,
+            self._application.mainWindow.mainMenu.editMenu
+        )
+
+        # Move selected lines down
+        self._application.actionController.getAction (MOVE_SELECTED_LINES_DOWN_ID).setFunc (self._onMoveSelectedLinesDown)
+
+        self._application.actionController.appendMenuItem (
+            MOVE_SELECTED_LINES_DOWN_ID,
             self._application.mainWindow.mainMenu.editMenu
         )
 

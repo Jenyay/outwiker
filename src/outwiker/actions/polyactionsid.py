@@ -97,3 +97,7 @@ MARK_STR_ID = "Mark"
 
 # Duplicate current line
 LINE_DUPLICATE_ID = "LineDuplicate"
+
+# Move selected lines Up / Down
+MOVE_SELECTED_LINES_UP_ID = "MoveSelectedLinesUp"
+MOVE_SELECTED_LINES_DOWN_ID = "MoveSelectedLinesDown"

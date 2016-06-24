@@ -58,11 +58,6 @@ class BaseHtmlPanel(BaseTextPanel):
         self.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED, self._onTabChanged, self.notebook)
         self.Bind (self.EVT_SPELL_ON_OFF, handler=self._onSpellOnOff)
 
-
-    # @property
-    # def htmlWindow (self):
-    #     return self.htmlWindowPanel.getHtmlWindow()
-
     def Clear (self):
         self.Unbind(wx.EVT_NOTEBOOK_PAGE_CHANGED, source=self.notebook, handler=self._onTabChanged)
         self.Unbind (self.EVT_SPELL_ON_OFF, handler=self._onSpellOnOff)
@@ -76,7 +71,6 @@ class BaseHtmlPanel(BaseTextPanel):
         """
         self.codeEditor.SetSelection (position, position)
 
-
     def GetCursorPosition (self):
         """
         Возвращает положение курсора в текстовом редакторе
@@ -86,6 +80,17 @@ class BaseHtmlPanel(BaseTextPanel):
     def _onLineDuplicate(self, params):
         self.codeEditor.LineDuplicate()
 
+    def _onMoveSelectedLinesUp(self, params):
+        """
+        Handler for the MOVE_SELECTED_LINES_UP_ID polyaction
+        """
+        self.codeEditor.MoveSelectedLinesUp()
+
+    def _onMoveSelectedLinesDown(self, params):
+        """
+        Handler for the MOVE_SELECTED_LINES_Down_ID polyaction
+        """
+        self.codeEditor.MoveSelectedLinesDown()
 
     @property
     def codeEditor (self):

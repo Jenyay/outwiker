@@ -753,3 +753,70 @@ class WikiActionsTest(BaseMainWndTest):
         actionController.getAction(LINE_DUPLICATE_ID).run(None)
         self.assertEqual(editor.GetText().replace(u'\r\n', u'\n'),
                          result)
+
+    def test_MoveLinesDown_01(self):
+        editor = self._getEditor()
+        actionController = Application.actionController
+        text = u'Строка 1\nСтрока 2\nСтрока 3\nСтрока 4'
+        editor.SetText(text)
+        editor.SetSelection(0, 0)
+
+        result = u'Строка 2\nСтрока 1\nСтрока 3\nСтрока 4'
+
+        actionController.getAction(MOVE_SELECTED_LINES_DOWN_ID).run(None)
+        self.assertEqual(editor.GetText().replace(u'\r\n', u'\n'),
+                         result)
+
+    def test_MoveLinesDown_02(self):
+        editor = self._getEditor()
+        actionController = Application.actionController
+        text = u'Строка 1\nСтрока 2\nСтрока 3\nСтрока 4'
+        editor.SetText(text)
+        editor.SetSelection(0, 15)
+
+        result = u'Строка 3\nСтрока 1\nСтрока 2\nСтрока 4'
+
+        actionController.getAction(MOVE_SELECTED_LINES_DOWN_ID).run(None)
+        self.assertEqual(editor.GetText().replace(u'\r\n', u'\n'),
+                         result)
+
+    def test_MoveLinesUp_01(self):
+        editor = self._getEditor()
+        actionController = Application.actionController
+        text = u'Строка 1\nСтрока 2\nСтрока 3\nСтрока 4'
+        editor.SetText(text)
+        editor.SetSelection(15, 15)
+
+        result = u'Строка 2\nСтрока 1\nСтрока 3\nСтрока 4'
+
+        actionController.getAction(MOVE_SELECTED_LINES_UP_ID).run(None)
+        self.assertEqual(editor.GetText().replace(u'\r\n', u'\n'),
+                         result)
+
+    def test_MoveLinesUp_02(self):
+        editor = self._getEditor()
+        actionController = Application.actionController
+        text = u'Строка 1\nСтрока 2\nСтрока 3\nСтрока 4'
+        editor.SetText(text)
+        editor.SetSelection(10, 21)
+
+        result = u'Строка 2\nСтрока 3\nСтрока 1\nСтрока 4'
+
+        actionController.getAction(MOVE_SELECTED_LINES_UP_ID).run(None)
+        self.assertEqual(editor.GetText().replace(u'\r\n', u'\n'),
+                         result)
+
+    def test_MoveLinesUpDown_empty(self):
+        editor = self._getEditor()
+        actionController = Application.actionController
+        text = u''
+        editor.SetText(text)
+        editor.SetSelection(0, 0)
+
+        result = u''
+
+        actionController.getAction(MOVE_SELECTED_LINES_UP_ID).run(None)
+        self.assertEqual(editor.GetText().replace(u'\r\n', u'\n'), result)
+
+        actionController.getAction(MOVE_SELECTED_LINES_DOWN_ID).run(None)
+        self.assertEqual(editor.GetText().replace(u'\r\n', u'\n'), result)

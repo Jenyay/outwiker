@@ -1074,3 +1074,15 @@ def _registerPolyActions (application):
                                                        _(u"Duplicate line"),
                                                        _(u"Duplicate current line")),
                                            None)
+
+    application.actionController.register (PolyAction (application,
+                                                       MOVE_SELECTED_LINES_UP_ID,
+                                                       _(u"Move selected lines down"),
+                                                       _(u"Move the selected lines down one line")),
+                                           None)
+
+    application.actionController.register (PolyAction (application,
+                                                       MOVE_SELECTED_LINES_DOWN_ID,
+                                                       _(u"Move selected lines up"),
+                                                       _(u"Move the selected lines up one line")),
+                                           None)
