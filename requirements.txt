@@ -3,4 +3,3 @@ comtypes
 Pillow
 pyenchant
 cx_Freeze == 4.3.3
-html5lib

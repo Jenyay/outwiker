@@ -56,7 +56,6 @@ class BaseBuilder (object):
                 'enchant',
                 'htmlentitydefs',
                 'HTMLParser',
-                'html5lib',
                 ]
 
 
