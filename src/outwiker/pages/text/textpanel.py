@@ -32,6 +32,14 @@ class TextPanel (BaseTextPanel):
         """
         self.textEditor.MoveSelectedLinesUp()
 
+    def _onDeleteCurrentLine(self, params):
+        """
+        Handler for the DELETE_CURRENT_LINE_ID polyaction
+
+        Added in OutWiker 2.0.0.795
+        """
+        self.textEditor.LineDelete()
+
     def Clear (self):
         self.Unbind (self.EVT_SPELL_ON_OFF, handler=self._onSpellOnOff)
         super (TextPanel, self).Clear()

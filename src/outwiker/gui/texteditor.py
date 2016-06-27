@@ -608,6 +608,14 @@ class TextEditor(wx.Panel):
         """
         self.textCtrl.LineDuplicate()
 
+    def LineDelete(self):
+        """
+        Delete the current line.
+
+        Added in OutWiker 2.0.0.795
+        """
+        self.textCtrl.LineDelete()
+
     def __calcCharPos(self, pos_bytes):
         """
         Пересчет позиции в байтах в позицию в символах

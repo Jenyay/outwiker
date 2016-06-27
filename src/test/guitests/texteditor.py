@@ -876,3 +876,29 @@ class TextEditorTest(BaseMainWndTest):
         editor.LineDuplicate()
         self.assertEqual(editor.GetText().replace(u'\r\n', u'\n'),
                          u'Строка 1\nСтрока 2\nСтрока 2\nСтрока 3\nСтрока 4')
+
+    def test_LineDelete_01(self):
+        editor = self._getEditor()
+        editor.SetText(u'Строка 1\nСтрока 2\nСтрока 3\nСтрока 4')
+        editor.SetSelection(0, 0)
+
+        editor.LineDelete()
+        self.assertEqual(editor.GetText().replace(u'\r\n', u'\n'),
+                         u'Строка 2\nСтрока 3\nСтрока 4')
+
+    def test_LineDelete_02(self):
+        editor = self._getEditor()
+        editor.SetText(u'Строка 1\nСтрока 2\nСтрока 3\nСтрока 4')
+        editor.SetSelection(10, 10)
+
+        editor.LineDelete()
+        self.assertEqual(editor.GetText().replace(u'\r\n', u'\n'),
+                         u'Строка 1\nСтрока 3\nСтрока 4')
+
+    def test_LineDelete_03_empty(self):
+        editor = self._getEditor()
+        editor.SetText(u'')
+        editor.SetSelection(0, 0)
+
+        editor.LineDelete()
+        self.assertEqual(editor.GetText().replace(u'\r\n', u'\n'), u'')

@@ -102,7 +102,8 @@ class WikiPageView(BaseWikiPageView):
             MARK_STR_ID,
             LINE_DUPLICATE_ID,
             MOVE_SELECTED_LINES_UP_ID,
-            MOVE_SELECTED_LINES_DOWN_ID
+            MOVE_SELECTED_LINES_DOWN_ID,
+            DELETE_CURRENT_LINE_ID,
         ]
 
     def _getSpecificActions(self):

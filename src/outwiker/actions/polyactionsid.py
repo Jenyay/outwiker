@@ -95,9 +95,12 @@ SPELL_ON_OFF_ID = "SpellChecking"
 # Mark text
 MARK_STR_ID = "Mark"
 
-# Duplicate current line
+# Duplicate the current line
 LINE_DUPLICATE_ID = "LineDuplicate"
 
 # Move selected lines Up / Down
 MOVE_SELECTED_LINES_UP_ID = "MoveSelectedLinesUp"
 MOVE_SELECTED_LINES_DOWN_ID = "MoveSelectedLinesDown"
+
+# Delete the current line
+DELETE_CURRENT_LINE_ID = "DeleteCurrentLine"

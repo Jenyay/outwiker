@@ -10,7 +10,8 @@ from outwiker.actions.search import SearchAction, SearchNextAction, SearchPrevAc
 from outwiker.actions.polyactionsid import (SPELL_ON_OFF_ID,
                                             LINE_DUPLICATE_ID,
                                             MOVE_SELECTED_LINES_UP_ID,
-                                            MOVE_SELECTED_LINES_DOWN_ID)
+                                            MOVE_SELECTED_LINES_DOWN_ID,
+                                            DELETE_CURRENT_LINE_ID)
 from outwiker.core.system import getImagesDir
 from outwiker.core.commands import MessageBox, pageExists
 from outwiker.core.attachment import Attachment
@@ -60,6 +61,8 @@ class BaseTextPanel (BasePagePanel):
     def _onLineDuplicate(self, params):
         """
         Handler for the LINE_DUPLICATE_ID polyaction
+
+        Added in OutWiker 2.0.0.795
         """
         pass
 
@@ -67,6 +70,8 @@ class BaseTextPanel (BasePagePanel):
     def _onMoveSelectedLinesUp(self, params):
         """
         Handler for the MOVE_SELECTED_LINES_UP_ID polyaction
+
+        Added in OutWiker 2.0.0.795
         """
         pass
 
@@ -74,9 +79,19 @@ class BaseTextPanel (BasePagePanel):
     def _onMoveSelectedLinesDown(self, params):
         """
         Handler for the MOVE_SELECTED_LINES_DOWN_ID polyaction
+
+        Added in OutWiker 2.0.0.795
         """
         pass
 
+    @abstractmethod
+    def _onDeleteCurrentLine(self, params):
+        """
+        Handler for the DELETE_CURRENT_LINE_ID polyaction
+
+        Added in OutWiker 2.0.0.795
+        """
+        pass
 
     def __init__ (self, parent, *args, **kwds):
         super (BaseTextPanel, self).__init__ (parent, *args, **kwds)
@@ -258,6 +273,7 @@ class BaseTextPanel (BasePagePanel):
         self._application.actionController.getAction (LINE_DUPLICATE_ID).setFunc (None)
         self._application.actionController.getAction (MOVE_SELECTED_LINES_UP_ID).setFunc (None)
         self._application.actionController.getAction (MOVE_SELECTED_LINES_DOWN_ID).setFunc (None)
+        self._application.actionController.getAction (DELETE_CURRENT_LINE_ID).setFunc (None)
 
         self._application.onAttachmentPaste -= self.onAttachmentPaste
         self._application.onPreferencesDialogClose -= self.onPreferencesDialogClose
@@ -283,6 +299,7 @@ class BaseTextPanel (BasePagePanel):
         self._application.actionController.removeMenuItem (LINE_DUPLICATE_ID)
         self._application.actionController.removeMenuItem (MOVE_SELECTED_LINES_UP_ID)
         self._application.actionController.removeMenuItem (MOVE_SELECTED_LINES_DOWN_ID)
+        self._application.actionController.removeMenuItem (DELETE_CURRENT_LINE_ID)
 
         if self.mainWindow.GENERAL_TOOLBAR_STR in self.mainWindow.toolbars:
             self._application.actionController.removeToolbarButton (SearchAction.stringId)
@@ -344,7 +361,17 @@ class BaseTextPanel (BasePagePanel):
         self._application.actionController.check (SPELL_ON_OFF_ID, enableSpell)
 
     def _addEditTools (self):
-        # Duplicate line
+        self._application.mainWindow.mainMenu.editMenu.AppendSeparator()
+
+        # Delete the current line line
+        self._application.actionController.getAction (DELETE_CURRENT_LINE_ID).setFunc (self._onDeleteCurrentLine)
+
+        self._application.actionController.appendMenuItem (
+            DELETE_CURRENT_LINE_ID,
+            self._application.mainWindow.mainMenu.editMenu
+        )
+
+        # Duplicate the current line
         self._application.actionController.getAction (LINE_DUPLICATE_ID).setFunc (self._onLineDuplicate)
 
         self._application.actionController.appendMenuItem (

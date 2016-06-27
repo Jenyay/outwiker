@@ -62,6 +62,10 @@ class MarkdownPageView(BaseWikiPageView):
             # LIST_NUMBERS_STR_ID,
             HTML_ESCAPE_STR_ID,
             CURRENT_DATE,
+            LINE_DUPLICATE_ID,
+            MOVE_SELECTED_LINES_UP_ID,
+            MOVE_SELECTED_LINES_DOWN_ID,
+            DELETE_CURRENT_LINE_ID,
         ]
 
     def _getSpecificActions(self):

@@ -78,19 +78,36 @@ class BaseHtmlPanel(BaseTextPanel):
         return self.codeEditor.GetCurrentPosition()
 
     def _onLineDuplicate(self, params):
+        """
+        Handler for the LINE_DUPLICATE_ID polyaction
+
+        Added in OutWiker 2.0.0.795
+        """
         self.codeEditor.LineDuplicate()
 
     def _onMoveSelectedLinesUp(self, params):
         """
         Handler for the MOVE_SELECTED_LINES_UP_ID polyaction
+
+        Added in OutWiker 2.0.0.795
         """
         self.codeEditor.MoveSelectedLinesUp()
 
     def _onMoveSelectedLinesDown(self, params):
         """
         Handler for the MOVE_SELECTED_LINES_Down_ID polyaction
+
+        Added in OutWiker 2.0.0.795
         """
         self.codeEditor.MoveSelectedLinesDown()
+
+    def _onDeleteCurrentLine(self, params):
+        """
+        Handler for the DELETE_CURRENT_LINE_ID polyaction
+
+        Added in OutWiker 2.0.0.795
+        """
+        self.codeEditor.LineDelete()
 
     @property
     def codeEditor (self):

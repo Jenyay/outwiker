@@ -1086,3 +1086,9 @@ def _registerPolyActions (application):
                                                        _(u"Move selected lines down"),
                                                        _(u"Move the selected lines down one line")),
                                            None)
+
+    application.actionController.register (PolyAction (application,
+                                                       DELETE_CURRENT_LINE_ID,
+                                                       _(u"Delete line"),
+                                                       _(u"Delete the current line")),
+                                           None)

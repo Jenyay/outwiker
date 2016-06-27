@@ -820,3 +820,42 @@ class WikiActionsTest(BaseMainWndTest):
 
         actionController.getAction(MOVE_SELECTED_LINES_DOWN_ID).run(None)
         self.assertEqual(editor.GetText().replace(u'\r\n', u'\n'), result)
+
+    def test_DeleteCurrentLine_01(self):
+        editor = self._getEditor()
+        actionController = Application.actionController
+        text = u'Строка 1\nСтрока 2\nСтрока 3\nСтрока 4'
+        editor.SetText(text)
+        editor.SetSelection(0, 0)
+
+        result = u'Строка 2\nСтрока 3\nСтрока 4'
+
+        actionController.getAction(DELETE_CURRENT_LINE_ID).run(None)
+        self.assertEqual(editor.GetText().replace(u'\r\n', u'\n'),
+                         result)
+
+    def test_DeleteCurrentLine_02(self):
+        editor = self._getEditor()
+        actionController = Application.actionController
+        text = u'Строка 1\nСтрока 2\nСтрока 3\nСтрока 4'
+        editor.SetText(text)
+        editor.SetSelection(10, 10)
+
+        result = u'Строка 1\nСтрока 3\nСтрока 4'
+
+        actionController.getAction(DELETE_CURRENT_LINE_ID).run(None)
+        self.assertEqual(editor.GetText().replace(u'\r\n', u'\n'),
+                         result)
+
+    def test_DeleteCurrentLine_03_empty(self):
+        editor = self._getEditor()
+        actionController = Application.actionController
+        text = u''
+        editor.SetText(text)
+        editor.SetSelection(0, 0)
+
+        result = u''
+
+        actionController.getAction(DELETE_CURRENT_LINE_ID).run(None)
+        self.assertEqual(editor.GetText().replace(u'\r\n', u'\n'),
+                         result)
