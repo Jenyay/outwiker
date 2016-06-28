@@ -2,6 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 from __future__ import print_function
+import __builtin__
 import os
 import os.path
 import glob
@@ -330,3 +331,33 @@ def plugins_list(lang):
     generator = SitePluginsTableGenerator(appinfo_list)
     text = generator.make()
     print(text)
+
+
+@task
+def create_tree(maxlevel, nsiblings, path):
+    '''
+    Create wiki tree for the tests.
+    '''
+    from outwiker.core.tree import WikiDocument
+
+    __builtin__._ = _empty
+    wikiroot = WikiDocument.create(path)
+    _create_tree(1, int(maxlevel), int(nsiblings), wikiroot)
+
+
+def _empty(param):
+    return param
+
+
+def _create_tree(level, maxlevel, nsiblings, parent):
+    from outwiker.pages.wiki.wikipage import WikiPageFactory
+
+    if level <= maxlevel:
+        for n in range(nsiblings):
+            pagename = u'page_{:03g}_{:03g}'.format(level, n)
+            print(u'Create page {}'.format(pagename))
+
+            newpage = WikiPageFactory().create(parent, pagename, [])
+            newpage.content = u'Абырвалг'
+            newpage.icon = u'images/outwiker_16.png'
+            _create_tree(level + 1, maxlevel, nsiblings, newpage)
