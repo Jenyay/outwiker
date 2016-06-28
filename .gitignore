@@ -58,3 +58,4 @@ tests_win
 *.sublime-*
 .idea/
 Thumbs.db
+tmp/
