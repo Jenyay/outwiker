@@ -3,6 +3,7 @@
 import os.path
 import re
 import logging
+import time
 
 import wx
 
@@ -27,6 +28,7 @@ class PluginDebug (Plugin):
         self._url = u"http://jenyay.net/Outwiker/DebugPlugin"
         self._watcher = EventsWatcher (self._application)
         self._timer = Timer()
+        self._startWikiOpenTime = None
 
         self.ID_PLUGINSLIST = wx.NewId()
         self.ID_BUTTONSDIALOG = wx.NewId()
@@ -46,6 +48,7 @@ class PluginDebug (Plugin):
         self._enableRenderingTimeMeasuring = config.enableRenderingTimeMeasuring.value
         self._enableNewPageDialogTab = config.enableNewPageDialogTab.value
         self._enablePageDialogEvents = config.enablePageDialogEvents.value
+        self._enableOpeningTimeMeasure = config.enableOpeningTimeMeasure.value
 
         config.enablePreprocessing.value = self._enablePreProcessing
         config.enablePostprocessing.value = self._enablePostProcessing
@@ -55,6 +58,7 @@ class PluginDebug (Plugin):
         config.enableRenderingTimeMeasuring.value = self._enableRenderingTimeMeasuring
         config.enableNewPageDialogTab.value = self._enableNewPageDialogTab
         config.enablePageDialogEvents.value = self._enablePageDialogEvents
+        config.enableOpeningTimeMeasure.value = self._enableOpeningTimeMeasure
 
 
     def initialize(self):
@@ -95,6 +99,8 @@ class PluginDebug (Plugin):
             self._application.onPageDialogPageStyleChanged += self.__onPageDialogPageStyleChanged
             self._application.onPageDialogPageIconChanged += self.__onPageDialogPageIconChanged
             self._application.onPageDialogPageTagsChanged += self.__onPageDialogPageTagsChanged
+            self._application.onPreWikiOpen += self.__onPreWikiOpen
+            self._application.onPostWikiOpen += self.__onPostWikiOpen
 
 
     def destroy (self):
@@ -144,6 +150,8 @@ class PluginDebug (Plugin):
             self._application.onPageDialogPageStyleChanged -= self.__onPageDialogPageStyleChanged
             self._application.onPageDialogPageIconChanged -= self.__onPageDialogPageIconChanged
             self._application.onPageDialogPageTagsChanged -= self.__onPageDialogPageTagsChanged
+            self._application.onPreWikiOpen -= self.__onPreWikiOpen
+            self._application.onPostWikiOpen -= self.__onPostWikiOpen
 
 
     def __createMenu (self):
@@ -363,6 +371,18 @@ class PluginDebug (Plugin):
     def __onPageDialogPageTagsChanged (self, page, params):
         if self._enablePageDialogEvents:
             print u'New page tags: {}'.format (params.pageTags)
+
+    def __onPreWikiOpen(self, page, params):
+        if self._enableOpeningTimeMeasure:
+            self._startWikiOpenTime = time.clock()
+
+    def __onPostWikiOpen(self, page, params):
+        if self._enableOpeningTimeMeasure:
+            interval = time.clock() - self._startWikiOpenTime
+            self._startWikiOpenTime = None
+            text = u'Opening "{path}": {time} sec'.format(path=params.path,
+                                                          time=interval)
+            print text
 
 
     ###################################################

@@ -12,9 +12,8 @@ import wx
 
 import outwiker.core.exceptions
 from outwiker.actions.polyactionsid import *
+from outwiker.core.events import PreWikiOpenParams, PostWikiOpenParams
 from outwiker.core.system import getOS, getCurrentDir
-from outwiker.utilites.textfile import readTextFile
-from outwiker.core.version import Version
 from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
@@ -29,6 +28,7 @@ from outwiker.gui.dateformatdialog import DateFormatDialog
 from outwiker.gui.guiconfig import GeneralGuiConfig
 from outwiker.gui.tester import Tester
 from outwiker.gui.testeddialog import TestedFileDialog
+from outwiker.utilites.textfile import readTextFile
 
 
 def MessageBox (*args, **kwargs):
@@ -161,18 +161,28 @@ def openWiki (path, readonly=False):
         except outwiker.core.exceptions.RootFormatError, error:
             return error
 
+    preWikiOpenParams = PreWikiOpenParams(path, readonly)
+    Application.onPreWikiOpen(Application.selectedPage,
+                              preWikiOpenParams)
+
     runner = LongProcessRunner (threadFunc,
                                 Application.mainWindow,
                                 _(u"Loading"),
                                 _(u"Opening notes tree..."))
     result = runner.run (os.path.realpath (path), readonly)
 
-    if isinstance (result, IOError):
-        __canNotLoadWikiMessage (path)
-    elif isinstance (result, outwiker.core.exceptions.RootFormatError):
-        __rootFormatErrorHandle (path, readonly)
+    success = False
+    if isinstance(result, IOError):
+        __canNotLoadWikiMessage(path)
+    elif isinstance(result, outwiker.core.exceptions.RootFormatError):
+        __rootFormatErrorHandle(path, readonly)
     else:
         Application.wikiroot = result
+        success = True
+
+    postWikiOpenParams = PostWikiOpenParams(path, readonly, success)
+    Application.onPostWikiOpen(Application.selectedPage,
+                               postWikiOpenParams)
 
     return Application.wikiroot
 

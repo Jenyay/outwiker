@@ -58,3 +58,9 @@ class DebugConfig (object):
                                                      self.SECTION,
                                                      u'enablePageDialogEvents',
                                                      False)
+
+        self.enableOpeningTimeMeasure = BooleanOption (
+            self.config,
+            self.SECTION,
+            u'enableOpeningTimeMeasure',
+            False)

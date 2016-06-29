@@ -273,6 +273,18 @@ class ApplicationParams (object):
         #     params - instance of the PageUpdateNeededParams class
         self.onPageUpdateNeeded = Event()
 
+        # Event occurs before wiki opening
+        # Parameters:
+        #    page - current (selected) page
+        #    params - instance of the PreWikiOpenParams class
+        self.onPreWikiOpen = Event()
+
+        # Event occurs before wiki opening
+        # Parameters:
+        #    page - current (selected) page
+        #    params - instance of the PostWikiOpenParams class
+        self.onPostWikiOpen = Event()
+
 
     def init (self, configFilename):
         """

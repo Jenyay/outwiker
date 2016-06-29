@@ -220,3 +220,26 @@ class PageUpdateNeededParams (object):
     """
     def __init__ (self, data):
         self.data = data
+
+
+class PreWikiOpenParams (object):
+    """
+    Parameter set for the onPreWikiOpen event
+
+    Added in OutWiker 2.0.0.795
+    """
+    def __init__(self, path, readonly):
+        self.path = path
+        self.readonly = readonly
+
+
+class PostWikiOpenParams (object):
+    """
+    Parameter set for the onPostWikiOpen event
+
+    Added in OutWiker 2.0.0.795
+    """
+    def __init__(self, path, readonly, success):
+        self.path = path
+        self.readonly = readonly
+        self.success = success
