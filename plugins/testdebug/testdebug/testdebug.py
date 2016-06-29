@@ -374,11 +374,11 @@ class PluginDebug (Plugin):
 
     def __onPreWikiOpen(self, page, params):
         if self._enableOpeningTimeMeasure:
-            self._startWikiOpenTime = time.clock()
+            self._startWikiOpenTime = time.time()
 
     def __onPostWikiOpen(self, page, params):
         if self._enableOpeningTimeMeasure:
-            interval = time.clock() - self._startWikiOpenTime
+            interval = time.time() - self._startWikiOpenTime
             self._startWikiOpenTime = None
             text = u'Opening wiki {time} sec'.format(time=interval)
             logging.warning(text)
