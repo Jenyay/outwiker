@@ -11,22 +11,20 @@ class LogRedirector(object):
         self._terminal = sys.stdout
         self._fname = filename
 
-
-    def init (self):
+    def init(self):
         sys.stdout = self
         sys.stderr = self
 
         self._firstWrite = True
 
-        self._runTime = time.strftime (u'%Y-%m-%d %H:%M:%S')
-        logging.basicConfig (format = '%(asctime)s - %(levelname)s - %(message)s',
-                             level = logging.WARNING)
-
+        self._runTime = time.strftime(u'%Y-%m-%d %H:%M:%S')
+        logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s',
+                            level=logging.WARNING)
 
     def write(self, message):
         self._terminal.write(message)
-        with codecs.open (self._fname, "a", "utf-8") as fp:
+        with codecs.open(self._fname, "a", "utf-8") as fp:
             if self._firstWrite:
-                fp.write(u'\n\n{} - START\n'.format (self._runTime))
+                fp.write(u'\n\n{} - START\n'.format(self._runTime))
                 self._firstWrite = False
             fp.write(message)
