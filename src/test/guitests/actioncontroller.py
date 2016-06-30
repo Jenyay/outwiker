@@ -904,7 +904,7 @@ class ActionControllerTest (BaseMainWndTest):
         item = self._getToolItem (toolbar, strid)
 
         if item is not None:
-            result = item.GetLabel()
+            result = item.GetShortHelp()
 
         return result
 
