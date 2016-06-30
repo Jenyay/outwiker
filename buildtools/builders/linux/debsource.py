@@ -8,7 +8,6 @@ from fabric.api import local, lcd
 
 from ..base import BuilderBase
 from buildtools.versions import getOutwikerVersion, getOutwikerAppInfo
-from buildtools.utilites import getCurrentUbuntuDistribName
 from buildtools.contentgenerators import DebChangelogGenerator
 from buildtools.defines import (TIMEZONE,
                                 DEB_MAINTAINER,
@@ -31,7 +30,6 @@ class BuilderBaseDebSource(BuilderBase):
         """
         date = datetime.datetime.now()
         date_str = date.strftime(u'%a, %d %b %Y %H:%M:%S ' + TIMEZONE)
-        current_distrib_name = getCurrentUbuntuDistribName()
         outwiker_appinfo = getOutwikerAppInfo()
         changelog_generator = DebChangelogGenerator(outwiker_appinfo,
                                                     DEB_MAINTAINER,
@@ -76,7 +74,38 @@ class BuilderBaseDebSource(BuilderBase):
         dirname = self._getSubpath(self._getDebName())
         os.makedirs(dirname)
 
-        local("rsync -avz * --exclude=.bzr --exclude=distrib --exclude=build --exclude=*.pyc --exclude=*.dll --exclude=*.exe --exclude=src/.ropeproject --exclude=src/test --exclude=src/setup.py --exclude=src/setup_tests.py --exclude=src/profile.py --exclude=src/tests.py --exclude=src/Microsoft.VC90.CRT.manifest --exclude=src/profiles --exclude=src/tools --exclude=doc --exclude=plugins --exclude=profiles --exclude=test --exclude=_update_version_bzr.py --exclude=outwiker_setup.iss --exclude=updateversion --exclude=updateversion.py --exclude=debian_tmp --exclude=Makefile_debbinary  --exclude=need_for_build {dirname}/".format(dirname=dirname))
+        excludes = [
+            u'build',
+            u'*.pyc',
+            u'*.dll',
+            u'*.exe',
+            u'src/.ropeproject',
+            u'src/test',
+            u'src/setup.py',
+            u'src/setup_tests.py',
+            u'src/tests_*',
+            u'src/profile.py',
+            u'src/profiles',
+            u'doc',
+            u'plugins',
+            u'profiles',
+            u'test',
+            u'outwiker_setup.iss',
+            u'need_for_build',
+            u'buildtools',
+            u'test_*',
+            u'images/datagraph',
+            u'images/old',
+            u'images/outwiker_new_year_*',
+        ]
+        excludes_param = reduce(lambda x, y: x + u' --exclude={}'.format(y),
+                                excludes,
+                                u'')
+
+        command = "rsync -avz * {excludes} {dirname}/".format(
+            dirname=dirname,
+            excludes=excludes_param)
+        local(command)
 
         shutil.copytree(os.path.join(u'need_for_build',
                                      u'debian_debsource',
