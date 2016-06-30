@@ -100,3 +100,8 @@ class CustomEvents(object):
         event = self._events.get(key)
         if event is not None:
             event(*args, **kwargs)
+
+    def get(self, key):
+        if key not in self._events:
+            self._events[key] = Event()
+        return self._events[key]

@@ -400,7 +400,13 @@ class ApplicationParams(object):
         try:
             init_i18n(language)
         except IOError:
-            print u"Can't load language: %s" % language
+            print u"Can't load language: {}".format(language)
+
+    def getEvent (self, name):
+        """Return build-in event or custom event"""
+        if hasattr (self, name) and isinstance (getattr (self, name), Event):
+            return getattr (self, name)
+        return self.customEvents.get(name)
 
 
 Application = ApplicationParams()
