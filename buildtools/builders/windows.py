@@ -31,6 +31,7 @@ class BuilderWindows(BuilderBase):
     def clear(self):
         super(BuilderWindows, self).clear()
         toRemove = [
+            os.path.join(self._root_build_dir, u'versions.xml'),
             os.path.join(self._root_build_dir, self._resultBaseName + u'.7z'),
             os.path.join(self._root_build_dir, self._resultBaseName + u'.exe'),
             os.path.join(self._root_build_dir, self._resultBaseName + u'.zip'),
@@ -42,6 +43,9 @@ class BuilderWindows(BuilderBase):
         map(self._remove, toRemove)
 
     def _build(self):
+        shutil.copy (os.path.join(u'src', u'versions.xml'),
+                     self._root_build_dir)
+
         self._create_plugins_dir()
         self._build_binary()
         self._clear_dest_plugins_dir()
