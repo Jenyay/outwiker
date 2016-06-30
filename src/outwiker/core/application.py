@@ -26,7 +26,7 @@ class ApplicationParams (object):
         # Anchor for transition during the opening other page
         self._anchor = None
 
-        self._customEvents = CustomEvents()
+        self.customEvents = CustomEvents()
 
         # Events
 
@@ -410,14 +410,6 @@ class ApplicationParams (object):
             init_i18n (language)
         except IOError:
             print u"Can't load language: %s" % language
-
-
-    def getEvent (self, name):
-        """Return build-in event or custom event"""
-        if hasattr (self, name) and isinstance (getattr (self, name), Event):
-            return getattr (self, name)
-
-        return self._customEvents.get(name)
 
 
 Application = ApplicationParams()

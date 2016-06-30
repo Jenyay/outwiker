@@ -24,34 +24,26 @@ class EventTest(unittest.TestCase):
         self.value3 = 0
         self.value4 = 0
 
-
     def event1(self):
         self.value1 = 1
-
 
     def event2(self, param):
         self.value2 = 2
 
-
     def event3(self, param):
         self.value3 = 3
-
 
     def event4(self, param):
         self.value4 += 1
 
-
     def eventAdd_1(self, param):
         param.append(1)
-
 
     def eventAdd_2(self, param):
         param.append(2)
 
-
     def eventAdd_3(self, param):
         param.append(3)
-
 
     def testAdd1(self):
         event = Event()
@@ -62,7 +54,6 @@ class EventTest(unittest.TestCase):
         self.assertEqual(self.value1, 1)
         self.assertEqual(self.value2, 0)
 
-
     def testAdd2(self):
         event = Event()
         event += self.event2
@@ -71,7 +62,6 @@ class EventTest(unittest.TestCase):
 
         self.assertEqual(self.value1, 0)
         self.assertEqual(self.value2, 2)
-
 
     def testAdd3(self):
         event = Event()
@@ -82,7 +72,6 @@ class EventTest(unittest.TestCase):
 
         self.assertEqual(self.value2, 2)
         self.assertEqual(self.value3, 3)
-
 
     def testAdd4(self):
         event = Event()
@@ -96,7 +85,6 @@ class EventTest(unittest.TestCase):
         event -= self.event4
         event -= self.event4
         event -= self.event4
-
 
     def testRemove1(self):
         event = Event()
@@ -118,11 +106,9 @@ class EventTest(unittest.TestCase):
         self.assertEqual(self.value2, 0)
         self.assertEqual(self.value3, 3)
 
-
     def testRemove3(self):
         event = Event()
         event -= self.event1
-
 
     def testClear1(self):
         event = Event()
@@ -130,7 +116,6 @@ class EventTest(unittest.TestCase):
 
         event.clear()
         self.assertEqual(len(event), 0)
-
 
     def testClear2(self):
         event = Event()
@@ -145,7 +130,6 @@ class EventTest(unittest.TestCase):
         self.assertEqual(self.value1, 0)
         self.assertEqual(self.value2, 0)
 
-
     def testPriority_01(self):
         items = []
         event = Event()
@@ -153,7 +137,6 @@ class EventTest(unittest.TestCase):
         event(items)
 
         self.assertEqual(items, [1])
-
 
     def testPriority_02(self):
         items = []
@@ -163,7 +146,6 @@ class EventTest(unittest.TestCase):
         event(items)
 
         self.assertEqual(items, [1, 2])
-
 
     def testPriority_03(self):
         items = []
@@ -175,7 +157,6 @@ class EventTest(unittest.TestCase):
 
         self.assertEqual(items, [1, 2, 3])
 
-
     def testPriority_04(self):
         items = []
         event = Event()
@@ -185,7 +166,6 @@ class EventTest(unittest.TestCase):
 
         self.assertEqual(items, [1, 2])
 
-
     def testPriority_05(self):
         items = []
         event = Event()
@@ -194,7 +174,6 @@ class EventTest(unittest.TestCase):
         event(items)
 
         self.assertEqual(items, [2, 1])
-
 
     def testPriority_06(self):
         items = []
@@ -206,7 +185,6 @@ class EventTest(unittest.TestCase):
 
         self.assertEqual(items, [1, 2, 3])
 
-
     def testPriority_07(self):
         items = []
         event = Event()
@@ -217,52 +195,48 @@ class EventTest(unittest.TestCase):
 
         self.assertEqual(items, [3, 1, 2])
 
-
     def testCustomEvent_01(self):
         cevent = CustomEvents()
-        cevent.get('event4').bind(self.event4)
+        cevent.bind(u'event4', self.event4)
 
-        cevent.get('event4')(None)
+        cevent(u'event4', None)
         self.assertEqual(self.value4, 1)
 
-        cevent.get('event4')(None)
+        cevent(u'event4', None)
         self.assertEqual(self.value4, 2)
 
-        cevent.get('event4').unbind(self.event4)
+        cevent.unbind(u'event4', self.event4)
 
-        cevent.get('event4')(None)
+        cevent(u'event4', None)
         self.assertEqual(self.value4, 2)
-
 
     def testCustomEvent_02(self):
         cevent = CustomEvents()
-        cevent.get('event4').bind(self.event4)
+        cevent.bind(u'event4', self.event4)
 
-        cevent.get('event4')(None)
+        cevent(u'event4', None)
         self.assertEqual(self.value4, 1)
 
-        cevent.get('event4')(None)
+        cevent(u'event4', None)
         self.assertEqual(self.value4, 2)
 
-        cevent.get('event4').clear()
+        cevent.clear(u'event4')
 
-        cevent.get('event4')(None)
+        cevent(u'event4', None)
         self.assertEqual(self.value4, 2)
-
 
     def testCustomEvent_03(self):
         cevent = CustomEvents()
         param = []
-        cevent.get('eventAdd1').bind(self.eventAdd_1)
-        cevent.get('eventAdd1')(param)
+        cevent.bind(u'eventAdd1', self.eventAdd_1)
+        cevent(u'eventAdd1', param)
 
         self.assertEqual(param, [1])
-        cevent.get('eventAdd1').clear()
-
+        cevent.clear('eventAdd1')
 
     def testCustomEvent_04(self):
         cevent = CustomEvents()
-        cevent.get('unknown')(None)
+        cevent('unknown', None)
 
 
 class EventsTest(unittest.TestCase):
@@ -289,7 +263,6 @@ class EventsTest(unittest.TestCase):
 
         Application.wikiroot = None
 
-
     def tearDown(self):
         Application.wikiroot = None
         removeDir(self.path)
@@ -300,24 +273,20 @@ class EventsTest(unittest.TestCase):
         self.pageUpdateCount += 1
         self.prev_kwargs = kwargs
 
-
     def pageCreate(self, sender):
         self.isPageCreate = True
         self.pageCreateSender = sender
         self.pageCreateCount += 1
-
 
     def treeUpdate(self, sender):
         self.isTreeUpdate = True
         self.treeUpdateSender = sender
         self.treeUpdateCount += 1
 
-
     def pageSelect(self, sender):
         self.isPageSelect = True
         self.pageSelectSender = sender
         self.pageSelectCount += 1
-
 
     def testLoad_01(self):
         path = u"../test/samplewiki"
@@ -331,21 +300,6 @@ class EventsTest(unittest.TestCase):
         self.assertEqual(self.treeUpdateCount, 0)
 
         Application.onTreeUpdate -= self.treeUpdate
-
-
-    def testLoad_02(self):
-        path = u"../test/samplewiki"
-        Application.getEvent('onTreeUpdate').bind(self.treeUpdate)
-
-        self.assertFalse(self.isTreeUpdate)
-        WikiDocument.load(path)
-
-        self.assertFalse(self.isTreeUpdate)
-        self.assertEqual(self.treeUpdateSender, None)
-        self.assertEqual(self.treeUpdateCount, 0)
-
-        Application.getEvent('onTreeUpdate').unbind(self.treeUpdate)
-
 
     def testCreateEvent(self):
         Application.onTreeUpdate += self.treeUpdate
@@ -396,7 +350,6 @@ class EventsTest(unittest.TestCase):
         Application.onTreeUpdate -= self.treeUpdate
         Application.onPageCreate -= self.pageCreate
 
-
     def testCreateNoEvent(self):
         Application.onTreeUpdate += self.treeUpdate
         Application.onPageCreate += self.pageCreate
@@ -421,7 +374,6 @@ class EventsTest(unittest.TestCase):
 
         self.assertFalse(self.isPageCreate)
         self.assertEqual(self.pageCreateSender, None)
-
 
     def testUpdateContentEvent(self):
         """
@@ -451,7 +403,6 @@ class EventsTest(unittest.TestCase):
         Application.onPageUpdate -= self.pageUpdate
         Application.wikiroot = None
 
-
     def testUpdateContentNoEvent(self):
         """
         Тест на НЕсрабатывание событий при обновлении контента
@@ -475,7 +426,6 @@ class EventsTest(unittest.TestCase):
         self.assertEqual(self.pageUpdateSender, None)
 
         Application.onPageUpdate -= self.pageUpdate
-
 
     def testUpdateTagsEvent(self):
         """
@@ -504,7 +454,6 @@ class EventsTest(unittest.TestCase):
 
         Application.onPageUpdate -= self.pageUpdate
 
-
     def testUpdateTagsNoEvent(self):
         """
         Тест на срабатывание событий при обновлении меток(тегов)
@@ -528,7 +477,6 @@ class EventsTest(unittest.TestCase):
         self.assertEqual(self.pageUpdateSender, None)
 
         Application.onPageUpdate -= self.pageUpdate
-
 
     def testUpdateIcon(self):
         """
@@ -560,7 +508,6 @@ class EventsTest(unittest.TestCase):
 
         Application.onPageUpdate -= self.pageUpdate
         Application.onTreeUpdate -= self.treeUpdate
-
 
     def testUpdateIconNoEvent(self):
         """
@@ -595,7 +542,6 @@ class EventsTest(unittest.TestCase):
         Application.onPageUpdate -= self.pageUpdate
         Application.onTreeUpdate -= self.treeUpdate
 
-
     def testPageSelectCreate(self):
         Application.onPageSelect += self.pageSelect
 
@@ -628,7 +574,6 @@ class EventsTest(unittest.TestCase):
 
         Application.onPageSelect -= self.pageSelect
 
-
     def testPageSelectCreateNoEvent(self):
         Application.onPageSelect += self.pageSelect
 
@@ -647,7 +592,6 @@ class EventsTest(unittest.TestCase):
 
         self.assertEqual(rootwiki.selectedPage, rootwiki[u"Страница 1"])
         self.assertEqual(self.isPageSelect, True)
-
 
     def testPageSelectLoad(self):
         Application.onPageSelect += self.pageSelect
