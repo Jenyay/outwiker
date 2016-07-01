@@ -128,5 +128,6 @@ if __name__ == '__main__':
     from test.plugins.markdown.test_markdown import MarkdownTest
     from test.plugins.markdown.test_loading import MarkdownLoadingTest
     from test.plugins.markdown.test_linkcreator import LinkCreatorTest
+    from test.plugins.markdown.test_markdown_polyactions import MarkdownPolyactionsTest
 
     unittest.main()
