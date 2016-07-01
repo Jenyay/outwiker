@@ -30,7 +30,7 @@ class TextPanel (BaseTextPanel):
         """
         Handler for the MOVE_SELECTED_LINES_Down_ID polyaction
         """
-        self.textEditor.MoveSelectedLinesUp()
+        self.textEditor.MoveSelectedLinesDown()
 
     def _onDeleteCurrentLine(self, params):
         """

@@ -50,5 +50,10 @@ if __name__ == '__main__':
     from test.actions.applystyle import ApplyStyleActionTest
     from test.actions.moveupdown import MovePageUpDownActionTest
     from test.actions.moving import MovingActionTest
+    from test.actions.test_editor_polyactions import (
+        WikiEditorPolyactionsTest,
+        HtmlEditorPolyactionsTest,
+        TextEditorPolyactionsTest,
+    )
 
     unittest.main()
