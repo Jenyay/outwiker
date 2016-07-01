@@ -102,7 +102,6 @@ class TextEditor(wx.Panel):
                            self.__onSelectAll,
                            id=wx.ID_SELECTALL)
 
-        self.textCtrl.Bind(wx.EVT_CHAR, self.__OnChar_ImeWorkaround)
         self.textCtrl.Bind(wx.EVT_KEY_DOWN, self.__onKeyDown)
         self.textCtrl.Bind(wx.EVT_CONTEXT_MENU, self.__onContextMenu)
 
@@ -380,27 +379,6 @@ class TextEditor(wx.Panel):
             self._searchPanel.Close()
 
         event.Skip()
-
-    def __OnChar_ImeWorkaround(self, evt):
-        """
-        Обработка клавиш вручную, чтобы не было проблем
-        с вводом русских букв в Linux.
-        Основа кода взята из Wikidpad(WikiTxtCtrl.py -> OnChar_ImeWorkaround)
-        """
-        key = evt.GetKeyCode()
-
-        # Return if this doesn't seem to be a real character input
-        if evt.ControlDown() or(0 < key < 32):
-            evt.Skip()
-            return
-
-        if key >= wx.WXK_START and evt.GetUnicodeKey() != key:
-            evt.Skip()
-            return
-
-        unichar = unichr(evt.GetUnicodeKey())
-
-        self.textCtrl.ReplaceSelection(self.mbcsEnc(unichar, "replace")[0])
 
     def AddText(self, text):
         self.textCtrl.AddText(text)
