@@ -7,7 +7,10 @@
 		<website>http://jenyay.net/Outwiker/Unstable</website>
 
 		<changelog>
-			<version number="2.0.0.796" status="dev">
+			<version number="2.0.0.797" status="dev">
+			</version>
+
+			<version number="2.0.0.796" status="dev" date="02.07.2016">
 				<change>В редактор добавлена возможность дублировать текущую строку с помощью горячей клавиши или меню.</change>
 				<change>В редактор добавлена возможность удалять текущую строку с помощью горячей клавиши или меню.</change>
 				<change>В редактор добавлена возможность перемещения строк вверх / вниз с помощью горячих клавиш или меню.</change>
@@ -30,7 +33,10 @@
 		<website>http://jenyay.net/Outwiker/UnstableEn</website>
 
 		<changelog>
-			<version number="2.0.0.796" status="dev">
+			<version number="2.0.0.797" status="dev">
+			</version>
+
+			<version number="2.0.0.796" status="dev" date="July 02, 2016">
 				<change>The editor adds the ability to duplicate the current line with hot key or menu item.</change>
 				<change>The editor adds the ability to delete the current line with hot key or menu item.</change>
 				<change>The editor adds the ability to move lines up / down with hot keys or menu items.</change>
