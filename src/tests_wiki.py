@@ -38,34 +38,34 @@ if __name__ == '__main__':
 
     import unittest
 
-    from test.wikipage.parsertests.tokennames import TokenNamesTest
-    from test.wikipage.parsertests.parserfont import ParserFontTest
-    from test.wikipage.parsertests.parserformat import ParserFormatTest
-    from test.wikipage.parsertests.parsermisc import ParserMiscTest
-    from test.wikipage.parsertests.parserlink import ParserLinkTest
-    from test.wikipage.parsertests.parserattach import ParserAttachTest
-    from test.wikipage.parsertests.parserimages import ParserImagesTest
-    from test.wikipage.parsertests.parserheading import ParserHeadingTest
-    from test.wikipage.parsertests.parserthumb import ParserThumbTest
-    from test.wikipage.parsertests.parseralign import ParserAlignTest
-    from test.wikipage.parsertests.parserlist import ParserListTest
-    from test.wikipage.parsertests.parsertable import ParserTableTest
-    from test.wikipage.parsertests.parseradhoc import ParserAdHocTest
-    from test.wikipage.parsertests.parserurl import ParserUrlTest
-    from test.wikipage.parsertests.parserlinebreak import ParserLineBreakTest
-    from test.wikipage.parsertests.parserquote import ParserQuoteTest
+    from test.wikipage.parsertests.test_tokennames import TokenNamesTest
+    from test.wikipage.parsertests.test_parserfont import ParserFontTest
+    from test.wikipage.parsertests.test_parserformat import ParserFormatTest
+    from test.wikipage.parsertests.test_parsermisc import ParserMiscTest
+    from test.wikipage.parsertests.test_parserlink import ParserLinkTest
+    from test.wikipage.parsertests.test_parserattach import ParserAttachTest
+    from test.wikipage.parsertests.test_parserimages import ParserImagesTest
+    from test.wikipage.parsertests.test_parserheading import ParserHeadingTest
+    from test.wikipage.parsertests.test_parserthumb import ParserThumbTest
+    from test.wikipage.parsertests.test_parseralign import ParserAlignTest
+    from test.wikipage.parsertests.test_parserlist import ParserListTest
+    from test.wikipage.parsertests.test_parsertable import ParserTableTest
+    from test.wikipage.parsertests.test_parseradhoc import ParserAdHocTest
+    from test.wikipage.parsertests.test_parserurl import ParserUrlTest
+    from test.wikipage.parsertests.test_parserlinebreak import ParserLineBreakTest
+    from test.wikipage.parsertests.test_parserquote import ParserQuoteTest
 
-    from test.wikipage.parsertests.wikicommands import WikiCommandsTest
-    from test.wikipage.parsertests.wikicommandinclude import WikiIncludeCommandTest
-    from test.wikipage.parsertests.wikicommandchildlist import WikiChildListCommandTest
-    from test.wikipage.parsertests.wikicommandattachlist import WikiAttachListCommandTest
-    from test.wikipage.parsertests.wikicommanddates import WikiCommandDatesTest
-    from test.wikipage.parsertests.wikicommandtable import WikiCommandTableTest
+    from test.wikipage.parsertests.test_wikicommands import WikiCommandsTest
+    from test.wikipage.parsertests.test_wikicommandinclude import WikiIncludeCommandTest
+    from test.wikipage.parsertests.test_wikicommandchildlist import WikiChildListCommandTest
+    from test.wikipage.parsertests.test_wikicommandattachlist import WikiAttachListCommandTest
+    from test.wikipage.parsertests.test_wikicommanddates import WikiCommandDatesTest
+    from test.wikipage.parsertests.test_wikicommandtable import WikiCommandTableTest
 
-    from test.wikipage.wikihtmlcache import WikiHtmlCacheTest
-    from test.wikipage.wikihtmlgenerator import WikiHtmlGeneratorTest
-    from test.wikipage.wikihash import WikiHashTest
-    from test.wikipage.wikilinkcreator import WikiLinkCreatorTest
-    from test.wikipage.wikiutils import WikiUtilsTest
+    from test.wikipage.test_wikihtmlcache import WikiHtmlCacheTest
+    from test.wikipage.test_wikihtmlgenerator import WikiHtmlGeneratorTest
+    from test.wikipage.test_wikihash import WikiHashTest
+    from test.wikipage.test_wikilinkcreator import WikiLinkCreatorTest
+    from test.wikipage.test_wikiutils import WikiUtilsTest
 
     unittest.main()

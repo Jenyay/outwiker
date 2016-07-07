@@ -38,64 +38,64 @@ if __name__ == '__main__':
 
     import unittest
 
-    from test.treeloading import (WikiPagesTest,
-                                  SubWikiTest,
-                                  TextPageAttachmentTest)
-    from test.treeloading_readonly import ReadonlyLoadTest, ReadonlyChangeTest
-    from test.treecreation import TextPageCreationTest
-    from test.treemanualedit import ManualEditTest
-    from test.bookmarks import BookmarksTest
-    from test.treeconfigpages import ConfigPagesTest
-    from test.invalidwiki import InvalidWikiTest
-    from test.factory import FactorySelectorTest
-    from test.titletester import PageTitleTesterTest
-    from test.tags import TagsListTest
-    from test.pagedatetime import PageDateTimeTest
+    from test.test_treeloading import (WikiPagesTest,
+                                       SubWikiTest,
+                                       TextPageAttachmentTest)
+    from test.test_treeloading_readonly import ReadonlyLoadTest, ReadonlyChangeTest
+    from test.test_treecreation import TextPageCreationTest
+    from test.test_treemanualedit import ManualEditTest
+    from test.test_bookmarks import BookmarksTest
+    from test.test_treeconfigpages import ConfigPagesTest
+    from test.test_invalidwiki import InvalidWikiTest
+    from test.test_factory import FactorySelectorTest
+    from test.test_titletester import PageTitleTesterTest
+    from test.test_tags import TagsListTest
+    from test.test_pagedatetime import PageDateTimeTest
 
-    from test.pagemove import MoveTest
-    from test.attachment import AttachmentTest
-    from test.pagerename import RenameTest
-    from test.pageremove import RemovePagesTest
-    from test.pageorder import PageOrderTest
+    from test.test_pagemove import MoveTest
+    from test.test_attachment import AttachmentTest
+    from test.test_pagerename import RenameTest
+    from test.test_pageremove import RemovePagesTest
+    from test.test_pageorder import PageOrderTest
 
-    from test.thumbmakerwx import ThumbmakerWxTest
-    from test.thumbmakerpil import ThumbmakerPilTest
-    from test.pagethumbmaker import PageThumbmakerTest
-    from test.thumbnails import ThumbnailsTest
-    from test.htmlimproverbr import BrHtmlImproverTest
-    from test.htmlimproverfactory import HtmlImproverFactoryTest
-    from test.htmltemplate import HtmlTemplateTest
-    from test.htmlpage.htmlpages import HtmlPagesTest
+    from test.test_thumbmakerwx import ThumbmakerWxTest
+    from test.test_thumbmakerpil import ThumbmakerPilTest
+    from test.test_pagethumbmaker import PageThumbmakerTest
+    from test.test_thumbnails import ThumbnailsTest
+    from test.test_htmlimproverbr import BrHtmlImproverTest
+    from test.test_htmlimproverfactory import HtmlImproverFactoryTest
+    from test.test_htmltemplate import HtmlTemplateTest
+    from test.htmlpage.test_htmlpages import HtmlPagesTest
 
-    from test.event import EventTest, EventsTest
-    from test.config import (ConfigTest,
-                             ConfigOptionsTest,
-                             TrayConfigTest,
-                             EditorConfigTest)
+    from test.test_event import EventTest, EventsTest
+    from test.test_config import (ConfigTest,
+                                  ConfigOptionsTest,
+                                  TrayConfigTest,
+                                  EditorConfigTest)
 
-    from test.recent import RecentWikiTest
-    from test.search import SearcherTest, SearchPageTest
-    from test.localsearch import LocalSearchTest
-    from test.i18n import I18nTest
-    from test.version import VersionTest, StatusTest
-    from test.treesort import TreeSortTest
-    from test.emptycontent import EmptyContentTest
-    from test.hotkey import HotKeyTest
-    from test.hotkeyparser import HotKeyParserTest
-    from test.hotkeyconfig import HotKeyConfigTest
-    from test.history import HistoryTest
-    from test.commandline import CommandLineTest
-    from test.pageuiddepot import PageUidDepotTest
-    from test.loader import PluginsLoaderTest
-    from test.iconscollection import IconsCollectionTest
-    from test.iconmaker import IconMakerTest
-    from test.dicttostr import DictToStrTest
+    from test.test_recent import RecentWikiTest
+    from test.test_search import SearcherTest, SearchPageTest
+    from test.test_localsearch import LocalSearchTest
+    from test.test_i18n import I18nTest
+    from test.test_version import VersionTest, StatusTest
+    from test.test_treesort import TreeSortTest
+    from test.test_emptycontent import EmptyContentTest
+    from test.test_hotkey import HotKeyTest
+    from test.test_hotkeyparser import HotKeyParserTest
+    from test.test_hotkeyconfig import HotKeyConfigTest
+    from test.test_history import HistoryTest
+    from test.test_commandline import CommandLineTest
+    from test.test_pageuiddepot import PageUidDepotTest
+    from test.test_loader import PluginsLoaderTest
+    from test.test_iconscollection import IconsCollectionTest
+    from test.test_iconmaker import IconMakerTest
+    from test.test_dicttostr import DictToStrTest
 
-    from test.spellchecker.dictsfinder import DictsFinderTest
-    from test.spellchecker.spellchecker import SpellCheckerTest
+    from test.spellchecker.test_dictsfinder import DictsFinderTest
+    from test.spellchecker.test_spellchecker import SpellCheckerTest
 
-    from test.styles.styles import StylesTest
-    from test.styles.styleslist import StylesListTest
+    from test.styles.test_styles import StylesTest
+    from test.styles.test_styleslist import StylesListTest
 
     from test.test_xmlversionparser import XmlVersionParserTest
 

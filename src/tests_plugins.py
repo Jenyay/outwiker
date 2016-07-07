@@ -38,84 +38,84 @@ if __name__ == '__main__':
 
     import unittest
 
-    from test.plugins.template import TemplateTest
-    from test.plugins.testplugin.testpage import TestPageTest
-    from test.plugins.testplugin.testwikicommand import PluginWikiCommandTest
+    from test.plugins.test_template import TemplateTest
+    from test.plugins.testplugin.test_testpage import TestPageTest
+    from test.plugins.testplugin.test_testwikicommand import PluginWikiCommandTest
 
-    from test.plugins.style.loading import StyleLoadingTest
-    from test.plugins.style.style import StylePluginTest
+    from test.plugins.style.test_loading import StyleLoadingTest
+    from test.plugins.style.test_style import StylePluginTest
 
-    from test.plugins.export2html.export2html_test import Export2HtmlTest
-    from test.plugins.export2html.loading import Export2HtmlLoadingTest
+    from test.plugins.export2html.test_export2html import Export2HtmlTest
+    from test.plugins.export2html.test_loading import Export2HtmlLoadingTest
 
-    from test.plugins.spoiler.loading import SpoilerLoadingTest
-    from test.plugins.spoiler.spoiler import SpoilerPluginTest
+    from test.plugins.spoiler.test_loading import SpoilerLoadingTest
+    from test.plugins.spoiler.test_spoiler import SpoilerPluginTest
 
-    from test.plugins.livejournal.loading import LivejournalLoadingTest
-    from test.plugins.livejournal.livejournal_test import LivejournalPluginTest
+    from test.plugins.livejournal.test_loading import LivejournalLoadingTest
+    from test.plugins.livejournal.test_livejournal import LivejournalPluginTest
 
-    from test.plugins.lightbox.loading import LightboxLoadingTest
-    from test.plugins.lightbox.lightbox import LightboxPluginTest
+    from test.plugins.lightbox.test_loading import LightboxLoadingTest
+    from test.plugins.lightbox.test_lightbox import LightboxPluginTest
 
-    from test.plugins.thumbgallery.loading import ThumbGalleryLoadingTest
-    from test.plugins.thumbgallery.thumblist import ThumbListPluginTest
+    from test.plugins.thumbgallery.test_loading import ThumbGalleryLoadingTest
+    from test.plugins.thumbgallery.test_thumblist import ThumbListPluginTest
 
-    from test.plugins.statistics.loading import StatisticsLoadingTest
-    from test.plugins.statistics.pagestatistics import PageStatisticsTest
-    from test.plugins.statistics.treestatistics import TreeStatisticsTest
+    from test.plugins.statistics.test_loading import StatisticsLoadingTest
+    from test.plugins.statistics.test_pagestatistics import PageStatisticsTest
+    from test.plugins.statistics.test_treestatistics import TreeStatisticsTest
 
-    from test.plugins.updatenotifier.loading import UpdateNotifierLoadingTest
-    from test.plugins.updatenotifier.updatenotifier_test import UpdateNotifierTest
+    from test.plugins.updatenotifier.test_loading import UpdateNotifierLoadingTest
+    from test.plugins.updatenotifier.test_updatenotifier import UpdateNotifierTest
 
-    from test.plugins.counter.counter_test import CounterTest
-    from test.plugins.counter.counterdialog import CounterDialogTest
-    from test.plugins.counter.loading import CounterLoadingTest
+    from test.plugins.counter.test_counter import CounterTest
+    from test.plugins.counter.test_counterdialog import CounterDialogTest
+    from test.plugins.counter.test_loading import CounterLoadingTest
 
-    from test.plugins.htmlheads.loading import HtmlHeadsLoadingTest
-    from test.plugins.htmlheads.htmlheads import HtmlHeadsTest
+    from test.plugins.htmlheads.test_loading import HtmlHeadsLoadingTest
+    from test.plugins.htmlheads.test_htmlheads import HtmlHeadsTest
 
-    from test.plugins.changepageuid.changepageuid_test import ChangePageUidTest
-    from test.plugins.changepageuid.loading import ChangePageUIDLoadingTest
+    from test.plugins.changepageuid.test_changepageuid import ChangePageUidTest
+    from test.plugins.changepageuid.test_loading import ChangePageUIDLoadingTest
 
-    from test.plugins.sessions.loading import SessionsLoadingTest
-    from test.plugins.sessions.sessions_test import SessionsTest
+    from test.plugins.sessions.test_loading import SessionsLoadingTest
+    from test.plugins.sessions.test_sessions import SessionsTest
 
-    from test.plugins.diagrammer.diagrammer_test import DiagrammerTest
-    from test.plugins.diagrammer.insertnode import InsertNodeTest
-    from test.plugins.diagrammer.insertdiagram import InsertDiagramTest
-    from test.plugins.diagrammer.insertedge import InsertEdgeTest
-    from test.plugins.diagrammer.insertgroup import InsertGroupTest
-    from test.plugins.diagrammer.loading import DiagrammerLoadingTest
+    from test.plugins.diagrammer.test_diagrammer import DiagrammerTest
+    from test.plugins.diagrammer.test_insertnode import InsertNodeTest
+    from test.plugins.diagrammer.test_insertdiagram import InsertDiagramTest
+    from test.plugins.diagrammer.test_insertedge import InsertEdgeTest
+    from test.plugins.diagrammer.test_insertgroup import InsertGroupTest
+    from test.plugins.diagrammer.test_loading import DiagrammerLoadingTest
 
-    from test.plugins.tableofcontents.toc_parser import TOC_ParserTest
-    from test.plugins.tableofcontents.toc_generator import TOC_GeneratorTest
-    from test.plugins.tableofcontents.toc_wikimaker import TOC_WikiMakerTest
-    from test.plugins.tableofcontents.loading import TOCLoadingTest
+    from test.plugins.tableofcontents.test_toc_parser import TOC_ParserTest
+    from test.plugins.tableofcontents.test_toc_generator import TOC_GeneratorTest
+    from test.plugins.tableofcontents.test_toc_wikimaker import TOC_WikiMakerTest
+    from test.plugins.tableofcontents.test_loading import TOCLoadingTest
 
-    from test.plugins.source.source_test import SourcePluginTest
-    from test.plugins.source.sourceencoding import SourceEncodingPluginTest
-    from test.plugins.source.sourcefile import SourceFilePluginTest
-    from test.plugins.source.sourcegui import SourceGuiPluginTest
-    from test.plugins.source.sourceattachment import SourceAttachmentPluginTest
-    from test.plugins.source.sourcestyle import SourceStyleTest
-    from test.plugins.source.loading import SourceLoadingTest
+    from test.plugins.source.test_source import SourcePluginTest
+    from test.plugins.source.test_sourceencoding import SourceEncodingPluginTest
+    from test.plugins.source.test_sourcefile import SourceFilePluginTest
+    from test.plugins.source.test_sourcegui import SourceGuiPluginTest
+    from test.plugins.source.test_sourceattachment import SourceAttachmentPluginTest
+    from test.plugins.source.test_sourcestyle import SourceStyleTest
+    from test.plugins.source.test_loading import SourceLoadingTest
 
-    from test.plugins.datagraph.loading import DataGraphLoadingTest
-    from test.plugins.datagraph.paramsparsing import ParamsParsingTest
-    from test.plugins.datagraph.graphbuilder import GraphBuilderTest
-    from test.plugins.datagraph.datasources import StringSourceTest, FileSourceTest
-    from test.plugins.datagraph.command_plot_highcharts import CommandPlotHighchartsTest
+    from test.plugins.datagraph.test_loading import DataGraphLoadingTest
+    from test.plugins.datagraph.test_paramsparsing import ParamsParsingTest
+    from test.plugins.datagraph.test_graphbuilder import GraphBuilderTest
+    from test.plugins.datagraph.test_datasources import StringSourceTest, FileSourceTest
+    from test.plugins.datagraph.test_command_plot_highcharts import CommandPlotHighchartsTest
 
-    from test.plugins.htmlformatter.htmlformatter_test import HtmlFormatterTest
-    from test.plugins.htmlformatter.htmlimproverp import ParagraphHtmlImproverTest
+    from test.plugins.htmlformatter.test_htmlformatter import HtmlFormatterTest
+    from test.plugins.htmlformatter.test_htmlimproverp import ParagraphHtmlImproverTest
 
-    from test.plugins.externaltools.loading import ExternalToolsLoadingTest
-    from test.plugins.externaltools.commandexec import CommandExecTest
-    from test.plugins.externaltools.commandexecparser import CommandExecParserTest
-    from test.plugins.externaltools.commandexeccontroller import CommandExecControllerTest
-    from test.plugins.externaltools.execdialog import ExecDialogTest
+    from test.plugins.externaltools.test_loading import ExternalToolsLoadingTest
+    from test.plugins.externaltools.test_commandexec import CommandExecTest
+    from test.plugins.externaltools.test_commandexecparser import CommandExecParserTest
+    from test.plugins.externaltools.test_commandexeccontroller import CommandExecControllerTest
+    from test.plugins.externaltools.test_execdialog import ExecDialogTest
 
-    from test.plugins.texequation.texequation_test import TexEquationTest
+    from test.plugins.texequation.test_texequation import TexEquationTest
 
     from test.plugins.webpage.test_webpage import WebPageTest
     from test.plugins.webpage.test_downloader import DownloaderTest
