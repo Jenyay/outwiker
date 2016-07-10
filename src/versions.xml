@@ -8,6 +8,7 @@
 
 		<changelog>
 			<version number="2.0.0.797" status="dev">
+				<change>Изменен стиль вкладок.</change>
 			</version>
 
 			<version number="2.0.0.796" status="dev" date="02.07.2016">
@@ -34,6 +35,7 @@
 
 		<changelog>
 			<version number="2.0.0.797" status="dev">
+				<change>Cahnged tabs style.</change>
 			</version>
 
 			<version number="2.0.0.796" status="dev" date="July 02, 2016">
