@@ -23,9 +23,11 @@ from buildtools.defines import(
     PLUGINS_LIST,
     PLUGIN_VERSIONS_FILENAME,
     OUTWIKER_VERSIONS_FILENAME,
-    DOWNLOAD_TIMEOUT,
 )
-from buildtools.versions import getOutwikerVersion, readAppInfo
+from buildtools.versions import (getOutwikerVersion,
+                                 readAppInfo,
+                                 downloadAppInfo,
+                                 )
 from buildtools.contentgenerators import (SiteChangelogGenerator,
                                           SitePluginsTableGenerator)
 from buildtools.builders import (BuilderWindows,
@@ -38,7 +40,6 @@ from buildtools.builders import (BuilderWindows,
                                  )
 
 from outwiker.utilites.textfile import readTextFile
-from outwiker.utilites.downloader import Downloader
 from outwiker.core.xmlversionparser import XmlVersionParser
 
 
@@ -341,7 +342,8 @@ def plugins_list(lang):
 def show_site_versions():
     url_list = [
         (u'OutWiker',
-         readAppInfo (os.path.join(u'src', OUTWIKER_VERSIONS_FILENAME)).updatesUrl),
+         readAppInfo (os.path.join(u'src',
+                                   OUTWIKER_VERSIONS_FILENAME)).updatesUrl),
     ]
 
     # Fill url_list with plugins.xml paths
@@ -350,19 +352,14 @@ def show_site_versions():
                             plugin,
                             plugin,
                             PLUGIN_VERSIONS_FILENAME)
-        url_list.append((plugin,
-                         readAppInfo(path).updatesUrl))
+        url_list.append((plugin, readAppInfo(path).updatesUrl))
 
     # Downloading versions info
-    downloader = Downloader(DOWNLOAD_TIMEOUT)
-    version_parser = XmlVersionParser(['en'])
-
     print(u'Downloading version info files:')
     for name, url in url_list:
         print(u'{:.<30}'.format(name), end=u'')
         try:
-            xml_content = downloader.download(url)
-            appinfo = version_parser.parse(xml_content)
+            appinfo = downloadAppInfo(url)
             print(str(appinfo.currentVersion))
         except (urllib2.URLError, urllib2.HTTPError) as e:
             print(u'Error')
