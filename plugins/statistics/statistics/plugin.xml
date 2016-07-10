@@ -1,7 +1,7 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <info>
 	<name>Statistics</name>
-	<updates>http://jenyay.net/Outwiker/Statistics/plugin.xml</updates>
+	<updates>http://jenyay.net/uploads/Outwiker/Statistics/plugin.xml</updates>
     <requirements>
         <outwiker>1.7.0</outwiker>
         <os>Windows, Linux</os>

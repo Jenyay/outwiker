@@ -6,7 +6,9 @@ import shutil
 from fabric.api import local, lcd
 
 from .base import BuilderBase
-from buildtools.defines import WINDOWS_BUILD_DIR, PLUGINS_LIST
+from buildtools.defines import (WINDOWS_BUILD_DIR,
+                                PLUGINS_LIST,
+                                OUTWIKER_VERSIONS_FILENAME)
 
 
 class BuilderWindows(BuilderBase):
@@ -31,7 +33,7 @@ class BuilderWindows(BuilderBase):
     def clear(self):
         super(BuilderWindows, self).clear()
         toRemove = [
-            os.path.join(self._root_build_dir, u'versions.xml'),
+            os.path.join(self._root_build_dir, OUTWIKER_VERSIONS_FILENAME),
             os.path.join(self._root_build_dir, self._resultBaseName + u'.7z'),
             os.path.join(self._root_build_dir, self._resultBaseName + u'.exe'),
             os.path.join(self._root_build_dir, self._resultBaseName + u'.zip'),
@@ -43,7 +45,7 @@ class BuilderWindows(BuilderBase):
         map(self._remove, toRemove)
 
     def _build(self):
-        shutil.copy (os.path.join(u'src', u'versions.xml'),
+        shutil.copy (os.path.join(u'src', OUTWIKER_VERSIONS_FILENAME),
                      self._root_build_dir)
 
         self._create_plugins_dir()

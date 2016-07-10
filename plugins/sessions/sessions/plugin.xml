@@ -1,7 +1,7 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <info>
 	<name>Sessions</name>
-	<updates>http://jenyay.net/Outwiker/Sessions/plugin.xml</updates>
+	<updates>http://jenyay.net/uploads/Outwiker/Sessions/plugin.xml</updates>
     <requirements>
         <outwiker>1.8.0.732 dev</outwiker>
         <os>Windows, Linux</os>

@@ -1,7 +1,7 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <info>
 	<name>OutWiker</name>
-    <updates>http://jenyay.net/Outwiker/Unstable/versions.xml</updates>
+	<updates>http://jenyay.net/uploads/Outwiker/Unstable/versions.xml</updates>
 
 	<data lang="ru">
 		<website>http://jenyay.net/Outwiker/Unstable</website>

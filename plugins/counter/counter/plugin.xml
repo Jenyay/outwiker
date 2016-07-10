@@ -1,7 +1,7 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <info>
 	<name>Counter</name>
-	<updates>http://jenyay.net/Outwiker/Counter/plugin.xml</updates>
+	<updates>http://jenyay.net/uploads/Outwiker/Counter/plugin.xml</updates>
     <requirements>
         <outwiker>1.8.0.730 dev</outwiker>
         <os>Windows, Linux</os>

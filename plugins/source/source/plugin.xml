@@ -1,7 +1,7 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <info>
 	<name>Source</name>
-	<updates>http://jenyay.net/Outwiker/SourcePlugin/plugin.xml</updates>
+	<updates>http://jenyay.net/uploads/Outwiker/SourcePlugin/plugin.xml</updates>
     <requirements>
         <outwiker>1.8.1</outwiker>
         <os>Windows, Linux</os>

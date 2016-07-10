@@ -1,7 +1,7 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <info>
 	<name>Lightbox</name>
-	<updates>http://jenyay.net/Outwiker/Lightbox/plugin.xml</updates>
+	<updates>http://jenyay.net/uploads/Outwiker/Lightbox/plugin.xml</updates>
     <requirements>
         <outwiker>1.7.0</outwiker>
         <os>Windows, Linux</os>

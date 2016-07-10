@@ -1,7 +1,7 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <info>
 	<name>ChangePageUID</name>
-	<updates>http://jenyay.net/Outwiker/ChangePageUid/plugin.xml</updates>
+	<updates>http://jenyay.net/uploads/Outwiker/ChangePageUid/plugin.xml</updates>
     <requirements>
         <outwiker>1.8.0.731 dev</outwiker>
         <os>Windows, Linux</os>

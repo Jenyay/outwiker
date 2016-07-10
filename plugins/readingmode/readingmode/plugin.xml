@@ -1,7 +1,7 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <info>
 	<name>ReadingMode</name>
-	<updates>http://jenyay.net/Outwiker/ReadingMode/plugin.xml</updates>
+	<updates>http://jenyay.net/uploads/Outwiker/ReadingMode/plugin.xml</updates>
     <requirements>
         <outwiker>1.8.0</outwiker>
         <os>Windows, Linux</os>

@@ -1,7 +1,7 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <info>
 	<name>Style</name>
-	<updates>http://jenyay.net/Outwiker/StylePlugin/plugin.xml</updates>
+	<updates>http://jenyay.net/uploads/Outwiker/StylePlugin/plugin.xml</updates>
     <requirements>
         <outwiker>1.6.0.632 dev</outwiker>
         <os>Windows, Linux</os>

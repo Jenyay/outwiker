@@ -42,6 +42,10 @@ DEB_SOURCE_BUILD_DIR = u'deb_source'
 SOURCES_DIR = u'sources'
 PLUGINS_DIR = u'plugins'
 PLUGIN_VERSIONS_FILENAME = u'plugin.xml'
+OUTWIKER_VERSIONS_FILENAME = u'versions.xml'
+
+# Timeout in seconds
+DOWNLOAD_TIMEOUT = 15
 
 # Parameters for deb building
 TIMEZONE = '+0300'

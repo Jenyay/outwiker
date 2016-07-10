@@ -1,7 +1,7 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <info>
 	<name>PageTypeColor</name>
-	<updates>http://jenyay.net/Outwiker/PageTypeColor/plugin.xml</updates>
+	<updates>http://jenyay.net/uploads/Outwiker/PageTypeColor/plugin.xml</updates>
     <requirements>
         <outwiker>1.9.0.777 dev</outwiker>
         <os>Windows, Linux</os>
