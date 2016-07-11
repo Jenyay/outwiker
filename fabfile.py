@@ -22,11 +22,10 @@ from buildtools.defines import(
     PLUGINS_DIR,
     PLUGINS_LIST,
     PLUGIN_VERSIONS_FILENAME,
-    OUTWIKER_VERSIONS_FILENAME,
 )
 from buildtools.versions import (getOutwikerVersion,
-                                 readAppInfo,
                                  downloadAppInfo,
+                                 getLocalAppInfoList
                                  )
 from buildtools.contentgenerators import (SiteChangelogGenerator,
                                           SitePluginsTableGenerator)
@@ -340,23 +339,14 @@ def plugins_list(lang):
 
 @task
 def show_site_versions():
-    url_list = [
-        (u'OutWiker',
-         readAppInfo (os.path.join(u'src',
-                                   OUTWIKER_VERSIONS_FILENAME)).updatesUrl),
-    ]
-
-    # Fill url_list with plugins.xml paths
-    for plugin in PLUGINS_LIST:
-        path = os.path.join(PLUGINS_DIR,
-                            plugin,
-                            plugin,
-                            PLUGIN_VERSIONS_FILENAME)
-        url_list.append((plugin, readAppInfo(path).updatesUrl))
+    app_list = getLocalAppInfoList()
 
     # Downloading versions info
     print(u'Downloading version info files:')
-    for name, url in url_list:
+    for localAppInfo in app_list:
+        url = localAppInfo.updatesUrl
+        name = localAppInfo.appname
+
         print(u'{:.<30}'.format(name), end=u'')
         try:
             appinfo = downloadAppInfo(url)
