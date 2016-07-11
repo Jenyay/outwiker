@@ -106,11 +106,11 @@ def ppaunstable():
 
 
 @task
-def plugins():
+def plugins(updatedonly=False):
     """
     Create an archive with plugins(7z required)
     """
-    builder = BuilderPlugins()
+    builder = BuilderPlugins(updatedOnly=updatedonly)
     builder.build()
 
 
@@ -358,7 +358,7 @@ def show_site_versions():
 
             print(font + str(appinfo.currentVersion))
         except (urllib2.URLError, urllib2.HTTPError) as e:
-            print(u'Error')
+            print(Fore.RED + u'Error')
             print(str(e))
             print(url)
             print('')

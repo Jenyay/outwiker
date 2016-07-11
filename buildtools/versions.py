@@ -53,9 +53,13 @@ def getLocalAppInfoList():
 
     # Fill url_list with plugins.xml paths
     for plugin in PLUGINS_LIST:
-        path = os.path.join(PLUGINS_DIR,
-                            plugin,
-                            plugin,
-                            PLUGIN_VERSIONS_FILENAME)
+        path = getPluginVersionsPath(plugin)
         app_list.append(readAppInfo(path))
     return app_list
+
+
+def getPluginVersionsPath(plugin):
+    return os.path.join(PLUGINS_DIR,
+                        plugin,
+                        plugin,
+                        PLUGIN_VERSIONS_FILENAME)
