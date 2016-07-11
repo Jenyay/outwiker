@@ -9,6 +9,7 @@ import glob
 import urllib2
 
 from fabric.api import local, lcd, settings, task
+from buildtools.libs.colorama import Fore
 
 from buildtools.utilites import (getPython,
                                  execute,
@@ -350,7 +351,12 @@ def show_site_versions():
         print(u'{:.<30}'.format(name), end=u'')
         try:
             appinfo = downloadAppInfo(url)
-            print(str(appinfo.currentVersion))
+            if appinfo.currentVersion == localAppInfo.currentVersion:
+                font = Fore.GREEN
+            else:
+                font = Fore.RED
+
+            print(font + str(appinfo.currentVersion))
         except (urllib2.URLError, urllib2.HTTPError) as e:
             print(u'Error')
             print(str(e))
