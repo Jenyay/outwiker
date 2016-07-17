@@ -37,9 +37,10 @@ class OutWiker(wx.App):
 
         wx.App.__init__(self, *args, **kwds)
 
-
     def OnInit(self):
+        getOS().init()
         getOS().migrateConfig()
+
         self._fullConfigPath = getConfigPath()
         Application.init(self._fullConfigPath)
         self._locale = wx.Locale(wx.LANGUAGE_DEFAULT)
@@ -75,14 +76,11 @@ class OutWiker(wx.App):
 
         return True
 
-
     def _onEndSession(self, event):
         self.mainWnd.Destroy()
 
-
     def getLogFileName(self, configPath):
         return os.path.join(os.path.split(configPath)[0], self.logFileName)
-
 
     def bindActivateApp(self):
         """
@@ -90,21 +88,16 @@ class OutWiker(wx.App):
         """
         self.Bind(wx.EVT_ACTIVATE_APP, self._onActivate)
 
-
     def unbindActivateApp(self):
         """
         Отключиться от события при потере фокуса приложением
         """
         self.Unbind(wx.EVT_ACTIVATE_APP)
 
-
     def _onActivate(self, event):
         Application.onForceSave()
 
 
-# end of class OutWiker
-
 if __name__ == "__main__":
-    getOS().init()
     outwiker = OutWiker(False)
     outwiker.MainLoop()

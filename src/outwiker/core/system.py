@@ -126,6 +126,8 @@ class Unix (System):
     def init (self):
         if 'LD_PRELOAD' in os.environ:
             del os.environ['LD_PRELOAD']
+        import gtk
+        gtk.gdk.threads_init()
 
 
     def startFile (self, path):

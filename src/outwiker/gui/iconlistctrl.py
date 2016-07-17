@@ -3,7 +3,6 @@
 import os.path
 
 import wx
-import wx.grid
 from wx.lib.newevent import NewEvent
 
 from outwiker.core.system import getImagesDir

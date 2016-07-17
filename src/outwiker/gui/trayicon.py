@@ -151,6 +151,42 @@ class TrayIconControllerWindows(TrayIconControllerBase):
         self._application.actionController.getAction(ExitAction.stringId).run(None)
 
 
+class TrayIconControllerLinux(TrayIconControllerBase):
+    def _createTrayIcon(self):
+        return TrayIconLinux(self._application, self.mainWnd)
+
+    def _bind(self):
+        super(TrayIconControllerLinux, self)._bind()
+        # self._trayIcon.Bind(wx.EVT_TASKBAR_LEFT_DOWN, self.__OnTrayLeftClick)
+        #
+        # self.Bind(wx.EVT_MENU, self.__onExit, id=self._trayIcon.ID_EXIT)
+        # self.Bind(wx.EVT_MENU, self.__onRestore, id=self._trayIcon.ID_RESTORE)
+
+    def _unbind(self):
+        super(TrayIconControllerLinux, self)._unbind()
+        # self._trayIcon.Unbind(wx.EVT_TASKBAR_LEFT_DOWN,
+        #                       handler=self.__OnTrayLeftClick)
+        #
+        # self.Unbind(wx.EVT_MENU,
+        #             handler=self.__onExit,
+        #             id=self._trayIcon.ID_EXIT)
+        # self.Unbind(wx.EVT_MENU,
+        #             handler=self.__onRestore,
+        #             id=self._trayIcon.ID_RESTORE)
+
+    # def __onRestore(self, event):
+    #     self.restoreWindow()
+    #
+    # def __OnTrayLeftClick(self, event):
+    #     if self.mainWnd.IsIconized():
+    #         self.restoreWindow()
+    #     else:
+    #         self.mainWnd.Iconize()
+    #
+    # def __onExit(self, event):
+    #     self._application.actionController.getAction(ExitAction.stringId).run(None)
+
+
 class TrayIconWindows(wx.TaskBarIcon):
     def __init__(self, application, mainWnd):
         super(TrayIconWindows, self).__init__()
@@ -177,14 +213,37 @@ class TrayIconWindows(wx.TaskBarIcon):
             self.RemoveIcon()
 
 
-class TrayIconControllerLinux(object):
-    def __init__(self, mainWnd):
-        pass
+class TrayIconLinux(object):
+    def __init__(self, application, mainWnd):
+        import gtk
+        import appindicator
+        self._application = application
+        self._mainWnd = mainWnd
+        self._indicator = None
 
+        self._icon = os.path.abspath(os.path.join(getImagesDir(),
+                                                  "outwiker_64x64.png"))
+        assert os.path.exists(self._icon)
+        self._indicator = appindicator.Indicator("OutWiker",
+                                                 self._icon,
+                                                 appindicator.CATEGORY_APPLICATION_STATUS)
+        menu = gtk.Menu()
+        menu_items = gtk.MenuItem('Quit')
+        menu.append(menu_items)
+        menu_items.show()
+        self._indicator.set_menu(menu)
 
-    def initialize(self):
+    def showTrayIcon(self):
         pass
+        import appindicator
+        self._indicator.set_status (appindicator.STATUS_ACTIVE)
+
+    def removeTrayIcon(self):
+        pass
+        import appindicator
+        self._indicator.set_status (appindicator.STATUS_PASSIVE)
 
 
     def Destroy(self):
-        pass
+        self.removeTrayIcon()
+        self._indicator = None
