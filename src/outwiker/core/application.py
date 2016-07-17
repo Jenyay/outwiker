@@ -153,13 +153,6 @@ class ApplicationParams(object):
         #     page - the page on which was right clicked in the notes tree
         self.onTreePopupMenu = Event()
 
-        # Event occurs after the popup menu creation by right mouse click
-        # on the tree
-        # Parameters:
-        #     menu - created popup menu,
-        #     tray - the OutwikerTrayIcon class instance
-        self.onTrayPopupMenu = Event()
-
         # Event occurs before HTML generation(for wiki and HTML pages)
         # Order of the calling preprocessing events is not regulated
         # Parameters:

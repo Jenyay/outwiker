@@ -114,8 +114,8 @@ class MainWindow(wx.Frame):
         if self.mainWindowConfig.maximized.value:
             self.Maximize()
 
-        self.taskBarIcon = getTrayIconController(self)
-        self.taskBarIcon.initialize()
+        self.taskBarIconController = getTrayIconController(Application, self)
+        self.taskBarIconController.initialize()
 
         self.tabsController = TabsController (self.pagePanel.panel.tabsCtrl,
                                               Application)
@@ -615,7 +615,7 @@ class MainWindow(wx.Frame):
         self.__panesController = None
 
         self.statusbar.Close()
-        self.taskBarIcon.Destroy()
+        self.taskBarIconController.destroy()
         self.controller.destroy()
         self.auiManager.Destroy()
 

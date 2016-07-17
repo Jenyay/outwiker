@@ -84,7 +84,6 @@ class PluginDebug (Plugin):
             self.__createTestAction()
 
             self._application.onTreePopupMenu += self.__onTreePopupMenu
-            self._application.onTrayPopupMenu += self.__onTrayPopupMenu
             self._application.onPostprocessing += self.__onPostProcessing
             self._application.onPreprocessing += self.__onPreProcessing
             self._application.onHoverLink += self.__onHoverLink
@@ -135,7 +134,6 @@ class PluginDebug (Plugin):
             index = self._application.mainWindow.mainMenu.Remove (index)
 
             self._application.onTreePopupMenu -= self.__onTreePopupMenu
-            self._application.onTrayPopupMenu -= self.__onTrayPopupMenu
             self._application.onPostprocessing -= self.__onPostProcessing
             self._application.onPreprocessing -= self.__onPreProcessing
             self._application.onHoverLink -= self.__onHoverLink
@@ -240,11 +238,11 @@ class PluginDebug (Plugin):
         raise IOError
 
 
-    def __onTrayPopupMenu (self, menu, tray):
-        menu.Insert (0, self.__ID_TRAY_POPUP, _(u"Tray Menu From Plugin"))
-        menu.Bind(wx.EVT_MENU,
-                  lambda event: MessageBox (_("Tray Icon"), _(u"This is tray icon")),
-                  id=self.__ID_TRAY_POPUP)
+    # def __onTrayPopupMenu (self, menu, tray):
+    #     menu.Insert (0, self.__ID_TRAY_POPUP, _(u"Tray Menu From Plugin"))
+    #     menu.Bind(wx.EVT_MENU,
+    #               lambda event: MessageBox (_("Tray Icon"), _(u"This is tray icon")),
+    #               id=self.__ID_TRAY_POPUP)
 
 
     def __onPostProcessing (self, page, params):
