@@ -60,7 +60,7 @@ class TrayIconControllerBase(wx.EvtHandler):
         self._application.onEndTreeUpdate += self.__OnTaskBarUpdate
 
     def _unbind(self):
-        self.mainWnd.Unbind(wx.EVT_ICONIZE, handler = self.__onIconize)
+        self.mainWnd.Unbind(wx.EVT_ICONIZE, handler=self.__onIconize)
         self.mainWnd.Unbind(wx.EVT_IDLE, handler=self.__onIdle)
 
         self._application.onPreferencesDialogClose -= self.__onPreferencesDialogClose
@@ -128,10 +128,15 @@ class TrayIconControllerWindows(TrayIconControllerBase):
 
     def _unbind(self):
         super(TrayIconControllerWindows, self)._unbind()
-        self._trayIcon.Unbind(wx.EVT_TASKBAR_LEFT_DOWN, handler = self.__OnTrayLeftClick)
+        self._trayIcon.Unbind(wx.EVT_TASKBAR_LEFT_DOWN,
+                              handler=self.__OnTrayLeftClick)
 
-        self.Unbind(wx.EVT_MENU, handler = self.__onExit, id=self._trayIcon.ID_EXIT)
-        self.Unbind(wx.EVT_MENU, handler = self.__onRestore, id=self._trayIcon.ID_RESTORE)
+        self.Unbind(wx.EVT_MENU,
+                    handler=self.__onExit,
+                    id=self._trayIcon.ID_EXIT)
+        self.Unbind(wx.EVT_MENU,
+                    handler=self.__onRestore,
+                    id=self._trayIcon.ID_RESTORE)
 
     def __onRestore(self, event):
         self.restoreWindow()
