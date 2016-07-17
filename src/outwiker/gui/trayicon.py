@@ -43,10 +43,10 @@ class TrayIconControllerBase(wx.EvtHandler):
         self._trayIcon.Destroy()
 
     def restoreWindow(self):
-        self.mainWnd.Show()
-        self.mainWnd.Iconize(False)
         if not self.config.alwaysShowTrayIcon.value:
             self._trayIcon.removeTrayIcon()
+        self.mainWnd.Iconize(False)
+        self.mainWnd.Show()
         self.mainWnd.Raise()
         self.mainWnd.SetFocus()
 
@@ -73,7 +73,7 @@ class TrayIconControllerBase(wx.EvtHandler):
         Показать или скрыть иконку в трее в зависимости от настроек
         """
         if(self.config.alwaysShowTrayIcon.value or
-               (self.config.minimizeToTray.value and self.mainWnd.IsIconized())):
+               (self.config.minimizeToTray.value and (self.mainWnd.IsIconized() or not self.mainWnd.IsShown()))):
             self._trayIcon.showTrayIcon()
         else:
             self._trayIcon.removeTrayIcon()
@@ -82,9 +82,9 @@ class TrayIconControllerBase(wx.EvtHandler):
         self.updateTrayIcon()
 
     def __onIdle(self, event):
+        self.mainWnd.Unbind(wx.EVT_IDLE, handler=self.__onIdle)
         self.__initMainWnd()
         self.updateTrayIcon()
-        self.mainWnd.Unbind(wx.EVT_IDLE, handler=self.__onIdle)
 
     def __onPreferencesDialogClose(self, prefDialog):
         self.updateTrayIcon()
@@ -99,8 +99,6 @@ class TrayIconControllerBase(wx.EvtHandler):
         if event.IsIconized():
             # Окно свернули
             self.__iconizeWindow()
-        else:
-            self.restoreWindow()
 
         self.updateTrayIcon()
 
@@ -111,7 +109,7 @@ class TrayIconControllerBase(wx.EvtHandler):
         if self.config.minimizeToTray.value:
             # В трей добавим иконку, а окно спрячем
             self._trayIcon.showTrayIcon()
-            self.mainWnd.Show()
+            # self.mainWnd.Show()
             self.mainWnd.Hide()
 
 
@@ -157,34 +155,23 @@ class TrayIconControllerLinux(TrayIconControllerBase):
 
     def _bind(self):
         super(TrayIconControllerLinux, self)._bind()
-        # self._trayIcon.Bind(wx.EVT_TASKBAR_LEFT_DOWN, self.__OnTrayLeftClick)
-        #
-        # self.Bind(wx.EVT_MENU, self.__onExit, id=self._trayIcon.ID_EXIT)
-        # self.Bind(wx.EVT_MENU, self.__onRestore, id=self._trayIcon.ID_RESTORE)
+
+        self._restoreHandlerId = self._trayIcon.restoreMenuItem.connect(
+            'activate', self.__onRestore)
+
+        self._exitHandlerId = self._trayIcon.exitMenuItem.connect(
+            'activate', self.__onExit)
 
     def _unbind(self):
         super(TrayIconControllerLinux, self)._unbind()
-        # self._trayIcon.Unbind(wx.EVT_TASKBAR_LEFT_DOWN,
-        #                       handler=self.__OnTrayLeftClick)
-        #
-        # self.Unbind(wx.EVT_MENU,
-        #             handler=self.__onExit,
-        #             id=self._trayIcon.ID_EXIT)
-        # self.Unbind(wx.EVT_MENU,
-        #             handler=self.__onRestore,
-        #             id=self._trayIcon.ID_RESTORE)
+        self._trayIcon.restoreMenuItem.disconnect(self._restoreHandlerId)
+        self._trayIcon.exitMenuItem.disconnect(self._exitHandlerId)
 
-    # def __onRestore(self, event):
-    #     self.restoreWindow()
-    #
-    # def __OnTrayLeftClick(self, event):
-    #     if self.mainWnd.IsIconized():
-    #         self.restoreWindow()
-    #     else:
-    #         self.mainWnd.Iconize()
-    #
-    # def __onExit(self, event):
-    #     self._application.actionController.getAction(ExitAction.stringId).run(None)
+    def __onRestore(self, obj):
+        self.restoreWindow()
+
+    def __onExit(self, obj):
+        self._application.actionController.getAction(ExitAction.stringId).run(None)
 
 
 class TrayIconWindows(wx.TaskBarIcon):
@@ -219,7 +206,6 @@ class TrayIconLinux(object):
         import appindicator
         self._application = application
         self._mainWnd = mainWnd
-        self._indicator = None
 
         self._icon = os.path.abspath(os.path.join(getImagesDir(),
                                                   "outwiker_64x64.png"))
@@ -228,22 +214,25 @@ class TrayIconLinux(object):
                                                  self._icon,
                                                  appindicator.CATEGORY_APPLICATION_STATUS)
         menu = gtk.Menu()
-        menu_items = gtk.MenuItem('Quit')
-        menu.append(menu_items)
-        menu_items.show()
+        self.restoreMenuItem = gtk.MenuItem(_('Restore'))
+        self.restoreMenuItem.show()
+
+        self.exitMenuItem = gtk.MenuItem(_('Exit'))
+        self.exitMenuItem.show()
+
+        menu.append(self.restoreMenuItem)
+        menu.append(self.exitMenuItem)
         self._indicator.set_menu(menu)
 
     def showTrayIcon(self):
-        pass
         import appindicator
         self._indicator.set_status (appindicator.STATUS_ACTIVE)
 
     def removeTrayIcon(self):
-        pass
         import appindicator
         self._indicator.set_status (appindicator.STATUS_PASSIVE)
 
 
     def Destroy(self):
-        self.removeTrayIcon()
+        # self.removeTrayIcon()
         self._indicator = None
