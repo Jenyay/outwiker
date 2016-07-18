@@ -4,6 +4,7 @@
 import os
 import os.path
 import sys
+import logging
 
 from outwiker.core.defines import WX_VERSION
 import wxversion
@@ -25,6 +26,7 @@ from outwiker.core.starter import Starter, StarterExit
 from outwiker.core.commands import registerActions
 from outwiker.core.logredirector import LogRedirector
 from outwiker.gui.actioncontroller import ActionController
+from outwiker.gui.guiconfig import GeneralGuiConfig
 
 
 class OutWiker(wx.App):
@@ -51,7 +53,11 @@ class OutWiker(wx.App):
         except StarterExit:
             return True
 
-        redirector = LogRedirector(self.getLogFileName(self._fullConfigPath))
+        config = GeneralGuiConfig(Application.config)
+        level = logging.INFO if config.debug.value else logging.WARNING
+
+        redirector = LogRedirector(self.getLogFileName(self._fullConfigPath),
+                                   level)
         redirector.init()
         wx.Log.SetLogLevel(0)
 

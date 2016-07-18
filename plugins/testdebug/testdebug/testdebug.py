@@ -379,7 +379,7 @@ class PluginDebug (Plugin):
             interval = time.time() - self._startWikiOpenTime
             self._startWikiOpenTime = None
             text = u'Opening wiki {time} sec'.format(time=interval)
-            logging.warning(text)
+            logging.info(text)
 
 
     ###################################################

@@ -7,9 +7,10 @@ import codecs
 
 
 class LogRedirector(object):
-    def __init__(self, filename):
+    def __init__(self, filename, level):
         self._terminal = sys.stdout
         self._fname = filename
+        self._level = level
 
     def init(self):
         sys.stdout = self
@@ -18,8 +19,9 @@ class LogRedirector(object):
         self._firstWrite = True
 
         self._runTime = time.strftime(u'%Y-%m-%d %H:%M:%S')
+
         logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s',
-                            level=logging.WARNING)
+                            level=self._level)
 
     def write(self, message):
         self._terminal.write(message)

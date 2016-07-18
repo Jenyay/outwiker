@@ -41,6 +41,9 @@ class GeneralGuiConfig (object):
     TABLE_COLS_COUNT = u'TableColsCount'
     TABLE_COLS_COUNT_DEFAULT = 1
 
+    DEBUG_PARAM = u'debug'
+    DEBUG_DEFAULT = False
+
 
     def __init__ (self, config):
         self.config = config
@@ -92,6 +95,11 @@ class GeneralGuiConfig (object):
                                              self.GENERAL_SECTION,
                                              self.TABLE_COLS_COUNT,
                                              self.TABLE_COLS_COUNT_DEFAULT)
+
+        self.debug = BooleanOption(self.config,
+                                   self.GENERAL_SECTION,
+                                   self.DEBUG_PARAM,
+                                   self.DEBUG_DEFAULT)
 
 
 class PluginsConfig (object):
