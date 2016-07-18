@@ -17,28 +17,8 @@ class TextPanel (BaseTextPanel):
         self.__createGui()
         self.Bind (self.EVT_SPELL_ON_OFF, handler=self._onSpellOnOff)
 
-    def _onLineDuplicate(self, params):
-        self.textEditor.LineDuplicate()
-
-    def _onMoveSelectedLinesUp(self, params):
-        """
-        Handler for the MOVE_SELECTED_LINES_UP_ID polyaction
-        """
-        self.textEditor.MoveSelectedLinesUp()
-
-    def _onMoveSelectedLinesDown(self, params):
-        """
-        Handler for the MOVE_SELECTED_LINES_Down_ID polyaction
-        """
-        self.textEditor.MoveSelectedLinesDown()
-
-    def _onDeleteCurrentLine(self, params):
-        """
-        Handler for the DELETE_CURRENT_LINE_ID polyaction
-
-        Added in OutWiker 2.0.0.795
-        """
-        self.textEditor.LineDelete()
+    def GetEditor(self):
+        return self.textEditor
 
     def Clear (self):
         self.Unbind (self.EVT_SPELL_ON_OFF, handler=self._onSpellOnOff)

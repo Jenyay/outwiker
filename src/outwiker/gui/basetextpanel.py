@@ -58,40 +58,43 @@ class BaseTextPanel (BasePagePanel):
         pass
 
     @abstractmethod
+    def GetEditor(self):
+        """
+        Return text editor from panel. It used for common polyactions.
+        """
+        pass
+
     def _onLineDuplicate(self, params):
         """
         Handler for the LINE_DUPLICATE_ID polyaction
 
         Added in OutWiker 2.0.0.795
         """
-        pass
+        self.GetEditor().LineDuplicate()
 
-    @abstractmethod
     def _onMoveSelectedLinesUp(self, params):
         """
         Handler for the MOVE_SELECTED_LINES_UP_ID polyaction
 
         Added in OutWiker 2.0.0.795
         """
-        pass
+        self.GetEditor().MoveSelectedLinesUp()
 
-    @abstractmethod
     def _onMoveSelectedLinesDown(self, params):
         """
-        Handler for the MOVE_SELECTED_LINES_DOWN_ID polyaction
+        Handler for the MOVE_SELECTED_LINES_Down_ID polyaction
 
         Added in OutWiker 2.0.0.795
         """
-        pass
+        self.GetEditor().MoveSelectedLinesDown()
 
-    @abstractmethod
     def _onDeleteCurrentLine(self, params):
         """
         Handler for the DELETE_CURRENT_LINE_ID polyaction
 
         Added in OutWiker 2.0.0.795
         """
-        pass
+        self.GetEditor().LineDelete()
 
     def __init__ (self, parent, *args, **kwds):
         super (BaseTextPanel, self).__init__ (parent, *args, **kwds)
