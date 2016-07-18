@@ -55,18 +55,12 @@ class TrayIconControllerBase(wx.EvtHandler):
         self.mainWnd.Bind(wx.EVT_IDLE, self.__onIdle)
 
         self._application.onPreferencesDialogClose += self.__onPreferencesDialogClose
-        self._application.onPageSelect += self.__OnTaskBarUpdate
-        self._application.onTreeUpdate += self.__OnTaskBarUpdate
-        self._application.onEndTreeUpdate += self.__OnTaskBarUpdate
 
     def _unbind(self):
         self.mainWnd.Unbind(wx.EVT_ICONIZE, handler=self.__onIconize)
         self.mainWnd.Unbind(wx.EVT_IDLE, handler=self.__onIdle)
 
         self._application.onPreferencesDialogClose -= self.__onPreferencesDialogClose
-        self._application.onPageSelect -= self.__OnTaskBarUpdate
-        self._application.onTreeUpdate -= self.__OnTaskBarUpdate
-        self._application.onEndTreeUpdate -= self.__OnTaskBarUpdate
 
     def updateTrayIcon(self):
         """
@@ -78,39 +72,19 @@ class TrayIconControllerBase(wx.EvtHandler):
         else:
             self._trayIcon.removeTrayIcon()
 
-    def __OnTaskBarUpdate(self, page):
-        self.updateTrayIcon()
-
     def __onIdle(self, event):
         self.mainWnd.Unbind(wx.EVT_IDLE, handler=self.__onIdle)
-        self.__initMainWnd()
-        self.updateTrayIcon()
+        if self.config.startIconized.value:
+            self.mainWnd.Iconize(True)
 
     def __onPreferencesDialogClose(self, prefDialog):
         self.updateTrayIcon()
 
-    def __initMainWnd(self):
-        if self.config.startIconized.value:
-            self.mainWnd.Iconize(True)
-        else:
-            self.mainWnd.Show()
-
     def __onIconize(self, event):
-        if event.IsIconized():
+        if event.IsIconized() and self.config.minimizeToTray.value:
             # Окно свернули
-            self.__iconizeWindow()
-
-        self.updateTrayIcon()
-
-    def __iconizeWindow(self):
-        """
-        Свернуть окно
-        """
-        if self.config.minimizeToTray.value:
-            # В трей добавим иконку, а окно спрячем
-            self._trayIcon.showTrayIcon()
-            # self.mainWnd.Show()
             self.mainWnd.Hide()
+        self.updateTrayIcon()
 
 
 class TrayIconControllerWindows(TrayIconControllerBase):
@@ -119,10 +93,14 @@ class TrayIconControllerWindows(TrayIconControllerBase):
 
     def _bind(self):
         super(TrayIconControllerWindows, self)._bind()
-        self._trayIcon.Bind(wx.EVT_TASKBAR_LEFT_DOWN, self.__OnTrayLeftClick)
 
+        self._trayIcon.Bind(wx.EVT_TASKBAR_LEFT_DOWN, self.__OnTrayLeftClick)
         self.Bind(wx.EVT_MENU, self.__onExit, id=self._trayIcon.ID_EXIT)
         self.Bind(wx.EVT_MENU, self.__onRestore, id=self._trayIcon.ID_RESTORE)
+
+        self._application.onPageSelect += self.__OnTaskBarUpdate
+        self._application.onTreeUpdate += self.__OnTaskBarUpdate
+        self._application.onEndTreeUpdate += self.__OnTaskBarUpdate
 
     def _unbind(self):
         super(TrayIconControllerWindows, self)._unbind()
@@ -135,6 +113,13 @@ class TrayIconControllerWindows(TrayIconControllerBase):
         self.Unbind(wx.EVT_MENU,
                     handler=self.__onRestore,
                     id=self._trayIcon.ID_RESTORE)
+
+        self._application.onPageSelect -= self.__OnTaskBarUpdate
+        self._application.onTreeUpdate -= self.__OnTaskBarUpdate
+        self._application.onEndTreeUpdate -= self.__OnTaskBarUpdate
+
+    def __OnTaskBarUpdate(self, page):
+        self.updateTrayIcon()
 
     def __onRestore(self, event):
         self.restoreWindow()

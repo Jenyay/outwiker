@@ -109,7 +109,7 @@ class MainWindow(wx.Frame):
         self.__bindGuiEvents()
 
         self._dropTarget = DropFilesTarget (self.attachPanel.panel)
-        self.Show()
+        # self.Show()
 
         if self.mainWindowConfig.maximized.value:
             self.Maximize()
