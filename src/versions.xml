@@ -8,6 +8,7 @@
 
 		<changelog>
 			<version number="2.0.0.797" status="dev">
+				<change>Восстановлена работоспособность иконки в трее под Linux.</change>
 				<change>Изменен стиль вкладок.</change>
 			</version>
 
@@ -35,7 +36,8 @@
 
 		<changelog>
 			<version number="2.0.0.797" status="dev">
-				<change>Cahnged tabs style.</change>
+				<change>Restored availability the icon in the system tray on Linux.</change>
+				<change>Changed tabs style.</change>
 			</version>
 
 			<version number="2.0.0.796" status="dev" date="July 02, 2016">
