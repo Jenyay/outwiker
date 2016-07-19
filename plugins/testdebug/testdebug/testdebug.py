@@ -378,7 +378,9 @@ class PluginDebug (Plugin):
         if self._enableOpeningTimeMeasure:
             interval = time.time() - self._startWikiOpenTime
             self._startWikiOpenTime = None
-            text = u'Opening wiki {time} sec'.format(time=interval)
+            text = u'Opening wiki {path}: {time} sec'.format(
+                path=params.path,
+                time=interval)
             logging.info(text)
 
 

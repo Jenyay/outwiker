@@ -3,7 +3,6 @@
 import sys
 import logging
 import time
-import codecs
 
 
 class LogRedirector(object):
@@ -25,7 +24,9 @@ class LogRedirector(object):
 
     def write(self, message):
         self._terminal.write(message)
-        with codecs.open(self._fname, "a", "utf-8") as fp:
+        if isinstance(message, unicode):
+            message = message.decode('utf8')
+        with open(self._fname, "a") as fp:
             if self._firstWrite:
                 fp.write(u'\n\n{} - START\n'.format(self._runTime))
                 self._firstWrite = False
