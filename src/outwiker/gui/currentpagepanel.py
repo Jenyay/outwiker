@@ -28,7 +28,7 @@ class CurrentPagePanel(wx.Panel):
         wx.Panel.__init__(self, *args, **kwds)
 
         self.tabsCtrl = TabsCtrl (self)
-        self.tabsCtrl.SetMinSize ((1, 1))
+        # self.tabsCtrl.SetMinSize ((1, 1))
         self.bookmarkButton = wx.BitmapButton(self,
                                               -1,
                                               wx.Bitmap(os.path.join (self.imagesDir, "star_gray.png"),

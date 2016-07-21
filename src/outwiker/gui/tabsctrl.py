@@ -18,7 +18,7 @@ class TabsCtrl(wx.Panel):
                                           fnb.FNB_MOUSE_MIDDLE_CLOSES_TABS |
                                           fnb.FNB_X_ON_TAB |
                                           fnb.FNB_DROPDOWN_TABS_LIST))
-
+        self._tabs.SetPadding(wx.Size(10, -1))
         self.__layout()
 
     def __layout(self):
