@@ -8,8 +8,9 @@ import os.path
 import glob
 import sys
 import urllib2
+import shutil
 
-from fabric.api import local, lcd, settings, task, env, cd, put
+from fabric.api import local, lcd, settings, task, cd, put, hosts
 from buildtools.libs.colorama import Fore
 
 from buildtools.utilites import (getPython,
@@ -45,9 +46,15 @@ from buildtools.builders import (BuilderWindows,
 
 from outwiker.utilites.textfile import readTextFile
 from outwiker.core.xmlversionparser import XmlVersionParser
-from buildtools.serverinfo import DEPLOY_SERVER_NAME, DEPLOY_UNSTABLE_PATH
 
-env.hosts = [DEPLOY_SERVER_NAME]
+try:
+    from buildtools.serverinfo import DEPLOY_SERVER_NAME, DEPLOY_UNSTABLE_PATH
+except ImportError:
+    shutil.copyfile(u'buildtools/serverinfo.py.example',
+                    u'buildtools/serverinfo.py')
+    from buildtools.serverinfo import DEPLOY_SERVER_NAME, DEPLOY_UNSTABLE_PATH
+
+# env.hosts = [DEPLOY_SERVER_NAME]
 
 @task
 def deb_sources_included():
@@ -400,6 +407,7 @@ def _create_tree(level, maxlevel, nsiblings, parent):
             _create_tree(level + 1, maxlevel, nsiblings, newpage)
 
 
+@hosts(DEPLOY_SERVER_NAME)
 @task
 def upload_unstable(distrib_path):
     """
@@ -435,6 +443,7 @@ def upload_unstable(distrib_path):
             put(fname, basename)
 
 
+@hosts(DEPLOY_SERVER_NAME)
 @task
 def deploy(distrib_path):
     """
