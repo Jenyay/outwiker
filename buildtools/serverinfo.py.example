@@ -1,0 +1,4 @@
+# -*- coding: UTF-8 -*-
+
+DEPLOY_SERVER_NAME = u'example.com'
+DEPLOY_UNSTABLE_PATH = u'/home/username/path/to/upload/'

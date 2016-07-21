@@ -44,6 +44,14 @@ PLUGINS_DIR = u'plugins'
 PLUGIN_VERSIONS_FILENAME = u'plugin.xml'
 OUTWIKER_VERSIONS_FILENAME = u'versions.xml'
 
+FILES_FOR_UPLOAD_UNSTABLE_WIN = [
+    u'outwiker_win_unstable.7z',
+    u'outwiker_win_unstable.exe',
+    u'outwiker_win_unstable_all_plugins.7z',
+    u'outwiker_win_unstable_all_plugins.zip',
+    u'outwiker_win_unstable.zip',
+]
+
 # Timeout in seconds
 DOWNLOAD_TIMEOUT = 15
 

@@ -59,3 +59,4 @@ tests_win
 .idea/
 Thumbs.db
 tmp/
+serverinfo.py
