@@ -74,6 +74,23 @@ class MarkdownPageView(BaseWikiPageView):
     def _getCacher(self, page, application):
         return HtmlCache(page, application)
 
+    def _getAttachString (self, fnames):
+        """
+        Функция возвращает текст, который будет вставлен на страницу при
+        вставке выбранных прикрепленных файлов из панели вложений
+
+        Перегрузка метода из BaseTextPanel
+        """
+        text = ""
+        count = len (fnames)
+
+        for n in range (count):
+            text += "__attach/" + fnames[n]
+            if n != count - 1:
+                text += "\n"
+
+        return text
+
     def _createWikiTools(self):
         assert self.mainWindow is not None
 
