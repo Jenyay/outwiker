@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 import os
+import re
 
 import wx
 
@@ -154,22 +155,22 @@ class MarkdownPageView(BaseWikiPageView):
         actionController = self._application.actionController
 
         actionController.getAction(HEADING_1_STR_ID).setFunc(
-            lambda param: self._toddleSelectedLinesPrefix(u"# "))
+            lambda param: self._setHeading(u"# "))
 
         actionController.getAction(HEADING_2_STR_ID).setFunc(
-            lambda param: self._toddleSelectedLinesPrefix(u"## "))
+            lambda param: self._setHeading(u"## "))
 
         actionController.getAction(HEADING_3_STR_ID).setFunc(
-            lambda param: self._toddleSelectedLinesPrefix(u"### "))
+            lambda param: self._setHeading(u"### "))
 
         actionController.getAction(HEADING_4_STR_ID).setFunc(
-            lambda param: self._toddleSelectedLinesPrefix(u"#### "))
+            lambda param: self._setHeading(u"#### "))
 
         actionController.getAction(HEADING_5_STR_ID).setFunc(
-            lambda param: self._toddleSelectedLinesPrefix(u"##### "))
+            lambda param: self._setHeading(u"##### "))
 
         actionController.getAction(HEADING_6_STR_ID).setFunc(
-            lambda param: self._toddleSelectedLinesPrefix(u"###### "))
+            lambda param: self._setHeading(u"###### "))
 
         actionController.appendMenuItem(HEADING_1_STR_ID,
                                         menu)
@@ -263,9 +264,34 @@ class MarkdownPageView(BaseWikiPageView):
         toolbar = self.mainWindow.toolbars[self._getName()]
         toolbar.AddSeparator()
 
-    def _toddleSelectedLinesPrefix(self, prefix):
+    def _setHeading(self, prefix):
         editor = self._application.mainWindow.pagePanel.pageView.codeEditor
-        editor.toddleSelectedLinesPrefix(prefix)
+
+        old_sel_start = editor.GetSelectionStart()
+        old_sel_end = editor.GetSelectionEnd()
+        first_line, last_line = editor.GetSelectionLines()
+
+        prefix_regex = re.compile('^(#+\\s+)*', re.U | re.M)
+
+        editor.BeginUndoAction()
+
+        for n in range(first_line, last_line + 1):
+            line = editor.GetLine(n)
+            if line.startswith(prefix):
+                newline = line[len(prefix):]
+            else:
+                newline = prefix_regex.sub(prefix, line, 1)
+            editor.SetLine(n, newline)
+
+        if old_sel_start != old_sel_end:
+            new_sel_start = editor.GetLineStartPosition(first_line)
+            new_sel_end = editor.GetLineEndPosition(last_line)
+        else:
+            new_sel_start = new_sel_end = editor.GetLineEndPosition(last_line)
+
+        editor.SetSelection(new_sel_start, new_sel_end)
+
+        editor.EndUndoAction()
 
     def _insertLink(self, params):
         codeEditor = self._application.mainWindow.pagePanel.pageView.codeEditor
