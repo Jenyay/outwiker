@@ -133,8 +133,8 @@ def openWikiWithDialog (parent, readonly=False):
     wikiroot = None
 
     with TestedFileDialog (parent,
-                           wildcard = "__page.opt|__page.opt",
-                           style = wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as dialog:
+                           wildcard="__page.opt|__page.opt",
+                           style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as dialog:
         if dialog.ShowModal() == wx.ID_OK:
             fullpath = dialog.GetPath()
             path = os.path.dirname(fullpath)
@@ -156,9 +156,9 @@ def openWiki (path, readonly=False):
     def threadFunc (path, readonly):
         try:
             return WikiDocument.load (path, readonly)
-        except IOError, error:
+        except IOError as error:
             return error
-        except outwiker.core.exceptions.RootFormatError, error:
+        except outwiker.core.exceptions.RootFormatError as error:
             return error
 
     preWikiOpenParams = PreWikiOpenParams(path, readonly)
@@ -1034,6 +1034,12 @@ def _registerPolyActions (application):
                                                        _(u"Numbers list"),
                                                        _(u"Insert a numbers list")),
                                            HotKey ("J", ctrl=True))
+
+    application.actionController.register (PolyAction (application,
+                                                       LIST_DECREASE_LEVEL_STR_ID,
+                                                       _(u"Decrease nesting level"),
+                                                       _(u"Decrease the nesting level of the selected list items")),
+                                           None)
 
     application.actionController.register (PolyAction (application,
                                                        LINE_BREAK_STR_ID,

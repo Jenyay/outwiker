@@ -65,6 +65,9 @@ LIST_BULLETS_STR_ID = "ListBullets"
 # Нумерованный список
 LIST_NUMBERS_STR_ID = "ListNumbers"
 
+# Decrease the nesting level of the selected list items
+LIST_DECREASE_LEVEL_STR_ID = "ListDesreaseLevel"
+
 # Перевод строки
 LINE_BREAK_STR_ID = "LineBreak"
 

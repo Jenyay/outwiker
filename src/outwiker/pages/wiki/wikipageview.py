@@ -111,6 +111,7 @@ class WikiPageView(BaseWikiPageView):
             LINK_STR_ID,
             LIST_BULLETS_STR_ID,
             LIST_NUMBERS_STR_ID,
+            LIST_DECREASE_LEVEL_STR_ID,
             LINE_BREAK_STR_ID,
             HTML_ESCAPE_STR_ID,
             CURRENT_DATE,
@@ -454,6 +455,12 @@ class WikiPageView(BaseWikiPageView):
             os.path.join(self.imagesDir, "text_list_numbers.png"),
             fullUpdate=False)
 
+        # Уменьшить уровень вложенности
+        actionController.getAction(LIST_DECREASE_LEVEL_STR_ID).setFunc(
+            lambda param: self._decreaseNestingListItems())
+
+        actionController.appendMenuItem(LIST_DECREASE_LEVEL_STR_ID, menu)
+
     def __addFormatTools(self):
         menu = self._formatMenu
         toolbar = self.mainWindow.toolbars[self._getName()]
@@ -633,11 +640,35 @@ class WikiPageView(BaseWikiPageView):
         toolbar = self.mainWindow.toolbars[self._getName()]
         toolbar.AddSeparator()
 
+    def _decreaseNestingListItems(self):
+        editor = self._application.mainWindow.pagePanel.pageView.codeEditor
+
+        old_sel_start = editor.GetSelectionStart()
+        old_sel_end = editor.GetSelectionEnd()
+        first_line, last_line = editor.GetSelectionLines()
+
+        editor.BeginUndoAction()
+
+        for n in range(first_line, last_line + 1):
+            line = editor.GetLine(n)
+            if line.startswith(u'*') or line.startswith(u'#'):
+                newline = line[1:]
+                newline = newline.lstrip()
+                editor.SetLine(n, newline)
+
+        if old_sel_start != old_sel_end:
+            new_sel_start = editor.GetLineStartPosition(first_line)
+            new_sel_end = editor.GetLineEndPosition(last_line)
+        else:
+            new_sel_start = new_sel_end = editor.GetLineEndPosition(last_line)
+
+        editor.SetSelection(new_sel_start, new_sel_end)
+
+        editor.EndUndoAction()
+
     def _setHeading(self, prefix):
         """
         Mark selected lines with heading
-
-        Added in OutWiker 2.0.0.797
         """
         editor = self._application.mainWindow.pagePanel.pageView.codeEditor
 
