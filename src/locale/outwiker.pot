@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-24 21:37+0300\n"
+"POT-Creation-Date: 2016-07-24 22:11+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -28,7 +28,7 @@ msgstr ""
 #: outwiker/core/commands.py:364 outwiker/core/commands.py:370
 #: outwiker/core/commands.py:399 outwiker/core/commands.py:410
 #: outwiker/core/commands.py:414 outwiker/core/textprinter.py:105
-#: outwiker/pages/html/htmlpageview.py:647
+#: outwiker/pages/html/htmlpageview.py:648
 #: outwiker/pages/html/basehtmlpanel.py:329
 #: outwiker/pages/html/basehtmlpanel.py:333
 #: outwiker/pages/wiki/actions/include.py:37
@@ -56,8 +56,8 @@ msgstr ""
 #: outwiker/gui/pagedialogpanels/appearancepanel.py:74
 #: outwiker/gui/pagedialog.py:23 outwiker/gui/pagedialog.py:33
 #: outwiker/gui/notestree.py:243 outwiker/gui/notestree.py:298
-#: outwiker/gui/mainwindow.py:579 outwiker/gui/basetextpanel.py:227
-#: outwiker/gui/basetextpanel.py:239 outwiker/gui/mainwndcontroller.py:225
+#: outwiker/gui/mainwindow.py:579 outwiker/gui/basetextpanel.py:234
+#: outwiker/gui/basetextpanel.py:246 outwiker/gui/mainwndcontroller.py:225
 #: outwiker/gui/htmlrenderie.py:213 outwiker/gui/htmlrenderwebkit.py:288
 msgid "Error"
 msgstr ""
@@ -416,6 +416,10 @@ msgstr ""
 msgid "Delete the current line"
 msgstr ""
 
+#: outwiker/core/commands.py:1114 outwiker/core/commands.py:1115
+msgid "Join lines"
+msgstr ""
+
 #: outwiker/core/defines.py:36
 msgid "versions_lang"
 msgstr ""
@@ -527,7 +531,7 @@ msgstr ""
 
 #: outwiker/pages/search/searchpanel.py:42
 #: outwiker/pages/search/searchpanel.py:302 outwiker/actions/search.py:31
-#: outwiker/gui/basetextpanel.py:316
+#: outwiker/gui/basetextpanel.py:323
 msgid "Search"
 msgstr ""
 
@@ -601,41 +605,41 @@ msgstr ""
 msgid "HTML"
 msgstr ""
 
-#: outwiker/pages/html/htmlpageview.py:231
-#: outwiker/pages/wiki/wikipageview.py:154
+#: outwiker/pages/html/htmlpageview.py:232
+#: outwiker/pages/wiki/wikipageview.py:155
 #: outwiker/gui/preferences/wikieditorpanel.py:38
 msgid "Heading"
 msgstr ""
 
-#: outwiker/pages/html/htmlpageview.py:232
-#: outwiker/pages/wiki/wikipageview.py:155
+#: outwiker/pages/html/htmlpageview.py:233
+#: outwiker/pages/wiki/wikipageview.py:156
 #: outwiker/gui/preferences/editorpanel.py:31
 #: outwiker/gui/preferences/htmlrenderpanel.py:25
 #: outwiker/gui/preferences/textprintpanel.py:28
 msgid "Font"
 msgstr ""
 
-#: outwiker/pages/html/htmlpageview.py:233
-#: outwiker/pages/wiki/wikipageview.py:156
+#: outwiker/pages/html/htmlpageview.py:234
+#: outwiker/pages/wiki/wikipageview.py:157
 msgid "Alignment"
 msgstr ""
 
-#: outwiker/pages/html/htmlpageview.py:234
-#: outwiker/pages/wiki/wikipageview.py:157
+#: outwiker/pages/html/htmlpageview.py:235
+#: outwiker/pages/wiki/wikipageview.py:158
 msgid "Formatting"
 msgstr ""
 
-#: outwiker/pages/html/htmlpageview.py:235
-#: outwiker/pages/wiki/wikipageview.py:159
+#: outwiker/pages/html/htmlpageview.py:236
+#: outwiker/pages/wiki/wikipageview.py:160
 msgid "Lists"
 msgstr ""
 
-#: outwiker/pages/html/htmlpageview.py:236
-#: outwiker/pages/wiki/wikipageview.py:158
+#: outwiker/pages/html/htmlpageview.py:237
+#: outwiker/pages/wiki/wikipageview.py:159
 msgid "Tables"
 msgstr ""
 
-#: outwiker/pages/html/htmlpageview.py:646
+#: outwiker/pages/html/htmlpageview.py:647
 msgid "Page style Error. Style by default is used"
 msgstr ""
 
@@ -691,7 +695,7 @@ msgstr ""
 msgid "Wiki"
 msgstr ""
 
-#: outwiker/pages/wiki/wikipageview.py:160
+#: outwiker/pages/wiki/wikipageview.py:161
 msgid "Commands"
 msgstr ""
 
@@ -1895,8 +1899,8 @@ msgstr ""
 msgid "Replace All"
 msgstr ""
 
-#: outwiker/gui/tabscontroller.py:250 outwiker/gui/basetextpanel.py:226
-#: outwiker/gui/basetextpanel.py:238
+#: outwiker/gui/tabscontroller.py:250 outwiker/gui/basetextpanel.py:233
+#: outwiker/gui/basetextpanel.py:245
 #, python-format
 msgid "Can't save file %s"
 msgstr ""
@@ -2006,7 +2010,7 @@ msgstr ""
 msgid "Overwrite file?"
 msgstr ""
 
-#: outwiker/gui/overwritedialog.py:19 outwiker/gui/basetextpanel.py:194
+#: outwiker/gui/overwritedialog.py:19 outwiker/gui/basetextpanel.py:201
 msgid "Overwrite"
 msgstr ""
 
@@ -2022,7 +2026,7 @@ msgstr ""
 msgid "Skip all"
 msgstr ""
 
-#: outwiker/gui/overwritedialog.py:23 outwiker/gui/basetextpanel.py:194
+#: outwiker/gui/overwritedialog.py:23 outwiker/gui/basetextpanel.py:201
 msgid "Cancel"
 msgstr ""
 
@@ -2056,16 +2060,16 @@ msgid ""
 "%s"
 msgstr ""
 
-#: outwiker/gui/basetextpanel.py:194
+#: outwiker/gui/basetextpanel.py:201
 msgid "Load"
 msgstr ""
 
-#: outwiker/gui/basetextpanel.py:196
+#: outwiker/gui/basetextpanel.py:203
 #, python-format
 msgid "Page \"%s\" is changed by the external program"
 msgstr ""
 
-#: outwiker/gui/basetextpanel.py:199
+#: outwiker/gui/basetextpanel.py:206
 msgid "Owerwrite?"
 msgstr ""
 

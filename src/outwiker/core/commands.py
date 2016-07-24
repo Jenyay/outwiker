@@ -1108,3 +1108,9 @@ def _registerPolyActions (application):
                                                        _(u"Delete line"),
                                                        _(u"Delete the current line")),
                                            None)
+
+    application.actionController.register (PolyAction (application,
+                                                       JOIN_LINES_STR_ID,
+                                                       _(u"Join lines"),
+                                                       _(u"Join lines")),
+                                           None)

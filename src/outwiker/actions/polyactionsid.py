@@ -107,3 +107,6 @@ MOVE_SELECTED_LINES_DOWN_ID = "MoveSelectedLinesDown"
 
 # Delete the current line
 DELETE_CURRENT_LINE_ID = "DeleteCurrentLine"
+
+# Join selected lines
+JOIN_LINES_STR_ID = "JoinLines"

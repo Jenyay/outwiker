@@ -902,3 +902,40 @@ class TextEditorTest(BaseMainWndTest):
 
         editor.LineDelete()
         self.assertEqual(editor.GetText().replace(u'\r\n', u'\n'), u'')
+
+    def test_JoinLines_01(self):
+        editor = self._getEditor()
+        editor.SetText(u'Строка 1\nСтрока 2\nСтрока 3\nСтрока 4')
+        editor.SetSelection(0, 0)
+
+        editor.JoinLines()
+        self.assertEqual(editor.GetText().replace(u'\r\n', u'\n'),
+                         u'Строка 1Строка 2\nСтрока 3\nСтрока 4')
+
+    def test_JoinLines_02(self):
+        editor = self._getEditor()
+        editor.SetText(u'Строка 1\nСтрока 2\nСтрока 3\nСтрока 4')
+        editor.SetSelection(0, 13)
+
+        editor.JoinLines()
+        self.assertEqual(editor.GetText().replace(u'\r\n', u'\n'),
+                         u'Строка 1Строка 2\nСтрока 3\nСтрока 4')
+
+    def test_JoinLines_03(self):
+        editor = self._getEditor()
+        editor.SetText(u'Строка 1\nСтрока 2\nСтрока 3\nСтрока 4')
+        editor.SetSelection(0, 20)
+
+        editor.JoinLines()
+        self.assertEqual(editor.GetText().replace(u'\r\n', u'\n'),
+                         u'Строка 1Строка 2Строка 3\nСтрока 4')
+
+    def test_JoinLines_04(self):
+        text = u'Строка 1\nСтрока 2\nСтрока 3\nСтрока 4'
+        editor = self._getEditor()
+        editor.SetText(text)
+        editor.SetSelection(len(text) - 1, len(text) - 1)
+
+        editor.JoinLines()
+        self.assertEqual(editor.GetText().replace(u'\r\n', u'\n'),
+                         u'Строка 1\nСтрока 2\nСтрока 3\nСтрока 4')

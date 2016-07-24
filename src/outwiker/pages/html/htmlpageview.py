@@ -85,6 +85,7 @@ class HtmlPageView (BaseHtmlPanel):
             MOVE_SELECTED_LINES_UP_ID,
             MOVE_SELECTED_LINES_DOWN_ID,
             DELETE_CURRENT_LINE_ID,
+            JOIN_LINES_STR_ID,
         ]
 
         # Список действий, которые нужно удалять с панелей и из меню.

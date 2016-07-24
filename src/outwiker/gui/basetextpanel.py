@@ -14,7 +14,8 @@ from outwiker.actions.polyactionsid import (SPELL_ON_OFF_ID,
                                             LINE_DUPLICATE_ID,
                                             MOVE_SELECTED_LINES_UP_ID,
                                             MOVE_SELECTED_LINES_DOWN_ID,
-                                            DELETE_CURRENT_LINE_ID)
+                                            DELETE_CURRENT_LINE_ID,
+                                            JOIN_LINES_STR_ID)
 from outwiker.core.system import getImagesDir
 from outwiker.core.commands import MessageBox, pageExists
 from outwiker.core.attachment import Attachment
@@ -72,8 +73,6 @@ class BaseTextPanel(BasePagePanel):
     def _onLineDuplicate(self, params):
         """
         Handler for the LINE_DUPLICATE_ID polyaction
-
-        Added in OutWiker 2.0.0.795
         """
         self.GetEditor().LineDuplicate()
 
@@ -100,6 +99,14 @@ class BaseTextPanel(BasePagePanel):
         Added in OutWiker 2.0.0.795
         """
         self.GetEditor().LineDelete()
+
+    def _onJoinLines(self, params):
+        """
+        Handler for the JOIN_LINES_STR_ID polyaction
+
+        Added in OutWiker 2.0.0.797
+        """
+        self.GetEditor().JoinLines()
 
     def __init__(self, parent, *args, **kwds):
         super(BaseTextPanel, self).__init__(parent, *args, **kwds)
@@ -222,7 +229,7 @@ class BaseTextPanel(BasePagePanel):
 
         try:
             self._getCursorPositionOption(page).value = self.GetCursorPosition()
-        except IOError, e:
+        except IOError as e:
             MessageBox(_(u"Can't save file %s") % (unicode(e.filename)),
                        _(u"Error"),
                        wx.ICON_ERROR | wx.OK)
@@ -233,7 +240,7 @@ class BaseTextPanel(BasePagePanel):
 
         try:
             page.content = self.GetContentFromGui()
-        except IOError, e:
+        except IOError as e:
             # TODO: Проверить под Windows
             MessageBox(_(u"Can't save file %s") % (unicode(e.filename)),
                        _(u"Error"),
@@ -388,6 +395,14 @@ class BaseTextPanel(BasePagePanel):
 
         self._application.actionController.appendMenuItem(
             MOVE_SELECTED_LINES_DOWN_ID,
+            self._application.mainWindow.mainMenu.editMenu
+        )
+
+        # Join Lines
+        self._application.actionController.getAction(JOIN_LINES_STR_ID).setFunc(self._onJoinLines)
+
+        self._application.actionController.appendMenuItem(
+            JOIN_LINES_STR_ID,
             self._application.mainWindow.mainMenu.editMenu
         )
 

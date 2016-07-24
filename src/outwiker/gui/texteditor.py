@@ -606,6 +606,29 @@ class TextEditor(wx.Panel):
         """
         self.textCtrl.EndUndoAction()
 
+    def JoinLines(self):
+        """
+        Join selected lines
+
+        Added in OutWiker 2.0.0.797
+        """
+        first_line, last_line = self.GetSelectionLines()
+        if first_line != last_line:
+            last_line -= 1
+
+        self.BeginUndoAction()
+
+        for _ in range(first_line, last_line + 1):
+            line = self.GetLine(first_line).replace(u'\r\n', u'\n')
+            if line.endswith(u'\n'):
+                newline = line[:-1]
+                self.SetLine(first_line, newline)
+
+        new_sel_pos = self.GetLineEndPosition(first_line)
+        self.SetSelection(new_sel_pos, new_sel_pos)
+
+        self.EndUndoAction()
+
     def __calcCharPos(self, pos_bytes):
         """
         Пересчет позиции в байтах в позицию в символах
