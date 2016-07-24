@@ -645,7 +645,7 @@ class WikiPageView(BaseWikiPageView):
         old_sel_end = editor.GetSelectionEnd()
         first_line, last_line = editor.GetSelectionLines()
 
-        prefix_regex = re.compile('^(!+\\s+)*', re.U | re.M)
+        prefix_regex = re.compile('^(!!+\\s+)*', re.U | re.M)
 
         editor.BeginUndoAction()
 
