@@ -451,6 +451,7 @@ def deploy(distrib_path):
 
     distrib_path - path to distribs for Windows
     """
+    test()
     deb_sources_included()
     ppaunstable()
     upload_unstable(distrib_path)
