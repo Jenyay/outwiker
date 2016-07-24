@@ -431,7 +431,7 @@ msgstr "Удалить текущую строку"
 
 #: outwiker/core/commands.py:1114 outwiker/core/commands.py:1115
 msgid "Join lines"
-msgstr "Join lines"
+msgstr "Объединить строки"
 
 #: outwiker/core/defines.py:36
 msgid "versions_lang"
