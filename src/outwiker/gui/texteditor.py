@@ -407,7 +407,7 @@ class TextEditor(wx.Panel):
 
         Added in OutWiker 2.0.0.795.
         """
-        self.textCtrl.BeginUndoAction()
+        self.BeginUndoAction()
         old_sel_start = self.GetSelectionStart()
         old_sel_end = self.GetSelectionEnd()
 
@@ -422,7 +422,7 @@ class TextEditor(wx.Panel):
             new_sel_start = new_sel_end = self.GetLineEndPosition(last_line)
 
         self.SetSelection(new_sel_start, new_sel_end)
-        self.textCtrl.EndUndoAction()
+        self.EndUndoAction()
 
     def turnText(self, lefttext, righttext):
         selText = self.textCtrl.GetSelectedText()
@@ -593,6 +593,18 @@ class TextEditor(wx.Panel):
         Added in OutWiker 2.0.0.795
         """
         self.textCtrl.LineDelete()
+
+    def BeginUndoAction(self):
+        """
+        Added in OutWiker 2.0.0.797
+        """
+        self.textCtrl.BeginUndoAction()
+
+    def EndUndoAction(self):
+        """
+        Added in OutWiker 2.0.0.797
+        """
+        self.textCtrl.EndUndoAction()
 
     def __calcCharPos(self, pos_bytes):
         """

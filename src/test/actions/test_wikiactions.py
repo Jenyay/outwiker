@@ -714,3 +714,35 @@ class WikiActionsTest(BaseMainWndTest):
             actionController.getAction(action_str).run(None)
             self.assertEqual(editor.GetText().replace(u'\r\n', u'\n'),
                              text)
+
+    def test_heading_switch(self):
+        editor = self._getEditor()
+        actionController = Application.actionController
+        text = u'Строка 1\nСтрока 2\nСтрока 3'
+
+        editor.SetText(text)
+        editor.SetSelection(0, 0)
+
+        actionController.getAction(HEADING_1_STR_ID).run(None)
+        self.assertEqual(editor.GetText().replace(u'\r\n', u'\n'),
+                         u'!! Строка 1\nСтрока 2\nСтрока 3')
+
+        actionController.getAction(HEADING_2_STR_ID).run(None)
+        self.assertEqual(editor.GetText().replace(u'\r\n', u'\n'),
+                         u'!!! Строка 1\nСтрока 2\nСтрока 3')
+
+        actionController.getAction(HEADING_1_STR_ID).run(None)
+        self.assertEqual(editor.GetText().replace(u'\r\n', u'\n'),
+                         u'!! Строка 1\nСтрока 2\nСтрока 3')
+
+        actionController.getAction(HEADING_6_STR_ID).run(None)
+        self.assertEqual(editor.GetText().replace(u'\r\n', u'\n'),
+                         u'!!!!!!! Строка 1\nСтрока 2\nСтрока 3')
+
+        actionController.getAction(HEADING_5_STR_ID).run(None)
+        self.assertEqual(editor.GetText().replace(u'\r\n', u'\n'),
+                         u'!!!!!! Строка 1\nСтрока 2\nСтрока 3')
+
+        actionController.getAction(HEADING_5_STR_ID).run(None)
+        self.assertEqual(editor.GetText().replace(u'\r\n', u'\n'),
+                         u'Строка 1\nСтрока 2\nСтрока 3')
