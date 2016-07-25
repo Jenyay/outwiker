@@ -10,6 +10,7 @@
 			<version number="2.0.0.797" status="dev">
 				<change>Восстановлена работоспособность иконки в трее под Linux.</change>
 				<change>В редактор добавлена возможность для слияния строк с помощью горячей клавиши или меню.</change>
+				<change>В редактор добавлена возможность удаления слов слева / справа с помощью горячей клавиши или меню.</change>
 				<change>В редактор добавлена возможность для уменьшения вложенности элементов списка с помощью горячей клавиши или меню.</change>
 				<change>Изменен стиль вкладок.</change>
 			</version>
@@ -40,6 +41,7 @@
 			<version number="2.0.0.797" status="dev">
 				<change>Restored availability the icon in the system tray on Linux.</change>
 				<change>The editor adds the ability to join lines with the hot key or menu item.</change>
+				<change>The editor adds the ability to remove word to beginning / ending with the hot key or menu item.</change>
 				<change>The editor adds the ability to decreade nesting level of the list items with the hot key or menu item.</change>
 				<change>Changed tabs style.</change>
 			</version>

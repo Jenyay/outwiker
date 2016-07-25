@@ -15,7 +15,9 @@ from outwiker.actions.polyactionsid import (SPELL_ON_OFF_ID,
                                             MOVE_SELECTED_LINES_UP_ID,
                                             MOVE_SELECTED_LINES_DOWN_ID,
                                             DELETE_CURRENT_LINE_ID,
-                                            JOIN_LINES_STR_ID)
+                                            JOIN_LINES_STR_ID,
+                                            DELETE_WORD_LEFT_STR_ID,
+                                            DELETE_WORD_RIGHT_STR_ID)
 from outwiker.core.system import getImagesDir
 from outwiker.core.commands import MessageBox, pageExists
 from outwiker.core.attachment import Attachment
@@ -33,6 +35,47 @@ class BaseTextPanel(BasePagePanel):
    (где есть текстовый редактор)
     """
     __metaclass__ = ABCMeta
+
+    def __init__(self, parent, *args, **kwds):
+        super(BaseTextPanel, self).__init__(parent, *args, **kwds)
+        self._application = Application
+
+        self._baseTextPolyactions = [
+            SPELL_ON_OFF_ID,
+            LINE_DUPLICATE_ID,
+            MOVE_SELECTED_LINES_UP_ID,
+            MOVE_SELECTED_LINES_DOWN_ID,
+            DELETE_CURRENT_LINE_ID,
+            JOIN_LINES_STR_ID,
+            DELETE_WORD_LEFT_STR_ID,
+            DELETE_WORD_RIGHT_STR_ID,
+        ]
+
+        self.searchMenu = None
+
+        # Предыдущее сохраненное состояние.
+        # Используется для выявления изменения страницы внешними средствами
+        self._oldContent = None
+
+        # Диалог, который показывается, если страница изменена
+        # сторонними программами.
+        # Используется для проверки того, что диалог уже показан и
+        # еще раз его показывать не надо
+        self.externalEditDialog = None
+
+        self.searchMenuIndex = 2
+        self.imagesDir = getImagesDir()
+
+        self._spellOnOffEvent, self.EVT_SPELL_ON_OFF = wx.lib.newevent.NewEvent()
+
+        self._addSearchTools()
+        self._addSpellTools()
+        self._addEditTools()
+
+        self._application.onAttachmentPaste += self.onAttachmentPaste
+        self._application.onPreferencesDialogClose += self.onPreferencesDialogClose
+
+        self._onSetPage += self.__onSetPage
 
     @abstractmethod
     def GetContentFromGui(self):
@@ -69,74 +112,6 @@ class BaseTextPanel(BasePagePanel):
         Return text editor from panel. It used for common polyactions.
         """
         pass
-
-    def _onLineDuplicate(self, params):
-        """
-        Handler for the LINE_DUPLICATE_ID polyaction
-        """
-        self.GetEditor().LineDuplicate()
-
-    def _onMoveSelectedLinesUp(self, params):
-        """
-        Handler for the MOVE_SELECTED_LINES_UP_ID polyaction
-
-        Added in OutWiker 2.0.0.795
-        """
-        self.GetEditor().MoveSelectedLinesUp()
-
-    def _onMoveSelectedLinesDown(self, params):
-        """
-        Handler for the MOVE_SELECTED_LINES_Down_ID polyaction
-
-        Added in OutWiker 2.0.0.795
-        """
-        self.GetEditor().MoveSelectedLinesDown()
-
-    def _onDeleteCurrentLine(self, params):
-        """
-        Handler for the DELETE_CURRENT_LINE_ID polyaction
-
-        Added in OutWiker 2.0.0.795
-        """
-        self.GetEditor().LineDelete()
-
-    def _onJoinLines(self, params):
-        """
-        Handler for the JOIN_LINES_STR_ID polyaction
-
-        Added in OutWiker 2.0.0.797
-        """
-        self.GetEditor().JoinLines()
-
-    def __init__(self, parent, *args, **kwds):
-        super(BaseTextPanel, self).__init__(parent, *args, **kwds)
-        self._application = Application
-
-        self.searchMenu = None
-
-        # Предыдущее сохраненное состояние.
-        # Используется для выявления изменения страницы внешними средствами
-        self._oldContent = None
-
-        # Диалог, который показывается, если страница изменена
-        # сторонними программами.
-        # Используется для проверки того, что диалог уже показан и
-        # еще раз его показывать не надо
-        self.externalEditDialog = None
-
-        self.searchMenuIndex = 2
-        self.imagesDir = getImagesDir()
-
-        self._spellOnOffEvent, self.EVT_SPELL_ON_OFF = wx.lib.newevent.NewEvent()
-
-        self._addSearchTools()
-        self._addSpellTools()
-        self._addEditTools()
-
-        self._application.onAttachmentPaste += self.onAttachmentPaste
-        self._application.onPreferencesDialogClose += self.onPreferencesDialogClose
-
-        self._onSetPage += self.__onSetPage
 
     def __onSetPage(self, page):
         self.__updateOldContent()
@@ -275,11 +250,10 @@ class BaseTextPanel(BasePagePanel):
         """
         Убрать за собой
         """
-        self._application.actionController.getAction(SPELL_ON_OFF_ID).setFunc(None)
-        self._application.actionController.getAction(LINE_DUPLICATE_ID).setFunc(None)
-        self._application.actionController.getAction(MOVE_SELECTED_LINES_UP_ID).setFunc(None)
-        self._application.actionController.getAction(MOVE_SELECTED_LINES_DOWN_ID).setFunc(None)
-        self._application.actionController.getAction(DELETE_CURRENT_LINE_ID).setFunc(None)
+
+        actionController = self._application.actionController
+        map(lambda item: actionController.getAction(item).setFunc(None),
+            self._baseTextPolyactions)
 
         self._application.onAttachmentPaste -= self.onAttachmentPaste
         self._application.onPreferencesDialogClose -= self.onPreferencesDialogClose
@@ -296,22 +270,21 @@ class BaseTextPanel(BasePagePanel):
         assert self.mainWindow.mainMenu.GetMenuCount() >= 3
         assert self.searchMenu is not None
 
-        self._application.actionController.removeMenuItem(SearchAction.stringId)
-        self._application.actionController.removeMenuItem(SearchAndReplaceAction.stringId)
-        self._application.actionController.removeMenuItem(SearchNextAction.stringId)
-        self._application.actionController.removeMenuItem(SearchPrevAction.stringId)
-        self._application.actionController.removeMenuItem(SPELL_ON_OFF_ID)
-        self._application.actionController.removeMenuItem(LINE_DUPLICATE_ID)
-        self._application.actionController.removeMenuItem(MOVE_SELECTED_LINES_UP_ID)
-        self._application.actionController.removeMenuItem(MOVE_SELECTED_LINES_DOWN_ID)
-        self._application.actionController.removeMenuItem(DELETE_CURRENT_LINE_ID)
+        actionController = self._application.actionController
+        map(lambda item: actionController.removeMenuItem(item),
+            self._baseTextPolyactions)
+
+        actionController.removeMenuItem(SearchAction.stringId)
+        actionController.removeMenuItem(SearchAndReplaceAction.stringId)
+        actionController.removeMenuItem(SearchNextAction.stringId)
+        actionController.removeMenuItem(SearchPrevAction.stringId)
 
         if self.mainWindow.GENERAL_TOOLBAR_STR in self.mainWindow.toolbars:
-            self._application.actionController.removeToolbarButton(SearchAction.stringId)
-            self._application.actionController.removeToolbarButton(SearchAndReplaceAction.stringId)
-            self._application.actionController.removeToolbarButton(SearchNextAction.stringId)
-            self._application.actionController.removeToolbarButton(SearchPrevAction.stringId)
-            self._application.actionController.removeToolbarButton(SPELL_ON_OFF_ID)
+            actionController.removeToolbarButton(SearchAction.stringId)
+            actionController.removeToolbarButton(SearchAndReplaceAction.stringId)
+            actionController.removeToolbarButton(SearchNextAction.stringId)
+            actionController.removeToolbarButton(SearchPrevAction.stringId)
+            actionController.removeToolbarButton(SPELL_ON_OFF_ID)
 
         self._removeAllTools()
         self.mainWindow.mainMenu.Remove(self.searchMenuIndex)
@@ -367,7 +340,7 @@ class BaseTextPanel(BasePagePanel):
         self._application.mainWindow.mainMenu.editMenu.AppendSeparator()
 
         # Delete the current line line
-        self._application.actionController.getAction(DELETE_CURRENT_LINE_ID).setFunc(self._onDeleteCurrentLine)
+        self._application.actionController.getAction(DELETE_CURRENT_LINE_ID).setFunc(lambda params: self.GetEditor().LineDelete())
 
         self._application.actionController.appendMenuItem(
             DELETE_CURRENT_LINE_ID,
@@ -375,7 +348,7 @@ class BaseTextPanel(BasePagePanel):
         )
 
         # Duplicate the current line
-        self._application.actionController.getAction(LINE_DUPLICATE_ID).setFunc(self._onLineDuplicate)
+        self._application.actionController.getAction(LINE_DUPLICATE_ID).setFunc(lambda params: self.GetEditor().LineDuplicate())
 
         self._application.actionController.appendMenuItem(
             LINE_DUPLICATE_ID,
@@ -383,7 +356,7 @@ class BaseTextPanel(BasePagePanel):
         )
 
         # Move selected lines up
-        self._application.actionController.getAction(MOVE_SELECTED_LINES_UP_ID).setFunc(self._onMoveSelectedLinesUp)
+        self._application.actionController.getAction(MOVE_SELECTED_LINES_UP_ID).setFunc(lambda params: self.GetEditor().MoveSelectedLinesUp())
 
         self._application.actionController.appendMenuItem(
             MOVE_SELECTED_LINES_UP_ID,
@@ -391,7 +364,7 @@ class BaseTextPanel(BasePagePanel):
         )
 
         # Move selected lines down
-        self._application.actionController.getAction(MOVE_SELECTED_LINES_DOWN_ID).setFunc(self._onMoveSelectedLinesDown)
+        self._application.actionController.getAction(MOVE_SELECTED_LINES_DOWN_ID).setFunc(lambda params: self.GetEditor().MoveSelectedLinesDown())
 
         self._application.actionController.appendMenuItem(
             MOVE_SELECTED_LINES_DOWN_ID,
@@ -399,10 +372,26 @@ class BaseTextPanel(BasePagePanel):
         )
 
         # Join Lines
-        self._application.actionController.getAction(JOIN_LINES_STR_ID).setFunc(self._onJoinLines)
+        self._application.actionController.getAction(JOIN_LINES_STR_ID).setFunc(lambda params: self.GetEditor().JoinLines())
 
         self._application.actionController.appendMenuItem(
             JOIN_LINES_STR_ID,
+            self._application.mainWindow.mainMenu.editMenu
+        )
+
+        # Delete word left
+        self._application.actionController.getAction(DELETE_WORD_LEFT_STR_ID).setFunc(lambda params: self.GetEditor().DelWordLeft())
+
+        self._application.actionController.appendMenuItem(
+            DELETE_WORD_LEFT_STR_ID,
+            self._application.mainWindow.mainMenu.editMenu
+        )
+
+        # Delete word right
+        self._application.actionController.getAction(DELETE_WORD_RIGHT_STR_ID).setFunc(lambda params: self.GetEditor().DelWordRight())
+
+        self._application.actionController.appendMenuItem(
+            DELETE_WORD_RIGHT_STR_ID,
             self._application.mainWindow.mainMenu.editMenu
         )
 

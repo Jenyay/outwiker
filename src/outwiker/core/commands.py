@@ -1114,3 +1114,15 @@ def _registerPolyActions (application):
                                                        _(u"Join lines"),
                                                        _(u"Join lines")),
                                            None)
+
+    application.actionController.register (PolyAction (application,
+                                                       DELETE_WORD_LEFT_STR_ID,
+                                                       _(u"Delete word to the left"),
+                                                       _(u"Delete text to beginning of the word")),
+                                           HotKey ("Back", ctrl=True))
+
+    application.actionController.register (PolyAction (application,
+                                                       DELETE_WORD_RIGHT_STR_ID,
+                                                       _(u"Delete word to the right"),
+                                                       _(u"Delete text to ending of the word")),
+                                           HotKey ("Delete", ctrl=True))

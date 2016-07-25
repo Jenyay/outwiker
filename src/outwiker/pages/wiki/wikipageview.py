@@ -119,12 +119,7 @@ class WikiPageView(BaseWikiPageView):
             TABLE_ROW_STR_ID,
             TABLE_CELL_STR_ID,
             MARK_STR_ID,
-            LINE_DUPLICATE_ID,
-            MOVE_SELECTED_LINES_UP_ID,
-            MOVE_SELECTED_LINES_DOWN_ID,
-            DELETE_CURRENT_LINE_ID,
-            JOIN_LINES_STR_ID,
-        ]
+        ] + self._baseTextPolyactions
 
     def _getSpecificActions(self):
         return [

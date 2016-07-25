@@ -110,3 +110,9 @@ DELETE_CURRENT_LINE_ID = "DeleteCurrentLine"
 
 # Join selected lines
 JOIN_LINES_STR_ID = "JoinLines"
+
+# Delete text to beginning of the word
+DELETE_WORD_LEFT_STR_ID = "DeleteWordLeft"
+
+# Delete text to ending of the word
+DELETE_WORD_RIGHT_STR_ID = "DeleteWordRight"
