@@ -1126,3 +1126,15 @@ def _registerPolyActions (application):
                                                        _(u"Delete word to the right"),
                                                        _(u"Delete text to ending of the word")),
                                            HotKey ("Delete", ctrl=True))
+
+    application.actionController.register (PolyAction (application,
+                                                       DELETE_LINE_LEFT_STR_ID,
+                                                       _(u"Delete to start of the line"),
+                                                       _(u"Delete text back from the current position to the start of the line")),
+                                           HotKey ("Back", ctrl=True, shift=True))
+
+    application.actionController.register (PolyAction (application,
+                                                       DELETE_LINE_RIGHT_STR_ID,
+                                                       _(u"Delete to end of the line"),
+                                                       _(u"Delete text forwards from the current position to the end of the line")),
+                                           HotKey ("Delete", ctrl=True, shift=True))

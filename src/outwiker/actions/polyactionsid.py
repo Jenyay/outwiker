@@ -116,3 +116,9 @@ DELETE_WORD_LEFT_STR_ID = "DeleteWordLeft"
 
 # Delete text to ending of the word
 DELETE_WORD_RIGHT_STR_ID = "DeleteWordRight"
+
+# Delete back from the current position to the start of the line
+DELETE_LINE_LEFT_STR_ID = "DeleteLineLeft"
+
+# Delete forwards from the current position to the end of the line
+DELETE_LINE_RIGHT_STR_ID = "DeleteLineRight"

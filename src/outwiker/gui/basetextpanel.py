@@ -17,7 +17,9 @@ from outwiker.actions.polyactionsid import (SPELL_ON_OFF_ID,
                                             DELETE_CURRENT_LINE_ID,
                                             JOIN_LINES_STR_ID,
                                             DELETE_WORD_LEFT_STR_ID,
-                                            DELETE_WORD_RIGHT_STR_ID)
+                                            DELETE_WORD_RIGHT_STR_ID,
+                                            DELETE_LINE_LEFT_STR_ID,
+                                            DELETE_LINE_RIGHT_STR_ID)
 from outwiker.core.system import getImagesDir
 from outwiker.core.commands import MessageBox, pageExists
 from outwiker.core.attachment import Attachment
@@ -49,6 +51,8 @@ class BaseTextPanel(BasePagePanel):
             JOIN_LINES_STR_ID,
             DELETE_WORD_LEFT_STR_ID,
             DELETE_WORD_RIGHT_STR_ID,
+            DELETE_LINE_LEFT_STR_ID,
+            DELETE_LINE_RIGHT_STR_ID,
         ]
 
         self.searchMenu = None
@@ -392,6 +396,22 @@ class BaseTextPanel(BasePagePanel):
 
         self._application.actionController.appendMenuItem(
             DELETE_WORD_RIGHT_STR_ID,
+            self._application.mainWindow.mainMenu.editMenu
+        )
+
+        # Delete line to start
+        self._application.actionController.getAction(DELETE_LINE_LEFT_STR_ID).setFunc(lambda params: self.GetEditor().DelLineLeft())
+
+        self._application.actionController.appendMenuItem(
+            DELETE_LINE_LEFT_STR_ID,
+            self._application.mainWindow.mainMenu.editMenu
+        )
+
+        # Delete line to end
+        self._application.actionController.getAction(DELETE_LINE_RIGHT_STR_ID).setFunc(lambda params: self.GetEditor().DelLineRight())
+
+        self._application.actionController.appendMenuItem(
+            DELETE_LINE_RIGHT_STR_ID,
             self._application.mainWindow.mainMenu.editMenu
         )
 
