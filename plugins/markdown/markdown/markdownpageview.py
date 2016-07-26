@@ -63,11 +63,7 @@ class MarkdownPageView(BaseWikiPageView):
             # LIST_NUMBERS_STR_ID,
             HTML_ESCAPE_STR_ID,
             CURRENT_DATE,
-            LINE_DUPLICATE_ID,
-            MOVE_SELECTED_LINES_UP_ID,
-            MOVE_SELECTED_LINES_DOWN_ID,
-            DELETE_CURRENT_LINE_ID,
-        ]
+        ] + self._baseTextPolyactions
 
     def _getSpecificActions(self):
         return []
@@ -75,7 +71,7 @@ class MarkdownPageView(BaseWikiPageView):
     def _getCacher(self, page, application):
         return HtmlCache(page, application)
 
-    def _getAttachString (self, fnames):
+    def _getAttachString(self, fnames):
         """
         Функция возвращает текст, который будет вставлен на страницу при
         вставке выбранных прикрепленных файлов из панели вложений
@@ -83,9 +79,9 @@ class MarkdownPageView(BaseWikiPageView):
         Перегрузка метода из BaseTextPanel
         """
         text = ""
-        count = len (fnames)
+        count = len(fnames)
 
-        for n in range (count):
+        for n in range(count):
             text += "__attach/" + fnames[n]
             if n != count - 1:
                 text += "\n"
