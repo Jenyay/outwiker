@@ -42,8 +42,8 @@ else:
 			return __version__
 
 		def initialize(self):
-			self._autorenamer.initialize()
 			self._initlocale(u"AutoRenamer")
+			self._autorenamer.initialize()
 
 		def destroy(self):
 			self._autorenamer.destroy()
