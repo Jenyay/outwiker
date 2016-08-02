@@ -15,7 +15,13 @@
 			<name>Vitalii Koshura</name>
 			<site>https://github.com/AenBleidd</site>
 		</author>
+
 		<changelog>
+			<version number="0.0.0.3">
+                <download os="all">http://jenyay.net/uploads/Outwiker/AutoRenamer/AutoRenamer-0.0.0.3.zip</download>
+				<change>Added the Swedish translation.</change>
+				<change>Bug fixes.</change>
+			</version>
 			<version number="0.0.0.2" date="April 26, 2015">
                 <download os="all">http://jenyay.net/uploads/Outwiker/AutoRenamer/AutoRenamer.zip</download>
 				<change>The first version.</change>
@@ -33,6 +39,11 @@
 		</author>
 
 		<changelog>
+			<version number="0.0.0.3">
+                <download os="all">http://jenyay.net/uploads/Outwiker/AutoRenamer/AutoRenamer-0.0.0.3.zip</download>
+				<change>Добавлена поддержка шведского языка.</change>
+				<change>Исправление ошибок.</change>
+			</version>
 			<version number="0.0.0.2" date="26.04.2015">
                 <download os="all">http://jenyay.net/uploads/Outwiker/AutoRenamer/AutoRenamer.zip</download>
 				<change>Первая версия.</change>
