@@ -1,0 +1,287 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: outwiker\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-05-14 23:10+0300\n"
+"PO-Revision-Date: 2016-08-02 09:25+0300\n"
+"Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
+"Language-Team: Swedish\n"
+"Language: sv_SE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.8.7.1\n"
+"X-Crowdin-Project: outwiker\n"
+"X-Crowdin-Language: sv-SE\n"
+"X-Crowdin-File: externaltools.po\n"
+
+#: menutoolscontroller.py:81
+msgid "Can't execute tools"
+msgstr "Kan inte starta verktyg"
+
+#: menutoolscontroller.py:82 preferencespanel.py:98
+msgid "Error"
+msgstr "Fel"
+
+#: controller.py:40
+msgid "External Tools [Plugin]"
+msgstr "Externa verktyg [Instick]"
+
+#: toolslistpanel.py:109
+msgid "Open file dialog..."
+msgstr "Öppna fildialog..."
+
+#: toolslistpanel.py:115
+msgid "Remove tool"
+msgstr "Ta bort verktyg"
+
+#: toolslistpanel.py:125
+msgid "Executables (*.exe)|*.exe|All Files|*.*"
+msgstr "Exekverbara (*.exe)|*.exe|Alla filer|*.*"
+
+#: toolslistpanel.py:127
+msgid "All Files|*"
+msgstr "Alla filer|*"
+
+#: commandexec/execdialog.py:17
+msgid "Link"
+msgstr "Länk"
+
+#: commandexec/execdialog.py:17
+msgid "Button"
+msgstr "Knapp"
+
+#: commandexec/execdialog.py:19
+msgid "Inserting (:exec:) command"
+msgstr "Infoga kommandot (:exec:)"
+
+#: commandexec/execdialog.py:30
+msgid "Title"
+msgstr "Titel"
+
+#: commandexec/execdialog.py:48
+msgid "Format"
+msgstr "Format"
+
+#: commandexec/guicreator.py:56 commandexec/commandcontroller.py:189
+msgid "ExternalTools"
+msgstr "ExternalTools"
+
+#: commandexec/actions.py:46
+msgid "Run applications (:exec:)"
+msgstr "Kör program (:exec:)"
+
+#: commandexec/actions.py:51
+msgid "ExternalTools plugin. Insert (:exec:) command"
+msgstr "ExternalTools-instick. Infoga kommandot (:exec:)"
+
+#: commandexec/actions.py:74
+msgid "%page%. Current page. Text file"
+msgstr "%page%. Aktuell sida. Textfil"
+
+#: commandexec/actions.py:79
+msgid "ExternalTools plugin. Insert a %page% macros. The macros will be replaced by a path to current page text file."
+msgstr "ExternalTools-instick. Infoga ett %page% -makro. Makrot kommer att ersättas med sökväg till aktuell sida."
+
+#: commandexec/actions.py:96
+msgid "%html%. Current page. HTML file"
+msgstr "%html%. Aktuell sida. HTML-fil"
+
+#: commandexec/actions.py:101
+msgid "ExternalTools plugin. Insert a %html% macros. The macros will be replaced by a path to current HTML file."
+msgstr "ExternalTools-instick. Infoga ett %html%-makro. Makrot kommer att ersättas med sökväg till aktuell HTML-fil."
+
+#: commandexec/actions.py:118
+msgid "%attach%. Path to current attachments folder"
+msgstr "%attach%. Sökväg till aktuell bilagemapp"
+
+#: commandexec/actions.py:123
+msgid "ExternalTools plugin. Insert a %attach% macros. The macros will be replaced by a path to current attach folder."
+msgstr "ExternalTools-instick. Infoga ett %attach%-makro. Makrot kommer att ersättas med sökväg till aktuell bilagemapp."
+
+#: commandexec/actions.py:140
+msgid "%folder%. Path to current page folder"
+msgstr "%folder%. Sökväg till aktuell sidmapp"
+
+#: commandexec/actions.py:145
+msgid "ExternalTools plugin. Insert a %folder% macros. The macros will be replaced by a path to current page folder."
+msgstr "ExternalTools-instick. Infoga ett %folder%-makro. Makrot kommer att ersättas med sökväg till aktuell sidmapp."
+
+#: commandexec/commandcontroller.py:182
+msgid ""
+"Run applications by ExternalTools plugin?\n"
+"It may be unsafe."
+msgstr ""
+"Vill du köra program via ExternalTools-insticket?\n"
+"Det kan vara en säkerhetsrisk."
+
+#: commandexec/commandcontroller.py:184
+msgid ""
+"Run application by ExternalTools plugin?\n"
+"It may be unsafe."
+msgstr ""
+"Vill du köra program via ExternalTools-insticket?\n"
+"Det kan vara en säkerhetsrisk."
+
+#: preferencespanel.py:38
+msgid "Show warning before executing applications by (:exec:) command"
+msgstr "Visa varning före körning av program via (:exec:)-kommandot"
+
+#: preferencespanel.py:41
+msgid "Tools List"
+msgstr "Verktygslista"
+
+#: preferencespanel.py:42
+msgid "Append Tools"
+msgstr "Tillämpa verktyg"
+
+#: preferencespanel.py:97
+msgid "Can't save options"
+msgstr "Kan inte spara alternativ"
+
+#: externaltools.py:50
+msgid ""
+"Open notes files with external editor.\n"
+"\n"
+"For OutWiker 1.9 and above ExternalTools adds the (:exec:) command for creation link or button for execute external applications from wiki page.\n"
+"\n"
+"The (:exec:) command allow to run many applications. Every application must writed on the separated lines.\n"
+"\n"
+"If line begins with \"#\" this line will be ignored. \"#\" in begin of the line is sign of the comment.\n"
+msgstr ""
+"Öppna notisfiler med extern redigerare.\n"
+"\n"
+"I OutWiker 1.9 och senare, lägger ExternalTools till (:exec:)-kommandot som skapar länk eller knapp för körning av externa program från wiki-sidan.\n"
+"\n"
+"(:exec:)-kommandot låter dig köra flera program. Varje program måste anges på separat rad.\n"
+"\n"
+"Om raden börjar med \"#\" kommer den att undantas. \"#\" i början på en rad är tecknet för kommentar.\n"
+
+#: externaltools.py:59
+msgid ""
+"The (:exec:) command has the following optional parameters:\n"
+"<ul>\n"
+"<li><b>format</b>. If the parameter equals \"button\" command will create a button instead of a link.</li>\n"
+"<li><b>title</b>. The parameter sets the text for link or button.</li>\n"
+"</ul>"
+msgstr ""
+"(:exec:)-kommandot har följande tilläggsparametrar:\n"
+"<ul>\n"
+"<li><b>format</b>. Om parametern är \"button\" skapar kommandot en knapp istället för en länk.</li>\n"
+"<li><b>title</b>. Parametern anger texten som länk eller knapp.</li>\n"
+"</ul>"
+
+#: externaltools.py:65
+msgid ""
+"Inside (:exec:) command may be macroses. The macroses will be replaced by appropriate paths:\n"
+"<ul>\n"
+"<li><b>%page%</b>. The macros will be replaced by full path to page text file.</li>\n"
+"<li><b>%html%</b>. The macros will be replaced by full path to HTML content file.</li>\n"
+"<li><b>%folder%</b>. The macros will be replaced by full path to page folder.</li>\n"
+"<li><b>%attach%</b>. The macros will be replaced by full path to attach folder without slash on the end.</li>\n"
+"</ul>"
+msgstr ""
+"(:exec:)-kommandot kan innehålla makron. Makron ersätts med respektive sökväg:\n"
+"<ul>\n"
+"<li><b>%page%</b>. Makrot ersätts med fullständig sökväg till sidans textfil.</li>\n"
+"<li><b>%html%</b>. Makrot ersätts med fullständig sökväg till HTML-filen.</li>\n"
+"<li><b>%folder%</b>. Makrot ersätts med fullständig sökväg till sidmappen.</li>\n"
+"<li><b>%attach%</b>. Makrot ersätts med fullständig sökväg till bilagemappen utan avslutande snedstreck.</li>\n"
+"</ul>"
+
+#: externaltools.py:73
+msgid "Examples"
+msgstr "Exempel"
+
+#: externaltools.py:75
+msgid ""
+"Creating a link for running application.exe:\n"
+"<code><pre>(:exec:)application.exe(:execend:)</pre></code>"
+msgstr ""
+"Skapa en länk för att köra program.exe:\n"
+"<code><pre>(:exec:)program.exe(:execend:)</pre></code>"
+
+#: externaltools.py:78
+msgid ""
+"Same but creating a button\n"
+"<code><pre>(:exec format=button:)\n"
+"application.exe\n"
+"(:execend:)</pre></code>"
+msgstr ""
+"Samma, fast skapa en knapp istället\n"
+"<code><pre>(:exec format=button:)\n"
+"program.exe\n"
+"(:execend:)</pre></code>"
+
+#: externaltools.py:83
+msgid ""
+"Create a link for running application.exe with parameters:\n"
+"<code><pre>(:exec:)\n"
+"application.exe param1 \"c:\\myfolder\\path to file name\"\n"
+"(:execend:)</pre></code>"
+msgstr ""
+"Skapa en länk för att köra program.exe med parametrar:\n"
+"<code><pre>(:exec:)\n"
+"program.exe parameter1 \"c:\\din mapp\\sökväg till fil\"\n"
+"(:execend:)</pre></code>"
+
+#: externaltools.py:88
+msgid ""
+"Run a lot of applications:\n"
+"<code><pre>(:exec text=\"Run application_1, application_2 and application_3\":)\n"
+"application_1.exe\n"
+"application_2.exe param_1 param_2\n"
+"application_3.exe param_1 param_2\n"
+"(:execend:)</pre></code>"
+msgstr ""
+"Kör flera program:\n"
+"<code><pre>(:exec text=\"Kör program_1, program_2 och program_3\":)\n"
+"program_1.exe\n"
+"program_2.exe parameter_1 parameter_2\n"
+"program_3.exe parameter_1 parameter_2\n"
+"(:execend:)</pre></code>"
+
+#: externaltools.py:95
+msgid ""
+"Open attached file with application.exe:\n"
+"<code><pre>(:exec:)\n"
+"application.exe Attach:my_file.txt\n"
+"(:execend:)</pre></code>"
+msgstr ""
+"Öppna bilaga med program.exe:\n"
+"<code><pre>(:exec:)\n"
+"program.exe Attach:din_fil.txt\n"
+"(:execend:)</pre></code>"
+
+#: externaltools.py:100
+msgid ""
+"Execute application.exe from attachments folder:\n"
+"<code><pre>(:exec:)\n"
+"%attach%/application.exe %attach%/my_file.txt\n"
+"(:execend:)</pre></code>\n"
+"or\n"
+"<code><pre>(:exec:)\n"
+"Attach:application.exe Attach:my_file.txt\n"
+"(:execend:)</pre></code>"
+msgstr ""
+"Starta program.exe från bilagemappen:\n"
+"<code><pre>(:exec:)\n"
+"%attach%/program.exe %attach%/din_fil.txt\n"
+"(:execend:)</pre></code>\n"
+"eller\n"
+"<code><pre>(:exec:)\n"
+"Attach:program.exe Attach:din_fil.txt\n"
+"(:execend:)</pre></code>"
+
+#: externaltools.py:160
+msgid "http://jenyay.net/Outwiker/ExternalToolsEn"
+msgstr "http://jenyay.net/Outwiker/ExternalToolsEn"
+
+#: menumaker.py:43
+msgid "Open Content File with..."
+msgstr "Öppna innehållsfil med..."
+
+#: menumaker.py:56
+msgid "Open Result HTML File with..."
+msgstr "Öppna HTML-fil med..."

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: externaltools\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-25 11:31+0300\n"
-"PO-Revision-Date: 2015-08-25 11:32+0300\n"
+"POT-Creation-Date: 2016-08-02 09:41+0300\n"
+"PO-Revision-Date: 2016-08-02 09:41+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: jenyay.net <jenyay.ilin@gmail.com>\n"
 "Language: en_GB\n"
@@ -13,148 +13,12 @@ msgstr ""
 "X-Poedit-KeywordsList: _;gettext;gettext_noop\n"
 "X-Poedit-Basepath: ../../..\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 1.7.5\n"
+"X-Generator: Poedit 1.8.7.1\n"
 "X-Poedit-SearchPath-0: .\n"
-
-#: menutoolscontroller.py:81
-msgid "Can't execute tools"
-msgstr "Can't execute tools"
-
-#: menutoolscontroller.py:82 preferencespanel.py:98
-msgid "Error"
-msgstr "Error"
 
 #: controller.py:40
 msgid "External Tools [Plugin]"
 msgstr "External Tools [Plugin]"
-
-#: toolslistpanel.py:109
-msgid "Open file dialog..."
-msgstr "Open file dialog..."
-
-#: toolslistpanel.py:115
-msgid "Remove tool"
-msgstr "Remove tool"
-
-#: toolslistpanel.py:125
-msgid "Executables (*.exe)|*.exe|All Files|*.*"
-msgstr "Executables (*.exe)|*.exe|All Files|*.*"
-
-#: toolslistpanel.py:127
-msgid "All Files|*"
-msgstr "All Files|*"
-
-#: commandexec/execdialog.py:17
-msgid "Link"
-msgstr "Link"
-
-#: commandexec/execdialog.py:17
-msgid "Button"
-msgstr "Button"
-
-#: commandexec/execdialog.py:19
-msgid "Inserting (:exec:) command"
-msgstr "Inserting (:exec:) command"
-
-#: commandexec/execdialog.py:30
-msgid "Title"
-msgstr "Title"
-
-#: commandexec/execdialog.py:48
-msgid "Format"
-msgstr "Format"
-
-#: commandexec/guicreator.py:56 commandexec/commandcontroller.py:195
-msgid "ExternalTools"
-msgstr "ExternalTools"
-
-#: commandexec/actions.py:46
-msgid "Run applications (:exec:)"
-msgstr "Run applications (:exec:)"
-
-#: commandexec/actions.py:51
-msgid "ExternalTools plugin. Insert (:exec:) command"
-msgstr "ExternalTools plugin. Insert (:exec:) command"
-
-#: commandexec/actions.py:74
-msgid "%page%. Current page. Text file"
-msgstr "%page%. Current page. Text file"
-
-#: commandexec/actions.py:79
-msgid ""
-"ExternalTools plugin. Insert a %page% macros. The macros will be replaced by "
-"a path to current page text file."
-msgstr ""
-"ExternalTools plugin. Insert a %page% macros. The macros will be replaced by "
-"a path to current page text file."
-
-#: commandexec/actions.py:96
-msgid "%html%. Current page. HTML file"
-msgstr "%html%. Current page. HTML file"
-
-#: commandexec/actions.py:101
-msgid ""
-"ExternalTools plugin. Insert a %html% macros. The macros will be replaced by "
-"a path to current HTML file."
-msgstr ""
-"ExternalTools plugin. Insert a %html% macros. The macros will be replaced by "
-"a path to current HTML file."
-
-#: commandexec/actions.py:118
-msgid "%attach%. Path to current attachments folder"
-msgstr "%attach%. Path to current attachments folder"
-
-#: commandexec/actions.py:123
-msgid ""
-"ExternalTools plugin. Insert a %attach% macros. The macros will be replaced "
-"by a path to current attach folder."
-msgstr ""
-"ExternalTools plugin. Insert a %attach% macros. The macros will be replaced "
-"by a path to current attach folder."
-
-#: commandexec/actions.py:140
-msgid "%folder%. Path to current page folder"
-msgstr "%folder%. Path to current page folder"
-
-#: commandexec/actions.py:145
-msgid ""
-"ExternalTools plugin. Insert a %folder% macros. The macros will be replaced "
-"by a path to current page folder."
-msgstr ""
-"ExternalTools plugin. Insert a %folder% macros. The macros will be replaced "
-"by a path to current page folder."
-
-#: commandexec/commandcontroller.py:188
-msgid ""
-"Run applications by ExternalTools plugin?\n"
-"It may be unsafe."
-msgstr ""
-"Run applications by ExternalTools plugin?\n"
-"It may be unsafe."
-
-#: commandexec/commandcontroller.py:190
-msgid ""
-"Run application by ExternalTools plugin?\n"
-"It may be unsafe."
-msgstr ""
-"Run application by ExternalTools plugin?\n"
-"It may be unsafe."
-
-#: preferencespanel.py:38
-msgid "Warn before executing applications by (:exec:) command"
-msgstr "Warn before executing applications by (:exec:) command"
-
-#: preferencespanel.py:41
-msgid "Tools List"
-msgstr "Tools List"
-
-#: preferencespanel.py:42
-msgid "Append Tools"
-msgstr "Append Tools"
-
-#: preferencespanel.py:97
-msgid "Can't save options"
-msgstr "Can't save options"
 
 #: externaltools.py:50
 msgid ""
@@ -314,6 +178,22 @@ msgstr ""
 msgid "http://jenyay.net/Outwiker/ExternalToolsEn"
 msgstr "http://jenyay.net/Outwiker/ExternalToolsEn"
 
+#: toolslistpanel.py:109
+msgid "Open file dialog..."
+msgstr "Open file dialog..."
+
+#: toolslistpanel.py:115
+msgid "Remove tool"
+msgstr "Remove tool"
+
+#: toolslistpanel.py:125
+msgid "Executables (*.exe)|*.exe|All Files|*.*"
+msgstr "Executables (*.exe)|*.exe|All Files|*.*"
+
+#: toolslistpanel.py:127
+msgid "All Files|*"
+msgstr "All Files|*"
+
 #: menumaker.py:43
 msgid "Open Content File with..."
 msgstr "Open Content File with..."
@@ -321,6 +201,126 @@ msgstr "Open Content File with..."
 #: menumaker.py:56
 msgid "Open Result HTML File with..."
 msgstr "Open Result HTML File with..."
+
+#: preferencespanel.py:38
+msgid "Warn before executing applications by (:exec:) command"
+msgstr "Warn before executing applications by (:exec:) command"
+
+#: preferencespanel.py:41
+msgid "Tools List"
+msgstr "Tools List"
+
+#: preferencespanel.py:42
+msgid "Append Tools"
+msgstr "Append Tools"
+
+#: preferencespanel.py:97
+msgid "Can't save options"
+msgstr "Can't save options"
+
+#: preferencespanel.py:98 menutoolscontroller.py:82
+msgid "Error"
+msgstr "Error"
+
+#: commandexec/commandcontroller.py:188
+msgid ""
+"Run applications by ExternalTools plugin?\n"
+"It may be unsafe."
+msgstr ""
+"Run applications by ExternalTools plugin?\n"
+"It may be unsafe."
+
+#: commandexec/commandcontroller.py:190
+msgid ""
+"Run application by ExternalTools plugin?\n"
+"It may be unsafe."
+msgstr ""
+"Run application by ExternalTools plugin?\n"
+"It may be unsafe."
+
+#: commandexec/commandcontroller.py:195 commandexec/guicreator.py:56
+msgid "ExternalTools"
+msgstr "ExternalTools"
+
+#: commandexec/actions.py:46
+msgid "Run applications (:exec:)"
+msgstr "Run applications (:exec:)"
+
+#: commandexec/actions.py:51
+msgid "ExternalTools plugin. Insert (:exec:) command"
+msgstr "ExternalTools plugin. Insert (:exec:) command"
+
+#: commandexec/actions.py:74
+msgid "%page%. Current page. Text file"
+msgstr "%page%. Current page. Text file"
+
+#: commandexec/actions.py:79
+msgid ""
+"ExternalTools plugin. Insert a %page% macros. The macros will be replaced by "
+"a path to current page text file."
+msgstr ""
+"ExternalTools plugin. Insert a %page% macros. The macros will be replaced by "
+"a path to current page text file."
+
+#: commandexec/actions.py:96
+msgid "%html%. Current page. HTML file"
+msgstr "%html%. Current page. HTML file"
+
+#: commandexec/actions.py:101
+msgid ""
+"ExternalTools plugin. Insert a %html% macros. The macros will be replaced by "
+"a path to current HTML file."
+msgstr ""
+"ExternalTools plugin. Insert a %html% macros. The macros will be replaced by "
+"a path to current HTML file."
+
+#: commandexec/actions.py:118
+msgid "%attach%. Path to current attachments folder"
+msgstr "%attach%. Path to current attachments folder"
+
+#: commandexec/actions.py:123
+msgid ""
+"ExternalTools plugin. Insert a %attach% macros. The macros will be replaced "
+"by a path to current attach folder."
+msgstr ""
+"ExternalTools plugin. Insert a %attach% macros. The macros will be replaced "
+"by a path to current attach folder."
+
+#: commandexec/actions.py:140
+msgid "%folder%. Path to current page folder"
+msgstr "%folder%. Path to current page folder"
+
+#: commandexec/actions.py:145
+msgid ""
+"ExternalTools plugin. Insert a %folder% macros. The macros will be replaced "
+"by a path to current page folder."
+msgstr ""
+"ExternalTools plugin. Insert a %folder% macros. The macros will be replaced "
+"by a path to current page folder."
+
+#: commandexec/execdialog.py:17
+msgid "Link"
+msgstr "Link"
+
+#: commandexec/execdialog.py:17
+msgid "Button"
+msgstr "Button"
+
+#: commandexec/execdialog.py:19
+msgid "Inserting (:exec:) command"
+msgstr "Inserting (:exec:) command"
+
+#: commandexec/execdialog.py:30
+msgid "Title"
+msgstr "Title"
+
+#: commandexec/execdialog.py:48
+msgid "Format"
+msgstr "Format"
+
+#: menutoolscontroller.py:81
+msgid "Can't execute tools"
+msgstr "Can't execute tools"
 
 #~ msgid ""
 #~ "Open notes files with external editor.\n"
