@@ -352,16 +352,20 @@ def plugins_list(lang):
 
 
 @task
-def show_site_versions():
+def site_versions():
     app_list = getLocalAppInfoList()
 
     # Downloading versions info
-    print(u'Downloading version info files:')
+    print(u'Downloading version info files...\n')
+    print(u'{: <20}{: <20}{}'.format(u'Title',
+                                     u'Deployed version',
+                                     u'Dev. version'))
+    print(u'-' * 60)
     for localAppInfo in app_list:
         url = localAppInfo.updatesUrl
         name = localAppInfo.appname
 
-        print(u'{:.<30}'.format(name), end=u'')
+        print(u'{:.<20}'.format(name), end=u'')
         try:
             appinfo = downloadAppInfo(url)
             if appinfo.currentVersion == localAppInfo.currentVersion:
@@ -369,7 +373,10 @@ def show_site_versions():
             else:
                 font = Fore.RED
 
-            print(font + str(appinfo.currentVersion))
+            print(u'{siteversion:.<20}{devversion}'.format(
+                siteversion=str(appinfo.currentVersion),
+                devversion=font + str(localAppInfo.currentVersion)
+                ))
         except (urllib2.URLError, urllib2.HTTPError) as e:
             print(Fore.RED + u'Error')
             print(str(e))
@@ -431,7 +438,7 @@ def upload_unstable(distrib_path):
     prevOutWikerAppInfo = downloadAppInfo(newOutWikerAppInfo.updatesUrl)
 
     if newOutWikerAppInfo.currentVersion < prevOutWikerAppInfo.currentVersion:
-        print('New version < Prev version')
+        print(Fore.RED + 'New version < Prev version')
         sys.exit(1)
     elif newOutWikerAppInfo.currentVersion == prevOutWikerAppInfo.currentVersion:
         print (Fore.RED + 'Warning: Uploaded the same version')
