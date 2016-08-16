@@ -48,13 +48,22 @@ from outwiker.utilites.textfile import readTextFile
 from outwiker.core.xmlversionparser import XmlVersionParser
 
 try:
-    from buildtools.serverinfo import DEPLOY_SERVER_NAME, DEPLOY_UNSTABLE_PATH
+    from buildtools.serverinfo import (DEPLOY_SERVER_NAME,
+                                       DEPLOY_UNSTABLE_PATH,
+                                       DEPLOY_HOME_PATH,
+                                       DEPLOY_SITE
+                                       )
 except ImportError:
     shutil.copyfile(u'buildtools/serverinfo.py.example',
                     u'buildtools/serverinfo.py')
-    from buildtools.serverinfo import DEPLOY_SERVER_NAME, DEPLOY_UNSTABLE_PATH
+    from buildtools.serverinfo import (DEPLOY_SERVER_NAME,
+                                       DEPLOY_UNSTABLE_PATH,
+                                       DEPLOY_HOME_PATH,
+                                       DEPLOY_SITE
+                                       )
 
 # env.hosts = [DEPLOY_SERVER_NAME]
+
 
 @task
 def deb_sources_included():
@@ -416,6 +425,38 @@ def _create_tree(level, maxlevel, nsiblings, parent):
 
 @hosts(DEPLOY_SERVER_NAME)
 @task
+def upload_plugin(pluginname):
+    """
+    Upload plugin to site
+    """
+    path_to_plugin_local = os.path.join(BUILD_DIR, PLUGINS_DIR, pluginname)
+    path_to_xml_local = os.path.join(path_to_plugin_local, PLUGIN_VERSIONS_FILENAME)
+
+    xml_content_local = readTextFile(path_to_xml_local)
+    appinfo_local = XmlVersionParser().parse(xml_content_local)
+
+    url = appinfo_local.updatesUrl
+    appinfo_remote = downloadAppInfo(url)
+
+    if appinfo_local.currentVersion < appinfo_remote.currentVersion:
+        print(Fore.RED + 'Error. New version < Prev version')
+        sys.exit(1)
+    elif appinfo_local.currentVersion == appinfo_remote.currentVersion:
+        print(Fore.RED + 'Warning: Uploaded the same version')
+    print(Fore.GREEN + 'Uploading...')
+
+    path_to_upload = os.path.dirname(appinfo_local.updatesUrl.replace(DEPLOY_SITE + u'/', DEPLOY_HOME_PATH))
+    version_local = unicode(appinfo_local.currentVersion)
+    archive_name = u'{}-{}.zip'.format(pluginname, version_local)
+    path_to_archive_local = os.path.join(path_to_plugin_local, archive_name)
+
+    with cd(path_to_upload):
+        put(path_to_archive_local, archive_name)
+        put(path_to_xml_local, PLUGIN_VERSIONS_FILENAME)
+
+
+@hosts(DEPLOY_SERVER_NAME)
+@task
 def upload_unstable(distrib_path):
     """
     Upload unstable version on the site
@@ -438,7 +479,7 @@ def upload_unstable(distrib_path):
     prevOutWikerAppInfo = downloadAppInfo(newOutWikerAppInfo.updatesUrl)
 
     if newOutWikerAppInfo.currentVersion < prevOutWikerAppInfo.currentVersion:
-        print(Fore.RED + 'New version < Prev version')
+        print(Fore.RED + 'Error. New version < Prev version')
         sys.exit(1)
     elif newOutWikerAppInfo.currentVersion == prevOutWikerAppInfo.currentVersion:
         print (Fore.RED + 'Warning: Uploaded the same version')
