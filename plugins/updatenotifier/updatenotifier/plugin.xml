@@ -17,6 +17,11 @@
 			<site>http://jenyay.net</site>
 		</author>
 		<changelog>
+			<version number="1.1.2">
+                <download os="all">http://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-1.1.2.zip</download>
+				<change>Added the Swedish translation.</change>
+			</version>
+
 			<version number="1.1.1" date="January 20, 2015">
                 <download os="all">http://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-1.1.1.zip</download>
 				<change>Bug fixes.</change>
@@ -47,6 +52,11 @@
 		</author>
 
 		<changelog>
+			<version number="1.1.2">
+                <download os="all">http://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-1.1.2.zip</download>
+				<change>Добавлена поддержка шведского языка.</change>
+			</version>
+
 			<version number="1.1.1" date="20.01.2015">
                 <download os="all">http://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-1.1.1.zip</download>
 				<change>Исправление ошибок.</change>

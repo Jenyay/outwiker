@@ -17,6 +17,11 @@
 			<site>http://jenyay.net</site>
 		</author>
 		<changelog>
+			<version number="1.1.1">
+                <download os="all">http://jenyay.net/uploads/Outwiker/WebPage/webpage-1.1.1.zip</download>
+				<change>Added the Swedish translation.</change>
+			</version>
+
 			<version number="1.1" date="May 30, 2016">
                 <download os="all">http://jenyay.net/uploads/Outwiker/WebPage/webpage-1.1.zip</download>
 				<change>Added the ability to import local files.</change>
@@ -47,6 +52,11 @@
 		</author>
 
 		<changelog>
+			<version number="1.1.1">
+                <download os="all">http://jenyay.net/uploads/Outwiker/WebPage/webpage-1.1.1.zip</download>
+				<change>Добавлена поддержка шведского языка.</change>
+			</version>
+
 			<version number="1.1" date="30.05.2016">
                 <download os="all">http://jenyay.net/uploads/Outwiker/WebPage/webpage-1.1.zip</download>
 				<change>Добавлена возможность импорта локальных файлов.</change>

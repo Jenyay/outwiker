@@ -18,6 +18,11 @@
 		</author>
 
 		<changelog>
+			<version number="1.1.1">
+                <download os="all">http://jenyay.net/uploads/Outwiker/HtmlFormatter/htmlformatter-1.1.1.zip</download>
+				<change>Added the Swedish translation.</change>
+			</version>
+
 			<version number="1.1" date="October 10, 2015">
                 <download os="all">http://jenyay.net/uploads/Outwiker/HtmlFormatter/htmlformatter-1.1.zip</download>
 			</version>
@@ -40,6 +45,11 @@
 		</author>
 
 		<changelog>
+			<version number="1.1.1">
+                <download os="all">http://jenyay.net/uploads/Outwiker/HtmlFormatter/htmlformatter-1.1.1.zip</download>
+				<change>Добавлена поддержка шведского языка.</change>
+			</version>
+
 			<version number="1.1" date="14.10.2015">
                 <download os="all">http://jenyay.net/uploads/Outwiker/HtmlFormatter/htmlformatter-1.1.zip</download>
 			</version>

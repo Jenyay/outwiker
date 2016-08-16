@@ -1,0 +1,241 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: outwiker\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-01-05 18:22+0400\n"
+"PO-Revision-Date: 2016-08-16 16:38+0300\n"
+"Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
+"Language-Team: Swedish\n"
+"Language: sv_SE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.8.8\n"
+"X-Crowdin-Project: outwiker\n"
+"X-Crowdin-Language: sv-SE\n"
+"X-Crowdin-File: source.pot\n"
+
+#: actions.py:24 guicreators.py:105
+msgid "Source Code (:source ...:)"
+msgstr "Källkod (:source ...:)"
+
+#: actions.py:29
+msgid "Source plugin. Insert (: source... :) command for source code highlighting"
+msgstr "Källkodsinstick. Infoga (: source... :)-kommando för källkodsbetoning"
+
+#: commandsource.py:69
+msgid "<B>Source plugin: File '{0}' not found</B>"
+msgstr "<B>Källkodsinstick: Filen '{0}' kan inte hittas</B>"
+
+#: commandsource.py:72
+msgid "<B>Source plugin: Encoding error</B>"
+msgstr "<B>Källkodsinstick: Kodningsfel</B>"
+
+#: commandsource.py:75
+msgid "<B>Source plugin: Unknown encoding</B>"
+msgstr "<B>Källkodsinstick: Okänd kodning</B>"
+
+#: controller.py:89
+msgid "Source [Plugin]"
+msgstr "Source [Instick]"
+
+#: insertdialogcontroller.py:32
+msgid "Auto"
+msgstr "Auto"
+
+#: insertdialog.py:20
+msgid "Source code"
+msgstr "Källkod"
+
+#: insertdialog.py:97
+msgid "General"
+msgstr "Allmänt"
+
+#: insertdialog.py:98
+msgid "Appearance"
+msgstr "Utseende"
+
+#: insertdialog.py:148
+msgid "Use the page background for the code block"
+msgstr "Använd sidans bakgrund för kodblock"
+
+#: insertdialog.py:162
+msgid "Enable line numbers"
+msgstr "Aktivera radnumrering"
+
+#: insertdialog.py:179
+msgid "Language"
+msgstr "Språk"
+
+#: insertdialog.py:215
+msgid "Tab Width (0 - Default Value)"
+msgstr "Tab-bredd (0 - Standardvärde)"
+
+#: insertdialog.py:252
+msgid "Style"
+msgstr "Stil"
+
+#: insertdialog.py:287
+msgid "Insert source from file"
+msgstr "Infoga källkod från fil"
+
+#: insertdialog.py:300
+msgid "Attached file"
+msgstr "Bifogad fil"
+
+#: insertdialog.py:319
+msgid "Attach new files"
+msgstr "Bifoga ny fil"
+
+#: insertdialog.py:337
+msgid "File encoding"
+msgstr "Teckentabell"
+
+#: preferencepanel.py:54
+msgid "Default Tab Width"
+msgstr "Standard tab-bredd"
+
+#: preferencepanel.py:90
+msgid "Default Style"
+msgstr "Standardstil"
+
+#: preferencepanel.py:122
+msgid "Used Languages"
+msgstr "Använda språk"
+
+#: preferencepanel.py:143
+msgid "Select All"
+msgstr "Markera alla"
+
+#: preferencepanel.py:144
+msgid "Clear"
+msgstr "Rensa"
+
+#: source.py:67
+msgid "Add command (:source:) in wiki parser. This command highlight your source code."
+msgstr "Lägg till kommandot (:source:) i wiki-tolken. Detta kommando färgmarkerar din källkod."
+
+#: source.py:69
+msgid ""
+"<B>Usage:</B>:\n"
+"(:source params... :)\n"
+"source code\n"
+"(:sourceend:)"
+msgstr ""
+"<B>Användning:</B>:\n"
+"(:source parametrar... :)\n"
+"källkod\n"
+"(:sourceend:)"
+
+#: source.py:74
+msgid ""
+"<B>Params:</B>\n"
+"<U>lang</U> - programming language\n"
+"\n"
+"<U>tabwidth</U> - tab size\n"
+"\n"
+"<U>file</U> - attached source file\n"
+"\n"
+"<U>encoding</U> - encoding of the attached source file (default encoding - utf8)\n"
+"\n"
+"<U>style</U> - style of hightlighting\n"
+"\n"
+"<U>parentbg</U> - use the page background for the code block\n"
+"\n"
+"<U>linenum</U> - enable line numbers"
+msgstr ""
+"<B>Parametrar:</B>\n"
+"<U>lang</U> - Programspråk\n"
+"\n"
+"<U>tabwidth</U> - Tab-storlek\n"
+"\n"
+"<U>file</U> - Bifogad källfil\n"
+"\n"
+"<U>encoding</U> - Teckentabell för bifogad källfil (standardkodning - utf8)\n"
+"\n"
+"<U>style</U> - Färgmarkeringsstil\n"
+"\n"
+"<U>parentbg</U> - Använd sidbakgrunden för kodblock\n"
+"\n"
+"<U>linenum</U> - Aktivera radnumrering"
+
+#: source.py:89
+msgid ""
+"<B>Example 1:</B>\n"
+"<PRE>(:source lang=\"python\" tabwidth=4:)\n"
+"import os\n"
+"\n"
+"if __name__ == \"__main__\":\n"
+"    print \"Hello World!\"\n"
+"(:sourceend:)\n"
+"</PRE>"
+msgstr ""
+"<B>Exempel 1:</B>\n"
+"<PRE>(:source lang=\"python\" tabwidth=4:)\n"
+"import os\n"
+"\n"
+"if __name__ == \"__main__\":\n"
+"    print \"Hello World!\"\n"
+"(:sourceend:)\n"
+"</PRE>"
+
+#: source.py:98
+msgid ""
+"<B>Example 2:</B>\n"
+"<PRE>(:source lang=\"python\" style=\"autumn\":)\n"
+"import os\n"
+"\n"
+"if __name__ == \"__main__\":\n"
+"    print \"Hello World!\"\n"
+"(:sourceend:)\n"
+"</PRE>"
+msgstr ""
+"<B>Exempel 2:</B>\n"
+"<PRE>(:source lang=\"python\" style=\"autumn\":)\n"
+"import os\n"
+"\n"
+"if __name__ == \"__main__\":\n"
+"    print \"Hello World!\"\n"
+"(:sourceend:)\n"
+"</PRE>"
+
+#: source.py:107
+msgid ""
+"<B>Example 3:</B>\n"
+"<PRE>(:source lang=\"python\" tabwidth=4 parentbg linenum:)\n"
+"import os\n"
+"\n"
+"if __name__ == \"__main__\":\n"
+"    print \"Hello World!\"\n"
+"(:sourceend:)\n"
+"</PRE>"
+msgstr ""
+"<B>Exempel 3:</B>\n"
+"<PRE>(:source lang=\"python\" tabwidth=4 parentbg linenum:)\n"
+"import os\n"
+"\n"
+"if __name__ == \"__main__\":\n"
+"    print \"Hello World!\"\n"
+"(:sourceend:)\n"
+"</PRE>"
+
+#: source.py:116
+msgid ""
+"<B>Example 4:</B>\n"
+"<PRE>(:source file=\"Attach:example.cs\" encoding=\"cp1251\":)(:sourceend:)</PRE>"
+msgstr ""
+"<B>Exempel 4:</B>\n"
+"<PRE>(:source file=\"Attach:exempel.cs\" encoding=\"cp1251\":)(:sourceend:)</PRE>"
+
+#: source.py:119
+msgid ""
+"<B>Example 5:</B>\n"
+"<PRE>(:source file=\"Attach:example.txt\" lang=\"python\":)(:sourceend:)</PRE>"
+msgstr ""
+"<B>Exempel 5:</B>\n"
+"<PRE>(:source file=\"Attach:exempel.txt\" lang=\"python\":)(:sourceend:)</PRE>"
+
+#: source.py:154
+msgid "http://jenyay.net/Outwiker/SourcePluginEn"
+msgstr "http://jenyay.net/Outwiker/SourcePluginEn"

@@ -1,0 +1,89 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: outwiker\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-06-11 09:43+0400\n"
+"PO-Revision-Date: 2016-08-16 16:28+0300\n"
+"Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
+"Language-Team: Swedish\n"
+"Language: sv_SE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.8.8\n"
+"X-Crowdin-Project: outwiker\n"
+"X-Crowdin-Language: sv-SE\n"
+"X-Crowdin-File: htmlheads.pot\n"
+
+#: actions.py:37
+msgid "Title (:title ...:)"
+msgstr "Titel (:title ...:)"
+
+#: actions.py:42
+msgid "HtmlHeads plugin. Insert (:title... :) command"
+msgstr "HtmlHeads-instick. Infoga (:title... :)-kommando"
+
+#: actions.py:59
+msgid "Description (:description ...:)"
+msgstr "Beskrivning (:description ...:)"
+
+#: actions.py:64
+msgid "HtmlHeads plugin. Insert (:description... :) command"
+msgstr "HtmlHeads-instick. Infoga (:description... :)-kommando"
+
+#: actions.py:81
+msgid "Keywords (:keywords ...:)"
+msgstr "Nyckelord (:keywords ...:)"
+
+#: actions.py:86
+msgid "HtmlHeads plugin. Insert (:keywords... :) command"
+msgstr "HtmlHeads-instick. Infoga (:keywords... :)-kommando"
+
+#: actions.py:102
+msgid "Custom head (:htmlhead:)"
+msgstr "Anpassat huvud (:htmlhead:)"
+
+#: actions.py:107
+msgid "HtmlHeads plugin. Insert (:htmlhead:) command"
+msgstr "HtmlHeads-instick. Infoga (:htmlhead:)-kommando"
+
+#: guicreator.py:42
+msgid "HTML Headers"
+msgstr "HTML-huvud"
+
+#: htmlheads.py:40
+msgid "Plugin adds wiki-commands (:title:), (:description:), (:keywords:) and (:htmlhead:)"
+msgstr "Insticket lägger till wiki-kommandona (:title:), (:description:), (:keywords:) och (:htmlhead:)"
+
+#: htmlheads.py:42
+msgid ""
+"<b>Usage:</b>\n"
+"(:title Page title:)\n"
+"\n"
+"(:description Page description:)\n"
+"\n"
+"(:keywords keyword_1, keyword_2, other keyword:)\n"
+"\n"
+"(:htmlhead:)\n"
+"&lt;meta http-equiv='Content-Type' content='text/html; charset=utf-8' /&gt;\n"
+"\n"
+"&lt;meta name='robots' content='index,follow' /&gt;\n"
+"(:htmlheadend:)\n"
+msgstr ""
+"<b>Användning:</b>\n"
+"(:title Sidtitel:)\n"
+"\n"
+"(:description Sidbeskrivning:)\n"
+"\n"
+"(:keywords nyckelord_1, nyckelord_2, annat nyckelord:)\n"
+"\n"
+"(:htmlhead:)\n"
+"&lt;meta http-equiv='Content-Type' content='text/html; charset=utf-8' /&gt;\n"
+"\n"
+"&lt;meta name='robots' content='index,follow' /&gt;\n"
+"(:htmlheadend:)\n"
+
+#: htmlheads.py:64
+msgid "http://jenyay.net/Outwiker/HtmlHeadsEn"
+msgstr "http://jenyay.net/Outwiker/HtmlHeadsEn"

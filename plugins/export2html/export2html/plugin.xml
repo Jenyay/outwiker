@@ -18,6 +18,11 @@
 		</author>
 
 		<changelog>
+			<version number="1.3.4">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Export2HtmlPlugin/export2html-1.3.4.zip</download>
+				<change>Added the Swedish translation.</change>
+			</version>
+
 			<version number="1.3.3" date="June 23, 2015">
                 <download os="all">http://jenyay.net/uploads/Outwiker/Export2HtmlPlugin/export2html-1.3.3.zip</download>
 				<change>Bug fixes.</change>
@@ -72,6 +77,11 @@
 		</author>
 
 		<changelog>
+			<version number="1.3.4">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Export2HtmlPlugin/export2html-1.3.4.zip</download>
+				<change>Добавлена поддержка шведского языка.</change>
+			</version>
+
 			<version number="1.3.3" date="23.06.2015">
                 <download os="all">http://jenyay.net/uploads/Outwiker/Export2HtmlPlugin/export2html-1.3.3.zip</download>
 				<change>Исправление ошибок.</change>

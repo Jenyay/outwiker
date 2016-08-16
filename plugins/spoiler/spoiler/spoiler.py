@@ -12,7 +12,7 @@ from outwiker.core.version import Version, StatusSet
 from .commandspoiler import SpoilerCommand
 
 
-__version__ = u"1.4.2"
+__version__ = u"1.4.3"
 
 
 # Для работы этого плагина требуется OutWiker 1.6.0.632

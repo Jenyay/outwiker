@@ -18,6 +18,11 @@
 		</author>
 
 		<changelog>
+			<version number="1.3.3">
+                <download os="all">http://jenyay.net/uploads/Outwiker/LivejournalPlugin/livejournal-1.3.3.zip</download>
+				<change>Added the Swedish translation.</change>
+			</version>
+
 			<version number="1.3.2" date="January 20, 2015">
                 <download os="all">http://jenyay.net/uploads/Outwiker/LivejournalPlugin/livejournal-1.3.2.zip</download>
 				<change>Minor interface improvements.</change>
@@ -69,6 +74,11 @@
 		</author>
 
 		<changelog>
+			<version number="1.3.3">
+                <download os="all">http://jenyay.net/uploads/Outwiker/LivejournalPlugin/livejournal-1.3.3.zip</download>
+				<change>Добавлена поддержка шведского языка.</change>
+			</version>
+
 			<version number="1.3.2" date="20.01.2015">
                 <download os="all">http://jenyay.net/uploads/Outwiker/LivejournalPlugin/livejournal-1.3.2.zip</download>
 				<change>Небольшие улучшения в интерфейсе.</change>

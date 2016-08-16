@@ -18,6 +18,11 @@
 		</author>
 
 		<changelog>
+			<version number="1.0.5">
+                <download os="all">http://jenyay.net/uploads/Outwiker/DataGraph/datagraph-1.0.5.zip</download>
+				<change>Added the Swedish translation.</change>
+			</version>
+
 			<version number="1.0.4" date="March 10, 2016">
                 <download os="all">http://jenyay.net/uploads/Outwiker/DataGraph/datagraph-1.0.4.zip</download>
 				<change>Bug fixes.</change>
@@ -56,6 +61,11 @@
 		</author>
 
 		<changelog>
+			<version number="1.0.5">
+                <download os="all">http://jenyay.net/uploads/Outwiker/DataGraph/datagraph-1.0.5.zip</download>
+				<change>Добавлена поддержка шведского языка.</change>
+			</version>
+
 			<version number="1.0.4" date="10.03.2016">
                 <download os="all">http://jenyay.net/uploads/Outwiker/DataGraph/datagraph-1.0.4.zip</download>
 				<change>Исправления ошибок.</change>

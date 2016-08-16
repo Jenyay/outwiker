@@ -1,0 +1,60 @@
+ThumbGallery-insticket lägger till kommandot (:thumbgallery:) i wiki-noteringen. Detta kommando kan arbeta i två lägen: Visa alla bifogade bilder eller endast valda filer. 
+
+<b>Syntax</b>
+
+(:thumbgallery [parametrar]:)
+
+eller
+
+(:thumbgallery [parametrar]:)
+[Attach:]bild_1 [| Kommentar]
+[Attach:]bild_2 [| Kommentar]
+...
+(:thumbgalleryend:)
+
+<b>Parametrar</b>
+<ul>
+<li><i>cols = ...</i> Ett heltal. Antal kolumner i tabellen. Om <i>cols = 0</i> eller ospecificerad, Kommer galleriet att bestå av en miniatyrbildsekvens, utan att delas upp i rader och kolumner.</li>
+
+<li><i>px = ...</i> Ett heltal. Specificerar storleken på miniatyrerna (den största sidan). Om <i>px = 0</i>, eller om parametern är ospecificerad, används standardvärdet från programinställningarna.</li>
+</ul>
+
+<b>Exempel</b>
+
+<u>Skapa ett galleri av alla bifogade filer</u>
+
+(:thumbgallery:)
+
+
+<u>Skapa ett galleri av alla bifogade filer, med en given miniatyrstorlek</u>
+
+(:thumbgallery px=150:)
+
+
+<u>Skapa ett galleri av alla bifogade filer, som en tabelldesign</u>
+
+(:thumbgallery px= 150 cols=3:)
+
+
+<u>Skapa ett galleri av valda filer, som en tabelldesign</u>
+
+(:thumbgallery cols=3 px=150:)
+&nbsp;&nbsp;&nbsp;Attach:DSC_0567.jpg
+&nbsp;&nbsp;&nbsp;Attach:DSC_0604.jpg
+&nbsp;&nbsp;&nbsp;Attach:klyazma_2011_07.jpg
+&nbsp;&nbsp;&nbsp;Attach:smoke.jpg
+&nbsp;&nbsp;&nbsp;Attach:sunset_1.jpg
+&nbsp;&nbsp;&nbsp;Attach:sev_beach2.jpg
+(:thumbgalleryend:)
+
+
+<u>Skapa ett galleri av valda filer, med kommentarer</u>
+
+(:thumbgallery cols=3 px=150:)
+&nbsp;&nbsp;&nbsp;DSC_0567.jpg
+&nbsp;&nbsp;&nbsp;DSC_0604.jpg
+&nbsp;&nbsp;&nbsp;klyazma_2011_07.jpg | Klyazma-floden
+&nbsp;&nbsp;&nbsp;smoke.jpg | Rökig sommar i Moskva
+&nbsp;&nbsp;&nbsp;sunset_1.jpg
+&nbsp;&nbsp;&nbsp;sev_beach2.jpg | Svarta havet. Sevastopol
+(:thumbgalleryend:)

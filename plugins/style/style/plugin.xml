@@ -18,6 +18,11 @@
 		</author>
 
 		<changelog>
+			<version number="1.2.2">
+                <download os="all">http://jenyay.net/uploads/Outwiker/StylePlugin/style-1.2.2.zip</download>
+				<change>Added the Swedish translation.</change>
+			</version>
+
 			<version number="1.2.1" date="20.01.2015">
                 <download os="all">http://jenyay.net/uploads/Outwiker/StylePlugin/style-1.2.1.zip</download>
 				<change>Cleanup code.</change>
@@ -51,6 +56,11 @@
 		</author>
 
 		<changelog>
+			<version number="1.2.2">
+                <download os="all">http://jenyay.net/uploads/Outwiker/StylePlugin/style-1.2.2.zip</download>
+				<change>Добавлена поддержка шведского языка.</change>
+			</version>
+
 			<version number="1.2.1" date="20.01.2015">
                 <download os="all">http://jenyay.net/uploads/Outwiker/StylePlugin/style-1.2.1.zip</download>
 				<change>Подчистка кода.</change>

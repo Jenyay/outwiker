@@ -1,0 +1,98 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: outwiker\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-05-17 09:26+0400\n"
+"PO-Revision-Date: 2016-08-16 13:58+0300\n"
+"Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
+"Language-Team: Swedish\n"
+"Language: sv_SE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.8.8\n"
+"X-Crowdin-Project: outwiker\n"
+"X-Crowdin-Language: sv-SE\n"
+"X-Crowdin-File: export2html.pot\n"
+
+#: baseexporter.py:50 baseexporter.py:116
+msgid "File {0} already exists"
+msgstr "Filen {0} finns redan"
+
+#: baseexporter.py:53
+msgid "Folder {0} not exists"
+msgstr "Mappen {0} finns inte"
+
+#: controller.py:37
+msgid "Export Page To HTML..."
+msgstr "Exportera sidan till HTML..."
+
+#: controller.py:40
+msgid "Export Branch To HTML..."
+msgstr "Exportera grenen till HTML..."
+
+#: controller.py:50
+msgid "Please, select page"
+msgstr "Välj sida"
+
+#: controller.py:51 controller.py:59 controller.py:73 exportdialog.py:83
+#: exportpagedialog.py:32
+msgid "Error"
+msgstr "Fel"
+
+#: controller.py:58 exporterfactory.py:25
+msgid "This page type not support export to HTML"
+msgstr "Denna sidtyp stödjer inte export till HTML"
+
+#: controller.py:72
+msgid "Wiki is not open"
+msgstr "Wikin är inte öppen"
+
+#: exportbranchdialog.py:31
+msgid "Use long file names (include parent name)"
+msgstr "Använd långa filnamn (inkludera överordnat namn)"
+
+#: exportbranchdialog.py:58
+msgid "Export to HTML"
+msgstr "Exportera till HTML"
+
+#: exportbranchdialog.py:59
+msgid "Please wait..."
+msgstr "Vänta..."
+
+#: exportdialog.py:17 exportmenu.py:63 exportmenu.py:81
+msgid "Export"
+msgstr "Exportera"
+
+#: exportdialog.py:21
+msgid "Folder for Export:"
+msgstr "Mapp för export:"
+
+#: exportdialog.py:32
+msgid "Overwrite Existing Files"
+msgstr "Skriv över befintliga filer"
+
+#: exportdialog.py:33
+msgid "Attaches. Save Only Images"
+msgstr "Bilagor. Spara endast bilder"
+
+#: exportdialog.py:82
+msgid "Please, select folder for export"
+msgstr "Välj mapp för export"
+
+#: exportmenu.py:48 exportmenu.py:75
+msgid "File menu not found"
+msgstr "Filmenyn hittas inte"
+
+#: logdialog.py:13
+msgid "Errors List"
+msgstr "Fellista"
+
+#: pluginexport2html.py:40
+msgid "Export pages to HTML"
+msgstr "Exportera sidor till HTML"
+
+#: pluginexport2html.py:64
+msgid "http://jenyay.net/Outwiker/Export2HtmlPluginEn"
+msgstr "http://jenyay.net/Outwiker/Export2HtmlPluginEn"

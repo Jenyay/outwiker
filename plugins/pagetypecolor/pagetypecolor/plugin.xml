@@ -18,6 +18,11 @@
 		</author>
 
 		<changelog>
+			<version number="1.0.3">
+                <download os="all">http://jenyay.net/uploads/Outwiker/PageTypeColor/pagetypecolor-1.0.3.zip</download>
+				<change>Added the Swedish translation.</change>
+			</version>
+
 			<version number="1.0.2" date="March 10, 2016">
                 <download os="all">http://jenyay.net/uploads/Outwiker/PageTypeColor/pagetypecolor-1.0.2.zip</download>
 				<change>Fixed misprints.</change>
@@ -46,6 +51,11 @@
 		</author>
 
 		<changelog>
+			<version number="1.0.3">
+                <download os="all">http://jenyay.net/uploads/Outwiker/PageTypeColor/pagetypecolor-1.0.3.zip</download>
+				<change>Добавлена поддержка шведского языка.</change>
+			</version>
+
 			<version number="1.0.2" date="10.03.2016">
                 <download os="all">http://jenyay.net/uploads/Outwiker/PageTypeColor/pagetypecolor-1.0.2.zip</download>
 				<change>Исправление опечаток.</change>

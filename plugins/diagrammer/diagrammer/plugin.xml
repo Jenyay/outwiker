@@ -18,6 +18,11 @@
 		</author>
 
 		<changelog>
+			<version number="1.0.4">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Diagrammer/diagrammer-1.0.4.zip</download>
+				<change>Added the Swedish translation.</change>
+			</version>
+
 			<version number="1.0.3" date="February 11, 2016">
                 <download os="all">http://jenyay.net/uploads/Outwiker/Diagrammer/diagrammer-1.0.3.zip</download>
 				<change>Updated the <a href="http://blockdiag.com/en/">blockdiag</a> library.</change>
@@ -54,6 +59,11 @@
 		</author>
 
 		<changelog>
+			<version number="1.0.4">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Diagrammer/diagrammer-1.0.4.zip</download>
+				<change>Добавлена поддержка шведского языка.</change>
+			</version>
+
 			<version number="1.0.3" date="11.02.2016">
                 <download os="all">http://jenyay.net/uploads/Outwiker/Diagrammer/diagrammer-1.0.3.zip</download>
 				<change>Обновление используемой библиотеки <a href="http://blockdiag.com/en/">blockdiag</a>.</change>

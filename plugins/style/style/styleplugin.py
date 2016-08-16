@@ -9,7 +9,7 @@ from outwiker.core.version import Version, StatusSet
 
 from .stylecommand import StyleCommand
 
-__version__ = u"1.2.1"
+__version__ = u"1.2.2"
 
 
 # Для работы этого плагина требуется OutWiker 1.6.0.632

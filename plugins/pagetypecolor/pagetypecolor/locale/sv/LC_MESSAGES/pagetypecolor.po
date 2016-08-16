@@ -1,0 +1,49 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: outwiker\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-10-25 16:45+0300\n"
+"PO-Revision-Date: 2016-08-16 16:33+0300\n"
+"Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
+"Language-Team: Swedish\n"
+"Language: sv_SE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.8.8\n"
+"X-Crowdin-Project: outwiker\n"
+"X-Crowdin-Language: sv-SE\n"
+"X-Crowdin-File: pagetypecolor.pot\n"
+
+#: pagetypecolor.py:46
+msgid "Plugin colorize the page dialog controls in depending on the selected page type."
+msgstr "Insticket färglägger sidans dialogkontroller, beroende på vald sidtyp."
+
+#: pagetypecolor.py:56
+msgid "http://jenyay.net/Outwiker/PageTypeColorEn"
+msgstr "http://jenyay.net/Outwiker/PageTypeColorEn"
+
+#: controller.py:68
+msgid "PageTypeColor [Plugin]"
+msgstr "PageTypeColor [Instick]"
+
+#: preferencepanel.py:36
+msgid "The colors for the various page types"
+msgstr "Färger för varierande sidtyper"
+
+#: preferencepanel.py:43
+msgid "Wiki page"
+msgstr "Wiki-sida"
+
+#: preferencepanel.py:48
+msgid "HTML page"
+msgstr "HTML-sida"
+
+#: preferencepanel.py:53
+msgid "Text page"
+msgstr "Textsida"
+
+#: preferencepanel.py:58
+msgid "Search page"
+msgstr "Söksida"

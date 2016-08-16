@@ -18,6 +18,11 @@
 		</author>
 
 		<changelog>
+			<version number="1.0.4">
+                <download os="all">http://jenyay.net/uploads/Outwiker/HtmlHeads/htmlheads-1.0.4.zip</download>
+				<change>Added the Swedish translation.</change>
+			</version>
+
 			<version number="1.0.3" date="January 20, 2015">
                 <download os="all">http://jenyay.net/uploads/Outwiker/HtmlHeads/htmlheads-1.0.3.zip</download>
 				<change>Bug fixes.</change>
@@ -53,6 +58,11 @@
 		</author>
 
 		<changelog>
+			<version number="1.0.4">
+                <download os="all">http://jenyay.net/uploads/Outwiker/HtmlHeads/htmlheads-1.0.4.zip</download>
+				<change>Добавлена поддержка шведского языка.</change>
+			</version>
+
 			<version number="1.0.3" date="20.01.2015">
                 <download os="all">http://jenyay.net/uploads/Outwiker/HtmlHeads/htmlheads-1.0.3.zip</download>
 				<change>Исправление ошибок.</change>
