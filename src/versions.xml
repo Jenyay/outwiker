@@ -9,6 +9,7 @@
 		<changelog>
 			<version number="2.0.0.799" status="dev">
 				<change>Добавлена поддержка шведского языка.</change>
+				<change>Исправление ошибок.</change>
 			</version>
 
 			<version number="2.0.0.798" status="dev" date="27.07.2016">
@@ -44,6 +45,7 @@
 		<changelog>
 			<version number="2.0.0.799" status="dev">
 				<change>Added the Swedish translation.</change>
+				<change>Bug fixes.</change>
 			</version>
 
 			<version number="2.0.0.798" status="dev" date="July 27, 2016">
