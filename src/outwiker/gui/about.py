@@ -5,6 +5,7 @@ import os.path
 import wx
 
 from outwiker.core.system import getImagesDir
+from outwiker.gui.controls.hyperlink import HyperLinkCtrl
 
 
 class AboutDialog(wx.Dialog):
@@ -21,14 +22,14 @@ class AboutDialog(wx.Dialog):
         self.description = wx.StaticText (self.aboutPane, -1, _("OutWiker is personal wiki system and tree notes outliner."))
         self.license = wx.StaticText(self.aboutPane, -1, _("License: GPL 3"))
         self.siteLabel = wx.StaticText(self.aboutPane, -1, _("OutWiker's page:"))
-        self.outwikerUrl = wx.HyperlinkCtrl(self.aboutPane, -1, label=_("http://jenyay.net/Outwiker/English"), url=_("http://jenyay.net/Outwiker/English"))
+        self.outwikerUrl = HyperLinkCtrl(self.aboutPane, -1, label=_("http://jenyay.net/Outwiker/English"), URL=_("http://jenyay.net/Outwiker/English"))
         self.contactsPane = wx.Panel(self.notebook, -1)
-        self.email = wx.HyperlinkCtrl(self.contactsPane, -1, label=_(u"jenyay.ilin@gmail.com"), url=_(u"mailto:jenyay.ilin@gmail.com"))
-        self.googleplus = wx.HyperlinkCtrl(self.contactsPane, -1, label=_(u"Google+ page"), url=_(u"https://plus.google.com/u/0/b/113404982971748285098/113404982971748285098/posts"))
-        self.facebook = wx.HyperlinkCtrl(self.contactsPane, -1, label=_(u"Facebook page"), url=_(u"http://www.facebook.com/outwiker"))
-        self.livejournal = wx.HyperlinkCtrl(self.contactsPane, -1, label=_(u"Livejournal community"), url=_(u"http://ru-outwiker.livejournal.com/?style=mine"))
-        self.twitter = wx.HyperlinkCtrl(self.contactsPane, -1, label=_(u"Twitter"), url=_(u"https://twitter.com/OutWiker"))
-        self.vkontakte = wx.HyperlinkCtrl(self.contactsPane, -1, label=_(u"Vkontakte group"), url=_(u"http://vk.com/outwiker"))
+        self.email = HyperLinkCtrl(self.contactsPane, -1, label=_(u"jenyay.ilin@gmail.com"), URL=_(u"mailto:jenyay.ilin@gmail.com"))
+        self.googleplus = HyperLinkCtrl(self.contactsPane, -1, label=_(u"Google+ page"), URL=_(u"https://plus.google.com/u/0/b/113404982971748285098/113404982971748285098/posts"))
+        self.facebook = HyperLinkCtrl(self.contactsPane, -1, label=_(u"Facebook page"), URL=_(u"http://www.facebook.com/outwiker"))
+        self.livejournal = HyperLinkCtrl(self.contactsPane, -1, label=_(u"Livejournal community"), URL=_(u"http://ru-outwiker.livejournal.com/?style=mine"))
+        self.twitter = HyperLinkCtrl(self.contactsPane, -1, label=_(u"Twitter"), URL=_(u"https://twitter.com/OutWiker"))
+        self.vkontakte = HyperLinkCtrl(self.contactsPane, -1, label=_(u"Vkontakte group"), URL=_(u"http://vk.com/outwiker"))
         self.okButton = wx.Button(self, wx.ID_OK, "")
 
         self.__set_properties()
