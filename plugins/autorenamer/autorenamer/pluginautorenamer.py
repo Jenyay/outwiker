@@ -10,7 +10,7 @@ from outwiker.core.version import Version
 from .i18n import set_
 
 
-__version__ = u"0.0.0.2"
+__version__ = u"0.0.0.3"
 
 
 if getCurrentVersion() < Version (1, 8, 1):
