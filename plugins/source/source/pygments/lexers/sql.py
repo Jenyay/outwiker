@@ -148,8 +148,8 @@ class PostgresLexer(PostgresBase, RegexLexer):
             (r'\$\d+', Name.Variable),
             (r'([0-9]*\.[0-9]*|[0-9]+)(e[+-]?[0-9]+)?', Number.Float),
             (r'[0-9]+', Number.Integer),
-            (r"(E|U&)?'(''|[^'])*'", String.Single),
-            (r'(U&)?"(""|[^"])*"', String.Name),  # quoted identifier
+            (r"(E|U&)?'", String.Single, 'string'),
+            (r'(U&)?"', String.Name, 'quoted-ident'),  # quoted identifier
             (r'(?s)(\$[^$]*\$)(.*?)(\1)', language_callback),
             (r'[a-z_]\w*', Name),
 
@@ -163,6 +163,16 @@ class PostgresLexer(PostgresBase, RegexLexer):
             (r'\*/', Comment.Multiline, '#pop'),
             (r'[^/*]+', Comment.Multiline),
             (r'[/*]', Comment.Multiline)
+        ],
+        'string': [
+            (r"[^']+", String.Single),
+            (r"''", String.Single),
+            (r"'", String.Single, '#pop'),
+        ],
+        'quoted-ident': [
+            (r'[^"]+', String.Name),
+            (r'""', String.Name),
+            (r'"', String.Name, '#pop'),
         ],
     }
 
@@ -380,13 +390,13 @@ class SqlLexer(RegexLexer):
                 'DEFINED', 'DEFINER', 'DELETE', 'DELIMITER', 'DELIMITERS', 'DEREF', 'DESC',
                 'DESCRIBE', 'DESCRIPTOR', 'DESTROY', 'DESTRUCTOR', 'DETERMINISTIC',
                 'DIAGNOSTICS', 'DICTIONARY', 'DISCONNECT', 'DISPATCH', 'DISTINCT', 'DO',
-                'DOMAIN', 'DROP', 'DYNAMIC', 'DYNAMIC_FUNCTION', 'DYNAMIC_FUNCTION_CODE',
-                'EACH', 'ELSE', 'ENCODING', 'ENCRYPTED', 'END', 'END-EXEC', 'EQUALS', 'ESCAPE', 'EVERY',
+                'DOMAIN', 'DROP', 'DYNAMIC', 'DYNAMIC_FUNCTION', 'DYNAMIC_FUNCTION_CODE', 'EACH',
+                'ELSE', 'ELSIF', 'ENCODING', 'ENCRYPTED', 'END', 'END-EXEC', 'EQUALS', 'ESCAPE', 'EVERY',
                 'EXCEPTION', 'EXCEPT', 'EXCLUDING', 'EXCLUSIVE', 'EXEC', 'EXECUTE', 'EXISTING',
                 'EXISTS', 'EXPLAIN', 'EXTERNAL', 'EXTRACT', 'FALSE', 'FETCH', 'FINAL', 'FIRST', 'FOR',
                 'FORCE', 'FOREIGN', 'FORTRAN', 'FORWARD', 'FOUND', 'FREE', 'FREEZE', 'FROM', 'FULL',
                 'FUNCTION', 'G', 'GENERAL', 'GENERATED', 'GET', 'GLOBAL', 'GO', 'GOTO', 'GRANT', 'GRANTED',
-                'GROUP', 'GROUPING', 'HANDLER', 'HAVING', 'HIERARCHY', 'HOLD', 'HOST', 'IDENTITY',
+                'GROUP', 'GROUPING', 'HANDLER', 'HAVING', 'HIERARCHY', 'HOLD', 'HOST', 'IDENTITY', 'IF',
                 'IGNORE', 'ILIKE', 'IMMEDIATE', 'IMMUTABLE', 'IMPLEMENTATION', 'IMPLICIT', 'IN',
                 'INCLUDING', 'INCREMENT', 'INDEX', 'INDITCATOR', 'INFIX', 'INHERITS', 'INITIALIZE',
                 'INITIALLY', 'INNER', 'INOUT', 'INPUT', 'INSENSITIVE', 'INSERT', 'INSTANTIABLE',

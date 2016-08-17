@@ -46,7 +46,7 @@ LEXERS = {
     'BBCodeLexer': ('pygments.lexers.markup', 'BBCode', ('bbcode',), (), ('text/x-bbcode',)),
     'BCLexer': ('pygments.lexers.algebra', 'BC', ('bc',), ('*.bc',), ()),
     'BaseMakefileLexer': ('pygments.lexers.make', 'Base Makefile', ('basemake',), (), ()),
-    'BashLexer': ('pygments.lexers.shell', 'Bash', ('bash', 'sh', 'ksh', 'shell'), ('*.sh', '*.ksh', '*.bash', '*.ebuild', '*.eclass', '.bashrc', 'bashrc', '.bash_*', 'bash_*', 'PKGBUILD'), ('application/x-sh', 'application/x-shellscript')),
+    'BashLexer': ('pygments.lexers.shell', 'Bash', ('bash', 'sh', 'ksh', 'shell'), ('*.sh', '*.ksh', '*.bash', '*.ebuild', '*.eclass', '*.exheres-0', '*.exlib', '.bashrc', 'bashrc', '.bash_*', 'bash_*', 'PKGBUILD'), ('application/x-sh', 'application/x-shellscript')),
     'BashSessionLexer': ('pygments.lexers.shell', 'Bash Session', ('console', 'shell-session'), ('*.sh-session', '*.shell-session'), ('application/x-shell-session', 'application/x-sh-session')),
     'BatchLexer': ('pygments.lexers.shell', 'Batchfile', ('bat', 'batch', 'dosbatch', 'winbatch'), ('*.bat', '*.cmd'), ('application/x-dos-batch',)),
     'BefungeLexer': ('pygments.lexers.esoteric', 'Befunge', ('befunge',), ('*.befunge',), ('application/x-befunge',)),
@@ -130,7 +130,7 @@ LEXERS = {
     'ElixirConsoleLexer': ('pygments.lexers.erlang', 'Elixir iex session', ('iex',), (), ('text/x-elixir-shellsession',)),
     'ElixirLexer': ('pygments.lexers.erlang', 'Elixir', ('elixir', 'ex', 'exs'), ('*.ex', '*.exs'), ('text/x-elixir',)),
     'ElmLexer': ('pygments.lexers.elm', 'Elm', ('elm',), ('*.elm',), ('text/x-elm',)),
-    'EmacsLispLexer': ('pygments.lexers.lisp', 'EmacsLisp', ('emacs', 'elisp'), ('*.el',), ('text/x-elisp', 'application/x-elisp')),
+    'EmacsLispLexer': ('pygments.lexers.lisp', 'EmacsLisp', ('emacs', 'elisp', 'emacs-lisp'), ('*.el',), ('text/x-elisp', 'application/x-elisp')),
     'ErbLexer': ('pygments.lexers.templates', 'ERB', ('erb',), (), ('application/x-ruby-templating',)),
     'ErlangLexer': ('pygments.lexers.erlang', 'Erlang', ('erlang',), ('*.erl', '*.hrl', '*.es', '*.escript'), ('text/x-erlang',)),
     'ErlangShellLexer': ('pygments.lexers.erlang', 'Erlang erl session', ('erl',), ('*.erl-sh',), ('text/x-erl-shellsession',)),
@@ -458,7 +458,7 @@ if __name__ == '__main__':  # pragma: no cover
     footer = content[content.find("if __name__ == '__main__':"):]
 
     # write new file
-    with open(__file__, 'wb') as fp:
+    with open(__file__, 'w') as fp:
         fp.write(header)
         fp.write('LEXERS = {\n    %s,\n}\n\n' % ',\n    '.join(found_lexers))
         fp.write(footer)
