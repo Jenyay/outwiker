@@ -5,17 +5,18 @@ import os
 
 import wx
 
-from outwiker.core.system import getImagesDir
 import outwiker.core.commands
-from .guiconfig import TrayConfig
 from outwiker.actions.exit import ExitAction
+from outwiker.core.system import getImagesDir
+from outwiker.core.defines import APP_DATA_DISABLE_MINIMIZING
+from outwiker.gui.guiconfig import TrayConfig
 
 
-def getTrayIconController(appliction, parentWnd):
+def getTrayIconController(application, parentWnd):
     if os.name == "nt":
-        return TrayIconControllerWindows(appliction, parentWnd)
+        return TrayIconControllerWindows(application, parentWnd)
     else:
-        return TrayIconControllerLinux(appliction, parentWnd)
+        return TrayIconControllerLinux(application, parentWnd)
 
 
 class TrayIconControllerBase(wx.EvtHandler):
@@ -74,7 +75,8 @@ class TrayIconControllerBase(wx.EvtHandler):
 
     def __onIdle(self, event):
         self.mainWnd.Unbind(wx.EVT_IDLE, handler=self.__onIdle)
-        if self.config.startIconized.value:
+        if (self.config.startIconized.value and not
+                self._application.sharedData.get(APP_DATA_DISABLE_MINIMIZING, False)):
             self.mainWnd.Iconize(True)
         else:
             self.mainWnd.Show()

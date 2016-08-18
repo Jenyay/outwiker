@@ -326,17 +326,13 @@ def getSpecialDirList (dirname,
     return dirlist
 
 
-def openInNewWindow (path, readonly=False):
+def openInNewWindow (path, args=[]):
     """ Open wiki tree in the new OutWiker window
     """
     exeFile = getExeFile()
     encoding = getOS().filesEncoding
 
-    params = [exeFile.encode (encoding),
-              path.encode (encoding)]
-
-    if readonly:
-        params += ['--readonly']
+    params = [exeFile.encode(encoding), path.encode(encoding)] + args
 
     env = os.environ.copy()
     if getOS().name == 'unix':

@@ -33,4 +33,5 @@ class OpenHelpAction (BaseAction):
                              help_dir,
                              current_help)
 
-        openInNewWindow (path, readonly=True)
+        args = [u'--normal', u'--readonly']
+        openInNewWindow (path, args)

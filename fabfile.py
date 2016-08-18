@@ -235,12 +235,12 @@ def localeplugin(pluginname):
 
 
 @task
-def run():
+def run(args=u''):
     """
     Run OutWiker from sources
     """
     with lcd("src"):
-        execute(u'{} runoutwiker.py'.format(getPython()))
+        execute(u'{} runoutwiker.py {}'.format(getPython(), args))
 
 
 @task

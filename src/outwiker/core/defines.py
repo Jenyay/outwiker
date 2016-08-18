@@ -37,6 +37,8 @@ APP_DATA_KEY_ANCHOR = u'__anchor'
 # Debug mode
 APP_DATA_DEBUG = u'__debug'
 
+APP_DATA_DISABLE_MINIMIZING = u'__disableMinimizing'
+
 
 # To translate this with xgettext
 if __name__ == u'__main__':
