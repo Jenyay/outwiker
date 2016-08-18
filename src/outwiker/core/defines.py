@@ -34,6 +34,9 @@ VERSION_FILE_NAME = u'versions.xml'
 # Anchor for transition during the opening other page
 APP_DATA_KEY_ANCHOR = u'__anchor'
 
+# Debug mode
+APP_DATA_DEBUG = u'__debug'
+
 
 # To translate this with xgettext
 if __name__ == u'__main__':
