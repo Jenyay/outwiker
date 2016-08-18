@@ -1,5 +1,5 @@
 [wiki]
-md5_hash = e7d514466db8ed2f041a675470d891fc
+md5_hash = d707fd1a041e3948f571220e8e49c14f
 
 [Tree]
 expand = False
@@ -7,8 +7,8 @@ expand = False
 [General]
 type = wiki
 tags = продвинутым пользователям
-datetime = 2016-08-18 20:56:07.941696
-cursorposition = 0
+datetime = 2016-08-18 23:19:43.271173
+cursorposition = 142
 order = 1
 
 [Misc]
