@@ -24,7 +24,7 @@ class CommandLine(object):
     Класс для хранения разобранных параметров командной строки
     """
     def __init__(self):
-        self._description = ur"""OutWiker {ver}. Crossplatform programm for keeping your notes in a tree.""".format(ver=str(getCurrentVersion()))
+        self._description = ur"""OutWiker {ver}. Crossplatform program to keep your notes in a tree.""".format(ver=str(getCurrentVersion()))
 
         self._parser = self._createParser()
         self._namespace = None
@@ -71,7 +71,7 @@ class CommandLine(object):
                             action='store_const',
                             const=True,
                             default=False,
-                            help=u"Don't minimize window after start",
+                            help=u"Don't minimize window when starting",
                             dest=u'disableMinimizing')
 
         return parser
