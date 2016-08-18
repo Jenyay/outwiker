@@ -74,6 +74,12 @@ class CommandLine(object):
                             help=u"Don't minimize window when starting",
                             dest=u'disableMinimizing')
 
+        parser.add_argument('--debug',
+                            action='store_const',
+                            const=True,
+                            default=False,
+                            help=u"Enable debug mode")
+
         return parser
 
     @property
@@ -103,6 +109,10 @@ class CommandLine(object):
     @property
     def disableMinimizing(self):
         return self._namespace.disableMinimizing
+
+    @property
+    def debug(self):
+        return self._namespace.debug
 
     def format_help(self):
         """

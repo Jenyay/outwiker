@@ -9,7 +9,8 @@
 		<changelog>
 			<version number="2.0.0.799" status="dev">
 				<change>Добавлена поддержка шведского языка.</change>
-				<change>Добавлен параметр командной строки --normal для отключения свертывания окна при запуске.</change>
+				<change>Добавлен параметр командной строки "--normal" для отключения свертывания окна при запуске.</change>
+				<change>Добавлен параметр командной строки "--debug" для запуска в режиме отладки.</change>
 				<change>Исправление ошибок.</change>
 			</version>
 
@@ -47,6 +48,7 @@
 			<version number="2.0.0.799" status="dev">
 				<change>Added the Swedish translation.</change>
 				<change>Added the "--normal" command line parameter to disable minimizing when starting.</change>
+				<change>Added the "--debug" command line parameter to run in the debug mode.</change>
 				<change>Bug fixes.</change>
 			</version>
 

@@ -53,10 +53,12 @@ class OutWiker(wx.App):
         except StarterExit:
             return True
 
-        config = GeneralGuiConfig(Application.config)
-        Application.sharedData[APP_DATA_DEBUG] = config.debug.value
+        if APP_DATA_DEBUG not in Application.sharedData:
+            config = GeneralGuiConfig(Application.config)
+            Application.sharedData[APP_DATA_DEBUG] = config.debug.value
+
         level = (logging.INFO
-                 if Application.sharedData[APP_DATA_DEBUG]
+                 if Application.sharedData.get(APP_DATA_DEBUG, False)
                  else logging.WARNING)
 
         redirector = LogRedirector(self.getLogFileName(self._fullConfigPath),

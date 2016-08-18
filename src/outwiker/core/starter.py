@@ -6,7 +6,7 @@ from outwiker.core.application import Application
 from outwiker.core.commands import openWiki
 from outwiker.core.commandline import CommandLine, CommandLineException
 from outwiker.core.commands import getCurrentVersion
-from outwiker.core.defines import APP_DATA_DISABLE_MINIMIZING
+from outwiker.core.defines import APP_DATA_DISABLE_MINIMIZING, APP_DATA_DEBUG
 from outwiker.gui.guiconfig import GeneralGuiConfig
 
 
@@ -67,6 +67,7 @@ class Starter (object):
             raise StarterExit
 
         Application.sharedData[APP_DATA_DISABLE_MINIMIZING] = self._commandLine.disableMinimizing
+        Application.sharedData[APP_DATA_DEBUG] = self._commandLine.debug
 
     def __openRecentWiki (self):
         """
