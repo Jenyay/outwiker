@@ -8,6 +8,7 @@ import wx.lib.iewin
 import outwiker.core.system
 import outwiker.core.commands
 from outwiker.core.application import Application
+from outwiker.core.defines import APP_DATA_KEY_ANCHOR
 from outwiker.gui.htmlrender import HtmlRender
 from outwiker.gui.htmlcontrollerie import UriIdentifierIE
 from outwiker.gui.defines import (ID_MOUSE_LEFT,
@@ -96,9 +97,9 @@ class HtmlRenderIE (HtmlRender):
         self.canOpenUrl = True
         path = fname
 
-        if Application.anchor is not None:
-            path += Application.anchor
-            Application.anchor = None
+        if APP_DATA_KEY_ANCHOR in Application.sharedData:
+            path += Application.sharedData[APP_DATA_KEY_ANCHOR]
+            del Application.sharedData[APP_DATA_KEY_ANCHOR]
 
         self.render.Navigate (path)
 
@@ -196,21 +197,17 @@ class HtmlRenderIE (HtmlRender):
 
         if url is not None:
             self.openUrl (url)
-
         elif page is not None and modifier == ID_KEY_CTRL:
-            Application.anchor = anchor
+            Application.sharedData[APP_DATA_KEY_ANCHOR] = anchor
             Application.mainWindow.tabsController.openInTab (page, True)
-
         elif page is not None:
-            Application.anchor = anchor
+            Application.sharedData[APP_DATA_KEY_ANCHOR] = anchor
             self._currentPage.root.selectedPage = page
-
         elif filename is not None:
             try:
                 outwiker.core.system.getOS().startFile (filename)
             except OSError:
                 text = _(u"Can't execute file '%s'") % filename
                 outwiker.core.commands.MessageBox (text, _(u"Error"), wx.ICON_ERROR | wx.OK)
-
         elif anchor is not None:
             self.LoadPage (href)

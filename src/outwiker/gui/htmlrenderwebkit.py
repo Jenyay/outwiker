@@ -8,6 +8,7 @@ import wx
 import outwiker.core.system
 import outwiker.core.commands
 from outwiker.core.application import Application
+from outwiker.core.defines import APP_DATA_KEY_ANCHOR
 from outwiker.gui.htmlcontrollerwebkit import UriIdentifierWebKit
 from outwiker.gui.defines import (ID_MOUSE_LEFT,
                                   ID_MOUSE_MIDDLE,
@@ -52,40 +53,21 @@ class HtmlRenderWebKit(HtmlRender):
 
         self.canOpenUrl = False                # Можно ли открывать ссылки
 
-        # Disable console output
-        # self.ctrl.connect("console-message", self._javascript_console_message)
-        #
-        # self.ctrl.connect("navigation-policy-decision-requested", self.__onNavigate)
-        # self.ctrl.connect("hovering-over-link", self.__onHoveredOverLink)
-        # self.ctrl.connect("notify::load-status", self.__onLoadStatus)
-
-        self.Bind (wx.EVT_MENU, self.__onCopyFromHtml, id = wx.ID_COPY)
-        self.Bind (wx.EVT_MENU, self.__onCopyFromHtml, id = wx.ID_CUT)
+        self.Bind (wx.EVT_MENU, self.__onCopyFromHtml, id=wx.ID_COPY)
+        self.Bind (wx.EVT_MENU, self.__onCopyFromHtml, id=wx.ID_CUT)
         self.Bind (webview.EVT_WEBVIEW_NAVIGATING, self.__onNavigate)
 
-        # self.ctrl.get_settings().set_property("tab-key-cycles-through-elements", False)
-
         self._path = None
-
-
-    # def _javascript_console_message(self, view, message, line, sourceid):
-    #     return True
-
-
-    # def __onLoadStatus (self, frame, status):
-    #     loadstatus = self.ctrl.get_load_status()
-    #
-    #     if Application.anchor is not None and loadstatus.value_nick == "finished":
-    #         assert self._path is not None
-    #         self.ctrl.load_uri (self._path + "{}".format (Application.anchor))
-    #         Application.anchor = None
-
 
     def Print (self):
         self.ctrl.Print()
 
-
     def LoadPage (self, fname):
+        url = u'file://' + fname
+        if APP_DATA_KEY_ANCHOR in Application.sharedData:
+            url += Application.sharedData[APP_DATA_KEY_ANCHOR]
+            del Application.sharedData[APP_DATA_KEY_ANCHOR]
+
         self.canOpenUrl = True
 
         try:
@@ -93,23 +75,22 @@ class HtmlRenderWebKit(HtmlRender):
                 text = fp.read()
         except IOError:
             text = _(u"Can't read file %s") % (fname)
+            self.SetPage (text, os.path.dirname (fname))
 
-        self.SetPage (text, os.path.dirname (fname))
+        self.ctrl.LoadURL(url)
         self.canOpenUrl = False
-
 
     def SetPage (self, htmltext, basepath):
         self.canOpenUrl = True
         self._path = "file://" + urllib.quote (basepath.encode ("utf8")) + "/"
 
         self.ctrl.SetPage (htmltext, self._path)
-        self.canOpenUrl = False
 
+        self.canOpenUrl = False
 
     def __onCopyFromHtml(self, event):
         self.ctrl.Copy()
         event.Skip()
-
 
     def __identifyUri (self, href):
         """
@@ -126,75 +107,13 @@ class HtmlRenderWebKit(HtmlRender):
         return (None, None, None, None)
 
 
-    # def __onHoveredOverLink (self, view, title, uri):
-    #     if uri is None:
-    #         self.setStatusText (uri, u"")
-    #         return
-    #
-    #     try:
-    #         href = urllib.unquote (uri.encode('ascii')).decode ('utf8')
-    #     except UnicodeDecodeError:
-    #         self.setStatusText (uri, u"")
-    #         return
-    #
-    #     (url, page, filename, anchor) = self.__identifyUri (href)
-    #
-    #     if url is not None:
-    #         self.setStatusText (href, url)
-    #         return
-    #
-    #     if page is not None:
-    #         text = page.subpath
-    #         if anchor is not None:
-    #             text += "/" + anchor
-    #
-    #         self.setStatusText (href, text)
-    #         return
-    #
-    #     if filename is not None:
-    #         self.setStatusText (href, filename)
-    #         return
-    #
-    #     if anchor is not None:
-    #         self.setStatusText (href, anchor)
-    #         return
-    #
-    #     self.setStatusText (href, u"")
-
-
     def __onNavigate (self, event):
         # Проверка на то, что мы не пытаемся открыть вложенный фрейм
-        frame = event.GetTarget()
+        # frame = event.GetTarget()
         href = event.GetURL()
         curr_href = self.ctrl.GetCurrentURL()
 
-        # native_ctrl = self.ctrl.GetNativeBackend()
-
-        # if frame != native_ctrl.get_main_frame():
-        #     return False
-
-        # Проверка на перезагрузку страницы
-        # if action.get_reason().value_nick == "reload":
-        #     return True
-
-        # if not self.canOpenUrl and href != curr_href:
-        #     event.Veto()
-
-        # curr_href = native_ctrl.get_main_frame().get_uri()
-
-        # try:
-        #     href = unicode (urllib.unquote (event.GetURL()), "utf8")
-        # except UnicodeDecodeError:
-        #     return True
-
-        if self.canOpenUrl or href == curr_href:
-            # Если вызов uri осуществляется из программы или это запрос на обновление, то
-            # разрешить обработать запрос компоненту
-            # event.Veto()
-            pass
-        else:
-            # button = action.get_button()
-            # modifier = action.get_modifier_state()
+        if not(self.canOpenUrl or href == curr_href):
             button = 1
             modifier = 0
             if self.__onLinkClicked (href, button, modifier):
@@ -246,7 +165,8 @@ class HtmlRenderWebKit(HtmlRender):
         Возвращает False, если обрабатывать ссылку разрешить компоненту,
         в противном случае - True (если обрабатываем сами)
         href - ссылка
-        gtk_mouse_button - кнопка мыши, с помощью которой кликнули по ссылке (1 - левая, 2 - средняя, 3 - правая, -1 - не известно)
+        gtk_mouse_button - кнопка мыши, с помощью которой кликнули по ссылке
+        (1 - левая, 2 - средняя, 3 - правая, -1 - не известно)
         gtk_key_modifier - зажатые клавиши (1 - Shift, 4 - Ctrl)
         """
         source_href = href
@@ -272,21 +192,21 @@ class HtmlRenderWebKit(HtmlRender):
 
         if url is not None:
             self.openUrl (url)
-
-        elif page is not None and (mouse_button == ID_MOUSE_MIDDLE or modifier == ID_KEY_CTRL):
+        elif (page is not None and
+              (mouse_button == ID_MOUSE_MIDDLE or modifier == ID_KEY_CTRL)):
             Application.mainWindow.tabsController.openInTab (page, True)
-
         elif page is not None:
-            Application.anchor = anchor
+            if anchor is not None:
+                Application.sharedData[APP_DATA_KEY_ANCHOR] = anchor
             self._currentPage.root.selectedPage = page
-
         elif filename is not None:
             try:
                 outwiker.core.system.getOS().startFile (filename)
             except OSError:
                 text = _(u"Can't execute file '%s'") % filename
-                outwiker.core.commands.MessageBox (text, _(u"Error"), wx.ICON_ERROR | wx.OK)
-
+                outwiker.core.commands.MessageBox (text,
+                                                   _(u"Error"),
+                                                   wx.ICON_ERROR | wx.OK)
         elif anchor is not None:
             return False
 

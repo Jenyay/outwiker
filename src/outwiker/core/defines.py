@@ -30,8 +30,12 @@ VERSIONS_LANG = u'versions_lang'
 
 VERSION_FILE_NAME = u'versions.xml'
 
+# Keys for Application.sharedData
+# Anchor for transition during the opening other page
+APP_DATA_KEY_ANCHOR = u'__anchor'
 
-    # To translate this with xgettext
+
+# To translate this with xgettext
 if __name__ == u'__main__':
     _('versions_lang')
 
@@ -51,4 +55,3 @@ if __name__ == u'__main__':
     _(u"software")
     _(u"tags")
     _(u"weather")
-    

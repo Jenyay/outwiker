@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import print_function
+
 from outwiker.core.i18n import init_i18n, getLanguageFromConfig
 from outwiker.core.config import Config
 from outwiker.core.event import Event, CustomEvents
@@ -10,7 +12,7 @@ from outwiker.core.pageuiddepot import PageUidDepot
 
 class ApplicationParams(object):
     def __init__(self):
-        # Current at given time wiki
+        # Opened wiki
         self.__wikiroot = None
 
         # Application's main window
@@ -23,8 +25,8 @@ class ApplicationParams(object):
         self.plugins = PluginsLoader(self)
         self.pageUidDepot = PageUidDepot()
 
-        # Anchor for transition during the opening other page
-        self._anchor = None
+        # Values for shared purpose
+        self.sharedData = {}
 
         self.customEvents = CustomEvents()
 
@@ -287,14 +289,6 @@ class ApplicationParams(object):
         self.__initLocale()
 
     @property
-    def anchor(self):
-        return self._anchor
-
-    @anchor.setter
-    def anchor(self, value):
-        self._anchor = value
-
-    @property
     def wikiroot(self):
         """
         Возвращает корень открытой в данный момент вики или None,
@@ -393,12 +387,12 @@ class ApplicationParams(object):
         try:
             init_i18n(language)
         except IOError:
-            print u"Can't load language: {}".format(language)
+            print(u"Can't load language: {}".format(language))
 
-    def getEvent (self, name):
+    def getEvent(self, name):
         """Return build-in event or custom event"""
-        if hasattr (self, name) and isinstance (getattr (self, name), Event):
-            return getattr (self, name)
+        if hasattr(self, name) and isinstance(getattr(self, name), Event):
+            return getattr(self, name)
         return self.customEvents.get(name)
 
 
