@@ -1,0 +1,13 @@
+OutWiker can take some command line parameters. The format of the argument is as follows:
+
+[@outwiker [-h] [-v] [-r] [--normal] [ path ]@]
+
+'''path''' - path to notes tree. For example: ''outwiker.exe "C:\temp\samplewiki"'' or ''outwiker.exe "C:\temp\samplewiki\__page.opt"''
+
+'''-h, --help''' - Show help with the command line parameters. 
+
+'''-v, --version''' - Show OutWiker version
+
+'''-r, --readonly''' - Open notes tree in the read-only mode.
+
+'''--normal''' - Don't minimize the main window when starting OutWiker.

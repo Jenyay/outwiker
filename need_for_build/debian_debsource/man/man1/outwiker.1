@@ -1,12 +1,12 @@
 .\" Process this file with
 .\" groff -man -Tutf8 outwiker.1
 .\"
-.TH outwiker 1 "May 2014" "Version 1.8.0" "OutWiker"
+.TH outwiker 1 "May 2016" "Version 2.0.0" "OutWiker"
 .SH NAME 
 .B outwiker 
 \- program to store notes in a tree.
 .SH SYNOPSIS
-.B outwiker [-h] [-v] [-r] [
+.B outwiker [-h] [-v] [-r] [--normal] [
 .I Path
 .B ]
 
@@ -26,14 +26,17 @@ Path to the folder with a tree notes (or to file __page.opt). If no
 .B Path
 is specified, the program behaves according to the settings and opens a blank window or open the last tree with notes.
 .TP 
-.B -h --help
-Print help for command line
+.B -h, --help
+Show help for command line.
 .TP 
-.B -v --version
-Print version
+.B -v, --version
+Show version information.
 .TP 
-.B -r --readonly
-Open notes tree as "read-only"
+.B -r, --readonly
+Open notes tree in read-only mode.
+.TP 
+.B --normal
+Don't minimize window when starting OutWiker.
 
 .SH AUTHOR
 Eugeniy Ilin (aka Jenyay). 
@@ -70,6 +73,8 @@ linda_kaioh (
 ) for the program testing and "green" style.
 .br
 Vitaliy Yakovchuk, Dmytro Vasylchenko and VadymDerckach for the ukrainian translation.
+.br
+Åke Engelbrektson for the Swedish translation
 .br
 Matteo Migliaccio (
 .B https://plus.google.com/+MatteoMigliaccio/posts
