@@ -12,13 +12,13 @@ import wx
 
 import outwiker.core.exceptions
 from outwiker.actions.polyactionsid import *
-from outwiker.core.events import PreWikiOpenParams, PostWikiOpenParams
-from outwiker.core.system import getOS, getCurrentDir
-from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
-from outwiker.core.pagetitletester import PageTitleError, PageTitleWarning
 from outwiker.core.defines import VERSION_FILE_NAME, VERSIONS_LANG
+from outwiker.core.events import PreWikiOpenParams, PostWikiOpenParams
+from outwiker.core.pagetitletester import PageTitleError, PageTitleWarning
+from outwiker.core.system import getOS, getCurrentDir
+from outwiker.core.tree import WikiDocument
 from outwiker.core.xmlversionparser import XmlVersionParser
 from outwiker.gui.overwritedialog import OverwriteDialog
 from outwiker.gui.longprocessrunner import LongProcessRunner
@@ -141,6 +141,24 @@ def openWikiWithDialog (parent, readonly=False):
             wikiroot = openWiki (path, readonly)
 
     return wikiroot
+
+
+def findPage(application, page_id):
+    """
+    page_id - subpath of page or page UID.
+    """
+    if application.wikiroot is None or page_id is None:
+        return None
+
+    prefix = u'page://'
+
+    if page_id.startswith(prefix):
+        page_id = page_id[len(prefix):]
+        return application.pageUidDepot[page_id]
+    elif application.wikiroot[page_id] is not None:
+        return application.wikiroot[page_id]
+    else:
+        return application.pageUidDepot[page_id]
 
 
 def openWiki (path, readonly=False):

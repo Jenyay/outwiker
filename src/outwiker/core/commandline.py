@@ -46,8 +46,11 @@ class CommandLine(object):
 
         parser.add_argument('wikipath',
                             nargs='?',
-                            metavar=u"Path",
-                            help=u"Path to wiki")
+                            metavar=u"path",
+                            help=u"Path to notes tree")
+
+        parser.add_argument('--page', '-p',
+                            help=u"Subpath or UID of a page")
 
         parser.add_argument('--help', '-h',
                             action='store_const',
@@ -88,6 +91,17 @@ class CommandLine(object):
 
         if self._namespace.wikipath is not None:
             result = unicode(self._namespace.wikipath, getOS().filesEncoding)
+            if len(result.split()) == 0:
+                result = None
+
+        return result
+
+    @property
+    def page_id(self):
+        result = None
+
+        if self._namespace.page is not None:
+            result = unicode(self._namespace.page, getOS().filesEncoding)
             if len(result.split()) == 0:
                 result = None
 

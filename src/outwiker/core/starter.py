@@ -3,7 +3,7 @@
 import sys
 
 from outwiker.core.application import Application
-from outwiker.core.commands import openWiki
+from outwiker.core.commands import openWiki, findPage
 from outwiker.core.commandline import CommandLine, CommandLineException
 from outwiker.core.commands import getCurrentVersion
 from outwiker.core.defines import APP_DATA_DISABLE_MINIMIZING, APP_DATA_DEBUG
@@ -34,6 +34,11 @@ class Starter (object):
             self.__openRecentWiki ()
         else:
             openWiki (self._commandLine.wikipath, self._commandLine.readonly)
+
+        if self._commandLine is not None:
+            page = findPage(Application, self._commandLine.page_id)
+            if Application.wikiroot is not None and page is not None:
+                Application.selectedPage = page
 
     def processConsole (self):
         """

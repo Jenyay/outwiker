@@ -240,7 +240,7 @@ def run(args=u''):
     Run OutWiker from sources
     """
     with lcd("src"):
-        execute(u'{} runoutwiker.py {}'.format(getPython(), args))
+        execute(u'{} runoutwiker.py {}'.format(getPython(), args.decode('utf8')))
 
 
 @task
