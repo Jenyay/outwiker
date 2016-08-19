@@ -19,9 +19,19 @@
 <body>
 <p>Программа outwiker может принимать параметры командной строки. Формат аргументов следующий:</p>
 <blockquote>
-<pre>outwiker [-h] [-v] [-r] [--normal] [ path ]</pre>
+<pre>outwiker [-h] [-v] [-r] [--normal] [-p page] [ path ]</pre>
 </blockquote>
-<p><b>path</b> - путь до дерева заметок. Например: <i>outwiker.exe "C:	emp\samplewiki"</i> или <i>outwiker.exe "C:	emp\samplewiki\__page.opt"</i></p>
+<p><b>path</b> - путь до дерева заметок. Например:</p>
+<blockquote>
+<p>outwiker.exe "C:\temp\samplewiki"</p>
+<p>outwiker.exe "C:\temp\samplewiki\__page.opt"</p>
+</blockquote>
+<p><b>-p, --page</b> - UID или относительный путь до страницы, которую нужно открыть при запуске OutWiker. Например:</p>
+<blockquote>
+<p>outwiker.exe --page="Страница 1/Страница 2/Страница 3" "C:\temp\samplewiki"</p>
+<p>outwiker.exe -p "Страница 1/Страница 2/Страница 3" "C:\temp\samplewiki"</p>
+<p>outwiker.exe --page="page://__1640eea0-1bb0-453b-ba4c-07f1c298ce76" "C:\temp\samplewiki"</p>
+</blockquote>
 <p><b>-h, --help</b> - Показать справку по параметрам командной строки.</p>
 <p><b>-v, --version</b> - Показать версию OutWiker.</p>
 <p><b>-r, --readonly</b> - Открыть дерево заметок в режиме "только для чтения".</p>

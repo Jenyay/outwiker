@@ -1,8 +1,21 @@
 OutWiker can take some command line parameters. The format of the argument is as follows:
 
-[>[@outwiker [-h] [-v] [-r] [--normal] [ path ]@]<]
+[>[@outwiker [-h] [-v] [-r] [--normal] [-p page] [ path ]@]<]
 
-'''path''' - path to notes tree. For example: ''outwiker.exe "C:\temp\samplewiki"'' or ''outwiker.exe "C:\temp\samplewiki\__page.opt"''
+'''path''' - path to notes tree. For example: 
+
+[>outwiker.exe "C:\temp\samplewiki"
+
+outwiker.exe "C:\temp\samplewiki\__page.opt"<]
+
+'''-p, --page''' - UID or relative path to page to open when OutWiker running. For example:
+
+[>outwiker.exe --page="Page 1/Page 2/Page 3" "C:\temp\samplewiki"
+
+outwiker.exe -p "Page 1/Page 2/Page 3" "C:\temp\samplewiki"
+
+outwiker.exe --page="[=page://__1640eea0-1bb0-453b-ba4c-07f1c298ce76=]" "C:\temp\samplewiki"
+<]
 
 '''-h, --help''' - Show help with the command line parameters. 
 

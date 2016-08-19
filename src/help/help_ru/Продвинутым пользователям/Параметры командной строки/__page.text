@@ -1,8 +1,21 @@
 Программа outwiker может принимать параметры командной строки. Формат аргументов следующий:
 
-[>[@outwiker [-h] [-v] [-r] [--normal] [ path ]@]<]
+[>[@outwiker [-h] [-v] [-r] [--normal] [-p page] [ path ]@]<]
 
-'''path''' - путь до дерева заметок. Например: ''outwiker.exe "C:\temp\samplewiki"'' или ''outwiker.exe "C:\temp\samplewiki\__page.opt"''
+'''path''' - путь до дерева заметок. Например: 
+
+[>outwiker.exe "C:\temp\samplewiki"
+
+outwiker.exe "C:\temp\samplewiki\__page.opt"<]
+
+'''-p, --page''' - UID или относительный путь до страницы, которую нужно открыть при запуске OutWiker. Например:
+
+[>outwiker.exe --page="Страница 1/Страница 2/Страница 3" "C:\temp\samplewiki"
+
+outwiker.exe -p "Страница 1/Страница 2/Страница 3" "C:\temp\samplewiki"
+
+outwiker.exe --page="[=page://__1640eea0-1bb0-453b-ba4c-07f1c298ce76=]" "C:\temp\samplewiki"
+<]
 
 '''-h, --help''' - Показать справку по параметрам командной строки.
 
