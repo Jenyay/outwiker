@@ -198,10 +198,12 @@ class HtmlRenderIE (HtmlRender):
         if url is not None:
             self.openUrl (url)
         elif page is not None and modifier == ID_KEY_CTRL:
-            Application.sharedData[APP_DATA_KEY_ANCHOR] = anchor
+            if anchor is not None:
+                Application.sharedData[APP_DATA_KEY_ANCHOR] = anchor
             Application.mainWindow.tabsController.openInTab (page, True)
         elif page is not None:
-            Application.sharedData[APP_DATA_KEY_ANCHOR] = anchor
+            if anchor is not None:
+                Application.sharedData[APP_DATA_KEY_ANCHOR] = anchor
             self._currentPage.root.selectedPage = page
         elif filename is not None:
             try:
