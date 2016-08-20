@@ -65,15 +65,15 @@ class CommandLineTest(unittest.TestCase):
 
     def test_PageId_01(self):
         cl = CommandLine()
-        cl.parseParams(['--page=Страница 1'])
+        cl.parseParams(['--page=Page 1'])
 
-        self.assertEqual(cl.page_id, u'Страница 1')
+        self.assertEqual(cl.page_id, u'Page 1')
 
     def test_PageId_02(self):
         cl = CommandLine()
-        cl.parseParams(['-p', 'Страница 1'])
+        cl.parseParams(['-p', 'Page 1'])
 
-        self.assertEqual(cl.page_id, u'Страница 1')
+        self.assertEqual(cl.page_id, u'Page 1')
 
     def test_PageId_03(self):
         cl = CommandLine()
