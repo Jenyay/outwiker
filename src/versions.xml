@@ -7,7 +7,7 @@
 		<website>http://jenyay.net/Outwiker/Unstable</website>
 
 		<changelog>
-			<version number="2.0.0.799" status="dev">
+			<version number="2.0.0.800" status="dev" date="20.08.2016">
 				<change>Добавлена поддержка шведского языка.</change>
 				<change>Добавлен параметр командной строки "--page, -p" для выбора страницы при запуске.</change>
 				<change>Добавлен параметр командной строки "--normal" для отключения свертывания окна при запуске.</change>
@@ -46,7 +46,7 @@
 		<website>http://jenyay.net/Outwiker/UnstableEn</website>
 
 		<changelog>
-			<version number="2.0.0.799" status="dev">
+			<version number="2.0.0.800" status="dev" date="August 20, 2016">
 				<change>Added the Swedish translation.</change>
 				<change>Added the "--page, -p" command line parameter to select page when starting.</change>
 				<change>Added the "--normal" command line parameter to disable minimizing when starting.</change>
