@@ -425,34 +425,35 @@ def _create_tree(level, maxlevel, nsiblings, parent):
 
 @hosts(DEPLOY_SERVER_NAME)
 @task
-def upload_plugin(pluginname):
+def upload_plugin(*args):
     """
     Upload plugin to site
     """
-    path_to_plugin_local = os.path.join(BUILD_DIR, PLUGINS_DIR, pluginname)
-    path_to_xml_local = os.path.join(path_to_plugin_local, PLUGIN_VERSIONS_FILENAME)
+    for pluginname in args:
+        path_to_plugin_local = os.path.join(BUILD_DIR, PLUGINS_DIR, pluginname)
+        path_to_xml_local = os.path.join(path_to_plugin_local, PLUGIN_VERSIONS_FILENAME)
 
-    xml_content_local = readTextFile(path_to_xml_local)
-    appinfo_local = XmlVersionParser().parse(xml_content_local)
+        xml_content_local = readTextFile(path_to_xml_local)
+        appinfo_local = XmlVersionParser().parse(xml_content_local)
 
-    url = appinfo_local.updatesUrl
-    appinfo_remote = downloadAppInfo(url)
+        url = appinfo_local.updatesUrl
+        appinfo_remote = downloadAppInfo(url)
 
-    if appinfo_local.currentVersion < appinfo_remote.currentVersion:
-        print(Fore.RED + 'Error. New version < Prev version')
-        sys.exit(1)
-    elif appinfo_local.currentVersion == appinfo_remote.currentVersion:
-        print(Fore.RED + 'Warning: Uploaded the same version')
-    print(Fore.GREEN + 'Uploading...')
+        if appinfo_local.currentVersion < appinfo_remote.currentVersion:
+            print(Fore.RED + 'Error. New version < Prev version')
+            sys.exit(1)
+        elif appinfo_local.currentVersion == appinfo_remote.currentVersion:
+            print(Fore.RED + 'Warning: Uploaded the same version')
+        print(Fore.GREEN + 'Uploading...')
 
-    path_to_upload = os.path.dirname(appinfo_local.updatesUrl.replace(DEPLOY_SITE + u'/', DEPLOY_HOME_PATH))
-    version_local = unicode(appinfo_local.currentVersion)
-    archive_name = u'{}-{}.zip'.format(pluginname, version_local)
-    path_to_archive_local = os.path.join(path_to_plugin_local, archive_name)
+        path_to_upload = os.path.dirname(appinfo_local.updatesUrl.replace(DEPLOY_SITE + u'/', DEPLOY_HOME_PATH))
+        version_local = unicode(appinfo_local.currentVersion)
+        archive_name = u'{}-{}.zip'.format(pluginname, version_local)
+        path_to_archive_local = os.path.join(path_to_plugin_local, archive_name)
 
-    with cd(path_to_upload):
-        put(path_to_archive_local, archive_name)
-        put(path_to_xml_local, PLUGIN_VERSIONS_FILENAME)
+        with cd(path_to_upload):
+            put(path_to_archive_local, archive_name)
+            put(path_to_xml_local, PLUGIN_VERSIONS_FILENAME)
 
 
 @hosts(DEPLOY_SERVER_NAME)
