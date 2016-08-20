@@ -17,7 +17,7 @@
 			<site>http://jenyay.net</site>
 		</author>
 		<changelog>
-			<version number="1.0.5">
+			<version number="1.0.5" date="August 20, 2016">
                 <download os="all">http://jenyay.net/uploads/Outwiker/Counter/counter-1.0.5.zip</download>
 				<change>Added the Swedish translation.</change>
 			</version>
@@ -62,7 +62,7 @@
 		</author>
 
 		<changelog>
-			<version number="1.0.5">
+			<version number="1.0.5" date="20.08.2016">
                 <download os="all">http://jenyay.net/uploads/Outwiker/Counter/counter-1.0.5.zip</download>
 				<change>Добавлена поддержка шведского языка.</change>
 			</version>

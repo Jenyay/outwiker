@@ -18,7 +18,7 @@
 		</author>
 
 		<changelog>
-			<version number="1.0.3">
+			<version number="1.0.3" date="August 20, 2016">
                 <download os="all">http://jenyay.net/uploads/Outwiker/Sessions/sessions-1.0.3.zip</download>
 				<change>Added the Swedish translation.</change>
 			</version>
@@ -52,7 +52,7 @@
 		</author>
 
 		<changelog>
-			<version number="1.0.3">
+			<version number="1.0.3" date="20.08.2016">
                 <download os="all">http://jenyay.net/uploads/Outwiker/Sessions/sessions-1.0.3.zip</download>
 				<change>Добавлена поддержка шведского языка.</change>
 			</version>

@@ -18,7 +18,7 @@
 		</author>
 
 		<changelog>
-			<version number="1.0.4">
+			<version number="1.0.4" date="August 20, 2016">
                 <download os="all">http://jenyay.net/uploads/Outwiker/ChangePageUid/changepageuid-1.0.4.zip</download>
 				<change>Added the Swedish translation.</change>
 			</version>
@@ -58,7 +58,7 @@
 		</author>
 
 		<changelog>
-			<version number="1.0.4">
+			<version number="1.0.4" date="20.08.2016">
                 <download os="all">http://jenyay.net/uploads/Outwiker/ChangePageUid/changepageuid-1.0.4.zip</download>
 				<change>Добавлена поддержка шведского языка</change>
 			</version>

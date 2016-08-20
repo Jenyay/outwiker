@@ -17,7 +17,7 @@
 		</author>
 
 		<changelog>
-			<version number="0.0.0.3">
+			<version number="0.0.0.3" date="August 20, 2016">
                 <download os="all">http://jenyay.net/uploads/Outwiker/AutoRenamer/AutoRenamer-0.0.0.3.zip</download>
 				<change>Added the Swedish translation.</change>
 				<change>Bug fixes.</change>
@@ -39,7 +39,7 @@
 		</author>
 
 		<changelog>
-			<version number="0.0.0.3">
+			<version number="0.0.0.3" date="20.08.2016">
                 <download os="all">http://jenyay.net/uploads/Outwiker/AutoRenamer/AutoRenamer-0.0.0.3.zip</download>
 				<change>Добавлена поддержка шведского языка.</change>
 				<change>Исправление ошибок.</change>

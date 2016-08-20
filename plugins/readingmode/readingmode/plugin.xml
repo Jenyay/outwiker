@@ -15,7 +15,7 @@
 			<name>Roman Sobolev</name>
 		</author>
 		<changelog>
-			<version number="1.0.1">
+			<version number="1.0.1" date="August 20, 2016">
                 <download os="all">http://jenyay.net/uploads/Outwiker/ReadingMode/readingmode-1.0.1.zip</download>
 				<change>Added the Swedish translation.</change>
 			</version>
@@ -36,7 +36,7 @@
 		</author>
 
 		<changelog>
-			<version number="1.0.1">
+			<version number="1.0.1" date="20.08.2016">
                 <download os="all">http://jenyay.net/uploads/Outwiker/ReadingMode/readingmode-1.0.1.zip</download>
 				<change>Добавлена поддержка шведского языка.</change>
 			</version>

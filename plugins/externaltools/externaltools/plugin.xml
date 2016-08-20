@@ -18,7 +18,7 @@
 		</author>
 
 		<changelog>
-			<version number="1.3.1">
+			<version number="1.3.1" date="August 20, 2016">
                 <download os="all">http://jenyay.net/uploads/Outwiker/ExternalTools/externaltools-1.3.1.zip</download>
 				<change>Added the Swedish translation.</change>
 			</version>
@@ -58,7 +58,7 @@
 		</author>
 
 		<changelog>
-			<version number="1.3.1">
+			<version number="1.3.1" date="20.08.2016">
                 <download os="all">http://jenyay.net/uploads/Outwiker/ExternalTools/externaltools-1.3.1.zip</download>
 				<change>Добавлена поддержка шведского языка.</change>
 			</version>

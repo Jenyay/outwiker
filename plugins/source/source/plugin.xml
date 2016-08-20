@@ -18,7 +18,7 @@
 		</author>
 
 		<changelog>
-			<version number="1.14.2">
+			<version number="1.14.2" date="August 20, 2016">
                 <download os="all">http://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.14.2.zip</download>
 				<change>Added the Swedish translation.</change>
 				<change>Updated Pygments library.</change>
@@ -123,7 +123,7 @@
 		</author>
 
 		<changelog>
-			<version number="1.14.2">
+			<version number="1.14.2" date="20.08.2016">
                 <download os="all">http://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.14.2.zip</download>
 				<change>Добавлена поддержка шведского языка.</change>
 				<change>Обновлена библиотека Pygments.</change>
