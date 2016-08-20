@@ -1,10 +1,9 @@
 # -*- coding: UTF-8 -*-
 
 import os.path
-import subprocess
 
 from outwiker.gui.baseaction import BaseAction
-from outwiker.core.system import getExeFile, getOS
+from outwiker.core.system import getOS, openInNewWindow
 from .i18n import get_
 
 
@@ -70,19 +69,9 @@ class OpenHelpAction (BaseAction):
     def run (self, params):
         encoding = getOS().filesEncoding
         helpDirName = u"help"
-        currentdir = unicode (os.path.dirname (__file__), encoding)
+        currentdir = unicode(os.path.dirname (__file__), encoding)
 
-        helpPath = os.path.join (currentdir, helpDirName, _("datagraph_eng"))
+        helpPath = os.path.join(currentdir, helpDirName, _("datagraph_eng"))
 
-        exeFile = getExeFile()
-        if exeFile.endswith (".exe"):
-            DETACHED_PROCESS = 0x00000008
-            subprocess.Popen ([exeFile.encode (encoding),
-                               helpPath.encode (encoding),
-                               "--readonly"],
-                              creationflags=DETACHED_PROCESS)
-        else:
-            subprocess.Popen (["python",
-                               exeFile.encode (encoding),
-                               helpPath.encode (encoding),
-                               "--readonly"])
+        args = [u'--normal', u'--readonly']
+        openInNewWindow(helpPath, args)
