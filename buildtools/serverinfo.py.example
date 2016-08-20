@@ -4,3 +4,4 @@ DEPLOY_SERVER_NAME = u'example.com'
 DEPLOY_SITE = u'http://' + DEPLOY_SERVER_NAME
 DEPLOY_HOME_PATH = u'/home/username/path_to_html/'
 DEPLOY_UNSTABLE_PATH = DEPLOY_HOME_PATH + u'uploads/Outwiker/Unstable'
+PATH_TO_WINDOWS_DISTRIBS = u'/media/username/Windows/data/outwiker/2.0.0.800 dev'

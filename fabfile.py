@@ -51,7 +51,8 @@ try:
     from buildtools.serverinfo import (DEPLOY_SERVER_NAME,
                                        DEPLOY_UNSTABLE_PATH,
                                        DEPLOY_HOME_PATH,
-                                       DEPLOY_SITE
+                                       DEPLOY_SITE,
+                                       PATH_TO_WINDOWS_DISTRIBS,
                                        )
 except ImportError:
     shutil.copyfile(u'buildtools/serverinfo.py.example',
@@ -59,7 +60,8 @@ except ImportError:
     from buildtools.serverinfo import (DEPLOY_SERVER_NAME,
                                        DEPLOY_UNSTABLE_PATH,
                                        DEPLOY_HOME_PATH,
-                                       DEPLOY_SITE
+                                       DEPLOY_SITE,
+                                       PATH_TO_WINDOWS_DISTRIBS,
                                        )
 
 # env.hosts = [DEPLOY_SERVER_NAME]
@@ -458,15 +460,12 @@ def upload_plugin(*args):
 
 @hosts(DEPLOY_SERVER_NAME)
 @task
-def upload_unstable(distrib_path):
+def upload_unstable():
     """
     Upload unstable version on the site
-
-    distrib_path - path to distribs for Windows
     """
-    distrib_path = unicode(distrib_path, 'utf8')
-    versions = os.path.join(distrib_path, OUTWIKER_VERSIONS_FILENAME)
-    upload_files = map(lambda item: os.path.join(distrib_path, item),
+    versions = os.path.join(PATH_TO_WINDOWS_DISTRIBS, OUTWIKER_VERSIONS_FILENAME)
+    upload_files = map(lambda item: os.path.join(PATH_TO_WINDOWS_DISTRIBS, item),
                        FILES_FOR_UPLOAD_UNSTABLE_WIN)
     upload_files = upload_files + [versions]
 
@@ -494,13 +493,11 @@ def upload_unstable(distrib_path):
 
 @hosts(DEPLOY_SERVER_NAME)
 @task
-def deploy(distrib_path):
+def deploy():
     """
     Upload unstable version on the site
-
-    distrib_path - path to distribs for Windows
     """
     test()
     deb_sources_included()
     ppaunstable()
-    upload_unstable(distrib_path)
+    upload_unstable()
