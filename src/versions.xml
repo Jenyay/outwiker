@@ -3,49 +3,13 @@
 	<name>OutWiker</name>
 	<updates>http://jenyay.net/uploads/Outwiker/Unstable/versions.xml</updates>
 
-	<data lang="ru">
-		<website>http://jenyay.net/Outwiker/Unstable</website>
-
-		<changelog>
-			<version number="2.0.0.800" status="dev" date="20.08.2016">
-				<change>Добавлена поддержка шведского языка.</change>
-				<change>Добавлен параметр командной строки "--page, -p" для выбора страницы при запуске.</change>
-				<change>Добавлен параметр командной строки "--normal" для отключения свертывания окна при запуске.</change>
-				<change>Добавлен параметр командной строки "--debug" для запуска в режиме отладки.</change>
-				<change>Исправление ошибок.</change>
-			</version>
-
-			<version number="2.0.0.798" status="dev" date="27.07.2016">
-				<change>Восстановлена работоспособность иконки в трее под Linux.</change>
-				<change>В редактор добавлена возможность для слияния строк с помощью горячей клавиши или меню.</change>
-				<change>В редактор добавлена возможность удаления слов слева / справа с помощью горячей клавиши или меню.</change>
-				<change>В редактор добавлена возможность для уменьшения вложенности элементов списка с помощью горячей клавиши или меню.</change>
-				<change>Изменен стиль вкладок.</change>
-			</version>
-
-			<version number="2.0.0.796" status="dev" date="02.07.2016">
-				<change>В редактор добавлена возможность дублировать текущую строку с помощью горячей клавиши или меню.</change>
-				<change>В редактор добавлена возможность удалять текущую строку с помощью горячей клавиши или меню.</change>
-				<change>В редактор добавлена возможность перемещения строк вверх / вниз с помощью горячей клавиши или меню.</change>
-				<change>Улучшена вставка заголовков на викистраницы.</change>
-				<change>Рефакторинг системы сборки.</change>
-				<change>Исправление ошибок.</change>
-			</version>
-
-			<version number="2.0.0.794" status="dev" date="30.05.2016">
-				<change>Исправление ошибок, возникших после перехода на wxPython 3.0.</change>
-			</version>
-
-			<version number="2.0.0.792" status="dev" date="10.05.2016">
-				<change>Переход на библиотеку wxPython 3.0.</change>
-			</version>
-		</changelog>
-	</data>
-
 	<data lang="en">
 		<website>http://jenyay.net/Outwiker/UnstableEn</website>
 
 		<changelog>
+			<version number="2.0.0.801" status="dev">
+			</version>
+
 			<version number="2.0.0.800" status="dev" date="August 20, 2016">
 				<change>Added the Swedish translation.</change>
 				<change>Added the "--page, -p" command line parameter to select page when starting.</change>
@@ -78,6 +42,48 @@
 			<version number="2.0.0.792" status="dev" date="May 10, 2016">
 				<change>The program now uses wxPython 3.0 library.</change>
 				<change>Bug fixes.</change>
+			</version>
+		</changelog>
+	</data>
+
+	<data lang="ru">
+		<website>http://jenyay.net/Outwiker/Unstable</website>
+
+		<changelog>
+			<version number="2.0.0.801" status="dev">
+			</version>
+
+			<version number="2.0.0.800" status="dev" date="20.08.2016">
+				<change>Добавлена поддержка шведского языка.</change>
+				<change>Добавлен параметр командной строки "--page, -p" для выбора страницы при запуске.</change>
+				<change>Добавлен параметр командной строки "--normal" для отключения свертывания окна при запуске.</change>
+				<change>Добавлен параметр командной строки "--debug" для запуска в режиме отладки.</change>
+				<change>Исправление ошибок.</change>
+			</version>
+
+			<version number="2.0.0.798" status="dev" date="27.07.2016">
+				<change>Восстановлена работоспособность иконки в трее под Linux.</change>
+				<change>В редактор добавлена возможность для слияния строк с помощью горячей клавиши или меню.</change>
+				<change>В редактор добавлена возможность удаления слов слева / справа с помощью горячей клавиши или меню.</change>
+				<change>В редактор добавлена возможность для уменьшения вложенности элементов списка с помощью горячей клавиши или меню.</change>
+				<change>Изменен стиль вкладок.</change>
+			</version>
+
+			<version number="2.0.0.796" status="dev" date="02.07.2016">
+				<change>В редактор добавлена возможность дублировать текущую строку с помощью горячей клавиши или меню.</change>
+				<change>В редактор добавлена возможность удалять текущую строку с помощью горячей клавиши или меню.</change>
+				<change>В редактор добавлена возможность перемещения строк вверх / вниз с помощью горячей клавиши или меню.</change>
+				<change>Улучшена вставка заголовков на викистраницы.</change>
+				<change>Рефакторинг системы сборки.</change>
+				<change>Исправление ошибок.</change>
+			</version>
+
+			<version number="2.0.0.794" status="dev" date="30.05.2016">
+				<change>Исправление ошибок, возникших после перехода на wxPython 3.0.</change>
+			</version>
+
+			<version number="2.0.0.792" status="dev" date="10.05.2016">
+				<change>Переход на библиотеку wxPython 3.0.</change>
 			</version>
 		</changelog>
 	</data>
