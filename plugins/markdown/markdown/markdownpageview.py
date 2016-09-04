@@ -7,9 +7,9 @@ import wx
 
 from outwiker.core.system import getImagesDir
 from outwiker.core.commands import insertCurrentDate
-from outwiker.gui.texteditor import TextEditor
 from outwiker.pages.wiki.basewikipageview import BaseWikiPageView
 from outwiker.pages.wiki.htmlcache import HtmlCache
+from outwiker.pages.wiki.wikieditor import WikiEditor
 from outwiker.actions.polyactionsid import *
 
 from .toolbar import MarkdownToolBar
@@ -30,7 +30,7 @@ class MarkdownPageView(BaseWikiPageView):
         return MarkdownHtmlGenerator(page)
 
     def getTextEditor(self):
-        return TextEditor
+        return WikiEditor
 
     def _getName(self):
         return u"markdown"

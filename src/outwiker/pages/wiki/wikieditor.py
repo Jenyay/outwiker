@@ -93,20 +93,15 @@ class WikiEditor (TextEditor):
             self.textCtrl.StyleSetFaceName (styleid, self.config.fontName.value)
             self.textCtrl.StyleSetBackground (styleid, self.config.backColor.value)
 
-        self.__setStyleHeading()
-
-
-    @property
-    def colorizeSyntax (self):
-        return self._colorizeSyntax
-
-
-    def __setStyleHeading (self):
         self.textCtrl.StyleSetSpec (self.STYLE_HEADING_ID, self._styles[self.STYLE_HEADING_ID])
         self.textCtrl.StyleSetSize (self.STYLE_HEADING_ID, self.config.fontSize.value + 2)
         self.textCtrl.StyleSetFaceName (self.STYLE_HEADING_ID, self.config.fontName.value)
         self.textCtrl.StyleSetBackground (self.STYLE_HEADING_ID, self.config.backColor.value)
 
+
+    @property
+    def colorizeSyntax (self):
+        return self._colorizeSyntax
 
     def turnList (self, itemStart):
         """

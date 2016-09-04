@@ -6,16 +6,12 @@ from outwiker.gui.texteditorhelper import TextEditorHelper
 from outwiker.gui.basetextstylingcontroller import BaseTextStylingController
 
 
-class SimpleSpellController (BaseTextStylingController):
+class SimpleSpellController(BaseTextStylingController):
     """
     Base class for styling controller which spell check only
     """
-    def _onEditorStyleNeeded (self, page, params):
-        if (self._colorizingThread is None or
-                not self._colorizingThread.isAlive()):
-            self._runColorizingEvent.set()
-
-            self._colorizingThread = threading.Thread (
+    def getColorizingThread(self, page, params, runEvent):
+        return threading.Thread(
                 None,
                 self._colorizeThreadFunc,
                 args=(params.text,
@@ -23,33 +19,29 @@ class SimpleSpellController (BaseTextStylingController):
                       params.enableSpellChecking)
             )
 
-            self._colorizingThread.start()
-
-
-    def _colorizeThreadFunc (self, text, editor, enableSpellChecking):
+    def _colorizeThreadFunc(self, text, editor, enableSpellChecking):
         helper = TextEditorHelper()
-        textlength = helper.calcByteLen (text)
+        textlength = helper.calcByteLen(text)
         stylebytes = [0] * textlength
 
         if enableSpellChecking:
-            for start, end in self._splitText (text):
+            for start, end in self._splitText(text):
                 if not self._runColorizingEvent.is_set():
                     return
-                editor.runSpellChecking (stylebytes, text, start, end)
+                editor.runSpellChecking(stylebytes, text, start, end)
 
-        self._updateStyles (editor, text, None, stylebytes, 0, len (text))
+        self.updateStyles(editor, text, None, stylebytes, 0, len(text))
 
-
-    def _splitText (self, text):
+    def _splitText(self, text):
         """
         Return part of the text for spell checking
         """
         portion = 8000
         position = 0
-        length = len (text)
+        length = len(text)
 
         while position < length:
-            newposition = text.rfind (u' ', position, position + portion)
+            newposition = text.rfind(u' ', position, position + portion)
             if newposition != -1:
                 yield (position, newposition)
                 position = newposition + 1
