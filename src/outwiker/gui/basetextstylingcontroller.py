@@ -31,14 +31,16 @@ class BaseTextStylingController(object):
 
         if (self._colorizingThread is None or
                 not self._colorizingThread.isAlive()):
-            self._runColorizingEvent.set()
 
-            self._colorizingThread = self.getColorizingThread(
+            thread = self.getColorizingThread(
                 page,
                 params,
                 self._runColorizingEvent)
 
-            self._colorizingThread.start()
+            if thread is not None:
+                self._colorizingThread = thread
+                self._runColorizingEvent.set()
+                self._colorizingThread.start()
 
     def initialize(self, page):
         if page.getTypeString() == self._pageTypeString:

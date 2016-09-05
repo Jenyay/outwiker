@@ -4,22 +4,26 @@ import threading
 
 from outwiker.gui.basetextstylingcontroller import BaseTextStylingController
 
-from wikicolorizer import WikiColorizer
+from outwiker.pages.wiki.wikicolorizer import WikiColorizer
+from outwiker.pages.wiki.wikieditor import WikiEditor
 
 
 class WikiColorizerController(BaseTextStylingController):
     """Controller for colorize text in wiki editor"""
 
     def getColorizingThread(self, page, params, runEvent):
-        return threading.Thread(
-            None,
-            self._colorizeThreadFunc,
-            args=(params.text,
-                  params.editor,
-                  params.editor.colorizeSyntax,
-                  params.editor.enableSpellChecking,
-                  runEvent)
-        )
+        if isinstance(params.editor, WikiEditor):
+            return threading.Thread(
+                None,
+                self._colorizeThreadFunc,
+                args=(params.text,
+                      params.editor,
+                      params.editor.colorizeSyntax,
+                      params.editor.enableSpellChecking,
+                      runEvent)
+            )
+        else:
+            return None
 
     def _colorizeThreadFunc(self,
                             text,
