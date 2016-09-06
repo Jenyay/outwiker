@@ -8,6 +8,7 @@
 
 		<changelog>
 			<version number="2.0.0.801" status="dev">
+				<change>Internal changes.</change>
 			</version>
 
 			<version number="2.0.0.800" status="dev" date="August 20, 2016">
@@ -51,6 +52,7 @@
 
 		<changelog>
 			<version number="2.0.0.801" status="dev">
+				<change>Внутренние изменения.</change>
 			</version>
 
 			<version number="2.0.0.800" status="dev" date="20.08.2016">
