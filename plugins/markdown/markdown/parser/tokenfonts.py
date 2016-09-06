@@ -29,7 +29,13 @@ class FontsFactory(object):
         return BoldItalicToken().getToken()
 
 
-class ItalicToken (object):
+class BlockToken(object):
+    def checkBreaks(self, s, loc, toks):
+        text = toks[0].replace(u'\r\n', u'\n')
+        return text.find(u'\n\n') == -1
+
+
+class ItalicToken (BlockToken):
     start_1 = "*"
     end_1 = "*"
 
@@ -42,10 +48,10 @@ class ItalicToken (object):
                              multiline=True) |
                 QuotedString(ItalicToken.start_2,
                              endQuoteChar=ItalicToken.end_2,
-                             multiline=True))("italic")
+                             multiline=True)).addCondition(self.checkBreaks)("italic")
 
 
-class BoldToken(object):
+class BoldToken(BlockToken):
     start_1 = "**"
     end_1 = "**"
 
@@ -58,14 +64,14 @@ class BoldToken(object):
                              multiline=True) |
                 QuotedString(BoldToken.start_2,
                              endQuoteChar=BoldToken.end_2,
-                             multiline=True))("bold")
+                             multiline=True)).addCondition(self.checkBreaks)("bold")
 
 
-class BoldItalicToken(object):
+class BoldItalicToken(BlockToken):
     start = "**_"
     end = "_**"
 
     def getToken(self):
         return QuotedString(BoldItalicToken.start,
                             endQuoteChar=BoldItalicToken.end,
-                            multiline=True)("bold_italic")
+                            multiline=True).addCondition(self.checkBreaks)("bold_italic")
