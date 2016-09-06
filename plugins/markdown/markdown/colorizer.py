@@ -6,6 +6,7 @@ from parser.tokenfonts import (FontsFactory,
                                BoldItalicToken)
 from parser.tokentext import TextFactory
 from parser.tokenheading import HeadingFactory
+from parser.tokenlink import LinkFactory
 
 from outwiker.gui.texteditorhelper import TextEditorHelper
 
@@ -22,9 +23,9 @@ class MarkdownColorizer(object):
         self.italic = FontsFactory.makeItalic()
         self.bold_italic = FontsFactory.makeBoldItalic()
         self.heading = HeadingFactory.make()
+        self.link = LinkFactory.make()
         # self.underline = FontsFactory.makeUnderline(None)
         # self.command = CommandFactory.make (None).setParseAction(lambda s, l, t: None)
-        # self.link = LinkFactory.make (None).setParseAction(lambda s, l, t: None)
         # self.url = UrlFactory.make (None).setParseAction(lambda s, l, t: None)
         # self.linebreak = LineBreakFactory.make (None).setParseAction(lambda s, l, t: None)
         # self.noformat = NoFormatFactory.make (None).setParseAction(lambda s, l, t: None)
@@ -36,7 +37,7 @@ class MarkdownColorizer(object):
                 self.heading |
                 self.text |
                 # self.linebreak |
-                # self.link |
+                self.link |
                 # self.noformat |
                 # self.preformat |
                 self.bold_italic |
@@ -49,7 +50,7 @@ class MarkdownColorizer(object):
                 # self.url |
                 self.text |
                 # self.linebreak |
-                # self.link |
+                self.link |
                 # self.noformat |
                 # self.preformat |
                 self.bold_italic |
@@ -156,16 +157,18 @@ class MarkdownColorizer(object):
                                                   pos_start,
                                                   pos_end)
 
-            # elif tokenname == "link":
-            #     self._helper.addStyle(stylelist,
-            #                           self._editor.STYLE_LINK_ID,
-            #                           bytepos_start,
-            #                           bytepos_end)
-            #     self._linkSpellChecking(fullText,
-            #                             text,
-            #                             stylelist,
-            #                             pos_start,
-            #                             pos_end)
+            elif tokenname == "link":
+                self._helper.addStyle(stylelist,
+                                      self._editor.STYLE_LINK_ID,
+                                      bytepos_start,
+                                      bytepos_end)
+                if self._enableSpellChecking:
+                    self._linkSpellChecking(fullText,
+                                            text,
+                                            stylelist,
+                                            pos_start,
+                                            pos_end,
+                                            token)
 
             # elif tokenname == "url":
             #     self._helper.addStyle(stylelist,
@@ -173,24 +176,15 @@ class MarkdownColorizer(object):
             #                           bytepos_start,
             #                           bytepos_end)
 
-    # def _linkSpellChecking (self, fullText, text, stylelist, pos_start, pos_end):
-    #     separator1 = u'->'
-    #     separator2 = u'|'
-    #
-    #     link = text[pos_start: pos_end]
-    #     sep1_pos = link.find (separator1)
-    #     if sep1_pos != -1:
-    #         if self._enableSpellChecking:
-    #             self._editor.runSpellChecking (stylelist,
-    #                                            fullText,
-    #                                            pos_start,
-    #                                            pos_start + sep1_pos)
-    #         return
-    #
-    #     sep2_pos = link.find (separator2)
-    #     if sep2_pos != -1:
-    #         if self._enableSpellChecking:
-    #             self._editor.runSpellChecking (stylelist,
-    #                                            fullText,
-    #                                            pos_start + sep2_pos + len (separator2),
-    #                                            pos_end)
+    def _linkSpellChecking (self, fullText, text, stylelist, pos_start, pos_end, token):
+        self._editor.runSpellChecking(stylelist,
+                                      fullText,
+                                      pos_start + 1,
+                                      pos_start + 1 + len(token[0][0]))
+        link = token[0][1]
+        space_pos = link.find(u' ')
+        if space_pos != -1:
+            self._editor.runSpellChecking(stylelist,
+                                          fullText,
+                                          pos_start + 1 + len(token[0][0]) + 2 + space_pos,
+                                          pos_start + 1 + len(token[0][0]) + 2 + space_pos + len(token[0][1]))
