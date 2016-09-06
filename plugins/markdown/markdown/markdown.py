@@ -1,6 +1,5 @@
 # -*- coding: UTF-8 -*-
 
-import os
 import sys
 
 from outwiker.core.pluginbase import Plugin
@@ -44,11 +43,6 @@ else:
 
 
         @property
-        def version (self):
-            return u"1.0"
-
-
-        @property
         def url (self):
             return _(u"http://jenyay.net/Outwiker/MarkdownEn")
 
@@ -66,12 +60,9 @@ else:
         #############################################
 
         def _correctSysPath (self):
-            currentpath = os.path.dirname(os.path.abspath(__file__))
-            currentpath = unicode (currentpath, getOS().filesEncoding)
-
             syspath = [unicode (item, getOS().filesEncoding)
                        if not isinstance (item, unicode)
                        else item for item in sys.path]
 
-            if currentpath not in syspath:
-                sys.path.insert(0, currentpath)
+            if self._pluginPath not in syspath:
+                sys.path.insert(0, self._pluginPath)

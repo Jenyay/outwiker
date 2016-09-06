@@ -29,6 +29,7 @@ PAGE_RESULT_HTML = u'__content.html'
 VERSIONS_LANG = u'versions_lang'
 
 VERSION_FILE_NAME = u'versions.xml'
+PLUGIN_VERSION_FILE_NAME = u'plugin.xml'
 
 # Keys for Application.sharedData
 # Anchor for transition during the opening other page
