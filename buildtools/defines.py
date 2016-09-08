@@ -19,7 +19,7 @@ PLUGINS_LIST = [
     u"htmlheads",
     u"lightbox",
     u"livejournal",
-    # u"markdown",
+    u"markdown",
     u"pagetypecolor",
     u"readingmode",
     u"sessions",
@@ -28,8 +28,8 @@ PLUGINS_LIST = [
     u"statistics",
     u"style",
     u"tableofcontents",
-    u"thumbgallery",
     u"texequation",
+    u"thumbgallery",
     u"updatenotifier",
     u"webpage",
 ]
