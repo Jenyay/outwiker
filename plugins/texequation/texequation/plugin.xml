@@ -17,6 +17,11 @@
 			<site>http://jenyay.net</site>
 		</author>
 		<changelog>
+			<version number="1.0.3">
+                <download os="all">http://jenyay.net/uploads/Outwiker/TexEquation/texequation-1.0.3.zip</download>
+				<change>Bug fixes.</change>
+			</version>
+
 			<version number="1.0.2" date="August 20, 2016">
                 <download os="all">http://jenyay.net/uploads/Outwiker/TexEquation/texequation-1.0.2.zip</download>
 				<change>Added the Swedish translation.</change>
@@ -45,6 +50,11 @@
 		</author>
 
 		<changelog>
+			<version number="1.0.3">
+                <download os="all">http://jenyay.net/uploads/Outwiker/TexEquation/texequation-1.0.3.zip</download>
+				<change>Исправление ошибок.</change>
+			</version>
+
 			<version number="1.0.2" date="20.08.2016">
                 <download os="all">http://jenyay.net/uploads/Outwiker/TexEquation/texequation-1.0.2.zip</download>
 				<change>Добавлена поддержка шведского языка.</change>

@@ -26,9 +26,18 @@ class TexToken (object):
 
 
     def getToken (self):
-        return QuotedString (TexToken.texStart,
-                             endQuoteChar = TexToken.texEnd,
-                             multiline = True).setParseAction(self.makeTexEquation)("tex")
+        try:
+            return QuotedString(TexToken.texStart,
+                                endQuoteChar=TexToken.texEnd,
+                                multiline=True,
+                                convertWhitespaceEscapes=False).setParseAction(self.makeTexEquation)("tex")
+        except TypeError:
+            # For compatibility with old OutWiker version
+            # In pyparsing 2.1.1 will be added
+            # the convertWhitespaceEscapes parameter
+            return QuotedString(TexToken.texStart,
+                                endQuoteChar=TexToken.texEnd,
+                                multiline=True).setParseAction(self.makeTexEquation)("tex")
 
 
     def makeTexEquation (self, s, l, t):
