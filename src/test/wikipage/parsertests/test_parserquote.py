@@ -43,9 +43,18 @@ class ParserQuoteTest (unittest.TestCase):
                           self.parser.toHtml (text).encode (self.encoding))
 
 
-    def testQuoteSimple (self):
+    def testQuoteSimple_01 (self):
         text = u"Блаблабла [>Цитата<] блабла"
         result = u"Блаблабла <blockquote>Цитата</blockquote> блабла"
+
+        self.assertEqual (self.parser.toHtml (text),
+                          result,
+                          self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testQuoteSimple_02 (self):
+        text = u"[>\\t<]"
+        result = u"<blockquote>\\t</blockquote>"
 
         self.assertEqual (self.parser.toHtml (text),
                           result,

@@ -98,7 +98,8 @@ class CodeToken(TextBlockToken):
     def getToken(self):
         return QuotedString(CodeToken.start,
                             endQuoteChar=CodeToken.end,
-                            multiline=True).setParseAction(self.convertToHTML("<code>", "</code>"))("code")
+                            multiline=True,
+                            convertWhitespaceEscapes=False).setParseAction(self.convertToHTML("<code>", "</code>"))("code")
 
 
 class SuperscriptToken(TextBlockToken):
@@ -111,7 +112,8 @@ class SuperscriptToken(TextBlockToken):
     def getToken(self):
         return QuotedString(SuperscriptToken.start,
                             endQuoteChar=SuperscriptToken.end,
-                            multiline=True).setParseAction(self.convertToHTML("<sup>", "</sup>"))("superscript")
+                            multiline=True,
+                            convertWhitespaceEscapes=False).setParseAction(self.convertToHTML("<sup>", "</sup>"))("superscript")
 
 
 class SubscriptToken(TextBlockToken):
@@ -124,7 +126,8 @@ class SubscriptToken(TextBlockToken):
     def getToken(self):
         return QuotedString(SubscriptToken.start,
                             endQuoteChar=SubscriptToken.end,
-                            multiline=True).setParseAction(self.convertToHTML("<sub>", "</sub>"))("subscript")
+                            multiline=True,
+                            convertWhitespaceEscapes=False).setParseAction(self.convertToHTML("<sub>", "</sub>"))("subscript")
 
 
 class UnderlineToken(TextBlockToken):
@@ -137,7 +140,8 @@ class UnderlineToken(TextBlockToken):
     def getToken(self):
         return QuotedString(UnderlineToken.start,
                             endQuoteChar=UnderlineToken.end,
-                            multiline=True).setParseAction(self.convertToHTML("<u>", "</u>"))("underline")
+                            multiline=True,
+                            convertWhitespaceEscapes=False).setParseAction(self.convertToHTML("<u>", "</u>"))("underline")
 
 
 class StrikeToken(TextBlockToken):
@@ -150,7 +154,8 @@ class StrikeToken(TextBlockToken):
     def getToken(self):
         return QuotedString(StrikeToken.start,
                             endQuoteChar=StrikeToken.end,
-                            multiline=True).setParseAction(self.convertToHTML("<strike>", "</strike>"))("strike")
+                            multiline=True,
+                            convertWhitespaceEscapes=False).setParseAction(self.convertToHTML("<strike>", "</strike>"))("strike")
 
 
 
@@ -164,7 +169,8 @@ class ItalicToken(TextBlockToken):
     def getToken(self):
         return QuotedString(ItalicToken.start,
                             endQuoteChar=ItalicToken.end,
-                            multiline=True).setParseAction(self.convertToHTML("<i>", "</i>"))("italic")
+                            multiline=True,
+                            convertWhitespaceEscapes=False).setParseAction(self.convertToHTML("<i>", "</i>"))("italic")
 
 
 class BoldToken(TextBlockToken):
@@ -177,7 +183,8 @@ class BoldToken(TextBlockToken):
     def getToken(self):
         return QuotedString(BoldToken.start,
                             endQuoteChar=BoldToken.end,
-                            multiline=True).setParseAction(self.convertToHTML("<b>", "</b>"))("bold")
+                            multiline=True,
+                            convertWhitespaceEscapes=False).setParseAction(self.convertToHTML("<b>", "</b>"))("bold")
 
 
 class BoldItalicToken(TextBlockToken):
@@ -190,7 +197,8 @@ class BoldItalicToken(TextBlockToken):
     def getToken(self):
         return QuotedString(BoldItalicToken.start,
                             endQuoteChar=BoldItalicToken.end,
-                            multiline=True).setParseAction(self.convertToHTML("<b><i>", "</i></b>"))("bold_italic")
+                            multiline=True,
+                            convertWhitespaceEscapes=False).setParseAction(self.convertToHTML("<b><i>", "</i></b>"))("bold_italic")
 
 
 class SmallFontToken(TextBlockToken):
@@ -238,4 +246,5 @@ class MarkToken(TextBlockToken):
     def getToken(self):
         return QuotedString(MarkToken.start,
                             endQuoteChar=MarkToken.end,
-                            multiline=True).setParseAction(self.convertToHTML("<mark>", "</mark>"))("mark")
+                            multiline=True,
+                            convertWhitespaceEscapes=False).setParseAction(self.convertToHTML("<mark>", "</mark>"))("mark")

@@ -25,8 +25,9 @@ class LinkToken (object):
 
     def getToken (self):
         return QuotedString(LinkToken.linkStart,
-                            endQuoteChar = LinkToken.linkEnd,
-                            multiline = False).setParseAction(self.__convertToLink)("link")
+                            endQuoteChar=LinkToken.linkEnd,
+                            multiline=False,
+                            convertWhitespaceEscapes=False).setParseAction(self.__convertToLink)("link")
 
 
     def __convertToLink (self, s, l, t):

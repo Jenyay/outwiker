@@ -45,10 +45,12 @@ class ItalicToken (BlockToken):
     def getToken(self):
         return (QuotedString(ItalicToken.start_1,
                              endQuoteChar=ItalicToken.end_1,
-                             multiline=True) |
+                             multiline=True,
+                             convertWhitespaceEscapes=False) |
                 QuotedString(ItalicToken.start_2,
                              endQuoteChar=ItalicToken.end_2,
-                             multiline=True)).addCondition(self.checkBreaks)("italic")
+                             multiline=True,
+                             convertWhitespaceEscapes=False)).addCondition(self.checkBreaks)("italic")
 
 
 class BoldToken(BlockToken):
@@ -61,10 +63,12 @@ class BoldToken(BlockToken):
     def getToken(self):
         return (QuotedString(BoldToken.start_1,
                              endQuoteChar=BoldToken.end_1,
-                             multiline=True) |
+                             multiline=True,
+                             convertWhitespaceEscapes=False) |
                 QuotedString(BoldToken.start_2,
                              endQuoteChar=BoldToken.end_2,
-                             multiline=True)).addCondition(self.checkBreaks)("bold")
+                             multiline=True,
+                             convertWhitespaceEscapes=False)).addCondition(self.checkBreaks)("bold")
 
 
 class BoldItalicToken(BlockToken):
@@ -74,4 +78,5 @@ class BoldItalicToken(BlockToken):
     def getToken(self):
         return QuotedString(BoldItalicToken.start,
                             endQuoteChar=BoldItalicToken.end,
-                            multiline=True).addCondition(self.checkBreaks)("bold_italic")
+                            multiline=True,
+                            convertWhitespaceEscapes=False).addCondition(self.checkBreaks)("bold_italic")

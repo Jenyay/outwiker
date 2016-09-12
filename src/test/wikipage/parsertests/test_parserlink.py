@@ -111,6 +111,27 @@ class ParserLinkTest (unittest.TestCase):
         self.assertEqual (self.parser.toHtml (text), result)
 
 
+    def testLink6 (self):
+        text = u"[[\\t -> http://www.example.com]]"
+        result = u'<a href="http://www.example.com">\\t</a>'
+
+        self.assertEqual (self.parser.toHtml (text), result)
+
+
+    def testLink7 (self):
+        text = u"[[http://www.example.com | \\t]]"
+        result = u'<a href="http://www.example.com">\\t</a>'
+
+        self.assertEqual (self.parser.toHtml (text), result)
+
+
+    def testLink8 (self):
+        text = u"[[\\t]]"
+        result = u'<a href="\\t">\\t</a>'
+
+        self.assertEqual (self.parser.toHtml (text), result)
+
+
     def testCommentLink1 (self):
         comment = u"Ссылко"
         text = u"бла-бла-бла \n[[%s | %s]] бла-бла-бла\nбла-бла-бла" % (self.url2, comment)

@@ -11,6 +11,10 @@ class LinkFactory (object):
 
 class LinkToken (object):
     def getToken(self):
-        token = (QuotedString('[', endQuoteChar=']')('comment') +
-                 QuotedString('(', endQuoteChar=')').leaveWhitespace()('url'))('link')
+        token = (QuotedString('[',
+                              endQuoteChar=']',
+                              convertWhitespaceEscapes=False)('comment') +
+                 QuotedString('(',
+                              endQuoteChar=')',
+                              convertWhitespaceEscapes=False).leaveWhitespace()('url'))('link')
         return token

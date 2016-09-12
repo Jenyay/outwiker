@@ -34,9 +34,15 @@ class ParserFormatTest (unittest.TestCase):
         self.testPage = self.wikiroot[u"Страница 2"]
 
 
-    def testMonospaced (self):
+    def testMonospaced_01 (self):
         text = u"бла-бла-бла @@моноширинный текст@@ бла-бла-бла"
         result = u"бла-бла-бла <code>моноширинный текст</code> бла-бла-бла"
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+    def testMonospaced_02 (self):
+        text = u"@@\\t@@"
+        result = u"<code>\\t</code>"
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
@@ -55,8 +61,22 @@ class ParserFormatTest (unittest.TestCase):
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
 
-    def testNoformat (self):
+    def testPreformat3 (self):
+        text = u"[@\\t@]"
+        result = u"<pre>\\t</pre>"
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testNoformat_01 (self):
         text = u"[= '''Полужирный''' \n''Курсив'' =]"
         result = u" '''Полужирный''' \n''Курсив'' "
+
+        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+
+
+    def testNoformat_02 (self):
+        text = u"[=\\t=]"
+        result = u"\\t"
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
