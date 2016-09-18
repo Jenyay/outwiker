@@ -178,8 +178,7 @@ class BaseHtmlPanel(BaseTextPanel):
             self.codeEditor.SetText (self._currentpage.content)
             self.codeEditor.EmptyUndoBuffer()
             self.codeEditor.SetReadOnly (page.readonly)
-            self.SetCursorPosition (
-                self._getCursorPositionOption (page).value)
+            self.SetCursorPosition(self._getCursorPositionOption(page).value)
 
             self._updateResult()
             tabIndex = self.loadPageTab (self._currentpage)
@@ -199,12 +198,6 @@ class BaseHtmlPanel(BaseTextPanel):
     def __do_layout(self):
         self.addPage(self.codeEditor, _("HTML"))
         self.addPage(self.htmlWindow, _("Preview"))
-        # self.addPage(self.htmlWindowPanel, _("Preview"))
-        # self.htmlWindow.Hide()
-        # self.htmlWindow.Show()
-
-        # self.htmlWindowPanel.Hide()
-        # self.htmlWindowPanel.Show()
 
         mainSizer = wx.FlexGridSizer(1, 1, 0, 0)
         mainSizer.Add(self.notebook, 1, wx.EXPAND, 0)
@@ -323,13 +316,9 @@ class BaseHtmlPanel(BaseTextPanel):
                 self.htmlWindow.LoadPage (path)
                 self._oldHtmlResult = html
                 self._oldPage = self._currentpage
-        except IOError as e:
+        except EnvironmentError as e:
             # TODO: Проверить под Windows
             MessageBox (_(u"Can't save file\n\n{}").format (unicode (e.filename, getOS().filesEncoding)),
-                        _(u"Error"),
-                        wx.ICON_ERROR | wx.OK)
-        except OSError as e:
-            MessageBox (_(u"Can't save file\n\n{}").format (unicode (e.strerror, getOS().filesEncoding)),
                         _(u"Error"),
                         wx.ICON_ERROR | wx.OK)
 

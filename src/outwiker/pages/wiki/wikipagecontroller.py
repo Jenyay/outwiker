@@ -83,4 +83,7 @@ class WikiPageController(object):
         params.addPageFactory(WikiPageFactory())
 
     def __onPageUpdateNeeded(self, page, params):
-        self._application.mainWindow.pagePanel.pageView.updateHtml()
+        selectedPage = self._application.selectedPage
+        if (selectedPage is not None and
+                selectedPage.getTypeString() == WikiWikiPage.getTypeString()):
+            self._application.mainWindow.pagePanel.pageView.updateHtml()
