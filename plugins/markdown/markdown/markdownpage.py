@@ -4,6 +4,7 @@ from outwiker.core.factory import PageFactory
 from outwiker.core.tree import WikiPage
 
 from .markdownpageview import MarkdownPageView
+from .i18n import get_
 
 
 class MarkdownPage(WikiPage):
@@ -27,6 +28,7 @@ class MarkdownPageFactory(PageFactory):
         """
         Название страницы, показываемое пользователю
         """
+        _ = get_()
         return _(u"Markdown Page")
 
     def getPageView(self, parent):

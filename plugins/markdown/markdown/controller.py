@@ -6,6 +6,7 @@ from outwiker.gui.pagedialogpanels.appearancepanel import(AppearancePanel,
 
 from .markdownpage import MarkdownPageFactory, MarkdownPage
 from .colorizercontroller import ColorizerController
+from .i18n import get_
 
 
 class Controller (object):
@@ -29,6 +30,9 @@ class Controller (object):
         """
         Инициализация контроллера при активации плагина. Подписка на нужные события
         """
+        global _
+        _ = get_()
+
         FactorySelector.addFactory(MarkdownPageFactory())
         self._application.onPageDialogPageFactoriesNeeded += self.__onPageDialogPageFactoriesNeeded
         self._application.onPageViewCreate += self.__onPageViewCreate

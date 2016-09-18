@@ -1,0 +1,60 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: markdown\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-09-18 19:24+0300\n"
+"PO-Revision-Date: 2016-09-18 19:30+0300\n"
+"Language-Team: jenyay.net <jenyay.ilin@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.7.1\n"
+"Last-Translator: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: en\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+#: controller.py:75
+msgid "Appearance"
+msgstr "Appearance"
+
+#: markdown.py:42
+msgid "The Markdown plug-in add a new page type with Markdown notation"
+msgstr "The Markdown plug-in add a new page type with Markdown notation"
+
+#: markdown.py:47
+msgid "http://jenyay.net/Outwiker/MarkdownEn"
+msgstr "http://jenyay.net/Outwiker/MarkdownEn"
+
+#: markdownpageview.py:39 markdownpageview.py:42 toolbar.py:25
+msgid "Markdown"
+msgstr "Markdown"
+
+#: markdownpageview.py:102
+msgid "Font"
+msgstr "Font"
+
+#: markdownpageview.py:147
+msgid "Heading"
+msgstr "Heading"
+
+#: links/linkdialog.py:20 links/linkdialog.py:34
+msgid "Link"
+msgstr "Link"
+
+#: links/linkdialog.py:46
+msgid "Comment"
+msgstr "Comment"
+
+#: links/linkdialog.py:58
+msgid "Title"
+msgstr "Title"
+
+#: markdownpage.py:30
+msgid "Markdown Page"
+msgstr "Markdown Page"

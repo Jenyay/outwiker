@@ -1,11 +1,14 @@
 # -*- coding: UTF-8 -*-
 
+import os
 import sys
 
 from outwiker.core.pluginbase import Plugin
 from outwiker.core.commands import getCurrentVersion
 from outwiker.core.version import Version, StatusSet
 from outwiker.core.system import getOS
+
+from .i18n import set_
 
 
 if getCurrentVersion() < Version (2, 0, 0, 801, status=StatusSet.DEV):
@@ -48,6 +51,7 @@ else:
 
 
         def initialize(self):
+            self._initlocale(u'markdown')
             self.__controller.initialize()
 
 
@@ -66,3 +70,14 @@ else:
 
             if self._pluginPath not in syspath:
                 sys.path.insert(0, self._pluginPath)
+
+        def _initlocale (self, domain):
+            langdir = os.path.join(self._pluginPath, "locale")
+            global _
+
+            try:
+                _ = self._init_i18n (domain, langdir)
+            except BaseException:
+                pass
+
+            set_(_)
