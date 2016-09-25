@@ -48,7 +48,9 @@ class HtmlWikiPage (WikiPage):
         """
         Добавлять ли теги <br> и <p> вместо разрывов строк?
         """
-        option = BooleanOption (self.params, self.__autoLineWrapSection, self.__autoLineWrapParam, True)
+        option = BooleanOption(self.params,
+                               self.__autoLineWrapSection,
+                               self.__autoLineWrapParam, True)
         return option.value
 
 
@@ -57,9 +59,11 @@ class HtmlWikiPage (WikiPage):
         """
         Добавлять ли теги <br> и <p> вместо разрывов строк?
         """
-        option = BooleanOption (self.params, self.__autoLineWrapSection, self.__autoLineWrapParam, True)
+        option = BooleanOption(self.params,
+                               self.__autoLineWrapSection,
+                               self.__autoLineWrapParam, True)
         option.value = value
-        self.root.onPageUpdate (self, change=PAGE_UPDATE_CONTENT)
+        self.root.onPageUpdate(self, change=PAGE_UPDATE_CONTENT)
 
 
     @staticmethod
@@ -70,7 +74,7 @@ class HtmlWikiPage (WikiPage):
         """
         Получить путь до результирующего файла HTML
         """
-        return os.path.join (self.path, PAGE_RESULT_HTML)
+        return os.path.join(self.path, PAGE_RESULT_HTML)
 
     def update(self):
         if self.readonly:
@@ -129,12 +133,14 @@ class HtmlPageFactory (PageFactory):
         """
         Зарегистрировать все действия, связанные с HTML-страницей
         """
-        map (lambda actionTuple: application.actionController.register (actionTuple[0](application), actionTuple[1]), _actions)
+        map (lambda actionTuple: application.actionController.register(
+            actionTuple[0](application), actionTuple[1]), _actions)
 
 
     @staticmethod
     def removeActions (application):
-        map (lambda actionTuple: application.actionController.removeAction (actionTuple[0].stringId), _actions)
+        map (lambda actionTuple: application.actionController.removeAction(
+            actionTuple[0].stringId), _actions)
 
 
     def getPageType(self):
