@@ -13,7 +13,6 @@ from outwiker.pages.wiki.wikieditor import WikiEditor
 from outwiker.actions.polyactionsid import *
 
 from .toolbar import MarkdownToolBar
-from .markdownhtmlgenerator import MarkdownHtmlGenerator
 from .links.linkdialog import LinkDialog
 from .links.linkdialogcontroller import LinkDialogController
 
@@ -25,9 +24,6 @@ class MarkdownPageView(BaseWikiPageView):
 
     def _isHtmlCodeShown(self):
         return True
-
-    def _getHtmlGenerator(self, page):
-        return MarkdownHtmlGenerator(page)
 
     def getTextEditor(self):
         return WikiEditor
