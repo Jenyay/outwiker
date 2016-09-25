@@ -90,6 +90,9 @@ class WikiPageController(object):
                 page.getTypeString() != WikiWikiPage.getTypeString()):
             return
 
+        if page.readonly:
+            return
+
         try:
             if not params.allowCache:
                 page.resetCache()
