@@ -184,7 +184,6 @@ class BaseHtmlPanel(BaseTextPanel):
                 tabIndex = self._getDefaultPage()
 
             self.selectedPageIndex = tabIndex
-
         finally:
             self.Thaw()
 
@@ -204,12 +203,6 @@ class BaseHtmlPanel(BaseTextPanel):
 
         self.SetSizer(mainSizer)
         self.Layout()
-
-
-    @abstractmethod
-    def generateHtml (self, page):
-        pass
-
 
     @abstractmethod
     def _enableActions (self, enabled):

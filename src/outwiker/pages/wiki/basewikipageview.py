@@ -118,22 +118,6 @@ class BaseWikiPageView (BaseHtmlPanel):
 
 
     @abstractmethod
-    def _getHtmlGenerator (self, page):
-        """
-        Метод должен возвращать экземпляр генератора, создающий код HTML для страницы
-        """
-        pass
-
-
-    @abstractmethod
-    def _getCacher (self, page, application):
-        """
-        Метод должен возвращать экземпляр класса, отвечающий за кэширование созданного HTML
-        """
-        pass
-
-
-    @abstractmethod
     def _isHtmlCodeShown (self):
         """
         Возвращает True, если нужно показывать вкладку с кодом HTML, и False в противном случае
@@ -292,35 +276,6 @@ class BaseWikiPageView (BaseHtmlPanel):
         self.selectedPageIndex = self.HTML_RESULT_PAGE_INDEX
 
 
-    def generateHtml (self, page):
-        resultFileName = self.getHtmlPath()
-
-        cache = self._getCacher (page, self._application)
-        # Проверим, можно ли прочитать уже готовый HTML
-        if (cache.canReadFromCache() and os.path.exists (resultFileName)) or page.readonly:
-            try:
-                return readTextFile (resultFileName)
-            except IOError:
-                MessageBox (_(u"Can't read file {}".format (resultFileName)),
-                            _(u"Error"),
-                            wx.ICON_ERROR | wx.OK)
-                return u""
-
-        style = Style()
-        stylepath = style.getPageStyle (page)
-        generator = self._getHtmlGenerator (page)
-
-        try:
-            html = generator.makeHtml(stylepath)
-            cache.saveHash()
-        except IOError:
-            MessageBox (_(u"Can't create HTML file"),
-                        _(u"Error"),
-                        wx.ICON_ERROR | wx.OK)
-
-        return html
-
-
     def removeMenu (self):
         mainMenu = self._application.mainWindow.mainMenu
         index = mainMenu.FindMenu (self._getMenuTitle())
@@ -338,8 +293,6 @@ class BaseWikiPageView (BaseHtmlPanel):
         """
         Сбросить кэш для того, чтобы заново сделать HTML
         """
-        self._getCacher (self._currentpage, self._application).resetHash()
-
         if self.selectedPageIndex == self.RESULT_PAGE_INDEX:
             self._onSwitchToPreview()
         elif self.selectedPageIndex == self.HTML_RESULT_PAGE_INDEX:

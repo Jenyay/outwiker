@@ -47,7 +47,7 @@ class WikiWikiPage (WikiPage):
     """
     Класс wiki-страниц
     """
-    def __init__ (self, path, title, parent, readonly = False):
+    def __init__ (self, path, title, parent, readonly=False):
         WikiPage.__init__ (self, path, title, parent, readonly)
 
     @staticmethod
@@ -59,6 +59,10 @@ class WikiWikiPage (WikiPage):
         Получить путь до результирующего файла HTML
         """
         return os.path.join (self.path, PAGE_RESULT_HTML)
+
+    def resetCache(self):
+        if not self.readonly:
+            HtmlCache(self, Application).resetHash()
 
     def update(self):
         if self.readonly:

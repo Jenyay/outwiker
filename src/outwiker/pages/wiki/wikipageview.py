@@ -36,9 +36,6 @@ class WikiPageView(BaseWikiPageView):
     def Clear(self):
         super(WikiPageView, self).Clear()
 
-    def _getHtmlGenerator(self, page):
-        return HtmlGenerator(page)
-
     def getTextEditor(self):
         return WikiEditor
 
@@ -56,9 +53,6 @@ class WikiPageView(BaseWikiPageView):
 
     def _createToolbar(self, mainWindow):
         return WikiToolBar(mainWindow, mainWindow.auiManager)
-
-    def _getCacher(self, page, application):
-        return HtmlCache(page, application)
 
     def _getAttachString (self, fnames):
         """

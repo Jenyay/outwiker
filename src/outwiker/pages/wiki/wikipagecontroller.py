@@ -91,6 +91,8 @@ class WikiPageController(object):
             return
 
         try:
+            if not params.allowCache:
+                page.resetCache()
             page.update()
         except EnvironmentError:
             MessageBox (_(u'Page update error: {}').format(page.title),
