@@ -266,6 +266,13 @@ class RootWikiPage (object):
         """
         self.datetime = datetime.datetime.now()
 
+    def update(self):
+        '''
+        Update page content if needed.
+        The method can raise EnvironmentError.
+        '''
+        pass
+
 
 class WikiDocument (RootWikiPage):
     def __init__ (self, path, readonly = False):

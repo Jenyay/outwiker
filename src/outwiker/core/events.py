@@ -218,8 +218,8 @@ class PageUpdateNeededParams (object):
     """
     Parameter set for the onPageUpdateNeededParams event
     """
-    def __init__ (self, data):
-        self.data = data
+    def __init__ (self, allowCache=True):
+        self._allowCache = allowCache
 
 
 class PreWikiOpenParams (object):

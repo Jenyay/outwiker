@@ -263,7 +263,7 @@ class BaseWikiPageView (BaseHtmlPanel):
             return
 
         try:
-            html = readTextFile (self.getHtmlPath())
+            html = readTextFile (self._currentpage.getHtmlPath())
 
             self.htmlCodeWindow.SetReadOnly (False)
             self.htmlCodeWindow.SetText (html)

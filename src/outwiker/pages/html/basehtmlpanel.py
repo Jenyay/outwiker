@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import os
 from abc import ABCMeta, abstractmethod
 
 import wx
@@ -13,9 +12,8 @@ from outwiker.core.commands import MessageBox, setStatusText
 from outwiker.core.system import getImagesDir
 from outwiker.core.attachment import Attachment
 from outwiker.core.config import IntegerOption
-from outwiker.core.defines import PAGE_RESULT_HTML
 from outwiker.core.system import getOS
-from outwiker.utilites.textfile import writeTextFile
+from outwiker.utilites.textfile import readTextFile
 from outwiker.gui.basetextpanel import BaseTextPanel
 from outwiker.gui.guiconfig import GeneralGuiConfig
 
@@ -218,14 +216,6 @@ class BaseHtmlPanel(BaseTextPanel):
         pass
 
 
-    def getHtmlPath (self):
-        """
-        Получить путь до результирующего файла HTML
-        """
-        path = os.path.join (self._currentpage.path, PAGE_RESULT_HTML)
-        return path
-
-
     def _getDefaultPage(self):
         assert self._currentpage is not None
 
@@ -298,31 +288,28 @@ class BaseHtmlPanel(BaseTextPanel):
         """
         assert self._currentpage is not None
 
-        status_item = 0
+        statusbar_item = 0
 
-        setStatusText (_(u"Page rendered. Please wait…"), status_item)
-        self._application.onHtmlRenderingBegin (self._currentpage, self.htmlWindow)
+        setStatusText (_(u"Page rendered. Please wait…"), statusbar_item)
+        self._application.onHtmlRenderingBegin(self._currentpage,
+                                               self.htmlWindow)
+        self._currentpage.update()
 
         try:
-            html = self.generateHtml (self._currentpage)
+            path = self._currentpage.getHtmlPath()
+            html = readTextFile(path)
 
             if (self._oldPage != self._currentpage or
                     self._oldHtmlResult != html):
-                path = self.getHtmlPath()
-
-                if not self._currentpage.readonly:
-                    writeTextFile (path, html)
-
                 self.htmlWindow.LoadPage (path)
                 self._oldHtmlResult = html
                 self._oldPage = self._currentpage
-        except EnvironmentError as e:
-            # TODO: Проверить под Windows
-            MessageBox (_(u"Can't save file\n\n{}").format (unicode (e.filename, getOS().filesEncoding)),
-                        _(u"Error"),
-                        wx.ICON_ERROR | wx.OK)
+        except EnvironmentError:
+            MessageBox (_(u'Page update error: {}').format(
+                self._currentpage.title),
+                _(u'Error'), wx.ICON_ERROR | wx.OK)
 
-        setStatusText (u"", status_item)
+        setStatusText (u"", statusbar_item)
         self._application.onHtmlRenderingEnd (self._currentpage, self.htmlWindow)
 
 

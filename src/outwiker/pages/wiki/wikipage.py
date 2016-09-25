@@ -3,10 +3,18 @@
 Необходимые классы для создания страниц с HTML
 """
 
-from outwiker.core.tree import WikiPage
-from wikipageview import WikiPageView
+import os
+
+from outwiker.core.application import Application
+from outwiker.core.defines import PAGE_RESULT_HTML
 from outwiker.core.factory import PageFactory
+from outwiker.core.tree import WikiPage
+from outwiker.core.style import Style
 from outwiker.gui.hotkey import HotKey
+from outwiker.utilites.textfile import writeTextFile
+from outwiker.pages.wiki.htmlcache import HtmlCache
+from outwiker.pages.wiki.htmlgenerator import HtmlGenerator
+from wikipageview import WikiPageView
 
 from actions.fontsizebig import WikiFontSizeBigAction
 from actions.fontsizesmall import WikiFontSizeSmallAction
@@ -42,10 +50,34 @@ class WikiWikiPage (WikiPage):
     def __init__ (self, path, title, parent, readonly = False):
         WikiPage.__init__ (self, path, title, parent, readonly)
 
-
     @staticmethod
     def getTypeString ():
         return u"wiki"
+
+    def getHtmlPath(self):
+        """
+        Получить путь до результирующего файла HTML
+        """
+        return os.path.join (self.path, PAGE_RESULT_HTML)
+
+    def update(self):
+        if self.readonly:
+            return
+
+        path = self.getHtmlPath()
+        cache = HtmlCache(self, Application)
+
+        # Проверим, можно ли прочитать уже готовый HTML
+        if cache.canReadFromCache() and os.path.exists(path):
+            return
+
+        style = Style()
+        stylepath = style.getPageStyle(self)
+        generator = HtmlGenerator(self)
+
+        html = generator.makeHtml(stylepath)
+        writeTextFile(path, html)
+        cache.saveHash()
 
 
 class WikiPageFactory (PageFactory):

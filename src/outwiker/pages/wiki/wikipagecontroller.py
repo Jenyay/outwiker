@@ -1,5 +1,8 @@
 # -*- coding: UTF-8 -*-
 
+import wx
+
+from outwiker.core.commands import MessageBox
 from outwiker.gui.pagedialogpanels.appearancepanel import(AppearancePanel,
                                                           AppearanceController)
 from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
@@ -83,7 +86,17 @@ class WikiPageController(object):
         params.addPageFactory(WikiPageFactory())
 
     def __onPageUpdateNeeded(self, page, params):
+        if (page is None or
+                page.getTypeString() != WikiWikiPage.getTypeString()):
+            return
+
+        try:
+            page.update()
+        except EnvironmentError:
+            MessageBox (_(u'Page update error: {}').format(page.title),
+                        _(u'Error'),
+                        wx.ICON_ERROR | wx.OK)
+
         selectedPage = self._application.selectedPage
-        if (selectedPage is not None and
-                selectedPage.getTypeString() == WikiWikiPage.getTypeString()):
+        if selectedPage is not None and selectedPage.subpath == page.subpath:
             self._application.mainWindow.pagePanel.pageView.updateHtml()
