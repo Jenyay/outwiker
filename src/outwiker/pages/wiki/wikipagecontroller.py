@@ -87,10 +87,8 @@ class WikiPageController(object):
 
     def __onPageUpdateNeeded(self, page, params):
         if (page is None or
-                page.getTypeString() != WikiWikiPage.getTypeString()):
-            return
-
-        if page.readonly:
+                page.getTypeString() != WikiWikiPage.getTypeString() or
+                page.readonly):
             return
 
         try:
@@ -101,7 +99,3 @@ class WikiPageController(object):
             MessageBox (_(u'Page update error: {}').format(page.title),
                         _(u'Error'),
                         wx.ICON_ERROR | wx.OK)
-
-        selectedPage = self._application.selectedPage
-        if selectedPage is not None and selectedPage.subpath == page.subpath:
-            self._application.mainWindow.pagePanel.pageView.updateHtml()

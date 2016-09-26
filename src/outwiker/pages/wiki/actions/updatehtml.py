@@ -32,4 +32,5 @@ class WikiUpdateHtmlAction (BaseAction):
         assert self._application.mainWindow.pagePanel is not None
 
         self._application.onPageUpdateNeeded(selectedPage,
-                                             PageUpdateNeededParams(True))
+                                             PageUpdateNeededParams(False))
+        self._application.mainWindow.pagePanel.pageView.updateHtml()

@@ -67,7 +67,9 @@ class GuiController (object):
 
 
     def _onPageUpdateNeeded (self, page, params):
-        self._application.mainWindow.pagePanel.pageView.updateHtml()
+        if (page is not None and
+                page.getTypeString() == WebNotePage.getTypeString()):
+            self._application.mainWindow.pagePanel.pageView.updateHtml()
 
 
     def _onPageSelect (self, page):

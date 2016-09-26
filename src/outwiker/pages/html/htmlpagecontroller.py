@@ -1,5 +1,8 @@
 # -*- coding: UTF-8 -*-
 
+import wx
+
+from outwiker.core.commands import MessageBox
 from outwiker.gui.pagedialogpanels.appearancepanel import(
     AppearancePanel,
     AppearanceController)
@@ -24,6 +27,7 @@ class HtmlPageController(object):
         self._application.onPageViewCreate += self.__onPageViewCreate
         self._application.onPageViewDestroy += self.__onPageViewDestroy
         self._application.onPageDialogPageFactoriesNeeded += self.__onPageDialogPageFactoriesNeeded
+        self._application.onPageUpdateNeeded += self.__onPageUpdateNeeded
 
     def clear(self):
         self._application.onPageDialogPageTypeChanged -= self.__onPageDialogPageTypeChanged
@@ -31,6 +35,7 @@ class HtmlPageController(object):
         self._application.onPageViewCreate -= self.__onPageViewCreate
         self._application.onPageViewDestroy -= self.__onPageViewDestroy
         self._application.onPageDialogPageFactoriesNeeded -= self.__onPageDialogPageFactoriesNeeded
+        self._application.onPageUpdateNeeded -= self.__onPageUpdateNeeded
 
         self._spellController.clear()
 
@@ -70,3 +75,16 @@ class HtmlPageController(object):
 
     def __onPageDialogPageFactoriesNeeded(self, page, params):
         params.addPageFactory(HtmlPageFactory())
+
+    def __onPageUpdateNeeded(self, page, params):
+        if (page is None or
+                page.getTypeString() != HtmlWikiPage.getTypeString() or
+                page.readonly):
+            return
+
+        try:
+            page.update()
+        except EnvironmentError:
+            MessageBox (_(u'Page update error: {}').format(page.title),
+                        _(u'Error'),
+                        wx.ICON_ERROR | wx.OK)

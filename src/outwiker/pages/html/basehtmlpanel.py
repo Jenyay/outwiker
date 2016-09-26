@@ -13,6 +13,7 @@ from outwiker.core.commands import MessageBox, setStatusText
 from outwiker.core.system import getImagesDir
 from outwiker.core.attachment import Attachment
 from outwiker.core.config import IntegerOption
+from outwiker.core.events import PageUpdateNeededParams
 from outwiker.core.system import getOS
 from outwiker.utilites.textfile import readTextFile
 from outwiker.gui.basetextpanel import BaseTextPanel
@@ -286,12 +287,8 @@ class BaseHtmlPanel(BaseTextPanel):
         self._application.onHtmlRenderingBegin(self._currentpage,
                                                self.htmlWindow)
 
-        try:
-            self._currentpage.update()
-        except EnvironmentError:
-            MessageBox (_(u'Page update error: {}').format(
-                self._currentpage.title),
-                _(u'Error'), wx.ICON_ERROR | wx.OK)
+        self._application.onPageUpdateNeeded(self._currentpage,
+                                             PageUpdateNeededParams(True))
 
         setStatusText (u"", self._statusbar_item)
         self._application.onHtmlRenderingEnd (self._currentpage,
