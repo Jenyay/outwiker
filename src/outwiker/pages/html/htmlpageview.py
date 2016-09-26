@@ -167,9 +167,10 @@ class HtmlPageView (BaseHtmlPanel):
 
 
     def __onPageUpdate (self, sender, **kwargs):
-        if sender == self._currentpage:
-            if self.notebook.GetSelection() == self.RESULT_PAGE_INDEX:
-                self._updateResult()
+        if (sender == self._currentpage and
+                self.notebook.GetSelection() == self.RESULT_PAGE_INDEX):
+            self._updatePage()
+            self._updateHtmlWindow()
 
 
     def UpdateView (self, page):

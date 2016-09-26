@@ -230,15 +230,11 @@ class BaseWikiPageView (BaseHtmlPanel):
 
         self.Save()
         self._enableActions (False)
-        self._updateResult ()
+        self._updatePage()
+        self._updateHtmlCode()
         self._enableAllTools ()
         self.htmlCodeWindow.SetFocus()
         self.htmlCodeWindow.Update()
-
-
-    def _updateResult (self):
-        super (BaseWikiPageView, self)._updateResult ()
-        self._updateHtmlCode()
 
 
     def _updateHtmlCode (self):
@@ -247,7 +243,8 @@ class BaseWikiPageView (BaseHtmlPanel):
             return
 
         try:
-            html = readTextFile (self._currentpage.getHtmlPath())
+            path = self._currentpage.getHtmlPath()
+            html = readTextFile (path)
 
             self.htmlCodeWindow.SetReadOnly (False)
             self.htmlCodeWindow.SetText (html)
@@ -290,9 +287,6 @@ class BaseWikiPageView (BaseHtmlPanel):
 
 
     def updateHtml (self):
-        """
-        Сбросить кэш для того, чтобы заново сделать HTML
-        """
         if self.selectedPageIndex == self.RESULT_PAGE_INDEX:
             self._onSwitchToPreview()
         elif self.selectedPageIndex == self.HTML_RESULT_PAGE_INDEX:

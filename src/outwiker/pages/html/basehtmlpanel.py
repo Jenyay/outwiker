@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from abc import ABCMeta, abstractmethod
+import os
 
 import wx
 import wx.lib.newevent
@@ -42,6 +43,8 @@ class BaseHtmlPanel(BaseTextPanel):
         # Где хранить параметы текущей страницы страницы (код, просмотр и т.д.)
         self.tabSectionName = u"Misc"
         self.tabParamName = u"PageIndex"
+
+        self._statusbar_item = 0
 
         self.imagesDir = getImagesDir()
 
@@ -178,7 +181,7 @@ class BaseHtmlPanel(BaseTextPanel):
             self.codeEditor.SetReadOnly (page.readonly)
             self.SetCursorPosition(self._getCursorPositionOption(page).value)
 
-            self._updateResult()
+            self._updateHtmlWindow()
             tabIndex = self.loadPageTab (self._currentpage)
             if tabIndex < 0:
                 tabIndex = self._getDefaultPage()
@@ -272,24 +275,42 @@ class BaseHtmlPanel(BaseTextPanel):
         self._enableAllTools ()
         self.htmlWindow.SetFocus()
         self.htmlWindow.Update()
-        self._updateResult()
+        self._updatePage()
+        self._updateHtmlWindow()
 
 
-    def _updateResult (self):
+    def _updatePage(self):
+        assert self._currentpage is not None
+
+        setStatusText (_(u"Page rendered. Please wait…"), self._statusbar_item)
+        self._application.onHtmlRenderingBegin(self._currentpage,
+                                               self.htmlWindow)
+
+        try:
+            self._currentpage.update()
+        except EnvironmentError:
+            MessageBox (_(u'Page update error: {}').format(
+                self._currentpage.title),
+                _(u'Error'), wx.ICON_ERROR | wx.OK)
+
+        setStatusText (u"", self._statusbar_item)
+        self._application.onHtmlRenderingEnd (self._currentpage,
+                                              self.htmlWindow)
+
+
+    def _updateHtmlWindow (self):
         """
         Подготовить и показать HTML текущей страницы
         """
         assert self._currentpage is not None
 
-        statusbar_item = 0
-
-        setStatusText (_(u"Page rendered. Please wait…"), statusbar_item)
-        self._application.onHtmlRenderingBegin(self._currentpage,
-                                               self.htmlWindow)
-        self._currentpage.update()
+        setStatusText (_(u"Page loading. Please wait…"), self._statusbar_item)
 
         try:
             path = self._currentpage.getHtmlPath()
+            if not os.path.exists(path):
+                self._updatePage()
+
             html = readTextFile(path)
 
             if (self._oldPage != self._currentpage or
@@ -298,17 +319,17 @@ class BaseHtmlPanel(BaseTextPanel):
                 self._oldHtmlResult = html
                 self._oldPage = self._currentpage
         except EnvironmentError:
-            MessageBox (_(u'Page update error: {}').format(
+            MessageBox (_(u'Page loading error: {}').format(
                 self._currentpage.title),
                 _(u'Error'), wx.ICON_ERROR | wx.OK)
 
-        setStatusText (u"", statusbar_item)
-        self._application.onHtmlRenderingEnd (self._currentpage, self.htmlWindow)
+        setStatusText (u"", self._statusbar_item)
 
 
     def _enableAllTools (self):
         """
-        Активировать или дезактивировать инструменты (пункты меню и кнопки) в зависимости от текущей выбранной вкладки
+        Активировать или дезактивировать инструменты (пункты меню и кнопки)
+        в зависимости от текущей выбранной вкладки
         """
         for tool in self.allTools:
             self.enableTool (tool, self._isEnabledTool (tool))
