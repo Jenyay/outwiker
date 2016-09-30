@@ -1,8 +1,11 @@
 # -*- coding: UTF-8 -*-
 
+import wx
+
 from outwiker.core.factoryselector import FactorySelector
 from outwiker.gui.pagedialogpanels.appearancepanel import(AppearancePanel,
                                                           AppearanceController)
+from outwiker.core.commands import MessageBox
 
 from .markdownpage import MarkdownPageFactory, MarkdownPage
 from .colorizercontroller import ColorizerController
@@ -39,6 +42,7 @@ class Controller (object):
         self._application.onPageViewDestroy += self.__onPageViewDestroy
         self._application.onPageDialogPageTypeChanged += self.__onPageDialogPageTypeChanged
         self._application.onPageDialogDestroy += self.__onPageDialogDestroy
+        self._application.onPageUpdateNeeded += self.__onPageUpdateNeeded
 
     def clear (self):
         """
@@ -50,6 +54,7 @@ class Controller (object):
         self._application.onPageViewDestroy -= self.__onPageViewDestroy
         self._application.onPageDialogPageTypeChanged -= self.__onPageDialogPageTypeChanged
         self._application.onPageDialogDestroy -= self.__onPageDialogDestroy
+        self._application.onPageUpdateNeeded -= self.__onPageUpdateNeeded
 
     def __onPageDialogPageFactoriesNeeded (self, page, params):
         params.addPageFactory (MarkdownPageFactory())
@@ -88,3 +93,18 @@ class Controller (object):
     def __onPageDialogDestroy(self, page, params):
         self._appearancePanel = None
         self._appearanceController = None
+
+    def __onPageUpdateNeeded(self, page, params):
+        if (page is None or
+                page.getTypeString() != MarkdownPage.getTypeString() or
+                page.readonly):
+            return
+
+        try:
+            if not params.allowCache:
+                page.resetCache()
+            page.update()
+        except EnvironmentError:
+            MessageBox (_(u'Page update error: {}').format(page.title),
+                        _(u'Error'),
+                        wx.ICON_ERROR | wx.OK)

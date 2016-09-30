@@ -98,7 +98,9 @@ class BaseHtmlPanel(BaseTextPanel):
                  fullUpdate=True,
                  panelname="plugins"):
         """
-        !!! Внимание. Это устаревший способ добавления элементов интерфейса. Сохраняется только для совместимости со старыми версиями плагинов и в будущих версиях программы может быть убран.
+        !!! Внимание. Это устаревший способ добавления элементов интерфейса.
+        Сохраняется только для совместимости со старыми версиями плагинов
+        и в будущих версиях программы может быть убран.
 
         Добавить пункт меню и кнопку на панель
         menu -- меню для добавления элемента
@@ -224,7 +226,7 @@ class BaseHtmlPanel(BaseTextPanel):
 
 
     def _onTabChanged (self, event):
-        newevent = PageTabChangedEvent (tab = self.selectedPageIndex)
+        newevent = PageTabChangedEvent (tab=self.selectedPageIndex)
         wx.PostEvent(self, newevent)
 
 
@@ -233,7 +235,10 @@ class BaseHtmlPanel(BaseTextPanel):
         Соханить текущую вкладку (код, просмотр и т.п.) в настройки страницы
         """
         assert page is not None
-        tabOption = IntegerOption (page.params, self.tabSectionName, self.tabParamName, -1)
+        tabOption = IntegerOption (page.params,
+                                   self.tabSectionName,
+                                   self.tabParamName,
+                                   -1)
         tabOption.value = self.selectedPageIndex
 
 
@@ -253,7 +258,10 @@ class BaseHtmlPanel(BaseTextPanel):
             return self.RESULT_PAGE_INDEX
 
         # Get tab option from page
-        tabOption = IntegerOption (page.params, self.tabSectionName, self.tabParamName, -1)
+        tabOption = IntegerOption (page.params,
+                                   self.tabSectionName,
+                                   self.tabParamName,
+                                   -1)
         return tabOption.value
 
 
@@ -389,25 +397,28 @@ class BaseHtmlPanel(BaseTextPanel):
     def turnText (self, left, right):
         """
         Обернуть выделенный текст строками left и right.
-        Метод предназначен в первую очередь для упрощения доступа к одноименному методу из codeEditor
+        Метод предназначен в первую очередь для упрощения доступа к
+        одноименному методу из codeEditor
         """
-        self._application.mainWindow.pagePanel.pageView.codeEditor.turnText (left, right)
+        self._application.mainWindow.pagePanel.pageView.codeEditor.turnText(left, right)
 
 
     def replaceText (self, text):
         """
         Заменить выделенный текст строкой text
-        Метод предназначен в первую очередь для упрощения доступа к одноименному методу из codeEditor
+        Метод предназначен в первую очередь для упрощения доступа к
+        одноименному методу из codeEditor
         """
-        self._application.mainWindow.pagePanel.pageView.codeEditor.replaceText (text)
+        self._application.mainWindow.pagePanel.pageView.codeEditor.replaceText(text)
 
 
     def escapeHtml (self):
         """
         Заменить символы на их HTML-представление
-        Метод предназначен в первую очередь для упрощения доступа к одноименному методу из codeEditor
+        Метод предназначен в первую очередь для упрощения доступа к
+        одноименному методу из codeEditor
         """
-        self._application.mainWindow.pagePanel.pageView.codeEditor.escapeHtml ()
+        self._application.mainWindow.pagePanel.pageView.codeEditor.escapeHtml()
 
 
     def _onSpellOnOff (self, event):
