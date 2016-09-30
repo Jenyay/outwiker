@@ -7,6 +7,7 @@ import wx
 from outwiker.gui.baseaction import BaseAction
 from outwiker.gui.testeddialog import TestedDialog
 from outwiker.gui.longprocessrunner import LongProcessRunner
+from outwiker.core.events import PageUpdateNeededParams
 from outwiker.core.style import Style
 from outwiker.core.styleslist import StylesList
 from outwiker.core.system import getStylesDirList
@@ -62,17 +63,20 @@ class SetStyleToBranchAction (BaseAction):
                                             _(u"Set Style to Branch"),
                                             _(u"Please wait..."))
 
-                runner.run (page, dlg.style)
+                runner.run (self._application, page, dlg.style)
                 # Вернем открытую вики
                 self._application.wikiroot = wiki
 
 
-    def __applyStyle (self, page, style):
+    def __applyStyle (self, application, page, style):
         if page.parent is not None and not page.readonly:
             # Если это не корень вики и страница открыта не только для чтения
             Style().setPageStyle (page, style)
+            application.onPageUpdateNeeded(page,
+                                           PageUpdateNeededParams(False))
 
-        map (lambda child: self.__applyStyle (child, style), page.children)
+        map(lambda child: self.__applyStyle(application, child, style),
+            page.children)
 
 
 

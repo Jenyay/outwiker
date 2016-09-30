@@ -32,7 +32,6 @@ class HtmlWikiPage (WikiPage):
         self.__autoLineWrapSection = u"General"
         self.__autoLineWrapParam = u"LineWrap"
 
-
     @property
     def autoLineWrap (self):
         """
@@ -42,7 +41,6 @@ class HtmlWikiPage (WikiPage):
                                self.__autoLineWrapSection,
                                self.__autoLineWrapParam, True)
         return option.value
-
 
     @autoLineWrap.setter
     def autoLineWrap (self, value):
@@ -54,7 +52,6 @@ class HtmlWikiPage (WikiPage):
                                self.__autoLineWrapParam, True)
         option.value = value
         self.root.onPageUpdate(self, change=PAGE_UPDATE_CONTENT)
-
 
     @staticmethod
     def getTypeString ():

@@ -59,6 +59,7 @@ class ApplyStyleActionTest (BaseMainWndTest):
 
         self.assertEqual (Tester.dialogTester.count, 0)
         self.assertTrue (os.path.exists (path))
+        self.assertTrue (os.path.exists (page.getHtmlPath()))
 
 
     def testSingle_02 (self):
@@ -75,6 +76,7 @@ class ApplyStyleActionTest (BaseMainWndTest):
 
         self.assertEqual (Tester.dialogTester.count, 0)
         self.assertTrue (os.path.exists (path))
+        self.assertTrue (os.path.exists (page.getHtmlPath()))
 
 
     def testSingle_03 (self):
@@ -106,6 +108,7 @@ class ApplyStyleActionTest (BaseMainWndTest):
 
         self.assertEqual (Tester.dialogTester.count, 0)
         self.assertTrue (os.path.exists (path))
+        self.assertTrue (os.path.exists (page.getHtmlPath()))
 
         Tester.dialogTester.append (self.__selectDefault)
         Application.actionController.getAction (SetStyleToBranchAction.stringId).run(None)
@@ -129,6 +132,8 @@ class ApplyStyleActionTest (BaseMainWndTest):
 
         self.assertTrue (os.path.exists (fname_1))
         self.assertTrue (os.path.exists (fname_2))
+        self.assertTrue (os.path.exists (self.wikiroot[u"Викистраница 1"].getHtmlPath()))
+        self.assertTrue (os.path.exists (self.wikiroot[u"Викистраница 2"].getHtmlPath()))
 
 
     def testMulti_02 (self):
@@ -146,6 +151,8 @@ class ApplyStyleActionTest (BaseMainWndTest):
 
         self.assertTrue (os.path.exists (fname_1))
         self.assertTrue (os.path.exists (fname_2))
+        self.assertTrue (os.path.exists (self.wikiroot[u"Викистраница 1"].getHtmlPath()))
+        self.assertTrue (os.path.exists (self.wikiroot[u"Викистраница 1/Викистраница 2"].getHtmlPath()))
 
 
     def testMulti_03 (self):
@@ -163,6 +170,8 @@ class ApplyStyleActionTest (BaseMainWndTest):
 
         self.assertTrue (os.path.exists (fname_1))
         self.assertTrue (os.path.exists (fname_2))
+        self.assertTrue (os.path.exists (self.wikiroot[u"Викистраница 1"].getHtmlPath()))
+        self.assertTrue (os.path.exists (self.wikiroot[u"Викистраница 1/Викистраница 2"].getHtmlPath()))
 
 
     def testMulti_04 (self):
@@ -180,3 +189,4 @@ class ApplyStyleActionTest (BaseMainWndTest):
 
         self.assertTrue (os.path.exists (fname_1))
         self.assertFalse (os.path.exists (fname_2))
+        self.assertTrue (os.path.exists (self.wikiroot[u"Викистраница 1"].getHtmlPath()))
