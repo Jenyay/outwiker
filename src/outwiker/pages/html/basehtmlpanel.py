@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import print_function
 from abc import ABCMeta, abstractmethod
 import os
 
@@ -323,7 +324,8 @@ class BaseHtmlPanel(BaseTextPanel):
                 self.htmlWindow.LoadPage (path)
                 self._oldHtmlResult = html
                 self._oldPage = self._currentpage
-        except EnvironmentError:
+        except EnvironmentError as e:
+            print(e)
             MessageBox (_(u'Page loading error: {}').format(
                 self._currentpage.title),
                 _(u'Error'), wx.ICON_ERROR | wx.OK)

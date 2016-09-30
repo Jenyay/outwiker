@@ -1,11 +1,8 @@
 # -*- coding: UTF-8 -*-
 
-import wx
-
 from outwiker.core.factoryselector import FactorySelector
 from outwiker.gui.pagedialogpanels.appearancepanel import(AppearancePanel,
                                                           AppearanceController)
-from outwiker.core.commands import MessageBox
 
 from .markdownpage import MarkdownPageFactory, MarkdownPage
 from .colorizercontroller import ColorizerController
@@ -100,11 +97,6 @@ class Controller (object):
                 page.readonly):
             return
 
-        try:
-            if not params.allowCache:
-                page.resetCache()
-            page.update()
-        except EnvironmentError:
-            MessageBox (_(u'Page update error: {}').format(page.title),
-                        _(u'Error'),
-                        wx.ICON_ERROR | wx.OK)
+        if not params.allowCache:
+            page.resetCache()
+        page.update()

@@ -1,8 +1,5 @@
 # -*- coding: UTF-8 -*-
 
-import wx
-
-from outwiker.core.commands import MessageBox
 from outwiker.gui.pagedialogpanels.appearancepanel import(AppearancePanel,
                                                           AppearanceController)
 from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
@@ -91,11 +88,6 @@ class WikiPageController(object):
                 page.readonly):
             return
 
-        try:
-            if not params.allowCache:
-                page.resetCache()
-            page.update()
-        except EnvironmentError:
-            MessageBox (_(u'Page update error: {}').format(page.title),
-                        _(u'Error'),
-                        wx.ICON_ERROR | wx.OK)
+        if not params.allowCache:
+            page.resetCache()
+        page.update()
