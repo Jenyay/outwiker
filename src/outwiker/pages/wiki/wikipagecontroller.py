@@ -1,8 +1,14 @@
 # -*- coding: UTF-8 -*-
 
+import os
+
+from outwiker.core.style import Style
 from outwiker.gui.pagedialogpanels.appearancepanel import(AppearancePanel,
                                                           AppearanceController)
 from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
+from outwiker.pages.wiki.htmlcache import HtmlCache
+from outwiker.pages.wiki.htmlgenerator import HtmlGenerator
+from outwiker.utilites.textfile import writeTextFile
 
 from wikipage import WikiWikiPage, WikiPageFactory
 from wikipreferences import WikiPrefGeneralPanel
@@ -89,5 +95,21 @@ class WikiPageController(object):
             return
 
         if not params.allowCache:
-            page.resetCache()
-        page.update()
+            HtmlCache(page, self._application).resetHash()
+        self._updatePage(page)
+
+    def _updatePage(self, page):
+        path = page.getHtmlPath()
+        cache = HtmlCache(page, self._application)
+
+        # Проверим, можно ли прочитать уже готовый HTML
+        if cache.canReadFromCache() and os.path.exists(path):
+            return
+
+        style = Style()
+        stylepath = style.getPageStyle(page)
+        generator = HtmlGenerator(page)
+
+        html = generator.makeHtml(stylepath)
+        writeTextFile(path, html)
+        cache.saveHash()

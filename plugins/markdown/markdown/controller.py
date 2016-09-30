@@ -1,11 +1,17 @@
 # -*- coding: UTF-8 -*-
 
+import os
+
 from outwiker.core.factoryselector import FactorySelector
+from outwiker.core.style import Style
 from outwiker.gui.pagedialogpanels.appearancepanel import(AppearancePanel,
                                                           AppearanceController)
+from outwiker.pages.wiki.htmlcache import HtmlCache
+from outwiker.utilites.textfile import writeTextFile
 
-from .markdownpage import MarkdownPageFactory, MarkdownPage
 from .colorizercontroller import ColorizerController
+from .markdownhtmlgenerator import MarkdownHtmlGenerator
+from .markdownpage import MarkdownPageFactory, MarkdownPage
 from .i18n import get_
 
 
@@ -98,5 +104,21 @@ class Controller (object):
             return
 
         if not params.allowCache:
-            page.resetCache()
-        page.update()
+            HtmlCache(page, self._application).resetHash()
+        self._updatePage(page)
+
+    def _updatePage(self, page):
+        path = page.getHtmlPath()
+        cache = HtmlCache(page, self._application)
+
+        # Проверим, можно ли прочитать уже готовый HTML
+        if cache.canReadFromCache() and os.path.exists(path):
+            return
+
+        style = Style()
+        stylepath = style.getPageStyle(page)
+        generator = MarkdownHtmlGenerator(page)
+
+        html = generator.makeHtml(stylepath)
+        writeTextFile(path, html)
+        cache.saveHash()
