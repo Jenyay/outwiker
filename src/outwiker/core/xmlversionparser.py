@@ -71,7 +71,39 @@ class XmlVersionParser (object):
                    for current_os
                    in os_str.split(u',')
                    if len(current_os.strip()) != 0]
-        return RequirementsInfo(outwiker_version, os_list)
+        packages_versions = self._getPackagesVersions(requirements_tag)
+        return RequirementsInfo(outwiker_version, os_list, packages_versions)
+
+    def _getPackagesVersions(self, requirements_tag):
+        result = {}
+        packages_tag = requirements_tag.find('packages')
+        if packages_tag is not None:
+            for package in packages_tag:
+                name = package.tag
+                versions_text = package.text
+                result[name] = self._parsePackageVersions(versions_text)
+
+        return result
+
+    def _parsePackageVersions(self, text):
+        if text is None:
+            return []
+        result = []
+        items = [item.strip()
+                 for item
+                 in text.split(',')
+                 if len(item.strip()) != 0]
+        for item in items:
+            elements = item.split('.')
+            if len(elements) != 2:
+                continue
+            try:
+                version = (int(elements[0]), int(elements[1]))
+                result.append(version)
+            except ValueError:
+                continue
+
+        return result
 
     def _getVersionsList(self, data_tag):
         """
@@ -134,7 +166,7 @@ class XmlVersionParser (object):
                 text = u''
             changes.append(text)
         return changes
-    
+
     def _getVersion(self, version_tag):
         """
         Return Version instance or None if version number is not exists.

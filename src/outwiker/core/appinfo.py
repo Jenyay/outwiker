@@ -75,10 +75,13 @@ class RequirementsInfo (object):
     """
     Plug-in's requirements
     """
-    def __init__(self, outwiker_version, os_list):
+    def __init__(self, outwiker_version, os_list, packages_versions={}):
         """
         outwiker_version - instance of the Version
         os_list - list of the supported OS
+        packages_versions - dictionary. Key - package's name (core, gui, etc),
+            value - list of the tuples with supported versions.
         """
         self.outwiker_version = outwiker_version
         self.os = os_list[:]
+        self.packages_versions = packages_versions

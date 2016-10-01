@@ -705,3 +705,100 @@ class XmlVersionParserTest (unittest.TestCase):
         self.assertTrue(isinstance(result.requirements, RequirementsInfo))
         self.assertEqual(result.requirements.os, [])
         self.assertEqual(result.requirements.outwiker_version, None)
+
+    def test_requirements_packages_01(self):
+        text = u'''<?xml version="1.1" encoding="UTF-8" ?>
+            <info>
+                <requirements>
+                    <packages>
+                    </packages>
+                </requirements>
+            </info>'''
+        result = XmlVersionParser().parse(text)
+
+        self.assertTrue(isinstance(result.requirements, RequirementsInfo))
+        self.assertEqual(result.requirements.packages_versions, {})
+
+    def test_requirements_packages_02(self):
+        text = u'''<?xml version="1.1" encoding="UTF-8" ?>
+            <info>
+                <requirements>
+                    <packages>
+                        <core>1.0</core>
+                    </packages>
+                </requirements>
+            </info>'''
+        result = XmlVersionParser().parse(text)
+
+        packages_dict = {u'core': [(1, 0)]}
+
+        self.assertTrue(isinstance(result.requirements, RequirementsInfo))
+        self.assertEqual(result.requirements.packages_versions, packages_dict)
+
+    def test_requirements_packages_03(self):
+        text = u'''<?xml version="1.1" encoding="UTF-8" ?>
+            <info>
+                <requirements>
+                    <packages>
+                        <core></core>
+                    </packages>
+                </requirements>
+            </info>'''
+        result = XmlVersionParser().parse(text)
+
+        packages_dict = {u'core': []}
+
+        self.assertTrue(isinstance(result.requirements, RequirementsInfo))
+        self.assertEqual(result.requirements.packages_versions, packages_dict)
+
+    def test_requirements_packages_04(self):
+        text = u'''<?xml version="1.1" encoding="UTF-8" ?>
+            <info>
+                <requirements>
+                    <packages>
+                        <core>1.0, 2.0</core>
+                    </packages>
+                </requirements>
+            </info>'''
+        result = XmlVersionParser().parse(text)
+
+        packages_dict = {u'core': [(1, 0), (2, 0)]}
+
+        self.assertTrue(isinstance(result.requirements, RequirementsInfo))
+        self.assertEqual(result.requirements.packages_versions, packages_dict)
+
+    def test_requirements_packages_05(self):
+        text = u'''<?xml version="1.1" encoding="UTF-8" ?>
+            <info>
+                <requirements>
+                    <packages>
+                        <core>1.0,2.0</core>
+                    </packages>
+                </requirements>
+            </info>'''
+        result = XmlVersionParser().parse(text)
+
+        packages_dict = {u'core': [(1, 0), (2, 0)]}
+
+        self.assertTrue(isinstance(result.requirements, RequirementsInfo))
+        self.assertEqual(result.requirements.packages_versions, packages_dict)
+
+    def test_requirements_packages_06(self):
+        text = u'''<?xml version="1.1" encoding="UTF-8" ?>
+            <info>
+                <requirements>
+                    <packages>
+                        <core>1.0</core>
+                        <gui>1.5, 2.0</gui>
+                    </packages>
+                </requirements>
+            </info>'''
+        result = XmlVersionParser().parse(text)
+
+        packages_dict = {
+            u'core': [(1, 0)],
+            u'gui': [(1, 5), (2, 0)],
+        }
+
+        self.assertTrue(isinstance(result.requirements, RequirementsInfo))
+        self.assertEqual(result.requirements.packages_versions, packages_dict)
