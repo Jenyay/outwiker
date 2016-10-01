@@ -4,11 +4,14 @@ import os.path
 
 import wx
 
-from test.guitests.basemainwnd import BaseMainWndTest
+from outwiker.actions.applystyle import SetStyleToBranchAction
 from outwiker.core.application import Application
 from outwiker.gui.tester import Tester
 from outwiker.pages.wiki.wikipage import WikiPageFactory
-from outwiker.actions.applystyle import SetStyleToBranchAction
+from outwiker.pages.text.textpage import TextPageFactory
+from outwiker.pages.html.htmlpage import HtmlPageFactory
+from outwiker.pages.search.searchpage import SearchPageFactory
+from test.guitests.basemainwnd import BaseMainWndTest
 
 
 class ApplyStyleActionTest (BaseMainWndTest):
@@ -190,3 +193,23 @@ class ApplyStyleActionTest (BaseMainWndTest):
         self.assertTrue (os.path.exists (fname_1))
         self.assertFalse (os.path.exists (fname_2))
         self.assertTrue (os.path.exists (self.wikiroot[u"Викистраница 1"].getHtmlPath()))
+
+    def testMultitype_01 (self):
+        WikiPageFactory().create (self.wikiroot, u"Викистраница", [])
+        page = self.wikiroot[u"Викистраница"]
+        path = os.path.join (page.path, self.styleFile)
+
+        TextPageFactory().create (page, u"Текстовая страница", [])
+        SearchPageFactory().create (page, u"Страница поиска", [])
+        HtmlPageFactory().create (page, u"HTML-страница", [])
+
+        Application.wikiroot = self.wikiroot
+        Application.selectedPage = None
+
+        Tester.dialogTester.append (self.__selectSecond)
+
+        Application.actionController.getAction(SetStyleToBranchAction.stringId).run(None)
+
+        self.assertEqual(Tester.dialogTester.count, 0)
+        self.assertTrue(os.path.exists (path))
+        self.assertTrue(os.path.exists (page.getHtmlPath()))
