@@ -91,3 +91,61 @@ class PackageCheckVersionAnyTest (unittest.TestCase):
         required = [(1, 0)]
         self.assertEqual(pv.checkVersionAny(packageVersion, required),
                          pv.PLUGIN_MUST_BE_UPGRADED)
+
+
+class CheckPackagesVersionTest (unittest.TestCase):
+    def test_ok_01(self):
+        packageversion_list = [(1, 0), (1, 0)]
+        required = [[(1, 0)], [(1, 0)]]
+
+        self.assertEqual(pv.checkAllPackagesVersions(packageversion_list,
+                                                     required),
+                         pv.VERSION_OK)
+
+    def test_ok_02(self):
+        packageversion_list = [(1, 10), (1, 10)]
+        required = [[(1, 0)], [(1, 0)]]
+
+        self.assertEqual(pv.checkAllPackagesVersions(packageversion_list,
+                                                     required),
+                         pv.VERSION_OK)
+
+    def test_ok_03(self):
+        packageversion_list = [(1, 10), (1, 10)]
+        required = [[(1, 0), (2, 0)], [(1, 10)]]
+
+        self.assertEqual(pv.checkAllPackagesVersions(packageversion_list,
+                                                     required),
+                         pv.VERSION_OK)
+
+    def test_fail_01(self):
+        packageversion_list = [(1, 0), (1, 0)]
+        required = [[(1, 1)], [(1, 1)]]
+
+        self.assertEqual(pv.checkAllPackagesVersions(packageversion_list,
+                                                     required),
+                         pv.OUTWIKER_MUST_BE_UPGRADED)
+
+    def test_fail_02(self):
+        packageversion_list = [(1, 0), (1, 0)]
+        required = [[(1, 1)], [(1, 0)]]
+
+        self.assertEqual(pv.checkAllPackagesVersions(packageversion_list,
+                                                     required),
+                         pv.OUTWIKER_MUST_BE_UPGRADED)
+
+    def test_fail_03(self):
+        packageversion_list = [(1, 0), (1, 0)]
+        required = [[(1, 0)], [(1, 1)]]
+
+        self.assertEqual(pv.checkAllPackagesVersions(packageversion_list,
+                                                     required),
+                         pv.OUTWIKER_MUST_BE_UPGRADED)
+
+    def test_fail_04(self):
+        packageversion_list = [(1, 0), (2, 0)]
+        required = [[(1, 0)], [(1, 0)]]
+
+        self.assertEqual(pv.checkAllPackagesVersions(packageversion_list,
+                                                     required),
+                         pv.PLUGIN_MUST_BE_UPGRADED)

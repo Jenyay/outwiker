@@ -18,13 +18,33 @@ def checkVersion(packageversion, required):
     return VERSION_OK
 
 
-def checkVersionAny(packageversion, requiredList):
-    if requiredList is None or len(requiredList) == 0:
+def checkVersionAny(packageversion, requiredlist):
+    '''
+    packageversion - current package version.
+    requiredlist - list of the supported versions.
+    '''
+    if requiredlist is None or len(requiredlist) == 0:
         return VERSION_OK
 
-    for required in requiredList:
+    for required in requiredlist:
         result = checkVersion(packageversion, required)
         if result == VERSION_OK:
             return result
 
     return result
+
+
+def checkAllPackagesVersions(packageversion_list, required_list_list):
+    '''
+    packageversion_list - list of the current packages versions.
+    required_list_list - list of the list supported versions.
+    length of the packageversion_list must be equal length of
+    the required_list_list.
+    '''
+    for packageversion, requiredlist in zip(packageversion_list,
+                                            required_list_list):
+        result = checkVersionAny(packageversion, requiredlist)
+        if result != VERSION_OK:
+            return result
+
+    return VERSION_OK
