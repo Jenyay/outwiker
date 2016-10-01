@@ -98,5 +98,6 @@ if __name__ == '__main__':
     from test.styles.test_styleslist import StylesListTest
 
     from test.test_xmlversionparser import XmlVersionParserTest
+    from test.test_packageversion import PackageVersionTest
 
     unittest.main()
