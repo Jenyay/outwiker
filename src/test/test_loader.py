@@ -61,7 +61,10 @@ class PluginsLoaderTest(unittest.TestCase):
                    u"../plugins/testempty1",
                    u"../plugins/testempty2",
                    u"../plugins/testempty2",                # Ссылка на плагин testempty2 повторяется еще раз
-                   u"../plugins/testwikicommand"]
+                   u"../plugins/testwikicommand",
+                   u"../plugins/testoutdated",
+                   u"../plugins/testfromfuture",
+                   ]
 
         loader = PluginsLoader(Application)
         loader.enableOutput = False

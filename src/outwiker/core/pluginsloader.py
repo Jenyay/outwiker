@@ -1,13 +1,27 @@
 # -*- coding: UTF-8 -*-
 
+from __future__ import print_function
+
 import os
 import os.path
 import sys
 import traceback
 
-from .pluginbase import Plugin
+import outwiker.core
+import outwiker.gui
+import outwiker.pages
+import outwiker.actions
+import outwiker.utilites
+import outwiker.libs
+
+import outwiker.core.packageversion as pv
+
+from outwiker.core.defines import PLUGIN_VERSION_FILE_NAME
+from outwiker.core.pluginbase import Plugin
+from outwiker.core.system import getOS
+from outwiker.core.xmlversionparser import XmlVersionParser
 from outwiker.gui.guiconfig import PluginsConfig
-from .system import getOS
+from outwiker.utilites.textfile import readTextFile
 
 
 class PluginsLoader (object):
@@ -33,13 +47,23 @@ class PluginsLoader (object):
         # Имя классов плагинов должно начинаться с "Plugins"
         self.__pluginsStartName = "Plugin"
 
-        # Установить в False, если не нужно выводить ошибки (например, в тестах)
+        # Установить в False, если не нужно выводить ошибки
+        # (например, в тестах)
         self.enableOutput = True
+
+        self.__currentPackageVersions = [
+            outwiker.core.__version__,
+            outwiker.gui.__version__,
+            outwiker.pages.__version__,
+            outwiker.actions.__version__,
+            outwiker.utilites.__version__,
+            outwiker.libs.__version__,
+        ]
 
 
     def _print (self, text):
         if self.enableOutput:
-            print text
+            print(text)
 
 
     @property
@@ -65,7 +89,7 @@ class PluginsLoader (object):
         self.__enableDisabledPlugins (options.disabledPlugins.value)
 
 
-    def __disableEnabledPlugins (self, disableList):
+    def __disableEnabledPlugins(self, disableList):
         """
         Отключить загруженные плагины, попавшие в "черный список" (disableList)
         """
@@ -78,13 +102,13 @@ class PluginsLoader (object):
                 del self.__plugins[pluginname]
 
 
-    def __enableDisabledPlugins (self, disableList):
+    def __enableDisabledPlugins(self, disableList):
         """
         Включить отключенные плагины, если их больше нет в "черном списке"
         """
         for plugin in self.__disabledPlugins.values():
             if plugin.name not in disableList:
-                plugin.initialize ()
+                plugin.initialize()
 
                 assert plugin.name not in self.__plugins
                 self.__plugins[plugin.name] = plugin
@@ -92,17 +116,19 @@ class PluginsLoader (object):
                 del self.__disabledPlugins[plugin.name]
 
 
-    def load (self, dirlist):
+    def load(self, dirlist):
         """
         Загрузить плагины из указанных директорий.
-        Каждый вызов метода load() добавляет плагины в список загруженных плагинов, не очищая его
-        dirlist - список директорий, где могут располагаться плагины. Каждый плагин расположен в своей поддиректории
+        Каждый вызов метода load() добавляет плагины в список загруженных
+            плагинов, не очищая его.
+        dirlist - список директорий, где могут располагаться плагины.
+            Каждый плагин расположен в своей поддиректории
         """
         assert dirlist is not None
 
         for currentDir in dirlist:
-            if os.path.exists (currentDir):
-                dirPackets = sorted (os.listdir (currentDir))
+            if os.path.exists(currentDir):
+                dirPackets = sorted(os.listdir (currentDir))
 
                 # Добавить путь до currentDir в sys.path
                 fullpath = os.path.abspath (currentDir)
@@ -110,30 +136,51 @@ class PluginsLoader (object):
                 # Иногда выскакивает предупреждение:
                 # ...\outwiker\core\pluginsloader.py:41: UnicodeWarning: Unicode equal comparison failed to convert both arguments to Unicode - interpreting them as being unequal
 
-                syspath = [unicode (item, getOS().filesEncoding)
-                           if type (item) != unicode else item
+                syspath = [unicode(item, getOS().filesEncoding)
+                           if type(item) != unicode else item
                            for item in sys.path]
 
                 if fullpath not in syspath:
-                    sys.path.insert (0, fullpath)
+                    sys.path.insert(0, fullpath)
 
                 # Все поддиректории попытаемся открыть как пакеты
-                self.__importModules (currentDir, dirPackets)
+                self.__importModules(currentDir, dirPackets)
 
 
-    def clear (self):
+    def clear(self):
         """
         Уничтожить все загруженные плагины
         """
-        map (lambda plugin: plugin.destroy(), self.__plugins.values())
+        map(lambda plugin: plugin.destroy(), self.__plugins.values())
         self.__plugins = {}
 
 
-    def __importModules (self, baseDir, dirPackagesList):
+    def __checkPackageVersions(self, plugin_fname):
+        if not os.path.exists(plugin_fname):
+            return pv.PLUGIN_MUST_BE_UPGRADED
+
+        xml_content = readTextFile(plugin_fname)
+        appinfo = XmlVersionParser().parse(xml_content)
+
+        required_versions = [
+            appinfo.requirements.packages_versions.get(u'core', [(1, 0)]),
+            appinfo.requirements.packages_versions.get(u'gui', [(1, 0)]),
+            appinfo.requirements.packages_versions.get(u'pages', [(1, 0)]),
+            appinfo.requirements.packages_versions.get(u'actions', [(1, 0)]),
+            appinfo.requirements.packages_versions.get(u'utilites', [(1, 0)]),
+            appinfo.requirements.packages_versions.get(u'libs', [(1, 0)]),
+        ]
+
+        return pv.checkAllPackagesVersions(self.__currentPackageVersions,
+                                           required_versions)
+
+
+    def __importModules(self, baseDir, dirPackagesList):
         """
         Попытаться импортировать пакеты
         baseDir - директория, где расположены пакеты
-        dirPackagesList - список директорий (только имена директорий), возможно являющихся пакетами
+        dirPackagesList - список директорий (только имена директорий),
+            возможно являющихся пакетами
         """
         assert dirPackagesList is not None
 
@@ -142,30 +189,52 @@ class PluginsLoader (object):
 
             # Проверить, что это директория
             if os.path.isdir (packagePath):
-                # Список строк, описывающий возникшие ошибки во время импортирования
-                # Выводятся только если не удалось импортировать ни одного модуля
+                # Checking information from plugin.xml file
+                plugin_fname = os.path.join(packagePath,
+                                            PLUGIN_VERSION_FILE_NAME)
+                try:
+                    versions_result = self.__checkPackageVersions(plugin_fname)
+                except EnvironmentError:
+                    self._print(_(u'Plug-in "{}". Can\'t read "{}" file').
+                                format(packageName, PLUGIN_VERSION_FILE_NAME))
+                    continue
+
+                if versions_result == pv.PLUGIN_MUST_BE_UPGRADED:
+                    self._print(_(u'Plug-in "{}" is outdated. Please, update the plug-in.').format(packageName))
+                    continue
+                elif versions_result == pv.OUTWIKER_MUST_BE_UPGRADED:
+                    self._print(_(u'Plug-in "{}" is designed for a newer version OutWiker. Please, install a new OutWiker version').format(packageName))
+                    continue
+
+                # Список строк, описывающий возникшие ошибки
+                # во время импортирования
+                # Выводятся только если не удалось импортировать
+                # ни одного модуля
                 errors = []
 
                 # Количество загруженных плагинов до импорта нового
-                oldPluginsCount = len (self.__plugins) + len (self.__disabledPlugins)
+                oldPluginsCount = (len(self.__plugins) +
+                                   len(self.__disabledPlugins))
 
                 # Переберем все файлы внутри packagePath
                 # и попытаемся их импортировать
-                for fileName in sorted (os.listdir (packagePath)):
+                for fileName in sorted(os.listdir(packagePath)):
                     try:
-                        module = self._importSingleModule (packageName, fileName)
+                        module = self._importSingleModule(packageName,
+                                                          fileName)
                         if module is not None:
-                            self.__loadPlugin (module)
-                    except BaseException, e:
-                        errors.append ("*** Plugin {package} loading error ***\n{package}/{fileName}\n{error}\n{traceback}".format (
-                            package = packageName,
-                            fileName = fileName,
+                            self.__loadPlugin(module)
+                    except BaseException as e:
+                        errors.append("*** Plugin {package} loading error ***\n{package}/{fileName}\n{error}\n{traceback}".format(
+                            package=packageName,
+                            fileName=fileName,
                             error=str(e),
                             traceback=traceback.format_exc()
                             ))
 
                 # Проверим, удалось ли загрузить плагин
-                newPluginsCount = len (self.__plugins) + len (self.__disabledPlugins)
+                newPluginsCount = (len(self.__plugins) +
+                                   len(self.__disabledPlugins))
 
                 # Вывод ошибок, если ни одного плагина из пакета не удалось
                 # импортировать
