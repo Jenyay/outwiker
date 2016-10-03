@@ -8,7 +8,7 @@ from outwiker.core.version import Version
 from outwiker.core.system import getOS
 
 
-__version__ = u'1.0.5'
+__version__ = u'1.0.6'
 
 
 if getCurrentVersion() < Version (1, 8, 0, 750):

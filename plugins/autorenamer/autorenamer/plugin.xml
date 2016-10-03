@@ -25,6 +25,10 @@
 		</author>
 
 		<changelog>
+			<version number="0.0.0.4">
+                <download os="all">http://jenyay.net/uploads/Outwiker/AutoRenamer/AutoRenamer-0.0.0.4.zip</download>
+				<change>Added OutWiker 2.0 supporting.</change>
+			</version>
 			<version number="0.0.0.3" date="August 20, 2016">
                 <download os="all">http://jenyay.net/uploads/Outwiker/AutoRenamer/AutoRenamer-0.0.0.3.zip</download>
 				<change>Added the Swedish translation.</change>
@@ -47,6 +51,10 @@
 		</author>
 
 		<changelog>
+			<version number="0.0.0.4">
+                <download os="all">http://jenyay.net/uploads/Outwiker/AutoRenamer/AutoRenamer-0.0.0.4.zip</download>
+				<change>Добавлена поддержка OutWiker 2.0.</change>
+			</version>
 			<version number="0.0.0.3" date="20.08.2016">
                 <download os="all">http://jenyay.net/uploads/Outwiker/AutoRenamer/AutoRenamer-0.0.0.3.zip</download>
 				<change>Добавлена поддержка шведского языка.</change>

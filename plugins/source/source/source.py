@@ -10,7 +10,7 @@ from outwiker.core.version import Version
 
 from .i18n import set_
 
-__version__ = u"1.14.2"
+__version__ = u"1.14.3"
 
 
 # Для работы этого плагина требуется OutWiker 1.8.1

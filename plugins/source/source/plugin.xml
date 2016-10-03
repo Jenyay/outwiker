@@ -26,6 +26,11 @@
 		</author>
 
 		<changelog>
+			<version number="1.14.3">
+                <download os="all">http://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.14.3.zip</download>
+				<change>Added OutWiker 2.0 supporting.</change>
+			</version>
+
 			<version number="1.14.2" date="August 20, 2016">
                 <download os="all">http://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.14.2.zip</download>
 				<change>Added the Swedish translation.</change>
@@ -131,6 +136,11 @@
 		</author>
 
 		<changelog>
+			<version number="1.14.3">
+                <download os="all">http://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.14.3.zip</download>
+				<change>Добавлена поддержка OutWiker 2.0.</change>
+			</version>
+
 			<version number="1.14.2" date="20.08.2016">
                 <download os="all">http://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.14.2.zip</download>
 				<change>Добавлена поддержка шведского языка.</change>

@@ -27,6 +27,7 @@
 		<changelog>
 			<version number="1.0.3">
                 <download os="all">http://jenyay.net/uploads/Outwiker/TexEquation/texequation-1.0.3.zip</download>
+				<change>Added OutWiker 2.0 supporting.</change>
 				<change>Bug fixes.</change>
 			</version>
 
@@ -61,6 +62,7 @@
 			<version number="1.0.3">
                 <download os="all">http://jenyay.net/uploads/Outwiker/TexEquation/texequation-1.0.3.zip</download>
 				<change>Исправление ошибок.</change>
+				<change>Добавлена поддержка OutWiker 2.0.</change>
 			</version>
 
 			<version number="1.0.2" date="20.08.2016">

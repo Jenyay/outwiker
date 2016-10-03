@@ -7,7 +7,7 @@ from outwiker.core.commands import getCurrentVersion
 from outwiker.core.version import Version, StatusSet
 from outwiker.core.system import getOS
 
-__version__ = u"1.0.5"
+__version__ = u"1.0.6"
 
 
 if getCurrentVersion() < Version (1, 8, 0, 729, status=StatusSet.DEV):

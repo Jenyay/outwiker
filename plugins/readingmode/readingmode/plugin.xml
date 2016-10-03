@@ -23,6 +23,11 @@
 			<name>Roman Sobolev</name>
 		</author>
 		<changelog>
+			<version number="1.0.2">
+                <download os="all">http://jenyay.net/uploads/Outwiker/ReadingMode/readingmode-1.0.2.zip</download>
+				<change>Added OutWiker 2.0 supporting.</change>
+			</version>
+
 			<version number="1.0.1" date="August 20, 2016">
                 <download os="all">http://jenyay.net/uploads/Outwiker/ReadingMode/readingmode-1.0.1.zip</download>
 				<change>Added the Swedish translation.</change>
@@ -44,6 +49,11 @@
 		</author>
 
 		<changelog>
+			<version number="1.0.2">
+                <download os="all">http://jenyay.net/uploads/Outwiker/ReadingMode/readingmode-1.0.2.zip</download>
+				<change>Добавлена поддержка OutWiker 2.0.</change>
+			</version>
+
 			<version number="1.0.1" date="20.08.2016">
                 <download os="all">http://jenyay.net/uploads/Outwiker/ReadingMode/readingmode-1.0.1.zip</download>
 				<change>Добавлена поддержка шведского языка.</change>
