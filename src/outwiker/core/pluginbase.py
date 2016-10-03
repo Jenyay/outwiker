@@ -29,13 +29,6 @@ class Plugin (object):
 
         # Load plugin's information
         self._version = u'0.0'
-        path = os.path.join (self._pluginPath, PLUGIN_VERSION_FILE_NAME)
-        try:
-            text = readTextFile(path)
-            versionInfo = XmlVersionParser([_(VERSIONS_LANG), u'en']).parse(text)
-            self._version = unicode(versionInfo.currentVersion)
-        except (EnvironmentError, ValueError):
-            pass
 
 
     def _init_i18n (self, domain, langdir):
@@ -55,6 +48,10 @@ class Plugin (object):
         Will be reloaded for Outwiker version before 2.0.0.801
         """
         return self._version
+
+    @version.setter
+    def version(self, value):
+        self._version = value
 
 
     ###################################################

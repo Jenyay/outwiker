@@ -97,7 +97,7 @@ class WikiHashCalculator (object):
         if len (self._application.plugins) == 0:
             return u""
 
-        plugins = [plugin.name + plugin.version for plugin in self._application.plugins]
+        plugins = [plugin.name + unicode(plugin.version) for plugin in self._application.plugins]
         plugins.sort()
         result = reduce (lambda x, y: x + y, plugins)
         return result

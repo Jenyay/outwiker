@@ -155,12 +155,18 @@ class PluginsLoader (object):
         self.__plugins = {}
 
 
-    def __checkPackageVersions(self, plugin_fname):
+    def __loadPluginInfo(self, plugin_fname):
         if not os.path.exists(plugin_fname):
-            return pv.PLUGIN_MUST_BE_UPGRADED
+            return None
 
         xml_content = readTextFile(plugin_fname)
         appinfo = XmlVersionParser().parse(xml_content)
+        return appinfo
+
+
+    def __checkPackageVersions(self, appinfo):
+        if appinfo is None:
+            return pv.PLUGIN_MUST_BE_UPGRADED
 
         required_versions = [
             appinfo.requirements.packages_versions.get(u'core', [(1, 0)]),
@@ -193,11 +199,13 @@ class PluginsLoader (object):
                 plugin_fname = os.path.join(packagePath,
                                             PLUGIN_VERSION_FILE_NAME)
                 try:
-                    versions_result = self.__checkPackageVersions(plugin_fname)
+                    appinfo = self.__loadPluginInfo(plugin_fname)
                 except EnvironmentError:
                     self._print(_(u'Plug-in "{}". Can\'t read "{}" file').
                                 format(packageName, PLUGIN_VERSION_FILE_NAME))
                     continue
+
+                versions_result = self.__checkPackageVersions(appinfo)
 
                 if versions_result == pv.PLUGIN_MUST_BE_UPGRADED:
                     self._print(_(u'Plug-in "{}" is outdated. Please, update the plug-in.').format(packageName))
@@ -223,7 +231,9 @@ class PluginsLoader (object):
                         module = self._importSingleModule(packageName,
                                                           fileName)
                         if module is not None:
-                            self.__loadPlugin(module)
+                            plugin = self.__loadPlugin(module)
+                            if plugin is not None:
+                                plugin.version = appinfo.currentVersion
                     except BaseException as e:
                         errors.append("*** Plugin {package} loading error ***\n{package}/{fileName}\n{error}\n{traceback}".format(
                             package=packageName,
@@ -260,21 +270,23 @@ class PluginsLoader (object):
         return result
 
 
-    def __loadPlugin (self, module):
+    def __loadPlugin(self, module):
         """
-        Найти классы плагинов и создать их экземпляры
+        Найти классы плагинов и создать экземпляр первого из них
         """
         assert module is not None
 
         options = PluginsConfig (self.__application.config)
 
         for name in dir (module):
-            self.__createObject (module,
-                                 name,
-                                 options.disabledPlugins.value)
+            plugin = self.__createPlugin(module,
+                                         name,
+                                         options.disabledPlugins.value)
+            if plugin is not None:
+                return plugin
 
 
-    def __createObject (self, module, name, disabledPlugins):
+    def __createPlugin(self, module, name, disabledPlugins):
         """
         Попытаться загрузить класс, возможно, это плагин
 
@@ -286,7 +298,7 @@ class PluginsLoader (object):
             if obj == Plugin or not issubclass (obj, Plugin):
                 return
 
-            plugin = obj (self.__application)
+            plugin = obj(self.__application)
             if not self.__isNewPlugin (plugin.name):
                 return
 
@@ -295,6 +307,8 @@ class PluginsLoader (object):
                 self.__plugins[plugin.name] = plugin
             else:
                 self.__disabledPlugins[plugin.name] = plugin
+
+            return plugin
 
 
     def __isNewPlugin (self, pluginname):
