@@ -18,7 +18,7 @@ class PluginWikiCommandTest(unittest.TestCase):
     def setUp(self):
         self.__createWiki()
 
-        dirlist = [u"../plugins/testwikicommand"]
+        dirlist = [u"../test/plugins/testwikicommand"]
 
         loader = PluginsLoader(Application)
         loader.load (dirlist)

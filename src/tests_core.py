@@ -86,7 +86,7 @@ if __name__ == '__main__':
     from test.test_history import HistoryTest
     from test.test_commandline import CommandLineTest
     from test.test_pageuiddepot import PageUidDepotTest
-    from test.test_loader import PluginsLoaderTest
+    from test.test_pluginsloader import PluginsLoaderTest
     from test.test_iconscollection import IconsCollectionTest
     from test.test_iconmaker import IconMakerTest
     from test.test_dicttostr import DictToStrTest

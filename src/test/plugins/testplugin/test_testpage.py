@@ -15,7 +15,7 @@ class TestPageTest (BaseMainWndTest):
     def setUp (self):
         super (TestPageTest, self).setUp ()
 
-        self.dirlist = [u"../plugins/testpage"]
+        self.dirlist = [u"../test/plugins/testpage"]
 
         self.loader = PluginsLoader(Application)
         self.loader.load (self.dirlist)

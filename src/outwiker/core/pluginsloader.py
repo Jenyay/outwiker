@@ -75,6 +75,10 @@ class PluginsLoader (object):
         """
         return self.__disabledPlugins
 
+    @property
+    def invalidPlugins(self):
+        return self.__invalidPlugins
+
     def updateDisableList(self):
         """
         Обновление состояния плагинов. Одни отключить, другие включить
