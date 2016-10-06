@@ -41,6 +41,10 @@ class PluginsLoader (object):
         # Значение - экземпляр плагина
         self.__disabledPlugins = {}
 
+        # The dictionary with invalid plugins.
+        # Key - plugin name (directory name), value - InvalidPlugin instance.
+        self.__invalidPlugins = {}
+
         # Пути, где ищутся плагины
         self.__dirlist = []
 
