@@ -28,7 +28,7 @@ class PluginsLoader (object):
     """
     Класс для загрузки плагинов
     """
-    def __init__ (self, application):
+    def __init__(self, application):
         self.__application = application
 
         # Словарь с загруженными плагинами
@@ -60,34 +60,30 @@ class PluginsLoader (object):
             outwiker.libs.__version__,
         ]
 
-
-    def _print (self, text):
+    def _print(self, text):
         if self.enableOutput:
             print(text)
 
-
     @property
-    def disabledPlugins (self):
+    def disabledPlugins(self):
         """
         Возвращает список отключенных плагинов
         """
         return self.__disabledPlugins
 
-
-    def updateDisableList (self):
+    def updateDisableList(self):
         """
         Обновление состояния плагинов. Одни отключить, другие включить
         """
-        options = PluginsConfig (self.__application.config)
+        options = PluginsConfig(self.__application.config)
 
         # Пройтись по включенным плагинам и отключить те,
         # что попали в черный список
-        self.__disableEnabledPlugins (options.disabledPlugins.value)
+        self.__disableEnabledPlugins(options.disabledPlugins.value)
 
         # Пройтись по отключенным плагинам и включить те,
         # что не попали в "черный список"
-        self.__enableDisabledPlugins (options.disabledPlugins.value)
-
+        self.__enableDisabledPlugins(options.disabledPlugins.value)
 
     def __disableEnabledPlugins(self, disableList):
         """
@@ -100,7 +96,6 @@ class PluginsLoader (object):
                 assert pluginname not in self.__disabledPlugins
                 self.__disabledPlugins[pluginname] = self.__plugins[pluginname]
                 del self.__plugins[pluginname]
-
 
     def __enableDisabledPlugins(self, disableList):
         """
@@ -115,7 +110,6 @@ class PluginsLoader (object):
 
                 del self.__disabledPlugins[plugin.name]
 
-
     def load(self, dirlist):
         """
         Загрузить плагины из указанных директорий.
@@ -128,10 +122,10 @@ class PluginsLoader (object):
 
         for currentDir in dirlist:
             if os.path.exists(currentDir):
-                dirPackets = sorted(os.listdir (currentDir))
+                dirPackets = sorted(os.listdir(currentDir))
 
                 # Добавить путь до currentDir в sys.path
-                fullpath = os.path.abspath (currentDir)
+                fullpath = os.path.abspath(currentDir)
                 # TODO: Разобраться с Unicode в следующей строке.
                 # Иногда выскакивает предупреждение:
                 # ...\outwiker\core\pluginsloader.py:41: UnicodeWarning: Unicode equal comparison failed to convert both arguments to Unicode - interpreting them as being unequal
@@ -146,14 +140,12 @@ class PluginsLoader (object):
                 # Все поддиректории попытаемся открыть как пакеты
                 self.__importModules(currentDir, dirPackets)
 
-
     def clear(self):
         """
         Уничтожить все загруженные плагины
         """
         map(lambda plugin: plugin.destroy(), self.__plugins.values())
         self.__plugins = {}
-
 
     def __loadPluginInfo(self, plugin_fname):
         if not os.path.exists(plugin_fname):
@@ -162,7 +154,6 @@ class PluginsLoader (object):
         xml_content = readTextFile(plugin_fname)
         appinfo = XmlVersionParser().parse(xml_content)
         return appinfo
-
 
     def __checkPackageVersions(self, appinfo):
         if appinfo is None:
@@ -180,7 +171,6 @@ class PluginsLoader (object):
         return pv.checkAllPackagesVersions(self.__currentPackageVersions,
                                            required_versions)
 
-
     def __importModules(self, baseDir, dirPackagesList):
         """
         Попытаться импортировать пакеты
@@ -191,10 +181,10 @@ class PluginsLoader (object):
         assert dirPackagesList is not None
 
         for packageName in dirPackagesList:
-            packagePath = os.path.join (baseDir, packageName)
+            packagePath = os.path.join(baseDir, packageName)
 
             # Проверить, что это директория
-            if os.path.isdir (packagePath):
+            if os.path.isdir(packagePath):
                 # Checking information from plugin.xml file
                 plugin_fname = os.path.join(packagePath,
                                             PLUGIN_VERSION_FILE_NAME)
@@ -248,12 +238,11 @@ class PluginsLoader (object):
 
                 # Вывод ошибок, если ни одного плагина из пакета не удалось
                 # импортировать
-                if newPluginsCount == oldPluginsCount and len (errors) != 0:
-                    self._print (u"\n\n".join (errors))
-                    self._print (u"**********\n")
+                if newPluginsCount == oldPluginsCount and len(errors) != 0:
+                    self._print(u"\n\n".join(errors))
+                    self._print(u"**********\n")
 
-
-    def _importSingleModule (self, packageName, fileName):
+    def _importSingleModule(self, packageName, fileName):
         """
         Импортировать один модуль по имени пакета и файла с модулем
         """
@@ -261,14 +250,13 @@ class PluginsLoader (object):
         result = None
 
         # Проверим, что файл может быть модулем
-        if fileName.endswith (extension) and fileName != "__init__.py":
-            modulename = fileName[: -len (extension)]
+        if fileName.endswith(extension) and fileName != "__init__.py":
+            modulename = fileName[: -len(extension)]
             # Попытаться импортировать модуль
-            package = __import__ (packageName + "." + modulename)
-            result = getattr (package, modulename)
+            package = __import__(packageName + "." + modulename)
+            result = getattr(package, modulename)
 
         return result
-
 
     def __loadPlugin(self, module):
         """
@@ -276,15 +264,14 @@ class PluginsLoader (object):
         """
         assert module is not None
 
-        options = PluginsConfig (self.__application.config)
+        options = PluginsConfig(self.__application.config)
 
-        for name in dir (module):
+        for name in dir(module):
             plugin = self.__createPlugin(module,
                                          name,
                                          options.disabledPlugins.value)
             if plugin is not None:
                 return plugin
-
 
     def __createPlugin(self, module, name, disabledPlugins):
         """
@@ -293,13 +280,13 @@ class PluginsLoader (object):
         module - модуль, откуда загружается класс
         name - имя класса потенциального плагина
         """
-        if name.startswith (self.__pluginsStartName):
-            obj = getattr (module, name)
-            if obj == Plugin or not issubclass (obj, Plugin):
+        if name.startswith(self.__pluginsStartName):
+            obj = getattr(module, name)
+            if obj == Plugin or not issubclass(obj, Plugin):
                 return
 
             plugin = obj(self.__application)
-            if not self.__isNewPlugin (plugin.name):
+            if not self.__isNewPlugin(plugin.name):
                 return
 
             if plugin.name not in disabledPlugins:
@@ -310,8 +297,7 @@ class PluginsLoader (object):
 
             return plugin
 
-
-    def __isNewPlugin (self, pluginname):
+    def __isNewPlugin(self, pluginname):
         """
         Проверка того, что плагин с таким именем еще не был загружен
         newplugin - плагин, который надо проверить
@@ -319,14 +305,11 @@ class PluginsLoader (object):
         return (pluginname not in self.__plugins and
                 pluginname not in self.__disabledPlugins)
 
+    def __len__(self):
+        return len(self.__plugins)
 
-    def __len__ (self):
-        return len (self.__plugins)
-
-
-    def __getitem__ (self, pluginname):
+    def __getitem__(self, pluginname):
         return self.__plugins[pluginname]
 
-
-    def __iter__ (self):
+    def __iter__(self):
         return self.__plugins.itervalues()
