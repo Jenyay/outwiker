@@ -17,7 +17,7 @@ import outwiker.libs
 import outwiker.core.packageversion as pv
 
 from outwiker.core.defines import PLUGIN_VERSION_FILE_NAME
-from outwiker.core.pluginbase import Plugin
+from outwiker.core.pluginbase import Plugin, InvalidPlugin
 from outwiker.core.system import getOS
 from outwiker.core.xmlversionparser import XmlVersionParser
 from outwiker.gui.guiconfig import PluginsConfig
@@ -41,9 +41,8 @@ class PluginsLoader (object):
         # Значение - экземпляр плагина
         self.__disabledPlugins = {}
 
-        # The dictionary with invalid plugins.
-        # Key - plugin name (directory name), value - InvalidPlugin instance.
-        self.__invalidPlugins = {}
+        # The list of the InvalidPlugin instance.
+        self.__invalidPlugins = []
 
         # Пути, где ищутся плагины
         self.__dirlist = []
@@ -157,6 +156,7 @@ class PluginsLoader (object):
 
     def __loadPluginInfo(self, plugin_fname):
         if not os.path.exists(plugin_fname):
+            print (plugin_fname)
             return None
 
         xml_content = readTextFile(plugin_fname)
@@ -168,7 +168,7 @@ class PluginsLoader (object):
             return pv.PLUGIN_MUST_BE_UPGRADED
 
         required_versions = [
-            appinfo.requirements.packages_versions.get(u'core', [(1, 0)]),
+            appinfo.requirements.packages_versions.get('core', [(1, 0)]),
             appinfo.requirements.packages_versions.get(u'gui', [(1, 0)]),
             appinfo.requirements.packages_versions.get(u'pages', [(1, 0)]),
             appinfo.requirements.packages_versions.get(u'actions', [(1, 0)]),
@@ -199,17 +199,42 @@ class PluginsLoader (object):
                 try:
                     appinfo = self.__loadPluginInfo(plugin_fname)
                 except EnvironmentError:
-                    self._print(_(u'Plug-in "{}". Can\'t read "{}" file').
-                                format(packageName, PLUGIN_VERSION_FILE_NAME))
+                    error = _(u'Plug-in "{}". Can\'t read "{}" file').format(packageName, PLUGIN_VERSION_FILE_NAME)
+
+                    self._print(error)
+                    self.__invalidPlugins.append(InvalidPlugin(packageName,
+                                                               error))
                     continue
 
                 versions_result = self.__checkPackageVersions(appinfo)
 
+                pluginname = (appinfo.appname
+                              if (appinfo is not None and
+                                  appinfo.appname is not None)
+                              else packageName)
+
+                pluginversion = (appinfo.currentVersion
+                                 if appinfo is not None
+                                 else None)
+
                 if versions_result == pv.PLUGIN_MUST_BE_UPGRADED:
-                    self._print(_(u'Plug-in "{}" is outdated. Please, update the plug-in.').format(packageName))
+                    error = _(u'Plug-in "{}" is outdated. Please, update the plug-in.').format(pluginname)
+                    self._print(error)
+
+                    self.__invalidPlugins.append(
+                        InvalidPlugin(pluginname,
+                                      error,
+                                      pluginversion)
+                    )
                     continue
                 elif versions_result == pv.OUTWIKER_MUST_BE_UPGRADED:
-                    self._print(_(u'Plug-in "{}" is designed for a newer version OutWiker. Please, install a new OutWiker version').format(packageName))
+                    error = _(u'Plug-in "{}" is designed for a newer version OutWiker. Please, install a new OutWiker version.').format(pluginname)
+                    self._print(error)
+
+                    self.__invalidPlugins.append(
+                        InvalidPlugin(pluginname,
+                                      error,
+                                      pluginversion))
                     continue
 
                 # Список строк, описывающий возникшие ошибки
@@ -247,8 +272,14 @@ class PluginsLoader (object):
                 # Вывод ошибок, если ни одного плагина из пакета не удалось
                 # импортировать
                 if newPluginsCount == oldPluginsCount and len(errors) != 0:
-                    self._print(u"\n\n".join(errors))
+                    error = u"\n\n".join(errors)
+                    self._print(error)
                     self._print(u"**********\n")
+
+                    self.__invalidPlugins.append(
+                        InvalidPlugin(appinfo.appname,
+                                      error,
+                                      appinfo.currentVersion))
 
     def _importSingleModule(self, packageName, fileName):
         """

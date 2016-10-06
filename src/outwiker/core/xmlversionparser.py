@@ -36,9 +36,9 @@ class XmlVersionParser (object):
         requirements = self._getRequirements(root)
 
         # Get data tag for selected language
-        data_tag = self._getDataTag (root)
-        appwebsite = self._getAppWebsite (data_tag)
-        description = self._getDescription (data_tag)
+        data_tag = self._getDataTag(root)
+        appwebsite = self._getAppWebsite(data_tag)
+        description = self._getDescription(data_tag)
         author = self._getAuthorInfo(data_tag)
         versionsList = self._getVersionsList(data_tag)
 
@@ -57,7 +57,7 @@ class XmlVersionParser (object):
         if requirements_tag is None:
             return None
 
-        outwiker_version=None
+        outwiker_version = None
         try:
             outwiker_version = Version.parse(self._getTextValue(requirements_tag, u'outwiker'))
         except ValueError:
@@ -230,7 +230,7 @@ class XmlVersionParser (object):
         result = None
         result_tag = root.find(tagname)
         if result_tag is not None:
-            result = result_tag.text
+            result = unicode(result_tag.text)
 
         if result is None:
             result = u''

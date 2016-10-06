@@ -92,7 +92,8 @@ class InvalidPlugin(object):
     """
     Class with the information about plugin with errors
     """
-    def __init__(self, name, description, version=u''):
+    def __init__(self, name, description, version=u'', url=None):
         self.name = name
-        self.version = version
         self.description = description
+        self.version = version if version is not None else u''
+        self.url = url
