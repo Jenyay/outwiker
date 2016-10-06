@@ -266,13 +266,13 @@ class WikiHtmlCacheTest (unittest.TestCase):
         self.assertTrue (cache.canReadFromCache())
 
         # Загрузили плагин. Кэш не должен сработать
-        Application.plugins.load ([u"../plugins/testempty1"])
+        Application.plugins.load ([u"../test/plugins/testempty1"])
         self.assertFalse (cache.canReadFromCache())
 
         cache.saveHash()
 
         # Загрузили еще один плагин
-        Application.plugins.load ([u"../plugins/testempty2"])
+        Application.plugins.load ([u"../test/plugins/testempty2"])
         self.assertFalse (cache.canReadFromCache())
 
 
@@ -281,8 +281,8 @@ class WikiHtmlCacheTest (unittest.TestCase):
         Проверка на то, что при изменении списка установленных плагинов не работает кэширование
         """
         Application.plugins.clear()
-        Application.plugins.load ([u"../plugins/testempty1"])
-        Application.plugins.load ([u"../plugins/testempty2"])
+        Application.plugins.load ([u"../test/plugins/testempty1"])
+        Application.plugins.load ([u"../test/plugins/testempty2"])
 
         # Только создали страницу, кешировать нельзя
         cache = HtmlCache (self.testPage, Application)
@@ -295,8 +295,8 @@ class WikiHtmlCacheTest (unittest.TestCase):
         self.assertFalse (cache.canReadFromCache())
 
         # Перезагрузим плагины в другом порядке
-        Application.plugins.load ([u"../plugins/testempty2"])
-        Application.plugins.load ([u"../plugins/testempty1"])
+        Application.plugins.load ([u"../test/plugins/testempty2"])
+        Application.plugins.load ([u"../test/plugins/testempty1"])
 
         self.assertEqual (len (Application.plugins), 2)
         self.assertTrue (cache.canReadFromCache())

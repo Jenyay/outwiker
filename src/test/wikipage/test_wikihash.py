@@ -238,12 +238,12 @@ class WikiHashTest (unittest.TestCase):
         hash_src = hashCalculator.getHash (self.testPage)
 
         # Загрузили плагин. Кэш не должен сработать
-        Application.plugins.load ([u"../plugins/testempty1"])
+        Application.plugins.load ([u"../test/plugins/testempty1"])
         hash2 = hashCalculator.getHash (self.testPage)
         self.assertNotEqual (hash2, hash_src)
 
         # Загрузили еще один плагин
-        Application.plugins.load ([u"../plugins/testempty2"])
+        Application.plugins.load ([u"../test/plugins/testempty2"])
         hash3 = hashCalculator.getHash (self.testPage)
         self.assertNotEqual (hash3, hash2)
         self.assertNotEqual (hash3, hash_src)
@@ -254,8 +254,8 @@ class WikiHashTest (unittest.TestCase):
         Проверка на то, что при изменении списка установленных плагинов не работает кэширование
         """
         Application.plugins.clear()
-        Application.plugins.load ([u"../plugins/testempty1"])
-        Application.plugins.load ([u"../plugins/testempty2"])
+        Application.plugins.load ([u"../test/plugins/testempty1"])
+        Application.plugins.load ([u"../test/plugins/testempty2"])
 
         hashCalculator = WikiHashCalculator (Application)
         hash_src = hashCalculator.getHash (self.testPage)
@@ -265,8 +265,8 @@ class WikiHashTest (unittest.TestCase):
         self.assertNotEqual (hash2, hash_src)
 
         # Перезагрузим плагины в другом порядке
-        Application.plugins.load ([u"../plugins/testempty1"])
-        Application.plugins.load ([u"../plugins/testempty2"])
+        Application.plugins.load ([u"../test/plugins/testempty1"])
+        Application.plugins.load ([u"../test/plugins/testempty2"])
 
         hash3 = hashCalculator.getHash (self.testPage)
         self.assertNotEqual (hash3, hash2)
