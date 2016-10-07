@@ -242,13 +242,37 @@ class PluginsLoaderTest(unittest.TestCase):
         self.assertTrue(loader[u"TestEmpty1"].enabled)
 
     def testLoadInvalid_02(self):
-        dirlist = [u"../test/plugins/testinvalid1",
-                   u"../test/plugins/testoutdated",
-                   ]
+        dirlist = [u"../test/plugins/testinvalid1"]
 
         loader = PluginsLoader(Application)
         loader.enableOutput = False
         loader.load(dirlist)
 
         self.assertEqual(len(loader), 0)
-        self.assertEqual(len(loader.invalidPlugins), 2)
+        self.assertEqual(len(loader.invalidPlugins), 1)
+
+        self.assertIn(u'TypeError', loader.invalidPlugins[0].description)
+
+    def testLoadInvalid_03(self):
+        dirlist = [u"../test/plugins/testfromfuture"]
+
+        loader = PluginsLoader(Application)
+        loader.enableOutput = False
+        loader.load(dirlist)
+
+        self.assertEqual(len(loader), 0)
+        self.assertEqual(len(loader.invalidPlugins), 1)
+        self.assertIn(u'Please, install a new OutWiker version.',
+                      loader.invalidPlugins[0].description)
+
+    def testLoadInvalid_04(self):
+        dirlist = [u"../test/plugins/testoutdated"]
+
+        loader = PluginsLoader(Application)
+        loader.enableOutput = False
+        loader.load(dirlist)
+
+        self.assertEqual(len(loader), 0)
+        self.assertEqual(len(loader.invalidPlugins), 1)
+        self.assertIn(u'Please, update the plug-in.',
+                      loader.invalidPlugins[0].description)
