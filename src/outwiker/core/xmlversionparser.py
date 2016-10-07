@@ -229,7 +229,7 @@ class XmlVersionParser (object):
         """
         result = None
         result_tag = root.find(tagname)
-        if result_tag is not None:
+        if result_tag is not None and result_tag.text is not None:
             result = unicode(result_tag.text)
 
         if result is None:
