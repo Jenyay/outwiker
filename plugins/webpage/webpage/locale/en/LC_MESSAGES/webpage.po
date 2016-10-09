@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: webpage\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-24 21:05+0300\n"
-"PO-Revision-Date: 2016-05-24 21:05+0300\n"
+"POT-Creation-Date: 2016-10-09 21:54+0300\n"
+"PO-Revision-Date: 2016-10-09 21:54+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language: en_US\n"
@@ -21,11 +21,11 @@ msgstr ""
 "X-Poedit-KeywordsList: _\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: webpage.py:46
-msgid "Download HTML pages from web"
-msgstr "Download HTML pages from web"
+#: webpage.py:40
+msgid "Plug-in for downloading HTML pages from web"
+msgstr "Plug-in for downloading HTML pages from web"
 
-#: webpage.py:56
+#: webpage.py:44
 msgid "http://jenyay.net/Outwiker/WebPageEn"
 msgstr "http://jenyay.net/Outwiker/WebPageEn"
 
@@ -93,11 +93,12 @@ msgstr "Disable scripts on page"
 msgid "WebPage. Enable / disable scripts on downloaded page."
 msgstr "WebPage. Enable / disable scripts on downloaded page."
 
-#: webnotepage.py:120
+#: webnotepage.py:114
 msgid "Web Page"
 msgstr "Web Page"
 
-#: webnotepage.py:167 gui/guicontroller.py:56 gui/webpagetoolbar.py:25
+#: webnotepage.py:158 gui/guicontroller.py:54 gui/webpagetoolbar.py:25
+#: gui/downloaddialog.py:263
 msgid "Web page"
 msgstr "Web page"
 
@@ -117,27 +118,27 @@ msgstr "Source URL"
 msgid "Link"
 msgstr "Link"
 
-#: gui/guicontroller.py:237
+#: gui/guicontroller.py:219
 msgid "Heading"
 msgstr "Heading"
 
-#: gui/guicontroller.py:242
+#: gui/guicontroller.py:224
 msgid "Font"
 msgstr "Font"
 
-#: gui/guicontroller.py:247
+#: gui/guicontroller.py:229
 msgid "Alignment"
 msgstr "Alignment"
 
-#: gui/guicontroller.py:252
+#: gui/guicontroller.py:234
 msgid "Formatting"
 msgstr "Formatting"
 
-#: gui/guicontroller.py:257
+#: gui/guicontroller.py:239
 msgid "Lists"
 msgstr "Lists"
 
-#: gui/guicontroller.py:262
+#: gui/guicontroller.py:244
 msgid "Tables"
 msgstr "Tables"
 
@@ -165,41 +166,44 @@ msgstr "Enter link for downloading"
 msgid "Error"
 msgstr "Error"
 
-#: gui/downloaddialog.py:240
+#: gui/downloaddialog.py:243
 msgid "HTML files (*.html; *.htm)|*.html;*.htm|All files|*.*"
 msgstr "HTML files (*.html; *.htm)|*.html;*.htm|All files|*.*"
 
-#: gui/downloaddialog.py:255 gui/downloaddialog.py:276
+#: gui/downloaddialog.py:258 gui/downloaddialog.py:280
 msgid "Page creation is canceled."
 msgstr "Page creation is canceled."
 
-#: gui/downloaddialog.py:269
+#: gui/downloaddialog.py:272
 msgid "Enter a title for the page"
 msgstr "Enter a title for the page"
 
-#: gui/downloaddialog.py:270
+#: gui/downloaddialog.py:273
 msgid "Page title"
 msgstr "Page title"
 
-#: gui/downloaddialog.py:292
+#: gui/downloaddialog.py:296
 msgid "Can't create the page. Perhaps the title of the page is too long."
 msgstr "Can't create the page. Perhaps the title of the page is too long."
 
-#: gui/downloaddialog.py:320
+#: gui/downloaddialog.py:324
 msgid "Start downloading\n"
 msgstr "Start downloading\n"
 
-#: gui/downloaddialog.py:325
+#: gui/downloaddialog.py:329
 msgid "Download error: {}\n"
 msgstr "Download error: {}\n"
 
-#: gui/downloaddialog.py:329
+#: gui/downloaddialog.py:333
 msgid "Invalid URL or file format\n"
 msgstr "Invalid URL or file format\n"
 
-#: gui/downloaddialog.py:332
+#: gui/downloaddialog.py:336
 msgid "Finish downloading\n"
 msgstr "Finish downloading\n"
+
+#~ msgid "Download HTML pages from web"
+#~ msgstr "Download HTML pages from web"
 
 #~ msgid "Can't execute file '%s'"
 #~ msgstr "Can't execute file '%s'"
