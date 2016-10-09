@@ -24,72 +24,68 @@ from actions.dates import WikiDateCreationAction, WikiDateEditionAction
 
 
 _actions = [
-    (WikiFontSizeBigAction, HotKey (".", ctrl=True)),
-    (WikiFontSizeSmallAction, HotKey (",", ctrl=True)),
-    (WikiNonParsedAction, None),
-    (WikiThumbAction, HotKey ("M", ctrl=True)),
-    (WikiOpenHtmlCodeAction, HotKey ("F4", shift=True)),
-    (WikiUpdateHtmlAction, HotKey ("F4", ctrl=True)),
-    (WikiAttachListAction, None),
-    (WikiChildListAction, None),
-    (WikiIncludeAction, None),
-    (WikiDateCreationAction, None),
-    (WikiDateEditionAction, None),
+   (WikiFontSizeBigAction, HotKey(".", ctrl=True)),
+   (WikiFontSizeSmallAction, HotKey(",", ctrl=True)),
+   (WikiNonParsedAction, None),
+   (WikiThumbAction, HotKey("M", ctrl=True)),
+   (WikiOpenHtmlCodeAction, HotKey("F4", shift=True)),
+   (WikiUpdateHtmlAction, HotKey("F4", ctrl=True)),
+   (WikiAttachListAction, None),
+   (WikiChildListAction, None),
+   (WikiIncludeAction, None),
+   (WikiDateCreationAction, None),
+   (WikiDateEditionAction, None),
 ]
 
 
-class WikiWikiPage (WikiPage):
+class WikiWikiPage(WikiPage):
     """
     Класс wiki-страниц
     """
-    def __init__ (self, path, title, parent, readonly=False):
-        WikiPage.__init__ (self, path, title, parent, readonly)
+    def __init__(self, path, title, parent, readonly=False):
+        WikiPage.__init__(self, path, title, parent, readonly)
 
     @staticmethod
-    def getTypeString ():
+    def getTypeString():
         return u"wiki"
 
     def getHtmlPath(self):
         """
         Получить путь до результирующего файла HTML
         """
-        return os.path.join (self.path, PAGE_RESULT_HTML)
+        return os.path.join(self.path, PAGE_RESULT_HTML)
 
 
-class WikiPageFactory (PageFactory):
+class WikiPageFactory(PageFactory):
     """
     Фабрика для создания викистраниц и их представлений
     """
     def getPageType(self):
         return WikiWikiPage
 
-
     @property
-    def title (self):
+    def title(self):
         """
         Название страницы, показываемое пользователю
         """
         return _(u"Wiki Page")
 
-
-    def getPageView (self, parent):
+    def getPageView(self, parent):
         """
         Вернуть контрол, который будет отображать и редактировать страницу
         """
-        return WikiPageView (parent)
-
+        return WikiPageView(parent)
 
     @staticmethod
-    def registerActions (application):
+    def registerActions(application):
         """
         Зарегистрировать все действия, связанные с викистраницей
         """
-        map (lambda actionTuple: application.actionController.register (actionTuple[0](application),
-                                                                        actionTuple[1]),
-             _actions)
-
+        map(lambda actionTuple: application.actionController.register(actionTuple[0](application),
+                                                                      actionTuple[1]),
+            _actions)
 
     @staticmethod
-    def removeActions (application):
-        map (lambda actionTuple: application.actionController.removeAction (actionTuple[0].stringId),
-             _actions)
+    def removeActions(application):
+        map(lambda actionTuple: application.actionController.removeAction(actionTuple[0].stringId),
+            _actions)

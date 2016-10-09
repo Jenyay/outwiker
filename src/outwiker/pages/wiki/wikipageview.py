@@ -11,8 +11,6 @@ from outwiker.core.commands import insertCurrentDate
 from .wikieditor import WikiEditor
 from .wikitoolbar import WikiToolBar
 from .wikiconfig import WikiConfig
-from .htmlgenerator import HtmlGenerator
-from .htmlcache import HtmlCache
 from .basewikipageview import BaseWikiPageView
 from .tableactions import (getInsertTableActionFunc,
                            getInsertTableRowsActionFunc,
@@ -54,7 +52,7 @@ class WikiPageView(BaseWikiPageView):
     def _createToolbar(self, mainWindow):
         return WikiToolBar(mainWindow, mainWindow.auiManager)
 
-    def _getAttachString (self, fnames):
+    def _getAttachString(self, fnames):
         """
         Функция возвращает текст, который будет вставлен на страницу при
         вставке выбранных прикрепленных файлов из панели вложений
@@ -62,9 +60,9 @@ class WikiPageView(BaseWikiPageView):
         Перегрузка метода из BaseTextPanel
         """
         text = ""
-        count = len (fnames)
+        count = len(fnames)
 
-        for n in range (count):
+        for n in range(count):
             text += "Attach:" + fnames[n]
             if n != count - 1:
                 text += "\n"

@@ -33,7 +33,7 @@ from webpagetoolbar import WebPageToolBar
 
 class GuiController (object):
     """Controller for creation and destroying GUI."""
-    def __init__ (self, application):
+    def __init__(self, application):
         self._application = application
 
         self._addedWebPageMenuItems = False
@@ -42,82 +42,66 @@ class GuiController (object):
         self._menuName = None
         self._menu = None
 
-
-    def initialize (self):
+    def initialize(self):
         global _
         _ = get_()
 
         self._application.onPageViewDestroy += self._onPageViewDestroy
         self._application.onPageViewCreate += self._onPageViewCreate
-        self._application.onPageSelect.bind (self._onPageSelect,
-                                             EVENT_PRIORITY_DEFAULT - 10)
-        self._application.onPageUpdateNeeded += self._onPageUpdateNeeded
+        self._application.onPageSelect.bind(self._onPageSelect,
+                                            EVENT_PRIORITY_DEFAULT - 10)
 
         self._menuName = _(u"Web page")
         self._createMenu()
 
-
-    def destroy (self):
+    def destroy(self):
         self._application.onPageViewDestroy -= self._onPageViewDestroy
         self._application.onPageViewCreate -= self._onPageViewCreate
         self._application.onPageSelect -= self._onPageSelect
-        self._application.onPageUpdateNeeded -= self._onPageUpdateNeeded
 
         self._removeGui()
 
-
-    def _onPageUpdateNeeded (self, page, params):
+    def _onPageSelect(self, page):
         if (page is not None and
                 page.getTypeString() == WebNotePage.getTypeString()):
-            self._application.mainWindow.pagePanel.pageView.updateHtml()
+            self._application.actionController.check(DisableScriptsAction.stringId,
+                                                     page.disableScripts)
 
-
-    def _onPageSelect (self, page):
-        if (page is not None and
-                page.getTypeString() == WebNotePage.getTypeString()):
-            self._application.actionController.check (DisableScriptsAction.stringId,
-                                                      page.disableScripts)
-
-
-    def _onPageViewCreate (self, page):
+    def _onPageViewCreate(self, page):
         assert page is not None
         self._createMenu()
         if page.getTypeString() == WebNotePage.getTypeString():
             self._addWebPageGui()
 
-
-    def _onPageViewDestroy (self, page):
+    def _onPageViewDestroy(self, page):
         assert page is not None
         if page.getTypeString() == WebNotePage.getTypeString():
             self._removeGui()
             self._createMenu()
 
-
-    def _removeGui (self):
+    def _removeGui(self):
         mainWindow = self._application.mainWindow
         if mainWindow is not None:
             actionController = self._application.actionController
-            actionController.removeMenuItem (CreateChildWebPageAction.stringId)
-            actionController.removeToolbarButton (CreateChildWebPageAction.stringId)
+            actionController.removeMenuItem(CreateChildWebPageAction.stringId)
+            actionController.removeToolbarButton(CreateChildWebPageAction.stringId)
 
-            actionController.removeMenuItem (CreateSiblingWebPageAction.stringId)
-            actionController.removeToolbarButton (CreateSiblingWebPageAction.stringId)
+            actionController.removeMenuItem(CreateSiblingWebPageAction.stringId)
+            actionController.removeToolbarButton(CreateSiblingWebPageAction.stringId)
 
             self._removeWebPageGui()
             self._removeMenu()
 
-
-    def _removeMenu (self):
+    def _removeMenu(self):
         if self._menu is not None:
             mainMenu = self._application.mainWindow.mainMenu
-            index = mainMenu.FindMenu (self._menuName)
+            index = mainMenu.FindMenu(self._menuName)
             assert index != wx.NOT_FOUND
 
-            mainMenu.Remove (index)
+            mainMenu.Remove(index)
             self._menu = None
 
-
-    def _addWebPageGui (self):
+    def _addWebPageGui(self):
         mainWindow = self._application.mainWindow
 
         if (mainWindow is not None and not self._addedWebPageMenuItems):
@@ -130,13 +114,13 @@ class GuiController (object):
             self._menu.AppendSeparator()
 
             openSourceAction = OpenSourceURLAction(self._application)
-            controller.appendMenuItem (openSourceAction.stringId, self._menu)
+            controller.appendMenuItem(openSourceAction.stringId, self._menu)
 
-            copySourceUrlAction = CopySourceURLToClipboardAction (self._application)
-            controller.appendMenuItem (copySourceUrlAction.stringId, self._menu)
+            copySourceUrlAction = CopySourceURLToClipboardAction(self._application)
+            controller.appendMenuItem(copySourceUrlAction.stringId, self._menu)
 
             showInfoAction = ShowPageInfoAction(self._application)
-            controller.appendMenuItem (showInfoAction.stringId, self._menu)
+            controller.appendMenuItem(showInfoAction.stringId, self._menu)
 
             self._addDisableScriptsTools()
             self._addToolbarSeparator()
@@ -166,42 +150,40 @@ class GuiController (object):
 
             self._addedWebPageMenuItems = True
 
-
-    def _removeWebPageGui (self):
+    def _removeWebPageGui(self):
         if self._addedWebPageMenuItems:
             actionController = self._application.actionController
 
-            actionController.removeMenuItem (OpenSourceURLAction.stringId)
-            actionController.removeMenuItem (CopySourceURLToClipboardAction.stringId)
-            actionController.removeMenuItem (ShowPageInfoAction.stringId)
-            actionController.removeMenuItem (SwitchCodeResultAction.stringId)
-            actionController.removeMenuItem (DisableScriptsAction.stringId)
+            actionController.removeMenuItem(OpenSourceURLAction.stringId)
+            actionController.removeMenuItem(CopySourceURLToClipboardAction.stringId)
+            actionController.removeMenuItem(ShowPageInfoAction.stringId)
+            actionController.removeMenuItem(SwitchCodeResultAction.stringId)
+            actionController.removeMenuItem(DisableScriptsAction.stringId)
 
             if panelName in self._application.mainWindow.toolbars:
-                self._application.mainWindow.toolbars.updatePanesInfo ()
+                self._application.mainWindow.toolbars.updatePanesInfo()
 
             self._removePolyActionTools()
             if panelName in self._application.mainWindow.toolbars:
-                actionController.removeToolbarButton (SwitchCodeResultAction.stringId)
-                actionController.removeToolbarButton (DisableScriptsAction.stringId)
+                actionController.removeToolbarButton(SwitchCodeResultAction.stringId)
+                actionController.removeToolbarButton(DisableScriptsAction.stringId)
 
-                self._application.mainWindow.toolbars.destroyToolBar (panelName)
+                self._application.mainWindow.toolbars.destroyToolBar(panelName)
 
-            self._menu.DestroyItem (self._headingMenuItem)
-            self._menu.DestroyItem (self._fontMenuItem)
-            self._menu.DestroyItem (self._alignMenuItem)
-            self._menu.DestroyItem (self._formatMenuItem)
-            self._menu.DestroyItem (self._listMenuItem)
-            self._menu.DestroyItem (self._tableMenuItem)
+            self._menu.DestroyItem(self._headingMenuItem)
+            self._menu.DestroyItem(self._fontMenuItem)
+            self._menu.DestroyItem(self._alignMenuItem)
+            self._menu.DestroyItem(self._formatMenuItem)
+            self._menu.DestroyItem(self._listMenuItem)
+            self._menu.DestroyItem(self._tableMenuItem)
 
             self._addedWebPageMenuItems = False
 
-
-    def _removePolyActionTools (self):
+    def _removePolyActionTools(self):
         actionController = self._application.actionController
 
         # Удалим элементы меню полиморфных действий
-        map (lambda strid: actionController.removeMenuItem (strid),
+        map(lambda strid: actionController.removeMenuItem(strid),
              polyActions)
 
         # Удалим кнопки с панелей инструментов
@@ -213,7 +195,6 @@ class GuiController (object):
         map (lambda strid: actionController.getAction (strid).setFunc (None),
              polyActions)
 
-
     def _createMenu (self):
         if self._application.mainWindow is not None and self._menu is None:
             self._menu = wx.Menu (u'')
@@ -222,7 +203,6 @@ class GuiController (object):
                                                           self._menuName)
             self._createSiblingWebPageAction()
             self._createChildWebPageAction()
-
 
     def _createWebPageMenu (self):
         self._headingMenu = wx.Menu()
@@ -264,11 +244,9 @@ class GuiController (object):
             _(u"Tables")
         )
 
-
     @property
     def toolsMenu (self):
         return self._menu
-
 
     def _addRenderTools (self):
         self._application.actionController.appendMenuItem (SwitchCodeResultAction.stringId, self.toolsMenu)
@@ -277,7 +255,6 @@ class GuiController (object):
             self._application.mainWindow.toolbars[self._application.mainWindow.GENERAL_TOOLBAR_STR],
             os.path.join (self.imagesDir, "render.png"),
             fullUpdate=False)
-
 
     def _addDisableScriptsTools (self):
         """
@@ -292,7 +269,6 @@ class GuiController (object):
                                                                      toolbar,
                                                                      image,
                                                                      fullUpdate=False)
-
 
     def _addFontTools (self):
         """
@@ -338,7 +314,6 @@ class GuiController (object):
                                                                 toolbar,
                                                                 os.path.join (self.imagesDir, "text_underline.png"),
                                                                 fullUpdate=False)
-
 
         # Зачеркнутый шрифт
         self._application.actionController.getAction (STRIKE_STR_ID).setFunc (lambda param: self.turnText (u"<strike>", u"</strike>"))
@@ -483,7 +458,7 @@ class GuiController (object):
         self._application.actionController.appendMenuItem (LIST_NUMBERS_STR_ID, menu)
         self._application.actionController.appendToolbarButton (LIST_NUMBERS_STR_ID,
                                                                 toolbar,
-                                                                os.path.join (self.imagesDir, "text_list_numbers.png"),
+                                                                os.path.join(self.imagesDir, "text_list_numbers.png"),
                                                                 fullUpdate=False)
 
 
