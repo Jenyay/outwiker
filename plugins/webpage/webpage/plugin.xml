@@ -3,7 +3,7 @@
 	<name>WebPage</name>
 	<updates>http://jenyay.net/uploads/Outwiker/WebPage/plugin.xml</updates>
     <requirements>
-        <outwiker>1.9.0.782 dev</outwiker>
+        <outwiker>2.0.0.801 dev</outwiker>
         <os>Windows, Linux</os>
 		<packages>
 			<core>1.0</core>
@@ -25,6 +25,11 @@
 			<site>http://jenyay.net</site>
 		</author>
 		<changelog>
+			<version number="1.2">
+                <download os="all">http://jenyay.net/uploads/Outwiker/WebPage/webpage-1.2.zip</download>
+				<change>Added OutWiker 2.0 supporting.</change>
+			</version>
+
 			<version number="1.1.1" date="August 20, 2016">
                 <download os="all">http://jenyay.net/uploads/Outwiker/WebPage/webpage-1.1.1.zip</download>
 				<change>Added the Swedish translation.</change>
@@ -58,6 +63,10 @@
 			<email>jenyay.ilin@gmail.com</email>
 			<site>http://jenyay.net</site>
 		</author>
+			<version number="1.2">
+                <download os="all">http://jenyay.net/uploads/Outwiker/WebPage/webpage-1.2.zip</download>
+				<change>Добавлена поддержка OutWiker 2.0.</change>
+			</version>
 
 		<changelog>
 			<version number="1.1.1" date="20.08.2016">

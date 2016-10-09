@@ -11,9 +11,6 @@ from outwiker.core.system import getOS
 from .i18n import set_
 
 
-__version__ = u'1.1.1'
-
-
 if getCurrentVersion() < Version(1, 9, 0, 781, status=StatusSet.DEV):
     logging.warning(u"WebPage plugin. OutWiker version requirement: 1.9.0.781")
 else:
@@ -40,11 +37,7 @@ else:
 
         @property
         def description(self):
-            return _(u"Download HTML pages from web")
-
-        @property
-        def version(self):
-            return __version__
+            return _(u"Plug-in for downloading HTML pages from web")
 
         @property
         def url(self):
