@@ -107,9 +107,12 @@ class HtmlRenderWebKit(HtmlRender):
         return (None, None, None, None)
 
 
-    def __onNavigate (self, event):
+    def __onNavigate(self, event):
         # Проверка на то, что мы не пытаемся открыть вложенный фрейм
-        # frame = event.GetTarget()
+        frame = event.GetTarget()
+        if len(frame) != 0:
+            return
+
         href = event.GetURL()
         curr_href = self.ctrl.GetCurrentURL()
 
