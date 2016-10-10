@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-24 21:05+0300\n"
-"PO-Revision-Date: 2016-08-16 16:51+0300\n"
+"POT-Creation-Date: 2016-10-09 21:54+0300\n"
+"PO-Revision-Date: 2016-10-10 10:00+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -11,16 +11,16 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.8\n"
+"X-Generator: Poedit 1.8.7.1\n"
 "X-Crowdin-Project: outwiker\n"
 "X-Crowdin-Language: sv-SE\n"
 "X-Crowdin-File: webpage.pot\n"
 
-#: webpage.py:46
-msgid "Download HTML pages from web"
-msgstr "Ladda ner HTML-sidor från nätet"
+#: webpage.py:40
+msgid "Plug-in for downloading HTML pages from web"
+msgstr "Insticksmodul för nedladdning av HTML-sidor från nätet"
 
-#: webpage.py:56
+#: webpage.py:44
 msgid "http://jenyay.net/Outwiker/WebPageEn"
 msgstr "http://jenyay.net/Outwiker/WebPageEn"
 
@@ -88,11 +88,12 @@ msgstr "Inaktivera skript på sidan"
 msgid "WebPage. Enable / disable scripts on downloaded page."
 msgstr "WebPage. Aktivera/Inaktivera skript på nedladdad sida."
 
-#: webnotepage.py:120
+#: webnotepage.py:114
 msgid "Web Page"
 msgstr "WebPage"
 
-#: webnotepage.py:167 gui/guicontroller.py:56 gui/webpagetoolbar.py:25
+#: webnotepage.py:158 gui/guicontroller.py:54 gui/webpagetoolbar.py:25
+#: gui/downloaddialog.py:263
 msgid "Web page"
 msgstr "Webbsida"
 
@@ -112,27 +113,27 @@ msgstr "Käll-URL"
 msgid "Link"
 msgstr "Länk"
 
-#: gui/guicontroller.py:237
+#: gui/guicontroller.py:219
 msgid "Heading"
 msgstr "Rubrik"
 
-#: gui/guicontroller.py:242
+#: gui/guicontroller.py:224
 msgid "Font"
 msgstr "Teckensnitt"
 
-#: gui/guicontroller.py:247
+#: gui/guicontroller.py:229
 msgid "Alignment"
 msgstr "Justering"
 
-#: gui/guicontroller.py:252
+#: gui/guicontroller.py:234
 msgid "Formatting"
 msgstr "Formatering"
 
-#: gui/guicontroller.py:257
+#: gui/guicontroller.py:239
 msgid "Lists"
 msgstr "Listor"
 
-#: gui/guicontroller.py:262
+#: gui/guicontroller.py:244
 msgid "Tables"
 msgstr "Tabeller"
 
@@ -160,40 +161,40 @@ msgstr "Ange länk för nedladdning"
 msgid "Error"
 msgstr "Fel"
 
-#: gui/downloaddialog.py:240
+#: gui/downloaddialog.py:243
 msgid "HTML files (*.html; *.htm)|*.html;*.htm|All files|*.*"
 msgstr "HTML-filer (*.html; *.htm)|*.html;*.htm|Alla filer|*.*"
 
-#: gui/downloaddialog.py:255 gui/downloaddialog.py:276
+#: gui/downloaddialog.py:258 gui/downloaddialog.py:280
 msgid "Page creation is canceled."
 msgstr "Sidskapande avbröts."
 
-#: gui/downloaddialog.py:269
+#: gui/downloaddialog.py:272
 msgid "Enter a title for the page"
 msgstr "Ange titel för sidan"
 
-#: gui/downloaddialog.py:270
+#: gui/downloaddialog.py:273
 msgid "Page title"
 msgstr "Sidtitel"
 
-#: gui/downloaddialog.py:292
+#: gui/downloaddialog.py:296
 msgid "Can't create the page. Perhaps the title of the page is too long."
 msgstr "Kan inte skapa sidan. Sidans titel kanske är för lång."
 
-#: gui/downloaddialog.py:320
+#: gui/downloaddialog.py:324
 msgid "Start downloading\n"
 msgstr "Starta nedladdning\n"
 
-#: gui/downloaddialog.py:325
+#: gui/downloaddialog.py:329
 msgid "Download error: {}\n"
 msgstr ""
 "Nedladdningsfel: {}\n"
 "\n"
 
-#: gui/downloaddialog.py:329
+#: gui/downloaddialog.py:333
 msgid "Invalid URL or file format\n"
 msgstr "Ogiltig URL eller filformat\n"
 
-#: gui/downloaddialog.py:332
+#: gui/downloaddialog.py:336
 msgid "Finish downloading\n"
 msgstr "Avsluta nedladdning\n"
