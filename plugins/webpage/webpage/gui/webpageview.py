@@ -5,8 +5,7 @@ from outwiker.gui.htmltexteditor import HtmlTextEditor
 from outwiker.pages.html.basehtmlpanel import (BaseHtmlPanel,
                                                EVT_PAGE_TAB_CHANGED)
 
-from webpage.misc import polyActions, onPrepareHtmlEventString
-from webpage.events import PrepareHtmlEventParams
+from webpage.misc import polyActions
 
 
 class WebPageView (BaseHtmlPanel):
@@ -18,7 +17,6 @@ class WebPageView (BaseHtmlPanel):
         self._application.mainWindow.updateShortcuts()
         self.mainWindow.UpdateAuiManager()
 
-        self._application.onPageUpdate += self.__onPageUpdate
         self.Bind(EVT_PAGE_TAB_CHANGED, handler=self.onTabChanged)
 
     def getTextEditor(self):
@@ -36,7 +34,6 @@ class WebPageView (BaseHtmlPanel):
         event.Skip()
 
     def Clear(self):
-        self._application.onPageUpdate -= self.__onPageUpdate
         self.Unbind(EVT_PAGE_TAB_CHANGED, handler=self.onTabChanged)
         super(WebPageView, self).Clear()
 
@@ -47,29 +44,8 @@ class WebPageView (BaseHtmlPanel):
         map(lambda strid: actionController.enableTools(strid, enabled),
             polyActions)
 
-    def __onPageUpdate(self, sender, **kwargs):
-        if sender == self._currentpage:
-            if self.notebook.GetSelection() == self.RESULT_PAGE_INDEX:
-                self.updateHtml()
-
     def updateHtml(self):
-        pass
-        # self._updateResult()
-
-    def generateHtml(self, page):
-        from bs4 import BeautifulSoup
-
-        soup = BeautifulSoup(page.content, "html.parser")
-        params = PrepareHtmlEventParams(self._application.selectedPage,
-                                        soup)
-        self._application.getEvent(onPrepareHtmlEventString)(params)
-        html = params.soup.prettify()
-
-        return html
+        self._updateHtmlWindow()
 
     def removeGui(self):
         super(WebPageView, self).removeGui()
-
-    def _changeContentByEvent(self, page, params, event):
-        event(page, params)
-        return params.result

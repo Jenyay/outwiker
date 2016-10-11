@@ -21,6 +21,7 @@ from actions.disablescripts import DisableScriptsAction
 from actions.copysourceurl import CopySourceURLToClipboardAction
 
 from misc import onPrepareHtmlEventString
+from events import PrepareHtmlEventParams
 from htmlprocessors.disablescripts import disableScripts
 from htmlprocessors.maxieversion import maxIEVersion
 
@@ -132,5 +133,15 @@ class Controller(object):
 
     def _updatePage(self, page):
         path = page.getHtmlPath()
-        html = page.content
+        html = self.generateHtml(page)
         writeTextFile(path, html)
+
+    def generateHtml(self, page):
+        from bs4 import BeautifulSoup
+
+        soup = BeautifulSoup(page.content, "html.parser")
+        params = PrepareHtmlEventParams(self._application.selectedPage, soup)
+        self._application.getEvent(onPrepareHtmlEventString)(params)
+        html = params.soup.prettify()
+
+        return html
