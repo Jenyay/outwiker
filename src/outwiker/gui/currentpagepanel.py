@@ -128,6 +128,7 @@ class CurrentPagePanel(wx.Panel):
         if self.__pageView is not None:
             assert page is not None
             self.__pageView.page = page
+            self.__pageView.SetFocus()
 
         # Запомнить страницу, чтобы потом можно было бы сравнивать ее тип с новой страницей
         self.__currentPage = page

@@ -53,7 +53,6 @@ class BaseHtmlPanel(BaseTextPanel):
         self.notebook = wx.Notebook(self, -1, style=wx.NB_BOTTOM)
         self._codeEditor = self.getTextEditor()(self.notebook)
 
-        # self.htmlWindowPanel = HtmlWindowPanel (self.notebook)
         self.htmlWindow = getOS().getHtmlRender (self.notebook)
 
         self.__do_layout()
@@ -184,6 +183,8 @@ class BaseHtmlPanel(BaseTextPanel):
             self.codeEditor.EmptyUndoBuffer()
             self.codeEditor.SetReadOnly (page.readonly)
             self.SetCursorPosition(self._getCursorPositionOption(page).value)
+            self.codeEditor.ScrollToLine(self.codeEditor.GetCurrentLine())
+            self.codeEditor.SetFocus()
 
             self._updateHtmlWindow()
             tabIndex = self.loadPageTab (self._currentpage)
@@ -425,3 +426,9 @@ class BaseHtmlPanel(BaseTextPanel):
 
     def _onSpellOnOff (self, event):
         self._codeEditor.setDefaultSettings()
+
+    def SetFocus(self):
+        if self.selectedPageIndex == self.CODE_PAGE_INDEX:
+            return self.codeEditor.SetFocus()
+        elif self.selectedPageIndex == self.RESULT_PAGE_INDEX:
+            return self.htmlWindow.SetFocus()

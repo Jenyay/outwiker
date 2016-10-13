@@ -79,6 +79,7 @@ class WikiPageController(object):
         assert page is not None
         if page.getTypeString() == WikiWikiPage.getTypeString():
             self._colorizerController.initialize(page)
+            self._application.mainWindow.pagePanel.pageView.SetFocus()
 
     def __onPageViewDestroy(self, page):
         assert page is not None

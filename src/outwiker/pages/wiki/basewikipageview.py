@@ -189,6 +189,12 @@ class BaseWikiPageView (BaseHtmlPanel):
         self.addPage (self.htmlCodeWindow, _("HTML"))
         return self.pageCount - 1
 
+    def SetFocus(self):
+        if self.selectedPageIndex == self.htmlcodePageIndex:
+            self.htmlCodeWindow.SetFocus()
+        else:
+            super(BaseWikiPageView, self).SetFocus()
+
 
     def GetSearchPanel (self):
         if self.selectedPageIndex == self.CODE_PAGE_INDEX:
