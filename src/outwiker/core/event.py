@@ -105,3 +105,19 @@ class CustomEvents(object):
         if key not in self._events:
             self._events[key] = Event()
         return self._events[key]
+
+
+def pagetype(pagecls):
+    """
+    The decorator to filter events. The function will be called for
+    pages of the pagecls type.
+
+    Added in outwiker.core version 1.1
+    """
+    def decorator(func):
+        def event_func(self, page, *args, **kwargs):
+            if (page is not None and
+                    pagecls.getTypeString() == page.getTypeString()):
+                return func(self, page, *args, **kwargs)
+        return event_func
+    return decorator

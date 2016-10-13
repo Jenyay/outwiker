@@ -5,6 +5,7 @@ from outwiker.gui.pagedialogpanels.appearancepanel import(
     AppearanceController)
 
 from outwiker.core.htmlimproverfactory import HtmlImproverFactory
+from outwiker.core.event import pagetype
 from outwiker.core.events import (PreprocessingParams,
                                   PreHtmlImprovingParams,
                                   PostprocessingParams,
@@ -71,24 +72,23 @@ class HtmlPageController(object):
         self._appearancePanel = None
         self._appearanceController = None
 
+    @pagetype(HtmlWikiPage)
     def __onPageViewCreate(self, page):
         assert page is not None
         self._spellController.initialize(page)
 
+    @pagetype(HtmlWikiPage)
     def __onPageViewDestroy(self, page):
         assert page is not None
         self._spellController.clear()
 
-
     def __onPageDialogPageFactoriesNeeded(self, page, params):
         params.addPageFactory(HtmlPageFactory())
 
+    @pagetype(HtmlWikiPage)
     def __onPageUpdateNeeded(self, page, params):
-        if (page is None or
-                page.getTypeString() != HtmlWikiPage.getTypeString() or
-                page.readonly):
+        if page.readonly:
             return
-
         self._updatePage(page)
 
     def _updatePage(self, page):

@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 
+from outwiker.core.event import pagetype
 from outwiker.gui.simplespellcontroller import SimpleSpellController
 from textpage import TextPageFactory, TextWikiPage
 
@@ -24,10 +25,12 @@ class TextPageController (object):
 
         self._spellController.clear()
 
+    @pagetype(TextWikiPage)
     def __onPageViewCreate(self, page):
         assert page is not None
         self._spellController.initialize(page)
 
+    @pagetype(TextWikiPage)
     def __onPageViewDestroy(self, page):
         assert page is not None
         self._spellController.clear()

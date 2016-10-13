@@ -2,6 +2,7 @@
 
 import os
 
+from outwiker.core.event import pagetype
 from outwiker.core.factoryselector import FactorySelector
 from outwiker.core.style import Style
 from outwiker.gui.pagedialogpanels.appearancepanel import(AppearancePanel,
@@ -62,15 +63,13 @@ class Controller (object):
     def __onPageDialogPageFactoriesNeeded (self, page, params):
         params.addPageFactory (MarkdownPageFactory())
 
+    @pagetype(MarkdownPage)
     def __onPageViewCreate(self, page):
-        assert page is not None
-        if page.getTypeString() == MarkdownPage.getTypeString():
-            self._colorizerController.initialize(page)
+        self._colorizerController.initialize(page)
 
+    @pagetype(MarkdownPage)
     def __onPageViewDestroy(self, page):
-        assert page is not None
-        if page.getTypeString() == MarkdownPage.getTypeString():
-            self._colorizerController.clear()
+        self._colorizerController.clear()
 
     def __onPageDialogPageTypeChanged(self, page, params):
         if params.pageType == MarkdownPage.getTypeString():
@@ -97,10 +96,9 @@ class Controller (object):
         self._appearancePanel = None
         self._appearanceController = None
 
+    @pagetype(MarkdownPage)
     def __onPageUpdateNeeded(self, page, params):
-        if (page is None or
-                page.getTypeString() != MarkdownPage.getTypeString() or
-                page.readonly):
+        if page.readonly:
             return
 
         if not params.allowCache:

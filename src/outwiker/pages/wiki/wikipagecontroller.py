@@ -3,6 +3,7 @@
 import os
 
 from outwiker.core.style import Style
+from outwiker.core.event import pagetype
 from outwiker.gui.pagedialogpanels.appearancepanel import(AppearancePanel,
                                                           AppearanceController)
 from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
@@ -75,16 +76,14 @@ class WikiPageController(object):
 
         dialog.appendPreferenceGroup(_(u'Wiki Page'), [prefPanelInfo])
 
+    @pagetype(WikiWikiPage)
     def __onPageViewCreate(self, page):
-        assert page is not None
-        if page.getTypeString() == WikiWikiPage.getTypeString():
-            self._colorizerController.initialize(page)
-            self._application.mainWindow.pagePanel.pageView.SetFocus()
+        self._colorizerController.initialize(page)
+        self._application.mainWindow.pagePanel.pageView.SetFocus()
 
+    @pagetype(WikiWikiPage)
     def __onPageViewDestroy(self, page):
-        assert page is not None
-        if page.getTypeString() == WikiWikiPage.getTypeString():
-            self._colorizerController.clear()
+        self._colorizerController.clear()
 
     def __onPageDialogPageFactoriesNeeded(self, page, params):
         params.addPageFactory(WikiPageFactory())

@@ -5,6 +5,7 @@ import os
 import wx
 
 from outwiker.core.commands import insertCurrentDate
+from outwiker.core.event import pagetype
 from outwiker.core.system import getOS, getImagesDir
 from outwiker.core.event import EVENT_PRIORITY_DEFAULT
 from outwiker.gui.tabledialog import TableDialog
@@ -61,12 +62,11 @@ class GuiController (object):
 
         self._removeGui()
 
+    @pagetype(WebNotePage)
     def _onPageSelect(self, page):
-        if (page is not None and
-                page.getTypeString() == WebNotePage.getTypeString()):
-            self._application.actionController.check(
-                DisableScriptsAction.stringId,
-                page.disableScripts)
+        self._application.actionController.check(
+            DisableScriptsAction.stringId,
+            page.disableScripts)
 
     def _onPageViewCreate(self, page):
         assert page is not None
@@ -74,11 +74,10 @@ class GuiController (object):
         if page.getTypeString() == WebNotePage.getTypeString():
             self._addWebPageGui()
 
+    @pagetype(WebNotePage)
     def _onPageViewDestroy(self, page):
-        assert page is not None
-        if page.getTypeString() == WebNotePage.getTypeString():
-            self._removeGui()
-            self._createMenu()
+        self._removeGui()
+        self._createMenu()
 
     def _removeGui(self):
         mainWindow = self._application.mainWindow
