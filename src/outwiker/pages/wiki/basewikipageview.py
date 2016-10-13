@@ -21,8 +21,8 @@ class BaseWikiPageView (BaseHtmlPanel):
 
     HTML_RESULT_PAGE_INDEX = BaseHtmlPanel.RESULT_PAGE_INDEX + 1
 
-    def __init__ (self, parent, *args, **kwds):
-        super (BaseWikiPageView, self).__init__ (parent, *args, **kwds)
+    def __init__ (self, parent):
+        super (BaseWikiPageView, self).__init__ (parent)
 
         # Редактор с просмотром получившегося HTML (если есть)
         self.htmlCodeWindow = None

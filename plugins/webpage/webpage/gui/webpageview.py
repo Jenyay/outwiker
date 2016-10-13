@@ -9,8 +9,8 @@ from webpage.misc import polyActions
 
 
 class WebPageView (BaseHtmlPanel):
-    def __init__(self, parent, *args, **kwds):
-        super(WebPageView, self).__init__(parent, *args, **kwds)
+    def __init__(self, parent):
+        super(WebPageView, self).__init__(parent)
         self._application = Application
         self.__htmlMenu = None
 

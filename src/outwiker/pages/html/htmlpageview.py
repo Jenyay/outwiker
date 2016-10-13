@@ -27,8 +27,8 @@ from outwiker.actions.polyactionsid import *
 
 
 class HtmlPageView (BaseHtmlPanel):
-    def __init__ (self, parent, *args, **kwds):
-        super (HtmlPageView, self).__init__ (parent, *args, **kwds)
+    def __init__ (self, parent):
+        super (HtmlPageView, self).__init__ (parent)
         self._application = Application
 
         self.__HTML_MENU_INDEX = 7

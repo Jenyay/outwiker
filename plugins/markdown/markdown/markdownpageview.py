@@ -18,8 +18,8 @@ from .links.linkdialogcontroller import LinkDialogController
 
 
 class MarkdownPageView(BaseWikiPageView):
-    def __init__(self, parent, *args, **kwds):
-        super(MarkdownPageView, self).__init__(parent, *args, **kwds)
+    def __init__(self, parent):
+        super(MarkdownPageView, self).__init__(parent)
         self.imagesDir = getImagesDir()
 
     def _isHtmlCodeShown(self):

@@ -38,8 +38,8 @@ class BaseTextPanel(BasePagePanel):
     """
     __metaclass__ = ABCMeta
 
-    def __init__(self, parent, *args, **kwds):
-        super(BaseTextPanel, self).__init__(parent, *args, **kwds)
+    def __init__(self, parent):
+        super(BaseTextPanel, self).__init__(parent)
         self._application = Application
 
         self._baseTextPolyactions = [
@@ -293,6 +293,12 @@ class BaseTextPanel(BasePagePanel):
         self._removeAllTools()
         self.mainWindow.mainMenu.Remove(self.searchMenuIndex)
         self.searchMenu = None
+
+    def onAttachmentPaste (self, fnames):
+        """
+        Пользователь хочет вставить ссылки на приаттаченные файлы
+        """
+        pass
 
     def _addSearchTools(self):
         assert self.mainWindow is not None
