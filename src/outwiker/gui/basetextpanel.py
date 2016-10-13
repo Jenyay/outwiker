@@ -23,7 +23,6 @@ from outwiker.actions.polyactionsid import (SPELL_ON_OFF_ID,
 from outwiker.core.system import getImagesDir
 from outwiker.core.commands import MessageBox, pageExists
 from outwiker.core.attachment import Attachment
-from outwiker.core.application import Application
 from outwiker.core.config import IntegerOption
 from outwiker.core.tree import RootWikiPage
 from outwiker.gui.basepagepanel import BasePagePanel
@@ -38,9 +37,8 @@ class BaseTextPanel(BasePagePanel):
     """
     __metaclass__ = ABCMeta
 
-    def __init__(self, parent):
-        super(BaseTextPanel, self).__init__(parent)
-        self._application = Application
+    def __init__(self, parent, application):
+        super(BaseTextPanel, self).__init__(parent, application)
 
         self._baseTextPolyactions = [
             SPELL_ON_OFF_ID,
@@ -343,7 +341,7 @@ class BaseTextPanel(BasePagePanel):
             fullUpdate=False
         )
 
-        enableSpell = EditorConfig(Application.config).spellEnabled.value
+        enableSpell = EditorConfig(self._application.config).spellEnabled.value
         self._application.actionController.check(SPELL_ON_OFF_ID, enableSpell)
 
     def _addEditTools(self):

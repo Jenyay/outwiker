@@ -11,8 +11,8 @@ class TextPanel (BaseTextPanel):
     Класс для представления текстовых страниц
     """
 
-    def __init__ (self, parent):
-        super (TextPanel, self).__init__ (parent)
+    def __init__ (self, parent, application):
+        super (TextPanel, self).__init__ (parent, application)
 
         self.__createGui()
         self.Bind (self.EVT_SPELL_ON_OFF, handler=self._onSpellOnOff)

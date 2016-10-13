@@ -6,8 +6,8 @@ from outwiker.gui.basepagepanel import BasePagePanel
 
 
 class TestPageView (BasePagePanel):
-    def __init__ (self, parent, *args, **kwds):
-        super (TestPageView, self).__init__ (parent, *args, **kwds)
+    def __init__ (self, parent, application):
+        super (TestPageView, self).__init__ (parent, application)
         self.SetBackgroundColour ('#A190F5')
 
         self.__createGui()

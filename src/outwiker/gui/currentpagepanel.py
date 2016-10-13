@@ -140,7 +140,7 @@ class CurrentPagePanel(wx.Panel):
         """
         if page is not None:
             factory = FactorySelector.getFactory (page.getTypeString())
-            pageView = factory.getPageView (self)
+            pageView = factory.getPageView (self, Application)
             self.__pageView = pageView
             self.__pageView.page = page
 

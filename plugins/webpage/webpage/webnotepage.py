@@ -113,9 +113,9 @@ class WebPageFactory(PageFactory):
         """Return page title for the page dialog."""
         return _(u"Web Page")
 
-    def getPageView(self, parent):
+    def getPageView(self, parent, application):
         """Return page view for the page."""
-        return WebPageView(parent)
+        return WebPageView(parent, application)
 
     def createWebPage(self,
                       parentPage,

@@ -95,8 +95,8 @@ class HtmlPageFactory (PageFactory):
         return _(u"HTML Page")
 
 
-    def getPageView (self, parent):
+    def getPageView (self, parent, application):
         """
         Вернуть контрол, который будет отображать и редактировать страницу
         """
-        return HtmlPageView (parent)
+        return HtmlPageView (parent, application)

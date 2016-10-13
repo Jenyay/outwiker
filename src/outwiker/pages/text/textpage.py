@@ -37,8 +37,8 @@ class TextPageFactory (PageFactory):
         return _(u"Text Page")
 
 
-    def getPageView (self, parent):
+    def getPageView (self, parent, application):
         """
         Вернуть контрол, который будет отображать и редактировать страницу
         """
-        return TextPanel (parent)
+        return TextPanel (parent, application)

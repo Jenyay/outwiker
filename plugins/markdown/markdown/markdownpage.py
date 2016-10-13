@@ -40,8 +40,8 @@ class MarkdownPageFactory(PageFactory):
         _ = get_()
         return _(u"Markdown Page")
 
-    def getPageView(self, parent):
+    def getPageView(self, parent, application):
         """
         Вернуть контрол, который будет отображать и редактировать страницу
         """
-        return MarkdownPageView(parent)
+        return MarkdownPageView(parent, application)

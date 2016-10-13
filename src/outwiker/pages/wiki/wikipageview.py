@@ -28,8 +28,8 @@ from actions.dates import WikiDateCreationAction, WikiDateEditionAction
 
 
 class WikiPageView(BaseWikiPageView):
-    def __init__(self, parent):
-        super(WikiPageView, self).__init__(parent)
+    def __init__(self, parent, application):
+        super(WikiPageView, self).__init__(parent, application)
 
     def Clear(self):
         super(WikiPageView, self).Clear()

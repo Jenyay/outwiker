@@ -5,7 +5,6 @@ import os
 import wx
 
 from outwiker.core.commands import insertCurrentDate
-from outwiker.core.application import Application
 
 from outwiker.gui.htmltexteditor import HtmlTextEditor
 from outwiker.gui.tabledialog import TableDialog
@@ -27,9 +26,8 @@ from outwiker.actions.polyactionsid import *
 
 
 class HtmlPageView (BaseHtmlPanel):
-    def __init__ (self, parent):
-        super (HtmlPageView, self).__init__ (parent)
-        self._application = Application
+    def __init__ (self, parent, application):
+        super (HtmlPageView, self).__init__ (parent, application)
 
         self.__HTML_MENU_INDEX = 7
         self._htmlPanelName = "html"
@@ -631,10 +629,10 @@ class HtmlPageView (BaseHtmlPanel):
 
     def _insertTable (self, param):
         editor = self.codeEditor
-        parent = Application.mainWindow
+        parent = self._application.mainWindow
 
         with TableDialog (parent) as dlg:
-            controller = TableDialogController (dlg, Application.config)
+            controller = TableDialogController (dlg, self._application.config)
             if controller.showDialog() == wx.ID_OK:
                 result = controller.getResult()
                 editor.replaceText (result)
@@ -642,10 +640,10 @@ class HtmlPageView (BaseHtmlPanel):
 
     def _insertTableRows (self, param):
         editor = self.codeEditor
-        parent = Application.mainWindow
+        parent = self._application.mainWindow
 
         with TableRowsDialog (parent) as dlg:
-            controller = TableRowsDialogController (dlg, Application.config)
+            controller = TableRowsDialogController (dlg, self._application.config)
             if controller.showDialog() == wx.ID_OK:
                 result = controller.getResult()
                 editor.replaceText (result)

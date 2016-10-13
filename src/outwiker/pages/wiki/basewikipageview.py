@@ -5,7 +5,6 @@ import os
 from abc import ABCMeta, abstractmethod
 
 from outwiker.core.commands import MessageBox
-from outwiker.core.style import Style
 
 from outwiker.gui.htmltexteditor import HtmlTextEditor
 from outwiker.pages.html.basehtmlpanel import BaseHtmlPanel, EVT_PAGE_TAB_CHANGED
@@ -21,8 +20,8 @@ class BaseWikiPageView (BaseHtmlPanel):
 
     HTML_RESULT_PAGE_INDEX = BaseHtmlPanel.RESULT_PAGE_INDEX + 1
 
-    def __init__ (self, parent):
-        super (BaseWikiPageView, self).__init__ (parent)
+    def __init__ (self, parent, application):
+        super (BaseWikiPageView, self).__init__ (parent, application)
 
         # Редактор с просмотром получившегося HTML (если есть)
         self.htmlCodeWindow = None

@@ -32,8 +32,8 @@ class BaseHtmlPanel(BaseTextPanel):
     RESULT_PAGE_INDEX = 1
 
 
-    def __init__(self, parent):
-        super (BaseHtmlPanel, self).__init__ (parent)
+    def __init__(self, parent, application):
+        super (BaseHtmlPanel, self).__init__ (parent, application)
 
         # Предыдущее содержимое результирующего HTML, чтобы не переписывать
         # его каждый раз

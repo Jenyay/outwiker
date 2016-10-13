@@ -36,8 +36,8 @@ class TestPageFactory (PageFactory):
         return _(u"Test Page")
 
 
-    def getPageView (self, parent):
+    def getPageView (self, parent, application):
         """
         Вернуть контрол, который будет отображать и редактировать страницу
         """
-        return TestPageView (parent)
+        return TestPageView (parent, application)

@@ -2,7 +2,6 @@
 
 import wx
 
-from outwiker.core.application import Application
 from outwiker.core.search import Searcher, AllTagsSearchStrategy, AnyTagSearchStrategy
 from outwiker.core.tagslist import TagsList
 from outwiker.core.commands import pageExists
@@ -17,8 +16,8 @@ from .sortstrategies import getSortStrategies
 
 
 class SearchPanel(BasePagePanel):
-    def __init__(self, parent, *args, **kwds):
-        BasePagePanel.__init__ (self, parent, *args, **kwds)
+    def __init__(self, parent, application):
+        BasePagePanel.__init__ (self, parent, application)
 
         self._allTags = None
 
@@ -187,7 +186,7 @@ class SearchPanel(BasePagePanel):
         assert self.page is not None
 
         # заполним список тегов
-        list_items = TagsList (Application.wikiroot)
+        list_items = TagsList (self._application.wikiroot)
         self.tagsList.setTags (list_items)
 
         tags = self.page.searchTags
@@ -298,7 +297,7 @@ class SearchPanel(BasePagePanel):
         searcher = Searcher (phrase, tags, self.page.strategy)
 
         runner = LongProcessRunner (searcher.find,
-                                    Application.mainWindow,
+                                    self._application.mainWindow,
                                     _(u"Search"),
                                     _(u"Search pages..."))
 
@@ -340,7 +339,7 @@ class SearchPanel(BasePagePanel):
         report = HtmlReport (resultPages_sorted,
                              self.__getSearchPhrase(),
                              self.__getSearchTags(),
-                             Application)
+                             self._application)
 
         htmltext = report.generate ()
         self.resultWindow.SetPage (htmltext, self.page.path)

@@ -146,11 +146,11 @@ class SearchPageFactory (PageFactory):
         return _(u"Search Page")
 
 
-    def getPageView (self, parent):
+    def getPageView (self, parent, application):
         """
         Вернуть контрол, который будет отображать и редактировать страницу
         """
-        return SearchPanel (parent)
+        return SearchPanel (parent, application)
 
 
 class GlobalSearch (object):
