@@ -46,6 +46,3 @@ class WebPageView (BaseHtmlPanel):
 
     def updateHtml(self):
         self._updateHtmlWindow()
-
-    def removeGui(self):
-        super(WebPageView, self).removeGui()
