@@ -45,6 +45,10 @@ class DownloaderTest (unittest.TestCase):
             downloader.contentResult)
 
         self.assertIn (
+            template.format (path = self._staticDirName + u'/картинка.png'),
+            downloader.contentResult)
+
+        self.assertIn (
             template.format (path = self._staticDirName + u'/image_01_1.png'),
             downloader.contentResult)
 

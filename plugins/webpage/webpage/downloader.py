@@ -101,7 +101,10 @@ class Downloader(BaseDownloader):
         images = soup.find_all(u'img')
         for image in images:
             if image.has_attr(u'src'):
-                controller.processImg(url, image['src'], image)
+                try:
+                    controller.processImg(url, image['src'], image)
+                except BaseException as e:
+                    controller.log(str(e))
 
     def _downloadCSS(self, soup, controller, url):
         links = soup.find_all(u'link')
@@ -109,24 +112,36 @@ class Downloader(BaseDownloader):
             if(link.has_attr('rel') and
                     link.has_attr('href') and
                     link['rel'][0].lower() == u'stylesheet'):
-                controller.processCSS(url, link['href'], link)
+                try:
+                    controller.processCSS(url, link['href'], link)
+                except BaseException as e:
+                    controller.log(str(e))
 
     def _downloadScripts(self, soup, controller, url):
         scripts = soup.find_all(u'script')
         for script in scripts:
             if script.has_attr('src'):
-                controller.processScript(url, script['src'], script)
+                try:
+                    controller.processScript(url, script['src'], script)
+                except BaseException as e:
+                    controller.log(str(e))
 
     def _downloadFavicon(self, soup, controller, url):
         links = soup.find_all(u'link')
         for link in links:
-            if(link.has_attr('rel') and
+            if (link.has_attr('rel') and
                     link.has_attr('href') and
                     u'icon' in link['rel']):
-                controller.processFavicon(url, link['href'], link)
+                try:
+                    controller.processFavicon(url, link['href'], link)
+                except BaseException as e:
+                    controller.log(str(e))
 
         if controller.favicon is None:
-            controller.processFavicon(url, u'/favicon.ico', None)
+            try:
+                controller.processFavicon(url, u'/favicon.ico', None)
+            except BaseException as e:
+                controller.log(str(e))
 
     @property
     def contentSrc(self):
