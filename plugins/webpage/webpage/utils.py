@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 
-def isLink (text):
+def isLink(text):
     lowerString = text.lower()
-    return (lowerString.startswith (u'http://') or
-            lowerString.startswith (u'https://'))
+    return (lowerString.startswith(u'http://') or
+            lowerString.startswith(u'https://'))

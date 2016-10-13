@@ -19,7 +19,8 @@ else:
     class PluginWebPage (Plugin):
         def __init__(self, application):
             """
-            application - instance of the core.application.ApplicationParams class
+            application - instance of the core.application.ApplicationParams
+            class
             """
             super(PluginWebPage, self).__init__(application)
             self.__controller = Controller(self, self._application)
@@ -49,19 +50,21 @@ else:
 
         def destroy(self):
             """
-            Уничтожение (выгрузка) плагина. Здесь плагин должен отписаться от всех событий
+            Уничтожение (выгрузка) плагина. Здесь плагин должен отписаться от
+            всех событий
             """
             self.__controller.destroy()
 
         #############################################
 
         def _initlocale(self, domain):
-            langdir = unicode(os.path.join(os.path.dirname (__file__), "locale"), getOS().filesEncoding)
+            langdir = unicode(os.path.join(os.path.dirname(__file__),
+                                           "locale"),
+                              getOS().filesEncoding)
             global _
 
             try:
                 _ = self._init_i18n(domain, langdir)
             except BaseException:
                 pass
-
             set_(_)

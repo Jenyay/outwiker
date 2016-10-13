@@ -93,10 +93,12 @@ class Controller(object):
             self._application.getEvent(onPrepareHtmlEventString).unbind(proc)
 
     def _registerActions(self):
-        map(lambda actionTuple: self._application.actionController.register(actionTuple[0](self._application), actionTuple[1]), self._actions)
+        map(lambda actionTuple: self._application.actionController.register(
+            actionTuple[0](self._application), actionTuple[1]), self._actions)
 
     def _unregisterActions(self):
-        map(lambda actionTuple: self._application.actionController.removeAction(actionTuple[0].stringId), self._actions)
+        map(lambda actionTuple: self._application.actionController.removeAction(
+            actionTuple[0].stringId), self._actions)
 
     def _correctSysPath(self):
         cmd_folder = unicode(os.path.dirname(os.path.abspath(__file__)),

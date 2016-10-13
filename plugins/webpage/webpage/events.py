@@ -10,7 +10,7 @@ FinishDownloadEvent, EVT_DOWNLOAD_FINISH = wx.lib.newevent.NewEvent()
 
 class PrepareHtmlEventParams (object):
     """Used for 'WebPage_onPrepareHtml' event"""
-    def __init__ (self, page, soup):
+    def __init__(self, page, soup):
         """
         page - current page;
         soup - BeaufullSoup instance
