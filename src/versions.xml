@@ -7,7 +7,7 @@
 		<website>http://jenyay.net/Outwiker/UnstableEn</website>
 
 		<changelog>
-			<version number="2.0.0.801" status="dev">
+			<version number="2.0.0.802" status="dev">
 				<change>Internal changes.</change>
 			</version>
 
@@ -51,7 +51,7 @@
 		<website>http://jenyay.net/Outwiker/Unstable</website>
 
 		<changelog>
-			<version number="2.0.0.801" status="dev">
+			<version number="2.0.0.802" status="dev">
 				<change>Внутренние изменения.</change>
 			</version>
 
