@@ -28,6 +28,7 @@
 			<version number="1.2">
                 <download os="all">http://jenyay.net/uploads/Outwiker/WebPage/webpage-1.2.zip</download>
 				<change>Added OutWiker 2.0 supporting.</change>
+				<change>Bug fixes.</change>
 			</version>
 
 			<version number="1.1.1" date="August 20, 2016">
@@ -66,6 +67,7 @@
 			<version number="1.2">
                 <download os="all">http://jenyay.net/uploads/Outwiker/WebPage/webpage-1.2.zip</download>
 				<change>Добавлена поддержка OutWiker 2.0.</change>
+				<change>Исправление ошибок.</change>
 			</version>
 
 		<changelog>
