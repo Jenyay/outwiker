@@ -456,6 +456,7 @@ def upload_plugin(*args):
         with cd(path_to_upload):
             put(path_to_archive_local, archive_name)
             put(path_to_xml_local, PLUGIN_VERSIONS_FILENAME)
+    site_versions()
 
 
 @hosts(DEPLOY_SERVER_NAME)
