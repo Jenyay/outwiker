@@ -431,6 +431,9 @@ def upload_plugin(*args):
     """
     Upload plugin to site
     """
+    if len(args) == 0:
+        args = PLUGINS_LIST
+
     for pluginname in args:
         path_to_plugin_local = os.path.join(BUILD_DIR, PLUGINS_DIR, pluginname)
         path_to_xml_local = os.path.join(path_to_plugin_local, PLUGIN_VERSIONS_FILENAME)
