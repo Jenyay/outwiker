@@ -25,7 +25,7 @@
 		</author>
 
 		<changelog>
-			<version number="0.0.0.4">
+			<version number="0.0.0.4" date="October 17, 2016">
                 <download os="all">http://jenyay.net/uploads/Outwiker/AutoRenamer/AutoRenamer-0.0.0.4.zip</download>
 				<change>Added OutWiker 2.0 supporting.</change>
 			</version>
@@ -51,7 +51,7 @@
 		</author>
 
 		<changelog>
-			<version number="0.0.0.4">
+			<version number="0.0.0.4" date="17.10.2016">
                 <download os="all">http://jenyay.net/uploads/Outwiker/AutoRenamer/AutoRenamer-0.0.0.4.zip</download>
 				<change>Добавлена поддержка OutWiker 2.0.</change>
 			</version>

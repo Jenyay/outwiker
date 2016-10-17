@@ -25,7 +25,7 @@
 			<site>http://jenyay.net</site>
 		</author>
 		<changelog>
-			<version number="1.2">
+			<version number="1.2" date="October 17, 2016">
                 <download os="all">http://jenyay.net/uploads/Outwiker/WebPage/webpage-1.2.zip</download>
 				<change>Added OutWiker 2.0 supporting.</change>
 				<change>Bug fixes.</change>
@@ -64,7 +64,7 @@
 			<email>jenyay.ilin@gmail.com</email>
 			<site>http://jenyay.net</site>
 		</author>
-			<version number="1.2">
+			<version number="1.2" date="17.10.2016">
                 <download os="all">http://jenyay.net/uploads/Outwiker/WebPage/webpage-1.2.zip</download>
 				<change>Добавлена поддержка OutWiker 2.0.</change>
 				<change>Исправление ошибок.</change>

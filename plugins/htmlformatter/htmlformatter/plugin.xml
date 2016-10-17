@@ -26,7 +26,7 @@
 		</author>
 
 		<changelog>
-			<version number="1.1.2">
+			<version number="1.1.2" date="October 17, 2016">
                 <download os="all">http://jenyay.net/uploads/Outwiker/HtmlFormatter/htmlformatter-1.1.2.zip</download>
 				<change>Added OutWiker 2.0 supporting.</change>
 			</version>
@@ -58,7 +58,7 @@
 		</author>
 
 		<changelog>
-			<version number="1.1.2">
+			<version number="1.1.2" date="17.10.2016">
                 <download os="all">http://jenyay.net/uploads/Outwiker/HtmlFormatter/htmlformatter-1.1.2.zip</download>
 				<change>Добавлена поддержка OutWiker 2.0.</change>
 			</version>
