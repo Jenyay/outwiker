@@ -439,12 +439,17 @@ def upload_plugin(*args):
         appinfo_local = XmlVersionParser().parse(xml_content_local)
 
         url = appinfo_local.updatesUrl
-        appinfo_remote = downloadAppInfo(url)
+        try:
+            appinfo_remote = downloadAppInfo(url)
+        except:
+            appinfo_remote = None
 
-        if appinfo_local.currentVersion < appinfo_remote.currentVersion:
+        if (appinfo_remote is not None and
+                appinfo_local.currentVersion < appinfo_remote.currentVersion):
             print(Fore.RED + 'Error. New version < Prev version')
             sys.exit(1)
-        elif appinfo_local.currentVersion == appinfo_remote.currentVersion:
+        elif (appinfo_remote is not None and
+                appinfo_local.currentVersion == appinfo_remote.currentVersion):
             print(Fore.RED + 'Warning: Uploaded the same version')
         print(Fore.GREEN + 'Uploading...')
 
