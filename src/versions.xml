@@ -7,7 +7,11 @@
 		<website>http://jenyay.net/Outwiker/UnstableEn</website>
 
 		<changelog>
-			<version number="2.0.0.802" status="dev">
+			<version number="2.0.0.803" status="dev">
+				<change></change>
+			</version>
+
+			<version number="2.0.0.802" status="dev" date="October 17, 2016">
 				<change>Internal changes.</change>
 			</version>
 
@@ -51,7 +55,11 @@
 		<website>http://jenyay.net/Outwiker/Unstable</website>
 
 		<changelog>
-			<version number="2.0.0.802" status="dev">
+			<version number="2.0.0.803" status="dev">
+				<change></change>
+			</version>
+
+			<version number="2.0.0.802" status="dev" date="19.10.2016">
 				<change>Внутренние изменения.</change>
 			</version>
 
