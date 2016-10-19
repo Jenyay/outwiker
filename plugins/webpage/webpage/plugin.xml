@@ -64,13 +64,13 @@
 			<email>jenyay.ilin@gmail.com</email>
 			<site>http://jenyay.net</site>
 		</author>
+		<changelog>
 			<version number="1.2" date="17.10.2016">
                 <download os="all">http://jenyay.net/uploads/Outwiker/WebPage/webpage-1.2.zip</download>
 				<change>Добавлена поддержка OutWiker 2.0.</change>
 				<change>Исправление ошибок.</change>
 			</version>
 
-		<changelog>
 			<version number="1.1.1" date="20.08.2016">
                 <download os="all">http://jenyay.net/uploads/Outwiker/WebPage/webpage-1.1.1.zip</download>
 				<change>Добавлена поддержка шведского языка.</change>
