@@ -55,7 +55,7 @@ class BuilderBaseDebSource(BuilderBase):
         Create an archive for "original" sources for building the deb package
         distname - Ubuntu release name
         """
-        self._source()
+        self._source(distname)
 
         origname = self._getOrigName(distname)
 
@@ -65,7 +65,7 @@ class BuilderBaseDebSource(BuilderBase):
         orig_dirname = os.path.join(self._build_dir, origname)
         local("gzip -f {}".format(orig_dirname))
 
-    def _source(self):
+    def _source(self, distname):
         """
         Create a sources folder for building the deb package
         """
@@ -109,26 +109,31 @@ class BuilderBaseDebSource(BuilderBase):
 
         shutil.copytree(os.path.join(u'need_for_build',
                                      u'debian_debsource',
+                                     distname,
                                      u'debian'),
                         os.path.join(dirname, u'debian'))
 
         shutil.copyfile(os.path.join(u'need_for_build',
                                      u'debian_debsource',
+                                     distname,
                                      u'Makefile'),
                         os.path.join(dirname, u'Makefile'))
 
         shutil.copyfile(os.path.join(u'need_for_build',
                                      u'debian_debsource',
+                                     distname,
                                      u'outwiker.desktop'),
                         os.path.join(dirname, u'outwiker.desktop'))
 
         shutil.copyfile(os.path.join(u'need_for_build',
                                      u'debian_debsource',
+                                     distname,
                                      u'outwiker'),
                         os.path.join(dirname, u'outwiker'))
 
         shutil.copytree(os.path.join(u'need_for_build',
                                      u'debian_debsource',
+                                     distname,
                                      u'man'),
                         os.path.join(dirname, u'man'))
 
