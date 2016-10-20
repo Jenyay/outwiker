@@ -7,8 +7,8 @@
 		<website>http://jenyay.net/Outwiker/UnstableEn</website>
 
 		<changelog>
-			<version number="2.0.0.803" status="dev">
-				<change></change>
+			<version number="2.0.0.804" status="dev" date="October 20, 2016">
+				<change>Fixed deb package for Ubuntu 16.10.</change>
 			</version>
 
 			<version number="2.0.0.802" status="dev" date="October 17, 2016">
@@ -55,8 +55,8 @@
 		<website>http://jenyay.net/Outwiker/Unstable</website>
 
 		<changelog>
-			<version number="2.0.0.803" status="dev">
-				<change></change>
+			<version number="2.0.0.804" status="dev" date="20.10.2016">
+				<change>Исправление в сборке deb-пакета в Ubuntu 16.10.</change>
 			</version>
 
 			<version number="2.0.0.802" status="dev" date="19.10.2016">
