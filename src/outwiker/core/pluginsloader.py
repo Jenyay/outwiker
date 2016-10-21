@@ -6,6 +6,7 @@ import os
 import os.path
 import sys
 import traceback
+import logging
 
 import outwiker.core
 import outwiker.gui
@@ -65,7 +66,7 @@ class PluginsLoader (object):
 
     def _print(self, text):
         if self.enableOutput:
-            print(text)
+            logging.error(text)
 
     @property
     def disabledPlugins(self):
@@ -156,7 +157,6 @@ class PluginsLoader (object):
 
     def __loadPluginInfo(self, plugin_fname):
         if not os.path.exists(plugin_fname):
-            print (plugin_fname)
             return None
 
         xml_content = readTextFile(plugin_fname)
