@@ -658,6 +658,19 @@ class TextEditor(wx.Panel):
         """
         self.textCtrl.DelLineRight()
 
+    def ScrollLineToCursor(self):
+        """
+        Added in outwiker.gui 1.1
+        """
+        maxlines = self.textCtrl.LinesOnScreen()
+        line = self.GetCurrentLine()
+        if line >= maxlines:
+            delta = min(10, maxlines / 3)
+            line -= delta
+            if line < 0:
+                line = 0
+            self.ScrollToLine(line)
+
     def __calcCharPos(self, pos_bytes):
         """
         Пересчет позиции в байтах в позицию в символах

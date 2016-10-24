@@ -71,7 +71,8 @@ class BaseHtmlPanel(BaseTextPanel):
         """
         Установить курсор в текстовом редакторе в положение position
         """
-        self.codeEditor.SetSelection (position, position)
+        self.codeEditor.SetSelection(position, position)
+        self.codeEditor.ScrollLineToCursor()
 
     def GetCursorPosition (self):
         """
@@ -183,7 +184,6 @@ class BaseHtmlPanel(BaseTextPanel):
             self.codeEditor.EmptyUndoBuffer()
             self.codeEditor.SetReadOnly (page.readonly)
             self.SetCursorPosition(self._getCursorPositionOption(page).value)
-            self.codeEditor.ScrollToLine(self.codeEditor.GetCurrentLine())
             self.codeEditor.SetFocus()
 
             self._updateHtmlWindow()
