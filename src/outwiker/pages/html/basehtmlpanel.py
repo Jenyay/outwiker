@@ -59,10 +59,12 @@ class BaseHtmlPanel(BaseTextPanel):
 
         self.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED, self._onTabChanged, self.notebook)
         self.Bind (self.EVT_SPELL_ON_OFF, handler=self._onSpellOnOff)
+        self._application.onPageUpdate += self._onPageUpdate
 
     def Clear (self):
         self.Unbind(wx.EVT_NOTEBOOK_PAGE_CHANGED, source=self.notebook, handler=self._onTabChanged)
         self.Unbind (self.EVT_SPELL_ON_OFF, handler=self._onSpellOnOff)
+        self._application.onPageUpdate -= self._onPageUpdate
 
         super (BaseHtmlPanel, self).Clear()
 
@@ -432,3 +434,9 @@ class BaseHtmlPanel(BaseTextPanel):
             return self.codeEditor.SetFocus()
         elif self.selectedPageIndex == self.RESULT_PAGE_INDEX:
             return self.htmlWindow.SetFocus()
+
+    def _onPageUpdate (self, sender, **kwargs):
+        if (sender == self._currentpage and
+                self.notebook.GetSelection() == self.RESULT_PAGE_INDEX):
+            self._updatePage()
+            self._updateHtmlWindow()

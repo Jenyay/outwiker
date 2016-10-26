@@ -6,6 +6,7 @@ import outwiker.core.commands
 from .basepagedialog import BasePageDialog
 from outwiker.core.application import Application
 from outwiker.core.commands import pageExists, MessageBox
+from outwiker.core.events import PageUpdateNeededParams
 
 
 @outwiker.core.commands.testreadonly
@@ -35,8 +36,6 @@ def editPage (parentWnd, currentPage):
 
             if not dlg.setPageProperties (currentPage):
                 return None
-
-            currentPage.root.selectedPage = currentPage
 
 
 @outwiker.core.commands.testreadonly
