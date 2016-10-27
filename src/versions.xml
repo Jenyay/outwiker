@@ -8,7 +8,8 @@
 
 		<changelog>
 			<version number="2.0.0.805" status="dev">
-				<change></change>
+				<change>Added the menu items to move cursor in text.</change>
+				<change>Bug fixes.</change>
 			</version>
 
 			<version number="2.0.0.804" status="dev" date="October 20, 2016">
@@ -60,7 +61,8 @@
 
 		<changelog>
 			<version number="2.0.0.805" status="dev">
-				<change></change>
+				<change>Добавлены пункты меню и горячие клавиши для перемещения по тексту.</change>
+				<change>Исправление ошибок.</change>
 			</version>
 
 			<version number="2.0.0.804" status="dev" date="20.10.2016">
