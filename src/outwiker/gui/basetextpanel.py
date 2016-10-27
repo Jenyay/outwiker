@@ -66,6 +66,10 @@ class BaseTextPanel(BasePagePanel):
         self.wordMenu = None
         self.wordMenuItem = None
 
+        # Added in outwiker.gui 1.2
+        self.linesMenu = None
+        self.linesMenuItem = None
+
         # Предыдущее сохраненное состояние.
         # Используется для выявления изменения страницы внешними средствами
         self._oldContent = None
@@ -83,8 +87,11 @@ class BaseTextPanel(BasePagePanel):
 
         self._addSearchTools()
         self._addSpellTools()
-        self._addEditTools()
+
+        self._application.mainWindow.mainMenu.editMenu.AppendSeparator()
+
         self._addWordTools()
+        self._addLinesTools()
 
         self._application.onAttachmentPaste += self.onAttachmentPaste
         self._application.onPreferencesDialogClose += self.onPreferencesDialogClose
@@ -303,9 +310,12 @@ class BaseTextPanel(BasePagePanel):
         self._removeAllTools()
         self.mainWindow.mainMenu.Remove(self.searchMenuIndex)
         self._application.mainWindow.mainMenu.editMenu.RemoveItem(self.wordMenuItem)
+        self._application.mainWindow.mainMenu.editMenu.RemoveItem(self.linesMenuItem)
         self.searchMenu = None
         self.wordMenuItem = None
         self.wordMenu = None
+        self.linesMenuItem = None
+        self.linesMenu = None
 
     def onAttachmentPaste (self, fnames):
         """
@@ -429,15 +439,15 @@ class BaseTextPanel(BasePagePanel):
         self.wordMenuItem = self._application.mainWindow.mainMenu.editMenu.AppendSubMenu(
             self.wordMenu, _(u'Word'))
 
-    def _addEditTools(self):
-        self._application.mainWindow.mainMenu.editMenu.AppendSeparator()
+    def _addLinesTools(self):
+        self.linesMenu = wx.Menu()
 
         # Delete the current line line
         self._application.actionController.getAction(DELETE_CURRENT_LINE_ID).setFunc(lambda params: self.GetEditor().LineDelete())
 
         self._application.actionController.appendMenuItem(
             DELETE_CURRENT_LINE_ID,
-            self._application.mainWindow.mainMenu.editMenu
+            self.linesMenu
         )
 
         # Duplicate the current line
@@ -445,7 +455,7 @@ class BaseTextPanel(BasePagePanel):
 
         self._application.actionController.appendMenuItem(
             LINE_DUPLICATE_ID,
-            self._application.mainWindow.mainMenu.editMenu
+            self.linesMenu
         )
 
         # Move selected lines up
@@ -453,7 +463,7 @@ class BaseTextPanel(BasePagePanel):
 
         self._application.actionController.appendMenuItem(
             MOVE_SELECTED_LINES_UP_ID,
-            self._application.mainWindow.mainMenu.editMenu
+            self.linesMenu
         )
 
         # Move selected lines down
@@ -461,7 +471,7 @@ class BaseTextPanel(BasePagePanel):
 
         self._application.actionController.appendMenuItem(
             MOVE_SELECTED_LINES_DOWN_ID,
-            self._application.mainWindow.mainMenu.editMenu
+            self.linesMenu
         )
 
         # Join Lines
@@ -469,7 +479,7 @@ class BaseTextPanel(BasePagePanel):
 
         self._application.actionController.appendMenuItem(
             JOIN_LINES_STR_ID,
-            self._application.mainWindow.mainMenu.editMenu
+            self.linesMenu
         )
 
         # Delete line to start
@@ -477,7 +487,7 @@ class BaseTextPanel(BasePagePanel):
 
         self._application.actionController.appendMenuItem(
             DELETE_LINE_LEFT_STR_ID,
-            self._application.mainWindow.mainMenu.editMenu
+            self.linesMenu
         )
 
         # Delete line to end
@@ -485,8 +495,11 @@ class BaseTextPanel(BasePagePanel):
 
         self._application.actionController.appendMenuItem(
             DELETE_LINE_RIGHT_STR_ID,
-            self._application.mainWindow.mainMenu.editMenu
+            self.linesMenu
         )
+
+        self.linesMenuItem = self._application.mainWindow.mainMenu.editMenu.AppendSubMenu(
+            self.linesMenu, _(u'Lines'))
 
     def _spellOnOff(self, checked):
         EditorConfig(self._application.config).spellEnabled.value = checked
