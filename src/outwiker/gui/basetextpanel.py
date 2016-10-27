@@ -19,7 +19,12 @@ from outwiker.actions.polyactionsid import (SPELL_ON_OFF_ID,
                                             DELETE_WORD_LEFT_STR_ID,
                                             DELETE_WORD_RIGHT_STR_ID,
                                             DELETE_LINE_LEFT_STR_ID,
-                                            DELETE_LINE_RIGHT_STR_ID)
+                                            DELETE_LINE_RIGHT_STR_ID,
+                                            GOTO_PREV_WORD,
+                                            GOTO_NEXT_WORD,
+                                            GOTO_PREV_WORD_SELECT,
+                                            GOTO_NEXT_WORD_SELECT,
+                                            )
 from outwiker.core.system import getImagesDir
 from outwiker.core.commands import MessageBox, pageExists
 from outwiker.core.attachment import Attachment
@@ -55,6 +60,10 @@ class BaseTextPanel(BasePagePanel):
 
         self.searchMenu = None
 
+        # Added in outwiker.gui 1.2
+        self.gotoMenu = None
+        self.gotoMenuItem = None
+
         # Предыдущее сохраненное состояние.
         # Используется для выявления изменения страницы внешними средствами
         self._oldContent = None
@@ -73,6 +82,7 @@ class BaseTextPanel(BasePagePanel):
         self._addSearchTools()
         self._addSpellTools()
         self._addEditTools()
+        self._addGotoTools()
 
         self._application.onAttachmentPaste += self.onAttachmentPaste
         self._application.onPreferencesDialogClose += self.onPreferencesDialogClose
@@ -290,7 +300,10 @@ class BaseTextPanel(BasePagePanel):
 
         self._removeAllTools()
         self.mainWindow.mainMenu.Remove(self.searchMenuIndex)
+        self._application.mainWindow.mainMenu.editMenu.RemoveItem(self.gotoMenuItem)
         self.searchMenu = None
+        self.gotoMenuItem = None
+        self.gotoMenu = None
 
     def onAttachmentPaste (self, fnames):
         """
@@ -343,6 +356,44 @@ class BaseTextPanel(BasePagePanel):
 
         enableSpell = EditorConfig(self._application.config).spellEnabled.value
         self._application.actionController.check(SPELL_ON_OFF_ID, enableSpell)
+
+    def _addGotoTools(self):
+        self.gotoMenu = wx.Menu()
+
+        # Go to previous word
+        self._application.actionController.getAction(GOTO_PREV_WORD).setFunc(lambda params: self.GetEditor().WordLeft())
+
+        self._application.actionController.appendMenuItem(
+            GOTO_PREV_WORD,
+            self.gotoMenu
+        )
+
+        # Go to next word
+        self._application.actionController.getAction(GOTO_NEXT_WORD).setFunc(lambda params: self.GetEditor().WordRight())
+
+        self._application.actionController.appendMenuItem(
+            GOTO_NEXT_WORD,
+            self.gotoMenu
+        )
+
+        # Go to previous word and select
+        self._application.actionController.getAction(GOTO_PREV_WORD_SELECT).setFunc(lambda params: self.GetEditor().WordLeftExtend())
+
+        self._application.actionController.appendMenuItem(
+            GOTO_PREV_WORD_SELECT,
+            self.gotoMenu
+        )
+
+        # Go to next word and select
+        self._application.actionController.getAction(GOTO_NEXT_WORD_SELECT).setFunc(lambda params: self.GetEditor().WordRightExtend())
+
+        self._application.actionController.appendMenuItem(
+            GOTO_NEXT_WORD_SELECT,
+            self.gotoMenu
+        )
+
+        self.gotoMenuItem = self._application.mainWindow.mainMenu.editMenu.AppendSubMenu(
+            self.gotoMenu, _(u'Go to'))
 
     def _addEditTools(self):
         self._application.mainWindow.mainMenu.editMenu.AppendSeparator()

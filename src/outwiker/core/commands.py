@@ -1156,3 +1156,27 @@ def _registerPolyActions (application):
                                                        _(u"Delete to end of the line"),
                                                        _(u"Delete text forwards from the current position to the end of the line")),
                                            HotKey ("Delete", ctrl=True, shift=True))
+
+    application.actionController.register (PolyAction (application,
+                                                       GOTO_PREV_WORD,
+                                                       _(u"Previous word"),
+                                                       _(u"Move cursor to previous word")),
+                                           HotKey ("Left", ctrl=True))
+
+    application.actionController.register (PolyAction (application,
+                                                       GOTO_NEXT_WORD,
+                                                       _(u"Next word"),
+                                                       _(u"Move cursor to next word")),
+                                           HotKey ("Right", ctrl=True))
+
+    application.actionController.register (PolyAction (application,
+                                                       GOTO_PREV_WORD_SELECT,
+                                                       _(u"Previous word and select"),
+                                                       _(u"Move cursor to previous word and select text")),
+                                           HotKey ("Left", ctrl=True, shift=True))
+
+    application.actionController.register (PolyAction (application,
+                                                       GOTO_NEXT_WORD_SELECT,
+                                                       _(u"Next word and select"),
+                                                       _(u"Move cursor to next word and select text")),
+                                           HotKey ("Right", ctrl=True, shift=True))

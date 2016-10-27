@@ -122,3 +122,19 @@ DELETE_LINE_LEFT_STR_ID = "DeleteLineLeft"
 
 # Delete forwards from the current position to the end of the line
 DELETE_LINE_RIGHT_STR_ID = "DeleteLineRight"
+
+# Move caret left one word.
+# Added in outwiker.actions 1.1
+GOTO_PREV_WORD = "GotoPrevWord"
+
+# Move caret right one word.
+# Added in outwiker.actions 1.1
+GOTO_NEXT_WORD = "GotoNextWord"
+
+# Move caret left one word and select.
+# Added in outwiker.actions 1.1
+GOTO_PREV_WORD_SELECT = "GotoPrevWordSelect"
+
+# Move caret right one word and select.
+# Added in outwiker.actions 1.1
+GOTO_NEXT_WORD_SELECT = "GotoNextWordSelect"

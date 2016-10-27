@@ -173,6 +173,51 @@ class BaseEditorPolyactionsTest (BaseMainWndTest):
         self.assertEqual(editor.GetText().replace(u'\r\n', u'\n'),
                          result)
 
+    def test_GotoNextWord_01(self):
+        editor = self._getEditor()
+        actionController = Application.actionController
+        text = u'слово слово2 ещеоднослово'
+        editor.SetText(text)
+        editor.GotoPos(0)
+
+        actionController.getAction(GOTO_NEXT_WORD).run(None)
+        self.assertEqual(editor.GetCurrentPosition(), 6)
+
+        actionController.getAction(GOTO_NEXT_WORD).run(None)
+        self.assertEqual(editor.GetCurrentPosition(), 13)
+
+        actionController.getAction(GOTO_NEXT_WORD).run(None)
+        self.assertEqual(editor.GetCurrentPosition(), 25)
+
+    def test_GotoPrevWord_01(self):
+        editor = self._getEditor()
+        actionController = Application.actionController
+        text = u'слово слово2 ещеоднослово'
+        editor.SetText(text)
+        editor.GotoPos(25)
+
+        actionController.getAction(GOTO_PREV_WORD).run(None)
+        self.assertEqual(editor.GetCurrentPosition(), 13)
+
+        actionController.getAction(GOTO_PREV_WORD).run(None)
+        self.assertEqual(editor.GetCurrentPosition(), 6)
+
+        actionController.getAction(GOTO_PREV_WORD).run(None)
+        self.assertEqual(editor.GetCurrentPosition(), 0)
+
+    def test_GotoWord_empty(self):
+        editor = self._getEditor()
+        actionController = Application.actionController
+        text = u''
+        editor.SetText(text)
+        editor.GotoPos(0)
+
+        actionController.getAction(GOTO_NEXT_WORD).run(None)
+        self.assertEqual(editor.GetCurrentPosition(), 0)
+
+        actionController.getAction(GOTO_PREV_WORD).run(None)
+        self.assertEqual(editor.GetCurrentPosition(), 0)
+
 
 class WikiEditorPolyactionsTest (BaseEditorPolyactionsTest):
     """
