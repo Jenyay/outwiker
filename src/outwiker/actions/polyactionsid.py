@@ -138,3 +138,11 @@ GOTO_PREV_WORD_SELECT = "GotoPrevWordSelect"
 # Move caret right one word and select.
 # Added in outwiker.actions 1.1
 GOTO_NEXT_WORD_SELECT = "GotoNextWordSelect"
+
+# Move caret to start of the current word
+# Added in outwiker.actions 1.1
+GOTO_WORD_START = "GotoWordStart"
+
+# Move caret to start of the current word
+# Added in outwiker.actions 1.1
+GOTO_WORD_END = "GotoWordEnd"

@@ -218,6 +218,176 @@ class BaseEditorPolyactionsTest (BaseMainWndTest):
         actionController.getAction(GOTO_PREV_WORD).run(None)
         self.assertEqual(editor.GetCurrentPosition(), 0)
 
+    def test_GoToWordStart_01(self):
+        text = u''
+        editor = self._getEditor()
+        actionController = Application.actionController
+        editor.SetText(text)
+        editor.GotoPos(0)
+
+        actionController.getAction(GOTO_WORD_START).run(None)
+        self.assertEqual(editor.GetCurrentPosition(), 0)
+
+    def test_GoToWordStart_02(self):
+        text = u'слово слово2 ещеоднослово'
+        editor = self._getEditor()
+        actionController = Application.actionController
+        editor.SetText(text)
+        editor.GotoPos(0)
+
+        actionController.getAction(GOTO_WORD_START).run(None)
+        self.assertEqual(editor.GetCurrentPosition(), 0)
+
+    def test_GoToWordStart_03(self):
+        text = u'слово слово2 ещеоднослово'
+        editor = self._getEditor()
+        actionController = Application.actionController
+        editor.SetText(text)
+        editor.GotoPos(3)
+
+        actionController.getAction(GOTO_WORD_START).run(None)
+        self.assertEqual(editor.GetCurrentPosition(), 0)
+
+    def test_GoToWordStart_04(self):
+        text = u'слово слово2 ещеоднослово'
+        editor = self._getEditor()
+        actionController = Application.actionController
+        editor.SetText(text)
+        editor.GotoPos(5)
+
+        actionController.getAction(GOTO_WORD_START).run(None)
+        self.assertEqual(editor.GetCurrentPosition(), 0)
+
+    def test_GoToWordStart_05(self):
+        text = u'слово слово2 ещеоднослово'
+        editor = self._getEditor()
+        actionController = Application.actionController
+        editor.SetText(text)
+        editor.GotoPos(6)
+
+        actionController.getAction(GOTO_WORD_START).run(None)
+        self.assertEqual(editor.GetCurrentPosition(), 6)
+
+    def test_GoToWordStart_06(self):
+        text = u'слово слово2 ещеоднослово'
+        editor = self._getEditor()
+        actionController = Application.actionController
+        editor.SetText(text)
+        editor.GotoPos(7)
+
+        actionController.getAction(GOTO_WORD_START).run(None)
+        self.assertEqual(editor.GetCurrentPosition(), 6)
+
+    def test_GoToWordStart_07(self):
+        text = u'слово слово2 ещеоднослово'
+        editor = self._getEditor()
+        actionController = Application.actionController
+        editor.SetText(text)
+        editor.GotoPos(13)
+
+        actionController.getAction(GOTO_WORD_START).run(None)
+        self.assertEqual(editor.GetCurrentPosition(), 13)
+
+    def test_GoToWordStart_08(self):
+        text = u'слово слово2 ещеоднослово'
+        editor = self._getEditor()
+        actionController = Application.actionController
+        editor.SetText(text)
+        editor.GotoPos(14)
+
+        actionController.getAction(GOTO_WORD_START).run(None)
+        self.assertEqual(editor.GetCurrentPosition(), 13)
+
+    def test_GoToWordStart_09(self):
+        text = u'слово слово2 ещеоднослово'
+        editor = self._getEditor()
+        actionController = Application.actionController
+        editor.SetText(text)
+        editor.GotoPos(25)
+
+        actionController.getAction(GOTO_WORD_START).run(None)
+        self.assertEqual(editor.GetCurrentPosition(), 13)
+
+    def test_GoToWordEnd_01(self):
+        text = u''
+        editor = self._getEditor()
+        actionController = Application.actionController
+        editor.SetText(text)
+        editor.GotoPos(0)
+
+        actionController.getAction(GOTO_WORD_END).run(None)
+        self.assertEqual(editor.GetCurrentPosition(), 0)
+
+    def test_GoToWordEnd_02(self):
+        text = u'слово слово2 ещеоднослово'
+        editor = self._getEditor()
+        actionController = Application.actionController
+        editor.SetText(text)
+        editor.GotoPos(0)
+
+        actionController.getAction(GOTO_WORD_END).run(None)
+        self.assertEqual(editor.GetCurrentPosition(), 5)
+
+    def test_GoToWordEnd_03(self):
+        text = u'слово слово2 ещеоднослово'
+        editor = self._getEditor()
+        actionController = Application.actionController
+        editor.SetText(text)
+        editor.GotoPos(1)
+
+        actionController.getAction(GOTO_WORD_END).run(None)
+        self.assertEqual(editor.GetCurrentPosition(), 5)
+
+    def test_GoToWordEnd_04(self):
+        text = u'слово слово2 ещеоднослово'
+        editor = self._getEditor()
+        actionController = Application.actionController
+        editor.SetText(text)
+        editor.GotoPos(6)
+
+        actionController.getAction(GOTO_WORD_END).run(None)
+        self.assertEqual(editor.GetCurrentPosition(), 12)
+
+    def test_GoToWordEnd_05(self):
+        text = u'слово слово2 ещеоднослово'
+        editor = self._getEditor()
+        actionController = Application.actionController
+        editor.SetText(text)
+        editor.GotoPos(12)
+
+        actionController.getAction(GOTO_WORD_END).run(None)
+        self.assertEqual(editor.GetCurrentPosition(), 12)
+
+    def test_GoToWordEnd_06(self):
+        text = u'слово слово2 ещеоднослово'
+        editor = self._getEditor()
+        actionController = Application.actionController
+        editor.SetText(text)
+        editor.GotoPos(13)
+
+        actionController.getAction(GOTO_WORD_END).run(None)
+        self.assertEqual(editor.GetCurrentPosition(), 25)
+
+    def test_GoToWordEnd_07(self):
+        text = u'слово слово2 ещеоднослово'
+        editor = self._getEditor()
+        actionController = Application.actionController
+        editor.SetText(text)
+        editor.GotoPos(14)
+
+        actionController.getAction(GOTO_WORD_END).run(None)
+        self.assertEqual(editor.GetCurrentPosition(), 25)
+
+    def test_GoToWordEnd_08(self):
+        text = u'слово слово2 ещеоднослово'
+        editor = self._getEditor()
+        actionController = Application.actionController
+        editor.SetText(text)
+        editor.GotoPos(25)
+
+        actionController.getAction(GOTO_WORD_END).run(None)
+        self.assertEqual(editor.GetCurrentPosition(), 25)
+
 
 class WikiEditorPolyactionsTest (BaseEditorPolyactionsTest):
     """

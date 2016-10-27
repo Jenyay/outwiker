@@ -24,6 +24,8 @@ from outwiker.actions.polyactionsid import (SPELL_ON_OFF_ID,
                                             GOTO_NEXT_WORD,
                                             GOTO_PREV_WORD_SELECT,
                                             GOTO_NEXT_WORD_SELECT,
+                                            GOTO_WORD_START,
+                                            GOTO_WORD_END,
                                             )
 from outwiker.core.system import getImagesDir
 from outwiker.core.commands import MessageBox, pageExists
@@ -61,8 +63,8 @@ class BaseTextPanel(BasePagePanel):
         self.searchMenu = None
 
         # Added in outwiker.gui 1.2
-        self.gotoMenu = None
-        self.gotoMenuItem = None
+        self.wordMenu = None
+        self.wordMenuItem = None
 
         # Предыдущее сохраненное состояние.
         # Используется для выявления изменения страницы внешними средствами
@@ -82,7 +84,7 @@ class BaseTextPanel(BasePagePanel):
         self._addSearchTools()
         self._addSpellTools()
         self._addEditTools()
-        self._addGotoTools()
+        self._addWordTools()
 
         self._application.onAttachmentPaste += self.onAttachmentPaste
         self._application.onPreferencesDialogClose += self.onPreferencesDialogClose
@@ -300,10 +302,10 @@ class BaseTextPanel(BasePagePanel):
 
         self._removeAllTools()
         self.mainWindow.mainMenu.Remove(self.searchMenuIndex)
-        self._application.mainWindow.mainMenu.editMenu.RemoveItem(self.gotoMenuItem)
+        self._application.mainWindow.mainMenu.editMenu.RemoveItem(self.wordMenuItem)
         self.searchMenu = None
-        self.gotoMenuItem = None
-        self.gotoMenu = None
+        self.wordMenuItem = None
+        self.wordMenu = None
 
     def onAttachmentPaste (self, fnames):
         """
@@ -357,15 +359,15 @@ class BaseTextPanel(BasePagePanel):
         enableSpell = EditorConfig(self._application.config).spellEnabled.value
         self._application.actionController.check(SPELL_ON_OFF_ID, enableSpell)
 
-    def _addGotoTools(self):
-        self.gotoMenu = wx.Menu()
+    def _addWordTools(self):
+        self.wordMenu = wx.Menu()
 
         # Go to previous word
         self._application.actionController.getAction(GOTO_PREV_WORD).setFunc(lambda params: self.GetEditor().WordLeft())
 
         self._application.actionController.appendMenuItem(
             GOTO_PREV_WORD,
-            self.gotoMenu
+            self.wordMenu
         )
 
         # Go to next word
@@ -373,7 +375,7 @@ class BaseTextPanel(BasePagePanel):
 
         self._application.actionController.appendMenuItem(
             GOTO_NEXT_WORD,
-            self.gotoMenu
+            self.wordMenu
         )
 
         # Go to previous word and select
@@ -381,7 +383,7 @@ class BaseTextPanel(BasePagePanel):
 
         self._application.actionController.appendMenuItem(
             GOTO_PREV_WORD_SELECT,
-            self.gotoMenu
+            self.wordMenu
         )
 
         # Go to next word and select
@@ -389,11 +391,43 @@ class BaseTextPanel(BasePagePanel):
 
         self._application.actionController.appendMenuItem(
             GOTO_NEXT_WORD_SELECT,
-            self.gotoMenu
+            self.wordMenu
         )
 
-        self.gotoMenuItem = self._application.mainWindow.mainMenu.editMenu.AppendSubMenu(
-            self.gotoMenu, _(u'Go to'))
+        # Go to start of the current word
+        self._application.actionController.getAction(GOTO_WORD_START).setFunc(lambda params: self.GetEditor().GotoWordStart())
+
+        self._application.actionController.appendMenuItem(
+            GOTO_WORD_START,
+            self.wordMenu
+        )
+
+        # Go to end of the current word
+        self._application.actionController.getAction(GOTO_WORD_END).setFunc(lambda params: self.GetEditor().GotoWordEnd())
+
+        self._application.actionController.appendMenuItem(
+            GOTO_WORD_END,
+            self.wordMenu
+        )
+
+        # Delete word left
+        self._application.actionController.getAction(DELETE_WORD_LEFT_STR_ID).setFunc(lambda params: self.GetEditor().DelWordLeft())
+
+        self._application.actionController.appendMenuItem(
+            DELETE_WORD_LEFT_STR_ID,
+            self.wordMenu
+        )
+
+        # Delete word right
+        self._application.actionController.getAction(DELETE_WORD_RIGHT_STR_ID).setFunc(lambda params: self.GetEditor().DelWordRight())
+
+        self._application.actionController.appendMenuItem(
+            DELETE_WORD_RIGHT_STR_ID,
+            self.wordMenu
+        )
+
+        self.wordMenuItem = self._application.mainWindow.mainMenu.editMenu.AppendSubMenu(
+            self.wordMenu, _(u'Word'))
 
     def _addEditTools(self):
         self._application.mainWindow.mainMenu.editMenu.AppendSeparator()
@@ -435,22 +469,6 @@ class BaseTextPanel(BasePagePanel):
 
         self._application.actionController.appendMenuItem(
             JOIN_LINES_STR_ID,
-            self._application.mainWindow.mainMenu.editMenu
-        )
-
-        # Delete word left
-        self._application.actionController.getAction(DELETE_WORD_LEFT_STR_ID).setFunc(lambda params: self.GetEditor().DelWordLeft())
-
-        self._application.actionController.appendMenuItem(
-            DELETE_WORD_LEFT_STR_ID,
-            self._application.mainWindow.mainMenu.editMenu
-        )
-
-        # Delete word right
-        self._application.actionController.getAction(DELETE_WORD_RIGHT_STR_ID).setFunc(lambda params: self.GetEditor().DelWordRight())
-
-        self._application.actionController.appendMenuItem(
-            DELETE_WORD_RIGHT_STR_ID,
             self._application.mainWindow.mainMenu.editMenu
         )
 

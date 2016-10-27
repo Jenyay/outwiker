@@ -1180,3 +1180,15 @@ def _registerPolyActions (application):
                                                        _(u"Next word and select"),
                                                        _(u"Move cursor to next word and select text")),
                                            HotKey ("Right", ctrl=True, shift=True))
+
+    application.actionController.register (PolyAction (application,
+                                                       GOTO_WORD_START,
+                                                       _(u"Start of the word"),
+                                                       _(u"Move cursor to start of the current word")),
+                                           None)
+
+    application.actionController.register (PolyAction (application,
+                                                       GOTO_WORD_END,
+                                                       _(u"End of the word"),
+                                                       _(u"Move cursor to end of the current word")),
+                                           None)

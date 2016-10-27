@@ -670,6 +670,18 @@ class TextEditor(wx.Panel):
         """
         self.textCtrl.WordRight()
 
+    def WordLeftEnd(self):
+        """
+        Added in outwiker.gui 1.2
+        """
+        self.textCtrl.WordLeftEnd()
+
+    def WordRightEnd(self):
+        """
+        Added in outwiker.gui 1.2
+        """
+        self.textCtrl.WordRightEnd()
+
     def WordLeftExtend(self):
         """
         Added in outwiker.gui 1.2
@@ -681,6 +693,20 @@ class TextEditor(wx.Panel):
         Added in outwiker.gui 1.2
         """
         self.textCtrl.WordRightExtend()
+
+    def GotoWordStart(self):
+        """
+        Added in outwiker.gui 1.2
+        """
+        self.WordRight()
+        self.WordLeft()
+
+    def GotoWordEnd(self):
+        """
+        Added in outwiker.gui 1.2
+        """
+        self.WordLeftEnd()
+        self.WordRightEnd()
 
     def ScrollLineToCursor(self):
         """
