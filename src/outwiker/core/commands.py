@@ -1159,36 +1159,36 @@ def _registerPolyActions (application):
 
     application.actionController.register (PolyAction (application,
                                                        GOTO_PREV_WORD,
-                                                       _(u"Previous word"),
+                                                       _(u"Go to previous word"),
                                                        _(u"Move cursor to previous word")),
                                            HotKey ("Left", ctrl=True))
 
     application.actionController.register (PolyAction (application,
                                                        GOTO_NEXT_WORD,
-                                                       _(u"Next word"),
+                                                       _(u"Go to next word"),
                                                        _(u"Move cursor to next word")),
                                            HotKey ("Right", ctrl=True))
 
     application.actionController.register (PolyAction (application,
                                                        GOTO_PREV_WORD_SELECT,
-                                                       _(u"Previous word and select"),
+                                                       _(u"Go to previous word and select"),
                                                        _(u"Move cursor to previous word and select text")),
                                            HotKey ("Left", ctrl=True, shift=True))
 
     application.actionController.register (PolyAction (application,
                                                        GOTO_NEXT_WORD_SELECT,
-                                                       _(u"Next word and select"),
+                                                       _(u"Go to next word and select"),
                                                        _(u"Move cursor to next word and select text")),
                                            HotKey ("Right", ctrl=True, shift=True))
 
     application.actionController.register (PolyAction (application,
                                                        GOTO_WORD_START,
-                                                       _(u"Start of the word"),
+                                                       _(u"Go to start of the word"),
                                                        _(u"Move cursor to start of the current word")),
                                            None)
 
     application.actionController.register (PolyAction (application,
                                                        GOTO_WORD_END,
-                                                       _(u"End of the word"),
+                                                       _(u"Go to end of the word"),
                                                        _(u"Move cursor to end of the current word")),
                                            None)

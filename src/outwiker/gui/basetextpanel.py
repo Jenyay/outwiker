@@ -58,6 +58,12 @@ class BaseTextPanel(BasePagePanel):
             DELETE_WORD_RIGHT_STR_ID,
             DELETE_LINE_LEFT_STR_ID,
             DELETE_LINE_RIGHT_STR_ID,
+            GOTO_PREV_WORD,
+            GOTO_NEXT_WORD,
+            GOTO_PREV_WORD_SELECT,
+            GOTO_NEXT_WORD_SELECT,
+            GOTO_WORD_START,
+            GOTO_WORD_END,
         ]
 
         self.searchMenu = None
