@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-27 22:26+0300\n"
+"POT-Creation-Date: 2016-10-28 19:17+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -66,8 +66,8 @@ msgstr "Страница открыта только для чтения"
 #: outwiker/gui/pagedialogpanels/appearancepanel.py:74
 #: outwiker/gui/pagedialog.py:24 outwiker/gui/pagedialog.py:34
 #: outwiker/gui/notestree.py:243 outwiker/gui/notestree.py:298
-#: outwiker/gui/mainwindow.py:579 outwiker/gui/basetextpanel.py:230
-#: outwiker/gui/basetextpanel.py:242 outwiker/gui/mainwndcontroller.py:225
+#: outwiker/gui/mainwindow.py:579 outwiker/gui/basetextpanel.py:236
+#: outwiker/gui/basetextpanel.py:248 outwiker/gui/mainwndcontroller.py:225
 #: outwiker/gui/htmlrenderie.py:213 outwiker/gui/htmlrenderwebkit.py:211
 msgid "Error"
 msgstr "Ошибка"
@@ -478,48 +478,48 @@ msgid "Delete text forwards from the current position to the end of the line"
 msgstr "Удалить текст от текущей позиции до конца строки"
 
 #: outwiker/core/commands.py:1162
-msgid "Previous word"
-msgstr "Предыдущее слово"
+msgid "Go to previous word"
+msgstr "Перейти к предыдущему слову"
 
 #: outwiker/core/commands.py:1163
 msgid "Move cursor to previous word"
 msgstr "Переместить курсор к предыдущему слову"
 
 #: outwiker/core/commands.py:1168
-msgid "Next word"
-msgstr "Следующее слово"
+msgid "Go to next word"
+msgstr "Перейти к следующему слову"
 
 #: outwiker/core/commands.py:1169
 msgid "Move cursor to next word"
 msgstr "Переместить курсор к следующему слову"
 
 #: outwiker/core/commands.py:1174
-msgid "Previous word and select"
-msgstr "Предыдущее слово и выделение"
+msgid "Go to previous word and select"
+msgstr "Перейти к предыдущему слову и выделить"
 
 #: outwiker/core/commands.py:1175
 msgid "Move cursor to previous word and select text"
 msgstr "Переместить курсор к предыдущему слову и выделить текст"
 
 #: outwiker/core/commands.py:1180
-msgid "Next word and select"
-msgstr "Следующее слово и выделение"
+msgid "Go to next word and select"
+msgstr "Перейти к следующему слову и выделить"
 
 #: outwiker/core/commands.py:1181
 msgid "Move cursor to next word and select text"
 msgstr "Переместить курсор к следующему слову и выделить текст"
 
 #: outwiker/core/commands.py:1186
-msgid "Start of the word"
-msgstr "Начало слова"
+msgid "Go to start of the word"
+msgstr "Перейти к началу слова"
 
 #: outwiker/core/commands.py:1187
 msgid "Move cursor to start of the current word"
 msgstr "Переместить курсор к началу текущего слова"
 
 #: outwiker/core/commands.py:1192
-msgid "End of the word"
-msgstr "Конец слова"
+msgid "Go to end of the word"
+msgstr "Перейти к концу слова"
 
 #: outwiker/core/commands.py:1193
 msgid "Move cursor to end of the current word"
@@ -638,7 +638,7 @@ msgstr "# Поиск"
 
 #: outwiker/pages/search/searchpanel.py:41
 #: outwiker/pages/search/searchpanel.py:301 outwiker/actions/search.py:31
-#: outwiker/gui/basetextpanel.py:329
+#: outwiker/gui/basetextpanel.py:335
 msgid "Search"
 msgstr "Поиск"
 
@@ -2013,8 +2013,8 @@ msgstr "Заменить"
 msgid "Replace All"
 msgstr "Заменить все"
 
-#: outwiker/gui/tabscontroller.py:250 outwiker/gui/basetextpanel.py:229
-#: outwiker/gui/basetextpanel.py:241
+#: outwiker/gui/tabscontroller.py:250 outwiker/gui/basetextpanel.py:235
+#: outwiker/gui/basetextpanel.py:247
 #, python-format
 msgid "Can't save file %s"
 msgstr "Ошибка записи в файл %s"
@@ -2126,7 +2126,7 @@ msgstr "Не изменять"
 msgid "Overwrite file?"
 msgstr "Перезаписать файл?"
 
-#: outwiker/gui/overwritedialog.py:19 outwiker/gui/basetextpanel.py:197
+#: outwiker/gui/overwritedialog.py:19 outwiker/gui/basetextpanel.py:203
 msgid "Overwrite"
 msgstr "Перезаписать"
 
@@ -2142,7 +2142,7 @@ msgstr "Пропустить"
 msgid "Skip all"
 msgstr "Пропустить все"
 
-#: outwiker/gui/overwritedialog.py:23 outwiker/gui/basetextpanel.py:197
+#: outwiker/gui/overwritedialog.py:23 outwiker/gui/basetextpanel.py:203
 msgid "Cancel"
 msgstr "Отмена"
 
@@ -2180,24 +2180,24 @@ msgstr ""
 "Невозможно сохранить настройки\n"
 "%s"
 
-#: outwiker/gui/basetextpanel.py:197
+#: outwiker/gui/basetextpanel.py:203
 msgid "Load"
 msgstr "Загрузить"
 
-#: outwiker/gui/basetextpanel.py:199
+#: outwiker/gui/basetextpanel.py:205
 #, python-format
 msgid "Page \"%s\" is changed by the external program"
 msgstr "Содержимое страницы \"%s\" изменено сторонней программой"
 
-#: outwiker/gui/basetextpanel.py:202
+#: outwiker/gui/basetextpanel.py:208
 msgid "Owerwrite?"
 msgstr "Перезаписать?"
 
-#: outwiker/gui/basetextpanel.py:440
+#: outwiker/gui/basetextpanel.py:446
 msgid "Word"
 msgstr "Слово"
 
-#: outwiker/gui/basetextpanel.py:502
+#: outwiker/gui/basetextpanel.py:508
 msgid "Lines"
 msgstr "Строки"
 
@@ -2416,6 +2416,24 @@ msgstr "Вставить таблицу"
 #: outwiker/gui/tabledialog.py:114
 msgid "Border width"
 msgstr "Толщина рамки"
+
+#~ msgid "Previous word"
+#~ msgstr "Предыдущее слово"
+
+#~ msgid "Next word"
+#~ msgstr "Следующее слово"
+
+#~ msgid "Previous word and select"
+#~ msgstr "Предыдущее слово и выделение"
+
+#~ msgid "Next word and select"
+#~ msgstr "Следующее слово и выделение"
+
+#~ msgid "Start of the word"
+#~ msgstr "Начало слова"
+
+#~ msgid "End of the word"
+#~ msgstr "Конец слова"
 
 #~ msgid "Page style Error. Style by default is used"
 #~ msgstr ""

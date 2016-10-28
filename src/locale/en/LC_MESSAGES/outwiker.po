@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-27 22:25+0300\n"
+"POT-Creation-Date: 2016-10-28 19:16+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -66,8 +66,8 @@ msgstr "Page is opened as read-only"
 #: outwiker/gui/pagedialogpanels/appearancepanel.py:74
 #: outwiker/gui/pagedialog.py:24 outwiker/gui/pagedialog.py:34
 #: outwiker/gui/notestree.py:243 outwiker/gui/notestree.py:298
-#: outwiker/gui/mainwindow.py:579 outwiker/gui/basetextpanel.py:230
-#: outwiker/gui/basetextpanel.py:242 outwiker/gui/mainwndcontroller.py:225
+#: outwiker/gui/mainwindow.py:579 outwiker/gui/basetextpanel.py:236
+#: outwiker/gui/basetextpanel.py:248 outwiker/gui/mainwndcontroller.py:225
 #: outwiker/gui/htmlrenderie.py:213 outwiker/gui/htmlrenderwebkit.py:211
 msgid "Error"
 msgstr "Error"
@@ -475,48 +475,48 @@ msgid "Delete text forwards from the current position to the end of the line"
 msgstr "Delete text forwards from the current position to the end of the line"
 
 #: outwiker/core/commands.py:1162
-msgid "Previous word"
-msgstr "Previous word"
+msgid "Go to previous word"
+msgstr "Go to previous word"
 
 #: outwiker/core/commands.py:1163
 msgid "Move cursor to previous word"
 msgstr "Move cursor to previous word"
 
 #: outwiker/core/commands.py:1168
-msgid "Next word"
-msgstr "Next word"
+msgid "Go to next word"
+msgstr "Go to next word"
 
 #: outwiker/core/commands.py:1169
 msgid "Move cursor to next word"
 msgstr "Move cursor to next word"
 
 #: outwiker/core/commands.py:1174
-msgid "Previous word and select"
-msgstr "Previous word and select"
+msgid "Go to previous word and select"
+msgstr "Go to previous word and select"
 
 #: outwiker/core/commands.py:1175
 msgid "Move cursor to previous word and select text"
 msgstr "Move cursor to previous word and select text"
 
 #: outwiker/core/commands.py:1180
-msgid "Next word and select"
-msgstr "Next word and select"
+msgid "Go to next word and select"
+msgstr "Go to next word and select"
 
 #: outwiker/core/commands.py:1181
 msgid "Move cursor to next word and select text"
 msgstr "Move cursor to next word and select text"
 
 #: outwiker/core/commands.py:1186
-msgid "Start of the word"
-msgstr "Start of the word"
+msgid "Go to start of the word"
+msgstr "Go to start of the word"
 
 #: outwiker/core/commands.py:1187
 msgid "Move cursor to start of the current word"
 msgstr "Move cursor to start of the current word"
 
 #: outwiker/core/commands.py:1192
-msgid "End of the word"
-msgstr "End of the word"
+msgid "Go to end of the word"
+msgstr "Go to end of the word"
 
 #: outwiker/core/commands.py:1193
 msgid "Move cursor to end of the current word"
@@ -637,7 +637,7 @@ msgstr "# Search"
 
 #: outwiker/pages/search/searchpanel.py:41
 #: outwiker/pages/search/searchpanel.py:301 outwiker/actions/search.py:31
-#: outwiker/gui/basetextpanel.py:329
+#: outwiker/gui/basetextpanel.py:335
 msgid "Search"
 msgstr "Search"
 
@@ -2003,8 +2003,8 @@ msgstr "Replace"
 msgid "Replace All"
 msgstr "Replace All"
 
-#: outwiker/gui/tabscontroller.py:250 outwiker/gui/basetextpanel.py:229
-#: outwiker/gui/basetextpanel.py:241
+#: outwiker/gui/tabscontroller.py:250 outwiker/gui/basetextpanel.py:235
+#: outwiker/gui/basetextpanel.py:247
 #, python-format
 msgid "Can't save file %s"
 msgstr "Can't save file %s"
@@ -2114,7 +2114,7 @@ msgstr "Do not change"
 msgid "Overwrite file?"
 msgstr "Overwrite file?"
 
-#: outwiker/gui/overwritedialog.py:19 outwiker/gui/basetextpanel.py:197
+#: outwiker/gui/overwritedialog.py:19 outwiker/gui/basetextpanel.py:203
 msgid "Overwrite"
 msgstr "Overwrite"
 
@@ -2130,7 +2130,7 @@ msgstr "Skip"
 msgid "Skip all"
 msgstr "Skip all"
 
-#: outwiker/gui/overwritedialog.py:23 outwiker/gui/basetextpanel.py:197
+#: outwiker/gui/overwritedialog.py:23 outwiker/gui/basetextpanel.py:203
 msgid "Cancel"
 msgstr "Cancel"
 
@@ -2168,24 +2168,24 @@ msgstr ""
 "Can't save config\n"
 "%s"
 
-#: outwiker/gui/basetextpanel.py:197
+#: outwiker/gui/basetextpanel.py:203
 msgid "Load"
 msgstr "Load"
 
-#: outwiker/gui/basetextpanel.py:199
+#: outwiker/gui/basetextpanel.py:205
 #, python-format
 msgid "Page \"%s\" is changed by the external program"
 msgstr "Page \"%s\" is changed by the external program"
 
-#: outwiker/gui/basetextpanel.py:202
+#: outwiker/gui/basetextpanel.py:208
 msgid "Owerwrite?"
 msgstr "Owerwrite?"
 
-#: outwiker/gui/basetextpanel.py:440
+#: outwiker/gui/basetextpanel.py:446
 msgid "Word"
 msgstr "Word"
 
-#: outwiker/gui/basetextpanel.py:502
+#: outwiker/gui/basetextpanel.py:508
 msgid "Lines"
 msgstr "Lines"
 
@@ -2404,6 +2404,24 @@ msgstr "Insert table"
 #: outwiker/gui/tabledialog.py:114
 msgid "Border width"
 msgstr "Border width"
+
+#~ msgid "Previous word"
+#~ msgstr "Previous word"
+
+#~ msgid "Next word"
+#~ msgstr "Next word"
+
+#~ msgid "Previous word and select"
+#~ msgstr "Previous word and select"
+
+#~ msgid "Next word and select"
+#~ msgstr "Next word and select"
+
+#~ msgid "Start of the word"
+#~ msgstr "Start of the word"
+
+#~ msgid "End of the word"
+#~ msgstr "End of the word"
 
 #~ msgid "Page style Error. Style by default is used"
 #~ msgstr "Page style Error. Style by default is used"
