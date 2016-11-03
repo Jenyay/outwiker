@@ -14,12 +14,12 @@ from outwiker.actions.polyactionsid import (SPELL_ON_OFF_ID,
                                             LINE_DUPLICATE_ID,
                                             MOVE_SELECTED_LINES_UP_ID,
                                             MOVE_SELECTED_LINES_DOWN_ID,
-                                            DELETE_CURRENT_LINE_ID,
-                                            JOIN_LINES_STR_ID,
-                                            DELETE_WORD_LEFT_STR_ID,
-                                            DELETE_WORD_RIGHT_STR_ID,
-                                            DELETE_LINE_LEFT_STR_ID,
-                                            DELETE_LINE_RIGHT_STR_ID,
+                                            DELETE_CURRENT_LINE,
+                                            JOIN_LINES,
+                                            DELETE_WORD_LEFT,
+                                            DELETE_WORD_RIGHT,
+                                            DELETE_LINE_LEFT,
+                                            DELETE_LINE_RIGHT,
                                             GOTO_PREV_WORD,
                                             GOTO_NEXT_WORD,
                                             GOTO_PREV_WORD_SELECT,
@@ -54,12 +54,12 @@ class BaseTextPanel(BasePagePanel):
             LINE_DUPLICATE_ID,
             MOVE_SELECTED_LINES_UP_ID,
             MOVE_SELECTED_LINES_DOWN_ID,
-            DELETE_CURRENT_LINE_ID,
-            JOIN_LINES_STR_ID,
-            DELETE_WORD_LEFT_STR_ID,
-            DELETE_WORD_RIGHT_STR_ID,
-            DELETE_LINE_LEFT_STR_ID,
-            DELETE_LINE_RIGHT_STR_ID,
+            DELETE_CURRENT_LINE,
+            JOIN_LINES,
+            DELETE_WORD_LEFT,
+            DELETE_WORD_RIGHT,
+            DELETE_LINE_LEFT,
+            DELETE_LINE_RIGHT,
             GOTO_PREV_WORD,
             GOTO_NEXT_WORD,
             GOTO_PREV_WORD_SELECT,
@@ -431,18 +431,18 @@ class BaseTextPanel(BasePagePanel):
         )
 
         # Delete word left
-        self._application.actionController.getAction(DELETE_WORD_LEFT_STR_ID).setFunc(lambda params: self.GetEditor().DelWordLeft())
+        self._application.actionController.getAction(DELETE_WORD_LEFT).setFunc(lambda params: self.GetEditor().DelWordLeft())
 
         self._application.actionController.appendMenuItem(
-            DELETE_WORD_LEFT_STR_ID,
+            DELETE_WORD_LEFT,
             self.wordMenu
         )
 
         # Delete word right
-        self._application.actionController.getAction(DELETE_WORD_RIGHT_STR_ID).setFunc(lambda params: self.GetEditor().DelWordRight())
+        self._application.actionController.getAction(DELETE_WORD_RIGHT).setFunc(lambda params: self.GetEditor().DelWordRight())
 
         self._application.actionController.appendMenuItem(
-            DELETE_WORD_RIGHT_STR_ID,
+            DELETE_WORD_RIGHT,
             self.wordMenu
         )
 
@@ -469,10 +469,10 @@ class BaseTextPanel(BasePagePanel):
         )
 
         # Delete the current line line
-        self._application.actionController.getAction(DELETE_CURRENT_LINE_ID).setFunc(lambda params: self.GetEditor().LineDelete())
+        self._application.actionController.getAction(DELETE_CURRENT_LINE).setFunc(lambda params: self.GetEditor().LineDelete())
 
         self._application.actionController.appendMenuItem(
-            DELETE_CURRENT_LINE_ID,
+            DELETE_CURRENT_LINE,
             self.linesMenu
         )
 
@@ -501,26 +501,26 @@ class BaseTextPanel(BasePagePanel):
         )
 
         # Join Lines
-        self._application.actionController.getAction(JOIN_LINES_STR_ID).setFunc(lambda params: self.GetEditor().JoinLines())
+        self._application.actionController.getAction(JOIN_LINES).setFunc(lambda params: self.GetEditor().JoinLines())
 
         self._application.actionController.appendMenuItem(
-            JOIN_LINES_STR_ID,
+            JOIN_LINES,
             self.linesMenu
         )
 
         # Delete line to start
-        self._application.actionController.getAction(DELETE_LINE_LEFT_STR_ID).setFunc(lambda params: self.GetEditor().DelLineLeft())
+        self._application.actionController.getAction(DELETE_LINE_LEFT).setFunc(lambda params: self.GetEditor().DelLineLeft())
 
         self._application.actionController.appendMenuItem(
-            DELETE_LINE_LEFT_STR_ID,
+            DELETE_LINE_LEFT,
             self.linesMenu
         )
 
         # Delete line to end
-        self._application.actionController.getAction(DELETE_LINE_RIGHT_STR_ID).setFunc(lambda params: self.GetEditor().DelLineRight())
+        self._application.actionController.getAction(DELETE_LINE_RIGHT).setFunc(lambda params: self.GetEditor().DelLineRight())
 
         self._application.actionController.appendMenuItem(
-            DELETE_LINE_RIGHT_STR_ID,
+            DELETE_LINE_RIGHT,
             self.linesMenu
         )
 

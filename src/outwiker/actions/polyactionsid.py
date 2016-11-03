@@ -106,22 +106,22 @@ MOVE_SELECTED_LINES_UP_ID = "MoveSelectedLinesUp"
 MOVE_SELECTED_LINES_DOWN_ID = "MoveSelectedLinesDown"
 
 # Delete the current line
-DELETE_CURRENT_LINE_ID = "DeleteCurrentLine"
+DELETE_CURRENT_LINE = "DeleteCurrentLine"
 
 # Join selected lines
-JOIN_LINES_STR_ID = "JoinLines"
+JOIN_LINES = "JoinLines"
 
 # Delete text to beginning of the word
-DELETE_WORD_LEFT_STR_ID = "DeleteWordLeft"
+DELETE_WORD_LEFT = "DeleteWordLeft"
 
 # Delete text to ending of the word
-DELETE_WORD_RIGHT_STR_ID = "DeleteWordRight"
+DELETE_WORD_RIGHT = "DeleteWordRight"
 
 # Delete back from the current position to the start of the line
-DELETE_LINE_LEFT_STR_ID = "DeleteLineLeft"
+DELETE_LINE_LEFT = "DeleteLineLeft"
 
 # Delete forwards from the current position to the end of the line
-DELETE_LINE_RIGHT_STR_ID = "DeleteLineRight"
+DELETE_LINE_RIGHT = "DeleteLineRight"
 
 # Move caret left one word.
 # Added in outwiker.actions 1.1

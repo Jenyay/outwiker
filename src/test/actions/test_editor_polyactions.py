@@ -144,7 +144,7 @@ class BaseEditorPolyactionsTest (BaseMainWndTest):
 
         result = u'Строка 2\nСтрока 3\nСтрока 4'
 
-        actionController.getAction(DELETE_CURRENT_LINE_ID).run(None)
+        actionController.getAction(DELETE_CURRENT_LINE).run(None)
         self.assertEqual(editor.GetText().replace(u'\r\n', u'\n'),
                          result)
 
@@ -157,7 +157,7 @@ class BaseEditorPolyactionsTest (BaseMainWndTest):
 
         result = u'Строка 1\nСтрока 3\nСтрока 4'
 
-        actionController.getAction(DELETE_CURRENT_LINE_ID).run(None)
+        actionController.getAction(DELETE_CURRENT_LINE).run(None)
         self.assertEqual(editor.GetText().replace(u'\r\n', u'\n'),
                          result)
 
@@ -170,7 +170,7 @@ class BaseEditorPolyactionsTest (BaseMainWndTest):
 
         result = u''
 
-        actionController.getAction(DELETE_CURRENT_LINE_ID).run(None)
+        actionController.getAction(DELETE_CURRENT_LINE).run(None)
         self.assertEqual(editor.GetText().replace(u'\r\n', u'\n'),
                          result)
 
