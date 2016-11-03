@@ -4,7 +4,7 @@ Section: text
 Priority: optional
 Depends: libc6 (>=2.15), zlib1g
 Maintainer: Eugeniy Ilin <jenyay.ilin@gmail.com>
-Standards-Version: 3.9.6
+Standards-Version: 3.9.8
 Homepage: http://jenyay.net/Outwiker/English
 Architecture: amd64
 Description: Outliner and personal wiki
