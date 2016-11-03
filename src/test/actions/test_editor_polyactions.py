@@ -8,6 +8,7 @@ from outwiker.core.application import Application
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.html.htmlpage import HtmlPageFactory
 from outwiker.pages.text.textpage import TextPageFactory
+from outwiker.core.commands import getClipboardText
 from outwiker.actions.polyactionsid import *
 
 
@@ -387,6 +388,161 @@ class BaseEditorPolyactionsTest (BaseMainWndTest):
 
         actionController.getAction(GOTO_WORD_END).run(None)
         self.assertEqual(editor.GetCurrentPosition(), 25)
+
+    def test_CopyLineToClipboard_01(self):
+        text = u''
+        editor = self._getEditor()
+        actionController = Application.actionController
+        editor.SetText(text)
+
+        actionController.getAction(CLIPBOARD_COPY_LINE).run(None)
+        cb_text = getClipboardText()
+
+        self.assertEqual(cb_text, u'')
+
+    def test_CopyLineToClipboard_02(self):
+        text = u'\n'
+        editor = self._getEditor()
+        actionController = Application.actionController
+        editor.SetText(text)
+        editor.GotoPos(0)
+
+        actionController.getAction(CLIPBOARD_COPY_LINE).run(None)
+        cb_text = getClipboardText()
+
+        self.assertEqual(cb_text.replace(u'\r\n', u'\n'), u'\n')
+
+    def test_CopyLineToClipboard_03(self):
+        text = u'Строка 1'
+        editor = self._getEditor()
+        actionController = Application.actionController
+        editor.SetText(text)
+        editor.GotoPos(0)
+
+        actionController.getAction(CLIPBOARD_COPY_LINE).run(None)
+        cb_text = getClipboardText()
+
+        self.assertEqual(cb_text.replace(u'\r\n', u'\n'), u'Строка 1')
+
+    def test_CopyLineToClipboard_04(self):
+        text = u'Строка 1\n'
+        editor = self._getEditor()
+        actionController = Application.actionController
+        editor.SetText(text)
+        editor.GotoPos(0)
+
+        actionController.getAction(CLIPBOARD_COPY_LINE).run(None)
+        cb_text = getClipboardText()
+
+        self.assertEqual(cb_text.replace(u'\r\n', u'\n'), u'Строка 1\n')
+
+    def test_CopyLineToClipboard_05(self):
+        text = u'Строка 1\nСтрока 2'
+        editor = self._getEditor()
+        actionController = Application.actionController
+        editor.SetText(text)
+        editor.GotoPos(9)
+
+        actionController.getAction(CLIPBOARD_COPY_LINE).run(None)
+        cb_text = getClipboardText()
+
+        self.assertEqual(cb_text.replace(u'\r\n', u'\n'), u'Строка 2')
+
+    def test_CopyLineToClipboard_06(self):
+        text = u'Строка 1\nСтрока 2\n'
+        editor = self._getEditor()
+        actionController = Application.actionController
+        editor.SetText(text)
+        editor.GotoPos(9)
+
+        actionController.getAction(CLIPBOARD_COPY_LINE).run(None)
+        cb_text = getClipboardText()
+
+        self.assertEqual(cb_text.replace(u'\r\n', u'\n'), u'Строка 2\n')
+
+    def test_CutLineToClipboard_01(self):
+        text = u''
+        editor = self._getEditor()
+        actionController = Application.actionController
+        editor.SetText(text)
+        editor.GotoPos(0)
+
+        actionController.getAction(CLIPBOARD_CUT_LINE).run(None)
+        cb_text = getClipboardText()
+        newtext = editor.GetText().replace(u'\r\n', u'\n')
+
+        self.assertEqual(cb_text, u'')
+        self.assertEqual(newtext, u'')
+
+    def test_CutLineToClipboard_02(self):
+        text = u'Строка 1'
+        editor = self._getEditor()
+        actionController = Application.actionController
+        editor.SetText(text)
+        editor.GotoPos(0)
+
+        actionController.getAction(CLIPBOARD_CUT_LINE).run(None)
+        cb_text = getClipboardText().replace(u'\r\n', u'\n')
+        newtext = editor.GetText().replace(u'\r\n', u'\n')
+
+        self.assertEqual(cb_text, u'Строка 1')
+        self.assertEqual(newtext, u'')
+
+    def test_CutLineToClipboard_03(self):
+        text = u'Строка 1\n'
+        editor = self._getEditor()
+        actionController = Application.actionController
+        editor.SetText(text)
+        editor.GotoPos(0)
+
+        actionController.getAction(CLIPBOARD_CUT_LINE).run(None)
+        cb_text = getClipboardText().replace(u'\r\n', u'\n')
+        newtext = editor.GetText().replace(u'\r\n', u'\n')
+
+        self.assertEqual(cb_text, u'Строка 1\n')
+        self.assertEqual(newtext, u'')
+
+    def test_CutLineToClipboard_04(self):
+        text = u'Строка 1\nСтрока 2'
+        editor = self._getEditor()
+        actionController = Application.actionController
+        editor.SetText(text)
+        editor.GotoPos(0)
+
+        actionController.getAction(CLIPBOARD_CUT_LINE).run(None)
+        cb_text = getClipboardText().replace(u'\r\n', u'\n')
+        newtext = editor.GetText().replace(u'\r\n', u'\n')
+
+        self.assertEqual(cb_text, u'Строка 1\n')
+        self.assertEqual(newtext, u'Строка 2')
+
+    def test_CutLineToClipboard_05(self):
+        text = u'Строка 1\nСтрока 2'
+        editor = self._getEditor()
+        actionController = Application.actionController
+        editor.SetText(text)
+        editor.GotoPos(9)
+
+        actionController.getAction(CLIPBOARD_CUT_LINE).run(None)
+        cb_text = getClipboardText().replace(u'\r\n', u'\n')
+        newtext = editor.GetText().replace(u'\r\n', u'\n')
+
+        self.assertEqual(cb_text, u'Строка 2')
+        self.assertEqual(newtext, u'Строка 1\n')
+
+    def test_CutLineToClipboard_06(self):
+        text = u'Строка 1\nСтрока 2\nСтрока 3'
+        editor = self._getEditor()
+        actionController = Application.actionController
+        editor.SetText(text)
+        editor.GotoPos(9)
+
+        actionController.getAction(CLIPBOARD_CUT_LINE).run(None)
+        cb_text = getClipboardText().replace(u'\r\n', u'\n')
+        newtext = editor.GetText().replace(u'\r\n', u'\n')
+
+        self.assertEqual(cb_text, u'Строка 2\n')
+        self.assertEqual(newtext, u'Строка 1\nСтрока 3')
 
 
 class WikiEditorPolyactionsTest (BaseEditorPolyactionsTest):

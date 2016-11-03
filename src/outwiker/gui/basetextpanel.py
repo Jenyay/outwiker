@@ -26,9 +26,11 @@ from outwiker.actions.polyactionsid import (SPELL_ON_OFF_ID,
                                             GOTO_NEXT_WORD_SELECT,
                                             GOTO_WORD_START,
                                             GOTO_WORD_END,
+                                            CLIPBOARD_COPY_LINE,
+                                            CLIPBOARD_CUT_LINE,
                                             )
 from outwiker.core.system import getImagesDir
-from outwiker.core.commands import MessageBox, pageExists
+from outwiker.core.commands import MessageBox, pageExists, copyTextToClipboard
 from outwiker.core.attachment import Attachment
 from outwiker.core.config import IntegerOption
 from outwiker.core.tree import RootWikiPage
@@ -64,6 +66,8 @@ class BaseTextPanel(BasePagePanel):
             GOTO_NEXT_WORD_SELECT,
             GOTO_WORD_START,
             GOTO_WORD_END,
+            CLIPBOARD_COPY_LINE,
+            CLIPBOARD_CUT_LINE,
         ]
 
         self.searchMenu = None
@@ -448,6 +452,22 @@ class BaseTextPanel(BasePagePanel):
     def _addLinesTools(self):
         self.linesMenu = wx.Menu()
 
+        # Copy the current line to clipboard
+        self._application.actionController.getAction(CLIPBOARD_COPY_LINE).setFunc(self._copyCurrentLineToClipboard)
+
+        self._application.actionController.appendMenuItem(
+            CLIPBOARD_COPY_LINE,
+            self.linesMenu
+        )
+
+        # Cut the current line to clipboard
+        self._application.actionController.getAction(CLIPBOARD_CUT_LINE).setFunc(self._cutCurrentLineToClipboard)
+
+        self._application.actionController.appendMenuItem(
+            CLIPBOARD_CUT_LINE,
+            self.linesMenu
+        )
+
         # Delete the current line line
         self._application.actionController.getAction(DELETE_CURRENT_LINE_ID).setFunc(lambda params: self.GetEditor().LineDelete())
 
@@ -511,3 +531,16 @@ class BaseTextPanel(BasePagePanel):
         EditorConfig(self._application.config).spellEnabled.value = checked
         event = self._spellOnOffEvent(checked=checked)
         wx.PostEvent(self, event)
+
+    def _copyCurrentLineToClipboard(self, params):
+        editor = self.GetEditor()
+        line = editor.GetCurrentLine()
+        text = editor.GetLine(line)
+        copyTextToClipboard(text)
+
+    def _cutCurrentLineToClipboard(self, params):
+        editor = self.GetEditor()
+        line = editor.GetCurrentLine()
+        text = editor.GetLine(line)
+        editor.LineDelete()
+        copyTextToClipboard(text)

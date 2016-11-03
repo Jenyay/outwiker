@@ -146,3 +146,9 @@ GOTO_WORD_START = "GotoWordStart"
 # Move caret to start of the current word
 # Added in outwiker.actions 1.1
 GOTO_WORD_END = "GotoWordEnd"
+
+# Copy line to clipboard
+CLIPBOARD_COPY_LINE = "ClipboardCopyLine"
+
+# Cut line to clipboard
+CLIPBOARD_CUT_LINE = "ClipboardCutLine"

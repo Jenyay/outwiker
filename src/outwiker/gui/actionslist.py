@@ -123,4 +123,6 @@ polyactionsList = [
     (polyactions.GOTO_NEXT_WORD_SELECT, _(u"Go to next word and select"), _(u"Move cursor to next word and select text"), HotKey("Right", ctrl=True, shift=True)),
     (polyactions.GOTO_WORD_START, _(u"Go to start of the word"), _(u"Move cursor to start of the current word"), None),
     (polyactions.GOTO_WORD_END, _(u"Go to end of the word"), _(u"Move cursor to end of the current word"), None),
+    (polyactions.CLIPBOARD_COPY_LINE, _(u"Copy line"), _(u"Copy the current line to clipboard"), None),
+    (polyactions.CLIPBOARD_CUT_LINE, _(u"Cut line"), _(u"Cut the current line to clipboard"), None),
 ]
