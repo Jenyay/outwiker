@@ -9,6 +9,7 @@
 		<changelog>
 			<version number="2.0.0.805" status="dev">
 				<change>Added the menu items to move cursor in text.</change>
+				<change>Added the menu items to copy / cut the current line to clipboard.</change>
 				<change>Bug fixes.</change>
 			</version>
 
@@ -62,6 +63,7 @@
 		<changelog>
 			<version number="2.0.0.805" status="dev">
 				<change>Добавлены пункты меню и горячие клавиши для перемещения по тексту.</change>
+				<change>Добавлены пункты меню и горячие клавиши для копирования / вырезания текущей строки в буфер обмена.</change>
 				<change>Исправление ошибок.</change>
 			</version>
 
