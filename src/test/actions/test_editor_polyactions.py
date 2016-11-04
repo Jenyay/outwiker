@@ -610,6 +610,132 @@ class BaseEditorPolyactionsTest (BaseMainWndTest):
         cb_text = getClipboardText().replace(u'\r\n', u'\n')
         self.assertEqual(cb_text, u'слово2')
 
+    def test_CutWordToClipboard_01(self):
+        text = u''
+        editor = self._getEditor()
+        actionController = Application.actionController
+        editor.SetText(text)
+        editor.GotoPos(0)
+
+        actionController.getAction(CLIPBOARD_CUT_WORD).run(None)
+        cb_text = getClipboardText().replace(u'\r\n', u'\n')
+        newtext = editor.GetText().replace(u'\r\n', u'\n')
+
+        self.assertEqual(cb_text, u'')
+        self.assertEqual(newtext, u'')
+
+    def test_CutWordToClipboard_02(self):
+        text = u'слово'
+        editor = self._getEditor()
+        actionController = Application.actionController
+        editor.SetText(text)
+        editor.GotoPos(0)
+
+        actionController.getAction(CLIPBOARD_CUT_WORD).run(None)
+        cb_text = getClipboardText().replace(u'\r\n', u'\n')
+        newtext = editor.GetText().replace(u'\r\n', u'\n')
+
+        self.assertEqual(cb_text, u'слово')
+        self.assertEqual(newtext, u'')
+
+    def test_CutWordToClipboard_03(self):
+        text = u'слово'
+        editor = self._getEditor()
+        actionController = Application.actionController
+        editor.SetText(text)
+        editor.GotoPos(2)
+
+        actionController.getAction(CLIPBOARD_CUT_WORD).run(None)
+        cb_text = getClipboardText().replace(u'\r\n', u'\n')
+        newtext = editor.GetText().replace(u'\r\n', u'\n')
+
+        self.assertEqual(cb_text, u'слово')
+        self.assertEqual(newtext, u'')
+
+    def test_CutWordToClipboard_04(self):
+        text = u'слово'
+        editor = self._getEditor()
+        actionController = Application.actionController
+        editor.SetText(text)
+        editor.GotoPos(5)
+
+        actionController.getAction(CLIPBOARD_CUT_WORD).run(None)
+        cb_text = getClipboardText().replace(u'\r\n', u'\n')
+        newtext = editor.GetText().replace(u'\r\n', u'\n')
+
+        self.assertEqual(cb_text, u'слово')
+        self.assertEqual(newtext, u'')
+
+    def test_CutWordToClipboard_05(self):
+        text = u'слово слово2'
+        editor = self._getEditor()
+        actionController = Application.actionController
+        editor.SetText(text)
+        editor.GotoPos(0)
+
+        actionController.getAction(CLIPBOARD_CUT_WORD).run(None)
+        cb_text = getClipboardText().replace(u'\r\n', u'\n')
+        newtext = editor.GetText().replace(u'\r\n', u'\n')
+
+        self.assertEqual(cb_text, u'слово')
+        self.assertEqual(newtext, u' слово2')
+
+    def test_CutWordToClipboard_06(self):
+        text = u'слово слово2'
+        editor = self._getEditor()
+        actionController = Application.actionController
+        editor.SetText(text)
+        editor.GotoPos(5)
+
+        actionController.getAction(CLIPBOARD_CUT_WORD).run(None)
+        cb_text = getClipboardText().replace(u'\r\n', u'\n')
+        newtext = editor.GetText().replace(u'\r\n', u'\n')
+
+        self.assertEqual(cb_text, u'слово')
+        self.assertEqual(newtext, u' слово2')
+
+    def test_CutWordToClipboard_07(self):
+        text = u'слово слово2'
+        editor = self._getEditor()
+        actionController = Application.actionController
+        editor.SetText(text)
+        editor.GotoPos(6)
+
+        actionController.getAction(CLIPBOARD_CUT_WORD).run(None)
+        cb_text = getClipboardText().replace(u'\r\n', u'\n')
+        newtext = editor.GetText().replace(u'\r\n', u'\n')
+
+        self.assertEqual(cb_text, u'слово2')
+        self.assertEqual(newtext, u'слово ')
+
+    def test_CutWordToClipboard_08(self):
+        text = u'слово слово2'
+        editor = self._getEditor()
+        actionController = Application.actionController
+        editor.SetText(text)
+        editor.GotoPos(8)
+
+        actionController.getAction(CLIPBOARD_CUT_WORD).run(None)
+        cb_text = getClipboardText().replace(u'\r\n', u'\n')
+        newtext = editor.GetText().replace(u'\r\n', u'\n')
+
+        self.assertEqual(cb_text, u'слово2')
+        self.assertEqual(newtext, u'слово ')
+
+    def test_CutWordToClipboard_09(self):
+        text = u'слово слово2'
+        editor = self._getEditor()
+        actionController = Application.actionController
+        editor.SetText(text)
+        editor.GotoPos(12)
+
+        actionController.getAction(CLIPBOARD_CUT_WORD).run(None)
+        cb_text = getClipboardText().replace(u'\r\n', u'\n')
+        newtext = editor.GetText().replace(u'\r\n', u'\n')
+
+        self.assertEqual(cb_text, u'слово2')
+        self.assertEqual(newtext, u'слово ')
+
 
 class WikiEditorPolyactionsTest (BaseEditorPolyactionsTest):
     """

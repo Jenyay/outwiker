@@ -458,6 +458,14 @@ class BaseTextPanel(BasePagePanel):
             self.wordMenu
         )
 
+        # Cut word to clipboard
+        self._application.actionController.getAction(CLIPBOARD_CUT_WORD).setFunc(self._cutCurrentWordToClipboard)
+
+        self._application.actionController.appendMenuItem(
+            CLIPBOARD_CUT_WORD,
+            self.wordMenu
+        )
+
         self.wordMenuItem = self._application.mainWindow.mainMenu.editMenu.AppendSubMenu(
             self.wordMenu, _(u'Word'))
 
@@ -562,3 +570,13 @@ class BaseTextPanel(BasePagePanel):
         pos = editor.GetCurrentPosition()
         word = editor.GetWord(pos)
         copyTextToClipboard(word)
+
+    def _cutCurrentWordToClipboard(self, params):
+        editor = self.GetEditor()
+        self._copyCurrentWordToClipboard(params)
+        pos = editor.GetCurrentPosition()
+
+        word_start = editor.WordStartPosition(pos)
+        word_end = editor.WordEndPosition(pos)
+        editor.SetSelection(word_start, word_end)
+        editor.replaceText(u'')
