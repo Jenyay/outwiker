@@ -1092,3 +1092,171 @@ class TextEditorTest(BaseMainWndTest):
 
         editor.GotoWordEnd()
         self.assertEqual(editor.GetCurrentPosition(), 25)
+
+    def test_WordStartPosition_01(self):
+        text = u''
+        editor = self._getEditor()
+        editor.SetText(text)
+        wordStart = editor.WordStartPosition(0)
+
+        self.assertEqual(wordStart, 0)
+
+    def test_WordStartPosition_02(self):
+        text = u'слово'
+        editor = self._getEditor()
+        editor.SetText(text)
+        wordStart = editor.WordStartPosition(0)
+
+        self.assertEqual(wordStart, 0)
+
+    def test_WordStartPosition_03(self):
+        text = u'слово'
+        editor = self._getEditor()
+        editor.SetText(text)
+        wordStart = editor.WordStartPosition(3)
+
+        self.assertEqual(wordStart, 0)
+
+    def test_WordStartPosition_04(self):
+        text = u' слово'
+        editor = self._getEditor()
+        editor.SetText(text)
+        wordStart = editor.WordStartPosition(3)
+
+        self.assertEqual(wordStart, 1)
+
+    def test_WordStartPosition_05(self):
+        text = u' слово слово2'
+        editor = self._getEditor()
+        editor.SetText(text)
+        wordStart = editor.WordStartPosition(7)
+
+        self.assertEqual(wordStart, 7)
+
+    def test_WordStartPosition_06(self):
+        text = u' слово слово2'
+        editor = self._getEditor()
+        editor.SetText(text)
+        wordStart = editor.WordStartPosition(9)
+
+        self.assertEqual(wordStart, 7)
+
+    def test_WordEndPosition_01(self):
+        text = u''
+        editor = self._getEditor()
+        editor.SetText(text)
+        wordEnd = editor.WordEndPosition(0)
+
+        self.assertEqual(wordEnd, 0)
+
+    def test_WordEndPosition_02(self):
+        text = u'слово'
+        editor = self._getEditor()
+        editor.SetText(text)
+        wordEnd = editor.WordEndPosition(0)
+
+        self.assertEqual(wordEnd, 5)
+
+    def test_WordEndPosition_03(self):
+        text = u'слово'
+        editor = self._getEditor()
+        editor.SetText(text)
+        wordEnd = editor.WordEndPosition(3)
+
+        self.assertEqual(wordEnd, 5)
+
+    def test_WordEndPosition_04(self):
+        text = u' слово'
+        editor = self._getEditor()
+        editor.SetText(text)
+        wordEnd = editor.WordEndPosition(3)
+
+        self.assertEqual(wordEnd, 6)
+
+    def test_WordEndPosition_05(self):
+        text = u' слово слово2'
+        editor = self._getEditor()
+        editor.SetText(text)
+        wordEnd = editor.WordEndPosition(7)
+
+        self.assertEqual(wordEnd, 13)
+
+    def test_WordEndPosition_06(self):
+        text = u' слово слово2'
+        editor = self._getEditor()
+        editor.SetText(text)
+        wordEnd = editor.WordEndPosition(9)
+
+        self.assertEqual(wordEnd, 13)
+
+    def test_GetWord_01(self):
+        text = u''
+        editor = self._getEditor()
+        editor.SetText(text)
+        word = editor.GetWord(0)
+
+        self.assertEqual(word, u'')
+
+    def test_GetWord_02(self):
+        text = u''
+        editor = self._getEditor()
+        editor.SetText(text)
+        word = editor.GetWord(10)
+
+        self.assertEqual(word, u'')
+
+    def test_GetWord_03(self):
+        text = u'слово'
+        editor = self._getEditor()
+        editor.SetText(text)
+        word = editor.GetWord(0)
+
+        self.assertEqual(word, u'слово')
+
+    def test_GetWord_04(self):
+        text = u' слово '
+        editor = self._getEditor()
+        editor.SetText(text)
+        word = editor.GetWord(1)
+
+        self.assertEqual(word, u'слово')
+
+    def test_GetWord_05(self):
+        text = u' слово '
+        editor = self._getEditor()
+        editor.SetText(text)
+        word = editor.GetWord(6)
+
+        self.assertEqual(word, u'слово')
+
+    def test_GetWord_06(self):
+        text = u' слово слово2'
+        editor = self._getEditor()
+        editor.SetText(text)
+        word = editor.GetWord(7)
+
+        self.assertEqual(word, u'слово2')
+
+    def test_GetWord_07(self):
+        text = u' слово слово2'
+        editor = self._getEditor()
+        editor.SetText(text)
+        word = editor.GetWord(13)
+
+        self.assertEqual(word, u'слово2')
+
+    def test_GetWord_08(self):
+        text = u' слово слово2 '
+        editor = self._getEditor()
+        editor.SetText(text)
+        word = editor.GetWord(13)
+
+        self.assertEqual(word, u'слово2')
+
+    def test_GetWord_09(self):
+        text = u' слово слово2 '
+        editor = self._getEditor()
+        editor.SetText(text)
+        word = editor.GetWord(100)
+
+        self.assertEqual(word, u'')

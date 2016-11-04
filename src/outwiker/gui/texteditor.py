@@ -721,6 +721,29 @@ class TextEditor(wx.Panel):
                 line = 0
             self.ScrollToLine(line)
 
+    def WordStartPosition(self, pos):
+        """
+        Added in outwiker.gui 1.2
+        """
+        pos_bytes = self._helper.calcBytePos(self.GetText(), pos)
+        result_bytes = self.textCtrl.WordStartPosition(pos_bytes, True)
+        return self.getPosChar(result_bytes)
+
+    def WordEndPosition(self, pos):
+        """
+        Added in outwiker.gui 1.2
+        """
+        pos_bytes = self._helper.calcBytePos(self.GetText(), pos)
+        result_bytes = self.textCtrl.WordEndPosition(pos_bytes, True)
+        return self.getPosChar(result_bytes)
+
+    def GetWord(self, pos):
+        pos_bytes = self._helper.calcBytePos(self.GetText(), pos)
+        word_start_bytes = self.textCtrl.WordStartPosition(pos_bytes, True)
+        word_end_bytes = self.textCtrl.WordEndPosition(pos_bytes, True)
+        word = self.textCtrl.GetTextRange(word_start_bytes, word_end_bytes)
+        return word
+
     def __calcCharPos(self, pos_bytes):
         """
         Пересчет позиции в байтах в позицию в символах
