@@ -125,4 +125,6 @@ polyactionsList = [
     (polyactions.GOTO_WORD_END, _(u"Go to end of the word"), _(u"Move cursor to end of the current word"), None),
     (polyactions.CLIPBOARD_COPY_LINE, _(u"Copy line"), _(u"Copy the current line to clipboard"), None),
     (polyactions.CLIPBOARD_CUT_LINE, _(u"Cut line"), _(u"Cut the current line to clipboard"), None),
+    (polyactions.CLIPBOARD_COPY_WORD, _(u"Copy word"), _(u"Copy the current word to clipboard"), None),
+    (polyactions.CLIPBOARD_CUT_WORD, _(u"Cut word"), _(u"Cut the current word to clipboard"), None),
 ]

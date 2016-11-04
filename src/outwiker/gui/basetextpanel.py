@@ -28,6 +28,8 @@ from outwiker.actions.polyactionsid import (SPELL_ON_OFF_ID,
                                             GOTO_WORD_END,
                                             CLIPBOARD_COPY_LINE,
                                             CLIPBOARD_CUT_LINE,
+                                            CLIPBOARD_COPY_WORD,
+                                            CLIPBOARD_CUT_WORD,
                                             )
 from outwiker.core.system import getImagesDir
 from outwiker.core.commands import MessageBox, pageExists, copyTextToClipboard
@@ -68,6 +70,8 @@ class BaseTextPanel(BasePagePanel):
             GOTO_WORD_END,
             CLIPBOARD_COPY_LINE,
             CLIPBOARD_CUT_LINE,
+            CLIPBOARD_COPY_WORD,
+            CLIPBOARD_CUT_WORD,
         ]
 
         self.searchMenu = None
@@ -446,6 +450,14 @@ class BaseTextPanel(BasePagePanel):
             self.wordMenu
         )
 
+        # Copy word to clipboard
+        self._application.actionController.getAction(CLIPBOARD_COPY_WORD).setFunc(self._copyCurrentWordToClipboard)
+
+        self._application.actionController.appendMenuItem(
+            CLIPBOARD_COPY_WORD,
+            self.wordMenu
+        )
+
         self.wordMenuItem = self._application.mainWindow.mainMenu.editMenu.AppendSubMenu(
             self.wordMenu, _(u'Word'))
 
@@ -544,3 +556,9 @@ class BaseTextPanel(BasePagePanel):
         text = editor.GetLine(line)
         editor.LineDelete()
         copyTextToClipboard(text)
+
+    def _copyCurrentWordToClipboard(self, params):
+        editor = self.GetEditor()
+        pos = editor.GetCurrentPosition()
+        word = editor.GetWord(pos)
+        copyTextToClipboard(word)

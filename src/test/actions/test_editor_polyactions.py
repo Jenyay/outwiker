@@ -544,6 +544,72 @@ class BaseEditorPolyactionsTest (BaseMainWndTest):
         self.assertEqual(cb_text, u'Строка 2\n')
         self.assertEqual(newtext, u'Строка 1\nСтрока 3')
 
+    def test_CopyWordToClipboard_01(self):
+        text = u''
+        editor = self._getEditor()
+        actionController = Application.actionController
+        editor.SetText(text)
+        editor.GotoPos(0)
+
+        actionController.getAction(CLIPBOARD_COPY_WORD).run(None)
+        cb_text = getClipboardText().replace(u'\r\n', u'\n')
+        self.assertEqual(cb_text, u'')
+
+    def test_CopyWordToClipboard_02(self):
+        text = u'слово'
+        editor = self._getEditor()
+        actionController = Application.actionController
+        editor.SetText(text)
+        editor.GotoPos(0)
+
+        actionController.getAction(CLIPBOARD_COPY_WORD).run(None)
+        cb_text = getClipboardText().replace(u'\r\n', u'\n')
+        self.assertEqual(cb_text, u'слово')
+
+    def test_CopyWordToClipboard_03(self):
+        text = u'слово'
+        editor = self._getEditor()
+        actionController = Application.actionController
+        editor.SetText(text)
+        editor.GotoPos(2)
+
+        actionController.getAction(CLIPBOARD_COPY_WORD).run(None)
+        cb_text = getClipboardText().replace(u'\r\n', u'\n')
+        self.assertEqual(cb_text, u'слово')
+
+    def test_CopyWordToClipboard_04(self):
+        text = u'слово'
+        editor = self._getEditor()
+        actionController = Application.actionController
+        editor.SetText(text)
+        editor.GotoPos(5)
+
+        actionController.getAction(CLIPBOARD_COPY_WORD).run(None)
+        cb_text = getClipboardText().replace(u'\r\n', u'\n')
+        self.assertEqual(cb_text, u'слово')
+
+    def test_CopyWordToClipboard_05(self):
+        text = u' слово '
+        editor = self._getEditor()
+        actionController = Application.actionController
+        editor.SetText(text)
+        editor.GotoPos(1)
+
+        actionController.getAction(CLIPBOARD_COPY_WORD).run(None)
+        cb_text = getClipboardText().replace(u'\r\n', u'\n')
+        self.assertEqual(cb_text, u'слово')
+
+    def test_CopyWordToClipboard_06(self):
+        text = u' слово слово2'
+        editor = self._getEditor()
+        actionController = Application.actionController
+        editor.SetText(text)
+        editor.GotoPos(7)
+
+        actionController.getAction(CLIPBOARD_COPY_WORD).run(None)
+        cb_text = getClipboardText().replace(u'\r\n', u'\n')
+        self.assertEqual(cb_text, u'слово2')
+
 
 class WikiEditorPolyactionsTest (BaseEditorPolyactionsTest):
     """

@@ -152,3 +152,9 @@ CLIPBOARD_COPY_LINE = "ClipboardCopyLine"
 
 # Cut line to clipboard
 CLIPBOARD_CUT_LINE = "ClipboardCutLine"
+
+# Copy the word to clipboard
+CLIPBOARD_COPY_WORD = "ClipboardCopyWord"
+
+# Cut the word to clipboard
+CLIPBOARD_CUT_WORD = "ClipboardCutWord"
