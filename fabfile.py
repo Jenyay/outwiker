@@ -46,6 +46,13 @@ from buildtools.builders import (BuilderWindows,
 
 from outwiker.utilites.textfile import readTextFile
 from outwiker.core.xmlversionparser import XmlVersionParser
+import outwiker
+import outwiker.core
+import outwiker.gui
+import outwiker.actions
+import outwiker.pages
+import outwiker.utilites
+import outwiker.libs
 
 try:
     from buildtools.serverinfo import (DEPLOY_SERVER_NAME,
@@ -510,3 +517,19 @@ def deploy():
     deb_sources_included()
     ppaunstable()
     upload_unstable()
+
+
+@task
+def apiversion():
+    print(u'core: {}.{}'.format(outwiker.core.__version__[0],
+                                outwiker.core.__version__[1]))
+    print(u'gui: {}.{}'.format(outwiker.gui.__version__[0],
+                               outwiker.gui.__version__[1]))
+    print(u'actions: {}.{}'.format(outwiker.actions.__version__[0],
+                                   outwiker.actions.__version__[1]))
+    print(u'pages: {}.{}'.format(outwiker.pages.__version__[0],
+                                 outwiker.pages.__version__[1]))
+    print(u'utilites: {}.{}'.format(outwiker.utilites.__version__[0],
+                                    outwiker.utilites.__version__[1]))
+    print(u'libs: {}.{}'.format(outwiker.libs.__version__[0],
+                                outwiker.libs.__version__[1]))
