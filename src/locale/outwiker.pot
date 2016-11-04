@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-03 21:48+0300\n"
+"POT-Creation-Date: 2016-11-04 20:58+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -66,8 +66,8 @@ msgstr ""
 #: outwiker/gui/pagedialogpanels/appearancepanel.py:74
 #: outwiker/gui/pagedialog.py:24 outwiker/gui/pagedialog.py:34
 #: outwiker/gui/notestree.py:243 outwiker/gui/notestree.py:298
-#: outwiker/gui/mainwindow.py:579 outwiker/gui/basetextpanel.py:240
-#: outwiker/gui/basetextpanel.py:252 outwiker/gui/mainwndcontroller.py:225
+#: outwiker/gui/mainwindow.py:579 outwiker/gui/basetextpanel.py:244
+#: outwiker/gui/basetextpanel.py:256 outwiker/gui/mainwndcontroller.py:225
 #: outwiker/gui/htmlrenderie.py:213 outwiker/gui/htmlrenderwebkit.py:211
 msgid "Error"
 msgstr ""
@@ -304,7 +304,7 @@ msgstr ""
 
 #: outwiker/pages/search/searchpanel.py:41
 #: outwiker/pages/search/searchpanel.py:301 outwiker/actions/search.py:31
-#: outwiker/gui/basetextpanel.py:339
+#: outwiker/gui/basetextpanel.py:343
 msgid "Search"
 msgstr ""
 
@@ -1991,8 +1991,24 @@ msgstr ""
 msgid "Cut the current line to clipboard"
 msgstr ""
 
-#: outwiker/gui/tabscontroller.py:250 outwiker/gui/basetextpanel.py:239
-#: outwiker/gui/basetextpanel.py:251
+#: outwiker/gui/actionslist.py:128
+msgid "Copy word"
+msgstr ""
+
+#: outwiker/gui/actionslist.py:128
+msgid "Copy the current word to clipboard"
+msgstr ""
+
+#: outwiker/gui/actionslist.py:129
+msgid "Cut word"
+msgstr ""
+
+#: outwiker/gui/actionslist.py:129
+msgid "Cut the current word to clipboard"
+msgstr ""
+
+#: outwiker/gui/tabscontroller.py:250 outwiker/gui/basetextpanel.py:243
+#: outwiker/gui/basetextpanel.py:255
 #, python-format
 msgid "Can't save file %s"
 msgstr ""
@@ -2102,7 +2118,7 @@ msgstr ""
 msgid "Overwrite file?"
 msgstr ""
 
-#: outwiker/gui/overwritedialog.py:19 outwiker/gui/basetextpanel.py:207
+#: outwiker/gui/overwritedialog.py:19 outwiker/gui/basetextpanel.py:211
 msgid "Overwrite"
 msgstr ""
 
@@ -2118,7 +2134,7 @@ msgstr ""
 msgid "Skip all"
 msgstr ""
 
-#: outwiker/gui/overwritedialog.py:23 outwiker/gui/basetextpanel.py:207
+#: outwiker/gui/overwritedialog.py:23 outwiker/gui/basetextpanel.py:211
 msgid "Cancel"
 msgstr ""
 
@@ -2152,24 +2168,24 @@ msgid ""
 "%s"
 msgstr ""
 
-#: outwiker/gui/basetextpanel.py:207
+#: outwiker/gui/basetextpanel.py:211
 msgid "Load"
 msgstr ""
 
-#: outwiker/gui/basetextpanel.py:209
+#: outwiker/gui/basetextpanel.py:213
 #, python-format
 msgid "Page \"%s\" is changed by the external program"
 msgstr ""
 
-#: outwiker/gui/basetextpanel.py:212
+#: outwiker/gui/basetextpanel.py:216
 msgid "Owerwrite?"
 msgstr ""
 
-#: outwiker/gui/basetextpanel.py:450
+#: outwiker/gui/basetextpanel.py:470
 msgid "Word"
 msgstr ""
 
-#: outwiker/gui/basetextpanel.py:528
+#: outwiker/gui/basetextpanel.py:548
 msgid "Lines"
 msgstr ""
 

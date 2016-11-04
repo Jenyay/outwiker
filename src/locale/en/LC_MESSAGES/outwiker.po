@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-03 21:48+0300\n"
+"POT-Creation-Date: 2016-11-04 20:58+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -66,8 +66,8 @@ msgstr "Page is opened as read-only"
 #: outwiker/gui/pagedialogpanels/appearancepanel.py:74
 #: outwiker/gui/pagedialog.py:24 outwiker/gui/pagedialog.py:34
 #: outwiker/gui/notestree.py:243 outwiker/gui/notestree.py:298
-#: outwiker/gui/mainwindow.py:579 outwiker/gui/basetextpanel.py:240
-#: outwiker/gui/basetextpanel.py:252 outwiker/gui/mainwndcontroller.py:225
+#: outwiker/gui/mainwindow.py:579 outwiker/gui/basetextpanel.py:244
+#: outwiker/gui/basetextpanel.py:256 outwiker/gui/mainwndcontroller.py:225
 #: outwiker/gui/htmlrenderie.py:213 outwiker/gui/htmlrenderwebkit.py:211
 msgid "Error"
 msgstr "Error"
@@ -320,7 +320,7 @@ msgstr "# Search"
 
 #: outwiker/pages/search/searchpanel.py:41
 #: outwiker/pages/search/searchpanel.py:301 outwiker/actions/search.py:31
-#: outwiker/gui/basetextpanel.py:339
+#: outwiker/gui/basetextpanel.py:343
 msgid "Search"
 msgstr "Search"
 
@@ -2017,8 +2017,24 @@ msgstr "Cut line"
 msgid "Cut the current line to clipboard"
 msgstr "Cut the current line to clipboard"
 
-#: outwiker/gui/tabscontroller.py:250 outwiker/gui/basetextpanel.py:239
-#: outwiker/gui/basetextpanel.py:251
+#: outwiker/gui/actionslist.py:128
+msgid "Copy word"
+msgstr "Copy word"
+
+#: outwiker/gui/actionslist.py:128
+msgid "Copy the current word to clipboard"
+msgstr "Copy the current word to clipboard"
+
+#: outwiker/gui/actionslist.py:129
+msgid "Cut word"
+msgstr "Cut word"
+
+#: outwiker/gui/actionslist.py:129
+msgid "Cut the current word to clipboard"
+msgstr "Cut the current word to clipboard"
+
+#: outwiker/gui/tabscontroller.py:250 outwiker/gui/basetextpanel.py:243
+#: outwiker/gui/basetextpanel.py:255
 #, python-format
 msgid "Can't save file %s"
 msgstr "Can't save file %s"
@@ -2128,7 +2144,7 @@ msgstr "Do not change"
 msgid "Overwrite file?"
 msgstr "Overwrite file?"
 
-#: outwiker/gui/overwritedialog.py:19 outwiker/gui/basetextpanel.py:207
+#: outwiker/gui/overwritedialog.py:19 outwiker/gui/basetextpanel.py:211
 msgid "Overwrite"
 msgstr "Overwrite"
 
@@ -2144,7 +2160,7 @@ msgstr "Skip"
 msgid "Skip all"
 msgstr "Skip all"
 
-#: outwiker/gui/overwritedialog.py:23 outwiker/gui/basetextpanel.py:207
+#: outwiker/gui/overwritedialog.py:23 outwiker/gui/basetextpanel.py:211
 msgid "Cancel"
 msgstr "Cancel"
 
@@ -2182,24 +2198,24 @@ msgstr ""
 "Can't save config\n"
 "%s"
 
-#: outwiker/gui/basetextpanel.py:207
+#: outwiker/gui/basetextpanel.py:211
 msgid "Load"
 msgstr "Load"
 
-#: outwiker/gui/basetextpanel.py:209
+#: outwiker/gui/basetextpanel.py:213
 #, python-format
 msgid "Page \"%s\" is changed by the external program"
 msgstr "Page \"%s\" is changed by the external program"
 
-#: outwiker/gui/basetextpanel.py:212
+#: outwiker/gui/basetextpanel.py:216
 msgid "Owerwrite?"
 msgstr "Owerwrite?"
 
-#: outwiker/gui/basetextpanel.py:450
+#: outwiker/gui/basetextpanel.py:470
 msgid "Word"
 msgstr "Word"
 
-#: outwiker/gui/basetextpanel.py:528
+#: outwiker/gui/basetextpanel.py:548
 msgid "Lines"
 msgstr "Lines"
 
