@@ -386,6 +386,56 @@ class BaseTextPanel(BasePagePanel):
     def _addWordTools(self):
         self.wordMenu = wx.Menu()
 
+        # Copy word to clipboard
+        self._application.actionController.getAction(CLIPBOARD_COPY_WORD).setFunc(self._copyCurrentWordToClipboard)
+
+        self._application.actionController.appendMenuItem(
+            CLIPBOARD_COPY_WORD,
+            self.wordMenu
+        )
+
+        # Cut word to clipboard
+        self._application.actionController.getAction(CLIPBOARD_CUT_WORD).setFunc(self._cutCurrentWordToClipboard)
+
+        self._application.actionController.appendMenuItem(
+            CLIPBOARD_CUT_WORD,
+            self.wordMenu
+        )
+
+        # Delete word left
+        self._application.actionController.getAction(DELETE_WORD_LEFT).setFunc(lambda params: self.GetEditor().DelWordLeft())
+
+        self._application.actionController.appendMenuItem(
+            DELETE_WORD_LEFT,
+            self.wordMenu
+        )
+
+        # Delete word right
+        self._application.actionController.getAction(DELETE_WORD_RIGHT).setFunc(lambda params: self.GetEditor().DelWordRight())
+
+        self._application.actionController.appendMenuItem(
+            DELETE_WORD_RIGHT,
+            self.wordMenu
+        )
+
+        self.wordMenu.AppendSeparator()
+
+        # Go to start of the current word
+        self._application.actionController.getAction(GOTO_WORD_START).setFunc(lambda params: self.GetEditor().GotoWordStart())
+
+        self._application.actionController.appendMenuItem(
+            GOTO_WORD_START,
+            self.wordMenu
+        )
+
+        # Go to end of the current word
+        self._application.actionController.getAction(GOTO_WORD_END).setFunc(lambda params: self.GetEditor().GotoWordEnd())
+
+        self._application.actionController.appendMenuItem(
+            GOTO_WORD_END,
+            self.wordMenu
+        )
+
         # Go to previous word
         self._application.actionController.getAction(GOTO_PREV_WORD).setFunc(lambda params: self.GetEditor().WordLeft())
 
@@ -415,54 +465,6 @@ class BaseTextPanel(BasePagePanel):
 
         self._application.actionController.appendMenuItem(
             GOTO_NEXT_WORD_SELECT,
-            self.wordMenu
-        )
-
-        # Go to start of the current word
-        self._application.actionController.getAction(GOTO_WORD_START).setFunc(lambda params: self.GetEditor().GotoWordStart())
-
-        self._application.actionController.appendMenuItem(
-            GOTO_WORD_START,
-            self.wordMenu
-        )
-
-        # Go to end of the current word
-        self._application.actionController.getAction(GOTO_WORD_END).setFunc(lambda params: self.GetEditor().GotoWordEnd())
-
-        self._application.actionController.appendMenuItem(
-            GOTO_WORD_END,
-            self.wordMenu
-        )
-
-        # Delete word left
-        self._application.actionController.getAction(DELETE_WORD_LEFT).setFunc(lambda params: self.GetEditor().DelWordLeft())
-
-        self._application.actionController.appendMenuItem(
-            DELETE_WORD_LEFT,
-            self.wordMenu
-        )
-
-        # Delete word right
-        self._application.actionController.getAction(DELETE_WORD_RIGHT).setFunc(lambda params: self.GetEditor().DelWordRight())
-
-        self._application.actionController.appendMenuItem(
-            DELETE_WORD_RIGHT,
-            self.wordMenu
-        )
-
-        # Copy word to clipboard
-        self._application.actionController.getAction(CLIPBOARD_COPY_WORD).setFunc(self._copyCurrentWordToClipboard)
-
-        self._application.actionController.appendMenuItem(
-            CLIPBOARD_COPY_WORD,
-            self.wordMenu
-        )
-
-        # Cut word to clipboard
-        self._application.actionController.getAction(CLIPBOARD_CUT_WORD).setFunc(self._cutCurrentWordToClipboard)
-
-        self._application.actionController.appendMenuItem(
-            CLIPBOARD_CUT_WORD,
             self.wordMenu
         )
 
