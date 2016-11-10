@@ -11,8 +11,6 @@ from outwiker.actions.search import (SearchAction,
                                      SearchNextAction,
                                      SearchPrevAction,
                                      SearchAndReplaceAction)
-from outwiker.actions.attachfiles import AttachFilesAction
-from outwiker.actions.globalsearch import GlobalSearchAction
 from outwiker.core.commands import MessageBox, setStatusText
 from outwiker.core.system import getImagesDir
 from outwiker.core.attachment import Attachment
@@ -335,14 +333,6 @@ class BaseHtmlPanel(BaseTextPanel):
 
         actionController.enableTools(
             SearchAndReplaceAction.stringId,
-            searchEnabled and not self._application.selectedPage.readonly)
-
-        actionController.enableTools(
-            AttachFilesAction.stringId,
-            searchEnabled and not self._application.selectedPage.readonly)
-
-        actionController.enableTools(
-            GlobalSearchAction.stringId,
             searchEnabled and not self._application.selectedPage.readonly)
 
         self.mainWindow.UpdateAuiManager()
