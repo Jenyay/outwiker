@@ -186,16 +186,16 @@ class BaseHtmlPanel(BaseTextPanel):
             self.codeEditor.EmptyUndoBuffer()
             self.codeEditor.SetReadOnly (page.readonly)
             self.SetCursorPosition(self._getCursorPositionOption(page).value)
-            self.codeEditor.SetFocus()
 
             self._updateHtmlWindow()
             tabIndex = self.loadPageTab (self._currentpage)
             if tabIndex < 0:
                 tabIndex = self._getDefaultPage()
-
-            self.selectedPageIndex = tabIndex
         finally:
             self.Thaw()
+
+        self.codeEditor.SetFocus()
+        self.selectedPageIndex = tabIndex
 
 
     def GetContentFromGui(self):
