@@ -28,7 +28,7 @@ actionsList = [
     (actions.movepagedown.MovePageDownAction, HotKey("Down", ctrl=True, shift=True)),
 
     (actions.renamepage.RenamePageAction, HotKey("F2")),
-    (actions.removepage.RemovePageAction, HotKey("Delete", ctrl=True, shift=True)),
+    (actions.removepage.RemovePageAction, None),
 
     (actions.sortchildalpha.SortChildAlphabeticalAction, None),
     (actions.sortsiblingsalpha.SortSiblingsAlphabeticalAction, None),
@@ -104,7 +104,7 @@ polyactionsList = [
     (polyactions.LINE_BREAK_STR_ID, _(u"Line break"), _(u"Insert a line break"), HotKey("Return", ctrl=True)),
     (polyactions.HTML_ESCAPE_STR_ID, _(u"Convert HTML Symbols"), _(u"Convert HTML Symbols"), None),
     (polyactions.TABLE_STR_ID, _(u"Table"), _(u"Insert a table"), HotKey("Q", ctrl=True)),
-    (polyactions.TABLE_ROW_STR_ID, _(u"Table rows"), _(u"Insert table rows"), HotKey("W", ctrl=True)),
+    (polyactions.TABLE_ROW_STR_ID, _(u"Table rows"), _(u"Insert table rows"), None),
     (polyactions.TABLE_CELL_STR_ID, _(u"Table cell"), _(u"Insert a table cell"), HotKey("Y", ctrl=True, shift=True)),
     (polyactions.CURRENT_DATE, _(u"Current date"), _(u"Insert the current date"), None),
     (polyactions.SPELL_ON_OFF_ID, _(u"Spell checking"), _(u"Enable / disable spell checking"), HotKey("F7")),
