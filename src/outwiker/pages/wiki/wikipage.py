@@ -23,7 +23,7 @@ from actions.include import WikiIncludeAction
 from actions.dates import WikiDateCreationAction, WikiDateEditionAction
 
 
-_actions = [
+wiki_actions = [
    (WikiFontSizeBigAction, HotKey(".", ctrl=True)),
    (WikiFontSizeSmallAction, HotKey(",", ctrl=True)),
    (WikiNonParsedAction, None),
@@ -83,9 +83,9 @@ class WikiPageFactory(PageFactory):
         """
         map(lambda actionTuple: application.actionController.register(actionTuple[0](application),
                                                                       actionTuple[1]),
-            _actions)
+            wiki_actions)
 
     @staticmethod
     def removeActions(application):
         map(lambda actionTuple: application.actionController.removeAction(actionTuple[0].stringId),
-            _actions)
+            wiki_actions)

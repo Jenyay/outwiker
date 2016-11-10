@@ -96,7 +96,7 @@ polyactionsList = [
     (polyactions.HORLINE_STR_ID, _(u"Horizontal rule"), _(u"Horizontal rule"), HotKey("H", ctrl=True, shift=True)),
     (polyactions.LINK_STR_ID, _(u"Link"), _(u"Insert Link"), HotKey("L", ctrl=True)),
     (polyactions.QUOTE_STR_ID, _(u"Quote"), _(u"Insert a quote block"), HotKey("Q", ctrl=True, alt=True)),
-    (polyactions.IMAGE_STR_ID, _(u"Image"), _(u"Insert image"), HotKey("M", ctrl=True)),
+    (polyactions.IMAGE_STR_ID, _(u"Image"), _(u"Insert image"), HotKey("M", ctrl=True, alt=True)),
     (polyactions.MARK_STR_ID, _(u"Mark"), _(u"Mark text"), HotKey("M", ctrl=True, shift=True)),
     (polyactions.LIST_BULLETS_STR_ID, _(u"Bullets list"), _(u"Insert a bullets list"), HotKey("G", ctrl=True)),
     (polyactions.LIST_NUMBERS_STR_ID, _(u"Numbers list"), _(u"Insert a numbers list"), HotKey("J", ctrl=True)),
