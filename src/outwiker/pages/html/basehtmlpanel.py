@@ -176,23 +176,18 @@ class BaseHtmlPanel(BaseTextPanel):
 
 
     def UpdateView (self, page):
-        self.Freeze()
+        self.htmlWindow.page = self._currentpage
 
-        try:
-            self.htmlWindow.page = self._currentpage
+        self.codeEditor.SetReadOnly (False)
+        self.codeEditor.SetText (self._currentpage.content)
+        self.codeEditor.EmptyUndoBuffer()
+        self.codeEditor.SetReadOnly (page.readonly)
+        self.SetCursorPosition(self._getCursorPositionOption(page).value)
 
-            self.codeEditor.SetReadOnly (False)
-            self.codeEditor.SetText (self._currentpage.content)
-            self.codeEditor.EmptyUndoBuffer()
-            self.codeEditor.SetReadOnly (page.readonly)
-            self.SetCursorPosition(self._getCursorPositionOption(page).value)
-
-            self._updateHtmlWindow()
-            tabIndex = self.loadPageTab (self._currentpage)
-            if tabIndex < 0:
-                tabIndex = self._getDefaultPage()
-        finally:
-            self.Thaw()
+        self._updateHtmlWindow()
+        tabIndex = self.loadPageTab (self._currentpage)
+        if tabIndex < 0:
+            tabIndex = self._getDefaultPage()
 
         self.codeEditor.SetFocus()
         self.selectedPageIndex = tabIndex
