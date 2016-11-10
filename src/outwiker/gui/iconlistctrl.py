@@ -349,7 +349,7 @@ class IconListCtrl (wx.ScrolledWindow):
 
         # Row size in cells (columns count)
         colsCount = (windowWidth - self.margin) // (self.cellWidth + self.margin)
-        if colsCount == 0:
+        if colsCount <= 0:
             return
 
         rowsCount = len (self.buttons) // colsCount + 1
