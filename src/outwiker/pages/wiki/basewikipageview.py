@@ -166,7 +166,6 @@ class BaseWikiPageView (BaseHtmlPanel):
             map (lambda strid: actionController.removeToolbarButton (strid),
                  self.__polyActions)
 
-            actionController.removeToolbarButton (WikiOpenHtmlCodeAction.stringId)
             actionController.removeToolbarButton (SwitchCodeResultAction.stringId)
 
         # Обнулим функции действия в полиморфных действиях
@@ -305,10 +304,6 @@ class BaseWikiPageView (BaseHtmlPanel):
 
         # Переключиться с кода на результат и обратно
         self._application.actionController.appendMenuItem (SwitchCodeResultAction.stringId, self.toolsMenu)
-        self._application.actionController.appendToolbarButton (SwitchCodeResultAction.stringId,
-                                                                self.mainWindow.toolbars[self.mainWindow.GENERAL_TOOLBAR_STR],
-                                                                os.path.join (self.imagesDir, "render.png"),
-                                                                fullUpdate=False)
 
         # Переключиться на код HTML
         self._application.actionController.appendMenuItem (WikiOpenHtmlCodeAction.stringId, self.toolsMenu)

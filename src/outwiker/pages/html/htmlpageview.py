@@ -24,7 +24,6 @@ from actions.switchcoderesult import SwitchCodeResultAction
 from outwiker.actions.polyactionsid import *
 
 
-
 class HtmlPageView (BaseHtmlPanel):
     def __init__ (self, parent, application):
         super (HtmlPageView, self).__init__ (parent, application)
@@ -88,15 +87,12 @@ class HtmlPageView (BaseHtmlPanel):
 
         self.Bind (EVT_PAGE_TAB_CHANGED, handler=self.onTabChanged)
 
-
     def getTextEditor(self):
         return HtmlTextEditor
-
 
     @property
     def toolsMenu (self):
         return self.__htmlMenu
-
 
     def onTabChanged (self, event):
         if self._currentpage is not None:
@@ -109,7 +105,6 @@ class HtmlPageView (BaseHtmlPanel):
 
         event.Skip()
 
-
     def Clear (self):
         # self._application.onPageUpdate -= self._onPageUpdate
         self.Unbind (EVT_PAGE_TAB_CHANGED, handler=self.onTabChanged)
@@ -121,7 +116,6 @@ class HtmlPageView (BaseHtmlPanel):
             self.mainWindow.toolbars.destroyToolBar (self._htmlPanelName)
 
         super (HtmlPageView, self).Clear()
-
 
     def _removeActionTools (self):
         actionController = self._application.actionController
@@ -146,12 +140,10 @@ class HtmlPageView (BaseHtmlPanel):
                  self.__polyActions)
 
             self._application.actionController.removeToolbarButton (HtmlAutoLineWrap.stringId)
-            self._application.actionController.removeToolbarButton (SwitchCodeResultAction.stringId)
 
         # Обнулим функции действия в полиморфных действиях
         map (lambda strid: actionController.getAction (strid).setFunc (None),
              self.__polyActions)
-
 
     def _enableActions (self, enabled):
         actionController = self._application.actionController
@@ -163,18 +155,9 @@ class HtmlPageView (BaseHtmlPanel):
         map (lambda strid: actionController.enableTools (strid, enabled),
              self.__polyActions)
 
-
-    # def _onPageUpdate (self, sender, **kwargs):
-    #     if (sender == self._currentpage and
-    #             self.notebook.GetSelection() == self.RESULT_PAGE_INDEX):
-    #         self._updatePage()
-    #         self._updateHtmlWindow()
-
-
     def UpdateView (self, page):
         self.__updateLineWrapTools()
         BaseHtmlPanel.UpdateView (self, page)
-
 
     def __createLineWrapTools (self):
         """
@@ -188,15 +171,12 @@ class HtmlPageView (BaseHtmlPanel):
                                                                      toolbar,
                                                                      image,
                                                                      fullUpdate=False)
-
         self.__updateLineWrapTools()
-
 
     def __updateLineWrapTools (self):
         if self._currentpage is not None:
             self._application.actionController.check (HtmlAutoLineWrap.stringId,
                                                       self._currentpage.autoLineWrap)
-
 
     def __createCustomTools (self):
         """
@@ -248,14 +228,8 @@ class HtmlPageView (BaseHtmlPanel):
                                          self.__htmlMenu,
                                          self._menuName)
 
-
     def _addRenderTools (self):
         self._application.actionController.appendMenuItem (SwitchCodeResultAction.stringId, self.toolsMenu)
-        self._application.actionController.appendToolbarButton (SwitchCodeResultAction.stringId,
-                                                                self.mainWindow.toolbars[self.mainWindow.GENERAL_TOOLBAR_STR],
-                                                                os.path.join (self.imagesDir, "render.png"),
-                                                                fullUpdate=False)
-
 
     def __addFontTools (self):
         """
@@ -272,7 +246,6 @@ class HtmlPageView (BaseHtmlPanel):
                                                                 toolbar,
                                                                 os.path.join (self.imagesDir, "text_bold.png"),
                                                                 fullUpdate=False)
-
 
         # Курсивный шрифт
         self._application.actionController.getAction (ITALIC_STR_ID).setFunc (lambda param: self.turnText (u"<i>", u"</i>"))
@@ -292,7 +265,6 @@ class HtmlPageView (BaseHtmlPanel):
                                                                 os.path.join (self.imagesDir, "text_bold_italic.png"),
                                                                 fullUpdate=False)
 
-
         # Подчеркнутый шрифт
         self._application.actionController.getAction (UNDERLINE_STR_ID).setFunc (lambda param: self.turnText (u"<u>", u"</u>"))
 
@@ -301,7 +273,6 @@ class HtmlPageView (BaseHtmlPanel):
                                                                 toolbar,
                                                                 os.path.join (self.imagesDir, "text_underline.png"),
                                                                 fullUpdate=False)
-
 
         # Зачеркнутый шрифт
         self._application.actionController.getAction (STRIKE_STR_ID).setFunc (lambda param: self.turnText (u"<strike>", u"</strike>"))
@@ -312,7 +283,6 @@ class HtmlPageView (BaseHtmlPanel):
                                                                 os.path.join (self.imagesDir, "text_strikethrough.png"),
                                                                 fullUpdate=False)
 
-
         # Нижний индекс
         self._application.actionController.getAction (SUBSCRIPT_STR_ID).setFunc (lambda param: self.turnText (u"<sub>", u"</sub>"))
 
@@ -322,7 +292,6 @@ class HtmlPageView (BaseHtmlPanel):
                                                                 os.path.join (self.imagesDir, "text_subscript.png"),
                                                                 fullUpdate=False)
 
-
         # Верхний индекс
         self._application.actionController.getAction (SUPERSCRIPT_STR_ID).setFunc (lambda param: self.turnText (u"<sup>", u"</sup>"))
 
@@ -331,8 +300,6 @@ class HtmlPageView (BaseHtmlPanel):
                                                                 toolbar,
                                                                 os.path.join (self.imagesDir, "text_superscript.png"),
                                                                 fullUpdate=False)
-
-
 
     def __addAlignTools (self):
         """
@@ -350,7 +317,6 @@ class HtmlPageView (BaseHtmlPanel):
                                                                 os.path.join (self.imagesDir, "text_align_left.png"),
                                                                 fullUpdate=False)
 
-
         # Выравнивание по центру
         self._application.actionController.getAction (ALIGN_CENTER_STR_ID).setFunc (lambda param: self.turnText (u'<div align="center">', u'</div>'))
 
@@ -359,7 +325,6 @@ class HtmlPageView (BaseHtmlPanel):
                                                                 toolbar,
                                                                 os.path.join (self.imagesDir, "text_align_center.png"),
                                                                 fullUpdate=False)
-
 
         # Выравнивание по правому краю
         self._application.actionController.getAction (ALIGN_RIGHT_STR_ID).setFunc (lambda param: self.turnText (u'<div align="right">', u'</div>'))
@@ -370,7 +335,6 @@ class HtmlPageView (BaseHtmlPanel):
                                                                 os.path.join (self.imagesDir, "text_align_right.png"),
                                                                 fullUpdate=False)
 
-
         # Выравнивание по ширине
         self._application.actionController.getAction (ALIGN_JUSTIFY_STR_ID).setFunc (lambda param: self.turnText (u'<div align="justify">', u'</div>'))
 
@@ -379,8 +343,6 @@ class HtmlPageView (BaseHtmlPanel):
                                                                 toolbar,
                                                                 os.path.join (self.imagesDir, "text_align_justify.png"),
                                                                 fullUpdate=False)
-
-
 
     def __addTableTools (self):
         """
@@ -400,7 +362,6 @@ class HtmlPageView (BaseHtmlPanel):
                                                                 os.path.join (self.imagesDir, "table.png"),
                                                                 fullUpdate=False)
 
-
         # Вставить строку таблицы
         self._application.actionController.getAction (TABLE_ROW_STR_ID).setFunc (
             self._insertTableRows
@@ -412,7 +373,6 @@ class HtmlPageView (BaseHtmlPanel):
                                                                 os.path.join (self.imagesDir, "table_insert_row.png"),
                                                                 fullUpdate=False)
 
-
         # Вставить ячейку таблицы
         self._application.actionController.getAction (TABLE_CELL_STR_ID).setFunc (lambda param: self.turnText (u'<td>', u'</td>'))
 
@@ -421,8 +381,6 @@ class HtmlPageView (BaseHtmlPanel):
                                                                 toolbar,
                                                                 os.path.join (self.imagesDir, "table_insert_cell.png"),
                                                                 fullUpdate=False)
-
-
 
     def __addListTools (self):
         """
@@ -448,8 +406,6 @@ class HtmlPageView (BaseHtmlPanel):
                                                                 toolbar,
                                                                 os.path.join (self.imagesDir, "text_list_numbers.png"),
                                                                 fullUpdate=False)
-
-
 
     def __addHTools (self):
         """
@@ -501,7 +457,6 @@ class HtmlPageView (BaseHtmlPanel):
                                                                 os.path.join (self.imagesDir, "text_heading_6.png"),
                                                                 fullUpdate=False)
 
-
     def __addFormatTools (self):
         toolbar = self.mainWindow.toolbars[self._htmlPanelName]
         menu = self.__formatMenu
@@ -518,7 +473,6 @@ class HtmlPageView (BaseHtmlPanel):
                                                                 toolbar,
                                                                 os.path.join (self.imagesDir, "quote.png"),
                                                                 fullUpdate=False)
-
 
         # Mark
         self._application.actionController.getAction (MARK_STR_ID).setFunc (lambda param: self.turnText (u"<mark>", u"</mark>"))
@@ -538,7 +492,6 @@ class HtmlPageView (BaseHtmlPanel):
                                                                 os.path.join (self.imagesDir, "code.png"),
                                                                 fullUpdate=False)
 
-
     def __addOtherTools (self):
         """
         Добавить остальные инструменты
@@ -555,7 +508,6 @@ class HtmlPageView (BaseHtmlPanel):
                                                                 os.path.join (self.imagesDir, "image.png"),
                                                                 fullUpdate=False)
 
-
         # Вставить ссылку
         self._application.actionController.getAction (LINK_STR_ID).setFunc (lambda param: insertLink (self._application))
 
@@ -564,7 +516,6 @@ class HtmlPageView (BaseHtmlPanel):
                                                                 toolbar,
                                                                 os.path.join (self.imagesDir, "link.png"),
                                                                 fullUpdate=False)
-
 
         # Вставить якорь
         self._application.actionController.getAction (ANCHOR_STR_ID).setFunc (lambda param: self.turnText (u'<a name="', u'"></a>'))
@@ -575,7 +526,6 @@ class HtmlPageView (BaseHtmlPanel):
                                                                 os.path.join (self.imagesDir, "anchor.png"),
                                                                 fullUpdate=False)
 
-
         # Вставить горизонтальную линию
         self._application.actionController.getAction (HORLINE_STR_ID).setFunc (lambda param: self.replaceText (u"<hr>"))
 
@@ -584,7 +534,6 @@ class HtmlPageView (BaseHtmlPanel):
                                                                 toolbar,
                                                                 os.path.join (self.imagesDir, "text_horizontalrule.png"),
                                                                 fullUpdate=False)
-
 
         # Вставка разрыва страницы
         self._application.actionController.getAction (LINE_BREAK_STR_ID).setFunc (lambda param: self.replaceText (u"<br>\n"))
@@ -605,18 +554,15 @@ class HtmlPageView (BaseHtmlPanel):
                                                                 os.path.join (self.imagesDir, "date.png"),
                                                                 fullUpdate=False)
 
-
         self.__htmlMenu.AppendSeparator()
 
         # Преобразовать символы в их HTML-представление
         self._application.actionController.getAction (HTML_ESCAPE_STR_ID).setFunc (lambda param: self.escapeHtml ())
         self._application.actionController.appendMenuItem (HTML_ESCAPE_STR_ID, menu)
 
-
     def _addSeparator (self):
         toolbar = self.mainWindow.toolbars[self._htmlPanelName]
         toolbar.AddSeparator()
-
 
     def removeGui (self):
         super (HtmlPageView, self).removeGui ()
@@ -625,7 +571,6 @@ class HtmlPageView (BaseHtmlPanel):
         assert index != wx.NOT_FOUND
 
         mainMenu.Remove (index)
-
 
     def _insertTable (self, param):
         editor = self.codeEditor
@@ -636,7 +581,6 @@ class HtmlPageView (BaseHtmlPanel):
             if controller.showDialog() == wx.ID_OK:
                 result = controller.getResult()
                 editor.replaceText (result)
-
 
     def _insertTableRows (self, param):
         editor = self.codeEditor
