@@ -23,7 +23,7 @@ import wx
 
 if __name__ == '__main__':
     from outwiker.core.application import Application
-    Application.init ("../test/testconfig.ini")
+    Application.init("../test/testconfig.ini")
 
     app = wx.App(redirect=False)
 
@@ -129,5 +129,6 @@ if __name__ == '__main__':
     from test.plugins.markdown.test_loading import MarkdownLoadingTest
     from test.plugins.markdown.test_linkcreator import LinkCreatorTest
     from test.plugins.markdown.test_markdown_polyactions import MarkdownPolyactionsTest
+    from test.plugins.markdown.test_imagedialog import MarkdownImageDialogTest
 
     unittest.main()

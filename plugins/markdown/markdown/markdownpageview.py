@@ -5,6 +5,7 @@ import re
 
 import wx
 
+from outwiker.core.attachment import Attachment
 from outwiker.core.system import getImagesDir
 from outwiker.core.commands import insertCurrentDate
 from outwiker.pages.wiki.basewikipageview import BaseWikiPageView
@@ -15,6 +16,9 @@ from outwiker.actions.polyactionsid import *
 from .toolbar import MarkdownToolBar
 from .links.linkdialog import LinkDialog
 from .links.linkdialogcontroller import LinkDialogController
+
+from .images.imagedialog import ImageDialog
+from .images.imagedialogcontroller import ImageDialogController
 
 
 class MarkdownPageView(BaseWikiPageView):
@@ -55,6 +59,7 @@ class MarkdownPageView(BaseWikiPageView):
             # CODE_STR_ID,
             HORLINE_STR_ID,
             LINK_STR_ID,
+            IMAGE_STR_ID,
             # LIST_BULLETS_STR_ID,
             # LIST_NUMBERS_STR_ID,
             HTML_ESCAPE_STR_ID,
@@ -222,7 +227,17 @@ class MarkdownPageView(BaseWikiPageView):
             os.path.join(self.imagesDir, "link.png"),
             fullUpdate=False)
 
-        # Вставка горизонтальной линии
+        # Image
+        actionController.getAction(IMAGE_STR_ID).setFunc(self._insertImage)
+
+        actionController.appendMenuItem(IMAGE_STR_ID, menu)
+        actionController.appendToolbarButton(
+            IMAGE_STR_ID,
+            toolbar,
+            os.path.join(self.imagesDir, "image.png"),
+            fullUpdate=False)
+
+        # Horizontal line
         actionController.getAction(HORLINE_STR_ID).setFunc(
             lambda param: self.replaceText(u"----"))
 
@@ -287,14 +302,29 @@ class MarkdownPageView(BaseWikiPageView):
 
     def _insertLink(self, params):
         codeEditor = self._application.mainWindow.pagePanel.pageView.codeEditor
+        page = self._application.selectedPage
+        assert page is not None
 
         with LinkDialog(self._application.mainWindow) as dlg:
             linkController = LinkDialogController(
                 self._application,
-                self._application.selectedPage,
+                page,
                 dlg,
                 codeEditor.GetSelectedText())
 
             if linkController.showDialog() == wx.ID_OK:
                 link_text, reference = linkController.linkResult
                 codeEditor.replaceText(link_text)
+
+    def _insertImage(self, params):
+        codeEditor = self._application.mainWindow.pagePanel.pageView.codeEditor
+        page = self._application.selectedPage
+        assert page is not None
+
+        with ImageDialog(self._application.mainWindow) as dlg:
+            attachList = Attachment(page).getAttachRelative()
+            controller = ImageDialogController(dlg,
+                                               attachList,
+                                               codeEditor.GetSelectedText())
+            if controller.showDialog() == wx.ID_OK:
+                codeEditor.replaceText(controller.result)

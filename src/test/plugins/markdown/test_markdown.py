@@ -14,9 +14,7 @@ class MarkdownTest(unittest.TestCase):
     """Markdown plug-in tests"""
     def setUp(self):
         self.__createWiki()
-
         dirlist = [u"../plugins/markdown"]
-
         self.loader = PluginsLoader(Application)
         self.loader.load(dirlist)
 

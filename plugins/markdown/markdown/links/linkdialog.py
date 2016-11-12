@@ -4,6 +4,8 @@ import wx
 
 from outwiker.gui.testeddialog import TestedDialog
 
+from markdown.i18n import get_
+
 
 class LinkDialog(TestedDialog):
     """
@@ -14,6 +16,9 @@ class LinkDialog(TestedDialog):
         """
         parent - parent window
         """
+        global _
+        _ = get_()
+
         super(LinkDialog, self).__init__(
             parent,
             style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER,

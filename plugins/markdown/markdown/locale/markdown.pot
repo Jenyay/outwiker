@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-18 19:22+0300\n"
+"POT-Creation-Date: 2016-11-12 22:29+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,15 +17,27 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: controller.py:75
+#: images/imagedialog.py:13
+msgid "Image"
+msgstr ""
+
+#: images/imagedialog.py:45
+msgid "File name or link"
+msgstr ""
+
+#: images/imagedialog.py:51 links/linkdialog.py:46
+msgid "Comment"
+msgstr ""
+
+#: controller.py:86
 msgid "Appearance"
 msgstr ""
 
-#: markdown.py:42
+#: markdown.py:45
 msgid "The Markdown plug-in add a new page type with Markdown notation"
 msgstr ""
 
-#: markdown.py:47
+#: markdown.py:50
 msgid "http://jenyay.net/Outwiker/MarkdownEn"
 msgstr ""
 
@@ -33,11 +45,11 @@ msgstr ""
 msgid "Markdown"
 msgstr ""
 
-#: markdownpageview.py:102
+#: markdownpageview.py:103
 msgid "Font"
 msgstr ""
 
-#: markdownpageview.py:147
+#: markdownpageview.py:148
 msgid "Heading"
 msgstr ""
 
@@ -45,14 +57,10 @@ msgstr ""
 msgid "Link"
 msgstr ""
 
-#: links/linkdialog.py:46
-msgid "Comment"
-msgstr ""
-
 #: links/linkdialog.py:58
 msgid "Title"
 msgstr ""
 
-#: markdownpage.py:30
+#: markdownpage.py:41
 msgid "Markdown Page"
 msgstr ""
