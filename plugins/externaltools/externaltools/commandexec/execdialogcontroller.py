@@ -43,18 +43,18 @@ class ExecDialogController (object):
         """
         Set dialog size
         """
-        currentWidth, currentHeight = self._dialog.GetSizeTuple ()
+        currentWidth, currentHeight = self._dialog.GetClientSizeTuple()
         dialogWidth = max (self._config.dialogWidth, currentWidth)
         dialogHeight = max (self._config.dialogHeight, currentHeight)
 
-        self._dialog.SetSizeWH (dialogWidth, dialogHeight)
+        self._dialog.SetClientSizeWH (dialogWidth, dialogHeight)
 
 
     def _saveState (self):
         """
         Save settings to config
         """
-        currentWidth, currentHeight = self._dialog.GetSizeTuple ()
+        currentWidth, currentHeight = self._dialog.GetClientSizeTuple()
         self._config.dialogWidth = currentWidth
         self._config.dialogHeight = currentHeight
         self._config.execFormat = self._dialog.format
