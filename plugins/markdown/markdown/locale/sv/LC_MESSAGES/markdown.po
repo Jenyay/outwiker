@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-18 19:22+0300\n"
-"PO-Revision-Date: 2016-09-21 13:46+0300\n"
+"POT-Creation-Date: 2016-11-12 22:29+0300\n"
+"PO-Revision-Date: 2016-11-13 08:48+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -11,20 +11,32 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.8\n"
+"X-Generator: Poedit 1.8.9\n"
 "X-Crowdin-Project: outwiker\n"
 "X-Crowdin-Language: sv-SE\n"
 "X-Crowdin-File: markdown.pot\n"
 
-#: controller.py:75
+#: images/imagedialog.py:13
+msgid "Image"
+msgstr "Bild"
+
+#: images/imagedialog.py:45
+msgid "File name or link"
+msgstr "Filnamn eller länk"
+
+#: images/imagedialog.py:51 links/linkdialog.py:46
+msgid "Comment"
+msgstr "Kommentar"
+
+#: controller.py:86
 msgid "Appearance"
 msgstr "Utseende"
 
-#: markdown.py:42
+#: markdown.py:45
 msgid "The Markdown plug-in add a new page type with Markdown notation"
 msgstr "Markdown-insticket lägger till en ny sidtyp med Markdown-märkning"
 
-#: markdown.py:47
+#: markdown.py:50
 msgid "http://jenyay.net/Outwiker/MarkdownEn"
 msgstr "https://crowdin.com/translate/outwiker/111/en-sv#1889298"
 
@@ -32,11 +44,11 @@ msgstr "https://crowdin.com/translate/outwiker/111/en-sv#1889298"
 msgid "Markdown"
 msgstr "Markdown"
 
-#: markdownpageview.py:102
+#: markdownpageview.py:103
 msgid "Font"
 msgstr "Teckensnitt"
 
-#: markdownpageview.py:147
+#: markdownpageview.py:148
 msgid "Heading"
 msgstr "Rubrik"
 
@@ -44,14 +56,10 @@ msgstr "Rubrik"
 msgid "Link"
 msgstr "Länk"
 
-#: links/linkdialog.py:46
-msgid "Comment"
-msgstr "Kommentar"
-
 #: links/linkdialog.py:58
 msgid "Title"
 msgstr "Titel"
 
-#: markdownpage.py:30
+#: markdownpage.py:41
 msgid "Markdown Page"
 msgstr "Markdown-sida"
