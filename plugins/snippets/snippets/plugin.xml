@@ -1,0 +1,53 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+<info>
+	<name>Snippets</name>
+    <updates>http://jenyay.net/uploads/Outwiker/Snippets/plugin.xml</updates>
+    <requirements>
+        <outwiker>2.0.0.806 beta</outwiker>
+        <os>Windows, Linux</os>
+		<packages>
+			<core>1.1</core>
+			<actions>1.1</actions>
+			<gui>1.2</gui>
+			<pages>2.0</pages>
+			<utilites>1.0</utilites>
+			<libs>1.0</libs>
+		</packages>
+    </requirements>
+
+	<data lang="en">
+		<website>http://jenyay.net/Outwiker/SnippetsEn</website>
+		<description>Plugin to store text templates.</description>
+
+		<author>
+			<name>Eugene Ilin (Jenyay)</name>
+			<email>jenyay.ilin@gmail.com</email>
+			<site>http://jenyay.net</site>
+		</author>
+
+		<changelog>
+			<version number="1.0">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Snippets/snippets-1.0.zip</download>
+				<change>The first version.</change>
+			</version>
+		</changelog>
+	</data>
+
+	<data lang="ru">
+		<website>http://jenyay.net/Outwiker/Snippets</website>
+		<description>Плагин для хранения шаблонов текстов.</description>
+
+		<author>
+			<name>Евгений Ильин (Jenyay)</name>
+			<email>jenyay.ilin@gmail.com</email>
+			<site>http://jenyay.net</site>
+		</author>
+
+		<changelog>
+			<version number="1.0">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Snippets/snippets-1.0.zip</download>
+				<change>Первая версия.</change>
+			</version>
+		</changelog>
+	</data>
+</info>
