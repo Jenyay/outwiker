@@ -443,6 +443,9 @@ def upload_plugin(*args):
 
     for pluginname in args:
         path_to_plugin_local = os.path.join(BUILD_DIR, PLUGINS_DIR, pluginname)
+        if not os.path.exists(path_to_plugin_local):
+            continue
+
         path_to_xml_local = os.path.join(path_to_plugin_local, PLUGIN_VERSIONS_FILENAME)
 
         xml_content_local = readTextFile(path_to_xml_local)
