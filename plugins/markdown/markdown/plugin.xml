@@ -30,9 +30,7 @@
                 <download os="all">http://jenyay.net/Outwiker/Markdown/markdown-1.1.zip</download>
 				<change>Added the dialog to insert image.</change>
 			</version>
-		</changelog>
 
-		<changelog>
 			<version number="1.0" date="October 17, 2016">
                 <download os="all">http://jenyay.net/Outwiker/Markdown/markdown-1.0.zip</download>
 				<change>The first version.</change>
@@ -55,9 +53,7 @@
                 <download os="all">http://jenyay.net/Outwiker/Markdown/markdown-1.1.zip</download>
 				<change>Добавлен диалог для вставки изображений.</change>
 			</version>
-		</changelog>
 
-		<changelog>
 			<version number="1.0" date="17.10.2016">
                 <download os="all">http://jenyay.net/Outwiker/Markdown/markdown-1.0.zip</download>
 				<change>Первая версия.</change>
