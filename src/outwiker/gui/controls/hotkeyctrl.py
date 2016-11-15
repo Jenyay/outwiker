@@ -55,10 +55,10 @@ class HotkeyCtrl(wx.TextCtrl):
             wx.WXK_F22: u'F22',
             wx.WXK_F23: u'F23',
             wx.WXK_F24: u'F24',
-            wx.WXK_SCROLL: u'Scroll',
-            wx.WXK_PAGEUP: u'PgUp',
-            wx.WXK_PAGEDOWN: u'PgDn',
+            wx.WXK_PAGEUP: u'Pageup',
+            wx.WXK_PAGEDOWN: u'Pagedown',
         }
+        self.SetValue(value)
         self.Bind(wx.EVT_CHAR_HOOK, self.onKeyPressed)
 
     def onKeyPressed(self, event):
@@ -66,19 +66,52 @@ class HotkeyCtrl(wx.TextCtrl):
         modifiers = event.GetModifiers()
 
         if self._check(event):
-            result = u''
-            if event.ControlDown():
-                result += u'Ctrl+'
-            if event.ShiftDown():
-                result += u'Shift+'
-            if event.AltDown():
-                result += u'Alt+'
             char = self._keycode2str(keycode)
-            result += char
+            value = (event.ControlDown(),
+                     event.ShiftDown(),
+                     event.AltDown(),
+                     char)
 
             if keycode == wx.WXK_BACK and modifiers == 0:
-                result = u''
-            self.SetValue(result)
+                value = None
+            self.SetValue(value)
+
+    def SetValue(self, value):
+        super(HotkeyCtrl, self).SetValue(self._key2str(value))
+
+    def GetValue(self):
+        text = super(HotkeyCtrl, self).GetValue()
+        if len(text) == 0:
+            return None
+
+        ctrl = u'Ctrl+' in text
+        shift = u'Shift+' in text
+        alt = u'Alt+' in text
+
+        plus_pos = text.rfind(u'+')
+        if plus_pos == -1:
+            key = text
+        else:
+            key = text[plus_pos+1:]
+
+        if len(key) == 0:
+            return None
+
+        return (ctrl, shift, alt, key)
+
+    def _key2str(self, hotkey):
+        if hotkey is None:
+            return u''
+
+        result = u''
+        if hotkey[0]:
+            result += u'Ctrl+'
+        if hotkey[1]:
+            result += u'Shift+'
+        if hotkey[2]:
+            result += u'Alt+'
+        result += hotkey[-1]
+        return result
 
     def _check(self, event):
         keycode = event.GetKeyCode()
