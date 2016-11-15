@@ -2,8 +2,14 @@
 
 import wx
 
+from outwiker.gui.hotkey import HotKey
+
 
 class HotkeyCtrl(wx.TextCtrl):
+    """
+    Added in Outwiker 2.0.0.807.
+    outwiker.gui 1.3
+    """
     def __init__(self, parent, id=-1, value=None, pos=None, size=None):
         super(HotkeyCtrl, self).__init__(parent, id, pos=pos, size=size)
 
@@ -67,14 +73,14 @@ class HotkeyCtrl(wx.TextCtrl):
 
         if self._check(event):
             char = self._keycode2str(keycode)
-            value = (event.ControlDown(),
-                     event.ShiftDown(),
-                     event.AltDown(),
-                     char)
+            hotkey = HotKey(char,
+                            event.ControlDown(),
+                            event.AltDown(),
+                            event.ShiftDown())
 
             if keycode == wx.WXK_BACK and modifiers == 0:
-                value = None
-            self.SetValue(value)
+                hotkey = None
+            self.SetValue(hotkey)
 
     def SetValue(self, value):
         super(HotkeyCtrl, self).SetValue(self._key2str(value))
@@ -97,20 +103,23 @@ class HotkeyCtrl(wx.TextCtrl):
         if len(key) == 0:
             return None
 
-        return (ctrl, shift, alt, key)
+        return HotKey(key, ctrl, alt, shift)
+
+    def GetText(self):
+        return super(HotkeyCtrl, self).GetValue()
 
     def _key2str(self, hotkey):
         if hotkey is None:
             return u''
 
         result = u''
-        if hotkey[0]:
+        if hotkey.ctrl:
             result += u'Ctrl+'
-        if hotkey[1]:
+        if hotkey.shift:
             result += u'Shift+'
-        if hotkey[2]:
+        if hotkey.alt:
             result += u'Alt+'
-        result += hotkey[-1]
+        result += hotkey.key
         return result
 
     def _check(self, event):

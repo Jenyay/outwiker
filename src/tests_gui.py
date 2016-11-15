@@ -68,6 +68,7 @@ if __name__ == '__main__':
     from test.guitests.test_uriidentifiers import UriIdentifierWebKitTest
     from test.guitests.test_safeimagelist import SafeImageListTest
     from test.guitests.test_hotkeys import HotKeysTest
+    from test.guitests.test_hotkeyctrl import HotkeyCtrlTest
 
     from test.guitests.htmlpage.test_htmlpageview import HtmlPageViewTest
     from test.guitests.htmlpage.test_htmltabledialog import HtmlTableDialogTest
