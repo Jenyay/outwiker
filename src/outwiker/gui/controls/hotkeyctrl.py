@@ -78,6 +78,10 @@ class HotkeyCtrl(wx.TextCtrl):
         keycode = event.GetKeyCode()
         modifiers = event.GetModifiers()
 
+        if keycode == wx.WXK_TAB and modifiers == 0:
+            event.Skip()
+            return
+
         if self._check(event):
             char = self._keycode2str(keycode)
             hotkey = HotKey(char,
