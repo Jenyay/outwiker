@@ -8,6 +8,7 @@
 
 		<changelog>
 			<version number="2.0.0.807" status="beta">
+				<change>Changed GUI to set hot keys.</change>
 			</version>
 
 			<version number="2.0.0.806" status="beta" date="November 14, 2016">
@@ -65,6 +66,7 @@
 
 		<changelog>
 			<version number="2.0.0.807" status="beta">
+				<change>Переделан интерфейс для установки горячих клавиш.</change>
 			</version>
 
 			<version number="2.0.0.806" status="beta" date="14.11.2016">
