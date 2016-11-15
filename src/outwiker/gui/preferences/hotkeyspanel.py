@@ -24,6 +24,7 @@ class HotKeysPanel (BasePrefPanel):
         self.__filterText.Bind (wx.EVT_TEXT, self.__onFilterEdit)
         self.__actionsList.Bind (wx.EVT_LISTBOX, self.__onActionSelect)
         self.__hotkey.Bind (EVT_HOTKEY_EDIT, self.__onHotkeyEdit)
+        self.__setHotKeyBtn.Bind(wx.EVT_BUTTON, self.__onSetHotkey)
         self._setScrolling()
 
 
@@ -78,11 +79,13 @@ class HotKeysPanel (BasePrefPanel):
         rightSizer.AddGrowableCol (0)
         rightSizer.AddGrowableRow (2)
 
-        # Горячая клавиша
-        self.hotkeyText = wx.StaticText(
+        # Comment to hotkeysCtrl
+        self.__hotkeyText = wx.StaticText(
             self,
             -1,
             _(u'Hot key.\nPress the Backspace key to clear'))
+
+        # Горячая клавиша
         self.__hotkey = HotkeyCtrl(self)
         self.__hotkey.Disable()
 
@@ -97,11 +100,15 @@ class HotKeysPanel (BasePrefPanel):
                                                   style=wx.TE_WORDWRAP | wx.TE_MULTILINE | wx.TE_READONLY)
         self.__conflictActionsText.SetMinSize ((-1, 100))
 
-        rightSizer.Add (self.hotkeyText, flag=wx.EXPAND | wx.ALL, border=2)
+        # The button the set hotkey
+        self.__setHotKeyBtn = wx.Button(self, label=_(u'Set hot key'))
+
+        rightSizer.Add (self.__hotkeyText, flag=wx.EXPAND | wx.ALL, border=2)
         rightSizer.Add (self.__hotkey, flag=wx.EXPAND | wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
         rightSizer.Add (self.__descriptionText, flag=wx.EXPAND | wx.ALL, border=2)
         rightSizer.Add (self.__conflictLabel, flag=wx.EXPAND | wx.ALL, border=2)
         rightSizer.Add (self.__conflictActionsText, flag=wx.EXPAND | wx.ALL, border=2)
+        rightSizer.Add (self.__setHotKeyBtn, flag=wx.EXPAND | wx.ALL, border=2)
 
         mainSizer.Add (leftSizer, flag=wx.EXPAND | wx.ALL, border=2)
         mainSizer.Add (rightSizer, flag=wx.EXPAND | wx.ALL, border=2)
@@ -117,16 +124,16 @@ class HotKeysPanel (BasePrefPanel):
         hotkeyCurrent = self.__hotkey.GetValue()
 
         for strid, hotkey in self.__hotkeys.iteritems():
-            if stridCurrent == strid:
+            if stridCurrent == strid or hotkey is None:
                 continue
             if hotkey == hotkeyCurrent:
                 self.__conflictActionsText.Value += Application.actionController.getTitle (strid) + "\n"
 
 
     def LoadState(self):
-        self.__fillActionsList ()
-        self.__initHotKeys ()
-        self.__findConflicts ()
+        self.__fillActionsList()
+        self.__initHotKeys()
+        self.__findConflicts()
 
 
     def __initHotKeys (self):
@@ -184,18 +191,30 @@ class HotKeysPanel (BasePrefPanel):
         return (filterText in action.title.lower() or
                 filterText in action.description.lower())
 
-
-    def Save (self):
+    def __onSetHotkey(self, event):
         from outwiker.actions.preferences import PreferencesAction
+
+        stridCurrent = self.__getSelectedStrid()
+        hotkeyCurrent = self.__hotkey.GetValue()
+
+        # Не будем менять до перезапуска горячую клавишу для вызова настроек.
+        # Это связано с тем, что потом придется удалять этот пункт меню, чтобы
+        # расставить подчеркивания с помощью Shortcuter, но возникнут проблемы,
+        # т.к. в это место кода мы попадаем из обработчика события, связанного
+        # с этим пунктом меню
+        Application.actionController.setHotKey(
+            stridCurrent,
+            hotkeyCurrent,
+            stridCurrent != PreferencesAction.stringId)
+
         for strid, hotkey in self.__hotkeys.iteritems():
-            try:
-                # Не будем менять до перезапуска горячую клавишу для вызова настроек.
-                # Это связано с тем, что потом придется удалять этот пункт меню, чтобы
-                # расставить подчеркивания с помощью Shortcuter, но возникнут проблемы,
-                # т.к. в это место кода мы попадаем из обработчика события, связанного
-                # с этим пунктом меню
-                if Application.actionController.getHotKey (strid) != hotkey:
-                    Application.actionController.setHotKey (strid, hotkey, strid != PreferencesAction.stringId)
-            except KeyError:
-                # Плагин могли уже отключить
-                pass
+            if hotkey == hotkeyCurrent and stridCurrent != strid:
+                Application.actionController.setHotKey(
+                    strid,
+                    None,
+                    strid != PreferencesAction.stringId)
+        self.__initHotKeys()
+        self.__findConflicts()
+
+    def Save(self):
+        pass
