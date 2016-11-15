@@ -3,8 +3,8 @@
 import wx
 
 from outwiker.core.application import Application
-from outwiker.gui.hotkeyeditor import HotkeyEditor, EVT_HOTKEY_EDIT
 from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
+from outwiker.gui.controls.hotkeyctrl import HotkeyCtrl, EVT_HOTKEY_EDIT
 
 
 class HotKeysPanel (BasePrefPanel):
@@ -79,7 +79,7 @@ class HotKeysPanel (BasePrefPanel):
         rightSizer.AddGrowableRow (1)
 
         # Горячая клавиша
-        self.__hotkey = HotkeyEditor (self)
+        self.__hotkey = HotkeyCtrl(self)
         self.__hotkey.Disable()
 
         # Описание action
@@ -109,7 +109,7 @@ class HotKeysPanel (BasePrefPanel):
         """
         self.__conflictActionsText.Value = u""
         stridCurrent = self.__getSelectedStrid ()
-        hotkeyCurrent = self.__hotkey.getHotkey ()
+        hotkeyCurrent = self.__hotkey.GetValue()
 
         for strid, hotkey in self.__hotkeys.iteritems():
             if stridCurrent == strid:
@@ -131,7 +131,7 @@ class HotKeysPanel (BasePrefPanel):
         actionController = Application.actionController
         strIdList = actionController.getActionsStrId()
         for strid in strIdList:
-            self.__hotkeys[strid] = actionController.getHotKey (strid)
+            self.__hotkeys[strid] = actionController.getHotKey(strid)
 
 
     def __onFilterEdit (self, event):
@@ -145,7 +145,7 @@ class HotKeysPanel (BasePrefPanel):
         if strid is not None:
             self.__descriptionText.Value = Application.actionController.getAction(strid).description
             self.__hotkey.Enable()
-            self.__hotkey.setHotkey (self.__hotkeys[strid])
+            self.__hotkey.SetValue(self.__hotkeys[strid])
             self.__findConflicts ()
 
 

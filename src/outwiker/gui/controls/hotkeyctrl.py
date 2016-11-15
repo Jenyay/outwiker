@@ -5,6 +5,9 @@ import wx
 from outwiker.gui.hotkey import HotKey
 
 
+HotkeyEditEvent, EVT_HOTKEY_EDIT = wx.lib.newevent.NewEvent()
+
+
 class HotkeyCtrl(wx.TextCtrl):
     """
     Added in Outwiker 2.0.0.807.
@@ -63,6 +66,10 @@ class HotkeyCtrl(wx.TextCtrl):
             wx.WXK_F24: u'F24',
             wx.WXK_PAGEUP: u'Pageup',
             wx.WXK_PAGEDOWN: u'Pagedown',
+            wx.WXK_NUMPAD_MULTIPLY: u'*',
+            wx.WXK_NUMPAD_ADD: u'+',
+            wx.WXK_NUMPAD_SUBTRACT: u'-',
+            wx.WXK_NUMPAD_DIVIDE: u'/',
         }
         self.SetValue(value)
         self.Bind(wx.EVT_CHAR_HOOK, self.onKeyPressed)
@@ -84,6 +91,8 @@ class HotkeyCtrl(wx.TextCtrl):
 
     def SetValue(self, value):
         super(HotkeyCtrl, self).SetValue(self._key2str(value))
+        event = HotkeyEditEvent(hotkey=value)
+        wx.PostEvent(self, event)
 
     def GetValue(self):
         text = super(HotkeyCtrl, self).GetValue()
@@ -94,11 +103,9 @@ class HotkeyCtrl(wx.TextCtrl):
         shift = u'Shift+' in text
         alt = u'Alt+' in text
 
-        plus_pos = text.rfind(u'+')
-        if plus_pos == -1:
-            key = text
-        else:
-            key = text[plus_pos+1:]
+        key = text.replace(u'Ctrl+', u'')
+        key = key.replace(u'Shift+', u'')
+        key = key.replace(u'Alt+', u'')
 
         if len(key) == 0:
             return None
