@@ -76,9 +76,13 @@ class HotKeysPanel (BasePrefPanel):
         # выбор горячей клавиши и описание action
         rightSizer = wx.FlexGridSizer (cols=1)
         rightSizer.AddGrowableCol (0)
-        rightSizer.AddGrowableRow (1)
+        rightSizer.AddGrowableRow (2)
 
         # Горячая клавиша
+        self.hotkeyText = wx.StaticText(
+            self,
+            -1,
+            _(u'Hot key.\nPress the Backspace key to clear'))
         self.__hotkey = HotkeyCtrl(self)
         self.__hotkey.Disable()
 
@@ -93,7 +97,8 @@ class HotKeysPanel (BasePrefPanel):
                                                   style=wx.TE_WORDWRAP | wx.TE_MULTILINE | wx.TE_READONLY)
         self.__conflictActionsText.SetMinSize ((-1, 100))
 
-        rightSizer.Add (self.__hotkey, flag=wx.EXPAND | wx.ALL, border=2)
+        rightSizer.Add (self.hotkeyText, flag=wx.EXPAND | wx.ALL, border=2)
+        rightSizer.Add (self.__hotkey, flag=wx.EXPAND | wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
         rightSizer.Add (self.__descriptionText, flag=wx.EXPAND | wx.ALL, border=2)
         rightSizer.Add (self.__conflictLabel, flag=wx.EXPAND | wx.ALL, border=2)
         rightSizer.Add (self.__conflictActionsText, flag=wx.EXPAND | wx.ALL, border=2)
