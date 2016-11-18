@@ -132,5 +132,6 @@ if __name__ == '__main__':
     from test.plugins.markdown.test_imagedialog import MarkdownImageDialogTest
 
     from test.plugins.snippets.test_loading import SnippetsLoadingTest
+    from test.plugins.snippets.test_snippetsloader import SnippetsLoaderTest
 
     unittest.main()
