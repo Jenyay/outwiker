@@ -22,6 +22,8 @@ class GuiController(object):
         self.MENU_POS = 6
         self._menuName = None
 
+        self._snippets_id = None
+
     def initialize(self):
         global _
         _ = get_()
@@ -32,6 +34,7 @@ class GuiController(object):
             self._createMenu()
 
     def _createMenu(self):
+        self._snippets_id = {}
         sl = SnippetsLoader(getSpecialDirList(SNIPPETS_DIR))
         snippets_tree = sl.getSnippets()
 
@@ -46,9 +49,11 @@ class GuiController(object):
             menu_item_id = wx.Window.NewControlId()
             menu.Append(menu_item_id, name)
 
+            self._snippets_id[menu_item_id] = snippet
+
             self._application.mainWindow.Bind(
                 wx.EVT_MENU,
-                lambda event: self._onClick(snippet),
+                self._onClick,
                 id=menu_item_id
             )
 
@@ -70,7 +75,10 @@ class GuiController(object):
         if self._application.mainWindow is not None:
             self._destroyMenu()
 
-    def _onClick(self, snippet):
+    def _onClick(self, event):
+        assert event.GetId() in self._snippets_id
+        snippet = self._snippets_id[event.GetId()]
+
         editor = self._getEditor()
         if editor is not None:
             parser = SnippetParser(snippet)
