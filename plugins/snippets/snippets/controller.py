@@ -1,7 +1,11 @@
 # -*- coding: UTF-8 -*-
 
+import os
+
 from .i18n import get_
-# from .guicreator import GuiCreator
+from .guicontroller import GuiController
+from .defines import SNIPPETS_DIR
+from outwiker.core.system import getSpecialDirList
 
 
 class Controller(object):
@@ -14,7 +18,7 @@ class Controller(object):
         self._plugin = plugin
         self._application = application
 
-        self._guiCreator = None
+        self._guiController = GuiController(application)
 
         # В этот список добавить новые викикоманды, если они нужны
         self._commands = []
@@ -27,8 +31,12 @@ class Controller(object):
         global _
         _ = get_()
 
-        # self._guiCreator = GuiCreator(self, self._application)
-        # self._guiCreator.initialize()
+        snippets_dir_list = getSpecialDirList(SNIPPETS_DIR)
+        assert len(snippets_dir_list) != 0
+        if not os.path.exists(snippets_dir_list[-1]):
+            os.mkdir(snippets_dir_list[-1])
+
+        self._guiController.initialize()
 
         self._application.onWikiParserPrepare += self.__onWikiParserPrepare
         self._application.onPageViewCreate += self.__onPageViewCreate
@@ -46,9 +54,9 @@ class Controller(object):
         self._application.onPageViewDestroy -= self.__onPageViewDestroy
 
         # if self._isCurrentWikiPage:
-        #     self._guiCreator.removeTools()
+        #     self._guiController.removeTools()
         #
-        # self._guiCreator.destroy()
+        self._guiController.destroy()
 
     def __onWikiParserPrepare(self, parser):
         """
@@ -71,7 +79,7 @@ class Controller(object):
         assert self._application.mainWindow is not None
 
         # if page.getTypeString() == u"wiki":
-        #     self._guiCreator.createTools()
+        #     self._guiController.createTools()
 
     def __onPageViewDestroy(self, page):
         """
@@ -80,4 +88,4 @@ class Controller(object):
         assert self._application.mainWindow is not None
 
         # if page.getTypeString() == u"wiki":
-        #     self._guiCreator.removeTools()
+        #     self._guiController.removeTools()

@@ -42,6 +42,9 @@ class SnippetsLoader(object):
 
     def _findSnippets(self, snippets, dirlist):
         for dirname in dirlist:
+            if not os.path.exists(dirname) or not os.path.isdir(dirname):
+                continue
+
             for fname in os.listdir(dirname):
                 fullname = os.path.join(dirname, fname)
                 if os.path.isdir(fullname):
