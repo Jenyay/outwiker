@@ -46,6 +46,16 @@ class SnippetsLoaderTest(unittest.TestCase):
         self.assertEqual(snippets.dirs, [])
         self.assertEqual(snippets.snippets, [])
 
+    def test_empty_03_invalid(self):
+        from snippets.snippetsloader import SnippetsLoader
+        loader = SnippetsLoader(['Invalid dir'])
+        snippets = loader.getSnippets()
+
+        self.assertEqual(snippets.name, None)
+        self.assertEqual(len(snippets), 0)
+        self.assertEqual(snippets.dirs, [])
+        self.assertEqual(snippets.snippets, [])
+
     def test_snippets_01(self):
         from snippets.snippetsloader import SnippetsLoader
         files = [u'Шаблон.tpl']

@@ -16,7 +16,7 @@ class GuiController(object):
         self._application = application
 
         self._menu = None
-        self._mainMenu = self._application.mainWindow.mainMenu
+        self._mainMenu = None
 
         self.MENU_POS = 6
         self._menuName = None
@@ -24,8 +24,11 @@ class GuiController(object):
     def initialize(self):
         global _
         _ = get_()
-        self._menuName = _(u'Snippets')
-        self._createMenu()
+
+        if self._application.mainWindow is not None:
+            self._mainMenu = self._application.mainWindow.mainMenu
+            self._menuName = _(u'Snippets')
+            self._createMenu()
 
     def _createMenu(self):
         sl = SnippetsLoader(getSpecialDirList(SNIPPETS_DIR))
@@ -63,7 +66,8 @@ class GuiController(object):
         self._menu = None
 
     def destroy(self):
-        self._destroyMenu()
+        if self._application.mainWindow is not None:
+            self._destroyMenu()
 
     def _onClick(self, snippet):
         print(snippet)
