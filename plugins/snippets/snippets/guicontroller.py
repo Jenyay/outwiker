@@ -9,6 +9,7 @@ from outwiker.core.system import getSpecialDirList
 from .i18n import get_
 from .snippetsloader import SnippetsLoader
 from .defines import SNIPPETS_DIR
+from .snippetparser import SnippetParser
 
 
 class GuiController(object):
@@ -70,4 +71,17 @@ class GuiController(object):
             self._destroyMenu()
 
     def _onClick(self, snippet):
-        print(snippet)
+        editor = self._getEditor()
+        if editor is not None:
+            parser = SnippetParser(snippet)
+            text = parser.process()
+            editor.replaceText(text)
+
+    def _getEditor(self):
+        if self._application.selectedPage is None:
+            return None
+
+        pageView = self._application.mainWindow.pagePanel.pageView
+
+        if 'GetEditor' in dir(pageView):
+            return pageView.GetEditor()
