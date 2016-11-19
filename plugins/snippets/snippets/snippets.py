@@ -2,6 +2,7 @@
 
 import os.path
 import logging
+import sys
 
 from outwiker.core.pluginbase import Plugin
 from outwiker.core.commands import getCurrentVersion
@@ -21,6 +22,8 @@ else:
             application - экземпляр класса core.application.ApplicationParams
             """
             super(PluginSnippets, self).__init__(application)
+            self._correctSysPath()
+
             self.__controller = Controller(self, application)
 
         @property
@@ -63,3 +66,11 @@ else:
                 print e
 
             set_(_)
+
+        def _correctSysPath(self):
+            syspath = [unicode(item, getOS().filesEncoding)
+                       if not isinstance(item, unicode)
+                       else item for item in sys.path]
+
+            if self._pluginPath not in syspath:
+                sys.path.insert(0, self._pluginPath)
