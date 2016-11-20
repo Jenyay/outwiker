@@ -6,10 +6,10 @@ import wx
 
 from outwiker.core.system import getSpecialDirList
 
-from .i18n import get_
-from .snippetsloader import SnippetsLoader
-from .defines import SNIPPETS_DIR
-from .snippetparser import SnippetParser
+from snippets.i18n import get_
+from snippets.snippetsloader import SnippetsLoader
+from snippets.snippetparser import SnippetParser
+import snippets.defines as defines
 
 
 class GuiController(object):
@@ -35,7 +35,7 @@ class GuiController(object):
 
     def _createMenu(self):
         self._snippets_id = {}
-        sl = SnippetsLoader(getSpecialDirList(SNIPPETS_DIR))
+        sl = SnippetsLoader(getSpecialDirList(defines.SNIPPETS_DIR))
         snippets_tree = sl.getSnippets()
 
         self._menu = wx.Menu(u'')
@@ -81,8 +81,9 @@ class GuiController(object):
 
         editor = self._getEditor()
         if editor is not None:
-            parser = SnippetParser(snippet)
-            text = parser.process()
+            selectedText = editor.GetSelectedText()
+            parser = SnippetParser(snippet, self._application)
+            text = parser.process(selectedText, self._application.selectedPage)
             editor.replaceText(text)
 
     def _getEditor(self):
