@@ -1,29 +1,23 @@
 # -*- coding: UTF-8 -*-
 
 from outwiker.core.attachment import Attachment
-from outwiker.utilites.textfile import readTextFile
 
 from snippets_libs.jinja2 import Environment
 import snippets.defines as defines
 
 
 class SnippetParser(object):
-    def __init__(self, fname, application):
-        self._fname = fname
+    def __init__(self, template, application):
+        self._template = template
         self._application = application
-        self._content = readTextFile(fname)
 
     def process(self, selectedText, page, **kwargs):
         assert self._application.selectedPage is not None
-        text = self._content
-        if text.endswith(u'\n'):
-            text = text[:-1]
-
         params = self._getGlobalVariables(selectedText, page)
         params.update(kwargs)
 
         env = Environment()
-        tpl = env.from_string(text, globals=params)
+        tpl = env.from_string(self._template, globals=params)
         result = tpl.render()
 
         return result

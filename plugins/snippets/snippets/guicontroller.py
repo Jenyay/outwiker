@@ -5,6 +5,8 @@ import os
 import wx
 
 from outwiker.core.system import getSpecialDirList
+from outwiker.core.commands import MessageBox
+from outwiker.utilites.textfile import readTextFile
 
 from snippets.i18n import get_
 from snippets.snippetsloader import SnippetsLoader
@@ -82,7 +84,19 @@ class GuiController(object):
         editor = self._getEditor()
         if editor is not None:
             selectedText = editor.GetSelectedText()
-            parser = SnippetParser(snippet, self._application)
+
+            try:
+                template = readTextFile(snippet)
+            except EnvironmentError:
+                MessageBox(_(u"Can't read the snippet\n{}").format(snippet),
+                           _(u"Error"),
+                           wx.ICON_ERROR | wx.OK)
+                return
+
+            if template.endswith(u'\n'):
+                template = template[:-1]
+
+            parser = SnippetParser(template, self._application)
             text = parser.process(selectedText, self._application.selectedPage)
             editor.replaceText(text)
 
