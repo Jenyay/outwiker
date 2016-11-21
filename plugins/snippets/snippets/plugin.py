@@ -13,9 +13,6 @@ from outwiker.core.system import getOS
 if getCurrentVersion() < Version(2, 0, 0, 806, status=StatusSet.BETA):
     logging.warning("Snippets plugin. OutWiker version requirement: 2.0.0.806")
 else:
-    from .i18n import set_
-    from .controller import Controller
-
     class PluginSnippets (Plugin):
         def __init__(self, application):
             """
@@ -24,7 +21,7 @@ else:
             super(PluginSnippets, self).__init__(application)
             self._correctSysPath()
 
-            self.__controller = Controller(self, application)
+            self.__controller = None
 
         @property
         def application(self):
@@ -48,6 +45,8 @@ else:
 
         def initialize(self):
             self._initlocale(u'snippets')
+            from .controller import Controller
+            self.__controller = Controller(self, self._application)
             self.__controller.initialize()
 
         def destroy(self):
@@ -56,6 +55,7 @@ else:
         #############################################
 
         def _initlocale(self, domain):
+            from snippets.i18n import set_
             langdir = unicode(os.path.join(os.path.dirname(__file__),
                                            "locale"), getOS().filesEncoding)
             global _
@@ -72,5 +72,6 @@ else:
                        if not isinstance(item, unicode)
                        else item for item in sys.path]
 
-            if self._pluginPath not in syspath:
-                sys.path.insert(0, self._pluginPath)
+            libspath = os.path.join(self._pluginPath, u'libs')
+            if libspath not in syspath:
+                sys.path.insert(0, libspath)

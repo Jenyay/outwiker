@@ -2,7 +2,7 @@
 
 from outwiker.core.attachment import Attachment
 
-from snippets_libs.jinja2 import Environment
+from jinja2 import Environment
 import snippets.defines as defines
 
 
