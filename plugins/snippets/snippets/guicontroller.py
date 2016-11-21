@@ -79,26 +79,33 @@ class GuiController(object):
 
     def _onClick(self, event):
         assert event.GetId() in self._snippets_id
-        snippet = self._snippets_id[event.GetId()]
+        snippet_fname = self._snippets_id[event.GetId()]
 
         editor = self._getEditor()
         if editor is not None:
             selectedText = editor.GetSelectedText()
 
             try:
-                template = readTextFile(snippet)
+                template = self._loadTemplate(snippet_fname)
             except EnvironmentError:
-                MessageBox(_(u"Can't read the snippet\n{}").format(snippet),
-                           _(u"Error"),
-                           wx.ICON_ERROR | wx.OK)
+                MessageBox(
+                    _(u"Can't read the snippet\n{}").format(snippet_fname),
+                    _(u"Error"),
+                    wx.ICON_ERROR | wx.OK)
                 return
 
-            if template.endswith(u'\n'):
-                template = template[:-1]
-
             parser = SnippetParser(template, self._application)
+            variables = sorted([var for var
+                                in parser.getVariables()
+                                if not var.startswith('__')])
             text = parser.process(selectedText, self._application.selectedPage)
             editor.replaceText(text)
+
+    def _loadTemplate(self, fname):
+        template = readTextFile(fname)
+        if template.endswith(u'\n'):
+            template = template[:-1]
+        return template
 
     def _getEditor(self):
         if self._application.selectedPage is None:

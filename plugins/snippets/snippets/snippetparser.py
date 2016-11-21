@@ -2,7 +2,7 @@
 
 from outwiker.core.attachment import Attachment
 
-from jinja2 import Environment
+from jinja2 import Environment, meta
 import snippets.defines as defines
 
 
@@ -21,6 +21,12 @@ class SnippetParser(object):
         result = tpl.render()
 
         return result
+
+    def getVariables(self):
+        env = Environment()
+        ast = env.parse(self._template)
+        variables = meta.find_undeclared_variables(ast)
+        return variables
 
     def _getGlobalVariables(self, selectedText, page):
         assert page is not None
