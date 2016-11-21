@@ -133,5 +133,6 @@ if __name__ == '__main__':
 
     from test.plugins.snippets.test_loading import SnippetsLoadingTest
     from test.plugins.snippets.test_snippetsloader import SnippetsLoaderTest
+    from test.plugins.snippets.test_snippetparser import SnippetParserTest
 
     unittest.main()

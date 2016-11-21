@@ -11,6 +11,7 @@ from outwiker.utilites.textfile import readTextFile
 from snippets.i18n import get_
 from snippets.snippetsloader import SnippetsLoader
 from snippets.snippetparser import SnippetParser
+from jinja2 import TemplateError
 import snippets.defines as defines
 
 
@@ -95,10 +96,16 @@ class GuiController(object):
                 return
 
             parser = SnippetParser(template, self._application)
-            variables = sorted([var for var
-                                in parser.getVariables()
-                                if not var.startswith('__')])
-            text = parser.process(selectedText, self._application.selectedPage)
+
+            try:
+                variables = sorted([var for var
+                                    in parser.getVariables()
+                                    if not var.startswith('__')])
+                text = parser.process(selectedText,
+                                      self._application.selectedPage)
+            except TemplateError as e:
+                text = _(u'Template error:\n{}').format(unicode(e.message))
+
             editor.replaceText(text)
 
     def _loadTemplate(self, fname):

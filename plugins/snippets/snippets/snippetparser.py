@@ -2,7 +2,7 @@
 
 from outwiker.core.attachment import Attachment
 
-from jinja2 import Environment, meta
+from jinja2 import Environment, meta, TemplateError
 import snippets.defines as defines
 
 
