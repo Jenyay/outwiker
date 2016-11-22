@@ -10,9 +10,10 @@ from outwiker.utilites.textfile import readTextFile
 
 from snippets.i18n import get_
 from snippets.snippetsloader import SnippetsLoader
-from snippets.snippetparser import SnippetParser
-from jinja2 import TemplateError
+from snippets.gui.variablesdialog import VariablesDialogController
 import snippets.defines as defines
+
+from jinja2 import TemplateError
 
 
 class GuiController(object):
@@ -26,6 +27,9 @@ class GuiController(object):
         self._menuName = None
 
         self._snippets_id = None
+        self._varDialogController = VariablesDialogController(
+            self._application
+        )
 
     def initialize(self):
         global _
@@ -35,6 +39,7 @@ class GuiController(object):
             self._mainMenu = self._application.mainWindow.mainMenu
             self._menuName = _(u'Snippets')
             self._createMenu()
+            self._varDialogController.onFinishDialog += self._onFinishDialog
 
     def _createMenu(self):
         self._snippets_id = {}
@@ -77,6 +82,9 @@ class GuiController(object):
     def destroy(self):
         if self._application.mainWindow is not None:
             self._destroyMenu()
+            self._varDialogController.onFinishDialog -= self._onFinishDialog
+
+        self._varDialogController.destroy()
 
     def _onClick(self, event):
         assert event.GetId() in self._snippets_id
@@ -84,8 +92,6 @@ class GuiController(object):
 
         editor = self._getEditor()
         if editor is not None:
-            selectedText = editor.GetSelectedText()
-
             try:
                 template = self._loadTemplate(snippet_fname)
             except EnvironmentError:
@@ -95,18 +101,12 @@ class GuiController(object):
                     wx.ICON_ERROR | wx.OK)
                 return
 
-            parser = SnippetParser(template, self._application)
-
+            selectedText = editor.GetSelectedText()
             try:
-                variables = sorted([var for var
-                                    in parser.getVariables()
-                                    if not var.startswith('__')])
-                text = parser.process(selectedText,
-                                      self._application.selectedPage)
+                self._varDialogController.ShowDialog(selectedText, template)
             except TemplateError as e:
                 text = _(u'Template error:\n{}').format(unicode(e.message))
-
-            editor.replaceText(text)
+                editor.replaceText(text)
 
     def _loadTemplate(self, fname):
         template = readTextFile(fname)
@@ -117,8 +117,11 @@ class GuiController(object):
     def _getEditor(self):
         if self._application.selectedPage is None:
             return None
-
         pageView = self._application.mainWindow.pagePanel.pageView
-
         if 'GetEditor' in dir(pageView):
             return pageView.GetEditor()
+
+    def _onFinishDialog(self, params):
+        editor = self._getEditor()
+        if editor is not None:
+            editor.replaceText(params.text)
