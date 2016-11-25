@@ -52,7 +52,7 @@ class GuiController(object):
 
     def _buildTree(self, snippets_tree, menu):
         # Create menu items
-        for snippet in snippets_tree.snippets:
+        for snippet in sorted(snippets_tree.snippets):
             name = os.path.basename(snippet)[:-4]
             menu_item_id = wx.Window.NewControlId()
             menu.Append(menu_item_id, name)
