@@ -31,7 +31,14 @@ class VariablesDialog(TestedDialog):
         mainSizer.AddGrowableCol(1)
         mainSizer.AddGrowableRow(0)
 
-        self._snippetPanel = SnippetPanel(self, self._application)
+        self._notebook = wx.Notebook(self)
+
+        self._snippetPanel = TextPanel(self._notebook, self._application)
+        self._notebook.AddPage(self._snippetPanel, _(u'Snippet'))
+
+        self._resultPanel = TextPanel(self._notebook, self._application)
+        self._notebook.AddPage(self._resultPanel, _(u'Result'))
+
         self._varPanel = VaraiblesPanel(self)
 
         self.ok_button = wx.Button(self, wx.ID_OK)
@@ -41,7 +48,7 @@ class VariablesDialog(TestedDialog):
         btn_sizer.Add(self.ok_button)
 
         mainSizer.Add(self._varPanel, 1, flag=wx.ALL | wx.EXPAND, border=2)
-        mainSizer.Add(self._snippetPanel,
+        mainSizer.Add(self._notebook,
                       1,
                       flag=wx.ALL | wx.EXPAND,
                       border=2)
@@ -185,12 +192,12 @@ class StringVariableCtrl(wx.Panel):
         return self._textCtrl.GetValue()
 
 
-class SnippetPanel(wx.Panel):
+class TextPanel(wx.Panel):
     '''
     Panel to show snippet source.
     '''
     def __init__(self, parent, application):
-        super(SnippetPanel, self).__init__(parent)
+        super(TextPanel, self).__init__(parent)
 
         self._application = application
         self.snippetEditor = None
@@ -199,7 +206,6 @@ class SnippetPanel(wx.Panel):
 
     def _createGUI(self):
         self.snippetEditor = SnippetEditor(self, self._application)
-
         mainSizer = wx.FlexGridSizer(cols=1)
         mainSizer.AddGrowableRow(0)
         mainSizer.AddGrowableCol(0)
