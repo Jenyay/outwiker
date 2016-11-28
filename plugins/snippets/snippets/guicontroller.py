@@ -105,7 +105,10 @@ class GuiController(object):
             try:
                 self._varDialogController.ShowDialog(selectedText, template)
             except TemplateError as e:
-                text = _(u'Template error:\n{}').format(unicode(e.message))
+                text = _(u'Template error at line {line}:\n{text}').format(
+                    line=e.lineno,
+                    text=unicode(e.message)
+                )
                 editor.replaceText(text)
 
     def _loadTemplate(self, fname):
