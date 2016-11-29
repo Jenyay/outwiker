@@ -34,6 +34,7 @@ class VariablesDialog(TestedDialog):
         self._notebook = wx.Notebook(self)
 
         self._snippetPanel = TextPanel(self._notebook, self._application)
+        self._snippetPanel.editor.SetReadOnly(True)
         self._notebook.AddPage(self._snippetPanel, _(u'Snippet'))
 
         self._resultPanel = TextPanel(self._notebook, self._application)
@@ -62,7 +63,9 @@ class VariablesDialog(TestedDialog):
         self.Layout()
 
     def setTemplate(self, text):
-        self._snippetPanel.snippetEditor.SetText(text)
+        self._snippetPanel.editor.SetReadOnly(False)
+        self._snippetPanel.editor.SetText(text)
+        self._snippetPanel.editor.SetReadOnly(True)
         self._varPanel.clear()
 
     def addStringVariable(self, varname):
@@ -200,17 +203,17 @@ class TextPanel(wx.Panel):
         super(TextPanel, self).__init__(parent)
 
         self._application = application
-        self.snippetEditor = None
+        self.editor = None
 
         self._createGUI()
 
     def _createGUI(self):
-        self.snippetEditor = SnippetEditor(self, self._application)
+        self.editor = SnippetEditor(self, self._application)
         mainSizer = wx.FlexGridSizer(cols=1)
         mainSizer.AddGrowableRow(0)
         mainSizer.AddGrowableCol(0)
 
-        mainSizer.Add(self.snippetEditor,
+        mainSizer.Add(self.editor,
                       1,
                       flag=wx.ALL | wx.EXPAND,
                       border=2)
