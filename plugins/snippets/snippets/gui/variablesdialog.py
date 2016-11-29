@@ -3,6 +3,7 @@
 from collections import namedtuple
 
 import wx
+from wx.lib.newevent import NewEvent
 
 from outwiker.core.event import Event
 from outwiker.gui.testeddialog import TestedDialog
@@ -12,6 +13,8 @@ from snippets.gui.snippeteditor import SnippetEditor
 
 
 FinishDialogParams = namedtuple('FinishDialogParams', ['text'])
+
+VarChangeEvent, EVT_VAR_CHANGE = NewEvent()
 
 
 class VariablesDialog(TestedDialog):
@@ -75,6 +78,12 @@ class VariablesDialog(TestedDialog):
     def getVarDict(self):
         return self._varPanel.getVarDict()
 
+    def setResult(self, text):
+        self._resultPanel.editor.SetText(text)
+
+    def getResult(self):
+        return self._resultPanel.editor.GetText()
+
 
 class VariablesDialogController(object):
     '''
@@ -99,6 +108,7 @@ class VariablesDialogController(object):
             self._dialog = VariablesDialog(self._application.mainWindow,
                                            self._application)
             self._dialog.ok_button.Bind(wx.EVT_BUTTON, handler=self._onOk)
+            self._dialog.Bind(EVT_VAR_CHANGE, handler=self._onVarChange)
 
         self._selectedText = selectedText
         self._parser = SnippetParser(template, self._application)
@@ -110,6 +120,7 @@ class VariablesDialogController(object):
         map(lambda var: self._dialog.addStringVariable(var), variables)
 
         if variables:
+            self._updateResult()
             self._dialog.Show()
         else:
             self._finishDialog()
@@ -117,23 +128,30 @@ class VariablesDialogController(object):
     def destroy(self):
         self.onFinishDialog.clear()
         if self._dialog is not None:
-            self._dialog.ok_button.Unbind(wx.EVT_BUTTON,
-                                          handler=self._onOk)
+            self._dialog.ok_button.Unbind(wx.EVT_BUTTON, handler=self._onOk)
+            self._dialog.Unbind(EVT_VAR_CHANGE, handle=self._onVarChange)
             self._dialog.Close()
             self._dialog = None
 
     def _finishDialog(self):
         if self._application.selectedPage is not None:
-            variables = self._dialog.getVarDict()
-            text = self._parser.process(self._selectedText,
-                                        self._application.selectedPage,
-                                        **variables)
+            text = self._dialog.getResult()
             self.onFinishDialog(FinishDialogParams(text))
         self._dialog.Close()
         self._dialog = None
 
     def _onOk(self, event):
         self._finishDialog()
+
+    def _onVarChange(self, event):
+        self._updateResult()
+
+    def _updateResult(self):
+        variables = self._dialog.getVarDict()
+        text = self._parser.process(self._selectedText,
+                                    self._application.selectedPage,
+                                    **variables)
+        self._dialog.setResult(text)
 
 
 class VaraiblesPanel(wx.ScrolledWindow):
@@ -181,6 +199,7 @@ class StringVariableCtrl(wx.Panel):
     def _createGUI(self):
         self._label = wx.StaticText(self, label=self._varname)
         self._textCtrl = wx.TextCtrl(self)
+        self._textCtrl.Bind(wx.EVT_TEXT, handler=self._onTextEdit)
 
         mainSizer = wx.FlexGridSizer(cols=1)
         mainSizer.AddGrowableCol(0)
@@ -193,6 +212,12 @@ class StringVariableCtrl(wx.Panel):
 
     def GetValue(self):
         return self._textCtrl.GetValue()
+
+    def _onTextEdit(self, event):
+        propagationLevel = 10
+        newevent = VarChangeEvent()
+        newevent.ResumePropagation(propagationLevel)
+        wx.PostEvent(self, newevent)
 
 
 class TextPanel(wx.Panel):
