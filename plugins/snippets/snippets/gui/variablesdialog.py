@@ -7,6 +7,7 @@ from wx.lib.newevent import NewEvent
 
 from outwiker.core.event import Event
 from outwiker.gui.testeddialog import TestedDialog
+from outwiker.gui.texteditor import TextEditor
 
 from snippets.snippetparser import SnippetParser
 from snippets.gui.snippeteditor import SnippetEditor
@@ -18,6 +19,9 @@ VarChangeEvent, EVT_VAR_CHANGE = NewEvent()
 
 
 class VariablesDialog(TestedDialog):
+    '''
+    Dialog to enter variables and preview result
+    '''
     def __init__(self, parent, application):
         super(TestedDialog, self).__init__(
             parent,
@@ -36,15 +40,18 @@ class VariablesDialog(TestedDialog):
 
         self._notebook = wx.Notebook(self)
 
-        self._snippetPanel = TextPanel(self._notebook, self._application)
-        self._snippetPanel.editor.SetReadOnly(True)
-        self._notebook.AddPage(self._snippetPanel, _(u'Snippet'))
+        # Snippet panel
+        self._snippetEditor = SnippetEditor(self._notebook, self._application)
+        self._notebook.AddPage(self._snippetEditor, _(u'Snippet'))
 
-        self._resultPanel = TextPanel(self._notebook, self._application)
-        self._notebook.AddPage(self._resultPanel, _(u'Result'))
+        # Result panel
+        self._resultEditor = TextEditor(self._notebook)
+        self._notebook.AddPage(self._resultEditor, _(u'Result'))
 
+        # Panel with variables
         self._varPanel = VaraiblesPanel(self)
 
+        # OK / Cancel buttons
         self.ok_button = wx.Button(self, wx.ID_OK)
         self.ok_button.SetDefault()
 
@@ -65,10 +72,10 @@ class VariablesDialog(TestedDialog):
         self.SetClientSize((self._width, self._height))
         self.Layout()
 
-    def setTemplate(self, text):
-        self._snippetPanel.editor.SetReadOnly(False)
-        self._snippetPanel.editor.SetText(text)
-        self._snippetPanel.editor.SetReadOnly(True)
+    def setSnippetText(self, text):
+        self._snippetEditor.SetReadOnly(False)
+        self._snippetEditor.SetText(text)
+        self._snippetEditor.SetReadOnly(True)
         self._varPanel.clear()
 
     def addStringVariable(self, varname):
@@ -79,10 +86,10 @@ class VariablesDialog(TestedDialog):
         return self._varPanel.getVarDict()
 
     def setResult(self, text):
-        self._resultPanel.editor.SetText(text)
+        self._resultEditor.SetText(text)
 
     def getResult(self):
-        return self._resultPanel.editor.GetText()
+        return self._resultEditor.GetText()
 
 
 class VariablesDialogController(object):
@@ -97,9 +104,6 @@ class VariablesDialogController(object):
         self._parser = None
         self._selectedText = u''
 
-    def _setDialogTemplate(self, template):
-        self._dialog.setTemplate(template)
-
     def ShowDialog(self, selectedText, template):
         if self._application.selectedPage is None:
             return
@@ -112,13 +116,16 @@ class VariablesDialogController(object):
 
         self._selectedText = selectedText
         self._parser = SnippetParser(template, self._application)
+
+        # Get non builtin variables
         variables = sorted([var for var
                             in self._parser.getVariables()
                             if not var.startswith('__')])
 
-        self._setDialogTemplate(template)
+        self._dialog.setSnippetText(template)
         map(lambda var: self._dialog.addStringVariable(var), variables)
 
+        # Show dialog if user must enter variable's values
         if variables:
             self._updateResult()
             self._dialog.Show()
@@ -190,6 +197,9 @@ class VaraiblesPanel(wx.ScrolledWindow):
 
 
 class StringVariableCtrl(wx.Panel):
+    '''
+    Control to edit string variable
+    '''
     def __init__(self, parent, varname):
         super(StringVariableCtrl, self).__init__(parent)
         self._varname = varname
@@ -218,30 +228,3 @@ class StringVariableCtrl(wx.Panel):
         newevent = VarChangeEvent()
         newevent.ResumePropagation(propagationLevel)
         wx.PostEvent(self, newevent)
-
-
-class TextPanel(wx.Panel):
-    '''
-    Panel to show snippet source.
-    '''
-    def __init__(self, parent, application):
-        super(TextPanel, self).__init__(parent)
-
-        self._application = application
-        self.editor = None
-
-        self._createGUI()
-
-    def _createGUI(self):
-        self.editor = SnippetEditor(self, self._application)
-        mainSizer = wx.FlexGridSizer(cols=1)
-        mainSizer.AddGrowableRow(0)
-        mainSizer.AddGrowableCol(0)
-
-        mainSizer.Add(self.editor,
-                      1,
-                      flag=wx.ALL | wx.EXPAND,
-                      border=2)
-
-        self.SetSizer(mainSizer)
-        self.Layout()
