@@ -8,6 +8,7 @@ from outwiker.core.system import getSpecialDirList
 from outwiker.core.commands import MessageBox
 from outwiker.utilites.textfile import readTextFile
 
+from snippets.actions.updatemenu import UpdateMenuAction, EVENT_UPDATE_MENU
 from snippets.i18n import get_
 from snippets.snippetsloader import SnippetsLoader
 from snippets.gui.variablesdialog import VariablesDialogController
@@ -26,10 +27,13 @@ class GuiController(object):
         self.MENU_POS = 6
         self._menuName = None
 
-        self._snippets_id = None
+        self._snippets_id = {}
         self._varDialogController = VariablesDialogController(
             self._application
         )
+
+        # # Menu items count for actions (without snipet items)
+        self._menuActionItemsCount = 2
 
     def initialize(self):
         global _
@@ -40,15 +44,44 @@ class GuiController(object):
             self._menuName = _(u'Snippets')
             self._createMenu()
             self._varDialogController.onFinishDialog += self._onFinishDialog
+            self._application.customEvents.bind(EVENT_UPDATE_MENU,
+                                                self._onMenuUpdate)
 
     def _createMenu(self):
+        self._menu = wx.Menu(u'')
+
+        controller = self._application.actionController
+        controller.appendMenuItem(UpdateMenuAction(self._application).stringId,
+                                  self._menu)
+
+        self._menu.AppendSeparator()
+        self._updateMenu()
+        self._mainMenu.Insert(self.MENU_POS, self._menu, self._menuName)
+
+    def _onMenuUpdate(self, params):
+        self._updateMenu()
+
+    def _removeSnippetsFromMenu(self):
+        for menu_id in self._snippets_id.keys():
+            self._application.mainWindow.Unbind(
+                wx.EVT_MENU,
+                handler=self._onClick,
+                id=menu_id
+            )
+            wx.Window.UnreserveControlId(menu_id)
+
         self._snippets_id = {}
+        snippets_count = (self._menu.GetMenuItemCount() -
+                          self._menuActionItemsCount)
+        for _ in range(snippets_count):
+            menu_item = self._menu.FindItemByPosition(self._menuActionItemsCount)
+            self._menu.RemoveItem(menu_item)
+
+    def _updateMenu(self):
+        self._removeSnippetsFromMenu()
         sl = SnippetsLoader(getSpecialDirList(defines.SNIPPETS_DIR))
         snippets_tree = sl.getSnippets()
-
-        self._menu = wx.Menu(u'')
         self._buildTree(snippets_tree, self._menu)
-        self._mainMenu.Insert(self.MENU_POS, self._menu, self._menuName)
 
     def _buildTree(self, snippets_tree, menu):
         # Create menu items
@@ -76,6 +109,9 @@ class GuiController(object):
         index = self._mainMenu.FindMenu(self._menuName)
         assert index != wx.NOT_FOUND
 
+        actionController = self._application.actionController
+
+        actionController.removeMenuItem(UpdateMenuAction.stringId)
         self._mainMenu.Remove(index)
         self._menu = None
 

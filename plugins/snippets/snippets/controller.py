@@ -2,10 +2,12 @@
 
 import os
 
+from outwiker.core.system import getSpecialDirList
+
 from .i18n import get_
 from .guicontroller import GuiController
 from .defines import SNIPPETS_DIR
-from outwiker.core.system import getSpecialDirList
+from snippets.actions.updatemenu import UpdateMenuAction
 
 
 class Controller(object):
@@ -23,6 +25,10 @@ class Controller(object):
         # В этот список добавить новые викикоманды, если они нужны
         self._commands = []
 
+        self._actions = [
+            (UpdateMenuAction, None),
+        ]
+
     def initialize(self):
         """
         Инициализация контроллера при активации плагина.
@@ -36,6 +42,7 @@ class Controller(object):
         if not os.path.exists(snippets_dir_list[-1]):
             os.mkdir(snippets_dir_list[-1])
 
+        self._registerActions()
         self._guiController.initialize()
 
         self._application.onWikiParserPrepare += self.__onWikiParserPrepare
@@ -57,6 +64,7 @@ class Controller(object):
         #     self._guiController.removeTools()
         #
         self._guiController.destroy()
+        self._unregisterActions()
 
     def __onWikiParserPrepare(self, parser):
         """
@@ -88,4 +96,11 @@ class Controller(object):
         assert self._application.mainWindow is not None
 
         # if page.getTypeString() == u"wiki":
-        #     self._guiController.removeTools()
+
+    def _registerActions(self):
+        map(lambda actionTuple: self._application.actionController.register(
+            actionTuple[0](self._application), actionTuple[1]), self._actions)
+
+    def _unregisterActions(self):
+        map(lambda actionTuple: self._application.actionController.removeAction(
+            actionTuple[0].stringId), self._actions)
