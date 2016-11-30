@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 import os
+from collections import namedtuple
 
 import wx
 
@@ -15,6 +16,8 @@ from snippets.gui.variablesdialog import VariablesDialogController
 import snippets.defines as defines
 
 from jinja2 import TemplateError
+
+SnippetInfo = namedtuple('SnippetInfo', ['filename', 'menuitem', 'parentmenu'])
 
 
 class GuiController(object):
@@ -32,8 +35,9 @@ class GuiController(object):
             self._application
         )
 
-        # # Menu items count for actions (without snipet items)
-        self._menuActionItemsCount = 2
+        self._actions = [
+            UpdateMenuAction,
+        ]
 
     def initialize(self):
         global _
@@ -51,8 +55,8 @@ class GuiController(object):
         self._menu = wx.Menu(u'')
 
         controller = self._application.actionController
-        controller.appendMenuItem(UpdateMenuAction(self._application).stringId,
-                                  self._menu)
+        map(lambda action: controller.appendMenuItem(action.stringId, self._menu),
+            self._actions)
 
         self._menu.AppendSeparator()
         self._updateMenu()
@@ -69,15 +73,22 @@ class GuiController(object):
                 id=menu_id
             )
 
-        snippets_count = (self._menu.GetMenuItemCount() -
-                          self._menuActionItemsCount)
-        for _ in range(snippets_count):
-            menu_item = self._menu.FindItemByPosition(self._menuActionItemsCount)
+        # Remove all snippets
+        for snippet_id, snippet_info in reversed(self._snippets_id.items()):
+            menu_item = snippet_info.menuitem
+            menu = snippet_info.parentmenu
+            menu.RemoveItem(menu_item)
+            menu_item.Destroy()
+            wx.Window.UnreserveControlId(snippet_id)
+
+        # Count menu items for snippets. (+-1 because of separator exists)
+        menu_snippets_count = (self._menu.GetMenuItemCount() -
+                               len(self._actions)) - 1
+
+        for _ in range(menu_snippets_count):
+            menu_item = self._menu.FindItemByPosition(len(self._actions) + 1)
             self._menu.RemoveItem(menu_item)
             menu_item.Destroy()
-
-        # for menu_id in self._snippets_id.keys():
-        #     wx.Window.UnreserveControlId(menu_id)
 
         self._snippets_id = {}
 
@@ -92,13 +103,15 @@ class GuiController(object):
         for snippet in sorted(snippets_tree.snippets):
             name = os.path.basename(snippet)[:-4]
             menu_item_id = wx.Window.NewControlId()
-            menu.Append(menu_item_id, name)
+            menu_item = menu.Append(menu_item_id, name)
 
-            self._snippets_id[menu_item_id] = snippet
+            self._snippets_id[menu_item_id] = SnippetInfo(snippet,
+                                                          menu_item,
+                                                          menu)
 
             self._application.mainWindow.Bind(
                 wx.EVT_MENU,
-                self._onClick,
+                handler=self._onClick,
                 id=menu_item_id
             )
 
@@ -115,7 +128,8 @@ class GuiController(object):
 
         actionController = self._application.actionController
 
-        actionController.removeMenuItem(UpdateMenuAction.stringId)
+        map(lambda action: actionController.removeMenuItem(action.stringId),
+            self._actions)
         self._mainMenu.Remove(index)
         self._menu = None
 
@@ -128,7 +142,7 @@ class GuiController(object):
 
     def _onClick(self, event):
         assert event.GetId() in self._snippets_id
-        snippet_fname = self._snippets_id[event.GetId()]
+        snippet_fname = self._snippets_id[event.GetId()].filename
 
         editor = self._getEditor()
         if editor is not None:
