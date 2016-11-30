@@ -66,20 +66,17 @@ class GuiController(object):
         self._updateMenu()
 
     def _removeSnippetsFromMenu(self):
-        for menu_id in self._snippets_id.keys():
-            self._application.mainWindow.Unbind(
-                wx.EVT_MENU,
-                handler=self._onClick,
-                id=menu_id
-            )
-
         # Remove all snippets
         for snippet_id, snippet_info in reversed(self._snippets_id.items()):
             menu_item = snippet_info.menuitem
             menu = snippet_info.parentmenu
+            self._application.mainWindow.Unbind(wx.EVT_MENU,
+                                                handler=self._onClick,
+                                                id=snippet_id
+                                                )
             menu.RemoveItem(menu_item)
             menu_item.Destroy()
-            wx.Window.UnreserveControlId(snippet_id)
+            # wx.Window.UnreserveControlId(snippet_id)
 
         # Count menu items for snippets. (+-1 because of separator exists)
         menu_snippets_count = (self._menu.GetMenuItemCount() -
