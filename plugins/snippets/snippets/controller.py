@@ -42,8 +42,9 @@ class Controller(object):
         if not os.path.exists(snippets_dir_list[-1]):
             os.mkdir(snippets_dir_list[-1])
 
-        self._registerActions()
-        self._guiController.initialize()
+        if self._application.mainWindow is not None:
+            self._registerActions()
+            self._guiController.initialize()
 
         self._application.onWikiParserPrepare += self.__onWikiParserPrepare
         self._application.onPageViewCreate += self.__onPageViewCreate
@@ -63,8 +64,9 @@ class Controller(object):
         # if self._isCurrentWikiPage:
         #     self._guiController.removeTools()
         #
-        self._guiController.destroy()
-        self._unregisterActions()
+        if self._application.mainWindow is not None:
+            self._guiController.destroy()
+            self._unregisterActions()
 
     def __onWikiParserPrepare(self, parser):
         """
