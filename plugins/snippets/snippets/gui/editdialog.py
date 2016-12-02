@@ -35,6 +35,10 @@ class EditSnippetsDialog(TestedDialog):
         self._imagesPath = getImagesPath()
 
         self._createGUI()
+        self.disableSnippetEditor()
+
+    def disableSnippetEditor(self):
+        self._snippetPanel.Disable()
 
     def _createTreeButtons(self, groupButtonsSizer):
         # Add a group button
@@ -87,20 +91,21 @@ class EditSnippetsDialog(TestedDialog):
 
         mainSizer.Add(treeSizer, 1, wx.ALL | wx.EXPAND, border=0)
 
-    def _createSnippetButtons(self, snippetButtonsSizer):
+    def _createSnippetButtons(self, snippetButtonsSizer, parent):
         # Insert variable
         self.insertVariableBtn = wx.BitmapButton(
-            self,
+            parent,
             id=self.ID_INSERT_VARIABLE,
-            bitmap=wx.Bitmap(os.path.join(self._imagesPath, "snippet_add.png"))
+            bitmap=wx.Bitmap(os.path.join(self._imagesPath, "variables.png"))
         )
         self.insertVariableBtn.SetToolTipString(_(u"Insert variable"))
         snippetButtonsSizer.Add(self.insertVariableBtn, flag=wx.ALL, border=0)
 
     def _createSnippetPanel(self, mainSizer):
+        self._snippetPanel = wx.Panel(self)
         # Snippet title controls
-        snippetTitleLabel = wx.StaticText(self, label=_(u'Snippet name'))
-        self.snippetTitle = wx.TextCtrl(self)
+        snippetTitleLabel = wx.StaticText(self._snippetPanel, label=_(u'Snippet name'))
+        self.snippetTitle = wx.TextCtrl(self._snippetPanel)
 
         titleSizer = wx.FlexGridSizer(cols=2)
         titleSizer.AddGrowableCol(1)
@@ -112,22 +117,24 @@ class EditSnippetsDialog(TestedDialog):
                        flag=wx.ALL | wx.EXPAND, border=2)
 
         # Snippet editor
-        self.snippetEditor = SnippetEditor(self, self._application)
+        self.snippetEditor = SnippetEditor(self._snippetPanel, self._application)
 
         # Buttons for snippet
         snippetButtonsSizer = wx.BoxSizer(wx.HORIZONTAL)
-        self._createSnippetButtons(snippetButtonsSizer)
+        self._createSnippetButtons(snippetButtonsSizer, self._snippetPanel)
 
         # SnippetSizer
         snippetSizer = wx.FlexGridSizer(cols=1)
         snippetSizer.AddGrowableRow(2)
         snippetSizer.AddGrowableCol(0)
 
-        snippetSizer.Add(snippetButtonsSizer, 1, wx.EXPAND, border=2)
         snippetSizer.Add(titleSizer, 1, wx.EXPAND, border=2)
+        snippetSizer.Add(snippetButtonsSizer, 1, wx.EXPAND, border=2)
         snippetSizer.Add(self.snippetEditor, 1, wx.EXPAND, border=2)
 
-        mainSizer.Add(snippetSizer, 1, wx.ALL | wx.EXPAND, border=2)
+        self._snippetPanel.SetSizer(snippetSizer)
+
+        mainSizer.Add(self._snippetPanel, 1, wx.ALL | wx.EXPAND, border=2)
 
     def _createGUI(self):
         # Main Sizer
