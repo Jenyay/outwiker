@@ -10,6 +10,7 @@ from outwiker.core.commands import MessageBox
 from outwiker.utilites.textfile import readTextFile
 
 from snippets.actions.updatemenu import UpdateMenuAction, EVENT_UPDATE_MENU
+from snippets.actions.editsnippets import EditSnippetsAction
 from snippets.i18n import get_
 from snippets.snippetsloader import SnippetsLoader
 from snippets.gui.variablesdialog import VariablesDialogController
@@ -37,6 +38,7 @@ class GuiController(object):
 
         self._actions = [
             UpdateMenuAction,
+            EditSnippetsAction,
         ]
 
     def initialize(self):

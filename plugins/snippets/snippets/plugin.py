@@ -46,6 +46,7 @@ else:
         def initialize(self):
             self._initlocale(u'snippets')
             from .controller import Controller
+
             self.__controller = Controller(self, self._application)
             self.__controller.initialize()
 

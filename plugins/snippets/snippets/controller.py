@@ -8,6 +8,7 @@ from .i18n import get_
 from .guicontroller import GuiController
 from .defines import SNIPPETS_DIR
 from snippets.actions.updatemenu import UpdateMenuAction
+from snippets.actions.editsnippets import EditSnippetsAction
 
 
 class Controller(object):
@@ -27,6 +28,7 @@ class Controller(object):
 
         self._actions = [
             (UpdateMenuAction, None),
+            (EditSnippetsAction, None),
         ]
 
     def initialize(self):
