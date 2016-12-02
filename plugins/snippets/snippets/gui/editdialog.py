@@ -8,6 +8,7 @@ from outwiker.gui.controls.safeimagelist import SafeImageList
 from outwiker.gui.testeddialog import TestedDialog
 
 from snippets.utils import getImagesPath
+from snippets.gui.snippeteditor import SnippetEditor
 
 
 class EditSnippetsDialog(TestedDialog):
@@ -29,21 +30,13 @@ class EditSnippetsDialog(TestedDialog):
         self.ID_ADD_SNIPPET = wx.NewId()
         self.ID_REMOVE = wx.NewId()
         self.ID_RENAME = wx.NewId()
+        self.ID_INSERT_VARIABLE = wx.NewId()
 
         self._imagesPath = getImagesPath()
 
         self._createGUI()
 
-    def _createGUI(self):
-        self._imagelist = SafeImageList(self.ICON_WIDTH, self.ICON_HEIGHT)
-
-        self._tree = wx.TreeCtrl(
-            self,
-            style=wx.TR_HAS_BUTTONS | wx.TR_EDIT_LABELS | wx.SUNKEN_BORDER)
-        self._tree.SetMinSize((200, 200))
-
-        self._tree.AssignImageList(self._imagelist)
-
+    def _createTreeButtons(self, groupButtonsSizer):
         # Add a group button
         self.addGroupBtn = wx.BitmapButton(
             self,
@@ -51,6 +44,7 @@ class EditSnippetsDialog(TestedDialog):
             bitmap=wx.Bitmap(os.path.join(self._imagesPath, "folder_add.png"))
         )
         self.addGroupBtn.SetToolTipString(_(u"Add new snippets group"))
+        groupButtonsSizer.Add(self.addGroupBtn, flag=wx.ALL, border=0)
 
         # Add a snippet button
         self.addSnippetBtn = wx.BitmapButton(
@@ -59,6 +53,7 @@ class EditSnippetsDialog(TestedDialog):
             bitmap=wx.Bitmap(os.path.join(self._imagesPath, "snippet_add.png"))
         )
         self.addSnippetBtn.SetToolTipString(_(u"Create new snippet"))
+        groupButtonsSizer.Add(self.addSnippetBtn, flag=wx.ALL, border=0)
 
         # Remove group or snippet button
         self.removeBtn = wx.BitmapButton(
@@ -67,27 +62,82 @@ class EditSnippetsDialog(TestedDialog):
             bitmap=wx.Bitmap(os.path.join(self._imagesPath, "remove.png"))
         )
         self.removeBtn.SetToolTipString(_(u"Remove"))
-
-        # Sizer for buttons for tree
-        groupButtonsSizer = wx.BoxSizer(wx.HORIZONTAL)
-        groupButtonsSizer.Add(self.addGroupBtn, flag=wx.ALL, border=0)
-        groupButtonsSizer.Add(self.addSnippetBtn, flag=wx.ALL, border=0)
         groupButtonsSizer.Add(self.removeBtn, flag=wx.ALL, border=0)
 
+    def _createTreePanel(self, mainSizer):
+        self._imagelist = SafeImageList(self.ICON_WIDTH, self.ICON_HEIGHT)
+
+        self.snippetsTree = wx.TreeCtrl(
+            self,
+            style=wx.TR_HAS_BUTTONS | wx.TR_EDIT_LABELS | wx.SUNKEN_BORDER)
+        self.snippetsTree.SetMinSize((200, 200))
+
+        self.snippetsTree.AssignImageList(self._imagelist)
+
+        # Buttons for the snippets tree
+        groupButtonsSizer = wx.BoxSizer(wx.HORIZONTAL)
+        self._createTreeButtons(groupButtonsSizer)
+
+        # TreeSizer
+        treeSizer = wx.FlexGridSizer(cols=1)
+        treeSizer.AddGrowableRow(1)
+        treeSizer.AddGrowableCol(0)
+        treeSizer.Add(groupButtonsSizer, 1, wx.EXPAND, border=2)
+        treeSizer.Add(self.snippetsTree, 1, wx.EXPAND, border=2)
+
+        mainSizer.Add(treeSizer, 1, wx.ALL | wx.EXPAND, border=0)
+
+    def _createSnippetButtons(self, snippetButtonsSizer):
+        # Insert variable
+        self.insertVariableBtn = wx.BitmapButton(
+            self,
+            id=self.ID_INSERT_VARIABLE,
+            bitmap=wx.Bitmap(os.path.join(self._imagesPath, "snippet_add.png"))
+        )
+        self.insertVariableBtn.SetToolTipString(_(u"Insert variable"))
+        snippetButtonsSizer.Add(self.insertVariableBtn, flag=wx.ALL, border=0)
+
+    def _createSnippetPanel(self, mainSizer):
+        # Snippet title controls
+        snippetTitleLabel = wx.StaticText(self, label=_(u'Snippet name'))
+        self.snippetTitle = wx.TextCtrl(self)
+
+        titleSizer = wx.FlexGridSizer(cols=2)
+        titleSizer.AddGrowableCol(1)
+
+        titleSizer.Add(snippetTitleLabel,
+                       flag=wx.ALIGN_CENTER_VERTICAL | wx.EXPAND | wx.ALL,
+                       border=2)
+        titleSizer.Add(self.snippetTitle,
+                       flag=wx.ALL | wx.EXPAND, border=2)
+
+        # Snippet editor
+        self.snippetEditor = SnippetEditor(self, self._application)
+
+        # Buttons for snippet
+        snippetButtonsSizer = wx.BoxSizer(wx.HORIZONTAL)
+        self._createSnippetButtons(snippetButtonsSizer)
+
+        # SnippetSizer
+        snippetSizer = wx.FlexGridSizer(cols=1)
+        snippetSizer.AddGrowableRow(2)
+        snippetSizer.AddGrowableCol(0)
+
+        snippetSizer.Add(snippetButtonsSizer, 1, wx.EXPAND, border=2)
+        snippetSizer.Add(titleSizer, 1, wx.EXPAND, border=2)
+        snippetSizer.Add(self.snippetEditor, 1, wx.EXPAND, border=2)
+
+        mainSizer.Add(snippetSizer, 1, wx.ALL | wx.EXPAND, border=2)
+
+    def _createGUI(self):
         # Main Sizer
         mainSizer = wx.FlexGridSizer(cols=2)
         mainSizer.AddGrowableCol(0)
         mainSizer.AddGrowableCol(1)
         mainSizer.AddGrowableRow(0)
 
-        # TreeSizer
-        treeSizer = wx.FlexGridSizer(cols=1)
-        treeSizer.AddGrowableRow(1)
-        treeSizer.AddGrowableCol(0)
-        treeSizer.Add(groupButtonsSizer, 1, wx.RIGHT | wx.EXPAND, border=2)
-        treeSizer.Add(self._tree, 1, wx.RIGHT | wx.EXPAND, border=2)
-
-        mainSizer.Add(treeSizer, 1, wx.ALL | wx.EXPAND, border=0)
+        self._createTreePanel(mainSizer)
+        self._createSnippetPanel(mainSizer)
 
         self.SetSizer(mainSizer)
         self.SetClientSize((self._width, self._height))
