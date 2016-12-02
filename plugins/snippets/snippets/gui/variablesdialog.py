@@ -23,7 +23,7 @@ class VariablesDialog(TestedDialog):
     Dialog to enter variables and preview result
     '''
     def __init__(self, parent, application):
-        super(TestedDialog, self).__init__(
+        super(VariablesDialog, self).__init__(
             parent,
             style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER
         )
