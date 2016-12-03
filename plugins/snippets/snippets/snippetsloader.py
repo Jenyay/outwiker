@@ -35,24 +35,23 @@ class SnippetsCollection(object):
 
 
 class SnippetsLoader(object):
-    def __init__(self, dirlist):
+    def __init__(self, dirname):
         self._ext = u'.tpl'
         self._snippets = SnippetsCollection(None)
-        self._findSnippets(self._snippets, dirlist)
+        self._findSnippets(self._snippets, dirname)
 
-    def _findSnippets(self, snippets, dirlist):
-        for dirname in dirlist:
-            if not os.path.exists(dirname) or not os.path.isdir(dirname):
-                continue
+    def _findSnippets(self, snippets, dirname):
+        if not os.path.exists(dirname):
+            return
 
-            for fname in os.listdir(dirname):
-                fullname = os.path.join(dirname, fname)
-                if os.path.isdir(fullname):
-                    subdir = SnippetsCollection(fname)
-                    self._findSnippets(subdir, [fullname])
-                    snippets.addDir(subdir)
-                elif fullname.endswith(self._ext):
-                    snippets.addSnippet(fullname)
+        for fname in os.listdir(dirname):
+            fullname = os.path.join(dirname, fname)
+            if os.path.isdir(fullname):
+                subdir = SnippetsCollection(fname)
+                self._findSnippets(subdir, fullname)
+                snippets.addDir(subdir)
+            elif fullname.endswith(self._ext):
+                snippets.addSnippet(fullname)
 
     def getSnippets(self):
         return self._snippets

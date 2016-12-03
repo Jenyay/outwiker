@@ -93,7 +93,7 @@ class GuiController(object):
 
     def _updateMenu(self):
         self._removeSnippetsFromMenu()
-        sl = SnippetsLoader(getSpecialDirList(defines.SNIPPETS_DIR))
+        sl = SnippetsLoader(getSpecialDirList(defines.SNIPPETS_DIR)[-1])
         snippets_tree = sl.getSnippets()
         self._buildTree(snippets_tree, self._menu)
 

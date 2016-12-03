@@ -6,9 +6,12 @@ import wx
 
 from outwiker.gui.controls.safeimagelist import SafeImageList
 from outwiker.gui.testeddialog import TestedDialog
+from outwiker.core.system import getSpecialDirList
 
 from snippets.utils import getImagesPath
 from snippets.gui.snippeteditor import SnippetEditor
+from snippets.snippetsloader import SnippetsLoader
+import snippets.defines as defines
 
 
 class EditSnippetsDialog(TestedDialog):
@@ -36,6 +39,9 @@ class EditSnippetsDialog(TestedDialog):
 
         self._createGUI()
         self.disableSnippetEditor()
+
+    def setSnippetsTree(self, snippets_tree):
+        pass
 
     def disableSnippetEditor(self):
         self._snippetPanel.Disable()
@@ -163,4 +169,8 @@ class EditSnippetsDialogController(object):
         if self._dialog is None:
             self._dialog = EditSnippetsDialog(self._application.mainWindow,
                                               self._application)
+
+        sl = SnippetsLoader(getSpecialDirList(defines.SNIPPETS_DIR)[-1])
+        snippets_tree = sl.getSnippets()
+        self._dialog.setSnippetsTree(snippets_tree)
         self._dialog.Show()
