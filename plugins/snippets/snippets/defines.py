@@ -12,3 +12,6 @@ VAR_COMMAND_CONTENT = u'__content'
 VAR_DATE = u'__date'
 VAR_DATE_CREATE = u'__crdate'
 VAR_DATE_EDIT = u'__eddate'
+
+NEW_DIR_NAME = _(u'snippets')
+EXTENSION = u'.tpl'

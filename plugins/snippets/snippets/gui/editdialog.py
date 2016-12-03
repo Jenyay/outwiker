@@ -10,16 +10,18 @@ from outwiker.core.commands import MessageBox
 from outwiker.core.system import getSpecialDirList
 from outwiker.utilites.textfile import readTextFile
 
-from snippets.utils import getImagesPath
+from snippets.actions.updatemenu import UpdateMenuAction
 from snippets.gui.snippeteditor import SnippetEditor
-from snippets.snippetsloader import SnippetsLoader
 from snippets.i18n import get_
+from snippets.snippetsloader import SnippetsLoader
+from snippets.utils import getImagesPath
 import snippets.defines as defines
 
 
 class TreeItemInfo(object):
-    def __init__(self, path):
+    def __init__(self, path, root=False):
         self.path = path
+        self.root = root
 
 
 class EditSnippetsDialog(TestedDialog):
@@ -49,6 +51,10 @@ class EditSnippetsDialog(TestedDialog):
         self._imagesPath = getImagesPath()
         self._dirImageId = None
         self._snippetImageId = None
+        self._rootDir = None
+
+        self.addGroupBtn = None
+        self.addSnippetBtn = None
 
         self._createGUI()
         self.SetTitle(_(u'Snippets'))
@@ -56,22 +62,66 @@ class EditSnippetsDialog(TestedDialog):
 
         self.snippetsTree.Bind(wx.EVT_TREE_SEL_CHANGED,
                                handler=self._onTreeClick)
+        self.snippetsTree.Bind(wx.EVT_TREE_BEGIN_LABEL_EDIT,
+                               handler=self._onRenameBegin)
+        self.renameBtn.Bind(wx.EVT_BUTTON, handler=self._onRenameClick)
 
     def setSnippetsTree(self, rootdir, snippetsCollection):
-        self.snippetsTree.DeleteAllItems()
+        self._rootDir = rootdir
 
-        info = TreeItemInfo(rootdir)
+        self.snippetsTree.DeleteAllItems()
+        info = TreeItemInfo(self._rootDir, True)
         rootId = self.snippetsTree.AddRoot(_(u'Snippets'),
                                            self._dirImageId,
                                            data=wx.TreeItemData(info))
-        self._buildSnippetsTree(rootId, snippetsCollection, rootdir)
+        self._buildSnippetsTree(rootId, snippetsCollection, self._rootDir)
         self.snippetsTree.ExpandAll()
+        self.snippetsTree.SelectItem(rootId)
 
     def disableSnippetEditor(self):
         self._snippetPanel.Disable()
 
     def enableSnippetEditor(self):
         self._snippetPanel.Enable()
+
+    def getSelectedItem(self):
+        item = self.snippetsTree.GetSelection()
+        if not item.IsOk():
+            return None
+        info = self.snippetsTree.GetItemData(item).GetData()
+        return info
+
+    def addChildDir(self, newpath):
+        item = self.snippetsTree.GetSelection()
+        assert item.IsOk()
+
+        if not self._isDirItem(item):
+            item = self.snippetsTree.GetItemParent(item)
+
+        name = os.path.basename(newpath)
+        data = wx.TreeItemData(TreeItemInfo(newpath))
+        newitem = self.snippetsTree.AppendItem(item,
+                                               name,
+                                               self._dirImageId,
+                                               data=data)
+        self.snippetsTree.SelectItem(newitem)
+        self.snippetsTree.EditLabel(newitem)
+
+    def _isDirItem(self, treeItem):
+        path = self.snippetsTree.GetItemData(treeItem).GetData().path
+        return os.path.isdir(path)
+
+    def _onRenameClick(self, event):
+        item = self.snippetsTree.GetSelection()
+        assert item.IsOk()
+        self.snippetsTree.EditLabel(item)
+
+    def _onRenameBegin(self, event):
+        item = event.GetItem()
+        assert item.IsOk()
+        info = self.snippetsTree.GetItemData(item).GetData()
+        if self._rootDir == info.path:
+            event.Veto()
 
     def _onTreeClick(self, event):
         item = event.GetItem()
@@ -130,6 +180,15 @@ class EditSnippetsDialog(TestedDialog):
         )
         self.addSnippetBtn.SetToolTipString(_(u"Create new snippet"))
         groupButtonsSizer.Add(self.addSnippetBtn, flag=wx.ALL, border=0)
+
+        # Rename group or snippet button
+        self.renameBtn = wx.BitmapButton(
+            self,
+            id=self.ID_RENAME,
+            bitmap=wx.Bitmap(os.path.join(self._imagesPath, "rename.png"))
+        )
+        self.renameBtn.SetToolTipString(_(u"Rename"))
+        groupButtonsSizer.Add(self.renameBtn, flag=wx.ALL, border=0)
 
         # Remove group or snippet button
         self.removeBtn = wx.BitmapButton(
@@ -226,15 +285,64 @@ class EditSnippetsDialogController(object):
     '''
     def __init__(self, application):
         self._application = application
-        self._dialog = None
+        self._dialog = EditSnippetsDialog(self._application.mainWindow,
+                                          self._application)
+        self._dialog.addGroupBtn.Bind(wx.EVT_BUTTON, handler=self._onAddGroup)
+        self._dialog.snippetsTree.Bind(wx.EVT_TREE_END_LABEL_EDIT,
+                                       handler=self._onRename)
 
     def ShowDialog(self):
-        if self._dialog is None:
-            self._dialog = EditSnippetsDialog(self._application.mainWindow,
-                                              self._application)
-
         rootdir = getSpecialDirList(defines.SNIPPETS_DIR)[-1]
         sl = SnippetsLoader(rootdir)
         snippets_tree = sl.getSnippets()
         self._dialog.setSnippetsTree(rootdir, snippets_tree)
         self._dialog.Show()
+
+    def _onAddGroup(self, event):
+        selectedItem = self._dialog.getSelectedItem()
+        rootdir = selectedItem.path
+
+        if not os.path.isdir(rootdir):
+            rootdir = os.path.dirname(rootdir)
+
+        newpath = self._findNewPath(os.path.join(rootdir,
+                                                 _(defines.NEW_DIR_NAME)))
+        os.mkdir(newpath)
+        self._dialog.addChildDir(newpath)
+
+    def _onRename(self, event):
+        if event.IsEditCancelled():
+            return
+
+        item = event.GetItem()
+        newlabel = event.GetLabel()
+        selectedItem = self._dialog.getSelectedItem()
+        oldpath = selectedItem.path
+        isdir = os.path.isdir(oldpath)
+
+        if isdir:
+            newpath = self._findNewPath(
+                os.path.join(os.path.dirname(oldpath), newlabel)
+            )
+        else:
+            newpath = self._findNewPath(
+                os.path.join(os.path.dirname(oldpath),
+                             newlabel + defines.EXTENSION)
+            )
+
+        try:
+            self._dialog.snippetsTree.GetItemData(item).GetData().path = newpath
+            os.rename(oldpath, newpath)
+        except EnvironmentError:
+            event.Veto()
+        self._application.actionController.getAction(UpdateMenuAction.stringId).run(None)
+
+    def _findNewPath(self, path):
+        index = 1
+        result = path
+
+        while os.path.exists(result):
+            suffix = u' ({})'.format(index)
+            result = path + suffix
+            index += 1
+        return result

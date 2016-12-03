@@ -116,7 +116,7 @@ class GuiController(object):
 
         # Create submenus
         menu.AppendSeparator()
-        for subdir in snippets_tree.dirs:
+        for subdir in sorted(snippets_tree.dirs, key=lambda x: x.name):
             submenu = wx.Menu(u'')
             self._buildTree(subdir, submenu)
             menu.AppendSubMenu(submenu, subdir.name)
