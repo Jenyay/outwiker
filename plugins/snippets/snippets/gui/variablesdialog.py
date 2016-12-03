@@ -11,6 +11,7 @@ from outwiker.gui.texteditor import TextEditor
 
 from snippets.snippetparser import SnippetParser
 from snippets.gui.snippeteditor import SnippetEditor
+from snippets.i18n import get_
 
 
 FinishDialogParams = namedtuple('FinishDialogParams', ['text'])
@@ -27,6 +28,9 @@ class VariablesDialog(TestedDialog):
             parent,
             style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER
         )
+        global _
+        _ = get_()
+
         self._application = application
         self._width = 700
         self._height = 400
