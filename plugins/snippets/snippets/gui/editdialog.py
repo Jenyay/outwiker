@@ -84,8 +84,11 @@ class EditSnippetsDialog(TestedDialog):
     def enableSnippetEditor(self):
         self._snippetPanel.Enable()
 
-    def getSelectedItem(self):
+    def getSelectedItemData(self):
         item = self.snippetsTree.GetSelection()
+        return self.getItemData(item)
+
+    def getItemData(self, item):
         if not item.IsOk():
             return None
         info = self.snippetsTree.GetItemData(item).GetData()
@@ -108,7 +111,7 @@ class EditSnippetsDialog(TestedDialog):
         self.snippetsTree.EditLabel(newitem)
 
     def _isDirItem(self, treeItem):
-        path = self.snippetsTree.GetItemData(treeItem).GetData().path
+        path = self.getItemData(treeItem).path
         return os.path.isdir(path)
 
     def _onRenameClick(self, event):
@@ -119,13 +122,16 @@ class EditSnippetsDialog(TestedDialog):
     def _onRenameBegin(self, event):
         item = event.GetItem()
         assert item.IsOk()
-        info = self.snippetsTree.GetItemData(item).GetData()
-        if self._rootDir == info.path:
+        if self.isRootItem(item):
             event.Veto()
+
+    def isRootItem(self, item):
+        info = self.getItemData(item)
+        return self._rootDir == info.path
 
     def _onTreeClick(self, event):
         item = event.GetItem()
-        info = self.snippetsTree.GetItemData(item).GetData()
+        info = self.getItemData(item)
         if os.path.isdir(info.path):
             self.disableSnippetEditor()
             self.snippetEditor.SetText('')
@@ -144,7 +150,7 @@ class EditSnippetsDialog(TestedDialog):
                 wx.ICON_ERROR | wx.OK)
 
     def _buildSnippetsTree(self, parentItemId, snippetsCollection, rootdir):
-        for subcollection in snippetsCollection.dirs:
+        for subcollection in sorted(snippetsCollection.dirs, key=lambda x: x.name):
             name = subcollection.name
             path = os.path.join(rootdir, name)
             data = wx.TreeItemData(TreeItemInfo(path))
@@ -154,8 +160,8 @@ class EditSnippetsDialog(TestedDialog):
                                                      data=data)
             self._buildSnippetsTree(dirItemId, subcollection, path)
 
-        for snippet in snippetsCollection.snippets:
-            name = os.path.basename(snippet)[:-4]
+        for snippet in sorted(snippetsCollection.snippets):
+            name = os.path.basename(snippet)[:-len(defines.EXTENSION)]
             data = wx.TreeItemData(TreeItemInfo(snippet))
             self.snippetsTree.AppendItem(parentItemId,
                                          name,
@@ -288,6 +294,7 @@ class EditSnippetsDialogController(object):
         self._dialog = EditSnippetsDialog(self._application.mainWindow,
                                           self._application)
         self._dialog.addGroupBtn.Bind(wx.EVT_BUTTON, handler=self._onAddGroup)
+        self._dialog.removeBtn.Bind(wx.EVT_BUTTON, handler=self._onRemove)
         self._dialog.snippetsTree.Bind(wx.EVT_TREE_END_LABEL_EDIT,
                                        handler=self._onRename)
 
@@ -298,8 +305,12 @@ class EditSnippetsDialogController(object):
         self._dialog.setSnippetsTree(rootdir, snippets_tree)
         self._dialog.Show()
 
+    def _onRemove(self, event):
+        pass
+
     def _onAddGroup(self, event):
-        selectedItem = self._dialog.getSelectedItem()
+        selectedItem = self._dialog.getSelectedItemData()
+        assert selectedItem is not None
         rootdir = selectedItem.path
 
         if not os.path.isdir(rootdir):
@@ -307,8 +318,14 @@ class EditSnippetsDialogController(object):
 
         newpath = self._findNewPath(os.path.join(rootdir,
                                                  _(defines.NEW_DIR_NAME)))
-        os.mkdir(newpath)
-        self._dialog.addChildDir(newpath)
+        try:
+            os.mkdir(newpath)
+            self._dialog.addChildDir(newpath)
+        except EnvironmentError:
+            MessageBox(
+                _(u"Can't create directory\n{}").format(newpath),
+                _(u"Error"),
+                wx.ICON_ERROR | wx.OK)
 
     def _onRename(self, event):
         if event.IsEditCancelled():
@@ -316,7 +333,8 @@ class EditSnippetsDialogController(object):
 
         item = event.GetItem()
         newlabel = event.GetLabel()
-        selectedItem = self._dialog.getSelectedItem()
+        selectedItem = self._dialog.getSelectedItemData()
+        assert selectedItem is not None
         oldpath = selectedItem.path
         isdir = os.path.isdir(oldpath)
 
@@ -331,7 +349,7 @@ class EditSnippetsDialogController(object):
             )
 
         try:
-            self._dialog.snippetsTree.GetItemData(item).GetData().path = newpath
+            self._dialog.getItemData(item).path = newpath
             os.rename(oldpath, newpath)
         except EnvironmentError:
             event.Veto()

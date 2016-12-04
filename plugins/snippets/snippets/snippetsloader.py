@@ -2,6 +2,8 @@
 
 import os
 
+from snippets.defines import EXTENSION
+
 
 class SnippetsCollection(object):
     def __init__(self, name):
@@ -36,7 +38,6 @@ class SnippetsCollection(object):
 
 class SnippetsLoader(object):
     def __init__(self, dirname):
-        self._ext = u'.tpl'
         self._snippets = SnippetsCollection(None)
         self._findSnippets(self._snippets, dirname)
 
@@ -50,7 +51,7 @@ class SnippetsLoader(object):
                 subdir = SnippetsCollection(fname)
                 self._findSnippets(subdir, fullname)
                 snippets.addDir(subdir)
-            elif fullname.endswith(self._ext):
+            elif fullname.endswith(EXTENSION):
                 snippets.addSnippet(fullname)
 
     def getSnippets(self):

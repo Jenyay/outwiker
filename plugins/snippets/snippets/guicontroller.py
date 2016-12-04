@@ -100,7 +100,7 @@ class GuiController(object):
     def _buildTree(self, snippets_tree, menu):
         # Create menu items
         for snippet in sorted(snippets_tree.snippets):
-            name = os.path.basename(snippet)[:-4]
+            name = os.path.basename(snippet)[:-len(defines.EXTENSION)]
             menu_item_id = wx.Window.NewControlId()
             menu_item = menu.Append(menu_item_id, name)
 
