@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 import os
+import shutil
 
 import wx
 
@@ -223,7 +224,7 @@ class EditSnippetsDialogController(object):
         self.snippetsTree.Bind(wx.EVT_TREE_SEL_CHANGED,
                                handler=self._onTreeItemClick)
         self.snippetsTree.Bind(wx.EVT_TREE_END_LABEL_EDIT,
-                               handler=self._onRename)
+                               handler=self._onRenameEnd)
         self.snippetsTree.Bind(wx.EVT_TREE_BEGIN_LABEL_EDIT,
                                handler=self._onRenameBegin)
 
@@ -264,7 +265,52 @@ class EditSnippetsDialogController(object):
         return self._dialog.snippetsTree
 
     def _onRemove(self, event):
-        pass
+        item = self.snippetsTree.GetSelection()
+        if self._isRootItem(item):
+            return
+
+        if self._isDirItem(item):
+            self._removeDir(item)
+        else:
+            self._removeSnippet(item)
+
+    def _removeDir(self, item):
+        parentItem = self.snippetsTree.GetItemParent(item)
+        path = self._getItemData(item).path
+        path_base = os.path.basename(path)
+        result = MessageBox(_(u'Remove directory "{}" and all snippets inside?').format(path_base),
+                            _(u"Remove snippets directory"),
+                            wx.YES | wx.NO | wx.ICON_QUESTION)
+        if result == wx.YES:
+            try:
+                shutil.rmtree(path)
+                self.snippetsTree.Delete(item)
+                self.snippetsTree.SelectItem(parentItem)
+                self._application.actionController.getAction(UpdateMenuAction.stringId).run(None)
+            except EnvironmentError:
+                MessageBox(
+                    _(u'Can\'t remove directory "{}"').format(path_base),
+                    _(u"Error"),
+                    wx.ICON_ERROR | wx.OK)
+
+    def _removeSnippet(self, item):
+        parentItem = self.snippetsTree.GetItemParent(item)
+        path = self._getItemData(item).path
+        path_base = os.path.basename(path)[:-len(defines.EXTENSION)]
+        result = MessageBox(_(u'Remove snippet "{}"?').format(path_base),
+                            _(u"Remove snippet"),
+                            wx.YES | wx.NO | wx.ICON_QUESTION)
+        if result == wx.YES:
+            try:
+                os.remove(path)
+                self.snippetsTree.Delete(item)
+                self.snippetsTree.SelectItem(parentItem)
+                self._application.actionController.getAction(UpdateMenuAction.stringId).run(None)
+            except EnvironmentError:
+                MessageBox(
+                    _(u'Can\'t remove snippet "{}"').format(path_base),
+                    _(u"Error"),
+                    wx.ICON_ERROR | wx.OK)
 
     def _onAddGroup(self, event):
         '''
@@ -311,7 +357,7 @@ class EditSnippetsDialogController(object):
         path = self._getItemData(treeItem).path
         return os.path.isdir(path)
 
-    def _onRename(self, event):
+    def _onRenameEnd(self, event):
         '''
         Rename button event handler
         '''
@@ -342,7 +388,7 @@ class EditSnippetsDialogController(object):
             os.rename(oldpath, newpath)
         except EnvironmentError:
             event.Veto()
-        self._application.actionController.getAction(UpdateMenuAction.stringId).run(None)
+            self._application.actionController.getAction(UpdateMenuAction.stringId).run(None)
 
     def _onTreeItemClick(self, event):
         item = event.GetItem()
@@ -388,7 +434,7 @@ class EditSnippetsDialogController(object):
             suffix = u' ({})'.format(index)
             result = path + suffix
             index += 1
-        return result
+            return result
 
     def _getItemData(self, item):
         if not item.IsOk():
