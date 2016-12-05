@@ -434,7 +434,8 @@ class EditSnippetsDialogController(object):
             suffix = u' ({})'.format(index)
             result = path + suffix
             index += 1
-            return result
+
+        return result
 
     def _getItemData(self, item):
         if not item.IsOk():
