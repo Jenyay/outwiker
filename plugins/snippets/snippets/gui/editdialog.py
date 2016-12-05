@@ -357,6 +357,13 @@ class EditSnippetsDialogController(object):
         path = self._getItemData(treeItem).path
         return os.path.isdir(path)
 
+    def _checkName(self, label):
+        return (label != u'..' and
+                label != u'.' and
+                len(label) != 0 and
+                u'/' not in label and
+                u'\\' not in label)
+
     def _onRenameEnd(self, event):
         '''
         Rename button event handler
@@ -370,6 +377,10 @@ class EditSnippetsDialogController(object):
         assert selectedItem is not None
         oldpath = selectedItem.path
         isdir = os.path.isdir(oldpath)
+
+        if not self._checkName(newlabel):
+            event.Veto()
+            return
 
         if isdir:
             # Rename directory
