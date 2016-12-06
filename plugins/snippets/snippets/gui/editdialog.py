@@ -172,7 +172,8 @@ class EditSnippetsDialog(TestedDialog):
         self._snippetPanel = wx.Panel(self)
 
         # Snippet editor
-        self.snippetEditor = SnippetEditor(self._snippetPanel, self._application)
+        self.snippetEditor = SnippetEditor(self._snippetPanel,
+                                           self._application)
 
         # Buttons for snippet
         snippetButtonsSizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -218,6 +219,8 @@ class EditSnippetsDialogController(object):
 
     def _bind(self):
         self._dialog.addGroupBtn.Bind(wx.EVT_BUTTON, handler=self._onAddGroup)
+        self._dialog.addSnippetBtn.Bind(wx.EVT_BUTTON,
+                                        handler=self._onAddSnippet)
         self._dialog.removeBtn.Bind(wx.EVT_BUTTON, handler=self._onRemove)
         self._dialog.renameBtn.Bind(wx.EVT_BUTTON, handler=self._onRenameClick)
 
@@ -251,7 +254,8 @@ class EditSnippetsDialogController(object):
 
     def _buildSnippetsTree(self, parentItemId, snippetsCollection, selectedPath):
         # Append snippet directories
-        for subcollection in sorted(snippetsCollection.dirs, key=lambda x: x.name):
+        for subcollection in sorted(snippetsCollection.dirs,
+                                    key=lambda x: x.name):
             name = subcollection.name
             path = os.path.join(snippetsCollection.path, name)
             data = TreeItemInfo(path)
@@ -266,7 +270,10 @@ class EditSnippetsDialogController(object):
         for snippet in sorted(snippetsCollection.snippets):
             name = os.path.basename(snippet)[:-len(defines.EXTENSION)]
             data = TreeItemInfo(snippet)
-            snippetItem = self._dialog.appendSnippetTreeItem(parentItemId, name, data)
+            snippetItem = self._dialog.appendSnippetTreeItem(
+                parentItemId,
+                name,
+                data)
             if selectedPath == snippet:
                 self.snippetsTree.SelectItem(snippetItem)
 
@@ -343,26 +350,16 @@ class EditSnippetsDialogController(object):
 
         try:
             os.mkdir(newpath)
-            self._addChildDir(newpath)
+            snippets_tree = self._loadSnippetsTree()
+            self._fillSnippetsTree(snippets_tree, newpath)
+            newitem = self.snippetsTree.GetSelection()
+            self.snippetsTree.EditLabel(newitem)
             self._updateMenu()
         except EnvironmentError:
             MessageBox(
                 _(u"Can't create directory\n{}").format(newpath),
                 _(u"Error"),
                 wx.ICON_ERROR | wx.OK)
-
-    def _addChildDir(self, newpath):
-        item = self.snippetsTree.GetSelection()
-        assert item.IsOk()
-
-        if not self._isDirItem(item):
-            item = self.snippetsTree.GetItemParent(item)
-
-        name = os.path.basename(newpath)
-        data = TreeItemInfo(newpath)
-        newitem = self._dialog.appendDirTreeItem(item, name, data)
-        self.snippetsTree.SelectItem(newitem)
-        self.snippetsTree.EditLabel(newitem)
 
     def _isDirItem(self, treeItem):
         '''
@@ -459,12 +456,12 @@ class EditSnippetsDialogController(object):
                 _(u"Error"),
                 wx.ICON_ERROR | wx.OK)
 
-    def _findUniquePath(self, path):
+    def _findUniquePath(self, path, extension=u''):
         index = 1
         result = path
 
         while os.path.exists(result):
-            suffix = u' ({})'.format(index)
+            suffix = u' ({}){}'.format(index, extension)
             result = path + suffix
             index += 1
 
@@ -481,4 +478,36 @@ class EditSnippetsDialogController(object):
         return self._getItemData(item)
 
     def _updateMenu(self):
-        self._application.actionController.getAction(UpdateMenuAction.stringId).run(None)
+        '''
+        Update 'Snippets' menu in main menu.
+        '''
+        actionController = self._application.actionController
+        actionController.getAction(UpdateMenuAction.stringId).run(None)
+
+    def _onAddSnippet(self, event):
+        selectedItem = self._getSelectedItemData()
+        assert selectedItem is not None
+        rootdir = selectedItem.path
+
+        if not os.path.isdir(rootdir):
+            rootdir = os.path.dirname(rootdir)
+
+        # Find unique directory for snippets
+        newpath = self._findUniquePath(
+            os.path.join(rootdir,
+                         _(defines.NEW_SNIPPET_NAME) + defines.EXTENSION),
+            defines.EXTENSION)
+
+        try:
+            with open(newpath, 'w'):
+                pass
+            snippets_tree = self._loadSnippetsTree()
+            self._fillSnippetsTree(snippets_tree, newpath)
+            newitem = self.snippetsTree.GetSelection()
+            self.snippetsTree.EditLabel(newitem)
+            self._updateMenu()
+        except EnvironmentError:
+            MessageBox(
+                _(u"Can't create snippet\n{}").format(newpath),
+                _(u"Error"),
+                wx.ICON_ERROR | wx.OK)

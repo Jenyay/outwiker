@@ -14,4 +14,5 @@ VAR_DATE_CREATE = u'__crdate'
 VAR_DATE_EDIT = u'__eddate'
 
 NEW_DIR_NAME = _(u'snippets')
+NEW_SNIPPET_NAME = _(u'snippet')
 EXTENSION = u'.tpl'
