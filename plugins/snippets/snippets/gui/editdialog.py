@@ -9,7 +9,7 @@ from outwiker.gui.controls.safeimagelist import SafeImageList
 from outwiker.gui.testeddialog import TestedDialog
 from outwiker.core.commands import MessageBox
 from outwiker.core.system import getSpecialDirList
-from outwiker.utilites.textfile import readTextFile
+from outwiker.utilites.textfile import readTextFile, writeTextFile
 
 from snippets.actions.updatemenu import UpdateMenuAction
 from snippets.gui.snippeteditor import SnippetEditor
@@ -225,7 +225,9 @@ class EditSnippetsDialogController(object):
         self._dialog.renameBtn.Bind(wx.EVT_BUTTON, handler=self._onRenameClick)
 
         self.snippetsTree.Bind(wx.EVT_TREE_SEL_CHANGED,
-                               handler=self._onTreeItemClick)
+                               handler=self._onTreeItemChanged)
+        self.snippetsTree.Bind(wx.EVT_TREE_SEL_CHANGING,
+                               handler=self._onTreeItemChanging)
         self.snippetsTree.Bind(wx.EVT_TREE_END_LABEL_EDIT,
                                handler=self._onRenameEnd)
         self.snippetsTree.Bind(wx.EVT_TREE_BEGIN_LABEL_EDIT,
@@ -420,7 +422,7 @@ class EditSnippetsDialogController(object):
 
         self._updateMenu()
 
-    def _onTreeItemClick(self, event):
+    def _onTreeItemChanged(self, event):
         item = event.GetItem()
         info = self._getItemData(item)
         if os.path.isdir(info.path):
@@ -511,3 +513,18 @@ class EditSnippetsDialogController(object):
                 _(u"Can't create snippet\n{}").format(newpath),
                 _(u"Error"),
                 wx.ICON_ERROR | wx.OK)
+
+    def _onTreeItemChanging(self, event):
+        item = event.GetOldItem()
+        path = self._getItemData(item).path
+        if os.path.isdir(path):
+            return
+
+        try:
+            writeTextFile(path, self._dialog.snippetEditor.GetText())
+        except EnvironmentError:
+            MessageBox(
+                _(u"Can't save snippet\n{}").format(path),
+                _(u"Error"),
+                wx.ICON_ERROR | wx.OK)
+            event.Veto()
