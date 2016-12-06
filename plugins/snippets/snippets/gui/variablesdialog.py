@@ -130,8 +130,8 @@ class VariablesDialogController(object):
         map(lambda var: self._dialog.addStringVariable(var), variables)
 
         # Show dialog if user must enter variable's values
+        self._updateResult()
         if variables:
-            self._updateResult()
             self._dialog.Show()
         else:
             self._finishDialog()
