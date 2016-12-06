@@ -229,36 +229,46 @@ class EditSnippetsDialogController(object):
                                handler=self._onRenameBegin)
 
     def ShowDialog(self):
+        snippets_tree = self._loadSnippetsTree()
+        self._fillSnippetsTree(snippets_tree, snippets_tree.path)
+        self._dialog.Show()
+
+    def _loadSnippetsTree(self):
         rootdir = getSpecialDirList(defines.SNIPPETS_DIR)[-1]
         sl = SnippetsLoader(rootdir)
         snippets_tree = sl.getSnippets()
-        self._fillSnippetsTree(rootdir, snippets_tree)
-        self._dialog.Show()
+        return snippets_tree
 
-    def _fillSnippetsTree(self, rootdir, snippetsCollection):
+    def _fillSnippetsTree(self, snippetsCollection, selectedPath):
         self.snippetsTree.DeleteAllItems()
-        info = TreeItemInfo(rootdir, True)
+        info = TreeItemInfo(snippetsCollection.path, True)
         rootId = self._dialog.appendDirTreeItem(None, _(u'Snippets'), info)
-        self._buildSnippetsTree(rootId, snippetsCollection, rootdir)
+        self._buildSnippetsTree(rootId, snippetsCollection, selectedPath)
         self.snippetsTree.ExpandAll()
-        self.snippetsTree.SelectItem(rootId)
 
-    def _buildSnippetsTree(self, parentItemId, snippetsCollection, rootdir):
+        if selectedPath == snippetsCollection.path:
+            self.snippetsTree.SelectItem(rootId)
+
+    def _buildSnippetsTree(self, parentItemId, snippetsCollection, selectedPath):
         # Append snippet directories
         for subcollection in sorted(snippetsCollection.dirs, key=lambda x: x.name):
             name = subcollection.name
-            path = os.path.join(rootdir, name)
+            path = os.path.join(snippetsCollection.path, name)
             data = TreeItemInfo(path)
             dirItemId = self._dialog.appendDirTreeItem(parentItemId,
                                                        name,
                                                        data)
-            self._buildSnippetsTree(dirItemId, subcollection, path)
+            self._buildSnippetsTree(dirItemId, subcollection, selectedPath)
+            if selectedPath == path:
+                self.snippetsTree.SelectItem(dirItemId)
 
         # Append snippets
         for snippet in sorted(snippetsCollection.snippets):
             name = os.path.basename(snippet)[:-len(defines.EXTENSION)]
             data = TreeItemInfo(snippet)
-            self._dialog.appendSnippetTreeItem(parentItemId, name, data)
+            snippetItem = self._dialog.appendSnippetTreeItem(parentItemId, name, data)
+            if selectedPath == snippet:
+                self.snippetsTree.SelectItem(snippetItem)
 
     @property
     def snippetsTree(self):
@@ -276,6 +286,8 @@ class EditSnippetsDialogController(object):
 
     def _removeDir(self, item):
         parentItem = self.snippetsTree.GetItemParent(item)
+        parent_path = self._getItemData(parentItem).path
+
         path = self._getItemData(item).path
         path_base = os.path.basename(path)
         result = MessageBox(_(u'Remove directory "{}" and all snippets inside?').format(path_base),
@@ -284,9 +296,9 @@ class EditSnippetsDialogController(object):
         if result == wx.YES:
             try:
                 shutil.rmtree(path)
-                self.snippetsTree.Delete(item)
-                self.snippetsTree.SelectItem(parentItem)
-                self._application.actionController.getAction(UpdateMenuAction.stringId).run(None)
+                snippets_tree = self._loadSnippetsTree()
+                self._fillSnippetsTree(snippets_tree, parent_path)
+                self._updateMenu()
             except EnvironmentError:
                 MessageBox(
                     _(u'Can\'t remove directory "{}"').format(path_base),
@@ -295,6 +307,7 @@ class EditSnippetsDialogController(object):
 
     def _removeSnippet(self, item):
         parentItem = self.snippetsTree.GetItemParent(item)
+        parent_path = self._getItemData(parentItem).path
         path = self._getItemData(item).path
         path_base = os.path.basename(path)[:-len(defines.EXTENSION)]
         result = MessageBox(_(u'Remove snippet "{}"?').format(path_base),
@@ -303,9 +316,9 @@ class EditSnippetsDialogController(object):
         if result == wx.YES:
             try:
                 os.remove(path)
-                self.snippetsTree.Delete(item)
-                self.snippetsTree.SelectItem(parentItem)
-                self._application.actionController.getAction(UpdateMenuAction.stringId).run(None)
+                snippets_tree = self._loadSnippetsTree()
+                self._fillSnippetsTree(snippets_tree, parent_path)
+                self._updateMenu()
             except EnvironmentError:
                 MessageBox(
                     _(u'Can\'t remove snippet "{}"').format(path_base),
@@ -331,6 +344,7 @@ class EditSnippetsDialogController(object):
         try:
             os.mkdir(newpath)
             self._addChildDir(newpath)
+            self._updateMenu()
         except EnvironmentError:
             MessageBox(
                 _(u"Can't create directory\n{}").format(newpath),
@@ -397,9 +411,17 @@ class EditSnippetsDialogController(object):
         try:
             self._getItemData(item).path = newpath
             os.rename(oldpath, newpath)
-        except EnvironmentError:
+            if isdir:
+                self.snippetsTree.DeleteChildren(item)
+                sl = SnippetsLoader(newpath)
+                snippets_tree = sl.getSnippets()
+                self._buildSnippetsTree(item, snippets_tree, newpath)
+                self.snippetsTree.ExpandAll()
+        except EnvironmentError as e:
+            print(e)
             event.Veto()
-            self._application.actionController.getAction(UpdateMenuAction.stringId).run(None)
+
+        self._updateMenu()
 
     def _onTreeItemClick(self, event):
         item = event.GetItem()
@@ -457,3 +479,6 @@ class EditSnippetsDialogController(object):
     def _getSelectedItemData(self):
         item = self.snippetsTree.GetSelection()
         return self._getItemData(item)
+
+    def _updateMenu(self):
+        self._application.actionController.getAction(UpdateMenuAction.stringId).run(None)

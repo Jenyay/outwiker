@@ -6,13 +6,13 @@ from snippets.defines import EXTENSION
 
 
 class SnippetsCollection(object):
-    def __init__(self, name):
+    def __init__(self, path):
         # List of SnippetsCollection
         self._dirs = []
 
         # List of paths
         self._snippets = []
-        self._name = name
+        self._path = path
 
     @property
     def dirs(self):
@@ -24,7 +24,11 @@ class SnippetsCollection(object):
 
     @property
     def name(self):
-        return self._name
+        return os.path.basename(self._path)
+
+    @property
+    def path(self):
+        return self._path
 
     def addSnippet(self, fname):
         self._snippets.append(fname)
@@ -38,8 +42,9 @@ class SnippetsCollection(object):
 
 class SnippetsLoader(object):
     def __init__(self, dirname):
-        self._snippets = SnippetsCollection(None)
+        self._snippets = SnippetsCollection(dirname)
         self._findSnippets(self._snippets, dirname)
+        self.rootdir = dirname
 
     def _findSnippets(self, snippets, dirname):
         if not os.path.exists(dirname):
@@ -48,7 +53,7 @@ class SnippetsLoader(object):
         for fname in os.listdir(dirname):
             fullname = os.path.join(dirname, fname)
             if os.path.isdir(fullname):
-                subdir = SnippetsCollection(fname)
+                subdir = SnippetsCollection(fullname)
                 self._findSnippets(subdir, fullname)
                 snippets.addDir(subdir)
             elif fullname.endswith(EXTENSION):
