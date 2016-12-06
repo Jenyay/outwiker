@@ -61,6 +61,7 @@ class EditSnippetsDialog(TestedDialog):
         self.disableSnippetEditor()
 
     def disableSnippetEditor(self):
+        self.snippetEditor.SetText(u'')
         self._snippetPanel.Disable()
 
     def enableSnippetEditor(self):
@@ -190,6 +191,12 @@ class EditSnippetsDialog(TestedDialog):
         self._snippetPanel.SetSizer(snippetSizer)
         mainSizer.Add(self._snippetPanel, 1, wx.ALL | wx.EXPAND, border=2)
 
+    def _createBottomButtons(self, mainSizer):
+        mainSizer.AddStretchSpacer()
+        self.closeBtn = wx.Button(self, id=wx.ID_CLOSE)
+        mainSizer.Add(self.closeBtn, flag=wx.ALL | wx.ALIGN_RIGHT, border=2)
+        self.SetEscapeId(wx.ID_CLOSE)
+
     def _createGUI(self):
         # Main Sizer
         mainSizer = wx.FlexGridSizer(cols=2)
@@ -199,6 +206,7 @@ class EditSnippetsDialog(TestedDialog):
 
         self._createTreePanel(mainSizer)
         self._createSnippetPanel(mainSizer)
+        self._createBottomButtons(mainSizer)
 
         self.SetSizer(mainSizer)
         self.SetClientSize((self._width, self._height))
@@ -218,6 +226,8 @@ class EditSnippetsDialogController(object):
         self._bind()
 
     def _bind(self):
+        self._dialog.Bind(wx.EVT_CLOSE, handler=self._onClose)
+        self._dialog.closeBtn.Bind(wx.EVT_BUTTON, handler=self._onCloseBtn)
         self._dialog.addGroupBtn.Bind(wx.EVT_BUTTON, handler=self._onAddGroup)
         self._dialog.addSnippetBtn.Bind(wx.EVT_BUTTON,
                                         handler=self._onAddSnippet)
@@ -253,6 +263,7 @@ class EditSnippetsDialogController(object):
 
         if selectedPath == snippetsCollection.path:
             self.snippetsTree.SelectItem(rootId)
+            self._dialog.disableSnippetEditor()
 
     def _buildSnippetsTree(self, parentItemId, snippetsCollection, selectedPath):
         # Append snippet directories
@@ -514,12 +525,10 @@ class EditSnippetsDialogController(object):
                 _(u"Error"),
                 wx.ICON_ERROR | wx.OK)
 
-    def _onTreeItemChanging(self, event):
-        item = event.GetOldItem()
+    def _saveItemSnippet(self, item):
         path = self._getItemData(item).path
         if os.path.isdir(path):
             return
-
         try:
             writeTextFile(path, self._dialog.snippetEditor.GetText())
         except EnvironmentError:
@@ -527,4 +536,24 @@ class EditSnippetsDialogController(object):
                 _(u"Can't save snippet\n{}").format(path),
                 _(u"Error"),
                 wx.ICON_ERROR | wx.OK)
+            raise
+
+    def _onTreeItemChanging(self, event):
+        item = event.GetOldItem()
+        try:
+            self._saveItemSnippet(item)
+        except EnvironmentError:
             event.Veto()
+
+    def _onClose(self, event):
+        item = self.snippetsTree.GetSelection()
+        try:
+            self._saveItemSnippet(item)
+            self._dialog.Hide()
+            # event.Skip()
+        except EnvironmentError:
+            if event.CanVeto():
+                event.Veto()
+
+    def _onCloseBtn(self, event):
+        self._dialog.Close()
