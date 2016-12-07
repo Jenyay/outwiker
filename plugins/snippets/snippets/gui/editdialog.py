@@ -13,6 +13,7 @@ from outwiker.utilites.textfile import readTextFile, writeTextFile
 
 from snippets.actions.updatemenu import UpdateMenuAction
 from snippets.gui.snippeteditor import SnippetEditor
+from snippets.gui.popupbutton import PopupButton, EVT_POPUP_BUTTON_MENU_CLICK
 from snippets.i18n import get_
 from snippets.snippetsloader import SnippetsLoader
 from snippets.utils import getImagesPath
@@ -47,7 +48,6 @@ class EditSnippetsDialog(TestedDialog):
         self.ID_ADD_SNIPPET = wx.NewId()
         self.ID_REMOVE = wx.NewId()
         self.ID_RENAME = wx.NewId()
-        self.ID_INSERT_VARIABLE = wx.NewId()
 
         self._imagesPath = getImagesPath()
         self._dirImageId = None
@@ -55,6 +55,15 @@ class EditSnippetsDialog(TestedDialog):
 
         self.addGroupBtn = None
         self.addSnippetBtn = None
+
+        self._varMenuItems = [
+            (_(u'Selected text'), defines.VAR_SEL_TEXT),
+            (_(u'Page title'), defines.VAR_TITLE),
+            (_(u'Attachments path'), defines.VAR_ATTACH),
+            (_(u'Path to page'), defines.VAR_FOLDER),
+            (_(u'Page Id'), defines.VAR_PAGE_ID),
+            (_(u'Relative page path'), defines.VAR_SUBPATH),
+        ]
 
         self._createGUI()
         self.SetTitle(_(u'Snippets'))
@@ -161,11 +170,17 @@ class EditSnippetsDialog(TestedDialog):
 
     def _createSnippetButtons(self, snippetButtonsSizer, parent):
         # Insert variable
-        self.insertVariableBtn = wx.BitmapButton(
+        self.insertVariableBtn = PopupButton(
             parent,
-            id=self.ID_INSERT_VARIABLE,
-            bitmap=wx.Bitmap(os.path.join(self._imagesPath, "variables.png"))
+            bitmap=wx.Bitmap(os.path.join(self._imagesPath,
+                                          "variables-menu.png"))
         )
+
+        for menuitem in self._varMenuItems:
+            data = u'{{' + menuitem[1] + u'}}'
+            title = u'{var} - {title}'.format(var=data, title=menuitem[0])
+            self.insertVariableBtn.appendMenuItem(title, data)
+
         self.insertVariableBtn.SetToolTipString(_(u"Insert variable"))
         snippetButtonsSizer.Add(self.insertVariableBtn, flag=wx.ALL, border=0)
 
@@ -233,6 +248,8 @@ class EditSnippetsDialogController(object):
                                         handler=self._onAddSnippet)
         self._dialog.removeBtn.Bind(wx.EVT_BUTTON, handler=self._onRemove)
         self._dialog.renameBtn.Bind(wx.EVT_BUTTON, handler=self._onRenameClick)
+        self._dialog.insertVariableBtn.Bind(EVT_POPUP_BUTTON_MENU_CLICK,
+                                            handler=self._onInsertVariable)
 
         self.snippetsTree.Bind(wx.EVT_TREE_SEL_CHANGED,
                                handler=self._onTreeItemChanged)
@@ -557,3 +574,8 @@ class EditSnippetsDialogController(object):
 
     def _onCloseBtn(self, event):
         self._dialog.Close()
+
+    def _onInsertVariable(self, event):
+        text = event.data
+        self._dialog.snippetEditor.replaceText(text)
+        self._dialog.snippetEditor.SetFocus()

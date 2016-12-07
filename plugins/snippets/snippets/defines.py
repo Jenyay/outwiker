@@ -8,6 +8,7 @@ VAR_SUBPATH = u'__subpath'
 VAR_ATTACH = u'__attach'
 VAR_FOLDER = u'__folder'
 VAR_PAGE_ID = u'__pageid'
+
 VAR_COMMAND_CONTENT = u'__content'
 VAR_DATE = u'__date'
 VAR_DATE_CREATE = u'__crdate'
