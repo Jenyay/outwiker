@@ -156,7 +156,9 @@ class GuiController(object):
 
             selectedText = editor.GetSelectedText()
             try:
-                self._varDialogController.ShowDialog(selectedText, template)
+                self._varDialogController.ShowDialog(selectedText,
+                                                     template,
+                                                     os.path.dirname(snippet_fname))
             except TemplateError as e:
                 text = _(u'Template error at line {line}:\n{text}').format(
                     line=e.lineno,

@@ -108,7 +108,7 @@ class VariablesDialogController(object):
         self._parser = None
         self._selectedText = u''
 
-    def ShowDialog(self, selectedText, template):
+    def ShowDialog(self, selectedText, template, dirname):
         if self._application.selectedPage is None:
             return
 
@@ -119,7 +119,7 @@ class VariablesDialogController(object):
             self._dialog.Bind(EVT_VAR_CHANGE, handler=self._onVarChange)
 
         self._selectedText = selectedText
-        self._parser = SnippetParser(template, self._application)
+        self._parser = SnippetParser(template, dirname, self._application)
 
         # Get non builtin variables
         variables = sorted([var for var
