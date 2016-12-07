@@ -1,6 +1,9 @@
 # -*- coding: UTF-8 -*-
 
+import os
+
 from outwiker.core.attachment import Attachment
+from outwiker.utilites.textfile import readTextFile
 
 from jinja2 import Environment, meta, FileSystemLoader
 import snippets.defines as defines
@@ -22,9 +25,21 @@ class SnippetParser(object):
         return result
 
     def getVariables(self):
-        ast = self._jinja_env.parse(self._template)
-        variables = meta.find_undeclared_variables(ast)
+        variables = set()
+        self._getVariables(self._template, variables)
         return variables
+
+    def _getVariables(self, text, var_set):
+        ast = self._jinja_env.parse(text)
+        var_set.update(meta.find_undeclared_variables(ast))
+
+        for tpl_fname in meta.find_referenced_templates(ast):
+            fname = os.path.join(self._dirname, tpl_fname)
+            try:
+                text = readTextFile(fname)
+                self._getVariables(text, var_set)
+            except EnvironmentError:
+                pass
 
     def _getGlobalVariables(self, selectedText, page):
         assert page is not None
