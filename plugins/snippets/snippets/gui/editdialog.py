@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 
+import re
 import os
 import shutil
 
@@ -180,6 +181,8 @@ class EditSnippetsDialog(TestedDialog):
             data = u'{{' + menuitem[1] + u'}}'
             title = u'{var} - {title}'.format(var=data, title=menuitem[0])
             self.insertVariableBtn.appendMenuItem(title, data)
+
+        self.insertVariableBtn.appendMenuItem(_(u'Other variable...'), None)
 
         self.insertVariableBtn.SetToolTipString(_(u"Insert variable"))
         snippetButtonsSizer.Add(self.insertVariableBtn, flag=wx.ALL, border=0)
@@ -570,7 +573,6 @@ class EditSnippetsDialogController(object):
         try:
             self._saveItemSnippet(item)
             self._dialog.Hide()
-            # event.Skip()
         except EnvironmentError:
             if event.CanVeto():
                 event.Veto()
@@ -580,5 +582,31 @@ class EditSnippetsDialogController(object):
 
     def _onInsertVariable(self, event):
         text = event.data
+        if text is None:
+            with wx.TextEntryDialog(self._dialog,
+                                    _(u'Enter variable name (numbers, English leters and _ only)'),
+                                    _(u'Variable name'),
+                                    u'varname') as dlg:
+                name_ok = False
+                while not name_ok:
+                    result = dlg.ShowModal()
+                    if result != wx.ID_OK:
+                        return
+                    text = dlg.GetValue()
+                    name_ok = self._checkVarName(text)
+                    if not name_ok:
+                        MessageBox(
+                            _(u'Invalid variable name "{}"').format(text),
+                            _(u"Error"),
+                            wx.ICON_ERROR | wx.OK)
+                    text = u'{{' + text + u'}}'
+
         self._dialog.snippetEditor.replaceText(text)
         self._dialog.snippetEditor.SetFocus()
+
+    def _checkVarName(self, name):
+        regex = re.compile('[a-zA-Z][a-zA-Z0-9_]*$')
+        result = (name is not None and
+                  len(name) > 0 and
+                  regex.match(name) is not None)
+        return result
