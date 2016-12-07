@@ -543,6 +543,9 @@ class EditSnippetsDialogController(object):
                 wx.ICON_ERROR | wx.OK)
 
     def _saveItemSnippet(self, item):
+        if not item.IsOk():
+            return
+
         path = self._getItemData(item).path
         if os.path.isdir(path):
             return
