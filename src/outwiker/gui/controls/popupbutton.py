@@ -35,8 +35,7 @@ class PopupButton(wx.Panel):
         self.Fit()
 
     def _onButtonClick(self, event):
-        rect = self.GetRect()
-        self.PopupMenu(self._menu, rect.GetBottomLeft())
+        self.PopupMenu(self._menu, (0, self._button.GetSize()[1]))
 
     def _onMenuClick(self, event):
         item_id = event.GetId()
