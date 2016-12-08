@@ -47,7 +47,7 @@ class SnippetParserTest(unittest.TestCase):
         right_variables = set()
 
         page = self.testPage
-        parser = SnippetParser(template, self._application)
+        parser = SnippetParser(template, u'.', self._application)
         result = parser.process(selectedText, page, **vars)
         variables = parser.getVariables()
 
@@ -64,7 +64,7 @@ class SnippetParserTest(unittest.TestCase):
         right_variables = set()
 
         page = self.testPage
-        parser = SnippetParser(template, self._application)
+        parser = SnippetParser(template, u'.', self._application)
         result = parser.process(selectedText, page, **vars)
         variables = parser.getVariables()
 
@@ -81,7 +81,7 @@ class SnippetParserTest(unittest.TestCase):
         right_variables = {u'varname'}
 
         page = self.testPage
-        parser = SnippetParser(template, self._application)
+        parser = SnippetParser(template, u'.', self._application)
         result = parser.process(selectedText, page, **vars)
         variables = parser.getVariables()
 
@@ -97,7 +97,7 @@ class SnippetParserTest(unittest.TestCase):
 
         right_result = page.title
 
-        parser = SnippetParser(template, self._application)
+        parser = SnippetParser(template, u'.', self._application)
         result = parser.process(selectedText, page, **vars)
 
         self.assertEqual(result, right_result)
@@ -111,7 +111,7 @@ class SnippetParserTest(unittest.TestCase):
 
         right_result = u'Проверка'
 
-        parser = SnippetParser(template, self._application)
+        parser = SnippetParser(template, u'.', self._application)
         result = parser.process(selectedText, page, **vars)
 
         self.assertEqual(result, right_result)
@@ -125,7 +125,7 @@ class SnippetParserTest(unittest.TestCase):
 
         right_result = page.subpath
 
-        parser = SnippetParser(template, self._application)
+        parser = SnippetParser(template, u'.', self._application)
         result = parser.process(selectedText, page, **vars)
 
         self.assertEqual(result, right_result)
@@ -139,7 +139,7 @@ class SnippetParserTest(unittest.TestCase):
 
         right_result = Attachment(page).getAttachPath(False)
 
-        parser = SnippetParser(template, self._application)
+        parser = SnippetParser(template, u'.', self._application)
         result = parser.process(selectedText, page, **vars)
 
         self.assertEqual(result, right_result)
@@ -154,7 +154,7 @@ class SnippetParserTest(unittest.TestCase):
 
         right_result = page.path
 
-        parser = SnippetParser(template, self._application)
+        parser = SnippetParser(template, u'.', self._application)
         result = parser.process(selectedText, page, **vars)
 
         self.assertEqual(result, right_result)
@@ -168,7 +168,7 @@ class SnippetParserTest(unittest.TestCase):
 
         right_result = self._application.pageUidDepot.createUid(page)
 
-        parser = SnippetParser(template, self._application)
+        parser = SnippetParser(template, u'.', self._application)
         result = parser.process(selectedText, page, **vars)
 
         self.assertEqual(result, right_result)
@@ -181,7 +181,7 @@ class SnippetParserTest(unittest.TestCase):
         vars = {u'переменная': u'Проверка 123'}
 
         page = self.testPage
-        parser = SnippetParser(template, self._application)
+        parser = SnippetParser(template, u'.', self._application)
 
         self.assertRaises(TemplateError,
                           parser.process,
@@ -194,6 +194,6 @@ class SnippetParserTest(unittest.TestCase):
         from snippets.libs.jinja2 import TemplateError
         template = u'Переменная = {{переменная}}'
 
-        parser = SnippetParser(template, self._application)
+        parser = SnippetParser(template, u'.', self._application)
 
         self.assertRaises(TemplateError, parser.getVariables)

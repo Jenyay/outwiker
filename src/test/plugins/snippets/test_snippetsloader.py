@@ -30,17 +30,17 @@ class SnippetsLoaderTest(unittest.TestCase):
         loader = SnippetsLoader(self._dir_snippets)
         snippets = loader.getSnippets()
 
-        self.assertEqual(snippets.name, None)
+        self.assertEqual(snippets.name, os.path.basename(self._dir_snippets))
         self.assertEqual(len(snippets), 0)
         self.assertEqual(snippets.dirs, [])
         self.assertEqual(snippets.snippets, [])
 
     def test_empty_02_invalid(self):
         from snippets.snippetsloader import SnippetsLoader
-        loader = SnippetsLoader('Invalid dir')
+        loader = SnippetsLoader(u'Invalid dir')
         snippets = loader.getSnippets()
 
-        self.assertEqual(snippets.name, None)
+        self.assertEqual(snippets.name, u'Invalid dir')
         self.assertEqual(len(snippets), 0)
         self.assertEqual(snippets.dirs, [])
         self.assertEqual(snippets.snippets, [])
