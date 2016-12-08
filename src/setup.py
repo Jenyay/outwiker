@@ -46,6 +46,7 @@ class BaseBuilder (object):
                 'urllib2',
                 'outwiker.pages.wiki.wikipanel',
                 'outwiker.gui.htmlrenderfactory',
+                'outwiker.gui.controls.popupbutton',
                 'PIL.Image',
                 'PIL.ImageDraw',
                 'PIL.ImageFont',
