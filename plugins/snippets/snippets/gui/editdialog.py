@@ -68,7 +68,7 @@ class EditSnippetsDialog(TestedDialog):
 
         self._blocksMenuItems = [
             (_('{% if %}'), (u'{% if %}', '{% endif %}')),
-            (_('{% include %}'), (u'', u'{% include %}')),
+            (_('{% include %}'), (u"{% include '", u"' %}")),
         ]
 
         self._createGUI()
@@ -270,6 +270,8 @@ class EditSnippetsDialogController(object):
         self._dialog.renameBtn.Bind(wx.EVT_BUTTON, handler=self._onRenameClick)
         self._dialog.insertVariableBtn.Bind(EVT_POPUP_BUTTON_MENU_CLICK,
                                             handler=self._onInsertVariable)
+        self._dialog.insertBlockBtn.Bind(EVT_POPUP_BUTTON_MENU_CLICK,
+                                         handler=self._onInsertBlock)
 
         self.snippetsTree.Bind(wx.EVT_TREE_SEL_CHANGED,
                                handler=self._onTreeItemChanged)
@@ -596,6 +598,12 @@ class EditSnippetsDialogController(object):
 
     def _onCloseBtn(self, event):
         self._dialog.Close()
+
+    def _onInsertBlock(self, event):
+        text_left = event.data[0]
+        text_right = event.data[1]
+        self._dialog.snippetEditor.turnText(text_left, text_right)
+        self._dialog.snippetEditor.SetFocus()
 
     def _onInsertVariable(self, event):
         text = event.data
