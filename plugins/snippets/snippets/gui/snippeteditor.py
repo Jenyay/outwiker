@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.gui.texteditor import TextEditor
+from outwiker.gui.texteditor import TextEditorBase
 
 
-class SnippetEditor(TextEditor):
-    def __init__(self, parent, application):
-        self._application = application
+class SnippetEditor(TextEditorBase):
+    def __init__(self, parent):
         super(SnippetEditor, self).__init__(parent)

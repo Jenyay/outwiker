@@ -31,7 +31,7 @@ class EditSnippetsDialog(TestedDialog):
     '''
     Dialog to create, edit and remove snippets and folders.
     '''
-    def __init__(self, parent, application):
+    def __init__(self, parent):
         super(EditSnippetsDialog, self).__init__(
             parent,
             style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER
@@ -39,7 +39,6 @@ class EditSnippetsDialog(TestedDialog):
         global _
         _ = get_()
 
-        self._application = application
         self._width = 800
         self._height = 500
         self.ICON_WIDTH = 16
@@ -191,8 +190,7 @@ class EditSnippetsDialog(TestedDialog):
         self._snippetPanel = wx.Panel(self)
 
         # Snippet editor
-        self.snippetEditor = SnippetEditor(self._snippetPanel,
-                                           self._application)
+        self.snippetEditor = SnippetEditor(self._snippetPanel)
 
         # Buttons for snippet
         snippetButtonsSizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -239,8 +237,7 @@ class EditSnippetsDialogController(object):
         global _
         _ = get_()
         self._application = application
-        self._dialog = EditSnippetsDialog(self._application.mainWindow,
-                                          self._application)
+        self._dialog = EditSnippetsDialog(self._application.mainWindow)
         self._bind()
 
     def _bind(self):

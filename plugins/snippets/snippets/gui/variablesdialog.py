@@ -23,7 +23,7 @@ class VariablesDialog(TestedDialog):
     '''
     Dialog to enter variables and preview result
     '''
-    def __init__(self, parent, application):
+    def __init__(self, parent):
         super(VariablesDialog, self).__init__(
             parent,
             style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER
@@ -31,7 +31,6 @@ class VariablesDialog(TestedDialog):
         global _
         _ = get_()
 
-        self._application = application
         self._width = 700
         self._height = 400
         self._createGUI()
@@ -45,7 +44,7 @@ class VariablesDialog(TestedDialog):
         self._notebook = wx.Notebook(self)
 
         # Snippet panel
-        self._snippetEditor = SnippetEditor(self._notebook, self._application)
+        self._snippetEditor = SnippetEditor(self._notebook)
         self._notebook.AddPage(self._snippetEditor, _(u'Snippet'))
 
         # Result panel
@@ -113,8 +112,7 @@ class VariablesDialogController(object):
             return
 
         if self._dialog is None:
-            self._dialog = VariablesDialog(self._application.mainWindow,
-                                           self._application)
+            self._dialog = VariablesDialog(self._application.mainWindow)
             self._dialog.ok_button.Bind(wx.EVT_BUTTON, handler=self._onOk)
             self._dialog.Bind(EVT_VAR_CHANGE, handler=self._onVarChange)
 
