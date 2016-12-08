@@ -66,6 +66,11 @@ class EditSnippetsDialog(TestedDialog):
             (_(u'Relative page path'), defines.VAR_SUBPATH),
         ]
 
+        self._blocksMenuItems = [
+            (_('{% if %}'), (u'{% if %}', '{% endif %}')),
+            (_('{% include %}'), (u'', u'{% include %}')),
+        ]
+
         self._createGUI()
         self.SetTitle(_(u'Snippets'))
         self.disableSnippetEditor()
@@ -176,6 +181,7 @@ class EditSnippetsDialog(TestedDialog):
             bitmap=wx.Bitmap(os.path.join(self._imagesPath,
                                           "variables-menu.png"))
         )
+        self.insertVariableBtn.SetToolTipString(_(u"Insert variable"))
 
         for menuitem in self._varMenuItems:
             data = u'{{' + menuitem[1] + u'}}'
@@ -184,8 +190,21 @@ class EditSnippetsDialog(TestedDialog):
 
         self.insertVariableBtn.appendMenuItem(_(u'Other variable...'), None)
 
-        self.insertVariableBtn.SetToolTipString(_(u"Insert variable"))
         snippetButtonsSizer.Add(self.insertVariableBtn, flag=wx.ALL, border=0)
+
+        # Insert block
+        self.insertBlockBtn = PopupButton(
+            parent,
+            bitmap=wx.Bitmap(os.path.join(self._imagesPath, "block-menu.png"))
+        )
+        self.insertBlockBtn.SetToolTipString(_(u"Insert block"))
+
+        for menuitem in self._blocksMenuItems:
+            data = menuitem[1]
+            title = menuitem[0]
+            self.insertBlockBtn.appendMenuItem(title, data)
+
+        snippetButtonsSizer.Add(self.insertBlockBtn, flag=wx.ALL, border=0)
 
     def _createSnippetPanel(self, mainSizer):
         self._snippetPanel = wx.Panel(self)
