@@ -6,6 +6,8 @@ import shutil
 
 import wx
 
+from outwiker.gui.controls.popupbutton import (PopupButton,
+                                               EVT_POPUP_BUTTON_MENU_CLICK)
 from outwiker.gui.controls.safeimagelist import SafeImageList
 from outwiker.gui.testeddialog import TestedDialog
 from outwiker.core.commands import MessageBox
@@ -14,7 +16,6 @@ from outwiker.utilites.textfile import readTextFile, writeTextFile
 
 from snippets.actions.updatemenu import UpdateMenuAction
 from snippets.gui.snippeteditor import SnippetEditor
-from snippets.gui.popupbutton import PopupButton, EVT_POPUP_BUTTON_MENU_CLICK
 from snippets.i18n import get_
 from snippets.snippetsloader import SnippetsLoader
 from snippets.utils import getImagesPath

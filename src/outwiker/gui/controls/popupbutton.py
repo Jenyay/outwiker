@@ -7,7 +7,7 @@ from wx.lib.newevent import NewEvent
 PopupButtonMenuClick, EVT_POPUP_BUTTON_MENU_CLICK = NewEvent()
 
 
-# Added in outwiker.gui 1.4
+# Added in outwiker.gui 1.3
 class PopupButton(wx.Panel):
     def __init__(self, parent, bitmap):
         super(PopupButton, self).__init__(parent)
