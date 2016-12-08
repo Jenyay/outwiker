@@ -88,6 +88,65 @@ class SnippetParserTest(unittest.TestCase):
         self.assertEqual(result, right_result)
         self.assertEqual(variables, right_variables)
 
+    def test_vars_02(self):
+        from snippets.snippetparser import SnippetParser
+        template = u'{{varname}}'
+        selectedText = u''
+        vars = {
+            u'varname': u'Проверка 123',
+            u'varname_2': u'Абырвалг',
+        }
+
+        right_result = u'Проверка 123'
+        right_variables = {u'varname'}
+
+        page = self.testPage
+        parser = SnippetParser(template, u'.', self._application)
+        result = parser.process(selectedText, page, **vars)
+        variables = parser.getVariables()
+
+        self.assertEqual(result, right_result)
+        self.assertEqual(variables, right_variables)
+
+    def test_vars_03(self):
+        from snippets.snippetparser import SnippetParser
+        template = u'Проверка: {{varname}}'
+        selectedText = u''
+        vars = {}
+
+        right_result = u'Проверка: '
+        right_variables = {u'varname'}
+
+        page = self.testPage
+        parser = SnippetParser(template, u'.', self._application)
+        result = parser.process(selectedText, page, **vars)
+        variables = parser.getVariables()
+
+        self.assertEqual(result, right_result)
+        self.assertEqual(variables, right_variables)
+
+    def test_include_01(self):
+        from snippets.snippetparser import SnippetParser
+        template = u'{{varname}} {% include "included.tpl" %}'
+        selectedText = u''
+        vars = {
+            u'varname': u'Проверка 123',
+            u'var_inc': u'Абырвалг',
+        }
+
+        right_result = u'Проверка 123 Включенный шаблон Абырвалг'
+        right_variables = {u'varname', u'var_inc'}
+
+        page = self.testPage
+        parser = SnippetParser(template,
+                               u'../test/snippets',
+                               self._application)
+        result = parser.process(selectedText, page, **vars)
+        variables = parser.getVariables()
+
+        self.assertEqual(result, right_result)
+        self.assertEqual(variables, right_variables)
+
     def test_global_var_01(self):
         from snippets.snippetparser import SnippetParser
         page = self.testPage
