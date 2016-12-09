@@ -47,6 +47,7 @@ class TextEditorBase(wx.Panel):
         self.__createCoders()
         self._helper = TextEditorHelper()
         self._bind()
+        self._setDefaultSettings()
 
     def _bind(self):
         self.textCtrl.Bind(wx.EVT_KEY_DOWN, self.__onKeyDown)
@@ -74,6 +75,13 @@ class TextEditorBase(wx.Panel):
             self._searchPanel.Close()
 
         event.Skip()
+
+    def _setDefaultSettings(self):
+        self.textCtrl.SetEndAtLastLine(False)
+        self.textCtrl.StyleClearAll()
+        self.textCtrl.SetWrapMode(wx.stc.STC_WRAP_WORD)
+        self.textCtrl.SetWrapVisualFlags(wx.stc.STC_WRAPVISUALFLAG_END)
+        self.textCtrl.SetTabWidth(4)
 
     @property
     def searchPanel(self):
@@ -580,6 +588,7 @@ class TextEditor(TextEditorBase):
         """
         Установить стили и настройки по умолчанию в контрол StyledTextCtrl
         """
+        self._setDefaultSettings()
         self._spellChecker = self.getSpellChecker()
 
         size = self._config.fontSize.value
@@ -590,7 +599,6 @@ class TextEditor(TextEditorBase):
         backColor = self._config.backColor.value
 
         self.__showlinenumbers = self._config.lineNumbers.value
-        self.textCtrl.SetEndAtLastLine(False)
 
         self.textCtrl.StyleSetSize(wx.stc.STC_STYLE_DEFAULT, size)
         self.textCtrl.StyleSetFaceName(wx.stc.STC_STYLE_DEFAULT, faceName)
@@ -599,12 +607,8 @@ class TextEditor(TextEditorBase):
         self.textCtrl.StyleSetForeground(wx.stc.STC_STYLE_DEFAULT, fontColor)
         self.textCtrl.StyleSetBackground(wx.stc.STC_STYLE_DEFAULT, backColor)
 
-        self.textCtrl.StyleClearAll()
-
         self.textCtrl.SetCaretForeground(fontColor)
         self.textCtrl.SetCaretLineBack(backColor)
-        self.textCtrl.SetWrapMode(wx.stc.STC_WRAP_WORD)
-        self.textCtrl.SetWrapVisualFlags(wx.stc.STC_WRAPVISUALFLAG_END)
 
         self._setDefaultHotKeys()
 
