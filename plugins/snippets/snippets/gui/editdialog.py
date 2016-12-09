@@ -49,6 +49,7 @@ class EditSnippetsDialog(TestedDialog):
         self.ID_ADD_SNIPPET = wx.NewId()
         self.ID_REMOVE = wx.NewId()
         self.ID_RENAME = wx.NewId()
+        self.ID_RUN = wx.NewId()
 
         self._imagesPath = getImagesPath()
         self._dirImageId = None
@@ -83,9 +84,11 @@ class EditSnippetsDialog(TestedDialog):
     def disableSnippetEditor(self):
         self.snippetEditor.SetText(u'')
         self._snippetPanel.Disable()
+        self.runSnippetBtn.Disable()
 
     def enableSnippetEditor(self):
         self._snippetPanel.Enable()
+        self.runSnippetBtn.Enable()
 
     def appendDirTreeItem(self, parentItem, name, data):
         itemData = wx.TreeItemData(data)
@@ -145,6 +148,15 @@ class EditSnippetsDialog(TestedDialog):
         self.removeBtn.SetToolTipString(_(u"Remove"))
         groupButtonsSizer.Add(self.removeBtn, flag=wx.ALL, border=0)
 
+        # Run snippet
+        self.runSnippetBtn =  wx.BitmapButton(
+            self,
+            id=self.ID_RUN,
+            bitmap=wx.Bitmap(os.path.join(self._imagesPath, "run.png"))
+        )
+        self.runSnippetBtn.SetToolTipString(_(u"Run snippet"))
+        groupButtonsSizer.Add(self.runSnippetBtn, flag=wx.ALL, border=0)
+
     def _createImagesList(self):
         self._imagelist = SafeImageList(self.ICON_WIDTH, self.ICON_HEIGHT)
 
@@ -177,7 +189,7 @@ class EditSnippetsDialog(TestedDialog):
         treeSizer.Add(groupButtonsSizer, 1, wx.EXPAND, border=2)
         treeSizer.Add(self.snippetsTree, 1, wx.EXPAND, border=2)
 
-        mainSizer.Add(treeSizer, 1, wx.ALL | wx.EXPAND, border=0)
+        mainSizer.Add(treeSizer, 1, wx.ALL | wx.EXPAND, border=2)
 
     def _createSnippetButtons(self, snippetButtonsSizer, parent):
         # Insert variable
