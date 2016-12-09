@@ -310,6 +310,21 @@ class SnippetParserTest(unittest.TestCase):
 
         self.assertEqual(result, right_result)
 
+    def test_global_var_type(self):
+        from snippets.snippetparser import SnippetParser
+        page = self.testPage
+        page.tags = []
+        template = u'{{__type}}'
+        selectedText = u''
+        vars = {}
+
+        right_result = u'wiki'
+
+        parser = SnippetParser(template, u'.', self._application)
+        result = parser.process(selectedText, page, **vars)
+
+        self.assertEqual(result, right_result)
+
     def test_error_01(self):
         from snippets.snippetparser import SnippetParser
         from snippets.libs.jinja2 import TemplateError

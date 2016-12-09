@@ -56,6 +56,7 @@ class SnippetParser(object):
             defines.VAR_DATE_CREATING: page.creationdatetime,
             defines.VAR_DATE_EDITIND: page.datetime,
             defines.VAR_TAGS: VarList(sorted(page.tags)),
+            defines.VAR_PAGE_TYPE: page.getTypeString(),
         }
 
         return globals

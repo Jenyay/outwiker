@@ -69,6 +69,7 @@ class EditSnippetsDialog(TestedDialog):
             (_(u'Current date'), defines.VAR_DATE),
             (_(u'Page creation date'), defines.VAR_DATE_CREATING),
             (_(u'Page modification date'), defines.VAR_DATE_EDITIND),
+            (_(u'Page type'), defines.VAR_PAGE_TYPE),
         ]
 
         self._blocksMenuItems = [

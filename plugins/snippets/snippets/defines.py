@@ -12,6 +12,7 @@ VAR_DATE = u'__date'
 VAR_DATE_CREATING = u'__crdate'
 VAR_DATE_EDITIND = u'__eddate'
 VAR_TAGS = u'__tags'
+VAR_PAGE_TYPE = u'__type'
 
 VAR_COMMAND_CONTENT = u'__content'
 
