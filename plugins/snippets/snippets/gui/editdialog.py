@@ -60,6 +60,7 @@ class EditSnippetsDialog(TestedDialog):
         self._varMenuItems = [
             (_(u'Selected text'), defines.VAR_SEL_TEXT),
             (_(u'Page title'), defines.VAR_TITLE),
+            (_(u'Page tags list'), defines.VAR_TAGS),
             (_(u'Attachments path'), defines.VAR_ATTACH),
             (_(u'Path to page'), defines.VAR_FOLDER),
             (_(u'Page Id'), defines.VAR_PAGE_ID),

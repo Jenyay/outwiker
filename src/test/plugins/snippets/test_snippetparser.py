@@ -265,6 +265,51 @@ class SnippetParserTest(unittest.TestCase):
 
         self.assertEqual(result, right_result)
 
+    def test_global_var_tags_01(self):
+        from snippets.snippetparser import SnippetParser
+        page = self.testPage
+        page.tags = [u'проверка', u'test', u'тест']
+        template = u'{{__tags}}'
+        selectedText = u''
+        vars = {}
+
+        right_result = u'test, проверка, тест'
+
+        parser = SnippetParser(template, u'.', self._application)
+        result = parser.process(selectedText, page, **vars)
+
+        self.assertEqual(result, right_result)
+
+    def test_global_var_tags_02(self):
+        from snippets.snippetparser import SnippetParser
+        page = self.testPage
+        page.tags = [u'проверка', u'test', u'тест']
+        template = u'{% for tag in __tags %}{{tag}}---{% endfor %}'
+        selectedText = u''
+        vars = {}
+
+        right_result = u'test---проверка---тест---'
+
+        parser = SnippetParser(template, u'.', self._application)
+        result = parser.process(selectedText, page, **vars)
+
+        self.assertEqual(result, right_result)
+
+    def test_global_var_tags_03_empty(self):
+        from snippets.snippetparser import SnippetParser
+        page = self.testPage
+        page.tags = []
+        template = u'{{__tags}}'
+        selectedText = u''
+        vars = {}
+
+        right_result = u''
+
+        parser = SnippetParser(template, u'.', self._application)
+        result = parser.process(selectedText, page, **vars)
+
+        self.assertEqual(result, right_result)
+
     def test_error_01(self):
         from snippets.snippetparser import SnippetParser
         from snippets.libs.jinja2 import TemplateError

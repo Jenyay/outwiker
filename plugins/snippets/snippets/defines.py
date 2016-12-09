@@ -11,6 +11,7 @@ VAR_PAGE_ID = u'__pageid'
 VAR_DATE = u'__date'
 VAR_DATE_CREATING = u'__crdate'
 VAR_DATE_EDITIND = u'__eddate'
+VAR_TAGS = u'__tags'
 
 VAR_COMMAND_CONTENT = u'__content'
 

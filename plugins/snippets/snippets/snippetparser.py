@@ -55,6 +55,27 @@ class SnippetParser(object):
             defines.VAR_DATE: datetime.now(),
             defines.VAR_DATE_CREATING: page.creationdatetime,
             defines.VAR_DATE_EDITIND: page.datetime,
+            defines.VAR_TAGS: VarList(sorted(page.tags)),
         }
 
         return globals
+
+
+class VarList(object):
+    def __init__(self, data):
+        self._data = tuple(data)
+
+    def __len__(self):
+        return len(self._data)
+
+    def __getitem__(self, i):
+        return self._data[i]
+
+    def __str__(self):
+        return ', '.join(self._data)
+
+    def __unicode__(self):
+        return u', '.join(self._data)
+
+    def __iter__(self):
+        return iter(self._data)
