@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 
+from datetime import datetime
 import os
 
 from outwiker.core.attachment import Attachment
@@ -50,7 +51,10 @@ class SnippetParser(object):
             defines.VAR_SUBPATH: page.subpath,
             defines.VAR_ATTACH: Attachment(page).getAttachPath(True),
             defines.VAR_FOLDER: page.path,
-            defines.VAR_PAGE_ID: self._application.pageUidDepot.createUid(page)
+            defines.VAR_PAGE_ID: self._application.pageUidDepot.createUid(page),
+            defines.VAR_DATE: datetime.now(),
+            defines.VAR_DATE_CREATING: page.creationdatetime,
+            defines.VAR_DATE_EDITIND: page.datetime,
         }
 
         return globals
