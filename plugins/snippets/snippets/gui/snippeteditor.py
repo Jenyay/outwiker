@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.gui.texteditor import TextEditorBase
+from outwiker.gui.controls.texteditorbase import TextEditorBase
 
 
 class SnippetEditor(TextEditorBase):

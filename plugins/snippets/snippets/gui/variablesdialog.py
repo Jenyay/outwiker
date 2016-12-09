@@ -7,7 +7,7 @@ from wx.lib.newevent import NewEvent
 
 from outwiker.core.event import Event
 from outwiker.gui.testeddialog import TestedDialog
-from outwiker.gui.texteditor import TextEditorBase
+from outwiker.gui.controls.texteditorbase import TextEditorBase
 
 from snippets.snippetparser import SnippetParser
 from snippets.gui.snippeteditor import SnippetEditor
