@@ -116,10 +116,11 @@ class VariablesDialogController(object):
 
         self._selectedText = selectedText
         self._parser = SnippetParser(template, dirname, self._application)
+        variables_list = self._parser.getVariables()
 
         # Get non builtin variables
         variables = sorted([var for var
-                            in self._parser.getVariables()
+                            in variables_list
                             if not var.startswith('__')])
 
         self._dialog.setSnippetText(template)

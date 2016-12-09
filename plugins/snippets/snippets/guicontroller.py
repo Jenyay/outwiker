@@ -156,15 +156,27 @@ class GuiController(object):
 
             selectedText = editor.GetSelectedText()
             try:
-                self._varDialogController.ShowDialog(selectedText,
-                                                     template,
-                                                     os.path.dirname(snippet_fname))
+                self._varDialogController.ShowDialog(
+                    selectedText,
+                    template,
+                    os.path.dirname(snippet_fname)
+                )
             except TemplateError as e:
                 text = _(u'Template error at line {line}:\n{text}').format(
                     line=e.lineno,
                     text=unicode(e.message)
                 )
-                editor.replaceText(text)
+                MessageBox(text, _(u"Snippet error"), wx.ICON_ERROR | wx.OK)
+            except EnvironmentError as e:
+                text = _(u'Snippet reading error:\n{text}').format(
+                    text=unicode(e)
+                )
+                MessageBox(text, _(u"Snippet error"), wx.ICON_ERROR | wx.OK)
+            except BaseException as e:
+                text = _(u'Snippet processing error:\n{text}').format(
+                    text=unicode(e)
+                )
+                MessageBox(text, _(u"Snippet error"), wx.ICON_ERROR | wx.OK)
 
     def _loadTemplate(self, fname):
         template = readTextFile(fname)
