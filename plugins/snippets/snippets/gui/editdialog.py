@@ -610,7 +610,7 @@ class EditSnippetsDialogController(object):
         text = event.data
         if text is None:
             with wx.TextEntryDialog(self._dialog,
-                                    _(u'Enter variable name (numbers, English leters and _ only)'),
+                                    _(u'Enter variable name (English leters, numbers and _ only)'),
                                     _(u'Variable name'),
                                     u'varname') as dlg:
                 name_ok = False

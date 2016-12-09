@@ -49,7 +49,7 @@ class GuiController(object):
             self._mainMenu = self._application.mainWindow.mainMenu
             self._menuName = _(u'Snippets')
             self._createMenu()
-            self._varDialogController.onFinishDialog += self._onFinishDialog
+            self._varDialogController.onFinishDialogEvent += self._onFinishDialog
             self._application.customEvents.bind(EVENT_UPDATE_MENU,
                                                 self._onMenuUpdate)
 
@@ -135,7 +135,7 @@ class GuiController(object):
     def destroy(self):
         if self._application.mainWindow is not None:
             self._destroyMenu()
-            self._varDialogController.onFinishDialog -= self._onFinishDialog
+            self._varDialogController.onFinishDialogEvent -= self._onFinishDialog
 
         self._varDialogController.destroy()
 
