@@ -43,13 +43,13 @@ class VariablesDialog(TestedDialog):
 
         self._notebook = wx.Notebook(self)
 
+        # Result panel
+        self._resultEditor = TextEditorBase(self._notebook)
+        self._notebook.AddPage(self._resultEditor, _(u'Preview'))
+
         # Snippet panel
         self._snippetEditor = SnippetEditor(self._notebook)
         self._notebook.AddPage(self._snippetEditor, _(u'Snippet'))
-
-        # Result panel
-        self._resultEditor = TextEditorBase(self._notebook)
-        self._notebook.AddPage(self._resultEditor, _(u'Result'))
 
         # Panel with variables
         self._varPanel = VaraiblesPanel(self)
