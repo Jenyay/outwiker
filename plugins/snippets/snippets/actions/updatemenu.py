@@ -3,9 +3,7 @@
 from outwiker.gui.baseaction import BaseAction
 
 from snippets.i18n import get_
-
-
-EVENT_UPDATE_MENU = u'Snippets_UpdateMenu'
+from snippets.defines import EVENT_UPDATE_MENU
 
 
 class UpdateMenuAction (BaseAction):

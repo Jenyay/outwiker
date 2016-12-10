@@ -19,3 +19,6 @@ VAR_COMMAND_CONTENT = u'__content'
 NEW_DIR_NAME = _(u'snippets')
 NEW_SNIPPET_NAME = _(u'snippet')
 EXTENSION = u'.tpl'
+
+EVENT_UPDATE_MENU = u'Snippets_UpdateMenu'
+EVENT_RUN_SNIPPET = u'Snippets_RunSnippet'

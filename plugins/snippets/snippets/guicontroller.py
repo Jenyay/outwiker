@@ -9,8 +9,9 @@ from outwiker.core.system import getSpecialDirList
 from outwiker.core.commands import MessageBox
 from outwiker.utilites.textfile import readTextFile
 
-from snippets.actions.updatemenu import UpdateMenuAction, EVENT_UPDATE_MENU
+from snippets.actions.updatemenu import UpdateMenuAction
 from snippets.actions.editsnippets import EditSnippetsAction
+from snippets.events import RunSnippetParams
 from snippets.i18n import get_
 from snippets.snippetsloader import SnippetsLoader
 from snippets.gui.variablesdialog import VariablesDialogController
@@ -50,8 +51,10 @@ class GuiController(object):
             self._menuName = _(u'Snippets')
             self._createMenu()
             self._varDialogController.onFinishDialogEvent += self._onFinishDialog
-            self._application.customEvents.bind(EVENT_UPDATE_MENU,
+            self._application.customEvents.bind(defines.EVENT_UPDATE_MENU,
                                                 self._onMenuUpdate)
+            self._application.customEvents.bind(defines.EVENT_RUN_SNIPPET,
+                                                self._onRunSnippet)
 
     def _createMenu(self):
         self._menu = wx.Menu(u'')
@@ -98,7 +101,14 @@ class GuiController(object):
         self._buildTree(snippets_tree, self._menu)
 
     def _buildTree(self, snippets_tree, menu):
+        # Create submenus
+        for subdir in sorted(snippets_tree.dirs, key=lambda x: x.name):
+            submenu = wx.Menu(u'')
+            self._buildTree(subdir, submenu)
+            menu.AppendSubMenu(submenu, subdir.name)
+
         # Create menu items
+        menu.AppendSeparator()
         for snippet in sorted(snippets_tree.snippets):
             name = os.path.basename(snippet)[:-len(defines.EXTENSION)]
             menu_item_id = wx.Window.NewControlId()
@@ -113,13 +123,6 @@ class GuiController(object):
                 handler=self._onClick,
                 id=menu_item_id
             )
-
-        # Create submenus
-        menu.AppendSeparator()
-        for subdir in sorted(snippets_tree.dirs, key=lambda x: x.name):
-            submenu = wx.Menu(u'')
-            self._buildTree(subdir, submenu)
-            menu.AppendSubMenu(submenu, subdir.name)
 
     def _destroyMenu(self):
         index = self._mainMenu.FindMenu(self._menuName)
@@ -139,44 +142,58 @@ class GuiController(object):
 
         self._varDialogController.destroy()
 
+    def _onRunSnippet(self, params):
+        # type: (RunSnippetParams) -> None
+        if self._application.selectedPage is None:
+            return
+
+        snippet_fname = params.snippet_fname
+        selectedText = params.selectedText
+        try:
+            template = self._loadTemplate(snippet_fname)
+        except EnvironmentError:
+            MessageBox(
+                _(u"Can't read the snippet\n{}").format(snippet_fname),
+                _(u"Error"),
+                wx.ICON_ERROR | wx.OK)
+            return
+
+        try:
+            self._varDialogController.ShowDialog(
+                selectedText,
+                template,
+                os.path.dirname(snippet_fname)
+            )
+        except TemplateError as e:
+            text = _(u'Template error at line {line}:\n{text}').format(
+                line=e.lineno,
+                text=unicode(e.message)
+            )
+            MessageBox(text, _(u"Snippet error"), wx.ICON_ERROR | wx.OK)
+        except EnvironmentError as e:
+            text = _(u'Snippet reading error:\n{text}').format(
+                text=unicode(e)
+            )
+            MessageBox(text, _(u"Snippet error"), wx.ICON_ERROR | wx.OK)
+        except BaseException as e:
+            text = _(u'Snippet processing error:\n{text}').format(
+                text=unicode(e)
+            )
+            MessageBox(text, _(u"Snippet error"), wx.ICON_ERROR | wx.OK)
+
     def _onClick(self, event):
+        if self._application.selectedPage is None:
+            return
+
         assert event.GetId() in self._snippets_id
         snippet_fname = self._snippets_id[event.GetId()].filename
 
         editor = self._getEditor()
         if editor is not None:
-            try:
-                template = self._loadTemplate(snippet_fname)
-            except EnvironmentError:
-                MessageBox(
-                    _(u"Can't read the snippet\n{}").format(snippet_fname),
-                    _(u"Error"),
-                    wx.ICON_ERROR | wx.OK)
-                return
-
             selectedText = editor.GetSelectedText()
-            try:
-                self._varDialogController.ShowDialog(
-                    selectedText,
-                    template,
-                    os.path.dirname(snippet_fname)
-                )
-            except TemplateError as e:
-                text = _(u'Template error at line {line}:\n{text}').format(
-                    line=e.lineno,
-                    text=unicode(e.message)
-                )
-                MessageBox(text, _(u"Snippet error"), wx.ICON_ERROR | wx.OK)
-            except EnvironmentError as e:
-                text = _(u'Snippet reading error:\n{text}').format(
-                    text=unicode(e)
-                )
-                MessageBox(text, _(u"Snippet error"), wx.ICON_ERROR | wx.OK)
-            except BaseException as e:
-                text = _(u'Snippet processing error:\n{text}').format(
-                    text=unicode(e)
-                )
-                MessageBox(text, _(u"Snippet error"), wx.ICON_ERROR | wx.OK)
+            eventParams = RunSnippetParams(snippet_fname, selectedText)
+            self._application.customEvents(defines.EVENT_RUN_SNIPPET,
+                                           eventParams)
 
     def _loadTemplate(self, fname):
         template = readTextFile(fname)

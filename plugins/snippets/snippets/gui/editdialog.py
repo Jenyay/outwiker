@@ -15,6 +15,7 @@ from outwiker.core.system import getSpecialDirList
 from outwiker.utilites.textfile import readTextFile, writeTextFile
 
 from snippets.actions.updatemenu import UpdateMenuAction
+from snippets.events import RunSnippetParams
 from snippets.gui.snippeteditor import SnippetEditor
 from snippets.i18n import get_
 from snippets.snippetsloader import SnippetsLoader
@@ -150,7 +151,7 @@ class EditSnippetsDialog(TestedDialog):
         groupButtonsSizer.Add(self.removeBtn, flag=wx.ALL, border=0)
 
         # Run snippet
-        self.runSnippetBtn =  wx.BitmapButton(
+        self.runSnippetBtn = wx.BitmapButton(
             self,
             id=self.ID_RUN,
             bitmap=wx.Bitmap(os.path.join(self._imagesPath, "run.png"))
@@ -286,6 +287,9 @@ class EditSnippetsDialogController(object):
                                         handler=self._onAddSnippet)
         self._dialog.removeBtn.Bind(wx.EVT_BUTTON, handler=self._onRemove)
         self._dialog.renameBtn.Bind(wx.EVT_BUTTON, handler=self._onRenameClick)
+        self._dialog.runSnippetBtn.Bind(wx.EVT_BUTTON,
+                                        handler=self._onRunSnippet)
+
         self._dialog.insertVariableBtn.Bind(EVT_POPUP_BUTTON_MENU_CLICK,
                                             handler=self._onInsertVariable)
         self._dialog.insertBlockBtn.Bind(EVT_POPUP_BUTTON_MENU_CLICK,
@@ -622,6 +626,16 @@ class EditSnippetsDialogController(object):
         text_right = event.data[1]
         self._dialog.snippetEditor.turnText(text_left, text_right)
         self._dialog.snippetEditor.SetFocus()
+
+    def _onRunSnippet(self, event):
+        snippet_fname = self._getSelectedItemData().path
+        assert not os.path.isdir(snippet_fname)
+
+        self._dialog.Close()
+        if self._application.selectedPage is not None:
+            eventParams = RunSnippetParams(snippet_fname, u'')
+            self._application.customEvents(defines.EVENT_RUN_SNIPPET,
+                                           eventParams)
 
     def _onInsertVariable(self, event):
         text = event.data
