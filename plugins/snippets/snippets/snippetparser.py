@@ -45,11 +45,17 @@ class SnippetParser(object):
     def _getGlobalVariables(self, selectedText, page):
         assert page is not None
 
+        attach = Attachment(page)
+        atatchList = VarList([fname
+                              for fname
+                              in attach.getAttachRelative()
+                              if not fname.startswith(u'__')])
+
         globals = {
             defines.VAR_SEL_TEXT: selectedText,
             defines.VAR_TITLE: page.title,
             defines.VAR_SUBPATH: page.subpath,
-            defines.VAR_ATTACH: Attachment(page).getAttachPath(True),
+            defines.VAR_ATTACH: attach.getAttachPath(True),
             defines.VAR_FOLDER: page.path,
             defines.VAR_PAGE_ID: self._application.pageUidDepot.createUid(page),
             defines.VAR_DATE: datetime.now(),
@@ -57,6 +63,10 @@ class SnippetParser(object):
             defines.VAR_DATE_EDITIND: page.datetime,
             defines.VAR_TAGS: VarList(sorted(page.tags)),
             defines.VAR_PAGE_TYPE: page.getTypeString(),
+            defines.VAR_CHILDLIST: VarList([subpage.title
+                                            for subpage
+                                            in page.children]),
+            defines.VAR_ATTACHLIST: atatchList,
         }
 
         return globals

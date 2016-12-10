@@ -14,6 +14,9 @@ VAR_DATE_EDITIND = u'__eddate'
 VAR_TAGS = u'__tags'
 VAR_PAGE_TYPE = u'__type'
 
+VAR_CHILDLIST = u'__childlist'
+VAR_ATTACHLIST = u'__attachlist'
+
 VAR_COMMAND_CONTENT = u'__content'
 
 NEW_DIR_NAME = _(u'snippets')
