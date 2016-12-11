@@ -34,6 +34,7 @@ class VariablesDialog(TestedDialog):
         self._width = 700
         self._height = 400
         self._createGUI()
+        self.SetTitle(u'Snippet variables')
 
     def _createGUI(self):
         mainSizer = wx.FlexGridSizer(cols=2)

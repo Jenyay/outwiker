@@ -48,7 +48,7 @@ class SnippetParser(object):
         attach = Attachment(page)
         atatchList = VarList([fname
                               for fname
-                              in attach.getAttachRelative()
+                              in sorted(attach.getAttachRelative())
                               if not fname.startswith(u'__')])
 
         globals = {

@@ -310,15 +310,76 @@ class SnippetParserTest(unittest.TestCase):
 
         self.assertEqual(result, right_result)
 
+    def test_global_var_childlist_01(self):
+        from snippets.snippetparser import SnippetParser
+        page = self.testPage
+        WikiPageFactory().create(page, u"Страница 1", [])
+        WikiPageFactory().create(page, u"Страница 2", [])
+        WikiPageFactory().create(page, u"Страница 3", [])
+
+        template = u'{{__childlist}}'
+        selectedText = u''
+        vars = {}
+
+        right_result = u'Страница 1, Страница 2, Страница 3'
+
+        parser = SnippetParser(template, u'.', self._application)
+        result = parser.process(selectedText, page, **vars)
+
+        self.assertEqual(result, right_result)
+
+    def test_global_var_childlist_02(self):
+        from snippets.snippetparser import SnippetParser
+        page = self.testPage
+        subpage1 = WikiPageFactory().create(page, u"Страница 1", [])
+        subpage2 = WikiPageFactory().create(page, u"Страница 2", [])
+        subpage3 = WikiPageFactory().create(page, u"Страница 3", [])
+
+        subpage2.order = 1
+        subpage3.order = 4
+        subpage1.order = 10
+
+        template = u'{{__childlist}}'
+        selectedText = u''
+        vars = {}
+
+        right_result = u'Страница 2, Страница 3, Страница 1'
+
+        parser = SnippetParser(template, u'.', self._application)
+        result = parser.process(selectedText, page, **vars)
+
+        self.assertEqual(result, right_result)
+
     def test_global_var_type(self):
         from snippets.snippetparser import SnippetParser
         page = self.testPage
-        page.tags = []
         template = u'{{__type}}'
         selectedText = u''
         vars = {}
 
         right_result = u'wiki'
+
+        parser = SnippetParser(template, u'.', self._application)
+        result = parser.process(selectedText, page, **vars)
+
+        self.assertEqual(result, right_result)
+
+    def test_global_var_attachilist(self):
+        from snippets.snippetparser import SnippetParser
+        fnames = [u'ccc.png', u'aaa.tmp', u'zzz.doc']
+        page = self.testPage
+        attachdir = Attachment(page).getAttachPath(True)
+        for fname in fnames:
+            fullpath = os.path.join(attachdir, fname)
+            with open(fullpath, 'w'):
+                pass
+
+        page = self.testPage
+        template = u'{{__attachlist}}'
+        selectedText = u''
+        vars = {}
+
+        right_result = u'aaa.tmp, ccc.png, zzz.doc'
 
         parser = SnippetParser(template, u'.', self._application)
         result = parser.process(selectedText, page, **vars)
