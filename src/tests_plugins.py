@@ -134,5 +134,8 @@ if __name__ == '__main__':
     from test.plugins.snippets.test_loading import SnippetsLoadingTest
     from test.plugins.snippets.test_snippetsloader import SnippetsLoaderTest
     from test.plugins.snippets.test_snippetparser import SnippetParserTest
+    from test.plugins.snippets.test_varpanel import VarPanelTest
+    from test.plugins.snippets.test_vardialog import VarDialogTest
+    from test.plugins.snippets.test_vardialogcontroller import VarDialogControllerTest
 
     unittest.main()

@@ -86,6 +86,9 @@ class VariablesDialog(TestedDialog):
         self._varPanel.addStringVariable(varname)
         self.Layout()
 
+    def setStringVariable(self, varname, value):
+        self._varPanel.setVarString(varname, value)
+
     def getVarDict(self):
         return self._varPanel.getVarDict()
 
@@ -143,13 +146,16 @@ class VariablesDialogController(object):
 
     def FinishDialog(self):
         if self._application.selectedPage is not None:
-            text = self._dialog.getResult()
+            text = self.GetResult()
             self.onFinishDialogEvent(FinishDialogParams(text))
 
         self._dialog.Close()
 
     def CloseDialog(self):
         self._dialog.Close()
+
+    def GetResult(self):
+        return self._dialog.getResult()
 
     def _onOk(self, event):
         self.FinishDialog()
@@ -194,6 +200,17 @@ class VaraiblesPanel(wx.ScrolledWindow):
     def getVarDict(self):
         return {item[0]: item[1].GetValue() for item in self._varControls}
 
+    def setVarString(self, varname, value):
+        ctrl = self._findControl(varname)
+        ctrl.SetValue(value)
+
+    def _findControl(self, varname):
+        for item in self._varControls:
+            if varname == item[0]:
+                return item[1]
+
+        raise KeyError
+
     def clear(self):
         self._mainSizer.Clear()
         map(lambda item: item[1].Destroy(), self._varControls)
@@ -226,6 +243,9 @@ class StringVariableCtrl(wx.Panel):
 
     def GetValue(self):
         return self._textCtrl.GetValue()
+
+    def SetValue(self, value):
+        self._textCtrl.SetValue(value)
 
     def _onTextEdit(self, event):
         propagationLevel = 10
