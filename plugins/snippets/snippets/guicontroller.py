@@ -144,9 +144,6 @@ class GuiController(object):
 
     def _onRunSnippet(self, params):
         # type: (RunSnippetParams) -> None
-        if self._application.selectedPage is None:
-            return
-
         snippet_fname = params.snippet_fname
         selectedText = params.selectedText
         try:
@@ -182,18 +179,13 @@ class GuiController(object):
             MessageBox(text, _(u"Snippet error"), wx.ICON_ERROR | wx.OK)
 
     def _onClick(self, event):
-        if self._application.selectedPage is None:
-            return
-
         assert event.GetId() in self._snippets_id
         snippet_fname = self._snippets_id[event.GetId()].filename
 
         editor = self._getEditor()
-        if editor is not None:
-            selectedText = editor.GetSelectedText()
-            eventParams = RunSnippetParams(snippet_fname, selectedText)
-            self._application.customEvents(defines.EVENT_RUN_SNIPPET,
-                                           eventParams)
+        selectedText = editor.GetSelectedText() if editor is not None else u''
+        eventParams = RunSnippetParams(snippet_fname, selectedText)
+        self._application.customEvents(defines.EVENT_RUN_SNIPPET, eventParams)
 
     def _loadTemplate(self, fname):
         template = readTextFile(fname)

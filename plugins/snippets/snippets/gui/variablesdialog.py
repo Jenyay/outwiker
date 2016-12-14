@@ -115,9 +115,6 @@ class VariablesDialogController(object):
         self._dialog.Bind(EVT_VAR_CHANGE, handler=self._onVarChange)
 
     def ShowDialog(self, selectedText, template, dirname):
-        if self._application.selectedPage is None:
-            return
-
         self._selectedText = selectedText
         self._parser = SnippetParser(template, dirname, self._application)
         variables_list = self._parser.getVariables()
@@ -145,10 +142,8 @@ class VariablesDialogController(object):
         self._dialog.Destroy()
 
     def FinishDialog(self):
-        if self._application.selectedPage is not None:
-            text = self.GetResult()
-            self.onFinishDialogEvent(FinishDialogParams(text))
-
+        text = self.GetResult()
+        self.onFinishDialogEvent(FinishDialogParams(text))
         self._dialog.Close()
 
     def CloseDialog(self):

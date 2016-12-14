@@ -18,7 +18,6 @@ class SnippetParser(object):
         self._jinja_env = Environment(loader=FileSystemLoader(self._dirname))
 
     def process(self, selectedText, page, **kwargs):
-        assert self._application.selectedPage is not None
         params = self._getGlobalVariables(selectedText, page)
         params.update(kwargs)
         tpl = self._jinja_env.from_string(self._template, globals=params)
@@ -43,31 +42,34 @@ class SnippetParser(object):
                 pass
 
     def _getGlobalVariables(self, selectedText, page):
-        assert page is not None
-
-        attach = Attachment(page)
-        atatchList = VarList([fname
-                              for fname
-                              in sorted(attach.getAttachRelative())
-                              if not fname.startswith(u'__')])
-
         globals = {
-            defines.VAR_SEL_TEXT: selectedText,
-            defines.VAR_TITLE: page.title,
-            defines.VAR_SUBPATH: page.subpath,
-            defines.VAR_ATTACH: attach.getAttachPath(True),
-            defines.VAR_FOLDER: page.path,
-            defines.VAR_PAGE_ID: self._application.pageUidDepot.createUid(page),
             defines.VAR_DATE: datetime.now(),
-            defines.VAR_DATE_CREATING: page.creationdatetime,
-            defines.VAR_DATE_EDITIND: page.datetime,
-            defines.VAR_TAGS: VarList(sorted(page.tags)),
-            defines.VAR_PAGE_TYPE: page.getTypeString(),
-            defines.VAR_CHILDLIST: VarList([subpage.title
-                                            for subpage
-                                            in page.children]),
-            defines.VAR_ATTACHLIST: atatchList,
         }
+
+        if page is not None:
+            attach = Attachment(page)
+            attachList = VarList([fname
+                                  for fname
+                                  in sorted(attach.getAttachRelative())
+                                  if not fname.startswith(u'__')])
+
+            globals_page = {
+                defines.VAR_SEL_TEXT: selectedText,
+                defines.VAR_TITLE: page.title,
+                defines.VAR_SUBPATH: page.subpath,
+                defines.VAR_ATTACH: attach.getAttachPath(True),
+                defines.VAR_FOLDER: page.path,
+                defines.VAR_PAGE_ID: self._application.pageUidDepot.createUid(page),
+                defines.VAR_DATE_CREATING: page.creationdatetime,
+                defines.VAR_DATE_EDITIND: page.datetime,
+                defines.VAR_TAGS: VarList(sorted(page.tags)),
+                defines.VAR_PAGE_TYPE: page.getTypeString(),
+                defines.VAR_CHILDLIST: VarList([subpage.title
+                                                for subpage
+                                                in page.children]),
+                defines.VAR_ATTACHLIST: attachList,
+            }
+            globals.update(globals_page)
 
         return globals
 

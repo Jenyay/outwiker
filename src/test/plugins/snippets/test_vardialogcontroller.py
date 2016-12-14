@@ -80,3 +80,17 @@ class VarDialogControllerTest(BaseMainWndTest):
         result = self._controller.GetResult()
 
         self.assertEqual(result, right_result)
+
+    def test_page_none_01(self):
+        seltext = u''
+        template = u'Шаблон'
+        dirname = u'.'
+        self._application.selectedPage = None
+
+        right_result = u'Шаблон'
+
+        self._controller.ShowDialog(seltext, template, dirname)
+        self._controller.FinishDialog()
+        result = self._controller.GetResult()
+
+        self.assertEqual(result, right_result)
