@@ -19,7 +19,7 @@ from snippets.events import RunSnippetParams
 from snippets.gui.snippeteditor import SnippetEditor
 from snippets.i18n import get_
 from snippets.snippetsloader import SnippetsLoader
-from snippets.utils import getImagesPath
+from snippets.utils import getImagesPath, findUniquePath, createFile
 import snippets.defines as defines
 
 
@@ -283,6 +283,8 @@ class EditSnippetsDialogController(object):
 
     def _bind(self):
         self._dialog.Bind(wx.EVT_CLOSE, handler=self._onClose)
+
+        # Buttons
         self._dialog.closeBtn.Bind(wx.EVT_BUTTON, handler=self._onCloseBtn)
         self._dialog.addGroupBtn.Bind(wx.EVT_BUTTON, handler=self._onAddGroup)
         self._dialog.addSnippetBtn.Bind(wx.EVT_BUTTON,
@@ -297,6 +299,7 @@ class EditSnippetsDialogController(object):
         self._dialog.insertBlockBtn.Bind(EVT_POPUP_BUTTON_MENU_CLICK,
                                          handler=self._onInsertBlock)
 
+        # Snippets tree
         self.snippetsTree.Bind(wx.EVT_TREE_SEL_CHANGED,
                                handler=self._onTreeItemChanged)
         self.snippetsTree.Bind(wx.EVT_TREE_SEL_CHANGING,
@@ -305,11 +308,20 @@ class EditSnippetsDialogController(object):
                                handler=self._onRenameEnd)
         self.snippetsTree.Bind(wx.EVT_TREE_BEGIN_LABEL_EDIT,
                                handler=self._onRenameBegin)
+        self.snippetsTree.Bind(wx.EVT_TREE_BEGIN_DRAG,
+                               handler=self._onTreeItemDragBegin)
+        self.snippetsTree.Bind(wx.EVT_TREE_END_DRAG,
+                               handler=self._onTreeItemDragEnd)
 
     def ShowDialog(self):
-        snippets_tree = self._loadSnippetsTree()
-        self._fillSnippetsTree(snippets_tree, snippets_tree.path)
+        self._updateSnippetsTree()
         self._dialog.Show()
+
+    def _updateSnippetsTree(self, selectedPath=None):
+        snippets_tree = self._loadSnippetsTree()
+        if selectedPath is None:
+            selectedPath = snippets_tree.path
+        self._fillSnippetsTree(snippets_tree, selectedPath)
 
     def _loadSnippetsTree(self):
         rootdir = getSpecialDirList(defines.SNIPPETS_DIR)[-1]
@@ -420,9 +432,7 @@ class EditSnippetsDialogController(object):
             rootdir = os.path.dirname(rootdir)
 
         # Find unique directory for snippets
-        newpath = self._findUniquePath(
-            os.path.join(rootdir, _(defines.NEW_DIR_NAME))
-        )
+        newpath = findUniquePath(rootdir, _(defines.NEW_DIR_NAME))
 
         try:
             os.mkdir(newpath)
@@ -471,29 +481,21 @@ class EditSnippetsDialogController(object):
 
         if isdir:
             # Rename directory
-            newpath = self._findUniquePath(
-                os.path.join(os.path.dirname(oldpath), newlabel)
-            )
+            newpath = findUniquePath(os.path.dirname(oldpath), newlabel)
         else:
             # Rename snippet
-            newpath = self._findUniquePath(
-                os.path.join(os.path.dirname(oldpath),
-                             newlabel + defines.EXTENSION)
-            )
+            newpath = findUniquePath(os.path.dirname(oldpath),
+                                     newlabel + defines.EXTENSION,
+                                     defines.EXTENSION)
 
         try:
             self._getItemData(item).path = newpath
             os.rename(oldpath, newpath)
-            if isdir:
-                self.snippetsTree.DeleteChildren(item)
-                sl = SnippetsLoader(newpath)
-                snippets_tree = sl.getSnippets()
-                self._buildSnippetsTree(item, snippets_tree, newpath)
-                self.snippetsTree.ExpandAll()
+            self._updateSnippetsTree(newpath)
         except EnvironmentError as e:
             print(e)
-            event.Veto()
 
+        event.Veto()
         self._updateMenu()
 
     def _onTreeItemChanged(self, event):
@@ -532,17 +534,6 @@ class EditSnippetsDialogController(object):
                 _(u"Error"),
                 wx.ICON_ERROR | wx.OK)
 
-    def _findUniquePath(self, path, extension=u''):
-        index = 1
-        result = path
-
-        while os.path.exists(result):
-            suffix = u' ({}){}'.format(index, extension)
-            result = path + suffix
-            index += 1
-
-        return result
-
     def _getItemData(self, item):
         if not item.IsOk():
             return None
@@ -568,15 +559,15 @@ class EditSnippetsDialogController(object):
         if not os.path.isdir(rootdir):
             rootdir = os.path.dirname(rootdir)
 
-        # Find unique directory for snippets
-        newpath = self._findUniquePath(
-            os.path.join(rootdir,
-                         _(defines.NEW_SNIPPET_NAME) + defines.EXTENSION),
-            defines.EXTENSION)
+        # Find unique file name for snippets
+        newpath = findUniquePath(
+            rootdir,
+            _(defines.NEW_SNIPPET_NAME) + defines.EXTENSION,
+            defines.EXTENSION
+        )
 
         try:
-            with open(newpath, 'w'):
-                pass
+            createFile(newpath)
             snippets_tree = self._loadSnippetsTree()
             self._fillSnippetsTree(snippets_tree, newpath)
             newitem = self.snippetsTree.GetSelection()
@@ -669,3 +660,28 @@ class EditSnippetsDialogController(object):
                   len(name) > 0 and
                   regex.match(name) is not None)
         return result
+
+    def _onTreeItemDragBegin(self, event):
+        item = event.GetItem()
+        if self._isRootItem(item):
+            return
+
+        event.Allow()
+        self._treeDragSource = self._getItemData(item).path
+
+    def _onTreeItemDragEnd(self, event):
+        treeDragTarget = event.GetItem()
+        dropPath = self._getItemData(treeDragTarget).path
+        sourceParent = os.path.dirname(self._treeDragSource)
+
+        if not os.path.isdir(dropPath):
+            dropPath = os.path.dirname(dropPath)
+
+        if dropPath.startswith(self._treeDragSource):
+            return
+
+        if sourceParent == dropPath:
+            return
+
+        print('{} -> {}'.format(self._treeDragSource, dropPath))
+        self._updateSnippetsTree(dropPath)
