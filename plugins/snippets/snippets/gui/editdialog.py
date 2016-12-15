@@ -19,7 +19,10 @@ from snippets.events import RunSnippetParams
 from snippets.gui.snippeteditor import SnippetEditor
 from snippets.i18n import get_
 from snippets.snippetsloader import SnippetsLoader
-from snippets.utils import getImagesPath, findUniquePath, createFile
+from snippets.utils import (getImagesPath,
+                            findUniquePath,
+                            createFile,
+                            moveSnippetsTo)
 import snippets.defines as defines
 
 
@@ -683,5 +686,7 @@ class EditSnippetsDialogController(object):
         if sourceParent == dropPath:
             return
 
-        print('{} -> {}'.format(self._treeDragSource, dropPath))
-        self._updateSnippetsTree(dropPath)
+        # print('{} -> {}'.format(self._treeDragSource, dropPath))
+        result_path = moveSnippetsTo(self._treeDragSource, dropPath)
+        self._updateSnippetsTree(result_path)
+        self._updateMenu()
