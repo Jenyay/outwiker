@@ -3,7 +3,8 @@
 from outwiker.pages.wiki.parser.command import Command
 
 from snippets.defines import WIKI_COMMAND_PARAM_FILE
-from snippets.snippetparser import SnippetParser
+from snippets.snippetparser import SnippetParser, SnippetException
+from snippets.i18n import get_
 
 
 class CommandSnip (Command):
@@ -30,6 +31,9 @@ class CommandSnip (Command):
         self._snippets_dir = snippets_dir
         self._application = application
 
+        global _
+        _ = get_()
+
     @property
     def name(self):
         return u"snip"
@@ -49,7 +53,11 @@ class CommandSnip (Command):
         snippet = content
 
         snippet_parser = SnippetParser(content, current_dir, self._application)
-        result = snippet_parser.process(snippet,
-                                        self.parser.page,
-                                        **params_dict)
+        try:
+            result = snippet_parser.process(snippet,
+                                            self.parser.page,
+                                            **params_dict)
+        except SnippetException as e:
+            text = _(u'Snippet error: \n') + e.message
+            result = u"<div class='__error'>'''{}'''</div>".format(text)
         return self.parser.parseWikiMarkup(result)

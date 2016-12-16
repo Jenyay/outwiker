@@ -9,6 +9,7 @@ from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.tree import WikiDocument
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
+from outwiker.utilites.textfile import writeTextFile
 from test.utils import removeDir
 
 
@@ -24,10 +25,16 @@ class WikiCommandTest(unittest.TestCase):
         factory = ParserFactory()
         self.parser = factory.make(self.testPage, self._application.config)
 
+        from snippets.utils import getSnippetsDir
+        root_snippets_dir = getSnippetsDir()
+        self._snippets_dir = os.path.join(root_snippets_dir, u'__test_snippets')
+        os.mkdir(self._snippets_dir)
+
     def tearDown(self):
+        self.loader.clear()
         self._application.wikiroot = None
         removeDir(self.path)
-        self.loader.clear()
+        removeDir(self._snippets_dir)
 
     def _createWiki(self):
         self.path = mkdtemp(prefix=u'Абырвалг абыр')
@@ -81,7 +88,30 @@ class WikiCommandTest(unittest.TestCase):
         result = self.parser.toHtml(text)
         self.assertEqual(result_right, result)
 
+    def test_content_include(self):
+        text = u'(:snip:){% include "__test_snippets/included.tpl" %}(:snipend:)'
+        fname = os.path.join(self._snippets_dir, u'included.tpl')
+        writeTextFile(fname, u'Включенный текст')
+        result_right = u'Включенный текст'
+
+        result = self.parser.toHtml(text)
+
+        self.assertEqual(result_right, result)
+
     def test_content_invalid_01(self):
         text = u'(:snip:){% if %}(:snipend:)'
         result = self.parser.toHtml(text)
         self.assertNotIn(u'Traceback', result, result)
+        self.assertIn(u"<div class='__error'>", result)
+
+    def test_content_invalid_02(self):
+        text = u"(:snip:){% include '' %}(:snipend:)"
+        result = self.parser.toHtml(text)
+        self.assertNotIn(u'Traceback', result, result)
+        self.assertIn(u"<div class='__error'>", result)
+
+    def test_content_invalid_03(self):
+        text = u"(:snip:){% include 'invalid.tpl' %}(:snipend:)"
+        result = self.parser.toHtml(text)
+        self.assertNotIn(u'Traceback', result, result)
+        self.assertIn(u"<div class='__error'>", result)
