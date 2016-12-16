@@ -17,11 +17,11 @@ VAR_PAGE_TYPE = u'__type'
 VAR_CHILDLIST = u'__childlist'
 VAR_ATTACHLIST = u'__attachlist'
 
-VAR_COMMAND_CONTENT = u'__content'
-
 NEW_DIR_NAME = _(u'snippets')
 NEW_SNIPPET_NAME = _(u'snippet')
 EXTENSION = u'.tpl'
 
 EVENT_UPDATE_MENU = u'Snippets_UpdateMenu'
 EVENT_RUN_SNIPPET = u'Snippets_RunSnippet'
+
+WIKI_COMMAND_PARAM_FILE = u'file'

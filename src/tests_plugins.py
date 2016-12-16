@@ -138,5 +138,6 @@ if __name__ == '__main__':
     from test.plugins.snippets.test_vardialog import VarDialogTest
     from test.plugins.snippets.test_vardialogcontroller import VarDialogControllerTest
     from test.plugins.snippets.test_utils import SnippetsUtilsTest
+    from test.plugins.snippets.test_wikicommand import WikiCommandTest
 
     unittest.main()

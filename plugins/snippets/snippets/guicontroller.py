@@ -5,7 +5,6 @@ from collections import namedtuple
 
 import wx
 
-from outwiker.core.system import getSpecialDirList
 from outwiker.core.commands import MessageBox
 from outwiker.utilites.textfile import readTextFile
 
@@ -15,6 +14,7 @@ from snippets.events import RunSnippetParams
 from snippets.i18n import get_
 from snippets.snippetsloader import SnippetsLoader
 from snippets.gui.variablesdialog import VariablesDialogController
+from snippets.utils import getSnippetsDir
 import snippets.defines as defines
 
 from jinja2 import TemplateError
@@ -96,7 +96,7 @@ class GuiController(object):
 
     def _updateMenu(self):
         self._removeSnippetsFromMenu()
-        sl = SnippetsLoader(getSpecialDirList(defines.SNIPPETS_DIR)[-1])
+        sl = SnippetsLoader(getSnippetsDir())
         snippets_tree = sl.getSnippets()
         self._buildTree(snippets_tree, self._menu)
 

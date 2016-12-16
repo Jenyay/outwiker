@@ -9,6 +9,8 @@ from .guicontroller import GuiController
 from .defines import SNIPPETS_DIR
 from snippets.actions.updatemenu import UpdateMenuAction
 from snippets.actions.editsnippets import EditSnippetsAction
+from snippets.wikicommand import CommandSnip
+from snippets.utils import getSnippetsDir
 
 
 class Controller(object):
@@ -22,9 +24,6 @@ class Controller(object):
         self._application = application
 
         self._guiController = GuiController(application)
-
-        # В этот список добавить новые викикоманды, если они нужны
-        self._commands = []
 
         self._actions = [
             (UpdateMenuAction, None),
@@ -63,9 +62,6 @@ class Controller(object):
         self._application.onPageViewCreate -= self.__onPageViewCreate
         self._application.onPageViewDestroy -= self.__onPageViewDestroy
 
-        # if self._isCurrentWikiPage:
-        #     self._guiController.removeTools()
-        #
         if self._application.mainWindow is not None:
             self._guiController.destroy()
             self._unregisterActions()
@@ -74,8 +70,8 @@ class Controller(object):
         """
         Вызывается до разбора викитекста.
         """
-        map(lambda command: parser.addCommand(command(parser)),
-            self._commands)
+        command = CommandSnip(parser, getSnippetsDir(), self._application)
+        parser.addCommand(command)
 
     @property
     def _isCurrentWikiPage(self):
@@ -90,16 +86,11 @@ class Controller(object):
         """Обработка события после создания представления страницы"""
         assert self._application.mainWindow is not None
 
-        # if page.getTypeString() == u"wiki":
-        #     self._guiController.createTools()
-
     def __onPageViewDestroy(self, page):
         """
         Обработка события перед удалением вида страницы
         """
         assert self._application.mainWindow is not None
-
-        # if page.getTypeString() == u"wiki":
 
     def _registerActions(self):
         map(lambda actionTuple: self._application.actionController.register(
