@@ -16,8 +16,7 @@ from snippets.snippetsloader import SnippetsLoader
 from snippets.gui.variablesdialog import VariablesDialogController
 from snippets.utils import getSnippetsDir
 import snippets.defines as defines
-
-from jinja2 import TemplateError
+from snippets.snippetparser import SnippetException
 
 SnippetInfo = namedtuple('SnippetInfo', ['filename', 'menuitem', 'parentmenu'])
 
@@ -161,22 +160,8 @@ class GuiController(object):
                 template,
                 os.path.dirname(snippet_fname)
             )
-        except TemplateError as e:
-            text = _(u'Template error at line {line}:\n{text}').format(
-                line=e.lineno,
-                text=unicode(e.message)
-            )
-            MessageBox(text, _(u"Snippet error"), wx.ICON_ERROR | wx.OK)
-        except EnvironmentError as e:
-            text = _(u'Snippet reading error:\n{text}').format(
-                text=unicode(e)
-            )
-            MessageBox(text, _(u"Snippet error"), wx.ICON_ERROR | wx.OK)
-        except BaseException as e:
-            text = _(u'Snippet processing error:\n{text}').format(
-                text=unicode(e)
-            )
-            MessageBox(text, _(u"Snippet error"), wx.ICON_ERROR | wx.OK)
+        except SnippetException as e:
+            MessageBox(e.message, _(u"Snippet error"), wx.ICON_ERROR | wx.OK)
 
     def _onClick(self, event):
         assert event.GetId() in self._snippets_id

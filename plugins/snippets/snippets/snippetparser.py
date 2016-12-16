@@ -6,8 +6,48 @@ import os
 from outwiker.core.attachment import Attachment
 from outwiker.utilites.textfile import readTextFile
 
-from jinja2 import Environment, meta, FileSystemLoader
+from jinja2 import (Environment, meta, FileSystemLoader,
+                    TemplateSyntaxError, TemplateNotFound)
 import snippets.defines as defines
+from snippets.i18n import get_
+
+
+class SnippetException(Exception):
+    pass
+
+
+def _convertExceptions(func):
+    '''
+    Decorator to convert Jinja's errors and other errors to SnippetException.
+    '''
+    _ = get_()
+
+    def _process(self, *args, **kwargs):
+        try:
+            return func(self, *args, **kwargs)
+        except TemplateNotFound as e:
+            text = _(u'Template "{name}" not found').format(
+                name=unicode(e.name)
+            )
+            raise SnippetException(text)
+        except TemplateSyntaxError as e:
+            text = _(u'Template error at line {line}:\n{text}').format(
+                line=e.lineno,
+                text=unicode(e.message)
+            )
+            raise SnippetException(text)
+        except EnvironmentError as e:
+            text = _(u'Snippet reading error:\n{text}').format(
+                text=unicode(e)
+            )
+            raise SnippetException(text)
+        except BaseException as e:
+            text = _(u'Snippet processing error:\n{text}').format(
+                text=unicode(e)
+            )
+            raise SnippetException(text)
+
+    return _process
 
 
 class SnippetParser(object):
@@ -17,6 +57,7 @@ class SnippetParser(object):
         self._dirname = dirname
         self._jinja_env = Environment(loader=FileSystemLoader(self._dirname))
 
+    @_convertExceptions
     def process(self, selectedText, page, **kwargs):
         params = self._getGlobalVariables(selectedText, page)
         params.update(kwargs)
@@ -24,6 +65,7 @@ class SnippetParser(object):
         result = tpl.render()
         return result
 
+    @_convertExceptions
     def getVariables(self):
         variables = set()
         self._getVariables(self._template, variables)
