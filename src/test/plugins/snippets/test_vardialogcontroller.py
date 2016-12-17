@@ -10,7 +10,7 @@ from test.guitests.basemainwnd import BaseMainWndTest
 from test.utils import removeDir
 
 
-class VarDialogControllerTest(BaseMainWndTest):
+class SnippetsVarDialogControllerTest(BaseMainWndTest):
     def setUp(self):
         BaseMainWndTest.setUp(self)
         plugins_dir = [u"../plugins/snippets"]

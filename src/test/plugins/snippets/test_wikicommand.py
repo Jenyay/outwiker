@@ -13,7 +13,7 @@ from outwiker.utilites.textfile import writeTextFile
 from test.utils import removeDir
 
 
-class WikiCommandTest(unittest.TestCase):
+class SnippetsWikiCommandTest(unittest.TestCase):
     def setUp(self):
         plugins_dir = [u"../plugins/snippets"]
 

@@ -5,7 +5,7 @@ from outwiker.core.pluginsloader import PluginsLoader
 from test.guitests.basemainwnd import BaseMainWndTest
 
 
-class VarPanelTest(BaseMainWndTest):
+class SnippetsVarPanelTest(BaseMainWndTest):
     def setUp(self):
         BaseMainWndTest.setUp(self)
         mainWnd = Application.mainWindow

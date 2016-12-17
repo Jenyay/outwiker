@@ -129,10 +129,7 @@ class VariablesDialogController(object):
 
         # Show dialog if user must enter variable's values
         self._updateResult()
-        if variables:
-            self._dialog.Show()
-        else:
-            self.FinishDialog()
+        self._dialog.Show()
 
     def destroy(self):
         self.onFinishDialogEvent.clear()
