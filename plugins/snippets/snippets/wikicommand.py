@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.pages.wiki.parser.command import Command
+import os
 
-from snippets.defines import WIKI_COMMAND_PARAM_FILE
+from outwiker.pages.wiki.parser.command import Command
+from outwiker.utilites.textfile import readTextFile
+
+from snippets.defines import WIKI_COMMAND_PARAM_FILE, EXTENSION
 from snippets.snippetparser import SnippetParser, SnippetException
 from snippets.i18n import get_
 
@@ -45,19 +48,40 @@ class CommandSnip (Command):
         else:
             return self._executeFromContent(params_dict, content)
 
-    def _executeFromFile(self, params_dict):
-        return u''
+    def _format_error(self, text):
+        return u"<div class='__error'><b>{}</b></div>".format(text)
 
-    def _executeFromContent(self, params_dict, content):
-        current_dir = self._snippets_dir
-        snippet = content
-
-        snippet_parser = SnippetParser(content, current_dir, self._application)
+    def _parseSnippet(self, snippet_text, current_dir, params_dict):
+        snippet_parser = SnippetParser(snippet_text,
+                                       current_dir,
+                                       self._application)
         try:
-            result = snippet_parser.process(snippet,
+            result = snippet_parser.process(u'',
                                             self.parser.page,
                                             **params_dict)
         except SnippetException as e:
             text = _(u'Snippet error: \n') + e.message
-            result = u"<div class='__error'>'''{}'''</div>".format(text)
+            return self._format_error(text)
         return self.parser.parseWikiMarkup(result)
+
+    def _executeFromFile(self, params_dict):
+        snippet_file = params_dict[WIKI_COMMAND_PARAM_FILE]
+        if not snippet_file.endswith(EXTENSION):
+            snippet_file += EXTENSION
+
+        snippet_path = os.path.join(self._snippets_dir, snippet_file)
+        current_dir = os.path.dirname(snippet_path)
+
+        try:
+            snippet_text = readTextFile(snippet_path)
+        except EnvironmentError:
+            text = (_(u'Snippet error: \n') +
+                    _(u"Can't read file '{}'").format(snippet_path))
+            return self._format_error(text)
+
+        return self._parseSnippet(snippet_text, current_dir, params_dict)
+
+    def _executeFromContent(self, params_dict, content):
+        current_dir = self._snippets_dir
+        snippet_text = content
+        return self._parseSnippet(snippet_text, current_dir, params_dict)

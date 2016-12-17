@@ -27,6 +27,8 @@ class WikiCommandTest(unittest.TestCase):
 
         from snippets.utils import getSnippetsDir
         root_snippets_dir = getSnippetsDir()
+
+        # snippets dir for tests
         self._snippets_dir = os.path.join(root_snippets_dir, u'__test_snippets')
         os.mkdir(self._snippets_dir)
 
@@ -115,3 +117,124 @@ class WikiCommandTest(unittest.TestCase):
         result = self.parser.toHtml(text)
         self.assertNotIn(u'Traceback', result, result)
         self.assertIn(u"<div class='__error'>", result)
+
+    def test_file_empty_01(self):
+        snippet_text = u''
+        snippet_fname = u'testsnip.tpl'
+        text = u'(:snip file="__test_snippets/testsnip":)(:snipend:)'
+        result_right = u''
+
+        snip_fname_full = os.path.join(self._snippets_dir, snippet_fname)
+        writeTextFile(snip_fname_full, snippet_text)
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result_right, result, result)
+
+    def test_file_empty_02(self):
+        snippet_text = u''
+        snippet_fname = u'testsnip.tpl'
+        text = u'(:snip file="__test_snippets/testsnip.tpl":)(:snipend:)'
+        result_right = u''
+
+        snip_fname_full = os.path.join(self._snippets_dir, snippet_fname)
+        writeTextFile(snip_fname_full, snippet_text)
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result_right, result, result)
+
+    def test_file_simple(self):
+        snippet_text = u'Текст шаблона'
+        snippet_fname = u'testsnip.tpl'
+        text = u'(:snip file="__test_snippets/testsnip.tpl":)(:snipend:)'
+        result_right = u'Текст шаблона'
+
+        snip_fname_full = os.path.join(self._snippets_dir, snippet_fname)
+        writeTextFile(snip_fname_full, snippet_text)
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result_right, result, result)
+
+    def test_file_global_var_title_01(self):
+        snippet_text = u'{{__title}}'
+        snippet_fname = u'testsnip.tpl'
+        text = u'(:snip file="__test_snippets/testsnip.tpl":)(:snipend:)'
+        result_right = u'Страница 1'
+
+        snip_fname_full = os.path.join(self._snippets_dir, snippet_fname)
+        writeTextFile(snip_fname_full, snippet_text)
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result_right, result, result)
+
+    def test_file_global_var_title_02(self):
+        snippet_text = u'{{__title}}'
+        snippet_fname = u'testsnip.tpl'
+        text = u'(:snip file="__test_snippets/testsnip":)(:snipend:)'
+        result_right = u'Страница 1'
+
+        snip_fname_full = os.path.join(self._snippets_dir, snippet_fname)
+        writeTextFile(snip_fname_full, snippet_text)
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result_right, result, result)
+
+    def test_file_var_01(self):
+        snippet_text = u'{{varname}}'
+        snippet_fname = u'testsnip.tpl'
+        text = u'(:snip file="__test_snippets/testsnip" varname="Переменная":)(:snipend:)'
+        result_right = u'Переменная'
+
+        snip_fname_full = os.path.join(self._snippets_dir, snippet_fname)
+        writeTextFile(snip_fname_full, snippet_text)
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result_right, result, result)
+
+    def test_file_var_02(self):
+        snippet_text = u'{{varname}}'
+        snippet_fname = u'testsnip.tpl'
+        text = u'(:snip file="__test_snippets/testsnip":)(:snipend:)'
+        result_right = u''
+
+        snip_fname_full = os.path.join(self._snippets_dir, snippet_fname)
+        writeTextFile(snip_fname_full, snippet_text)
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result_right, result, result)
+
+    def test_file_invalid(self):
+        text = u'(:snip file="__test_snippets/invalid":)(:snipend:)'
+
+        result = self.parser.toHtml(text)
+        self.assertNotIn(u'Traceback', result, result)
+        self.assertIn(u"<div class='__error'>", result)
+
+    def test_file_include_01(self):
+        snippet_text = u'{% include "included.tpl" %}'
+        snippet_fname = u'testsnip.tpl'
+        text = u'(:snip file="__test_snippets/testsnip":)(:snipend:)'
+        result_right = u'Включение'
+
+        snip_fname_full = os.path.join(self._snippets_dir, snippet_fname)
+        writeTextFile(snip_fname_full, snippet_text)
+
+        snip_fname_full_2 = os.path.join(self._snippets_dir, u'included.tpl')
+        writeTextFile(snip_fname_full_2, u'Включение')
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result_right, result, result)
+
+    def test_file_include_02(self):
+        snippet_text = u'{% include "included.tpl" %}'
+        snippet_fname = u'testsnip.tpl'
+        text = u'(:snip file="__test_snippets/testsnip" var="Переменная":)(:snipend:)'
+        result_right = u'Переменная'
+
+        snip_fname_full = os.path.join(self._snippets_dir, snippet_fname)
+        writeTextFile(snip_fname_full, snippet_text)
+
+        snip_fname_full_2 = os.path.join(self._snippets_dir, u'included.tpl')
+        writeTextFile(snip_fname_full_2, u'{{var}}')
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result_right, result, result)
