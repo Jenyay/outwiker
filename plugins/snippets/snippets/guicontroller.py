@@ -158,7 +158,7 @@ class GuiController(object):
             self._varDialogController.ShowDialog(
                 selectedText,
                 template,
-                os.path.dirname(snippet_fname)
+                snippet_fname
             )
         except SnippetException as e:
             MessageBox(e.message, _(u"Snippet error"), wx.ICON_ERROR | wx.OK)

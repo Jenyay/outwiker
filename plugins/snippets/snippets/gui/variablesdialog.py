@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 from collections import namedtuple
+import os
 
 import wx
 from wx.lib.newevent import NewEvent
@@ -12,6 +13,8 @@ from outwiker.gui.controls.texteditorbase import TextEditorBase
 from snippets.snippetparser import SnippetParser
 from snippets.gui.snippeteditor import SnippetEditor
 from snippets.i18n import get_
+from snippets.defines import EXTENSION
+from snippets.utils import getSnippetsDir
 
 
 FinishDialogParams = namedtuple('FinishDialogParams', ['text'])
@@ -33,6 +36,7 @@ class VariablesDialog(TestedDialog):
 
         self._width = 700
         self._height = 400
+        self._shortTemplateName = None
         self._createGUI()
         self.SetTitle(u'Snippet variables')
 
@@ -55,6 +59,11 @@ class VariablesDialog(TestedDialog):
         # Panel with variables
         self._varPanel = VaraiblesPanel(self)
 
+        # Checkbox for wiki command
+        self._wikiCommandCheckBox = wx.CheckBox(
+            self,
+            label=_(u'Insert as wiki command'))
+
         # OK / Cancel buttons
         self.ok_button = wx.Button(self, wx.ID_OK)
         self.ok_button.SetDefault()
@@ -62,12 +71,15 @@ class VariablesDialog(TestedDialog):
         btn_sizer = self.CreateStdDialogButtonSizer(wx.CANCEL)
         btn_sizer.Add(self.ok_button)
 
+        # Fill mainSizer
         mainSizer.Add(self._varPanel, 1, flag=wx.ALL | wx.EXPAND, border=2)
         mainSizer.Add(self._notebook,
                       1,
                       flag=wx.ALL | wx.EXPAND,
                       border=2)
-        mainSizer.AddStretchSpacer()
+        mainSizer.Add(self._wikiCommandCheckBox,
+                      flag=wx.ALIGN_CENTER_VERTICAL | wx.ALL,
+                      border=2)
         mainSizer.Add(btn_sizer,
                       flag=wx.ALL | wx.ALIGN_RIGHT,
                       border=2)
@@ -98,6 +110,30 @@ class VariablesDialog(TestedDialog):
     def getResult(self):
         return self._resultEditor.GetText()
 
+    def setWikiCommandSetVisible(self, visible):
+        if not visible:
+            self._wikiCommandCheckBox.SetValue(False)
+
+        self._wikiCommandCheckBox.Show(visible)
+
+    @property
+    def wikiCommandChecked(self):
+        return self._wikiCommandCheckBox.IsChecked()
+
+    @wikiCommandChecked.setter
+    def wikiCommandChecked(self, value):
+        self._wikiCommandCheckBox.SetValue(value)
+
+    @property
+    def templateFileName(self):
+        return self._shortTemplateName
+
+    @templateFileName.setter
+    def templateFileName(self, shortTemplateName):
+        title = _(u'{} | Snippet variables').format(shortTemplateName)
+        self._shortTemplateName = shortTemplateName
+        self.SetTitle(title)
+
 
 class VariablesDialogController(object):
     '''
@@ -114,7 +150,12 @@ class VariablesDialogController(object):
         self._dialog.ok_button.Bind(wx.EVT_BUTTON, handler=self._onOk)
         self._dialog.Bind(EVT_VAR_CHANGE, handler=self._onVarChange)
 
-    def ShowDialog(self, selectedText, template, dirname):
+    @property
+    def dialog(self):
+        return self._dialog
+
+    def ShowDialog(self, selectedText, template, template_path):
+        dirname = os.path.dirname(template_path)
         self._selectedText = selectedText
         self._parser = SnippetParser(template, dirname, self._application)
         variables_list = self._parser.getVariables()
@@ -124,30 +165,75 @@ class VariablesDialogController(object):
                             in variables_list
                             if not var.startswith('__')])
 
-        self._dialog.setSnippetText(template)
-        map(lambda var: self._dialog.addStringVariable(var), variables)
+        self.dialog.setSnippetText(template)
+        map(lambda var: self.dialog.addStringVariable(var), variables)
+
+        shortTemplateName = self._getShortTemplateName(template_path)
+        self.dialog.templateFileName = shortTemplateName
+        self.dialog.wikiCommandChecked = False
 
         # Show dialog if user must enter variable's values
         self._updateResult()
-        self._dialog.Show()
+        if (self._application.selectedPage is not None and
+                self._application.selectedPage.getTypeString() == u'wiki'):
+            self.dialog.setWikiCommandSetVisible(True)
+        else:
+            self.dialog.setWikiCommandSetVisible(False)
+        self.dialog.Show()
+
+    def _getShortTemplateName(self, template_fname):
+        '''
+        Convert full template path to short path
+        '''
+        snippets_dir = getSnippetsDir()
+        shortTemplateName = template_fname
+        if shortTemplateName.endswith(EXTENSION):
+            shortTemplateName = shortTemplateName[:-len(EXTENSION)]
+
+        if shortTemplateName.startswith(snippets_dir):
+            shortTemplateName = shortTemplateName[len(snippets_dir) + 1:]
+
+        shortTemplateName = shortTemplateName.replace(u'\\', u'/')
+        return shortTemplateName
 
     def destroy(self):
         self.onFinishDialogEvent.clear()
-        self._dialog.ok_button.Unbind(wx.EVT_BUTTON, handler=self._onOk)
-        self._dialog.Unbind(EVT_VAR_CHANGE, handler=self._onVarChange)
-        self._dialog.Close()
-        self._dialog.Destroy()
+        self.dialog.ok_button.Unbind(wx.EVT_BUTTON, handler=self._onOk)
+        self.dialog.Unbind(EVT_VAR_CHANGE, handler=self._onVarChange)
+        self.dialog.Close()
+        self.dialog.Destroy()
 
     def FinishDialog(self):
         text = self.GetResult()
         self.onFinishDialogEvent(FinishDialogParams(text))
-        self._dialog.Close()
+        self.dialog.Close()
 
     def CloseDialog(self):
-        self._dialog.Close()
+        self.dialog.Close()
 
     def GetResult(self):
-        return self._dialog.getResult()
+        if not self.dialog.wikiCommandChecked:
+            return self.dialog.getResult()
+        else:
+            return self._makeWikiCommand(self.dialog.getVarDict(),
+                                         self.dialog.templateFileName)
+
+    def _makeWikiCommand(self, vardict, template_name):
+        vars_str = u''
+
+        for varname in sorted(vardict.keys()):
+            value = vardict[varname]
+            if u'"' not in value:
+                vars_str += u' {name}="{value}"'.format(name=varname,
+                                                        value=vardict[varname])
+            else:
+                vars_str += u" {name}='{value}'".format(name=varname,
+                                                        value=vardict[varname])
+
+        result = u'(:snip file="{template}"{vars}:)(:snipend:)'.format(
+            template=template_name,
+            vars=vars_str)
+        return result
 
     def _onOk(self, event):
         self.FinishDialog()
@@ -156,11 +242,11 @@ class VariablesDialogController(object):
         self._updateResult()
 
     def _updateResult(self):
-        variables = self._dialog.getVarDict()
+        variables = self.dialog.getVarDict()
         text = self._parser.process(self._selectedText,
                                     self._application.selectedPage,
                                     **variables)
-        self._dialog.setResult(text)
+        self.dialog.setResult(text)
 
 
 class VaraiblesPanel(wx.ScrolledWindow):
