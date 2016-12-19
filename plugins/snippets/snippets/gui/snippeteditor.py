@@ -23,6 +23,8 @@ class SnippetEditor(TextEditorBase):
         self._comment_re = re.compile(r'{#.*?#}', re.U | re.M)
         self._statement_re = re.compile(r'{%.*?%}', re.U | re.M)
 
+        self.textCtrl.SetMarginWidth(0, 35)
+        self.textCtrl.SetMarginWidth(1, 5)
         self.textCtrl.Bind(wx.stc.EVT_STC_STYLENEEDED, self._onStyleNeeded)
 
     def _onStyleNeeded(self, event):
