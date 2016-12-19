@@ -24,6 +24,7 @@ from snippets.utils import (getImagesPath,
                             createFile,
                             moveSnippetsTo)
 import snippets.defines as defines
+from snippets.snippetparser import SnippetParser, SnippetException
 
 
 class TreeItemInfo(object):
@@ -240,6 +241,13 @@ class EditSnippetsDialog(TestedDialog):
         snippetButtonsSizer = wx.BoxSizer(wx.HORIZONTAL)
         self._createSnippetButtons(snippetButtonsSizer, self._snippetPanel)
 
+        # Errors messages
+        self.errorsTextCtrl = wx.TextCtrl(
+            self._snippetPanel,
+            style=wx.TE_MULTILINE | wx.TE_READONLY
+        )
+        self.errorsTextCtrl.SetMinSize((-1, 100))
+
         # SnippetSizer
         snippetSizer = wx.FlexGridSizer(cols=1)
         snippetSizer.AddGrowableRow(1)
@@ -247,6 +255,7 @@ class EditSnippetsDialog(TestedDialog):
 
         snippetSizer.Add(snippetButtonsSizer, 1, wx.EXPAND, border=2)
         snippetSizer.Add(self.snippetEditor, 1, wx.EXPAND, border=2)
+        snippetSizer.Add(self.errorsTextCtrl, 1, wx.EXPAND, border=2)
 
         self._snippetPanel.SetSizer(snippetSizer)
         mainSizer.Add(self._snippetPanel, 1, wx.ALL | wx.EXPAND, border=2)
@@ -272,6 +281,13 @@ class EditSnippetsDialog(TestedDialog):
         self.SetClientSize((self._width, self._height))
         self.Layout()
 
+    @property
+    def currentSnippet(self):
+        return self.snippetEditor.GetText()
+
+    def setError(self, text):
+        self.errorsTextCtrl.SetValue(text)
+
 
 class EditSnippetsDialogController(object):
     '''
@@ -281,6 +297,7 @@ class EditSnippetsDialogController(object):
         global _
         _ = get_()
         self._application = application
+        self._snippetChanged = False
         self._dialog = EditSnippetsDialog(self._application.mainWindow)
         self._bind()
 
@@ -316,9 +333,39 @@ class EditSnippetsDialogController(object):
         self.snippetsTree.Bind(wx.EVT_TREE_END_DRAG,
                                handler=self._onTreeItemDragEnd)
 
+        # Snippet editor
+        self._dialog.snippetEditor.Bind(wx.stc.EVT_STC_CHANGE,
+                                        handler=self._onSnippetEdit)
+        self._dialog.snippetEditor.Bind(wx.EVT_IDLE,
+                                        handler=self._onSnippetEditIdle)
+
     def ShowDialog(self):
         self._updateSnippetsTree()
         self._dialog.Show()
+
+    def _onSnippetEdit(self, event):
+        self._snippetChanged = True
+
+    def _onSnippetEditIdle(self, event):
+        if not self._snippetChanged:
+            return
+
+        path = self._getSelectedItemData().path
+        if os.path.isdir(path):
+            return
+
+        snippet_text = self._dialog.currentSnippet
+        parser = SnippetParser(snippet_text,
+                               os.path.dirname(path),
+                               self._application)
+        try:
+            parser.getVariables()
+        except SnippetException as e:
+            self._dialog.setError(e.message)
+        else:
+            self._dialog.setError(_(u'No snippet errors'))
+
+        self._snippetChanged = False
 
     def _updateSnippetsTree(self, selectedPath=None):
         snippets_tree = self._loadSnippetsTree()
