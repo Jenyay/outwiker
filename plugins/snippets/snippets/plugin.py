@@ -10,6 +10,10 @@ from outwiker.core.version import Version, StatusSet
 from outwiker.core.system import getOS
 
 
+def _no_translate(text):
+    return text
+
+
 if getCurrentVersion() < Version(2, 0, 0, 806, status=StatusSet.BETA):
     logging.warning("Snippets plugin. OutWiker version requirement: 2.0.0.806")
 else:
@@ -37,11 +41,11 @@ else:
 
         @property
         def description(self):
-            return _(u"Plugin to store text templates")
+            return _(u"Plugin to store text snippets")
 
         @property
         def url(self):
-            return _(u"http://jenyay.net/Outwiker/Snippets")
+            return _(u"http://jenyay.net/Outwiker/SnippetsEn")
 
         def initialize(self):
             self._initlocale(u'snippets')
@@ -63,8 +67,8 @@ else:
 
             try:
                 _ = self._init_i18n(domain, langdir)
-            except BaseException, e:
-                print e
+            except BaseException:
+                _ = _no_translate
 
             set_(_)
 

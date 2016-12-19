@@ -26,12 +26,12 @@ def _convertExceptions(func):
         try:
             return func(self, *args, **kwargs)
         except TemplateNotFound as e:
-            text = _(u'Template "{name}" not found').format(
+            text = _(u'Snippet "{name}" not found').format(
                 name=unicode(e.name)
             )
             raise SnippetException(text)
         except TemplateSyntaxError as e:
-            text = _(u'Template error at line {line}:\n{text}').format(
+            text = _(u'Snippet error at line {line}:\n{text}').format(
                 line=e.lineno,
                 text=unicode(e.message)
             )

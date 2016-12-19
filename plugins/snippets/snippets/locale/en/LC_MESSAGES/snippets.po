@@ -1,0 +1,305 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-12-19 10:12+0300\n"
+"PO-Revision-Date: 2016-12-19 10:12+0300\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.9\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: guicontroller.py:50 gui/editdialog.py:89 gui/editdialog.py:385
+msgid "Snippets"
+msgstr "Snippets"
+
+#: guicontroller.py:152 gui/editdialog.py:583
+msgid ""
+"Can't read the snippet\n"
+"{}"
+msgstr ""
+"Can't read the snippet\n"
+"{}"
+
+#: guicontroller.py:153 gui/editdialog.py:450 gui/editdialog.py:470
+#: gui/editdialog.py:497 gui/editdialog.py:584 gui/editdialog.py:629
+#: gui/editdialog.py:644 gui/editdialog.py:700
+msgid "Error"
+msgstr "Error"
+
+#: guicontroller.py:164
+msgid "Snippet error"
+msgstr "Snippet error"
+
+#: actions/editsnippets.py:24
+msgid "Snippets management"
+msgstr "Snippets management"
+
+#: actions/editsnippets.py:28
+msgid "Snippets. Open dialog to edit, create or remove snippets."
+msgstr "Snippets. Open dialog to edit, create or remove snippets."
+
+#: actions/updatemenu.py:23
+msgid "Update snippets list"
+msgstr "Update snippets list"
+
+#: actions/updatemenu.py:27
+msgid "Snippets. Reload snippets list and update the menu."
+msgstr "Snippets. Reload snippets list and update the menu."
+
+#: defines.py:20
+msgid "snippets"
+msgstr "snippets"
+
+#: defines.py:21
+msgid "snippet"
+msgstr "snippet"
+
+#: wikicommand.py:63 wikicommand.py:78
+msgid "Snippet error: \n"
+msgstr "Snippet error: \n"
+
+#: wikicommand.py:79
+msgid "Can't read file '{}'"
+msgstr "Can't read file '{}'"
+
+#: snippetparser.py:29
+#, python-brace-format
+msgid "Snippet \"{name}\" not found"
+msgstr "Snippet \"{name}\" not found"
+
+#: snippetparser.py:34
+#, python-brace-format
+msgid ""
+"Snippet error at line {line}:\n"
+"{text}"
+msgstr ""
+"Snippet error at line {line}:\n"
+"{text}"
+
+#: snippetparser.py:40
+#, python-brace-format
+msgid ""
+"Snippet reading error:\n"
+"{text}"
+msgstr ""
+"Snippet reading error:\n"
+"{text}"
+
+#: snippetparser.py:45
+#, python-brace-format
+msgid ""
+"Snippet processing error:\n"
+"{text}"
+msgstr ""
+"Snippet processing error:\n"
+"{text}"
+
+#: plugin.py:44
+msgid "Plugin to store text snippets"
+msgstr "Plugin to store text snippets"
+
+#: plugin.py:48
+msgid "http://jenyay.net/Outwiker/SnippetsEn"
+msgstr "http://jenyay.net/Outwiker/SnippetsEn"
+
+#: gui/variablesdialog.py:53
+msgid "Preview"
+msgstr "Preview"
+
+#: gui/variablesdialog.py:57
+msgid "Snippet"
+msgstr "Snippet"
+
+#: gui/variablesdialog.py:65
+msgid "Insert as wiki command"
+msgstr "Insert as wiki command"
+
+#: gui/variablesdialog.py:133
+msgid "{} | Snippet variables"
+msgstr "{} | Snippet variables"
+
+#: gui/editdialog.py:67
+msgid "Selected text"
+msgstr "Selected text"
+
+#: gui/editdialog.py:68
+msgid "Page title"
+msgstr "Page title"
+
+#: gui/editdialog.py:69
+msgid "Page tags list"
+msgstr "Page tags list"
+
+#: gui/editdialog.py:70
+msgid "Attachments path"
+msgstr "Attachments path"
+
+#: gui/editdialog.py:71
+msgid "Path to page"
+msgstr "Path to page"
+
+#: gui/editdialog.py:72
+msgid "Page Id"
+msgstr "Page Id"
+
+#: gui/editdialog.py:73
+msgid "Relative page path"
+msgstr "Relative page path"
+
+#: gui/editdialog.py:74
+msgid "Current date"
+msgstr "Current date"
+
+#: gui/editdialog.py:75
+msgid "Page creation date"
+msgstr "Page creation date"
+
+#: gui/editdialog.py:76
+msgid "Page modification date"
+msgstr "Page modification date"
+
+#: gui/editdialog.py:77
+msgid "Page type"
+msgstr "Page type"
+
+#: gui/editdialog.py:78
+msgid "Attachments list"
+msgstr "Attachments list"
+
+#: gui/editdialog.py:79
+msgid "Child pages"
+msgstr "Child pages"
+
+#: gui/editdialog.py:83
+msgid "{% if %}"
+msgstr "{% if %}"
+
+#: gui/editdialog.py:84
+msgid "{% include %}"
+msgstr "{% include %}"
+
+#: gui/editdialog.py:85
+msgid "{# comment #}"
+msgstr "{# comment #}"
+
+#: gui/editdialog.py:129
+msgid "Add new snippets group"
+msgstr "Add new snippets group"
+
+#: gui/editdialog.py:138
+msgid "Create new snippet"
+msgstr "Create new snippet"
+
+#: gui/editdialog.py:147
+msgid "Rename"
+msgstr "Rename"
+
+#: gui/editdialog.py:156
+msgid "Remove"
+msgstr "Remove"
+
+#: gui/editdialog.py:165
+msgid "Run snippet"
+msgstr "Run snippet"
+
+#: gui/editdialog.py:209
+msgid "Insert variable"
+msgstr "Insert variable"
+
+#: gui/editdialog.py:216
+msgid "Other variable..."
+msgstr "Other variable..."
+
+#: gui/editdialog.py:225
+msgid "Insert block"
+msgstr "Insert block"
+
+#: gui/editdialog.py:366
+msgid "No snippet errors"
+msgstr "No snippet errors"
+
+#: gui/editdialog.py:438
+msgid "Remove directory \"{}\" and all snippets inside?"
+msgstr "Remove directory \"{}\" and all snippets inside?"
+
+#: gui/editdialog.py:439
+msgid "Remove snippets directory"
+msgstr "Remove snippets directory"
+
+#: gui/editdialog.py:449
+msgid "Can't remove directory \"{}\""
+msgstr "Can't remove directory \"{}\""
+
+#: gui/editdialog.py:458
+msgid "Remove snippet \"{}\"?"
+msgstr "Remove snippet \"{}\"?"
+
+#: gui/editdialog.py:459
+msgid "Remove snippet"
+msgstr "Remove snippet"
+
+#: gui/editdialog.py:469
+msgid "Can't remove snippet \"{}\""
+msgstr "Can't remove snippet \"{}\""
+
+#: gui/editdialog.py:496
+msgid ""
+"Can't create directory\n"
+"{}"
+msgstr ""
+"Can't create directory\n"
+"{}"
+
+#: gui/editdialog.py:628
+msgid ""
+"Can't create snippet\n"
+"{}"
+msgstr ""
+"Can't create snippet\n"
+"{}"
+
+#: gui/editdialog.py:643
+msgid ""
+"Can't save snippet\n"
+"{}"
+msgstr ""
+"Can't save snippet\n"
+"{}"
+
+#: gui/editdialog.py:687
+msgid "Enter variable name (English leters, numbers and _ only)"
+msgstr "Enter variable name (English leters, numbers and _ only)"
+
+#: gui/editdialog.py:688
+msgid "Variable name"
+msgstr "Variable name"
+
+#: gui/editdialog.py:699
+msgid "Invalid variable name \"{}\""
+msgstr "Invalid variable name \"{}\""
+
+#~ msgid "Template \"{name}\" not found"
+#~ msgstr "Template \"{name}\" not found"
+
+#~ msgid ""
+#~ "Template error at line {line}:\n"
+#~ "{text}"
+#~ msgstr ""
+#~ "Template error at line {line}:\n"
+#~ "{text}"
+
+#~ msgid "Plugin to store text templates"
+#~ msgstr "Plugin to store text templates"
+
+#~ msgid "http://jenyay.net/Outwiker/Snippets"
+#~ msgstr "http://jenyay.net/Outwiker/Snippets"
