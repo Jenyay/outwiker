@@ -86,7 +86,7 @@ class EditSnippetsDialog(TestedDialog):
         ]
 
         self._createGUI()
-        self.SetTitle(_(u'Snippets'))
+        self.SetTitle(_(u'Snippets management'))
         self.disableSnippetEditor()
 
     def disableSnippetEditor(self):
@@ -262,7 +262,7 @@ class EditSnippetsDialog(TestedDialog):
 
     def _createBottomButtons(self, mainSizer):
         mainSizer.AddStretchSpacer()
-        self.closeBtn = wx.Button(self, id=wx.ID_CLOSE)
+        self.closeBtn = wx.Button(self, id=wx.ID_CLOSE, label=_(u'Close'))
         mainSizer.Add(self.closeBtn, flag=wx.ALL | wx.ALIGN_RIGHT, border=2)
         self.SetEscapeId(wx.ID_CLOSE)
 
