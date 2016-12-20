@@ -3,4 +3,4 @@
 from collections import namedtuple
 
 
-RunSnippetParams = namedtuple('RunSnippetParams', 'snippet_fname selectedText')
+RunSnippetParams = namedtuple('RunSnippetParams', 'snippet_fname')

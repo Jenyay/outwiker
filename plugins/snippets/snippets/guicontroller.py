@@ -10,6 +10,7 @@ from outwiker.utilites.textfile import readTextFile
 
 from snippets.actions.updatemenu import UpdateMenuAction
 from snippets.actions.editsnippets import EditSnippetsAction
+from snippets.actions.runrecentsnippet import RunRecentSnippet
 from snippets.events import RunSnippetParams
 from snippets.i18n import get_
 from snippets.snippetsloader import SnippetsLoader
@@ -39,6 +40,7 @@ class GuiController(object):
         self._actions = [
             UpdateMenuAction,
             EditSnippetsAction,
+            RunRecentSnippet,
         ]
 
     def initialize(self):
@@ -143,8 +145,10 @@ class GuiController(object):
 
     def _onRunSnippet(self, params):
         # type: (RunSnippetParams) -> None
+        editor = self._getEditor()
+        selectedText = editor.GetSelectedText() if editor is not None else u''
+
         snippet_fname = params.snippet_fname
-        selectedText = params.selectedText
         try:
             template = self._loadTemplate(snippet_fname)
         except EnvironmentError:
@@ -167,9 +171,7 @@ class GuiController(object):
         assert event.GetId() in self._snippets_id
         snippet_fname = self._snippets_id[event.GetId()].filename
 
-        editor = self._getEditor()
-        selectedText = editor.GetSelectedText() if editor is not None else u''
-        eventParams = RunSnippetParams(snippet_fname, selectedText)
+        eventParams = RunSnippetParams(snippet_fname)
         self._application.customEvents(defines.EVENT_RUN_SNIPPET, eventParams)
 
     def _loadTemplate(self, fname):
