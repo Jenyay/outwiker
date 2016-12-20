@@ -144,6 +144,7 @@ class VariablesDialogController(object):
         self._parser = None
         self._selectedText = u''
         self._config = SnippetsConfig(self._application.config)
+        self._recentSnippetPath = None
 
         self._dialog = VariablesDialog(self._application.mainWindow)
         self._dialog.ok_button.Bind(wx.EVT_BUTTON, handler=self._onOk)
@@ -156,6 +157,7 @@ class VariablesDialogController(object):
         return self._dialog
 
     def ShowDialog(self, selectedText, template, template_path):
+        self._recentSnippetPath = template_path
         dirname = os.path.dirname(template_path)
         self._selectedText = selectedText
         self._parser = SnippetParser(template, dirname, self._application)
@@ -209,6 +211,7 @@ class VariablesDialogController(object):
             w, h = self._dialog.GetClientSize()
             self._config.variablesDialogWidth = w
             self._config.variablesDialogHeight = h
+            self._config.recentSnippet = self._recentSnippetPath
         except EnvironmentError:
             pass
 
