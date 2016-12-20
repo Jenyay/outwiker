@@ -15,6 +15,7 @@ from snippets.gui.snippeteditor import SnippetEditor
 from snippets.i18n import get_
 from snippets.defines import EXTENSION
 from snippets.utils import getSnippetsDir
+from snippets.config import SnippetsConfig
 
 
 FinishDialogParams = namedtuple('FinishDialogParams', ['text'])
@@ -34,8 +35,6 @@ class VariablesDialog(TestedDialog):
         global _
         _ = get_()
 
-        self._width = 700
-        self._height = 400
         self._shortTemplateName = None
         self._createGUI()
         self.SetTitle(u'Snippet variables')
@@ -85,7 +84,6 @@ class VariablesDialog(TestedDialog):
                       border=2)
 
         self.SetSizer(mainSizer)
-        self.SetClientSize((self._width, self._height))
         self.Layout()
 
     def setSnippetText(self, text):
@@ -145,10 +143,13 @@ class VariablesDialogController(object):
         self.onFinishDialogEvent = Event()
         self._parser = None
         self._selectedText = u''
+        self._config = SnippetsConfig(self._application.config)
 
         self._dialog = VariablesDialog(self._application.mainWindow)
         self._dialog.ok_button.Bind(wx.EVT_BUTTON, handler=self._onOk)
         self._dialog.Bind(EVT_VAR_CHANGE, handler=self._onVarChange)
+        self._dialog.SetClientSize((self._config.variablesDialogWidth,
+                                    self._config.variablesDialogHeight))
 
     @property
     def dialog(self):
@@ -204,6 +205,13 @@ class VariablesDialogController(object):
         self.dialog.Destroy()
 
     def FinishDialog(self):
+        try:
+            w, h = self._dialog.GetClientSize()
+            self._config.variablesDialogWidth = w
+            self._config.variablesDialogHeight = h
+        except EnvironmentError:
+            pass
+
         text = self.GetResult()
         self.onFinishDialogEvent(FinishDialogParams(text))
         self.dialog.Close()

@@ -25,6 +25,7 @@ from snippets.utils import (getImagesPath,
                             moveSnippetsTo)
 import snippets.defines as defines
 from snippets.snippetparser import SnippetParser, SnippetException
+from snippets.config import SnippetsConfig
 
 
 class TreeItemInfo(object):
@@ -45,8 +46,6 @@ class EditSnippetsDialog(TestedDialog):
         global _
         _ = get_()
 
-        self._width = 800
-        self._height = 500
         self.ICON_WIDTH = 16
         self.ICON_HEIGHT = 16
 
@@ -278,7 +277,6 @@ class EditSnippetsDialog(TestedDialog):
         self._createBottomButtons(mainSizer)
 
         self.SetSizer(mainSizer)
-        self.SetClientSize((self._width, self._height))
         self.Layout()
 
     @property
@@ -299,6 +297,9 @@ class EditSnippetsDialogController(object):
         self._application = application
         self._snippetChanged = False
         self._dialog = EditSnippetsDialog(self._application.mainWindow)
+        self._config = SnippetsConfig(self._application.config)
+        self._dialog.SetClientSize((self._config.editDialogWidth,
+                                    self._config.editDialogHeight))
         self._bind()
 
     def _bind(self):
@@ -660,6 +661,14 @@ class EditSnippetsDialogController(object):
         except EnvironmentError:
             if event.CanVeto():
                 event.Veto()
+                return
+
+        try:
+            w, h = self._dialog.GetClientSize()
+            self._config.editDialogWidth = w
+            self._config.editDialogHeight = h
+        except EnvironmentError:
+            pass
 
     def _onCloseBtn(self, event):
         self._dialog.Close()
