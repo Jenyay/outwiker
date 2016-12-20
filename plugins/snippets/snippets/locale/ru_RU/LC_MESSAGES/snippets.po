@@ -7,23 +7,23 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-19 10:12+0300\n"
-"PO-Revision-Date: 2016-12-19 12:28+0300\n"
+"POT-Creation-Date: 2016-12-20 22:35+0300\n"
+"PO-Revision-Date: 2016-12-20 22:36+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.11\n"
+"X-Generator: Poedit 1.8.9\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: guicontroller.py:50 gui/editdialog.py:89 gui/editdialog.py:385
+#: guicontroller.py:52 gui/editdialog.py:386
 msgid "Snippets"
 msgstr "Шаблоны"
 
-#: guicontroller.py:152 gui/editdialog.py:583
+#: guicontroller.py:156 gui/editdialog.py:584
 msgid ""
 "Can't read the snippet\n"
 "{}"
@@ -31,17 +31,17 @@ msgstr ""
 "Невозможно прочитать шаблон\n"
 "{}"
 
-#: guicontroller.py:153 gui/editdialog.py:450 gui/editdialog.py:470
-#: gui/editdialog.py:497 gui/editdialog.py:584 gui/editdialog.py:629
-#: gui/editdialog.py:644 gui/editdialog.py:700
+#: guicontroller.py:157 gui/editdialog.py:451 gui/editdialog.py:471
+#: gui/editdialog.py:498 gui/editdialog.py:585 gui/editdialog.py:630
+#: gui/editdialog.py:645 gui/editdialog.py:709
 msgid "Error"
 msgstr "Ошибка"
 
-#: guicontroller.py:164
+#: guicontroller.py:168
 msgid "Snippet error"
 msgstr "Ошибка в шаблоне"
 
-#: actions/editsnippets.py:24
+#: actions/editsnippets.py:24 gui/editdialog.py:88
 msgid "Snippets management"
 msgstr "Управление шаблонами"
 
@@ -49,6 +49,14 @@ msgstr "Управление шаблонами"
 msgid "Snippets. Open dialog to edit, create or remove snippets."
 msgstr ""
 "Snippets. Открыть диалог для редактирования, создания или удаления шаблонов."
+
+#: actions/runrecentsnippet.py:30
+msgid "Run recent used snippet..."
+msgstr "Последний используемый шаблон..."
+
+#: actions/runrecentsnippet.py:34
+msgid "Snippets. Run recent used snippet."
+msgstr "Snippets. Выполнить последний используемый шаблон."
 
 #: actions/updatemenu.py:23
 msgid "Update snippets list"
@@ -66,11 +74,11 @@ msgstr "шаблоны"
 msgid "snippet"
 msgstr "шаблон"
 
-#: wikicommand.py:63 wikicommand.py:78
+#: wikicommand.py:67 wikicommand.py:82
 msgid "Snippet error: \n"
 msgstr "Ошибка в шаблоне:\n"
 
-#: wikicommand.py:79
+#: wikicommand.py:83
 msgid "Can't read file '{}'"
 msgstr "Невозможно прочитать файл '{}'"
 
@@ -114,147 +122,151 @@ msgstr "Плагин для хранения шаблонов текста"
 msgid "http://jenyay.net/Outwiker/SnippetsEn"
 msgstr "http://jenyay.net/Outwiker/Snippets"
 
-#: gui/variablesdialog.py:53
+#: gui/variablesdialog.py:52
 msgid "Preview"
 msgstr "Просмотр"
 
-#: gui/variablesdialog.py:57
+#: gui/variablesdialog.py:56
 msgid "Snippet"
 msgstr "Шаблон"
 
-#: gui/variablesdialog.py:65
+#: gui/variablesdialog.py:64
 msgid "Insert as wiki command"
 msgstr "Вставить как викикоманду"
 
-#: gui/variablesdialog.py:133
+#: gui/variablesdialog.py:131
 msgid "{} | Snippet variables"
 msgstr "{} | Переменные шаблона"
 
-#: gui/editdialog.py:67
+#: gui/editdialog.py:66
 msgid "Selected text"
 msgstr "Выбранный текст"
 
-#: gui/editdialog.py:68
+#: gui/editdialog.py:67
 msgid "Page title"
 msgstr "Заголовок страницы"
 
-#: gui/editdialog.py:69
+#: gui/editdialog.py:68
 msgid "Page tags list"
 msgstr "Список меток страницы"
 
-#: gui/editdialog.py:70
+#: gui/editdialog.py:69
 msgid "Attachments path"
 msgstr "Путь до прикрепленных файлов"
 
-#: gui/editdialog.py:71
+#: gui/editdialog.py:70
 msgid "Path to page"
 msgstr "Путь до страницы"
 
-#: gui/editdialog.py:72
+#: gui/editdialog.py:71
 msgid "Page Id"
 msgstr "Идентификатор страницы"
 
-#: gui/editdialog.py:73
+#: gui/editdialog.py:72
 msgid "Relative page path"
 msgstr "Относительный путь страницы"
 
-#: gui/editdialog.py:74
+#: gui/editdialog.py:73
 msgid "Current date"
 msgstr "Текущая дата"
 
-#: gui/editdialog.py:75
+#: gui/editdialog.py:74
 msgid "Page creation date"
 msgstr "Дата создания страницы"
 
-#: gui/editdialog.py:76
+#: gui/editdialog.py:75
 msgid "Page modification date"
 msgstr "Дата изменения страницы"
 
-#: gui/editdialog.py:77
+#: gui/editdialog.py:76
 msgid "Page type"
 msgstr "Тип страницы"
 
-#: gui/editdialog.py:78
+#: gui/editdialog.py:77
 msgid "Attachments list"
 msgstr "Список прикрепленных файлов"
 
-#: gui/editdialog.py:79
+#: gui/editdialog.py:78
 msgid "Child pages"
 msgstr "Дочерние страницы"
 
-#: gui/editdialog.py:83
+#: gui/editdialog.py:82
 msgid "{% if %}"
 msgstr "{% if %}"
 
-#: gui/editdialog.py:84
+#: gui/editdialog.py:83
 msgid "{% include %}"
 msgstr "{% include %}"
 
-#: gui/editdialog.py:85
+#: gui/editdialog.py:84
 msgid "{# comment #}"
 msgstr "{# комментарий #}"
 
-#: gui/editdialog.py:129
+#: gui/editdialog.py:128
 msgid "Add new snippets group"
 msgstr "Добавить новую группу шаблонов"
 
-#: gui/editdialog.py:138
+#: gui/editdialog.py:137
 msgid "Create new snippet"
 msgstr "Создать новый шаблон"
 
-#: gui/editdialog.py:147
+#: gui/editdialog.py:146
 msgid "Rename"
 msgstr "Переименовать"
 
-#: gui/editdialog.py:156
+#: gui/editdialog.py:155
 msgid "Remove"
 msgstr "Удалить"
 
-#: gui/editdialog.py:165
+#: gui/editdialog.py:164
 msgid "Run snippet"
 msgstr "Выполнить шаблон"
 
-#: gui/editdialog.py:209
+#: gui/editdialog.py:208
 msgid "Insert variable"
 msgstr "Вставить переменную"
 
-#: gui/editdialog.py:216
+#: gui/editdialog.py:215
 msgid "Other variable..."
 msgstr "Другая переменная..."
 
-#: gui/editdialog.py:225
+#: gui/editdialog.py:224
 msgid "Insert block"
 msgstr "Вставить блок"
 
-#: gui/editdialog.py:366
+#: gui/editdialog.py:264
+msgid "Close"
+msgstr "Закрыть"
+
+#: gui/editdialog.py:367
 msgid "No snippet errors"
 msgstr "Нет ошибок в шаблоне"
 
-#: gui/editdialog.py:438
+#: gui/editdialog.py:439
 msgid "Remove directory \"{}\" and all snippets inside?"
 msgstr "Удалить папку \"{}\" и все шаблоны внутри нее?"
 
-#: gui/editdialog.py:439
+#: gui/editdialog.py:440
 msgid "Remove snippets directory"
 msgstr "Удалить папку с шаблонами"
 
-#: gui/editdialog.py:449
+#: gui/editdialog.py:450
 msgid "Can't remove directory \"{}\""
 msgstr "Невозможно удалить папку \"{}\""
 
-#: gui/editdialog.py:458
+#: gui/editdialog.py:459
 msgid "Remove snippet \"{}\"?"
 msgstr "Удалить шаблон \"{}\"?"
 
-#: gui/editdialog.py:459
+#: gui/editdialog.py:460
 msgid "Remove snippet"
 msgstr "Удалить шаблон"
 
-#: gui/editdialog.py:469
+#: gui/editdialog.py:470
 msgid "Can't remove snippet \"{}\""
 msgstr "Невозможно удалить шаблон \"{}\""
 
-#: gui/editdialog.py:496
+#: gui/editdialog.py:497
 msgid ""
 "Can't create directory\n"
 "{}"
@@ -262,7 +274,7 @@ msgstr ""
 "Невозможно создать папку\n"
 "{}"
 
-#: gui/editdialog.py:628
+#: gui/editdialog.py:629
 msgid ""
 "Can't create snippet\n"
 "{}"
@@ -270,7 +282,7 @@ msgstr ""
 "Невозможно создать шаблон\n"
 "{}"
 
-#: gui/editdialog.py:643
+#: gui/editdialog.py:644
 msgid ""
 "Can't save snippet\n"
 "{}"
@@ -278,17 +290,17 @@ msgstr ""
 "Невозможно сохранить шаблон\n"
 "{}"
 
-#: gui/editdialog.py:687
+#: gui/editdialog.py:696
 msgid "Enter variable name (English leters, numbers and _ only)"
 msgstr ""
 "Введите имя переменной (допускаются только английские буквы, цифры и символ "
 "_)"
 
-#: gui/editdialog.py:688
+#: gui/editdialog.py:697
 msgid "Variable name"
 msgstr "Имя переменной"
 
-#: gui/editdialog.py:699
+#: gui/editdialog.py:708
 msgid "Invalid variable name \"{}\""
 msgstr "Неправильное имя переменной \"{}\""
 
