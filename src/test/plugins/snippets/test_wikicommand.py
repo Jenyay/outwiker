@@ -202,6 +202,18 @@ class SnippetsWikiCommandTest(unittest.TestCase):
         result = self.parser.toHtml(text)
         self.assertEqual(result_right, result, result)
 
+    def test_file_var_03(self):
+        snippet_text = u'{{__text}}'
+        snippet_fname = u'testsnip.tpl'
+        text = u'(:snip file="__test_snippets/testsnip":)Текст(:snipend:)'
+        result_right = u'Текст'
+
+        snip_fname_full = os.path.join(self._snippets_dir, snippet_fname)
+        writeTextFile(snip_fname_full, snippet_text)
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result_right, result, result)
+
     def test_file_invalid(self):
         text = u'(:snip file="__test_snippets/invalid":)(:snipend:)'
 

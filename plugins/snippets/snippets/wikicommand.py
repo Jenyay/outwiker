@@ -44,19 +44,23 @@ class CommandSnip (Command):
     def execute(self, params, content):
         params_dict = self.parseParams(params)
         if WIKI_COMMAND_PARAM_FILE in params_dict:
-            return self._executeFromFile(params_dict)
+            return self._executeFromFile(params_dict, content)
         else:
             return self._executeFromContent(params_dict, content)
 
     def _format_error(self, text):
         return u"<div class='__error'><b>{}</b></div>".format(text)
 
-    def _parseSnippet(self, snippet_text, current_dir, params_dict):
+    def _parseSnippet(self,
+                      snippet_text,
+                      current_dir,
+                      params_dict,
+                      selected_text=u''):
         snippet_parser = SnippetParser(snippet_text,
                                        current_dir,
                                        self._application)
         try:
-            result = snippet_parser.process(u'',
+            result = snippet_parser.process(selected_text,
                                             self.parser.page,
                                             **params_dict)
         except SnippetException as e:
@@ -64,7 +68,7 @@ class CommandSnip (Command):
             return self._format_error(text)
         return self.parser.parseWikiMarkup(result)
 
-    def _executeFromFile(self, params_dict):
+    def _executeFromFile(self, params_dict, content):
         snippet_file = params_dict[WIKI_COMMAND_PARAM_FILE]
         if not snippet_file.endswith(EXTENSION):
             snippet_file += EXTENSION
@@ -79,7 +83,10 @@ class CommandSnip (Command):
                     _(u"Can't read file '{}'").format(snippet_path))
             return self._format_error(text)
 
-        return self._parseSnippet(snippet_text, current_dir, params_dict)
+        return self._parseSnippet(snippet_text,
+                                  current_dir,
+                                  params_dict,
+                                  content)
 
     def _executeFromContent(self, params_dict, content):
         current_dir = self._snippets_dir
