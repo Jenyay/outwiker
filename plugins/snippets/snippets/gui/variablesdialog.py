@@ -323,27 +323,17 @@ class StringVariableCtrl(wx.Panel):
         self._label = wx.StaticText(self, label=self._varname)
 
         # TextCtrl
-        # Without the style magic Enter key don't work in Windows
-        # after expanding
         self._textCtrl = wx.TextCtrl(self, style=wx.TE_MULTILINE)
-        self._textCtrl.SetWindowStyle(wx.TE_PROCESS_ENTER)
-        self._textCtrl.SetMinSize((-1, -1))
+        self._textCtrl.SetMinSize((-1, 75))
         self._textCtrl.Bind(wx.EVT_TEXT, handler=self._onTextEdit)
-        self._textCtrl.Bind(wx.EVT_TEXT_ENTER, handler=self._onPressEnter)
 
-        # Expand button
-        self._expandButton = wx.BitmapButton(self, bitmap=self._expandBitmap)
-        self._expandButton.Bind(wx.EVT_BUTTON, handler=self._onExpand)
-
-        mainSizer = wx.FlexGridSizer(cols=2)
+        mainSizer = wx.FlexGridSizer(cols=1)
         mainSizer.AddGrowableCol(0)
 
         mainSizer.Add(self._label, flag=wx.ALL, border=2)
-        mainSizer.AddStretchSpacer()
         mainSizer.Add(self._textCtrl,
-                      flag=wx.EXPAND | wx.TOP | wx.BOTTOM | wx.LEFT,
+                      flag=wx.EXPAND | wx.ALL,
                       border=2)
-        mainSizer.Add(self._expandButton)
 
         self.SetSizer(mainSizer)
         self.Layout()
@@ -353,31 +343,6 @@ class StringVariableCtrl(wx.Panel):
 
     def SetValue(self, value):
         self._textCtrl.SetValue(value)
-
-    def _onPressEnter(self, event):
-        self._onExpand(None)
-
-    def _onExpand(self, event):
-        self._expandButton.Unbind(wx.EVT_BUTTON, handler=self._onExpand)
-        self._expandButton.Bind(wx.EVT_BUTTON, handler=self._onCollapse)
-        self._expandButton.SetBitmapLabel(self._collapseBitmap)
-        self._textCtrl.SetWindowStyle(wx.TE_MULTILINE)
-        self._textCtrl.SetMinSize((-1, 75))
-        self.GetParent().Layout()
-
-    def _onCollapse(self, event):
-        self._expandButton.Bind(wx.EVT_BUTTON, handler=self._onExpand)
-        self._expandButton.Unbind(wx.EVT_BUTTON, handler=self._onCollapse)
-        self._expandButton.SetBitmapLabel(self._expandBitmap)
-        self._textCtrl.SetWindowStyle(wx.TE_PROCESS_ENTER)
-        self._textCtrl.SetMinSize((-1, -1))
-
-        old_text = self._textCtrl.GetValue()
-        if old_text:
-            new_text = old_text.split(u'\n')[0]
-            self._textCtrl.SetValue(new_text)
-
-        self.GetParent().Layout()
 
     def _onTextEdit(self, event):
         propagationLevel = 10
