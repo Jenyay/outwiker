@@ -8,7 +8,6 @@ import wx
 from outwiker.core.commands import MessageBox
 from outwiker.utilites.textfile import readTextFile
 
-from snippets.actions.updatemenu import UpdateMenuAction
 from snippets.actions.editsnippets import EditSnippetsAction
 from snippets.actions.runrecentsnippet import RunRecentSnippet
 from snippets.events import RunSnippetParams
@@ -38,7 +37,6 @@ class GuiController(object):
         )
 
         self._actions = [
-            UpdateMenuAction,
             EditSnippetsAction,
             RunRecentSnippet,
         ]

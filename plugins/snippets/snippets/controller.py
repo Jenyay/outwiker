@@ -7,7 +7,6 @@ from outwiker.core.system import getSpecialDirList
 from .i18n import get_
 from .guicontroller import GuiController
 from .defines import SNIPPETS_DIR
-from snippets.actions.updatemenu import UpdateMenuAction
 from snippets.actions.editsnippets import EditSnippetsAction
 from snippets.actions.runrecentsnippet import RunRecentSnippet
 from snippets.wikicommand import CommandSnip
@@ -27,7 +26,6 @@ class Controller(object):
         self._guiController = GuiController(application)
 
         self._actions = [
-            (UpdateMenuAction, None),
             (EditSnippetsAction, None),
             (RunRecentSnippet, None),
         ]

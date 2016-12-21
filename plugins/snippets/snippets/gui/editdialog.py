@@ -14,7 +14,6 @@ from outwiker.core.commands import MessageBox
 from outwiker.core.system import getSpecialDirList
 from outwiker.utilites.textfile import readTextFile, writeTextFile
 
-from snippets.actions.updatemenu import UpdateMenuAction
 from snippets.events import RunSnippetParams
 from snippets.gui.snippeteditor import SnippetEditor
 from snippets.i18n import get_
@@ -599,8 +598,7 @@ class EditSnippetsDialogController(object):
         '''
         Update 'Snippets' menu in main menu.
         '''
-        actionController = self._application.actionController
-        actionController.getAction(UpdateMenuAction.stringId).run(None)
+        self._application.customEvents(defines.EVENT_UPDATE_MENU, None)
 
     def _onAddSnippet(self, event):
         selectedItem = self._getSelectedItemData()

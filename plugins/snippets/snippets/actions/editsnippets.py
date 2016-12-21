@@ -21,7 +21,7 @@ class EditSnippetsAction (BaseAction):
 
     @property
     def title(self):
-        return _(u"Snippets management")
+        return _(u"Snippets management...")
 
     @property
     def description(self):
