@@ -431,11 +431,17 @@ class WikiPage(RootWikiPage):
 
     @property
     def alias(self):
+        '''
+        Added in outwiker.core 1.2
+        '''
         alias = self.params.aliasOption.value
         return None if not alias else alias
 
     @alias.setter
     def alias(self, value):
+        '''
+        Added in outwiker.core 1.2
+        '''
         if not value:
             self.params.aliasOption.remove_option()
         else:
