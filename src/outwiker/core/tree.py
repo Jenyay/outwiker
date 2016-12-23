@@ -451,6 +451,9 @@ class WikiPage(RootWikiPage):
 
     @property
     def display_title(self):
+        '''
+        Added in outwiker.core 1.2
+        '''
         return self.alias if self.alias else self.title
 
     @property
