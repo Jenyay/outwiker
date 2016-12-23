@@ -531,7 +531,7 @@ class NotesTree(wx.Panel):
 
         item = self.treeCtrl.InsertItemBefore (parentItem,
                                                child.order,
-                                               child.title,
+                                               child.display_title,
                                                data = wx.TreeItemData(child))
 
         self.treeCtrl.SetItemImage (item, self.__loadIcon (child))

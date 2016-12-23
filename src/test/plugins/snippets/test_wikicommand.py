@@ -178,6 +178,19 @@ class SnippetsWikiCommandTest(unittest.TestCase):
         result = self.parser.toHtml(text)
         self.assertEqual(result_right, result, result)
 
+    def test_file_global_var_title_alias(self):
+        self.testPage.alias = u'Псевдоним'
+        snippet_text = u'{{__title}}'
+        snippet_fname = u'testsnip.tpl'
+        text = u'(:snip file="__test_snippets/testsnip":)(:snipend:)'
+        result_right = u'Псевдоним'
+
+        snip_fname_full = os.path.join(self._snippets_dir, snippet_fname)
+        writeTextFile(snip_fname_full, snippet_text)
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result_right, result, result)
+
     def test_file_var_01(self):
         snippet_text = u'{{varname}}'
         snippet_fname = u'testsnip.tpl'

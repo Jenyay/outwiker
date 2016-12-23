@@ -38,9 +38,9 @@ class BookmarksController (object):
                 parentPage = page.parent
 
                 if parentPage.parent is not None:
-                    label = "%s [%s]" % (page.title, parentPage.subpath)
+                    label = "%s [%s]" % (page.display_title, parentPage.subpath)
                 else:
-                    label = page.title
+                    label = page.display_title
 
                 self.controller.mainMenu.bookmarksMenu.Append (id, label, "", wx.ITEM_NORMAL)
                 self.controller.mainWindow.Bind(wx.EVT_MENU, self.__onSelectBookmark, id=id)

@@ -407,6 +407,7 @@ class PageConfig(Config):
     orderParamName = u"order"
     datetimeParamName = u"datetime"
     creationDatetimeParamName = u"creationdatetime"
+    aliasParamName = u"alias"
 
     def __init__(self, fname, readonly=False):
         Config.__init__(self, fname, readonly)
@@ -434,3 +435,8 @@ class PageConfig(Config):
             PageConfig.sectionName,
             PageConfig.creationDatetimeParamName,
             None)
+
+        self.aliasOption = StringOption(self,
+                                        PageConfig.sectionName,
+                                        PageConfig.aliasParamName,
+                                        u'')

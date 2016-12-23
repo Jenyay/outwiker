@@ -97,7 +97,7 @@ class SnippetParser(object):
 
             globals_page = {
                 defines.VAR_SEL_TEXT: selectedText,
-                defines.VAR_TITLE: page.title,
+                defines.VAR_TITLE: page.display_title,
                 defines.VAR_SUBPATH: page.subpath,
                 defines.VAR_ATTACH: attach.getAttachPath(True),
                 defines.VAR_FOLDER: page.path,

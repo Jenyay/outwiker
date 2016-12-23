@@ -430,6 +430,24 @@ class WikiPage(RootWikiPage):
         self.root.onPageOrderChange(self)
 
     @property
+    def alias(self):
+        alias = self.params.aliasOption.value
+        return None if not alias else alias
+
+    @alias.setter
+    def alias(self, value):
+        if not value:
+            self.params.aliasOption.remove_option()
+        else:
+            self.params.aliasOption.value = value
+
+        self.root.onTreeUpdate(self)
+
+    @property
+    def display_title(self):
+        return self.alias if self.alias else self.title
+
+    @property
     def title(self):
         return self._title
 

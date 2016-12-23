@@ -262,7 +262,7 @@ class TabsController (object):
 
     def __getTitle (self, page):
         if page is not None:
-            return page.title
+            return page.display_title
 
         if self._application.wikiroot is None:
             return "    "
@@ -293,7 +293,7 @@ class TabsController (object):
             if (page is None or page.isRemoved) and index != selectedIndex:
                 self._tabsCtrl.DeletePage (index)
                 index -= 1
-            elif page is None or page.title != self.getTabTitle (index):
+            elif page is None or page.display_title != self.getTabTitle (index):
                 self._tabsCtrl.RenameTab (index, self.__getTitle (page))
 
             index += 1

@@ -361,7 +361,7 @@ def copyTitleToClipboard (page):
     Копировать заголовок страницы в буфер обмена
     """
     assert page is not None
-    copyTextToClipboard (page.title)
+    copyTextToClipboard(page.display_title)
 
 
 @testreadonly

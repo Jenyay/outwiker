@@ -57,6 +57,7 @@ if __name__ == '__main__':
     from test.test_pagerename import RenameTest
     from test.test_pageremove import RemovePagesTest
     from test.test_pageorder import PageOrderTest
+    from test.test_pagealias import PageAliasTest
 
     from test.test_thumbmakerwx import ThumbmakerWxTest
     from test.test_thumbmakerpil import ThumbmakerPilTest

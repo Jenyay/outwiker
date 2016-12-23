@@ -83,6 +83,22 @@ class SnippetsVarDialogControllerTest(BaseMainWndTest):
 
         self.assertEqual(result, right_result)
 
+    def test_global_var_title_alias(self):
+        self.testPage.alias = u'Псевдоним'
+
+        seltext = u''
+        template = u'{{__title}}'
+        template_name = u'template.tpl'
+        self._application.selectedPage = self.testPage
+
+        right_result = u'Псевдоним'
+
+        self._controller.ShowDialog(seltext, template, template_name)
+        self._controller.FinishDialog()
+        result = self._controller.GetResult()
+
+        self.assertEqual(result, right_result)
+
     def test_page_none_01(self):
         seltext = u''
         template = u'Шаблон'
