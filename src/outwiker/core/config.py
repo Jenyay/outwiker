@@ -8,36 +8,34 @@ import shutil
 from outwiker.gui.stcstyle import StcStyle
 
 
-class Config (object):
+class Config(object):
     """
-    Оболочка над ConfigParser
+    Shell for ConfigParser class
     """
-    def __init__ (self, fname, readonly=False):
+    def __init__(self, fname, readonly=False):
         """
-        fname -- имя файла конфига
+        fname - config file name
         """
         self.readonly = readonly
         self.fname = fname
         self.__config = ConfigParser.ConfigParser()
 
         try:
-            self.__config.read (self.fname)
+            self.__config.read(self.fname)
         except ConfigParser.Error:
-            shutil.copyfile (self.fname, self.fname + ".bak")
-            with open (self.fname, "w") as fp:
-                fp.write (self.getDefaultContent())
+            shutil.copyfile(self.fname, self.fname + ".bak")
+            with open(self.fname, "w") as fp:
+                fp.write(self.getDefaultContent())
 
-            self.__config.read (self.fname)
+            self.__config.read(self.fname)
 
-
-    def getDefaultContent (self):
+    def getDefaultContent(self):
         """
         Значение, которое будет записано в конфиг по умолчанию
         """
         return u""
 
-
-    def set (self, section, param, value):
+    def set(self, section, param, value):
         """
         Установить значение параметра.
         section - имя секции в файле конфига
@@ -47,32 +45,31 @@ class Config (object):
         if self.readonly:
             return False
 
-        section_encoded = section.encode ("utf8")
-        if not self.__config.has_section (section_encoded):
-            self.__config.add_section (section_encoded)
+        section_encoded = section.encode("utf8")
+        if not self.__config.has_section(section_encoded):
+            self.__config.add_section(section_encoded)
 
-        self.__config.set (section_encoded,
-                           param.encode ("utf8"),
-                           unicode (value).encode ("utf8"))
+        self.__config.set(section_encoded,
+                          param.encode("utf8"),
+                          unicode(value).encode("utf8"))
 
         return self.save()
 
-
-    def save (self):
+    def save(self):
         """
         Сохранить изменения
-        Возвращает True, если сохранение прошло успешно и False в противном случае
+        Возвращает True, если сохранение прошло успешно и False
+        в противном случае
         """
         if self.readonly:
             return False
 
-        with open (self.fname, "wb") as fp:
-            self.__config.write (fp)
+        with open(self.fname, "wb") as fp:
+            self.__config.write(fp)
 
         return True
 
-
-    def get (self, section, param):
+    def get(self, section, param):
         """
         Получить значение из конфига
         section - имя секции файла конфига
@@ -80,12 +77,10 @@ class Config (object):
         Возващает строку с прочитанным значением
         Может бросать исключения
         """
-        val = self.__config.get (section.encode ("utf8"),
-                                 param.encode ("utf8"))
-        return unicode (val, "utf8", "replace")
+        val = self.__config.get(section.encode("utf8"), param.encode("utf8"))
+        return unicode(val, "utf8", "replace")
 
-
-    def getint (self, section, param):
+    def getint(self, section, param):
         """
         Получить целочисленное значение из конфига
         section - имя секции файла конфига
@@ -93,10 +88,9 @@ class Config (object):
         Возващает строку с прочитанным значением
         Может бросать исключения
         """
-        return int (self.get (section, param))
+        return int(self.get(section, param))
 
-
-    def getbool (self, section, param):
+    def getbool(self, section, param):
         """
         Получить булево значение из конфига
         section - имя секции файла конфига
@@ -104,55 +98,53 @@ class Config (object):
         Возващает строку с прочитанным значением
         Может бросать исключения
         """
-        val = self.get (section, param)
+        val = self.get(section, param)
 
         return True if val.strip().lower() == "true" else False
 
-
-    def remove_section (self, section):
+    def remove_section(self, section):
         """
         Удалить текцию из файла конфига
         section - имя удаляемой секции
         """
-        section_encoded = section.encode ("utf8")
-        result1 = self.__config.remove_section (section_encoded)
+        section_encoded = section.encode("utf8")
+        result1 = self.__config.remove_section(section_encoded)
         result2 = self.save()
 
         return result1 and result2
 
-
-    def remove_option (self, section, option):
+    def remove_option(self, section, option):
         """
         Удалить настройку из файла конфига
         section - имя секции, которой принадлежит опция
         option - имя удаляемой опции
         """
-        section_encoded = section.encode ("utf8")
-        option_encoded = option.encode ("utf8")
+        section_encoded = section.encode("utf8")
+        option_encoded = option.encode("utf8")
 
-        result1 = self.__config.remove_option (section_encoded,
-                                               option_encoded)
+        result1 = self.__config.remove_option(section_encoded,
+                                              option_encoded)
 
         result2 = self.save()
 
         return result1 and result2
 
-
-    def has_section (self, section):
+    def has_section(self, section):
         """
-        Возврщает True, если векция с именем section существует или False в противном случае
+        Возврщает True, если векция с именем section существует
+        и False в противном случае
         """
-        section_encoded = section.encode ("utf8")
-        return self.__config.has_section (section_encoded)
+        section_encoded = section.encode("utf8")
+        return self.__config.has_section(section_encoded)
 
 
-class BaseOption (object):
+class BaseOption(object):
     """
     Базовый класс для работы с отдельными записями конфига
     """
     __metaclass__ = ABCMeta
 
-    def __init__ (self, config, section, param, defaultValue):
+    def __init__(self, config, section, param, defaultValue):
         """
         config - экземпляр класса core.Config
         section - секция для параметра конфига
@@ -169,47 +161,44 @@ class BaseOption (object):
         # поэтому это поле используется для отладки
         self.error = None
 
-
-    def remove_option (self):
+    def remove_option(self):
         """
         Удалить настройку
         """
-        self.config.remove_option (self.section, self.param)
-
+        self.config.remove_option(self.section, self.param)
 
     @property
-    def value (self):
+    def value(self):
         """
         Возвращает значение парамета
         """
-        return self._loadParam ()
-
+        return self._loadParam()
 
     @value.setter
-    def value (self, val):
+    def value(self, val):
         """
         Устанавливает значение параметра
         """
-        self.config.set (self.section, self.param, self._prepareToWrite (val))
-
+        self.config.set(self.section, self.param, self._prepareToWrite(val))
 
     @abstractmethod
-    def _loadValue (self):
+    def _loadValue(self):
         """
-        Метод должен прочитать из конфига параметр self.param из секции self.section и вернуть значение.
-        Исключения можно игнорировать, поскольку они перехватываются выше в методе _loadParam
+        Метод должен прочитать из конфига параметр self.param из секции
+        self.section и вернуть значение.
+        Исключения можно игнорировать, поскольку они перехватываются выше
+        в методе _loadParam
         """
         pass
 
-
-    def _prepareToWrite (self, val):
+    def _prepareToWrite(self, val):
         """
-        Преобразовать (если надо) значение к виду, в котором оно будет записано в конфиг
+        Преобразовать(если надо) значение к виду, в котором оно будет
+    записано в конфиг
         """
         return val
 
-
-    def _loadParam (self):
+    def _loadParam(self):
         """
         Возващает прочитанное из конфига значение или значение по умолчанию
         """
@@ -222,181 +211,185 @@ class BaseOption (object):
         return val
 
 
-
-class StringOption (BaseOption):
+class StringOption(BaseOption):
     """
     Класс для упрощения работы со строковыми опциями
     """
-    def __init__ (self, config, section, param, defaultValue):
-        super (StringOption, self).__init__ (config, section, param, defaultValue)
+    def __init__(self, config, section, param, defaultValue):
+        super(StringOption, self).__init__(config,
+                                           section,
+                                           param,
+                                           defaultValue)
 
-
-    def _loadValue (self):
+    def _loadValue(self):
         """
         Получить значение. В производных классах этот метод переопределяется
         """
-        return self.config.get (self.section, self.param)
+        return self.config.get(self.section, self.param)
 
 
-
-class BooleanOption (BaseOption):
+class BooleanOption(BaseOption):
     """
     Булевская настройка.
     Элемент управления - wx.CheckBox
     """
-    def __init__ (self, config, section, param, defaultValue):
-        super (BooleanOption, self).__init__ (config, section, param, defaultValue)
+    def __init__(self, config, section, param, defaultValue):
+        super(BooleanOption, self).__init__(config,
+                                            section,
+                                            param,
+                                            defaultValue)
 
-
-    def _loadValue (self):
+    def _loadValue(self):
         """
         Получить значение. В производных классах этот метод переопределяется
         """
-        return self.config.getbool (self.section, self.param)
+        return self.config.getbool(self.section, self.param)
 
 
-class StcStyleOption (BaseOption):
+class StcStyleOption(BaseOption):
     """
     Настрока для хранения стиля редактора StcStyledEditor
     """
-    def __init__ (self, config, section, param, defaultValue):
+    def __init__(self, config, section, param, defaultValue):
         """
         defaultValue - экземпляр класса StcStyle
         """
-        super (StcStyleOption, self).__init__ (config, section, param, defaultValue)
+        super(StcStyleOption, self).__init__(config,
+                                             section,
+                                             param,
+                                             defaultValue)
 
-
-    def _loadValue (self):
+    def _loadValue(self):
         """
         Получить значение. В производных классах этот метод переопределяется
         """
-        style = StcStyle.parse (self.config.get (self.section, self.param))
+        style = StcStyle.parse(self.config.get(self.section, self.param))
         if style is None:
             raise ValueError
 
         return style
 
-
-    def _prepareToWrite (self, val):
+    def _prepareToWrite(self, val):
         return val.tostr()
 
 
-class DateTimeOption (BaseOption):
+class DateTimeOption(BaseOption):
     """
     Настройка для хранения даты и времени
     """
     formatDate = "%Y-%m-%d %H:%M:%S.%f"
 
-    def __init__ (self, config, section, param, defaultValue):
-        super (DateTimeOption, self).__init__ (config, section, param, defaultValue)
+    def __init__(self, config, section, param, defaultValue):
+        super(DateTimeOption, self).__init__(config,
+                                             section,
+                                             param,
+                                             defaultValue)
+
+    def _loadValue(self):
+        strdate = self.config.get(self.section, self.param)
+        return datetime.datetime.strptime(strdate, self.formatDate)
+
+    def _prepareToWrite(self, value):
+        return datetime.datetime.strftime(value, self.formatDate)
 
 
-    def _loadValue (self):
-        strdate = self.config.get (self.section, self.param)
-        return datetime.datetime.strptime (strdate, self.formatDate)
-
-
-    def _prepareToWrite (self, value):
-        return datetime.datetime.strftime (value, self.formatDate)
-
-
-
-class ListOption (BaseOption):
+class ListOption(BaseOption):
     """
-    Класс для хранения настроек в виде списка. По умолчанию элементы разделяются символом ";", но разделитель можно изменять
+    Класс для хранения настроек в виде списка.
+    По умолчанию элементы разделяются символом ";",
+    но разделитель можно изменять
     """
-    def __init__ (self, config, section, param, defaultValue, separator=";"):
-        super (ListOption, self).__init__ (config, section, param, defaultValue)
+    def __init__(self, config, section, param, defaultValue, separator=";"):
+        super(ListOption, self).__init__(config, section, param, defaultValue)
         self.__separator = separator
 
-
-    def _loadValue (self):
-        line = self.config.get (self.section, self.param)
-        items = line.split (self.__separator)
+    def _loadValue(self):
+        line = self.config.get(self.section, self.param)
+        items = line.split(self.__separator)
         return items
 
+    def _prepareToWrite(self, value):
+        return self.__separator.join(value)
 
-    def _prepareToWrite (self, value):
-        return self.__separator.join (value)
 
-
-class IntegerOption (BaseOption):
+class IntegerOption(BaseOption):
     """
     Настройка для целых чисел.
     Элемент управления - wx.SpinCtrl
     """
-    def __init__ (self, config, section, param, defaultValue):
-        super (IntegerOption, self).__init__ (config, section, param, defaultValue)
+    def __init__(self, config, section, param, defaultValue):
+        super(IntegerOption, self).__init__(config,
+                                            section,
+                                            param,
+                                            defaultValue)
 
-
-    def _loadValue (self):
+    def _loadValue(self):
         """
         Получить значение. В производных классах этот метод переопределяется
         """
-        return self.config.getint (self.section, self.param)
+        return self.config.getint(self.section, self.param)
 
 
-class StringListSection (object):
+class StringListSection(object):
     """
     Класс для хранения списка строк. Список хранится в отдельной секции
     """
-    def __init__ (self, config, section, paramname):
+    def __init__(self, config, section, paramname):
         """
         config - экземпляр класса Config
         section - имя секции для хранения списка
-        paramname - начало имени параметров, которые будут храниться в секции. К paramname будут добавляться порядковые числа.
+        paramname - начало имени параметров, которые будут храниться в секции.
+        К paramname будут добавляться порядковые числа.
         """
         self._config = config
         self._section = section
         self._paramname = u"%s{number}" % paramname
 
-
-    def _loadValue (self):
-        if not self._config.has_section (self._section):
+    def _loadValue(self):
+        if not self._config.has_section(self._section):
             return []
 
         result = []
         index = 0
         try:
-            while (1):
-                option = self._paramname.format (number=index)
-                subpath = self._config.get (self._section, option)
-                result.append (subpath)
+            while(1):
+                option = self._paramname.format(number=index)
+                subpath = self._config.get(self._section, option)
+                result.append(subpath)
                 index += 1
         except ConfigParser.NoOptionError:
             pass
 
         return result
 
-
     @property
-    def value (self):
+    def value(self):
         """
         Возвращает знвчение парамета
         """
-        return self._loadValue ()
-
+        return self._loadValue()
 
     @value.setter
-    def value (self, val):
+    def value(self, val):
         """
         Устанавливает значение параметра
         """
-        self._config.remove_section (self._section)
+        self._config.remove_section(self._section)
 
-        for index in range (len (val)):
-            option = self._paramname.format (number=index)
-            self._config.set (self._section, option, val[index])
+        for index in range(len(val)):
+            option = self._paramname.format(number=index)
+            self._config.set(self._section, option, val[index])
 
 
-class FontOption (object):
-    def __init__ (self,
-                  faceNameOption,
-                  sizeOption,
-                  isBoldOption,
-                  isItalicOption):
+class FontOption(object):
+    def __init__(self,
+                 faceNameOption,
+                 sizeOption,
+                 isBoldOption,
+                 isItalicOption):
         """
-        faceNameOption - экземепляр класса StringOption, где хранится значение начертания шрифта
+        faceNameOption - экземепляр класса StringOption, где хранится
+        значение начертания шрифта
         sizeOption - экземпляр класса IntegerOption, где хранится размер шрифта
         isBoldOption, isItalicOption - экземпляры класса BooleanOption
         """
@@ -406,7 +399,7 @@ class FontOption (object):
         self.italic = isItalicOption
 
 
-class PageConfig (Config):
+class PageConfig(Config):
     """
     Класс для хранения настроек страниц
     """
@@ -415,28 +408,29 @@ class PageConfig (Config):
     datetimeParamName = u"datetime"
     creationDatetimeParamName = u"creationdatetime"
 
-    def __init__ (self, fname, readonly=False):
-        Config.__init__ (self, fname, readonly)
+    def __init__(self, fname, readonly=False):
+        Config.__init__(self, fname, readonly)
 
-        self.typeOption = StringOption (self,
-                                        PageConfig.sectionName,
-                                        u"type", u"")
+        self.typeOption = StringOption(self,
+                                       PageConfig.sectionName,
+                                       u"type", u"")
 
-        self.orderOption = IntegerOption (self,
-                                          PageConfig.sectionName,
-                                          PageConfig.orderParamName, -1)
+        self.orderOption = IntegerOption(self,
+                                         PageConfig.sectionName,
+                                         PageConfig.orderParamName, -1)
 
-        self.lastViewedPageOption = StringOption (self,
-                                                  u"History",
-                                                  u"LastViewedPage",
-                                                  u"")
+        self.lastViewedPageOption = StringOption(self,
+                                                 u"History",
+                                                 u"LastViewedPage",
+                                                 u"")
 
-        self.datetimeOption = DateTimeOption (self,
-                                              PageConfig.sectionName,
-                                              PageConfig.datetimeParamName,
-                                              None)
+        self.datetimeOption = DateTimeOption(self,
+                                             PageConfig.sectionName,
+                                             PageConfig.datetimeParamName,
+                                             None)
 
-        self.creationDatetimeOption = DateTimeOption (self,
-                                                      PageConfig.sectionName,
-                                                      PageConfig.creationDatetimeParamName,
-                                                      None)
+        self.creationDatetimeOption = DateTimeOption(
+            self,
+            PageConfig.sectionName,
+            PageConfig.creationDatetimeParamName,
+            None)
