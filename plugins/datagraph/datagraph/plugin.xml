@@ -26,6 +26,11 @@
 		</author>
 
 		<changelog>
+			<version number="1.0.7">
+                <download os="all">http://jenyay.net/uploads/Outwiker/DataGraph/datagraph-1.0.7.zip</download>
+				<change>Updated Russian help.</change>
+			</version>
+
 			<version number="1.0.6" date="October 17, 2016">
                 <download os="all">http://jenyay.net/uploads/Outwiker/DataGraph/datagraph-1.0.6.zip</download>
 				<change>Added OutWiker 2.0 supporting.</change>
@@ -75,6 +80,11 @@
 		</author>
 
 		<changelog>
+			<version number="1.0.7">
+                <download os="all">http://jenyay.net/uploads/Outwiker/DataGraph/datagraph-1.0.7.zip</download>
+				<change>Обновление справки на русском языке.</change>
+			</version>
+
 			<version number="1.0.6" date="17.10.2016">
                 <download os="all">http://jenyay.net/uploads/Outwiker/DataGraph/datagraph-1.0.6.zip</download>
 				<change>Добавлена поддержка OutWiker 2.0.</change>

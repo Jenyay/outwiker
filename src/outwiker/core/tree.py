@@ -461,6 +461,9 @@ class WikiPage(RootWikiPage):
 
     @display_title.setter
     def display_title(self, value):
+        '''
+        Added in outwiker.core 1.2
+        '''
         if not value:
             self.alias = None
         elif self.alias is not None:
