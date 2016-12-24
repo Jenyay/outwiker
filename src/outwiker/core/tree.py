@@ -442,6 +442,9 @@ class WikiPage(RootWikiPage):
         '''
         Added in outwiker.core 1.2
         '''
+        if self.readonly:
+            raise ReadonlyException
+
         if not value:
             self.params.aliasOption.remove_option()
         else:

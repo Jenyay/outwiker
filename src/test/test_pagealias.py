@@ -2,9 +2,10 @@
 import unittest
 from tempfile import mkdtemp
 
+from outwiker.core.application import Application
+from outwiker.core.exceptions import ReadonlyException
 from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
-from outwiker.core.application import Application
 from test.utils import removeDir
 
 
@@ -33,6 +34,9 @@ class PageAliasTest(unittest.TestCase):
     def _onTreeUpdate(self, sender):
         self.updateCount += 1
         self.updateSender = sender
+
+    def _changeAlias(self, page, alias):
+        page.alias = alias
 
     def test_default(self):
         self.assertIsNone(self.page.alias)
@@ -96,3 +100,41 @@ class PageAliasTest(unittest.TestCase):
         self.assertEqual(page.alias, u'Псевдоним')
         self.assertEqual(page.title, u'Страница 1')
         self.assertEqual(page.display_title, u'Псевдоним')
+
+    def test_alias_readonly_01(self):
+        newwiki = WikiDocument.load(self.path, readonly=True)
+        page = newwiki[u'Страница 1']
+
+        self.assertRaises(ReadonlyException,
+                          self._changeAlias,
+                          page, u'Тест')
+
+    def test_alias_readonly_02(self):
+        self.page.alias = u'Псевдоним'
+
+        newwiki = WikiDocument.load(self.path, readonly=True)
+        page = newwiki[u'Страница 1']
+
+        self.assertRaises(ReadonlyException,
+                          self._changeAlias,
+                          page, None)
+
+    def test_alias_readonly_03(self):
+        self.page.alias = u'Псевдоним'
+
+        newwiki = WikiDocument.load(self.path, readonly=True)
+        page = newwiki[u'Страница 1']
+
+        self.assertRaises(ReadonlyException,
+                          self._changeAlias,
+                          page, u'')
+
+    def test_alias_readonly_04(self):
+        self.page.alias = u'Псевдоним'
+
+        newwiki = WikiDocument.load(self.path, readonly=True)
+        page = newwiki[u'Страница 1']
+
+        self.assertRaises(ReadonlyException,
+                          self._changeAlias,
+                          page, u'test')
