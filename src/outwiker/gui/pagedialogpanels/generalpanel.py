@@ -146,7 +146,7 @@ class GeneralController (BasePageDialogController):
         self.tags = currentPage.tags
 
         # Запретить изменять заголовок
-        self._generalPanel.titleTextCtrl.SetValue (currentPage.title)
+        self._generalPanel.titleTextCtrl.SetValue (currentPage.display_title)
 
         # Установить тип страницы
         self._setComboPageType(currentPage.getTypeString())
@@ -154,8 +154,8 @@ class GeneralController (BasePageDialogController):
         self.__onPageTypeChanged (None)
 
 
-    def _validateCommon (self, parentPage):
-        if not testPageTitle (self.pageTitle):
+    def _validateCommon (self, parentPage, pageAlias):
+        if not pageAlias and not testPageTitle (self.pageTitle):
             self._generalPanel.titleTextCtrl.SetFocus()
             self._generalPanel.titleTextCtrl.SetSelection (-1, -1)
             return False
@@ -164,7 +164,7 @@ class GeneralController (BasePageDialogController):
 
 
     def validateBeforeCreation (self, parentPage):
-        if not self._validateCommon (parentPage):
+        if not self._validateCommon (parentPage, None):
             return False
 
         if (parentPage is not None and
@@ -178,10 +178,10 @@ class GeneralController (BasePageDialogController):
 
 
     def validateBeforeEditing (self, page):
-        if not self._validateCommon (page.parent):
+        if not self._validateCommon (page.parent, page.alias):
             return False
 
-        if not page.canRename (self.pageTitle):
+        if page.alias is not None and not page.canRename (self.pageTitle):
             MessageBox (_(u"Can't rename page when page with that title already exists"),
                         _(u"Error"),
                         wx.ICON_ERROR | wx.OK)

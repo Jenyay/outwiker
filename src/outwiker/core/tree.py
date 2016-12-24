@@ -459,6 +459,15 @@ class WikiPage(RootWikiPage):
         '''
         return self.alias if self.alias else self.title
 
+    @display_title.setter
+    def display_title(self, value):
+        if not value:
+            self.alias = None
+        elif self.alias is not None:
+            self.alias = value
+        else:
+            self.title = value
+
     @property
     def title(self):
         return self._title

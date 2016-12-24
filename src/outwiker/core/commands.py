@@ -416,11 +416,11 @@ def renamePage (page, newtitle):
                     wx.ICON_ERROR | wx.OK)
         return
 
-    if not testPageTitle (newtitle):
+    if page.alias is None and not testPageTitle (newtitle):
         return
 
     try:
-        page.title = newtitle
+        page.display_title = newtitle
     except outwiker.core.exceptions.DublicateTitle:
         MessageBox (_(u"Can't move page when page with that title already exists"),
                     _(u"Error"),

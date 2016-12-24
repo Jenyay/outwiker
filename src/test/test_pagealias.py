@@ -138,3 +138,41 @@ class PageAliasTest(unittest.TestCase):
         self.assertRaises(ReadonlyException,
                           self._changeAlias,
                           page, u'test')
+
+    def test_display_title_rename_01(self):
+        self.page.display_title = None
+        self.assertIsNone(self.page.alias)
+        self.assertEqual(self.page.title, u'Страница 1')
+        self.assertEqual(self.page.display_title, u'Страница 1')
+
+    def test_display_title_rename_02(self):
+        self.page.alias = u'Псевдоним'
+        self.page.display_title = None
+
+        self.assertIsNone(self.page.alias)
+        self.assertEqual(self.page.title, u'Страница 1')
+        self.assertEqual(self.page.display_title, u'Страница 1')
+
+    def test_display_title_rename_03(self):
+        self.page.alias = u'Псевдоним'
+        self.page.display_title = u''
+
+        self.assertIsNone(self.page.alias)
+        self.assertEqual(self.page.title, u'Страница 1')
+        self.assertEqual(self.page.display_title, u'Страница 1')
+
+    def test_display_title_rename_04(self):
+        self.page.alias = u'Псевдоним'
+        self.page.display_title = u'Новый псевдоним'
+
+        self.assertEqual(self.page.alias, u'Новый псевдоним')
+        self.assertEqual(self.page.title, u'Страница 1')
+        self.assertEqual(self.page.display_title, u'Новый псевдоним')
+
+    def test_display_title_rename_05(self):
+        self.page.alias = None
+        self.page.display_title = u'Новый заголовок'
+
+        self.assertIsNone(self.page.alias)
+        self.assertEqual(self.page.title, u'Новый заголовок')
+        self.assertEqual(self.page.display_title, u'Новый заголовок')

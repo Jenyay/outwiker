@@ -20,7 +20,7 @@ def editPage (parentWnd, currentPage):
         raise outwiker.core.exceptions.ReadonlyException
 
     if not pageExists (currentPage):
-        MessageBox (_(u'Page "%s" not found') % currentPage.title,
+        MessageBox (_(u'Page "%s" not found') % currentPage.display_title,
                     _(u"Error"),
                     wx.OK | wx.ICON_ERROR)
         return
@@ -28,7 +28,7 @@ def editPage (parentWnd, currentPage):
     with EditPageDialog (parentWnd, currentPage) as dlg:
         if dlg.ShowModal() == wx.ID_OK:
             try:
-                currentPage.title = dlg.pageTitle
+                currentPage.display_title = dlg.pageTitle
             except EnvironmentError as e:
                 MessageBox (_(u"Can't rename page\n") + unicode (e),
                             _(u"Error"),
