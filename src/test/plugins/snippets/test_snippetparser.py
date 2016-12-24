@@ -387,8 +387,7 @@ class SnippetParserTest(unittest.TestCase):
         self.assertEqual(result, right_result)
 
     def test_error_01(self):
-        from snippets.snippetparser import SnippetParser
-        from snippets.libs.jinja2 import TemplateError
+        from snippets.snippetparser import SnippetParser, SnippetException
         template = u'Переменная = {{переменная}}'
         selectedText = u''
         vars = {u'переменная': u'Проверка 123'}
@@ -396,17 +395,16 @@ class SnippetParserTest(unittest.TestCase):
         page = self.testPage
         parser = SnippetParser(template, u'.', self._application)
 
-        self.assertRaises(TemplateError,
+        self.assertRaises(SnippetException,
                           parser.process,
                           selectedText,
                           page,
                           **vars)
 
     def test_error_02(self):
-        from snippets.snippetparser import SnippetParser
-        from snippets.libs.jinja2 import TemplateError
+        from snippets.snippetparser import SnippetParser, SnippetException
         template = u'Переменная = {{переменная}}'
 
         parser = SnippetParser(template, u'.', self._application)
 
-        self.assertRaises(TemplateError, parser.getVariables)
+        self.assertRaises(SnippetException, parser.getVariables)
