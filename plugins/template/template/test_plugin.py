@@ -9,32 +9,29 @@ from outwiker.pages.wiki.wikipage import WikiPageFactory
 from test.utils import removeDir
 
 
-class PluginNameTest (unittest.TestCase):
+class PluginNameTest(unittest.TestCase):
     """Тесты плагина PluginName"""
-    def setUp (self):
+    def setUp(self):
         self.__createWiki()
 
         dirlist = [u"../plugins/pluginname"]
 
         self.loader = PluginsLoader(Application)
-        self.loader.load (dirlist)
+        self.loader.load(dirlist)
 
-
-    def tearDown (self):
-        removeDir (self.path)
+    def tearDown(self):
+        removeDir(self.path)
         self.loader.clear()
 
-
-    def __createWiki (self):
+    def __createWiki(self):
         # Здесь будет создаваться вики
         self.path = u"../test/testwiki"
-        removeDir (self.path)
+        removeDir(self.path)
 
-        self.rootwiki = WikiDocument.create (self.path)
+        self.rootwiki = WikiDocument.create(self.path)
 
-        WikiPageFactory().create (self.rootwiki, u"Страница 1", [])
+        WikiPageFactory().create(self.rootwiki, u"Страница 1", [])
         self.testPage = self.rootwiki[u"Страница 1"]
 
-
-    def testPluginLoad (self):
-        self.assertEqual (len (self.loader), 1)
+    def testPluginLoad(self):
+        self.assertEqual(len(self.loader), 1)
