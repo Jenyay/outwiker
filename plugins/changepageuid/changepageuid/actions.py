@@ -4,11 +4,11 @@ from outwiker.gui.baseaction import BaseAction
 from .i18n import get_
 
 
-class ChangePageUIDAction (BaseAction):
+class ChangePageUIDAction(BaseAction):
     """
     Описание действия
     """
-    def __init__ (self, application, controller):
+    def __init__(self, application, controller):
         self._application = application
         self._controller = controller
 
@@ -17,16 +17,13 @@ class ChangePageUIDAction (BaseAction):
 
     stringId = u"ChangePageUID_ChangePageUID"
 
-
     @property
-    def title (self):
+    def title(self):
         return _(u"Change Page Identifier...")
 
-
     @property
-    def description (self):
+    def description(self):
         return _(u"ChangePageUID plugin. Change Page Identifier")
 
-
-    def run (self, params):
-        self._controller.changeUidWithDialog()
+    def run(self, params):
+        self._controller.changeUidWithDialog(self._application.selectedPage)
