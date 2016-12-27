@@ -31,10 +31,8 @@ def getDefaultLanguage():
 
 def init_i18n(language):
     langdir = os.path.join(getCurrentDir(), u'locale')
-
     lang = loadLanguage(language, langdir, u"outwiker")
     lang.install(unicode=1)
-    # locale.setlocale(locale.LC_ALL, '')
 
 
 def loadLanguage(language, langdir, domain):
