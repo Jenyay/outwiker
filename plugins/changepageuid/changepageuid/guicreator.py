@@ -7,11 +7,11 @@ from .i18n import get_
 from .actions import ChangePageUIDAction
 
 
-class GuiCreator (object):
+class GuiCreator(object):
     """
     Создание элементов интерфейса с использованием actions
     """
-    def __init__ (self, controller, application):
+    def __init__(self, controller, application):
         self._controller = controller
         self._application = application
 
@@ -21,14 +21,13 @@ class GuiCreator (object):
         global _
         _ = get_()
 
-
-    def initialize (self):
+    def initialize(self):
         if self._application.mainWindow is not None:
-            map (lambda action: self._application.actionController.register (
-                action (self._application, self._controller), None), self._actions)
+            map(lambda action: self._application.actionController.register(
+                action(self._application, self._controller), None),
+                self._actions)
 
-
-    def createTools (self):
+    def createTools(self):
         mainWindow = self._application.mainWindow
 
         if mainWindow is None:
@@ -37,17 +36,17 @@ class GuiCreator (object):
         # Меню, куда будут добавляться команды
         menu = mainWindow.mainMenu.toolsMenu
 
-        map (lambda action: self._application.actionController.appendMenuItem (
+        map(lambda action: self._application.actionController.appendMenuItem(
             action.stringId, menu), self._actions)
 
-
-    def removeTools (self):
+    def removeTools(self):
+        actionController = self._application.actionController
         if self._application.mainWindow is not None:
-            map (lambda action: self._application.actionController.removeMenuItem (action.stringId),
-                 self._actions)
+            map(lambda action: actionController.removeMenuItem(action.stringId),
+                self._actions)
 
-
-    def destroy (self):
+    def destroy(self):
+        actionController = self._application.actionController
         if self._application.mainWindow is not None:
-            map (lambda action: self._application.actionController.removeAction (action.stringId),
-                 self._actions)
+            map(lambda action: actionController.removeAction(action.stringId),
+                self._actions)
