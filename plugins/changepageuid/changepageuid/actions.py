@@ -1,7 +1,9 @@
 # -*- coding: UTF-8 -*-
 
 from outwiker.gui.baseaction import BaseAction
-from .i18n import get_
+
+from changepageuid.utils import changeUidWithDialog
+from changepageuid.i18n import get_
 
 
 class ChangePageUIDAction(BaseAction):
@@ -26,4 +28,4 @@ class ChangePageUIDAction(BaseAction):
         return _(u"ChangePageUID plugin. Change Page Identifier")
 
     def run(self, params):
-        self._controller.changeUidWithDialog(self._application.selectedPage)
+        changeUidWithDialog(self._application.selectedPage, self._application)

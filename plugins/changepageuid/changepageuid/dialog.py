@@ -19,7 +19,7 @@ class ChangeUidDialog(TestedDialog):
         super(ChangeUidDialog, self).__init__(
             parent,
             style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.THICK_FRAME,
-            title=u"ChangeUID"
+            title=u"ChangePageUID"
         )
 
         # Функция для проверки правильности введенного идентификатора

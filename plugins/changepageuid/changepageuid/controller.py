@@ -2,13 +2,9 @@
 
 import wx
 
-from outwiker.core.commands import testreadonly
-from outwiker.core.exceptions import ReadonlyException
-
-from .i18n import get_
-from .guicreator import GuiCreator
-from .dialog import ChangeUidDialog
-from .dialogcontroller import DialogController
+from changepageuid.i18n import get_
+from changepageuid.guicreator import GuiCreator
+from changepageuid.utils import changeUidWithDialog
 
 
 class Controller(object):
@@ -62,34 +58,8 @@ class Controller(object):
     def __onPopupClick(self, event):
         assert self._selectedPage is not None
 
-        self.changeUidWithDialog(self._selectedPage)
+        changeUidWithDialog(self._selectedPage, self._application)
         self._application.mainWindow.Unbind(wx.EVT_MENU,
                                             id=self.CHANGE_PAGE_UID)
 
         self._selectedPage = None
-
-    @testreadonly
-    def changeUidWithDialog(self, page):
-        """
-        Вызвать диалог для изменения UID страницы
-        """
-        if page is None or page.parent is None:
-            return
-
-        if page.readonly:
-            raise ReadonlyException
-
-        dlg = ChangeUidDialog(self._application.mainWindow)
-
-        dlgController = DialogController(self._application,
-                                         dlg,
-                                         page)
-
-        resultDlg = dlgController.showDialog()
-
-        if resultDlg == wx.ID_OK:
-            # Не отлавливаем исключения, поскольку считаем,
-            # что правильность идентификатора проверил DialogController
-            self._application.pageUidDepot.changeUid(page, dlg.uid)
-
-        dlg.Destroy()
