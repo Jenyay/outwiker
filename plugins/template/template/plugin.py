@@ -61,7 +61,7 @@ else:
         #############################################
 
         def _initlocale(self, domain):
-            from snippets.i18n import set_
+            from .i18n import set_
             langdir = unicode(os.path.join(os.path.dirname(__file__),
                                            "locale"), getOS().filesEncoding)
             global _
