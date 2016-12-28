@@ -30,6 +30,7 @@ nosetests.xml
 .mr.developer.cfg
 .project
 .pydevproject
+.cache
 
 *.pyc
 *.bak
