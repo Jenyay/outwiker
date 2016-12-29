@@ -78,7 +78,7 @@ class EditSnippetsDialog(TestedDialog):
         ]
 
         self._blocksMenuItems = [
-            (_('{% if %}'), (u'{% if %}', '{% endif %}')),
+            (_('{% if %}'), (u'{% if %}', '{% elif %}{% else %}{% endif %}')),
             (_('{% include %}'), (u"{% include '", u"' %}")),
             (_('{# comment #}'), (u'{# ', ' #}')),
         ]
