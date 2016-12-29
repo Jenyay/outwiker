@@ -21,7 +21,7 @@ class TreeMainPane (MainPane):
 
 
     @property
-    def caption (self):
+    def caption(self):
         return _(u"Notes")
 
 
@@ -36,7 +36,7 @@ class TreeMainPane (MainPane):
         pane.CloseButton()
         pane.Caption(self.caption)
 
-        pane.BestSize ((self.config.width.value,
-                        self.config.height.value))
+        pane.BestSize((self.config.width.value,
+                       self.config.height.value))
 
         return pane

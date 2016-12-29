@@ -7,6 +7,7 @@ from .tagsselector import TagsSelector
 
 
 class TagsDialog(wx.Dialog):
+
     def __init__(self, parent, application):
         super(TagsDialog, self).__init__(
             parent,

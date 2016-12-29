@@ -14,6 +14,7 @@ from test.utils import removeDir
 
 
 class SnippetsWikiCommandTest(unittest.TestCase):
+
     def setUp(self):
         plugins_dir = [u"../plugins/snippets"]
 
@@ -29,7 +30,8 @@ class SnippetsWikiCommandTest(unittest.TestCase):
         root_snippets_dir = getSnippetsDir()
 
         # snippets dir for tests
-        self._snippets_dir = os.path.join(root_snippets_dir, u'__test_snippets')
+        self._snippets_dir = os.path.join(
+            root_snippets_dir, u'__test_snippets')
         os.mkdir(self._snippets_dir)
 
     def tearDown(self):

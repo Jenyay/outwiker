@@ -50,8 +50,7 @@ class TagsCloud (wx.ScrolledWindow):
 
         self.__tagSelectedBackColor = config.colorBackSelected.value
 
-
-    def __updateTagLabel (self, tagLabel):
+    def __updateTagLabel(self, tagLabel):
         tagLabel.normalFontColor = self.__tagNormalFontColor
         tagLabel.normalHoverFontColor = self.__tagNormalHoverFontColor
 
@@ -60,8 +59,7 @@ class TagsCloud (wx.ScrolledWindow):
 
         tagLabel.markedBackColor = self.__tagSelectedBackColor
 
-
-    def updateTagLabels (self):
+    def updateTagLabels(self):
         self.__loadColors()
         for label in self.__labels.values():
             self.__updateTagLabel (label)
@@ -72,30 +70,28 @@ class TagsCloud (wx.ScrolledWindow):
         Добавить теги в облако
         """
         self.Freeze()
-        oldy = self.GetScrollPos (wx.VERTICAL)
+        oldy = self.GetScrollPos(wx.VERTICAL)
         self.clear()
 
         self.__tags = taglist
 
         for tag in taglist:
             newlabel = TagLabel(self, tag)
-            self.__updateTagLabel (newlabel)
+            self.__updateTagLabel(newlabel)
             self.__labels[tag] = newlabel
 
         self.__layoutTags()
-        self.Scroll (-1, oldy)
+        self.Scroll(-1, oldy)
         self.Thaw()
 
-
-    def mark (self, tag, marked=True):
+    def mark(self, tag, marked=True):
         """
         Выделить метку
         """
         if tag.lower().strip() in self.__labels.keys():
             self.__labels[tag.lower().strip()].mark(marked)
 
-
-    def clearMarks (self):
+    def clearMarks(self):
         """
         Убрать все выделения с меток
         """
@@ -105,22 +101,20 @@ class TagsCloud (wx.ScrolledWindow):
     def isMarked (self, tag):
         return self.__labels[tag].isMarked
 
-
     def clear(self):
-        map (lambda label: label.Destroy(), self.__labels.values())
+        map(lambda label: label.Destroy(), self.__labels.values())
 
         self.__labels = {}
         self.__tags = []
 
-
-    def __getMaxHeight (self, labels):
+    def __getMaxHeight(self, labels):
         maxheight = 0
         maxindex = -1
 
-        if len (labels) == 0:
+        if len(labels) == 0:
             return (maxheight, maxindex)
 
-        for label, index in zip (labels, range (len (labels))):
+        for label, index in zip(labels, range(len(labels))):
             height = label.GetSizeTuple()[1]
             if height > maxheight:
                 maxheight = height
@@ -128,8 +122,7 @@ class TagsCloud (wx.ScrolledWindow):
 
         return (maxheight, maxindex)
 
-
-    def __getMaxCount (self):
+    def __getMaxCount(self):
         count = 0
         for tag in self.__tags:
             if len(self.__tags[tag]) > count:
@@ -137,8 +130,7 @@ class TagsCloud (wx.ScrolledWindow):
 
         return count
 
-
-    def __calcSizeRatio (self, count):
+    def __calcSizeRatio(self, count):
         assert self.__tags is not None
 
         maxcount = self.__getMaxCount()
@@ -172,8 +164,7 @@ class TagsCloud (wx.ScrolledWindow):
         self.__moveLabels()
         self.__moveLabels()
 
-
-    def __moveLabels (self):
+    def __moveLabels(self):
         # Метки, расположенные на текущей строке
         currentLine = []
 
@@ -186,13 +177,13 @@ class TagsCloud (wx.ScrolledWindow):
 
         # Хак из-за разного поведения полос прокрутки в винде и линуксе
         if os.name != "nt":
-            self.SetScrollbars (0, 0, 0, 0)
+            self.SetScrollbars(0, 0, 0, 0)
 
         for tagname in self.__tags:
             label = self.__labels[tagname]
             newRightBorder = currentx + label.GetSizeTuple()[0]
 
-            if newRightBorder > maxwidth and len (currentLine) != 0:
+            if newRightBorder > maxwidth and len(currentLine) != 0:
 
                 currentx = self.__margin
                 currenty += self.__stepy
@@ -200,10 +191,10 @@ class TagsCloud (wx.ScrolledWindow):
                 currentLine = []
                 linesCount += 1
 
-            label.MoveXY (currentx, currenty - label.GetSizeTuple()[1] / 2)
+            label.MoveXY(currentx, currenty - label.GetSizeTuple()[1] / 2)
             label.Refresh()
 
-            currentLine.append (label)
+            currentLine.append(label)
             currentx += label.GetSizeTuple()[0] + self.__space
 
         if len (self.__tags) != 0:

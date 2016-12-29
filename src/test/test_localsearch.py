@@ -6,6 +6,7 @@ from outwiker.gui.searchreplacecontroller import LocalSearcher
 
 
 class LocalSearchTest(unittest.TestCase):
+
     def test1(self):
         text = u"1111 sdf sdf 111 657 111 1111 sdf sdf1243"
         phrase = u"111"

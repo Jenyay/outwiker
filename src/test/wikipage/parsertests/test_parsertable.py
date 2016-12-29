@@ -12,6 +12,7 @@ from outwiker.pages.wiki.parserfactory import ParserFactory
 
 
 class ParserTableTest (unittest.TestCase):
+
     def setUp(self):
         self.encoding = "utf8"
         self.filesPath = u"../test/samplefiles/"
@@ -170,4 +171,5 @@ sdfsdf || centered || right aligned||
         result = u'''бла-бла-бла
 <table border=1><tr><td align="center">Ячейка 1</td><td align="left">Ячейка 2</td><td align="right">Ячейка 3</td></tr><tr><td>Ячейка 4</td><td><blockquote>Ячейка 5</blockquote></td><td>Ячейка 6</td></tr></table>'''
 
-        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+        self.assertEqual(self.parser.toHtml(text), result,
+                         self.parser.toHtml(text).encode(self.encoding))

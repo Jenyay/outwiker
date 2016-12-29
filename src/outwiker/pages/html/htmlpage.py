@@ -18,7 +18,7 @@ from actions.switchcoderesult import SwitchCodeResultAction
 
 html_actions = [
     (HtmlAutoLineWrap, None),
-    (SwitchCodeResultAction, HotKey ("F4")),
+    (SwitchCodeResultAction, HotKey("F4")),
 ]
 
 
@@ -33,7 +33,7 @@ class HtmlWikiPage (WikiPage):
         self.__autoLineWrapParam = u"LineWrap"
 
     @property
-    def autoLineWrap (self):
+    def autoLineWrap(self):
         """
         Добавлять ли теги <br> и <p> вместо разрывов строк?
         """
@@ -43,7 +43,7 @@ class HtmlWikiPage (WikiPage):
         return option.value
 
     @autoLineWrap.setter
-    def autoLineWrap (self, value):
+    def autoLineWrap(self, value):
         """
         Добавлять ли теги <br> и <p> вместо разрывов строк?
         """
@@ -54,7 +54,7 @@ class HtmlWikiPage (WikiPage):
         self.root.onPageUpdate(self, change=PAGE_UPDATE_CONTENT)
 
     @staticmethod
-    def getTypeString ():
+    def getTypeString():
         return u"html"
 
     def getHtmlPath(self):
@@ -69,11 +69,11 @@ class HtmlPageFactory (PageFactory):
     Фабрика для создания HTML-страниц и их представлений
     """
     @staticmethod
-    def registerActions (application):
+    def registerActions(application):
         """
         Зарегистрировать все действия, связанные с HTML-страницей
         """
-        map (lambda actionTuple: application.actionController.register(
+        map(lambda actionTuple: application.actionController.register(
             actionTuple[0](application), actionTuple[1]), html_actions)
 
 
@@ -86,17 +86,15 @@ class HtmlPageFactory (PageFactory):
     def getPageType(self):
         return HtmlWikiPage
 
-
     @property
-    def title (self):
+    def title(self):
         """
         Название страницы, показываемое пользователю
         """
         return _(u"HTML Page")
 
-
-    def getPageView (self, parent, application):
+    def getPageView(self, parent, application):
         """
         Вернуть контрол, который будет отображать и редактировать страницу
         """
-        return HtmlPageView (parent, application)
+        return HtmlPageView(parent, application)

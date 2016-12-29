@@ -20,6 +20,7 @@ class SourceGuiPluginTest (unittest.TestCase):
     """
     Тесты интерфейса для плагина Source
     """
+
     def setUp(self):
         self.__pluginname = u"Source"
 
@@ -29,10 +30,10 @@ class SourceGuiPluginTest (unittest.TestCase):
         self._stylesCount = 26
 
         self.loader = PluginsLoader(Application)
-        self.loader.load (dirlist)
+        self.loader.load(dirlist)
 
         self.config = self.loader[self.__pluginname].config
-        self._clearConfig (self.config)
+        self._clearConfig(self.config)
 
         from source.insertdialogcontroller import InsertDialogController
         self.dialog = FakeInsertDialog ()

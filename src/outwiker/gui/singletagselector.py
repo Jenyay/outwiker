@@ -15,9 +15,8 @@ class SingleTagSelector (TagsCloud):
     def __onTagLeftClick (self, event):
         self.clearMarks()
         self.__selectedTag = event.text
-        self.mark (event.text)
-
+        self.mark(event.text)
 
     @property
-    def selectedTag (self):
+    def selectedTag(self):
         return self.__selectedTag

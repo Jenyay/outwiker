@@ -13,17 +13,17 @@ from outwiker.pages.wiki.tabledialogcontroller import (
 )
 
 
-def getTableByPos (text, position):
+def getTableByPos(text, position):
     """
     Return suffix for command name for most nested (:tableNN:) command in the position
     """
-    regex = re.compile (r'table(?P<suffix>\d*)$', re.UNICODE)
-    matches = getCommandsByPos (text, position)
+    regex = re.compile(r'table(?P<suffix>\d*)$', re.UNICODE)
+    matches = getCommandsByPos(text, position)
     matches.reverse()
 
     for match in matches:
         name = match.groupdict()['name']
-        tableMatch = regex.match (name)
+        tableMatch = regex.match(name)
         if tableMatch:
             return tableMatch.groupdict()['suffix']
 
@@ -41,15 +41,15 @@ def getInsertTableActionFunc (application, parent, pageView):
             suffix = u'2'
         else:
             try:
-                suffix = unicode (int (tableSuffix) + 1)
+                suffix = unicode(int(tableSuffix) + 1)
             except ValueError:
                 suffix = u''
 
-        with TableDialog (parent) as dlg:
-            controller = TableDialogController (dlg, suffix, application.config)
+        with TableDialog(parent) as dlg:
+            controller = TableDialogController(dlg, suffix, application.config)
             if controller.showDialog() == wx.ID_OK:
                 result = controller.getResult()
-                editor.replaceText (result)
+                editor.replaceText(result)
 
     return func
 
@@ -63,7 +63,7 @@ def getInsertTableRowsActionFunc (application, parent, pageView):
             suffix = u''
         else:
             try:
-                suffix = unicode (int (tableSuffix))
+                suffix = unicode(int(tableSuffix))
             except ValueError:
                 suffix = u''
 
@@ -71,7 +71,7 @@ def getInsertTableRowsActionFunc (application, parent, pageView):
             controller = TableRowsDialogController (dlg, suffix, application.config)
             if controller.showDialog() == wx.ID_OK:
                 result = controller.getResult()
-                editor.replaceText (result)
+                editor.replaceText(result)
 
     return func
 
@@ -85,11 +85,11 @@ def getInsertTableCellActionFunc (application, parent, pageView):
             suffix = u''
         else:
             try:
-                suffix = unicode (int (tableSuffix))
+                suffix = unicode(int(tableSuffix))
             except ValueError:
                 suffix = u''
 
-        text = u'(:cell{}:)'.format (suffix)
-        editor.replaceText (text)
+        text = u'(:cell{}:)'.format(suffix)
+        editor.replaceText(text)
 
     return func

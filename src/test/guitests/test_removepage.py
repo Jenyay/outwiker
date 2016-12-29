@@ -24,8 +24,7 @@ class RemovePageGuiTest (BaseMainWndTest):
 
         Tester.dialogTester.clear()
 
-
-    def testCommandRemove_01 (self):
+    def testCommandRemove_01(self):
         Tester.dialogTester.appendNo()
 
         Application.wikiroot = self.wikiroot
@@ -97,9 +96,9 @@ class RemovePageGuiTest (BaseMainWndTest):
             Tester.dialogTester.appendOk()
             return wx.YES
 
-        Tester.dialogTester.append (removeBeforeRemove)
+        Tester.dialogTester.append(removeBeforeRemove)
 
-        removePage (self.wikiroot[u"Страница 2/Страница 3"])
+        removePage(self.wikiroot[u"Страница 2/Страница 3"])
 
         # Убедимся, что были показаны все сообщения
         self.assertEqual (Tester.dialogTester.count, 0)

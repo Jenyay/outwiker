@@ -14,6 +14,7 @@ from test.utils import removeDir
 
 
 class HtmlHeadsTest (unittest.TestCase):
+
     def setUp(self):
         self.maxDiff = None
 
@@ -24,7 +25,7 @@ class HtmlHeadsTest (unittest.TestCase):
         dirlist = [u"../plugins/htmlheads"]
 
         self.loader = PluginsLoader(Application)
-        self.loader.load (dirlist)
+        self.loader.load(dirlist)
 
         self.factory = ParserFactory()
         self.parser = self.factory.make (self.testPage, Application.config)

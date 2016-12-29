@@ -16,10 +16,10 @@ class WikiTableActionsTest (BaseMainWndTest):
         super (WikiTableActionsTest, self).setUp()
         self._application = Application
 
-        config = GeneralGuiConfig (self._application.config)
+        config = GeneralGuiConfig(self._application.config)
         config.tableColsCount.remove_option()
         factory = WikiPageFactory()
-        self._testpage = factory.create (self.wikiroot, u"Страница 1", [])
+        self._testpage = factory.create(self.wikiroot, u"Страница 1", [])
 
         self._application.wikiroot = self.wikiroot
         self._application.selectedPage = self._testpage
@@ -336,6 +336,5 @@ class WikiTableActionsTest (BaseMainWndTest):
     def _getPageView (self):
         return Application.mainWindow.pagePanel.pageView
 
-
-    def _getCodeEditor (self):
+    def _getCodeEditor(self):
         return self._getPageView().codeEditor

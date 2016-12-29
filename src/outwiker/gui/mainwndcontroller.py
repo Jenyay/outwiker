@@ -44,7 +44,7 @@ class MainWndController (object):
     Контроллер для управления главным окном
     """
 
-    def __init__ (self, parent):
+    def __init__(self, parent):
         """
         parent - окно, которым управляет контроллер
         """
@@ -102,14 +102,13 @@ class MainWndController (object):
         # Ключ - id, значение - путь до вики
         self._recentId = {}
 
-        self.bookmarks = BookmarksController (self)
-        self.__autosaveTimer = AutosaveTimer (Application)
+        self.bookmarks = BookmarksController(self)
+        self.__autosaveTimer = AutosaveTimer(Application)
 
         self.init()
         self.__createAcceleratorTable()
 
-
-    def __createAcceleratorTable (self):
+    def __createAcceleratorTable(self):
         """
         Создать горячие клавиши, которые не попали в меню
         """
@@ -119,8 +118,7 @@ class MainWndController (object):
             (wx.ACCEL_SHIFT,  wx.WXK_DELETE, wx.ID_CUT)])
         self._mainWindow.SetAcceleratorTable(aTable)
 
-
-    def init (self):
+    def init(self):
         """
         Начальные установки для главного окна
         """
@@ -141,14 +139,12 @@ class MainWndController (object):
         self.mainWindow.Unbind (wx.EVT_CLOSE, handler=self.__onClose)
         self._mainWindow = None
 
-
     @property
-    def mainWindow (self):
+    def mainWindow(self):
         return self._mainWindow
 
-
     @property
-    def mainMenu (self):
+    def mainMenu(self):
         return self.mainWindow.mainMenu
 
 
@@ -184,8 +180,7 @@ class MainWndController (object):
         Application.onWikiOpen += self.__onWikiOpen
         Application.onPageUpdate += self.__onPageUpdate
 
-
-    def __unbindAppEvents (self):
+    def __unbindAppEvents(self):
         Application.onPageSelect -= self.__onPageSelect
         Application.onPreferencesDialogClose -= self.__onPreferencesDialogClose
         Application.onBookmarksChanged -= self.__onBookmarksChanged
@@ -193,12 +188,10 @@ class MainWndController (object):
         Application.onWikiOpen -= self.__onWikiOpen
         Application.onPageUpdate -= self.__onPageUpdate
 
-
-    def __onBookmarksChanged (self, event):
+    def __onBookmarksChanged(self, event):
         self.bookmarks.updateBookmarks()
 
-
-    def __onTreeUpdate (self, sender):
+    def __onTreeUpdate(self, sender):
         """
         Событие при обновлении дерева
         """
@@ -217,7 +210,7 @@ class MainWndController (object):
         """
         if wikiroot is not None and not wikiroot.readonly:
             try:
-                Application.recentWiki.add (wikiroot.path)
+                Application.recentWiki.add(wikiroot.path)
                 self.updateRecentMenu()
             except IOError as e:
                 outwiker.core.commands.MessageBox (
@@ -229,11 +222,10 @@ class MainWndController (object):
         self.updateTitle()
         self.updatePageDateTime()
 
-
     ###################################################
     # Обработка событий
     #
-    def __onPageSelect (self, newpage):
+    def __onPageSelect(self, newpage):
         """
         Обработчик события выбора страницы в дереве
         """
@@ -256,17 +248,16 @@ class MainWndController (object):
     #
     ###################################################
 
-
     ###################################################
     # Активировать/дизактивировать интерфейс
     #
-    def enableGui (self):
+    def enableGui(self):
         """
         Проверить открыта ли вики и включить или выключить кнопки на панели
         """
         enabled = Application.wikiroot is not None
 
-        self.__enableTools (enabled)
+        self.__enableTools(enabled)
         self.mainWindow.pagePanel.panel.Enable(enabled)
         self.mainWindow.treePanel.panel.Enable(enabled)
         self.mainWindow.attachPanel.panel.Enable(enabled)
@@ -293,8 +284,7 @@ class MainWndController (object):
         """
         Обновить заголовок главного окна в зависимости от шаблона и текущей страницы
         """
-        self.mainWindow.SetTitle (getMainWindowTitle (Application))
-
+        self.mainWindow.SetTitle(getMainWindowTitle(Application))
 
     def loadMainWindowParams(self):
         """
@@ -308,23 +298,23 @@ class MainWndController (object):
         xpos = self.mainWindow.mainWindowConfig.xPos.value
         ypos = self.mainWindow.mainWindowConfig.yPos.value
 
-        self.mainWindow.SetDimensions (xpos, ypos, width, height, sizeFlags=wx.SIZE_FORCE)
+        self.mainWindow.SetDimensions(
+            xpos, ypos, width, height, sizeFlags=wx.SIZE_FORCE)
 
         self.mainWindow.Layout()
         self.mainWindow.Thaw()
 
-
     ###################################################
     # Список последних открытых вики
     #
-    def updateRecentMenu (self):
+    def updateRecentMenu(self):
         """
         Обновление меню со списком последних открытых вики
         """
-        self.removeMenuItemsById (self.mainMenu.fileMenu, self._recentId.keys())
+        self.removeMenuItemsById(self.mainMenu.fileMenu, self._recentId.keys())
         self._recentId = {}
 
-        for n in range (len (Application.recentWiki)):
+        for n in range(len(Application.recentWiki)):
             id = wx.Window.NewControlId()
             path = Application.recentWiki[n]
             self._recentId[id] = path
@@ -335,8 +325,7 @@ class MainWndController (object):
 
             self.mainWindow.Bind(wx.EVT_MENU, self.__onRecent, id=id)
 
-
-    def __onRecent (self, event):
+    def __onRecent(self, event):
         """
         Выбор пункта меню с недавно открытыми файлами
         """

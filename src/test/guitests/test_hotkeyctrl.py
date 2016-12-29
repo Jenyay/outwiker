@@ -7,6 +7,7 @@ from outwiker.gui.hotkey import HotKey
 
 
 class HotkeyCtrlTest(BaseMainWndTest):
+
     def setUp(self):
         BaseMainWndTest.setUp(self)
         self._mainWnd = Application.mainWindow

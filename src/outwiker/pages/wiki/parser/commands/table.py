@@ -39,11 +39,12 @@ class TableCommand (Command):
     ...
     (:table2end:)
     """
-    def __init__ (self, parser, suffix=u''):
+
+    def __init__(self, parser, suffix=u''):
         """
         parser - parser instance
         """
-        super (TableCommand, self).__init__ (parser)
+        super(TableCommand, self).__init__(parser)
         self._suffix = suffix
 
         # For using by others commands (row, cell)
@@ -77,10 +78,10 @@ class TableCommand (Command):
         self.parser.addCommand (hcellCommand)
 
         try:
-            body = self.parser.parseWikiMarkup (content)
+            body = self.parser.parseWikiMarkup(content)
 
             if self.lastCellTag is not None:
-                body += u'</{}>'.format (self.lastCellTag)
+                body += u'</{}>'.format(self.lastCellTag)
 
             if not self.firstRow:
                 body += u'</tr>'
@@ -110,28 +111,26 @@ class RowCommand (Command):
         super (RowCommand, self).__init__ (parser)
         self._table = table
 
-
     @property
-    def name (self):
+    def name(self):
         return u'row' + self._table.suffix
 
-
-    def execute (self, params, content):
+    def execute(self, params, content):
         tag = u''
 
         if self._table.lastCellTag is not None:
-            tag = u'</{}>'.format (self._table.lastCellTag)
+            tag = u'</{}>'.format(self._table.lastCellTag)
 
         if not self._table.firstRow:
             tag = tag + u'</tr>'
 
         tag += (u'<tr>' if not params.strip()
-                else u'<tr {}>'.format (params.strip()))
+                else u'<tr {}>'.format(params.strip()))
 
         self._table.firstRow = False
         self._table.lastCellTag = None
 
-        result = tag + self.parser.parseWikiMarkup (content.strip())
+        result = tag + self.parser.parseWikiMarkup(content.strip())
 
         return result
 
@@ -141,47 +140,44 @@ class BaseCellCommand (Command):
         super (BaseCellCommand, self).__init__ (parser)
         self._table = table
 
-
     @abstractmethod
-    def _getTag (self):
+    def _getTag(self):
         pass
 
-
-    def execute (self, params, content):
+    def execute(self, params, content):
         currentTag = self._getTag()
 
-        tag = (u'<{}>'.format (currentTag) if not params.strip()
-               else u'<{} {}>'.format (currentTag, params.strip()))
+        tag = (u'<{}>'.format(currentTag) if not params.strip()
+               else u'<{} {}>'.format(currentTag, params.strip()))
 
         if self._table.firstRow:
             tag = u'<tr>' + tag
             self._table.firstRow = False
 
-
         if self._table.lastCellTag is not None:
-            tag = u'</{}>'.format (self._table.lastCellTag) + tag
+            tag = u'</{}>'.format(self._table.lastCellTag) + tag
 
         self._table.lastCellTag = currentTag
 
-        tag = tag + self.parser.parseWikiMarkup (content.strip())
+        tag = tag + self.parser.parseWikiMarkup(content.strip())
         return tag
 
 
 class CellCommand (BaseCellCommand):
+
     @property
-    def name (self):
+    def name(self):
         return u'cell' + self._table.suffix
 
-
-    def _getTag (self):
+    def _getTag(self):
         return u'td'
 
 
 class HCellCommand (BaseCellCommand):
+
     @property
-    def name (self):
+    def name(self):
         return u'hcell' + self._table.suffix
 
-
-    def _getTag (self):
+    def _getTag(self):
         return u'th'

@@ -10,6 +10,7 @@ from outwiker.core.system import getImagesDir
 
 
 class DateFormatDialog(TestedDialog):
+
     def __init__(self, parent, message, title, initial=u""):
         super(DateFormatDialog, self).__init__(parent)
 

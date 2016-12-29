@@ -5,6 +5,7 @@ from outwiker.core.defines import PAGE_ATTACH_DIR
 
 
 class HtmlLinkDialogController (BaseLinkDialogController):
+
     @property
     def linkResult(self):
         """

@@ -3,24 +3,24 @@
 from .tagslist import TagsList
 
 
-def parseTagsList (tagsString):
+def parseTagsList(tagsString):
     """
     Преобразовать строку тегов, разделенных запятой, в список
     """
-    tags = [tag.strip() for tag in tagsString.split (",")
-            if len (tag.strip()) > 0]
+    tags = [tag.strip() for tag in tagsString.split(",")
+            if len(tag.strip()) > 0]
 
     return tags
 
 
-def getTagsString (tags):
+def getTagsString(tags):
     """
     Получить строку тегов
     """
     result = u""
-    count = len (tags)
+    count = len(tags)
 
-    for n in range (count):
+    for n in range(count):
         result += tags[n]
         if n != count - 1:
             result += ", "
@@ -28,7 +28,7 @@ def getTagsString (tags):
     return result
 
 
-def removeTag (page, tag):
+def removeTag(page, tag):
     """
     Удалить тег из страницы
     """
@@ -36,24 +36,24 @@ def removeTag (page, tag):
 
     taglower = tag.lower()
     while taglower in pageTags:
-        pageTags.remove (taglower)
+        pageTags.remove(taglower)
 
     page.tags = pageTags
 
 
-def appendTag (page, tag):
+def appendTag(page, tag):
     pageTags = page.tags[:]
-    pageTags.append (tag)
+    pageTags.append(tag)
     page.tags = pageTags
 
 
-def appendTagsList (page, tagslist):
+def appendTagsList(page, tagslist):
     pageTags = page.tags[:]
-    pageTags.extend (tagslist)
+    pageTags.extend(tagslist)
     page.tags = pageTags
 
 
-def tagBranch (parentPage, tags):
+def tagBranch(parentPage, tags):
     """
     Добавить теги к ветке, начиная с родительской страницы
 
@@ -65,7 +65,7 @@ def tagBranch (parentPage, tags):
     map (lambda child: tagBranch (child, tags), parentPage.children)
 
 
-def removeTagsFromBranch (parentPage, tags):
+def removeTagsFromBranch(parentPage, tags):
     """
     Удалить теги из ветки, начиная с родительской страницы
 
@@ -78,7 +78,7 @@ def removeTagsFromBranch (parentPage, tags):
     map (lambda child: removeTagsFromBranch (child, tags), parentPage.children)
 
 
-def renameTag (wikiroot, oldName, newName):
+def renameTag(wikiroot, oldName, newName):
     """
     Переименовать тег
     """

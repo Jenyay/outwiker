@@ -8,7 +8,8 @@ from outwiker.core.htmlimproverfactory import HtmlImproverFactory
 
 
 class ParagraphHtmlImproverTest (unittest.TestCase):
-    def setUp (self):
+
+    def setUp(self):
         dirlist = [u"../plugins/htmlformatter"]
 
         self.loader = PluginsLoader(Application)
@@ -17,12 +18,10 @@ class ParagraphHtmlImproverTest (unittest.TestCase):
         factory = HtmlImproverFactory (Application)
         self.improver = factory['pimprover']
 
-
-    def tearDown (self):
+    def tearDown(self):
         self.loader.clear()
 
-
-    def test_empty (self):
+    def test_empty(self):
         src = u''
         expectedResult = u''
 
@@ -405,5 +404,5 @@ qwerty
 </table>
 Абзац 2</p>"""
 
-        result = self.improver.run (src)
-        self.assertEqual (expectedResult, result, result)
+        result = self.improver.run(src)
+        self.assertEqual(expectedResult, result, result)

@@ -21,6 +21,7 @@ from htmlpage import HtmlWikiPage, HtmlPageFactory
 
 class HtmlPageController(object):
     """GUI controller for HTML page"""
+
     def __init__(self, application):
         self._application = application
         self._appearancePanel = None

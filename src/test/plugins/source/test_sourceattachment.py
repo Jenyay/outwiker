@@ -18,6 +18,7 @@ class SourceAttachmentPluginTest (unittest.TestCase):
     """
     Тесты интерфейса для плагина Source
     """
+
     def setUp(self):
         self.__pluginname = u"Source"
 
@@ -26,12 +27,12 @@ class SourceAttachmentPluginTest (unittest.TestCase):
         dirlist = [u"../plugins/source"]
 
         self.loader = PluginsLoader(Application)
-        self.loader.load (dirlist)
+        self.loader.load(dirlist)
 
         self.config = self.loader[self.__pluginname].config
         self.config.tabWidth.value = 4
         self.config.defaultLanguage.remove_option()
-        Application.config.remove_section (self.config.section)
+        Application.config.remove_section(self.config.section)
 
         from source.insertdialogcontroller import InsertDialogController
         self.dialog = FakeInsertDialog ()

@@ -17,6 +17,7 @@ from outwiker.core.system import getImagesDir
 
 
 class GeneralPanel(BasePrefPanel):
+
     def __init__(self, parent):
         super(type(self), self).__init__(parent)
 

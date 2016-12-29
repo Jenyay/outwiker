@@ -15,8 +15,8 @@ class BasePagePanel (wx.Panel):
     """
     __metaclass__ = ABCMeta
 
-    def __init__ (self, parent, application):
-        super (BasePagePanel, self).__init__ (parent, style=wx.TAB_TRAVERSAL)
+    def __init__(self, parent, application):
+        super(BasePagePanel, self).__init__(parent, style=wx.TAB_TRAVERSAL)
 
         self._currentpage = None
         self._application = application
@@ -24,33 +24,30 @@ class BasePagePanel (wx.Panel):
 
         # Событие, срабатывающее, когда устанавливается новая страница
         # Параметр: новая страница
-        self._onSetPage = Event ()
+        self._onSetPage = Event()
 
         # Словарь, хранящий информацию о созданных инструментах
         # Ключ - строка, описывающая инструмент
         # Значение - экземпляр класса ToolsInfo
         self._tools = {}
 
-
     @property
-    def allTools (self):
+    def allTools(self):
         """
         Возвращает список ToolsInfo.
         """
         return self._tools.values()
 
-
-    def _removeAllTools (self):
+    def _removeAllTools(self):
         self.mainWindow.Freeze()
 
         for toolKey in self._tools.keys():
-            self.removeTool (toolKey, fullUpdate=False)
+            self.removeTool(toolKey, fullUpdate=False)
 
         self.mainWindow.UpdateAuiManager()
         self.mainWindow.Thaw()
 
-
-    def removeTool (self, idstring, fullUpdate=True):
+    def removeTool(self, idstring, fullUpdate=True):
         tool = self._tools[idstring]
 
         if (tool.panelname in self.mainWindow.toolbars and
@@ -92,7 +89,7 @@ class BasePagePanel (wx.Panel):
         assert idstring not in self._tools
 
         id = wx.Window.NewControlId()
-        tool = ToolsInfo (id, alwaysEnabled, menu, panelname)
+        tool = ToolsInfo(id, alwaysEnabled, menu, panelname)
         self._tools[idstring] = tool
 
         menu.Append (id, menuText, "", wx.ITEM_NORMAL)
@@ -106,64 +103,58 @@ class BasePagePanel (wx.Panel):
                 buttonText,
                 fullUpdate=fullUpdate)
 
-
-    def enableTool (self, tool, enabled):
+    def enableTool(self, tool, enabled):
         """
         Активировать или дезактивировать один инструмент (пункт меню и кнопку)
         tool - экземпляр класса ToolsInfo
         """
-        tool.menu.Enable (tool.id, enabled)
+        tool.menu.Enable(tool.id, enabled)
 
-        if self.mainWindow.toolbars[tool.panelname].FindById (tool.id) is not None:
+        if self.mainWindow.toolbars[tool.panelname].FindById(tool.id) is not None:
             toolbar = self.mainWindow.toolbars[tool.panelname]
             toolbar.Freeze()
-            toolbar.EnableTool (tool.id, enabled)
+            toolbar.EnableTool(tool.id, enabled)
             toolbar.Realize()
             toolbar.Thaw()
-
 
     ###############################################
     # Методы, которые обязательно надо перегрузить
     ###############################################
 
     @abstractmethod
-    def Print (self):
+    def Print(self):
         """
         Вызов печати страницы
         """
         pass
 
-
     @abstractmethod
-    def UpdateView (self, page):
+    def UpdateView(self, page):
         """
         Обновление страницы
         """
         pass
 
-
     @abstractmethod
-    def Save (self):
+    def Save(self):
         """
         Сохранить страницу
         """
         pass
 
-
     @abstractmethod
-    def Clear (self):
+    def Clear(self):
         """
         Убрать за собой. Удалить добавленные элементы интерфейса и отписаться от событий
         """
         pass
 
     @property
-    def page (self):
+    def page(self):
         return self._currentpage
 
-
     @page.setter
-    def page (self, page):
+    def page(self, page):
         self.Save()
         self._currentpage = page
 

@@ -7,6 +7,7 @@ from outwiker.core.application import Application
 
 
 class LinkCreatorTest (unittest.TestCase):
+
     def setUp(self):
         dirlist = [u"../plugins/markdown"]
         self.loader = PluginsLoader(Application)
