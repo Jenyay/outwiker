@@ -63,16 +63,16 @@ class EditSnippetsDialog(TestedDialog):
 
         self._varMenuItems = [
             (_(u'Selected text'), defines.VAR_SEL_TEXT),
+            (_(u'Current date'), defines.VAR_DATE),
             (_(u'Page title'), defines.VAR_TITLE),
+            (_(u'Page type'), defines.VAR_PAGE_TYPE),
             (_(u'Page tags list'), defines.VAR_TAGS),
             (_(u'Attachments path'), defines.VAR_ATTACH),
             (_(u'Path to page'), defines.VAR_FOLDER),
-            (_(u'Page Id'), defines.VAR_PAGE_ID),
             (_(u'Relative page path'), defines.VAR_SUBPATH),
-            (_(u'Current date'), defines.VAR_DATE),
             (_(u'Page creation date'), defines.VAR_DATE_CREATING),
             (_(u'Page modification date'), defines.VAR_DATE_EDITIND),
-            (_(u'Page type'), defines.VAR_PAGE_TYPE),
+            (_(u'Page Id'), defines.VAR_PAGE_ID),
             (_(u'Attachments list'), defines.VAR_ATTACHLIST),
             (_(u'Child pages'), defines.VAR_CHILDLIST),
         ]
