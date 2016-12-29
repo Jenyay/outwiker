@@ -22,14 +22,12 @@ class CloseTabAction (BaseAction):
     def description (self):
         return _(u"Close current tab")
 
-
-    def run (self, params):
+    def run(self, params):
         assert self._application.mainWindow is not None
 
         index = self._application.mainWindow.tabsController.getSelection()
         if index != -1:
-            self._application.mainWindow.tabsController.closeTab (index)
-
+            self._application.mainWindow.tabsController.closeTab(index)
 
 
 class AddTabAction (BaseAction):
@@ -38,9 +36,12 @@ class AddTabAction (BaseAction):
     """
     stringId = u"AddTab"
 
-    def __init__ (self, application):
+    def __init__(self, application):
         self._application = application
 
+    @property
+    def title(self):
+        return _(u"Add Tab")
 
     @property
     def title (self):
@@ -51,11 +52,9 @@ class AddTabAction (BaseAction):
     def description (self):
         return _(u"Add tab")
 
-
-    def run (self, params):
+    def run(self, params):
         assert self._application.mainWindow is not None
         self._application.mainWindow.tabsController.cloneTab()
-
 
 
 class NextTabAction (BaseAction):
