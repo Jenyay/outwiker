@@ -5,6 +5,7 @@ order = 3
 creationdatetime = 2016-12-26 09:37:24.167990
 datetime = 2016-12-26 09:38:26.785725
 cursorposition = 0
+selectedtab = 0
 
 [wiki]
 md5_hash = e3cc64c9aac368d89290eabbb70bc69b
@@ -14,4 +15,7 @@ expand = True
 
 [Misc]
 pageindex = 0
+
+[Tabs]
+tab_0 = ru
 

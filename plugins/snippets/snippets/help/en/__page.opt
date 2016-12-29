@@ -1,13 +1,13 @@
 [General]
 type = wiki
-tags = плагины, snippets
+tags = 
 order = 1
 creationdatetime = 2016-12-29 09:41:18.668440
-datetime = 2016-12-29 09:41:18.723017
+datetime = 2016-12-29 09:47:13.939717
 cursorposition = 0
 
 [wiki]
-md5_hash = 870a5846d884c98a71931376dd1ef51d
+md5_hash = 54c9ac721b0fdb4e5d6c1c1407f5938e
 
 [Misc]
 pageindex = 1

@@ -1,14 +1,14 @@
 [General]
 type = wiki
-tags = плагины, snippets
+tags = 
 order = 0
 creationdatetime = 2016-12-26 09:38:08.406938
-datetime = 2016-12-29 09:39:51.295504
-cursorposition = 8895
+datetime = 2016-12-29 09:54:14.390384
+cursorposition = 36
 uid = __d35e9016-5e84-4aa4-a6f5-0d3fe2f27203
 
 [wiki]
-md5_hash = 128bb87048ef24003f4b66b5cb6716c8
+md5_hash = 26d59f29ae62d868c084e3ae97e050b3
 
 [Misc]
 pageindex = 1
