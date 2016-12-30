@@ -49,13 +49,6 @@ class EditSnippetsDialog(TestedDialog):
         self.ICON_WIDTH = 16
         self.ICON_HEIGHT = 16
 
-        # self.ID_ADD_GROUP = wx.NewId()
-        # self.ID_ADD_SNIPPET = wx.NewId()
-        # self.ID_REMOVE = wx.NewId()
-        # self.ID_RENAME = wx.NewId()
-        # self.ID_RUN = wx.NewId()
-        # self.ID_HELP = wx.NewId()
-
         self._imagesPath = getImagesPath()
         self._dirImageId = None
         self._snippetImageId = None
@@ -165,7 +158,7 @@ class EditSnippetsDialog(TestedDialog):
             self,
             bitmap=wx.Bitmap(os.path.join(self._imagesPath, "help.png"))
         )
-        self.openHelpBtn.SetToolTipString(_(u"Open help"))
+        self.openHelpBtn.SetToolTipString(_(u"Open help..."))
         groupButtonsSizer.Add(self.openHelpBtn, flag=wx.ALL, border=0)
 
     def _createImagesList(self):

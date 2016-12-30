@@ -9,6 +9,7 @@ from .guicontroller import GuiController
 from .defines import SNIPPETS_DIR
 from snippets.actions.editsnippets import EditSnippetsAction
 from snippets.actions.runrecentsnippet import RunRecentSnippet
+from snippets.actions.openhelp import OpenHelpAction
 from snippets.wikicommand import CommandSnip
 from snippets.utils import getSnippetsDir
 
@@ -28,6 +29,7 @@ class Controller(object):
         self._actions = [
             (EditSnippetsAction, None),
             (RunRecentSnippet, None),
+            (OpenHelpAction, None),
         ]
 
     def initialize(self):
