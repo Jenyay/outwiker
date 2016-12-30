@@ -6,7 +6,7 @@ import shutil
 from outwiker.core.system import getOS
 
 from outwiker.core.system import getSpecialDirList
-from defines import EXTENSION, SNIPPETS_DIR
+from defines import SNIPPETS_DIR
 
 
 def getImagesPath():
@@ -59,7 +59,7 @@ def moveSnippetsTo(src, dest):
 
 def _moveSnippetFileTo(src, dest):
     basename = os.path.basename(src)
-    newname = findUniquePath(dest, basename, EXTENSION)
+    newname = findUniquePath(dest, basename, u'')
     os.rename(src, newname)
     return newname
 

@@ -47,7 +47,7 @@ class SnippetsLoaderTest(unittest.TestCase):
 
     def test_snippets_01(self):
         from snippets.snippetsloader import SnippetsLoader
-        files = [u'Шаблон.tpl']
+        files = [u'Шаблон']
         for fname in files:
             self._create(os.path.join(self._dir_snippets, fname))
 
@@ -55,12 +55,12 @@ class SnippetsLoaderTest(unittest.TestCase):
         snippets = loader.getSnippets()
         self.assertEqual(snippets.dirs, [])
         self.assertEqual(snippets.snippets,
-                         [os.path.join(self._dir_snippets, u'Шаблон.tpl')])
+                         [os.path.join(self._dir_snippets, u'Шаблон')])
         self.assertEqual(len(snippets), 1)
 
     def test_snippets_02(self):
         from snippets.snippetsloader import SnippetsLoader
-        files = [u'Шаблон 01.tpl', u'Шаблон 02.tpl', u'Не шаблон.txt']
+        files = [u'Шаблон 01', u'Шаблон 02', u'Шаблон 03.txt']
         for fname in files:
             self._create(os.path.join(self._dir_snippets, fname))
 
@@ -69,14 +69,18 @@ class SnippetsLoaderTest(unittest.TestCase):
         self.assertEqual(snippets.dirs, [])
 
         self.assertIn(
-            os.path.join(self._dir_snippets, u'Шаблон 01.tpl'),
+            os.path.join(self._dir_snippets, u'Шаблон 01'),
             snippets.snippets)
 
         self.assertIn(
-            os.path.join(self._dir_snippets, u'Шаблон 02.tpl'),
+            os.path.join(self._dir_snippets, u'Шаблон 02'),
             snippets.snippets)
 
-        self.assertEqual(len(snippets), 2)
+        self.assertIn(
+            os.path.join(self._dir_snippets, u'Шаблон 03.txt'),
+            snippets.snippets)
+
+        self.assertEqual(len(snippets), 3)
 
     def test_subdir_01(self):
         from snippets.snippetsloader import SnippetsLoader
@@ -130,12 +134,12 @@ class SnippetsLoaderTest(unittest.TestCase):
         os.mkdir(subdir_1)
         os.mkdir(subdir_2)
 
-        files = [os.path.join(self._dir_snippets, u'root_01.tpl'),
-                 os.path.join(self._dir_snippets, u'root_02.tpl'),
-                 os.path.join(subdir_1, u'dir_01_01.tpl'),
-                 os.path.join(subdir_1, u'dir_01_02.tpl'),
-                 os.path.join(subdir_2, u'dir_02_01.tpl'),
-                 os.path.join(subdir_2, u'dir_02_02.tpl'),
+        files = [os.path.join(self._dir_snippets, u'root_01'),
+                 os.path.join(self._dir_snippets, u'root_02'),
+                 os.path.join(subdir_1, u'dir_01_01'),
+                 os.path.join(subdir_1, u'dir_01_02'),
+                 os.path.join(subdir_2, u'dir_02_01'),
+                 os.path.join(subdir_2, u'dir_02_02'),
                  ]
 
         map(lambda fname: self._create(fname), files)

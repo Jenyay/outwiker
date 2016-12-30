@@ -44,7 +44,7 @@ class SnippetsVarDialogControllerTest(BaseMainWndTest):
     def test_empty(self):
         seltext = u''
         template = u''
-        template_name = u'template.tpl'
+        template_name = u'template'
         self._application.selectedPage = self.testPage
 
         right_result = u''
@@ -58,7 +58,7 @@ class SnippetsVarDialogControllerTest(BaseMainWndTest):
     def test_simple(self):
         seltext = u''
         template = u'Шаблон'
-        template_name = u'template.tpl'
+        template_name = u'template'
         self._application.selectedPage = self.testPage
 
         right_result = u'Шаблон'
@@ -72,7 +72,7 @@ class SnippetsVarDialogControllerTest(BaseMainWndTest):
     def test_global_var_title(self):
         seltext = u''
         template = u'{{__title}}'
-        template_name = u'template.tpl'
+        template_name = u'template'
         self._application.selectedPage = self.testPage
 
         right_result = u'Страница 1'
@@ -88,7 +88,7 @@ class SnippetsVarDialogControllerTest(BaseMainWndTest):
 
         seltext = u''
         template = u'{{__title}}'
-        template_name = u'template.tpl'
+        template_name = u'template'
         self._application.selectedPage = self.testPage
 
         right_result = u'Псевдоним'
@@ -102,7 +102,7 @@ class SnippetsVarDialogControllerTest(BaseMainWndTest):
     def test_page_none_01(self):
         seltext = u''
         template = u'Шаблон'
-        template_name = u'template.tpl'
+        template_name = u'template'
         self._application.selectedPage = None
 
         right_result = u'Шаблон'
@@ -116,7 +116,7 @@ class SnippetsVarDialogControllerTest(BaseMainWndTest):
     def test_var_01(self):
         seltext = u''
         template = u'Переменная = {{varname}}'
-        template_name = u'template.tpl'
+        template_name = u'template'
         self._application.selectedPage = None
 
         right_result = u'Переменная = Абырвалг'
@@ -135,7 +135,7 @@ class SnippetsVarDialogControllerTest(BaseMainWndTest):
     def test_var_02(self):
         seltext = u''
         template = u'Переменная = {{varname1}} = {{varname2}}'
-        template_name = u'template.tpl'
+        template_name = u'template'
         self._application.selectedPage = None
 
         right_result = u'Переменная = Абырвалг1 = Абырвалг2'
@@ -156,7 +156,7 @@ class SnippetsVarDialogControllerTest(BaseMainWndTest):
     def test_wiki_command_01(self):
         seltext = u''
         template = u''
-        template_name = u'template.tpl'
+        template_name = u'template'
         self._application.selectedPage = None
 
         right_result = u'(:snip file="template":)(:snipend:)'

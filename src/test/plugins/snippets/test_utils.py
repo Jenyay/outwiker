@@ -108,7 +108,7 @@ class SnippetsUtilsTest(unittest.TestCase):
 
     def test_moveSnippetsTo_01(self):
         from snippets.utils import moveSnippetsTo, createFile
-        fname = os.path.join(self._tmpdir, u'snippet.tpl')
+        fname = os.path.join(self._tmpdir, u'snippet')
 
         createFile(fname)
         moveSnippetsTo(fname, self._tmpdir)
@@ -117,67 +117,67 @@ class SnippetsUtilsTest(unittest.TestCase):
 
     def test_moveSnippetsTo_02(self):
         from snippets.utils import moveSnippetsTo, createFile
-        fname = os.path.join(self._tmpdir, u'snippet.tpl')
+        fname = os.path.join(self._tmpdir, u'snippet')
         createFile(fname)
         dest = os.path.join(self._tmpdir, u'Поддиректория')
         os.mkdir(dest)
 
         result = moveSnippetsTo(fname, dest)
 
-        self.assertEqual(result, os.path.join(dest, u'snippet.tpl'))
+        self.assertEqual(result, os.path.join(dest, u'snippet'))
         self.assertFalse(os.path.exists(fname))
         self.assertTrue(os.path.exists(result))
 
     def test_moveSnippetsTo_03(self):
         from snippets.utils import moveSnippetsTo, createFile
-        fname = os.path.join(self._tmpdir, u'snippet.tpl')
+        fname = os.path.join(self._tmpdir, u'snippet')
         createFile(fname)
         dest = os.path.join(self._tmpdir, u'Поддиректория')
         os.mkdir(dest)
 
-        createFile(os.path.join(dest, u'snippet.tpl'))
+        createFile(os.path.join(dest, u'snippet'))
 
         result = moveSnippetsTo(fname, dest)
 
-        self.assertEqual(result, os.path.join(dest, u'snippet (1).tpl'))
+        self.assertEqual(result, os.path.join(dest, u'snippet (1)'))
 
-        self.assertTrue(os.path.exists(os.path.join(dest, u'snippet.tpl')))
+        self.assertTrue(os.path.exists(os.path.join(dest, u'snippet')))
         self.assertFalse(os.path.exists(fname))
         self.assertTrue(os.path.exists(result))
 
     def test_moveSnippetsTo_04(self):
         from snippets.utils import moveSnippetsTo, createFile
-        fname = os.path.join(self._tmpdir, u'snippet.tpl')
+        fname = os.path.join(self._tmpdir, u'snippet')
         createFile(fname)
         dest = os.path.join(self._tmpdir, u'Поддиректория')
         os.mkdir(dest)
 
-        createFile(os.path.join(dest, u'snippet.tpl'))
-        createFile(os.path.join(dest, u'snippet (1).tpl'))
+        createFile(os.path.join(dest, u'snippet'))
+        createFile(os.path.join(dest, u'snippet (1)'))
 
         result = moveSnippetsTo(fname, dest)
 
-        self.assertEqual(result, os.path.join(dest, u'snippet (2).tpl'))
+        self.assertEqual(result, os.path.join(dest, u'snippet (2)'))
 
-        self.assertTrue(os.path.exists(os.path.join(dest, u'snippet.tpl')))
-        self.assertTrue(os.path.exists(os.path.join(dest, u'snippet (1).tpl')))
+        self.assertTrue(os.path.exists(os.path.join(dest, u'snippet')))
+        self.assertTrue(os.path.exists(os.path.join(dest, u'snippet (1)')))
         self.assertFalse(os.path.exists(fname))
         self.assertTrue(os.path.exists(result))
 
     def test_moveSnippetsTo_05(self):
         from snippets.utils import moveSnippetsTo, createFile
-        fname = os.path.join(self._tmpdir, u'snippet.tpl')
+        fname = os.path.join(self._tmpdir, u'snippet')
         createFile(fname)
         dest = os.path.join(self._tmpdir, u'Поддиректория')
         os.mkdir(dest)
 
-        os.mkdir(os.path.join(dest, u'snippet.tpl'))
+        os.mkdir(os.path.join(dest, u'snippet'))
 
         result = moveSnippetsTo(fname, dest)
 
-        self.assertEqual(result, os.path.join(dest, u'snippet (1).tpl'))
+        self.assertEqual(result, os.path.join(dest, u'snippet (1)'))
 
-        self.assertTrue(os.path.exists(os.path.join(dest, u'snippet.tpl')))
+        self.assertTrue(os.path.exists(os.path.join(dest, u'snippet')))
         self.assertFalse(os.path.exists(fname))
         self.assertTrue(os.path.exists(result))
 
@@ -186,23 +186,23 @@ class SnippetsUtilsTest(unittest.TestCase):
         dirname = os.path.join(self._tmpdir, u'дир_1', u'дир_2', u'дир_3')
 
         os.makedirs(dirname)
-        fname = os.path.join(dirname, u'snippet.tpl')
+        fname = os.path.join(dirname, u'snippet')
         createFile(fname)
 
         dest = os.path.join(self._tmpdir, u'дир_1')
 
         result = moveSnippetsTo(fname, dest)
 
-        self.assertEqual(result, os.path.join(dest, u'snippet.tpl'))
+        self.assertEqual(result, os.path.join(dest, u'snippet'))
 
-        self.assertTrue(os.path.exists(os.path.join(dest, u'snippet.tpl')))
+        self.assertTrue(os.path.exists(os.path.join(dest, u'snippet')))
         self.assertFalse(os.path.exists(fname))
         self.assertTrue(os.path.exists(result))
 
     def test_moveSnippetsTo_07(self):
         from snippets.utils import moveSnippetsTo, createFile
 
-        fname = os.path.join(self._tmpdir, 'snippet.tpl')
+        fname = os.path.join(self._tmpdir, 'snippet')
         dirname = os.path.join(self._tmpdir, u'subdir')
 
         os.makedirs(dirname)
@@ -210,7 +210,7 @@ class SnippetsUtilsTest(unittest.TestCase):
 
         result = moveSnippetsTo(fname, dirname)
 
-        self.assertEqual(result, os.path.join(dirname, u'snippet.tpl'))
+        self.assertEqual(result, os.path.join(dirname, u'snippet'))
         self.assertTrue(os.path.exists(result))
         self.assertFalse(os.path.exists(fname))
 
@@ -227,7 +227,7 @@ class SnippetsUtilsTest(unittest.TestCase):
         from snippets.utils import moveSnippetsTo, createFile
 
         dirname_1 = os.path.join(self._tmpdir, u'subdir_1')
-        fname = os.path.join(dirname_1, 'snippet.tpl')
+        fname = os.path.join(dirname_1, 'snippet')
 
         dirname_2 = os.path.join(self._tmpdir, u'subdir_2')
 
@@ -239,5 +239,5 @@ class SnippetsUtilsTest(unittest.TestCase):
 
         self.assertEqual(result, os.path.join(dirname_2, u'subdir_1'))
         self.assertTrue(os.path.exists(result))
-        self.assertTrue(os.path.exists(os.path.join(dirname_2, u'subdir_1', u'snippet.tpl')))
+        self.assertTrue(os.path.exists(os.path.join(dirname_2, u'subdir_1', u'snippet')))
         self.assertFalse(os.path.exists(fname))

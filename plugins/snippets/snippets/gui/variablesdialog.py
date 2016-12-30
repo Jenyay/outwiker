@@ -13,7 +13,6 @@ from outwiker.gui.controls.texteditorbase import TextEditorBase
 from snippets.snippetparser import SnippetParser
 from snippets.gui.snippeteditor import SnippetEditor
 from snippets.i18n import get_
-from snippets.defines import EXTENSION
 from snippets.utils import getSnippetsDir, getImagesPath
 from snippets.config import SnippetsConfig
 
@@ -190,8 +189,6 @@ class VariablesDialogController(object):
         '''
         snippets_dir = getSnippetsDir()
         shortTemplateName = template_fname
-        if shortTemplateName.endswith(EXTENSION):
-            shortTemplateName = shortTemplateName[:-len(EXTENSION)]
 
         if shortTemplateName.startswith(snippets_dir):
             shortTemplateName = shortTemplateName[len(snippets_dir) + 1:]

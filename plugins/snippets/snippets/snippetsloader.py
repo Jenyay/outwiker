@@ -2,8 +2,6 @@
 
 import os
 
-from snippets.defines import EXTENSION
-
 
 class SnippetsCollection(object):
     def __init__(self, path):
@@ -56,7 +54,7 @@ class SnippetsLoader(object):
                 subdir = SnippetsCollection(fullname)
                 self._findSnippets(subdir, fullname)
                 snippets.addDir(subdir)
-            elif fullname.endswith(EXTENSION):
+            else:
                 snippets.addSnippet(fullname)
 
     def getSnippets(self):

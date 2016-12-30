@@ -406,7 +406,7 @@ class EditSnippetsDialogController(object):
 
         # Append snippets
         for snippet in sorted(snippetsCollection.snippets):
-            name = os.path.basename(snippet)[:-len(defines.EXTENSION)]
+            name = os.path.basename(snippet)
             data = TreeItemInfo(snippet)
             snippetItem = self._dialog.appendSnippetTreeItem(
                 parentItemId,
@@ -454,7 +454,7 @@ class EditSnippetsDialogController(object):
         parentItem = self.snippetsTree.GetItemParent(item)
         parent_path = self._getItemData(parentItem).path
         path = self._getItemData(item).path
-        path_base = os.path.basename(path)[:-len(defines.EXTENSION)]
+        path_base = os.path.basename(path)
         result = MessageBox(_(u'Remove snippet "{}"?').format(path_base),
                             _(u"Remove snippet"),
                             wx.YES | wx.NO | wx.ICON_QUESTION)
@@ -534,9 +534,7 @@ class EditSnippetsDialogController(object):
             newpath = findUniquePath(os.path.dirname(oldpath), newlabel)
         else:
             # Rename snippet
-            newpath = findUniquePath(os.path.dirname(oldpath),
-                                     newlabel + defines.EXTENSION,
-                                     defines.EXTENSION)
+            newpath = findUniquePath(os.path.dirname(oldpath), newlabel, u'')
 
         try:
             self._getItemData(item).path = newpath
@@ -609,11 +607,7 @@ class EditSnippetsDialogController(object):
             rootdir = os.path.dirname(rootdir)
 
         # Find unique file name for snippets
-        newpath = findUniquePath(
-            rootdir,
-            _(defines.NEW_SNIPPET_NAME) + defines.EXTENSION,
-            defines.EXTENSION
-        )
+        newpath = findUniquePath(rootdir, _(defines.NEW_SNIPPET_NAME), u'')
 
         try:
             createFile(newpath)

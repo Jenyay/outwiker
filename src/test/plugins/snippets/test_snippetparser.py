@@ -128,7 +128,7 @@ class SnippetParserTest(unittest.TestCase):
 
     def test_include_01(self):
         from snippets.snippetparser import SnippetParser
-        template = u'{{varname}} {% include "included.tpl" %}'
+        template = u'{{varname}} {% include "included" %}'
         selectedText = u''
         vars = {
             u'varname': u'Проверка 123',

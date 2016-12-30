@@ -109,7 +109,7 @@ class GuiController(object):
         # Create menu items
         menu.AppendSeparator()
         for snippet in sorted(snippets_tree.snippets):
-            name = os.path.basename(snippet)[:-len(defines.EXTENSION)]
+            name = os.path.basename(snippet)
             menu_item_id = wx.Window.NewControlId()
             menu_item = menu.Append(menu_item_id, name)
 

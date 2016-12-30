@@ -5,7 +5,7 @@ import os
 from outwiker.pages.wiki.parser.command import Command
 from outwiker.utilites.textfile import readTextFile
 
-from snippets.defines import WIKI_COMMAND_PARAM_FILE, EXTENSION
+from snippets.defines import WIKI_COMMAND_PARAM_FILE
 from snippets.snippetparser import SnippetParser, SnippetException
 from snippets.i18n import get_
 
@@ -70,8 +70,6 @@ class CommandSnip (Command):
 
     def _executeFromFile(self, params_dict, content):
         snippet_file = params_dict[WIKI_COMMAND_PARAM_FILE]
-        if not snippet_file.endswith(EXTENSION):
-            snippet_file += EXTENSION
 
         snippet_path = os.path.join(self._snippets_dir, snippet_file)
         current_dir = os.path.dirname(snippet_path)
