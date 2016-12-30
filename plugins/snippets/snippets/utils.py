@@ -3,17 +3,27 @@
 import os
 import shutil
 
-from outwiker.core.system import getOS
+from outwiker.core.system import getSpecialDirList, getOS
 
-from outwiker.core.system import getSpecialDirList
-from defines import SNIPPETS_DIR
+from snippets.defines import SNIPPETS_DIR
+from snippets.i18n import get_
 
 
 def getImagesPath():
-    return unicode(
-        os.path.join(os.path.dirname(__file__), "images"),
-        getOS().filesEncoding
-    )
+    return os.path.join(getPluginPath(), "images")
+
+
+def getPluginPath():
+    return unicode(os.path.dirname(__file__), getOS().filesEncoding)
+
+
+def openHelp():
+    global _
+    _ = get_()
+
+    help_dir = _(u'help/en')
+    help_path = os.path.join(getPluginPath(), help_dir, u'__content.html')
+    getOS().startFile(help_path)
 
 
 def findUniquePath(path, name, extension=u''):

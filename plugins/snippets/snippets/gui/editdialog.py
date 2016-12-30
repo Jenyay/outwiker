@@ -21,7 +21,8 @@ from snippets.snippetsloader import SnippetsLoader
 from snippets.utils import (getImagesPath,
                             findUniquePath,
                             createFile,
-                            moveSnippetsTo)
+                            moveSnippetsTo,
+                            openHelp)
 import snippets.defines as defines
 from snippets.snippetparser import SnippetParser, SnippetException
 from snippets.config import SnippetsConfig
@@ -48,11 +49,12 @@ class EditSnippetsDialog(TestedDialog):
         self.ICON_WIDTH = 16
         self.ICON_HEIGHT = 16
 
-        self.ID_ADD_GROUP = wx.NewId()
-        self.ID_ADD_SNIPPET = wx.NewId()
-        self.ID_REMOVE = wx.NewId()
-        self.ID_RENAME = wx.NewId()
-        self.ID_RUN = wx.NewId()
+        # self.ID_ADD_GROUP = wx.NewId()
+        # self.ID_ADD_SNIPPET = wx.NewId()
+        # self.ID_REMOVE = wx.NewId()
+        # self.ID_RENAME = wx.NewId()
+        # self.ID_RUN = wx.NewId()
+        # self.ID_HELP = wx.NewId()
 
         self._imagesPath = getImagesPath()
         self._dirImageId = None
@@ -121,7 +123,6 @@ class EditSnippetsDialog(TestedDialog):
         # Add a group button
         self.addGroupBtn = wx.BitmapButton(
             self,
-            id=self.ID_ADD_GROUP,
             bitmap=wx.Bitmap(os.path.join(self._imagesPath, "folder_add.png"))
         )
         self.addGroupBtn.SetToolTipString(_(u"Add new snippets group"))
@@ -130,7 +131,6 @@ class EditSnippetsDialog(TestedDialog):
         # Add a snippet button
         self.addSnippetBtn = wx.BitmapButton(
             self,
-            id=self.ID_ADD_SNIPPET,
             bitmap=wx.Bitmap(os.path.join(self._imagesPath, "snippet_add.png"))
         )
         self.addSnippetBtn.SetToolTipString(_(u"Create new snippet"))
@@ -139,7 +139,6 @@ class EditSnippetsDialog(TestedDialog):
         # Rename group or snippet button
         self.renameBtn = wx.BitmapButton(
             self,
-            id=self.ID_RENAME,
             bitmap=wx.Bitmap(os.path.join(self._imagesPath, "rename.png"))
         )
         self.renameBtn.SetToolTipString(_(u"Rename"))
@@ -148,7 +147,6 @@ class EditSnippetsDialog(TestedDialog):
         # Remove group or snippet button
         self.removeBtn = wx.BitmapButton(
             self,
-            id=self.ID_REMOVE,
             bitmap=wx.Bitmap(os.path.join(self._imagesPath, "remove.png"))
         )
         self.removeBtn.SetToolTipString(_(u"Remove"))
@@ -157,11 +155,18 @@ class EditSnippetsDialog(TestedDialog):
         # Run snippet
         self.runSnippetBtn = wx.BitmapButton(
             self,
-            id=self.ID_RUN,
             bitmap=wx.Bitmap(os.path.join(self._imagesPath, "run.png"))
         )
         self.runSnippetBtn.SetToolTipString(_(u"Run snippet"))
         groupButtonsSizer.Add(self.runSnippetBtn, flag=wx.ALL, border=0)
+
+        # Open help
+        self.openHelpBtn = wx.BitmapButton(
+            self,
+            bitmap=wx.Bitmap(os.path.join(self._imagesPath, "help.png"))
+        )
+        self.openHelpBtn.SetToolTipString(_(u"Open help"))
+        groupButtonsSizer.Add(self.openHelpBtn, flag=wx.ALL, border=0)
 
     def _createImagesList(self):
         self._imagelist = SafeImageList(self.ICON_WIDTH, self.ICON_HEIGHT)
@@ -313,6 +318,7 @@ class EditSnippetsDialogController(object):
         self._dialog.renameBtn.Bind(wx.EVT_BUTTON, handler=self._onRenameClick)
         self._dialog.runSnippetBtn.Bind(wx.EVT_BUTTON,
                                         handler=self._onRunSnippet)
+        self._dialog.openHelpBtn.Bind(wx.EVT_BUTTON, handler=self._onOpenHelp)
 
         self._dialog.insertVariableBtn.Bind(EVT_POPUP_BUTTON_MENU_CLICK,
                                             handler=self._onInsertVariable)
@@ -680,6 +686,9 @@ class EditSnippetsDialogController(object):
             eventParams = RunSnippetParams(snippet_fname, u'')
             self._application.customEvents(defines.EVENT_RUN_SNIPPET,
                                            eventParams)
+
+    def _onOpenHelp(self, event):
+        openHelp()
 
     def _onInsertVariable(self, event):
         text = event.data
