@@ -97,4 +97,5 @@ class BaseLinkDialogController(object):
                 lowerString.startswith(u'https://') or
                 lowerString.startswith(u'ftp://') or
                 lowerString.startswith(u'page://') or
+                text.startswith(u'#') or
                 text.strip() in self._dlg.linkText.GetItems())

@@ -423,6 +423,41 @@ class LinkDialogControllerTest(BaseMainWndTest):
             controller.linkResult,
             u'<a href="page://_asdfasdfasdf">page://_asdfasdfasdf</a>')
 
+    def testClipboardAnchor_wiki(self):
+        parent = LinkDialog(self.wnd)
+        Tester.dialogTester.appendOk()
+        selectedString = u''
+        clipboardText = u'#anchor'
+        copyTextToClipboard(clipboardText)
+
+        controller = WikiLinkDialogController(Application,
+                                              self._testpage,
+                                              parent,
+                                              selectedString)
+        controller.showDialog()
+
+        self.assertEqual(controller.link, clipboardText)
+        self.assertEqual(controller.comment, clipboardText)
+        self.assertEqual(controller.linkResult, u'[[#anchor]]')
+
+    def testClipboardAnchor_html(self):
+        parent = LinkDialog(self.wnd)
+        Tester.dialogTester.appendOk()
+        selectedString = u''
+        clipboardText = u'#anchor'
+        copyTextToClipboard(clipboardText)
+
+        controller = HtmlLinkDialogController(self._testpage,
+                                              parent,
+                                              selectedString)
+        controller.showDialog()
+
+        self.assertEqual(controller.link, clipboardText)
+        self.assertEqual(controller.comment, clipboardText)
+        self.assertEqual(
+            controller.linkResult,
+            u'<a href="#anchor">#anchor</a>')
+
     def testAttach_wiki(self):
         Attachment(self._testpage).attach(self.files)
         parent = LinkDialog(self.wnd)
