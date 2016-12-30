@@ -20,9 +20,10 @@ def _convertExceptions(func):
     '''
     Decorator to convert Jinja's errors and other errors to SnippetException.
     '''
-    _ = get_()
-
     def _process(self, *args, **kwargs):
+        global _
+        _ = get_()
+
         try:
             return func(self, *args, **kwargs)
         except TemplateNotFound as e:
