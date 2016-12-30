@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-30 16:38+0300\n"
-"PO-Revision-Date: 2016-12-30 16:38+0300\n"
+"POT-Creation-Date: 2016-12-30 17:45+0300\n"
+"PO-Revision-Date: 2016-12-30 17:45+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -22,7 +22,7 @@ msgstr ""
 msgid "Snippets"
 msgstr "Snippets"
 
-#: guicontroller.py:156 gui/editdialog.py:580
+#: guicontroller.py:156 gui/editdialog.py:585
 msgid ""
 "Can't read the snippet\n"
 "{}"
@@ -31,8 +31,8 @@ msgstr ""
 "{}"
 
 #: guicontroller.py:157 gui/editdialog.py:449 gui/editdialog.py:469
-#: gui/editdialog.py:496 gui/editdialog.py:581 gui/editdialog.py:621
-#: gui/editdialog.py:636 gui/editdialog.py:703
+#: gui/editdialog.py:497 gui/editdialog.py:547 gui/editdialog.py:586
+#: gui/editdialog.py:632 gui/editdialog.py:647 gui/editdialog.py:714
 msgid "Error"
 msgstr "Error"
 
@@ -272,7 +272,7 @@ msgstr "Remove snippet"
 msgid "Can't remove snippet \"{}\""
 msgstr "Can't remove snippet \"{}\""
 
-#: gui/editdialog.py:495
+#: gui/editdialog.py:496
 msgid ""
 "Can't create directory\n"
 "{}"
@@ -280,7 +280,15 @@ msgstr ""
 "Can't create directory\n"
 "{}"
 
-#: gui/editdialog.py:620
+#: gui/editdialog.py:546
+msgid ""
+"Can't rename the snippet '{}'\n"
+"{}"
+msgstr ""
+"Can't rename the snippet '{}'\n"
+"{}"
+
+#: gui/editdialog.py:631
 msgid ""
 "Can't create snippet\n"
 "{}"
@@ -288,7 +296,7 @@ msgstr ""
 "Can't create snippet\n"
 "{}"
 
-#: gui/editdialog.py:635
+#: gui/editdialog.py:646
 msgid ""
 "Can't save snippet\n"
 "{}"
@@ -296,15 +304,15 @@ msgstr ""
 "Can't save snippet\n"
 "{}"
 
-#: gui/editdialog.py:690
+#: gui/editdialog.py:701
 msgid "Enter variable name (English leters, numbers and _ only)"
 msgstr "Enter variable name (English leters, numbers and _ only)"
 
-#: gui/editdialog.py:691
+#: gui/editdialog.py:702
 msgid "Variable name"
 msgstr "Variable name"
 
-#: gui/editdialog.py:702
+#: gui/editdialog.py:713
 msgid "Invalid variable name \"{}\""
 msgstr "Invalid variable name \"{}\""
 

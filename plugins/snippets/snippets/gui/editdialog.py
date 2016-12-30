@@ -490,6 +490,7 @@ class EditSnippetsDialogController(object):
             newitem = self.snippetsTree.GetSelection()
             self.snippetsTree.EditLabel(newitem)
             self._updateMenu()
+            self._scrollToSelectedItem()
         except EnvironmentError:
             MessageBox(
                 _(u"Can't create directory\n{}").format(newpath),
@@ -539,8 +540,12 @@ class EditSnippetsDialogController(object):
             self._getItemData(item).path = newpath
             os.rename(oldpath, newpath)
             self._updateSnippetsTree(newpath)
+            self._scrollToSelectedItem()
         except EnvironmentError as e:
-            print(e)
+            MessageBox(
+                _(u"Can't rename the snippet '{}'\n{}").format(oldpath, e),
+                _(u"Error"),
+                wx.ICON_ERROR | wx.OK)
 
         event.Veto()
         self._updateMenu()
@@ -591,6 +596,11 @@ class EditSnippetsDialogController(object):
         item = self.snippetsTree.GetSelection()
         return self._getItemData(item)
 
+    def _scrollToSelectedItem(self):
+        item = self.snippetsTree.GetSelection()
+        if item.IsOk():
+            self.snippetsTree.ScrollTo(item)
+
     def _updateMenu(self):
         '''
         Update 'Snippets' menu in main menu.
@@ -615,6 +625,7 @@ class EditSnippetsDialogController(object):
             newitem = self.snippetsTree.GetSelection()
             self.snippetsTree.EditLabel(newitem)
             self._updateMenu()
+            self._scrollToSelectedItem()
         except EnvironmentError:
             MessageBox(
                 _(u"Can't create snippet\n{}").format(newpath),
@@ -736,7 +747,7 @@ class EditSnippetsDialogController(object):
         if sourceParent == dropPath:
             return
 
-        # print('{} -> {}'.format(self._treeDragSource, dropPath))
         result_path = moveSnippetsTo(self._treeDragSource, dropPath)
         self._updateSnippetsTree(result_path)
         self._updateMenu()
+        self._scrollToSelectedItem()
