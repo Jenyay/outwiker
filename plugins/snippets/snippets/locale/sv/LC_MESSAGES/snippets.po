@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-21 21:32+0300\n"
-"PO-Revision-Date: 2016-12-23 17:19+0300\n"
+"POT-Creation-Date: 2016-12-30 17:44+0300\n"
+"PO-Revision-Date: 2016-12-31 11:17+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -11,16 +11,16 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.11\n"
+"X-Generator: Poedit 1.8.9\n"
 "X-Crowdin-Project: outwiker\n"
 "X-Crowdin-Language: sv-SE\n"
 "X-Crowdin-File: snippets.pot\n"
 
-#: guicontroller.py:50 gui/editdialog.py:385
+#: guicontroller.py:52 gui/editdialog.py:384
 msgid "Snippets"
 msgstr "Textutdrag"
 
-#: guicontroller.py:154 gui/editdialog.py:583
+#: guicontroller.py:156 gui/editdialog.py:585
 msgid ""
 "Can't read the snippet\n"
 "{}"
@@ -28,13 +28,13 @@ msgstr ""
 "Kan inte läsa utdraget\n"
 "{}"
 
-#: guicontroller.py:155 gui/editdialog.py:450 gui/editdialog.py:470
-#: gui/editdialog.py:497 gui/editdialog.py:584 gui/editdialog.py:628
-#: gui/editdialog.py:643 gui/editdialog.py:707
+#: guicontroller.py:157 gui/editdialog.py:449 gui/editdialog.py:469
+#: gui/editdialog.py:497 gui/editdialog.py:547 gui/editdialog.py:586
+#: gui/editdialog.py:632 gui/editdialog.py:647 gui/editdialog.py:714
 msgid "Error"
 msgstr "Fel"
 
-#: guicontroller.py:166
+#: guicontroller.py:168
 msgid "Snippet error"
 msgstr "Textudragsfel"
 
@@ -46,6 +46,14 @@ msgstr "Utdragshantering..."
 msgid "Snippets. Open dialog to edit, create or remove snippets."
 msgstr "Textutdrag. Redigera, skapa eller ta bort textsnuttar."
 
+#: actions/openhelp.py:22 gui/editdialog.py:161
+msgid "Open help..."
+msgstr "Öppna hjälpen..."
+
+#: actions/openhelp.py:26
+msgid "Snippets. Open plugin help."
+msgstr "Utdrag. Öppna instickshjälpen."
+
 #: actions/runrecentsnippet.py:30
 msgid "Run recent used snippet..."
 msgstr "Kör senast använda utdrag..."
@@ -53,6 +61,10 @@ msgstr "Kör senast använda utdrag..."
 #: actions/runrecentsnippet.py:34
 msgid "Snippets. Run recent used snippet."
 msgstr "Textutdrag. Kör senast använda textsnutt."
+
+#: utils.py:24
+msgid "help/en"
+msgstr "help/en"
 
 #: defines.py:20
 msgid "snippets"
@@ -62,20 +74,20 @@ msgstr "utdrag"
 msgid "snippet"
 msgstr "utdrag"
 
-#: wikicommand.py:67 wikicommand.py:82
+#: wikicommand.py:67 wikicommand.py:80
 msgid "Snippet error: \n"
 msgstr "Utdragsfel: \n"
 
-#: wikicommand.py:83
+#: wikicommand.py:81
 msgid "Can't read file '{}'"
 msgstr "Kan inte läsa filen \"{}\""
 
-#: snippetparser.py:29
+#: snippetparser.py:30
 #, python-brace-format
 msgid "Snippet \"{name}\" not found"
 msgstr "Textutdraget \"{name}\" hittades inte"
 
-#: snippetparser.py:34
+#: snippetparser.py:35
 #, python-brace-format
 msgid ""
 "Snippet error at line {line}:\n"
@@ -84,7 +96,7 @@ msgstr ""
 "Utdragsfel på rad {line}:\n"
 "{text}"
 
-#: snippetparser.py:40
+#: snippetparser.py:41
 #, python-brace-format
 msgid ""
 "Snippet reading error:\n"
@@ -93,7 +105,7 @@ msgstr ""
 "Inläsningsfel:\n"
 "{text}"
 
-#: snippetparser.py:45
+#: snippetparser.py:46
 #, python-brace-format
 msgid ""
 "Snippet processing error:\n"
@@ -110,151 +122,151 @@ msgstr "Insticksmodul för att lagra textutdrag"
 msgid "http://jenyay.net/Outwiker/SnippetsEn"
 msgstr "http://jenyay.net/Outwiker/SnippetsEn"
 
-#: gui/variablesdialog.py:52
+#: gui/variablesdialog.py:51
 msgid "Preview"
 msgstr "Förhandsgranskning"
 
-#: gui/variablesdialog.py:56
+#: gui/variablesdialog.py:55
 msgid "Snippet"
 msgstr "Textutdrag"
 
-#: gui/variablesdialog.py:64
+#: gui/variablesdialog.py:63
 msgid "Insert as wiki command"
 msgstr "Infoga som wiki-kommando"
 
-#: gui/variablesdialog.py:131
+#: gui/variablesdialog.py:130
 msgid "{} | Snippet variables"
 msgstr "{} | Utdragsvariabler"
 
-#: gui/editdialog.py:65
+#: gui/editdialog.py:60
 msgid "Selected text"
 msgstr "Markerad text"
 
-#: gui/editdialog.py:66
+#: gui/editdialog.py:61
+msgid "Current date"
+msgstr "Aktuellt datum"
+
+#: gui/editdialog.py:62
 msgid "Page title"
 msgstr "Sidtitel"
 
-#: gui/editdialog.py:67
+#: gui/editdialog.py:63
+msgid "Page type"
+msgstr "Sidtyp"
+
+#: gui/editdialog.py:64
 msgid "Page tags list"
 msgstr "Sidtaggslista"
 
-#: gui/editdialog.py:68
+#: gui/editdialog.py:65
 msgid "Attachments path"
 msgstr "Sökväg till bilagor"
 
-#: gui/editdialog.py:69
+#: gui/editdialog.py:66
 msgid "Path to page"
 msgstr "Sökväg till sidan"
+
+#: gui/editdialog.py:67
+msgid "Relative page path"
+msgstr "Relativ sidsökväg"
+
+#: gui/editdialog.py:68
+msgid "Page creation date"
+msgstr "Datum då sidan skapades"
+
+#: gui/editdialog.py:69
+msgid "Page modification date"
+msgstr "Sidan ändringsdatum"
 
 #: gui/editdialog.py:70
 msgid "Page Id"
 msgstr "Sid-ID"
 
 #: gui/editdialog.py:71
-msgid "Relative page path"
-msgstr "Relativ sidsökväg"
-
-#: gui/editdialog.py:72
-msgid "Current date"
-msgstr "Aktuellt datum"
-
-#: gui/editdialog.py:73
-msgid "Page creation date"
-msgstr "Datum då sidan skapades"
-
-#: gui/editdialog.py:74
-msgid "Page modification date"
-msgstr "Sidan ändringsdatum"
-
-#: gui/editdialog.py:75
-msgid "Page type"
-msgstr "Sidtyp"
-
-#: gui/editdialog.py:76
 msgid "Attachments list"
 msgstr "Lista över bilagor"
 
-#: gui/editdialog.py:77
+#: gui/editdialog.py:72
 msgid "Child pages"
 msgstr "Underordnade sidor"
 
-#: gui/editdialog.py:81
+#: gui/editdialog.py:76
 msgid "{% if %}"
 msgstr "{% if %}"
 
-#: gui/editdialog.py:82
+#: gui/editdialog.py:77
 msgid "{% include %}"
 msgstr "{% include %}"
 
-#: gui/editdialog.py:83
+#: gui/editdialog.py:78
 msgid "{# comment #}"
 msgstr "{# comment #}"
 
-#: gui/editdialog.py:87
+#: gui/editdialog.py:82
 msgid "Snippets management"
 msgstr "Utdragshantering"
 
-#: gui/editdialog.py:127
+#: gui/editdialog.py:121
 msgid "Add new snippets group"
 msgstr "Lägg till ny utdragsgrupp"
 
-#: gui/editdialog.py:136
+#: gui/editdialog.py:129
 msgid "Create new snippet"
 msgstr "Skapa nytt utdrag"
 
-#: gui/editdialog.py:145
+#: gui/editdialog.py:137
 msgid "Rename"
 msgstr "Byt namn"
 
-#: gui/editdialog.py:154
+#: gui/editdialog.py:145
 msgid "Remove"
 msgstr "Ta bort"
 
-#: gui/editdialog.py:163
+#: gui/editdialog.py:153
 msgid "Run snippet"
 msgstr "Kör utdraget"
 
-#: gui/editdialog.py:207
+#: gui/editdialog.py:205
 msgid "Insert variable"
 msgstr "Infoga variabel"
 
-#: gui/editdialog.py:214
+#: gui/editdialog.py:212
 msgid "Other variable..."
 msgstr "Annan variabel..."
 
-#: gui/editdialog.py:223
+#: gui/editdialog.py:221
 msgid "Insert block"
 msgstr "Infoga block"
 
-#: gui/editdialog.py:263
+#: gui/editdialog.py:261
 msgid "Close"
 msgstr "Stäng"
 
-#: gui/editdialog.py:366
+#: gui/editdialog.py:365
 msgid "No snippet errors"
 msgstr "Inga utdragsfel"
 
-#: gui/editdialog.py:438
+#: gui/editdialog.py:437
 msgid "Remove directory \"{}\" and all snippets inside?"
 msgstr "Ta bort mappen \"{}\" och alla utdrag i mappen?"
 
-#: gui/editdialog.py:439
+#: gui/editdialog.py:438
 msgid "Remove snippets directory"
 msgstr "Ta bort utdragsmappen"
 
-#: gui/editdialog.py:449
+#: gui/editdialog.py:448
 msgid "Can't remove directory \"{}\""
 msgstr "Kan inte ta bort mappen \"{}\""
 
-#: gui/editdialog.py:458
+#: gui/editdialog.py:457
 msgid "Remove snippet \"{}\"?"
 msgstr "Vill du ta bort utdraget \"{}\"?"
 
-#: gui/editdialog.py:459
+#: gui/editdialog.py:458
 msgid "Remove snippet"
 msgstr "Ta bort utdrag"
 
-#: gui/editdialog.py:469
+#: gui/editdialog.py:468
 msgid "Can't remove snippet \"{}\""
 msgstr "Kan inte ta bort utdraget \"{}\""
 
@@ -266,7 +278,15 @@ msgstr ""
 "Kan inte skapa mappen\n"
 "{}"
 
-#: gui/editdialog.py:627
+#: gui/editdialog.py:546
+msgid ""
+"Can't rename the snippet '{}'\n"
+"{}"
+msgstr ""
+"Kan inte byta namn på utdraget '{}'\n"
+"{}"
+
+#: gui/editdialog.py:631
 msgid ""
 "Can't create snippet\n"
 "{}"
@@ -274,7 +294,7 @@ msgstr ""
 "Kan inte skapa utdraget\n"
 "{}"
 
-#: gui/editdialog.py:642
+#: gui/editdialog.py:646
 msgid ""
 "Can't save snippet\n"
 "{}"
@@ -282,14 +302,14 @@ msgstr ""
 "Kan inte spara utdraget\n"
 "{}"
 
-#: gui/editdialog.py:694
+#: gui/editdialog.py:701
 msgid "Enter variable name (English leters, numbers and _ only)"
 msgstr "Ange variabelnamn (endast engelska bokstäver, siffror och understreck _ )"
 
-#: gui/editdialog.py:695
+#: gui/editdialog.py:702
 msgid "Variable name"
 msgstr "Variabelnamn"
 
-#: gui/editdialog.py:706
+#: gui/editdialog.py:713
 msgid "Invalid variable name \"{}\""
 msgstr "Ogiltig variabelnamn \"{}\""
