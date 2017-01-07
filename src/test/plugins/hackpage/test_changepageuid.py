@@ -21,7 +21,7 @@ class HackPage_ChangePageUidTest(BaseMainWndTest):
         self._loader = PluginsLoader(Application)
         self._loader.load(dirlist)
 
-        from hackpage.dialog import ChangeUidDialog
+        from hackpage.gui.changeuiddialog import ChangeUidDialog
         self._dlg = ChangeUidDialog(Application.mainWindow)
         Tester.dialogTester.clear()
 
@@ -76,5 +76,5 @@ class HackPage_ChangePageUidTest(BaseMainWndTest):
         self.assertNotEqual(len(controller.validate(u"adfadf asdfasdf")), 0)
 
     def _createDialogController(self):
-        from hackpage.dialogcontroller import DialogController
-        return DialogController(Application, self._dlg, self.testPage)
+        from hackpage.gui.changeuiddialog import ChangeUidDialogController
+        return ChangeUidDialogController(Application, self._dlg, self.testPage)

@@ -6,7 +6,7 @@ from hackpage.utils import changeUidWithDialog
 from hackpage.i18n import get_
 
 
-class ChangePageUIDAction(BaseAction):
+class ChangeUIDAction(BaseAction):
     """
     Описание действия
     """

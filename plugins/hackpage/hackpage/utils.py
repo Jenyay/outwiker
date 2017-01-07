@@ -5,8 +5,8 @@ import wx
 from outwiker.core.commands import testreadonly
 from outwiker.core.exceptions import ReadonlyException
 
-from hackpage.dialog import ChangeUidDialog
-from hackpage.dialogcontroller import DialogController
+from hackpage.gui.changeuiddialog import (ChangeUidDialog,
+                                          ChangeUidDialogController)
 
 
 @testreadonly
@@ -21,7 +21,7 @@ def changeUidWithDialog(page, application):
         raise ReadonlyException
 
     with ChangeUidDialog(application.mainWindow) as dlg:
-        dlgController = DialogController(application, dlg, page)
+        dlgController = ChangeUidDialogController(application, dlg, page)
         result = dlgController.showDialog()
 
         if result == wx.ID_OK:

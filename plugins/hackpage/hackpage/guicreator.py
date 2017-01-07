@@ -4,7 +4,7 @@
 """
 from .i18n import get_
 
-from hackpage.actions import ChangePageUIDAction
+from hackpage.actions.changeuid import ChangeUIDAction
 
 
 class GuiCreator(object):
@@ -16,7 +16,7 @@ class GuiCreator(object):
         self._application = application
 
         # Сюда добавить все Actions
-        self._actions = [ChangePageUIDAction]
+        self._actions = [ChangeUIDAction]
 
         global _
         _ = get_()

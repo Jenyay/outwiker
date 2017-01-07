@@ -1,16 +1,18 @@
 # -*- coding: UTF-8 -*-
 
+import re
+
 import wx
 
 from outwiker.gui.testeddialog import TestedDialog
 from outwiker.core.commands import MessageBox
 
-from .i18n import get_
+from hackpage.i18n import get_
 
 
 class ChangeUidDialog(TestedDialog):
     """
-    Диалог ввода нового UID
+    The dialog to enter a new page UID
     """
     def __init__(self, parent):
         global _
@@ -19,7 +21,7 @@ class ChangeUidDialog(TestedDialog):
         super(ChangeUidDialog, self).__init__(
             parent,
             style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.THICK_FRAME,
-            title=u"ChangePageUID"
+            title=_(u"Change page UID")
         )
 
         # Функция для проверки правильности введенного идентификатора
@@ -57,6 +59,7 @@ class ChangeUidDialog(TestedDialog):
         """
         mainSizer = wx.FlexGridSizer(cols=1)
         mainSizer.AddGrowableCol(0)
+        mainSizer.AddGrowableRow(2)
 
         self._questionLabel = wx.StaticText(
             self,
@@ -68,13 +71,13 @@ class ChangeUidDialog(TestedDialog):
 
         protocolLabel = wx.StaticText(self, label=u"page://")
         self._newUidText = wx.TextCtrl(self)
-        self._newUidText.SetMinSize((320, -1))
+        self._newUidText.SetMinSize((400, -1))
 
         newUidSizer.Add(protocolLabel,
                         flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
                         border=2)
-
         newUidSizer.Add(self._newUidText, flag=wx.ALL | wx.EXPAND, border=2)
+
         mainSizer.Add(self._questionLabel, flag=wx.ALL, border=2)
         mainSizer.Add(newUidSizer, flag=wx.ALL | wx.EXPAND, border=2)
 
@@ -85,11 +88,10 @@ class ChangeUidDialog(TestedDialog):
 
     def _createOkCancelButtons(self, mainSizer):
         okCancel = self.CreateButtonSizer(wx.OK | wx.CANCEL)
-        mainSizer.AddStretchSpacer()
         mainSizer.Add(
             okCancel,
             flag=wx.ALL | wx.ALIGN_RIGHT | wx.ALIGN_BOTTOM,
-            border=4
+            border=2
         )
 
     @property
@@ -105,3 +107,54 @@ class ChangeUidDialog(TestedDialog):
     def setPageTitle(self, pageTitle):
         self._questionLabel.SetLabel(_(u'Enter new identifier for page "{}"').format(pageTitle))
         self.Fit()
+
+
+class ChangeUidDialogController(object):
+    """
+    Класс для управления диалогом ChangeUidDialog
+    """
+    def __init__(self, application, dialog, page):
+        """
+        dialog - экземпляр класса InsertDialog,
+                который надо будет показать пользователю.
+        page - текущая страница, для которой показывается диалог
+        """
+        assert page is not None
+        assert dialog is not None
+        assert application is not None
+
+        self._application = application
+        self._dialog = dialog
+        self._page = page
+        self._dialog.uid = self._application.pageUidDepot.createUid(self._page)
+        self._dialog.setPageTitle(self._page.display_title)
+        self._dialog.uidValidator = self.validate
+
+    def showDialog(self):
+        """
+        Метод показывает диалог и возвращает строку,
+        соответствующую выбранным настройкам.
+        Если пользователь нажимает кнопку "Cancel", возвращается None
+        """
+        result = self._dialog.ShowModal()
+        return result
+
+    def validate(self, newiud):
+        """
+        Возвращает пустую строку, если newiud соответствует требованиям
+            к идентификаторам.
+        Возвращает строку с описанием ошибки, если что-то неверно.
+        """
+        otherpage = self._application.pageUidDepot[newiud]
+
+        if(otherpage is not None and otherpage != self._page):
+            return _(u"Same identifier exist already")
+
+        regexp = re.compile(r"^[-\w,\$\.\+\!\*\(\):@|&=\?~\#\%]+$",
+                            re.I | re.U)
+        match = regexp.match(newiud)
+
+        if match is None:
+            return _(u"Identifier contain invalid character")
+
+        return u""
