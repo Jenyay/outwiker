@@ -24,6 +24,7 @@ class Controller(object):
         self._selectedPage = None
 
         self.CHANGE_PAGE_UID = wx.NewId()
+        self._popupSubmenu = None
 
     def initialize(self):
         global _
@@ -47,7 +48,11 @@ class Controller(object):
     def __onTreePopupMenu(self, menu, page):
         self._selectedPage = page
 
-        menu.Append(self.CHANGE_PAGE_UID, _(u"Change Page Identifier..."))
+        self._popupSubmenu = wx.Menu()
+        self._popupSubmenu.Append(self.CHANGE_PAGE_UID,
+                                  _(u"Change Page Identifier..."))
+
+        menu.AppendSubMenu(self._popupSubmenu, u"HackPage")
 
         self._application.mainWindow.Bind(wx.EVT_MENU,
                                           id=self.CHANGE_PAGE_UID,
