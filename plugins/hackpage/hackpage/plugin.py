@@ -1,7 +1,6 @@
 # -*- coding: UTF-8 -*-
 
 import os.path
-import logging
 
 from outwiker.core.pluginbase import Plugin
 from outwiker.core.commands import getCurrentVersion
@@ -9,31 +8,30 @@ from outwiker.core.version import Version, StatusSet
 from outwiker.core.system import getOS
 
 
+__version__ = u"1.0"
+
+
 def _no_translate(text):
     return text
 
 
 if getCurrentVersion() < Version(2, 0, 0, 807, status=StatusSet.DEV):
-    logging.warning("HackPage plugin. OutWiker version requirement: 2.0.0.807")
+    print(u"HackPage plugin. OutWiker version requirement: 2.0.0.807")
 else:
-    # from .controller import Controller
+    from hackpage.controller import Controller
 
-    class PluginName(Plugin):
+    class PluginHackPage(Plugin):
         def __init__(self, application):
-            """
-            application - Instance of the
-                core.application.ApplicationParams class
-            """
-            super(PluginName, self).__init__(application)
-            # self.__controller = Controller(self, application)
+            super(PluginHackPage, self).__init__(application)
+            self.__controller = Controller(self, application)
 
         @property
         def application(self):
             return self._application
 
-        #########################################
-        # Properties and methods to overloading #
-        #########################################
+        ###################################################
+        # Свойства и методы, которые необходимо определить
+        ###################################################
 
         @property
         def name(self):
@@ -41,23 +39,22 @@ else:
 
         @property
         def description(self):
-            return _(u"Plugin description")
+            return _(u"Plugin for edit low-level page parameters")
+
+        @property
+        def version(self):
+            return __version__
 
         @property
         def url(self):
-            return _(u"http://jenyay.net")
+            return _(u"http://jenyay.net/Outwiker/HackPageEn")
 
         def initialize(self):
             self._initlocale(u"hackpage")
-            # self.__controller.initialize()
+            self.__controller.initialize()
 
         def destroy(self):
-            """
-            Destroy (unload) the plugin.
-            The plugin must unbind all events.
-            """
-            # self.__controller.destroy()
-            pass
+            self.__controller.destroy()
 
         #############################################
 
