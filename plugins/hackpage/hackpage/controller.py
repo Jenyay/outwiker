@@ -42,8 +42,6 @@ class Controller(object):
         Вызывается при отключении плагина
         """
         self._application.onTreePopupMenu -= self.__onTreePopupMenu
-
-        self._guiCreator.removeTools()
         self._guiCreator.destroy()
 
     def __onTreePopupMenu(self, menu, page):

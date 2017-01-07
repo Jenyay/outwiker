@@ -2,8 +2,10 @@
 """
 Модуль с классами для добавления пунктов меню и кнопок на панель
 """
-from .i18n import get_
 
+import wx
+
+from hackpage.i18n import get_
 from hackpage.actions.changeuid import ChangeUIDAction
 
 
@@ -21,6 +23,8 @@ class GuiCreator(object):
         global _
         _ = get_()
 
+        self._menuItem = None
+
     def initialize(self):
         if self._application.mainWindow is not None:
             map(lambda action: self._application.actionController.register(
@@ -34,19 +38,20 @@ class GuiCreator(object):
             return
 
         # Меню, куда будут добавляться команды
-        menu = mainWindow.mainMenu.toolsMenu
+        menu = wx.Menu()
+        self._menuItem = mainWindow.mainMenu.toolsMenu.AppendSubMenu(
+            menu,
+            u'HackPage')
 
         map(lambda action: self._application.actionController.appendMenuItem(
             action.stringId, menu), self._actions)
 
-    def removeTools(self):
-        actionController = self._application.actionController
-        if self._application.mainWindow is not None:
-            map(lambda action: actionController.removeMenuItem(action.stringId),
-                self._actions)
-
     def destroy(self):
         actionController = self._application.actionController
-        if self._application.mainWindow is not None:
+        mainWindow = self._application.mainWindow
+
+        if mainWindow is not None:
             map(lambda action: actionController.removeAction(action.stringId),
                 self._actions)
+            mainWindow.mainMenu.toolsMenu.RemoveItem(self._menuItem)
+            self._menuItem = None
