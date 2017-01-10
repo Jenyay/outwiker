@@ -5,7 +5,7 @@
 
     Runtime helpers.
 
-    :copyright: (c) 2010 by the Jinja Team.
+    :copyright: (c) 2017 by the Jinja Team.
     :license: BSD.
 """
 import sys
@@ -13,7 +13,7 @@ import sys
 from itertools import chain
 from jinja2.nodes import EvalContext, _context_function_types
 from jinja2.utils import Markup, soft_unicode, escape, missing, concat, \
-     internalcode, object_type_repr
+     internalcode, object_type_repr, evalcontextfunction
 from jinja2.exceptions import UndefinedError, TemplateRuntimeError, \
      TemplateNotFound
 from jinja2._compat import imap, text_type, iteritems, \
@@ -24,7 +24,7 @@ from jinja2._compat import imap, text_type, iteritems, \
 __all__ = ['LoopContext', 'TemplateReference', 'Macro', 'Markup',
            'TemplateRuntimeError', 'missing', 'concat', 'escape',
            'markup_join', 'unicode_join', 'to_string', 'identity',
-           'TemplateNotFound', 'make_logging_undefined']
+           'TemplateNotFound']
 
 #: the name of the function that is used to convert something into
 #: a string.  We can just use the text type here.
@@ -67,8 +67,8 @@ def new_context(environment, template_name, blocks, vars=None,
         if shared:
             parent = dict(parent)
         for key, value in iteritems(locals):
-            if key[:2] == 'l_' and value is not missing:
-                parent[key[2:]] = value
+            if value is not missing:
+                parent[key] = value
     return environment.context_class(environment, parent, template_name,
                                      blocks)
 
@@ -100,7 +100,7 @@ class Context(object):
     The context is immutable.  Modifications on :attr:`parent` **must not**
     happen and modifications on :attr:`vars` are allowed from generated
     template code only.  Template filters and global functions marked as
-    :func:`contextfunction`\s get the active context passed as first argument
+    :func:`contextfunction`\\s get the active context passed as first argument
     and are allowed to access the context read-only.
 
     The template context supports read only dict operations (`get`,
@@ -150,20 +150,34 @@ class Context(object):
         """Looks up a variable like `__getitem__` or `get` but returns an
         :class:`Undefined` object with the name of the name looked up.
         """
+        rv = self.resolve_or_missing(key)
+        if rv is missing:
+            return self.environment.undefined(name=key)
+        return rv
+
+    def resolve_or_missing(self, key):
+        """Resolves a variable like :meth:`resolve` but returns the
+        special `missing` value if it cannot be found.
+        """
         if key in self.vars:
             return self.vars[key]
         if key in self.parent:
             return self.parent[key]
-        return self.environment.undefined(name=key)
+        return missing
 
     def get_exported(self):
         """Get a new dict with the exported variables."""
         return dict((k, self.vars[k]) for k in self.exported_vars)
 
     def get_all(self):
-        """Return a copy of the complete context as dict including the
-        exported variables.
+        """Return the complete context as dict including the exported
+        variables.  For optimizations reasons this might not return an
+        actual copy so be careful with using it.
         """
+        if not self.vars:
+            return self.parent
+        if not self.parent:
+            return self.vars
         return dict(self.parent, **self.vars)
 
     @internalcode
@@ -200,10 +214,12 @@ class Context(object):
                                                 'StopIteration exception')
 
     def derived(self, locals=None):
-        """Internal helper function to create a derived context."""
+        """Internal helper function to create a derived context.  This is
+        used in situations where the system needs a new context in the same
+        template that is independent.
+        """
         context = new_context(self.environment, self.name, {},
-                              self.parent, True, None, locals)
-        context.vars.update(self.vars)
+                              self.get_all(), True, None, locals)
         context.eval_ctx = self.eval_ctx
         context.blocks.update((k, list(v)) for k, v in iteritems(self.blocks))
         return context
@@ -232,8 +248,8 @@ class Context(object):
         """Lookup a variable or raise `KeyError` if the variable is
         undefined.
         """
-        item = self.resolve(key)
-        if isinstance(item, Undefined):
+        item = self.resolve_or_missing(key)
+        if item is missing:
             raise KeyError(key)
         return item
 
@@ -280,24 +296,16 @@ class BlockReference(object):
         return rv
 
 
-class LoopContext(object):
+class LoopContextBase(object):
     """A loop context for dynamic iteration."""
 
-    def __init__(self, iterable, recurse=None, depth0=0):
-        self._iterator = iter(iterable)
+    _after = _last_iteration
+    _length = None
+
+    def __init__(self, recurse=None, depth0=0):
         self._recurse = recurse
-        self._after = self._safe_next()
         self.index0 = -1
         self.depth0 = depth0
-
-        # try to get the length of the iterable early.  This must be done
-        # here because there are some broken iterators around where there
-        # __len__ is the number of iterations left (i'm looking at your
-        # listreverseiterator!).
-        try:
-            self._length = len(iterable)
-        except (TypeError, AttributeError):
-            self._length = None
 
     def cycle(self, *args):
         """Cycles among the arguments with the current loop index."""
@@ -315,15 +323,6 @@ class LoopContext(object):
     def __len__(self):
         return self.length
 
-    def __iter__(self):
-        return LoopContextIterator(self)
-
-    def _safe_next(self):
-        try:
-            return next(self._iterator)
-        except StopIteration:
-            return _last_iteration
-
     @internalcode
     def loop(self, iterable):
         if self._recurse is None:
@@ -335,6 +334,30 @@ class LoopContext(object):
     # the the loop without or with too many arguments.
     __call__ = loop
     del loop
+
+    def __repr__(self):
+        return '<%s %r/%r>' % (
+            self.__class__.__name__,
+            self.index,
+            self.length
+        )
+
+
+class LoopContext(LoopContextBase):
+
+    def __init__(self, iterable, recurse=None, depth0=0):
+        LoopContextBase.__init__(self, recurse, depth0)
+        self._iterator = iter(iterable)
+
+        # try to get the length of the iterable early.  This must be done
+        # here because there are some broken iterators around where there
+        # __len__ is the number of iterations left (i'm looking at your
+        # listreverseiterator!).
+        try:
+            self._length = len(iterable)
+        except (TypeError, AttributeError):
+            self._length = None
+        self._after = self._safe_next()
 
     @property
     def length(self):
@@ -349,12 +372,14 @@ class LoopContext(object):
             self._length = len(iterable) + iterations_done
         return self._length
 
-    def __repr__(self):
-        return '<%s %r/%r>' % (
-            self.__class__.__name__,
-            self.index,
-            self.length
-        )
+    def __iter__(self):
+        return LoopContextIterator(self)
+
+    def _safe_next(self):
+        try:
+            return next(self._iterator)
+        except StopIteration:
+            return _last_iteration
 
 
 @implements_iterator
@@ -381,23 +406,55 @@ class LoopContextIterator(object):
 class Macro(object):
     """Wraps a macro function."""
 
-    def __init__(self, environment, func, name, arguments, defaults,
-                 catch_kwargs, catch_varargs, caller):
+    def __init__(self, environment, func, name, arguments,
+                 catch_kwargs, catch_varargs, caller,
+                 default_autoescape=None):
         self._environment = environment
         self._func = func
         self._argument_count = len(arguments)
         self.name = name
         self.arguments = arguments
-        self.defaults = defaults
         self.catch_kwargs = catch_kwargs
         self.catch_varargs = catch_varargs
         self.caller = caller
+        self.explicit_caller = 'caller' in arguments
+        if default_autoescape is None:
+            default_autoescape = environment.autoescape
+        self._default_autoescape = default_autoescape
 
     @internalcode
+    @evalcontextfunction
     def __call__(self, *args, **kwargs):
+        # This requires a bit of explanation,  In the past we used to
+        # decide largely based on compile-time information if a macro is
+        # safe or unsafe.  While there was a volatile mode it was largely
+        # unused for deciding on escaping.  This turns out to be
+        # problemtic for macros because if a macro is safe or not not so
+        # much depends on the escape mode when it was defined but when it
+        # was used.
+        #
+        # Because however we export macros from the module system and
+        # there are historic callers that do not pass an eval context (and
+        # will continue to not pass one), we need to perform an instance
+        # check here.
+        #
+        # This is considered safe because an eval context is not a valid
+        # argument to callables otherwise anwyays.  Worst case here is
+        # that if no eval context is passed we fall back to the compile
+        # time autoescape flag.
+        if args and isinstance(args[0], EvalContext):
+            autoescape = args[0].autoescape
+            args = args[1:]
+        else:
+            autoescape = self._default_autoescape
+
         # try to consume the positional arguments
         arguments = list(args[:self._argument_count])
         off = len(arguments)
+
+        # For information why this is necessary refer to the handling
+        # of caller in the `macro_body` handler in the compiler.
+        found_caller = False
 
         # if the number of arguments consumed is not the number of
         # arguments expected we start filling in keyword arguments
@@ -407,25 +464,30 @@ class Macro(object):
                 try:
                     value = kwargs.pop(name)
                 except KeyError:
-                    try:
-                        value = self.defaults[idx - self._argument_count + off]
-                    except IndexError:
-                        value = self._environment.undefined(
-                            'parameter %r was not provided' % name, name=name)
+                    value = missing
+                if name == 'caller':
+                    found_caller = True
                 arguments.append(value)
+        else:
+            found_caller = self.explicit_caller
 
         # it's important that the order of these arguments does not change
         # if not also changed in the compiler's `function_scoping` method.
         # the order is caller, keyword arguments, positional arguments!
-        if self.caller:
+        if self.caller and not found_caller:
             caller = kwargs.pop('caller', None)
             if caller is None:
                 caller = self._environment.undefined('No caller defined',
                                                      name='caller')
             arguments.append(caller)
+
         if self.catch_kwargs:
             arguments.append(kwargs)
         elif kwargs:
+            if 'caller' in kwargs:
+                raise TypeError('macro %r was invoked with two values for '
+                                'the special caller argument.  This is '
+                                'most likely a bug.' % self.name)
             raise TypeError('macro %r takes no keyword argument %r' %
                             (self.name, next(iter(kwargs))))
         if self.catch_varargs:
@@ -433,7 +495,11 @@ class Macro(object):
         elif len(args) > self._argument_count:
             raise TypeError('macro %r takes not more than %d argument(s)' %
                             (self.name, len(self.arguments)))
-        return self._func(*arguments)
+
+        rv = self._func(*arguments)
+        if autoescape:
+            rv = Markup(rv)
+        return rv
 
     def __repr__(self):
         return '<%s %s>' % (
@@ -498,8 +564,8 @@ class Undefined(object):
         __truediv__ = __rtruediv__ = __floordiv__ = __rfloordiv__ = \
         __mod__ = __rmod__ = __pos__ = __neg__ = __call__ = \
         __getitem__ = __lt__ = __le__ = __gt__ = __ge__ = __int__ = \
-        __float__ = __complex__ = __pow__ = __rpow__ = \
-        _fail_with_undefined_error
+        __float__ = __complex__ = __pow__ = __rpow__ = __sub__ = \
+        __rsub__ = _fail_with_undefined_error
 
     def __eq__(self, other):
         return type(self) is type(other)
