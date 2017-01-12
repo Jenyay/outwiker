@@ -1,0 +1,15 @@
+[Tree]
+expand = False
+
+[General]
+type = html
+order = 0
+tags = пользователям
+datetime = 2014-06-15 21:13:23.389796
+linewrap = True
+cursorposition = 496
+alias = Прикрепленные файлы
+
+[Misc]
+pageindex = 1
+

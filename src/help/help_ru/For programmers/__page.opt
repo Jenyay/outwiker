@@ -1,0 +1,17 @@
+[wiki]
+md5_hash = 17bd420a92655778ae02b4e64f8244a0
+
+[Tree]
+expand = True
+
+[General]
+type = wiki
+order = 8
+tags = программистам
+datetime = 2012-04-27 23:04:51.000000
+cursorposition = 0
+alias = Программистам
+
+[Misc]
+pageindex = 1
+

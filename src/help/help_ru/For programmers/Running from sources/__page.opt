@@ -1,0 +1,16 @@
+[wiki]
+md5_hash = 2a359a0e9fe91d0dffe65385ed899e2b
+
+[Tree]
+expand = False
+
+[General]
+type = wiki
+tags = программистам
+datetime = 2013-05-26 10:13:18.872168
+cursorposition = 0
+alias = Запуск из исходников
+
+[Misc]
+pageindex = 1
+

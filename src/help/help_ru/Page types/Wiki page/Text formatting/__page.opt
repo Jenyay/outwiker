@@ -1,0 +1,17 @@
+[wiki]
+md5_hash = db2d3068d2bcb2504b161f75267bba93
+
+[Tree]
+expand = False
+
+[General]
+type = wiki
+order = 5
+tags = пользователям, wiki
+datetime = 2016-02-05 10:00:02.105820
+cursorposition = 1319
+alias = Форматирование текста
+
+[Misc]
+pageindex = 1
+

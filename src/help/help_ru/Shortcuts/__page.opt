@@ -1,0 +1,17 @@
+[wiki]
+md5_hash = 0e24c95bdb2e9c0a3741021776070e9b
+
+[Tree]
+expand = False
+
+[General]
+type = wiki
+order = 4
+tags = пользователям
+datetime = 2015-02-01 20:49:54.924912
+cursorposition = 0
+alias = Горячие клавиши
+
+[Misc]
+pageindex = 1
+

@@ -1,0 +1,15 @@
+[General]
+type = wiki
+tags = wiki, команды, пользователям
+order = 3
+creationdatetime = 2014-08-21 12:26:47.811979
+datetime = 2014-08-21 12:51:40.878481
+cursorposition = 236
+alias = Команды crdate и eddate
+
+[wiki]
+md5_hash = fc7780183c32d7f6db61b0296256269d
+
+[Misc]
+pageindex = 1
+

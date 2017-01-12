@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
+	<meta http-equiv='content-type' content='text/html; charset=utf-8'/>
+
+	<style type='text/css'>
+		body, div, p, table {
+			font-size:10pt;
+			font-family:Verdana;
+		}
+
+		img{border:none}
+		
+	</style>
+	
+</head>
+
+<body>
+<p>В таблице приведены примеры оформления ссылок на адреса в интернете и на другие страницы дерева.</p>
+<h2>Ссылки</h2>
+<p>
+<table border=1>
+<tr>
+<td align="center"><b>Синтаксис</b></td>
+<td align="center"><b>Результат</b></td>
+<td align="center"><b>Комментарий</b></td>
+</tr>
+<tr>
+<td>http://example.com</td>
+<td><a href="http://example.com">http://example.com</a></td>
+<td>Ссылка на адрес в интернете</td>
+</tr>
+<tr>
+<td>[[http://example.com]]</td>
+<td><a href="http://example.com">http://example.com</a></td>
+<td>Ссылка на адрес в интернете</td>
+</tr>
+<tr>
+<td>[[Пример ссылки -> http://example.com]]</td>
+<td><a href="http://example.com">Пример ссылки</a></td>
+<td>Ссылка на адрес в интернете с заданным текстом</td>
+</tr>
+<tr>
+<td>[[http://example.com | Пример ссылки]]</td>
+<td><a href="http://example.com">Пример ссылки</a></td>
+<td>Ссылка на адрес в интернете с заданным текстом</td>
+</tr>
+<tr>
+<td>[[page://__19866d72-8d95-4e2c-8df1-6df0bd8f06c0]]</td>
+<td><a href="page://__19866d72-8d95-4e2c-8df1-6df0bd8f06c0">page://__19866d72-8d95-4e2c-8df1-6df0bd8f06c0</a></td>
+<td>Ссылка на страницу дерева по идентификатору</td>
+</tr>
+<tr>
+<td>[[page://__19866d72-8d95-4e2c-8df1-6df0bd8f06c0 | Ссылка на страницу]]</td>
+<td><a href="page://__19866d72-8d95-4e2c-8df1-6df0bd8f06c0">Ссылка на страницу</a></td>
+<td>Ссылка на страницу дерева  по идентификатору с комментарием</td>
+</tr>
+<tr>
+<td>[[Ссылка на страницу->page://__19866d72-8d95-4e2c-8df1-6df0bd8f06c0]]</td>
+<td><a href="page://__19866d72-8d95-4e2c-8df1-6df0bd8f06c0">Ссылка на страницу</a></td>
+<td>Ссылка на страницу дерева  по идентификатору с комментарием</td>
+</tr>
+<tr>
+<td>[[Типы страниц/Wiki-страница/Ссылки]]</td>
+<td><a href="Типы страниц/Wiki-страница/Ссылки">Типы страниц/Wiki-страница/Ссылки</a></td>
+<td>Ссылка на страницу дерева по имени</td>
+</tr>
+<tr>
+<td>[[Типы страниц/Wiki-страница/Ссылки | Ссылки]]</td>
+<td><a href="Типы страниц/Wiki-страница/Ссылки">Ссылки</a></td>
+<td>Ссылка на страницу дерева с комментарием по имени</td>
+</tr>
+<tr>
+<td>[[Ссылки -> Типы страниц/Wiki-страница/Ссылки]]</td>
+<td><a href="Типы страниц/Wiki-страница/Ссылки">Ссылки</a></td>
+<td>Ссылка на страницу дерева с комментарием по имени</td>
+</tr>
+<tr>
+<td>[[../../HTML-страница]]</td>
+<td><a href="../../HTML-страница">../../HTML-страница</a></td>
+<td align="left">Использование относительных ссылок</td>
+</tr>
+<tr>
+<td>[[../../HTML-страница | Ссылка на страницу]]</td>
+<td><a href="../../HTML-страница">Ссылка на страницу</a></td>
+<td align="left">Использование относительных ссылок с комментариями</td>
+</tr>
+<tr>
+<td>[[Ссылка на страницу -> ../../HTML-страница ]]</td>
+<td align="left"><a href="../../HTML-страница">Ссылка на страницу</a></td>
+<td align="left">Использование относительных ссылок с комментариями</td>
+</tr>
+<tr>
+<td>http://jenyay.net/utils/small_image.jpg</td>
+<td align="left"><img src="http://jenyay.net/uploads/Outwiker/Unstable/outwiker_100_white.png"/></td>
+<td>Картинка из интернета</td>
+</tr>
+</table>
+<h2>Якоря</h2>
+<p>
+<table border=1>
+<tr>
+<td align="center"><b>Синтаксис</b></td>
+<td align="center"><b>Результат</b></td>
+<td align="center"><b>Комментарий</b></td>
+</tr>
+<tr>
+<td>[[#anchor]]</td>
+<td>Добавить якорь с именем #anchor <a id="anchor"></a></td>
+<td>Результирующий HTML-код: &lt;A NAME=&quot;#anchor&quot;&gt;&lt;/A&gt;</td>
+</tr>
+<tr>
+<td>[[#anchor | Ссылка на якорь]]</td>
+<td><a href="#anchor">Ссылка на якорь</a></td>
+<td>Ссылка на якорь с именем anchor</td>
+</tr>
+<tr>
+<td>[[Ссылка на якорь -> #anchor]]</td>
+<td><a href="#anchor">Ссылка на якорь</a></td>
+<td>Ссылка на якорь с именем anchor</td>
+</tr>
+<tr>
+<td>[[page://__8fb202a4-8a7a-40ad-8326-e744ffb102f5/#anchor]]</td>
+<td><a href="page://__8fb202a4-8a7a-40ad-8326-e744ffb102f5/#anchor">page://__8fb202a4-8a7a-40ad-8326-e744ffb102f5/#anchor</a></td>
+<td>Ссылка на якорь с именем anchor на другой странице</td>
+</tr>
+<tr>
+<td>[[page://__8fb202a4-8a7a-40ad-8326-e744ffb102f5/#anchor | Ссылка на якорь на другой странице]]</td>
+<td><a href="page://__8fb202a4-8a7a-40ad-8326-e744ffb102f5/#anchor">Ссылка на якорь на другой странице</a></td>
+<td>Ссылка на якорь с именем anchor на другой странице с комментарием</td>
+</tr>
+<tr>
+<td>[[Ссылка на якорь на другой странице -> page://__8fb202a4-8a7a-40ad-8326-e744ffb102f5/#anchor]]</td>
+<td><a href="page://__8fb202a4-8a7a-40ad-8326-e744ffb102f5/#anchor">Ссылка на якорь на другой странице</a></td>
+<td>Ссылка на якорь с именем anchor на другой странице с комментарием</td>
+</tr>
+</table>
+</body>
+</html>

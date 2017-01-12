@@ -1,0 +1,14 @@
+[General]
+type = wiki
+tags = пользователям
+order = 1
+datetime = 2012-04-27 23:04:51.000000
+cursorposition = 0
+alias = Работа с метками
+
+[wiki]
+md5_hash = b7dae8cf6bf11d8420d1d32e754085d2
+
+[Misc]
+pageindex = 1
+
