@@ -12,7 +12,7 @@ from hackpage.gui.changeuiddialog import (ChangeUidDialog,
 @testreadonly
 def changeUidWithDialog(page, application):
     """
-    Вызвать диалог для изменения UID страницы
+    Show dialog to change page UID
     """
     if page is None or page.parent is None:
         return
@@ -28,3 +28,23 @@ def changeUidWithDialog(page, application):
             # Не отлавливаем исключения, поскольку считаем,
             # что правильность идентификатора проверил DialogController
             application.pageUidDepot.changeUid(page, dlg.uid)
+
+
+@testreadonly
+def setAliasWithDialog(page, application):
+    """
+    Show dialog to set page alias
+    """
+    if page is None or page.parent is None:
+        return
+
+    if page.readonly:
+        raise ReadonlyException
+
+    defaultValue = page.alias if page.alias is not None else u''
+    with wx.TextEntryDialog(application.mainWindow,
+                            _(u'Enter new page alias'),
+                            _(u'Set page alias'),
+                            defaultValue) as dlg:
+        if dlg.ShowModal() == wx.ID_OK:
+            page.alias = dlg.GetValue()
