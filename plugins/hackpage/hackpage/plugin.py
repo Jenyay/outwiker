@@ -18,12 +18,12 @@ def _no_translate(text):
 if getCurrentVersion() < Version(2, 0, 0, 807, status=StatusSet.DEV):
     print(u"HackPage plugin. OutWiker version requirement: 2.0.0.807")
 else:
-    from hackpage.controller import Controller
+    from hackpage.guicontroller import GuiController
 
     class PluginHackPage(Plugin):
         def __init__(self, application):
             super(PluginHackPage, self).__init__(application)
-            self.__controller = Controller(self, application)
+            self.__controller = GuiController(self, application)
 
         @property
         def application(self):
