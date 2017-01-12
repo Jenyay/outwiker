@@ -1,14 +1,14 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <info>
-	<name>PLUGINNAME</name>
-    <updates>http://example.com/pluginname/plugin.xml</updates>
+	<name>HackPage</name>
+    <updates>http://jenyay.net/uploads/Outwiker/HackPage/plugin.xml</updates>
     <requirements>
-        <outwiker>2.0.0.802 dev</outwiker>
+        <outwiker>2.0.0.807 dev</outwiker>
         <os>Windows, Linux</os>
 		<packages>
-			<core>1.0</core>
+			<core>1.2</core>
 			<actions>1.0</actions>
-			<gui>1.0</gui>
+			<gui>1.3</gui>
 			<pages>2.0</pages>
 			<utilites>1.0</utilites>
 			<libs>1.0</libs>
@@ -16,36 +16,36 @@
     </requirements>
 
 	<data lang="en">
-		<website>http://example.com/pluginnameEn</website>
-		<description>Description.</description>
+		<website>http://jenyay.net/uploads/Outwiker/HackPageEn</website>
+		<description>Plugin allow to edit hidden page properties.</description>
 
 		<author>
-			<name>Author name</name>
-			<email>example@example.com</email>
-			<site>http://example.com</site>
+			<name>Eugene Ilin (aka Jenyay)</name>
+			<email>jenyay.ilin@gmail.com</email>
+			<site>http://jenyay.net</site>
 		</author>
 
 		<changelog>
 			<version number="1.0">
-                <download os="all">http://example.com/pluginname/pluginname-1.0.zip</download>
+                <download os="all">http://jenyay.net/uploads/Outwiker/HackPage/hackpage-1.0.zip</download>
 				<change>The first version.</change>
 			</version>
 		</changelog>
 	</data>
 
 	<data lang="ru">
-		<website>http://example.com/pluginnameRu</website>
-		<description>Описание.</description>
+		<website>http://jenyay.net/uploads/Outwiker/HackPage</website>
+		<description>Плагин для редактирования скрытых свойств страниц.</description>
 
 		<author>
-			<name>Author name</name>
-			<email>example@example.com</email>
-			<site>http://example.com</site>
+			<name>Евгений Ильин (aka Jenyay)</name>
+			<email>jenyay.ilin@gmail.com</email>
+			<site>http://jenyay.net</site>
 		</author>
 
 		<changelog>
 			<version number="1.0">
-                <download os="all">http://example.com/pluginname/pluginname-1.0.zip</download>
+                <download os="all">http://jenyay.net/uploads/Outwiker/HackPage/hackpage-1.0.zip</download>
 				<change>Первая версия.</change>
 			</version>
 		</changelog>

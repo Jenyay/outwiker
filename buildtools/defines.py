@@ -15,6 +15,7 @@ PLUGINS_LIST = [
     u"datagraph",
     u"export2html",
     u"externaltools",
+    u"hackpage",
     u"htmlformatter",
     u"htmlheads",
     u"lightbox",

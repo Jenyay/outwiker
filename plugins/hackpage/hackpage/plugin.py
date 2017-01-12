@@ -39,7 +39,7 @@ else:
 
         @property
         def description(self):
-            return _(u"Plugin for edit low-level page parameters")
+            return _(u"The HackPage plugin allow to edit hidden page properties")
 
         @property
         def version(self):
