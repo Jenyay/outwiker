@@ -4,7 +4,10 @@ import wx
 from hackpage.i18n import get_
 from hackpage.actions.changeuid import ChangeUIDAction
 from hackpage.actions.setalias import SetAliasAction
-from hackpage.utils import changeUidWithDialog, setAliasWithDialog
+from hackpage.actions.changepagefolder import ChangePageFolderAction
+from hackpage.utils import (changeUidWithDialog,
+                            setAliasWithDialog,
+                            setPageFolderWithDialog)
 
 
 class GuiController(object):
@@ -16,7 +19,9 @@ class GuiController(object):
         self._application = application
 
         # All actions list
-        self._actions = [ChangeUIDAction, SetAliasAction]
+        self._actions = [ChangeUIDAction,
+                         SetAliasAction,
+                         ChangePageFolderAction]
 
         global _
         _ = get_()
@@ -28,6 +33,8 @@ class GuiController(object):
 
         self.CHANGE_PAGE_UID = wx.NewId()
         self.SET_PAGE_ALIAS_UID = wx.NewId()
+        self.SET_PAGE_FOLDER_UID = wx.NewId()
+
         self._popupSubmenu = None
 
     def _bind(self):
@@ -80,6 +87,8 @@ class GuiController(object):
                                   _(u"Change page identifier..."))
         self._popupSubmenu.Append(self.SET_PAGE_ALIAS_UID,
                                   _(u"Set page alias..."))
+        self._popupSubmenu.Append(self.SET_PAGE_FOLDER_UID,
+                                  _(u"Set page folder..."))
 
         menu.AppendSubMenu(self._popupSubmenu, u"HackPage")
 
@@ -95,20 +104,34 @@ class GuiController(object):
             handler=self.__onSetPageAliasPopupClick
         )
 
+        self._application.mainWindow.Bind(
+            wx.EVT_MENU,
+            id=self.SET_PAGE_FOLDER_UID,
+            handler=self.__onSetPageFolderPopupClick
+        )
+
     def __onChangePageUIDPopupClick(self, event):
         assert self._selectedPage is not None
-
         changeUidWithDialog(self._selectedPage, self._application)
-        self._application.mainWindow.Unbind(wx.EVT_MENU,
-                                            id=self.CHANGE_PAGE_UID)
-
+        self._unbindPopupMenu()
         self._selectedPage = None
 
     def __onSetPageAliasPopupClick(self, event):
         assert self._selectedPage is not None
-
         setAliasWithDialog(self._selectedPage, self._application)
+        self._unbindPopupMenu()
+        self._selectedPage = None
+
+    def __onSetPageFolderPopupClick(self, event):
+        assert self._selectedPage is not None
+        setPageFolderWithDialog(self._selectedPage, self._application)
+        self._unbindPopupMenu()
+        self._selectedPage = None
+
+    def _unbindPopupMenu(self):
+        self._application.mainWindow.Unbind(wx.EVT_MENU,
+                                            id=self.SET_PAGE_FOLDER_UID)
         self._application.mainWindow.Unbind(wx.EVT_MENU,
                                             id=self.SET_PAGE_ALIAS_UID)
-
-        self._selectedPage = None
+        self._application.mainWindow.Unbind(wx.EVT_MENU,
+                                            id=self.CHANGE_PAGE_UID)
