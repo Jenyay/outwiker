@@ -1,0 +1,94 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-01-12 21:59+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: guicontroller.py:87
+msgid "Change page identifier..."
+msgstr ""
+
+#: guicontroller.py:89 actions/setalias.py:24
+msgid "Set page alias..."
+msgstr ""
+
+#: guicontroller.py:91 actions/changepagefolder.py:24
+msgid "Change page folder..."
+msgstr ""
+
+#: actions/setalias.py:28
+msgid "HackPage plugin. Set page alias"
+msgstr ""
+
+#: actions/changepagefolder.py:28
+msgid "HackPage plugin. Change the current page folder"
+msgstr ""
+
+#: actions/changeuid.py:24
+msgid "Change Page Identifier..."
+msgstr ""
+
+#: actions/changeuid.py:28
+msgid "HackPage plugin. Change Page Identifier"
+msgstr ""
+
+#: utils.py:53
+msgid "Enter new page alias"
+msgstr ""
+
+#: utils.py:54
+msgid "Set page alias"
+msgstr ""
+
+#: utils.py:78
+msgid "Enter the page folder name"
+msgstr ""
+
+#: utils.py:79
+msgid "Set page folder"
+msgstr ""
+
+#: plugin.py:39
+msgid "The HackPage plugin allow to edit hidden page properties"
+msgstr ""
+
+#: plugin.py:47
+msgid "http://jenyay.net/Outwiker/HackPageEn"
+msgstr ""
+
+#: gui/changeuiddialog.py:24
+msgid "Change page identifier"
+msgstr ""
+
+#: gui/changeuiddialog.py:45
+msgid "Error"
+msgstr ""
+
+#: gui/changeuiddialog.py:66
+msgid "Enter new page identifier"
+msgstr ""
+
+#: gui/changeuiddialog.py:108
+msgid "Enter new identifier for page \"{}\""
+msgstr ""
+
+#: gui/changeuiddialog.py:151
+msgid "Same identifier exist already"
+msgstr ""
+
+#: gui/changeuiddialog.py:158
+msgid "Identifier contain invalid character"
+msgstr ""

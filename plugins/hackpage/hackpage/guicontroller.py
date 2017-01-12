@@ -88,7 +88,7 @@ class GuiController(object):
         self._popupSubmenu.Append(self.SET_PAGE_ALIAS_UID,
                                   _(u"Set page alias..."))
         self._popupSubmenu.Append(self.SET_PAGE_FOLDER_UID,
-                                  _(u"Set page folder..."))
+                                  _(u"Change page folder..."))
 
         menu.AppendSubMenu(self._popupSubmenu, u"HackPage")
 

@@ -25,7 +25,7 @@ class ChangePageFolderAction(BaseAction):
 
     @property
     def description(self):
-        return _(u"HackPage plugin. Set current page folder")
+        return _(u"HackPage plugin. Change the current page folder")
 
     def run(self, params):
         setPageFolderWithDialog(self._application.selectedPage,

@@ -1,0 +1,105 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-01-12 21:59+0300\n"
+"PO-Revision-Date: 2017-01-12 21:59+0300\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.9\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: guicontroller.py:87
+msgid "Change page identifier..."
+msgstr "Изменить идентификатор страницы..."
+
+#: guicontroller.py:89 actions/setalias.py:24
+msgid "Set page alias..."
+msgstr "Установить псевдоним страницы..."
+
+#: guicontroller.py:91 actions/changepagefolder.py:24
+msgid "Change page folder..."
+msgstr "Изменить папку страницы..."
+
+#: actions/setalias.py:28
+msgid "HackPage plugin. Set page alias"
+msgstr "Плагин HackPage. Установить псевдоним страницы."
+
+#: actions/changepagefolder.py:28
+msgid "HackPage plugin. Change the current page folder"
+msgstr "Плагин HackPage. Изменить папку текущей страницы"
+
+#: actions/changeuid.py:24
+msgid "Change Page Identifier..."
+msgstr "Изменить идентификатор страницы..."
+
+#: actions/changeuid.py:28
+msgid "HackPage plugin. Change Page Identifier"
+msgstr "Плагин HackPage. Изменить идентификатор страницы"
+
+#: utils.py:53
+msgid "Enter new page alias"
+msgstr "Введите новый псевдоним страницы"
+
+#: utils.py:54
+msgid "Set page alias"
+msgstr "Установить псевдоним страницы"
+
+#: utils.py:78
+msgid "Enter the page folder name"
+msgstr "Введите имя папки страницы"
+
+#: utils.py:79
+msgid "Set page folder"
+msgstr "Изменить папку страницы"
+
+#: plugin.py:39
+msgid "The HackPage plugin allow to edit hidden page properties"
+msgstr "Плагин HackPage позволяет редактировать скрытые свойства страницы."
+
+#: plugin.py:47
+msgid "http://jenyay.net/Outwiker/HackPageEn"
+msgstr "http://jenyay.net/Outwiker/HackPage"
+
+#: gui/changeuiddialog.py:24
+msgid "Change page identifier"
+msgstr "Изменить идентификатор страницы"
+
+#: gui/changeuiddialog.py:45
+msgid "Error"
+msgstr "Ошибка"
+
+#: gui/changeuiddialog.py:66
+msgid "Enter new page identifier"
+msgstr "Введите новый идентификатор страницы"
+
+#: gui/changeuiddialog.py:108
+msgid "Enter new identifier for page \"{}\""
+msgstr "Введите новый идентификатор для страницы \"{}\""
+
+#: gui/changeuiddialog.py:151
+msgid "Same identifier exist already"
+msgstr "Такой идентификатор уже существует"
+
+#: gui/changeuiddialog.py:158
+msgid "Identifier contain invalid character"
+msgstr "Идентификатор содержит неправильные символы"
+
+#~ msgid "Change page UID"
+#~ msgstr "Изменить UID страницы"
+
+#~ msgid "Set page folder..."
+#~ msgstr "Изменить папку страницы..."
+
+#~ msgid "HackPage plugin. Set current page folder"
+#~ msgstr "Плагин HackPage. Изменить папку текущей страницы."

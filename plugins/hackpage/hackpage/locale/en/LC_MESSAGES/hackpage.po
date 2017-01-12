@@ -1,0 +1,105 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: hackpage\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-01-12 21:59+0300\n"
+"PO-Revision-Date: 2017-01-12 21:59+0300\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.9\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+#: guicontroller.py:87
+msgid "Change page identifier..."
+msgstr "Change page identifier..."
+
+#: guicontroller.py:89 actions/setalias.py:24
+msgid "Set page alias..."
+msgstr "Set page alias..."
+
+#: guicontroller.py:91 actions/changepagefolder.py:24
+msgid "Change page folder..."
+msgstr "Change page folder..."
+
+#: actions/setalias.py:28
+msgid "HackPage plugin. Set page alias"
+msgstr "HackPage plugin. Set page alias"
+
+#: actions/changepagefolder.py:28
+msgid "HackPage plugin. Change the current page folder"
+msgstr "HackPage plugin. Change the current page folder"
+
+#: actions/changeuid.py:24
+msgid "Change Page Identifier..."
+msgstr "Change Page Identifier..."
+
+#: actions/changeuid.py:28
+msgid "HackPage plugin. Change Page Identifier"
+msgstr "HackPage plugin. Change Page Identifier"
+
+#: utils.py:53
+msgid "Enter new page alias"
+msgstr "Enter new page alias"
+
+#: utils.py:54
+msgid "Set page alias"
+msgstr "Set page alias"
+
+#: utils.py:78
+msgid "Enter the page folder name"
+msgstr "Enter the page folder name"
+
+#: utils.py:79
+msgid "Set page folder"
+msgstr "Set page folder"
+
+#: plugin.py:39
+msgid "The HackPage plugin allow to edit hidden page properties"
+msgstr "The HackPage plugin allow to edit hidden page properties"
+
+#: plugin.py:47
+msgid "http://jenyay.net/Outwiker/HackPageEn"
+msgstr "http://jenyay.net/Outwiker/HackPageEn"
+
+#: gui/changeuiddialog.py:24
+msgid "Change page identifier"
+msgstr "Change page identifier"
+
+#: gui/changeuiddialog.py:45
+msgid "Error"
+msgstr "Error"
+
+#: gui/changeuiddialog.py:66
+msgid "Enter new page identifier"
+msgstr "Enter new page identifier"
+
+#: gui/changeuiddialog.py:108
+msgid "Enter new identifier for page \"{}\""
+msgstr "Enter new identifier for page \"{}\""
+
+#: gui/changeuiddialog.py:151
+msgid "Same identifier exist already"
+msgstr "Same identifier exist already"
+
+#: gui/changeuiddialog.py:158
+msgid "Identifier contain invalid character"
+msgstr "Identifier contain invalid character"
+
+#~ msgid "Change page UID"
+#~ msgstr "Change page UID"
+
+#~ msgid "Set page folder..."
+#~ msgstr "Set page folder..."
+
+#~ msgid "HackPage plugin. Set current page folder"
+#~ msgstr "HackPage plugin. Set current page folder"

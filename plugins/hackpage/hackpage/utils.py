@@ -7,6 +7,7 @@ from outwiker.core.exceptions import ReadonlyException
 
 from hackpage.gui.changeuiddialog import (ChangeUidDialog,
                                           ChangeUidDialogController)
+from hackpage.i18n import get_
 
 
 @testreadonly
@@ -14,6 +15,9 @@ def changeUidWithDialog(page, application):
     """
     Show dialog to change page UID
     """
+    global _
+    _ = get_()
+
     if page is None or page.parent is None:
         return
 
@@ -35,6 +39,9 @@ def setAliasWithDialog(page, application):
     """
     Show dialog to set page alias
     """
+    global _
+    _ = get_()
+
     if page is None or page.parent is None:
         return
 
@@ -55,6 +62,9 @@ def setPageFolderWithDialog(page, application):
     """
     Change page folder and set alias which matches old display_title
     """
+    global _
+    _ = get_()
+
     if page is None or page.parent is None:
         return
 
