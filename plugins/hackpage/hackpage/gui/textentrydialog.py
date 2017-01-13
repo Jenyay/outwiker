@@ -21,32 +21,19 @@ class TextEntryDialog(TestedDialog):
 
         # Функция для проверки правильности введенного идентификатора
         self._validator = validator
-
         self._createGui(message, prefix, value)
-        self.valueTextCtrl.SetFocus()
-        self.valueTextCtrl.SetSelection(0, -1)
-
-        self.Center(wx.CENTRE_ON_SCREEN)
 
         self.Bind(wx.EVT_BUTTON, self.__onOk, id=wx.ID_OK)
-        self.Bind(wx.EVT_TEXT, self.__onTextChanged, self.valueTextCtrl)
+
+        self.Center(wx.CENTRE_ON_SCREEN)
 
     def __onOk(self, event):
         if self._validator is None or self._validator(self.Value):
             self.EndModal(wx.ID_OK)
 
-    def __onTextChanged(self, event):
-        self.Unbind(wx.EVT_TEXT, self.valueTextCtrl)
-
-        selFrom, selTo = self.valueTextCtrl.GetSelection()
-        self.valueTextCtrl.Value = self.valueTextCtrl.Value.replace(u" ", u"_")
-        self.valueTextCtrl.SetSelection(selTo, selTo)
-
-        self.Bind(wx.EVT_TEXT, self.__onTextChanged, self.valueTextCtrl)
-
     def _createGui(self, message, prefix, value):
         """
-        Create controls
+        Create GUI controls
         """
         mainSizer = wx.FlexGridSizer(cols=1)
         mainSizer.AddGrowableCol(0)
@@ -109,3 +96,9 @@ class TextEntryDialog(TestedDialog):
 
     def SetValue(self, value):
         self.Value = value
+
+    def ShowModal(self):
+        self.valueTextCtrl.SetSelection(0, 0)
+        self.valueTextCtrl.SelectAll()
+        self.valueTextCtrl.SetFocus()
+        return super(TextEntryDialog, self).ShowModal()

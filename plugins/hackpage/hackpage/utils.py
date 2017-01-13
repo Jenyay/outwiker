@@ -28,14 +28,14 @@ def changeUidWithDialog(page, application):
     message = _(u'Enter new identifier for page "{}"').format(
         page.display_title)
     prefix = u'page://'
-    value = application.pageUidDepot.createUid(page)
+    defaultValue = application.pageUidDepot.createUid(page)
     validator = ChangeUidValidator(application, page)
 
     with TextEntryDialog(application.mainWindow,
                          title=title,
                          message=message,
                          prefix=prefix,
-                         value=value,
+                         value=defaultValue,
                          validator=validator) as dlg:
         if dlg.ShowModal() == wx.ID_OK:
             # Не отлавливаем исключения, поскольку считаем,
@@ -57,11 +57,15 @@ def setAliasWithDialog(page, application):
     if page.readonly:
         raise ReadonlyException
 
+    title = _(u"Set page alias")
+    message = _(u'Enter alias for page').format(
+        page.display_title)
     defaultValue = page.alias if page.alias is not None else u''
-    with wx.TextEntryDialog(application.mainWindow,
-                            _(u'Enter new page alias'),
-                            _(u'Set page alias'),
-                            defaultValue) as dlg:
+
+    with TextEntryDialog(application.mainWindow,
+                         title=title,
+                         message=message,
+                         value=defaultValue) as dlg:
         if dlg.ShowModal() == wx.ID_OK:
             page.alias = dlg.GetValue()
 
