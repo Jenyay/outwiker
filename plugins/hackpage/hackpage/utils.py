@@ -87,16 +87,16 @@ def setPageFolderWithDialog(page, application):
     oldTitle = page.title
     oldDisplayTitle = page.display_title
 
-    with wx.TextEntryDialog(application.mainWindow,
-                            _(u'Enter the page folder name'),
-                            _(u'Set page folder'),
-                            oldTitle) as dlg:
-        while True:
-            result = dlg.ShowModal()
-            if result != wx.ID_OK:
-                break
+    title = _(u'Set page folder')
+    message = _(u'Enter the page folder name')
+    defaultValue = oldTitle
 
-            if testPageTitle(dlg.GetValue()):
-                page.title = dlg.GetValue()
-                page.alias = oldDisplayTitle
-                break
+    with TextEntryDialog(application.mainWindow,
+                         title=title,
+                         message=message,
+                         value=defaultValue,
+                         validator=testPageTitle
+                         ) as dlg:
+        if dlg.ShowModal() == wx.ID_OK:
+            page.title = dlg.GetValue()
+            page.alias = oldDisplayTitle
