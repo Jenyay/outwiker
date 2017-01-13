@@ -1,0 +1,93 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: outwiker\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-01-12 21:59+0300\n"
+"PO-Revision-Date: 2017-01-13 08:59+0300\n"
+"Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
+"Language-Team: Swedish\n"
+"Language: sv_SE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.8.9\n"
+"X-Crowdin-Project: outwiker\n"
+"X-Crowdin-Language: sv-SE\n"
+"X-Crowdin-File: hackpage.pot\n"
+
+#: guicontroller.py:87
+msgid "Change page identifier..."
+msgstr "Ändra sididentifierare..."
+
+#: guicontroller.py:89 actions/setalias.py:24
+msgid "Set page alias..."
+msgstr "Ange sidalias..."
+
+#: guicontroller.py:91 actions/changepagefolder.py:24
+msgid "Change page folder..."
+msgstr "Byt sidmapp..."
+
+#: actions/setalias.py:28
+msgid "HackPage plugin. Set page alias"
+msgstr "HackPage-instick. Ange sidalias"
+
+#: actions/changepagefolder.py:28
+msgid "HackPage plugin. Change the current page folder"
+msgstr "HackPage-instick. Byt aktuell sidmapp"
+
+#: actions/changeuid.py:24
+msgid "Change Page Identifier..."
+msgstr "Ändra sididentifierare..."
+
+#: actions/changeuid.py:28
+msgid "HackPage plugin. Change Page Identifier"
+msgstr "HackPage-instick. Ändra sididentifierare"
+
+#: utils.py:53
+msgid "Enter new page alias"
+msgstr "Ange nytt sidalias"
+
+#: utils.py:54
+msgid "Set page alias"
+msgstr "Ange sidalias"
+
+#: utils.py:78
+msgid "Enter the page folder name"
+msgstr "Ange mappnamn"
+
+#: utils.py:79
+msgid "Set page folder"
+msgstr "Ange sidmapp"
+
+#: plugin.py:39
+msgid "The HackPage plugin allow to edit hidden page properties"
+msgstr "HackPage-insticket låter dig redigera dolda sidegenskaper"
+
+#: plugin.py:47
+msgid "http://jenyay.net/Outwiker/HackPageEn"
+msgstr "http://jenyay.net/Outwiker/HackPageEn"
+
+#: gui/changeuiddialog.py:24
+msgid "Change page identifier"
+msgstr "Ändra sididentifierare"
+
+#: gui/changeuiddialog.py:45
+msgid "Error"
+msgstr "Fel"
+
+#: gui/changeuiddialog.py:66
+msgid "Enter new page identifier"
+msgstr "Ange ny sididentiferare"
+
+#: gui/changeuiddialog.py:108
+msgid "Enter new identifier for page \"{}\""
+msgstr "Ange ny sididentiferare för \"{}\""
+
+#: gui/changeuiddialog.py:151
+msgid "Same identifier exist already"
+msgstr "Samma identifierare finns redan"
+
+#: gui/changeuiddialog.py:158
+msgid "Identifier contain invalid character"
+msgstr "Identifieraren innehåller ogiltiga tecken"
