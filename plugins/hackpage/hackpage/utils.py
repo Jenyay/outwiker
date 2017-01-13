@@ -5,8 +5,8 @@ import wx
 from outwiker.core.commands import testreadonly, testPageTitle
 from outwiker.core.exceptions import ReadonlyException
 
-from hackpage.gui.changeuiddialog import (ChangeUidDialog,
-                                          ChangeUidDialogController)
+from hackpage.gui.validators import ChangeUidValidator
+from hackpage.gui.textentrydialog import TextEntryDialog
 from hackpage.i18n import get_
 
 
@@ -24,14 +24,23 @@ def changeUidWithDialog(page, application):
     if page.readonly:
         raise ReadonlyException
 
-    with ChangeUidDialog(application.mainWindow) as dlg:
-        dlgController = ChangeUidDialogController(application, dlg, page)
-        result = dlgController.showDialog()
+    title = _(u"Change page identifier")
+    message = _(u'Enter new identifier for page "{}"').format(
+        page.display_title)
+    prefix = u'page://'
+    value = application.pageUidDepot.createUid(page)
+    validator = ChangeUidValidator(application, page)
 
-        if result == wx.ID_OK:
+    with TextEntryDialog(application.mainWindow,
+                         title=title,
+                         message=message,
+                         prefix=prefix,
+                         value=value,
+                         validator=validator) as dlg:
+        if dlg.ShowModal() == wx.ID_OK:
             # Не отлавливаем исключения, поскольку считаем,
-            # что правильность идентификатора проверил DialogController
-            application.pageUidDepot.changeUid(page, dlg.uid)
+            # что правильность идентификатора проверил validator
+            application.pageUidDepot.changeUid(page, dlg.Value)
 
 
 @testreadonly
