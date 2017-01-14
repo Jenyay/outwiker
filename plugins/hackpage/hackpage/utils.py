@@ -5,9 +5,9 @@ import wx
 from outwiker.core.commands import testreadonly, testPageTitle
 from outwiker.core.exceptions import ReadonlyException
 
-from hackpage.gui.validators import ChangeUidValidator
 from hackpage.gui.textentrydialog import TextEntryDialog
 from hackpage.i18n import get_
+from hackpage.validators import ChangeUidValidator
 
 
 @testreadonly
@@ -40,7 +40,7 @@ def changeUidWithDialog(page, application):
         if dlg.ShowModal() == wx.ID_OK:
             # Не отлавливаем исключения, поскольку считаем,
             # что правильность идентификатора проверил validator
-            application.pageUidDepot.changeUid(page, dlg.Value)
+            application.pageUidDepot.changeUid(page, dlg.Value.strip())
 
 
 @testreadonly

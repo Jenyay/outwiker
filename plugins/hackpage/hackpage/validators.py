@@ -24,6 +24,7 @@ class ChangeUidValidator(object):
         """
         Return True if value is Ok and False otherwise.
         """
+        value = value.strip()
         otherpage = self._application.pageUidDepot[value]
 
         if (otherpage is not None and otherpage != self._page):
