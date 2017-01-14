@@ -40,12 +40,9 @@ class HackPage_ChangePageUidTest(BaseMainWndTest):
         WikiPageFactory().create(self.wikiroot, u"Страница 1", [])
         WikiPageFactory().create(self.wikiroot, u"Страница 2", [])
 
-    def _getFuncChangeDialogValue(self, value):
-        def func(dialog):
-            dialog.Value = value
-            return wx.ID_OK
-
-        return func
+    def _setValue(self, dialog, value):
+        dialog.Value = value
+        return wx.ID_OK
 
     def test_UidDefault(self):
         from hackpage.utils import changeUidWithDialog
@@ -64,7 +61,7 @@ class HackPage_ChangePageUidTest(BaseMainWndTest):
         from hackpage.utils import changeUidWithDialog
         uid = u'dsfsfsfssg'
 
-        Tester.dialogTester.append(self._getFuncChangeDialogValue(uid))
+        Tester.dialogTester.append(self._setValue, uid)
 
         changeUidWithDialog(self.testPage, self._application)
 
@@ -77,7 +74,7 @@ class HackPage_ChangePageUidTest(BaseMainWndTest):
         from hackpage.utils import changeUidWithDialog
         uid = u'     dsfsfsfssg      '
 
-        Tester.dialogTester.append(self._getFuncChangeDialogValue(uid))
+        Tester.dialogTester.append(self._setValue, uid)
 
         changeUidWithDialog(self.testPage, self._application)
 

@@ -98,5 +98,6 @@ def setPageFolderWithDialog(page, application):
                          validator=testPageTitle
                          ) as dlg:
         if dlg.ShowModal() == wx.ID_OK:
-            page.title = dlg.GetValue()
-            page.alias = oldDisplayTitle
+            if page.title != dlg.GetValue():
+                page.title = dlg.GetValue()
+                page.alias = oldDisplayTitle

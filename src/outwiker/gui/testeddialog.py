@@ -18,7 +18,8 @@ class TestedDialog(wx.Dialog):
     def ShowModal(self):
         result = Tester.dialogTester.runNext(self)
         if result is not None:
-            return result
+            event = wx.CommandEvent(wx.EVT_BUTTON.typeId, result)
+            wx.PostEvent(self, event)
 
         return super(TestedDialog, self).ShowModal()
 

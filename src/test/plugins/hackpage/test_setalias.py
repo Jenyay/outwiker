@@ -37,7 +37,6 @@ class HackPage_SetAliasTest(BaseMainWndTest):
 
     def __createWiki(self):
         WikiPageFactory().create(self.wikiroot, u"Страница 1", [])
-        WikiPageFactory().create(self.wikiroot, u"Страница 2", [])
 
     def _setValue(self, dialog, value):
         dialog.Value = value
