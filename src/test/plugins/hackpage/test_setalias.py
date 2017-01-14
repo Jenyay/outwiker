@@ -39,12 +39,9 @@ class HackPage_SetAliasTest(BaseMainWndTest):
         WikiPageFactory().create(self.wikiroot, u"Страница 1", [])
         WikiPageFactory().create(self.wikiroot, u"Страница 2", [])
 
-    def _getFuncChangeDialogValue(self, value):
-        def func(dialog):
-            dialog.Value = value
-            return wx.ID_OK
-
-        return func
+    def _setValue(self, dialog, value):
+        dialog.Value = value
+        return wx.ID_OK
 
     def test_set_alias_default_01(self):
         from hackpage.utils import setAliasWithDialog
@@ -71,7 +68,7 @@ class HackPage_SetAliasTest(BaseMainWndTest):
 
         alias = u'Псевдоним страницы'
 
-        Tester.dialogTester.append(self._getFuncChangeDialogValue(alias))
+        Tester.dialogTester.append(self._setValue, alias)
 
         setAliasWithDialog(self.testPage, self._application)
 
@@ -83,7 +80,7 @@ class HackPage_SetAliasTest(BaseMainWndTest):
 
         alias = u'   Псевдоним страницы   '
 
-        Tester.dialogTester.append(self._getFuncChangeDialogValue(alias))
+        Tester.dialogTester.append(self._setValue, alias)
 
         setAliasWithDialog(self.testPage, self._application)
 
@@ -95,7 +92,7 @@ class HackPage_SetAliasTest(BaseMainWndTest):
 
         self.testPage.alias = u'Псевдоним страницы'
 
-        Tester.dialogTester.append(self._getFuncChangeDialogValue(''))
+        Tester.dialogTester.append(self._setValue, '')
 
         setAliasWithDialog(self.testPage, self._application)
 

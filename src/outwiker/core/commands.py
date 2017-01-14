@@ -29,24 +29,26 @@ from outwiker.gui.testeddialog import TestedFileDialog
 from outwiker.utilites.textfile import readTextFile
 
 
-def MessageBox (*args, **kwargs):
+def MessageBox(*args, **kwargs):
     """
-    Замена стандартного MessageBox. Перед показом диалога отключает приложение от события EVT_ACTIVATE_APP.
+    Замена стандартного MessageBox. Перед показом диалога отключает
+    приложение от события EVT_ACTIVATE_APP.
     """
-    func = Tester.dialogTester.pop()
-    if func is not None:
-        return func (None)
+    result = Tester.dialogTester.runNext(None)
+    if result is not None:
+        return result
 
     wx.GetApp().unbindActivateApp()
-    result = wx.MessageBox (*args, **kwargs)
+    result = wx.MessageBox(*args, **kwargs)
     wx.GetApp().bindActivateApp()
 
     return result
 
 
-def testreadonly (func):
+def testreadonly(func):
     """
-    Декоратор для отлавливания исключения outwiker.core.exceptions.ReadonlyException
+    Декоратор для отлавливания исключения
+        outwiker.core.exceptions.ReadonlyException
     """
     def readOnlyWrap (*args, **kwargs):
         try:
