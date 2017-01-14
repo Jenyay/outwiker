@@ -62,7 +62,7 @@ class HackPage_ChangeTitleTest(BaseMainWndTest):
 
         setPageFolderWithDialog(self.testPage, self._application)
 
-        self.assertEqual(self.testPage.alias, 'Псевдоним')
+        self.assertEqual(self.testPage.alias, u'Псевдоним')
         self.assertEqual(self.testPage.title, u"Страница 1")
         self.assertEqual(Tester.dialogTester.count, 0)
 
@@ -74,7 +74,7 @@ class HackPage_ChangeTitleTest(BaseMainWndTest):
 
         setPageFolderWithDialog(self.testPage, self._application)
 
-        self.assertEqual(self.testPage.alias, 'Псевдоним')
+        self.assertEqual(self.testPage.alias, u'Псевдоним')
         self.assertEqual(self.testPage.title, u"Страница 1")
         self.assertEqual(Tester.dialogTester.count, 0)
 
