@@ -83,13 +83,11 @@ class TextEntryDialog(TestedDialog):
 
     @property
     def Value(self):
-        newuid = self.valueTextCtrl.GetValue().strip()
-        assert len(newuid) != 0
-        return newuid
+        return self.valueTextCtrl.GetValue()
 
     @Value.setter
     def Value(self, value):
-        self.valueTextCtrl.SetValue(value.strip())
+        self.valueTextCtrl.SetValue(value)
 
     def GetValue(self):
         return self.Value
