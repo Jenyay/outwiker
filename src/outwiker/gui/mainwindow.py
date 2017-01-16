@@ -677,11 +677,9 @@ class MainWindow(wx.Frame):
                                  wx.FULLSCREEN_NOBORDER |
                                  wx.FULLSCREEN_NOCAPTION))
 
-        self.__panesController.hidePanes()
-        self.__panesController.updateViewMenu()
+        self.__panesController.toFullscreen()
 
-
-    def __fromFullscreen (self):
+    def __fromFullscreen(self):
         """
         Возврат из полноэкранного режима
         """
@@ -690,11 +688,7 @@ class MainWindow(wx.Frame):
         if getOS().name != 'unix':
             self.ShowFullScreen(False)
 
-        self.__panesController.showPanes()
-        self.__panesController.loadPanesSize ()
-        self.__panesController.updateViewMenu()
-
-# end of class MainWindow
+        self.__panesController.fromFullscreen()
 
 
 class DropFilesTarget (wx.FileDropTarget):
