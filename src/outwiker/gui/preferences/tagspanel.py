@@ -43,9 +43,7 @@ class TagsPanel(BasePrefPanel):
             self,
             label = text)
 
-        colorPicker = wx.ColourPickerCtrl(
-            self,
-            style=wx.CLRP_SHOW_LABEL)
+        colorPicker = wx.ColourPickerCtrl(self)
 
         self._addControlsPairToSizer (sizer, label, colorPicker)
 

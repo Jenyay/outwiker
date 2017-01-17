@@ -59,14 +59,12 @@ class EditorPanel(BasePrefPanel):
         # Цвет шрифта
         self.fontColorLabel = wx.StaticText(self,
                                             label=_(u"Font color"))
-        self.fontColorPicker = wx.ColourPickerCtrl(self,
-                                                   style=wx.CLRP_SHOW_LABEL)
+        self.fontColorPicker = wx.ColourPickerCtrl(self)
 
         # Цвет фона
         self.backColorLabel = wx.StaticText(self,
                                             label=_(u"Background color"))
-        self.backColorPicker = wx.ColourPickerCtrl(self,
-                                                   style=wx.CLRP_SHOW_LABEL)
+        self.backColorPicker = wx.ColourPickerCtrl(self)
 
         # Margin background color
         self.marginBackColorLabel = wx.StaticText(
@@ -74,10 +72,7 @@ class EditorPanel(BasePrefPanel):
             label=_(u"Margin background color")
         )
 
-        self.marginBackColorPicker = wx.ColourPickerCtrl(
-            self,
-            style=wx.CLRP_SHOW_LABEL
-        )
+        self.marginBackColorPicker = wx.ColourPickerCtrl(self)
 
     def __do_layout(self):
         # Шрифт

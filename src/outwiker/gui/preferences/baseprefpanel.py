@@ -58,7 +58,7 @@ class BasePrefPanel (wx.ScrolledWindow):
 
     def _createLabelAndColorPicker (self, text, sizer):
         label = wx.StaticText (self, label = text)
-        colorPicker = wx.ColourPickerCtrl (self, style=wx.CLRP_SHOW_LABEL)
+        colorPicker = wx.ColourPickerCtrl (self)
 
         self._addControlsPairToSizer (sizer, label, colorPicker)
         return (label, colorPicker)

@@ -21,7 +21,7 @@ class EditorStylesList (wx.Panel):
         self._stylesList = wx.ListBox (self, style = wx.LB_SINGLE)
         self._stylesList.SetMinSize ((150, -1))
 
-        self._colorPicker = wx.ColourPickerCtrl (self, style=wx.CLRP_SHOW_LABEL)
+        self._colorPicker = wx.ColourPickerCtrl (self)
         self._bold = wx.CheckBox (self, label=_(u"Bold"))
         self._italic = wx.CheckBox (self, label=_(u"Italic"))
         self._underline = wx.CheckBox (self, label=_(u"Underline"))
