@@ -212,7 +212,11 @@ class EditorConfig(object):
 
     # Цвет фона
     BACK_COLOR_SECTION = u'BackColor'
-    BACK_COLOR_DEFAULT = u'#FFFFFF'
+    BACK_COLOR_DEFAULT = u'#D9D9D9'
+
+    # Margin background color
+    MARGIN_BACK_COLOR_SECTION = u'MarginBackColor'
+    MARGIN_BACK_COLOR_DEFAULT = u'#C4C4C4'
 
     # Spell checker
     SPELL_DICTS_SECTION = u'dictionaries'
@@ -278,6 +282,12 @@ class EditorConfig(object):
                                       GeneralGuiConfig.GENERAL_SECTION,
                                       EditorConfig.BACK_COLOR_SECTION,
                                       EditorConfig.BACK_COLOR_DEFAULT)
+
+        self.marginBackColor = StringOption(
+            self.config,
+            GeneralGuiConfig.GENERAL_SECTION,
+            EditorConfig.MARGIN_BACK_COLOR_SECTION,
+            EditorConfig.MARGIN_BACK_COLOR_DEFAULT)
 
         self.spellCheckerDicts = StringOption(self.config,
                                               GeneralGuiConfig.GENERAL_SECTION,

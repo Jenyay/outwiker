@@ -8,8 +8,9 @@
 
 		<changelog>
 			<version number="2.0.0.807" status="beta">
-				<change>Changed GUI to set hot keys.</change>
 				<change>Added the ability to add alias to page.</change>
+				<change>Changed GUI to set hot keys.</change>
+				<change>Added options to change editor margin color.</change>
 			</version>
 
 			<version number="2.0.0.806" status="beta" date="November 14, 2016">
@@ -67,8 +68,9 @@
 
 		<changelog>
 			<version number="2.0.0.807" status="beta">
-				<change>Переделан интерфейс для установки горячих клавиш.</change>
 				<change>Добавлена возможность создавать псевдонимы для страниц.</change>
+				<change>Переделан интерфейс для установки горячих клавиш.</change>
+				<change>Добавлена настройка для изменения цвета фона поля редактора.</change>
 			</version>
 
 			<version number="2.0.0.806" status="beta" date="14.11.2016">
