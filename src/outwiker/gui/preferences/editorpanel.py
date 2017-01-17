@@ -69,7 +69,7 @@ class EditorPanel(BasePrefPanel):
         # Margin background color
         self.marginBackColorLabel = wx.StaticText(
             self,
-            label=_(u"Margin background color")
+            label=_(u"Page margin background color")
         )
 
         self.marginBackColorPicker = wx.ColourPickerCtrl(self)
