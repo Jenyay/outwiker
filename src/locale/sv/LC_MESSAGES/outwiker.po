@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-15 21:42+0300\n"
-"PO-Revision-Date: 2016-11-16 13:59+0300\n"
+"POT-Creation-Date: 2017-01-17 20:33+0300\n"
+"PO-Revision-Date: 2017-01-18 10:16+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.8\n"
+"X-Generator: Poedit 1.8.9\n"
 "X-Crowdin-Project: outwiker\n"
 "X-Crowdin-Language: sv-SE\n"
 "X-Crowdin-File: outwiker.pot\n"
@@ -28,17 +28,17 @@ msgstr "Insticksmodul \"{}\" är utdaterad. Uppdatera insticket!"
 msgid "Plug-in \"{}\" is designed for a newer version OutWiker. Please, install a new OutWiker version."
 msgstr "Insticksmodul \"{}\" är designad för en nyare version av OutWiker. Installera en ny OutWiker-version."
 
-#: outwiker/core/commands.py:55
+#: outwiker/core/commands.py:57
 msgid "Page is opened as read-only"
 msgstr "Sidan är öppnad med skrivskydd"
 
-#: outwiker/core/commands.py:56 outwiker/core/commands.py:111
-#: outwiker/core/commands.py:122 outwiker/core/commands.py:241
-#: outwiker/core/commands.py:280 outwiker/core/commands.py:288
-#: outwiker/core/commands.py:296 outwiker/core/commands.py:306
-#: outwiker/core/commands.py:380 outwiker/core/commands.py:386
-#: outwiker/core/commands.py:415 outwiker/core/commands.py:426
-#: outwiker/core/commands.py:430 outwiker/core/textprinter.py:105
+#: outwiker/core/commands.py:58 outwiker/core/commands.py:113
+#: outwiker/core/commands.py:124 outwiker/core/commands.py:243
+#: outwiker/core/commands.py:282 outwiker/core/commands.py:290
+#: outwiker/core/commands.py:298 outwiker/core/commands.py:308
+#: outwiker/core/commands.py:382 outwiker/core/commands.py:388
+#: outwiker/core/commands.py:417 outwiker/core/commands.py:428
+#: outwiker/core/commands.py:432 outwiker/core/textprinter.py:105
 #: outwiker/pages/html/basehtmlpanel.py:312
 #: outwiker/pages/wiki/actions/include.py:37
 #: outwiker/pages/wiki/basewikipageview.py:256
@@ -64,17 +64,17 @@ msgstr "Sidan är öppnad med skrivskydd"
 #: outwiker/gui/pagedialog.py:24 outwiker/gui/pagedialog.py:34
 #: outwiker/gui/notestree.py:243 outwiker/gui/notestree.py:298
 #: outwiker/gui/mainwindow.py:579 outwiker/gui/basetextpanel.py:244
-#: outwiker/gui/basetextpanel.py:256 outwiker/gui/mainwndcontroller.py:225
+#: outwiker/gui/basetextpanel.py:256 outwiker/gui/mainwndcontroller.py:218
 #: outwiker/gui/htmlrenderie.py:213 outwiker/gui/htmlrenderwebkit.py:211
 msgid "Error"
 msgstr "Fel"
 
-#: outwiker/core/commands.py:82
+#: outwiker/core/commands.py:84
 #, python-format
 msgid "File '%s' exists already"
 msgstr "Filen '%s' finns redan"
 
-#: outwiker/core/commands.py:95 outwiker/core/commands.py:97
+#: outwiker/core/commands.py:97 outwiker/core/commands.py:99
 #, python-brace-format
 msgid ""
 "Error copying files\n"
@@ -83,36 +83,36 @@ msgstr ""
 "Kunde inte kopiera filer\n"
 "{0}"
 
-#: outwiker/core/commands.py:110
+#: outwiker/core/commands.py:112
 msgid "You can't remove the root element"
 msgstr "Du kan inte ta bort rotobjektet"
 
-#: outwiker/core/commands.py:115
+#: outwiker/core/commands.py:117
 msgid "Remove page \"{}\" and all subpages?"
 msgstr "Vill du ta bort \"{}\" och alla undersidor?"
 
-#: outwiker/core/commands.py:116
+#: outwiker/core/commands.py:118
 msgid "Remove page?"
 msgstr "Vill du ta bort sidan?"
 
-#: outwiker/core/commands.py:121
+#: outwiker/core/commands.py:123
 msgid "Can't remove page"
 msgstr "Kan inte ta bort sidan"
 
-#: outwiker/core/commands.py:186
+#: outwiker/core/commands.py:188
 msgid "Loading"
 msgstr "Läser in"
 
-#: outwiker/core/commands.py:187
+#: outwiker/core/commands.py:189
 msgid "Opening notes tree..."
 msgstr "Öppnar anteckningsträdet..."
 
-#: outwiker/core/commands.py:240
+#: outwiker/core/commands.py:242
 #, python-format
 msgid "Can't load wiki '%s'"
 msgstr "Kan inte läsa in wikin '%s'"
 
-#: outwiker/core/commands.py:249
+#: outwiker/core/commands.py:251
 #, python-format
 msgid ""
 "Can't load wiki '%s'\n"
@@ -125,15 +125,15 @@ msgstr ""
 "Vill du rensa fältet och läsa in wikin?\n"
 "Bokmärken kommer att förloras."
 
-#: outwiker/core/commands.py:250
+#: outwiker/core/commands.py:252
 msgid "__page.opt error"
 msgstr "__page.opt-fel"
 
-#: outwiker/core/commands.py:261
+#: outwiker/core/commands.py:263
 msgid "First Wiki Page"
 msgstr "Första Wiki-sidan"
 
-#: outwiker/core/commands.py:262
+#: outwiker/core/commands.py:264
 msgid ""
 "!! First Wiki Page\n"
 "\n"
@@ -143,43 +143,43 @@ msgstr ""
 "\n"
 "Detta är första sidan. Du kan använda textformateringen: '''fet''', ''kursiv'', {+understruken text+}, [[http://jenyay.net | länk]] och annat."
 
-#: outwiker/core/commands.py:271
+#: outwiker/core/commands.py:273
 msgid "test"
 msgstr "test"
 
-#: outwiker/core/commands.py:279
+#: outwiker/core/commands.py:281
 msgid "Can't create wiki\n"
 msgstr "Kan inte skapa wiki\n"
 
-#: outwiker/core/commands.py:287 outwiker/core/commands.py:305
+#: outwiker/core/commands.py:289 outwiker/core/commands.py:307
 msgid "Can't open clipboard"
 msgstr "Kan inte öppna urklipp"
 
-#: outwiker/core/commands.py:295
+#: outwiker/core/commands.py:297
 msgid "Can't copy text to clipboard"
 msgstr "Kan inte kopiera text till urklipp"
 
-#: outwiker/core/commands.py:379 outwiker/core/commands.py:425
+#: outwiker/core/commands.py:381 outwiker/core/commands.py:427
 msgid "Can't move page when page with that title already exists"
 msgstr "Kan inte flytta sidan när det redan finns en sida med samma namn"
 
-#: outwiker/core/commands.py:385
+#: outwiker/core/commands.py:387
 msgid "Can't move page"
 msgstr "Kan inte flytta sidan"
 
-#: outwiker/core/commands.py:414 outwiker/gui/notestree.py:297
+#: outwiker/core/commands.py:416 outwiker/gui/notestree.py:297
 msgid "You can't rename the root element"
 msgstr "Du kan inte namnändra rotobjektet"
 
-#: outwiker/core/commands.py:429
+#: outwiker/core/commands.py:431
 msgid "Can't rename page \"{}\" to \"{}\""
 msgstr "Kan inte namnändra \"{}\" till \"{}\""
 
-#: outwiker/core/commands.py:445
+#: outwiker/core/commands.py:447
 msgid "The invalid page title"
 msgstr "Ogiltig sidtitel"
 
-#: outwiker/core/commands.py:450
+#: outwiker/core/commands.py:452
 #, python-brace-format
 msgid ""
 "{0}\n"
@@ -188,15 +188,15 @@ msgstr ""
 "{0}\n"
 "Vill du fortsätta?"
 
-#: outwiker/core/commands.py:453
+#: outwiker/core/commands.py:455
 msgid "The page title"
 msgstr "Sidtitel"
 
-#: outwiker/core/commands.py:499
+#: outwiker/core/commands.py:501
 msgid "Enter format of the date"
 msgstr "Ange datumformat"
 
-#: outwiker/core/commands.py:500 outwiker/pages/wiki/actions/dates.py:29
+#: outwiker/core/commands.py:502 outwiker/pages/wiki/actions/dates.py:29
 msgid "Date format"
 msgstr "Datumformat"
 
@@ -389,7 +389,7 @@ msgstr "Rubrik"
 
 #: outwiker/pages/html/htmlpageview.py:206
 #: outwiker/pages/wiki/wikipageview.py:143
-#: outwiker/gui/preferences/editorpanel.py:31
+#: outwiker/gui/preferences/editorpanel.py:30
 #: outwiker/gui/preferences/htmlrenderpanel.py:25
 #: outwiker/gui/preferences/textprintpanel.py:28
 msgid "Font"
@@ -431,18 +431,18 @@ msgstr "Automatisk radbrytning"
 msgid "Auto line wrap for HTML pages"
 msgstr "Automatisk radbrytning för HTML-sidor"
 
-#: outwiker/pages/html/htmlpage.py:95
+#: outwiker/pages/html/htmlpage.py:94
 msgid "HTML Page"
 msgstr "HTML-sida"
 
-#: outwiker/pages/html/htmlpagecontroller.py:53
+#: outwiker/pages/html/htmlpagecontroller.py:54
 #: outwiker/pages/wiki/wikipagecontroller.py:51
 msgid "Appearance"
 msgstr "Utseende"
 
 #: outwiker/pages/html/basehtmlpanel.py:193
 #: outwiker/gui/preferences/prefcontroller.py:59
-#: outwiker/gui/preferences/generalpanel.py:39
+#: outwiker/gui/preferences/generalpanel.py:40
 msgid "Preview"
 msgstr "Förhandsgranskning"
 
@@ -968,27 +968,27 @@ msgstr "Stäng flik"
 msgid "Close current tab"
 msgstr "Stäng aktuell flik"
 
-#: outwiker/actions/tabs.py:47
+#: outwiker/actions/tabs.py:44 outwiker/actions/tabs.py:48
 msgid "Add Tab"
 msgstr "Lägg till flik"
 
-#: outwiker/actions/tabs.py:52
+#: outwiker/actions/tabs.py:53
 msgid "Add tab"
 msgstr "Lägg till flik"
 
-#: outwiker/actions/tabs.py:73
+#: outwiker/actions/tabs.py:72
 msgid "Next Tab"
 msgstr "Nästa flik"
 
-#: outwiker/actions/tabs.py:78
+#: outwiker/actions/tabs.py:77
 msgid "Go to next tab"
 msgstr "Gå till nästa flik"
 
-#: outwiker/actions/tabs.py:99
+#: outwiker/actions/tabs.py:98
 msgid "Previous Tab"
 msgstr "Föregående flik"
 
-#: outwiker/actions/tabs.py:104
+#: outwiker/actions/tabs.py:103
 msgid "Go to previous tab"
 msgstr "Gå till föregående flik"
 
@@ -1366,71 +1366,71 @@ msgstr "Vill du ta bort markerade ikoner?"
 msgid "Remove icons"
 msgstr "Ta bort ikoner"
 
-#: outwiker/gui/preferences/generalpanel.py:38
+#: outwiker/gui/preferences/generalpanel.py:39
 msgid "Recent used"
 msgstr "Senast använd"
 
-#: outwiker/gui/preferences/generalpanel.py:40 outwiker/gui/mainmenu.py:17
+#: outwiker/gui/preferences/generalpanel.py:41 outwiker/gui/mainmenu.py:17
 msgid "Edit"
 msgstr "Redigera"
 
-#: outwiker/gui/preferences/generalpanel.py:82
+#: outwiker/gui/preferences/generalpanel.py:83
 msgid "Autosave interval in seconds(0 - disabled)"
 msgstr "Intervall för att autospara, i sekunder (0 - inaktiverat)"
 
-#: outwiker/gui/preferences/generalpanel.py:110
+#: outwiker/gui/preferences/generalpanel.py:111
 msgid "Date and time format"
 msgstr "Datum- och tidsformat"
 
-#: outwiker/gui/preferences/generalpanel.py:135
+#: outwiker/gui/preferences/generalpanel.py:136
 msgid "Ask before exit"
 msgstr "Bekräfta före avslut"
 
-#: outwiker/gui/preferences/generalpanel.py:144
+#: outwiker/gui/preferences/generalpanel.py:145
 msgid "Minimize to tray"
 msgstr "Minimera till meddelandefältet"
 
-#: outwiker/gui/preferences/generalpanel.py:149
+#: outwiker/gui/preferences/generalpanel.py:150
 msgid "Start iconized"
 msgstr "Starta minimerad"
 
-#: outwiker/gui/preferences/generalpanel.py:154
+#: outwiker/gui/preferences/generalpanel.py:155
 msgid "Always show tray icon"
 msgstr "Visa alltid ikon i meddelandefältet"
 
-#: outwiker/gui/preferences/generalpanel.py:159
+#: outwiker/gui/preferences/generalpanel.py:160
 msgid "Minimize on close window"
 msgstr "Minimera istället för att stänga"
 
-#: outwiker/gui/preferences/generalpanel.py:168
+#: outwiker/gui/preferences/generalpanel.py:169
 msgid "Recent files history length(restart required)"
 msgstr "Historiklängd för tidigare filer (omstart krävs)"
 
-#: outwiker/gui/preferences/generalpanel.py:180
+#: outwiker/gui/preferences/generalpanel.py:181
 msgid "Automatically open the recent file"
 msgstr "Öppna senast använda fil automatiskt"
 
-#: outwiker/gui/preferences/generalpanel.py:204
+#: outwiker/gui/preferences/generalpanel.py:205
 msgid "Wiki file name"
 msgstr "Wiki-filnamn"
 
-#: outwiker/gui/preferences/generalpanel.py:205
+#: outwiker/gui/preferences/generalpanel.py:206
 msgid "Page title"
 msgstr "Sidtitel"
 
-#: outwiker/gui/preferences/generalpanel.py:210
+#: outwiker/gui/preferences/generalpanel.py:211
 msgid "Main window title format"
 msgstr "Huvudfönstrets titelformat"
 
-#: outwiker/gui/preferences/generalpanel.py:242
+#: outwiker/gui/preferences/generalpanel.py:243
 msgid "Language(restart required)"
 msgstr "Språk (omstart krävs)"
 
-#: outwiker/gui/preferences/generalpanel.py:259
+#: outwiker/gui/preferences/generalpanel.py:260
 msgid "Default opening page mode"
 msgstr "Standardläge för sidöppning"
 
-#: outwiker/gui/preferences/generalpanel.py:406
+#: outwiker/gui/preferences/generalpanel.py:407
 msgid "Auto"
 msgstr "Auto"
 
@@ -1444,15 +1444,15 @@ msgstr "Länk"
 msgid "Command"
 msgstr "Kommando"
 
-#: outwiker/gui/preferences/editorpanel.py:33
+#: outwiker/gui/preferences/editorpanel.py:34
 msgid "Show line numbers"
 msgstr "Visa radnummer"
 
-#: outwiker/gui/preferences/editorpanel.py:34
+#: outwiker/gui/preferences/editorpanel.py:35
 msgid "Tab width"
 msgstr "Flikbredd"
 
-#: outwiker/gui/preferences/editorpanel.py:44
+#: outwiker/gui/preferences/editorpanel.py:49
 msgid ""
 "Home / End keys moves the cursor \n"
 "to the beginning / end of "
@@ -1460,21 +1460,25 @@ msgstr ""
 "Home-/End-tangenter flyttar markören\n"
 "till början/slutet av"
 
-#: outwiker/gui/preferences/editorpanel.py:47
+#: outwiker/gui/preferences/editorpanel.py:57
 msgid "Line"
 msgstr "Rad"
 
-#: outwiker/gui/preferences/editorpanel.py:47
+#: outwiker/gui/preferences/editorpanel.py:57
 msgid "Paragraph"
 msgstr "Stycke"
 
-#: outwiker/gui/preferences/editorpanel.py:50
+#: outwiker/gui/preferences/editorpanel.py:61
 msgid "Font color"
 msgstr "Teckenfärg"
 
-#: outwiker/gui/preferences/editorpanel.py:54
+#: outwiker/gui/preferences/editorpanel.py:66
 msgid "Background color"
 msgstr "Bakgrundsfärg"
+
+#: outwiker/gui/preferences/editorpanel.py:72
+msgid "Page margin background color"
+msgstr "Bakgrundsfärg för sidmarginal"
 
 #: outwiker/gui/preferences/htmleditorpanel.py:38
 msgid "Tag"
@@ -1545,31 +1549,31 @@ msgstr "Sök sidor med taggen"
 msgid "Toggle tag selection"
 msgstr "Växla taggmarkering"
 
-#: outwiker/gui/preferences/tagspanel.py:60
+#: outwiker/gui/preferences/tagspanel.py:58
 msgid "Tag color"
 msgstr "Taggfärg"
 
-#: outwiker/gui/preferences/tagspanel.py:62
+#: outwiker/gui/preferences/tagspanel.py:60
 msgid "Hover tag color"
 msgstr "Taggfärg vid hovring"
 
-#: outwiker/gui/preferences/tagspanel.py:64
+#: outwiker/gui/preferences/tagspanel.py:62
 msgid "Marked tag color"
 msgstr "Markerad tagg-färg"
 
-#: outwiker/gui/preferences/tagspanel.py:66
+#: outwiker/gui/preferences/tagspanel.py:64
 msgid "Hover marked tag color"
 msgstr "Markerad tagg-färg vid hovring"
 
-#: outwiker/gui/preferences/tagspanel.py:68
+#: outwiker/gui/preferences/tagspanel.py:66
 msgid "Marked tag background color"
 msgstr "Bakgrundsfärg för markerad tagg"
 
-#: outwiker/gui/preferences/tagspanel.py:91
+#: outwiker/gui/preferences/tagspanel.py:89
 msgid "Left click on the tag"
 msgstr "Vänsterklick på taggen"
 
-#: outwiker/gui/preferences/tagspanel.py:92
+#: outwiker/gui/preferences/tagspanel.py:90
 msgid "Middle click on the tag"
 msgstr "Mushjulsklick på taggen"
 
@@ -2266,7 +2270,7 @@ msgstr "Visa"
 msgid "Restore"
 msgstr "Återställ"
 
-#: outwiker/gui/mainwndcontroller.py:224
+#: outwiker/gui/mainwndcontroller.py:217
 #, python-format
 msgid ""
 "Can't add wiki to recent list.\n"
