@@ -62,7 +62,7 @@ def testreadonly(func):
 
 
 @testreadonly
-def attachFiles (parent, page, files):
+def attachFiles(parent, page, files):
     """
     Прикрепить файлы к странице с диалогом о перезаписи при необходимости
     parent - родительское окно
@@ -71,32 +71,36 @@ def attachFiles (parent, page, files):
     if page.readonly:
         raise outwiker.core.exceptions.ReadonlyException
 
-    oldAttaches = [os.path.basename (fname).lower()
-                   for fname in Attachment (page).attachmentFull]
+    oldAttachesFull = Attachment(page).attachmentFull
+    oldAttaches = [os.path.basename(fname).lower()
+                   for fname in oldAttachesFull]
 
     # Список файлов, которые будут добавлены
     newAttaches = []
 
-    overwriteDialog = OverwriteDialog (parent)
+    overwriteDialog = OverwriteDialog(parent)
 
     for fname in files:
-        if os.path.basename (fname).lower() in oldAttaches:
-            text = _(u"File '%s' exists already") % (os.path.basename (fname))
-            result = overwriteDialog.ShowDialog (text)
+        if fname in oldAttachesFull:
+            continue
+
+        if os.path.basename(fname).lower() in oldAttaches:
+            text = _(u"File '%s' exists already") % (os.path.basename(fname))
+            result = overwriteDialog.ShowDialog(text)
 
             if result == overwriteDialog.ID_SKIP:
                 continue
             elif result == wx.ID_CANCEL:
                 break
 
-        newAttaches.append (fname)
+        newAttaches.append(fname)
 
     try:
-        Attachment (page).attach (newAttaches)
+        Attachment(page).attach(newAttaches)
     except IOError as e:
-        text = _(u'Error copying files\n{0}').format (str (e))
+        text = _(u'Error copying files\n{0}').format(str(e))
     except shutil.Error as e:
-        text = _(u'Error copying files\n{0}').format (str (e))
+        text = _(u'Error copying files\n{0}').format(str(e))
 
     overwriteDialog.Destroy()
 
