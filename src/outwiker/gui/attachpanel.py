@@ -12,6 +12,7 @@ from outwiker.core.events import PAGE_UPDATE_ATTACHMENT
 from outwiker.actions.attachfiles import AttachFilesAction
 from outwiker.actions.openattachfolder import OpenAttachFolderAction
 from outwiker.gui.guiconfig import AttachConfig
+from outwiker.gui.dropfilestarget import DropFilesTarget
 
 
 class AttachPanel(wx.Panel):
@@ -25,71 +26,76 @@ class AttachPanel(wx.Panel):
 
         wx.Panel.__init__(self, *args, **kwds)
         self.__toolbar = self.__createToolBar(self, -1)
-        self.__attachList = wx.ListCtrl(self, -1, style=wx.LC_LIST | wx.SUNKEN_BORDER)
+        self.__attachList = wx.ListCtrl(self,
+                                        -1,
+                                        style=wx.LC_LIST | wx.SUNKEN_BORDER)
 
         self.__set_properties()
         self.__do_layout()
 
         self.__fileIcons = getOS().fileIcons
-        self.__attachList.SetImageList (self.__fileIcons.imageList, wx.IMAGE_LIST_SMALL)
+        self.__attachList.SetImageList(self.__fileIcons.imageList,
+                                       wx.IMAGE_LIST_SMALL)
+        self._dropTarget = DropFilesTarget(Application, self)
 
         self.__bindGuiEvents()
         self.__bindAppEvents()
 
+    def __bindGuiEvents(self):
+        self.Bind(wx.EVT_LIST_BEGIN_DRAG,
+                  self.__onBeginDrag, self.__attachList)
 
-    def __bindGuiEvents (self):
-        self.Bind (wx.EVT_LIST_BEGIN_DRAG, self.__onBeginDrag, self.__attachList)
-        self.Bind (wx.EVT_LIST_ITEM_ACTIVATED, self.__onDoubleClick, self.__attachList)
-        self.Bind (wx.EVT_MENU, self.__onAttach, id=self.ID_ATTACH)
-        self.Bind (wx.EVT_MENU, self.__onRemove, id=self.ID_REMOVE)
-        self.Bind (wx.EVT_MENU, self.__onPaste, id=self.ID_PASTE)
-        self.Bind (wx.EVT_MENU, self.__onExecute, id=self.ID_EXECUTE)
-        self.Bind (wx.EVT_MENU, self.__onOpenFolder, id=self.ID_OPEN_FOLDER)
-        self.Bind (wx.EVT_MENU, self.__onRefresh, id=self.ID_REFRESH)
-        self.Bind (wx.EVT_CLOSE, self.__onClose)
+        self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.__onDoubleClick,
+                  self.__attachList)
 
+        self.Bind(wx.EVT_MENU, self.__onAttach, id=self.ID_ATTACH)
+        self.Bind(wx.EVT_MENU, self.__onRemove, id=self.ID_REMOVE)
+        self.Bind(wx.EVT_MENU, self.__onPaste, id=self.ID_PASTE)
+        self.Bind(wx.EVT_MENU, self.__onExecute, id=self.ID_EXECUTE)
+        self.Bind(wx.EVT_MENU, self.__onOpenFolder, id=self.ID_OPEN_FOLDER)
+        self.Bind(wx.EVT_MENU, self.__onRefresh, id=self.ID_REFRESH)
+        self.Bind(wx.EVT_CLOSE, self.__onClose)
 
-    def __unbindGuiEvents (self):
-        self.Unbind (wx.EVT_LIST_BEGIN_DRAG,
-                     handler=self.__onBeginDrag,
-                     source=self.__attachList)
+    def __unbindGuiEvents(self):
+        self.Unbind(wx.EVT_LIST_BEGIN_DRAG,
+                    handler=self.__onBeginDrag,
+                    source=self.__attachList)
 
-        self.Unbind (wx.EVT_LIST_ITEM_ACTIVATED,
-                     handler=self.__onDoubleClick,
-                     source=self.__attachList)
+        self.Unbind(wx.EVT_LIST_ITEM_ACTIVATED,
+                    handler=self.__onDoubleClick,
+                    source=self.__attachList)
 
-        self.Unbind (wx.EVT_MENU, handler=self.__onAttach, id=self.ID_ATTACH)
-        self.Unbind (wx.EVT_MENU, handler=self.__onRemove, id=self.ID_REMOVE)
-        self.Unbind (wx.EVT_MENU, handler=self.__onPaste, id=self.ID_PASTE)
-        self.Unbind (wx.EVT_MENU, handler=self.__onExecute, id=self.ID_EXECUTE)
-        self.Unbind (wx.EVT_MENU, handler=self.__onOpenFolder, id=self.ID_OPEN_FOLDER)
-        self.Unbind (wx.EVT_MENU, handler=self.__onRefresh, id=self.ID_REFRESH)
-        self.Unbind (wx.EVT_CLOSE, handler=self.__onClose)
+        self.Unbind(wx.EVT_MENU, handler=self.__onAttach, id=self.ID_ATTACH)
+        self.Unbind(wx.EVT_MENU, handler=self.__onRemove, id=self.ID_REMOVE)
+        self.Unbind(wx.EVT_MENU, handler=self.__onPaste, id=self.ID_PASTE)
+        self.Unbind(wx.EVT_MENU, handler=self.__onExecute, id=self.ID_EXECUTE)
 
+        self.Unbind(wx.EVT_MENU, handler=self.__onOpenFolder,
+                    id=self.ID_OPEN_FOLDER)
+
+        self.Unbind(wx.EVT_MENU, handler=self.__onRefresh, id=self.ID_REFRESH)
+        self.Unbind(wx.EVT_CLOSE, handler=self.__onClose)
 
     @property
-    def attachList (self):
+    def attachList(self):
         return self.__attachList
 
-
     @property
-    def toolBar (self):
+    def toolBar(self):
         return self.__toolbar
 
-
-    def __bindAppEvents (self):
+    def __bindAppEvents(self):
         Application.onPageSelect += self.__onPageSelect
         Application.onPageUpdate += self.__onPageUpdate
         Application.onWikiOpen += self.__onWikiOpen
 
-
-    def __unbindAppEvents (self):
+    def __unbindAppEvents(self):
         Application.onPageSelect -= self.__onPageSelect
         Application.onPageUpdate -= self.__onPageUpdate
         Application.onWikiOpen -= self.__onWikiOpen
 
-
-    def __onClose (self, event):
+    def __onClose(self, event):
+        self._dropTarget.destroy()
         self.__unbindAppEvents()
         self.__unbindGuiEvents()
         self.toolBar.ClearTools()
@@ -97,15 +103,14 @@ class AttachPanel(wx.Panel):
         self.__fileIcons.clear()
         self.Destroy()
 
-
-    def __createToolBar (self, parent, id):
+    def __createToolBar(self, parent, id):
         imagesDir = getImagesDir()
 
-        toolbar = wx.ToolBar (parent, id, style=wx.TB_DOCKABLE)
+        toolbar = wx.ToolBar(parent, id, style=wx.TB_DOCKABLE)
 
         toolbar.AddLabelTool(self.ID_REFRESH,
                              _(u"Refresh"),
-                             wx.Bitmap(os.path.join (imagesDir, "reload.png"),
+                             wx.Bitmap(os.path.join(imagesDir, "reload.png"),
                                        wx.BITMAP_TYPE_ANY),
                              wx.NullBitmap,
                              wx.ITEM_NORMAL,
@@ -116,7 +121,7 @@ class AttachPanel(wx.Panel):
 
         toolbar.AddLabelTool(self.ID_ATTACH,
                              _(u"Attach Files…"),
-                             wx.Bitmap(os.path.join (imagesDir, "attach.png"),
+                             wx.Bitmap(os.path.join(imagesDir, "attach.png"),
                                        wx.BITMAP_TYPE_ANY),
                              wx.NullBitmap,
                              wx.ITEM_NORMAL,
@@ -125,7 +130,7 @@ class AttachPanel(wx.Panel):
 
         toolbar.AddLabelTool(self.ID_REMOVE,
                              _(u"Remove Files…"),
-                             wx.Bitmap(os.path.join (imagesDir, "delete.png"),
+                             wx.Bitmap(os.path.join(imagesDir, "delete.png"),
                                        wx.BITMAP_TYPE_ANY),
                              wx.NullBitmap,
                              wx.ITEM_NORMAL,
@@ -136,7 +141,7 @@ class AttachPanel(wx.Panel):
 
         toolbar.AddLabelTool(self.ID_PASTE,
                              _(u"Paste"),
-                             wx.Bitmap(os.path.join (imagesDir, "paste.png"),
+                             wx.Bitmap(os.path.join(imagesDir, "paste.png"),
                                        wx.BITMAP_TYPE_ANY),
                              wx.NullBitmap,
                              wx.ITEM_NORMAL,
@@ -145,7 +150,7 @@ class AttachPanel(wx.Panel):
 
         toolbar.AddLabelTool(self.ID_EXECUTE,
                              _(u"Execute"),
-                             wx.Bitmap(os.path.join (imagesDir, "execute.png"),
+                             wx.Bitmap(os.path.join(imagesDir, "execute.png"),
                                        wx.BITMAP_TYPE_ANY),
                              wx.NullBitmap,
                              wx.ITEM_NORMAL,
@@ -154,18 +159,15 @@ class AttachPanel(wx.Panel):
 
         toolbar.AddLabelTool(self.ID_OPEN_FOLDER,
                              _(u"Open Attachments Folder"),
-                             wx.Bitmap(os.path.join (imagesDir, "folder.png"),
+                             wx.Bitmap(os.path.join(imagesDir, "folder.png"),
                                        wx.BITMAP_TYPE_ANY),
                              wx.NullBitmap,
                              wx.ITEM_NORMAL,
                              _(u"Open Attachments Folder"),
                              "")
 
-
-
         toolbar.Realize()
         return toolbar
-
 
     def __set_properties(self):
         self.__attachList.SetMinSize((-1, 100))
@@ -182,153 +184,144 @@ class AttachPanel(wx.Panel):
         attachSizer_copy.Fit(self)
         self.SetAutoLayout(True)
 
-
-    def __onWikiOpen (self, wiki):
+    def __onWikiOpen(self, wiki):
         self.updateAttachments()
 
+    def __onPageSelect(self, page):
+        self.updateAttachments()
 
-    def __onPageSelect (self, page):
-        self.updateAttachments ()
-
-
-    def __onPageUpdate (self, page, **kwargs):
-        if (Application.selectedPage is not None and
+    def __onPageUpdate(self, page, **kwargs):
+        if(Application.selectedPage is not None and
                 Application.selectedPage == page and
                 kwargs['change'] == PAGE_UPDATE_ATTACHMENT):
-            self.updateAttachments ()
+            self.updateAttachments()
 
-
-    def updateAttachments (self):
+    def updateAttachments(self):
         """
         Обновить список прикрепленных файлов
         """
         self.__attachList.Freeze()
         self.__attachList.ClearAll()
         if Application.selectedPage is not None:
-            files = Attachment (Application.selectedPage).attachmentFull
+            files = Attachment(Application.selectedPage).attachmentFull
             files.sort(Attachment.sortByName, reverse=True)
 
             for fname in files:
-                if not os.path.basename(fname).startswith("__") or not os.path.isdir (fname):
+                if (not os.path.basename(fname).startswith("__") or
+                        not os.path.isdir(fname)):
                     # Отключим уведомления об ошибках во всплывающих окнах
-                    # иначе они появляются при попытке прочитать испорченные иконки
-                    # На результат работы это не сказывается, все-равно бракованные
-                    # иконки отлавливаются.
+                    # иначе они появляются при попытке прочитать
+                    # испорченные иконки
+                    # На результат работы это не сказывается,
+                    # все-равно бракованные иконки отлавливаются.
                     wx.Log_EnableLogging(False)
 
-                    imageIndex = self.__fileIcons.getFileImage (fname)
+                    imageIndex = self.__fileIcons.getFileImage(fname)
 
                     # Вернем всплывающие окна с ошибками
                     wx.Log_EnableLogging(True)
 
-                    self.__attachList.InsertImageStringItem (0, os.path.basename (fname), imageIndex)
+                    self.__attachList.InsertImageStringItem(
+                        0,
+                        os.path.basename(fname),
+                        imageIndex)
 
         self.__attachList.Thaw()
 
-
-    def __getSelectedFiles (self):
+    def __getSelectedFiles(self):
         files = []
 
-        item = self.__attachList.GetNextItem (-1, state = wx.LIST_STATE_SELECTED)
+        item = self.__attachList.GetNextItem(-1, state=wx.LIST_STATE_SELECTED)
 
         while item != -1:
-            fname = self.__attachList.GetItemText (item)
-            files.append (fname)
+            fname = self.__attachList.GetItemText(item)
+            files.append(fname)
 
-            item = self.__attachList.GetNextItem (item, state = wx.LIST_STATE_SELECTED)
+            item = self.__attachList.GetNextItem(item,
+                                                 state=wx.LIST_STATE_SELECTED)
 
         return files
 
-
     def __onAttach(self, event):
-        Application.actionController.getAction (AttachFilesAction.stringId).run (None)
-
+        Application.actionController.getAction(AttachFilesAction.stringId).run(None)
 
     def __onRemove(self, event):
         if Application.selectedPage is not None:
-            files = self.__getSelectedFiles ()
+            files = self.__getSelectedFiles()
 
-            if len (files) == 0:
-                MessageBox (_(u"You did not select a file to remove"),
-                            _(u"Error"),
-                            wx.OK | wx.ICON_ERROR)
+            if len(files) == 0:
+                MessageBox(_(u"You did not select a file to remove"),
+                           _(u"Error"),
+                           wx.OK | wx.ICON_ERROR)
                 return
 
-            if MessageBox (_(u"Remove selected files?"),
-                           _(u"Remove files?"),
-                           wx.YES_NO | wx.ICON_QUESTION) == wx.YES:
+            if MessageBox(_(u"Remove selected files?"),
+                          _(u"Remove files?"),
+                          wx.YES_NO | wx.ICON_QUESTION) == wx.YES:
                 try:
-                    Attachment (Application.selectedPage).removeAttach (files)
+                    Attachment(Application.selectedPage).removeAttach(files)
                 except IOError as e:
-                    MessageBox (unicode (e), _(u"Error"), wx.ICON_ERROR | wx.OK)
+                    MessageBox(unicode(e), _(u"Error"), wx.ICON_ERROR | wx.OK)
 
-                self.updateAttachments ()
+                self.updateAttachments()
 
-
-    def __pasteLink (self):
+    def __pasteLink(self):
         """
-        Сгенерировать сообщение о том, что пользователь хочет вставить ссылку на приаттаченные файлы
+        Сгенерировать сообщение о том, что пользователь хочет вставить
+        ссылку на приаттаченные файлы
         """
-        files = self.__getSelectedFiles ()
-        if len (files) == 0:
-            MessageBox (_(u"You did not select a file to paste"),
-                        _(u"Error"),
-                        wx.OK | wx.ICON_ERROR)
+        files = self.__getSelectedFiles()
+        if len(files) == 0:
+            MessageBox(_(u"You did not select a file to paste"),
+                       _(u"Error"),
+                       wx.OK | wx.ICON_ERROR)
             return
 
-        Application.onAttachmentPaste (files)
+        Application.onAttachmentPaste(files)
 
-
-    def __executeFile (self):
+    def __executeFile(self):
         if Application.selectedPage is not None:
             files = self.__getSelectedFiles()
 
-            if len (files) == 0:
-                MessageBox (_(u"You did not select a file to execute"),
-                            _(u"Error"),
-                            wx.OK | wx.ICON_ERROR)
+            if len(files) == 0:
+                MessageBox(_(u"You did not select a file to execute"),
+                           _(u"Error"),
+                           wx.OK | wx.ICON_ERROR)
                 return
 
             for file in files:
-                fullpath = os.path.join (Attachment (Application.selectedPage).getAttachPath(), file)
+                fullpath = os.path.join(Attachment(Application.selectedPage).getAttachPath(), file)
                 try:
-                    getOS().startFile (fullpath)
+                    getOS().startFile(fullpath)
                 except OSError:
                     text = _(u"Can't execute file '%s'") % file
-                    MessageBox (text, _(u"Error"), wx.ICON_ERROR | wx.OK)
-
+                    MessageBox(text, _(u"Error"), wx.ICON_ERROR | wx.OK)
 
     def __onPaste(self, event):
-        self.__pasteLink ()
+        self.__pasteLink()
 
-
-    def __onRefresh (self, event):
+    def __onRefresh(self, event):
         self.updateAttachments()
 
-
-    def __onOpenFolder (self, event):
-        Application.actionController.getAction (OpenAttachFolderAction.stringId).run (None)
-
+    def __onOpenFolder(self, event):
+        Application.actionController.getAction(OpenAttachFolderAction.stringId).run(None)
 
     def __onExecute(self, event):
         self.__executeFile()
 
-
-    def __onDoubleClick (self, event):
-        config = AttachConfig (Application.config)
+    def __onDoubleClick(self, event):
+        config = AttachConfig(Application.config)
         if config.doubleClickAction.value == AttachConfig.ACTION_INSERT_LINK:
             self.__pasteLink()
         elif config.doubleClickAction.value == AttachConfig.ACTION_OPEN:
             self.__executeFile()
 
-
     def __onBeginDrag(self, event):
         data = getOS().dragFileDataObject()
 
         for fname in self.__getSelectedFiles():
-            data.AddFile (os.path.join (Attachment (Application.selectedPage).getAttachPath(), fname))
+            data.AddFile(os.path.join(Attachment(Application.selectedPage).getAttachPath(), fname))
 
-        dragSource = wx.DropSource (self)
+        dragSource = wx.DropSource(self)
         dragSource.SetData(data)
-
-        dragSource.DoDragDrop ()
+        dragSource.DoDragDrop()

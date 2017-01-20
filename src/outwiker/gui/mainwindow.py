@@ -108,9 +108,6 @@ class MainWindow(wx.Frame):
 
         self.__bindGuiEvents()
 
-        self._dropTarget = DropFilesTarget (self.attachPanel.panel)
-        # self.Show()
-
         if self.mainWindowConfig.maximized.value:
             self.Maximize()
 
@@ -603,7 +600,6 @@ class MainWindow(wx.Frame):
         self._destroyCoreControllers()
 
         self.__unbindGuiEvents()
-        self._dropTarget.destroy()
 
         self.toolbars.destroyAllToolBars()
         self.tabsController.destroy()
@@ -689,27 +685,3 @@ class MainWindow(wx.Frame):
             self.ShowFullScreen(False)
 
         self.__panesController.fromFullscreen()
-
-
-class DropFilesTarget (wx.FileDropTarget):
-    """
-    Класс для возможности перетаскивания файлов между другими программами и OutWiker
-    """
-    def __init__ (self, dropWnd):
-        wx.FileDropTarget.__init__ (self)
-        self._dropWnd = dropWnd
-        self._dropWnd.SetDropTarget (self)
-
-
-    def OnDropFiles (self, x, y, files):
-        if (Application.wikiroot is not None and
-                Application.wikiroot.selectedPage is not None):
-            cmd.attachFiles (self._dropWnd,
-                             Application.wikiroot.selectedPage,
-                             files)
-            return True
-
-
-    def destroy (self):
-        self._dropWnd.SetDropTarget (None)
-        self._dropWnd = None

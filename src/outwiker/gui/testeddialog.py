@@ -12,7 +12,6 @@ class TestedDialog(wx.Dialog):
     будущего вызова метода ShowModal
     """
     def __init__(self, *args, **kwargs):
-        kwargs["style"] = wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER
         super(TestedDialog, self).__init__(*args, **kwargs)
 
     def ShowModal(self):

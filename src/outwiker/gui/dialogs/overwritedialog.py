@@ -7,7 +7,6 @@ from outwiker.gui.testeddialog import TestedDialog
 
 class OverwriteDialog(TestedDialog):
     def __init__(self, *args, **kwds):
-        kwds["style"] = wx.DEFAULT_DIALOG_STYLE
         super(OverwriteDialog, self).__init__(*args, **kwds)
         self.textLabel = wx.StaticText(self,
                                        -1,
@@ -43,7 +42,9 @@ class OverwriteDialog(TestedDialog):
         self.overwrite.SetDefault()
 
     def __do_layout(self):
-        sizer_1 = wx.BoxSizer(wx.VERTICAL)
+        sizer_1 = wx.FlexGridSizer(cols=1)
+        sizer_1.AddGrowableCol(0)
+        sizer_1.AddGrowableRow(1)
         sizer_2 = wx.BoxSizer(wx.HORIZONTAL)
 
         sizer_1.Add(self.textLabel,
@@ -57,12 +58,11 @@ class OverwriteDialog(TestedDialog):
         sizer_2.Add(self.cancel, flag=wx.ALL, border=4)
 
         sizer_1.Add(sizer_2,
-                    flag=wx.EXPAND | wx.ALIGN_CENTER_HORIZONTAL | wx.ALL,
+                    flag=wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL | wx.ALL,
                     border=4)
 
         self.SetSizer(sizer_1)
-        sizer_1.Fit(self)
-        self.Layout()
+        self.Fit()
 
     def ShowDialog(self, text):
         """
