@@ -19,7 +19,7 @@ from outwiker.core.pagetitletester import PageTitleError, PageTitleWarning
 from outwiker.core.system import getOS, getCurrentDir
 from outwiker.core.tree import WikiDocument
 from outwiker.core.xmlversionparser import XmlVersionParser
-from outwiker.gui.overwritedialog import OverwriteDialog
+from outwiker.gui.dialogs.overwritedialog import OverwriteDialog
 from outwiker.gui.longprocessrunner import LongProcessRunner
 from outwiker.gui.polyaction import PolyAction
 from outwiker.gui.dateformatdialog import DateFormatDialog
