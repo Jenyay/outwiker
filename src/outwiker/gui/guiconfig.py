@@ -214,6 +214,10 @@ class EditorConfig(object):
     BACK_COLOR_SECTION = u'BackColor'
     BACK_COLOR_DEFAULT = u'#D9D9D9'
 
+    # Selected text background color
+    SEL_BACK_COLOR_SECTION = u'SelBackColor'
+    SEL_BACK_COLOR_DEFAULT = u'#C0C0C0'
+
     # Margin background color
     MARGIN_BACK_COLOR_SECTION = u'MarginBackColor'
     MARGIN_BACK_COLOR_DEFAULT = u'#C4C4C4'
@@ -282,6 +286,11 @@ class EditorConfig(object):
                                       GeneralGuiConfig.GENERAL_SECTION,
                                       EditorConfig.BACK_COLOR_SECTION,
                                       EditorConfig.BACK_COLOR_DEFAULT)
+
+        self.selBackColor = StringOption(self.config,
+                                         GeneralGuiConfig.GENERAL_SECTION,
+                                         EditorConfig.SEL_BACK_COLOR_SECTION,
+                                         EditorConfig.SEL_BACK_COLOR_DEFAULT)
 
         self.marginBackColor = StringOption(
             self.config,

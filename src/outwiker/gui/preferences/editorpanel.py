@@ -57,14 +57,19 @@ class EditorPanel(BasePrefPanel):
         self.homeEndCombo.AppendItems([_(u"Line"), _(u"Paragraph")])
 
         # Цвет шрифта
-        self.fontColorLabel = wx.StaticText(self,
-                                            label=_(u"Font color"))
+        self.fontColorLabel = wx.StaticText(self, label=_(u"Font color"))
         self.fontColorPicker = wx.ColourPickerCtrl(self)
 
         # Цвет фона
-        self.backColorLabel = wx.StaticText(self,
-                                            label=_(u"Background color"))
+        self.backColorLabel = wx.StaticText(self, label=_(u"Background color"))
         self.backColorPicker = wx.ColourPickerCtrl(self)
+
+        # Selected background text color
+        self.selBackColorLabel = wx.StaticText(
+            self,
+            label=_(u"Selected background color"))
+
+        self.selBackColorPicker = wx.ColourPickerCtrl(self)
 
         # Margin background color
         self.marginBackColorLabel = wx.StaticText(
@@ -106,6 +111,16 @@ class EditorPanel(BasePrefPanel):
                         border=2)
 
         colorsSizer.Add(self.backColorPicker,
+                        0,
+                        wx.ALL | wx.ALIGN_RIGHT,
+                        border=2)
+
+        colorsSizer.Add(self.selBackColorLabel,
+                        0,
+                        wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+                        border=2)
+
+        colorsSizer.Add(self.selBackColorPicker,
                         0,
                         wx.ALL | wx.ALIGN_RIGHT,
                         border=2)
@@ -197,6 +212,11 @@ class EditorPanel(BasePrefPanel):
         else:
             self.backColorPicker.SetColour(wx.Color(255, 255, 255))
 
+        if StcStyle.checkColorString(self.__config.selBackColor.value):
+            self.selBackColorPicker.SetColour(self.__config.selBackColor.value)
+        else:
+            self.selBackColorPicker.SetColour(wx.Color(192, 192, 192))
+
         if StcStyle.checkColorString(self.__config.marginBackColor.value):
             self.marginBackColorPicker.SetColour(
                 self.__config.marginBackColor.value
@@ -211,4 +231,5 @@ class EditorPanel(BasePrefPanel):
         self.__config.homeEndKeys.value = self.homeEndCombo.GetSelection()
         self.__config.fontColor.value = self.fontColorPicker.GetColour().GetAsString(wx.C2S_HTML_SYNTAX)
         self.__config.backColor.value = self.backColorPicker.GetColour().GetAsString(wx.C2S_HTML_SYNTAX)
+        self.__config.selBackColor.value = self.selBackColorPicker.GetColour().GetAsString(wx.C2S_HTML_SYNTAX)
         self.__config.marginBackColor.value = self.marginBackColorPicker.GetColour().GetAsString(wx.C2S_HTML_SYNTAX)

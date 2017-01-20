@@ -141,6 +141,7 @@ class TextEditor(TextEditorBase):
         isItalic = self._config.fontIsItalic.value
         fontColor = self._config.fontColor.value
         backColor = self._config.backColor.value
+        selBackColor = self._config.selBackColor.value
         marginBackColor = self._config.marginBackColor.value
 
         self.__showlinenumbers = self._config.lineNumbers.value
@@ -151,9 +152,10 @@ class TextEditor(TextEditorBase):
         self.textCtrl.StyleSetItalic(wx.stc.STC_STYLE_DEFAULT, isItalic)
         self.textCtrl.StyleSetForeground(wx.stc.STC_STYLE_DEFAULT, fontColor)
         self.textCtrl.StyleSetBackground(wx.stc.STC_STYLE_DEFAULT, backColor)
-
         self.textCtrl.StyleSetBackground(wx.stc.STC_STYLE_LINENUMBER,
                                          marginBackColor)
+
+        self.textCtrl.SetSelBackground(1, selBackColor)
 
         self.textCtrl.SetCaretForeground(fontColor)
         self.textCtrl.SetCaretLineBack(backColor)
