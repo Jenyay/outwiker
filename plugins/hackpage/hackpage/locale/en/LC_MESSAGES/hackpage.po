@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hackpage\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-12 21:59+0300\n"
-"PO-Revision-Date: 2017-01-12 21:59+0300\n"
+"POT-Creation-Date: 2017-01-23 20:36+0300\n"
+"PO-Revision-Date: 2017-01-23 20:36+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -47,21 +47,29 @@ msgstr "Change Page Identifier..."
 msgid "HackPage plugin. Change Page Identifier"
 msgstr "HackPage plugin. Change Page Identifier"
 
-#: utils.py:53
-msgid "Enter new page alias"
-msgstr "Enter new page alias"
+#: utils.py:27
+msgid "Change page identifier"
+msgstr "Change page identifier"
 
-#: utils.py:54
+#: utils.py:28
+msgid "Enter new identifier for page \"{}\""
+msgstr "Enter new identifier for page \"{}\""
+
+#: utils.py:60
 msgid "Set page alias"
 msgstr "Set page alias"
 
-#: utils.py:78
-msgid "Enter the page folder name"
-msgstr "Enter the page folder name"
+#: utils.py:61
+msgid "Enter alias for page"
+msgstr "Enter alias for page"
 
-#: utils.py:79
+#: utils.py:90
 msgid "Set page folder"
 msgstr "Set page folder"
+
+#: utils.py:91
+msgid "Enter the page folder name"
+msgstr "Enter the page folder name"
 
 #: plugin.py:39
 msgid "The HackPage plugin allow to edit hidden page properties"
@@ -71,29 +79,23 @@ msgstr "The HackPage plugin allow to edit hidden page properties"
 msgid "http://jenyay.net/Outwiker/HackPageEn"
 msgstr "http://jenyay.net/Outwiker/HackPageEn"
 
-#: gui/changeuiddialog.py:24
-msgid "Change page identifier"
-msgstr "Change page identifier"
-
-#: gui/changeuiddialog.py:45
-msgid "Error"
-msgstr "Error"
-
-#: gui/changeuiddialog.py:66
-msgid "Enter new page identifier"
-msgstr "Enter new page identifier"
-
-#: gui/changeuiddialog.py:108
-msgid "Enter new identifier for page \"{}\""
-msgstr "Enter new identifier for page \"{}\""
-
-#: gui/changeuiddialog.py:151
+#: validators.py:31
 msgid "Same identifier exist already"
 msgstr "Same identifier exist already"
 
-#: gui/changeuiddialog.py:158
+#: validators.py:32 validators.py:42
+msgid "Error"
+msgstr "Error"
+
+#: validators.py:41
 msgid "Identifier contain invalid character"
 msgstr "Identifier contain invalid character"
+
+#~ msgid "Enter new page alias"
+#~ msgstr "Enter new page alias"
+
+#~ msgid "Enter new page identifier"
+#~ msgstr "Enter new page identifier"
 
 #~ msgid "Change page UID"
 #~ msgstr "Change page UID"

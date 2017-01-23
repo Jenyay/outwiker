@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-12 21:59+0300\n"
+"POT-Creation-Date: 2017-01-23 20:36+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -45,20 +45,28 @@ msgstr ""
 msgid "HackPage plugin. Change Page Identifier"
 msgstr ""
 
-#: utils.py:53
-msgid "Enter new page alias"
+#: utils.py:27
+msgid "Change page identifier"
 msgstr ""
 
-#: utils.py:54
+#: utils.py:28
+msgid "Enter new identifier for page \"{}\""
+msgstr ""
+
+#: utils.py:60
 msgid "Set page alias"
 msgstr ""
 
-#: utils.py:78
-msgid "Enter the page folder name"
+#: utils.py:61
+msgid "Enter alias for page"
 msgstr ""
 
-#: utils.py:79
+#: utils.py:90
 msgid "Set page folder"
+msgstr ""
+
+#: utils.py:91
+msgid "Enter the page folder name"
 msgstr ""
 
 #: plugin.py:39
@@ -69,26 +77,14 @@ msgstr ""
 msgid "http://jenyay.net/Outwiker/HackPageEn"
 msgstr ""
 
-#: gui/changeuiddialog.py:24
-msgid "Change page identifier"
-msgstr ""
-
-#: gui/changeuiddialog.py:45
-msgid "Error"
-msgstr ""
-
-#: gui/changeuiddialog.py:66
-msgid "Enter new page identifier"
-msgstr ""
-
-#: gui/changeuiddialog.py:108
-msgid "Enter new identifier for page \"{}\""
-msgstr ""
-
-#: gui/changeuiddialog.py:151
+#: validators.py:31
 msgid "Same identifier exist already"
 msgstr ""
 
-#: gui/changeuiddialog.py:158
+#: validators.py:32 validators.py:42
+msgid "Error"
+msgstr ""
+
+#: validators.py:41
 msgid "Identifier contain invalid character"
 msgstr ""

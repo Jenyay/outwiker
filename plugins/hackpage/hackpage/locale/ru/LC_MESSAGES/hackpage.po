@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-12 21:59+0300\n"
-"PO-Revision-Date: 2017-01-12 21:59+0300\n"
+"POT-Creation-Date: 2017-01-23 20:37+0300\n"
+"PO-Revision-Date: 2017-01-23 20:37+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru\n"
@@ -47,21 +47,29 @@ msgstr "Изменить идентификатор страницы..."
 msgid "HackPage plugin. Change Page Identifier"
 msgstr "Плагин HackPage. Изменить идентификатор страницы"
 
-#: utils.py:53
-msgid "Enter new page alias"
-msgstr "Введите новый псевдоним страницы"
+#: utils.py:27
+msgid "Change page identifier"
+msgstr "Изменить идентификатор страницы"
 
-#: utils.py:54
+#: utils.py:28
+msgid "Enter new identifier for page \"{}\""
+msgstr "Введите новый идентификатор для страницы \"{}\""
+
+#: utils.py:60
 msgid "Set page alias"
 msgstr "Установить псевдоним страницы"
 
-#: utils.py:78
-msgid "Enter the page folder name"
-msgstr "Введите имя папки страницы"
+#: utils.py:61
+msgid "Enter alias for page"
+msgstr "Введите псевдоним для страницы"
 
-#: utils.py:79
+#: utils.py:90
 msgid "Set page folder"
 msgstr "Изменить папку страницы"
+
+#: utils.py:91
+msgid "Enter the page folder name"
+msgstr "Введите имя папки страницы"
 
 #: plugin.py:39
 msgid "The HackPage plugin allow to edit hidden page properties"
@@ -71,29 +79,23 @@ msgstr "Плагин HackPage позволяет редактировать ск
 msgid "http://jenyay.net/Outwiker/HackPageEn"
 msgstr "http://jenyay.net/Outwiker/HackPage"
 
-#: gui/changeuiddialog.py:24
-msgid "Change page identifier"
-msgstr "Изменить идентификатор страницы"
-
-#: gui/changeuiddialog.py:45
-msgid "Error"
-msgstr "Ошибка"
-
-#: gui/changeuiddialog.py:66
-msgid "Enter new page identifier"
-msgstr "Введите новый идентификатор страницы"
-
-#: gui/changeuiddialog.py:108
-msgid "Enter new identifier for page \"{}\""
-msgstr "Введите новый идентификатор для страницы \"{}\""
-
-#: gui/changeuiddialog.py:151
+#: validators.py:31
 msgid "Same identifier exist already"
 msgstr "Такой идентификатор уже существует"
 
-#: gui/changeuiddialog.py:158
+#: validators.py:32 validators.py:42
+msgid "Error"
+msgstr "Ошибка"
+
+#: validators.py:41
 msgid "Identifier contain invalid character"
 msgstr "Идентификатор содержит неправильные символы"
+
+#~ msgid "Enter new page alias"
+#~ msgstr "Введите новый псевдоним страницы"
+
+#~ msgid "Enter new page identifier"
+#~ msgstr "Введите новый идентификатор страницы"
 
 #~ msgid "Change page UID"
 #~ msgstr "Изменить UID страницы"
