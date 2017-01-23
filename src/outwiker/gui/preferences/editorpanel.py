@@ -67,7 +67,7 @@ class EditorPanel(BasePrefPanel):
         # Selected background text color
         self.selBackColorLabel = wx.StaticText(
             self,
-            label=_(u"Selected background color"))
+            label=_(u"Background color of the selected text"))
 
         self.selBackColorPicker = wx.ColourPickerCtrl(self)
 
