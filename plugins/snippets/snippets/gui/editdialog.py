@@ -687,7 +687,7 @@ class EditSnippetsDialogController(object):
 
         self._dialog.Close()
         if self._application.selectedPage is not None:
-            eventParams = RunSnippetParams(snippet_fname, u'')
+            eventParams = RunSnippetParams(snippet_fname)
             self._application.customEvents(defines.EVENT_RUN_SNIPPET,
                                            eventParams)
 
