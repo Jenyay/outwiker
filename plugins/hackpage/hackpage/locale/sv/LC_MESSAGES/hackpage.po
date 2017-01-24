@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-12 21:59+0300\n"
-"PO-Revision-Date: 2017-01-13 08:59+0300\n"
+"POT-Creation-Date: 2017-01-23 20:36+0300\n"
+"PO-Revision-Date: 2017-01-24 08:40+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -44,21 +44,29 @@ msgstr "Ändra sididentifierare..."
 msgid "HackPage plugin. Change Page Identifier"
 msgstr "HackPage-instick. Ändra sididentifierare"
 
-#: utils.py:53
-msgid "Enter new page alias"
-msgstr "Ange nytt sidalias"
+#: utils.py:27
+msgid "Change page identifier"
+msgstr "Ändra sididentifierare"
 
-#: utils.py:54
+#: utils.py:28
+msgid "Enter new identifier for page \"{}\""
+msgstr "Ange ny sididentiferare för \"{}\""
+
+#: utils.py:60
 msgid "Set page alias"
 msgstr "Ange sidalias"
 
-#: utils.py:78
-msgid "Enter the page folder name"
-msgstr "Ange mappnamn"
+#: utils.py:61
+msgid "Enter alias for page"
+msgstr "Ange alias för sidan"
 
-#: utils.py:79
+#: utils.py:90
 msgid "Set page folder"
 msgstr "Ange sidmapp"
+
+#: utils.py:91
+msgid "Enter the page folder name"
+msgstr "Ange mappnamn"
 
 #: plugin.py:39
 msgid "The HackPage plugin allow to edit hidden page properties"
@@ -68,26 +76,14 @@ msgstr "HackPage-insticket låter dig redigera dolda sidegenskaper"
 msgid "http://jenyay.net/Outwiker/HackPageEn"
 msgstr "http://jenyay.net/Outwiker/HackPageEn"
 
-#: gui/changeuiddialog.py:24
-msgid "Change page identifier"
-msgstr "Ändra sididentifierare"
-
-#: gui/changeuiddialog.py:45
-msgid "Error"
-msgstr "Fel"
-
-#: gui/changeuiddialog.py:66
-msgid "Enter new page identifier"
-msgstr "Ange ny sididentiferare"
-
-#: gui/changeuiddialog.py:108
-msgid "Enter new identifier for page \"{}\""
-msgstr "Ange ny sididentiferare för \"{}\""
-
-#: gui/changeuiddialog.py:151
+#: validators.py:31
 msgid "Same identifier exist already"
 msgstr "Samma identifierare finns redan"
 
-#: gui/changeuiddialog.py:158
+#: validators.py:32 validators.py:42
+msgid "Error"
+msgstr "Fel"
+
+#: validators.py:41
 msgid "Identifier contain invalid character"
 msgstr "Identifieraren innehåller ogiltiga tecken"
