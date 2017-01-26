@@ -6,6 +6,7 @@ import shutil
 from fabric.api import local, lcd
 
 from .base import BuilderBase
+from buildtools.utilites import getPython
 from buildtools.defines import (WINDOWS_BUILD_DIR,
                                 PLUGINS_LIST,
                                 OUTWIKER_VERSIONS_FILENAME)
@@ -45,8 +46,8 @@ class BuilderWindows(BuilderBase):
         map(self._remove, toRemove)
 
     def _build(self):
-        shutil.copy (os.path.join(u'src', OUTWIKER_VERSIONS_FILENAME),
-                     self._root_build_dir)
+        shutil.copy(os.path.join(u'src', OUTWIKER_VERSIONS_FILENAME),
+                    self._root_build_dir)
 
         self._create_plugins_dir()
         self._build_binary()
@@ -76,7 +77,10 @@ class BuilderWindows(BuilderBase):
         Build with cx_Freeze
         """
         with lcd("src"):
-            local("python setup.py build --build-exe ../{}".format(self._build_dir))
+            local("{python} setup.py build --build-exe ../{builddir}".format(
+                python=getPython(),
+                builddir=self._build_dir)
+            )
 
     def _create_plugins_dir(self):
         """
