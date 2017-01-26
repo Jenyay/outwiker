@@ -18,7 +18,7 @@ from buildtools.utilites import (getPython,
                                  getCurrentUbuntuDistribName,
                                  getPathToPlugin
                                  )
-from buildtools.defines import(
+from buildtools.defines import (
     UBUNTU_RELEASE_NAMES,
     BUILD_DIR,
     DEB_SOURCE_BUILD_DIR,
