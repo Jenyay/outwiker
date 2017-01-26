@@ -8,6 +8,7 @@
 
 		<changelog>
 			<version number="2.0.0.809" status="beta">
+				<change>Bug fixes.</change>
 			</version>
 
 			<version number="2.0.0.808" date="January 26, 2017" status="beta">
@@ -72,6 +73,7 @@
 
 		<changelog>
 			<version number="2.0.0.809" status="beta">
+				<change>Исправления ошибок.</change>
 			</version>
 
 			<version number="2.0.0.808" date="26.01.2017" status="beta">
