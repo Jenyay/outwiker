@@ -94,6 +94,9 @@ class BaseTextPanel(BasePagePanel):
         # еще раз его показывать не надо
         self.externalEditDialog = None
 
+        # List of the tuples: (menu, MenuItem)
+        self._menuSeparators = []
+
         self.searchMenuIndex = 2
         self.imagesDir = getImagesDir()
 
@@ -102,7 +105,9 @@ class BaseTextPanel(BasePagePanel):
         self._addSearchTools()
         self._addSpellTools()
 
-        self._application.mainWindow.mainMenu.editMenu.AppendSeparator()
+        editMenu = self._application.mainWindow.mainMenu.editMenu
+        sepMenuItem = editMenu.AppendSeparator()
+        self._menuSeparators.append((editMenu, sepMenuItem))
 
         self._addWordTools()
         self._addLinesTools()
@@ -322,16 +327,22 @@ class BaseTextPanel(BasePagePanel):
             actionController.removeToolbarButton(SPELL_ON_OFF_ID)
 
         self._removeAllTools()
+
+        editMenu = self._application.mainWindow.mainMenu.editMenu
         self.mainWindow.mainMenu.Remove(self.searchMenuIndex)
-        self._application.mainWindow.mainMenu.editMenu.RemoveItem(self.wordMenuItem)
-        self._application.mainWindow.mainMenu.editMenu.RemoveItem(self.linesMenuItem)
+        editMenu.RemoveItem(self.wordMenuItem)
+        editMenu.RemoveItem(self.linesMenuItem)
+
+        map(lambda item: item[0].RemoveItem(item[1]), self._menuSeparators)
+
         self.searchMenu = None
         self.wordMenuItem = None
         self.wordMenu = None
         self.linesMenuItem = None
         self.linesMenu = None
+        self._menuSeparators = []
 
-    def onAttachmentPaste (self, fnames):
+    def onAttachmentPaste(self, fnames):
         """
         Пользователь хочет вставить ссылки на приаттаченные файлы
         """
