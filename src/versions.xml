@@ -7,7 +7,7 @@
 		<website>http://jenyay.net/Outwiker/UnstableEn</website>
 
 		<changelog>
-			<version number="2.0.0.808" status="beta">
+			<version number="2.0.0.808" date="January 26, 2017" status="beta">
 				<change>Added the ability to add alias to page.</change>
 				<change>Changed GUI to set hot keys.</change>
 				<change>Added options to change editor margin color.</change>
@@ -68,7 +68,7 @@
 		<website>http://jenyay.net/Outwiker/Unstable</website>
 
 		<changelog>
-			<version number="2.0.0.808" status="beta">
+			<version number="2.0.0.808" date="26.01.2017" status="beta">
 				<change>Добавлена возможность создавать псевдонимы для страниц.</change>
 				<change>Переделан интерфейс для установки горячих клавиш.</change>
 				<change>Добавлена настройка для изменения цвета фона поля редактора.</change>

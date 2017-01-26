@@ -26,7 +26,7 @@
 		</author>
 
 		<changelog>
-			<version number="1.0.6">
+			<version number="1.0.6" date="January 26, 2017">
                 <download os="all">http://jenyay.net/uploads/Outwiker/ChangePageUid/changepageuid-1.0.6.zip</download>
 				<change>Bug fixes.</change>
 			</version>
@@ -76,7 +76,7 @@
 		</author>
 
 		<changelog>
-			<version number="1.0.6">
+			<version number="1.0.6" date="26.01.2017">
                 <download os="all">http://jenyay.net/uploads/Outwiker/ChangePageUid/changepageuid-1.0.6.zip</download>
 				<change>Исправление ошибок.</change>
 			</version>

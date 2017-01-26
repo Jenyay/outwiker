@@ -26,7 +26,7 @@
 		</author>
 
 		<changelog>
-			<version number="1.0.7">
+			<version number="1.0.7" date="January 26, 2017">
                 <download os="all">http://jenyay.net/uploads/Outwiker/DataGraph/datagraph-1.0.7.zip</download>
 				<change>Updated Russian help.</change>
 			</version>
@@ -80,7 +80,7 @@
 		</author>
 
 		<changelog>
-			<version number="1.0.7">
+			<version number="1.0.7" date="26.01.2017">
                 <download os="all">http://jenyay.net/uploads/Outwiker/DataGraph/datagraph-1.0.7.zip</download>
 				<change>Обновление справки на русском языке.</change>
 			</version>
