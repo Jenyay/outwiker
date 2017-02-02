@@ -10,36 +10,36 @@ import wxversion
 wxversion.select(WX_VERSION)
 
 
-class BaseBuilder (object):
+class BaseBuilder(object):
     __metaclass__ = ABCMeta
 
-
     @abstractmethod
-    def _getExecutable (self):
+    def _getExecutable(self):
         pass
 
-
-    def _getExtraIncludeFiles (self):
+    def _getExtraIncludeFiles(self):
         return []
 
-
-    def _getPathIncludes (self):
+    def _getPathIncludes(self):
         return []
 
-
-    def _getExtraBuildExeOptions (self):
+    def _getExtraBuildExeOptions(self):
         return {}
 
-
-    def _getExcludes (self):
+    def _getExcludes(self):
         return ['numpy',
                 'scipy',
                 'tkinter',
                 'PyQt4',
+                'tcl',
+                'tk',
+                'unittest',
+                'setuptools',
+                'distutils',
+                'email',
                 ]
 
-
-    def _getPackages (self):
+    def _getPackages(self):
         # Добавляем 'outwiker.pages.wiki.wikipanel',
         # т.к. этот модуль используется только в старых версиях плагинов
         return ['urllib',
@@ -60,24 +60,22 @@ class BaseBuilder (object):
                 'xml',
                 ]
 
-
-    def _getCurrentVersion (self):
+    def _getCurrentVersion(self):
         """
         Get current version from file
         """
         from outwiker.core.system import getCurrentDir
 
         fname = "versions.xml"
-        path = os.path.join (getCurrentDir(), fname)
+        path = os.path.join(getCurrentDir(), fname)
 
-        with open (path) as fp:
+        with open(path) as fp:
             lines = fp.readlines()
 
         version_str = "%s.%s" % (lines[0].strip(), lines[1].strip())
         return version_str
 
-
-    def build (self):
+    def build(self):
         includeFiles = [
             'images',
             'help',
@@ -96,62 +94,67 @@ class BaseBuilder (object):
             'packages': self._getPackages(),
             'include_files': includeFiles,
             "bin_path_includes": self._getPathIncludes(),
+            # For cx_Freeze 5.0.1
+            # 'zip_include_packages': ['outwiker', 'wx', 'PIL', 'comtypes',
+            #                          'ctypes', 'importlib', 'logging', 'xml',
+            #                          'enchant', 'encodings', 'pkg_resources'],
         }
-        build_exe_options.update (self._getExtraBuildExeOptions())
+        build_exe_options.update(self._getExtraBuildExeOptions())
 
         executable = self._getExecutable()
 
-        setup (
-            name = "OutWiker",
-            version = self._getCurrentVersion(),
-            description = "Wiki + Outliner",
-            options = {'build_exe': build_exe_options},
-            executables = [executable]
+        setup(
+            name="OutWiker",
+            version=self._getCurrentVersion(),
+            description="Wiki + Outliner",
+            options={'build_exe': build_exe_options},
+            executables=[executable]
             )
 
 
-
-class WindowsBuilder (BaseBuilder):
-    def _getExtraIncludeFiles (self):
+class WindowsBuilder(BaseBuilder):
+    def _getExtraIncludeFiles(self):
         return [
-            ('../need_for_build/windows/libs/lib', 'lib'),
-            ('../need_for_build/windows/libs/libenchant-1.dll', 'libenchant-1.dll'),
-            ('../need_for_build/windows/libs/libglib-2.0-0.dll', 'libglib-2.0-0.dll'),
-            ('../need_for_build/windows/libs/libgmodule-2.0-0.dll', 'libgmodule-2.0-0.dll'),
+           ('../need_for_build/windows/libs/lib', 'lib'),
+
+           ('../need_for_build/windows/libs/libenchant-1.dll',
+            'libenchant-1.dll'),
+
+           ('../need_for_build/windows/libs/libglib-2.0-0.dll',
+            'libglib-2.0-0.dll'),
+
+           ('../need_for_build/windows/libs/libgmodule-2.0-0.dll',
+            'libgmodule-2.0-0.dll'),
         ]
 
-
-    def _getExtraBuildExeOptions (self):
+    def _getExtraBuildExeOptions(self):
         return {
             'include_msvcr': True,
             }
 
-
-    def _getExecutable (self):
+    def _getExecutable(self):
         return Executable("runoutwiker.py",
-                          base = 'Win32GUI',
-                          icon = "images/outwiker.ico",
+                          base='Win32GUI',
+                          icon="images/outwiker.ico",
                           targetName="outwiker.exe")
 
 
-
-class LinuxBuilder (BaseBuilder):
-    def _getExecutable (self):
+class LinuxBuilder(BaseBuilder):
+    def _getExecutable(self):
         return Executable("runoutwiker.py",
-                          icon = "images/outwiker.ico",
+                          icon="images/outwiker.ico",
                           targetName="outwiker")
 
-
-    def _getPathIncludes (self):
+    def _getPathIncludes(self):
         return [u'/usr/lib']
 
-
-    def _getExtraIncludeFiles (self):
+    def _getExtraIncludeFiles(self):
         return [
-            ('../need_for_build/linux/libs_amd64/libgcrypt.so.20', 'libgcrypt.so.20'),
-            ('../need_for_build/linux/libs_amd64/libglib-2.0.so.0', 'libglib-2.0.so.0'),
+            ('../need_for_build/linux/libs_amd64/libgcrypt.so.20',
+             'libgcrypt.so.20'),
+            ('../need_for_build/linux/libs_amd64/libglib-2.0.so.0',
+             'libglib-2.0.so.0'),
         ]
-
 
 
 if __name__ == '__main__':

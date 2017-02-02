@@ -178,10 +178,8 @@ def openWiki (path, readonly=False):
     def threadFunc (path, readonly):
         try:
             return WikiDocument.load (path, readonly)
-        except IOError as error:
-            return error
-        except outwiker.core.exceptions.RootFormatError as error:
-            return error
+        except BaseException as e:
+            return e
 
     preWikiOpenParams = PreWikiOpenParams(path, readonly)
     Application.onPreWikiOpen(Application.selectedPage,
@@ -192,6 +190,8 @@ def openWiki (path, readonly=False):
                                 _(u"Loading"),
                                 _(u"Opening notes tree..."))
     result = runner.run (os.path.realpath (path), readonly)
+
+    # result = WikiDocument.load (os.path.realpath (path), readonly)
 
     success = False
     if isinstance(result, IOError):

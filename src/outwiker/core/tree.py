@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 
+import logging
 import os
 import os.path
 import ConfigParser
@@ -247,7 +248,10 @@ class RootWikiPage(object):
             if not name.startswith("__") and os.path.isdir(fullpath):
                 try:
                     page = WikiPage.load(fullpath, self, self.root.readonly)
-                except Exception:
+                except Exception as e:
+                    text = _(u'Error reading page {}').format(fullpath)
+                    logging.error(text)
+                    logging.error(u'    ' + str(e))
                     continue
 
                 self._children.append(page)
