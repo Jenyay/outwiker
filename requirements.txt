@@ -1,5 +1,5 @@
 fabric
 comtypes
-Pillow
+Pillow==4.0.0
 pyenchant
-cx_Freeze == 4.3.3
+cx_Freeze==4.3.3
