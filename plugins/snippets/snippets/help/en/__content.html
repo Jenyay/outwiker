@@ -17,146 +17,146 @@
 </head>
 
 <body>
-<h1>Плагин Snippets</h1>
-<p>Версия 1.0</p>
-<h2>Содержание</h2>
+<h1>Snippets plug-in</h1>
+<p>Version 1.0</p>
+<h2>Table of contents</h2>
 <ul>
 <ul>
-<li><a href="#brief">Краткое описание</a></li>
-<li><a href="#management">Управление шаблонами</a></li>
-<li><a href="#enter">Вставка шаблонного текста</a></li>
-<li><a href="#wikicommand">Вставка шаблона в виде викикоманды</a></li>
-<li><a href="#language">Язык шаблонов</a></li>
+<li><a href="#brief">Brief description</a></li>
+<li><a href="#management">Snippets management</a></li>
+<li><a href="#enter">Entering the template text</a></li>
+<li><a href="#wikicommand">Insert snippet as wiki command</a></li>
+<li><a href="#language">Snippet language</a></li>
 <ul>
-<li><a href="#var">Задание переменных</a></li>
-<li><a href="#globalvar">Встроенные переменные</a></li>
-<li><a href="#blocks">Другие языковые конструкции</a></li>
+<li><a href="#var">Setting variables</a></li>
+<li><a href="#globalvar">Built-in variables</a></li>
+<li><a href="#blocks">Other language constructs</a></li>
 <ul>
-<li><a href="#if">Оператор if</a></li>
-<li><a href="#include">Оператор include</a></li>
+<li><a href="#if">The if operator</a></li>
+<li><a href="#include">The include operator</a></li>
 </ul>
 </ul>
-<li><a href="#advanced">Особенности хранения шаблонов</a></li>
-<li><a href="#contacts">Ссылки и контакты</a></li>
+<li><a href="#advanced">Snippets storage features</a></li>
+<li><a href="#contacts">Links and contacts</a></li>
 </ul>
 </ul>
-<h2><a id="brief"></a> Краткое описание</h2>
-<p>Плагин Snippets предназначен для сохранения шаблонного текста, который часто используется в заметках, для того, чтобы каждый раз не набирать повторяющийся текст заново. В тексте шаблона могут встречаться переменные подстановки, значения которых вводится пользователем при использовании шаблона. Кроме того, если вы знакомы с шаблонизатором <a href="http://jinja.pocoo.org/">Jinja2</a>, то можете использовать его возможности в шаблонах, поскольку плагин Snippets использует эту библиотеку для генерации текста по шаблону.</p>
-<p><div align="center"><a href="__attach/snippets_rus_vardialog_snippet.png"><img src="__attach/__thumb/th_width_700_snippets_rus_vardialog_snippet.png"/></a></div></p>
-<h2><a id="management"></a> Управление шаблонами</h2>
-<p>Чтобы создать шаблон, выберите пункт меню "Шаблоны - Управление шаблонами...", откроется диалог "Управление шаблонами". В левой части диалога будет показано дерево шаблонов, в котором шаблоны можно группировать по папкам.</p>
-<p><div align="center"><a href="__attach/snippets_rus_management.png"><img src="__attach/__thumb/th_width_700_snippets_rus_management.png"/></a></div></p>
-<p>В верхней части диалога расположена панель инструментов с двумя группами кнопок.</p>
-<p>В левую группу входят кнопки для создания папки шаблонов, создания нового шаблона, переименования папки или шаблона, удаления шаблона, запуска шаблона на выполнение.</p>
-<p>В правую группу входят кнопка для вставки встроенных или пользовательских переменных, а также кнопка для вставки некоторых <a href="#language">языковых конструкций Jinja</a> в текст шаблона.</p>
-<p>Если во введенном шаблоне есть синтаксическая ошибка, то она выводится в правом нижнем информационном поле.</p>
-<p>Все шаблоны при редактировании сохраняются автоматически, поэтому в диалоге нет кнопки для сохранения шаблона.</p>
-<p>Все созданные шаблоны помещаются в меню "Шаблоны" главного окна программы OutWiker, а созданные папки с шаблонами в этом меню представлены вложенными подменю. Вложенность папок практически не ограничена.</p>
-<p><div align="center"><img src="__attach/snippets_rus_menu_snippets.png"/></div></p>
-<h2><a id="enter"></a> Вставка шаблонного текста</h2>
-<p>Плагин Snippets позволяет вставлять шаблоны в двух режимах - в виде сгенерированного текста и в виде викикоманды (этот режим работает только для викистраниц).</p>
-<p>Чтобы вставить шаблон в текст страницы, нужно выбрать соответствующий шаблон в меню "Шаблоны" или запустить на выполнение шаблон из диалога управлением шаблонами. После этого откроется диалог для ввода значений переменных. В левой части диалога будут перечислены переменные, которые необходимо ввести (при желании, их значения можно оставить пустыми), а справа можно увидеть результат, который будет вставлен в текст страницы, и исходный текст шаблона.</p>
-<p><div align="center"><a href="__attach/snippets_rus_vardialog_result.png"><img src="__attach/__thumb/th_width_600_snippets_rus_vardialog_result.png"/></a></div></p>
-<p><div align="center"><a href="__attach/snippets_rus_vardialog_snippet.png"><img src="__attach/__thumb/th_width_600_snippets_rus_vardialog_snippet.png"/></a></div></p>
-<p>В левом нижнем углу диалога расположен переключатель "Вставить как викикоманду". Если он <b>не установлен</b>, то полученный результат будет непосредственно вставлен в текст страницы. Если этот переключатель <b>установлен</b>, то в текст страницы будет вставлена <a href="#wikicommand">викикоманда</a>, которая будет преобразована в соответствующий текст в режиме просмотра. Переключатель "Вставить как викикоманду" существует только в том случае, если выбранная в данный момент страница является викистраницей (а не HTML-страницей, текстовой страницей и т.д.)</p>
-<h2><a id="wikicommand"></a> Вставка шаблона в виде викикоманды</h2>
-<p>Если в <a href="#enter">диалоге ввода переменных</a> установить переключатель "Вставить как викикоманду", то в текст страницы будет вставлен не сгенерированный текст, а викикоманда (:snip:), которая будет преобразована в соответствующий текст в режиме просмотра. Эта команда имеет следующий формат:</p>
+<h2><a id="brief"></a> Brief description</h2>
+<p>The Snippets plug-in designed to save the text templates (snippets) which often occurs in the notes. This plug-in allow don't repeat the text entering every time. The variables may be used in the snippet text. The variables values entered by user when the snippet executed. In addition, if you know the <a href="http://jinja.pocoo.org/">Jinja2</a> template engine, you can use rich ability of the library in yours snippets. The Snippets plug-in uses this library for the text generation on the snippet.</p>
+<p><div align="center"><a href="__attach/snippets_eng_vardialog_snippet.png"><img src="__attach/__thumb/th_width_700_snippets_eng_vardialog_snippet.png"/></a></div></p>
+<h2><a id="management"></a> Snippets management</h2>
+<p>To create a snippet, select menu item "Snippet - Snippets management...". Thereafter the "Snippets management" dialog window will be opening. The tree snippet will be showing in the left part of the window. You can unite the snippets in the folders.</p>
+<p><div align="center"><a href="__attach/snippets_eng_management.png"><img src="__attach/__thumb/th_width_700_snippets_eng_management.png"/></a></div></p>
+<p>The toolbar with two the button groups located in the upper part of the dialog window.</p>
+<p>The left group includes the buttons for creating the snippets folders, creating the new snippet, renaming the folder or snippet, removing the snippet, executing its.</p>
+<p>The right group includes the button for inserting built-in or custom variables and button for inserting some <a href="#language">Jinja language constructs</a></p>
+<p>If the entered snippet has any syntactically error, it will be displaying in the lower right information box.</p>
+<p>All snippets will saved automatically, and thus the dialog window does not have a button to save the snippet.</p>
+<p>All created snippets located in the "Snippets" menu of the main OutWiker window. All created folders with snippets in this menu presented as nested submenu. The nesting of folders is almost limitless.</p>
+<p><div align="center"><img src="__attach/snippets_eng_menu_snippets.png"/></div></p>
+<h2><a id="enter"></a> Entering the template text</h2>
+<p>The Snippets plug-in allows you to insert the snippets in two modes: as generated text and as the wiki command. (the second mode works only for the wiki pages).</p>
+<p>To put the template text at the page, you can select the appropriate snippet in the "Snippets" menu or execute the snippet from the dialog management snippets. Thereafter the dialog to enter the variables will be opened. You can enter variable values in the left part of the window (variable values may be blank). On the right part you will seeing the result which will insert in the text page and the snippet source text.</p>
+<p><div align="center"><a href="__attach/snippets_eng_vardialog_result.png"><img src="__attach/__thumb/th_width_600_snippets_eng_vardialog_result.png"/></a></div></p>
+<p><div align="center"><a href="__attach/snippets_eng_vardialog_snippet.png"><img src="__attach/__thumb/th_width_600_snippets_eng_vardialog_snippet.png"/></a></div></p>
+<p>The check box "Insert as wiki command" located in the left bottom part of the dialog window. If the check box is <b>not checked</b> the result directly will be inserted in the page. If the check box is <b>checked</b>, <a href="#wikicommand">wiki command</a> will be inserted in the page text. The wiki command will be converted to text in the "Preview" mode. The "Insert as wiki command" check box showed only for wiki pages.</p>
+<h2><a id="wikicommand"></a> Insert snippet as wiki command</h2>
+<p>If in the <a href="#enter">dialog to enter the variable values</a> you checked the "Insert as wiki command" check box, in the page text will insert not a generated text, but (:snip:) wiki command. This wiki command will convert to appropriate text in the "Preview" mode. This command has the following format:</p>
 
 <pre>
-(:snip file=&quot;Папка с шаблоном/имя шаблона&quot; varname1=&quot;значение переменной&quot;, varname2=&quot;значение переменной&quot;, ...:)
-Необязательный текст
+(:snip file=&quot;path to snippet/snippet name&quot; parameter1=&quot;variable value&quot;, parameter2=&quot;variable value&quot;, ...:)
+Optional text
 (:snipend:)
 </pre>
 
-<p>Если задан параметр <i>file</i>, то используется шаблон, указанный в качестве значения этого параметра. Путь до шаблона задается относительно корневой папки шаблона, т.е. если шаблон с именем "Мой шаблон" виден непосредственно в меню "Шаблоны", то значение параметра <i>file</i> должно быть равно "Мой шаблон". Если "Мой шаблон" находится в подменю "Шаблоны - Папка с шаблонами", то значение параметра <i>file</i> должно быть равно "Папка с шаблонами/Мой шаблон". При этом в пути всегда используются прямые слеши (/).</p>
-<p><i>varname1</i>, <i>varname2</i> и т.д. - имена переменных, встречающихся в тексте шаблона, а "Необязательный текст" будет сохранен во <a href="#globalvar">встроенную переменную</a> <i>__text</i>, которая может использоваться в шаблоне.</p>
-<p>В этом случае переменная <i>__text</i> будет хранить текст между (:snip:) и (:snipend:), т.е. в данном примере значение "Необязательный текст".</p>
-<p>Если в викикоманде (:snip:) параметр <i>file</i> не задан, то считается, что текст шаблона задан между (:snip:) и (:snipend:):</p>
+<p>If the "file" parameter was set, the snippet specifying as value this parameter is used. The path to snippet is specified relative the snippets root folder. Thus if a template with the name "My snippets" directly visible in the "Snippets" menu, then the "file" parameter value must be equal to “My snippets”. If the "My template" snippet located in the submenu "Snippets – My concrete snippets", the parameter value file must be equal to "My concrete snippets/My template". In this way always used forward slashes (/).</p>
+<p><i>parameter1</i>, <i>parameter1</i> and etc are the variable names used in the snippet text. <i>Optional text</i> will be saved as the built-in <i>__text</i> variable, which can be used in the template.</p>
+<p>In this case, the <i>__text</i> variable will be storing the text between (:snip:) and (:snipend:) commands.</p>
+<p>If the <i>file</i> parameter is not specified in the (:snip:) wiki command, it is considered the text template is specified between (:snip:) and (:snipend:):</p>
 
 <pre>
-(:snip varname1=&quot;значение переменной&quot;, varname2=&quot;значение переменной&quot;, ...:)
-Текст шаблона
+(:snip parameter1=&quot;variable value&quot;, parameter1=&quot;variable value&quot;, ...:)
+Snippet text
 (:snipend:)
 </pre>
 
-<p>В этом случае <a href="#globalvar">встроенная переменная</a> <i>__text</i> будет равна пустой строке "".</p>
-<h2><a id="language"></a> Язык шаблонов</h2>
-<p>В шаблонах используется язык из библиотеки-шаблонизатора <a href="http://jinja.pocoo.org/">jinja2</a>. Это очень мощная библиотека, но а данном разделе будут перечислены только наиболее простые и часто используемые в шаблонах возможности. Интерфейс плагина Snippets рассчитан на пользователя, незнакомого с этой библиотекой, однако если вы программист и работали с ней, то вы можете использовать все ее возможности, о которых здесь не будет упомянуто. Описание всех возможностей этой библиотеки вы можете найти в <a href="http://jinja.pocoo.org/docs/dev/templates/">документации к Jinja2</a>.</p>
-<h3><a id="var"></a> Задание переменных</h3>
-<p>Наиболее важная часть синтаксиса шаблонов - это переменные. Значение переменной в шаблоне вставляется с помощью конструкции {{<i>varname</i>}}, где <i>varname</i> - это имя переменной. Из-за особенности используемой библиотеки имя переменной может включать в себя только английские буквы, цифры и знак подчеркивания "_", причем первым символом в имени переменной может быть только английская буква.</p>
-<p>В плагине Snippets есть набор встроенных переменных, которые нельзя задать через диалог ввода переменных, их значения зависят от свойств текущей страницы или текущей даты. Полный список таких переменных перечислен в разделе <a href="#variables">Встроенные переменные</a>. Эти переменные начинаются с символа двойного подчеркивания.</p>
-<p>Рассмотрим такой шаблон:</p>
+<p>In this case <a href="#globalvar">built-in variable</a> <i>__text</i> will be equal to an empty string "".</p>
+<h2><a id="language"></a> Snippet language</h2>
+<p>The Snippet plug-in uses the language of the <a href="http://jinja.pocoo.org/">jinja2</a> template engine. This is a very powerful library, but in this section will be showed only the most simple and frequently used features. The plug-in's interface designed for user, who does not know this library, however if you are a programmer and worked with this library, you can use all of its features which is not to be mentioned. Description of all possibilities of this library you can find in the <a href="http://jinja.pocoo.org/docs/dev/templates/">Jinja2 documentation</a>.</p>
+<h3><a id="var"></a> Setting variables</h3>
+<p>The most important part of the syntax of snippets are variables. The variable value in the snippet inserted with the construction {{<i>varname</i>}}, where <i>varname</i> is the name of the variable. The name of the variable may include only Latin letters, numbers and the underscore "_", but the first character in the variable name must be Latin letter.</p>
+<p>The Snippets plug-in has a the set of built-in variables, which cannot be defined in the dialog to input variables. Values of the built-in variables depends from the properties of the current page or the current date. A complete list of these variables listed in section <a href="#variables">Built-in variables</a>. The names of the built-in variables start with the double underscore "__".</p>
+<p>Consider this snippet:</p>
 
 <pre>
 from outwiker.core.commands import MessageBox
 
 MessageBox(
-    _(u'{{message}}'),
-    _(u'{{title}}'),
-    wx.ICON_ERROR | wx.OK)
+ _(u'{{message}}'),
+ _(u'{{title}}'),
+ wx.ICON_ERROR | wx.OK)
 </pre>
 
-<p>В нем используются две переменные: <i>message</i> и <i>title</i>, плагин Snippets попросит их определить в открывшемся диалоге при вызове данного шаблона:</p>
-<p><div align="center"><a href="__attach/snippets_rus_vardialog_result.png"><img src="__attach/__thumb/th_width_600_snippets_rus_vardialog_result.png"/></a></div></p>
-<h3><a id="globalvar"></a>Встроенные переменные</h3>
-<p>Кроме заданных пользователем переменных, плагин Snippets создает набор встроенных переменных, значения которых зависят от свойств текущей страницы. Имена всех встроенных переменные начинаются с двух знаков подчеркивания.</p>
-<p>Имена и значения встроенных переменных можно увидеть в диалоге управления шаблонами, если нажать кнопку для вставки переменных.</p>
-<p><div align="center"><a href="__attach/snippets_rus_globalvar.png"><img src="__attach/__thumb/th_width_600_snippets_rus_globalvar.png"/></a></div></p>
-<p>Например. Переменная <i>__text</i> содержит в себе текст, выделенный на странице в момент вызова шаблона. Также переменная <i>__text</i> используется при работе <a href="#wikicommand">викикоманды</a> (:snip:), которая вставляет шаблон из файла (если задан параметр <i>file</i>). В этом случае переменная <i>__text</i> содержит текст, находящийся между (:snip:) и (:snipend:).</p>
-<p>Переменная <i>__type</i> равна значению <i>wiki</i> для викистраниц, <i>html</i> для страниц в формате HTML, <i>text</i> для простых текстовых страниц и т.д. Эту переменную вместе с <a href="#if">оператором if</a> можно использовать для изменения поведения шаблона в зависимости от типа страницы.</p>
-<h3><a id="blocks"></a> Другие языковые конструкции</h3>
-<p>Используемая внутри плагина Snippets библиотека <a href="http://jinja.pocoo.org/">Jinja2</a> поддерживает достаточно большое количество языковых конструкций, но через интерфейс плагина можно вставить только некоторые из них. Если вы знакомы с данной библиотекой, то можете использовать все поддерживаемые ей конструкции.</p>
-<p>Через интерфейс можно вставить три языковые конструкции: операторы <i><a href="#if">if</a></i>, <i><a href="#include">include</a></i> и комментарии.</p>
-<p><div align="center"><a href="__attach/snippets_rus_blocks.png"><img src="__attach/__thumb/th_width_600_snippets_rus_blocks.png"/></a></div></p>
-<p>Комментарии обрамляются скобками вида {# ... #} и во время обработки шаблона удаляются. Они нужны, чтобы пояснить текст шаблона - для чего он используется, что означают переменные и т.п.</p>
-<h4><a id="if"></a> Оператор if</h4>
-<p>Оператор <i>if</i> предназначен для организации ветвления в шаблоне и вставки текста, зависящего от значений переменных. Синтаксис оператора <i>if</i> следующий:</p>
+<p>In this snippet uses two variables: <i>message</i> and <i>title</i>, the Snippet plug-in will ask to define them in the dialog that will be open when you calling this snippet:</p>
+<p><div align="center"><a href="__attach/snippets_eng_vardialog_result.png"><img src="__attach/__thumb/th_width_600_snippets_eng_vardialog_result.png"/></a></div></p>
+<h3><a id="globalvar"></a>Built-in variables</h3>
+<p>In addition to the users variables, the Snippets plug-in has a set of the set of built-in variables, the values of the built-in variables depend of the properties of the current page. The names of all built-in variables start with two underscores "__".</p>
+<p>If you click to button to inserting of the variables in the dialog of snippets management, you can see the names of built-in variables.</p>
+<p><div align="center"><a href="__attach/snippets_eng_globalvar.png"><img src="__attach/__thumb/th_width_600_snippets_eng_globalvar.png"/></a></div></p>
+<p>For example. The <i>__text</i> contains text selected on the page when you invoke the snippet. Also <i>__text</i> variable used with the (:snip:) wiki command, which inserts a snippet from a file (if the parameter <i>file</i> is set). In this case, the <i>__text</i> variable contains the text located between (:snip:) and (:snipend:).</p>
+<p>The <i>__type</i> variable equal to the <i>wiki</i> for wiki pages, <i>html</i> for HTML pages, <i>text</i> for simple text pages etc. This variable jointly with <a href="#if">if operator</a> you can use to change the behavior of the snippet depending on page type.</p>
+<h3><a id="blocks"></a> Other language constructs</h3>
+<p>The Snippet plug-in uses inside it the <a href="http://jinja.pocoo.org/">Jinja2</a> template engine. This engine supports a sufficiently large number of the template constructs, but with the graphic users interface you can insert only some of them. You can use all features of Jinja2 engine if you know this library.</p>
+<p>With the interface you can insert three language constructs: <a href="#if">if operator</a>, <a href="#include">include operator</a> and comments.</p>
+<p><div align="center"><a href="__attach/snippets_eng_blocks.png"><img src="__attach/__thumb/th_width_600_snippets_eng_blocks.png"/></a></div></p>
+<p>The comments are enclosed in braces of the form {# … #} and during processing of the snippet are removed. The comments needed to explain the snippet text: for which it is used, the meaning of the variables, etc.</p>
+<h4><a id="if"></a> The if operator</h4>
+<p>If operator designed for the organization of branching in the snippet and inserting the text depending on the variables value. The syntax of the <i>if</i> operator is as follows:</p>
 
 <pre>
-{% if условие_1 %}
-    Текст 1
-{% elif условие_2 %}
-    Текст 2
-{% elif условие_3 %}
-    Текст 3
+{% if condition_1 %}
+ Content 1
+{% elif condition_2 %}
+ Content 2
+{% elif condition_3 %}
+ Content 3
 ...
 {% else %}
-    Текст N.
+ Content N.
 {% endif %}
 </pre>
 
-<p>Скорее всего подобная конструкция вам знакома по какому-либо языку программирования.</p>
-<p>Обратите внимание, что все переменные кроме тех, что содержат даты, являются строковыми переменными, поэтому их значения нужно сравнивать именно со строками, даже если подразумевается, что переменная будет содержать только цифры. Поэтому правильное выражение может быть такое:</p>
+<p>Most likely this syntax you know on any other programming language.</p>
+<p>Please note, all variables except those that contain dates are string variables, therefore their values need to compare with strings, even if it means, that variable will contain only numbers. So the correct expression, can be as follows:</p>
 
 <pre>
 {% if var == '1' %}100{% elif var == '2' %}200{% elif var == '3' %}300{% else %}xxx{% endif %}
 </pre>
 
-<p>А такое выражение будет <b>ошибочно</b> (всегда будет выполняться ветвь <i>else</i>):</p>
+<p>and that expression will be wrong (will always run branch else)</p>
 
 <pre>
 {% if var == 1 %}100{% elif var == 2 %}200{% elif var == 3 %}300{% else %}xxx{% endif %}
 </pre>
 
-<h4><a id="include"></a> Оператор include</h4>
-<p>Оператор <i>include</i> предназначен для вставки одного шаблона в другой, при этом во вставляемом шаблоне могут быть объявлены собственные переменные. Синтаксис оператора <i>include</i> следующий:</p>
+<h4><a id="include"></a> The include operator</h4>
+<p>The <i>include</i> operator is designed to insert a snippet into another snippet, in this case own variables may be declared in the inserted snippet. The syntax the <i>include</i> operator is as follows:</p>
 
 <pre>
-{% include &quot;Вставляемый шаблон&quot; %}
+{% include &quot;inserted snippet&quot; %}
 </pre>
 
-<p>В этом операторе "Вставляемый шаблон" - это имя шаблона, который должен находиться в той же папке, что и родительский шаблон (внутри которого находится оператор <i>include</i>) или во вложенной папке, в этом случае оператор будет выглядеть следующим образом:</p>
+<p>In this operator "inserted snippet" is the name of the snippet located in the same folder that the parent snippet (which is located inside the <i>include</i> operator) or in a sub-folder, in this case the operator will look like the following</p>
 
 <pre>
-{% include &quot;Папка 1/Папка 2/Вставляемый шаблон&quot; %}
+{% include &quot;Folder 1/Folder 2/inserted snippet&quot; %}
 </pre>
 
-<h2><a id="advanced"></a> Особенности хранения шаблонов </h2>
-<p>Все шаблоны хранятся в виде отдельных файлов в папке <i>snippets</i> внутри директории с настройками программы (под Windows 7 / 8.x / 10 - C:\Users\USERNAME\AppData\Roaming\outwiker\, под Linux - /home/USERNAME/.config/outwiker/). Имя шаблона соответствует имени файла, поэтому чаще всего это будут файлы без расширения. Папки в шаблонах - это обычные папки в той же директории <i>snippets</i>.</p>
-<h2><a id="contacts"></a> Ссылки и контакты</h2>
+<h2><a id="advanced"></a> Snippets storage features</h2>
+<p>All snippets are stored as separate files in the <i>snippets</i> folder inside the program settings directory (in MS Windows is C:\Users\USERNAME\AppData\Roaming\outwiker\snippets\, in Linux is /home/USERNAME/.config/outwiker/snippets/). The name of the snippet corresponds to a file name, so usually these are files without extensions. Folders in the templates is ordinary folders in the same directory snippets.</p>
+<h2><a id="contacts"></a> Links and contacts</h2>
 <ul>
-<li><a href="http://jenyay.net/Outwiker/Snippets">Страница плагина</a></li>
-<li>Замеченные ошибки, пожелания и предложения пишите на почту <a href="mailto:jenyay.ilin@gmail.com">jenyay.ilin@gmail.com</a></li>
+<li><a href="http://jenyay.net/Outwiker/SnippetsEn">Plug-in's page</a></li>
+<li>Еrrors, wishes and suggestions write to <a href="mailto:jenyay.ilin@gmail.com">jenyay.ilin@gmail.com</a>, please.</li>
 </ul>
 </body>
 </html>
