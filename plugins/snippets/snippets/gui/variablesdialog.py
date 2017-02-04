@@ -131,6 +131,9 @@ class VariablesDialog(TestedDialog):
         self._shortTemplateName = shortTemplateName
         self.SetTitle(title)
 
+    def setFocusToFirstVariable(self):
+        self._varPanel.setFocusToFirstVariable()
+
 
 class VariablesDialogController(object):
     '''
@@ -181,6 +184,8 @@ class VariablesDialogController(object):
             self.dialog.setWikiCommandSetVisible(True)
         else:
             self.dialog.setWikiCommandSetVisible(False)
+
+        self.dialog.setFocusToFirstVariable()
         self.dialog.Show()
 
     def _getShortTemplateName(self, template_fname):
@@ -272,6 +277,10 @@ class VaraiblesPanel(wx.ScrolledWindow):
         self._mainSizer.AddGrowableCol(0)
         self.SetSizer(self._mainSizer)
 
+    def setFocusToFirstVariable(self):
+        if self._varControls:
+            self._varControls[0][1].SetFocus()
+
     def addStringVariable(self, varname):
         newCtrl = StringVariableCtrl(self, varname)
         self._varControls.append((varname, newCtrl))
@@ -318,6 +327,12 @@ class StringVariableCtrl(wx.Panel):
         self._varname = varname
         self._createGUI()
 
+    def SetFocus(self):
+        if self._textCtrlExpanded.IsShown():
+            self._textCtrlExpanded.SetFocus()
+        else:
+            self._textCtrlCollapsed.SetFocus()
+
     def _createGUI(self):
         # Label
         self._label = wx.StaticText(self, label=self._varname)
@@ -363,9 +378,10 @@ class StringVariableCtrl(wx.Panel):
         self._textCtrlExpanded.SetValue(value)
 
     def _onPressEnter(self, event):
-        self._onExpand(None)
-        self._textCtrlExpanded.Value = self._textCtrlExpanded.Value + u'\n'
-        self._textCtrlExpanded.SetInsertionPointEnd()
+        if wx.GetKeyState(wx.WXK_CONTROL):
+            self._onExpand(None)
+            self._textCtrlExpanded.Value = self._textCtrlExpanded.Value + u'\n'
+            self._textCtrlExpanded.SetInsertionPointEnd()
 
     def _onExpand(self, event):
         self._expandButton.Unbind(wx.EVT_BUTTON, handler=self._onExpand)
