@@ -3,7 +3,7 @@
 	<name>Snippets</name>
     <updates>http://jenyay.net/uploads/Outwiker/Snippets/plugin.xml</updates>
     <requirements>
-        <outwiker>2.0.0.807 beta</outwiker>
+        <outwiker>2.0.0.808 beta</outwiker>
         <os>Windows, Linux</os>
 		<packages>
 			<core>1.2</core>
@@ -26,7 +26,7 @@
 		</author>
 
 		<changelog>
-			<version number="1.0">
+			<version number="1.0" date="February 06, 2017">
                 <download os="all">http://jenyay.net/uploads/Outwiker/Snippets/snippets-1.0.zip</download>
 				<change>The first version.</change>
 			</version>
@@ -44,7 +44,7 @@
 		</author>
 
 		<changelog>
-			<version number="1.0">
+			<version number="1.0" date="06.02.2017">
                 <download os="all">http://jenyay.net/uploads/Outwiker/Snippets/snippets-1.0.zip</download>
 				<change>Первая версия.</change>
 			</version>
