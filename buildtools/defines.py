@@ -24,6 +24,7 @@ PLUGINS_LIST = [
     u"pagetypecolor",
     u"readingmode",
     u"sessions",
+    u"snippets",
     u"source",
     u"spoiler",
     u"statistics",
