@@ -378,7 +378,7 @@ class StringVariableCtrl(wx.Panel):
         self._textCtrlExpanded.SetValue(value)
 
     def _onPressEnter(self, event):
-        if wx.GetKeyState(wx.WXK_CONTROL):
+        if wx.GetKeyState(wx.WXK_SHIFT):
             self._onExpand(None)
             self._textCtrlExpanded.Value = self._textCtrlExpanded.Value + u'\n'
             self._textCtrlExpanded.SetInsertionPointEnd()
