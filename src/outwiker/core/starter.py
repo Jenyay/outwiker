@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 
+from __future__ import print_function
 import sys
 
 from outwiker.core.application import Application
@@ -55,7 +56,7 @@ class Starter (object):
             try:
                 cl.parseParams (args)
             except CommandLineException:
-                print cl.format_help()
+                print(cl.format_help())
                 raise StarterExit
 
         return cl
@@ -63,12 +64,12 @@ class Starter (object):
     def __processConsoleCommands (self):
         # Вывод справки
         if self._commandLine.help:
-            print self._commandLine.format_help()
+            print(self._commandLine.format_help())
             raise StarterExit
 
         # Вывод информации о версии
         if self._commandLine.version:
-            print ur"""OutWiker {ver}""".format (ver=str (getCurrentVersion()))
+            print(ur"""OutWiker {ver}""".format (ver=str (getCurrentVersion())))
             raise StarterExit
 
         Application.sharedData[APP_DATA_DISABLE_MINIMIZING] = self._commandLine.disableMinimizing

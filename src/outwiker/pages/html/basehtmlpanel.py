@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import print_function
 from abc import ABCMeta, abstractmethod
+import logging
 import os
 
 import wx
@@ -306,7 +306,7 @@ class BaseHtmlPanel(BaseTextPanel):
                 self._oldHtmlResult = html
                 self._oldPage = self._currentpage
         except EnvironmentError as e:
-            print(e)
+            logging.error(str(e))
             MessageBox(_(u'Page loading error: {}').format(
                 self._currentpage.title),
                 _(u'Error'), wx.ICON_ERROR | wx.OK)

@@ -436,8 +436,6 @@ class DownloaderTest (unittest.TestCase):
 
         downloader.start (self._path2url (exampleHtmlPath), controller)
 
-        # print os.listdir (os.path.join (self._tempDir, self._staticDirName))
-
         self.assertTrue (
             os.path.exists (
                 os.path.join (

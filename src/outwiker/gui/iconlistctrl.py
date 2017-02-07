@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 
+import logging
 import os.path
 
 import wx
@@ -41,7 +42,7 @@ class IconButton(object):
         wx.Log_EnableLogging(True)
 
         if not image.IsOk():
-            print _(u'Invalid icon file: {}').format(fname)
+            logging.error(_(u'Invalid icon file: {}').format(fname))
             image = wx.Bitmap(self._invalidFileName)
 
         return image

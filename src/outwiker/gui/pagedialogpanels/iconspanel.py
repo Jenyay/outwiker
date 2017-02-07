@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 
+import logging
 import os
 import os.path
 
@@ -79,7 +80,7 @@ class IconsPanel (wx.Panel):
         wx.Log_EnableLogging(True)
 
         if not image.IsOk():
-            print _(u'Invalid icon file: {}').format (fname)
+            logging.error(_(u'Invalid icon file: {}').format (fname))
             return wx.NullBitmap
 
         posx = (neww - image.Width) / 2

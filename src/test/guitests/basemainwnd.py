@@ -54,8 +54,6 @@ class BaseMainWndTest(unittest.TestCase):
 
 
     def tearDown (self):
-        # obj = Application.actionController
-
         wx.GetApp().Yield()
         self.wnd.Close()
         self.wnd.Hide()
@@ -68,7 +66,3 @@ class BaseMainWndTest(unittest.TestCase):
         Application.actionController = None
         removeDir (self.path)
         self.wnd = None
-
-        # from pympler import refbrowser
-        # cb = refbrowser.ConsoleBrowser(obj, maxdepth=3)
-        # cb.print_tree()

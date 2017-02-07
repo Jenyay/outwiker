@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import print_function
+import logging
 
 from outwiker.core.i18n import init_i18n, getLanguageFromConfig
 from outwiker.core.config import Config
@@ -387,7 +387,7 @@ class ApplicationParams(object):
         try:
             init_i18n(language)
         except IOError:
-            print(u"Can't load language: {}".format(language))
+            logging.warning(u"Can't load language: {}".format(language))
 
     def getEvent(self, name):
         """Return build-in event or custom event"""

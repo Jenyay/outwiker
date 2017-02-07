@@ -85,7 +85,6 @@ class PageUidDepot (object):
         # совпадет (в этом случае угадавшему UID нужно срочно проверить
         # экстрасенсорные способности :) )
         while uid in self.__uids:
-            print u" Wow! O_o "
             uid = self.__generateUid()
 
         self.changeUid (page, uid)
