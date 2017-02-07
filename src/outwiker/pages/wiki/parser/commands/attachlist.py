@@ -4,6 +4,7 @@ import os.path
 
 from outwiker.pages.wiki.parser.command import Command
 from outwiker.core.attachment import Attachment
+from outwiker.core.defines import PAGE_ATTACH_DIR
 
 
 class SimpleView (object):
@@ -20,7 +21,7 @@ class SimpleView (object):
 
         titles = [u"[%s]" % (name) if os.path.isdir (os.path.join (attachdir, name)) else name for name in fnames]
 
-        result = u"".join ([template.format (link = os.path.join (Attachment.attachDir, name).replace ("\\", "/"), title=title)
+        result = u"".join ([template.format (link = os.path.join (PAGE_ATTACH_DIR, name).replace ("\\", "/"), title=title)
                             for (name, title) in zip (fnames, titles)]).rstrip()
 
         return result

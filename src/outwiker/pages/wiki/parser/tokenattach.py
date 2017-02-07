@@ -3,8 +3,9 @@
 import os.path
 from abc import ABCMeta, abstractmethod
 
-from outwiker.libs.pyparsing import Literal
 from outwiker.core.attachment import Attachment
+from outwiker.core.defines import PAGE_ATTACH_DIR
+from outwiker.libs.pyparsing import Literal
 
 from utils import concatenate, isImage
 
@@ -54,9 +55,9 @@ class AttachToken (object):
         fname = t[1]
 
         if isImage (fname):
-            return '<img src="%s/%s"/>' % (Attachment.attachDir, fname)
+            return '<img src="%s/%s"/>' % (PAGE_ATTACH_DIR, fname)
         else:
-            return '<a href="%s/%s">%s</a>' % (Attachment.attachDir, fname, fname)
+            return '<a href="%s/%s">%s</a>' % (PAGE_ATTACH_DIR, fname, fname)
 
 
     # TODO: Вынести в отдельный модуль

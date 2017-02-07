@@ -291,15 +291,15 @@ class ApplicationParams(object):
     @property
     def wikiroot(self):
         """
-        Возвращает корень открытой в данный момент вики или None,
-        если нет открытой вики
+        Return the root of the wiki opened in the current time or None if
+        no wiki opened
         """
         return self.__wikiroot
 
     @wikiroot.setter
     def wikiroot(self, value):
         """
-        Установить текущую вики
+        Set wiki as current
         """
         self.onWikiClose(self.__wikiroot)
 
@@ -317,20 +317,20 @@ class ApplicationParams(object):
     @property
     def mainWindow(self):
         """
-        Возвращает главное окно программы или None, если оно еще не создано
+        Return main window instance or None if main window is not created
         """
         return self.__mainWindow
 
     @mainWindow.setter
     def mainWindow(self, value):
         """
-        Установить главное окно программы
+        Set main window for the program
         """
         self.__mainWindow = value
 
     def __bindWikiEvents(self, wiki):
         """
-        Подписка на события, связанные с открытой вики для передачи их дальше
+        Subscribe to wiki event to forward it to next receiver.
         """
         wiki.onPageSelect += self.onPageSelect
         wiki.onPageUpdate += self.onPageUpdate
@@ -345,7 +345,7 @@ class ApplicationParams(object):
 
     def __unbindWikiEvents(self, wiki):
         """
-        Отписаться от события, связанных с открытой вики
+        Unsubscribe from wiki events.
         """
         wiki.onPageSelect -= self.onPageSelect
         wiki.onPageUpdate -= self.onPageUpdate
@@ -361,8 +361,7 @@ class ApplicationParams(object):
     @property
     def selectedPage(self):
         """
-        Вернуть текущую страницу или None,
-        если страница не выбрана или вики не открыта
+        Return the instance of the selected page or None if no selected page.
         """
         if self.__wikiroot is None:
             return None
@@ -372,7 +371,7 @@ class ApplicationParams(object):
     @selectedPage.setter
     def selectedPage(self, page):
         """
-        Установить текущую страницу
+        Set page as selected
         """
         if (self.__wikiroot is not None and
                 self.__wikiroot.selectedPage != page):
@@ -380,7 +379,7 @@ class ApplicationParams(object):
 
     def __initLocale(self):
         """
-        Инициализации локализаций интерфейса
+        Locale initialization
         """
         language = getLanguageFromConfig(self.config)
 

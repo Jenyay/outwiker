@@ -4,6 +4,7 @@ import os
 import os.path
 
 from outwiker.core.attachment import Attachment
+from outwiker.core.defines import PAGE_ATTACH_DIR
 
 
 class Thumbnails (object):
@@ -18,7 +19,7 @@ class Thumbnails (object):
 
     @staticmethod
     def getRelativeThumbDir ():
-        return os.path.join (Attachment.attachDir, Thumbnails.thumbDir)
+        return os.path.join (PAGE_ATTACH_DIR, Thumbnails.thumbDir)
 
 
     def getThumbPath (self, create):

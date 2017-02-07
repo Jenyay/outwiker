@@ -6,6 +6,7 @@ from outwiker.libs.pyparsing import QuotedString
 
 from tokenattach import AttachToken
 from outwiker.core.attachment import Attachment
+from outwiker.core.defines import PAGE_ATTACH_DIR
 
 
 class LinkFactory (object):
@@ -72,7 +73,7 @@ class LinkToken (object):
         Подготовить адрес для ссылки. Если ссылка - прикрепленный файл, то создать путь до него
         """
         if url.strip().startswith (AttachToken.attachString):
-            return url.strip().replace (AttachToken.attachString, Attachment.attachDir + "/", 1)
+            return url.strip().replace (AttachToken.attachString, PAGE_ATTACH_DIR + "/", 1)
 
         return url
 
@@ -89,7 +90,7 @@ class LinkToken (object):
 
         if textStrip.startswith (AttachToken.attachString):
             # Ссылка на прикрепление
-            url = textStrip.replace (AttachToken.attachString, Attachment.attachDir + "/", 1)
+            url = textStrip.replace (AttachToken.attachString, PAGE_ATTACH_DIR + "/", 1)
             comment = textStrip.replace (AttachToken.attachString, "")
 
         elif (textStrip.startswith ("#") and

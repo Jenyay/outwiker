@@ -5,6 +5,7 @@ import re
 from outwiker.libs.pyparsing import Regex
 
 from outwiker.core.thumbexception import ThumbException
+from outwiker.core.defines import PAGE_ATTACH_DIR
 from pagethumbmaker import PageThumbmaker
 from outwiker.core.attachment import Attachment
 from ..wikiconfig import WikiConfig
@@ -71,4 +72,4 @@ class ThumbnailToken (object):
         except (ThumbException, IOError):
             return _(u"<b>Can't create thumbnail for \"{}\"</b>").format (fname)
 
-        return u'<a href="%s/%s"><img src="%s"/></a>' % (Attachment.attachDir, fname, thumb.replace ("\\", "/"))
+        return u'<a href="%s/%s"><img src="%s"/></a>' % (PAGE_ATTACH_DIR, fname, thumb.replace ("\\", "/"))
