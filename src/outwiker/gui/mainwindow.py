@@ -91,6 +91,9 @@ class MainWindow(wx.Frame):
         self.controller = MainWndController (self)
         self.controller.loadMainWindowParams()
 
+        if self.mainWindowConfig.maximized.value:
+            self.Maximize()
+
         self.auiManager = wx.aui.AuiManager(self)
         self.__createAuiPanes ()
 
@@ -107,9 +110,6 @@ class MainWindow(wx.Frame):
         self.__panesController = MainPanesController (Application, self)
 
         self.__bindGuiEvents()
-
-        if self.mainWindowConfig.maximized.value:
-            self.Maximize()
 
         self.taskBarIconController = getTrayIconController(Application, self)
         self.taskBarIconController.initialize()

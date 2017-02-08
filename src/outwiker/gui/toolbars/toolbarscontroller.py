@@ -10,8 +10,8 @@ class ToolBarsController(object):
     """
     Класс для управления панелями инструментов и меню, связанными с ними
     """
-    def __init__(self, parent):
-        self._parent = parent
+    def __init__(self, mainWindow):
+        self._mainWindow = mainWindow
 
         # Ключ - строка для нахождения панели инструментов
         # Значение - экземпляр класса ToolBarInfo
@@ -19,10 +19,14 @@ class ToolBarsController(object):
 
         # Подменю для показа скрытия панелей
         self._toolbarsMenu = wx.Menu()
-        self._parent.mainMenu.viewMenu.AppendMenu(-1, _(u"Toolbars"),
-                                                  self._toolbarsMenu)
-        self._parent.auiManager.Bind(wx.aui.EVT_AUI_PANE_CLOSE,
-                                     self.__onPaneClose)
+        self._mainWindow.mainMenu.viewMenu.AppendMenu(-1, _(u"Toolbars"),
+                                                      self._toolbarsMenu)
+        self._mainWindow.auiManager.Bind(wx.aui.EVT_AUI_PANE_CLOSE,
+                                         self.__onPaneClose)
+        self._mainWindow.Bind(wx.EVT_SIZE, self.__onSizeChanged)
+
+    def __onSizeChanged(self, event):
+        self.layout()
 
     def __onPaneClose(self, event):
         for toolbarinfo in self._toolbars.values():
@@ -43,20 +47,21 @@ class ToolBarsController(object):
         newitem = self._addMenu(toolbar)
         self._toolbars[toolbarname] = ToolBarInfo(toolbar, newitem)
         toolbar.UpdateToolBar()
+        self.layout()
 
     def _addMenu(self, toolbar):
         newitem = self._toolbarsMenu.AppendCheckItem(wx.ID_ANY,
                                                      toolbar.caption)
         newitem.Check(toolbar.pane.IsShown())
 
-        self._parent.Bind(wx.EVT_MENU, self.__onToolBarMenuClick, newitem)
+        self._mainWindow.Bind(wx.EVT_MENU, self.__onToolBarMenuClick, newitem)
         return newitem
 
     def _removeMenu(self, toolbarinfo):
         self._toolbarsMenu.DeleteItem(toolbarinfo.menuitem)
-        self._parent.Unbind(wx.EVT_MENU,
-                            source=toolbarinfo.menuitem,
-                            handler=self.__onToolBarMenuClick)
+        self._mainWindow.Unbind(wx.EVT_MENU,
+                                source=toolbarinfo.menuitem,
+                                handler=self.__onToolBarMenuClick)
 
     def __onToolBarMenuClick(self, event):
         toolbarinfo = self._getToolBar(event.GetId())
@@ -68,7 +73,7 @@ class ToolBarsController(object):
             toolbarinfo.toolbar.Show()
 
         toolbarinfo.toolbar.UpdateToolBar()
-        self._parent.UpdateAuiManager()
+        self._mainWindow.UpdateAuiManager()
 
     def _getToolBar(self, menuid):
         """
@@ -86,11 +91,11 @@ class ToolBarsController(object):
         toolbarinfo = self._toolbars[toolbarname]
         toolbarinfo.toolbar.updatePaneInfo()
         self._removeMenu(toolbarinfo)
-        self._parent.auiManager.DetachPane(toolbarinfo.toolbar)
+        self._mainWindow.auiManager.DetachPane(toolbarinfo.toolbar)
 
         toolbarinfo.toolbar.Destroy()
         del self._toolbars[toolbarname]
-        self._parent.UpdateAuiManager()
+        self._mainWindow.UpdateAuiManager()
 
     def destroyAllToolBars(self):
         """
@@ -99,8 +104,9 @@ class ToolBarsController(object):
         """
         self.updatePanesInfo()
 
-        self._parent.auiManager.Unbind(wx.aui.EVT_AUI_PANE_CLOSE,
-                                       handler=self.__onPaneClose)
+        self._mainWindow.auiManager.Unbind(wx.aui.EVT_AUI_PANE_CLOSE,
+                                           handler=self.__onPaneClose)
+        self._mainWindow.Unbind(wx.EVT_SIZE, handler=self.__onSizeChanged)
 
         for toolbarname in self._toolbars.keys():
             self.destroyToolBar(toolbarname)
@@ -116,7 +122,7 @@ class ToolBarsController(object):
         '''
         Fix toolbars positions in the window to all toolbars were visible.
         '''
-        mainWindowWidth = self._parent.GetClientSize()[0]
+        mainWindowWidth = self._mainWindow.GetClientSize()[0]
 
         for name, toolbar_info in self._toolbars.items():
             toolbar = toolbar_info.toolbar
@@ -124,18 +130,20 @@ class ToolBarsController(object):
             if toolbar_rect.GetLeft() >= mainWindowWidth:
                 self._moveToolbar(name)
 
+            # toolbar.Realize()
+
+        self._packToolbarsRows()
+        # self._mainWindow.auiManager.Update()
+
     def _getPaneInfo(self, name):
-        auiManager = self._parent.auiManager
-        toolbar = self._getToolbar(name)
+        auiManager = self._mainWindow.auiManager
+        toolbar = self[name]
         pane_info = auiManager.GetPane(toolbar)
         return pane_info
 
-    def _getToolbar(self, name):
-        return self._toolbars[name].toolbar
-
     def _getToolbarRow(self, name):
-        toolbar = self._getToolbar(name)
-        pane_info = self._parent.auiManager.GetPane(toolbar)
+        toolbar = self[name]
+        pane_info = self._mainWindow.auiManager.GetPane(toolbar)
         return pane_info.dock_row
 
     def _getRowsCount(self):
@@ -147,27 +155,71 @@ class ToolBarsController(object):
 
         return maxIndex + 1
 
+    def _moveToolbarTo(self, name, row, pos):
+        # auiManager = self._mainWindow.auiManager
+
+        moved_pane_info = self._getPaneInfo(name)
+        moved_pane_info.Position(pos).Row(row)
+
+        moved_toolbar = self[name]
+        moved_toolbar.updatePaneInfo()
+        # auiManager.Update()
+
+    def _packToolbarsRows(self):
+        '''
+        Remove unused rows numbers
+        '''
+        # auiManager = self._mainWindow.auiManager
+        rows = [1] * self._getRowsCount()
+
+        for name in self._toolbars.keys():
+            toolbar_row = self._getToolbarRow(name)
+            rows[toolbar_row] = 0
+
+        for name in self._toolbars.keys():
+            toolbar = self[name]
+            toolbar_row = self._getToolbarRow(name)
+            delta = sum(rows[:toolbar_row])
+            if delta == 0:
+                continue
+
+            row_new = toolbar_row - delta
+
+            pane_info = self._getPaneInfo(name)
+            pane_info.Row(row_new)
+            toolbar.updatePaneInfo()
+
+        # auiManager.Update()
+
+    def _getRowSpaces(self, moved_toolbar_name):
+        mainWindowWidth = self._mainWindow.GetClientSize()[0]
+
+        # Calculate empty space for each row
+        rows_spaces = [-1] * self._getRowsCount()
+        for toolbar_name in self._toolbars.keys():
+            if toolbar_name == moved_toolbar_name:
+                continue
+
+            toolbar = self[toolbar_name]
+            toolbar_rect = toolbar.GetRect()
+            toolbar_row = self._getToolbarRow(toolbar_name)
+            space = mainWindowWidth - toolbar_rect.GetRight()
+
+            if (rows_spaces[toolbar_row] == -1 or
+                    space < rows_spaces[toolbar_row]):
+                rows_spaces[toolbar_row] = space
+
+        return rows_spaces
+
     def _moveToolbar(self, name):
         '''
         Find location for toolbar and move it there.
         '''
         margin = 24
-        mainWindowWidth = self._parent.GetClientSize()[0]
-        auiManager = self._parent.auiManager
+        mainWindowWidth = self._mainWindow.GetClientSize()[0]
 
         # Calculate empty space for each row
-        rows_spaces = [mainWindowWidth] * self._getRowsCount()
-        for toolbar_name in self._toolbars.keys():
-            if toolbar_name == name:
-                continue
-
-            toolbar = self._getToolbar(toolbar_name)
-            toolbar_rect = toolbar.GetRect()
-            toolbar_row = self._getToolbarRow(toolbar_name)
-            space = mainWindowWidth - toolbar_rect.GetRight()
-
-            if space < rows_spaces[toolbar_row]:
-                rows_spaces[toolbar_row] = space
+        rows_spaces = self._getRowSpaces(name)
 
         # Find row to move the toolbar
         row_index = len(rows_spaces)
@@ -180,13 +232,7 @@ class ToolBarsController(object):
         if row_index == len(rows_spaces):
             toolbar_pos = 0
         else:
-            toolbar_pos = mainWindowWidth - rows_spaces[row_index]
+            toolbar_pos = mainWindowWidth - rows_spaces[row_index] + 1
 
-        # Move toolbar
-        moved_pane_info = self._getPaneInfo(name)
-        moved_pane_info.Position(toolbar_pos).Row(row_index)
-
-        moved_toolbar = self._getToolbar(name)
-        moved_toolbar.updatePaneInfo()
-
-        auiManager.Update()
+        self._moveToolbarTo(name, row_index, toolbar_pos)
+        # self._mainWindow.auiManager.Update()
