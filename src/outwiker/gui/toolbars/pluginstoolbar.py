@@ -12,7 +12,7 @@ class PluginsToolBar (BaseToolBar):
 
 
     def _createPane (self):
-        return wx.aui.AuiPaneInfo().Name(self.name).Caption(self.caption).ToolbarPane().Top().Position(5)
+        return wx.aui.AuiPaneInfo().Name(self.name).Caption(self.caption).ToolbarPane().Top().Position(5).Row(1)
 
 
     @property

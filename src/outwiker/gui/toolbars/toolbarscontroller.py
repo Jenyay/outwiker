@@ -130,10 +130,8 @@ class ToolBarsController(object):
             if toolbar_rect.GetLeft() >= mainWindowWidth:
                 self._moveToolbar(name)
 
-            # toolbar.Realize()
-
         self._packToolbarsRows()
-        # self._mainWindow.auiManager.Update()
+        self._mainWindow.auiManager.Update()
 
     def _getPaneInfo(self, name):
         auiManager = self._mainWindow.auiManager
@@ -156,20 +154,16 @@ class ToolBarsController(object):
         return maxIndex + 1
 
     def _moveToolbarTo(self, name, row, pos):
-        # auiManager = self._mainWindow.auiManager
-
         moved_pane_info = self._getPaneInfo(name)
         moved_pane_info.Position(pos).Row(row)
 
         moved_toolbar = self[name]
         moved_toolbar.updatePaneInfo()
-        # auiManager.Update()
 
     def _packToolbarsRows(self):
         '''
         Remove unused rows numbers
         '''
-        # auiManager = self._mainWindow.auiManager
         rows = [1] * self._getRowsCount()
 
         for name in self._toolbars.keys():
@@ -188,8 +182,6 @@ class ToolBarsController(object):
             pane_info = self._getPaneInfo(name)
             pane_info.Row(row_new)
             toolbar.updatePaneInfo()
-
-        # auiManager.Update()
 
     def _getRowSpaces(self, moved_toolbar_name):
         mainWindowWidth = self._mainWindow.GetClientSize()[0]
@@ -235,4 +227,3 @@ class ToolBarsController(object):
             toolbar_pos = mainWindowWidth - rows_spaces[row_index] + 1
 
         self._moveToolbarTo(name, row_index, toolbar_pos)
-        # self._mainWindow.auiManager.Update()
