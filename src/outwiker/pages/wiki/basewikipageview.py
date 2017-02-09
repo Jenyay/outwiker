@@ -1,7 +1,6 @@
 # -*- coding: UTF-8 -*-
 
 import wx
-import os
 from abc import ABCMeta, abstractmethod
 
 from outwiker.core.commands import MessageBox

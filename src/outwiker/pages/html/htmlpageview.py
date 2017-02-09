@@ -10,10 +10,10 @@ from outwiker.gui.htmltexteditor import HtmlTextEditor
 from outwiker.gui.tabledialog import TableDialog
 from outwiker.gui.tablerowsdialog import TableRowsDialog
 
-from outwiker.pages.html.htmltoolbar import HtmlToolBar
-from outwiker.pages.html.basehtmlpanel import(BaseHtmlPanel,
-                                              EVT_PAGE_TAB_CHANGED)
-from outwiker.pages.html.tabledialogcontroller import(
+from outwiker.gui.toolbars.simpletoolbar import SimpleToolBar
+from outwiker.pages.html.basehtmlpanel import (BaseHtmlPanel,
+                                               EVT_PAGE_TAB_CHANGED)
+from outwiker.pages.html.tabledialogcontroller import (
     TableDialogController,
     TableRowsDialogController
 )
@@ -29,12 +29,17 @@ class HtmlPageView(BaseHtmlPanel):
         super(HtmlPageView, self).__init__(parent, application)
 
         self.__HTML_MENU_INDEX = 7
-        self._htmlPanelName = "html"
-        self._menuName = _(u"HTML")
 
-        self.mainWindow.toolbars[self._htmlPanelName] = HtmlToolBar(
-            self.mainWindow,
-            self.mainWindow.auiManager)
+        self._htmlPanelName = "html_general"
+        if self.mainWindow is not None:
+            self._toolbar_general = SimpleToolBar(self.mainWindow,
+                                                  self.mainWindow.auiManager,
+                                                  self._htmlPanelName,
+                                                  _(u"Html. General"))
+
+        self.mainWindow.toolbars[self._htmlPanelName] = self._toolbar_general
+
+        self._menuName = _(u"HTML")
 
         # Список используемых полиморфных действий
         self.__polyActions = [

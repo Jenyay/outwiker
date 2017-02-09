@@ -7,9 +7,9 @@ from StringIO import StringIO
 
 from outwiker.actions.polyactionsid import *
 from outwiker.core.commands import insertCurrentDate
+from outwiker.gui.toolbars.simpletoolbar import SimpleToolBar
 
 from .wikieditor import WikiEditor
-from .wikitoolbar import WikiToolBar
 from .wikiconfig import WikiConfig
 from .basewikipageview import BaseWikiPageView
 from .tableactions import (getInsertTableActionFunc,
@@ -29,6 +29,15 @@ from actions.dates import WikiDateCreationAction, WikiDateEditionAction
 
 class WikiPageView(BaseWikiPageView):
     def __init__(self, parent, application):
+        self._toolbar_general_name = u"wiki_general"
+
+        if application.mainWindow is not None:
+            self._toolbar_general = SimpleToolBar(
+                application.mainWindow,
+                application.mainWindow.auiManager,
+                u"wiki_general",
+                _(u"Wiki. General"))
+
         super(WikiPageView, self).__init__(parent, application)
 
     def Clear(self):
@@ -50,7 +59,7 @@ class WikiPageView(BaseWikiPageView):
         return WikiConfig(self._application.config).showHtmlCodeOptions.value
 
     def _createToolbar(self, mainWindow):
-        return WikiToolBar(mainWindow, mainWindow.auiManager)
+        return self._toolbar_general
 
     def _getAttachString(self, fnames):
         """

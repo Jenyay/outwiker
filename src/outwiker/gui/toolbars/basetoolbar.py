@@ -23,6 +23,21 @@ class BaseToolBar(wx.aui.AuiToolBar):
         self._auiManager = auiManager
         self._pane = self._loadPaneInfo()
 
+    @abstractproperty
+    def caption(self):
+        pass
+
+    @abstractproperty
+    def name(self):
+        return self.pane.name
+
+    @abstractmethod
+    def _createPane(self):
+        """
+        The method must return the instance of the AuiPaneInfo
+        """
+        pass
+
     def _loadPaneInfo(self):
         try:
             paneinfo = Application.config.get(self._SECTION_NAME, self.name)
@@ -34,13 +49,6 @@ class BaseToolBar(wx.aui.AuiToolBar):
             pane = self._createPane()
 
         return pane
-
-    @abstractmethod
-    def _createPane(self):
-        """
-        The method must return the instance of the AuiPaneInfo
-        """
-        pass
 
     def savePaneInfo(self):
         config = Application.config
@@ -94,14 +102,6 @@ class BaseToolBar(wx.aui.AuiToolBar):
 
     def FindById(self, toolid):
         return self.FindTool(toolid)
-
-    @abstractproperty
-    def caption(self):
-        pass
-
-    @abstractproperty
-    def name(self):
-        return self.pane.name
 
     def Hide(self):
         self.updatePaneInfo()
