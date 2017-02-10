@@ -70,7 +70,7 @@ class BasePagePanel (wx.Panel):
                  image,
                  alwaysEnabled=False,
                  fullUpdate=False,
-                 panelname="plugins"):
+                 panelname="pluginsToolBar"):
         """
         !!! Внимание. Это устаревший способ добавления элементов интерфейса. Сохраняется только для совместимости со старыми версиями плагинов и в будущих версиях программы может быть убран.
 
