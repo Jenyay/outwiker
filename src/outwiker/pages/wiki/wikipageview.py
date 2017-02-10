@@ -29,15 +29,6 @@ from actions.dates import WikiDateCreationAction, WikiDateEditionAction
 
 class WikiPageView(BaseWikiPageView):
     def __init__(self, parent, application):
-        self._toolbar_general_name = u"wiki_general"
-
-        if application.mainWindow is not None:
-            self._toolbar_general = SimpleToolBar(
-                application.mainWindow,
-                application.mainWindow.auiManager,
-                u"wiki_general",
-                _(u"Wiki. General"))
-
         super(WikiPageView, self).__init__(parent, application)
 
     def Clear(self):
@@ -45,9 +36,6 @@ class WikiPageView(BaseWikiPageView):
 
     def getTextEditor(self):
         return WikiEditor
-
-    def _getName(self):
-        return u"wiki"
 
     def _getPageTitle(self):
         return _(u"Wiki")
@@ -58,8 +46,42 @@ class WikiPageView(BaseWikiPageView):
     def _isHtmlCodeShown(self):
         return WikiConfig(self._application.config).showHtmlCodeOptions.value
 
-    def _createToolbar(self, mainWindow):
-        return self._toolbar_general
+    def _createToolbars(self, mainWindow):
+        self._toolbar_general = SimpleToolBar(
+            mainWindow,
+            mainWindow.auiManager,
+            u"wiki_general_toolbar",
+            _(u"Wiki"))
+
+        self._toolbar_heading = SimpleToolBar(
+            mainWindow,
+            mainWindow.auiManager,
+            u"wiki_heading_toolbar",
+            _(u"Heading"))
+
+        self._toolbar_font = SimpleToolBar(
+            mainWindow,
+            mainWindow.auiManager,
+            u"wiki_font_toolbar",
+            _(u"Font"))
+
+        self._toolbar_align = SimpleToolBar(
+            mainWindow,
+            mainWindow.auiManager,
+            u"wiki_align_toolbar",
+            _(u"Align"))
+
+        self._toolbar_table = SimpleToolBar(
+            mainWindow,
+            mainWindow.auiManager,
+            u"wiki_table_toolbar",
+            _(u"Table"))
+
+        return [self._toolbar_general,
+                self._toolbar_heading,
+                self._toolbar_font,
+                self._toolbar_align,
+                self._toolbar_table]
 
     def _getAttachString(self, fnames):
         """
@@ -159,19 +181,11 @@ class WikiPageView(BaseWikiPageView):
         self.__addCommandsTools()
 
         self.__addFontTools()
-        self._addSeparator()
-
         self.__addAlignTools()
-        self._addSeparator()
-
-        self.__addHTools()
-        self._addSeparator()
-
-        self.__addTableTools()
-        self._addSeparator()
-
         self.__addListTools()
-        self._addSeparator()
+        self.__addHTools()
+        self.__addTableTools()
+
 
         self.__addFormatTools()
         self._addSeparator()
@@ -208,7 +222,7 @@ class WikiPageView(BaseWikiPageView):
         """
         Добавить инструменты, связанные со шрифтами
         """
-        toolbar = self.mainWindow.toolbars[self._getName()]
+        toolbar = self._toolbar_font
         menu = self._fontMenu
         actionController = self._application.actionController
 
@@ -306,7 +320,7 @@ class WikiPageView(BaseWikiPageView):
             fullUpdate=False)
 
     def __addAlignTools(self):
-        toolbar = self.mainWindow.toolbars[self._getName()]
+        toolbar = self._toolbar_align
         menu = self._alignMenu
         actionController = self._application.actionController
 
@@ -358,7 +372,7 @@ class WikiPageView(BaseWikiPageView):
         """
         Добавить инструменты для заголовочных тегов <H>
         """
-        toolbar = self.mainWindow.toolbars[self._getName()]
+        toolbar = self._toolbar_heading
         menu = self._headingMenu
         actionController = self._application.actionController
 
@@ -426,7 +440,7 @@ class WikiPageView(BaseWikiPageView):
         """
         Добавить инструменты, связанные со списками
         """
-        toolbar = self.mainWindow.toolbars[self._getName()]
+        toolbar = self._toolbar_align
         menu = self._listMenu
         actionController = self._application.actionController
 
@@ -460,7 +474,7 @@ class WikiPageView(BaseWikiPageView):
 
     def __addFormatTools(self):
         menu = self._formatMenu
-        toolbar = self.mainWindow.toolbars[self._getName()]
+        toolbar = self._toolbar_general
         actionController = self._application.actionController
 
         # Текст, который не нужно разбирать википарсером
@@ -508,7 +522,7 @@ class WikiPageView(BaseWikiPageView):
         """
         Добавить остальные инструменты
         """
-        toolbar = self.mainWindow.toolbars[self._getName()]
+        toolbar = self._toolbar_general
         menu = self.toolsMenu
         actionController = self._application.actionController
 
@@ -587,7 +601,7 @@ class WikiPageView(BaseWikiPageView):
         """
         Добавить инструменты, связанные с таблицами
         """
-        toolbar = self.mainWindow.toolbars[self._getName()]
+        toolbar = self._toolbar_table
         menu = self._tableMenu
         actionController = self._application.actionController
 
@@ -634,7 +648,7 @@ class WikiPageView(BaseWikiPageView):
             fullUpdate=False)
 
     def _addSeparator(self):
-        toolbar = self.mainWindow.toolbars[self._getName()]
+        toolbar = self._toolbar_general
         toolbar.AddSeparator()
 
     def _decreaseNestingListItems(self):

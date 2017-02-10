@@ -30,7 +30,7 @@ class HtmlPageView(BaseHtmlPanel):
 
         self.__HTML_MENU_INDEX = 7
 
-        self._htmlPanelName = "html_general"
+        self._htmlPanelName = "html_general_toolbar"
         if self.mainWindow is not None:
             self._toolbar_general = SimpleToolBar(self.mainWindow,
                                                   self.mainWindow.auiManager,

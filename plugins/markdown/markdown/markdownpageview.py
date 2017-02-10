@@ -5,13 +5,14 @@ import re
 
 import wx
 
+from outwiker.actions.polyactionsid import *
 from outwiker.core.attachment import Attachment
 from outwiker.core.system import getImagesDir
 from outwiker.core.commands import insertCurrentDate
+from outwiker.gui.toolbars.simpletoolbar import SimpleToolBar
 from outwiker.pages.wiki.basewikipageview import BaseWikiPageView
 from outwiker.pages.wiki.htmlcache import HtmlCache
 from outwiker.pages.wiki.wikieditor import WikiEditor
-from outwiker.actions.polyactionsid import *
 
 from .toolbar import MarkdownToolBar
 from .links.linkdialog import LinkDialog
@@ -32,17 +33,19 @@ class MarkdownPageView(BaseWikiPageView):
     def getTextEditor(self):
         return WikiEditor
 
-    def _getName(self):
-        return u"markdown"
-
     def _getPageTitle(self):
         return _(u"Markdown")
 
     def _getMenuTitle(self):
         return _(u"Markdown")
 
-    def _createToolbar(self, mainWindow):
-        return MarkdownToolBar(mainWindow, mainWindow.auiManager)
+    def _createToolbars(self, mainWindow):
+        self._toolbar_general = SimpleToolBar(
+                mainWindow,
+                mainWindow.auiManager,
+                u'markdown_general_toolbar',
+                _(u"Markdown"))
+        return [self._toolbar_general]
 
     def _getPolyActions(self):
         return [
@@ -102,7 +105,7 @@ class MarkdownPageView(BaseWikiPageView):
         self._fontMenu = wx.Menu()
         self.toolsMenu.AppendSubMenu(self._fontMenu, _(u"Font"))
 
-        toolbar = self.mainWindow.toolbars[self._getName()]
+        toolbar = self._toolbar_general
         menu = self._fontMenu
         actionController = self._application.actionController
 
@@ -147,7 +150,7 @@ class MarkdownPageView(BaseWikiPageView):
         self._headingMenu = wx.Menu()
         self.toolsMenu.AppendSubMenu(self._headingMenu, _(u"Heading"))
 
-        toolbar = self.mainWindow.toolbars[self._getName()]
+        toolbar = self._toolbar_general
         menu = self._headingMenu
         actionController = self._application.actionController
 
@@ -213,7 +216,7 @@ class MarkdownPageView(BaseWikiPageView):
             fullUpdate=False)
 
     def _addOtherTools(self):
-        toolbar = self.mainWindow.toolbars[self._getName()]
+        toolbar = self._toolbar_general
         menu = self.toolsMenu
         actionController = self._application.actionController
 
@@ -268,7 +271,7 @@ class MarkdownPageView(BaseWikiPageView):
         actionController.appendMenuItem(HTML_ESCAPE_STR_ID, menu)
 
     def _addToolbarSeparator(self):
-        toolbar = self.mainWindow.toolbars[self._getName()]
+        toolbar = self._toolbar_general
         toolbar.AddSeparator()
 
     def _setHeading(self, prefix):

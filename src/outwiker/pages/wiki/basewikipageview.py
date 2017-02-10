@@ -35,7 +35,10 @@ class BaseWikiPageView (BaseHtmlPanel):
         # А еще их надо дизаблить при переходе на вкладки просмотра результата или HTML
         self.__wikiNotationActions = self._getSpecificActions ()
 
-        self.mainWindow.toolbars[self._getName()] = self._createToolbar (self.mainWindow)
+        self._toolbars = self._createToolbars (self.mainWindow)
+
+        for toolbar in self._toolbars:
+            self.mainWindow.toolbars[toolbar.name] = toolbar
 
         self.notebook.SetPageText (0, self._getPageTitle())
 
@@ -84,7 +87,7 @@ class BaseWikiPageView (BaseHtmlPanel):
 
 
     @abstractmethod
-    def _createToolbar (self, mainWindow):
+    def _createToolbars(self, mainWindow):
         """
         Метод должен возвращать экземпляр панели инструментов
         """
@@ -106,15 +109,6 @@ class BaseWikiPageView (BaseHtmlPanel):
         """
         pass
 
-
-    @abstractmethod
-    def _getName (self):
-        """
-        Метод должен возвращать имя, которое будет использоваться в названии панели инструментов
-        """
-        pass
-
-
     @abstractmethod
     def _isHtmlCodeShown (self):
         """
@@ -129,9 +123,10 @@ class BaseWikiPageView (BaseHtmlPanel):
         self._removeActionTools()
         self.Unbind (EVT_PAGE_TAB_CHANGED, handler=self.onTabChanged)
 
-        if self._getName() in self.mainWindow.toolbars:
-            self.mainWindow.toolbars.updatePanesInfo()
-            self.mainWindow.toolbars.destroyToolBar (self._getName())
+        for toolbar in self._toolbars:
+            if toolbar.name in self.mainWindow.toolbars:
+                self.mainWindow.toolbars.updatePanesInfo()
+                self.mainWindow.toolbars.destroyToolBar(toolbar.name)
 
         super (BaseWikiPageView, self).Clear()
 
@@ -158,7 +153,7 @@ class BaseWikiPageView (BaseHtmlPanel):
         actionController.removeMenuItem (SwitchCodeResultAction.stringId)
 
         # Удалим кнопки с панелей инструментов
-        if self._getName() in self.mainWindow.toolbars:
+        if self._toolbars:
             map (lambda action: actionController.removeToolbarButton (action.stringId),
                  self.__wikiNotationActions)
 
