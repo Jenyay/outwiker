@@ -6,11 +6,22 @@
 Welcome to OutWiker's documentation!
 ====================================
 
-Contents:
+English documentation
+---------------------
 
 .. toctree::
    :maxdepth: 2
 
+   en/index_en
+
+
+Russian documentation
+---------------------
+
+.. toctree::
+   :maxdepth: 2
+
+   ru/index_ru
 
 
 Indices and tables

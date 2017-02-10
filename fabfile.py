@@ -535,3 +535,9 @@ def apiversion():
                                     outwiker.utilites.__version__[1]))
     print(u'libs: {}.{}'.format(outwiker.libs.__version__[0],
                                 outwiker.libs.__version__[1]))
+
+
+@task
+def doc():
+    with lcd('doc'):
+        local('make html')
