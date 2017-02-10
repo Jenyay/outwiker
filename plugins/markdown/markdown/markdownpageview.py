@@ -98,6 +98,7 @@ class MarkdownPageView(BaseWikiPageView):
         self._addFontTools()
         self._addToolbarSeparator()
         self._addHeadingTools()
+        self._addToolbarSeparator()
         self._addOtherTools()
 
     def _addFontTools(self):
