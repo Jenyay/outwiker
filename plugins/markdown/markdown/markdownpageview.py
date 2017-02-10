@@ -14,7 +14,6 @@ from outwiker.pages.wiki.basewikipageview import BaseWikiPageView
 from outwiker.pages.wiki.htmlcache import HtmlCache
 from outwiker.pages.wiki.wikieditor import WikiEditor
 
-from .toolbar import MarkdownToolBar
 from .links.linkdialog import LinkDialog
 from .links.linkdialogcontroller import LinkDialogController
 
