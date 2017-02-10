@@ -38,9 +38,8 @@ class BaseWikiPageView (BaseHtmlPanel):
         self.__wikiNotationActions = self._getSpecificActions()
 
         self._toolbars = self._createToolbars(self.mainWindow)
-
-        for toolbar in self._toolbars:
-            self.mainWindow.toolbars[toolbar.name] = toolbar
+        map(lambda toolbar: self.mainWindow.toolbars.addToolbar(toolbar),
+            self._toolbars)
 
         self.notebook.SetPageText(0, self._getPageTitle())
 

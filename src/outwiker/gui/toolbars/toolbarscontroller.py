@@ -49,6 +49,12 @@ class ToolBarsController(object):
         toolbar.UpdateToolBar()
         self.layout()
 
+    def addToolbar(self, toolbar):
+        '''
+        Added in outwiker.gui 1.4
+        '''
+        self[toolbar.name] = toolbar
+
     def _addMenu(self, toolbar):
         newitem = self._toolbarsMenu.AppendCheckItem(wx.ID_ANY,
                                                      toolbar.caption)

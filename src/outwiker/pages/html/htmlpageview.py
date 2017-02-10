@@ -29,8 +29,8 @@ class HtmlPageView(BaseHtmlPanel):
         self._menuName = _(u"HTML")
 
         self._toolbars = self._createToolbars()
-        for toolbar in self._toolbars:
-            self.mainWindow.toolbars[toolbar.name] = toolbar
+        map(lambda toolbar: self.mainWindow.toolbars.addToolbar(toolbar),
+            self._toolbars)
 
         # Список используемых полиморфных действий
         self.__polyActions = [
