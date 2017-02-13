@@ -48,7 +48,8 @@ class CurrentPagePanel(wx.Panel):
         self.Bind (wx.EVT_CLOSE, self.__onClose)
 
     def SetFocus(self):
-        self.__pageView.SetFocus()
+        if self.__pageView is not None:
+            self.__pageView.SetFocus()
 
     @property
     def pageView (self):

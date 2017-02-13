@@ -21,7 +21,9 @@ class SwitchToMainPanelAction(BaseAction):
         return _(u"Set focus to main panel")
 
     def run(self, params):
-        self._application.mainWindow.pagePanel.setFocus()
+        panel = self._application.mainWindow.pagePanel
+        if panel.isShown():
+            panel.setFocus()
 
 
 class SwitchToTreeAction(BaseAction):
@@ -42,7 +44,9 @@ class SwitchToTreeAction(BaseAction):
         return _(u"Set focus to notes tree")
 
     def run(self, params):
-        self._application.mainWindow.treePanel.setFocus()
+        panel = self._application.mainWindow.treePanel
+        if panel.isShown():
+            panel.setFocus()
 
 
 class SwitchToAttachmentsAction(BaseAction):
@@ -63,7 +67,9 @@ class SwitchToAttachmentsAction(BaseAction):
         return _(u"Set focus to attachments panel")
 
     def run(self, params):
-        self._application.mainWindow.attachPanel.setFocus()
+        panel = self._application.mainWindow.attachPanel
+        if panel.isShown():
+            panel.setFocus()
 
 
 class SwitchToTagsCloudAction(BaseAction):
@@ -84,4 +90,6 @@ class SwitchToTagsCloudAction(BaseAction):
         return _(u"Set focus to tags cloud panel")
 
     def run(self, params):
-        self._application.mainWindow.tagsCloudPanel.setFocus()
+        panel = self._application.mainWindow.tagsCloudPanel
+        if panel.isShown():
+            panel.setFocus()
