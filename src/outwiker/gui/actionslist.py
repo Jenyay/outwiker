@@ -69,6 +69,11 @@ actionsList = [
     (actions.about.AboutAction, HotKey("F1", ctrl=True)),
     (actions.applystyle.SetStyleToBranchAction, None),
     (actions.openpluginsfolder.OpenPluginsFolderAction, None),
+
+    (actions.switchto.SwitchToMainPanelAction, None),
+    (actions.switchto.SwitchToTreeAction, None),
+    (actions.switchto.SwitchToAttachmentsAction, None),
+    (actions.switchto.SwitchToTagsCloudAction, None),
 ]
 
 

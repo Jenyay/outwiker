@@ -325,3 +325,11 @@ class AttachPanel(wx.Panel):
         dragSource = wx.DropSource(self)
         dragSource.SetData(data)
         dragSource.DoDragDrop()
+
+    def SetFocus(self):
+        self.__attachList.SetFocus()
+
+        if (self.__attachList.GetItemCount() != 0 and
+                self.__attachList.GetFocusedItem() == -1):
+            self.__attachList.Focus(0)
+            self.__attachList.Select(0)

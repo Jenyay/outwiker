@@ -50,6 +50,7 @@ from outwiker.actions.globalsearch import GlobalSearchAction
 from outwiker.actions.attachfiles import AttachFilesAction
 import outwiker.actions.clipboard as clipboard
 import outwiker.actions.tags as tags
+import outwiker.actions.switchto as switchto
 from outwiker.actions.reloadwiki import ReloadWikiAction
 from outwiker.actions.openhelp import OpenHelpAction
 from outwiker.actions.about import AboutAction
@@ -161,6 +162,26 @@ class MainWindow(wx.Frame):
 
         if self.mainWindowConfig.fullscreen.value:
             Application.actionController.check(FullScreenAction.stringId, True)
+
+    def __createSwitchToMenu(self):
+        actionController = Application.actionController
+        menu = Application.mainWindow.mainMenu.switchToMenu
+
+        actionController.appendMenuItem(
+            switchto.SwitchToMainPanelAction.stringId,
+            menu)
+
+        actionController.appendMenuItem(
+            switchto.SwitchToTreeAction.stringId,
+            menu)
+
+        actionController.appendMenuItem(
+            switchto.SwitchToAttachmentsAction.stringId,
+            menu)
+
+        actionController.appendMenuItem(
+            switchto.SwitchToTagsCloudAction.stringId,
+            menu)
 
     def __createFileMenu(self):
         """
@@ -377,6 +398,7 @@ class MainWindow(wx.Frame):
         self.__createTreeMenu()
         self.__createToolsMenu()
         self.__createHelpMenu()
+        self.__createSwitchToMenu()
         self.__panesController.createViewMenuItems()
 
         actionController = Application.actionController

@@ -28,7 +28,6 @@ class CurrentPagePanel(wx.Panel):
         wx.Panel.__init__(self, *args, **kwds)
 
         self.tabsCtrl = TabsCtrl (self)
-        # self.tabsCtrl.SetMinSize ((1, 1))
         self.bookmarkButton = wx.BitmapButton(self,
                                               -1,
                                               wx.Bitmap(os.path.join (self.imagesDir, "star_gray.png"),
@@ -48,6 +47,8 @@ class CurrentPagePanel(wx.Panel):
 
         self.Bind (wx.EVT_CLOSE, self.__onClose)
 
+    def SetFocus(self):
+        self.__pageView.SetFocus()
 
     @property
     def pageView (self):

@@ -593,3 +593,6 @@ class BaseTextPanel(BasePagePanel):
         word_end = editor.WordEndPosition(pos)
         editor.SetSelection(word_start, word_end)
         editor.replaceText(u'')
+
+    def SetFocus(self):
+        self.GetEditor().SetFocus()

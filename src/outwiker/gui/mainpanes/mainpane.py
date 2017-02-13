@@ -5,13 +5,13 @@ from abc import ABCMeta, abstractmethod, abstractproperty
 import wx.aui
 
 
-class MainPane (object):
+class MainPane(object):
     """
     Базовый класс для хранения основных панелей главного окна
     """
     __metaclass__ = ABCMeta
 
-    def __init__ (self, parent, auiManager, application):
+    def __init__(self, parent, auiManager, application):
         """
         parent - родитель панели
         application - экземпляр outwiker.core.application.ApplicationParams
@@ -25,100 +25,87 @@ class MainPane (object):
         pane = self._createPane()
         self._auiManager.AddPane(self._panel, pane)
 
-
-    def _savePaneInfo (self, param, paneInfo):
+    def _savePaneInfo(self, param, paneInfo):
         """
-        Сохранить в конфиг информацию о dockable-панели (AuiPaneInfo)
+        Сохранить в конфиг информацию о dockable-панели(AuiPaneInfo)
         """
-        string_info = self._auiManager.SavePaneInfo (paneInfo)
+        string_info = self._auiManager.SavePaneInfo(paneInfo)
         param.value = string_info
 
-
-    def _loadPaneInfo (self, param):
+    def _loadPaneInfo(self, param):
         """
-        Загрузить из конфига и вернуть информацию о dockable-панели (AuiPaneInfo)
+        Загрузить из конфига и вернуть информацию о
+        dockable-панели (AuiPaneInfo)
         """
         string_info = param.value
 
-        if len (string_info) == 0:
+        if len(string_info) == 0:
             return
 
         pane = wx.aui.AuiPaneInfo()
         try:
-            self._auiManager.LoadPaneInfo (string_info, pane)
+            self._auiManager.LoadPaneInfo(string_info, pane)
         except Exception:
             return
 
         return pane
 
+    def loadPaneSize(self):
+        self.pane.BestSize((self.config.width.value,
+                            self.config.height.value))
 
-    def loadPaneSize (self):
-        self.pane.BestSize ((self.config.width.value,
-                             self.config.height.value))
-
-
-    def show (self):
+    def show(self):
         self.pane.Show()
 
-
-    def hide (self):
+    def hide(self):
         self.pane.Hide()
 
-
-    def isShown (self):
+    def isShown(self):
         return self.pane.IsShown()
 
-
-    def close (self):
+    def close(self):
         self.panel.Close()
         self._parent = None
         self._panel = None
 
-
-    def saveParams (self):
-        self._savePaneInfo (self.config.pane,
-                            self._auiManager.GetPane (self.panel))
+    def saveParams(self):
+        self._savePaneInfo(self.config.pane,
+                           self._auiManager.GetPane(self.panel))
 
         self.config.width.value = self.panel.GetSizeTuple()[0]
         self.config.height.value = self.panel.GetSizeTuple()[1]
 
+    def setFocus(self):
+        self.panel.SetFocus()
 
     @abstractproperty
-    def caption (self):
+    def caption(self):
         pass
-
 
     @abstractmethod
     def _createPanel(self):
         pass
 
-
     @abstractmethod
-    def _createConfig (self):
+    def _createConfig(self):
         pass
 
-
-
     @property
-    def panel (self):
+    def panel(self):
         return self._panel
 
-
     @property
-    def config (self):
+    def config(self):
         return self._config
 
-
     @property
-    def parent (self):
+    def parent(self):
         return self._parent
 
-
     @property
-    def application (self):
+    def application(self):
         return self._application
 
-
     @property
-    def pane (self):
-        return self._auiManager.GetPane (self.panel)
+    def pane(self):
+        return self._auiManager.GetPane(self.panel)
