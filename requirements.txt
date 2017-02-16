@@ -1,5 +1,5 @@
 fabric
-comtypes
+comtypes==1.1.3
 Pillow==4.0.0
-pyenchant
+pyenchant==1.6.8
 cx_Freeze==4.3.3
