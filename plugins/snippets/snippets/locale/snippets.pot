@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-30 17:44+0300\n"
+"POT-Creation-Date: 2017-02-18 17:32+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -129,6 +129,14 @@ msgstr ""
 
 #: gui/variablesdialog.py:130
 msgid "{} | Snippet variables"
+msgstr ""
+
+#: gui/variablesdialog.py:353 gui/variablesdialog.py:413
+msgid "Expand (Shift+Enter)"
+msgstr ""
+
+#: gui/variablesdialog.py:392
+msgid "Collapse"
 msgstr ""
 
 #: gui/editdialog.py:60

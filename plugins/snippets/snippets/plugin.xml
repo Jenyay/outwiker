@@ -29,6 +29,7 @@
 			<version number="1.1">
                 <download os="all">http://jenyay.net/uploads/Outwiker/Snippets/snippets-1.1.zip</download>
 				<change>Added the Ukrainian localization.</change>
+				<change>Small GUI improvement.</change>
 			</version>
 
 			<version number="1.0" date="February 06, 2017">
@@ -52,6 +53,7 @@
 			<version number="1.1">
                 <download os="all">http://jenyay.net/uploads/Outwiker/Snippets/snippets-1.1.zip</download>
 				<change>Добавлена украинская локализация.</change>
+				<change>Небольшие улучшения в интерфейсе.</change>
 			</version>
 
 			<version number="1.0" date="06.02.2017">

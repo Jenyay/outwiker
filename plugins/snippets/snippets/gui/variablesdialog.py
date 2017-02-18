@@ -344,13 +344,13 @@ class StringVariableCtrl(wx.Panel):
         self._textCtrlExpanded.Hide()
 
         # Collapsed TextCtrl
-        self._textCtrlCollapsed = wx.TextCtrl(self, style=wx.TE_PROCESS_ENTER)
+        self._textCtrlCollapsed = wx.TextCtrl(self)
         self._textCtrlCollapsed.Bind(wx.EVT_TEXT, handler=self._onTextEdit)
-        self._textCtrlCollapsed.Bind(wx.EVT_TEXT_ENTER,
-                                     handler=self._onPressEnter)
+        self._textCtrlCollapsed.Bind(wx.EVT_CHAR_HOOK, handler=self._onChar)
 
         # Expand / Collapse button
         self._expandButton = wx.BitmapButton(self, bitmap=self._expandBitmap)
+        self._expandButton.SetToolTipString(_(u'Expand (Shift+Enter)'))
         self._expandButton.Bind(wx.EVT_BUTTON, handler=self._onExpand)
 
         self._mainSizer = wx.FlexGridSizer(cols=2)
@@ -377,16 +377,19 @@ class StringVariableCtrl(wx.Panel):
         self._textCtrlCollapsed.SetValue(value)
         self._textCtrlExpanded.SetValue(value)
 
-    def _onPressEnter(self, event):
-        if wx.GetKeyState(wx.WXK_SHIFT):
+    def _onChar(self, event):
+        if event.GetKeyCode() == wx.WXK_RETURN and event.ShiftDown():
             self._onExpand(None)
             self._textCtrlExpanded.Value = self._textCtrlExpanded.Value + u'\n'
             self._textCtrlExpanded.SetInsertionPointEnd()
+        else:
+            event.Skip()
 
     def _onExpand(self, event):
         self._expandButton.Unbind(wx.EVT_BUTTON, handler=self._onExpand)
         self._expandButton.Bind(wx.EVT_BUTTON, handler=self._onCollapse)
         self._expandButton.SetBitmapLabel(self._collapseBitmap)
+        self._expandButton.SetToolTipString(_(u'Collapse'))
 
         self._textCtrlCollapsed.Hide()
         self._textCtrlExpanded.Show()
@@ -407,6 +410,7 @@ class StringVariableCtrl(wx.Panel):
         self._expandButton.Bind(wx.EVT_BUTTON, handler=self._onExpand)
         self._expandButton.Unbind(wx.EVT_BUTTON, handler=self._onCollapse)
         self._expandButton.SetBitmapLabel(self._expandBitmap)
+        self._expandButton.SetToolTipString(_(u'Expand (Shift+Enter)'))
 
         self._textCtrlExpanded.Hide()
         self._textCtrlCollapsed.Show()
