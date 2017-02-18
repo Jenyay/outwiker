@@ -25,6 +25,11 @@
 			<site>http://jenyay.net</site>
 		</author>
 		<changelog>
+			<version number="1.2.1">
+                <download os="all">http://jenyay.net/uploads/Outwiker/WebPage/webpage-1.2.1.zip</download>
+				<change>Updated the Ukrainian localization.</change>
+			</version>
+
 			<version number="1.2" date="October 17, 2016">
                 <download os="all">http://jenyay.net/uploads/Outwiker/WebPage/webpage-1.2.zip</download>
 				<change>Added OutWiker 2.0 supporting.</change>
@@ -65,6 +70,11 @@
 			<site>http://jenyay.net</site>
 		</author>
 		<changelog>
+			<version number="1.2.1">
+                <download os="all">http://jenyay.net/uploads/Outwiker/WebPage/webpage-1.2.1.zip</download>
+				<change>Обновлена украинская локализация.</change>
+			</version>
+
 			<version number="1.2" date="17.10.2016">
                 <download os="all">http://jenyay.net/uploads/Outwiker/WebPage/webpage-1.2.zip</download>
 				<change>Добавлена поддержка OutWiker 2.0.</change>

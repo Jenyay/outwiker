@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-18 19:22+0300\n"
-"PO-Revision-Date: 2016-10-07 09:32+0300\n"
+"POT-Creation-Date: 2016-11-12 22:29+0300\n"
+"PO-Revision-Date: 2017-02-18 16:53+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
@@ -11,20 +11,32 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 1.8.9\n"
 "X-Crowdin-Project: outwiker\n"
 "X-Crowdin-Language: uk\n"
 "X-Crowdin-File: markdown.pot\n"
 
-#: controller.py:75
+#: images/imagedialog.py:13
+msgid "Image"
+msgstr "Зображення"
+
+#: images/imagedialog.py:45
+msgid "File name or link"
+msgstr "Ім'я файлу або посилання"
+
+#: images/imagedialog.py:51 links/linkdialog.py:46
+msgid "Comment"
+msgstr "Коментар"
+
+#: controller.py:86
 msgid "Appearance"
 msgstr "Зовнішній вигляд"
 
-#: markdown.py:42
+#: markdown.py:45
 msgid "The Markdown plug-in add a new page type with Markdown notation"
 msgstr "Додаток Markdown додає новий тип сторінок у форматі Markdown"
 
-#: markdown.py:47
+#: markdown.py:50
 msgid "http://jenyay.net/Outwiker/MarkdownEn"
 msgstr "http://jenyay.net/Outwiker/Markdown"
 
@@ -32,11 +44,11 @@ msgstr "http://jenyay.net/Outwiker/Markdown"
 msgid "Markdown"
 msgstr "Markdown"
 
-#: markdownpageview.py:102
+#: markdownpageview.py:103
 msgid "Font"
 msgstr "Шрифт"
 
-#: markdownpageview.py:147
+#: markdownpageview.py:148
 msgid "Heading"
 msgstr "Заголовки"
 
@@ -44,14 +56,10 @@ msgstr "Заголовки"
 msgid "Link"
 msgstr "Посилання"
 
-#: links/linkdialog.py:46
-msgid "Comment"
-msgstr "Коментар"
-
 #: links/linkdialog.py:58
 msgid "Title"
 msgstr "Заголовок"
 
-#: markdownpage.py:30
+#: markdownpage.py:41
 msgid "Markdown Page"
 msgstr "Markdown сторінка"

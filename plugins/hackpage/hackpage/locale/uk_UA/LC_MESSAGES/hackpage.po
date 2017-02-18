@@ -1,0 +1,89 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: outwiker\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-01-23 20:36+0300\n"
+"PO-Revision-Date: 2017-02-18 16:48+0300\n"
+"Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
+"Language-Team: Ukrainian\n"
+"Language: uk_UA\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 1.8.9\n"
+"X-Crowdin-Project: outwiker\n"
+"X-Crowdin-Language: uk\n"
+"X-Crowdin-File: hackpage.pot\n"
+
+#: guicontroller.py:87
+msgid "Change page identifier..."
+msgstr "Змінити ідентифікатор сторінки..."
+
+#: guicontroller.py:89 actions/setalias.py:24
+msgid "Set page alias..."
+msgstr "Встановити псевдонім сторінки..."
+
+#: guicontroller.py:91 actions/changepagefolder.py:24
+msgid "Change page folder..."
+msgstr "Змінити папку сторінки..."
+
+#: actions/setalias.py:28
+msgid "HackPage plugin. Set page alias"
+msgstr "Додаток HackPage. Встановити псевдонім сторінки"
+
+#: actions/changepagefolder.py:28
+msgid "HackPage plugin. Change the current page folder"
+msgstr "Додаток HackPage. Змінити папку поточної сторінки"
+
+#: actions/changeuid.py:24
+msgid "Change Page Identifier..."
+msgstr "Змінити ідентифікатор сторінки..."
+
+#: actions/changeuid.py:28
+msgid "HackPage plugin. Change Page Identifier"
+msgstr "Додаток HackPage. Змінити ідентифікатор сторінки"
+
+#: utils.py:27
+msgid "Change page identifier"
+msgstr "Змінити ідентифікатор сторінки"
+
+#: utils.py:28
+msgid "Enter new identifier for page \"{}\""
+msgstr "Введіть новий ідентифікатор для сторінки \"{}\""
+
+#: utils.py:60
+msgid "Set page alias"
+msgstr "Встановити псевдонім сторінки"
+
+#: utils.py:61
+msgid "Enter alias for page"
+msgstr "Введіть псевдонім для сторінки"
+
+#: utils.py:90
+msgid "Set page folder"
+msgstr "Встановити папку сторінки"
+
+#: utils.py:91
+msgid "Enter the page folder name"
+msgstr "Введіть им’я папки сторінки"
+
+#: plugin.py:39
+msgid "The HackPage plugin allow to edit hidden page properties"
+msgstr "Додаток HackPage дозволяє редагувати приховані властивості сторінки"
+
+#: plugin.py:47
+msgid "http://jenyay.net/Outwiker/HackPageEn"
+msgstr "http://jenyay.net/Outwiker/HackPage"
+
+#: validators.py:31
+msgid "Same identifier exist already"
+msgstr "Такий ідентифікатор вже існує"
+
+#: validators.py:32 validators.py:42
+msgid "Error"
+msgstr "Помилка"
+
+#: validators.py:41
+msgid "Identifier contain invalid character"
+msgstr "Ідентифікатор містить неприпустимі символи"

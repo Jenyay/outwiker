@@ -28,6 +28,7 @@
 		<changelog>
 			<version number="1.2">
                 <download os="all">http://jenyay.net/Outwiker/Markdown/markdown-1.2.zip</download>
+				<change>Updated the Ukrainian localization.</change>
 				<change>Added compatibility with OutWiker 2.0.0.810.</change>
 			</version>
 
@@ -56,6 +57,7 @@
 		<changelog>
 			<version number="1.2">
                 <download os="all">http://jenyay.net/Outwiker/Markdown/markdown-1.2.zip</download>
+				<change>Обновлена украинская локализация.</change>
 				<change>Добавлена совместимость с OutWiker 2.0.0.810.</change>
 			</version>
 

@@ -1,0 +1,315 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: outwiker\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-12-30 17:44+0300\n"
+"PO-Revision-Date: 2017-02-18 16:46+0300\n"
+"Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
+"Language-Team: Ukrainian\n"
+"Language: uk_UA\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 1.8.9\n"
+"X-Crowdin-Project: outwiker\n"
+"X-Crowdin-Language: uk\n"
+"X-Crowdin-File: snippets.pot\n"
+
+#: guicontroller.py:52 gui/editdialog.py:384
+msgid "Snippets"
+msgstr "Фрагменти"
+
+#: guicontroller.py:156 gui/editdialog.py:585
+msgid ""
+"Can't read the snippet\n"
+"{}"
+msgstr ""
+"Не вдалося прочитати фрагмент\n"
+"{}"
+
+#: guicontroller.py:157 gui/editdialog.py:449 gui/editdialog.py:469
+#: gui/editdialog.py:497 gui/editdialog.py:547 gui/editdialog.py:586
+#: gui/editdialog.py:632 gui/editdialog.py:647 gui/editdialog.py:714
+msgid "Error"
+msgstr "Помилка"
+
+#: guicontroller.py:168
+msgid "Snippet error"
+msgstr "Помилка у фрагменті"
+
+#: actions/editsnippets.py:24
+msgid "Snippets management..."
+msgstr "Управління фрагментами..."
+
+#: actions/editsnippets.py:28
+msgid "Snippets. Open dialog to edit, create or remove snippets."
+msgstr "Фрагменти. Відкрити діалог для редагування, створення або видалення фрагментів."
+
+#: actions/openhelp.py:22 gui/editdialog.py:161
+msgid "Open help..."
+msgstr "Відкрити довідку..."
+
+#: actions/openhelp.py:26
+msgid "Snippets. Open plugin help."
+msgstr "Фрагменти. Відкриті довідку по додатку."
+
+#: actions/runrecentsnippet.py:30
+msgid "Run recent used snippet..."
+msgstr "Останній використаний фрагмент..."
+
+#: actions/runrecentsnippet.py:34
+msgid "Snippets. Run recent used snippet."
+msgstr "Фрагменти. Виконати останній використаний фрагмент."
+
+#: utils.py:24
+msgid "help/en"
+msgstr "help/ua"
+
+#: defines.py:20
+msgid "snippets"
+msgstr "фрагменти"
+
+#: defines.py:21
+msgid "snippet"
+msgstr "фрагмент"
+
+#: wikicommand.py:67 wikicommand.py:80
+msgid "Snippet error: \n"
+msgstr "Помилка у фрагменті:\n"
+
+#: wikicommand.py:81
+msgid "Can't read file '{}'"
+msgstr "Помилка читання файлу '{}'"
+
+#: snippetparser.py:30
+#, python-brace-format
+msgid "Snippet \"{name}\" not found"
+msgstr "Фрагмент \"{name}\" не знайдено"
+
+#: snippetparser.py:35
+#, python-brace-format
+msgid ""
+"Snippet error at line {line}:\n"
+"{text}"
+msgstr ""
+"Помилка фрагменту в рядку {line}:\n"
+"{text}"
+
+#: snippetparser.py:41
+#, python-brace-format
+msgid ""
+"Snippet reading error:\n"
+"{text}"
+msgstr ""
+"Помилка читання фрагменту:\n"
+"{text}"
+
+#: snippetparser.py:46
+#, python-brace-format
+msgid ""
+"Snippet processing error:\n"
+"{text}"
+msgstr ""
+"Помилка обробки фрагменту:\n"
+"{text}"
+
+#: plugin.py:44
+msgid "Plugin to store text snippets"
+msgstr "Додаток для зберігання текстових фрагментів"
+
+#: plugin.py:48
+msgid "http://jenyay.net/Outwiker/SnippetsEn"
+msgstr "http://jenyay.net/Outwiker/Snippets"
+
+#: gui/variablesdialog.py:51
+msgid "Preview"
+msgstr "Перегляд"
+
+#: gui/variablesdialog.py:55
+msgid "Snippet"
+msgstr "Фрагмент"
+
+#: gui/variablesdialog.py:63
+msgid "Insert as wiki command"
+msgstr "Вставити як вікі-команду"
+
+#: gui/variablesdialog.py:130
+msgid "{} | Snippet variables"
+msgstr "{} | Змінні фрагменту"
+
+#: gui/editdialog.py:60
+msgid "Selected text"
+msgstr "Виділений текст"
+
+#: gui/editdialog.py:61
+msgid "Current date"
+msgstr "Поточна дата"
+
+#: gui/editdialog.py:62
+msgid "Page title"
+msgstr "Заголовок сторінки"
+
+#: gui/editdialog.py:63
+msgid "Page type"
+msgstr "Тип сторінки"
+
+#: gui/editdialog.py:64
+msgid "Page tags list"
+msgstr "Список міток сторінки"
+
+#: gui/editdialog.py:65
+msgid "Attachments path"
+msgstr "Шлях до прикріплених файлів"
+
+#: gui/editdialog.py:66
+msgid "Path to page"
+msgstr "Шлях до сторінки"
+
+#: gui/editdialog.py:67
+msgid "Relative page path"
+msgstr "Відносний шлях до сторінки"
+
+#: gui/editdialog.py:68
+msgid "Page creation date"
+msgstr "Дата створення сторінки"
+
+#: gui/editdialog.py:69
+msgid "Page modification date"
+msgstr "Дата зміни сторінки"
+
+#: gui/editdialog.py:70
+msgid "Page Id"
+msgstr "Ідентифікатор сторінки"
+
+#: gui/editdialog.py:71
+msgid "Attachments list"
+msgstr "Список прикріплених файлів"
+
+#: gui/editdialog.py:72
+msgid "Child pages"
+msgstr "Дочірні сторінки"
+
+#: gui/editdialog.py:76
+msgid "{% if %}"
+msgstr "{% if %}"
+
+#: gui/editdialog.py:77
+msgid "{% include %}"
+msgstr "{% include %}"
+
+#: gui/editdialog.py:78
+msgid "{# comment #}"
+msgstr "{# коментар #}"
+
+#: gui/editdialog.py:82
+msgid "Snippets management"
+msgstr "Управління фрагментами"
+
+#: gui/editdialog.py:121
+msgid "Add new snippets group"
+msgstr "Додати нову групу фрагментів"
+
+#: gui/editdialog.py:129
+msgid "Create new snippet"
+msgstr "Створити новий фрагмент"
+
+#: gui/editdialog.py:137
+msgid "Rename"
+msgstr "Перейменувати"
+
+#: gui/editdialog.py:145
+msgid "Remove"
+msgstr "Видалити"
+
+#: gui/editdialog.py:153
+msgid "Run snippet"
+msgstr "Виконати фрагмент"
+
+#: gui/editdialog.py:205
+msgid "Insert variable"
+msgstr "Вставити змінну"
+
+#: gui/editdialog.py:212
+msgid "Other variable..."
+msgstr "Інша змінна..."
+
+#: gui/editdialog.py:221
+msgid "Insert block"
+msgstr "Вставити блок"
+
+#: gui/editdialog.py:261
+msgid "Close"
+msgstr "Закрити"
+
+#: gui/editdialog.py:365
+msgid "No snippet errors"
+msgstr "Фрагмент без помилок"
+
+#: gui/editdialog.py:437
+msgid "Remove directory \"{}\" and all snippets inside?"
+msgstr "Видалити каталог \"{}\" і всі фрагменти всередині?"
+
+#: gui/editdialog.py:438
+msgid "Remove snippets directory"
+msgstr "Видалити каталог з фрагментами"
+
+#: gui/editdialog.py:448
+msgid "Can't remove directory \"{}\""
+msgstr "Неможливо видалити каталог \"{}\""
+
+#: gui/editdialog.py:457
+msgid "Remove snippet \"{}\"?"
+msgstr "Видалити фрагмент \"{}\"?"
+
+#: gui/editdialog.py:458
+msgid "Remove snippet"
+msgstr "Видалити фрагмент"
+
+#: gui/editdialog.py:468
+msgid "Can't remove snippet \"{}\""
+msgstr "Неможливо видалити фрагмент \"{}\""
+
+#: gui/editdialog.py:496
+msgid ""
+"Can't create directory\n"
+"{}"
+msgstr ""
+"Неможливо створити каталог\n"
+"{}"
+
+#: gui/editdialog.py:546
+msgid ""
+"Can't rename the snippet '{}'\n"
+"{}"
+msgstr ""
+"Неможливо перейменувати фрагмент '{}'\n"
+"{}"
+
+#: gui/editdialog.py:631
+msgid ""
+"Can't create snippet\n"
+"{}"
+msgstr ""
+"Неможливо створити фрагмент\n"
+"{}"
+
+#: gui/editdialog.py:646
+msgid ""
+"Can't save snippet\n"
+"{}"
+msgstr ""
+"Неможливо зберегти фрагмент\n"
+"{}"
+
+#: gui/editdialog.py:701
+msgid "Enter variable name (English leters, numbers and _ only)"
+msgstr "Введіть ім'я змінної (тільки англійські літери, цифри і символ _)"
+
+#: gui/editdialog.py:702
+msgid "Variable name"
+msgstr "Ім'я змінної"
+
+#: gui/editdialog.py:713
+msgid "Invalid variable name \"{}\""
+msgstr "Неприпустиме ім'я змінної \"{}\""
