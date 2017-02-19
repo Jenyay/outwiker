@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-30 17:44+0300\n"
-"PO-Revision-Date: 2016-12-31 11:17+0300\n"
+"POT-Creation-Date: 2017-02-18 17:32+0300\n"
+"PO-Revision-Date: 2017-02-19 14:07+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -137,6 +137,14 @@ msgstr "Infoga som wiki-kommando"
 #: gui/variablesdialog.py:130
 msgid "{} | Snippet variables"
 msgstr "{} | Utdragsvariabler"
+
+#: gui/variablesdialog.py:353 gui/variablesdialog.py:413
+msgid "Expand (Shift+Enter)"
+msgstr "Expandera (Shift + Enter)"
+
+#: gui/variablesdialog.py:392
+msgid "Collapse"
+msgstr "Komprimera"
 
 #: gui/editdialog.py:60
 msgid "Selected text"
