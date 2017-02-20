@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-30 17:44+0300\n"
-"PO-Revision-Date: 2017-02-18 16:46+0300\n"
+"POT-Creation-Date: 2017-02-18 17:32+0300\n"
+"PO-Revision-Date: 2017-02-20 20:42+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
@@ -137,6 +137,14 @@ msgstr "Вставити як вікі-команду"
 #: gui/variablesdialog.py:130
 msgid "{} | Snippet variables"
 msgstr "{} | Змінні фрагменту"
+
+#: gui/variablesdialog.py:353 gui/variablesdialog.py:413
+msgid "Expand (Shift+Enter)"
+msgstr "Розгорнути"
+
+#: gui/variablesdialog.py:392
+msgid "Collapse"
+msgstr "Згорнути"
 
 #: gui/editdialog.py:60
 msgid "Selected text"
