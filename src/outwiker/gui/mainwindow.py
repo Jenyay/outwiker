@@ -525,6 +525,13 @@ class MainWindow(wx.Frame):
         """
         Убрать за собой
         """
+        assert self.toolbars is not None
+        assert self.__panesController is not None
+        assert self.pagePanel is not None
+        assert self.treePanel is not None
+        assert self.attachPanel is not None
+        assert self.tagsCloudPanel is not None
+
         self.__saveParams()
         self.toolbars.updatePanesInfo()
         self.destroyPagePanel(True)

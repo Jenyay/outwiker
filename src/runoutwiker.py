@@ -88,6 +88,7 @@ class OutWiker(wx.App):
         return True
 
     def _onEndSession(self, event):
+        self.Unbind(wx.EVT_QUERY_END_SESSION, handler=self._onEndSession)
         self.mainWnd.Destroy()
 
     def getLogFileName(self, configPath):
