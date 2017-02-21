@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-13 19:46+0300\n"
-"PO-Revision-Date: 2017-02-14 08:00+0300\n"
+"POT-Creation-Date: 2017-02-20 22:32+0300\n"
+"PO-Revision-Date: 2017-02-21 20:49+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -411,7 +411,7 @@ msgid "Align"
 msgstr "Justera"
 
 #: outwiker/pages/html/htmlpageview.py:112
-#: outwiker/pages/wiki/wikipageview.py:78 outwiker/gui/actionslist.py:111
+#: outwiker/pages/wiki/wikipageview.py:78 outwiker/gui/actionslist.py:117
 msgid "Table"
 msgstr "Tabell"
 
@@ -1272,7 +1272,7 @@ msgid "Interface"
 msgstr "Gränssnitt"
 
 #: outwiker/gui/preferences/prefcontroller.py:80
-#: outwiker/gui/actionslist.py:115
+#: outwiker/gui/actionslist.py:122
 msgid "Spell checking"
 msgstr "Stavningskontroll"
 
@@ -1480,7 +1480,7 @@ msgid "Auto"
 msgstr "Auto"
 
 #: outwiker/gui/preferences/wikieditorpanel.py:37
-#: outwiker/gui/actionslist.py:102 outwiker/gui/dialogs/linkdialog.py:20
+#: outwiker/gui/actionslist.py:105 outwiker/gui/dialogs/linkdialog.py:20
 #: outwiker/gui/dialogs/linkdialog.py:34
 msgid "Link"
 msgstr "Länk"
@@ -1785,295 +1785,299 @@ msgstr "Infoga kod"
 msgid "Insert code(monospaced font)"
 msgstr "Infoga kod (fast teckenbredd)"
 
-#: outwiker/gui/actionslist.py:90
+#: outwiker/gui/actionslist.py:91
 msgid "Align text left"
 msgstr "Justera vänster"
 
-#: outwiker/gui/actionslist.py:91
+#: outwiker/gui/actionslist.py:92
+msgid "Align text center"
+msgstr "Centrera text"
+
+#: outwiker/gui/actionslist.py:92
 msgid "Center"
 msgstr "Centrera"
 
-#: outwiker/gui/actionslist.py:92
+#: outwiker/gui/actionslist.py:93
 msgid "Align text right"
 msgstr "Justera höger"
 
-#: outwiker/gui/actionslist.py:93
+#: outwiker/gui/actionslist.py:94
 msgid "Justify"
 msgstr "Justera"
 
-#: outwiker/gui/actionslist.py:94
+#: outwiker/gui/actionslist.py:96
 msgid "First-level heading"
 msgstr "Primär nivårubrik"
 
-#: outwiker/gui/actionslist.py:95
+#: outwiker/gui/actionslist.py:97
 msgid "Second-level heading"
 msgstr "Sekundär nivårubrik"
 
-#: outwiker/gui/actionslist.py:96
+#: outwiker/gui/actionslist.py:98
 msgid "Subtitle three"
 msgstr "Underrubrik tre"
 
-#: outwiker/gui/actionslist.py:97
+#: outwiker/gui/actionslist.py:99
 msgid "Subtitle four"
 msgstr "Underrubrik fyra"
 
-#: outwiker/gui/actionslist.py:98
+#: outwiker/gui/actionslist.py:100
 msgid "Subtitle five"
 msgstr "Underrubrik fem"
 
-#: outwiker/gui/actionslist.py:99
+#: outwiker/gui/actionslist.py:101
 msgid "Subtitle six"
 msgstr "Underrubrik sex"
 
-#: outwiker/gui/actionslist.py:100
+#: outwiker/gui/actionslist.py:103
 msgid "Anchor"
 msgstr "Ankare"
 
-#: outwiker/gui/actionslist.py:101
+#: outwiker/gui/actionslist.py:104
 msgid "Horizontal rule"
 msgstr "Horisontell linjal"
 
-#: outwiker/gui/actionslist.py:102
+#: outwiker/gui/actionslist.py:105
 msgid "Insert Link"
 msgstr "Infoga länk"
 
-#: outwiker/gui/actionslist.py:103
+#: outwiker/gui/actionslist.py:106
 msgid "Quote"
 msgstr "Citat"
 
-#: outwiker/gui/actionslist.py:103
+#: outwiker/gui/actionslist.py:106
 msgid "Insert a quote block"
 msgstr "Infoga citatblock"
 
-#: outwiker/gui/actionslist.py:104
+#: outwiker/gui/actionslist.py:107
 msgid "Image"
 msgstr "Bild"
 
-#: outwiker/gui/actionslist.py:104
+#: outwiker/gui/actionslist.py:107
 msgid "Insert image"
 msgstr "Infoga bild"
 
-#: outwiker/gui/actionslist.py:105
+#: outwiker/gui/actionslist.py:108
 msgid "Mark"
 msgstr "Märk"
 
-#: outwiker/gui/actionslist.py:105
+#: outwiker/gui/actionslist.py:108
 msgid "Mark text"
 msgstr "Märk text"
 
-#: outwiker/gui/actionslist.py:106
+#: outwiker/gui/actionslist.py:110
 msgid "Bullets list"
 msgstr "Punktlista"
 
-#: outwiker/gui/actionslist.py:106
+#: outwiker/gui/actionslist.py:110
 msgid "Insert a bullets list"
 msgstr "Infoga punktlista"
 
-#: outwiker/gui/actionslist.py:107
+#: outwiker/gui/actionslist.py:111
 msgid "Numbers list"
 msgstr "Numrerad lista"
 
-#: outwiker/gui/actionslist.py:107
+#: outwiker/gui/actionslist.py:111
 msgid "Insert a numbers list"
 msgstr "Infoga numrerad lista"
 
-#: outwiker/gui/actionslist.py:108
+#: outwiker/gui/actionslist.py:113
 msgid "Decrease nesting level"
 msgstr "Minska underliggande nivå"
 
-#: outwiker/gui/actionslist.py:108
+#: outwiker/gui/actionslist.py:113
 msgid "Decrease the nesting level of the selected list items"
 msgstr "Minska underliggande nivåer för markerade listobjekt"
 
-#: outwiker/gui/actionslist.py:109
+#: outwiker/gui/actionslist.py:114
 msgid "Line break"
 msgstr "Radbrytning"
 
-#: outwiker/gui/actionslist.py:109
+#: outwiker/gui/actionslist.py:114
 msgid "Insert a line break"
 msgstr "Infoga radbrytning"
 
-#: outwiker/gui/actionslist.py:110
+#: outwiker/gui/actionslist.py:115
 msgid "Convert HTML Symbols"
 msgstr "Konvertera HTML-symboler"
 
-#: outwiker/gui/actionslist.py:111
+#: outwiker/gui/actionslist.py:117
 msgid "Insert a table"
 msgstr "Infoga tabell"
 
-#: outwiker/gui/actionslist.py:112
+#: outwiker/gui/actionslist.py:118
 msgid "Table rows"
 msgstr "Tabellrader"
 
-#: outwiker/gui/actionslist.py:112
+#: outwiker/gui/actionslist.py:118
 msgid "Insert table rows"
 msgstr "Infoga tabellrader"
 
-#: outwiker/gui/actionslist.py:113
+#: outwiker/gui/actionslist.py:119
 msgid "Table cell"
 msgstr "Tabellcell"
 
-#: outwiker/gui/actionslist.py:113
+#: outwiker/gui/actionslist.py:119
 msgid "Insert a table cell"
 msgstr "Infoga tabellcell"
 
-#: outwiker/gui/actionslist.py:114
+#: outwiker/gui/actionslist.py:121
 msgid "Current date"
 msgstr "Aktuellt datum"
 
-#: outwiker/gui/actionslist.py:114
+#: outwiker/gui/actionslist.py:121
 msgid "Insert the current date"
 msgstr "Infoga aktuellt datum"
 
-#: outwiker/gui/actionslist.py:115
+#: outwiker/gui/actionslist.py:122
 msgid "Enable / disable spell checking"
 msgstr "Aktivera/Avaktivera stavningskontroll"
 
-#: outwiker/gui/actionslist.py:116
+#: outwiker/gui/actionslist.py:124
 msgid "Duplicate line"
 msgstr "Duplicera rad"
 
-#: outwiker/gui/actionslist.py:116
+#: outwiker/gui/actionslist.py:124
 msgid "Duplicate current line"
 msgstr "Duplicera aktuell rad"
 
-#: outwiker/gui/actionslist.py:117
+#: outwiker/gui/actionslist.py:125
 msgid "Move selected lines up"
 msgstr "Flytta upp markerade rader"
 
-#: outwiker/gui/actionslist.py:117
+#: outwiker/gui/actionslist.py:125
 msgid "Move the selected lines up one line"
 msgstr "Flytta upp markerade rader ett steg"
 
-#: outwiker/gui/actionslist.py:118
+#: outwiker/gui/actionslist.py:126
 msgid "Move selected lines down"
 msgstr "Flytta ner markerade rader"
 
-#: outwiker/gui/actionslist.py:118
+#: outwiker/gui/actionslist.py:126
 msgid "Move the selected lines down one line"
 msgstr "Flytta ner markerade rader ett steg"
 
-#: outwiker/gui/actionslist.py:119
+#: outwiker/gui/actionslist.py:127
 msgid "Delete line"
 msgstr "Ta bort rad"
 
-#: outwiker/gui/actionslist.py:119
+#: outwiker/gui/actionslist.py:127
 msgid "Delete the current line"
 msgstr "Ta bort aktuell rad"
 
-#: outwiker/gui/actionslist.py:120
+#: outwiker/gui/actionslist.py:128
 msgid "Join lines"
 msgstr "Sammanfoga rader"
 
-#: outwiker/gui/actionslist.py:121
+#: outwiker/gui/actionslist.py:130
 msgid "Delete word to the left"
 msgstr "Ta bort ord till vänster"
 
-#: outwiker/gui/actionslist.py:121
+#: outwiker/gui/actionslist.py:130
 msgid "Delete text to beginning of the word"
 msgstr "Ta bort text till början av ordet"
 
-#: outwiker/gui/actionslist.py:122
+#: outwiker/gui/actionslist.py:131
 msgid "Delete word to the right"
 msgstr "Ta bort ord till höger"
 
-#: outwiker/gui/actionslist.py:122
+#: outwiker/gui/actionslist.py:131
 msgid "Delete text to ending of the word"
 msgstr "Ta bort text till slut av ordet"
 
-#: outwiker/gui/actionslist.py:123
+#: outwiker/gui/actionslist.py:132
 msgid "Delete to start of the line"
 msgstr "Ta bort till början av raden"
 
-#: outwiker/gui/actionslist.py:123
+#: outwiker/gui/actionslist.py:132
 msgid "Delete text back from the current position to the start of the line"
 msgstr "Ta bort text från aktuell position till till början av raden"
 
-#: outwiker/gui/actionslist.py:124
+#: outwiker/gui/actionslist.py:133
 msgid "Delete to end of the line"
 msgstr "Ta bort till slutet av raden"
 
-#: outwiker/gui/actionslist.py:124
+#: outwiker/gui/actionslist.py:133
 msgid "Delete text forwards from the current position to the end of the line"
 msgstr "Ta bort text från aktuell position till till slutet av raden"
 
-#: outwiker/gui/actionslist.py:125
+#: outwiker/gui/actionslist.py:135
 msgid "Go to previous word"
 msgstr "Gå till föregående ord"
 
-#: outwiker/gui/actionslist.py:125
+#: outwiker/gui/actionslist.py:135
 msgid "Move cursor to previous word"
 msgstr "Flytta markören till föregående ord"
 
-#: outwiker/gui/actionslist.py:126
+#: outwiker/gui/actionslist.py:136
 msgid "Go to next word"
 msgstr "Gå till nästa ord"
 
-#: outwiker/gui/actionslist.py:126
+#: outwiker/gui/actionslist.py:136
 msgid "Move cursor to next word"
 msgstr "Flytta markören till nästa ord"
 
-#: outwiker/gui/actionslist.py:127
+#: outwiker/gui/actionslist.py:137
 msgid "Go to previous word and select"
 msgstr "Gå till föregående ord och markera"
 
-#: outwiker/gui/actionslist.py:127
+#: outwiker/gui/actionslist.py:137
 msgid "Move cursor to previous word and select text"
 msgstr "Flytta markören till föregående ord och markera text"
 
-#: outwiker/gui/actionslist.py:128
+#: outwiker/gui/actionslist.py:138
 msgid "Go to next word and select"
 msgstr "Gå till nästa ord och markera"
 
-#: outwiker/gui/actionslist.py:128
+#: outwiker/gui/actionslist.py:138
 msgid "Move cursor to next word and select text"
 msgstr "Flytta markören till nästa ord och markera text"
 
-#: outwiker/gui/actionslist.py:129
+#: outwiker/gui/actionslist.py:139
 msgid "Go to start of the word"
 msgstr "Gå till början av ordet"
 
-#: outwiker/gui/actionslist.py:129
+#: outwiker/gui/actionslist.py:139
 msgid "Move cursor to start of the current word"
 msgstr "Flytta markören till början av det aktuella ordet"
 
-#: outwiker/gui/actionslist.py:130
+#: outwiker/gui/actionslist.py:140
 msgid "Go to end of the word"
 msgstr "Gå till slutet av ordet"
 
-#: outwiker/gui/actionslist.py:130
+#: outwiker/gui/actionslist.py:140
 msgid "Move cursor to end of the current word"
 msgstr "Flytta markören till slutet av det aktuella ordet"
 
-#: outwiker/gui/actionslist.py:131
+#: outwiker/gui/actionslist.py:142
 msgid "Copy line"
 msgstr "Kopiera rad"
 
-#: outwiker/gui/actionslist.py:131
+#: outwiker/gui/actionslist.py:142
 msgid "Copy the current line to clipboard"
 msgstr "Kopiera aktuell rad till Urklipp"
 
-#: outwiker/gui/actionslist.py:132
+#: outwiker/gui/actionslist.py:143
 msgid "Cut line"
 msgstr "Klipp ut rad"
 
-#: outwiker/gui/actionslist.py:132
+#: outwiker/gui/actionslist.py:143
 msgid "Cut the current line to clipboard"
 msgstr "Klipp ut aktuell rad till Urklipp"
 
-#: outwiker/gui/actionslist.py:133
+#: outwiker/gui/actionslist.py:144
 msgid "Copy word"
 msgstr "Kopiera ord"
 
-#: outwiker/gui/actionslist.py:133
+#: outwiker/gui/actionslist.py:144
 msgid "Copy the current word to clipboard"
 msgstr "Kopiera det aktuella ordet till Urklipp"
 
-#: outwiker/gui/actionslist.py:134
+#: outwiker/gui/actionslist.py:145
 msgid "Cut word"
 msgstr "Klipp ut ord"
 
-#: outwiker/gui/actionslist.py:134
+#: outwiker/gui/actionslist.py:145
 msgid "Cut the current word to clipboard"
 msgstr "Klipp ut det aktuella ordet"
 
