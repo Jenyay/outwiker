@@ -180,6 +180,13 @@ class TextEditorBase(wx.Panel):
             (ord('Z'),             wx.stc.STC_SCMOD_CTRL,    wx.stc.STC_CMD_UNDO),
             (ord('Y'),             wx.stc.STC_SCMOD_CTRL,    wx.stc.STC_CMD_REDO),
             (ord('A'),             wx.stc.STC_SCMOD_CTRL,    wx.stc.STC_CMD_SELECTALL),
+
+            (wx.stc.STC_KEY_INSERT,             wx.stc.STC_SCMOD_CTRL | wx.stc.STC_SCMOD_SHIFT,    wx.stc.STC_CMD_COPY),
+            (wx.stc.STC_KEY_INSERT,             wx.stc.STC_SCMOD_SHIFT,    wx.stc.STC_CMD_PASTE),
+            (ord('C'),             wx.stc.STC_SCMOD_CTRL,    wx.stc.STC_CMD_COPY),
+            (ord('X'),             wx.stc.STC_SCMOD_CTRL,    wx.stc.STC_CMD_CUT),
+            (ord('V'),             wx.stc.STC_SCMOD_CTRL,    wx.stc.STC_CMD_PASTE),
+
             (wx.stc.STC_KEY_TAB,        wx.stc.STC_SCMOD_NORM,    wx.stc.STC_CMD_TAB),
             (wx.stc.STC_KEY_TAB,        wx.stc.STC_SCMOD_SHIFT,    wx.stc.STC_CMD_BACKTAB),
             (wx.stc.STC_KEY_RETURN,     wx.stc.STC_SCMOD_NORM,    wx.stc.STC_CMD_NEWLINE),
