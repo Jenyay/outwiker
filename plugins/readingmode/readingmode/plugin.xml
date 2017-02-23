@@ -23,7 +23,7 @@
 			<name>Roman Sobolev</name>
 		</author>
 		<changelog>
-			<version number="1.0.3">
+			<version number="1.0.3" date="February 24, 2017">
                 <download os="all">http://jenyay.net/uploads/Outwiker/ReadingMode/readingmode-1.0.3.zip</download>
 				<change>Fix the misprint in the Russian localization.</change>
 			</version>
@@ -54,7 +54,7 @@
 		</author>
 
 		<changelog>
-			<version number="1.0.3">
+			<version number="1.0.3" date="24.02.2017">
                 <download os="all">http://jenyay.net/uploads/Outwiker/ReadingMode/readingmode-1.0.3.zip</download>
 				<change>Исправление опечаток.</change>
 			</version>

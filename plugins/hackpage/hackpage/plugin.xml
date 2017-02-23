@@ -26,7 +26,7 @@
 		</author>
 
 		<changelog>
-			<version number="1.1">
+			<version number="1.1" date="February 24, 2017">
                 <download os="all">http://jenyay.net/uploads/Outwiker/HackPage/hackpage-1.1.zip</download>
 				<change>Added the Ukrainian localization.</change>
 			</version>
@@ -49,7 +49,7 @@
 		</author>
 
 		<changelog>
-			<version number="1.1">
+			<version number="1.1" date="24.02.2017">
                 <download os="all">http://jenyay.net/uploads/Outwiker/HackPage/hackpage-1.1.zip</download>
 				<change>Добавлена украинская локализация.</change>
 			</version>
