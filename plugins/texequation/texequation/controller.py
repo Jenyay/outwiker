@@ -51,13 +51,23 @@ class Controller (object):
 
     def __onWikiParserPrepare (self, parser):
         from tokentex import TexFactory
-        tex = TexFactory().make (parser)
+        tex_inline = TexFactory().makeInlineTexToken (parser)
+        tex_big = TexFactory().makeBigTexToken (parser)
 
-        parser.wikiTokens.append (tex)
-        parser.linkTokens.append (tex)
-        parser.headingTokens.append (tex)
-        parser.textLevelTokens.append (tex)
-        parser.listItemsTokens.append (tex)
+        parser.wikiTokens.append (tex_big)
+        parser.wikiTokens.append (tex_inline)
+
+        parser.linkTokens.append (tex_big)
+        parser.linkTokens.append (tex_inline)
+
+        parser.headingTokens.append (tex_big)
+        parser.headingTokens.append (tex_inline)
+
+        parser.textLevelTokens.append (tex_big)
+        parser.textLevelTokens.append (tex_inline)
+
+        parser.listItemsTokens.append (tex_big)
+        parser.listItemsTokens.append (tex_inline)
 
 
     @property
