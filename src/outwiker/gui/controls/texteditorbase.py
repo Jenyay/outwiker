@@ -19,7 +19,7 @@ class TextEditorBase(wx.Panel):
     Added in outwiker.gui 1.3
     '''
     def __init__(self, parent):
-        super(TextEditorBase, self).__init__(parent)
+        super(TextEditorBase, self).__init__(parent, style=0)
         self.textCtrl = StyledTextCtrl(self, -1)
 
         # Создание панели поиска и ее контроллера
@@ -132,15 +132,19 @@ class TextEditorBase(wx.Panel):
             self.textCtrl.CmdKeyClear(key, wx.stc.STC_SCMOD_ALT | wx.stc.STC_SCMOD_CTRL)
             self.textCtrl.CmdKeyClear(key, wx.stc.STC_SCMOD_SHIFT | wx.stc.STC_SCMOD_ALT | wx.stc.STC_SCMOD_CTRL)
 
+        self.textCtrl.CmdKeyClear(wx.stc.STC_KEY_UP, wx.stc.STC_SCMOD_CTRL)
+        self.textCtrl.CmdKeyClear(wx.stc.STC_KEY_DOWN, wx.stc.STC_SCMOD_CTRL)
+
         # Code from Wikidpad sources
         # Default mapping based on Scintilla's "KeyMap.cxx" file
         defaultHotKeys = (
             (wx.stc.STC_KEY_DOWN,        wx.stc.STC_SCMOD_NORM,     wx.stc.STC_CMD_LINEDOWN),
-            (wx.stc.STC_KEY_DOWN,        wx.stc.STC_SCMOD_SHIFT,    wx.stc.STC_CMD_LINEDOWNEXTEND),
-            (wx.stc.STC_KEY_DOWN,        wx.stc.STC_SCMOD_CTRL,     wx.stc.STC_CMD_LINESCROLLDOWN),
             (wx.stc.STC_KEY_UP,          wx.stc.STC_SCMOD_NORM,     wx.stc.STC_CMD_LINEUP),
+            # (wx.stc.STC_KEY_DOWN,        wx.stc.STC_SCMOD_CTRL,     wx.stc.STC_CMD_LINESCROLLDOWN),
+            # (wx.stc.STC_KEY_UP,          wx.stc.STC_SCMOD_CTRL,     wx.stc.STC_CMD_LINESCROLLUP),
             (wx.stc.STC_KEY_UP,          wx.stc.STC_SCMOD_SHIFT,    wx.stc.STC_CMD_LINEUPEXTEND),
-            (wx.stc.STC_KEY_UP,          wx.stc.STC_SCMOD_CTRL,     wx.stc.STC_CMD_LINESCROLLUP),
+            (wx.stc.STC_KEY_DOWN,        wx.stc.STC_SCMOD_SHIFT,    wx.stc.STC_CMD_LINEDOWNEXTEND),
+
             (ord('['),            wx.stc.STC_SCMOD_CTRL,            wx.stc.STC_CMD_PARAUP),
             (ord('['),            wx.stc.STC_SCMOD_SHIFT | wx.stc.STC_SCMOD_CTRL,    wx.stc.STC_CMD_PARAUPEXTEND),
             (ord(']'),            wx.stc.STC_SCMOD_CTRL,        wx.stc.STC_CMD_PARADOWN),
@@ -216,8 +220,7 @@ class TextEditorBase(wx.Panel):
             #        (ord('U'),             wx.stc.STC_SCMOD_SHIFT | wx.stc.STC_SCMOD_CTRL,    wx.stc.STC_CMD_UPPERCASE),
         )
 
-        map(lambda key: self.textCtrl.CmdKeyAssign(key[0], key[1], key[2]),
-            defaultHotKeys)
+        map(lambda key: self.textCtrl.CmdKeyAssign(*key), defaultHotKeys)
 
     @property
     def searchPanel(self):
