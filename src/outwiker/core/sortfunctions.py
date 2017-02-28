@@ -28,9 +28,9 @@ def sortAlphabeticalFunction (page1, page2):
     """
     Функция для сортировки страниц по алфавиту
     """
-    if page1.title.lower() > page2.title.lower():
+    if page1.display_title.lower() > page2.display_title.lower():
         return 1
-    elif page1.title.lower() < page2.title.lower():
+    elif page1.display_title.lower() < page2.display_title.lower():
         return -1
 
     return 0
