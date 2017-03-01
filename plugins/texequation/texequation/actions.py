@@ -1,6 +1,8 @@
 # -*- coding: UTF-8 -*-
 
 from outwiker.gui.baseaction import BaseAction
+
+from texequation.gui.buttonsdialog import ButtonsDialog
 from .i18n import get_
 
 
@@ -27,5 +29,15 @@ class TexEquationAction (BaseAction):
         assert self._application.mainWindow is not None
         assert self._application.mainWindow.pagePanel is not None
 
+        parent = self._application.mainWindow
+        message = _(u'Select the equation type')
+        caption = _(u'Insert the equation')
+        buttons = [_(u'Inline'), _(u'Block'), _(u'Cancel')]
         codeEditor = self._application.mainWindow.pagePanel.pageView.codeEditor
-        codeEditor.turnText(u'{$', u'$}')
+
+        with ButtonsDialog(parent, message, caption, buttons, cancel=2) as fp:
+            result = fp.ShowModal()
+            if result == 0:
+                codeEditor.turnText(u'{$', u'$}')
+            elif result == 1:
+                codeEditor.turnText(u'{$$', u'$$}')
