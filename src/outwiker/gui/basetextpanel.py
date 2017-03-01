@@ -37,7 +37,7 @@ from outwiker.core.attachment import Attachment
 from outwiker.core.config import IntegerOption
 from outwiker.core.tree import RootWikiPage
 from outwiker.gui.basepagepanel import BasePagePanel
-from outwiker.gui.buttonsdialog import ButtonsDialog
+from outwiker.gui.dialogs.buttonsdialog import ButtonsDialog
 from outwiker.gui.guiconfig import EditorConfig
 
 
