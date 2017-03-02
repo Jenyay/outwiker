@@ -14,6 +14,8 @@ class ButtonsDialog(TestedDialog):
 
     The dialog with the custom buttons.
     The ShowModal method return number of the button (begins with 0).
+
+    Version 1.1
     """
     def __init__(self, parent, message, caption, buttons,
                  default=0, cancel=-1):
@@ -66,7 +68,7 @@ class ButtonsDialog(TestedDialog):
 
     def __assignHotKeys(self):
         count = min(9, len(self.__buttons))
-        entries = [wx.AcceleratorEntry() for n in range(count)]
+        entries = [wx.AcceleratorEntry() for n in range(count + 1)]
 
         for n in range(count):
             if n <= 9:
@@ -75,6 +77,8 @@ class ButtonsDialog(TestedDialog):
                     n=n + 1,
                     title=self.__buttons[n].GetLabel())
                 self.__buttons[n].SetLabel(text)
+
+        entries[count].Set(0, wx.WXK_ESCAPE, wx.ID_CANCEL)
 
         accel = wx.AcceleratorTable(entries)
         self.SetAcceleratorTable(accel)
@@ -92,12 +96,12 @@ class ButtonsDialog(TestedDialog):
             self.__textLabel,
             0,
             wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_CENTER_HORIZONTAL,
-            4)
+            border=8)
 
         for button in self.__buttons:
-            sizer_2.Add(button, 0, wx.ALL, 2)
+            sizer_2.Add(button, 0, wx.ALL, border=4)
 
-        sizer_1.Add(sizer_2, 0, wx.ALIGN_CENTER_HORIZONTAL, 0)
+        sizer_1.Add(sizer_2, 0, wx.ALIGN_CENTER_HORIZONTAL | wx.ALL, border=2)
         self.SetSizer(sizer_1)
         sizer_1.Fit(self)
         self.Layout()
