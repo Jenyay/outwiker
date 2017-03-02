@@ -60,7 +60,24 @@ class ButtonsDialog(TestedDialog):
             cancel_id = self.__buttons[cancel].GetId() + self.ID_MIN
             self.SetEscapeId(cancel_id)
 
+        self.__assignHotKeys()
         self.Bind(wx.EVT_BUTTON, self.__onButton)
+        self.Bind(wx.EVT_MENU, self.__onButton)
+
+    def __assignHotKeys(self):
+        count = min(9, len(self.__buttons))
+        entries = [wx.AcceleratorEntry() for n in range(count)]
+
+        for n in range(count):
+            if n <= 9:
+                entries[n].Set(0, ord('1') + n, self.ID_MIN + n)
+                text = u'{n}. {title}'.format(
+                    n=n + 1,
+                    title=self.__buttons[n].GetLabel())
+                self.__buttons[n].SetLabel(text)
+
+        accel = wx.AcceleratorTable(entries)
+        self.SetAcceleratorTable(accel)
 
     def __onButton(self, event):
         self.EndModal(event.GetId() - self.ID_MIN)

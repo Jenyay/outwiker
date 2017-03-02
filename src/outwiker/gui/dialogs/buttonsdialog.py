@@ -1,5 +1,8 @@
 # -*- coding: UTF-8 -*-
 
+# This file was copied from outwiker/gui/dialogs to
+# maintain backward compatibility with OutWiker 1.9
+
 import wx
 
 from outwiker.gui.testeddialog import TestedDialog
@@ -26,6 +29,8 @@ class ButtonsDialog(TestedDialog):
         assert default < len(buttons)
         assert cancel < len(buttons)
 
+        self.ID_MIN = wx.ID_HIGHEST + 1
+
         super(ButtonsDialog, self).__init__(parent)
 
         self.__default = default
@@ -42,21 +47,40 @@ class ButtonsDialog(TestedDialog):
         self.Center(wx.CENTRE_ON_SCREEN)
 
     def __createButtons(self, buttons, default, cancel):
-        self.__buttons = [wx.Button(self, index, text)
+        self.__buttons = [wx.Button(self, self.ID_MIN + index, text)
                           for text, index
                           in zip(buttons, range(len(buttons)))]
 
         if default >= 0:
-            self.SetAffirmativeId(self.__buttons[default].GetId())
+            default_id = self.__buttons[default].GetId() + self.ID_MIN
+            self.SetAffirmativeId(default_id)
             self.__buttons[default].SetFocus()
 
         if cancel >= 0:
-            self.SetEscapeId(self.__buttons[cancel].GetId())
+            cancel_id = self.__buttons[cancel].GetId() + self.ID_MIN
+            self.SetEscapeId(cancel_id)
 
+        self.__assignHotKeys()
         self.Bind(wx.EVT_BUTTON, self.__onButton)
+        self.Bind(wx.EVT_MENU, self.__onButton)
+
+    def __assignHotKeys(self):
+        count = min(9, len(self.__buttons))
+        entries = [wx.AcceleratorEntry() for n in range(count)]
+
+        for n in range(count):
+            if n <= 9:
+                entries[n].Set(0, ord('1') + n, self.ID_MIN + n)
+                text = u'{n}. {title}'.format(
+                    n=n + 1,
+                    title=self.__buttons[n].GetLabel())
+                self.__buttons[n].SetLabel(text)
+
+        accel = wx.AcceleratorTable(entries)
+        self.SetAcceleratorTable(accel)
 
     def __onButton(self, event):
-        self.EndModal(event.GetId())
+        self.EndModal(event.GetId() - self.ID_MIN)
 
     def __do_layout(self):
         sizer_1 = wx.FlexGridSizer(2, 1)
