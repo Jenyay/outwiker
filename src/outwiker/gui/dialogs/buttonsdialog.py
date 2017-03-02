@@ -1,5 +1,8 @@
 # -*- coding: UTF-8 -*-
 
+# This file was copied from outwiker/gui/dialogs to
+# maintain backward compatibility with OutWiker 1.9
+
 import wx
 
 from outwiker.gui.testeddialog import TestedDialog
@@ -26,6 +29,8 @@ class ButtonsDialog(TestedDialog):
         assert default < len(buttons)
         assert cancel < len(buttons)
 
+        self.ID_MIN = wx.ID_HIGHEST + 1
+
         super(ButtonsDialog, self).__init__(parent)
 
         self.__default = default
@@ -42,7 +47,7 @@ class ButtonsDialog(TestedDialog):
         self.Center(wx.CENTRE_ON_SCREEN)
 
     def __createButtons(self, buttons, default, cancel):
-        self.__buttons = [wx.Button(self, index, text)
+        self.__buttons = [wx.Button(self, self.ID_MIN + index, text)
                           for text, index
                           in zip(buttons, range(len(buttons)))]
 
@@ -56,7 +61,7 @@ class ButtonsDialog(TestedDialog):
         self.Bind(wx.EVT_BUTTON, self.__onButton)
 
     def __onButton(self, event):
-        self.EndModal(event.GetId())
+        self.EndModal(event.GetId() - self.ID_MIN)
 
     def __do_layout(self):
         sizer_1 = wx.FlexGridSizer(2, 1)
