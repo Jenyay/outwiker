@@ -52,11 +52,13 @@ class ButtonsDialog(TestedDialog):
                           in zip(buttons, range(len(buttons)))]
 
         if default >= 0:
-            self.SetAffirmativeId(self.__buttons[default].GetId())
+            default_id = self.__buttons[default].GetId() + self.ID_MIN
+            self.SetAffirmativeId(default_id)
             self.__buttons[default].SetFocus()
 
         if cancel >= 0:
-            self.SetEscapeId(self.__buttons[cancel].GetId())
+            cancel_id = self.__buttons[cancel].GetId() + self.ID_MIN
+            self.SetEscapeId(cancel_id)
 
         self.Bind(wx.EVT_BUTTON, self.__onButton)
 
