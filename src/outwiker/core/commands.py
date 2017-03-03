@@ -50,13 +50,13 @@ def testreadonly(func):
     Декоратор для отлавливания исключения
         outwiker.core.exceptions.ReadonlyException
     """
-    def readOnlyWrap (*args, **kwargs):
+    def readOnlyWrap(*args, **kwargs):
         try:
-            return func (*args, **kwargs)
+            return func(*args, **kwargs)
         except outwiker.core.exceptions.ReadonlyException:
-            MessageBox (_(u"Page is opened as read-only"),
-                        _(u"Error"),
-                        wx.ICON_ERROR | wx.OK)
+            MessageBox(_(u"Page is opened as read-only"),
+                       _(u"Error"),
+                       wx.ICON_ERROR | wx.OK)
 
     return readOnlyWrap
 
@@ -106,43 +106,43 @@ def attachFiles(parent, page, files):
 
 
 @testreadonly
-def removePage (page):
+def removePage(page):
     assert page is not None
 
     if page.readonly:
         raise outwiker.core.exceptions.ReadonlyException
 
     if page.parent is None:
-        MessageBox (_(u"You can't remove the root element"),
-                    _(u"Error"),
-                    wx.ICON_ERROR | wx.OK)
+        MessageBox(_(u"You can't remove the root element"),
+                   _(u"Error"),
+                   wx.ICON_ERROR | wx.OK)
         return
 
-    if (MessageBox (_(u'Remove page "{}" and all subpages?').format (page.title),
-                    _(u"Remove page?"),
-                    wx.YES_NO | wx.ICON_QUESTION) == wx.YES):
+    if (MessageBox(_(u'Remove page "{}" and all subpages?').format(page.title),
+                   _(u"Remove page?"),
+                   wx.YES_NO | wx.ICON_QUESTION) == wx.YES):
         try:
             page.remove()
         except IOError:
-            MessageBox (_(u"Can't remove page"),
-                        _(u"Error"),
-                        wx.ICON_ERROR | wx.OK)
+            MessageBox(_(u"Can't remove page"),
+                       _(u"Error"),
+                       wx.ICON_ERROR | wx.OK)
 
 
-def openWikiWithDialog (parent, readonly=False):
+def openWikiWithDialog(parent, readonly=False):
     """
     Показать диалог открытия вики и вернуть открытую wiki
     parent -- родительское окно
     """
     wikiroot = None
 
-    with TestedFileDialog (parent,
-                           wildcard="__page.opt|__page.opt",
-                           style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as dialog:
+    with TestedFileDialog(parent,
+                          wildcard="__page.opt|__page.opt",
+                          style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as dialog:
         if dialog.ShowModal() == wx.ID_OK:
             fullpath = dialog.GetPath()
             path = os.path.dirname(fullpath)
-            wikiroot = openWiki (path, readonly)
+            wikiroot = openWiki(path, readonly)
 
     return wikiroot
 
@@ -165,19 +165,19 @@ def findPage(application, page_id):
         return application.pageUidDepot[page_id]
 
 
-def openWiki (path, readonly=False):
-    if not os.path.exists (path):
-        __canNotLoadWikiMessage (path)
+def openWiki(path, readonly=False):
+    if not os.path.exists(path):
+        __canNotLoadWikiMessage(path)
         return
 
     # Если передан путь до файла настроек (а не до папки с вики),
     # то оставим только папку
-    if not os.path.isdir (path):
-        path = os.path.split (path)[0]
+    if not os.path.isdir(path):
+        path = os.path.split(path)[0]
 
-    def threadFunc (path, readonly):
+    def threadFunc(path, readonly):
         try:
-            return WikiDocument.load (path, readonly)
+            return WikiDocument.load(path, readonly)
         except BaseException as e:
             return e
 
@@ -185,11 +185,11 @@ def openWiki (path, readonly=False):
     Application.onPreWikiOpen(Application.selectedPage,
                               preWikiOpenParams)
 
-    runner = LongProcessRunner (threadFunc,
-                                Application.mainWindow,
-                                _(u"Loading"),
-                                _(u"Opening notes tree..."))
-    result = runner.run (os.path.realpath (path), readonly)
+    runner = LongProcessRunner(threadFunc,
+                               Application.mainWindow,
+                               _(u"Loading"),
+                               _(u"Opening notes tree..."))
+    result = runner.run(os.path.realpath(path), readonly)
 
     # result = WikiDocument.load (os.path.realpath (path), readonly)
 
@@ -209,60 +209,60 @@ def openWiki (path, readonly=False):
     return Application.wikiroot
 
 
-def __rootFormatErrorHandle (path, readonly):
+def __rootFormatErrorHandle(path, readonly):
     """
     Обработчик исключения outwiker.core.exceptions.RootFormatError
     """
     if readonly:
         # Если вики открыт только для чтения, то нельзя изменять файлы
-        __canNotLoadWikiMessage (path)
+        __canNotLoadWikiMessage(path)
         return
 
-    if (__wantClearWikiOptions (path) != wx.YES):
+    if (__wantClearWikiOptions(path) != wx.YES):
         return
 
     # Обнулим файл __page.opt
-    WikiDocument.clearConfigFile (path)
+    WikiDocument.clearConfigFile(path)
 
     # Попробуем открыть вики еще раз
     try:
         # Загрузить вики
-        wikiroot = WikiDocument.load (os.path.realpath (path), readonly)
+        wikiroot = WikiDocument.load(os.path.realpath(path), readonly)
         Application.wikiroot = wikiroot
     except IOError:
-        __canNotLoadWikiMessage (path)
+        __canNotLoadWikiMessage(path)
 
     except outwiker.core.exceptions.RootFormatError:
-        __canNotLoadWikiMessage (path)
+        __canNotLoadWikiMessage(path)
 
     finally:
         pass
 
 
-def __canNotLoadWikiMessage (path):
+def __canNotLoadWikiMessage(path):
     """
     Вывести сообщение о том, что невоможно открыть вики
     """
-    MessageBox (_(u"Can't load wiki '%s'") % path,
-                _(u"Error"),
-                wx.ICON_ERROR | wx.OK)
+    MessageBox(_(u"Can't load wiki '%s'") % path,
+               _(u"Error"),
+               wx.ICON_ERROR | wx.OK)
 
 
-def __wantClearWikiOptions (path):
+def __wantClearWikiOptions(path):
     """
     Сообщение о том, хочет ли пользователь сбросить файл __page.opt
     """
-    return MessageBox (_(u"Can't load wiki '%s'\nFile __page.opt is invalid.\nClear this file and load wiki?\nBookmarks will be lost") % path,
-                       _(u"__page.opt error"),
-                       wx.ICON_ERROR | wx.YES_NO)
+    return MessageBox(_(u"Can't load wiki '%s'\nFile __page.opt is invalid.\nClear this file and load wiki?\nBookmarks will be lost") % path,
+                      _(u"__page.opt error"),
+                      wx.ICON_ERROR | wx.YES_NO)
 
 
-def createNewWiki (parentwnd):
+def createNewWiki(parentwnd):
     """
     Создать новую вики
     parentwnd - окно-владелец диалога выбора файла
     """
-    dlg = TestedFileDialog (parentwnd, style = wx.FD_SAVE)
+    dlg = TestedFileDialog(parentwnd, style=wx.FD_SAVE)
 
     newPageTitle = _(u"First Wiki Page")
     newPageContent = _(u"""!! First Wiki Page
@@ -273,8 +273,8 @@ This is the first page. You can use a text formatting: '''bold''', ''italic'', {
         try:
             from outwiker.pages.wiki.wikipage import WikiPageFactory
 
-            newwiki = WikiDocument.create (dlg.GetPath ())
-            WikiPageFactory().create (newwiki, newPageTitle, [_(u"test")])
+            newwiki = WikiDocument.create(dlg.GetPath())
+            WikiPageFactory().create(newwiki, newPageTitle, [_(u"test")])
             firstPage = newwiki[newPageTitle]
             firstPage.content = newPageContent
 
@@ -282,39 +282,39 @@ This is the first page. You can use a text formatting: '''bold''', ''italic'', {
             Application.wikiroot.selectedPage = firstPage
         except (IOError, OSError) as e:
             # TODO: проверить под Windows
-            MessageBox (_(u"Can't create wiki\n") + unicode (e.filename.encode (getOS().filesEncoding), "utf8"),
-                        _(u"Error"), wx.OK | wx.ICON_ERROR)
+            MessageBox(_(u"Can't create wiki\n") + unicode(e.filename.encode(getOS().filesEncoding), "utf8"),
+                       _(u"Error"), wx.OK | wx.ICON_ERROR)
 
     dlg.Destroy()
 
 
-def copyTextToClipboard (text):
+def copyTextToClipboard(text):
     if not wx.TheClipboard.Open():
-        MessageBox (_(u"Can't open clipboard"),
-                    _(u"Error"),
-                    wx.ICON_ERROR | wx.OK)
+        MessageBox(_(u"Can't open clipboard"),
+                   _(u"Error"),
+                   wx.ICON_ERROR | wx.OK)
         return
 
-    data = wx.TextDataObject (text)
+    data = wx.TextDataObject(text)
 
     if not wx.TheClipboard.SetData(data):
-        MessageBox (_(u"Can't copy text to clipboard"),
-                    _(u"Error"),
-                    wx.ICON_ERROR | wx.OK)
+        MessageBox(_(u"Can't copy text to clipboard"),
+                   _(u"Error"),
+                   wx.ICON_ERROR | wx.OK)
 
     wx.TheClipboard.Flush()
     wx.TheClipboard.Close()
 
 
-def getClipboardText ():
+def getClipboardText():
     if not wx.TheClipboard.Open():
-        MessageBox (_(u"Can't open clipboard"),
-                    _(u"Error"),
-                    wx.ICON_ERROR | wx.OK)
+        MessageBox(_(u"Can't open clipboard"),
+                   _(u"Error"),
+                   wx.ICON_ERROR | wx.OK)
         return
 
     data = wx.TextDataObject()
-    getDataResult = wx.TheClipboard.GetData (data)
+    getDataResult = wx.TheClipboard.GetData(data)
 
     wx.TheClipboard.Close()
 
@@ -324,45 +324,44 @@ def getClipboardText ():
     return data.GetText()
 
 
-
-def copyPathToClipboard (page):
+def copyPathToClipboard(page):
     """
     Копировать путь до страницы в буфер обмена
     """
     assert page is not None
-    copyTextToClipboard (page.path)
+    copyTextToClipboard(page.path)
 
 
 # TODO: Сделать тест
-def copyAttachPathToClipboard (page):
+def copyAttachPathToClipboard(page):
     """
     Копировать путь до папки с прикрепленными файлами в буфер обмена
     """
     assert page is not None
-    copyTextToClipboard (Attachment(page).getAttachPath(create=True))
+    copyTextToClipboard(Attachment(page).getAttachPath(create=True))
 
 
 @testreadonly
-def generateLink (application, page):
+def generateLink(application, page):
     """
     Создать ссылку на страницу по UID
     """
-    uid = application.pageUidDepot.createUid (page)
-    return u"page://{}".format (uid)
+    uid = application.pageUidDepot.createUid(page)
+    return u"page://{}".format(uid)
 
 
-def copyLinkToClipboard (page):
+def copyLinkToClipboard(page):
     """
     Копировать ссылку на страницу в буфер обмена
     """
     assert page is not None
 
-    link = generateLink (Application, page)
+    link = generateLink(Application, page)
     if link is not None:
-        copyTextToClipboard (link)
+        copyTextToClipboard(link)
 
 
-def copyTitleToClipboard (page):
+def copyTitleToClipboard(page):
     """
     Копировать заголовок страницы в буфер обмена
     """
@@ -371,7 +370,7 @@ def copyTitleToClipboard (page):
 
 
 @testreadonly
-def movePage (page, newParent):
+def movePage(page, newParent):
     """
     Сделать страницу page ребенком newParent
     """
@@ -379,31 +378,31 @@ def movePage (page, newParent):
     assert newParent is not None
 
     try:
-        page.moveTo (newParent)
+        page.moveTo(newParent)
     except outwiker.core.exceptions.DublicateTitle:
         # Невозможно переместить из-за дублирования имен
-        MessageBox (_(u"Can't move page when page with that title already exists"),
-                    _(u"Error"),
-                    wx.ICON_ERROR | wx.OK)
+        MessageBox(_(u"Can't move page when page with that title already exists"),
+                   _(u"Error"),
+                   wx.ICON_ERROR | wx.OK)
 
     except outwiker.core.exceptions.TreeException:
         # Невозможно переместить по другой причине
-        MessageBox (_(u"Can't move page"),
-                    _(u"Error"),
-                    wx.ICON_ERROR | wx.OK)
+        MessageBox(_(u"Can't move page"),
+                   _(u"Error"),
+                   wx.ICON_ERROR | wx.OK)
 
 
-def setStatusText (text, index = 0):
+def setStatusText(text, index=0):
     """
     Установить текст статусбара.
     text - текст
     index - номер ячейки статусбара
     """
-    Application.mainWindow.statusbar.SetStatusText (text, index)
+    Application.mainWindow.statusbar.SetStatusText(text, index)
 
 
-def getCurrentVersion ():
-    path = os.path.join (getCurrentDir(), VERSION_FILE_NAME)
+def getCurrentVersion():
+    path = os.path.join(getCurrentDir(), VERSION_FILE_NAME)
 
     try:
         text = readTextFile(path)
@@ -415,49 +414,49 @@ def getCurrentVersion ():
 
 
 @testreadonly
-def renamePage (page, newtitle):
+def renamePage(page, newtitle):
     if page.parent is None:
-        MessageBox (_(u"You can't rename the root element"),
-                    _(u"Error"),
-                    wx.ICON_ERROR | wx.OK)
+        MessageBox(_(u"You can't rename the root element"),
+                   _(u"Error"),
+                   wx.ICON_ERROR | wx.OK)
         return
 
-    if page.alias is None and not testPageTitle (newtitle):
+    if page.alias is None and not testPageTitle(newtitle):
         return
 
     try:
         page.display_title = newtitle
     except outwiker.core.exceptions.DublicateTitle:
-        MessageBox (_(u"Can't move page when page with that title already exists"),
-                    _(u"Error"),
-                    wx.ICON_ERROR | wx.OK)
+        MessageBox(_(u"Can't move page when page with that title already exists"),
+                   _(u"Error"),
+                   wx.ICON_ERROR | wx.OK)
     except OSError:
-        MessageBox (_(u'Can\'t rename page "{}" to "{}"').format (page.title, newtitle),
-                    _(u"Error"),
-                    wx.ICON_ERROR | wx.OK)
+        MessageBox(_(u'Can\'t rename page "{}" to "{}"').format(page.title, newtitle),
+                   _(u"Error"),
+                   wx.ICON_ERROR | wx.OK)
 
 
-def testPageTitle (title):
+def testPageTitle(title):
     """
     Возвращает True, если можно создавать страницу с таким заголовком
     """
     tester = getOS().pageTitleTester
 
     try:
-        tester.test (title)
+        tester.test(title)
 
     except PageTitleError as error:
-        MessageBox (error.message,
-                    _(u"The invalid page title"),
-                    wx.OK | wx.ICON_ERROR)
+        MessageBox(error.message,
+                   _(u"The invalid page title"),
+                   wx.OK | wx.ICON_ERROR)
         return False
 
     except PageTitleWarning as warning:
-        text = _(u"{0}\nContinue?").format (warning.message)
+        text = _(u"{0}\nContinue?").format(warning.message)
 
-        if (MessageBox (text,
-                        _(u"The page title"),
-                        wx.YES_NO | wx.ICON_QUESTION) == wx.YES):
+        if (MessageBox(text,
+                       _(u"The page title"),
+                       wx.YES_NO | wx.ICON_QUESTION) == wx.YES):
             return True
         else:
             return False
@@ -465,18 +464,18 @@ def testPageTitle (title):
     return True
 
 
-def pageExists (page):
+def pageExists(page):
     """
     Проверка на то, что страница была удалена сторонними средствами
     """
-    return page is not None and os.path.exists (page.path)
+    return page is not None and os.path.exists(page.path)
 
 
-def closeWiki (application):
+def closeWiki(application):
     application.wikiroot = None
 
 
-def getMainWindowTitle (application):
+def getMainWindowTitle(application):
     template = application.mainWindow.mainWindowConfig.titleFormat.value
 
     if application.wikiroot is None:
@@ -484,88 +483,88 @@ def getMainWindowTitle (application):
     else:
         pageTitle = (u"" if application.wikiroot.selectedPage is None
                      else application.wikiroot.selectedPage.title)
-        filename = os.path.basename (application.wikiroot.path)
+        filename = os.path.basename(application.wikiroot.path)
 
-        result = template.replace ("{file}", filename).replace ("{page}", pageTitle)
+        result = template.replace("{file}", filename).replace("{page}", pageTitle)
 
     return result
 
 
-def insertCurrentDate (parent, editor):
+def insertCurrentDate(parent, editor):
     """
     Вызвать диалог для выбора формата даты и вставить в редактор текущую дату согласно выбранному формату.
 
     parent - родительское окно для диалога
     editor - текстовое поле ввода, куда надо вставить дату (экземпляр класса TextEditor)
     """
-    config = GeneralGuiConfig (Application.config)
+    config = GeneralGuiConfig(Application.config)
     initial = config.recentDateTimeFormat.value
 
-    with DateFormatDialog (parent,
-                           _(u"Enter format of the date"),
-                           _(u"Date format"),
-                           initial) as dlg:
+    with DateFormatDialog(parent,
+                          _(u"Enter format of the date"),
+                          _(u"Date format"),
+                          initial) as dlg:
         if dlg.ShowModal() == wx.ID_OK:
-            dateStr = unicode (datetime.now().strftime (dlg.Value.encode (getOS().filesEncoding)),
-                               getOS().filesEncoding)
-            editor.replaceText (dateStr)
+            dateStr = unicode(datetime.now().strftime(dlg.Value.encode(getOS().filesEncoding)),
+                              getOS().filesEncoding)
+            editor.replaceText(dateStr)
             config.recentDateTimeFormat.value = dlg.Value
 
 
-def isImage (fname):
+def isImage(fname):
     """
     If fname is image then the function return True. Otherwise - False.
     """
     fnameLower = fname.lower()
 
-    return (fnameLower.endswith (".png") or
-            fnameLower.endswith (".jpg") or
-            fnameLower.endswith (".jpeg") or
-            fnameLower.endswith (".bmp") or
-            fnameLower.endswith (".gif"))
+    return (fnameLower.endswith(".png") or
+            fnameLower.endswith(".jpg") or
+            fnameLower.endswith(".jpeg") or
+            fnameLower.endswith(".bmp") or
+            fnameLower.endswith(".gif"))
 
 
-def dictToStr (paramsDict):
+def dictToStr(paramsDict):
     """
     Return string like param_1="value1" param_2='value "" with double quotes'...
     """
     items = []
     for name, value in paramsDict.items():
-        valueStr = unicode (value)
+        valueStr = unicode(value)
 
         hasSingleQuote = u"'" in valueStr
         hasDoubleQuote = u'"' in valueStr
 
         if hasSingleQuote and hasDoubleQuote:
-            valueStr = valueStr.replace (u'"', u'\\"')
+            valueStr = valueStr.replace(u'"', u'\\"')
             quote = u'"'
         elif hasDoubleQuote:
             quote = u"'"
         else:
             quote = u'"'
 
-        paramStr = u'{name}={quote}{value}{quote}'.format (
-            name = name,
-            quote = quote,
-            value = valueStr
+        paramStr = u'{name}={quote}{value}{quote}'.format(
+            name=name,
+            quote=quote,
+            value=valueStr
         )
 
-        items.append (paramStr)
+        items.append(paramStr)
 
     items.sort()
-    return u', '.join (items)
+    return u', '.join(items)
 
 
-def registerActions (application):
+def registerActions(application):
     """
     Зарегистрировать действия
     """
     # Действия, связанные с разными типами страниц
     from outwiker.pages.html.htmlpage import HtmlPageFactory
-    HtmlPageFactory.registerActions (application)
+    HtmlPageFactory.registerActions(application)
 
     from outwiker.pages.wiki.wikipage import WikiPageFactory
-    WikiPageFactory.registerActions (application)
+    WikiPageFactory.registerActions(application)
 
     actionController = application.actionController
     from outwiker.gui.actionslist import actionsList, polyactionsList
