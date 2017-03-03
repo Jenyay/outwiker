@@ -8,7 +8,7 @@ import time
 import wx
 
 from outwiker.core.commands import MessageBox
-from outwiker.gui.buttonsdialog import ButtonsDialog
+from outwiker.gui.dialogs.buttonsdialog import ButtonsDialog
 from outwiker.gui.hotkey import HotKey
 from outwiker.core.pluginbase import Plugin
 from outwiker.core.system import getOS
