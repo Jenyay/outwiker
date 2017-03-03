@@ -111,10 +111,10 @@ class InlineTexToken(BaseTexToken):
         return u'false'
 
     def _getClassName(self):
-        return u'tex-inline'
+        return u'texequation-inline'
 
     def _getIdName(self):
-        return u'tex-inline'
+        return u'texequation-inline'
 
 
 class BigTexToken(BaseTexToken):
@@ -128,7 +128,7 @@ class BigTexToken(BaseTexToken):
         return u'true'
 
     def _getClassName(self):
-        return u'tex-big'
+        return u'texequation-block'
 
     def _getIdName(self):
-        return u'tex-big'
+        return u'texequation-block'
