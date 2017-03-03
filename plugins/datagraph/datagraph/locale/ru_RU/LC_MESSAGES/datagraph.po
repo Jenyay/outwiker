@@ -7,53 +7,58 @@ msgid ""
 msgstr ""
 "Project-Id-Version: datagraph\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-08 21:37+0300\n"
-"PO-Revision-Date: 2015-01-08 21:37+0300\n"
+"POT-Creation-Date: 2017-03-03 21:08+0300\n"
+"PO-Revision-Date: 2017-03-03 21:09+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: jenyay.net <jenyay.ilin@gmail.com>\n"
 "Language: ru_RU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 1.8.9\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-#: datagraph.py:42
-msgid "DataGraph plug-in designed for creation a charts by text data."
-msgstr ""
-"Плагин DataGraph предназначен для построения графиков по текстовым данным."
-
-#: datagraph.py:52
-msgid "http://jenyay.net/Outwiker/DataGraphEn"
-msgstr "http://jenyay.net/Outwiker/DataGraph"
-
-#: actions.py:26
-msgid "Plot graph (:plot:)"
-msgstr "Нарисовать график (:plot:)"
-
-#: actions.py:31
-msgid "[DataGraph] Insert (:plot:) command for graph plotting"
-msgstr "[DataGraph] Вставить команду (:plot:) для создания графика"
-
-#: actions.py:62
-msgid "Open help"
-msgstr "Открыть справку"
-
-#: actions.py:67
-msgid "[DataGraph] Open help in the new OutWiker window"
-msgstr "[DataGraph] Открыть справку в новом окне OutWiker"
-
-#: actions.py:75
-msgid "datagraph_eng"
-msgstr "datagraph_rus"
-
-#: renders/highcharts.py:275
+#: renders/highcharts.py:259
 msgid "Curve {}"
 msgstr "Линия {}"
 
-#: toolbar.py:25
+#: guicreator.py:63 toolbar.py:25
 msgid "DataGraph"
 msgstr "DataGraph"
+
+#: plugin.py:42
+msgid "DataGraph plug-in designed for creation a charts by text data."
+msgstr "Плагин DataGraph предназначен для построения графиков по текстовым данным."
+
+#: plugin.py:50
+msgid "http://jenyay.net/Outwiker/DataGraphEn"
+msgstr "http://jenyay.net/Outwiker/DataGraph"
+
+#: actions.py:24
+msgid "Plot graph (:plot:)"
+msgstr "Нарисовать график (:plot:)"
+
+#: actions.py:28
+msgid "[DataGraph] Insert (:plot:) command for graph plotting"
+msgstr "[DataGraph] Вставить команду (:plot:) для создания графика"
+
+#: actions.py:55
+msgid "Open help"
+msgstr "Открыть справку"
+
+#: actions.py:59
+msgid "[DataGraph] Open help in the new OutWiker window"
+msgstr "[DataGraph] Открыть справку в новом окне OutWiker"
+
+#: actions.py:66
+msgid "datagraph_eng"
+msgstr "datagraph_rus"
+
+#~ msgid "Plot graph(:plot:)"
+#~ msgstr "Создать график (:plot:)"
+
+#~ msgid "[DataGraph] Insert(:plot:) command for graph plotting"
+#~ msgstr "[DataGraph] Вставить команду (:plot:) для создания графика"
 
 #~ msgid "Plugin description"
 #~ msgstr "Описание плагина"

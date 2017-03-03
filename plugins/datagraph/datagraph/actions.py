@@ -21,11 +21,11 @@ class PlotAction(BaseAction):
 
     @property
     def title(self):
-        return _(u"Plot graph(:plot:)")
+        return _(u"Plot graph (:plot:)")
 
     @property
     def description(self):
-        return _(u"[DataGraph] Insert(:plot:) command for graph plotting")
+        return _(u"[DataGraph] Insert (:plot:) command for graph plotting")
 
     def run(self, params):
         startCommand = u'(:plot:)'
