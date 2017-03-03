@@ -26,6 +26,11 @@
 		</author>
 
 		<changelog>
+			<version number="1.14.4">
+                <download os="all">http://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.14.4.zip</download>
+				<change>Updated the Pygments library.</change>
+			</version>
+
 			<version number="1.14.3" date="October 17, 2016">
                 <download os="all">http://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.14.3.zip</download>
 				<change>Added OutWiker 2.0 supporting.</change>
@@ -136,6 +141,11 @@
 		</author>
 
 		<changelog>
+			<version number="1.14.4">
+                <download os="all">http://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.14.4.zip</download>
+				<change>Обновлена библиотека Pygments.</change>
+			</version>
+
 			<version number="1.14.3" date="17.10.2016">
                 <download os="all">http://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.14.3.zip</download>
 				<change>Добавлена поддержка OutWiker 2.0.</change>
