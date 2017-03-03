@@ -1,0 +1,68 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: outwiker\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-03-02 12:13+0300\n"
+"PO-Revision-Date: 2017-03-03 09:01+0300\n"
+"Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
+"Language-Team: Swedish\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.9\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Crowdin-Project: outwiker\n"
+"X-Crowdin-Language: sv-SE\n"
+"X-Crowdin-File: texequation.pot\n"
+"Language: sv_SE\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: actions.py:22
+msgid "Equation"
+msgstr "Ekvation"
+
+#: actions.py:26
+msgid "Insert the equation in te TeX format"
+msgstr "Infoga ekvation i TeX-format"
+
+#: actions.py:33
+msgid "Select the equation type"
+msgstr "Välj ekvationstyp"
+
+#: actions.py:34
+msgid "Insert the equation"
+msgstr "Infoga ekvationen"
+
+#: actions.py:35
+msgid "Inline"
+msgstr "Infogad"
+
+#: actions.py:35
+msgid "Block"
+msgstr "Block"
+
+#: actions.py:35
+msgid "Cancel"
+msgstr "Avbryt"
+
+#: plugin.py:43
+msgid "TeXEquation plug-in allow to insert equations in the TeX format."
+msgstr "TeXEquation-insticket låter dig infoga ekvationer i TeX-format."
+
+#: plugin.py:51
+msgid "http://jenyay.net/Outwiker/TexEquationEn"
+msgstr "http://jenyay.net/Outwiker/TexEquationEn"
+
+#: tokentex.py:65
+msgid "Can't create thumbnails directory"
+msgstr "Kan inte skapa miniatyrmapp"
+
+#: tokentex.py:75
+msgid "Can't remove KaTeX library"
+msgstr "Kan inte ta bort KaTeX-bibliotek"
+
+#: tokentex.py:79
+msgid "Can't copy KaTeX library"
+msgstr "Kan inte kopiera KaTeX-bibliotek"
