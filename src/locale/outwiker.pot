@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-20 22:32+0300\n"
+"POT-Creation-Date: 2017-03-04 20:42+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -43,9 +43,9 @@ msgstr ""
 #: outwiker/core/commands.py:128 outwiker/core/commands.py:247
 #: outwiker/core/commands.py:286 outwiker/core/commands.py:294
 #: outwiker/core/commands.py:302 outwiker/core/commands.py:312
-#: outwiker/core/commands.py:386 outwiker/core/commands.py:392
-#: outwiker/core/commands.py:421 outwiker/core/commands.py:432
-#: outwiker/core/commands.py:436 outwiker/core/textprinter.py:105
+#: outwiker/core/commands.py:385 outwiker/core/commands.py:391
+#: outwiker/core/commands.py:420 outwiker/core/commands.py:431
+#: outwiker/core/commands.py:435 outwiker/core/textprinter.py:105
 #: outwiker/pages/html/basehtmlpanel.py:312
 #: outwiker/pages/wiki/actions/include.py:37
 #: outwiker/pages/wiki/basewikipageview.py:241
@@ -158,42 +158,42 @@ msgstr ""
 msgid "Can't copy text to clipboard"
 msgstr ""
 
-#: outwiker/core/commands.py:385 outwiker/core/commands.py:431
+#: outwiker/core/commands.py:384 outwiker/core/commands.py:430
 msgid "Can't move page when page with that title already exists"
 msgstr ""
 
-#: outwiker/core/commands.py:391
+#: outwiker/core/commands.py:390
 msgid "Can't move page"
 msgstr ""
 
-#: outwiker/core/commands.py:420 outwiker/gui/notestree.py:297
+#: outwiker/core/commands.py:419 outwiker/gui/notestree.py:297
 msgid "You can't rename the root element"
 msgstr ""
 
-#: outwiker/core/commands.py:435
+#: outwiker/core/commands.py:434
 msgid "Can't rename page \"{}\" to \"{}\""
 msgstr ""
 
-#: outwiker/core/commands.py:451
+#: outwiker/core/commands.py:450
 msgid "The invalid page title"
 msgstr ""
 
-#: outwiker/core/commands.py:456
+#: outwiker/core/commands.py:455
 #, python-brace-format
 msgid ""
 "{0}\n"
 "Continue?"
 msgstr ""
 
-#: outwiker/core/commands.py:459
+#: outwiker/core/commands.py:458
 msgid "The page title"
 msgstr ""
 
-#: outwiker/core/commands.py:505
+#: outwiker/core/commands.py:504
 msgid "Enter format of the date"
 msgstr ""
 
-#: outwiker/core/commands.py:506 outwiker/pages/wiki/actions/dates.py:29
+#: outwiker/core/commands.py:505 outwiker/pages/wiki/actions/dates.py:29
 msgid "Date format"
 msgstr ""
 
@@ -1297,18 +1297,21 @@ msgstr ""
 msgid "Double click on an attached file"
 msgstr ""
 
-#: outwiker/gui/preferences/hotkeyspanel.py:84
+#: outwiker/gui/preferences/hotkeyspanel.py:42
+#, python-brace-format
+msgid ""
+"{hotkey} hotkey assigned for \"{old}\".\n"
+"Assign this hotkey for \"{new}\"?"
+msgstr ""
+
+#: outwiker/gui/preferences/hotkeyspanel.py:48
+msgid "Hotkeys conflict"
+msgstr ""
+
+#: outwiker/gui/preferences/hotkeyspanel.py:104
 msgid ""
 "Hot key.\n"
 "Press the Backspace key to clear"
-msgstr ""
-
-#: outwiker/gui/preferences/hotkeyspanel.py:99
-msgid "Actions with the same hotkey"
-msgstr ""
-
-#: outwiker/gui/preferences/hotkeyspanel.py:106
-msgid "Set hot key"
 msgstr ""
 
 #: outwiker/gui/preferences/iconsetpanel.py:90

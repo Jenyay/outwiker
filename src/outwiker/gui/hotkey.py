@@ -27,6 +27,12 @@ class HotKey (object):
     def shift(self):
         return self._shift
 
+    def isEmpty(self):
+        '''
+        Added in outwiker.gui 1.5
+        '''
+        return len(self.key) == 0
+
     def __eq__(self, other):
         return (other is not None and
                 self._key == other._key and

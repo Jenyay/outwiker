@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-20 22:33+0300\n"
+"POT-Creation-Date: 2017-03-04 20:44+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -43,9 +43,9 @@ msgstr "Страница открыта только для чтения"
 #: outwiker/core/commands.py:128 outwiker/core/commands.py:247
 #: outwiker/core/commands.py:286 outwiker/core/commands.py:294
 #: outwiker/core/commands.py:302 outwiker/core/commands.py:312
-#: outwiker/core/commands.py:386 outwiker/core/commands.py:392
-#: outwiker/core/commands.py:421 outwiker/core/commands.py:432
-#: outwiker/core/commands.py:436 outwiker/core/textprinter.py:105
+#: outwiker/core/commands.py:385 outwiker/core/commands.py:391
+#: outwiker/core/commands.py:420 outwiker/core/commands.py:431
+#: outwiker/core/commands.py:435 outwiker/core/textprinter.py:105
 #: outwiker/pages/html/basehtmlpanel.py:312
 #: outwiker/pages/wiki/actions/include.py:37
 #: outwiker/pages/wiki/basewikipageview.py:241
@@ -169,29 +169,29 @@ msgstr "Невозможно открыть буфер обмена"
 msgid "Can't copy text to clipboard"
 msgstr "Ошибка копирования текста в буфер обмена"
 
-#: outwiker/core/commands.py:385 outwiker/core/commands.py:431
+#: outwiker/core/commands.py:384 outwiker/core/commands.py:430
 msgid "Can't move page when page with that title already exists"
 msgstr ""
 "Невозможно переместить страницу, так как страница с таким именем уже "
 "существует"
 
-#: outwiker/core/commands.py:391
+#: outwiker/core/commands.py:390
 msgid "Can't move page"
 msgstr "Невозможно переместить страницу"
 
-#: outwiker/core/commands.py:420 outwiker/gui/notestree.py:297
+#: outwiker/core/commands.py:419 outwiker/gui/notestree.py:297
 msgid "You can't rename the root element"
 msgstr "Нельзя переименовать корневой элемент"
 
-#: outwiker/core/commands.py:435
+#: outwiker/core/commands.py:434
 msgid "Can't rename page \"{}\" to \"{}\""
 msgstr "Невозможно переименовать страницу \"{}\" в \"{}\" "
 
-#: outwiker/core/commands.py:451
+#: outwiker/core/commands.py:450
 msgid "The invalid page title"
 msgstr "Ошибка заголовка страницы"
 
-#: outwiker/core/commands.py:456
+#: outwiker/core/commands.py:455
 #, python-brace-format
 msgid ""
 "{0}\n"
@@ -200,15 +200,15 @@ msgstr ""
 "{0}\n"
 "Продолжить?"
 
-#: outwiker/core/commands.py:459
+#: outwiker/core/commands.py:458
 msgid "The page title"
 msgstr "Заголовок страницы"
 
-#: outwiker/core/commands.py:505
+#: outwiker/core/commands.py:504
 msgid "Enter format of the date"
 msgstr "Введите формат даты"
 
-#: outwiker/core/commands.py:506 outwiker/pages/wiki/actions/dates.py:29
+#: outwiker/core/commands.py:505 outwiker/pages/wiki/actions/dates.py:29
 msgid "Date format"
 msgstr "Формат даты"
 
@@ -1323,21 +1323,26 @@ msgstr "Открыть файл"
 msgid "Double click on an attached file"
 msgstr "Двойной клик на прикрепленном файле"
 
-#: outwiker/gui/preferences/hotkeyspanel.py:84
+#: outwiker/gui/preferences/hotkeyspanel.py:42
+#, python-brace-format
+msgid ""
+"{hotkey} hotkey assigned for \"{old}\".\n"
+"Assign this hotkey for \"{new}\"?"
+msgstr ""
+"Горячая клавиша {hotkey} назначена для \"{old}\".\n"
+"Назначить эту горячую клавишу для \"{new}\"?"
+
+#: outwiker/gui/preferences/hotkeyspanel.py:48
+msgid "Hotkeys conflict"
+msgstr "Конфликт горячих клавиш"
+
+#: outwiker/gui/preferences/hotkeyspanel.py:104
 msgid ""
 "Hot key.\n"
 "Press the Backspace key to clear"
 msgstr ""
 "Горячая клавиша.\n"
 "Нажмите Backspace, чтобы ее очистить"
-
-#: outwiker/gui/preferences/hotkeyspanel.py:99
-msgid "Actions with the same hotkey"
-msgstr "Действия с той же клавишей"
-
-#: outwiker/gui/preferences/hotkeyspanel.py:106
-msgid "Set hot key"
-msgstr "Установить горячую клавишу"
 
 #: outwiker/gui/preferences/iconsetpanel.py:90
 msgid "Add new group"
@@ -2499,6 +2504,12 @@ msgstr "Вставить таблицу"
 #: outwiker/gui/tabledialog.py:114
 msgid "Border width"
 msgstr "Толщина рамки"
+
+#~ msgid "Actions with the same hotkey"
+#~ msgstr "Действия с той же клавишей"
+
+#~ msgid "Set hot key"
+#~ msgstr "Установить горячую клавишу"
 
 #~ msgid "None"
 #~ msgstr "Нет"

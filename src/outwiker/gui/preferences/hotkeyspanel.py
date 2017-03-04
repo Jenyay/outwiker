@@ -5,6 +5,7 @@ import wx
 from outwiker.core.application import Application
 from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
 from outwiker.gui.controls.hotkeyctrl import HotkeyCtrl, EVT_HOTKEY_EDIT
+from outwiker.core.commands import MessageBox
 
 
 class HotKeysPanel(BasePrefPanel):
@@ -23,15 +24,35 @@ class HotKeysPanel(BasePrefPanel):
 
         self.__filterText.Bind(wx.EVT_TEXT, self.__onFilterEdit)
         self.__actionsList.Bind(wx.EVT_LISTBOX, self.__onActionSelect)
-        self.__hotkey.Bind(EVT_HOTKEY_EDIT, self.__onHotkeyEdit)
-        self.__setHotKeyBtn.Bind(wx.EVT_BUTTON, self.__onSetHotkey)
+        self.__hotkeyCtrl.Bind(EVT_HOTKEY_EDIT, self.__onHotkeyEdit)
         self._setScrolling()
 
     def __onHotkeyEdit(self, event):
-        strid = self.__getSelectedStrid()
-        if strid is not None:
-            self.__hotkeys[strid] = event.hotkey
-            self.__findConflicts()
+        newActionStrId = self.__getSelectedStrid()
+        if newActionStrId is None:
+            return
+
+        newhotkey = event.hotkey
+        oldActionStrId = self.__findConflict(newhotkey)
+
+        if oldActionStrId is not None:
+            newAction = Application.actionController.getTitle(newActionStrId)
+            oldAction = Application.actionController.getTitle(oldActionStrId)
+
+            text = _(u'{hotkey} hotkey assigned for "{old}".\nAssign this hotkey for "{new}"?').format(
+                hotkey=newhotkey,
+                old=oldAction,
+                new=newAction)
+
+            if (MessageBox(text,
+                           _(u'Hotkeys conflict'),
+                           wx.ICON_QUESTION | wx.YES | wx.NO) == wx.YES):
+                self.__hotkeys[oldActionStrId] = None
+            else:
+                self.__hotkeyCtrl.SetValue(self.__hotkeys[newActionStrId])
+                return
+
+        self.__hotkeys[newActionStrId] = newhotkey
 
     def __getSelectedStrid(self):
         """
@@ -75,7 +96,6 @@ class HotKeysPanel(BasePrefPanel):
         # выбор горячей клавиши и описание action
         rightSizer = wx.FlexGridSizer(cols=1)
         rightSizer.AddGrowableCol(0)
-        rightSizer.AddGrowableRow(2)
 
         # Comment to hotkeysCtrl
         self.__hotkeyText = wx.StaticText(
@@ -84,61 +104,43 @@ class HotKeysPanel(BasePrefPanel):
             _(u'Hot key.\nPress the Backspace key to clear'))
 
         # Горячая клавиша
-        self.__hotkey = HotkeyCtrl(self)
-        self.__hotkey.Disable()
+        self.__hotkeyCtrl = HotkeyCtrl(self)
+        self.__hotkeyCtrl.Disable()
 
         # Описание action
         self.__descriptionText = wx.TextCtrl(
             self,
             style=wx.TE_WORDWRAP | wx.TE_MULTILINE | wx.TE_READONLY)
-        self.__descriptionText.SetMinSize((200, -1))
-
-        # Список actions с такими же горячими клавишами
-        self.__conflictLabel = wx.StaticText(
-            self,
-            label=_(u"Actions with the same hotkey"))
-        self.__conflictActionsText = wx.TextCtrl(
-            self,
-            style=wx.TE_WORDWRAP | wx.TE_MULTILINE | wx.TE_READONLY)
-        self.__conflictActionsText.SetMinSize((-1, 100))
-
-        # The button the set hotkey
-        self.__setHotKeyBtn = wx.Button(self, label=_(u'Set hot key'))
+        self.__descriptionText.SetMinSize((200, 150))
 
         rightSizer.Add(self.__hotkeyText, flag=wx.EXPAND | wx.ALL, border=2)
         rightSizer.Add(
-            self.__hotkey,
+            self.__hotkeyCtrl,
             flag=wx.EXPAND | wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
         rightSizer.Add(self.__descriptionText,
                        flag=wx.EXPAND | wx.ALL, border=2)
-        rightSizer.Add(self.__conflictLabel,
-                       flag=wx.EXPAND | wx.ALL, border=2)
-        rightSizer.Add(self.__conflictActionsText,
-                       flag=wx.EXPAND | wx.ALL, border=2)
-        rightSizer.Add(self.__setHotKeyBtn, flag=wx.EXPAND | wx.ALL, border=2)
 
         mainSizer.Add(leftSizer, flag=wx.EXPAND | wx.ALL, border=2)
         mainSizer.Add(rightSizer, flag=wx.EXPAND | wx.ALL, border=2)
         self.SetSizer(mainSizer)
 
-    def __findConflicts(self):
-        """
-        Заполнить список действий с такой же горячей клавишей
-        """
-        self.__conflictActionsText.Value = u""
-        stridCurrent = self.__getSelectedStrid()
-        hotkeyCurrent = self.__hotkey.GetValue()
+    def __findConflict(self, hotkey):
+        if hotkey is None or hotkey.isEmpty():
+            return None
 
-        for strid, hotkey in self.__hotkeys.iteritems():
+        stridCurrent = self.__getSelectedStrid()
+
+        for strid, hotkeyCurrent in self.__hotkeys.iteritems():
             if stridCurrent == strid or hotkey is None:
                 continue
             if hotkey == hotkeyCurrent:
-                self.__conflictActionsText.Value += Application.actionController.getTitle(strid) + "\n"
+                return strid
+
+        return None
 
     def LoadState(self):
         self.__fillActionsList()
         self.__initHotKeys()
-        self.__findConflicts()
 
     def __initHotKeys(self):
         """
@@ -158,9 +160,8 @@ class HotKeysPanel(BasePrefPanel):
         strid = event.GetClientData()
         if strid is not None:
             self.__descriptionText.Value = Application.actionController.getAction(strid).description
-            self.__hotkey.Enable()
-            self.__hotkey.SetValue(self.__hotkeys[strid])
-            self.__findConflicts()
+            self.__hotkeyCtrl.Enable()
+            self.__hotkeyCtrl.SetValue(self.__hotkeys[strid])
 
     def __fillActionsList(self):
         """
@@ -191,30 +192,9 @@ class HotKeysPanel(BasePrefPanel):
         return (filterText in action.title.lower() or
                 filterText in action.description.lower())
 
-    def __onSetHotkey(self, event):
-        from outwiker.actions.preferences import PreferencesAction
-
-        stridCurrent = self.__getSelectedStrid()
-        hotkeyCurrent = self.__hotkey.GetValue()
-
-        # Не будем менять до перезапуска горячую клавишу для вызова настроек.
-        # Это связано с тем, что потом придется удалять этот пункт меню, чтобы
-        # расставить подчеркивания с помощью Shortcuter, но возникнут проблемы,
-        # т.к. в это место кода мы попадаем из обработчика события, связанного
-        # с этим пунктом меню
-        Application.actionController.setHotKey(
-            stridCurrent,
-            hotkeyCurrent,
-            stridCurrent != PreferencesAction.stringId)
+    def Save(self):
+        actionController = Application.actionController
 
         for strid, hotkey in self.__hotkeys.iteritems():
-            if hotkey == hotkeyCurrent and stridCurrent != strid:
-                Application.actionController.setHotKey(
-                    strid,
-                    None,
-                    strid != PreferencesAction.stringId)
-        self.__initHotKeys()
-        self.__findConflicts()
-
-    def Save(self):
-        pass
+            if actionController.getHotKey(strid) != hotkey:
+                actionController.setHotKey(strid, hotkey, True)
