@@ -234,8 +234,8 @@ def locale():
         local(r'find . -iname "*.py" | xargs xgettext -o locale/outwiker.pot')
 
 
-@task
-def localeplugin(pluginname):
+@task(alias='plugin_locale')
+def locale_plugin(pluginname):
     """
     Create or update the localization file for pluginname plug-in
     """
@@ -521,7 +521,7 @@ def deploy():
     upload_unstable()
 
 
-@task
+@task(alias='apiversions')
 def apiversion():
     print(u'core: {}.{}'.format(outwiker.core.__version__[0],
                                 outwiker.core.__version__[1]))
