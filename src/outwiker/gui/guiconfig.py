@@ -771,6 +771,27 @@ class PageDialogConfig(object):
         )
 
 
+class PrefDialogConfig(object):
+    WIDTH_SECTION = u'PrefDialogWidth'
+    WIDTH_DEFAULT = 800
+
+    HEIGHT_SECTION = u'PrefDialogHeight'
+    HEIGHT_DEFAULT = 500
+
+    def __init__(self, config):
+        self.config = config
+
+        self.width = IntegerOption(self.config,
+                                   MainWindowConfig.MAIN_WINDOW_SECTION,
+                                   self.WIDTH_SECTION,
+                                   self.WIDTH_DEFAULT)
+
+        self.height = IntegerOption(self.config,
+                                    MainWindowConfig.MAIN_WINDOW_SECTION,
+                                    self.HEIGHT_SECTION,
+                                    self.HEIGHT_DEFAULT)
+
+
 class TagsConfig(object):
     """
     Options for tags and tags cloud
