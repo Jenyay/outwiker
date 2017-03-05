@@ -2,12 +2,12 @@
 type = wiki
 tags = пользователям, стили
 order = 4
-datetime = 2012-04-27 23:04:51.000000
-cursorposition = 0
+datetime = 2017-03-05 12:10:51.887000
+cursorposition = 181
 alias = Стили страниц
 
 [wiki]
-md5_hash = fbe8a966ce5caec2b0efbd73f1c38a5a
+md5_hash = 6befab084863c71c8ea94f2d1fb45ec5
 
 [Tree]
 expand = True

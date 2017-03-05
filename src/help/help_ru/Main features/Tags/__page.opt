@@ -2,12 +2,12 @@
 type = wiki
 tags = пользователям
 order = 1
-datetime = 2012-04-27 23:04:51.000000
-cursorposition = 0
+datetime = 2017-03-05 12:22:15.876000
+cursorposition = 31
 alias = Работа с метками
 
 [wiki]
-md5_hash = b7dae8cf6bf11d8420d1d32e754085d2
+md5_hash = 022e49de22bf37866c4de0768007ded3
 
 [Misc]
 pageindex = 1

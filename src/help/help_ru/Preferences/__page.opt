@@ -3,12 +3,12 @@ type = wiki
 tags = 
 order = 5
 creationdatetime = 2015-02-01 20:49:35.017769
-datetime = 2015-02-08 17:07:38.350657
-cursorposition = 12477
+datetime = 2017-03-05 12:36:48.509000
+cursorposition = 12413
 alias = Настройки программы
 
 [wiki]
-md5_hash = f1f52bd54c7533366bb0e00cd556d303
+md5_hash = e71106e09d1d281f05f9e1aba0fff7f6
 
 [Misc]
 pageindex = 1

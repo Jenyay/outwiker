@@ -1,12 +1,12 @@
 [wiki]
-md5_hash = 268736f75801474e3bbb3cb989ce8c2c
+md5_hash = aec1a2b1f9473e530fa8ff637e178c83
 
 [General]
 type = wiki
 order = 0
 tags = продвинутым пользователям
-datetime = 2014-06-14 15:43:12.235680
-cursorposition = 75
+datetime = 2017-03-05 12:52:12.097000
+cursorposition = 349
 alias = Запуск под Linux. Зависимости
 
 [Misc]

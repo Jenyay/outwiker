@@ -1,4 +1,26 @@
-!!! [=1.9.0=]
+!!! [=2.0.0=]
+
+* The program now uses wxPython 3.0 library.
+* The editor adds the ability to duplicate the current line with hot key or menu item.
+* The editor adds the ability to delete the current line with hot key or menu item.
+* The editor adds the ability to move lines up / down with hot keys or menu items.
+* The editor adds the ability to join lines with the hot key or menu item.
+* The editor adds the ability to remove word to beginning / ending with the hot key or menu item.
+* The editor adds the ability to decreade nesting level of the list items with the hot key or menu item.
+* Added the menu items to move cursor in text.
+* Added the menu items to copy / cut the current line to clipboard.
+* Added the "--page, -p" command line parameter to select page when starting.
+* Added the "--normal" command line parameter to disable minimizing when starting.
+* Added the "--debug" command line parameter to run in the debug mode.
+* Added the Swedish translation.
+* Restored availability the icon in the system tray on Linux.
+* Added the ability to add alias to page.
+* Changed GUI to set hot keys.
+* Added options to change editor margin color.
+* Added options to change background color of the selected text.
+
+
+!!! [=1.9.0  (09.04.2016)=]
 
 * Icons for notes are separated into groups.
 * Now users can complement a standard set of icons for new files.

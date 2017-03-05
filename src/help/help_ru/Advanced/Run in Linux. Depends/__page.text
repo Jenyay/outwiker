@@ -1,8 +1,13 @@
 Под Linux должны быть установлены следующие пакеты:
 
-* '''python''' (версия 2.7)
-* '''python-wxgtk2.8''' (реализация wxPython под Linux)
+* '''python2.7'''
+* '''python-gtk2'''
+* '''python-wxgtk3.0'''
+* '''python-wxgtk-webview3.0'''
 * '''python-wxversion'''
 * '''python-webkit-dev'''
-* '''libgnomeprint2.2-0''', '''libgnomeprintui2.2-0''' (эти пакеты используются при печати текста, например, текстовых страниц, вики-нотацию или исходный текст страниц. Без этих пакетов печать будет работать, но будет проблема с печатью русских букв)
-* '''mimetex''' (без этого пакета не будет работать рендеринг формул)
+* '''libwxgtk-webview3.0-0v5'''
+* '''python-pil''' или '''python-imaging'''
+* '''python-enchant'''
+* '''python-appindicator'''
+* '''ibus-gtk3'''
