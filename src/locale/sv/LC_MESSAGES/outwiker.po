@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-20 22:32+0300\n"
-"PO-Revision-Date: 2017-02-21 20:49+0300\n"
+"POT-Creation-Date: 2017-03-04 20:42+0300\n"
+"PO-Revision-Date: 2017-03-05 09:13+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -40,9 +40,9 @@ msgstr "Sidan är öppnad med skrivskydd"
 #: outwiker/core/commands.py:128 outwiker/core/commands.py:247
 #: outwiker/core/commands.py:286 outwiker/core/commands.py:294
 #: outwiker/core/commands.py:302 outwiker/core/commands.py:312
-#: outwiker/core/commands.py:386 outwiker/core/commands.py:392
-#: outwiker/core/commands.py:421 outwiker/core/commands.py:432
-#: outwiker/core/commands.py:436 outwiker/core/textprinter.py:105
+#: outwiker/core/commands.py:385 outwiker/core/commands.py:391
+#: outwiker/core/commands.py:420 outwiker/core/commands.py:431
+#: outwiker/core/commands.py:435 outwiker/core/textprinter.py:105
 #: outwiker/pages/html/basehtmlpanel.py:312
 #: outwiker/pages/wiki/actions/include.py:37
 #: outwiker/pages/wiki/basewikipageview.py:241
@@ -163,27 +163,27 @@ msgstr "Kan inte öppna urklipp"
 msgid "Can't copy text to clipboard"
 msgstr "Kan inte kopiera text till urklipp"
 
-#: outwiker/core/commands.py:385 outwiker/core/commands.py:431
+#: outwiker/core/commands.py:384 outwiker/core/commands.py:430
 msgid "Can't move page when page with that title already exists"
 msgstr "Kan inte flytta sidan när det redan finns en sida med samma namn"
 
-#: outwiker/core/commands.py:391
+#: outwiker/core/commands.py:390
 msgid "Can't move page"
 msgstr "Kan inte flytta sidan"
 
-#: outwiker/core/commands.py:420 outwiker/gui/notestree.py:297
+#: outwiker/core/commands.py:419 outwiker/gui/notestree.py:297
 msgid "You can't rename the root element"
 msgstr "Du kan inte namnändra rotobjektet"
 
-#: outwiker/core/commands.py:435
+#: outwiker/core/commands.py:434
 msgid "Can't rename page \"{}\" to \"{}\""
 msgstr "Kan inte namnändra \"{}\" till \"{}\""
 
-#: outwiker/core/commands.py:451
+#: outwiker/core/commands.py:450
 msgid "The invalid page title"
 msgstr "Ogiltig sidtitel"
 
-#: outwiker/core/commands.py:456
+#: outwiker/core/commands.py:455
 #, python-brace-format
 msgid ""
 "{0}\n"
@@ -192,15 +192,15 @@ msgstr ""
 "{0}\n"
 "Vill du fortsätta?"
 
-#: outwiker/core/commands.py:459
+#: outwiker/core/commands.py:458
 msgid "The page title"
 msgstr "Sidtitel"
 
-#: outwiker/core/commands.py:505
+#: outwiker/core/commands.py:504
 msgid "Enter format of the date"
 msgstr "Ange datumformat"
 
-#: outwiker/core/commands.py:506 outwiker/pages/wiki/actions/dates.py:29
+#: outwiker/core/commands.py:505 outwiker/pages/wiki/actions/dates.py:29
 msgid "Date format"
 msgstr "Datumformat"
 
@@ -1304,21 +1304,26 @@ msgstr "Öppna fil"
 msgid "Double click on an attached file"
 msgstr "Dubbelklick på en bifogad fil"
 
-#: outwiker/gui/preferences/hotkeyspanel.py:84
+#: outwiker/gui/preferences/hotkeyspanel.py:42
+#, python-brace-format
+msgid ""
+"{hotkey} hotkey assigned for \"{old}\".\n"
+"Assign this hotkey for \"{new}\"?"
+msgstr ""
+"Snabbtangent {hotkey} associerad med \"{old}\".\n"
+"Vill du tilldela denna snabbtangent till \"{new}\"?"
+
+#: outwiker/gui/preferences/hotkeyspanel.py:48
+msgid "Hotkeys conflict"
+msgstr "Snabbtangentkonflikt"
+
+#: outwiker/gui/preferences/hotkeyspanel.py:104
 msgid ""
 "Hot key.\n"
 "Press the Backspace key to clear"
 msgstr ""
 "Hot key. \n"
 "Press på Backsteg för att rensa"
-
-#: outwiker/gui/preferences/hotkeyspanel.py:99
-msgid "Actions with the same hotkey"
-msgstr "Åtgärder med samma snabbtangent"
-
-#: outwiker/gui/preferences/hotkeyspanel.py:106
-msgid "Set hot key"
-msgstr "Ange snabbtangent"
 
 #: outwiker/gui/preferences/iconsetpanel.py:90
 msgid "Add new group"
