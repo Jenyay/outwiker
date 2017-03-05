@@ -134,7 +134,10 @@ class PluginsLoader (object):
                 fullpath = os.path.abspath(currentDir)
                 # TODO: Разобраться с Unicode в следующей строке.
                 # Иногда выскакивает предупреждение:
-                # ...\outwiker\core\pluginsloader.py:41: UnicodeWarning: Unicode equal comparison failed to convert both arguments to Unicode - interpreting them as being unequal
+                # ...\outwiker\core\pluginsloader.py:41:
+                # UnicodeWarning: Unicode equal comparison failed to convert
+                # both arguments to Unicode - interpreting them as
+                # being unequal
 
                 syspath = [unicode(item, getOS().filesEncoding)
                            if type(item) != unicode else item
@@ -197,7 +200,8 @@ class PluginsLoader (object):
                 try:
                     appinfo = self.__loadPluginInfo(plugin_fname)
                 except EnvironmentError:
-                    error = _(u'Plug-in "{}". Can\'t read "{}" file').format(packageName, PLUGIN_VERSION_FILE_NAME)
+                    error = _(u'Plug-in "{}". Can\'t read "{}" file').format(
+                        packageName, PLUGIN_VERSION_FILE_NAME)
 
                     self._print(error)
                     self.__invalidPlugins.append(InvalidPlugin(packageName,
