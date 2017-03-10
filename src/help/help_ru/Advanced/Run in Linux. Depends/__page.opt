@@ -6,7 +6,7 @@ type = wiki
 order = 0
 tags = продвинутым пользователям
 datetime = 2017-03-05 12:52:12.097000
-cursorposition = 349
+cursorposition = 342
 alias = Запуск под Linux. Зависимости
 
 [Misc]
