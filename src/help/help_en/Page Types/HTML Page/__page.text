@@ -8,5 +8,5 @@ It is possible to add links to other pages.
 Screenshot examples of pages:
 
 <table border=0 width=100%>
-<tr><td align=center><a href="__attach/outwiker_1.0_alpha_3_htmlcode_win.png"><img src="__attach/outwiker_1.0_alpha_3_htmlcode_win_small.png"/></a></td><td align=center><a href="__attach/outwiker_1.0_alpha_3_html_win.png"><img src="__attach/outwiker_1.0_alpha_3_html_win_small.png"/></a></td></tr>
-</table>
+<tr><td align=center><a href="__attach/html_code.png"><img src="__attach/html_code_small.png"/></a></td><td align=center><a href="__attach/html_preview.png"><img src="__attach/html_preview_small.png"/></a></td></tr>
+</table> 

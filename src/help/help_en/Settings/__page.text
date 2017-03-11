@@ -30,7 +30,7 @@ Later in this section will be described the preferences. The dialog for the chan
 
 !!! [[#general]] Interface - General
 
-%center%%thumb width=550%Attach:outwiker_opt_01.png%%
+%center%%thumb width=550%Attach:outwiker_opt_general.png%%
 
 The first flags destined for the change behavior a program icon in the tray (the region near the system clock under Windows).
 
@@ -60,7 +60,7 @@ The '''Language''' field sets the interface language. If this field was being se
 
 !!! [[#view]] Interface - Preview
 
-%center%%thumb width=550%Attach:outwiker_opt_02.png%%
+%center%%thumb width=550%Attach:outwiker_opt_preview.png%%
 
 This section is responsible for the appearance [[HTML pages -> page://__0cc8f2c6-754c-4aa8-b118-561b930e9955]] and [[wiki pages -> page://__dd8b23a1-6787-42bb-9b58-c78a656688e2]] in preview mode. In this section can set default font size and style (by parameters group '''Font''') as well as add custom CSS styles which will be added to all pages referred above types.
 
@@ -68,7 +68,7 @@ This section is responsible for the appearance [[HTML pages -> page://__0cc8f2c6
 
 !!! [[#print]] Interface - Text Printout
 
-%center%%thumb width=550%Attach:outwiker_opt_03.png%%
+%center%%thumb width=550%Attach:outwiker_opt_printout.png%%
 
 This section allow to change parameters of the printing of the [[text pages -> page://__b32aa743-384d-493f-aad4-4c4cbf945fbb]] as well as [[HTML pages -> page://__0cc8f2c6-754c-4aa8-b118-561b930e9955]] in ''HTML'' mode and [[wiki pages -> page://__dd8b23a1-6787-42bb-9b58-c78a656688e2]] in ''Wiki'' and ''HTML'' modes.
 
@@ -78,7 +78,7 @@ In this section can change font size and style (the parameters group '''Font''')
 
 !!! [[#editor]] Editor - General
 
-%center%%thumb width=550%Attach:outwiker_opt_04.png%%
+%center%%thumb width=550%Attach:outwiker_opt_editor_general.png%%
 
 This section contains settings for the text editor, which uses for input the notes. Here can set font size, style and color (the parameters group '''Font''') and background color (the parameters group '''Font color'''). For example you can set inverted colors: black background and white text color.
 
@@ -92,7 +92,7 @@ Editor can respond on the Home / End keys two ways. When this keys are pressed t
 
 !!! [[#htmleditor]] Editor - HTML Editor
 
-%center%%thumb width=550%Attach:outwiker_opt_05.png%%
+%center%%thumb width=550%Attach:outwiker_opt_editor_html.png%%
 
 This section contains settings for HTML code highliting on the [[HTML page -> page://__0cc8f2c6-754c-4aa8-b118-561b930e9955]] and on ''HTML'' tab for [[wiki page -> page://__dd8b23a1-6787-42bb-9b58-c78a656688e2]]. Here can change font colors and styles for HTML tags, their attributes, numbers, comments, strings in HTML format and invalid HTML elements.
 
@@ -102,7 +102,7 @@ The font name can change in [[Editor - General -> #editor]] section.
 
 !!! [[#wikieditor]] Editor - Wiki Editor
 
-%center%%thumb width=550%Attach:outwiker_opt_06.png%%
+%center%%thumb width=550%Attach:outwiker_opt_editor_wiki.png%%
 
 This section contains settings for some wiki code highlighting: links, headers, [[wiki commands -> page://__b016f2ed-a6c0-4dca-8d17-508955f4cc7c]] (that is located between the brackets (: ... :) )
 
@@ -112,7 +112,7 @@ Font name and size can change in [[Editor - General -> #editor]] section.
 
 !!! [[#wikipage]] Wiki Page
 
-%center%%thumb width=550%Attach:outwiker_opt_07.png%%
+%center%%thumb width=550%Attach:outwiker_opt_wiki_pages.png%%
 
 This section contains parameters which influences on [[wiki page -> page://__dd8b23a1-6787-42bb-9b58-c78a656688e2]] appearance
 
@@ -131,9 +131,9 @@ If you create new [[wiki page -> page://__dd8b23a1-6787-42bb-9b58-c78a656688e2]]
 
 
 
-!!! [[#icons]] User's iconset
+!!! [[#icons]] User's icon set
 
-%center%%thumb width=550%Attach:outwiker_opt_08.png%%
+%center%%thumb width=550%Attach:outwiker_opt_icons.png%%
 
 Since version OutWiker 1.9 you can set for pages not only predefined icons, but you can load own icons. For this intended the section '''User's iconset'''.
 
@@ -145,11 +145,11 @@ In the right located icons list for selected group. By buttons in the bottom can
 
 
 
-!!! [[#plugins]] Plugins
+!!! [[#plugins]] Plug-ins
 
-%center%%thumb width=550%Attach:outwiker_opt_09.png%%
+%center%%thumb width=550%Attach:outwiker_opt_plugins.png%%
 
-In this section can view list installed (succesfully laoded) plug-ins. After plug-in selection will be showed information about: name, version number, short description and, if exists, link to plug-in page.
+In this section can view list installed (successfully loaded) plug-ins. After plug-in selection will be showed information about: name, version number, short description and, if exists, link to plug-in page.
 
 In this section can disable unnecessary currently plug-ins without removing its files.
 
@@ -157,7 +157,7 @@ In this section can disable unnecessary currently plug-ins without removing its 
 
 !!! [[#hotkeys]] Hotkeys
 
-%center%%thumb width=550%Attach:outwiker_opt_10.png%%
+%center%%thumb width=550%Attach:outwiker_opt_hotkeys.png%%
 
 In this section can change or set hotkeys for calling program actions. In the left located list of the all actions. In the right located controls to set hotkey and more detailed description for this action. In the right bottom showed action which uses current hotkey by this time, that to see possible conflicts.
 

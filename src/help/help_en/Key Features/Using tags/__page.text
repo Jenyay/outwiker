@@ -1,4 +1,4 @@
-!!! Add tags to your notes
+!!! Add tags to your notes 
 
 Each note may be added any number of tags, which can then be used to find specific notes.
 
@@ -18,7 +18,7 @@ On the "Tags" panel font size for each label depends on the count of use of the 
 
 When you click on tag the left mouse button displays a list of pages that are also marked this tag.
 
-%center% %thumb width=500%Attach:popup.png%%
+%center% Attach:popup.png 
 
 
 !!! Batch operations with tags

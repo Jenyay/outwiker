@@ -6,6 +6,7 @@ type = wiki
 order = 0
 tags = for users, wiki, commands
 datetime = 2014-03-24 13:11:22.326000
+cursorposition = 0
 
 [Misc]
 pageindex = 1
