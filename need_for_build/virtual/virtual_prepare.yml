@@ -1,0 +1,80 @@
+---
+- name: Configure virtual machine for OutWiker development
+  hosts: virtual
+  remote_user: jenyay
+  vars:
+      outwiker_dir: "{{ homedir }}/projects/soft/outwiker"
+      vundle_dir: "{{ homedir }}/.vim/bundle/Vundle.vim"
+  tasks:
+      - name: upgrade software
+        apt: update_cache=yes upgrade=dist
+        become: true
+
+      - name: install software
+        apt: name={{ item }}
+        with_items:
+          - virtualenv
+          - mc
+          - python-pip
+          - git
+          - krusader
+          - konsole
+          - synaptic
+          - vim-gtk3
+          - fabric
+          - python-wxgtk3.0
+          - python-wxversion
+          - libwxgtk-webview3.0-0v5
+          - python-pil
+          - python-enchant
+          - python-appindicator
+          - python-gtk2
+          - python-wxgtk-webview3.0
+          - ibus-gtk3
+          - debhelper
+          - exuberant-ctags
+        become: true
+
+      - name: create directories for jenyay
+        file: path={{ item }} state=directory
+        with_items:
+            - "{{ homedir }}/.config/mc"
+            - "{{ homedir }}/projects"
+            - "{{ homedir }}/projects/soft"
+
+      - name: copy .bashrc config file to jenyay's home
+        copy: src=files/.bashrc dest={{ homedir }}/.bashrc
+
+      - name: copy mc ini config file to jenyay's home
+        copy: src=files/mc_ini dest={{ homedir }}/.config/mc/ini
+
+      - name: copy .vimrc config file to jenyay's home
+        copy: src=files/.vimrc dest={{ homedir }}/.vimrc
+
+      - name: copy .vim directory to jenyay's home
+        copy: src=files/.vim dest={{ homedir }}
+
+      - name: create directories for vim
+        file: path={{ item }} state=directory
+        with_items:
+            - "{{ homedir }}/.vim/bundle"
+
+      - stat: path={{ vundle_dir }}
+        register: vundle_dir_stat
+
+      - name: install vundle vim plugin
+        git:
+            repo: https://github.com/VundleVim/Vundle.vim
+            dest: "{{ vundle_dir }}"
+        when:
+            vundle_dir_stat.stat.exists == False
+
+      - stat: path={{ outwiker_dir }}
+        register: outwiker_dir_stat
+
+      - name: clone OutWiker repository
+        git:
+            repo: https://github.com/jenyay/outwiker
+            dest: "{{ homedir }}/projects/soft/outwiker"
+        when:
+            outwiker_dir_stat.stat.exists == False
