@@ -32,6 +32,7 @@
           - python-wxgtk-webview3.0
           - ibus-gtk3
           - debhelper
+          - devscripts
           - exuberant-ctags
         become: true
 

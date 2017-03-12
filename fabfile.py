@@ -27,6 +27,7 @@ from buildtools.defines import (
     PLUGIN_VERSIONS_FILENAME,
     FILES_FOR_UPLOAD_UNSTABLE_WIN,
     OUTWIKER_VERSIONS_FILENAME,
+    NEED_FOR_BUILD_DIR,
 )
 from buildtools.versions import (getOutwikerVersion,
                                  downloadAppInfo,
@@ -541,3 +542,12 @@ def apiversion():
 def doc():
     with lcd('doc'):
         local('make html')
+
+
+@task
+def prepare_virtual():
+    '''
+    Prepare virtual machine
+    '''
+    with lcd(os.path.join(NEED_FOR_BUILD_DIR, u'virtual')):
+        local(u'ansible-playbook virtual_prepare.yml -k --ask-sudo-pass')
