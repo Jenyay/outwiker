@@ -34,12 +34,9 @@ class BaseTexToken (object):
         self._scriptActionsTemplate = u'''var element = document.getElementById("{idname}-{index}");
 katex.render("{code}", element, {{ displayMode: {displayMode}, throwOnError: false }});'''
 
-        self._scriptCommentStart = u'<!-- TeXEquation start -->\n'
-        self._scriptCommentEnd = u'\n<!-- TeXEquation end -->\n'
-
-        self._scriptTemplate = self._scriptCommentStart + u'''<script>
+        self._scriptTemplate = u'''<script>
 {actions}
-</script>''' + self._scriptCommentEnd
+</script>'''
 
     def getToken(self):
         return QuotedString(self.texStart,
