@@ -34,6 +34,21 @@ var element = document.getElementById("{idname}-{index}");
 katex.render("{code}", element, {{ displayMode: {displayMode}, throwOnError: false }});
 </script>'''
 
+
+        self._equationTemplate = u'<span class="{classname}" id="{idname}-{index}"></span>'
+
+        self._scriptActionsTemplate = u'''var element = document.getElementById("{idname}-{index}");
+katex.render("{code}", element, {{ displayMode: {displayMode}, throwOnError: false }});'''
+
+        self._scriptCommentStart = u'<!-- TeXEquation start -->\n'
+        self._scriptCommentEnd = u'\n<!-- TeXEquation start -->'
+
+        self._scriptTemplate = self._scriptCommentStart + u'''<script>
+{actions}
+</script>''' + self._scriptCommentEnd
+
+        self._scriptActions = []
+
     def getToken(self):
         return QuotedString(self.texStart,
                             endQuoteChar=self.texEnd,
@@ -52,30 +67,26 @@ katex.render("{code}", element, {{ displayMode: {displayMode}, throwOnError: fal
     def _getIdName(self):
         pass
 
+    def _copyKatexLibrary(self):
+        thumb = Thumbnails(self.parser.page)
+        thumb_path = thumb.getThumbPath(True)
+        katex_path = os.path.join(thumb_path, u'katex')
+
+        if os.path.exists(katex_path):
+            shutil.rmtree(katex_path)
+
+        shutil.copytree(self._getKaTeXPath(), katex_path)
+
     def makeTexEquation(self, s, l, t):
         eqn = t[0].strip()
         if len(eqn) == 0:
             return u""
 
-        thumb = Thumbnails(self.parser.page)
-
-        try:
-            thumb_path = thumb.getThumbPath(True)
-        except IOError:
-            return u"<b>{}</b>".format(_(u"Can't create thumbnails directory"))
-
         if self._headers[0] not in self.parser.head:
             map(lambda head: self.parser.appendToHead(head), self._headers)
-            katex_path = os.path.join(thumb_path, u'katex')
-
-            if os.path.exists(katex_path):
-                try:
-                    shutil.rmtree(katex_path)
-                except shutil.Error:
-                    return u"<b>{}</b>".format(_(u"Can't remove KaTeX library"))
             try:
-                shutil.copytree(self._getKaTeXPath(), katex_path)
-            except shutil.Error:
+                self._copyKatexLibrary()
+            except (shutil.Error, IOError):
                 return u"<b>{}</b>".format(_(u"Can't copy KaTeX library"))
 
         eqn = eqn.replace('\\', '\\\\')
@@ -86,6 +97,20 @@ katex.render("{code}", element, {{ displayMode: {displayMode}, throwOnError: fal
                                           displayMode=self._getDisplayParam(),
                                           classname=self._getClassName(),
                                           idname=self._getIdName())
+
+        scriptAction = self._scriptActionsTemplate.format(
+            index=self._divIndex,
+            code=eqn,
+            displayMode=self._getDisplayParam(),
+            idname=self._getIdName()
+        )
+
+        self._scriptActions.append(scriptAction)
+
+        script = self._scriptTemplate.format(
+            actions=u'\n'.join(self._scriptActions)
+        )
+
         self._divIndex += 1
         return result
 

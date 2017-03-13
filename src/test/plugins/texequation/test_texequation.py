@@ -86,6 +86,15 @@ class TexEquationTest(unittest.TestCase):
         full_path = os.path.join(self.parser.page.path, path)
         self.assertTrue(os.path.exists(full_path), full_path)
 
+    def test_inline_03(self):
+        eqn = u"y = f(x)"
+        text = u"Это строчная формула. {{$ {eqn} $}} Она не разрывает строку.".format(eqn=eqn)
+
+        result = self.parser.toHtml(text)
+
+        self.assertIn(u'Это строчная формула. <span class="texequation-inline" id="texequation-inline-0"></span> Она не разрывает строку.',
+                      result)
+
     def test_block_01(self):
         eqn = u"y = f(x)"
         text = u"{{$$ {eqn} $$}}".format(eqn=eqn)

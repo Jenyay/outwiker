@@ -3,10 +3,10 @@
 	<name>TeXEquation</name>
 	<updates>http://jenyay.net/uploads/Outwiker/TexEquation/plugin.xml</updates>
     <requirements>
-        <outwiker>1.9.0.777 dev</outwiker>
+        <outwiker>2.0.0.811 beta</outwiker>
         <os>Windows, Linux</os>
 		<packages>
-			<core>1.0</core>
+			<core>1.3</core>
 			<actions>1.0</actions>
 			<gui>1.0</gui>
 			<pages>1.0, 2.0</pages>
@@ -27,7 +27,8 @@
 		<changelog>
 			<version number="2.0">
                 <download os="all">http://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.0.zip</download>
-				<change>Now the plug-in uses the Katex library instead mimeTex.</change>
+				<change>Now the plug-in uses the Katex library instead mimeTex to render equations.</change>
+				<change>Added the ability to insert the block equations.</change>
 			</version>
 
 			<version number="1.0.3" date="October 17, 2016">
@@ -66,7 +67,8 @@
 		<changelog>
 			<version number="2.0">
                 <download os="all">http://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.0.zip</download>
-				<change>Теперь плагин использует библиотеку Katex вместо mimeTex.</change>
+				<change>Теперь для отображения формул плагин использует библиотеку Katex вместо mimeTex.</change>
+				<change>Добавлена возможность вставки блочных формул.</change>
 			</version>
 
 			<version number="1.0.3" date="17.10.2016">
