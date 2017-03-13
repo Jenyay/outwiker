@@ -235,13 +235,6 @@ class Parser(object):
         """
         return u"\n".join(self.__headers)
 
-    @property
-    def footer(self):
-        '''
-        Added in outwiker.core 1.3
-        '''
-        return u'\n'.join(self.__footers)
-
     def appendToHead(self, header):
         """
         Добавить строку в заголовок
@@ -258,11 +251,24 @@ class Parser(object):
         return self.__headers
 
     @property
+    def footer(self):
+        '''
+        Added in outwiker.core 1.3
+        '''
+        return u''.join(self.__footers)
+
+    @property
     def footerItems(self):
         '''
         Added in outwiker.core 1.3
         '''
         return self.__footers
+
+    def appendToFooter(self, footer):
+        """
+        Added in outwiker.core 1.3
+        """
+        self.__footers.append(footer)
 
     def toHtml(self, text):
         """
