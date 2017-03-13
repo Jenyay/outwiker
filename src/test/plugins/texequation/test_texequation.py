@@ -50,6 +50,9 @@ class TexEquationTest(unittest.TestCase):
 
         result_lines = [
             u'<span class="texequation-inline" id="texequation-inline-0"></span>',
+        ]
+
+        footer_lines = [
             u'var element = document.getElementById("texequation-inline-0");',
             u'katex.render("{}",'.format(eqn),
         ]
@@ -58,6 +61,9 @@ class TexEquationTest(unittest.TestCase):
 
         for line in result_lines:
             self.assertIn(line, result)
+
+        for line in footer_lines:
+            self.assertIn(line, self.parser.footer)
 
         full_path = os.path.join(self.parser.page.path, path)
         self.assertTrue(os.path.exists(full_path), full_path)
@@ -71,8 +77,11 @@ class TexEquationTest(unittest.TestCase):
 
         result_lines = [
             u'<span class="texequation-inline" id="texequation-inline-0"></span>',
-            u'var element = document.getElementById("texequation-inline-0");',
             u'<span class="texequation-inline" id="texequation-inline-1"></span>',
+        ]
+
+        footer_lines = [
+            u'var element = document.getElementById("texequation-inline-0");',
             u'var element = document.getElementById("texequation-inline-1");',
             u'katex.render("{}",'.format(eqn1),
             u'katex.render("{}",'.format(eqn2),
@@ -82,6 +91,9 @@ class TexEquationTest(unittest.TestCase):
 
         for line in result_lines:
             self.assertIn(line, result)
+
+        for line in footer_lines:
+            self.assertIn(line, self.parser.footer)
 
         full_path = os.path.join(self.parser.page.path, path)
         self.assertTrue(os.path.exists(full_path), full_path)
@@ -103,6 +115,9 @@ class TexEquationTest(unittest.TestCase):
 
         result_lines = [
             u'<span class="texequation-block" id="texequation-block-0"></span>',
+        ]
+
+        footer_lines = [
             u'var element = document.getElementById("texequation-block-0");',
             u'katex.render("{}",'.format(eqn),
         ]
@@ -111,6 +126,9 @@ class TexEquationTest(unittest.TestCase):
 
         for line in result_lines:
             self.assertIn(line, result)
+
+        for line in footer_lines:
+            self.assertIn(line, self.parser.footer)
 
         full_path = os.path.join(self.parser.page.path, path)
         self.assertTrue(os.path.exists(full_path), full_path)
@@ -126,8 +144,11 @@ class TexEquationTest(unittest.TestCase):
 
         result_lines = [
             u'<span class="texequation-block" id="texequation-block-0"></span>',
-            u'var element = document.getElementById("texequation-block-0");',
             u'<span class="texequation-block" id="texequation-block-1"></span>',
+        ]
+
+        footer_lines = [
+            u'var element = document.getElementById("texequation-block-0");',
             u'var element = document.getElementById("texequation-block-1");',
             u'katex.render("{}",'.format(eqn1),
             u'katex.render("{}",'.format(eqn2),
@@ -137,6 +158,9 @@ class TexEquationTest(unittest.TestCase):
 
         for line in result_lines:
             self.assertIn(line, result)
+
+        for line in footer_lines:
+            self.assertIn(line, self.parser.footer)
 
         full_path = os.path.join(self.parser.page.path, path)
         self.assertTrue(os.path.exists(full_path), full_path)
@@ -152,8 +176,11 @@ class TexEquationTest(unittest.TestCase):
 
         result_lines = [
             u'<span class="texequation-block" id="texequation-block-0"></span>',
-            u'var element = document.getElementById("texequation-block-0");',
             u'<span class="texequation-inline" id="texequation-inline-0"></span>',
+        ]
+
+        footer_lines = [
+            u'var element = document.getElementById("texequation-block-0");',
             u'var element = document.getElementById("texequation-inline-0");',
             u'katex.render("{}",'.format(eqn1),
             u'katex.render("{}",'.format(eqn2),
@@ -163,6 +190,9 @@ class TexEquationTest(unittest.TestCase):
 
         for line in result_lines:
             self.assertIn(line, result)
+
+        for line in footer_lines:
+            self.assertIn(line, self.parser.footer)
 
         full_path = os.path.join(self.parser.page.path, path)
         self.assertTrue(os.path.exists(full_path), full_path)

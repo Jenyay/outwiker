@@ -28,12 +28,6 @@ class BaseTexToken (object):
         self._headers = [u'<link rel="stylesheet" href="__attach/__thumb/katex/katex.min.css">',
                          u'<script src="__attach/__thumb/katex/katex.min.js"></script>']
         self._divIndex = 0
-        self._divTemplate = u'''<span class="{classname}" id="{idname}-{index}"></span>
-<script>
-var element = document.getElementById("{idname}-{index}");
-katex.render("{code}", element, {{ displayMode: {displayMode}, throwOnError: false }});
-</script>'''
-
 
         self._equationTemplate = u'<span class="{classname}" id="{idname}-{index}"></span>'
 
@@ -41,13 +35,11 @@ katex.render("{code}", element, {{ displayMode: {displayMode}, throwOnError: fal
 katex.render("{code}", element, {{ displayMode: {displayMode}, throwOnError: false }});'''
 
         self._scriptCommentStart = u'<!-- TeXEquation start -->\n'
-        self._scriptCommentEnd = u'\n<!-- TeXEquation start -->'
+        self._scriptCommentEnd = u'\n<!-- TeXEquation end -->\n'
 
         self._scriptTemplate = self._scriptCommentStart + u'''<script>
 {actions}
 </script>''' + self._scriptCommentEnd
-
-        self._scriptActions = []
 
     def getToken(self):
         return QuotedString(self.texStart,
@@ -92,11 +84,12 @@ katex.render("{code}", element, {{ displayMode: {displayMode}, throwOnError: fal
         eqn = eqn.replace('\\', '\\\\')
         eqn = eqn.replace('"', '\\"')
 
-        result = self._divTemplate.format(index=self._divIndex,
-                                          code=eqn,
-                                          displayMode=self._getDisplayParam(),
-                                          classname=self._getClassName(),
-                                          idname=self._getIdName())
+        result = self._equationTemplate.format(
+            index=self._divIndex,
+            displayMode=self._getDisplayParam(),
+            idname=self._getIdName(),
+            classname=self._getClassName()
+        )
 
         scriptAction = self._scriptActionsTemplate.format(
             index=self._divIndex,
@@ -105,11 +98,8 @@ katex.render("{code}", element, {{ displayMode: {displayMode}, throwOnError: fal
             idname=self._getIdName()
         )
 
-        self._scriptActions.append(scriptAction)
-
-        script = self._scriptTemplate.format(
-            actions=u'\n'.join(self._scriptActions)
-        )
+        script = self._scriptTemplate.format(actions=scriptAction)
+        self.parser.appendToFooter(script)
 
         self._divIndex += 1
         return result
