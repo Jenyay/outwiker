@@ -5,66 +5,63 @@ import re
 from StringIO import StringIO
 
 
-class HtmlImprover (object):
+class HtmlImprover(object):
     """
     Class make HTML code more readable and append line breaks.
     """
     __metaclass__ = ABCMeta
 
-
-    def __init__ (self):
+    def __init__(self):
         specialTags = [u'pre', u'script']
 
         flags = re.I | re.S | re.M
 
         # List of tuples of the regexp for opening and closing tags
-        self._tagsRegexp = [(re.compile (u'\n?<\s*{}.*?>'.format (name), flags),
-                             re.compile (u'</\s*{}\s*>\n?'.format (name), flags))
+        self._tagsRegexp = [(re.compile(u'\n?<\s*{}.*?>'.format(name), flags),
+                             re.compile(u'</\s*{}\s*>\n?'.format(name), flags))
                             for name in specialTags]
 
-
-    def run (self, text):
-        result = text.replace ("\r\n", "\n")
-        result = self._replaceEndlines (result)
+    def run(self, text):
+        result = text.replace("\r\n", "\n")
+        result = self._replaceEndlines(result)
 
         return result.strip()
 
-
-    def _replaceEndlines (self, text):
+    def _replaceEndlines(self, text):
         # Current search position
         start = 0
 
-        # Current index of the special tag (if we inside it)
+        # Current index of the special tag(if we inside it)
         currenttag = None
 
         buf = StringIO()
         while start != -1:
-            nexttagstart, nexttagend, currenttag = self._findNextTag (text, start)
+            nexttagstart, nexttagend, currenttag = self._findNextTag(text,
+                                                                     start)
             if nexttagstart != -1:
                 assert currenttag is not None
                 assert nexttagend != -1
 
-                buf.write (self._appendLineBreaks (text[start: nexttagstart]))
-                buf.write (u'\n')
+                buf.write(self._appendLineBreaks(text[start: nexttagstart]))
+                buf.write(u'\n')
 
-                closingend = self._findClosingTag (text, nexttagend, currenttag)
+                closingend = self._findClosingTag(text, nexttagend, currenttag)
 
                 if closingend != -1:
-                    buf.write (text[nexttagstart: closingend].strip())
-                    buf.write (u'\n')
+                    buf.write(text[nexttagstart: closingend].strip())
+                    buf.write(u'\n')
                 else:
-                    buf.write (text[nexttagstart:].strip())
+                    buf.write(text[nexttagstart:].strip())
 
                 start = closingend
             else:
-                buf.write (self._appendLineBreaks (text[start:]))
+                buf.write(self._appendLineBreaks(text[start:]))
                 start = nexttagstart
 
         result = buf.getvalue()
         return result
 
-
-    def _findClosingTag (self, text, pos, tagindex):
+    def _findClosingTag(self, text, pos, tagindex):
         """
         Find closing tag by index tagindex from self._tagsRegexp
         Return the end tag position or -1 if closing tag not found
@@ -72,22 +69,21 @@ class HtmlImprover (object):
         assert tagindex is not None
         assert tagindex >= 0
 
-        match = self._tagsRegexp[tagindex][1].search (text, pos)
+        match = self._tagsRegexp[tagindex][1].search(text, pos)
 
         return -1 if match is None else match.end()
 
-
-    def _findNextTag (self, text, pos):
+    def _findNextTag(self, text, pos):
         """
         Find next opening special tag.
-        Return tuple: (start tag position, end tag position, tag index)
+        Return tuple:(start tag position, end tag position, tag index)
         """
         start = -1
         end = -1
         index = None
 
-        for n, tag in enumerate (self._tagsRegexp):
-            match = tag[0].search (text, pos)
+        for n, tag in enumerate(self._tagsRegexp):
+            match = tag[0].search(text, pos)
             if match is None:
                 continue
 
@@ -97,27 +93,25 @@ class HtmlImprover (object):
                 end = match.end()
                 index = n
 
-        return (start, end, index)
-
+        return(start, end, index)
 
     @abstractmethod
-    def _appendLineBreaks (self, text):
+    def _appendLineBreaks(self, text):
         """
         Replace line breaks to <br> tags
         """
 
 
-
-class BrHtmlImprover (HtmlImprover):
+class BrHtmlImprover(HtmlImprover):
     """
     Class replace \\n to <br>
     """
-    def _appendLineBreaks (self, text):
+    def _appendLineBreaks(self, text):
         """
         Replace line breaks to <br/> tags
         """
         result = text
-        result = result.replace ("\n", "<br/>")
+        result = result.replace("\n", "<br/>")
 
         opentags = r"[uod]l|hr|h\d|tr|td"
         closetags = r"li|d[td]|t[rdh]|caption|thead|tfoot|tbody|colgroup|col|h\d"
@@ -130,30 +124,28 @@ class BrHtmlImprover (HtmlImprover):
         remove_br_after = r"(<(?:" + opentags + r")[ >]|</(?:" + closetags + r")>)[\s\n]*<br\s*/?>"
         result = re.sub(remove_br_after, r"\1", result, flags=re.I)
 
-        # Append line breaks before some elements (to improve readability)
+        # Append line breaks before some elements(to improve readability)
         append_eol_before = r"\n*(<li>|<h\d>|</?[uo]l>|<hr\s*/?>|<p>|</?table.*?>|</?tr.*?>|<td.*?>)"
         result = re.sub(append_eol_before, "\n\\1", result, flags=re.I)
 
-        # Append line breaks after some elements (to improve readability)
+        # Append line breaks after some elements(to improve readability)
         append_eol_after = r"(<hr\s*/?>|<br\s*/?>|</\s*h\d>|</\s*p>|</\s*ul>)\n*"
         result = re.sub(append_eol_after, "\\1\n", result, flags=re.I)
 
         return result
 
 
-class ParagraphHtmlImprover (HtmlImprover):
+class ParagraphHtmlImprover(HtmlImprover):
     """
     Class cover paragraphes by <p> tags
     """
-    def _appendLineBreaks (self, text):
-        result = self._coverParagraphs (text)
-        result = self._addLineBreaks (result)
-        result = self._improveRedability (result)
-
+    def _appendLineBreaks(self, text):
+        result = self._coverParagraphs(text)
+        result = self._addLineBreaks(result)
+        result = self._improveRedability(result)
         return result
 
-
-    def _improveRedability (self, text):
+    def _improveRedability(self, text):
         result = text
 
         opentags = r"[uod]l|hr|h\d|tr|td|blockquote"
@@ -177,33 +169,45 @@ class ParagraphHtmlImprover (HtmlImprover):
 
         # Append </p> before some elements
         append_p_before = r"(?<!</p>)(<(?:h\d|blockquote).*?>)"
-        result = re.sub(append_p_before, "</p>\\1", result, flags=re.I | re.M | re.S)
+        result = re.sub(append_p_before,
+                        "</p>\\1",
+                        result,
+                        flags=re.I | re.M | re.S)
 
         # Append <p> after some closing elements
         append_p_after = r"(</(?:h\d|blockquote)>)(?!\s*<p>)"
-        result = re.sub(append_p_after, "\\1<p>", result, flags=re.I | re.M | re.S)
+        result = re.sub(append_p_after,
+                        "\\1<p>",
+                        result,
+                        flags=re.I | re.M | re.S)
 
         # Append <p> inside after some elements
         append_p_after_inside = r"(<(?:blockquote)>)"
-        result = re.sub(append_p_after_inside, "\\1<p>", result, flags=re.I | re.M)
+        result = re.sub(append_p_after_inside,
+                        "\\1<p>",
+                        result,
+                        flags=re.I | re.M)
 
         # Append </p> inside before some closing elements
         append_p_before_inside = r"(</(?:blockquote)>)"
-        result = re.sub(append_p_before_inside, "</p>\\1", result, flags=re.I | re.M)
+        result = re.sub(append_p_before_inside,
+                        "</p>\\1",
+                        result,
+                        flags=re.I | re.M)
 
         # Remove empty paragraphs
         empty_par = r"<p></p>"
-        result = re.sub (empty_par, "", result, flags=re.I | re.M)
+        result = re.sub(empty_par, "", result, flags=re.I | re.M)
 
         # Remove <br> on the paragraph end
         final_linebreaks = r"<br\s*/?>\s*(</p>)"
-        result = re.sub (final_linebreaks, "\\1", result, flags=re.I | re.M)
+        result = re.sub(final_linebreaks, "\\1", result, flags=re.I | re.M)
 
-        # Append line breaks before some elements (to improve readability)
+        # Append line breaks before some elements(to improve readability)
         append_eol_before = r"\n*(<li>|<h\d>|</?[uo]l>|<hr\s*/?>|<p>|<script>|</?table.*?>|</?tr.*?>|<td.*?>)"
         result = re.sub(append_eol_before, "\n\\1", result, flags=re.I | re.M)
 
-        # Append line breaks after some elements (to improve readability)
+        # Append line breaks after some elements(to improve readability)
         append_eol_after = r"(<hr\s*/?>|<br\s*/?>|</\s*h\d>|</\s*p>|</\s*script>|</\s*ul>|</\s*table>)\n*"
         result = re.sub(append_eol_after, "\\1\n", result, flags=re.I | re.M)
 
@@ -217,21 +221,19 @@ class ParagraphHtmlImprover (HtmlImprover):
 
         return result
 
+    def _addLineBreaks(self, text):
+        return text.replace(u"\n", "<br/>")
 
-    def _addLineBreaks (self, text):
-        return text.replace (u"\n", "<br/>")
-
-
-    def _coverParagraphs (self, text):
-        parRegExp = re.compile ("(.*?(?:\s*\n\s*){2,})|$",
-                                re.I | re.M | re.S | re.U)
-        paragraphs = parRegExp.split (text)
+    def _coverParagraphs(self, text):
+        parRegExp = re.compile("(.*?(?:\s*\n\s*){2,})|$",
+                               re.I | re.M | re.S | re.U)
+        paragraphs = parRegExp.split(text)
 
         buf = StringIO()
         for par in paragraphs:
-            if len (par.strip()) != 0:
-                buf.write ("<p>")
-                buf.write (par.strip())
-                buf.write ("</p>")
+            if len(par.strip()) != 0:
+                buf.write("<p>")
+                buf.write(par.strip())
+                buf.write("</p>")
 
         return buf.getvalue()

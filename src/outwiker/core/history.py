@@ -3,19 +3,21 @@
 Классы для работы с историей открытия страниц
 """
 
-class HistoryEmptyException (Exception):
+
+class HistoryEmptyException(Exception):
     """
-    Вызывается при попытке вернуться назад, если история возврата пустая (и аналогично с историей вперед)
+    Вызывается при попытке вернуться назад, если история возврата пустая
+    (и аналогично с историей вперед)
     """
     pass
 
 
-class History (object):
+class History(object):
     """
     Класс для работы с историей открытия страниц на вкладке
     """
-    def __init__ (self):
-        # Список страниц для возврата (для перехода "назад")
+    def __init__(self):
+        # Список страниц для возврата(для перехода "назад")
         self._back = []
 
         # Список страниц для перехода "вперед"
@@ -24,24 +26,21 @@ class History (object):
         # Текущая открытая страница
         self._currentPage = None
 
+    @property
+    def backLength(self):
+        return len(self._back)
 
     @property
-    def backLength (self):
-        return len (self._back)
+    def forwardLength(self):
+        return len(self._forward)
 
-
-    @property
-    def forwardLength (self):
-        return len (self._forward)
-
-
-    def goto (self, newCurrentPage):
+    def goto(self, newCurrentPage):
         """
         Произошел переход на новую страницу
         """
-        if (self._currentPage == None and
-                len (self._back) == 0 and
-                len (self._forward) == 0 ):
+        if (self._currentPage is None and
+                len(self._back) == 0 and
+                len(self._forward) == 0):
             # В первый раз открыли какую-то страницу
             self._currentPage = newCurrentPage
             return
@@ -50,38 +49,35 @@ class History (object):
             # Если повторно открываем ту же самую страницу, то ничего не делаем
             return
 
-        self._back.append (self._currentPage)
+        self._back.append(self._currentPage)
         self._forward = []
 
         self._currentPage = newCurrentPage
 
-
-    def back (self):
+    def back(self):
         if self.backLength == 0:
             raise HistoryEmptyException()
 
-        self._forward.append (self._currentPage)
+        self._forward.append(self._currentPage)
         self._currentPage = self._back.pop()
 
-        if self._currentPage != None and self._currentPage.isRemoved:
+        if self._currentPage is not None and self._currentPage.isRemoved:
             self._currentPage = None
 
         return self._currentPage
 
-
-    def forward (self):
+    def forward(self):
         if self.forwardLength == 0:
             raise HistoryEmptyException()
 
-        self._back.append (self._currentPage)
+        self._back.append(self._currentPage)
         self._currentPage = self._forward.pop()
 
-        if self._currentPage != None and self._currentPage.isRemoved:
+        if self._currentPage is not None and self._currentPage.isRemoved:
             self._currentPage = None
 
         return self._currentPage
 
-
     @property
-    def currentPage (self):
+    def currentPage(self):
         return self._currentPage

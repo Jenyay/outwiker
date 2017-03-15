@@ -60,9 +60,9 @@ def tagBranch(parentPage, tags):
     parentPage - страница, с которой начинается ветка
     tags - список тегов для добавления
     """
-    if "tags" in dir (parentPage):
-        appendTagsList (parentPage, tags)
-    map (lambda child: tagBranch (child, tags), parentPage.children)
+    if "tags" in dir(parentPage):
+        appendTagsList(parentPage, tags)
+    map(lambda child: tagBranch(child, tags), parentPage.children)
 
 
 def removeTagsFromBranch(parentPage, tags):
@@ -72,17 +72,17 @@ def removeTagsFromBranch(parentPage, tags):
     parentPage - страницы, с которой начинается ветка
     tags - список тегов, которые надо удалить
     """
-    if "tags" in dir (parentPage):
-        map (lambda tag: removeTag (parentPage, tag), tags)
+    if "tags" in dir(parentPage):
+        map(lambda tag: removeTag(parentPage, tag), tags)
 
-    map (lambda child: removeTagsFromBranch (child, tags), parentPage.children)
+    map(lambda child: removeTagsFromBranch(child, tags), parentPage.children)
 
 
 def renameTag(wikiroot, oldName, newName):
     """
     Переименовать тег
     """
-    tags = TagsList (wikiroot)
+    tags = TagsList(wikiroot)
     for page in tags[oldName]:
-        removeTag (page, oldName)
-        appendTag (page, newName)
+        removeTag(page, oldName)
+        appendTag(page, newName)

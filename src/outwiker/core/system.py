@@ -36,129 +36,120 @@ DEFAULT_OLD_CONFIG_DIR = u".outwiker"
 DEFAULT_CONFIG_DIR = u"outwiker"
 
 
-class System (object):
-    def migrateConfig (self,
-                       oldConfDirName=DEFAULT_OLD_CONFIG_DIR,
-                       newConfDirName=DEFAULT_CONFIG_DIR):
+class System(object):
+    def migrateConfig(self,
+                      oldConfDirName=DEFAULT_OLD_CONFIG_DIR,
+                      newConfDirName=DEFAULT_CONFIG_DIR):
         """
-        Remove config directory from HOME$/.outwiker to idealogic right place (depends of the OS)
+        Remove config directory from HOME$/.outwiker to idealogic right place
+        (depends of the OS)
         """
         confDir = op.join(self.settingsDir, newConfDirName)
 
-        homeDir = unicode (op.expanduser("~"), getOS().filesEncoding)
+        homeDir = unicode(op.expanduser("~"), getOS().filesEncoding)
         oldConfDir = op.join(homeDir, oldConfDirName)
 
         if op.exists(oldConfDir) and not op.exists(confDir):
             shutil.move(oldConfDir, confDir)
 
 
-
-class Windows (System):
-    def init (self):
+class Windows(System):
+    def init(self):
         pass
 
-
     @property
-    def name (self):
+    def name(self):
         return u'windows'
 
-
-    def startFile (self, path):
+    def startFile(self, path):
         """
         Запустить программу по умолчанию для path
         """
-        os.startfile (path.replace ("/", "\\"))
-
+        os.startfile(path.replace("/", "\\"))
 
     @property
-    def filesEncoding (self):
+    def filesEncoding(self):
         return sys.getfilesystemencoding()
 
-
     @property
-    def inputEncoding (self):
+    def inputEncoding(self):
         """
         Кодировка, используемая для преобразования нажатой клавиши в строку
         """
         return "mbcs"
 
-
     @property
-    def dragFileDataObject (self):
+    def dragFileDataObject(self):
         """
-        Получить класс для перетаскивания файлов из окна OutWiker'а в другие приложения.
+        Получить класс для перетаскивания файлов
+        из окна OutWiker'а в другие приложения.
         Под Linux'ом wx.FileDataObject не правильно работает с Unicode
         """
         return wx.FileDataObject
 
-
     @property
-    def pageTitleTester (self):
+    def pageTitleTester(self):
         return WindowsPageTitleTester()
 
-
     @property
-    def fileIcons (self):
+    def fileIcons(self):
         return WindowsFileIcons()
 
-
     @property
-    def settingsDir (self):
+    def settingsDir(self):
         """
-        Возвращает папку, внутри которой хранятся настройки всех программ, и где будет создаваться папка для хранения настроек OutWiker
+        Возвращает папку, внутри которой хранятся настройки всех программ,
+        и где будет создаваться папка для хранения настроек OutWiker
         """
-        homeDir = unicode (op.expanduser("~"), self.filesEncoding)
-        appdata = unicode (os.environ["APPDATA"], self.filesEncoding) if "APPDATA" in os.environ else homeDir
+        homeDir = unicode(op.expanduser("~"), self.filesEncoding)
+        appdata = (unicode(os.environ["APPDATA"], self.filesEncoding)
+                   if "APPDATA" in os.environ
+                   else homeDir)
         return appdata
 
-
-    def getHtmlRender (self, parent):
+    def getHtmlRender(self, parent):
         from outwiker.gui.htmlrenderie import HtmlRenderIE
-        return HtmlRenderIE (parent)
+        return HtmlRenderIE(parent)
 
 
-class Unix (System):
+class Unix(System):
     @property
-    def name (self):
+    def name(self):
         return u'unix'
 
-
-    def init (self):
+    def init(self):
         if 'LD_PRELOAD' in os.environ:
             del os.environ['LD_PRELOAD']
         import gtk
         gtk.gdk.threads_init()
 
-
-    def startFile (self, path):
+    def startFile(self, path):
         """
         Запустить программу по умолчанию для path
         """
-        subprocess.Popen ([u'xdg-open', path])
-
+        subprocess.Popen([u'xdg-open', path])
 
     @property
-    def settingsDir (self):
+    def settingsDir(self):
         """
-        Возвращает папку, внутри которой хранятся настройки всех программ, и где будет создаваться папка для хранения настроек OutWiker.
+        Возвращает папку, внутри которой хранятся настройки всех программ,
+        и где будет создаваться папка для хранения настроек OutWiker.
         ($XDG_CONFIG_HOME/outwiker или .config/outwiker)
         """
-        homeDir = unicode (op.expanduser("~"), getOS().filesEncoding)
-        settingsDir = os.environ.get (u"XDG_CONFIG_HOME", u".config")
+        homeDir = unicode(op.expanduser("~"), getOS().filesEncoding)
+        settingsDir = os.environ.get(u"XDG_CONFIG_HOME", u".config")
 
-        if not op.isabs (settingsDir):
-            settingsDir = op.join (homeDir, settingsDir)
+        if not op.isabs(settingsDir):
+            settingsDir = op.join(homeDir, settingsDir)
 
         return settingsDir
 
-
     @property
-    def filesEncoding (self):
+    def filesEncoding(self):
         return sys.getfilesystemencoding()
 
-
     @property
-    def inputEncoding (self):
+    def inputEncoding(self):
         encoding = locale.getpreferredencoding()
 
         if not encoding:
@@ -166,25 +157,27 @@ class Unix (System):
 
         return encoding
 
-
     @property
-    def dragFileDataObject (self):
+    def dragFileDataObject(self):
         """
-        Получить класс для перетаскивания файлов из окна OutWiker'а в другие приложения.
+        Получить класс для перетаскивания файлов из окна OutWiker'а
+        в другие приложения.
         Под Linux'ом wx.FileDataObject не правильно работает с Unicode
         """
-        class GtkFileDataObject (wx.PyDataObjectSimple):
+        class GtkFileDataObject(wx.PyDataObjectSimple):
             """
-            Класс данных для перетаскивания файлов. Использовать вместо wx.FileDataObject, который по сути не работает с Unicode
+            Класс данных для перетаскивания файлов. Использовать вместо
+            wx.FileDataObject, который по сути не работает с Unicode
             """
-            def __init__ (self):
-                wx.PyDataObjectSimple.__init__ (self, wx.DataFormat (wx.DF_FILENAME))
+            def __init__(self):
+                wx.PyDataObjectSimple.__init__(self,
+                                               wx.DataFormat(wx.DF_FILENAME))
                 self._fnames = []
 
-            def AddFile (self, fname):
-                self._fnames.append (fname)
+            def AddFile(self, fname):
+                self._fnames.append(fname)
 
-            def GetDataHere (self):
+            def GetDataHere(self):
                 result = ""
                 for fname in self._fnames:
                     result += u"file:%s\r\n" % (fname)
@@ -192,141 +185,142 @@ class Unix (System):
                 # Преобразуем в строку
                 return result.strip().encode("utf8")
 
-            def GetDataSize (self):
-                return len (self.GetDataHere())
+            def GetDataSize(self):
+                return len(self.GetDataHere())
 
         return GtkFileDataObject
 
-
     @property
-    def pageTitleTester (self):
+    def pageTitleTester(self):
         return LinuxPageTitleTester()
 
-
     @property
-    def fileIcons (self):
+    def fileIcons(self):
         return UnixFileIcons()
 
-
-    def getHtmlRender (self, parent):
+    def getHtmlRender(self, parent):
         from outwiker.gui.htmlrenderwebkit import HtmlRenderWebKit
-        return HtmlRenderWebKit (parent)
+        return HtmlRenderWebKit(parent)
 
 
-def getOS ():
+def getOS():
     if os.name == "nt":
         return Windows()
     else:
         return Unix()
 
 
-def getCurrentDir ():
-    return unicode (op.dirname (sys.argv[0]), getOS().filesEncoding)
+def getCurrentDir():
+    return unicode(op.dirname(sys.argv[0]), getOS().filesEncoding)
 
 
-def getConfigPath (dirname=DEFAULT_CONFIG_DIR, fname=DEFAULT_CONFIG_NAME):
+def getConfigPath(dirname=DEFAULT_CONFIG_DIR, fname=DEFAULT_CONFIG_NAME):
     """
     Вернуть полный путь до файла настроек.
     Поиск пути осуществляется следующим образом:
     1. Если в папке с программой есть файл настроек, то вернуть путь до него
-    2. Иначе настройки будут храниться в домашней конфигурационной директории outwiker (Пример: .conf/outwiker)
+    2. Иначе настройки будут храниться в домашней конфигурационной директории
+    outwiker (Пример: .conf/outwiker)
     """
-    confSrc = op.join (getCurrentDir(), fname)
+    confSrc = op.join(getCurrentDir(), fname)
 
-    if op.exists (confSrc):
+    if op.exists(confSrc):
         confPath = confSrc
     else:
-        mainConfDir = op.join (getOS().settingsDir, dirname)
-        confPath = op.join (mainConfDir, fname)
+        mainConfDir = op.join(getOS().settingsDir, dirname)
+        confPath = op.join(mainConfDir, fname)
 
-        if not op.exists (mainConfDir):
-            os.mkdir (mainConfDir)
+        if not op.exists(mainConfDir):
+            os.mkdir(mainConfDir)
 
-        pluginsDir = op.join (mainConfDir, PLUGINS_DIR)
-        if not op.exists (pluginsDir):
-            os.mkdir (pluginsDir)
+        pluginsDir = op.join(mainConfDir, PLUGINS_DIR)
+        if not op.exists(pluginsDir):
+            os.mkdir(pluginsDir)
 
-        stylesDir = op.join (mainConfDir, STYLES_DIR)
-        if not op.exists (stylesDir):
-            os.mkdir (stylesDir)
+        stylesDir = op.join(mainConfDir, STYLES_DIR)
+        if not op.exists(stylesDir):
+            os.mkdir(stylesDir)
 
-        iconsDir = op.join (mainConfDir, ICONS_DIR)
-        if not op.exists (iconsDir):
-            os.mkdir (iconsDir)
+        iconsDir = op.join(mainConfDir, ICONS_DIR)
+        if not op.exists(iconsDir):
+            os.mkdir(iconsDir)
 
-        spellDir = op.join (mainConfDir, SPELL_DIR)
-        if not op.exists (spellDir):
-            os.mkdir (spellDir)
+        spellDir = op.join(mainConfDir, SPELL_DIR)
+        if not op.exists(spellDir):
+            os.mkdir(spellDir)
 
     return confPath
 
 
-def getImagesDir ():
-    return op.join (getCurrentDir(), IMAGES_DIR)
+def getImagesDir():
+    return op.join(getCurrentDir(), IMAGES_DIR)
 
 
-def getTemplatesDir ():
-    return op.join (getCurrentDir(), STYLES_DIR)
+def getTemplatesDir():
+    return op.join(getCurrentDir(), STYLES_DIR)
 
 
-def getExeFile ():
+def getExeFile():
     """
     Возвращает имя запускаемого файла
     """
-    return unicode (sys.argv[0], getOS().filesEncoding)
+    return unicode(sys.argv[0], getOS().filesEncoding)
 
 
-def getPluginsDirList (configDirName=DEFAULT_CONFIG_DIR, configFileName=DEFAULT_CONFIG_NAME):
-    """
-    Возвращает список директорий, откуда должны грузиться плагины
-    """
-    return getSpecialDirList (PLUGINS_DIR, configDirName, configFileName)
-
-
-def getIconsDirList (configDirName=DEFAULT_CONFIG_DIR, configFileName=DEFAULT_CONFIG_NAME):
-    """
-    Возвращает список директорий, где могут располагаться иконки для страниц
-    """
-    return getSpecialDirList (ICONS_DIR, configDirName, configFileName)
-
-
-def getStylesDirList (configDirName=DEFAULT_CONFIG_DIR,
+def getPluginsDirList(configDirName=DEFAULT_CONFIG_DIR,
                       configFileName=DEFAULT_CONFIG_NAME):
     """
     Возвращает список директорий, откуда должны грузиться плагины
     """
-    return getSpecialDirList (STYLES_DIR, configDirName, configFileName)
+    return getSpecialDirList(PLUGINS_DIR, configDirName, configFileName)
 
 
-def getSpellDirList (configDirName=DEFAULT_CONFIG_DIR,
+def getIconsDirList(configDirName=DEFAULT_CONFIG_DIR,
+                    configFileName=DEFAULT_CONFIG_NAME):
+    """
+    Возвращает список директорий, где могут располагаться иконки для страниц
+    """
+    return getSpecialDirList(ICONS_DIR, configDirName, configFileName)
+
+
+def getStylesDirList(configDirName=DEFAULT_CONFIG_DIR,
                      configFileName=DEFAULT_CONFIG_NAME):
+    """
+    Возвращает список директорий, откуда должны грузиться плагины
+    """
+    return getSpecialDirList(STYLES_DIR, configDirName, configFileName)
+
+
+def getSpellDirList(configDirName=DEFAULT_CONFIG_DIR,
+                    configFileName=DEFAULT_CONFIG_NAME):
     """
     Возвращает список директорий со словарями для проверки орфографии
     """
-    return getSpecialDirList (SPELL_DIR, configDirName, configFileName)
+    return getSpecialDirList(SPELL_DIR, configDirName, configFileName)
 
 
-def getSpecialDirList (dirname,
-                       configDirName=DEFAULT_CONFIG_DIR,
-                       configFileName=DEFAULT_CONFIG_NAME):
+def getSpecialDirList(dirname,
+                      configDirName=DEFAULT_CONFIG_DIR,
+                      configFileName=DEFAULT_CONFIG_NAME):
     """
-    Возвращает список "специальных" директорий (директорий для плагинов, стилей и т.п., расположение которых зависит от расположения файла настроек)
+    Возвращает список "специальных" директорий(директорий для плагинов,
+    стилей и т.п., расположение которых зависит от расположения файла настроек)
     """
     # Директория рядом с запускаемым файлом
-    programSpecialDir = op.join (getCurrentDir(), dirname)
+    programSpecialDir = op.join(getCurrentDir(), dirname)
 
     # Директория рядом с файлом настроек
-    configdir = op.dirname (getConfigPath (configDirName, configFileName))
-    specialDir = op.join (configdir, dirname)
+    configdir = op.dirname(getConfigPath(configDirName, configFileName))
+    specialDir = op.join(configdir, dirname)
 
     dirlist = [programSpecialDir]
-    if op.abspath (programSpecialDir) != op.abspath (specialDir):
-        dirlist.append (specialDir)
+    if op.abspath(programSpecialDir) != op.abspath(specialDir):
+        dirlist.append(specialDir)
 
     return dirlist
 
 
-def openInNewWindow (path, args=[]):
+def openInNewWindow(path, args=[]):
     """ Open wiki tree in the new OutWiker window
     """
     exeFile = getExeFile()
@@ -338,8 +332,8 @@ def openInNewWindow (path, args=[]):
     if getOS().name == 'unix':
         env['LD_PRELOAD'] = 'libwx_gtk2u_webview-3.0.so.0'
 
-    if exeFile.endswith (".exe"):
+    if exeFile.endswith(".exe"):
         DETACHED_PROCESS = 0x00000008
-        subprocess.Popen (params, creationflags=DETACHED_PROCESS, env=env)
+        subprocess.Popen(params, creationflags=DETACHED_PROCESS, env=env)
     else:
-        subprocess.Popen (["python"] + params, env=env)
+        subprocess.Popen(["python"] + params, env=env)

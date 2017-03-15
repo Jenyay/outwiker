@@ -44,7 +44,7 @@ class RecentWiki(object):
                 path = self._config.get(self._sectionName, param)
 
                 recentes.append(path)
-        except:
+        except Exception:
             pass
 
         return recentes

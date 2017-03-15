@@ -59,7 +59,9 @@ class XmlVersionParser (object):
 
         outwiker_version = None
         try:
-            outwiker_version = Version.parse(self._getTextValue(requirements_tag, u'outwiker'))
+            outwiker_version = Version.parse(
+                self._getTextValue(requirements_tag, u'outwiker')
+            )
         except ValueError:
             pass
 
@@ -107,7 +109,8 @@ class XmlVersionParser (object):
 
     def _getVersionsList(self, data_tag):
         """
-        Return list of VersionInfo instance. List sorted by version (last version is first)
+        Return list of VersionInfo instance.
+        List sorted by version (last version is first)
         """
         result = []
         if data_tag is None:
