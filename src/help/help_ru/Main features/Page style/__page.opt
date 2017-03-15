@@ -5,9 +5,10 @@ order = 4
 datetime = 2017-03-05 12:10:51.887000
 cursorposition = 181
 alias = Стили страниц
+uid = styles
 
 [wiki]
-md5_hash = f8d5f1ad2458145c8ced6cd2803d97c3
+md5_hash = d73f2377a8225cbad5d642c757828642
 
 [Tree]
 expand = True
