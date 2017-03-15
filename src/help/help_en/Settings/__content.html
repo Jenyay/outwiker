@@ -32,141 +32,71 @@
 <li><a href="#hotkeys">Hotkeys</a></li>
 </ul>
 <h2><a id="ini"></a> Settings file location</h2>
-<br/>
-OutWiker keeps all settings in the <i>outwiker.ini</i> file. It may be located in the several places in depending on operating system and running mode (a portable or normal mode).<br/>
-<br/>
-The portable mode switched on if <i>outwiker.ini</i> file exists in the same folder as executable file <i>outwiker.exe</i>. In the portable mode OutWiker looks all settings, plug-ins and page styles in the same folder solely. In this case the program may be secure executed from the flash drive on the foreign computer.<br/>
-<br/>
-If OutWiker executed in the normal mode, under <b>Windows 7</b> and above the <i>outwiker.ini</i> file will be locating in the <i>C:\Users\USERNAME\AppData\Roaming\outwiker</i> or analogous user's profile folder. In the same place will be locating folders for the plug-ins, user's styles and icons.<br/>
-<br/>
-Under <b>Linux</b> settings file location is able to depend on the <i>XDG_CONFIG_HOME</i> environment variable. If the <i>XDG_CONFIG_HOME</i> environment variable is not set, <i>outwiker.ini</i> file will be located from <i>~/.config/outwiker/outwiker.ini</i>.<br/>
-<br/>
-Later in this section will be described the preferences. The dialog for the change preferences is called by <b>Edit - Preferences...</b> menu item.<br/>
-<br/>
+<p>OutWiker keeps all settings in the <i>outwiker.ini</i> file. It may be located in the several places in depending on operating system and running mode (a portable or normal mode).</p>
+<p>The portable mode switched on if <i>outwiker.ini</i> file exists in the same folder as executable file <i>outwiker.exe</i>. In the portable mode OutWiker looks all settings, plug-ins and page styles in the same folder solely. In this case the program may be secure executed from the flash drive on the foreign computer.</p>
+<p>If OutWiker executed in the normal mode, under <b>Windows 7</b> and above the <i>outwiker.ini</i> file will be locating in the <i>C:\Users\USERNAME\AppData\Roaming\outwiker</i> or analogous user's profile folder. In the same place will be locating folders for the plug-ins, user's styles and icons.</p>
+<p>Under <b>Linux</b> settings file location is able to depend on the <i>XDG_CONFIG_HOME</i> environment variable. If the <i>XDG_CONFIG_HOME</i> environment variable is not set, <i>outwiker.ini</i> file will be located from <i>~/.config/outwiker/outwiker.ini</i>.</p>
+<p>Later in this section will be described the preferences. The dialog for the change preferences is called by <b>Edit - Preferences...</b> menu item.</p>
 <hr>
 <h2><a id="general"></a> Interface - General</h2>
-<br/>
-<div align="center"><a href="__attach/outwiker_opt_general.png"><img src="__attach/__thumb/th_width_550_outwiker_opt_general.png"/></a></div><br/>
-<br/>
-The first flags destined for the change behavior a program icon in the tray (the region near the system clock under Windows).<br/>
-<br/>
-If <b>Minimize to tray</b> flag is set, when the "Minimize" button of the main window will be clicked, the main window will be hidden on the taskbar, but program icon will be showed in the tray panel. Such behavior is convenient if OutWiker is launching most of the time.<br/>
-<br/>
-The <b>Start iconized</b> flag indicates what OutWiker must hide main window by starting. Such behavior is convenient if OutWiker was added to system autorun.<br/>
-<br/>
-The <b>Always show tray icon</b> flag indicated what the tray icon must by showed always and not only in the minimized state.<br/>
-<br/>
-The <b>Minimize on close window</b> flag indicated what the program must not closed but minimize only. That to terminate OutWiker, it is necessary select <b>File - Exit...</b> menu item.<br/>
-<br/>
-The <b>Ask befor exit</b> flag indicated what the program must ask the exit confirmation. So long as OutWiker saves the notes text sufficiently oft, and such confirmations in the others programs need to save the entered data, the purport of this behavior is no matter. Is possible this flag will be removed in the next versions.<br/>
-<br/>
-The <b>Autosave interval</b> input field sets how often a current note will have saved. This value is set in seconds. If this value equal 0, autosaving will be disabled. Besides by timer the notes are saving by other events: by exit from program, switching between notes, switching between "Wiki", "Preview" and "HTML" tabs and other.<br/>
-<br/>
-The <b>Recent files history length</b> input field sets so far as long must be list of the recent opened files in the <b>File</b> menu.<br/>
-<br/>
-If the <b>Automatically open the recent file</b> flag have set, then after restart OutWiker the recent wiki will be opened automatically.<br/>
-<br/>
-The <b>Main window title format</b> input field sets how should look title of the main window. In this field can use the macros <b>{page}</b> and <b>{file}</b> what will be replaced to title of the current page and title of the notes tree accordingly.<br/>
-<br/>
-The <b>Main window title format</b> input field sets how should look the creation and modification dates in different program parts, for example to the right in statusbar. OutWiker uses date format from <a href="https://docs.python.org/2/library/datetime.html#strftime-and-strptime-behavior">Python language</a>, but it should't remember since to the right of the input field disposes button, that invokes popup menu with all macros from this format.<br/>
-<br/>
-The <b>Language</b> field sets the interface language. If this field was being set to "Auto", the language will be selected automatically depending on the operating system settings. If you want to translate interface to other language, you can use <a href="https://crowdin.com/project/outwiker">crowdin.com</a> web service.<br/>
-<br/>
-<br/>
+<p><div align="center"><a href="__attach/outwiker_opt_general.png"><img src="__attach/__thumb/th_width_550_outwiker_opt_general.png"/></a></div></p>
+<p>The first flags destined for the change behavior a program icon in the tray (the region near the system clock under Windows).</p>
+<p>If <b>Minimize to tray</b> flag is set, when the "Minimize" button of the main window will be clicked, the main window will be hidden on the taskbar, but program icon will be showed in the tray panel. Such behavior is convenient if OutWiker is launching most of the time.</p>
+<p>The <b>Start iconized</b> flag indicates what OutWiker must hide main window by starting. Such behavior is convenient if OutWiker was added to system autorun.</p>
+<p>The <b>Always show tray icon</b> flag indicated what the tray icon must by showed always and not only in the minimized state.</p>
+<p>The <b>Minimize on close window</b> flag indicated what the program must not closed but minimize only. That to terminate OutWiker, it is necessary select <b>File - Exit...</b> menu item.</p>
+<p>The <b>Ask befor exit</b> flag indicated what the program must ask the exit confirmation. So long as OutWiker saves the notes text sufficiently oft, and such confirmations in the others programs need to save the entered data, the purport of this behavior is no matter. Is possible this flag will be removed in the next versions.</p>
+<p>The <b>Autosave interval</b> input field sets how often a current note will have saved. This value is set in seconds. If this value equal 0, autosaving will be disabled. Besides by timer the notes are saving by other events: by exit from program, switching between notes, switching between "Wiki", "Preview" and "HTML" tabs and other.</p>
+<p>The <b>Recent files history length</b> input field sets so far as long must be list of the recent opened files in the <b>File</b> menu.</p>
+<p>If the <b>Automatically open the recent file</b> flag have set, then after restart OutWiker the recent wiki will be opened automatically.</p>
+<p>The <b>Main window title format</b> input field sets how should look title of the main window. In this field can use the macros <b>{page}</b> and <b>{file}</b> what will be replaced to title of the current page and title of the notes tree accordingly.</p>
+<p>The <b>Main window title format</b> input field sets how should look the creation and modification dates in different program parts, for example to the right in statusbar. OutWiker uses date format from <a href="https://docs.python.org/2/library/datetime.html#strftime-and-strptime-behavior">Python language</a>, but it should't remember since to the right of the input field disposes button, that invokes popup menu with all macros from this format.</p>
+<p>The <b>Language</b> field sets the interface language. If this field was being set to "Auto", the language will be selected automatically depending on the operating system settings. If you want to translate interface to other language, you can use <a href="https://crowdin.com/project/outwiker">crowdin.com</a> web service.</p>
 <h2><a id="view"></a> Interface - Preview</h2>
-<br/>
-<div align="center"><a href="__attach/outwiker_opt_preview.png"><img src="__attach/__thumb/th_width_550_outwiker_opt_preview.png"/></a></div><br/>
-<br/>
-This section is responsible for the appearance <a href="page://__0cc8f2c6-754c-4aa8-b118-561b930e9955">HTML pages</a> and <a href="page://__dd8b23a1-6787-42bb-9b58-c78a656688e2">wiki pages</a> in preview mode. In this section can set default font size and style (by parameters group <b>Font</b>) as well as add custom CSS styles which will be added to all pages referred above types.<br/>
-<br/>
-<br/>
+<p><div align="center"><a href="__attach/outwiker_opt_preview.png"><img src="__attach/__thumb/th_width_550_outwiker_opt_preview.png"/></a></div></p>
+<p>This section is responsible for the appearance <a href="page://__0cc8f2c6-754c-4aa8-b118-561b930e9955">HTML pages</a> and <a href="page://__dd8b23a1-6787-42bb-9b58-c78a656688e2">wiki pages</a> in preview mode. In this section can set default font size and style (by parameters group <b>Font</b>) as well as add custom CSS styles which will be added to all pages referred above types.</p>
 <h2><a id="print"></a> Interface - Text Printout</h2>
-<br/>
-<div align="center"><a href="__attach/outwiker_opt_printout.png"><img src="__attach/__thumb/th_width_550_outwiker_opt_printout.png"/></a></div><br/>
-<br/>
-This section allow to change parameters of the printing of the <a href="page://__b32aa743-384d-493f-aad4-4c4cbf945fbb">text pages</a> as well as <a href="page://__0cc8f2c6-754c-4aa8-b118-561b930e9955">HTML pages</a> in <i>HTML</i> mode and <a href="page://__dd8b23a1-6787-42bb-9b58-c78a656688e2">wiki pages</a> in <i>Wiki</i> and <i>HTML</i> modes.<br/>
-<br/>
-In this section can change font size and style (the parameters group <b>Font</b>), using which will be printed text, also can change page parameters. Dialog appearance may vary depending on operating system and printer drivers.<br/>
-<br/>
- <br/>
+<p><div align="center"><a href="__attach/outwiker_opt_printout.png"><img src="__attach/__thumb/th_width_550_outwiker_opt_printout.png"/></a></div></p>
+<p>This section allow to change parameters of the printing of the <a href="page://__b32aa743-384d-493f-aad4-4c4cbf945fbb">text pages</a> as well as <a href="page://__0cc8f2c6-754c-4aa8-b118-561b930e9955">HTML pages</a> in <i>HTML</i> mode and <a href="page://__dd8b23a1-6787-42bb-9b58-c78a656688e2">wiki pages</a> in <i>Wiki</i> and <i>HTML</i> modes.</p>
+<p>In this section can change font size and style (the parameters group <b>Font</b>), using which will be printed text, also can change page parameters. Dialog appearance may vary depending on operating system and printer drivers.</p>
 <h2><a id="editor"></a> Editor - General</h2>
-<br/>
-<div align="center"><a href="__attach/outwiker_opt_editor_general.png"><img src="__attach/__thumb/th_width_550_outwiker_opt_editor_general.png"/></a></div><br/>
-<br/>
-This section contains settings for the text editor, which uses for input the notes. Here can set font size, style and color (the parameters group <b>Font</b>) and background color (the parameters group <b>Font color</b>). For example you can set inverted colors: black background and white text color.<br/>
-<br/>
-Here can enable or disable the display of line numbers (by <b>Show line numbers</b> flag). The line numbers located on the left of the main input field.<br/>
-<br/>
-The <b>Tab width</b> parameter allow to change size of the tab symbol.<br/>
-<br/>
-Editor can respond on the Home / End keys two ways. When this keys are pressed the cursor will be moved to begin / end current line or current paragraph (in view of wrapping). This behavior can select with <b>Home / End keys moves the cursor to the beginning / end of... </b> parameter.<br/>
-<br/>
-<br/>
+<p><div align="center"><a href="__attach/outwiker_opt_editor_general.png"><img src="__attach/__thumb/th_width_550_outwiker_opt_editor_general.png"/></a></div></p>
+<p>This section contains settings for the text editor, which uses for input the notes. Here can set font size, style and color (the parameters group <b>Font</b>) and background color (the parameters group <b>Font color</b>). For example you can set inverted colors: black background and white text color.</p>
+<p>Here can enable or disable the display of line numbers (by <b>Show line numbers</b> flag). The line numbers located on the left of the main input field.</p>
+<p>The <b>Tab width</b> parameter allow to change size of the tab symbol.</p>
+<p>Editor can respond on the Home / End keys two ways. When this keys are pressed the cursor will be moved to begin / end current line or current paragraph (in view of wrapping). This behavior can select with <b>Home / End keys moves the cursor to the beginning / end of... </b> parameter.</p>
 <h2><a id="htmleditor"></a> Editor - HTML Editor</h2>
-<br/>
-<div align="center"><a href="__attach/outwiker_opt_editor_html.png"><img src="__attach/__thumb/th_width_550_outwiker_opt_editor_html.png"/></a></div><br/>
-<br/>
-This section contains settings for HTML code highliting on the <a href="page://__0cc8f2c6-754c-4aa8-b118-561b930e9955">HTML page</a> and on <i>HTML</i> tab for <a href="page://__dd8b23a1-6787-42bb-9b58-c78a656688e2">wiki page</a>. Here can change font colors and styles for HTML tags, their attributes, numbers, comments, strings in HTML format and invalid HTML elements.<br/>
-<br/>
-The font name can change in <a href="#editor">Editor - General</a> section.<br/>
-<br/>
-<br/>
+<p><div align="center"><a href="__attach/outwiker_opt_editor_html.png"><img src="__attach/__thumb/th_width_550_outwiker_opt_editor_html.png"/></a></div></p>
+<p>This section contains settings for HTML code highliting on the <a href="page://__0cc8f2c6-754c-4aa8-b118-561b930e9955">HTML page</a> and on <i>HTML</i> tab for <a href="page://__dd8b23a1-6787-42bb-9b58-c78a656688e2">wiki page</a>. Here can change font colors and styles for HTML tags, their attributes, numbers, comments, strings in HTML format and invalid HTML elements.</p>
+<p>The font name can change in <a href="#editor">Editor - General</a> section.</p>
 <h2><a id="wikieditor"></a> Editor - Wiki Editor</h2>
-<br/>
-<div align="center"><a href="__attach/outwiker_opt_editor_wiki.png"><img src="__attach/__thumb/th_width_550_outwiker_opt_editor_wiki.png"/></a></div><br/>
-<br/>
-This section contains settings for some wiki code highlighting: links, headers, <a href="page://__b016f2ed-a6c0-4dca-8d17-508955f4cc7c">wiki commands</a> (that is located between the brackets (: ... :) )<br/>
-<br/>
-Font name and size can change in <a href="#editor">Editor - General</a> section.<br/>
-<br/>
-<br/>
+<p><div align="center"><a href="__attach/outwiker_opt_editor_wiki.png"><img src="__attach/__thumb/th_width_550_outwiker_opt_editor_wiki.png"/></a></div></p>
+<p>This section contains settings for some wiki code highlighting: links, headers, <a href="page://__b016f2ed-a6c0-4dca-8d17-508955f4cc7c">wiki commands</a> (that is located between the brackets (: ... :) )</p>
+<p>Font name and size can change in <a href="#editor">Editor - General</a> section.</p>
 <h2><a id="wikipage"></a> Wiki Page</h2>
-<br/>
-<div align="center"><a href="__attach/outwiker_opt_wiki_pages.png"><img src="__attach/__thumb/th_width_550_outwiker_opt_wiki_pages.png"/></a></div><br/>
-<br/>
-This section contains parameters which influences on <a href="page://__dd8b23a1-6787-42bb-9b58-c78a656688e2">wiki page</a> appearance<br/>
-<br/>
-During the switching to <i>Preview</i> mode on the wiki page is created HTML code transparent to the user. Exactly this code will be showed in <i>Preview</i> mode. In most time user needn’t think about this code. However for some tasks (for example, if you use OutWiker for blogging) it might be as well to get "raw" HTML code. For this the <i>HTML</i> mode intended. Since this mode need not for everyone, tab of this mode is hidden default. That show this tab need set <b>Show HTML Code Tab</b> flag.<br/>
-<br/>
-By <b>Thumbnail size</b> parameter can set default thumbnails size. Thumbnails is created by  <a href="page://__22953e02-77ed-4b41-a5fe-a75e0d6a431e">%thumb%Attach:filename%%</a> wiki tag.<br/>
-<br/>
-<a href="page://__97bae762-abb7-489e-a1f4-1b0c9f6916d1">Links</a> on the wiki pages can be in two formats:<br/>
+<p><div align="center"><a href="__attach/outwiker_opt_wiki_pages.png"><img src="__attach/__thumb/th_width_550_outwiker_opt_wiki_pages.png"/></a></div></p>
+<p>This section contains parameters which influences on <a href="page://__dd8b23a1-6787-42bb-9b58-c78a656688e2">wiki page</a> appearance</p>
+<p>During the switching to <i>Preview</i> mode on the wiki page is created HTML code transparent to the user. Exactly this code will be showed in <i>Preview</i> mode. In most time user needn’t think about this code. However for some tasks (for example, if you use OutWiker for blogging) it might be as well to get "raw" HTML code. For this the <i>HTML</i> mode intended. Since this mode need not for everyone, tab of this mode is hidden default. That show this tab need set <b>Show HTML Code Tab</b> flag.</p>
+<p>By <b>Thumbnail size</b> parameter can set default thumbnails size. Thumbnails is created by  <a href="page://__22953e02-77ed-4b41-a5fe-a75e0d6a431e">%thumb%Attach:filename%%</a> wiki tag.</p>
+<p><a href="page://__97bae762-abb7-489e-a1f4-1b0c9f6916d1">Links</a> on the wiki pages can be in two formats:</p>
 <ul>
 <li>[[Link -> Comment]]</li>
 <li>[[Comment | Link]]</li>
 </ul>
-When dialog for inserting the link used (dialog invoked by <i>Wiki - Link</i> menu item or corresponding button on toolbar), link must be created in both formats. The preferable format selected by <b>Default link style</b> parameter.<br/>
-<br/>
-If you create new <a href="page://__dd8b23a1-6787-42bb-9b58-c78a656688e2">wiki page</a> and leave its content empty (should not even be spaces), then after switching to <i>Preview</i> mode will be seeing something more useful than blank page. For example, default will be showed attachments list and child page list. This behavior can change with <b>Template for empty page</b> parameter.<br/>
-<br/>
-<br/>
+When dialog for inserting the link used (dialog invoked by <i>Wiki - Link</i> menu item or corresponding button on toolbar), link must be created in both formats. The preferable format selected by <b>Default link style</b> parameter.</p>
+<p>If you create new <a href="page://__dd8b23a1-6787-42bb-9b58-c78a656688e2">wiki page</a> and leave its content empty (should not even be spaces), then after switching to <i>Preview</i> mode will be seeing something more useful than blank page. For example, default will be showed attachments list and child page list. This behavior can change with <b>Template for empty page</b> parameter.</p>
 <h2><a id="icons"></a> User's icon set</h2>
-<br/>
-<div align="center"><a href="__attach/outwiker_opt_icons.png"><img src="__attach/__thumb/th_width_550_outwiker_opt_icons.png"/></a></div><br/>
-<br/>
-Since version OutWiker 1.9 you can set for pages not only predefined icons, but you can load own icons. For this intended the section <b>User's iconset</b>.<br/>
-<br/>
-User's and standard icons divide by groups. From the software standpoint icons groups are usual folders inside <i>icons</i> folder. The <i>icons</i> folder located inside settings folder (see <a href="#ini">Settings file location</a> section). User needn’t think about this since all actions with icons and groups can be accomplished by user interface this section.<br/>
-<br/>
-On the left located user's groups list. Icons can be located outside any group, direct in <i>icons</i> folder, than correspond to <b>Not in groups</b> item. By buttons in the bottom can create, remove and rename icons groups.<br/>
-<br/>
-In the right located icons list for selected group. By buttons in the bottom can add and remove icons, as well as set icons as group cover (as well as icon, that will be showed on the left of group name).<br/>
-<br/>
-<br/>
+<p><div align="center"><a href="__attach/outwiker_opt_icons.png"><img src="__attach/__thumb/th_width_550_outwiker_opt_icons.png"/></a></div></p>
+<p>Since version OutWiker 1.9 you can set for pages not only predefined icons, but you can load own icons. For this intended the section <b>User's iconset</b>.</p>
+<p>User's and standard icons divide by groups. From the software standpoint icons groups are usual folders inside <i>icons</i> folder. The <i>icons</i> folder located inside settings folder (see <a href="#ini">Settings file location</a> section). User needn’t think about this since all actions with icons and groups can be accomplished by user interface this section.</p>
+<p>On the left located user's groups list. Icons can be located outside any group, direct in <i>icons</i> folder, than correspond to <b>Not in groups</b> item. By buttons in the bottom can create, remove and rename icons groups.</p>
+<p>In the right located icons list for selected group. By buttons in the bottom can add and remove icons, as well as set icons as group cover (as well as icon, that will be showed on the left of group name).</p>
 <h2><a id="plugins"></a> Plug-ins</h2>
-<br/>
-<div align="center"><a href="__attach/outwiker_opt_plugins.png"><img src="__attach/__thumb/th_width_550_outwiker_opt_plugins.png"/></a></div><br/>
-<br/>
-In this section can view list installed (successfully loaded) plug-ins. After plug-in selection will be showed information about: name, version number, short description and, if exists, link to plug-in page.<br/>
-<br/>
-In this section can disable unnecessary currently plug-ins without removing its files.<br/>
-<br/>
-<br/>
+<p><div align="center"><a href="__attach/outwiker_opt_plugins.png"><img src="__attach/__thumb/th_width_550_outwiker_opt_plugins.png"/></a></div></p>
+<p>In this section can view list installed (successfully loaded) plug-ins. After plug-in selection will be showed information about: name, version number, short description and, if exists, link to plug-in page.</p>
+<p>In this section can disable unnecessary currently plug-ins without removing its files.</p>
 <h2><a id="hotkeys"></a> Hotkeys</h2>
-<br/>
-<div align="center"><a href="__attach/outwiker_opt_hotkeys.png"><img src="__attach/__thumb/th_width_550_outwiker_opt_hotkeys.png"/></a></div><br/>
-<br/>
-In this section can change or set hotkeys for calling program actions. In the left located list of the all actions. In the right located controls to set hotkey and more detailed description for this action. In the right bottom showed action which uses current hotkey by this time, that to see possible conflicts.<br/>
-<br/>
+<p><div align="center"><a href="__attach/outwiker_opt_hotkeys.png"><img src="__attach/__thumb/th_width_550_outwiker_opt_hotkeys.png"/></a></div></p>
+<p>In this section can change or set hotkeys for calling program actions. In the left located list of the all actions. In the right located controls to set hotkey and more detailed description for this action. In the right bottom showed action which uses current hotkey by this time, that to see possible conflicts.</p>
 </body>
 </html>
