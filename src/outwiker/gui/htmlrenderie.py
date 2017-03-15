@@ -59,7 +59,7 @@ class HtmlRenderIE (HtmlRender):
             (url, page, filename, anchor) = self.__identifyUri (status)
 
             if page is not None:
-                text = page.subpath
+                text = page.display_subpath
                 if anchor is not None:
                     text = u"{}/{}".format (text, anchor)
 

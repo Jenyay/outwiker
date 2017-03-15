@@ -375,6 +375,10 @@ class WikiDocument(RootWikiPage):
         return u"/"
 
     @property
+    def display_subpath(self):
+        return u"/"
+
+    @property
     def title(self):
         return os.path.basename(self.path)
 
@@ -787,6 +791,20 @@ class WikiPage(RootWikiPage):
             # Пока не дойдем до корня, у которого нет заголовка,
             # и родитель - None
             result = page.title + "/" + result
+            page = page.parent
+
+        return result
+
+    @property
+    def display_subpath(self):
+        '''
+        Added in outwiker.core 1.3
+        '''
+        result = self.display_title
+        page = self.parent
+
+        while page.parent is not None:
+            result = page.display_title + "/" + result
             page = page.parent
 
         return result
