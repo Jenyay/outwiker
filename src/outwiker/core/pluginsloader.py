@@ -194,6 +194,11 @@ class PluginsLoader (object):
 
             # Проверить, что это директория
             if os.path.isdir(packagePath):
+                # It may be plugin if __init__.py file exists
+                initFile = os.path.join(packagePath, u'__init__.py')
+                if not os.path.exists(initFile):
+                    continue
+
                 # Checking information from plugin.xml file
                 plugin_fname = os.path.join(packagePath,
                                             PLUGIN_VERSION_FILE_NAME)
