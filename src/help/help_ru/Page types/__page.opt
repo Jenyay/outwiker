@@ -6,7 +6,7 @@ expand = True
 
 [General]
 type = wiki
-order = 6
+order = 5
 tags = пользователям
 datetime = 2014-06-14 15:29:57.171578
 cursorposition = 439

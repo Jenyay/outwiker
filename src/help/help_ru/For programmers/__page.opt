@@ -6,7 +6,7 @@ expand = True
 
 [General]
 type = wiki
-order = 8
+order = 7
 tags = программистам
 datetime = 2012-04-27 23:04:51.000000
 cursorposition = 0
