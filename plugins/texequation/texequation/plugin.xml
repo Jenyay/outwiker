@@ -25,7 +25,7 @@
 			<site>http://jenyay.net</site>
 		</author>
 		<changelog>
-			<version number="2.0">
+			<version number="2.0" date="March 18, 2017">
                 <download os="all">http://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.0.zip</download>
 				<change>Now the plug-in uses the Katex library instead mimeTex to render equations.</change>
 				<change>Added the ability to insert the block equations.</change>
@@ -65,7 +65,7 @@
 		</author>
 
 		<changelog>
-			<version number="2.0">
+			<version number="2.0" date="18.03.2017">
                 <download os="all">http://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.0.zip</download>
 				<change>Теперь для отображения формул плагин использует библиотеку Katex вместо mimeTex.</change>
 				<change>Добавлена возможность вставки блочных формул.</change>
