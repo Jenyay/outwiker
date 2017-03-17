@@ -66,39 +66,36 @@ class HotKeysPanel(BasePrefPanel):
         return self.__actionsList.GetClientData(index)
 
     def __createGui(self):
-        # Сайзер, делящий панель на две части
-        # Слева будет список actions с фильтром,
-        # справа - выбранная горячая клавиша
-        mainSizer = wx.FlexGridSizer(cols=2)
-        mainSizer.AddGrowableCol(0, 1)
-        mainSizer.AddGrowableCol(1, 1)
+        mainSizer = wx.FlexGridSizer(cols=1)
         mainSizer.AddGrowableRow(0)
-
-        # Сайзер, размещающий элементы левой части панели
-        # Верхняя часть - список actions
-        # Нижняя часть - фильтр
-        leftSizer = wx.FlexGridSizer(rows=2)
-        leftSizer.AddGrowableCol(0)
-        leftSizer.AddGrowableRow(0)
+        # mainSizer.AddGrowableRow(3)
+        mainSizer.AddGrowableCol(0)
 
         # Список с именами actions
         self.__actionsList = wx.ListBox(self)
         self.__actionsList.SetMinSize((200, -1))
 
-        leftSizer.Add(self.__actionsList, flag=wx.EXPAND | wx.ALL, border=2)
-
         # Фильтр
+        filterSizer = wx.FlexGridSizer(cols=2)
+        filterSizer.AddGrowableCol(1)
+
+        filterLabel = wx.StaticText(self, label=_(u'Search'))
         self.__filterText = wx.TextCtrl(self)
 
-        leftSizer.Add(self.__filterText, flag=wx.EXPAND | wx.ALL, border=2)
+        filterSizer.Add(filterLabel,
+                        flag=wx.ALIGN_CENTER_VERTICAL | wx.ALL,
+                        border=2)
 
-        # Сайзер для размещения элементов в правой части:
-        # выбор горячей клавиши и описание action
-        rightSizer = wx.FlexGridSizer(cols=1)
-        rightSizer.AddGrowableCol(0)
+        filterSizer.Add(self.__filterText,
+                        flag=wx.EXPAND | wx.ALL,
+                        border=2)
+
+        # Sizer for hotkey and label for it
+        hotkeySizer = wx.FlexGridSizer(cols=2)
+        hotkeySizer.AddGrowableCol(1)
 
         # Comment to hotkeysCtrl
-        self.__hotkeyText = wx.StaticText(
+        hotkeyLabel = wx.StaticText(
             self,
             -1,
             _(u'Hot key.\nPress the Backspace key to clear'))
@@ -106,22 +103,30 @@ class HotKeysPanel(BasePrefPanel):
         # Горячая клавиша
         self.__hotkeyCtrl = HotkeyCtrl(self)
         self.__hotkeyCtrl.Disable()
+        self.__hotkeyCtrl.SetMinSize((200, -1))
+
+        hotkeySizer.Add(hotkeyLabel,
+                        flag=wx.ALIGN_CENTER_VERTICAL | wx.ALL,
+                        border=2)
+
+        hotkeySizer.Add(
+            self.__hotkeyCtrl,
+            flag=wx.ALIGN_CENTER_VERTICAL | wx.ALL | wx.ALIGN_RIGHT,
+            border=2)
 
         # Описание action
         self.__descriptionText = wx.TextCtrl(
             self,
             style=wx.TE_WORDWRAP | wx.TE_MULTILINE | wx.TE_READONLY)
-        self.__descriptionText.SetMinSize((200, 150))
+        self.__descriptionText.SetMinSize((-1, 75))
+        self.__descriptionText.Disable()
 
-        rightSizer.Add(self.__hotkeyText, flag=wx.EXPAND | wx.ALL, border=2)
-        rightSizer.Add(
-            self.__hotkeyCtrl,
-            flag=wx.EXPAND | wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
-        rightSizer.Add(self.__descriptionText,
-                       flag=wx.EXPAND | wx.ALL, border=2)
+        mainSizer.Add(self.__actionsList, flag=wx.EXPAND | wx.ALL, border=2)
+        mainSizer.Add(self.__descriptionText,
+                      flag=wx.EXPAND | wx.ALL, border=2)
+        mainSizer.Add(filterSizer, flag=wx.EXPAND | wx.ALL, border=2)
+        mainSizer.Add(hotkeySizer, flag=wx.EXPAND | wx.ALL, border=2)
 
-        mainSizer.Add(leftSizer, flag=wx.EXPAND | wx.ALL, border=2)
-        mainSizer.Add(rightSizer, flag=wx.EXPAND | wx.ALL, border=2)
         self.SetSizer(mainSizer)
 
     def __findConflict(self, hotkey):
