@@ -481,11 +481,17 @@ def getMainWindowTitle(application):
     if application.wikiroot is None:
         result = u"OutWiker"
     else:
-        pageTitle = (u"" if application.wikiroot.selectedPage is None
-                     else application.wikiroot.selectedPage.display_title)
+        page = application.wikiroot.selectedPage
+
+        pageTitle = u"" if page is None else page.display_title
+        subpath = u"" if page is None else page.display_subpath
         filename = os.path.basename(application.wikiroot.path)
 
-        result = template.replace("{file}", filename).replace("{page}", pageTitle)
+        result = (template
+                  .replace("{file}", filename)
+                  .replace("{page}", pageTitle)
+                  .replace("{subpath}", subpath)
+                  )
 
     return result
 

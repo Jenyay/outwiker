@@ -203,7 +203,8 @@ class GeneralPanel(BasePrefPanel):
 
         hints = [
             (u"{file}", _(u"Wiki file name")),
-            (u"{page}", _(u"Page title"))
+            (u"{page}", _(u"Page title")),
+            (u"{subpath}", _(u"Relative path to current page")),
         ]
 
         self.titleFormatLabel = wx.StaticText(self,
