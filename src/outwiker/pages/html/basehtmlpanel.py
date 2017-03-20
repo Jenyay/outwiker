@@ -164,9 +164,10 @@ class BaseHtmlPanel(BaseTextPanel):
         self.codeEditor.setDefaultSettings()
 
     def onAttachmentPaste(self, fnames):
-        text = self._getAttachString(fnames)
-        self.codeEditor.AddText(text)
-        self.codeEditor.SetFocus()
+        if self.selectedPageIndex == self.CODE_PAGE_INDEX:
+            text = self._getAttachString(fnames)
+            self.codeEditor.AddText(text)
+            self.codeEditor.SetFocus()
 
     def UpdateView(self, page):
         self.htmlWindow.page = self._currentpage
