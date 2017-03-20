@@ -7,6 +7,9 @@
 		<website>http://jenyay.net/Outwiker/UnstableEn</website>
 
 		<changelog>
+			<version number="2.0.0.813" status="beta">
+			</version>
+
 			<version number="2.0.0.812" status="beta" date="March 18, 2017">
 				<change>Hot keys GUI improvements.</change>
 				<change>Update help.</change>
@@ -79,6 +82,9 @@
 		<website>http://jenyay.net/Outwiker/Unstable</website>
 
 		<changelog>
+			<version number="2.0.0.813" status="beta">
+			</version>
+
 			<version number="2.0.0.812" status="beta" date="18.03.2017">
 				<change>Улучшение интерфейса для установки горячих клавиш.</change>
 				<change>Обновление справки.</change>
