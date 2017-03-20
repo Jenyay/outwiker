@@ -24,7 +24,7 @@ class HtmlImproverFactory(object):
 
         self.add(self._defaultImprover,
                  BrHtmlImprover(),
-                 _(u"Line Breaks(<br/>)"))
+                 _(u"Line Breaks (<br/>)"))
 
         application.onPrepareHtmlImprovers(self)
 
