@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-04 20:42+0300\n"
-"PO-Revision-Date: 2017-03-05 09:13+0300\n"
+"POT-Creation-Date: 2017-03-20 09:41+0300\n"
+"PO-Revision-Date: 2017-03-26 13:39+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -20,15 +20,15 @@ msgstr ""
 msgid "Error reading page {}"
 msgstr "Kunde inte läsa sidan {}"
 
-#: outwiker/core/pluginsloader.py:200
+#: outwiker/core/pluginsloader.py:208
 msgid "Plug-in \"{}\". Can't read \"{}\" file"
 msgstr "Insticksmodul \"{}\". Kan inte läsa \"{}\""
 
-#: outwiker/core/pluginsloader.py:219
+#: outwiker/core/pluginsloader.py:228
 msgid "Plug-in \"{}\" is outdated. Please, update the plug-in."
 msgstr "Insticksmodul \"{}\" är utdaterad. Uppdatera insticket!"
 
-#: outwiker/core/pluginsloader.py:229
+#: outwiker/core/pluginsloader.py:238
 msgid "Plug-in \"{}\" is designed for a newer version OutWiker. Please, install a new OutWiker version."
 msgstr "Insticksmodul \"{}\" är designad för en nyare version av OutWiker. Installera en ny OutWiker-version."
 
@@ -42,7 +42,7 @@ msgstr "Sidan är öppnad med skrivskydd"
 #: outwiker/core/commands.py:302 outwiker/core/commands.py:312
 #: outwiker/core/commands.py:385 outwiker/core/commands.py:391
 #: outwiker/core/commands.py:420 outwiker/core/commands.py:431
-#: outwiker/core/commands.py:435 outwiker/core/textprinter.py:105
+#: outwiker/core/commands.py:435 outwiker/core/textprinter.py:106
 #: outwiker/pages/html/basehtmlpanel.py:312
 #: outwiker/pages/wiki/actions/include.py:37
 #: outwiker/pages/wiki/basewikipageview.py:241
@@ -196,11 +196,11 @@ msgstr ""
 msgid "The page title"
 msgstr "Sidtitel"
 
-#: outwiker/core/commands.py:504
+#: outwiker/core/commands.py:510
 msgid "Enter format of the date"
 msgstr "Ange datumformat"
 
-#: outwiker/core/commands.py:505 outwiker/pages/wiki/actions/dates.py:29
+#: outwiker/core/commands.py:511 outwiker/pages/wiki/actions/dates.py:29
 msgid "Date format"
 msgstr "Datumformat"
 
@@ -268,7 +268,7 @@ msgstr "taggar"
 msgid "weather"
 msgstr "väder"
 
-#: outwiker/core/htmlimproverfactory.py:28
+#: outwiker/core/htmlimproverfactory.py:27
 msgid "Line Breaks (<br/>)"
 msgstr "Radbrytning (<br/>)"
 
@@ -276,7 +276,7 @@ msgstr "Radbrytning (<br/>)"
 msgid "Printing error"
 msgstr "Utskriftsfel"
 
-#: outwiker/core/pagetitletester.py:50
+#: outwiker/core/pagetitletester.py:51
 #, python-format
 msgid "The page title contains the expression \"%xx\". Links on this page may be invalid."
 msgstr "Sidtiteln innehåller uttrycket \"%xx\". Länkar på denna sida kan vara ogiltiga."
@@ -293,11 +293,11 @@ msgstr "Ogiltig sidtitel"
 msgid "The page title can not begin with __"
 msgstr "Sidtiteln kan inte börja med __"
 
-#: outwiker/core/pagetitletester.py:71 outwiker/core/pagetitletester.py:114
+#: outwiker/core/pagetitletester.py:71 outwiker/core/pagetitletester.py:112
 msgid "The page title contains invalid characters"
 msgstr "Sidtiteln innehåller ogiltiga tecken"
 
-#: outwiker/core/pagetitletester.py:135
+#: outwiker/core/pagetitletester.py:131
 msgid "The page title contains invalid characters for Microsoft Windows operating system"
 msgstr "Sidtiteln innehåller ogiltiga tecken, för Microsoft Windows operativsystem"
 
@@ -311,6 +311,7 @@ msgstr "# Sök"
 
 #: outwiker/pages/search/searchpanel.py:41
 #: outwiker/pages/search/searchpanel.py:301 outwiker/actions/search.py:31
+#: outwiker/gui/preferences/hotkeyspanel.py:82
 #: outwiker/gui/basetextpanel.py:354
 msgid "Search"
 msgstr "Sök"
@@ -461,7 +462,7 @@ msgid "Appearance"
 msgstr "Utseende"
 
 #: outwiker/pages/html/basehtmlpanel.py:193
-#: outwiker/gui/preferences/prefcontroller.py:59
+#: outwiker/gui/preferences/prefcontroller.py:118
 #: outwiker/gui/preferences/generalpanel.py:40
 msgid "Preview"
 msgstr "Förhandsgranskning"
@@ -753,8 +754,8 @@ msgstr "<b>Kan inte skapa miniatyr för \"{}\"</b>"
 #: outwiker/pages/wiki/wikipagecontroller.py:75
 #: outwiker/gui/toolbars/generaltoolbar.py:28
 #: outwiker/gui/basepagedialog.py:130
-#: outwiker/gui/preferences/prefcontroller.py:58
-#: outwiker/gui/preferences/prefcontroller.py:79
+#: outwiker/gui/preferences/prefcontroller.py:117
+#: outwiker/gui/preferences/prefcontroller.py:138
 msgid "General"
 msgstr "Allmänt"
 
@@ -1104,7 +1105,7 @@ msgid "Set focus to notes tree"
 msgstr "Sätt fokus på notisträdet"
 
 #: outwiker/actions/switchto.py:63 outwiker/actions/showhideattaches.py:18
-#: outwiker/gui/preferences/prefcontroller.py:61
+#: outwiker/gui/preferences/prefcontroller.py:120
 #: outwiker/gui/mainpanes/attachmainpane.py:19
 msgid "Attachments"
 msgstr "Bilagor"
@@ -1239,7 +1240,7 @@ msgid "Toolbars"
 msgstr "Verktygsfält"
 
 #: outwiker/gui/toolbars/pluginstoolbar.py:28
-#: outwiker/gui/preferences/prefcontroller.py:90
+#: outwiker/gui/preferences/prefcontroller.py:148
 msgid "Plugins"
 msgstr "Insticksmoduler"
 
@@ -1251,46 +1252,46 @@ msgstr "Ikon"
 msgid "Not found"
 msgstr "Hittas inte"
 
-#: outwiker/gui/preferences/prefdialog.py:63
-msgid "Preferences"
-msgstr "Inställningar"
-
-#: outwiker/gui/preferences/prefcontroller.py:60
+#: outwiker/gui/preferences/prefcontroller.py:119
 msgid "Tags cloud"
 msgstr "Taggmoln"
 
-#: outwiker/gui/preferences/prefcontroller.py:62
+#: outwiker/gui/preferences/prefcontroller.py:121
 msgid "Hotkeys"
 msgstr "Snabbtangenter"
 
-#: outwiker/gui/preferences/prefcontroller.py:63
+#: outwiker/gui/preferences/prefcontroller.py:122
 msgid "Text Printout"
 msgstr "Utskrift"
 
-#: outwiker/gui/preferences/prefcontroller.py:66
+#: outwiker/gui/preferences/prefcontroller.py:125
 msgid "Interface"
 msgstr "Gränssnitt"
 
-#: outwiker/gui/preferences/prefcontroller.py:80
+#: outwiker/gui/preferences/prefcontroller.py:139
 #: outwiker/gui/actionslist.py:122
 msgid "Spell checking"
 msgstr "Stavningskontroll"
 
-#: outwiker/gui/preferences/prefcontroller.py:81
+#: outwiker/gui/preferences/prefcontroller.py:140
 msgid "HTML Editor"
 msgstr "HTML-redigerare"
 
-#: outwiker/gui/preferences/prefcontroller.py:82
+#: outwiker/gui/preferences/prefcontroller.py:141
 msgid "Wiki Editor"
 msgstr "Wiki-redigerare"
 
-#: outwiker/gui/preferences/prefcontroller.py:85
+#: outwiker/gui/preferences/prefcontroller.py:144
 msgid "Editor"
 msgstr "Redigerare"
 
-#: outwiker/gui/preferences/prefcontroller.py:95
+#: outwiker/gui/preferences/prefcontroller.py:152
 msgid "User's iconset"
 msgstr "Anpassade ikoner"
+
+#: outwiker/gui/preferences/prefcontroller.py:157
+msgid "Preferences"
+msgstr "Inställningar"
 
 #: outwiker/gui/preferences/attachpanel.py:17
 msgid "Insert link"
@@ -1317,7 +1318,7 @@ msgstr ""
 msgid "Hotkeys conflict"
 msgstr "Snabbtangentkonflikt"
 
-#: outwiker/gui/preferences/hotkeyspanel.py:104
+#: outwiker/gui/preferences/hotkeyspanel.py:101
 msgid ""
 "Hot key.\n"
 "Press the Backspace key to clear"
@@ -1468,19 +1469,23 @@ msgstr "Wiki-filnamn"
 msgid "Page title"
 msgstr "Sidtitel"
 
-#: outwiker/gui/preferences/generalpanel.py:211
+#: outwiker/gui/preferences/generalpanel.py:207
+msgid "Relative path to current page"
+msgstr "Relativ sökväg till aktuell sida"
+
+#: outwiker/gui/preferences/generalpanel.py:212
 msgid "Main window title format"
 msgstr "Huvudfönstrets titelformat"
 
-#: outwiker/gui/preferences/generalpanel.py:243
+#: outwiker/gui/preferences/generalpanel.py:244
 msgid "Language(restart required)"
 msgstr "Språk (omstart krävs)"
 
-#: outwiker/gui/preferences/generalpanel.py:260
+#: outwiker/gui/preferences/generalpanel.py:261
 msgid "Default opening page mode"
 msgstr "Standardläge för sidöppning"
 
-#: outwiker/gui/preferences/generalpanel.py:407
+#: outwiker/gui/preferences/generalpanel.py:408
 msgid "Auto"
 msgstr "Auto"
 
