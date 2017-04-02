@@ -21,33 +21,32 @@ class ParserMiscTest (unittest.TestCase):
         self.__createWiki()
 
         factory = ParserFactory()
-        self.parser = factory.make (self.testPage, Application.config)
+        self.parser = factory.make(self.testPage, Application.config)
 
-
-    def __createWiki (self):
+    def __createWiki(self):
         # Здесь будет создаваться вики
-        self.path = mkdtemp (prefix=u'Абырвалг абыр')
+        self.path = mkdtemp(prefix=u'Абырвалг абыр')
 
-        self.wikiroot = WikiDocument.create (self.path)
-        WikiPageFactory().create (self.wikiroot, u"Страница 2", [])
+        self.wikiroot = WikiDocument.create(self.path)
+        WikiPageFactory().create(self.wikiroot, u"Страница 2", [])
         self.testPage = self.wikiroot[u"Страница 2"]
 
-
     def tearDown(self):
-        removeDir (self.path)
+        removeDir(self.path)
 
-
-    def testHorLine (self):
+    def testHorLine(self):
         text = u"бла-бла-бла \nкхм ---- бла-бла-бла\nбла-бла-бла"
         result = u'бла-бла-бла \nкхм <hr> бла-бла-бла\nбла-бла-бла'
 
-        self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
+        self.assertEqual(
+            self.parser.toHtml(text),
+            result,
+            self.parser.toHtml(text).encode(self.encoding))
 
-
-    def testParseWithoutAttaches (self):
+    def testParseWithoutAttaches(self):
         pagetitle = u"Страница 666"
 
-        WikiPageFactory().create (self.wikiroot, pagetitle, [])
+        WikiPageFactory().create(self.wikiroot, pagetitle, [])
         parser = Parser(self.wikiroot[pagetitle], Application.config)
 
-        parser.toHtml (u"Attach:bla-bla-bla")
+        parser.toHtml(u"Attach:bla-bla-bla")

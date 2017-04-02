@@ -231,9 +231,9 @@ class Parser(object):
     def head(self):
         """
         Свойство возвращает строку из добавленных заголовочных элементов
-       (то, что должно быть внутри тега <head>...</head>)
+        (то, что должно быть внутри тега <head>...</head>)
         """
-        return u"\n".join(self.__headers)
+        return u"".join(self.__headers)
 
     def appendToHead(self, header):
         """

@@ -5,12 +5,13 @@ import os.path
 import unittest
 from tempfile import mkdtemp
 
-from outwiker.core.tree import WikiDocument
-from outwiker.core.attachment import Attachment
 from outwiker.core.application import Application
-from outwiker.core.style import Style
-from outwiker.gui.guiconfig import HtmlRenderConfig
+from outwiker.core.attachment import Attachment
 from outwiker.core.defines import PAGE_RESULT_HTML
+from outwiker.core.style import Style
+from outwiker.core.tree import WikiDocument
+from outwiker.gui.guiconfig import HtmlRenderConfig
+from outwiker.pages.wiki.parser.command import Command
 
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.htmlgenerator import HtmlGenerator
@@ -20,12 +21,35 @@ from outwiker.pages.wiki.wikiconfig import WikiConfig
 from test.utils import removeDir
 
 
+class TestFooterWikiCommand(Command):
+    def execute(self, params, content):
+        self.parser.appendToFooter(content)
+        return u''
+
+    @property
+    def name(self):
+        return u"footer"
+
+
+class TestHeadWikiCommand(Command):
+    def execute(self, params, content):
+        self.parser.appendToHead(content)
+        return u''
+
+    @property
+    def name(self):
+        return u"head"
+
+
 class WikiHtmlGeneratorTest(unittest.TestCase):
     def setUp(self):
         self.filesPath = u"../test/samplefiles/"
         self.__createWiki()
 
         files = [u"image.jpg", u"dir"]
+        self.wikicommands = [TestFooterWikiCommand,
+                             TestHeadWikiCommand,
+                             ]
 
         fullFilesPath = [os.path.join(self.filesPath, fname)
                          for fname
@@ -47,6 +71,8 @@ class WikiHtmlGeneratorTest(unittest.TestCase):
 
         self.resultPath = os.path.join(self.testPage.path, PAGE_RESULT_HTML)
 
+        Application.onWikiParserPrepare += self.__onWikiParserPrepare
+
     def __setDefaultConfig(self):
         # Установим размер превьюшки, не совпадающий с размером по умолчанию
         Application.config.set(WikiConfig.WIKI_SECTION,
@@ -66,7 +92,12 @@ class WikiHtmlGeneratorTest(unittest.TestCase):
         WikiPageFactory().create(self.wikiroot, u"Страница 2", [])
         self.testPage = self.wikiroot[u"Страница 2"]
 
+    def __onWikiParserPrepare(self, parser):
+        map(lambda command: parser.addCommand(command(parser)),
+            self.wikicommands)
+
     def tearDown(self):
+        Application.onWikiParserPrepare -= self.__onWikiParserPrepare
         self.__setDefaultConfig()
         removeDir(self.path)
 
@@ -97,3 +128,42 @@ class WikiHtmlGeneratorTest(unittest.TestCase):
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertTrue(u"image.jpg" in result)
+
+    def testFooter_01(self):
+        text = u'Бла-бла-бла(:footer:)Подвал 1(:footerend:)'
+        self.testPage.content = text
+
+        generator = HtmlGenerator(self.testPage)
+        result = generator.makeHtml(Style().getPageStyle(self.testPage))
+
+        self.assertIn(u'Бла-бла-бла<br/>\nПодвал 1\n</body>', result)
+
+    def testFooter_02(self):
+        text = u'Бла-бла-бла(:footer:)Подвал 1(:footerend:)(:footer:)Подвал 2(:footerend:)11111'
+        self.testPage.content = text
+
+        generator = HtmlGenerator(self.testPage)
+        result = generator.makeHtml(Style().getPageStyle(self.testPage))
+
+        self.assertIn(u'Бла-бла-бла11111<br/>\nПодвал 1Подвал 2\n</body>', result)
+
+    def testHead_01(self):
+        text = u'Бла-бла-бла(:head:)Заголовок 1(:headend:)'
+        self.testPage.content = text
+
+        generator = HtmlGenerator(self.testPage)
+        result = generator.makeHtml(Style().getPageStyle(self.testPage))
+
+        self.assertIn(u'Заголовок 1\n</head>', result)
+
+    def testHead_02(self):
+        text = u'''Бла-бла-бла
+(:head:)Заголовок 1(:headend:)
+(:head:)Заголовок 2(:headend:)
+'''
+        self.testPage.content = text
+
+        generator = HtmlGenerator(self.testPage)
+        result = generator.makeHtml(Style().getPageStyle(self.testPage))
+
+        self.assertIn(u'Заголовок 1Заголовок 2\n</head>', result)
