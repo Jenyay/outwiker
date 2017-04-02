@@ -88,7 +88,7 @@ class CurrentPagePanel(wx.Panel):
         """
         if page is not None and not pageExists (page):
             MessageBox (_(u"Can't open page. Page folder not exists"), _("Error"), wx.OK | wx.ICON_ERROR)
-            Application.selectedPage = None
+            self.__reloadWiki()
             return
 
         self.__updatePageView (page)
