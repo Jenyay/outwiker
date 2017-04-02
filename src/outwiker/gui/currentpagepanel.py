@@ -103,10 +103,10 @@ class CurrentPagePanel(wx.Panel):
         imagePath = self.grayStarImage
         tooltip = _(u"Add to Bookmarks")
 
-        bookmarks = Application.selectedPage.root.bookmarks
+        page = Application.selectedPage
 
-        if (Application.selectedPage is not None and
-                bookmarks.pageMarked(Application.selectedPage)):
+        if (page is not None and
+                page.root.bookmarks.pageMarked(Application.selectedPage)):
             imagePath = self.goldStarImage
             tooltip = _(u"Remove from Bookmarks")
 
