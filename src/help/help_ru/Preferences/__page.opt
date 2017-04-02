@@ -6,9 +6,10 @@ creationdatetime = 2015-02-01 20:49:35.017769
 datetime = 2017-04-02 12:29:52.247779
 cursorposition = 10862
 alias = Настройки программы
+uid = settings
 
 [wiki]
-md5_hash = 20897eede2058ce447022ff5a516cae3
+md5_hash = c660f472df86cd29eef17fc6bd5f005e
 
 [Misc]
 pageindex = 1
