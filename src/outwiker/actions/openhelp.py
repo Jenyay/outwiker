@@ -6,32 +6,38 @@ from outwiker.gui.baseaction import BaseAction
 from outwiker.core.system import getCurrentDir, openInNewWindow
 
 
-class OpenHelpAction (BaseAction):
+class OpenHelpParams(object):
+    def __init__(self, pagelink):
+        self.pagelink = pagelink
+
+
+class OpenHelpAction(BaseAction):
     """
     Open the OutWiker help
     """
     stringId = u"Help"
 
-    def __init__ (self, application):
+    def __init__(self, application):
         self._application = application
 
-
     @property
-    def title (self):
+    def title(self):
         return _(u"Help")
 
-
     @property
-    def description (self):
+    def description(self):
         return _(u"Open help")
 
-
-    def run (self, params):
+    def run(self, params):
         help_dir = u"help"
         current_help = _("help_en")
-        path = os.path.join (getCurrentDir(),
-                             help_dir,
-                             current_help)
+        path = os.path.join(getCurrentDir(),
+                            help_dir,
+                            current_help)
 
         args = [u'--normal', u'--readonly']
-        openInNewWindow (path, args)
+        if params is not None:
+            args.append(u'-p')
+            args.append(params.pagelink)
+
+        openInNewWindow(path, args)

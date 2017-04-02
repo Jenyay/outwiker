@@ -2,6 +2,7 @@
 
 import wx
 
+from outwiker.actions.openhelp import OpenHelpAction, OpenHelpParams
 from outwiker.core.event import (EVENT_PRIORITY_MAX_CORE,
                                  EVENT_PRIORITY_MIN_CORE)
 from outwiker.core.exceptions import PreferencesException
@@ -52,6 +53,7 @@ class PrefController (object):
 
         self._dialog.Bind(wx.EVT_BUTTON, self.__onOk, id=wx.ID_OK)
         self._dialog.Bind(wx.EVT_BUTTON, self.__onCancel, id=wx.ID_CANCEL)
+        self._dialog.Bind(wx.EVT_BUTTON, self.__onHelp, id=wx.ID_HELP)
 
     def __onPrefDialogCreateLast(self, dialog):
         self.__expandAllPages()
@@ -69,6 +71,10 @@ class PrefController (object):
                             handler=self.__onCancel,
                             id=wx.ID_CANCEL)
 
+        self._dialog.Unbind(wx.EVT_BUTTON,
+                            handler=self.__onHelp,
+                            id=wx.ID_HELP)
+
     def __onCancel(self, event):
         self._application.onPreferencesDialogClose(self)
         self.__unbindFromDialog()
@@ -84,6 +90,12 @@ class PrefController (object):
         self._application.onPreferencesDialogClose(self._dialog)
         self.__unbindFromDialog()
         self._dialog.EndModal(wx.ID_OK)
+
+    def __onHelp(self, event):
+        controller = self._application.actionController
+        action = controller.getAction(OpenHelpAction.stringId)
+        params = OpenHelpParams(u'page://settings')
+        action.run(params)
 
     def __saveAll(self):
         """

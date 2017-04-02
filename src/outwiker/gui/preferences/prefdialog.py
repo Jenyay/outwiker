@@ -61,7 +61,7 @@ class PrefDialog(TestedDialog):
         """
         Создать кнопки Ok / Cancel
         """
-        buttonsSizer = self.CreateButtonSizer(wx.OK | wx.CANCEL)
+        buttonsSizer = self.CreateButtonSizer(wx.OK | wx.CANCEL | wx.HELP)
         sizer.Add(buttonsSizer,
                   0,
                   wx.ALIGN_RIGHT | wx.ALIGN_BOTTOM | wx.ALL,
