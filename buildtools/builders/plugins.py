@@ -27,13 +27,16 @@ class BuilderPlugins(BuilderBase):
         self._plugins_list = plugins_list
         self._updatedOnly = updatedOnly
 
+    def get_plugins_pack_path(self):
+        return self._getSubpath(self._all_plugins_fname)
+
     def clear(self):
         super(BuilderPlugins, self).clear()
-        self._remove(self._getSubpath(self._all_plugins_fname))
+        self._remove(self.get_plugins_pack_path())
 
     def _build(self):
         # Path to archive with all plug-ins
-        full_archive_path = self._getSubpath(self._all_plugins_fname)
+        full_archive_path = self.get_plugins_pack_path()
 
         for plugin in self._plugins_list:
             # Path to plugin.xml for current plugin

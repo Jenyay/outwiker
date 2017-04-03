@@ -55,6 +55,9 @@ FILES_FOR_UPLOAD_UNSTABLE_WIN = [
     u'outwiker_win_unstable.zip',
 ]
 
+PPA_UNSTABLE_PATH = u'ppa:outwiker-team/unstable'
+PPA_STABLE_PATH = u'ppa:outwiker-team/ppa'
+
 # Timeout in seconds
 DOWNLOAD_TIMEOUT = 15
 

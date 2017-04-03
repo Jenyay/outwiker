@@ -28,6 +28,7 @@ from buildtools.defines import (
     FILES_FOR_UPLOAD_UNSTABLE_WIN,
     OUTWIKER_VERSIONS_FILENAME,
     NEED_FOR_BUILD_DIR,
+    PPA_UNSTABLE_PATH,
 )
 from buildtools.versions import (getOutwikerVersion,
                                  downloadAppInfo,
@@ -61,6 +62,7 @@ try:
                                        DEPLOY_HOME_PATH,
                                        DEPLOY_SITE,
                                        PATH_TO_WINDOWS_DISTRIBS,
+                                       DEPLOY_PLUGINS_PACK_PATH,
                                        )
 except ImportError:
     shutil.copyfile(u'buildtools/serverinfo.py.example',
@@ -70,6 +72,7 @@ except ImportError:
                                        DEPLOY_HOME_PATH,
                                        DEPLOY_SITE,
                                        PATH_TO_WINDOWS_DISTRIBS,
+                                       DEPLOY_PLUGINS_PACK_PATH,
                                        )
 
 # env.hosts = [DEPLOY_SERVER_NAME]
@@ -113,28 +116,19 @@ def debsingle():
     builder.build()
 
 
-@task
-def ppaunstable():
+def _ppa_upload(ppa_path):
     """
-    Upload the current OutWiker version in PPA(unstable)
+    Upload the current OutWiker version in PPA
     """
     version = getOutwikerVersion()
 
     for distname in UBUNTU_RELEASE_NAMES:
         with lcd(os.path.join(BUILD_DIR, DEB_SOURCE_BUILD_DIR)):
-            local("dput ppa:outwiker-team/unstable outwiker_{}+{}~{}_source.changes".format(version[0], version[1], distname))
-
-
-# @task
-# def ppastable():
-#     """
-#     Upload the current OutWiker version in PPA(unstable)
-#     """
-#     version = getOutwikerVersion()
-#
-#     for distname in UBUNTU_RELEASE_NAMES:
-#         with lcd(os.path.join(BUILD_DIR, DEB_SOURCE_BUILD_DIR)):
-#             local("dput ppa:outwiker-team/ppa outwiker_{}+{}~{}_source.changes".format(version[0], version[1], distname))
+            local("dput {} outwiker_{}+{}~{}_source.changes".format(
+                ppa_path,
+                version[0],
+                version[1],
+                distname))
 
 
 @task
@@ -513,13 +507,29 @@ def upload_unstable():
 
 @hosts(DEPLOY_SERVER_NAME)
 @task
-def deploy():
+def upload_plugins_pack():
+    '''
+    Upload archive with all plugins.
+    '''
+    pluginsBuilder = BuilderPlugins()
+    pack_path = pluginsBuilder.get_plugins_pack_path()
+    with cd(DEPLOY_PLUGINS_PACK_PATH):
+        basename = os.path.basename(pack_path)
+        put(pack_path, basename)
+
+
+@hosts(DEPLOY_SERVER_NAME)
+@task
+def deploy_unstable():
     """
     Upload unstable version on the site
     """
+    ppa_path = PPA_UNSTABLE_PATH
+
     deb_sources_included()
-    ppaunstable()
+    _ppa_upload(ppa_path)
     upload_unstable()
+    upload_plugins_pack()
 
 
 @task(alias='apiversions')
