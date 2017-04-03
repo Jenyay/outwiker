@@ -7,7 +7,7 @@
 		<website>http://jenyay.net/Outwiker/UnstableEn</website>
 
 		<changelog>
-			<version number="2.0.0.813" status="beta">
+			<version number="2.0.0.814" status="beta">
 				<change>Added the "subpath" parameter to main window title.</change>
 				<change>Some GUI improvements.</change>
 				<change>Bug fixes.</change>
@@ -85,7 +85,7 @@
 		<website>http://jenyay.net/Outwiker/Unstable</website>
 
 		<changelog>
-			<version number="2.0.0.813" status="beta">
+			<version number="2.0.0.814" status="beta">
 				<change>Добавлен параметр "subpath" в настройках выбора заголовка главного окна программы.</change>
 				<change>Некоторые улучшения в интерфейсе.</change>
 				<change>Исправления ошибок.</change>
