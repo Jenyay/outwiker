@@ -136,7 +136,8 @@ class WikiHtmlGeneratorTest(unittest.TestCase):
         generator = HtmlGenerator(self.testPage)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
-        self.assertIn(u'Бла-бла-бла<br/>\nПодвал 1\n</body>', result)
+        self.assertIn(u'Бла-бла-бла<br/>\nПодвал 1\n</body>',
+                      result.replace(u'\r\n', u'\n'))
 
     def testFooter_02(self):
         text = u'Бла-бла-бла(:footer:)Подвал 1(:footerend:)(:footer:)Подвал 2(:footerend:)11111'
@@ -145,7 +146,8 @@ class WikiHtmlGeneratorTest(unittest.TestCase):
         generator = HtmlGenerator(self.testPage)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
-        self.assertIn(u'Бла-бла-бла11111<br/>\nПодвал 1Подвал 2\n</body>', result)
+        self.assertIn(u'Бла-бла-бла11111<br/>\nПодвал 1Подвал 2\n</body>',
+                      result.replace(u'\r\n', u'\n'))
 
     def testHead_01(self):
         text = u'Бла-бла-бла(:head:)Заголовок 1(:headend:)'
@@ -154,7 +156,8 @@ class WikiHtmlGeneratorTest(unittest.TestCase):
         generator = HtmlGenerator(self.testPage)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
-        self.assertIn(u'Заголовок 1\n</head>', result)
+        self.assertIn(u'Заголовок 1\n</head>',
+                      result.replace(u'\r\n', u'\n'))
 
     def testHead_02(self):
         text = u'''Бла-бла-бла
@@ -166,4 +169,5 @@ class WikiHtmlGeneratorTest(unittest.TestCase):
         generator = HtmlGenerator(self.testPage)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
-        self.assertIn(u'Заголовок 1Заголовок 2\n</head>', result)
+        self.assertIn(u'Заголовок 1Заголовок 2\n</head>',
+                      result.replace(u'\r\n', u'\n'))
