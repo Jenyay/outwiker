@@ -9,25 +9,25 @@ class PageTypeColorConfig (object):
     '''
     SECTION = u'PageTypeColor'
 
-    def __init__ (self, config):
+    def __init__(self, config):
         self.config = config
 
-        self.wikiColor = StringOption (self.config,
-                                       self.SECTION,
-                                       u'wiki',
-                                       u'#9DC0FA')
+        self.wikiColor = StringOption(self.config,
+                                      self.SECTION,
+                                      u'wiki',
+                                      u'#9DC0FA')
 
-        self.htmlColor = StringOption (self.config,
-                                       self.SECTION,
-                                       u'html',
-                                       u'#F1F779')
+        self.htmlColor = StringOption(self.config,
+                                      self.SECTION,
+                                      u'html',
+                                      u'#F1F779')
 
-        self.textColor = StringOption (self.config,
-                                       self.SECTION,
-                                       u'text',
-                                       u'#79F7B8')
+        self.textColor = StringOption(self.config,
+                                      self.SECTION,
+                                      u'text',
+                                      u'#79F7B8')
 
-        self.searchColor = StringOption (self.config,
-                                         self.SECTION,
-                                         u'search',
-                                         u'#F280E3')
+        self.searchColor = StringOption(self.config,
+                                        self.SECTION,
+                                        u'search',
+                                        u'#F280E3')
