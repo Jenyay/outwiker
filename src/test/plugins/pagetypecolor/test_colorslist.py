@@ -21,8 +21,17 @@ class PageTypeColor_ColorsListTest(unittest.TestCase):
 
     def test_empty(self):
         from pagetypecolor.colorslist import ColorsList
+        from pagetypecolor.config import PageTypeColorConfig
+
+        pagetype = u'wiki'
 
         colorslist = ColorsList(self._application)
+
+        color_param = StringOption(self._application.config,
+                                   PageTypeColorConfig.SECTION,
+                                   pagetype,
+                                   None)
+        self.assertIsNone(color_param.value)
 
         self.assertEqual(colorslist.getPageTypes(), [])
 
@@ -40,12 +49,7 @@ class PageTypeColor_ColorsListTest(unittest.TestCase):
         self.assertIn(u'search', pageTypeList)
 
     def test_init_markdown(self):
-        self.loader.clear()
-
-        plugins_dirs = [u"../plugins/pagetypecolor",
-                        u"../plugins/markdown",
-                        ]
-        self.loader.load(plugins_dirs)
+        self._loadMarkdownPlugin()
 
         from pagetypecolor.colorslist import ColorsList
 
@@ -55,6 +59,22 @@ class PageTypeColor_ColorsListTest(unittest.TestCase):
         pageTypeList = colorslist.getPageTypes()
 
         self.assertIn(u'markdown', pageTypeList)
+
+    def test_init_markdown_config(self):
+        pagetype = u'markdown'
+        self._loadMarkdownPlugin()
+
+        from pagetypecolor.colorslist import ColorsList
+        from pagetypecolor.config import PageTypeColorConfig
+
+        colorslist = ColorsList(self._application)
+        colorslist.load()
+
+        color_param = StringOption(self._application.config,
+                                   PageTypeColorConfig.SECTION,
+                                   pagetype,
+                                   None)
+        self.assertIsNotNone(color_param.value)
 
     def test_setColor(self):
         from pagetypecolor.colorslist import ColorsList
@@ -78,3 +98,11 @@ class PageTypeColor_ColorsListTest(unittest.TestCase):
         from pagetypecolor.config import PageTypeColorConfig
 
         self._application.config.remove_section(PageTypeColorConfig.SECTION)
+
+    def _loadMarkdownPlugin(self):
+        self.loader.clear()
+
+        plugins_dirs = [u"../plugins/pagetypecolor",
+                        u"../plugins/markdown",
+                        ]
+        self.loader.load(plugins_dirs)
