@@ -77,7 +77,7 @@ class PageTypeColor_ColorsListTest(unittest.TestCase):
                                    None)
         self.assertIsNotNone(color_param.value)
 
-    def test_setColor(self):
+    def test_setColor_manual(self):
         from pagetypecolor.colorslist import ColorsList
         from pagetypecolor.config import PageTypeColorConfig
 
@@ -94,6 +94,43 @@ class PageTypeColor_ColorsListTest(unittest.TestCase):
         colorslist.load()
 
         self.assertEqual(colorslist.getColor(pagetype), color)
+
+    def test_setColor_01(self):
+        from pagetypecolor.colorslist import ColorsList
+
+        color = u'#AABBCC'
+        pagetype = u'wiki'
+
+        colorslist = ColorsList(self._application)
+        colorslist.load()
+        colorslist.setColor(pagetype, color)
+
+        self.assertEqual(colorslist.getColor(pagetype), color)
+
+    def test_setColor_02(self):
+        from pagetypecolor.colorslist import ColorsList
+
+        color = u'#AABBCC'
+        pagetype = u'wiki'
+
+        colorslist = ColorsList(self._application)
+        colorslist.setColor(pagetype, color)
+
+        self.assertEqual(colorslist.getColor(pagetype), color)
+
+    def test_setColor_03(self):
+        from pagetypecolor.colorslist import ColorsList
+
+        color = u'#AABBCC'
+        pagetype = u'wiki'
+
+        colorslist = ColorsList(self._application)
+        colorslist.setColor(pagetype, color)
+
+        colorslist_new = ColorsList(self._application)
+        colorslist_new.load()
+
+        self.assertEqual(colorslist_new.getColor(pagetype), color)
 
     def test_markdown_default(self):
         self._loadMarkdownPlugin()

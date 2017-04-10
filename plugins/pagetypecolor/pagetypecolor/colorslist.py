@@ -18,6 +18,7 @@ class ColorsList(object):
     def load(self):
         config = PageTypeColorConfig(self._application.config)
 
+        # Colors for built-in page types
         self._colors = {
             u'wiki': config.wikiColor.value,
             u'html': config.htmlColor.value,
@@ -39,9 +40,7 @@ class ColorsList(object):
 
                 if color_param.value is None:
                     color = self._getNewColor()
-                    self._colors[typeString] = color
-                    config.config.set(config.SECTION, typeString, color)
-                    config.config.save()
+                    self.setColor(typeString, color)
                 else:
                     self._colors[typeString] = color_param.value
 
@@ -62,6 +61,13 @@ class ColorsList(object):
 
     def getColor(self, pageTypeString):
         return self._colors.get(pageTypeString, self._defaultColor)
+
+    def setColor(self, pageTypeString, color):
+        self._colors[pageTypeString] = color
+
+        self._application.config.set(PageTypeColorConfig.SECTION,
+                                     pageTypeString, color)
+        self._application.config.save()
 
     def getPageTypes(self):
         return self._colors.keys()

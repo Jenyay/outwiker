@@ -2,9 +2,12 @@
 
 import wx
 
-from i18n import get_
-from config import PageTypeColorConfig
+from outwiker.core.application import Application
+from outwiker.core.events import PageDialogPageFactoriesNeededParams
 from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
+
+from pagetypecolor.i18n import get_
+from pagetypecolor.colorslist import ColorsList
 
 
 class PreferencePanel(BasePrefPanel):
@@ -21,8 +24,13 @@ class PreferencePanel(BasePrefPanel):
         global _
         _ = get_()
 
+        self._application = Application
+
+        # Key - page type string, value - ColorPicker instance
+        self._colorPickers = {}
+        self._colorsList = ColorsList(self._application)
+
         self.__createGui()
-        self.__controller = PrefPanelController(self, config)
         self._setScrolling()
 
     def __createGui(self):
@@ -44,83 +52,28 @@ class PreferencePanel(BasePrefPanel):
                       border=2)
         mainSizer.AddSpacer(0)
 
-        wikiLabel, self._wikiColorPicker = self._createLabelAndColorPicker(
-            _(u'Wiki page'),
-            mainSizer
-        )
+        eventParams = PageDialogPageFactoriesNeededParams(None, None)
+        self._application.onPageDialogPageFactoriesNeeded(None, eventParams)
 
-        htmlLabel, self._htmlColorPicker = self._createLabelAndColorPicker(
-            _(u'HTML page'),
-            mainSizer
-        )
-
-        textLabel, self._textColorPicker = self._createLabelAndColorPicker(
-            _(u'Text page'),
-            mainSizer
-        )
-
-        searchLabel, self._searchColorPicker = self._createLabelAndColorPicker(
-            _(u'Search page'),
-            mainSizer
-        )
+        for factory in eventParams.pageFactories:
+            label, colorPicker = self._createLabelAndColorPicker(
+                factory.title,
+                mainSizer
+            )
+            self._colorPickers[factory.getTypeString()] = colorPicker
 
         self.SetSizer(mainSizer)
 
-    @property
-    def wikiColor(self):
-        return self._wikiColorPicker.GetColour().GetAsString(wx.C2S_HTML_SYNTAX)
-
-    @wikiColor.setter
-    def wikiColor(self, value):
-        self._wikiColorPicker.SetColour(value)
-
-    @property
-    def htmlColor(self):
-        return self._htmlColorPicker.GetColour().GetAsString(wx.C2S_HTML_SYNTAX)
-
-    @htmlColor.setter
-    def htmlColor(self, value):
-        self._htmlColorPicker.SetColour(value)
-
-    @property
-    def textColor(self):
-        return self._textColorPicker.GetColour().GetAsString(wx.C2S_HTML_SYNTAX)
-
-    @textColor.setter
-    def textColor(self, value):
-        self._textColorPicker.SetColour(value)
-
-    @property
-    def searchColor(self):
-        return self._searchColorPicker.GetColour().GetAsString(wx.C2S_HTML_SYNTAX)
-
-    @searchColor.setter
-    def searchColor(self, value):
-        self._searchColorPicker.SetColour(value)
-
     def LoadState(self):
-        self.__controller.loadState()
+        self._colorsList.load()
+        for pageType in self._colorsList.getPageTypes():
+            if pageType in self._colorPickers:
+                color = self._colorsList.getColor(pageType)
+                self._colorPickers[pageType].SetColour(color)
 
     def Save(self):
-        self.__controller.save()
-
-
-class PrefPanelController(object):
-    """
-    Контроллер для панели настроек
-    """
-    def __init__(self, ownerPanel, config):
-        self._panel = ownerPanel
-        self._config = PageTypeColorConfig(config)
-
-    def loadState(self):
-        self._panel.wikiColor = self._config.wikiColor.value
-        self._panel.htmlColor = self._config.htmlColor.value
-        self._panel.textColor = self._config.textColor.value
-        self._panel.searchColor = self._config.searchColor.value
-
-    def save(self):
-        self._config.wikiColor.value = self._panel.wikiColor
-        self._config.htmlColor.value = self._panel.htmlColor
-        self._config.textColor.value = self._panel.textColor
-        self._config.searchColor.value = self._panel.searchColor
+        self._colorsList.load()
+        for pageType in self._colorsList.getPageTypes():
+            if pageType in self._colorPickers:
+                color = self._colorPickers[pageType].GetColour().GetAsString(wx.C2S_HTML_SYNTAX)
+                self._colorsList.setColor(pageType, color)
