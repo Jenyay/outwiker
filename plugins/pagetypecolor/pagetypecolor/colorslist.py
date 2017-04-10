@@ -1,9 +1,12 @@
 # -*- coding: UTF-8 -*-
 
+import wx
+
 from outwiker.core.events import PageDialogPageFactoriesNeededParams
 from outwiker.core.config import StringOption
 
-from config import PageTypeColorConfig
+from pagetypecolor.config import PageTypeColorConfig
+from pagetypecolor.colorfinder import find_farthest_color
 
 
 class ColorsList(object):
@@ -43,8 +46,19 @@ class ColorsList(object):
                     self._colors[typeString] = color_param.value
 
     def _getNewColor(self):
-        color = 'white'
-        return color
+        colors_list = map(lambda color: self._parseColor(color),
+                          self._colors.values())
+        color_tuple = find_farthest_color(colors_list)
+        color_text = u'#{:02X}{:02X}{:02X}'.format(*color_tuple)
+        return color_text
+
+    def _parseColor(self, color_str):
+        '''
+        Return tuple (R, G, B)
+        '''
+        color = wx.Colour()
+        color.SetFromString(color_str)
+        return (color.Red(), color.Green(), color.Blue())
 
     def getColor(self, pageTypeString):
         return self._colors.get(pageTypeString, self._defaultColor)

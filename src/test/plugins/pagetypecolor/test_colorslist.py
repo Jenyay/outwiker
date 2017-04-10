@@ -14,6 +14,7 @@ class PageTypeColor_ColorsListTest(unittest.TestCase):
 
         self.loader = PluginsLoader(self._application)
         self.loader.load(plugins_dirs)
+        self._clearConfig()
 
     def tearDown(self):
         self._clearConfig()
@@ -93,6 +94,20 @@ class PageTypeColor_ColorsListTest(unittest.TestCase):
         colorslist.load()
 
         self.assertEqual(colorslist.getColor(pagetype), color)
+
+    def test_markdown_default(self):
+        self._loadMarkdownPlugin()
+
+        from pagetypecolor.colorslist import ColorsList
+
+        pagetype = u'markdown'
+
+        colorslist = ColorsList(self._application)
+        colorslist.load()
+        color_param = colorslist.getColor(pagetype)
+
+        self.assertIsNotNone(color_param)
+        self.assertNotEqual(color_param, u'white')
 
     def _clearConfig(self):
         from pagetypecolor.config import PageTypeColorConfig
