@@ -7,4 +7,3 @@ English documentation
    sources
    pageformat
    changelog
-   ideas

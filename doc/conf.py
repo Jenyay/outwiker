@@ -144,7 +144,7 @@ html_static_path = ['_static']
 
 # If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
 # using the given strftime format.
-html_last_updated_fmt = '%d.%m.%Y'
+html_last_updated_fmt = '%Y.%m.%d'
 
 # If true, SmartyPants will be used to convert quotes and dashes to
 # typographically correct entities.
@@ -266,3 +266,4 @@ texinfo_documents = [
 #texinfo_no_detailmenu = False
 
 todo_include_todos = True
+todo_emit_warnings = True

@@ -4,6 +4,26 @@ Version History
 Current developing version
 --------------------------
 
+2.0.0.814 beta (April 03, 2017)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* Added the "subpath" parameter to main window title.
+* Some GUI improvements.
+* Bug fixes.
+
+2.0.0.812 beta (March 18, 2017)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* Hot keys GUI improvements.
+* Update help.
+* Add Ubuntu 17.04 Zesty Zapus supporting.
+
+2.0.0.810 beta (February 24, 2017)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* Splitted the long toolbars.
+* Bug fixes.
+
 2.0.0.808 beta (January 26, 2017)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
