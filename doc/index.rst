@@ -12,7 +12,7 @@ English documentation
 .. toctree::
    :maxdepth: 2
 
-   en/index_en
+   en/index
 
 
 Russian documentation
@@ -21,7 +21,7 @@ Russian documentation
 .. toctree::
    :maxdepth: 2
 
-   ru/index_ru
+   ru/index
 
 
 Indices and tables
