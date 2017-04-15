@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "OutWiker"
-#define MyAppVersion "1.9.0"
+#define MyAppVersion "2.0.0"
 #define MyAppPublisher "jenyay.net"
 #define MyAppURL "http://jenyay.net/Outwiker/English"
 #define MyAppExeName "outwiker.exe"
@@ -14,7 +14,6 @@
 AppId={{ED6D2DAD-1DF8-4779-BCA9-F559CCEE8F25}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
-;AppVerName={#MyAppName} {#MyAppVersion}
 AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
