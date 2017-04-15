@@ -8,6 +8,7 @@
 
 		<changelog>
 			<version number="2.0.0.815" status="beta">
+				<change>Removed Italian localization.</change>
 			</version>
 
 			<version number="2.0.0.814" status="beta" date="April 03, 2017">
@@ -89,6 +90,7 @@
 
 		<changelog>
 			<version number="2.0.0.815" status="beta">
+				<change>Удалена итальянская локализация.</change>
 			</version>
 
 			<version number="2.0.0.814" status="beta" date="03.04.2017">
