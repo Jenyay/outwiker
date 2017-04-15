@@ -6,8 +6,7 @@
 # Packages
 *.egg
 *.egg-info
-dist
-build
+/build
 eggs
 parts
 bin
@@ -40,22 +39,13 @@ _build
 *.py~
 *.deb
 doxydoc
-logdict2.6.1.final.0-1.log
-logdict2.6.5.final.0-1.log
-warnoutwiker_win32.txt
-warnoutwiker_linux.txt
-doc/todo.tsk.lock
-doc/todo.tsk.lock.*
 profiles/*.profile
 test/*.profile
-distrib
 .coverage
 htmlcov
 src/tests.log
 src/plugins/*
 .ropeproject
-doc/doxygen/html
-doc/coverage
 tests_win
 *.sublime-*
 .idea/
