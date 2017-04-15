@@ -5,7 +5,11 @@
    :maxdepth: 2
 
    sources_get
-   sources
+   sources_struct
+   tools
+   fabfile
+   build_linux
+   build_windows
    test
    pageformat
    changelog
