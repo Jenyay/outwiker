@@ -7,3 +7,4 @@
    build/index
    sources/index
    changelog
+   links
