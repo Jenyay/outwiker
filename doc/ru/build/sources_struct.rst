@@ -129,6 +129,8 @@ setup.py
     Скрипт, предназначенный для создания бинарной сборки OiutWiker с помощью cx_freeze_. Подробности см. в :ref:`build_windows` и :ref:`build_linux`.
 
 
+.. _ru_sources_struct_src:
+
 Структура папки src/outwiker
 ----------------------------
 
