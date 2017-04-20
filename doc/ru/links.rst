@@ -7,9 +7,9 @@
 * `Нестабильные версии программы <http://jenyay.net/Outwiker/Unstable>`_
 * `Плагины для программы <http://jenyay.net/Outwiker/Unstable>`_
 * `Исходные коды <https://github.com/Jenyay/outwiker>`_
-* `Сервис для локализации <http://crowdin.net/project/outwiker>`_
+* `Сервис для локализации <https://crowdin.net/project/outwiker>`_
 * `Багтрекер и пожелания <https://github.com/Jenyay/outwiker/issues>`_
-* `Документация <http://jenyay.net/OutWikerDoc/OutWikerDoc>`_
+* `Документация <https://outwiker.readthedocs.io>`_
 
 
 .. _ru_social:
