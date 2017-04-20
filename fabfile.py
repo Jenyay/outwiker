@@ -107,7 +107,7 @@ def deb_clear():
 
 
 @task
-def debsingle():
+def deb_single():
     """
     Assemble the deb package for the current Ubuntu release
     """
@@ -205,11 +205,11 @@ def linux_clear():
 
 
 @task
-def debinstall():
+def deb_install():
     """
     Assemble deb package for current Ubuntu release
     """
-    debsingle()
+    deb_single()
 
     version = getOutwikerVersion()
 
@@ -260,7 +260,7 @@ def test(section=u'', *args):
 @task
 def test_build(section=u'', *args):
     """
-    Run the unit tests
+    Run the build unit tests
     """
     _runTests(u'.', u'test_build_', section, *args)
 
@@ -449,7 +449,7 @@ def upload_plugin(*args):
         url = appinfo_local.updatesUrl
         try:
             appinfo_remote = downloadAppInfo(url)
-        except:
+        except Exception:
             appinfo_remote = None
 
         if (appinfo_remote is not None and
