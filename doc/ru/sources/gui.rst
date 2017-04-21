@@ -1,0 +1,4 @@
+.. _ru_outwiker_gui:
+
+Пакет outwiker.gui
+==================

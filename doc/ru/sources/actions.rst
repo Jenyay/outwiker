@@ -1,4 +1,4 @@
-.. _actions:
+.. _ru_outwiker_actions:
 
 Actions
 =======

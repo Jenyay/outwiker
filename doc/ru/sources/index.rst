@@ -6,4 +6,8 @@
 
    pageformat
    version_format
+   core
    actions
+   gui
+   wiki_parser
+   plugins
