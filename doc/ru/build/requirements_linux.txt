@@ -1,0 +1,9 @@
+python-wxgtk3.0
+python-wxversion
+libwxgtk-webview3.0-0v5
+python-pil или python-imaging
+python-enchant
+python-appindicator
+python-gtk2
+python-wxgtk-webview3.0
+ibus-gtk3

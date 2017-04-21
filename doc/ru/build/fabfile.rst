@@ -7,6 +7,89 @@
    :depth: 2
 
 
+.. _ru_fabric:
+
+Основы использования Fabric
+---------------------------
+
+
+Для многих задач, связанных со сборкой, тестированием и выкладыванием новых версий на сайт, используется Fabric_ - удобный инструмент, который позволяет автоматизировать многие задачи как на удаленном сервере, так и на локальном компьютере. На русском языке про Fabric можно почитать в статье `Основы использования Fabric <http://jenyay.net/Programming/Fabric>`_.
+
+Основная идея использования Fabric состоит в том, что все команды (или задачи) описываются в файле :file:`fabfile.py`, расположенном в корневой папке исходных кодов.
+
+Чтобы узнать список имеющихся в данном :file:`fabfile.py` команд, выполните к консоли команду:
+
+.. code:: bash
+
+    fab -l
+
+
+Будет выведен следующий список команд:
+
+.. code-block:: text
+
+    Available commands:
+
+        apiversion
+        apiversions
+        clear                 Remove artifacts after all assemblies
+        create_tree           Create wiki tree for the tests.
+        deb                   Assemble the deb packages
+        deb_binary
+        deb_binary_clear
+        deb_clear             Remove the deb packages
+        deb_install           Assemble deb package for current Ubuntu release
+        deb_single            Assemble the deb package for the current Ubuntu release
+        deb_sources_included  Create files for uploading in PPA(including sources)
+        deploy_unstable       Upload unstable version on the site
+        doc
+        linux                 Assemble binary builds for Linux
+        linux_clear           Remove binary builds for Linux
+        locale                Update the localization file(outwiker.pot)
+        locale_plugin         Create or update the localization file for pluginname plug-in
+        outwiker_changelog    Generate OutWiker's changelog for the site
+        plugin_changelog      Generate plugin's changelog for the site
+        plugin_locale         Create or update the localization file for pluginname plug-in
+        plugins               Create an archive with plugins(7z required)
+        plugins_clear         Remove an archive with plugins(7z required)
+        plugins_list
+        prepare_virtual       Prepare virtual machine
+        run                   Run OutWiker from sources
+        site_versions
+        sources               Create the sources archives.
+        sources_clear         Remove the sources archives.
+        test                  Run the unit tests
+        test_build            Run the build unit tests
+        upload_plugin         Upload plugin to site
+        upload_plugins_pack   Upload archive with all plugins.
+        upload_unstable       Upload unstable version on the site
+        win                   Build assemblies under Windows
+        win_clear             Remove assemblies under Windows
+
+
+Все эти команды описаны ниже.
+
+Чтобы выполнить команду, в консол нужно написать:
+
+.. code:: bash
+
+    fab имя_команды
+
+Некоторые команды могут (или должны) принимать некоторые параметры. Параметры передаются после имени команды и символа ":", как показано ниже:
+
+.. code:: bash
+
+    fab имя_команды:парам1,парам2
+
+Обратите внимание, что после двоеточия и запятой в списке параметров не должно быть пробела. Если параметр должен содержать пробел, то такое значение должно быть заключено в кавычки:
+
+.. code:: bash
+
+    fab имя_команды:"параметр с пробелами"
+
+
+.. _ru_fabfile_win:
+
 Сборка под Windows
 ------------------
 
@@ -15,6 +98,9 @@ win
 
 win_clear
     Удалить все, что создается с помощью команды `win`.
+
+
+.. _ru_fabfile_linux:
 
 Сборка под Linux
 ----------------
@@ -46,6 +132,8 @@ linux_clear
     Удалить созданную бинарную сборку под Linux.
 
 
+.. _ru_fabfile_plugins:
+
 Команды, связанные с плагинами
 ------------------------------
 
@@ -66,11 +154,13 @@ apiversion или apiversions
     Вывести номера версий встроенных пакетов outwiker (см. раздел :ref:`ru_sources_struct_src`).
 
 test
-    Запустить юнит-тесты.
+    Запустить юнит-тесты. Подробнее о тестировании см. раздел :ref:`ru_test`.
 
 test_build
-    Запустить юнит-тесты, связанные со сборкой.
+    Запустить юнит-тесты, связанные со сборкой. Подробнее о тестировании см. раздел :ref:`ru_test`.
 
+
+.. _ru_fabfile_locale:
 
 Команды, связанные с локализацией
 ---------------------------------
@@ -81,6 +171,8 @@ locale
 locale_plugin или plugin_locale
     Создать файл локализации \*.pot для плагина, указанного в качестве параметра команды.
 
+
+.. _ru_fabfile_deploy:
 
 Команды, связанные с развертыванием
 -----------------------------------
@@ -133,4 +225,5 @@ sources_clear
 
 
 .. _cx_Freeze: https://anthony-tuininga.github.io/cx_Freeze/
+.. _Fabric: http://www.fabfile.org/
 .. _`Inno Setup`: http://www.jrsoftware.org
