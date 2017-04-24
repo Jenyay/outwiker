@@ -30,6 +30,9 @@ class BuilderBase(object):
     def _build(self):
         pass
 
+    def _postBuild(self):
+        pass
+
     def clear(self):
         self._remove(self._build_dir)
 
@@ -42,6 +45,7 @@ class BuilderBase(object):
             os.mkdir(self._distrib_dir)
 
         self._build()
+        self._postBuild()
 
     def _createRootDir(self):
         if not os.path.exists(self._root_build_dir):

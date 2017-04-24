@@ -16,7 +16,8 @@ from buildtools.libs.colorama import Fore
 from buildtools.utilites import (getPython,
                                  execute,
                                  getCurrentUbuntuDistribName,
-                                 getPathToPlugin
+                                 getPathToPlugin,
+                                 getDebSourceResultPath
                                  )
 from buildtools.defines import (
     UBUNTU_RELEASE_NAMES,
@@ -95,6 +96,7 @@ def deb():
     """
     builder = BuilderDebSource(DEB_SOURCE_BUILD_DIR, UBUNTU_RELEASE_NAMES)
     builder.build()
+    return builder.getResultPath()
 
 
 @task
@@ -114,6 +116,7 @@ def deb_single():
     builder = BuilderDebSource(DEB_SOURCE_BUILD_DIR,
                                [getCurrentUbuntuDistribName()])
     builder.build()
+    return builder.getResultPath()
 
 
 def _ppa_upload(ppa_path):
@@ -121,9 +124,10 @@ def _ppa_upload(ppa_path):
     Upload the current OutWiker version in PPA
     """
     version = getOutwikerVersion()
+    deb_source_path = getDebSourceResultPath()
 
     for distname in UBUNTU_RELEASE_NAMES:
-        with lcd(os.path.join(BUILD_DIR, DEB_SOURCE_BUILD_DIR)):
+        with lcd(deb_source_path):
             local("dput {} outwiker_{}+{}~{}_source.changes".format(
                 ppa_path,
                 version[0],
@@ -209,11 +213,11 @@ def deb_install():
     """
     Assemble deb package for current Ubuntu release
     """
-    deb_single()
+    result_path = deb_single()
 
     version = getOutwikerVersion()
 
-    with lcd(os.path.join(BUILD_DIR, DEB_SOURCE_BUILD_DIR)):
+    with lcd(result_path):
         local("sudo dpkg -i outwiker_{}+{}~{}_all.deb".format(
             version[0],
             version[1],

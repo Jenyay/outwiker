@@ -23,6 +23,10 @@ class BuilderBaseDebSource(BuilderBase):
     def __init__(self, subdir_name):
         super(BuilderBaseDebSource, self).__init__(subdir_name)
 
+    def clear(self):
+        super(BuilderBaseDebSource, self).clear()
+        self._remove(self.getResultPath())
+
     def _debuild(self, command, distriblist):
         """
         Run command with debuild.
@@ -49,6 +53,17 @@ class BuilderBaseDebSource(BuilderBase):
 
             with lcd(current_debian_dirname):
                 local(command)
+
+    def _postBuild(self):
+        src_dir = self._build_dir
+        dest_dir = self.getResultPath()
+        shutil.move(src_dir, dest_dir)
+
+        # Remove temp files
+        self._remove(os.path.join(dest_dir, self._getDebName()))
+
+    def getResultPath(self):
+        return os.path.join(self._distrib_dir, self._subdir_name)
 
     def _orig(self, distname):
         """
