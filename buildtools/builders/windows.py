@@ -9,7 +9,8 @@ from .base import BuilderBase
 from buildtools.utilites import getPython
 from buildtools.defines import (WINDOWS_BUILD_DIR,
                                 PLUGINS_LIST,
-                                OUTWIKER_VERSIONS_FILENAME)
+                                OUTWIKER_VERSIONS_FILENAME,
+                                WINDOWS_INSTALLER_FILENAME)
 
 
 class BuilderWindows(BuilderBase):
@@ -35,19 +36,20 @@ class BuilderWindows(BuilderBase):
         super(BuilderWindows, self).clear()
         toRemove = [
             os.path.join(self._root_build_dir, OUTWIKER_VERSIONS_FILENAME),
-            os.path.join(self._root_build_dir, self._resultBaseName + u'.7z'),
-            os.path.join(self._root_build_dir, self._resultBaseName + u'.exe'),
-            os.path.join(self._root_build_dir, self._resultBaseName + u'.zip'),
-            os.path.join(self._root_build_dir,
+            os.path.join(self._distrib_dir, self._resultBaseName + u'.7z'),
+            os.path.join(self._distrib_dir, self._resultBaseName + u'.exe'),
+            os.path.join(self._distrib_dir, self._resultBaseName + u'.zip'),
+            os.path.join(self._distrib_dir,
                          self._resultWithPluginsBaseName + u'.7z'),
-            os.path.join(self._root_build_dir,
+            os.path.join(self._distrib_dir,
                          self._resultWithPluginsBaseName + u'.zip'),
+            os.path.join(self._distrib_dir, WINDOWS_INSTALLER_FILENAME),
         ]
         map(self._remove, toRemove)
 
     def _build(self):
         shutil.copy(os.path.join(u'src', OUTWIKER_VERSIONS_FILENAME),
-                    self._root_build_dir)
+                    self._distrib_dir)
 
         self._create_plugins_dir()
         self._build_binary()
@@ -56,8 +58,20 @@ class BuilderWindows(BuilderBase):
         # Create archives without plugins
         if self._create_archives:
             with lcd(self._build_dir):
-                local("7z a ..\outwiker_win_unstable.zip .\* .\plugins -r -aoa")
-                local("7z a ..\outwiker_win_unstable.7z .\* .\plugins -r -aoa")
+                path_zip = os.path.abspath(
+                    os.path.join(
+                        self._distrib_dir,
+                        u'outwiker_win_unstable.zip')
+                )
+
+                path_7z = os.path.abspath(
+                    os.path.join(
+                        self._distrib_dir,
+                        u'outwiker_win_unstable.7z')
+                )
+
+                local(u'7z a "{}" .\* .\plugins -r -aoa'.format(path_zip))
+                local(u'7z a "{}" .\* .\plugins -r -aoa'.format(path_7z))
 
         # Compile installer
         if self._create_installer:
@@ -69,8 +83,20 @@ class BuilderWindows(BuilderBase):
         # Archive versions with plugins
         if self._create_archives:
             with lcd(self._build_dir):
-                local("7z a ..\outwiker_win_unstable_all_plugins.zip .\* .\plugins -r -aoa -xr!*.pyc -xr!.ropeproject")
-                local("7z a ..\outwiker_win_unstable_all_plugins.7z .\* .\plugins -r -aoa -xr!*.pyc -xr!.ropeproject")
+                path_zip = os.path.abspath(
+                    os.path.join(
+                        self._distrib_dir,
+                        u'outwiker_win_unstable_all_plugins.zip')
+                )
+
+                path_7z = os.path.abspath(
+                    os.path.join(
+                        self._distrib_dir,
+                        u'outwiker_win_unstable_all_plugins.7z')
+                )
+
+                local(u'7z a "{}" .\* .\plugins -r -aoa -xr!*.pyc -xr!.ropeproject'.format(path_zip))
+                local(u'7z a "{}" .\* .\plugins -r -aoa -xr!*.pyc -xr!.ropeproject'.format(path_7z))
 
     def _build_binary(self):
         """
@@ -96,6 +122,13 @@ class BuilderWindows(BuilderBase):
 
     def _build_installer(self):
         local("iscc outwiker_setup.iss")
+
+        src_path = os.path.join(self._root_build_dir,
+                                WINDOWS_INSTALLER_FILENAME)
+        dest_path = os.path.join(self._distrib_dir,
+                                 WINDOWS_INSTALLER_FILENAME)
+
+        shutil.move(src_path, dest_path)
 
     def _copy_plugins(self):
         """

@@ -5,6 +5,7 @@ import os
 import shutil
 
 from buildtools.defines import BUILD_DIR
+from buildtools.versions import getOutwikerVersion
 
 
 class BuilderBase(object):
@@ -19,6 +20,12 @@ class BuilderBase(object):
         self._build_dir = os.path.join(self._root_build_dir,
                                        self._subdir_name)
 
+        version = getOutwikerVersion()
+        self._distrib_dir_name = version[0] + u'.' + version[1]
+
+        self._distrib_dir = os.path.join(self._root_build_dir,
+                                         self._distrib_dir_name)
+
     @abc.abstractmethod
     def _build(self):
         pass
@@ -30,6 +37,9 @@ class BuilderBase(object):
         self._createRootDir()
         self.clear()
         os.mkdir(self._build_dir)
+
+        if not os.path.exists(self._distrib_dir):
+            os.mkdir(self._distrib_dir)
 
         self._build()
 
