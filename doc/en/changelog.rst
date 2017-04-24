@@ -4,6 +4,11 @@ Version History
 Current developing version
 --------------------------
 
+2.0.0.816 RC (April 25, 2017)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* Removed Italian localization.
+
 2.0.0.814 beta (April 03, 2017)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

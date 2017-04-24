@@ -8,4 +8,5 @@
    build/index
    sources/index
    changelog
+   support
    links
