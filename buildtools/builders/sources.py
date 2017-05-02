@@ -15,25 +15,37 @@ class BuilderSources(BuilderBase):
     """
     def __init__(self, build_dir=SOURCES_DIR):
         super(BuilderSources, self).__init__(build_dir)
-        self._fullfname = os.path.join(self._root_build_dir,
-                                       u"outwiker-src-full.zip")
-        self._minfname = os.path.join(self._root_build_dir,
-                                      u"outwiker-src-min.zip")
+        version = getOutwikerVersion()
+
+        self._full_archive_name = u"outwiker-src-full-{}.{}".format(
+            version[0],
+            version[1]
+        )
+
+        self._min_archive_name = u"outwiker-src-min-{}.{}".format(
+            version[0],
+            version[1]
+        )
+
+        self._full_archive_path = os.path.join(
+            self._root_build_dir,
+            self._full_archive_name) + u'.zip'
+
+        self._min_archive_path = os.path.join(
+            self._root_build_dir,
+            self._min_archive_name) + u'.zip'
 
     def clear(self):
         super(BuilderSources, self).clear()
-        self._remove(self._fullfname)
-        self._remove(self._minfname)
+        self._remove(self._full_archive_path)
+        self._remove(self._min_archive_path)
 
     def _build(self):
-        version = getOutwikerVersion()
-
-        local('git archive --prefix=outwiker-{}.{}/ -o "{}" HEAD'.format(
-            version[0],
-            version[1],
-            self._fullfname))
+        local('git archive --prefix={}/ -o "{}" HEAD'.format(
+            self._full_archive_name,
+            self._full_archive_path))
 
         with lcd("src"):
-            local("7z a -r -aoa -xr!*.pyc -xr!.ropeproject -xr!tests.py -xr!profile.py -xr!setup_tests.py -xr!tests_*.py -xr!setup.py -xr!test -xr!profiles ../{} ./*".format(self._minfname))
+            local("7z a -r -aoa -xr!*.pyc -xr!.ropeproject -xr!tests.py -xr!profile.py -xr!setup_tests.py -xr!tests_*.py -xr!setup.py -xr!test -xr!profiles ../{} ./*".format(self._min_archive_path))
 
         self._remove(self._build_dir)
