@@ -1,0 +1,91 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+<info>
+	<name>OutWiker</name>
+	<updates>http://jenyay.net/Soft/Outwiker/versions.xml</updates>
+
+	<data lang="en">
+		<website>http://jenyay.net/Outwiker/English</website>
+
+		<changelog>
+			<version number="2.0.0.820" status="stable">
+				<change>The program now uses wxPython 3.0 library.</change>
+				<change>The editor adds the ability to duplicate the current line with hot key or menu item.</change>
+				<change>The editor adds the ability to delete the current line with hot key or menu item.</change>
+				<change>The editor adds the ability to move lines up / down with hot keys or menu items.</change>
+				<change>The editor adds the ability to join lines with the hot key or menu item.</change>
+				<change>The editor adds the ability to remove word to beginning / ending with the hot key or menu item.</change>
+				<change>The editor adds the ability to decreade nesting level of the list items with the hot key or menu item.</change>
+				<change>Added the menu items to move cursor in text.</change>
+				<change>Added the menu items to copy / cut the current line to clipboard.</change>
+				<change>Added the "--page, -p" command line parameter to select page when starting.</change>
+				<change>Added the "--normal" command line parameter to disable minimizing when starting.</change>
+				<change>Added the "--debug" command line parameter to run in the debug mode.</change>
+				<change>Added the Swedish translation.</change>
+				<change>Added the ability to add alias to page.</change>
+				<change>Added options to change editor margin color.</change>
+				<change>Added options to change background color of the selected text.</change>
+				<change>Changed GUI to set hot keys.</change>
+				<change>Restored availability the icon in the system tray on Linux.</change>
+				<change>Removed Italian localization.</change>
+			</version>
+
+			<version number="1.9.0.790" status="stable" date="April 09, 2016">
+				<change>Added spell checker.</change>
+				<change>Created the groups for the icons.</change>
+				<change>Now users can add custom icons.</change>
+				<change>The choice of colors for the tag cloud.</change>
+				<change>The choise the action when you make left or middle mouse click on the tag.</change>
+				<change>The choise the action when you make double mouse click on the attached file.</change>
+				<change>Added the new wiki commands for the table creation: (:table:), (:row:), (:cell:), (:hcell:).</change>
+				<change>Improved search het keys for the actions.</change>
+				<change>Added new icons.</change>
+				<change>Added new page styles.</change>
+				<change>Now in the link inserting dialog you can select an attached file to create link to it.</change>
+				<change>Added help.</change>
+			</version>
+		</changelog>
+	</data>
+
+	<data lang="ru">
+		<website>http://jenyay.net/Soft/Outwiker</website>
+
+		<changelog>
+			<version number="2.0.0.820" status="stable">
+				<change>Удалена итальянская локализация.</change>
+				<change>Переход на библиотеку wxPython 3.0.</change>
+				<change>В редактор добавлена возможность дублировать текущую строку с помощью горячей клавиши или меню.</change>
+				<change>В редактор добавлена возможность удалять текущую строку с помощью горячей клавиши или меню.</change>
+				<change>В редактор добавлена возможность перемещения строк вверх / вниз с помощью горячих клавиш или меню.</change>
+				<change>В редактор добавлена возможность для слияния строк с помощью горячей клавиши или меню.</change>
+				<change>В редактор добавлена возможность удаления слов слева / справа с помощью горячей клавиши или меню.</change>
+				<change>Добавлены пункты меню и горячие клавиши для перемещения по тексту.</change>
+				<change>Добавлены пункты меню и горячие клавиши для копирования / вырезания текущей строки в буфер обмена.</change>
+				<change>В редактор добавлены возможности для редактирования слов и строк.</change>
+				<change>Добавлен параметр командной строки "--page, -p" для выбора страницы при запуске.</change>
+				<change>Добавлен параметр командной строки "--normal" для отключения свертывания окна при запуске.</change>
+				<change>Добавлен параметр командной строки "--debug" для запуска в режиме отладки.</change>
+				<change>Добавлена поддержка шведского языка.</change>
+				<change>Восстановлена работоспособность иконки в трее под Linux.</change>
+				<change>Добавлена возможность создавать псевдонимы для страниц.</change>
+				<change>Переделан интерфейс для установки горячих клавиш.</change>
+				<change>Добавлена настройка для изменения цвета фона поля редактора.</change>
+				<change>Добавлена настройка для изменения цвета фона выделенного текста.</change>
+			</version>
+
+			<version number="1.9.0.790" status="stable" date="09.04.2016">
+				<change>Добавлена проверка орфографии.</change>
+				<change>Иконки для заметок разделены на группы.</change>
+				<change>Теперь пользователи могут дополнять стандартный набор иконок своими файлами.</change>
+				<change>Возможность выбора цветов для облака тегов.</change>
+				<change>Возможность выбора действий при клике левой и средней кнопки мыши по тегам.</change>
+				<change>Возможность выбора действия при двойном клике по прикрепленному файлу.</change>
+				<change>Добавлены новые викикоманды для создания страниц (:table:), (:row:), (:cell:), (:hcell:).</change>
+				<change>Теперь поиск действий для горячих клавиш в настройках осуществляется не только по названию действия, но и по его описанию.</change>
+				<change>Добавлены новые иконки.</change>
+				<change>Добавлены новые стили страниц.</change>
+				<change>Теперь в диалоге вставки ссылок можно выбирать один из прикрепленных файлов, чтобы сделать ссылку на него.</change>
+				<change>Дополнена справка.</change>
+			</version>
+		</changelog>
+	</data>
+</info>
