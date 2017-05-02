@@ -17,6 +17,10 @@ Download stable version - http://jenyay.net/Outwiker/English
 
 Download unstable version - http://jenyay.net/Outwiker/UnstableEn
 
+Plugins - http://jenyay.net/Outwiker/PluginsEn
+
+Documentation - https://outwiker.readthedocs.io/
+
 Key Features
 ------------
 
@@ -41,7 +45,7 @@ Key Features
 License
 -------
 
-OutWiker uses some sets of free icons taken from sites `famfamfam.com <http://www.famfamfam.com/lab/icons/silk/>`_ and `yusukekamiyamane.com <http://p.yusukekamiyamane.com/>`_. Many thanks to the authors of those sites.
+OutWiker uses some sets of free icons taken from sites [famfamfam.com](http://www.famfamfam.com/lab/icons/silk/ "famfamfam.com"), [yusukekamiyamane.com](http://p.yusukekamiyamane.com/ "yusukekamiyamane.com") and [fatcow.com](http://www.fatcow.com/free-icons "fatcow.com"). Many thanks to the authors of those sites.
 
 OutWiker distributed with source code under the GPL 3.
 
@@ -60,6 +64,10 @@ OutWiker может содержать страницы разного типа,
 Скачать стабильную версию - http://jenyay.net/Soft/Outwiker
 
 Скачать текущую нестабильную версию - http://jenyay.net/Outwiker/Unstable
+
+Плагины - http://jenyay.net/Outwiker/Plugins
+
+Документация - https://outwiker.readthedocs.io/
 
 Основные возможности
 --------------------
@@ -92,4 +100,4 @@ OutWiker может содержать страницы разного типа,
 OutWiker распространяется с исходными текстами под лицензией GPL 3.
 Автор не несет ответственность за последствия использования программы.
 
-Особая благодарность разработчикам сайтов [famfamfam.com](<http://www.famfamfam.com/lab/icons/silk/>) и [yusukekamiyamane.com](<http://p.yusukekamiyamane.com/>) за бесплатные иконки, которые используются в OutWiker'е.
+Особая благодарность разработчикам сайтов [famfamfam.com](http://www.famfamfam.com/lab/icons/silk/ "famfamfam.com"), [yusukekamiyamane.com](http://p.yusukekamiyamane.com/ "yusukekamiyamane.com") и [fatcow.com](http://www.fatcow.com/free-icons "fatcow.com") за бесплатные иконки, которые используются в OutWiker'е.
