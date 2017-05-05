@@ -13,3 +13,4 @@
    gui
    wiki_parser
    locale
+   setup_py

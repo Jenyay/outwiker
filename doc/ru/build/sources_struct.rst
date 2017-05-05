@@ -55,7 +55,7 @@ outwiker_setup.iss
     Скрипт, описывающий создание инсталятора под Windows с помощью инструмента `Inno Setup <http://www.jrsoftware.org/isinfo.php>`_.
 
 README
-    Краткое описание программы. Используется при сборке deb-пакета (см. раздел :ref:`build_linux`).
+    Краткое описание программы. Используется при сборке deb-пакета (см. раздел :ref:`ru_build_linux`).
 
 readme.md
     Более подробное описание программы, которое показывается в качестве описания проекта на сайте `github <https://github.com/Jenyay/outwiker>`_
@@ -126,7 +126,7 @@ runoutwiker.py
     Основной файл, запускающий OutWiker.
 
 setup.py
-    Скрипт, предназначенный для создания бинарной сборки OiutWiker с помощью cx_freeze_. Подробности см. в :ref:`build_windows` и :ref:`build_linux`.
+    Скрипт, предназначенный для создания бинарной сборки OiutWiker с помощью cx_freeze_. Подробности см. в :ref:`ru_build_windows` и :ref:`ru_build_linux`.
 
 
 .. _ru_sources_struct_src:

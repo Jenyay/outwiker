@@ -1,4 +1,4 @@
-.. _build_linux:
+.. _ru_build_linux:
 
 Сборка под Linux
 ================
