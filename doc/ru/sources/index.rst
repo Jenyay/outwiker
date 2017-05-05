@@ -5,6 +5,7 @@
    :maxdepth: 2
 
    pageformat
+   setup_py
    styles
    plugins
    version_format
@@ -13,4 +14,3 @@
    gui
    wiki_parser
    locale
-   setup_py
