@@ -21,3 +21,4 @@ OutWiker в социальных сетях
 * `OutWiker в Facebook <https://www.facebook.com/outwiker>`_
 * `OutWiker в Google+ <https://plus.google.com/+OutWiker>`_
 * `OutWiker в Twitter <https://twitter.com/OutWiker>`_
+* `OutWiker в Telegram <https://t.me/outwiker>`_
