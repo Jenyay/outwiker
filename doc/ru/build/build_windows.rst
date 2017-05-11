@@ -26,7 +26,7 @@
 * :file:`outwiker_win_unstable.7z` - 7z-архив, содержащий содержимое папки :file:`outwiker_win`, но без плагинов во вложенной папке :file:`plugins`.
 * :file:`outwiker_win_unstable_all_plugins.zip` - zip-архив, содержащий содержимое папки :file:`outwiker_win`, включая плагины во вложенной папке :file:`plugins`.
 * :file:`outwiker_win_unstable_all_plugins.7z` - 7z-архив, содержащий содержимое папки :file:`outwiker_win`, включая плагины во вложенной папке :file:`plugins`.
-* :file:`outwiker_win_unstable.exe` - инсталятор, созданный с помощью `Inno Setup`_.
+* :file:`outwiker_win_unstable.exe` - инсталятор, созданный с помощью `Inno Setup`_ (см. раздел :ref:`ru_windows_installer`).
 * :file:`versions.xml` - манифест с описанием текущей версии программы OutWiker (см. раздел :ref:`ru_version_format`).
 
 Команда `fab win` может принимать два булевых параметра.
@@ -84,6 +84,17 @@
     В cx_Freeze 5.0 изменился способ сохранения необходимых Python-библиотек, и по умолчанию они не архивируются в :file:`library.zip`. С помощью дополнительных параметров можно явно указать, какие библиотеки должны быть включены в :file:`library.zip`. Это нужно будет сделать, если решится проблема с зависаниями, описанная выше. В данный момент эти параметры закомментарены в файле :file:`src/setup.py` (см. раздел :ref:`ru_setup_py`).
 
 Подробное описание работы скрипта `src/setup.py`_ приводится в разделе :ref:`ru_setup_py`.
+
+
+.. _ru_windows_installer:
+
+Создание инсталятора под Windows
+================================
+
+Команда `fab win` также создает графический инсталятор под Windows с помощью `Inno Setup`_. Скрипт для создания инсталлятора - это файл :file:`outwiker_setup.iss` в корне папки исходников. В результате будет создан файл :file:`outwiker_win_unstable.exe`.
+
+.. note::
+    При обновлении номера версии OutWiker надо не забыть поменять номер версии в файле :file:`outwiker_setup.iss`. В будущем это надо будет автоматизировать.
 
 
 .. _cx_Freeze: https://anthony-tuininga.github.io/cx_Freeze/
