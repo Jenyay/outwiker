@@ -11,7 +11,8 @@ from buildtools.defines import (WINDOWS_BUILD_DIR,
                                 PLUGINS_LIST,
                                 OUTWIKER_VERSIONS_FILENAME,
                                 WINDOWS_INSTALLER_FILENAME,
-                                NEED_FOR_BUILD_DIR)
+                                NEED_FOR_BUILD_DIR,
+                                WINDOWS_EXECUTABLE_DIR)
 
 
 class BuilderWindows(BuilderBase):
@@ -23,6 +24,8 @@ class BuilderWindows(BuilderBase):
                  create_installer=True,
                  create_archives=True):
         super(BuilderWindows, self).__init__(build_dir)
+        self._executable_dir = os.path.join(self.build_dir,
+                                            WINDOWS_EXECUTABLE_DIR)
         self._create_installer = create_installer
         self._create_archives = create_archives
 
@@ -31,24 +34,24 @@ class BuilderWindows(BuilderBase):
         self._plugins_list = PLUGINS_LIST
 
         # Path to copy plugins
-        self._dest_plugins_dir = os.path.join(self.build_dir, u'plugins')
+        self._dest_plugins_dir = os.path.join(self._executable_dir, u'plugins')
 
     def clear(self):
         super(BuilderWindows, self).clear()
         toRemove = [
             os.path.join(self.facts.version_dir,
                          OUTWIKER_VERSIONS_FILENAME),
-            os.path.join(self.facts.version_dir,
+            os.path.join(self.build_dir,
                          self._resultBaseName + u'.7z'),
-            os.path.join(self.facts.version_dir,
+            os.path.join(self.build_dir,
                          self._resultBaseName + u'.exe'),
-            os.path.join(self.facts.version_dir,
+            os.path.join(self.build_dir,
                          self._resultBaseName + u'.zip'),
-            os.path.join(self.facts.version_dir,
+            os.path.join(self.build_dir,
                          self._resultWithPluginsBaseName + u'.7z'),
-            os.path.join(self.facts.version_dir,
+            os.path.join(self.build_dir,
                          self._resultWithPluginsBaseName + u'.zip'),
-            os.path.join(self.facts.version_dir,
+            os.path.join(self.build_dir,
                          WINDOWS_INSTALLER_FILENAME),
         ]
         map(self._remove, toRemove)
@@ -63,17 +66,17 @@ class BuilderWindows(BuilderBase):
 
         # Create archives without plugins
         if self._create_archives:
-            with lcd(self.build_dir):
+            with lcd(self._executable_dir):
                 path_zip = os.path.abspath(
                     os.path.join(
-                        self.facts.version_dir,
-                        u'outwiker_win_unstable.zip')
+                        self.build_dir,
+                        self._resultBaseName + u'.zip')
                 )
 
                 path_7z = os.path.abspath(
                     os.path.join(
-                        self.facts.version_dir,
-                        u'outwiker_win_unstable.7z')
+                        self.build_dir,
+                        self._resultBaseName + u'.7z')
                 )
 
                 local(u'7z a "{}" .\* .\plugins -r -aoa'.format(path_zip))
@@ -88,17 +91,17 @@ class BuilderWindows(BuilderBase):
 
         # Archive versions with plugins
         if self._create_archives:
-            with lcd(self.build_dir):
+            with lcd(self._executable_dir):
                 path_zip = os.path.abspath(
                     os.path.join(
-                        self.facts.version_dir,
-                        u'outwiker_win_unstable_all_plugins.zip')
+                        self.build_dir,
+                        self._resultWithPluginsBaseName + u'.zip')
                 )
 
                 path_7z = os.path.abspath(
                     os.path.join(
-                        self.facts.version_dir,
-                        u'outwiker_win_unstable_all_plugins.7z')
+                        self.build_dir,
+                        self._resultWithPluginsBaseName + u'.7z')
                 )
 
                 local(u'7z a "{}" .\* .\plugins -r -aoa -xr!*.pyc -xr!.ropeproject'.format(path_zip))
@@ -111,7 +114,7 @@ class BuilderWindows(BuilderBase):
         with lcd("src"):
             local(u'{python} setup.py build --build-exe "{builddir}"'.format(
                 python=getPython(),
-                builddir=self.build_dir)
+                builddir=self._executable_dir)
             )
 
     def _create_plugins_dir(self):
@@ -132,13 +135,13 @@ class BuilderWindows(BuilderBase):
             u'LICENSE.txt',
         ]
 
-        map(lambda fname: shutil.copy(fname, self.facts.version_dir), fnames)
+        map(lambda fname: shutil.copy(fname, self.build_dir), fnames)
 
-        with lcd(self.facts.version_dir):
+        with lcd(self.build_dir):
             local("iscc outwiker_setup.iss")
 
         for fname in fnames:
-            os.remove(os.path.join(self.facts.version_dir,
+            os.remove(os.path.join(self.build_dir,
                                    os.path.basename(fname)))
 
     def _copy_plugins(self):

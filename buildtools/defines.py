@@ -38,7 +38,8 @@ PLUGINS_LIST = [
 
 BUILD_DIR = u'build'
 LINUX_BUILD_DIR = u"outwiker_linux"
-WINDOWS_BUILD_DIR = u"outwiker_win"
+WINDOWS_BUILD_DIR = u"windows"
+WINDOWS_EXECUTABLE_DIR = u"outwiker_exe"
 WINDOWS_INSTALLER_FILENAME = u"outwiker_win_unstable.exe"
 DEB_BINARY_BUILD_DIR = u'deb_binary'
 DEB_SOURCE_BUILD_DIR = u'deb_source'
