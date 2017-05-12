@@ -10,7 +10,8 @@ from buildtools.utilites import getPython
 from buildtools.defines import (WINDOWS_BUILD_DIR,
                                 PLUGINS_LIST,
                                 OUTWIKER_VERSIONS_FILENAME,
-                                WINDOWS_INSTALLER_FILENAME)
+                                WINDOWS_INSTALLER_FILENAME,
+                                NEED_FOR_BUILD_DIR)
 
 
 class BuilderWindows(BuilderBase):
@@ -30,26 +31,31 @@ class BuilderWindows(BuilderBase):
         self._plugins_list = PLUGINS_LIST
 
         # Path to copy plugins
-        self._dest_plugins_dir = os.path.join(self._build_dir, u'plugins')
+        self._dest_plugins_dir = os.path.join(self.build_dir, u'plugins')
 
     def clear(self):
         super(BuilderWindows, self).clear()
         toRemove = [
-            os.path.join(self._root_build_dir, OUTWIKER_VERSIONS_FILENAME),
-            os.path.join(self._distrib_dir, self._resultBaseName + u'.7z'),
-            os.path.join(self._distrib_dir, self._resultBaseName + u'.exe'),
-            os.path.join(self._distrib_dir, self._resultBaseName + u'.zip'),
-            os.path.join(self._distrib_dir,
+            os.path.join(self.facts.version_dir,
+                         OUTWIKER_VERSIONS_FILENAME),
+            os.path.join(self.facts.version_dir,
+                         self._resultBaseName + u'.7z'),
+            os.path.join(self.facts.version_dir,
+                         self._resultBaseName + u'.exe'),
+            os.path.join(self.facts.version_dir,
+                         self._resultBaseName + u'.zip'),
+            os.path.join(self.facts.version_dir,
                          self._resultWithPluginsBaseName + u'.7z'),
-            os.path.join(self._distrib_dir,
+            os.path.join(self.facts.version_dir,
                          self._resultWithPluginsBaseName + u'.zip'),
-            os.path.join(self._distrib_dir, WINDOWS_INSTALLER_FILENAME),
+            os.path.join(self.facts.version_dir,
+                         WINDOWS_INSTALLER_FILENAME),
         ]
         map(self._remove, toRemove)
 
     def _build(self):
         shutil.copy(os.path.join(u'src', OUTWIKER_VERSIONS_FILENAME),
-                    self._distrib_dir)
+                    self.facts.version_dir)
 
         self._create_plugins_dir()
         self._build_binary()
@@ -57,16 +63,16 @@ class BuilderWindows(BuilderBase):
 
         # Create archives without plugins
         if self._create_archives:
-            with lcd(self._build_dir):
+            with lcd(self.build_dir):
                 path_zip = os.path.abspath(
                     os.path.join(
-                        self._distrib_dir,
+                        self.facts.version_dir,
                         u'outwiker_win_unstable.zip')
                 )
 
                 path_7z = os.path.abspath(
                     os.path.join(
-                        self._distrib_dir,
+                        self.facts.version_dir,
                         u'outwiker_win_unstable.7z')
                 )
 
@@ -82,16 +88,16 @@ class BuilderWindows(BuilderBase):
 
         # Archive versions with plugins
         if self._create_archives:
-            with lcd(self._build_dir):
+            with lcd(self.build_dir):
                 path_zip = os.path.abspath(
                     os.path.join(
-                        self._distrib_dir,
+                        self.facts.version_dir,
                         u'outwiker_win_unstable_all_plugins.zip')
                 )
 
                 path_7z = os.path.abspath(
                     os.path.join(
-                        self._distrib_dir,
+                        self.facts.version_dir,
                         u'outwiker_win_unstable_all_plugins.7z')
                 )
 
@@ -103,9 +109,9 @@ class BuilderWindows(BuilderBase):
         Build with cx_Freeze
         """
         with lcd("src"):
-            local("{python} setup.py build --build-exe ../{builddir}".format(
+            local(u'{python} setup.py build --build-exe "{builddir}"'.format(
                 python=getPython(),
-                builddir=self._build_dir)
+                builddir=self.build_dir)
             )
 
     def _create_plugins_dir(self):
@@ -121,14 +127,19 @@ class BuilderWindows(BuilderBase):
         os.mkdir(self._dest_plugins_dir)
 
     def _build_installer(self):
-        local("iscc outwiker_setup.iss")
+        fnames = [
+            os.path.join(NEED_FOR_BUILD_DIR, u'windows', u'outwiker_setup.iss'),
+            u'LICENSE.txt',
+        ]
 
-        src_path = os.path.join(self._root_build_dir,
-                                WINDOWS_INSTALLER_FILENAME)
-        dest_path = os.path.join(self._distrib_dir,
-                                 WINDOWS_INSTALLER_FILENAME)
+        map(lambda fname: shutil.copy(fname, self.facts.version_dir), fnames)
 
-        shutil.move(src_path, dest_path)
+        with lcd(self.facts.version_dir):
+            local("iscc outwiker_setup.iss")
+
+        for fname in fnames:
+            os.remove(os.path.join(self.facts.version_dir,
+                                   os.path.basename(fname)))
 
     def _copy_plugins(self):
         """
