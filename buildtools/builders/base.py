@@ -18,9 +18,6 @@ class BuilderBase(object):
     def __init__(self, subdir_name):
         self.facts = BuildFacts(BUILD_DIR)
 
-        if not os.path.exists(self.facts.temp_dir):
-            os.mkdir(self.facts.temp_dir)
-
         self.build_dir = os.path.join(self.facts.version_dir, subdir_name)
         # self._root_build_dir = BUILD_DIR
         # self._subdir_name = subdir_name
@@ -46,7 +43,9 @@ class BuilderBase(object):
     def build(self):
         self._createRootDir()
         self.clear()
-        os.makedirs(self.build_dir)
+
+        self._remove(self.facts.temp_dir)
+        os.mkdir(self.facts.temp_dir)
 
         if not os.path.exists(self.build_dir):
             os.makedirs(self.build_dir)
