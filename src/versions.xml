@@ -7,6 +7,10 @@
 		<website>http://jenyay.net/Outwiker/UnstableEn</website>
 
 		<changelog>
+			<version number="2.0.0.820" status="stable" date="May, 2017">
+				<change>Stable version.</change>
+			</version>
+
 			<version number="2.0.0.816" status="RC" date="April 25, 2017">
 				<change>Removed Italian localization.</change>
 			</version>
@@ -89,6 +93,10 @@
 		<website>http://jenyay.net/Outwiker/Unstable</website>
 
 		<changelog>
+			<version number="2.0.0.820" status="stable" date="Май 2017">
+				<change>Стабильная версия.</change>
+			</version>
+
 			<version number="2.0.0.816" status="RC" date="24.04.2017">
 				<change>Удалена итальянская локализация.</change>
 			</version>
