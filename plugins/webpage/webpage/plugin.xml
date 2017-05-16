@@ -25,6 +25,11 @@
 			<site>http://jenyay.net</site>
 		</author>
 		<changelog>
+			<version number="1.2.2">
+                <download os="all">http://jenyay.net/uploads/Outwiker/WebPage/webpage-1.2.2.zip</download>
+				<change>Fixed import of the local HTML page in Windows.</change>
+			</version>
+
 			<version number="1.2.1" date="February 24, 2017">
                 <download os="all">http://jenyay.net/uploads/Outwiker/WebPage/webpage-1.2.1.zip</download>
 				<change>Updated the Ukrainian localization.</change>
@@ -70,6 +75,11 @@
 			<site>http://jenyay.net</site>
 		</author>
 		<changelog>
+			<version number="1.2.2">
+                <download os="all">http://jenyay.net/uploads/Outwiker/WebPage/webpage-1.2.2.zip</download>
+				<change>Исправлена ошибка импорта локальных HTML-файлов под Windows.</change>
+			</version>
+
 			<version number="1.2.1" date="24.02.2017">
                 <download os="all">http://jenyay.net/uploads/Outwiker/WebPage/webpage-1.2.1.zip</download>
 				<change>Обновлена украинская локализация.</change>
