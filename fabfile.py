@@ -138,7 +138,7 @@ def _ppa_upload(ppa_path):
 @task
 def plugins(updatedonly=False):
     """
-    Create an archive with plugins(7z required)
+    Create an archive with plugins (7z required)
     """
     builder = BuilderPlugins(updatedOnly=updatedonly)
     builder.build()
@@ -147,7 +147,7 @@ def plugins(updatedonly=False):
 @task
 def plugins_clear():
     """
-    Remove an archive with plugins(7z required)
+    Remove an archive with plugins (7z required)
     """
     builder = BuilderPlugins()
     builder.clear()
@@ -227,7 +227,7 @@ def deb_install():
 @task
 def locale():
     """
-    Update the localization file(outwiker.pot)
+    Update the localization file (outwiker.pot)
     """
     with lcd("src"):
         local(r'find . -iname "*.py" | xargs xgettext -o locale/outwiker.pot')
