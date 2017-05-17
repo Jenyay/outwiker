@@ -20,15 +20,21 @@ class BuilderWindows(BuilderBase):
     Build for Windows
     """
     def __init__(self,
-                 build_dir=WINDOWS_BUILD_DIR,
                  create_installer=True,
-                 create_archives=True):
-        super(BuilderWindows, self).__init__(build_dir)
+                 create_archives=True,
+                 is_stable=False):
+        super(BuilderWindows, self).__init__(WINDOWS_BUILD_DIR, is_stable)
         self._create_installer = create_installer
         self._create_archives = create_archives
 
-        self._resultBaseName = u'outwiker_win_unstable'
-        self._resultWithPluginsBaseName = u'outwiker_win_unstable_all_plugins'
+        self._resultBaseName = (
+            u'outwiker_{version}_win'.format(
+                version=self.facts.version_items[0])
+            if self.is_stable
+            else u'outwiker_win_unstable'
+        )
+
+        self._resultWithPluginsBaseName = self._resultBaseName + u'_all_plugins'
         self._installerName = u'outwiker_win_unstable.exe'
         self._plugins_list = PLUGINS_LIST
 
@@ -61,8 +67,8 @@ class BuilderWindows(BuilderBase):
         map(self._remove, toRemove)
 
     def _build(self):
-        self._copy_versions_file()
         self._copy_sources_to_temp()
+        self._copy_versions_file()
         self._copy_necessary_files()
         self._create_plugins_dir()
         self._create_binary()
@@ -121,13 +127,23 @@ class BuilderWindows(BuilderBase):
             )
 
     def _copy_sources_to_temp(self):
-        print(u'Copy sources to {}...'.format(self._temp_sources_dir))
+        print(u'Copy sources to {}'.format(self._temp_sources_dir))
         shutil.copytree(u'src', self._temp_sources_dir)
 
     def _copy_versions_file(self):
+        src_versions_name = (u'versions_stable.xml'
+                             if self.is_stable
+                             else OUTWIKER_VERSIONS_FILENAME)
+
         shutil.copy(
-            os.path.join(u'src', OUTWIKER_VERSIONS_FILENAME),
-            self.facts.version_dir)
+            os.path.join(u'src', src_versions_name),
+            os.path.join(self.facts.version_dir, OUTWIKER_VERSIONS_FILENAME))
+
+        shutil.copy(
+            os.path.join(u'src', src_versions_name),
+            os.path.join(self._temp_sources_dir, OUTWIKER_VERSIONS_FILENAME))
+
+        os.remove(os.path.join(self._temp_sources_dir, u'versions_stable.xml'))
 
     def _copy_necessary_files(self):
         shutil.copy(u'copyright.txt', self.facts.temp_dir)

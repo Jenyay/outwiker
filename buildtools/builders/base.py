@@ -5,7 +5,6 @@ import os
 import shutil
 
 from buildtools.defines import BUILD_DIR
-# from buildtools.versions import getOutwikerVersion
 from buildtools.buildfacts import BuildFacts
 
 
@@ -15,10 +14,11 @@ class BuilderBase(object):
     """
     __metaclass__ = abc.ABCMeta
 
-    def __init__(self, subdir_name):
+    def __init__(self, subdir_name, is_stable=False):
         self.facts = BuildFacts(BUILD_DIR)
 
         self.build_dir = os.path.join(self.facts.version_dir, subdir_name)
+        self.is_stable = is_stable
         # self._root_build_dir = BUILD_DIR
         # self._subdir_name = subdir_name
         # self._build_dir = os.path.join(self._root_build_dir,
