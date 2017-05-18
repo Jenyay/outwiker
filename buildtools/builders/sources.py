@@ -12,8 +12,8 @@ class BuilderSources(BuilderBase):
     """
     Create archives with sources
     """
-    def __init__(self, build_dir=SOURCES_DIR):
-        super(BuilderSources, self).__init__(build_dir)
+    def __init__(self, build_dir=SOURCES_DIR, is_stable=False):
+        super(BuilderSources, self).__init__(build_dir, is_stable)
 
         self._full_archive_name = u"outwiker-src-full-{}".format(
             self.facts.version
@@ -22,6 +22,9 @@ class BuilderSources(BuilderBase):
         self._min_archive_name = u"outwiker-src-min-{}".format(
             self.facts.version
         )
+
+        if not self.is_stable:
+            self._min_archive_name += u'-unstable'
 
         self._full_archive_path = os.path.join(
             self.build_dir,
@@ -41,5 +44,5 @@ class BuilderSources(BuilderBase):
             self._full_archive_name,
             self._full_archive_path))
 
-        with lcd("src"):
-            local("7z a -r -aoa -xr!*.pyc -xr!.ropeproject -xr!tests.py -xr!profile.py -xr!setup_tests.py -xr!tests_*.py -xr!setup.py -xr!test -xr!profiles {} ./*".format(self._min_archive_path))
+        with lcd(self.temp_sources_dir):
+            local(u'7z a -r -aoa -xr!*.pyc -xr!.ropeproject -xr!tests.py -xr!profile.py -xr!setup_tests.py -xr!tests_*.py -xr!setup.py -xr!test -xr!profiles "{}" ./*'.format(self._min_archive_path))

@@ -154,11 +154,20 @@ def plugins_clear():
 
 
 @task
-def sources():
+def sources_unstable():
     """
-    Create the sources archives.
+    Create the sources archives as unstable version.
     """
-    builder = BuilderSources()
+    builder = BuilderSources(is_stable=False)
+    builder.build()
+
+
+@task
+def sources_stable():
+    """
+    Create the sources archives as stable version.
+    """
+    builder = BuilderSources(is_stable=True)
     builder.build()
 
 
