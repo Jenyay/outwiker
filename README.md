@@ -6,7 +6,7 @@ OutWiker
 Description
 -----------
 
-![OutWiker](https://github.com/Jenyay/outwiker/blob/master/doc/_static/screenshots/outwiker_1.9_01.png?raw=true)
+![OutWiker](https://github.com/Jenyay/outwiker/blob/master/doc/_static/screenshots/outwiker%202.0/outwiker_2.0.0_01.png)
 
 OutWiker is a cross-platform software for keeping your notes in a tree. Similar programs call "outliner", "tree-like editor" or personal wiki. Main difference OutWiker from other programs is a keeping notes as folders on disk. A notes can to have attached files. OutWiker can contain pages of different types, currently supports three types of pages: plain text, HTML pages and wiki pages.
 
