@@ -73,8 +73,14 @@ class BuilderPlugins(BuilderBase):
 
                 # Archive a single plug-in
                 with lcd("plugins/{}".format(plugin)):
-                    local("7z a -r -aoa -xr!*.pyc -xr!.ropeproject ../../{} ./*".format(archive_path))
+                    local('7z a -r -aoa -xr!*.pyc -xr!.ropeproject "{}" ./*'.format(archive_path))
 
             # Add a plug-in to full archive
             with lcd("plugins/{}".format(plugin)):
-                local("7z a -r -aoa -xr!*.pyc -xr!.ropeproject -w../ ../../{} ./*".format(full_archive_path))
+                local('7z a -r -aoa -xr!*.pyc -xr!.ropeproject -w../ "{}" ./*'.format(full_archive_path))
+
+    def _getSubpath(self, *args):
+        """
+        Return subpath inside current build path (inside 'build' subpath)
+        """
+        return os.path.join(self.build_dir, *args)
