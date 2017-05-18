@@ -13,7 +13,7 @@ from outwiker.pages.wiki.parserfactory import ParserFactory
 
 class ParserAdHocTest(unittest.TestCase):
     def setUp(self):
-        self.encoding = "866"
+        self.encoding = "utf8"
 
         self.filesPath = u"../test/samplefiles/"
 
