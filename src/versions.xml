@@ -7,8 +7,8 @@
 		<website>http://jenyay.net/Outwiker/UnstableEn</website>
 
 		<changelog>
-			<version number="2.0.0.820" status="stable" date="May, 2017">
-				<change>Stable version.</change>
+			<version number="2.0.0.817" status="RC" date="May, 2017">
+				<change>Fixed errors.</change>
 			</version>
 
 			<version number="2.0.0.816" status="RC" date="April 25, 2017">
@@ -93,8 +93,8 @@
 		<website>http://jenyay.net/Outwiker/Unstable</website>
 
 		<changelog>
-			<version number="2.0.0.820" status="stable" date="Май 2017">
-				<change>Стабильная версия.</change>
+			<version number="2.0.0.817" status="RC" date="Май 2017">
+				<change>Исправление ошибок.</change>
 			</version>
 
 			<version number="2.0.0.816" status="RC" date="24.04.2017">
