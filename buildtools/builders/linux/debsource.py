@@ -20,8 +20,8 @@ class BuilderBaseDebSource(BuilderBase):
     """
     The base class for source deb packages assebbling.
     """
-    def __init__(self, subdir_name):
-        super(BuilderBaseDebSource, self).__init__(subdir_name)
+    def __init__(self, subdir_name, is_stable):
+        super(BuilderBaseDebSource, self).__init__(subdir_name, is_stable)
 
     def clear(self):
         super(BuilderBaseDebSource, self).clear()
@@ -42,7 +42,7 @@ class BuilderBaseDebSource(BuilderBase):
         for distrib_name in distriblist:
             self._orig(distrib_name)
             changelog = changelog_generator.make(distrib_name, date_str)
-            current_debian_dirname = os.path.join(self._build_dir,
+            current_debian_dirname = os.path.join(self.build_dir,
                                                   self._getDebName(),
                                                   'debian')
 
@@ -55,7 +55,7 @@ class BuilderBaseDebSource(BuilderBase):
                 local(command)
 
     def _postBuild(self):
-        src_dir = self._build_dir
+        src_dir = self.build_dir
         dest_dir = self.getResultPath()
         shutil.move(src_dir, dest_dir)
 
@@ -63,7 +63,7 @@ class BuilderBaseDebSource(BuilderBase):
         self._remove(os.path.join(dest_dir, self._getDebName()))
 
     def getResultPath(self):
-        return os.path.join(self._distrib_dir, self._subdir_name)
+        return self.build_dir
 
     def _orig(self, distname):
         """
@@ -74,10 +74,10 @@ class BuilderBaseDebSource(BuilderBase):
 
         origname = self._getOrigName(distname)
 
-        with lcd(self._build_dir):
+        with lcd(self.build_dir):
             local("tar -cvf {} {}".format(origname, self._getDebName()))
 
-        orig_dirname = os.path.join(self._build_dir, origname)
+        orig_dirname = os.path.join(self.build_dir, origname)
         local("gzip -f {}".format(orig_dirname))
 
     def _source(self, distname):
@@ -86,8 +86,46 @@ class BuilderBaseDebSource(BuilderBase):
         """
         self._debclean()
 
-        dirname = self._getSubpath(self._getDebName())
+        dirname = os.path.join(self.build_dir, self._getDebName())
         os.makedirs(dirname)
+
+        temp_images_dir = os.path.join(self.facts.temp_dir, u'images')
+        if os.path.exists(temp_images_dir):
+            shutil.rmtree(temp_images_dir)
+
+        shutil.copy(u'copyright.txt', dirname)
+        shutil.copy(u'README', dirname)
+        shutil.copytree(u'images', temp_images_dir)
+
+        shutil.copytree(os.path.join(u'need_for_build',
+                                     u'debian_debsource',
+                                     distname,
+                                     u'debian'),
+                        os.path.join(dirname, u'debian'))
+
+        shutil.copy(os.path.join(u'need_for_build',
+                                 u'debian_debsource',
+                                 distname,
+                                 u'Makefile'),
+                    dirname)
+
+        shutil.copy(os.path.join(u'need_for_build',
+                                 u'debian_debsource',
+                                 distname,
+                                 u'outwiker.desktop'),
+                    dirname)
+
+        shutil.copy(os.path.join(u'need_for_build',
+                                 u'debian_debsource',
+                                 distname,
+                                 u'outwiker'),
+                    dirname)
+
+        shutil.copytree(os.path.join(u'need_for_build',
+                                     u'debian_debsource',
+                                     distname,
+                                     u'man'),
+                        os.path.join(dirname, u'man'))
 
         excludes = [
             u'build',
@@ -120,43 +158,15 @@ class BuilderBaseDebSource(BuilderBase):
         command = "rsync -avz * {excludes} {dirname}/".format(
             dirname=dirname,
             excludes=excludes_param)
-        local(command)
 
-        shutil.copytree(os.path.join(u'need_for_build',
-                                     u'debian_debsource',
-                                     distname,
-                                     u'debian'),
-                        os.path.join(dirname, u'debian'))
-
-        shutil.copyfile(os.path.join(u'need_for_build',
-                                     u'debian_debsource',
-                                     distname,
-                                     u'Makefile'),
-                        os.path.join(dirname, u'Makefile'))
-
-        shutil.copyfile(os.path.join(u'need_for_build',
-                                     u'debian_debsource',
-                                     distname,
-                                     u'outwiker.desktop'),
-                        os.path.join(dirname, u'outwiker.desktop'))
-
-        shutil.copyfile(os.path.join(u'need_for_build',
-                                     u'debian_debsource',
-                                     distname,
-                                     u'outwiker'),
-                        os.path.join(dirname, u'outwiker'))
-
-        shutil.copytree(os.path.join(u'need_for_build',
-                                     u'debian_debsource',
-                                     distname,
-                                     u'man'),
-                        os.path.join(dirname, u'man'))
+        with lcd(self.facts.temp_dir):
+            local(command)
 
     def _debclean(self):
         """
         Clean build/<distversion> folder
         """
-        dirname = os.path.join(self._build_dir, self._getDebName())
+        dirname = os.path.join(self.build_dir, self._getDebName())
         if os.path.exists(dirname):
             shutil.rmtree(dirname)
 
@@ -175,8 +185,8 @@ class BuilderBaseDebSource(BuilderBase):
 
 
 class BuilderDebSource(BuilderBaseDebSource):
-    def __init__(self, subdir_name, release_names):
-        super(BuilderBaseDebSource, self).__init__(subdir_name)
+    def __init__(self, subdir_name, release_names, is_stable):
+        super(BuilderBaseDebSource, self).__init__(subdir_name, is_stable)
         self._release_names = release_names
 
     def _build(self):
@@ -185,8 +195,8 @@ class BuilderDebSource(BuilderBaseDebSource):
 
 
 class BuilderDebSourcesIncluded(BuilderBaseDebSource):
-    def __init__(self, subdir_name, release_names):
-        super(BuilderDebSourcesIncluded, self).__init__(subdir_name)
+    def __init__(self, subdir_name, release_names, is_stable):
+        super(BuilderDebSourcesIncluded, self).__init__(subdir_name, is_stable)
         self._release_names = release_names
 
     def _build(self):

@@ -17,7 +17,6 @@ from buildtools.utilites import (getPython,
                                  execute,
                                  getCurrentUbuntuDistribName,
                                  getPathToPlugin,
-                                 getDebSourceResultPath
                                  )
 from buildtools.defines import (
     UBUNTU_RELEASE_NAMES,
@@ -80,21 +79,25 @@ except ImportError:
 
 
 @task
-def deb_sources_included():
+def deb_sources_included(is_stable=False):
     """
     Create files for uploading in PPA(including sources)
     """
     builder = BuilderDebSourcesIncluded(DEB_SOURCE_BUILD_DIR,
-                                        UBUNTU_RELEASE_NAMES)
+                                        UBUNTU_RELEASE_NAMES,
+                                        is_stable)
     builder.build()
+    return builder.getResultPath()
 
 
 @task
-def deb():
+def deb(is_stable=False):
     """
     Assemble the deb packages
     """
-    builder = BuilderDebSource(DEB_SOURCE_BUILD_DIR, UBUNTU_RELEASE_NAMES)
+    builder = BuilderDebSource(DEB_SOURCE_BUILD_DIR,
+                               UBUNTU_RELEASE_NAMES,
+                               is_stable)
     builder.build()
     return builder.getResultPath()
 
@@ -109,25 +112,25 @@ def deb_clear():
 
 
 @task
-def deb_single():
+def deb_single(is_stable=False):
     """
     Assemble the deb package for the current Ubuntu release
     """
     builder = BuilderDebSource(DEB_SOURCE_BUILD_DIR,
-                               [getCurrentUbuntuDistribName()])
+                               [getCurrentUbuntuDistribName()],
+                               is_stable)
     builder.build()
     return builder.getResultPath()
 
 
-def _ppa_upload(ppa_path):
+def _ppa_upload(ppa_path, deb_path):
     """
     Upload the current OutWiker version in PPA
     """
     version = getOutwikerVersion()
-    deb_source_path = getDebSourceResultPath()
 
     for distname in UBUNTU_RELEASE_NAMES:
-        with lcd(deb_source_path):
+        with lcd(deb_path):
             local("dput {} outwiker_{}+{}~{}_source.changes".format(
                 ppa_path,
                 version[0],
@@ -230,11 +233,11 @@ def linux_clear():
 
 
 @task
-def deb_install():
+def deb_install(is_stable=False):
     """
     Assemble deb package for current Ubuntu release
     """
-    result_path = deb_single()
+    result_path = deb_single(is_stable)
 
     version = getOutwikerVersion()
 
@@ -550,9 +553,10 @@ def deploy_unstable():
     Upload unstable version on the site
     """
     ppa_path = PPA_UNSTABLE_PATH
+    is_stable = False
 
-    deb_sources_included()
-    _ppa_upload(ppa_path)
+    deb_path = deb_sources_included(is_stable)
+    _ppa_upload(ppa_path, deb_path)
     upload_unstable()
     upload_plugins_pack()
 

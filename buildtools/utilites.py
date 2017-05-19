@@ -5,8 +5,6 @@ import os
 
 from fabric.api import local
 
-from buildtools.defines import BUILD_DIR, DEB_SOURCE_BUILD_DIR
-
 
 def addToSysPath(path):
     """
@@ -48,21 +46,3 @@ def getCurrentUbuntuDistribName():
 
 def getPathToPlugin(plugin_name):
     return os.path.join(u'plugins', plugin_name, plugin_name)
-
-
-def getResultDistribPath():
-    """
-    Return directory name like build/x.x.x.xxx
-    """
-    from buildtools.versions import getOutwikerVersion
-
-    version = getOutwikerVersion()
-    distrib_dir_name = version[0] + u'.' + version[1]
-    return os.path.join(BUILD_DIR, distrib_dir_name)
-
-
-def getDebSourceResultPath():
-    """
-    Return directory name like build/x.x.x.xxx/deb_source
-    """
-    return os.path.join(getResultDistribPath(), DEB_SOURCE_BUILD_DIR)
