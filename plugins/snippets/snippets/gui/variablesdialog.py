@@ -39,9 +39,8 @@ class VariablesDialog(TestedDialog):
         self.SetTitle(u'Snippet variables')
 
     def _createGUI(self):
-        mainSizer = wx.FlexGridSizer(cols=2)
+        mainSizer = wx.FlexGridSizer(cols=1)
         mainSizer.AddGrowableCol(0)
-        mainSizer.AddGrowableCol(1)
         mainSizer.AddGrowableRow(0)
 
         self._notebook = wx.Notebook(self)
@@ -56,6 +55,7 @@ class VariablesDialog(TestedDialog):
 
         # Panel with variables
         self._varPanel = VaraiblesPanel(self)
+        self._varPanel.Hide()
 
         # Checkbox for wiki command
         self._wikiCommandCheckBox = wx.CheckBox(
@@ -70,17 +70,30 @@ class VariablesDialog(TestedDialog):
         btn_sizer.Add(self.ok_button)
 
         # Fill mainSizer
-        mainSizer.Add(self._varPanel, 1, flag=wx.ALL | wx.EXPAND, border=2)
-        mainSizer.Add(self._notebook,
-                      1,
-                      flag=wx.ALL | wx.EXPAND,
-                      border=2)
-        mainSizer.Add(self._wikiCommandCheckBox,
-                      flag=wx.ALIGN_CENTER_VERTICAL | wx.ALL,
-                      border=2)
-        mainSizer.Add(btn_sizer,
-                      flag=wx.ALL | wx.ALIGN_RIGHT,
-                      border=2)
+        self.topPanel = wx.FlexGridSizer(cols=2)
+        self.topPanel.AddGrowableCol(0)
+        self.topPanel.AddGrowableCol(1)
+        self.topPanel.AddGrowableRow(0)
+
+        self.bottomPanel = wx.FlexGridSizer(cols=2)
+        self.bottomPanel.AddGrowableCol(0)
+        self.bottomPanel.AddGrowableCol(1)
+        self.bottomPanel.AddGrowableRow(0)
+
+        self.topPanel.Add(self._varPanel, 1, flag=wx.ALL | wx.EXPAND, border=2)
+        self.topPanel.Add(self._notebook,
+                          1,
+                          flag=wx.ALL | wx.EXPAND,
+                          border=2)
+        self.bottomPanel.Add(self._wikiCommandCheckBox,
+                             flag=wx.ALIGN_CENTER_VERTICAL | wx.ALL,
+                             border=2)
+        self.bottomPanel.Add(btn_sizer,
+                             flag=wx.ALL | wx.ALIGN_RIGHT,
+                             border=2)
+
+        mainSizer.Add(self.topPanel, 1, flag=wx.ALL | wx.EXPAND, border=2)
+        mainSizer.Add(self.bottomPanel, 1, flag=wx.ALL | wx.EXPAND, border=2)
 
         self.SetSizer(mainSizer)
         self.Layout()
@@ -92,6 +105,7 @@ class VariablesDialog(TestedDialog):
         self._varPanel.clear()
 
     def addStringVariable(self, varname):
+        self._varPanel.Show()
         self._varPanel.addStringVariable(varname)
         self.Layout()
 
@@ -276,6 +290,10 @@ class VaraiblesPanel(wx.ScrolledWindow):
         self._mainSizer = wx.FlexGridSizer(cols=1)
         self._mainSizer.AddGrowableCol(0)
         self.SetSizer(self._mainSizer)
+
+    @property
+    def count(self):
+        return len(self._varControls)
 
     def setFocusToFirstVariable(self):
         if self._varControls:
