@@ -48,10 +48,23 @@ class ParserFontTest (unittest.TestCase):
 
         self.assertEqual (self.parser.toHtml (text), result)
 
+    def testBold_03 (self):
+        text = u"'''Полужирный\n'''"
+        result = u"<b>Полужирный\n</b>"
+
+        self.assertEqual (self.parser.toHtml (text), result)
+
 
     def testItalic_01 (self):
         text = u"''Курсив''"
         result = u"<i>Курсив</i>"
+
+        self.assertEqual (self.parser.toHtml (text), result)
+
+
+    def testItalic_03 (self):
+        text = u"''Курсив\n''"
+        result = u"<i>Курсив\n</i>"
 
         self.assertEqual (self.parser.toHtml (text), result)
 
@@ -73,6 +86,12 @@ class ParserFontTest (unittest.TestCase):
     def testBoldItalic_02 (self):
         text = u"''''\\t''''"
         result = u"<b><i>\\t</i></b>"
+
+        self.assertEqual (self.parser.toHtml (text), result)
+
+    def testBoldItalic_03 (self):
+        text = u"''''Полужирный курсив\n''''"
+        result = u"<b><i>Полужирный курсив\n</i></b>"
 
         self.assertEqual (self.parser.toHtml (text), result)
 
