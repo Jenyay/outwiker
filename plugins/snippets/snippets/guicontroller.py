@@ -60,12 +60,16 @@ class GuiController(object):
     def _createMenu(self):
         self._menu = wx.Menu(u'')
 
+        # Snippet's control menu items (actions)
         controller = self._application.actionController
         map(lambda action: controller.appendMenuItem(action.stringId, self._menu),
             self._actions)
 
+        # Snippets list
         self._menu.AppendSeparator()
         self._updateMenu()
+
+        # Added Snippet's menu to main menu
         self._mainMenu.Insert(self.MENU_POS, self._menu, self._menuName)
 
     def _onMenuUpdate(self, params):
@@ -109,7 +113,10 @@ class GuiController(object):
             menu.AppendSubMenu(submenu, subdir.name)
 
         # Create menu items
-        menu.AppendSeparator()
+        if len(snippets_tree.dirs) != 0 and len(snippets_tree.snippets) != 0:
+            menu.AppendSeparator()
+
+        # Append snippets
         for snippet in sorted(snippets_tree.snippets):
             name = os.path.basename(snippet)
             menu_item_id = wx.Window.NewControlId()
