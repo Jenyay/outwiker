@@ -184,24 +184,13 @@ def sources_clear():
 
 
 @task
-def win_unstable(skipinstaller=False, skiparchives=False):
+def win(is_stable=False, skipinstaller=False, skiparchives=False):
     """
     Build assemblies under Windows
     """
     builder = BuilderWindows(create_installer=not skipinstaller,
                              create_archives=not skiparchives,
-                             is_stable=False)
-    builder.build()
-
-
-@task
-def win_stable(skipinstaller=False, skiparchives=False):
-    """
-    Build assemblies under Windows
-    """
-    builder = BuilderWindows(create_installer=not skipinstaller,
-                             create_archives=not skiparchives,
-                             is_stable=True)
+                             is_stable=is_stable)
     builder.build()
 
 
