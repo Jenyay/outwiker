@@ -9,6 +9,5 @@
    sources_struct
    tools
    fabfile
-   build_windows
-   build_linux
+   build
    test

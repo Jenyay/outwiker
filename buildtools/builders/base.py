@@ -15,22 +15,11 @@ class BuilderBase(object):
     __metaclass__ = abc.ABCMeta
 
     def __init__(self, subdir_name, is_stable=False):
-        self.facts = BuildFacts(BUILD_DIR)
-
         self.is_stable = is_stable
+
+        self.facts = BuildFacts(BUILD_DIR)
         self.build_dir = os.path.join(self.facts.version_dir, subdir_name)
         self.temp_sources_dir = os.path.join(self.facts.temp_dir, u'src')
-
-        # self._root_build_dir = BUILD_DIR
-        # self._subdir_name = subdir_name
-        # self._build_dir = os.path.join(self._root_build_dir,
-        #                                self._subdir_name)
-
-        # version = getOutwikerVersion()
-        # self._distrib_dir_name = version[0] + u'.' + version[1]
-        #
-        # self._distrib_dir = os.path.join(self._root_build_dir,
-        #                                  self._distrib_dir_name)
 
     @abc.abstractmethod
     def _build(self):
