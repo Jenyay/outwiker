@@ -80,7 +80,7 @@ except ImportError:
 
 
 @task
-def deb_sources_included(is_stable=False):
+def deb_sources_included(is_stable='False'):
     """
     Create files for uploading in PPA (including sources)
     """
@@ -92,7 +92,7 @@ def deb_sources_included(is_stable=False):
 
 
 @task
-def deb(is_stable=False):
+def deb(is_stable='False'):
     """
     Assemble the deb packages
     """
@@ -113,7 +113,7 @@ def deb_clear():
 
 
 @task
-def deb_single(is_stable=False):
+def deb_single(is_stable='False'):
     """
     Assemble the deb package for the current Ubuntu release
     """
@@ -174,7 +174,7 @@ def plugins_clear():
 
 
 @task
-def sources(is_stable=False):
+def sources(is_stable='False'):
     """
     Create the sources archives as stable version.
     """
@@ -192,7 +192,7 @@ def sources_clear():
 
 
 @task
-def win(is_stable=False, skipinstaller=False, skiparchives=False):
+def win(is_stable='False', skipinstaller='False', skiparchives='False'):
     """
     Build assemblies under Windows
     """
