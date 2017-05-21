@@ -98,6 +98,10 @@ class VariablesDialog(TestedDialog):
         self.SetSizer(mainSizer)
         self.Layout()
 
+    def hideVarPanel(self):
+        self._varPanel.Hide()
+        self.Layout()
+
     def setSnippetText(self, text):
         self._snippetEditor.SetReadOnly(False)
         self._snippetEditor.SetText(text)
@@ -184,6 +188,7 @@ class VariablesDialogController(object):
                             in variables_list
                             if not var.startswith('__')])
 
+        self.dialog.hideVarPanel()
         self.dialog.setSnippetText(template)
         map(lambda var: self.dialog.addStringVariable(var), variables)
 
