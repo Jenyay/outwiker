@@ -46,3 +46,15 @@ def getCurrentUbuntuDistribName():
 
 def getPathToPlugin(plugin_name):
     return os.path.join(u'plugins', plugin_name, plugin_name)
+
+
+def tobool(value):
+    if isinstance(value, bool):
+        return value
+
+    true_list = [u'1', '1', u'true', 'true']
+
+    if isinstance(value, str) or isinstance(value, unicode):
+        return value.lower() in true_list
+
+    return bool(value)

@@ -9,7 +9,6 @@ import glob
 import sys
 import urllib2
 import shutil
-from distutils.util import strtobool
 
 from fabric.api import local, lcd, settings, task, cd, put, hosts
 from buildtools.libs.colorama import Fore
@@ -18,6 +17,7 @@ from buildtools.utilites import (getPython,
                                  execute,
                                  getCurrentUbuntuDistribName,
                                  getPathToPlugin,
+                                 tobool,
                                  )
 from buildtools.defines import (
     UBUNTU_RELEASE_NAMES,
@@ -80,25 +80,25 @@ except ImportError:
 
 
 @task
-def deb_sources_included(is_stable='False'):
+def deb_sources_included(is_stable=False):
     """
     Create files for uploading in PPA (including sources)
     """
     builder = BuilderDebSourcesIncluded(DEB_SOURCE_BUILD_DIR,
                                         UBUNTU_RELEASE_NAMES,
-                                        strtobool(is_stable))
+                                        tobool(is_stable))
     builder.build()
     return builder.getResultPath()
 
 
 @task
-def deb(is_stable='False'):
+def deb(is_stable=False):
     """
     Assemble the deb packages
     """
     builder = BuilderDebSource(DEB_SOURCE_BUILD_DIR,
                                UBUNTU_RELEASE_NAMES,
-                               strtobool(is_stable))
+                               tobool(is_stable))
     builder.build()
     return builder.getResultPath()
 
@@ -113,13 +113,13 @@ def deb_clear():
 
 
 @task
-def deb_single(is_stable='False'):
+def deb_single(is_stable=False):
     """
     Assemble the deb package for the current Ubuntu release
     """
     builder = BuilderDebSource(DEB_SOURCE_BUILD_DIR,
                                [getCurrentUbuntuDistribName()],
-                               strtobool(is_stable))
+                               tobool(is_stable))
     builder.build()
     return builder.getResultPath()
 
@@ -129,7 +129,7 @@ def deb_install(is_stable=False):
     """
     Assemble deb package for current Ubuntu release
     """
-    result_path = deb_single(istrtobool(s_stable))
+    result_path = deb_single(tobool(is_stable))
 
     version = getOutwikerVersion()
 
@@ -174,11 +174,11 @@ def plugins_clear():
 
 
 @task
-def sources(is_stable='False'):
+def sources(is_stable=False):
     """
     Create the sources archives as stable version.
     """
-    builder = BuilderSources(is_stable=strtobool(is_stable))
+    builder = BuilderSources(is_stable=tobool(is_stable))
     builder.build()
 
 
@@ -192,13 +192,13 @@ def sources_clear():
 
 
 @task
-def win(is_stable='False', skipinstaller='False', skiparchives='False'):
+def win(is_stable=False, skipinstaller=False, skiparchives=False):
     """
     Build assemblies under Windows
     """
-    builder = BuilderWindows(create_installer=not strtobool(skipinstaller),
-                             create_archives=not strtobool(skiparchives),
-                             is_stable=strtobool(is_stable))
+    builder = BuilderWindows(create_installer=not tobool(skipinstaller),
+                             create_archives=not tobool(skiparchives),
+                             is_stable=tobool(is_stable))
     builder.build()
 
 
