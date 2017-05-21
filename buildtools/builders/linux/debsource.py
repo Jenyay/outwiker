@@ -55,11 +55,8 @@ class BuilderBaseDebSource(BuilderBase):
                 local(command)
 
     def _postBuild(self):
-        src_dir = self.build_dir
-        dest_dir = self.getResultPath()
-        shutil.move(src_dir, dest_dir)
-
         # Remove temp files
+        dest_dir = self.getResultPath()
         self._remove(os.path.join(dest_dir, self._getDebName()))
 
     def getResultPath(self):

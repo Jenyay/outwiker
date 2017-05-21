@@ -57,6 +57,7 @@ FILES_FOR_UPLOAD_UNSTABLE_WIN = [
     u'outwiker_win_unstable.zip',
 ]
 
+PPA_DEV_PATH = u'ppa:outwiker-team/dev'
 PPA_UNSTABLE_PATH = u'ppa:outwiker-team/unstable'
 PPA_STABLE_PATH = u'ppa:outwiker-team/ppa'
 
