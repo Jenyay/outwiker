@@ -445,8 +445,15 @@ def upload_plugin(*args):
     if len(args) == 0:
         args = PLUGINS_LIST
 
+    version = getOutwikerVersion()
+
     for pluginname in args:
-        path_to_plugin_local = os.path.join(BUILD_DIR, PLUGINS_DIR, pluginname)
+        path_to_plugin_local = os.path.join(
+            BUILD_DIR,
+            u'{}.{}'.format(version[0], version[1]),
+            PLUGINS_DIR,
+            pluginname)
+
         if not os.path.exists(path_to_plugin_local):
             continue
 
