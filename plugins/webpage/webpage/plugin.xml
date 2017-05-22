@@ -25,7 +25,7 @@
 			<site>http://jenyay.net</site>
 		</author>
 		<changelog>
-			<version number="1.2.2">
+			<version number="1.2.2" date="May 22, 2017">
                 <download os="all">http://jenyay.net/uploads/Outwiker/WebPage/webpage-1.2.2.zip</download>
 				<change>Fixed import of the local HTML page in Windows.</change>
 			</version>
@@ -75,7 +75,7 @@
 			<site>http://jenyay.net</site>
 		</author>
 		<changelog>
-			<version number="1.2.2">
+			<version number="1.2.2" date="22.05.2017">
                 <download os="all">http://jenyay.net/uploads/Outwiker/WebPage/webpage-1.2.2.zip</download>
 				<change>Исправлена ошибка импорта локальных HTML-файлов под Windows.</change>
 			</version>
