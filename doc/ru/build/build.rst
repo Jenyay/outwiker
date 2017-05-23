@@ -62,7 +62,7 @@
 * :file:`outwiker_win_unstable.7z` - 7z-архив, содержащий содержимое папки :file:`outwiker_exe`, но без плагинов во вложенной папке :file:`plugins`.
 * :file:`outwiker_win_unstable_all_plugins.zip` - zip-архив, содержащий содержимое папки :file:`outwiker_exe`, включая плагины во вложенной папке :file:`plugins`.
 * :file:`outwiker_win_unstable_all_plugins.7z` - 7z-архив, содержащий содержимое папки :file:`outwiker_exe`, включая плагины во вложенной папке :file:`plugins`.
-* :file:`outwiker_win_unstable.exe` - инсталятор, созданный с помощью `Inno Setup`_ (см. раздел :ref:`ru_windows_installer`).
+* :file:`outwiker_win_unstable.exe` - инсталятор, созданный с помощью `Inno Setup`_.
 * :file:`versions.xml` - манифест с описанием текущей версии программы OutWiker (см. раздел :ref:`ru_version_format`).
 
 
@@ -73,7 +73,7 @@
 * :file:`outwiker_{{x.x.x}}_win.7z` - 7z-архив, содержащий содержимое папки :file:`outwiker_exe`, но без плагинов во вложенной папке :file:`plugins`.
 * :file:`outwiker_{{x.x.x}}_win_all_plugins.zip` - zip-архив, содержащий содержимое папки :file:`outwiker_exe`, включая плагины во вложенной папке :file:`plugins`.
 * :file:`outwiker_{{x.x.x}}_win_all_plugins.7z` - 7z-архив, содержащий содержимое папки :file:`outwiker_exe`, включая плагины во вложенной папке :file:`plugins`.
-* :file:`outwiker_win_unstable.exe` - инсталятор, созданный с помощью `Inno Setup`_ (см. раздел :ref:`ru_windows_installer`).
+* :file:`outwiker_{{x.x.x}}_win.exe` - инсталятор, созданный с помощью `Inno Setup`_.
 * :file:`versions.xml` - манифест с описанием текущей версии программы OutWiker. Этот файл является переименованным файлом :file:`src/versions_stable.xml` (см. раздел :ref:`ru_version_format`).
 
 
@@ -134,7 +134,11 @@
 
 #. Создаются архивы с бинарной сборкой в формате zip и 7z без плагинов. Созданные архивы помещаются в :file:`build/{{номер версии}}/windows`.
 
-#. Создается инсталятор (см. раздел :ref:`ru_windows_installer`).
+#. На основе файла шаблона :file:`need_for_build/windows/outwiker_setup.iss.tpl` создается файл :file:`tmp/outwiker_setup.iss`, используемый для создания инсталятора с помощью `Inno Setup`_.
+
+#. Создается инсталятор в папке :file:`tmp`.
+
+#. Созданный инсталятор перемещается в папку :file:`build/{{номер версии}}/windows`.
 
 #. Все плагины копируются в папку :file:`tmp/outwiker_exe/plugins`.
 
@@ -163,24 +167,9 @@
 
 
 .. note::
-    В cx_Freeze 5.0 изменился способ сохранения необходимых Python-библиотек, и по умолчанию они не архивируются в :file:`library.zip`. С помощью дополнительных параметров можно явно указать, какие библиотеки должны быть включены в :file:`library.zip`. Это нужно будет сделать, если решится проблема с зависаниями, описанная выше. В данный момент эти параметры закомментарены в файле :file:`src/setup.py` (см. раздел :ref:`ru_setup_py`).
+    В cx_Freeze 5.0 изменился способ сохранения необходимых Python-библиотек, и по умолчанию они не архивируются в :file:`library.zip`. С помощью дополнительных параметров можно явно указать, какие библиотеки должны быть включены в :file:`library.zip`. Это нужно будет сделать, если решится проблема с зависаниями, описанная выше. В данный момент эти параметры закомментированы в файле :file:`src/setup.py` (см. раздел :ref:`ru_setup_py`).
 
 Подробное описание работы скрипта `src/setup.py`_ приводится в разделе :ref:`ru_setup_py`.
-
-
-.. _ru_windows_installer:
-
-Создание инсталятора под Windows
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Команда :code:`fab win` также создает графический инсталятор под Windows с помощью `Inno Setup`_. Скрипт для создания инсталятора - это файл :file:`outwiker_setup.iss`, который расположен в папке :file:`need_for_build/windows`. В результате выполнения данной команды будет создан файл :file:`outwiker_win_unstable.exe`.
-
-.. note::
-    При обновлении номера версии OutWiker надо не забыть поменять номер версии в файле :file:`outwiker_setup.iss`. В будущем это надо будет автоматизировать.
-
-.. note::
-    В данный момент инсталятор всегда создается с именем :file:`outwiker_win_unstable.exe` независимо от того, создается стабильная или нестабильная версия OutWiker. В будущем надо сделать, чтобы файл :file:`outwiker_setup.iss` создавался по шаблону, в котором можно было бы задавать с помощью переменных имя создаваемого инсталятора и номер версии (см. github issue `#344 <https://github.com/Jenyay/outwiker/issues/344>`_).
-
 
 
 .. _ru_build_linux:
