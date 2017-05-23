@@ -50,11 +50,11 @@ OUTWIKER_VERSIONS_FILENAME = u'versions.xml'
 NEED_FOR_BUILD_DIR = u'need_for_build'
 
 FILES_FOR_UPLOAD_UNSTABLE_WIN = [
-    u'outwiker_win_unstable.7z',
-    u'outwiker_win_unstable.exe',
-    u'outwiker_win_unstable_all_plugins.7z',
-    u'outwiker_win_unstable_all_plugins.zip',
-    u'outwiker_win_unstable.zip',
+    u'windows/outwiker_win_unstable.7z',
+    u'windows/outwiker_win_unstable.exe',
+    u'windows/outwiker_win_unstable_all_plugins.7z',
+    u'windows/outwiker_win_unstable_all_plugins.zip',
+    u'windows/outwiker_win_unstable.zip',
 ]
 
 PPA_DEV_PATH = u'ppa:outwiker-team/dev'
