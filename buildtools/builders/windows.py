@@ -2,6 +2,7 @@
 
 import os
 import shutil
+from string import Template
 
 from fabric.api import local, lcd
 
@@ -13,6 +14,8 @@ from buildtools.defines import (WINDOWS_BUILD_DIR,
                                 WINDOWS_INSTALLER_FILENAME,
                                 NEED_FOR_BUILD_DIR,
                                 WINDOWS_EXECUTABLE_DIR)
+
+from outwiker.utilites.textfile import readTextFile, writeTextFile
 
 
 class BuilderWindows(BuilderBase):
@@ -35,7 +38,6 @@ class BuilderWindows(BuilderBase):
         )
 
         self._resultWithPluginsBaseName = self._resultBaseName + u'_all_plugins'
-        self._installerName = u'outwiker_win_unstable.exe'
         self._plugins_list = PLUGINS_LIST
 
         self._executable_dir = os.path.join(self.facts.temp_dir,
@@ -101,15 +103,29 @@ class BuilderWindows(BuilderBase):
         if not self._create_installer:
             return
 
-        installer_path = os.path.join(self.facts.temp_dir, self._installerName)
+        if self.is_stable:
+            installerName = u'outwiker_{}_win'.format(self.facts.version_items[0])
+        else:
+            installerName = u'outwiker_win_unstable'.format(self.facts.version)
 
-        shutil.copy(os.path.join(NEED_FOR_BUILD_DIR, u'windows', u'outwiker_setup.iss'),
-                    self.facts.temp_dir)
+        installer_path = os.path.join(self.facts.temp_dir, installerName)
+
+        installer_template = readTextFile(os.path.join(NEED_FOR_BUILD_DIR, u'windows', u'outwiker_setup.iss.tpl'))
+
+        installer_text = Template(installer_template).safe_substitute(
+            version=self.facts.version,
+            resultname=installerName
+        )
+
+        installer_script_path = os.path.join(self.facts.temp_dir,
+                                             u'outwiker_setup.iss')
+
+        writeTextFile(installer_script_path, installer_text)
 
         with lcd(self.facts.temp_dir):
             local("iscc outwiker_setup.iss")
 
-        shutil.move(installer_path, self.build_dir)
+        shutil.move(installer_path + u'.exe', self.build_dir)
 
     def _copy_plugins(self):
         """

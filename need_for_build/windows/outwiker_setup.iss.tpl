@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "OutWiker"
-#define MyAppVersion "2.0.0"
+#define MyAppVersion "$version"
 #define MyAppPublisher "jenyay.net"
 #define MyAppURL "http://jenyay.net/Outwiker/English"
 #define MyAppExeName "outwiker.exe"
@@ -21,7 +21,7 @@ AppUpdatesURL={#MyAppURL}
 DefaultDirName={pf}\{#MyAppName}
 DefaultGroupName={#MyAppName}
 AllowNoIcons=yes
-OutputBaseFilename=outwiker_win_unstable
+OutputBaseFilename=$resultname
 OutputDir=.
 Compression=lzma
 SolidCompression=yes
