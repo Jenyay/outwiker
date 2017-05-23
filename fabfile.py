@@ -567,6 +567,10 @@ def apiversion():
 
 @task
 def doc():
+    doc_path = u'doc/_build'
+    if os.path.exists(doc_path):
+        shutil.rmtree(doc_path)
+
     with lcd('doc'):
         local('make html')
 
