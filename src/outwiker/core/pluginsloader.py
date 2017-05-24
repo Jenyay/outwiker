@@ -220,7 +220,7 @@ class PluginsLoader (object):
                                   appinfo.appname is not None)
                               else packageName)
 
-                pluginversion = (appinfo.currentVersion
+                pluginversion = (appinfo.currentVersionStr
                                  if appinfo is not None
                                  else None)
 
@@ -263,7 +263,7 @@ class PluginsLoader (object):
                         if module is not None:
                             plugin = self.__loadPlugin(module)
                             if plugin is not None:
-                                plugin.version = appinfo.currentVersion
+                                plugin.version = appinfo.currentVersionStr
                     except BaseException as e:
                         errors.append("*** Plugin {package} loading error ***\n{package}/{fileName}\n{error}\n{traceback}".format(
                             package=packageName,
@@ -286,7 +286,7 @@ class PluginsLoader (object):
                     self.__invalidPlugins.append(
                         InvalidPlugin(appinfo.appname,
                                       error,
-                                      appinfo.currentVersion))
+                                      appinfo.currentVersionStr))
 
     def _importSingleModule(self, packageName, fileName):
         """

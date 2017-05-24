@@ -96,8 +96,12 @@ class Version(object):
         return self.__gt__(other) or self.__eq__(other)
 
     def __str__(self):
-        result = reduce(lambda x, y: str(x) + "." + str(y), self.version, "")
-        result += " " + self.status.name
+        return unicode(self).encode('utf-8')
+
+    def __unicode__(self):
+        result = reduce(lambda x, y: str(x) + u"." + unicode(y),
+                        self.version, u"")
+        result += u" " + self.status.name
 
         # Отбросим первую точку
         return result.strip()[1:]

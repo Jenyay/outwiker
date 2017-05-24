@@ -39,6 +39,13 @@ class AppInfo (object):
             return None
         return self.versionsList[0].version
 
+    @property
+    def currentVersionStr(self):
+        if self.currentVersion is None:
+            return None
+
+        return unicode(self.currentVersion)
+
 
 class AuthorInfo (object):
     """

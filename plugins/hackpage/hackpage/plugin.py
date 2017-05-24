@@ -8,9 +8,6 @@ from outwiker.core.version import Version, StatusSet
 from outwiker.core.system import getOS
 
 
-__version__ = u"1.0"
-
-
 def _no_translate(text):
     return text
 
@@ -37,10 +34,6 @@ else:
         @property
         def description(self):
             return _(u"The HackPage plugin allow to edit hidden page properties")
-
-        @property
-        def version(self):
-            return __version__
 
         @property
         def url(self):

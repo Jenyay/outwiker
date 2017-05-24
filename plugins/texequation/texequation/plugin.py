@@ -9,10 +9,7 @@ from outwiker.core.version import Version, StatusSet
 from outwiker.core.system import getOS
 
 
-__version__ = u'2.0'
-
-
-if getCurrentVersion() < Version(1, 9, 0, 777, status=StatusSet.DEV):
+if getCurrentVersion() < Version(2, 0, 0, 812, status=StatusSet.DEV):
     logging.warning("TexEquation plugin. OutWiker version requirement: 1.9.0.777")
 else:
     from .i18n import set_
@@ -41,10 +38,6 @@ else:
         @property
         def description(self):
             return _(u"TeXEquation plug-in allow to insert equations in the TeX format.")
-
-        @property
-        def version(self):
-            return __version__
 
         @property
         def url(self):

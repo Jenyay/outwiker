@@ -46,6 +46,24 @@ class PluginsLoaderTest(unittest.TestCase):
         loader.clear()
         self.assertEqual(len(loader), 0)
 
+    def testVersion_01(self):
+        dirlist = [u"../test/plugins/testempty3"]
+        loader = PluginsLoader(Application)
+        loader.load(dirlist)
+
+        self.assertEqual(len(loader), 1)
+        self.assertEqual(loader[u"TestEmpty3"].name, u"TestEmpty3")
+        self.assertEqual(loader[u"TestEmpty3"].version, u"0.5")
+
+    def testVersion_02(self):
+        dirlist = [u"../test/plugins/testempty4"]
+        loader = PluginsLoader(Application)
+        loader.load(dirlist)
+
+        self.assertEqual(len(loader), 1)
+        self.assertEqual(loader[u"TestEmpty4"].name, u"TestEmpty4")
+        self.assertEqual(loader[u"TestEmpty4"].version, None)
+
     def testLoadInvalid_01(self):
         dirlist = [u"../test/plugins/testinvalid",            # Нет такой директории
                    u"../test/plugins/testinvalid1",
