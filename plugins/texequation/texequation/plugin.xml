@@ -25,6 +25,11 @@
 			<site>http://jenyay.net</site>
 		</author>
 		<changelog>
+			<version number="2.0.2" date="May 28, 2017">
+                <download os="all">http://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.0.2.zip</download>
+				<change>Fixed errors.</change>
+			</version>
+
 			<version number="2.0.1" date="April 25, 2017">
                 <download os="all">http://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.0.1.zip</download>
 				<change>Updated Ukrainian localization.</change>
@@ -70,6 +75,11 @@
 		</author>
 
 		<changelog>
+			<version number="2.0.2" date="28.05.2017">
+                <download os="all">http://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.0.2.zip</download>
+				<change>Исправление ошибок.</change>
+			</version>
+
 			<version number="2.0.1" date="25.04.2017">
                 <download os="all">http://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.0.1.zip</download>
 				<change>Обновлена украинская локализация.</change>

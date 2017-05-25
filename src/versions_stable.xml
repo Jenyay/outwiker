@@ -7,7 +7,7 @@
 		<website>http://jenyay.net/Outwiker/English</website>
 
 		<changelog>
-			<version number="2.0.0.820" status="stable" date="May, 2017">
+			<version number="2.0.0.822" status="stable" date="June, 2017">
 				<change>The program now uses wxPython 3.0 library.</change>
 				<change>The editor adds the ability to duplicate the current line with hot key or menu item.</change>
 				<change>The editor adds the ability to delete the current line with hot key or menu item.</change>
@@ -50,7 +50,7 @@
 		<website>http://jenyay.net/Soft/Outwiker</website>
 
 		<changelog>
-			<version number="2.0.0.820" status="stable" date="Май 2017">
+			<version number="2.0.0.822" status="stable" date="Июнь 2017">
 				<change>Удалена итальянская локализация.</change>
 				<change>Переход на библиотеку wxPython 3.0.</change>
 				<change>В редактор добавлена возможность дублировать текущую строку с помощью горячей клавиши или меню.</change>

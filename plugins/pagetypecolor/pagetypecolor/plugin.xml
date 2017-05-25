@@ -26,6 +26,11 @@
 		</author>
 
 		<changelog>
+			<version number="1.1.1" date="May 28, 2017">
+                <download os="all">http://jenyay.net/uploads/Outwiker/PageTypeColor/pagetypecolor-1.1.1.zip</download>
+				<change>Fixed errors.</change>
+			</version>
+
 			<version number="1.1" date="April 25, 2017">
                 <download os="all">http://jenyay.net/uploads/Outwiker/PageTypeColor/pagetypecolor-1.1.zip</download>
 				<change>Added Markdown page support.</change>
@@ -69,6 +74,11 @@
 		</author>
 
 		<changelog>
+			<version number="1.1.1" date="28.05.2017">
+                <download os="all">http://jenyay.net/uploads/Outwiker/PageTypeColor/pagetypecolor-1.1.1.zip</download>
+				<change>Исправление ошибок.</change>
+			</version>
+
 			<version number="1.1" date="25.04.2017">
                 <download os="all">http://jenyay.net/uploads/Outwiker/PageTypeColor/pagetypecolor-1.1.zip</download>
 				<change>Добавлена поддержка страниц Markdown.</change>
