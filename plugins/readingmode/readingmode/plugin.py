@@ -7,7 +7,7 @@ from outwiker.core.commands import getCurrentVersion
 from outwiker.core.version import Version
 
 
-__version__ = u"1.0.2"
+__version__ = u"1.0.4"
 
 if getCurrentVersion() < Version (1, 8, 0, 742):
     print ("ReadingMode. OutWiker version requirement: 1.8.0.742")
