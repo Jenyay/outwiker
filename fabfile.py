@@ -494,9 +494,18 @@ def upload_unstable():
     """
     Upload unstable version on the site
     """
-    versions = os.path.join(PATH_TO_WINDOWS_DISTRIBS, OUTWIKER_VERSIONS_FILENAME)
-    upload_files = map(lambda item: os.path.join(PATH_TO_WINDOWS_DISTRIBS, item),
+    version = getOutwikerVersion()
+    version_dir = u'{}.{}'.format(version[0], version[1])
+
+    versions = os.path.join(PATH_TO_WINDOWS_DISTRIBS,
+                            version_dir,
+                            OUTWIKER_VERSIONS_FILENAME)
+
+    upload_path = os.path.join(PATH_TO_WINDOWS_DISTRIBS, version_dir)
+
+    upload_files = map(lambda item: os.path.join(upload_path, item),
                        FILES_FOR_UPLOAD_UNSTABLE_WIN)
+
     upload_files = upload_files + [versions]
 
     for fname in upload_files:
