@@ -86,7 +86,7 @@ polyactionsList = [
     (polyactions.SUBSCRIPT_STR_ID, _(u"Subscript"), _(u"Subscript"), HotKey("=", ctrl=True)),
     (polyactions.SUPERSCRIPT_STR_ID, _(u"Superscript"), _(u"Superscript"), HotKey("+", ctrl=True)),
     (polyactions.PREFORMAT_STR_ID, _(u"Preformatted text"), _(u"Preformatted text"), HotKey("B", ctrl=True, shift=True)),
-    (polyactions.CODE_STR_ID, _(u"Insert code"), _(u"Insert code(monospaced font)"), HotKey("D", ctrl=True, shift=True)),
+    (polyactions.CODE_STR_ID, _(u"Insert code"), _(u"Insert code(monospaced font)"), None),
 
     (polyactions.ALIGN_LEFT_STR_ID, _(u"Align text left"), _(u"Align text left"), HotKey("L", ctrl=True, shift=True)),
     (polyactions.ALIGN_CENTER_STR_ID, _(u"Align text center"), _(u"Center"), HotKey("C", ctrl=True, shift=True)),
@@ -121,7 +121,7 @@ polyactionsList = [
     (polyactions.CURRENT_DATE, _(u"Current date"), _(u"Insert the current date"), None),
     (polyactions.SPELL_ON_OFF_ID, _(u"Spell checking"), _(u"Enable / disable spell checking"), HotKey("F7")),
 
-    (polyactions.LINE_DUPLICATE_ID, _(u"Duplicate line"), _(u"Duplicate current line"), None),
+    (polyactions.LINE_DUPLICATE_ID, _(u"Duplicate line"), _(u"Duplicate current line"), HotKey("D", ctrl=True, shift=True)),
     (polyactions.MOVE_SELECTED_LINES_UP_ID, _(u"Move selected lines up"), _(u"Move the selected lines up one line"), None),
     (polyactions.MOVE_SELECTED_LINES_DOWN_ID, _(u"Move selected lines down"), _(u"Move the selected lines down one line"), None),
     (polyactions.DELETE_CURRENT_LINE, _(u"Delete line"), _(u"Delete the current line"), None),
