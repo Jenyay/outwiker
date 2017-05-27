@@ -16,24 +16,6 @@ from outwiker.gui.defines import (ID_MOUSE_LEFT,
                                   ID_KEY_CTRL,
                                   ID_KEY_SHIFT)
 
-'''
-As far as I know (I may be wrong), a wx.Panel is "composed" by a GtkPizza
-as a child of GtkScrolledWindow. GtkPizza is a custom widget created for
-wxGTK.
-
-WebKitGTK+ - the webkit port for GTK+ that has python bindings - wants a
-GtkScrolledWindow as parent.
-
-So all we need to embed webkit in wxGTK is find the wx.Panel's
-GtkScrolledWindow.
-This is acomplished using pygtk that is present in major distro's by
-default, at least those that use gnome as its main desktop environment.
-
-A last note is that for get a handle of a window in X, the window must be
-"realized" first, in other words, must already exists. So we must Show
-the wx.Frame before use this WKHtmlWindow class.
-
-'''
 
 from .htmlrender import HtmlRender
 
@@ -45,11 +27,11 @@ class HtmlRenderWebKit(HtmlRender):
         import wx.html2 as webview
         self.ctrl = webview.WebView.New(self)
 
-        sizer = wx.FlexGridSizer (1)
-        sizer.AddGrowableCol (0)
-        sizer.AddGrowableRow (0)
-        sizer.Add (self.ctrl, 0, wx.EXPAND)
-        self.SetSizer (sizer)
+        sizer = wx.FlexGridSizer(1)
+        sizer.AddGrowableCol(0)
+        sizer.AddGrowableRow(0)
+        sizer.Add(self.ctrl, 0, wx.EXPAND)
+        self.SetSizer(sizer)
 
         self.canOpenUrl = False                # Можно ли открывать ссылки
 
@@ -63,7 +45,7 @@ class HtmlRenderWebKit(HtmlRender):
         self.ctrl.Print()
 
     def LoadPage (self, fname):
-        url = u'file://' + fname
+        url = u'file://' + urllib.quote(fname.encode ("utf8"))
         if APP_DATA_KEY_ANCHOR in Application.sharedData:
             url += Application.sharedData[APP_DATA_KEY_ANCHOR]
             del Application.sharedData[APP_DATA_KEY_ANCHOR]
