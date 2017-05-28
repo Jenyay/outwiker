@@ -552,10 +552,13 @@ def deploy_unstable():
     ppa_path = PPA_UNSTABLE_PATH
     is_stable = False
 
+    plugins(True)
+    upload_plugin()
+    upload_plugins_pack()
+
     deb_path = deb_sources_included(is_stable)
     _ppa_upload(ppa_path, deb_path)
     upload_unstable()
-    upload_plugins_pack()
 
 
 @task(alias='apiversions')
