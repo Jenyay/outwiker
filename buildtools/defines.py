@@ -1,10 +1,10 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os
 
 
 # Supported Ubuntu releases
-UBUNTU_RELEASE_NAMES = [u"trusty", u"xenial", "yakkety", "zesty"]
+UBUNTU_RELEASE_NAMES = [u"xenial", "yakkety", "zesty"]
 
 # List of the supported plugins
 PLUGINS_LIST = [
