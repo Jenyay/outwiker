@@ -27,9 +27,11 @@ from buildtools.defines import (
     PLUGINS_LIST,
     PLUGIN_VERSIONS_FILENAME,
     FILES_FOR_UPLOAD_UNSTABLE_WIN,
+    FILES_FOR_UPLOAD_STABLE_WIN,
     OUTWIKER_VERSIONS_FILENAME,
     NEED_FOR_BUILD_DIR,
     PPA_UNSTABLE_PATH,
+    PPA_STABLE_PATH,
 )
 from buildtools.versions import (getOutwikerVersion,
                                  downloadAppInfo,
@@ -60,6 +62,7 @@ import outwiker.libs
 try:
     from buildtools.serverinfo import (DEPLOY_SERVER_NAME,
                                        DEPLOY_UNSTABLE_PATH,
+                                       DEPLOY_STABLE_PATH,
                                        DEPLOY_HOME_PATH,
                                        DEPLOY_SITE,
                                        PATH_TO_WINDOWS_DISTRIBS,
@@ -70,6 +73,7 @@ except ImportError:
                     u'buildtools/serverinfo.py')
     from buildtools.serverinfo import (DEPLOY_SERVER_NAME,
                                        DEPLOY_UNSTABLE_PATH,
+                                       DEPLOY_STABLE_PATH,
                                        DEPLOY_HOME_PATH,
                                        DEPLOY_SITE,
                                        PATH_TO_WINDOWS_DISTRIBS,
@@ -488,12 +492,7 @@ def upload_plugin(*args):
     site_versions()
 
 
-@hosts(DEPLOY_SERVER_NAME)
-@task
-def upload_unstable():
-    """
-    Upload unstable version on the site
-    """
+def _upload_win_versions(files_for_upload_win, deploy_path):
     version = getOutwikerVersion()
     version_dir = u'{}.{}'.format(version[0], version[1])
 
@@ -504,7 +503,7 @@ def upload_unstable():
     upload_path = os.path.join(PATH_TO_WINDOWS_DISTRIBS, version_dir)
 
     upload_files = map(lambda item: os.path.join(upload_path, item),
-                       FILES_FOR_UPLOAD_UNSTABLE_WIN)
+                       files_for_upload_win)
 
     upload_files = upload_files + [versions]
 
@@ -515,19 +514,46 @@ def upload_unstable():
     print('Checking versions')
     newOutWikerAppInfo = readAppInfo(versions)
     print('Download {}'.format(newOutWikerAppInfo.updatesUrl))
-    prevOutWikerAppInfo = downloadAppInfo(newOutWikerAppInfo.updatesUrl)
+    try:
+        prevOutWikerAppInfo = downloadAppInfo(newOutWikerAppInfo.updatesUrl)
 
-    if newOutWikerAppInfo.currentVersion < prevOutWikerAppInfo.currentVersion:
-        print(Fore.RED + 'Error. New version < Prev version')
-        sys.exit(1)
-    elif newOutWikerAppInfo.currentVersion == prevOutWikerAppInfo.currentVersion:
-        print (Fore.RED + 'Warning: Uploaded the same version')
+        if newOutWikerAppInfo.currentVersion < prevOutWikerAppInfo.currentVersion:
+            print(Fore.RED + 'Error. New version < Prev version')
+            sys.exit(1)
+        elif newOutWikerAppInfo.currentVersion == prevOutWikerAppInfo.currentVersion:
+            print(Fore.RED + 'Warning: Uploaded the same version')
+    except urllib2.HTTPError:
+        pass
 
-    print ('Uploading...')
+    print('Uploading...')
     for fname in upload_files:
-        with cd(DEPLOY_UNSTABLE_PATH):
+        with cd(deploy_path):
             basename = os.path.basename(fname)
             put(fname, basename)
+
+
+@hosts(DEPLOY_SERVER_NAME)
+@task
+def upload_win_stable():
+    """
+    Upload stable version on the site
+    """
+    version = getOutwikerVersion()
+    files_for_upload_win = [fname.format(version=version[0])
+                            for fname in FILES_FOR_UPLOAD_STABLE_WIN]
+    deploy_path = DEPLOY_STABLE_PATH
+    _upload_win_versions(files_for_upload_win, deploy_path)
+
+
+@hosts(DEPLOY_SERVER_NAME)
+@task
+def upload_win_unstable():
+    """
+    Upload unstable version on the site
+    """
+    files_for_upload_win = FILES_FOR_UPLOAD_UNSTABLE_WIN
+    deploy_path = DEPLOY_UNSTABLE_PATH
+    _upload_win_versions(files_for_upload_win, deploy_path)
 
 
 @hosts(DEPLOY_SERVER_NAME)
@@ -558,7 +584,22 @@ def deploy_unstable():
 
     deb_path = deb_sources_included(is_stable)
     _ppa_upload(ppa_path, deb_path)
-    upload_unstable()
+    upload_win_unstable()
+
+
+@hosts(DEPLOY_SERVER_NAME)
+@task
+def deploy_stable():
+    """
+    Upload unstable version on the site
+    """
+    deploy_unstable()
+    ppa_path = PPA_STABLE_PATH
+    is_stable = True
+
+    deb_path = deb_sources_included(is_stable)
+    _ppa_upload(ppa_path, deb_path)
+    upload_win_stable()
 
 
 @task(alias='apiversions')
