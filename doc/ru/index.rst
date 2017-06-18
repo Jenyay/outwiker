@@ -4,6 +4,7 @@
 .. toctree::
    :maxdepth: 2
 
+   faq
    build/start
    build/index
    sources/index
