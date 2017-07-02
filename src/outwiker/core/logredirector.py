@@ -19,8 +19,10 @@ class LogRedirector(object):
 
         self._runTime = time.strftime(u'%Y-%m-%d %H:%M:%S')
 
-        logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s',
+        logging.basicConfig(format='%(levelname)-10s %(asctime)-25s %(name)s - %(module)s - %(message)s',
                             level=self._level)
+        logging.getLogger("comtypes").setLevel(logging.WARNING)
+        logging.getLogger("PIL").setLevel(logging.WARNING)
 
     def write(self, message):
         if isinstance(message, unicode):

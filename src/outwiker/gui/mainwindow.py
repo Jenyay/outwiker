@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 import os.path
+import logging
 
 import wx
 import wx.aui
@@ -70,6 +71,8 @@ from outwiker.pages.search.searchpagecontroller import SearchPageController
 from outwiker.gui.preferences.prefcontroller import PrefController
 from outwiker.core.system import getOS
 
+
+logger = logging.getLogger('outwiker.gui.mainwindow')
 
 class MainWindow(wx.Frame):
     def __init__(self, *args, **kwds):
@@ -525,6 +528,8 @@ class MainWindow(wx.Frame):
         """
         Убрать за собой
         """
+        logger.debug(u'Begin MainWindow.Destroy.')
+
         assert self.toolbars is not None
         assert self.__panesController is not None
         assert self.pagePanel is not None
@@ -565,6 +570,7 @@ class MainWindow(wx.Frame):
         self.tagsCloudPanel = None
 
         super(MainWindow, self).Destroy()
+        logger.debug(u'End MainWindow.Destroy.')
 
     def destroyPagePanel(self, save):
         """

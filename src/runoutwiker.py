@@ -57,7 +57,7 @@ class OutWiker(wx.App):
             config = GeneralGuiConfig(Application.config)
             Application.sharedData[APP_DATA_DEBUG] = config.debug.value
 
-        level = (logging.INFO
+        level = (logging.DEBUG
                  if Application.sharedData.get(APP_DATA_DEBUG, False)
                  else logging.WARNING)
 
@@ -112,4 +112,8 @@ class OutWiker(wx.App):
 
 if __name__ == "__main__":
     outwiker = OutWiker(False)
+    logger = logging.getLogger('outwiker')
+
     outwiker.MainLoop()
+
+    logger.debug('Exit')
