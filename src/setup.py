@@ -6,6 +6,9 @@ import os
 from abc import ABCMeta, abstractmethod
 
 from outwiker.core.defines import WX_VERSION
+from outwiker.core.xmlversionparser import XmlVersionParser
+from outwiker.utilites.textfile import readTextFile
+
 import wxversion
 wxversion.select(WX_VERSION)
 
@@ -69,10 +72,10 @@ class BaseBuilder(object):
         fname = "versions.xml"
         path = os.path.join(getCurrentDir(), fname)
 
-        with open(path) as fp:
-            lines = fp.readlines()
+        text = readTextFile(fname)
+        appinfo = XmlVersionParser([u'en']).parse(text)
 
-        version_str = "%s.%s" % (lines[0].strip(), lines[1].strip())
+        version_str = u'.'.join([unicode(item) for item in appinfo.currentVersion])
         return version_str
 
     def build(self):
@@ -94,10 +97,11 @@ class BaseBuilder(object):
             'packages': self._getPackages(),
             'include_files': includeFiles,
             "bin_path_includes": self._getPathIncludes(),
-            # For cx_Freeze 5.0.1
-            # 'zip_include_packages': ['outwiker', 'wx', 'PIL', 'comtypes',
+            # For cx_Freeze 5.0.x
+            # 'zip_include_packages': ['outwiker', 'wx', 'wx.html', 'PIL', 'comtypes',
             #                          'ctypes', 'importlib', 'logging', 'xml',
-            #                          'enchant', 'encodings', 'pkg_resources'],
+            #                          'enchant', 'encodings', 'pkg_resources', 'packaging',
+            #                          'bz2'],
         }
         build_exe_options.update(self._getExtraBuildExeOptions())
 
@@ -106,7 +110,7 @@ class BaseBuilder(object):
         setup(
             name="OutWiker",
             version=self._getCurrentVersion(),
-            description="Wiki + Outliner",
+            description="OutWiker",
             options={'build_exe': build_exe_options},
             executables=[executable]
             )
