@@ -198,12 +198,65 @@ def sources_clear():
 @task
 def win(is_stable=False, skipinstaller=False, skiparchives=False):
     """
-    Build assemblies under Windows
+    Build OutWiker for Windows with cx_Freeze
     """
     builder = BuilderWindows(create_installer=not tobool(skipinstaller),
                              create_archives=not tobool(skiparchives),
                              is_stable=tobool(is_stable))
     builder.build()
+
+
+@task
+def win_pyinstaller():
+    """
+    Build OutWiker for Windows with cx_Freeze
+    """
+    distpath = os.path.abspath(u'build/dist')
+    workpath  = os.path.abspath(u'build/build_tmp')
+
+    sep = os.pathsep
+
+    params = [u'--log-level WARN',
+              u'--noconfirm',
+              u'--icon images/outwiker.ico',
+              u'--name outwiker',
+              u'--windowed',
+              u'--distpath ' + distpath,
+              u'--workpath ' + workpath,
+              u'--add-data versions.xml' + sep + u'.',
+              u'--add-binary help' + sep + u'help',
+              u'--add-binary iconset' + sep + u'iconset',
+              u'--add-binary images' + sep + u'images',
+              u'--add-binary locale' + sep + u'locale',
+              u'--add-binary spell' + sep + u'spell',
+              u'--add-binary styles' + sep + u'styles',
+              u'--add-binary plugins' + sep + u'plugins',
+              u'--exclude-module Tkinter',
+              ]
+
+    packages = ['urllib',
+                'urllib2',
+                'outwiker.pages.wiki.wikipanel',
+                'outwiker.gui.htmlrenderfactory',
+                'outwiker.gui.controls.popupbutton',
+                'PIL.Image',
+                'PIL.ImageDraw',
+                'PIL.ImageFont',
+                'PIL.ImageFilter',
+                'PIL.IcoImagePlugin',
+                'PIL.BmpImagePlugin',
+                'PIL.TiffImagePlugin',
+                'enchant',
+                'htmlentitydefs',
+                'HTMLParser',
+                'xml',
+                ]
+
+    params += [u' --hiddenimport {}'.format(package) for package in packages]
+
+    with lcd('src'):
+        command = u'pyinstaller runoutwiker.py ' + u' '.join(params)
+        local(command)
 
 
 @task
