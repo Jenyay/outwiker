@@ -72,7 +72,7 @@ class BaseBuilder(object):
         fname = "versions.xml"
         path = os.path.join(getCurrentDir(), fname)
 
-        text = readTextFile(fname)
+        text = readTextFile(path)
         appinfo = XmlVersionParser([u'en']).parse(text)
 
         version_str = u'.'.join([unicode(item) for item in appinfo.currentVersion])
@@ -154,9 +154,9 @@ class LinuxBuilder(BaseBuilder):
 
     def _getExtraIncludeFiles(self):
         return [
-            ('../need_for_build/linux/libs_amd64/libgcrypt.so.20',
+            ('../../../need_for_build/linux/libs_amd64/libgcrypt.so.20',
              'libgcrypt.so.20'),
-            ('../need_for_build/linux/libs_amd64/libglib-2.0.so.0',
+            ('../../../need_for_build/linux/libs_amd64/libglib-2.0.so.0',
              'libglib-2.0.so.0'),
         ]
 

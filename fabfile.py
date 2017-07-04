@@ -212,7 +212,7 @@ def win_pyinstaller():
     Build OutWiker for Windows with cx_Freeze
     """
     distpath = os.path.abspath(u'build/dist')
-    workpath  = os.path.abspath(u'build/build_tmp')
+    workpath = os.path.abspath(u'build/build_tmp')
 
     sep = os.pathsep
 
