@@ -1,2 +1,2 @@
 fabric
-cx_Freeze==4.3.3
+pyinstaller==3.2.1
