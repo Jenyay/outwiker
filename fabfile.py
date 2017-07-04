@@ -207,22 +207,23 @@ def win(is_stable=False, skipinstaller=False, skiparchives=False):
 
 
 @task
-def win_pyinstaller():
+def binary():
     """
-    Build OutWiker for Windows with cx_Freeze
+    Build OutWiker binary packages with pyInstaller
     """
-    distpath = os.path.abspath(u'build/dist')
+    distpath = os.path.abspath(u'build/dist/')
     workpath = os.path.abspath(u'build/build_tmp')
 
     sep = os.pathsep
 
     params = [u'--log-level WARN',
+              u'--clean',
               u'--noconfirm',
               u'--icon images/outwiker.ico',
               u'--name outwiker',
               u'--windowed',
-              u'--distpath ' + distpath,
-              u'--workpath ' + workpath,
+              u'--distpath "{}"'.format(distpath),
+              u'--workpath "{}"'.format(workpath),
               u'--add-data versions.xml' + sep + u'.',
               u'--add-binary help' + sep + u'help',
               u'--add-binary iconset' + sep + u'iconset',
@@ -231,28 +232,42 @@ def win_pyinstaller():
               u'--add-binary spell' + sep + u'spell',
               u'--add-binary styles' + sep + u'styles',
               u'--add-binary plugins' + sep + u'plugins',
-              u'--exclude-module Tkinter',
               ]
 
-    packages = ['urllib',
-                'urllib2',
-                'outwiker.pages.wiki.wikipanel',
-                'outwiker.gui.htmlrenderfactory',
-                'outwiker.gui.controls.popupbutton',
-                'PIL.Image',
-                'PIL.ImageDraw',
-                'PIL.ImageFont',
-                'PIL.ImageFilter',
-                'PIL.IcoImagePlugin',
-                'PIL.BmpImagePlugin',
-                'PIL.TiffImagePlugin',
-                'enchant',
-                'htmlentitydefs',
-                'HTMLParser',
-                'xml',
-                ]
+    packages_included = ['urllib',
+                         'urllib2',
+                         'outwiker.pages.wiki.wikipanel',
+                         'outwiker.gui.htmlrenderfactory',
+                         'outwiker.gui.controls.popupbutton',
+                         'PIL.Image',
+                         'PIL.ImageDraw',
+                         'PIL.ImageFont',
+                         'PIL.ImageFilter',
+                         'PIL.IcoImagePlugin',
+                         'PIL.BmpImagePlugin',
+                         'PIL.TiffImagePlugin',
+                         'enchant',
+                         'htmlentitydefs',
+                         'HTMLParser',
+                         'xml',
+                         ]
 
-    params += [u' --hiddenimport {}'.format(package) for package in packages]
+    packages_excluded = [
+        'Tkinter',
+        'PyQt4',
+        'unittest',
+        'distutils',
+        'pycparser',
+        'sqlite3',
+    ]
+
+    params += [u' --hiddenimport {}'.format(package)
+               for package
+               in packages_included]
+
+    params += [u' --exclude-module {}'.format(package)
+               for package
+               in packages_excluded]
 
     with lcd('src'):
         command = u'pyinstaller runoutwiker.py ' + u' '.join(params)
