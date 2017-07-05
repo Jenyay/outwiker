@@ -255,10 +255,22 @@ def binary():
     packages_excluded = [
         'Tkinter',
         'PyQt4',
+        'PyQt5',
         'unittest',
         'distutils',
+        'setuptools',
         'pycparser',
         'sqlite3',
+        'numpy',
+        'pydoc',
+        'xmlrpclib',
+        'test',
+        'PIL.SunImagePlugin',
+        'PIL.IptcImagePlugin',
+        'PIL.McIdasImagePlugin',
+        'PIL.DdsImagePlugin',
+        'PIL.FpxImagePlugin',
+        'PIL.PixarImagePlugin',
     ]
 
     params += [u' --hiddenimport {}'.format(package)
