@@ -2,6 +2,8 @@
 
 import sys
 import os
+import os.path
+import shutil
 
 from fabric.api import local
 
@@ -58,3 +60,15 @@ def tobool(value):
         return value.lower() in true_list
 
     return bool(value)
+
+
+def remove(path):
+    """
+    Remove the fname file if it exists.
+    The function not catch any exceptions.
+    """
+    if os.path.exists(path):
+        if os.path.isfile(path):
+            os.remove(path)
+        elif os.path.isdir(path):
+            shutil.rmtree(path)
