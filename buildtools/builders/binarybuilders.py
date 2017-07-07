@@ -49,6 +49,7 @@ class BaseBinaryBuilder(object):
     def get_includes(self):
         """Return modules list to include to build. """
         return [
+            'importlib',
             'urllib',
             'urllib2',
             'outwiker.pages.wiki.wikipanel',

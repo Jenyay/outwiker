@@ -5,38 +5,36 @@ import shutil
 
 from fabric.api import local, lcd
 
-from ..base import BuilderBase
-from buildtools.defines import LINUX_BUILD_DIR
+from .base import BuilderBase
+from .binarybuilders import PyInstallerBuilderLinux
 from buildtools.utilites import getPython
 
+from buildtools.defines import LINUX_BUILD_DIR
 
-class BuilderLinuxBinaryBase(BuilderBase):
+
+class BuilderLinuxBinary(BuilderBase):
     """
     Base class for all Linux binary builders.
     """
-    def __init__(self, build_dir, create_archive):
-        super(BuilderLinuxBinaryBase, self).__init__(build_dir)
+    def __init__(self, build_dir=LINUX_BUILD_DIR, create_archive=True):
+        super(BuilderLinuxBinary, self).__init__(build_dir)
+
+        self._archiveFullName = os.path.join(self.build_dir,
+                                             'outwiker_linux_unstable_x64.7z')
 
         self._create_archive = create_archive
-        # self._toRemove = [
-        #     os.path.join(self.build_dir, u'tcl'),
-        #     os.path.join(self.build_dir, u'tk'),
-        #     os.path.join(self.build_dir, u'PyQt4.QtCore.so'),
-        #     os.path.join(self.build_dir, u'PyQt4.QtGui.so'),
-        #     os.path.join(self.build_dir, u'_tkinter.so'),
-        # ]
+        self._exe_path = os.path.join(self.build_dir, u'outwiker_exe')
 
     def _build_binary(self):
         """
         Build with cx_Freeze
         """
-        with lcd(self.temp_sources_dir):
-            local(u'{python} setup.py build --build-exe "{build_dir}"'.format(
-                build_dir=self.build_dir,
-                python=getPython()
-            ))
+        src_dir = self.temp_sources_dir
+        dest_dir = self._exe_path
+        temp_dir = self.facts.temp_dir
 
-        # map(self._remove, self._toRemove)
+        builder = PyInstallerBuilderLinux(src_dir, dest_dir, temp_dir)
+        builder.build()
 
     def _create_plugins_dir(self):
         """
@@ -47,16 +45,6 @@ class BuilderLinuxBinaryBase(BuilderBase):
         # Create the plugins folder(it is not appened to the git repository)
         if not os.path.exists(pluginsdir):
             os.mkdir(pluginsdir)
-
-
-class BuilderLinuxBinary(BuilderLinuxBinaryBase):
-    """
-    Class for making simple Linux binary build
-    """
-    def __init__(self, build_dir=LINUX_BUILD_DIR, create_archive=True):
-        super(BuilderLinuxBinary, self).__init__(build_dir, create_archive)
-        self._archiveFullName = os.path.join(self.build_dir,
-                                             'outwiker_linux_unstable_x64.7z')
 
     def _build(self):
         self._copy_necessary_files()
@@ -72,7 +60,7 @@ class BuilderLinuxBinary(BuilderLinuxBinaryBase):
 
     def _build_archive(self):
         # Create archive without plugins
-        with lcd(self.build_dir):
+        with lcd(self._exe_path):
             local("7z a ../outwiker_linux_unstable_x64.7z ./* ./plugins -r -aoa")
 
     def _copy_necessary_files(self):
