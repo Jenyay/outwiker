@@ -7,7 +7,6 @@ from fabric.api import local, lcd
 
 from .base import BuilderBase
 from .binarybuilders import PyInstallerBuilderLinux
-from buildtools.utilites import getPython
 
 from buildtools.defines import LINUX_BUILD_DIR
 
@@ -16,8 +15,8 @@ class BuilderLinuxBinary(BuilderBase):
     """
     Base class for all Linux binary builders.
     """
-    def __init__(self, build_dir=LINUX_BUILD_DIR, create_archive=True):
-        super(BuilderLinuxBinary, self).__init__(build_dir)
+    def __init__(self, create_archive=True, is_stable=False):
+        super(BuilderLinuxBinary, self).__init__(LINUX_BUILD_DIR, is_stable)
 
         self._archiveFullName = os.path.join(self.build_dir,
                                              'outwiker_linux_unstable_x64.7z')

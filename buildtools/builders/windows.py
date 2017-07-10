@@ -23,9 +23,9 @@ class BuilderWindows(BuilderBase):
     Build for Windows
     """
     def __init__(self,
-                 create_installer=True,
+                 is_stable=False,
                  create_archives=True,
-                 is_stable=False):
+                 create_installer=True):
         super(BuilderWindows, self).__init__(WINDOWS_BUILD_DIR, is_stable)
         self._create_installer = create_installer
         self._create_archives = create_archives

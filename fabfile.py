@@ -200,9 +200,10 @@ def win(is_stable=False, skipinstaller=False, skiparchives=False):
     """
     Build OutWiker for Windows with cx_Freeze
     """
-    builder = BuilderWindows(create_installer=not tobool(skipinstaller),
+    builder = BuilderWindows(is_stable=tobool(is_stable),
                              create_archives=not tobool(skiparchives),
-                             is_stable=tobool(is_stable))
+                             create_installer=not tobool(skipinstaller)
+                             )
     builder.build()
 
 
@@ -216,11 +217,13 @@ def win_clear():
 
 
 @task
-def linux(create_archive=True):
+def linux_binary(is_stable=False, skiparchives=False):
     """
     Assemble binary builds for Linux
     """
-    builder = BuilderLinuxBinary(create_archive=create_archive)
+    builder = BuilderLinuxBinary(is_stable=tobool(is_stable),
+                                 create_archive=not tobool(skiparchives)
+                                 )
     builder.build()
 
 
