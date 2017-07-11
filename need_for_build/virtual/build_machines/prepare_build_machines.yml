@@ -1,0 +1,47 @@
+---
+- name: Configure virtual machine for OutWiker build
+  hosts: all
+  remote_user: ubuntu
+  vars_files:
+      - vars/common.yaml
+  tasks:
+      - name: upgrade software
+        apt: update_cache=yes upgrade=dist
+        become: true
+
+      - name: install software
+        apt: name={{ item }}
+        with_items:
+          - mc
+          - python-pip
+          - git
+          - konsole
+          - vim-gtk3
+          - fabric
+          - python-wxgtk3.0
+          - python-wxversion
+          - libwxgtk-webview3.0-0v5
+          - python-pil
+          - python-enchant
+          - python-appindicator
+          - python-gtk2
+          # - python-wxgtk-webview3.0
+          - ibus-gtk3
+          - debhelper
+          - devscripts
+        become: true
+
+      - name: create directories for vagrant
+        file: path={{ item }} state=directory
+        with_items:
+            - "{{ homedir }}/.config/mc"
+            - "{{ homedir }}/projects"
+
+      - name: copy .bashrc config file to vagrant's home
+        copy: src=files/.bashrc dest={{ homedir }}/.bashrc
+
+      - name: copy mc ini config file to vagrant's home
+        copy: src=files/mc_ini dest={{ homedir }}/.config/mc/ini
+
+      - stat: path={{ outwiker_dir }}
+        register: outwiker_dir_stat

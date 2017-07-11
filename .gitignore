@@ -52,3 +52,5 @@ tests_win
 Thumbs.db
 tmp/
 serverinfo.py
+.vagrant
+*.retry
