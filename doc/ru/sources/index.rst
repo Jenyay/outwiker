@@ -5,7 +5,6 @@
    :maxdepth: 2
 
    pageformat
-   setup_py
    styles
    plugins
    version_format

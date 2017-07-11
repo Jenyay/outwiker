@@ -128,7 +128,7 @@
 
 #. Создается пустая папка для плагинов :file:`tmp/src/plugins`, если она не была создана.
 
-#. Создается бинарная сборка в :file:`tmp/outwiker_exe` (см. раздел :ref:`ru_fab_win_exe`).
+#. Создается бинарная сборка в :file:`tmp/outwiker_exe` (см. раздел :ref:`ru_fab_binary`).
 
 #. Удаляется и создается заново папка :file:`tmp/outwiker_exe/plugins`.
 
@@ -147,29 +147,16 @@
 #. Папка :file:`tmp/outwiker_exe` перемещается в :file:`build/{{номер версии}}/windows`.
 
 
-.. _ru_fab_win_exe:
+.. _ru_fab_binary:
 
 Создание бинарной сборки
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Самое важное, что делает команда :code:`fab win` - это создание запускаемого приложения под Windows, чтобы пользователям не требовалось устанавливать интерпретатор Python. Это осуществляется с помощью утилиты cx_Freeze_. Для создания запускаемых файлов под Windows используется скрипт `src/setup.py`_ (см. раздел :ref:`ru_setup_py`)
+Самое важное, что делает команды :code:`fab win` и :code:`fab linux_binary`- это создание запускаемых приложений под Windows и Linux соответственно, чтобы пользователям не требовалось устанавливать интерпретатор Python. Это осуществляется с помощью утилиты PyInstaller_.
 
-В результате выполнения данного скрипта будет создана папка :file:`build/outwiker_exe`, содержащая запускаемый файл :file:`outwiker.exe`, динамически загружаемую библиотеку с интерпретатором Python :file:`python27.dll`, архив :file:`library.zip`, содержащий необходимые Python-библиотеки, а также дополнительные файлы, необходимые для работы с библиотеками и папки, необходимые для работы OutWiker.
+В результате выполнения данного скрипта будет создана папка :file:`build/{version}/windows/outwiker_exe` (в Windows) или :file:`build/{version}/outwiker_linux/outwiker_exe` (в Linux), содержащая запускаемый файл :file:`outwiker.exe` (в Windows) или :file:`outwiker` (в Linux), а также дополнительные файлы, необходимые для работы с библиотеками, и папки, необходимые для работы OutWiker. Все необходимые модули PyInstaller помещает внутрь запускаемого файла (:file:`outwiker.exe` или :file:`outwiker`).
 
-.. image:: /_static/build/cx_freeze_files.png
-
-Содержимое :file:`library.zip` может выглядеть следующим образом:
-
-.. image:: /_static/build/cx_freeze_library.png
-
-.. warning::
-    В данный момент для сборки OutWiker под Windows используется cx_Freeze 4.3.3. В cx_Freeze 5.x возникла проблема с тем, что запускаемое приложение стало гарантированно виснуть при запуске. Пока проблема не решена, используется предыдущая версия cx_Freeze.
-
-
-.. note::
-    В cx_Freeze 5.0 изменился способ сохранения необходимых Python-библиотек, и по умолчанию они не архивируются в :file:`library.zip`. С помощью дополнительных параметров можно явно указать, какие библиотеки должны быть включены в :file:`library.zip`. Это нужно будет сделать, если решится проблема с зависаниями, описанная выше. В данный момент эти параметры закомментированы в файле :file:`src/setup.py` (см. раздел :ref:`ru_setup_py`).
-
-Подробное описание работы скрипта `src/setup.py`_ приводится в разделе :ref:`ru_setup_py`.
+За создание запускаемых файлов отвечают классы :class:`buildtools.builders.PyInstallerBuilderWindows` и :class:`buildtools.builders.PyInstallerBuilderLinux`, которые являются производными от :class:`buildtools.builders.BasePyInstallerBuilder`.
 
 
 .. _ru_build_linux:
@@ -270,6 +257,5 @@
 Если создается архив исходников как нестабильной версии, то создается файл :file:`outwiker-src-min-{{номер версии}}-unstable.zip`, который содержит минимально необходимый набор файлов, чтобы запустить OutWiker. Если создается архив стабильной версии, то этот файл будет называться :file:`outwiker-src-min-{{номер версии}}.zip`. Содержимое архивов в двух режимах сборки отличается только текстом файла :file:`versions.xml`.
 
 
-.. _cx_Freeze: https://anthony-tuininga.github.io/cx_Freeze/
+.. _PyInstaller: http://www.pyinstaller.org/
 .. _`Inno Setup`: http://www.jrsoftware.org
-.. _`src/setup.py`: https://github.com/Jenyay/outwiker/blob/master/src/setup.py
