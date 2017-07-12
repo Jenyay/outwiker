@@ -83,3 +83,10 @@ try:
     DEB_MAINTAINER_EMAIL = os.environ['DEBEMAIL']
 except KeyError:
     DEB_MAINTAINER_EMAIL = u'jenyay.ilin@gmail.com'
+
+
+# Paths to Vagrantfiles of fortual machines for build
+VM_BUILD_PATH_LIST = [
+    'need_for_build/virtual/build_machines/xenial_64',
+    'need_for_build/virtual/build_machines/xenial_32',
+]

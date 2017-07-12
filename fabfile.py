@@ -32,6 +32,7 @@ from buildtools.defines import (
     NEED_FOR_BUILD_DIR,
     PPA_UNSTABLE_PATH,
     PPA_STABLE_PATH,
+    VM_BUILD_PATH_LIST,
 )
 from buildtools.versions import (getOutwikerVersion,
                                  downloadAppInfo,
@@ -638,3 +639,23 @@ def prepare_virtual():
     '''
     with lcd(os.path.join(NEED_FOR_BUILD_DIR, u'virtual')):
         local(u'ansible-playbook virtual_prepare.yml -k --ask-sudo-pass')
+
+
+@task
+def vm_run():
+    '''
+    Run virtual machines for build.
+    '''
+    for path in VM_BUILD_PATH_LIST:
+        with(lcd(path)):
+            local(u'vagrant up')
+
+
+@task
+def vm_stop():
+    '''
+    Stop virtual machines for build.
+    '''
+    for path in VM_BUILD_PATH_LIST:
+        with(lcd(path)):
+            local(u'vagrant halt')
