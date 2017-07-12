@@ -647,15 +647,25 @@ def vm_run():
     Run virtual machines for build.
     '''
     for path in VM_BUILD_PATH_LIST:
-        with(lcd(path)):
+        with lcd(path):
             local(u'vagrant up')
 
 
-@task
+@task(alias='vm_halt')
 def vm_stop():
     '''
     Stop virtual machines for build.
     '''
     for path in VM_BUILD_PATH_LIST:
-        with(lcd(path)):
+        with lcd(path):
             local(u'vagrant halt')
+
+
+@task
+def vm_prepare():
+    '''
+    Prepare virtual machines for build,
+    '''
+    vm_run()
+    with lcd(u'need_for_build/virtual/build_machines'):
+        local(u'ansible-playbook prepare_build_machines.yml')

@@ -29,6 +29,7 @@
           - ibus-gtk3
           - debhelper
           - devscripts
+          - p7zip-full
         become: true
 
       - name: create directories for vagrant

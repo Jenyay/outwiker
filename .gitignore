@@ -54,4 +54,4 @@ tmp/
 serverinfo.py
 .vagrant
 *.retry
-.log
+*.log
