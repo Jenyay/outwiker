@@ -19,7 +19,7 @@ class BuilderLinuxBinary(BuilderBase):
         super(BuilderLinuxBinary, self).__init__(LINUX_BUILD_DIR, is_stable)
 
         self._archiveFullName = os.path.join(self.build_dir,
-                                             'outwiker_linux_unstable_x64.7z')
+                                             'outwiker_linux_bin.7z')
 
         self._create_archive = create_archive
         self._exe_path = os.path.join(self.build_dir, u'outwiker_exe')
