@@ -125,9 +125,6 @@ versions.xml
 runoutwiker.py
     Основной файл, запускающий OutWiker.
 
-setup.py
-    Скрипт, предназначенный для создания бинарной сборки OiutWiker с помощью cx_freeze_. Подробности см. в :ref:`ru_build_windows` и :ref:`ru_build_linux`.
-
 
 .. _ru_sources_struct_src:
 
@@ -164,5 +161,4 @@ utilites
 .. _yusukekamiyamane: http://p.yusukekamiyamane.com/
 .. _fatcow: http://www.fatcow.com/free-icons
 .. _gettext: http://ru.wikipedia.org/wiki/Gettext
-.. _cx_freeze: http://cx-freeze.sourceforge.net/
 .. _pyparsing: http://pyparsing.wikispaces.com/

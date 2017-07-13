@@ -39,5 +39,5 @@
 `comtypes <https://pypi.python.org/pypi/comtypes>`_ (1.1.3.post2)
     Используется для создания COM-объекта Internet Explorer в операционной системе Microsoft Windows. Под другими операционными системами не требуется.
 
-`cx_Freeze <https://pypi.python.org/pypi/cx_Freeze>`_ (4.3.3)
-    Используется для сборки запускаемого файла под Windows. На момент написания документации вышла cx_Freeze 5.0.1, но с этой версией возникли проблемы с запуском создаваемого файла outwiker.exe, поэтому на данный момент используется предыдущая версия.
+`PyInstaller <http://www.pyinstaller.org/>`_ (3.2.1)
+    Используется для сборки запускаемого файла под Windows.

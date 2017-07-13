@@ -7,7 +7,7 @@ from string import Template
 from fabric.api import local, lcd
 
 from .base import BuilderBase
-from buildtools.utilites import getPython
+from .binarybuilders import PyInstallerBuilderWindows
 from buildtools.defines import (WINDOWS_BUILD_DIR,
                                 PLUGINS_LIST,
                                 OUTWIKER_VERSIONS_FILENAME,
@@ -23,9 +23,9 @@ class BuilderWindows(BuilderBase):
     Build for Windows
     """
     def __init__(self,
-                 create_installer=True,
+                 is_stable=False,
                  create_archives=True,
-                 is_stable=False):
+                 create_installer=True):
         super(BuilderWindows, self).__init__(WINDOWS_BUILD_DIR, is_stable)
         self._create_installer = create_installer
         self._create_archives = create_archives
@@ -79,13 +79,14 @@ class BuilderWindows(BuilderBase):
 
     def _create_binary(self):
         """
-        Build with cx_Freeze
+        Build with PyInstaller
         """
-        with lcd(self.temp_sources_dir):
-            local(u'{python} setup.py build --build-exe "{builddir}"'.format(
-                python=getPython(),
-                builddir=self._executable_dir)
-            )
+        src_dir = self.temp_sources_dir
+        dest_dir = self._executable_dir
+        temp_dir = self.facts.temp_dir
+
+        builder = PyInstallerBuilderWindows(src_dir, dest_dir, temp_dir)
+        builder.build()
 
     def _create_plugins_dir(self):
         """

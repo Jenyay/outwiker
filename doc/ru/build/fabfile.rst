@@ -43,7 +43,7 @@
         deb_sources_included  Create files for uploading in PPA(including sources)
         deploy_unstable       Upload unstable version on the site
         doc
-        linux                 Assemble binary builds for Linux
+        linux_binary          Assemble binary builds for Linux
         linux_clear           Remove binary builds for Linux
         locale                Update the localization file(outwiker.pot)
         locale_plugin         Create or update the localization file for pluginname plug-in
@@ -98,7 +98,7 @@
 ------------------
 
 win
-    Сборка OutWiker под Windows с помощью cx_Freeze_, а также инсталятор с помощью `Inno Setup`_. Подробнее см. раздел :ref:`ru_build_windows`.
+    Сборка OutWiker под Windows с помощью PyInstaller_, а также инсталятор с помощью `Inno Setup`_. Подробнее см. раздел :ref:`ru_build_windows`.
 
 win_clear
     Удалить все, что создается с помощью команды `win`.
@@ -129,8 +129,8 @@ deb_single
 deb_clear
     Удалить все deb-пакеты.
 
-linux
-    Создать бинарную сборку под Linux с помощью cx_Freeze_.
+linux_binary
+    Создать бинарную сборку под Linux с помощью PyInstaller_.
 
 linux_clear
     Удалить созданную бинарную сборку под Linux.
@@ -234,5 +234,5 @@ sources_clear
 
 
 .. _Fabric: http://www.fabfile.org/
-.. _cx_Freeze: https://anthony-tuininga.github.io/cx_Freeze/
+.. _PyInstaller: http://www.pyinstaller.org/
 .. _`Inno Setup`: http://www.jrsoftware.org

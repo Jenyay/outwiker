@@ -1,0 +1,3 @@
+---
+homedir: "/home/ubuntu"
+outwiker_dir: "{{ homedir }}/projects/outwiker"

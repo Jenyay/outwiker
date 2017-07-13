@@ -32,6 +32,7 @@ from buildtools.defines import (
     NEED_FOR_BUILD_DIR,
     PPA_UNSTABLE_PATH,
     PPA_STABLE_PATH,
+    VM_BUILD_PATH_LIST,
 )
 from buildtools.versions import (getOutwikerVersion,
                                  downloadAppInfo,
@@ -198,11 +199,12 @@ def sources_clear():
 @task
 def win(is_stable=False, skipinstaller=False, skiparchives=False):
     """
-    Build assemblies under Windows
+    Build OutWiker for Windows with cx_Freeze
     """
-    builder = BuilderWindows(create_installer=not tobool(skipinstaller),
+    builder = BuilderWindows(is_stable=tobool(is_stable),
                              create_archives=not tobool(skiparchives),
-                             is_stable=tobool(is_stable))
+                             create_installer=not tobool(skipinstaller)
+                             )
     builder.build()
 
 
@@ -216,11 +218,13 @@ def win_clear():
 
 
 @task
-def linux(create_archive=True):
+def linux_binary(is_stable=False, skiparchives=False):
     """
     Assemble binary builds for Linux
     """
-    builder = BuilderLinuxBinary(create_archive=create_archive)
+    builder = BuilderLinuxBinary(is_stable=tobool(is_stable),
+                                 create_archive=not tobool(skiparchives)
+                                 )
     builder.build()
 
 
@@ -635,3 +639,33 @@ def prepare_virtual():
     '''
     with lcd(os.path.join(NEED_FOR_BUILD_DIR, u'virtual')):
         local(u'ansible-playbook virtual_prepare.yml -k --ask-sudo-pass')
+
+
+@task
+def vm_run():
+    '''
+    Run virtual machines for build.
+    '''
+    for path in VM_BUILD_PATH_LIST:
+        with lcd(path):
+            local(u'vagrant up')
+
+
+@task(alias='vm_halt')
+def vm_stop():
+    '''
+    Stop virtual machines for build.
+    '''
+    for path in VM_BUILD_PATH_LIST:
+        with lcd(path):
+            local(u'vagrant halt')
+
+
+@task
+def vm_prepare():
+    '''
+    Prepare virtual machines for build,
+    '''
+    vm_run()
+    with lcd(u'need_for_build/virtual/build_machines'):
+        local(u'ansible-playbook prepare_build_machines.yml')

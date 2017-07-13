@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import abc
 import os
@@ -63,7 +63,7 @@ class BuilderBase(object):
                 shutil.rmtree(path)
 
     def _copy_sources_to_temp(self):
-        print(u'Copy sources to {}'.format(self.temp_sources_dir))
+        print(u'Copying sources to {}...'.format(self.temp_sources_dir))
         shutil.copytree(u'src', self.temp_sources_dir)
 
     def _copy_versions_file(self):

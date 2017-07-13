@@ -6,7 +6,7 @@ import shutil
 from fabric.api import local, lcd
 
 from ..base import BuilderBase
-from .linuxbinary import BuilderLinuxBinary
+from ..linuxbinary import BuilderLinuxBinary
 from buildtools.defines import DEB_BINARY_BUILD_DIR
 from buildtools.versions import getOutwikerVersion
 
