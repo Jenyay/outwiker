@@ -290,24 +290,8 @@ class MarkdownTest(unittest.TestCase):
     import os
     import sys'''
 
-        right_result = u'''<pre><code>import os
-import sys
-</code></pre>'''
         result = self.__getHtmlByText(text)
-        self.assertIn(right_result, result)
-
-    def test_code_02(self):
-        text = u'''
-    tell application "Foo"
-        beep
-    end tell'''
-
-        right_result = u'''<pre><code>tell application "Foo"
-    beep
-end tell
-</code></pre>'''
-        result = self.__getHtmlByText(text)
-        self.assertIn(right_result, result)
+        self.assertIn(u'<div class="codehilite">', result)
 
     def test_code_03(self):
         text = u'''Use the `printf()` function.'''
