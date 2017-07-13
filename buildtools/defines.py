@@ -85,8 +85,16 @@ except KeyError:
     DEB_MAINTAINER_EMAIL = u'jenyay.ilin@gmail.com'
 
 
-# Paths to Vagrantfiles of fortual machines for build
-VM_BUILD_PATH_LIST = [
-    'need_for_build/virtual/build_machines/xenial_64',
-    'need_for_build/virtual/build_machines/xenial_32',
-]
+VM_BUILD_PARAMS = {
+    u'xenial_64': {
+        u'vagrant_path': 'need_for_build/virtual/build_machines/xenial_64',
+        u'host': u'192.168.100.64',
+        u'archive_suffix': u'_x64',
+    },
+
+    u'xenial_32': {
+        u'vagrant_path': 'need_for_build/virtual/build_machines/xenial_32',
+        u'host': u'192.168.100.32',
+        u'archive_suffix': u'_x86',
+    },
+}

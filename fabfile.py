@@ -32,7 +32,7 @@ from buildtools.defines import (
     NEED_FOR_BUILD_DIR,
     PPA_UNSTABLE_PATH,
     PPA_STABLE_PATH,
-    VM_BUILD_PATH_LIST,
+    VM_BUILD_PARAMS,
 )
 from buildtools.versions import (getOutwikerVersion,
                                  downloadAppInfo,
@@ -646,8 +646,8 @@ def vm_run():
     '''
     Run virtual machines for build.
     '''
-    for path in VM_BUILD_PATH_LIST:
-        with lcd(path):
+    for host_param in VM_BUILD_PARAMS.values():
+        with lcd(host_param[u'vagrant_path']):
             local(u'vagrant up')
 
 
@@ -656,9 +656,16 @@ def vm_stop():
     '''
     Stop virtual machines for build.
     '''
-    for path in VM_BUILD_PATH_LIST:
-        with lcd(path):
+    for host_param in VM_BUILD_PARAMS.values():
+        with lcd(host_param[u'vagrant_path']):
             local(u'vagrant halt')
+
+
+@task
+def vm_remove_keys():
+    for host_param in VM_BUILD_PARAMS.values():
+        host = host_param[u'host']
+        local(u'ssh-keygen -f ~/.ssh/known_hosts -R {}'.format(host))
 
 
 @task
