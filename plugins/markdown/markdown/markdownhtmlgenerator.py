@@ -8,14 +8,17 @@ from markdownparser.parser import Parser
 
 class MarkdownHtmlGenerator (object):
     """
-    Класс, который создает HTML для Markdown-страницы с учетом кэширования.
+    Class to convert Markdown to HTML code.
     """
     def __init__(self, page):
         self.page = page
 
     def makeHtml(self, stylepath):
-        head = u""
-        html = Parser().convert(self.page.content)
+        parser = Parser()
+        css = parser.getCSS()
+        head = u'<style>\n{}\n</style>'.format(css)
+
+        html = parser.convert(self.page.content)
         tpl = HtmlTemplate(readTextFile(stylepath))
         result = tpl.substitute(content=html, userhead=head)
         return result

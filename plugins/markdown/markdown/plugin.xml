@@ -26,6 +26,12 @@
 		</author>
 
 		<changelog>
+			<version number="1.3">
+                <download os="all">http://jenyay.net/Outwiker/Markdown/markdown-1.3.zip</download>
+				<change>Added code highlight.</change>
+				<change>Added tables syntax.</change>
+			</version>
+
 			<version number="1.2" date="February 24, 2017">
                 <download os="all">http://jenyay.net/Outwiker/Markdown/markdown-1.2.zip</download>
 				<change>Updated the Ukrainian localization.</change>
@@ -55,6 +61,12 @@
 		</author>
 
 		<changelog>
+			<version number="1.3">
+                <download os="all">http://jenyay.net/Outwiker/Markdown/markdown-1.3.zip</download>
+				<change>Добавлена раскраска кода.</change>
+				<change>Добавлена возможность вставки таблиц.</change>
+			</version>
+
 			<version number="1.2" date="24.02.2017">
                 <download os="all">http://jenyay.net/Outwiker/Markdown/markdown-1.2.zip</download>
 				<change>Обновлена украинская локализация.</change>
