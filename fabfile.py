@@ -676,3 +676,10 @@ def vm_prepare():
     vm_run()
     with lcd(u'need_for_build/virtual/build_machines'):
         local(u'ansible-playbook prepare_build_machines.yml')
+
+
+@task
+def vm_linux_binary():
+    vm_run()
+    with lcd(u'need_for_build/virtual/build_machines'):
+        local(u'ansible-playbook build_linux_binaries.yml')

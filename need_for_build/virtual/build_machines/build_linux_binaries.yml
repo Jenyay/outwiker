@@ -1,0 +1,41 @@
+---
+- name: Build linux binary assemblies
+  hosts: all
+  remote_user: ubuntu
+  vars_files:
+      - vars/common.yaml
+  vars:
+      sources_root: '../../../../'
+  environment:
+      PATH: "{{ ansible_env.PATH }}:{{homedir}}/.local/bin"
+  tasks:
+      - name: Remove old sources directory
+        file:
+            path: "{{ outwiker_dir }}"
+            state: "absent"
+
+      - name: Create directories for sources
+        file:
+            path: "{{ outwiker_dir }}"
+            state: "directory"
+
+      - name: Upload sources
+        synchronize:
+            src: "{{ sources_root }}"
+            dest: "{{ outwiker_dir }}"
+            rsync_opts:
+                - "--exclude=.git"
+                - "--exclude=.ropeproject"
+                - "--exclude=build"
+
+      - name: Install Python modules
+        pip: chdir={{ outwiker_dir }} requirements={{ item }}
+        with_items:
+            - "requirements.txt"
+            - "requirements_dev.txt"
+
+      - name: Build binary assembly
+        command: fab linux_binary
+        args:
+            chdir: "{{ outwiker_dir }}"
+

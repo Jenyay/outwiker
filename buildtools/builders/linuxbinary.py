@@ -60,7 +60,7 @@ class BuilderLinuxBinary(BuilderBase):
     def _build_archive(self):
         # Create archive without plugins
         with lcd(self._exe_path):
-            local("7z a ../outwiker_linux_unstable_x64.7z ./* ./plugins -r -aoa")
+            local('7z a "{}" ./* ./plugins -r -aoa'.format(self._archiveFullName))
 
     def _copy_necessary_files(self):
         shutil.copy(u'copyright.txt', self.facts.temp_dir)

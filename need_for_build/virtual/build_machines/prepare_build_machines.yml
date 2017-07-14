@@ -30,6 +30,7 @@
           - debhelper
           - devscripts
           - p7zip-full
+          - libssl-dev
         become: true
 
       - name: create directories for vagrant
@@ -46,3 +47,8 @@
 
       - stat: path={{ outwiker_dir }}
         register: outwiker_dir_stat
+
+      - name: Upgrade pip
+        pip:
+            name: pip
+
