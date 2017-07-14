@@ -37,7 +37,7 @@ PLUGINS_LIST = [
 ]
 
 BUILD_DIR = u'build'
-LINUX_BUILD_DIR = u"outwiker_linux"
+LINUX_BUILD_DIR = u"linux"
 WINDOWS_BUILD_DIR = u"windows"
 WINDOWS_EXECUTABLE_DIR = u"outwiker_exe"
 WINDOWS_INSTALLER_FILENAME = u"outwiker_win_unstable.exe"
@@ -86,15 +86,23 @@ except KeyError:
 
 
 VM_BUILD_PARAMS = {
-    u'xenial_64': {
-        u'vagrant_path': 'need_for_build/virtual/build_machines/xenial_64',
-        u'host': u'192.168.100.64',
-        u'archive_suffix': u'_x64',
+    # u'xenial_64': {
+    #     u'vagrant_path': 'need_for_build/virtual/build_machines/xenial_64',
+    #     u'host': u'192.168.100.64',
+    # },
+    #
+    # u'xenial_32': {
+    #     u'vagrant_path': 'need_for_build/virtual/build_machines/xenial_32',
+    #     u'host': u'192.168.100.32',
+    # },
+
+    u'zesty_64': {
+        u'vagrant_path': 'need_for_build/virtual/build_machines/zesty_64',
+        u'host': u'192.168.101.64',
     },
 
-    u'xenial_32': {
-        u'vagrant_path': 'need_for_build/virtual/build_machines/xenial_32',
-        u'host': u'192.168.100.32',
-        u'archive_suffix': u'_x86',
+    u'zesty_32': {
+        u'vagrant_path': 'need_for_build/virtual/build_machines/zesty_32',
+        u'host': u'192.168.101.32',
     },
 }

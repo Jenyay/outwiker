@@ -1,11 +1,12 @@
 ---
 - name: Build linux binary assemblies
-  hosts: all
+  hosts: zesty
   remote_user: ubuntu
   vars_files:
-      - vars/common.yaml
+      - vars/common.yml
   vars:
-      sources_root: '../../../../'
+      sources_root: "../../../../"
+      result_path: "{{ outwiker_dir }}/build/{{ version }}/linux"
   environment:
       PATH: "{{ ansible_env.PATH }}:{{homedir}}/.local/bin"
   tasks:
@@ -29,13 +30,24 @@
                 - "--exclude=build"
 
       - name: Install Python modules
-        pip: chdir={{ outwiker_dir }} requirements={{ item }}
+        pip: chdir={{ outwiker_dir }} requirements={{ item }} extra_args="--user"
         with_items:
             - "requirements.txt"
             - "requirements_dev.txt"
 
       - name: Build binary assembly
-        command: fab linux_binary
+        command: fab linux_binary:{{ is_stable }}
         args:
             chdir: "{{ outwiker_dir }}"
 
+      - name: Rename result archive
+        copy:
+            src: "{{ outwiker_dir }}/build/{{ version }}/linux/outwiker_linux_bin.7z"
+            dest: "{{ result_path }}/outwiker_linux{{ suffix }}.7z"
+            remote_src: true
+
+      - name: Download result archive
+        fetch:
+            src: "{{ result_path }}/outwiker_linux{{ suffix }}.7z"
+            dest: "{{ save_to }}/"
+            flat: true

@@ -1,15 +1,15 @@
 ---
 - name: Configure virtual machine for OutWiker build
-  hosts: all
+  hosts: zesty
   remote_user: ubuntu
   vars_files:
-      - vars/common.yaml
+      - vars/common.yml
   tasks:
       - name: upgrade software
         apt: update_cache=yes upgrade=dist
         become: true
 
-      - name: install software
+      - name: Install common software
         apt: name={{ item }}
         with_items:
           - mc
@@ -31,6 +31,11 @@
           - devscripts
           - p7zip-full
           - libssl-dev
+        become: true
+
+      - name: Install additional software
+        apt: name={{ item }}
+        with_items: "{{ additional_soft | default([]) }}"
         become: true
 
       - name: create directories for vagrant

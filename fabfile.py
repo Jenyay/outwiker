@@ -33,6 +33,7 @@ from buildtools.defines import (
     PPA_UNSTABLE_PATH,
     PPA_STABLE_PATH,
     VM_BUILD_PARAMS,
+    LINUX_BUILD_DIR
 )
 from buildtools.versions import (getOutwikerVersion,
                                  downloadAppInfo,
@@ -679,7 +680,21 @@ def vm_prepare():
 
 
 @task
-def vm_linux_binary():
+def vm_linux_binary(is_stable=0):
     vm_run()
+    version = getOutwikerVersion()
+    version_str = u'{}.{}'.format(version[0], version[1])
+
+    path_to_result = os.path.abspath(
+        os.path.join(BUILD_DIR, version_str, LINUX_BUILD_DIR)
+    )
+
+    if not os.path.exists(path_to_result):
+        os.makedirs(path_to_result)
+
     with lcd(u'need_for_build/virtual/build_machines'):
-        local(u'ansible-playbook build_linux_binaries.yml')
+        local(u'ansible-playbook build_linux_binaries.yml --extra-vars "version={version} save_to={save_to} is_stable={is_stable}"'.format(
+            version=version_str,
+            save_to=path_to_result,
+            is_stable=is_stable)
+        )
