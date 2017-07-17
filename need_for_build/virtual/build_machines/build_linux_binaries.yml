@@ -40,14 +40,23 @@
         args:
             chdir: "{{ outwiker_dir }}"
 
-      - name: Rename result archive
+      - name: Rename result archive (7z)
         copy:
             src: "{{ outwiker_dir }}/build/{{ version }}/linux/outwiker_linux_bin.7z"
             dest: "{{ result_path }}/outwiker_linux{{ suffix }}.7z"
             remote_src: true
 
-      - name: Download result archive
+      - name: Rename result archive (zip)
+        copy:
+            src: "{{ outwiker_dir }}/build/{{ version }}/linux/outwiker_linux_bin.zip"
+            dest: "{{ result_path }}/outwiker_linux{{ suffix }}.zip"
+            remote_src: true
+
+      - name: Download result archives
         fetch:
-            src: "{{ result_path }}/outwiker_linux{{ suffix }}.7z"
+            src: "{{ item }}"
             dest: "{{ save_to }}/"
             flat: true
+        with_items:
+            - "{{ result_path }}/outwiker_linux{{ suffix }}.7z"
+            - "{{ result_path }}/outwiker_linux{{ suffix }}.zip"

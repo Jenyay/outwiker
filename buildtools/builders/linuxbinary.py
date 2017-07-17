@@ -18,8 +18,10 @@ class BuilderLinuxBinary(BuilderBase):
     def __init__(self, create_archive=True, is_stable=False):
         super(BuilderLinuxBinary, self).__init__(LINUX_BUILD_DIR, is_stable)
 
-        self._archiveFullName = os.path.join(self.build_dir,
-                                             'outwiker_linux_bin.7z')
+        self._archiveFullName_7z = os.path.join(self.build_dir,
+                                                'outwiker_linux_bin.7z')
+        self._archiveFullName_zip = os.path.join(self.build_dir,
+                                                 'outwiker_linux_bin.zip')
 
         self._create_archive = create_archive
         self._exe_path = os.path.join(self.build_dir, u'outwiker_exe')
@@ -55,12 +57,14 @@ class BuilderLinuxBinary(BuilderBase):
 
     def clear(self):
         super(BuilderLinuxBinary, self).clear()
-        self._remove(self._archiveFullName)
+        self._remove(self._archiveFullName_7z)
+        self._remove(self._archiveFullName_zip)
 
     def _build_archive(self):
         # Create archive without plugins
         with lcd(self._exe_path):
-            local('7z a "{}" ./* ./plugins -r -aoa'.format(self._archiveFullName))
+            local('7z a "{}" ./* ./plugins -r -aoa'.format(self._archiveFullName_7z))
+            local('7z a "{}" ./* ./plugins -r -aoa'.format(self._archiveFullName_zip))
 
     def _copy_necessary_files(self):
         shutil.copy(u'copyright.txt', self.facts.temp_dir)
