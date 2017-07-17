@@ -10,23 +10,30 @@ class FontsFactory(object):
     @staticmethod
     def makeItalic():
         """
-        Создать токен для курсивного шрифта
+        Create token for italic font
         """
         return ItalicToken().getToken()
 
     @staticmethod
     def makeBold():
         """
-        Создать токен для полужирного шрифта
+        Create token for bold font
         """
         return BoldToken().getToken()
 
     @staticmethod
     def makeBoldItalic():
         """
-        Создать токен для полужирного курсивного шрифта
+        Create token for bold italic font
         """
         return BoldItalicToken().getToken()
+
+    @staticmethod
+    def makeCode():
+        """
+        Create token for the code block
+        """
+        return CodeToken().getToken()
 
 
 class BlockToken(object):
@@ -80,3 +87,14 @@ class BoldItalicToken(BlockToken):
                             endQuoteChar=BoldItalicToken.end,
                             multiline=True,
                             convertWhitespaceEscapes=False).addCondition(self.checkBreaks)("bold_italic")
+
+
+class CodeToken(BlockToken):
+    start = "```"
+    end = "```"
+
+    def getToken(self):
+        return QuotedString(CodeToken.start,
+                            endQuoteChar=CodeToken.end,
+                            multiline=True,
+                            convertWhitespaceEscapes=False)("code")

@@ -24,6 +24,7 @@ class MarkdownColorizer(object):
         self.bold_italic = FontsFactory.makeBoldItalic()
         self.heading = HeadingFactory.make()
         self.link = LinkFactory.make()
+        self.code = FontsFactory.makeCode()
 
         if colorizeSyntax:
             self.colorParser = (
@@ -32,7 +33,8 @@ class MarkdownColorizer(object):
                 self.link |
                 self.bold_italic |
                 self.bold |
-                self.italic
+                self.italic |
+                self.code
             )
 
             self.insideBlockParser = (
@@ -141,6 +143,12 @@ class MarkdownColorizer(object):
                                             pos_start,
                                             pos_end,
                                             token)
+
+            elif tokenname == "code":
+                self._helper.addStyle(stylelist,
+                                      self._editor.STYLE_COMMAND_ID,
+                                      bytepos_start,
+                                      bytepos_end)
 
     def _linkSpellChecking(self, fullText, text, stylelist,
                            pos_start, pos_end, token):
