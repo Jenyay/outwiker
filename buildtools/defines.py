@@ -86,16 +86,6 @@ except KeyError:
 
 
 VM_BUILD_PARAMS = {
-    # u'xenial_64': {
-    #     u'vagrant_path': 'need_for_build/virtual/build_machines/xenial_64',
-    #     u'host': u'192.168.100.64',
-    # },
-    #
-    # u'xenial_32': {
-    #     u'vagrant_path': 'need_for_build/virtual/build_machines/xenial_32',
-    #     u'host': u'192.168.100.32',
-    # },
-
     u'zesty_64': {
         u'vagrant_path': 'need_for_build/virtual/build_machines/zesty_64',
         u'host': u'192.168.101.64',

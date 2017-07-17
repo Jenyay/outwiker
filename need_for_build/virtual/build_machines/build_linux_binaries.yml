@@ -1,6 +1,6 @@
 ---
 - name: Build linux binary assemblies
-  hosts: zesty
+  hosts: all
   remote_user: ubuntu
   vars_files:
       - vars/common.yml

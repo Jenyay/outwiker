@@ -1,7 +1,3 @@
-[xenial]
-xenial_64 ansible_host=192.168.100.64 ansible_port=22 ansible_ssh_private_key_file="xenial_64/.vagrant/machines/default/virtualbox/private_key"
-xenial_32 ansible_host=192.168.100.32 ansible_port=22 ansible_ssh_private_key_file="xenial_32/.vagrant/machines/default/virtualbox/private_key"
-
 [zesty]
 zesty_64 ansible_host=192.168.101.64 ansible_port=22 ansible_ssh_private_key_file="zesty_64/.vagrant/machines/default/virtualbox/private_key"
 zesty_32 ansible_host=192.168.101.32 ansible_port=22 ansible_ssh_private_key_file="zesty_32/.vagrant/machines/default/virtualbox/private_key"

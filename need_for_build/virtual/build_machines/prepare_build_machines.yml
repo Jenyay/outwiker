@@ -1,6 +1,6 @@
 ---
 - name: Configure virtual machine for OutWiker build
-  hosts: zesty
+  hosts: all
   remote_user: ubuntu
   vars_files:
       - vars/common.yml
@@ -25,7 +25,6 @@
           - python-enchant
           - python-appindicator
           - python-gtk2
-          # - python-wxgtk-webview3.0
           - ibus-gtk3
           - debhelper
           - devscripts
