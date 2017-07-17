@@ -38,6 +38,8 @@ class BaseBinaryBuilder(object):
             'pydoc',
             'xmlrpclib',
             'test',
+            'bz2',
+            'cffi',
             'PIL.SunImagePlugin',
             'PIL.IptcImagePlugin',
             'PIL.McIdasImagePlugin',
@@ -154,4 +156,14 @@ class PyInstallerBuilderWindows(BasePyInstallerBuilder):
 
 
 class PyInstallerBuilderLinux(BasePyInstallerBuilder):
-    pass
+    def get_remove_list(self):
+        return [
+            u'lib',
+            u'include',
+            u'_codecs_cn.so',
+            u'_codecs_hk.so',
+            u'_codecs_iso2022.so',
+            u'_codecs_jp.so',
+            u'_codecs_kr.so',
+            u'_codecs_tw.so',
+        ]
