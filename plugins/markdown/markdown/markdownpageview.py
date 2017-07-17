@@ -58,7 +58,7 @@ class MarkdownPageView(BaseWikiPageView):
             HEADING_5_STR_ID,
             HEADING_6_STR_ID,
             # PREFORMAT_STR_ID,
-            # CODE_STR_ID,
+            CODE_STR_ID,
             HORLINE_STR_ID,
             LINK_STR_ID,
             IMAGE_STR_ID,
@@ -261,6 +261,17 @@ class MarkdownPageView(BaseWikiPageView):
             CURRENT_DATE,
             toolbar,
             os.path.join(self.imagesDir, "date.png"),
+            fullUpdate=False)
+
+        # Code block
+        actionController.getAction(CODE_STR_ID).setFunc(
+            lambda param: self.turnText(u"```\n", u"\n```"))
+
+        actionController.appendMenuItem(CODE_STR_ID, menu)
+        actionController.appendToolbarButton(
+            CODE_STR_ID,
+            toolbar,
+            os.path.join(self.imagesDir, "code.png"),
             fullUpdate=False)
 
         self.toolsMenu.AppendSeparator()

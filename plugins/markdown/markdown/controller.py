@@ -16,11 +16,11 @@ from .markdownpage import MarkdownPageFactory, MarkdownPage
 from .i18n import get_
 
 
-class Controller (object):
+class Controller(object):
     """
     Класс отвечает за основную работу интерфейса плагина
     """
-    def __init__ (self, plugin, application):
+    def __init__(self, plugin, application):
         """
         """
         self._plugin = plugin
@@ -33,7 +33,7 @@ class Controller (object):
             self._application,
             MarkdownPage.getTypeString())
 
-    def initialize (self):
+    def initialize(self):
         """
         Инициализация контроллера при активации плагина. Подписка на нужные события
         """
@@ -48,11 +48,11 @@ class Controller (object):
         self._application.onPageDialogDestroy += self.__onPageDialogDestroy
         self._application.onPageUpdateNeeded += self.__onPageUpdateNeeded
 
-    def clear (self):
+    def clear(self):
         """
         Вызывается при отключении плагина
         """
-        FactorySelector.removeFactory (MarkdownPageFactory().getTypeString())
+        FactorySelector.removeFactory(MarkdownPageFactory().getTypeString())
         self._application.onPageDialogPageFactoriesNeeded -= self.__onPageDialogPageFactoriesNeeded
         self._application.onPageViewCreate -= self.__onPageViewCreate
         self._application.onPageViewDestroy -= self.__onPageViewDestroy
@@ -60,8 +60,8 @@ class Controller (object):
         self._application.onPageDialogDestroy -= self.__onPageDialogDestroy
         self._application.onPageUpdateNeeded -= self.__onPageUpdateNeeded
 
-    def __onPageDialogPageFactoriesNeeded (self, page, params):
-        params.addPageFactory (MarkdownPageFactory())
+    def __onPageDialogPageFactoriesNeeded(self, page, params):
+        params.addPageFactory(MarkdownPageFactory())
 
     @pagetype(MarkdownPage)
     def __onPageViewCreate(self, page):
