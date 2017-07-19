@@ -4,7 +4,7 @@ import abc
 import os
 import shutil
 
-from buildtools.defines import BUILD_DIR, OUTWIKER_VERSIONS_FILENAME
+from buildtools.defines import OUTWIKER_VERSIONS_FILENAME
 from buildtools.buildfacts import BuildFacts
 
 
@@ -17,7 +17,7 @@ class BuilderBase(object):
     def __init__(self, subdir_name, is_stable=False):
         self.is_stable = is_stable
 
-        self.facts = BuildFacts(BUILD_DIR)
+        self.facts = BuildFacts()
         self.build_dir = os.path.join(self.facts.version_dir, subdir_name)
         self.temp_sources_dir = os.path.join(self.facts.temp_dir, u'src')
 
@@ -73,7 +73,7 @@ class BuilderBase(object):
 
         shutil.copy(
             os.path.join(u'src', src_versions_name),
-            os.path.join(self.facts.version_dir, OUTWIKER_VERSIONS_FILENAME))
+            self.facts.versions_file)
 
         shutil.copy(
             os.path.join(u'src', src_versions_name),

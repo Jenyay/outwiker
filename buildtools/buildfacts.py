@@ -2,16 +2,44 @@
 
 import os.path
 
-from buildtools.versions import getOutwikerVersion
+from buildtools.versions import getOutwikerVersionStr
+import defines
 
 
 class BuildFacts(object):
-    def __init__(self, root_dir):
-        self.root_dir = os.path.abspath(root_dir)
+    def __init__(self):
+        # x.x.x.xxx
+        self.version = getOutwikerVersionStr()
 
-        self.version_items = getOutwikerVersion()
-        self.version = self.version_items[0] + u'.' + self.version_items[1]
+        # build/
+        self.root_dir = os.path.abspath(defines.BUILD_DIR)
 
+        # build/x.x.x.xxx/
         self.version_dir = os.path.join(self.root_dir, self.version)
 
+        # build/x.x.x.xxx/windows/
+        self.build_dir_windows = os.path.join(self.version_dir,
+                                              defines.WINDOWS_BUILD_DIR)
+
+        # build/x.x.x.xxx/linux/
+        self.build_dir_linux = os.path.join(self.version_dir,
+                                            defines.LINUX_BUILD_DIR)
+
+        # build/x.x.x.xxx/versions.xml
+        self.versions_file = os.path.join(self.version_dir,
+                                          defines.OUTWIKER_VERSIONS_FILENAME)
+
+        # build/tmp/
         self.temp_dir = os.path.join(self.root_dir, u'tmp')
+
+        # need_for_build/
+        self.need_for_build = os.path.abspath(defines.NEED_FOR_BUILD_DIR)
+
+        # need_for_build/windows
+        self.nfb_win = os.path.join(self.need_for_build, u'windows')
+
+        # need_for_build/linux
+        self.nfb_linux = os.path.join(self.need_for_build, u'linux')
+
+        # need_for_build/virtual
+        self.nfb_virtual = os.path.join(self.need_for_build, u'virtual')

@@ -43,6 +43,14 @@ def getOutwikerVersion():
     return (version_major, version_build)
 
 
+def getOutwikerVersionStr():
+    '''
+    Return version as "x.x.x.xxx" string
+    '''
+    version = getOutwikerVersion()
+    return u'{}.{}'.format(version[0], version[1])
+
+
 def getLocalAppInfoList():
     """
     Return AppInfo list for OutWiker and plug-ins.

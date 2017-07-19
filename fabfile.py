@@ -12,6 +12,7 @@ import shutil
 
 from fabric.api import local, lcd, settings, task, cd, put, hosts
 from buildtools.libs.colorama import Fore
+from buildtools.buildfacts import BuildFacts
 
 from buildtools.utilites import (getPython,
                                  execute,
@@ -28,7 +29,8 @@ from buildtools.defines import (
     PLUGIN_VERSIONS_FILENAME,
     FILES_FOR_UPLOAD_UNSTABLE_WIN,
     FILES_FOR_UPLOAD_STABLE_WIN,
-    OUTWIKER_VERSIONS_FILENAME,
+    FILES_FOR_UPLOAD_UNSTABLE_LINUX,
+    FILES_FOR_UPLOAD_STABLE_LINUX,
     NEED_FOR_BUILD_DIR,
     PPA_UNSTABLE_PATH,
     PPA_STABLE_PATH,
@@ -36,9 +38,9 @@ from buildtools.defines import (
     LINUX_BUILD_DIR
 )
 from buildtools.versions import (getOutwikerVersion,
+                                 getOutwikerVersionStr,
                                  downloadAppInfo,
                                  getLocalAppInfoList,
-                                 readAppInfo,
                                  )
 from buildtools.contentgenerators import (SiteChangelogGenerator,
                                           SitePluginsTableGenerator)
@@ -67,7 +69,6 @@ try:
                                        DEPLOY_STABLE_PATH,
                                        DEPLOY_HOME_PATH,
                                        DEPLOY_SITE,
-                                       PATH_TO_WINDOWS_DISTRIBS,
                                        DEPLOY_PLUGINS_PACK_PATH,
                                        )
 except ImportError:
@@ -78,11 +79,10 @@ except ImportError:
                                        DEPLOY_STABLE_PATH,
                                        DEPLOY_HOME_PATH,
                                        DEPLOY_SITE,
-                                       PATH_TO_WINDOWS_DISTRIBS,
                                        DEPLOY_PLUGINS_PACK_PATH,
                                        )
 
-# env.hosts = [DEPLOY_SERVER_NAME]
+from buildtools.uploaders import BinaryUploader
 
 
 @task
@@ -454,19 +454,19 @@ def upload_plugin(*args):
     if len(args) == 0:
         args = PLUGINS_LIST
 
-    version = getOutwikerVersion()
+    version_str = getOutwikerVersionStr()
 
     for pluginname in args:
-        path_to_plugin_local = os.path.join(
-            BUILD_DIR,
-            u'{}.{}'.format(version[0], version[1]),
-            PLUGINS_DIR,
-            pluginname)
+        path_to_plugin_local = os.path.join(BUILD_DIR,
+                                            version_str,
+                                            PLUGINS_DIR,
+                                            pluginname)
 
         if not os.path.exists(path_to_plugin_local):
             continue
 
-        path_to_xml_local = os.path.join(path_to_plugin_local, PLUGIN_VERSIONS_FILENAME)
+        path_to_xml_local = os.path.join(path_to_plugin_local,
+                                         PLUGIN_VERSIONS_FILENAME)
 
         xml_content_local = readTextFile(path_to_xml_local)
         appinfo_local = XmlVersionParser().parse(xml_content_local)
@@ -497,68 +497,44 @@ def upload_plugin(*args):
     site_versions()
 
 
-def _upload_win_versions(files_for_upload_win, deploy_path):
-    version = getOutwikerVersion()
-    version_dir = u'{}.{}'.format(version[0], version[1])
-
-    versions = os.path.join(PATH_TO_WINDOWS_DISTRIBS,
-                            version_dir,
-                            OUTWIKER_VERSIONS_FILENAME)
-
-    upload_path = os.path.join(PATH_TO_WINDOWS_DISTRIBS, version_dir)
-
-    upload_files = map(lambda item: os.path.join(upload_path, item),
-                       files_for_upload_win)
-
-    upload_files = upload_files + [versions]
-
-    for fname in upload_files:
-        print(u'Checking {}'.format(fname))
-        assert os.path.exists(fname)
-
-    print('Checking versions')
-    newOutWikerAppInfo = readAppInfo(versions)
-    print('Download {}'.format(newOutWikerAppInfo.updatesUrl))
-    try:
-        prevOutWikerAppInfo = downloadAppInfo(newOutWikerAppInfo.updatesUrl)
-
-        if newOutWikerAppInfo.currentVersion < prevOutWikerAppInfo.currentVersion:
-            print(Fore.RED + 'Error. New version < Prev version')
-            sys.exit(1)
-        elif newOutWikerAppInfo.currentVersion == prevOutWikerAppInfo.currentVersion:
-            print(Fore.RED + 'Warning: Uploaded the same version')
-    except urllib2.HTTPError:
-        pass
-
-    print('Uploading...')
-    for fname in upload_files:
-        with cd(deploy_path):
-            basename = os.path.basename(fname)
-            put(fname, basename)
-
-
 @hosts(DEPLOY_SERVER_NAME)
 @task
-def upload_win_stable():
+def upload_binary_stable():
     """
     Upload stable version on the site
     """
-    version = getOutwikerVersion()
-    files_for_upload_win = [fname.format(version=version[0])
-                            for fname in FILES_FOR_UPLOAD_STABLE_WIN]
+    facts = BuildFacts()
+
+    win_tpl_files = FILES_FOR_UPLOAD_STABLE_WIN
+    linux_tpl_files = FILES_FOR_UPLOAD_STABLE_LINUX
+    versions_file = facts.versions_file
     deploy_path = DEPLOY_STABLE_PATH
-    _upload_win_versions(files_for_upload_win, deploy_path)
+
+    binary_uploader = BinaryUploader(win_tpl_files,
+                                     linux_tpl_files,
+                                     versions_file,
+                                     deploy_path)
+    binary_uploader.deploy()
 
 
 @hosts(DEPLOY_SERVER_NAME)
 @task
-def upload_win_unstable():
+def upload_binary_unstable():
     """
     Upload unstable version on the site
     """
-    files_for_upload_win = FILES_FOR_UPLOAD_UNSTABLE_WIN
+    facts = BuildFacts()
+
+    win_tpl_files = FILES_FOR_UPLOAD_UNSTABLE_WIN
+    linux_tpl_files = FILES_FOR_UPLOAD_UNSTABLE_LINUX
+    versions_file = facts.versions_file
     deploy_path = DEPLOY_UNSTABLE_PATH
-    _upload_win_versions(files_for_upload_win, deploy_path)
+
+    binary_uploader = BinaryUploader(win_tpl_files,
+                                     linux_tpl_files,
+                                     versions_file,
+                                     deploy_path)
+    binary_uploader.deploy()
 
 
 @hosts(DEPLOY_SERVER_NAME)
@@ -589,7 +565,7 @@ def deploy_unstable():
 
     deb_path = deb_sources_included(is_stable)
     _ppa_upload(ppa_path, deb_path)
-    upload_win_unstable()
+    upload_binary_unstable()
 
 
 @hosts(DEPLOY_SERVER_NAME)
@@ -604,7 +580,7 @@ def deploy_stable():
 
     deb_path = deb_sources_included(is_stable)
     _ppa_upload(ppa_path, deb_path)
-    upload_win_stable()
+    upload_binary_stable()
 
 
 @task(alias='apiversions')
@@ -682,8 +658,7 @@ def vm_prepare():
 @task
 def vm_linux_binary(is_stable=0):
     vm_run()
-    version = getOutwikerVersion()
-    version_str = u'{}.{}'.format(version[0], version[1])
+    version_str = getOutwikerVersionStr()
 
     path_to_result = os.path.abspath(
         os.path.join(BUILD_DIR, version_str, LINUX_BUILD_DIR)
