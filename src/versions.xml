@@ -7,8 +7,8 @@
 		<website>http://jenyay.net/Outwiker/UnstableEn</website>
 
 		<changelog>
-			<version number="2.1.0.823" status="dev">
-				<change>First unstable version of OutWiker 2.1</change>
+			<version number="2.1.0.824" status="dev">
+				<change>Created binary assembly for Linux.</change>
 			</version>
 		</changelog>
 	</data>
@@ -17,8 +17,8 @@
 		<website>http://jenyay.net/Outwiker/Unstable</website>
 
 		<changelog>
-			<version number="2.1.0.823" status="dev">
-				<change>Первая нестабильная версия OutWiker 2.1</change>
+			<version number="2.1.0.824" status="dev">
+				<change>Созданы бинарные сборки для Linux.</change>
 			</version>
 		</changelog>
 	</data>
