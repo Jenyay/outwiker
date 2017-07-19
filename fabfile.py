@@ -559,6 +559,7 @@ def deploy_unstable():
     ppa_path = PPA_UNSTABLE_PATH
     is_stable = False
 
+    vm_linux_binary(False)
     plugins(True)
     upload_plugin()
     upload_plugins_pack()
@@ -578,6 +579,7 @@ def deploy_stable():
     ppa_path = PPA_STABLE_PATH
     is_stable = True
 
+    vm_linux_binary(True)
     deb_path = deb_sources_included(is_stable)
     _ppa_upload(ppa_path, deb_path)
     upload_binary_stable()
