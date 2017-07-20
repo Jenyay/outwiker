@@ -7,7 +7,7 @@
 		<website>http://jenyay.net/Outwiker/UnstableEn</website>
 
 		<changelog>
-			<version number="2.1.0.824" status="dev">
+			<version number="2.1.0.824" status="dev" date="July 21, 2017">
 				<change>Created binary assembly for Linux.</change>
 			</version>
 		</changelog>
@@ -17,7 +17,7 @@
 		<website>http://jenyay.net/Outwiker/Unstable</website>
 
 		<changelog>
-			<version number="2.1.0.824" status="dev">
+			<version number="2.1.0.824" status="dev" date="21.07.2017">
 				<change>Созданы бинарные сборки для Linux.</change>
 			</version>
 		</changelog>
