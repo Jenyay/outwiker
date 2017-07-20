@@ -46,6 +46,7 @@ class BaseBinaryBuilder(object):
             'PIL.DdsImagePlugin',
             'PIL.FpxImagePlugin',
             'PIL.PixarImagePlugin',
+            'bsddb',
         ]
 
     def get_includes(self):
@@ -152,6 +153,18 @@ class PyInstallerBuilderWindows(BasePyInstallerBuilder):
             u'mfc90u.dll',
             u'mfcm90.dll',
             u'mfcm90u.dll',
+            u'Include',
+            u'Microsoft.VC90.MFC.manifest',
+            u'iconv.dll',
+            u'_win32sysloader.pyd',
+            u'_winxptheme.pyd',
+            u'win32com.shell.shell.pyd',
+            u'win32pipe.pyd',
+            u'win32trace.pyd',
+            u'win32wnet.pyd',
+            u'enchant/iconv.dll',
+            u'enchant/share',
+            u'enchant/lib/enchant/README.txt',
         ]
 
 
