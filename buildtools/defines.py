@@ -4,7 +4,7 @@ import os
 
 
 # Supported Ubuntu releases
-UBUNTU_RELEASE_NAMES = [u"xenial", "yakkety", "zesty"]
+UBUNTU_RELEASE_NAMES = [u"xenial", "zesty"]
 
 # List of the supported plugins
 PLUGINS_LIST = [
