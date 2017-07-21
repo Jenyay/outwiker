@@ -550,6 +550,12 @@ def upload_plugins_pack():
         put(pack_path, basename)
 
 
+def _add_git_tag(tagname):
+    local(u'git checkout master')
+    local(u'git tag {}'.format(tagname))
+    local(u'git push --tags')
+
+
 @hosts(DEPLOY_SERVER_NAME)
 @task
 def deploy_unstable():
@@ -568,6 +574,11 @@ def deploy_unstable():
     _ppa_upload(ppa_path, deb_path)
     upload_binary_unstable()
 
+    version_str = getOutwikerVersionStr()
+    tagname = u'unstable_{}'.format(version_str)
+
+    _add_git_tag(tagname)
+
 
 @hosts(DEPLOY_SERVER_NAME)
 @task
@@ -583,6 +594,11 @@ def deploy_stable():
     deb_path = deb_sources_included(is_stable)
     _ppa_upload(ppa_path, deb_path)
     upload_binary_stable()
+
+    version_str = getOutwikerVersionStr()
+    tagname = u'release_{}'.format(version_str)
+
+    _add_git_tag(tagname)
 
 
 @task(alias='apiversions')
