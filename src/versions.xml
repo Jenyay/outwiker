@@ -7,6 +7,11 @@
 		<website>http://jenyay.net/Outwiker/UnstableEn</website>
 
 		<changelog>
+			<version number="2.1.0.825" status="dev">
+			</version>
+		</changelog>
+
+		<changelog>
 			<version number="2.1.0.824" status="dev" date="July 21, 2017">
 				<change>Created binary assembly for Linux.</change>
 			</version>
@@ -15,6 +20,11 @@
 
 	<data lang="ru">
 		<website>http://jenyay.net/Outwiker/Unstable</website>
+
+		<changelog>
+			<version number="2.1.0.825" status="dev">
+			</version>
+		</changelog>
 
 		<changelog>
 			<version number="2.1.0.824" status="dev" date="21.07.2017">
