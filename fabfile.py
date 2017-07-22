@@ -499,36 +499,22 @@ def upload_plugin(*args):
 
 @hosts(DEPLOY_SERVER_NAME)
 @task
-def upload_binary_stable():
-    """
-    Upload stable version on the site
-    """
-    facts = BuildFacts()
-
-    win_tpl_files = FILES_FOR_UPLOAD_STABLE_WIN
-    linux_tpl_files = FILES_FOR_UPLOAD_STABLE_LINUX
-    versions_file = facts.versions_file
-    deploy_path = DEPLOY_STABLE_PATH
-
-    binary_uploader = BinaryUploader(win_tpl_files,
-                                     linux_tpl_files,
-                                     versions_file,
-                                     deploy_path)
-    binary_uploader.deploy()
-
-
-@hosts(DEPLOY_SERVER_NAME)
-@task
-def upload_binary_unstable():
+def upload_binary(is_stable=False):
     """
     Upload unstable version on the site
     """
     facts = BuildFacts()
 
-    win_tpl_files = FILES_FOR_UPLOAD_UNSTABLE_WIN
-    linux_tpl_files = FILES_FOR_UPLOAD_UNSTABLE_LINUX
+    if is_stable:
+        win_tpl_files = FILES_FOR_UPLOAD_STABLE_WIN
+        linux_tpl_files = FILES_FOR_UPLOAD_STABLE_LINUX
+        deploy_path = DEPLOY_STABLE_PATH
+    else:
+        win_tpl_files = FILES_FOR_UPLOAD_UNSTABLE_WIN
+        linux_tpl_files = FILES_FOR_UPLOAD_UNSTABLE_LINUX
+        deploy_path = DEPLOY_UNSTABLE_PATH
+
     versions_file = facts.versions_file
-    deploy_path = DEPLOY_UNSTABLE_PATH
 
     binary_uploader = BinaryUploader(win_tpl_files,
                                      linux_tpl_files,
@@ -558,45 +544,26 @@ def _add_git_tag(tagname):
 
 @hosts(DEPLOY_SERVER_NAME)
 @task
-def deploy_unstable():
+def deploy(is_stable=False):
     """
     Upload unstable version on the site
     """
-    ppa_path = PPA_UNSTABLE_PATH
-    is_stable = False
+    version_str = getOutwikerVersionStr()
+    if is_stable:
+        deploy(False)
 
-    vm_linux_binary(False)
-    plugins(True)
-    upload_plugin()
-    upload_plugins_pack()
+    ppa_path = PPA_STABLE_PATH if is_stable else PPA_UNSTABLE_PATH
 
+    vm_linux_binary(is_stable)
     deb_path = deb_sources_included(is_stable)
     _ppa_upload(ppa_path, deb_path)
-    upload_binary_unstable()
 
-    version_str = getOutwikerVersionStr()
-    tagname = u'unstable_{}'.format(version_str)
+    upload_binary(is_stable)
 
-    _add_git_tag(tagname)
-
-
-@hosts(DEPLOY_SERVER_NAME)
-@task
-def deploy_stable():
-    """
-    Upload unstable version on the site
-    """
-    deploy_unstable()
-    ppa_path = PPA_STABLE_PATH
-    is_stable = True
-
-    vm_linux_binary(True)
-    deb_path = deb_sources_included(is_stable)
-    _ppa_upload(ppa_path, deb_path)
-    upload_binary_stable()
-
-    version_str = getOutwikerVersionStr()
-    tagname = u'release_{}'.format(version_str)
+    if is_stable:
+        tagname = u'release_{}'.format(version_str)
+    else:
+        tagname = u'unstable_{}'.format(version_str)
 
     _add_git_tag(tagname)
 
