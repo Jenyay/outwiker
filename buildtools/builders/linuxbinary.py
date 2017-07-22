@@ -28,7 +28,7 @@ class BuilderLinuxBinary(BuilderBase):
 
     def _build_binary(self):
         """
-        Build with cx_Freeze
+        Build with PyInstaller
         """
         src_dir = self.temp_sources_dir
         dest_dir = self._exe_path
