@@ -35,7 +35,8 @@ from buildtools.defines import (
     PPA_UNSTABLE_PATH,
     PPA_STABLE_PATH,
     VM_BUILD_PARAMS,
-    LINUX_BUILD_DIR
+    LINUX_BUILD_DIR,
+    WINDOWS_BUILD_DIR,
 )
 from buildtools.versions import (getOutwikerVersion,
                                  getOutwikerVersionStr,
@@ -70,6 +71,7 @@ try:
                                        DEPLOY_HOME_PATH,
                                        DEPLOY_SITE,
                                        DEPLOY_PLUGINS_PACK_PATH,
+                                       PATH_TO_WINDOWS_DISTRIBS,
                                        )
 except ImportError:
     shutil.copyfile(u'buildtools/serverinfo.py.example',
@@ -80,6 +82,7 @@ except ImportError:
                                        DEPLOY_HOME_PATH,
                                        DEPLOY_SITE,
                                        DEPLOY_PLUGINS_PACK_PATH,
+                                       PATH_TO_WINDOWS_DISTRIBS,
                                        )
 
 from buildtools.uploaders import BinaryUploader
@@ -515,9 +518,13 @@ def upload_binary(is_stable=False):
         deploy_path = DEPLOY_UNSTABLE_PATH
 
     versions_file = facts.versions_file
+    windows_result_path = os.path.join(PATH_TO_WINDOWS_DISTRIBS,
+                                       facts.version,
+                                       WINDOWS_BUILD_DIR)
 
     binary_uploader = BinaryUploader(win_tpl_files,
                                      linux_tpl_files,
+                                     windows_result_path,
                                      versions_file,
                                      deploy_path)
     binary_uploader.deploy()
@@ -552,9 +559,9 @@ def deploy(is_stable=False):
     if is_stable:
         deploy(False)
 
-    ppa_path = PPA_STABLE_PATH if is_stable else PPA_UNSTABLE_PATH
-
     vm_linux_binary(is_stable)
+
+    ppa_path = PPA_STABLE_PATH if is_stable else PPA_UNSTABLE_PATH
     deb_path = deb_sources_included(is_stable)
     _ppa_upload(ppa_path, deb_path)
 

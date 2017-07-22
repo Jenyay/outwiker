@@ -7,11 +7,8 @@ import sys
 from fabric.api import cd, put
 
 from .versions import (getOutwikerVersion,
-                       getOutwikerVersionStr,
                        readAppInfo,
                        downloadAppInfo)
-from .serverinfo import (PATH_TO_WINDOWS_DISTRIBS)
-from .defines import WINDOWS_BUILD_DIR
 from .libs.colorama import Fore
 from .buildfacts import BuildFacts
 
@@ -21,7 +18,9 @@ class BinaryUploader(object):
     Class to upload binary files to server.
     '''
     def __init__(self,
-                 win_tpl_files, linux_tpl_files, versions_file,
+                 win_tpl_files, linux_tpl_files,
+                 windows_result_path,
+                 versions_file,
                  deploy_path):
         self.facts = BuildFacts()
 
@@ -29,19 +28,14 @@ class BinaryUploader(object):
         self.versions_file = versions_file
 
         version = getOutwikerVersion()
-        version_dir = getOutwikerVersionStr()
 
         files_for_upload_win = [fname.format(version=version[0])
                                 for fname in win_tpl_files]
         files_for_upload_linux = [fname.format(version=version[0])
                                   for fname in linux_tpl_files]
 
-        src_path_win = os.path.join(PATH_TO_WINDOWS_DISTRIBS,
-                                    version_dir,
-                                    WINDOWS_BUILD_DIR)
-
         upload_files_win = map(
-            lambda item: os.path.join(src_path_win, item),
+            lambda item: os.path.join(windows_result_path, item),
             files_for_upload_win)
 
         upload_files_linux = map(
