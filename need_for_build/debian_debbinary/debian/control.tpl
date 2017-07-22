@@ -1,5 +1,5 @@
 Package: outwiker
-Version: 1.9.0-790
+Version: {{version}}-{{build}}
 Section: text
 Priority: optional
 Depends: libc6 (>=2.15), zlib1g

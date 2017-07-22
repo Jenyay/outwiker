@@ -1,12 +1,12 @@
 ---
-- name: Build linux binary assemblies
+- name: Build binary assembly for Linux
   hosts: all
   remote_user: ubuntu
   vars_files:
       - vars/common.yml
   vars:
       sources_root: "../../../../"
-      result_path: "{{ outwiker_dir }}/build/{{ version }}/linux"
+      result_path: "{{ outwiker_dir }}/build/{{ version }}.{{ build }}/linux"
   environment:
       PATH: "{{ ansible_env.PATH }}:{{homedir}}/.local/bin"
   tasks:
@@ -35,6 +35,18 @@
             - "requirements.txt"
             - "requirements_dev.txt"
 
+      - name: Build deb binary package
+        command: fab deb_binary:{{ is_stable }}
+        args:
+            chdir: "{{ outwiker_dir }}"
+        ignore_errors: true
+
+      - name: Download deb packages
+        fetch:
+            src: "{{ result_path }}/outwiker-{{ version }}+{{ build }}{{ suffix }}.deb"
+            dest: "{{ save_to }}/"
+            flat: true
+
       - name: Build binary assembly
         command: fab linux_binary:{{ is_stable }}
         args:
@@ -42,13 +54,13 @@
 
       - name: Rename result archive (7z)
         copy:
-            src: "{{ outwiker_dir }}/build/{{ version }}/linux/outwiker_linux_bin.7z"
+            src: "{{ outwiker_dir }}/build/{{ version }}.{{ build }}/linux/outwiker_linux_bin.7z"
             dest: "{{ result_path }}/outwiker_linux{{ suffix }}.7z"
             remote_src: true
 
       - name: Rename result archive (zip)
         copy:
-            src: "{{ outwiker_dir }}/build/{{ version }}/linux/outwiker_linux_bin.zip"
+            src: "{{ outwiker_dir }}/build/{{ version }}.{{ build }}/linux/outwiker_linux_bin.zip"
             dest: "{{ result_path }}/outwiker_linux{{ suffix }}.zip"
             remote_src: true
 

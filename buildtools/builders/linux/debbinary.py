@@ -6,14 +6,20 @@ import shutil
 from fabric.api import local, lcd
 
 from ..base import BuilderBase
-from ..linuxbinary import BuilderLinuxBinary
-from buildtools.defines import DEB_BINARY_BUILD_DIR
+from ..binarybuilders import PyInstallerBuilderLinux
+from buildtools.defines import (DEB_BINARY_BUILD_DIR,
+                                NEED_FOR_BUILD_DIR,
+                                # TIMEZONE,
+                                # DEB_MAINTAINER,
+                                # DEB_MAINTAINER_EMAIL
+                                )
+# from buildtools.contentgenerators import DebChangelogGenerator
 from buildtools.versions import getOutwikerVersion
 
 
 class BuilderLinuxDebBinary(BuilderBase):
-    def __init__(self, subdir_name=DEB_BINARY_BUILD_DIR):
-        super(BuilderLinuxDebBinary, self).__init__(subdir_name)
+    def __init__(self, dir_name=DEB_BINARY_BUILD_DIR, is_stable=False):
+        super(BuilderLinuxDebBinary, self).__init__(dir_name, is_stable)
         version = getOutwikerVersion()
         self._architecture = self._getDebArchitecture()
         self._debName = "outwiker-{}+{}_{}".format(version[0],
@@ -21,9 +27,8 @@ class BuilderLinuxDebBinary(BuilderBase):
                                                    self._architecture)
 
     def clear(self):
-        super(BuilderLinuxDebBinary, self).clear()
         deb_result_filename = self._getDebFileName()
-        self._remove(os.path.join(self._root_build_dir, deb_result_filename))
+        self._remove(os.path.join(self.build_dir, deb_result_filename))
 
     def _build(self):
         self._buildBinaries()
@@ -34,32 +39,53 @@ class BuilderLinuxDebBinary(BuilderBase):
         self._buildDeb()
 
     def _buildBinaries(self):
-        dest_subdir = self._getExecutableDir()
+        dest_dir = self._getExecutableDir()
 
-        dest_dir = os.path.join(self._root_build_dir, dest_subdir)
-        os.makedirs(self._getSubpath(self._debName, u'usr', u'lib'))
+        src_dir = self.temp_sources_dir
+        temp_dir = self.facts.temp_dir
 
-        linuxBuilder = BuilderLinuxBinary(dest_subdir, create_archive=False)
+        linuxBuilder = PyInstallerBuilderLinux(src_dir,
+                                               dest_dir,
+                                               temp_dir)
         linuxBuilder.build()
         self._remove(os.path.join(dest_dir, u'LICENSE.txt'))
+
+    def _getSubpath(self, *args):
+        return os.path.join(self.facts.temp_dir, *args)
 
     def _getDEBIANPath(self):
         return self._getSubpath(self._debName, u'DEBIAN')
 
     def _getExecutableDir(self):
-        return os.path.join(self._subdir_name,
+        return os.path.join(self.facts.temp_dir,
                             self._debName,
                             u'usr',
                             u'lib',
                             u'outwiker')
 
     def _copyDebianFiles(self):
-        debian_src_dir = os.path.join(u'need_for_build',
+        debian_src_dir = os.path.join(NEED_FOR_BUILD_DIR,
                                       u'debian_debbinary',
                                       u'debian')
 
         debian_dest_dir = self._getDEBIANPath()
         shutil.copytree(debian_src_dir, debian_dest_dir)
+        self._create_control_file(debian_dest_dir)
+
+    def _create_control_file(self, debian_dir):
+        version = getOutwikerVersion()
+        template_file = os.path.join(debian_dir, 'control.tpl')
+
+        with open(template_file) as fp:
+            template = fp.read()
+
+        control_text = template.replace('{{version}}', version[0])
+        control_text = control_text.replace('{{build}}', version[1])
+
+        with open(os.path.join(debian_dir, 'control'), 'w') as fp:
+            fp.write(control_text)
+
+        os.remove(template_file)
 
     def _setPermissions(self):
         for par, dirs, files in os.walk(self._getSubpath(self._debName)):
@@ -75,7 +101,7 @@ class BuilderLinuxDebBinary(BuilderBase):
                     continue
 
         exe_dir = self._getExecutableDir()
-        os.chmod(os.path.join(self._root_build_dir,
+        os.chmod(os.path.join(self.build_dir,
                               exe_dir,
                               u'outwiker'), 0o755)
 
@@ -83,21 +109,18 @@ class BuilderLinuxDebBinary(BuilderBase):
 
         os.chmod(os.path.join(DEBIAN_dir, u'postinst'), 0o755)
         os.chmod(os.path.join(DEBIAN_dir, u'postrm'), 0o755)
-        os.chmod(os.path.join(self._build_dir,
-                              self._debName,
-                              u'usr',
-                              u'bin',
-                              u'outwiker'), 0o755)
+        os.chmod(self._getSubpath(self._debName, u'usr', u'bin', u'outwiker'),
+                 0o755)
 
     def _buildDeb(self):
-        with lcd(self._build_dir):
+        with lcd(self.facts.temp_dir):
             local(u'fakeroot dpkg-deb --build {}'.format(self._debName))
 
         deb_filename = self._getDebFileName()
         shutil.move(self._getSubpath(deb_filename),
-                    os.path.join(self._root_build_dir, deb_filename))
+                    os.path.join(self.build_dir, deb_filename))
 
-        with lcd(self._root_build_dir):
+        with lcd(self.build_dir):
             local(u'lintian {}.deb'.format(self._debName))
 
     def _move_to_share(self, destdir):
@@ -129,7 +152,7 @@ class BuilderLinuxDebBinary(BuilderBase):
         dest_share_dir = os.path.join(dest_usr_dir, u'share')
         dest_bin_dir = os.path.join(dest_usr_dir, u'bin')
 
-        root_dir = os.path.join(u'need_for_build',
+        root_dir = os.path.join(NEED_FOR_BUILD_DIR,
                                 u'debian_debbinary',
                                 u'root')
         shutil.copytree(os.path.join(root_dir, u'usr', u'share'),
@@ -141,11 +164,9 @@ class BuilderLinuxDebBinary(BuilderBase):
                                     u'doc',
                                     u'outwiker')
 
-        shutil.copyfile(os.path.join(u'need_for_build',
-                                     u'debian_debsource',
-                                     u'debian',
-                                     u'changelog'),
-                        os.path.join(dest_doc_dir, u'changelog'))
+        with open(os.path.join(dest_doc_dir, u'changelog'), "w"):
+            pass
+
         with lcd(dest_doc_dir):
             local(u'gzip --best -n -c changelog > changelog.Debian.gz')
             local(u'rm changelog')

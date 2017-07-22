@@ -41,7 +41,7 @@ LINUX_BUILD_DIR = u"linux"
 WINDOWS_BUILD_DIR = u"windows"
 WINDOWS_EXECUTABLE_DIR = u"outwiker_exe"
 WINDOWS_INSTALLER_FILENAME = u"outwiker_win_unstable.exe"
-DEB_BINARY_BUILD_DIR = u'linux/deb_binary'
+DEB_BINARY_BUILD_DIR = u'linux'
 DEB_SOURCE_BUILD_DIR = u'linux/deb_source'
 SOURCES_DIR = u'sources'
 PLUGINS_DIR = u'plugins'
@@ -66,17 +66,17 @@ FILES_FOR_UPLOAD_STABLE_WIN = [
 ]
 
 FILES_FOR_UPLOAD_UNSTABLE_LINUX = [
-    u'outwiker_linux_x86.zip',
-    u'outwiker_linux_x86.7z',
-    u'outwiker_linux_x64.zip',
-    u'outwiker_linux_x64.7z',
+    u'outwiker_linux_i386.zip',
+    u'outwiker_linux_i386.7z',
+    u'outwiker_linux_amd64.zip',
+    u'outwiker_linux_amd64.7z',
 ]
 
 FILES_FOR_UPLOAD_STABLE_LINUX = [
-    u'outwiker_linux_{version}_x86.zip',
-    u'outwiker_linux_{version}_x86.7z',
-    u'outwiker_linux_{version}_x64.zip',
-    u'outwiker_linux_{version}_x64.7z',
+    u'outwiker_linux_{version}_i386.zip',
+    u'outwiker_linux_{version}_i386.7z',
+    u'outwiker_linux_{version}_amd64.zip',
+    u'outwiker_linux_{version}_amd64.7z',
 ]
 
 PPA_DEV_PATH = u'ppa:outwiker-team/dev'

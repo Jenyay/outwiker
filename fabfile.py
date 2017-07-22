@@ -24,6 +24,7 @@ from buildtools.defines import (
     UBUNTU_RELEASE_NAMES,
     BUILD_DIR,
     DEB_SOURCE_BUILD_DIR,
+    DEB_BINARY_BUILD_DIR,
     PLUGINS_DIR,
     PLUGINS_LIST,
     PLUGIN_VERSIONS_FILENAME,
@@ -312,8 +313,8 @@ def _runTests(testdir, prefix, section=u'', *args):
 
 
 @task
-def deb_binary():
-    builder = BuilderLinuxDebBinary()
+def deb_binary(is_stable=False):
+    builder = BuilderLinuxDebBinary(DEB_BINARY_BUILD_DIR, tobool(is_stable))
     builder.build()
 
 
@@ -651,6 +652,7 @@ def vm_prepare():
 def vm_linux_binary(is_stable=0):
     vm_run()
     version_str = getOutwikerVersionStr()
+    version = getOutwikerVersion()
 
     path_to_result = os.path.abspath(
         os.path.join(BUILD_DIR, version_str, LINUX_BUILD_DIR)
@@ -660,8 +662,9 @@ def vm_linux_binary(is_stable=0):
         os.makedirs(path_to_result)
 
     with lcd(u'need_for_build/virtual/build_machines'):
-        local(u'ansible-playbook build_linux_binaries.yml --extra-vars "version={version} save_to={save_to} is_stable={is_stable}"'.format(
-            version=version_str,
+        local(u'ansible-playbook build_linux_binaries.yml --extra-vars "version={version} build={build} save_to={save_to} is_stable={is_stable}"'.format(
+            version=version[0],
+            build=version[1],
             save_to=path_to_result,
             is_stable=is_stable)
         )

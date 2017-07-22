@@ -56,7 +56,7 @@ class BuilderLinuxBinary(BuilderBase):
             self._build_archive()
 
     def clear(self):
-        super(BuilderLinuxBinary, self).clear()
+        self._remove(self._exe_path)
         self._remove(self._archiveFullName_7z)
         self._remove(self._archiveFullName_zip)
 

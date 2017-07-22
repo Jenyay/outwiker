@@ -1,4 +1,4 @@
 ---
-suffix: "_x86"
+suffix: "_i386"
 additional_soft:
     - python-wxgtk-webview3.0
