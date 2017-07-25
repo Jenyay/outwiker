@@ -98,7 +98,7 @@ class SiteChangelogGenerator(object):
 
 
 class SitePluginsTableGenerator (object):
-    def __init__ (self, appInfoList):
+    def __init__(self, appInfoList):
         self._appInfoList = appInfoList[:]
         self._appInfoList.sort(key=lambda x: x.appname)
 

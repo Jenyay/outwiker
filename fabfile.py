@@ -50,7 +50,7 @@ from buildtools.builders import (BuilderWindows,
                                  BuilderSources,
                                  BuilderPlugins,
                                  BuilderLinuxBinary,
-                                 BuilderLinuxDebBinary,
+                                 BuilderDebBinary,
                                  BuilderDebSource,
                                  BuilderDebSourcesIncluded,
                                  )
@@ -314,13 +314,13 @@ def _runTests(testdir, prefix, section=u'', *args):
 
 @task
 def deb_binary(is_stable=False):
-    builder = BuilderLinuxDebBinary(DEB_BINARY_BUILD_DIR, tobool(is_stable))
+    builder = BuilderDebBinary(DEB_BINARY_BUILD_DIR, tobool(is_stable))
     builder.build()
 
 
 @task
 def deb_binary_clear():
-    builder = BuilderLinuxDebBinary()
+    builder = BuilderDebBinary()
     builder.clear()
 
 
