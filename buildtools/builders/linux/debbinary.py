@@ -18,6 +18,23 @@ from buildtools.defines import (DEB_BINARY_BUILD_DIR,
 from buildtools.versions import getOutwikerVersion
 
 
+class BuilderDebBinaryFactory(object):
+    '''
+    Class to get necessary builder for deb binary.
+    '''
+    @staticmethod
+    def get_default(dir_name=DEB_BINARY_BUILD_DIR, is_stable=False):
+        return BuilderDebBinaryFactory.get_usr(dir_name, is_stable)
+
+    @staticmethod
+    def get_usr(dir_name=DEB_BINARY_BUILD_DIR, is_stable=False):
+        return BuilderDebBinary(dir_name, is_stable)
+
+    @staticmethod
+    def get_opt(dir_name=DEB_BINARY_BUILD_DIR, is_stable=False):
+        return BuilderDebBinaryOpt(dir_name, is_stable)
+
+
 class BuilderDebBinaryBase(BuilderBase):
     __metaclass__ = ABCMeta
 
