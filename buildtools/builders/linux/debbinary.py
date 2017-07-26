@@ -42,7 +42,6 @@ class BuilderDebBinaryBase(BuilderBase):
     def _getExecutableDirShort(self):
         pass
 
-    @abstractmethod
     def _createFoldersTree(self):
         '''
         Create folders tree inside tmp/outwiker-x.x.x+xxx_.../
@@ -226,3 +225,11 @@ class BuilderDebBinary(BuilderDebBinaryBase):
             shutil.move(src_dir, dst_dir)
             with lcd(self.debPath):
                 local(u'ln -s ../../share/outwiker/{dirname} usr/lib/outwiker'.format(dirname=dir_name))
+
+
+class BuilderDebBinaryOpt(BuilderDebBinaryBase):
+    '''
+    Class to create deb package from which will be installed to /opt/ folder
+    '''
+    def _getExecutableDirShort(self):
+        return u'opt/outwiker'
