@@ -7,7 +7,7 @@ import shutil
 
 from fabric.api import lcd, local
 
-from buildtools.utilites import remove
+from buildtools.utilites import remove, print_info
 
 
 class BaseBinaryBuilder(object):
@@ -130,7 +130,7 @@ class BasePyInstallerBuilder(BaseBinaryBuilder):
 
         self._remove_files()
 
-        print(u'Copy files to dest path.')
+        print_info(u'Copy files to dest path.')
         shutil.copytree(
             os.path.join(self._dist_dir, u'outwiker'),
             self._dest_dir
@@ -141,7 +141,7 @@ class BasePyInstallerBuilder(BaseBinaryBuilder):
                     for fname in self.get_remove_list()]
 
         for fname in toRemove:
-            print(u'Remove: {}'.format(fname))
+            print_info(u'Remove: {}'.format(fname))
             remove(fname)
 
 
