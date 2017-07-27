@@ -46,7 +46,7 @@ class BuilderBase(object):
         self._copy_sources_to_temp()
         self._copy_versions_file()
 
-        print_info(u'Build...')
+        print_info(u'Build to {}'.format(self.build_dir))
         self._build()
         self._postBuild()
 
