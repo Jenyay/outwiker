@@ -19,6 +19,9 @@ from buildtools.utilites import (getPython,
                                  getCurrentUbuntuDistribName,
                                  getPathToPlugin,
                                  tobool,
+                                 print_info,
+                                 print_warning,
+                                 print_error
                                  )
 from buildtools.defines import (
     UBUNTU_RELEASE_NAMES,
@@ -370,7 +373,11 @@ def _print_changelog(path_to_xml, lang):
 
 
 @task
-def plugins_list(lang):
+def plugins_list(lang=None):
+    if lang is None:
+        print_error(u'Error. No language specified')
+        sys.exit(1)
+
     appinfo_list = []
     for plugin_name in PLUGINS_LIST:
         path_to_xml = os.path.join(PLUGINS_DIR,
@@ -484,12 +491,12 @@ def upload_plugin(*args):
 
         if (appinfo_remote is not None and
                 appinfo_local.currentVersion < appinfo_remote.currentVersion):
-            print(Fore.RED + 'Error. New version < Prev version')
+            print_error(u'Error. New version < Prev version')
             sys.exit(1)
         elif (appinfo_remote is not None and
                 appinfo_local.currentVersion == appinfo_remote.currentVersion):
-            print(Fore.RED + 'Warning: Uploaded the same version')
-        print(Fore.GREEN + 'Uploading...')
+            print_warning(u'Warning: Uploaded the same version')
+        print_info(u'Uploading...')
 
         path_to_upload = os.path.dirname(appinfo_local.updatesUrl.replace(DEPLOY_SITE + u'/', DEPLOY_HOME_PATH))
         version_local = unicode(appinfo_local.currentVersion)

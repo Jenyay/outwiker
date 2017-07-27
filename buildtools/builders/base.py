@@ -6,6 +6,7 @@ import shutil
 
 from buildtools.defines import OUTWIKER_VERSIONS_FILENAME
 from buildtools.buildfacts import BuildFacts
+from buildtools.utilites import print_info
 
 
 class BuilderBase(object):
@@ -33,6 +34,7 @@ class BuilderBase(object):
 
     def build(self):
         self._createRootDir()
+        print_info(u'Clearing...')
         self.clear()
 
         self._remove(self.facts.temp_dir)
@@ -44,6 +46,7 @@ class BuilderBase(object):
         self._copy_sources_to_temp()
         self._copy_versions_file()
 
+        print_info(u'Build...')
         self._build()
         self._postBuild()
 
@@ -63,7 +66,7 @@ class BuilderBase(object):
                 shutil.rmtree(path)
 
     def _copy_sources_to_temp(self):
-        print(u'Copying sources to {}...'.format(self.temp_sources_dir))
+        print_info(u'Copy sources to {}...'.format(self.temp_sources_dir))
         shutil.copytree(u'src', self.temp_sources_dir)
 
     def _copy_versions_file(self):

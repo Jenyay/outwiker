@@ -14,6 +14,7 @@ from buildtools.defines import (WINDOWS_BUILD_DIR,
                                 WINDOWS_INSTALLER_FILENAME,
                                 NEED_FOR_BUILD_DIR,
                                 WINDOWS_EXECUTABLE_DIR)
+from buildtools.utilites import print_info
 
 from outwiker.utilites.textfile import readTextFile, writeTextFile
 
@@ -81,6 +82,7 @@ class BuilderWindows(BuilderBase):
         """
         Build with PyInstaller
         """
+        print_info(u'Create binary files...')
         src_dir = self.temp_sources_dir
         dest_dir = self._executable_dir
         temp_dir = self.facts.temp_dir
@@ -104,6 +106,7 @@ class BuilderWindows(BuilderBase):
         if not self._create_installer:
             return
 
+        print_info(u'Create installer...')
         if self.is_stable:
             installerName = u'outwiker_{}_win'.format(self.facts.version_items[0])
         else:
@@ -132,6 +135,7 @@ class BuilderWindows(BuilderBase):
         """
         Copy plugins to build folder
         """
+        print_info(u'Copy plugins...')
         src_pluginsdir = u"plugins"
         for plugin in self._plugins_list:
             shutil.copytree(
@@ -140,6 +144,7 @@ class BuilderWindows(BuilderBase):
             )
 
     def _copy_necessary_files(self):
+        print_info(u'Copy necessary files...')
         shutil.copy(u'copyright.txt', self.facts.temp_dir)
         shutil.copy(u'LICENSE.txt', self.facts.temp_dir)
 
@@ -147,6 +152,7 @@ class BuilderWindows(BuilderBase):
         if not self._create_archives:
             return
 
+        print_info(u'Create archives without plugins...')
         with lcd(self._executable_dir):
             path_zip = os.path.abspath(
                 os.path.join(
@@ -167,6 +173,7 @@ class BuilderWindows(BuilderBase):
         if not self._create_archives:
             return
 
+        print_info(u'Create archives with plugins...')
         with lcd(self._executable_dir):
             path_zip = os.path.abspath(
                 os.path.join(
@@ -184,4 +191,5 @@ class BuilderWindows(BuilderBase):
             local(u'7z a "{}" .\* .\plugins -r -aoa -xr!*.pyc -xr!.ropeproject'.format(path_7z))
 
     def _move_executable_dir(self):
+        print_info(u'Move result directory to {}...'.format(self.build_dir))
         shutil.move(self._executable_dir, self.build_dir)
