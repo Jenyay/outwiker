@@ -114,6 +114,7 @@ class BuilderDebBinaryBase(BuilderBase):
         shutil.move(self.facts.getTempSubpath(self.debFileName),
                     os.path.join(self.build_dir, self.debFileName))
 
+    def _checkLintian(self):
         with lcd(self.build_dir):
             local(u'lintian {}.deb'.format(self.debName))
 
@@ -210,6 +211,7 @@ class BuilderDebBinaryBase(BuilderBase):
         self._create_changelog()
         self._setPermissions()
         self._buildDeb()
+        self._checkLintian()
 
 
 class BuilderDebBinary(BuilderDebBinaryBase):
