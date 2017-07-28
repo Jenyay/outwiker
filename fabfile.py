@@ -21,7 +21,9 @@ from buildtools.utilites import (getPython,
                                  tobool,
                                  print_info,
                                  print_warning,
-                                 print_error
+                                 print_error,
+                                 windows_only,
+                                 linux_only
                                  )
 from buildtools.defines import (
     UBUNTU_RELEASE_NAMES,
@@ -93,6 +95,7 @@ from buildtools.uploaders import BinaryUploader
 
 
 @task
+@linux_only
 def deb_sources_included(is_stable=False):
     """
     Create files for uploading in PPA (including sources)
@@ -105,6 +108,7 @@ def deb_sources_included(is_stable=False):
 
 
 @task
+@linux_only
 def deb(is_stable=False):
     """
     Assemble the deb packages
@@ -117,6 +121,7 @@ def deb(is_stable=False):
 
 
 @task
+@linux_only
 def deb_clear():
     """
     Remove the deb packages
@@ -128,6 +133,7 @@ def deb_clear():
 
 
 @task
+@linux_only
 def deb_single(is_stable=False):
     """
     Assemble the deb package for the current Ubuntu release
@@ -140,6 +146,7 @@ def deb_single(is_stable=False):
 
 
 @task
+@linux_only
 def deb_install(is_stable=False):
     """
     Assemble deb package for current Ubuntu release
@@ -207,6 +214,7 @@ def sources_clear():
 
 
 @task
+@windows_only
 def win(is_stable=False, skipinstaller=False, skiparchives=False):
     """
     Build OutWiker for Windows with cx_Freeze
@@ -219,6 +227,7 @@ def win(is_stable=False, skipinstaller=False, skiparchives=False):
 
 
 @task
+@windows_only
 def win_clear():
     """
     Remove assemblies under Windows
@@ -228,6 +237,7 @@ def win_clear():
 
 
 @task
+@linux_only
 def linux_binary(is_stable=False, skiparchives=False):
     """
     Assemble binary builds for Linux
@@ -239,6 +249,7 @@ def linux_binary(is_stable=False, skiparchives=False):
 
 
 @task
+@linux_only
 def linux_clear():
     """
     Remove binary builds for Linux
@@ -248,6 +259,7 @@ def linux_clear():
 
 
 @task
+@linux_only
 def locale():
     """
     Update the localization file (outwiker.pot)
@@ -257,6 +269,7 @@ def locale():
 
 
 @task(alias='plugin_locale')
+@linux_only
 def locale_plugin(pluginname):
     """
     Create or update the localization file for pluginname plug-in
@@ -318,6 +331,7 @@ def _runTests(testdir, prefix, section=u'', *args):
 
 
 @task
+@linux_only
 def deb_binary(is_stable=False):
     builder = BuilderDebBinaryFactory.get_default(DEB_BINARY_BUILD_DIR,
                                                   tobool(is_stable))
@@ -325,6 +339,7 @@ def deb_binary(is_stable=False):
 
 
 @task
+@linux_only
 def deb_binary_clear():
     builder = BuilderDebBinaryFactory.get_default()
     builder.clear()
@@ -562,6 +577,7 @@ def _add_git_tag(tagname):
 
 @hosts(DEPLOY_SERVER_NAME)
 @task
+@linux_only
 def deploy(is_stable=False):
     """
     Upload unstable version on the site
@@ -642,6 +658,7 @@ def vm_stop():
 
 
 @task
+@linux_only
 def vm_remove_keys():
     for host_param in VM_BUILD_PARAMS.values():
         host = host_param[u'host']

@@ -87,3 +87,39 @@ def print_warning(text):
 
 def print_error(text):
     print(Fore.RED + text)
+
+
+def _os_only(func, os_str, name):
+    '''
+    Create decorator to mark task what it can be run in specified OS only.
+        os_str - internal OS name from
+            https://docs.python.org/2/library/sys.html#sys.platform
+        name - OS name for users.
+    '''
+    def wrapped(*args, **kwargs):
+        if not sys.platform.startswith(os_str):
+            print_error(u'Error. This task can only be run on {name}.'.format(
+                name=name
+            ))
+            sys.exit(1)
+        else:
+            func(*args, **kwargs)
+
+    wrapped.__name__ = func.__name__
+    return wrapped
+
+
+def windows_only(func):
+    '''
+    Decorator to mark task what it can only be run on Windows.
+    This decorator must be after @task decorator
+    '''
+    return _os_only(func, 'win32', u'Windows')
+
+
+def linux_only(func):
+    '''
+    Decorator to mark task what it can onnly be run on Linux.
+    This decorator must be after @task decorator
+    '''
+    return _os_only(func, 'linux', u'Linux')
