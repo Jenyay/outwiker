@@ -121,7 +121,9 @@ def deb_clear():
     """
     Remove the deb packages
     """
-    builder = BuilderDebSource(DEB_SOURCE_BUILD_DIR, UBUNTU_RELEASE_NAMES)
+    builder = BuilderDebSource(DEB_SOURCE_BUILD_DIR,
+                               UBUNTU_RELEASE_NAMES,
+                               False)
     builder.clear()
 
 
@@ -336,11 +338,11 @@ def clear():
     plugins_clear()
     sources_clear()
 
-    if os.name == 'posix':
+    if sys.platform.startswith('linux'):
         linux_clear()
         deb_clear()
         deb_binary_clear()
-    elif os.name == 'nt':
+    elif sys.platform.startswith('win32'):
         win_clear()
 
 
