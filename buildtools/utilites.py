@@ -106,6 +106,7 @@ def _os_only(func, os_str, name):
             func(*args, **kwargs)
 
     wrapped.__name__ = func.__name__
+    wrapped.__doc__ = func.__doc__
     return wrapped
 
 
