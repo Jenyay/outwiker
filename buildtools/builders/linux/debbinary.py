@@ -136,10 +136,10 @@ class BuilderDebBinaryBase(BuilderBase):
                               exe_dir,
                               u'outwiker'), 0o755)
 
-        DEBIAN_dir = self._getDEBIANPath()
+        # DEBIAN_dir = self._getDEBIANPath()
+        # os.chmod(os.path.join(DEBIAN_dir, u'postinst'), 0o755)
+        # os.chmod(os.path.join(DEBIAN_dir, u'postrm'), 0o755)
 
-        os.chmod(os.path.join(DEBIAN_dir, u'postinst'), 0o755)
-        os.chmod(os.path.join(DEBIAN_dir, u'postrm'), 0o755)
         os.chmod(os.path.join(self.debPath, u'usr', u'bin', u'outwiker'),
                  0o755)
 
@@ -197,9 +197,9 @@ class BuilderDebBinaryBase(BuilderBase):
         with open(os.path.join(doc_dir, u'changelog'), "w"):
             pass
 
-        # Archive the changelog to usr/share/doc
+        # Archive the changelog to usr/share/doc/outwiker
         with lcd(doc_dir):
-            local(u'gzip --best -n -c changelog > changelog.Debian.gz')
+            local(u'gzip --best -n -c changelog > changelog.gz')
             local(u'rm changelog')
 
     def _build(self):
