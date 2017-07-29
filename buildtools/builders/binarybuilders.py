@@ -189,3 +189,24 @@ class PyInstallerBuilderLinux(BasePyInstallerBuilder):
             u'libtinfo.so.5',
             u'libjpeg.so.8',
         ]
+
+    def build(self):
+        super(PyInstallerBuilderLinux, self).build()
+        files_for_strip = [
+            u'wx._aui.so',
+            u'wx._combo.so',
+            u'wx._controls_.so',
+            u'wx._core_.so',
+            u'wx._gdi_.so',
+            u'wx._html.so',
+            u'wx._html2.so',
+            u'wx._misc_.so',
+            u'wx._stc.so',
+            u'wx._windows_.so',
+        ]
+
+        for fname in files_for_strip:
+            print_info(u'Strip {}'.format(fname))
+            with lcd(self._dest_dir):
+                assert os.path.exists(os.path.join(self._dest_dir, fname))
+                local(u'strip -s -o "{fname}" "{fname}"'.format(fname=fname))
