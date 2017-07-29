@@ -179,4 +179,13 @@ class PyInstallerBuilderLinux(BasePyInstallerBuilder):
             u'_codecs_jp.so',
             u'_codecs_kr.so',
             u'_codecs_tw.so',
+            u'libcrypto.so.1.0.0',
+            u'libexpat.so.1',
+            u'libfreetype.so.6',
+            u'libz.so.1',
+            u'libpng16.so.16',
+            u'libxml2.so.2',
+            u'libtiff.so.5',
+            u'libtinfo.so.5',
+            u'libjpeg.so.8',
         ]

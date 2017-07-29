@@ -116,7 +116,7 @@ class BuilderDebBinaryBase(BuilderBase):
 
     def _checkLintian(self):
         with lcd(self.build_dir):
-            local(u'lintian {}.deb'.format(self.debName))
+            local(u'lintian --no-tag-display-limit {}.deb'.format(self.debName))
 
     def _setPermissions(self):
         for par, dirs, files in os.walk(self.debPath):
