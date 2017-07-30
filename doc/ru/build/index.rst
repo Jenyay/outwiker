@@ -10,4 +10,5 @@
    tools
    fabfile
    build
+   virtual
    test

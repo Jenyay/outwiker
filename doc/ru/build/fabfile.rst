@@ -30,46 +30,52 @@
 
     Available commands:
 
-        apiversion
-        apiversions
+        apiversion            Print current OutWiker API versions
+        apiversions           Print current OutWiker API versions
         clear                 Remove artifacts after all assemblies
-        create_tree           Create wiki tree for the tests.
+        create_tree           Create wiki tree for the tests
         deb                   Assemble the deb packages
-        deb_binary
-        deb_binary_clear
+        deb_binary            Create binary deb package
+        deb_binary_clear      Remove binary deb package
         deb_clear             Remove the deb packages
         deb_install           Assemble deb package for current Ubuntu release
         deb_single            Assemble the deb package for the current Ubuntu release
-        deb_sources_included  Create files for uploading in PPA(including sources)
-        deploy_unstable       Upload unstable version on the site
-        doc
+        deb_sources_included  Create files for uploading in PPA (including sources)
+        deploy                Upload unstable version to site
+        doc                   Build documentation
         linux_binary          Assemble binary builds for Linux
         linux_clear           Remove binary builds for Linux
-        locale                Update the localization file(outwiker.pot)
+        locale                Update the localization file (outwiker.pot)
         locale_plugin         Create or update the localization file for pluginname plug-in
         outwiker_changelog    Generate OutWiker's changelog for the site
         plugin_changelog      Generate plugin's changelog for the site
         plugin_locale         Create or update the localization file for pluginname plug-in
-        plugins               Create an archive with plugins(7z required)
-        plugins_clear         Remove an archive with plugins(7z required)
-        plugins_list
+        plugins               Create an archive with plugins (7z required)
+        plugins_clear         Remove an archive with plugins (7z required)
+        plugins_list          Print plugins list for th site
         prepare_virtual       Prepare virtual machine
         run                   Run OutWiker from sources
-        site_versions
-        sources               Create the sources archives.
+        site_versions         Compare current OutWiker and plugins versions with versions on the site
+        sources               Create the sources archives as stable version
         sources_clear         Remove the sources archives.
         test                  Run the unit tests
         test_build            Run the build unit tests
+        upload_binary         Upload unstable version to site
         upload_plugin         Upload plugin to site
-        upload_plugins_pack   Upload archive with all plugins.
-        upload_unstable       Upload unstable version on the site
-        win                   Build assemblies under Windows
+        upload_plugins_pack   Upload archive with all plugins to site
+        vm_halt               Stop virtual machines for build
+        vm_linux_binary       Create 32- and 64-bit assembly on virtual machines
+        vm_prepare            Prepare virtual machines for build
+        vm_remove_keys        Remove local SSH keys for remote virual machines
+        vm_run                Run virtual machines for build
+        vm_stop               Stop virtual machines for build
+        win                   Build OutWiker for Windows with cx_Freeze
         win_clear             Remove assemblies under Windows
 
 
 Все эти команды описаны ниже.
 
-Чтобы выполнить команду, в консол нужно написать:
+Чтобы выполнить команду, в консоли нужно написать:
 
 .. code:: bash
 
@@ -109,30 +115,31 @@ win_clear
 Сборка под Linux
 ----------------
 
-deb
+`deb`
+    Создать deb-пакет на основе исходных кодов для всех поддерживаемых версий Ubuntu.
 
-deb_binary
-    Создать deb-пакеты на основе бинарной сборки под Linux для всех поддерживаемых версий Ubuntu.
+`deb_single`
+    Создать deb-пакет на основе исходных кодов под ту версию Ubuntu, в которой происходит сборка.
 
-deb_binary_clear
-    Удалить все, что создается с помощью команды `deb_binary`
+`deb_install`
+    Создать deb-пакет на основе исходных кодов и установить его в систему.
 
-deb_sources_included
+`deb_clear`
+    Удалить все артефакты, которые создаются с помощью команды `deb`.
+
+`deb_sources_included`
     Создать deb-пакеты на основе исходных кодов для всех поддерживаемых версий Ubuntu. Используется для закачки на PPA.
 
-deb_install
-    Создать и установить deb-пакет (на основе исходных кодов) в систему.
+`deb_binary`
+    Создать deb-пакеты на основе бинарной сборки под Linux.
 
-deb_single
-    Создать deb-пакет под ту версию Ubuntu, в которой происходит сборка.
+`deb_binary_clear`
+    Удалить все, что создается с помощью команды `deb_binary`
 
-deb_clear
-    Удалить все deb-пакеты.
-
-linux_binary
+`linux_binary`
     Создать бинарную сборку под Linux с помощью PyInstaller_.
 
-linux_clear
+`linux_clear`
     Удалить созданную бинарную сборку под Linux.
 
 
@@ -144,10 +151,10 @@ linux_clear
 Команды, связанные с плагинами
 ------------------------------
 
-plugins
+`plugins`
     Создать архивы с плагинами (отдельный архив на каждый плагин и общий архив со всеми плагинами). Эта команда может принимать булево значение. Если оно равно 1, то создаются архивы только для тех плагинов, которые имеют более новые версии по сравнению с теми, что выложены на сайте программы. Общий архив с плагинами создается в любом случае.
 
-plugins_clear
+`plugins_clear`
     Удалить все архивы с плагинами.
 
 
@@ -156,17 +163,17 @@ plugins_clear
 Команды, помогающие при разработке
 ----------------------------------
 
-run
+`run`
     Запустить OutWiker из исходников.
 
-apiversion или apiversions
+`apiversion` или `apiversions`
     Вывести номера версий встроенных пакетов outwiker (см. раздел :ref:`ru_sources_struct_src`).
 
-test
-    Запустить юнит-тесты. Подробнее о тестировании см. раздел :ref:`ru_test`.
+`test`
+    Запустить интеграционные и юнит-тесты. Подробнее о тестировании см. раздел :ref:`ru_test`.
 
-test_build
-    Запустить юнит-тесты, связанные со сборкой. Подробнее о тестировании см. раздел :ref:`ru_test`.
+`test_build`
+    Запустить тесты, связанные со сборкой. Подробнее о тестировании см. раздел :ref:`ru_test`.
 
 
 .. _ru_fabfile_locale:
@@ -174,10 +181,10 @@ test_build
 Команды, связанные с локализацией
 ---------------------------------
 
-locale
+`locale`
     Создать файл src/locale/outwiker.pot, используемый для создания файлов локализации.
 
-locale_plugin или plugin_locale
+`locale_plugin` или `plugin_locale`
     Создать файл локализации \*.pot для плагина, указанного в качестве параметра команды.
 
 
@@ -186,53 +193,81 @@ locale_plugin или plugin_locale
 Команды, связанные с развертыванием
 -----------------------------------
 
-deploy_unstable
-    Закачать собранную нестабильную версию под Windows, а также собрать deb-пакеты и закачать их на PPA.
+`deploy`
+    Закачать собранную версию под Windows, собрать deb-пакеты и закачать их на PPA, установить тег в репозитории исходных кодов в соответствии с текущей версией OutWiker. Работает для стабильной и нестабильной версий.
 
-outwiker_changelog
+`outwiker_changelog`
     Вывести список изменений, который нужно будет вставить на сайт. В качестве параметра требуется указать язык: ru или en.
 
-plugin_changelog
+`plugin_changelog`
     Вывести список изменений для плагина. В качестве параметров требуется указать имя плагина и язык: ru или en.
 
-site_versions
+`site_versions`
     Вывести номера версий OutWiker и всех плагинов. Показываются версии, закачанные на сайт и находящиеся в папке с исходниками.
 
-upload_plugin
+`upload_plugin`
     Закачать плагин или плагины на сайт. Для плагинов требуется предварительно создать архивы с плагинами с помощью команды `plugins`.
 
-upload_plugins_pack
+`upload_plugins_pack`
     Закачать архив со всеми плагинами на сайт. Архив с плагинами требуется предварительно создать с помощью команды `plugins`.
 
-upload_unstable
-    Закачать нестабильную версию OutWiker на сайт.
+`upload_binary`
+    Закачать бинарные версии OutWiker (под Windows и Linux) на сайт.
 
-plugins_list
+`plugins_list`
     Создать таблицу со списком плагинов для сайта. Требуется указать язык: ru или en.
 
+
+.. _ru_fabfile_vm:
+
+Команды для создания бинарных сборок на виртуальных машинах
+-----------------------------------------------------------
+
+Для создания бинарных сборок под различные версии Linux используются виртуальные машины. Для выполнения этих команд должны быть установлены VirtualBox_, Vagrant_ и Ansible_. Подробнее см. раздел :ref:`ru_build_virtual`.
+
+`vm_run`
+    Запустить все виртуальные машины.
+
+`vm_stop` или `vm_halt`
+    Остановить все виртуальные машины.
+
+`vm_prepare`
+    Запустить виртуальные машины и подготовить их к сборке OutWiker. Эта команда устанавливает все необходимые библиотеки.
+
+`vm_linux_binary`
+    Создать 32- и 64-битные бинарные сборки под Linux на виртуальных машинах.
+
+`vm_remove_keys`
+    Удалить ключи SSH из папки .ssh. Нужно выполнять после переустановки виртуальных машин.
+
+
+.. _ru_fabfile_other:
 
 Другие команды
 -----------------------
 
-clear
+`clear`
     Удалить все, что создано в папке build
 
-create_tree
-    Создать тестовое дерево заметок для тестов.
+`create_tree`
+    Создать дерево заметок для тестов.
 
-doc
+`doc`
     Скомпилировать данную документацию.
 
-prepare_virtual
+`prepare_virtual`
     Подготовить виртуальную машину с Linux, чтобы в ней можно было бы запустить OutWiker из исходников.
 
-sources
+`sources`
     Создать архив с исходниками. Подробнее см. раздел :ref:`ru_build_sources`.
 
-sources_clear
+`sources_clear`
     Удалить архив с исходниками.
 
 
 .. _Fabric: http://www.fabfile.org/
 .. _PyInstaller: http://www.pyinstaller.org/
-.. _`Inno Setup`: http://www.jrsoftware.org
+.. _`Inno Setup`: http://www.jrsoftware.org/
+.. _VirtualBox: https://www.virtualbox.org/
+.. _Ansible: https://www.ansible.com/
+.. _Vagrant: https://www.vagrantup.com/

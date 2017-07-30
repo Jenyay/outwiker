@@ -97,9 +97,9 @@ from buildtools.uploaders import BinaryUploader
 @task
 @linux_only
 def deb_sources_included(is_stable=False):
-    """
+    '''
     Create files for uploading in PPA (including sources)
-    """
+    '''
     builder = BuilderDebSourcesIncluded(DEB_SOURCE_BUILD_DIR,
                                         UBUNTU_RELEASE_NAMES,
                                         tobool(is_stable))
@@ -110,9 +110,9 @@ def deb_sources_included(is_stable=False):
 @task
 @linux_only
 def deb(is_stable=False):
-    """
+    '''
     Assemble the deb packages
-    """
+    '''
     builder = BuilderDebSource(DEB_SOURCE_BUILD_DIR,
                                UBUNTU_RELEASE_NAMES,
                                tobool(is_stable))
@@ -123,9 +123,9 @@ def deb(is_stable=False):
 @task
 @linux_only
 def deb_clear():
-    """
+    '''
     Remove the deb packages
-    """
+    '''
     builder = BuilderDebSource(DEB_SOURCE_BUILD_DIR,
                                UBUNTU_RELEASE_NAMES,
                                False)
@@ -135,9 +135,9 @@ def deb_clear():
 @task
 @linux_only
 def deb_single(is_stable=False):
-    """
+    '''
     Assemble the deb package for the current Ubuntu release
-    """
+    '''
     builder = BuilderDebSource(DEB_SOURCE_BUILD_DIR,
                                [getCurrentUbuntuDistribName()],
                                tobool(is_stable))
@@ -148,9 +148,9 @@ def deb_single(is_stable=False):
 @task
 @linux_only
 def deb_install(is_stable=False):
-    """
+    '''
     Assemble deb package for current Ubuntu release
-    """
+    '''
     result_path = deb_single(tobool(is_stable))
 
     version = getOutwikerVersion()
@@ -163,9 +163,9 @@ def deb_install(is_stable=False):
 
 
 def _ppa_upload(ppa_path, deb_path):
-    """
+    '''
     Upload the current OutWiker version in PPA
-    """
+    '''
     version = getOutwikerVersion()
 
     for distname in UBUNTU_RELEASE_NAMES:
@@ -179,36 +179,36 @@ def _ppa_upload(ppa_path, deb_path):
 
 @task
 def plugins(updatedonly=False):
-    """
+    '''
     Create an archive with plugins (7z required)
-    """
+    '''
     builder = BuilderPlugins(updatedOnly=updatedonly)
     builder.build()
 
 
 @task
 def plugins_clear():
-    """
+    '''
     Remove an archive with plugins (7z required)
-    """
+    '''
     builder = BuilderPlugins()
     builder.clear()
 
 
 @task
 def sources(is_stable=False):
-    """
-    Create the sources archives as stable version.
-    """
+    '''
+    Create the sources archives as stable version
+    '''
     builder = BuilderSources(is_stable=tobool(is_stable))
     builder.build()
 
 
 @task
 def sources_clear():
-    """
+    '''
     Remove the sources archives.
-    """
+    '''
     builder = BuilderSources()
     builder.clear()
 
@@ -216,9 +216,9 @@ def sources_clear():
 @task
 @windows_only
 def win(is_stable=False, skipinstaller=False, skiparchives=False):
-    """
+    '''
     Build OutWiker for Windows with cx_Freeze
-    """
+    '''
     builder = BuilderWindows(is_stable=tobool(is_stable),
                              create_archives=not tobool(skiparchives),
                              create_installer=not tobool(skipinstaller)
@@ -229,9 +229,9 @@ def win(is_stable=False, skipinstaller=False, skiparchives=False):
 @task
 @windows_only
 def win_clear():
-    """
+    '''
     Remove assemblies under Windows
-    """
+    '''
     builder = BuilderWindows()
     builder.clear()
 
@@ -239,9 +239,9 @@ def win_clear():
 @task
 @linux_only
 def linux_binary(is_stable=False, skiparchives=False):
-    """
+    '''
     Assemble binary builds for Linux
-    """
+    '''
     builder = BuilderLinuxBinary(is_stable=tobool(is_stable),
                                  create_archive=not tobool(skiparchives)
                                  )
@@ -251,9 +251,9 @@ def linux_binary(is_stable=False, skiparchives=False):
 @task
 @linux_only
 def linux_clear():
-    """
+    '''
     Remove binary builds for Linux
-    """
+    '''
     builder = BuilderLinuxBinary()
     builder.clear()
 
@@ -261,9 +261,9 @@ def linux_clear():
 @task
 @linux_only
 def locale():
-    """
+    '''
     Update the localization file (outwiker.pot)
-    """
+    '''
     with lcd("src"):
         local(r'find . -iname "*.py" | xargs xgettext -o locale/outwiker.pot')
 
@@ -271,27 +271,27 @@ def locale():
 @task(alias='plugin_locale')
 @linux_only
 def locale_plugin(pluginname):
-    """
+    '''
     Create or update the localization file for pluginname plug-in
-    """
+    '''
     with lcd(os.path.join("plugins", pluginname, pluginname)):
         local(r'find . -iname "*.py" | xargs xgettext -o locale/{}.pot'.format(pluginname))
 
 
 @task
 def run(args=u''):
-    """
+    '''
     Run OutWiker from sources
-    """
+    '''
     with lcd("src"):
         execute(u'{} runoutwiker.py {}'.format(getPython(), args.decode('utf8')))
 
 
 @task
 def test(section=u'', *args):
-    """
+    '''
     Run the unit tests
-    """
+    '''
     _runTests(u'src', u'tests_', section, *args)
     if len(section) == 0:
         test_build(section, *args)
@@ -299,9 +299,9 @@ def test(section=u'', *args):
 
 @task
 def test_build(section=u'', *args):
-    """
+    '''
     Run the build unit tests
-    """
+    '''
     _runTests(u'.', u'test_build_', section, *args)
 
 
@@ -333,6 +333,9 @@ def _runTests(testdir, prefix, section=u'', *args):
 @task
 @linux_only
 def deb_binary(is_stable=False):
+    '''
+    Create binary deb package
+    '''
     builder = BuilderDebBinaryFactory.get_default(DEB_BINARY_BUILD_DIR,
                                                   tobool(is_stable))
     builder.build()
@@ -341,15 +344,18 @@ def deb_binary(is_stable=False):
 @task
 @linux_only
 def deb_binary_clear():
+    '''
+    Remove binary deb package
+    '''
     builder = BuilderDebBinaryFactory.get_default()
     builder.clear()
 
 
 @task
 def clear():
-    """
+    '''
     Remove artifacts after all assemblies
-    """
+    '''
     plugins_clear()
     sources_clear()
 
@@ -363,9 +369,9 @@ def clear():
 
 @task
 def plugin_changelog(plugin, lang):
-    """
+    '''
     Generate plugin's changelog for the site
-    """
+    '''
     path_to_xml = os.path.join(getPathToPlugin(plugin),
                                PLUGIN_VERSIONS_FILENAME)
     _print_changelog(path_to_xml, lang)
@@ -373,9 +379,9 @@ def plugin_changelog(plugin, lang):
 
 @task
 def outwiker_changelog(lang):
-    """
+    '''
     Generate OutWiker's changelog for the site
-    """
+    '''
     path_to_xml = os.path.join(u'src', 'versions.xml')
     _print_changelog(path_to_xml, lang)
 
@@ -391,6 +397,9 @@ def _print_changelog(path_to_xml, lang):
 
 @task
 def plugins_list(lang=None):
+    '''
+    Print plugins list for th site
+    '''
     if lang is None:
         print_error(u'Error. No language specified')
         sys.exit(1)
@@ -413,6 +422,9 @@ def plugins_list(lang=None):
 
 @task
 def site_versions():
+    '''
+    Compare current OutWiker and plugins versions with versions on the site
+    '''
     app_list = getLocalAppInfoList()
 
     # Downloading versions info
@@ -447,7 +459,7 @@ def site_versions():
 @task
 def create_tree(maxlevel, nsiblings, path):
     '''
-    Create wiki tree for the tests.
+    Create wiki tree for the tests
     '''
     from outwiker.core.tree import WikiDocument
 
@@ -477,9 +489,9 @@ def _create_tree(level, maxlevel, nsiblings, parent):
 @hosts(DEPLOY_SERVER_NAME)
 @task
 def upload_plugin(*args):
-    """
+    '''
     Upload plugin to site
-    """
+    '''
     if len(args) == 0:
         args = PLUGINS_LIST
 
@@ -529,9 +541,9 @@ def upload_plugin(*args):
 @hosts(DEPLOY_SERVER_NAME)
 @task
 def upload_binary(is_stable=False):
-    """
-    Upload unstable version on the site
-    """
+    '''
+    Upload unstable version to site
+    '''
     facts = BuildFacts()
 
     if is_stable:
@@ -560,7 +572,7 @@ def upload_binary(is_stable=False):
 @task
 def upload_plugins_pack():
     '''
-    Upload archive with all plugins.
+    Upload archive with all plugins to site
     '''
     pluginsBuilder = BuilderPlugins()
     pack_path = pluginsBuilder.get_plugins_pack_path()
@@ -579,9 +591,9 @@ def _add_git_tag(tagname):
 @task
 @linux_only
 def deploy(is_stable=False):
-    """
-    Upload unstable version on the site
-    """
+    '''
+    Upload unstable version to site
+    '''
     version_str = getOutwikerVersionStr()
     if is_stable:
         deploy(False)
@@ -604,6 +616,9 @@ def deploy(is_stable=False):
 
 @task(alias='apiversions')
 def apiversion():
+    '''
+    Print current OutWiker API versions
+    '''
     print(u'core: {}.{}'.format(outwiker.core.__version__[0],
                                 outwiker.core.__version__[1]))
     print(u'gui: {}.{}'.format(outwiker.gui.__version__[0],
@@ -620,6 +635,9 @@ def apiversion():
 
 @task
 def doc():
+    '''
+    Build documentation
+    '''
     doc_path = u'doc/_build'
     if os.path.exists(doc_path):
         shutil.rmtree(doc_path)
@@ -640,7 +658,7 @@ def prepare_virtual():
 @task
 def vm_run():
     '''
-    Run virtual machines for build.
+    Run virtual machines for build
     '''
     for host_param in VM_BUILD_PARAMS.values():
         with lcd(host_param[u'vagrant_path']):
@@ -650,7 +668,7 @@ def vm_run():
 @task(alias='vm_halt')
 def vm_stop():
     '''
-    Stop virtual machines for build.
+    Stop virtual machines for build
     '''
     for host_param in VM_BUILD_PARAMS.values():
         with lcd(host_param[u'vagrant_path']):
@@ -660,6 +678,9 @@ def vm_stop():
 @task
 @linux_only
 def vm_remove_keys():
+    '''
+    Remove local SSH keys for remote virual machines
+    '''
     for host_param in VM_BUILD_PARAMS.values():
         host = host_param[u'host']
         local(u'ssh-keygen -f ~/.ssh/known_hosts -R {}'.format(host))
@@ -668,7 +689,7 @@ def vm_remove_keys():
 @task
 def vm_prepare():
     '''
-    Prepare virtual machines for build,
+    Prepare virtual machines for build
     '''
     vm_run()
     with lcd(u'need_for_build/virtual/build_machines'):
@@ -677,6 +698,9 @@ def vm_prepare():
 
 @task
 def vm_linux_binary(is_stable=0):
+    '''
+    Create 32- and 64-bit assembly on virtual machines
+    '''
     vm_run()
     version_str = getOutwikerVersionStr()
     version = getOutwikerVersion()
