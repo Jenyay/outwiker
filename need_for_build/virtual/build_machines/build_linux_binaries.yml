@@ -39,7 +39,6 @@
         command: fab deb_binary:{{ is_stable }}
         args:
             chdir: "{{ outwiker_dir }}"
-        ignore_errors: true
 
       - name: Download deb packages
         fetch:

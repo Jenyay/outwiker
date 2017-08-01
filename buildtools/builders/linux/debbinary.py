@@ -4,7 +4,7 @@ from abc import ABCMeta, abstractmethod
 import os
 import shutil
 
-from fabric.api import local, lcd
+from fabric.api import local, lcd, settings
 
 from ..base import BuilderBase
 from ..binarybuilders import PyInstallerBuilderLinux
@@ -49,6 +49,19 @@ class BuilderDebBinaryBase(BuilderBase):
         # tmp/outwiker-x.x.x+xxx_.../
         self.debPath = self.facts.getTempSubpath(self.debName)
         self.debFileName = u'{}.deb'.format(self.debName)
+
+        self._files_to_remove = [
+            u'LICENSE.txt',
+            # u'libcrypto.so.1.0.0',
+            # u'libexpat.so.1',
+            # u'libfreetype.so.6',
+            # u'libz.so.1',
+            # u'libpng16.so.16',
+            # u'libxml2.so.2',
+            # u'libtiff.so.5',
+            # u'libtinfo.so.5',
+            # u'libjpeg.so.8',
+        ]
 
     def _getExecutableDir(self):
         return os.path.join(self.facts.temp_dir,
@@ -115,8 +128,9 @@ class BuilderDebBinaryBase(BuilderBase):
                     os.path.join(self.build_dir, self.debFileName))
 
     def _checkLintian(self):
-        with lcd(self.build_dir):
-            local(u'lintian --no-tag-display-limit {}.deb'.format(self.debName))
+        with settings(warn_only=True):
+            with lcd(self.build_dir):
+                local(u'lintian --no-tag-display-limit {}.deb'.format(self.debName))
 
     def _setPermissions(self):
         for par, dirs, files in os.walk(self.debPath):
@@ -136,10 +150,6 @@ class BuilderDebBinaryBase(BuilderBase):
                               exe_dir,
                               u'outwiker'), 0o755)
 
-        # DEBIAN_dir = self._getDEBIANPath()
-        # os.chmod(os.path.join(DEBIAN_dir, u'postinst'), 0o755)
-        # os.chmod(os.path.join(DEBIAN_dir, u'postrm'), 0o755)
-
         os.chmod(os.path.join(self.debPath, u'usr', u'bin', u'outwiker'),
                  0o755)
 
@@ -153,7 +163,9 @@ class BuilderDebBinaryBase(BuilderBase):
                                                dest_dir,
                                                temp_dir)
         linuxBuilder.build()
-        self._remove(os.path.join(dest_dir, u'LICENSE.txt'))
+
+        for fname in self._files_to_remove:
+            self._remove(os.path.join(dest_dir, fname))
 
     def _create_bin_file(self):
         '''
