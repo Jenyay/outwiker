@@ -5,11 +5,14 @@
    :maxdepth: 2
 
    pageformat
-   styles
    plugins
+   styles
+   application
+   events
    version_format
    core
    actions
    gui
    wiki_parser
    locale
+   apiversions
