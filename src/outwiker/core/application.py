@@ -118,7 +118,7 @@ class ApplicationParams(object):
         #     --
         self.onForceSave = Event()
 
-        # The event occurs after wiki parser (Parser cllass) creation,
+        # The event occurs after wiki parser (Parser class) creation,
         # but before it using
         # Parameter:
         #     parser - Parser class instance
@@ -171,18 +171,18 @@ class ApplicationParams(object):
         #             class
         self.onPostprocessing = Event()
 
-        # Event occurs during HtmlImproverFactory instance creation
-        # Parameters:
-        #     factory - HtmlImproverFactory instance in which can add
-        #     the new HtmlImprover instances by add() method
-        self.onPrepareHtmlImprovers = Event()
-
-        # Event occurs after wiki parsing but before HTML improveing
+        # Event occurs after wiki parsing but before HTML improving
         # Parameters:
         #     page - page for which HTML is generated
         #     params - instance of the
         #              outwiker.core.events.PreHtmlImprovingParams class
         self.onPreHtmlImproving = Event()
+
+        # Event occurs during HtmlImproverFactory instance creation
+        # Parameters:
+        #     factory - HtmlImproverFactory instance in which can add
+        #     the new HtmlImprover instances by add() method
+        self.onPrepareHtmlImprovers = Event()
 
         # Event occurs when cursor hovers under link on preview tab
         # Parameters:
