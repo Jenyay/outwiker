@@ -48,9 +48,21 @@ Application. Экземпляр класса ApplicationParams
 
         Словарь общего назначения, предназначенный для временного хранения данных и передачи информации между сообщениями. Используется как буфер для хранения произвольных данных.
 
+    .. py:attribute:: wikiroot
+
+        Корень открытого в данный момент дерева заметок. Экземпляр класса :class:`outwiker.core.tree.WikiDocument` или `None`, если в данный момент нет открытого дерева заметок.
+
+    .. py:attribute:: selectedPage
+
+        Выбранная в данный момент страница. Экземпляр класса, производного от :class:`outwiker.core.tree.WikiPage` или `None`, если в данный момент нет открытого дерева заметок или никакая страница не выбрана.
+
+    .. py:attribute:: mainWindow
+
+        Ссылка на экземпляр класса :class:`outwiker.gui.mainwikdow.MainWindow` главного окна программы.
+
     .. py:attribute:: customEvents
 
-        Экземпляр класса :class:`outwiker.core.event.CustomEvents`, предназначенный для работы с нестандартынми событиями (например, событиями, созданными плагинами).
+        Экземпляр класса :class:`outwiker.core.event.CustomEvents`, предназначенный для работы с нестандартными событиями (например, событиями, созданными плагинами).
 
     .. py:attribute:: onWikiOpen
 
@@ -138,7 +150,7 @@ Application. Экземпляр класса ApplicationParams
 
     .. py:attribute:: onForceSave
 
-        **Событие.** Экземпляр класса :class:`outwiker.core.event.Events`. Вызывается, чтобы принудительно заставить сохранить текущую страницу. Обработчик не должен принимать никакие параметры.
+        **Событие.** Экземпляр класса :class:`outwiker.core.event.Events`. Можно вызвать, чтобы принудительно заставить сохранить текущую страницу. Обработчик не должен принимать никакие параметры.
 
     .. py:attribute:: onWikiParserPrepare
 
@@ -218,6 +230,66 @@ Application. Экземпляр класса ApplicationParams
         **Событие.** Экземпляр класса :class:`outwiker.core.event.Events`. Вызывается, в процессе уничтожения диалога для установки свойств страницы. Обработчик должен принимать параметры:
             * `page` - страница, для которой вызывается диалог. Экземпляр класса :class:`outwiker.core.tree.WikiPage` или производного от него.
             * `params` - экземпляр класса :class:`outwiker.core.events.PageDialogDestroyParams`.
+
+    .. py:attribute:: onPageDialogPageTypeChanged
+
+        **Событие.** Экземпляр класса :class:`outwiker.core.event.Events`. Вызывается, когда в диалоге изменения свойств страницы пользователь меняет тип страницы. Это событие можно использовать, например, для настройки внешнего вида диалога изменения свойств страницы в зависимости от выбранного типа страницы. Обработчик должен принимать параметры:
+            * `page` - страница, для которой вызывается диалог. Экземпляр класса :class:`outwiker.core.tree.WikiPage` или производного от него.
+            * `params` - экземпляр класса :class:`outwiker.core.events.PageDialogPageTypeChangedParams`.
+
+    .. py:attribute:: onPageDialogPageTitleChanged
+
+        **Событие.** Экземпляр класса :class:`outwiker.core.event.Events`. Вызывается, когда в диалоге изменения свойств страницы пользователь меняет заголовок страницы. Обработчик должен принимать параметры:
+            * `page` - страница, для которой вызывается диалог. Экземпляр класса :class:`outwiker.core.tree.WikiPage` или производного от него.
+            * `params` - экземпляр класса :class:`outwiker.core.events.PageDialogPageTitleChangedParams`.
+
+    .. py:attribute:: onPageDialogPageStyleChanged
+
+        **Событие.** Экземпляр класса :class:`outwiker.core.event.Events`. Вызывается, когда в диалоге изменения свойств страницы пользователь меняет стиль страницы. Обработчик должен принимать параметры:
+            * `page` - страница, для которой вызывается диалог. Экземпляр класса :class:`outwiker.core.tree.WikiPage` или производного от него.
+            * `params` - экземпляр класса :class:`outwiker.core.events.PageDialogPageStyleChangedParams`.
+
+    .. py:attribute:: onPageDialogPageIconChanged
+
+        **Событие.** Экземпляр класса :class:`outwiker.core.event.Events`. Вызывается, когда в диалоге изменения свойств страницы пользователь меняет иконку страницы. Обработчик должен принимать параметры:
+            * `page` - страница, для которой вызывается диалог. Экземпляр класса :class:`outwiker.core.tree.WikiPage` или производного от него.
+            * `params` - экземпляр класса :class:`outwiker.core.events.PageDialogPageIconChangedParams`.
+
+    .. py:attribute:: onPageDialogPageTagsChanged
+
+        **Событие.** Экземпляр класса :class:`outwiker.core.event.Events`. Вызывается, когда в диалоге изменения свойств страницы пользователь меняет теги страницы. Обработчик должен принимать параметры:
+            * `page` - страница, для которой вызывается диалог. Экземпляр класса :class:`outwiker.core.tree.WikiPage` или производного от него.
+            * `params` - экземпляр класса :class:`outwiker.core.events.PageDialogPageTagsChangedParams`.
+
+    .. py:attribute:: onPageDialogPageFactoriesNeeded
+
+        **Событие.** Экземпляр класса :class:`outwiker.core.event.Events`. Вызывается во время создания диалога редактирования свойств страницы. Обработчик этого события может добавлять нестандартные типы фабрик страниц, чтобы пользователь мог выбрать новый тип страниц в соответствующем выпадающем списке. В основном событие нежно для плагинов, которые добавляют новые типы страниц. Обработчик должен принимать параметры:
+            * `page` - страница, для которой вызывается диалог. Экземпляр класса :class:`outwiker.core.tree.WikiPage` или производного от него.
+            * `params` - экземпляр класса :class:`outwiker.core.events.PageDialogPageFactoriesNeededParams`.
+
+    .. py:attribute:: onEditorStyleNeeded
+
+        **Событие.** Экземпляр класса :class:`outwiker.core.event.Events`. Вызывается в процессе раскраски текста страницы в редакторе заметок. Обработчик должен принимать параметры:
+            * `page` - страница, для которой вызывается диалог. Экземпляр класса :class:`outwiker.core.tree.WikiPage` или производного от него.
+            * `params` - экземпляр класса :class:`outwiker.core.events.EditorStyleNeededParams`.
+
+    .. py:attribute:: onPageUpdateNeeded
+
+        **Событие.** Экземпляр класса :class:`outwiker.core.event.Events`. Вызывается, чтобы принудительно обновить текущую страницу. Обработчик должен принимать параметры:
+            * `page` - страница, для которой вызывается диалог. Экземпляр класса :class:`outwiker.core.tree.WikiPage` или производного от него.
+            * `params` - экземпляр класса :class:`outwiker.core.events.PageUpdateNeededParams`.
+
+    .. py:attribute:: onPreWikiOpen
+
+        **Событие.** Экземпляр класса :class:`outwiker.core.event.Events`. Вызывается до того, как будет открыто новое дерево заметок. Обработчик должен принимать параметры:
+            * `page` - страница, для которой вызывается диалог. Экземпляр класса :class:`outwiker.core.tree.WikiPage` или производного от него.
+            * `params` - экземпляр класса :class:`outwiker.core.events.PreWikiOpenParams`.
+
+    .. py:attribute:: onPostWikiOpen
+
+        **Событие.** Экземпляр класса :class:`outwiker.core.event.Events`. Вызывается после попытки открытия нового дерева заметок. Отличие от события `onWikiOpen` заключается в том, что `onPostWikiOpen` вызывается также после неудачных попыток открыть дерево заметок. Обработчик должен принимать параметры:
+            * `page` - страница, для которой вызывается диалог. Экземпляр класса :class:`outwiker.core.tree.WikiPage` или производного от него.
+            * `params` - экземпляр класса :class:`outwiker.core.events.PostWikiOpenParams`.
 
 
 
