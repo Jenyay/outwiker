@@ -198,7 +198,7 @@ def plugins_clear():
 @task
 def sources(is_stable=False):
     '''
-    Create the sources archives as stable version
+    Create the sources archives
     '''
     builder = BuilderSources(is_stable=tobool(is_stable))
     builder.build()
@@ -587,6 +587,21 @@ def _add_git_tag(tagname):
     local(u'git push --tags')
 
 
+@task
+def build(is_stable=False):
+    if is_stable:
+        build(False)
+
+    sources(is_stable)
+    plugins(True)
+
+    if sys.platform.startswith('linux'):
+        vm_linux_binary(is_stable)
+        deb_sources_included(is_stable)
+    elif sys.platform.startswith('win32'):
+        win(is_stable)
+
+
 @hosts(DEPLOY_SERVER_NAME)
 @task
 @linux_only
@@ -594,18 +609,23 @@ def deploy(is_stable=False):
     '''
     Upload unstable version to site
     '''
-    version_str = getOutwikerVersionStr()
     if is_stable:
         deploy(False)
-
-    vm_linux_binary(is_stable)
+    else:
+        # To upload only once
+        upload_plugin()
+        upload_plugins_pack()
 
     ppa_path = PPA_STABLE_PATH if is_stable else PPA_UNSTABLE_PATH
-    deb_path = deb_sources_included(is_stable)
+
+    deb_path = BuilderDebSourcesIncluded(DEB_SOURCE_BUILD_DIR,
+                                         UBUNTU_RELEASE_NAMES,
+                                         tobool(is_stable)).getResultPath()
     _ppa_upload(ppa_path, deb_path)
 
     upload_binary(is_stable)
 
+    version_str = getOutwikerVersionStr()
     if is_stable:
         tagname = u'release_{}'.format(version_str)
     else:
@@ -663,6 +683,16 @@ def vm_run():
     for host_param in VM_BUILD_PARAMS.values():
         with lcd(host_param[u'vagrant_path']):
             local(u'vagrant up')
+
+
+@task
+def vm_update():
+    '''
+    Update the virtual machines
+    '''
+    for host_param in VM_BUILD_PARAMS.values():
+        with lcd(host_param[u'vagrant_path']):
+            local(u'vagrant box update')
 
 
 @task(alias='vm_halt')

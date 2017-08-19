@@ -13,10 +13,14 @@
         apt: name={{ item }}
         with_items:
           - mc
-          - python-pip
-          - git
-          - konsole
           - vim-gtk3
+        become: true
+
+      - name: Install software to build OutWiker
+        apt: name={{ item }}
+        with_items:
+          - git
+          - python-pip
           - fabric
           - python-wxgtk3.0
           - python-wxversion
