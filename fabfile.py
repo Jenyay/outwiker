@@ -354,7 +354,7 @@ def deb_binary_clear():
 @task
 def clear():
     '''
-    Remove artifacts after all assemblies
+    Remove artefacts after all assemblies
     '''
     plugins_clear()
     sources_clear()
@@ -589,6 +589,9 @@ def _add_git_tag(tagname):
 
 @task
 def build(is_stable=False):
+    '''
+    Create artefacts for current version.
+    '''
     if is_stable:
         build(False)
 
