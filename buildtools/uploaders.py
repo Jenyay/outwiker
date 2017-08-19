@@ -29,9 +29,11 @@ class BinaryUploader(object):
 
         version = getOutwikerVersion()
 
-        files_for_upload_win = [fname.format(version=version[0])
+        files_for_upload_win = [fname.format(version=version[0],
+                                             build=version[1])
                                 for fname in win_tpl_files]
-        files_for_upload_linux = [fname.format(version=version[0])
+        files_for_upload_linux = [fname.format(version=version[0],
+                                               build=version[1])
                                   for fname in linux_tpl_files]
 
         upload_files_win = map(
