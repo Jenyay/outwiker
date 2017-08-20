@@ -7,3 +7,4 @@
    :maxdepth: 2
 
    plugins_start
+   plugins_events
