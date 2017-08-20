@@ -5,7 +5,6 @@
    :maxdepth: 2
 
    pageformat
-   plugins
    styles
    application
    events
