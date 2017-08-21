@@ -103,7 +103,7 @@ def _os_only(func, os_str, name):
             ))
             sys.exit(1)
         else:
-            func(*args, **kwargs)
+            return func(*args, **kwargs)
 
     wrapped.__name__ = func.__name__
     wrapped.__doc__ = func.__doc__
