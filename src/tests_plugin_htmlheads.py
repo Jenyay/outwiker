@@ -5,19 +5,6 @@
 Unit-тесты
 """
 
-import os
-from outwiker.core.defines import WX_VERSION
-
-import wxversion
-
-try:
-    wxversion.select(WX_VERSION)
-except wxversion.VersionError:
-    if os.name == "nt":
-        pass
-    else:
-        raise
-
 import wx
 
 
