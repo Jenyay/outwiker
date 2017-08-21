@@ -537,6 +537,7 @@ class MainWindow(wx.Frame):
         assert self.attachPanel is not None
         assert self.tagsCloudPanel is not None
 
+        Application.plugins.clear()
         self.__saveParams()
         self.toolbars.updatePanesInfo()
         self.destroyPagePanel(True)
