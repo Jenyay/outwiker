@@ -7,8 +7,7 @@
 		<website>http://jenyay.net/Outwiker/UnstableEn</website>
 
 		<changelog>
-			<version number="2.1.0.825" status="dev">
-				<change>Bug fixes.</change>
+			<version number="2.1.0.826" status="dev" date="August 22, 2017">
 				<change>Created the binary deb package for Linux.</change>
 			</version>
 		</changelog>
@@ -24,8 +23,7 @@
 		<website>http://jenyay.net/Outwiker/Unstable</website>
 
 		<changelog>
-			<version number="2.1.0.825" status="dev">
-				<change>Исправление ошибок.</change>
+			<version number="2.1.0.826" status="dev" date="22.08.2017">
 				<change>Созданы бинарные deb-пакеты под Linux.</change>
 			</version>
 		</changelog>
