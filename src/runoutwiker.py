@@ -3,23 +3,11 @@
 
 import os
 import os.path
-import sys
 import logging
-
-from outwiker.core.defines import WX_VERSION, APP_DATA_DEBUG
-import wxversion
-
-try:
-    wxversion.select(WX_VERSION)
-except wxversion.VersionError:
-    if(sys.argv[0].endswith('outwiker') or
-            sys.argv[0].endswith('outwiker.exe')):
-        pass
-    else:
-        raise
 
 import wx
 
+from outwiker.core.defines import APP_DATA_DEBUG
 from outwiker.core.application import Application
 from outwiker.core.system import getOS, getPluginsDirList, getConfigPath
 from outwiker.core.starter import Starter, StarterExit
