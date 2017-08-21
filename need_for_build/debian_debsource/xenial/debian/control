@@ -8,7 +8,7 @@ Homepage: http://jenyay.net/Outwiker/English
 
 Package: outwiker
 Architecture: all
-Depends: python2.7 (>=2.7), python-wxgtk3.0, python-wxversion, libwxgtk-webview3.0-0v5, python-pil|python-imaging, python-enchant, python-appindicator, python-gtk2, ibus-gtk3, ${python:Depends}, ${misc:Depends}
+Depends: python2.7 (>=2.7), python-wxgtk3.0, libwxgtk-webview3.0-0v5, python-pil|python-imaging, python-enchant, python-appindicator, python-gtk2, ibus-gtk3, ${python:Depends}, ${misc:Depends}
 Description: Outliner and personal wiki
  OutWiker is designed to store notes in a tree. Such programs are called
  "outliner", personal wiki, or tree-like editors. OutWiker's main difference
