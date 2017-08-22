@@ -32,7 +32,8 @@
 
         apiversion            Print current OutWiker API versions
         apiversions           Print current OutWiker API versions
-        clear                 Remove artifacts after all assemblies
+        build                 Create artefacts for current version.
+        clear                 Remove artefacts after all assemblies
         create_tree           Create wiki tree for the tests
         deb                   Assemble the deb packages
         deb_binary            Create binary deb package
@@ -56,7 +57,7 @@
         prepare_virtual       Prepare virtual machine
         run                   Run OutWiker from sources
         site_versions         Compare current OutWiker and plugins versions with versions on the site
-        sources               Create the sources archives as stable version
+        sources               Create the sources archives
         sources_clear         Remove the sources archives.
         test                  Run the unit tests
         test_build            Run the build unit tests
@@ -69,6 +70,7 @@
         vm_remove_keys        Remove local SSH keys for remote virual machines
         vm_run                Run virtual machines for build
         vm_stop               Stop virtual machines for build
+        vm_update             Update the virtual machines
         win                   Build OutWiker for Windows with cx_Freeze
         win_clear             Remove assemblies under Windows
 
@@ -97,11 +99,19 @@
     Некоторые команды Fabric принимают булевы параметры. Чтобы в такую задачу передать значение `True`, в качестве параметра в командной строке нужно передать одно из следующих значений: 1 или true (независимо от регистра). Чтобы передать значение False, нужно передать какое-либо другое значение.
 
 
+.. _ru_fabfile_build:
+
+Сборка
+------
+
+build
+    Запускает сборку OutWiker под ту операционную систему, в которой запущена данная команда. Под Windows запускается команда сборки `win` (см. раздел :ref:`ru_fabfile_win`), под Linux - `vm_linux_binary` и `deb_sources_included` (см. раздел :ref:`ru_fabfile_linux`). Также под всеми операционными системами запускается команда `source` для создания архивов с исходными кодами (см. раздел :ref:`ru_fabfile_other`) и команда `plugins` для создания архивов с плагинами (см. раздел :ref:`ru_fabfile_plugins`).
+
 
 .. _ru_fabfile_win:
 
 Сборка под Windows
-------------------
+~~~~~~~~~~~~~~~~~~
 
 win
     Сборка OutWiker под Windows с помощью PyInstaller_, а также инсталятор с помощью `Inno Setup`_. Подробнее см. раздел :ref:`ru_build_windows`.
@@ -113,7 +123,7 @@ win_clear
 .. _ru_fabfile_linux:
 
 Сборка под Linux
-----------------
+~~~~~~~~~~~~~~~~
 
 `deb`
     Создать deb-пакет на основе исходных кодов для всех поддерживаемых версий Ubuntu.
@@ -194,7 +204,7 @@ win_clear
 -----------------------------------
 
 `deploy`
-    Закачать собранную версию под Windows, собрать deb-пакеты и закачать их на PPA, установить тег в репозитории исходных кодов в соответствии с текущей версией OutWiker. Работает для стабильной и нестабильной версий.
+    Команда закачивает бинарные сборки под Windows и Linux на сайт, закачивает deb-пакеты (на основе исходников, не бинарные) на PPA, устанавливает тег в репозитории исходных кодов в соответствии с текущей версией OutWiker. Команда работает для стабильной и нестабильной версий.
 
 `outwiker_changelog`
     Вывести список изменений, который нужно будет вставить на сайт. В качестве параметра требуется указать язык: ru или en.
