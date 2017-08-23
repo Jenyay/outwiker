@@ -1,0 +1,52 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+<info>
+	<name>DebugEventsPlugin</name>
+    <updates>http://example.com/pluginname/plugin.xml</updates>
+    <requirements>
+        <os>Windows, Linux</os>
+		<packages>
+			<core>1.3</core>
+			<actions>1.1</actions>
+			<gui>1.5</gui>
+			<pages>2.0</pages>
+			<utilites>1.0</utilites>
+			<libs>1.0</libs>
+		</packages>
+    </requirements>
+
+	<data lang="en">
+		<website>http://jenyay.net/Outwiker/DebugEventsEn</website>
+		<description>Plugin to watch for the OutWiker events.</description>
+
+		<author>
+			<name>Eugene Ilin</name>
+			<email>jenyay.ilin@gmail.com</email>
+			<site>http://jenyay.net</site>
+		</author>
+
+		<changelog>
+			<version number="1.0">
+                <download os="all">http://jenyay.net/uploads/Outwiker/DebugEvents/debugevents-1.0.zip</download>
+				<change>The first version.</change>
+			</version>
+		</changelog>
+	</data>
+
+	<data lang="ru">
+		<website>http://jenyay.net/Outwiker/DebugEvents</website>
+		<description>Плагин для отслеживания событий OutWiker.</description>
+
+		<author>
+			<name>Евгений Ильин</name>
+			<email>jenyay.ilin@gmail.com</email>
+			<site>http://jenyay.net</site>
+		</author>
+
+		<changelog>
+			<version number="1.0">
+                <download os="all">http://jenyay.net/uploads/Outwiker/DebugEvents/debugevents-1.0.zip</download>
+				<change>Первая версия.</change>
+			</version>
+		</changelog>
+	</data>
+</info>
