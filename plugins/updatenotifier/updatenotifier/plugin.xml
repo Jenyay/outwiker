@@ -3,13 +3,12 @@
 	<name>UpdateNotifier</name>
 	<updates>http://jenyay.net/uploads/Outwiker/UpdateNotifier/plugin.xml</updates>
     <requirements>
-        <outwiker>1.7.0 dev</outwiker>
         <os>Windows, Linux</os>
 		<packages>
-			<core>1.0</core>
-			<actions>1.0</actions>
-			<gui>1.0</gui>
-			<pages>1.0, 2.0</pages>
+			<core>1.3</core>
+			<actions>1.1</actions>
+			<gui>1.5</gui>
+			<pages>2.0</pages>
 			<utilites>1.0</utilites>
 			<libs>1.0</libs>
 		</packages>
@@ -25,6 +24,12 @@
 			<site>http://jenyay.net</site>
 		</author>
 		<changelog>
+			<version number="2.0">
+                <download os="all">http://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-2.0.zip</download>
+				<change>New user interface.</change>
+				<change>The way of detection of new versions is changed.</change>
+			</version>
+
 			<version number="1.1.3" date="October 17, 2016">
                 <download os="all">http://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-1.1.3.zip</download>
 				<change>Added OutWiker 2.0 supporting.</change>
@@ -65,6 +70,12 @@
 		</author>
 
 		<changelog>
+			<version number="2.0">
+                <download os="all">http://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-2.0.zip</download>
+				<change>Новый интерфейс плагина.</change>
+				<change>Изменен способ обнаружения новых версий.</change>
+			</version>
+
 			<version number="1.1.3" date="17.10.2016">
                 <download os="all">http://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-1.1.3.zip</download>
 				<change>Добавлена поддержка OutWiker 2.0.</change>
