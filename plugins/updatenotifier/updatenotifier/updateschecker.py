@@ -47,8 +47,8 @@ class UpdatesChecker(object):
         setStatusText(u"")
 
         currentVersion = getCurrentVersion()
-        stableVersion = verList.stableVersion
-        unstableVersion = verList.unstableVersion
+        stableVersion = verList.stableVersionInfo
+        unstableVersion = verList.unstableVersionInfo
 
         updatedPlugins = self.getUpdatedPlugins(verList)
 
@@ -57,15 +57,15 @@ class UpdatesChecker(object):
 
         if stableVersion is not None:
             updateDialog.setLatestStableOutwikerVersion(
-                stableVersion,
-                currentVersion < stableVersion)
+                stableVersion.currentVersion,
+                currentVersion < stableVersion.currentVersion)
         else:
             updateDialog.setLatestStableOutwikerVersion(currentVersion, False)
 
         if unstableVersion is not None:
             updateDialog.setLatestUnstableOutwikerVersion(
-                unstableVersion,
-                currentVersion < unstableVersion)
+                unstableVersion.currentVersion,
+                currentVersion < unstableVersion.currentVersion)
         else:
             updateDialog.setLatestUnstableOutwikerVersion(
                 currentVersion,
@@ -87,18 +87,18 @@ class UpdatesChecker(object):
         Возвращает True, если есть обновления в плагинах или самой программы
         """
         currentVersion = getCurrentVersion()
-        stableVersion = verList.stableVersion
-        unstableVersion = verList.unstableVersion
+        stableVersion = verList.stableVersionInfo
+        unstableVersion = verList.unstableVersionInfo
 
         updatedPlugins = self.getUpdatedPlugins(verList)
 
         # Обновилась ли нестабильная версия(или игнорируем ее)
         unstableUpdate = (unstableVersion is not None and
-                          currentVersion < unstableVersion and
+                          currentVersion < unstableVersion.currentVersion and
                           not self._config.ignoreUnstable)
 
         stableUpdate = (stableVersion is not None and
-                        currentVersion < stableVersion)
+                        currentVersion < stableVersion.currentVersion)
 
         result = len(updatedPlugins) != 0 or unstableUpdate or stableUpdate
 
