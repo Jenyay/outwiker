@@ -7,76 +7,91 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UpdateNotifier\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-01-05 12:54+0400\n"
-"PO-Revision-Date: 2014-01-05 12:56+0300\n"
+"POT-Creation-Date: 2017-08-24 13:08+0300\n"
+"PO-Revision-Date: 2017-08-24 13:08+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language: ru_RU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 2.0.1\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-#: actions.py:24 guicreators.py:45
-msgid "Check for Updates..."
-msgstr "Проверить обновления..."
-
-#: actions.py:29
-msgid "UpdateNotifier plugin. Check for updates"
-msgstr "Плагин UpdateNotifier. Поиск обновлений."
-
-#: actions.py:52 guicreators.py:49
-msgid "Silence check for Updates..."
-msgstr "Тихая проверка обновлений..."
-
-#: actions.py:57
-msgid "UpdateNotifier plugin. Check for updates. Silence mode"
-msgstr "Плагин UpdateNotifier. Поиск обновлений. Тихий режим."
-
-#: controller.py:102
+#: controller.py:93
 msgid "UpdateNotifier [Plugin]"
 msgstr "UpdateNotifier [Плагин]"
 
-#: preferencepanel.py:40
+#: versionlist.py:36 updatedialog.py:53
+msgid "http://jenyay.net/Outwiker/English"
+msgstr "http://jenyay.net/Soft/Outwiker"
+
+#: versionlist.py:39 updatedialog.py:74
+msgid "http://jenyay.net/Outwiker/UnstableEn"
+msgstr "http://jenyay.net/Outwiker/Unstable"
+
+#: versionlist.py:59
+msgid "__updateLang"
+msgstr "ru"
+
+#: versionlist.py:95
+msgid "http://jenyay.net/Outwiker/ExternalToolsEn"
+msgstr "http://jenyay.net/Outwiker/ExternalTools"
+
+#: versionlist.py:96
+msgid "http://jenyay.net/Outwiker/LightboxEn"
+msgstr "http://jenyay.net/Outwiker/Lightbox"
+
+#: versionlist.py:97
+msgid "http://jenyay.net/Outwiker/LivejournalPluginEn"
+msgstr "http://jenyay.net/Outwiker/LivejournalPlugin"
+
+#: versionlist.py:98
+msgid "http://jenyay.net/Outwiker/SpoilerEn"
+msgstr "http://jenyay.net/Outwiker/Spoiler"
+
+#: versionlist.py:99
+msgid "http://jenyay.net/Outwiker/StylePluginEn"
+msgstr "http://jenyay.net/Outwiker/StylePlugin"
+
+#: versionlist.py:100
+msgid "http://jenyay.net/Outwiker/ThumbGalleryEn"
+msgstr "http://jenyay.net/Outwiker/ThumbGallery"
+
+#: plugin.py:27
+msgid ""
+"Check for update OutWiker and plug-ins for it.\n"
+"\n"
+"Append menu item \"Help -> Check for Updates...\""
+msgstr ""
+
+#: plugin.py:33
+msgid "http://jenyay.net/Outwiker/UpdateNotifierEn"
+msgstr "http://jenyay.net/Outwiker/UpdateNotifier"
+
+#: actions.py:23 guicreators.py:45
+msgid "Check for Updates..."
+msgstr "Проверить обновления..."
+
+#: actions.py:28
+msgid "UpdateNotifier plugin. Check for updates"
+msgstr "Плагин UpdateNotifier. Поиск обновлений."
+
+#: actions.py:51 guicreators.py:49
+msgid "Silence check for Updates..."
+msgstr "Тихая проверка обновлений..."
+
+#: actions.py:56
+msgid "UpdateNotifier plugin. Check for updates. Silence mode"
+msgstr "Плагин UpdateNotifier. Поиск обновлений. Тихий режим."
+
+#: preferencepanel.py:35
 msgid "Check for updates"
 msgstr "Проверка обновлений"
 
-#: preferencepanel.py:61
+#: preferencepanel.py:56
 msgid "Ignore updates unstable versions"
 msgstr "Игнорировать обновления нестабильных версий"
-
-#: prefpanelcontroller.py:26
-msgid "Never"
-msgstr "Никогда"
-
-#: prefpanelcontroller.py:27
-msgid "Every day"
-msgstr "Каждый день"
-
-#: prefpanelcontroller.py:28
-msgid "Every two days"
-msgstr "Раз в два дня"
-
-#: prefpanelcontroller.py:29
-msgid "Every three days"
-msgstr "Раз в три дня"
-
-#: prefpanelcontroller.py:30
-msgid "Every week"
-msgstr "Раз в неделю"
-
-#: prefpanelcontroller.py:31
-msgid "Every two weeks"
-msgstr "Раз в две недели"
-
-#: prefpanelcontroller.py:32
-msgid "Every month"
-msgstr "Раз в месяц"
-
-#: prefpanelcontroller.py:58
-msgid "Custom"
-msgstr "Другое"
 
 #: updatedialog.py:23
 msgid "UpdateNotifier"
@@ -90,65 +105,56 @@ msgstr "Текущая версия OutWiker"
 msgid "Latest stable OutWiker version"
 msgstr "Последняя стабильная версия OutWiker"
 
-#: updatedialog.py:53 versionlist.py:28
-msgid "http://jenyay.net/Outwiker/English"
-msgstr "http://jenyay.net/Soft/Outwiker"
-
 #: updatedialog.py:73
 msgid "Latest unstable OutWiker version"
 msgstr "Последняя нестабильная версия OutWiker"
-
-#: updatedialog.py:74 versionlist.py:31
-msgid "http://jenyay.net/Outwiker/UnstableEn"
-msgstr "http://jenyay.net/Outwiker/Unstable"
 
 #: updatedialog.py:94
 msgid "Updated plugins:"
 msgstr "Обновленные плагины:"
 
-#: updatenotifier.py:48
-msgid ""
-"Check for update OutWiker and plug-ins for it. Append menu item \"Help -> "
-"Check for Updates...\""
-msgstr ""
-"Проверка обновлений OutWiker и плагинов к нему. Плагин добавляет пункт меню "
-"\"Справка -> Проверить обновления...\""
-
-#: updatenotifier.py:58
-msgid "http://jenyay.net/Outwiker/UpdateNotifierEn"
-msgstr "http://jenyay.net/Outwiker/UpdateNotifier"
-
-#: updateschecker.py:164 updateschecker.py:179 updateschecker.py:184
+#: updateschecker.py:166 updateschecker.py:180 updateschecker.py:186
 msgid "Check for new versions..."
 msgstr "Поиск новых версий..."
 
-#: updateschecker.py:194
+#: updateschecker.py:196
 msgid "Updates not found"
 msgstr "Обновления не найдены"
 
-#: versionlist.py:63
-msgid "http://jenyay.net/Outwiker/ExternalToolsEn"
-msgstr "http://jenyay.net/Outwiker/ExternalTools"
+#: prefpanelcontroller.py:25
+msgid "Never"
+msgstr "Никогда"
 
-#: versionlist.py:64
-msgid "http://jenyay.net/Outwiker/LightboxEn"
-msgstr "http://jenyay.net/Outwiker/Lightbox"
+#: prefpanelcontroller.py:26
+msgid "Every day"
+msgstr "Каждый день"
 
-#: versionlist.py:65
-msgid "http://jenyay.net/Outwiker/LivejournalPluginEn"
-msgstr "http://jenyay.net/Outwiker/LivejournalPlugin"
+#: prefpanelcontroller.py:27
+msgid "Every two days"
+msgstr "Раз в два дня"
 
-#: versionlist.py:66
-msgid "http://jenyay.net/Outwiker/SpoilerEn"
-msgstr "http://jenyay.net/Outwiker/Spoiler"
+#: prefpanelcontroller.py:28
+msgid "Every three days"
+msgstr "Раз в три дня"
 
-#: versionlist.py:67
-msgid "http://jenyay.net/Outwiker/StylePluginEn"
-msgstr "http://jenyay.net/Outwiker/StylePlugin"
+#: prefpanelcontroller.py:29
+msgid "Every week"
+msgstr "Раз в неделю"
 
-#: versionlist.py:68
-msgid "http://jenyay.net/Outwiker/ThumbGalleryEn"
-msgstr "http://jenyay.net/Outwiker/ThumbGallery"
+#: prefpanelcontroller.py:30
+msgid "Every two weeks"
+msgstr "Раз в две недели"
+
+#: prefpanelcontroller.py:31
+msgid "Every month"
+msgstr "Раз в месяц"
+
+#: prefpanelcontroller.py:57
+msgid "Custom"
+msgstr "Другое"
+
+#~ msgid "Check for update OutWiker and plug-ins for it. Append menu item \"Help -> Check for Updates...\""
+#~ msgstr "Проверка обновлений OutWiker и плагинов к нему. Плагин добавляет пункт меню \"Справка -> Проверить обновления...\""
 
 #~ msgid "Check for new versions"
 #~ msgstr "Поиск новых версий"

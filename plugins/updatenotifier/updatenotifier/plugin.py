@@ -5,14 +5,14 @@ import os.path
 from outwiker.core.pluginbase import Plugin
 from outwiker.core.system import getOS
 
-from updatenotifier.controller import Controller
-from updatenotifier.i18n import set_
+from .controller import Controller
+from .i18n import set_
 
 
 class PluginUpdateNotifier(Plugin):
     def __init__(self, application):
         super(PluginUpdateNotifier, self).__init__(application)
-        self._controller = Controller(application)
+        self._controller = Controller(self, application)
 
     @property
     def application(self):

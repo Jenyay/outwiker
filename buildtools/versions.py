@@ -56,7 +56,7 @@ def getLocalAppInfoList():
     Return AppInfo list for OutWiker and plug-ins.
     """
     app_list = [
-         readAppInfo (os.path.join(u'src', OUTWIKER_VERSIONS_FILENAME)),
+         readAppInfo(os.path.join(u'src', OUTWIKER_VERSIONS_FILENAME)),
     ]
 
     # Fill url_list with plugins.xml paths

@@ -19,60 +19,70 @@ from .i18n import get_
 UpdateVersionsEvent, EVT_UPDATE_VERSIONS = wx.lib.newevent.NewEvent()
 
 
-class UpdatesChecker (object):
+class UpdatesChecker(object):
     """
     Контроллер для управления UpdateDialog.
     Сюда вынесена вся логика.
     """
-    def __init__ (self, application):
+    def __init__(self, application):
         global _
         _ = get_()
 
         self._application = application
-        self._config = UpdatesConfig (self._application.config)
+        self._config = UpdatesConfig(self._application.config)
 
         # Экземпляр потока, который будет проверять новые версии
         self._silenceThread = None
         if self._application.mainWindow is not None:
-            self._application.mainWindow.Bind (EVT_UPDATE_VERSIONS, handler=self._onSilenceVersionUpdate)
+            self._application.mainWindow.Bind(
+                EVT_UPDATE_VERSIONS,
+                handler=self._onSilenceVersionUpdate)
 
-
-    def _showUpdates (self, verList):
+    def _showUpdates(self, verList):
         """
-        Сверяем полученные номера версий с теми, что установлены сейчас и заполняем диалог изменениями (updateDialog)
+        Сверяем полученные номера версий с теми,
+        что установлены сейчас и заполняем диалог изменениями(updateDialog)
         Возвращает True, если есть какие-нибудь обновления
         """
-        setStatusText (u"")
+        setStatusText(u"")
 
         currentVersion = getCurrentVersion()
         stableVersion = verList.stableVersion
         unstableVersion = verList.unstableVersion
 
-        updatedPlugins = self.getUpdatedPlugins (verList)
+        updatedPlugins = self.getUpdatedPlugins(verList)
 
-        updateDialog = UpdateDialog (self._application.mainWindow)
-        updateDialog.setCurrentOutWikerVersion (currentVersion)
+        updateDialog = UpdateDialog(self._application.mainWindow)
+        updateDialog.setCurrentOutWikerVersion(currentVersion)
 
         if stableVersion is not None:
-            updateDialog.setLatestStableOutwikerVersion (stableVersion, currentVersion < stableVersion)
+            updateDialog.setLatestStableOutwikerVersion(
+                stableVersion,
+                currentVersion < stableVersion)
         else:
-            updateDialog.setLatestStableOutwikerVersion (currentVersion, False)
+            updateDialog.setLatestStableOutwikerVersion(currentVersion, False)
 
         if unstableVersion is not None:
-            updateDialog.setLatestUnstableOutwikerVersion (unstableVersion, currentVersion < unstableVersion)
+            updateDialog.setLatestUnstableOutwikerVersion(
+                unstableVersion,
+                currentVersion < unstableVersion)
         else:
-            updateDialog.setLatestUnstableOutwikerVersion (currentVersion, False)
+            updateDialog.setLatestUnstableOutwikerVersion(
+                currentVersion,
+                False)
 
         for plugin in updatedPlugins:
-            updateDialog.addPluginInfo (plugin,
-                                        verList.getPluginVersion (plugin.name),
-                                        verList.getPluginUrl (plugin.name))
+            pluginInfo = verList.getPluginInfo(plugin.name)
+
+            updateDialog.addPluginInfo(
+                plugin,
+                pluginInfo.currentVersion,
+                pluginInfo.appwebsite)
 
         updateDialog.ShowModal()
         updateDialog.Destroy()
 
-
-    def hasUpdates (self, verList):
+    def hasUpdates(self, verList):
         """
         Возвращает True, если есть обновления в плагинах или самой программы
         """
@@ -80,115 +90,105 @@ class UpdatesChecker (object):
         stableVersion = verList.stableVersion
         unstableVersion = verList.unstableVersion
 
-        assert stableVersion is not None
-        assert unstableVersion is not None
+        updatedPlugins = self.getUpdatedPlugins(verList)
 
-        updatedPlugins = self.getUpdatedPlugins (verList)
+        # Обновилась ли нестабильная версия(или игнорируем ее)
+        unstableUpdate = (unstableVersion is not None and
+                          currentVersion < unstableVersion and
+                          not self._config.ignoreUnstable)
 
-        # Обновилась ли нестабильная версия (или игнорируем ее)
-        unstableUpdate = (currentVersion < unstableVersion) and not self._config.ignoreUnstable
+        stableUpdate = (stableVersion is not None and
+                        currentVersion < stableVersion)
 
-        result = ((currentVersion < stableVersion) or
-                  unstableUpdate or
-                  len (updatedPlugins) != 0)
+        result = len(updatedPlugins) != 0 or unstableUpdate or stableUpdate
 
         return result
 
-
-    def getUpdatedPlugins (self, verList):
+    def getUpdatedPlugins(self, verList):
         """
         Возвращает список плагинов, которые обновились
         """
         updatedPlugins = []
 
         for plugin in self._application.plugins:
-            pluginVersion = verList.getPluginVersion (plugin.name)
+            appInfo = verList.getPluginInfo(plugin.name)
+            if appInfo is None:
+                continue
+
+            pluginVersion = appInfo.currentVersion
 
             try:
-                currentPluginVersion = Version.parse (plugin.version)
+                currentPluginVersion = Version.parse(plugin.version)
             except ValueError:
                 continue
 
             try:
-                verList.getPluginUrl (plugin.name)
+                pluginInfo = verList.getPluginInfo(plugin.name)
+                pluginInfo.currentVersion
             except KeyError:
                 continue
 
             if (pluginVersion is not None and
                     pluginVersion > currentPluginVersion):
-                updatedPlugins.append (plugin)
+                updatedPlugins.append(plugin)
 
         return updatedPlugins
 
+    def _onSilenceVersionUpdate(self, event):
+        setStatusText(u"")
 
-    def _onSilenceVersionUpdate (self, event):
-        setStatusText (u"")
+        self._touchLastUpdateDate()
 
-        if self._isLoadingSuccess (event.verList):
-            self._touchLastUpdateDate()
-
-            if self.hasUpdates (event.verList):
-                self._showUpdates (event.verList)
+        if self.hasUpdates(event.verList):
+            self._showUpdates(event.verList)
 
         self._silenceThread = None
 
-
-    def _isLoadingSuccess (self, verList):
-        """
-        Возвращает True, если удалось загрузить номера версий, False в проитвнмо случае
-        """
-        return (verList.stableVersion is not None and
-                verList.unstableVersion is not None)
-
-
-    def _touchLastUpdateDate (self):
+    def _touchLastUpdateDate(self):
         self._config.lastUpdate = datetime.datetime.today()
 
-
-    def _silenceThreadFunc (self, verList):
+    def _silenceThreadFunc(self, verList):
         """
         Функция потока для молчаливой проверки обновлений
         """
         verList.updateVersions()
-        event = UpdateVersionsEvent (verList=verList)
+        event = UpdateVersionsEvent(verList=verList)
 
         if self._application.mainWindow:
-            wx.PostEvent (self._application.mainWindow, event)
+            wx.PostEvent(self._application.mainWindow, event)
 
-
-    def checkForUpdatesSilence (self):
+    def checkForUpdatesSilence(self):
         """
         Молчаливое обновление списка версий
         """
-        setStatusText (_(u"Check for new versions..."))
-        verList = VersionList (self._application.plugins)
+        setStatusText(_(u"Check for new versions..."))
+        verList = VersionList(self._application.plugins)
 
-        if (self._silenceThread is None or
-                not self._silenceThread.isAlive()):
-
-            self._silenceThread = threading.Thread (None, self._silenceThreadFunc, args=(verList,))
+        if (self._silenceThread is None or not self._silenceThread.isAlive()):
+            self._silenceThread = threading.Thread(None,
+                                                   self._silenceThreadFunc,
+                                                   args=(verList,))
             self._silenceThread.start()
 
-
-    def checkForUpdates (self):
+    def checkForUpdates(self):
         """
         Проверить обновления и показать диалог с результатами
         """
-        verList = VersionList (self._application.plugins)
-        setStatusText (_(u"Check for new versions..."))
+        verList = VersionList(self._application.plugins)
+        setStatusText(_(u"Check for new versions..."))
 
-        progressRunner = LongProcessRunner (verList.updateVersions,
-                                            self._application.mainWindow,
-                                            dialogTitle = u"UpdateNotifier",
-                                            dialogText = _(u"Check for new versions..."))
+        progressRunner = LongProcessRunner(
+            verList.updateVersions,
+            self._application.mainWindow,
+            dialogTitle=u"UpdateNotifier",
+            dialogText=_(u"Check for new versions..."))
 
         progressRunner.run()
 
-        if self._isLoadingSuccess (verList):
-            self._touchLastUpdateDate()
+        self._touchLastUpdateDate()
 
-            if self.hasUpdates (verList):
-                self._showUpdates (verList)
-            else:
-                MessageBox (_(u"Updates not found"),
-                            u"UpdateNotifier")
+        if self.hasUpdates(verList):
+            self._showUpdates(verList)
+        else:
+            MessageBox(_(u"Updates not found"),
+                       u"UpdateNotifier")

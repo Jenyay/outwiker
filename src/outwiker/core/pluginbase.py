@@ -50,6 +50,14 @@ class Plugin (object):
     def version(self, value):
         self._version = value
 
+    @property
+    def pluginPath(self):
+        '''
+        Return path to plugin's directory.
+        Added in outwiker.core 1.4
+        '''
+        return self._pluginPath
+
     ###################################################
     # Свойства и методы, которые необходимо определить
     ###################################################

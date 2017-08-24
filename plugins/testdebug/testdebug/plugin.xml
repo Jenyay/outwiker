@@ -1,6 +1,7 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <info>
 	<name>TestDebug</name>
+	<updates>http://jenyay.net/uploads/Outwiker/DebugPlugin/plugin.xml</updates>
     <requirements>
 		<packages>
 			<core>1.0</core>
@@ -14,9 +15,25 @@
 
 	<data lang="en">
 		<description>Test plug-in.</description>
+
+		<changelog>
+			<version number="0.6">
+                <download os="all">http://jenyay.net/uploads/Outwiker/DebugPlugin/debugplugin-0.6.zip</download>
+				<change>The first change.</change>
+				<change>The second change.</change>
+			</version>
+		</changelog>
 	</data>
 
 	<data lang="ru">
 		<description>Тестовый плагин.</description>
+
+		<changelog>
+			<version number="0.6">
+                <download os="all">http://jenyay.net/uploads/Outwiker/DebugPlugin/debugplugin-0.6.zip</download>
+				<change>Первое изменение.</change>
+				<change>Второе изменение.</change>
+			</version>
+		</changelog>
 	</data>
 </info>

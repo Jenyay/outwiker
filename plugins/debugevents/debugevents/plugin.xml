@@ -1,7 +1,7 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <info>
 	<name>DebugEventsPlugin</name>
-    <updates>http://example.com/pluginname/plugin.xml</updates>
+    <updates>http://jenyay.net/uploads/Outwiker/DebugEvents/plugin.xml</updates>
     <requirements>
         <os>Windows, Linux</os>
 		<packages>
