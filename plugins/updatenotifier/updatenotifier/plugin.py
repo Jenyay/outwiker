@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os.path
+import sys
 
 from outwiker.core.pluginbase import Plugin
 from outwiker.core.system import getOS
@@ -12,6 +13,7 @@ from .i18n import set_
 class PluginUpdateNotifier(Plugin):
     def __init__(self, application):
         super(PluginUpdateNotifier, self).__init__(application)
+        self._correctSysPath()
         self._controller = Controller(self, application)
 
     @property
@@ -39,6 +41,10 @@ Append menu item "Help -> Check for Updates..."''')
     def destroy(self):
         self._controller.destroy()
 
+    @property
+    def pluginPath(self):
+        return self._pluginPath
+
     def _initlocale(self, domain):
         langdir = unicode(os.path.join(os.path.dirname(__file__), "locale"),
                           getOS().filesEncoding)
@@ -50,3 +56,12 @@ Append menu item "Help -> Check for Updates..."''')
             print e
 
         set_(_)
+
+    def _correctSysPath(self):
+        syspath = [unicode(item, getOS().filesEncoding)
+                   if not isinstance(item, unicode)
+                   else item for item in sys.path]
+
+        libspath = os.path.join(self._pluginPath, u'libs')
+        if libspath not in syspath:
+            sys.path.insert(0, libspath)

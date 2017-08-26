@@ -2,17 +2,20 @@
 
 import datetime
 import threading
+import os.path
 
 import wx
 
 from outwiker.core.commands import getCurrentVersion, MessageBox, setStatusText
 from outwiker.core.version import Version
+from outwiker.utilites.textfile import readTextFile
 
 from .longprocessrunner import LongProcessRunner
 from .updatedialog import UpdateDialog
 from .updatesconfig import UpdatesConfig
 from .versionlist import VersionList
 from .i18n import get_
+from .contentgenerator import ContentGenerator
 
 # Событие срабатывает, когда завершается "молчаливое" обновление списка версий
 # Параметр verList - экземпляр класса VersionList
@@ -24,12 +27,14 @@ class UpdatesChecker(object):
     Контроллер для управления UpdateDialog.
     Сюда вынесена вся логика.
     """
-    def __init__(self, application):
+    def __init__(self, application, pluginPath):
         global _
         _ = get_()
 
         self._application = application
         self._config = UpdatesConfig(self._application.config)
+        self._dataPath = os.path.join(pluginPath, u'data')
+        self._updateTemplatePath = os.path.join(self._dataPath, u'update.html')
 
         # Экземпляр потока, который будет проверять новые версии
         self._silenceThread = None
@@ -47,40 +52,34 @@ class UpdatesChecker(object):
         setStatusText(u"")
 
         currentVersion = getCurrentVersion()
-        stableVersion = verList.stableVersionInfo
-        unstableVersion = verList.unstableVersionInfo
+        stableAppInfo = verList.stableVersionInfo
+        unstableAppInfo = verList.unstableVersionInfo
 
-        updatedPlugins = self.getUpdatedPlugins(verList)
+        updatedPluginsInfo = self.getUpdatedPlugins(verList)
+        currentPluginsInfo = verList.currentPluginsInfo
+        template = readTextFile(self._updateTemplatePath)
 
-        updateDialog = UpdateDialog(self._application.mainWindow)
-        updateDialog.setCurrentOutWikerVersion(currentVersion)
+        templateData = {
+            u'outwiker_current_version': currentVersion,
+            u'stableAppInfo': stableAppInfo,
+            u'unstableAppInfo': unstableAppInfo,
+            u'updatedPluginsInfo': updatedPluginsInfo,
+            u'currentPluginsInfo': currentPluginsInfo,
+            u'str_outwiker_current_version': _(u'Installed OutWiker version'),
+            u'str_outwiker_latest_stable_version': _(u'Latest stable OutWiker version'),
+            u'str_outwiker_latest_unstable_version': _(u'Latest unstable OutWiker version'),
+            u'str_version_history': _(u'Version history'),
+            u'str_more_info': _(u'More info'),
+            u'str_download': _(u'Download'),
+        }
 
-        if stableVersion is not None:
-            updateDialog.setLatestStableOutwikerVersion(
-                stableVersion.currentVersion,
-                currentVersion < stableVersion.currentVersion)
-        else:
-            updateDialog.setLatestStableOutwikerVersion(currentVersion, False)
+        contentGenerator = ContentGenerator(template)
+        HTMLContent = contentGenerator.render(templateData)
 
-        if unstableVersion is not None:
-            updateDialog.setLatestUnstableOutwikerVersion(
-                unstableVersion.currentVersion,
-                currentVersion < unstableVersion.currentVersion)
-        else:
-            updateDialog.setLatestUnstableOutwikerVersion(
-                currentVersion,
-                False)
-
-        for plugin in updatedPlugins:
-            pluginInfo = verList.getPluginInfo(plugin.name)
-
-            updateDialog.addPluginInfo(
-                plugin,
-                pluginInfo.currentVersion,
-                pluginInfo.appwebsite)
-
-        updateDialog.ShowModal()
-        updateDialog.Destroy()
+        with UpdateDialog(self._application.mainWindow) as updateDialog:
+            basepath = self._dataPath
+            updateDialog.setContent(HTMLContent, basepath)
+            updateDialog.ShowModal()
 
     def hasUpdates(self, verList):
         """
@@ -108,10 +107,10 @@ class UpdatesChecker(object):
         """
         Возвращает список плагинов, которые обновились
         """
-        updatedPlugins = []
+        updatedPlugins = {}
 
         for plugin in self._application.plugins:
-            appInfo = verList.getPluginInfo(plugin.name)
+            appInfo = verList.latestPluginsInfo[plugin.name]
             if appInfo is None:
                 continue
 
@@ -123,14 +122,14 @@ class UpdatesChecker(object):
                 continue
 
             try:
-                pluginInfo = verList.getPluginInfo(plugin.name)
+                pluginInfo = verList.latestPluginsInfo[plugin.name]
                 pluginInfo.currentVersion
             except KeyError:
                 continue
 
             if (pluginVersion is not None and
                     pluginVersion > currentPluginVersion):
-                updatedPlugins.append(plugin)
+                updatedPlugins[plugin.name] = appInfo
 
         return updatedPlugins
 

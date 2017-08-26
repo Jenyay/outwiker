@@ -44,7 +44,8 @@ class Controller(object):
         except ImportError:
             self._guiCreator = OldGuiCreator(self, self._application)
 
-        self._updatesChecker = UpdatesChecker(self._application)
+        self._updatesChecker = UpdatesChecker(self._application,
+                                              self._plugin.pluginPath)
 
         self._guiCreator.initialize()
 

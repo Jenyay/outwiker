@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+			body {
+				font-size: 110%;
+			}
+
+			.changelog {
+				display: none;
+			}
+
+			.version {
+				padding: 0.2em;
+				font-weight: bold;
+			}
+
+			.version-current {
+				color: #569AE8;
+			}
+
+			.version-new {
+				color: #D11500;
+			}
+
+			.version-block {
+				border-bottom: 1px solid #54D100;
+			}
+
+			.version-block div {
+				margin: 0.7em 0em;
+			}
+
+			.download {
+				border-radius: 2px;
+				color: #fff;
+				font-weight: bold;
+				padding: 0.2em 1em;
+				text-decoration: none;
+				background-color: #54D100;
+			}
+
+			.show-changelog {
+				border-radius: 2px;
+				text-decoration: none;
+				padding: 0.2em 1em;
+				background-color: #fff;
+				border: 1px solid #3D9104;
+				color: #3D9104;
+			}
+
+			.version-block {
+				border-left: 4px solid #54D100;
+				padding-left: 1em;
+			}
+		</style>
+
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+
+		<script>
+		function toggleChengelog(classname) {
+			$('.' + classname).toggle();
+		}
+		</script>
+	</head>
+	<body>
+		<div class="outwiker-current">{{str_outwiker_current_version}}: <span class="version version-current">{{outwiker_current_version}}</span></div>
+		<div class="version-block outwiker-version">
+
+				<!-- Outwiker stable version block begin -->
+				<div class="outwiker-latest-stable">{{str_outwiker_latest_stable_version}}: <span class="version version-new">{{stableAppInfo.currentVersionStr}}</span>
+					<div class="controls"><a class="download button" href="{{stableAppInfo.appwebsite}}">{{str_download}}</a> <a class="show-changelog button" href="#"  onclick="toggleChengelog('OutWikerStable-changelog');">{{str_more_info}}</a>
+					</div>
+
+					<!-- Stable version changelog -->
+					<div class="OutWikerStable-changelog changelog">
+						<h3>{{str_version_history}}</h3>
+
+						{% for version in stableAppInfo.versionsList %}
+						<h4>{{version.version}} {{(version.date)}}</h4>
+						<ul>
+							{% for change in version.changes %}
+							<li>{{change}}</li>
+							{% endfor %}
+						</ul>
+						{% endfor %}
+					</div>
+					
+				</div>
+				<!-- Outwiker stable version block end -->
+
+				<!-- Outwiker unstable version block begin -->
+				<div class="outwiker-latest-unstable">{{str_outwiker_latest_unstable_version}}: <span class="version version-new">{{unstableAppInfo.currentVersionStr}}</span>
+					<div class="controls"><a class="download button" href="{{unstableAppInfo.appwebsite}}">{{str_download}}</a> <a class="show-changelog button" href="#"  href="#"  onclick="toggleChengelog('OutWikerUnstable-changelog');">{{str_more_info}}</a>
+					</div>
+
+					<!-- Unstable version changelog -->
+					<div class="OutWikerUnstable-changelog changelog">
+						<h3>{{str_version_history}}</h3>
+
+						{% for version in unstableAppInfo.versionsList %}
+						<h4>{{version.version}} {{(version.date)}}</h4>
+						<ul>
+							{% for change in version.changes %}
+							<li>{{change}}</li>
+							{% endfor %}
+						</ul>
+						{% endfor %}
+					</div>
+				</div>
+				<!-- Outwiker unstable version block end -->
+
+			</div>
+		</div>
+
+		{% for pluginName, pluginInfo in updatedPluginsInfo.iteritems() %}
+		<!-- {{pluginName}} block begin -->
+		<div class="version-block plugin-version {{pluginName|replace(' ', '_')}}">
+			<div class="title">{{pluginName}} <span class="version version-current">{{currentPluginsInfo[pluginName].currentVersionStr}}</span> &#x27f6; <span class="version version-new">{{pluginInfo.currentVersionStr}}</span></div>
+			<div class="controls"><a class="download button" href="{{pluginInfo.appwebsite}}">{{str_download}}</a> <a class="show-changelog button" href="#" onclick="toggleChengelog('{{pluginName|replace(' ', '_')}}-changelog');">{{str_more_info}}</a></div>
+
+			<div class="{{pluginName|replace(' ', '_')}}-changelog changelog">
+				<h3>{{str_version_history}}</h3>
+
+				{% for version in pluginInfo.versionsList %}
+				<h4>{{version.version}} {{(version.date)}}</h4>
+				<ul>
+					{% for change in version.changes %}
+					<li>{{change}}</li>
+					{% endfor %}
+				</ul>
+				{% endfor %}
+			</div>
+		</div>
+		<!-- {{pluginName}} block end -->
+		{% endfor %}
+	</body>
+</html>

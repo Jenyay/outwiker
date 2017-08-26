@@ -37,8 +37,8 @@ class VersionList(object):
         self._outwikerUnstablePage = u"http://jenyay.net/uploads/Outwiker/Unstable/versions.xml"
 
         # Без загрузки версий все версии равны None
-        self._pluginsInfo = {plugin.name: None for plugin in self._plugins}
-        self._pluginsInfoList = self._getPluginsInfo()
+        self._latestPluginsInfo = {plugin.name: None for plugin in self._plugins}
+        self._currentPluginsInfo = self._getPluginsInfo()
 
     def _getPluginsInfo(self):
         result = {}
@@ -73,9 +73,9 @@ class VersionList(object):
         for plugin in self._plugins:
             logger.info(u"Checking update for {}".format(plugin.name))
             appInfo = self._getAppInfoFromUrl(
-                self._pluginsInfoList[plugin.name].updatesUrl)
+                self._currentPluginsInfo[plugin.name].updatesUrl)
             if appInfo is not None:
-                self._pluginsInfo[plugin.name] = appInfo
+                self._latestPluginsInfo[plugin.name] = appInfo
 
     def setLoader(self, newloader):
         """
@@ -121,8 +121,13 @@ class VersionList(object):
 
         return text
 
-    def getPluginInfo(self, pluginname):
-        return self._pluginsInfo[pluginname]
+    @property
+    def latestPluginsInfo(self):
+        return self._latestPluginsInfo
+
+    @property
+    def currentPluginsInfo(self):
+        return self._currentPluginsInfo
 
     @property
     def stableVersionInfo(self):
