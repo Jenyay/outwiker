@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 import datetime
+import logging
 import threading
 import os.path
 
@@ -8,6 +9,8 @@ import wx
 
 from outwiker.core.commands import getCurrentVersion, MessageBox, setStatusText
 from outwiker.core.version import Version
+from outwiker.core.defines import PLUGIN_VERSION_FILE_NAME
+from outwiker.core.xmlversionparser import XmlVersionParser
 from outwiker.utilites.textfile import readTextFile
 
 from .longprocessrunner import LongProcessRunner
@@ -21,8 +24,10 @@ from .contentgenerator import ContentGenerator
 # Параметр verList - экземпляр класса VersionList
 UpdateVersionsEvent, EVT_UPDATE_VERSIONS = wx.lib.newevent.NewEvent()
 
+logger = logging.getLogger('UpdateNotifierPlugin')
 
-class UpdatesChecker(object):
+
+class UpdateController(object):
     """
     Контроллер для управления UpdateDialog.
     Сюда вынесена вся логика.
@@ -36,6 +41,10 @@ class UpdatesChecker(object):
         self._dataPath = os.path.join(pluginPath, u'data')
         self._updateTemplatePath = os.path.join(self._dataPath, u'update.html')
 
+        self._updateUrls = self._getPluginsUpdateUrls(self._application.plugins)
+        self._updateUrls[u'OUTWIKER_STABLE'] = u'http://jenyay.net/uploads/Soft/Outwiker/versions.xml'
+        self._updateUrls[u'OUTWIKER_UNSTABLE'] = u'http://jenyay.net/uploads/Outwiker/Unstable/versions.xml'
+
         # Экземпляр потока, который будет проверять новые версии
         self._silenceThread = None
         if self._application.mainWindow is not None:
@@ -43,20 +52,47 @@ class UpdatesChecker(object):
                 EVT_UPDATE_VERSIONS,
                 handler=self._onSilenceVersionUpdate)
 
+    def _getPluginsUpdateUrls(self, plugins):
+        '''
+        plugins - instance of the PluginsLoader
+        Return dict which key is plugin name, value is updatesUrl
+        '''
+        result = {}
+
+        for plugin in plugins:
+            xmlPath = os.path.join(plugin._pluginPath,
+                                   PLUGIN_VERSION_FILE_NAME)
+            try:
+                xmlText = readTextFile(xmlPath)
+            except IOError:
+                logger.warning(u"Can't read {}".format(xmlPath))
+                continue
+
+            versionParser = XmlVersionParser([_(u'__updateLang'), u'en'])
+            try:
+                result[plugin.name] = versionParser.parse(xmlText).updatesUrl
+            except ValueError:
+                logger.warning(u"Invalid format {}".format(xmlPath))
+                continue
+
+        return result
+
     def _showUpdates(self, verList):
         """
         Сверяем полученные номера версий с теми,
-        что установлены сейчас и заполняем диалог изменениями(updateDialog)
+        что установлены сейчас и заполняем диалог изменениями (updateDialog)
         Возвращает True, если есть какие-нибудь обновления
         """
         setStatusText(u"")
 
         currentVersion = getCurrentVersion()
-        stableAppInfo = verList.stableVersionInfo
-        unstableAppInfo = verList.unstableVersionInfo
+        stableAppInfo = verList[u'OUTWIKER_STABLE']
+        unstableAppInfo = verList[u'OUTWIKER_UNSTABLE']
 
         updatedPluginsInfo = self.getUpdatedPlugins(verList)
-        currentPluginsInfo = verList.currentPluginsInfo
+        currentPluginsVersions = {plugin.name: plugin.version
+                                  for plugin
+                                  in self._application.plugins}
         template = readTextFile(self._updateTemplatePath)
 
         templateData = {
@@ -64,7 +100,7 @@ class UpdatesChecker(object):
             u'stableAppInfo': stableAppInfo,
             u'unstableAppInfo': unstableAppInfo,
             u'updatedPluginsInfo': updatedPluginsInfo,
-            u'currentPluginsInfo': currentPluginsInfo,
+            u'currentPluginsVersions': currentPluginsVersions,
             u'str_outwiker_current_version': _(u'Installed OutWiker version'),
             u'str_outwiker_latest_stable_version': _(u'Latest stable OutWiker version'),
             u'str_outwiker_latest_unstable_version': _(u'Latest unstable OutWiker version'),
@@ -86,8 +122,8 @@ class UpdatesChecker(object):
         Возвращает True, если есть обновления в плагинах или самой программы
         """
         currentVersion = getCurrentVersion()
-        stableVersion = verList.stableVersionInfo
-        unstableVersion = verList.unstableVersionInfo
+        stableVersion = verList[u'OUTWIKER_STABLE']
+        unstableVersion = verList[u'OUTWIKER_UNSTABLE']
 
         updatedPlugins = self.getUpdatedPlugins(verList)
 
@@ -110,7 +146,9 @@ class UpdatesChecker(object):
         updatedPlugins = {}
 
         for plugin in self._application.plugins:
-            appInfo = verList.latestPluginsInfo[plugin.name]
+            plugin_name = plugin.name
+            appInfo = verList[plugin_name]
+
             if appInfo is None:
                 continue
 
@@ -122,7 +160,7 @@ class UpdatesChecker(object):
                 continue
 
             try:
-                pluginInfo = verList.latestPluginsInfo[plugin.name]
+                pluginInfo = verList[plugin_name]
                 pluginInfo.currentVersion
             except KeyError:
                 continue
@@ -161,7 +199,7 @@ class UpdatesChecker(object):
         Молчаливое обновление списка версий
         """
         setStatusText(_(u"Check for new versions..."))
-        verList = VersionList(self._application.plugins)
+        verList = VersionList(self._updateUrls)
 
         if (self._silenceThread is None or not self._silenceThread.isAlive()):
             self._silenceThread = threading.Thread(None,
@@ -173,7 +211,7 @@ class UpdatesChecker(object):
         """
         Проверить обновления и показать диалог с результатами
         """
-        verList = VersionList(self._application.plugins)
+        verList = VersionList(self._updateUrls)
         setStatusText(_(u"Check for new versions..."))
 
         progressRunner = LongProcessRunner(

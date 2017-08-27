@@ -1,6 +1,6 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <info>
-	<name>TestDebug</name>
+	<name>Debug Plugin</name>
 	<updates>http://jenyay.net/uploads/Outwiker/DebugPlugin/plugin.xml</updates>
     <requirements>
 		<packages>

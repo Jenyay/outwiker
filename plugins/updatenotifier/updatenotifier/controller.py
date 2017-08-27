@@ -7,7 +7,7 @@ import wx
 from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
 
 from .i18n import get_
-from .updateschecker import UpdatesChecker
+from .updatecontroller import UpdateController
 from .preferencepanel import PreferencePanel
 from .updatesconfig import UpdatesConfig
 from .guicreators import OldGuiCreator, ActionGuiCreator
@@ -44,8 +44,8 @@ class Controller(object):
         except ImportError:
             self._guiCreator = OldGuiCreator(self, self._application)
 
-        self._updatesChecker = UpdatesChecker(self._application,
-                                              self._plugin.pluginPath)
+        self._updatesChecker = UpdateController(self._application,
+                                                self._plugin.pluginPath)
 
         self._guiCreator.initialize()
 

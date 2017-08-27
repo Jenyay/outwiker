@@ -2,14 +2,11 @@
 
 import urllib2
 import logging
-import os
 
-from outwiker.core.defines import PLUGIN_VERSION_FILE_NAME
 from outwiker.core.xmlversionparser import XmlVersionParser
-from outwiker.utilites.textfile import readTextFile
 
 from .i18n import get_
-import loaders
+from .loaders import NormalLoader
 
 
 logger = logging.getLogger('UpdateNotifierPlugin')
@@ -18,75 +15,38 @@ logger = logging.getLogger('UpdateNotifierPlugin')
 class VersionList(object):
     """Класс для получения последних версий плагинов
     и самой программы с сайтов"""
-    def __init__(self, plugins):
+    def __init__(self, updateUrls):
         """
-        plugins - экземпляр класса PluginsLoader
+        updateUrls - dict which key is plugin name or other ID,
+            value is update url
         """
         global _
         _ = get_()
 
-        self._plugins = plugins
-
-        self._loader = loaders.NormalLoader()
-
-        # Номера версий OutWiker
-        self._outwikerStableInfo = None
-        self._outwikerStablePage = u"http://jenyay.net/uploads/Soft/Outwiker/versions.xml"
-
-        self._outwikerUnstableInfo = None
-        self._outwikerUnstablePage = u"http://jenyay.net/uploads/Outwiker/Unstable/versions.xml"
-
-        # Без загрузки версий все версии равны None
-        self._latestPluginsInfo = {plugin.name: None for plugin in self._plugins}
-        self._currentPluginsInfo = self._getPluginsInfo()
-
-    def _getPluginsInfo(self):
-        result = {}
-
-        for plugin in self._plugins:
-            xmlPath = os.path.join(plugin._pluginPath,
-                                   PLUGIN_VERSION_FILE_NAME)
-            try:
-                xmlText = readTextFile(xmlPath)
-            except IOError:
-                logger.warning(u"Can't read {}".format(xmlPath))
-                continue
-
-            try:
-                result[plugin.name] = XmlVersionParser([_(u'__updateLang')]).parse(xmlText)
-            except ValueError:
-                logger.warning(u"Invalid format {}".format(xmlPath))
-                continue
-
-        return result
+        self._updateUrls = updateUrls
+        self._loader = NormalLoader()
+        self._latestInfo = {}
 
     def updateVersions(self):
         """
         Получить номера версий всех плагинов и самой программы из интернета
         """
-        self._outwikerStableInfo = self._getAppInfoFromUrl(
-            self._outwikerStablePage)
-
-        self._outwikerUnstableInfo = self._getAppInfoFromUrl(
-            self._outwikerUnstablePage)
-
-        for plugin in self._plugins:
-            logger.info(u"Checking update for {}".format(plugin.name))
-            appInfo = self._getAppInfoFromUrl(
-                self._currentPluginsInfo[plugin.name].updatesUrl)
+        for name, url in self._updateUrls.iteritems():
+            logger.info(u"Checking update for {}".format(name))
+            appInfo = self._getAppInfoFromUrl(url)
             if appInfo is not None:
-                self._latestPluginsInfo[plugin.name] = appInfo
+                self._latestInfo[name] = appInfo
 
     def setLoader(self, newloader):
         """
-        Метод используется только для тестирования. Нужен для эмуляции отсутствия соединения с интернетом.
+        Метод используется только для тестирования.
+        Нужен для эмуляции отсутствия соединения с интернетом.
         """
         self._loader = newloader
 
     def _getAppInfoFromUrl(self, url):
         """
         url - ссылка, откуда получается номер версии
-        versionname - название версии(stable, unstable и т.п.)
         """
         if url is None:
             return None
@@ -97,7 +57,7 @@ class VersionList(object):
             return None
 
         try:
-            appinfo = XmlVersionParser([_(u'__updateLang')]).parse(text)
+            appinfo = XmlVersionParser([_(u'__updateLang'), u'en']).parse(text)
         except ValueError:
             logger.warning(u'Invalid format of {}'.format(url))
             return None
@@ -121,24 +81,5 @@ class VersionList(object):
 
         return text
 
-    @property
-    def latestPluginsInfo(self):
-        return self._latestPluginsInfo
-
-    @property
-    def currentPluginsInfo(self):
-        return self._currentPluginsInfo
-
-    @property
-    def stableVersionInfo(self):
-        """
-        Возвращает номер стабильной версии OutWiker, которая лежит на сайте программы
-        """
-        return self._outwikerStableInfo
-
-    @property
-    def unstableVersionInfo(self):
-        """
-        Возвращает номер нестабильной версии OutWiker, которая лежит на сайте программы
-        """
-        return self._outwikerUnstableInfo
+    def __getitem__(self, key):
+        return self._latestInfo.get(key)

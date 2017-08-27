@@ -116,7 +116,7 @@
 		{% for pluginName, pluginInfo in updatedPluginsInfo.iteritems() %}
 		<!-- {{pluginName}} block begin -->
 		<div class="version-block plugin-version {{pluginName|replace(' ', '_')}}">
-			<div class="title">{{pluginName}} <span class="version version-current">{{currentPluginsInfo[pluginName].currentVersionStr}}</span> &#x27f6; <span class="version version-new">{{pluginInfo.currentVersionStr}}</span></div>
+			<div class="title">{{pluginName}} <span class="version version-current">{{currentPluginsVersions[pluginName]}}</span> &#x27f6; <span class="version version-new">{{pluginInfo.currentVersionStr}}</span></div>
 			<div class="controls"><a class="download button" href="{{pluginInfo.appwebsite}}">{{str_download}}</a> <a class="show-changelog button" href="#" onclick="toggleChengelog('{{pluginName|replace(' ', '_')}}-changelog');">{{str_more_info}}</a></div>
 
 			<div class="{{pluginName|replace(' ', '_')}}-changelog changelog">
