@@ -14,6 +14,7 @@ from outwiker.gui.htmlcontrollerie import UriIdentifierIE
 from outwiker.gui.defines import (ID_MOUSE_LEFT,
                                   ID_KEY_CTRL,
                                   ID_KEY_SHIFT)
+from outwiker.gui.guiconfig import GeneralGuiConfig
 
 
 class HtmlRenderIE (HtmlRender):
@@ -22,9 +23,10 @@ class HtmlRenderIE (HtmlRender):
     """
     def __init__ (self, parent):
         HtmlRender.__init__ (self, parent)
+        config = GeneralGuiConfig(Application.config)
 
         self.render = wx.lib.iewin.IEHtmlWindow (self)
-        self.render.silent = 1
+        self.render.silent = not config.debug.value
 
         # Подпишемся на события IE
         self.render.AddEventSink(self)
@@ -213,3 +215,4 @@ class HtmlRenderIE (HtmlRender):
                 outwiker.core.commands.MessageBox (text, _(u"Error"), wx.ICON_ERROR | wx.OK)
         elif anchor is not None:
             self.LoadPage (href)
+
