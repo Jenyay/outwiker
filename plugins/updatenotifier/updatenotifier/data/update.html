@@ -58,11 +58,14 @@
 			}
 		</style>
 
-		<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-
 		<script>
 		function toggleChangelog(classname) {
-			$('.' + classname).toggle();
+			var element = document.getElementById(classname);
+			if (element.style.display !== 'block') {
+				element.style.display = 'block';
+			} else {
+				element.style.display = 'none';
+			}
 		}
 		</script>
 	</head>
@@ -76,7 +79,7 @@
 					</div>
 
 					<!-- Stable version changelog -->
-					<div class="OutWikerStable-changelog changelog">
+					<div id="OutWikerStable-changelog" class="changelog">
 						<h3>{{str_version_history}}</h3>
 
 						{% for version in stableAppInfo.versionsList %}
@@ -98,7 +101,7 @@
 					</div>
 
 					<!-- Unstable version changelog -->
-					<div class="OutWikerUnstable-changelog changelog">
+					<div id="OutWikerUnstable-changelog" class="changelog">
 						<h3>{{str_version_history}}</h3>
 
 						{% for version in unstableAppInfo.versionsList %}
@@ -121,7 +124,7 @@
 			<div class="title">{{pluginName}} <span class="version version-current">{{currentPluginsVersions[pluginName]}}</span> &#x27f6; <span class="version version-new">{{pluginInfo.currentVersionStr}}</span></div>
 			<div class="controls"><a class="download button" href="{{pluginInfo.appwebsite}}">{{str_download}}</a> <a class="show-changelog button" href="#" onclick="toggleChangelog('{{pluginName|replace(' ', '_')}}-changelog');">{{str_more_info}}</a></div>
 
-			<div class="{{pluginName|replace(' ', '_')}}-changelog changelog">
+			<div id="{{pluginName|replace(' ', '_')}}-changelog" class="changelog">
 				<h3>{{str_version_history}}</h3>
 
 				{% for version in pluginInfo.versionsList %}
