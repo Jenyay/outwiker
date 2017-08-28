@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<meta http-equiv='X-UA-Compatible' content='IE=edge' />
+		<meta http-equiv='content-type' content='text/html; charset=utf-8'/>
+
 		<style>
 			body {
 				font-size: 110%;
@@ -58,7 +61,7 @@
 		<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 
 		<script>
-		function toggleChengelog(classname) {
+		function toggleChangelog(classname) {
 			$('.' + classname).toggle();
 		}
 		</script>
@@ -69,7 +72,7 @@
 
 				<!-- Outwiker stable version block begin -->
 				<div class="outwiker-latest-stable">{{str_outwiker_latest_stable_version}}: <span class="version version-new">{{stableAppInfo.currentVersionStr}}</span>
-					<div class="controls"><a class="download button" href="{{stableAppInfo.appwebsite}}">{{str_download}}</a> <a class="show-changelog button" href="#"  onclick="toggleChengelog('OutWikerStable-changelog');">{{str_more_info}}</a>
+					<div class="controls"><a class="download button" href="{{stableAppInfo.appwebsite}}">{{str_download}}</a> <a class="show-changelog button" href="#"  onclick="toggleChangelog('OutWikerStable-changelog');">{{str_more_info}}</a>
 					</div>
 
 					<!-- Stable version changelog -->
@@ -91,7 +94,7 @@
 
 				<!-- Outwiker unstable version block begin -->
 				<div class="outwiker-latest-unstable">{{str_outwiker_latest_unstable_version}}: <span class="version version-new">{{unstableAppInfo.currentVersionStr}}</span>
-					<div class="controls"><a class="download button" href="{{unstableAppInfo.appwebsite}}">{{str_download}}</a> <a class="show-changelog button" href="#"  href="#"  onclick="toggleChengelog('OutWikerUnstable-changelog');">{{str_more_info}}</a>
+					<div class="controls"><a class="download button" href="{{unstableAppInfo.appwebsite}}">{{str_download}}</a> <a class="show-changelog button" href="#" onclick="toggleChangelog('OutWikerUnstable-changelog');">{{str_more_info}}</a>
 					</div>
 
 					<!-- Unstable version changelog -->
@@ -111,13 +114,12 @@
 				<!-- Outwiker unstable version block end -->
 
 			</div>
-		</div>
 
 		{% for pluginName, pluginInfo in updatedPluginsInfo.iteritems() %}
 		<!-- {{pluginName}} block begin -->
 		<div class="version-block plugin-version {{pluginName|replace(' ', '_')}}">
 			<div class="title">{{pluginName}} <span class="version version-current">{{currentPluginsVersions[pluginName]}}</span> &#x27f6; <span class="version version-new">{{pluginInfo.currentVersionStr}}</span></div>
-			<div class="controls"><a class="download button" href="{{pluginInfo.appwebsite}}">{{str_download}}</a> <a class="show-changelog button" href="#" onclick="toggleChengelog('{{pluginName|replace(' ', '_')}}-changelog');">{{str_more_info}}</a></div>
+			<div class="controls"><a class="download button" href="{{pluginInfo.appwebsite}}">{{str_download}}</a> <a class="show-changelog button" href="#" onclick="toggleChangelog('{{pluginName|replace(' ', '_')}}-changelog');">{{str_more_info}}</a></div>
 
 			<div class="{{pluginName|replace(' ', '_')}}-changelog changelog">
 				<h3>{{str_version_history}}</h3>
