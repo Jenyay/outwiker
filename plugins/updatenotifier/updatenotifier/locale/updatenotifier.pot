@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-24 13:07+0300\n"
+"POT-Creation-Date: 2017-08-28 20:35+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,54 +17,54 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: controller.py:93
+#: controller.py:94
 msgid "UpdateNotifier [Plugin]"
 msgstr ""
 
-#: versionlist.py:36 updatedialog.py:53
-msgid "http://jenyay.net/Outwiker/English"
-msgstr ""
-
-#: versionlist.py:39 updatedialog.py:74
-msgid "http://jenyay.net/Outwiker/UnstableEn"
-msgstr ""
-
-#: versionlist.py:59
+#: updatecontroller.py:81 versionlist.py:60
 msgid "__updateLang"
 msgstr ""
 
-#: versionlist.py:95
-msgid "http://jenyay.net/Outwiker/ExternalToolsEn"
+#: updatecontroller.py:130
+msgid "Installed OutWiker version"
 msgstr ""
 
-#: versionlist.py:96
-msgid "http://jenyay.net/Outwiker/LightboxEn"
+#: updatecontroller.py:131
+msgid "Latest stable OutWiker version"
 msgstr ""
 
-#: versionlist.py:97
-msgid "http://jenyay.net/Outwiker/LivejournalPluginEn"
+#: updatecontroller.py:132
+msgid "Latest unstable OutWiker version"
 msgstr ""
 
-#: versionlist.py:98
-msgid "http://jenyay.net/Outwiker/SpoilerEn"
+#: updatecontroller.py:133
+msgid "Version history"
 msgstr ""
 
-#: versionlist.py:99
-msgid "http://jenyay.net/Outwiker/StylePluginEn"
+#: updatecontroller.py:134
+msgid "More info"
 msgstr ""
 
-#: versionlist.py:100
-msgid "http://jenyay.net/Outwiker/ThumbGalleryEn"
+#: updatecontroller.py:135
+msgid "Download"
 msgstr ""
 
-#: plugin.py:27
+#: updatecontroller.py:205 updatecontroller.py:219 updatecontroller.py:225
+msgid "Check for new versions..."
+msgstr ""
+
+#: updatecontroller.py:236
+msgid "Updates not found"
+msgstr ""
+
+#: plugin.py:29
 msgid ""
 "Check for update OutWiker and plug-ins for it.\n"
 "\n"
 "Append menu item \"Help -> Check for Updates...\""
 msgstr ""
 
-#: plugin.py:33
+#: plugin.py:35
 msgid "http://jenyay.net/Outwiker/UpdateNotifierEn"
 msgstr ""
 
@@ -92,32 +92,8 @@ msgstr ""
 msgid "Ignore updates unstable versions"
 msgstr ""
 
-#: updatedialog.py:23
+#: updatedialog.py:21
 msgid "UpdateNotifier"
-msgstr ""
-
-#: updatedialog.py:31
-msgid "Current OutWiker version"
-msgstr ""
-
-#: updatedialog.py:52
-msgid "Latest stable OutWiker version"
-msgstr ""
-
-#: updatedialog.py:73
-msgid "Latest unstable OutWiker version"
-msgstr ""
-
-#: updatedialog.py:94
-msgid "Updated plugins:"
-msgstr ""
-
-#: updateschecker.py:166 updateschecker.py:180 updateschecker.py:186
-msgid "Check for new versions..."
-msgstr ""
-
-#: updateschecker.py:196
-msgid "Updates not found"
 msgstr ""
 
 #: prefpanelcontroller.py:25

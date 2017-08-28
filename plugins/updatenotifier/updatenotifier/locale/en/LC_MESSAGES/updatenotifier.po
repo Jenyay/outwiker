@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UpdateNotifier\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-24 13:08+0300\n"
-"PO-Revision-Date: 2017-08-24 13:08+0300\n"
+"POT-Creation-Date: 2017-08-28 20:36+0300\n"
+"PO-Revision-Date: 2017-08-28 20:36+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language: en\n"
@@ -18,54 +18,57 @@ msgstr ""
 "X-Generator: Poedit 2.0.1\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-#: controller.py:93
+#: controller.py:94
 msgid "UpdateNotifier [Plugin]"
 msgstr "UpdateNotifier [Plugin]"
 
-#: versionlist.py:36 updatedialog.py:53
-msgid "http://jenyay.net/Outwiker/English"
-msgstr "http://jenyay.net/Outwiker/English"
-
-#: versionlist.py:39 updatedialog.py:74
-msgid "http://jenyay.net/Outwiker/UnstableEn"
-msgstr "http://jenyay.net/Outwiker/UnstableEn"
-
-#: versionlist.py:59
+#: updatecontroller.py:81 versionlist.py:60
 msgid "__updateLang"
 msgstr "en"
 
-#: versionlist.py:95
-msgid "http://jenyay.net/Outwiker/ExternalToolsEn"
-msgstr "http://jenyay.net/Outwiker/ExternalToolsEn"
+#: updatecontroller.py:130
+msgid "Installed OutWiker version"
+msgstr "Installed OutWiker version"
 
-#: versionlist.py:96
-msgid "http://jenyay.net/Outwiker/LightboxEn"
-msgstr "http://jenyay.net/Outwiker/LightboxEn"
+#: updatecontroller.py:131
+msgid "Latest stable OutWiker version"
+msgstr "Latest stable OutWiker version"
 
-#: versionlist.py:97
-msgid "http://jenyay.net/Outwiker/LivejournalPluginEn"
-msgstr "http://jenyay.net/Outwiker/LivejournalPluginEn"
+#: updatecontroller.py:132
+msgid "Latest unstable OutWiker version"
+msgstr "Latest unstable OutWiker version"
 
-#: versionlist.py:98
-msgid "http://jenyay.net/Outwiker/SpoilerEn"
-msgstr "http://jenyay.net/Outwiker/SpoilerEn"
+#: updatecontroller.py:133
+msgid "Version history"
+msgstr "Version history"
 
-#: versionlist.py:99
-msgid "http://jenyay.net/Outwiker/StylePluginEn"
-msgstr "http://jenyay.net/Outwiker/StylePluginEn"
+#: updatecontroller.py:134
+msgid "More info"
+msgstr "More info"
 
-#: versionlist.py:100
-msgid "http://jenyay.net/Outwiker/ThumbGalleryEn"
-msgstr "http://jenyay.net/Outwiker/ThumbGalleryEn"
+#: updatecontroller.py:135
+msgid "Download"
+msgstr "Download"
 
-#: plugin.py:27
+#: updatecontroller.py:205 updatecontroller.py:219 updatecontroller.py:225
+msgid "Check for new versions..."
+msgstr "Check for new versions..."
+
+#: updatecontroller.py:236
+msgid "Updates not found"
+msgstr "Updates not found"
+
+#: plugin.py:29
 msgid ""
 "Check for update OutWiker and plug-ins for it.\n"
 "\n"
 "Append menu item \"Help -> Check for Updates...\""
 msgstr ""
+"Check for update OutWiker and plug-ins for it.\n"
+"\n"
+"Append menu item \"Help -> Check for Updates...\""
 
-#: plugin.py:33
+#: plugin.py:35
 msgid "http://jenyay.net/Outwiker/UpdateNotifierEn"
 msgstr "http://jenyay.net/Outwiker/UpdateNotifierEn"
 
@@ -93,33 +96,9 @@ msgstr "Check for updates"
 msgid "Ignore updates unstable versions"
 msgstr "Ignore updates unstable versions"
 
-#: updatedialog.py:23
+#: updatedialog.py:21
 msgid "UpdateNotifier"
 msgstr "UpdateNotifier"
-
-#: updatedialog.py:31
-msgid "Current OutWiker version"
-msgstr "Current OutWiker version"
-
-#: updatedialog.py:52
-msgid "Latest stable OutWiker version"
-msgstr "Latest stable OutWiker version"
-
-#: updatedialog.py:73
-msgid "Latest unstable OutWiker version"
-msgstr "Latest unstable OutWiker version"
-
-#: updatedialog.py:94
-msgid "Updated plugins:"
-msgstr "Updated plugins:"
-
-#: updateschecker.py:166 updateschecker.py:180 updateschecker.py:186
-msgid "Check for new versions..."
-msgstr "Check for new versions..."
-
-#: updateschecker.py:196
-msgid "Updates not found"
-msgstr "Updates not found"
 
 #: prefpanelcontroller.py:25
 msgid "Never"
@@ -152,6 +131,36 @@ msgstr "Every month"
 #: prefpanelcontroller.py:57
 msgid "Custom"
 msgstr "Custom"
+
+#~ msgid "http://jenyay.net/Outwiker/English"
+#~ msgstr "http://jenyay.net/Outwiker/English"
+
+#~ msgid "http://jenyay.net/Outwiker/UnstableEn"
+#~ msgstr "http://jenyay.net/Outwiker/UnstableEn"
+
+#~ msgid "http://jenyay.net/Outwiker/ExternalToolsEn"
+#~ msgstr "http://jenyay.net/Outwiker/ExternalToolsEn"
+
+#~ msgid "http://jenyay.net/Outwiker/LightboxEn"
+#~ msgstr "http://jenyay.net/Outwiker/LightboxEn"
+
+#~ msgid "http://jenyay.net/Outwiker/LivejournalPluginEn"
+#~ msgstr "http://jenyay.net/Outwiker/LivejournalPluginEn"
+
+#~ msgid "http://jenyay.net/Outwiker/SpoilerEn"
+#~ msgstr "http://jenyay.net/Outwiker/SpoilerEn"
+
+#~ msgid "http://jenyay.net/Outwiker/StylePluginEn"
+#~ msgstr "http://jenyay.net/Outwiker/StylePluginEn"
+
+#~ msgid "http://jenyay.net/Outwiker/ThumbGalleryEn"
+#~ msgstr "http://jenyay.net/Outwiker/ThumbGalleryEn"
+
+#~ msgid "Current OutWiker version"
+#~ msgstr "Current OutWiker version"
+
+#~ msgid "Updated plugins:"
+#~ msgstr "Updated plugins:"
 
 #~ msgid "Check for update OutWiker and plug-ins for it. Append menu item \"Help -> Check for Updates...\""
 #~ msgstr "Check for update OutWiker and plug-ins for it. Append menu item \"Help -> Check for Updates...\""
