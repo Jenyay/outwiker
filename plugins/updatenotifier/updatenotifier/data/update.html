@@ -71,7 +71,13 @@
 	</head>
 	<body>
         {% macro update_info(id)%}
-        <div class="controls"><a class="download button" href="{{updatedAppInfo[id].appwebsite}}">{{str_download}}</a> <a class="show-changelog button" href="#"  onclick="toggleChangelog('{{id}}-changelog');">{{str_more_info}}</a>
+        {% set download_url = updatedAppInfo[id].appwebsite %}
+        <div class="controls">
+            {% if download_url %}
+                <a class="download button" href="{{download_url}}">{{str_download}}</a>
+            {% endif %}
+
+            <a class="show-changelog button" href="#"  onclick="toggleChangelog('{{id}}-changelog');">{{str_more_info}}</a>
 					</div>
 
                     <!-- {{id}} version changelog -->

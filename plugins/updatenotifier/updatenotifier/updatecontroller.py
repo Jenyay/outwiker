@@ -137,6 +137,7 @@ class UpdateController(object):
 
         contentGenerator = ContentGenerator(template)
         HTMLContent = contentGenerator.render(templateData)
+        print updatedAppInfo['Debug Plugin'].appwebsite
 
         with UpdateDialog(self._application.mainWindow) as updateDialog:
             basepath = self._dataPath

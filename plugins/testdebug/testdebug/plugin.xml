@@ -15,6 +15,7 @@
 
 	<data lang="en">
 		<description>Test plug-in.</description>
+		<website>http://jenyay.net/Outwiker/DebugPluginEn</website>
 
 		<changelog>
 			<version number="0.6">
@@ -27,6 +28,7 @@
 
 	<data lang="ru">
 		<description>Тестовый плагин.</description>
+		<website>http://jenyay.net/Outwiker/DebugPlugin</website>
 
 		<changelog>
 			<version number="0.6">
