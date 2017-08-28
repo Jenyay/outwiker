@@ -20,19 +20,23 @@ from .versionlist import VersionList
 from .i18n import get_
 from .contentgenerator import ContentGenerator
 
-# Событие срабатывает, когда завершается "молчаливое" обновление списка версий
-# Параметр verList - экземпляр класса VersionList
-UpdateVersionsEvent, EVT_UPDATE_VERSIONS = wx.lib.newevent.NewEvent()
+# The event occures after finish "silence" cheching latest versions.
+# The parameters:
+#     verList - instance of the VersionList class
+SilenceUpdateVersionsEvent, EVT_SILENCE_UPDATE_VERSIONS = wx.lib.newevent.NewEvent()
 
 logger = logging.getLogger('UpdateNotifierPlugin')
 
 
 class UpdateController(object):
     """
-    Контроллер для управления UpdateDialog.
-    Сюда вынесена вся логика.
+    Controller for updates checking and show information.
     """
     def __init__(self, application, pluginPath):
+        '''
+        application - instance of the ApplicationParams class.
+        pluginPath - path to UpdatesNotifier plugin.
+        '''
         global _
         _ = get_()
 
@@ -41,15 +45,21 @@ class UpdateController(object):
         self._dataPath = os.path.join(pluginPath, u'data')
         self._updateTemplatePath = os.path.join(self._dataPath, u'update.html')
 
-        self._updateUrls = self._getPluginsUpdateUrls(self._application.plugins)
-        self._updateUrls[u'OUTWIKER_STABLE'] = u'http://jenyay.net/uploads/Soft/Outwiker/versions.xml'
-        self._updateUrls[u'OUTWIKER_UNSTABLE'] = u'http://jenyay.net/uploads/Outwiker/Unstable/versions.xml'
+        # Special string id for stable and unstable OutWiker URL
+        self._OUTWIKER_STABLE_KEY = u'OUTWIKER_STABLE'
+        self._OUTWIKER_UNSTABLE_KEY = u'OUTWIKER_UNSTABLE'
 
-        # Экземпляр потока, который будет проверять новые версии
+        # Dictionary. Key - plugin name or special string id,
+        # Value - URL to XML file with versions information.
+        self._updateUrls = self._getPluginsUpdateUrls(self._application.plugins)
+        self._updateUrls[self._OUTWIKER_STABLE_KEY] = u'http://jenyay.net/uploads/Soft/Outwiker/versions.xml'
+        self._updateUrls[self._OUTWIKER_UNSTABLE_KEY] = u'http://jenyay.net/uploads/Outwiker/Unstable/versions.xml'
+
+        # The thread to check updates in the silence mode (after program start)
         self._silenceThread = None
         if self._application.mainWindow is not None:
             self._application.mainWindow.Bind(
-                EVT_UPDATE_VERSIONS,
+                EVT_SILENCE_UPDATE_VERSIONS,
                 handler=self._onSilenceVersionUpdate)
 
     def _getPluginsUpdateUrls(self, plugins):
@@ -77,30 +87,46 @@ class UpdateController(object):
 
         return result
 
-    def _showUpdates(self, verList):
-        """
-        Сверяем полученные номера версий с теми,
-        что установлены сейчас и заполняем диалог изменениями (updateDialog)
-        Возвращает True, если есть какие-нибудь обновления
-        """
+    def _getUpdatedAppInfo(self, latestVersionsList):
+        '''
+        Get AppInfo instances for updated apps (plugins and OutWiker) only.
+        '''
+        currentVersionsList = self._getCurrentVersionsList()
+        updatedAppInfo = self.filterUpdatedApps(currentVersionsList,
+                                                latestVersionsList)
+        return updatedAppInfo
+
+    def _getCurrentVersionsList(self):
+        '''
+        Return dictionary with apps versions. Key - plugin name or special id,
+        Value - string with version.
+        '''
+        currentVersion = getCurrentVersion()
+
+        currentVersionsList = {plugin.name: plugin.version
+                               for plugin
+                               in self._application.plugins}
+
+        currentVersionsList[self._OUTWIKER_STABLE_KEY] = unicode(currentVersion)
+        currentVersionsList[self._OUTWIKER_UNSTABLE_KEY] = unicode(currentVersion)
+
+        return currentVersionsList
+
+    def _showUpdates(self, updatedAppInfo):
+        '''
+        Show dialog with lupdate information.
+        '''
         setStatusText(u"")
 
         currentVersion = getCurrentVersion()
-        stableAppInfo = verList[u'OUTWIKER_STABLE']
-        unstableAppInfo = verList[u'OUTWIKER_UNSTABLE']
+        currentVersionsList = self._getCurrentVersionsList()
 
-        updatedPluginsInfo = self.getUpdatedPlugins(verList)
-        currentPluginsVersions = {plugin.name: plugin.version
-                                  for plugin
-                                  in self._application.plugins}
         template = readTextFile(self._updateTemplatePath)
 
         templateData = {
             u'outwiker_current_version': currentVersion,
-            u'stableAppInfo': stableAppInfo,
-            u'unstableAppInfo': unstableAppInfo,
-            u'updatedPluginsInfo': updatedPluginsInfo,
-            u'currentPluginsVersions': currentPluginsVersions,
+            u'updatedAppInfo': updatedAppInfo,
+            u'currentVersionsList': currentVersionsList,
             u'str_outwiker_current_version': _(u'Installed OutWiker version'),
             u'str_outwiker_latest_stable_version': _(u'Latest stable OutWiker version'),
             u'str_outwiker_latest_unstable_version': _(u'Latest unstable OutWiker version'),
@@ -117,86 +143,64 @@ class UpdateController(object):
             updateDialog.setContent(HTMLContent, basepath)
             updateDialog.ShowModal()
 
-    def hasUpdates(self, verList):
+    @staticmethod
+    def filterUpdatedApps(currentVersionsList, latestAppInfoList):
         """
-        Возвращает True, если есть обновления в плагинах или самой программы
-        """
-        currentVersion = getCurrentVersion()
-        stableVersion = verList[u'OUTWIKER_STABLE']
-        unstableVersion = verList[u'OUTWIKER_UNSTABLE']
-
-        updatedPlugins = self.getUpdatedPlugins(verList)
-
-        # Обновилась ли нестабильная версия(или игнорируем ее)
-        unstableUpdate = (unstableVersion is not None and
-                          currentVersion < unstableVersion.currentVersion and
-                          not self._config.ignoreUnstable)
-
-        stableUpdate = (stableVersion is not None and
-                        currentVersion < stableVersion.currentVersion)
-
-        result = len(updatedPlugins) != 0 or unstableUpdate or stableUpdate
-
-        return result
-
-    def getUpdatedPlugins(self, verList):
-        """
-        Возвращает список плагинов, которые обновились
+        Return dictionary with the AppInfo fot updated apps only.
         """
         updatedPlugins = {}
 
-        for plugin in self._application.plugins:
-            plugin_name = plugin.name
-            appInfo = verList[plugin_name]
+        for app_name, version_str in currentVersionsList.iteritems():
+            latestAppInfo = latestAppInfoList[app_name]
 
-            if appInfo is None:
+            if latestAppInfo is None:
                 continue
 
-            pluginVersion = appInfo.currentVersion
-
             try:
-                currentPluginVersion = Version.parse(plugin.version)
+                currentPluginVersion = Version.parse(version_str)
             except ValueError:
                 continue
 
-            try:
-                pluginInfo = verList[plugin_name]
-                pluginInfo.currentVersion
-            except KeyError:
-                continue
-
-            if (pluginVersion is not None and
-                    pluginVersion > currentPluginVersion):
-                updatedPlugins[plugin.name] = appInfo
+            latestVersion = latestAppInfo.currentVersion
+            if (latestVersion is not None and
+                    latestVersion > currentPluginVersion):
+                updatedPlugins[app_name] = latestAppInfo
 
         return updatedPlugins
 
     def _onSilenceVersionUpdate(self, event):
+        '''
+        Event handler for EVT_SILENCE_UPDATE_VERSIONS.
+        '''
         setStatusText(u"")
 
         self._touchLastUpdateDate()
+        updatedAppInfo = self._getUpdatedAppInfo(event.verList)
 
-        if self.hasUpdates(event.verList):
-            self._showUpdates(event.verList)
+        if updatedAppInfo:
+            self._showUpdates(updatedAppInfo)
 
         self._silenceThread = None
 
     def _touchLastUpdateDate(self):
+        '''
+        Save latest updates checking time.
+        '''
         self._config.lastUpdate = datetime.datetime.today()
 
     def _silenceThreadFunc(self, verList):
         """
-        Функция потока для молчаливой проверки обновлений
+        Thread function for silence updates checking
         """
         verList.updateVersions()
-        event = UpdateVersionsEvent(verList=verList)
+        event = SilenceUpdateVersionsEvent(verList=verList)
 
         if self._application.mainWindow:
             wx.PostEvent(self._application.mainWindow, event)
 
     def checkForUpdatesSilence(self):
         """
-        Молчаливое обновление списка версий
+        Execute the silence update checking.
         """
         setStatusText(_(u"Check for new versions..."))
         verList = VersionList(self._updateUrls)
@@ -209,7 +213,7 @@ class UpdateController(object):
 
     def checkForUpdates(self):
         """
-        Проверить обновления и показать диалог с результатами
+        Execute updates checking and show dialog with the results.
         """
         verList = VersionList(self._updateUrls)
         setStatusText(_(u"Check for new versions..."))
@@ -224,8 +228,10 @@ class UpdateController(object):
 
         self._touchLastUpdateDate()
 
-        if self.hasUpdates(verList):
-            self._showUpdates(verList)
+        updatedAppInfo = self._getUpdatedAppInfo(verList)
+
+        if updatedAppInfo:
+            self._showUpdates(updatedAppInfo)
         else:
             MessageBox(_(u"Updates not found"),
                        u"UpdateNotifier")

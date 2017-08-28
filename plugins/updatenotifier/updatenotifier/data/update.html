@@ -70,74 +70,55 @@
 		</script>
 	</head>
 	<body>
+        {% macro update_info(id)%}
+        <div class="controls"><a class="download button" href="{{updatedAppInfo[id].appwebsite}}">{{str_download}}</a> <a class="show-changelog button" href="#"  onclick="toggleChangelog('{{id}}-changelog');">{{str_more_info}}</a>
+					</div>
+
+                    <!-- {{id}} version changelog -->
+                    <div id="{{id}}-changelog" class="changelog">
+						<h3>{{str_version_history}}</h3>
+
+						{% for version in updatedAppInfo[id].versionsList %}
+						<h4>{{version.version}} {{(version.date)}}</h4>
+						<ul>
+							{% for change in version.changes %}
+							<li>{{change}}</li>
+							{% endfor %}
+						</ul>
+						{% endfor %}
+					</div>
+        {%- endmacro %}
+
 		<div class="outwiker-current">{{str_outwiker_current_version}}: <span class="version version-current">{{outwiker_current_version}}</span></div>
 		<div class="version-block outwiker-version">
 
+            {% if 'OUTWIKER_STABLE' in updatedAppInfo%}
 				<!-- Outwiker stable version block begin -->
-				<div class="outwiker-latest-stable">{{str_outwiker_latest_stable_version}}: <span class="version version-new">{{stableAppInfo.currentVersionStr}}</span>
-					<div class="controls"><a class="download button" href="{{stableAppInfo.appwebsite}}">{{str_download}}</a> <a class="show-changelog button" href="#"  onclick="toggleChangelog('OutWikerStable-changelog');">{{str_more_info}}</a>
-					</div>
-
-					<!-- Stable version changelog -->
-					<div id="OutWikerStable-changelog" class="changelog">
-						<h3>{{str_version_history}}</h3>
-
-						{% for version in stableAppInfo.versionsList %}
-						<h4>{{version.version}} {{(version.date)}}</h4>
-						<ul>
-							{% for change in version.changes %}
-							<li>{{change}}</li>
-							{% endfor %}
-						</ul>
-						{% endfor %}
-					</div>
-					
+				<div class="outwiker-latest-stable">{{str_outwiker_latest_stable_version}}: <span class="version version-new">{{updatedAppInfo['OUTWIKER_STABLE'].currentVersionStr}}</span>
+                {{ update_info('OUTWIKER_STABLE') }}
 				</div>
 				<!-- Outwiker stable version block end -->
+            {% endif %}
 
+            {% if 'OUTWIKER_UNSTABLE' in  updatedAppInfo%}
 				<!-- Outwiker unstable version block begin -->
-				<div class="outwiker-latest-unstable">{{str_outwiker_latest_unstable_version}}: <span class="version version-new">{{unstableAppInfo.currentVersionStr}}</span>
-					<div class="controls"><a class="download button" href="{{unstableAppInfo.appwebsite}}">{{str_download}}</a> <a class="show-changelog button" href="#" onclick="toggleChangelog('OutWikerUnstable-changelog');">{{str_more_info}}</a>
-					</div>
-
-					<!-- Unstable version changelog -->
-					<div id="OutWikerUnstable-changelog" class="changelog">
-						<h3>{{str_version_history}}</h3>
-
-						{% for version in unstableAppInfo.versionsList %}
-						<h4>{{version.version}} {{(version.date)}}</h4>
-						<ul>
-							{% for change in version.changes %}
-							<li>{{change}}</li>
-							{% endfor %}
-						</ul>
-						{% endfor %}
-					</div>
+				<div class="outwiker-latest-unstable">{{str_outwiker_latest_unstable_version}}: <span class="version version-new">{{updatedAppInfo['OUTWIKER_UNSTABLE'].currentVersionStr}}</span>
+					{{ update_info('OUTWIKER_UNSTABLE') }}
 				</div>
 				<!-- Outwiker unstable version block end -->
+            {% endif %}
 
 			</div>
 
-		{% for pluginName, pluginInfo in updatedPluginsInfo.iteritems() %}
-		<!-- {{pluginName}} block begin -->
-		<div class="version-block plugin-version {{pluginName|replace(' ', '_')}}">
-			<div class="title">{{pluginName}} <span class="version version-current">{{currentPluginsVersions[pluginName]}}</span> &#x27f6; <span class="version version-new">{{pluginInfo.currentVersionStr}}</span></div>
-			<div class="controls"><a class="download button" href="{{pluginInfo.appwebsite}}">{{str_download}}</a> <a class="show-changelog button" href="#" onclick="toggleChangelog('{{pluginName|replace(' ', '_')}}-changelog');">{{str_more_info}}</a></div>
-
-			<div id="{{pluginName|replace(' ', '_')}}-changelog" class="changelog">
-				<h3>{{str_version_history}}</h3>
-
-				{% for version in pluginInfo.versionsList %}
-				<h4>{{version.version}} {{(version.date)}}</h4>
-				<ul>
-					{% for change in version.changes %}
-					<li>{{change}}</li>
-					{% endfor %}
-				</ul>
-				{% endfor %}
-			</div>
-		</div>
-		<!-- {{pluginName}} block end -->
+		{% for pluginName, pluginInfo in updatedAppInfo.iteritems() %}
+            {% if pluginName != 'OUTWIKER_STABLE' and pluginName != 'OUTWIKER_UNSTABLE' %}
+                <!-- {{pluginName}} block begin -->
+                <div class="version-block plugin-version {{pluginName|replace(' ', '_')}}">
+                    <div class="title">{{pluginName}} <span class="version version-current">{{currentVersionsList[pluginName]}}</span> &#x27f6; <span class="version version-new">{{pluginInfo.currentVersionStr}}</span></div>
+                    {{ update_info(pluginName) }}
+                </div>
+                <!-- {{pluginName}} block end -->
+            {% endif %}
 		{% endfor %}
 	</body>
 </html>

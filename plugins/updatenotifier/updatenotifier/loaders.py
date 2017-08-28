@@ -4,7 +4,10 @@
 или эмуляции этого процесса
 """
 
+import os.path
 import urllib2
+
+from outwiker.utilites.textfile import readTextFile
 
 
 class NormalLoader(object):
@@ -15,6 +18,9 @@ class NormalLoader(object):
         """
         Метод может бросать исключения urllib2.HTTPError и urllib2.URLError
         """
+        if os.path.isfile(url):
+            return readTextFile(url)
+
         fp = urllib2.urlopen(url)
 
         try:
