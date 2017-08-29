@@ -31,17 +31,19 @@ class VersionList(object):
         else:
             self._loader = loader
 
-        self._latestInfo = {}
-
-    def updateVersions(self):
+    def loadAppInfo(self):
         """
         Load latest versions information.
         """
+        latestInfo = {}
+
         for name, url in self._updateUrls.iteritems():
             logger.info(u"Checking update for {}".format(name))
             appInfo = self.getAppInfoFromUrl(url)
             if appInfo is not None:
-                self._latestInfo[name] = appInfo
+                latestInfo[name] = appInfo
+
+        return latestInfo
 
     def getAppInfoFromUrl(self, url):
         """
@@ -64,7 +66,7 @@ class VersionList(object):
             logger.warning(u'Invalid format of {}'.format(url))
             return None
 
-        return appinfo
+        if not appinfo.appname.strip():
+            return None
 
-    def __getitem__(self, key):
-        return self._latestInfo.get(key)
+        return appinfo

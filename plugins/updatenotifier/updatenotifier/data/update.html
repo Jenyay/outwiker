@@ -120,7 +120,7 @@
             {% if pluginName != 'OUTWIKER_STABLE' and pluginName != 'OUTWIKER_UNSTABLE' %}
                 <!-- {{pluginName}} block begin -->
                 <div class="version-block plugin-version {{pluginName|replace(' ', '_')}}">
-                    <div class="title">{{pluginName}} <span class="version version-current">{{currentVersionsList[pluginName]}}</span> &#x27f6; <span class="version version-new">{{pluginInfo.currentVersionStr}}</span></div>
+                    <div class="title">{{pluginName}} <span class="version version-current">{{currentVersionsDict[pluginName]}}</span> &#x27f6; <span class="version version-new">{{pluginInfo.currentVersionStr}}</span></div>
                     {{ update_info(pluginName) }}
                 </div>
                 <!-- {{pluginName}} block end -->

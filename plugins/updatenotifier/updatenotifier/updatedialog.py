@@ -3,11 +3,12 @@
 import wx
 
 from outwiker.core.system import getOS
+from outwiker.gui.testeddialog import TestedDialog
 
 from .i18n import get_
 
 
-class UpdateDialog(wx.Dialog):
+class UpdateDialog(TestedDialog):
     """Dialog to show new versions of hte OutWiekr and plugins"""
 
     def __init__(self, parent):
@@ -25,9 +26,6 @@ class UpdateDialog(wx.Dialog):
         self._htmlRender.SetPage(HTMLContent, basepath)
 
     def _createGui(self):
-        """
-        Создание элементов управления в дилалоге
-        """
         self._mainSizer = wx.FlexGridSizer(cols=1)
         self._mainSizer.AddGrowableCol(0)
         self._mainSizer.AddGrowableRow(0)

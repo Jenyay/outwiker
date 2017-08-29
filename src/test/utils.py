@@ -4,6 +4,7 @@
 Вспомогательные функции для тестов
 """
 
+import logging
 import os
 import shutil
 import time
@@ -11,25 +12,30 @@ import time
 import wx
 
 
-def removeDir (path):
+def removeDir(path):
     """
     Удалить вики из указанной папки
     """
-    if os.path.exists (path):
+    if os.path.exists(path):
         try:
-            shutil.rmtree (path)
+            shutil.rmtree(path)
         except OSError:
-            time.sleep (1)
-            shutil.rmtree (path)
+            time.sleep(1)
+            shutil.rmtree(path)
 
 
-def getImageSize (fname):
+def getImageSize(fname):
     """
     Получить размер картинки.
-    Возвращает кортеж (ширина, высота)
+    Возвращает кортеж(ширина, высота)
     """
-    image = wx.Image (fname)
+    image = wx.Image(fname)
     width = image.GetWidth()
     height = image.GetHeight()
 
     return (width, height)
+
+
+class SkipLogFilter(logging.Filter):
+    def filter(self, record):
+        return False

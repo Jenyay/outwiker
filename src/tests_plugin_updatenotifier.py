@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 """
 Unit-тесты
@@ -26,6 +26,7 @@ if __name__ == '__main__':
     import unittest
 
     from test.plugins.updatenotifier.test_loading import UpdateNotifierLoadingTest
-    from test.plugins.updatenotifier.test_updatenotifier import UpdateNotifierTest
+    from test.plugins.updatenotifier.test_versionlist import VersionListTest
+    from test.plugins.updatenotifier.test_updatecontroller import UpdateControllerTest
 
     unittest.main()

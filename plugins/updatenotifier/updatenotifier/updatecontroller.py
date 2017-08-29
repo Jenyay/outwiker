@@ -22,7 +22,8 @@ from .contentgenerator import ContentGenerator
 
 # The event occures after finish cheching latest versions.
 # The parameters:
-#     verList - instance of the VersionList class
+#     appInfoDict - dictionary. Key - plugin name or special id,
+#                               value - AppInfo instance.
 #     silenceMode - True if the theread was runned in the silence mode.
 UpdateVersionsEvent, EVT_UPDATE_VERSIONS = wx.lib.newevent.NewEvent()
 
@@ -36,7 +37,7 @@ class UpdateController(object):
     def __init__(self, application, pluginPath):
         '''
         application - instance of the ApplicationParams class.
-        pluginPath - path to UpdatesNotifier plugin.
+        pluginPath - path to UpdateNotifier plugin.
         '''
         global _
         _ = get_()
@@ -68,19 +69,19 @@ class UpdateController(object):
         Execute the silence update checking.
         """
         setStatusText(_(u"Check for new versions..."))
-        verList = VersionList(self._updateUrls)
 
         if (self._silenceThread is None or not self._silenceThread.isAlive()):
-            self._silenceThread = threading.Thread(None,
-                                                   self._threadFunc,
-                                                   args=(verList, True))
+            self._silenceThread = threading.Thread(
+                None,
+                self._threadFunc,
+                args=(self._updateUrls.copy(), True)
+            )
             self._silenceThread.start()
 
     def checkForUpdates(self):
         """
         Execute updates checking and show dialog with the results.
         """
-        verList = VersionList(self._updateUrls)
         setStatusText(_(u"Check for new versions..."))
 
         progressRunner = LongProcessRunner(
@@ -89,18 +90,19 @@ class UpdateController(object):
             dialogTitle=u"UpdateNotifier",
             dialogText=_(u"Check for new versions..."))
 
-        progressRunner.run(verList, silenceMode=False)
+        progressRunner.run(self._updateUrls.copy(),
+                           silenceMode=False)
 
     def createHTMLContent(self, updatedAppInfo):
         currentVersion = getCurrentVersion()
-        currentVersionsList = self._getCurrentVersionsList()
+        currentVersionsDict = self._getCurrentVersionsDict()
 
         template = readTextFile(self._updateTemplatePath)
 
         templateData = {
             u'outwiker_current_version': currentVersion,
             u'updatedAppInfo': updatedAppInfo,
-            u'currentVersionsList': currentVersionsList,
+            u'currentVersionsDict': currentVersionsDict,
             u'str_outwiker_current_version': _(u'Installed OutWiker version'),
             u'str_outwiker_latest_stable_version': _(u'Latest stable OutWiker version'),
             u'str_outwiker_latest_unstable_version': _(u'Latest unstable OutWiker version'),
@@ -114,17 +116,25 @@ class UpdateController(object):
         return HTMLContent
 
     @staticmethod
-    def filterUpdatedApps(currentVersionsList, latestAppInfoList):
+    def filterUpdatedApps(currentVersionsDict, latestAppInfoDict):
         """
-        Return dictionary with the AppInfo fot updated apps only.
+        Return dictionary with the AppInfo for updated apps only.
+
+        currentVersionsDict - dictionary with apps versions.
+            Key - plugin name or special id,
+            value - version number string.
+
+        latestAppInfoDict - dictionary with AppInfo instances.
+            Key - plugin name or special id,
+            value - instance of the AppInfo.
         """
         updatedPlugins = {}
 
-        for app_name, version_str in currentVersionsList.iteritems():
-            latestAppInfo = latestAppInfoList[app_name]
-
-            if latestAppInfo is None:
+        for app_name, version_str in currentVersionsDict.iteritems():
+            if app_name not in latestAppInfoDict:
                 continue
+
+            latestAppInfo = latestAppInfoDict[app_name]
 
             try:
                 currentPluginVersion = Version.parse(version_str)
@@ -163,30 +173,34 @@ class UpdateController(object):
 
         return result
 
-    def _getUpdatedAppInfo(self, latestVersionsList):
+    def _getUpdatedAppInfo(self, latestVersionsDict):
         '''
         Get AppInfo instances for updated apps (plugins and OutWiker) only.
+        latestVersionsDict - dictionary. Key - plugin name or special id,
+            value - instalnce of the AppInfo class.
+
+        Return dictionary with the AppInfo instances for updated apps.
         '''
-        currentVersionsList = self._getCurrentVersionsList()
-        updatedAppInfo = self.filterUpdatedApps(currentVersionsList,
-                                                latestVersionsList)
+        currentVersionsDict = self._getCurrentVersionsDict()
+        updatedAppInfo = self.filterUpdatedApps(currentVersionsDict,
+                                                latestVersionsDict)
         return updatedAppInfo
 
-    def _getCurrentVersionsList(self):
+    def _getCurrentVersionsDict(self):
         '''
         Return dictionary with apps versions. Key - plugin name or special id,
-        Value - string with version.
+        value - string with version.
         '''
         currentVersion = getCurrentVersion()
 
-        currentVersionsList = {plugin.name: plugin.version
+        currentVersionsDict = {plugin.name: plugin.version
                                for plugin
                                in self._application.plugins}
 
-        currentVersionsList[self._OUTWIKER_STABLE_KEY] = unicode(currentVersion)
-        currentVersionsList[self._OUTWIKER_UNSTABLE_KEY] = unicode(currentVersion)
+        currentVersionsDict[self._OUTWIKER_STABLE_KEY] = unicode(currentVersion)
+        currentVersionsDict[self._OUTWIKER_UNSTABLE_KEY] = unicode(currentVersion)
 
-        return currentVersionsList
+        return currentVersionsDict
 
     def _showUpdates(self, updatedAppInfo):
         '''
@@ -207,8 +221,8 @@ class UpdateController(object):
         '''
         setStatusText(u"")
 
+        updatedAppInfo = self._getUpdatedAppInfo(event.appInfoDict)
         self._touchLastUpdateDate()
-        updatedAppInfo = self._getUpdatedAppInfo(event.verList)
 
         if updatedAppInfo:
             self._showUpdates(updatedAppInfo)
@@ -221,12 +235,14 @@ class UpdateController(object):
         '''
         self._config.lastUpdate = datetime.datetime.today()
 
-    def _threadFunc(self, verList, silenceMode):
+    def _threadFunc(self, updateUrls, silenceMode):
         """
         Thread function for silence updates checking
         """
-        verList.updateVersions()
-        event = UpdateVersionsEvent(verList=verList, silenceMode=silenceMode)
+        verList = VersionList(updateUrls)
+        appInfoDict = verList.loadAppInfo()
+        event = UpdateVersionsEvent(appInfoDict=appInfoDict,
+                                    silenceMode=silenceMode)
 
         if self._application.mainWindow:
             wx.PostEvent(self._application.mainWindow, event)
