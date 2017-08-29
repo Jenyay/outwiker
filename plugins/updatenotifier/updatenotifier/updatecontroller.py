@@ -7,23 +7,24 @@ import os.path
 
 import wx
 
+from outwiker.gui.longprocessrunner import LongProcessRunner
 from outwiker.core.commands import getCurrentVersion, MessageBox, setStatusText
 from outwiker.core.version import Version
 from outwiker.core.defines import PLUGIN_VERSION_FILE_NAME
 from outwiker.core.xmlversionparser import XmlVersionParser
 from outwiker.utilites.textfile import readTextFile
 
-from .longprocessrunner import LongProcessRunner
 from .updatedialog import UpdateDialog
 from .updatesconfig import UpdatesConfig
 from .versionlist import VersionList
 from .i18n import get_
 from .contentgenerator import ContentGenerator
 
-# The event occures after finish "silence" cheching latest versions.
+# The event occures after finish cheching latest versions.
 # The parameters:
 #     verList - instance of the VersionList class
-SilenceUpdateVersionsEvent, EVT_SILENCE_UPDATE_VERSIONS = wx.lib.newevent.NewEvent()
+#     silenceMode - True if the theread was runned in the silence mode.
+UpdateVersionsEvent, EVT_UPDATE_VERSIONS = wx.lib.newevent.NewEvent()
 
 logger = logging.getLogger('UpdateNotifierPlugin')
 
@@ -59,8 +60,83 @@ class UpdateController(object):
         self._silenceThread = None
         if self._application.mainWindow is not None:
             self._application.mainWindow.Bind(
-                EVT_SILENCE_UPDATE_VERSIONS,
-                handler=self._onSilenceVersionUpdate)
+                EVT_UPDATE_VERSIONS,
+                handler=self._onVersionUpdate)
+
+    def checkForUpdatesSilence(self):
+        """
+        Execute the silence update checking.
+        """
+        setStatusText(_(u"Check for new versions..."))
+        verList = VersionList(self._updateUrls)
+
+        if (self._silenceThread is None or not self._silenceThread.isAlive()):
+            self._silenceThread = threading.Thread(None,
+                                                   self._threadFunc,
+                                                   args=(verList, True))
+            self._silenceThread.start()
+
+    def checkForUpdates(self):
+        """
+        Execute updates checking and show dialog with the results.
+        """
+        verList = VersionList(self._updateUrls)
+        setStatusText(_(u"Check for new versions..."))
+
+        progressRunner = LongProcessRunner(
+            self._threadFunc,
+            self._application.mainWindow,
+            dialogTitle=u"UpdateNotifier",
+            dialogText=_(u"Check for new versions..."))
+
+        progressRunner.run(verList, silenceMode=False)
+
+    def createHTMLContent(self, updatedAppInfo):
+        currentVersion = getCurrentVersion()
+        currentVersionsList = self._getCurrentVersionsList()
+
+        template = readTextFile(self._updateTemplatePath)
+
+        templateData = {
+            u'outwiker_current_version': currentVersion,
+            u'updatedAppInfo': updatedAppInfo,
+            u'currentVersionsList': currentVersionsList,
+            u'str_outwiker_current_version': _(u'Installed OutWiker version'),
+            u'str_outwiker_latest_stable_version': _(u'Latest stable OutWiker version'),
+            u'str_outwiker_latest_unstable_version': _(u'Latest unstable OutWiker version'),
+            u'str_version_history': _(u'Version history'),
+            u'str_more_info': _(u'More info'),
+            u'str_download': _(u'Download'),
+        }
+
+        contentGenerator = ContentGenerator(template)
+        HTMLContent = contentGenerator.render(templateData)
+        return HTMLContent
+
+    @staticmethod
+    def filterUpdatedApps(currentVersionsList, latestAppInfoList):
+        """
+        Return dictionary with the AppInfo fot updated apps only.
+        """
+        updatedPlugins = {}
+
+        for app_name, version_str in currentVersionsList.iteritems():
+            latestAppInfo = latestAppInfoList[app_name]
+
+            if latestAppInfo is None:
+                continue
+
+            try:
+                currentPluginVersion = Version.parse(version_str)
+            except ValueError:
+                continue
+
+            latestVersion = latestAppInfo.currentVersion
+            if (latestVersion is not None and
+                    latestVersion > currentPluginVersion):
+                updatedPlugins[app_name] = latestAppInfo
+
+        return updatedPlugins
 
     def _getPluginsUpdateUrls(self, plugins):
         '''
@@ -114,64 +190,20 @@ class UpdateController(object):
 
     def _showUpdates(self, updatedAppInfo):
         '''
-        Show dialog with lupdate information.
+        Show dialog with update information.
         '''
         setStatusText(u"")
 
-        currentVersion = getCurrentVersion()
-        currentVersionsList = self._getCurrentVersionsList()
-
-        template = readTextFile(self._updateTemplatePath)
-
-        templateData = {
-            u'outwiker_current_version': currentVersion,
-            u'updatedAppInfo': updatedAppInfo,
-            u'currentVersionsList': currentVersionsList,
-            u'str_outwiker_current_version': _(u'Installed OutWiker version'),
-            u'str_outwiker_latest_stable_version': _(u'Latest stable OutWiker version'),
-            u'str_outwiker_latest_unstable_version': _(u'Latest unstable OutWiker version'),
-            u'str_version_history': _(u'Version history'),
-            u'str_more_info': _(u'More info'),
-            u'str_download': _(u'Download'),
-        }
-
-        contentGenerator = ContentGenerator(template)
-        HTMLContent = contentGenerator.render(templateData)
-        print updatedAppInfo['Debug Plugin'].appwebsite
+        HTMLContent = self.createHTMLContent(updatedAppInfo)
 
         with UpdateDialog(self._application.mainWindow) as updateDialog:
             basepath = self._dataPath
             updateDialog.setContent(HTMLContent, basepath)
             updateDialog.ShowModal()
 
-    @staticmethod
-    def filterUpdatedApps(currentVersionsList, latestAppInfoList):
-        """
-        Return dictionary with the AppInfo fot updated apps only.
-        """
-        updatedPlugins = {}
-
-        for app_name, version_str in currentVersionsList.iteritems():
-            latestAppInfo = latestAppInfoList[app_name]
-
-            if latestAppInfo is None:
-                continue
-
-            try:
-                currentPluginVersion = Version.parse(version_str)
-            except ValueError:
-                continue
-
-            latestVersion = latestAppInfo.currentVersion
-            if (latestVersion is not None and
-                    latestVersion > currentPluginVersion):
-                updatedPlugins[app_name] = latestAppInfo
-
-        return updatedPlugins
-
-    def _onSilenceVersionUpdate(self, event):
+    def _onVersionUpdate(self, event):
         '''
-        Event handler for EVT_SILENCE_UPDATE_VERSIONS.
+        Event handler for EVT_UPDATE_VERSIONS.
         '''
         setStatusText(u"")
 
@@ -180,8 +212,8 @@ class UpdateController(object):
 
         if updatedAppInfo:
             self._showUpdates(updatedAppInfo)
-
-        self._silenceThread = None
+        elif not event.silenceMode:
+            MessageBox(_(u"Updates not found"), u"UpdateNotifier")
 
     def _touchLastUpdateDate(self):
         '''
@@ -189,50 +221,12 @@ class UpdateController(object):
         '''
         self._config.lastUpdate = datetime.datetime.today()
 
-    def _silenceThreadFunc(self, verList):
+    def _threadFunc(self, verList, silenceMode):
         """
         Thread function for silence updates checking
         """
         verList.updateVersions()
-        event = SilenceUpdateVersionsEvent(verList=verList)
+        event = UpdateVersionsEvent(verList=verList, silenceMode=silenceMode)
 
         if self._application.mainWindow:
             wx.PostEvent(self._application.mainWindow, event)
-
-    def checkForUpdatesSilence(self):
-        """
-        Execute the silence update checking.
-        """
-        setStatusText(_(u"Check for new versions..."))
-        verList = VersionList(self._updateUrls)
-
-        if (self._silenceThread is None or not self._silenceThread.isAlive()):
-            self._silenceThread = threading.Thread(None,
-                                                   self._silenceThreadFunc,
-                                                   args=(verList,))
-            self._silenceThread.start()
-
-    def checkForUpdates(self):
-        """
-        Execute updates checking and show dialog with the results.
-        """
-        verList = VersionList(self._updateUrls)
-        setStatusText(_(u"Check for new versions..."))
-
-        progressRunner = LongProcessRunner(
-            verList.updateVersions,
-            self._application.mainWindow,
-            dialogTitle=u"UpdateNotifier",
-            dialogText=_(u"Check for new versions..."))
-
-        progressRunner.run()
-
-        self._touchLastUpdateDate()
-
-        updatedAppInfo = self._getUpdatedAppInfo(verList)
-
-        if updatedAppInfo:
-            self._showUpdates(updatedAppInfo)
-        else:
-            MessageBox(_(u"Updates not found"),
-                       u"UpdateNotifier")
