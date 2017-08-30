@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-24 13:09+0300\n"
-"PO-Revision-Date: 2017-08-24 13:09+0300\n"
+"POT-Creation-Date: 2017-08-28 20:35+0300\n"
+"PO-Revision-Date: 2017-08-30 16:24+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -11,59 +11,62 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.0.1\n"
+"X-Generator: Poedit 1.8.12\n"
 "X-Crowdin-Project: outwiker\n"
 "X-Crowdin-Language: sv-SE\n"
 "X-Crowdin-File: updatenotifier.pot\n"
 
-#: controller.py:93
+#: controller.py:94
 msgid "UpdateNotifier [Plugin]"
 msgstr "UpdateNotifier [Instick]"
 
-#: versionlist.py:36 updatedialog.py:53
-msgid "http://jenyay.net/Outwiker/English"
-msgstr "http://jenyay.net/Outwiker/English"
-
-#: versionlist.py:39 updatedialog.py:74
-msgid "http://jenyay.net/Outwiker/UnstableEn"
-msgstr "http://jenyay.net/Outwiker/UnstableEn"
-
-#: versionlist.py:59
+#: updatecontroller.py:81 versionlist.py:60
 msgid "__updateLang"
 msgstr "en"
 
-#: versionlist.py:95
-msgid "http://jenyay.net/Outwiker/ExternalToolsEn"
-msgstr "http://jenyay.net/Outwiker/ExternalToolsEn"
+#: updatecontroller.py:130
+msgid "Installed OutWiker version"
+msgstr "Installerad OutWiker-version"
 
-#: versionlist.py:96
-msgid "http://jenyay.net/Outwiker/LightboxEn"
-msgstr "http://jenyay.net/Outwiker/LightboxEn"
+#: updatecontroller.py:131
+msgid "Latest stable OutWiker version"
+msgstr "Senaste stabila OutWiker-version"
 
-#: versionlist.py:97
-msgid "http://jenyay.net/Outwiker/LivejournalPluginEn"
-msgstr "http://jenyay.net/Outwiker/LivejournalPluginEn"
+#: updatecontroller.py:132
+msgid "Latest unstable OutWiker version"
+msgstr "Senaste instabila OutWiker-version"
 
-#: versionlist.py:98
-msgid "http://jenyay.net/Outwiker/SpoilerEn"
-msgstr "http://jenyay.net/Outwiker/SpoilerEn"
+#: updatecontroller.py:133
+msgid "Version history"
+msgstr "Versionshistorik"
 
-#: versionlist.py:99
-msgid "http://jenyay.net/Outwiker/StylePluginEn"
-msgstr "http://jenyay.net/Outwiker/StylePluginEn"
+#: updatecontroller.py:134
+msgid "More info"
+msgstr "Mer information"
 
-#: versionlist.py:100
-msgid "http://jenyay.net/Outwiker/ThumbGalleryEn"
-msgstr "http://jenyay.net/Outwiker/ThumbGalleryEn"
+#: updatecontroller.py:135
+msgid "Download"
+msgstr "Ladda ner"
 
-#: plugin.py:27
+#: updatecontroller.py:205 updatecontroller.py:219 updatecontroller.py:225
+msgid "Check for new versions..."
+msgstr "Sök efter ny version..."
+
+#: updatecontroller.py:236
+msgid "Updates not found"
+msgstr "Inga uppdateringar hittades"
+
+#: plugin.py:29
 msgid ""
 "Check for update OutWiker and plug-ins for it.\n"
 "\n"
 "Append menu item \"Help -> Check for Updates...\""
 msgstr ""
+"Sök efter uppdateringar till OutWiker och insticksmoduler.\n"
+"\n"
+"Lägg till menyobjektet \"Hjälp -> Sök efter uppdateringar...\""
 
-#: plugin.py:33
+#: plugin.py:35
 msgid "http://jenyay.net/Outwiker/UpdateNotifierEn"
 msgstr "http://jenyay.net/Outwiker/UpdateNotifierEn"
 
@@ -91,33 +94,9 @@ msgstr "Sök efter uppdateringar"
 msgid "Ignore updates unstable versions"
 msgstr "Undanta instabila versioner"
 
-#: updatedialog.py:23
+#: updatedialog.py:21
 msgid "UpdateNotifier"
 msgstr "UpdateNotifier"
-
-#: updatedialog.py:31
-msgid "Current OutWiker version"
-msgstr "Aktuell OutWiker-version"
-
-#: updatedialog.py:52
-msgid "Latest stable OutWiker version"
-msgstr "Senaste stabila OutWiker-version"
-
-#: updatedialog.py:73
-msgid "Latest unstable OutWiker version"
-msgstr "Senaste instabila OutWiker-version"
-
-#: updatedialog.py:94
-msgid "Updated plugins:"
-msgstr "Uppdaterade insticksmoduler:"
-
-#: updateschecker.py:166 updateschecker.py:180 updateschecker.py:186
-msgid "Check for new versions..."
-msgstr "Sök efter ny version..."
-
-#: updateschecker.py:196
-msgid "Updates not found"
-msgstr "Inga uppdateringar hittades"
 
 #: prefpanelcontroller.py:25
 msgid "Never"
@@ -150,6 +129,3 @@ msgstr "Varje månad"
 #: prefpanelcontroller.py:57
 msgid "Custom"
 msgstr "Anpassat"
-
-#~ msgid "Check for update OutWiker and plug-ins for it. Append menu item \"Help -> Check for Updates...\""
-#~ msgstr "Sök efter uppdateringar till OutWiker och insticksmoduler. Lägg till menyobjektet \"Hjälp -> Sök efter uppdateringar...\""
