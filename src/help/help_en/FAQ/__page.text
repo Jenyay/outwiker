@@ -1,15 +1,14 @@
 !! Frequently asked questions (FAQ)
 
-!!!! OutWiker does not run under Windows. What should I do?
+!!!! OutWiker does not run on Windows. What should I do?
 
-Try to install [[http://www.microsoft.com/downloads/details.aspx?familyid=9b2da534-3e03-4391-8a4d-074b9f2bc1bf&displaylang=en | MS Visual C++ 2008 Redistributable Package]].If you install the library and it did not help, please write to the author on [[http://jenyay.net/Soft/Outwiker | program page]] or write to e-mail [[mailto:jenyay.ilin@gmail.com | jenyay.ilin@gmail.com]] with a full error text.
+Try to install [[http://www.microsoft.com/downloads/details.aspx?familyid=9b2da534-3e03-4391-8a4d-074b9f2bc1bf&displaylang=en | MS Visual C++ 2008 Redistributable Package]]. If it does not help, please, send message to the author at [[http://jenyay.net/Soft/Outwiker | program page]] or to e-mail [[mailto:jenyay.ilin@gmail.com | jenyay.ilin@gmail.com]] with a full text of error.
 
 
-!!!! May it be better to make the program keep notes in one file?
+!!!! Would not it be better, if OutWiker kept notes in one file?
 
-Keeping notes in a tree - the main feature, for which the program was developed. This does not mean that someday I will not add the option for choosing ways of storing your notes, but this will not happen in the near future.
-
+Keeping notes in a tree is the main feature of OutWiker that stands it apart from similar software. It is possible that one day users will be granted choice of how to store their note collections, however, it is not on the developer's to-do list in the near future.
 
 !!!! Will there be a visual editor for the pages?
 
-There are some thoughts to make a separate page type format RichTextFormat with the visual editor. Please do not exclude the possibility that there will be a visual editor for HTML-pages. But still I can't talk about dates.
+Possibility to add such functionality (RichTextFormat seems to be the best candidate to implement wysiwyg editor) is under consideration. But it is still not certain for the moment.

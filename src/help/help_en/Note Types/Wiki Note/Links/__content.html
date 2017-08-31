@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
+	<meta http-equiv='content-type' content='text/html; charset=utf-8'/>
+
+	<style type='text/css'>
+		body, div, p, table {
+			font-size:12pt;
+			font-family:Calibri;
+		}
+
+		img{border:none}
+		body,p
+{
+background-color: #282828 !important;
+color: #C0C0C0 !important;
+font: 12pt/1.6 Calibri !important;
+text-align: justify !important;
+}
+h1 {
+font: 16pt Cambria !important;
+color: #365F91 !important;
+font-weight: bold !important;
+}
+h2 {
+font: 14pt Cambria !important;
+color: #008080 !important;
+font-weight: bold !important;
+}
+h3 {
+font: 11pt Cambria !important;
+color: #4F81BD !important;
+font-weight: bold !important;
+}
+h4 {
+font: 11pt Cambria !important;
+color: #008000 !important;
+font-weight: bold !important;
+}
+h5 {
+font: 11pt Cambria !important;
+color: #9966CC !important;
+font-weight: bold !important;
+}
+h6 {
+font: 11pt Cambria !important;
+color: #808080 !important;
+font-weight: bold !important;
+}
+	</style>
+	
+</head>
+
+<body>
+The following table shows examples of links to webpages and to another notes of the tree.<br/>
+ 
+<h2>Links</h2>
+<br/>
+<table border=1>
+<tr>
+<td align="center"><b>Syntax</b></td>
+<td align="center"><b>Result</b></td>
+<td align="center"><b>Comment</b></td>
+</tr>
+<tr>
+<td>http://example.com</td>
+<td><a href="http://example.com">http://example.com</a></td>
+<td>Link to webpage</td>
+</tr>
+<tr>
+<td>[[http://example.com]]</td>
+<td><a href="http://example.com">http://example.com</a></td>
+<td>Link to webpage</td>
+</tr>
+<tr>
+<td>[[Link sample -> http://example.com]]</td>
+<td><a href="http://example.com">Link sample</a></td>
+<td>Link to webpage with comment</td>
+</tr>
+<tr>
+<td>[[http://example.com | Link sample]]</td>
+<td><a href="http://example.com">Link sample</a></td>
+<td>Link to webpage with comment</td>
+</tr>
+<tr>
+<td>[[page://__97bae762-abb7-489e-a1f4-1b0c9f6916d1]]</td>
+<td><a href="page://__97bae762-abb7-489e-a1f4-1b0c9f6916d1">page://__97bae762-abb7-489e-a1f4-1b0c9f6916d1</a></td>
+<td align="left">Link to note by identifier</td>
+</tr>
+<tr>
+<td>[[page://__97bae762-abb7-489e-a1f4-1b0c9f6916d1 | Link to the current note]]</td>
+<td><a href="page://__97bae762-abb7-489e-a1f4-1b0c9f6916d1">Link to the current note</a></td>
+<td align="left">Link to note by identifier with comment (variant 1)</td>
+</tr>
+<tr>
+<td>[[Link to the current note -> page://__97bae762-abb7-489e-a1f4-1b0c9f6916d1]]</td>
+<td><a href="page://__97bae762-abb7-489e-a1f4-1b0c9f6916d1">Link to the current note</a></td>
+<td align="left">Link to note by identifier with comment (variant 2)</td>
+</tr>
+<tr>
+<td>[[/Page Types/Wiki Page/Links]]</td>
+<td><a href="/Page Types/Wiki Page/Links">/Page Types/Wiki Page/Links</a></td>
+<td align="left">Link to note by name</td>
+</tr>
+<tr>
+<td>[[/Page Types/Wiki Page/Links | Links]]</td>
+<td><a href="/Page Types/Wiki Page/Links">Links</a></td>
+<td>Link to note by name with comment</td>
+</tr>
+<tr>
+<td>[[Links -> /Page Types/Wiki Page/Links]]</td>
+<td align="left"><a href="/Page Types/Wiki Page/Links">Links</a></td>
+<td align="left">Link to note by name with comment</td>
+</tr>
+<tr>
+<td align="left">[[../../HTML Page]]</td>
+<td align="left"><a href="../../HTML Page">../../HTML Page</a></td>
+<td align="left">Link to note by relative path</td>
+</tr>
+<tr>
+<td align="left">[[../../HTML Page | HTML Page]]</td>
+<td align="left"><a href="../../HTML Page">HTML Page</a></td>
+<td align="left">Link to note by relative path with comment</td>
+</tr>
+<tr>
+<td align="left">[[HTML Page -> ../../HTML Page]]</td>
+<td align="left"><a href="../../HTML Page">HTML Page</a></td>
+<td align="left">Link to note by relative path with comment</td>
+</tr>
+<tr>
+<td>http://jenyay.net/utils/small_image.jpg</td>
+<td align="left"><img src="http://jenyay.net/uploads/Outwiker/Unstable/outwiker_100_white.png"/></td>
+<td align="left">Image from webpage</td>
+</tr>
+</table><br/>
+<h2>Anchors</h2>
+<br/>
+<table border=1>
+<tr>
+<td align="center"><b>Syntax</b></td>
+<td align="center"><b>Result</b></td>
+<td align="center"><b>Comment</b></td>
+</tr>
+<tr>
+<td>[[#anchor]]</td>
+<td>Add anchor "#anchor" <a id="anchor"></a></td>
+<td>HTML code: &lt;A NAME=&quot;#anchor&quot;&gt;&lt;/A&gt;</td>
+</tr>
+<tr>
+<td>[[#anchor | Link to anchor]]</td>
+<td><a href="#anchor">Link to anchor</a></td>
+<td>Link to anchor "#anchor"</td>
+</tr>
+<tr>
+<td>[[ Link to anchor -> #anchor]]</td>
+<td><a href="#anchor">Link to anchor</a></td>
+<td>Link to anchor "#anchor"</td>
+</tr>
+<tr>
+<td>[[page://__d0ed44d4-0772-4f04-80ca-98fc55530667/#anchor]]</td>
+<td align="left"><a href="page://__d0ed44d4-0772-4f04-80ca-98fc55530667/#anchor">page://__d0ed44d4-0772-4f04-80ca-98fc55530667/#anchor</a></td>
+<td>Link to anchor "#anchor" in another note</td>
+</tr>
+<tr>
+<td>[[page://__d0ed44d4-0772-4f04-80ca-98fc55530667/#anchor | Link to anchor in another note]]</td>
+<td align="left"><a href="page://__d0ed44d4-0772-4f04-80ca-98fc55530667/#anchor">Link to anchor in another note</a></td>
+<td>Link to anchor "#anchor" in another note</td>
+</tr>
+<tr>
+<td>[[ Link to anchor in another note -> page://__d0ed44d4-0772-4f04-80ca-98fc55530667/#anchor]]</td>
+<td align="left"><a href="page://__d0ed44d4-0772-4f04-80ca-98fc55530667/#anchor">link to anchor in another note</a></td>
+<td>Link to anchor "#anchor" in another note</td>
+</tr>
+</table>
+</body>
+</html>

@@ -1,37 +1,72 @@
-<HTML>
-<HEAD>
-	<META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
+	<meta http-equiv='content-type' content='text/html; charset=utf-8'/>
 
-	<STYLE type="text/css">
+	<style type='text/css'>
 		body, div, p, table {
-			font-size:10pt;
-			font-family:Verdana;
+			font-size:12pt;
+			font-family:Calibri;
 		}
 
 		img{border:none}
-		
-	</STYLE>
-</HEAD>
+		body,p
+{
+background-color: #282828 !important;
+color: #C0C0C0 !important;
+font: 12pt/1.6 Calibri !important;
+text-align: justify !important;
+}
+h1 {
+font: 16pt Cambria !important;
+color: #365F91 !important;
+font-weight: bold !important;
+}
+h2 {
+font: 14pt Cambria !important;
+color: #008080 !important;
+font-weight: bold !important;
+}
+h3 {
+font: 11pt Cambria !important;
+color: #4F81BD !important;
+font-weight: bold !important;
+}
+h4 {
+font: 11pt Cambria !important;
+color: #008000 !important;
+font-weight: bold !important;
+}
+h5 {
+font: 11pt Cambria !important;
+color: #9966CC !important;
+font-weight: bold !important;
+}
+h6 {
+font: 11pt Cambria !important;
+color: #808080 !important;
+font-weight: bold !important;
+}
+	</style>
+	
+</head>
 
-<BODY>
-<P><I>Каждая заметка расположена в своей отдельной папке, вложенные папки как раз и создают дерево. Все другие вложенные папки считаются вложенными заметками. Вот, например, как выглядит дерево заметок этой справки: <A HREF="__attach/tree.txt">tree.txt</A></I></P>
-
-<P>Each note is stored in its own directory, subdirectories actually create a tree. All other subdirectory are sub-notes. For example, this reference is organized this way: <A HREF="__attach/tree.txt">tree.txt</A></P>
-
-<P><I>В каждой папке-заметке, как и в корне дерева, находится файл </I>__page.opt<I>, в котором хранятся настройки отдельной заметки (теги, ее тип и т.д.). Кроме того, во вложенных папках расположены файлы </I>__page.text<I> – собственно, содержимое заметки (формат этого файла зависит от типа страницы) и, возможно, </I>__icon.*<I> – иконка в любом графическом формате размером 16×16.</I></P>
-
-<P>Each directory and the root of tree contains a file <I>__page.opt</I>, which stores the settings for individual notes (tag, page type, etc.). Also, in subdirectories there are files<I>__page.text</I> - the contents of the notes (the format of this file depends on the type of page) and, possibly, <I>__icon .*</I> - an icon in any graphic format 16 × 16 pixels.</P>
-
-<P><I>В каждой папке-заметке есть вложенная папка </I>__attach<I>, где располагаются прикрепленный файлы, поэтому для того, чтобы прикрепить файл к заметке, достаточно его скопировать в папку </I>__attach<I>.</I></P>
-
-<P>Each directory contains a subdirectory <I>__attach</I>, which contains attached files, so to attach a file to a note, you just copy it the directory <I>__attach</I>.</P>
-
-<P><I>Благодаря такой структуре возможно открывать каждую ветвь как отдельное дерево, только при этом надо учитывать, что корневой элемент древа не содержит самой заметки, а используется только как контейнер для вложенных страниц.</I></P>
-
-<P>Due to this structure you may open each branch as a separate tree, but at the same time you must remember, that the root element of the tree itself does not contain a note and is only used as a container for sub-pages.</P>
-
-<P><I>Файлы и директории, созданные OutWiker'ом, начинаются с двух символов подчеркивания.</I></P>
-
-<P>Files and directories created by OutWiker, begin with two underscores.</P>
-</BODY>
-</HTML>
+<body>
+Each note is stored in its own directory, which may contain any number of (sub)directories with lower level (child) notes. Thus the note tree in OutWiker is a representation for the tree of directories on disk. For example, this reference note tree is organised as shown in the following file: <a href="__attach/tree.txt">tree.txt</a><br/>
+<br/>
+Each directory, including the root directory, contains the <i>__page.opt</i> file, that stores various settings for the note, such as tag(s), page type, etc (or some info about the whole tree for the case of the root directory).<br/>
+<br/>
+Each directory, except for the root directory, contains the following files:<br/>
+<ul>
+<li>mandatory <i>__page.text</i>, that contains content of the notes (the format of this file depends on the note type);</li>
+<li>optional <i>__icon .*</i>, that stores note's icon of 16 × 16 pixels size (OutWiker recognises all standard bitmap formats);</li>
+<li>some other format-specific files (for example, <i>__content.html</i>).</li>
+</ul>
+Apart from child note subdirectories, each directory can contain the <i>__attach</i> subdirectory, which stores files attached to the note (and vice versa all files put in this directory will be automatically attached to the note).<br/>
+<br/>
+Because of this structure each branch of the note tree can be considered as tree on its own (the only thing to remember is that the root element of the note tree is not a note, rather serves as container for lower level notes).<br/>
+<br/>
+For OutWiker to be able to build the note tree, names of files must begin with two consecutive underscores (it does not apply to the files within the <i>__attach</i> directory, there are no special requirements for names of those).<br/>
+</body>
+</html>

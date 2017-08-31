@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
+	<meta http-equiv='content-type' content='text/html; charset=utf-8'/>
+
+	<style type='text/css'>
+		body, div, p, table {
+			font-size:12pt;
+			font-family:Calibri;
+		}
+
+		img{border:none}
+		body,p
+{
+background-color: #282828 !important;
+color: #C0C0C0 !important;
+font: 12pt/1.6 Calibri !important;
+text-align: justify !important;
+}
+h1 {
+font: 16pt Cambria !important;
+color: #365F91 !important;
+font-weight: bold !important;
+}
+h2 {
+font: 14pt Cambria !important;
+color: #008080 !important;
+font-weight: bold !important;
+}
+h3 {
+font: 11pt Cambria !important;
+color: #4F81BD !important;
+font-weight: bold !important;
+}
+h4 {
+font: 11pt Cambria !important;
+color: #008000 !important;
+font-weight: bold !important;
+}
+h5 {
+font: 11pt Cambria !important;
+color: #9966CC !important;
+font-weight: bold !important;
+}
+h6 {
+font: 11pt Cambria !important;
+color: #808080 !important;
+font-weight: bold !important;
+}
+	</style>
+	
+</head>
+
+<body>
+There are two ways to create a table on wiki page: simple wiki notation and the (:table:)...(:tableend:) command. The former method is effective ans convenient for creating small and compact tables. (:table:) command is more general and powerful method best suited for large and complex tables. Both methods are described below.<br/>
+<br/>
+<h2>Simple table creation</h2>
+<br/>
+In order to create table with simple wiki notation, one should use the following syntax:<br/>
+<br/>
+<br/>
+|| Table params (&lt;TABLE&gt; tag attribute): border, width, etc.<br/>
+|| The first cell of the first row || The second cell of the first row || ... || The last cell of the first row ||<br/>
+|| The first cell of the second row || The second cell of the second row || ... || The last cell of the last row ||<br/>
+...<br/>
+<br/>
+<br/>
+The space characters between cell content and the double vertical separators on left and right are important for they set horizontal alignment of content within the cell. The following example illustrates this concept:<br/>
+<br/>
+Table code:<br/>
+<br/>
+<br/>
+|| border=1 width=100%<br/>
+||Left align || Center align || Right align||<br/>
+<br/>
+<br/>
+Result:<br/>
+<br/>
+<table border=1 width=100%>
+<tr>
+<td align="left">Left align</td>
+<td align="center">Center align</td>
+<td align="right">Right align</td>
+</tr>
+</table><br/>
+<h2>Using (:table:) command</h2>
+<h3>Syntax</h3>
+<br/>
+Creation of a table with (:table:) command is similar to creation of tables in HTML code. The syntax is as follows:<br/>
+<br/>
+<br/>
+<br/>
+(:table parameters:)<br/>
+(:row parameters:)<br/>
+(:hcell parameters:) Header cell text<br/>
+(:hcell parameters:) Header cell text<br/>
+...<br/>
+(:row parameters:)<br/>
+(:cell parameters:) Cell text<br/>
+(:cell parameters:) Cell text<br/>
+...<br/>
+(:tableend:)<br/>
+<br/>
+<br/>
+The (:table:) command accepts the same parameters as &lt;table&gt; tag from HTML. Some widely used parameters are <i>border</i> which allows to set table border width (if <i>border</i>="0", which is the default value then the table frame is not visible), <i>width</i> to set table width and <i>align</i> to set alignment of the table as a whole.<br/>
+<br/>
+OutWiker converts the (:table paraameters:)...(:tableend:) command into HTML code (&lt;table parameters&gt;...&lt;/table&gt;) to render notes in the "Preview" mode.<br/>
+<br/>
+The (:row:) command is used to denote beginning a new table row. This command is an equivalent of  &lt;tr&gt; HTML tag, the same parameters as for the tag are allowed.<br/>
+<br/>
+The (:cell:) command is is used to denote beginning a new table cell. The (:hcell:) command is used to denote beginning a new heading cell. The (:cell:) command is an equivalent of &lt;td&gt; HTML tag. The (:hcell:) command is an equivalent of &lt;th&gt HTML tag.<br/>
+<br/>
+<h4>Examples</h4>
+<br/>
+<table width=100% border=1>
+<tr><th> Comment</th><th> Wiki notation</th><th> Result<br/>
+</th>
+</tr>
+<tr>
+<td> Table with a border</td>
+<td>(:table border="1":)<br/>
+(:row:)<br/>
+(:hcell:)cell 1<br/>
+(:hcell:)cell 2<br/>
+(:hcell:)cell 3<br/>
+(:row:)<br/>
+(:cell:)cell 4<br/>
+(:cell:)cell 5<br/>
+(:cell:)cell 6<br/>
+(:tableend:)</td>
+<td>
+<table border="1">
+<tr><th>cell 1</th><th>cell 2</th><th>cell 3</th>
+</tr>
+<tr>
+<td>cell 4</td>
+<td>cell 5</td>
+<td>cell 6</td>
+</tr>
+</table><br/>
+</td>
+</tr>
+<tr>
+<td>Table without a border</td>
+<td>(:table:)<br/>
+(:row:)<br/>
+(:cell:)cell 1<br/>
+(:cell:)cell 2<br/>
+(:cell:)cell 3<br/>
+(:row:)<br/>
+(:cell:)cell 4<br/>
+(:cell:)cell 5<br/>
+(:cell:)cell 6<br/>
+(:tableend:)</td>
+<td>
+<table>
+<tr>
+<td>cell 1</td>
+<td>cell 2</td>
+<td>cell 3</td>
+</tr>
+<tr>
+<td>cell 4</td>
+<td>cell 5</td>
+<td>cell 6</td>
+</tr>
+</table><br/>
+</td>
+</tr>
+<tr>
+<td> Using colspan and rowspan parameters<br/>
+to join cells horizontally and vertically</td>
+<td>(:table border="1" align="center":)<br/>
+(:row:)<br/>
+(:cell colspan=2 align=center:)cell 1<br/>
+(:cell rowspan=2:)cell 2<br/>
+(:row:)<br/>
+(:cell:)cell 4<br/>
+(:cell:)cell 5<br/>
+(:tableend:)</td>
+<td>
+<table border="1" align="center">
+<tr>
+<td colspan=2 align=center>cell 1</td>
+<td rowspan=2>cell 2</td>
+</tr>
+<tr>
+<td>cell 4</td>
+<td>cell 5</td>
+</tr>
+</table></td>
+</tr>
+</table><br/>
+<br/>
+<h3>Nested tables</h3>
+<br/>
+Due to the nature of the wiki parser (part OutWiker program that convert wiki notation to HTML code) to a table be arranged in the cell the other table not enough single (:table:) command (In this case wiki parser will not know where ends the table top level, and where ends the nested table). Therefor for explicit indication to begin and end of the command it was created (:table:) commands with numbers, i.e. (:table1:), (:table2:), (:table3:), (:table4:) end (:table5:). They is used alike (:table:) command, but is designed for nested tables. <br/>
+<br/>
+Note that these commands is closed with (:table1:), (:table2end:), (:table3end:), (:table4end:) and (:table5end:) expression respectively.<br/>
+<br/>
+Inside (:tableN:) command must used numbered commands (:rowN:) and (:cellN:) / (:hcellN:) for creation table rows and cell respectively. This feature adds to the visibility of what the table which row or cell belongs.<br/>
+<br/>
+<br/>
+For example:<br/>
+<br/>
+<table border="1" width=100%>
+<tr><th>Wiki notation</th><th>Result<br/>
+</th>
+</tr>
+<tr>
+<td>(:table border=1 align=center:)<br/>
+(:row:)<br/>
+(:cell:)(:table2 border=1:)<br/>
+(:row2:)<br/>
+(:cell2:)Table 2. Cell 1<br/>
+(:cell2:)Table 2. Cell 2<br/>
+(:cell2:)Table 2. Cell 3<br/>
+(:row2:)<br/>
+(:cell2:)Table 2. Cell 4<br/>
+(:cell2:)Table 2. Cell 5<br/>
+(:cell2:)Table 2. Cell 6<br/>
+(:table2end:)<br/>
+<br/>
+(:cell:)cell 2<br/>
+(:cell:)cell 3<br/>
+<br/>
+(:row:)<br/>
+(:cell:)cell 4<br/>
+(:cell:)cell 5<br/>
+(:cell:)cell 6<br/>
+(:tableend:)<br/>
+</td>
+<td>
+<table border=1 align=center>
+<tr>
+<td>
+<table border=1>
+<tr>
+<td>Table 2. Cell 1</td>
+<td>Table 2. Cell 2</td>
+<td>Table 2. Cell 3</td>
+</tr>
+<tr>
+<td>Table 2. Cell 4</td>
+<td>Table 2. Cell 5</td>
+<td>Table 2. Cell 6</td>
+</tr>
+</table></td>
+<td>cell 2</td>
+<td>cell 3</td>
+</tr>
+<tr>
+<td>cell 4</td>
+<td>cell 5</td>
+<td>cell 6</td>
+</tr>
+</table></td>
+</tr>
+</table><br/>
+<br/>
+The numbering of the tables does not necessarily indicate the level of nesting. For example on this help page for decor the recent example outer table is created with (:table3:) command and nested tables - with (:table:) and (:table2:)
+</body>
+</html>

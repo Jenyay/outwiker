@@ -1,9 +1,15 @@
-Each note is stored in its own directory, subdirectories actually create a tree. All other subdirectory are sub-notes. For example, this reference is organized this way: Attach:tree.txt
+Each note is stored in its own directory, which may contain any number of (sub)directories with lower level (child) notes. Thus the note tree in OutWiker is a representation for the tree of directories on disk. For example, this reference note tree is organised as shown in the following file: Attach:tree.txt
 
-Each directory and the root of tree contains a file ''__page.opt'', which stores the settings for individual notes (tag, page type, etc.). Also, in subdirectories there are files''__page.text'' - the contents of the notes (the format of this file depends on the type of page) and, possibly, ''__icon .*'' - an icon in any graphic format 16 × 16 pixels.
+Each directory, including the root directory, contains the ''__page.opt'' file, that stores various settings for the note, such as tag(s), page type, etc (or some info about the whole tree for the case of the root directory).
 
-Each directory contains a subdirectory ''__attach'', which contains attached files, so to attach a file to a note, you just copy it the directory ''__attach''.
+Each directory, except for the root directory, includes the following files:
 
-Due to this structure you may open each branch as a separate tree, but at the same time you must remember, that the root element of the tree itself does not contain a note and is only used as a container for sub-pages.
+* mandatory ''__page.text'' contains note content (the format of this file depends on the note type);
+* optional ''__icon .*'' stores note's icon of 16 × 16 pixels size (OutWiker recognises all standard bitmap formats);
+* some other format-specific files (for example, ''__content.html'').
 
-Files and directories created by OutWiker, begin with two underscores.
+Apart from child note subdirectories, each directory can contain the ''__attach'' subdirectory, which stores files attached to the note (and vice versa all files placed to this directory will be automatically attached to the note).
+
+Because of this note tree structure, each branch of the tree can be considered as tree on its own (the only thing to remember is that the root element of the note tree is not a note, rather it serves as container for lower level notes).
+
+For OutWiker to be able to build the note tree, names of files must begin with two consecutive underscores (it does not apply to the files within the ''__attach'' directory, there are no special requirements for names of those).

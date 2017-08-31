@@ -1,16 +1,16 @@
-* The base is stored as a directory tree on disk. 
-* Plugins supporting.
-* Any number of files can be attached to each note. 
-* Pages can be of different types.
-* Attached images can be inserted into the HTML-page. 
+* The list of notes is stored in tree of directories on disk.
+* Plug-ins are supported.
+* Any number of files can be attached to note.
+* Notes can be of different types.
+* Attached images can be shown in HTML-notes.
 * HTML syntax highlighting.
-* Tags support.
-* Support for bookmarks.
-* Each tree branch can be opened as a separate wiki. 
-* Icons for notes. 
-* Cross-platform (Windows and Linux). 
-* Portability. Program all the settings can be stored in its directory. 
-* Open-source program.
-* The ability to create links between pages.
-* Global search on your notes and search by tags.
-* Batch job with the tags.
+* Note tags are supported.
+* Bookmarks are supported.
+* Any tree branch can be opened as separate wiki.
+* Individual icons for notes are supported.
+* The software is cross-platform (Windows and Linux).
+* The software is portable.
+* The software is open-source.
+* Links between notes are supported.
+* Global search in the tree of notes and search by tags.
+* Batch processing (adding, deleting, renaming) of tags.

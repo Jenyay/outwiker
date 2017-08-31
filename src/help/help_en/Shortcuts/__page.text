@@ -1,4 +1,4 @@
-Hot keys can be set in the dialog "Settings", which is called from the menu "Edit - Preferences ...". Hotkeys set by by default, shown in the following table.
+Hot keys can be set in the dialogue "Settings" called from the menu "Edit - Preferences ...". Default hotkeys are listed in the following table.
 
 ||border=1
 || '''Shortcut''' || '''Action''' ||
@@ -12,51 +12,51 @@ Hot keys can be set in the dialog "Settings", which is called from the menu "Edi
 ||Ctrl+C ||Copy ||
 ||Ctrl+V ||Paste ||
 ||Ctrl+F8 ||Open preferences dialog||
-||Ctrl+F ||Search on page ||
-||Ctrl+H ||Search and replace on page ||
+||Ctrl+F ||Search in note ||
+||Ctrl+H ||Search and replace in note ||
 ||F3 ||Find next ||
-||Shift + F3 ||Find prev ||
-||Ctrl+Alt+T ||Create a page with the same nesting level as the current ||
-||Ctrl+Shift+T ||Create nested page ||
-||Ctrl+Shift+Del ||Remove current page ||
-||F2 ||Rename page ||
-||Ctrl+E ||Edit current page properties ||
-||Ctrl+Shift+F ||Find for page ||
+||Shift + F3 ||Find previous ||
+||Ctrl+Alt+T ||Create new note with the same nesting level as current one ||
+||Ctrl+Shift+T ||Create child note ||
+||Ctrl+Shift+Del ||Remove current note ||
+||F2 ||Rename note ||
+||Ctrl+E ||Edit current note properties ||
+||Ctrl+Shift+F ||Find note ||
 ||Ctrl+Alt+A ||Attach files ||
-||Ctrl+Shift+D ||Copy the title of the current page to clipboard ||
-||Ctrl+Shift+P ||Copy the path for the current page to clipboard ||
-||Ctrl+Shift+A ||Copy to attachment path to clipboard ||
-||Ctrl+Shift+L ||Copy the link for the current page to clipboard||
+||Ctrl+Shift+D ||Copy title of current note to clipboard ||
+||Ctrl+Shift+P ||Copy path of current note to clipboard ||
+||Ctrl+Shift+A ||Copy attachment's path to clipboard ||
+||Ctrl+Shift+L ||Copy link for current note to clipboard||
 ||Ctrl+R ||Reload wiki ||
-||Ctrl+D ||Add the current page to bookmarks / Remove the current page from bookmarks ||
-||F4 ||Switch between code and view ||
-||Shift+F4 ||Switch to HTML code for the wiki page ||
-||Ctrl+F1 ||About ||
-||Ctrl+B ||In bold||
-||Ctrl+I ||In italic||
-||Ctrl+Shift+I ||In bold italic||
-||Ctrl+Shift+I ||In monospaced||
+||Ctrl+D ||Add current note to bookmarks / Remove current note from bookmarks ||
+||F4 ||Switch between code and preview tabs ||
+||Shift+F4 ||Switch to HTML code for current wiki note ||
+||Ctrl+F1 ||About OutWiker||
+||Ctrl+B ||Bold||
+||Ctrl+I ||Italic||
+||Ctrl+Shift+I ||Bold italic||
+||Ctrl+Shift+I ||Monospaced||
 ||Ctrl+U ||Underlined||
 ||Ctrl+= ||Subscript||
 ||Ctrl++ ||Superscript||
-||Ctrl+, ||Small font||
-||Ctrl+. ||Big font||
-||Ctrl+Alt+L ||Left align||
-||Ctrl+Alt+C ||Center align||
-||Ctrl+Alt+R ||Right align||
-||Ctrl+Alt+J ||Justify align||
+||Ctrl+, ||Smaller font||
+||Ctrl+. ||Larger font||
+||Ctrl+Alt+L ||Align left||
+||Ctrl+Alt+C ||Align centre||
+||Ctrl+Alt+R ||Align right||
+||Ctrl+Alt+J ||Justify||
 ||Ctrl+1 ... Ctrl+6 ||Heading level 1-6||
-||Ctrl+G ||Unorder list||
-||Ctrl+J ||Order list||
+||Ctrl+G ||Bulleted list||
+||Ctrl+J ||Numbered list||
 ||Ctrl+K ||Strikethrough||
-||Ctrl+M ||Insert the &lt;IMG&gt; tag[[<<]]''For HTML pages''||
-||Ctrl+M ||Insert thumbnail[[<<]]''For wiki pages''||
+||Ctrl+M ||Insert the &lt;IMG&gt; tag[[<<]]''For HTML notes''||
+||Ctrl+M ||Insert thumbnail[[<<]]''For wiki notes''||
 ||Ctrl+L ||Link||
 ||Ctrl+Alt+N ||Anchor||
 ||Ctrl+Shift+H ||Horizontal line||
-||Ctrl+Alt+D ||Insert the &lt;CODE&gt; tag[[<<]]''For HTML pages''||
-||Ctrl+Alt+Q ||Insert the &lt;BLOCKQUOTE&gt; tag[[<<]]''For HTML pages''||
-||Ctrl+Shift+Up ||Move page up||
-||Ctrl+Shift+Down ||Move page down||
+||Ctrl+Alt+D ||Insert the &lt;CODE&gt; tag[[<<]]''For HTML notes''||
+||Ctrl+Alt+Q ||Insert the &lt;BLOCKQUOTE&gt; tag[[<<]]''For HTML notes''||
+||Ctrl+Shift+Up ||Move note up||
+||Ctrl+Shift+Down ||Move note down||
 ||Ctrl+T ||Add tab||
 ||Ctrl+W ||Close tab||

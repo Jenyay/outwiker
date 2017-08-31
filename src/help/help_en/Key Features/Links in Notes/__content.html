@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
+	<meta http-equiv='content-type' content='text/html; charset=utf-8'/>
+
+	<style type='text/css'>
+		body, div, p, table {
+			font-size:11pt;
+			font-family:Calibri;
+		}
+
+		img{border:none}
+		body,p
+{
+background-color: #282828 !important;
+color: #C0C0C0 !important;
+font: 12pt/1.6 Calibri !important;
+text-align: justify !important;
+}
+h1 {
+font: 16pt Cambria !important;
+color: #365F91 !important;
+font-weight: bold !important;
+}
+h2 {
+font: 14pt Cambria !important;
+color: #008080 !important;
+font-weight: bold !important;
+}
+h3 {
+font: 11pt Cambria !important;
+color: #4F81BD !important;
+font-weight: bold !important;
+}
+h4 {
+font: 11pt Cambria !important;
+color: #008000 !important;
+font-weight: bold !important;
+}
+h5 {
+font: 11pt Cambria !important;
+color: #9966CC !important;
+font-weight: bold !important;
+}
+h6 {
+font: 11pt Cambria !important;
+color: #808080 !important;
+font-weight: bold !important;
+}
+	</style>
+	
+</head>
+
+<body>
+OutWiker provides possibility to make links between notes. A note can be referred to in two ways (link type):
+<ul>
+<li>By name.</li>
+<li>By identifier.</li>
+</ul>
+Link of any type can be inserted either with &lt;a href="..."&gt; tag (html notes) or with <a href="page://__97bae762-abb7-489e-a1f4-1b0c9f6916d1">wiki notation</a> (wiki notes).<br/>
+<br/>
+<h2>Link by unique identifier</h2>
+<br/>
+Ability to refer to pages via identifier was introduced in version 1.8. This type of links is considered to be prefable one. Identifier for any given note stays the same in case of note's title change or moving the note within the tree. So the links by identifier remain working, unless the target note is deleted.<br/>
+<br/>
+To copy link to note in the clipboard, go to "Tools -> Copy page link" or right-click the note's tab and select the "Copy page link" item of the pop-up menu.<br/>
+<br/>
+For example, the link address for this note is as follows: <a href="page://__a9b6359a-ec35-4113-a097-ae12c7cc7ec2">page://__a9b6359a-ec35-4113-a097-ae12c7cc7ec2</a>.<br/>
+<br/>
+Any link by indentifier must begin with prefix "page://" followed by the identifier itself. Such links can be used in html-type notes in exactly the same way as any links with standard html prefixes (http://, ftp:// and so on).<br/>
+<br/>
+Examples:<br/>
+<ul>
+<li><a href="page://__b016f2ed-a6c0-4dca-8d17-508955f4cc7c">Wiki Commands</a> (wiki)</li>
+<li><a href="page://__7eeecc1f-cffb-4fbd-9d7a-d5f79adda92d">Nested note</a> (wiki)</li>
+</ul>
+Links by identifier are allowed to include anchors. In this case, the link looks like <a href="page://__d0ed44d4-0772-4f04-80ca-98fc55530667/#anchor">page://__d0ed44d4-0772-4f04-80ca-98fc55530667/#anchor</a><br/>
+<br/>
+<h2>Link by name</h2>
+<br/>
+A link by name looks like file path for UNIX system, for example, <u>/Note name 1/Note name 2/.../Purpose note</u>.<br/>
+<br/>
+The links by name may begin with "/", in this case OutWiker starts looking for the target note from root of the tree, otherwise the current page is used as the starting point for search.<br/>
+<br/>
+Examples:<br/>
+<ul>
+<li><a href="/Page Types/Wiki page/Wiki Commands">/Page Types/Wiki page/Wiki Commands</a> (HTML)</li>
+<li><a href="Page Types/Wiki page/Wiki Commands">Page Types/Wiki page/Wiki Commands</a> (HTML)</li>
+<li><a href="Nested Page">Nested Page</a> (HTML)</li>
+</ul>
+<ul>
+<li><a href="/Page Types/Wiki page/Wiki Commands">/Page Types/Wiki page/Wiki Commands</a> (wiki)</li>
+<li><a href="Page Types/Wiki page/Wiki Commands">Page Types/Wiki page/Wiki Commands</a> (wiki)</li>
+<li><a href="Nested Notes">Nested Notes</a> (wiki)</li>
+</ul>
+Renaming or moving of the target note from a branch of the tree to another one results in invalidating the link. In this case link should be edited manually.<br/>
+<br/>
+Due to the problems described above, using links by name are not encouraged in general case. One should consider using links by identifier in stead. Links by name are considered to be obsolete, albeit working, functionality.<br/>
+<br/>
+<h2>Relative links</h2>
+<br/>
+Relative links are a specific case of links by name. Their syntax is as follows: <a href="../../Page Types/Html Page">../../Page Types/Html Page</a>.<br/>
+<br/>
+If the a link starts with dot (<a href=".">.</a>) it redirects to some child note for the current note.
+</body>
+</html>

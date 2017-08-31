@@ -1,0 +1,3 @@
+There are some settings which can not be changed from program's GUI. These settings are stored in the ''outwiker.ini'' file. If such settings are not set in the file, they can be added manually.
+
+* '''[MainWindow] / datetime_status_width''' - The parameter defines width for the status bar region containing date and time of the note's last change. Default value is 250 (the value must be integer).

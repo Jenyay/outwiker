@@ -1,0 +1,81 @@
+OutWiker supports both bulleted and numbered lists in wiki notes. Every item of bulleted list should begin with asterisk (*) character(s). Slash characters are used in stead of asterisks for numbered lists. The number of the asterisks or slashes denotes the nesting level shown by indent.
+
+In order to create a bulleted list one can use either the "Wiki - Lists - bulleted list" menu or the Attach:bullet.png button.
+
+In order to create an numbered list one can use either the "Wiki - Lists - numbered list" menu item or the Attach:order.png button.
+
+If cursor is placed on list item, then clicking Attach:bullet.png or Attach:order.png (or the corrsponding menus) increases the nesting level by one.
+
+Below are a few examples of using lists in wiki notation.
+
+!!! Bulleted lists
+
+Syntax:
+[=
+* Line 1
+* Line 2
+** Line 3
+** Line 4
+*** Line 5
+*** Line 6
+** Line 7
+*Line 8
+=]
+
+Result:
+* Line 1
+* Line 2
+** Line 3
+** Line 4
+*** Line 5
+*** Line 6
+** Line 7
+*Line 8
+
+!!! Numbered lists
+
+Syntax:
+[=
+# Line 1
+# Line 2
+## Line 3
+## Line 4
+### Line 5
+### Line 6
+## Line 7
+# Line 8
+=]
+
+Result:
+# Line 1
+# Line 2
+## Line 3
+## Line 4
+### Line 5
+### Line 6
+## Line 7
+# Line 8
+
+!!! Mixed lists
+
+Syntax:
+[=
+# Line 1
+# Line 2
+** Line 3
+** Line 4
+### Line 5
+### Line 6
+** Line 7
+# Line 8
+=]
+
+Result:
+# Line 1
+# Line 2
+** Line 3
+** Line 4
+### Line 5
+### Line 6
+** Line 7
+# Line 8

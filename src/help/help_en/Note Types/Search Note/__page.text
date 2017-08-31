@@ -1,0 +1,3 @@
+Global search notes belongs to separate note type. There can be many such notes in single tree. This is convenient if there is a need to look for several phrases regularly or, at least, repetitively. In this case it makes sense to consider creating a separate search note for each such phrase.
+
+%center%%thumb width=750%Attach:search_big.png%%

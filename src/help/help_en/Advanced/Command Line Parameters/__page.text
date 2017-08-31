@@ -1,0 +1,26 @@
+OutWiker can take some command line parameters. The syntax is as follows:
+
+[>[@outwiker [-h] [-v] [-r] [--normal] [-p page] [ path ]@]<]
+
+'''path''' - path to the note tree. For example: 
+[>outwiker.exe "C:\temp\samplewiki"
+
+outwiker.exe "C:\temp\samplewiki\__page.opt"<]
+
+'''-p, --page''' - UID or relative path to note to show. For example:
+[>outwiker.exe --page="Page 1/Page 2/Page 3" "C:\temp\samplewiki"
+
+outwiker.exe -p "Page 1/Page 2/Page 3" "C:\temp\samplewiki"
+
+outwiker.exe --page="[=page://__1640eea0-1bb0-453b-ba4c-07f1c298ce76=]" "C:\temp\samplewiki"
+<]
+
+'''-h, --help''' - displays help for command line parameters. 
+
+'''-v, --version''' - displays OutWiker's version.
+
+'''-r, --readonly''' - opens the note tree in read-only mode.
+
+'''--normal''' - does not allow minimising the main window when starting OutWiker.
+
+'''--debug''' - forces OutWiker to run in debug mode.

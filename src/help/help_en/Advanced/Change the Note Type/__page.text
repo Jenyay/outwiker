@@ -1,0 +1,16 @@
+It is not possible to change note type via GUI. However, it can be done manually, since any note is stored on disk as set of text and bitmap files.
+
+In order to manualy change the note type do the following:
+
+# Run Windows Explorer, go to the directory where the note's files are located.
+# Open the ''__page.opt'' file in a text editor.
+# Change value of the ''Type'' field of the ''[General]'' section with the desired type name and save the file.
+# Launch OutWiker (if OutWiker's window has already been opened, go to "Tools / Reload Wiki" to refresh the tree of notes).
+
+At the moment OutWiker supports the following note types:
+* text - [[/Page Types/Text Page]];
+* html - [[/Page Types/HTML Page]]; 
+* wiki - [[/Page Types/Wiki Page]];
+* search - [[/Page Types/Search Page]].
+
+<font color='#ff0000'>'''Use the described procedure with caution for the syntax as well as structure of ''__page.opt'' and ''__page.text'' files depend on the note type.'''</font>

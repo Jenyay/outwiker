@@ -6,26 +6,67 @@
 
 	<style type='text/css'>
 		body, div, p, table {
-			font-size:10pt;
-			font-family:Verdana;
+			font-size:11pt;
+			font-family:Calibri;
 		}
 
 		img{border:none}
-		
+		body,p
+{
+background-color: #282828 !important;
+color: #C0C0C0 !important;
+font: 12pt/1.6 Calibri !important;
+text-align: justify !important;
+}
+h1 {
+font: 16pt Cambria !important;
+color: #365F91 !important;
+font-weight: bold !important;
+}
+h2 {
+font: 14pt Cambria !important;
+color: #008080 !important;
+font-weight: bold !important;
+}
+h3 {
+font: 11pt Cambria !important;
+color: #4F81BD !important;
+font-weight: bold !important;
+}
+h4 {
+font: 11pt Cambria !important;
+color: #008000 !important;
+font-weight: bold !important;
+}
+h5 {
+font: 11pt Cambria !important;
+color: #9966CC !important;
+font-weight: bold !important;
+}
+h6 {
+font: 11pt Cambria !important;
+color: #808080 !important;
+font-weight: bold !important;
+}
 	</style>
 	<title>Attachments</title>
 </head>
 
 <body>
-<p>Working with attachments is one of the main features of the OutWiker. All files attached to note are stored in __attach directory inside the note directory. To attach files just copy them into __attach directory. One of the goals which was put in the development of the program, was the possibility to insert the attached images in the page code.</p>
-<p><i>for example:</i></p>
-<p><img src="__attach/cat.jpg"></p>
-<p>There is the special panel to work with attachments. It allowes to:</p>
+Working with attachments is one of the main features of the OutWiker. All files attached to the note are stored in the "__attach" subdirectory of the note's directory. To attach files just copy them into the "__attach" subdirectory. One of the software development tasks was to implement possibility to insert the attached images in note's text.<br/>
+<br/>
+<i>for example:</i><br/>
+<br/>
+<img src="__attach/cat.jpg"><br/>
+<br/>
+There is the special button bar (located on the "Attachments" pane) to work with attachments. Its buttons are as follows:<br/>
 <ul>
-<li>To attach new files ("Attach Files" button).</li>
-<li>To remove attached files ("Remove Files…" button).</li>
-<li>To paste the path to the attached file, e.g., "__attach/cat.jpg" ("Paste" button).</li>
-<li>To execute attached files ("Execute files" button).</li>
+<li>"Refresh" — To refresh the list of attached files. Refreshing is needed in case the files were attached/removed from the "__attach" subdirectory via a file manager, rather than via OutWiker GUI</li>
+<li>"Attach Files..." — To attach new files.</li>
+<li>"Remove Files..." — To remove selected files.</li>
+<li>"Paste" — To insert relative pathname of the selected file into the note's body, e.g., selecting the file "cat.jpg" attached to this note and clicking the "Paste" button results in inserting "__attach/cat.jpg".</li>
+<li>"Execute" — To execute the selected file.<br/>
+<li>"Open attachments folder" — To open folder with attached files in the default file manager.</li>
 </ul>
 </body>
 </html>

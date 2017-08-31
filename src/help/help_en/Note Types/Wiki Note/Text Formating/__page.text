@@ -1,0 +1,93 @@
+
+|| border=1
+|| '''Syntax''' || '''Result''' || '''Comment''' ||
+
+||[=''Italic''=] ||''Italic'' || - ||
+
+||[='''Bold'''=] ||'''Bold''' || - ||
+
+||[=''''Bold Italic''''=] ||''''Bold Italic'''' || - ||
+
+||[=@@Monospaced font@@=] ||@@Monospaced font@@ || The text is marked by the tag &lt;code&gt;...&lt;/code&gt; ||
+
+||[='^Superscript^'=] ||'^Superscript^' || For comparison: normal font '^Superscript^' ||
+
+||[='_Subscript_'=] ||'_Subscript_' || For comparison: normal font '_Subscript_' ||
+
+||[=[----Small font----]=] ||[----Small font----] || - ||
+
+||[=[---Small font---]=] ||[---Small font---] || - ||
+
+||[=[--Small font--]=] ||[--Small font--] || - ||
+
+||[=[-Small font-]=] ||[-Small font-] || - ||
+
+||[=[+Big font+]=] ||[+Big font+] || - ||
+
+||[=[++Big font++]=] ||[++Big font++] || - ||
+
+||[=[+++Big font+++]=] ||[+++Big font+++] || - ||
+
+||[=[++++Big font++++]=] ||[++++Big font++++] || - ||
+
+||[=[+++++Big font+++++]=] ||[+++++Big font+++++] || - ||
+
+||[={+Underlined+}=] ||{+Underlined+} || - ||
+
+||[={-Strikethrough-}=] ||{-Strikethrough-} || - ||
+
+||[=[>Quote<]=] ||[>Quote<] || The text is marked by the tag &lt;clockquote&gt;...&lt;/blockquote&gt; ||
+
+||[=[!Marked text!]=] ||[!Marked text!] || The text is marked by the tag &lt;mark&gt;...&lt;/mark&gt; ||
+
+||[=[@Preformated '''text'''@]=] ||[@Preformated '''text'''@] || Special characters of wiki notation are escaped when enclosed in square brackets, text is marked by the tag &lt;pre&gt;...&lt;/pre&gt; ||
+
+||[@[=Nonformated '''text'''=]@] ||[=Nonformated '''text'''=] || Special characters of wiki notation are escaped when enclosed in square brackets ||
+
+||[=----=] || ---- || Horizontal line ||
+
+
+There are a few commands to insert a linebreak.
+
+Backslash at the end of the line indicates the EOL symbol.
+
+Example:
+
+This is a long line, \
+which continues on the next line
+
+Command '''[=[[<<]]=]''' indicates the end of line for lists and tables.
+
+Examples:
+
+command for list:
+[=
+# The first list item.
+# The second list item [[<<]]The second line of the second list item.
+# The third list item [[<<]][[<<]] The second line of the third list item after two indents.
+# The fourth list item.
+=]
+
+result:
+# The first list item.
+# The second list item [[<<]]The second line of the second list item.
+# The third list item [[<<]][[<<]] The second line of the third list item after two indents.
+# The fourth list item.
+
+command for table:
+[=
+|| border=1
+||The forst line || bla-bla-bla ||
+||The second line [[<<]]the continuation of the second line || bla-bla-bla ||
+||The third line [[<<]][[<<]] the continuation of the third line || bla-bla-bla ||
+||The fourth \
+line || bla-bla-bla ||
+=]
+
+result:
+|| border=1
+||The forst line || bla-bla-bla ||
+||The second line [[<<]]the continuation of the second line || bla-bla-bla ||
+||The third line [[<<]][[<<]] the continuation of the third line || bla-bla-bla ||
+||The fourth \
+line || bla-bla-bla ||
