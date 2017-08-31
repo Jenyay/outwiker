@@ -20,6 +20,9 @@ from outwiker.core.defines import (PAGE_CONTENT_FILE,
                                    PAGE_ICON_NAME)
 
 
+logger = logging.getLogger('core')
+
+
 class RootWikiPage(object):
     """
     Класс для корня вики
@@ -405,6 +408,7 @@ class WikiPage(RootWikiPage):
         path -- путь до страницы
         """
         if not RootWikiPage.testDublicate(parent, title):
+            logger.error(u'Duplicate page title in the parent page. Title: {}. Parent: {}'.format(title, parent.subpath))
             raise DublicateTitle
 
         RootWikiPage.__init__(self, path, readonly)
