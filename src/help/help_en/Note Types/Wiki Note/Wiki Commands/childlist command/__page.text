@@ -1,0 +1,25 @@
+!!! The [=(:childlist:)=] command
+
+Command [= (:childlist:) =] is a placeholder, which is to be replaced with list of child notes wnen parsing.
+
+[=(:childlist [params...]:)=]
+
+The [=(:childlist:)=] command can be used with the ''sort'' switch, which specifies the sorting order. The ''Sort'' switch can take the following values:
+
+* '''name''' - child notes are sorted alphabetically in ascending order;
+* '''descendname''' - child notes are sorted alphabetically in descending order;
+* '''creation''' - child notes are sorted by creation date in ascending order (oldest on top);
+* '''descendcreation''' - child notes are sorted by creation date in descending order (newest on top);
+* '''edit''' - child notes are sorted by the last modification date (last edited note at bottom)
+* '''descendedit''' - child notes are sorted by the last modification date (last edited note on top)
+* '''descendorder''' - child notes are sorted by the opposite order of how they appear in the tree.
+
+If '''sort''' parameter is not specified, then the note names in the list will be sorted as they appear in the tree.
+
+!!! Examples
+
+There are five files attached to the current note. The following table shows the output of the command [= (:childlist:) =] with various values ​​of the switch ''sort'':
+
+||width=850 border=1 
+|| '''Command''' || [=(:childlist:)=] || [=(:childlist sort=name:)=] || [=(:childlist sort=descendname:)=] || [=(:childlist sort=descendorder:)=] ||
+|| '''Result''' || (:childlist:) || (:childlist sort=name:) || (:childlist sort=descendname:) || (:childlist sort=descendorder:) ||

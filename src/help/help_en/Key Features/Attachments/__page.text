@@ -1,14 +1,16 @@
-Working with attachments is one of the main features of the OutWiker. All files attached to note are stored in __attach directory inside the note directory. To attach files just copy them into __attach directory. One of the goals which was put in the development of the program, was the possibility to insert the attached images in the page code.
+Working with attachments is one of the main features of the OutWiker. All files attached to the note are stored in the "__attach" subdirectory of the note's directory. To attach files just copy them into the "__attach" subdirectory. One of the software development tasks was to implement possibility to insert the attached images in note's text.
 
 <i>for example:</i>
 
 <img src="__attach/cat.jpg">
 
-There is the special panel to work with attachments. It allowes to:
+There is the special button bar (located on the "Attachments" pane) to work with attachments. Its buttons are as follows:
 
 <ul>
-<li>To attach new files ("Attach Files" button).</li>
-<li>To remove attached files ("Remove Files…" button).</li>
-<li>To paste the path to the attached file, e.g., "__attach/cat.jpg" ("Paste" button).</li>
-<li>To execute attached files ("Execute files" button).</li>
+<li>"Refresh" — To refresh the list of attached files. Refreshing is needed in case the files were attached/removed from the "__attach" subdirectory via a file manager, rather than via OutWiker GUI</li>
+<li>"Attach Files..." — To attach new files.</li>
+<li>"Remove Files..." — To remove selected files.</li>
+<li>"Paste" — To insert relative pathname of the selected file into the note's body, e.g., selecting the file "cat.jpg" attached to this note and clicking the "Paste" button results in inserting "__attach/cat.jpg".</li>
+<li>"Execute" — To execute the selected file.
+<li>"Open attachments folder" — To open folder with attached files in the default file manager.</li>
 </ul>

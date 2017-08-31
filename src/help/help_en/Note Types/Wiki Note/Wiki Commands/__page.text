@@ -1,0 +1,21 @@
+!!! Command syntax
+
+Apart from the commands described in the previous sections, wiki notation also support the so-called wiki commands, whose syntax is as follows:
+
+[=
+(:commandname [params...] :)
+[content...]
+(:commandnameend:)
+=]
+
+Here ''commandname'' - the name of the command; ''params'' - optional switche(s) that activate various command's options; ''content'' - a piece of text the command is applied to.
+
+!!! Params
+
+The syntax of switches varies depending on the command, for example:
+
+param1 param2 = value1 param3 = "value 3" param4 = 'value 4' param5
+
+Switches must be separated with space characters, some switches may have to be set to specific value. Switches without values ​​can be regarded as flags: it is either on or off. 
+
+If the value contains alphanumerics and underscores only, it ​should not be quoted. In case of presence of any other characters quotation is mandatory.

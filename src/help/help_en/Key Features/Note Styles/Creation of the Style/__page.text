@@ -1,0 +1,36 @@
+Note's style is implemented as the ''__style.html'' file (mandatory) and the ''__style'' subdirectory (optional); both located in the note's directory.
+
+''__style.html'' file is an HTML file encoded in UTF-8. The file is not supposed to be created or edited by user, rather by special macro which adds formatting tags as well as some additional parameters (see below) to the note content. Here is how the default style looks like:
+
+[@
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>
+
+	<STYLE type="text/css">
+		body, div, p, table {
+			font-size:${fontsize}pt;
+			font-family:$fontfamily;
+		}
+
+		img{border:none}
+		$userstyle
+	</STYLE>
+	$userhead
+</HEAD>
+
+<BODY>
+<P>$content</P>
+</BODY>
+</HTML>
+@]
+
+'' __style.html'' file contains references to macros that begin with "$" character followed by the macro name (it can be enclosed by braces), for example, $content or ${content}. The braces are used in case the macro name is not separated by space character from alphanumeric characters to follow. Currently, OutWiker's styles support the following macros:
+
+* $content - substitutes the content of the note.
+* $fontsize - substitutes font size in points (pt) specified in the settings.
+* $fontfamily - substitutes font name specified in the settings.
+* $userstyle - substitutes additional styles that can be created in the process of wiki notes parsing.
+* $userhead - substitutes additional tags inside the &lt;head&gt; ... &lt;/ head&gt; tag, which can be created in the process of wiki notes parsing.
+
+''__style'' directory is not mandatory. It can store images and files with CSS styles, if any. However, storing CSS styles in this directory is not encouraged, preferable solution is to incorporate them in the file ''__style.html''. This is primarily due to the caching of styles when running under Linux. If several styles include CSS files of same name, then switching between those CSS may cause delays in rendering. There is no such problem if CSS is included directly into HTML code.

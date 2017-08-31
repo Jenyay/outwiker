@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
+	<meta http-equiv='content-type' content='text/html; charset=utf-8'/>
+
+	<style type='text/css'>
+		body, div, p, table {
+			font-size:12pt;
+			font-family:Calibri;
+		}
+
+		img{border:none}
+		body,p
+{
+background-color: #282828 !important;
+color: #C0C0C0 !important;
+font: 12pt/1.6 Calibri !important;
+text-align: justify !important;
+}
+h1 {
+font: 16pt Cambria !important;
+color: #365F91 !important;
+font-weight: bold !important;
+}
+h2 {
+font: 14pt Cambria !important;
+color: #008080 !important;
+font-weight: bold !important;
+}
+h3 {
+font: 11pt Cambria !important;
+color: #4F81BD !important;
+font-weight: bold !important;
+}
+h4 {
+font: 11pt Cambria !important;
+color: #008000 !important;
+font-weight: bold !important;
+}
+h5 {
+font: 11pt Cambria !important;
+color: #9966CC !important;
+font-weight: bold !important;
+}
+h6 {
+font: 11pt Cambria !important;
+color: #808080 !important;
+font-weight: bold !important;
+}
+	</style>
+	
+</head>
+
+<body>
+<h2>Attaching images</h2>
+<br/>
+<table border=1>
+<tr>
+<td align="center"><b>Syntax</b></td>
+<td align="center"><b>Result</b></td>
+<td align="center"><b>Comment</b></td>
+</tr>
+<tr>
+<td align="center">http://jenyay.net/small_image.jpg</td>
+<td align="center"><img src="http://jenyay.net/small_image.jpg"/></td>
+<td align="center">Insert image from webpage</td>
+</tr>
+<tr>
+<td align="center">Attach:small_image.jpg</td>
+<td align="center"><img src="__attach/small_image.jpg"/></td>
+<td align="center">Insert image from attached file</td>
+</tr>
+<tr>
+<td align="center">[[http://jenyay.net | Attach:small_image.jpg]]</td>
+<td align="center"><a href="http://jenyay.net"><img src="__attach/small_image.jpg"/></a></td>
+<td align="center">Insert link to webpage as image</td>
+</tr>
+<tr>
+<td align="center">[[/Page Types/Wiki Page/Attachments and Pictures | Attach:small_image.jpg]]</td>
+<td align="center"><a href="/Page Types/Wiki Page/Attachments and Pictures"><img src="__attach/small_image.jpg"/></a></td>
+<td align="center">Insert link to note as image</td>
+</tr>
+<tr>
+<td align="center">%thumb%Attach:image.jpg%%</td>
+<td align="center"><a href="__attach/image.jpg"><img src="__attach/__thumb/th_maxsize_250_image.jpg"/></a></td>
+<td align="center">Insert link to attached image as thumbnail. <br/>
+Thumbnails are stored in the "__thumb" subdirectory of the attachments directory</td>
+</tr>
+<tr>
+<td align="center">%width=200%Attach:image.jpg%%</td>
+<td align="center"><a href="__attach/image.jpg"><img src="__attach/__thumb/th_width_200_image.jpg"/></a></td>
+<td align="center">Insert link to attached image as thumbnail with specified width. <br/>
+<br/>
+ <br/>
+<br/>
+Command variants: <br/>
+<br/>
+ <i>%width=200px%Attach:image.jpg%%</i> <br/>
+<br/>
+or <br/>
+<br/>
+ <i>%thumb width=200%Attach:image.jpg%%</i> <br/>
+<br/>
+ Thumbnails are created in the "__thumb" subdirectory of the attachments directory</td>
+</tr>
+<tr>
+<td align="center">%height=200%Attach:image.jpg%%</td>
+<td align="center"><a href="__attach/image.jpg"><img src="__attach/__thumb/th_height_200_image.jpg"/></a></td>
+<td align="center">Insert link to attached image as thumbnail with specified height<br/>
+<br/>
+ Command variants: <br/>
+<br/>
+<i>%height=200px%Attach:image.jpg%%</i> <br/>
+<br/>
+or <br/>
+<br/>
+<i>%thumb height=200%Attach:image.jpg%%</i> <br/>
+<br/>
+Thumbnails are stored in the "__thumb" subdirectory of the attachments directory</td>
+</tr>
+<tr>
+<td align="center">%maxsize=200%Attach:image.jpg%%</td>
+<td align="center"><a href="__attach/image.jpg"><img src="__attach/__thumb/th_maxsize_200_image.jpg"/></a></td>
+<td align="center">Insert link to attached image as thumbnail with specified max size.<br/>
+<br/>
+Command variants: <br/>
+<br/>
+<i>%maxsize=200px%Attach:image.jpg%%</i> <br/>
+<br/>
+or <br/>
+<br/>
+<i>%thumb maxsize=200%Attach:image.jpg%%</i> <br/>
+<br/>
+Thumbnails are stored in the "__thumb" subdirectory of the attachments directory</td>
+</tr>
+</table>
+<h2><i>Attaching files of other types</i></h2>
+<br/>
+<table border=1>
+<tr>
+<td align="center"><b>Syntax</b></td>
+<td align="center"><b>Result</b></td>
+<td align="center"><b>Comment</b></td>
+</tr>
+<tr>
+<td align="center">Attach:file.txt</td>
+<td align="center"><a href="__attach/file.txt">file.txt</a></td>
+<td align="center">Link to attached file</td>
+</tr>
+<tr>
+<td align="center">[[Attach:file.txt]]</td>
+<td align="center"><a href="__attach/file.txt">file.txt</a></td>
+<td align="center">Link to attached file. <br/>
+Same as the previous variant.</td>
+</tr>
+<tr>
+<td align="center">[[Attach:small_image.jpg]]</td>
+<td align="center"><a href="__attach/small_image.jpg">small_image.jpg</a></td>
+<td align="center">Link to attached image</td>
+</tr>
+<tr>
+<td align="right">[[Attach:file.txt | Attached file]]</td>
+<td align="center"><a href="__attach/file.txt">Attached file</a></td>
+<td align="center">Link to attached file with comment</td>
+</tr>
+<tr>
+<td align="right">[[Attached file -> Attach:file.txt]]</td>
+<td align="center"><a href="__attach/file.txt">Attached file</a></td>
+<td align="center">Link to attached image with comment <br/>
+Same as the previous variant.</td>
+</tr>
+</table>
+</body>
+</html>

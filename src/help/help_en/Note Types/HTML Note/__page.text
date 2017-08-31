@@ -1,0 +1,13 @@
+HTML-type notes are fully supported by OutWiker. At the moment, the Internet Explorer engine (Trident) is used to render HTML notes on Windows. WebKit engine is used for Linux.
+
+There is one notable difference between standard HTML pages and OutWiker's notes. OutWiker uses the tag &lt;BR&gt; to represent a single line break and &lt;P&gt; to represent a double line break.
+
+There are buttons on the toolbar for adding some of the most frequently used tags.
+
+It is possible to insert links to other pages and attached files.
+
+Examples of HTML-notes:
+
+<table border=0 width=100%>
+<tr><td align=center><a href="__attach/html_code.png"><img src="__attach/html_code_small.png"/></a></td><td align=center><a href="__attach/html_preview.png"><img src="__attach/html_preview_small.png"/></a></td></tr>
+</table>

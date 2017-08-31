@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
+	<meta http-equiv='content-type' content='text/html; charset=utf-8'/>
+
+	<style type='text/css'>
+		body, div, p, table {
+			font-size:12pt;
+			font-family:Calibri;
+		}
+
+		img{border:none}
+		body,p
+{
+background-color: #282828 !important;
+color: #C0C0C0 !important;
+font: 12pt/1.6 Calibri !important;
+text-align: justify !important;
+}
+h1 {
+font: 16pt Cambria !important;
+color: #365F91 !important;
+font-weight: bold !important;
+}
+h2 {
+font: 14pt Cambria !important;
+color: #008080 !important;
+font-weight: bold !important;
+}
+h3 {
+font: 11pt Cambria !important;
+color: #4F81BD !important;
+font-weight: bold !important;
+}
+h4 {
+font: 11pt Cambria !important;
+color: #008000 !important;
+font-weight: bold !important;
+}
+h5 {
+font: 11pt Cambria !important;
+color: #9966CC !important;
+font-weight: bold !important;
+}
+h6 {
+font: 11pt Cambria !important;
+color: #808080 !important;
+font-weight: bold !important;
+}
+	</style>
+	
+</head>
+
+<body>
+It is not possible to change note type via GUI. However, it can be done manually, since any note is stored on disk as set of text and bitmap files.<br/>
+<br/>
+In order to manuaaly change the type of page do the following:<br/>
+<ol>
+<li>Run Windows Exlplrer, go to the directory where the note's files are located.</li>
+<li>Open the <i>__page.opt</i> file in a text editor.</li>
+<li>Change value of the <i>Type</i> field of the <i>[General]</i> section with the desired type name and save the file.</li>
+<li>Launch OutWiker (if OutWiker's window has already been opened, go to Tools / Reload Wiki to refresh the tree of notes).</li>
+</ol>At the moment OutWiker supports the following note types:
+<ul>
+<li>text - <a href="/Page Types/Text Page">/Page Types/Text Page</a>;</li>
+<li>html - <a href="/Page Types/HTML Page">/Page Types/HTML Page</a>;</li>
+<li>wiki - <a href="/Page Types/Wiki Page">/Page Types/Wiki Page</a>;</li>
+<li>search - <a href="/Page Types/Search Page">/Page Types/Search Page</a>.</li>
+</ul>
+<font color='#ff0000'><b>Use the described procedure with caution for files <i>__page.opt</i> and <i>__page.text</i> have different structure depending on the note type.</b></font><br/>
+</body>
+</html>

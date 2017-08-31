@@ -6,23 +6,296 @@
 
 	<style type='text/css'>
 		body, div, p, table {
-			font-size:10pt;
-			font-family:Verdana;
+			font-size:11pt;
+			font-family:Calibri;
 		}
 
 		img{border:none}
-		
+		body,p
+{
+background-color: #282828 !important;
+color: #C0C0C0 !important;
+font: 12pt/1.6 Calibri !important;
+text-align: justify !important;
+}
+h1 {
+font: 16pt Cambria !important;
+color: #365F91 !important;
+font-weight: bold !important;
+}
+h2 {
+font: 14pt Cambria !important;
+color: #008080 !important;
+font-weight: bold !important;
+}
+h3 {
+font: 11pt Cambria !important;
+color: #4F81BD !important;
+font-weight: bold !important;
+}
+h4 {
+font: 11pt Cambria !important;
+color: #008000 !important;
+font-weight: bold !important;
+}
+h5 {
+font: 11pt Cambria !important;
+color: #9966CC !important;
+font-weight: bold !important;
+}
+h6 {
+font: 11pt Cambria !important;
+color: #808080 !important;
+font-weight: bold !important;
+}
 	</style>
 	
 </head>
 
 <body>
-Hot keys can be set in the dialog "Settings", which is called from the menu "Edit - Preferences ...". Hotkeys set by by default, shown in the following table.</p>
-
-<table border=1><tr><td align="center"><b>Shortcut</b></td><td align="center"><b>Action</b></td></tr><tr><td align="left">Ctrl+N</td><td align="left">Create new wiki</td></tr><tr><td align="left">Ctrl+O</td><td align="left">Open wiki</td></tr><tr><td align="left">Ctrl+S</td><td align="left">Save wiki</td></tr><tr><td align="left">Alt+F4</td><td align="left">Exit</td></tr><tr><td align="left">Ctrl+Z</td><td align="left">Undo</td></tr><tr><td align="left">Ctrl+Y</td><td align="left">Redo</td></tr><tr><td align="left">Ctrl+X</td><td align="left">Cut</td></tr><tr><td align="left">Ctrl+C</td><td align="left">Copy</td></tr><tr><td align="left">Ctrl+V</td><td align="left">Paste</td></tr><tr><td align="left">Ctrl+F8</td><td>Open preferences dialog</td></tr><tr><td align="left">Ctrl+F</td><td align="left">Search on page</td></tr><tr><td align="left">Ctrl+H</td><td align="left">Search and replace on page</td></tr><tr><td align="left">F3</td><td align="left">Find next</td></tr><tr><td align="left">Shift + F3</td><td align="left">Find prev</td></tr><tr><td align="left">Ctrl+Alt+T</td><td align="left">Create a page with the same nesting level as the current</td></tr><tr><td align="left">Ctrl+Shift+T</td><td align="left">Create nested page</td></tr><tr><td align="left">Ctrl+Shift+Del</td><td align="left">Remove current page</td></tr><tr><td align="left">F2</td><td align="left">Rename page</td></tr><tr><td align="left">Ctrl+E</td><td align="left">Edit current page properties</td></tr><tr><td align="left">Ctrl+Shift+F</td><td align="left">Find for page</td></tr><tr><td align="left">Ctrl+Alt+A</td><td align="left">Attach files</td></tr><tr><td align="left">Ctrl+Shift+D</td><td align="left">Copy the title of the current page to clipboard</td></tr><tr><td align="left">Ctrl+Shift+P</td><td align="left">Copy the path for the current page to clipboard</td></tr><tr><td align="left">Ctrl+Shift+A</td><td align="left">Copy to attachment path to clipboard</td></tr><tr><td align="left">Ctrl+Shift+L</td><td>Copy the link for the current page to clipboard</td></tr><tr><td align="left">Ctrl+R</td><td align="left">Reload wiki</td></tr><tr><td align="left">Ctrl+D</td><td align="left">Add the current page to bookmarks / Remove the current page from bookmarks</td></tr><tr><td align="left">F4</td><td align="left">Switch between code and view</td></tr><tr><td align="left">Shift+F4</td><td align="left">Switch to HTML code for the wiki page</td></tr><tr><td align="left">Ctrl+F1</td><td align="left">About</td></tr><tr><td align="left">Ctrl+B</td><td>In bold</td></tr><tr><td align="left">Ctrl+I</td><td>In italic</td></tr><tr><td align="left">Ctrl+Shift+I</td><td>In bold italic</td></tr><tr><td align="left">Ctrl+Shift+I</td><td>In monospaced</td></tr><tr><td align="left">Ctrl+U</td><td>Underlined</td></tr><tr><td align="left">Ctrl+=</td><td>Subscript</td></tr><tr><td align="left">Ctrl++</td><td>Superscript</td></tr><tr><td align="left">Ctrl+,</td><td>Small font</td></tr><tr><td align="left">Ctrl+.</td><td>Big font</td></tr><tr><td align="left">Ctrl+Alt+L</td><td>Left align</td></tr><tr><td align="left">Ctrl+Alt+C</td><td>Center align</td></tr><tr><td align="left">Ctrl+Alt+R</td><td>Right align</td></tr><tr><td align="left">Ctrl+Alt+J</td><td>Justify align</td></tr><tr><td align="left">Ctrl+1 ... Ctrl+6</td><td>Heading level 1-6</td></tr><tr><td align="left">Ctrl+G</td><td>Unorder list</td></tr><tr><td align="left">Ctrl+J</td><td>Order list</td></tr><tr><td align="left">Ctrl+K</td><td>Strikethrough</td></tr><tr><td align="left">Ctrl+M</td><td>Insert the &lt;IMG&gt; tag
-<br><i>For HTML pages</i></td></tr><tr><td align="left">Ctrl+M</td><td>Insert thumbnail
-<br><i>For wiki pages</i></td></tr><tr><td align="left">Ctrl+L</td><td>Link</td></tr><tr><td align="left">Ctrl+Alt+N</td><td>Anchor</td></tr><tr><td align="left">Ctrl+Shift+H</td><td>Horizontal line</td></tr><tr><td align="left">Ctrl+Alt+D</td><td>Insert the &lt;CODE&gt; tag
-<br><i>For HTML pages</i></td></tr><tr><td align="left">Ctrl+Alt+Q</td><td>Insert the &lt;BLOCKQUOTE&gt; tag
-<br><i>For HTML pages</i></td></tr><tr><td align="left">Ctrl+Shift+Up</td><td>Move page up</td></tr><tr><td align="left">Ctrl+Shift+Down</td><td>Move page down</td></tr><tr><td align="left">Ctrl+T</td><td>Add tab</td></tr><tr><td align="left">Ctrl+W</td><td>Close tab</td></tr></table>
+Hot keys can be set in the dialogue "Settings" called from the menu "Edit - Preferences ...". Default hotkeys are listed in the following table.<br/>
+<br/>
+<table border=1>
+<tr>
+<td align="center"><b>Shortcut</b></td>
+<td align="center"><b>Action</b></td>
+</tr>
+<tr>
+<td align="left">Ctrl+N</td>
+<td align="left">Create new wiki</td>
+</tr>
+<tr>
+<td align="left">Ctrl+O</td>
+<td align="left">Open wiki</td>
+</tr>
+<tr>
+<td align="left">Ctrl+S</td>
+<td align="left">Save wiki</td>
+</tr>
+<tr>
+<td align="left">Alt+F4</td>
+<td align="left">Exit</td>
+</tr>
+<tr>
+<td align="left">Ctrl+Z</td>
+<td align="left">Undo</td>
+</tr>
+<tr>
+<td align="left">Ctrl+Y</td>
+<td align="left">Redo</td>
+</tr>
+<tr>
+<td align="left">Ctrl+X</td>
+<td align="left">Cut</td>
+</tr>
+<tr>
+<td align="left">Ctrl+C</td>
+<td align="left">Copy</td>
+</tr>
+<tr>
+<td align="left">Ctrl+V</td>
+<td align="left">Paste</td>
+</tr>
+<tr>
+<td align="left">Ctrl+F8</td>
+<td>Open preferences dialog</td>
+</tr>
+<tr>
+<td align="left">Ctrl+F</td>
+<td align="left">Search in note</td>
+</tr>
+<tr>
+<td align="left">Ctrl+H</td>
+<td align="left">Search and replace in note</td>
+</tr>
+<tr>
+<td align="left">F3</td>
+<td align="left">Find next</td>
+</tr>
+<tr>
+<td align="left">Shift + F3</td>
+<td align="left">Find previous</td>
+</tr>
+<tr>
+<td align="left">Ctrl+Alt+T</td>
+<td align="left">Create new note with the same nesting level as current one</td>
+</tr>
+<tr>
+<td align="left">Ctrl+Shift+T</td>
+<td align="left">Create child note</td>
+</tr>
+<tr>
+<td align="left">Ctrl+Shift+Del</td>
+<td align="left">Remove current note</td>
+</tr>
+<tr>
+<td align="left">F2</td>
+<td align="left">Rename note</td>
+</tr>
+<tr>
+<td align="left">Ctrl+E</td>
+<td align="left">Edit current note properties</td>
+</tr>
+<tr>
+<td align="left">Ctrl+Shift+F</td>
+<td align="left">Find note</td>
+</tr>
+<tr>
+<td align="left">Ctrl+Alt+A</td>
+<td align="left">Attach files</td>
+</tr>
+<tr>
+<td align="left">Ctrl+Shift+D</td>
+<td align="left">Copy title of current note to clipboard</td>
+</tr>
+<tr>
+<td align="left">Ctrl+Shift+P</td>
+<td align="left">Copy path of current note to clipboard</td>
+</tr>
+<tr>
+<td align="left">Ctrl+Shift+A</td>
+<td align="left">Copy attachment's path to clipboard</td>
+</tr>
+<tr>
+<td align="left">Ctrl+Shift+L</td>
+<td>Copy link for current note to clipboard</td>
+</tr>
+<tr>
+<td align="left">Ctrl+R</td>
+<td align="left">Reload wiki</td>
+</tr>
+<tr>
+<td align="left">Ctrl+D</td>
+<td align="left">Add current note to bookmarks / Remove current note from bookmarks</td>
+</tr>
+<tr>
+<td align="left">F4</td>
+<td align="left">Switch between code and preview tabs</td>
+</tr>
+<tr>
+<td align="left">Shift+F4</td>
+<td align="left">Switch to HTML code for the wiki note</td>
+</tr>
+<tr>
+<td align="left">Ctrl+F1</td>
+<td align="left">About</td>
+</tr>
+<tr>
+<td align="left">Ctrl+B</td>
+<td>In bold</td>
+</tr>
+<tr>
+<td align="left">Ctrl+I</td>
+<td>In italic</td>
+</tr>
+<tr>
+<td align="left">Ctrl+Shift+I</td>
+<td>In bold italic</td>
+</tr>
+<tr>
+<td align="left">Ctrl+Shift+I</td>
+<td>In monospaced</td>
+</tr>
+<tr>
+<td align="left">Ctrl+U</td>
+<td>Underlined</td>
+</tr>
+<tr>
+<td align="left">Ctrl+=</td>
+<td>Subscript</td>
+</tr>
+<tr>
+<td align="left">Ctrl++</td>
+<td>Superscript</td>
+</tr>
+<tr>
+<td align="left">Ctrl+,</td>
+<td>Small font</td>
+</tr>
+<tr>
+<td align="left">Ctrl+.</td>
+<td>Big font</td>
+</tr>
+<tr>
+<td align="left">Ctrl+Alt+L</td>
+<td>Left align</td>
+</tr>
+<tr>
+<td align="left">Ctrl+Alt+C</td>
+<td>Center align</td>
+</tr>
+<tr>
+<td align="left">Ctrl+Alt+R</td>
+<td>Right align</td>
+</tr>
+<tr>
+<td align="left">Ctrl+Alt+J</td>
+<td>Justify align</td>
+</tr>
+<tr>
+<td align="left">Ctrl+1 ... Ctrl+6</td>
+<td>Heading level 1-6</td>
+</tr>
+<tr>
+<td align="left">Ctrl+G</td>
+<td>Unorder list</td>
+</tr>
+<tr>
+<td align="left">Ctrl+J</td>
+<td>Order list</td>
+</tr>
+<tr>
+<td align="left">Ctrl+K</td>
+<td>Strikethrough</td>
+</tr>
+<tr>
+<td align="left">Ctrl+M</td>
+<td>Insert the &lt;IMG&gt; tag<br/>
+<i>For HTML notes</i></td>
+</tr>
+<tr>
+<td align="left">Ctrl+M</td>
+<td>Insert thumbnail<br/>
+<i>For wiki notes</i></td>
+</tr>
+<tr>
+<td align="left">Ctrl+L</td>
+<td>Link</td>
+</tr>
+<tr>
+<td align="left">Ctrl+Alt+N</td>
+<td>Anchor</td>
+</tr>
+<tr>
+<td align="left">Ctrl+Shift+H</td>
+<td>Horizontal line</td>
+</tr>
+<tr>
+<td align="left">Ctrl+Alt+D</td>
+<td>Insert the &lt;CODE&gt; tag<br/>
+<i>For HTML notes</i></td>
+</tr>
+<tr>
+<td align="left">Ctrl+Alt+Q</td>
+<td>Insert the &lt;BLOCKQUOTE&gt; tag<br/>
+<i>For HTML notes</i></td>
+</tr>
+<tr>
+<td align="left">Ctrl+Shift+Up</td>
+<td>Move note up</td>
+</tr>
+<tr>
+<td align="left">Ctrl+Shift+Down</td>
+<td>Move note down</td>
+</tr>
+<tr>
+<td align="left">Ctrl+T</td>
+<td>Add tab</td>
+</tr>
+<tr>
+<td align="left">Ctrl+W</td>
+<td>Close tab</td>
+</tr>
+</table>
 </body>
 </html>

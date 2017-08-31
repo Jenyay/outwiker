@@ -1,0 +1,52 @@
+OutWiker provides possibility to make links between notes. A note can be referred to in two ways (link type):
+* By name.
+* By identifier.
+
+Link of any type can be inserted either with &lt;a href="..."&gt; tag (html notes) or with [[wiki notation -> page://__97bae762-abb7-489e-a1f4-1b0c9f6916d1]] (wiki notes).
+
+
+!!! Link by unique identifier
+
+Ability to refer to pages via identifier was introduced in version 1.8. This type of links is considered to be prefable one. Identifier for any given note stays the same in case of note's title change or moving the note within the tree. So the links by identifier remain working, unless the target note is deleted.
+
+To copy link to note in the clipboard, go to "Tools -> Copy page link" or right-click the note's tab and select the "Copy page link" item of the pop-up menu.
+
+For example, the link address for this note is as follows: page://__a9b6359a-ec35-4113-a097-ae12c7cc7ec2.
+
+Any link by indentifier must begin with prefix "page://" followed by the identifier itself. Such links can be used in html-type notes in exactly the same way as any links with standard html prefixes (http://, ftp:// and so on).
+
+Examples:
+
+* [[page://__b016f2ed-a6c0-4dca-8d17-508955f4cc7c | Wiki Commands]] (wiki)
+* [[Nested note -> page://__7eeecc1f-cffb-4fbd-9d7a-d5f79adda92d]] (wiki)
+
+Links by identifier are allowed to include anchors. In this case, the link looks like page://__d0ed44d4-0772-4f04-80ca-98fc55530667/#anchor
+
+
+!!! Link by name
+
+A link by name looks like file path for UNIX system, for example, {+/Note name 1/Note name 2/.../Purpose note+}.
+
+The links by name may begin with "/", in this case OutWiker starts looking for the target note from root of the tree, otherwise the current page is used as the starting point for search.
+
+Examples:
+
+* <a href="/Page Types/Wiki page/Wiki Commands">/Page Types/Wiki page/Wiki Commands</a> (HTML)
+* <a href="Page Types/Wiki page/Wiki Commands">Page Types/Wiki page/Wiki Commands</a> (HTML)
+* <a href="Nested Page">Nested Page</a> (HTML)
+
+
+* [[/Page Types/Wiki page/Wiki Commands]] (wiki)
+* [[Page Types/Wiki page/Wiki Commands]] (wiki)
+* [[Nested Notes]] (wiki)
+
+Renaming or moving of the target note from a branch of the tree to another one results in invalidating the link. In this case link should be edited manually.
+
+Due to the problems described above, using links by name are not encouraged in general case. One should consider using links by identifier in stead. Links by name are considered to be obsolete, albeit working, functionality.
+
+
+!!! Relative links
+
+Relative links are a specific case of links by name. Their syntax is as follows: [[../../Page Types/Html Page -> ../../Page Types/Html Page]].
+
+If the a link starts with dot ([[.]]) it redirects to some child note for the current note.

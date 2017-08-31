@@ -1,0 +1,17 @@
+OutWiker allows to set pre-defined styles that can be used to change look of wiki-type and HTML-type notes. In order to set a style for specific note, right-click its name in the tree, select "Page properties..."; switch to the "Appearance" tab and select the style.
+
+%center% Attach:styles_01.png
+
+Styles for specific notes are stored in the subdirectory ''styles'' of the note's directory.
+
+The repository of pre-defined styles can be found in the subdirectory ''styles'' of the directory ''.outwiker'' located in the user's home directory (under Linux it is ''~/.outwiker/styles'').
+
+When style is set for a note in OutWiker, the ''__style.html'' file and the ''__style'' subdirectory (if exists) are automatically copied from the style repository to the note's directory. This approach gurantees the note looks the same even if, for example, it has been copied and opened in Outwiker installed on another computer, which might have no such style in the repository. Apart from that it makes it possible to change style for any specific note without affecting look of other notes.
+
+When a pre-defined style is replaced with default style, the ''__style.html'' file and the ''__style'' subdirectory are automatically deleted.
+
+Here is a screenshot of page with different styles applied.
+
+||border=0 width=100%
+|| %thumb%Attach:style_default.png%%[[<<]]Default style || %thumb%Attach:style_black_and_red.png%%[[<<]]"Black_and_red" style ||
+|| %thumb%Attach:style_dark.png%%[[<<]]"Dark" style || %thumb%Attach:style_green.png%%[[<<]]"Green" style ||

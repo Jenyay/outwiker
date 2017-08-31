@@ -1,0 +1,24 @@
+!!! The [= (:attachlist:) =] command
+
+The [= (:attachlist:) =] command is a placeholder, which is to be replaced with list of attachments of the note wnen parsing.
+
+[=(:attachlist [params...]:)=]
+
+The command [= (:attachlist:) =] can be used with the ''sort'' switch, which specifies the sorting order. The ''Sort'' switch can take the following values:
+
+* ''name'' - attached files are sorted by name in ascending order (this is equivalent to command [= (: attachlist:) =] without switches);
+* ''descendname'' - attached files are sorted by name in descending order;
+* ''ext'' - attached files are sorted by extension in ascending order;
+* ''descendext'' - attached files are sorted by extension in descending order;
+* ''size'' - attached files are sorted by size in ascending order;
+* ''descendsize'' - attached files are sorted by size in descending order;
+* ''date'' - attached files are sorted by their date of last modification in ascending order;
+* ''descenddate'' - attached files are sorted by their date of last modification in descending order;
+
+!!! Examples
+
+There are five files attached to the current note. The following table shows the output of the command [= (:attachlist:) =] with various values ​​of the ''sort'' switch:
+
+||width=850 border=1 
+|| '''Command''' || [=(:attachlist:)=] || [=(:attachlist sort=ext:)=] || [=(:attachlist sort=descendext:)=] || [=(:attachlist sort=size:)=] ||
+|| '''Result''' || (:attachlist:) || (:attachlist sort=ext:) || (:attachlist sort=descendext:) || (:attachlist sort=size:) ||

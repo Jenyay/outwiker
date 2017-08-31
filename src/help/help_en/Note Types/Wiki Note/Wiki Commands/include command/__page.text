@@ -1,0 +1,97 @@
+!!! The [=(:include:)=] command
+
+The [= (:include:) =] command is a placeholder, which is to be replaced with content of the attached file, wnen parsing. The full syntax for the command is as follows:
+
+[=(:include Attach:filename [params...]:)=]
+
+Here ''filename'' is the name of the attached file and switches of the command are listed below.
+
+!!! Switches of the command [=(:include:)=]
+
+The [=(:include:)=] command can take the following values:
+
+* ''encoding''
+* ''htmlescape''
+* ''wikiparse''
+
+!!!! encoding
+''Encoding'' switch indicates the encoding of the attached file to be included. Since OutWiker is incapable of recognising encodings, as, by default, it treats all files as if they were encoded in UTF-8.
+
+If the file is encoded in Attach:text_utf8.txt the "encoding" switch may be omitted:
+
+[=(:include Attach:text_utf8.txt:)=]
+
+Result:
+(:include Attach:text_utf8.txt:)
+
+For files in other encoding, the switch must be specified explicitly as follows:
+
+[=(:include Attach:text_utf8.txt encoding=utf8 :)=]
+
+Another example of the [=(:include:)=] command to insert a file text_1251.txt encoded in cp1251:
+
+[=(:include Attach:text_1251.txt encoding=cp1251:)=]
+
+Result:
+(:include Attach:text_1251.txt encoding=cp1251:)
+
+In case the encoding is not specified, OutWiker gives an error message as in the following example:
+
+[=(:include Attach:text_1251.txt:)=]
+
+Result:
+(:include Attach:text_1251.txt:)
+
+Full list of supported encodings is extensive, it can be found on the following webpage (Python help): [[http://docs.python.org/library/codecs.html#standard-encodings | this page]]. Here is an excerpt from that list with the most commonly used encodings (note that single encoding may have multiple names):
+
+* utf8, utf-8, utf_8, U8, UTF;
+* cp1251, windows-1251;
+* koi8_r;
+* koi8_u;
+* utf_32, utf-32, utf32;
+* utf_16, utf-16, utf16;
+* mac_cyrillic, maccyrillic;
+* cp866, 866, IBM866;
+
+!!!! htmlescape
+
+The ''htmlescape'' switch forces the parser to interpret the characters &lt;, &gt;, , &amp; as &amp;lt;, &amp;gt;, &amp;amp;, respectively. This switch comes in handy in case the attached file contains source code.
+
+Example of the command with the switch "htmlescape" omitted:
+[=(:include Attach:html.txt:)=]
+
+displays bolded text:
+(:include Attach:html.txt:)
+
+If the switch is included
+[=(:include Attach:html.txt htmlescape:)=]
+
+it displays the HTML code:
+(:include Attach:html.txt htmlescape:)
+
+!!!! wikiparse
+
+''Wikiparse'' forces OutWiker to process content of the attached file with the wiki parser before rendering. This switch comes in handy in case the attached file contains wiki notation.
+
+Example of the command with the switch "wikiparse" omitted:
+
+[=(:include Attach:wiki.txt:)=]
+
+displays the following non-parsed text:
+(:include Attach:wiki.txt:)
+
+If the switch is included
+[=(:include Attach:wiki.txt wikiparse :)=]
+
+it parses content as wiki-text:
+(:include Attach:wiki.txt wikiparse :)
+
+If the command [= (: include:) =] is invoked with both switches "htmlescape" and "wikiparse", then OutWiker processes HTML escape characters first, and than parses the wiki notation.
+
+It is also possible to use the tag <pre> to render listing of source code from the attached file nicely. The syntax is as follows:
+
+[@
+<PRE>
+(:include Attach:filename htmlescape:)
+</PRE>
+@]

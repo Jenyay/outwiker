@@ -1,22 +1,19 @@
-The program is open source and distributed under the GPL. Sources are located on the [[https://github.com/Jenyay/outwiker | github]].
+The program is an open source software and is distributed under the GPL. Sources are located at [[https://github.com/Jenyay/outwiker | github]].
 
-To get the latest version of the source code from the git repository, execute the command:
-
+To get the latest version of the source code from the git repository, execute the following command:
 '''git clone https://github.com/Jenyay/outwiker.git'''
 
-To run these commands, [[http://git-scm.com/ | Git]] must be installed.
-
-To get stable version of the source code from git repository, execute the command:
-
+To get the latest stable version of the source code from git repository, execute the following commands:
 '''git clone https://github.com/Jenyay/outwiker.git
 cd outwiker
 git checkout stable
 '''
 
-To run the program from the source code, [[http://www.python.org/ | Python 2.7]] and [[http://wxpython.org/ | wxPython 2.8]] must be installed.
+[[http://git-scm.com/ | Git]] must be installed to be able to execute these command.
 
-To run the OutWiker program from source code, execute following command (in the ''src'' directory):
-
+To compile OutWiker from source code, execute following command (in the ''src'' directory):
 '''python outwiker.py'''
 
-When you run the program under Linux, check out the dependencies [[depending -> / Advanced / Starting under Linux. Depending]]
+[[http://www.python.org/ | Python 2.7]] and [[http://wxpython.org/ | wxPython 2.8]] must be installed to compile OutWiker from the source code.
+
+In order to run the program on Linux the following dependencies [[depending -> / Advanced / Starting under Linux. Depending]] have to be checked first.

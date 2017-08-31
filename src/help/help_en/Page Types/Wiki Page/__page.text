@@ -1,5 +1,0 @@
-Another type of page that supports OutWiker, are the pages in the wiki notation. On these pages, you can still use HTML, but above all these pages are designed for syntax resembled of (but not exactly copying) a notation that is used in [[pmWiki -> http://pmwiki.org/]].
-
-The notation wiki syntax is described in nested notes:
-
-(:childlist:)

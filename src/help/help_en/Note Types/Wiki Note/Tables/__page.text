@@ -1,0 +1,194 @@
+There are two ways to create a table on wiki page: simple wiki notation and the [=(:table:)...(:tableend:)=] command. The former method is effective and convenient for creating small and compact tables. [=(:table:)=] command is more general and powerful method best suited for large and complex tables. Both methods are described below.
+
+
+!!! Simple table creation
+
+In order to create table with simple wiki notation, one should use the following syntax:
+
+[=
+|| Table params (&lt;TABLE&gt; tag attribute): border, width, etc.
+|| The first cell of the first row || The second cell of the first row || ... || The last cell of the first row ||
+|| The first cell of the second row || The second cell of the second row || ... || The last cell of the last row ||
+...
+=]
+
+The space characters between cell content and the double vertical separators on left and right are important for they set horizontal alignment of content within the cell. The following example illustrates this concept:
+
+Table code:
+
+[=
+|| border=1 width=100%
+||Left align || Center align || Right align||
+=]
+
+Result:
+
+|| border=1 width=100%
+||Left align || Center align || Right align||
+
+
+!!! Using [=(:table:)=] command
+
+!!!! Syntax
+
+Creation of a table with [=(:table:)=] command is similar to creation of tables in HTML code. The syntax is as follows:
+
+[=
+(:table parameters:)
+(:row parameters:)
+(:hcell parameters:) Header cell text
+(:hcell parameters:) Header cell text
+...
+(:row parameters:)
+(:cell parameters:) Cell text
+(:cell parameters:) Cell text
+...
+(:tableend:)
+=]
+
+The [=(:table:)=] command accepts the same parameters as &lt;table&gt; tag from HTML. Some widely used parameters are ''border'' which allows to set table border width (if ''border''="0", which is the default value then the table frame is not visible), ''width'' to set table width and ''align'' to set alignment of the table as a whole.
+
+OutWiker converts the [=(:table paraameters:)...(:tableend:)=] command into HTML code (&lt;table parameters&gt;...&lt;/table&gt;) to render notes in the "Preview" mode.
+
+The [=(:row:)=] command is used to denote beginning of a new table row. This command is an equivalent of the &lt;tr&gt; HTML tag, the same parameters as for the tag are allowed.
+
+The [=(:cell:)=] command is used to denote beginning of a new table cell. The [=(:hcell:)=] command is used to denote beginning of a new heading cell. The [=(:cell:)=] command is an equivalent of the &lt;td&gt; HTML tag. The [=(:hcell:)=] command is an equivalent of &lt;th&gt HTML tag.
+
+
+!!!!! Examples
+
+(:table2 width=100% border=1:)
+(:row2:)
+(:hcell2:) Comment
+(:hcell2:) Wiki notation
+(:hcell2:) Result
+
+(:row2:)
+(:cell2:) Table with a border
+(:cell2:)[=(:table border="1":)
+(:row:)
+(:hcell:)cell 1
+(:hcell:)cell 2
+(:hcell:)cell 3
+(:row:)
+(:cell:)cell 4
+(:cell:)cell 5
+(:cell:)cell 6
+(:tableend:)=]
+(:cell2:)(:table border="1":)
+(:row:)
+(:hcell:)cell 1
+(:hcell:)cell 2
+(:hcell:)cell 3
+(:row:)
+(:cell:)cell 4
+(:cell:)cell 5
+(:cell:)cell 6
+(:tableend:)
+
+(:row2:)
+(:cell2:)Table without a border
+(:cell2:)[=(:table:)
+(:row:)
+(:cell:)cell 1
+(:cell:)cell 2
+(:cell:)cell 3
+(:row:)
+(:cell:)cell 4
+(:cell:)cell 5
+(:cell:)cell 6
+(:tableend:)=]
+(:cell2:)(:table:)
+(:row:)
+(:cell:)cell 1
+(:cell:)cell 2
+(:cell:)cell 3
+(:row:)
+(:cell:)cell 4
+(:cell:)cell 5
+(:cell:)cell 6
+(:tableend:)
+
+(:row2:)
+(:cell2:) Using colspan and rowspan parameters
+to join cells horizontally and vertically
+(:cell2:)[=(:table border="1" align="center":)
+(:row:)
+(:cell colspan=2 align=center:)cell 1
+(:cell rowspan=2:)cell 2
+(:row:)
+(:cell:)cell 4
+(:cell:)cell 5
+(:tableend:)=]
+(:cell2:)(:table border="1" align="center":)
+(:row:)
+(:cell colspan=2 align=center:)cell 1
+(:cell rowspan=2:)cell 2
+(:row:)
+(:cell:)cell 4
+(:cell:)cell 5
+(:tableend:)
+(:table2end:)
+
+
+!!!! Nested tables
+
+The wiki parser (OutWiker's internal module that converts wiki notation into HTML code) allows table to be placed within a cell of another table. However, that requires using a bit more sophisticated syntax, than it does in the case of single [=(:table:)=] command. This complicating is unavoidable, otherwise the parser has no way to differentiate between the ends of the main table and that of the nested table. To circumvent this problem the tables should be numbered, i. e. [=(:table1:)=], [=(:table2:)=], [=(:table3:)=], [=(:table4:)=], [=(:table5:)=] to designate the beginning of a nested table and  [=(:table1:)=], [=(:table2end:)=], [=(:table3end:)=], [=(:table4end:)=] and [=(:table5end:)=] to designate its end. 
+
+Commands for rows, cells and header cells of nested table must also contain the same number at the end, i. e. [=(:rowN:)=], [=(:cellN:)=], [=(:hcellN:)=] (necessity of using numbers for rows and cells can be put into question, however, their presence makes it much easier to understand which table given row or cell belongs to). Apart from the numbers, these modified commands do not differ from the standard [=(:table:)=] command.
+
+For example:
+
+(:table3 border="1" width=100%:)
+(:row3:)
+(:hcell3:)Wiki notation
+(:hcell3:)Result
+
+(:row3:)
+(:cell3:)
+[=(:table border=1 align=center:)
+(:row:)
+(:cell:)(:table2 border=1:)
+(:row2:)
+(:cell2:)Table 2. Cell 1
+(:cell2:)Table 2. Cell 2
+(:cell2:)Table 2. Cell 3
+(:row2:)
+(:cell2:)Table 2. Cell 4
+(:cell2:)Table 2. Cell 5
+(:cell2:)Table 2. Cell 6
+(:table2end:)
+
+(:cell:)cell 2
+(:cell:)cell 3
+
+(:row:)
+(:cell:)cell 4
+(:cell:)cell 5
+(:cell:)cell 6
+(:tableend:)=]
+
+(:cell3:)(:table border=1 align=center:)
+(:row:)
+(:cell:)(:table2 border=1:)
+(:row2:)
+(:cell2:)Table 2. Cell 1
+(:cell2:)Table 2. Cell 2
+(:cell2:)Table 2. Cell 3
+(:row2:)
+(:cell2:)Table 2. Cell 4
+(:cell2:)Table 2. Cell 5
+(:cell2:)Table 2. Cell 6
+(:table2end:)
+
+(:cell:)cell 2
+(:cell:)cell 3
+
+(:row:)
+(:cell:)cell 4
+(:cell:)cell 5
+(:cell:)cell 6
+(:tableend:)
+(:table3end:)
+
+Please, note that in general case the numbers of the tables have nothing to do with the level of nesting. Their solely purpose is to provide the parser with means to differentiate between the tables (and their rows and cells). To illustate this idea, the main table of the example above is deliberately created with [=(:table3:)=] command and [=(:table:)=] and [=(:table2:)=] commands are used for two nested tables.

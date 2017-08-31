@@ -1,5 +1,5 @@
-Additional plugins can be found [[here -> http://jenyay.net/Outwiker/Plugins]].
+Plug-ins for Outwiker can be found at [[here -> http://jenyay.net/Outwiker/Plugins]].
 
-To install the plug-ins need to unzip the plugin archive to ''plugins'' folder next to the outwiker.exe (if you run OutWiker in portable mode) or to ''outwiker\plugins'' directory of the user's settings folder (under Windows 7 / 8 / 8.1 - {+C:\Users\USERNAME\AppData\Roaming\outwiker\plugins+}, under Linux - {+/home/USERNAME/.config/outwiker/plugins+}). The easiest way to open the plugin folder is select "Help - Open Plugins Folder" menu item.
+In order to install a plug-in one needs to download the archive with plug-in's files and unpack it to the ''plugins'' subdirectory located in the same directory as "Outwiker.exe" (for portable version) or to the ''outwiker\plugins'' subdirectory of the user's settings directory (it is {+C:\Users\USERNAME\AppData\Roaming\outwiker\plugins+} under Windows 7/8/8.1 and {+/home/USERNAME/.config/outwiker/plugins+} under Linux). The easiest way to open the plug-in folder is to use "Help / Open Plugins Folder" menu.
 
-If you write your own plugin and you want it to be posted on the page of plugins, send it to email [[mailto: jenyay.ilin @ gmail.com | jenyay.ilin @ gmail.com]] with a detailed description. 
+To post a plug-in written by third party on the OutWiker's webstite, please, submit it to [[mailto: jenyay.ilin @ gmail.com | jenyay.ilin @ gmail.com]] with detailed description.

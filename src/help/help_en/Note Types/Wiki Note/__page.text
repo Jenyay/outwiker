@@ -1,0 +1,4 @@
+Wiki-type notes are fully supported by OutWiker. Pages of this type are allowed to contain HTML-code, however, they are primarily designed for tagged text with syntax resembling, albeit not identical to, that of notation described on [[pmWiki -> http://pmwiki.org/]].
+
+The notation wiki syntax is described in the following child notes:
+(:childlist:)
