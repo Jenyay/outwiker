@@ -7,7 +7,7 @@ import os.path
 import unittest
 from tempfile import mkdtemp
 
-from outwiker.core.exceptions import DublicateTitle, TreeException
+from outwiker.core.exceptions import DuplicateTitle, TreeException
 from outwiker.core.application import Application
 from outwiker.core.tree import WikiDocument
 from outwiker.core.attachment import Attachment
@@ -41,16 +41,13 @@ class MoveTest(unittest.TestCase):
 
         Application.wikiroot = None
 
-
     def tearDown(self):
         removeDir(self.path)
         Application.wikiroot = None
 
-
     def onTreeUpdate(self, sender):
         self.treeUpdateCount += 1
         self.treeUpdateSender = sender
-
 
     def test1(self):
         self.treeUpdateCount = 0
@@ -71,7 +68,6 @@ class MoveTest(unittest.TestCase):
 
         Application.onTreeUpdate += self.onTreeUpdate
 
-
     def testNoEvent(self):
         self.treeUpdateCount = 0
         Application.wikiroot = None
@@ -90,7 +86,6 @@ class MoveTest(unittest.TestCase):
         self.assertEqual(self.wiki[u"Страница 5"].subpath, u"Страница 5")
 
         Application.onTreeUpdate += self.onTreeUpdate
-
 
     def test2(self):
         self.wiki[u"Страница 1"].moveTo(self.wiki[u"Страница 2/Страница 3"])
@@ -120,14 +115,12 @@ class MoveTest(unittest.TestCase):
             self.wiki[u"Страница 2/Страница 3/Страница 1/Страница 5"].subpath,
             u"Страница 2/Страница 3/Страница 1/Страница 5")
 
-
     def test3(self):
         self.assertRaises(
-            DublicateTitle,
+            DuplicateTitle,
             self.wiki[u"Страница 2/Страница 3/Страница 4"].moveTo,
             self.wiki
         )
-
 
     def test4(self):
         self.wiki[u"страница 4"].moveTo(self.wiki[u"страница 444"])
@@ -140,7 +133,6 @@ class MoveTest(unittest.TestCase):
         self.assertEqual(self.wiki[u"страница 444/страница 4"].title,
                          u"страница 4")
 
-
     def testMoveToSelf(self):
         self.assertRaises(TreeException,
                           self.wiki[u"Страница 1"].moveTo,
@@ -148,7 +140,6 @@ class MoveTest(unittest.TestCase):
 
         self.assertNotEqual(self.wiki[u"Страница 1"], None)
         self.assertEqual(len(self.wiki), 4)
-
 
     def testMoveToChild1(self):
         self.assertRaises(TreeException,
@@ -158,7 +149,6 @@ class MoveTest(unittest.TestCase):
         self.assertNotEqual(self.wiki[u"Страница 2"], None)
         self.assertEqual(len(self.wiki), 4)
 
-
     def testMoveToChild2(self):
         self.assertRaises(TreeException,
                           self.wiki[u"Страница 2"].moveTo,
@@ -166,7 +156,6 @@ class MoveTest(unittest.TestCase):
 
         self.assertNotEqual(self.wiki[u"Страница 2"], None)
         self.assertEqual(len(self.wiki), 4)
-
 
     def testMoveInvalid(self):
         """

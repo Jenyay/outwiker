@@ -379,7 +379,7 @@ def movePage(page, newParent):
 
     try:
         page.moveTo(newParent)
-    except outwiker.core.exceptions.DublicateTitle:
+    except outwiker.core.exceptions.DuplicateTitle:
         # Невозможно переместить из-за дублирования имен
         MessageBox(_(u"Can't move page when page with that title already exists"),
                    _(u"Error"),
@@ -426,7 +426,7 @@ def renamePage(page, newtitle):
 
     try:
         page.display_title = newtitle
-    except outwiker.core.exceptions.DublicateTitle:
+    except outwiker.core.exceptions.DuplicateTitle:
         MessageBox(_(u"Can't move page when page with that title already exists"),
                    _(u"Error"),
                    wx.ICON_ERROR | wx.OK)

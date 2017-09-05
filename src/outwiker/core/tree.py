@@ -10,7 +10,7 @@ import datetime
 from .config import PageConfig
 from .bookmarks import Bookmarks
 from .event import Event
-from .exceptions import (ClearConfigError, RootFormatError, DublicateTitle,
+from .exceptions import (ClearConfigError, RootFormatError, DuplicateTitle,
                          ReadonlyException, TreeException)
 from .tagscommands import parseTagsList
 from .sortfunctions import sortOrderFunction, sortAlphabeticalFunction
@@ -409,7 +409,7 @@ class WikiPage(RootWikiPage):
         """
         if not RootWikiPage.testDublicate(parent, title):
             logger.error(u'Duplicate page title in the parent page. Title: {}. Parent: {}'.format(title, parent.subpath))
-            raise DublicateTitle
+            raise DuplicateTitle
 
         RootWikiPage.__init__(self, path, readonly)
         self._title = title
@@ -502,7 +502,7 @@ class WikiPage(RootWikiPage):
         # Проверка на дубликат страниц, а также на то, что в заголовке страницы
         # может меняться только регистр букв
         if not self.canRename(newtitle):
-            raise DublicateTitle
+            raise DuplicateTitle
 
         newpath = os.path.join(os.path.dirname(oldpath), newtitle)
         os.renames(oldpath, newpath)
@@ -546,7 +546,7 @@ class WikiPage(RootWikiPage):
 
         # Проверка на то, что в новом родителе нет записи с таким же заголовком
         if newparent[self.title] is not None:
-            raise DublicateTitle
+            raise DuplicateTitle
 
         oldpath = self.path
         oldparent = self.parent

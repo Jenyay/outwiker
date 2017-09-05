@@ -7,7 +7,7 @@ from tempfile import mkdtemp
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.core.attachment import Attachment
 from outwiker.core.application import Application
-from outwiker.core.exceptions import DublicateTitle
+from outwiker.core.exceptions import DuplicateTitle
 from outwiker.core.tree import WikiDocument
 from test.utils import removeDir
 
@@ -77,7 +77,7 @@ class RenameTest(unittest.TestCase):
         def rename(page, newtitle):
             page.title = newtitle
 
-        self.assertRaises(DublicateTitle, rename,
+        self.assertRaises(DuplicateTitle, rename,
                           self.wikiroot[u"Страница 1"], u"СтраНица 6")
 
     def testRename2(self):
