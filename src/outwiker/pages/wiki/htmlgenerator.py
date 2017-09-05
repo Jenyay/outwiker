@@ -55,7 +55,9 @@ class HtmlGenerator(object):
 
         # Create final HTML file
         tpl = HtmlTemplate(readTextFile(stylepath))
-        result = tpl.substitute(content=text, userhead=head)
+        result = tpl.substitute(content=text,
+                                userhead=head,
+                                title=self.page.display_title)
 
         result = self._changeContentByEvent(self.page,
                                             PostprocessingParams(result),

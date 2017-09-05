@@ -123,9 +123,8 @@ class HtmlPageController(object):
         else:
             text = content
 
-        userhead = u"<title>{}</title>".format(page.title)
         result = tpl.substitute(content=text,
-                                userhead=userhead)
+                                title=page.display_title)
 
         result = self._changeContentByEvent(page,
                                             PostprocessingParams(result),

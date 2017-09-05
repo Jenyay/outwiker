@@ -8,6 +8,7 @@
 
 		<changelog>
 			<version number="2.1.0.827" status="dev">
+				<change>To the page style files added a new variable with name $title.</change>
 			</version>
 
 			<version number="2.1.0.826" status="dev" date="August 22, 2017">
@@ -25,6 +26,7 @@
 
 		<changelog>
 			<version number="2.1.0.827" status="dev">
+				<change>В файлы стилей страниц добавлена новая переменная $title.</change>
 			</version>
 
 			<version number="2.1.0.826" status="dev" date="22.08.2017">
