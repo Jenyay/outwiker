@@ -34,6 +34,13 @@
           - debhelper
           - devscripts
           - exuberant-ctags
+          - p7zip-full
+        become: true
+
+      - name: Install Python modules
+        pip: name={{ item }}
+        with_items:
+            - "pyinstaller"
         become: true
 
       - name: create directories for jenyay
