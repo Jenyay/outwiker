@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from .libs.jinja2 import Environment
-
 
 class ContentGenerator(object):
     def __init__(self, templateStr):
@@ -11,6 +9,8 @@ class ContentGenerator(object):
         '''
         data - dictionary for template substitution.
         '''
+        from .libs.jinja2 import Environment
+
         env = Environment()
         templateObj = env.from_string(self._templateStr)
 
