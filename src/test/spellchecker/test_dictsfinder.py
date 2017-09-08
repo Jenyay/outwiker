@@ -8,205 +8,194 @@ from outwiker.core.spellchecker import DictsFinder
 from test.utils import removeDir
 
 
-class DictsFinderTest (unittest.TestCase):
-    def setUp (self):
+class DictsFinderTest(unittest.TestCase):
+    def setUp(self):
         self.tempDirList = []
 
-
-    def tearDown (self):
+    def tearDown(self):
         for tempdir in self.tempDirList:
-            removeDir (tempdir)
+            removeDir(tempdir)
 
         self.tempDirList = []
 
+    def testGetLangEmpty(self):
+        finder = DictsFinder(self.tempDirList)
+        self.assertEqual(finder.getLangList(), [])
 
-    def testGetLangEmpty (self):
-        finder = DictsFinder (self.tempDirList)
-        self.assertEqual (finder.getLangList(), [])
+    def testGetLangSingleEmpty(self):
+        self.tempDirList.append(mkdtemp(prefix=u'Абырвалг spell'))
+        finder = DictsFinder(self.tempDirList)
 
+        self.assertEqual(finder.getLangList(), [])
 
-    def testGetLangSingleEmpty (self):
-        self.tempDirList.append (mkdtemp (prefix=u'Абырвалг spell'))
-        finder = DictsFinder (self.tempDirList)
+    def testGetLangSingle_01(self):
+        self.tempDirList.append(mkdtemp(prefix=u'Абырвалг spell'))
+        self._createDict(self.tempDirList[0], u"ru_RU")
 
-        self.assertEqual (finder.getLangList(), [])
+        finder = DictsFinder(self.tempDirList)
 
+        self.assertEqual(finder.getLangList(), [u"ru_RU"])
 
-    def testGetLangSingle_01 (self):
-        self.tempDirList.append (mkdtemp (prefix=u'Абырвалг spell'))
-        self._createDict (self.tempDirList[0], u"ru_RU")
+    def testGetLangSingle_02(self):
+        self.tempDirList.append(mkdtemp(prefix=u'Абырвалг spell 1'))
+        self.tempDirList.append(mkdtemp(prefix=u'Абырвалг spell 2'))
+        self._createDict(self.tempDirList[0], u"ru_RU")
 
-        finder = DictsFinder (self.tempDirList)
+        finder = DictsFinder(self.tempDirList)
 
-        self.assertEqual (finder.getLangList(), [u"ru_RU"])
+        self.assertEqual(finder.getLangList(), [u"ru_RU"])
 
+    def testGetLangSingle_03(self):
+        self.tempDirList.append(mkdtemp(prefix=u'Абырвалг spell 1'))
+        self.tempDirList.append(mkdtemp(prefix=u'Абырвалг spell 2'))
+        self._createDict(self.tempDirList[0], u"ru_RU")
+        self._createDict(self.tempDirList[1], u"ru_RU")
 
-    def testGetLangSingle_02 (self):
-        self.tempDirList.append (mkdtemp (prefix=u'Абырвалг spell 1'))
-        self.tempDirList.append (mkdtemp (prefix=u'Абырвалг spell 2'))
-        self._createDict (self.tempDirList[0], u"ru_RU")
+        finder = DictsFinder(self.tempDirList)
 
-        finder = DictsFinder (self.tempDirList)
+        self.assertEqual(finder.getLangList(), [u"ru_RU"])
 
-        self.assertEqual (finder.getLangList(), [u"ru_RU"])
+    def testGetLangSingle_invalid_01(self):
+        self.tempDirList.append(mkdtemp(prefix=u'Абырвалг spell'))
 
-
-    def testGetLangSingle_03 (self):
-        self.tempDirList.append (mkdtemp (prefix=u'Абырвалг spell 1'))
-        self.tempDirList.append (mkdtemp (prefix=u'Абырвалг spell 2'))
-        self._createDict (self.tempDirList[0], u"ru_RU")
-        self._createDict (self.tempDirList[1], u"ru_RU")
-
-        finder = DictsFinder (self.tempDirList)
-
-        self.assertEqual (finder.getLangList(), [u"ru_RU"])
-
-
-    def testGetLangSingle_invalid_01 (self):
-        self.tempDirList.append (mkdtemp (prefix=u'Абырвалг spell'))
-
-        with open (os.path.join (self.tempDirList[0], "ru_RU" + DictsFinder.dictExtensions[0]), "w"):
+        with open(os.path.join(self.tempDirList[0],
+                               "ru_RU" + DictsFinder.dictExtensions[0]), "w"):
             pass
 
-        finder = DictsFinder (self.tempDirList)
+        finder = DictsFinder(self.tempDirList)
 
-        self.assertEqual (finder.getLangList(), [])
+        self.assertEqual(finder.getLangList(), [])
 
+    def testGetLangSingle_invalid_02(self):
+        self.tempDirList.append(mkdtemp(prefix=u'Абырвалг spell'))
 
-    def testGetLangSingle_invalid_02 (self):
-        self.tempDirList.append (mkdtemp (prefix=u'Абырвалг spell'))
-
-        with open (os.path.join (self.tempDirList[0], "ru_RU" + DictsFinder.dictExtensions[1]), "w"):
+        with open(os.path.join(self.tempDirList[0],
+                               "ru_RU" + DictsFinder.dictExtensions[1]), "w"):
             pass
 
-        finder = DictsFinder (self.tempDirList)
+        finder = DictsFinder(self.tempDirList)
 
-        self.assertEqual (finder.getLangList(), [])
+        self.assertEqual(finder.getLangList(), [])
 
+    def testGetLangSeveral_01(self):
+        self.tempDirList.append(mkdtemp(prefix=u'Абырвалг spell'))
+        self._createDict(self.tempDirList[0], u"ru_RU")
+        self._createDict(self.tempDirList[0], u"en_US")
 
-    def testGetLangSeveral_01 (self):
-        self.tempDirList.append (mkdtemp (prefix=u'Абырвалг spell'))
-        self._createDict (self.tempDirList[0], u"ru_RU")
-        self._createDict (self.tempDirList[0], u"en_US")
-
-        finder = DictsFinder (self.tempDirList)
+        finder = DictsFinder(self.tempDirList)
 
         langs = finder.getLangList()
         langs.sort()
 
-        self.assertEqual (langs, [u"en_US", u"ru_RU"])
+        self.assertEqual(langs, [u"en_US", u"ru_RU"])
 
+    def testGetLangSeveral_02(self):
+        self.tempDirList.append(mkdtemp(prefix=u'Абырвалг spell 1'))
+        self.tempDirList.append(mkdtemp(prefix=u'Абырвалг spell 2'))
+        self._createDict(self.tempDirList[1], u"ru_RU")
+        self._createDict(self.tempDirList[1], u"en_US")
 
-    def testGetLangSeveral_02 (self):
-        self.tempDirList.append (mkdtemp (prefix=u'Абырвалг spell 1'))
-        self.tempDirList.append (mkdtemp (prefix=u'Абырвалг spell 2'))
-        self._createDict (self.tempDirList[1], u"ru_RU")
-        self._createDict (self.tempDirList[1], u"en_US")
-
-        finder = DictsFinder (self.tempDirList)
-
-        langs = finder.getLangList()
-        langs.sort()
-
-        self.assertEqual (langs, [u"en_US", u"ru_RU"])
-
-
-    def testGetLangSeveral_03 (self):
-        self.tempDirList.append (mkdtemp (prefix=u'Абырвалг spell 1'))
-        self.tempDirList.append (mkdtemp (prefix=u'Абырвалг spell 2'))
-        self._createDict (self.tempDirList[0], u"ru_RU")
-        self._createDict (self.tempDirList[1], u"en_US")
-
-        finder = DictsFinder (self.tempDirList)
+        finder = DictsFinder(self.tempDirList)
 
         langs = finder.getLangList()
         langs.sort()
 
-        self.assertEqual (langs, [u"en_US", u"ru_RU"])
+        self.assertEqual(langs, [u"en_US", u"ru_RU"])
 
+    def testGetLangSeveral_03(self):
+        self.tempDirList.append(mkdtemp(prefix=u'Абырвалг spell 1'))
+        self.tempDirList.append(mkdtemp(prefix=u'Абырвалг spell 2'))
+        self._createDict(self.tempDirList[0], u"ru_RU")
+        self._createDict(self.tempDirList[1], u"en_US")
 
-    def testGetLangSeveral_04 (self):
-        self.tempDirList.append (mkdtemp (prefix=u'Абырвалг spell 1'))
-        self.tempDirList.append (mkdtemp (prefix=u'Абырвалг spell 2'))
-        self._createDict (self.tempDirList[0], u"ru_RU")
-        self._createDict (self.tempDirList[1], u"ru_RU")
-        self._createDict (self.tempDirList[1], u"en_US")
-
-        finder = DictsFinder (self.tempDirList)
+        finder = DictsFinder(self.tempDirList)
 
         langs = finder.getLangList()
         langs.sort()
 
-        self.assertEqual (langs, [u"en_US", u"ru_RU"])
+        self.assertEqual(langs, [u"en_US", u"ru_RU"])
 
+    def testGetLangSeveral_04(self):
+        self.tempDirList.append(mkdtemp(prefix=u'Абырвалг spell 1'))
+        self.tempDirList.append(mkdtemp(prefix=u'Абырвалг spell 2'))
+        self._createDict(self.tempDirList[0], u"ru_RU")
+        self._createDict(self.tempDirList[1], u"ru_RU")
+        self._createDict(self.tempDirList[1], u"en_US")
 
-    def testGetFolders_empty_01 (self):
-        finder = DictsFinder (self.tempDirList)
-        self.assertEqual (finder.getFoldersForLang (u"ru_RU"), [])
+        finder = DictsFinder(self.tempDirList)
 
+        langs = finder.getLangList()
+        langs.sort()
 
-    def testGetFolders_empty_02 (self):
-        self.tempDirList.append (mkdtemp (prefix=u'Абырвалг spell 1'))
-        self.tempDirList.append (mkdtemp (prefix=u'Абырвалг spell 2'))
+        self.assertEqual(langs, [u"en_US", u"ru_RU"])
 
-        finder = DictsFinder (self.tempDirList)
-        self.assertEqual (finder.getFoldersForLang (u"ru_RU"), [])
+    def testGetFolders_empty_01(self):
+        finder = DictsFinder(self.tempDirList)
+        self.assertEqual(finder.getFoldersForLang(u"ru_RU"), [])
 
+    def testGetFolders_empty_02(self):
+        self.tempDirList.append(mkdtemp(prefix=u'Абырвалг spell 1'))
+        self.tempDirList.append(mkdtemp(prefix=u'Абырвалг spell 2'))
 
-    def testGetFolders_empty_03_invalid (self):
-        self.tempDirList.append (mkdtemp (prefix=u'Абырвалг spell 1'))
+        finder = DictsFinder(self.tempDirList)
+        self.assertEqual(finder.getFoldersForLang(u"ru_RU"), [])
 
-        with open (os.path.join (self.tempDirList[0], u"ru_RU" + DictsFinder.dictExtensions[0]), "w"):
+    def testGetFolders_empty_03_invalid(self):
+        self.tempDirList.append(mkdtemp(prefix=u'Абырвалг spell 1'))
+
+        with open(os.path.join(self.tempDirList[0],
+                               u"ru_RU" + DictsFinder.dictExtensions[0]), "w"):
             pass
 
-        finder = DictsFinder (self.tempDirList)
-        self.assertEqual (finder.getFoldersForLang (u"ru_RU"), [])
+        finder = DictsFinder(self.tempDirList)
+        self.assertEqual(finder.getFoldersForLang(u"ru_RU"), [])
 
+    def testGetFolders_01(self):
+        self.tempDirList.append(mkdtemp(prefix=u'Абырвалг spell 1'))
+        self._createDict(self.tempDirList[0], u"ru_RU")
 
-    def testGetFolders_01 (self):
-        self.tempDirList.append (mkdtemp (prefix=u'Абырвалг spell 1'))
-        self._createDict (self.tempDirList[0], u"ru_RU")
+        finder = DictsFinder(self.tempDirList)
+        self.assertEqual(finder.getFoldersForLang(u"ru_RU"),
+                         [self.tempDirList[0]])
 
-        finder = DictsFinder (self.tempDirList)
-        self.assertEqual (finder.getFoldersForLang (u"ru_RU"), [self.tempDirList[0]])
+    def testGetFolders_02(self):
+        self.tempDirList.append(mkdtemp(prefix=u'Абырвалг spell 1'))
+        self.tempDirList.append(mkdtemp(prefix=u'Абырвалг spell 2'))
+        self._createDict(self.tempDirList[0], u"ru_RU")
 
+        finder = DictsFinder(self.tempDirList)
+        self.assertEqual(finder.getFoldersForLang(u"ru_RU"),
+                         [self.tempDirList[0]])
 
-    def testGetFolders_02 (self):
-        self.tempDirList.append (mkdtemp (prefix=u'Абырвалг spell 1'))
-        self.tempDirList.append (mkdtemp (prefix=u'Абырвалг spell 2'))
-        self._createDict (self.tempDirList[0], u"ru_RU")
+    def testGetFolders_03(self):
+        self.tempDirList.append(mkdtemp(prefix=u'Абырвалг spell 1'))
+        self.tempDirList.append(mkdtemp(prefix=u'Абырвалг spell 2'))
+        self._createDict(self.tempDirList[0], u"ru_RU")
+        self._createDict(self.tempDirList[1], u"ru_RU")
 
-        finder = DictsFinder (self.tempDirList)
-        self.assertEqual (finder.getFoldersForLang (u"ru_RU"), [self.tempDirList[0]])
+        finder = DictsFinder(self.tempDirList)
+        self.assertEqual(finder.getFoldersForLang(u"ru_RU"),
+                         [self.tempDirList[0], self.tempDirList[1]])
 
+    def testGetFolders_04(self):
+        self.tempDirList.append(mkdtemp(prefix=u'Абырвалг spell 1'))
+        self._createDict(self.tempDirList[0], u"ru_RU")
 
-    def testGetFolders_03 (self):
-        self.tempDirList.append (mkdtemp (prefix=u'Абырвалг spell 1'))
-        self.tempDirList.append (mkdtemp (prefix=u'Абырвалг spell 2'))
-        self._createDict (self.tempDirList[0], u"ru_RU")
-        self._createDict (self.tempDirList[1], u"ru_RU")
+        self.tempDirList.append(mkdtemp(prefix=u'Абырвалг spell 2'))
+        self._createDict(self.tempDirList[1], u"ru_RU")
+        self._createDict(self.tempDirList[1], u"en_US")
 
-        finder = DictsFinder (self.tempDirList)
-        self.assertEqual (finder.getFoldersForLang (u"ru_RU"),
-                          [self.tempDirList[0], self.tempDirList[1]])
+        finder = DictsFinder(self.tempDirList)
+        self.assertEqual(finder.getFoldersForLang(u"ru_RU"),
+                         [self.tempDirList[0], self.tempDirList[1]])
+        self.assertEqual(finder.getFoldersForLang(u"en_US"),
+                         [self.tempDirList[1]])
 
-
-    def testGetFolders_04 (self):
-        self.tempDirList.append (mkdtemp (prefix=u'Абырвалг spell 1'))
-        self._createDict (self.tempDirList[0], u"ru_RU")
-
-        self.tempDirList.append (mkdtemp (prefix=u'Абырвалг spell 2'))
-        self._createDict (self.tempDirList[1], u"ru_RU")
-        self._createDict (self.tempDirList[1], u"en_US")
-
-        finder = DictsFinder (self.tempDirList)
-        self.assertEqual (finder.getFoldersForLang (u"ru_RU"), [self.tempDirList[0], self.tempDirList[1]])
-        self.assertEqual (finder.getFoldersForLang (u"en_US"), [self.tempDirList[1]])
-
-
-    def _createDict (self, path, lang):
-        with open (os.path.join (path, lang + DictsFinder.dictExtensions[0]), "w"):
+    def _createDict(self, path, lang):
+        with open(os.path.join(path, lang + DictsFinder.dictExtensions[0]),
+                  "w"):
             pass
 
-        with open (os.path.join (path, lang + DictsFinder.dictExtensions[1]), "w"):
+        with open(os.path.join(path, lang + DictsFinder.dictExtensions[1]),
+                  "w"):
             pass
