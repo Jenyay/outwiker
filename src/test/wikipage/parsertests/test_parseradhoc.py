@@ -59,6 +59,11 @@ class ParserAdHocTest(unittest.TestCase):
         result = u'бла-бла-бла <sup><b>xc</b></sup> бла-бла-бла'
         self.assertEqual(self.parser.toHtml(text), result, self.parser.toHtml(text).encode(self.encoding))
 
+    def testSuperscriptItalic(self):
+        text = u"бла-бла-бла '^''xc''^' бла-бла-бла"
+        result = u'бла-бла-бла <sup><i>xc</i></sup> бла-бла-бла'
+        self.assertEqual(self.parser.toHtml(text), result, self.parser.toHtml(text).encode(self.encoding))
+
     def testItalicSubscript(self):
         text = u"бла-бла-бла ''x'_c_''' бла-бла-бла"
         result = u'бла-бла-бла <i>x<sub>c</sub></i> бла-бла-бла'

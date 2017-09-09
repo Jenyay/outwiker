@@ -71,6 +71,14 @@ class ParserQuoteTest(unittest.TestCase):
                          result,
                          self.parser.toHtml(text).encode(self.encoding))
 
+    def testQuoteFormat_03(self):
+        text = u"[>'''test'''<]"
+        result = u'<blockquote><b>test</b></blockquote>'
+
+        self.assertEqual(self.parser.toHtml(text),
+                         result,
+                         self.parser.toHtml(text).encode(self.encoding))
+
     def testQuoteMultiline1(self):
         text = u"""Блаблабла [>это длинная
 мнотострочная
