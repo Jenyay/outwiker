@@ -1,7 +1,9 @@
 # -*- coding: UTF-8 -*-
 
+import outwiker.core
 from outwiker.core.htmltemplate import HtmlTemplate
 from outwiker.utilites.textfile import readTextFile
+from outwiker.core.version import Version
 
 from markdownparser.parser import Parser
 
@@ -20,5 +22,10 @@ class MarkdownHtmlGenerator (object):
 
         html = parser.convert(self.page.content)
         tpl = HtmlTemplate(readTextFile(stylepath))
-        result = tpl.substitute(content=html, userhead=head)
+        if Version(*outwiker.core.__version__) >= Version(1, 5):
+            result = tpl.substitute(content=html,
+                                    userhead=head,
+                                    title=self.page.display_title)
+        else:
+            result = tpl.substitute(content=html, userhead=head)
         return result
