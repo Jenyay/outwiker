@@ -51,3 +51,4 @@ serverinfo.py
 .vagrant
 *.retry
 *.log
+.vscode
