@@ -44,11 +44,13 @@ class MenuToolsController (object):
         menuMaker = MenuMaker (self, menu, self._application.mainWindow)
         pagetype = page.getTypeString()
 
-        if pagetype == "wiki" or pagetype == "html":
+        if (pagetype == u"wiki" or
+                pagetype == u"html" or
+                pagetype == u"markdown"):
             menuMaker.insertSeparator()
             menuMaker.insertContentMenuItem ()
             menuMaker.insertResultMenuItem ()
-        elif pagetype == "text":
+        elif pagetype == u"text":
             menuMaker.insertSeparator()
             menuMaker.insertContentMenuItem ()
 
