@@ -10,8 +10,8 @@ from outwiker.core.config import IntegerOption, BooleanOption
 from toolsinfo import ToolsInfo
 
 
-class ExternalToolsConfig (object):
-    def __init__ (self, config):
+class ExternalToolsConfig(object):
+    def __init__(self, config):
         self._sectionName = "ExternalTools"
         self._toolsItemTemplate = "tools{index}"
 
@@ -32,124 +32,111 @@ class ExternalToolsConfig (object):
         DEFAULT_WARNING = True
         WARNING_OPTION = u'ShowExecWarning'
 
-
-        self._dialogWidth = IntegerOption (self._config,
-                                           self._sectionName,
-                                           DIALOG_WIDTH_OPTION,
-                                           DEFAULT_DIALOG_WIDTH)
-
-        self._dialogHeight = IntegerOption (self._config,
-                                            self._sectionName,
-                                            DIALOG_HEIGHT_OPTION,
-                                            DEFAULT_DIALOG_HEIGHT)
-
-
-        self._execFormat = IntegerOption (self._config,
+        self._dialogWidth = IntegerOption(self._config,
                                           self._sectionName,
-                                          DIALOG_SELECTED_FORMAT_OPTION,
-                                          DEFAULT_FORMAT)
+                                          DIALOG_WIDTH_OPTION,
+                                          DEFAULT_DIALOG_WIDTH)
 
-        self._execWarning = BooleanOption (self._config,
+        self._dialogHeight = IntegerOption(self._config,
                                            self._sectionName,
-                                           WARNING_OPTION,
-                                           DEFAULT_WARNING)
+                                           DIALOG_HEIGHT_OPTION,
+                                           DEFAULT_DIALOG_HEIGHT)
 
+        self._execFormat = IntegerOption(self._config,
+                                         self._sectionName,
+                                         DIALOG_SELECTED_FORMAT_OPTION,
+                                         DEFAULT_FORMAT)
 
-    def clearAll (self):
+        self._execWarning = BooleanOption(self._config,
+                                          self._sectionName,
+                                          WARNING_OPTION,
+                                          DEFAULT_WARNING)
+
+    def clearAll(self):
         """
         Remove all options
         """
-        self._config.remove_section (self._sectionName)
-
+        self._config.remove_section(self._sectionName)
 
     @property
-    def dialogWidth (self):
+    def dialogWidth(self):
         return self._dialogWidth.value
 
-
     @dialogWidth.setter
-    def dialogWidth (self, value):
+    def dialogWidth(self, value):
         self._dialogWidth.value = value
 
-
     @property
-    def dialogHeight (self):
+    def dialogHeight(self):
         return self._dialogHeight.value
 
-
     @dialogHeight.setter
-    def dialogHeight (self, value):
+    def dialogHeight(self, value):
         self._dialogHeight.value = value
 
-
     @property
-    def execFormat (self):
+    def execFormat(self):
         return self._execFormat.value
 
-
     @execFormat.setter
-    def execFormat (self, value):
+    def execFormat(self, value):
         self._execFormat.value = value
 
-
     @property
-    def execWarning (self):
+    def execWarning(self):
         return self._execWarning.value
 
-
     @execWarning.setter
-    def execWarning (self, value):
+    def execWarning(self, value):
         self._execWarning.value = value
 
-
     @property
-    def tools (self):
+    def tools(self):
         toolsItems = []
 
         while True:
-            paramname = self._toolsItemTemplate.format (index = len (toolsItems) + 1)
+            paramname = self._toolsItemTemplate.format(index=len(toolsItems) + 1)
             try:
-                toolsPath = self._config.get (self._sectionName, paramname)
+                toolsPath = self._config.get(self._sectionName, paramname)
             except ConfigParser.Error:
                 break
 
-            toolsName = os.path.basename (toolsPath)
-            toolsItems.append (ToolsInfo (toolsPath, toolsName, wx.NewId()))
+            toolsName = os.path.basename(toolsPath)
+            toolsItems.append(ToolsInfo(toolsPath, toolsName, wx.NewId()))
 
         return toolsItems
 
-
     @tools.setter
-    def tools (self, toolsItems):
+    def tools(self, toolsItems):
         """
-        Может бросить исключение ConfigParser.Error в случае ошибки сохранения конфига
+        Может бросить исключение ConfigParser.
+        Error в случае ошибки сохранения конфига
         """
-        self._removeTools(len (toolsItems) + 1)
-        self._saveTools (toolsItems)
+        self._removeTools(len(toolsItems) + 1)
+        self._saveTools(toolsItems)
 
-
-    def _removeTools (self, minCount):
+    def _removeTools(self, minCount):
         """
         удалить все инструменты из настроек
-        minCount - минимальное количество элементов, которое необходимо проверить на наличие, чтобы удалить
+        minCount - минимальное количество элементов,
+        которое необходимо проверить на наличие, чтобы удалить
         """
         index = 1
         while True:
-            paramname = self._toolsItemTemplate.format (index=index)
+            paramname = self._toolsItemTemplate.format(index=index)
 
             try:
-                self._config.get (self._sectionName, paramname)
-                self._config.remove_option (self._sectionName, paramname)
+                self._config.get(self._sectionName, paramname)
+                self._config.remove_option(self._sectionName, paramname)
             except ConfigParser.Error:
                 if index >= minCount:
                     break
 
             index += 1
 
-
-    def _saveTools (self, toolsItems):
+    def _saveTools(self, toolsItems):
         index = 1
         for tool in toolsItems:
-            paramname = self._toolsItemTemplate.format (index=index)
-            self._config.set (self._sectionName, paramname, tool.command)
+            paramname = self._toolsItemTemplate.format(index=index)
+            self._config.set(self._sectionName, paramname, tool.command)
             index += 1

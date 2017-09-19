@@ -1,10 +1,10 @@
-# global _
-# _ = None
+# -*- coding: utf-8 -*-
+
 
 def set_(lang):
     global _
     _ = lang
 
 
-def get_ ():
+def get_():
     return _
