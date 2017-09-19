@@ -7,18 +7,17 @@ from menutoolscontroller import MenuToolsController
 from commandexec.commandcontroller import CommandController
 
 
-class Controller (object):
+class Controller(object):
     """
     Этот класс отвечает за основную работу плагина
     """
-    def __init__ (self, ownerPlugin):
+    def __init__(self, ownerPlugin):
         self._owner = ownerPlugin
         self._page = None
-        self._menuToolsController = MenuToolsController (ownerPlugin.application)
-        self._commandController = CommandController (ownerPlugin.application)
+        self._menuToolsController = MenuToolsController(ownerPlugin.application)
+        self._commandController = CommandController(ownerPlugin.application)
 
-
-    def initialize (self):
+    def initialize(self):
         global _
         _ = get_()
 
@@ -26,17 +25,15 @@ class Controller (object):
         self._commandController.initialize()
         self._owner.application.onPreferencesDialogCreate += self.__onPreferencesDialogCreate
 
-
-    def destroy (self):
+    def destroy(self):
         self._menuToolsController.destroy()
         self._commandController.destroy()
         self._owner.application.onPreferencesDialogCreate -= self.__onPreferencesDialogCreate
 
-
-    def __onPreferencesDialogCreate (self, dialog):
+    def __onPreferencesDialogCreate(self, dialog):
         from .preferencespanel import PreferencesPanel
-        prefPanel = PreferencesPanel (dialog.treeBook, self._owner.application.config)
+        prefPanel = PreferencesPanel(dialog.treeBook, self._owner.application.config)
 
         panelName = _(u"External Tools [Plugin]")
-        panelsList = [PreferencePanelInfo (prefPanel, panelName)]
-        dialog.appendPreferenceGroup (panelName, panelsList)
+        panelsList = [PreferencePanelInfo(prefPanel, panelName)]
+        dialog.appendPreferenceGroup(panelName, panelsList)
