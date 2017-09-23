@@ -24,7 +24,7 @@
 			<site>http://jenyay.net</site>
 		</author>
 		<changelog>
-			<version number="2.0">
+			<version number="2.0" date="September 24, 2017">
                 <download os="all">http://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-2.0.zip</download>
 				<change>New user interface.</change>
 				<change>The way of detection of new versions is changed.</change>
@@ -70,7 +70,7 @@
 		</author>
 
 		<changelog>
-			<version number="2.0">
+			<version number="2.0" date="24.09.2017">
                 <download os="all">http://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-2.0.zip</download>
 				<change>Новый интерфейс плагина.</change>
 				<change>Изменен способ обнаружения новых версий.</change>
