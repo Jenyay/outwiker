@@ -7,6 +7,9 @@
 		<website>http://jenyay.net/Outwiker/UnstableEn</website>
 
 		<changelog>
+			<version number="2.1.0.829" status="dev">
+			</version>
+
 			<version number="2.1.0.828" status="dev" date="September 24, 2017">
 				<change>To the page style files added a new variable with name $title.</change>
 				<change>Added support for Ubuntu 17.10.</change>
@@ -27,6 +30,9 @@
 		<website>http://jenyay.net/Outwiker/Unstable</website>
 
 		<changelog>
+			<version number="2.1.0.829" status="dev">
+			</version>
+
 			<version number="2.1.0.828" status="dev" date="24.09.2017">
 				<change>В файлы стилей страниц добавлена новая переменная $title.</change>
 				<change>Добавлена поддержка Ubuntu 17.10.</change>
