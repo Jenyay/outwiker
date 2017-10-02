@@ -307,14 +307,14 @@ def getSpecialDirList(dirname,
     стилей и т.п., расположение которых зависит от расположения файла настроек)
     """
     # Директория рядом с запускаемым файлом
-    programSpecialDir = op.join(getCurrentDir(), dirname)
+    programSpecialDir = op.abspath(op.join(getCurrentDir(), dirname))
 
     # Директория рядом с файлом настроек
     configdir = op.dirname(getConfigPath(configDirName, configFileName))
-    specialDir = op.join(configdir, dirname)
+    specialDir = op.abspath(op.join(configdir, dirname))
 
     dirlist = [programSpecialDir]
-    if op.abspath(programSpecialDir) != op.abspath(specialDir):
+    if programSpecialDir != specialDir:
         dirlist.append(specialDir)
 
     return dirlist

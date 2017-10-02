@@ -9,7 +9,8 @@ import wx
 
 from outwiker.core.defines import APP_DATA_DEBUG
 from outwiker.core.application import Application
-from outwiker.core.system import getOS, getPluginsDirList, getConfigPath
+from outwiker.core.system import (getOS, getPluginsDirList,
+                                  getConfigPath, getSpecialDirList)
 from outwiker.core.starter import Starter, StarterExit
 from outwiker.core.commands import registerActions
 from outwiker.core.logredirector import LogRedirector
@@ -53,6 +54,10 @@ class OutWiker(wx.App):
                                    level)
         redirector.init()
         wx.Log.SetLogLevel(0)
+
+        logger = logging.getLogger('outwiker')
+        for n, dirname in enumerate(getSpecialDirList(u'')):
+            logger.info(u'Special directory [{}]: {}'.format(n, dirname))
 
         from outwiker.gui.mainwindow import MainWindow
 
