@@ -7,6 +7,7 @@ import wx
 from wx.lib.newevent import NewEvent
 
 from outwiker.core.system import getImagesDir
+from outwiker.core.iconcontroller import IconController
 
 IconSelectedEvent, EVT_ICON_SELECTED = NewEvent()
 
@@ -132,6 +133,8 @@ class IconButton(object):
             text = _(u"Curent icon")
         elif text == u"_page":
             text = _(u"Default icon")
+        else:
+            text = IconController.display_name(self._fname)
 
         return text
 

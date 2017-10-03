@@ -77,6 +77,7 @@ if __name__ == '__main__':
     from test.test_pluginsloader import PluginsLoaderTest
     from test.test_iconscollection import IconsCollectionTest
     from test.test_iconmaker import IconMakerTest
+    from test.test_iconcontroller import IconControllerTest
     from test.test_dicttostr import DictToStrTest
 
     from test.spellchecker.test_dictsfinder import DictsFinderTest

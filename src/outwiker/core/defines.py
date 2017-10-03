@@ -38,6 +38,8 @@ APP_DATA_DEBUG = u'__debug'
 
 APP_DATA_DISABLE_MINIMIZING = u'__disableMinimizing'
 
+ICONS_STD_PREFIX = u'__std_'
+
 
 # To translate this with xgettext
 if __name__ == u'__main__':
