@@ -408,13 +408,16 @@ class PageConfig(Config):
     datetimeParamName = u"datetime"
     creationDatetimeParamName = u"creationdatetime"
     aliasParamName = u"alias"
+    iconParamName = u'icon'
+    typeParamName = u'type'
 
     def __init__(self, fname, readonly=False):
         Config.__init__(self, fname, readonly)
 
         self.typeOption = StringOption(self,
                                        PageConfig.sectionName,
-                                       u"type", u"")
+                                       PageConfig.typeParamName,
+                                       u"")
 
         self.orderOption = IntegerOption(self,
                                          PageConfig.sectionName,
@@ -440,3 +443,8 @@ class PageConfig(Config):
                                         PageConfig.sectionName,
                                         PageConfig.aliasParamName,
                                         u'')
+
+        self.iconOption = StringOption(self,
+                                       PageConfig.sectionName,
+                                       PageConfig.iconParamName,
+                                       None)

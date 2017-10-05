@@ -40,6 +40,8 @@ APP_DATA_DISABLE_MINIMIZING = u'__disableMinimizing'
 
 ICONS_STD_PREFIX = u'__std_'
 
+ICONS_EXTENSIONS = [u'png', u'jpg', u'jpeg', u'gif', u'bmp']
+
 
 # To translate this with xgettext
 if __name__ == u'__main__':

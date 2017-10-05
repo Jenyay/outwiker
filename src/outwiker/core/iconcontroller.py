@@ -4,7 +4,7 @@
 import os
 import os.path
 
-from defines import ICONS_STD_PREFIX
+from defines import ICONS_STD_PREFIX, PAGE_ICON_NAME, ICONS_EXTENSIONS
 
 
 class IconController(object):
@@ -38,6 +38,30 @@ class IconController(object):
 
         return (self._is_subdir(fname, main_path) and
                 basename.startswith(ICONS_STD_PREFIX))
+
+    def get_icon(self, page):
+        '''
+        Return path to a page icon or None if icon is not installed.
+        The existence of a built-in icons is not checked.
+
+        Added in outwiker.core 1.5
+        '''
+        assert page is not None
+
+        # Find __icon.* file
+        for extension in ICONS_EXTENSIONS:
+            fname = os.path.join(page.path, PAGE_ICON_NAME + u'.' + extension)
+            if os.path.exists(fname):
+                return fname
+
+        # If an icon file name wrote in the page params.
+        icon_from_config = page.params.iconOption.value
+        if icon_from_config is not None:
+            icon_from_config = icon_from_config.replace(u'\\', os.sep)
+            icon_from_config = icon_from_config.replace(u'/', os.sep)
+            return os.path.join(self._icons_path_list[0], icon_from_config)
+
+        return None
 
     @staticmethod
     def display_name(file_name):
