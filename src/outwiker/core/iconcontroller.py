@@ -39,6 +39,20 @@ class IconController(object):
         return (self._is_subdir(fname, main_path) and
                 basename.startswith(ICONS_STD_PREFIX))
 
+    def set_icon(self, page, icon_fname):
+        '''
+        Set icon (icon_fname - icon file name) for a page.
+        If icon_fname is built-in icon then link to icon will be added to page
+        params, else file will be copied to page folder.
+
+        Added in outwiker.core 1.5
+        '''
+        icon_fname = os.path.abspath(icon_fname)
+
+        if self.is_builtin_icon(icon_fname):
+            rel_icon_path = os.path.relpath(icon_fname, self._icons_path_list[0])
+            page.params.iconOption.value = rel_icon_path
+
     def get_icon(self, page):
         '''
         Return path to a page icon or None if icon is not installed.

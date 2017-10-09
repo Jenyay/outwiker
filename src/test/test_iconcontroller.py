@@ -326,3 +326,33 @@ class IconControllerTest(unittest.TestCase):
         result_right = icon_fname
 
         self.assertEqual(result, result_right)
+
+    def test_set_icon_01(self):
+        path_main = u'tmp'
+        icons_paths = [path_main]
+        controller = IconController(icons_paths)
+
+        icon_fname = ICONS_STD_PREFIX + u'icon.png'
+        icon_path = os.path.join(path_main, icon_fname)
+
+        controller.set_icon(self._page, icon_path)
+
+        self.assertIsNotNone(self._page.params.iconOption.value)
+
+        self.assertEqual(icon_fname, self._page.params.iconOption.value)
+
+    def test_set_icon_02(self):
+        path_main = u'tmp'
+        icons_paths = [path_main]
+        controller = IconController(icons_paths)
+
+        icon_fname = ICONS_STD_PREFIX + u'icon.png'
+        icon_path = os.path.join(path_main, icon_fname)
+
+        icon_path = os.path.abspath(icon_path)
+
+        controller.set_icon(self._page, icon_path)
+
+        self.assertIsNotNone(self._page.params.iconOption.value)
+
+        self.assertEqual(icon_fname, self._page.params.iconOption.value)
