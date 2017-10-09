@@ -447,4 +447,4 @@ class PageConfig(Config):
         self.iconOption = StringOption(self,
                                        PageConfig.sectionName,
                                        PageConfig.iconParamName,
-                                       None)
+                                       u'')

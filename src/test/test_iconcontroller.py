@@ -5,7 +5,9 @@ import os
 import unittest
 from tempfile import mkdtemp
 
-from outwiker.core.defines import ICONS_STD_PREFIX, PAGE_ICON_NAME
+from outwiker.core.defines import (ICONS_STD_PREFIX,
+                                   PAGE_ICON_NAME,
+                                   ICONS_EXTENSIONS)
 from outwiker.core.iconcontroller import IconController
 from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
@@ -327,7 +329,7 @@ class IconControllerTest(unittest.TestCase):
 
         self.assertEqual(result, result_right)
 
-    def test_set_icon_01(self):
+    def test_set_icon_builtin_01(self):
         path_main = u'tmp'
         icons_paths = [path_main]
         controller = IconController(icons_paths)
@@ -338,10 +340,9 @@ class IconControllerTest(unittest.TestCase):
         controller.set_icon(self._page, icon_path)
 
         self.assertIsNotNone(self._page.params.iconOption.value)
-
         self.assertEqual(icon_fname, self._page.params.iconOption.value)
 
-    def test_set_icon_02(self):
+    def test_set_icon_builtin_02(self):
         path_main = u'tmp'
         icons_paths = [path_main]
         controller = IconController(icons_paths)
@@ -354,5 +355,109 @@ class IconControllerTest(unittest.TestCase):
         controller.set_icon(self._page, icon_path)
 
         self.assertIsNotNone(self._page.params.iconOption.value)
-
         self.assertEqual(icon_fname, self._page.params.iconOption.value)
+
+    def test_set_icon_builtin_03(self):
+        path_main = u'tmp'
+        icons_paths = [path_main]
+        controller = IconController(icons_paths)
+
+        icon_fname = os.path.join(
+            u'подпапка',
+            ICONS_STD_PREFIX + u'icon.png')
+
+        icon_path = os.path.join(path_main, icon_fname)
+
+        controller.set_icon(self._page, icon_path)
+
+        self.assertIsNotNone(self._page.params.iconOption.value)
+        self.assertEqual(icon_fname, self._page.params.iconOption.value)
+
+    def test_set_icon_builtin_04(self):
+        path_main = u'tmp'
+        icons_paths = [path_main]
+        controller = IconController(icons_paths)
+
+        icon_fname = os.path.join(
+            u'подпапка',
+            ICONS_STD_PREFIX + u'icon.png')
+
+        icon_path = os.path.join(path_main, icon_fname)
+
+        icon_path = os.path.abspath(icon_path)
+
+        controller.set_icon(self._page, icon_path)
+
+        self.assertIsNotNone(self._page.params.iconOption.value)
+        self.assertEqual(icon_fname, self._page.params.iconOption.value)
+
+    def test_set_icon_builtin_05(self):
+        path_main = u'tmp'
+        icons_paths = [path_main]
+
+        # Create icons files in the page folder
+        for extension in ICONS_EXTENSIONS:
+            icon_fname = os.path.join(self._page.path,
+                                      PAGE_ICON_NAME + u'.' + extension)
+            self._create_file(icon_fname)
+
+        controller = IconController(icons_paths)
+
+        icon_fname = os.path.join(
+            u'подпапка',
+            ICONS_STD_PREFIX + u'icon.png')
+
+        icon_path = os.path.join(path_main, icon_fname)
+        controller.set_icon(self._page, icon_path)
+
+        # Checking custom icon files
+        for extension in ICONS_EXTENSIONS:
+            icon_fname = os.path.join(self._page.path,
+                                      PAGE_ICON_NAME + u'.' + extension)
+            self.assertFalse(os.path.exists(icon_fname), icon_fname)
+
+    def test_set_icon_invalid_extension(self):
+        path_main = u'tmp'
+        icons_paths = [path_main]
+        controller = IconController(icons_paths)
+
+        icon_fname = ICONS_STD_PREFIX + u'icon.xxx'
+        icon_path = os.path.join(path_main, icon_fname)
+
+        icon_path = os.path.abspath(icon_path)
+
+        self.assertRaises(ValueError,
+                          controller.set_icon,
+                          self._page,
+                          icon_path)
+
+    def test_remove_icon_01(self):
+        path_main = u'tmp'
+        icons_paths = [path_main]
+
+        # Create icons files in the page folder
+        for extension in ICONS_EXTENSIONS:
+            icon_fname = os.path.join(self._page.path,
+                                      PAGE_ICON_NAME + u'.' + extension)
+            self._create_file(icon_fname)
+
+        controller = IconController(icons_paths)
+        controller.remove_icon(self._page)
+
+        # Checking custom icon files
+        for extension in ICONS_EXTENSIONS:
+            icon_fname = os.path.join(self._page.path,
+                                      PAGE_ICON_NAME + u'.' + extension)
+            self.assertFalse(os.path.exists(icon_fname), icon_fname)
+
+    def test_remove_icon_02(self):
+        path_main = u'tmp'
+        icons_paths = [path_main]
+
+        self._page.params.iconOption.value = u'icon.png'
+
+        controller = IconController(icons_paths)
+        controller.remove_icon(self._page)
+
+        # Checking built-in icon
+        self.assertEqual(self._page.params.iconOption.value, u'')

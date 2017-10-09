@@ -39,19 +39,46 @@ class IconController(object):
         return (self._is_subdir(fname, main_path) and
                 basename.startswith(ICONS_STD_PREFIX))
 
+    def _check_icon_extension(self, fname):
+        for extension in ICONS_EXTENSIONS:
+            if fname.endswith(u'.' + extension):
+                return True
+
+        return False
+
+    def remove_icon(self, page):
+        for extension in ICONS_EXTENSIONS:
+            icon_fname = os.path.join(page.path,
+                                      PAGE_ICON_NAME + u'.' + extension)
+            if os.path.exists(icon_fname):
+                os.remove(icon_fname)
+
+        page.params.iconOption.value = u''
+
     def set_icon(self, page, icon_fname):
         '''
         Set icon (icon_fname - icon file name) for a page.
         If icon_fname is built-in icon then link to icon will be added to page
         params, else file will be copied to page folder.
 
+        Raises exceptions: ValueError, IOError
+
         Added in outwiker.core 1.5
         '''
+        if not self._check_icon_extension(icon_fname):
+            raise ValueError
+
+        self.remove_icon(page)
+
         icon_fname = os.path.abspath(icon_fname)
 
         if self.is_builtin_icon(icon_fname):
+            # Set built-in icon
             rel_icon_path = os.path.relpath(icon_fname, self._icons_path_list[0])
             page.params.iconOption.value = rel_icon_path
+        else:
+            # Set custom icon
+            pass
 
     def get_icon(self, page):
         '''
@@ -70,7 +97,7 @@ class IconController(object):
 
         # If an icon file name wrote in the page params.
         icon_from_config = page.params.iconOption.value
-        if icon_from_config is not None:
+        if icon_from_config:
             icon_from_config = icon_from_config.replace(u'\\', os.sep)
             icon_from_config = icon_from_config.replace(u'/', os.sep)
             return os.path.join(self._icons_path_list[0], icon_from_config)
