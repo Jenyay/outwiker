@@ -3,7 +3,7 @@
 
 import os
 import os.path
-
+import shutil
 
 from outwiker.core.defines import (ICONS_STD_PREFIX,
                                    PAGE_ICON_NAME,
@@ -88,7 +88,16 @@ class IconController(object):
             page.params.iconOption.value = rel_icon_path
         else:
             # Set custom icon
-            pass
+            dot = icon_fname.rfind(".")
+            extension = icon_fname[dot:]
+
+            newname = PAGE_ICON_NAME + extension
+            newpath = os.path.abspath(os.path.join(page.path, newname))
+
+            if icon_fname != newpath:
+                shutil.copyfile(icon_fname, newpath)
+
+        page.updateDateTime()
 
     def get_icon(self, page):
         '''

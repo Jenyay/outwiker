@@ -40,7 +40,7 @@ APP_DATA_DISABLE_MINIMIZING = u'__disableMinimizing'
 
 ICONS_STD_PREFIX = u'__std_'
 
-ICONS_EXTENSIONS = [u'png', u'jpg', u'jpeg', u'gif', u'bmp']
+ICONS_EXTENSIONS = [u'png', u'jpg', u'jpeg', u'gif', u'bmp', u'ico']
 
 
 # To translate this with xgettext

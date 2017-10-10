@@ -406,12 +406,95 @@ class IconControllerTest(unittest.TestCase):
         self.assertNotEqual(self._page.params.iconOption.value, u'')
         self.assertEqual(icon_fname, self._page.params.iconOption.value)
 
-    # def test_set_icon_custom_01(self):
-    #     path_main = u'tmp'
-    #     icons_paths = [path_main]
-    #     controller = IconController(icons_paths)
-    #
-    #     icon_fname = u'../test/images/16x16.png'
+    def test_set_icon_custom_png(self):
+        path_main = u'tmp'
+        icons_paths = [path_main]
+        controller = IconController(icons_paths)
+
+        icon_path = u'../test/images/icon.png'
+
+        controller.set_icon(self._page, icon_path)
+
+        self.assertTrue(os.path.exists(
+            os.path.join(self._page.path, PAGE_ICON_NAME + u'.png'))
+        )
+
+    def test_set_icon_custom_gif(self):
+        path_main = u'tmp'
+        icons_paths = [path_main]
+        controller = IconController(icons_paths)
+
+        icon_path = u'../test/images/icon.gif'
+
+        controller.set_icon(self._page, icon_path)
+
+        self.assertTrue(os.path.exists(
+            os.path.join(self._page.path, PAGE_ICON_NAME + u'.gif'))
+        )
+
+    def test_set_icon_custom_bmp(self):
+        path_main = u'tmp'
+        icons_paths = [path_main]
+        controller = IconController(icons_paths)
+
+        icon_path = u'../test/images/icon.bmp'
+
+        controller.set_icon(self._page, icon_path)
+
+        self.assertTrue(os.path.exists(
+            os.path.join(self._page.path, PAGE_ICON_NAME + u'.bmp'))
+        )
+
+    def test_set_icon_custom_jpg(self):
+        path_main = u'tmp'
+        icons_paths = [path_main]
+        controller = IconController(icons_paths)
+
+        icon_path = u'../test/images/icon.jpg'
+
+        controller.set_icon(self._page, icon_path)
+
+        self.assertTrue(os.path.exists(
+            os.path.join(self._page.path, PAGE_ICON_NAME + u'.jpg'))
+        )
+
+    def test_set_icon_custom_jpeg(self):
+        path_main = u'tmp'
+        icons_paths = [path_main]
+        controller = IconController(icons_paths)
+
+        icon_path = u'../test/images/icon.jpeg'
+
+        controller.set_icon(self._page, icon_path)
+
+        self.assertTrue(os.path.exists(
+            os.path.join(self._page.path, PAGE_ICON_NAME + u'.jpeg'))
+        )
+
+    def test_set_icon_custom_ico(self):
+        path_main = u'tmp'
+        icons_paths = [path_main]
+        controller = IconController(icons_paths)
+
+        icon_path = u'../test/images/icon.ico'
+
+        controller.set_icon(self._page, icon_path)
+
+        self.assertTrue(os.path.exists(
+            os.path.join(self._page.path, PAGE_ICON_NAME + u'.ico'))
+        )
+
+    def test_set_icon_custom_remove_param(self):
+        self._page.params.iconOption.value = u'icon.png'
+
+        path_main = u'tmp'
+        icons_paths = [path_main]
+        controller = IconController(icons_paths)
+
+        icon_path = u'../test/images/icon.png'
+        controller.set_icon(self._page, icon_path)
+
+        self.assertEqual(self._page.params.iconOption.value, u'')
 
     def test_set_icon_builtin_remove_files(self):
         path_main = u'tmp'
@@ -438,7 +521,7 @@ class IconControllerTest(unittest.TestCase):
                                       PAGE_ICON_NAME + u'.' + extension)
             self.assertFalse(os.path.exists(icon_fname), icon_fname)
 
-    def test_set_icon_invalid_extension(self):
+    def test_set_icon_invalid_extension_01(self):
         path_main = u'tmp'
         icons_paths = [path_main]
         controller = IconController(icons_paths)
@@ -449,6 +532,30 @@ class IconControllerTest(unittest.TestCase):
         icon_path = os.path.abspath(icon_path)
 
         self.assertRaises(ValueError,
+                          controller.set_icon,
+                          self._page,
+                          icon_path)
+
+    def test_set_icon_invalid_extension_02(self):
+        path_main = u'tmp'
+        icons_paths = [path_main]
+        controller = IconController(icons_paths)
+
+        icon_path = u'../test/images/16x16.xxx'
+
+        self.assertRaises(ValueError,
+                          controller.set_icon,
+                          self._page,
+                          icon_path)
+
+    def test_set_icon_custom_invalid_fname(self):
+        path_main = u'tmp'
+        icons_paths = [path_main]
+        controller = IconController(icons_paths)
+
+        icon_path = u'../test/images/16x16_invalid.png'
+
+        self.assertRaises(IOError,
                           controller.set_icon,
                           self._page,
                           icon_path)
