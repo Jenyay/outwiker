@@ -329,6 +329,21 @@ class IconControllerTest(unittest.TestCase):
 
         self.assertEqual(result, result_right)
 
+    def test_get_icon_13(self):
+        path_main = u'tmp'
+        icons_paths = [path_main]
+        controller = IconController(icons_paths)
+
+        icon_fname = os.path.join(self._page.path, PAGE_ICON_NAME + u'.png')
+        self._create_file(icon_fname)
+
+        self._page.params.iconOption.value = u'subdir/example.png'
+
+        result = controller.get_icon(self._page)
+        result_right = icon_fname
+
+        self.assertEqual(result, result_right)
+
     def test_set_icon_builtin_01(self):
         path_main = u'tmp'
         icons_paths = [path_main]
@@ -339,7 +354,7 @@ class IconControllerTest(unittest.TestCase):
 
         controller.set_icon(self._page, icon_path)
 
-        self.assertIsNotNone(self._page.params.iconOption.value)
+        self.assertNotEqual(self._page.params.iconOption.value, u'')
         self.assertEqual(icon_fname, self._page.params.iconOption.value)
 
     def test_set_icon_builtin_02(self):
@@ -354,7 +369,7 @@ class IconControllerTest(unittest.TestCase):
 
         controller.set_icon(self._page, icon_path)
 
-        self.assertIsNotNone(self._page.params.iconOption.value)
+        self.assertNotEqual(self._page.params.iconOption.value, u'')
         self.assertEqual(icon_fname, self._page.params.iconOption.value)
 
     def test_set_icon_builtin_03(self):
@@ -370,7 +385,7 @@ class IconControllerTest(unittest.TestCase):
 
         controller.set_icon(self._page, icon_path)
 
-        self.assertIsNotNone(self._page.params.iconOption.value)
+        self.assertNotEqual(self._page.params.iconOption.value, u'')
         self.assertEqual(icon_fname, self._page.params.iconOption.value)
 
     def test_set_icon_builtin_04(self):
@@ -388,10 +403,10 @@ class IconControllerTest(unittest.TestCase):
 
         controller.set_icon(self._page, icon_path)
 
-        self.assertIsNotNone(self._page.params.iconOption.value)
+        self.assertNotEqual(self._page.params.iconOption.value, u'')
         self.assertEqual(icon_fname, self._page.params.iconOption.value)
 
-    def test_set_icon_builtin_05(self):
+    def test_set_icon_builtin_remove_files_05(self):
         path_main = u'tmp'
         icons_paths = [path_main]
 

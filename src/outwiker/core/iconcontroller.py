@@ -96,7 +96,7 @@ class IconController(object):
                 return fname
 
         # If an icon file name wrote in the page params.
-        icon_from_config = page.params.iconOption.value
+        icon_from_config = page.params.iconOption.value.strip()
         if icon_from_config:
             icon_from_config = icon_from_config.replace(u'\\', os.sep)
             icon_from_config = icon_from_config.replace(u'/', os.sep)
