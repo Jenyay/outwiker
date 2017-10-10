@@ -8,6 +8,7 @@ from tempfile import mkdtemp
 from outwiker.core.defines import (ICONS_STD_PREFIX,
                                    PAGE_ICON_NAME,
                                    ICONS_EXTENSIONS)
+from outwiker.core.exceptions import ReadonlyException
 from outwiker.core.iconcontroller import IconController
 from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
@@ -90,7 +91,7 @@ class IconControllerTest(unittest.TestCase):
         result = IconController.display_name(fname)
         self.assertEqual(result, display_name_right)
 
-    def test_is_builtin_01(self):
+    def test_is_builtin_invalid_fname_01(self):
         path_main = u'tmp'
         icons_paths = [path_main]
         controller = IconController(icons_paths)
@@ -98,7 +99,7 @@ class IconControllerTest(unittest.TestCase):
 
         self.assertRaises(ValueError, controller.is_builtin_icon, fname)
 
-    def test_is_builtin_02(self):
+    def test_is_builtin_invalid_fname_02(self):
         path_main = u'tmp'
         icons_paths = [path_main]
         controller = IconController(icons_paths)
@@ -398,7 +399,6 @@ class IconControllerTest(unittest.TestCase):
             ICONS_STD_PREFIX + u'icon.png')
 
         icon_path = os.path.join(path_main, icon_fname)
-
         icon_path = os.path.abspath(icon_path)
 
         controller.set_icon(self._page, icon_path)
@@ -406,7 +406,14 @@ class IconControllerTest(unittest.TestCase):
         self.assertNotEqual(self._page.params.iconOption.value, u'')
         self.assertEqual(icon_fname, self._page.params.iconOption.value)
 
-    def test_set_icon_builtin_remove_files_05(self):
+    # def test_set_icon_custom_01(self):
+    #     path_main = u'tmp'
+    #     icons_paths = [path_main]
+    #     controller = IconController(icons_paths)
+    #
+    #     icon_fname = u'../test/images/16x16.png'
+
+    def test_set_icon_builtin_remove_files(self):
         path_main = u'tmp'
         icons_paths = [path_main]
 
@@ -442,6 +449,23 @@ class IconControllerTest(unittest.TestCase):
         icon_path = os.path.abspath(icon_path)
 
         self.assertRaises(ValueError,
+                          controller.set_icon,
+                          self._page,
+                          icon_path)
+
+    def test_set_icon_readonly(self):
+        self._page.readonly = True
+
+        path_main = u'tmp'
+        icons_paths = [path_main]
+        controller = IconController(icons_paths)
+
+        icon_fname = ICONS_STD_PREFIX + u'icon.png'
+        icon_path = os.path.join(path_main, icon_fname)
+
+        icon_path = os.path.abspath(icon_path)
+
+        self.assertRaises(ReadonlyException,
                           controller.set_icon,
                           self._page,
                           icon_path)

@@ -4,7 +4,11 @@
 import os
 import os.path
 
-from defines import ICONS_STD_PREFIX, PAGE_ICON_NAME, ICONS_EXTENSIONS
+
+from outwiker.core.defines import (ICONS_STD_PREFIX,
+                                   PAGE_ICON_NAME,
+                                   ICONS_EXTENSIONS)
+from outwiker.core.exceptions import ReadonlyException
 
 
 class IconController(object):
@@ -47,6 +51,9 @@ class IconController(object):
         return False
 
     def remove_icon(self, page):
+        if page.readonly:
+            raise ReadonlyException
+
         for extension in ICONS_EXTENSIONS:
             icon_fname = os.path.join(page.path,
                                       PAGE_ICON_NAME + u'.' + extension)
@@ -65,6 +72,9 @@ class IconController(object):
 
         Added in outwiker.core 1.5
         '''
+        if page.readonly:
+            raise ReadonlyException
+
         if not self._check_icon_extension(icon_fname):
             raise ValueError
 
