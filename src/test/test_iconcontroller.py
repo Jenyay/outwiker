@@ -500,3 +500,14 @@ class IconControllerTest(unittest.TestCase):
 
         # Checking built-in icon
         self.assertEqual(self._page.params.iconOption.value, u'')
+
+    def test_remove_icon_readonly(self):
+        self._page.readonly = True
+
+        path_main = u'tmp'
+        icons_paths = [path_main]
+        controller = IconController(icons_paths)
+
+        self.assertRaises(ReadonlyException,
+                          controller.remove_icon,
+                          self._page)
