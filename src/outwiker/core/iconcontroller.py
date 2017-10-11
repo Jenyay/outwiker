@@ -8,6 +8,7 @@ import shutil
 from outwiker.core.defines import (ICONS_STD_PREFIX,
                                    PAGE_ICON_NAME,
                                    ICONS_EXTENSIONS)
+from outwiker.core.events import PAGE_UPDATE_ICON
 from outwiker.core.exceptions import ReadonlyException
 
 
@@ -51,6 +52,11 @@ class IconController(object):
         return False
 
     def remove_icon(self, page):
+        self._remove_icon(page)
+        page.updateDateTime()
+        page.root.onPageUpdate(page, change=PAGE_UPDATE_ICON)
+
+    def _remove_icon(self, page):
         if page.readonly:
             raise ReadonlyException
 
@@ -78,7 +84,7 @@ class IconController(object):
         if not self._check_icon_extension(icon_fname):
             raise ValueError
 
-        self.remove_icon(page)
+        self._remove_icon(page)
 
         icon_fname = os.path.abspath(icon_fname)
 
@@ -98,6 +104,7 @@ class IconController(object):
                 shutil.copyfile(icon_fname, newpath)
 
         page.updateDateTime()
+        page.root.onPageUpdate(page, change=PAGE_UPDATE_ICON)
 
     def get_icon(self, page):
         '''

@@ -25,13 +25,18 @@ class IconControllerTest(unittest.TestCase):
 
         factory = TextPageFactory()
         self._page = factory.create(self.wikiroot, u"Страница 1", [])
+        self._page.root.onPageUpdate += self._onPageUpdate
 
     def tearDown(self):
+        self._page.root.onPageUpdate -= self._onPageUpdate
         removeDir(self.path)
 
     def _create_file(self, fname):
         fp = open(fname, 'w')
         fp.close()
+
+    def _onPageUpdate(self, page, change):
+        self.eventcount += 1
 
     def test_init_01(self):
         paths = []
@@ -365,7 +370,6 @@ class IconControllerTest(unittest.TestCase):
 
         icon_fname = ICONS_STD_PREFIX + u'icon.png'
         icon_path = os.path.join(path_main, icon_fname)
-
         icon_path = os.path.abspath(icon_path)
 
         controller.set_icon(self._page, icon_path)
@@ -405,6 +409,22 @@ class IconControllerTest(unittest.TestCase):
 
         self.assertNotEqual(self._page.params.iconOption.value, u'')
         self.assertEqual(icon_fname, self._page.params.iconOption.value)
+
+    def test_set_icon_builtin_event(self):
+        path_main = u'tmp'
+        icons_paths = [path_main]
+        controller = IconController(icons_paths)
+
+        icon_fname = ICONS_STD_PREFIX + u'icon.png'
+        icon_path = os.path.join(path_main, icon_fname)
+
+        self.assertEqual(self.eventcount, 0)
+
+        controller.set_icon(self._page, icon_path)
+        self.assertEqual(self.eventcount, 1)
+
+        controller.set_icon(self._page, icon_path)
+        self.assertEqual(self.eventcount, 2)
 
     def test_set_icon_custom_png(self):
         path_main = u'tmp'
@@ -495,6 +515,23 @@ class IconControllerTest(unittest.TestCase):
         controller.set_icon(self._page, icon_path)
 
         self.assertEqual(self._page.params.iconOption.value, u'')
+
+    def test_set_icon_custom_event(self):
+        self._page.params.iconOption.value = u'icon.png'
+
+        path_main = u'tmp'
+        icons_paths = [path_main]
+        controller = IconController(icons_paths)
+
+        icon_path = u'../test/images/icon.png'
+
+        self.assertEqual(self.eventcount, 0)
+
+        controller.set_icon(self._page, icon_path)
+        self.assertEqual(self.eventcount, 1)
+
+        controller.set_icon(self._page, icon_path)
+        self.assertEqual(self.eventcount, 2)
 
     def test_set_icon_builtin_remove_files(self):
         path_main = u'tmp'
@@ -607,6 +644,22 @@ class IconControllerTest(unittest.TestCase):
 
         # Checking built-in icon
         self.assertEqual(self._page.params.iconOption.value, u'')
+
+    def test_remove_icon_event(self):
+        path_main = u'tmp'
+        icons_paths = [path_main]
+
+        self._page.params.iconOption.value = u'icon.png'
+
+        controller = IconController(icons_paths)
+
+        self.assertEqual(self.eventcount, 0)
+
+        controller.remove_icon(self._page)
+        self.assertEqual(self.eventcount, 1)
+
+        controller.remove_icon(self._page)
+        self.assertEqual(self.eventcount, 2)
 
     def test_remove_icon_readonly(self):
         self._page.readonly = True
