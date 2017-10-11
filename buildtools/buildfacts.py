@@ -2,7 +2,7 @@
 
 import os.path
 
-from buildtools.versions import getOutwikerVersionStr
+from buildtools.versions import getOutwikerVersionStr, getOutwikerVersion
 import defines
 
 
@@ -10,6 +10,9 @@ class BuildFacts(object):
     def __init__(self):
         # x.x.x.xxx
         self.version = getOutwikerVersionStr()
+
+        # Version tuple ('x.x.x', 'xxx')
+        self.version_items = getOutwikerVersion()
 
         # build/
         self.root_dir = os.path.abspath(defines.BUILD_DIR)

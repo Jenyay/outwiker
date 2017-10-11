@@ -32,8 +32,7 @@ class BuilderWindows(BuilderBase):
         self._create_archives = create_archives
 
         self._resultBaseName = (
-            u'outwiker_{version}_win'.format(
-                version=self.facts.version_items[0])
+            u'outwiker_{version}_win'.format(version=self.facts.version_items[0])
             if self.is_stable
             else u'outwiker_win_unstable'
         )
