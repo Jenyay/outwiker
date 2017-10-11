@@ -53,6 +53,9 @@ class NotesTree(wx.Panel):
 
         self.defaultBitmap.SetHeight(self.iconHeight)
 
+        # Key - path to icon, value - icon ID in self.imagelist
+        self._iconsCache = {}
+
         self.dragItem = None
 
         # Картинки для дерева
@@ -128,10 +131,16 @@ class NotesTree(wx.Panel):
         imageId = self.defaultImageId
         icon = page.icon
 
-        if icon is not None:
+        if not icon:
+            return imageId
+
+        if icon in self._iconsCache:
+            return self._iconsCache[icon]
+        else:
             image = wx.Bitmap(icon)
             if image.IsOk():
                 imageId = self.imagelist.Add(image)
+                self._iconsCache[icon] = imageId
 
         return imageId
 
@@ -185,6 +194,7 @@ class NotesTree(wx.Panel):
         self.treeCtrl.DeleteAllItems()
         self.imagelist.RemoveAll()
         self.toolbar.ClearTools()
+        self._iconsCache = {}
         self.Destroy()
 
     def __onPageCreate(self, newpage):
@@ -456,6 +466,7 @@ class NotesTree(wx.Panel):
         """
         self.treeCtrl.DeleteAllItems()
         self.imagelist.RemoveAll()
+        self._iconsCache = {}
         self.defaultImageId = self.imagelist.Add(self.defaultBitmap)
 
         # Ключ - страница, значение - экземпляр класса TreeItemId
