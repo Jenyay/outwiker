@@ -13,15 +13,11 @@ from outwiker.core.exceptions import ReadonlyException
 
 
 class IconController(object):
-    def __init__(self, icons_path_list):
+    def __init__(self, builtin_icons_path):
         '''
-        icons_path_list -- list of the paths to icons collections.
-            The first item is built-in icons.
+        builtin_icons_path -- path to built-in icons folder.
         '''
-        if not icons_path_list:
-            raise ValueError
-
-        self._icons_path_list = icons_path_list[:]
+        self._builtin_icons_path = builtin_icons_path
 
     def _is_subdir(self, fname, directory):
         fname = os.path.realpath(fname)
@@ -39,7 +35,7 @@ class IconController(object):
 
         basename = os.path.basename(fname)
 
-        main_path = self._icons_path_list[0]
+        main_path = self._builtin_icons_path
 
         return (self._is_subdir(fname, main_path) and
                 basename.startswith(ICONS_STD_PREFIX))
@@ -90,7 +86,7 @@ class IconController(object):
 
         if self.is_builtin_icon(icon_fname):
             # Set built-in icon
-            rel_icon_path = os.path.relpath(icon_fname, self._icons_path_list[0])
+            rel_icon_path = os.path.relpath(icon_fname, self._builtin_icons_path)
             page.params.iconOption.value = rel_icon_path
         else:
             # Set custom icon
@@ -126,7 +122,7 @@ class IconController(object):
         if icon_from_config:
             icon_from_config = icon_from_config.replace(u'\\', os.sep)
             icon_from_config = icon_from_config.replace(u'/', os.sep)
-            return os.path.join(self._icons_path_list[0], icon_from_config)
+            return os.path.join(self._builtin_icons_path, icon_from_config)
 
         return None
 
