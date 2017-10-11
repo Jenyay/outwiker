@@ -42,6 +42,8 @@ ICONS_STD_PREFIX = u'__std_'
 
 ICONS_EXTENSIONS = [u'png', u'jpg', u'jpeg', u'gif', u'bmp', u'ico']
 
+ICONS_FOLDER_NAME = u'iconset'
+
 
 # To translate this with xgettext
 if __name__ == u'__main__':
