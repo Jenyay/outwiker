@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 """
 Действия, которые зависят от ОС, на которой запущена программа
 """
@@ -14,19 +14,18 @@ import wx
 
 from .pagetitletester import WindowsPageTitleTester, LinuxPageTitleTester
 from outwiker.gui.fileicons import WindowsFileIcons, UnixFileIcons
+from outwiker.core.defines import (ICONS_FOLDER_NAME,
+                                   IMAGES_FOLDER_NAME,
+                                   STYLES_FOLDER_NAME,
+                                   PLUGINS_FOLDER_NAME,
+                                   SPELL_FOLDER_NAME,
+                                   )
 
-
-# Папки, используемые в программе
-IMAGES_DIR = u"images"
-STYLES_DIR = u"styles"
-PLUGINS_DIR = u"plugins"
-ICONS_DIR = u"iconset"
-SPELL_DIR = u"spell"
 
 # Имя файла настроек по умолчанию
 DEFAULT_CONFIG_NAME = u"outwiker.ini"
 
-# Имя по умолчанию для папки с настройками в профиле пользователя(устарело)
+# Имя по умолчанию для папки с настройками в профиле пользователя (устарело)
 DEFAULT_OLD_CONFIG_DIR = u".outwiker"
 
 # Новая местоположение конфигурационной директории
@@ -233,19 +232,19 @@ def getConfigPath(dirname=DEFAULT_CONFIG_DIR, fname=DEFAULT_CONFIG_NAME):
         if not op.exists(mainConfDir):
             os.mkdir(mainConfDir)
 
-        pluginsDir = op.join(mainConfDir, PLUGINS_DIR)
+        pluginsDir = op.join(mainConfDir, PLUGINS_FOLDER_NAME)
         if not op.exists(pluginsDir):
             os.mkdir(pluginsDir)
 
-        stylesDir = op.join(mainConfDir, STYLES_DIR)
+        stylesDir = op.join(mainConfDir, STYLES_FOLDER_NAME)
         if not op.exists(stylesDir):
             os.mkdir(stylesDir)
 
-        iconsDir = op.join(mainConfDir, ICONS_DIR)
+        iconsDir = op.join(mainConfDir, ICONS_FOLDER_NAME)
         if not op.exists(iconsDir):
             os.mkdir(iconsDir)
 
-        spellDir = op.join(mainConfDir, SPELL_DIR)
+        spellDir = op.join(mainConfDir, SPELL_FOLDER_NAME)
         if not op.exists(spellDir):
             os.mkdir(spellDir)
 
@@ -253,11 +252,11 @@ def getConfigPath(dirname=DEFAULT_CONFIG_DIR, fname=DEFAULT_CONFIG_NAME):
 
 
 def getImagesDir():
-    return op.join(getCurrentDir(), IMAGES_DIR)
+    return op.join(getCurrentDir(), IMAGES_FOLDER_NAME)
 
 
 def getTemplatesDir():
-    return op.join(getCurrentDir(), STYLES_DIR)
+    return op.join(getCurrentDir(), STYLES_FOLDER_NAME)
 
 
 def getExeFile():
@@ -272,7 +271,9 @@ def getPluginsDirList(configDirName=DEFAULT_CONFIG_DIR,
     """
     Возвращает список директорий, откуда должны грузиться плагины
     """
-    return getSpecialDirList(PLUGINS_DIR, configDirName, configFileName)
+    return getSpecialDirList(PLUGINS_FOLDER_NAME,
+                             configDirName,
+                             configFileName)
 
 
 def getIconsDirList(configDirName=DEFAULT_CONFIG_DIR,
@@ -280,7 +281,7 @@ def getIconsDirList(configDirName=DEFAULT_CONFIG_DIR,
     """
     Возвращает список директорий, где могут располагаться иконки для страниц
     """
-    return getSpecialDirList(ICONS_DIR, configDirName, configFileName)
+    return getSpecialDirList(ICONS_FOLDER_NAME, configDirName, configFileName)
 
 
 def getStylesDirList(configDirName=DEFAULT_CONFIG_DIR,
@@ -288,7 +289,7 @@ def getStylesDirList(configDirName=DEFAULT_CONFIG_DIR,
     """
     Возвращает список директорий, откуда должны грузиться плагины
     """
-    return getSpecialDirList(STYLES_DIR, configDirName, configFileName)
+    return getSpecialDirList(STYLES_FOLDER_NAME, configDirName, configFileName)
 
 
 def getSpellDirList(configDirName=DEFAULT_CONFIG_DIR,
@@ -296,7 +297,7 @@ def getSpellDirList(configDirName=DEFAULT_CONFIG_DIR,
     """
     Возвращает список директорий со словарями для проверки орфографии
     """
-    return getSpecialDirList(SPELL_DIR, configDirName, configFileName)
+    return getSpecialDirList(SPELL_FOLDER_NAME, configDirName, configFileName)
 
 
 def getSpecialDirList(dirname,

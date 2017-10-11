@@ -39,10 +39,13 @@ APP_DATA_DEBUG = u'__debug'
 APP_DATA_DISABLE_MINIMIZING = u'__disableMinimizing'
 
 ICONS_STD_PREFIX = u'__std_'
-
 ICONS_EXTENSIONS = [u'png', u'jpg', u'jpeg', u'gif', u'bmp', u'ico']
 
 ICONS_FOLDER_NAME = u'iconset'
+IMAGES_FOLDER_NAME = u'images'
+STYLES_FOLDER_NAME = u"styles"
+PLUGINS_FOLDER_NAME = u"plugins"
+SPELL_FOLDER_NAME = u"spell"
 
 
 # To translate this with xgettext
