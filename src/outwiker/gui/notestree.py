@@ -19,9 +19,7 @@ from outwiker.actions.editpageprop import EditPagePropertiesAction
 from outwiker.actions.moving import GoToParentAction
 from outwiker.core.config import BooleanOption
 from outwiker.core.events import PAGE_UPDATE_ICON
-from outwiker.core.defines import ICON_WIDTH, ICON_HEIGHT, ICONS_FOLDER_NAME
-from outwiker.core.iconcontroller import IconController
-from outwiker.core.system import getSpecialDirList
+from outwiker.core.defines import ICON_WIDTH, ICON_HEIGHT
 from outwiker.gui.pagepopupmenu import PagePopupMenu
 from outwiker.gui.controls.safeimagelist import SafeImageList
 
@@ -72,10 +70,6 @@ class NotesTree(wx.Panel):
 
         # Имя опции для сохранения развернутости страницы
         self.pageOptionExpand = "Expand"
-
-        self._iconController = IconController(
-            getSpecialDirList(ICONS_FOLDER_NAME)[0]
-        )
 
         self.__BindApplicationEvents()
         self.__BindGuiEvents()
@@ -132,7 +126,7 @@ class NotesTree(wx.Panel):
         Если иконки нет, то возвращает идентификатор иконки по умолчанию
         """
         imageId = self.defaultImageId
-        icon = self._iconController.get_icon(page)
+        icon = page.icon
 
         if icon is not None:
             image = wx.Bitmap(icon)

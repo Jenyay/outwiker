@@ -22,7 +22,12 @@ class IconController(object):
     def _is_subdir(self, fname, directory):
         fname = os.path.realpath(fname)
         directory = os.path.realpath(directory)
-        relative = os.path.relpath(fname, directory)
+
+        try:
+            relative = os.path.relpath(fname, directory)
+        except ValueError:
+            return False
+
         return not relative.startswith(os.pardir + os.sep)
 
     def is_builtin_icon(self, fname):
@@ -101,6 +106,7 @@ class IconController(object):
 
         page.updateDateTime()
         page.root.onPageUpdate(page, change=PAGE_UPDATE_ICON)
+        return icon_fname
 
     def get_icon(self, page):
         '''

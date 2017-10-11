@@ -7,17 +7,23 @@ import ConfigParser
 import shutil
 import datetime
 
-from .config import PageConfig
-from .bookmarks import Bookmarks
-from .event import Event
-from .exceptions import (ClearConfigError, RootFormatError, DuplicateTitle,
-                         ReadonlyException, TreeException)
-from .tagscommands import parseTagsList
-from .sortfunctions import sortOrderFunction, sortAlphabeticalFunction
-import events
+from outwiker.core.config import PageConfig
+from outwiker.core.bookmarks import Bookmarks
+from outwiker.core.event import Event
+from outwiker.core.exceptions import (ClearConfigError,
+                                      RootFormatError,
+                                      DuplicateTitle,
+                                      ReadonlyException,
+                                      TreeException)
+from outwiker.core.tagscommands import parseTagsList
+from outwiker.core.sortfunctions import (sortOrderFunction,
+                                         sortAlphabeticalFunction)
 from outwiker.core.defines import (PAGE_CONTENT_FILE,
                                    PAGE_OPT_FILE,
-                                   PAGE_ICON_NAME)
+                                   ICONS_FOLDER_NAME)
+from outwiker.core.iconcontroller import IconController
+from outwiker.core.system import getSpecialDirList
+import events
 
 
 logger = logging.getLogger('core')
@@ -397,6 +403,8 @@ class WikiPage(RootWikiPage):
     paramTags = u"tags"
     paramType = u"type"
 
+    iconController = IconController(getSpecialDirList(ICONS_FOLDER_NAME)[0])
+
     @staticmethod
     def getTypeString():
         return u"base"
@@ -598,38 +606,17 @@ class WikiPage(RootWikiPage):
 
     @property
     def icon(self):
-        icons = self._getIconFiles()
-        return icons[0] if len(icons) > 0 else None
+        '''
+        Return page icon.
+        '''
+        return self.iconController.get_icon(self)
 
     @icon.setter
     def icon(self, iconpath):
-        if self.readonly:
-            raise ReadonlyException
-
-        if (self.icon is not None and
-                os.path.abspath(self.icon) == os.path.abspath(iconpath)):
-            return
-
-        self._removeOldIcons()
-
-        name = os.path.basename(iconpath)
-        dot = name.rfind(".")
-        extension = name[dot:]
-
-        newname = PAGE_ICON_NAME + extension
-        newpath = os.path.join(self.path, newname)
-
-        if iconpath != newpath:
-            shutil.copyfile(iconpath, newpath)
-            self.updateDateTime()
-
-        self.root.onPageUpdate(self, change=events.PAGE_UPDATE_ICON)
-
-        return newpath
-
-    def _removeOldIcons(self):
-        for fname in self._getIconFiles():
-            os.remove(fname)
+        '''
+        Return page icon.
+        '''
+        return self.iconController.set_icon(self, iconpath)
 
     @property
     def tags(self):
@@ -659,15 +646,6 @@ class WikiPage(RootWikiPage):
             self.save()
             self.updateDateTime()
             self.root.onPageUpdate(self, change=events.PAGE_UPDATE_TAGS)
-
-    def _getIconFiles(self):
-        files = os.listdir(self.path)
-
-        icons = [os.path.join(self.path, fname) for fname in files
-                 if(fname.startswith(PAGE_ICON_NAME) and
-                     not os.path.isdir(fname))]
-
-        return icons
 
     @staticmethod
     def load(path, parent, readonly=False):
