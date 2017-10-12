@@ -19,10 +19,9 @@ from outwiker.core.tagscommands import parseTagsList
 from outwiker.core.sortfunctions import (sortOrderFunction,
                                          sortAlphabeticalFunction)
 from outwiker.core.defines import (PAGE_CONTENT_FILE,
-                                   PAGE_OPT_FILE,
-                                   ICONS_FOLDER_NAME)
+                                   PAGE_OPT_FILE)
 from outwiker.core.iconcontroller import IconController
-from outwiker.core.system import getSpecialDirList
+from outwiker.core.system import getIconsDirList
 import events
 
 
@@ -48,7 +47,7 @@ class RootWikiPage(object):
         self.readonly = readonly
 
         configpath = os.path.join(path, PAGE_OPT_FILE)
-        if(not self.readonly and
+        if (not self.readonly and
                 os.path.exists(configpath) and
                 not os.access(configpath, os.W_OK)):
             self.readonly = True
@@ -403,7 +402,7 @@ class WikiPage(RootWikiPage):
     paramTags = u"tags"
     paramType = u"type"
 
-    iconController = IconController(getSpecialDirList(ICONS_FOLDER_NAME)[0])
+    iconController = IconController(getIconsDirList()[0])
 
     @staticmethod
     def getTypeString():
@@ -542,7 +541,7 @@ class WikiPage(RootWikiPage):
         """
         Переместить запись к другому родителю
         """
-        if(self.readonly or newparent.readonly):
+        if self.readonly or newparent.readonly:
             raise ReadonlyException
 
         if self._parent == newparent:
@@ -598,7 +597,7 @@ class WikiPage(RootWikiPage):
         number = 0
         newname = template.format(title=title, number=number)
 
-        while(os.path.exists(os.path.join(path, newname))):
+        while os.path.exists(os.path.join(path, newname)):
             number += 1
             newname = template.format(title=title, number=number)
 
