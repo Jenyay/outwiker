@@ -23,13 +23,14 @@ class IconsPanel(wx.Panel):
     def __init__(self, parent):
         super(IconsPanel, self).__init__(parent)
 
-        self._iconsCollections = [IconsCollection(path) for path in getIconsDirList()]
+        self._iconsCollections = [IconsCollection(path)
+                                  for path
+                                  in getIconsDirList()]
         self.__createGui()
 
         self.__appendGroups()
         self.groupCtrl.SetSelection(0)
         self.__switchToCurrentGroup()
-
 
     def __createGui(self):
         self.iconsList = IconListCtrl(self)
@@ -82,7 +83,7 @@ class IconsPanel(wx.Panel):
 
         posx = (neww - image.Width) / 2
         posy = (newh - image.Height) / 2
-        image.Resize((neww, newh),(posx, posy), 255, 255, 255)
+        image.Resize((neww, newh), (posx, posy), 255, 255, 255)
 
         return wx.BitmapFromImage(image)
 
@@ -100,7 +101,6 @@ class IconsPanel(wx.Panel):
         """
         Return bitmap for combobox item
         """
-        # fname = self._iconsCollections[0].getCover(None)
         fname = None
         for collection in self._iconsCollections:
             cover = collection.getCover(None)
@@ -140,7 +140,7 @@ class IconsController(BasePageDialogController):
         self._iconsPanel = iconsPanel
 
         self._iconsPanel.iconsList.Bind(EVT_ICON_SELECTED,
-                                         handler=self.__onIconSelected)
+                                        handler=self.__onIconSelected)
 
     @property
     def icon(self):
@@ -162,8 +162,8 @@ class IconsController(BasePageDialogController):
                 page.icon = icon
             except EnvironmentError as e:
                 MessageBox(_(u"Can't set page icon\n") + unicode(e),
-                            _(u"Error"),
-                            wx.ICON_ERROR | wx.OK)
+                           _(u"Error"),
+                           wx.ICON_ERROR | wx.OK)
                 return False
 
         return True
@@ -179,7 +179,7 @@ class IconsController(BasePageDialogController):
 
     def clear(self):
         self._iconsPanel.iconsList.Unbind(EVT_ICON_SELECTED,
-                                           handler=self.__onIconSelected)
+                                          handler=self.__onIconSelected)
         self._dialog = None
         self._iconsPanel = None
 
