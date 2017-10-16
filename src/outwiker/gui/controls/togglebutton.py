@@ -267,7 +267,6 @@ class ToggleButton(ThemedGenBitmapTextToggleButton):
 
 class MyFrame(wx.Frame):
     def __init__(self, parent, title):
-
         wx.Frame.__init__(self, parent, wx.ID_ANY, title, size=(400, 300))
         panel = wx.Panel(self)
 

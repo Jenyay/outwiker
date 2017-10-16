@@ -1,10 +1,10 @@
 # -*- coding=utf-8 -*-
 
-from outwiker.gui.controls.togglebutton import ToggleButton
+from togglebutton import ToggleButton
 
 
 class ToggleButtonThemed(ToggleButton):
-    def setTheme(self, theme):
+    def SetTheme(self, theme):
         self.SetColorNormal(theme.colorBackground)
         self.SetColorToggled(theme.colorBackgroundSelected)
         self.SetColorShadow(theme.colorShadow)
