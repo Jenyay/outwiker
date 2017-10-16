@@ -23,6 +23,7 @@ class ToggleButton(ThemedGenBitmapTextToggleButton):
         self.colorToggled = wx.Colour(144, 195, 212)
         self.colorShadow = wx.Colour(200, 200, 200)
         self.colorBorder = wx.Colour(0, 0, 0)
+        self.colorBorderToggled = wx.Colour(0, 0, 255)
         self.colorTextNormal = wx.Colour(0, 0, 0)
         self.colorTextDisabled = wx.SystemSettings.GetColour(wx.SYS_COLOUR_GRAYTEXT)
         self.colorTextToggled = wx.Colour(0, 0, 0)
@@ -66,6 +67,13 @@ class ToggleButton(ThemedGenBitmapTextToggleButton):
 
     def SetColorBorder(self, color):
         self.colorBorder = color
+        self.Refresh()
+
+    def GetColorBorderToggled(self):
+        return self.colorBorderToggled
+
+    def SetColorBorderToggled(self, color):
+        self.colorBorderToggled = color
         self.Refresh()
 
     def GetColorTextNormal(self):
@@ -179,8 +187,9 @@ class ToggleButton(ThemedGenBitmapTextToggleButton):
 
         # Draw button
         color = self.colorToggled if self.GetToggle() else self.colorNormal
+        colorBorder = self.colorBorderToggled if self.GetToggle() else self.colorBorder
         brush = wx.Brush(color)
-        pen = wx.Pen(self.colorBorder)
+        pen = wx.Pen(colorBorder)
 
         dc.SetBrush(brush)
         dc.SetPen(pen)

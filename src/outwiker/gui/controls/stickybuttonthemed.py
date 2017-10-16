@@ -1,14 +1,13 @@
 # -*- coding=utf-8 -*-
 
-from togglebutton import ToggleButton
+from stickybutton import StickyButton
 
 
-class ToggleButtonThemed(ToggleButton):
+class StickyButtonThemed(StickyButton):
     def SetTheme(self, theme):
         self.SetColorNormal(theme.colorBackground)
         self.SetColorToggled(theme.colorBackgroundSelected)
         self.SetColorShadow(theme.colorShadow)
         self.SetColorTextNormal(theme.colorTextNormal)
         self.SetColorTextToggled(theme.colorTextNormal)
-        self.SetColorBorderToggled(theme.colorBorderSelected)
         self.SetRoundRadius(theme.roundRadius)
