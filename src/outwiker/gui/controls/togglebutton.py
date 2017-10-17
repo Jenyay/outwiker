@@ -8,7 +8,7 @@ class ToggleButton(ThemedGenBitmapTextToggleButton):
     def __init__(self,
                  parent,
                  id=-1,
-                 bitmap=wx.NullBitmap,
+                 bitmap=None,
                  label='',
                  pos=wx.DefaultPosition,
                  size=wx.DefaultSize,
@@ -282,7 +282,7 @@ class MyFrame(wx.Frame):
         # Build a bitmap button and a normal one
         bmp = wx.ArtProvider.GetBitmap(wx.ART_INFORMATION, wx.ART_OTHER, (16, 16))
 
-        btn = ToggleButton(panel, -1, bmp, label=u'adsfasdf', pos=(10, 10))
+        btn = ToggleButton(panel, -1, label=u'adsfasdf', pos=(10, 10))
         btn.SetSize((150, 75))
 
         btn2 = ToggleButton(panel, -1, bmp, label=u'adsfasdf', pos=(10, 110), align=wx.ALIGN_CENTER)

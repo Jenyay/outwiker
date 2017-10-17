@@ -8,13 +8,13 @@ from togglebutton import ToggleButton
 class StickyButton(ToggleButton):
     def OnLeftDown(self, event):
         if self.GetToggle():
-            return
+            event.Skip()
         else:
             super(StickyButton, self).OnLeftDown(event)
 
     def OnKeyUp(self, event):
         if self.GetToggle():
-            return
+            event.Skip()
         else:
             super(StickyButton, self).OnKeyUp(event)
 

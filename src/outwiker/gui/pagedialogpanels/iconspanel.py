@@ -14,6 +14,15 @@ from outwiker.core.commands import MessageBox
 from outwiker.core.events import PageDialogPageIconChangedParams
 from outwiker.gui.iconlistctrl import IconListCtrl, EVT_ICON_SELECTED
 from outwiker.gui.pagedialogpanels.basecontroller import BasePageDialogController
+from outwiker.gui.controls.switchthemed import SwitchThemed, EVT_SWITCH
+from outwiker.gui.theme import Theme
+
+
+class GroupInfo(object):
+    def __init__(self, iconscollection, groupname, title):
+        self.iconscollection = iconscollection
+        self.groupname = groupname
+        self.title = title
 
 
 class IconsPanel(wx.Panel):
@@ -22,56 +31,66 @@ class IconsPanel(wx.Panel):
     """
     def __init__(self, parent):
         super(IconsPanel, self).__init__(parent)
+        self._groupsButtonHeight = 32
+        self._groupsInfo = self._getGroupsInfo()
+        self._theme = Theme()
+        self._createGui()
 
-        self._iconsCollections = [IconsCollection(path)
-                                  for path
-                                  in getIconsDirList()]
-        self.__createGui()
-
-        self.__appendGroups()
+        self._appendGroups()
         self.groupCtrl.SetSelection(0)
-        self.__switchToCurrentGroup()
+        self._switchToCurrentGroup()
 
-    def __createGui(self):
+    def _getGroupsInfo(self):
+        result = []
+
+        for n, path in enumerate(getIconsDirList()):
+            # First None is root directory
+            collection = IconsCollection(path)
+            for groupname in [None] + sorted(collection.getGroups(), key=self._localize):
+                # Get group name
+                if groupname is None:
+                    title = _(u'Not in groups')
+                else:
+                    title = self._localize(groupname)
+
+                if n != 0:
+                    title += u' *'
+
+                result.append(GroupInfo(collection, groupname, title))
+        
+        return result
+
+    def _createGui(self):
         self.iconsList = IconListCtrl(self)
         self.iconsList.SetMinSize((200, 150))
 
         # Control for selection icons group
-        self.groupCtrl = wx.combo.BitmapComboBox(self, style=wx.CB_READONLY)
-        self.groupCtrl.Bind(wx.EVT_COMBOBOX, handler=self.__onGroupSelect)
+        self.groupCtrl = SwitchThemed(self, self._theme)
+        self.groupCtrl.SetButtonsHeight(self._groupsButtonHeight)
+        self.groupCtrl.Bind(EVT_SWITCH, handler=self._onGroupSelect)
 
-        self.__layout()
+        self._layout()
 
-    def __layout(self):
-        iconSizer = wx.FlexGridSizer(rows=2)
-        iconSizer.AddGrowableRow(1)
+    def _layout(self):
+        iconSizer = wx.FlexGridSizer(cols=2)
+        iconSizer.AddGrowableRow(0)
         iconSizer.AddGrowableCol(0)
+        iconSizer.AddGrowableCol(1)
         iconSizer.Add(self.groupCtrl, 1, wx.ALL | wx.EXPAND, 2)
         iconSizer.Add(self.iconsList, 1, wx.ALL | wx.EXPAND, 2)
 
         self.SetSizer(iconSizer)
         self.Layout()
 
-    def __appendGroups(self):
-        for n, collection in enumerate(self._iconsCollections):
-            # First None is root directory
-            for group in [None] + sorted(collection.getGroups(), key=self._localize):
-                # Get group name
-                if group is None:
-                    title = _(u'Not in groups')
-                else:
-                    title = self._localize(group)
-
-                if n != 0:
-                    title += u' *'
-                # Every item has tuple (collection index, group name)
-                self.groupCtrl.Append(title,
-                                      self._getCover(collection, group),
-                                      (n, group))
+    def _appendGroups(self):
+        for groupInfo in self._groupsInfo:
+            bitmap = self._getCover(groupInfo.iconscollection,
+                                    groupInfo.groupname)
+            self.groupCtrl.Append(groupInfo.title, bitmap)
 
     def _getImageForGroup(self, fname):
         neww = ICON_WIDTH
-        newh = ICON_HEIGHT + 2
+        newh = ICON_HEIGHT
 
         wx.Log_EnableLogging(False)
         image = wx.Image(fname)
@@ -79,7 +98,7 @@ class IconsPanel(wx.Panel):
 
         if not image.IsOk():
             logging.error(_(u'Invalid icon file: {}').format(fname))
-            return wx.NullBitmap
+            return None
 
         posx = (neww - image.Width) / 2
         posy = (newh - image.Height) / 2
@@ -95,36 +114,22 @@ class IconsPanel(wx.Panel):
         if fname is not None:
             return self._getImageForGroup(fname)
 
-        return wx.NullBitmap
+        return None
 
-    def _getRootCover(self):
-        """
-        Return bitmap for combobox item
-        """
-        fname = None
-        for collection in self._iconsCollections:
-            cover = collection.getCover(None)
-            if cover is not None:
-                fname = cover
+    def _onGroupSelect(self, event):
+        self._switchToCurrentGroup()
 
-        if fname is not None:
-            return self._getImageForGroup(fname)
+    def _getCurrentIcons(self):
+        index = self.groupCtrl.GetSelection()
+        groupInfo = self._groupsInfo[index]
 
-        return wx.NullBitmap
-
-    def __onGroupSelect(self, event):
-        self.__switchToCurrentGroup()
-
-    def __getCurrentIcons(self):
-        index, groupname = self.groupCtrl.GetClientData(self.groupCtrl.GetSelection())
-
-        icons = self._iconsCollections[index].getIcons(groupname)
+        icons = groupInfo.iconscollection.getIcons(groupInfo.groupname)
         icons.sort()
 
         return icons
 
-    def __switchToCurrentGroup(self):
-        icons = self.__getCurrentIcons()
+    def _switchToCurrentGroup(self):
+        icons = self._getCurrentIcons()
         icons.sort(key=os.path.basename)
         self.iconsList.setIconsList(icons)
 

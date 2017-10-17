@@ -43,7 +43,7 @@ class SwitchThemed(ScrolledPanel):
     def SetTheme(self, theme):
         map(lambda button: button.SetTheme(theme), self._buttons)
 
-    def AddItem(self, label=u'', bitmap=None):
+    def Append(self, label=u'', bitmap=None):
         button = StickyButtonThemed(self, label=label, bitmap=bitmap)
         button.SetMinSize((-1, self._buttonsHeight))
         button.SetToggleShift(0, 0)
@@ -77,6 +77,15 @@ class SwitchThemed(ScrolledPanel):
         self._buttons[index].SetFocus()
         self.Notify()
 
+    def GetButtonsHeight(self):
+        return self._buttonsHeight
+
+    def SetButtonsHeight(self, height):
+        self._buttonsHeight = height
+        map(lambda button: button.SetMinSize((-1, self._buttonsHeight)),
+            self._buttons)
+        self.Layout()
+
 
 class MyFrame(wx.Frame):
     def __init__(self, parent, title):
@@ -85,7 +94,7 @@ class MyFrame(wx.Frame):
         self.switch.Bind(EVT_SWITCH, self._onSwitch)
 
         for n in range(20):
-            self.switch.AddItem(u'Кнопка {}'.format(n))
+            self.switch.Append(u'Кнопка {}'.format(n))
 
         self.switch.SetSelection(4)
 
