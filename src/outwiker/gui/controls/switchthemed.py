@@ -20,6 +20,7 @@ class SwitchThemed(ScrolledPanel):
         self._mainSizer = wx.FlexGridSizer(cols=1)
         self._mainSizer.AddGrowableCol(0)
         self.SetSizer(self._mainSizer)
+        self.SetupScrolling()
 
     def _onButtonClick(self, event):
         current_button = event.GetEventObject()
@@ -34,7 +35,10 @@ class SwitchThemed(ScrolledPanel):
                 index = n
 
         if index is not None:
-            wx.PostEvent(self, SwitchEvent(self.GetId(), index=index))
+            self.Notify()
+
+    def Notify(self):
+        wx.PostEvent(self, SwitchEvent(self.GetId(), index=self.GetSelection()))
 
     def SetTheme(self, theme):
         map(lambda button: button.SetTheme(theme), self._buttons)
@@ -57,18 +61,37 @@ class SwitchThemed(ScrolledPanel):
         self._mainSizer.Add(button, flag=wx.EXPAND | wx.ALL, border=0)
         self.Layout()
 
+    def GetSelection(self):
+        for n, button in enumerate(self._buttons):
+            if button.GetToggle():
+                return n
+
+        return wx.NOT_FOUND
+
+    def SetSelection(self, index):
+        assert index >= 0
+        assert index < len(self._buttons)
+
+        map(lambda button: button.SetToggle(False), self._buttons)
+        self._buttons[index].SetToggle(True)
+        self._buttons[index].SetFocus()
+        self.Notify()
+
 
 class MyFrame(wx.Frame):
     def __init__(self, parent, title):
         wx.Frame.__init__(self, parent, wx.ID_ANY, title, size=(200, 400))
-        switch = SwitchThemed(self)
-        switch.Bind(EVT_SWITCH, self._onSwitch)
+        self.switch = SwitchThemed(self)
+        self.switch.Bind(EVT_SWITCH, self._onSwitch)
 
         for n in range(20):
-            switch.AddItem(u'Кнопка {}'.format(n))
+            self.switch.AddItem(u'Кнопка {}'.format(n))
+
+        self.switch.SetSelection(4)
 
     def _onSwitch(self, event):
         print event.index
+        print self.switch.GetSelection()
 
 
 if __name__ == '__main__':
