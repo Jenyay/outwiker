@@ -11,5 +11,5 @@ class Theme(object):
         self.colorBackgroundSelected = wx.Colour(81, 139, 219)
         self.colorShadow = wx.Colour(200, 200, 200)
         self.colorTextNormal = wx.Colour(0, 0, 0)
-        self.colorTextSelected = wx.Colour(0, 0, 0)
+        self.colorTextSelected = wx.Colour(255, 255, 255)
         self.roundRadius = 0

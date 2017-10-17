@@ -16,18 +16,23 @@ class IconButton(object):
     """
     Button with single icons
     """
-    _invalidFileName = os.path.join(getImagesDir(), u'cross.png')
 
-    # Оформление
-    _normalBackground = wx.Colour(255, 255, 255)
-    _selectedBackground = wx.Colour(160, 190, 255)
-    _borderColor = wx.Colour(0, 0, 255)
-
-    def __init__(self, parent, fname, width, height):
+    def __init__(self, parent, fname, width, height, theme=None):
         self._parent = parent
         self._fname = fname
         self._width = width
         self._height = height
+
+        self._invalidFileName = os.path.join(getImagesDir(), u'cross.png')
+
+        self._normalBackground = wx.Colour(255, 255, 255)
+        self._selectedBackground = wx.Colour(160, 190, 255)
+        self._borderColor = wx.Colour(0, 0, 255)
+
+        if theme is not None:
+            self._normalBackground = theme.colorBackground
+            self._selectedBackground = theme.colorBackgroundSelected
+            self._borderColor = theme.colorBorderSelected
 
         self._x = 0
         self._y = 0
@@ -147,10 +152,14 @@ class IconListCtrl(wx.ScrolledWindow):
     """
     Control with icons for pages
     """
-    def __init__(self, parent, multiselect=False):
+    def __init__(self, parent, multiselect=False, theme=None):
         wx.ScrolledWindow.__init__(self, parent, style=wx.BORDER_THEME)
-        self._backgroundColor = wx.Colour(255, 255, 255)
+        self._theme = theme
 
+        self._backgroundColor = wx.Colour(255, 255, 255)
+        if self._theme is not None:
+            self._backgroundColor = self._theme.colorBackground
+    
         self._canvas = wx.Panel(self)
         self._canvas.SetSize((0, 0))
         self._canvas.SetBackgroundColour(self._backgroundColor)
@@ -243,7 +252,8 @@ class IconListCtrl(wx.ScrolledWindow):
             button = IconButton(self._canvas,
                                 fname,
                                 self.cellWidth,
-                                self.cellHeight)
+                                self.cellHeight,
+                                self._theme)
         except ValueError:
             return
 

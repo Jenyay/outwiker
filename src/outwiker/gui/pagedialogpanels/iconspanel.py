@@ -32,6 +32,7 @@ class IconsPanel(wx.Panel):
     def __init__(self, parent):
         super(IconsPanel, self).__init__(parent)
         self._groupsButtonHeight = 32
+        self._groupsMaxWidth = 200
         self._groupsInfo = self._getGroupsInfo()
         self._theme = Theme()
         self._createGui()
@@ -61,7 +62,7 @@ class IconsPanel(wx.Panel):
         return result
 
     def _createGui(self):
-        self.iconsList = IconListCtrl(self)
+        self.iconsList = IconListCtrl(self, theme=self._theme)
         self.iconsList.SetMinSize((200, 150))
 
         # Control for selection icons group
@@ -74,8 +75,8 @@ class IconsPanel(wx.Panel):
     def _layout(self):
         iconSizer = wx.FlexGridSizer(cols=2)
         iconSizer.AddGrowableRow(0)
-        iconSizer.AddGrowableCol(0)
-        iconSizer.AddGrowableCol(1)
+        iconSizer.AddGrowableCol(0, 1)
+        iconSizer.AddGrowableCol(1, 3)
         iconSizer.Add(self.groupCtrl, 1, wx.ALL | wx.EXPAND, 2)
         iconSizer.Add(self.iconsList, 1, wx.ALL | wx.EXPAND, 2)
 
@@ -87,6 +88,12 @@ class IconsPanel(wx.Panel):
             bitmap = self._getCover(groupInfo.iconscollection,
                                     groupInfo.groupname)
             self.groupCtrl.Append(groupInfo.title, bitmap)
+
+        minw, minh = self.groupCtrl.GetMinSize()
+        if minw > self._groupsMaxWidth:
+            minw = self._groupsMaxWidth
+
+        self.groupCtrl.SetMinSize((minw, minh))
 
     def _getImageForGroup(self, fname):
         neww = ICON_WIDTH

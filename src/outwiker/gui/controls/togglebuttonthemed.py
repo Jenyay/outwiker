@@ -9,6 +9,6 @@ class ToggleButtonThemed(ToggleButton):
         self.SetColorToggled(theme.colorBackgroundSelected)
         self.SetColorShadow(theme.colorShadow)
         self.SetColorTextNormal(theme.colorTextNormal)
-        self.SetColorTextToggled(theme.colorTextNormal)
+        self.SetColorTextToggled(theme.colorTextSelected)
         self.SetColorBorderToggled(theme.colorBorderSelected)
         self.SetRoundRadius(theme.roundRadius)

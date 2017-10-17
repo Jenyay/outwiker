@@ -37,6 +37,16 @@ class SwitchThemed(ScrolledPanel):
         if index is not None:
             self.Notify()
 
+    def _updateMinWidth(self):
+        minWidth = 30
+        scrollWidth = wx.SystemSettings.GetMetric(wx.SYS_VSCROLL_X)
+        for button in self._buttons:
+            w, h = button.GetMinSize()
+            if w > minWidth:
+                minWidth = w
+
+        self.SetMinSize((minWidth + scrollWidth, -1))
+
     def Notify(self):
         wx.PostEvent(self, SwitchEvent(self.GetId(), index=self.GetSelection()))
 
@@ -45,20 +55,23 @@ class SwitchThemed(ScrolledPanel):
 
     def Append(self, label=u'', bitmap=None):
         button = StickyButtonThemed(self, label=label, bitmap=bitmap)
-        button.SetMinSize((-1, self._buttonsHeight))
+
+        if self._theme is not None:
+            button.SetTheme(self._theme)
+
+        w, h = button.GetMinSize()
+        button.SetMinSize((w, self._buttonsHeight))
         button.SetToggleShift(0, 0)
         button.SetRoundRadius(0)
         button.SetColorBorder(wx.Colour(255, 255, 255))
         button.Bind(wx.EVT_BUTTON, handler=self._onButtonClick)
-
-        if self._theme is not None:
-            button.SetTheme(self._theme)
 
         if len(self._buttons) == 0:
             button.SetToggle(True)
 
         self._buttons.append(button)
         self._mainSizer.Add(button, flag=wx.EXPAND | wx.ALL, border=0)
+        self._updateMinWidth()
         self.Layout()
 
     def GetSelection(self):
