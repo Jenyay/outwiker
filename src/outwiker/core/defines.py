@@ -40,6 +40,7 @@ APP_DATA_DISABLE_MINIMIZING = u'__disableMinimizing'
 
 ICONS_STD_PREFIX = u'__std_'
 ICONS_EXTENSIONS = [u'png', u'jpg', u'jpeg', u'gif', u'bmp', u'ico']
+ICON_DEFAULT = ICONS_STD_PREFIX + u'_default.png'
 
 ICONS_FOLDER_NAME = u'iconset'
 IMAGES_FOLDER_NAME = u'images'

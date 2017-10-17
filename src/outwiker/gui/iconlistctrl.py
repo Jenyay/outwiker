@@ -6,6 +6,7 @@ import os.path
 import wx
 from wx.lib.newevent import NewEvent
 
+from outwiker.core.defines import ICON_DEFAULT
 from outwiker.core.system import getImagesDir
 from outwiker.core.iconcontroller import IconController
 
@@ -127,16 +128,16 @@ class IconButton(object):
         """
         Return the text of the tooltip with file name
         """
-        text = os.path.basename(self._fname)
+        text_src = os.path.basename(self._fname)
 
         # Отбросим расширение файла
-        dotPos = text.rfind(".")
+        dotPos = text_src.rfind(".")
         if dotPos != -1:
-            text = text[: dotPos]
+            text = text_src[: dotPos]
 
         if text == "__icon":
-            text = _(u"Curent icon")
-        elif text == u"_page":
+            text = _(u"Custom icon")
+        elif text_src == ICON_DEFAULT:
             text = _(u"Default icon")
         else:
             text = IconController.display_name(self._fname)
@@ -159,7 +160,7 @@ class IconListCtrl(wx.ScrolledWindow):
         self._backgroundColor = wx.Colour(255, 255, 255)
         if self._theme is not None:
             self._backgroundColor = self._theme.colorBackground
-    
+
         self._canvas = wx.Panel(self)
         self._canvas.SetSize((0, 0))
         self._canvas.SetBackgroundColour(self._backgroundColor)
@@ -233,9 +234,9 @@ class IconListCtrl(wx.ScrolledWindow):
 
     def setIconsList(self, iconFileNames):
         self.clear()
-        self._iconFileNames = iconFileNames
+        self._iconFileNames = iconFileNames[:]
 
-        for fname in reversed(iconFileNames):
+        for fname in reversed(self._iconFileNames):
             self.__addButton(fname)
 
         if len(self.buttons) != 0:
