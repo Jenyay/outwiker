@@ -110,7 +110,7 @@ class IconsCollection(object):
 
     def getIcons(self, groupname):
         '''
-        Return all icons(full paths) for groups with name group
+        Return all icons (full paths) for groups with name group
         Raise KeyError if group not exists
         '''
         if groupname is None:
@@ -120,7 +120,7 @@ class IconsCollection(object):
 
     def addGroup(self, groupname):
         '''
-        Add new group(and directory) of the icons.
+        Add new group (and directory) of the icons.
         If directory exists the method does nothing.
         The method can raise ValueError, IOError and SystemError exceptions.
         '''
