@@ -7,7 +7,7 @@ import os.path
 import wx
 import wx.combo
 
-from outwiker.core.system import getIconsDirList
+from outwiker.core.system import getIconsDirList, getImagesDir
 from outwiker.core.iconscollection import IconsCollection
 from outwiker.core.defines import ICON_WIDTH, ICON_HEIGHT
 from outwiker.core.commands import MessageBox
@@ -19,10 +19,10 @@ from outwiker.gui.theme import Theme
 
 
 class GroupInfo(object):
-    def __init__(self, iconscollection, groupname, title):
-        self.iconscollection = iconscollection
-        self.groupname = groupname
+    def __init__(self, iconslist, title, cover):
+        self.iconslist = iconslist
         self.title = title
+        self.cover = cover
 
 
 class IconsPanel(wx.Panel):
@@ -92,7 +92,15 @@ class IconsController(BasePageDialogController):
                 if n != 0:
                     title += u' *'
 
-                result.append(GroupInfo(collection, groupname, title))
+                iconslist = collection.getIcons(groupname)
+                cover = collection.getCover(groupname)
+                result.append(GroupInfo(iconslist, title, cover))
+
+        # Add recent used icons
+        recent_icons = []
+        recent_title = _(u'Recent')
+        recent_cover = os.path.join(getImagesDir(), u'recent.png')
+        result.insert(0, GroupInfo(recent_icons, recent_title, recent_cover))
 
         return result
 
@@ -154,8 +162,7 @@ class IconsController(BasePageDialogController):
 
     def _appendGroups(self):
         for groupInfo in self._groupsInfo:
-            bitmap = self._getCover(groupInfo.iconscollection,
-                                    groupInfo.groupname)
+            bitmap = self._getCoverBitmap(groupInfo.cover)
             self._iconsPanel.groupCtrl.Append(groupInfo.title, bitmap)
 
         minw, minh = self._iconsPanel.groupCtrl.GetMinSize()
@@ -164,17 +171,13 @@ class IconsController(BasePageDialogController):
 
         self._iconsPanel.groupCtrl.SetMinSize((minw, minh))
 
-    def _getCover(self, collection, groupname):
+    def _getCoverBitmap(self, fname):
         """
         Return bitmap for combobox item
         """
-        fname = collection.getCover(groupname)
-        if fname is not None:
-            return self._getImageForGroup(fname)
+        if fname is None:
+            return None
 
-        return None
-
-    def _getImageForGroup(self, fname):
         neww = ICON_WIDTH
         newh = ICON_HEIGHT
 
@@ -196,7 +199,7 @@ class IconsController(BasePageDialogController):
         index = self._iconsPanel.groupCtrl.GetSelection()
         groupInfo = self._groupsInfo[index]
 
-        icons = groupInfo.iconscollection.getIcons(groupInfo.groupname)
+        icons = groupInfo.iconslist
         icons.sort()
 
         return icons

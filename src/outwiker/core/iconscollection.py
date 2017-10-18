@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os
 import os.path
@@ -22,11 +22,11 @@ class IconsCollection(object):
 
     def __init__(self, iconsDir):
         '''
-        iconsDir - Root directory(absolute path) with the icons
+        iconsDir - Root directory (absolute path) with the icons
         '''
         self._iconsDir = iconsDir
 
-        # Key - group name, value - files list(full paths)
+        # Key - group name, value - files list (full paths)
         self._groups = {}
 
         # Key - group name, value - full path to group icon
@@ -76,7 +76,7 @@ class IconsCollection(object):
 
     def _findIcons(self, folder):
         '''
-        Return files list(full paths) for icons in 'folder'
+        Return files list (full paths) for icons in 'folder'
         '''
         result = []
         files = sorted(os.listdir(folder))
@@ -192,7 +192,7 @@ class IconsCollection(object):
     def _addIconToDir(self, grouppath, iconpath):
         '''
         Add single icon with full path iconpath into folder groupPath.
-        Not images is skipped.
+        Not images will be skipped.
         '''
         if (not isImage(iconpath) or not os.path.exists(iconpath)):
             return
