@@ -7,9 +7,15 @@ import os.path
 import wx
 import wx.combo
 
+from outwiker.core.config import StringListSection
 from outwiker.core.system import getIconsDirList, getImagesDir
 from outwiker.core.iconscollection import IconsCollection
-from outwiker.core.defines import ICON_WIDTH, ICON_HEIGHT
+from outwiker.core.iconcontroller import IconController
+from outwiker.core.defines import (ICON_WIDTH,
+                                   ICON_HEIGHT,
+                                   RECENT_ICONS_SECTION,
+                                   RECENT_ICONS_COUNT,
+                                   RECENT_ICONS_PARAM_NAME)
 from outwiker.core.commands import MessageBox
 from outwiker.core.events import PageDialogPageIconChangedParams
 from outwiker.gui.iconlistctrl import IconListCtrl, EVT_ICON_SELECTED
@@ -19,10 +25,11 @@ from outwiker.gui.theme import Theme
 
 
 class IconsGroupInfo(object):
-    def __init__(self, iconslist, title, cover):
+    def __init__(self, iconslist, title, cover, sort_key=None):
         self.iconslist = iconslist
         self.title = title
         self.cover = cover
+        self.sort_key = sort_key
 
 
 class IconsPanel(wx.Panel):
@@ -63,6 +70,13 @@ class IconsController(BasePageDialogController):
         self._dialog = dialog
         self._iconsPanel = iconsPanel
         self._groupsMaxWidth = 200
+        self._builtin_icons_path = getIconsDirList()[0]
+
+        self._recentIconsConfig = StringListSection(application.config,
+                                                    RECENT_ICONS_SECTION,
+                                                    RECENT_ICONS_PARAM_NAME)
+
+        self._recentIcons = self._loadRecentIcons()
 
         self._iconsPanel.iconsList.Bind(EVT_ICON_SELECTED,
                                         handler=self._onIconSelected)
@@ -75,6 +89,31 @@ class IconsController(BasePageDialogController):
         self._appendGroups()
         self._iconsPanel.groupCtrl.SetSelection(0)
         self._switchToCurrentGroup()
+
+    def _loadRecentIcons(self):
+        recent_icons_list = []
+        for icon_path in self._recentIconsConfig.value:
+            if os.path.exists(icon_path):
+                recent_icons_list.append(icon_path)
+                continue
+
+            icon_path = os.path.join(self._builtin_icons_path, icon_path)
+            if os.path.exists(icon_path):
+                recent_icons_list.append(icon_path)
+
+        return recent_icons_list
+
+    def _saveRecentIcons(self):
+        iconController = IconController(self._builtin_icons_path)
+        icons_for_config = []
+
+        for icon in self._recentIcons:
+            if iconController.is_builtin_icon(icon):
+                icon = os.path.relpath(icon, self._builtin_icons_path)
+
+            icons_for_config.append(icon)
+
+        self._recentIconsConfig.value = icons_for_config[0: RECENT_ICONS_COUNT]
 
     def _getGroupsInfo(self):
         result = []
@@ -94,15 +133,22 @@ class IconsController(BasePageDialogController):
 
                 iconslist = collection.getIcons(groupname)
                 cover = collection.getCover(groupname)
-                result.append(IconsGroupInfo(iconslist, title, cover))
+                result.append(IconsGroupInfo(iconslist,
+                                             title,
+                                             cover,
+                                             sort_key=os.path.basename))
 
-        # Add recent used icons
-        recent_icons = []
+        self._addRecentIconsGroup(result)
+        return result
+
+    def _addRecentIconsGroup(self, group_info_list):
         recent_title = _(u'Recent')
         recent_cover = os.path.join(getImagesDir(), u'recent.png')
-        result.insert(0, IconsGroupInfo(recent_icons, recent_title, recent_cover))
-
-        return result
+        group_info_list.insert(0, IconsGroupInfo(self._recentIcons,
+                                                 recent_title,
+                                                 recent_cover,
+                                                 sort_key=None)
+                              )
 
     @property
     def icon(self):
@@ -112,7 +158,14 @@ class IconsController(BasePageDialogController):
         """
         Return True if success and False otherwise
         """
-        icon = self.icon
+        icon = os.path.abspath(self.icon)
+
+        # Remove duplicate icon
+        if icon in self._recentIcons:
+            self._recentIcons.remove(icon)
+
+        self._recentIcons.insert(0, icon)
+        self._saveRecentIcons()
 
         # If icon not exists, page may be renamed. Don't will to change icon
         if os.path.exists(icon):
@@ -200,7 +253,8 @@ class IconsController(BasePageDialogController):
         groupInfo = self._groupsInfo[index]
 
         icons = groupInfo.iconslist
-        icons.sort()
+        if groupInfo.sort_key is not None:
+            icons.sort(key=groupInfo.sort_key)
 
         return icons
 
@@ -209,6 +263,5 @@ class IconsController(BasePageDialogController):
 
     def _switchToCurrentGroup(self):
         icons = self._getCurrentIcons()
-        icons.sort(key=os.path.basename)
         self._iconsPanel.iconsList.setIconsList(icons)
         self._addCurrentIcon()
