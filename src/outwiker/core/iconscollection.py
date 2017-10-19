@@ -16,7 +16,6 @@ class IconsCollection(object):
     '''
     Class for the working with groups of the icons
     '''
-
     # File name for cover of the group
     COVER_FILE_NAME = u'__cover.png'
 

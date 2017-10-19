@@ -18,7 +18,7 @@ from outwiker.gui.controls.switchthemed import SwitchThemed, EVT_SWITCH
 from outwiker.gui.theme import Theme
 
 
-class GroupInfo(object):
+class IconsGroupInfo(object):
     def __init__(self, iconslist, title, cover):
         self.iconslist = iconslist
         self.title = title
@@ -94,13 +94,13 @@ class IconsController(BasePageDialogController):
 
                 iconslist = collection.getIcons(groupname)
                 cover = collection.getCover(groupname)
-                result.append(GroupInfo(iconslist, title, cover))
+                result.append(IconsGroupInfo(iconslist, title, cover))
 
         # Add recent used icons
         recent_icons = []
         recent_title = _(u'Recent')
         recent_cover = os.path.join(getImagesDir(), u'recent.png')
-        result.insert(0, GroupInfo(recent_icons, recent_title, recent_cover))
+        result.insert(0, IconsGroupInfo(recent_icons, recent_title, recent_cover))
 
         return result
 
