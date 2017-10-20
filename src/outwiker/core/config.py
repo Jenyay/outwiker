@@ -131,7 +131,7 @@ class Config(object):
 
     def has_section(self, section):
         """
-        Возврщает True, если векция с именем section существует
+        Возвращает True, если векция с именем section существует
         и False в противном случае
         """
         section_encoded = section.encode("utf8")
