@@ -239,9 +239,6 @@ class IconListCtrl(wx.ScrolledWindow):
         for fname in reversed(self._iconFileNames):
             self.__addButton(fname)
 
-        if len(self.buttons) != 0:
-            self.__selectSingleButton(self.buttons[0])
-
         self.__layout()
         self.Scroll(0, 0)
 

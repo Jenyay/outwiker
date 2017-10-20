@@ -67,13 +67,7 @@ class IconsController(BasePageDialogController):
         self._dialog = dialog
         self._iconsPanel = iconsPanel
         self._groupsMaxWidth = 200
-        # self._builtin_icons_path = getIconsDirList()[0]
 
-        # self._recentIconsConfig = StringListSection(application.config,
-        #                                             RECENT_ICONS_SECTION,
-        #                                             RECENT_ICONS_PARAM_NAME)
-
-        # self._recentIcons = self._loadRecentIcons()
         self._recentIconsList = RecentIconsList(RECENT_ICONS_COUNT,
                                                 application.config,
                                                 getIconsDirList()[0])
@@ -90,31 +84,6 @@ class IconsController(BasePageDialogController):
         self._appendGroups()
         self._iconsPanel.groupCtrl.SetSelection(0)
         self._switchToCurrentGroup()
-
-    # def _loadRecentIcons(self):
-    #     recent_icons_list = []
-    #     for icon_path in self._recentIconsConfig.value:
-    #         if os.path.exists(icon_path):
-    #             recent_icons_list.append(icon_path)
-    #             continue
-
-    #         icon_path = os.path.join(self._builtin_icons_path, icon_path)
-    #         if os.path.exists(icon_path):
-    #             recent_icons_list.append(icon_path)
-
-    #     return recent_icons_list
-
-    # def _saveRecentIcons(self):
-    #     iconController = IconController(self._builtin_icons_path)
-    #     icons_for_config = []
-
-    #     for icon in self._recentIcons:
-    #         if iconController.is_builtin_icon(icon):
-    #             icon = os.path.relpath(icon, self._builtin_icons_path)
-
-    #         icons_for_config.append(icon)
-
-    #     self._recentIconsConfig.value = icons_for_config[0: RECENT_ICONS_COUNT]
 
     def _getGroupsInfo(self):
         result = []
@@ -150,7 +119,7 @@ class IconsController(BasePageDialogController):
                                                  recent_title,
                                                  recent_cover,
                                                  sort_key=None)
-                              )
+                               )
 
     @property
     def icon(self):
@@ -160,8 +129,10 @@ class IconsController(BasePageDialogController):
         """
         Return True if success and False otherwise
         """
-        icon = os.path.abspath(self.icon)
+        if self.icon is None:
+            return True
 
+        icon = os.path.abspath(self.icon)
         self._recentIconsList.add(icon)
 
         # If icon not exists, page may be renamed. Don't will to change icon
@@ -181,7 +152,8 @@ class IconsController(BasePageDialogController):
         Initialize the panel before new page editing.
         page - page for editing
         """
-        self._selectedIcon = os.path.abspath(currentPage.icon)
+        if currentPage.icon is not None:
+            self._selectedIcon = os.path.abspath(currentPage.icon)
 
     def _addCurrentIcon(self):
         if self._selectedIcon is not None:
