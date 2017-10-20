@@ -32,8 +32,12 @@ def getImageSize(fname):
     image = wx.Image(fname)
     width = image.GetWidth()
     height = image.GetHeight()
-
     return (width, height)
+
+
+def createFile(fname):
+    fp = open(fname, 'w')
+    fp.close()
 
 
 class SkipLogFilter(logging.Filter):
