@@ -7,7 +7,7 @@
 		<website>http://jenyay.net/Outwiker/UnstableEn</website>
 
 		<changelog>
-			<version number="2.1.0.829" status="dev">
+			<version number="2.1.0.830" status="dev">
 				<change>The way of storing standard icons in notes is changed.</change>
 				<change>New interface to select notes icons.</change>
 			</version>
@@ -32,7 +32,7 @@
 		<website>http://jenyay.net/Outwiker/Unstable</website>
 
 		<changelog>
-			<version number="2.1.0.829" status="dev">
+			<version number="2.1.0.830" status="dev">
 				<change>Изменен способ хранения стандартных значков в заметках.</change>
 				<change>Новый интерфейс выбора значков заметок.</change>
 			</version>
