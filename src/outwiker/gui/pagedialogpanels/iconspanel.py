@@ -14,7 +14,8 @@ from outwiker.core.defines import (ICON_WIDTH,
                                    ICON_HEIGHT,
                                    RECENT_ICONS_COUNT)
 from outwiker.core.commands import MessageBox
-from outwiker.core.events import PageDialogPageIconChangedParams
+from outwiker.core.events import (PageDialogPageIconChangedParams,
+                                  IconsGroupsListInitParams)
 from outwiker.gui.iconlistctrl import IconListCtrl, EVT_ICON_SELECTED
 from outwiker.gui.pagedialogpanels.basecontroller import BasePageDialogController
 from outwiker.gui.controls.switchthemed import SwitchThemed, EVT_SWITCH
@@ -22,10 +23,21 @@ from outwiker.gui.theme import Theme
 
 
 class IconsGroupInfo(object):
-    def __init__(self, iconslist, title, cover, sort_key=None):
+    # Icons group types
+    TYPE_BUILTIN = 0
+    TYPE_CUSTOM = 1
+    TYPE_OTHER = 2
+
+    def __init__(self,
+                 iconslist,
+                 title,
+                 cover,
+                 group_type,
+                 sort_key=None):
         self.iconslist = iconslist
         self.title = title
         self.cover = cover
+        self.group_type = group_type
         self.sort_key = sort_key
 
 
@@ -67,6 +79,7 @@ class IconsController(BasePageDialogController):
         self._dialog = dialog
         self._iconsPanel = iconsPanel
         self._groupsMaxWidth = 200
+        self._page = None
 
         self._recentIconsList = RecentIconsList(RECENT_ICONS_COUNT,
                                                 application.config,
@@ -103,23 +116,32 @@ class IconsController(BasePageDialogController):
 
                 iconslist = collection.getIcons(groupname)
                 cover = collection.getCover(groupname)
+                group_type = (IconsGroupInfo.TYPE_BUILTIN if n == 0
+                              else IconsGroupInfo.TYPE_CUSTOM)
+
                 result.append(IconsGroupInfo(iconslist,
                                              title,
                                              cover,
+                                             group_type=group_type,
                                              sort_key=os.path.basename))
 
         self._addRecentIconsGroup(result)
-        return result
+        eventParam = IconsGroupsListInitParams(result)
+        self._application.onIconsGroupsListInit(self._page, eventParam)
+
+        return eventParam.groupsList
 
     def _addRecentIconsGroup(self, group_info_list):
         recent_title = _(u'Recent')
         recent_cover = os.path.join(getImagesDir(), u'recent.png')
         recent_icons = self._recentIconsList.getRecentIcons()
-        group_info_list.insert(0, IconsGroupInfo(recent_icons,
-                                                 recent_title,
-                                                 recent_cover,
-                                                 sort_key=None)
-                               )
+        group_info_list.insert(0, IconsGroupInfo(
+            recent_icons,
+            recent_title,
+            recent_cover,
+            group_type=IconsGroupInfo.TYPE_OTHER,
+            sort_key=None)
+        )
 
     @property
     def icon(self):
@@ -152,6 +174,8 @@ class IconsController(BasePageDialogController):
         Initialize the panel before new page editing.
         page - page for editing
         """
+        self._page = currentPage
+
         if currentPage.icon is not None:
             self._selectedIcon = os.path.abspath(currentPage.icon)
 

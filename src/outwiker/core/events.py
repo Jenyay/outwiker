@@ -244,3 +244,16 @@ class PostWikiOpenParams(object):
         self.path = path
         self.readonly = readonly
         self.success = success
+
+
+class IconsGroupsListInitParams(object):
+    """
+    Set of parameters for the onIconsGroupsListInit event
+
+    Added in OutWiker 2.1.0.831 (outwiker.core 1.5)
+    """
+    def __init__(self, groupsList):
+        """
+        groupsList - list of the outwiker.gui.iconspanel.IconsGroupInfo.
+        """
+        self.groupsList = groupsList

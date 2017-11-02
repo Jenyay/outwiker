@@ -136,7 +136,7 @@ class ApplicationParams(object):
         #              class instance
         self.onPreferencesDialogClose = Event()
 
-        # Event occurs after(!) the page view creation
+        # Event occurs after (!) the page view creation
         # (inside CurrentPagePanel instance)
         # Parameters:
         #     page - new selected page
@@ -213,13 +213,13 @@ class ApplicationParams(object):
 
         # Event occurs before page dialog will be destroyed
         # Parameters:
-        #     page - current(selected) page
+        #     page - current (selected) page
         #     params - instance of the PageDialogDestroyParams class
         self.onPageDialogDestroy = Event()
 
         # Event occurs after page type changing
         # Parameters:
-        #     page - current(selected) page
+        #     page - current (selected) page
         #     params - instance of the PageDialogPageTypeChangedParams class
         self.onPageDialogPageTypeChanged = Event()
 
@@ -231,13 +231,13 @@ class ApplicationParams(object):
 
         # Event occurs after page style changing
         # Parameters:
-        #     page - current(selected) page
+        #     page - current (selected) page
         #     params - instance of the PageDialogPageStyleChangedParams class
         self.onPageDialogPageStyleChanged = Event()
 
         # Event occurs after page icon changing
         # Parameters:
-        #     page - current(selected) page
+        #     page - current (selected) page
         #     params - instance of the PageDialogPageIconChangedParams class
         self.onPageDialogPageIconChanged = Event()
 
@@ -251,34 +251,41 @@ class ApplicationParams(object):
         # during general panel creation. Evens sender expect what event
         # handlers will fill the page factories list with addPageFactory method
         # Parameters:
-        #     page - current(selected) page
+        #     page - current (selected) page
         #     params - instance of the PageDialogPageFactoriesNeededParams
         #              class
         self.onPageDialogPageFactoriesNeeded = Event()
 
         # Event occurs by TextEditor when it needs styles
         # Parameters:
-        #     page - current(selected) page
+        #     page - current (selected) page
         #     params - instance of the EditorStyleNeededParams class
         self.onEditorStyleNeeded = Event()
 
         # Event forces update and render current page
         # Parameters:
-        #     page - current(selected) page
+        #     page - current (selected) page
         #     params - instance of the PageUpdateNeededParams class
         self.onPageUpdateNeeded = Event()
 
         # Event occurs before wiki opening
         # Parameters:
-        #    page - current(selected) page
+        #    page - current (selected) page
         #    params - instance of the PreWikiOpenParams class
         self.onPreWikiOpen = Event()
 
         # Event occurs after wiki opening
         # Parameters:
-        #    page - current(selected) page
+        #    page - current (selected) page
         #    params - instance of the PostWikiOpenParams class
         self.onPostWikiOpen = Event()
+
+        # Event occurs in the IconsPanel after generation list of
+        # the icons groups.
+        # Parameters:
+        #     page - current (selected) page
+        #     params - instance of the IconsGroupsListInitParams class
+        self.onIconsGroupsListInit = Event()
 
     def init(self, configFilename):
         """
