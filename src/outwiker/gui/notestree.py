@@ -134,13 +134,18 @@ class NotesTree(wx.Panel):
         if not icon:
             return imageId
 
+        icon = os.path.abspath(icon)
+
         if icon in self._iconsCache:
             return self._iconsCache[icon]
-        else:
-            image = wx.Bitmap(icon)
-            if image.IsOk():
-                imageId = self.imagelist.Add(image)
-                self._iconsCache[icon] = imageId
+
+        image = wx.Bitmap(icon)
+        if image.IsOk():
+            imageId = self.imagelist.Add(image)
+
+        page_path = os.path.abspath(page.path)
+        if not icon.startswith(page_path):
+            self._iconsCache[icon] = imageId
 
         return imageId
 
@@ -150,8 +155,8 @@ class NotesTree(wx.Panel):
             # изменилась иконка или нет
             return
 
-        self.treeCtrl.SetItemImage(self._pageCache[page],
-                                   self.__loadIcon(page))
+        icon_id = self.__loadIcon(page)
+        self.treeCtrl.SetItemImage(self._pageCache[page], icon_id)
 
     def __BindGuiEvents(self):
         """
