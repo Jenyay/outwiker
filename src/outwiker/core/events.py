@@ -20,15 +20,15 @@ PAGE_UPDATE_ATTACHMENT = 8
 PAGE_UPDATE_STYLE = 16
 
 
-class LinkClickParams (object):
+class LinkClickParams(object):
     """
-    Parameter set for the onLinkClick event
+    Set of parameters for the onLinkClick event
     """
-    def __init__ (self,
-                  link = u'',
-                  button = ID_MOUSE_LEFT,
-                  modifier = 0,
-                  linktype = None):
+    def __init__(self,
+                 link=u'',
+                 button=ID_MOUSE_LEFT,
+                 modifier=0,
+                 linktype=None):
         """
         link - clicked link
 
@@ -39,7 +39,7 @@ class LinkClickParams (object):
 
         linktype - string (or None) which shows type of link:
             "url" - link to Internet site
-            "page" - link to page (note)
+            "page" - link to page(note)
             "file" - link to file
             "anchor" - link to anchor on current page
             None - unknown
@@ -58,11 +58,11 @@ class LinkClickParams (object):
         self.process = False
 
 
-class HoverLinkParams (object):
+class HoverLinkParams(object):
     """
-    Parameter set for the onHoverLink event
+    Set of parameters for the onHoverLink event
     """
-    def __init__ (self, link = None, text = u''):
+    def __init__(self, link=None, text=u''):
         """
         link - link under cursor (or None)
         text - text which will be showed in status bar.
@@ -72,46 +72,49 @@ class HoverLinkParams (object):
         self.text = text
 
 
-class PreprocessingParams (object):
+class PreprocessingParams(object):
     """
-    Parameter set for the onPreprocessing event
+    Set of parameters for the onPreprocessing event
     """
-    def __init__ (self, result):
+    def __init__(self, result):
         """
-        result - resulted code (wiki or HTML) for which will be generated final HTML code.
+        result - resulted code (wiki or HTML) for which will be generated
+        final HTML code.
         This item can be changed by event handlers
         """
         self.result = result
 
 
-class PostprocessingParams (object):
+class PostprocessingParams(object):
     """
-    Parameter set for the onPostprocessing event
+    Set of parameters for the onPostprocessing event
     """
-    def __init__ (self, result):
+    def __init__(self, result):
         """
-        result - resulted HTML code. This item can be changed by event handlers.
+        result - resulted HTML code.
+            This item can be changed by event handlers.
             User will see result after all changes.
         """
         self.result = result
 
 
-class PreHtmlImprovingParams (object):
+class PreHtmlImprovingParams(object):
     """
-    Parameter set for the onPreHtmlImproving event
+    Set of parameters for the onPreHtmlImproving event
     """
-    def __init__ (self, result):
+    def __init__(self, result):
         """
-        result - HTML code after wiki parsing. This item can be changed by event handlers.
+        result - HTML code after wiki parsing.
+            This item can be changed by event handlers.
         """
         self.result = result
 
 
-class EditorPopupMenuParams (object):
+class EditorPopupMenuParams(object):
     """
-    Parameter set for the onEditorPopupMenu event
+    Set of parameters for the onEditorPopupMenu event
     """
-    def __init__ (self, editor, menu, point, pos_byte):
+    def __init__(self, editor, menu, point, pos_byte):
         """
         editor - text editor
         menu - popup menu
@@ -124,107 +127,105 @@ class EditorPopupMenuParams (object):
         self.pos_byte = pos_byte
 
 
-class PageDialogInitParams (object):
+class PageDialogInitParams(object):
     """
-    Parameter set for the onPageDialogInit event
+    Set of parameters for the onPageDialogInit event
     """
-    def __init__ (self, dialog):
+    def __init__(self, dialog):
         self.dialog = dialog
 
 
-class PageDialogDestroyParams (object):
+class PageDialogDestroyParams(object):
     """
-    Parameter set for the onPageDialogDestroy event
+    Set of parameters for the onPageDialogDestroy event
     """
-    def __init__ (self, dialog):
+    def __init__(self, dialog):
         self.dialog = dialog
 
 
-class PageDialogPageTypeChangedParams (object):
+class PageDialogPageTypeChangedParams(object):
     """
-    Parameter set for the onPageDialogPageTypeChanged event
+    Set of parameters for the onPageDialogPageTypeChanged event
     """
-    def __init__ (self, dialog, pageType):
+    def __init__(self, dialog, pageType):
         self.dialog = dialog
         self.pageType = pageType
 
 
-class PageDialogPageTitleChangedParams (object):
+class PageDialogPageTitleChangedParams(object):
     """
-    Parameter set for the onPageDialogPageTitleChanged event
+    Set of parameters for the onPageDialogPageTitleChanged event
     """
-    def __init__ (self, dialog, pageTitle):
+    def __init__(self, dialog, pageTitle):
         self.dialog = dialog
         self.pageTitle = pageTitle
 
 
-class PageDialogPageStyleChangedParams (object):
+class PageDialogPageStyleChangedParams(object):
     """
-    Parameter set for the onPageDialogPageStyleChanged event
+    Set of parameters for the onPageDialogPageStyleChanged event
     """
-    def __init__ (self, dialog, pageStyle):
+    def __init__(self, dialog, pageStyle):
         self.dialog = dialog
         self.pageStyle = pageStyle
 
 
-class PageDialogPageIconChangedParams (object):
+class PageDialogPageIconChangedParams(object):
     """
-    Parameter set for the onPageDialogPageIconChanged event
+    Set of parameters for the onPageDialogPageIconChanged event
     """
-    def __init__ (self, dialog, pageIcon):
+    def __init__(self, dialog, pageIcon):
         self.dialog = dialog
         self.pageIcon = pageIcon
 
 
-class PageDialogPageTagsChangedParams (object):
+class PageDialogPageTagsChangedParams(object):
     """
-    Parameter set for the onPageDialogPageTagsChanged event
+    Set of parameters for the onPageDialogPageTagsChanged event
     """
-    def __init__ (self, dialog, pageTags):
+    def __init__(self, dialog, pageTags):
         self.dialog = dialog
         self.pageTags = pageTags
 
 
-class PageDialogPageFactoriesNeededParams (object):
-    def __init__ (self, dialog, pageForEdit):
+class PageDialogPageFactoriesNeededParams(object):
+    def __init__(self, dialog, pageForEdit):
         """
-        Parameter set for the onPageDialogPageFactoriesNeeded event
+        Set of parameters for the onPageDialogPageFactoriesNeeded event
         """
         self.dialog = dialog
         self.pageForEdit = pageForEdit
         self._pageFactories = []
 
-
-    def addPageFactory (self, factory):
-        self._pageFactories.append (factory)
-
+    def addPageFactory(self, factory):
+        self._pageFactories.append(factory)
 
     @property
-    def pageFactories (self):
+    def pageFactories(self):
         return self._pageFactories[:]
 
 
-class EditorStyleNeededParams (object):
+class EditorStyleNeededParams(object):
     """
-    Parameter set for the onEditorStyleNeeded event
+    Set of parameters for the onEditorStyleNeeded event
     """
-    def __init__ (self, editor, text, enableSpellChecking):
+    def __init__(self, editor, text, enableSpellChecking):
         self.editor = editor
         self.text = text
         self.enableSpellChecking = enableSpellChecking
 
 
-class PageUpdateNeededParams (object):
+class PageUpdateNeededParams(object):
     """
-    Parameter set for the onPageUpdateNeededParams event
+    Set of parameters for the onPageUpdateNeededParams event
     """
-    def __init__ (self, allowCache=True):
+    def __init__(self, allowCache=True):
         self.allowCache = allowCache
 
 
-class PreWikiOpenParams (object):
+class PreWikiOpenParams(object):
     """
-    Parameter set for the onPreWikiOpen event
+    Set of parameters for the onPreWikiOpen event
 
     Added in OutWiker 2.0.0.795
     """
@@ -233,9 +234,9 @@ class PreWikiOpenParams (object):
         self.readonly = readonly
 
 
-class PostWikiOpenParams (object):
+class PostWikiOpenParams(object):
     """
-    Parameter set for the onPostWikiOpen event
+    Set of parameters for the onPostWikiOpen event
 
     Added in OutWiker 2.0.0.795
     """
