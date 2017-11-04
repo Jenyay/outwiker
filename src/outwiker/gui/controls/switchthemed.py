@@ -5,6 +5,7 @@ from wx.lib.newevent import NewCommandEvent
 from wx.lib.scrolledpanel import ScrolledPanel
 
 from stickybuttonthemed import StickyButtonThemed
+from staticlinethemed import StaticLineThemed
 
 
 SwitchEvent, EVT_SWITCH = NewCommandEvent()
@@ -51,7 +52,8 @@ class SwitchThemed(ScrolledPanel):
         wx.PostEvent(self, SwitchEvent(self.GetId(), index=self.GetSelection()))
 
     def SetTheme(self, theme):
-        map(lambda button: button.SetTheme(theme), self._buttons)
+        self._theme = theme
+        map(lambda button: button.SetTheme(self._theme), self._buttons)
 
     def Append(self, label=u'', bitmap=None):
         button = StickyButtonThemed(self, label=label, bitmap=bitmap)
@@ -73,6 +75,11 @@ class SwitchThemed(ScrolledPanel):
         self._mainSizer.Add(button, flag=wx.EXPAND | wx.ALL, border=0)
         self._updateMinWidth()
         self.Layout()
+
+    def AppendSeparator(self):
+        separator = StaticLineThemed(self, theme=self._theme)
+        # self._buttons.append(separator)
+        self._mainSizer.Add(separator, flag=wx.EXPAND | wx.ALL, border=0)
 
     def GetSelection(self):
         for n, button in enumerate(self._buttons):

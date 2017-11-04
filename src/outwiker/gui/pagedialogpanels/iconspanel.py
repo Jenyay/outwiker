@@ -80,6 +80,8 @@ class IconsController(BasePageDialogController):
         self._iconsPanel = iconsPanel
         self._groupsMaxWidth = 200
         self._page = None
+        self._default_group_cover = os.path.join(getImagesDir(),
+                                                 u'icons_cover_default.png')
 
         self._recentIconsList = RecentIconsList(RECENT_ICONS_COUNT,
                                                 application.config,
@@ -111,11 +113,11 @@ class IconsController(BasePageDialogController):
                 else:
                     title = self._localize(groupname)
 
-                if n != 0:
-                    title += u' *'
-
                 iconslist = collection.getIcons(groupname)
                 cover = collection.getCover(groupname)
+                if cover is None:
+                    cover = self._default_group_cover
+
                 group_type = (IconsGroupInfo.TYPE_BUILTIN if n == 0
                               else IconsGroupInfo.TYPE_CUSTOM)
 
@@ -207,8 +209,11 @@ class IconsController(BasePageDialogController):
         return name.capitalize()
 
     def _appendGroups(self):
-        for groupInfo in self._groupsInfo:
+        for index, groupInfo in enumerate(self._groupsInfo):
             bitmap = self._getCoverBitmap(groupInfo.cover)
+            if (index != 0 and
+                    groupInfo.group_type != self._groupsInfo[index - 1].group_type):
+                self._iconsPanel.groupCtrl.AppendSeparator()
             self._iconsPanel.groupCtrl.Append(groupInfo.title, bitmap)
 
         minw, minh = self._iconsPanel.groupCtrl.GetMinSize()

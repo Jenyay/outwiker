@@ -26,6 +26,9 @@ class IconsetPanel(BasePrefPanel):
         self.REMOVE_ICONS = wx.NewId()
         self.SET_COVER = wx.NewId()
 
+        self._default_group_cover = os.path.join(getImagesDir(),
+                                                 u'icons_cover_default.png')
+
         self.__createGuiElements()
 
         self._groups.Bind(wx.EVT_TREE_SEL_CHANGED,
@@ -184,7 +187,10 @@ class IconsetPanel(BasePrefPanel):
         # Add child groups
         for group in collection.getGroups():
             image = collection.getCover(group)
-            imageIndex = -1 if image is None else self._imagelist.Add(wx.Bitmap(image))
+            if image is None:
+                image = self._default_group_cover
+
+            imageIndex = self._imagelist.Add(wx.Bitmap(image))
 
             self._groups.AppendItem(rootItem,
                                     group,
