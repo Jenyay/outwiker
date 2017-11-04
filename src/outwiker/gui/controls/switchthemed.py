@@ -14,14 +14,15 @@ SwitchEvent, EVT_SWITCH = NewCommandEvent()
 class SwitchThemed(ScrolledPanel):
     def __init__(self, parent, theme=None):
         super(SwitchThemed, self).__init__(parent)
-        self._theme = theme
         self._buttonsHeight = 40
 
         self._buttons = []
+        self._otherItems = []
         self._mainSizer = wx.FlexGridSizer(cols=1)
         self._mainSizer.AddGrowableCol(0)
         self.SetSizer(self._mainSizer)
         self.SetupScrolling()
+        self.SetTheme(theme)
 
     def _onButtonClick(self, event):
         current_button = event.GetEventObject()
@@ -53,7 +54,8 @@ class SwitchThemed(ScrolledPanel):
 
     def SetTheme(self, theme):
         self._theme = theme
-        map(lambda button: button.SetTheme(self._theme), self._buttons)
+        map(lambda button: button.SetTheme(self._theme),
+            self._buttons + self._otherItems)
 
     def Append(self, label=u'', bitmap=None):
         button = StickyButtonThemed(self, label=label, bitmap=bitmap)
@@ -78,7 +80,7 @@ class SwitchThemed(ScrolledPanel):
 
     def AppendSeparator(self):
         separator = StaticLineThemed(self, theme=self._theme)
-        # self._buttons.append(separator)
+        self._otherItems.append(separator)
         self._mainSizer.Add(separator, flag=wx.EXPAND | wx.ALL, border=0)
 
     def GetSelection(self):
