@@ -23,6 +23,9 @@ class GeneralGuiConfig(object):
     RECENT_WIKI_COUNT_PARAM = u'maxcount'
     RECENT_WIKI_COUNT_DEFAULT = 5
 
+    RECENT_ICONS_COUNT_PARAM = u'recenticonscount'
+    RECENT_ICONS_COUNT_DEFAULT = 30
+
     RECENT_AUTOOPEN_PARAM = u'AutoOpen'
     RECENT_AUTOOPEN_DEFAULT = True
 
@@ -66,6 +69,13 @@ class GeneralGuiConfig(object):
                                            self.RECENT_SECTION,
                                            self.RECENT_WIKI_COUNT_PARAM,
                                            self.RECENT_WIKI_COUNT_DEFAULT)
+
+        # Recently icons history length
+        self.iconsHistoryLength = IntegerOption(
+            self.config,
+            self.RECENT_SECTION,
+            self.RECENT_ICONS_COUNT_PARAM,
+            self.RECENT_ICONS_COUNT_DEFAULT)
 
         # Открывать последнуюю открытую вики при старте?
         self.autoopen = BooleanOption(self.config,

@@ -35,6 +35,9 @@ class RecentIconsList(object):
             if os.path.exists(icon_path):
                 self._recentIcons.append(icon_path)
 
+        if self._maxcount >= 0:
+            self._recentIcons = self._recentIcons[:self._maxcount]
+
         return self.getRecentIcons()
 
     def add(self, icon_path):
@@ -46,9 +49,9 @@ class RecentIconsList(object):
 
         self._recentIcons.insert(0, icon_path)
         self._recentIcons = self._recentIcons[0: self._maxcount]
-        self._save()
+        self.save()
 
-    def _save(self):
+    def save(self):
         iconController = IconController(self._builtin_icons_path)
         icons_for_config = []
 

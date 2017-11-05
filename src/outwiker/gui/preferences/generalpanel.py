@@ -7,13 +7,13 @@ import wx
 import configelements
 import outwiker.core.i18n
 from outwiker.core.application import Application
+from outwiker.core.system import getImagesDir
 from outwiker.gui.guiconfig import (TrayConfig,
                                     GeneralGuiConfig,
                                     MainWindowConfig)
 from outwiker.gui.controls.formatctrl import FormatCtrl
 from outwiker.gui.controls.datetimeformatctrl import DateTimeFormatCtrl
 from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
-from outwiker.core.system import getImagesDir
 
 
 class GeneralPanel(BasePrefPanel):
@@ -31,6 +31,9 @@ class GeneralPanel(BasePrefPanel):
 
         self.MIN_HISTORY_LENGTH = 0
         self.MAX_HISTORY_LENGTH = 30
+
+        self.MIN_ICON_HISTORY_LENGTH = 0
+        self.MAX_ICON_HISTORY_LENGTH = 100
 
         self.PAGE_TAB_COMBO_WIDTH = 200
         self.LANG_COMBO_WIDTH = 200
@@ -163,10 +166,26 @@ class GeneralPanel(BasePrefPanel):
         """
         Создать элементы интерфейса, связанные с историей открытых файлов
         """
+        # Count of recently used icons
+        recent_icons_label = wx.StaticText(
+            self,
+            -1,
+            _("Length of recently used icons history"))
+
+        self.iconsHistoryLengthSpin = wx.SpinCtrl(
+            self,
+            -1,
+            str(generalConfig.RECENT_ICONS_COUNT_DEFAULT),
+            min=self.MIN_ICON_HISTORY_LENGTH,
+            max=self.MAX_ICON_HISTORY_LENGTH,
+            style=wx.SP_ARROW_KEYS | wx.TE_PROCESS_ENTER | wx.TE_PROCESS_TAB | wx.TE_AUTO_URL)
+
+        # Recently opened files
         history_label = wx.StaticText(
             self,
             -1,
-            _("Recent files history length(restart required)"))
+            _("Length of recently opened files history (restart required)"))
+
         self.historySpin = wx.SpinCtrl(
             self,
             -1,
@@ -180,7 +199,20 @@ class GeneralPanel(BasePrefPanel):
             -1,
             _("Automatically open the recent file"))
 
-        self.historySizer = wx.FlexGridSizer(1, 2, 0, 0)
+        self.historySizer = wx.FlexGridSizer(cols=2)
+        self.historySizer.AddGrowableCol(0)
+        self.historySizer.AddGrowableCol(1)
+
+        self.historySizer.Add(recent_icons_label,
+                              0,
+                              wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+                              2)
+
+        self.historySizer.Add(self.iconsHistoryLengthSpin,
+                              0,
+                              wx.ALL | wx.ALIGN_RIGHT,
+                              2)
+
         self.historySizer.Add(history_label,
                               0,
                               wx.ALL | wx.ALIGN_CENTER_VERTICAL,
@@ -190,10 +222,6 @@ class GeneralPanel(BasePrefPanel):
                               0,
                               wx.ALL | wx.ALIGN_RIGHT,
                               2)
-
-        self.historySizer.AddGrowableRow(0)
-        self.historySizer.AddGrowableCol(0)
-        self.historySizer.AddGrowableCol(1)
 
     def __createTitleFormatGui(self):
         """
@@ -338,6 +366,13 @@ class GeneralPanel(BasePrefPanel):
             self.MAX_HISTORY_LENGTH
         )
 
+        self.iconsHistoryLength = configelements.IntegerElement(
+            self.generalConfig.iconsHistoryLength,
+            self.iconsHistoryLengthSpin,
+            self.MIN_ICON_HISTORY_LENGTH,
+            self.MAX_ICON_HISTORY_LENGTH
+        )
+
         # Открывать последнюю вики при запуске?
         self.autoopen = configelements.BooleanElement(
             self.generalConfig.autoopen,
@@ -427,6 +462,7 @@ class GeneralPanel(BasePrefPanel):
         self.minimizeOnClose.save()
         self.askBeforeExit.save()
         self.historyLength.save()
+        self.iconsHistoryLength.save()
         self.autoopen.save()
         self.autosaveInterval.save()
         self.dateTimeFormat.save()

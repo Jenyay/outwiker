@@ -10,9 +10,7 @@ import wx.combo
 from outwiker.core.system import getIconsDirList, getImagesDir
 from outwiker.core.iconscollection import IconsCollection
 from outwiker.core.recenticonslist import RecentIconsList
-from outwiker.core.defines import (ICON_WIDTH,
-                                   ICON_HEIGHT,
-                                   RECENT_ICONS_COUNT)
+from outwiker.core.defines import ICON_WIDTH, ICON_HEIGHT
 from outwiker.core.commands import MessageBox
 from outwiker.core.events import (PageDialogPageIconChangedParams,
                                   IconsGroupsListInitParams)
@@ -20,6 +18,7 @@ from outwiker.gui.iconlistctrl import IconListCtrl, EVT_ICON_SELECTED
 from outwiker.gui.pagedialogpanels.basecontroller import BasePageDialogController
 from outwiker.gui.controls.switchthemed import SwitchThemed, EVT_SWITCH
 from outwiker.gui.theme import Theme
+from outwiker.gui.guiconfig import GeneralGuiConfig
 
 
 class IconsGroupInfo(object):
@@ -82,10 +81,13 @@ class IconsController(BasePageDialogController):
         self._page = None
         self._default_group_cover = os.path.join(getImagesDir(),
                                                  u'icons_cover_default.png')
+        guiconfig = GeneralGuiConfig(application.config)
 
-        self._recentIconsList = RecentIconsList(RECENT_ICONS_COUNT,
-                                                application.config,
-                                                getIconsDirList()[0])
+        self._recentIconsList = RecentIconsList(
+            guiconfig.iconsHistoryLength.value,
+            application.config,
+            getIconsDirList()[0])
+
         self._recentIconsList.load()
 
         self._iconsPanel.iconsList.Bind(EVT_ICON_SELECTED,

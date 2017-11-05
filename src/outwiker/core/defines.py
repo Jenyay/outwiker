@@ -43,7 +43,6 @@ ICONS_EXTENSIONS = [u'png', u'jpg', u'jpeg', u'gif', u'bmp', u'ico']
 ICON_DEFAULT = ICONS_STD_PREFIX + u'_default.png'
 RECENT_ICONS_SECTION = u'RecentIcons'
 RECENT_ICONS_PARAM_NAME = u'icon'
-RECENT_ICONS_COUNT = 20
 
 ICONS_FOLDER_NAME = u'iconset'
 IMAGES_FOLDER_NAME = u'images'
