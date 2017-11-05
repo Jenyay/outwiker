@@ -159,6 +159,11 @@ class IconsController(BasePageDialogController):
             return True
 
         icon = os.path.abspath(self.icon)
+        old_icon = os.path.abspath(page.icon)
+
+        if icon == old_icon:
+            return True
+
         self._recentIconsList.add(icon)
 
         # If icon not exists, page may be renamed. Don't will to change icon

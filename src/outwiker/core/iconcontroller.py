@@ -85,11 +85,11 @@ class IconController(object):
         if not self._check_icon_extension(icon_fname):
             raise ValueError
 
-        self._remove_icon(page)
-
         icon_fname = os.path.abspath(icon_fname)
 
         if self.is_builtin_icon(icon_fname):
+            self._remove_icon(page)
+
             # Set built-in icon
             rel_icon_path = os.path.relpath(icon_fname, self._builtin_icons_path)
             page.params.iconOption.value = rel_icon_path
@@ -102,6 +102,7 @@ class IconController(object):
             newpath = os.path.abspath(os.path.join(page.path, newname))
 
             if icon_fname != newpath:
+                self._remove_icon(page)
                 shutil.copyfile(icon_fname, newpath)
 
         page.updateDateTime()
