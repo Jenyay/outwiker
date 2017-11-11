@@ -184,7 +184,7 @@ class GeneralPanel(BasePrefPanel):
         history_label = wx.StaticText(
             self,
             -1,
-            _("Length of recently opened files history (restart required)"))
+            _("Length of recently opened files history"))
 
         self.historySpin = wx.SpinCtrl(
             self,
