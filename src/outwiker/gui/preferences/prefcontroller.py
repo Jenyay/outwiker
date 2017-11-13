@@ -10,6 +10,7 @@ from outwiker.gui.guiconfig import PrefDialogConfig
 
 from preferencepanelinfo import PreferencePanelInfo
 from generalpanel import GeneralPanel
+from traypanel import TrayPanel
 from editorpanel import EditorPanel
 from spellpanel import SpellPanel
 from htmlrenderpanel import HtmlRenderPanel
@@ -119,6 +120,7 @@ class PrefController (object):
         Создать страницы с подгруппой "Interface"
         """
         generalPage = GeneralPanel(self._dialog.treeBook)
+        trayPage = TrayPanel(self._dialog.treeBook)
         htmlRenderPage = HtmlRenderPanel(self._dialog.treeBook)
         textPrintPage = TextPrintPanel(self._dialog.treeBook)
         hotkeysPage = HotKeysPanel(self._dialog.treeBook)
@@ -127,6 +129,7 @@ class PrefController (object):
 
         interfacePanelsList = [
             PreferencePanelInfo(generalPage, _(u"General")),
+            PreferencePanelInfo(trayPage, _(u"Tray icon")),
             PreferencePanelInfo(htmlRenderPage, _(u"Preview")),
             PreferencePanelInfo(tagsPage, _(u"Tags cloud")),
             PreferencePanelInfo(attachPage, _(u"Attachments")),

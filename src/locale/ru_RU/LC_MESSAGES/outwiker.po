@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-11 21:20+0300\n"
+"POT-Creation-Date: 2017-11-13 21:08+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -476,8 +476,8 @@ msgid "Appearance"
 msgstr "Внешний вид"
 
 #: outwiker/pages/html/basehtmlpanel.py:194
-#: outwiker/gui/preferences/prefcontroller.py:130
-#: outwiker/gui/preferences/generalpanel.py:43
+#: outwiker/gui/preferences/prefcontroller.py:133
+#: outwiker/gui/preferences/generalpanel.py:40
 msgid "Preview"
 msgstr "Просмотр"
 
@@ -772,8 +772,8 @@ msgstr "<b>Ошибка создания миниатюры для \"{}\"</b>"
 #: outwiker/pages/wiki/wikipagecontroller.py:75
 #: outwiker/gui/toolbars/generaltoolbar.py:28
 #: outwiker/gui/basepagedialog.py:130
-#: outwiker/gui/preferences/prefcontroller.py:129
-#: outwiker/gui/preferences/prefcontroller.py:150
+#: outwiker/gui/preferences/prefcontroller.py:131
+#: outwiker/gui/preferences/prefcontroller.py:153
 msgid "General"
 msgstr "Общие"
 
@@ -1123,7 +1123,7 @@ msgid "Set focus to notes tree"
 msgstr "Установить фокус на дерево заметок"
 
 #: outwiker/actions/switchto.py:63 outwiker/actions/showhideattaches.py:18
-#: outwiker/gui/preferences/prefcontroller.py:132
+#: outwiker/gui/preferences/prefcontroller.py:135
 #: outwiker/gui/mainpanes/attachmainpane.py:19
 msgid "Attachments"
 msgstr "Прикрепленные файлы"
@@ -1259,7 +1259,7 @@ msgid "Toolbars"
 msgstr "Панели инструментов"
 
 #: outwiker/gui/toolbars/pluginstoolbar.py:28
-#: outwiker/gui/preferences/prefcontroller.py:160
+#: outwiker/gui/preferences/prefcontroller.py:163
 msgid "Plugins"
 msgstr "Плагины"
 
@@ -1271,44 +1271,48 @@ msgstr "Значок"
 msgid "Not found"
 msgstr "Не найдено"
 
-#: outwiker/gui/preferences/prefcontroller.py:131
+#: outwiker/gui/preferences/prefcontroller.py:132
+msgid "Tray icon"
+msgstr "Значок в панели задач"
+
+#: outwiker/gui/preferences/prefcontroller.py:134
 msgid "Tags cloud"
 msgstr "Облако меток"
 
-#: outwiker/gui/preferences/prefcontroller.py:133
+#: outwiker/gui/preferences/prefcontroller.py:136
 msgid "Hotkeys"
 msgstr "Горячие клавиши"
 
-#: outwiker/gui/preferences/prefcontroller.py:134
+#: outwiker/gui/preferences/prefcontroller.py:137
 msgid "Text Printout"
 msgstr "Печать текста"
 
-#: outwiker/gui/preferences/prefcontroller.py:137
+#: outwiker/gui/preferences/prefcontroller.py:140
 msgid "Interface"
 msgstr "Интерфейс"
 
-#: outwiker/gui/preferences/prefcontroller.py:151
+#: outwiker/gui/preferences/prefcontroller.py:154
 #: outwiker/gui/actionslist.py:122
 msgid "Spell checking"
 msgstr "Проверка орфографии"
 
-#: outwiker/gui/preferences/prefcontroller.py:152
+#: outwiker/gui/preferences/prefcontroller.py:155
 msgid "HTML Editor"
 msgstr "HTML-редактор"
 
-#: outwiker/gui/preferences/prefcontroller.py:153
+#: outwiker/gui/preferences/prefcontroller.py:156
 msgid "Wiki Editor"
 msgstr "Викиредактор"
 
-#: outwiker/gui/preferences/prefcontroller.py:156
+#: outwiker/gui/preferences/prefcontroller.py:159
 msgid "Editor"
 msgstr "Редактор"
 
-#: outwiker/gui/preferences/prefcontroller.py:164
+#: outwiker/gui/preferences/prefcontroller.py:167
 msgid "User's iconset"
 msgstr "Значки пользователя"
 
-#: outwiker/gui/preferences/prefcontroller.py:169
+#: outwiker/gui/preferences/prefcontroller.py:172
 msgid "Preferences"
 msgstr "Параметры"
 
@@ -1323,6 +1327,22 @@ msgstr "Открыть файл"
 #: outwiker/gui/preferences/attachpanel.py:40
 msgid "Double click on an attached file"
 msgstr "Двойной клик на прикрепленном файле"
+
+#: outwiker/gui/preferences/traypanel.py:44
+msgid "Minimize to tray"
+msgstr "Сворачивать в трей"
+
+#: outwiker/gui/preferences/traypanel.py:49
+msgid "Start iconized"
+msgstr "Запускаться свернутым в трей"
+
+#: outwiker/gui/preferences/traypanel.py:54
+msgid "Always show tray icon"
+msgstr "Всегда показывать иконку в трее"
+
+#: outwiker/gui/preferences/traypanel.py:59
+msgid "Minimize on close window"
+msgstr "Сворачивать при закрытии окна"
 
 #: outwiker/gui/preferences/hotkeyspanel.py:42
 #, python-brace-format
@@ -1436,79 +1456,63 @@ msgstr "Удалить выбранные значки?"
 msgid "Remove icons"
 msgstr "Удалить значки"
 
-#: outwiker/gui/preferences/generalpanel.py:42
+#: outwiker/gui/preferences/generalpanel.py:39
 msgid "Recent used"
 msgstr "Последний используемый"
 
-#: outwiker/gui/preferences/generalpanel.py:44 outwiker/gui/mainmenu.py:14
+#: outwiker/gui/preferences/generalpanel.py:41 outwiker/gui/mainmenu.py:14
 msgid "Edit"
 msgstr "Правка"
 
-#: outwiker/gui/preferences/generalpanel.py:86
+#: outwiker/gui/preferences/generalpanel.py:77
 msgid "Autosave interval in seconds(0 - disabled)"
 msgstr "Период автосохранения (0 - отключено)"
 
-#: outwiker/gui/preferences/generalpanel.py:114
+#: outwiker/gui/preferences/generalpanel.py:105
 msgid "Date and time format"
 msgstr "Формат даты и времени"
 
-#: outwiker/gui/preferences/generalpanel.py:139
+#: outwiker/gui/preferences/generalpanel.py:130
 msgid "Ask before exit"
 msgstr "Спрашивать подтверждение перед выходом"
 
-#: outwiker/gui/preferences/generalpanel.py:148
-msgid "Minimize to tray"
-msgstr "Сворачивать в трей"
-
-#: outwiker/gui/preferences/generalpanel.py:153
-msgid "Start iconized"
-msgstr "Запускаться свернутым в трей"
-
-#: outwiker/gui/preferences/generalpanel.py:158
-msgid "Always show tray icon"
-msgstr "Всегда показывать иконку в трее"
-
-#: outwiker/gui/preferences/generalpanel.py:163
-msgid "Minimize on close window"
-msgstr "Сворачивать при закрытии окна"
-
-#: outwiker/gui/preferences/generalpanel.py:173
+#: outwiker/gui/preferences/generalpanel.py:140
 msgid "Length of recently used icons history"
 msgstr "Размер истории последних используемых значков"
 
-#: outwiker/gui/preferences/generalpanel.py:187
+#: outwiker/gui/preferences/generalpanel.py:154
 msgid "Length of recently opened files history"
 msgstr "Размер истории последних открытых файлов"
 
-#: outwiker/gui/preferences/generalpanel.py:200
+#: outwiker/gui/preferences/generalpanel.py:167
 msgid "Automatically open the recent file"
 msgstr "При запуске открывать последний открытый файл"
 
-#: outwiker/gui/preferences/generalpanel.py:233
+#: outwiker/gui/preferences/generalpanel.py:200
 msgid "Wiki file name"
 msgstr "Имя файла загруженной вики"
 
-#: outwiker/gui/preferences/generalpanel.py:234
+#: outwiker/gui/preferences/generalpanel.py:201
 msgid "Page title"
 msgstr "Заголовок страницы"
 
-#: outwiker/gui/preferences/generalpanel.py:235
+#: outwiker/gui/preferences/generalpanel.py:202
 msgid "Relative path to current page"
 msgstr "Относительный путь до текущей страницы"
 
-#: outwiker/gui/preferences/generalpanel.py:240
+#: outwiker/gui/preferences/generalpanel.py:207
 msgid "Main window title format"
 msgstr "Формат заголовка главного окна"
 
-#: outwiker/gui/preferences/generalpanel.py:272
+#: outwiker/gui/preferences/generalpanel.py:239
 msgid "Language(restart required)"
 msgstr "Язык (требуется перезапуск)"
 
-#: outwiker/gui/preferences/generalpanel.py:289
+#: outwiker/gui/preferences/generalpanel.py:256
 msgid "Default opening page mode"
 msgstr "Режим открытия страниц по умолчанию"
 
-#: outwiker/gui/preferences/generalpanel.py:443
+#: outwiker/gui/preferences/generalpanel.py:377
 msgid "Auto"
 msgstr "Авто"
 

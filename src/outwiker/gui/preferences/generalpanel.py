@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os
 
@@ -8,8 +8,7 @@ import configelements
 import outwiker.core.i18n
 from outwiker.core.application import Application
 from outwiker.core.system import getImagesDir
-from outwiker.gui.guiconfig import (TrayConfig,
-                                    GeneralGuiConfig,
+from outwiker.gui.guiconfig import (GeneralGuiConfig,
                                     MainWindowConfig)
 from outwiker.gui.controls.formatctrl import FormatCtrl
 from outwiker.gui.controls.datetimeformatctrl import DateTimeFormatCtrl
@@ -17,11 +16,9 @@ from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
 
 
 class GeneralPanel(BasePrefPanel):
-
     def __init__(self, parent):
-        super(type(self), self).__init__(parent)
+        super(GeneralPanel, self).__init__(parent)
 
-        self.trayConfig = TrayConfig(Application.config)
         self.generalConfig = GeneralGuiConfig(Application.config)
         self.mainWindowConfig = MainWindowConfig(Application.config)
         self.i18nConfig = outwiker.core.i18n.I18nConfig(Application.config)
@@ -47,7 +44,6 @@ class GeneralPanel(BasePrefPanel):
         # Номер элемента при выборе "Авто" в списке языков
         self.__autoIndex = 0
 
-        self.__createTrayGui()
         self.__createMiscGui()
         self.__createAutosaveGui(self.generalConfig)
         self.__createHistoryGui(self.generalConfig)
@@ -59,12 +55,7 @@ class GeneralPanel(BasePrefPanel):
         self.__set_properties()
         self.__do_layout()
 
-        self.Bind(wx.EVT_CHECKBOX,
-                  self.onMinimizeToTray,
-                  self.minimizeCheckBox)
-
         self.LoadState()
-        self.updateCheckState()
         self._setScrolling()
 
     def __set_properties(self):
@@ -137,30 +128,6 @@ class GeneralPanel(BasePrefPanel):
         self.askBeforeExitCheckBox = wx.CheckBox(self,
                                                  -1,
                                                  _("Ask before exit"))
-
-    def __createTrayGui(self):
-        """
-        Создать элементы интерфейса, связанные с треем
-        """
-        self.minimizeCheckBox = wx.CheckBox(
-            self,
-            -1,
-            _("Minimize to tray"))
-
-        self.startIconizedCheckBox = wx.CheckBox(
-            self,
-            -1,
-            _("Start iconized"))
-
-        self.alwaysInTrayCheckBox = wx.CheckBox(
-            self,
-            -1,
-            _("Always show tray icon"))
-
-        self.minimizeOnCloseCheckBox = wx.CheckBox(
-            self,
-            -1,
-            _("Minimize on close window"))
 
     def __createHistoryGui(self, generalConfig):
         """
@@ -313,15 +280,6 @@ class GeneralPanel(BasePrefPanel):
         main_sizer = wx.FlexGridSizer(cols=1)
         main_sizer.AddGrowableCol(0)
 
-        main_sizer.Add(self.minimizeCheckBox,
-                       0,
-                       wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                       2)
-
-        main_sizer.Add(self.startIconizedCheckBox, 0, wx.ALL, 2)
-        main_sizer.Add(self.alwaysInTrayCheckBox, 0, wx.ALL, 2)
-        main_sizer.Add(self.minimizeOnCloseCheckBox, 0, wx.ALL, 2)
-
         main_sizer.Add(self.askBeforeExitCheckBox,
                        0,
                        wx.ALL | wx.ALIGN_CENTER_VERTICAL,
@@ -383,30 +341,6 @@ class GeneralPanel(BasePrefPanel):
         """
         Загрузка общих параметров программы
         """
-        # Сворачивать в трей?
-        self.minimizeToTray = configelements.BooleanElement(
-            self.trayConfig.minimizeToTray,
-            self.minimizeCheckBox
-        )
-
-        # Всегда показывать иконку в трее
-        self.alwaysInTray = configelements.BooleanElement(
-            self.trayConfig.alwaysShowTrayIcon,
-            self.alwaysInTrayCheckBox
-        )
-
-        # Сворачивать при закрытии
-        self.minimizeOnClose = configelements.BooleanElement(
-            self.trayConfig.minimizeOnClose,
-            self.minimizeOnCloseCheckBox
-        )
-
-        # Запускаться свернутым?
-        self.startIconized = configelements.BooleanElement(
-            self.trayConfig.startIconized,
-            self.startIconizedCheckBox
-        )
-
         # Задавать вопрос перед выходом из программы?
         self.askBeforeExit = configelements.BooleanElement(
             self.generalConfig.askBeforeExit,
@@ -457,22 +391,15 @@ class GeneralPanel(BasePrefPanel):
         """
         Сохранить состояние страницы в конфиг
         """
-        self.startIconized.save()
-        self.minimizeToTray.save()
-        self.minimizeOnClose.save()
         self.askBeforeExit.save()
         self.historyLength.save()
         self.iconsHistoryLength.save()
         self.autoopen.save()
         self.autosaveInterval.save()
         self.dateTimeFormat.save()
+        self.titleFormat.save()
         self.__saveLanguage()
         self.__savePageTab()
-
-        if (self.titleFormat.isValueChanged() or
-                self.alwaysInTray.isValueChanged()):
-            self.alwaysInTray.save()
-            self.titleFormat.save()
 
     def __saveLanguage(self):
         index = self.langCombo.GetSelection()
@@ -490,16 +417,3 @@ class GeneralPanel(BasePrefPanel):
         assert selectedItem < len(self.pageTabChoises)
 
         self.generalConfig.pageTab.value = self.pageTabChoises[selectedItem][1]
-
-    def onMinimizeToTray(self, event):
-        self.updateCheckState()
-
-    def updateCheckState(self):
-        """
-        Обновить стостояния чекбоксов
-        """
-        if not self.minimizeCheckBox.IsChecked():
-            self.startIconizedCheckBox.SetValue(False)
-            self.startIconizedCheckBox.Disable()
-        else:
-            self.startIconizedCheckBox.Enable()
