@@ -80,6 +80,7 @@ katex.render("{code}", element, {{ displayMode: {displayMode}, throwOnError: fal
 
         eqn = eqn.replace('\\', '\\\\')
         eqn = eqn.replace('"', '\\"')
+        eqn = eqn.replace('\n', '\\\n')
 
         result = self._equationTemplate.format(
             index=self._divIndex,
