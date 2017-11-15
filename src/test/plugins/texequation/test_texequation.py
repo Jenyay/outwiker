@@ -53,7 +53,7 @@ class TexEquationTest(unittest.TestCase):
         ]
 
         footer_lines = [
-            u'var element = document.getElementById("texequation-inline-0");',
+            u'var element_0 = document.getElementById("texequation-inline-0");',
             u'katex.render("{}",'.format(eqn),
         ]
 
@@ -81,8 +81,8 @@ class TexEquationTest(unittest.TestCase):
         ]
 
         footer_lines = [
-            u'var element = document.getElementById("texequation-inline-0");',
-            u'var element = document.getElementById("texequation-inline-1");',
+            u'var element_0 = document.getElementById("texequation-inline-0");',
+            u'var element_1 = document.getElementById("texequation-inline-1");',
             u'katex.render("{}",'.format(eqn1),
             u'katex.render("{}",'.format(eqn2),
         ]
@@ -118,7 +118,7 @@ class TexEquationTest(unittest.TestCase):
         ]
 
         footer_lines = [
-            u'var element = document.getElementById("texequation-block-0");',
+            u'var element_0 = document.getElementById("texequation-block-0");',
             u'katex.render("{}",'.format(eqn),
         ]
 
@@ -148,8 +148,8 @@ class TexEquationTest(unittest.TestCase):
         ]
 
         footer_lines = [
-            u'var element = document.getElementById("texequation-block-0");',
-            u'var element = document.getElementById("texequation-block-1");',
+            u'var element_0 = document.getElementById("texequation-block-0");',
+            u'var element_1 = document.getElementById("texequation-block-1");',
             u'katex.render("{}",'.format(eqn1),
             u'katex.render("{}",'.format(eqn2),
         ]
@@ -180,8 +180,8 @@ class TexEquationTest(unittest.TestCase):
         ]
 
         footer_lines = [
-            u'var element = document.getElementById("texequation-block-0");',
-            u'var element = document.getElementById("texequation-inline-0");',
+            u'var element_0 = document.getElementById("texequation-block-0");',
+            u'var element_0 = document.getElementById("texequation-inline-0");',
             u'katex.render("{}",'.format(eqn1),
             u'katex.render("{}",'.format(eqn2),
         ]

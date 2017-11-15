@@ -25,18 +25,22 @@ class BaseTexToken (object):
 
     def __init__(self, parser):
         self.parser = parser
-        self._headers = [u'<link rel="stylesheet" href="__attach/__thumb/katex/katex.min.css">',
+        self._headers = [u'<link rel="stylesheet" href="__attach/__thumb/katex/katex.min.css">\n',
                          u'<script src="__attach/__thumb/katex/katex.min.js"></script>']
         self._divIndex = 0
 
         self._equationTemplate = u'<span class="{classname}" id="{idname}-{index}"></span>'
 
-        self._scriptActionsTemplate = u'''var element = document.getElementById("{idname}-{index}");
-katex.render("{code}", element, {{ displayMode: {displayMode}, throwOnError: false }});'''
+        self._scriptActionsTemplate = u'''var element_{index} = document.getElementById("{idname}-{index}");
+katex.render("{code}", element_{index}, {{ displayMode: {displayMode}, throwOnError: false }});'''
 
         self._scriptTemplate = u'''<script>
+// {comment_begin}
 {actions}
-</script>'''
+// {comment_end}
+</script>
+'''
+        self._script_code = u''
 
     def getToken(self):
         return QuotedString(self.texStart,
@@ -54,6 +58,14 @@ katex.render("{code}", element, {{ displayMode: {displayMode}, throwOnError: fal
 
     @abstractmethod
     def _getIdName(self):
+        pass
+
+    @abstractmethod
+    def _get_script_comment_begin(self):
+        pass
+
+    @abstractmethod
+    def _get_script_comment_end(self):
         pass
 
     def _copyKatexLibrary(self):
@@ -96,11 +108,30 @@ katex.render("{code}", element, {{ displayMode: {displayMode}, throwOnError: fal
             idname=self._getIdName()
         )
 
-        script = self._scriptTemplate.format(actions=scriptAction)
-        self.parser.appendToFooter(script)
+        self._script_code += u'\n' + scriptAction + u'\n'
+
+        self._addScriptToFooter(self.parser, self._script_code)
 
         self._divIndex += 1
         return result
+
+    def _addScriptToFooter(self, parser, script_code):
+        comment_begin = self._get_script_comment_begin()
+        comment_end = self._get_script_comment_end()
+
+        script = self._scriptTemplate.format(actions=script_code,
+                                             comment_begin=comment_begin,
+                                             comment_end=comment_end)
+        index = None
+        for n, footer in enumerate(parser.footerItems):
+            if comment_begin in footer and comment_end in footer:
+                index = n
+                break
+
+        if index is not None:
+            parser.footerItems.pop(index)
+
+        parser.appendToFooter(script)
 
     def _getKaTeXPath(self):
         """
@@ -129,6 +160,12 @@ class InlineTexToken(BaseTexToken):
     def _getIdName(self):
         return u'texequation-inline'
 
+    def _get_script_comment_begin(self):
+        return u'*** TexEquation inline script begin ***'
+
+    def _get_script_comment_end(self):
+        return u'*** TexEquation inline script end ***'
+
 
 class BigTexToken(BaseTexToken):
     """
@@ -145,3 +182,9 @@ class BigTexToken(BaseTexToken):
 
     def _getIdName(self):
         return u'texequation-block'
+
+    def _get_script_comment_begin(self):
+        return u'*** TexEquation block script begin ***'
+
+    def _get_script_comment_end(self):
+        return u'*** TexEquation block script end ***'
