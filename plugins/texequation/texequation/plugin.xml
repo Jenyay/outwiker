@@ -25,7 +25,7 @@
 			<site>http://jenyay.net</site>
 		</author>
 		<changelog>
-			<version number="2.0.3">
+			<version number="2.0.3" date="November 20, 2017">
                 <download os="all">http://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.0.3.zip</download>
 				<change>Fixed error with multiline equations.</change>
 			</version>
@@ -80,7 +80,7 @@
 		</author>
 
 		<changelog>
-			<version number="2.0.3">
+			<version number="2.0.3" date="20.11.2017">
                 <download os="all">http://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.0.3.zip</download>
 				<change>Исправлена ошибка с многострочными формулами.</change>
 			</version>
