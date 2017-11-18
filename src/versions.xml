@@ -7,7 +7,7 @@
 		<website>http://jenyay.net/Outwiker/UnstableEn</website>
 
 		<changelog>
-			<version number="2.1.0.831" status="dev">
+			<version number="2.1.0.832" status="dev" date="November 20, 2017">
 				<change>Added options to select length of history of recently used icons.</change>
 				<change>Fixed errors.</change>
 			</version>
@@ -37,7 +37,7 @@
 		<website>http://jenyay.net/Outwiker/Unstable</website>
 
 		<changelog>
-			<version number="2.1.0.831" status="dev">
+			<version number="2.1.0.832" status="dev" date="20.11.2017">
 				<change>Добавлена настройка для выбора размера истории последних используемых значков страницы.</change>
 				<change>Исправление ошибок.</change>
 			</version>
