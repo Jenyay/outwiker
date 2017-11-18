@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-18 22:58+0300\n"
-"PO-Revision-Date: 2017-10-19 14:03+0300\n"
+"POT-Creation-Date: 2017-11-13 21:08+0300\n"
+"PO-Revision-Date: 2017-11-18 09:16+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.12\n"
+"X-Generator: Poedit 2.0.4\n"
 "X-Crowdin-Project: outwiker\n"
 "X-Crowdin-Language: sv-SE\n"
 "X-Crowdin-File: outwiker.pot\n"
@@ -51,11 +51,11 @@ msgstr "Sidan är öppnad med skrivskydd"
 #: outwiker/actions/movepagedown.py:40 outwiker/actions/globalsearch.py:41
 #: outwiker/actions/openattachfolder.py:38
 #: outwiker/actions/sortsiblingsalpha.py:37
-#: outwiker/gui/preferences/iconsetpanel.py:232
-#: outwiker/gui/preferences/iconsetpanel.py:288
+#: outwiker/gui/preferences/iconsetpanel.py:238
 #: outwiker/gui/preferences/iconsetpanel.py:294
 #: outwiker/gui/preferences/iconsetpanel.py:300
-#: outwiker/gui/preferences/iconsetpanel.py:340 outwiker/gui/attachpanel.py:254
+#: outwiker/gui/preferences/iconsetpanel.py:306
+#: outwiker/gui/preferences/iconsetpanel.py:346 outwiker/gui/attachpanel.py:254
 #: outwiker/gui/attachpanel.py:264 outwiker/gui/attachpanel.py:276
 #: outwiker/gui/attachpanel.py:288 outwiker/gui/attachpanel.py:298
 #: outwiker/gui/renametagdialog.py:75 outwiker/gui/renametagdialog.py:79
@@ -63,10 +63,10 @@ msgstr "Sidan är öppnad med skrivskydd"
 #: outwiker/gui/currentpagepanel.py:237 outwiker/gui/tabscontroller.py:251
 #: outwiker/gui/pagedialogpanels/generalpanel.py:173
 #: outwiker/gui/pagedialogpanels/generalpanel.py:186
-#: outwiker/gui/pagedialogpanels/iconspanel.py:123
+#: outwiker/gui/pagedialogpanels/iconspanel.py:174
 #: outwiker/gui/pagedialogpanels/appearancepanel.py:74
 #: outwiker/gui/pagedialog.py:24 outwiker/gui/pagedialog.py:34
-#: outwiker/gui/notestree.py:248 outwiker/gui/notestree.py:303
+#: outwiker/gui/notestree.py:253 outwiker/gui/notestree.py:308
 #: outwiker/gui/mainwindow.py:514 outwiker/gui/basetextpanel.py:249
 #: outwiker/gui/basetextpanel.py:261 outwiker/gui/mainwndcontroller.py:218
 #: outwiker/gui/htmlrenderie.py:215 outwiker/gui/htmlrenderwebkit.py:193
@@ -171,7 +171,7 @@ msgstr "Kan inte flytta sidan när det redan finns en sida med samma namn"
 msgid "Can't move page"
 msgstr "Kan inte flytta sidan"
 
-#: outwiker/core/commands.py:419 outwiker/gui/notestree.py:302
+#: outwiker/core/commands.py:419 outwiker/gui/notestree.py:307
 msgid "You can't rename the root element"
 msgstr "Du kan inte namnändra rotobjektet"
 
@@ -204,67 +204,67 @@ msgstr "Ange datumformat"
 msgid "Date format"
 msgstr "Datumformat"
 
-#: outwiker/core/defines.py:54
+#: outwiker/core/defines.py:56
 msgid "versions_lang"
 msgstr "en"
 
-#: outwiker/core/defines.py:57
+#: outwiker/core/defines.py:59
 msgid "awards"
 msgstr "utmärkelser"
 
-#: outwiker/core/defines.py:58
+#: outwiker/core/defines.py:60
 msgid "battery"
 msgstr "batteri"
 
-#: outwiker/core/defines.py:59
+#: outwiker/core/defines.py:61
 msgid "books"
 msgstr "böcker"
 
-#: outwiker/core/defines.py:60
+#: outwiker/core/defines.py:62
 msgid "computer"
 msgstr "dator"
 
-#: outwiker/core/defines.py:61
+#: outwiker/core/defines.py:63
 msgid "emotions"
 msgstr "känslor"
 
-#: outwiker/core/defines.py:62
+#: outwiker/core/defines.py:64
 msgid "flags"
 msgstr "flaggor"
 
-#: outwiker/core/defines.py:63
+#: outwiker/core/defines.py:65
 msgid "folders"
 msgstr "mappar"
 
-#: outwiker/core/defines.py:64
+#: outwiker/core/defines.py:66
 msgid "food"
 msgstr "mat"
 
-#: outwiker/core/defines.py:65
+#: outwiker/core/defines.py:67
 msgid "internet"
 msgstr "internet"
 
-#: outwiker/core/defines.py:66
+#: outwiker/core/defines.py:68
 msgid "money"
 msgstr "pengar"
 
-#: outwiker/core/defines.py:67
+#: outwiker/core/defines.py:69
 msgid "people"
 msgstr "folk"
 
-#: outwiker/core/defines.py:68
+#: outwiker/core/defines.py:70
 msgid "signs"
 msgstr "tecken"
 
-#: outwiker/core/defines.py:69
+#: outwiker/core/defines.py:71
 msgid "software"
 msgstr "mjukvara"
 
-#: outwiker/core/defines.py:70
+#: outwiker/core/defines.py:72
 msgid "tags"
 msgstr "taggar"
 
-#: outwiker/core/defines.py:71
+#: outwiker/core/defines.py:73
 msgid "weather"
 msgstr "väder"
 
@@ -462,7 +462,7 @@ msgid "Appearance"
 msgstr "Utseende"
 
 #: outwiker/pages/html/basehtmlpanel.py:194
-#: outwiker/gui/preferences/prefcontroller.py:130
+#: outwiker/gui/preferences/prefcontroller.py:133
 #: outwiker/gui/preferences/generalpanel.py:40
 msgid "Preview"
 msgstr "Förhandsgranskning"
@@ -754,8 +754,8 @@ msgstr "<b>Kan inte skapa miniatyr för \"{}\"</b>"
 #: outwiker/pages/wiki/wikipagecontroller.py:75
 #: outwiker/gui/toolbars/generaltoolbar.py:28
 #: outwiker/gui/basepagedialog.py:130
-#: outwiker/gui/preferences/prefcontroller.py:129
-#: outwiker/gui/preferences/prefcontroller.py:150
+#: outwiker/gui/preferences/prefcontroller.py:131
+#: outwiker/gui/preferences/prefcontroller.py:153
 msgid "General"
 msgstr "Allmänt"
 
@@ -1105,7 +1105,7 @@ msgid "Set focus to notes tree"
 msgstr "Sätt fokus på notisträdet"
 
 #: outwiker/actions/switchto.py:63 outwiker/actions/showhideattaches.py:18
-#: outwiker/gui/preferences/prefcontroller.py:132
+#: outwiker/gui/preferences/prefcontroller.py:135
 #: outwiker/gui/mainpanes/attachmainpane.py:19
 msgid "Attachments"
 msgstr "Bilagor"
@@ -1240,7 +1240,7 @@ msgid "Toolbars"
 msgstr "Verktygsfält"
 
 #: outwiker/gui/toolbars/pluginstoolbar.py:28
-#: outwiker/gui/preferences/prefcontroller.py:160
+#: outwiker/gui/preferences/prefcontroller.py:163
 msgid "Plugins"
 msgstr "Insticksmoduler"
 
@@ -1252,44 +1252,48 @@ msgstr "Ikon"
 msgid "Not found"
 msgstr "Hittas inte"
 
-#: outwiker/gui/preferences/prefcontroller.py:131
+#: outwiker/gui/preferences/prefcontroller.py:132
+msgid "Tray icon"
+msgstr "Panelikon"
+
+#: outwiker/gui/preferences/prefcontroller.py:134
 msgid "Tags cloud"
 msgstr "Taggmoln"
 
-#: outwiker/gui/preferences/prefcontroller.py:133
+#: outwiker/gui/preferences/prefcontroller.py:136
 msgid "Hotkeys"
 msgstr "Snabbtangenter"
 
-#: outwiker/gui/preferences/prefcontroller.py:134
+#: outwiker/gui/preferences/prefcontroller.py:137
 msgid "Text Printout"
 msgstr "Utskrift"
 
-#: outwiker/gui/preferences/prefcontroller.py:137
+#: outwiker/gui/preferences/prefcontroller.py:140
 msgid "Interface"
 msgstr "Gränssnitt"
 
-#: outwiker/gui/preferences/prefcontroller.py:151
+#: outwiker/gui/preferences/prefcontroller.py:154
 #: outwiker/gui/actionslist.py:122
 msgid "Spell checking"
 msgstr "Stavningskontroll"
 
-#: outwiker/gui/preferences/prefcontroller.py:152
+#: outwiker/gui/preferences/prefcontroller.py:155
 msgid "HTML Editor"
 msgstr "HTML-redigerare"
 
-#: outwiker/gui/preferences/prefcontroller.py:153
+#: outwiker/gui/preferences/prefcontroller.py:156
 msgid "Wiki Editor"
 msgstr "Wiki-redigerare"
 
-#: outwiker/gui/preferences/prefcontroller.py:156
+#: outwiker/gui/preferences/prefcontroller.py:159
 msgid "Editor"
 msgstr "Redigerare"
 
-#: outwiker/gui/preferences/prefcontroller.py:164
+#: outwiker/gui/preferences/prefcontroller.py:167
 msgid "User's iconset"
 msgstr "Anpassade ikoner"
 
-#: outwiker/gui/preferences/prefcontroller.py:169
+#: outwiker/gui/preferences/prefcontroller.py:172
 msgid "Preferences"
 msgstr "Inställningar"
 
@@ -1304,6 +1308,22 @@ msgstr "Öppna fil"
 #: outwiker/gui/preferences/attachpanel.py:40
 msgid "Double click on an attached file"
 msgstr "Dubbelklick på en bifogad fil"
+
+#: outwiker/gui/preferences/traypanel.py:44
+msgid "Minimize to tray"
+msgstr "Minimera till meddelandefältet"
+
+#: outwiker/gui/preferences/traypanel.py:49
+msgid "Start iconized"
+msgstr "Starta minimerad"
+
+#: outwiker/gui/preferences/traypanel.py:54
+msgid "Always show tray icon"
+msgstr "Visa alltid ikon i meddelandefältet"
+
+#: outwiker/gui/preferences/traypanel.py:59
+msgid "Minimize on close window"
+msgstr "Minimera istället för att stänga"
 
 #: outwiker/gui/preferences/hotkeyspanel.py:42
 #, python-brace-format
@@ -1326,94 +1346,94 @@ msgstr ""
 "Hot key. \n"
 "Press på Backsteg för att rensa"
 
-#: outwiker/gui/preferences/iconsetpanel.py:90
+#: outwiker/gui/preferences/iconsetpanel.py:93
 msgid "Add new group"
 msgstr "Lägg till ny grupp"
 
-#: outwiker/gui/preferences/iconsetpanel.py:98
+#: outwiker/gui/preferences/iconsetpanel.py:101
 msgid "Remove group"
 msgstr "Ta bort grupp"
 
-#: outwiker/gui/preferences/iconsetpanel.py:106
+#: outwiker/gui/preferences/iconsetpanel.py:109
 msgid "Rename group"
 msgstr "Byt namn på grupp"
 
-#: outwiker/gui/preferences/iconsetpanel.py:133
+#: outwiker/gui/preferences/iconsetpanel.py:136
 msgid "Add icons"
 msgstr "Lägg till ikoner"
 
-#: outwiker/gui/preferences/iconsetpanel.py:141
+#: outwiker/gui/preferences/iconsetpanel.py:144
 msgid "Remove selected icons"
 msgstr "Ta bort markerade ikoner"
 
-#: outwiker/gui/preferences/iconsetpanel.py:149
+#: outwiker/gui/preferences/iconsetpanel.py:152
 msgid "Set icon as group cover"
 msgstr "Ange ikon som gruppikon"
 
-#: outwiker/gui/preferences/iconsetpanel.py:180
-#: outwiker/gui/pagedialogpanels/iconspanel.py:88
+#: outwiker/gui/preferences/iconsetpanel.py:183
+#: outwiker/gui/pagedialogpanels/iconspanel.py:114
 msgid "Not in groups"
 msgstr "Inte i grupper"
 
-#: outwiker/gui/preferences/iconsetpanel.py:231
+#: outwiker/gui/preferences/iconsetpanel.py:237
 msgid "Can't create directory for icons group"
 msgstr "Kan inte skapa mapp för ikongrupp"
 
-#: outwiker/gui/preferences/iconsetpanel.py:260
+#: outwiker/gui/preferences/iconsetpanel.py:266
 msgid "New group{}"
 msgstr "Ny grupp {}"
 
-#: outwiker/gui/preferences/iconsetpanel.py:287
+#: outwiker/gui/preferences/iconsetpanel.py:293
 msgid "Can't rename directory for icons group"
 msgstr "Kan inte namnändra mapp för ikongrupp"
 
-#: outwiker/gui/preferences/iconsetpanel.py:293
+#: outwiker/gui/preferences/iconsetpanel.py:299
 msgid "Group with name \"{}\" exists already"
 msgstr "Det finns redan en grupp  med namnet \"{}\""
 
-#: outwiker/gui/preferences/iconsetpanel.py:299
+#: outwiker/gui/preferences/iconsetpanel.py:305
 msgid "Invalid group name \"{}\""
 msgstr "Ogiltigt gruppnamn \"{}\""
 
-#: outwiker/gui/preferences/iconsetpanel.py:332
+#: outwiker/gui/preferences/iconsetpanel.py:338
 msgid "Remove group \"{}\" and all icons inside it?"
 msgstr "Vill du ta bort gruppen \"{}\" och alla tillhörande ikoner?"
 
-#: outwiker/gui/preferences/iconsetpanel.py:333
+#: outwiker/gui/preferences/iconsetpanel.py:339
 msgid "Remove group?"
 msgstr "Vill du ta bort gruppen?"
 
-#: outwiker/gui/preferences/iconsetpanel.py:339
+#: outwiker/gui/preferences/iconsetpanel.py:345
 msgid "Can't remove group directory"
 msgstr "Kan inte ta bort gruppmappen"
 
-#: outwiker/gui/preferences/iconsetpanel.py:347
+#: outwiker/gui/preferences/iconsetpanel.py:353
 msgid "All image files"
 msgstr "Alla bildfiler"
 
-#: outwiker/gui/preferences/iconsetpanel.py:348
+#: outwiker/gui/preferences/iconsetpanel.py:354
 msgid "All files"
 msgstr "Alla filer"
 
-#: outwiker/gui/preferences/iconsetpanel.py:353
+#: outwiker/gui/preferences/iconsetpanel.py:359
 msgid "Select images"
 msgstr "Välj bilder"
 
-#: outwiker/gui/preferences/iconsetpanel.py:369
-#: outwiker/gui/preferences/iconsetpanel.py:393
+#: outwiker/gui/preferences/iconsetpanel.py:375
+#: outwiker/gui/preferences/iconsetpanel.py:399
 msgid "You have not selected any icons"
 msgstr "Du har inte valt några ikoner"
 
-#: outwiker/gui/preferences/iconsetpanel.py:370
-#: outwiker/gui/preferences/iconsetpanel.py:394
+#: outwiker/gui/preferences/iconsetpanel.py:376
+#: outwiker/gui/preferences/iconsetpanel.py:400
 msgid "Select icons"
 msgstr "Välj ikoner"
 
-#: outwiker/gui/preferences/iconsetpanel.py:375
+#: outwiker/gui/preferences/iconsetpanel.py:381
 msgid "Remove selected icons?"
 msgstr "Vill du ta bort markerade ikoner?"
 
-#: outwiker/gui/preferences/iconsetpanel.py:376
+#: outwiker/gui/preferences/iconsetpanel.py:382
 msgid "Remove icons"
 msgstr "Ta bort ikoner"
 
@@ -1425,67 +1445,55 @@ msgstr "Senast använd"
 msgid "Edit"
 msgstr "Redigera"
 
-#: outwiker/gui/preferences/generalpanel.py:83
+#: outwiker/gui/preferences/generalpanel.py:77
 msgid "Autosave interval in seconds(0 - disabled)"
 msgstr "Intervall för att autospara, i sekunder (0 - inaktiverat)"
 
-#: outwiker/gui/preferences/generalpanel.py:111
+#: outwiker/gui/preferences/generalpanel.py:105
 msgid "Date and time format"
 msgstr "Datum- och tidsformat"
 
-#: outwiker/gui/preferences/generalpanel.py:136
+#: outwiker/gui/preferences/generalpanel.py:130
 msgid "Ask before exit"
 msgstr "Bekräfta före avslut"
 
-#: outwiker/gui/preferences/generalpanel.py:145
-msgid "Minimize to tray"
-msgstr "Minimera till meddelandefältet"
+#: outwiker/gui/preferences/generalpanel.py:140
+msgid "Length of recently used icons history"
+msgstr "Historiklängd för tidigare använda ikoner"
 
-#: outwiker/gui/preferences/generalpanel.py:150
-msgid "Start iconized"
-msgstr "Starta minimerad"
+#: outwiker/gui/preferences/generalpanel.py:154
+msgid "Length of recently opened files history"
+msgstr "Historiklängd för tidigare öppnade filer"
 
-#: outwiker/gui/preferences/generalpanel.py:155
-msgid "Always show tray icon"
-msgstr "Visa alltid ikon i meddelandefältet"
-
-#: outwiker/gui/preferences/generalpanel.py:160
-msgid "Minimize on close window"
-msgstr "Minimera istället för att stänga"
-
-#: outwiker/gui/preferences/generalpanel.py:169
-msgid "Recent files history length(restart required)"
-msgstr "Historiklängd för tidigare filer (omstart krävs)"
-
-#: outwiker/gui/preferences/generalpanel.py:181
+#: outwiker/gui/preferences/generalpanel.py:167
 msgid "Automatically open the recent file"
 msgstr "Öppna senast använda fil automatiskt"
 
-#: outwiker/gui/preferences/generalpanel.py:205
+#: outwiker/gui/preferences/generalpanel.py:200
 msgid "Wiki file name"
 msgstr "Wiki-filnamn"
 
-#: outwiker/gui/preferences/generalpanel.py:206
+#: outwiker/gui/preferences/generalpanel.py:201
 msgid "Page title"
 msgstr "Sidtitel"
 
-#: outwiker/gui/preferences/generalpanel.py:207
+#: outwiker/gui/preferences/generalpanel.py:202
 msgid "Relative path to current page"
 msgstr "Relativ sökväg till aktuell sida"
 
-#: outwiker/gui/preferences/generalpanel.py:212
+#: outwiker/gui/preferences/generalpanel.py:207
 msgid "Main window title format"
 msgstr "Huvudfönstrets titelformat"
 
-#: outwiker/gui/preferences/generalpanel.py:244
+#: outwiker/gui/preferences/generalpanel.py:239
 msgid "Language(restart required)"
 msgstr "Språk (omstart krävs)"
 
-#: outwiker/gui/preferences/generalpanel.py:261
+#: outwiker/gui/preferences/generalpanel.py:256
 msgid "Default opening page mode"
 msgstr "Standardläge för sidöppning"
 
-#: outwiker/gui/preferences/generalpanel.py:408
+#: outwiker/gui/preferences/generalpanel.py:377
 msgid "Auto"
 msgstr "Auto"
 
@@ -2177,15 +2185,15 @@ msgstr "Det finns redan en sida med samma titel"
 msgid "Can't rename page when page with that title already exists"
 msgstr "Kan inte byta namn när det redan finns en sida med samma titel"
 
-#: outwiker/gui/pagedialogpanels/iconspanel.py:101
+#: outwiker/gui/pagedialogpanels/iconspanel.py:139
 msgid "Recent"
 msgstr "Senaste"
 
-#: outwiker/gui/pagedialogpanels/iconspanel.py:122
+#: outwiker/gui/pagedialogpanels/iconspanel.py:173
 msgid "Can't set page icon\n"
 msgstr "Kan inte tillämpa sidikon\n"
 
-#: outwiker/gui/pagedialogpanels/iconspanel.py:189
+#: outwiker/gui/pagedialogpanels/iconspanel.py:246
 #: outwiker/gui/iconlistctrl.py:52
 msgid "Invalid icon file: {}"
 msgstr "Ogiltig ikonfil: {}"
@@ -2215,7 +2223,7 @@ msgstr "Kan inte byta namn på sidan\n"
 msgid "Create Page"
 msgstr "Skapa sida"
 
-#: outwiker/gui/notestree.py:247
+#: outwiker/gui/notestree.py:252
 msgid ""
 "Can't save page options\n"
 "{}"
