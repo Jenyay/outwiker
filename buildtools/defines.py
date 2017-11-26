@@ -66,21 +66,15 @@ FILES_FOR_UPLOAD_STABLE_WIN = [
 ]
 
 FILES_FOR_UPLOAD_UNSTABLE_LINUX = [
-    u'outwiker_linux_i386.zip',
-    u'outwiker_linux_i386.7z',
     u'outwiker_linux_amd64.zip',
     u'outwiker_linux_amd64.7z',
     u'outwiker-{version}+{build}_amd64.deb',
-    u'outwiker-{version}+{build}_i386.deb',
 ]
 
 FILES_FOR_UPLOAD_STABLE_LINUX = [
-    u'outwiker_linux_{version}_i386.zip',
-    u'outwiker_linux_{version}_i386.7z',
     u'outwiker_linux_{version}_amd64.zip',
     u'outwiker_linux_{version}_amd64.7z',
     u'outwiker-{version}+{build}_amd64.deb',
-    u'outwiker-{version}+{build}_i386.deb',
 ]
 
 PPA_DEV_PATH = u'ppa:outwiker-team/dev'
@@ -107,10 +101,5 @@ VM_BUILD_PARAMS = {
     u'zesty_64': {
         u'vagrant_path': 'need_for_build/virtual/build_machines/zesty_64',
         u'host': u'192.168.101.64',
-    },
-
-    u'zesty_32': {
-        u'vagrant_path': 'need_for_build/virtual/build_machines/zesty_32',
-        u'host': u'192.168.101.32',
     },
 }

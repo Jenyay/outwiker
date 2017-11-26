@@ -732,7 +732,7 @@ def vm_prepare():
 @task
 def vm_linux_binary(is_stable=0):
     '''
-    Create 32- and 64-bit assembly on virtual machines
+    Create 64-bit assembly on virtual machines
     '''
     vm_run()
     version_str = getOutwikerVersionStr()
