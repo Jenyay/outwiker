@@ -43,10 +43,11 @@ class TexEquationTest(unittest.TestCase):
         self.assertEqual(len(self.loader), 1)
 
     def test_inline_01(self):
+        from texequation.defines import KATEX_DIR_NAME
         eqn = u"y = f(x)"
         text = u"{{$ {eqn} $}}".format(eqn=eqn)
 
-        path = os.path.join(Thumbnails.getRelativeThumbDir(), 'katex')
+        path = os.path.join(Thumbnails.getRelativeThumbDir(), KATEX_DIR_NAME)
 
         result_lines = [
             u'<span class="texequation-inline" id="texequation-inline-0"></span>',
@@ -69,11 +70,12 @@ class TexEquationTest(unittest.TestCase):
         self.assertTrue(os.path.exists(full_path), full_path)
 
     def test_inline_02(self):
+        from texequation.defines import KATEX_DIR_NAME
         eqn1 = u"y = f1(x)"
         eqn2 = u"y = f2(x)"
         text = u"{{$ {eqn1} $}} {{$ {eqn2} $}}".format(eqn1=eqn1, eqn2=eqn2)
 
-        path = os.path.join(Thumbnails.getRelativeThumbDir(), 'katex')
+        path = os.path.join(Thumbnails.getRelativeThumbDir(), KATEX_DIR_NAME)
 
         result_lines = [
             u'<span class="texequation-inline" id="texequation-inline-0"></span>',
@@ -108,10 +110,11 @@ class TexEquationTest(unittest.TestCase):
                       result)
 
     def test_block_01(self):
+        from texequation.defines import KATEX_DIR_NAME
         eqn = u"y = f(x)"
         text = u"{{$$ {eqn} $$}}".format(eqn=eqn)
 
-        path = os.path.join(Thumbnails.getRelativeThumbDir(), 'katex')
+        path = os.path.join(Thumbnails.getRelativeThumbDir(), KATEX_DIR_NAME)
 
         result_lines = [
             u'<span class="texequation-block" id="texequation-block-0"></span>',
@@ -134,13 +137,14 @@ class TexEquationTest(unittest.TestCase):
         self.assertTrue(os.path.exists(full_path), full_path)
 
     def test_block_02(self):
+        from texequation.defines import KATEX_DIR_NAME
         eqn1 = u"y = f1(x)"
         eqn2 = u"y = f2(x)"
 
         text = u"{{$$ {eqn1} $$}} {{$$ {eqn2} $$}}".format(eqn1=eqn1,
                                                            eqn2=eqn2)
 
-        path = os.path.join(Thumbnails.getRelativeThumbDir(), 'katex')
+        path = os.path.join(Thumbnails.getRelativeThumbDir(), KATEX_DIR_NAME)
 
         result_lines = [
             u'<span class="texequation-block" id="texequation-block-0"></span>',
@@ -166,13 +170,14 @@ class TexEquationTest(unittest.TestCase):
         self.assertTrue(os.path.exists(full_path), full_path)
 
     def test_mixed_01(self):
+        from texequation.defines import KATEX_DIR_NAME
         eqn1 = u"y = f1(x)"
         eqn2 = u"y = f2(x)"
 
         text = u"{{$$ {eqn1} $$}} {{$ {eqn2} $}}".format(eqn1=eqn1,
                                                          eqn2=eqn2)
 
-        path = os.path.join(Thumbnails.getRelativeThumbDir(), 'katex')
+        path = os.path.join(Thumbnails.getRelativeThumbDir(), KATEX_DIR_NAME)
 
         result_lines = [
             u'<span class="texequation-block" id="texequation-block-0"></span>',
