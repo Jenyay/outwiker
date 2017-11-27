@@ -8,6 +8,7 @@
 
 		<changelog>
 			<version number="2.1.0.833" status="dev">
+				<change>32-bit binary builds for Linux are no longer created.</change>
 			</version>
 
 			<version number="2.1.0.832" status="dev" date="November 20, 2017">
@@ -41,6 +42,7 @@
 
 		<changelog>
 			<version number="2.1.0.833" status="dev">
+				<change>Больше не создаются 32-битные бинарные сборки под Linux.</change>
 			</version>
 
 			<version number="2.1.0.832" status="dev" date="20.11.2017">
