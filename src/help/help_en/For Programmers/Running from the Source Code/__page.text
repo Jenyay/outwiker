@@ -12,8 +12,8 @@ git checkout stable
 [[http://git-scm.com/ | Git]] must be installed to be able to execute these command.
 
 To compile OutWiker from source code, execute following command (in the ''src'' directory):
-'''python outwiker.py'''
+'''python runoutwiker.py'''
 
-[[http://www.python.org/ | Python 2.7]] and [[http://wxpython.org/ | wxPython 2.8]] must be installed to compile OutWiker from the source code.
+[[http://www.python.org/ | Python 2.7]] and [[http://wxpython.org/ | wxPython 3.0.2]] must be installed to compile OutWiker from the source code.
 
-In order to run the program on Linux the following dependencies [[depending -> / Advanced / Starting under Linux. Depending]] have to be checked first.
+In order to run the program on Linux the following dependencies [[depending -> page://__91bf6b5f-75bc-44ee-8c12-1d6d004f6c75]] have to be checked first.

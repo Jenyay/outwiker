@@ -1,5 +1,5 @@
 [wiki]
-md5_hash = d4c165082b8e63fa0f9b4cfb422df65b
+md5_hash = 22bb2f52479828ef69aa252e86d011de
 
 [Tree]
 expand = False
@@ -8,8 +8,8 @@ expand = False
 type = wiki
 order = 0
 tags = for programmers
-datetime = 2017-08-31 19:25:53.055000
-cursorposition = 998
+datetime = 2017-11-28 20:13:08.226850
+cursorposition = 975
 
 [Misc]
 pageindex = 1
