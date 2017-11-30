@@ -1,0 +1,6 @@
+#!/bin/sh
+
+HERE="$(dirname "${0}")"
+USR="$(dirname "${HERE}")"
+ROOT="$(dirname "${USR}")"
+"${ROOT}"/opt/outwiker/outwiker "$@"

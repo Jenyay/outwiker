@@ -9,8 +9,9 @@ from linux.debbinary import (BuilderDebBinary,
                              BuilderDebBinaryOpt,
                              BuilderDebBinaryFactory)
 from linux.debsource import BuilderDebSource, BuilderDebSourcesIncluded
+from appimage import BuilderAppImage
 
 __all__ = [BuilderBase, BuilderWindows, BuilderSources, BuilderPlugins,
            BuilderLinuxBinary, BuilderDebBinary, BuilderDebBinaryOpt,
            BuilderDebSource, BuilderDebSourcesIncluded,
-           BuilderDebBinaryFactory]
+           BuilderDebBinaryFactory, BuilderAppImage]

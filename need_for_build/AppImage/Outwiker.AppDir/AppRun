@@ -1,0 +1,7 @@
+#!/bin/sh
+
+HERE="$(dirname "${0}")"
+EXEC="outwiker"
+export PATH="${HERE}"/usr/bin/:"${PATH}"
+
+exec "${EXEC}" "$@"

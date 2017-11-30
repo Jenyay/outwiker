@@ -58,6 +58,7 @@ from buildtools.builders import (BuilderWindows,
                                  BuilderDebBinaryFactory,
                                  BuilderDebSource,
                                  BuilderDebSourcesIncluded,
+                                 BuilderAppImage,
                                  )
 
 from outwiker.utilites.textfile import readTextFile
@@ -752,3 +753,10 @@ def vm_linux_binary(is_stable=0):
             save_to=path_to_result,
             is_stable=is_stable)
         )
+
+
+@task
+@linux_only
+def appimage(is_stable=0):
+    builder = BuilderAppImage(is_stable=tobool(is_stable))
+    builder.build()
