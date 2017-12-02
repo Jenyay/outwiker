@@ -173,7 +173,7 @@ class PrefController (object):
         self._dialog.treeBook.SetMinSize((300, -1))
 
         self._dialog.Fit()
-        fitWidth, fitHeight = self._dialog.GetSizeTuple()
+        fitWidth, fitHeight = self._dialog.GetSize()
         self._dialog.SetMinSize((fitWidth, fitHeight))
         self._dialog.SetClientSize((config.width.value, config.height.value))
         self.__centerDialog()

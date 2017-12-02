@@ -214,12 +214,12 @@ class AttachPanel(wx.Panel):
                     # испорченные иконки
                     # На результат работы это не сказывается,
                     # все-равно бракованные иконки отлавливаются.
-                    wx.Log_EnableLogging(False)
+                    wx.Log.EnableLogging(False)
 
                     imageIndex = self.__fileIcons.getFileImage(fname)
 
                     # Вернем всплывающие окна с ошибками
-                    wx.Log_EnableLogging(True)
+                    wx.Log.EnableLogging(True)
 
                     self.__attachList.InsertImageStringItem(
                         0,

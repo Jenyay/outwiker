@@ -44,9 +44,9 @@ class IconButton(object):
 
     def _createImage(self, fname):
         # Disable wxPython message about the invalid picture format
-        wx.Log_EnableLogging(False)
+        wx.Log.EnableLogging(False)
         image = wx.Bitmap(fname)
-        wx.Log_EnableLogging(True)
+        wx.Log.EnableLogging(True)
 
         if not image.IsOk():
             logging.error(_(u'Invalid icon file: {}').format(fname))
@@ -198,15 +198,15 @@ class IconListCtrl(wx.ScrolledWindow):
         dc = wx.AutoBufferedPaintDCFactory(self._canvas)
 
         y0 = self.GetScrollPos(wx.VERTICAL) * (self.cellHeight + self.margin)
-        y1 = y0 + self.GetClientSizeTuple()[1]
+        y1 = y0 + self.GetClientSize()[1]
 
         dc.SetBrush(wx.Brush(self._backgroundColor))
         dc.SetPen(wx.TRANSPARENT_PEN)
 
         dc.DrawRectangle(0,
                          y0,
-                         self._canvas.GetSizeTuple()[0],
-                         self._canvas.GetSizeTuple()[1])
+                         self._canvas.GetSize()[0],
+                         self._canvas.GetSize()[1])
 
         dc.SetBrush(wx.NullBrush)
         dc.SetPen(wx.NullPen)
@@ -218,10 +218,10 @@ class IconListCtrl(wx.ScrolledWindow):
     def __onMouseMove(self, event):
         button = self._getButtonByCoord(event.GetPosition()[0],
                                         event.GetPosition()[1])
-        self._canvas.SetToolTipString(u'')
+        self._canvas.SetToolTip(u'')
 
         if button is not None:
-            self._canvas.SetToolTipString(button.getToolTipText())
+            self._canvas.SetToolTip(button.getToolTipText())
 
     def clear(self):
         """
@@ -332,7 +332,7 @@ class IconListCtrl(wx.ScrolledWindow):
 
         currx = 0
         curry = 0
-        windowWidth = self.GetClientSizeTuple()[0]
+        windowWidth = self.GetClientSize()[0]
 
         # Row size in cells(columns count)
         colsCount = ((windowWidth - self.margin) //
@@ -353,7 +353,7 @@ class IconListCtrl(wx.ScrolledWindow):
             button.y = curry
 
         self.Scroll(0, 0)
-        self._canvas.SetSizeWH(windowWidth,
+        self._canvas.SetSize(windowWidth,
                                rowsCount * (self.cellHeight + self.margin))
 
         self.SetScrollbars(self.cellWidth,

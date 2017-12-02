@@ -62,7 +62,7 @@ class FormatCtrl(wx.Panel):
             self._menuItemsId[newid] = hint
 
     def __layout(self):
-        mainSizer = wx.FlexGridSizer(1, 2)
+        mainSizer = wx.FlexGridSizer(1, 2, 0, 0)
         mainSizer.AddGrowableCol(0)
         mainSizer.AddGrowableRow(0)
         mainSizer.Add(self.formatCtrl,

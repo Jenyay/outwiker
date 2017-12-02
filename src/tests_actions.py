@@ -19,7 +19,7 @@ if __name__ == '__main__':
 
     app.bindActivateApp = emptyFunc
     app.unbindActivateApp = emptyFunc
-    loop = wx.EventLoop()
+    loop = wx.GUIEventLoop()
     wx.EventLoop.SetActive(loop)
     wx.Log.SetLogLevel(0)
 

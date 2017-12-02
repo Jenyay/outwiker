@@ -41,7 +41,7 @@ class BasePageDialog (TestedDialog):
 
         self.SetClientSize ((self._config.width.value, self._config.height.value))
 
-        self.Center(wx.CENTRE_ON_SCREEN)
+        self.Center(wx.BOTH)
         self._generalPanel.titleTextCtrl.SetFocus()
 
 
@@ -154,7 +154,7 @@ class BasePageDialog (TestedDialog):
 
 
     def saveParams (self):
-        width, height = self.GetClientSizeTuple()
+        width, height = self.GetClientSize()
         self._config.width.value = width
         self._config.height.value = height
 

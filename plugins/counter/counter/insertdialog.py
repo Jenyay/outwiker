@@ -31,7 +31,7 @@ class InsertDialog (TestedDialog):
         self.SetMinSize ((470, -1))
 
         self._counterName.SetFocus()
-        self.Center(wx.CENTRE_ON_SCREEN)
+        self.Center(wx.BOTH)
 
 
     def _onSetReset (self, event):

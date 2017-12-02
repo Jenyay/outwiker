@@ -18,7 +18,7 @@ class TagsDialog(wx.Dialog):
         self.__createControls()
         self.__setTagsList()
         self.__tagsSelector.SetFocus()
-        self.Center(wx.CENTRE_ON_SCREEN)
+        self.Center(wx.BOTH)
 
     def __setTagsList(self):
         assert self.__application.wikiroot is not None

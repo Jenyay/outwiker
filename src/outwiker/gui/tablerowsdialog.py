@@ -89,7 +89,7 @@ class TableRowsDialog (TestedDialog):
                        flag = wx.ALL | wx.EXPAND,
                        border = 2)
 
-        mainSizer.AddSpacer ((0, 10))
+        mainSizer.AddSpacer (10)
         self._createAdvancedControls (mainSizer)
 
         okCancel = self.CreateButtonSizer (wx.OK | wx.CANCEL)

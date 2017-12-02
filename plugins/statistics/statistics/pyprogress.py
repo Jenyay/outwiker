@@ -343,6 +343,7 @@ class ProgressGauge(wx.PyWindow):
         
 
     def Update(self):
+        # type: () -> object
         """ Updates the gauge with a new value. """
 
         self.Refresh()

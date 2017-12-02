@@ -20,7 +20,7 @@ class RenameTagDialog(wx.Dialog):
 
         self.__createControls(tagsList)
         self.__layout()
-        self.Center(wx.CENTRE_ON_SCREEN)
+        self.Center(wx.BOTH)
 
         self.Bind (wx.EVT_BUTTON, self.__onOk, id=wx.ID_OK)
 

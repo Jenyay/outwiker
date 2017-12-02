@@ -24,7 +24,7 @@ class InsertDialog (wx.Dialog):
 
         self.__createGui()
         self.fileCheckBox.SetFocus()
-        self.Center(wx.CENTRE_ON_SCREEN)
+        self.Center(wx.BOTH)
 
 
     @property
@@ -315,7 +315,7 @@ class InsertDialog (wx.Dialog):
         # Кнопка для прикрепления нового файла
         attachImage = wx.Bitmap (getImagePath ("attach.png"))
         self.attachButton = wx.BitmapButton (parent, -1, attachImage)
-        self.attachButton.SetToolTipString (_(u"Attach new files"))
+        self.attachButton.SetToolTip (_(u"Attach new files"))
 
         fileSizer.Add (
             self.attachButton,

@@ -141,7 +141,7 @@ class PageTitleItem (wx.Panel):
                         underline=False)
 
         label.SetFont (font)
-        label.SetToolTipString (self.__page.subpath.replace ("/", " / "))
+        label.SetToolTip (self.__page.subpath.replace ("/", " / "))
         label.SetBackgroundColour (self.__backColor)
         label.SetColours (self.__color, self.__color, self.__color)
         label.AutoBrowse (False)

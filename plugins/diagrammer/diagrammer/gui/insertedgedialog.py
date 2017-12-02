@@ -23,7 +23,7 @@ class InsertEdgeDialog (BaseDialog):
 
         self.__createGui()
         self.Fit()
-        self.Center(wx.CENTRE_ON_SCREEN)
+        self.Center(wx.BOTH)
 
         self.Bind (wx.EVT_COLLAPSIBLEPANE_CHANGED, self.__onPaneChanged)
 

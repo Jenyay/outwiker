@@ -90,7 +90,7 @@ class IconsetPanel(BasePrefPanel):
             id=self.ADD_GROUP,
             bitmap=wx.Bitmap(os.path.join(imagesDir, "add.png"))
         )
-        addGroupBtn.SetToolTipString(_(u"Add new group"))
+        addGroupBtn.SetToolTip(_(u"Add new group"))
 
         # Remove a group
         removeGroupBtn = wx.BitmapButton(
@@ -98,7 +98,7 @@ class IconsetPanel(BasePrefPanel):
             id=self.REMOVE_GROUP,
             bitmap=wx.Bitmap(os.path.join(imagesDir, "remove.png"))
         )
-        removeGroupBtn.SetToolTipString(_(u"Remove group"))
+        removeGroupBtn.SetToolTip(_(u"Remove group"))
 
         # Rename a group
         renameGroupBtn = wx.BitmapButton(
@@ -106,7 +106,7 @@ class IconsetPanel(BasePrefPanel):
             id=self.RENAME_GROUP,
             bitmap=wx.Bitmap(os.path.join(imagesDir, "pencil.png"))
         )
-        renameGroupBtn.SetToolTipString(_(u"Rename group"))
+        renameGroupBtn.SetToolTip(_(u"Rename group"))
 
         groupButtonsSizer.Add(addGroupBtn, flag=wx.ALL, border=0)
         groupButtonsSizer.Add(removeGroupBtn, flag=wx.ALL, border=0)
@@ -133,7 +133,7 @@ class IconsetPanel(BasePrefPanel):
             id=self.ADD_ICONS,
             bitmap=wx.Bitmap(os.path.join(imagesDir, "add.png"))
         )
-        addIconsBtn.SetToolTipString(_(u"Add icons"))
+        addIconsBtn.SetToolTip(_(u"Add icons"))
 
         # Remove icons
         removeIconsBtn = wx.BitmapButton(
@@ -141,7 +141,7 @@ class IconsetPanel(BasePrefPanel):
             id=self.REMOVE_ICONS,
             bitmap=wx.Bitmap(os.path.join(imagesDir, "remove.png"))
         )
-        removeIconsBtn.SetToolTipString(_(u"Remove selected icons"))
+        removeIconsBtn.SetToolTip(_(u"Remove selected icons"))
 
         # Set icon as group cover
         setCoverBtn = wx.BitmapButton(
@@ -149,7 +149,7 @@ class IconsetPanel(BasePrefPanel):
             id=self.SET_COVER,
             bitmap=wx.Bitmap(os.path.join(imagesDir, "picture.png"))
         )
-        setCoverBtn.SetToolTipString(_(u"Set icon as group cover"))
+        setCoverBtn.SetToolTip(_(u"Set icon as group cover"))
 
         iconsButtonsSizer.Add(addIconsBtn, flag=wx.ALL, border=0)
         iconsButtonsSizer.Add(removeIconsBtn, flag=wx.ALL, border=0)

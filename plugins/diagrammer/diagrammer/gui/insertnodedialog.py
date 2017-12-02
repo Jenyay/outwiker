@@ -27,7 +27,7 @@ class InsertNodeDialog (BaseShapesDialog):
         self.Bind (wx.EVT_COLLAPSIBLEPANE_CHANGED, self.__onPaneChanged)
         self.Bind (wx.EVT_TEXT, self.__onNameChanged, self._name)
 
-        self.Center(wx.CENTRE_ON_SCREEN)
+        self.Center(wx.BOTH)
 
 
     def _getShapesList (self):

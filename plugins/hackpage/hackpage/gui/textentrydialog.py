@@ -25,7 +25,7 @@ class TextEntryDialog(TestedDialog):
 
         self.Bind(wx.EVT_BUTTON, self.__onOk, id=wx.ID_OK)
 
-        self.Center(wx.CENTRE_ON_SCREEN)
+        self.Center(wx.BOTH)
 
     def __onOk(self, event):
         if self._validator is None or self._validator(self.Value):
