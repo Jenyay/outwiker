@@ -30,13 +30,14 @@ class ExitAction (BaseAction):
     def run (self, params):
         if (self.__allowExit()):
             self._application.mainWindow.Destroy()
+            wx.Exit()
 
 
     def __allowExit (self):
         """
         Возвращает True, если можно закрывать окно
         """
-        generalConfig = GeneralGuiConfig (self._application.config)
+        generalConfig = GeneralGuiConfig(self._application.config)
         askBeforeExit = generalConfig.askBeforeExit.value
 
         return (not askBeforeExit or
