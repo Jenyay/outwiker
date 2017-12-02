@@ -4,7 +4,7 @@ import os
 import os.path
 
 import wx
-import wx.combo
+#import wx.combo
 
 from outwiker.core.style import Style
 from outwiker.core.styleslist import StylesList

@@ -158,7 +158,7 @@ class TextEditor(TextEditorBase):
         self.textCtrl.SetSelBackground(1, selBackColor)
 
         self.textCtrl.SetCaretForeground(fontColor)
-        self.textCtrl.SetCaretLineBack(backColor)
+        self.textCtrl.SetCaretLineBackground(backColor)
 
         self._setHotKeys()
 

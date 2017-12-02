@@ -488,8 +488,8 @@ class MainWindow(wx.Frame):
         try:
             if not self.IsIconized():
                 if (not self.IsFullScreen() and not self.IsMaximized()):
-                    (width, height) = self.GetSizeTuple()
-                    (xpos, ypos) = self.GetPositionTuple()
+                    (width, height) = self.GetSize()
+                    (xpos, ypos) = self.GetPosition()
 
                     if xpos < 0:
                         width += xpos
@@ -517,7 +517,7 @@ class MainWindow(wx.Frame):
         """
         Установки иконки главного окна
         """
-        icon = wx.EmptyIcon()
+        icon = wx.Icon()
         icon.CopyFromBitmap(wx.Bitmap(os.path.join(getImagesDir(),
                                                    "outwiker.ico"),
                                       wx.BITMAP_TYPE_ANY))

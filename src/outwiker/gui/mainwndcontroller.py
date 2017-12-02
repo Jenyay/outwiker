@@ -298,7 +298,7 @@ class MainWndController (object):
         xpos = self.mainWindow.mainWindowConfig.xPos.value
         ypos = self.mainWindow.mainWindowConfig.yPos.value
 
-        self.mainWindow.SetDimensions(
+        self.mainWindow.SetSize(
             xpos, ypos, width, height, sizeFlags=wx.SIZE_FORCE)
 
         self.mainWindow.Layout()

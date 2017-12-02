@@ -513,7 +513,7 @@ class HyperLinkCtrl(StaticText):
         :param `cur`: an integer representing a :ref:`Cursor` constant.
         """
         # self._CursorHand = wx.Cursor(cur, wx.CURSOR_DEFAULT_TYPE)
-        self._CursorHand = wx.StockCursor(cur)
+        self._CursorHand = wx.Cursor(cur)
 
 
     def GetLinkCursor(self):

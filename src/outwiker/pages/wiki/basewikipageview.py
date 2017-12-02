@@ -16,7 +16,7 @@ from outwiker.pages.html.actions.switchcoderesult import SwitchCodeResultAction
 
 
 class BaseWikiPageView (BaseHtmlPanel):
-    __metaclass__ = ABCMeta
+    #__metaclass__ = ABCMeta
 
     HTML_RESULT_PAGE_INDEX = BaseHtmlPanel.RESULT_PAGE_INDEX + 1
 
@@ -65,11 +65,11 @@ class BaseWikiPageView (BaseHtmlPanel):
         self.Bind(EVT_PAGE_TAB_CHANGED, handler=self.onTabChanged)
 
     # Методы, которые необходимо переопределить в производном классе
-    @abstractmethod
+    #@abstractmethod
     def _createWikiTools(self):
         pass
 
-    @abstractmethod
+    #@abstractmethod
     def _getPageTitle(self):
         """
         Метод должен возвращать строку, показываемую на вкладке
@@ -77,21 +77,21 @@ class BaseWikiPageView (BaseHtmlPanel):
         """
         pass
 
-    @abstractmethod
+    #@abstractmethod
     def _getMenuTitle(self):
         """
         Метод должен возвращать заголовок меню
         """
         pass
 
-    @abstractmethod
+    #@abstractmethod
     def _createToolbars(self, mainWindow):
         """
         Метод должен возвращать экземпляр панели инструментов
         """
         pass
 
-    @abstractmethod
+    #@abstractmethod
     def _getPolyActions(self):
         """
         Метод должен возвращать список используемых полиморфных actions
@@ -99,7 +99,7 @@ class BaseWikiPageView (BaseHtmlPanel):
         """
         pass
 
-    @abstractmethod
+    #@abstractmethod
     def _getSpecificActions(self):
         """
         Метод должен возвращать список actions, которые нужно дизаблить при
@@ -107,7 +107,7 @@ class BaseWikiPageView (BaseHtmlPanel):
         """
         pass
 
-    @abstractmethod
+    #@abstractmethod
     def _isHtmlCodeShown(self):
         """
         Возвращает True, если нужно показывать вкладку с кодом HTML,

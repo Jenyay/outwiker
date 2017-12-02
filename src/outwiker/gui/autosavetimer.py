@@ -5,12 +5,12 @@ import wx
 from outwiker.gui.guiconfig import GeneralGuiConfig
 
 
-class AutosaveTimer (wx.PyEvtHandler):
+class AutosaveTimer (wx.EvtHandler):
     """
     Класс для автосохранения по таймеру
     """
     def __init__ (self, application):
-        wx.PyEvtHandler.__init__ (self)
+        wx.EvtHandler.__init__ (self)
 
         self.__application = application
         self.__guiconfig = GeneralGuiConfig (self.__application.config)

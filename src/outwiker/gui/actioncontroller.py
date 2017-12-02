@@ -320,7 +320,7 @@ class ActionController(object):
                                           kind=buttonType,
                                           fullUpdate=fullUpdate)
         elif issubclass(type(toolbar), wx.ToolBar):
-            toolbarItem = toolbar.AddLabelTool(actionid,
+            toolbarItem = toolbar.AddTool(actionid,
                                                title,
                                                bitmap,
                                                wx.NullBitmap,

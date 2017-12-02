@@ -191,7 +191,7 @@ class NotesTree(wx.Panel):
         if not item.IsOk():
             return
 
-        page = self.treeCtrl.GetItemData(item).GetData()
+        page = self.treeCtrl.GetItemData(item)
         Application.mainWindow.tabsController.openInTab(page, True)
 
     def __onClose(self, event):
@@ -223,13 +223,13 @@ class NotesTree(wx.Panel):
         if not item.IsOk():
             return
 
-        page = self.treeCtrl.GetItemData(item).GetData()
+        page = self.treeCtrl.GetItemData(item)
         outwiker.gui.pagedialog.editPage(self, page)
 
     def __onTreeStateChanged(self, event):
         item = event.GetItem()
         assert item.IsOk()
-        page = self.treeCtrl.GetItemData(item).GetData()
+        page = self.treeCtrl.GetItemData(item)
         self.__saveItemState(item)
 
         for child in page.children:
@@ -238,7 +238,7 @@ class NotesTree(wx.Panel):
     def __saveItemState(self, itemid):
         assert itemid.IsOk()
 
-        page = self.treeCtrl.GetItemData(itemid).GetData()
+        page = self.treeCtrl.GetItemData(itemid)
         expanded = self.treeCtrl.IsExpanded(itemid)
         expandedOption = BooleanOption(page.params,
                                        self.pageOptionsSection,
@@ -291,7 +291,7 @@ class NotesTree(wx.Panel):
         if not popupItem.IsOk():
             return
 
-        popupPage = self.treeCtrl.GetItemData(popupItem).GetData()
+        popupPage = self.treeCtrl.GetItemData(popupItem)
         self.popupMenu = PagePopupMenu(self, popupPage, Application)
         self.PopupMenu(self.popupMenu.menu)
 
@@ -323,8 +323,7 @@ class NotesTree(wx.Panel):
         label = event.GetLabel().strip()
 
         item = event.GetItem()
-        page = self.treeCtrl.GetItemData(item).GetData()
-
+        page = self.treeCtrl.GetItemData(item)
         # Не доверяем переименовывать элементы системе
         event.Veto()
 
@@ -362,11 +361,11 @@ class NotesTree(wx.Panel):
             endDragItem = event.GetItem()
 
             # Перетаскиваемая станица
-            draggedPage = self.treeCtrl.GetItemData(self.dragItem).GetData()
+            draggedPage = self.treeCtrl.GetItemData(self.dragItem)
 
             # Будущий родитель для страницы
             if endDragItem.IsOk():
-                newParent = self.treeCtrl.GetItemData(endDragItem).GetData()
+                newParent = self.treeCtrl.GetItemData(endDragItem)
 
                 # Moving page to itself is ignored
                 if newParent != draggedPage:
@@ -415,7 +414,7 @@ class NotesTree(wx.Panel):
 
         item = self.treeCtrl.GetSelection()
         if item.IsOk():
-            page = self.treeCtrl.GetItemData(item).GetData()
+            page = self.treeCtrl.GetItemData(item)
 
             # Проверка того, что выбрали не корневой элемент
             if page.parent is None:
@@ -481,7 +480,8 @@ class NotesTree(wx.Panel):
             rootname = os.path.basename(rootPage.path)
             rootItem = self.treeCtrl.AddRoot(
                 rootname,
-                data=wx.TreeItemData(rootPage),
+                #data=wx.TreeItemData(rootPage),
+                data=rootPage,
                 image=self.defaultImageId)
 
             self._pageCache[rootPage] = rootItem
@@ -523,10 +523,10 @@ class NotesTree(wx.Panel):
         parentItem = self.getTreeItem(child.parent)
         assert parentItem is not None
 
-        item = self.treeCtrl.InsertItemBefore(parentItem,
+        item = self.treeCtrl.InsertItem(parentItem,
                                               child.order,
                                               child.display_title,
-                                              data=wx.TreeItemData(child))
+                                              data=child)
 
         self.treeCtrl.SetItemImage(item, self.__loadIcon(child))
 

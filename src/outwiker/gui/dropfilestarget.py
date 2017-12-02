@@ -12,7 +12,7 @@ class DropFilesTargetBase (wx.FileDropTarget):
     Класс для возможности перетаскивания файлов
     между другими программами и OutWiker
     """
-    __metaclass__ = ABCMeta
+    #__metaclass__ = ABCMeta
 
     def __init__(self, application, dropWnd):
         wx.FileDropTarget.__init__(self)
@@ -24,7 +24,7 @@ class DropFilesTargetBase (wx.FileDropTarget):
         self._dropWnd.SetDropTarget(None)
         self._dropWnd = None
 
-    @abstractmethod
+    #@abstractmethod
     def OnDropFiles(self, x, y, files):
         pass
 

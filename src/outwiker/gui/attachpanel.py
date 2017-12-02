@@ -108,7 +108,7 @@ class AttachPanel(wx.Panel):
 
         toolbar = wx.ToolBar(parent, id, style=wx.TB_DOCKABLE)
 
-        toolbar.AddLabelTool(self.ID_REFRESH,
+        toolbar.AddTool(self.ID_REFRESH,
                              _(u"Refresh"),
                              wx.Bitmap(os.path.join(imagesDir, "reload.png"),
                                        wx.BITMAP_TYPE_ANY),
@@ -119,7 +119,7 @@ class AttachPanel(wx.Panel):
 
         toolbar.AddSeparator()
 
-        toolbar.AddLabelTool(self.ID_ATTACH,
+        toolbar.AddTool(self.ID_ATTACH,
                              _(u"Attach Files…"),
                              wx.Bitmap(os.path.join(imagesDir, "attach.png"),
                                        wx.BITMAP_TYPE_ANY),
@@ -128,7 +128,7 @@ class AttachPanel(wx.Panel):
                              _(u"Attach Files…"),
                              "")
 
-        toolbar.AddLabelTool(self.ID_REMOVE,
+        toolbar.AddTool(self.ID_REMOVE,
                              _(u"Remove Files…"),
                              wx.Bitmap(os.path.join(imagesDir, "delete.png"),
                                        wx.BITMAP_TYPE_ANY),
@@ -139,7 +139,7 @@ class AttachPanel(wx.Panel):
 
         toolbar.AddSeparator()
 
-        toolbar.AddLabelTool(self.ID_PASTE,
+        toolbar.AddTool(self.ID_PASTE,
                              _(u"Paste"),
                              wx.Bitmap(os.path.join(imagesDir, "paste.png"),
                                        wx.BITMAP_TYPE_ANY),
@@ -148,7 +148,7 @@ class AttachPanel(wx.Panel):
                              _(u"Paste"),
                              "")
 
-        toolbar.AddLabelTool(self.ID_EXECUTE,
+        toolbar.AddTool(self.ID_EXECUTE,
                              _(u"Execute"),
                              wx.Bitmap(os.path.join(imagesDir, "execute.png"),
                                        wx.BITMAP_TYPE_ANY),
@@ -157,7 +157,7 @@ class AttachPanel(wx.Panel):
                              _(u"Execute"),
                              "")
 
-        toolbar.AddLabelTool(self.ID_OPEN_FOLDER,
+        toolbar.AddTool(self.ID_OPEN_FOLDER,
                              _(u"Open Attachments Folder"),
                              wx.Bitmap(os.path.join(imagesDir, "folder.png"),
                                        wx.BITMAP_TYPE_ANY),

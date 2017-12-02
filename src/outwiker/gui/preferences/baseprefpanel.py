@@ -5,7 +5,7 @@ import wx
 
 
 class BasePrefPanel (wx.ScrolledWindow):
-    __metaclass__ = ABCMeta
+    #__metaclass__ = ABCMeta
 
 
     def __init__ (self, parent):
@@ -31,12 +31,12 @@ class BasePrefPanel (wx.ScrolledWindow):
             self.SetScrollbars (0, scrollHeight, 0, scrollCount)
 
 
-    @abstractmethod
+    #@abstractmethod
     def LoadState (self):
         pass
 
 
-    @abstractmethod
+    #@abstractmethod
     def Save(self):
         pass
 

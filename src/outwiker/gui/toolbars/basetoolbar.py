@@ -13,7 +13,7 @@ class BaseToolBar(wx.aui.AuiToolBar):
     """
     The base class for a toolbars.
     """
-    __metaclass__ = ABCMeta
+    #__metaclass__ = ABCMeta
 
     def __init__(self, parent, auiManager):
         super(BaseToolBar, self).__init__(parent)
@@ -23,15 +23,15 @@ class BaseToolBar(wx.aui.AuiToolBar):
         self._auiManager = auiManager
         self._pane = self._loadPaneInfo()
 
-    @abstractproperty
+    #@abstractproperty
     def caption(self):
         pass
 
-    @abstractproperty
+    #@abstractproperty
     def name(self):
         return self.pane.name
 
-    @abstractmethod
+    #@abstractmethod
     def _createPane(self):
         """
         The method must return the instance of the AuiPaneInfo

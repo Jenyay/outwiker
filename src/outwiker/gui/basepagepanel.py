@@ -13,7 +13,7 @@ class BasePagePanel (wx.Panel):
     """
     Базовый класс для панелей представления страниц
     """
-    __metaclass__ = ABCMeta
+    #__metaclass__ = ABCMeta
 
     def __init__(self, parent, application):
         super(BasePagePanel, self).__init__(parent, style=wx.TAB_TRAVERSAL)
@@ -121,28 +121,28 @@ class BasePagePanel (wx.Panel):
     # Методы, которые обязательно надо перегрузить
     ###############################################
 
-    @abstractmethod
+    #@abstractmethod
     def Print(self):
         """
         Вызов печати страницы
         """
         pass
 
-    @abstractmethod
+    #@abstractmethod
     def UpdateView(self, page):
         """
         Обновление страницы
         """
         pass
 
-    @abstractmethod
+    #@abstractmethod
     def Save(self):
         """
         Сохранить страницу
         """
         pass
 
-    @abstractmethod
+    #@abstractmethod
     def Clear(self):
         """
         Убрать за собой. Удалить добавленные элементы интерфейса и отписаться от событий

@@ -5,7 +5,7 @@ import os
 import os.path
 
 import wx
-import wx.combo
+#import wx.combo
 
 from outwiker.core.system import getIconsDirList, getImagesDir
 from outwiker.core.iconscollection import IconsCollection
