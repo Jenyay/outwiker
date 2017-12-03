@@ -14,7 +14,7 @@ from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
 
 
-class ThumbnailsTest (unittest.TestCase):
+class ThumbnailsTest(unittest.TestCase):
     def setUp(self):
         self.encoding = "utf8"
 
@@ -23,93 +23,90 @@ class ThumbnailsTest (unittest.TestCase):
         self.url1 = u"http://example.com"
         self.url2 = u"http://jenyay.net/Photo/Nature?action=imgtpl&G=1&upname=tsaritsyno_01.jpg"
 
-        self.pagelinks = [u"Страница 1", u"/Страница 1", u"/Страница 2/Страница 3"]
+        self.pagelinks = [u"Страница 1",
+                          u"/Страница 1",
+                          u"/Страница 2/Страница 3"]
         self.pageComments = [u"Страницо 1", u"Страницо 1", u"Страницо 3"]
 
         self.__createWiki()
 
-        self.parser = ParserFactory().make (self.testPage, Application.config)
+        self.parser = ParserFactory().make(self.testPage, Application.config)
 
-
-    def __createWiki (self):
+    def __createWiki(self):
         # Здесь будет создаваться вики
-        self.path = mkdtemp (prefix=u'Абырвалг абыр')
+        self.path = mkdtemp(prefix=u'Абырвалг абыр')
 
-        self.wikiroot = WikiDocument.create (self.path)
-        WikiPageFactory().create (self.wikiroot, u"Страница 2", [])
+        self.wikiroot = WikiDocument.create(self.path)
+        WikiPageFactory().create(self.wikiroot, u"Страница 2", [])
         self.testPage = self.wikiroot[u"Страница 2"]
 
-
     def tearDown(self):
-        removeDir (self.path)
+        removeDir(self.path)
 
-    def testThumbnails1 (self):
-        thumb = Thumbnails (self.parser.page)
-        thumbDir = thumb.getThumbPath (create=False)
+    def testThumbnails1(self):
+        thumb = Thumbnails(self.parser.page)
+        thumbDir = thumb.getThumbPath(create=False)
 
-        self.assertEqual (thumbDir,
-                          os.path.join (Attachment (self.parser.page).getAttachPath(), Thumbnails.thumbDir),
-                          thumbDir)
+        self.assertEqual(
+            thumbDir,
+            os.path.join(Attachment(self.parser.page).getAttachPath(),
+                         Thumbnails.thumbDir),
+            thumbDir)
 
+    def testThumbnails2(self):
+        thumb = Thumbnails(self.parser.page)
+        thumbDir = thumb.getThumbPath(create=False)
 
-    def testThumbnails2 (self):
-        thumb = Thumbnails (self.parser.page)
-        thumbDir = thumb.getThumbPath (create=False)
+        self.assertFalse(os.path.exists(thumbDir))
 
-        self.assertFalse (os.path.exists (thumbDir))
+    def testThumbnails3(self):
+        thumb = Thumbnails(self.parser.page)
+        thumbDir = thumb.getThumbPath(create=True)
 
+        self.assertTrue(os.path.exists(thumbDir))
 
-    def testThumbnails3 (self):
-        thumb = Thumbnails (self.parser.page)
-        thumbDir = thumb.getThumbPath (create=True)
+    def testThumbnailsClear1(self):
+        thumb = Thumbnails(self.parser.page)
+        thumb.clearDir()
 
-        self.assertTrue (os.path.exists (thumbDir))
+        self.assertFalse(os.path.exists(thumb.getThumbPath(create=False)))
 
+    def testThumbnails1_attach(self):
+        thumb = Thumbnails(self.parser.page)
+        thumbDir = thumb.getThumbPath(create=False)
 
-    def testThumbnailsClear1 (self):
-        thumb = Thumbnails (self.parser.page)
-        thumb.clearDir ()
+        self.assertEqual(
+            thumbDir,
+            os.path.join(Attachment(self.parser.page).getAttachPath(),
+                         Thumbnails.thumbDir),
+            thumbDir)
 
-        self.assertFalse (os.path.exists (thumb.getThumbPath (create=False)))
-
-
-    def testThumbnails1_attach (self):
-        thumb = Thumbnails (self.parser.page)
-        thumbDir = thumb.getThumbPath (create=False)
-
-        self.assertEqual (thumbDir,
-                          os.path.join (Attachment (self.parser.page).getAttachPath(), Thumbnails.thumbDir),
-                          thumbDir)
-
-
-    def testThumbnails2_attach (self):
+    def testThumbnails2_attach(self):
         fname = u"accept.png"
-        attachPath = os.path.join (self.filesPath, fname)
-        Attachment (self.parser.page).attach ([attachPath])
+        attachPath = os.path.join(self.filesPath, fname)
+        Attachment(self.parser.page).attach([attachPath])
 
-        thumb = Thumbnails (self.parser.page)
-        thumbDir = thumb.getThumbPath (create=False)
+        thumb = Thumbnails(self.parser.page)
+        thumbDir = thumb.getThumbPath(create=False)
 
-        self.assertFalse (os.path.exists (thumbDir))
+        self.assertFalse(os.path.exists(thumbDir))
 
-
-    def testThumbnails3_attach (self):
+    def testThumbnails3_attach(self):
         fname = u"accept.png"
-        attachPath = os.path.join (self.filesPath, fname)
-        Attachment (self.parser.page).attach ([attachPath])
+        attachPath = os.path.join(self.filesPath, fname)
+        Attachment(self.parser.page).attach([attachPath])
 
-        thumb = Thumbnails (self.parser.page)
-        thumbDir = thumb.getThumbPath (create=True)
+        thumb = Thumbnails(self.parser.page)
+        thumbDir = thumb.getThumbPath(create=True)
 
-        self.assertTrue (os.path.exists (thumbDir))
+        self.assertTrue(os.path.exists(thumbDir))
 
-
-    def testThumbnailsClear1_attach (self):
+    def testThumbnailsClear1_attach(self):
         fname = u"accept.png"
-        attachPath = os.path.join (self.filesPath, fname)
-        Attachment (self.parser.page).attach ([attachPath])
+        attachPath = os.path.join(self.filesPath, fname)
+        Attachment(self.parser.page).attach([attachPath])
 
-        thumb = Thumbnails (self.parser.page)
-        thumb.clearDir ()
+        thumb = Thumbnails(self.parser.page)
+        thumb.clearDir()
 
-        self.assertFalse (os.path.exists (thumb.getThumbPath (create=False)))
+        self.assertFalse(os.path.exists(thumb.getThumbPath(create=False)))

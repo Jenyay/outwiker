@@ -1,8 +1,13 @@
 The following packages are required to run OutWiker on Linux:
 
-* '''python''' (version 2.6 or 2.7)
-* '''python-wxgtk2.8'''
+* '''python2.7'''
+* '''python-gtk2'''
+* '''python-wxgtk3.0'''
+* '''python-wxgtk-webview3.0'''
 * '''python-wxversion'''
 * '''python-webkit-dev'''
-* '''libgnomeprint2.2-0''', '''libgnomeprintui2.2-0''' (Note: these packages are needed for correct printing of text pages, wiki notations or original source pages containing Cyrillic characters. In case of text containing Latin characters only, the packages are not needed)
-* '''mimetex''' (Note: this package is needed to render math formulae)
+* '''libwxgtk-webview3.0-0v5'''
+* '''python-pil''' or '''python-imaging'''
+* '''python-enchant'''
+* '''python-appindicator'''
+* '''ibus-gtk3'''

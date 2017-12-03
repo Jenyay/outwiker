@@ -71,3 +71,14 @@
         with_items:
             - "{{ result_path }}/outwiker_linux{{ suffix }}.7z"
             - "{{ result_path }}/outwiker_linux{{ suffix }}.zip"
+
+      - name: Build AppImage
+        command: fab appimage:{{ is_stable }}
+        args:
+            chdir: "{{ outwiker_dir }}"
+
+      - name: Download AppImage
+        fetch:
+            src: "{{ result_path }}/Outwiker-x86_64.AppImage"
+            dest: "{{ save_to }}/"
+            flat: true

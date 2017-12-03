@@ -1,5 +1,5 @@
 [wiki]
-md5_hash = 2a359a0e9fe91d0dffe65385ed899e2b
+md5_hash = 84197b7de3a93a6058e6eea3571112b7
 
 [Tree]
 expand = False
@@ -7,9 +7,10 @@ expand = False
 [General]
 type = wiki
 tags = программистам
-datetime = 2013-05-26 10:13:18.872168
-cursorposition = 0
+datetime = 2017-11-28 20:11:03.747266
+cursorposition = 917
 alias = Запуск из исходников
+uid = __a6b9938c-60e3-405e-b883-b204e3c7b20c
 
 [Misc]
 pageindex = 1
