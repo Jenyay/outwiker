@@ -197,8 +197,8 @@ class TrayIconLinux(object):
         gi.require_version('AppIndicator3', '0.1')
 
         from gi.repository import Gtk as gtk
-        #import gtk
         from gi.repository import AppIndicator3
+
         self._application = application
         self._mainWnd = mainWnd
 
