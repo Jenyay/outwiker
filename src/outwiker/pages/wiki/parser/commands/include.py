@@ -94,7 +94,7 @@ class IncludeCommand (Command):
             return (None, params_tail)
 
         attaches = Attachment (self.parser.page).attachmentFull
-        attaches.sort (IncludeCommand.sortByLength, reverse=True)
+        attaches.sort (key=len, reverse=True)
 
         path = None
 
@@ -106,16 +106,3 @@ class IncludeCommand (Command):
 
         return (path, params_tail)
 
-
-    # TODO: Вынести в отдельный модуль
-    @staticmethod
-    def sortByLength (fname1, fname2):
-        """
-        Функция для сортировки имен по длине имени
-        """
-        if len (fname1) > len (fname2):
-            return 1
-        elif len (fname1) < len (fname2):
-            return -1
-
-        return 0

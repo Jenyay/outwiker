@@ -38,7 +38,7 @@ class AttachToken (object):
         attachesAll = []
 
         attaches = Attachment (self.parser.page).attachmentFull
-        attaches.sort (self.sortByLength, reverse=True)
+        attaches.sort (key=len, reverse=True)
 
         for attach in attaches:
             fname = os.path.basename (attach)
@@ -58,20 +58,6 @@ class AttachToken (object):
             return '<img src="%s/%s"/>' % (PAGE_ATTACH_DIR, fname)
         else:
             return '<a href="%s/%s">%s</a>' % (PAGE_ATTACH_DIR, fname, fname)
-
-
-    # TODO: Вынести в отдельный модуль
-    def sortByLength (self, fname1, fname2):
-        """
-        Функция для сортировки имен по длине имени
-        """
-        if len (fname1) > len (fname2):
-            return 1
-        elif len (fname1) < len (fname2):
-            return -1
-
-        return 0
-
 
     @abstractmethod
     def filterFile (self, fname):
