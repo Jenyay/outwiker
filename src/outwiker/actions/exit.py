@@ -30,7 +30,8 @@ class ExitAction (BaseAction):
     def run (self, params):
         if (self.__allowExit()):
             self._application.mainWindow.Destroy()
-            wx.Exit()
+            #TODO: wx.Exit()fixes RuntimeError, but brokes tests.
+            #wx.Exit()
 
 
     def __allowExit (self):
