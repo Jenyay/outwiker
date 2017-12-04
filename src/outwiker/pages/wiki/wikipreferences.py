@@ -57,7 +57,7 @@ class WikiPrefGeneralPanel(BasePrefPanel):
         mainSizer.Add(self.colorizeWiki, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
 
         # Размер миниатюр
-        thumbSizer = wx.FlexGridSizer(1, 2)
+        thumbSizer = wx.FlexGridSizer(1, 2, 0, 0)
         thumbSizer.AddGrowableCol(0)
         thumbSizer.AddGrowableCol(1)
         thumbSizer.Add(self.thumbSizeLabel, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
@@ -65,7 +65,7 @@ class WikiPrefGeneralPanel(BasePrefPanel):
         mainSizer.Add(thumbSizer, 1, wx.EXPAND, 0)
 
         # Стиль ссылок по умолчанию (при создании через диалог)
-        linkStyleSizer = wx.FlexGridSizer(1, 2)
+        linkStyleSizer = wx.FlexGridSizer(1, 2, 0, 0)
         linkStyleSizer.AddGrowableCol(0)
         linkStyleSizer.AddGrowableCol(1)
         linkStyleSizer.Add (self.linkStyleLabel, 0,

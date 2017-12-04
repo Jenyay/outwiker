@@ -41,8 +41,8 @@ class PageList (wx.ScrolledWindow):
 
         count = len (self.__titleItems)
         if count > 1:
-            lastItemY = self.__titleItems[-1].GetPositionTuple()[1]
-            lastItemH = self.__titleItems[-1].GetPositionTuple()[1] - self.__titleItems[-2].GetPositionTuple()[1]
+            lastItemY = self.__titleItems[-1].GetPosition()[1]
+            lastItemH = self.__titleItems[-1].GetPosition()[1] - self.__titleItems[-2].GetPosition()[1]
 
             pixelPerUnitX = 5
             unitX = (self.__getItemMaxWidth() + 2 * self.__space) / pixelPerUnitX + 1

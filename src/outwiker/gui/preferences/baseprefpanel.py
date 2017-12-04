@@ -16,14 +16,14 @@ class BasePrefPanel (wx.ScrolledWindow):
     def _setScrolling (self):
         bottomElement = reduce (
             lambda left, right: right if (left is None or
-                                          (right.GetPositionTuple()[1] + right.GetSize()[1]) >
-                                          (left.GetPositionTuple()[1] + left.GetSize()[1])) else left,
+                                          (right.GetPosition()[1] + right.GetSize()[1]) >
+                                          (left.GetPosition()[1] + left.GetSize()[1])) else left,
             self.GetChildren(),
             None
         )
 
         if bottomElement is not None:
-            btElementTop = bottomElement.GetPositionTuple()[1]
+            btElementTop = bottomElement.GetPosition()[1]
             btElementHeight = bottomElement.GetSize()[1]
             scrollHeight = btElementHeight
             scrollCount = (btElementTop + btElementHeight) / scrollHeight + 1
