@@ -104,13 +104,13 @@ class ToolsItemCtrl(wx.Panel):
         self._browseButton = wx.BitmapButton(self,
                                              self._BROWSE_ID,
                                              browseBitmap)
-        self._browseButton.SetToolTip(_(u"Open file dialog..."))
+        self._browseButton.SetToolTipString(_(u"Open file dialog..."))
 
         removeBitmap = wx.Bitmap(self.__getImagePath("cross.png"))
         self._removeButton = wx.BitmapButton(self,
                                              self._REMOVE_ID,
                                              removeBitmap)
-        self._removeButton.SetToolTip(_(u"Remove tool"))
+        self._removeButton.SetToolTipString(_(u"Remove tool"))
 
         self._browseButton.Bind(wx.EVT_BUTTON, self.__onBrowse)
         self._removeButton.Bind(wx.EVT_BUTTON, self.__onRemove)

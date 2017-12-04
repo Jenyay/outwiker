@@ -23,7 +23,7 @@ class InsertGroupDialog (BaseDialog):
 
         self.__createGui()
         self.Fit()
-        self.Center(wx.BOTH)
+        self.Center(wx.CENTRE_ON_SCREEN)
 
 
     def __createGui (self):

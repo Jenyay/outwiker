@@ -118,7 +118,7 @@ class EditSnippetsDialog(TestedDialog):
             self,
             bitmap=wx.Bitmap(os.path.join(self._imagesPath, "folder_add.png"))
         )
-        self.addGroupBtn.SetToolTip(_(u"Add new snippets group"))
+        self.addGroupBtn.SetToolTipString(_(u"Add new snippets group"))
         groupButtonsSizer.Add(self.addGroupBtn, flag=wx.ALL, border=0)
 
         # Add a snippet button
@@ -126,7 +126,7 @@ class EditSnippetsDialog(TestedDialog):
             self,
             bitmap=wx.Bitmap(os.path.join(self._imagesPath, "snippet_add.png"))
         )
-        self.addSnippetBtn.SetToolTip(_(u"Create new snippet"))
+        self.addSnippetBtn.SetToolTipString(_(u"Create new snippet"))
         groupButtonsSizer.Add(self.addSnippetBtn, flag=wx.ALL, border=0)
 
         # Rename group or snippet button
@@ -134,7 +134,7 @@ class EditSnippetsDialog(TestedDialog):
             self,
             bitmap=wx.Bitmap(os.path.join(self._imagesPath, "rename.png"))
         )
-        self.renameBtn.SetToolTip(_(u"Rename"))
+        self.renameBtn.SetToolTipString(_(u"Rename"))
         groupButtonsSizer.Add(self.renameBtn, flag=wx.ALL, border=0)
 
         # Remove group or snippet button
@@ -142,7 +142,7 @@ class EditSnippetsDialog(TestedDialog):
             self,
             bitmap=wx.Bitmap(os.path.join(self._imagesPath, "remove.png"))
         )
-        self.removeBtn.SetToolTip(_(u"Remove"))
+        self.removeBtn.SetToolTipString(_(u"Remove"))
         groupButtonsSizer.Add(self.removeBtn, flag=wx.ALL, border=0)
 
         # Run snippet
@@ -150,7 +150,7 @@ class EditSnippetsDialog(TestedDialog):
             self,
             bitmap=wx.Bitmap(os.path.join(self._imagesPath, "run.png"))
         )
-        self.runSnippetBtn.SetToolTip(_(u"Run snippet"))
+        self.runSnippetBtn.SetToolTipString(_(u"Run snippet"))
         groupButtonsSizer.Add(self.runSnippetBtn, flag=wx.ALL, border=0)
 
         # Open help
@@ -158,7 +158,7 @@ class EditSnippetsDialog(TestedDialog):
             self,
             bitmap=wx.Bitmap(os.path.join(self._imagesPath, "help.png"))
         )
-        self.openHelpBtn.SetToolTip(_(u"Open help..."))
+        self.openHelpBtn.SetToolTipString(_(u"Open help..."))
         groupButtonsSizer.Add(self.openHelpBtn, flag=wx.ALL, border=0)
 
     def _createImagesList(self):
@@ -202,7 +202,7 @@ class EditSnippetsDialog(TestedDialog):
             bitmap=wx.Bitmap(os.path.join(self._imagesPath,
                                           "variables-menu.png"))
         )
-        self.insertVariableBtn.SetToolTip(_(u"Insert variable"))
+        self.insertVariableBtn.SetToolTipString(_(u"Insert variable"))
 
         for menuitem in self._varMenuItems:
             data = u'{{' + menuitem[1] + u'}}'
@@ -218,7 +218,7 @@ class EditSnippetsDialog(TestedDialog):
             parent,
             bitmap=wx.Bitmap(os.path.join(self._imagesPath, "block-menu.png"))
         )
-        self.insertBlockBtn.SetToolTip(_(u"Insert block"))
+        self.insertBlockBtn.SetToolTipString(_(u"Insert block"))
 
         for menuitem in self._blocksMenuItems:
             data = menuitem[1]

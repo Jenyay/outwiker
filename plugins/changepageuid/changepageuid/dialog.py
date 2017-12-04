@@ -29,7 +29,7 @@ class ChangeUidDialog(TestedDialog):
         self._newUidText.SetFocus()
         self._newUidText.SetSelection(0, -1)
 
-        self.Center(wx.BOTH)
+        self.Center(wx.CENTRE_ON_SCREEN)
 
         self.Bind(wx.EVT_BUTTON, self.__onOk, id=wx.ID_OK)
         self.Bind(wx.EVT_TEXT, self.__onTextChanged, self._newUidText)

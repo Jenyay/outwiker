@@ -54,7 +54,7 @@ class TreeStatDialog (wx.Dialog):
 
         self.Show()
         self._createGUI ()
-        self.Center (wx.BOTH)
+        self.Center (wx.CENTRE_ON_SCREEN)
 
         self._updateStatistics()
 
@@ -131,6 +131,6 @@ class TreeStatDialog (wx.Dialog):
 
 
     def _saveParams (self):
-        width, height = self.GetSize()
+        width, height = self.GetSizeTuple()
         self._config.treeDialogWidth.value = width
         self._config.treeDialogHeight.value = height

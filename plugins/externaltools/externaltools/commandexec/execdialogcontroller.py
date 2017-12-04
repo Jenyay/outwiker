@@ -40,7 +40,7 @@ class ExecDialogController(object):
         """
         Set dialog size
         """
-        currentWidth, currentHeight = self._dialog.GetClientSize()
+        currentWidth, currentHeight = self._dialog.GetClientSizeTuple()
         dialogWidth = max(self._config.dialogWidth, currentWidth)
         dialogHeight = max(self._config.dialogHeight, currentHeight)
 
@@ -50,7 +50,7 @@ class ExecDialogController(object):
         """
         Save settings to config
         """
-        currentWidth, currentHeight = self._dialog.GetClientSize()
+        currentWidth, currentHeight = self._dialog.GetClientSizeTuple()
         self._config.dialogWidth = currentWidth
         self._config.dialogHeight = currentHeight
         self._config.execFormat = self._dialog.format

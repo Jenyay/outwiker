@@ -22,7 +22,7 @@ class ThumbDialog (wx.Dialog):
 
         self.SetTitle (_(u"Gallery"))
 
-        self.Center(wx.BOTH)
+        self.Center(wx.CENTRE_ON_SCREEN)
 
         self.ALL_BUTTON = wx.NewId()
         self.CLEAR_BUTTON = wx.NewId()

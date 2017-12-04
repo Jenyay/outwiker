@@ -138,17 +138,17 @@ class InsertDialogController (object):
         """
         Изменение размера диалога
         """
-        currentWidth, currentHeight = self._dialog.GetSize ()
+        currentWidth, currentHeight = self._dialog.GetSizeTuple ()
         dialogWidth = max (self._config.dialogWidth.value, currentWidth)
         dialogHeight = max (self._config.dialogHeight.value, currentHeight)
 
-        self._dialog.SetSize (dialogWidth, dialogHeight)
+        self._dialog.SetSizeWH (dialogWidth, dialogHeight)
 
 
     def saveState (self):
         """
         Сохранить настройки диалога
         """
-        currentWidth, currentHeight = self._dialog.GetSize ()
+        currentWidth, currentHeight = self._dialog.GetSizeTuple ()
         self._config.dialogWidth.value = currentWidth
         self._config.dialogHeight.value = currentHeight

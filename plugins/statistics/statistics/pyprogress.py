@@ -343,7 +343,6 @@ class ProgressGauge(wx.PyWindow):
         
 
     def Update(self):
-        # type: () -> object
         """ Updates the gauge with a new value. """
 
         self.Refresh()
@@ -501,9 +500,9 @@ class PyProgress(wx.Dialog):
         if self._elapsed:
             self.SetTimeLabel(0, self._elapsed)
 
-        if not wx.GUIEventLoop().GetActive():
-            self.evtloop = wx.GUIEventLoop()
-            wx.GUIEventLoop.SetActive(self.evtloop)
+        if not wx.EventLoop().GetActive():
+            self.evtloop = wx.EventLoop()
+            wx.EventLoop.SetActive(self.evtloop)
         
         self.Update()
 

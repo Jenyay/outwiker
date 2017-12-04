@@ -373,7 +373,7 @@ class StringVariableCtrl(wx.Panel):
 
         # Expand / Collapse button
         self._expandButton = wx.BitmapButton(self, bitmap=self._expandBitmap)
-        self._expandButton.SetToolTip(_(u'Expand (Shift+Enter)'))
+        self._expandButton.SetToolTipString(_(u'Expand (Shift+Enter)'))
         self._expandButton.Bind(wx.EVT_BUTTON, handler=self._onExpand)
 
         self._mainSizer = wx.FlexGridSizer(cols=2)
@@ -412,7 +412,7 @@ class StringVariableCtrl(wx.Panel):
         self._expandButton.Unbind(wx.EVT_BUTTON, handler=self._onExpand)
         self._expandButton.Bind(wx.EVT_BUTTON, handler=self._onCollapse)
         self._expandButton.SetBitmapLabel(self._collapseBitmap)
-        self._expandButton.SetToolTip(_(u'Collapse'))
+        self._expandButton.SetToolTipString(_(u'Collapse'))
 
         self._textCtrlCollapsed.Hide()
         self._textCtrlExpanded.Show()
@@ -433,7 +433,7 @@ class StringVariableCtrl(wx.Panel):
         self._expandButton.Bind(wx.EVT_BUTTON, handler=self._onExpand)
         self._expandButton.Unbind(wx.EVT_BUTTON, handler=self._onCollapse)
         self._expandButton.SetBitmapLabel(self._expandBitmap)
-        self._expandButton.SetToolTip(_(u'Expand (Shift+Enter)'))
+        self._expandButton.SetToolTipString(_(u'Expand (Shift+Enter)'))
 
         self._textCtrlExpanded.Hide()
         self._textCtrlCollapsed.Show()

@@ -73,7 +73,7 @@ class EditSessionsDialog (TestedDialog):
         self.__createGui ()
 
         self._updateSessionsList ()
-        self.Center(wx.BOTH)
+        self.Center(wx.CENTRE_ON_SCREEN)
         self.SetSize ((350, 250))
 
         self.Bind (wx.EVT_BUTTON, handler=self._onRemove, id=self.REMOVE_ID)
@@ -149,13 +149,13 @@ class EditSessionsDialog (TestedDialog):
                                               self.RENAME_ID,
                                               wx.Bitmap (getImagePath (u"rename.png")))
 
-        self._renameButton.SetToolTip (_(u"Rename session..."))
+        self._renameButton.SetToolTipString (_(u"Rename session..."))
 
         self._removeButton = wx.BitmapButton (self,
                                               self.REMOVE_ID,
                                               wx.Bitmap (getImagePath (u"remove.png")))
 
-        self._removeButton.SetToolTip (_(u"Remove session..."))
+        self._removeButton.SetToolTipString (_(u"Remove session..."))
 
         mainButtonsSizer.Add (self._renameButton, 0, wx.ALL, border=2)
         mainButtonsSizer.Add (self._removeButton, 0, wx.ALL, border=2)

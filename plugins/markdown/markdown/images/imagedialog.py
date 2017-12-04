@@ -18,7 +18,7 @@ class ImageDialog (TestedDialog):
 
         self._createGui()
         self.filesListCombo.SetFocus()
-        self.Center(wx.BOTH)
+        self.Center(wx.CENTRE_ON_SCREEN)
 
     @property
     def fileName(self):

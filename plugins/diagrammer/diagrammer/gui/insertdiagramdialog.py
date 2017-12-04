@@ -21,7 +21,7 @@ class InsertDiagramDialog (BaseShapesDialog):
 
         self.__createGui()
         self.Fit()
-        self.Center(wx.BOTH)
+        self.Center(wx.CENTRE_ON_SCREEN)
 
 
     def _getShapesList (self):

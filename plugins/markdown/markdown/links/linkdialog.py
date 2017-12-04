@@ -28,7 +28,7 @@ class LinkDialog(TestedDialog):
 
         self._createGui()
         self.linkText.SetFocus()
-        self.Center(wx.BOTH)
+        self.Center(wx.CENTRE_ON_SCREEN)
 
     def _createGui(self):
         mainSizer = wx.FlexGridSizer(cols=2)

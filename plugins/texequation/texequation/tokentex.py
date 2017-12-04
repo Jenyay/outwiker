@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# -*- coding: UTF-8 -*-
 
 from abc import ABCMeta, abstractmethod
 import os
@@ -8,8 +8,6 @@ import shutil
 from outwiker.core.system import getOS
 from outwiker.libs.pyparsing import QuotedString
 from outwiker.pages.wiki.thumbnails import Thumbnails
-
-from defines import KATEX_DIR_NAME
 
 
 class TexFactory (object):
@@ -27,8 +25,8 @@ class BaseTexToken (object):
 
     def __init__(self, parser):
         self.parser = parser
-        self._headers = [u'<link rel="stylesheet" href="__attach/__thumb/{katex}/katex.min.css">\n'.format(katex=KATEX_DIR_NAME),
-                         u'<script src="__attach/__thumb/{katex}/katex.min.js"></script>'.format(katex=KATEX_DIR_NAME)]
+        self._headers = [u'<link rel="stylesheet" href="__attach/__thumb/katex/katex.min.css">\n',
+                         u'<script src="__attach/__thumb/katex/katex.min.js"></script>']
         self._divIndex = 0
 
         self._equationTemplate = u'<span class="{classname}" id="{idname}-{index}"></span>'
@@ -73,7 +71,7 @@ katex.render("{code}", element_{index}, {{ displayMode: {displayMode}, throwOnEr
     def _copyKatexLibrary(self):
         thumb = Thumbnails(self.parser.page)
         thumb_path = thumb.getThumbPath(True)
-        katex_path = os.path.join(thumb_path, KATEX_DIR_NAME)
+        katex_path = os.path.join(thumb_path, u'katex')
 
         if os.path.exists(katex_path):
             shutil.rmtree(katex_path)
@@ -139,8 +137,10 @@ katex.render("{code}", element_{index}, {{ displayMode: {displayMode}, throwOnEr
         """
         Get path to KaTeX library
         """
-        root = unicode(os.path.dirname(__file__), getOS().filesEncoding)
-        katexpath = os.path.join(root, u"tools", KATEX_DIR_NAME)
+        katexpath = unicode(os.path.join(os.path.dirname(__file__),
+                                         "tools",
+                                         "katex"),
+                            getOS().filesEncoding)
         return katexpath
 
 
