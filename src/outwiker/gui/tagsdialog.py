@@ -11,7 +11,7 @@ class TagsDialog(wx.Dialog):
     def __init__(self, parent, application):
         super(TagsDialog, self).__init__(
             parent,
-            style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.THICK_FRAME)
+            style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
 
         self.__application = application
 

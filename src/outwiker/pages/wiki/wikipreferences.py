@@ -31,7 +31,7 @@ class WikiPrefGeneralPanel(BasePrefPanel):
         # Шаблон для пустых страниц
         self.emptyTplLabel = wx.StaticText(self, -1, _(u"Template for empty page"))
         self.emptyTplTextCtrl = wx.TextCtrl(self, -1, "",
-                                            style=wx.TE_MULTILINE | wx.HSCROLL | wx.TE_LINEWRAP | wx.TE_WORDWRAP)
+                                            style=wx.TE_MULTILINE | wx.HSCROLL | wx.TE_WORDWRAP)
 
         # Стиль ссылок по умолчанию (при создании через диалог)
         self.linkStyleLabel = wx.StaticText (self, label=_(u"Default link style"))
