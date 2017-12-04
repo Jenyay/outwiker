@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 import wx
+import wx.adv
 
 from outwiker.core.application import Application
 from outwiker.gui.guiconfig import PluginsConfig
@@ -24,7 +25,7 @@ class PluginsPanel (BasePrefPanel):
         self.pluginsList = wx.CheckListBox(self, -1, style=wx.LB_SORT)
         self.pluginsList.SetMinSize((50, 20))
 
-        self.__downloadLink = wx.HyperlinkCtrl(self,
+        self.__downloadLink = wx.adv.HyperlinkCtrl(self,
                                                -1,
                                                _(u"Download more plugins"),
                                                _(u"http://jenyay.net/Outwiker/PluginsEn"))
