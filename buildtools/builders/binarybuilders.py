@@ -195,8 +195,11 @@ class PyInstallerBuilderLinux(BasePyInstallerBuilder):
     def get_additional_files(self):
         files = [
             u'need_for_build/linux/loaders.cache',
-            u'/usr/lib/x86_64-linux-gnu/gtk-2.0/modules/libcanberra-gtk-module.so',
         ]
+
+        canberra_lib = u'/usr/lib/x86_64-linux-gnu/gtk-2.0/modules/libcanberra-gtk-module.so'
+        if os.path.exists(canberra_lib):
+            files.append(canberra_lib)
 
         pixbuf_loaders_dir = u'/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders'
 
