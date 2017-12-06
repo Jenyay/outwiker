@@ -154,14 +154,14 @@ class TreeTest (BaseMainWndTest):
 
         self.assertEqual (tree.GetChildrenCount (page2Item, True), 2)
         self.assertEqual (tree.GetChildrenCount (page2Item, False), 1)
-        self.assertEqual (tree.GetItemData(page2Item).GetData(), self.wikiroot[u"Страница 2"])
+        self.assertEqual (tree.GetItemData(page2Item), self.wikiroot[u"Страница 2"])
         self.assertEqual (tree.GetItemText (page2Item), u"Страница 2")
 
         page3Item, cookie = tree.GetFirstChild (page2Item)
 
         self.assertEqual (tree.GetChildrenCount (page3Item, True), 1)
         self.assertEqual (tree.GetChildrenCount (page3Item, False), 1)
-        self.assertEqual (tree.GetItemData(page3Item).GetData(), self.wikiroot[u"Страница 2/Страница 3"])
+        self.assertEqual (tree.GetItemData(page3Item), self.wikiroot[u"Страница 2/Страница 3"])
         self.assertEqual (tree.GetItemText (page3Item), u"Страница 3")
 
 
@@ -209,14 +209,14 @@ class TreeTest (BaseMainWndTest):
         self.wikiroot.selectedPage = self.wikiroot[u"Страница 1"]
 
         selItem = tree.GetSelection()
-        self.assertEqual (tree.GetItemData(selItem).GetData(), self.wikiroot.selectedPage)
-        self.assertEqual (tree.GetItemData(selItem).GetData(), self.wikiroot[u"Страница 1"])
+        self.assertEqual (tree.GetItemData(selItem), self.wikiroot.selectedPage)
+        self.assertEqual (tree.GetItemData(selItem), self.wikiroot[u"Страница 1"])
 
         self.wikiroot.selectedPage = self.wikiroot[u"Страница 2/Страница 3"]
 
         selItem = tree.GetSelection()
-        self.assertEqual (tree.GetItemData(selItem).GetData(), self.wikiroot.selectedPage)
-        self.assertEqual (tree.GetItemData(selItem).GetData(), self.wikiroot[u"Страница 2/Страница 3"])
+        self.assertEqual (tree.GetItemData(selItem), self.wikiroot.selectedPage)
+        self.assertEqual (tree.GetItemData(selItem), self.wikiroot[u"Страница 2/Страница 3"])
 
 
     def testOrder1 (self):
@@ -238,14 +238,14 @@ class TreeTest (BaseMainWndTest):
 
         self.assertEqual (tree.GetChildrenCount (page2Item, False), 1)
         self.assertEqual (tree.GetChildrenCount (page2Item, True), 1)
-        self.assertEqual (tree.GetItemData(page2Item).GetData(), self.wikiroot[u"Страница 2"])
+        self.assertEqual (tree.GetItemData(page2Item), self.wikiroot[u"Страница 2"])
         self.assertEqual (tree.GetItemText (page2Item), u"Страница 2")
 
         page3Item, cookie = tree.GetFirstChild (page2Item)
 
         self.assertEqual (tree.GetChildrenCount (page3Item, True), 0)
         self.assertEqual (tree.GetChildrenCount (page3Item, False), 0)
-        self.assertEqual (tree.GetItemData(page3Item).GetData(), self.wikiroot[u"Страница 2/Страница 3"])
+        self.assertEqual (tree.GetItemData(page3Item), self.wikiroot[u"Страница 2/Страница 3"])
         self.assertEqual (tree.GetItemText (page3Item), u"Страница 3")
 
 
@@ -263,15 +263,15 @@ class TreeTest (BaseMainWndTest):
         Application.wikiroot.selectedPage = self.wikiroot[u"Страница 2"]
 
         selItem = tree.GetSelection()
-        self.assertEqual (tree.GetItemData(selItem).GetData(), self.wikiroot[u"Страница 2"])
-        self.assertEqual (tree.GetItemData(selItem).GetData(), self.wikiroot[u"Страница 2"])
+        self.assertEqual (tree.GetItemData(selItem), self.wikiroot[u"Страница 2"])
+        self.assertEqual (tree.GetItemData(selItem), self.wikiroot[u"Страница 2"])
         self.assertEqual (self.wikiroot.selectedPage, self.wikiroot[u"Страница 2"])
 
         Application.wikiroot.selectedPage.order -= 1
 
         selItem = tree.GetSelection()
-        self.assertEqual (tree.GetItemData(selItem).GetData(), self.wikiroot[u"Страница 2"])
-        self.assertEqual (tree.GetItemData(selItem).GetData(), self.wikiroot[u"Страница 2"])
+        self.assertEqual (tree.GetItemData(selItem), self.wikiroot[u"Страница 2"])
+        self.assertEqual (tree.GetItemData(selItem), self.wikiroot[u"Страница 2"])
         self.assertEqual (self.wikiroot.selectedPage, self.wikiroot[u"Страница 2"])
 
         rootitem = tree.GetRootItem()
@@ -279,14 +279,14 @@ class TreeTest (BaseMainWndTest):
 
         self.assertEqual (tree.GetChildrenCount (page2Item, False), 1)
         self.assertEqual (tree.GetChildrenCount (page2Item, True), 1)
-        self.assertEqual (tree.GetItemData(page2Item).GetData(), self.wikiroot[u"Страница 2"])
+        self.assertEqual (tree.GetItemData(page2Item), self.wikiroot[u"Страница 2"])
         self.assertEqual (tree.GetItemText (page2Item), u"Страница 2")
 
         page3Item, cookie = tree.GetFirstChild (page2Item)
 
         self.assertEqual (tree.GetChildrenCount (page3Item, False), 0)
         self.assertEqual (tree.GetChildrenCount (page3Item, True), 0)
-        self.assertEqual (tree.GetItemData(page3Item).GetData(), self.wikiroot[u"Страница 2/Страница 3"])
+        self.assertEqual (tree.GetItemData(page3Item), self.wikiroot[u"Страница 2/Страница 3"])
         self.assertEqual (tree.GetItemText (page3Item), u"Страница 3")
 
 
@@ -309,7 +309,7 @@ class TreeTest (BaseMainWndTest):
 
         self.assertEqual (tree.GetChildrenCount (newPageItem, False), 1)
         self.assertEqual (tree.GetChildrenCount (newPageItem, True), 1)
-        self.assertEqual (tree.GetItemData(newPageItem).GetData(), self.wikiroot[u"Переименованная страница"])
+        self.assertEqual (tree.GetItemData(newPageItem), self.wikiroot[u"Переименованная страница"])
         self.assertEqual (tree.GetItemText (newPageItem), u"Переименованная страница")
 
     def testInvalidIcon (self):
