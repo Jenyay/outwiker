@@ -35,7 +35,8 @@ def getPython():
 
 def execute(command):
     if os.name == 'posix':
-        local(u'LD_PRELOAD=libwx_gtk2u_webview-3.0.so.0 ' + command)
+        #local(u'LD_PRELOAD=libwx_gtk2u_webview-3.0.so.0 ' + command)
+        local(command)
     else:
         local(command)
 
