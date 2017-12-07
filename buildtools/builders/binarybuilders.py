@@ -71,6 +71,16 @@ class BaseBinaryBuilder(object):
             'xml',
         ]
 
+    def get_additional_files(self):
+        return []
+
+    def _copy_additional_files(self):
+        dest_dir = os.path.join(self._dist_dir, u'outwiker')
+
+        for fname in self.get_additional_files():
+            print_info(u'Copy: {} -> {}'.format(fname, dest_dir))
+            shutil.copy(fname, dest_dir)
+
 
 class BasePyInstallerBuilder(BaseBinaryBuilder):
     """Class for binary assimbling creation with PyParsing. """
@@ -129,6 +139,7 @@ class BasePyInstallerBuilder(BaseBinaryBuilder):
             local(command)
 
         self._remove_files()
+        self._copy_additional_files()
 
         print_info(u'Copy files to dest path.')
         shutil.copytree(
@@ -181,6 +192,24 @@ class PyInstallerBuilderLinux(BasePyInstallerBuilder):
             u'_codecs_tw.so',
         ]
 
+    def get_additional_files(self):
+        files = [
+            u'need_for_build/linux/loaders.cache',
+        ]
+
+        canberra_lib = u'/usr/lib/x86_64-linux-gnu/gtk-2.0/modules/libcanberra-gtk-module.so'
+        if os.path.exists(canberra_lib):
+            files.append(canberra_lib)
+
+        pixbuf_loaders_dir = u'/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders'
+
+        for pixbuf_type in os.listdir(pixbuf_loaders_dir):
+            if pixbuf_type.endswith('.so'):
+                files.append(os.path.join(pixbuf_loaders_dir,
+                                          pixbuf_type))
+
+        return files
+
     def build(self):
         super(PyInstallerBuilderLinux, self).build()
         files_for_strip = [
@@ -201,3 +230,8 @@ class PyInstallerBuilderLinux(BasePyInstallerBuilder):
             with lcd(self._dest_dir):
                 assert os.path.exists(os.path.join(self._dest_dir, fname))
                 local(u'strip -s -o "{fname}" "{fname}"'.format(fname=fname))
+
+    def get_params(self):
+        params = super(PyInstallerBuilderLinux, self).get_params()
+        params.append(u'--runtime-hook=linux_runtime_hook.py')
+        return params

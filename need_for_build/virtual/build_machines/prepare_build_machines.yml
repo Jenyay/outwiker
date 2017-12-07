@@ -34,6 +34,7 @@
           - devscripts
           - p7zip-full
           - libssl-dev
+          - libcanberra-gtk-module
         become: true
 
       - name: Install additional software
