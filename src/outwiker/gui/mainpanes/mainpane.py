@@ -72,8 +72,8 @@ class MainPane(object):
         self._savePaneInfo(self.config.pane,
                            self._auiManager.GetPane(self.panel))
 
-        self.config.width.value = self.panel.GetSizeTuple()[0]
-        self.config.height.value = self.panel.GetSizeTuple()[1]
+        self.config.width.value = self.panel.GetSize()[0]
+        self.config.height.value = self.panel.GetSize()[1]
 
     def setFocus(self):
         self.panel.SetFocus()

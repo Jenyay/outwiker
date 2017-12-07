@@ -14,7 +14,7 @@ class PrefDialog(TestedDialog):
     Класс диалога настроек
     """
     def __init__(self, parent):
-        style = wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.THICK_FRAME
+        style = wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER
         super(PrefDialog, self).__init__(parent, style=style)
         self.__treeBook = wx.Treebook(self, -1)
         self.__do_layout()

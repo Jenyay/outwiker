@@ -14,13 +14,13 @@ class RenameTagDialog(wx.Dialog):
         """
         super(RenameTagDialog, self).__init__(
             parent,
-            style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.THICK_FRAME)
+            style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
 
         self.SetTitle (_(u"Rename tag"))
 
         self.__createControls(tagsList)
         self.__layout()
-        self.Center(wx.CENTRE_ON_SCREEN)
+        self.Center(wx.BOTH)
 
         self.Bind (wx.EVT_BUTTON, self.__onOk, id=wx.ID_OK)
 

@@ -41,8 +41,8 @@ class PageList (wx.ScrolledWindow):
 
         count = len (self.__titleItems)
         if count > 1:
-            lastItemY = self.__titleItems[-1].GetPositionTuple()[1]
-            lastItemH = self.__titleItems[-1].GetPositionTuple()[1] - self.__titleItems[-2].GetPositionTuple()[1]
+            lastItemY = self.__titleItems[-1].GetPosition()[1]
+            lastItemH = self.__titleItems[-1].GetPosition()[1] - self.__titleItems[-2].GetPosition()[1]
 
             pixelPerUnitX = 5
             unitX = (self.__getItemMaxWidth() + 2 * self.__space) / pixelPerUnitX + 1
@@ -141,7 +141,7 @@ class PageTitleItem (wx.Panel):
                         underline=False)
 
         label.SetFont (font)
-        label.SetToolTipString (self.__page.subpath.replace ("/", " / "))
+        label.SetToolTip (self.__page.subpath.replace ("/", " / "))
         label.SetBackgroundColour (self.__backColor)
         label.SetColours (self.__color, self.__color, self.__color)
         label.AutoBrowse (False)

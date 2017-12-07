@@ -5,7 +5,7 @@ import os
 import os.path
 
 import wx
-import wx.combo
+#import wx.combo
 
 from outwiker.core.system import getIconsDirList, getImagesDir
 from outwiker.core.iconscollection import IconsCollection
@@ -238,9 +238,9 @@ class IconsController(BasePageDialogController):
         neww = ICON_WIDTH
         newh = ICON_HEIGHT
 
-        wx.Log_EnableLogging(False)
+        wx.Log.EnableLogging(False)
         image = wx.Image(fname)
-        wx.Log_EnableLogging(True)
+        wx.Log.EnableLogging(True)
 
         if not image.IsOk():
             logging.error(_(u'Invalid icon file: {}').format(fname))
@@ -250,7 +250,7 @@ class IconsController(BasePageDialogController):
         posy = (newh - image.Height) / 2
         image.Resize((neww, newh), (posx, posy), 255, 255, 255)
 
-        return wx.BitmapFromImage(image)
+        return wx.Bitmap(image)
 
     def _getCurrentIcons(self):
         index = self._iconsPanel.groupCtrl.GetSelection()

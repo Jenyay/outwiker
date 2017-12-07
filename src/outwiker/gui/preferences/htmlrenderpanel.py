@@ -34,7 +34,7 @@ class HtmlRenderPanel(BasePrefPanel):
         self.userStyleTextBox = wx.TextCtrl(self,
                                             -1,
                                             "",
-                                            style = wx.TE_PROCESS_ENTER | wx.TE_MULTILINE | wx.HSCROLL | wx.TE_LINEWRAP | wx.TE_WORDWRAP)
+                                            style = wx.TE_PROCESS_ENTER | wx.TE_MULTILINE | wx.HSCROLL | wx.TE_WORDWRAP)
 
 
     def _do_layout(self):

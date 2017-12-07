@@ -136,7 +136,7 @@ class WindowsFileIcons (BaseFileIcons):
         bmp.CopyFromIcon(icon)
         bmp = bmp.ConvertToImage()
         bmp.Rescale(16, 16)
-        bmp = wx.BitmapFromImage(bmp)
+        bmp = wx.Bitmap(bmp)
 
         return bmp
 
@@ -164,7 +164,7 @@ class WindowsFileIcons (BaseFileIcons):
         except Exception:
             return None
         bmp.Rescale(16, 16)
-        bmp = wx.BitmapFromImage(bmp)
+        bmp = wx.Bitmap(bmp)
         return bmp
 
 

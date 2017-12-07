@@ -49,7 +49,8 @@ class TagsCloudPanel (wx.Panel):
 
 
     def __layout (self):
-        mainSizer = wx.FlexGridSizer (1, 1)
+        #mainSizer = wx.FlexGridSizer (1, 1)
+        mainSizer = wx.FlexGridSizer (1, 1,0)
         mainSizer.AddGrowableCol (0)
         mainSizer.AddGrowableRow (0)
         mainSizer.Add (self.__tagscloud, 0, wx.ALL | wx.EXPAND, 4)

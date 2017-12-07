@@ -46,7 +46,7 @@ class BaseTextPanel(BasePagePanel):
     Базовый класс для представления текстовых страниц и им подобных
    (где есть текстовый редактор)
     """
-    __metaclass__ = ABCMeta
+    #__metaclass__ = ABCMeta
 
     def __init__(self, parent, application):
         super(BaseTextPanel, self).__init__(parent, application)
@@ -117,7 +117,7 @@ class BaseTextPanel(BasePagePanel):
 
         self._onSetPage += self.__onSetPage
 
-    @abstractmethod
+    #@abstractmethod
     def GetContentFromGui(self):
         """
         Получить из интерфейса контент, который будет сохранен в файл
@@ -125,28 +125,28 @@ class BaseTextPanel(BasePagePanel):
         """
         pass
 
-    @abstractmethod
+    #@abstractmethod
     def GetSearchPanel(self):
         """
         Вернуть панель поиска
         """
         pass
 
-    @abstractmethod
+    #@abstractmethod
     def SetCursorPosition(self, position):
         """
         Установить курсор в текстовом редакторе в положение position
         """
         pass
 
-    @abstractmethod
+    #@abstractmethod
     def GetCursorPosition(self):
         """
         Возвращает положение курсора в текстовом редакторе
         """
         pass
 
-    @abstractmethod
+    #@abstractmethod
     def GetEditor(self):
         """
         Return text editor from panel. It used for common polyactions.
@@ -330,10 +330,10 @@ class BaseTextPanel(BasePagePanel):
 
         editMenu = self._application.mainWindow.mainMenu.editMenu
         self.mainWindow.mainMenu.Remove(self.searchMenuIndex)
-        editMenu.RemoveItem(self.wordMenuItem)
-        editMenu.RemoveItem(self.linesMenuItem)
+        editMenu.Remove(self.wordMenuItem)
+        editMenu.Remove(self.linesMenuItem)
 
-        map(lambda item: item[0].RemoveItem(item[1]), self._menuSeparators)
+        map(lambda item: item[0].Remove(item[1]), self._menuSeparators)
 
         self.searchMenu = None
         self.wordMenuItem = None

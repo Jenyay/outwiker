@@ -14,7 +14,7 @@ class HtmlRender (wx.Panel):
     """
     Базовый класс для HTML-рендеров
     """
-    __metaclass__ = ABCMeta
+    #__metaclass__ = ABCMeta
 
     def __init__(self, parent):
         wx.Panel.__init__(self, parent)
@@ -24,7 +24,7 @@ class HtmlRender (wx.Panel):
         self._currentPage = None
 
 
-    @abstractmethod
+    #@abstractmethod
     def LoadPage (self, fname):
         """
         Загрузить страницу из файла

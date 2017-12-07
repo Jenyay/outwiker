@@ -4,6 +4,7 @@ from abc import ABCMeta, abstractmethod
 import os
 
 import wx
+import wx.adv
 
 import outwiker.core.commands
 from outwiker.actions.exit import ExitAction
@@ -20,7 +21,7 @@ def getTrayIconController(application, parentWnd):
 
 
 class TrayIconControllerBase(wx.EvtHandler):
-    __metaclass__ = ABCMeta
+    #__metaclass__ = ABCMeta
 
     def __init__(self, application, mainWnd):
         super(TrayIconControllerBase, self).__init__()
@@ -30,7 +31,7 @@ class TrayIconControllerBase(wx.EvtHandler):
 
         self._trayIcon = None
 
-    @abstractmethod
+    #@abstractmethod
     def _createTrayIcon(self):
         pass
 
@@ -163,8 +164,7 @@ class TrayIconControllerLinux(TrayIconControllerBase):
     def __onExit(self, obj):
         self._application.actionController.getAction(ExitAction.stringId).run(None)
 
-
-class TrayIconWindows(wx.TaskBarIcon):
+class TrayIconWindows(wx.adv.TaskBarIcon):
     def __init__(self, application, mainWnd):
         super(TrayIconWindows, self).__init__()
         self._application = application
@@ -192,17 +192,22 @@ class TrayIconWindows(wx.TaskBarIcon):
 
 class TrayIconLinux(object):
     def __init__(self, application, mainWnd):
-        import gtk
-        import appindicator
+        import gi
+        gi.require_version('Gtk', '3.0')
+        gi.require_version('AppIndicator3', '0.1')
+
+        from gi.repository import Gtk as gtk
+        from gi.repository import AppIndicator3
+
         self._application = application
         self._mainWnd = mainWnd
 
         self._icon = os.path.abspath(os.path.join(getImagesDir(),
                                                   "outwiker_64x64.png"))
         assert os.path.exists(self._icon)
-        self._indicator = appindicator.Indicator("OutWiker",
+        self._indicator = AppIndicator3.Indicator.new("OutWiker",
                                                  self._icon,
-                                                 appindicator.CATEGORY_APPLICATION_STATUS)
+                                                  AppIndicator3.IndicatorCategory.APPLICATION_STATUS)
         menu = gtk.Menu()
         self.restoreMenuItem = gtk.MenuItem(_('Restore'))
         self.restoreMenuItem.show()
@@ -215,13 +220,12 @@ class TrayIconLinux(object):
         self._indicator.set_menu(menu)
 
     def showTrayIcon(self):
-        import appindicator
-        self._indicator.set_status (appindicator.STATUS_ACTIVE)
+        from gi.repository import AppIndicator3
+        self._indicator.set_status(AppIndicator3.IndicatorStatus.ACTIVE)
 
     def removeTrayIcon(self):
-        import appindicator
-        self._indicator.set_status (appindicator.STATUS_PASSIVE)
-
+        from gi.repository import AppIndicator3
+        self._indicator.set_status(AppIndicator3.IndicatorStatus.PASSIVE)
 
     def Destroy(self):
         # self.removeTrayIcon()

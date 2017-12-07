@@ -115,7 +115,7 @@ class TagsCloud (wx.ScrolledWindow):
             return (maxheight, maxindex)
 
         for label, index in zip(labels, range(len(labels))):
-            height = label.GetSizeTuple()[1]
+            height = label.GetSize()[1]
             if height > maxheight:
                 maxheight = height
                 maxindex = index
@@ -173,7 +173,7 @@ class TagsCloud (wx.ScrolledWindow):
 
         linesCount = 1
 
-        maxwidth = self.GetClientSizeTuple()[0] - self.__margin * 2
+        maxwidth = self.GetClientSize()[0] - self.__margin * 2
 
         # Хак из-за разного поведения полос прокрутки в винде и линуксе
         if os.name != "nt":
@@ -181,7 +181,7 @@ class TagsCloud (wx.ScrolledWindow):
 
         for tagname in self.__tags:
             label = self.__labels[tagname]
-            newRightBorder = currentx + label.GetSizeTuple()[0]
+            newRightBorder = currentx + label.GetSize()[0]
 
             if newRightBorder > maxwidth and len(currentLine) != 0:
 
@@ -191,11 +191,11 @@ class TagsCloud (wx.ScrolledWindow):
                 currentLine = []
                 linesCount += 1
 
-            label.MoveXY(currentx, currenty - label.GetSizeTuple()[1] / 2)
+            label.Move(currentx, currenty - label.GetSize()[1] / 2)
             label.Refresh()
 
             currentLine.append(label)
-            currentx += label.GetSizeTuple()[0] + self.__space
+            currentx += label.GetSize()[0] + self.__space
 
         if len (self.__tags) != 0:
             commonheight = currenty + self.__getMaxHeight (currentLine)[0] + self.__space

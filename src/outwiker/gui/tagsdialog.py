@@ -11,14 +11,14 @@ class TagsDialog(wx.Dialog):
     def __init__(self, parent, application):
         super(TagsDialog, self).__init__(
             parent,
-            style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.THICK_FRAME)
+            style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
 
         self.__application = application
 
         self.__createControls()
         self.__setTagsList()
         self.__tagsSelector.SetFocus()
-        self.Center(wx.CENTRE_ON_SCREEN)
+        self.Center(wx.BOTH)
 
     def __setTagsList(self):
         assert self.__application.wikiroot is not None

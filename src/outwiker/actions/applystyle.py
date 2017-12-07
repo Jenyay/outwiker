@@ -89,7 +89,7 @@ class AddStyleDialog (TestedDialog):
 
         self.SetMinSize ((300, 80))
         self.__createGui()
-        self.Center(wx.CENTRE_ON_SCREEN)
+        self.Center(wx.BOTH)
 
 
     def __createGui (self):

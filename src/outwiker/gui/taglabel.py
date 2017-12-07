@@ -2,6 +2,7 @@
 
 import wx
 import wx.lib.newevent
+import wx.adv
 
 from outwiker.gui.controls.hyperlink import (HyperLinkCtrl,
                                              EVT_HYPERLINK_LEFT,
@@ -20,7 +21,7 @@ class TagLabel(HyperLinkCtrl):
         super(TagLabel, self).__init__(
             parent,
             label=title,
-            style=wx.HL_ALIGN_CENTRE | wx.NO_BORDER)
+            style=wx.adv.HL_ALIGN_CENTRE | wx.BORDER_NONE)
 
         self.__propagationLevel = 10
         self.AutoBrowse(False)

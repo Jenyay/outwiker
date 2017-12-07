@@ -61,13 +61,13 @@ class IconsetPanel(BasePrefPanel):
         self.__updateGroups()
 
     def __createGuiElements(self):
-        mainSizer = wx.FlexGridSizer(cols=2, rows=1)
+        mainSizer = wx.FlexGridSizer(cols=2, rows=1, vgap=0, hgap=0)
         mainSizer.AddGrowableCol(1)
         mainSizer.AddGrowableRow(0)
 
         #
         # Controls for groups
-        groupsSizer = wx.FlexGridSizer(cols=1)
+        groupsSizer = wx.FlexGridSizer(cols=1, rows=0, vgap=0, hgap=0)
         groupsSizer.AddGrowableCol(0)
         groupsSizer.AddGrowableRow(0)
 
@@ -90,7 +90,7 @@ class IconsetPanel(BasePrefPanel):
             id=self.ADD_GROUP,
             bitmap=wx.Bitmap(os.path.join(imagesDir, "add.png"))
         )
-        addGroupBtn.SetToolTipString(_(u"Add new group"))
+        addGroupBtn.SetToolTip(_(u"Add new group"))
 
         # Remove a group
         removeGroupBtn = wx.BitmapButton(
@@ -98,7 +98,7 @@ class IconsetPanel(BasePrefPanel):
             id=self.REMOVE_GROUP,
             bitmap=wx.Bitmap(os.path.join(imagesDir, "remove.png"))
         )
-        removeGroupBtn.SetToolTipString(_(u"Remove group"))
+        removeGroupBtn.SetToolTip(_(u"Remove group"))
 
         # Rename a group
         renameGroupBtn = wx.BitmapButton(
@@ -106,7 +106,7 @@ class IconsetPanel(BasePrefPanel):
             id=self.RENAME_GROUP,
             bitmap=wx.Bitmap(os.path.join(imagesDir, "pencil.png"))
         )
-        renameGroupBtn.SetToolTipString(_(u"Rename group"))
+        renameGroupBtn.SetToolTip(_(u"Rename group"))
 
         groupButtonsSizer.Add(addGroupBtn, flag=wx.ALL, border=0)
         groupButtonsSizer.Add(removeGroupBtn, flag=wx.ALL, border=0)
@@ -117,7 +117,7 @@ class IconsetPanel(BasePrefPanel):
 
         #
         # Controls for icons in the group
-        iconsSizer = wx.FlexGridSizer(cols=1)
+        iconsSizer = wx.FlexGridSizer(cols=1, rows=0, vgap=0, hgap=0)
         iconsSizer.AddGrowableRow(0)
         iconsSizer.AddGrowableCol(0)
 
@@ -133,7 +133,7 @@ class IconsetPanel(BasePrefPanel):
             id=self.ADD_ICONS,
             bitmap=wx.Bitmap(os.path.join(imagesDir, "add.png"))
         )
-        addIconsBtn.SetToolTipString(_(u"Add icons"))
+        addIconsBtn.SetToolTip(_(u"Add icons"))
 
         # Remove icons
         removeIconsBtn = wx.BitmapButton(
@@ -141,7 +141,7 @@ class IconsetPanel(BasePrefPanel):
             id=self.REMOVE_ICONS,
             bitmap=wx.Bitmap(os.path.join(imagesDir, "remove.png"))
         )
-        removeIconsBtn.SetToolTipString(_(u"Remove selected icons"))
+        removeIconsBtn.SetToolTip(_(u"Remove selected icons"))
 
         # Set icon as group cover
         setCoverBtn = wx.BitmapButton(
@@ -149,7 +149,7 @@ class IconsetPanel(BasePrefPanel):
             id=self.SET_COVER,
             bitmap=wx.Bitmap(os.path.join(imagesDir, "picture.png"))
         )
-        setCoverBtn.SetToolTipString(_(u"Set icon as group cover"))
+        setCoverBtn.SetToolTip(_(u"Set icon as group cover"))
 
         iconsButtonsSizer.Add(addIconsBtn, flag=wx.ALL, border=0)
         iconsButtonsSizer.Add(removeIconsBtn, flag=wx.ALL, border=0)
@@ -222,7 +222,7 @@ class IconsetPanel(BasePrefPanel):
         if not selItem.IsOk():
             return
 
-        group = self._groups.GetItemData(selItem).GetData()
+        group = self._groups.GetItemData(selItem)
         self.__showIcons(group)
 
     def __onAddGroup(self, event):
@@ -253,7 +253,7 @@ class IconsetPanel(BasePrefPanel):
         nextGroupItem, cookie = self._groups.GetFirstChild(rootItem)
 
         while nextGroupItem.IsOk():
-            if self._groups.GetItemData(nextGroupItem).GetData() == groupname:
+            if self._groups.GetItemData(nextGroupItem) == groupname:
                 self._groups.SelectItem(nextGroupItem)
                 break
 
@@ -279,7 +279,7 @@ class IconsetPanel(BasePrefPanel):
             return
 
         event.Veto()
-        oldGroupName = self._groups.GetItemData(event.GetItem()).GetData()
+        oldGroupName = self._groups.GetItemData(event.GetItem())
         newGroupName = event.GetLabel().strip()
 
         assert oldGroupName is not None
@@ -312,7 +312,7 @@ class IconsetPanel(BasePrefPanel):
 
     def __onBeginLabelEdit(self, event):
         item = event.GetItem()
-        group = self._groups.GetItemData(item).GetData()
+        group = self._groups.GetItemData(item)
         if group is None:
             # Root element
             event.Veto()
@@ -331,7 +331,7 @@ class IconsetPanel(BasePrefPanel):
         if not selItem.IsOk() or selItem == rootItem:
             return
 
-        groupname = self._groups.GetItemData(selItem).GetData()
+        groupname = self._groups.GetItemData(selItem)
         assert groupname is not None
 
         if MessageBox(
@@ -361,7 +361,7 @@ class IconsetPanel(BasePrefPanel):
                 style=style) as dlg:
             if dlg.ShowModal() == wx.ID_OK:
                 item = self._groups.GetSelection()
-                group = self._groups.GetItemData(item).GetData()
+                group = self._groups.GetItemData(item)
 
                 collection = self.__getIconsCollection()
                 collection.addIcons(group, dlg.GetPaths())
@@ -388,7 +388,7 @@ class IconsetPanel(BasePrefPanel):
                     pass
 
             item = self._groups.GetSelection()
-            group = self._groups.GetItemData(item).GetData()
+            group = self._groups.GetItemData(item)
             self.__updateGroups()
             self.__selectGroupItem(group)
 
@@ -402,7 +402,7 @@ class IconsetPanel(BasePrefPanel):
             return
 
         item = self._groups.GetSelection()
-        group = self._groups.GetItemData(item).GetData()
+        group = self._groups.GetItemData(item)
 
         collection = self.__getIconsCollection()
         collection.setCover(group, icons[0])

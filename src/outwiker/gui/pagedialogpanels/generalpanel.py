@@ -11,7 +11,7 @@ from outwiker.core.events import (PageDialogPageTypeChangedParams,
                                   PageDialogPageFactoriesNeededParams)
 from outwiker.gui.tagsselector import TagsSelector, EVT_TAGS_LIST_CHANGED
 from outwiker.gui.guiconfig import PageDialogConfig
-from basecontroller import BasePageDialogController
+from .basecontroller import BasePageDialogController
 
 
 class GeneralPanel (wx.Panel):

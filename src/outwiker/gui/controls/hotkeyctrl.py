@@ -13,8 +13,8 @@ class HotkeyCtrl(wx.TextCtrl):
     Added in Outwiker 2.0.0.807.
     outwiker.gui 1.3
     """
-    def __init__(self, parent, id=-1, value=None, pos=None, size=None):
-        super(HotkeyCtrl, self).__init__(parent, id, pos=pos, size=size)
+    def __init__(self, parent, id=-1, value=None):
+        super(HotkeyCtrl, self).__init__(parent, id)
 
         self.KEYMAP = {
             wx.WXK_BACK: u'Back',

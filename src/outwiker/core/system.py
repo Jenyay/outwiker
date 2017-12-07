@@ -119,8 +119,12 @@ class Unix(System):
     def init(self):
         if 'LD_PRELOAD' in os.environ:
             del os.environ['LD_PRELOAD']
-        import gtk
-        gtk.gdk.threads_init()
+
+        import gi
+        gi.require_version('Gdk', '3.0')
+
+        from gi.repository import Gdk
+        Gdk.threads_init()
 
     def startFile(self, path):
         """
@@ -330,8 +334,6 @@ def openInNewWindow(path, args=[]):
     params = [exeFile.encode(encoding), path.encode(encoding)] + args
 
     env = os.environ.copy()
-    if getOS().name == 'unix':
-        env['LD_PRELOAD'] = 'libwx_gtk2u_webview-3.0.so.0'
 
     if exeFile.endswith(".exe"):
         DETACHED_PROCESS = 0x00000008

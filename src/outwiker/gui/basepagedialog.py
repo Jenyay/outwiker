@@ -3,7 +3,7 @@
 from abc import ABCMeta, abstractmethod
 
 import wx
-import wx.combo
+#import wx.combo
 
 from outwiker.core.application import Application
 from outwiker.gui.guiconfig import PageDialogConfig
@@ -17,7 +17,7 @@ from outwiker.core.events import (PageDialogInitParams,
 
 
 class BasePageDialog (TestedDialog):
-    __metaclass__ = ABCMeta
+    #__metaclass__ = ABCMeta
 
     def __init__(self, parentWnd, currentPage, parentPage):
         super (BasePageDialog, self).__init__(parent=parentWnd)
@@ -41,15 +41,15 @@ class BasePageDialog (TestedDialog):
 
         self.SetClientSize ((self._config.width.value, self._config.height.value))
 
-        self.Center(wx.CENTRE_ON_SCREEN)
+        self.Center(wx.BOTH)
         self._generalPanel.titleTextCtrl.SetFocus()
 
 
-    @abstractmethod
+    #@abstractmethod
     def _validate (self):
         pass
 
-    @abstractmethod
+    #@abstractmethod
     def _initController (self, controller):
         pass
 
@@ -154,7 +154,7 @@ class BasePageDialog (TestedDialog):
 
 
     def saveParams (self):
-        width, height = self.GetClientSizeTuple()
+        width, height = self.GetClientSize()
         self._config.width.value = width
         self._config.height.value = height
 

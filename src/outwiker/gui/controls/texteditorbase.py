@@ -45,7 +45,7 @@ class TextEditorBase(wx.Panel):
         # self.textCtrl.Bind(wx.stc.EVT_STC_KEY, self.__onStcKey)
 
     def _do_layout(self):
-        mainSizer = wx.FlexGridSizer(rows=2)
+        mainSizer = wx.FlexGridSizer(rows=2, cols=0, vgap=0, hgap=0)
         mainSizer.AddGrowableRow(0)
         mainSizer.AddGrowableCol(0)
 

@@ -23,7 +23,7 @@ class ThumbDialog (wx.Dialog):
 
         self.__createGui()
         self.filesListCombo.SetFocus()
-        self.Center(wx.CENTRE_ON_SCREEN)
+        self.Center(wx.BOTH)
 
 
     @property
@@ -71,7 +71,7 @@ class ThumbDialog (wx.Dialog):
         okCancel = self.CreateButtonSizer (wx.OK | wx.CANCEL)
 
         # Расстановка элементов
-        mainSizer = wx.FlexGridSizer (rows=0, cols=2)
+        mainSizer = wx.FlexGridSizer(rows=0, cols=2, vgap=0, hgap=0)
         mainSizer.AddGrowableCol (0)
         mainSizer.AddGrowableCol (1)
         mainSizer.AddGrowableRow (4)

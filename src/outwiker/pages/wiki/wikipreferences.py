@@ -31,7 +31,7 @@ class WikiPrefGeneralPanel(BasePrefPanel):
         # Шаблон для пустых страниц
         self.emptyTplLabel = wx.StaticText(self, -1, _(u"Template for empty page"))
         self.emptyTplTextCtrl = wx.TextCtrl(self, -1, "",
-                                            style=wx.TE_MULTILINE | wx.HSCROLL | wx.TE_LINEWRAP | wx.TE_WORDWRAP)
+                                            style=wx.TE_MULTILINE | wx.HSCROLL | wx.TE_WORDWRAP)
 
         # Стиль ссылок по умолчанию (при создании через диалог)
         self.linkStyleLabel = wx.StaticText (self, label=_(u"Default link style"))
@@ -57,7 +57,7 @@ class WikiPrefGeneralPanel(BasePrefPanel):
         mainSizer.Add(self.colorizeWiki, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
 
         # Размер миниатюр
-        thumbSizer = wx.FlexGridSizer(1, 2)
+        thumbSizer = wx.FlexGridSizer(1, 2, 0, 0)
         thumbSizer.AddGrowableCol(0)
         thumbSizer.AddGrowableCol(1)
         thumbSizer.Add(self.thumbSizeLabel, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
@@ -65,7 +65,7 @@ class WikiPrefGeneralPanel(BasePrefPanel):
         mainSizer.Add(thumbSizer, 1, wx.EXPAND, 0)
 
         # Стиль ссылок по умолчанию (при создании через диалог)
-        linkStyleSizer = wx.FlexGridSizer(1, 2)
+        linkStyleSizer = wx.FlexGridSizer(1, 2, 0, 0)
         linkStyleSizer.AddGrowableCol(0)
         linkStyleSizer.AddGrowableCol(1)
         linkStyleSizer.Add (self.linkStyleLabel, 0,

@@ -26,7 +26,7 @@ PageTabChangedEvent, EVT_PAGE_TAB_CHANGED = wx.lib.newevent.NewEvent()
 
 
 class BaseHtmlPanel(BaseTextPanel):
-    __metaclass__ = ABCMeta
+    #__metaclass__ = ABCMeta
 
     # Номера страниц-вкладок
     CODE_PAGE_INDEX = 0
@@ -134,7 +134,7 @@ class BaseHtmlPanel(BaseTextPanel):
         if currpanel is not None:
             currpanel.Print()
 
-    @abstractmethod
+    #@abstractmethod
     def getTextEditor(self):
         pass
 
@@ -201,7 +201,7 @@ class BaseHtmlPanel(BaseTextPanel):
         self.SetSizer(mainSizer)
         self.Layout()
 
-    @abstractmethod
+    #@abstractmethod
     def _enableActions(self, enabled):
         pass
 

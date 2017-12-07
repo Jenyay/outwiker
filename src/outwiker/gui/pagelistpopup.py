@@ -7,8 +7,9 @@ from .pagelist import PageList
 
 class PageListPopup (wx.PopupTransientWindow):
     def __init__ (self, parent):
-        super (PageListPopup, self).__init__ (parent, style = wx.BORDER_SUNKEN)
+        super(PageListPopup, self).__init__(parent)
 
+        self.SetWindowStyle(wx.BORDER_SUNKEN)
         self.__pagelist = PageList (self)
         self.__layout ()
 
@@ -40,7 +41,7 @@ class PageListPopup (wx.PopupTransientWindow):
         mousePosition = wx.GetMousePosition()
         displaySize = wx.GetDisplaySize()
 
-        width, height = self.GetSizeTuple()
+        width, height = self.GetSize()
 
         # Проверяем разные четверти
         # Слева вверху
