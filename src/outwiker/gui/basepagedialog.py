@@ -49,7 +49,7 @@ class BasePageDialog (TestedDialog):
 
     def _setDialogSize(self):
         self.Fit()
-        default_width, default_height = self.GetClientSizeTuple()
+        default_width, default_height = self.GetClientSize()
 
         width = self._config.width.value
         height = self._config.height.value
