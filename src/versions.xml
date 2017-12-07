@@ -9,7 +9,8 @@
 		<changelog>
 			<version number="2.1.0.833" status="dev">
 				<change>32-bit binary builds for Linux are no longer created.</change>
-				<change>Created AppImage packages for Linux.</change>
+				<change>Created AppImage packages for Linux</change>
+				<change>Fixed errors.</change>
 			</version>
 
 			<version number="2.1.0.832" status="dev" date="November 20, 2017">
@@ -45,6 +46,7 @@
 			<version number="2.1.0.833" status="dev">
 				<change>Больше не создаются 32-битные бинарные сборки под Linux.</change>
 				<change>Теперь создаются пакеты AppImage для Linux.</change>
+				<change>Исправление ошибок.</change>
 			</version>
 
 			<version number="2.1.0.832" status="dev" date="20.11.2017">

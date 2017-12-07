@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+	<id>net.jenyay.outwiker</id>
+	<metadata_license>MIT</metadata_license>
+	<project_license>GPL-3.0</project_license>
+	<name>outwiker</name>
+	<summary>Desktop personal wiki software and tree-like editor</summary>
+	<description>
+		<p>
+			OutWiker is designed to store notes in a tree. Such programs are called "outliner", personal wiki, or tree-like editors. OutWiker's main difference from the other similar programs is keeping the tree of notes in the form of directories on disk, and encouraging changing the base by external sources and programs.
+		</p>
+		<p>
+			Also any number of files can be attached to the page. OutWiker can contain pages of different types, currently supports three types of pages: plain text, HTML pages and wiki pages, but the number of types of pages will increase in future.
+		</p>
+	</description>
+
+	<screenshots>
+		<screenshot type="default">
+			<caption>OutWiker main window. Preview mode</caption>
+			<image>http://jenyay.net/uploads/Outwiker/English/outwiker_2.0.0_01_en.png</image>
+		</screenshot>
+		<screenshot type="default">
+			<caption>OutWiker main window. Wiki mode</caption>
+			<image>http://jenyay.net/uploads/Outwiker/English/outwiker_2.0.0_02_en.png</image>
+		</screenshot>
+	</screenshots>
+
+	<url type="homepage">http://jenyay.net/Outwiker/English</url>
+	<project_group>OutWiker</project_group>
+	<provides>
+		<binary>outwiker</binary>
+	</provides>
+
+	<releases>
+		<release version="2.1.0.833">
+			<description>
+				<p>32-bit binary builds for Linux are no longer created.</p>
+				<p>Created AppImage package for Linux.</p>
+				<p>Fixed errors.</p>
+			</description>
+		</release>
+	</releases>
+</component>
