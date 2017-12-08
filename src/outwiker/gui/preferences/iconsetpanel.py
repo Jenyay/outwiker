@@ -182,7 +182,7 @@ class IconsetPanel(BasePrefPanel):
         imageIndex = -1 if rootimage is None else self._imagelist.Add(wx.Bitmap(rootimage))
         rootItem = self._groups.AddRoot(_(u"Not in groups"),
                                         imageIndex,
-                                        data=wx.TreeItemData(None))
+                                        data=None)
 
         # Add child groups
         for group in collection.getGroups():
@@ -195,7 +195,7 @@ class IconsetPanel(BasePrefPanel):
             self._groups.AppendItem(rootItem,
                                     group,
                                     imageIndex,
-                                    data=wx.TreeItemData(group))
+                                    data=group)
 
         self._groups.Expand(rootItem)
         self._groups.SelectItem(rootItem)
