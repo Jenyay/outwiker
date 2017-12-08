@@ -100,7 +100,8 @@ class TrayIconControllerWindows(TrayIconControllerBase):
     def _bind(self):
         super(TrayIconControllerWindows, self)._bind()
 
-        self._trayIcon.Bind(wx.EVT_TASKBAR_LEFT_DOWN, self.__OnTrayLeftClick)
+        #TODO: wx.EVT_TASKBAR_LEFT_DOWN is absent on windows 10 (64x)
+        #self._trayIcon.Bind(wx.EVT_TASKBAR_LEFT_DOWN, self.__OnTrayLeftClick)
         self._trayIcon.Bind(wx.EVT_MENU, self.__onExit, id=self._trayIcon.ID_EXIT)
         self._trayIcon.Bind(wx.EVT_MENU, self.__onRestore, id=self._trayIcon.ID_RESTORE)
 
@@ -110,6 +111,8 @@ class TrayIconControllerWindows(TrayIconControllerBase):
 
     def _unbind(self):
         super(TrayIconControllerWindows, self)._unbind()
+
+        # TODO: wx.EVT_TASKBAR_LEFT_DOWN is absent on windows 10 (64x)
         self._trayIcon.Unbind(wx.EVT_TASKBAR_LEFT_DOWN,
                               handler=self.__OnTrayLeftClick)
 
