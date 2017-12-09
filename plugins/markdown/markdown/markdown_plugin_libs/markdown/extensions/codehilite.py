@@ -4,7 +4,7 @@ CodeHilite Extension for Python-Markdown
 
 Adds code/syntax highlighting to standard Python-Markdown code blocks.
 
-See <https://pythonhosted.org/Markdown/extensions/code_hilite.html>
+See <https://Python-Markdown.github.io/extensions/code_hilite>
 for documentation.
 
 Original code Copyright 2006-2008 [Waylan Limberg](http://achinghead.com/).
@@ -166,7 +166,7 @@ class CodeHilite(object):
         c = re.compile(r'''
             (?:(?:^::+)|(?P<shebang>^[#]!)) # Shebang or 2 or more colons
             (?P<path>(?:/\w+)*[/ ])?        # Zero or 1 path
-            (?P<lang>[\w+-]*)               # The language
+            (?P<lang>[\w#.+-]*)             # The language
             \s*                             # Arbitrary whitespace
             # Optional highlight lines, single- or double-quote-delimited
             (hl_lines=(?P<quot>"|')(?P<hl_lines>.*?)(?P=quot))?
