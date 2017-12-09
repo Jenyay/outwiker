@@ -434,7 +434,8 @@ class MainWindow(wx.Frame):
         """
         Обновление auiManager. Сделано для облегчения доступа
         """
-        self.auiManager.Update()
+        if self.auiManager:
+            self.auiManager.Update()
 
     def __createAuiPanes(self):
         """
@@ -560,6 +561,7 @@ class MainWindow(wx.Frame):
         self.taskBarIconController.destroy()
         self.controller.destroy()
         self.auiManager.Destroy()
+        self.auiManager = None
 
         self.toolbars = None
         self.SetMenuBar(None)

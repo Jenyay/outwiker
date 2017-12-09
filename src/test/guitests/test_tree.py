@@ -114,7 +114,7 @@ class TreeTest (BaseMainWndTest):
         self.assertEqual (tree.GetItemText (rootitem),
                           os.path.basename (self.path))
         self.assertEqual (tree.GetChildrenCount (rootitem), 0)
-        self.assertEqual (tree.GetItemData(rootitem).GetData(), self.wikiroot)
+        self.assertEqual (tree.GetItemData(rootitem), self.wikiroot)
 
 
     def testAddPage (self):
@@ -130,7 +130,7 @@ class TreeTest (BaseMainWndTest):
 
         self.assertEqual (tree.GetItemText (childitem), u"Страница 1")
         self.assertEqual (tree.GetChildrenCount (childitem), 0)
-        self.assertEqual (tree.GetItemData(childitem).GetData(), self.wikiroot[u"Страница 1"])
+        self.assertEqual (tree.GetItemData(childitem), self.wikiroot[u"Страница 1"])
 
 
     def testAddMorePages (self):

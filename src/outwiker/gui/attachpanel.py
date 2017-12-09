@@ -322,6 +322,9 @@ class AttachPanel(wx.Panel):
         for fname in self.__getSelectedFiles():
             data.AddFile(os.path.join(Attachment(Application.selectedPage).getAttachPath(), fname))
 
+        #TODO: wx.DropSource (which optionally takes parameters that should be a wx.Icon on wxGTK or a wx.Cursor
+        # on the other platforms) has been changed to not accept the cursor/icon in the constructors.
+        # Instead you’ll have to call either SetCursor or SetIcon depending on the platform.
         dragSource = wx.DropSource(self)
         dragSource.SetData(data)
         dragSource.DoDragDrop()

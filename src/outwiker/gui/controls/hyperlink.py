@@ -307,7 +307,7 @@ class HyperLinkCtrl(StaticText):
             fontTemp = self.GetFont()
             fontTemp.SetUnderlined(self._RolloverUnderline)
             if self._Bold:
-                fontTemp.SetWeight(wx.BOLD)
+                fontTemp.SetWeight(wx.FONTWEIGHT_BOLD)
 
             needRefresh = False
 

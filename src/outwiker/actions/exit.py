@@ -30,13 +30,11 @@ class ExitAction (BaseAction):
     def run (self, params):
         if (self.__allowExit()):
             self._application.mainWindow.Destroy()
-            #TODO: wx.Exit()fixes RuntimeError, but brokes tests.
-            #wx.Exit()
 
 
     def __allowExit (self):
         """
-        Возвращает True, если можно закрывать окно
+        Return True, if the window can be closed
         """
         generalConfig = GeneralGuiConfig(self._application.config)
         askBeforeExit = generalConfig.askBeforeExit.value

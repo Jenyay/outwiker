@@ -137,7 +137,7 @@ class ToolBarsController(object):
                 self._moveToolbar(name)
 
         self._packToolbarsRows()
-        self._mainWindow.auiManager.Update()
+        self._mainWindow.UpdateAuiManager()
 
     def _getPaneInfo(self, name):
         auiManager = self._mainWindow.auiManager

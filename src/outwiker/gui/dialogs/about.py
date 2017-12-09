@@ -42,7 +42,7 @@ class AboutDialog(wx.Dialog):
     def __set_properties(self):
         self.SetTitle(_("About"))
         self.SetSize((500, 350))
-        self.titleLabel.SetFont(wx.Font(15, wx.DEFAULT, wx.NORMAL, wx.NORMAL, 0, ""))
+        self.titleLabel.SetFont(wx.Font(15, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, 0, ""))
         self.description.SetMinSize((-1, 50))
         self.okButton.SetFocus()
         self.okButton.SetDefault()
