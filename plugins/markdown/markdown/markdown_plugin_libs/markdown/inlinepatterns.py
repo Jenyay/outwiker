@@ -87,6 +87,7 @@ def build_inlinepatterns(md_instance, **kwargs):
         inlinePatterns["emphasis2"] = SimpleTagPattern(EMPHASIS_2_RE, 'em')
     return inlinePatterns
 
+
 """
 The actual regular expressions for patterns
 -----------------------------------------------------------------------------
@@ -102,7 +103,7 @@ BRK = (
 NOIMG = r'(?<!\!)'
 
 # `e=f()` or ``e=f("`")``
-BACKTICK_RE = r'(?<!\\)(`+)(.+?)(?<!`)\2(?!`)'
+BACKTICK_RE = r'(?:(?<!\\)((?:\\{2})+)(?=`+)|(?<!\\)(`+)(.+?)(?<!`)\3(?!`))'
 
 # \<
 ESCAPE_RE = r'\\(.)'
@@ -130,7 +131,7 @@ LINK_RE = NOIMG + BRK + \
     r'''\(\s*(<.*?>|((?:(?:\(.*?\))|[^\(\)]))*?)\s*((['"])(.*?)\12\s*)?\)'''
 
 # ![alttxt](http://x.com/) or ![alttxt](<http://x.com/>)
-IMAGE_LINK_RE = r'\!' + BRK + r'\s*\((<.*?>|([^")]+"[^"]*"|[^\)]*))\)'
+IMAGE_LINK_RE = r'\!' + BRK + r'\s*\(\s*(<.*?>|([^"\)\s]+\s*"[^"]*"|[^\)\s]*))\s*\)'
 
 # [Google][3]
 REFERENCE_RE = NOIMG + BRK + r'\s?\[([^\]]*)\]'
@@ -139,7 +140,7 @@ REFERENCE_RE = NOIMG + BRK + r'\s?\[([^\]]*)\]'
 SHORT_REF_RE = NOIMG + r'\[([^\]]+)\]'
 
 # ![alt text][2]
-IMAGE_REFERENCE_RE = r'\!' + BRK + '\s?\[([^\]]*)\]'
+IMAGE_REFERENCE_RE = r'\!' + BRK + r'\s?\[([^\]]*)\]'
 
 # stand-alone * or _
 NOT_STRONG_RE = r'((^| )(\*|_)( |$))'
@@ -169,7 +170,7 @@ def dequote(string):
         return string
 
 
-ATTR_RE = re.compile("\{@([^\}]*)=([^\}]*)}")  # {@id=123}
+ATTR_RE = re.compile(r"\{@([^\}]*)=([^\}]*)}")  # {@id=123}
 
 
 def handleAttributes(text, parent):
@@ -187,6 +188,8 @@ The pattern classes
 
 class Pattern(object):
     """Base class that inline patterns subclass. """
+
+    ANCESTOR_EXCLUDES = tuple()
 
     def __init__(self, pattern, markdown_instance=None):
         """
@@ -301,12 +304,16 @@ class BacktickPattern(Pattern):
     """ Return a `<code>` element containing the matching text. """
     def __init__(self, pattern):
         Pattern.__init__(self, pattern)
-        self.tag = "code"
+        self.ESCAPED_BSLASH = '%s%s%s' % (util.STX, ord('\\'), util.ETX)
+        self.tag = 'code'
 
     def handleMatch(self, m):
-        el = util.etree.Element(self.tag)
-        el.text = util.AtomicString(m.group(3).strip())
-        return el
+        if m.group(4):
+            el = util.etree.Element(self.tag)
+            el.text = util.AtomicString(m.group(4).strip())
+            return el
+        else:
+            return m.group(2).replace('\\\\', self.ESCAPED_BSLASH)
 
 
 class DoubleTagPattern(SimpleTagPattern):
@@ -345,8 +352,8 @@ class HtmlPattern(Pattern):
             if value is not None:
                 try:
                     return self.markdown.serializer(value)
-                except:
-                    return '\%s' % value
+                except Exception:
+                    return r'\%s' % value
 
         return util.INLINE_PLACEHOLDER_RE.sub(get_stash, text)
 
@@ -453,7 +460,7 @@ class ReferencePattern(LinkPattern):
         except IndexError:
             id = None
         if not id:
-            # if we got something like "[Google][]" or "[Goggle]"
+            # if we got something like "[Google][]" or "[Google]"
             # we'll use "google" as the id
             id = m.group(2).lower()
 

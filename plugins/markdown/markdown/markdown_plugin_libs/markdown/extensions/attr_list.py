@@ -6,7 +6,7 @@ Adds attribute list syntax. Inspired by
 [maruku](http://maruku.rubyforge.org/proposal.html#attribute_lists)'s
 feature of the same name.
 
-See <https://pythonhosted.org/Markdown/extensions/attr_list.html>
+See <https://Python-Markdown.github.io/extensions/attr_list>
 for documentation.
 
 Original code Copyright 2011 [Waylan Limberg](http://achinghead.com/).
@@ -32,17 +32,17 @@ except AttributeError:  # pragma: no cover
 
 
 def _handle_double_quote(s, t):
-    k, v = t.split('=')
+    k, v = t.split('=', 1)
     return k, v.strip('"')
 
 
 def _handle_single_quote(s, t):
-    k, v = t.split('=')
+    k, v = t.split('=', 1)
     return k, v.strip("'")
 
 
 def _handle_key_value(s, t):
-    return t.split('=')
+    return t.split('=', 1)
 
 
 def _handle_word(s, t):
@@ -52,10 +52,11 @@ def _handle_word(s, t):
         return 'id', t[1:]
     return t, t
 
+
 _scanner = Scanner([
-    (r'[^ ]+=".*?"', _handle_double_quote),
-    (r"[^ ]+='.*?'", _handle_single_quote),
-    (r'[^ ]+=[^ =]+', _handle_key_value),
+    (r'[^ =]+=".*?"', _handle_double_quote),
+    (r"[^ =]+='.*?'", _handle_single_quote),
+    (r'[^ =]+=[^ =]+', _handle_key_value),
     (r'[^ =]+', _handle_word),
     (r' ', None)
 ])
@@ -72,7 +73,7 @@ def isheader(elem):
 
 class AttrListTreeprocessor(Treeprocessor):
 
-    BASE_RE = r'\{\:?([^\}]*)\}'
+    BASE_RE = r'\{\:?([^\}\n]*)\}'
     HEADER_RE = re.compile(r'[ ]+%s[ ]*$' % BASE_RE)
     BLOCK_RE = re.compile(r'\n[ ]*%s[ ]*$' % BASE_RE)
     INLINE_RE = re.compile(r'^%s' % BASE_RE)
@@ -83,7 +84,7 @@ class AttrListTreeprocessor(Treeprocessor):
                          r'\:\-\.0-9\u00b7\u0300-\u036f\u203f-\u2040]+')
 
     def run(self, doc):
-        for elem in doc.getiterator():
+        for elem in doc.iter():
             if isBlockLevel(elem.tag):
                 # Block level: check for attrs on last line of text
                 RE = self.BLOCK_RE
