@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 import wx
+from functools import cmp_to_key
 
 from outwiker.core.search import Searcher, AllTagsSearchStrategy, AnyTagSearchStrategy
 from outwiker.core.tagslist import TagsList
@@ -334,7 +335,7 @@ class SearchPanel(BasePagePanel):
         sortStrategy = self.__getCurrentSortStrategy()
 
         resultPages_sorted = resultPages[:]
-        resultPages_sorted.sort (sortStrategy.sort)
+        resultPages_sorted.sort (key=cmp_to_key(sortStrategy.sort))
 
         report = HtmlReport (resultPages_sorted,
                              self.__getSearchPhrase(),

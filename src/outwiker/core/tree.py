@@ -6,6 +6,7 @@ import os.path
 import ConfigParser
 import shutil
 import datetime
+from functools import cmp_to_key
 
 from outwiker.core.config import PageConfig
 from outwiker.core.bookmarks import Bookmarks
@@ -136,7 +137,7 @@ class RootWikiPage(object):
         """
         Отсортировать дочерние страницы по алфавиту
         """
-        self._children.sort(sortAlphabeticalFunction)
+        self._children.sort(key=cmp_to_key(sortAlphabeticalFunction))
 
         self.root.onStartTreeUpdate(self.root)
         self.saveChildrenParams()
@@ -170,7 +171,7 @@ class RootWikiPage(object):
         Добавить страницу к дочерним страницам
         """
         self._children.append(page)
-        self._children.sort(sortOrderFunction)
+        self._children.sort(key=cmp_to_key(sortOrderFunction))
 
     def removeFromChildren(self, page):
         """
@@ -264,7 +265,7 @@ class RootWikiPage(object):
 
                 self._children.append(page)
 
-        self._children.sort(sortOrderFunction)
+        self._children.sort(key=cmp_to_key(sortOrderFunction))
 
 
 class WikiDocument(RootWikiPage):
