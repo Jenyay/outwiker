@@ -212,10 +212,10 @@ class TrayIconLinux(object):
                                                  self._icon,
                                                   AppIndicator3.IndicatorCategory.APPLICATION_STATUS)
         menu = gtk.Menu()
-        self.restoreMenuItem = gtk.MenuItem(_('Restore'))
+        self.restoreMenuItem = gtk.MenuItem(label=_('Restore'))
         self.restoreMenuItem.show()
 
-        self.exitMenuItem = gtk.MenuItem(_('Exit'))
+        self.exitMenuItem = gtk.MenuItem(label=_('Exit'))
         self.exitMenuItem.show()
 
         menu.append(self.restoreMenuItem)
