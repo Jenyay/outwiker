@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from functools import cmp_to_key
+
 from outwiker.core.attachment import Attachment
 
 from .thumbdialog import ThumbDialog
@@ -25,7 +27,7 @@ class ThumbDialogController (object):
 
     def showDialog (self):
         filesList = filter (isImage, Attachment (self._page).getAttachRelative())
-        filesList.sort (Attachment.sortByName)
+        filesList.sort (key=cmp_to_key(Attachment.sortByName))
 
         if (self._selectedText.startswith (u"Attach:") and
                 self._selectedText[len (u"Attach:"):] in filesList):

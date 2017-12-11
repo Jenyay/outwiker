@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 import os.path
+from functools import cmp_to_key
 
 import wx
 
@@ -204,7 +205,7 @@ class AttachPanel(wx.Panel):
         self.__attachList.ClearAll()
         if Application.selectedPage is not None:
             files = Attachment(Application.selectedPage).attachmentFull
-            files.sort(Attachment.sortByName, reverse=True)
+            files.sort(key=cmp_to_key(Attachment.sortByName), reverse=True)
 
             for fname in files:
                 if (not os.path.basename(fname).startswith("__") or

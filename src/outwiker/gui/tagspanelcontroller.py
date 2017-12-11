@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 import wx
+from functools import cmp_to_key
 
 from .pagelist import EVT_PAGE_CLICK
 from .taglabel import EVT_TAG_LEFT_CLICK, EVT_TAG_MIDDLE_CLICK
@@ -63,7 +64,7 @@ class TagsPanelController (object):
 
     def __showPopup (self, tagname):
         pages = self.__currentTags[tagname][:]
-        pages.sort (sortAlphabeticalFunction)
+        pages.sort (key=cmp_to_key(sortAlphabeticalFunction))
 
         self.__tagsPanel.showPopup(pages)
 
