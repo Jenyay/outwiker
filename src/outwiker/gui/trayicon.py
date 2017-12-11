@@ -113,8 +113,8 @@ class TrayIconControllerWindows(TrayIconControllerBase):
         super(TrayIconControllerWindows, self)._unbind()
 
         # TODO: wx.EVT_TASKBAR_LEFT_DOWN is absent on windows 10 (64x)
-        self._trayIcon.Unbind(wx.EVT_TASKBAR_LEFT_DOWN,
-                              handler=self.__OnTrayLeftClick)
+        #self._trayIcon.Unbind(wx.EVT_TASKBAR_LEFT_DOWN,
+        #                      handler=self.__OnTrayLeftClick)
 
         self._trayIcon.Unbind(wx.EVT_MENU,
                               handler=self.__onExit,
