@@ -30,7 +30,7 @@ def getPython():
     if os.name == 'posix':
         return u'python2.7'
     else:
-        return u'py -2'
+        return u'python'
 
 
 def execute(command):
