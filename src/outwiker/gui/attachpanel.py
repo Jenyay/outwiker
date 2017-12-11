@@ -222,7 +222,7 @@ class AttachPanel(wx.Panel):
                     # Вернем всплывающие окна с ошибками
                     wx.Log.EnableLogging(True)
 
-                    self.__attachList.InsertImageStringItem(
+                    self.__attachList.InsertItem(
                         0,
                         os.path.basename(fname),
                         imageIndex)
