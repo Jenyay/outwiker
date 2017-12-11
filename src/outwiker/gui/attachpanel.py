@@ -110,62 +110,62 @@ class AttachPanel(wx.Panel):
         toolbar = wx.ToolBar(parent, id, style=wx.TB_DOCKABLE)
 
         toolbar.AddTool(self.ID_REFRESH,
-                             _(u"Refresh"),
-                             wx.Bitmap(os.path.join(imagesDir, "reload.png"),
-                                       wx.BITMAP_TYPE_ANY),
-                             wx.NullBitmap,
-                             wx.ITEM_NORMAL,
-                             _(u"Refresh"),
-                             "")
+                        _(u"Refresh"),
+                        wx.Bitmap(os.path.join(imagesDir, "reload.png"),
+                                  wx.BITMAP_TYPE_ANY),
+                        wx.NullBitmap,
+                        wx.ITEM_NORMAL,
+                        _(u"Refresh"),
+                        "")
 
         toolbar.AddSeparator()
 
         toolbar.AddTool(self.ID_ATTACH,
-                             _(u"Attach Files…"),
-                             wx.Bitmap(os.path.join(imagesDir, "attach.png"),
-                                       wx.BITMAP_TYPE_ANY),
-                             wx.NullBitmap,
-                             wx.ITEM_NORMAL,
-                             _(u"Attach Files…"),
-                             "")
+                        _(u"Attach Files…"),
+                        wx.Bitmap(os.path.join(imagesDir, "attach.png"),
+                                  wx.BITMAP_TYPE_ANY),
+                        wx.NullBitmap,
+                        wx.ITEM_NORMAL,
+                        _(u"Attach Files…"),
+                        "")
 
         toolbar.AddTool(self.ID_REMOVE,
-                             _(u"Remove Files…"),
-                             wx.Bitmap(os.path.join(imagesDir, "delete.png"),
-                                       wx.BITMAP_TYPE_ANY),
-                             wx.NullBitmap,
-                             wx.ITEM_NORMAL,
-                             _(u"Remove Files…"),
-                             "")
+                        _(u"Remove Files…"),
+                        wx.Bitmap(os.path.join(imagesDir, "delete.png"),
+                                  wx.BITMAP_TYPE_ANY),
+                        wx.NullBitmap,
+                        wx.ITEM_NORMAL,
+                        _(u"Remove Files…"),
+                        "")
 
         toolbar.AddSeparator()
 
         toolbar.AddTool(self.ID_PASTE,
-                             _(u"Paste"),
-                             wx.Bitmap(os.path.join(imagesDir, "paste.png"),
-                                       wx.BITMAP_TYPE_ANY),
-                             wx.NullBitmap,
-                             wx.ITEM_NORMAL,
-                             _(u"Paste"),
-                             "")
+                        _(u"Paste"),
+                        wx.Bitmap(os.path.join(imagesDir, "paste.png"),
+                                  wx.BITMAP_TYPE_ANY),
+                        wx.NullBitmap,
+                        wx.ITEM_NORMAL,
+                        _(u"Paste"),
+                        "")
 
         toolbar.AddTool(self.ID_EXECUTE,
-                             _(u"Execute"),
-                             wx.Bitmap(os.path.join(imagesDir, "execute.png"),
-                                       wx.BITMAP_TYPE_ANY),
-                             wx.NullBitmap,
-                             wx.ITEM_NORMAL,
-                             _(u"Execute"),
-                             "")
+                        _(u"Execute"),
+                        wx.Bitmap(os.path.join(imagesDir, "execute.png"),
+                                  wx.BITMAP_TYPE_ANY),
+                        wx.NullBitmap,
+                        wx.ITEM_NORMAL,
+                        _(u"Execute"),
+                        "")
 
         toolbar.AddTool(self.ID_OPEN_FOLDER,
-                             _(u"Open Attachments Folder"),
-                             wx.Bitmap(os.path.join(imagesDir, "folder.png"),
-                                       wx.BITMAP_TYPE_ANY),
-                             wx.NullBitmap,
-                             wx.ITEM_NORMAL,
-                             _(u"Open Attachments Folder"),
-                             "")
+                        _(u"Open Attachments Folder"),
+                        wx.Bitmap(os.path.join(imagesDir, "folder.png"),
+                                  wx.BITMAP_TYPE_ANY),
+                        wx.NullBitmap,
+                        wx.ITEM_NORMAL,
+                        _(u"Open Attachments Folder"),
+                        "")
 
         toolbar.Realize()
         return toolbar
@@ -323,7 +323,7 @@ class AttachPanel(wx.Panel):
         for fname in self.__getSelectedFiles():
             data.AddFile(os.path.join(Attachment(Application.selectedPage).getAttachPath(), fname))
 
-        #TODO: wx.DropSource (which optionally takes parameters that should be a wx.Icon on wxGTK or a wx.Cursor
+        # TODO: wx.DropSource (which optionally takes parameters that should be a wx.Icon on wxGTK or a wx.Cursor
         # on the other platforms) has been changed to not accept the cursor/icon in the constructors.
         # Instead you’ll have to call either SetCursor or SetIcon depending on the platform.
         dragSource = wx.DropSource(self)
