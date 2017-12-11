@@ -15,7 +15,7 @@ class PageListPopup (wx.PopupTransientWindow):
 
 
     def __layout (self):
-        sizer = wx.FlexGridSizer (1, 1)
+        sizer = wx.FlexGridSizer (cols=1)
         sizer.AddGrowableCol (0)
         sizer.AddGrowableRow (0)
         sizer.Add (self.__pagelist, 0, flag=wx.EXPAND)

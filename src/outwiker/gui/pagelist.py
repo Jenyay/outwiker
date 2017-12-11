@@ -1,10 +1,10 @@
 # -*- coding: UTF-8 -*-
 
 import wx
+import wx.adv
 import wx.lib.newevent
 
-from outwiker.gui.controls.hyperlink import (HyperLinkCtrl,
-                                             EVT_HYPERLINK_LEFT)
+from outwiker.gui.controls.hyperlink import HyperLinkCtrl, EVT_HYPERLINK_LEFT
 
 # Событие, возникающее при клике по элементу, описывающий страницу
 PageClickEvent, EVT_PAGE_CLICK = wx.lib.newevent.NewEvent()
@@ -23,7 +23,7 @@ class PageList (wx.ScrolledWindow):
 
         # Список отображаемых элементов
         self.__titleItems = []
-        self.__sizer = wx.FlexGridSizer (rows = 0, cols=1)
+        self.__sizer = wx.FlexGridSizer (cols=1)
         self.__sizer.AddGrowableCol (0)
 
         self.SetSizer (self.__sizer)
@@ -61,7 +61,7 @@ class PageList (wx.ScrolledWindow):
     def __getItemMaxWidth (self):
         maxwidth = 0
         for item in self.__titleItems:
-            width = item.GetBestSizeTuple()[0]
+            width = item.GetBestSize()[0]
             if width > maxwidth:
                 maxwidth = width
 
@@ -115,7 +115,7 @@ class PageTitleItem (wx.Panel):
         self.__label = HyperLinkCtrl (self,
                                       label = page.title,
                                       URL=url,
-                                      style=wx.HL_ALIGN_CENTRE | wx.NO_BORDER)
+                                      style=wx.adv.HL_ALIGN_CENTRE | wx.NO_BORDER)
 
         self.__formatLabel (self.__label)
         self.__label.Bind (EVT_HYPERLINK_LEFT, self.__pageClicked)
