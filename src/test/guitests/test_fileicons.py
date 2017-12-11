@@ -3,7 +3,7 @@
 from unittest import skipIf
 import os
 
-from basemainwnd import BaseMainWndTest
+from .basemainwnd import BaseMainWndTest
 from outwiker.gui.fileicons import UnixFileIcons, WindowsFileIcons
 
 

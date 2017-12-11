@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-from baseaction import BaseAction
+from .baseaction import BaseAction
 
 
 class PolyAction (BaseAction):

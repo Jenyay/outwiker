@@ -6,7 +6,7 @@ from outwiker.libs.pyparsing import Regex
 
 from outwiker.core.thumbexception import ThumbException
 from outwiker.core.defines import PAGE_ATTACH_DIR
-from pagethumbmaker import PageThumbmaker
+from .pagethumbmaker import PageThumbmaker
 from outwiker.core.attachment import Attachment
 from ..wikiconfig import WikiConfig
 

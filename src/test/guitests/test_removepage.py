@@ -2,7 +2,7 @@
 
 import wx
 
-from basemainwnd import BaseMainWndTest
+from .basemainwnd import BaseMainWndTest
 from outwiker.core.application import Application
 from outwiker.core.commands import removePage
 from outwiker.pages.text.textpage import TextPageFactory

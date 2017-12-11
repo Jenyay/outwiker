@@ -6,7 +6,7 @@ import shutil
 
 from outwiker.core.exceptions import ReadonlyException
 from outwiker.core.defines import PAGE_ATTACH_DIR
-import events
+from . import events
 
 
 class Attachment(object):

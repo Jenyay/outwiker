@@ -16,15 +16,15 @@ from .tableactions import (getInsertTableActionFunc,
                            getInsertTableRowsActionFunc,
                            getInsertTableCellActionFunc)
 
-from actions.fontsizebig import WikiFontSizeBigAction
-from actions.fontsizesmall import WikiFontSizeSmallAction
-from actions.nonparsed import WikiNonParsedAction
-from actions.thumb import WikiThumbAction
-from actions.link import insertLink
-from actions.attachlist import WikiAttachListAction
-from actions.childlist import WikiChildListAction
-from actions.include import WikiIncludeAction
-from actions.dates import WikiDateCreationAction, WikiDateEditionAction
+from .actions.fontsizebig import WikiFontSizeBigAction
+from .actions.fontsizesmall import WikiFontSizeSmallAction
+from .actions.nonparsed import WikiNonParsedAction
+from .actions.thumb import WikiThumbAction
+from .actions.link import insertLink
+from .actions.attachlist import WikiAttachListAction
+from .actions.childlist import WikiChildListAction
+from .actions.include import WikiIncludeAction
+from .actions.dates import WikiDateCreationAction, WikiDateEditionAction
 
 
 class WikiPageView(BaseWikiPageView):

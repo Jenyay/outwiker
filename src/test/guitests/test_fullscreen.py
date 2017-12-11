@@ -7,7 +7,7 @@ from outwiker.actions.fullscreen import FullScreenAction
 
 from outwiker.core.application import Application
 from outwiker.core.system import getOS
-from basemainwnd import BaseMainWndTest
+from .basemainwnd import BaseMainWndTest
 
 
 class FullScreenTest (BaseMainWndTest):

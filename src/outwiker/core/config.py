@@ -14,7 +14,9 @@ class Config(object):
     """
     def __init__(self, fname, readonly=False):
         """
-        fname - config file name
+            Args:
+                fname: config file name
+                readonly: True if config should be in readonly mode
         """
         self.readonly = readonly
         self.fname = fname

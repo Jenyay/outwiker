@@ -1,12 +1,12 @@
 # -*- coding: UTF-8 -*-
 
 from outwiker.core.application import Application
-from parser.wikiparser import Parser
-from parser.commands.include import IncludeCommand
-from parser.commands.childlist import ChildListCommand
-from parser.commands.attachlist import AttachListCommand
-from parser.commands.dates import CommandDateCreation, CommandDateEdition
-from parser.commands.table import TableCommand
+from .parser.wikiparser import Parser
+from .parser.commands.include import IncludeCommand
+from .parser.commands.childlist import ChildListCommand
+from .parser.commands.attachlist import AttachListCommand
+from .parser.commands.dates import CommandDateCreation, CommandDateEdition
+from .parser.commands.table import TableCommand
 
 
 class ParserFactory (object):

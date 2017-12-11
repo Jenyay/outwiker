@@ -1,6 +1,6 @@
 # -*- coding=utf-8 -*-
 
-from togglebutton import ToggleButton
+from .togglebutton import ToggleButton
 
 
 class ToggleButtonThemed(ToggleButton):

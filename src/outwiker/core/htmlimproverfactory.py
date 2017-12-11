@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-from htmlimprover import BrHtmlImprover
+from .htmlimprover import BrHtmlImprover
 
 
 class HtmlImproverInfo(object):

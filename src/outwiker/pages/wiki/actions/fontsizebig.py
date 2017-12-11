@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-from fontsizebase import WikiFontSizeBaseAction
+from .fontsizebase import WikiFontSizeBaseAction
 
 
 class WikiFontSizeBigAction (WikiFontSizeBaseAction):

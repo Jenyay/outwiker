@@ -2,7 +2,7 @@
 
 import wx
 
-import configelements
+from . import configelements
 from outwiker.core.application import Application
 from outwiker.gui.guiconfig import EditorConfig
 from outwiker.gui.stcstyle import StcStyle

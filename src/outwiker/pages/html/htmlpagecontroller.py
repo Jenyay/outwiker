@@ -16,7 +16,7 @@ from outwiker.gui.guiconfig import HtmlRenderConfig
 from outwiker.gui.simplespellcontroller import SimpleSpellController
 from outwiker.utilites.textfile import writeTextFile, readTextFile
 
-from htmlpage import HtmlWikiPage, HtmlPageFactory
+from .htmlpage import HtmlWikiPage, HtmlPageFactory
 
 
 class HtmlPageController(object):

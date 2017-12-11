@@ -5,7 +5,7 @@ import shutil
 
 from .exceptions import ReadonlyException
 from .system import getTemplatesDir
-import events
+from . import events
 
 
 class Style(object):

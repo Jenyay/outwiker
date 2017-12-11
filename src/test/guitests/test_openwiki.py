@@ -5,7 +5,7 @@ from tempfile import mkdtemp
 
 import wx
 
-from basemainwnd import BaseMainWndTest
+from .basemainwnd import BaseMainWndTest
 from outwiker.core.application import Application
 from outwiker.core.tree import WikiDocument
 from outwiker.core.commands import openWikiWithDialog, openWiki, findPage

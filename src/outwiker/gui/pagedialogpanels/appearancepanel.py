@@ -13,7 +13,7 @@ from outwiker.core.commands import MessageBox
 from outwiker.core.events import PageDialogPageStyleChangedParams
 from outwiker.gui.guiconfig import PageDialogConfig
 
-from basecontroller import BasePageDialogController
+from .basecontroller import BasePageDialogController
 
 
 class AppearancePanel (wx.Panel):

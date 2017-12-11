@@ -6,7 +6,7 @@ from outwiker.core.appinfo import (AppInfo,
                                    AuthorInfo,
                                    VersionInfo,
                                    RequirementsInfo)
-from version import Version
+from .version import Version
 
 
 class XmlVersionParser (object):

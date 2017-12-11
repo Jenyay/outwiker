@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-from basemainwnd import BaseMainWndTest
+from .basemainwnd import BaseMainWndTest
 from outwiker.pages.wiki.actions.childlist import ChildListDialog, ChildListDialogController
 from outwiker.core.application import Application
 from outwiker.gui.tester import Tester

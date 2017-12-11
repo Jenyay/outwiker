@@ -10,8 +10,8 @@ from outwiker.pages.html.basehtmlpanel import (BaseHtmlPanel,
                                                EVT_PAGE_TAB_CHANGED)
 from outwiker.utilites.textfile import readTextFile
 
-from actions.openhtmlcode import WikiOpenHtmlCodeAction
-from actions.updatehtml import WikiUpdateHtmlAction
+from .actions.openhtmlcode import WikiOpenHtmlCodeAction
+from .actions.updatehtml import WikiUpdateHtmlAction
 from outwiker.pages.html.actions.switchcoderesult import SwitchCodeResultAction
 
 

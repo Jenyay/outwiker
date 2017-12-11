@@ -2,25 +2,25 @@
 
 import traceback
 
-from tokenfonts import FontsFactory
-from tokennoformat import NoFormatFactory
-from tokenpreformat import PreFormatFactory
-from tokenthumbnail import ThumbnailFactory
-from tokenheading import HeadingFactory
-from tokenadhoc import AdHocFactory
-from tokenhorline import HorLineFactory
-from tokenlink import LinkFactory
-from tokenalign import AlignFactory
-from tokentable import TableFactory
-from tokenurl import UrlFactory
-from tokenurlimage import UrlImageFactory
-from tokenattach import AttachFactory, AttachImagesFactory
-from tokenlist import ListFactory
-from tokenlinebreak import LineBreakFactory
-from tokenlinejoin import LineJoinFactory
-from tokencommand import CommandFactory
-from tokentext import TextFactory
-from tokenquote import QuoteFactory
+from .tokenfonts import FontsFactory
+from .tokennoformat import NoFormatFactory
+from .tokenpreformat import PreFormatFactory
+from .tokenthumbnail import ThumbnailFactory
+from .tokenheading import HeadingFactory
+from .tokenadhoc import AdHocFactory
+from .tokenhorline import HorLineFactory
+from .tokenlink import LinkFactory
+from .tokenalign import AlignFactory
+from .tokentable import TableFactory
+from .tokenurl import UrlFactory
+from .tokenurlimage import UrlImageFactory
+from .tokenattach import AttachFactory, AttachImagesFactory
+from .tokenlist import ListFactory
+from .tokenlinebreak import LineBreakFactory
+from .tokenlinejoin import LineJoinFactory
+from .tokencommand import CommandFactory
+from .tokentext import TextFactory
+from .tokenquote import QuoteFactory
 
 from ..thumbnails import Thumbnails
 from outwiker.libs.pyparsing import NoMatch

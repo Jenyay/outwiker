@@ -2,7 +2,7 @@
 
 import wx
 
-from basemainwnd import BaseMainWndTest
+from .basemainwnd import BaseMainWndTest
 from outwiker.core.application import Application
 from outwiker.core.commands import createNewWiki
 from outwiker.gui.tester import Tester

@@ -5,8 +5,8 @@ import os.path
 from enchant import Dict, DictWithPWL, Broker
 import enchant.errors
 
-from dictsfinder import DictsFinder
-from defines import CUSTOM_DICT_LANG
+from .dictsfinder import DictsFinder
+from .defines import CUSTOM_DICT_LANG
 
 
 class EnchantWrapper (object):

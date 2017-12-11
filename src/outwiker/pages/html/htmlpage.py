@@ -13,8 +13,8 @@ from outwiker.core.tree import WikiPage
 from outwiker.gui.hotkey import HotKey
 from outwiker.pages.html.htmlpageview import HtmlPageView
 
-from actions.autolinewrap import HtmlAutoLineWrap
-from actions.switchcoderesult import SwitchCodeResultAction
+from .actions.autolinewrap import HtmlAutoLineWrap
+from .actions.switchcoderesult import SwitchCodeResultAction
 
 html_actions = [
     (HtmlAutoLineWrap, None),

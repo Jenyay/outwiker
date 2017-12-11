@@ -7,7 +7,7 @@ from outwiker.actions.showhidetree import ShowHideTreeAction
 from outwiker.actions.showhidetags import ShowHideTagsAction
 
 from outwiker.core.application import Application
-from basemainwnd import BaseMainWndTest
+from .basemainwnd import BaseMainWndTest
 
 
 class MainPanesTest (BaseMainWndTest):
