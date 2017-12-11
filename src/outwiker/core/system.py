@@ -117,6 +117,7 @@ class Unix(System):
         return u'unix'
 
     def init(self):
+        pass
         import gi
         gi.require_version('Gdk', '3.0')
 
