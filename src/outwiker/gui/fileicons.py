@@ -129,7 +129,7 @@ class WindowsFileIcons (BaseFileIcons):
         Возвращает картинку exe-шника
         """
         icon = wx.Icon(filepath, wx.BITMAP_TYPE_ICO, 16, 16)
-        if not icon.Ok():
+        if not icon.IsOk():
             return None
 
         bmp = wx.EmptyBitmap(16, 16)
@@ -154,10 +154,10 @@ class WindowsFileIcons (BaseFileIcons):
             return None
 
         icon = nntype[0]
-        if not icon.Ok():
+        if not icon.IsOk():
             return None
 
-        bmp = wx.EmptyBitmap(16, 16)
+        bmp = wx.Bitmap(16, 16)
         bmp.CopyFromIcon(icon)
         try:
             bmp = bmp.ConvertToImage()
