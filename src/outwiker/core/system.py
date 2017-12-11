@@ -117,9 +117,6 @@ class Unix(System):
         return u'unix'
 
     def init(self):
-        if 'LD_PRELOAD' in os.environ:
-            del os.environ['LD_PRELOAD']
-
         import gi
         gi.require_version('Gdk', '3.0')
 
