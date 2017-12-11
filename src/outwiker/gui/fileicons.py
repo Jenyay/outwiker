@@ -6,84 +6,81 @@ from abc import abstractmethod, ABCMeta
 import wx
 
 
-class BaseFileIcons (object):
+class BaseFileIcons(object):
     """
     Базовый класс для получения иконок прикрепленных файлов
     """
     __metaclass__ = ABCMeta
 
-    def __init__ (self):
+    def __init__(self):
         self.DEFAULT_FILE_ICON = 0
         self.FOLDER_ICON = 1
 
-        self._imageList = wx.ImageList (16, 16)
+        self._imageList = wx.ImageList(16, 16)
 
         # Ключ - расширение файла, значение - номер иконки в self._imageList
         self._iconsDict = {}
 
-
-    def initialize (self):
+    def initialize(self):
         from outwiker.core.system import getImagesDir
         imagesDir = getImagesDir()
-        self._imageList.Add (wx.Bitmap(os.path.join (imagesDir, "file_icon_default.png"),
-                                       wx.BITMAP_TYPE_ANY))
-        self._imageList.Add (wx.Bitmap(os.path.join (imagesDir, "folder.png"),
-                                       wx.BITMAP_TYPE_ANY))
+        self._imageList.Add(wx.Bitmap(os.path.join(imagesDir,
+                                                   "file_icon_default.png"),
+                                      wx.BITMAP_TYPE_ANY))
+        self._imageList.Add(wx.Bitmap(os.path.join(imagesDir,
+                                                   "folder.png"),
+                                      wx.BITMAP_TYPE_ANY))
 
-
-    def getFileImage (self, filepath):
+    def getFileImage(self, filepath):
         if self.imageListCount == 0:
             self.initialize()
 
-        return self._getFileImage (filepath)
-
+        return self._getFileImage(filepath)
 
     @abstractmethod
-    def _getFileImage (self, filepath):
+    def _getFileImage(self, filepath):
         pass
 
-
     @property
-    def imageList (self):
+    def imageList(self):
         return self._imageList
 
-
-    def clear (self):
+    def clear(self):
         self._imageList.RemoveAll()
         self._iconsDict = {}
 
-
     @property
-    def imageListCount (self):
+    def imageListCount(self):
         """
         Используется для тестирования
         """
         return self._imageList.GetImageCount()
 
-
     @property
-    def dictSize (self):
+    def dictSize(self):
         """
         Используется для тестирования
         """
-        return len (self._iconsDict)
+        return len(self._iconsDict)
 
 
-class UnixFileIcons (BaseFileIcons):
+class UnixFileIcons(BaseFileIcons):
     """
-    Класс для получения иконок прикрепленных файлов под Unix (все иконки берутся из прилагающихся картинок)
+    Класс для получения иконок прикрепленных
+    файлов под Unix(все иконки берутся из прилагающихся картинок)
     """
-    def _getFileImage (self, filepath):
+    def _getFileImage(self, filepath):
         """
-        Возвращает номер картинки в imageList для файла по его расширению. При необходимости добавляет картинку в список
+        Возвращает номер картинки в imageList для файла по его расширению.
+        При необходимости добавляет картинку в список
         """
-        if os.path.isdir (filepath):
+        if os.path.isdir(filepath):
             return self.FOLDER_ICON
 
-        filename = os.path.basename (filepath)
+        filename = os.path.basename(filepath)
 
-        elements = filename.rsplit (".", 1)
-        if len (elements) < 2:
+        elements = filename.rsplit(".", 1)
+        if len(elements) < 2:
             return self.DEFAULT_FILE_ICON
 
         ext = elements[1].lower()
@@ -91,40 +88,38 @@ class UnixFileIcons (BaseFileIcons):
         if ext in self._iconsDict:
             return self._iconsDict[ext]
 
-        bmp = self.__getSystemIcon (ext)
+        bmp = self.__getSystemIcon(ext)
 
         if bmp is None:
             return self.DEFAULT_FILE_ICON
 
-        index = self.imageList.Add (bmp)
+        index = self.imageList.Add(bmp)
         self._iconsDict[ext] = index
 
         return index
 
-
-    def __getSystemIcon (self, ext):
+    def __getSystemIcon(self, ext):
         """
         Получить картинку по расширению или None, если такой картинки нет
         """
         iconfolder = "fileicons"
         from outwiker.core.system import getImagesDir
-        iconpath = os.path.join (getImagesDir(), iconfolder)
+        iconpath = os.path.join(getImagesDir(), iconfolder)
 
-        filename = u"file_extension_{}.png".format (ext)
-        imagePath = os.path.join (iconpath, filename)
+        filename = u"file_extension_{}.png".format(ext)
+        imagePath = os.path.join(iconpath, filename)
 
-        if os.path.exists (imagePath):
-            return wx.Bitmap (imagePath, wx.BITMAP_TYPE_ANY)
+        if os.path.exists(imagePath):
+            return wx.Bitmap(imagePath, wx.BITMAP_TYPE_ANY)
 
         return None
 
 
-
-class WindowsFileIcons (BaseFileIcons):
+class WindowsFileIcons(BaseFileIcons):
     """
     Класс для получения иконок прикрепленных файлов под Windows
     """
-    def __getExeIcon (self, filepath):
+    def __getExeIcon(self, filepath):
         """
         Возвращает картинку exe-шника
         """
@@ -140,10 +135,10 @@ class WindowsFileIcons (BaseFileIcons):
 
         return bmp
 
-
-    def __getSystemIcon (self, ext):
+    def __getSystemIcon(self, ext):
         """
-        Возвращает картинку, связанную  расширением ext в системе. Если с расширением не связана картинка, возвращется None
+        Возвращает картинку, связанную  расширением ext в системе.
+        Если с расширением не связана картинка, возвращется None
         """
         filetype = wx.TheMimeTypesManager.GetFileTypeFromExtension(ext)
         if filetype is None:
@@ -167,18 +162,18 @@ class WindowsFileIcons (BaseFileIcons):
         bmp = wx.Bitmap(bmp)
         return bmp
 
-
-    def _getFileImage (self, filepath):
+    def _getFileImage(self, filepath):
         """
-        Возвращает номер картинки в imageList для файла по его расширению. При необходимости добавляет картинку в список
+        Возвращает номер картинки в imageList для файла по его расширению.
+        При необходимости добавляет картинку в список
         """
-        if os.path.isdir (filepath):
+        if os.path.isdir(filepath):
             return self.FOLDER_ICON
 
-        filename = os.path.basename (filepath)
+        filename = os.path.basename(filepath)
 
-        elements = filename.rsplit (".", 1)
-        if len (elements) < 2:
+        elements = filename.rsplit(".", 1)
+        if len(elements) < 2:
             return self.DEFAULT_FILE_ICON
 
         ext = elements[1]
@@ -187,21 +182,22 @@ class WindowsFileIcons (BaseFileIcons):
         if ext in self._iconsDict:
             return self._iconsDict[ext]
 
-        # Поиск иконки по имени файла (используется для расширения .exe)
+        # Поиск иконки по имени файла(используется для расширения .exe)
         if filepath in self._iconsDict:
             return self._iconsDict[filepath]
 
         if ext.lower() == "exe":
-            bmp = self.__getExeIcon (filepath)
+            bmp = self.__getExeIcon(filepath)
         else:
-            bmp = self.__getSystemIcon (ext)
+            bmp = self.__getSystemIcon(ext)
 
         if bmp is None:
             return self.DEFAULT_FILE_ICON
 
-        index = self.imageList.Add (bmp)
+        index = self.imageList.Add(bmp)
 
-        # Для всех расширений кроме .exe в качестве ключа испльзуется расширение
+        # Для всех расширений кроме .exe в качестве ключа
+        # испльзуется расширение файла
         # Для .exe используется полный путь до файла
         if ext.lower() != "exe":
             self._iconsDict[ext] = index
