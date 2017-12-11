@@ -22,8 +22,7 @@ class TabsCtrl(wx.Panel):
         self.__layout()
 
     def __layout(self):
-        #mainSizer = wx.FlexGridSizer(1, 0)
-        mainSizer = wx.FlexGridSizer(1, 0, 0)
+        mainSizer = wx.FlexGridSizer(1, 0, 0, 0)
 
         mainSizer.AddGrowableCol(0)
         mainSizer.AddGrowableRow(0)

@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-from searchpage import SearchPageFactory
+from .searchpage import SearchPageFactory
 
 
 class SearchPageController (object):

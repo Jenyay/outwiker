@@ -22,9 +22,9 @@ from outwiker.gui.tabscontroller import TabsController
 from outwiker.gui.trayicon import getTrayIconController
 from outwiker.core.system import getImagesDir
 
-from toolbars.generaltoolbar import GeneralToolBar
-from toolbars.pluginstoolbar import PluginsToolBar
-from toolbars.toolbarscontroller import ToolBarsController
+from .toolbars.generaltoolbar import GeneralToolBar
+from .toolbars.pluginstoolbar import PluginsToolBar
+from .toolbars.toolbarscontroller import ToolBarsController
 
 from outwiker.actions.new import NewAction
 from outwiker.actions.open import OpenAction

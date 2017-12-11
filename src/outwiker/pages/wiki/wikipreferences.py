@@ -4,8 +4,8 @@ import wx
 
 from outwiker.gui.preferences.configelements import BooleanElement, IntegerElement
 from outwiker.core.application import Application
-from wikiconfig import WikiConfig
-from emptycontent import EmptyContent
+from .wikiconfig import WikiConfig
+from .emptycontent import EmptyContent
 from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
 
 

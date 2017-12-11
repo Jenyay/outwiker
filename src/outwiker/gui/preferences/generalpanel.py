@@ -4,7 +4,7 @@ import os
 
 import wx
 
-import configelements
+from . import configelements
 import outwiker.core.i18n
 from outwiker.core.application import Application
 from outwiker.core.system import getImagesDir

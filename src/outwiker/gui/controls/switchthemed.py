@@ -4,8 +4,8 @@ import wx
 from wx.lib.newevent import NewCommandEvent
 from wx.lib.scrolledpanel import ScrolledPanel
 
-from stickybuttonthemed import StickyButtonThemed
-from staticlinethemed import StaticLineThemed
+from .stickybuttonthemed import StickyButtonThemed
+from .staticlinethemed import StaticLineThemed
 
 
 SwitchEvent, EVT_SWITCH = NewCommandEvent()

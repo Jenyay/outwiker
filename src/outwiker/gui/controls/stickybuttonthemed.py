@@ -1,6 +1,6 @@
 # -*- coding=utf-8 -*-
 
-from stickybutton import StickyButton
+from .stickybutton import StickyButton
 
 
 class StickyButtonThemed(StickyButton):

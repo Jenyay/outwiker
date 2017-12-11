@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-from basemainwnd import BaseMainWndTest
+from .basemainwnd import BaseMainWndTest
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.core.application import Application
 from outwiker.actions.addbookmark import AddBookmarkAction

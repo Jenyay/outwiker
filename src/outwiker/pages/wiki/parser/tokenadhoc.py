@@ -2,7 +2,7 @@
 
 from outwiker.libs.pyparsing import Regex
 
-from tokenfonts import SubscriptToken, BoldToken, ItalicToken, BoldItalicToken
+from .tokenfonts import SubscriptToken, BoldToken, ItalicToken, BoldItalicToken
 
 
 class AdHocFactory(object):

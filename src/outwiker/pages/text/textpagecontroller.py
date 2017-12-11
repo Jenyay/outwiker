@@ -2,7 +2,7 @@
 
 from outwiker.core.event import pagetype
 from outwiker.gui.simplespellcontroller import SimpleSpellController
-from textpage import TextPageFactory, TextWikiPage
+from .textpage import TextPageFactory, TextWikiPage
 
 
 class TextPageController (object):

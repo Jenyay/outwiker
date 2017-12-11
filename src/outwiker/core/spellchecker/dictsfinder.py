@@ -3,7 +3,7 @@
 import os
 import os.path
 
-from defines import CUSTOM_DICT_LANG
+from .defines import CUSTOM_DICT_LANG
 
 
 class DictsFinder (object):

@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 from outwiker.libs.pyparsing import QuotedString
-from utils import noConvert
+from .utils import noConvert
 
 
 class NoFormatFactory (object):

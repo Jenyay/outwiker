@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-from basemainwnd import BaseMainWndTest
+from .basemainwnd import BaseMainWndTest
 from outwiker.core.application import Application
 from outwiker.gui.controls.hotkeyctrl import HotkeyCtrl
 from outwiker.gui.hotkey import HotKey

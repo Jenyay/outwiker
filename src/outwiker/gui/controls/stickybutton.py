@@ -2,7 +2,7 @@
 
 import wx
 
-from togglebutton import ToggleButton
+from .togglebutton import ToggleButton
 
 
 class StickyButton(ToggleButton):

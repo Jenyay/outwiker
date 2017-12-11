@@ -8,7 +8,7 @@ from outwiker.gui.hotkey import HotKey
 from outwiker.gui.hotkeyparser import HotKeyParser
 from outwiker.gui.hotkeyoption import HotKeyOption
 from outwiker.core.application import Application
-from basemainwnd import BaseMainWndTest
+from .basemainwnd import BaseMainWndTest
 
 
 class TestAction (BaseAction):

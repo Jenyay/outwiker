@@ -2,7 +2,7 @@
 
 import os.path
 
-from basemainwnd import BaseMainWndTest
+from .basemainwnd import BaseMainWndTest
 from outwiker.pages.wiki.actions.include import IncludeDialog, IncludeDialogController
 from outwiker.core.application import Application
 from outwiker.pages.wiki.wikipage import WikiPageFactory

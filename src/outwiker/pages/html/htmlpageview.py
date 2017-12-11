@@ -15,9 +15,9 @@ from outwiker.pages.html.tabledialogcontroller import (
     TableDialogController,
     TableRowsDialogController
 )
-from actions.autolinewrap import HtmlAutoLineWrap
-from actions.link import insertLink
-from actions.switchcoderesult import SwitchCodeResultAction
+from .actions.autolinewrap import HtmlAutoLineWrap
+from .actions.link import insertLink
+from .actions.switchcoderesult import SwitchCodeResultAction
 from outwiker.actions.polyactionsid import *
 
 

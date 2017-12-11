@@ -23,7 +23,7 @@ from outwiker.core.defines import (PAGE_CONTENT_FILE,
                                    PAGE_OPT_FILE)
 from outwiker.core.iconcontroller import IconController
 from outwiker.core.system import getIconsDirList
-import events
+from . import events
 
 
 logger = logging.getLogger('core')

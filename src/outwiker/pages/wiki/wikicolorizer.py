@@ -1,14 +1,14 @@
 # -*- coding: UTF-8 -*-
 
-from parser.tokenfonts import FontsFactory, BoldToken, ItalicToken, BoldItalicToken, UnderlineToken
-from parser.tokenheading import HeadingFactory
-from parser.tokencommand import CommandFactory
-from parser.tokenlink import LinkFactory
-from parser.tokenurl import UrlFactory
-from parser.tokenlinebreak import LineBreakFactory
-from parser.tokennoformat import NoFormatFactory
-from parser.tokenpreformat import PreFormatFactory
-from parser.tokentext import TextFactory
+from .parser.tokenfonts import FontsFactory, BoldToken, ItalicToken, BoldItalicToken, UnderlineToken
+from .parser.tokenheading import HeadingFactory
+from .parser.tokencommand import CommandFactory
+from .parser.tokenlink import LinkFactory
+from .parser.tokenurl import UrlFactory
+from .parser.tokenlinebreak import LineBreakFactory
+from .parser.tokennoformat import NoFormatFactory
+from .parser.tokenpreformat import PreFormatFactory
+from .parser.tokentext import TextFactory
 
 from outwiker.gui.texteditorhelper import TextEditorHelper
 

@@ -2,7 +2,7 @@
 
 import re
 
-from enchantwrapper import EnchantWrapper
+from .enchantwrapper import EnchantWrapper
 
 
 class SpellChecker (object):

@@ -3,7 +3,7 @@
 import re
 
 from outwiker.libs.pyparsing import QuotedString, Regex
-from tokenblock import TextBlockToken
+from .tokenblock import TextBlockToken
 
 
 class FontsFactory(object):
