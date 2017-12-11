@@ -201,6 +201,11 @@ class TabsController (object):
 
 
     def __loadTabs (self, wikiroot):
+        if wikiroot is not None:
+            selectedTab = IntegerOption (wikiroot.params,
+                                         self._tabSelectedSection,
+                                         self._tabSelectedOption,
+                                         0).value
         self.__unbindGuiEvents()
         self._tabsCtrl.Clear()
 
@@ -214,11 +219,6 @@ class TabsController (object):
             page = wikiroot[tab]
             if page is not None:
                 self._tabsCtrl.AddPage (self.__getTitle (page), page)
-
-        selectedTab = IntegerOption (wikiroot.params,
-                                     self._tabSelectedSection,
-                                     self._tabSelectedOption,
-                                     0).value
 
         pageCount = self._tabsCtrl.GetPageCount()
 
