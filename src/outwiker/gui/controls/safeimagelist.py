@@ -27,7 +27,7 @@ class SafeImageList (wx.ImageList):
         """
         size_src = bitmap.GetSize()
         # Create transparent bitmap
-        bitmap_new = wx.EmptyBitmap(self._width, self._height)
+        bitmap_new = wx.Bitmap(self._width, self._height)
         dc = wx.MemoryDC(bitmap_new)
         dc.SetBackground(wx.Brush("magenta"))
         dc.Clear()
@@ -39,13 +39,13 @@ class SafeImageList (wx.ImageList):
         scale_y = float(size_src[1]) / float(self._height)
 
         max_scale = max(scale_x, scale_y)
-        image_new = wx.ImageFromBitmap(bitmap)
+        image_new = bitmap.ConvertToImage()
         if max_scale >= 1.0:
             image_new.Rescale(int(size_src[0] / max_scale),
                               int(size_src[1] / max_scale))
 
         size_new = image_new.GetSize()
-        result_image = wx.ImageFromBitmap(bitmap_new)
+        result_image = bitmap_new.ConvertToImage()
         paste_x = (self._width - size_new[0]) / 2
         paste_y = (self._height - size_new[1]) / 2
         result_image.Paste(image_new, paste_x, paste_y)
