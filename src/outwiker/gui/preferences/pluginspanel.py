@@ -42,7 +42,7 @@ class PluginsPanel (BasePrefPanel):
     def pluginsInfo(self):
         if self.__pluginsInfo is None:
             # Удалим пустую панель, а вместо нее добавим HTML-рендер
-            self.pluginsSizer.Remove(self.__blankPanel)
+            self.pluginsSizer.Detach(self.__blankPanel)
             self.__blankPanel.Destroy()
 
             self.__pluginsInfo = getOS().getHtmlRender(self)

@@ -3,13 +3,13 @@
 	<name>ChangePageUID</name>
 	<updates>http://jenyay.net/uploads/Outwiker/ChangePageUid/plugin.xml</updates>
     <requirements>
-        <outwiker>1.8.0.731 dev</outwiker>
+        <outwiker>2.1.0.833 dev</outwiker>
         <os>Windows, Linux</os>
 		<packages>
-			<core>1.0</core>
-			<actions>1.0</actions>
-			<gui>1.0</gui>
-			<pages>1.0, 2.0</pages>
+			<core>1.5</core>
+			<actions>1.1</actions>
+			<gui>2.0</gui>
+			<pages>2.0</pages>
 			<utilites>1.0</utilites>
 			<libs>1.0</libs>
 		</packages>
@@ -17,7 +17,7 @@
 
 	<data lang="en">
 		<website>http://jenyay.net/Outwiker/ChangePageUidEn</website>
-		<description>Plugin for edit a page indentifiers.</description>
+		<description>Plugin for edit a page identifiers.</description>
 
 		<author>
 			<name>Eugene Ilin (aka Jenyay)</name>
@@ -26,6 +26,11 @@
 		</author>
 
 		<changelog>
+			<version number="2.0.0" date="December 12, 2017">
+                <download os="all">http://jenyay.net/uploads/Outwiker/ChangePageUid/changepageuid-2.0.0.zip</download>
+				<change>Ported on wxPython4.0</change>
+			</version>
+
 			<version number="1.0.6" date="January 26, 2017">
                 <download os="all">http://jenyay.net/uploads/Outwiker/ChangePageUid/changepageuid-1.0.6.zip</download>
 				<change>Bug fixes.</change>
@@ -76,6 +81,11 @@
 		</author>
 
 		<changelog>
+			<version number="2.0.0" date="12.12.2017">
+                <download os="all">http://jenyay.net/uploads/Outwiker/ChangePageUid/changepageuid-2.0.0.zip</download>
+				<change>Портирован на wxPython4.0</change>
+			</version>
+
 			<version number="1.0.6" date="26.01.2017">
                 <download os="all">http://jenyay.net/uploads/Outwiker/ChangePageUid/changepageuid-1.0.6.zip</download>
 				<change>Исправление ошибок.</change>

@@ -8,15 +8,15 @@ from outwiker.core.version import Version, StatusSet
 from outwiker.core.system import getOS
 
 
-__version__ = u"1.0.6"
+__version__ = u"2.0.0"
 
 
 def _no_translate(text):
     return text
 
 
-if getCurrentVersion() < Version(1, 8, 0, 731, status=StatusSet.DEV):
-    print(u"ChangePageUID plugin. OutWiker version requirement: 1.8.0.731")
+if getCurrentVersion() < Version(2, 1, 0, 833, status=StatusSet.DEV):
+    print(u"ChangePageUID plugin. OutWiker version requirement: 2.1.0.833")
 else:
     from .controller import Controller
 
