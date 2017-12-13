@@ -21,7 +21,7 @@ class BookmarksController (object):
 
 
     def updateBookmarks (self):
-        self.controller.removeMenuItemsById (self.controller.mainMenu.bookmarksMenu, self._bookmarksId.keys())
+        self.controller.removeMenuItemsById (self.controller.mainMenu.bookmarksMenu, list(self._bookmarksId.keys()))
         self._bookmarksId = {}
 
         if Application.wikiroot is not None:

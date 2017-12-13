@@ -4,6 +4,7 @@
 """
 
 import re
+from functools import reduce
 
 
 class Status(object):

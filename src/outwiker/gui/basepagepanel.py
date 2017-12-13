@@ -36,12 +36,12 @@ class BasePagePanel (wx.Panel):
         """
         Возвращает список ToolsInfo.
         """
-        return self._tools.values()
+        return list(self._tools.values())
 
     def _removeAllTools(self):
         self.mainWindow.Freeze()
 
-        for toolKey in self._tools.keys():
+        for toolKey in list(self._tools.keys()):
             self.removeTool(toolKey, fullUpdate=False)
 
         self.mainWindow.UpdateAuiManager()

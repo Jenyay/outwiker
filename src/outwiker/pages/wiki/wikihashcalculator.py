@@ -4,6 +4,7 @@ import os.path
 import hashlib
 from StringIO import StringIO
 from functools import cmp_to_key
+from functools import reduce
 
 from outwiker.core.attachment import Attachment
 from outwiker.core.style import Style

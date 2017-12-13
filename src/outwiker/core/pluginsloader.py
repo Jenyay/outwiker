@@ -96,7 +96,7 @@ class PluginsLoader (object):
         Отключить загруженные плагины, попавшие в "черный список" (disableList)
         """
         for pluginname in disableList:
-            if pluginname in self.__plugins.keys():
+            if pluginname in list(self.__plugins.keys()):
                 self.__plugins[pluginname].destroy()
 
                 assert pluginname not in self.__disabledPlugins
@@ -107,7 +107,7 @@ class PluginsLoader (object):
         """
         Включить отключенные плагины, если их больше нет в "черном списке"
         """
-        for plugin in self.__disabledPlugins.values():
+        for plugin in list(self.__disabledPlugins.values()):
             if plugin.name not in disableList:
                 plugin.initialize()
 
@@ -153,7 +153,7 @@ class PluginsLoader (object):
         """
         Уничтожить все загруженные плагины
         """
-        map(lambda plugin: plugin.destroy(), self.__plugins.values())
+        list(map(lambda plugin: plugin.destroy(), list(self.__plugins.values())))
         self.__plugins = {}
 
     def __loadPluginInfo(self, plugin_fname):

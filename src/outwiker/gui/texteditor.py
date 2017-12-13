@@ -259,6 +259,17 @@ class TextEditor(TextEditorBase):
             self._styleSet = True
 
     def _onApplyStyle(self, event):
+        '''
+            Call back function for EVT_APPLY_STYLE
+
+            Args:
+                event: the object of wx.stc.StyledTextEvent
+            Returns:
+                None
+            Raises:
+                None
+        '''
+
         if event.text == self._getTextForParse():
             startByte = self._helper.calcBytePos(event.text, event.start)
             endByte = self._helper.calcBytePos(event.text, event.end)

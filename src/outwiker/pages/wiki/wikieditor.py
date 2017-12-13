@@ -5,6 +5,7 @@ import wx.stc
 from outwiker.core.application import Application
 from outwiker.gui.texteditor import TextEditor
 from .wikiconfig import WikiConfig
+from functools import reduce
 
 
 class WikiEditor (TextEditor):
@@ -87,7 +88,7 @@ class WikiEditor (TextEditor):
         self.textCtrl.SetLexer (wx.stc.STC_LEX_CONTAINER)
         self.textCtrl.SetModEventMask(wx.stc.STC_MOD_INSERTTEXT | wx.stc.STC_MOD_DELETETEXT)
 
-        for (styleid, style) in self._styles.items():
+        for (styleid, style) in list(self._styles.items()):
             self.textCtrl.StyleSetSpec (styleid, style)
             self.textCtrl.StyleSetSize (styleid, self.config.fontSize.value)
             self.textCtrl.StyleSetFaceName (styleid, self.config.fontName.value)
@@ -108,7 +109,7 @@ class WikiEditor (TextEditor):
         Создать список
         """
         selText = self.textCtrl.GetSelectedText()
-        items = filter (lambda item: len (item.strip()) > 0, selText.split ("\n"))
+        items = [item for item in selText.split ("\n") if len (item.strip()) > 0]
 
         # Собираем все элементы
         if len (items) > 0:

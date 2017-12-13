@@ -292,8 +292,8 @@ class BaseTextPanel(BasePagePanel):
         """
 
         actionController = self._application.actionController
-        map(lambda item: actionController.getAction(item).setFunc(None),
-            self._baseTextPolyactions)
+        list(map(lambda item: actionController.getAction(item).setFunc(None),
+            self._baseTextPolyactions))
 
         self._application.onAttachmentPaste -= self.onAttachmentPaste
         self._application.onPreferencesDialogClose -= self.onPreferencesDialogClose
@@ -311,8 +311,8 @@ class BaseTextPanel(BasePagePanel):
         assert self.searchMenu is not None
 
         actionController = self._application.actionController
-        map(lambda item: actionController.removeMenuItem(item),
-            self._baseTextPolyactions)
+        list(map(lambda item: actionController.removeMenuItem(item),
+            self._baseTextPolyactions))
 
         actionController.removeMenuItem(SearchAction.stringId)
         actionController.removeMenuItem(SearchAndReplaceAction.stringId)
@@ -333,7 +333,7 @@ class BaseTextPanel(BasePagePanel):
         editMenu.Remove(self.wordMenuItem)
         editMenu.Remove(self.linesMenuItem)
 
-        map(lambda item: item[0].Remove(item[1]), self._menuSeparators)
+        list(map(lambda item: item[0].Remove(item[1]), self._menuSeparators))
 
         self.searchMenu = None
         self.wordMenuItem = None

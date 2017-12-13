@@ -73,14 +73,14 @@ class HtmlPageFactory (PageFactory):
         """
         Зарегистрировать все действия, связанные с HTML-страницей
         """
-        map(lambda actionTuple: application.actionController.register(
-            actionTuple[0](application), actionTuple[1]), html_actions)
+        list(map(lambda actionTuple: application.actionController.register(
+            actionTuple[0](application), actionTuple[1]), html_actions))
 
 
     @staticmethod
     def removeActions (application):
-        map (lambda actionTuple: application.actionController.removeAction(
-            actionTuple[0].stringId), html_actions)
+        list(map (lambda actionTuple: application.actionController.removeAction(
+            actionTuple[0].stringId), html_actions))
 
 
     def getPageType(self):

@@ -426,7 +426,7 @@ class HtmlRenderConfig(object):
     USER_STYLE_DEFAULT = u''
 
     HTML_IMPROVER_PARAM = u'HtmlImprover'
-    HTML_IMPROVER_DEFAULT = 'brimprover'
+    HTML_IMPROVER_DEFAULT = u'brimprover'
 
     def __init__(self, config):
         self.config = config
@@ -578,7 +578,7 @@ class MainWindowConfig(object):
 
     # Размер области в статусной панели для показа даты изменения текущей
     # страницы
-    DATETIME_STATUS_WIDTH_SECTION = 'datetime_status_width'
+    DATETIME_STATUS_WIDTH_SECTION = u'datetime_status_width'
     DATETIME_STATUS_WIDTH_DEFAULT = 250
 
     def __init__(self, config):
@@ -638,7 +638,7 @@ class TreeConfig(object):
     HEIGHT_DEFAULT = 250
 
     PANE_OPTIONS_SECTION = u'TreePane'
-    PANE_OPTIONS_DEFAULT = ''
+    PANE_OPTIONS_DEFAULT = u''
 
     def __init__(self, config):
         self.config = config
@@ -719,7 +719,7 @@ class TagsCloudConfig(object):
     HEIGHT_DEFAULT = 170
 
     PANE_OPTIONS_SECTION = u'TagsCloudPane'
-    PANE_OPTIONS_DEFAULT = ''
+    PANE_OPTIONS_DEFAULT = u''
 
     def __init__(self, config):
         self.config = config

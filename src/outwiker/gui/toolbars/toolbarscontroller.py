@@ -29,7 +29,7 @@ class ToolBarsController(object):
         self.layout()
 
     def __onPaneClose(self, event):
-        for toolbarinfo in self._toolbars.values():
+        for toolbarinfo in list(self._toolbars.values()):
             if event.GetPane().name == toolbarinfo.toolbar.name:
                 toolbarinfo.menuitem.Check(False)
                 toolbarinfo.toolbar.Hide()
@@ -85,7 +85,7 @@ class ToolBarsController(object):
         """
         Найти панель инструментов по идентификатору меню
         """
-        for toolbarinfo in self._toolbars.values():
+        for toolbarinfo in list(self._toolbars.values()):
             if menuid == toolbarinfo.menuitem.GetId():
                 return toolbarinfo
 
@@ -114,15 +114,15 @@ class ToolBarsController(object):
                                            handler=self.__onPaneClose)
         self._mainWindow.Unbind(wx.EVT_SIZE, handler=self.__onSizeChanged)
 
-        for toolbarname in self._toolbars.keys():
+        for toolbarname in list(self._toolbars.keys()):
             self.destroyToolBar(toolbarname)
 
     def __contains__(self, toolbarname):
         return toolbarname in self._toolbars
 
     def updatePanesInfo(self):
-        map(lambda toolbar: toolbar.toolbar.updatePaneInfo(),
-            self._toolbars.values())
+        list(map(lambda toolbar: toolbar.toolbar.updatePaneInfo(),
+            list(self._toolbars.values())))
 
     def layout(self):
         '''
@@ -130,7 +130,7 @@ class ToolBarsController(object):
         '''
         mainWindowWidth = self._mainWindow.GetClientSize()[0]
 
-        for name, toolbar_info in self._toolbars.items():
+        for name, toolbar_info in list(self._toolbars.items()):
             toolbar = toolbar_info.toolbar
             toolbar_rect = toolbar.GetRect()
             if toolbar_rect.GetLeft() >= mainWindowWidth:
@@ -152,7 +152,7 @@ class ToolBarsController(object):
 
     def _getRowsCount(self):
         maxIndex = -1
-        for name in self._toolbars.keys():
+        for name in list(self._toolbars.keys()):
             toolbar_row = self._getToolbarRow(name)
             if toolbar_row > maxIndex:
                 maxIndex = toolbar_row
@@ -172,11 +172,11 @@ class ToolBarsController(object):
         '''
         rows = [1] * self._getRowsCount()
 
-        for name in self._toolbars.keys():
+        for name in list(self._toolbars.keys()):
             toolbar_row = self._getToolbarRow(name)
             rows[toolbar_row] = 0
 
-        for name in self._toolbars.keys():
+        for name in list(self._toolbars.keys()):
             toolbar = self[name]
             toolbar_row = self._getToolbarRow(name)
             delta = sum(rows[:toolbar_row])
@@ -194,7 +194,7 @@ class ToolBarsController(object):
 
         # Calculate empty space for each row
         rows_spaces = [-1] * self._getRowsCount()
-        for toolbar_name in self._toolbars.keys():
+        for toolbar_name in list(self._toolbars.keys()):
             if toolbar_name == moved_toolbar_name:
                 continue
 

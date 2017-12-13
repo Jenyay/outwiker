@@ -1,5 +1,7 @@
 # -*- coding=utf-8 -*-
 
+from __future__ import print_function
+
 import wx
 from wx.lib.newevent import NewCommandEvent
 from wx.lib.scrolledpanel import ScrolledPanel
@@ -54,8 +56,8 @@ class SwitchThemed(ScrolledPanel):
 
     def SetTheme(self, theme):
         self._theme = theme
-        map(lambda button: button.SetTheme(self._theme),
-            self._buttons + self._otherItems)
+        list(map(lambda button: button.SetTheme(self._theme),
+            self._buttons + self._otherItems))
 
     def Append(self, label=u'', bitmap=None):
         button = StickyButtonThemed(self, label=label, bitmap=bitmap)
@@ -94,7 +96,7 @@ class SwitchThemed(ScrolledPanel):
         assert index >= 0
         assert index < len(self._buttons)
 
-        map(lambda button: button.SetToggle(False), self._buttons)
+        list(map(lambda button: button.SetToggle(False), self._buttons))
         self._buttons[index].SetToggle(True)
         self._buttons[index].SetFocus()
         self.Notify()
@@ -104,8 +106,8 @@ class SwitchThemed(ScrolledPanel):
 
     def SetButtonsHeight(self, height):
         self._buttonsHeight = height
-        map(lambda button: button.SetMinSize((-1, self._buttonsHeight)),
-            self._buttons)
+        list(map(lambda button: button.SetMinSize((-1, self._buttonsHeight)),
+            self._buttons))
         self.Layout()
 
 
@@ -121,8 +123,8 @@ class MyFrame(wx.Frame):
         self.switch.SetSelection(4)
 
     def _onSwitch(self, event):
-        print event.index
-        print self.switch.GetSelection()
+        print(event.index)
+        print(self.switch.GetSelection())
 
 
 if __name__ == '__main__':

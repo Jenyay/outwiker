@@ -107,7 +107,7 @@ class Searcher(object):
         Проверить, встречается ли в тексте меток искомая фраза
         """
         lowerPhrase = self.phrase.lower()
-        tags = filter(lambda tag: lowerPhrase in tag.lower(), page.tags)
+        tags = [tag for tag in page.tags if lowerPhrase in tag.lower()]
         return len(tags) != 0
 
     def __testAttachment(self, page):
@@ -118,10 +118,8 @@ class Searcher(object):
         lowerPhrase = self.phrase.lower()
 
         for root, subfolders, files in os.walk(attach.getAttachPath()):
-            filterfiles = (filter(lambda fname: lowerPhrase in fname.lower(),
-                                  files))
-            filterdirs = (filter(lambda dirname: lowerPhrase in dirname.lower(),
-                                 subfolders))
+            filterfiles = ([fname for fname in files if lowerPhrase in fname.lower()])
+            filterdirs = ([dirname for dirname in subfolders if lowerPhrase in dirname.lower()])
 
             if (len(filterfiles) != 0 or len(filterdirs) != 0):
                 return True

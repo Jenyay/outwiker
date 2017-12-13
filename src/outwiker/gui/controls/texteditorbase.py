@@ -128,7 +128,7 @@ class TextEditorBase(wx.Panel):
         self.textCtrl.CmdKeyClearAll()
 
         # Clear Cmd keys for Ubuntu
-        for key in range(ord('A'), ord('Z') + 1) + range(ord('0'), ord('9') + 1):
+        for key in list(range(ord('A'), ord('Z') + 1)) + list(range(ord('0'), ord('9') + 1)):
             self.textCtrl.CmdKeyClear(key, wx.stc.STC_SCMOD_ALT | wx.stc.STC_SCMOD_CTRL)
             self.textCtrl.CmdKeyClear(key, wx.stc.STC_SCMOD_SHIFT | wx.stc.STC_SCMOD_ALT | wx.stc.STC_SCMOD_CTRL)
 
@@ -220,7 +220,7 @@ class TextEditorBase(wx.Panel):
             #        (ord('U'),             wx.stc.STC_SCMOD_SHIFT | wx.stc.STC_SCMOD_CTRL,    wx.stc.STC_CMD_UPPERCASE),
         )
 
-        map(lambda key: self.textCtrl.CmdKeyAssign(*key), defaultHotKeys)
+        list(map(lambda key: self.textCtrl.CmdKeyAssign(*key), defaultHotKeys))
 
     @property
     def searchPanel(self):
@@ -271,8 +271,8 @@ class TextEditorBase(wx.Panel):
         old_sel_end = self.GetSelectionEnd()
 
         first_line, last_line = self.GetSelectionLines()
-        map(lambda n: self.toddleLinePrefix(n, prefix),
-            xrange(first_line, last_line + 1))
+        list(map(lambda n: self.toddleLinePrefix(n, prefix),
+            range(first_line, last_line + 1)))
 
         if old_sel_start != old_sel_end:
             new_sel_start = self.GetLineStartPosition(first_line)

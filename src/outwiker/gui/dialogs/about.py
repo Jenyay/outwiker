@@ -48,7 +48,7 @@ class AboutDialog(wx.Dialog):
         self.okButton.SetDefault()
 
     def __do_layout(self):
-        main_sizer = wx.FlexGridSizer(rows=4)
+        main_sizer = wx.FlexGridSizer(rows=4, cols=0, vgap=0, hgap=0)
         grid_sizer_2 = wx.FlexGridSizer(cols=2)
         grid_sizer_3 = wx.FlexGridSizer(cols=1)
         sizeSizer = wx.FlexGridSizer(cols=2)

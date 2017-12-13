@@ -17,4 +17,4 @@ class QuoteToken(SimpleNestedBlock):
     end = u'<]'
     start_html = u'<blockquote>'
     end_html = u'</blockquote>'
-    name = 'quote'
+    name = u'quote'

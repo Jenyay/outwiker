@@ -37,7 +37,7 @@ class PageUidDepot(object):
         if uid is not None:
             self.__uids[uid] = root
 
-        map(lambda child: self.__load(child), root.children)
+        list(map(lambda child: self.__load(child), root.children))
 
     def __getUid(self, page):
         """

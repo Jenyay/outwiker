@@ -112,8 +112,7 @@ class EnchantWrapper (object):
         for checker in self._checkers + self._customCheckers:
             suggest_set |= set (checker.suggest (word))
 
-        suggest = list (suggest_set)
-        suggest = filter (lambda item: len (item.strip()) > 0, suggest)
+        suggest = [item for item in suggest_set if len (item.strip()) > 0]
         suggest.sort()
 
         return suggest

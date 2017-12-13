@@ -64,7 +64,7 @@ class TagsPanelController (object):
 
     def __showPopup (self, tagname):
         pages = self.__currentTags[tagname][:]
-        pages.sort (key=cmp_to_key(sortAlphabeticalFunction))
+        pages.sort(key=cmp_to_key(sortAlphabeticalFunction))
 
         self.__tagsPanel.showPopup(pages)
 

@@ -85,7 +85,7 @@ class CurrentPagePanel(wx.Panel):
         """
         if page is not None and not pageExists(page):
             MessageBox(_(u"Can't open page. Page folder not exists"),
-                       _("Error"),
+                       _(u"Error"),
                        wx.OK | wx.ICON_ERROR)
             self.__reloadWiki()
             return
@@ -223,7 +223,7 @@ class CurrentPagePanel(wx.Panel):
                 # Нет папки с деревом
                 self.__saveProcessing = True
                 MessageBox(_(u"Can't save page. Wiki folder not exists. Wiki will be closed."),
-                           _("Error"),
+                           _(u"Error"),
                            wx.OK | wx.ICON_ERROR)
                 self.__saveProcessing = False
 
@@ -234,7 +234,7 @@ class CurrentPagePanel(wx.Panel):
                 # Похоже, страница удалена вручную, перезагрузим вики
                 self.__saveProcessing = True
                 MessageBox(_(u"Can't save page. Page folder not exists. Wiki will be reloaded."),
-                           _("Error"),
+                           _(u"Error"),
                            wx.OK | wx.ICON_ERROR)
                 self.__saveProcessing = False
 
