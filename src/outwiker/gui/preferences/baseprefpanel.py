@@ -2,6 +2,7 @@
 
 from abc import ABCMeta, abstractmethod
 import wx
+from functools import reduce
 
 
 class BasePrefPanel (wx.ScrolledWindow):

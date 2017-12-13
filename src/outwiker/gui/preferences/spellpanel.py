@@ -70,9 +70,7 @@ class SpellPanel(BasePrefPanel):
     def _fillDictsList (self):
         dicts = DictsFinder (getSpellDirList()).getLangList()
         dicts.sort()
-        selectedDicts = filter (
-            lambda item: item in dicts,
-            self._getDictsFromConfig())
+        selectedDicts = [item for item in self._getDictsFromConfig() if item in dicts]
 
 
         self.dictsList.Clear()

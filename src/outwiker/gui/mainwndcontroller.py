@@ -273,8 +273,8 @@ class MainWndController (object):
             if self.mainMenu.FindItemById (toolId) is not None:
                 self.mainMenu.Enable (toolId, enabled)
 
-        map (lambda action: Application.actionController.enableTools (action.stringId, enabled),
-             self._disabledActions)
+        list(map (lambda action: Application.actionController.enableTools (action.stringId, enabled),
+             self._disabledActions))
 
     #
     ###################################################
@@ -311,7 +311,7 @@ class MainWndController (object):
         """
         Обновление меню со списком последних открытых вики
         """
-        self.removeMenuItemsById(self.mainMenu.fileMenu, self._recentId.keys())
+        self.removeMenuItemsById(self.mainMenu.fileMenu, list(self._recentId.keys()))
         self._recentId = {}
 
         for n in range(len(Application.recentWiki)):

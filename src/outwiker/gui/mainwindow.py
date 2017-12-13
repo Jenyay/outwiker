@@ -146,10 +146,10 @@ class MainWindow(wx.Frame):
         self.toolbars[self._pluginsToolbar.name] = self._pluginsToolbar
 
     def _initCoreControllers(self):
-        map(lambda controller: controller.initialize(), self._coreControllers)
+        list(map(lambda controller: controller.initialize(), self._coreControllers))
 
     def _destroyCoreControllers(self):
-        map(lambda controller: controller.clear(), self._coreControllers)
+        list(map(lambda controller: controller.clear(), self._coreControllers))
         self._coreControllers = []
 
     def createGui(self):
@@ -510,7 +510,7 @@ class MainWindow(wx.Frame):
                 self.mainWindowConfig.maximized.value = self.IsMaximized()
 
                 self.__panesController.savePanesParams()
-        except Exception, e:
+        except Exception as e:
             cmd.MessageBox(_(u"Can't save config\n%s") % (unicode(e)),
                            _(u"Error"), wx.ICON_ERROR | wx.OK)
 

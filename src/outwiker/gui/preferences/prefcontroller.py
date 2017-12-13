@@ -8,20 +8,20 @@ from outwiker.core.event import (EVENT_PRIORITY_MAX_CORE,
 from outwiker.core.exceptions import PreferencesException
 from outwiker.gui.guiconfig import PrefDialogConfig
 
-from preferencepanelinfo import PreferencePanelInfo
-from generalpanel import GeneralPanel
-from traypanel import TrayPanel
-from editorpanel import EditorPanel
-from spellpanel import SpellPanel
-from htmlrenderpanel import HtmlRenderPanel
-from textprintpanel import TextPrintPanel
-from pluginspanel import PluginsPanel
-from hotkeyspanel import HotKeysPanel
-from htmleditorpanel import HtmlEditorPanel
-from wikieditorpanel import WikiEditorPanel
-from iconsetpanel import IconsetPanel
-from tagspanel import TagsPanel
-from attachpanel import AttachPanel
+from .preferencepanelinfo import PreferencePanelInfo
+from .generalpanel import GeneralPanel
+from .traypanel import TrayPanel
+from .editorpanel import EditorPanel
+from .spellpanel import SpellPanel
+from .htmlrenderpanel import HtmlRenderPanel
+from .textprintpanel import TextPrintPanel
+from .pluginspanel import PluginsPanel
+from .hotkeyspanel import HotKeysPanel
+from .htmleditorpanel import HtmlEditorPanel
+from .wikieditorpanel import WikiEditorPanel
+from .iconsetpanel import IconsetPanel
+from .tagspanel import TagsPanel
+from .attachpanel import AttachPanel
 
 
 class PrefController (object):

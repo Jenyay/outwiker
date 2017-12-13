@@ -61,7 +61,7 @@ class TagsCloud (wx.ScrolledWindow):
 
     def updateTagLabels(self):
         self.__loadColors()
-        for label in self.__labels.values():
+        for label in list(self.__labels.values()):
             self.__updateTagLabel (label)
 
 
@@ -88,21 +88,21 @@ class TagsCloud (wx.ScrolledWindow):
         """
         Выделить метку
         """
-        if tag.lower().strip() in self.__labels.keys():
+        if tag.lower().strip() in list(self.__labels.keys()):
             self.__labels[tag.lower().strip()].mark(marked)
 
     def clearMarks(self):
         """
         Убрать все выделения с меток
         """
-        map (lambda label: label.mark(False), self.__labels.values())
+        list(map (lambda label: label.mark(False), list(self.__labels.values())))
 
 
     def isMarked (self, tag):
         return self.__labels[tag].isMarked
 
     def clear(self):
-        map(lambda label: label.Destroy(), self.__labels.values())
+        list(map(lambda label: label.Destroy(), list(self.__labels.values())))
 
         self.__labels = {}
         self.__tags = []
@@ -114,7 +114,7 @@ class TagsCloud (wx.ScrolledWindow):
         if len(labels) == 0:
             return (maxheight, maxindex)
 
-        for label, index in zip(labels, range(len(labels))):
+        for label, index in zip(labels, list(range(len(labels)))):
             height = label.GetSize()[1]
             if height > maxheight:
                 maxheight = height

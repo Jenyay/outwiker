@@ -2,6 +2,7 @@
 
 import os.path
 import shutil
+from functools import reduce
 
 import wx
 
@@ -9,6 +10,7 @@ from outwiker.gui.texteditor import TextEditor
 from outwiker.gui.guiconfig import HtmlEditorStylesConfig
 from outwiker.core.application import Application
 from outwiker.core.system import getSpellDirList
+
 
 
 class HtmlTextEditor (TextEditor):
@@ -32,7 +34,7 @@ class HtmlTextEditor (TextEditor):
         textCtrl.SetLexer (wx.stc.STC_LEX_HTML)
         textCtrl.StyleClearAll()
 
-        for key in styles.keys():
+        for key in list(styles.keys()):
             textCtrl.StyleSetSpec (key, styles[key])
             textCtrl.StyleSetSize (key, self.config.fontSize.value)
             textCtrl.StyleSetFaceName (key, self.config.fontName.value)
@@ -106,11 +108,11 @@ class HtmlTextEditor (TextEditor):
         Создать список
         """
         selText = self.textCtrl.GetSelectedText()
-        items = filter (lambda item: len (item.strip()) > 0, selText.split ("\n"))
+        items = [item for item in selText.split ("\n") if len (item.strip()) > 0]
 
         # Собираем все элементы
         if len (items) > 0:
-            itemsList = reduce (lambda result, item: result + itemStart + item.strip() + itemEnd + "\n", items, u"")
+            itemsList = reduce (lambda result, item: result + itemStart + item.strip() + itemEnd + "\n", items, "")
         else:
             itemsList = itemStart + itemEnd + "\n"
 

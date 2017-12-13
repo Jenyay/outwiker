@@ -161,7 +161,7 @@ class PluginsController (object):
         for plugin in Application.plugins:
             index = self.__owner.pluginsList.Append(plugin.name)
 
-            assert plugin.name not in self.__pluginsItems.keys()
+            assert plugin.name not in list(self.__pluginsItems.keys())
             self.__pluginsItems[plugin.name] = plugin
 
             self.__owner.pluginsList.Check(index, True)
@@ -170,10 +170,10 @@ class PluginsController (object):
         """
         Добавить отключенные плагины в список
         """
-        for plugin in Application.plugins.disabledPlugins.values():
+        for plugin in list(Application.plugins.disabledPlugins.values()):
             index = self.__owner.pluginsList.Append(plugin.name)
 
-            assert plugin.name not in self.__pluginsItems.keys()
+            assert plugin.name not in list(self.__pluginsItems.keys())
             self.__pluginsItems[plugin.name] = plugin
 
             self.__owner.pluginsList.Check(index, False)
