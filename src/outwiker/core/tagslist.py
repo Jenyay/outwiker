@@ -18,7 +18,7 @@ class TagsList(object):
         """
         Возвращает список тегов
         """
-        return self._tags.keys()
+        return list(self._tags.keys())
 
     def _findTags(self, page):
         """
@@ -28,7 +28,7 @@ class TagsList(object):
             for tag in page.tags:
                 tag_lower = tag.lower()
 
-                if tag_lower in self._tags.keys():
+                if tag_lower in list(self._tags.keys()):
                     self._tags[tag_lower].append(page)
                 else:
                     self._tags[tag_lower] = [page]
@@ -48,7 +48,7 @@ class TagsList(object):
         return pages
 
     def __iter__(self):
-        tags = self._tags.keys()
+        tags = list(self._tags.keys())
         tags.sort()
 
         return iter(tags)

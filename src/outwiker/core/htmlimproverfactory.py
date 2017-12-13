@@ -39,7 +39,7 @@ class HtmlImproverFactory(object):
 
     @property
     def names(self):
-        return self._improvers.keys()
+        return list(self._improvers.keys())
 
     def getDescription(self, name):
         return self._improvers[name].description

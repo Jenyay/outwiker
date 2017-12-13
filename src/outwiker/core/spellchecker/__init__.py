@@ -1,2 +1,2 @@
-from spellchecker import SpellChecker
-from dictsfinder import DictsFinder
+from .spellchecker import SpellChecker
+from .dictsfinder import DictsFinder

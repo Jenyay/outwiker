@@ -535,7 +535,7 @@ def dictToStr(paramsDict):
     Return string like param_1="value1" param_2='value "" with double quotes'...
     """
     items = []
-    for name, value in paramsDict.items():
+    for name, value in list(paramsDict.items()):
         valueStr = unicode(value)
 
         hasSingleQuote = u"'" in valueStr
@@ -576,14 +576,14 @@ def registerActions(application):
     from outwiker.gui.actionslist import actionsList, polyactionsList
 
     # Register the normal actions
-    map(lambda item: actionController.register(item[0](application),
+    list(map(lambda item: actionController.register(item[0](application),
                                                item[1]),
-        actionsList)
+        actionsList))
 
     # Register the polyactions
-    map(lambda item: actionController.register(PolyAction(application,
+    list(map(lambda item: actionController.register(PolyAction(application,
                                                           item[0],
                                                           item[1],
                                                           item[2]),
                                                item[3]),
-        polyactionsList)
+        polyactionsList))

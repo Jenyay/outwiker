@@ -103,6 +103,6 @@ class TextPrinter(object):
 
         if printer.GetLastError() == wx.PRINTER_ERROR:
             MessageBox(_(u"Printing error"),
-                       _("Error"),
+                       _(u"Error"),
                        wx.OK | wx.ICON_ERROR,
                        self.parent)

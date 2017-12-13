@@ -21,8 +21,8 @@ class FactorySelector(object):
 
     @staticmethod
     def getFactories():
-        return sorted(FactorySelector._factories.values(),
-                      cmp=lambda x, y: cmp(x.title, y.title))
+        return sorted(list(FactorySelector._factories.values()),
+                      key=lambda x: x.title)
 
     @staticmethod
     def getFactory(pageType):

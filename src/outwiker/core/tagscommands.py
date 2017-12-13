@@ -62,7 +62,7 @@ def tagBranch(parentPage, tags):
     """
     if "tags" in dir(parentPage):
         appendTagsList(parentPage, tags)
-    map(lambda child: tagBranch(child, tags), parentPage.children)
+    list(map(lambda child: tagBranch(child, tags), parentPage.children))
 
 
 def removeTagsFromBranch(parentPage, tags):
@@ -73,9 +73,9 @@ def removeTagsFromBranch(parentPage, tags):
     tags - список тегов, которые надо удалить
     """
     if "tags" in dir(parentPage):
-        map(lambda tag: removeTag(parentPage, tag), tags)
+        list(map(lambda tag: removeTag(parentPage, tag), tags))
 
-    map(lambda child: removeTagsFromBranch(child, tags), parentPage.children)
+    list(map(lambda child: removeTagsFromBranch(child, tags), parentPage.children))
 
 
 def renameTag(wikiroot, oldName, newName):
