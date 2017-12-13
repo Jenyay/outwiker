@@ -247,7 +247,7 @@ class NotesTree(wx.Panel):
 
         try:
             expandedOption.value = expanded
-        except IOError, e:
+        except IOError as e:
             outwiker.core.commands.MessageBox(
                 _(u"Can't save page options\n{}").format(unicode(e)),
                 _(u"Error"), wx.ICON_ERROR | wx.OK)

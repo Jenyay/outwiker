@@ -236,7 +236,7 @@ class BaseWikiPageView (BaseHtmlPanel):
             self.htmlCodeWindow.SetReadOnly(False)
             self.htmlCodeWindow.SetText(html)
             self.htmlCodeWindow.SetReadOnly(True)
-        except IOError, e:
+        except IOError as e:
             MessageBox(_(u"Can't load file %s") % (unicode(e.filename)),
                        _(u"Error"),
                        wx.ICON_ERROR | wx.OK)
