@@ -75,9 +75,12 @@ class BaseBinaryBuilder(object):
         return []
 
     def _copy_additional_files(self):
-        dest_dir = os.path.join(self._dist_dir, u'outwiker')
+        root_dir = os.path.join(self._dist_dir, u'outwiker')
 
-        for fname in self.get_additional_files():
+        for fname, subpath in self.get_additional_files():
+            dest_dir = os.path.join(root_dir, subpath)
+            if not os.path.exists(dest_dir):
+                os.makedirs(dest_dir)
             print_info(u'Copy: {} -> {}'.format(fname, dest_dir))
             shutil.copy(fname, dest_dir)
 
@@ -193,20 +196,21 @@ class PyInstallerBuilderLinux(BasePyInstallerBuilder):
         ]
 
     def get_additional_files(self):
+        pixbuf_dir_dest = u'lib/gdk-pixbuf'
         files = [
-            u'need_for_build/linux/loaders.cache',
+            (u'need_for_build/linux/loaders.cache', pixbuf_dir_dest),
         ]
 
         canberra_lib = u'/usr/lib/x86_64-linux-gnu/gtk-2.0/modules/libcanberra-gtk-module.so'
         if os.path.exists(canberra_lib):
-            files.append(canberra_lib)
+            files.append((canberra_lib, u'.'))
 
         pixbuf_loaders_dir = u'/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders'
 
         for pixbuf_type in os.listdir(pixbuf_loaders_dir):
             if pixbuf_type.endswith('.so'):
-                files.append(os.path.join(pixbuf_loaders_dir,
-                                          pixbuf_type))
+                fname = os.path.join(pixbuf_loaders_dir, pixbuf_type)
+                files.append((fname, pixbuf_dir_dest))
 
         return files
 
@@ -228,8 +232,9 @@ class PyInstallerBuilderLinux(BasePyInstallerBuilder):
         for fname in files_for_strip:
             print_info(u'Strip {}'.format(fname))
             with lcd(self._dest_dir):
-                assert os.path.exists(os.path.join(self._dest_dir, fname))
-                local(u'strip -s -o "{fname}" "{fname}"'.format(fname=fname))
+                full_path = os.path.join(self._dest_dir, fname)
+                if os.path.exists(full_path):
+                    local(u'strip -s -o "{fname}" "{fname}"'.format(fname=fname))
 
     def get_params(self):
         params = super(PyInstallerBuilderLinux, self).get_params()

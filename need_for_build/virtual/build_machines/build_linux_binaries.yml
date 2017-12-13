@@ -7,6 +7,8 @@
   vars:
       sources_root: "../../../../"
       result_path: "{{ outwiker_dir }}/build/{{ version }}.{{ build }}/linux"
+      venv_path: "{{homedir}}/venv/outwiker"
+      venv_activate_command: "source {{venv_path}}/bin/activate"
   environment:
       PATH: "{{ ansible_env.PATH }}:{{homedir}}/.local/bin"
   tasks:
@@ -31,12 +33,14 @@
 
       - name: Install Python modules
         pip: chdir={{ outwiker_dir }} requirements={{ item }} extra_args="--user"
+        virtualenv: "{{ venv_path }}"
         with_items:
             - "requirements.txt"
+            - "requirements_linux.txt"
             - "requirements_dev.txt"
 
       - name: Build deb binary package
-        command: fab deb_binary:{{ is_stable }}
+        command: {{venv_activate_command}} && fab deb_binary:{{ is_stable }}
         args:
             chdir: "{{ outwiker_dir }}"
 
@@ -47,7 +51,7 @@
             flat: true
 
       - name: Build binary assembly
-        command: fab linux_binary:{{ is_stable }}
+        command: {{venv_activate_command}} && fab linux_binary:{{ is_stable }}
         args:
             chdir: "{{ outwiker_dir }}"
 
@@ -73,7 +77,7 @@
             - "{{ result_path }}/outwiker_linux{{ suffix }}.zip"
 
       - name: Build AppImage
-        command: fab appimage:{{ is_stable }}
+        command: {{venv_activate_command}} && fab appimage:{{ is_stable }}
         args:
             chdir: "{{ outwiker_dir }}"
 

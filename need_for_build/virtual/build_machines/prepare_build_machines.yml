@@ -22,19 +22,11 @@
           - git
           - python-pip
           - fabric
-          - python-wxgtk3.0
-          - python-wxversion
-          - libwxgtk-webview3.0-0v5
-          - python-pil
-          - python-enchant
-          - python-appindicator
-          - python-gtk2
-          - ibus-gtk3
           - debhelper
           - devscripts
           - p7zip-full
           - libssl-dev
-          - libcanberra-gtk-module
+          - python-virtualenv
         become: true
 
       - name: Install additional software
