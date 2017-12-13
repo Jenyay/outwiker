@@ -29,8 +29,8 @@ class HtmlPageView(BaseHtmlPanel):
         self._menuName = _(u"HTML")
 
         self._toolbars = self._createToolbars()
-        map(lambda toolbar: self.mainWindow.toolbars.addToolbar(toolbar),
-            self._toolbars)
+        list(map(lambda toolbar: self.mainWindow.toolbars.addToolbar(toolbar),
+            self._toolbars))
 
         # Список используемых полиморфных действий
         self.__polyActions = [
@@ -153,40 +153,40 @@ class HtmlPageView(BaseHtmlPanel):
         actionController = self._application.actionController
 
         # Удалим элементы меню
-        map(lambda action: actionController.removeMenuItem(action.stringId),
-            self.__htmlNotationActions)
+        list(map(lambda action: actionController.removeMenuItem(action.stringId),
+            self.__htmlNotationActions))
 
         # Удалим элементы меню полиморфных действий
-        map(lambda strid: actionController.removeMenuItem(strid),
-            self.__polyActions)
+        list(map(lambda strid: actionController.removeMenuItem(strid),
+            self.__polyActions))
 
         actionController.removeMenuItem(HtmlAutoLineWrap.stringId)
         actionController.removeMenuItem(SwitchCodeResultAction.stringId)
 
         # Удалим кнопки с панелей инструментов
-        map(lambda action: actionController.removeToolbarButton(
+        list(map(lambda action: actionController.removeToolbarButton(
             action.stringId),
-            self.__htmlNotationActions)
+            self.__htmlNotationActions))
 
-        map(lambda strid: actionController.removeToolbarButton(strid),
-            self.__polyActions)
+        list(map(lambda strid: actionController.removeToolbarButton(strid),
+            self.__polyActions))
 
         actionController.removeToolbarButton(HtmlAutoLineWrap.stringId)
 
         # Обнулим функции действия в полиморфных действиях
-        map(lambda strid: actionController.getAction(strid).setFunc(None),
-            self.__polyActions)
+        list(map(lambda strid: actionController.getAction(strid).setFunc(None),
+            self.__polyActions))
 
     def _enableActions(self, enabled):
         actionController = self._application.actionController
 
-        map(lambda action: actionController.enableTools(action.stringId,
+        list(map(lambda action: actionController.enableTools(action.stringId,
                                                         enabled),
-            self.__htmlNotationActions)
+            self.__htmlNotationActions))
 
         # Активируем / дизактивируем полиморфные действия
-        map(lambda strid: actionController.enableTools(strid, enabled),
-            self.__polyActions)
+        list(map(lambda strid: actionController.enableTools(strid, enabled),
+            self.__polyActions))
 
     def UpdateView(self, page):
         self.__updateLineWrapTools()

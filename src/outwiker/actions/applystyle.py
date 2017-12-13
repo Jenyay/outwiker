@@ -75,8 +75,8 @@ class SetStyleToBranchAction (BaseAction):
             application.onPageUpdateNeeded(page,
                                            PageUpdateNeededParams(False))
 
-        map(lambda child: self.__applyStyle(application, child, style),
-            page.children)
+        list(map(lambda child: self.__applyStyle(application, child, style),
+            page.children))
 
 
 
