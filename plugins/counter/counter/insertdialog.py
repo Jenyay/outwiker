@@ -16,7 +16,7 @@ class InsertDialog (TestedDialog):
         _ = get_()
 
         super (InsertDialog, self).__init__ (parent, 
-                style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.THICK_FRAME,
+                style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER,
                 title=u"Counter")
 
         # Размер отступа
@@ -31,7 +31,7 @@ class InsertDialog (TestedDialog):
         self.SetMinSize ((470, -1))
 
         self._counterName.SetFocus()
-        self.Center(wx.CENTRE_ON_SCREEN)
+        self.Center(wx.BOTH)
 
 
     def _onSetReset (self, event):
