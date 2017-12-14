@@ -86,7 +86,7 @@ class PropertyFactory (object):
         changeProp - имя свойства, котороу будет добавлено в класс объекта self._obj для определения того, что цвет изменился
         """
         _colorCheckBox = wx.CheckBox (parent, label = label)
-        _colorPicker = wx.ColourPickerCtrl (parent, col = defaultColor)
+        _colorPicker = wx.ColourPickerCtrl (parent, colour=defaultColor)
 
         _colorCheckBox.SetValue (False)
         _colorPicker.Enabled = False

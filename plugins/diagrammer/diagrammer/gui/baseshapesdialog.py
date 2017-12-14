@@ -13,7 +13,7 @@ class BaseShapesDialog (BaseDialog):
     """
     Базовый класс для диалогов с параметрами
     """
-    __metaclass__ = ABCMeta
+    #__metaclass__ = ABCMeta
 
     def __init__ (self, parent):
         global _
@@ -22,7 +22,7 @@ class BaseShapesDialog (BaseDialog):
         super (BaseShapesDialog, self).__init__ (parent)
 
 
-    @abstractmethod
+    #@abstractmethod
     def _getShapesList (self):
         """
         Метод должен вернуть список фигур, который нужно добавить в комбобокс _shape
@@ -30,7 +30,7 @@ class BaseShapesDialog (BaseDialog):
         pass
 
 
-    @abstractproperty
+    #@abstractproperty
     def isShapeDefault (self):
         """
         Свойство должно вернуть True, если выбрана фигура по умолчанию, и False в противном случае

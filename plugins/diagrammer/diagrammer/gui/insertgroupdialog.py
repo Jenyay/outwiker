@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 import wx
+import wx.adv
 
 from ..i18n import get_
 
@@ -23,7 +24,7 @@ class InsertGroupDialog (BaseDialog):
 
         self.__createGui()
         self.Fit()
-        self.Center(wx.CENTRE_ON_SCREEN)
+        self.Center(wx.BOTH)
 
 
     def __createGui (self):
@@ -74,7 +75,7 @@ class InsertGroupDialog (BaseDialog):
                                  mainSizer,
                                  _(u"Border style"))
 
-        helpLink = wx.HyperlinkCtrl (self,
+        helpLink = wx.adv.HyperlinkCtrl(self,
                                      -1,
                                      _(u"Open the documentation page"),
                                      u"http://blockdiag.com/en/blockdiag/examples.html#grouping-nodes")

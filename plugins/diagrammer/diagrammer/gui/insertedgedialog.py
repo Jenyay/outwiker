@@ -3,6 +3,7 @@
 from abc import ABCMeta, abstractmethod
 
 import wx
+import wx.adv
 
 from ..i18n import get_
 from .propertyfactory import PropertyFactory
@@ -23,7 +24,7 @@ class InsertEdgeDialog (BaseDialog):
 
         self.__createGui()
         self.Fit()
-        self.Center(wx.CENTRE_ON_SCREEN)
+        self.Center(wx.BOTH)
 
         self.Bind (wx.EVT_COLLAPSIBLEPANE_CHANGED, self.__onPaneChanged)
 
@@ -106,7 +107,7 @@ class InsertEdgeDialog (BaseDialog):
                                    _(u"Folded"),
                                    "folded")
 
-        helpLink = wx.HyperlinkCtrl (self,
+        helpLink = wx.adv.HyperlinkCtrl (self,
                                      -1,
                                      _(u"Open the documentation page"),
                                      u"http://blockdiag.com/en/blockdiag/attributes/edge.attributes.html")
