@@ -3,13 +3,13 @@
 	<name>HtmlHeads</name>
 	<updates>http://jenyay.net/uploads/Outwiker/HtmlHeads/plugin.xml</updates>
     <requirements>
-        <outwiker>2.1.0.833 dev</outwiker>
+        <outwiker>1.8.0.730 dev</outwiker>
         <os>Windows, Linux</os>
 		<packages>
-			<core>1.5</core>
-			<actions>1.1</actions>
-			<gui>2.0</gui>
-			<pages>2.0</pages>
+			<core>1.0</core>
+			<actions>1.0</actions>
+			<gui>1.0, 2.0</gui>
+			<pages>1.0, 2.0</pages>
 			<utilites>1.0</utilites>
 			<libs>1.0</libs>
 		</packages>
@@ -26,9 +26,9 @@
 		</author>
 
 		<changelog>
-			<version number="2.0.0" date="December 14, 2017">
+			<version number="1.0.6" date="December 14, 2017">
                 <download os="all">http://jenyay.net/uploads/Outwiker/HtmlHeads/htmlheads-2.0.5.zip</download>
-				<change>Update per wxPython 4.0</change>
+				<change>Added wxPython 4.0 supporting</change>
 			</version>
 
 			<version number="1.0.5" date="October 17, 2016">
@@ -76,9 +76,9 @@
 		</author>
 
 		<changelog>
-			<version number="2.0.0" date="17.10.2016">
+			<version number="1.0.6" date="17.10.2016">
                 <download os="all">http://jenyay.net/uploads/Outwiker/HtmlHeads/htmlheads-2.0.0.zip</download>
-				<change>Добавлена поддержка OutWiker 2.0.</change>
+				<change>Добавлена поддержка wxPython 4.0</change>
 			</version>
 
 			<version number="1.0.5" date="17.10.2016">
