@@ -12,7 +12,7 @@ class TestedDialog (wx.Dialog):
     Диалог, который можно тестировать через Unit Test, поскольку ему можно заранее установить результат будущего вызова метода ShowModal
     """
     def __init__ (self, *args, **kwargs):
-        kwargs["style"] = wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.THICK_FRAME
+        kwargs["style"] = wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER
 
         super (TestedDialog, self).__init__ (*args, **kwargs)
         self.__modalResult = None
