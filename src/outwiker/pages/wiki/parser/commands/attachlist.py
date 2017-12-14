@@ -88,18 +88,18 @@ class AttachListCommand (Command):
         if sort == u"name":
             names.sort(key=cmp_to_key(Attachment.sortByName))
         elif sort == u"descendname":
-            names.sort(key=cmp_to_key(Attachment.sortByName, reverse=True))
+            names.sort(key=cmp_to_key(Attachment.sortByName), reverse=True)
         elif sort == u"ext":
             names.sort(key=cmp_to_key(Attachment.sortByExt))
         elif sort == u"descendext":
-            names.sort(key=cmp_to_key(Attachment.sortByExt, reverse=True))
+            names.sort(key=cmp_to_key(Attachment.sortByExt), reverse=True)
         elif sort == u"size":
             names.sort(key=cmp_to_key(attach.sortBySizeRelative))
         elif sort == u"descendsize":
-            names.sort(key=cmp_to_key(attach.sortBySizeRelative, reverse=True))
+            names.sort(key=cmp_to_key(attach.sortBySizeRelative), reverse=True)
         elif sort == u"date":
             names.sort(key=cmp_to_key(attach.sortByDateRelative))
         elif sort == u"descenddate":
-            names.sort(key=cmp_to_key(attach.sortByDateRelative, reverse=True))
+            names.sort(key=cmp_to_key(attach.sortByDateRelative), reverse=True)
         else:
             names.sort(key=cmp_to_key(Attachment.sortByName))
