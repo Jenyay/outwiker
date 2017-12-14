@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 import wx
+import wx.adv
 
 from ..i18n import get_
 from ..diagramrender import DiagramRender
@@ -21,7 +22,7 @@ class InsertDiagramDialog (BaseShapesDialog):
 
         self.__createGui()
         self.Fit()
-        self.Center(wx.CENTRE_ON_SCREEN)
+        self.Center(wx.BOTH)
 
 
     def _getShapesList (self):
@@ -110,7 +111,7 @@ class InsertDiagramDialog (BaseShapesDialog):
                                    1000,
                                    40)
 
-        helpLink = wx.HyperlinkCtrl (self,
+        helpLink = wx.adv.HyperlinkCtrl (self,
                                      -1,
                                      _(u"Open the documentation page"),
                                      u"http://blockdiag.com/en/blockdiag/attributes/diagram.attributes.html")

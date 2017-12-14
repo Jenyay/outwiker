@@ -9,7 +9,7 @@ class BaseDialog (TestedDialog):
     def __init__ (self, parent):
         super (BaseDialog, self).__init__ (
             parent,
-            style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.THICK_FRAME)
+            style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
 
 
     def Destroy (self):

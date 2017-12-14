@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 import wx
+import wx.adv
 
 from outwiker.core.commands import MessageBox
 
@@ -27,7 +28,7 @@ class InsertNodeDialog (BaseShapesDialog):
         self.Bind (wx.EVT_COLLAPSIBLEPANE_CHANGED, self.__onPaneChanged)
         self.Bind (wx.EVT_TEXT, self.__onNameChanged, self._name)
 
-        self.Center(wx.CENTRE_ON_SCREEN)
+        self.Center(wx.BOTH)
 
 
     def _getShapesList (self):
@@ -129,7 +130,7 @@ class InsertNodeDialog (BaseShapesDialog):
                                    1000,
                                    40)
 
-        helpLink = wx.HyperlinkCtrl (self,
+        helpLink = wx.adv.HyperlinkCtrl (self,
                                      -1,
                                      _(u"Open the documentation page"),
                                      u"http://blockdiag.com/en/blockdiag/attributes/node.attributes.html")
