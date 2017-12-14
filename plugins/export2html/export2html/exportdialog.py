@@ -10,7 +10,7 @@ from .exportconfig import ExportConfig
 
 
 class ExportDialog (wx.Dialog):
-    __metaclass__ = ABCMeta
+    #__metaclass__ = ABCMeta
 
     def __init__ (self, parent, config):
         from .i18n import _
@@ -112,7 +112,7 @@ class ExportDialog (wx.Dialog):
         self._onOk()
 
 
-    @abstractmethod
+    #@abstractmethod
     def _onOk(self):
         pass
 
