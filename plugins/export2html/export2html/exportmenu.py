@@ -75,8 +75,8 @@ class ExportMenuFactory (object):
             print _(u"File menu not found")
             return
 
-        exportmenu = wx.Menu ()
-        menu.InsertMenu (pos=self.__exportMenuPosition,
+        exportmenu = wx.Menu()
+        menu.Insert(pos=self.__exportMenuPosition,
                          id=self.EXPORT_ID,
                          text=_(u"Export"),
                          submenu=exportmenu,
