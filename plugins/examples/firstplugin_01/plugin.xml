@@ -3,9 +3,9 @@
     <name>FirstPlugin</name>
     <requirements>
 		<packages>
-			<core>1.3</core>
+			<core>1.5</core>
 			<actions>1.1</actions>
-			<gui>1.5</gui>
+			<gui>2.0</gui>
 			<pages>2.0</pages>
 			<utilites>1.0</utilites>
 			<libs>1.0</libs>
