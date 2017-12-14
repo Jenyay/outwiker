@@ -8,7 +8,7 @@
 		<packages>
 			<core>1.0</core>
 			<actions>1.0</actions>
-			<gui>1.0</gui>
+			<gui>1.0,2.0</gui>
 			<pages>1.0, 2.0</pages>
 			<utilites>1.0</utilites>
 			<libs>1.0</libs>
@@ -26,6 +26,11 @@
 		</author>
 
 		<changelog>
+			<version number="1.0.10" date="December 14, 2017">
+                <download os="all">http://jenyay.net/uploads/Outwiker/DataGraph/datagraph-2.0.0.zip</download>
+				<change>Added wxPython 4.0 supporting</change>
+			</version>
+
 			<version number="1.0.9" date="May 28, 2017">
                 <download os="all">http://jenyay.net/uploads/Outwiker/DataGraph/datagraph-1.0.9.zip</download>
 				<change>Bug fixes.</change>
@@ -90,6 +95,11 @@
 		</author>
 
 		<changelog>
+			<version number="1.0.10" date="14.12.2017">
+                <download os="all">http://jenyay.net/uploads/Outwiker/DataGraph/datagraph-2.0.0.zip</download>
+				<change>Добавлена поддержка wxPython 4.0</change>
+			</version>
+
 			<version number="1.0.9" date="28.05.2017">
                 <download os="all">http://jenyay.net/uploads/Outwiker/DataGraph/datagraph-1.0.9.zip</download>
 				<change>Исправление ошибок.</change>
