@@ -76,7 +76,7 @@ class GuiController(object):
         if mainWindow is not None:
             map(lambda action: actionController.removeAction(action.stringId),
                 self._actions)
-            mainWindow.mainMenu.toolsMenu.RemoveItem(self._mainSubmenuItem)
+            mainWindow.mainMenu.toolsMenu.Remove(self._mainSubmenuItem)
             self._mainSubmenuItem = None
 
     def __onTreePopupMenu(self, menu, page):
