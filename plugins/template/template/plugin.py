@@ -13,8 +13,8 @@ def _no_translate(text):
     return text
 
 
-if getCurrentVersion() < Version(2, 0, 0, 807, status=StatusSet.DEV):
-    logging.warning("PluginName plugin. OutWiker version requirement: 2.0.0.807")
+if getCurrentVersion() < Version(2, 1, 0, 833, status=StatusSet.DEV):
+    logging.warning("PluginName plugin. OutWiker version requirement: 2.1.0.833")
 else:
     from .controller import Controller
 
