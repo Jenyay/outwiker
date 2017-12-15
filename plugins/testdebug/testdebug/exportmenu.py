@@ -73,7 +73,7 @@ class ExportMenuFactory (object):
             return
 
         exportmenu = wx.Menu ()
-        menu.InsertMenu (pos=self.__exportMenuPosition, 
+        menu.Insert(pos=self.__exportMenuPosition,
                 id=self.EXPORT_ID, 
                 text=_(u"Export"),
                 submenu=exportmenu,
