@@ -44,7 +44,7 @@ class LogDialog (wx.Dialog):
 
 
     def __layout (self):
-        mainSizer = wx.FlexGridSizer (rows=2, cols=1)
+        mainSizer = wx.FlexGridSizer (rows=2, cols=1, vgap=0, hgap=0)
         mainSizer.AddGrowableCol (0)
         mainSizer.AddGrowableRow (0)
 

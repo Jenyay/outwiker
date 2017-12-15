@@ -30,7 +30,7 @@ class ToolsListPanel(ScrolledPanel):
         # (экземпляры класса ToolsItemCtrl)
         self._toolsGuiElements = []
 
-        self._mainSizer = wx.FlexGridSizer(rows=0, cols=1)
+        self._mainSizer = wx.FlexGridSizer(rows=0, cols=1, vgap=0, hgap=0)
         self._mainSizer.AddGrowableCol(0)
         self.SetSizer(self._mainSizer)
         self.SetAutoLayout(1)
@@ -104,13 +104,13 @@ class ToolsItemCtrl(wx.Panel):
         self._browseButton = wx.BitmapButton(self,
                                              self._BROWSE_ID,
                                              browseBitmap)
-        self._browseButton.SetToolTipString(_(u"Open file dialog..."))
+        self._browseButton.SetToolTip(_(u"Open file dialog..."))
 
         removeBitmap = wx.Bitmap(self.__getImagePath("cross.png"))
         self._removeButton = wx.BitmapButton(self,
                                              self._REMOVE_ID,
                                              removeBitmap)
-        self._removeButton.SetToolTipString(_(u"Remove tool"))
+        self._removeButton.SetToolTip(_(u"Remove tool"))
 
         self._browseButton.Bind(wx.EVT_BUTTON, self.__onBrowse)
         self._removeButton.Bind(wx.EVT_BUTTON, self.__onRemove)
@@ -144,7 +144,7 @@ class ToolsItemCtrl(wx.Panel):
                        getOS().filesEncoding)
 
     def __layout(self):
-        sizer = wx.FlexGridSizer(1, 3)
+        sizer = wx.FlexGridSizer(1, 3, 0, 0)
         sizer.AddGrowableCol(0)
         sizer.Add(self._pathTextCtrl, 1, wx.EXPAND | wx.ALL, border=2)
         sizer.Add(self._browseButton, 1, wx.RIGHT | wx.TOP | wx.BOTTOM,
