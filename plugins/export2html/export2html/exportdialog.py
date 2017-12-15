@@ -124,7 +124,7 @@ class ExportDialog (wx.Dialog):
 
 
     def __layout (self):
-        folderSizer = wx.FlexGridSizer (rows=1, cols=2)
+        folderSizer = wx.FlexGridSizer (rows=1, cols=2, vgap=0, hgap=0)
         folderSizer.AddGrowableCol (0)
         folderSizer.Add (self.__folderTextCtrl, flag=wx.EXPAND | wx.ALIGN_CENTER_VERTICAL)
         folderSizer.Add (self.__selFolderButton, flag=wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_LEFT)

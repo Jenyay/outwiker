@@ -84,7 +84,7 @@ class GuiController(object):
                                                 handler=self._onClick,
                                                 id=snippet_id
                                                 )
-            menu.RemoveItem(menu_item)
+            menu.Remove(menu_item)
             menu_item.Destroy()
             # wx.Window.UnreserveControlId(snippet_id)
 
@@ -94,7 +94,7 @@ class GuiController(object):
 
         for _ in range(menu_snippets_count):
             menu_item = self._menu.FindItemByPosition(len(self._actions) + 1)
-            self._menu.RemoveItem(menu_item)
+            self._menu.Remove(menu_item)
             menu_item.Destroy()
 
         self._snippets_id = {}

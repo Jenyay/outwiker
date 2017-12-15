@@ -14,7 +14,7 @@ class UpdateDialog(TestedDialog):
     def __init__(self, parent):
         super(UpdateDialog, self).__init__(
             parent,
-            style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.THICK_FRAME)
+            style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
 
         global _
         _ = get_()

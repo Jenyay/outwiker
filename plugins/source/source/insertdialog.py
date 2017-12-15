@@ -15,7 +15,7 @@ class InsertDialog (wx.Dialog):
         _ = get_()
 
         super (InsertDialog, self).__init__ (parent,
-                                             style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.THICK_FRAME,
+                                             style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER,
                                              title=_(u"Source code"))
 
         # Размер отступа
@@ -24,7 +24,7 @@ class InsertDialog (wx.Dialog):
 
         self.__createGui()
         self.fileCheckBox.SetFocus()
-        self.Center(wx.CENTRE_ON_SCREEN)
+        self.Center(wx.BOTH)
 
 
     @property
@@ -78,7 +78,7 @@ class InsertDialog (wx.Dialog):
         """
         self.notebook = wx.Notebook(self, -1)
 
-        mainSizer = wx.FlexGridSizer (0, 1)
+        mainSizer = wx.FlexGridSizer (0, 1, 0, 0)
         mainSizer.AddGrowableCol(0)
         mainSizer.AddGrowableRow(0)
 
@@ -172,7 +172,7 @@ class InsertDialog (wx.Dialog):
         """
         Создать интерфейс, связанный с языком программирования
         """
-        langSizer = wx.FlexGridSizer (0, 2)
+        langSizer = wx.FlexGridSizer (0, 2, 0, 0)
         langSizer.AddGrowableCol(1)
 
         languageLabel = wx.StaticText(parent, -1, _(u"Language"))
@@ -208,7 +208,7 @@ class InsertDialog (wx.Dialog):
         """
         Создать интерфейс, связанный с размером табуляции
         """
-        tabSizer = wx.FlexGridSizer (0, 2)
+        tabSizer = wx.FlexGridSizer (0, 2, 0, 0)
         tabSizer.AddGrowableCol(1)
 
         tabWidthLabel = wx.StaticText(parent, -1, _(u"Tab Width (0 - Default Value)"))
@@ -245,7 +245,7 @@ class InsertDialog (wx.Dialog):
         """
         Создать интерфейс, связанный с выбором стиля оформления
         """
-        styleSizer = wx.FlexGridSizer (0, 2)
+        styleSizer = wx.FlexGridSizer (0, 2, 0, 0)
         styleSizer.AddGrowableCol(1)
 
         styleLabel = wx.StaticText(parent, -1, _(u"Style"))
@@ -315,7 +315,7 @@ class InsertDialog (wx.Dialog):
         # Кнопка для прикрепления нового файла
         attachImage = wx.Bitmap (getImagePath ("attach.png"))
         self.attachButton = wx.BitmapButton (parent, -1, attachImage)
-        self.attachButton.SetToolTipString (_(u"Attach new files"))
+        self.attachButton.SetToolTip(_(u"Attach new files"))
 
         fileSizer.Add (
             self.attachButton,

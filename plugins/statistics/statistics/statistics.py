@@ -125,9 +125,9 @@ Statistics plugin append menu items <b>Tools -> Page Statistic</b> and <b>Tools 
             self._application.mainWindow.Unbind (wx.EVT_MENU, handler=self._onPageStat)
             self._application.mainWindow.Unbind (wx.EVT_MENU, handler=self._onTreeStat)
 
-            self.toolsMenu.RemoveItem (self._separatorMenuItem)
-            self.toolsMenu.RemoveItem (self._pageStatMenuItem)
-            self.toolsMenu.RemoveItem (self._treeStatMenuItem)
+            self.toolsMenu.Remove(self._separatorMenuItem)
+            self.toolsMenu.Remove(self._pageStatMenuItem)
+            self.toolsMenu.Remove(self._treeStatMenuItem)
 
             self._separatorMenuItem = None
             self._pageStatMenuItem = None

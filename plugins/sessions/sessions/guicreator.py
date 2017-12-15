@@ -60,7 +60,7 @@ class GuiCreator (object):
         self._menu.AppendSeparator()
         self.updateMenu()
 
-        self._menuItem = self._getParentMenu().InsertMenu (self._menuIndex, -1, _(u"Sessions"), submenu=self._menu)
+        self._menuItem = self._getParentMenu().Insert(self._menuIndex, -1, _(u"Sessions"), submenu=self._menu)
 
 
     def removeTools (self):

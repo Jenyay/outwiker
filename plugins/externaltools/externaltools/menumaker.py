@@ -39,7 +39,7 @@ class MenuMaker(object):
                                self._controller.tools)
 
         itemsCount = len(self._menu.GetMenuItems())
-        self._menu.InsertMenu(itemsCount - self._popupPosition,
+        self._menu.Insert(itemsCount - self._popupPosition,
                               -1,
                               _(u"Open Content File with..."),
                               contentMenu,
@@ -53,7 +53,7 @@ class MenuMaker(object):
                                self._controller.tools)
 
         itemsCount = len(self._menu.GetMenuItems())
-        self._menu.InsertMenu(itemsCount - self._popupPosition,
+        self._menu.Insert(itemsCount - self._popupPosition,
                               -1,
                               _(u"Open Result HTML File with..."),
                               resultMenu,

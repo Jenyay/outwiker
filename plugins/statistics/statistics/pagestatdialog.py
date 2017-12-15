@@ -22,7 +22,7 @@ class PageStatDialog (wx.Dialog):
         self.SetTitle (_(u"Page Statistic"))
         self._createGui ()
         self.Fit()
-        self.Center (wx.CENTRE_ON_SCREEN)
+        self.Center (wx.BOTH)
 
         self._updateStatistics (pageStat)
 

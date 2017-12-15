@@ -56,7 +56,7 @@ class ColorsList(object):
         Return tuple (R, G, B)
         '''
         color = wx.Colour()
-        color.SetFromString(color_str)
+        color.Set(color_str)
         return (color.Red(), color.Green(), color.Blue())
 
     def getColor(self, pageTypeString):

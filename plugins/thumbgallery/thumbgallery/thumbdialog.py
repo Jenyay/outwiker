@@ -12,7 +12,7 @@ from .utilites import isImage
 class ThumbDialog (wx.Dialog):
     def __init__ (self, parent, page, lang, application):
         super (ThumbDialog, self).__init__ (parent,
-                                            style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.THICK_FRAME)
+                                            style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
         global _
         _ = lang
 
@@ -22,7 +22,7 @@ class ThumbDialog (wx.Dialog):
 
         self.SetTitle (_(u"Gallery"))
 
-        self.Center(wx.CENTRE_ON_SCREEN)
+        self.Center(wx.BOTH)
 
         self.ALL_BUTTON = wx.NewId()
         self.CLEAR_BUTTON = wx.NewId()
@@ -79,7 +79,7 @@ class ThumbDialog (wx.Dialog):
 
 
     def _getAttachSizer (self):
-        buttonsSizer = wx.FlexGridSizer (1, 2)
+        buttonsSizer = wx.FlexGridSizer (1, 2, 0, 0)
         buttonsSizer.AddGrowableCol (0)
         buttonsSizer.AddGrowableCol (1)
 
@@ -109,7 +109,7 @@ class ThumbDialog (wx.Dialog):
 
     def _getColumsSizer (self):
         # Строка для выбора количества столбцов
-        columnsSizer = wx.FlexGridSizer (1, 2)
+        columnsSizer = wx.FlexGridSizer (1, 2, 0, 0)
         columnsSizer.AddGrowableCol (0)
         columnsSizer.AddGrowableCol (1)
 
@@ -126,7 +126,7 @@ class ThumbDialog (wx.Dialog):
 
     def _getThumbSizeSizer (self):
         # Строка для выбора размера превьюшек
-        thumbSizer = wx.FlexGridSizer (1, 2)
+        thumbSizer = wx.FlexGridSizer (1, 2, 0, 0)
         thumbSizer.AddGrowableCol (0)
         thumbSizer.AddGrowableCol (1)
 
@@ -146,7 +146,7 @@ class ThumbDialog (wx.Dialog):
         thumbSizer = self._getThumbSizeSizer()
         attachSizer = self._getAttachSizer()
 
-        self.mainSizer = wx.FlexGridSizer (0, 1)
+        self.mainSizer = wx.FlexGridSizer (0, 1, 0, 0)
         self.mainSizer.AddGrowableCol (0)
         self.mainSizer.AddGrowableRow (2)
 

@@ -290,7 +290,7 @@ class InsertDialogController (object):
                 self._dialog.languageComboBox.GetSelection() != 0):
             self._config.defaultLanguage.value = self._dialog.language
 
-        currentWidth, currentHeight = self._dialog.GetClientSizeTuple ()
+        currentWidth, currentHeight = self._dialog.GetClientSize()
         self._config.dialogWidth.value = currentWidth
         self._config.dialogHeight.value = currentHeight
         self._config.style.value = self._dialog.style

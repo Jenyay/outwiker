@@ -31,7 +31,7 @@ class PreferencePanel (wx.Panel):
         """
         Создать элементы управления
         """
-        mainSizer = wx.FlexGridSizer (0, 1)
+        mainSizer = wx.FlexGridSizer (0, 1, 0, 0)
         mainSizer.AddGrowableCol(0)
         mainSizer.AddGrowableRow(3)
 
@@ -45,7 +45,7 @@ class PreferencePanel (wx.Panel):
         """
         Создать элементы управления, связанные с выбором размера табуляции по умолчанию
         """
-        tabSizer = wx.FlexGridSizer (0, 2)
+        tabSizer = wx.FlexGridSizer (0, 2, 0, 0)
         tabSizer.AddGrowableCol (1)
 
         tabWidthLabel = wx.StaticText(self, -1, _(u"Default Tab Width"))
@@ -81,7 +81,7 @@ class PreferencePanel (wx.Panel):
         """
         Создать элементы управления, связанные с выбором стиля по умолчанию
         """
-        styleSizer = wx.FlexGridSizer (0, 2)
+        styleSizer = wx.FlexGridSizer (0, 2, 0, 0)
         styleSizer.AddGrowableCol (1)
 
         styleLabel = wx.StaticText(self, -1, _(u"Default Style"))
@@ -124,7 +124,7 @@ class PreferencePanel (wx.Panel):
             border=2)
 
         # Сайзер для расположения списка языков и кнопок
-        langSizer = wx.FlexGridSizer (0, 2)
+        langSizer = wx.FlexGridSizer (0, 2, 0, 0)
         langSizer.AddGrowableRow (0)
         langSizer.AddGrowableCol (0)
 

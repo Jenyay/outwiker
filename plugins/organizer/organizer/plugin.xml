@@ -8,7 +8,7 @@
 		<packages>
 			<core>1.0</core>
 			<actions>1.0</actions>
-			<gui>1.0</gui>
+			<gui>1.0, 2.0</gui>
 			<pages>1.0, 2.0</pages>
 			<utilites>1.0</utilites>
 			<libs>1.0</libs>
@@ -26,6 +26,11 @@
 		</author>
 
 		<changelog>
+			<version number="1.0.1">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Organizer/organizer-1.0.1.zip</download>
+				<change>Add GUI 2.0 API support</change>
+			</version>
+
 			<version number="1.0">
                 <download os="all">http://jenyay.net/uploads/Outwiker/Organizer/organizer-1.0.zip</download>
 				<change>The first version</change>
@@ -44,6 +49,11 @@
 		</author>
 
 		<changelog>
+			<version number="1.0.1">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Organizer/organizer-1.0.1.zip</download>
+				<change>Добавлена поддержка GUI 2.0.</change>
+			</version>
+
 			<version number="1.0">
                 <download os="all">http://jenyay.net/uploads/Outwiker/Organizer/organizer-1.0.zip</download>
 				<change>Первая версия</change>
