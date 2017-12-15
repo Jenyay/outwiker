@@ -46,7 +46,7 @@ class ButtonsDialog(TestedDialog):
 
         self.__createButtons(buttons, default, cancel)
         self.__do_layout()
-        self.Center(wx.CENTRE_ON_SCREEN)
+        self.Center(wx.BOTH)
 
     def __createButtons(self, buttons, default, cancel):
         self.__buttons = [wx.Button(self, self.ID_MIN + index, text)
@@ -87,7 +87,7 @@ class ButtonsDialog(TestedDialog):
         self.EndModal(event.GetId() - self.ID_MIN)
 
     def __do_layout(self):
-        sizer_1 = wx.FlexGridSizer(2, 1)
+        sizer_1 = wx.FlexGridSizer(2, 1, 0, 0)
         sizer_1.AddGrowableCol(0)
 
         sizer_2 = wx.BoxSizer(wx.HORIZONTAL)

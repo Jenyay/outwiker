@@ -8,7 +8,7 @@
 		<packages>
 			<core>1.1</core>
 			<actions>1.0</actions>
-			<gui>1.0</gui>
+			<gui>1.0, 2.0</gui>
 			<pages>2.0</pages>
 			<utilites>1.0</utilites>
 			<libs>1.0</libs>
@@ -25,6 +25,11 @@
 			<site>http://jenyay.net</site>
 		</author>
 		<changelog>
+			<version number="1.2.3" date="December 15, 2017">
+                <download os="all">http://jenyay.net/uploads/Outwiker/WebPage/webpage-1.2.3.zip</download>
+				<change>GUI 2.0 API was added.</change>
+			</version>
+
 			<version number="1.2.2" date="May 22, 2017">
                 <download os="all">http://jenyay.net/uploads/Outwiker/WebPage/webpage-1.2.2.zip</download>
 				<change>Fixed import of the local HTML page in Windows.</change>
@@ -75,6 +80,11 @@
 			<site>http://jenyay.net</site>
 		</author>
 		<changelog>
+			<version number="1.2.3" date="15.12.2017">
+                <download os="all">http://jenyay.net/uploads/Outwiker/WebPage/webpage-1.2.3.zip</download>
+				<change>Добавлено GUI 2.0 API.</change>
+			</version>
+
 			<version number="1.2.2" date="22.05.2017">
                 <download os="all">http://jenyay.net/uploads/Outwiker/WebPage/webpage-1.2.2.zip</download>
 				<change>Исправлена ошибка импорта локальных HTML-файлов под Windows.</change>
