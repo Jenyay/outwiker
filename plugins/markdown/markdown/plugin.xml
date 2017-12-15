@@ -27,7 +27,7 @@
 
 		<changelog>
 			<version number="2.0" date="December 15, 2017">
-                <download os="all">http://jenyay.net/Outwiker/Markdown/markdown-2.0.zip</download>
+                <download os="all">http://jenyay.net/uploads/Outwiker/Markdown/markdown-2.0.zip</download>
 				<change>Update according to wxPython 4.0.</change>
 			</version>
 
@@ -77,7 +77,7 @@
 
 		<changelog>
 			<version number="2.0" date="15.12.2017">
-                <download os="all">http://jenyay.net/Outwiker/Markdown/markdown-2.0.zip</download>
+                <download os="all">http://jenyay.net/uploads/Outwiker/Markdown/markdown-2.0.zip</download>
 				<change>Обновлен в соответсвии с wxPython4.0.</change>
 			</version>
 
