@@ -23,7 +23,7 @@ class TreeStatDialog (wx.Dialog):
         """
         super (TreeStatDialog, self).__init__ (
             parent,
-            style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.THICK_FRAME)
+            style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
 
         self._application = application
         self._treestat = treestat
@@ -54,7 +54,7 @@ class TreeStatDialog (wx.Dialog):
 
         self.Show()
         self._createGUI ()
-        self.Center (wx.CENTRE_ON_SCREEN)
+        self.Center (wx.BOTH)
 
         self._updateStatistics()
 
