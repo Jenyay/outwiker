@@ -26,11 +26,11 @@ class Controller (object):
 
 
     def __addExportItems (self, menu):
-        self.__exportSingleItem = menu.Append (id=self.EXPORT_SINGLE,
-                                               text=_(u"Export Page To HTML..."))
+        self.__exportSingleItem = menu.Append(id=self.EXPORT_SINGLE,
+                                               item=_(u"Export Page To HTML..."))
 
-        self.__exportBranchItem = menu.Append (id=self.EXPORT_BRANCH,
-                                               text=_(u"Export Branch To HTML..."))
+        self.__exportBranchItem = menu.Append(id=self.EXPORT_BRANCH,
+                                               item=_(u"Export Branch To HTML..."))
 
         self.__application.mainWindow.Bind (wx.EVT_MENU, self.__onSingleExport, id=self.EXPORT_SINGLE)
         self.__application.mainWindow.Bind (wx.EVT_MENU, self.__onBranchExport, id=self.EXPORT_BRANCH)
@@ -115,10 +115,10 @@ class Controller (object):
         self.__application.mainWindow.Unbind (wx.EVT_MENU, id=self.EXPORT_SINGLE, handler=self.__onSingleExport)
         self.__application.mainWindow.Unbind (wx.EVT_MENU, id=self.EXPORT_BRANCH, handler=self.__onBranchExport)
 
-        self.__exportMenu.DeleteItem (self.__exportSingleItem)
+        self.__exportMenu.Delete(self.__exportSingleItem)
         self.__exportSingleItem = None
 
-        self.__exportMenu.DeleteItem (self.__exportBranchItem)
+        self.__exportMenu.Delete(self.__exportBranchItem)
         self.__exportBranchItem = None
 
         if (self.__exportMenu.GetMenuItemCount() == 0):

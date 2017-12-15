@@ -3,13 +3,13 @@
 	<name>ExternalTools</name>
 	<updates>http://jenyay.net/uploads/Outwiker/ExternalTools/plugin.xml</updates>
     <requirements>
-        <outwiker>1.8.0</outwiker>
+        <outwiker>2.1.0.833 dev</outwiker>
         <os>Windows, Linux</os>
 		<packages>
-			<core>1.0</core>
-			<actions>1.0</actions>
-			<gui>1.0</gui>
-			<pages>1.0, 2.0</pages>
+			<core>1.5</core>
+			<actions>1.1</actions>
+			<gui>2.0</gui>
+			<pages>2.0</pages>
 			<utilites>1.0</utilites>
 			<libs>1.0</libs>
 		</packages>
@@ -26,6 +26,11 @@
 		</author>
 
 		<changelog>
+			<version number="2.0" date="December 14, 2017">
+                <download os="all">http://jenyay.net/uploads/Outwiker/ExternalTools/externaltools-2.0.zip</download>
+				<change>Update according to wxPython 4.0</change>
+			</version>
+
 			<version number="1.4" date="September 24, 2017">
                 <download os="all">http://jenyay.net/uploads/Outwiker/ExternalTools/externaltools-1.4.zip</download>
 				<change>Added support Markdown pages.</change>
@@ -81,6 +86,11 @@
 		</author>
 
 		<changelog>
+			<version number="2.0" date="14.12.2017">
+                <download os="all">http://jenyay.net/uploads/Outwiker/ExternalTools/externaltools-1.4.zip</download>
+				<change>Обновлен в соответсвии с wxPython 4.0</change>
+			</version>
+
 			<version number="1.4" date="24.09.2017">
                 <download os="all">http://jenyay.net/uploads/Outwiker/ExternalTools/externaltools-1.4.zip</download>
 				<change>Добавлена поддержка Markdown-страниц.</change>

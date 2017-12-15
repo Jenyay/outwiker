@@ -15,7 +15,7 @@ class TextEntryDialog(TestedDialog):
                  validator=None):
         super(TextEntryDialog, self).__init__(
             parent,
-            style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.THICK_FRAME,
+            style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER,
             title=title
         )
 
@@ -25,7 +25,7 @@ class TextEntryDialog(TestedDialog):
 
         self.Bind(wx.EVT_BUTTON, self.__onOk, id=wx.ID_OK)
 
-        self.Center(wx.CENTRE_ON_SCREEN)
+        self.Center(wx.BOTH)
 
     def __onOk(self, event):
         if self._validator is None or self._validator(self.Value):
