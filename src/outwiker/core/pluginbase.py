@@ -5,7 +5,6 @@ import sys
 import os
 
 from outwiker.core.i18n import getLanguageFromConfig, loadLanguage
-from outwiker.core.system import getOS
 
 
 class Plugin (object, metaclass=ABCMeta):
@@ -31,7 +30,7 @@ class Plugin (object, metaclass=ABCMeta):
         """
         language = getLanguageFromConfig(self._application.config)
         lang = loadLanguage(language, langdir, domain)
-        return lang.ugettext
+        return lang.gettext
 
     @property
     def version(self):
