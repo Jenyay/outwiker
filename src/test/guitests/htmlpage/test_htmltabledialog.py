@@ -18,7 +18,7 @@ class HtmlTableDialogTest (BaseMainWndTest):
         config = GeneralGuiConfig (self._application.config)
         config.tableColsCount.remove_option()
         factory = HtmlPageFactory()
-        self._testpage = factory.create (self.wikiroot, u"Страница 1", [])
+        self._testpage = factory.create (self.wikiroot, "Страница 1", [])
 
 
     def tearDown (self):
@@ -34,7 +34,7 @@ class HtmlTableDialogTest (BaseMainWndTest):
 
         result = controller.getResult()
 
-        validResult = u'''<table border="1">
+        validResult = '''<table border="1">
 <tr>
 <td></td>
 </tr>
@@ -54,7 +54,7 @@ class HtmlTableDialogTest (BaseMainWndTest):
 
         result = controller.getResult()
 
-        validResult = u'''<table border="1">
+        validResult = '''<table border="1">
 <tr>
 <td></td>
 <td></td>
@@ -79,7 +79,7 @@ class HtmlTableDialogTest (BaseMainWndTest):
 
         result = controller.getResult()
 
-        validResult = u'''<table border="1">
+        validResult = '''<table border="1">
 <tr>
 <td></td>
 <td></td>
@@ -116,7 +116,7 @@ class HtmlTableDialogTest (BaseMainWndTest):
 
         result = controller.getResult()
 
-        validResult = u'''<table border="10">
+        validResult = '''<table border="10">
 <tr>
 <td></td>
 </tr>
@@ -135,7 +135,7 @@ class HtmlTableDialogTest (BaseMainWndTest):
 
         result = controller.getResult()
 
-        validResult = u'''<table>
+        validResult = '''<table>
 <tr>
 <td></td>
 </tr>
@@ -174,7 +174,7 @@ class HtmlTableDialogTest (BaseMainWndTest):
 
         result = controller.getResult()
 
-        validResult = u'''<table border="1">
+        validResult = '''<table border="1">
 <tr>
 <th></th>
 <th></th>

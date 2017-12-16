@@ -32,7 +32,7 @@ class ChildListDialogTest (BaseMainWndTest):
 
         result = controller.getDialogResult()
 
-        self.assertEqual (result, u"(:childlist:)")
+        self.assertEqual (result, "(:childlist:)")
 
 
     def testSortByOrderDescend (self):
@@ -44,7 +44,7 @@ class ChildListDialogTest (BaseMainWndTest):
 
         result = controller.getDialogResult()
 
-        self.assertEqual (result, u"(:childlist sort=descendorder:)")
+        self.assertEqual (result, "(:childlist sort=descendorder:)")
 
 
     def testSortByName (self):
@@ -56,7 +56,7 @@ class ChildListDialogTest (BaseMainWndTest):
 
         result = controller.getDialogResult()
 
-        self.assertEqual (result, u"(:childlist sort=name:)")
+        self.assertEqual (result, "(:childlist sort=name:)")
 
 
     def testSortByNameDescend (self):
@@ -68,7 +68,7 @@ class ChildListDialogTest (BaseMainWndTest):
 
         result = controller.getDialogResult()
 
-        self.assertEqual (result, u"(:childlist sort=descendname:)")
+        self.assertEqual (result, "(:childlist sort=descendname:)")
 
 
     def testSortByCreation (self):
@@ -80,7 +80,7 @@ class ChildListDialogTest (BaseMainWndTest):
 
         result = controller.getDialogResult()
 
-        self.assertEqual (result, u"(:childlist sort=creation:)")
+        self.assertEqual (result, "(:childlist sort=creation:)")
 
 
     def testSortByCreationDescend (self):
@@ -92,7 +92,7 @@ class ChildListDialogTest (BaseMainWndTest):
 
         result = controller.getDialogResult()
 
-        self.assertEqual (result, u"(:childlist sort=descendcreation:)")
+        self.assertEqual (result, "(:childlist sort=descendcreation:)")
 
 
     def testSortByEdit (self):
@@ -104,7 +104,7 @@ class ChildListDialogTest (BaseMainWndTest):
 
         result = controller.getDialogResult()
 
-        self.assertEqual (result, u"(:childlist sort=edit:)")
+        self.assertEqual (result, "(:childlist sort=edit:)")
 
 
     def testSortByEditDescend (self):
@@ -116,4 +116,4 @@ class ChildListDialogTest (BaseMainWndTest):
 
         result = controller.getDialogResult()
 
-        self.assertEqual (result, u"(:childlist sort=descendedit:)")
+        self.assertEqual (result, "(:childlist sort=descendedit:)")

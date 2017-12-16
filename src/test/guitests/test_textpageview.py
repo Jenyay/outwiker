@@ -16,18 +16,18 @@ class TextPageViewTest (BaseMainWndTest):
         BaseMainWndTest.setUp (self)
 
         factory = TextPageFactory()
-        factory.create (self.wikiroot, u"Страница", [])
-        factory.create (self.wikiroot, u"Страница 2", [])
+        factory.create (self.wikiroot, "Страница", [])
+        factory.create (self.wikiroot, "Страница 2", [])
 
 
     def testType (self):
         Application.wikiroot = self.wikiroot
         self.assertEqual (None, Application.mainWindow.pagePanel.pageView)
 
-        Application.selectedPage = self.wikiroot[u"Страница"]
+        Application.selectedPage = self.wikiroot["Страница"]
         self.assertEqual (TextPanel, type (Application.mainWindow.pagePanel.pageView))
 
-        Application.selectedPage = self.wikiroot[u"Страница 2"]
+        Application.selectedPage = self.wikiroot["Страница 2"]
         self.assertEqual (TextPanel, type (Application.mainWindow.pagePanel.pageView))
 
         Application.selectedPage = None
@@ -38,12 +38,12 @@ class TextPageViewTest (BaseMainWndTest):
         Application.wikiroot = self.wikiroot
         Application.selectedPage = None
 
-        self.wikiroot[u"Страница"].content = u"Бла-бла-бла"
-        Application.selectedPage = self.wikiroot[u"Страница"]
+        self.wikiroot["Страница"].content = "Бла-бла-бла"
+        Application.selectedPage = self.wikiroot["Страница"]
         self._getCodeEditor().SetSelection (3, 3)
 
         Application.selectedPage = None
-        Application.selectedPage = self.wikiroot[u"Страница"]
+        Application.selectedPage = self.wikiroot["Страница"]
         self.assertEqual (self._getCodeEditor().GetCurrentPosition(), 3)
 
 
@@ -51,12 +51,12 @@ class TextPageViewTest (BaseMainWndTest):
         Application.wikiroot = self.wikiroot
         Application.selectedPage = None
 
-        self.wikiroot[u"Страница"].content = u"Бла-бла-бла"
-        Application.selectedPage = self.wikiroot[u"Страница"]
+        self.wikiroot["Страница"].content = "Бла-бла-бла"
+        Application.selectedPage = self.wikiroot["Страница"]
         self._getCodeEditor().SetSelection (0, 0)
 
         Application.selectedPage = None
-        Application.selectedPage = self.wikiroot[u"Страница"]
+        Application.selectedPage = self.wikiroot["Страница"]
         self.assertEqual (self._getCodeEditor().GetCurrentPosition(), 0)
 
 
@@ -65,21 +65,21 @@ class TextPageViewTest (BaseMainWndTest):
         Application.selectedPage = None
 
         # В исходном файле установим курсор на 3-ю позицию
-        self.wikiroot[u"Страница"].content = u"Бла-бла-бла"
-        Application.selectedPage = self.wikiroot[u"Страница"]
+        self.wikiroot["Страница"].content = "Бла-бла-бла"
+        Application.selectedPage = self.wikiroot["Страница"]
         self._getCodeEditor().SetSelection (3, 3)
         Application.selectedPage = None
 
         # Теперь загрузим эту вики в режиме только для чтения и поменяем позицию
         wikiroot_ro = WikiDocument.load (self.path, readonly=True)
         Application.wikiroot = wikiroot_ro
-        Application.selectedPage = wikiroot_ro[u"Страница"]
+        Application.selectedPage = wikiroot_ro["Страница"]
         self.assertEqual (self._getCodeEditor().GetCurrentPosition(), 3)
         self._getCodeEditor().SetSelection (0, 0)
 
         # После возвращения на страницу положение курсора не должно поменяться
         Application.selectedPage = None
-        Application.selectedPage = wikiroot_ro[u"Страница"]
+        Application.selectedPage = wikiroot_ro["Страница"]
         self.assertEqual (self._getCodeEditor().GetCurrentPosition(), 3)
 
 

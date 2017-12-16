@@ -13,10 +13,10 @@ from outwiker.pages.wiki.parserfactory import ParserFactory
 class ParserFormatTest (unittest.TestCase):
     def setUp(self):
         # Здесь будет создаваться вики
-        self.path = mkdtemp (prefix=u'Абырвалг абыр')
+        self.path = mkdtemp (prefix='Абырвалг абыр')
         self.encoding = "utf8"
 
-        self.filesPath = u"../test/samplefiles/"
+        self.filesPath = "../test/samplefiles/"
 
         self.__createWiki()
 
@@ -30,53 +30,53 @@ class ParserFormatTest (unittest.TestCase):
 
     def __createWiki (self):
         self.wikiroot = WikiDocument.create (self.path)
-        WikiPageFactory().create (self.wikiroot, u"Страница 2", [])
-        self.testPage = self.wikiroot[u"Страница 2"]
+        WikiPageFactory().create (self.wikiroot, "Страница 2", [])
+        self.testPage = self.wikiroot["Страница 2"]
 
 
     def testMonospaced_01 (self):
-        text = u"бла-бла-бла @@моноширинный текст@@ бла-бла-бла"
-        result = u"бла-бла-бла <code>моноширинный текст</code> бла-бла-бла"
+        text = "бла-бла-бла @@моноширинный текст@@ бла-бла-бла"
+        result = "бла-бла-бла <code>моноширинный текст</code> бла-бла-бла"
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
     def testMonospaced_02 (self):
-        text = u"@@\\t@@"
-        result = u"<code>\\t</code>"
+        text = "@@\\t@@"
+        result = "<code>\\t</code>"
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
 
     def testPreformat1 (self):
-        text = u"[@ '''Полужирный''' \n''Курсив'' @]"
-        result = u"<pre> '''Полужирный''' \n''Курсив'' </pre>"
+        text = "[@ '''Полужирный''' \n''Курсив'' @]"
+        result = "<pre> '''Полужирный''' \n''Курсив'' </pre>"
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
 
     def testPreformat2 (self):
-        text = u'бла-бла-бла [@ <a href="http://jenyay.net/&param">jenyay.net</a> @] foo bar'
-        result = u"бла-бла-бла <pre> &lt;a href=&quot;http://jenyay.net/&amp;param&quot;&gt;jenyay.net&lt;/a&gt; </pre> foo bar"
+        text = 'бла-бла-бла [@ <a href="http://jenyay.net/&param">jenyay.net</a> @] foo bar'
+        result = "бла-бла-бла <pre> &lt;a href=&quot;http://jenyay.net/&amp;param&quot;&gt;jenyay.net&lt;/a&gt; </pre> foo bar"
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
 
     def testPreformat3 (self):
-        text = u"[@\\t@]"
-        result = u"<pre>\\t</pre>"
+        text = "[@\\t@]"
+        result = "<pre>\\t</pre>"
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
 
     def testNoformat_01 (self):
-        text = u"[= '''Полужирный''' \n''Курсив'' =]"
-        result = u" '''Полужирный''' \n''Курсив'' "
+        text = "[= '''Полужирный''' \n''Курсив'' =]"
+        result = " '''Полужирный''' \n''Курсив'' "
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))
 
 
     def testNoformat_02 (self):
-        text = u"[=\\t=]"
-        result = u"\\t"
+        text = "[=\\t=]"
+        result = "\\t"
 
         self.assertEqual (self.parser.toHtml (text), result, self.parser.toHtml (text).encode (self.encoding))

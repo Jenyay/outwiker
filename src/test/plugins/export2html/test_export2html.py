@@ -15,12 +15,12 @@ from test.utils import removeDir
 class Export2HtmlTest (unittest.TestCase):
     def setUp(self):
         self.outputdir = "../test/temp"
-        self.pluginname = u"Export2Html"
+        self.pluginname = "Export2Html"
 
-        self.path = u"../test/samplewiki"
+        self.path = "../test/samplewiki"
         self.root = WikiDocument.load (self.path)
 
-        dirlist = [u"../plugins/export2html"]
+        dirlist = ["../plugins/export2html"]
 
         self.loader = PluginsLoader(Application)
         self.loader.load (dirlist)
@@ -45,7 +45,7 @@ class Export2HtmlTest (unittest.TestCase):
     def testExporterPage (self):
         from export2html.exporterfactory import ExporterFactory
 
-        pagename = u"Страница 1"
+        pagename = "Страница 1"
         exporter = ExporterFactory.getExporter (self.root[pagename])
 
         self.assertEqual (exporter.page, self.root[pagename])
@@ -57,7 +57,7 @@ class Export2HtmlTest (unittest.TestCase):
         """
         from export2html.exporterfactory import ExporterFactory
 
-        pagename = u"Страница 1"
+        pagename = "Страница 1"
 
         exporter = ExporterFactory.getExporter (self.root[pagename])
         exporter.export (outdir = self.outputdir,
@@ -83,8 +83,8 @@ class Export2HtmlTest (unittest.TestCase):
         """
         from export2html.exporterfactory import ExporterFactory
 
-        pagename = u"Страница 1"
-        exportname = u"Бла-бла-бла"
+        pagename = "Страница 1"
+        exportname = "Бла-бла-бла"
 
         exporter = ExporterFactory.getExporter (self.root[pagename])
         exporter.export (outdir = self.outputdir,
@@ -105,7 +105,7 @@ class Export2HtmlTest (unittest.TestCase):
         """
         from export2html.exporterfactory import ExporterFactory
 
-        pagename = u"Страница 1"
+        pagename = "Страница 1"
         exporter = ExporterFactory.getExporter (self.root[pagename])
         exporter.export (outdir = self.outputdir,
                          exportname=pagename,
@@ -126,7 +126,7 @@ class Export2HtmlTest (unittest.TestCase):
         """
         from export2html.exporterfactory import ExporterFactory
 
-        pagename = u"Страница 1"
+        pagename = "Страница 1"
 
         exporter = ExporterFactory.getExporter (self.root[pagename])
         exporter.export (outdir = self.outputdir,
@@ -149,7 +149,7 @@ class Export2HtmlTest (unittest.TestCase):
         """
         from export2html.exporterfactory import ExporterFactory
 
-        pagename = u"Страница 1"
+        pagename = "Страница 1"
 
         exporter = ExporterFactory.getExporter (self.root[pagename])
         exporter.export (outdir = self.outputdir,
@@ -159,19 +159,19 @@ class Export2HtmlTest (unittest.TestCase):
 
         text = readTextFile (os.path.join (self.outputdir, pagename + ".html"))
 
-        self.assertTrue (u'<img src="{pagename}/add.png">'.format (pagename=pagename) in text)
+        self.assertTrue ('<img src="{pagename}/add.png">'.format (pagename=pagename) in text)
 
-        self.assertTrue (u'<img alt="Картинка" src="{pagename}/add.png" border="1">'.format (pagename=pagename) in text)
+        self.assertTrue ('<img alt="Картинка" src="{pagename}/add.png" border="1">'.format (pagename=pagename) in text)
 
-        self.assertTrue (u'<a href="{pagename}/wall1.gif">ссылка на файл</a>.'.format (pagename=pagename) in text)
+        self.assertTrue ('<a href="{pagename}/wall1.gif">ссылка на файл</a>.'.format (pagename=pagename) in text)
 
-        self.assertTrue (u'<a title="Это title" href="{pagename}/wall1.gif">ссылка на файл</a>.'.format (pagename=pagename) in text)
+        self.assertTrue ('<a title="Это title" href="{pagename}/wall1.gif">ссылка на файл</a>.'.format (pagename=pagename) in text)
 
-        self.assertTrue (u'<a href="{pagename}/wall1.gif" title="Это title">ссылка на файл</a>.'.format (pagename=pagename) in text)
+        self.assertTrue ('<a href="{pagename}/wall1.gif" title="Это title">ссылка на файл</a>.'.format (pagename=pagename) in text)
 
-        self.assertTrue (u'А этот __attach/ содержится в тексте' in text)
+        self.assertTrue ('А этот __attach/ содержится в тексте' in text)
 
-        self.assertFalse (u'<img src="__attach/add.png">' in text)
+        self.assertFalse ('<img src="__attach/add.png">' in text)
 
 
     def testLinkToFilesHtmlWithName (self):
@@ -181,8 +181,8 @@ class Export2HtmlTest (unittest.TestCase):
         """
         from export2html.exporterfactory import ExporterFactory
 
-        pagename = u"Страница 1"
-        exportname = u"Бла-бла-бла"
+        pagename = "Страница 1"
+        exportname = "Бла-бла-бла"
 
         exporter = ExporterFactory.getExporter (self.root[pagename])
         exporter.export (outdir = self.outputdir,
@@ -192,9 +192,9 @@ class Export2HtmlTest (unittest.TestCase):
 
         text = readTextFile (os.path.join (self.outputdir, exportname + ".html"))
 
-        self.assertTrue (u'<img src="{pagename}/add.png">'.format (pagename=exportname) in text)
-        self.assertTrue (u'<a href="{pagename}/wall1.gif">ссылка на файл</a>.'.format (pagename=exportname) in text)
-        self.assertTrue (u'А этот __attach/ содержится в тексте' in text)
+        self.assertTrue ('<img src="{pagename}/add.png">'.format (pagename=exportname) in text)
+        self.assertTrue ('<a href="{pagename}/wall1.gif">ссылка на файл</a>.'.format (pagename=exportname) in text)
+        self.assertTrue ('А этот __attach/ содержится в тексте' in text)
 
 
     def testLinkToFilesWiki (self):
@@ -204,8 +204,8 @@ class Export2HtmlTest (unittest.TestCase):
         """
         from export2html.exporterfactory import ExporterFactory
 
-        fullpagename = u"Типы страниц/wiki-страница"
-        pagename = u"wiki-страница"
+        fullpagename = "Типы страниц/wiki-страница"
+        pagename = "wiki-страница"
 
         exporter = ExporterFactory.getExporter (self.root[fullpagename])
         exporter.export (outdir = self.outputdir,
@@ -215,10 +215,10 @@ class Export2HtmlTest (unittest.TestCase):
 
         text = readTextFile (os.path.join (self.outputdir, pagename + ".html"))
 
-        self.assertTrue (u'<img src="{pagename}/add.png"/>'.format (pagename=pagename) in text)
-        self.assertTrue (u'<a href="{pagename}/wall1.gif">ссылка на файл</a>'.format (pagename=pagename) in text)
-        self.assertTrue (u'А этот __attach/ содержится в тексте' in text)
-        self.assertTrue (u'<a href="{pagename}/image.jpg"><img src="{pagename}/__thumb/th_maxsize_250_image.jpg"/></a>'.format (pagename=pagename) in text)
+        self.assertTrue ('<img src="{pagename}/add.png"/>'.format (pagename=pagename) in text)
+        self.assertTrue ('<a href="{pagename}/wall1.gif">ссылка на файл</a>'.format (pagename=pagename) in text)
+        self.assertTrue ('А этот __attach/ содержится в тексте' in text)
+        self.assertTrue ('<a href="{pagename}/image.jpg"><img src="{pagename}/__thumb/th_maxsize_250_image.jpg"/></a>'.format (pagename=pagename) in text)
 
 
     def testLinkToFilesWikiWithName (self):
@@ -228,8 +228,8 @@ class Export2HtmlTest (unittest.TestCase):
         """
         from export2html.exporterfactory import ExporterFactory
 
-        fullpagename = u"Типы страниц/wiki-страница"
-        exportname = u"Бла-бла-бла"
+        fullpagename = "Типы страниц/wiki-страница"
+        exportname = "Бла-бла-бла"
 
         exporter = ExporterFactory.getExporter (self.root[fullpagename])
         exporter.export (outdir = self.outputdir,
@@ -237,15 +237,15 @@ class Export2HtmlTest (unittest.TestCase):
                          imagesonly=True,
                          alwaysOverwrite=False)
 
-        text = u""
+        text = ""
 
         with open (os.path.join (self.outputdir, exportname + ".html")) as fp:
-            text = unicode (fp.read(), "utf8")
+            text = str (fp.read(), "utf8")
 
-        self.assertTrue (u'<img src="{pagename}/add.png"/>'.format (pagename=exportname) in text)
-        self.assertTrue (u'<a href="{pagename}/wall1.gif">ссылка на файл</a>'.format (pagename=exportname) in text)
-        self.assertTrue (u'А этот __attach/ содержится в тексте' in text)
-        self.assertTrue (u'<a href="{pagename}/image.jpg"><img src="{pagename}/__thumb/th_maxsize_250_image.jpg"/></a>'.format (pagename=exportname) in text)
+        self.assertTrue ('<img src="{pagename}/add.png"/>'.format (pagename=exportname) in text)
+        self.assertTrue ('<a href="{pagename}/wall1.gif">ссылка на файл</a>'.format (pagename=exportname) in text)
+        self.assertTrue ('А этот __attach/ содержится в тексте' in text)
+        self.assertTrue ('<a href="{pagename}/image.jpg"><img src="{pagename}/__thumb/th_maxsize_250_image.jpg"/></a>'.format (pagename=exportname) in text)
 
 
 
@@ -255,8 +255,8 @@ class Export2HtmlTest (unittest.TestCase):
         """
         from export2html.exporterfactory import ExporterFactory
 
-        fullpagename = u"Типы страниц/wiki-страница"
-        pagename = u"wiki-страница"
+        fullpagename = "Типы страниц/wiki-страница"
+        pagename = "wiki-страница"
 
         exporter = ExporterFactory.getExporter (self.root[fullpagename])
         exporter.export (outdir = self.outputdir,
@@ -274,8 +274,8 @@ class Export2HtmlTest (unittest.TestCase):
         """
         from export2html.exporterfactory import ExporterFactory
 
-        fullpagename = u"Типы страниц/Текстовая страница"
-        pagename = u"Текстовая страница"
+        fullpagename = "Типы страниц/Текстовая страница"
+        pagename = "Текстовая страница"
 
         exporter = ExporterFactory.getExporter (self.root[fullpagename])
         exporter.export (outdir = self.outputdir,
@@ -295,8 +295,8 @@ class Export2HtmlTest (unittest.TestCase):
         """
         from export2html.exporterfactory import ExporterFactory
 
-        fullpagename = u"Типы страниц/Текстовая страница"
-        pagename = u"Текстовая страница"
+        fullpagename = "Типы страниц/Текстовая страница"
+        pagename = "Текстовая страница"
 
         exporter = ExporterFactory.getExporter (self.root[fullpagename])
         exporter.export (outdir = self.outputdir,
@@ -318,8 +318,8 @@ class Export2HtmlTest (unittest.TestCase):
         """
         from export2html.exporterfactory import ExporterFactory
 
-        fullpagename = u"Типы страниц/Текстовая страница"
-        pagename = u"Текстовая страница"
+        fullpagename = "Типы страниц/Текстовая страница"
+        pagename = "Текстовая страница"
 
         exporter = ExporterFactory.getExporter (self.root[fullpagename])
         exporter.export (outdir = self.outputdir,
@@ -327,12 +327,12 @@ class Export2HtmlTest (unittest.TestCase):
                          imagesonly=True,
                          alwaysOverwrite=False)
 
-        text = u""
+        text = ""
 
         with open (os.path.join (self.outputdir, pagename + ".html")) as fp:
-            text = unicode (fp.read(), "utf8")
+            text = str (fp.read(), "utf8")
 
-        self.assertTrue (u'&lt;a href="http://jenyay.net"&gt;bla-bla-bla&lt;/a&gt;' in text)
+        self.assertTrue ('&lt;a href="http://jenyay.net"&gt;bla-bla-bla&lt;/a&gt;' in text)
 
 
     def testTextTemplate (self):
@@ -342,8 +342,8 @@ class Export2HtmlTest (unittest.TestCase):
         """
         from export2html.exporterfactory import ExporterFactory
 
-        fullpagename = u"Типы страниц/Текстовая страница"
-        pagename = u"Текстовая страница"
+        fullpagename = "Типы страниц/Текстовая страница"
+        pagename = "Текстовая страница"
 
         exporter = ExporterFactory.getExporter (self.root[fullpagename])
 
@@ -352,18 +352,18 @@ class Export2HtmlTest (unittest.TestCase):
                          imagesonly=True,
                          alwaysOverwrite=False)
 
-        text = u""
+        text = ""
 
         with open (os.path.join (self.outputdir, pagename + ".html")) as fp:
-            text = unicode (fp.read(), "utf8")
+            text = str (fp.read(), "utf8")
 
-        self.assertTrue (u'<head>' in text)
-        self.assertTrue (u'</head>' in text)
-        self.assertTrue (u'<body>' in text)
-        self.assertTrue (u'</body>' in text)
-        self.assertTrue (u'<pre>' in text)
-        self.assertTrue (u'</pre>' in text)
-        self.assertTrue (u'<title>Текстовая страница</title>' in text)
+        self.assertTrue ('<head>' in text)
+        self.assertTrue ('</head>' in text)
+        self.assertTrue ('<body>' in text)
+        self.assertTrue ('</body>' in text)
+        self.assertTrue ('<pre>' in text)
+        self.assertTrue ('</pre>' in text)
+        self.assertTrue ('<title>Текстовая страница</title>' in text)
 
 
     def testAttachesImagesExportTextPage (self):
@@ -372,8 +372,8 @@ class Export2HtmlTest (unittest.TestCase):
         """
         from export2html.exporterfactory import ExporterFactory
 
-        fullpagename = u"Типы страниц/Текстовая страница"
-        pagename = u"Текстовая страница"
+        fullpagename = "Типы страниц/Текстовая страница"
+        pagename = "Текстовая страница"
 
         exporter = ExporterFactory.getExporter (self.root[fullpagename])
         exporter.export (outdir = self.outputdir,
@@ -394,7 +394,7 @@ class Export2HtmlTest (unittest.TestCase):
         """
         from export2html.exporterfactory import ExporterFactory
 
-        pagename = u"Страница 1"
+        pagename = "Страница 1"
         exporter = ExporterFactory.getExporter (self.root[pagename])
 
         exporter.export (outdir = self.outputdir,
@@ -421,7 +421,7 @@ class Export2HtmlTest (unittest.TestCase):
         """
         from export2html.exporterfactory import ExporterFactory
 
-        pagename = u"Типы страниц/Страница поиска"
+        pagename = "Типы страниц/Страница поиска"
 
         self.assertRaises (BaseException,
                            ExporterFactory.getExporter,
@@ -435,7 +435,7 @@ class Export2HtmlTest (unittest.TestCase):
         from export2html.longnamegenerator import LongNameGenerator
         from export2html.branchexporter import BranchExporter
 
-        pagename = u"Страница 1"
+        pagename = "Страница 1"
         namegenerator = LongNameGenerator (self.root[pagename])
         branchExporter = BranchExporter (self.root[pagename], namegenerator, Application)
 
@@ -455,32 +455,32 @@ class Export2HtmlTest (unittest.TestCase):
                                                        pagename, "__icon.png")))
 
         self.assertTrue (os.path.exists (os.path.join (self.outputdir,
-                                                       pagename + u"_Страница 2")))
+                                                       pagename + "_Страница 2")))
         self.assertTrue (os.path.exists (os.path.join (self.outputdir,
-                                                       pagename + u"_Страница 2.html")))
+                                                       pagename + "_Страница 2.html")))
         self.assertTrue (os.path.exists (os.path.join (self.outputdir,
-                                                       pagename + u"_Страница 2", "__icon.gif")))
+                                                       pagename + "_Страница 2", "__icon.gif")))
 
         self.assertTrue (os.path.exists (os.path.join (self.outputdir,
-                                                       pagename + u"_Страница 2_Страница 5")))
+                                                       pagename + "_Страница 2_Страница 5")))
         self.assertTrue (os.path.exists (os.path.join (self.outputdir,
-                                                       pagename + u"_Страница 2_Страница 5.html")))
+                                                       pagename + "_Страница 2_Страница 5.html")))
         self.assertTrue (os.path.exists (os.path.join (self.outputdir,
-                                                       pagename + u"_Страница 2_Страница 5", "__icon.gif")))
+                                                       pagename + "_Страница 2_Страница 5", "__icon.gif")))
 
         self.assertTrue (os.path.exists (os.path.join (self.outputdir,
-                                                       pagename + u"_Страница 2_Страница 6")))
+                                                       pagename + "_Страница 2_Страница 6")))
         self.assertTrue (os.path.exists (os.path.join (self.outputdir,
-                                                       pagename + u"_Страница 2_Страница 6.html")))
+                                                       pagename + "_Страница 2_Страница 6.html")))
         self.assertTrue (os.path.exists (os.path.join (self.outputdir,
-                                                       pagename + u"_Страница 2_Страница 6", "__icon.png")))
+                                                       pagename + "_Страница 2_Страница 6", "__icon.png")))
 
         self.assertTrue (os.path.exists (os.path.join (self.outputdir,
-                                                       pagename + u"_Страница 2_Страница 6_Страница 7")))
+                                                       pagename + "_Страница 2_Страница 6_Страница 7")))
         self.assertTrue (os.path.exists (os.path.join (self.outputdir,
-                                                       pagename + u"_Страница 2_Страница 6_Страница 7.html")))
+                                                       pagename + "_Страница 2_Страница 6_Страница 7.html")))
         self.assertTrue (os.path.exists (os.path.join (self.outputdir,
-                                                       pagename + u"_Страница 2_Страница 6_Страница 7", "__icon.png")))
+                                                       pagename + "_Страница 2_Страница 6_Страница 7", "__icon.png")))
 
         self.assertTrue (os.path.exists (os.path.join (self.outputdir, "__index.html")))
         self.assertTrue (os.path.isfile (os.path.join (self.outputdir, "__index.html")))
@@ -496,7 +496,7 @@ class Export2HtmlTest (unittest.TestCase):
         from export2html.longnamegenerator import LongNameGenerator
         from export2html.branchexporter import BranchExporter
 
-        wikiname = u"samplewiki"
+        wikiname = "samplewiki"
         namegenerator = LongNameGenerator (self.root)
         branchExporter = BranchExporter (self.root, namegenerator, Application)
 
@@ -507,32 +507,32 @@ class Export2HtmlTest (unittest.TestCase):
         )
 
         self.assertEqual (len (result), 1)
-        self.assertTrue (u"Страница поиска" in result[0])
+        self.assertTrue ("Страница поиска" in result[0])
 
         self.assertTrue (os.path.exists (os.path.join (self.outputdir,
-                                                       wikiname + u"_Страница 1")))
+                                                       wikiname + "_Страница 1")))
         self.assertTrue (os.path.exists (os.path.join (self.outputdir,
-                                                       wikiname + u"_Страница 1.html")))
+                                                       wikiname + "_Страница 1.html")))
 
         self.assertTrue (os.path.exists (os.path.join (self.outputdir,
-                                                       wikiname + u"_Страница 1_Страница 2")))
+                                                       wikiname + "_Страница 1_Страница 2")))
         self.assertTrue (os.path.exists (os.path.join (self.outputdir,
-                                                       wikiname + u"_Страница 1_Страница 2.html")))
+                                                       wikiname + "_Страница 1_Страница 2.html")))
 
         self.assertTrue (os.path.exists (os.path.join (self.outputdir,
-                                                       wikiname + u"_Страница 1_Страница 2_Страница 5")))
+                                                       wikiname + "_Страница 1_Страница 2_Страница 5")))
         self.assertTrue (os.path.exists (os.path.join (self.outputdir,
-                                                       wikiname + u"_Страница 1_Страница 2_Страница 5.html")))
+                                                       wikiname + "_Страница 1_Страница 2_Страница 5.html")))
 
         self.assertTrue (os.path.exists (os.path.join (self.outputdir,
-                                                       wikiname + u"_Страница 1_Страница 2_Страница 6")))
+                                                       wikiname + "_Страница 1_Страница 2_Страница 6")))
         self.assertTrue (os.path.exists (os.path.join (self.outputdir,
-                                                       wikiname + u"_Страница 1_Страница 2_Страница 6.html")))
+                                                       wikiname + "_Страница 1_Страница 2_Страница 6.html")))
 
         self.assertTrue (os.path.exists (os.path.join (self.outputdir,
-                                                       wikiname + u"_Страница 1_Страница 2_Страница 6_Страница 7")))
+                                                       wikiname + "_Страница 1_Страница 2_Страница 6_Страница 7")))
         self.assertTrue (os.path.exists (os.path.join (self.outputdir,
-                                                       wikiname + u"_Страница 1_Страница 2_Страница 6_Страница 7.html")))
+                                                       wikiname + "_Страница 1_Страница 2_Страница 6_Страница 7.html")))
 
 
     def testExportBranchFilesTitleNames (self):
@@ -542,7 +542,7 @@ class Export2HtmlTest (unittest.TestCase):
         from export2html.titlenamegenerator import TitleNameGenerator
         from export2html.branchexporter import BranchExporter
 
-        pagename = u"Страница 1"
+        pagename = "Страница 1"
         namegenerator = TitleNameGenerator (self.outputdir)
         branchExporter = BranchExporter (self.root[pagename], namegenerator, Application)
 
@@ -560,34 +560,34 @@ class Export2HtmlTest (unittest.TestCase):
                                                        pagename + ".html")))
 
         self.assertTrue (os.path.exists (os.path.join (self.outputdir,
-                                                       u"Страница 2")))
+                                                       "Страница 2")))
         self.assertTrue (os.path.exists (os.path.join (self.outputdir,
-                                                       u"Страница 2.html")))
+                                                       "Страница 2.html")))
 
         self.assertTrue (os.path.exists (os.path.join (self.outputdir,
-                                                       u"Страница 2 (1)")))
+                                                       "Страница 2 (1)")))
         self.assertTrue (os.path.exists (os.path.join (self.outputdir,
-                                                       u"Страница 2 (1).html")))
+                                                       "Страница 2 (1).html")))
 
         self.assertTrue (os.path.exists (os.path.join (self.outputdir,
-                                                       u"Страница 2 (2)")))
+                                                       "Страница 2 (2)")))
         self.assertTrue (os.path.exists (os.path.join (self.outputdir,
-                                                       u"Страница 2 (2).html")))
+                                                       "Страница 2 (2).html")))
 
         self.assertTrue (os.path.exists (os.path.join (self.outputdir,
-                                                       u"Страница 5")))
+                                                       "Страница 5")))
         self.assertTrue (os.path.exists (os.path.join (self.outputdir,
-                                                       u"Страница 5.html")))
+                                                       "Страница 5.html")))
 
         self.assertTrue (os.path.exists (os.path.join (self.outputdir,
-                                                       u"Страница 6")))
+                                                       "Страница 6")))
         self.assertTrue (os.path.exists (os.path.join (self.outputdir,
-                                                       u"Страница 6.html")))
+                                                       "Страница 6.html")))
 
         self.assertTrue (os.path.exists (os.path.join (self.outputdir,
-                                                       u"Страница 7")))
+                                                       "Страница 7")))
         self.assertTrue (os.path.exists (os.path.join (self.outputdir,
-                                                       u"Страница 7.html")))
+                                                       "Страница 7.html")))
 
         self.assertTrue (os.path.exists (os.path.join (self.outputdir, "__index.html")))
         self.assertTrue (os.path.isfile (os.path.join (self.outputdir, "__index.html")))
@@ -603,7 +603,7 @@ class Export2HtmlTest (unittest.TestCase):
         from export2html.titlenamegenerator import TitleNameGenerator
         from export2html.branchexporter import BranchExporter
 
-        pagename = u"Страница 1"
+        pagename = "Страница 1"
         namegenerator = TitleNameGenerator (self.outputdir)
         branchExporter = BranchExporter (self.root[pagename], namegenerator, Application)
 
@@ -613,10 +613,10 @@ class Export2HtmlTest (unittest.TestCase):
             alwaysOverwrite=False
         )
 
-        text = readTextFile (os.path.join (self.outputdir, u"Страница 2 (1).html"))
+        text = readTextFile (os.path.join (self.outputdir, "Страница 2 (1).html"))
 
-        self.assertTrue (u'<img src="Страница 2 (1)/cake.png"/>' in text)
-        self.assertTrue (u'<a href="Страница 2 (1)/calendar.png">calendar.png</a>' in text)
+        self.assertTrue ('<img src="Страница 2 (1)/cake.png"/>' in text)
+        self.assertTrue ('<a href="Страница 2 (1)/calendar.png">calendar.png</a>' in text)
 
 
     def testBranchContentTitleNames2 (self):
@@ -626,7 +626,7 @@ class Export2HtmlTest (unittest.TestCase):
         from export2html.titlenamegenerator import TitleNameGenerator
         from export2html.branchexporter import BranchExporter
 
-        pagename = u"Страница 1"
+        pagename = "Страница 1"
         namegenerator = TitleNameGenerator (self.outputdir)
         branchExporter = BranchExporter (self.root[pagename], namegenerator, Application)
 
@@ -636,10 +636,10 @@ class Export2HtmlTest (unittest.TestCase):
             alwaysOverwrite=False
         )
 
-        text = readTextFile (os.path.join (self.outputdir, u"Страница 2 (2).html"))
+        text = readTextFile (os.path.join (self.outputdir, "Страница 2 (2).html"))
 
-        self.assertTrue (u'<img src="Страница 2 (2)/cd.png"/>' in text)
-        self.assertTrue (u'<a href="Страница 2 (2)/cd_go.png">cd_go.png</a>' in text)
+        self.assertTrue ('<img src="Страница 2 (2)/cd.png"/>' in text)
+        self.assertTrue ('<a href="Страница 2 (2)/cd_go.png">cd_go.png</a>' in text)
 
 
     def testLinkToPagesHtmlLongNames (self):
@@ -649,7 +649,7 @@ class Export2HtmlTest (unittest.TestCase):
         from export2html.longnamegenerator import LongNameGenerator
         from export2html.branchexporter import BranchExporter
 
-        pagename = u"Страница 1"
+        pagename = "Страница 1"
         namegenerator = LongNameGenerator (self.root[pagename])
         branchExporter = BranchExporter (self.root[pagename], namegenerator, Application)
 
@@ -659,21 +659,21 @@ class Export2HtmlTest (unittest.TestCase):
             alwaysOverwrite=False
         )
 
-        text = readTextFile (os.path.join (self.outputdir, u"Страница 1_Страница 2_Страница 6.html"))
+        text = readTextFile (os.path.join (self.outputdir, "Страница 1_Страница 2_Страница 6.html"))
 
-        self.assertTrue (u'<A HREF="/Типы страниц">/Типы страниц</A>' in text)
+        self.assertTrue ('<A HREF="/Типы страниц">/Типы страниц</A>' in text)
 
-        self.assertTrue (u'<A HREF="Страница 1_Страница 2_Страница 6_Страница 7_Страница 2.html">/Страница 1/Страница 2/Страница 6/Страница 7/Страница 2</A>' in text)
+        self.assertTrue ('<A HREF="Страница 1_Страница 2_Страница 6_Страница 7_Страница 2.html">/Страница 1/Страница 2/Страница 6/Страница 7/Страница 2</A>' in text)
 
-        self.assertTrue (u'<A HREF="Страница 1_Страница 2_Страница 6_Страница 7_Страница 2.html">Страница 7/Страница 2</A>' in text)
+        self.assertTrue ('<A HREF="Страница 1_Страница 2_Страница 6_Страница 7_Страница 2.html">Страница 7/Страница 2</A>' in text)
 
-        self.assertTrue (u'<A HREF="Страница 1_Страница 2_Страница 6_Страница 7_Страница 2.html">Еще одна ссылка</A>' in text)
+        self.assertTrue ('<A HREF="Страница 1_Страница 2_Страница 6_Страница 7_Страница 2.html">Еще одна ссылка</A>' in text)
 
-        self.assertTrue (u'<A HREF="Страница 1_Страница 2_Страница 6_Страница 7.html">Страница 7</A>' in text)
+        self.assertTrue ('<A HREF="Страница 1_Страница 2_Страница 6_Страница 7.html">Страница 7</A>' in text)
 
-        self.assertTrue (u'<A HREF="Страница 1_Страница 2_Страница 6_Страница 7_Страница 2.html" title="бла-бла-бла">Ссылка на /Страница 1/Страница 2/Страница 6/Страница 7/Страница 2</A>' in text)
+        self.assertTrue ('<A HREF="Страница 1_Страница 2_Страница 6_Страница 7_Страница 2.html" title="бла-бла-бла">Ссылка на /Страница 1/Страница 2/Страница 6/Страница 7/Страница 2</A>' in text)
 
-        self.assertTrue (u'<A HREF="Страница 1_Страница 2_Страница 6_Страница 7.html" title="бла-бла-бла">Ссылка на Страницу 7</A>' in text)
+        self.assertTrue ('<A HREF="Страница 1_Страница 2_Страница 6_Страница 7.html" title="бла-бла-бла">Ссылка на Страницу 7</A>' in text)
 
 
     def testLinkToPagesHtmlTitleNames (self):
@@ -683,7 +683,7 @@ class Export2HtmlTest (unittest.TestCase):
         from export2html.titlenamegenerator import TitleNameGenerator
         from export2html.branchexporter import BranchExporter
 
-        pagename = u"Страница 1"
+        pagename = "Страница 1"
         namegenerator = TitleNameGenerator (self.outputdir)
         branchExporter = BranchExporter (self.root[pagename], namegenerator, Application)
 
@@ -693,21 +693,21 @@ class Export2HtmlTest (unittest.TestCase):
             alwaysOverwrite=False
         )
 
-        text = readTextFile (os.path.join (self.outputdir, u"Страница 6.html"))
+        text = readTextFile (os.path.join (self.outputdir, "Страница 6.html"))
 
-        self.assertTrue (u'<A HREF="/Типы страниц">/Типы страниц</A>' in text)
+        self.assertTrue ('<A HREF="/Типы страниц">/Типы страниц</A>' in text)
 
-        self.assertTrue (u'<A HREF="Страница 2 (2).html">/Страница 1/Страница 2/Страница 6/Страница 7/Страница 2</A>' in text)
+        self.assertTrue ('<A HREF="Страница 2 (2).html">/Страница 1/Страница 2/Страница 6/Страница 7/Страница 2</A>' in text)
 
-        self.assertTrue (u'<A HREF="Страница 2 (2).html">Страница 7/Страница 2</A>' in text)
+        self.assertTrue ('<A HREF="Страница 2 (2).html">Страница 7/Страница 2</A>' in text)
 
-        self.assertTrue (u'<A HREF="Страница 2 (2).html">Еще одна ссылка</A>' in text)
+        self.assertTrue ('<A HREF="Страница 2 (2).html">Еще одна ссылка</A>' in text)
 
-        self.assertTrue (u'<A HREF="Страница 7.html">Страница 7</A>' in text)
+        self.assertTrue ('<A HREF="Страница 7.html">Страница 7</A>' in text)
 
-        self.assertTrue (u'<A HREF="Страница 2 (2).html" title="бла-бла-бла">Ссылка на /Страница 1/Страница 2/Страница 6/Страница 7/Страница 2</A>' in text)
+        self.assertTrue ('<A HREF="Страница 2 (2).html" title="бла-бла-бла">Ссылка на /Страница 1/Страница 2/Страница 6/Страница 7/Страница 2</A>' in text)
 
-        self.assertTrue (u'<A HREF="Страница 7.html" title="бла-бла-бла">Ссылка на Страницу 7</A>' in text)
+        self.assertTrue ('<A HREF="Страница 7.html" title="бла-бла-бла">Ссылка на Страницу 7</A>' in text)
 
 
     def testLinkToPageByProticolLongNames (self):
@@ -727,9 +727,9 @@ class Export2HtmlTest (unittest.TestCase):
             alwaysOverwrite=False
         )
 
-        text = readTextFile (os.path.join (self.outputdir, u"samplewiki_Страница 1.html"))
+        text = readTextFile (os.path.join (self.outputdir, "samplewiki_Страница 1.html"))
 
-        self.assertIn (u'<a href="samplewiki_Страница 1_Страница 2_Страница 6_Страница 7_Страница 2.html">', text)
+        self.assertIn ('<a href="samplewiki_Страница 1_Страница 2_Страница 6_Страница 7_Страница 2.html">', text)
 
 
     def testLinkToPageByProticolTitleNames_01 (self):
@@ -749,9 +749,9 @@ class Export2HtmlTest (unittest.TestCase):
             alwaysOverwrite=False
         )
 
-        text = readTextFile (os.path.join (self.outputdir, u"Страница 1.html"))
+        text = readTextFile (os.path.join (self.outputdir, "Страница 1.html"))
 
-        self.assertIn (u'<a href="Страница 2 (2).html">', text)
+        self.assertIn ('<a href="Страница 2 (2).html">', text)
 
 
     def testLinkToPageByProticolTitleNames_02 (self):
@@ -771,9 +771,9 @@ class Export2HtmlTest (unittest.TestCase):
             alwaysOverwrite=False
         )
 
-        text = readTextFile (os.path.join (self.outputdir, u"Страница 2 (2).html"))
+        text = readTextFile (os.path.join (self.outputdir, "Страница 2 (2).html"))
 
-        self.assertIn (u'<a href="Страница 2 (1).html">', text)
+        self.assertIn ('<a href="Страница 2 (1).html">', text)
 
 
     def testLinkToPageByProticolTitleNames_03 (self):
@@ -793,9 +793,9 @@ class Export2HtmlTest (unittest.TestCase):
             alwaysOverwrite=False
         )
 
-        text = readTextFile (os.path.join (self.outputdir, u"Страница 2 (2).html"))
+        text = readTextFile (os.path.join (self.outputdir, "Страница 2 (2).html"))
 
-        self.assertIn (u'<a href="Страница 3.html">', text)
+        self.assertIn ('<a href="Страница 3.html">', text)
 
 
     def testLinkToAnchorByProticolTitleNames_01 (self):
@@ -815,9 +815,9 @@ class Export2HtmlTest (unittest.TestCase):
             alwaysOverwrite=False
         )
 
-        text = readTextFile (os.path.join (self.outputdir, u"Страница 2 (2).html"))
+        text = readTextFile (os.path.join (self.outputdir, "Страница 2 (2).html"))
 
-        self.assertIn (u'<a href="Страница 7.html#anchor">', text)
+        self.assertIn ('<a href="Страница 7.html#anchor">', text)
 
 
     def testRelativeLinkTitleNames_01 (self):
@@ -837,9 +837,9 @@ class Export2HtmlTest (unittest.TestCase):
             alwaysOverwrite=False
         )
 
-        text = readTextFile (os.path.join (self.outputdir, u"Страница 2 (2).html"))
+        text = readTextFile (os.path.join (self.outputdir, "Страница 2 (2).html"))
 
-        self.assertIn (u'<a href="Страница 2 (1).html">', text)
+        self.assertIn ('<a href="Страница 2 (1).html">', text)
 
 
     def testRelativeLinkTitleNames_02 (self):
@@ -859,6 +859,6 @@ class Export2HtmlTest (unittest.TestCase):
             alwaysOverwrite=False
         )
 
-        text = readTextFile (os.path.join (self.outputdir, u"Страница 2 (2).html"))
+        text = readTextFile (os.path.join (self.outputdir, "Страница 2 (2).html"))
 
-        self.assertIn (u'<a href="Страница 7.html">', text)
+        self.assertIn ('<a href="Страница 7.html">', text)

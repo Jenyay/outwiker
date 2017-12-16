@@ -23,19 +23,19 @@ class WikiHashTest (unittest.TestCase):
     def setUp(self):
         self.encoding = "866"
 
-        self.filesPath = u"../test/samplefiles/"
+        self.filesPath = "../test/samplefiles/"
         self.__createWiki()
 
-        files = [u"image.jpg", u"dir"]
+        files = ["image.jpg", "dir"]
 
         fullFilesPath = [os.path.join (self.filesPath, fname) for fname in files]
 
-        self.attach_page2 = Attachment (self.wikiroot[u"Страница 2"])
+        self.attach_page2 = Attachment (self.wikiroot["Страница 2"])
 
         # Прикрепим к двум страницам файлы
         Attachment (self.testPage).attach (fullFilesPath)
 
-        self.wikitext = u"""Бла-бла-бла
+        self.wikitext = """Бла-бла-бла
         %thumb maxsize=250%Attach:image.jpg%%
         Бла-бла-бла"""
 
@@ -46,7 +46,7 @@ class WikiHashTest (unittest.TestCase):
 
 
     def __setDefaultConfig (self):
-        self.__htmlconfig.userStyle.value = u""
+        self.__htmlconfig.userStyle.value = ""
 
         # Установим размер превьюшки, не совпадающий с размером по умолчанию
         Application.config.set (WikiConfig.WIKI_SECTION,
@@ -60,12 +60,12 @@ class WikiHashTest (unittest.TestCase):
 
     def __createWiki (self):
         # Здесь будет создаваться вики
-        self.path = mkdtemp (prefix=u'Абырвалг абыр')
+        self.path = mkdtemp (prefix='Абырвалг абыр')
 
         self.wikiroot = WikiDocument.create (self.path)
 
-        WikiPageFactory().create (self.wikiroot, u"Страница 2", [])
-        self.testPage = self.wikiroot[u"Страница 2"]
+        WikiPageFactory().create (self.wikiroot, "Страница 2", [])
+        self.testPage = self.wikiroot["Страница 2"]
 
 
     def tearDown(self):
@@ -79,14 +79,14 @@ class WikiHashTest (unittest.TestCase):
         hashCalculator = WikiHashCalculator (Application)
         hash_src = hashCalculator.getHash (self.testPage)
 
-        self.testPage.content = u"бла-бла-бла"
+        self.testPage.content = "бла-бла-бла"
         hash2 = hashCalculator.getHash (self.testPage)
 
         self.assertNotEqual (hash_src, hash2)
 
         # Добавим файл
         attach = Attachment (self.testPage)
-        attach.attach ([os.path.join (self.filesPath, u"add.png")])
+        attach.attach ([os.path.join (self.filesPath, "add.png")])
 
         hash3 = hashCalculator.getHash (self.testPage)
         self.assertNotEqual (hash_src, hash3)
@@ -98,7 +98,7 @@ class WikiHashTest (unittest.TestCase):
         hashCalculator = WikiHashCalculator (Application)
         hash_src = hashCalculator.getHash (self.testPage)
 
-        self.testPage.content = u"бла-бла-бла"
+        self.testPage.content = "бла-бла-бла"
         hash2 = hashCalculator.getHash (self.testPage)
 
         self.assertNotEqual (hash_src, hash2)
@@ -114,11 +114,11 @@ class WikiHashTest (unittest.TestCase):
         hashCalculator = WikiHashCalculator (Application)
         hash_src = hashCalculator.getHash (self.testPage)
 
-        self.testPage.title = u"Новый заголовок"
+        self.testPage.title = "Новый заголовок"
         hash2 = hashCalculator.getHash (self.testPage)
         self.assertNotEqual (hash_src, hash2)
 
-        self.testPage.title = u"Страница 2"
+        self.testPage.title = "Страница 2"
         hash3 = hashCalculator.getHash (self.testPage)
         self.assertEqual (hash_src, hash3)
 
@@ -126,24 +126,24 @@ class WikiHashTest (unittest.TestCase):
 
     def testCacheEmpty (self):
         emptycontent = EmptyContent (Application.config)
-        self.testPage.content = u""
+        self.testPage.content = ""
 
         hashCalculator = WikiHashCalculator (Application)
         hash_src = hashCalculator.getHash (self.testPage)
 
         # Страница пустая, изменился шаблон для путой записи
-        emptycontent.content = u"1111"
+        emptycontent.content = "1111"
         hash2 = hashCalculator.getHash (self.testPage)
         self.assertNotEqual (hash_src, hash2)
 
         # Изменилось содержимое страницы
-        self.testPage.content = u"Бла-бла-бла"
+        self.testPage.content = "Бла-бла-бла"
         hash3 = hashCalculator.getHash (self.testPage)
         self.assertNotEqual (hash2, hash3)
         self.assertNotEqual (hash_src, hash3)
 
         # Изменился шаблон страницы, но страница уже не пустая
-        emptycontent.content = u"2222"
+        emptycontent.content = "2222"
         hash4 = hashCalculator.getHash (self.testPage)
         self.assertEqual (hash4, hash3)
 
@@ -186,12 +186,12 @@ class WikiHashTest (unittest.TestCase):
         hash_src = hashCalculator.getHash (self.testPage)
 
         # Добавляем новую подстраницу
-        WikiPageFactory().create (self.testPage, u"Подстраница 1", [])
+        WikiPageFactory().create (self.testPage, "Подстраница 1", [])
         hash2 = hashCalculator.getHash (self.testPage)
         self.assertNotEqual (hash2, hash_src)
 
         # Удалим новую страницу
-        self.testPage[u"Подстраница 1"].remove()
+        self.testPage["Подстраница 1"].remove()
 
         hash3 = hashCalculator.getHash (self.testPage)
         self.assertEqual (hash3, hash_src)
@@ -205,8 +205,8 @@ class WikiHashTest (unittest.TestCase):
         hashCalculator = WikiHashCalculator (Application)
         hash_src = hashCalculator.getHash (self.testPage)
 
-        exampleStyleDir = u"../test/styles/example_jblog/example_jblog"
-        exampleStyleDir2 = u"../test/styles/example_jnet/example_jnet"
+        exampleStyleDir = "../test/styles/example_jblog/example_jblog"
+        exampleStyleDir2 = "../test/styles/example_jnet/example_jnet"
 
         # Изменим стиль страницы
         style.setPageStyle (self.testPage, exampleStyleDir)
@@ -238,12 +238,12 @@ class WikiHashTest (unittest.TestCase):
         hash_src = hashCalculator.getHash (self.testPage)
 
         # Загрузили плагин. Кэш не должен сработать
-        Application.plugins.load ([u"../test/plugins/testempty1"])
+        Application.plugins.load (["../test/plugins/testempty1"])
         hash2 = hashCalculator.getHash (self.testPage)
         self.assertNotEqual (hash2, hash_src)
 
         # Загрузили еще один плагин
-        Application.plugins.load ([u"../test/plugins/testempty2"])
+        Application.plugins.load (["../test/plugins/testempty2"])
         hash3 = hashCalculator.getHash (self.testPage)
         self.assertNotEqual (hash3, hash2)
         self.assertNotEqual (hash3, hash_src)
@@ -254,8 +254,8 @@ class WikiHashTest (unittest.TestCase):
         Проверка на то, что при изменении списка установленных плагинов не работает кэширование
         """
         Application.plugins.clear()
-        Application.plugins.load ([u"../test/plugins/testempty1"])
-        Application.plugins.load ([u"../test/plugins/testempty2"])
+        Application.plugins.load (["../test/plugins/testempty1"])
+        Application.plugins.load (["../test/plugins/testempty2"])
 
         hashCalculator = WikiHashCalculator (Application)
         hash_src = hashCalculator.getHash (self.testPage)
@@ -265,8 +265,8 @@ class WikiHashTest (unittest.TestCase):
         self.assertNotEqual (hash2, hash_src)
 
         # Перезагрузим плагины в другом порядке
-        Application.plugins.load ([u"../test/plugins/testempty1"])
-        Application.plugins.load ([u"../test/plugins/testempty2"])
+        Application.plugins.load (["../test/plugins/testempty1"])
+        Application.plugins.load (["../test/plugins/testempty2"])
 
         hash3 = hashCalculator.getHash (self.testPage)
         self.assertNotEqual (hash3, hash2)
@@ -291,7 +291,7 @@ class WikiHashTest (unittest.TestCase):
 
         Application.config.set (WikiConfig.WIKI_SECTION,
                                 WikiConfig.THUMB_SIZE_PARAM,
-                                u"Бла-бла-бла")
+                                "Бла-бла-бла")
 
         hash3 = hashCalculator.getHash (self.testPage)
         self.assertNotEqual (hash3, hash2)
@@ -307,7 +307,7 @@ class WikiHashTest (unittest.TestCase):
 
         Application.config.set (HtmlRenderConfig.HTML_SECTION,
                                 HtmlRenderConfig.FONT_FACE_NAME_PARAM,
-                                u"Бла-бла-бла")
+                                "Бла-бла-бла")
 
         hash2 = hashCalculator.getHash (self.testPage)
         self.assertNotEqual (hash2, hash_src)
@@ -320,7 +320,7 @@ class WikiHashTest (unittest.TestCase):
         hashCalculator = WikiHashCalculator (Application)
         hash_src = hashCalculator.getHash (self.testPage)
 
-        self.__htmlconfig.userStyle.value = u"p {background-color: maroon; /* Цвет фона под текстом параграфа */ color: white; /* Цвет текста */ }"
+        self.__htmlconfig.userStyle.value = "p {background-color: maroon; /* Цвет фона под текстом параграфа */ color: white; /* Цвет текста */ }"
 
         hash2 = hashCalculator.getHash (self.testPage)
         self.assertNotEqual (hash2, hash_src)
@@ -335,7 +335,7 @@ class WikiHashTest (unittest.TestCase):
 
         Application.config.set (HtmlRenderConfig.HTML_SECTION,
                                 HtmlRenderConfig.FONT_SIZE_PARAM,
-                                u"Бла-бла-бла")
+                                "Бла-бла-бла")
 
         hashCalculator.getHash (self.testPage)
 
@@ -349,7 +349,7 @@ class WikiHashTest (unittest.TestCase):
 
         Application.config.set (HtmlRenderConfig.HTML_SECTION,
                                 HtmlRenderConfig.FONT_BOLD_PARAM,
-                                u"Бла-бла-бла")
+                                "Бла-бла-бла")
 
         hashCalculator.getHash (self.testPage)
 
@@ -363,6 +363,6 @@ class WikiHashTest (unittest.TestCase):
 
         Application.config.set (HtmlRenderConfig.HTML_SECTION,
                                 HtmlRenderConfig.FONT_ITALIC_PARAM,
-                                u"Бла-бла-бла")
+                                "Бла-бла-бла")
 
         hashCalculator.getHash (self.testPage)

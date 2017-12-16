@@ -12,16 +12,16 @@ from outwiker.gui.tagspanelcontroller import TagsPanelController
 
 class TagsPanelTest (unittest.TestCase):
     def setUp (self):
-        self.path = mkdtemp (prefix=u'Абырвалг абыр')
+        self.path = mkdtemp (prefix='Абырвалг абыр')
 
         self.wikiroot = WikiDocument.create (self.path)
 
         factory = TextPageFactory()
-        factory.create (self.wikiroot, u"Страница 1", [u"тег 1"])
-        factory.create (self.wikiroot, u"Страница 2", [u"тег 1", u"тег 2"])
-        factory.create (self.wikiroot[u"Страница 2"], u"Страница 3", [u"тег 3"])
-        factory.create (self.wikiroot[u"Страница 2/Страница 3"], u"Страница 4", [])
-        factory.create (self.wikiroot[u"Страница 1"], u"Страница 5", [u"тег 4", u"тег 1"])
+        factory.create (self.wikiroot, "Страница 1", ["тег 1"])
+        factory.create (self.wikiroot, "Страница 2", ["тег 1", "тег 2"])
+        factory.create (self.wikiroot["Страница 2"], "Страница 3", ["тег 3"])
+        factory.create (self.wikiroot["Страница 2/Страница 3"], "Страница 4", [])
+        factory.create (self.wikiroot["Страница 1"], "Страница 5", ["тег 4", "тег 1"])
 
 
     def tearDown (self):
@@ -37,10 +37,10 @@ class TagsPanelTest (unittest.TestCase):
 
         TagsPanelController (panel, application)
 
-        self.assertTrue (u"тег 1" in panel.tags)
-        self.assertTrue (u"тег 2" in panel.tags)
-        self.assertTrue (u"тег 3" in panel.tags)
-        self.assertTrue (u"тег 4" in panel.tags)
+        self.assertTrue ("тег 1" in panel.tags)
+        self.assertTrue ("тег 2" in panel.tags)
+        self.assertTrue ("тег 3" in panel.tags)
+        self.assertTrue ("тег 4" in panel.tags)
 
         self.assertEqual (panel.marks, [])
 
@@ -51,15 +51,15 @@ class TagsPanelTest (unittest.TestCase):
         panel = FakeTagsPanel()
         TagsPanelController (panel, application)
 
-        self.wikiroot.selectedPage = self.wikiroot[u"Страница 1"]
-        self.assertTrue (u"тег 1" in panel.marks)
+        self.wikiroot.selectedPage = self.wikiroot["Страница 1"]
+        self.assertTrue ("тег 1" in panel.marks)
 
-        self.wikiroot.selectedPage = self.wikiroot[u"Страница 2/Страница 3"]
-        self.assertTrue (u"тег 3" in panel.marks)
+        self.wikiroot.selectedPage = self.wikiroot["Страница 2/Страница 3"]
+        self.assertTrue ("тег 3" in panel.marks)
 
-        self.wikiroot.selectedPage = self.wikiroot[u"Страница 1/Страница 5"]
-        self.assertTrue (u"тег 1" in panel.marks)
-        self.assertTrue (u"тег 4" in panel.marks)
+        self.wikiroot.selectedPage = self.wikiroot["Страница 1/Страница 5"]
+        self.assertTrue ("тег 1" in panel.marks)
+        self.assertTrue ("тег 4" in panel.marks)
 
         self.wikiroot.selectedPage = None
         self.assertEqual (panel.marks, [])
@@ -71,8 +71,8 @@ class TagsPanelTest (unittest.TestCase):
         panel = FakeTagsPanel()
         TagsPanelController (panel, application)
 
-        self.wikiroot.selectedPage = self.wikiroot[u"Страница 1"]
-        self.assertTrue (u"тег 1" in panel.marks)
+        self.wikiroot.selectedPage = self.wikiroot["Страница 1"]
+        self.assertTrue ("тег 1" in panel.marks)
 
         application.wikiroot = None
         self.assertEqual (panel.marks, [])
@@ -84,13 +84,13 @@ class TagsPanelTest (unittest.TestCase):
         panel = FakeTagsPanel()
         TagsPanelController (panel, application)
 
-        self.wikiroot.selectedPage = self.wikiroot[u"Страница 1"]
-        self.assertTrue (u"тег 1" in panel.marks)
+        self.wikiroot.selectedPage = self.wikiroot["Страница 1"]
+        self.assertTrue ("тег 1" in panel.marks)
 
-        self.wikiroot[u"Страница 1"].tags = [u"тег 1", u"тег 2", u"тег 666"]
-        self.assertTrue (u"тег 1" in panel.marks)
-        self.assertTrue (u"тег 2" in panel.marks)
-        self.assertTrue (u"тег 666" in panel.marks)
+        self.wikiroot["Страница 1"].tags = ["тег 1", "тег 2", "тег 666"]
+        self.assertTrue ("тег 1" in panel.marks)
+        self.assertTrue ("тег 2" in panel.marks)
+        self.assertTrue ("тег 666" in panel.marks)
 
 
 
@@ -100,13 +100,13 @@ class TagsPanelTest (unittest.TestCase):
         panel = FakeTagsPanel()
         TagsPanelController (panel, application)
 
-        self.wikiroot[u"Страница 2"].tags = [u"бла-бла-бла"]
+        self.wikiroot["Страница 2"].tags = ["бла-бла-бла"]
 
-        self.assertTrue (u"тег 1" in panel.tags)
-        self.assertTrue (u"тег 2" not in panel.tags)
-        self.assertTrue (u"тег 3" in panel.tags)
-        self.assertTrue (u"тег 4" in panel.tags)
-        self.assertTrue (u"бла-бла-бла" in panel.tags)
+        self.assertTrue ("тег 1" in panel.tags)
+        self.assertTrue ("тег 2" not in panel.tags)
+        self.assertTrue ("тег 3" in panel.tags)
+        self.assertTrue ("тег 4" in panel.tags)
+        self.assertTrue ("бла-бла-бла" in panel.tags)
 
 
     def testPageRemove (self):
@@ -116,12 +116,12 @@ class TagsPanelTest (unittest.TestCase):
         panel = FakeTagsPanel()
         TagsPanelController (panel, application)
 
-        self.wikiroot[u"Страница 2"].remove()
+        self.wikiroot["Страница 2"].remove()
 
-        self.assertTrue (u"тег 1" in panel.tags)
-        self.assertTrue (u"тег 2" not in panel.tags)
-        self.assertTrue (u"тег 3" not in panel.tags)
-        self.assertTrue (u"тег 4" in panel.tags)
+        self.assertTrue ("тег 1" in panel.tags)
+        self.assertTrue ("тег 2" not in panel.tags)
+        self.assertTrue ("тег 3" not in panel.tags)
+        self.assertTrue ("тег 4" in panel.tags)
 
 
     def testPageCreate (self):
@@ -131,13 +131,13 @@ class TagsPanelTest (unittest.TestCase):
         panel = FakeTagsPanel()
         TagsPanelController (panel, application)
 
-        TextPageFactory().create (self.wikiroot, u"Страница 10", [u"тег 10"])
+        TextPageFactory().create (self.wikiroot, "Страница 10", ["тег 10"])
 
-        self.assertTrue (u"тег 10" in panel.tags)
-        self.assertTrue (u"тег 1" in panel.tags)
-        self.assertTrue (u"тег 2" in panel.tags)
-        self.assertTrue (u"тег 3" in panel.tags)
-        self.assertTrue (u"тег 4" in panel.tags)
+        self.assertTrue ("тег 10" in panel.tags)
+        self.assertTrue ("тег 1" in panel.tags)
+        self.assertTrue ("тег 2" in panel.tags)
+        self.assertTrue ("тег 3" in panel.tags)
+        self.assertTrue ("тег 4" in panel.tags)
 
 
     def testClear(self):

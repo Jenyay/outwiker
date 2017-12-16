@@ -18,7 +18,7 @@ class WikiTableDialogTest (BaseMainWndTest):
         config = GeneralGuiConfig (self._application.config)
         config.tableColsCount.remove_option()
         factory = WikiPageFactory()
-        self._testpage = factory.create (self.wikiroot, u"Страница 1", [])
+        self._testpage = factory.create (self.wikiroot, "Страница 1", [])
 
 
     def tearDown (self):
@@ -26,7 +26,7 @@ class WikiTableDialogTest (BaseMainWndTest):
 
 
     def testDefault (self):
-        suffix = u''
+        suffix = ''
         dlg = TableDialog (self.wnd)
         Tester.dialogTester.appendOk()
 
@@ -35,7 +35,7 @@ class WikiTableDialogTest (BaseMainWndTest):
 
         result = controller.getResult()
 
-        validResult = u'''(:table border="1":)
+        validResult = '''(:table border="1":)
 (:row:)
 (:cell:)
 (:tableend:)'''
@@ -44,7 +44,7 @@ class WikiTableDialogTest (BaseMainWndTest):
 
 
     def testDefault_suffix (self):
-        suffix = u'20'
+        suffix = '20'
         dlg = TableDialog (self.wnd)
         Tester.dialogTester.appendOk()
 
@@ -53,7 +53,7 @@ class WikiTableDialogTest (BaseMainWndTest):
 
         result = controller.getResult()
 
-        validResult = u'''(:table20 border="1":)
+        validResult = '''(:table20 border="1":)
 (:row20:)
 (:cell20:)
 (:table20end:)'''
@@ -62,7 +62,7 @@ class WikiTableDialogTest (BaseMainWndTest):
 
 
     def testCells (self):
-        suffix = u''
+        suffix = ''
         dlg = TableDialog (self.wnd)
         controller = TableDialogController (dlg, suffix, self._application.config)
 
@@ -73,7 +73,7 @@ class WikiTableDialogTest (BaseMainWndTest):
 
         result = controller.getResult()
 
-        validResult = u'''(:table border="1":)
+        validResult = '''(:table border="1":)
 (:row:)
 (:cell:)
 (:cell:)
@@ -86,7 +86,7 @@ class WikiTableDialogTest (BaseMainWndTest):
 
 
     def testRowsCells (self):
-        suffix = u''
+        suffix = ''
         dlg = TableDialog (self.wnd)
         controller = TableDialogController (dlg, suffix, self._application.config)
 
@@ -98,7 +98,7 @@ class WikiTableDialogTest (BaseMainWndTest):
 
         result = controller.getResult()
 
-        validResult = u'''(:table border="1":)
+        validResult = '''(:table border="1":)
 (:row:)
 (:cell:)
 (:cell:)
@@ -123,7 +123,7 @@ class WikiTableDialogTest (BaseMainWndTest):
 
 
     def testBorder_01 (self):
-        suffix = u''
+        suffix = ''
         dlg = TableDialog (self.wnd)
         controller = TableDialogController (dlg, suffix, self._application.config)
         Tester.dialogTester.appendOk()
@@ -133,7 +133,7 @@ class WikiTableDialogTest (BaseMainWndTest):
 
         result = controller.getResult()
 
-        validResult = u'''(:table border="10":)
+        validResult = '''(:table border="10":)
 (:row:)
 (:cell:)
 (:tableend:)'''
@@ -142,7 +142,7 @@ class WikiTableDialogTest (BaseMainWndTest):
 
 
     def testBorder_02 (self):
-        suffix = u''
+        suffix = ''
         dlg = TableDialog (self.wnd)
         controller = TableDialogController (dlg, suffix, self._application.config)
         Tester.dialogTester.appendOk()
@@ -152,7 +152,7 @@ class WikiTableDialogTest (BaseMainWndTest):
 
         result = controller.getResult()
 
-        validResult = u'''(:table:)
+        validResult = '''(:table:)
 (:row:)
 (:cell:)
 (:tableend:)'''
@@ -161,7 +161,7 @@ class WikiTableDialogTest (BaseMainWndTest):
 
 
     def testColsCount (self):
-        suffix = u''
+        suffix = ''
         dlg = TableDialog (self.wnd)
         Tester.dialogTester.appendOk()
 
@@ -179,7 +179,7 @@ class WikiTableDialogTest (BaseMainWndTest):
 
 
     def testHCells (self):
-        suffix = u''
+        suffix = ''
         dlg = TableDialog (self.wnd)
         controller = TableDialogController (dlg, suffix, self._application.config)
 
@@ -192,7 +192,7 @@ class WikiTableDialogTest (BaseMainWndTest):
 
         result = controller.getResult()
 
-        validResult = u'''(:table border="1":)
+        validResult = '''(:table border="1":)
 (:row:)
 (:hcell:)
 (:hcell:)

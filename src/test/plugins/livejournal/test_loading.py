@@ -9,7 +9,7 @@ class LivejournalLoadingTest (BasePluginLoadingTest):
         """
         Должен возвращать путь до папки с тестируемым плагином
         """
-        return u"../plugins/livejournal"
+        return "../plugins/livejournal"
 
     def getPluginName(self):
         """

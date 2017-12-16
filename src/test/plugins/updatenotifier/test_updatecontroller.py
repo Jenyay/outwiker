@@ -18,7 +18,7 @@ class UpdateControllerTest(unittest.TestCase):
     """Tests for the UpdateNotifier plugin."""
     def setUp(self):
         self.loader = PluginsLoader(Application)
-        self.loader.load([u"../plugins/updatenotifier"])
+        self.loader.load(["../plugins/updatenotifier"])
 
     def tearDown(self):
         self.loader.clear()
@@ -26,7 +26,7 @@ class UpdateControllerTest(unittest.TestCase):
     def test_filter_empty_01(self):
         from updatenotifier.updatecontroller import UpdateController
 
-        pluginPath = self.loader[u'UpdateNotifier'].pluginPath
+        pluginPath = self.loader['UpdateNotifier'].pluginPath
         controller = UpdateController(Application, pluginPath)
 
         currentVersionsDict = {}
@@ -40,10 +40,10 @@ class UpdateControllerTest(unittest.TestCase):
     def test_filter_empty_02(self):
         from updatenotifier.updatecontroller import UpdateController
 
-        pluginPath = self.loader[u'UpdateNotifier'].pluginPath
+        pluginPath = self.loader['UpdateNotifier'].pluginPath
         controller = UpdateController(Application, pluginPath)
 
-        currentVersionsDict = {u'test_01': u'0.1'}
+        currentVersionsDict = {'test_01': '0.1'}
         latestVersionsDict = {}
 
         result = controller.filterUpdatedApps(currentVersionsDict,
@@ -54,12 +54,12 @@ class UpdateControllerTest(unittest.TestCase):
     def test_filter_empty_03(self):
         from updatenotifier.updatecontroller import UpdateController
 
-        pluginPath = self.loader[u'UpdateNotifier'].pluginPath
+        pluginPath = self.loader['UpdateNotifier'].pluginPath
         controller = UpdateController(Application, pluginPath)
 
         currentVersionsDict = {}
         latestVersionsDict = {
-            u'test_01': AppInfo(u'test', None),
+            'test_01': AppInfo('test', None),
         }
 
         result = controller.filterUpdatedApps(currentVersionsDict,
@@ -70,7 +70,7 @@ class UpdateControllerTest(unittest.TestCase):
     def test_filter_empty_04(self):
         from updatenotifier.updatecontroller import UpdateController
 
-        pluginPath = self.loader[u'UpdateNotifier'].pluginPath
+        pluginPath = self.loader['UpdateNotifier'].pluginPath
         controller = UpdateController(Application, pluginPath)
 
         latestVersion = Version(1, 0)
@@ -78,7 +78,7 @@ class UpdateControllerTest(unittest.TestCase):
 
         currentVersionsDict = {}
         latestVersionsDict = {
-            u'test_01': AppInfo(u'test',
+            'test_01': AppInfo('test',
                                 None,
                                 versionsList=[latestVersionInfo]),
         }
@@ -91,15 +91,15 @@ class UpdateControllerTest(unittest.TestCase):
     def test_filter_empty_05(self):
         from updatenotifier.updatecontroller import UpdateController
 
-        pluginPath = self.loader[u'UpdateNotifier'].pluginPath
+        pluginPath = self.loader['UpdateNotifier'].pluginPath
         controller = UpdateController(Application, pluginPath)
 
         latestVersion = Version(1, 0)
         latestVersionInfo = VersionInfo(latestVersion)
 
-        currentVersionsDict = {u'test_02': u'1.0'}
+        currentVersionsDict = {'test_02': '1.0'}
         latestVersionsDict = {
-            u'test_01': AppInfo(u'test',
+            'test_01': AppInfo('test',
                                 None,
                                 versionsList=[latestVersionInfo]),
         }
@@ -112,15 +112,15 @@ class UpdateControllerTest(unittest.TestCase):
     def test_filter_empty_06(self):
         from updatenotifier.updatecontroller import UpdateController
 
-        pluginPath = self.loader[u'UpdateNotifier'].pluginPath
+        pluginPath = self.loader['UpdateNotifier'].pluginPath
         controller = UpdateController(Application, pluginPath)
 
         latestVersion = Version(1, 0)
         latestVersionInfo = VersionInfo(latestVersion)
 
-        currentVersionsDict = {u'test_01': u'1.0'}
+        currentVersionsDict = {'test_01': '1.0'}
         latestVersionsDict = {
-            u'test_01': AppInfo(u'test',
+            'test_01': AppInfo('test',
                                 None,
                                 versionsList=[latestVersionInfo]),
         }
@@ -133,15 +133,15 @@ class UpdateControllerTest(unittest.TestCase):
     def test_filter_07(self):
         from updatenotifier.updatecontroller import UpdateController
 
-        pluginPath = self.loader[u'UpdateNotifier'].pluginPath
+        pluginPath = self.loader['UpdateNotifier'].pluginPath
         controller = UpdateController(Application, pluginPath)
 
         latestVersion = Version(1, 1)
         latestVersionInfo = VersionInfo(latestVersion)
 
-        currentVersionsDict = {u'test_01': u'1.0'}
+        currentVersionsDict = {'test_01': '1.0'}
         latestVersionsDict = {
-            u'test_01': AppInfo(u'test',
+            'test_01': AppInfo('test',
                                 None,
                                 versionsList=[latestVersionInfo]),
         }
@@ -150,20 +150,20 @@ class UpdateControllerTest(unittest.TestCase):
                                               latestVersionsDict)
 
         self.assertEqual(len(result), 1)
-        self.assertEqual(result[u'test_01'].appname, u'test')
+        self.assertEqual(result['test_01'].appname, 'test')
 
     def test_filter_empty_08(self):
         from updatenotifier.updatecontroller import UpdateController
 
-        pluginPath = self.loader[u'UpdateNotifier'].pluginPath
+        pluginPath = self.loader['UpdateNotifier'].pluginPath
         controller = UpdateController(Application, pluginPath)
 
         latestVersion = Version(0, 9)
         latestVersionInfo = VersionInfo(latestVersion)
 
-        currentVersionsDict = {u'test_01': u'1.0'}
+        currentVersionsDict = {'test_01': '1.0'}
         latestVersionsDict = {
-            u'test_01': AppInfo(u'test',
+            'test_01': AppInfo('test',
                                 None,
                                 versionsList=[latestVersionInfo]),
         }
@@ -176,18 +176,18 @@ class UpdateControllerTest(unittest.TestCase):
     def test_filter_09(self):
         from updatenotifier.updatecontroller import UpdateController
 
-        pluginPath = self.loader[u'UpdateNotifier'].pluginPath
+        pluginPath = self.loader['UpdateNotifier'].pluginPath
         controller = UpdateController(Application, pluginPath)
 
         latestVersion = Version(1, 1)
         latestVersionInfo = VersionInfo(latestVersion)
 
-        currentVersionsDict = {u'test_01': u'1.0',
-                               u'test_02': u'2.0',
+        currentVersionsDict = {'test_01': '1.0',
+                               'test_02': '2.0',
                                }
 
         latestVersionsDict = {
-            u'test_01': AppInfo(u'test',
+            'test_01': AppInfo('test',
                                 None,
                                 versionsList=[latestVersionInfo]),
         }
@@ -196,4 +196,4 @@ class UpdateControllerTest(unittest.TestCase):
                                               latestVersionsDict)
 
         self.assertEqual(len(result), 1)
-        self.assertEqual(result[u'test_01'].appname, u'test')
+        self.assertEqual(result['test_01'].appname, 'test')

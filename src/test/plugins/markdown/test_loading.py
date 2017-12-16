@@ -8,7 +8,7 @@ class MarkdownLoadingTest (BasePluginLoadingTest):
         """
         Must return path to plugin
         """
-        return u"../plugins/markdown"
+        return "../plugins/markdown"
 
 
     def getPluginName (self):

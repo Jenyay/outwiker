@@ -8,7 +8,7 @@ class SessionsLoadingTest (BasePluginLoadingTest):
         """
         Должен возвращать путь до папки с тестируемым плагином
         """
-        return u"../plugins/sessions"
+        return "../plugins/sessions"
 
 
     def getPluginName (self):

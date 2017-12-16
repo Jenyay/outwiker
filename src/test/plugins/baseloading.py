@@ -11,10 +11,7 @@ from outwiker.pages.search.searchpage import SearchPageFactory
 from test.guitests.basemainwnd import BaseMainWndTest
 
 
-class BasePluginLoadingTest (BaseMainWndTest):
-    __metaclass__ = ABCMeta
-
-
+class BasePluginLoadingTest (BaseMainWndTest, metaclass=ABCMeta):
     @abstractmethod
     def getPluginDir (self):
         """
@@ -43,10 +40,10 @@ class BasePluginLoadingTest (BaseMainWndTest):
 
     def __createWiki (self):
         # Здесь будет создаваться вики
-        WikiPageFactory().create (self.wikiroot, u"Викистраница", [])
-        TextPageFactory().create (self.wikiroot, u"Текст", [])
-        HtmlPageFactory().create (self.wikiroot, u"HTML", [])
-        SearchPageFactory().create (self.wikiroot, u"Search", [])
+        WikiPageFactory().create (self.wikiroot, "Викистраница", [])
+        TextPageFactory().create (self.wikiroot, "Текст", [])
+        HtmlPageFactory().create (self.wikiroot, "HTML", [])
+        SearchPageFactory().create (self.wikiroot, "Search", [])
 
 
     def tearDown(self):
@@ -74,23 +71,23 @@ class BasePluginLoadingTest (BaseMainWndTest):
 
     def testDestroy_03 (self):
         Application.wikiroot = self.wikiroot
-        Application.selectedPage = self.wikiroot[u"Викистраница"]
+        Application.selectedPage = self.wikiroot["Викистраница"]
         self.loader.clear()
 
 
     def testDestroy_04 (self):
         Application.wikiroot = self.wikiroot
-        Application.selectedPage = self.wikiroot[u"Текст"]
+        Application.selectedPage = self.wikiroot["Текст"]
         self.loader.clear()
 
 
     def testDestroy_05 (self):
         Application.wikiroot = self.wikiroot
-        Application.selectedPage = self.wikiroot[u"HTML"]
+        Application.selectedPage = self.wikiroot["HTML"]
         self.loader.clear()
 
 
     def testDestroy_06 (self):
         Application.wikiroot = self.wikiroot
-        Application.selectedPage = self.wikiroot[u"Search"]
+        Application.selectedPage = self.wikiroot["Search"]
         self.loader.clear()

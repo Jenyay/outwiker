@@ -15,11 +15,11 @@ from test.utils import removeDir
 
 class SpoilerPluginTest (unittest.TestCase):
     def setUp(self):
-        self.__pluginname = u"Spoiler"
+        self.__pluginname = "Spoiler"
 
         self.__createWiki()
 
-        dirlist = [u"../plugins/spoiler"]
+        dirlist = ["../plugins/spoiler"]
 
         self.loader = PluginsLoader(Application)
         self.loader.load (dirlist)
@@ -30,12 +30,12 @@ class SpoilerPluginTest (unittest.TestCase):
 
     def __createWiki (self):
         # Здесь будет создаваться вики
-        self.path = mkdtemp (prefix=u'Абырвалг абыр')
+        self.path = mkdtemp (prefix='Абырвалг абыр')
 
         self.wikiroot = WikiDocument.create (self.path)
 
-        WikiPageFactory().create (self.wikiroot, u"Страница 1", [])
-        self.testPage = self.wikiroot[u"Страница 1"]
+        WikiPageFactory().create (self.wikiroot, "Страница 1", [])
+        self.testPage = self.wikiroot["Страница 1"]
 
 
     def tearDown(self):
@@ -64,115 +64,115 @@ class SpoilerPluginTest (unittest.TestCase):
 
 
     def testEmptyCommand (self):
-        text = u'''bla-bla-bla (:spoiler:) bla-bla-bla'''
+        text = '''bla-bla-bla (:spoiler:) bla-bla-bla'''
 
         self.testPage.content = text
 
         generator = HtmlGenerator (self.testPage)
         result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
-        self.assertTrue (u"bla-bla-bla" in result)
+        self.assertTrue ("bla-bla-bla" in result)
 
 
     def testSimple (self):
-        text = u"бла-бла-бла (:spoiler:)Текст(:spoilerend:)"
+        text = "бла-бла-бла (:spoiler:)Текст(:spoilerend:)"
 
         self.testPage.content = text
 
         generator = HtmlGenerator (self.testPage)
         result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
-        self.assertTrue (u"бла-бла-бла" in result)
-        self.assertTrue (u"Текст</div></div></div>" in result)
+        self.assertTrue ("бла-бла-бла" in result)
+        self.assertTrue ("Текст</div></div></div>" in result)
 
 
     def testSimpleNumbers (self):
         for index in range (10):
-            text = u"бла-бла-бла (:spoiler{index}:)Текст(:spoiler{index}end:)".format (index=index)
+            text = "бла-бла-бла (:spoiler{index}:)Текст(:spoiler{index}end:)".format (index=index)
 
             self.testPage.content = text
 
             generator = HtmlGenerator (self.testPage)
             result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
-            self.assertTrue (u"бла-бла-бла" in result)
-            self.assertTrue (u"Текст</div></div></div>" in result)
+            self.assertTrue ("бла-бла-бла" in result)
+            self.assertTrue ("Текст</div></div></div>" in result)
 
 
     def testWikiBoldContent (self):
-        text = u"бла-бла-бла (:spoiler:)'''Текст'''(:spoilerend:)"
+        text = "бла-бла-бла (:spoiler:)'''Текст'''(:spoilerend:)"
 
         self.testPage.content = text
 
         generator = HtmlGenerator (self.testPage)
         result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
-        self.assertTrue (u"бла-бла-бла" in result)
-        self.assertTrue (u"<b>Текст</b></div></div></div>" in result)
+        self.assertTrue ("бла-бла-бла" in result)
+        self.assertTrue ("<b>Текст</b></div></div></div>" in result)
 
 
     def testExpandText (self):
-        text = u"""бла-бла-бла (:spoiler expandtext="Раскукожить":)Текст(:spoilerend:)"""
+        text = """бла-бла-бла (:spoiler expandtext="Раскукожить":)Текст(:spoilerend:)"""
 
         self.testPage.content = text
 
         generator = HtmlGenerator (self.testPage)
         result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
-        self.assertTrue (u"бла-бла-бла" in result)
-        self.assertTrue (u"Текст</div></div></div>" in result)
-        self.assertTrue (u"Раскукожить</a></span></div>" in result)
+        self.assertTrue ("бла-бла-бла" in result)
+        self.assertTrue ("Текст</div></div></div>" in result)
+        self.assertTrue ("Раскукожить</a></span></div>" in result)
 
 
     def testCollapseText (self):
-        text = u"""бла-бла-бла (:spoiler collapsetext="Скукожить":)Текст(:spoilerend:)"""
+        text = """бла-бла-бла (:spoiler collapsetext="Скукожить":)Текст(:spoilerend:)"""
 
         self.testPage.content = text
 
         generator = HtmlGenerator (self.testPage)
         result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
-        self.assertTrue (u"бла-бла-бла" in result)
-        self.assertTrue (u"Текст</div></div></div>" in result)
-        self.assertTrue (u"Скукожить</a>" in result)
+        self.assertTrue ("бла-бла-бла" in result)
+        self.assertTrue ("Текст</div></div></div>" in result)
+        self.assertTrue ("Скукожить</a>" in result)
 
 
     def testExpandCollapseText (self):
-        text = u"""бла-бла-бла (:spoiler expandtext="Раскукожить" collapsetext="Скукожить":)Текст(:spoilerend:)"""
+        text = """бла-бла-бла (:spoiler expandtext="Раскукожить" collapsetext="Скукожить":)Текст(:spoilerend:)"""
 
         self.testPage.content = text
 
         generator = HtmlGenerator (self.testPage)
         result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
-        self.assertTrue (u"бла-бла-бла" in result)
-        self.assertTrue (u"Текст</div></div></div>" in result)
-        self.assertTrue (u"Раскукожить</a></span></div>" in result)
-        self.assertTrue (u"Скукожить</a>" in result)
+        self.assertTrue ("бла-бла-бла" in result)
+        self.assertTrue ("Текст</div></div></div>" in result)
+        self.assertTrue ("Раскукожить</a></span></div>" in result)
+        self.assertTrue ("Скукожить</a>" in result)
 
 
     def testInline (self):
-        text = u"бла-бла-бла (:spoiler inline:)Текст(:spoilerend:)"
+        text = "бла-бла-бла (:spoiler inline:)Текст(:spoilerend:)"
 
         self.testPage.content = text
 
         generator = HtmlGenerator (self.testPage)
         result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
-        self.assertTrue (u"бла-бла-бла" in result)
-        self.assertFalse (u"Текст</div></div></div>" in result)
-        self.assertTrue (u"<span><span" in result)
+        self.assertTrue ("бла-бла-бла" in result)
+        self.assertFalse ("Текст</div></div></div>" in result)
+        self.assertTrue ("<span><span" in result)
 
 
     def testInlineExpandText (self):
-        text = u"""бла-бла-бла (:spoiler expandtext="Раскукожить" inline:)Текст(:spoilerend:)"""
+        text = """бла-бла-бла (:spoiler expandtext="Раскукожить" inline:)Текст(:spoilerend:)"""
 
         self.testPage.content = text
 
         generator = HtmlGenerator (self.testPage)
         result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
-        self.assertTrue (u"бла-бла-бла" in result)
-        self.assertFalse (u"Текст</div></div></div>" in result)
-        self.assertTrue (u"<span><span" in result)
-        self.assertTrue (u"""<a href="#">Раскукожить</a>""" in result)
+        self.assertTrue ("бла-бла-бла" in result)
+        self.assertFalse ("Текст</div></div></div>" in result)
+        self.assertTrue ("<span><span" in result)
+        self.assertTrue ("""<a href="#">Раскукожить</a>""" in result)

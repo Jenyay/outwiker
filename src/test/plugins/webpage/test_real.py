@@ -2,7 +2,7 @@
 
 import os.path
 from tempfile import mkdtemp
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import unittest
 
 from outwiker.core.application import Application
@@ -12,9 +12,9 @@ from test.utils import removeDir
 
 class RealTest (unittest.TestCase):
     def setUp (self):
-        self.plugindirlist = [u'../plugins/webpage']
-        self._staticDirName = u'__download'
-        self._tempDir = mkdtemp (prefix=u'Абырвалг абыр')
+        self.plugindirlist = ['../plugins/webpage']
+        self._staticDirName = '__download'
+        self._tempDir = mkdtemp (prefix='Абырвалг абыр')
 
         self.loader = PluginsLoader(Application)
         self.loader.load (self.plugindirlist)
@@ -31,7 +31,7 @@ class RealTest (unittest.TestCase):
         controller = DownloadController(self._tempDir, self._staticDirName)
         downloader = Downloader ()
 
-        url = u'http://www.crummy.com/software/BeautifulSoup/bs4/doc/'
+        url = 'http://www.crummy.com/software/BeautifulSoup/bs4/doc/'
         downloader.start (url, controller)
 
         self.assertTrue (downloader.success)
@@ -42,31 +42,31 @@ class RealTest (unittest.TestCase):
         self.assertTrue (os.path.join (
             self._tempDir,
             self._staticDirName,
-            u'default.css')
+            'default.css')
         )
 
         self.assertTrue (os.path.join (
             self._tempDir,
             self._staticDirName,
-            u'pygments.css')
+            'pygments.css')
         )
 
         self.assertTrue (os.path.join (
             self._tempDir,
             self._staticDirName,
-            u'jquery.js')
+            'jquery.js')
         )
 
         self.assertTrue (os.path.join (
             self._tempDir,
             self._staticDirName,
-            u'underscore.js')
+            'underscore.js')
         )
 
         self.assertTrue (os.path.join (
             self._tempDir,
             self._staticDirName,
-            u'doctools.js')
+            'doctools.js')
         )
 
 
@@ -76,7 +76,7 @@ class RealTest (unittest.TestCase):
         controller = DownloadController(self._tempDir, self._staticDirName)
         downloader = Downloader ()
 
-        url = u'https://toster.ru/q/273244'
+        url = 'https://toster.ru/q/273244'
         downloader.start (url, controller)
 
         self.assertTrue (downloader.success)
@@ -88,7 +88,7 @@ class RealTest (unittest.TestCase):
         controller = DownloadController(self._tempDir, self._staticDirName)
         downloader = Downloader ()
 
-        url = u'http://ru.stackoverflow.com/questions/476918/django-%D0%97%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B8%D0%B5-%D0%B2-%D0%B7%D0%B0%D0%B2%D0%B8%D1%81%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D0%B8-%D0%BE%D1%82-%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B8%D0%B9-%D0%B2-%D0%91%D0%94'
+        url = 'http://ru.stackoverflow.com/questions/476918/django-%D0%97%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B8%D0%B5-%D0%B2-%D0%B7%D0%B0%D0%B2%D0%B8%D1%81%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D0%B8-%D0%BE%D1%82-%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B8%D0%B9-%D0%B2-%D0%91%D0%94'
         downloader.start (url, controller)
 
         self.assertTrue (downloader.success)
@@ -111,4 +111,4 @@ class RealTest (unittest.TestCase):
     def _path2url (path):
         path = os.path.abspath(path)
         path = path.encode('utf8')
-        return 'file:' + urllib.pathname2url(path)
+        return 'file:' + urllib.request.pathname2url(path)

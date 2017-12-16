@@ -8,7 +8,7 @@ class HtmlHeadsLoadingTest (BasePluginLoadingTest):
         """
         Должен возвращать путь до папки с тестируемым плагином
         """
-        return u"../plugins/htmlheads"
+        return "../plugins/htmlheads"
 
 
     def getPluginName (self):

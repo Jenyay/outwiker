@@ -18,11 +18,11 @@ class HtmlHeadsTest (unittest.TestCase):
     def setUp(self):
         self.maxDiff = None
 
-        self.filesPath = u"../test/samplefiles/"
+        self.filesPath = "../test/samplefiles/"
         self.__createWiki()
-        self.testPage = self.wikiroot[u"Страница 1"]
+        self.testPage = self.wikiroot["Страница 1"]
 
-        dirlist = [u"../plugins/htmlheads"]
+        dirlist = ["../plugins/htmlheads"]
 
         self.loader = PluginsLoader(Application)
         self.loader.load(dirlist)
@@ -33,11 +33,11 @@ class HtmlHeadsTest (unittest.TestCase):
 
     def __createWiki (self):
         # Здесь будет создаваться вики
-        self.path = mkdtemp (prefix=u'Абырвалг абыр')
+        self.path = mkdtemp (prefix='Абырвалг абыр')
 
         self.wikiroot = WikiDocument.create (self.path)
 
-        WikiPageFactory().create (self.wikiroot, u"Страница 1", [])
+        WikiPageFactory().create (self.wikiroot, "Страница 1", [])
 
 
     def tearDown(self):
@@ -50,107 +50,107 @@ class HtmlHeadsTest (unittest.TestCase):
 
 
     def testTitle_01 (self):
-        text = u'(:title Бла-бла-бла:)'
+        text = '(:title Бла-бла-бла:)'
 
         self.testPage.content = text
 
         generator = HtmlGenerator (self.testPage)
         result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
-        self.assertIn (u"<title>Бла-бла-бла</title>", result)
+        self.assertIn ("<title>Бла-бла-бла</title>", result)
 
 
     def testTitle_02 (self):
-        text = u'(:title    Бла-бла-бла бла-бла   :)'
+        text = '(:title    Бла-бла-бла бла-бла   :)'
 
         self.testPage.content = text
 
         generator = HtmlGenerator (self.testPage)
         result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
-        self.assertIn (u"<title>Бла-бла-бла бла-бла</title>", result)
+        self.assertIn ("<title>Бла-бла-бла бла-бла</title>", result)
 
 
     def testDescription_01 (self):
-        text = u'(:description Бла-бла-бла абырвалг:)'
+        text = '(:description Бла-бла-бла абырвалг:)'
 
         self.testPage.content = text
 
         generator = HtmlGenerator (self.testPage)
         result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
-        self.assertIn (u'<meta name="description" content="Бла-бла-бла абырвалг"/>', result)
+        self.assertIn ('<meta name="description" content="Бла-бла-бла абырвалг"/>', result)
 
 
     def testDescription_02 (self):
-        text = u'(:description    Бла-бла-бла абырвалг   :)'
+        text = '(:description    Бла-бла-бла абырвалг   :)'
 
         self.testPage.content = text
 
         generator = HtmlGenerator (self.testPage)
         result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
-        self.assertIn (u'<meta name="description" content="Бла-бла-бла абырвалг"/>', result)
+        self.assertIn ('<meta name="description" content="Бла-бла-бла абырвалг"/>', result)
 
 
     def testDescription_03 (self):
-        text = u'(:description:)'
+        text = '(:description:)'
 
         self.testPage.content = text
 
         generator = HtmlGenerator (self.testPage)
         result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
-        self.assertIn (u'<meta name="description" content=""/>', result)
+        self.assertIn ('<meta name="description" content=""/>', result)
 
 
     def testKeywords_01 (self):
-        text = u'(:keywords Бла-бла-бла, абырвалг:)'
+        text = '(:keywords Бла-бла-бла, абырвалг:)'
 
         self.testPage.content = text
 
         generator = HtmlGenerator (self.testPage)
         result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
-        self.assertIn (u'<meta name="keywords" content="Бла-бла-бла, абырвалг"/>', result)
+        self.assertIn ('<meta name="keywords" content="Бла-бла-бла, абырвалг"/>', result)
 
 
     def testKeywords_02 (self):
-        text = u'(:keywords     Бла-бла-бла, абырвалг    :)'
+        text = '(:keywords     Бла-бла-бла, абырвалг    :)'
 
         self.testPage.content = text
 
         generator = HtmlGenerator (self.testPage)
         result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
-        self.assertIn (u'<meta name="keywords" content="Бла-бла-бла, абырвалг"/>', result)
+        self.assertIn ('<meta name="keywords" content="Бла-бла-бла, абырвалг"/>', result)
 
 
     def testKeywords_03 (self):
-        text = u'(:keywords:)'
+        text = '(:keywords:)'
 
         self.testPage.content = text
 
         generator = HtmlGenerator (self.testPage)
         result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
-        self.assertIn (u'<meta name="keywords" content=""/>', result)
+        self.assertIn ('<meta name="keywords" content=""/>', result)
 
 
     def testHtmlHead_01 (self):
-        text = u'''(:htmlhead:)<meta name="keywords" content="Бла-бла-бла, абырвалг"/>(:htmlheadend:)'''
+        text = '''(:htmlhead:)<meta name="keywords" content="Бла-бла-бла, абырвалг"/>(:htmlheadend:)'''
 
         self.testPage.content = text
 
         generator = HtmlGenerator (self.testPage)
         result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
-        self.assertIn (u'<meta name="keywords" content="Бла-бла-бла, абырвалг"/>', result)
+        self.assertIn ('<meta name="keywords" content="Бла-бла-бла, абырвалг"/>', result)
         self.assertNotIn ("(:htmlhead:)", result)
 
 
     def testHtmlHead_02 (self):
-        text = u'''(:htmlhead:)
+        text = '''(:htmlhead:)
         <meta name="keywords" content="Бла-бла-бла, абырвалг"/>
         <meta name="description" content="Бла-бла-бла абырвалг"/>
 (:htmlheadend:)'''
@@ -160,13 +160,13 @@ class HtmlHeadsTest (unittest.TestCase):
         generator = HtmlGenerator (self.testPage)
         result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
-        self.assertIn (u'<meta name="keywords" content="Бла-бла-бла, абырвалг"/>', result)
-        self.assertIn (u'<meta name="description" content="Бла-бла-бла абырвалг"/>', result)
+        self.assertIn ('<meta name="keywords" content="Бла-бла-бла, абырвалг"/>', result)
+        self.assertIn ('<meta name="description" content="Бла-бла-бла абырвалг"/>', result)
         self.assertNotIn ("(:htmlhead:)", result)
 
 
     def testHtmlHead_03 (self):
-        text = u'''(:htmlhead:)(:htmlheadend:)'''
+        text = '''(:htmlhead:)(:htmlheadend:)'''
 
         self.testPage.content = text
 

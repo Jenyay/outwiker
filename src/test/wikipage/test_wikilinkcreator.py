@@ -16,116 +16,116 @@ class WikiLinkCreatorTest(unittest.TestCase):
         self.config.linkStyleOptions.value = 0
 
     def testCreateStyle0(self):
-        comment = u"Бла-бла-бла"
-        link = u"Ссылко бла-бла-бла"
+        comment = "Бла-бла-бла"
+        link = "Ссылко бла-бла-бла"
 
         creator = LinkCreator(self.config)
         text = creator.create(link, comment)
 
-        self.assertEqual(text, u"[[Бла-бла-бла -> Ссылко бла-бла-бла]]")
+        self.assertEqual(text, "[[Бла-бла-бла -> Ссылко бла-бла-бла]]")
 
     def testCreateStyle1(self):
         self.config.linkStyleOptions.value = 1
-        comment = u"Бла-бла-бла"
-        link = u"Ссылко бла-бла-бла"
+        comment = "Бла-бла-бла"
+        link = "Ссылко бла-бла-бла"
 
         creator = LinkCreator(self.config)
         text = creator.create(link, comment)
 
-        self.assertEqual(text, u"[[Ссылко бла-бла-бла | Бла-бла-бла]]")
+        self.assertEqual(text, "[[Ссылко бла-бла-бла | Бла-бла-бла]]")
 
     def testCreateStyleInvalid(self):
         self.config.linkStyleOptions.value = 100
-        comment = u"Бла-бла-бла"
-        link = u"Ссылко бла-бла-бла"
+        comment = "Бла-бла-бла"
+        link = "Ссылко бла-бла-бла"
 
         creator = LinkCreator(self.config)
         text = creator.create(link, comment)
 
-        self.assertEqual(text, u"[[Бла-бла-бла -> Ссылко бла-бла-бла]]")
+        self.assertEqual(text, "[[Бла-бла-бла -> Ссылко бла-бла-бла]]")
 
     def testEmptyComment0(self):
-        comment = u""
-        link = u"Ссылко бла-бла-бла"
+        comment = ""
+        link = "Ссылко бла-бла-бла"
 
         creator = LinkCreator(self.config)
         text = creator.create(link, comment)
 
-        self.assertEqual(text, u"[[Ссылко бла-бла-бла]]")
+        self.assertEqual(text, "[[Ссылко бла-бла-бла]]")
 
     def testEmptyComment1(self):
         self.config.linkStyleOptions.value = 1
-        comment = u""
-        link = u"Ссылко бла-бла-бла"
+        comment = ""
+        link = "Ссылко бла-бла-бла"
 
         creator = LinkCreator(self.config)
         text = creator.create(link, comment)
 
-        self.assertEqual(text, u"[[Ссылко бла-бла-бла]]")
+        self.assertEqual(text, "[[Ссылко бла-бла-бла]]")
 
     def testLinkComment0(self):
-        comment = u"Ссылко бла-бла-бла"
+        comment = "Ссылко бла-бла-бла"
         link = comment
 
         creator = LinkCreator(self.config)
         text = creator.create(link, comment)
 
-        self.assertEqual(text, u"[[Ссылко бла-бла-бла]]")
+        self.assertEqual(text, "[[Ссылко бла-бла-бла]]")
 
     def testLinkComment1(self):
         self.config.linkStyleOptions.value = 1
-        comment = u"Ссылко бла-бла-бла"
+        comment = "Ссылко бла-бла-бла"
         link = comment
 
         creator = LinkCreator(self.config)
         text = creator.create(link, comment)
 
-        self.assertEqual(text, u"[[Ссылко бла-бла-бла]]")
+        self.assertEqual(text, "[[Ссылко бла-бла-бла]]")
 
     def testLinkCommentInvalid(self):
         self.config.linkStyleOptions.value = 100
-        comment = u"Ссылко бла-бла-бла"
+        comment = "Ссылко бла-бла-бла"
         link = comment
 
         creator = LinkCreator(self.config)
         text = creator.create(link, comment)
 
-        self.assertEqual(text, u"[[Ссылко бла-бла-бла]]")
+        self.assertEqual(text, "[[Ссылко бла-бла-бла]]")
 
     def testEmptyCommentStrip0(self):
-        comment = u"  "
-        link = u"Ссылко бла-бла-бла"
+        comment = "  "
+        link = "Ссылко бла-бла-бла"
 
         creator = LinkCreator(self.config)
         text = creator.create(link, comment)
 
-        self.assertEqual(text, u"[[Ссылко бла-бла-бла]]")
+        self.assertEqual(text, "[[Ссылко бла-бла-бла]]")
 
     def testEmptyCommentStrip1(self):
         self.config.linkStyleOptions.value = 1
-        comment = u"   "
-        link = u"Ссылко бла-бла-бла"
+        comment = "   "
+        link = "Ссылко бла-бла-бла"
 
         creator = LinkCreator(self.config)
         text = creator.create(link, comment)
 
-        self.assertEqual(text, u"[[Ссылко бла-бла-бла]]")
+        self.assertEqual(text, "[[Ссылко бла-бла-бла]]")
 
     def testLinkCommentStrip0(self):
-        comment = u"   Ссылко бла-бла-бла     "
-        link = u"Ссылко бла-бла-бла"
+        comment = "   Ссылко бла-бла-бла     "
+        link = "Ссылко бла-бла-бла"
 
         creator = LinkCreator(self.config)
         text = creator.create(link, comment)
 
-        self.assertEqual(text, u"[[Ссылко бла-бла-бла]]")
+        self.assertEqual(text, "[[Ссылко бла-бла-бла]]")
 
     def testLinkCommentStrip1(self):
         self.config.linkStyleOptions.value = 1
-        comment = u"   Ссылко бла-бла-бла     "
-        link = u"Ссылко бла-бла-бла"
+        comment = "   Ссылко бла-бла-бла     "
+        link = "Ссылко бла-бла-бла"
 
         creator = LinkCreator(self.config)
         text = creator.create(link, comment)
 
-        self.assertEqual(text, u"[[Ссылко бла-бла-бла]]")
+        self.assertEqual(text, "[[Ссылко бла-бла-бла]]")

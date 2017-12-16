@@ -9,7 +9,7 @@ class ExternalToolsLoadingTest (BasePluginLoadingTest):
         """
         Должен возвращать путь до папки с тестируемым плагином
         """
-        return u"../plugins/externaltools"
+        return "../plugins/externaltools"
 
     def getPluginName(self):
         """

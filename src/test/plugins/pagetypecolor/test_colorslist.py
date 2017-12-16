@@ -9,7 +9,7 @@ from outwiker.core.pluginsloader import PluginsLoader
 
 class PageTypeColor_ColorsListTest(unittest.TestCase):
     def setUp(self):
-        plugins_dirs = [u"../plugins/pagetypecolor"]
+        plugins_dirs = ["../plugins/pagetypecolor"]
         self._application = Application
 
         self.loader = PluginsLoader(self._application)
@@ -24,7 +24,7 @@ class PageTypeColor_ColorsListTest(unittest.TestCase):
         from pagetypecolor.colorslist import ColorsList
         from pagetypecolor.config import PageTypeColorConfig
 
-        pagetype = u'wiki'
+        pagetype = 'wiki'
 
         colorslist = ColorsList(self._application)
 
@@ -44,10 +44,10 @@ class PageTypeColor_ColorsListTest(unittest.TestCase):
 
         pageTypeList = colorslist.getPageTypes()
 
-        self.assertIn(u'wiki', pageTypeList)
-        self.assertIn(u'html', pageTypeList)
-        self.assertIn(u'text', pageTypeList)
-        self.assertIn(u'search', pageTypeList)
+        self.assertIn('wiki', pageTypeList)
+        self.assertIn('html', pageTypeList)
+        self.assertIn('text', pageTypeList)
+        self.assertIn('search', pageTypeList)
 
     def test_init_markdown(self):
         self._loadMarkdownPlugin()
@@ -59,10 +59,10 @@ class PageTypeColor_ColorsListTest(unittest.TestCase):
 
         pageTypeList = colorslist.getPageTypes()
 
-        self.assertIn(u'markdown', pageTypeList)
+        self.assertIn('markdown', pageTypeList)
 
     def test_init_markdown_config(self):
-        pagetype = u'markdown'
+        pagetype = 'markdown'
         self._loadMarkdownPlugin()
 
         from pagetypecolor.colorslist import ColorsList
@@ -81,8 +81,8 @@ class PageTypeColor_ColorsListTest(unittest.TestCase):
         from pagetypecolor.colorslist import ColorsList
         from pagetypecolor.config import PageTypeColorConfig
 
-        color = u'#AABBCC'
-        pagetype = u'wiki'
+        color = '#AABBCC'
+        pagetype = 'wiki'
 
         color_param = StringOption(self._application.config,
                                    PageTypeColorConfig.SECTION,
@@ -98,8 +98,8 @@ class PageTypeColor_ColorsListTest(unittest.TestCase):
     def test_setColor_01(self):
         from pagetypecolor.colorslist import ColorsList
 
-        color = u'#AABBCC'
-        pagetype = u'wiki'
+        color = '#AABBCC'
+        pagetype = 'wiki'
 
         colorslist = ColorsList(self._application)
         colorslist.load()
@@ -110,8 +110,8 @@ class PageTypeColor_ColorsListTest(unittest.TestCase):
     def test_setColor_02(self):
         from pagetypecolor.colorslist import ColorsList
 
-        color = u'#AABBCC'
-        pagetype = u'wiki'
+        color = '#AABBCC'
+        pagetype = 'wiki'
 
         colorslist = ColorsList(self._application)
         colorslist.setColor(pagetype, color)
@@ -121,8 +121,8 @@ class PageTypeColor_ColorsListTest(unittest.TestCase):
     def test_setColor_03(self):
         from pagetypecolor.colorslist import ColorsList
 
-        color = u'#AABBCC'
-        pagetype = u'wiki'
+        color = '#AABBCC'
+        pagetype = 'wiki'
 
         colorslist = ColorsList(self._application)
         colorslist.setColor(pagetype, color)
@@ -137,14 +137,14 @@ class PageTypeColor_ColorsListTest(unittest.TestCase):
 
         from pagetypecolor.colorslist import ColorsList
 
-        pagetype = u'markdown'
+        pagetype = 'markdown'
 
         colorslist = ColorsList(self._application)
         colorslist.load()
         color_param = colorslist.getColor(pagetype)
 
         self.assertIsNotNone(color_param)
-        self.assertNotEqual(color_param, u'white')
+        self.assertNotEqual(color_param, 'white')
 
     def _clearConfig(self):
         from pagetypecolor.config import PageTypeColorConfig
@@ -154,7 +154,7 @@ class PageTypeColor_ColorsListTest(unittest.TestCase):
     def _loadMarkdownPlugin(self):
         self.loader.clear()
 
-        plugins_dirs = [u"../plugins/pagetypecolor",
-                        u"../plugins/markdown",
+        plugins_dirs = ["../plugins/pagetypecolor",
+                        "../plugins/markdown",
                         ]
         self.loader.load(plugins_dirs)

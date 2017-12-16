@@ -14,7 +14,7 @@ from test.utils import removeDir
 
 class GraphBuilderTest (unittest.TestCase):
     def setUp(self):
-        dirlist = [u"../plugins/datagraph"]
+        dirlist = ["../plugins/datagraph"]
 
         self.loader = PluginsLoader(Application)
         self.loader.load (dirlist)
@@ -22,9 +22,9 @@ class GraphBuilderTest (unittest.TestCase):
         self._defaultWidth = '700'
         self._defaultHeight = '300'
 
-        self.path = mkdtemp (prefix=u'Абырвалг абыр')
+        self.path = mkdtemp (prefix='Абырвалг абыр')
         self.wikiroot = WikiDocument.create (self.path)
-        self.page = WikiPageFactory().create (self.wikiroot, u"Страница 1", [])
+        self.page = WikiPageFactory().create (self.wikiroot, "Страница 1", [])
         Application.wikiroot = None
 
 
@@ -37,286 +37,286 @@ class GraphBuilderTest (unittest.TestCase):
     def testEmpty (self):
         from datagraph.graphbuilder import GraphBuilder
         params = {}
-        content = u''
+        content = ''
         page = None
 
         builder = GraphBuilder(params, content, page)
         graph = builder.graph
 
-        self.assertEqual (graph.getProperty (u'width', 0), self._defaultWidth)
-        self.assertEqual (graph.getProperty (u'height', 0), self._defaultHeight)
+        self.assertEqual (graph.getProperty ('width', 0), self._defaultWidth)
+        self.assertEqual (graph.getProperty ('height', 0), self._defaultHeight)
 
-        self.assertEqual (graph.getProperty (u'Width', 0), self._defaultWidth)
-        self.assertEqual (graph.getProperty (u'HEIGHT', 0), self._defaultHeight)
+        self.assertEqual (graph.getProperty ('Width', 0), self._defaultWidth)
+        self.assertEqual (graph.getProperty ('HEIGHT', 0), self._defaultHeight)
 
-        self.assertIsNotNone (graph.getObject (u'curve'))
-        self.assertIsNotNone (graph.getObject (u'curve1'))
+        self.assertIsNotNone (graph.getObject ('curve'))
+        self.assertIsNotNone (graph.getObject ('curve1'))
 
 
     def testGraphProperties (self):
         from datagraph.graphbuilder import GraphBuilder
         params = {
-            u'width': 100,
-            u'height': 150,
-            u'render': u'highchart',
+            'width': 100,
+            'height': 150,
+            'render': 'highchart',
 
 
             # invalid values
-            u'pane': u'Бла-бла-бла',
-            u'abyrvalg': u'Абырвалг',
-            u'Абырвалг': u'Главрыба',
-            u'qwerty.qw': 42,
-            u'qwerty.qw.sss': 42,
+            'pane': 'Бла-бла-бла',
+            'abyrvalg': 'Абырвалг',
+            'Абырвалг': 'Главрыба',
+            'qwerty.qw': 42,
+            'qwerty.qw.sss': 42,
         }
-        content = u''
+        content = ''
         page = None
 
         builder = GraphBuilder (params, content, page)
         graph = builder.graph
 
-        self.assertEqual (graph.getProperty (u'width', 0), 100)
-        self.assertEqual (graph.getProperty (u'height', 0), 150)
-        self.assertEqual (graph.getProperty (u'render', u''), u'highchart')
+        self.assertEqual (graph.getProperty ('width', 0), 100)
+        self.assertEqual (graph.getProperty ('height', 0), 150)
+        self.assertEqual (graph.getProperty ('render', ''), 'highchart')
 
-        self.assertEqual (graph.getProperty (u'abyrvalg', None), u'Абырвалг')
-        self.assertEqual (graph.getProperty (u'Абырвалг', None), u'Главрыба')
+        self.assertEqual (graph.getProperty ('abyrvalg', None), 'Абырвалг')
+        self.assertEqual (graph.getProperty ('Абырвалг', None), 'Главрыба')
 
 
     def testCurvesCount_01 (self):
         from datagraph.graphbuilder import GraphBuilder
         params = {
-            'curve2': u'Абырвалг',
-            'curve3': u'Абырвалг',
-            'curve23sdf': u''
+            'curve2': 'Абырвалг',
+            'curve3': 'Абырвалг',
+            'curve23sdf': ''
         }
-        content = u''
+        content = ''
         page = None
 
         builder = GraphBuilder (params, content, page)
         graph = builder.graph
 
-        self.assertIsNone (graph.getObject (u'curve2'))
-        self.assertIsNone (graph.getObject (u'curve3'))
-        self.assertIsNone (graph.getObject (u'curve23sdf'))
+        self.assertIsNone (graph.getObject ('curve2'))
+        self.assertIsNone (graph.getObject ('curve3'))
+        self.assertIsNone (graph.getObject ('curve23sdf'))
 
 
     def testCurvesCount_02 (self):
         from datagraph.graphbuilder import GraphBuilder
         params = {
-            'curve.property': u'Абырвалг',
+            'curve.property': 'Абырвалг',
         }
-        content = u''
+        content = ''
         page = None
 
         builder = GraphBuilder (params, content, page)
         graph = builder.graph
 
-        self.assertIsNotNone (graph.getObject (u'curve'))
-        self.assertIsNotNone (graph.getObject (u'curve1'))
+        self.assertIsNotNone (graph.getObject ('curve'))
+        self.assertIsNotNone (graph.getObject ('curve1'))
 
 
     def testCurvesCount_03 (self):
         from datagraph.graphbuilder import GraphBuilder
         params = {
-            'curve1.property': u'Абырвалг',
+            'curve1.property': 'Абырвалг',
         }
-        content = u''
+        content = ''
         page = None
 
         builder = GraphBuilder (params, content, page)
         graph = builder.graph
 
-        self.assertIsNotNone (graph.getObject (u'curve'))
-        self.assertIsNotNone (graph.getObject (u'curve1'))
+        self.assertIsNotNone (graph.getObject ('curve'))
+        self.assertIsNotNone (graph.getObject ('curve1'))
 
 
     def testCurvesCount_04 (self):
         from datagraph.graphbuilder import GraphBuilder
         params = {
-            'curve2.property': u'Абырвалг',
+            'curve2.property': 'Абырвалг',
         }
-        content = u''
+        content = ''
         page = None
 
         builder = GraphBuilder (params, content, page)
         graph = builder.graph
 
-        self.assertIsNotNone (graph.getObject (u'curve'))
-        self.assertIsNotNone (graph.getObject (u'curve1'))
-        self.assertIsNotNone (graph.getObject (u'curve2'))
+        self.assertIsNotNone (graph.getObject ('curve'))
+        self.assertIsNotNone (graph.getObject ('curve1'))
+        self.assertIsNotNone (graph.getObject ('curve2'))
 
 
     def testCurvesCount_05 (self):
         from datagraph.graphbuilder import GraphBuilder
         params = {
-            'curve2.property': u'Абырвалг',
-            'curve10.property': u'Абырвалг10',
+            'curve2.property': 'Абырвалг',
+            'curve10.property': 'Абырвалг10',
         }
-        content = u''
+        content = ''
         page = None
 
         builder = GraphBuilder (params, content, page)
         graph = builder.graph
 
-        self.assertIsNotNone (graph.getObject (u'curve'))
-        self.assertIsNotNone (graph.getObject (u'curve10'))
-        self.assertEqual (graph.getObject (u'curve10').getProperty (u'property', None),
-                          u'Абырвалг10')
+        self.assertIsNotNone (graph.getObject ('curve'))
+        self.assertIsNotNone (graph.getObject ('curve10'))
+        self.assertEqual (graph.getObject ('curve10').getProperty ('property', None),
+                          'Абырвалг10')
 
 
     def testCurveProperties_01 (self):
         from datagraph.graphbuilder import GraphBuilder
         params = {
-            'curve.property': u'Абырвалг',
+            'curve.property': 'Абырвалг',
         }
-        content = u''
+        content = ''
         page = None
 
         builder = GraphBuilder (params, content, page)
         graph = builder.graph
-        curve = graph.getObject (u'curve')
-        curve1 = graph.getObject (u'curve1')
+        curve = graph.getObject ('curve')
+        curve1 = graph.getObject ('curve1')
 
         self.assertEqual (curve, curve1)
-        self.assertEqual (curve.getProperty (u'property', None), u'Абырвалг')
+        self.assertEqual (curve.getProperty ('property', None), 'Абырвалг')
 
-        self.assertEqual (curve.getProperty (u'xcol', 42), None)
-        self.assertEqual (curve.getProperty (u'ycol', 42), None)
-        self.assertEqual (curve.getProperty (u'data', 42), None)
+        self.assertEqual (curve.getProperty ('xcol', 42), None)
+        self.assertEqual (curve.getProperty ('ycol', 42), None)
+        self.assertEqual (curve.getProperty ('data', 42), None)
 
 
     def testCurveData_01 (self):
         from datagraph.graphbuilder import GraphBuilder
         params = {
-            u'curve.data.colsep': u',',
-            u'curve.data.coltype1': u'datetime',
-            u'curve.data.coltype3': u'float',
+            'curve.data.colsep': ',',
+            'curve.data.coltype1': 'datetime',
+            'curve.data.coltype3': 'float',
         }
-        content = u''
+        content = ''
         page = None
 
         builder = GraphBuilder (params, content, page)
         graph = builder.graph
-        curve = graph.getObject (u'curve')
+        curve = graph.getObject ('curve')
 
         self.assertIsNotNone (curve)
-        self.assertIsNone (curve.getProperty (u'data', 'xxx'))
+        self.assertIsNone (curve.getProperty ('data', 'xxx'))
 
-        data = curve.getObject (u'data')
+        data = curve.getObject ('data')
         self.assertIsNotNone (data)
 
-        self.assertEqual (data.getProperty (u'colsep', None), u',')
-        self.assertEqual (data.getProperty (u'coltype1', None), u'datetime')
-        self.assertEqual (data.getProperty (u'coltype3', None), u'float')
+        self.assertEqual (data.getProperty ('colsep', None), ',')
+        self.assertEqual (data.getProperty ('coltype1', None), 'datetime')
+        self.assertEqual (data.getProperty ('coltype3', None), 'float')
 
 
     def testCurveData_02 (self):
         from datagraph.graphbuilder import GraphBuilder
         params = {}
-        content = u'''123
+        content = '''123
 456
 789'''
         page = None
 
         builder = GraphBuilder (params, content, page)
         graph = builder.graph
-        curve = graph.getObject (u'curve')
+        curve = graph.getObject ('curve')
 
-        curveData = curve.getObject (u'data')
+        curveData = curve.getObject ('data')
 
         self.assertIsNotNone (curveData)
         self.assertIsNotNone (curveData.getSource())
 
         data = list (curveData.getRowsIterator())
-        self.assertEqual (data, [[u'123'], [u'456'], [u'789']])
+        self.assertEqual (data, [['123'], ['456'], ['789']])
 
 
     def testCurveData_03 (self):
         from datagraph.graphbuilder import GraphBuilder
         params = {}
-        content = u'''123    111
+        content = '''123    111
 456    222
 789    333'''
         page = None
 
         builder = GraphBuilder (params, content, page)
         graph = builder.graph
-        curve = graph.getObject (u'curve')
+        curve = graph.getObject ('curve')
 
-        curveData = curve.getObject (u'data')
+        curveData = curve.getObject ('data')
 
         self.assertIsNotNone (curveData)
         self.assertIsNotNone (curveData.getSource())
 
         data = list (curveData.getRowsIterator())
-        self.assertEqual (data, [[u'123', u'111'], [u'456', u'222'], [u'789', u'333']])
+        self.assertEqual (data, [['123', '111'], ['456', '222'], ['789', '333']])
 
 
     def testCurveAttachData_01 (self):
         from datagraph.graphbuilder import GraphBuilder
-        data = u'''123
+        data = '''123
 456
 789'''
 
         attachname = self._saveDataAndAttach (self.page, data)
         params = {
-            u'curve.data': 'Attach:{}'.format (attachname),
+            'curve.data': 'Attach:{}'.format (attachname),
         }
-        content = u''
+        content = ''
         page = self.page
 
         builder = GraphBuilder (params, content, page)
         graph = builder.graph
-        curve = graph.getObject (u'curve')
+        curve = graph.getObject ('curve')
 
-        curveData = curve.getObject (u'data')
+        curveData = curve.getObject ('data')
 
         self.assertIsNotNone (curveData)
         self.assertIsNotNone (curveData.getSource())
 
         data = list (curveData.getRowsIterator())
-        self.assertEqual (data, [[u'123'], [u'456'], [u'789']])
+        self.assertEqual (data, [['123'], ['456'], ['789']])
 
 
     def testCurveAttachData_02 (self):
         from datagraph.graphbuilder import GraphBuilder
-        data = u'''123
+        data = '''123
 456
 789'''
 
         attachname = self._saveDataAndAttach (self.page, data)
         params = {
-            u'curve.data': attachname,
+            'curve.data': attachname,
         }
-        content = u''
+        content = ''
         page = self.page
 
         builder = GraphBuilder (params, content, page)
         graph = builder.graph
-        curve = graph.getObject (u'curve')
+        curve = graph.getObject ('curve')
 
-        curveData = curve.getObject (u'data')
+        curveData = curve.getObject ('data')
 
         self.assertIsNotNone (curveData)
         self.assertIsNotNone (curveData.getSource())
 
         data = list (curveData.getRowsIterator())
-        self.assertEqual (data, [[u'123'], [u'456'], [u'789']])
+        self.assertEqual (data, [['123'], ['456'], ['789']])
 
 
     def testCurveAttachData_03 (self):
         from datagraph.graphbuilder import GraphBuilder
         params = {
-            u'curve.data': u'invalid_fname.txt',
+            'curve.data': 'invalid_fname.txt',
         }
-        content = u''
+        content = ''
         page = self.page
 
         builder = GraphBuilder (params, content, page)
         graph = builder.graph
-        curve = graph.getObject (u'curve')
+        curve = graph.getObject ('curve')
 
-        curveData = curve.getObject (u'data')
+        curveData = curve.getObject ('data')
 
         self.assertIsNotNone (curveData)
         self.assertIsNotNone (curveData.getSource())
@@ -327,43 +327,43 @@ class GraphBuilderTest (unittest.TestCase):
 
     def testCurveAttachData_04 (self):
         from datagraph.graphbuilder import GraphBuilder
-        data = u'''123    111
+        data = '''123    111
 456    222
 789    333'''
 
         attachname = self._saveDataAndAttach (self.page, data)
         params = {
-            u'curve.data': 'Attach:{}'.format (attachname),
+            'curve.data': 'Attach:{}'.format (attachname),
         }
-        content = u''
+        content = ''
         page = self.page
 
         builder = GraphBuilder (params, content, page)
         graph = builder.graph
-        curve = graph.getObject (u'curve')
+        curve = graph.getObject ('curve')
 
-        curveData = curve.getObject (u'data')
+        curveData = curve.getObject ('data')
 
         self.assertIsNotNone (curveData)
         self.assertIsNotNone (curveData.getSource())
 
         data = list (curveData.getRowsIterator())
-        self.assertEqual (data, [[u'123', u'111'], [u'456', u'222'], [u'789', u'333']])
+        self.assertEqual (data, [['123', '111'], ['456', '222'], ['789', '333']])
 
 
     def testCurveAttach_invalid_01 (self):
         from datagraph.graphbuilder import GraphBuilder
         params = {
-            u'curve.data': 'Attach:invalid_fname.txt',
+            'curve.data': 'Attach:invalid_fname.txt',
         }
-        content = u''
+        content = ''
         page = self.page
 
         builder = GraphBuilder (params, content, page)
         graph = builder.graph
-        curve = graph.getObject (u'curve')
+        curve = graph.getObject ('curve')
 
-        curveData = curve.getObject (u'data')
+        curveData = curve.getObject ('data')
 
         self.assertIsNotNone (curveData)
         self.assertIsNotNone (curveData.getSource())
@@ -376,7 +376,7 @@ class GraphBuilderTest (unittest.TestCase):
         from datagraph.graphbuilder import GraphBuilder
         params = {
         }
-        content = u''
+        content = ''
         page = self.page
 
         builder = GraphBuilder (params, content, page)
@@ -390,9 +390,9 @@ class GraphBuilderTest (unittest.TestCase):
     def testCurves_02 (self):
         from datagraph.graphbuilder import GraphBuilder
         params = {
-            u'curve.data': u'Attach:fname.txt'
+            'curve.data': 'Attach:fname.txt'
         }
-        content = u''
+        content = ''
         page = self.page
 
         builder = GraphBuilder (params, content, page)
@@ -406,9 +406,9 @@ class GraphBuilderTest (unittest.TestCase):
     def testCurves_03 (self):
         from datagraph.graphbuilder import GraphBuilder
         params = {
-            u'curve1.data': u'Attach:fname.txt'
+            'curve1.data': 'Attach:fname.txt'
         }
-        content = u''
+        content = ''
         page = self.page
 
         builder = GraphBuilder (params, content, page)
@@ -422,9 +422,9 @@ class GraphBuilderTest (unittest.TestCase):
     def testCurves_04 (self):
         from datagraph.graphbuilder import GraphBuilder
         params = {
-            u'curve2.data': u'Attach:fname.txt'
+            'curve2.data': 'Attach:fname.txt'
         }
-        content = u''
+        content = ''
         page = self.page
 
         builder = GraphBuilder (params, content, page)
@@ -438,12 +438,12 @@ class GraphBuilderTest (unittest.TestCase):
     def testCurves_05 (self):
         from datagraph.graphbuilder import GraphBuilder
         params = {
-            u'curve2.title': u'curve2',
-            u'curve1.title': u'curve1',
-            u'curve6.title': u'curve6',
-            u'curve3.title': u'curve3',
+            'curve2.title': 'curve2',
+            'curve1.title': 'curve1',
+            'curve6.title': 'curve6',
+            'curve3.title': 'curve3',
         }
-        content = u''
+        content = ''
         page = self.page
 
         builder = GraphBuilder (params, content, page)
@@ -452,36 +452,36 @@ class GraphBuilderTest (unittest.TestCase):
         curves = graph.getCurves()
 
         self.assertEqual (len (curves), 4)
-        self.assertEqual (curves[0].getProperty (u'title', u''), u'curve1')
-        self.assertEqual (curves[1].getProperty (u'title', u''), u'curve2')
-        self.assertEqual (curves[2].getProperty (u'title', u''), u'curve3')
-        self.assertEqual (curves[3].getProperty (u'title', u''), u'curve6')
+        self.assertEqual (curves[0].getProperty ('title', ''), 'curve1')
+        self.assertEqual (curves[1].getProperty ('title', ''), 'curve2')
+        self.assertEqual (curves[2].getProperty ('title', ''), 'curve3')
+        self.assertEqual (curves[3].getProperty ('title', ''), 'curve6')
 
 
     def testAxis_01 (self):
         from datagraph.graphbuilder import GraphBuilder
         params = {
-            'x.min': u'1.5',
-            'y.max': u'2.5',
-            'x.title': u'Абырвалг',
-            'y.type': u'datetime',
+            'x.min': '1.5',
+            'y.max': '2.5',
+            'x.title': 'Абырвалг',
+            'y.type': 'datetime',
         }
-        content = u''
+        content = ''
         page = None
 
         builder = GraphBuilder (params, content, page)
         graph = builder.graph
 
-        xaxis = graph.getObject (u'x')
-        yaxis = graph.getObject (u'y')
+        xaxis = graph.getObject ('x')
+        yaxis = graph.getObject ('y')
 
         self.assertIsNotNone (xaxis)
         self.assertIsNotNone (yaxis)
 
-        self.assertEqual (xaxis.getProperty (u'min', None), u'1.5')
-        self.assertEqual (yaxis.getProperty (u'max', None), u'2.5')
-        self.assertEqual (xaxis.getProperty (u'title', None), u'Абырвалг')
-        self.assertEqual (yaxis.getProperty (u'type', None), u'datetime')
+        self.assertEqual (xaxis.getProperty ('min', None), '1.5')
+        self.assertEqual (yaxis.getProperty ('max', None), '2.5')
+        self.assertEqual (xaxis.getProperty ('title', None), 'Абырвалг')
+        self.assertEqual (yaxis.getProperty ('type', None), 'datetime')
 
 
     def _saveDataAndAttach (self, page, data):

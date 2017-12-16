@@ -9,7 +9,7 @@ from outwiker.gui.tester import Tester
 
 class InsertNodeTest (unittest.TestCase):
     def setUp(self):
-        dirlist = [u"../plugins/diagrammer"]
+        dirlist = ["../plugins/diagrammer"]
 
         self.loader = PluginsLoader(Application)
         self.loader.load (dirlist)
@@ -37,391 +37,391 @@ class InsertNodeTest (unittest.TestCase):
     def testName_01 (self):
 
         Tester.dialogTester.appendOk()
-        self._dlg.name = u"Абырвалг"
+        self._dlg.name = "Абырвалг"
 
         result = self._controller.getResult ()
 
-        self.assertEqual (result, u"Абырвалг")
+        self.assertEqual (result, "Абырвалг")
 
 
     def testName_02 (self):
         Tester.dialogTester.appendOk()
-        self._dlg.name = u"Абырвалг 111"
+        self._dlg.name = "Абырвалг 111"
 
         result = self._controller.getResult ()
 
-        self.assertEqual (result, u'"Абырвалг 111"')
+        self.assertEqual (result, '"Абырвалг 111"')
 
 
     def testShapeSelection_01 (self):
         Tester.dialogTester.appendOk()
-        self._dlg.name = u"Абырвалг"
+        self._dlg.name = "Абырвалг"
         self._dlg.setShapeSelection (0)
 
         result = self._controller.getResult ()
 
-        self.assertEqual (result, u"Абырвалг")
+        self.assertEqual (result, "Абырвалг")
 
 
     def testShapeSelection_02 (self):
         Tester.dialogTester.appendOk()
-        self._dlg.name = u"Абырвалг"
+        self._dlg.name = "Абырвалг"
         self._dlg.setShapeSelection (1)
 
         result = self._controller.getResult ()
 
-        self.assertEqual (result, u"Абырвалг [shape = actor];")
+        self.assertEqual (result, "Абырвалг [shape = actor];")
 
 
     def testShapeSelection_03 (self):
         Tester.dialogTester.appendOk()
-        self._dlg.name = u"Абырвалг"
+        self._dlg.name = "Абырвалг"
 
         self._dlg.setShapeSelection (10)
 
         result = self._controller.getResult ()
 
-        self.assertEqual (result, u"Абырвалг [shape = flowchart.database];")
+        self.assertEqual (result, "Абырвалг [shape = flowchart.database];")
 
 
     def testBorderStyle_01 (self):
         Tester.dialogTester.appendOk()
-        self._dlg.name = u"Абырвалг"
+        self._dlg.name = "Абырвалг"
 
         self._dlg.setStyleIndex (0)
 
         result = self._controller.getResult ()
-        self.assertEqual (result, u"Абырвалг")
+        self.assertEqual (result, "Абырвалг")
 
 
     def testBorderStyle_02 (self):
         Tester.dialogTester.appendOk()
-        self._dlg.name = u"Абырвалг"
+        self._dlg.name = "Абырвалг"
 
         self._dlg.setStyleIndex (1)
 
         result = self._controller.getResult ()
-        self.assertEqual (result, u"Абырвалг [style = solid];")
+        self.assertEqual (result, "Абырвалг [style = solid];")
 
 
     def testBorderStyle_03 (self):
         Tester.dialogTester.appendOk()
-        self._dlg.name = u"Абырвалг"
+        self._dlg.name = "Абырвалг"
 
         self._dlg.setStyleIndex (2)
 
         result = self._controller.getResult ()
-        self.assertEqual (result, u"Абырвалг [style = dotted];")
+        self.assertEqual (result, "Абырвалг [style = dotted];")
 
 
     def testBorderStyle_04 (self):
         Tester.dialogTester.appendOk()
-        self._dlg.name = u"Абырвалг"
+        self._dlg.name = "Абырвалг"
 
-        self._dlg.style = u""
+        self._dlg.style = ""
 
         result = self._controller.getResult ()
-        self.assertEqual (result, u"Абырвалг")
+        self.assertEqual (result, "Абырвалг")
 
 
     def testBorderStyle_05 (self):
         Tester.dialogTester.appendOk()
-        self._dlg.name = u"Абырвалг"
+        self._dlg.name = "Абырвалг"
 
-        self._dlg.style = u"solid"
+        self._dlg.style = "solid"
 
         result = self._controller.getResult ()
-        self.assertEqual (result, u"Абырвалг [style = solid];")
+        self.assertEqual (result, "Абырвалг [style = solid];")
 
 
     def testBorderStyle_06 (self):
         Tester.dialogTester.appendOk()
-        self._dlg.name = u"Абырвалг"
+        self._dlg.name = "Абырвалг"
 
-        self._dlg.style = u"Solid"
+        self._dlg.style = "Solid"
 
         result = self._controller.getResult ()
-        self.assertEqual (result, u"Абырвалг [style = solid];")
+        self.assertEqual (result, "Абырвалг [style = solid];")
 
 
     def testBorderStyle_07 (self):
         Tester.dialogTester.appendOk()
-        self._dlg.name = u"Абырвалг"
+        self._dlg.name = "Абырвалг"
 
-        self._dlg.style = u" Solid "
+        self._dlg.style = " Solid "
 
         result = self._controller.getResult ()
-        self.assertEqual (result, u"Абырвалг [style = solid];")
+        self.assertEqual (result, "Абырвалг [style = solid];")
 
 
     def testBorderStyle_08 (self):
         Tester.dialogTester.appendOk()
-        self._dlg.name = u"Абырвалг"
+        self._dlg.name = "Абырвалг"
 
-        self._dlg.style = u"1,2,3"
+        self._dlg.style = "1,2,3"
 
         result = self._controller.getResult ()
-        self.assertEqual (result, u'Абырвалг [style = "1,2,3"];')
+        self.assertEqual (result, 'Абырвалг [style = "1,2,3"];')
 
 
     def testBorderStyle_09 (self):
         Tester.dialogTester.appendOk()
-        self._dlg.name = u"Абырвалг"
+        self._dlg.name = "Абырвалг"
 
-        self._dlg.style = u"1, 2, 3"
+        self._dlg.style = "1, 2, 3"
 
         result = self._controller.getResult ()
-        self.assertEqual (result, u'Абырвалг [style = "1,2,3"];')
+        self.assertEqual (result, 'Абырвалг [style = "1,2,3"];')
 
 
     def testBorderStyle_10 (self):
         Tester.dialogTester.appendOk()
-        self._dlg.name = u"Абырвалг"
+        self._dlg.name = "Абырвалг"
 
-        self._dlg.style = u" 1, 2, 3 "
+        self._dlg.style = " 1, 2, 3 "
 
         result = self._controller.getResult ()
-        self.assertEqual (result, u'Абырвалг [style = "1,2,3"];')
+        self.assertEqual (result, 'Абырвалг [style = "1,2,3"];')
 
 
     def testBorderStyle_11 (self):
         Tester.dialogTester.appendOk()
-        self._dlg.name = u"Абырвалг"
+        self._dlg.name = "Абырвалг"
 
-        self._dlg.style = u'"1,2,3"'
+        self._dlg.style = '"1,2,3"'
 
         result = self._controller.getResult ()
-        self.assertEqual (result, u'Абырвалг [style = "1,2,3"];')
+        self.assertEqual (result, 'Абырвалг [style = "1,2,3"];')
 
 
     def testBorderStyle_12 (self):
         Tester.dialogTester.appendOk()
-        self._dlg.name = u"Абырвалг"
+        self._dlg.name = "Абырвалг"
 
         self._dlg.setShapeSelection (1)
-        self._dlg.style = u"dotted"
+        self._dlg.style = "dotted"
 
         result = self._controller.getResult ()
-        self.assertEqual (result, u"Абырвалг [shape = actor, style = dotted];")
+        self.assertEqual (result, "Абырвалг [shape = actor, style = dotted];")
 
 
     def testStacked_01 (self):
         Tester.dialogTester.appendOk()
-        self._dlg.name = u"Абырвалг"
+        self._dlg.name = "Абырвалг"
         self._dlg.stacked = True
 
         result = self._controller.getResult ()
-        self.assertEqual (result, u"Абырвалг [stacked];")
+        self.assertEqual (result, "Абырвалг [stacked];")
 
 
     def testStacked_02 (self):
         Tester.dialogTester.appendOk()
-        self._dlg.name = u"Абырвалг"
+        self._dlg.name = "Абырвалг"
         self._dlg.stacked = True
         self._dlg.setShapeSelection (1)
 
         result = self._controller.getResult ()
-        self.assertEqual (result, u"Абырвалг [shape = actor, stacked];")
+        self.assertEqual (result, "Абырвалг [shape = actor, stacked];")
 
 
     def testLabel_01 (self):
         Tester.dialogTester.appendOk()
-        self._dlg.name = u"Абырвалг"
-        self._dlg.label = u"Превед"
+        self._dlg.name = "Абырвалг"
+        self._dlg.label = "Превед"
 
         result = self._controller.getResult ()
-        self.assertEqual (result, u'Абырвалг [label = "Превед"];')
+        self.assertEqual (result, 'Абырвалг [label = "Превед"];')
 
 
     def testLabel_02 (self):
         Tester.dialogTester.appendOk()
-        self._dlg.name = u"Абырвалг"
+        self._dlg.name = "Абырвалг"
         self._dlg.setShapeSelection (1)
-        self._dlg.label = u"Превед"
+        self._dlg.label = "Превед"
 
         result = self._controller.getResult ()
-        self.assertEqual (result, u'Абырвалг [shape = actor, label = "Превед"];')
+        self.assertEqual (result, 'Абырвалг [shape = actor, label = "Превед"];')
 
 
     def testLabel_03 (self):
         Tester.dialogTester.appendOk()
-        self._dlg.name = u"Абырвалг"
-        self._dlg.label = u"Абырвалг"
+        self._dlg.name = "Абырвалг"
+        self._dlg.label = "Абырвалг"
 
         result = self._controller.getResult ()
-        self.assertEqual (result, u'Абырвалг')
+        self.assertEqual (result, 'Абырвалг')
 
 
     def testColor_01 (self):
         Tester.dialogTester.appendOk()
-        self._dlg.name = u"Абырвалг"
+        self._dlg.name = "Абырвалг"
         self._dlg.isBackColorChanged = True
-        self._dlg.backColor = u"white"
+        self._dlg.backColor = "white"
 
         result = self._controller.getResult ()
-        self.assertEqual (result, u'Абырвалг [color = "white"];')
+        self.assertEqual (result, 'Абырвалг [color = "white"];')
 
 
     def testColor_02 (self):
         Tester.dialogTester.appendOk()
-        self._dlg.name = u"Абырвалг"
+        self._dlg.name = "Абырвалг"
         self._dlg.isBackColorChanged = True
-        self._dlg.backColor = u"#AAAAAA"
+        self._dlg.backColor = "#AAAAAA"
 
         result = self._controller.getResult ()
-        self.assertEqual (result, u'Абырвалг [color = "#AAAAAA"];')
+        self.assertEqual (result, 'Абырвалг [color = "#AAAAAA"];')
 
 
     def testColor_03 (self):
         Tester.dialogTester.appendOk()
-        self._dlg.name = u"Абырвалг"
+        self._dlg.name = "Абырвалг"
         self._dlg.isBackColorChanged = False
-        self._dlg.backColor = u"#AAAAAA"
+        self._dlg.backColor = "#AAAAAA"
 
         result = self._controller.getResult ()
-        self.assertEqual (result, u'Абырвалг')
+        self.assertEqual (result, 'Абырвалг')
 
 
     def testColor_04 (self):
         Tester.dialogTester.appendOk()
-        self._dlg.name = u"Абырвалг"
+        self._dlg.name = "Абырвалг"
         self._dlg.setShapeSelection (1)
         self._dlg.isBackColorChanged = True
-        self._dlg.backColor = u"#AAAAAA"
+        self._dlg.backColor = "#AAAAAA"
 
         result = self._controller.getResult ()
-        self.assertEqual (result, u'Абырвалг [shape = actor, color = "#AAAAAA"];')
+        self.assertEqual (result, 'Абырвалг [shape = actor, color = "#AAAAAA"];')
 
 
     def testTextColor_01 (self):
         Tester.dialogTester.appendOk()
-        self._dlg.name = u"Абырвалг"
+        self._dlg.name = "Абырвалг"
         self._dlg.isTextColorChanged = True
-        self._dlg.textColor = u"black"
+        self._dlg.textColor = "black"
 
         result = self._controller.getResult ()
-        self.assertEqual (result, u'Абырвалг [textcolor = "black"];')
+        self.assertEqual (result, 'Абырвалг [textcolor = "black"];')
 
 
     def testTextColor_02 (self):
         Tester.dialogTester.appendOk()
-        self._dlg.name = u"Абырвалг"
+        self._dlg.name = "Абырвалг"
         self._dlg.isTextColorChanged = True
-        self._dlg.textColor = u"#AAAAAA"
+        self._dlg.textColor = "#AAAAAA"
 
         result = self._controller.getResult ()
-        self.assertEqual (result, u'Абырвалг [textcolor = "#AAAAAA"];')
+        self.assertEqual (result, 'Абырвалг [textcolor = "#AAAAAA"];')
 
 
     def testTextColor_03 (self):
         Tester.dialogTester.appendOk()
-        self._dlg.name = u"Абырвалг"
+        self._dlg.name = "Абырвалг"
         self._dlg.isTextColorChanged = False
-        self._dlg.textColor = u"#AAAAAA"
+        self._dlg.textColor = "#AAAAAA"
 
         result = self._controller.getResult ()
-        self.assertEqual (result, u'Абырвалг')
+        self.assertEqual (result, 'Абырвалг')
 
 
     def testTextColor_04 (self):
         Tester.dialogTester.appendOk()
-        self._dlg.name = u"Абырвалг"
+        self._dlg.name = "Абырвалг"
         self._dlg.setShapeSelection (1)
         self._dlg.isTextColorChanged = True
-        self._dlg.textColor = u"#AAAAAA"
+        self._dlg.textColor = "#AAAAAA"
 
         result = self._controller.getResult ()
-        self.assertEqual (result, u'Абырвалг [shape = actor, textcolor = "#AAAAAA"];')
+        self.assertEqual (result, 'Абырвалг [shape = actor, textcolor = "#AAAAAA"];')
 
 
     def testFontSize_01 (self):
         Tester.dialogTester.appendOk()
-        self._dlg.name = u"Абырвалг"
+        self._dlg.name = "Абырвалг"
         self._dlg.isFontSizeChanged = True
         self._dlg.fontSize = 20
 
         result = self._controller.getResult ()
-        self.assertEqual (result, u'Абырвалг [fontsize = 20];')
+        self.assertEqual (result, 'Абырвалг [fontsize = 20];')
 
 
     def testFontSize_02 (self):
         Tester.dialogTester.appendOk()
-        self._dlg.name = u"Абырвалг"
+        self._dlg.name = "Абырвалг"
         self._dlg.isFontSizeChanged = False
         self._dlg.fontSize = 20
 
         result = self._controller.getResult ()
-        self.assertEqual (result, u'Абырвалг')
+        self.assertEqual (result, 'Абырвалг')
 
 
     def testFontSize_03 (self):
         Tester.dialogTester.appendOk()
-        self._dlg.name = u"Абырвалг"
+        self._dlg.name = "Абырвалг"
         self._dlg.setShapeSelection (1)
         self._dlg.isFontSizeChanged = True
         self._dlg.fontSize = 20
 
         result = self._controller.getResult ()
-        self.assertEqual (result, u'Абырвалг [shape = actor, fontsize = 20];')
+        self.assertEqual (result, 'Абырвалг [shape = actor, fontsize = 20];')
 
 
     def testWidth_01 (self):
         Tester.dialogTester.appendOk()
-        self._dlg.name = u"Абырвалг"
+        self._dlg.name = "Абырвалг"
         self._dlg.isWidthChanged = True
         self._dlg.width = 200
 
         result = self._controller.getResult ()
-        self.assertEqual (result, u'Абырвалг [width = 200];')
+        self.assertEqual (result, 'Абырвалг [width = 200];')
 
 
     def testWidth_02 (self):
         Tester.dialogTester.appendOk()
-        self._dlg.name = u"Абырвалг"
+        self._dlg.name = "Абырвалг"
         self._dlg.isWidthChanged = False
         self._dlg.width = 200
 
         result = self._controller.getResult ()
-        self.assertEqual (result, u'Абырвалг')
+        self.assertEqual (result, 'Абырвалг')
 
 
     def testWidth_03 (self):
         Tester.dialogTester.appendOk()
-        self._dlg.name = u"Абырвалг"
+        self._dlg.name = "Абырвалг"
         self._dlg.setShapeSelection (1)
         self._dlg.isWidthChanged = True
         self._dlg.width = 200
 
         result = self._controller.getResult ()
-        self.assertEqual (result, u'Абырвалг [shape = actor, width = 200];')
+        self.assertEqual (result, 'Абырвалг [shape = actor, width = 200];')
 
 
     def testHeight_01 (self):
         Tester.dialogTester.appendOk()
-        self._dlg.name = u"Абырвалг"
+        self._dlg.name = "Абырвалг"
         self._dlg.isHeightChanged = True
         self._dlg.height = 200
 
         result = self._controller.getResult ()
-        self.assertEqual (result, u'Абырвалг [height = 200];')
+        self.assertEqual (result, 'Абырвалг [height = 200];')
 
 
     def testHeight_02 (self):
         Tester.dialogTester.appendOk()
-        self._dlg.name = u"Абырвалг"
+        self._dlg.name = "Абырвалг"
         self._dlg.isHeightChanged = False
         self._dlg.height = 200
 
         result = self._controller.getResult ()
-        self.assertEqual (result, u'Абырвалг')
+        self.assertEqual (result, 'Абырвалг')
 
 
     def testHeight_03 (self):
         Tester.dialogTester.appendOk()
-        self._dlg.name = u"Абырвалг"
+        self._dlg.name = "Абырвалг"
         self._dlg.setShapeSelection (1)
         self._dlg.isHeightChanged = True
         self._dlg.height = 200
 
         result = self._controller.getResult ()
-        self.assertEqual (result, u'Абырвалг [shape = actor, height = 200];')
+        self.assertEqual (result, 'Абырвалг [shape = actor, height = 200];')

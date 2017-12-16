@@ -17,10 +17,10 @@ class DiagrammerTest (unittest.TestCase):
     def setUp(self):
         self.maxDiff = None
 
-        self.filesPath = u"../test/samplefiles/"
+        self.filesPath = "../test/samplefiles/"
         self.__createWiki()
 
-        dirlist = [u"../plugins/diagrammer"]
+        dirlist = ["../plugins/diagrammer"]
 
         self.loader = PluginsLoader(Application)
         self.loader.load (dirlist)
@@ -28,18 +28,18 @@ class DiagrammerTest (unittest.TestCase):
         self.factory = ParserFactory()
         self.parser = self.factory.make (self.testPage, Application.config)
 
-        self.thumbDir = os.path.join (u"__attach", u"__thumb")
+        self.thumbDir = os.path.join ("__attach", "__thumb")
         self.thumbFullPath = os.path.join (self.testPage.path, self.thumbDir)
 
 
     def __createWiki (self):
         # Здесь будет создаваться вики
-        self.path = mkdtemp (prefix=u'Абырвалг абыр')
+        self.path = mkdtemp (prefix='Абырвалг абыр')
 
         self.wikiroot = WikiDocument.create (self.path)
 
-        WikiPageFactory().create (self.wikiroot, u"Страница 1", [])
-        self.testPage = self.wikiroot[u"Страница 1"]
+        WikiPageFactory().create (self.wikiroot, "Страница 1", [])
+        self.testPage = self.wikiroot["Страница 1"]
 
 
     def tearDown(self):
@@ -48,81 +48,81 @@ class DiagrammerTest (unittest.TestCase):
 
 
     def testEmpty (self):
-        text = u"(:diagram:)(:diagramend:)"
-        validResult = u'<img src="{}/__diagram_'.format (self.thumbDir)
+        text = "(:diagram:)(:diagramend:)"
+        validResult = '<img src="{}/__diagram_'.format (self.thumbDir)
 
         result = self.parser.toHtml (text)
         self.assertIn (validResult, result)
 
         # Признак ошибки
-        self.assertNotIn (u"<b>", result)
+        self.assertNotIn ("<b>", result)
 
         self.assertTrue (os.path.exists (self.thumbFullPath))
         self.assertEqual (len (os.listdir(self.thumbFullPath)), 1)
 
 
     def test_simple (self):
-        text = u"(:diagram:)Абырвалг -> Блаблабла(:diagramend:)"
-        validResult = u'<img src="{}/__diagram_'.format (self.thumbDir)
+        text = "(:diagram:)Абырвалг -> Блаблабла(:diagramend:)"
+        validResult = '<img src="{}/__diagram_'.format (self.thumbDir)
 
         result = self.parser.toHtml (text)
         self.assertIn (validResult, result)
 
         # Признак ошибки
-        self.assertNotIn (u"<b>", result)
+        self.assertNotIn ("<b>", result)
 
         self.assertTrue (os.path.exists (self.thumbFullPath))
         self.assertEqual (len (os.listdir(self.thumbFullPath)), 1)
 
 
     def test_double (self):
-        text = u"""(:diagram:)Абырвалг -> Блаблабла(:diagramend:)
+        text = """(:diagram:)Абырвалг -> Блаблабла(:diagramend:)
 (:diagram:)Абыр -> валг -> Блаблабла(:diagramend:)"""
 
-        validResult = u'<img src="{}/__diagram_'.format (self.thumbDir)
+        validResult = '<img src="{}/__diagram_'.format (self.thumbDir)
 
         result = self.parser.toHtml (text)
         self.assertIn (validResult, result)
 
         # Признак ошибки
-        self.assertNotIn (u"<b>", result)
+        self.assertNotIn ("<b>", result)
 
         self.assertTrue (os.path.exists (self.thumbFullPath))
         self.assertEqual (len (os.listdir(self.thumbFullPath)), 2)
 
 
     def test_copy (self):
-        text = u"""(:diagram:)Абырвалг -> Блаблабла(:diagramend:)
+        text = """(:diagram:)Абырвалг -> Блаблабла(:diagramend:)
 (:diagram:)Абырвалг -> Блаблабла(:diagramend:)"""
 
-        validResult = u'<img src="{}/__diagram_'.format (self.thumbDir)
+        validResult = '<img src="{}/__diagram_'.format (self.thumbDir)
 
         result = self.parser.toHtml (text)
         self.assertIn (validResult, result)
 
         # Признак ошибки
-        self.assertNotIn (u"<b>", result)
+        self.assertNotIn ("<b>", result)
 
         self.assertTrue (os.path.exists (self.thumbFullPath))
         self.assertEqual (len (os.listdir(self.thumbFullPath)), 1)
 
 
     def testError (self):
-        text = u"(:diagram:)a - b(:diagramend:)"
-        validResult = u'<img src="{}/__diagram_'.format (self.thumbDir)
+        text = "(:diagram:)a - b(:diagramend:)"
+        validResult = '<img src="{}/__diagram_'.format (self.thumbDir)
 
         result = self.parser.toHtml (text)
         self.assertNotIn (validResult, result)
 
         # Признак ошибки
-        self.assertIn (u"<b>", result)
+        self.assertIn ("<b>", result)
 
         # Папка для превьюшек все равно создается
         self.assertTrue (os.path.exists (self.thumbFullPath))
 
 
     def testShapes_01 (self):
-        template = u'a{n}[shape = {shape}]'
+        template = 'a{n}[shape = {shape}]'
         shapes = [
             "actor",
             "beginpoint",
@@ -147,20 +147,20 @@ class DiagrammerTest (unittest.TestCase):
             "flowchart.terminator",
         ]
 
-        lines = [u"(:diagram:)"]
+        lines = ["(:diagram:)"]
 
-        for n, shape in zip (range (len (shapes)), shapes):
+        for n, shape in zip (list(range(len (shapes))), shapes):
             lines.append (template.format (n = n, shape = shape))
 
-        lines .append (u"(:diagramend:)")
-        text = u"\n".join (lines)
+        lines .append ("(:diagramend:)")
+        text = "\n".join (lines)
 
-        validResult = u'<img src="{}/__diagram_'.format (self.thumbDir)
+        validResult = '<img src="{}/__diagram_'.format (self.thumbDir)
         result = self.parser.toHtml (text)
         self.assertIn (validResult, result)
 
         # Признак ошибки
-        self.assertNotIn (u"<b>", result)
+        self.assertNotIn ("<b>", result)
 
 
     def testShapes_02 (self):

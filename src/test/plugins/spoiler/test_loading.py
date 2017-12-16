@@ -8,7 +8,7 @@ class SpoilerLoadingTest (BasePluginLoadingTest):
         """
         Должен возвращать путь до папки с тестируемым плагином
         """
-        return u"../plugins/spoiler"
+        return "../plugins/spoiler"
 
 
     def getPluginName (self):

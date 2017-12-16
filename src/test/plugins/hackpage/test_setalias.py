@@ -17,9 +17,9 @@ class HackPage_SetAliasTest(BaseMainWndTest):
         self._application = Application
 
         self.__createWiki()
-        self.testPage = self.wikiroot[u"Страница 1"]
+        self.testPage = self.wikiroot["Страница 1"]
 
-        dirlist = [u"../plugins/hackpage"]
+        dirlist = ["../plugins/hackpage"]
 
         self._loader = PluginsLoader(Application)
         self._loader.load(dirlist)
@@ -36,7 +36,7 @@ class HackPage_SetAliasTest(BaseMainWndTest):
         BaseMainWndTest.tearDown(self)
 
     def __createWiki(self):
-        WikiPageFactory().create(self.wikiroot, u"Страница 1", [])
+        WikiPageFactory().create(self.wikiroot, "Страница 1", [])
 
     def _setValue(self, dialog, value):
         dialog.Value = value
@@ -65,7 +65,7 @@ class HackPage_SetAliasTest(BaseMainWndTest):
     def test_set_alias_01(self):
         from hackpage.utils import setAliasWithDialog
 
-        alias = u'Псевдоним страницы'
+        alias = 'Псевдоним страницы'
 
         Tester.dialogTester.append(self._setValue, alias)
 
@@ -77,7 +77,7 @@ class HackPage_SetAliasTest(BaseMainWndTest):
     def test_set_alias_02(self):
         from hackpage.utils import setAliasWithDialog
 
-        alias = u'   Псевдоним страницы   '
+        alias = '   Псевдоним страницы   '
 
         Tester.dialogTester.append(self._setValue, alias)
 
@@ -89,7 +89,7 @@ class HackPage_SetAliasTest(BaseMainWndTest):
     def test_set_alias_03(self):
         from hackpage.utils import setAliasWithDialog
 
-        self.testPage.alias = u'Псевдоним страницы'
+        self.testPage.alias = 'Псевдоним страницы'
 
         Tester.dialogTester.append(self._setValue, '')
 

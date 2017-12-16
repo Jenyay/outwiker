@@ -197,39 +197,39 @@ class EventTest(unittest.TestCase):
 
     def testCustomEvent_01(self):
         cevent = CustomEvents()
-        cevent.bind(u'event4', self.event4)
+        cevent.bind('event4', self.event4)
 
-        cevent(u'event4', None)
+        cevent('event4', None)
         self.assertEqual(self.value4, 1)
 
-        cevent(u'event4', None)
+        cevent('event4', None)
         self.assertEqual(self.value4, 2)
 
-        cevent.unbind(u'event4', self.event4)
+        cevent.unbind('event4', self.event4)
 
-        cevent(u'event4', None)
+        cevent('event4', None)
         self.assertEqual(self.value4, 2)
 
     def testCustomEvent_02(self):
         cevent = CustomEvents()
-        cevent.bind(u'event4', self.event4)
+        cevent.bind('event4', self.event4)
 
-        cevent(u'event4', None)
+        cevent('event4', None)
         self.assertEqual(self.value4, 1)
 
-        cevent(u'event4', None)
+        cevent('event4', None)
         self.assertEqual(self.value4, 2)
 
-        cevent.clear(u'event4')
+        cevent.clear('event4')
 
-        cevent(u'event4', None)
+        cevent('event4', None)
         self.assertEqual(self.value4, 2)
 
     def testCustomEvent_03(self):
         cevent = CustomEvents()
         param = []
-        cevent.bind(u'eventAdd1', self.eventAdd_1)
-        cevent(u'eventAdd1', param)
+        cevent.bind('eventAdd1', self.eventAdd_1)
+        cevent('eventAdd1', param)
 
         self.assertEqual(param, [1])
         cevent.clear('eventAdd1')
@@ -242,7 +242,7 @@ class EventTest(unittest.TestCase):
 class EventsTest(unittest.TestCase):
     def setUp(self):
         Application.wikiroot = None
-        self.path = mkdtemp(prefix=u'Абырвалг абыр')
+        self.path = mkdtemp(prefix='Абырвалг абыр')
 
         self.isPageUpdate = False
         self.isPageCreate = False
@@ -289,7 +289,7 @@ class EventsTest(unittest.TestCase):
         self.pageSelectCount += 1
 
     def testLoad_01(self):
-        path = u"../test/samplewiki"
+        path = "../test/samplewiki"
         Application.onTreeUpdate += self.treeUpdate
 
         self.assertFalse(self.isTreeUpdate)
@@ -323,29 +323,29 @@ class EventsTest(unittest.TestCase):
         self.isPageCreate = False
         self.pageCreateSender = None
 
-        TextPageFactory().create(rootwiki, u"Страница 1", [])
+        TextPageFactory().create(rootwiki, "Страница 1", [])
 
         self.assertTrue(self.isPageCreate)
-        self.assertEqual(self.pageCreateSender, rootwiki[u"Страница 1"])
+        self.assertEqual(self.pageCreateSender, rootwiki["Страница 1"])
 
         # Создаем еще одну страницу
         self.isPageCreate = False
         self.pageCreateSender = None
 
-        TextPageFactory().create(rootwiki, u"Страница 2", [])
+        TextPageFactory().create(rootwiki, "Страница 2", [])
 
         self.assertTrue(self.isPageCreate)
-        self.assertEqual(self.pageCreateSender, rootwiki[u"Страница 2"])
+        self.assertEqual(self.pageCreateSender, rootwiki["Страница 2"])
 
         # Создаем подстраницу
         self.isPageCreate = False
         self.pageCreateSender = None
 
-        TextPageFactory().create(rootwiki[u"Страница 2"], u"Страница 3", [])
+        TextPageFactory().create(rootwiki["Страница 2"], "Страница 3", [])
 
         self.assertTrue(self.isPageCreate)
         self.assertEqual(self.pageCreateSender,
-                         rootwiki[u"Страница 2/Страница 3"])
+                         rootwiki["Страница 2/Страница 3"])
 
         Application.onTreeUpdate -= self.treeUpdate
         Application.onPageCreate -= self.pageCreate
@@ -370,7 +370,7 @@ class EventsTest(unittest.TestCase):
         self.isPageCreate = False
         self.pageCreateSender = None
 
-        TextPageFactory().create(rootwiki, u"Страница 1", [])
+        TextPageFactory().create(rootwiki, "Страница 1", [])
 
         self.assertFalse(self.isPageCreate)
         self.assertEqual(self.pageCreateSender, None)
@@ -389,15 +389,15 @@ class EventsTest(unittest.TestCase):
 
         # Создаем вики
         rootwiki = WikiDocument.create(self.path)
-        TextPageFactory().create(rootwiki, u"Страница 1", [])
+        TextPageFactory().create(rootwiki, "Страница 1", [])
 
         Application.wikiroot = rootwiki
 
         # Изменим содержимое страницы
-        rootwiki[u"Страница 1"].content = "1111"
+        rootwiki["Страница 1"].content = "1111"
 
         self.assertTrue(self.isPageUpdate)
-        self.assertEqual(self.pageUpdateSender, rootwiki[u"Страница 1"])
+        self.assertEqual(self.pageUpdateSender, rootwiki["Страница 1"])
         self.assertEqual(self.prev_kwargs["change"], PAGE_UPDATE_CONTENT)
 
         Application.onPageUpdate -= self.pageUpdate
@@ -417,10 +417,10 @@ class EventsTest(unittest.TestCase):
 
         # Создаем вики
         rootwiki = WikiDocument.create(self.path)
-        TextPageFactory().create(rootwiki, u"Страница 1", [])
+        TextPageFactory().create(rootwiki, "Страница 1", [])
 
         # Изменим содержимое страницы
-        rootwiki[u"Страница 1"].content = "1111"
+        rootwiki["Страница 1"].content = "1111"
 
         self.assertFalse(self.isPageUpdate)
         self.assertEqual(self.pageUpdateSender, None)
@@ -441,15 +441,15 @@ class EventsTest(unittest.TestCase):
 
         # Создаем вики
         rootwiki = WikiDocument.create(self.path)
-        TextPageFactory().create(rootwiki, u"Страница 1", [])
+        TextPageFactory().create(rootwiki, "Страница 1", [])
 
         Application.wikiroot = rootwiki
 
         # Изменим содержимое страницы
-        rootwiki[u"Страница 1"].tags = ["test"]
+        rootwiki["Страница 1"].tags = ["test"]
 
         self.assertTrue(self.isPageUpdate)
-        self.assertEqual(self.pageUpdateSender, rootwiki[u"Страница 1"])
+        self.assertEqual(self.pageUpdateSender, rootwiki["Страница 1"])
         self.assertEqual(self.prev_kwargs["change"], PAGE_UPDATE_TAGS)
 
         Application.onPageUpdate -= self.pageUpdate
@@ -468,10 +468,10 @@ class EventsTest(unittest.TestCase):
 
         # Создаем вики
         rootwiki = WikiDocument.create(self.path)
-        TextPageFactory().create(rootwiki, u"Страница 1", [])
+        TextPageFactory().create(rootwiki, "Страница 1", [])
 
         # Изменим содержимое страницы
-        rootwiki[u"Страница 1"].tags = ["test"]
+        rootwiki["Страница 1"].tags = ["test"]
 
         self.assertFalse(self.isPageUpdate)
         self.assertEqual(self.pageUpdateSender, None)
@@ -493,15 +493,15 @@ class EventsTest(unittest.TestCase):
 
         # Создаем вики
         rootwiki = WikiDocument.create(self.path)
-        TextPageFactory().create(rootwiki, u"Страница 1", [])
+        TextPageFactory().create(rootwiki, "Страница 1", [])
 
         Application.wikiroot = rootwiki
 
         # Изменим содержимое страницы
-        rootwiki[u"Страница 1"].icon = "../test/images/feed.gif"
+        rootwiki["Страница 1"].icon = "../test/images/feed.gif"
 
         self.assertTrue(self.isPageUpdate)
-        self.assertEqual(self.pageUpdateSender, rootwiki[u"Страница 1"])
+        self.assertEqual(self.pageUpdateSender, rootwiki["Страница 1"])
         self.assertEqual(self.prev_kwargs["change"], PAGE_UPDATE_ICON)
 
         self.assertFalse(self.isTreeUpdate)
@@ -527,15 +527,15 @@ class EventsTest(unittest.TestCase):
 
         # Создаем вики
         rootwiki = WikiDocument.create(self.path)
-        TextPageFactory().create(rootwiki, u"Страница 1", [])
+        TextPageFactory().create(rootwiki, "Страница 1", [])
 
         Application.wikiroot = rootwiki
 
         # Изменим содержимое страницы
-        rootwiki[u"Страница 1"].icon = "../test/images/feed.gif"
+        rootwiki["Страница 1"].icon = "../test/images/feed.gif"
 
         self.assertTrue(self.isPageUpdate)
-        self.assertEqual(self.pageUpdateSender, rootwiki[u"Страница 1"])
+        self.assertEqual(self.pageUpdateSender, rootwiki["Страница 1"])
 
         self.assertFalse(self.isTreeUpdate)
 
@@ -548,28 +548,28 @@ class EventsTest(unittest.TestCase):
         removeDir(self.path)
 
         rootwiki = WikiDocument.create(self.path)
-        TextPageFactory().create(rootwiki, u"Страница 1", [])
-        TextPageFactory().create(rootwiki, u"Страница 2", [])
-        TextPageFactory().create(rootwiki[u"Страница 2"], u"Страница 3", [])
+        TextPageFactory().create(rootwiki, "Страница 1", [])
+        TextPageFactory().create(rootwiki, "Страница 2", [])
+        TextPageFactory().create(rootwiki["Страница 2"], "Страница 3", [])
 
         Application.wikiroot = rootwiki
 
         self.assertEqual(rootwiki.selectedPage, None)
 
-        rootwiki.selectedPage = rootwiki[u"Страница 1"]
+        rootwiki.selectedPage = rootwiki["Страница 1"]
 
-        self.assertEqual(rootwiki.selectedPage, rootwiki[u"Страница 1"])
+        self.assertEqual(rootwiki.selectedPage, rootwiki["Страница 1"])
         self.assertEqual(self.isPageSelect, True)
-        self.assertEqual(self.pageSelectSender, rootwiki[u"Страница 1"])
+        self.assertEqual(self.pageSelectSender, rootwiki["Страница 1"])
         self.assertEqual(self.pageSelectCount, 1)
 
-        rootwiki.selectedPage = rootwiki[u"Страница 2/Страница 3"]
+        rootwiki.selectedPage = rootwiki["Страница 2/Страница 3"]
 
         self.assertEqual(rootwiki.selectedPage,
-                         rootwiki[u"Страница 2/Страница 3"])
+                         rootwiki["Страница 2/Страница 3"])
         self.assertEqual(self.isPageSelect, True)
         self.assertEqual(self.pageSelectSender,
-                         rootwiki[u"Страница 2/Страница 3"])
+                         rootwiki["Страница 2/Страница 3"])
         self.assertEqual(self.pageSelectCount, 2)
 
         Application.onPageSelect -= self.pageSelect
@@ -580,17 +580,17 @@ class EventsTest(unittest.TestCase):
         removeDir(self.path)
 
         rootwiki = WikiDocument.create(self.path)
-        TextPageFactory().create(rootwiki, u"Страница 1", [])
-        TextPageFactory().create(rootwiki, u"Страница 2", [])
-        TextPageFactory().create(rootwiki[u"Страница 2"], u"Страница 3", [])
+        TextPageFactory().create(rootwiki, "Страница 1", [])
+        TextPageFactory().create(rootwiki, "Страница 2", [])
+        TextPageFactory().create(rootwiki["Страница 2"], "Страница 3", [])
 
         Application.wikiroot = rootwiki
 
         self.assertEqual(rootwiki.selectedPage, None)
 
-        rootwiki.selectedPage = rootwiki[u"Страница 1"]
+        rootwiki.selectedPage = rootwiki["Страница 1"]
 
-        self.assertEqual(rootwiki.selectedPage, rootwiki[u"Страница 1"])
+        self.assertEqual(rootwiki.selectedPage, rootwiki["Страница 1"])
         self.assertEqual(self.isPageSelect, True)
 
     def testPageSelectLoad(self):
@@ -599,29 +599,29 @@ class EventsTest(unittest.TestCase):
         removeDir(self.path)
 
         rootwiki = WikiDocument.create(self.path)
-        TextPageFactory().create(rootwiki, u"Страница 1", [])
-        TextPageFactory().create(rootwiki, u"Страница 2", [])
-        TextPageFactory().create(rootwiki[u"Страница 2"], u"Страница 3", [])
+        TextPageFactory().create(rootwiki, "Страница 1", [])
+        TextPageFactory().create(rootwiki, "Страница 2", [])
+        TextPageFactory().create(rootwiki["Страница 2"], "Страница 3", [])
 
         document = WikiDocument.load(self.path)
         Application.wikiroot = document
 
         self.assertEqual(document.selectedPage, None)
 
-        document.selectedPage = document[u"Страница 1"]
+        document.selectedPage = document["Страница 1"]
 
-        self.assertEqual(document.selectedPage, document[u"Страница 1"])
+        self.assertEqual(document.selectedPage, document["Страница 1"])
         self.assertEqual(self.isPageSelect, True)
-        self.assertEqual(self.pageSelectSender, document[u"Страница 1"])
+        self.assertEqual(self.pageSelectSender, document["Страница 1"])
         self.assertEqual(self.pageSelectCount, 1)
 
-        document.selectedPage = document[u"Страница 2/Страница 3"]
+        document.selectedPage = document["Страница 2/Страница 3"]
 
         self.assertEqual(document.selectedPage,
-                         document[u"Страница 2/Страница 3"])
+                         document["Страница 2/Страница 3"])
         self.assertEqual(self.isPageSelect, True)
         self.assertEqual(self.pageSelectSender,
-                         document[u"Страница 2/Страница 3"])
+                         document["Страница 2/Страница 3"])
         self.assertEqual(self.pageSelectCount, 2)
 
         Application.onPageSelect -= self.pageSelect

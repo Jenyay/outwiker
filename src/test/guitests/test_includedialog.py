@@ -18,11 +18,11 @@ class IncludeDialogTest (BaseMainWndTest):
         BaseMainWndTest.setUp (self)
         self._dialog = IncludeDialog (Application.mainWindow)
 
-        WikiPageFactory().create (self.wikiroot, u"Викистраница", [])
-        self.testedPage = self.wikiroot[u"Викистраница"]
+        WikiPageFactory().create (self.wikiroot, "Викистраница", [])
+        self.testedPage = self.wikiroot["Викистраница"]
 
-        filesPath = u"../test/samplefiles/"
-        self.files = [u"accept.png", u"add.png", u"anchor.png", u"файл с пробелами.tmp", u"dir"]
+        filesPath = "../test/samplefiles/"
+        self.files = ["accept.png", "add.png", "anchor.png", "файл с пробелами.tmp", "dir"]
         self.fullFilesPath = [os.path.join (filesPath, fname) for fname in self.files]
 
         Attachment (self.testedPage).attach (self.fullFilesPath)
@@ -49,7 +49,7 @@ class IncludeDialogTest (BaseMainWndTest):
 
         result = controller.getDialogResult()
 
-        self.assertEqual (result, u"(:include Attach:accept.png:)")
+        self.assertEqual (result, "(:include Attach:accept.png:)")
 
 
     def test_02 (self):
@@ -63,7 +63,7 @@ class IncludeDialogTest (BaseMainWndTest):
 
         result = controller.getDialogResult()
 
-        self.assertEqual (result, u"(:include Attach:add.png:)")
+        self.assertEqual (result, "(:include Attach:add.png:)")
 
 
     def test_03 (self):
@@ -77,7 +77,7 @@ class IncludeDialogTest (BaseMainWndTest):
 
         result = controller.getDialogResult()
 
-        self.assertEqual (result, u"(:include Attach:dir:)")
+        self.assertEqual (result, "(:include Attach:dir:)")
 
 
     def test_04 (self):
@@ -91,7 +91,7 @@ class IncludeDialogTest (BaseMainWndTest):
 
         result = controller.getDialogResult()
 
-        self.assertEqual (result, u"(:include Attach:файл с пробелами.tmp:)")
+        self.assertEqual (result, "(:include Attach:файл с пробелами.tmp:)")
 
 
     def test_05 (self):
@@ -105,7 +105,7 @@ class IncludeDialogTest (BaseMainWndTest):
 
         result = controller.getDialogResult()
 
-        self.assertEqual (result, u"(:include Attach:accept.png:)")
+        self.assertEqual (result, "(:include Attach:accept.png:)")
 
 
     def test_encoding_01 (self):
@@ -119,7 +119,7 @@ class IncludeDialogTest (BaseMainWndTest):
 
         result = controller.getDialogResult()
 
-        self.assertEqual (result, u'(:include Attach:accept.png encoding="utf-16":)')
+        self.assertEqual (result, '(:include Attach:accept.png encoding="utf-16":)')
 
 
     def test_encoding_02 (self):
@@ -133,7 +133,7 @@ class IncludeDialogTest (BaseMainWndTest):
 
         result = controller.getDialogResult()
 
-        self.assertEqual (result, u'(:include Attach:accept.png encoding="mac_cyrillic":)')
+        self.assertEqual (result, '(:include Attach:accept.png encoding="mac_cyrillic":)')
 
 
     def test_encoding_04 (self):
@@ -147,7 +147,7 @@ class IncludeDialogTest (BaseMainWndTest):
 
         result = controller.getDialogResult()
 
-        self.assertEqual (result, u'(:include Attach:accept.png:)')
+        self.assertEqual (result, '(:include Attach:accept.png:)')
 
 
     def test_escapeHtml_01 (self):
@@ -161,7 +161,7 @@ class IncludeDialogTest (BaseMainWndTest):
 
         result = controller.getDialogResult()
 
-        self.assertEqual (result, u'(:include Attach:accept.png htmlescape:)')
+        self.assertEqual (result, '(:include Attach:accept.png htmlescape:)')
 
 
     def test_escapeHtml_02 (self):
@@ -175,7 +175,7 @@ class IncludeDialogTest (BaseMainWndTest):
 
         result = controller.getDialogResult()
 
-        self.assertEqual (result, u'(:include Attach:accept.png encoding="utf-16" htmlescape:)')
+        self.assertEqual (result, '(:include Attach:accept.png encoding="utf-16" htmlescape:)')
 
 
     def test_wikiparse_01 (self):
@@ -189,7 +189,7 @@ class IncludeDialogTest (BaseMainWndTest):
 
         result = controller.getDialogResult()
 
-        self.assertEqual (result, u'(:include Attach:accept.png wikiparse:)')
+        self.assertEqual (result, '(:include Attach:accept.png wikiparse:)')
 
 
     def test_wikiparse_02 (self):
@@ -203,7 +203,7 @@ class IncludeDialogTest (BaseMainWndTest):
 
         result = controller.getDialogResult()
 
-        self.assertEqual (result, u'(:include Attach:accept.png encoding="utf-16" wikiparse:)')
+        self.assertEqual (result, '(:include Attach:accept.png encoding="utf-16" wikiparse:)')
 
 
     def test_wikiparse_escapehtml (self):
@@ -217,4 +217,4 @@ class IncludeDialogTest (BaseMainWndTest):
 
         result = controller.getDialogResult()
 
-        self.assertEqual (result, u'(:include Attach:accept.png encoding="utf-16" htmlescape wikiparse:)')
+        self.assertEqual (result, '(:include Attach:accept.png encoding="utf-16" htmlescape wikiparse:)')

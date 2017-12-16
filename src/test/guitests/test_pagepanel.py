@@ -23,17 +23,17 @@ class PagePanelTest (BaseMainWndTest):
     def setUp (self):
         BaseMainWndTest.setUp (self)
 
-        TextPageFactory().create (self.wikiroot, u"Текстовая страница", [])
-        TextPageFactory().create (self.wikiroot, u"Текстовая страница 2", [])
+        TextPageFactory().create (self.wikiroot, "Текстовая страница", [])
+        TextPageFactory().create (self.wikiroot, "Текстовая страница 2", [])
 
-        HtmlPageFactory().create (self.wikiroot, u"HTML-страница", [])
-        HtmlPageFactory().create (self.wikiroot, u"HTML-страница 2", [])
+        HtmlPageFactory().create (self.wikiroot, "HTML-страница", [])
+        HtmlPageFactory().create (self.wikiroot, "HTML-страница 2", [])
 
-        WikiPageFactory().create (self.wikiroot, u"Викистраница", [])
-        WikiPageFactory().create (self.wikiroot, u"Викистраница 2", [])
+        WikiPageFactory().create (self.wikiroot, "Викистраница", [])
+        WikiPageFactory().create (self.wikiroot, "Викистраница 2", [])
 
-        SearchPageFactory().create (self.wikiroot, u"Поисковая страница", [])
-        SearchPageFactory().create (self.wikiroot, u"Поисковая страница 2", [])
+        SearchPageFactory().create (self.wikiroot, "Поисковая страница", [])
+        SearchPageFactory().create (self.wikiroot, "Поисковая страница 2", [])
 
 
     def testEmpty (self):
@@ -44,16 +44,16 @@ class PagePanelTest (BaseMainWndTest):
 
     def testSelect (self):
         Application.wikiroot = self.wikiroot
-        self.wikiroot.selectedPage = self.wikiroot[u"Текстовая страница"]
+        self.wikiroot.selectedPage = self.wikiroot["Текстовая страница"]
         self.assertEqual (TextPanel, type (self.wnd.pagePanel.pageView))
 
-        self.wikiroot.selectedPage = self.wikiroot[u"HTML-страница"]
+        self.wikiroot.selectedPage = self.wikiroot["HTML-страница"]
         self.assertEqual (HtmlPageView, type (self.wnd.pagePanel.pageView))
 
-        self.wikiroot.selectedPage = self.wikiroot[u"Викистраница"]
+        self.wikiroot.selectedPage = self.wikiroot["Викистраница"]
         self.assertEqual (WikiPageView, type (self.wnd.pagePanel.pageView))
 
-        self.wikiroot.selectedPage = self.wikiroot[u"Поисковая страница"]
+        self.wikiroot.selectedPage = self.wikiroot["Поисковая страница"]
         self.assertEqual (SearchPanel, type (self.wnd.pagePanel.pageView))
 
         self.wikiroot.selectedPage = None
@@ -66,13 +66,13 @@ class PagePanelTest (BaseMainWndTest):
         """
         Application.wikiroot = self.wikiroot
 
-        self.wikiroot.selectedPage = self.wikiroot[u"Текстовая страница"]
+        self.wikiroot.selectedPage = self.wikiroot["Текстовая страница"]
         currentView = self.wnd.pagePanel.pageView
 
         self.assertNotEqual (None, currentView)
         self.assertEqual (TextPanel, type (currentView))
 
-        self.wikiroot.selectedPage = self.wikiroot[u"Текстовая страница 2"]
+        self.wikiroot.selectedPage = self.wikiroot["Текстовая страница 2"]
         self.assertEqual (currentView, self.wnd.pagePanel.pageView)
 
 
@@ -82,13 +82,13 @@ class PagePanelTest (BaseMainWndTest):
         """
         Application.wikiroot = self.wikiroot
 
-        self.wikiroot.selectedPage = self.wikiroot[u"HTML-страница"]
+        self.wikiroot.selectedPage = self.wikiroot["HTML-страница"]
         currentView = self.wnd.pagePanel.pageView
 
         self.assertNotEqual (None, currentView)
         self.assertEqual (HtmlPageView, type (currentView))
 
-        self.wikiroot.selectedPage = self.wikiroot[u"HTML-страница 2"]
+        self.wikiroot.selectedPage = self.wikiroot["HTML-страница 2"]
         self.assertEqual (currentView, self.wnd.pagePanel.pageView)
 
 
@@ -98,13 +98,13 @@ class PagePanelTest (BaseMainWndTest):
         """
         Application.wikiroot = self.wikiroot
 
-        self.wikiroot.selectedPage = self.wikiroot[u"Викистраница"]
+        self.wikiroot.selectedPage = self.wikiroot["Викистраница"]
         currentView = self.wnd.pagePanel.pageView
 
         self.assertNotEqual (None, currentView)
         self.assertEqual (WikiPageView, type (currentView))
 
-        self.wikiroot.selectedPage = self.wikiroot[u"Викистраница 2"]
+        self.wikiroot.selectedPage = self.wikiroot["Викистраница 2"]
         self.assertEqual (currentView, self.wnd.pagePanel.pageView)
 
 
@@ -114,19 +114,19 @@ class PagePanelTest (BaseMainWndTest):
         """
         Application.wikiroot = self.wikiroot
 
-        self.wikiroot.selectedPage = self.wikiroot[u"Поисковая страница"]
+        self.wikiroot.selectedPage = self.wikiroot["Поисковая страница"]
         currentView = self.wnd.pagePanel.pageView
 
         self.assertNotEqual (None, currentView)
         self.assertEqual (SearchPanel, type (currentView))
 
-        self.wikiroot.selectedPage = self.wikiroot[u"Поисковая страница 2"]
+        self.wikiroot.selectedPage = self.wikiroot["Поисковая страница 2"]
         self.assertEqual (currentView, self.wnd.pagePanel.pageView)
 
 
     def testLoadSelected (self):
         # Открытие вики с уже выбранной страницей
-        self.wikiroot.selectedPage = self.wikiroot[u"Текстовая страница"]
+        self.wikiroot.selectedPage = self.wikiroot["Текстовая страница"]
 
         Application.wikiroot = self.wikiroot
         self.assertEqual (TextPanel, type (self.wnd.pagePanel.pageView))
@@ -134,7 +134,7 @@ class PagePanelTest (BaseMainWndTest):
 
     def testReload (self):
         Application.wikiroot = self.wikiroot
-        self.wikiroot.selectedPage = self.wikiroot[u"Текстовая страница"]
+        self.wikiroot.selectedPage = self.wikiroot["Текстовая страница"]
         self.assertEqual (TextPanel, type (self.wnd.pagePanel.pageView))
 
         # "Закроем" вики

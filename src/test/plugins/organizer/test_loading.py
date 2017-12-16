@@ -8,7 +8,7 @@ class OrganizerLoadingTest (BasePluginLoadingTest):
         """
         Must return path to plugin
         """
-        return u"../plugins/organizer"
+        return "../plugins/organizer"
 
 
     def getPluginName (self):

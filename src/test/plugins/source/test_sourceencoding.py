@@ -20,14 +20,14 @@ class SourceEncodingPluginTest (unittest.TestCase):
     Тесты на работу с разными кодировками в плагине Source
     """
     def setUp(self):
-        self.__pluginname = u"Source"
+        self.__pluginname = "Source"
 
         self.__createWiki()
 
-        dirlist = [u"../plugins/source"]
+        dirlist = ["../plugins/source"]
 
         # Путь, где лежат примеры исходников в разных кодировках
-        self.samplefilesPath = u"../test/samplefiles/sources"
+        self.samplefilesPath = "../test/samplefiles/sources"
 
         self.loader = PluginsLoader(Application)
         self.loader.load (dirlist)
@@ -42,12 +42,12 @@ class SourceEncodingPluginTest (unittest.TestCase):
 
     def __createWiki (self):
         # Здесь будет создаваться вики
-        self.path = mkdtemp (prefix=u'Абырвалг абыр')
+        self.path = mkdtemp (prefix='Абырвалг абыр')
 
         self.wikiroot = WikiDocument.create (self.path)
 
-        WikiPageFactory().create (self.wikiroot, u"Страница 1", [])
-        self.testPage = self.wikiroot[u"Страница 1"]
+        WikiPageFactory().create (self.wikiroot, "Страница 1", [])
+        self.testPage = self.wikiroot["Страница 1"]
 
 
     def tearDown(self):
@@ -59,66 +59,66 @@ class SourceEncodingPluginTest (unittest.TestCase):
         """
         Явное задание кодировки
         """
-        Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, u"source_cp1251.cs")])
-        content = u'(:source file="source_cp1251.cs"  encoding="cp1251":)'
+        Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, "source_cp1251.cs")])
+        content = '(:source file="source_cp1251.cs"  encoding="cp1251":)'
         self.testPage.content = content
 
         generator = HtmlGenerator (self.testPage)
         result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
-        self.assertTrue (u'<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>' in result)
-        self.assertTrue (u'Ошибка соединения с сервером' in result)
+        self.assertTrue ('<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>' in result)
+        self.assertTrue ('Ошибка соединения с сервером' in result)
 
 
     def testHighlightFileEncoding2 (self):
         """
         Явное задание неправильной кодировки
         """
-        Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, u"source_cp1251.cs")])
-        content = u'(:source file="source_cp1251.cs"  encoding="utf8":)'
+        Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, "source_cp1251.cs")])
+        content = '(:source file="source_cp1251.cs"  encoding="utf8":)'
         self.testPage.content = content
 
         generator = HtmlGenerator (self.testPage)
         result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
-        self.assertTrue (u'<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>' not in result)
-        self.assertTrue (u'Ошибка соединения с сервером' not in result)
+        self.assertTrue ('<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>' not in result)
+        self.assertTrue ('Ошибка соединения с сервером' not in result)
 
-        self.assertTrue (u'Source' in result)
+        self.assertTrue ('Source' in result)
 
 
     def testHighlightFileEncoding3 (self):
         """
         Явное задание неправильной кодировки (которой нет в списке кодировок)
         """
-        Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, u"source_cp1251.cs")])
-        content = u'(:source file="source_cp1251.cs"  encoding="blablabla":)'
+        Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, "source_cp1251.cs")])
+        content = '(:source file="source_cp1251.cs"  encoding="blablabla":)'
         self.testPage.content = content
 
         generator = HtmlGenerator (self.testPage)
         result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
-        self.assertTrue (u'<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>' not in result)
-        self.assertTrue (u'Ошибка соединения с сервером' not in result)
+        self.assertTrue ('<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>' not in result)
+        self.assertTrue ('Ошибка соединения с сервером' not in result)
 
-        self.assertTrue (u'Source' in result)
+        self.assertTrue ('Source' in result)
 
 
     def testHighlightFileEncoding4 (self):
         """
         Явное задание неправильной кодировки (которой нет в списке кодировок)
         """
-        Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, u"source_utf8.py")])
-        content = u'(:source file="source_utf8.py"  encoding="blablabla":)'
+        Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, "source_utf8.py")])
+        content = '(:source file="source_utf8.py"  encoding="blablabla":)'
         self.testPage.content = content
 
         generator = HtmlGenerator (self.testPage)
         result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
-        self.assertTrue (u'<span class="kn">import</span> <span class="nn">os.path</span>' not in result)
+        self.assertTrue ('<span class="kn">import</span> <span class="nn">os.path</span>' not in result)
 
-        self.assertTrue (u'<span class="bp">self</span><span class="o">.</span><span class="n">__correctSysPath</span><span class="p">()</span>' not in result)
+        self.assertTrue ('<span class="bp">self</span><span class="o">.</span><span class="n">__correctSysPath</span><span class="p">()</span>' not in result)
 
-        self.assertTrue (u'Уничтожение (выгрузка) плагина.' not in result)
+        self.assertTrue ('Уничтожение (выгрузка) плагина.' not in result)
 
-        self.assertTrue (u'Source' in result)
+        self.assertTrue ('Source' in result)

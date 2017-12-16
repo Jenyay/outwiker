@@ -15,14 +15,14 @@ from test.utils import removeDir
 
 class SourcePluginTest (unittest.TestCase):
     def setUp(self):
-        self.__pluginname = u"Source"
+        self.__pluginname = "Source"
 
         self.__createWiki()
 
-        dirlist = [u"../plugins/source"]
+        dirlist = ["../plugins/source"]
 
         # Путь, где лежат примеры исходников в разных кодировках
-        self.samplefilesPath = u"../test/samplefiles/sources"
+        self.samplefilesPath = "../test/samplefiles/sources"
 
         self.loader = PluginsLoader(Application)
         self.loader.load (dirlist)
@@ -37,12 +37,12 @@ class SourcePluginTest (unittest.TestCase):
 
     def __createWiki (self):
         # Здесь будет создаваться вики
-        self.path = mkdtemp (prefix=u'Абырвалг абыр')
+        self.path = mkdtemp (prefix='Абырвалг абыр')
 
         self.wikiroot = WikiDocument.create (self.path)
 
-        WikiPageFactory().create (self.wikiroot, u"Страница 1", [])
-        self.testPage = self.wikiroot[u"Страница 1"]
+        WikiPageFactory().create (self.wikiroot, "Страница 1", [])
+        self.testPage = self.wikiroot["Страница 1"]
 
 
     def tearDown(self):
@@ -57,18 +57,18 @@ class SourcePluginTest (unittest.TestCase):
 
 
     def testEmptyCommand (self):
-        text = u'''bla-bla-bla (:source:) bla-bla-bla'''
+        text = '''bla-bla-bla (:source:) bla-bla-bla'''
 
         self.testPage.content = text
 
         generator = HtmlGenerator (self.testPage)
         result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
-        self.assertTrue (u"bla-bla-bla" in result)
+        self.assertTrue ("bla-bla-bla" in result)
 
 
     def test1S (self):
-        text = u'''(:source lang="1s":)
+        text = '''(:source lang="1s":)
 Функция УстановитьФизическиеЛица(Выборка)
     Пока Выборка.Следующий() Цикл
         //УстановитьФизическоеЛицо
@@ -86,12 +86,12 @@ class SourcePluginTest (unittest.TestCase):
         generator = HtmlGenerator (self.testPage)
         result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
-        self.assertIn (u'<span class="c">//УстановитьФизическоеЛицо</span>', result)
-        self.assertIn (u'<span class="k">КонецФункции</span>', result)
+        self.assertIn ('<span class="c">//УстановитьФизическоеЛицо</span>', result)
+        self.assertIn ('<span class="k">КонецФункции</span>', result)
 
 
     def testFullHtmlPython (self):
-        text = u'''(:source lang="python" tabwidth=5:)
+        text = '''(:source lang="python" tabwidth=5:)
 import os
 
 # Комментарий
@@ -109,9 +109,9 @@ def hello (count):
         generator = HtmlGenerator (self.testPage)
         result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
-        innerString1 = u".highlight-default .go { color: #888888 } /* Generic.Output */"
-        innerString2 = u'          <span class="k">print</span> <span class="s2">&quot;Hello world!!!&quot;</span>'
-        innerString3 = u'<span class="kn">import</span> <span class="nn">os</span>'
+        innerString1 = ".highlight-default .go { color: #888888 } /* Generic.Output */"
+        innerString2 = '          <span class="k">print</span> <span class="s2">&quot;Hello world!!!&quot;</span>'
+        innerString3 = '<span class="kn">import</span> <span class="nn">os</span>'
 
         self.assertTrue (innerString1 in result)
         self.assertTrue (innerString2 in result)
@@ -119,7 +119,7 @@ def hello (count):
 
 
     def testFullHtmlPython2 (self):
-        text = u'''(:source lang="python":)
+        text = '''(:source lang="python":)
 import os
 
 # Комментарий
@@ -137,9 +137,9 @@ def hello (count):
         generator = HtmlGenerator (self.testPage)
         result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
-        innerString1 = u".highlight-default .go { color: #888888 } /* Generic.Output */"
-        innerString2 = u'       <span class="k">print</span> <span class="s2">&quot;Hello world!!!&quot;</span>'
-        innerString3 = u'<span class="kn">import</span> <span class="nn">os</span>'
+        innerString1 = ".highlight-default .go { color: #888888 } /* Generic.Output */"
+        innerString2 = '       <span class="k">print</span> <span class="s2">&quot;Hello world!!!&quot;</span>'
+        innerString3 = '<span class="kn">import</span> <span class="nn">os</span>'
 
         self.assertTrue (innerString1 in result)
         self.assertTrue (innerString2 in result)
@@ -148,7 +148,7 @@ def hello (count):
 
     def testFullHtmlPython3 (self):
         # Неправильный размер табуляции
-        text = u'''(:source lang="python" tabwidth="qqqqq":)
+        text = '''(:source lang="python" tabwidth="qqqqq":)
 import os
 
 # Комментарий
@@ -166,9 +166,9 @@ def hello (count):
         generator = HtmlGenerator (self.testPage)
         result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
-        innerString1 = u".highlight-default .go { color: #888888 } /* Generic.Output */"
-        innerString2 = u'       <span class="k">print</span> <span class="s2">&quot;Hello world!!!&quot;</span>'
-        innerString3 = u'<span class="kn">import</span> <span class="nn">os</span>'
+        innerString1 = ".highlight-default .go { color: #888888 } /* Generic.Output */"
+        innerString2 = '       <span class="k">print</span> <span class="s2">&quot;Hello world!!!&quot;</span>'
+        innerString3 = '<span class="kn">import</span> <span class="nn">os</span>'
 
         self.assertTrue (innerString1 in result)
         self.assertTrue (innerString2 in result)
@@ -176,7 +176,7 @@ def hello (count):
 
 
     def testFullHtmlInvalidLang (self):
-        text = u'''(:source lang="qqq" tabwidth=4:)
+        text = '''(:source lang="qqq" tabwidth=4:)
 import os
 
 # Комментарий
@@ -194,18 +194,18 @@ def hello (count):
         generator = HtmlGenerator (self.testPage)
         result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
-        innerString1 = u".highlight-default .go { color: #888888 } /* Generic.Output */"
-        innerString2 = u'        print &quot;Hello world!!!&quot;'
-        innerString3 = u'def hello (count):'
+        innerString1 = ".highlight-default .go { color: #888888 } /* Generic.Output */"
+        innerString2 = '        print &quot;Hello world!!!&quot;'
+        innerString3 = 'def hello (count):'
 
         self.assertTrue (innerString1 in result, result)
         self.assertTrue (innerString2 in result)
         self.assertTrue (innerString3 in result)
-        self.assertFalse (u"(:source" in result)
+        self.assertFalse ("(:source" in result)
 
 
     def testFullHtmlText (self):
-        text = u'''(:source lang="text" tabwidth=4:)
+        text = '''(:source lang="text" tabwidth=4:)
 import os
 
 # Комментарий
@@ -223,18 +223,18 @@ def hello (count):
         generator = HtmlGenerator (self.testPage)
         result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
-        innerString1 = u".highlight-default .go { color: #888888 } /* Generic.Output */"
-        innerString2 = u'        print &quot;Hello world!!!&quot;'
-        innerString3 = u'def hello (count):'
+        innerString1 = ".highlight-default .go { color: #888888 } /* Generic.Output */"
+        innerString2 = '        print &quot;Hello world!!!&quot;'
+        innerString3 = 'def hello (count):'
 
         self.assertTrue (innerString1 in result)
         self.assertTrue (innerString2 in result)
         self.assertTrue (innerString3 in result)
-        self.assertFalse (u"(:source" in result)
+        self.assertFalse ("(:source" in result)
 
 
     def testFullHtmlText2 (self):
-        text = u'''(:source:)
+        text = '''(:source:)
 import os
 
 # Комментарий
@@ -252,18 +252,18 @@ def hello (count):
         generator = HtmlGenerator (self.testPage)
         result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
-        innerString1 = u".highlight-default .go { color: #888888 } /* Generic.Output */"
-        innerString2 = u'        print &quot;Hello world!!!&quot;'
-        innerString3 = u'def hello (count):'
+        innerString1 = ".highlight-default .go { color: #888888 } /* Generic.Output */"
+        innerString2 = '        print &quot;Hello world!!!&quot;'
+        innerString3 = 'def hello (count):'
 
         self.assertTrue (innerString1 in result)
         self.assertTrue (innerString2 in result)
         self.assertTrue (innerString3 in result)
-        self.assertFalse (u"(:source" in result)
+        self.assertFalse ("(:source" in result)
 
 
     def testManySource (self):
-        text = u'''(:source lang=python:)
+        text = '''(:source lang=python:)
 import os
 
 # Комментарий
@@ -294,11 +294,11 @@ def hello (count):
         generator = HtmlGenerator (self.testPage)
         result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
-        innerString1 = u".highlight-default .go { color: #888888 } /* Generic.Output */"
-        innerString2 = u'        print &quot;Hello world!!!&quot;'
-        innerString3 = u'def hello (count):'
-        innerString4 = u'       <span class="k">print</span> <span class="s2">&quot;Hello world!!!&quot;</span>'
-        innerString5 = u'<span class="kn">import</span> <span class="nn">os</span>'
+        innerString1 = ".highlight-default .go { color: #888888 } /* Generic.Output */"
+        innerString2 = '        print &quot;Hello world!!!&quot;'
+        innerString3 = 'def hello (count):'
+        innerString4 = '       <span class="k">print</span> <span class="s2">&quot;Hello world!!!&quot;</span>'
+        innerString5 = '<span class="kn">import</span> <span class="nn">os</span>'
 
         self.assertTrue (innerString1 in result)
 
@@ -309,11 +309,11 @@ def hello (count):
         self.assertTrue (innerString3 in result)
         self.assertTrue (innerString4 in result)
         self.assertTrue (innerString5 in result)
-        self.assertFalse (u"(:source" in result)
+        self.assertFalse ("(:source" in result)
 
 
     def testConfigTabWidth(self):
-        text = u'''(:source:)
+        text = '''(:source:)
 import os
 
 # Комментарий
@@ -332,18 +332,18 @@ def hello (count):
         generator = HtmlGenerator (self.testPage)
         result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
-        innerString1 = u".highlight-default .go { color: #888888 } /* Generic.Output */"
-        innerString2 = u'          for i in range (10)'
-        innerString3 = u'def hello (count):'
+        innerString1 = ".highlight-default .go { color: #888888 } /* Generic.Output */"
+        innerString2 = '          for i in range (10)'
+        innerString3 = 'def hello (count):'
 
         self.assertTrue (innerString1 in result)
         self.assertTrue (innerString2 in result)
         self.assertTrue (innerString3 in result)
-        self.assertFalse (u"(:source" in result)
+        self.assertFalse ("(:source" in result)
 
 
     def testConfigTabWidth2(self):
-        text = u'''(:source tabwidth=10:)
+        text = '''(:source tabwidth=10:)
 import os
 
 # Комментарий
@@ -362,18 +362,18 @@ def hello (count):
         generator = HtmlGenerator (self.testPage)
         result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
-        innerString1 = u".highlight-default .go { color: #888888 } /* Generic.Output */"
-        innerString2 = u'          for i in range (10)'
-        innerString3 = u'def hello (count):'
+        innerString1 = ".highlight-default .go { color: #888888 } /* Generic.Output */"
+        innerString2 = '          for i in range (10)'
+        innerString3 = 'def hello (count):'
 
         self.assertTrue (innerString1 in result)
         self.assertTrue (innerString2 in result)
         self.assertTrue (innerString3 in result)
-        self.assertFalse (u"(:source" in result)
+        self.assertFalse ("(:source" in result)
 
 
     def testConfigTabWidth3(self):
-        text = u'''(:source tabwidth="-1":)
+        text = '''(:source tabwidth="-1":)
 import os
 
 # Комментарий
@@ -392,18 +392,18 @@ def hello (count):
         generator = HtmlGenerator (self.testPage)
         result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
-        innerString1 = u".highlight-default .go { color: #888888 } /* Generic.Output */"
-        innerString2 = u'    for i in range (10)'
-        innerString3 = u'def hello (count):'
+        innerString1 = ".highlight-default .go { color: #888888 } /* Generic.Output */"
+        innerString2 = '    for i in range (10)'
+        innerString3 = 'def hello (count):'
 
         self.assertTrue (innerString1 in result)
         self.assertTrue (innerString2 in result)
         self.assertTrue (innerString3 in result)
-        self.assertFalse (u"(:source" in result)
+        self.assertFalse ("(:source" in result)
 
 
     def testConfigTabWidth4(self):
-        text = u'''(:source:)
+        text = '''(:source:)
 import os
 
 # Комментарий
@@ -422,18 +422,18 @@ def hello (count):
         generator = HtmlGenerator (self.testPage)
         result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
-        innerString1 = u".highlight-default .go { color: #888888 } /* Generic.Output */"
-        innerString2 = u'    for i in range (10)'
-        innerString3 = u'def hello (count):'
+        innerString1 = ".highlight-default .go { color: #888888 } /* Generic.Output */"
+        innerString2 = '    for i in range (10)'
+        innerString3 = 'def hello (count):'
 
         self.assertTrue (innerString1 in result)
         self.assertTrue (innerString2 in result)
         self.assertTrue (innerString3 in result)
-        self.assertFalse (u"(:source" in result)
+        self.assertFalse ("(:source" in result)
 
 
     def testLineNum1 (self):
-        text = u'''(:source linenum:)
+        text = '''(:source linenum:)
 import os
 import os.path
 import sys
@@ -454,7 +454,7 @@ def hello (count):
         generator = HtmlGenerator (self.testPage)
         result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
-        innerString1 = u""" 1
+        innerString1 = """ 1
  2
  3
  4

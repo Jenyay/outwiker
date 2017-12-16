@@ -23,19 +23,19 @@ from test.utils import removeDir
 
 class WikiHtmlCacheTest (unittest.TestCase):
     def setUp(self):
-        self.filesPath = u"../test/samplefiles/"
+        self.filesPath = "../test/samplefiles/"
         self.__createWiki()
 
-        files = [u"image.jpg", u"dir"]
+        files = ["image.jpg", "dir"]
 
         fullFilesPath = [os.path.join (self.filesPath, fname) for fname in files]
 
-        self.attach_page2 = Attachment (self.wikiroot[u"Страница 2"])
+        self.attach_page2 = Attachment (self.wikiroot["Страница 2"])
 
         # Прикрепим к двум страницам файлы
         Attachment (self.testPage).attach (fullFilesPath)
 
-        self.wikitext = u"""Бла-бла-бла
+        self.wikitext = """Бла-бла-бла
         %thumb maxsize=250%Attach:image.jpg%%
         Бла-бла-бла"""
 
@@ -60,12 +60,12 @@ class WikiHtmlCacheTest (unittest.TestCase):
 
     def __createWiki (self):
         # Здесь будет создаваться вики
-        self.path = mkdtemp (prefix=u'Абырвалг абыр')
+        self.path = mkdtemp (prefix='Абырвалг абыр')
 
         self.wikiroot = WikiDocument.create (self.path)
 
-        WikiPageFactory().create (self.wikiroot, u"Страница 2", [])
-        self.testPage = self.wikiroot[u"Страница 2"]
+        WikiPageFactory().create (self.wikiroot, "Страница 2", [])
+        self.testPage = self.wikiroot["Страница 2"]
 
 
     def tearDown(self):
@@ -82,7 +82,7 @@ class WikiHtmlCacheTest (unittest.TestCase):
         cache.saveHash()
         self.assertTrue (cache.canReadFromCache())
 
-        self.testPage.content = u"бла-бла-бла"
+        self.testPage.content = "бла-бла-бла"
 
         # Изменили содержимое страницы, опять нельзя кешировать
         self.assertFalse (cache.canReadFromCache())
@@ -93,7 +93,7 @@ class WikiHtmlCacheTest (unittest.TestCase):
 
         # Добавим файл
         attach = Attachment (self.testPage)
-        attach.attach ([os.path.join (self.filesPath, u"add.png")])
+        attach.attach ([os.path.join (self.filesPath, "add.png")])
 
         self.assertFalse (cache.canReadFromCache())
         cache.saveHash()
@@ -111,7 +111,7 @@ class WikiHtmlCacheTest (unittest.TestCase):
         # После того, как один раз сгенерили страницу, если ничего не изменилось, можно кешировать
         self.assertTrue (cache.canReadFromCache())
 
-        self.testPage.content = u"бла-бла-бла"
+        self.testPage.content = "бла-бла-бла"
 
         # Изменили содержимое страницы, опять нельзя кешировать
         self.assertFalse (cache.canReadFromCache())
@@ -120,7 +120,7 @@ class WikiHtmlCacheTest (unittest.TestCase):
         self.assertTrue (cache.canReadFromCache())
 
         # Изменили заголовок
-        self.testPage.title = u"Новый заголовок"
+        self.testPage.title = "Новый заголовок"
 
         self.assertFalse (cache.canReadFromCache())
         cache.saveHash()
@@ -130,7 +130,7 @@ class WikiHtmlCacheTest (unittest.TestCase):
 
     def testCacheEmpty (self):
         emptycontent = EmptyContent (Application.config)
-        self.testPage.content = u""
+        self.testPage.content = ""
 
         # Только создали страницу, кешировать нельзя
         cache = HtmlCache (self.testPage, Application)
@@ -139,13 +139,13 @@ class WikiHtmlCacheTest (unittest.TestCase):
         cache.saveHash()
 
         # Страница пустая, изменился шаблон для путой записи
-        emptycontent.content = u"1111"
+        emptycontent.content = "1111"
         self.assertFalse (cache.canReadFromCache())
 
         cache.saveHash()
 
         # Изменилось содержимое страницы
-        self.testPage.content = u"Бла-бла-бла"
+        self.testPage.content = "Бла-бла-бла"
         self.assertFalse (cache.canReadFromCache())
 
         cache.saveHash()
@@ -154,7 +154,7 @@ class WikiHtmlCacheTest (unittest.TestCase):
         cache.saveHash()
 
         # Изменился шаблон страницы, но страница уже не пустая
-        emptycontent.content = u"2222"
+        emptycontent.content = "2222"
         self.assertTrue (cache.canReadFromCache())
 
 
@@ -205,7 +205,7 @@ class WikiHtmlCacheTest (unittest.TestCase):
         self.assertTrue (cache.canReadFromCache())
 
         # Добавляем новую подстраницу
-        WikiPageFactory().create (self.testPage, u"Подстраница 1", [])
+        WikiPageFactory().create (self.testPage, "Подстраница 1", [])
         self.assertFalse (cache.canReadFromCache())
 
         cache.saveHash()
@@ -225,8 +225,8 @@ class WikiHtmlCacheTest (unittest.TestCase):
         cache.saveHash()
         self.assertTrue (cache.canReadFromCache())
 
-        exampleStyleDir = u"../test/styles/example_jblog/example_jblog"
-        exampleStyleDir2 = u"../test/styles/example_jnet/example_jnet"
+        exampleStyleDir = "../test/styles/example_jblog/example_jblog"
+        exampleStyleDir2 = "../test/styles/example_jnet/example_jnet"
 
         # Изменим стиль страницы
         style.setPageStyle (self.testPage, exampleStyleDir)
@@ -266,13 +266,13 @@ class WikiHtmlCacheTest (unittest.TestCase):
         self.assertTrue (cache.canReadFromCache())
 
         # Загрузили плагин. Кэш не должен сработать
-        Application.plugins.load ([u"../test/plugins/testempty1"])
+        Application.plugins.load (["../test/plugins/testempty1"])
         self.assertFalse (cache.canReadFromCache())
 
         cache.saveHash()
 
         # Загрузили еще один плагин
-        Application.plugins.load ([u"../test/plugins/testempty2"])
+        Application.plugins.load (["../test/plugins/testempty2"])
         self.assertFalse (cache.canReadFromCache())
 
 
@@ -281,8 +281,8 @@ class WikiHtmlCacheTest (unittest.TestCase):
         Проверка на то, что при изменении списка установленных плагинов не работает кэширование
         """
         Application.plugins.clear()
-        Application.plugins.load ([u"../test/plugins/testempty1"])
-        Application.plugins.load ([u"../test/plugins/testempty2"])
+        Application.plugins.load (["../test/plugins/testempty1"])
+        Application.plugins.load (["../test/plugins/testempty2"])
 
         # Только создали страницу, кешировать нельзя
         cache = HtmlCache (self.testPage, Application)
@@ -295,8 +295,8 @@ class WikiHtmlCacheTest (unittest.TestCase):
         self.assertFalse (cache.canReadFromCache())
 
         # Перезагрузим плагины в другом порядке
-        Application.plugins.load ([u"../test/plugins/testempty2"])
-        Application.plugins.load ([u"../test/plugins/testempty1"])
+        Application.plugins.load (["../test/plugins/testempty2"])
+        Application.plugins.load (["../test/plugins/testempty1"])
 
         self.assertEqual (len (Application.plugins), 2)
         self.assertTrue (cache.canReadFromCache())
@@ -322,7 +322,7 @@ class WikiHtmlCacheTest (unittest.TestCase):
         cache.saveHash()
         self.assertTrue (cache.canReadFromCache())
 
-        Application.config.set (WikiConfig.WIKI_SECTION, WikiConfig.THUMB_SIZE_PARAM, u"Бла-бла-бла")
+        Application.config.set (WikiConfig.WIKI_SECTION, WikiConfig.THUMB_SIZE_PARAM, "Бла-бла-бла")
         self.assertFalse (cache.canReadFromCache())
 
         cache.saveHash()
@@ -344,7 +344,7 @@ class WikiHtmlCacheTest (unittest.TestCase):
 
         Application.config.set (HtmlRenderConfig.HTML_SECTION,
                                 HtmlRenderConfig.FONT_FACE_NAME_PARAM,
-                                u"Бла-бла-бла")
+                                "Бла-бла-бла")
 
         self.assertFalse (cache.canReadFromCache())
 

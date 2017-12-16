@@ -28,7 +28,7 @@ class BaseMainWndTest(unittest.TestCase):
 
 
     def setUp(self):
-        self.path = mkdtemp (prefix=u'OutWiker_Абырвалг абырвалг_' + unicode (self.__class__.__name__, 'utf-8'))
+        self.path = mkdtemp (prefix='OutWiker_Абырвалг абырвалг_' + str (self.__class__.__name__))
 
         Application.config.remove_section (MainWindowConfig.MAIN_WINDOW_SECTION)
 

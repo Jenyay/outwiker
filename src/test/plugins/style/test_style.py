@@ -19,7 +19,7 @@ class StylePluginTest (unittest.TestCase):
 
         self.__createWiki()
 
-        dirlist = [u"../plugins/style"]
+        dirlist = ["../plugins/style"]
 
         self.loader = PluginsLoader(Application)
         self.loader.load (dirlist)
@@ -30,12 +30,12 @@ class StylePluginTest (unittest.TestCase):
 
     def __createWiki (self):
         # Здесь будет создаваться вики
-        self.path = mkdtemp (prefix=u'Абырвалг абыр')
+        self.path = mkdtemp (prefix='Абырвалг абыр')
 
         self.wikiroot = WikiDocument.create (self.path)
 
-        WikiPageFactory().create (self.wikiroot, u"Страница 1", [])
-        self.testPage = self.wikiroot[u"Страница 1"]
+        WikiPageFactory().create (self.wikiroot, "Страница 1", [])
+        self.testPage = self.wikiroot["Страница 1"]
 
 
     def tearDown(self):
@@ -48,18 +48,18 @@ class StylePluginTest (unittest.TestCase):
 
 
     def testStyleContentParse (self):
-        text = u"""Бла-бла-бла
+        text = """Бла-бла-бла
 (:style:)
 body {font-size: 33px}
 (:styleend:)
 бла-бла-бла
 """
 
-        validResult = u"""Бла-бла-бла
+        validResult = """Бла-бла-бла
 
 бла-бла-бла
 """
-        styleresult = u"<STYLE>body {font-size: 33px}</STYLE>"
+        styleresult = "<STYLE>body {font-size: 33px}</STYLE>"
 
         result = self.parser.toHtml (text)
         self.assertEqual (result, validResult)
@@ -67,7 +67,7 @@ body {font-size: 33px}
 
 
     def testFullHtml (self):
-        text = u"""Бла-бла-бла
+        text = """Бла-бла-бла
 (:style:)
 body {font-size: 33px}
 (:styleend:)
@@ -78,13 +78,13 @@ body {font-size: 33px}
         generator = HtmlGenerator (self.testPage)
         result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
-        validStyle = u"<STYLE>body {font-size: 33px}</STYLE>"
+        validStyle = "<STYLE>body {font-size: 33px}</STYLE>"
 
         self.assertTrue (validStyle in result, result)
 
 
     def testFullHtml2 (self):
-        text = u"""Бла-бла-бла
+        text = """Бла-бла-бла
 (:style:)
 body {font-size: 33px}
 (:styleend:)
@@ -102,8 +102,8 @@ body {font-size: 10px}
         generator = HtmlGenerator (self.testPage)
         result = generator.makeHtml (Style().getPageStyle (self.testPage))
 
-        validStyle1 = u"<STYLE>body {font-size: 33px}</STYLE>"
-        validStyle2 = u"<STYLE>body {font-size: 10px}</STYLE>"
+        validStyle1 = "<STYLE>body {font-size: 33px}</STYLE>"
+        validStyle2 = "<STYLE>body {font-size: 10px}</STYLE>"
 
         self.assertTrue (validStyle1 in result, result)
         self.assertTrue (validStyle2 in result, result)

@@ -9,7 +9,7 @@ from outwiker.gui.tester import Tester
 
 class InsertGroupTest (unittest.TestCase):
     def setUp(self):
-        dirlist = [u"../plugins/diagrammer"]
+        dirlist = ["../plugins/diagrammer"]
 
         self.loader = PluginsLoader(Application)
         self.loader.load (dirlist)
@@ -34,70 +34,70 @@ class InsertGroupTest (unittest.TestCase):
 
         begin, end = self._controller.getResult ()
 
-        valid_begin = u'''group {
+        valid_begin = '''group {
     '''
 
         self.assertEqual (begin, valid_begin)
-        self.assertEqual (end, u"\n}")
+        self.assertEqual (end, "\n}")
 
 
     def testName_01 (self):
         Tester.dialogTester.appendOk()
-        self._dlg.name = u"Абырвалг"
+        self._dlg.name = "Абырвалг"
 
         begin, end = self._controller.getResult ()
 
-        valid_begin = u'''group Абырвалг {
+        valid_begin = '''group Абырвалг {
     '''
 
         self.assertEqual (begin, valid_begin)
-        self.assertEqual (end, u"\n}")
+        self.assertEqual (end, "\n}")
 
 
     def testBackColor_01 (self):
         Tester.dialogTester.appendOk()
         self._dlg.isBackColorChanged = True
-        self._dlg.backColor = u"blue"
+        self._dlg.backColor = "blue"
 
         begin, end = self._controller.getResult ()
 
-        valid_begin = u'''group {
+        valid_begin = '''group {
     color = "blue";
 
     '''
 
         self.assertEqual (begin, valid_begin)
-        self.assertEqual (end, u"\n}")
+        self.assertEqual (end, "\n}")
 
 
     def testBackColor_02 (self):
         Tester.dialogTester.appendOk()
         self._dlg.isBackColorChanged = False
-        self._dlg.backColor = u"blue"
+        self._dlg.backColor = "blue"
 
         begin, end = self._controller.getResult ()
 
-        valid_begin = u'''group {
+        valid_begin = '''group {
     '''
 
         self.assertEqual (begin, valid_begin)
-        self.assertEqual (end, u"\n}")
+        self.assertEqual (end, "\n}")
 
 
     def testBackColor_03 (self):
         Tester.dialogTester.appendOk()
         self._dlg.isBackColorChanged = True
-        self._dlg.backColor = u"#AAAAAA"
+        self._dlg.backColor = "#AAAAAA"
 
         begin, end = self._controller.getResult ()
 
-        valid_begin = u'''group {
+        valid_begin = '''group {
     color = "#AAAAAA";
 
     '''
 
         self.assertEqual (begin, valid_begin)
-        self.assertEqual (end, u"\n}")
+        self.assertEqual (end, "\n}")
 
 
     def testOrientation_01 (self):
@@ -107,7 +107,7 @@ class InsertGroupTest (unittest.TestCase):
 
         begin, end = self._controller.getResult ()
 
-        valid_begin = u'''group {
+        valid_begin = '''group {
     orientation = landscape;
 
     '''
@@ -122,7 +122,7 @@ class InsertGroupTest (unittest.TestCase):
 
         begin, end = self._controller.getResult ()
 
-        valid_begin = u'''group {
+        valid_begin = '''group {
     orientation = portrait;
 
     '''
@@ -137,7 +137,7 @@ class InsertGroupTest (unittest.TestCase):
 
         begin, end = self._controller.getResult ()
 
-        valid_begin = u'''group {
+        valid_begin = '''group {
     '''
 
         self.assertEqual (begin, valid_begin)
@@ -148,11 +148,11 @@ class InsertGroupTest (unittest.TestCase):
         self._dlg.isOrientationChanged = True
         self._dlg.orientationIndex = 1
         self._dlg.isBackColorChanged = True
-        self._dlg.backColor = u"blue"
+        self._dlg.backColor = "blue"
 
         begin, end = self._controller.getResult ()
 
-        valid_begin = u'''group {
+        valid_begin = '''group {
     color = "blue";
     orientation = portrait;
 
@@ -163,11 +163,11 @@ class InsertGroupTest (unittest.TestCase):
 
     def testLabel_01 (self):
         Tester.dialogTester.appendOk()
-        self._dlg.label = u"Абырвалг"
+        self._dlg.label = "Абырвалг"
 
         begin, end = self._controller.getResult ()
 
-        valid_begin = u'''group {
+        valid_begin = '''group {
     label = "Абырвалг";
 
     '''
@@ -177,11 +177,11 @@ class InsertGroupTest (unittest.TestCase):
 
     def testLabel_02 (self):
         Tester.dialogTester.appendOk()
-        self._dlg.label = u""
+        self._dlg.label = ""
 
         begin, end = self._controller.getResult ()
 
-        valid_begin = u'''group {
+        valid_begin = '''group {
     '''
 
         self.assertEqual (begin, valid_begin)
@@ -190,47 +190,47 @@ class InsertGroupTest (unittest.TestCase):
     def testTextColor_01 (self):
         Tester.dialogTester.appendOk()
         self._dlg.isTextColorChanged = True
-        self._dlg.textColor = u"blue"
+        self._dlg.textColor = "blue"
 
         begin, end = self._controller.getResult ()
 
-        valid_begin = u'''group {
+        valid_begin = '''group {
     textcolor = "blue";
 
     '''
 
         self.assertEqual (begin, valid_begin)
-        self.assertEqual (end, u"\n}")
+        self.assertEqual (end, "\n}")
 
 
     def testTextColor_02 (self):
         Tester.dialogTester.appendOk()
         self._dlg.isTextColorChanged = False
-        self._dlg.textColor = u"blue"
+        self._dlg.textColor = "blue"
 
         begin, end = self._controller.getResult ()
 
-        valid_begin = u'''group {
+        valid_begin = '''group {
     '''
 
         self.assertEqual (begin, valid_begin)
-        self.assertEqual (end, u"\n}")
+        self.assertEqual (end, "\n}")
 
 
     def testTextColor_03 (self):
         Tester.dialogTester.appendOk()
         self._dlg.isTextColorChanged = True
-        self._dlg.textColor = u"#AAAAAA"
+        self._dlg.textColor = "#AAAAAA"
 
         begin, end = self._controller.getResult ()
 
-        valid_begin = u'''group {
+        valid_begin = '''group {
     textcolor = "#AAAAAA";
 
     '''
 
         self.assertEqual (begin, valid_begin)
-        self.assertEqual (end, u"\n}")
+        self.assertEqual (end, "\n}")
 
 
     def testBorderShape_01 (self):
@@ -240,7 +240,7 @@ class InsertGroupTest (unittest.TestCase):
 
         begin, end = self._controller.getResult ()
 
-        valid_begin = u'''group {
+        valid_begin = '''group {
     shape = box;
 
     '''
@@ -255,7 +255,7 @@ class InsertGroupTest (unittest.TestCase):
 
         begin, end = self._controller.getResult ()
 
-        valid_begin = u'''group {
+        valid_begin = '''group {
     shape = line;
 
     '''
@@ -270,7 +270,7 @@ class InsertGroupTest (unittest.TestCase):
 
         begin, end = self._controller.getResult ()
 
-        valid_begin = u'''group {
+        valid_begin = '''group {
     '''
 
         self.assertEqual (begin, valid_begin)
@@ -285,7 +285,7 @@ class InsertGroupTest (unittest.TestCase):
 
         begin, end = self._controller.getResult ()
 
-        valid_begin = u'''group {
+        valid_begin = '''group {
     shape = line;
     style = solid;
 
@@ -303,7 +303,7 @@ class InsertGroupTest (unittest.TestCase):
 
         begin, end = self._controller.getResult ()
 
-        valid_begin = u'''group {
+        valid_begin = '''group {
     '''
 
         self.assertEqual (begin, valid_begin)
@@ -318,7 +318,7 @@ class InsertGroupTest (unittest.TestCase):
 
         begin, end = self._controller.getResult ()
 
-        valid_begin = u'''group {
+        valid_begin = '''group {
     shape = box;
 
     '''
@@ -335,7 +335,7 @@ class InsertGroupTest (unittest.TestCase):
 
         begin, end = self._controller.getResult ()
 
-        valid_begin = u'''group {
+        valid_begin = '''group {
     shape = line;
     style = dotted;
 
@@ -353,7 +353,7 @@ class InsertGroupTest (unittest.TestCase):
 
         begin, end = self._controller.getResult ()
 
-        valid_begin = u'''group {
+        valid_begin = '''group {
     shape = line;
     style = dashed;
 
@@ -367,11 +367,11 @@ class InsertGroupTest (unittest.TestCase):
         self._dlg.isBorderShapeChanged = True
         self._dlg.borderShapeIndex = 1
 
-        self._dlg.style = u"1,2,3,4"
+        self._dlg.style = "1,2,3,4"
 
         begin, end = self._controller.getResult ()
 
-        valid_begin = u'''group {
+        valid_begin = '''group {
     shape = line;
     style = "1,2,3,4";
 
@@ -385,11 +385,11 @@ class InsertGroupTest (unittest.TestCase):
         self._dlg.isBorderShapeChanged = True
         self._dlg.borderShapeIndex = 1
 
-        self._dlg.style = u" 1, 2, 3, 4 "
+        self._dlg.style = " 1, 2, 3, 4 "
 
         begin, end = self._controller.getResult ()
 
-        valid_begin = u'''group {
+        valid_begin = '''group {
     shape = line;
     style = "1,2,3,4";
 

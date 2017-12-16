@@ -16,7 +16,7 @@ class WikiCommandsTest (unittest.TestCase):
     def setUp(self):
         self.encoding = "utf8"
 
-        self.filesPath = u"../test/samplefiles/"
+        self.filesPath = "../test/samplefiles/"
         self.__createWiki()
 
         factory = ParserFactory()
@@ -25,12 +25,12 @@ class WikiCommandsTest (unittest.TestCase):
 
     def __createWiki (self):
         # Здесь будет создаваться вики
-        self.path = mkdtemp (prefix=u'Абырвалг абыр')
+        self.path = mkdtemp (prefix='Абырвалг абыр')
 
         self.wikiroot = WikiDocument.create (self.path)
 
-        WikiPageFactory().create (self.wikiroot, u"Страница 2", [])
-        self.testPage = self.wikiroot[u"Страница 2"]
+        WikiPageFactory().create (self.wikiroot, "Страница 2", [])
+        self.testPage = self.wikiroot["Страница 2"]
 
 
     def tearDown(self):
@@ -38,7 +38,7 @@ class WikiCommandsTest (unittest.TestCase):
 
 
     def testParamsParsing1 (self):
-        params_text = u"""Параметр1
+        params_text = """Параметр1
 Параметр2 = 111
 Параметр3 = " бла бла бла"
 Параметр4
@@ -54,70 +54,70 @@ class WikiCommandsTest (unittest.TestCase):
         params = Command.parseParams (params_text)
 
         self.assertEqual (len (params), 11, params)
-        self.assertEqual (params[u"Параметр1"], u"")
-        self.assertEqual (params[u"Параметр2"], u"111")
-        self.assertEqual (params[u"Параметр3"], u" бла бла бла")
-        self.assertEqual (params[u"Параметр4"], u"")
-        self.assertEqual (params[u"Параметр5"], u"111")
-        self.assertEqual (params[u"Параметр6"], u" 222 ")
-        self.assertEqual (params[u"Параметр7"], u" проверка 'бла бла бла' проверка")
-        self.assertEqual (params[u"Параметр8"], u' проверка "bla-bla-bla" тест ')
-        self.assertEqual (params[u"Параметр9"], u"-1")
-        self.assertEqual (params[u"Параметр10"], u"-10.5")
-        self.assertEqual (params[u"Параметр11"], u"12.5")
+        self.assertEqual (params["Параметр1"], "")
+        self.assertEqual (params["Параметр2"], "111")
+        self.assertEqual (params["Параметр3"], " бла бла бла")
+        self.assertEqual (params["Параметр4"], "")
+        self.assertEqual (params["Параметр5"], "111")
+        self.assertEqual (params["Параметр6"], " 222 ")
+        self.assertEqual (params["Параметр7"], " проверка 'бла бла бла' проверка")
+        self.assertEqual (params["Параметр8"], ' проверка "bla-bla-bla" тест ')
+        self.assertEqual (params["Параметр9"], "-1")
+        self.assertEqual (params["Параметр10"], "-10.5")
+        self.assertEqual (params["Параметр11"], "12.5")
 
 
     def testParamsParsing2 (self):
-        params_text = u""
+        params_text = ""
         params = Command.parseParams (params_text)
 
         self.assertEqual (len (params), 0)
 
 
     def testParamsParsing3 (self):
-        params_text = u"""Параметр=-1"""
+        params_text = """Параметр=-1"""
         params = Command.parseParams (params_text)
-        self.assertEqual (params[u"Параметр"], u"-1")
+        self.assertEqual (params["Параметр"], "-1")
 
 
     def testParamsParsing4 (self):
-        params_text = u'Параметр="-1"'
+        params_text = 'Параметр="-1"'
         params = Command.parseParams (params_text)
-        self.assertEqual (params[u"Параметр"], u"-1")
+        self.assertEqual (params["Параметр"], "-1")
 
 
     def testParamsParsing5 (self):
-        params_text = u'Параметр= -1 '
+        params_text = 'Параметр= -1 '
         params = Command.parseParams (params_text)
-        self.assertEqual (params[u"Параметр"], u"-1")
+        self.assertEqual (params["Параметр"], "-1")
 
 
     def testParamsParsing6 (self):
-        params_text = u'Параметр=Бла-бла-бла'
+        params_text = 'Параметр=Бла-бла-бла'
         params = Command.parseParams (params_text)
-        self.assertEqual (params[u"Параметр"], u"Бла-бла-бла")
+        self.assertEqual (params["Параметр"], "Бла-бла-бла")
 
 
     def testParamsParsing7 (self):
-        params_text = u'Параметр= Бла-бла-бла'
+        params_text = 'Параметр= Бла-бла-бла'
         params = Command.parseParams (params_text)
-        self.assertEqual (params[u"Параметр"], u"Бла-бла-бла")
+        self.assertEqual (params["Параметр"], "Бла-бла-бла")
 
 
     def testParamsParsing8 (self):
-        params_text = u'Параметр=Бла_бла_бла'
+        params_text = 'Параметр=Бла_бла_бла'
         params = Command.parseParams (params_text)
-        self.assertEqual (params[u"Параметр"], u"Бла_бла_бла")
+        self.assertEqual (params["Параметр"], "Бла_бла_бла")
 
 
     def testParamsParsing9 (self):
-        params_text = u'Параметр= Бла_бла_бла'
+        params_text = 'Параметр= Бла_бла_бла'
         params = Command.parseParams (params_text)
-        self.assertEqual (params[u"Параметр"], u"Бла_бла_бла")
+        self.assertEqual (params["Параметр"], "Бла_бла_бла")
 
 
     def testParamsParsing10 (self):
-        params_text = u"""Параметр1.Подпараметр
+        params_text = """Параметр1.Подпараметр
             Пар_аме_тр2 = 111
             Параметр3.Еще.Подпар_аметр
             Пар.ам.етр4 = " проверка 'бла бла бла' проверка"
@@ -126,21 +126,21 @@ class WikiCommandsTest (unittest.TestCase):
         params = Command.parseParams (params_text)
 
         self.assertEqual (len (params), 5)
-        self.assertEqual (params[u"Параметр1.Подпараметр"], u"")
-        self.assertEqual (params[u"Пар_аме_тр2"], u"111")
-        self.assertEqual (params[u"Параметр3.Еще.Подпар_аметр"], u"")
-        self.assertEqual (params[u"Пар.ам.етр4"], u" проверка 'бла бла бла' проверка")
-        self.assertEqual (params[u"Пар.аме.тр5"], u' проверка "bla-bla-bla" тест ')
+        self.assertEqual (params["Параметр1.Подпараметр"], "")
+        self.assertEqual (params["Пар_аме_тр2"], "111")
+        self.assertEqual (params["Параметр3.Еще.Подпар_аметр"], "")
+        self.assertEqual (params["Пар.ам.етр4"], " проверка 'бла бла бла' проверка")
+        self.assertEqual (params["Пар.аме.тр5"], ' проверка "bla-bla-bla" тест ')
 
 
     def testCommandTest1 (self):
         self.parser.addCommand (TestCommand (self.parser))
-        text = u"""(: test Параметр1 Параметр2=2 Параметр3=3 :)
+        text = """(: test Параметр1 Параметр2=2 Параметр3=3 :)
 Текст внутри
 команды
 (:testend:)"""
 
-        result_right = u"""Command name: test
+        result_right = """Command name: test
 params: Параметр1 Параметр2=2 Параметр3=3
 content: Текст внутри
 команды"""
@@ -151,14 +151,14 @@ content: Текст внутри
 
     def testCommandTest2 (self):
         command = TestCommand (self.parser)
-        params = u"Параметр1 Параметр2=2 Параметр3=3"
-        content = u"""Текст внутри
+        params = "Параметр1 Параметр2=2 Параметр3=3"
+        content = """Текст внутри
 команды"""
 
-        self.assertEqual (command.name, u"test")
+        self.assertEqual (command.name, "test")
 
         result = command.execute (params, content)
-        result_right = u"""Command name: test
+        result_right = """Command name: test
 params: Параметр1 Параметр2=2 Параметр3=3
 content: Текст внутри
 команды"""
@@ -168,9 +168,9 @@ content: Текст внутри
 
     def testCommandTest3 (self):
         self.parser.addCommand (TestCommand (self.parser))
-        text = u"""(: test Параметр1 Параметр2=2 Параметр3=3 :)"""
+        text = """(: test Параметр1 Параметр2=2 Параметр3=3 :)"""
 
-        result_right = u"""Command name: test
+        result_right = """Command name: test
 params: Параметр1 Параметр2=2 Параметр3=3
 content: """
 
@@ -180,9 +180,9 @@ content: """
 
     def testCommandTest4 (self):
         self.parser.addCommand (TestCommand (self.parser))
-        text = u"""(:test:)"""
+        text = """(:test:)"""
 
-        result_right = u"""Command name: test
+        result_right = """Command name: test
 params: 
 content: """
 
@@ -192,9 +192,9 @@ content: """
 
     def testCommandTest5 (self):
         self.parser.addCommand (TestCommand (self.parser))
-        text = u"""(: test Параметр1 Параметр2=2 Параметр3=3 :)"""
+        text = """(: test Параметр1 Параметр2=2 Параметр3=3 :)"""
 
-        result_right = u"""Command name: test
+        result_right = """Command name: test
 params: Параметр1 Параметр2=2 Параметр3=3
 content: """
 
@@ -204,7 +204,7 @@ content: """
 
     def testCommandTest6 (self):
         self.parser.addCommand (TestCommand (self.parser))
-        text = u"""(: test Параметр1 Параметр2=2 Параметр3=3 :)
+        text = """(: test Параметр1 Параметр2=2 Параметр3=3 :)
 Текст внутри
 команды
 (:testend:)
@@ -213,7 +213,7 @@ content: """
 Контент
 (:testend:)"""
 
-        result_right = u"""Command name: test
+        result_right = """Command name: test
 params: Параметр1 Параметр2=2 Параметр3=3
 content: Текст внутри
 команды
@@ -233,7 +233,7 @@ content: Контент"""
         parser.addCommand (TestCommand (parser))
 
 
-        text = u"""(: test Параметр1 Параметр2=2 Параметр3=3 :)
+        text = """(: test Параметр1 Параметр2=2 Параметр3=3 :)
 Текст внутри
 команды
 (:testend:)
@@ -242,7 +242,7 @@ content: Контент"""
 Контент
 (:testend:)"""
 
-        result_right = u"""Command name: test
+        result_right = """Command name: test
 params: Параметр1 Параметр2=2 Параметр3=3
 content: Текст внутри
 команды
@@ -257,12 +257,12 @@ content: Контент"""
 
 
     def testInvalidCommandTest (self):
-        text = u"""(: testblabla Параметр1 Параметр2=2 Параметр3=3 :)
+        text = """(: testblabla Параметр1 Параметр2=2 Параметр3=3 :)
 Текст внутри
 команды
 (:testend:)"""
 
-        result_right = u"""(: testblabla Параметр1 Параметр2=2 Параметр3=3 :)
+        result_right = """(: testblabla Параметр1 Параметр2=2 Параметр3=3 :)
 Текст внутри
 команды
 (:testend:)"""
@@ -277,7 +277,7 @@ content: Контент"""
         parser = factory.make (self.testPage, Application.config)
         parser.addCommand (ExceptionCommand (parser))
 
-        text = u"""(:exception:)"""
+        text = """(:exception:)"""
 
         result = parser.toHtml(text)
         # Исключение не должно бросаться, а должно быть выведено в результирующий текст
@@ -288,9 +288,9 @@ content: Контент"""
         command = TestCommand (self.parser)
 
         self.parser.addCommand (command)
-        text = u"""(:test:)"""
+        text = """(:test:)"""
 
-        result_right = u"""Command name: test
+        result_right = """Command name: test
 params: 
 content: """
 
@@ -307,9 +307,9 @@ content: """
         command = TestCommand (self.parser)
 
         self.parser.addCommand (command)
-        text = u"""(:test:)"""
+        text = """(:test:)"""
 
-        result_right = u"""Command name: test
+        result_right = """Command name: test
 params: 
 content: """
 
@@ -326,16 +326,16 @@ content: """
         command = TestCommand (self.parser)
 
         self.parser.addCommand (command)
-        text = u"""(:test:)"""
+        text = """(:test:)"""
 
-        result_right = u"""Command name: test
+        result_right = """Command name: test
 params: 
 content: """
 
         result = self.parser.toHtml (text)
         self.assertEqual (result_right, result)
 
-        self.parser.removeCommand (u'абырвалг')
+        self.parser.removeCommand ('абырвалг')
 
         result = self.parser.toHtml (text)
         self.assertEqual (result_right, result)

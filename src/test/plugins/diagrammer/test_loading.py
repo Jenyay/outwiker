@@ -8,7 +8,7 @@ class DiagrammerLoadingTest (BasePluginLoadingTest):
         """
         Должен возвращать путь до папки с тестируемым плагином
         """
-        return u"../plugins/diagrammer"
+        return "../plugins/diagrammer"
 
 
     def getPluginName (self):

@@ -34,7 +34,7 @@ class AttachListDialogTest (BaseMainWndTest):
 
         result = controller.getDialogResult()
 
-        self.assertEqual (result, u"(:attachlist sort=name:)")
+        self.assertEqual (result, "(:attachlist sort=name:)")
 
 
     def testSortByNameDescend (self):
@@ -46,7 +46,7 @@ class AttachListDialogTest (BaseMainWndTest):
 
         result = controller.getDialogResult()
 
-        self.assertEqual (result, u"(:attachlist sort=descendname:)")
+        self.assertEqual (result, "(:attachlist sort=descendname:)")
 
 
     def testSortByExt (self):
@@ -58,7 +58,7 @@ class AttachListDialogTest (BaseMainWndTest):
 
         result = controller.getDialogResult()
 
-        self.assertEqual (result, u"(:attachlist sort=ext:)")
+        self.assertEqual (result, "(:attachlist sort=ext:)")
 
 
     def testSortByExtDescend (self):
@@ -70,7 +70,7 @@ class AttachListDialogTest (BaseMainWndTest):
 
         result = controller.getDialogResult()
 
-        self.assertEqual (result, u"(:attachlist sort=descendext:)")
+        self.assertEqual (result, "(:attachlist sort=descendext:)")
 
 
     def testSortBySize (self):
@@ -82,7 +82,7 @@ class AttachListDialogTest (BaseMainWndTest):
 
         result = controller.getDialogResult()
 
-        self.assertEqual (result, u"(:attachlist sort=size:)")
+        self.assertEqual (result, "(:attachlist sort=size:)")
 
 
     def testSortBySizeDescend (self):
@@ -94,7 +94,7 @@ class AttachListDialogTest (BaseMainWndTest):
 
         result = controller.getDialogResult()
 
-        self.assertEqual (result, u"(:attachlist sort=descendsize:)")
+        self.assertEqual (result, "(:attachlist sort=descendsize:)")
 
 
     def testSortByDate (self):
@@ -106,7 +106,7 @@ class AttachListDialogTest (BaseMainWndTest):
 
         result = controller.getDialogResult()
 
-        self.assertEqual (result, u"(:attachlist sort=date:)")
+        self.assertEqual (result, "(:attachlist sort=date:)")
 
 
     def testSortByDateDescend (self):
@@ -118,4 +118,4 @@ class AttachListDialogTest (BaseMainWndTest):
 
         result = controller.getDialogResult()
 
-        self.assertEqual (result, u"(:attachlist sort=descenddate:)")
+        self.assertEqual (result, "(:attachlist sort=descenddate:)")

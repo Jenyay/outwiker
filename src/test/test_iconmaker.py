@@ -22,8 +22,8 @@ class IconMakerTest(unittest.TestCase):
 
 
     def test_no_resize_png(self):
-        fname_in = u'../test/images/icon.png'
-        fname_out = join(self._tempDir, u'result.png')
+        fname_in = '../test/images/icon.png'
+        fname_out = join(self._tempDir, 'result.png')
 
         iconmaker = IconMaker()
         iconmaker.create(fname_in, fname_out)
@@ -35,8 +35,8 @@ class IconMakerTest(unittest.TestCase):
 
 
     def test_overwrite(self):
-        fname_in = u'../test/images/icon.png'
-        fname_out = join(self._tempDir, u'result.png')
+        fname_in = '../test/images/icon.png'
+        fname_out = join(self._tempDir, 'result.png')
 
         iconmaker = IconMaker()
         iconmaker.create(fname_in, fname_out)
@@ -64,7 +64,7 @@ class IconMakerTest(unittest.TestCase):
             '../test/images/first_vertical.png',
         ]
 
-        fname_out = join(self._tempDir, u'result.png')
+        fname_out = join(self._tempDir, 'result.png')
         iconmaker = IconMaker()
 
         for fname in fnames_in:

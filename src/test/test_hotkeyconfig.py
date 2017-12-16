@@ -13,7 +13,7 @@ class HotKeyConfigTest(unittest.TestCase):
     """Тесты, связанные с сохранением горячих клавиш в настройках"""
 
     def setUp(self):
-        self.path = u"../test/testconfig.ini"
+        self.path = "../test/testconfig.ini"
 
         if os.path.exists(self.path):
             os.remove(self.path)

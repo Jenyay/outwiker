@@ -20,12 +20,12 @@ class TestAction (BaseAction):
 
     @property
     def title (self):
-        return u"Тестовый Action"
+        return "Тестовый Action"
 
 
     @property
     def description (self):
-        return u"Тестовый Action"
+        return "Тестовый Action"
 
 
     def run (self, params):
@@ -41,12 +41,12 @@ class TestCheckAction (BaseAction):
 
     @property
     def title (self):
-        return u"Тестовый CheckAction"
+        return "Тестовый CheckAction"
 
 
     @property
     def description (self):
-        return u"Тестовый CheckAction"
+        return "Тестовый CheckAction"
 
 
     def run (self, params):
@@ -523,7 +523,7 @@ class ActionControllerTest (BaseMainWndTest):
                                                    image)
 
         self.assertEqual (self._getToolItemLabel (toolbar, action.stringId),
-                          u"{0} ({1})".format (action.title, HotKeyParser.toString (hotkey)))
+                          "{0} ({1})".format (action.title, HotKeyParser.toString (hotkey)))
 
 
     def testDisableTools (self):
@@ -705,10 +705,10 @@ class ActionControllerTest (BaseMainWndTest):
         self.actionController.setHotKey (action.stringId, hotkey)
 
         self.assertEqual (self._getToolItemLabel (toolbar, action.stringId),
-                          u"{} ({})".format (action.title, "Ctrl+F11"))
+                          "{} ({})".format (action.title, "Ctrl+F11"))
 
         self.assertEqual (self._getMenuItem(action.stringId).GetItemLabel(),
-                          u"{}\t{}".format (action.title, "Ctrl+F11"))
+                          "{}\t{}".format (action.title, "Ctrl+F11"))
 
 
     def testChangeHotkeyGuiMenu (self):
@@ -724,7 +724,7 @@ class ActionControllerTest (BaseMainWndTest):
         self.actionController.setHotKey (action.stringId, hotkey)
 
         self.assertEqual (self._getMenuItem(action.stringId).GetItemLabel(),
-                          u"{}\t{}".format (action.title, "Ctrl+F11"))
+                          "{}\t{}".format (action.title, "Ctrl+F11"))
 
 
     def testChangeHotkeyToolbar (self):
@@ -743,7 +743,7 @@ class ActionControllerTest (BaseMainWndTest):
         self.actionController.setHotKey (action.stringId, hotkey)
 
         self.assertEqual (self._getToolItemLabel (toolbar, action.stringId),
-                          u"{} ({})".format (action.title, "Ctrl+F11"))
+                          "{} ({})".format (action.title, "Ctrl+F11"))
 
 
     def testDelayChangeHotkeyToolbar (self):
@@ -762,7 +762,7 @@ class ActionControllerTest (BaseMainWndTest):
         self.actionController.setHotKey (action.stringId, hotkey, False)
 
         self.assertEqual (self._getToolItemLabel (toolbar, action.stringId),
-                          u"{} ({})".format (action.title, "F11"))
+                          "{} ({})".format (action.title, "F11"))
 
         otherActionController = ActionController (self.wnd, Application.config)
         otherActionController.register (action, None)
@@ -789,10 +789,10 @@ class ActionControllerTest (BaseMainWndTest):
         self.actionController.setHotKey (action.stringId, hotkey)
 
         self.assertEqual (self._getToolItemLabel (toolbar, action.stringId),
-                          u"{} ({})".format (action.title, "Ctrl+F11"))
+                          "{} ({})".format (action.title, "Ctrl+F11"))
 
         self.assertEqual (self._getMenuItem(action.stringId).GetItemLabel(),
-                          u"{}\t{}".format (action.title, "Ctrl+F11"))
+                          "{}\t{}".format (action.title, "Ctrl+F11"))
 
 
     def testChangeHotkeyGuiChecked2 (self):

@@ -20,11 +20,11 @@ class SourceAttachmentPluginTest (unittest.TestCase):
     """
 
     def setUp(self):
-        self.__pluginname = u"Source"
+        self.__pluginname = "Source"
 
         self.__createWiki()
 
-        dirlist = [u"../plugins/source"]
+        dirlist = ["../plugins/source"]
 
         self.loader = PluginsLoader(Application)
         self.loader.load(dirlist)
@@ -41,12 +41,12 @@ class SourceAttachmentPluginTest (unittest.TestCase):
 
     def __createWiki (self):
         # Здесь будет создаваться вики
-        self.path = mkdtemp (prefix=u'Абырвалг абыр')
+        self.path = mkdtemp (prefix='Абырвалг абыр')
 
         self.wikiroot = WikiDocument.create (self.path)
 
-        WikiPageFactory().create (self.wikiroot, u"Страница 1", [])
-        self.testPage = self.wikiroot[u"Страница 1"]
+        WikiPageFactory().create (self.wikiroot, "Страница 1", [])
+        self.testPage = self.wikiroot["Страница 1"]
 
 
     def tearDown(self):
@@ -63,23 +63,23 @@ class SourceAttachmentPluginTest (unittest.TestCase):
 
     def testAttachment2 (self):
         # Путь, где лежат примеры исходников в разных кодировках
-        self.samplefilesPath = u"../test/samplefiles/sources"
-        Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, u"source_utf8.py")])
-        Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, u"source_cp1251.cs")])
+        self.samplefilesPath = "../test/samplefiles/sources"
+        Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, "source_utf8.py")])
+        Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, "source_cp1251.cs")])
 
         self.controller.showDialog()
 
         self.assertEqual (self.dialog.attachmentComboBox.GetSelection(), 0)
         self.assertEqual (self.dialog.attachmentComboBox.GetCount(), 2)
         self.assertEqual (self.dialog.attachmentComboBox.GetItems(),
-                          [u"source_cp1251.cs", u"source_utf8.py"])
+                          ["source_cp1251.cs", "source_utf8.py"])
 
 
     def testAttachment3 (self):
         # Путь, где лежат примеры исходников в разных кодировках
-        self.samplefilesPath = u"../test/samplefiles/sources"
-        Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, u"source_utf8.py")])
-        Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, u"source_cp1251.cs")])
+        self.samplefilesPath = "../test/samplefiles/sources"
+        Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, "source_utf8.py")])
+        Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, "source_cp1251.cs")])
 
         self.controller.showDialog()
 
@@ -91,14 +91,14 @@ class SourceAttachmentPluginTest (unittest.TestCase):
 
         result = self.controller.getCommandStrings()
 
-        self.assertEqual (result, (u'(:source file="Attach:source_cp1251.cs":)', u'(:sourceend:)'))
+        self.assertEqual (result, ('(:source file="Attach:source_cp1251.cs":)', '(:sourceend:)'))
 
 
     def testAttachment4 (self):
         # Путь, где лежат примеры исходников в разных кодировках
-        self.samplefilesPath = u"../test/samplefiles/sources"
-        Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, u"source_utf8.py")])
-        Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, u"source_cp1251.cs")])
+        self.samplefilesPath = "../test/samplefiles/sources"
+        Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, "source_utf8.py")])
+        Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, "source_cp1251.cs")])
 
         self.controller.showDialog()
 
@@ -110,14 +110,14 @@ class SourceAttachmentPluginTest (unittest.TestCase):
 
         result = self.controller.getCommandStrings()
 
-        self.assertEqual (result, (u'(:source file="Attach:source_utf8.py":)', u'(:sourceend:)'))
+        self.assertEqual (result, ('(:source file="Attach:source_utf8.py":)', '(:sourceend:)'))
 
 
     def testAttachment5 (self):
         # Путь, где лежат примеры исходников в разных кодировках
-        self.samplefilesPath = u"../test/samplefiles/sources"
-        Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, u"source_utf8.py")])
-        Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, u"source_cp1251.cs")])
+        self.samplefilesPath = "../test/samplefiles/sources"
+        Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, "source_utf8.py")])
+        Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, "source_cp1251.cs")])
 
         self.controller.showDialog()
 
@@ -129,16 +129,16 @@ class SourceAttachmentPluginTest (unittest.TestCase):
 
         result = self.controller.getCommandStrings()
 
-        self.assertEqual (result, (u'(:source file="Attach:source_cp1251.cs" encoding="cp1251":)', u'(:sourceend:)'))
+        self.assertEqual (result, ('(:source file="Attach:source_cp1251.cs" encoding="cp1251":)', '(:sourceend:)'))
 
 
     def testAttachment6 (self):
         # Путь, где лежат примеры исходников в разных кодировках
-        self.samplefilesPath = u"../test/samplefiles/sources"
-        Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, u"source_utf8.py")])
-        Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, u"source_cp1251.cs")])
+        self.samplefilesPath = "../test/samplefiles/sources"
+        Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, "source_utf8.py")])
+        Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, "source_cp1251.cs")])
 
-        self.config.languageList.value = [u"cpp", u"csharp", u"haskell"]
+        self.config.languageList.value = ["cpp", "csharp", "haskell"]
 
         self.controller.showDialog()
 
@@ -154,16 +154,16 @@ class SourceAttachmentPluginTest (unittest.TestCase):
 
         result = self.controller.getCommandStrings()
 
-        self.assertEqual (result, (u'(:source file="Attach:source_cp1251.cs" encoding="cp1251" lang="haskell":)', u'(:sourceend:)'))
+        self.assertEqual (result, ('(:source file="Attach:source_cp1251.cs" encoding="cp1251" lang="haskell":)', '(:sourceend:)'))
 
 
     def testAttachment7 (self):
         # Путь, где лежат примеры исходников в разных кодировках
-        self.samplefilesPath = u"../test/samplefiles/sources"
-        Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, u"source_utf8.py")])
-        Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, u"source_cp1251.cs")])
+        self.samplefilesPath = "../test/samplefiles/sources"
+        Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, "source_utf8.py")])
+        Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, "source_cp1251.cs")])
 
-        self.config.languageList.value = [u"cpp", u"haskell", u"csharp"]
+        self.config.languageList.value = ["cpp", "haskell", "csharp"]
 
         self.controller.showDialog()
 
@@ -174,16 +174,16 @@ class SourceAttachmentPluginTest (unittest.TestCase):
 
         result = self.controller.getCommandStrings()
 
-        self.assertEqual (result, (u'(:source file="Attach:source_cp1251.cs" encoding="cp1251":)', u'(:sourceend:)'))
+        self.assertEqual (result, ('(:source file="Attach:source_cp1251.cs" encoding="cp1251":)', '(:sourceend:)'))
 
 
     def testAttachment8 (self):
         # Путь, где лежат примеры исходников в разных кодировках
-        self.samplefilesPath = u"../test/samplefiles/sources"
-        Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, u"source_utf8.py")])
-        Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, u"source_cp1251.cs")])
+        self.samplefilesPath = "../test/samplefiles/sources"
+        Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, "source_utf8.py")])
+        Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, "source_cp1251.cs")])
 
-        self.config.languageList.value = [u"cpp", u"csharp", u"haskell"]
+        self.config.languageList.value = ["cpp", "csharp", "haskell"]
 
         self.controller.showDialog()
 
@@ -199,16 +199,16 @@ class SourceAttachmentPluginTest (unittest.TestCase):
 
         result = self.controller.getCommandStrings()
 
-        self.assertEqual (result, (u'(:source file="Attach:source_cp1251.cs" lang="csharp":)', u'(:sourceend:)'))
+        self.assertEqual (result, ('(:source file="Attach:source_cp1251.cs" lang="csharp":)', '(:sourceend:)'))
 
 
     def testAttachment9 (self):
         # Путь, где лежат примеры исходников в разных кодировках
-        self.samplefilesPath = u"../test/samplefiles/sources"
-        Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, u"source_utf8.py")])
-        Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, u"source_cp1251.cs")])
+        self.samplefilesPath = "../test/samplefiles/sources"
+        Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, "source_utf8.py")])
+        Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, "source_cp1251.cs")])
 
-        self.config.languageList.value = [u"cpp", u"csharp", u"haskell"]
+        self.config.languageList.value = ["cpp", "csharp", "haskell"]
 
         self.controller.showDialog()
 
@@ -225,4 +225,4 @@ class SourceAttachmentPluginTest (unittest.TestCase):
 
         result = self.controller.getCommandStrings()
 
-        self.assertEqual (result, (u'(:source file="Attach:source_cp1251.cs" lang="csharp" tabwidth="10":)', u'(:sourceend:)'))
+        self.assertEqual (result, ('(:source file="Attach:source_cp1251.cs" lang="csharp" tabwidth="10":)', '(:sourceend:)'))

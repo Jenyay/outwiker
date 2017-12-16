@@ -24,7 +24,7 @@ class UriIdentifierTest (TestCase):
     """
     def setUp(self):
         # Здесь будет создаваться вики
-        self.path = mkdtemp (prefix=u'Абырвалг абыр')
+        self.path = mkdtemp (prefix='Абырвалг абыр')
 
         self.wikiroot = WikiDocument.create (self.path)
 
@@ -35,20 +35,20 @@ class UriIdentifierTest (TestCase):
         #   - Страница 3
         #     - # Страница 4
         factory = WikiPageFactory()
-        factory.create (self.wikiroot, u"Страница 1", [])
-        factory.create (self.wikiroot, u"Страница 2", [])
-        factory.create (self.wikiroot[u"Страница 2"], u"Страница 3", [])
-        factory.create (self.wikiroot[u"Страница 2/Страница 3"], u"# Страница 4", [])
-        factory.create (self.wikiroot[u"Страница 1"], u"# Страница 5", [])
-        factory.create (self.wikiroot[u"Страница 1"], u"Страница 6", [])
-        factory.create (self.wikiroot[u"Страница 1/# Страница 5"], u"Страница 7", [])
+        factory.create (self.wikiroot, "Страница 1", [])
+        factory.create (self.wikiroot, "Страница 2", [])
+        factory.create (self.wikiroot["Страница 2"], "Страница 3", [])
+        factory.create (self.wikiroot["Страница 2/Страница 3"], "# Страница 4", [])
+        factory.create (self.wikiroot["Страница 1"], "# Страница 5", [])
+        factory.create (self.wikiroot["Страница 1"], "Страница 6", [])
+        factory.create (self.wikiroot["Страница 1/# Страница 5"], "Страница 7", [])
 
-        filesPath = u"../test/samplefiles/"
-        self.files = [u"accept.png", u"add.png", u"anchor.png", u"файл с пробелами.tmp", u"dir"]
+        filesPath = "../test/samplefiles/"
+        self.files = ["accept.png", "add.png", "anchor.png", "файл с пробелами.tmp", "dir"]
         self.fullFilesPath = [os.path.join (filesPath, fname) for fname in self.files]
 
-        Attachment (self.wikiroot[u"Страница 1"]).attach (self.fullFilesPath)
-        Attachment (self.wikiroot[u"Страница 1/# Страница 5"]).attach (self.fullFilesPath)
+        Attachment (self.wikiroot["Страница 1"]).attach (self.fullFilesPath)
+        Attachment (self.wikiroot["Страница 1/# Страница 5"]).attach (self.fullFilesPath)
 
         Application.wikiroot = None
 
@@ -59,7 +59,7 @@ class UriIdentifierTest (TestCase):
 
 
 
-@skipIf (os.name != "nt", u'Test executed under Windows only')
+@skipIf (os.name != "nt", 'Test executed under Windows only')
 class UriIdentifierIETest (UriIdentifierTest):
     def _getContentFile (self, page):
         """
@@ -74,13 +74,13 @@ class UriIdentifierIETest (UriIdentifierTest):
         """
         Тест на распознавание адресов, начинающихся с http
         """
-        currentpage = self.wikiroot[u"Страница 1"]
+        currentpage = self.wikiroot["Страница 1"]
         contentfile = self._getContentFile (currentpage)
 
         identifier = UriIdentifierIE (currentpage, contentfile)
-        (url, page, filename, anchor) = identifier.identify (u"http://jenyay.net")
+        (url, page, filename, anchor) = identifier.identify ("http://jenyay.net")
 
-        self.assertEqual (url, u"http://jenyay.net")
+        self.assertEqual (url, "http://jenyay.net")
         self.assertEqual (page, None)
         self.assertEqual (filename, None)
         self.assertEqual (anchor, None)
@@ -90,14 +90,14 @@ class UriIdentifierIETest (UriIdentifierTest):
         """
         Тест на распознавание адресов, начинающихся с https
         """
-        currentpage = self.wikiroot[u"Страница 1"]
+        currentpage = self.wikiroot["Страница 1"]
         contentfile = self._getContentFile (currentpage)
 
         identifier = UriIdentifierIE (currentpage, contentfile)
 
-        (url, page, filename, anchor) = identifier.identify (u"https://jenyay.net")
+        (url, page, filename, anchor) = identifier.identify ("https://jenyay.net")
 
-        self.assertEqual (url, u"https://jenyay.net")
+        self.assertEqual (url, "https://jenyay.net")
         self.assertEqual (page, None)
         self.assertEqual (filename, None)
         self.assertEqual (anchor, None)
@@ -107,14 +107,14 @@ class UriIdentifierIETest (UriIdentifierTest):
         """
         Тест на распознавание адресов, начинающихся с ftp
         """
-        currentpage = self.wikiroot[u"Страница 1"]
+        currentpage = self.wikiroot["Страница 1"]
         contentfile = self._getContentFile (currentpage)
 
         identifier = UriIdentifierIE (currentpage, contentfile)
 
-        (url, page, filename, anchor) = identifier.identify (u"ftp://jenyay.net")
+        (url, page, filename, anchor) = identifier.identify ("ftp://jenyay.net")
 
-        self.assertEqual (url, u"ftp://jenyay.net")
+        self.assertEqual (url, "ftp://jenyay.net")
         self.assertEqual (page, None)
         self.assertEqual (filename, None)
         self.assertEqual (anchor, None)
@@ -124,14 +124,14 @@ class UriIdentifierIETest (UriIdentifierTest):
         """
         Тест на распознавание адресов, начинающихся с mailto
         """
-        currentpage = self.wikiroot[u"Страница 1"]
+        currentpage = self.wikiroot["Страница 1"]
         contentfile = self._getContentFile (currentpage)
 
         identifier = UriIdentifierIE (currentpage, contentfile)
 
-        (url, page, filename, anchor) = identifier.identify (u"mailto://jenyay.net")
+        (url, page, filename, anchor) = identifier.identify ("mailto://jenyay.net")
 
-        self.assertEqual (url, u"mailto://jenyay.net")
+        self.assertEqual (url, "mailto://jenyay.net")
         self.assertEqual (page, None)
         self.assertEqual (filename, None)
         self.assertEqual (anchor, None)
@@ -141,15 +141,15 @@ class UriIdentifierIETest (UriIdentifierTest):
         """
         Тест на распознавание ссылок на страницы, когда движок IE считает, что это ссылка на файл
         """
-        currentpage = self.wikiroot[u"Страница 1"]
+        currentpage = self.wikiroot["Страница 1"]
         contentfile = self._getContentFile (currentpage)
 
         identifier = UriIdentifierIE (currentpage, contentfile)
 
-        (url, page, filename, anchor) = identifier.identify (u"x:\\Страница 2\\Страница 3\\# Страница 4")
+        (url, page, filename, anchor) = identifier.identify ("x:\\Страница 2\\Страница 3\\# Страница 4")
 
         self.assertEqual (url, None)
-        self.assertEqual (page, self.wikiroot[u"Страница 2/Страница 3/# Страница 4"])
+        self.assertEqual (page, self.wikiroot["Страница 2/Страница 3/# Страница 4"])
         self.assertNotEqual (None, page)
         self.assertEqual (filename, None)
         self.assertEqual (anchor, None)
@@ -159,8 +159,8 @@ class UriIdentifierIETest (UriIdentifierTest):
         """
         Тест на распознавание ссылок на подстраницы, когда движок IE считает, что это ссылка на файл.
         """
-        wikipage = self.wikiroot[u"Страница 1"]
-        path = os.path.join (wikipage.path, u"Страница 6")
+        wikipage = self.wikiroot["Страница 1"]
+        path = os.path.join (wikipage.path, "Страница 6")
         contentfile = self._getContentFile (wikipage)
 
         identifier = UriIdentifierIE (wikipage, contentfile)
@@ -168,7 +168,7 @@ class UriIdentifierIETest (UriIdentifierTest):
         (url, page, filename, anchor) = identifier.identify (path)
 
         self.assertEqual (url, None)
-        self.assertEqual (page, wikipage[u"Страница 6"])
+        self.assertEqual (page, wikipage["Страница 6"])
         self.assertNotEqual (None, page)
         self.assertEqual (anchor, None)
 
@@ -177,48 +177,48 @@ class UriIdentifierIETest (UriIdentifierTest):
         """
         Тест на распознавание ссылок на подстраницы, когда движок IE считает, что это ссылка на якорь
         """
-        wikipage = self.wikiroot[u"Страница 1"]
+        wikipage = self.wikiroot["Страница 1"]
         contentfile = self._getContentFile (wikipage)
 
-        path = u"".join ([self._getContentFile (wikipage), u"# Страница 5"])
+        path = "".join ([self._getContentFile (wikipage), "# Страница 5"])
 
         identifier = UriIdentifierIE (wikipage, contentfile)
 
         (url, page, filename, anchor) = identifier.identify (path)
 
         self.assertEqual (url, None)
-        self.assertEqual (page, wikipage[u"# Страница 5"])
+        self.assertEqual (page, wikipage["# Страница 5"])
         self.assertNotEqual (None, page)
-        self.assertEqual (anchor, u"# Страница 5")
+        self.assertEqual (anchor, "# Страница 5")
 
 
     def testSubpath3 (self):
         """
         Тест на распознавание ссылок на подстраницы, когда движок IE считает, что это ссылка на якорь
         """
-        wikipage = self.wikiroot[u"Страница 1"]
+        wikipage = self.wikiroot["Страница 1"]
         contentfile = self._getContentFile (wikipage)
 
-        path = u"".join ([self._getContentFile (wikipage), u"# Страница 5", u"\\Страница 7"])
+        path = "".join ([self._getContentFile (wikipage), "# Страница 5", "\\Страница 7"])
 
         identifier = UriIdentifierIE (wikipage, contentfile)
 
         (url, page, filename, anchor) = identifier.identify (path)
 
         self.assertEqual (url, None)
-        self.assertEqual (page, wikipage[u"# Страница 5/Страница 7"])
+        self.assertEqual (page, wikipage["# Страница 5/Страница 7"])
         self.assertNotEqual (None, page)
-        self.assertEqual (anchor, u"# Страница 5\\Страница 7")
+        self.assertEqual (anchor, "# Страница 5\\Страница 7")
 
 
     def testAnchor (self):
         """
         Тест на распознавание ссылок на подстраницы, когда движок IE считает, что это ссылка на якорь
         """
-        wikipage = self.wikiroot[u"Страница 1"]
+        wikipage = self.wikiroot["Страница 1"]
         contentfile = self._getContentFile (wikipage)
 
-        path = u"".join ([self._getContentFile (wikipage), u"# Страница 666"])
+        path = "".join ([self._getContentFile (wikipage), "# Страница 666"])
 
         identifier = UriIdentifierIE (wikipage, contentfile)
 
@@ -226,7 +226,7 @@ class UriIdentifierIETest (UriIdentifierTest):
 
         self.assertEqual (url, None)
         self.assertEqual (None, page)
-        self.assertEqual (anchor, u"# Страница 666")
+        self.assertEqual (anchor, "# Страница 666")
 
 
 
@@ -234,9 +234,9 @@ class UriIdentifierIETest (UriIdentifierTest):
         """
         Тест на распознавание ссылок на вложенные файлы
         """
-        wikipage = self.wikiroot[u"Страница 1"]
+        wikipage = self.wikiroot["Страница 1"]
         contentfile = self._getContentFile (wikipage)
-        path = os.path.join (Attachment (wikipage).getAttachPath (), u"accept.png")
+        path = os.path.join (Attachment (wikipage).getAttachPath (), "accept.png")
 
         identifier = UriIdentifierIE (wikipage, contentfile)
 
@@ -253,7 +253,7 @@ class UriIdentifierIETest (UriIdentifierTest):
         """
         Тест на распознавание ссылок на страницы по полному пути в вики
         """
-        wikipage = self.wikiroot[u"Страница 1"]
+        wikipage = self.wikiroot["Страница 1"]
         contentfile = self._getContentFile (wikipage)
         identifier = UriIdentifierIE (wikipage, contentfile)
         (url, page, filename, anchor) = identifier.identify (wikipage.path)
@@ -266,7 +266,7 @@ class UriIdentifierIETest (UriIdentifierTest):
 
     def testLinkPage_01 (self):
         Application.wikiroot = self.wikiroot
-        currentpage = self.wikiroot[u"Страница 1"]
+        currentpage = self.wikiroot["Страница 1"]
         contentfile = self._getContentFile (currentpage)
         link = generateLink (Application, currentpage)
 
@@ -281,7 +281,7 @@ class UriIdentifierIETest (UriIdentifierTest):
 
     def testLinkPage_02 (self):
         Application.wikiroot = self.wikiroot
-        currentpage = self.wikiroot[u"Страница 2/Страница 3"]
+        currentpage = self.wikiroot["Страница 2/Страница 3"]
         contentfile = self._getContentFile (currentpage)
         link = generateLink (Application, currentpage)
 
@@ -296,7 +296,7 @@ class UriIdentifierIETest (UriIdentifierTest):
 
     def testLinkPage_03 (self):
         Application.wikiroot = self.wikiroot
-        currentpage = self.wikiroot[u"Страница 2/Страница 3"]
+        currentpage = self.wikiroot["Страница 2/Страница 3"]
         contentfile = self._getContentFile (currentpage)
         link = generateLink (Application, currentpage) + "/#anchor"
 
@@ -306,10 +306,10 @@ class UriIdentifierIETest (UriIdentifierTest):
         self.assertEqual (url, None)
         self.assertEqual (page, currentpage)
         self.assertEqual (filename, None)
-        self.assertEqual (anchor, u"#anchor")
+        self.assertEqual (anchor, "#anchor")
 
 
-@skipIf (os.name == "nt", u'Test executed under Unix only')
+@skipIf (os.name == "nt", 'Test executed under Unix only')
 class UriIdentifierWebKitTest (UriIdentifierTest):
     """
     Тесты идентификации ссылок для WebKit
@@ -318,7 +318,7 @@ class UriIdentifierWebKitTest (UriIdentifierTest):
         """
         Возвращает путь до файла __content.html
         """
-        path = u"".join ([u"file://", page.path])
+        path = "".join (["file://", page.path])
         if path[-1] != "/":
             path += "/"
 
@@ -329,11 +329,11 @@ class UriIdentifierWebKitTest (UriIdentifierTest):
         """
         Тест на распознавание адресов, начинающихся с http
         """
-        currentpage = self.wikiroot[u"Страница 1"]
+        currentpage = self.wikiroot["Страница 1"]
         identifier = UriIdentifierWebKit (currentpage, self._getBasePath (currentpage))
-        (url, page, filename, anchor) = identifier.identify (u"http://jenyay.net")
+        (url, page, filename, anchor) = identifier.identify ("http://jenyay.net")
 
-        self.assertEqual (url, u"http://jenyay.net")
+        self.assertEqual (url, "http://jenyay.net")
         self.assertEqual (page, None)
         self.assertEqual (filename, None)
         self.assertEqual (anchor, None)
@@ -343,11 +343,11 @@ class UriIdentifierWebKitTest (UriIdentifierTest):
         """
         Тест на распознавание адресов, начинающихся с https
         """
-        currentpage = self.wikiroot[u"Страница 1"]
+        currentpage = self.wikiroot["Страница 1"]
         identifier = UriIdentifierWebKit (currentpage, self._getBasePath (currentpage))
-        (url, page, filename, anchor) = identifier.identify (u"https://jenyay.net")
+        (url, page, filename, anchor) = identifier.identify ("https://jenyay.net")
 
-        self.assertEqual (url, u"https://jenyay.net")
+        self.assertEqual (url, "https://jenyay.net")
         self.assertEqual (page, None)
         self.assertEqual (filename, None)
         self.assertEqual (anchor, None)
@@ -357,11 +357,11 @@ class UriIdentifierWebKitTest (UriIdentifierTest):
         """
         Тест на распознавание адресов, начинающихся с ftp
         """
-        currentpage = self.wikiroot[u"Страница 1"]
+        currentpage = self.wikiroot["Страница 1"]
         identifier = UriIdentifierWebKit (currentpage, self._getBasePath (currentpage))
-        (url, page, filename, anchor) = identifier.identify (u"ftp://jenyay.net")
+        (url, page, filename, anchor) = identifier.identify ("ftp://jenyay.net")
 
-        self.assertEqual (url, u"ftp://jenyay.net")
+        self.assertEqual (url, "ftp://jenyay.net")
         self.assertEqual (page, None)
         self.assertEqual (filename, None)
         self.assertEqual (anchor, None)
@@ -371,11 +371,11 @@ class UriIdentifierWebKitTest (UriIdentifierTest):
         """
         Тест на распознавание адресов, начинающихся с mailto
         """
-        currentpage = self.wikiroot[u"Страница 1"]
+        currentpage = self.wikiroot["Страница 1"]
         identifier = UriIdentifierWebKit (currentpage, self._getBasePath (currentpage))
-        (url, page, filename, anchor) = identifier.identify (u"mailto://jenyay.net")
+        (url, page, filename, anchor) = identifier.identify ("mailto://jenyay.net")
 
-        self.assertEqual (url, u"mailto://jenyay.net")
+        self.assertEqual (url, "mailto://jenyay.net")
         self.assertEqual (page, None)
         self.assertEqual (filename, None)
         self.assertEqual (anchor, None)
@@ -385,12 +385,12 @@ class UriIdentifierWebKitTest (UriIdentifierTest):
         """
         Тест на распознавание ссылок на страницы по полному пути в вики
         """
-        currentpage = self.wikiroot[u"Страница 1"]
+        currentpage = self.wikiroot["Страница 1"]
         identifier = UriIdentifierWebKit (currentpage, self._getBasePath (currentpage))
-        (url, page, filename, anchor) = identifier.identify (u"file:///Страница 2/Страница 3/# Страница 4")
+        (url, page, filename, anchor) = identifier.identify ("file:///Страница 2/Страница 3/# Страница 4")
 
         self.assertEqual (url, None)
-        self.assertEqual (page, self.wikiroot[u"Страница 2/Страница 3/# Страница 4"])
+        self.assertEqual (page, self.wikiroot["Страница 2/Страница 3/# Страница 4"])
         self.assertNotEqual (None, page)
         self.assertEqual (filename, None)
         self.assertEqual (anchor, None)
@@ -400,15 +400,15 @@ class UriIdentifierWebKitTest (UriIdentifierTest):
         """
         При относительной ссылке на вложенную страницу WebKit считает, что ссылаемся на папку страницы
         """
-        currentpage = self.wikiroot[u"Страница 1"]
+        currentpage = self.wikiroot["Страница 1"]
         identifier = UriIdentifierWebKit (currentpage, self._getBasePath (currentpage))
-        link = u"file://{0}".format (os.path.join (currentpage.path, u"Страница 6"))
+        link = "file://{0}".format (os.path.join (currentpage.path, "Страница 6"))
 
         (url, page, filename, anchor) = identifier.identify (link)
 
         self.assertEqual (url, None)
-        self.assertEqual (page, currentpage[u"Страница 6"])
-        self.assertEqual (page, self.wikiroot[u"Страница 1/Страница 6"])
+        self.assertEqual (page, currentpage["Страница 6"])
+        self.assertEqual (page, self.wikiroot["Страница 1/Страница 6"])
         self.assertNotEqual (None, page)
         self.assertEqual (anchor, None)
 
@@ -417,16 +417,16 @@ class UriIdentifierWebKitTest (UriIdentifierTest):
         """
         При относительной ссылке на вложенную страницу WebKit считает, что ссылаемся на папку страницы
         """
-        currentpage = self.wikiroot[u"Страница 2"]
+        currentpage = self.wikiroot["Страница 2"]
         identifier = UriIdentifierWebKit (currentpage, self._getBasePath (currentpage))
-        link = u"file://{0}".format (os.path.join (currentpage.path,
-                                                   u"Страница 3", u"# Страница 4"))
+        link = "file://{0}".format (os.path.join (currentpage.path,
+                                                   "Страница 3", "# Страница 4"))
 
         (url, page, filename, anchor) = identifier.identify (link)
 
         self.assertEqual (url, None)
-        self.assertEqual (page, self.wikiroot[u"Страница 2/Страница 3/# Страница 4"])
-        self.assertEqual (page, currentpage[u"Страница 3/# Страница 4"])
+        self.assertEqual (page, self.wikiroot["Страница 2/Страница 3/# Страница 4"])
+        self.assertEqual (page, currentpage["Страница 3/# Страница 4"])
         self.assertNotEqual (None, page)
         self.assertEqual (anchor, None)
 
@@ -435,28 +435,28 @@ class UriIdentifierWebKitTest (UriIdentifierTest):
         """
         При относительной ссылке на вложенную страницу WebKit считает, что ссылаемся на папку страницы
         """
-        currentpage = self.wikiroot[u"Страница 2"]
+        currentpage = self.wikiroot["Страница 2"]
         identifier = UriIdentifierWebKit (currentpage, self._getBasePath (currentpage))
-        link = u"file://{0}".format (os.path.join (currentpage.path, u"# Страница 666"))
+        link = "file://{0}".format (os.path.join (currentpage.path, "# Страница 666"))
 
         (url, page, filename, anchor) = identifier.identify (link)
 
         self.assertEqual (url, None)
         self.assertEqual (page, None)
         self.assertEqual (filename, None)
-        self.assertEqual (anchor, u"# Страница 666")
+        self.assertEqual (anchor, "# Страница 666")
 
 
     def testAttachment1 (self):
         """
         Тест на распознавание ссылок на вложенные файлы
         """
-        wikipage = self.wikiroot[u"Страница 1"]
+        wikipage = self.wikiroot["Страница 1"]
 
         path = os.path.join (Attachment (wikipage).getAttachPath (),
-                             u"accept.png")
+                             "accept.png")
 
-        href = "".join ([u"file://", path])
+        href = "".join (["file://", path])
 
         identifier = UriIdentifierWebKit (wikipage, self._getBasePath (wikipage))
 
@@ -472,7 +472,7 @@ class UriIdentifierWebKitTest (UriIdentifierTest):
         """
         Тест на распознавание ссылок на страницы по полному пути в вики
         """
-        currentpage = self.wikiroot[u"Страница 1"]
+        currentpage = self.wikiroot["Страница 1"]
         identifier = UriIdentifierWebKit (currentpage, self._getBasePath (currentpage))
         (url, page, filename, anchor) = identifier.identify (currentpage.path)
 
@@ -484,7 +484,7 @@ class UriIdentifierWebKitTest (UriIdentifierTest):
 
     def testLinkPage_01 (self):
         Application.wikiroot = self.wikiroot
-        currentpage = self.wikiroot[u"Страница 1"]
+        currentpage = self.wikiroot["Страница 1"]
         link = generateLink (Application, currentpage)
 
         identifier = UriIdentifierWebKit (currentpage, self._getBasePath (currentpage))
@@ -498,7 +498,7 @@ class UriIdentifierWebKitTest (UriIdentifierTest):
 
     def testLinkPage_02 (self):
         Application.wikiroot = self.wikiroot
-        currentpage = self.wikiroot[u"Страница 2/Страница 3"]
+        currentpage = self.wikiroot["Страница 2/Страница 3"]
         link = generateLink (Application, currentpage)
 
         identifier = UriIdentifierWebKit (currentpage, self._getBasePath (currentpage))
@@ -512,7 +512,7 @@ class UriIdentifierWebKitTest (UriIdentifierTest):
 
     def testLinkPage_03 (self):
         Application.wikiroot = self.wikiroot
-        currentpage = self.wikiroot[u"Страница 2/Страница 3"]
+        currentpage = self.wikiroot["Страница 2/Страница 3"]
         link = generateLink (Application, currentpage) + "/#anchor"
 
         identifier = UriIdentifierWebKit (currentpage, self._getBasePath (currentpage))
@@ -521,4 +521,4 @@ class UriIdentifierWebKitTest (UriIdentifierTest):
         self.assertEqual (url, None)
         self.assertEqual (page, currentpage)
         self.assertEqual (filename, None)
-        self.assertEqual (anchor, u"#anchor")
+        self.assertEqual (anchor, "#anchor")

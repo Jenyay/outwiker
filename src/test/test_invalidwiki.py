@@ -19,7 +19,7 @@ from test.utils import removeDir
 class InvalidWikiTest (unittest.TestCase):
     def setUp (self):
         self.defaultdate = datetime.datetime (2020, 1, 1)
-        self.path = u"../test/invalidwiki"
+        self.path = "../test/invalidwiki"
 
 
     def testInvalidWikiRoot1 (self):
@@ -28,17 +28,17 @@ class InvalidWikiTest (unittest.TestCase):
         """
         def __createInvalidWiki1 ():
             # Здесь будет создаваться вики
-            path = mkdtemp (prefix=u'Абырвалг абыр')
+            path = mkdtemp (prefix='Абырвалг абыр')
 
             rootwiki = WikiDocument.create (path)
 
             factory = TextPageFactory()
-            factory.create (rootwiki, u"Страница 1", [])
-            factory.create (rootwiki[u"Страница 1"], u"Страница 2", [])
+            factory.create (rootwiki, "Страница 1", [])
+            factory.create (rootwiki["Страница 1"], "Страница 2", [])
 
             # Испортим файл __page.opt
-            with open (os.path.join (rootwiki.path, u"__page.opt"), "w") as fp:
-                fp.write (u"wsfsdf sdf sdfasdfdsf \nasfasdsadf")
+            with open (os.path.join (rootwiki.path, "__page.opt"), "w") as fp:
+                fp.write ("wsfsdf sdf sdfasdfdsf \nasfasdsadf")
 
             return path
 
@@ -54,18 +54,18 @@ class InvalidWikiTest (unittest.TestCase):
         """
         def __createInvalidWiki2 ():
             # Здесь будет создаваться вики
-            path = mkdtemp (prefix=u'Абырвалг абыр')
+            path = mkdtemp (prefix='Абырвалг абыр')
             removeDir (path)
 
             rootwiki = WikiDocument.create (path)
 
             factory = TextPageFactory()
-            factory.create (rootwiki, u"Страница 1", [])
-            factory.create (rootwiki[u"Страница 1"], u"Страница 2", [])
+            factory.create (rootwiki, "Страница 1", [])
+            factory.create (rootwiki["Страница 1"], "Страница 2", [])
 
             # Испортим файл __page.opt
-            with open (os.path.join (rootwiki.path, u"__page.opt"), "w") as fp:
-                fp.write (u"[General]\naaa=xxx\n<<<<<<<<wsfsdf sdf sdfasdfdsf \nasfasdsadf")
+            with open (os.path.join (rootwiki.path, "__page.opt"), "w") as fp:
+                fp.write ("[General]\naaa=xxx\n<<<<<<<<wsfsdf sdf sdfasdfdsf \nasfasdsadf")
 
             return path
 
@@ -80,7 +80,7 @@ class InvalidWikiTest (unittest.TestCase):
         Тест папок, которые не являются страницами
         """
         wiki = WikiDocument.load (self.path)
-        page = wiki[u"Просто папка"]
+        page = wiki["Просто папка"]
         self.assertEqual (page, None)
 
 
@@ -89,7 +89,7 @@ class InvalidWikiTest (unittest.TestCase):
         Тест страницы без папки с аттачами
         """
         wiki = WikiDocument.load (self.path)
-        page = wiki[u"Страница без аттачей"]
+        page = wiki["Страница без аттачей"]
         self.assertEqual (len (Attachment (page).attachmentFull), 0)
         page.datetime = self.defaultdate
 
@@ -98,22 +98,22 @@ class InvalidWikiTest (unittest.TestCase):
         """
         Попытка прикрепления файлов к странице без папки __attach
         """
-        filesPath = u"../test/samplefiles/"
-        files = [u"accept.png", u"add.png", u"anchor.png"]
+        filesPath = "../test/samplefiles/"
+        files = ["accept.png", "add.png", "anchor.png"]
         attaches = [os.path.join (filesPath, fname) for fname in files]
 
         wiki = WikiDocument.load (self.path)
-        Attachment (wiki[u"Страница без аттачей"]).attach (attaches)
+        Attachment (wiki["Страница без аттачей"]).attach (attaches)
 
         self.assertEqual (
-            len (Attachment (wiki[u"Страница без аттачей"]).attachmentFull),
+            len (Attachment (wiki["Страница без аттачей"]).attachmentFull),
             3
         )
 
         # Удалим прикрепленные файлы
-        attachPath = Attachment (wiki[u"Страница без аттачей"]).getAttachPath()
+        attachPath = Attachment (wiki["Страница без аттачей"]).getAttachPath()
         shutil.rmtree (attachPath)
-        wiki[u"Страница без аттачей"].datetime = self.defaultdate
+        wiki["Страница без аттачей"].datetime = self.defaultdate
 
 
     def testEmptyContent (self):
@@ -121,7 +121,7 @@ class InvalidWikiTest (unittest.TestCase):
         Тест страницы без файла контента
         """
         wiki = WikiDocument.load (self.path)
-        page = wiki[u"Страница без контента"]
+        page = wiki["Страница без контента"]
         self.assertEqual (page.content, "")
 
 
@@ -129,5 +129,5 @@ class InvalidWikiTest (unittest.TestCase):
         """
         Тест попытки открытия несуществующей вики
         """
-        invalidpath = u"../testsss/invalidwiki"
+        invalidpath = "../testsss/invalidwiki"
         self.assertRaises (IOError, WikiDocument.load, invalidpath)

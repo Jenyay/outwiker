@@ -16,27 +16,27 @@ class ManualEditTest (unittest.TestCase):
     """
     def setUp(self):
         # Здесь будет создаваться вики
-        self.path = mkdtemp (prefix=u'Абырвалг абыр')
+        self.path = mkdtemp (prefix='Абырвалг абыр')
 
         self.wikiroot = WikiDocument.create (self.path)
 
         factory = TextPageFactory()
-        factory.create (self.wikiroot, u"Страница 1", [])
-        factory.create (self.wikiroot, u"Страница 2", [])
-        factory.create (self.wikiroot[u"Страница 2"], u"Страница 3", [])
-        factory.create (self.wikiroot[u"Страница 2/Страница 3"], u"Страница 4", [])
-        factory.create (self.wikiroot[u"Страница 1"], u"Страница 5", [])
+        factory.create (self.wikiroot, "Страница 1", [])
+        factory.create (self.wikiroot, "Страница 2", [])
+        factory.create (self.wikiroot["Страница 2"], "Страница 3", [])
+        factory.create (self.wikiroot["Страница 2/Страница 3"], "Страница 4", [])
+        factory.create (self.wikiroot["Страница 1"], "Страница 5", [])
 
-        self.wikiroot[u"Страница 1"].content = u"1234567"
-        self.wikiroot[u"Страница 2/Страница 3"].content = u"Абырвалг"
-        self.wikiroot[u"Страница 2/Страница 3/Страница 4"].content = u"Тарам-пам-пам"
-        self.wikiroot[u"Страница 1/Страница 5"].content = u"111111"
+        self.wikiroot["Страница 1"].content = "1234567"
+        self.wikiroot["Страница 2/Страница 3"].content = "Абырвалг"
+        self.wikiroot["Страница 2/Страница 3/Страница 4"].content = "Тарам-пам-пам"
+        self.wikiroot["Страница 1/Страница 5"].content = "111111"
 
-        self.wikiroot[u"Страница 1"].tags = [u"метка 1"]
-        self.wikiroot[u"Страница 2/Страница 3"].tags = [u"метка 2", u"метка 3"]
-        self.wikiroot[u"Страница 2/Страница 3/Страница 4"].tags = [u"метка 1", u"метка 2", u"метка 4"]
+        self.wikiroot["Страница 1"].tags = ["метка 1"]
+        self.wikiroot["Страница 2/Страница 3"].tags = ["метка 2", "метка 3"]
+        self.wikiroot["Страница 2/Страница 3/Страница 4"].tags = ["метка 1", "метка 2", "метка 4"]
 
-        self.wikiroot[u"Страница 2/Страница 3/Страница 4"].icon = "../test/images/feed.gif"
+        self.wikiroot["Страница 2/Страница 3/Страница 4"].icon = "../test/images/feed.gif"
 
 
     def tearDown(self):
@@ -48,33 +48,33 @@ class ManualEditTest (unittest.TestCase):
 
 
     def testContentRenamedPage (self):
-        page = self.wikiroot[u"Страница 1"]
+        page = self.wikiroot["Страница 1"]
 
-        newtitle = u"Новый заголовок"
+        newtitle = "Новый заголовок"
         newpath = os.path.join (page.root.path, newtitle)
 
         os.renames (page.path, newpath)
 
-        self.assertRaises (IOError, self.__changeContent, page, u"bla-bla-bla")
+        self.assertRaises (IOError, self.__changeContent, page, "bla-bla-bla")
 
 
     def testTagsRenamedPage (self):
-        page = self.wikiroot[u"Страница 1"]
+        page = self.wikiroot["Страница 1"]
 
-        newtitle = u"Новый заголовок"
+        newtitle = "Новый заголовок"
         newpath = os.path.join (page.root.path, newtitle)
 
         os.renames (page.path, newpath)
 
-        page.tags = [u"bla-bla-bla"]
+        page.tags = ["bla-bla-bla"]
         self.assertTrue (os.path.exists (page.path))
-        self.assertEqual (self.wikiroot[u"Страница 1"], page)
+        self.assertEqual (self.wikiroot["Страница 1"], page)
 
 
     def testReloadWiki (self):
-        page = self.wikiroot[u"Страница 1"]
+        page = self.wikiroot["Страница 1"]
 
-        newtitle = u"Новый заголовок"
+        newtitle = "Новый заголовок"
         newpath = os.path.join (page.root.path, newtitle)
 
         os.renames (page.path, newpath)
@@ -82,6 +82,6 @@ class ManualEditTest (unittest.TestCase):
         # Заново загрузим вики
         newroot = WikiDocument.load (self.path)
 
-        self.assertEqual (newroot[u"Страница 1"], None)
+        self.assertEqual (newroot["Страница 1"], None)
         self.assertNotEqual (newroot[newtitle], None)
         self.assertEqual (newroot[newtitle].title, newtitle)

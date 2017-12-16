@@ -9,7 +9,7 @@ from test.actions.test_editor_polyactions import BaseEditorPolyactionsTest
 class MarkdownPolyactionsTest (BaseEditorPolyactionsTest):
     """Test polyactions for Markdown pages"""
     def setUp(self):
-        dirlist = [u"../plugins/markdown"]
+        dirlist = ["../plugins/markdown"]
         self.loader = PluginsLoader(Application)
         self.loader.load(dirlist)
         super(MarkdownPolyactionsTest, self).setUp()
@@ -21,7 +21,7 @@ class MarkdownPolyactionsTest (BaseEditorPolyactionsTest):
     def _createPage(self):
         from markdown.markdownpage import MarkdownPageFactory
         return MarkdownPageFactory().create(self.wikiroot,
-                                            u"Markdown-страница",
+                                            "Markdown-страница",
                                             [])
 
     def _getEditor(self):

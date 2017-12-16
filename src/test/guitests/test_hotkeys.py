@@ -26,10 +26,10 @@ class HotKeysTest(TestCase):
             if action not in duplicates:
                 duplicate = self._find_duplicate(actions_list, action)
                 if duplicate is not None:
-                    print(u'Hot keys duplicate: {} <---> {} ---> {:<15}'.format(
+                    print(('Hot keys duplicate: {} <---> {} ---> {:<15}'.format(
                         action[0],
                         duplicate[0],
-                        action[-1]))
+                        action[-1])))
                     duplicates.append(duplicate)
 
-        self.assertEqual(len(duplicates), 0, u'Hot keys have duplicates')
+        self.assertEqual(len(duplicates), 0, 'Hot keys have duplicates')

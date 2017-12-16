@@ -15,10 +15,10 @@ class CounterTest (unittest.TestCase):
     def setUp(self):
         self.maxDiff = None
 
-        self.filesPath = u"../test/samplefiles/"
+        self.filesPath = "../test/samplefiles/"
         self.__createWiki()
 
-        dirlist = [u"../plugins/counter"]
+        dirlist = ["../plugins/counter"]
 
         self.loader = PluginsLoader(Application)
         self.loader.load (dirlist)
@@ -29,12 +29,12 @@ class CounterTest (unittest.TestCase):
 
     def __createWiki (self):
         # Здесь будет создаваться вики
-        self.path = mkdtemp (prefix=u'Абырвалг абыр')
+        self.path = mkdtemp (prefix='Абырвалг абыр')
 
         self.wikiroot = WikiDocument.create (self.path)
 
-        WikiPageFactory().create (self.wikiroot, u"Страница 1", [])
-        self.testPage = self.wikiroot[u"Страница 1"]
+        WikiPageFactory().create (self.wikiroot, "Страница 1", [])
+        self.testPage = self.wikiroot["Страница 1"]
 
 
     def tearDown(self):
@@ -47,8 +47,8 @@ class CounterTest (unittest.TestCase):
 
 
     def testCounter_01 (self):
-        text = u"(:counter:)"
-        validResult = u"1"
+        text = "(:counter:)"
+        validResult = "1"
 
         result = self.parser.toHtml (text)
         self.assertEqual (result, validResult)
@@ -61,8 +61,8 @@ class CounterTest (unittest.TestCase):
 
 
     def testCounter_02 (self):
-        text = u"(:counter:) (:counter:)"
-        validResult = u"1 2"
+        text = "(:counter:) (:counter:)"
+        validResult = "1 2"
 
         result = self.parser.toHtml (text)
         self.assertEqual (result, validResult)
@@ -75,168 +75,168 @@ class CounterTest (unittest.TestCase):
 
 
     def testAlign_01 (self):
-        text = u"%center%(:counter:)"
-        validResult = u'<div align="center">1</div>'
+        text = "%center%(:counter:)"
+        validResult = '<div align="center">1</div>'
 
         result = self.parser.toHtml (text)
         self.assertEqual (result, validResult)
 
 
     def testAlign_02 (self):
-        text = u"%center%Рисунок (:counter:)."
-        validResult = u'<div align="center">Рисунок 1.</div>'
+        text = "%center%Рисунок (:counter:)."
+        validResult = '<div align="center">Рисунок 1.</div>'
 
         result = self.parser.toHtml (text)
         self.assertEqual (result, validResult)
 
 
     def testAlign_03 (self):
-        text = u"%center%Рисунок (:counter:).\nqqq"
-        validResult = u'<div align="center">Рисунок 1.\nqqq</div>'
+        text = "%center%Рисунок (:counter:).\nqqq"
+        validResult = '<div align="center">Рисунок 1.\nqqq</div>'
 
         result = self.parser.toHtml (text)
         self.assertEqual (result, validResult)
 
 
     def testAlign_04 (self):
-        text = u"%center%Рисунок (:counter:).\n\nqqq"
-        validResult = u'<div align="center">Рисунок 1.</div>\n\nqqq'
+        text = "%center%Рисунок (:counter:).\n\nqqq"
+        validResult = '<div align="center">Рисунок 1.</div>\n\nqqq'
 
         result = self.parser.toHtml (text)
         self.assertEqual (result, validResult)
 
 
     def testAlign_05 (self):
-        text = u"%center%Рисунок (:counter:). (:counter:).\n\nqqq"
-        validResult = u'<div align="center">Рисунок 1. 2.</div>\n\nqqq'
+        text = "%center%Рисунок (:counter:). (:counter:).\n\nqqq"
+        validResult = '<div align="center">Рисунок 1. 2.</div>\n\nqqq'
 
         result = self.parser.toHtml (text)
         self.assertEqual (result, validResult)
 
 
     def testName_01 (self):
-        text = u'(:counter name="Абырвалг":) (:counter name="Абырвалг":)'
-        validResult = u"1 2"
+        text = '(:counter name="Абырвалг":) (:counter name="Абырвалг":)'
+        validResult = "1 2"
 
         result = self.parser.toHtml (text)
         self.assertEqual (result, validResult)
 
 
     def testName_02 (self):
-        text = u'(:counter name="Абырвалг":) (:counter:)'
-        validResult = u"1 1"
+        text = '(:counter name="Абырвалг":) (:counter:)'
+        validResult = "1 1"
 
         result = self.parser.toHtml (text)
         self.assertEqual (result, validResult)
 
 
     def testName_03 (self):
-        text = u'(:counter name="Абырвалг":) (:counter:) (:counter name="Абырвалг":)'
-        validResult = u"1 1 2"
+        text = '(:counter name="Абырвалг":) (:counter:) (:counter name="Абырвалг":)'
+        validResult = "1 1 2"
 
         result = self.parser.toHtml (text)
         self.assertEqual (result, validResult)
 
 
     def testName_04 (self):
-        text = u'(:counter name="Абырвалг":) (:counter:) (:counter name="Абырвалг":) (:counter:)'
-        validResult = u"1 1 2 2"
+        text = '(:counter name="Абырвалг":) (:counter:) (:counter name="Абырвалг":) (:counter:)'
+        validResult = "1 1 2 2"
 
         result = self.parser.toHtml (text)
         self.assertEqual (result, validResult)
 
 
     def testName_05 (self):
-        text = u'(:counter name="Абырвалг":) (:counter name:) (:counter name="Абырвалг":) (:counter name:)'
-        validResult = u"1 1 2 2"
+        text = '(:counter name="Абырвалг":) (:counter name:) (:counter name="Абырвалг":) (:counter name:)'
+        validResult = "1 1 2 2"
 
         result = self.parser.toHtml (text)
         self.assertEqual (result, validResult)
 
 
     def testName_06 (self):
-        text = u'(:counter name="Абырвалг":) (:counter name="":) (:counter name="Абырвалг":) (:counter name="":)'
-        validResult = u"1 1 2 2"
+        text = '(:counter name="Абырвалг":) (:counter name="":) (:counter name="Абырвалг":) (:counter name="":)'
+        validResult = "1 1 2 2"
 
         result = self.parser.toHtml (text)
         self.assertEqual (result, validResult)
 
 
     def testName_07 (self):
-        text = u'(:counter name="Абырвалг":) (:counter name="Новый счетчик":) (:counter name="Абырвалг":) (:counter name="Новый счетчик":)'
-        validResult = u"1 1 2 2"
+        text = '(:counter name="Абырвалг":) (:counter name="Новый счетчик":) (:counter name="Абырвалг":) (:counter name="Новый счетчик":)'
+        validResult = "1 1 2 2"
 
         result = self.parser.toHtml (text)
         self.assertEqual (result, validResult)
 
 
     def testName_08 (self):
-        text = u'(:counter name=" Абырвалг":) (:counter name="Новый счетчик ":) (:counter name="Абырвалг":) (:counter name="Новый счетчик":)'
-        validResult = u"1 1 2 2"
+        text = '(:counter name=" Абырвалг":) (:counter name="Новый счетчик ":) (:counter name="Абырвалг":) (:counter name="Новый счетчик":)'
+        validResult = "1 1 2 2"
 
         result = self.parser.toHtml (text)
         self.assertEqual (result, validResult)
 
 
     def testName_09 (self):
-        text = u'(:counter name="  Абырвалг":) (:counter name="Новый счетчик  ":) (:counter name=" Абырвалг ":) (:counter name="Новый счетчик ":)'
-        validResult = u"1 1 2 2"
+        text = '(:counter name="  Абырвалг":) (:counter name="Новый счетчик  ":) (:counter name=" Абырвалг ":) (:counter name="Новый счетчик ":)'
+        validResult = "1 1 2 2"
 
         result = self.parser.toHtml (text)
         self.assertEqual (result, validResult)
 
 
     def testStart_01 (self):
-        text = u"(:counter:) (:counter:) (:counter start=1:) (:counter:)"
-        validResult = u"1 2 1 2"
+        text = "(:counter:) (:counter:) (:counter start=1:) (:counter:)"
+        validResult = "1 2 1 2"
 
         result = self.parser.toHtml (text)
         self.assertEqual (result, validResult)
 
 
     def testStart_02 (self):
-        text = u"(:counter start=5:) (:counter:) (:counter:)"
-        validResult = u"5 6 7"
+        text = "(:counter start=5:) (:counter:) (:counter:)"
+        validResult = "5 6 7"
 
         result = self.parser.toHtml (text)
         self.assertEqual (result, validResult)
 
 
     def testStart_03 (self):
-        text = u"(:counter:) (:counter:) (:counter start=0:) (:counter:)"
-        validResult = u"1 2 0 1"
+        text = "(:counter:) (:counter:) (:counter start=0:) (:counter:)"
+        validResult = "1 2 0 1"
 
         result = self.parser.toHtml (text)
         self.assertEqual (result, validResult)
 
 
     def testStart_04 (self):
-        text = u'(:counter:) (:counter name="Абырвалг":) (:counter:) (:counter name="Абырвалг" start=10:) (:counter:)'
-        validResult = u"1 1 2 10 3"
+        text = '(:counter:) (:counter name="Абырвалг":) (:counter:) (:counter name="Абырвалг" start=10:) (:counter:)'
+        validResult = "1 1 2 10 3"
 
         result = self.parser.toHtml (text)
         self.assertEqual (result, validResult)
 
 
     def testStart_05 (self):
-        text = u'(:counter start="-1":) (:counter:) (:counter:) (:counter start=10:)'
-        validResult = u"-1 0 1 10"
+        text = '(:counter start="-1":) (:counter:) (:counter:) (:counter start=10:)'
+        validResult = "-1 0 1 10"
 
         result = self.parser.toHtml (text)
         self.assertEqual (result, validResult)
 
 
     def testStart_06 (self):
-        text = u'(:counter start="абырвалг":) (:counter:) (:counter:)'
-        validResult = u"1 2 3"
+        text = '(:counter start="абырвалг":) (:counter:) (:counter:)'
+        validResult = "1 2 3"
 
         result = self.parser.toHtml (text)
         self.assertEqual (result, validResult)
 
 
     def testStart_07 (self):
-        text = u'(:counter:) (:counter:) (:counter start="абырвалг":)'
-        validResult = u"1 2 3"
+        text = '(:counter:) (:counter:) (:counter start="абырвалг":)'
+        validResult = "1 2 3"
 
         result = self.parser.toHtml (text)
         self.assertEqual (result, validResult)
@@ -245,12 +245,12 @@ class CounterTest (unittest.TestCase):
 
 
     def testParent_01 (self):
-        text = u'''(:counter name="level 1":)
+        text = '''(:counter name="level 1":)
 (:counter name="level 2" parent="level 1":)
 (:counter name="level 2" parent="level 1":)
 (:counter name="level 2" parent="level 1":)'''
 
-        validResult = u'''1
+        validResult = '''1
 1.1
 1.2
 1.3'''
@@ -260,12 +260,12 @@ class CounterTest (unittest.TestCase):
 
 
     def testParent_02 (self):
-        text = u'''(:counter name="level 1":)
+        text = '''(:counter name="level 1":)
 (:counter name="level 2" parent="level 1":)
 (:counter name="level 3" parent="level 2":)
 (:counter name="level 3" parent="level 2":)'''
 
-        validResult = u'''1
+        validResult = '''1
 1.1
 1.1.1
 1.1.2'''
@@ -275,13 +275,13 @@ class CounterTest (unittest.TestCase):
 
 
     def testParent_03 (self):
-        text = u'''(:counter name="level 1":)
+        text = '''(:counter name="level 1":)
 (:counter name="level 2" parent="level 1":)
 (:counter name="level 1":)
 (:counter name="level 2" parent="level 1":)
 (:counter name="level 2" parent="level 1":)'''
 
-        validResult = u'''1
+        validResult = '''1
 1.1
 2
 2.1
@@ -292,7 +292,7 @@ class CounterTest (unittest.TestCase):
 
 
     def testParent_04 (self):
-        text = u'''(:counter name="level 1":)
+        text = '''(:counter name="level 1":)
 (:counter name="level 2" parent="level 1":)
 (:counter name="level 3" parent="level 2":)
 (:counter name="level 3" parent="level 2":)
@@ -306,7 +306,7 @@ class CounterTest (unittest.TestCase):
 (:counter name="level 3" parent="level 2":)
 (:counter name="level 3" parent="level 2":)'''
 
-        validResult = u'''1
+        validResult = '''1
 1.1
 1.1.1
 1.1.2
@@ -325,20 +325,20 @@ class CounterTest (unittest.TestCase):
 
 
     def testInvalidParent_01 (self):
-        text = u'''(:counter name="level 1" parent="level 1":)'''
+        text = '''(:counter name="level 1" parent="level 1":)'''
 
-        validResult = u'''1'''
+        validResult = '''1'''
         result = self.parser.toHtml (text)
         self.assertEqual (result, validResult)
 
 
     def testInvalidParent_02 (self):
-        text = u'''(:counter name="level 1":)
+        text = '''(:counter name="level 1":)
 (:counter name="level 2" parent="level 1":)
 (:counter name="level 1" parent="level 2":)
 (:counter name="level 2" parent="level 1":)'''
 
-        validResult = u'''1
+        validResult = '''1
 1.1
 1.1.1
 1.1.1.1'''
@@ -347,10 +347,10 @@ class CounterTest (unittest.TestCase):
 
 
     def testInvalidParent_03 (self):
-        text = u'''(:counter name="level 1" parent="invalid":)
+        text = '''(:counter name="level 1" parent="invalid":)
 (:counter name="level 1" parent="invalid":)'''
 
-        validResult = u'''1
+        validResult = '''1
 2'''
 
         result = self.parser.toHtml (text)
@@ -358,7 +358,7 @@ class CounterTest (unittest.TestCase):
 
 
     def testFull_01 (self):
-        text = u'''Раздел (:counter name="level 1":)
+        text = '''Раздел (:counter name="level 1":)
 Раздел (:counter name="level 1":)
 Раздел (:counter name="level 2" parent="level 1":)
 Раздел (:counter name="level 3" parent="level 2":)
@@ -378,7 +378,7 @@ class CounterTest (unittest.TestCase):
 Раздел (:counter name="level 2" parent="level 1":)'''
 
 
-        validResult = u'''Раздел 1
+        validResult = '''Раздел 1
 Раздел 2
 Раздел 2.1
 Раздел 2.1.1
@@ -402,7 +402,7 @@ class CounterTest (unittest.TestCase):
 
 
     def testFull_02 (self):
-        text = u'''Раздел (:counter:)
+        text = '''Раздел (:counter:)
 Раздел (:counter:)
 Раздел (:counter name="level 2" parent="":)
 Раздел (:counter name="level 3" parent="level 2":)
@@ -422,7 +422,7 @@ class CounterTest (unittest.TestCase):
 Раздел (:counter name="level 2" parent="":)'''
 
 
-        validResult = u'''Раздел 1
+        validResult = '''Раздел 1
 Раздел 2
 Раздел 2.1
 Раздел 2.1.1
@@ -446,13 +446,13 @@ class CounterTest (unittest.TestCase):
 
 
     def testFull_03 (self):
-        text = u'''Раздел (:counter name="level 1":)
+        text = '''Раздел (:counter name="level 1":)
 Раздел (:counter name="level 2" parent="level 1":)
 Раздел (:counter name="level 2" parent="level 1":)
 Раздел (:counter name="level 2" parent="level 1" start=10:)
 Раздел (:counter name="level 2" parent="level 1":)'''
 
-        validResult = u'''Раздел 1
+        validResult = '''Раздел 1
 Раздел 1.1
 Раздел 1.2
 Раздел 1.10
@@ -463,13 +463,13 @@ class CounterTest (unittest.TestCase):
 
 
     def testFull_04 (self):
-        text = u'''Раздел (:counter name="level 1":)
+        text = '''Раздел (:counter name="level 1":)
 Раздел (:counter name="level 2" parent="level 1" start=10:)
 Раздел (:counter name="level 2" parent="level 1":)
 Раздел (:counter name="level 2" parent="level 1":)
 Раздел (:counter name="level 2" parent="level 1":)'''
 
-        validResult = u'''Раздел 1
+        validResult = '''Раздел 1
 Раздел 1.10
 Раздел 1.11
 Раздел 1.12
@@ -480,23 +480,23 @@ class CounterTest (unittest.TestCase):
 
 
     def testHide_01 (self):
-        text = u'''(:counter hide:)'''
+        text = '''(:counter hide:)'''
 
-        validResult = u''''''
+        validResult = ''''''
 
         result = self.parser.toHtml (text)
         self.assertEqual (result, validResult)
 
 
     def testHide_02 (self):
-        text = u'''Раздел (:counter name="level 1":)
+        text = '''Раздел (:counter name="level 1":)
 Раздел (:counter name="level 2" parent="level 1":)
 Раздел (:counter name="level 2" parent="level 1" hide:)
 Раздел (:counter name="level 2" parent="level 1":)
 Раздел (:counter name="level 2" parent="level 1" start=10 hide:)
 Раздел (:counter name="level 2" parent="level 1":)'''
 
-        validResult = u'''Раздел 1
+        validResult = '''Раздел 1
 Раздел 1.1
 Раздел 
 Раздел 1.3
@@ -508,47 +508,47 @@ class CounterTest (unittest.TestCase):
 
 
     def testHide_03 (self):
-        text = u'''(:counter start=100 hide:)(:counter:)'''
+        text = '''(:counter start=100 hide:)(:counter:)'''
 
-        validResult = u'''101'''
+        validResult = '''101'''
 
         result = self.parser.toHtml (text)
         self.assertEqual (result, validResult)
 
 
     def testStep_01 (self):
-        text = u'''(:counter:) (:counter step=2:)'''
+        text = '''(:counter:) (:counter step=2:)'''
 
-        validResult = u'''1 3'''
+        validResult = '''1 3'''
 
         result = self.parser.toHtml (text)
         self.assertEqual (result, validResult)
 
 
     def testStep_02 (self):
-        text = u'''(:counter step=2:)'''
+        text = '''(:counter step=2:)'''
 
-        validResult = u'''2'''
+        validResult = '''2'''
 
         result = self.parser.toHtml (text)
         self.assertEqual (result, validResult)
 
 
     def testStep_03 (self):
-        text = u'''(:counter step=2:) (:counter step=3:) (:counter step=4:)'''
+        text = '''(:counter step=2:) (:counter step=3:) (:counter step=4:)'''
 
-        validResult = u'''2 5 9'''
+        validResult = '''2 5 9'''
 
         result = self.parser.toHtml (text)
         self.assertEqual (result, validResult)
 
 
     def testStep_04 (self):
-        text = u'''Раздел (:counter name="level 1":)
+        text = '''Раздел (:counter name="level 1":)
 Раздел (:counter name="level 2" parent="level 1" step=2:)
 Раздел (:counter name="level 2" parent="level 1" step=2:)'''
 
-        validResult = u'''Раздел 1
+        validResult = '''Раздел 1
 Раздел 1.2
 Раздел 1.4'''
 
@@ -557,13 +557,13 @@ class CounterTest (unittest.TestCase):
 
 
     def testStep_05 (self):
-        text = u'''Раздел (:counter name="level 1":)
+        text = '''Раздел (:counter name="level 1":)
 Раздел (:counter name="level 2" parent="level 1" start=10 step="100":)
 Раздел (:counter name="level 2" parent="level 1" step="100":)
 Раздел (:counter name="level 2" parent="level 1" step="100":)
 Раздел (:counter name="level 2" parent="level 1" step="100":)'''
 
-        validResult = u'''Раздел 1
+        validResult = '''Раздел 1
 Раздел 1.10
 Раздел 1.110
 Раздел 1.210
@@ -574,13 +574,13 @@ class CounterTest (unittest.TestCase):
 
 
     def testStep_06 (self):
-        text = u'''Раздел (:counter name="level 1":)
+        text = '''Раздел (:counter name="level 1":)
 Раздел (:counter name="level 2" parent="level 1" start=0:)
 Раздел (:counter name="level 2" parent="level 1" step=-100:)
 Раздел (:counter name="level 2" parent="level 1" step=-100:)
 Раздел (:counter name="level 2" parent="level 1" step=-100:)'''
 
-        validResult = u'''Раздел 1
+        validResult = '''Раздел 1
 Раздел 1.0
 Раздел 1.-100
 Раздел 1.-200
@@ -591,21 +591,21 @@ class CounterTest (unittest.TestCase):
 
 
     def testStep_07 (self):
-        text = u'''(:counter start=0 step=2:)'''
+        text = '''(:counter start=0 step=2:)'''
 
-        validResult = u'''0'''
+        validResult = '''0'''
 
         result = self.parser.toHtml (text)
         self.assertEqual (result, validResult)
 
 
     def testSeparator_01 (self):
-        text = u'''Раздел (:counter name="level 1":)
+        text = '''Раздел (:counter name="level 1":)
 Раздел (:counter name="level 2" parent="level 1" separator="/":)
 Раздел (:counter name="level 2" parent="level 1" separator="/":)
 Раздел (:counter name="level 2" parent="level 1" separator="/":)'''
 
-        validResult = u'''Раздел 1
+        validResult = '''Раздел 1
 Раздел 1/1
 Раздел 1/2
 Раздел 1/3'''
@@ -615,7 +615,7 @@ class CounterTest (unittest.TestCase):
 
 
     def testSeparator_02 (self):
-        text = u'''Раздел (:counter:)
+        text = '''Раздел (:counter:)
 Раздел (:counter name="level 2" parent="" separator=":":)
 Раздел (:counter name="level 3" parent="level 2" separator="-":)
 Раздел (:counter name="level 3" parent="level 2" separator="-":)
@@ -624,7 +624,7 @@ class CounterTest (unittest.TestCase):
 Раздел (:counter name="level 2" parent="" separator="-":)'''
 
 
-        validResult = u'''Раздел 1
+        validResult = '''Раздел 1
 Раздел 1:1
 Раздел 1:1-1
 Раздел 1:1-2

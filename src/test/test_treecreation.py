@@ -28,36 +28,36 @@ class TextPageCreationTest(unittest.TestCase):
     """
     def setUp(self):
         # Здесь будет создаваться вики
-        self.path = mkdtemp(prefix=u'Абырвалг абыр')
+        self.path = mkdtemp(prefix='Абырвалг абыр')
         self.eventcount = 0
 
         self.wikiroot = WikiDocument.create(self.path)
 
         factory = TextPageFactory()
-        factory.create(self.wikiroot, u"Страница 1", [])
-        factory.create(self.wikiroot, u"Страница 2", [])
-        factory.create(self.wikiroot[u"Страница 2"], u"Страница 3", [])
+        factory.create(self.wikiroot, "Страница 1", [])
+        factory.create(self.wikiroot, "Страница 2", [])
+        factory.create(self.wikiroot["Страница 2"], "Страница 3", [])
 
-        factory.create(self.wikiroot[u"Страница 2/Страница 3"],
-                       u"Страница 4",
+        factory.create(self.wikiroot["Страница 2/Страница 3"],
+                       "Страница 4",
                        [])
 
-        factory.create(self.wikiroot[u"Страница 1"], u"Страница 5", [])
+        factory.create(self.wikiroot["Страница 1"], "Страница 5", [])
 
-        self.wikiroot[u"Страница 1"].content = u"1234567"
-        self.wikiroot[u"Страница 2/Страница 3"].content = u"Абырвалг"
-        self.wikiroot[u"Страница 2/Страница 3/Страница 4"].content = u"Тарам-пам-пам"
-        self.wikiroot[u"Страница 1/Страница 5"].content = u"111111"
+        self.wikiroot["Страница 1"].content = "1234567"
+        self.wikiroot["Страница 2/Страница 3"].content = "Абырвалг"
+        self.wikiroot["Страница 2/Страница 3/Страница 4"].content = "Тарам-пам-пам"
+        self.wikiroot["Страница 1/Страница 5"].content = "111111"
 
-        self.wikiroot[u"Страница 1"].tags = [u"метка 1"]
-        self.wikiroot[u"Страница 2/Страница 3"].tags = [u"метка 2", u"метка 3"]
-        self.wikiroot[u"Страница 2/Страница 3/Страница 4"].tags = [u"метка 1", u"метка 2", u"метка 4"]
+        self.wikiroot["Страница 1"].tags = ["метка 1"]
+        self.wikiroot["Страница 2/Страница 3"].tags = ["метка 2", "метка 3"]
+        self.wikiroot["Страница 2/Страница 3/Страница 4"].tags = ["метка 1", "метка 2", "метка 4"]
 
-        self.wikiroot[u"Страница 2/Страница 3/Страница 4"].icon = "../test/images/feed.gif"
+        self.wikiroot["Страница 2/Страница 3/Страница 4"].icon = "../test/images/feed.gif"
 
-        self.wikiroot[u"Страница 1"].alias = u'page 1'
-        self.wikiroot[u"Страница 1/Страница 5"].alias = u'page 5'
-        self.wikiroot[u"Страница 2/Страница 3"].alias = u'page 3'
+        self.wikiroot["Страница 1"].alias = 'page 1'
+        self.wikiroot["Страница 1/Страница 5"].alias = 'page 5'
+        self.wikiroot["Страница 2/Страница 3"].alias = 'page 3'
 
         self.icons = ["../test/images/icon.gif",
                       "../test/images/icon.png",
@@ -70,11 +70,11 @@ class TextPageCreationTest(unittest.TestCase):
         Application.wikiroot = None
         os.chmod(self._getConfigPath(self.wikiroot),
                  stat.S_IRUSR | stat.S_IXUSR | stat.S_IWUSR)
-        os.chmod(self._getConfigPath(self.wikiroot[u"Страница 1"]),
+        os.chmod(self._getConfigPath(self.wikiroot["Страница 1"]),
                  stat.S_IRUSR | stat.S_IXUSR | stat.S_IWUSR)
 
-        if self.wikiroot[u"Страница 2"] is not None:
-            os.chmod(self._getConfigPath(self.wikiroot[u"Страница 2"]),
+        if self.wikiroot["Страница 2"] is not None:
+            os.chmod(self._getConfigPath(self.wikiroot["Страница 2"]),
                      stat.S_IRUSR | stat.S_IXUSR | stat.S_IWUSR)
 
         removeDir(self.path)
@@ -83,28 +83,28 @@ class TextPageCreationTest(unittest.TestCase):
         self.eventcount += 1
 
     def testDisplaySubpath(self):
-        self.assertEqual(self.wikiroot.display_subpath, u'/')
+        self.assertEqual(self.wikiroot.display_subpath, '/')
 
         self.assertEqual(
-            self.wikiroot[u"Страница 1"].display_subpath,
-            u'page 1'
+            self.wikiroot["Страница 1"].display_subpath,
+            'page 1'
         )
 
         self.assertEqual(
-            self.wikiroot[u"Страница 1/Страница 5"].display_subpath,
-            u'page 1/page 5'
+            self.wikiroot["Страница 1/Страница 5"].display_subpath,
+            'page 1/page 5'
         )
 
         self.assertEqual(
-            self.wikiroot[u"Страница 2/Страница 3"].display_subpath,
-            u'Страница 2/page 3'
+            self.wikiroot["Страница 2/Страница 3"].display_subpath,
+            'Страница 2/page 3'
         )
 
     def testEventChangeContent(self):
         Application.wikiroot = self.wikiroot
         Application.onPageUpdate += self.onPageUpdate
 
-        self.wikiroot[u"Страница 1"].content = u"тарам-там-там"
+        self.wikiroot["Страница 1"].content = "тарам-там-там"
         self.assertEqual(self.eventcount, 1)
 
         Application.onPageUpdate -= self.onPageUpdate
@@ -112,7 +112,7 @@ class TextPageCreationTest(unittest.TestCase):
     def testNoEventChangeContent(self):
         Application.onPageUpdate += self.onPageUpdate
 
-        self.wikiroot[u"Страница 1"].content = u"тарам-там-там"
+        self.wikiroot["Страница 1"].content = "тарам-там-там"
         self.assertEqual(self.eventcount, 0)
 
         Application.onPageUpdate -= self.onPageUpdate
@@ -121,11 +121,11 @@ class TextPageCreationTest(unittest.TestCase):
         Application.wikiroot = self.wikiroot
         Application.onPageUpdate += self.onPageUpdate
 
-        self.wikiroot[u"Страница 1"].tags = [u"метка 1", u"метка 2", u"метка 4"]
+        self.wikiroot["Страница 1"].tags = ["метка 1", "метка 2", "метка 4"]
         self.assertEqual(self.eventcount, 1)
 
         # То же самое содержимое
-        self.wikiroot[u"Страница 1"].tags = [u"метка 1", u"метка 2", u"метка 4"]
+        self.wikiroot["Страница 1"].tags = ["метка 1", "метка 2", "метка 4"]
         self.assertEqual(self.eventcount, 1)
 
         Application.onPageUpdate -= self.onPageUpdate
@@ -133,50 +133,50 @@ class TextPageCreationTest(unittest.TestCase):
     def testNoEventChangeTags(self):
         Application.onPageUpdate += self.onPageUpdate
 
-        self.wikiroot[u"Страница 1"].tags = [u"метка 1", u"метка 2", u"метка 4"]
+        self.wikiroot["Страница 1"].tags = ["метка 1", "метка 2", "метка 4"]
         self.assertEqual(self.eventcount, 0)
 
         Application.onPageUpdate -= self.onPageUpdate
 
     def testAttach1(self):
         # Получить путь до прикрепленных файлов, не создавая ее
-        path = Attachment(self.wikiroot[u"Страница 2"]).getAttachPath()
+        path = Attachment(self.wikiroot["Страница 2"]).getAttachPath()
         # Вложенных файлов еще нет, поэтому нет и папки
         self.assertFalse(os.path.exists(path))
 
     def testAttach2(self):
         # Получить путь до прикрепленных файлов, не создавая ее
-        path = Attachment(self.wikiroot[u"Страница 2"]).getAttachPath(create=False)
+        path = Attachment(self.wikiroot["Страница 2"]).getAttachPath(create=False)
         # Вложенных файлов еще нет, поэтому нет и папки
         self.assertFalse(os.path.exists(path))
 
     def testAttach3(self):
         # Получить путь до прикрепленных файлов, создав ее
-        path = Attachment(self.wikiroot[u"Страница 2"]).getAttachPath(create=True)
+        path = Attachment(self.wikiroot["Страница 2"]).getAttachPath(create=True)
         # Вложенных файлов еще нет, поэтому нет и папки
         self.assertTrue(os.path.exists(path))
 
     def testTypeCreation(self):
         textPage = TextPageFactory().create(self.wikiroot,
-                                            u"Текстовая страница",
+                                            "Текстовая страница",
                                             [])
 
         self.assertEqual(TextWikiPage, type(textPage))
 
         wikiPage = WikiPageFactory().create(self.wikiroot,
-                                            u"Вики-страница",
+                                            "Вики-страница",
                                             [])
 
         self.assertEqual(WikiWikiPage, type(wikiPage))
 
         htmlPage = HtmlPageFactory().create(self.wikiroot,
-                                            u"HTML-страница",
+                                            "HTML-страница",
                                             [])
 
         self.assertEqual(HtmlWikiPage, type(htmlPage))
 
         searchPage = SearchPageFactory().create(self.wikiroot,
-                                                u"Поисковая страница",
+                                                "Поисковая страница",
                                                 [])
 
         self.assertEqual(SearchWikiPage, type(searchPage))
@@ -184,59 +184,59 @@ class TextPageCreationTest(unittest.TestCase):
     def testIcon(self):
         wiki = WikiDocument.load(self.path)
         self.assertEqual(os.path.basename(
-            wiki[u"Страница 2/Страница 3/Страница 4"].icon),
+            wiki["Страница 2/Страница 3/Страница 4"].icon),
             "__icon.gif")
 
     def testReplaceIcon(self):
         wiki = WikiDocument.load(self.path)
 
-        wiki[u"Страница 1"].icon = self.icons[3]
-        self.assertEqual(os.path.basename(wiki[u"Страница 1"].icon),
+        wiki["Страница 1"].icon = self.icons[3]
+        self.assertEqual(os.path.basename(wiki["Страница 1"].icon),
                          "__icon.ico")
 
-        wiki[u"Страница 1"].icon = self.icons[1]
-        self.assertEqual(os.path.basename(wiki[u"Страница 1"].icon),
+        wiki["Страница 1"].icon = self.icons[1]
+        self.assertEqual(os.path.basename(wiki["Страница 1"].icon),
                          "__icon.png")
 
-        wiki[u"Страница 1"].icon = self.icons[0]
-        self.assertEqual(os.path.basename(wiki[u"Страница 1"].icon),
+        wiki["Страница 1"].icon = self.icons[0]
+        self.assertEqual(os.path.basename(wiki["Страница 1"].icon),
                          "__icon.gif")
 
-        wiki[u"Страница 1"].icon = self.icons[2]
-        self.assertEqual(os.path.basename(wiki[u"Страница 1"].icon),
+        wiki["Страница 1"].icon = self.icons[2]
+        self.assertEqual(os.path.basename(wiki["Страница 1"].icon),
                          "__icon.jpg")
 
-        wiki[u"Страница 1"].icon = self.icons[3]
-        self.assertEqual(os.path.basename(wiki[u"Страница 1"].icon),
+        wiki["Страница 1"].icon = self.icons[3]
+        self.assertEqual(os.path.basename(wiki["Страница 1"].icon),
                          "__icon.ico")
 
-        wiki[u"Страница 1"].icon = self.icons[0]
-        self.assertEqual(os.path.basename(wiki[u"Страница 1"].icon),
+        wiki["Страница 1"].icon = self.icons[0]
+        self.assertEqual(os.path.basename(wiki["Страница 1"].icon),
                          "__icon.gif")
 
-        wiki[u"Страница 1"].icon = self.icons[1]
-        self.assertEqual(os.path.basename(wiki[u"Страница 1"].icon),
+        wiki["Страница 1"].icon = self.icons[1]
+        self.assertEqual(os.path.basename(wiki["Страница 1"].icon),
                          "__icon.png")
 
     def testTags(self):
         wiki = WikiDocument.load(self.path)
-        self.assertTrue(u"метка 1" in wiki[u"Страница 1"].tags)
-        self.assertEqual(len(wiki[u"Страница 1"].tags), 1)
+        self.assertTrue("метка 1" in wiki["Страница 1"].tags)
+        self.assertEqual(len(wiki["Страница 1"].tags), 1)
 
-        self.assertIn(u"метка 2", wiki[u"Страница 2/Страница 3"].tags)
-        self.assertIn(u"метка 3", wiki[u"Страница 2/Страница 3"].tags)
-        self.assertEqual(len(wiki[u"Страница 2/Страница 3"].tags), 2)
+        self.assertIn("метка 2", wiki["Страница 2/Страница 3"].tags)
+        self.assertIn("метка 3", wiki["Страница 2/Страница 3"].tags)
+        self.assertEqual(len(wiki["Страница 2/Страница 3"].tags), 2)
 
-        self.assertIn(u"метка 1",
-                      wiki[u"Страница 2/Страница 3/Страница 4"].tags)
+        self.assertIn("метка 1",
+                      wiki["Страница 2/Страница 3/Страница 4"].tags)
 
-        self.assertIn(u"метка 2",
-                      wiki[u"Страница 2/Страница 3/Страница 4"].tags)
+        self.assertIn("метка 2",
+                      wiki["Страница 2/Страница 3/Страница 4"].tags)
 
-        self.assertIn(u"метка 4",
-                      wiki[u"Страница 2/Страница 3/Страница 4"].tags)
+        self.assertIn("метка 4",
+                      wiki["Страница 2/Страница 3/Страница 4"].tags)
 
-        self.assertEqual(len(wiki[u"Страница 2/Страница 3/Страница 4"].tags),
+        self.assertEqual(len(wiki["Страница 2/Страница 3/Страница 4"].tags),
                          3)
 
     def testCreation(self):
@@ -248,7 +248,7 @@ class TextPageCreationTest(unittest.TestCase):
         self.assertRaises(Exception,
                           TextPageFactory.create,
                           self.wikiroot,
-                          u"+*5name:/\0",
+                          "+*5name:/\0",
                           [])
 
         self.assertEqual(len(self.wikiroot.children), children)
@@ -257,33 +257,33 @@ class TextPageCreationTest(unittest.TestCase):
         self.assertRaises(DuplicateTitle,
                           TextPageFactory().create,
                           self.wikiroot,
-                          u"страНица 1",
+                          "страНица 1",
                           [])
 
         self.assertRaises(DuplicateTitle,
                           TextPageFactory().create,
-                          self.wikiroot[u"Страница 1"],
-                          u"страНица 5",
+                          self.wikiroot["Страница 1"],
+                          "страНица 5",
                           [])
 
     def testPageCreate(self):
         wiki = WikiDocument.load(self.path)
-        self.assertEqual(wiki[u"Страница 1"].title, u"Страница 1")
-        self.assertEqual(wiki[u"Страница 2"].title, u"Страница 2")
-        self.assertEqual(wiki[u"Страница 2/Страница 3"].title, u"Страница 3")
+        self.assertEqual(wiki["Страница 1"].title, "Страница 1")
+        self.assertEqual(wiki["Страница 2"].title, "Страница 2")
+        self.assertEqual(wiki["Страница 2/Страница 3"].title, "Страница 3")
 
     def testCreateTextContent(self):
         wiki = WikiDocument.load(self.path)
-        self.assertEqual(wiki[u"Страница 1"].content, u"1234567")
-        self.assertEqual(wiki[u"Страница 2/Страница 3"].content, u"Абырвалг")
-        self.assertEqual(wiki[u"Страница 2/Страница 3/Страница 4"].content,
-                         u"Тарам-пам-пам")
-        self.assertEqual(wiki[u"Страница 1/Страница 5"].content, u"111111")
+        self.assertEqual(wiki["Страница 1"].content, "1234567")
+        self.assertEqual(wiki["Страница 2/Страница 3"].content, "Абырвалг")
+        self.assertEqual(wiki["Страница 2/Страница 3/Страница 4"].content,
+                         "Тарам-пам-пам")
+        self.assertEqual(wiki["Страница 1/Страница 5"].content, "111111")
 
     def testSelection1(self):
-        self.wikiroot.selectedPage = self.wikiroot[u"Страница 2/Страница 3"]
+        self.wikiroot.selectedPage = self.wikiroot["Страница 2/Страница 3"]
         self.assertEqual(self.wikiroot.selectedPage,
-                         self.wikiroot[u"Страница 2/Страница 3"])
+                         self.wikiroot["Страница 2/Страница 3"])
 
     def testSelection3(self):
         self.wikiroot.selectedPage = None
@@ -292,39 +292,39 @@ class TextPageCreationTest(unittest.TestCase):
         self.assertEqual(wiki2.selectedPage, None)
 
     def testSelection5(self):
-        self.wikiroot.selectedPage = self.wikiroot[u"Страница 2/Страница 3"]
-        self.wikiroot[u"Страница 2"].remove()
+        self.wikiroot.selectedPage = self.wikiroot["Страница 2/Страница 3"]
+        self.wikiroot["Страница 2"].remove()
 
         wiki2 = WikiDocument.load(self.path)
 
         self.assertEqual(wiki2.selectedPage, None)
 
     def testReadOnly_01(self):
-        os.chmod(self._getConfigPath(self.wikiroot[u"Страница 1"]),
+        os.chmod(self._getConfigPath(self.wikiroot["Страница 1"]),
                  stat.S_IRUSR | stat.S_IXUSR)
 
         wiki2 = WikiDocument.load(self.path)
-        self.assertTrue(wiki2[u"Страница 1"].readonly)
-        self.assertFalse(wiki2[u"Страница 1/Страница 5"].readonly)
-        self.assertFalse(wiki2[u"Страница 2"].readonly)
+        self.assertTrue(wiki2["Страница 1"].readonly)
+        self.assertFalse(wiki2["Страница 1/Страница 5"].readonly)
+        self.assertFalse(wiki2["Страница 2"].readonly)
 
     def testReadOnly_02(self):
         os.chmod(self._getConfigPath(self.wikiroot),
                  stat.S_IRUSR | stat.S_IXUSR)
 
         wiki2 = WikiDocument.load(self.path)
-        self.assertTrue(wiki2[u"Страница 1"].readonly)
-        self.assertTrue(wiki2[u"Страница 1/Страница 5"].readonly)
-        self.assertTrue(wiki2[u"Страница 2"].readonly)
+        self.assertTrue(wiki2["Страница 1"].readonly)
+        self.assertTrue(wiki2["Страница 1/Страница 5"].readonly)
+        self.assertTrue(wiki2["Страница 2"].readonly)
 
     def testReadOnly_03(self):
-        os.chmod(self._getConfigPath(self.wikiroot[u"Страница 2"]),
+        os.chmod(self._getConfigPath(self.wikiroot["Страница 2"]),
                  stat.S_IRUSR | stat.S_IXUSR)
 
         wiki2 = WikiDocument.load(self.path)
-        self.assertTrue(wiki2[u"Страница 2"].readonly)
-        self.assertFalse(wiki2[u"Страница 2/Страница 3"].readonly)
-        self.assertFalse(wiki2[u"Страница 2/Страница 3/Страница 4"].readonly)
+        self.assertTrue(wiki2["Страница 2"].readonly)
+        self.assertFalse(wiki2["Страница 2/Страница 3"].readonly)
+        self.assertFalse(wiki2["Страница 2/Страница 3/Страница 4"].readonly)
 
     def _getConfigPath(self, page):
         return os.path.join(page.path, PAGE_OPT_FILE)

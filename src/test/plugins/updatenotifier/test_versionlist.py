@@ -16,7 +16,7 @@ class VersionListTest (unittest.TestCase):
     """Tests for the UpdateNotifier plugin."""
     def setUp(self):
         self.loader = PluginsLoader(Application)
-        self.loader.load([u"../plugins/updatenotifier"])
+        self.loader.load(["../plugins/updatenotifier"])
 
     def tearDown(self):
         self.loader.clear()
@@ -37,7 +37,7 @@ class VersionListTest (unittest.TestCase):
         from updatenotifier.versionlist import VersionList
 
         updateUrls = {
-            u'test_01': u'http://example.com/',
+            'test_01': 'http://example.com/',
         }
         versionList = VersionList(updateUrls)
         result = versionList.loadAppInfo()
@@ -48,7 +48,7 @@ class VersionListTest (unittest.TestCase):
         from updatenotifier.versionlist import VersionList
 
         updateUrls = {
-            u'test_01': u'invalid_file_name.txt',
+            'test_01': 'invalid_file_name.txt',
         }
         versionList = VersionList(updateUrls)
         result = versionList.loadAppInfo()
@@ -59,42 +59,42 @@ class VersionListTest (unittest.TestCase):
         from updatenotifier.versionlist import VersionList
 
         updateUrls = {
-            u'test_01': u'../test/updatenotifier_data/testplugin_01.xml',
+            'test_01': '../test/updatenotifier_data/testplugin_01.xml',
         }
         versionList = VersionList(updateUrls)
         result = versionList.loadAppInfo()
 
-        self.assertIn(u'test_01', result)
-        self.assertEqual(unicode(result[u'test_01'].currentVersion), u'0.1')
+        self.assertIn('test_01', result)
+        self.assertEqual(str(result['test_01'].currentVersion), '0.1')
 
     def test_loadAppInfo_file_02(self):
         from updatenotifier.versionlist import VersionList
 
         updateUrls = {
-            u'test_01': u'../test/updatenotifier_data/testplugin_01.xml',
-            u'test_02': u'../test/updatenotifier_data/testplugin_02.xml',
+            'test_01': '../test/updatenotifier_data/testplugin_01.xml',
+            'test_02': '../test/updatenotifier_data/testplugin_02.xml',
         }
         versionList = VersionList(updateUrls)
         result = versionList.loadAppInfo()
 
-        self.assertIn(u'test_01', result)
-        self.assertIn(u'test_02', result)
-        self.assertEqual(unicode(result[u'test_01'].currentVersion), u'0.1')
-        self.assertEqual(unicode(result[u'test_02'].currentVersion), u'0.2')
+        self.assertIn('test_01', result)
+        self.assertIn('test_02', result)
+        self.assertEqual(str(result['test_01'].currentVersion), '0.1')
+        self.assertEqual(str(result['test_02'].currentVersion), '0.2')
 
     def test_getAppInfo_file_01(self):
         from updatenotifier.versionlist import VersionList
 
-        url = u'../test/updatenotifier_data/testplugin_01.xml'
+        url = '../test/updatenotifier_data/testplugin_01.xml'
         versionList = VersionList({})
         appInfo = versionList.getAppInfoFromUrl(url)
 
-        self.assertEqual(unicode(appInfo.currentVersion), u'0.1')
+        self.assertEqual(str(appInfo.currentVersion), '0.1')
 
     def test_getAppInfo_file_invalid_01(self):
         from updatenotifier.versionlist import VersionList
 
-        url = u'invalid_path.xml'
+        url = 'invalid_path.xml'
         versionList = VersionList({})
         appInfo = versionList.getAppInfoFromUrl(url)
 
@@ -103,7 +103,7 @@ class VersionListTest (unittest.TestCase):
     def test_getAppInfo_file_invalid_02(self):
         from updatenotifier.versionlist import VersionList
 
-        url = u'http://example.com'
+        url = 'http://example.com'
         versionList = VersionList({})
         appInfo = versionList.getAppInfoFromUrl(url)
 

@@ -8,7 +8,7 @@ class PageTypeColor_LoadingTest(BasePluginLoadingTest):
         """
         Must return path to plugin
         """
-        return u"../plugins/pagetypecolor"
+        return "../plugins/pagetypecolor"
 
     def getPluginName(self):
         """

@@ -12,7 +12,7 @@ from test.utils import removeDir, createFile
 class RecentIconsListTest(TestCase):
     def setUp(self):
         self.config = Application.config
-        self.icons_path = mkdtemp(suffix=u'значки', prefix=u'outwiker')
+        self.icons_path = mkdtemp(suffix='значки', prefix='outwiker')
 
     def tearDown(self):
         removeDir(self.icons_path)
@@ -107,8 +107,8 @@ class RecentIconsListTest(TestCase):
     def test_add_icons_09(self):
         controller = RecentIconsList(10, self.config, self.icons_path)
         controller.load()
-        self._add_icons(controller, 2, u'xxx')
-        self._add_icons(controller, 2, u'yyy')
+        self._add_icons(controller, 2, 'xxx')
+        self._add_icons(controller, 2, 'yyy')
         icons_list = controller.getRecentIcons()
 
         controller2 = RecentIconsList(10, self.config, self.icons_path)
@@ -134,8 +134,8 @@ class RecentIconsListTest(TestCase):
     def test_add_icons_11(self):
         controller = RecentIconsList(10, self.config, self.icons_path)
         controller.load()
-        self._add_icons(controller, 2, u'xxx')
-        self._add_invalid_icons(controller, 2, u'yyy')
+        self._add_icons(controller, 2, 'xxx')
+        self._add_invalid_icons(controller, 2, 'yyy')
         icons_list = controller.getRecentIcons()
 
         controller2 = RecentIconsList(10, self.config, self.icons_path)
@@ -145,15 +145,15 @@ class RecentIconsListTest(TestCase):
         self.assertEqual(len(icons_list), 4)
         self.assertEqual(len(icons_list2), 2)
 
-    def _add_icons(self, controller, count, suffix_fname=u''):
+    def _add_icons(self, controller, count, suffix_fname=''):
         for n in range(count):
-            fname = u'icon_{}_{}'.format(n, suffix_fname)
+            fname = 'icon_{}_{}'.format(n, suffix_fname)
             icon_path = os.path.join(self.icons_path, fname)
             createFile(icon_path)
             controller.add(icon_path)
 
-    def _add_invalid_icons(self, controller, count, suffix_fname=u''):
+    def _add_invalid_icons(self, controller, count, suffix_fname=''):
         for n in range(count):
-            fname = u'icon_{}_{}'.format(n, suffix_fname)
+            fname = 'icon_{}_{}'.format(n, suffix_fname)
             icon_path = os.path.join(self.icons_path, fname)
             controller.add(icon_path)

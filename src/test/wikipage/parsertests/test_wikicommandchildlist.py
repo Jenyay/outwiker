@@ -16,7 +16,7 @@ class WikiChildListCommandTest (unittest.TestCase):
     def setUp(self):
         self.encoding = "utf8"
 
-        self.filesPath = u"../test/samplefiles/"
+        self.filesPath = "../test/samplefiles/"
         self.__createWiki()
 
         factory = ParserFactory()
@@ -25,20 +25,20 @@ class WikiChildListCommandTest (unittest.TestCase):
 
     def __createWiki (self):
         # Здесь будет создаваться вики
-        self.path = mkdtemp (prefix=u'Абырвалг абыр')
+        self.path = mkdtemp (prefix='Абырвалг абыр')
 
         self.wikiroot = WikiDocument.create (self.path)
 
         factory = WikiPageFactory()
-        factory.create (self.wikiroot, u"Страница 1", [])
+        factory.create (self.wikiroot, "Страница 1", [])
         time.sleep (0.1)
-        factory.create (self.wikiroot[u"Страница 1"], u"Страница 2", [])
+        factory.create (self.wikiroot["Страница 1"], "Страница 2", [])
         time.sleep (0.1)
-        factory.create (self.wikiroot[u"Страница 1"], u"Страница 4", [])
+        factory.create (self.wikiroot["Страница 1"], "Страница 4", [])
         time.sleep (0.1)
-        factory.create (self.wikiroot[u"Страница 1"], u"СТРАНИЦА 3", [])
+        factory.create (self.wikiroot["Страница 1"], "СТРАНИЦА 3", [])
 
-        self.testPage = self.wikiroot[u"Страница 1"]
+        self.testPage = self.wikiroot["Страница 1"]
 
 
     def tearDown(self):
@@ -49,7 +49,7 @@ class WikiChildListCommandTest (unittest.TestCase):
         command = ChildListCommand (self.parser)
         result = command.execute ("", "")
 
-        result_right = u"""<a href="Страница 2">Страница 2</a>
+        result_right = """<a href="Страница 2">Страница 2</a>
 <a href="СТРАНИЦА 3">СТРАНИЦА 3</a>
 <a href="Страница 4">Страница 4</a>"""
 
@@ -57,11 +57,11 @@ class WikiChildListCommandTest (unittest.TestCase):
 
 
     def test2 (self):
-        text = u"(:childlist:)"
+        text = "(:childlist:)"
 
         result = self.parser.toHtml (text)
 
-        result_right = u"""<a href="Страница 2">Страница 2</a>
+        result_right = """<a href="Страница 2">Страница 2</a>
 <a href="СТРАНИЦА 3">СТРАНИЦА 3</a>
 <a href="Страница 4">Страница 4</a>"""
 
@@ -69,12 +69,12 @@ class WikiChildListCommandTest (unittest.TestCase):
 
 
     def test3 (self):
-        text = u"(:childlist:)"
-        self.wikiroot[u"Страница 1/Страница 4"].order = 0
+        text = "(:childlist:)"
+        self.wikiroot["Страница 1/Страница 4"].order = 0
 
         result = self.parser.toHtml (text)
 
-        result_right = u"""<a href="Страница 4">Страница 4</a>
+        result_right = """<a href="Страница 4">Страница 4</a>
 <a href="Страница 2">Страница 2</a>
 <a href="СТРАНИЦА 3">СТРАНИЦА 3</a>"""
 
@@ -82,12 +82,12 @@ class WikiChildListCommandTest (unittest.TestCase):
 
 
     def test4 (self):
-        text = u"(:childlist sort=name:)"
-        self.wikiroot[u"Страница 1/Страница 4"].order = 0
+        text = "(:childlist sort=name:)"
+        self.wikiroot["Страница 1/Страница 4"].order = 0
 
         result = self.parser.toHtml (text)
 
-        result_right = u"""<a href="Страница 2">Страница 2</a>
+        result_right = """<a href="Страница 2">Страница 2</a>
 <a href="СТРАНИЦА 3">СТРАНИЦА 3</a>
 <a href="Страница 4">Страница 4</a>"""
 
@@ -95,12 +95,12 @@ class WikiChildListCommandTest (unittest.TestCase):
 
 
     def test5 (self):
-        text = u"(:childlist sort=descendname:)"
-        self.wikiroot[u"Страница 1/Страница 4"].order = 0
+        text = "(:childlist sort=descendname:)"
+        self.wikiroot["Страница 1/Страница 4"].order = 0
 
         result = self.parser.toHtml (text)
 
-        result_right = u"""<a href="Страница 4">Страница 4</a>
+        result_right = """<a href="Страница 4">Страница 4</a>
 <a href="СТРАНИЦА 3">СТРАНИЦА 3</a>
 <a href="Страница 2">Страница 2</a>"""
 
@@ -108,12 +108,12 @@ class WikiChildListCommandTest (unittest.TestCase):
 
 
     def test6 (self):
-        text = u"(:childlist sort=descendorder:)"
-        self.wikiroot[u"Страница 1/Страница 4"].order = 0
+        text = "(:childlist sort=descendorder:)"
+        self.wikiroot["Страница 1/Страница 4"].order = 0
 
         result = self.parser.toHtml (text)
 
-        result_right = u"""<a href="СТРАНИЦА 3">СТРАНИЦА 3</a>
+        result_right = """<a href="СТРАНИЦА 3">СТРАНИЦА 3</a>
 <a href="Страница 2">Страница 2</a>
 <a href="Страница 4">Страница 4</a>"""
 
@@ -121,10 +121,10 @@ class WikiChildListCommandTest (unittest.TestCase):
 
 
     def testSortCreation_01 (self):
-        text = u"(:childlist sort=creation:)"
+        text = "(:childlist sort=creation:)"
         result = self.parser.toHtml (text)
 
-        result_right = u"""<a href="Страница 2">Страница 2</a>
+        result_right = """<a href="Страница 2">Страница 2</a>
 <a href="Страница 4">Страница 4</a>
 <a href="СТРАНИЦА 3">СТРАНИЦА 3</a>"""
 
@@ -132,10 +132,10 @@ class WikiChildListCommandTest (unittest.TestCase):
 
 
     def testSortCreation_02 (self):
-        text = u"(:childlist sort=descendcreation:)"
+        text = "(:childlist sort=descendcreation:)"
         result = self.parser.toHtml (text)
 
-        result_right = u"""<a href="СТРАНИЦА 3">СТРАНИЦА 3</a>
+        result_right = """<a href="СТРАНИЦА 3">СТРАНИЦА 3</a>
 <a href="Страница 4">Страница 4</a>
 <a href="Страница 2">Страница 2</a>"""
 
@@ -143,17 +143,17 @@ class WikiChildListCommandTest (unittest.TestCase):
 
 
     def testSortEdit_01 (self):
-        text = u"(:childlist sort=edit:)"
+        text = "(:childlist sort=edit:)"
 
-        self.wikiroot[u"Страница 1/Страница 2"].content = u"111"
+        self.wikiroot["Страница 1/Страница 2"].content = "111"
         time.sleep (0.1)
-        self.wikiroot[u"Страница 1/СТРАНИЦА 3"].content = u"111"
+        self.wikiroot["Страница 1/СТРАНИЦА 3"].content = "111"
         time.sleep (0.1)
-        self.wikiroot[u"Страница 1/Страница 4"].content = u"111"
+        self.wikiroot["Страница 1/Страница 4"].content = "111"
 
         result = self.parser.toHtml (text)
 
-        result_right = u"""<a href="Страница 2">Страница 2</a>
+        result_right = """<a href="Страница 2">Страница 2</a>
 <a href="СТРАНИЦА 3">СТРАНИЦА 3</a>
 <a href="Страница 4">Страница 4</a>"""
 
@@ -161,17 +161,17 @@ class WikiChildListCommandTest (unittest.TestCase):
 
 
     def testSortEdit_02 (self):
-        text = u"(:childlist sort=descendedit:)"
+        text = "(:childlist sort=descendedit:)"
 
-        self.wikiroot[u"Страница 1/Страница 2"].content = u"111"
+        self.wikiroot["Страница 1/Страница 2"].content = "111"
         time.sleep (0.1)
-        self.wikiroot[u"Страница 1/СТРАНИЦА 3"].content = u"111"
+        self.wikiroot["Страница 1/СТРАНИЦА 3"].content = "111"
         time.sleep (0.1)
-        self.wikiroot[u"Страница 1/Страница 4"].content = u"111"
+        self.wikiroot["Страница 1/Страница 4"].content = "111"
 
         result = self.parser.toHtml (text)
 
-        result_right = u"""<a href="Страница 4">Страница 4</a>
+        result_right = """<a href="Страница 4">Страница 4</a>
 <a href="СТРАНИЦА 3">СТРАНИЦА 3</a>
 <a href="Страница 2">Страница 2</a>"""
 
@@ -179,17 +179,17 @@ class WikiChildListCommandTest (unittest.TestCase):
 
 
     def testSortEdit_03 (self):
-        text = u"(:childlist sort=edit:)"
+        text = "(:childlist sort=edit:)"
 
-        self.wikiroot[u"Страница 1/Страница 2"].content = u"111"
+        self.wikiroot["Страница 1/Страница 2"].content = "111"
         time.sleep (0.1)
-        self.wikiroot[u"Страница 1/Страница 4"].content = u"111"
+        self.wikiroot["Страница 1/Страница 4"].content = "111"
         time.sleep (0.1)
-        self.wikiroot[u"Страница 1/СТРАНИЦА 3"].content = u"111"
+        self.wikiroot["Страница 1/СТРАНИЦА 3"].content = "111"
 
         result = self.parser.toHtml (text)
 
-        result_right = u"""<a href="Страница 2">Страница 2</a>
+        result_right = """<a href="Страница 2">Страница 2</a>
 <a href="Страница 4">Страница 4</a>
 <a href="СТРАНИЦА 3">СТРАНИЦА 3</a>"""
 
