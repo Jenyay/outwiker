@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-import urllib
+import urllib.request, urllib.parse, urllib.error
 
 import wx
 import wx.lib.iewin
@@ -111,7 +111,7 @@ class HtmlRenderIE (HtmlRender):
         Почистить ссылку, убрать file:///
         """
         result = self.__removeFileProtokol (href)
-        result = urllib.unquote (result)
+        result = urllib.parse.unquote (result)
         result = result.replace ("/", u"\\")
 
         return result
@@ -185,7 +185,7 @@ class HtmlRenderIE (HtmlRender):
         button = ID_MOUSE_LEFT
         modifier = self.__getKeyCode()
 
-        params = self._getClickParams (self._decodeIDNA (href),
+        params = self._getClickParams (href,
                                        button,
                                        modifier,
                                        url,

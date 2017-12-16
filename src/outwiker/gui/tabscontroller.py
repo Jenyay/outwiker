@@ -247,7 +247,7 @@ class TabsController (object):
                 selectedTab = self._tabsCtrl.GetSelection()
                 self._application.wikiroot.params.set (self._tabSelectedSection, self._tabSelectedOption, str (selectedTab))
             except IOError as e:
-                MessageBox (_(u"Can't save file %s") % (unicode (e.filename)),
+                MessageBox (_(u"Can't save file %s") % (str (e.filename)),
                             _(u"Error"),
                             wx.ICON_ERROR | wx.OK)
 

@@ -121,8 +121,7 @@ class ToolBarsController(object):
         return toolbarname in self._toolbars
 
     def updatePanesInfo(self):
-        list(map(lambda toolbar: toolbar.toolbar.updatePaneInfo(),
-            list(self._toolbars.values())))
+        [toolbar.toolbar.updatePaneInfo() for toolbar in list(self._toolbars.values())]
 
     def layout(self):
         '''

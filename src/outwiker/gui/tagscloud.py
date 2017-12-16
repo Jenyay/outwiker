@@ -95,14 +95,14 @@ class TagsCloud (wx.ScrolledWindow):
         """
         Убрать все выделения с меток
         """
-        list(map (lambda label: label.mark(False), list(self.__labels.values())))
+        [label.mark(False) for label in list(self.__labels.values())]
 
 
     def isMarked (self, tag):
         return self.__labels[tag].isMarked
 
     def clear(self):
-        list(map(lambda label: label.Destroy(), list(self.__labels.values())))
+        [label.Destroy() for label in list(self.__labels.values())]
 
         self.__labels = {}
         self.__tags = []

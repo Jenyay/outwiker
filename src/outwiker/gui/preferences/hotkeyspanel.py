@@ -135,7 +135,7 @@ class HotKeysPanel(BasePrefPanel):
 
         stridCurrent = self.__getSelectedStrid()
 
-        for strid, hotkeyCurrent in self.__hotkeys.iteritems():
+        for strid, hotkeyCurrent in self.__hotkeys.items():
             if stridCurrent == strid or hotkey is None:
                 continue
             if hotkey == hotkeyCurrent:
@@ -200,6 +200,6 @@ class HotKeysPanel(BasePrefPanel):
     def Save(self):
         actionController = Application.actionController
 
-        for strid, hotkey in self.__hotkeys.iteritems():
+        for strid, hotkey in self.__hotkeys.items():
             if actionController.getHotKey(strid) != hotkey:
                 actionController.setHotKey(strid, hotkey, True)

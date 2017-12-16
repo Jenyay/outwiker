@@ -148,4 +148,4 @@ class HotkeyCtrl(wx.TextCtrl):
     def _keycode2str(self, keycode):
         if keycode in self.KEYMAP:
             return self.KEYMAP[keycode]
-        return unichr(keycode)
+        return chr(keycode)

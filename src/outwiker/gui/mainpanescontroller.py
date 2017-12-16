@@ -23,9 +23,9 @@ class MainPanesController(object):
 
     def createViewMenuItems(self):
         actionController = self.__application.actionController
-        list(map(lambda action: actionController.appendMenuCheckItem(
+        [actionController.appendMenuCheckItem(
             action.stringId,
-            self.__mainWindow.mainMenu.viewMenu), self.__actions))
+            self.__mainWindow.mainMenu.viewMenu) for action in self.__actions]
 
     def __onPaneClose(self, event):
         paneName = event.GetPane().name
@@ -76,22 +76,20 @@ class MainPanesController(object):
         """
         Закрыть все панели
         """
-        list(map(lambda action: action.getPanel().close(), self.__getAllActions()))
+        [action.getPanel().close() for action in self.__getAllActions()]
 
     def loadPanesSize(self):
         """
         Загрузить размеры всех панелей
         """
-        list(map(lambda action: action.getPanel().loadPaneSize(),
-            self.__getAllActions()))
+        [action.getPanel().loadPaneSize() for action in self.__getAllActions()]
         self.auiManager.Update()
 
     def savePanesParams(self):
         """
         Сохранить размеры всех панелей
         """
-        list(map(lambda action: action.getPanel().saveParams(),
-            self.__getAllActions()))
+        [action.getPanel().saveParams() for action in self.__getAllActions()]
 
     def updateViewMenu(self):
         """

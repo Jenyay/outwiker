@@ -90,7 +90,7 @@ class HtmlRender (wx.Panel):
             try:
                 link = u"{}{}".format (
                     protocol,
-                    unicode (url.decode ("idna")))
+                    str (url.decode ("idna")))
             except UnicodeError:
                 # Под IE ссылки не преобразуются в кодировку IDNA
                 pass
@@ -130,7 +130,7 @@ class HtmlRender (wx.Panel):
         """
         Execute onHoverLink event and set status text
         """
-        link_decoded = self._decodeIDNA (link)
+        link_decoded = link
 
         params = HoverLinkParams (link = link_decoded, text = text)
         Application.onHoverLink (page=self._currentPage, params = params)

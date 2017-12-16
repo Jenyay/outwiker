@@ -9,11 +9,10 @@ from outwiker.core.commands import getClipboardText
 from outwiker.core.attachment import Attachment
 
 
-class BaseLinkDialogController(object):
+class BaseLinkDialogController(object, metaclass=ABCMeta):
     """
     Базовый класс контроллера для управления классом LinkDialog
     """
-    __metaclass__ = ABCMeta
 
     def __init__(self, page, dialog, selectedString):
         """

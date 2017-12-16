@@ -75,11 +75,11 @@ class BasePageDialog (TestedDialog):
             return
 
         self.saveParams()
-        map(lambda controller: controller.saveParams(), self._controllers)
+        list(map(lambda controller: controller.saveParams(), self._controllers))
         event.Skip()
 
     def Destroy(self):
-        map(lambda controller: controller.clear(), self._controllers)
+        list(map(lambda controller: controller.clear(), self._controllers))
 
         self._application.onPageDialogDestroy(self._application.selectedPage,
                                               PageDialogDestroyParams(self))

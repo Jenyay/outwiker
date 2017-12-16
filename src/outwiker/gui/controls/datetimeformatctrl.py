@@ -66,9 +66,7 @@ class DateTimeFormatCtrl(wx.Panel):
 
     def _updateExample(self):
         try:
-            dateStr = unicode(datetime.now().strftime(
-                self.GetValue().encode(getOS().filesEncoding)),
-                getOS().filesEncoding)
+            dateStr = datetime.now().strftime(self.GetValue())
             self.exampleText.SetValue(dateStr)
         except ValueError:
             pass

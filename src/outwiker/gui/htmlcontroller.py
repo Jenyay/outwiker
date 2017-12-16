@@ -6,12 +6,10 @@ import os.path
 from outwiker.core.application import Application
 
 
-class UriIdentifier (object):
+class UriIdentifier (object, metaclass=ABCMeta):
     """
     Базовый класс для обработчиков ссылок HTML-движков
     """
-
-    __metaclass__ = ABCMeta
 
     def __init__ (self, currentpage, basepath):
         """
@@ -71,7 +69,7 @@ class UriIdentifier (object):
             uid = href[len (protocol):]
 
             try:
-                uid = unicode (uid.decode ("idna"))
+                uid = str (uid.decode ("idna"))
             except UnicodeError:
                 # Под IE ссылки не преобразуются в кодировку IDNA
                 pass

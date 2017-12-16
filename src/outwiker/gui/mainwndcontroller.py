@@ -214,7 +214,7 @@ class MainWndController (object):
                 self.updateRecentMenu()
             except IOError as e:
                 outwiker.core.commands.MessageBox (
-                    _(u"Can't add wiki to recent list.\nCan't save config.\n%s") % (unicode (e)),
+                    _(u"Can't add wiki to recent list.\nCan't save config.\n%s") % (str (e)),
                     _(u"Error"), wx.ICON_ERROR | wx.OK)
 
         self.enableGui()
@@ -273,8 +273,7 @@ class MainWndController (object):
             if self.mainMenu.FindItemById (toolId) is not None:
                 self.mainMenu.Enable (toolId, enabled)
 
-        list(map (lambda action: Application.actionController.enableTools (action.stringId, enabled),
-             self._disabledActions))
+        [Application.actionController.enableTools (action.stringId, enabled) for action in self._disabledActions]
 
     #
     ###################################################

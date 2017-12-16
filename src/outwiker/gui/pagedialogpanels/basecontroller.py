@@ -3,9 +3,7 @@
 from abc import ABCMeta
 
 
-class BasePageDialogController (object):
-    __metaclass__ = ABCMeta
-
+class BasePageDialogController (object, metaclass=ABCMeta):
     def __init__ (self, application):
         self._application = application
 

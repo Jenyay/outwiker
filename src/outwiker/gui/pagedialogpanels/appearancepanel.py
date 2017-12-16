@@ -70,7 +70,7 @@ class AppearanceController (BasePageDialogController):
         try:
             Style().setPageStyle (page, self.style)
         except EnvironmentError as e:
-            MessageBox (_(u"Can't set page style\n") + unicode (e),
+            MessageBox (_(u"Can't set page style\n") + str (e),
                         _(u"Error"),
                         wx.ICON_ERROR | wx.OK)
             return False
