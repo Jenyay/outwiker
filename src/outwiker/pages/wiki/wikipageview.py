@@ -3,7 +3,7 @@
 import wx
 import os
 import re
-from StringIO import StringIO
+from io import StringIO
 
 from outwiker.actions.polyactionsid import *
 from outwiker.core.commands import insertCurrentDate

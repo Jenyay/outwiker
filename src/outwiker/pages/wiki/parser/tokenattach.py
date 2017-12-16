@@ -22,8 +22,7 @@ class AttachImagesFactory (object):
         return AttachImagesToken (parser).getToken()
 
 
-class AttachToken (object):
-    __metaclass__ = ABCMeta
+class AttachToken (object, metaclass=ABCMeta):
     attachString = u"Attach:"
 
     def __init__ (self, parser):

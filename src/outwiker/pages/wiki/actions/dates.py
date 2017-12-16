@@ -8,9 +8,7 @@ from outwiker.gui.baseaction import BaseAction
 from outwiker.gui.dateformatdialog import DateFormatDialog
 
 
-class WikiDateBaseAction (BaseAction):
-    __metaclass__ = ABCMeta
-
+class WikiDateBaseAction (BaseAction, metaclass=ABCMeta):
     def __init__ (self, application):
         self._application = application
 

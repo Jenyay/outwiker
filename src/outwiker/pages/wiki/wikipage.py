@@ -81,11 +81,9 @@ class WikiPageFactory(PageFactory):
         """
         Зарегистрировать все действия, связанные с викистраницей
         """
-        list(map(lambda actionTuple: application.actionController.register(actionTuple[0](application),
-                                                                      actionTuple[1]),
-            wiki_actions))
+        [application.actionController.register(actionTuple[0](application),
+                                               actionTuple[1]) for actionTuple in wiki_actions]
 
     @staticmethod
     def removeActions(application):
-        list(map(lambda actionTuple: application.actionController.removeAction(actionTuple[0].stringId),
-            wiki_actions))
+        [application.actionController.removeAction(actionTuple[0].stringId) for actionTuple in wiki_actions]

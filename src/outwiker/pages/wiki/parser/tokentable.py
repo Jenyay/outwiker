@@ -20,13 +20,13 @@ class TableToken (object):
 
 
     def getToken (self):
-        tableCell = Regex (r"(?P<text>(.|(\\\n))*?)(\\\n\s*)*\|\|", re.UNICODE)
+        tableCell = Regex (r"(?P<text>(.|(\\\n))*?)(\\\n\s*)*\|\|")
         tableCell.setParseAction(self.__convertTableCell)
 
         tableRow = LineStart() + "||" + OneOrMore (tableCell) + Optional (LineEnd())
         tableRow.setParseAction(self.__convertTableRow)
 
-        table = LineStart() + Regex (r"\|\| *(?P<params>.+)?", re.UNICODE) + LineEnd() + OneOrMore (tableRow)
+        table = LineStart() + Regex (r"\|\| *(?P<params>.+)?") + LineEnd() + OneOrMore (tableRow)
         table = table.setParseAction(self.__convertTable)("table")
 
         return table

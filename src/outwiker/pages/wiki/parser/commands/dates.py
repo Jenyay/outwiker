@@ -8,13 +8,12 @@ from outwiker.core.system import getOS
 from outwiker.core.application import Application
 
 
-class CommandDateBase (Command):
+class CommandDateBase (Command, metaclass=ABCMeta):
     """
     Базовый класс для вставки дат
     Параметры:
         format - формат представления даты. Если этот параметр не задан, используется формат из настроек программы
     """
-    __metaclass__ = ABCMeta
 
     def __init__ (self, parser):
         """
@@ -45,10 +44,7 @@ class CommandDateBase (Command):
         else:
             formatStr = GeneralGuiConfig (Application.config).dateTimeFormat.value
 
-        result = unicode (
-            self._getDate().strftime (formatStr.encode (getOS().filesEncoding)),
-            getOS().filesEncoding
-        )
+        result = str (self._getDate().strftime (formatStr))
 
         return result
 

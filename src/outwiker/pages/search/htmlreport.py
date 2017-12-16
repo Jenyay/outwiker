@@ -70,8 +70,7 @@ class HtmlReport (object):
 
     def generateDate (self, page):
         config = GeneralGuiConfig (self.__application.config)
-        dateStr = unicode (page.datetime.strftime (config.dateTimeFormat.value),
-                           getOS().filesEncoding)
+        dateStr = page.datetime.strftime(config.dateTimeFormat.value)
         result = _(u"Last modified date: {0}").format (dateStr)
 
         return result

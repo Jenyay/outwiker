@@ -53,7 +53,7 @@ class CommandToken (object):
         if content is None:
             content = u""
 
-        argcount = command.execute.func_code.co_argcount
+        argcount = command.execute.__code__.co_argcount
 
         if argcount != 4:
             return command.execute (params, content)
