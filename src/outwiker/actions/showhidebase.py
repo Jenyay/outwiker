@@ -5,11 +5,10 @@ from abc import abstractmethod, ABCMeta
 from outwiker.gui.baseaction import BaseAction
 
 
-class ShowHideBaseAction (BaseAction):
+class ShowHideBaseAction (BaseAction, metaclass=ABCMeta):
     """
     Базовый класс для показа / скрытия панелей главного окна
     """
-    __metaclass__ = ABCMeta
 
     def __init__ (self, application):
         self._application = application
