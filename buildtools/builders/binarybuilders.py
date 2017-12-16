@@ -10,9 +10,8 @@ from fabric.api import lcd, local
 from buildtools.utilites import remove, print_info
 
 
-class BaseBinaryBuilder(object):
+class BaseBinaryBuilder(object, metaclass=ABCMeta):
     """Base class for any binary builders"""
-    __metaclass__ = ABCMeta
 
     def __init__(self, src_dir, dest_dir, temp_dir):
         self._src_dir = src_dir
@@ -85,9 +84,8 @@ class BaseBinaryBuilder(object):
             shutil.copy(fname, dest_dir)
 
 
-class BasePyInstallerBuilder(BaseBinaryBuilder):
+class BasePyInstallerBuilder(BaseBinaryBuilder, metaclass=ABCMeta):
     """Class for binary assimbling creation with PyParsing. """
-    __metaclass__ = ABCMeta
 
     def __init__(self, src_dir, dest_dir, temp_dir):
         super(BasePyInstallerBuilder, self).__init__(

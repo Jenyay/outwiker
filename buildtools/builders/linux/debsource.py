@@ -14,6 +14,7 @@ from buildtools.defines import (TIMEZONE,
                                 DEB_MAINTAINER_EMAIL,
                                 )
 from outwiker.utilites.textfile import writeTextFile
+from functools import reduce
 
 
 class BuilderBaseDebSource(BuilderBase):

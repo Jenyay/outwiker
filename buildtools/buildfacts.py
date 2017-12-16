@@ -3,7 +3,7 @@
 import os.path
 
 from buildtools.versions import getOutwikerVersionStr, getOutwikerVersion
-import defines
+from . import defines
 
 
 class BuildFacts(object):

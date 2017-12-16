@@ -64,7 +64,7 @@ class BuilderWindows(BuilderBase):
             os.path.join(self.build_dir,
                          WINDOWS_INSTALLER_FILENAME),
         ]
-        map(self._remove, toRemove)
+        list(map(self._remove, toRemove))
 
     def _build(self):
         self._copy_necessary_files()

@@ -2,7 +2,7 @@
 
 import os
 import shutil
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 
 from fabric.api import local, lcd
 
@@ -55,12 +55,12 @@ class BuilderPlugins(BuilderBase):
                     siteappinfo = downloadAppInfo(url)
                     if localAppInfo.currentVersion == siteappinfo.currentVersion:
                         skip_plugin = True
-                except (urllib2.URLError, urllib2.HTTPError):
+                except (urllib.error.URLError, urllib.error.HTTPError):
                     pass
 
             # Archive a single plug-in
             if not skip_plugin:
-                version = unicode(localAppInfo.currentVersion)
+                version = str(localAppInfo.currentVersion)
                 archive_name = u'{}-{}.zip'.format(plugin, version)
 
                 # Subpath to current plug-in archive
