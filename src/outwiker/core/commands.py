@@ -282,7 +282,7 @@ This is the first page. You can use a text formatting: '''bold''', ''italic'', {
             Application.wikiroot.selectedPage = firstPage
         except (IOError, OSError) as e:
             # TODO: проверить под Windows
-            MessageBox(_(u"Can't create wiki\n") + unicode(e.filename.encode(getOS().filesEncoding), "utf8"),
+            MessageBox(_(u"Can't create wiki\n") + str(e.filename),
                        _(u"Error"), wx.OK | wx.ICON_ERROR)
 
     dlg.Destroy()
@@ -511,8 +511,7 @@ def insertCurrentDate(parent, editor):
                           _(u"Date format"),
                           initial) as dlg:
         if dlg.ShowModal() == wx.ID_OK:
-            dateStr = unicode(datetime.now().strftime(dlg.Value.encode(getOS().filesEncoding)),
-                              getOS().filesEncoding)
+            dateStr = datetime.now().strftime(dlg.Value)
             editor.replaceText(dateStr)
             config.recentDateTimeFormat.value = dlg.Value
 
@@ -536,7 +535,7 @@ def dictToStr(paramsDict):
     """
     items = []
     for name, value in list(paramsDict.items()):
-        valueStr = unicode(value)
+        valueStr = str(value)
 
         hasSingleQuote = u"'" in valueStr
         hasDoubleQuote = u'"' in valueStr
@@ -576,14 +575,11 @@ def registerActions(application):
     from outwiker.gui.actionslist import actionsList, polyactionsList
 
     # Register the normal actions
-    list(map(lambda item: actionController.register(item[0](application),
-                                               item[1]),
-        actionsList))
+    [actionController.register(item[0](application), item[1]) for item in actionsList]
 
     # Register the polyactions
-    list(map(lambda item: actionController.register(PolyAction(application,
-                                                          item[0],
-                                                          item[1],
-                                                          item[2]),
-                                               item[3]),
-        polyactionsList))
+    [actionController.register(PolyAction(application,
+                                          item[0],
+                                          item[1],
+                                          item[2]),
+                                          item[3]) for item in polyactionsList]

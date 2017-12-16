@@ -22,11 +22,10 @@ class PageTitleWarning(BaseException):
         BaseException.__init__(self, message)
 
 
-class PageTitleTester(object):
+class PageTitleTester(object, metaclass=ABCMeta):
     """
     Класс для проверки правильности заголовка страницы
     """
-    __metaclass__ = ABCMeta
 
     def test(self, title):
         """

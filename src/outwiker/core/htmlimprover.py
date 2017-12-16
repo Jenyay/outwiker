@@ -2,14 +2,13 @@
 
 from abc import ABCMeta, abstractmethod
 import re
-from StringIO import StringIO
+from io import StringIO
 
 
-class HtmlImprover(object):
+class HtmlImprover(object, metaclass=ABCMeta):
     """
     Class make HTML code more readable and append line breaks.
     """
-    __metaclass__ = ABCMeta
 
     def __init__(self):
         specialTags = [u'pre', u'script']

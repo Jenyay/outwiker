@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-from __future__ import print_function
+
 import sys
 
 from outwiker.core.application import Application
@@ -69,7 +69,7 @@ class Starter(object):
 
         # Вывод информации о версии
         if self._commandLine.version:
-            print(ur"""OutWiker {ver}""".format(ver=str(getCurrentVersion())))
+            print(r"""OutWiker {ver}""".format(ver=str(getCurrentVersion())))
             raise StarterExit
 
         Application.sharedData[APP_DATA_DISABLE_MINIMIZING] = self._commandLine.disableMinimizing

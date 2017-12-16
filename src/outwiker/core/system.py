@@ -45,7 +45,7 @@ class System(object):
         """
         confDir = op.join(self.settingsDir, newConfDirName)
 
-        homeDir = unicode(op.expanduser("~"), getOS().filesEncoding)
+        homeDir = str(op.expanduser("~"))
         oldConfDir = op.join(homeDir, oldConfDirName)
 
         if op.exists(oldConfDir) and not op.exists(confDir):
@@ -100,8 +100,8 @@ class Windows(System):
         Возвращает папку, внутри которой хранятся настройки всех программ,
         и где будет создаваться папка для хранения настроек OutWiker
         """
-        homeDir = unicode(op.expanduser("~"), self.filesEncoding)
-        appdata = (unicode(os.environ["APPDATA"], self.filesEncoding)
+        homeDir = str(op.expanduser("~"), self.filesEncoding)
+        appdata = (str(os.environ["APPDATA"], self.filesEncoding)
                    if "APPDATA" in os.environ
                    else homeDir)
         return appdata
@@ -136,8 +136,8 @@ class Unix(System):
         и где будет создаваться папка для хранения настроек OutWiker.
         ($XDG_CONFIG_HOME/outwiker или .config/outwiker)
         """
-        homeDir = unicode(op.expanduser("~"), getOS().filesEncoding)
-        settingsDir = os.environ.get(u"XDG_CONFIG_HOME", u".config")
+        homeDir = str(op.expanduser("~"))
+        settingsDir = os.environ.get("XDG_CONFIG_HOME", ".config")
 
         if not op.isabs(settingsDir):
             settingsDir = op.join(homeDir, settingsDir)
@@ -211,7 +211,7 @@ def getOS():
 
 
 def getCurrentDir():
-    return unicode(op.dirname(sys.argv[0]), getOS().filesEncoding)
+    return str(op.dirname(sys.argv[0]))
 
 
 def getConfigPath(dirname=DEFAULT_CONFIG_DIR, fname=DEFAULT_CONFIG_NAME):

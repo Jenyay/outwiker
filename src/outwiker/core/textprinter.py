@@ -34,7 +34,7 @@ class TextPrinter(object):
 
         self.paperId = self.config.paperId.value
 
-        self.htmltemplate = ur"""<HTML>
+        self.htmltemplate = r"""<HTML>
 <HEAD>
     <META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>
 </HEAD>

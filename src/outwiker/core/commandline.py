@@ -24,7 +24,7 @@ class CommandLine(object):
     Класс для хранения разобранных параметров командной строки
     """
     def __init__(self):
-        self._description = ur"""OutWiker {ver}. Crossplatform program to keep your notes in a tree.""".format(ver=str(getCurrentVersion()))
+        self._description = r"""OutWiker {ver}. Crossplatform program to keep your notes in a tree.""".format(ver=str(getCurrentVersion()))
 
         self._parser = self._createParser()
         self._namespace = None
@@ -90,7 +90,7 @@ class CommandLine(object):
         result = None
 
         if self._namespace.wikipath is not None:
-            result = unicode(self._namespace.wikipath, getOS().filesEncoding)
+            result = str(self._namespace.wikipath)
             if len(result.split()) == 0:
                 result = None
 
@@ -101,7 +101,7 @@ class CommandLine(object):
         result = None
 
         if self._namespace.page is not None:
-            result = unicode(self._namespace.page, getOS().filesEncoding)
+            result = str(self._namespace.page)
             if len(result.split()) == 0:
                 result = None
 

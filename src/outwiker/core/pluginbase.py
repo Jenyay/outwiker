@@ -8,11 +8,10 @@ from outwiker.core.i18n import getLanguageFromConfig, loadLanguage
 from outwiker.core.system import getOS
 
 
-class Plugin (object):
+class Plugin (object, metaclass=ABCMeta):
     """
     Базовый класс для плагинов
     """
-    __metaclass__ = ABCMeta
 
     def __init__(self, application):
         self._application = application
@@ -20,9 +19,6 @@ class Plugin (object):
         self._pluginPath = os.path.dirname(os.path.abspath(
             sys.modules[self.__class__.__module__].__file__)
         )
-
-        # Added in OutWiker 2.0.0.801
-        self._pluginPath = unicode(self._pluginPath, getOS().filesEncoding)
 
         # Load plugin's information
         self._version = u'0.0'

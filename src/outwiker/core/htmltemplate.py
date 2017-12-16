@@ -14,7 +14,7 @@ class MyTemplate (Template):
     Реализация регулярного выражения частично взята
     из http://stackoverflow.com/a/12769116
     """
-    pattern = ur"""
+    pattern = r"""
       %(delim)s(?:
       (?P<escaped>^$) |          # Отключим замену $$
       (?P<named>%(id)s) |        # delimiter and a Python identifier

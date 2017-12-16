@@ -139,9 +139,7 @@ class PluginsLoader (object):
                 # both arguments to Unicode - interpreting them as
                 # being unequal
 
-                syspath = [unicode(item, getOS().filesEncoding)
-                           if type(item) != unicode else item
-                           for item in sys.path]
+                syspath = [item for item in sys.path]
 
                 if fullpath not in syspath:
                     sys.path.insert(0, fullpath)
@@ -153,7 +151,7 @@ class PluginsLoader (object):
         """
         Уничтожить все загруженные плагины
         """
-        list(map(lambda plugin: plugin.destroy(), list(self.__plugins.values())))
+        [plugin.destroy() for plugin in list(self.__plugins.values())]
         self.__plugins = {}
 
     def __loadPluginInfo(self, plugin_fname):
@@ -358,4 +356,4 @@ class PluginsLoader (object):
         return self.__plugins[pluginname]
 
     def __iter__(self):
-        return self.__plugins.itervalues()
+        return iter(self.__plugins.values())

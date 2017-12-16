@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from abc import ABCMeta, abstractmethod
-import ConfigParser
+import configparser
 import datetime
 import shutil
 
@@ -20,11 +20,11 @@ class Config(object):
         """
         self.readonly = readonly
         self.fname = fname
-        self.__config = ConfigParser.ConfigParser()
+        self.__config = configparser.ConfigParser()
 
         try:
             self.__config.read(self.fname)
-        except ConfigParser.Error:
+        except configparser.Error:
             shutil.copyfile(self.fname, self.fname + ".bak")
             with open(self.fname, "w") as fp:
                 fp.write(self.getDefaultContent())
@@ -47,13 +47,10 @@ class Config(object):
         if self.readonly:
             return False
 
-        section_encoded = section.encode("utf8")
-        if not self.__config.has_section(section_encoded):
-            self.__config.add_section(section_encoded)
+        if not self.__config.has_section(section):
+            self.__config.add_section(section)
 
-        self.__config.set(section_encoded,
-                          param.encode("utf8"),
-                          unicode(value).encode("utf8"))
+        self.__config.set(section, param, str(value))
 
         return self.save()
 
@@ -66,7 +63,7 @@ class Config(object):
         if self.readonly:
             return False
 
-        with open(self.fname, "wb") as fp:
+        with open(self.fname, "w") as fp:
             self.__config.write(fp)
 
         return True
@@ -79,8 +76,7 @@ class Config(object):
         Возващает строку с прочитанным значением
         Может бросать исключения
         """
-        val = self.__config.get(section.encode("utf8"), param.encode("utf8"))
-        return unicode(val, "utf8", "replace")
+        return self.__config.get(section, param)
 
     def getint(self, section, param):
         """
@@ -109,8 +105,7 @@ class Config(object):
         Удалить текцию из файла конфига
         section - имя удаляемой секции
         """
-        section_encoded = section.encode("utf8")
-        result1 = self.__config.remove_section(section_encoded)
+        result1 = self.__config.remove_section(section)
         result2 = self.save()
 
         return result1 and result2
@@ -121,14 +116,8 @@ class Config(object):
         section - имя секции, которой принадлежит опция
         option - имя удаляемой опции
         """
-        section_encoded = section.encode("utf8")
-        option_encoded = option.encode("utf8")
-
-        result1 = self.__config.remove_option(section_encoded,
-                                              option_encoded)
-
+        result1 = self.__config.remove_option(section, option)
         result2 = self.save()
-
         return result1 and result2
 
     def has_section(self, section):
@@ -136,15 +125,13 @@ class Config(object):
         Возвращает True, если векция с именем section существует
         и False в противном случае
         """
-        section_encoded = section.encode("utf8")
-        return self.__config.has_section(section_encoded)
+        return self.__config.has_section(section)
 
 
-class BaseOption(object):
+class BaseOption(object, metaclass=ABCMeta):
     """
     Базовый класс для работы с отдельными записями конфига
     """
-    __metaclass__ = ABCMeta
 
     def __init__(self, config, section, param, defaultValue):
         """
@@ -359,7 +346,7 @@ class StringListSection(object):
                 subpath = self._config.get(self._section, option)
                 result.append(subpath)
                 index += 1
-        except ConfigParser.NoOptionError:
+        except configparser.NoOptionError:
             pass
 
         return result
