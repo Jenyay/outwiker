@@ -63,8 +63,7 @@ else:
 
         def _initlocale(self, domain):
             from .i18n import set_
-            langdir = unicode(os.path.join(os.path.dirname(__file__),
-                                           "locale"), getOS().filesEncoding)
+            langdir = str(os.path.join(os.path.dirname(__file__), "locale"))
             global _
 
             try:

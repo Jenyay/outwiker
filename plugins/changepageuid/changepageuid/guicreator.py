@@ -23,9 +23,9 @@ class GuiCreator(object):
 
     def initialize(self):
         if self._application.mainWindow is not None:
-            map(lambda action: self._application.actionController.register(
+            list(map(lambda action: self._application.actionController.register(
                 action(self._application, self._controller), None),
-                self._actions)
+                self._actions))
 
     def createTools(self):
         mainWindow = self._application.mainWindow
@@ -36,17 +36,17 @@ class GuiCreator(object):
         # Меню, куда будут добавляться команды
         menu = mainWindow.mainMenu.toolsMenu
 
-        map(lambda action: self._application.actionController.appendMenuItem(
-            action.stringId, menu), self._actions)
+        list(map(lambda action: self._application.actionController.appendMenuItem(
+            action.stringId, menu), self._actions))
 
     def removeTools(self):
         actionController = self._application.actionController
         if self._application.mainWindow is not None:
-            map(lambda action: actionController.removeMenuItem(action.stringId),
-                self._actions)
+            list(map(lambda action: actionController.removeMenuItem(action.stringId),
+                self._actions))
 
     def destroy(self):
         actionController = self._application.actionController
         if self._application.mainWindow is not None:
-            map(lambda action: actionController.removeAction(action.stringId),
-                self._actions)
+            list(map(lambda action: actionController.removeAction(action.stringId),
+                self._actions))
