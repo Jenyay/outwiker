@@ -70,7 +70,7 @@ class WikiHashCalculator (object):
         result = content.getvalue()
         content.close()
 
-        return result
+        return result.encode('utf-8')
 
 
     def __getStyleContent (self, page):

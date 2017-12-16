@@ -3,7 +3,7 @@
 	<name>TestEmpty</name>
     <requirements>
 		<packages>
-			<core>1.0</core>
+			<core>1.0, 2.0</core>
 			<actions>1.0</actions>
 			<gui>1.0, 2.0</gui>
 			<pages>1.0, 2.0</pages>
