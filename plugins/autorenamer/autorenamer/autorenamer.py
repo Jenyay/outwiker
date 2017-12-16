@@ -9,7 +9,7 @@ from .preferencesPanel import PreferencesPanel
 from .commands import AutoRenameTagCommand
 from .renamer import Renamer
 
-from i18n import get_
+from .i18n import get_
 
 class AutoRenamer (object):
 	def __init__ (self, plugin, application):
