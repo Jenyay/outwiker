@@ -114,7 +114,7 @@ class CustomHeadsCommand (Command):
         Запустить команду на выполнение.
         Метод возвращает текст, который будет вставлен на место команды в вики-нотации
         """
-        map (lambda head: self.parser.appendToHead (head.strip()),
-             content.split ("\n"))
+        list(map (lambda head: self.parser.appendToHead (head.strip()),
+             content.split ("\n")))
 
         return u""

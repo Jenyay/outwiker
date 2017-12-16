@@ -7,38 +7,37 @@ from outwiker.core.commands import getCurrentVersion
 from outwiker.core.version import Version, StatusSet
 from outwiker.core.system import getOS
 
-__version__ = u"1.0.5"
+__version__ = u"2.0.0"
 
-
-if getCurrentVersion() < Version (1, 8, 0, 729, status=StatusSet.DEV):
-    print ("HtmlHeads plugin. OutWiker version requirement: 1.8.0.729")
+if getCurrentVersion() < Version(2, 1, 0, 833, status=StatusSet.DEV):
+    print("HtmlHeads plugin. OutWiker version requirement: 2.1.0.833")
 else:
     from .i18n import set_
     from .controller import Controller
 
-    class PluginHtmlHeads (Plugin):
+
+    class PluginHtmlHeads(Plugin):
         """
         This is a main class for HtmlHeads plugin
         """
-        def __init__ (self, application):
+
+        def __init__(self, application):
             """
             application - экземпляр класса core.application.ApplicationParams
             """
-            Plugin.__init__ (self, application)
+            Plugin.__init__(self, application)
             self.__controller = Controller(self, application)
-
 
         ###################################################
         # Свойства и методы, которые необходимо определить
         ###################################################
 
         @property
-        def name (self):
+        def name(self):
             return u"HtmlHeads"
 
-
         @property
-        def description (self):
+        def description(self):
             description = _(u'''Plugin adds wiki-commands (:title:), (:description:), (:keywords:) and (:htmlhead:)''')
 
             usage = _(u'''<b>Usage:</b>
@@ -58,18 +57,15 @@ else:
             return u"""{description}
 
 {usage}
-""".format (description=description, usage=usage)
-
+""".format(description=description, usage=usage)
 
         @property
-        def url (self):
+        def url(self):
             return _(u"http://jenyay.net/Outwiker/HtmlHeadsEn")
 
-
         @property
-        def version (self):
+        def version(self):
             return __version__
-
 
         def initialize(self):
             if self._application.mainWindow is not None:
@@ -77,23 +73,21 @@ else:
 
             self.__controller.initialize()
 
-
-        def _initlocale (self, domain):
-            langdir = unicode (os.path.join (os.path.dirname (__file__), "locale"), getOS().filesEncoding)
+        def _initlocale(self, domain):
+            langdir = str(os.path.join(os.path.dirname(__file__), "locale"))
             global _
 
             try:
-                _ = self._init_i18n (domain, langdir)
-            except BaseException, e:
-                print e
+                _ = self._init_i18n(domain, langdir)
+            except BaseException as e:
+                print (e)
 
             set_(_)
 
-
-        def destroy (self):
+        def destroy(self):
             """
             Уничтожение (выгрузка) плагина. Здесь плагин должен отписаться от всех событий
             """
             self.__controller.destroy()
 
-        #############################################
+            #############################################

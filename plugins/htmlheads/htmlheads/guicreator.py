@@ -31,8 +31,8 @@ class GuiCreator (object):
 
     def initialize (self):
         if self._application.mainWindow is not None:
-            map (lambda action: self._application.actionController.register (
-                action (self._application, self._controller), None), self._actions)
+            list(map (lambda action: self._application.actionController.register (
+                action (self._application, self._controller), None), self._actions))
 
 
     def createTools (self):
@@ -43,8 +43,8 @@ class GuiCreator (object):
 
         headsMenu = wx.Menu()
 
-        map (lambda action: self._application.actionController.appendMenuItem (
-            action.stringId, headsMenu), self._actions)
+        list(map (lambda action: self._application.actionController.appendMenuItem (
+            action.stringId, headsMenu), self._actions))
 
         self._submenuItem = self._getParentMenu().AppendSubMenu (headsMenu, _(u"HTML Headers"))
 
@@ -54,8 +54,8 @@ class GuiCreator (object):
 
     def removeTools (self):
         if self._application.mainWindow is not None:
-            map (lambda action: self._application.actionController.removeMenuItem (action.stringId),
-                 self._actions)
+            list(map (lambda action: self._application.actionController.removeMenuItem (action.stringId),
+                 self._actions))
 
             self._getParentMenu().DestroyItem (self._submenuItem)
             self._submenuItem = None
@@ -65,8 +65,8 @@ class GuiCreator (object):
 
     def destroy (self):
         if self._application.mainWindow is not None:
-            map (lambda action: self._application.actionController.removeAction (action.stringId),
-                 self._actions)
+            list(map (lambda action: self._application.actionController.removeAction (action.stringId),
+                 self._actions))
 
 
     def _onTabChanged (self, event):
@@ -80,8 +80,8 @@ class GuiCreator (object):
         pageView = self._getPageView()
         enabled = (pageView.selectedPageIndex == pageView.CODE_PAGE_INDEX)
 
-        map (lambda action: self._application.actionController.enableTools (action.stringId, enabled),
-             self._actions)
+        list(map (lambda action: self._application.actionController.enableTools (action.stringId, enabled),
+             self._actions))
 
 
     def _getParentMenu (self):
