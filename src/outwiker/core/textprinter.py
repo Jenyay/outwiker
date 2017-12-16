@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-import cgi
+import html
 
 import wx
 import wx.html
@@ -48,7 +48,7 @@ class TextPrinter(object):
         Подготовить текст с учетом того, что печататься будет HTML
         """
         # Заменим спецсимволы HTML и установим переводы строк
-        newtext = cgi.escape(text, True)
+        newtext = html.escape(text, True)
         newtext = newtext.replace("\n\n", "<P>")
         newtext = newtext.replace("\n", "<BR>")
 

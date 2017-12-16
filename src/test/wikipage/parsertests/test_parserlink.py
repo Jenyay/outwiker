@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 import os
-import cgi
+import html
 import unittest
 from tempfile import mkdtemp
 
@@ -83,7 +83,7 @@ class ParserLinkTest (unittest.TestCase):
 
     def testLink2 (self):
         text = "бла-бла-бла \n[[%s]] бла-бла-бла\nбла-бла-бла" % (self.url2)
-        result = 'бла-бла-бла \n<a href="%s">%s</a> бла-бла-бла\nбла-бла-бла' % (self.url2, cgi.escape (self.url2))
+        result = 'бла-бла-бла \n<a href="%s">%s</a> бла-бла-бла\nбла-бла-бла' % (self.url2, html.escape (self.url2))
 
         self.assertEqual (self.parser.toHtml (text), result)
 

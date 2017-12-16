@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-import cgi
+import html
 
 from outwiker.libs.pyparsing import QuotedString
 
@@ -30,4 +30,4 @@ class PreFormatToken (object):
 
 
     def __convertPreformat (self, s, l, t):
-        return u"<pre>" + cgi.escape (t[0], True) + u"</pre>"
+        return u"<pre>" + html.escape (t[0], True) + u"</pre>"

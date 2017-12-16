@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-import cgi
+import html
 
 from outwiker.libs.pyparsing import QuotedString
 
@@ -50,7 +50,7 @@ class LinkToken (object):
         comment, url = text.rsplit ("->", 1)
         realurl = self.__prepareUrl (url)
 
-        return self.__getUrlTag (realurl, cgi.escape (comment))
+        return self.__getUrlTag (realurl, html.escape (comment))
 
 
     def __convertLinkLine (self, text):
@@ -65,7 +65,7 @@ class LinkToken (object):
             url, comment = text.rsplit ("|", 1)
         realurl = self.__prepareUrl (url)
 
-        return self.__getUrlTag (realurl, cgi.escape (comment))
+        return self.__getUrlTag (realurl, html.escape (comment))
 
 
     def __prepareUrl (self, url):
@@ -104,4 +104,4 @@ class LinkToken (object):
             url = text.strip()
             comment = text.strip()
 
-        return '<a href="%s">%s</a>' % (url, cgi.escape (comment))
+        return '<a href="%s">%s</a>' % (url, html.escape (comment))

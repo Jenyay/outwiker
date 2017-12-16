@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import codecs
-import cgi
+import html
 
 import wx
 import wx.lib.newevent
@@ -300,7 +300,7 @@ class TextEditorBase(wx.Panel):
 
     def escapeHtml(self):
         selText = self.textCtrl.GetSelectedText()
-        text = cgi.escape(selText, quote=False)
+        text = html.escape(selText, quote=False)
         self.textCtrl.ReplaceSelection(text)
 
     def SetReadOnly(self, readonly):
