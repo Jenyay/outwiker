@@ -9,11 +9,11 @@ from outwiker.core.version import Version, StatusSet
 from outwiker.core.system import getOS
 
 
-__version__ = u'1.1.1'
+__version__ = u'2.0.1'
 
 
-if getCurrentVersion() < Version (1, 9, 0, 777, status=StatusSet.DEV):
-    logging.warning ("PageTypeColor plugin. OutWiker version requirement: 1.9.0.777")
+if getCurrentVersion() < Version(2, 1, 0, 833, status=StatusSet.DEV):
+    logging.warning ("PageTypeColor plugin. OutWiker version requirement: 2.1.0.833")
 else:
     from .i18n import set_
     from .controller import Controller
@@ -70,13 +70,12 @@ else:
         #############################################
 
         def _initlocale (self, domain):
-            langdir = unicode (os.path.join (os.path.dirname (__file__),
-                                             "locale"), getOS().filesEncoding)
+            langdir = str (os.path.join (os.path.dirname (__file__), "locale"))
             global _
 
             try:
                 _ = self._init_i18n (domain, langdir)
-            except BaseException, e:
-                print e
+            except BaseException as e:
+                print (e)
 
             set_(_)
