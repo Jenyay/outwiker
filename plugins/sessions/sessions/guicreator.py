@@ -42,8 +42,8 @@ class GuiCreator (object):
 
     def initialize (self):
         if self._application.mainWindow is not None:
-            map (lambda action: self._application.actionController.register (
-                action (self._application, self), None), self._actions)
+            list(map (lambda action: self._application.actionController.register (
+                action (self._application, self), None), self._actions))
 
         self.createTools()
 
@@ -54,8 +54,8 @@ class GuiCreator (object):
         if mainWindow is None:
             return
 
-        map (lambda action: self._application.actionController.appendMenuItem (
-            action.stringId, self._menu), self._actions)
+        list(map (lambda action: self._application.actionController.appendMenuItem (
+            action.stringId, self._menu), self._actions))
 
         self._menu.AppendSeparator()
         self.updateMenu()
@@ -65,8 +65,8 @@ class GuiCreator (object):
 
     def removeTools (self):
         if self._application.mainWindow is not None:
-            map (lambda action: self._application.actionController.removeMenuItem (action.stringId),
-                 self._actions)
+            list(map (lambda action: self._application.actionController.removeMenuItem (action.stringId),
+                 self._actions))
 
             self._getParentMenu().DestroyItem (self._menuItem)
             self._menuItem = None
@@ -85,8 +85,8 @@ class GuiCreator (object):
         self.removeTools()
 
         if self._application.mainWindow is not None:
-            map (lambda action: self._application.actionController.removeAction (action.stringId),
-                 self._actions)
+            list(map (lambda action: self._application.actionController.removeAction (action.stringId),
+                 self._actions))
 
 
     def updateMenu (self):
@@ -99,7 +99,7 @@ class GuiCreator (object):
 
     def _addSessionsMenuItems (self):
         sessions = SessionStorage (self._application.config).getSessions()
-        for sessionName in sorted (sessions.keys(), key=unicode.lower):
+        for sessionName in sorted (list(sessions.keys()), key=lambda x: x.lower()):
             menuId = wx.NewId()
             self._menu.Append (menuId, sessionName)
             self._application.mainWindow.Bind (wx.EVT_MENU,
