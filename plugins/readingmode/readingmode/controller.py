@@ -6,7 +6,7 @@ from outwiker.core.system import getOS
 from .i18n import get_
 
 # Импортируем action
-from actions import ReadingModeAction
+from .actions import ReadingModeAction
 
 
 class Controller (object):
@@ -48,7 +48,7 @@ class Controller (object):
         """
         Получить полный путь до картинки.
         """
-        imagedir = unicode (os.path.join (os.path.dirname (__file__), "images"), getOS().filesEncoding)
+        imagedir = str (os.path.join (os.path.dirname (__file__), "images"))
         fname = os.path.join (imagedir, imageName)
         return fname
 

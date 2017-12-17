@@ -3,16 +3,16 @@
 	<name>ReadingMode</name>
 	<updates>http://jenyay.net/uploads/Outwiker/ReadingMode/plugin.xml</updates>
     <requirements>
-        <outwiker>1.8.0</outwiker>
+        <outwiker>2.1.0.833 dev</outwiker>
         <os>Windows, Linux</os>
-		<packages>
-			<core>1.0</core>
-			<actions>1.0</actions>
-			<gui>1.0,2.0</gui>
-			<pages>1.0, 2.0</pages>
-			<utilites>1.0</utilites>
-			<libs>1.0</libs>
-		</packages>
+        <packages>
+            <core>2.0</core>
+            <actions>1.1</actions>
+            <gui>2.0</gui>
+            <pages>2.0</pages>
+            <utilites>1.0</utilites>
+            <libs>1.0</libs>
+        </packages>
     </requirements>
 
 	<data lang="en">
@@ -23,6 +23,11 @@
 			<name>Roman Sobolev</name>
 		</author>
 		<changelog>
+			<version number="2.0" date="December 17, 2017">
+                <download os="all">http://jenyay.net/uploads/Outwiker/ReadingMode/readingmode-2.0.zip</download>
+                <change>Python 3.6 migration.</change>
+            </version>
+
 			<version number="1.0.5" date="December 15, 2017">
                 <download os="all">http://jenyay.net/uploads/Outwiker/ReadingMode/readingmode-1.0.5.zip</download>
 				<change>GUI 2.0 API was added.</change>
@@ -64,6 +69,11 @@
 		</author>
 
 		<changelog>
+            <version number="2.0" date="17.12.2017">
+                <download os="all">http://jenyay.net/uploads/Outwiker/ReadingMode/readingmode-2.0.zip</download>
+                <change>Портирован на Python 3.6</change>
+            </version>
+
 			<version number="1.0.5" date="15.12.2017">
                 <download os="all">http://jenyay.net/uploads/Outwiker/ReadingMode/readingmode-1.0.5.zip</download>
 				<change>Добавлено GUI 2.0 API.</change>
