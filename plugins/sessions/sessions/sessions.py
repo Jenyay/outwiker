@@ -5,7 +5,6 @@ import os.path
 from outwiker.core.pluginbase import Plugin
 from outwiker.core.commands import getCurrentVersion
 from outwiker.core.version import Version, StatusSet
-from outwiker.core.system import getOS
 
 __version__ = u"2.0.1"
 
