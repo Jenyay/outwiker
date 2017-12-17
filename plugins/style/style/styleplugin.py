@@ -3,18 +3,16 @@
 import os.path
 
 from outwiker.core.pluginbase import Plugin
-from outwiker.core.system import getOS
 from outwiker.core.commands import getCurrentVersion
 from outwiker.core.version import Version, StatusSet
 
 from .stylecommand import StyleCommand
 
-__version__ = u"1.2.3"
+__version__ = u"2.0"
 
 
-# Для работы этого плагина требуется OutWiker 1.6.0.632
-if getCurrentVersion() < Version (1, 6, 0, 632, status=StatusSet.DEV):
-    print ("Style plugin. OutWiker version requirement: 1.6.0.632")
+if getCurrentVersion() < Version(2, 1, 0, 833, status=StatusSet.DEV):
+    print ("Style plugin. OutWiker version requirement: 2.1.0.833")
 else:
     class PluginStyle (Plugin):
         """
@@ -68,13 +66,13 @@ body {background-color: #EEE;}
 
 
         def _initlocale (self, domain):
-            langdir = unicode (os.path.join (os.path.dirname (__file__), "locale"), getOS().filesEncoding)
+            langdir = str(os.path.join (os.path.dirname (__file__), "locale"))
             global _
 
             try:
                 _ = self._init_i18n (domain, langdir)
-            except BaseException, e:
-                print e
+            except BaseException as e:
+                print (e)
 
 
         def __onPageViewCreate(self, page):
