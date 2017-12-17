@@ -2,7 +2,7 @@
 
 from .i18n import get_
 
-from paragraphimprover import ParagraphHtmlImprover
+from .paragraphimprover import ParagraphHtmlImprover
 
 
 class Controller (object):
