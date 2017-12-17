@@ -15,7 +15,7 @@ class Record (object):
 
 
     def getHeaders (self):
-        return self._data.keys()
+        return list(self._data.keys())
 
 
     def __getitem__ (self, header):
