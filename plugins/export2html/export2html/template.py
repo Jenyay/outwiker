@@ -12,11 +12,11 @@ def loadTemplate (fname):
     """
     templatedir = u"templates"
 
-    currentdir = unicode ((os.path.dirname (__file__)), getOS().filesEncoding)
+    currentdir = str ((os.path.dirname (__file__)))
 
     templateFileName = os.path.join (currentdir, templatedir, fname)
 
     with open (templateFileName) as fp:
-        template = unicode (fp.read(), "utf8")
+        template = fp.read()
 
     return Template (template)

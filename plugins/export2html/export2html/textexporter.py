@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-import cgi
+import html
 
 from .template import loadTemplate
 from .baseexporter import BaseExporter
@@ -40,5 +40,5 @@ class TextExporter (BaseExporter):
 
 
     def __prepareTextContent (self, content):
-        result = u"<pre>{0}</pre>".format (cgi.escape (content))
+        result = u"<pre>{0}</pre>".format (html.escape (content))
         return result

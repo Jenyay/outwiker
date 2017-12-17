@@ -51,8 +51,8 @@ class BaseExporter (object):
         if not os.path.exists (outdir):
             raise FolderNotExists (_(u"Folder {0} not exists").format (outdir))
 
-        with open (exportfile, "wb") as fp:
-            fp.write (content.encode ("utf8"))
+        with open(exportfile, "w") as fp:
+            fp.write(content)
 
         self.__exportAttaches (page, exportdir, imagesonly, alwaisOverwrite)
         self.__exportIcon (page, exportdir, alwaisOverwrite)

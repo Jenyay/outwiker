@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-import cgi
+import html
 import os.path
 
 from .template import loadTemplate
@@ -35,7 +35,7 @@ class IndexContentGenerator (object):
         finalresult = self.__prepareResult (u"\n".join (resultList))
 
         with open (fname, "w") as fp:
-            fp.write (finalresult.encode ("utf8"))
+            fp.write(finalresult)
 
 
     def __prepareResult (self, result):
@@ -80,20 +80,20 @@ class IndexContentGenerator (object):
         if page.icon is None:
             itemstring = template.format (indent=self.__indent * level,
                                           url=self.__prepareUrl (self.__renames[page] + ".html"),
-                                          title=cgi.escape(page.title))
+                                          title=html.escape(page.title))
         else:
             iconpath = self.__getIcon (page)
 
             itemstring = templateIcon.format (indent=self.__indent * level,
                                               url=self.__prepareUrl (self.__renames[page] + ".html"),
-                                              title=cgi.escape(page.title),
+                                              title=html.escape(page.title),
                                               iconpath=self.__prepareUrl (iconpath))
 
         return itemstring
 
 
     def __addpage (self, resultList, page, level):
-        if page in self.__renames.keys():
+        if page in list(self.__renames.keys()):
             if "title" in dir (page):
                 itemstring = self.__getPageLink (page, level)
                 resultList.append (itemstring)

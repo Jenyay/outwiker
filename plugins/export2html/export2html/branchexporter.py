@@ -53,7 +53,7 @@ class BranchExporter (object):
         self.__replacePageLinks (outdir)
         try:
             self.__createIndex (outdir, alwaysOverwrite)
-        except IOError, e:
+        except IOError as e:
             str (e)
 
         return self.log
@@ -74,19 +74,19 @@ class BranchExporter (object):
         """
         Скорректировать ссылки на страницы
         """
-        for page in self.__renames.keys():
+        for page in list(self.__renames.keys()):
             fullname = os.path.join (outdir, self.__renames[page] + u".html")
 
             try:
                 with open (fullname) as fp:
-                    text = unicode (fp.read (), "utf8")
+                    text = fp.read ()
 
                 newtext = self.__replacePageLinksInText (text, page, outdir)
 
-                with open (fullname, "wb") as fp:
-                    fp.write (newtext.encode ("utf8"))
-            except BaseException, error:
-                self.__log.append (u"{0}: {1}".format (page.title, unicode (error)))
+                with open(fullname, "w") as fp:
+                    fp.write(newtext)
+            except BaseException as error:
+                self.__log.append (u"{0}: {1}".format (page.title, str(error)))
 
 
 
@@ -127,7 +127,7 @@ class BranchExporter (object):
             if linkToPage is None:
                 continue
 
-            if linkToPage not in self.__renames.keys():
+            if linkToPage not in list(self.__renames.keys()):
                 continue
 
             # Эта страница нам подходит
@@ -213,8 +213,8 @@ class BranchExporter (object):
                 self.__renames[page] = exportname
 
                 exporter.export (outdir, exportname, imagesonly, alwaysOverwrite)
-            except BaseException, error:
-                self.__log.append (u"{0}: {1}".format (page.title, unicode (error)))
+            except BaseException as error:
+                self.__log.append (u"{0}: {1}".format (page.title, str(error)))
 
         for child in page.children:
             self.__export (

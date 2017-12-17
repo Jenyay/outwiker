@@ -3,12 +3,11 @@
 import os.path
 
 from outwiker.core.pluginbase import Plugin
-from outwiker.core.system import getOS
 
 from .controller import Controller
 from .i18n import set_
 
-__version__ = u"1.3.5"
+__version__ = u"2.0.1"
 
 
 class PluginExport2Html (Plugin):
@@ -65,11 +64,11 @@ class PluginExport2Html (Plugin):
     def __initlocale (self):
         domain = u"export2html"
 
-        langdir = unicode (os.path.join (os.path.dirname (__file__), "locale"), getOS().filesEncoding)
+        langdir = str(os.path.join (os.path.dirname (__file__), "locale"))
 
         try:
             global _
             _ = self._init_i18n (domain, langdir)
             set_(_)
-        except BaseException, e:
-            print e
+        except BaseException as e:
+            print (e)
