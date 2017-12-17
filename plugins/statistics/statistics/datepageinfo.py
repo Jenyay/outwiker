@@ -57,7 +57,7 @@ class DatePageInfo (object):
         items = [u"<li><a href='{url}'>{title}</a> ({date})</li>".format (
             url=u"/" + page.subpath,
             title=page.title,
-            date=unicode (page.datetime.strftime (self._dateTimeFormat), getOS().filesEncoding))
+            date=str(page.datetime.strftime(self._dateTimeFormat)))
             for page in pageList]
 
         return u"<ul>" + u"".join (items) + u"</ul>"

@@ -19,7 +19,7 @@ class PageStat (object):
 
         # Типы страниц, по которым можно собрать статистику
         self._supportedPages = ['html', 'text', 'wiki']
-        self._wordsRegExp = re.compile ('\w+', re.M | re.U)
+        self._wordsRegExp = re.compile(r'\w+', re.M)
 
 
     def _testPageType (self):

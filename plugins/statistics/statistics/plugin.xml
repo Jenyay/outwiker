@@ -5,14 +5,14 @@
     <requirements>
         <outwiker>2.1.0.833 dev</outwiker>
         <os>Windows, Linux</os>
-		<packages>
-			<core>1.5</core>
-			<actions>1.1</actions>
-			<gui>2.0</gui>
-			<pages>2.0</pages>
-			<utilites>1.0</utilites>
-			<libs>1.0</libs>
-		</packages>
+        <packages>
+            <core>2.0</core>
+            <actions>1.1</actions>
+            <gui>2.0</gui>
+            <pages>2.0</pages>
+            <utilites>1.0</utilites>
+            <libs>1.0</libs>
+        </packages>
     </requirements>
 
 	<data lang="en">
@@ -26,6 +26,11 @@
 		</author>
 
 		<changelog>
+			<version number="2.0.1" date="December 17, 2017">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Statistics/statistics-2.0.1.zip</download>
+                <change>Python 3.6 migration.</change>
+            </version>
+
 			<version number="2.0" date="December 15, 2017">
                 <download os="all">http://jenyay.net/uploads/Outwiker/Statistics/statistics-2.0.zip</download>
 				<change>Update according to wxPython 4.0.</change>
@@ -70,6 +75,11 @@
 		</author>
 
 		<changelog>
+            <version number="2.0.1" date="17.12.2017">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Statistics/statistics-2.0.1.zip</download>
+                <change>Портирован на Python 3.6</change>
+            </version>
+
 			<version number="2.0" date="15.12.2017">
                 <download os="all">http://jenyay.net/uploads/Outwiker/Statistics/statistics-2.0.zip</download>
 				<change>Обновлен в соответсвии с wxPython4.0.</change>
