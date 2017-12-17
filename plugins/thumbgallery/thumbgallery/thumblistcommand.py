@@ -122,9 +122,9 @@ class ThumbListCommand (Command):
         sizeParamName1 = "px"
         sizeParamName2 = "maxsize"
 
-        if sizeParamName1 in paramsDict.keys():
+        if sizeParamName1 in list(paramsDict.keys()):
             thumbsize = paramsDict[sizeParamName1]
-        elif sizeParamName2 in paramsDict.keys():
+        elif sizeParamName2 in list(paramsDict.keys()):
             thumbsize = paramsDict[sizeParamName2]
         else:
             config = WikiConfig (self.parser.config)

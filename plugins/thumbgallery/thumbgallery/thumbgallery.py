@@ -3,19 +3,17 @@
 import os.path
 
 from outwiker.core.pluginbase import Plugin
-from outwiker.core.system import getOS
 from outwiker.core.commands import getCurrentVersion
 from outwiker.core.version import Version, StatusSet
 
 from .controller import Controller
 
 
-__version__ = u"1.1.5"
+__version__ = u"2.0.1"
 
 
-# Для работы этого плагина требуется OutWiker 1.6.0.632
-if getCurrentVersion() < Version (1, 6, 0, 632, status=StatusSet.DEV):
-    print ("Thumblist plugin. OutWiker version requirement: 1.6.0.632")
+if getCurrentVersion() < Version(2, 1, 0, 833, status=StatusSet.DEV):
+    print ("Thumblist plugin. OutWiker version requirement: 2.1.0.833")
 else:
     class PluginThumbGallery (Plugin):
         """
@@ -50,13 +48,13 @@ else:
 
 
         def _initlocale (self, domain):
-            langdir = unicode (os.path.join (os.path.dirname (__file__), "locale"), getOS().filesEncoding)
+            langdir = str(os.path.join (os.path.dirname (__file__), "locale"))
             global _
 
             try:
                 _ = self._init_i18n (domain, langdir)
-            except BaseException:
-                pass
+            except BaseException as e:
+                print (e)
 
 
         def destroy (self):
@@ -76,11 +74,11 @@ else:
             Загрузить описание плагина из файла
             """
             path = _(u"locale/description.html")
-            currentDir = unicode (os.path.dirname (__file__), getOS().filesEncoding)
+            currentDir = str(os.path.dirname (__file__))
             fullpath = os.path.join (currentDir, path)
 
             try:
                 with open (fullpath) as fp:
-                    return unicode (fp.read (), "utf8")
+                    return str(fp.read())
             except IOError:
                 return _(u"Can't load description")
