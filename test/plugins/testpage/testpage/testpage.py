@@ -9,8 +9,8 @@ from .testnotespage import TestPage, TestPageFactory
 from .testpageview import TestPageView
 
 
-if getCurrentVersion() < Version (1, 8, 0, 731, status=StatusSet.DEV):
-    print ("TestPage plugin. OutWiker version requirement: 1.8.0.731")
+if getCurrentVersion() < Version(2, 1, 0, 833, status=StatusSet.DEV):
+    print ("TestPage plugin. OutWiker version requirement: 2.1.0.833")
 else:
     class PluginName (Plugin):
         def __init__ (self, application):
@@ -42,7 +42,7 @@ else:
 
         @property
         def version (self):
-            return u"1.0"
+            return u"2.0"
 
 
         @property
