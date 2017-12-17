@@ -25,5 +25,5 @@ class DebugAction (BaseAction):
         return u"DebugAction"
 
     def run(self, params):
-        print u"DebugAction.run({0})".format(params)
+        print(u"DebugAction.run({0})".format(params))
         # self._application.mainWindow.toolbars.layout()
