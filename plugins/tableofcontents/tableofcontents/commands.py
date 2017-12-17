@@ -2,7 +2,7 @@
 
 from outwiker.pages.wiki.parser.command import Command
 
-from tocwikimaker import TocWikiMaker
+from .tocwikimaker import TocWikiMaker
 
 
 class TOCCommand (Command):
