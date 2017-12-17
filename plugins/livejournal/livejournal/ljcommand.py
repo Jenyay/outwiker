@@ -4,9 +4,7 @@ from abc import ABCMeta, abstractproperty
 from outwiker.pages.wiki.parser.command import Command
 
 
-class LjCommand (Command):
-    __metaclass__ = ABCMeta
-
+class LjCommand (Command, metaclass=ABCMeta):
     def __init__ (self, parser):
         Command.__init__ (self, parser)
 
