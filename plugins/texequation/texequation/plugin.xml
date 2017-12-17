@@ -25,7 +25,7 @@
 			<site>http://jenyay.net</site>
 		</author>
 		<changelog>
-			<version number="2.1">
+			<version number="2.1" date="December 17, 2017">
                 <download os="all">http://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.1.zip</download>
 				<change>Updated KaTeX engine.</change>
 			</version>
@@ -85,7 +85,7 @@
 		</author>
 
 		<changelog>
-			<version number="2.1">
+			<version number="2.1" date="17.12.2017">
                 <download os="all">http://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.1.zip</download>
 				<change>Обновлен движок KaTeX.</change>
 			</version>
