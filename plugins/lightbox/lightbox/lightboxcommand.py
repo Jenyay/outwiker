@@ -32,7 +32,7 @@ class LightboxCommand (Command):
         """
         Копировать дополнительные файлы, необходимые для работы скрипта (из папки scripts в __attach/__thumb)
         """
-        scriptdir = str(os.path.join (os.path.dirname (__file__), "scripts"))
+        scriptdir = os.path.join (os.path.dirname (__file__), "scripts")
         thumbDir = Thumbnails (self.parser.page).getThumbPath (True)
 
         files = ["jquery.fancybox.css",
