@@ -34,7 +34,7 @@ class PageTypeColor_ColorsListTest(unittest.TestCase):
                                    None)
         self.assertIsNone(color_param.value)
 
-        self.assertEqual(colorslist.getPageTypes(), dict([]).keys())
+        self.assertEqual(list(colorslist.getPageTypes()), [])
 
     def test_init(self):
         from pagetypecolor.colorslist import ColorsList

@@ -282,7 +282,7 @@ This is the first page. You can use a text formatting: '''bold''', ''italic'', {
             Application.wikiroot.selectedPage = firstPage
         except (IOError, OSError) as e:
             # TODO: проверить под Windows
-            MessageBox(_(u"Can't create wiki\n") + str(e.filename),
+            MessageBox(_(u"Can't create wiki\n") + e.filename,
                        _(u"Error"), wx.OK | wx.ICON_ERROR)
 
     dlg.Destroy()

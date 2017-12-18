@@ -136,7 +136,7 @@ class Unix(System):
         и где будет создаваться папка для хранения настроек OutWiker.
         ($XDG_CONFIG_HOME/outwiker или .config/outwiker)
         """
-        homeDir = str(op.expanduser("~"))
+        homeDir = op.expanduser("~")
         settingsDir = os.environ.get("XDG_CONFIG_HOME", ".config")
 
         if not op.isabs(settingsDir):
@@ -264,7 +264,7 @@ def getExeFile():
     """
     Возвращает имя запускаемого файла
     """
-    return unicode(sys.argv[0], getOS().filesEncoding)
+    return sys.argv[0]
 
 
 def getPluginsDirList(configDirName=DEFAULT_CONFIG_DIR,

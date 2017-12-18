@@ -90,7 +90,7 @@ class HtmlRender (wx.Panel):
             try:
                 link = u"{}{}".format (
                     protocol,
-                    str (url.decode ("idna")))
+                    url.decode ("idna"))
             except UnicodeError:
                 # Под IE ссылки не преобразуются в кодировку IDNA
                 pass

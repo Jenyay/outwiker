@@ -90,7 +90,7 @@ class CommandLine(object):
         result = None
 
         if self._namespace.wikipath is not None:
-            result = str(self._namespace.wikipath)
+            result = self._namespace.wikipath
             if len(result.split()) == 0:
                 result = None
 
@@ -101,7 +101,7 @@ class CommandLine(object):
         result = None
 
         if self._namespace.page is not None:
-            result = str(self._namespace.page)
+            result = self._namespace.page
             if len(result.split()) == 0:
                 result = None
 

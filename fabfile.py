@@ -684,7 +684,7 @@ def vm_run():
     '''
     Run virtual machines for build
     '''
-    for host_param in list(VM_BUILD_PARAMS.values()):
+    for host_param in VM_BUILD_PARAMS.values():
         with lcd(host_param[u'vagrant_path']):
             local(u'vagrant up')
 
@@ -694,7 +694,7 @@ def vm_update():
     '''
     Update the virtual machines
     '''
-    for host_param in list(VM_BUILD_PARAMS.values()):
+    for host_param in VM_BUILD_PARAMS.values():
         with lcd(host_param[u'vagrant_path']):
             local(u'vagrant box update')
 
@@ -704,7 +704,7 @@ def vm_stop():
     '''
     Stop virtual machines for build
     '''
-    for host_param in list(VM_BUILD_PARAMS.values()):
+    for host_param in VM_BUILD_PARAMS.values():
         with lcd(host_param[u'vagrant_path']):
             local(u'vagrant halt')
 
@@ -715,7 +715,7 @@ def vm_remove_keys():
     '''
     Remove local SSH keys for remote virual machines
     '''
-    for host_param in list(VM_BUILD_PARAMS.values()):
+    for host_param in VM_BUILD_PARAMS.values():
         host = host_param[u'host']
         local(u'ssh-keygen -f ~/.ssh/known_hosts -R {}'.format(host))
 
