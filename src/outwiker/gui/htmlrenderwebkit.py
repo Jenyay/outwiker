@@ -155,7 +155,8 @@ class HtmlRenderWebKit(HtmlRender):
         gtk_key_modifier - зажатые клавиши (1 - Shift, 4 - Ctrl)
         """
         source_href = href
-        href = urllib.parse.unquote (href)
+        href = urllib.parse.unquote(href)
+        href = self._decodeIDNA(href)
 
         (url, page, filename, anchor) = self.__identifyUri (href)
 
