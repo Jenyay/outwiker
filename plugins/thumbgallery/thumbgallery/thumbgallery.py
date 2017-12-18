@@ -74,7 +74,7 @@ else:
             Загрузить описание плагина из файла
             """
             path = _(u"locale/description.html")
-            currentDir = str(os.path.dirname (__file__))
+            currentDir = os.path.dirname (__file__)
             fullpath = os.path.join (currentDir, path)
 
             try:

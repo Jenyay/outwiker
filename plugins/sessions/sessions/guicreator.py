@@ -99,7 +99,7 @@ class GuiCreator (object):
 
     def _addSessionsMenuItems (self):
         sessions = SessionStorage (self._application.config).getSessions()
-        for sessionName in sorted (list(sessions.keys()), key=lambda x: x.lower()):
+        for sessionName in sorted(sessions.keys(), key=str.lower):
             menuId = wx.NewId()
             self._menu.Append (menuId, sessionName)
             self._application.mainWindow.Bind (wx.EVT_MENU,

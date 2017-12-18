@@ -69,4 +69,4 @@ class ColorsList(object):
         self._application.config.save()
 
     def getPageTypes(self):
-        return list(self._colors.keys())
+        return self._colors.keys()

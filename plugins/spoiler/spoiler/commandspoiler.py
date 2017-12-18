@@ -82,7 +82,7 @@ class SpoilerCommand (Command):
         """
         Возвращает шаблон в зависимости от вида спойлера
         """
-        if self.__inlineParam in list(params_dict.keys()):
+        if self.__inlineParam in params_dict:
             return self.__inlineTemplate
         else:
             return self.__blockTemplate
