@@ -100,8 +100,8 @@ class Windows(System):
         Возвращает папку, внутри которой хранятся настройки всех программ,
         и где будет создаваться папка для хранения настроек OutWiker
         """
-        homeDir = str(op.expanduser("~"), self.filesEncoding)
-        appdata = (str(os.environ["APPDATA"], self.filesEncoding)
+        homeDir = op.expanduser("~")
+        appdata = (os.environ["APPDATA"]
                    if "APPDATA" in os.environ
                    else homeDir)
         return appdata

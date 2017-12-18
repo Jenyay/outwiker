@@ -735,7 +735,7 @@ class WikiPage(RootWikiPage):
         text = ""
 
         try:
-            with open(os.path.join(self.path, RootWikiPage.contentFile)) as fp:
+            with open(os.path.join(self.path, RootWikiPage.contentFile), encoding='utf-8') as fp:
                 text = fp.read()
         except IOError:
             pass
