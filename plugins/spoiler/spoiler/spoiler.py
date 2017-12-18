@@ -48,7 +48,7 @@ else:
 
 
         def _initlocale (self, domain):
-            langdir = str(os.path.join (os.path.dirname (__file__), "locale"))
+            langdir = os.path.join (os.path.dirname (__file__), "locale")
             global _
 
             try:
@@ -84,7 +84,7 @@ else:
 
 
         def _getImagePath (self):
-            imagedir = str(os.path.join (os.path.dirname (__file__), "images"))
+            imagedir = os.path.join (os.path.dirname (__file__), "images")
             fname = os.path.join (imagedir, "spoiler.png")
             return fname
 

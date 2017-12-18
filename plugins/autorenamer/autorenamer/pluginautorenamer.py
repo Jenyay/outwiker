@@ -48,7 +48,7 @@ else:
             self._autorenamer.destroy()
 
         def _initlocale(self, domain):
-            langdir = str(os.path.join(os.path.dirname(__file__), "locale"))
+            langdir = os.path.join(os.path.dirname(__file__), "locale")
             global _
             try:
                 _ = self._init_i18n(domain, langdir)

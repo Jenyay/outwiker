@@ -9,6 +9,6 @@ def getImagePath(image_name):
     """
     Получить полный путь до картинки
     """
-    imagedir = str(os.path.join(os.path.dirname(__file__), "images"))
+    imagedir = os.path.join(os.path.dirname(__file__), "images")
     fname = os.path.join(imagedir, image_name)
     return fname

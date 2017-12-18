@@ -48,7 +48,7 @@ else:
 
 
         def _initlocale (self, domain):
-            langdir = str(os.path.join (os.path.dirname (__file__), "locale"))
+            langdir = os.path.join(os.path.dirname (__file__), "locale")
             global _
 
             try:
@@ -79,6 +79,6 @@ else:
 
             try:
                 with open (fullpath) as fp:
-                    return str(fp.read())
+                    return fp.read()
             except IOError:
                 return _(u"Can't load description")

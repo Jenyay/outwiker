@@ -157,7 +157,7 @@ class Controller (object):
 
 
     def _getImagePath (self, fname):
-        imagedir = str(os.path.join (os.path.dirname (__file__), "images"))
+        imagedir = os.path.join (os.path.dirname (__file__), "images")
         return os.path.join (imagedir, fname)
 
 

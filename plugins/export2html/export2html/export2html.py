@@ -64,7 +64,7 @@ class PluginExport2Html (Plugin):
     def __initlocale (self):
         domain = u"export2html"
 
-        langdir = str(os.path.join (os.path.dirname (__file__), "locale"))
+        langdir = os.path.join (os.path.dirname (__file__), "locale")
 
         try:
             global _

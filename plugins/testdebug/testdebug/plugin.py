@@ -69,7 +69,7 @@ class PluginDebug(Plugin):
         self.__ID_TREE_POPUP = wx.NewId()
         self.__ID_TRAY_POPUP = wx.NewId()
 
-        langdir = str(os.path.join(os.path.dirname(__file__), "locale"))
+        langdir = os.path.join(os.path.dirname(__file__), "locale")
         global _
 
         try:
@@ -204,7 +204,7 @@ class PluginDebug(Plugin):
         """
         Получить полный путь до картинки
         """
-        imagedir = str(os.path.join(os.path.dirname(__file__), "images"))
+        imagedir = os.path.join(os.path.dirname(__file__), "images")
         fname = os.path.join(imagedir, imageName)
         return fname
 

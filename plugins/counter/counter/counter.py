@@ -80,7 +80,7 @@ All parameters are optional.
 
 
         def _initlocale (self, domain):
-            langdir = str(os.path.join (os.path.dirname (__file__), "locale"))
+            langdir = os.path.join (os.path.dirname (__file__), "locale")
             global _
 
             try:
