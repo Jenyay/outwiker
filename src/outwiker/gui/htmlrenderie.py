@@ -185,7 +185,7 @@ class HtmlRenderIE (HtmlRender):
         button = ID_MOUSE_LEFT
         modifier = self.__getKeyCode()
 
-        params = self._getClickParams (href,
+        params = self._getClickParams (self._decodeIDNA (href),
                                        button,
                                        modifier,
                                        url,

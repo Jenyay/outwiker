@@ -2,6 +2,7 @@
 
 from abc import abstractmethod
 from abc import ABCMeta
+import idna
 
 import wx
 
@@ -84,13 +85,13 @@ class HtmlRender (wx.Panel):
         if link is None:
             return None
 
-        protocol = self._getLinkProtocol (link)
+        protocol = self._getLinkProtocol(link)
         if protocol is not None:
             url = link[len (protocol):]
             try:
-                link = u"{}{}".format (
+                link = u"{}{}".format(
                     protocol,
-                    url.decode ("idna"))
+                    idna.decode(url))
             except UnicodeError:
                 # Под IE ссылки не преобразуются в кодировку IDNA
                 pass
@@ -130,7 +131,7 @@ class HtmlRender (wx.Panel):
         """
         Execute onHoverLink event and set status text
         """
-        link_decoded = link
+        link_decoded = self._decodeIDNA (link)
 
         params = HoverLinkParams (link = link_decoded, text = text)
         Application.onHoverLink (page=self._currentPage, params = params)
