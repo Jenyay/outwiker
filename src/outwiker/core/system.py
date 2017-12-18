@@ -211,7 +211,7 @@ def getOS():
 
 
 def getCurrentDir():
-    return str(op.dirname(sys.argv[0]))
+    return op.dirname(sys.argv[0])
 
 
 def getConfigPath(dirname=DEFAULT_CONFIG_DIR, fname=DEFAULT_CONFIG_NAME):
