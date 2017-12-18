@@ -10,17 +10,18 @@ from outwiker.gui.stcstyle import StcStyle
 
 class Config(object):
     """
-    Shell for ConfigParser class
+    Shell for configparser class
     """
+
     def __init__(self, fname, readonly=False):
         """
-            Args:
+            :
                 fname: config file name
                 readonly: True if config should be in readonly mode
         """
         self.readonly = readonly
         self.fname = fname
-        self.__config = configparser.ConfigParser()
+        self.__config = configparser.ConfigParser(interpolation=None)
 
         try:
             self.__config.read(self.fname)
@@ -33,16 +34,22 @@ class Config(object):
 
     def getDefaultContent(self):
         """
-        Значение, которое будет записано в конфиг по умолчанию
+        Return default value for config file.
+            Returns:
+                Empty string.
         """
         return u""
 
     def set(self, section, param, value):
         """
-        Установить значение параметра.
-        section - имя секции в файле конфига
-        param - имя параметра
-        value - устанавливаемое значение
+        Set parameter value. If section is absent in the config it will be added.
+            Args:
+                :section: section name in configuration file.
+                :param: parameter name.
+                :value: new value of param. value is converted to str.
+            Returns:
+                :True: if param was successful added to configuration file
+                :False: if config file was opened in readonly mode.
         """
         if self.readonly:
             return False
@@ -204,6 +211,7 @@ class StringOption(BaseOption):
     """
     Класс для упрощения работы со строковыми опциями
     """
+
     def __init__(self, config, section, param, defaultValue):
         super(StringOption, self).__init__(config,
                                            section,
@@ -222,6 +230,7 @@ class BooleanOption(BaseOption):
     Булевская настройка.
     Элемент управления - wx.CheckBox
     """
+
     def __init__(self, config, section, param, defaultValue):
         super(BooleanOption, self).__init__(config,
                                             section,
@@ -239,6 +248,7 @@ class StcStyleOption(BaseOption):
     """
     Настрока для хранения стиля редактора StcStyledEditor
     """
+
     def __init__(self, config, section, param, defaultValue):
         """
         defaultValue - экземпляр класса StcStyle
@@ -288,6 +298,7 @@ class ListOption(BaseOption):
     По умолчанию элементы разделяются символом ";",
     но разделитель можно изменять
     """
+
     def __init__(self, config, section, param, defaultValue, separator=";"):
         super(ListOption, self).__init__(config, section, param, defaultValue)
         self.__separator = separator
@@ -306,6 +317,7 @@ class IntegerOption(BaseOption):
     Настройка для целых чисел.
     Элемент управления - wx.SpinCtrl
     """
+
     def __init__(self, config, section, param, defaultValue):
         super(IntegerOption, self).__init__(config,
                                             section,
@@ -323,6 +335,7 @@ class StringListSection(object):
     """
     Класс для хранения списка строк. Список хранится в отдельной секции
     """
+
     def __init__(self, config, section, paramname):
         """
         config - экземпляр класса Config
@@ -341,7 +354,7 @@ class StringListSection(object):
         result = []
         index = 0
         try:
-            while(1):
+            while (1):
                 option = self._paramname.format(number=index)
                 subpath = self._config.get(self._section, option)
                 result.append(subpath)
