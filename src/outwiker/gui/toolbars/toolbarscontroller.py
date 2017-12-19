@@ -114,7 +114,7 @@ class ToolBarsController(object):
                                            handler=self.__onPaneClose)
         self._mainWindow.Unbind(wx.EVT_SIZE, handler=self.__onSizeChanged)
 
-        for toolbarname in self._toolbars:
+        for toolbarname in list(self._toolbars):
             self.destroyToolBar(toolbarname)
 
     def __contains__(self, toolbarname):
