@@ -4,22 +4,25 @@ from abc import ABCMeta, abstractmethod
 import re
 
 
-class PageTitleError(BaseException):
-    """
-    Исключение, которое бросается, если заголовок не может быть
-    использован во всех ОС
-    """
-    def __init__(self, message):
-        BaseException.__init__(self, message)
+class PageTitleError(Exception):
+    """Exception raised for title if it can't be used in all OS systems
 
+        Attributes:
+            message -- explanation of the error
+        """
 
-class PageTitleWarning(BaseException):
-    """
-    Исключение, которое бросается, если заголовок не может быть использован в
-    некоторых ОС (читай, под Windows)
-    """
     def __init__(self, message):
-        BaseException.__init__(self, message)
+        self.message = message
+
+class PageTitleWarning(Exception):
+    """Exception raised for title if it can't be used in Windows system
+
+        Attributes:
+            message -- explanation of the error
+    """
+
+    def __init__(self, message):
+        self.message = message
 
 
 class PageTitleTester(object, metaclass=ABCMeta):
