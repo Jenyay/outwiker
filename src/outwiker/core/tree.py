@@ -333,7 +333,7 @@ class WikiDocument(RootWikiPage):
             realpath = os.path.join(path, PAGE_OPT_FILE)
 
         try:
-            fp = open(realpath, "w")
+            fp = open(realpath, "w", encoding='utf8')
             fp.close()
         except IOError:
             raise ClearConfigError
@@ -735,7 +735,7 @@ class WikiPage(RootWikiPage):
         text = ""
 
         try:
-            with open(os.path.join(self.path, RootWikiPage.contentFile), encoding='utf-8') as fp:
+            with open(os.path.join(self.path, RootWikiPage.contentFile), encoding='utf8') as fp:
                 text = fp.read()
         except IOError:
             pass
@@ -750,8 +750,8 @@ class WikiPage(RootWikiPage):
         if text != self.content or text == u"":
             path = os.path.join(self.path, RootWikiPage.contentFile)
 
-            with open(path, "wb") as fp:
-                fp.write(text.encode("utf8"))
+            with open(path, "w", encoding='utf8') as fp:
+                fp.write(text)
 
             self.updateDateTime()
             self.root.onPageUpdate(self, change=events.PAGE_UPDATE_CONTENT)

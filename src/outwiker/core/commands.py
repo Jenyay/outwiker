@@ -7,6 +7,8 @@
 from datetime import datetime
 import os.path
 import shutil
+import logging
+import traceback
 
 import wx
 
@@ -28,6 +30,8 @@ from outwiker.gui.tester import Tester
 from outwiker.gui.testeddialog import TestedFileDialog
 from outwiker.utilites.textfile import readTextFile
 
+
+logger = logging.getLogger('core')
 
 def MessageBox(*args, **kwargs):
     """
@@ -191,13 +195,12 @@ def openWiki(path, readonly=False):
                                _(u"Opening notes tree..."))
     result = runner.run(os.path.realpath(path), readonly)
 
-    # result = WikiDocument.load (os.path.realpath (path), readonly)
-
     success = False
-    if isinstance(result, IOError):
-        __canNotLoadWikiMessage(path)
-    elif isinstance(result, outwiker.core.exceptions.RootFormatError):
+    if isinstance(result, outwiker.core.exceptions.RootFormatError):
         __rootFormatErrorHandle(path, readonly)
+    elif isinstance(result, Exception):
+        logger.error(result)
+        __canNotLoadWikiMessage(path)
     else:
         Application.wikiroot = result
         success = True

@@ -24,13 +24,13 @@ class Config(object):
         self.__config = configparser.ConfigParser(interpolation=None)
 
         try:
-            self.__config.read(self.fname)
+            self.__config.read(self.fname, encoding='utf8')
         except configparser.Error:
             shutil.copyfile(self.fname, self.fname + ".bak")
-            with open(self.fname, "w") as fp:
+            with open(self.fname, "w", encoding='utf8') as fp:
                 fp.write(self.getDefaultContent())
 
-            self.__config.read(self.fname)
+            self.__config.read(self.fname, encoding='utf8')
 
     def getDefaultContent(self):
         """
@@ -70,7 +70,7 @@ class Config(object):
         if self.readonly:
             return False
 
-        with open(self.fname, "w") as fp:
+        with open(self.fname, "w", encoding='utf8') as fp:
             self.__config.write(fp)
 
         return True
