@@ -69,12 +69,12 @@ else:
         #############################################
 
         def _initlocale (self, domain):
-            langdir = unicode (os.path.join (os.path.dirname (__file__), "locale"), getOS().filesEncoding)
+            langdir = os.path.join (os.path.dirname (__file__), "locale")
             global _
 
             try:
                 _ = self._init_i18n (domain, langdir)
-            except BaseException, e:
-                print e
+            except BaseException as e:
+                print (e)
 
             set_(_)

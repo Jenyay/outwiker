@@ -49,10 +49,10 @@ class HtmlImproverFactoryTest(unittest.TestCase):
         Application.onPrepareHtmlImprovers += self._addTestImprovers
         factory = HtmlImproverFactory(Application)
 
-        self.assertEqual(type(factory[u'test1']), TestImprover1)
-        self.assertEqual(type(factory[u'test2']), TestImprover2)
+        self.assertEqual(type(factory['test1']), TestImprover1)
+        self.assertEqual(type(factory['test2']), TestImprover2)
 
 
     def _addTestImprovers(self, factory):
-        factory.add(u'test1', TestImprover1(), u'')
-        factory.add(u'test2', TestImprover2(), u'')
+        factory.add('test1', TestImprover1(), '')
+        factory.add('test2', TestImprover2(), '')

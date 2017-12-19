@@ -29,8 +29,8 @@ class ExportPageDialog (ExportDialog):
                                     self.imagesOnly,
                                     self.overwrite)
 
-        except BaseException, error:
-            MessageBox (unicode(error),
+        except BaseException as error:
+            MessageBox (str(error),
                         _(u"Error"),
                         wx.OK | wx.ICON_ERROR)
             return

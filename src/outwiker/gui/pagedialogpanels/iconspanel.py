@@ -170,7 +170,7 @@ class IconsController(BasePageDialogController):
             try:
                 page.icon = icon
             except EnvironmentError as e:
-                MessageBox(_(u"Can't set page icon\n") + unicode(e),
+                MessageBox(_(u"Can't set page icon\n") + str(e),
                            _(u"Error"),
                            wx.ICON_ERROR | wx.OK)
                 return False

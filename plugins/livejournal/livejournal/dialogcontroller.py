@@ -7,11 +7,10 @@ import wx
 from .ljconfig import LJConfig
 
 
-class DialogController (object):
+class DialogController (object, metaclass=ABCMeta):
     """
     Базовый класс для диалога вставки пользователя и сообщества ЖЖ
     """
-    __metaclass__ = ABCMeta
 
     def __init__ (self, dialog, application, initial = u""):
         self._dialog = dialog

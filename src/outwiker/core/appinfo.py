@@ -44,7 +44,7 @@ class AppInfo (object):
         if self.currentVersion is None:
             return None
 
-        return unicode(self.currentVersion)
+        return str(self.currentVersion)
 
 
 class AuthorInfo (object):

@@ -60,7 +60,7 @@ class Controller (object):
         """
         Вызывается до разбора викитекста. Добавление команды (:counter:)
         """
-        map (lambda command: parser.addCommand (command (parser)), self._commands)
+        list(map (lambda command: parser.addCommand (command (parser)), self._commands))
 
 
     @property

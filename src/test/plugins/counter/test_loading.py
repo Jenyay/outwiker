@@ -8,7 +8,7 @@ class CounterLoadingTest (BasePluginLoadingTest):
         """
         Должен возвращать путь до папки с тестируемым плагином
         """
-        return u"../plugins/counter"
+        return "../plugins/counter"
 
 
     def getPluginName (self):

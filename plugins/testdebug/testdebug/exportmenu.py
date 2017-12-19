@@ -42,7 +42,7 @@ class ExportMenuFactory (object):
         filemenu = self.__getFileMenu()
 
         if filemenu == None:
-            print _(u"File menu not found")
+            print(_(u"File menu not found"))
             return
 
         filemenu.Delete (self.__findExportId())
@@ -69,7 +69,7 @@ class ExportMenuFactory (object):
         menu = self.__getFileMenu()
 
         if menu == None:
-            print _(u"File menu not found")
+            print(_(u"File menu not found"))
             return
 
         exportmenu = wx.Menu ()

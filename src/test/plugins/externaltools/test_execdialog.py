@@ -16,7 +16,7 @@ class ExecDialogTest (BaseMainWndTest):
     def setUp (self):
         BaseMainWndTest.setUp (self)
 
-        dirlist = [u"../plugins/externaltools"]
+        dirlist = ["../plugins/externaltools"]
 
         self._loader = PluginsLoader(Application)
         self._loader.load (dirlist)
@@ -53,8 +53,8 @@ class ExecDialogTest (BaseMainWndTest):
         begin, end = controller.getResult()
 
         self.assertEqual (result, wx.ID_OK)
-        self.assertEqual (begin, u'(:exec:)')
-        self.assertEqual (end, u'(:execend:)')
+        self.assertEqual (begin, '(:exec:)')
+        self.assertEqual (end, '(:execend:)')
 
 
     def testTitle (self):
@@ -65,14 +65,14 @@ class ExecDialogTest (BaseMainWndTest):
             Application
         )
 
-        self._dlg.title = u'Заголовок команды'
+        self._dlg.title = 'Заголовок команды'
 
         result = controller.showDialog()
         begin, end = controller.getResult()
 
         self.assertEqual (result, wx.ID_OK)
-        self.assertEqual (begin, u'(:exec title="Заголовок команды":)')
-        self.assertEqual (end, u'(:execend:)')
+        self.assertEqual (begin, '(:exec title="Заголовок команды":)')
+        self.assertEqual (end, '(:execend:)')
 
 
     def testFormat (self):
@@ -89,8 +89,8 @@ class ExecDialogTest (BaseMainWndTest):
         begin, end = controller.getResult()
 
         self.assertEqual (result, wx.ID_OK)
-        self.assertEqual (begin, u'(:exec format="button":)')
-        self.assertEqual (end, u'(:execend:)')
+        self.assertEqual (begin, '(:exec format="button":)')
+        self.assertEqual (end, '(:execend:)')
 
 
     def testTitleFormat (self):
@@ -101,12 +101,12 @@ class ExecDialogTest (BaseMainWndTest):
             Application
         )
 
-        self._dlg.title = u'Заголовок команды'
+        self._dlg.title = 'Заголовок команды'
         self._dlg.format = 1
 
         result = controller.showDialog()
         begin, end = controller.getResult()
 
         self.assertEqual (result, wx.ID_OK)
-        self.assertEqual (begin, u'(:exec title="Заголовок команды" format="button":)')
-        self.assertEqual (end, u'(:execend:)')
+        self.assertEqual (begin, '(:exec title="Заголовок команды" format="button":)')
+        self.assertEqual (end, '(:execend:)')

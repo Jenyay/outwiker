@@ -36,9 +36,9 @@ class EventsWatcher (object):
 
     def _getHandler (self, eventname):
         def onEvent (*args, **kwargs):
-            print u"*** {}".format (eventname)
+            print(u"*** {}".format (eventname))
             # self._printer.pprint (args)
             # self._printer.pprint (kwargs)
-            print
+            print()
 
         return onEvent

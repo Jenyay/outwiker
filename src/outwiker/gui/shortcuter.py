@@ -58,7 +58,7 @@ class Shortcuter (object):
         """
         menuitems = self._getMenuItems (menu)
 
-        for menuitem, position in zip (menuitems, list(range(len (menuitems)))):
+        for menuitem, position in zip (menuitems, range(len (menuitems))):
             title = self._getText (menuitem, position)
             hotkey = self._extractHotKey (title)
 
@@ -102,7 +102,7 @@ class Shortcuter (object):
 
         menuitems = self._getMenuItems (menu)
 
-        for menuitem, position in zip (menuitems, list(range(len (menuitems)))):
+        for menuitem, position in zip (menuitems, range(len (menuitems))):
             title = self._getText (menuitem, position)
             shortcut = self._extractShortcut (title)
 
@@ -131,7 +131,7 @@ class Shortcuter (object):
 
         menuitems = self._getMenuItems (menu)
 
-        for menuitem, position in zip (menuitems, list(range(len (menuitems)))):
+        for menuitem, position in zip (menuitems, range(len (menuitems))):
             title = self._getText (menuitem, position)
             shortcut = self._extractShortcut (title)
 

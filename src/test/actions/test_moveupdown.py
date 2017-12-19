@@ -31,8 +31,8 @@ class MovePageUpDownActionTest (BaseMainWndTest):
 
 
     def testMove_01 (self):
-        WikiPageFactory().create (self.wikiroot, u"Страница 1", [])
-        WikiPageFactory().create (self.wikiroot, u"Страница 2", [])
+        WikiPageFactory().create (self.wikiroot, "Страница 1", [])
+        WikiPageFactory().create (self.wikiroot, "Страница 2", [])
 
         Application.wikiroot = self.wikiroot
         Application.selectedPage = None
@@ -42,61 +42,61 @@ class MovePageUpDownActionTest (BaseMainWndTest):
 
 
     def testMove_02 (self):
-        WikiPageFactory().create (self.wikiroot, u"Страница 1", [])
-        WikiPageFactory().create (self.wikiroot, u"Страница 2", [])
+        WikiPageFactory().create (self.wikiroot, "Страница 1", [])
+        WikiPageFactory().create (self.wikiroot, "Страница 2", [])
 
         Application.wikiroot = self.wikiroot
-        Application.selectedPage = self.wikiroot[u"Страница 1"]
+        Application.selectedPage = self.wikiroot["Страница 1"]
 
         Application.actionController.getAction (MovePageDownAction.stringId).run(None)
-        self.assertTrue (self.wikiroot[u"Страница 1"].order > self.wikiroot[u"Страница 2"].order)
+        self.assertTrue (self.wikiroot["Страница 1"].order > self.wikiroot["Страница 2"].order)
 
         Application.actionController.getAction (MovePageUpAction.stringId).run(None)
-        self.assertTrue (self.wikiroot[u"Страница 1"].order < self.wikiroot[u"Страница 2"].order)
+        self.assertTrue (self.wikiroot["Страница 1"].order < self.wikiroot["Страница 2"].order)
 
 
     def testMove_03 (self):
-        WikiPageFactory().create (self.wikiroot, u"Страница 1", [])
-        WikiPageFactory().create (self.wikiroot, u"Страница 2", [])
+        WikiPageFactory().create (self.wikiroot, "Страница 1", [])
+        WikiPageFactory().create (self.wikiroot, "Страница 2", [])
 
         Application.wikiroot = self.wikiroot
-        Application.selectedPage = self.wikiroot[u"Страница 1"]
+        Application.selectedPage = self.wikiroot["Страница 1"]
 
         Application.actionController.getAction (MovePageDownAction.stringId).run(None)
         Application.actionController.getAction (MovePageDownAction.stringId).run(None)
         Application.actionController.getAction (MovePageDownAction.stringId).run(None)
-        self.assertTrue (self.wikiroot[u"Страница 1"].order > self.wikiroot[u"Страница 2"].order)
+        self.assertTrue (self.wikiroot["Страница 1"].order > self.wikiroot["Страница 2"].order)
 
         Application.actionController.getAction (MovePageUpAction.stringId).run(None)
-        self.assertTrue (self.wikiroot[u"Страница 1"].order < self.wikiroot[u"Страница 2"].order)
+        self.assertTrue (self.wikiroot["Страница 1"].order < self.wikiroot["Страница 2"].order)
 
 
     def testMove_04 (self):
-        WikiPageFactory().create (self.wikiroot, u"Страница 1", [])
-        WikiPageFactory().create (self.wikiroot, u"Страница 2", [])
+        WikiPageFactory().create (self.wikiroot, "Страница 1", [])
+        WikiPageFactory().create (self.wikiroot, "Страница 2", [])
 
         Application.wikiroot = self.wikiroot
-        Application.selectedPage = self.wikiroot[u"Страница 1"]
+        Application.selectedPage = self.wikiroot["Страница 1"]
 
         Application.actionController.getAction (MovePageDownAction.stringId).run(None)
-        self.assertTrue (self.wikiroot[u"Страница 1"].order > self.wikiroot[u"Страница 2"].order)
+        self.assertTrue (self.wikiroot["Страница 1"].order > self.wikiroot["Страница 2"].order)
 
         Application.actionController.getAction (MovePageUpAction.stringId).run(None)
         Application.actionController.getAction (MovePageUpAction.stringId).run(None)
         Application.actionController.getAction (MovePageUpAction.stringId).run(None)
-        self.assertTrue (self.wikiroot[u"Страница 1"].order < self.wikiroot[u"Страница 2"].order)
+        self.assertTrue (self.wikiroot["Страница 1"].order < self.wikiroot["Страница 2"].order)
 
         Application.actionController.getAction (MovePageDownAction.stringId).run(None)
-        self.assertTrue (self.wikiroot[u"Страница 1"].order > self.wikiroot[u"Страница 2"].order)
+        self.assertTrue (self.wikiroot["Страница 1"].order > self.wikiroot["Страница 2"].order)
 
 
     def testMoveReadonly_01 (self):
-        WikiPageFactory().create (self.wikiroot, u"Страница 1", [])
-        WikiPageFactory().create (self.wikiroot, u"Страница 2", [])
+        WikiPageFactory().create (self.wikiroot, "Страница 1", [])
+        WikiPageFactory().create (self.wikiroot, "Страница 2", [])
 
         Application.wikiroot = self.wikiroot
-        Application.selectedPage = self.wikiroot[u"Страница 1"]
-        self.wikiroot[u"Страница 1"].readonly = True
+        Application.selectedPage = self.wikiroot["Страница 1"]
+        self.wikiroot["Страница 1"].readonly = True
 
         Tester.dialogTester.appendOk()
         Application.actionController.getAction (MovePageDownAction.stringId).run(None)

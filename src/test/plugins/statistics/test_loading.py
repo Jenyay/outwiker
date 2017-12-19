@@ -8,7 +8,7 @@ class StatisticsLoadingTest (BasePluginLoadingTest):
         """
         Должен возвращать путь до папки с тестируемым плагином
         """
-        return u"../plugins/statistics"
+        return "../plugins/statistics"
 
 
     def getPluginName (self):

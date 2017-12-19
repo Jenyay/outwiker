@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-import urllib
+import urllib.request, urllib.parse, urllib.error
 
 from .htmlcontroller import UriIdentifier
 
@@ -33,7 +33,7 @@ class UriIdentifierIE (UriIdentifier):
         Обработать ссылку, если требуется
         """
         result = self.__removeFileProtokol (href)
-        result = urllib.unquote (result)
+        result = urllib.parse.unquote (result)
         result = result.replace ("/", u"\\")
 
         return result

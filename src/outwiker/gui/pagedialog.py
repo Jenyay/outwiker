@@ -29,7 +29,7 @@ def editPage(parentWnd, currentPage):
             try:
                 currentPage.display_title = dlg.pageTitle
             except EnvironmentError as e:
-                MessageBox(_(u"Can't rename page\n") + unicode(e),
+                MessageBox(_(u"Can't rename page\n") + str(e),
                            _(u"Error"),
                            wx.ICON_ERROR | wx.OK)
 

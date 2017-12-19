@@ -21,13 +21,13 @@ class WikiAttachListCommandTest (unittest.TestCase):
         self.encoding = "utf8"
 
         self.__createWiki()
-        self.testPage = self.wikiroot[u"Страница 1"]
+        self.testPage = self.wikiroot["Страница 1"]
 
         factory = ParserFactory()
         self.parser = factory.make (self.testPage, Application.config)
 
-        filesPath = u"../test/samplefiles/"
-        self.files = [u"image.jpg", u"add.png", u"anchor.png", u"файл с пробелами.tmp", u"dir", u"for_sort"]
+        filesPath = "../test/samplefiles/"
+        self.files = ["image.jpg", "add.png", "anchor.png", "файл с пробелами.tmp", "dir", "for_sort"]
         self.fullFilesPath = [os.path.join (filesPath, fname) for fname in self.files]
 
 
@@ -38,10 +38,10 @@ class WikiAttachListCommandTest (unittest.TestCase):
 
     def __createWiki (self):
         # Здесь будет создаваться вики
-        self.path = mkdtemp (prefix=u'Абырвалг абыр')
+        self.path = mkdtemp (prefix='Абырвалг абыр')
 
         self.wikiroot = WikiDocument.create (self.path)
-        WikiPageFactory().create (self.wikiroot, u"Страница 1", [])
+        WikiPageFactory().create (self.wikiroot, "Страница 1", [])
 
 
     def tearDown(self):
@@ -49,10 +49,10 @@ class WikiAttachListCommandTest (unittest.TestCase):
 
 
     def _compareResult (self, titles, names, result):
-        attachdir = u"__attach"
-        template = u'<a href="{path}">{title}</a>\n'
+        attachdir = "__attach"
+        template = '<a href="{path}">{title}</a>\n'
 
-        result_right = u"".join ([template.format (path = os.path.join (attachdir, name).replace ("\\", "/"), title=title)
+        result_right = "".join ([template.format (path = os.path.join (attachdir, name).replace ("\\", "/"), title=title)
                                   for (name, title) in zip (names, titles)]).rstrip()
 
         self.assertEqual (result_right, result)
@@ -61,10 +61,10 @@ class WikiAttachListCommandTest (unittest.TestCase):
     def testCommand1 (self):
         self._attachFiles ()
         cmd = AttachListCommand (self.parser)
-        result = cmd.execute (u"", u"")
+        result = cmd.execute ("", "")
 
-        titles = [u"[dir]", u"[for_sort]", u"add.png", u"anchor.png", u"image.jpg", u"файл с пробелами.tmp"]
-        names = [u"dir", u"for_sort", u"add.png", u"anchor.png", u"image.jpg", u"файл с пробелами.tmp"]
+        titles = ["[dir]", "[for_sort]", "add.png", "anchor.png", "image.jpg", "файл с пробелами.tmp"]
+        names = ["dir", "for_sort", "add.png", "anchor.png", "image.jpg", "файл с пробелами.tmp"]
 
         self._compareResult (titles, names, result)
 
@@ -72,11 +72,11 @@ class WikiAttachListCommandTest (unittest.TestCase):
 
     def testParse1 (self):
         self._attachFiles ()
-        text = u"(:attachlist:)"
+        text = "(:attachlist:)"
         result = self.parser.toHtml (text)
 
-        titles = [u"[dir]", u"[for_sort]", u"add.png", u"anchor.png", u"image.jpg", u"файл с пробелами.tmp"]
-        names = [u"dir", u"for_sort", u"add.png", u"anchor.png", u"image.jpg", u"файл с пробелами.tmp"]
+        titles = ["[dir]", "[for_sort]", "add.png", "anchor.png", "image.jpg", "файл с пробелами.tmp"]
+        names = ["dir", "for_sort", "add.png", "anchor.png", "image.jpg", "файл с пробелами.tmp"]
 
         self._compareResult (titles, names, result)
 
@@ -87,11 +87,11 @@ class WikiAttachListCommandTest (unittest.TestCase):
         thumb = Thumbnails (self.testPage)
         thumb.getThumbPath (True)
 
-        text = u"(:attachlist:)"
+        text = "(:attachlist:)"
         result = self.parser.toHtml (text)
 
-        titles = [u"[dir]", u"[for_sort]", u"add.png", u"anchor.png", u"image.jpg", u"файл с пробелами.tmp"]
-        names = [u"dir", u"for_sort", u"add.png", u"anchor.png", u"image.jpg", u"файл с пробелами.tmp"]
+        titles = ["[dir]", "[for_sort]", "add.png", "anchor.png", "image.jpg", "файл с пробелами.tmp"]
+        names = ["dir", "for_sort", "add.png", "anchor.png", "image.jpg", "файл с пробелами.tmp"]
 
         self._compareResult (titles, names, result)
 
@@ -99,21 +99,21 @@ class WikiAttachListCommandTest (unittest.TestCase):
     def testCommandSortByName (self):
         self._attachFiles ()
         cmd = AttachListCommand (self.parser)
-        result = cmd.execute (u"sort=name", u"")
+        result = cmd.execute ("sort=name", "")
 
-        titles = [u"[dir]", u"[for_sort]", u"add.png", u"anchor.png", u"image.jpg", u"файл с пробелами.tmp"]
-        names = [u"dir", u"for_sort", u"add.png", u"anchor.png", u"image.jpg", u"файл с пробелами.tmp"]
+        titles = ["[dir]", "[for_sort]", "add.png", "anchor.png", "image.jpg", "файл с пробелами.tmp"]
+        names = ["dir", "for_sort", "add.png", "anchor.png", "image.jpg", "файл с пробелами.tmp"]
 
         self._compareResult (titles, names, result)
 
 
     def testParseSortByName (self):
         self._attachFiles ()
-        text = u"(:attachlist sort=name:)"
+        text = "(:attachlist sort=name:)"
         result = self.parser.toHtml (text)
 
-        titles = [u"[dir]", u"[for_sort]", u"add.png", u"anchor.png", u"image.jpg", u"файл с пробелами.tmp"]
-        names = [u"dir", u"for_sort", u"add.png", u"anchor.png", u"image.jpg", u"файл с пробелами.tmp"]
+        titles = ["[dir]", "[for_sort]", "add.png", "anchor.png", "image.jpg", "файл с пробелами.tmp"]
+        names = ["dir", "for_sort", "add.png", "anchor.png", "image.jpg", "файл с пробелами.tmp"]
 
         self._compareResult (titles, names, result)
 
@@ -121,76 +121,76 @@ class WikiAttachListCommandTest (unittest.TestCase):
     def testCommandSortDescendName (self):
         self._attachFiles ()
         cmd = AttachListCommand (self.parser)
-        result = cmd.execute (u"sort=descendname", u"")
+        result = cmd.execute ("sort=descendname", "")
 
-        titles = [u"[for_sort]", u"[dir]", u"файл с пробелами.tmp", u"image.jpg", u"anchor.png", u"add.png"]
-        names = [u"for_sort", u"dir", u"файл с пробелами.tmp", u"image.jpg", u"anchor.png", u"add.png"]
+        titles = ["[for_sort]", "[dir]", "файл с пробелами.tmp", "image.jpg", "anchor.png", "add.png"]
+        names = ["for_sort", "dir", "файл с пробелами.tmp", "image.jpg", "anchor.png", "add.png"]
 
         self._compareResult (titles, names, result)
 
 
     def testParseSortDescendName (self):
         self._attachFiles ()
-        text = u"(:attachlist sort=descendname:)"
+        text = "(:attachlist sort=descendname:)"
         result = self.parser.toHtml (text)
 
-        titles = [u"[for_sort]", u"[dir]", u"файл с пробелами.tmp", u"image.jpg", u"anchor.png", u"add.png"]
-        names = [u"for_sort", u"dir", u"файл с пробелами.tmp", u"image.jpg", u"anchor.png", u"add.png"]
+        titles = ["[for_sort]", "[dir]", "файл с пробелами.tmp", "image.jpg", "anchor.png", "add.png"]
+        names = ["for_sort", "dir", "файл с пробелами.tmp", "image.jpg", "anchor.png", "add.png"]
 
         self._compareResult (titles, names, result)
 
 
     def testParseSortByExt (self):
         self._attachFiles ()
-        text = u"(:attachlist sort=ext:)"
+        text = "(:attachlist sort=ext:)"
         result = self.parser.toHtml (text)
 
-        titles = [u"[dir]", u"[for_sort]", u"image.jpg", u"add.png", u"anchor.png", u"файл с пробелами.tmp"]
-        names = [u"dir", u"for_sort", u"image.jpg", u"add.png", u"anchor.png", u"файл с пробелами.tmp"]
+        titles = ["[dir]", "[for_sort]", "image.jpg", "add.png", "anchor.png", "файл с пробелами.tmp"]
+        names = ["dir", "for_sort", "image.jpg", "add.png", "anchor.png", "файл с пробелами.tmp"]
 
         self._compareResult (titles, names, result)
 
 
     def testParseSortDescendExt (self):
         self._attachFiles ()
-        text = u"(:attachlist sort=descendext:)"
+        text = "(:attachlist sort=descendext:)"
         result = self.parser.toHtml (text)
 
-        titles = [u"[for_sort]", u"[dir]", u"файл с пробелами.tmp", u"anchor.png", u"add.png", u"image.jpg"]
-        names = [u"for_sort", u"dir", u"файл с пробелами.tmp", u"anchor.png", u"add.png", u"image.jpg"]
+        titles = ["[for_sort]", "[dir]", "файл с пробелами.tmp", "anchor.png", "add.png", "image.jpg"]
+        names = ["for_sort", "dir", "файл с пробелами.tmp", "anchor.png", "add.png", "image.jpg"]
 
         self._compareResult (titles, names, result)
 
 
     def testParseSortBySize (self):
         self._attachFiles ()
-        text = u"(:attachlist sort=size:)"
+        text = "(:attachlist sort=size:)"
         result = self.parser.toHtml (text)
 
-        titles = [u"[dir]", u"[for_sort]", u"файл с пробелами.tmp", u"anchor.png", u"add.png", u"image.jpg"]
-        names = [u"dir", u"for_sort", u"файл с пробелами.tmp", u"anchor.png", u"add.png", u"image.jpg"]
+        titles = ["[dir]", "[for_sort]", "файл с пробелами.tmp", "anchor.png", "add.png", "image.jpg"]
+        names = ["dir", "for_sort", "файл с пробелами.tmp", "anchor.png", "add.png", "image.jpg"]
 
         self._compareResult (titles, names, result)
 
 
     def testParseSortDescendSize (self):
         self._attachFiles ()
-        text = u"(:attachlist sort=descendsize:)"
+        text = "(:attachlist sort=descendsize:)"
         result = self.parser.toHtml (text)
 
-        titles = [u"[for_sort]", u"[dir]", u"image.jpg", u"add.png", u"anchor.png", u"файл с пробелами.tmp"]
-        names = [u"for_sort", u"dir", u"image.jpg", u"add.png", u"anchor.png", u"файл с пробелами.tmp"]
+        titles = ["[for_sort]", "[dir]", "image.jpg", "add.png", "anchor.png", "файл с пробелами.tmp"]
+        names = ["for_sort", "dir", "image.jpg", "add.png", "anchor.png", "файл с пробелами.tmp"]
 
         self._compareResult (titles, names, result)
 
 
     def testParseSortByDate (self):
-        files = [u"add.png", u"Anchor.png",
-                 u"image2.png", u"image.png",
-                 u"add.png2", u"файл с пробелами.tmp",
-                 u"filename"]
+        files = ["add.png", "Anchor.png",
+                 "image2.png", "image.png",
+                 "add.png2", "файл с пробелами.tmp",
+                 "filename"]
 
-        fullFilesPath = [os.path.join (u"../test/samplefiles/for_sort", fname) for fname in files]
+        fullFilesPath = [os.path.join ("../test/samplefiles/for_sort", fname) for fname in files]
 
 
         attach = Attachment (self.testPage)
@@ -204,7 +204,7 @@ class WikiAttachListCommandTest (unittest.TestCase):
         os.utime (attach.getFullPath (files[5]), (1000000000, 1500000000))
         os.utime (attach.getFullPath (files[1]), (1000000000, 1600000000))
 
-        text = u"(:attachlist sort=date:)"
+        text = "(:attachlist sort=date:)"
         result = self.parser.toHtml (text)
 
         names = [files[3], files[0], files[2], files[6], files[4], files[5], files[1]]
@@ -214,12 +214,12 @@ class WikiAttachListCommandTest (unittest.TestCase):
 
 
     def testParseSortDescendDate (self):
-        files = [u"add.png", u"Anchor.png",
-                 u"image2.png", u"image.png",
-                 u"add.png2", u"файл с пробелами.tmp",
-                 u"filename"]
+        files = ["add.png", "Anchor.png",
+                 "image2.png", "image.png",
+                 "add.png2", "файл с пробелами.tmp",
+                 "filename"]
 
-        fullFilesPath = [os.path.join (u"../test/samplefiles/for_sort", fname) for fname in files]
+        fullFilesPath = [os.path.join ("../test/samplefiles/for_sort", fname) for fname in files]
 
 
         attach = Attachment (self.testPage)
@@ -233,7 +233,7 @@ class WikiAttachListCommandTest (unittest.TestCase):
         os.utime (attach.getFullPath (files[5]), (1000000000, 1500000000))
         os.utime (attach.getFullPath (files[1]), (1000000000, 1600000000))
 
-        text = u"(:attachlist sort=descenddate:)"
+        text = "(:attachlist sort=descenddate:)"
         result = self.parser.toHtml (text)
 
         names = [files[1], files[5], files[4], files[6], files[2], files[0], files[3]]

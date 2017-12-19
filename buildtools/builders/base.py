@@ -9,11 +9,10 @@ from buildtools.buildfacts import BuildFacts
 from buildtools.utilites import print_info
 
 
-class BuilderBase(object):
+class BuilderBase(object, metaclass=abc.ABCMeta):
     """
     Base class for all builders.
     """
-    __metaclass__ = abc.ABCMeta
 
     def __init__(self, subdir_name, is_stable=False):
         self.is_stable = is_stable

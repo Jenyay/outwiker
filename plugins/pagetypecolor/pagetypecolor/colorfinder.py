@@ -9,9 +9,9 @@ def find_farthest_color(colors_rgb):
     hue_list = [color[0] for color in colors_hsv_src]
 
     if colors_hsv_src:
-        sat_middle = sum(map(lambda x: x[1], colors_hsv_src)) / len(colors_hsv_src)
+        sat_middle = sum([x[1] for x in colors_hsv_src]) / len(colors_hsv_src)
         sat_middle += random.random() * (0.3) - 0.15
-        val_middle = sum(map(lambda x: x[2], colors_hsv_src)) / len(colors_hsv_src)
+        val_middle = sum([x[2] for x in colors_hsv_src]) / len(colors_hsv_src)
     else:
         sat_middle = 0.35
         val_middle = 0.90

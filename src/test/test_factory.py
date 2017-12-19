@@ -18,7 +18,7 @@ from outwiker.core.factoryselector import FactorySelector
 
 class FactorySelectorTest(unittest.TestCase):
     def setUp(self):
-        self.path = u"../test/samplewiki"
+        self.path = "../test/samplewiki"
         self.addEventsCount = 0
         self.removeEventCount = 0
         self.eventFactory = None
@@ -30,27 +30,27 @@ class FactorySelectorTest(unittest.TestCase):
 
     def testSelection(self):
         wikiroot = WikiDocument.load(self.path)
-        html_page = wikiroot[u"Типы страниц/HTML-страница"]
+        html_page = wikiroot["Типы страниц/HTML-страница"]
         self.assertEqual(
             type(FactorySelector.getFactory(html_page.getTypeString())),
             HtmlPageFactory)
 
-        text_page = wikiroot[u"Типы страниц/Текстовая страница"]
+        text_page = wikiroot["Типы страниц/Текстовая страница"]
         self.assertEqual(
             type(FactorySelector.getFactory(text_page.getTypeString())),
             TextPageFactory)
 
-        wiki_page = wikiroot[u"Типы страниц/wiki-страница"]
+        wiki_page = wikiroot["Типы страниц/wiki-страница"]
         self.assertEqual(
             type(FactorySelector.getFactory(wiki_page.getTypeString())),
             WikiPageFactory)
 
-        search_page = wikiroot[u"Типы страниц/Страница поиска"]
+        search_page = wikiroot["Типы страниц/Страница поиска"]
         self.assertEqual(
             type(FactorySelector.getFactory(search_page.getTypeString())),
             SearchPageFactory)
 
-        test_page = wikiroot[u"Типы страниц/TestPage"]
+        test_page = wikiroot["Типы страниц/TestPage"]
         self.assertEqual(
             type(FactorySelector.getFactory(test_page.getTypeString())),
             TextPageFactory)
@@ -61,7 +61,7 @@ class FactorySelectorTest(unittest.TestCase):
 
         wikiroot = WikiDocument.load(self.path)
 
-        test_page = wikiroot[u"Типы страниц/TestPage"]
+        test_page = wikiroot["Типы страниц/TestPage"]
         self.assertEqual(
             type(FactorySelector.getFactory(test_page.getTypeString())),
             TestPageFactory)
@@ -72,7 +72,7 @@ class FactorySelectorTest(unittest.TestCase):
 
         wikiroot = WikiDocument.load(self.path)
 
-        wiki_page = wikiroot[u"Типы страниц/wiki-страница"]
+        wiki_page = wikiroot["Типы страниц/wiki-страница"]
         self.assertEqual(
             type(FactorySelector.getFactory(wiki_page.getTypeString())),
             TextPageFactory)
@@ -83,7 +83,7 @@ class FactorySelectorTest(unittest.TestCase):
 
         FactorySelector.removeFactory(WikiPageFactory().getTypeString())
 
-        wiki_page = wikiroot[u"Типы страниц/wiki-страница"]
+        wiki_page = wikiroot["Типы страниц/wiki-страница"]
         self.assertEqual(
             type(FactorySelector.getFactory(wiki_page.getTypeString())),
             TextPageFactory)
@@ -100,7 +100,7 @@ class TestPage(WikiPage):
 
     @staticmethod
     def getTypeString():
-        return u"testpage"
+        return "testpage"
 
 
 class TestPageFactory(PageFactory):
@@ -119,7 +119,7 @@ class TestPageFactory(PageFactory):
         """
         Название страницы, показываемое пользователю
         """
-        return u"Test Page"
+        return "Test Page"
 
 
     def getPageView(self, parent):

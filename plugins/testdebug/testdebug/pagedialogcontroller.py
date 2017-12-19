@@ -9,31 +9,31 @@ class DebugPageDialogController (BasePageDialogController):
 
 
     def setPageProperties (self, page):
-        print u'DebugPageDialogController.setPageProperties()'
+        print(u'DebugPageDialogController.setPageProperties()')
         return True
 
 
     def initBeforeCreation (self, parentPage):
-        print u'DebugPageDialogController.initBeforeCreation()'
+        print(u'DebugPageDialogController.initBeforeCreation()')
 
 
     def initBeforeEditing (self, currentPage):
-        print u'DebugPageDialogController.initBeforeEditing()'
+        print(u'DebugPageDialogController.initBeforeEditing()')
 
 
     def validateBeforeCreation (self, parentPage):
-        print u'DebugPageDialogController.validateBeforeCreation()'
+        print(u'DebugPageDialogController.validateBeforeCreation()')
         return True
 
 
     def validateBeforeEditing (self, currentPage):
-        print u'DebugPageDialogController.validateBeforeEditing()'
+        print(u'DebugPageDialogController.validateBeforeEditing()')
         return True
 
 
     def saveParams (self):
-        print u'DebugPageDialogController.saveParams()'
+        print(u'DebugPageDialogController.saveParams()')
 
 
     def clear (self):
-        print u'DebugPageDialogController.clear()'
+        print(u'DebugPageDialogController.clear()')

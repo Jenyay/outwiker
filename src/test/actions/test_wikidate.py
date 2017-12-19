@@ -16,10 +16,10 @@ class WikiDateActionTest (BaseMainWndTest):
     def setUp (self):
         super (WikiDateActionTest, self).setUp()
 
-        WikiPageFactory().create (self.wikiroot, u"Викистраница", [])
+        WikiPageFactory().create (self.wikiroot, "Викистраница", [])
 
-        self._wikipage = self.wikiroot[u"Викистраница"]
-        self._wikipage.content = u""
+        self._wikipage = self.wikiroot["Викистраница"]
+        self._wikipage.content = ""
 
         Application.wikiroot = self.wikiroot
 
@@ -30,7 +30,7 @@ class WikiDateActionTest (BaseMainWndTest):
 
 
     def _setFormat (self, dialog):
-        dialog.Value = u"%d - %m - %Y"
+        dialog.Value = "%d - %m - %Y"
         return wx.ID_OK
 
 
@@ -42,7 +42,7 @@ class WikiDateActionTest (BaseMainWndTest):
         self._savePage()
 
         self.assertEqual (Tester.dialogTester.count, 0)
-        self.assertEqual (self._wikipage.content, u"")
+        self.assertEqual (self._wikipage.content, "")
 
 
     def testCancelEddate (self):
@@ -53,7 +53,7 @@ class WikiDateActionTest (BaseMainWndTest):
         self._savePage()
 
         self.assertEqual (Tester.dialogTester.count, 0)
-        self.assertEqual (self._wikipage.content, u"")
+        self.assertEqual (self._wikipage.content, "")
 
 
     def testEmptyCrdate_01 (self):
@@ -64,7 +64,7 @@ class WikiDateActionTest (BaseMainWndTest):
         self._savePage()
 
         self.assertEqual (Tester.dialogTester.count, 0)
-        self.assertEqual (self._wikipage.content, u"(:crdate:)")
+        self.assertEqual (self._wikipage.content, "(:crdate:)")
 
 
     def testEmptyEddate_01 (self):
@@ -75,7 +75,7 @@ class WikiDateActionTest (BaseMainWndTest):
         self._savePage()
 
         self.assertEqual (Tester.dialogTester.count, 0)
-        self.assertEqual (self._wikipage.content, u"(:eddate:)")
+        self.assertEqual (self._wikipage.content, "(:eddate:)")
 
 
     def testSetFormatCrdate_01 (self):
@@ -86,7 +86,7 @@ class WikiDateActionTest (BaseMainWndTest):
         self._savePage()
 
         self.assertEqual (Tester.dialogTester.count, 0)
-        self.assertEqual (self._wikipage.content, u'(:crdate format="%d - %m - %Y":)')
+        self.assertEqual (self._wikipage.content, '(:crdate format="%d - %m - %Y":)')
 
 
     def testSetFormatEddate_01 (self):
@@ -97,12 +97,12 @@ class WikiDateActionTest (BaseMainWndTest):
         self._savePage()
 
         self.assertEqual (Tester.dialogTester.count, 0)
-        self.assertEqual (self._wikipage.content, u'(:eddate format="%d - %m - %Y":)')
+        self.assertEqual (self._wikipage.content, '(:eddate format="%d - %m - %Y":)')
 
 
     def testAppendCrdate_01 (self):
         Tester.dialogTester.appendOk ()
-        text = u"Абырвалг "
+        text = "Абырвалг "
         self._wikipage.content = text
 
         Application.selectedPage = self._wikipage
@@ -113,12 +113,12 @@ class WikiDateActionTest (BaseMainWndTest):
         self._savePage()
 
         self.assertEqual (Tester.dialogTester.count, 0)
-        self.assertEqual (self._wikipage.content, u"Абырвалг (:crdate:)")
+        self.assertEqual (self._wikipage.content, "Абырвалг (:crdate:)")
 
 
     def testAppendEddate_01 (self):
         Tester.dialogTester.appendOk ()
-        text = u"Абырвалг "
+        text = "Абырвалг "
         self._wikipage.content = text
 
         Application.selectedPage = self._wikipage
@@ -129,12 +129,12 @@ class WikiDateActionTest (BaseMainWndTest):
         self._savePage()
 
         self.assertEqual (Tester.dialogTester.count, 0)
-        self.assertEqual (self._wikipage.content, u"Абырвалг (:eddate:)")
+        self.assertEqual (self._wikipage.content, "Абырвалг (:eddate:)")
 
 
     def testReplaceCrdate_01 (self):
         Tester.dialogTester.appendOk ()
-        text = u"ЫЫЫ Абырвалг"
+        text = "ЫЫЫ Абырвалг"
         self._wikipage.content = text
 
         Application.selectedPage = self._wikipage
@@ -145,12 +145,12 @@ class WikiDateActionTest (BaseMainWndTest):
         self._savePage()
 
         self.assertEqual (Tester.dialogTester.count, 0)
-        self.assertEqual (self._wikipage.content, u"(:crdate:) Абырвалг")
+        self.assertEqual (self._wikipage.content, "(:crdate:) Абырвалг")
 
 
     def testReplaceEddate_01 (self):
         Tester.dialogTester.appendOk ()
-        text = u"ЫЫЫ Абырвалг"
+        text = "ЫЫЫ Абырвалг"
         self._wikipage.content = text
 
         Application.selectedPage = self._wikipage
@@ -161,4 +161,4 @@ class WikiDateActionTest (BaseMainWndTest):
         self._savePage()
 
         self.assertEqual (Tester.dialogTester.count, 0)
-        self.assertEqual (self._wikipage.content, u"(:eddate:) Абырвалг")
+        self.assertEqual (self._wikipage.content, "(:eddate:) Абырвалг")

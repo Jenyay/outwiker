@@ -30,7 +30,7 @@ class TestPageView (BasePagePanel):
         """
         Вызов печати страницы
         """
-        print u"Print!"
+        print (u"Print!")
 
 
     def UpdateView (self, page):

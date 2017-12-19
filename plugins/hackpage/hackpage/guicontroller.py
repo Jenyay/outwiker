@@ -47,9 +47,9 @@ class GuiController(object):
         self._bind()
 
         if self._application.mainWindow is not None:
-            map(lambda action: self._application.actionController.register(
+            list(map(lambda action: self._application.actionController.register(
                 action(self._application, self._controller), None),
-                self._actions)
+                self._actions))
 
             self.createTools()
 
@@ -65,8 +65,8 @@ class GuiController(object):
             menu,
             u'HackPage')
 
-        map(lambda action: self._application.actionController.appendMenuItem(
-            action.stringId, menu), self._actions)
+        list(map(lambda action: self._application.actionController.appendMenuItem(
+            action.stringId, menu), self._actions))
 
     def destroy(self):
         self._unbind()
@@ -74,8 +74,8 @@ class GuiController(object):
         mainWindow = self._application.mainWindow
 
         if mainWindow is not None:
-            map(lambda action: actionController.removeAction(action.stringId),
-                self._actions)
+            list(map(lambda action: actionController.removeAction(action.stringId),
+                self._actions))
             mainWindow.mainMenu.toolsMenu.Remove(self._mainSubmenuItem)
             self._mainSubmenuItem = None
 

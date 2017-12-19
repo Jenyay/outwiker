@@ -2,6 +2,7 @@
 
 from abc import abstractmethod
 from abc import ABCMeta
+import idna
 
 import wx
 
@@ -84,13 +85,13 @@ class HtmlRender (wx.Panel):
         if link is None:
             return None
 
-        protocol = self._getLinkProtocol (link)
+        protocol = self._getLinkProtocol(link)
         if protocol is not None:
             url = link[len (protocol):]
             try:
-                link = u"{}{}".format (
+                link = u"{}{}".format(
                     protocol,
-                    unicode (url.decode ("idna")))
+                    idna.decode(url))
             except UnicodeError:
                 # Под IE ссылки не преобразуются в кодировку IDNA
                 pass

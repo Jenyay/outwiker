@@ -37,7 +37,7 @@ class PageUidDepot(object):
         if uid is not None:
             self.__uids[uid] = root
 
-        list(map(lambda child: self.__load(child), root.children))
+        [self.__load(child) for child in root.children]
 
     def __getUid(self, page):
         """
@@ -91,7 +91,7 @@ class PageUidDepot(object):
         return uid
 
     def __generateUid(self):
-        return "__" + unicode(uuid.uuid4())
+        return "__" + str(uuid.uuid4())
 
     def changeUid(self, page, newUid):
         """

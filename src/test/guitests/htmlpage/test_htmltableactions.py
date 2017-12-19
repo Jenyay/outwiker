@@ -19,7 +19,7 @@ class HtmlTableActionsTest (BaseMainWndTest):
         config = GeneralGuiConfig (self._application.config)
         config.tableColsCount.remove_option()
         factory = HtmlPageFactory()
-        self._testpage = factory.create (self.wikiroot, u"Страница 1", [])
+        self._testpage = factory.create (self.wikiroot, "Страница 1", [])
 
         self._application.wikiroot = self.wikiroot
         self._application.selectedPage = self._testpage
@@ -36,7 +36,7 @@ class HtmlTableActionsTest (BaseMainWndTest):
         editor = self._getCodeEditor()
         self._application.actionController.getAction (TABLE_STR_ID).run (None)
 
-        validResult = u'''<table border="1">
+        validResult = '''<table border="1">
 <tr>
 <td></td>
 </tr>
@@ -49,7 +49,7 @@ class HtmlTableActionsTest (BaseMainWndTest):
         editor = self._getCodeEditor()
         self._application.actionController.getAction (TABLE_ROW_STR_ID).run (None)
 
-        validResult = u'''<tr>
+        validResult = '''<tr>
 <td></td>
 </tr>'''
 
@@ -60,7 +60,7 @@ class HtmlTableActionsTest (BaseMainWndTest):
         editor = self._getCodeEditor()
         self._application.actionController.getAction (TABLE_CELL_STR_ID).run (None)
 
-        validResult = u'''<td></td>'''
+        validResult = '''<td></td>'''
 
         self.assertEqual (editor.GetText(), validResult)
 

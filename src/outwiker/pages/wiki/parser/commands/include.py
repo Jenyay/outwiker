@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 import os.path
-import cgi
+import html
 
 from outwiker.pages.wiki.parser.command import Command
 from outwiker.core.attachment import Attachment
@@ -44,9 +44,9 @@ class IncludeCommand (Command):
         encoding = self._getEncoding (params_dict)
 
         try:
-            with open (path) as fp:
+            with open(path, encoding) as fp:
                 # Почему-то в конце всегда оказывается перевод строки
-                text = unicode (fp.read (), encoding).rstrip()
+                text = fp.read().rstrip()
         except IOError:
             return _(u"<b>Can't open file %s</b>" % path)
         except Exception:
@@ -62,7 +62,7 @@ class IncludeCommand (Command):
         result = text
 
         if "htmlescape" in params_dict:
-            result = cgi.escape (text)
+            result = html.escape(text)
 
         if "wikiparse" in params_dict:
             result = self.parser.parseWikiMarkup (result)

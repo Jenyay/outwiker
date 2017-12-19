@@ -25,8 +25,6 @@ class LogRedirector(object):
         logging.getLogger("PIL").setLevel(logging.WARNING)
 
     def write(self, message):
-        if isinstance(message, unicode):
-            message = message.encode('utf8')
         self._terminal.write(message)
         with open(self._fname, "a") as fp:
             if self._firstWrite:

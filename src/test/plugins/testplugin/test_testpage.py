@@ -15,7 +15,7 @@ class TestPageTest (BaseMainWndTest):
     def setUp (self):
         super (TestPageTest, self).setUp ()
 
-        self.dirlist = [u"../test/plugins/testpage"]
+        self.dirlist = ["../test/plugins/testpage"]
 
         self.loader = PluginsLoader(Application)
         self.loader.load (self.dirlist)
@@ -32,12 +32,12 @@ class TestPageTest (BaseMainWndTest):
 
 
     def testAddRemoveFactory (self):
-        plugin = self.loader[u"TestPage"]
+        plugin = self.loader["TestPage"]
 
-        path = u"../test/samplewiki"
+        path = "../test/samplewiki"
         wikiroot = WikiDocument.load (path)
 
-        test_page = wikiroot[u"Типы страниц/TestPage"]
+        test_page = wikiroot["Типы страниц/TestPage"]
         self.assertEqual (type (test_page), plugin.TestPage)
 
         self.assertEqual (type (FactorySelector.getFactory (plugin.TestPage.getTypeString())),
@@ -54,10 +54,10 @@ class TestPageTest (BaseMainWndTest):
 
 
     def testPageView (self):
-        plugin = self.loader[u"TestPage"]
+        plugin = self.loader["TestPage"]
 
         wikiroot = WikiDocument.create (self.path)
-        test_page = plugin.TestPageFactory().create (wikiroot, u"Страница 1", [])
+        test_page = plugin.TestPageFactory().create (wikiroot, "Страница 1", [])
 
         Application.wikiroot = wikiroot
         Application.selectedPage = test_page
@@ -67,12 +67,12 @@ class TestPageTest (BaseMainWndTest):
 
 
     def testLoadContent (self):
-        plugin = self.loader[u"TestPage"]
+        plugin = self.loader["TestPage"]
 
         wikiroot = WikiDocument.create (self.path)
-        test_page = plugin.TestPageFactory().create (wikiroot, u"Страница 1", [])
+        test_page = plugin.TestPageFactory().create (wikiroot, "Страница 1", [])
 
-        test_page.content = u"Абырвалг"
+        test_page.content = "Абырвалг"
 
         Application.wikiroot = wikiroot
         Application.selectedPage = test_page
@@ -80,30 +80,30 @@ class TestPageTest (BaseMainWndTest):
         pageview = Application.mainWindow.pagePanel.pageView
         pageContent = pageview.text.GetValue()
 
-        self.assertEqual (pageContent, u"Абырвалг")
+        self.assertEqual (pageContent, "Абырвалг")
 
 
     def testChangeContent (self):
-        plugin = self.loader[u"TestPage"]
+        plugin = self.loader["TestPage"]
 
         wikiroot = WikiDocument.create (self.path)
-        test_page = plugin.TestPageFactory().create (wikiroot, u"Страница 1", [])
-        test_page.content = u"Абырвалг"
+        test_page = plugin.TestPageFactory().create (wikiroot, "Страница 1", [])
+        test_page.content = "Абырвалг"
 
         Application.wikiroot = wikiroot
         Application.selectedPage = test_page
 
         pageview = Application.mainWindow.pagePanel.pageView
-        pageview.text.SetValue (u"Бла-бла-бла")
+        pageview.text.SetValue ("Бла-бла-бла")
 
         Application.selectedPage = None
         Application.wikiroot = None
 
         wikiroot_other = WikiDocument.load (self.path)
         Application.wikiroot = wikiroot_other
-        Application.selectedPage = wikiroot_other[u"Страница 1"]
+        Application.selectedPage = wikiroot_other["Страница 1"]
 
         pageview = Application.mainWindow.pagePanel.pageView
         pageContent = pageview.text.GetValue()
 
-        self.assertEqual (pageContent, u"Бла-бла-бла")
+        self.assertEqual (pageContent, "Бла-бла-бла")

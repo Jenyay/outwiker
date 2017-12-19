@@ -38,8 +38,7 @@ class BaseWikiPageView (BaseHtmlPanel):
         self.__wikiNotationActions = self._getSpecificActions()
 
         self._toolbars = self._createToolbars(self.mainWindow)
-        list(map(lambda toolbar: self.mainWindow.toolbars.addToolbar(toolbar),
-            self._toolbars))
+        [self.mainWindow.toolbars.addToolbar(toolbar) for toolbar in self._toolbars]
 
         self.notebook.SetPageText(0, self._getPageTitle())
 
@@ -136,12 +135,10 @@ class BaseWikiPageView (BaseHtmlPanel):
         actionController = self._application.actionController
 
         # Удалим элементы меню
-        list(map(lambda action: actionController.removeMenuItem(action.stringId),
-            self.__wikiNotationActions))
+        [actionController.removeMenuItem(action.stringId) for action in self.__wikiNotationActions]
 
         # Удалим элементы меню полиморфных действий
-        list(map(lambda strid: actionController.removeMenuItem(strid),
-            self.__polyActions))
+        [actionController.removeMenuItem(strid) for strid in self.__polyActions]
 
         actionController.removeMenuItem(WikiOpenHtmlCodeAction.stringId)
         actionController.removeMenuItem(WikiUpdateHtmlAction.stringId)
@@ -149,16 +146,13 @@ class BaseWikiPageView (BaseHtmlPanel):
 
         # Удалим кнопки с панелей инструментов
         if self._toolbars:
-            list(map(lambda action: actionController.removeToolbarButton(
-                    action.stringId),
-                self.__wikiNotationActions))
+            [actionController.removeToolbarButton(
+                    action.stringId) for action in self.__wikiNotationActions]
 
-            list(map(lambda strid: actionController.removeToolbarButton(strid),
-                self.__polyActions))
+            [actionController.removeToolbarButton(strid) for strid in self.__polyActions]
 
         # Обнулим функции действия в полиморфных действиях
-        list(map(lambda strid: actionController.getAction(strid).setFunc(None),
-            self.__polyActions))
+        [actionController.getAction(strid).setFunc(None) for strid in self.__polyActions]
 
     @property
     def toolsMenu(self):
@@ -205,13 +199,11 @@ class BaseWikiPageView (BaseHtmlPanel):
         actionController = self._application.actionController
 
         # Активируем / дизактивируем собственные действия
-        list(map(lambda action: actionController.enableTools(action.stringId,
-                                                        enabled),
-            self.__wikiNotationActions))
+        [actionController.enableTools(action.stringId,
+                                                        enabled) for action in self.__wikiNotationActions]
 
         # Активируем / дизактивируем полиморфные действия
-        list(map(lambda strid: actionController.enableTools(strid, enabled),
-            self.__polyActions))
+        [actionController.enableTools(strid, enabled) for strid in self.__polyActions]
 
     def _onSwitchCodeHtml(self):
         assert self._currentpage is not None

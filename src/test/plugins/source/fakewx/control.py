@@ -6,7 +6,7 @@ from .window import Window
 class Control (Window):
     def __init__ (self):
         super (Control, self).__init__ ()
-        self.LabelText = u""
+        self.LabelText = ""
 
 
     def GetLabelText (self):

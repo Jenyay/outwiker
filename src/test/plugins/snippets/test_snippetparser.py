@@ -15,7 +15,7 @@ from test.utils import removeDir
 
 class SnippetParserTest(unittest.TestCase):
     def setUp(self):
-        plugins_dir = [u"../plugins/snippets"]
+        plugins_dir = ["../plugins/snippets"]
 
         self.loader = PluginsLoader(Application)
         self.loader.load(plugins_dir)
@@ -31,24 +31,24 @@ class SnippetParserTest(unittest.TestCase):
         self.loader.clear()
 
     def _createWiki(self):
-        self.path = mkdtemp(prefix=u'Абырвалг абыр')
+        self.path = mkdtemp(prefix='Абырвалг абыр')
 
         self.wikiroot = WikiDocument.create(self.path)
 
-        WikiPageFactory().create(self.wikiroot, u"Страница 1", [])
-        self.testPage = self.wikiroot[u"Страница 1"]
+        WikiPageFactory().create(self.wikiroot, "Страница 1", [])
+        self.testPage = self.wikiroot["Страница 1"]
 
     def test_empty(self):
         from snippets.snippetparser import SnippetParser
-        template = u''
-        selectedText = u''
+        template = ''
+        selectedText = ''
         vars = {}
 
-        right_result = u''
+        right_result = ''
         right_variables = set()
 
         page = self.testPage
-        parser = SnippetParser(template, u'.', self._application)
+        parser = SnippetParser(template, '.', self._application)
         result = parser.process(selectedText, page, **vars)
         variables = parser.getVariables()
 
@@ -57,15 +57,15 @@ class SnippetParserTest(unittest.TestCase):
 
     def test_simple(self):
         from snippets.snippetparser import SnippetParser
-        template = u'Проверка 123'
-        selectedText = u''
+        template = 'Проверка 123'
+        selectedText = ''
         vars = {}
 
-        right_result = u'Проверка 123'
+        right_result = 'Проверка 123'
         right_variables = set()
 
         page = self.testPage
-        parser = SnippetParser(template, u'.', self._application)
+        parser = SnippetParser(template, '.', self._application)
         result = parser.process(selectedText, page, **vars)
         variables = parser.getVariables()
 
@@ -74,15 +74,15 @@ class SnippetParserTest(unittest.TestCase):
 
     def test_vars_01(self):
         from snippets.snippetparser import SnippetParser
-        template = u'{{varname}}'
-        selectedText = u''
-        vars = {u'varname': u'Проверка 123'}
+        template = '{{varname}}'
+        selectedText = ''
+        vars = {'varname': 'Проверка 123'}
 
-        right_result = u'Проверка 123'
-        right_variables = {u'varname'}
+        right_result = 'Проверка 123'
+        right_variables = {'varname'}
 
         page = self.testPage
-        parser = SnippetParser(template, u'.', self._application)
+        parser = SnippetParser(template, '.', self._application)
         result = parser.process(selectedText, page, **vars)
         variables = parser.getVariables()
 
@@ -91,18 +91,18 @@ class SnippetParserTest(unittest.TestCase):
 
     def test_vars_02(self):
         from snippets.snippetparser import SnippetParser
-        template = u'{{varname}}'
-        selectedText = u''
+        template = '{{varname}}'
+        selectedText = ''
         vars = {
-            u'varname': u'Проверка 123',
-            u'varname_2': u'Абырвалг',
+            'varname': 'Проверка 123',
+            'varname_2': 'Абырвалг',
         }
 
-        right_result = u'Проверка 123'
-        right_variables = {u'varname'}
+        right_result = 'Проверка 123'
+        right_variables = {'varname'}
 
         page = self.testPage
-        parser = SnippetParser(template, u'.', self._application)
+        parser = SnippetParser(template, '.', self._application)
         result = parser.process(selectedText, page, **vars)
         variables = parser.getVariables()
 
@@ -111,15 +111,15 @@ class SnippetParserTest(unittest.TestCase):
 
     def test_vars_03(self):
         from snippets.snippetparser import SnippetParser
-        template = u'Проверка: {{varname}}'
-        selectedText = u''
+        template = 'Проверка: {{varname}}'
+        selectedText = ''
         vars = {}
 
-        right_result = u'Проверка: '
-        right_variables = {u'varname'}
+        right_result = 'Проверка: '
+        right_variables = {'varname'}
 
         page = self.testPage
-        parser = SnippetParser(template, u'.', self._application)
+        parser = SnippetParser(template, '.', self._application)
         result = parser.process(selectedText, page, **vars)
         variables = parser.getVariables()
 
@@ -128,19 +128,19 @@ class SnippetParserTest(unittest.TestCase):
 
     def test_include_01(self):
         from snippets.snippetparser import SnippetParser
-        template = u'{{varname}} {% include "included" %}'
-        selectedText = u''
+        template = '{{varname}} {% include "included" %}'
+        selectedText = ''
         vars = {
-            u'varname': u'Проверка 123',
-            u'var_inc': u'Абырвалг',
+            'varname': 'Проверка 123',
+            'var_inc': 'Абырвалг',
         }
 
-        right_result = u'Проверка 123 Включенный шаблон Абырвалг'
-        right_variables = {u'varname', u'var_inc'}
+        right_result = 'Проверка 123 Включенный шаблон Абырвалг'
+        right_variables = {'varname', 'var_inc'}
 
         page = self.testPage
         parser = SnippetParser(template,
-                               u'../test/snippets',
+                               '../test/snippets',
                                self._application)
         result = parser.process(selectedText, page, **vars)
         variables = parser.getVariables()
@@ -151,13 +151,13 @@ class SnippetParserTest(unittest.TestCase):
     def test_global_var_title(self):
         from snippets.snippetparser import SnippetParser
         page = self.testPage
-        template = u'{{__title}}'
-        selectedText = u''
+        template = '{{__title}}'
+        selectedText = ''
         vars = {}
 
         right_result = page.title
 
-        parser = SnippetParser(template, u'.', self._application)
+        parser = SnippetParser(template, '.', self._application)
         result = parser.process(selectedText, page, **vars)
 
         self.assertEqual(result, right_result)
@@ -165,13 +165,13 @@ class SnippetParserTest(unittest.TestCase):
     def test_global_var_text(self):
         from snippets.snippetparser import SnippetParser
         page = self.testPage
-        template = u'{{__text}}'
-        selectedText = u'Проверка'
+        template = '{{__text}}'
+        selectedText = 'Проверка'
         vars = {}
 
-        right_result = u'Проверка'
+        right_result = 'Проверка'
 
-        parser = SnippetParser(template, u'.', self._application)
+        parser = SnippetParser(template, '.', self._application)
         result = parser.process(selectedText, page, **vars)
 
         self.assertEqual(result, right_result)
@@ -179,13 +179,13 @@ class SnippetParserTest(unittest.TestCase):
     def test_global_var_subpath(self):
         from snippets.snippetparser import SnippetParser
         page = self.testPage
-        template = u'{{__subpath}}'
-        selectedText = u''
+        template = '{{__subpath}}'
+        selectedText = ''
         vars = {}
 
         right_result = page.subpath
 
-        parser = SnippetParser(template, u'.', self._application)
+        parser = SnippetParser(template, '.', self._application)
         result = parser.process(selectedText, page, **vars)
 
         self.assertEqual(result, right_result)
@@ -193,13 +193,13 @@ class SnippetParserTest(unittest.TestCase):
     def test_global_var_attach(self):
         from snippets.snippetparser import SnippetParser
         page = self.testPage
-        template = u'{{__attach}}'
-        selectedText = u''
+        template = '{{__attach}}'
+        selectedText = ''
         vars = {}
 
         right_result = Attachment(page).getAttachPath(False)
 
-        parser = SnippetParser(template, u'.', self._application)
+        parser = SnippetParser(template, '.', self._application)
         result = parser.process(selectedText, page, **vars)
 
         self.assertEqual(result, right_result)
@@ -208,13 +208,13 @@ class SnippetParserTest(unittest.TestCase):
     def test_global_var_folder(self):
         from snippets.snippetparser import SnippetParser
         page = self.testPage
-        template = u'{{__folder}}'
-        selectedText = u''
+        template = '{{__folder}}'
+        selectedText = ''
         vars = {}
 
         right_result = page.path
 
-        parser = SnippetParser(template, u'.', self._application)
+        parser = SnippetParser(template, '.', self._application)
         result = parser.process(selectedText, page, **vars)
 
         self.assertEqual(result, right_result)
@@ -222,13 +222,13 @@ class SnippetParserTest(unittest.TestCase):
     def test_global_var_pageid(self):
         from snippets.snippetparser import SnippetParser
         page = self.testPage
-        template = u'{{__pageid}}'
-        selectedText = u''
+        template = '{{__pageid}}'
+        selectedText = ''
         vars = {}
 
         right_result = self._application.pageUidDepot.createUid(page)
 
-        parser = SnippetParser(template, u'.', self._application)
+        parser = SnippetParser(template, '.', self._application)
         result = parser.process(selectedText, page, **vars)
 
         self.assertEqual(result, right_result)
@@ -238,13 +238,13 @@ class SnippetParserTest(unittest.TestCase):
         date = datetime(2016, 12, 9, 14, 23)
         page = self.testPage
         page.datetime = date
-        template = u'{{__eddate}}'
-        selectedText = u''
+        template = '{{__eddate}}'
+        selectedText = ''
         vars = {}
 
-        right_result = unicode(date)
+        right_result = str(date)
 
-        parser = SnippetParser(template, u'.', self._application)
+        parser = SnippetParser(template, '.', self._application)
         result = parser.process(selectedText, page, **vars)
 
         self.assertEqual(result, right_result)
@@ -254,13 +254,13 @@ class SnippetParserTest(unittest.TestCase):
         date = datetime(2016, 12, 9, 14, 0)
         page = self.testPage
         page.creationdatetime = date
-        template = u'{{__crdate}}'
-        selectedText = u''
+        template = '{{__crdate}}'
+        selectedText = ''
         vars = {}
 
-        right_result = unicode(date)
+        right_result = str(date)
 
-        parser = SnippetParser(template, u'.', self._application)
+        parser = SnippetParser(template, '.', self._application)
         result = parser.process(selectedText, page, **vars)
 
         self.assertEqual(result, right_result)
@@ -268,14 +268,14 @@ class SnippetParserTest(unittest.TestCase):
     def test_global_var_tags_01(self):
         from snippets.snippetparser import SnippetParser
         page = self.testPage
-        page.tags = [u'проверка', u'test', u'тест']
-        template = u'{{__tags}}'
-        selectedText = u''
+        page.tags = ['проверка', 'test', 'тест']
+        template = '{{__tags}}'
+        selectedText = ''
         vars = {}
 
-        right_result = u'test, проверка, тест'
+        right_result = 'test, проверка, тест'
 
-        parser = SnippetParser(template, u'.', self._application)
+        parser = SnippetParser(template, '.', self._application)
         result = parser.process(selectedText, page, **vars)
 
         self.assertEqual(result, right_result)
@@ -283,14 +283,14 @@ class SnippetParserTest(unittest.TestCase):
     def test_global_var_tags_02(self):
         from snippets.snippetparser import SnippetParser
         page = self.testPage
-        page.tags = [u'проверка', u'test', u'тест']
-        template = u'{% for tag in __tags %}{{tag}}---{% endfor %}'
-        selectedText = u''
+        page.tags = ['проверка', 'test', 'тест']
+        template = '{% for tag in __tags %}{{tag}}---{% endfor %}'
+        selectedText = ''
         vars = {}
 
-        right_result = u'test---проверка---тест---'
+        right_result = 'test---проверка---тест---'
 
-        parser = SnippetParser(template, u'.', self._application)
+        parser = SnippetParser(template, '.', self._application)
         result = parser.process(selectedText, page, **vars)
 
         self.assertEqual(result, right_result)
@@ -299,13 +299,13 @@ class SnippetParserTest(unittest.TestCase):
         from snippets.snippetparser import SnippetParser
         page = self.testPage
         page.tags = []
-        template = u'{{__tags}}'
-        selectedText = u''
+        template = '{{__tags}}'
+        selectedText = ''
         vars = {}
 
-        right_result = u''
+        right_result = ''
 
-        parser = SnippetParser(template, u'.', self._application)
+        parser = SnippetParser(template, '.', self._application)
         result = parser.process(selectedText, page, **vars)
 
         self.assertEqual(result, right_result)
@@ -313,17 +313,17 @@ class SnippetParserTest(unittest.TestCase):
     def test_global_var_childlist_01(self):
         from snippets.snippetparser import SnippetParser
         page = self.testPage
-        WikiPageFactory().create(page, u"Страница 1", [])
-        WikiPageFactory().create(page, u"Страница 2", [])
-        WikiPageFactory().create(page, u"Страница 3", [])
+        WikiPageFactory().create(page, "Страница 1", [])
+        WikiPageFactory().create(page, "Страница 2", [])
+        WikiPageFactory().create(page, "Страница 3", [])
 
-        template = u'{{__childlist}}'
-        selectedText = u''
+        template = '{{__childlist}}'
+        selectedText = ''
         vars = {}
 
-        right_result = u'Страница 1, Страница 2, Страница 3'
+        right_result = 'Страница 1, Страница 2, Страница 3'
 
-        parser = SnippetParser(template, u'.', self._application)
+        parser = SnippetParser(template, '.', self._application)
         result = parser.process(selectedText, page, **vars)
 
         self.assertEqual(result, right_result)
@@ -331,21 +331,21 @@ class SnippetParserTest(unittest.TestCase):
     def test_global_var_childlist_02(self):
         from snippets.snippetparser import SnippetParser
         page = self.testPage
-        subpage1 = WikiPageFactory().create(page, u"Страница 1", [])
-        subpage2 = WikiPageFactory().create(page, u"Страница 2", [])
-        subpage3 = WikiPageFactory().create(page, u"Страница 3", [])
+        subpage1 = WikiPageFactory().create(page, "Страница 1", [])
+        subpage2 = WikiPageFactory().create(page, "Страница 2", [])
+        subpage3 = WikiPageFactory().create(page, "Страница 3", [])
 
         subpage2.order = 1
         subpage3.order = 4
         subpage1.order = 10
 
-        template = u'{{__childlist}}'
-        selectedText = u''
+        template = '{{__childlist}}'
+        selectedText = ''
         vars = {}
 
-        right_result = u'Страница 2, Страница 3, Страница 1'
+        right_result = 'Страница 2, Страница 3, Страница 1'
 
-        parser = SnippetParser(template, u'.', self._application)
+        parser = SnippetParser(template, '.', self._application)
         result = parser.process(selectedText, page, **vars)
 
         self.assertEqual(result, right_result)
@@ -353,20 +353,20 @@ class SnippetParserTest(unittest.TestCase):
     def test_global_var_type(self):
         from snippets.snippetparser import SnippetParser
         page = self.testPage
-        template = u'{{__type}}'
-        selectedText = u''
+        template = '{{__type}}'
+        selectedText = ''
         vars = {}
 
-        right_result = u'wiki'
+        right_result = 'wiki'
 
-        parser = SnippetParser(template, u'.', self._application)
+        parser = SnippetParser(template, '.', self._application)
         result = parser.process(selectedText, page, **vars)
 
         self.assertEqual(result, right_result)
 
     def test_global_var_attachilist(self):
         from snippets.snippetparser import SnippetParser
-        fnames = [u'ccc.png', u'aaa.tmp', u'zzz.doc']
+        fnames = ['ccc.png', 'aaa.tmp', 'zzz.doc']
         page = self.testPage
         attachdir = Attachment(page).getAttachPath(True)
         for fname in fnames:
@@ -375,25 +375,25 @@ class SnippetParserTest(unittest.TestCase):
                 pass
 
         page = self.testPage
-        template = u'{{__attachlist}}'
-        selectedText = u''
+        template = '{{__attachlist}}'
+        selectedText = ''
         vars = {}
 
-        right_result = u'aaa.tmp, ccc.png, zzz.doc'
+        right_result = 'aaa.tmp, ccc.png, zzz.doc'
 
-        parser = SnippetParser(template, u'.', self._application)
+        parser = SnippetParser(template, '.', self._application)
         result = parser.process(selectedText, page, **vars)
 
         self.assertEqual(result, right_result)
 
     def test_error_01(self):
         from snippets.snippetparser import SnippetParser, SnippetException
-        template = u'Переменная = {{переменная}}'
-        selectedText = u''
-        vars = {u'переменная': u'Проверка 123'}
+        template = 'Переменная = {{переменная}}'
+        selectedText = ''
+        vars = {'переменная': 'Проверка 123'}
 
         page = self.testPage
-        parser = SnippetParser(template, u'.', self._application)
+        parser = SnippetParser(template, '.', self._application)
 
         self.assertRaises(SnippetException,
                           parser.process,
@@ -403,8 +403,8 @@ class SnippetParserTest(unittest.TestCase):
 
     def test_error_02(self):
         from snippets.snippetparser import SnippetParser, SnippetException
-        template = u'Переменная = {{переменная}}'
+        template = 'Переменная = {{переменная}}'
 
-        parser = SnippetParser(template, u'.', self._application)
+        parser = SnippetParser(template, '.', self._application)
 
         self.assertRaises(SnippetException, parser.getVariables)

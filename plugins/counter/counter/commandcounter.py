@@ -164,7 +164,7 @@ class _Counter (object):
 
 
     def _getMyString (self):
-        return unicode (str (self._counter), "utf8")
+        return str(self._counter)
 
 
     def _createString (self, parent, startval=1, separator=u"."):

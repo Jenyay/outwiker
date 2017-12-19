@@ -8,7 +8,7 @@ class LightboxLoadingTest (BasePluginLoadingTest):
         """
         Должен возвращать путь до папки с тестируемым плагином
         """
-        return u"../plugins/lightbox"
+        return "../plugins/lightbox"
 
 
     def getPluginName (self):

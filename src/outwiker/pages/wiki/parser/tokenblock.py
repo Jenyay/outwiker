@@ -26,11 +26,10 @@ class TextBlockToken (object):
         return conversionParseAction
 
 
-class NestedBlockBase(object):
+class NestedBlockBase(object, metaclass=ABCMeta):
     '''
     Base class for tokens of the nested blocks.
     '''
-    __metaclass__ = ABCMeta
 
     start = None
     end = None

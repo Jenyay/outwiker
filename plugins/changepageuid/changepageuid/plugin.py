@@ -5,10 +5,9 @@ import os.path
 from outwiker.core.pluginbase import Plugin
 from outwiker.core.commands import getCurrentVersion
 from outwiker.core.version import Version, StatusSet
-from outwiker.core.system import getOS
 
 
-__version__ = u"2.0.0"
+__version__ = u"2.0.1"
 
 
 def _no_translate(text):
@@ -63,8 +62,7 @@ else:
 
         def _initlocale(self, domain):
             from .i18n import set_
-            langdir = unicode(os.path.join(os.path.dirname(__file__),
-                                           "locale"), getOS().filesEncoding)
+            langdir = os.path.join(os.path.dirname(__file__), "locale")
             global _
 
             try:

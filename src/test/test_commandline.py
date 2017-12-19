@@ -27,7 +27,7 @@ class CommandLineTest(unittest.TestCase):
 
         self.assertRaises(CommandLineException,
                           cl.parseParams,
-                          [path, u'-abyrvalg'])
+                          [path, '-abyrvalg'])
 
     def test_Help_01(self):
         cl = CommandLine()
@@ -67,13 +67,13 @@ class CommandLineTest(unittest.TestCase):
         cl = CommandLine()
         cl.parseParams(['--page=Page 1'])
 
-        self.assertEqual(cl.page_id, u'Page 1')
+        self.assertEqual(cl.page_id, 'Page 1')
 
     def test_PageId_02(self):
         cl = CommandLine()
         cl.parseParams(['-p', 'Page 1'])
 
-        self.assertEqual(cl.page_id, u'Page 1')
+        self.assertEqual(cl.page_id, 'Page 1')
 
     def test_PageId_03(self):
         cl = CommandLine()

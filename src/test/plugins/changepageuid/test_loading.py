@@ -8,7 +8,7 @@ class ChangePageUIDLoadingTest (BasePluginLoadingTest):
         """
         Должен возвращать путь до папки с тестируемым плагином
         """
-        return u"../plugins/changepageuid"
+        return "../plugins/changepageuid"
 
 
     def getPluginName (self):

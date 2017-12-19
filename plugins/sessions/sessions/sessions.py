@@ -5,13 +5,12 @@ import os.path
 from outwiker.core.pluginbase import Plugin
 from outwiker.core.commands import getCurrentVersion
 from outwiker.core.version import Version, StatusSet
-from outwiker.core.system import getOS
 
-__version__ = u"1.0.4"
+__version__ = u"2.0.1"
 
 
-if getCurrentVersion() < Version (1, 8, 0, 732, status=StatusSet.DEV):
-    print ("Sessions plugin. OutWiker version requirement: 1.8.0.732")
+if getCurrentVersion() < Version(2, 1, 0, 833, status=StatusSet.DEV):
+    print ("Sessions plugin. OutWiker version requirement: 2.1.0.833")
 else:
     from .i18n import set_
     from .plugincontroller import PluginController
@@ -69,12 +68,12 @@ else:
         #############################################
 
         def _initlocale (self, domain):
-            langdir = unicode (os.path.join (os.path.dirname (__file__), "locale"), getOS().filesEncoding)
+            langdir = os.path.join (os.path.dirname (__file__), "locale")
             global _
 
             try:
                 _ = self._init_i18n (domain, langdir)
-            except BaseException, e:
-                print e
+            except BaseException as e:
+                print (e)
 
             set_(_)

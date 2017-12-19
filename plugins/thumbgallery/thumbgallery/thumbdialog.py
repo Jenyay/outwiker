@@ -60,7 +60,7 @@ class ThumbDialog (wx.Dialog):
 
 
     def _onAll (self, event):
-        self.attachFiles.SetChecked (range (self.attachFiles.GetCount()))
+        self.attachFiles.SetChecked (list(range(self.attachFiles.GetCount())))
 
 
     def _onClear (self, event):

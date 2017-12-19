@@ -21,16 +21,16 @@ class FactorySelector(object):
 
     @staticmethod
     def getFactories():
-        return sorted(list(FactorySelector._factories.values()),
+        return sorted(FactorySelector._factories.values(),
                       key=lambda x: x.title)
 
     @staticmethod
-    def getFactory(pageType):
+    def getFactory(page_type):
         """
         Найти фабрику, которая работает с переданным типом страницы
         (со страницей данного типа). Или вернуть фабрику по умолчанию
         """
-        return FactorySelector._factories.get(pageType,
+        return FactorySelector._factories.get(page_type,
                                               FactorySelector._defaultFactory)
 
     @staticmethod
@@ -49,13 +49,13 @@ class FactorySelector(object):
                                           SearchPageFactory()]}
 
     @staticmethod
-    def addFactory(newFactory):
+    def addFactory(new_factory):
         """
         Добавить новую фабрику. При этом у фабрики может быть новый
         создаваемый тип страниц, в то же время фабрика может заменить
         существующую фабрику.
         """
-        FactorySelector._factories[newFactory.getTypeString()] = newFactory
+        FactorySelector._factories[new_factory.getTypeString()] = new_factory
 
     @staticmethod
     def removeFactory(typeString):

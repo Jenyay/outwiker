@@ -5,11 +5,10 @@ from abc import ABCMeta, abstractmethod, abstractproperty
 import wx.aui
 
 
-class MainPane(object):
+class MainPane(object, metaclass=ABCMeta):
     """
     Базовый класс для хранения основных панелей главного окна
     """
-    __metaclass__ = ABCMeta
 
     def __init__(self, parent, auiManager, application):
         """

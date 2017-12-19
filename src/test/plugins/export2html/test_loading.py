@@ -8,7 +8,7 @@ class Export2HtmlLoadingTest (BasePluginLoadingTest):
         """
         Должен возвращать путь до папки с тестируемым плагином
         """
-        return u"../plugins/export2html"
+        return "../plugins/export2html"
 
 
     def getPluginName (self):

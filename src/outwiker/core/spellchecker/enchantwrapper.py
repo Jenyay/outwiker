@@ -36,7 +36,7 @@ class EnchantWrapper (object):
 
     def addToCustomDict (self, dictIndex, word):
         if dictIndex < len (self._customCheckers):
-            self._customCheckers[dictIndex].add_to_pwl (word)
+            self._customCheckers[dictIndex].add(word)
 
 
     def _createCustomDictLang (self, pathToDict):

@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 import re
-from StringIO import StringIO
+from io import StringIO
 
 from outwiker.core.htmlimprover import HtmlImprover
 

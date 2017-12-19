@@ -8,7 +8,7 @@ class DataGraphLoadingTest (BasePluginLoadingTest):
         """
         Должен возвращать путь до папки с тестируемым плагином
         """
-        return u"../plugins/datagraph"
+        return "../plugins/datagraph"
 
 
     def getPluginName (self):

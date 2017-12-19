@@ -31,9 +31,7 @@ class BuilderDebBinaryFactory(object):
         return BuilderDebBinaryOpt(dir_name, is_stable)
 
 
-class BuilderDebBinaryBase(BuilderBase):
-    __metaclass__ = ABCMeta
-
+class BuilderDebBinaryBase(BuilderBase, metaclass=ABCMeta):
     def __init__(self, dir_name=DEB_BINARY_BUILD_DIR, is_stable=False):
         super(BuilderDebBinaryBase, self).__init__(dir_name, is_stable)
         version = getOutwikerVersion()

@@ -262,7 +262,7 @@ class AttachPanel(wx.Panel):
                 try:
                     Attachment(Application.selectedPage).removeAttach(files)
                 except IOError as e:
-                    MessageBox(unicode(e), _(u"Error"), wx.ICON_ERROR | wx.OK)
+                    MessageBox(str(e), _(u"Error"), wx.ICON_ERROR | wx.OK)
 
                 self.updateAttachments()
 

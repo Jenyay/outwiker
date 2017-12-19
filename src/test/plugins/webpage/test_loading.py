@@ -8,7 +8,7 @@ class WebPageLoadingTest (BasePluginLoadingTest):
         """
         Должен возвращать путь до папки с тестируемым плагином
         """
-        return u"../plugins/webpage"
+        return "../plugins/webpage"
 
 
     def getPluginName (self):

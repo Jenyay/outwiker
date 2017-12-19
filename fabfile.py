@@ -1,13 +1,13 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from __future__ import print_function
-import __builtin__
+
+import builtins
 import os
 import os.path
 import glob
 import sys
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 import shutil
 
 from fabric.api import local, lcd, settings, task, cd, put, hosts
@@ -285,7 +285,7 @@ def run(args=u''):
     Run OutWiker from sources
     '''
     with lcd("src"):
-        execute(u'{} runoutwiker.py {}'.format(getPython(), args.decode('utf8')))
+        execute(u'{} runoutwiker.py {}'.format(getPython(), args))
 
 
 @task
@@ -450,7 +450,7 @@ def site_versions():
                 siteversion=str(appinfo.currentVersion),
                 devversion=font + str(localAppInfo.currentVersion)
                 ))
-        except (urllib2.URLError, urllib2.HTTPError) as e:
+        except (urllib.error.URLError, urllib.error.HTTPError) as e:
             print(Fore.RED + u'Error')
             print(str(e))
             print(url)
@@ -464,7 +464,7 @@ def create_tree(maxlevel, nsiblings, path):
     '''
     from outwiker.core.tree import WikiDocument
 
-    __builtin__._ = _empty
+    builtins._ = _empty
     wikiroot = WikiDocument.create(path)
     _create_tree(1, int(maxlevel), int(nsiblings), wikiroot)
 

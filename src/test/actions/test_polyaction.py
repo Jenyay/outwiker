@@ -36,8 +36,8 @@ class PolyActionTest (BaseMainWndTest):
 
     def testEmpty (self):
         strid = "test_id"
-        title = u"title"
-        description = u"description"
+        title = "title"
+        description = "description"
         hotkey = HotKey ("F1")
 
         polyaction = PolyAction (Application, strid, title, description)
@@ -51,8 +51,8 @@ class PolyActionTest (BaseMainWndTest):
 
     def testPolymorph (self):
         strid = "test_id"
-        title = u"title"
-        description = u"description"
+        title = "title"
+        description = "description"
         polyaction = PolyAction (Application, strid, title, description)
 
         polyaction.run(None)
@@ -77,8 +77,8 @@ class PolyActionTest (BaseMainWndTest):
 
     def testPolymorphParam1 (self):
         strid = "test_id"
-        title = u"title"
-        description = u"description"
+        title = "title"
+        description = "description"
         polyaction = PolyAction (Application, strid, title, description)
 
         polyaction.run(None)
@@ -91,8 +91,8 @@ class PolyActionTest (BaseMainWndTest):
 
     def testPolymorphParam2 (self):
         strid = "test_id"
-        title = u"title"
-        description = u"description"
+        title = "title"
+        description = "description"
         polyaction = PolyAction (Application, strid, title, description)
         self.actionController.register (polyaction, None)
 

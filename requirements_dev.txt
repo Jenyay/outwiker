@@ -1,2 +1,2 @@
-fabric==1.13.2
+fabric3==1.13.2
 pyinstaller==3.2.1

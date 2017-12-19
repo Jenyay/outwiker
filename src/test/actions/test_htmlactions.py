@@ -33,23 +33,23 @@ class HtmlActionsTest (BaseMainWndTest):
             (HEADING_6_STR_ID, "<h6>", "</h6>"),
             (PREFORMAT_STR_ID, "<pre>", "</pre>"),
             (CODE_STR_ID, "<code>", "</code>"),
-            (ANCHOR_STR_ID, u'<a name="', u'"></a>'),
-            (QUOTE_STR_ID, u'<blockquote>', u'</blockquote>'),
-            (IMAGE_STR_ID, u'<img src="', u'"/>'),
+            (ANCHOR_STR_ID, '<a name="', '"></a>'),
+            (QUOTE_STR_ID, '<blockquote>', '</blockquote>'),
+            (IMAGE_STR_ID, '<img src="', '"/>'),
         ]
 
         self._replaceSyntax = [
-            (HORLINE_STR_ID, u"<hr>"),
+            (HORLINE_STR_ID, "<hr>"),
         ]
 
-        HtmlPageFactory().create (self.wikiroot, u"HTML-страница", [])
-        HtmlPageFactory().create (self.wikiroot, u"temp", [])
+        HtmlPageFactory().create (self.wikiroot, "HTML-страница", [])
+        HtmlPageFactory().create (self.wikiroot, "temp", [])
 
         # Страница, куда будем переключаться перед изменением содержимого основной страницы
         # Можно было бы вместо temppage использовать None, но тогда программе
         # пришлось бы каждый раз удалять и создавать панели инструментов, что медленно
-        self.temppage = self.wikiroot[u"temp"]
-        self.testpage = self.wikiroot[u"HTML-страница"]
+        self.temppage = self.wikiroot["temp"]
+        self.testpage = self.wikiroot["HTML-страница"]
 
         Application.wikiroot = self.wikiroot
         Application.selectedPage = self.testpage
@@ -62,7 +62,7 @@ class HtmlActionsTest (BaseMainWndTest):
     def testTurnSyntaxEmpty (self):
         for syntax in self._turnSyntax:
             Application.selectedPage = self.temppage
-            self.testpage.content = u""
+            self.testpage.content = ""
             Application.selectedPage = self.testpage
 
             Application.actionController.getAction (syntax[0]).run(None)
@@ -70,7 +70,7 @@ class HtmlActionsTest (BaseMainWndTest):
 
 
     def testTurnSyntaxSelectedAll (self):
-        text = u"Бла-бла-бла"
+        text = "Бла-бла-бла"
 
         for syntax in self._turnSyntax:
             Application.selectedPage = self.temppage
@@ -80,11 +80,11 @@ class HtmlActionsTest (BaseMainWndTest):
             self._getEditor().SetSelection (0, len (text))
 
             Application.actionController.getAction (syntax[0]).run(None)
-            self.assertEqual (self._getEditor().GetText(), syntax[1] + u"Бла-бла-бла" + syntax[2])
+            self.assertEqual (self._getEditor().GetText(), syntax[1] + "Бла-бла-бла" + syntax[2])
 
 
     def testTurnSyntaxSelectedPart (self):
-        text = u"Бла-бла-бла"
+        text = "Бла-бла-бла"
 
         for syntax in self._turnSyntax:
             Application.selectedPage = self.temppage
@@ -94,13 +94,13 @@ class HtmlActionsTest (BaseMainWndTest):
             self._getEditor().SetSelection (4, 7)
 
             Application.actionController.getAction (syntax[0]).run(None)
-            self.assertEqual (self._getEditor().GetText(), u"Бла-{}бла{}-бла".format (syntax[1], syntax[2]))
+            self.assertEqual (self._getEditor().GetText(), "Бла-{}бла{}-бла".format (syntax[1], syntax[2]))
 
 
     def testReplaceSyntaxEmpty (self):
         for syntax in self._replaceSyntax:
             Application.selectedPage = self.temppage
-            self.testpage.content = u""
+            self.testpage.content = ""
             Application.selectedPage = self.testpage
 
             Application.actionController.getAction (syntax[0]).run(None)
@@ -108,7 +108,7 @@ class HtmlActionsTest (BaseMainWndTest):
 
 
     def testReplaceSyntaxSelectedAll (self):
-        text = u"Бла-бла-бла"
+        text = "Бла-бла-бла"
 
         for syntax in self._replaceSyntax:
             Application.selectedPage = self.temppage
@@ -122,7 +122,7 @@ class HtmlActionsTest (BaseMainWndTest):
 
 
     def testReplaceSyntaxSelectedPart (self):
-        text = u"Бла-бла-бла"
+        text = "Бла-бла-бла"
 
         for syntax in self._replaceSyntax:
             Application.selectedPage = self.temppage
@@ -132,16 +132,16 @@ class HtmlActionsTest (BaseMainWndTest):
             self._getEditor().SetSelection (4, 7)
 
             Application.actionController.getAction (syntax[0]).run(None)
-            self.assertEqual (self._getEditor().GetText(), u"Бла-{}-бла".format (syntax[1]))
+            self.assertEqual (self._getEditor().GetText(), "Бла-{}-бла".format (syntax[1]))
 
 
     def testListBulletsEmpty (self):
-        result = u"""<ul>
+        result = """<ul>
 <li></li>
 </ul>"""
 
         Application.selectedPage = self.temppage
-        self.testpage.content = u""
+        self.testpage.content = ""
         Application.selectedPage = self.testpage
 
         Application.actionController.getAction (LIST_BULLETS_STR_ID).run(None)
@@ -149,12 +149,12 @@ class HtmlActionsTest (BaseMainWndTest):
 
 
     def testListNumbersEmpty (self):
-        result = u"""<ol>
+        result = """<ol>
 <li></li>
 </ol>"""
 
         Application.selectedPage = self.temppage
-        self.testpage.content = u""
+        self.testpage.content = ""
         Application.selectedPage = self.testpage
 
         Application.actionController.getAction (LIST_NUMBERS_STR_ID).run(None)
@@ -162,13 +162,13 @@ class HtmlActionsTest (BaseMainWndTest):
 
 
     def testListBulletsSelectedAll (self):
-        text = u"""йцкуйцук
+        text = """йцкуйцук
 укеуке
 ывапвыап
 ывапвыапыап
 ывапываппа"""
 
-        result = u"""<ul>
+        result = """<ul>
 <li>йцкуйцук</li>
 <li>укеуке</li>
 <li>ывапвыап</li>
@@ -187,13 +187,13 @@ class HtmlActionsTest (BaseMainWndTest):
 
 
     def testListNumbersSelectedAll (self):
-        text = u"""йцкуйцук
+        text = """йцкуйцук
 укеуке
 ывапвыап
 ывапвыапыап
 ывапываппа"""
 
-        result = u"""<ol>
+        result = """<ol>
 <li>йцкуйцук</li>
 <li>укеуке</li>
 <li>ывапвыап</li>

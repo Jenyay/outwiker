@@ -30,8 +30,8 @@ class HtmlExporter (BaseExporter):
 
         # Чтение файла с содержимым
         try:
-            with open (os.path.join (self._page.path, self.__htmlFileName)) as fp:
-                content = unicode (fp.read(), "utf8")
+            with open(os.path.join (self._page.path, self.__htmlFileName)) as fp:
+                content = fp.read()
         except IOError:
             content = u""
 

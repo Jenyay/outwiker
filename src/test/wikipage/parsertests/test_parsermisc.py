@@ -16,7 +16,7 @@ class ParserMiscTest (unittest.TestCase):
     def setUp(self):
         self.encoding = "utf8"
 
-        self.filesPath = u"../test/samplefiles/"
+        self.filesPath = "../test/samplefiles/"
 
         self.__createWiki()
 
@@ -25,18 +25,18 @@ class ParserMiscTest (unittest.TestCase):
 
     def __createWiki(self):
         # Здесь будет создаваться вики
-        self.path = mkdtemp(prefix=u'Абырвалг абыр')
+        self.path = mkdtemp(prefix='Абырвалг абыр')
 
         self.wikiroot = WikiDocument.create(self.path)
-        WikiPageFactory().create(self.wikiroot, u"Страница 2", [])
-        self.testPage = self.wikiroot[u"Страница 2"]
+        WikiPageFactory().create(self.wikiroot, "Страница 2", [])
+        self.testPage = self.wikiroot["Страница 2"]
 
     def tearDown(self):
         removeDir(self.path)
 
     def testHorLine(self):
-        text = u"бла-бла-бла \nкхм ---- бла-бла-бла\nбла-бла-бла"
-        result = u'бла-бла-бла \nкхм <hr> бла-бла-бла\nбла-бла-бла'
+        text = "бла-бла-бла \nкхм ---- бла-бла-бла\nбла-бла-бла"
+        result = 'бла-бла-бла \nкхм <hr> бла-бла-бла\nбла-бла-бла'
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -44,9 +44,9 @@ class ParserMiscTest (unittest.TestCase):
             self.parser.toHtml(text).encode(self.encoding))
 
     def testParseWithoutAttaches(self):
-        pagetitle = u"Страница 666"
+        pagetitle = "Страница 666"
 
         WikiPageFactory().create(self.wikiroot, pagetitle, [])
         parser = Parser(self.wikiroot[pagetitle], Application.config)
 
-        parser.toHtml(u"Attach:bla-bla-bla")
+        parser.toHtml("Attach:bla-bla-bla")

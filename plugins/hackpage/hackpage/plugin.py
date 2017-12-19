@@ -5,15 +5,14 @@ import os.path
 from outwiker.core.pluginbase import Plugin
 from outwiker.core.commands import getCurrentVersion
 from outwiker.core.version import Version, StatusSet
-from outwiker.core.system import getOS
 
 
 def _no_translate(text):
     return text
 
 
-if getCurrentVersion() < Version(2, 0, 0, 807, status=StatusSet.DEV):
-    print(u"HackPage plugin. OutWiker version requirement: 2.0.0.807")
+if getCurrentVersion() < Version(2, 1, 0, 833, status=StatusSet.DEV):
+    print(u"HackPage plugin. OutWiker version requirement: 2.1.0.833")
 else:
     class PluginHackPage(Plugin):
         def __init__(self, application):
@@ -52,8 +51,7 @@ else:
 
         def _initlocale(self, domain):
             from .i18n import set_
-            langdir = unicode(os.path.join(os.path.dirname(__file__),
-                                           "locale"), getOS().filesEncoding)
+            langdir = os.path.join(os.path.dirname(__file__), "locale")
             global _
 
             try:

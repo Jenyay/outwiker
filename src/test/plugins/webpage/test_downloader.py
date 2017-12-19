@@ -3,7 +3,7 @@
 import os
 import os.path
 from tempfile import mkdtemp
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import unittest
 
 from outwiker.core.application import Application
@@ -14,9 +14,9 @@ from test.utils import removeDir
 
 class DownloaderTest (unittest.TestCase):
     def setUp (self):
-        self.plugindirlist = [u'../plugins/webpage']
-        self._staticDirName = u'__download'
-        self._tempDir = mkdtemp (prefix=u'Абырвалг абыр')
+        self.plugindirlist = ['../plugins/webpage']
+        self._staticDirName = '__download'
+        self._tempDir = mkdtemp (prefix='Абырвалг абыр')
 
         self.loader = PluginsLoader(Application)
         self.loader.load (self.plugindirlist)
@@ -30,118 +30,118 @@ class DownloaderTest (unittest.TestCase):
     def testContentImgExample1 (self):
         from webpage.downloader import Downloader, DownloadController
 
-        template = u'<img src="{path}"'
+        template = '<img src="{path}"'
 
         controller = DownloadController(self._tempDir, self._staticDirName)
         downloader = Downloader ()
 
-        examplePath = u'../test/webpage/example1/'
-        exampleHtmlPath = os.path.join (examplePath, u'example1.html')
+        examplePath = '../test/webpage/example1/'
+        exampleHtmlPath = os.path.join (examplePath, 'example1.html')
 
         downloader.start (self._path2url (exampleHtmlPath), controller)
 
         self.assertIn (
-            template.format (path = self._staticDirName + u'/image_01.png'),
+            template.format (path = self._staticDirName + '/image_01.png'),
             downloader.contentResult)
 
         self.assertIn (
-            template.format (path = self._staticDirName + u'/картинка.png'),
+            template.format (path = self._staticDirName + '/картинка.png'),
             downloader.contentResult)
 
         self.assertIn (
-            template.format (path = self._staticDirName + u'/image_01_1.png'),
+            template.format (path = self._staticDirName + '/image_01_1.png'),
             downloader.contentResult)
 
         self.assertIn (
-            template.format (path = self._staticDirName + u'/image_02.png'),
+            template.format (path = self._staticDirName + '/image_02.png'),
             downloader.contentResult)
 
         self.assertNotIn (
-            template.format (path = self._staticDirName + u'/image_02_1.png'),
+            template.format (path = self._staticDirName + '/image_02_1.png'),
             downloader.contentResult)
 
         self.assertIn (
-            template.format (path = self._staticDirName + u'/image_03.png'),
+            template.format (path = self._staticDirName + '/image_03.png'),
             downloader.contentResult)
 
         self.assertNotIn (
-            template.format (path = self._staticDirName + u'/image_03_1.png'),
+            template.format (path = self._staticDirName + '/image_03_1.png'),
             downloader.contentResult)
 
 
     def testContentCSSExample1_01 (self):
         from webpage.downloader import Downloader, DownloadController
 
-        template = u'<link href="{path}"'
+        template = '<link href="{path}"'
 
         controller = DownloadController(self._tempDir, self._staticDirName)
         downloader = Downloader ()
 
-        examplePath = u'../test/webpage/example1/'
-        exampleHtmlPath = os.path.join (examplePath, u'example1.html')
+        examplePath = '../test/webpage/example1/'
+        exampleHtmlPath = os.path.join (examplePath, 'example1.html')
 
         downloader.start (self._path2url (exampleHtmlPath), controller)
 
         self.assertIn (
-            template.format (path = self._staticDirName + u'/fname1.css'),
+            template.format (path = self._staticDirName + '/fname1.css'),
             downloader.contentResult)
 
         self.assertIn (
-            template.format (path = self._staticDirName + u'/fname2.css'),
+            template.format (path = self._staticDirName + '/fname2.css'),
             downloader.contentResult)
 
         self.assertIn (
-            template.format (path = self._staticDirName + u'/fname3.css'),
+            template.format (path = self._staticDirName + '/fname3.css'),
             downloader.contentResult)
 
         self.assertIn (
-            template.format (path = self._staticDirName + u'/fname4.css'),
+            template.format (path = self._staticDirName + '/fname4.css'),
             downloader.contentResult)
 
         self.assertIn (
-            template.format (path = self._staticDirName + u'/fname1_1.css'),
+            template.format (path = self._staticDirName + '/fname1_1.css'),
             downloader.contentResult)
 
         self.assertNotIn (
-            template.format (path = self._staticDirName + u'/fname2_1.css'),
+            template.format (path = self._staticDirName + '/fname2_1.css'),
             downloader.contentResult)
 
 
     def testContentScriptExample1 (self):
         from webpage.downloader import Downloader, DownloadController
 
-        template = u'<script src="{path}"'
+        template = '<script src="{path}"'
 
         controller = DownloadController(self._tempDir, self._staticDirName)
         downloader = Downloader ()
 
-        examplePath = u'../test/webpage/example1/'
-        exampleHtmlPath = os.path.join (examplePath, u'example1.html')
+        examplePath = '../test/webpage/example1/'
+        exampleHtmlPath = os.path.join (examplePath, 'example1.html')
 
         downloader.start (self._path2url (exampleHtmlPath), controller)
 
         self.assertIn (
-            template.format (path = self._staticDirName + u'/fname1.js'),
+            template.format (path = self._staticDirName + '/fname1.js'),
             downloader.contentResult)
 
         self.assertIn (
-            template.format (path = self._staticDirName + u'/fname2.js'),
+            template.format (path = self._staticDirName + '/fname2.js'),
             downloader.contentResult)
 
         self.assertIn (
-            template.format (path = self._staticDirName + u'/fname2_1.js'),
+            template.format (path = self._staticDirName + '/fname2_1.js'),
             downloader.contentResult)
 
         self.assertIn (
-            template.format (path = self._staticDirName + u'/fname3.js'),
+            template.format (path = self._staticDirName + '/fname3.js'),
             downloader.contentResult)
 
         self.assertIn (
-            template.format (path = self._staticDirName + u'/fname4.js'),
+            template.format (path = self._staticDirName + '/fname4.js'),
             downloader.contentResult)
 
         self.assertNotIn (
-            template.format (path = self._staticDirName + u'/fname1_1.js'),
+            template.format (path = self._staticDirName + '/fname1_1.js'),
             downloader.contentResult)
 
 
@@ -151,13 +151,13 @@ class DownloaderTest (unittest.TestCase):
         controller = DownloadController(self._tempDir, self._staticDirName)
         downloader = Downloader ()
 
-        examplePath = u'../test/webpage/example1/'
-        exampleHtmlPath = os.path.join (examplePath, u'example1.html')
+        examplePath = '../test/webpage/example1/'
+        exampleHtmlPath = os.path.join (examplePath, 'example1.html')
 
         downloader.start (self._path2url (exampleHtmlPath), controller)
 
         self.assertTrue (downloader.success)
-        self.assertEqual (downloader.pageTitle, u'Заголовок страницы')
+        self.assertEqual (downloader.pageTitle, 'Заголовок страницы')
 
 
     def testNoTitle (self):
@@ -166,8 +166,8 @@ class DownloaderTest (unittest.TestCase):
         controller = DownloadController(self._tempDir, self._staticDirName)
         downloader = Downloader ()
 
-        examplePath = u'../test/webpage/example_no_title/'
-        exampleHtmlPath = os.path.join (examplePath, u'example_no_title.html')
+        examplePath = '../test/webpage/example_no_title/'
+        exampleHtmlPath = os.path.join (examplePath, 'example_no_title.html')
 
         downloader.start (self._path2url (exampleHtmlPath), controller)
 
@@ -178,30 +178,30 @@ class DownloaderTest (unittest.TestCase):
     def testContentExample2 (self):
         from webpage.downloader import Downloader, DownloadController
 
-        template = u'<img src="{path}"'
+        template = '<img src="{path}"'
 
         controller = DownloadController(self._tempDir, self._staticDirName)
         downloader = Downloader ()
 
-        examplePath = u'../test/webpage/example2/'
-        exampleHtmlPath = os.path.join (examplePath, u'example2.html')
+        examplePath = '../test/webpage/example2/'
+        exampleHtmlPath = os.path.join (examplePath, 'example2.html')
 
         downloader.start (self._path2url (exampleHtmlPath), controller)
 
         self.assertIn (
-            template.format (path = self._staticDirName + u'/image_01.png'),
+            template.format (path = self._staticDirName + '/image_01.png'),
             downloader.contentResult)
 
         self.assertIn (
-            template.format (path = self._staticDirName + u'/image_01_1.png'),
+            template.format (path = self._staticDirName + '/image_01_1.png'),
             downloader.contentResult)
 
         self.assertIn (
-            template.format (path = self._staticDirName + u'/image_02.png'),
+            template.format (path = self._staticDirName + '/image_02.png'),
             downloader.contentResult)
 
         self.assertNotIn (
-            template.format (path = self._staticDirName + u'/image_02_1.png'),
+            template.format (path = self._staticDirName + '/image_02_1.png'),
             downloader.contentResult)
 
 
@@ -211,8 +211,8 @@ class DownloaderTest (unittest.TestCase):
         controller = DownloadController(self._tempDir, self._staticDirName)
         downloader = Downloader ()
 
-        examplePath = u'../test/webpage/example1/'
-        exampleHtmlPath = os.path.join (examplePath, u'example1.html')
+        examplePath = '../test/webpage/example1/'
+        exampleHtmlPath = os.path.join (examplePath, 'example1.html')
 
         downloader.start (self._path2url (exampleHtmlPath), controller)
 
@@ -220,19 +220,19 @@ class DownloaderTest (unittest.TestCase):
 
         fname1 = os.path.join (self._tempDir,
                                self._staticDirName,
-                               u'image_01.png')
+                               'image_01.png')
 
         fname2 = os.path.join (self._tempDir,
                                self._staticDirName,
-                               u'image_02.png')
+                               'image_02.png')
 
         fname3 = os.path.join (self._tempDir,
                                self._staticDirName,
-                               u'image_03.png')
+                               'image_03.png')
 
         fname4 = os.path.join (self._tempDir,
                                self._staticDirName,
-                               u'image_01_1.png')
+                               'image_01_1.png')
 
         self.assertTrue (os.path.exists (downloadDir))
         self.assertTrue (os.path.exists (fname1))
@@ -247,8 +247,8 @@ class DownloaderTest (unittest.TestCase):
         controller = DownloadController(self._tempDir, self._staticDirName)
         downloader = Downloader ()
 
-        examplePath = u'../test/webpage/example2/'
-        exampleHtmlPath = os.path.join (examplePath, u'example2.html')
+        examplePath = '../test/webpage/example2/'
+        exampleHtmlPath = os.path.join (examplePath, 'example2.html')
 
         downloader.start (self._path2url (exampleHtmlPath), controller)
 
@@ -256,15 +256,15 @@ class DownloaderTest (unittest.TestCase):
 
         fname1 = os.path.join (self._tempDir,
                                self._staticDirName,
-                               u'image_01.png')
+                               'image_01.png')
 
         fname2 = os.path.join (self._tempDir,
                                self._staticDirName,
-                               u'image_02.png')
+                               'image_02.png')
 
         fname3 = os.path.join (self._tempDir,
                                self._staticDirName,
-                               u'image_03.png')
+                               'image_03.png')
 
         self.assertTrue (os.path.exists (downloadDir))
         self.assertTrue (os.path.exists (fname1))
@@ -278,8 +278,8 @@ class DownloaderTest (unittest.TestCase):
         controller = DownloadController(self._tempDir, self._staticDirName)
         downloader = Downloader ()
 
-        examplePath = u'../test/webpage/example1/'
-        exampleHtmlPath = os.path.join (examplePath, u'example1.html')
+        examplePath = '../test/webpage/example1/'
+        exampleHtmlPath = os.path.join (examplePath, 'example1.html')
 
         downloader.start (self._path2url (exampleHtmlPath), controller)
 
@@ -287,23 +287,23 @@ class DownloaderTest (unittest.TestCase):
 
         fname1 = os.path.join (self._tempDir,
                                self._staticDirName,
-                               u'fname1.css')
+                               'fname1.css')
 
         fname2 = os.path.join (self._tempDir,
                                self._staticDirName,
-                               u'fname2.css')
+                               'fname2.css')
 
         fname3 = os.path.join (self._tempDir,
                                self._staticDirName,
-                               u'fname3.css')
+                               'fname3.css')
 
         fname4 = os.path.join (self._tempDir,
                                self._staticDirName,
-                               u'fname4.css')
+                               'fname4.css')
 
         fname5 = os.path.join (self._tempDir,
                                self._staticDirName,
-                               u'fname1_1.css')
+                               'fname1_1.css')
 
         self.assertTrue (os.path.exists (downloadDir))
         self.assertTrue (os.path.exists (fname1))
@@ -319,8 +319,8 @@ class DownloaderTest (unittest.TestCase):
         controller = DownloadController(self._tempDir, self._staticDirName)
         downloader = Downloader ()
 
-        examplePath = u'../test/webpage/example1/'
-        exampleHtmlPath = os.path.join (examplePath, u'example1.html')
+        examplePath = '../test/webpage/example1/'
+        exampleHtmlPath = os.path.join (examplePath, 'example1.html')
 
         downloader.start (self._path2url (exampleHtmlPath), controller)
 
@@ -329,7 +329,7 @@ class DownloaderTest (unittest.TestCase):
                 os.path.join (
                     self._tempDir,
                     self._staticDirName,
-                    u'import1.css'
+                    'import1.css'
                 )
             )
         )
@@ -339,7 +339,7 @@ class DownloaderTest (unittest.TestCase):
                 os.path.join (
                     self._tempDir,
                     self._staticDirName,
-                    u'import2.css'
+                    'import2.css'
                 )
             )
         )
@@ -349,7 +349,7 @@ class DownloaderTest (unittest.TestCase):
                 os.path.join (
                     self._tempDir,
                     self._staticDirName,
-                    u'import3.css'
+                    'import3.css'
                 )
             )
         )
@@ -359,7 +359,7 @@ class DownloaderTest (unittest.TestCase):
                 os.path.join (
                     self._tempDir,
                     self._staticDirName,
-                    u'import4.css'
+                    'import4.css'
                 )
             )
         )
@@ -369,7 +369,7 @@ class DownloaderTest (unittest.TestCase):
                 os.path.join (
                     self._tempDir,
                     self._staticDirName,
-                    u'basic2.css'
+                    'basic2.css'
                 )
             )
         )
@@ -379,7 +379,7 @@ class DownloaderTest (unittest.TestCase):
                 os.path.join (
                     self._tempDir,
                     self._staticDirName,
-                    u'basic3.css'
+                    'basic3.css'
                 )
             )
         )
@@ -389,7 +389,7 @@ class DownloaderTest (unittest.TestCase):
                 os.path.join (
                     self._tempDir,
                     self._staticDirName,
-                    u'basic4.css'
+                    'basic4.css'
                 )
             )
         )
@@ -399,7 +399,7 @@ class DownloaderTest (unittest.TestCase):
                 os.path.join (
                     self._tempDir,
                     self._staticDirName,
-                    u'basic5.css'
+                    'basic5.css'
                 )
             )
         )
@@ -409,7 +409,7 @@ class DownloaderTest (unittest.TestCase):
                 os.path.join (
                     self._tempDir,
                     self._staticDirName,
-                    u'basic5_1.css'
+                    'basic5_1.css'
                 )
             )
         )
@@ -419,7 +419,7 @@ class DownloaderTest (unittest.TestCase):
                 os.path.join (
                     self._tempDir,
                     self._staticDirName,
-                    u'basic6.css'
+                    'basic6.css'
                 )
             )
         )
@@ -431,8 +431,8 @@ class DownloaderTest (unittest.TestCase):
         controller = DownloadController(self._tempDir, self._staticDirName)
         downloader = Downloader ()
 
-        examplePath = u'../test/webpage/example1/'
-        exampleHtmlPath = os.path.join (examplePath, u'example1.html')
+        examplePath = '../test/webpage/example1/'
+        exampleHtmlPath = os.path.join (examplePath, 'example1.html')
 
         downloader.start (self._path2url (exampleHtmlPath), controller)
 
@@ -441,7 +441,7 @@ class DownloaderTest (unittest.TestCase):
                 os.path.join (
                     self._tempDir,
                     self._staticDirName,
-                    u'back_img_01.png'
+                    'back_img_01.png'
                 )
             )
         )
@@ -451,7 +451,7 @@ class DownloaderTest (unittest.TestCase):
                 os.path.join (
                     self._tempDir,
                     self._staticDirName,
-                    u'back_img_02.png'
+                    'back_img_02.png'
                 )
             )
         )
@@ -461,7 +461,7 @@ class DownloaderTest (unittest.TestCase):
                 os.path.join (
                     self._tempDir,
                     self._staticDirName,
-                    u'back_img_03.png'
+                    'back_img_03.png'
                 )
             )
         )
@@ -471,7 +471,7 @@ class DownloaderTest (unittest.TestCase):
                 os.path.join (
                     self._tempDir,
                     self._staticDirName,
-                    u'back_img_04.png'
+                    'back_img_04.png'
                 )
             )
         )
@@ -481,7 +481,7 @@ class DownloaderTest (unittest.TestCase):
                 os.path.join (
                     self._tempDir,
                     self._staticDirName,
-                    u'back_img_05.png'
+                    'back_img_05.png'
                 )
             )
         )
@@ -491,7 +491,7 @@ class DownloaderTest (unittest.TestCase):
                 os.path.join (
                     self._tempDir,
                     self._staticDirName,
-                    u'back_img_06.png'
+                    'back_img_06.png'
                 )
             )
         )
@@ -500,50 +500,50 @@ class DownloaderTest (unittest.TestCase):
     def testDownloading_css_url_01 (self):
         from webpage.downloader import Downloader, DownloadController
 
-        template = u'url("{url}")'
+        template = 'url("{url}")'
 
         controller = DownloadController(self._tempDir, self._staticDirName)
         downloader = Downloader ()
 
-        examplePath = u'../test/webpage/example1/'
-        exampleHtmlPath = os.path.join (examplePath, u'example1.html')
+        examplePath = '../test/webpage/example1/'
+        exampleHtmlPath = os.path.join (examplePath, 'example1.html')
 
         downloader.start (self._path2url (exampleHtmlPath), controller)
 
         fname1_text = readTextFile (os.path.join (self._tempDir,
                                                   self._staticDirName,
-                                                  u'fname1.css'))
+                                                  'fname1.css'))
 
-        self.assertIn (template.format (url = u'import1.css'), fname1_text)
-        self.assertIn (template.format (url = u'back_img_01.png'), fname1_text)
-        self.assertIn (template.format (url = u'back_img_02.png'), fname1_text)
-        self.assertIn (template.format (url = u'back_img_03.png'), fname1_text)
-        self.assertIn (template.format (url = u'back_img_04.png'), fname1_text)
-        self.assertIn (template.format (url = u'back_img_05.png'), fname1_text)
-        self.assertIn (template.format (url = u'back_img_06.png'), fname1_text)
+        self.assertIn (template.format (url = 'import1.css'), fname1_text)
+        self.assertIn (template.format (url = 'back_img_01.png'), fname1_text)
+        self.assertIn (template.format (url = 'back_img_02.png'), fname1_text)
+        self.assertIn (template.format (url = 'back_img_03.png'), fname1_text)
+        self.assertIn (template.format (url = 'back_img_04.png'), fname1_text)
+        self.assertIn (template.format (url = 'back_img_05.png'), fname1_text)
+        self.assertIn (template.format (url = 'back_img_06.png'), fname1_text)
 
 
     def testDownloading_css_url_02 (self):
         from webpage.downloader import Downloader, DownloadController
 
-        template = u'url("{url}")'
+        template = 'url("{url}")'
 
         controller = DownloadController(self._tempDir, self._staticDirName)
         downloader = Downloader ()
 
-        examplePath = u'../test/webpage/example1/'
-        exampleHtmlPath = os.path.join (examplePath, u'example1.html')
+        examplePath = '../test/webpage/example1/'
+        exampleHtmlPath = os.path.join (examplePath, 'example1.html')
 
         downloader.start (self._path2url (exampleHtmlPath), controller)
 
         fname2_text = readTextFile (os.path.join (self._tempDir,
                                                   self._staticDirName,
-                                                  u'fname2.css'))
+                                                  'fname2.css'))
 
-        self.assertIn (template.format (url = u'basic2.css'), fname2_text)
-        self.assertIn (template.format (url = u'basic4.css'), fname2_text)
-        self.assertIn (template.format (url = u'basic5.css'), fname2_text)
-        self.assertIn (template.format (url = u'basic6.css'), fname2_text)
+        self.assertIn (template.format (url = 'basic2.css'), fname2_text)
+        self.assertIn (template.format (url = 'basic4.css'), fname2_text)
+        self.assertIn (template.format (url = 'basic5.css'), fname2_text)
+        self.assertIn (template.format (url = 'basic6.css'), fname2_text)
         self.assertIn ('basic3.css', fname2_text)
         self.assertIn ('basic5.css', fname2_text)
 
@@ -555,8 +555,8 @@ class DownloaderTest (unittest.TestCase):
         controller = DownloadController(self._tempDir, self._staticDirName)
         downloader = Downloader ()
 
-        examplePath = u'../test/webpage/example1/'
-        exampleHtmlPath = os.path.join (examplePath, u'example1.html')
+        examplePath = '../test/webpage/example1/'
+        exampleHtmlPath = os.path.join (examplePath, 'example1.html')
 
         downloader.start (self._path2url (exampleHtmlPath), controller)
 
@@ -564,19 +564,19 @@ class DownloaderTest (unittest.TestCase):
 
         fname1 = os.path.join (self._tempDir,
                                self._staticDirName,
-                               u'fname1.js')
+                               'fname1.js')
 
         fname2 = os.path.join (self._tempDir,
                                self._staticDirName,
-                               u'fname2.js')
+                               'fname2.js')
 
         fname3 = os.path.join (self._tempDir,
                                self._staticDirName,
-                               u'fname3.js')
+                               'fname3.js')
 
         fname4 = os.path.join (self._tempDir,
                                self._staticDirName,
-                               u'fname4.js')
+                               'fname4.js')
 
         self.assertTrue (os.path.exists (downloadDir))
         self.assertTrue (os.path.exists (fname1))
@@ -589,4 +589,4 @@ class DownloaderTest (unittest.TestCase):
     def _path2url (path):
         path = os.path.abspath(path)
         path = path.encode('utf8')
-        return 'file:' + urllib.pathname2url(path)
+        return 'file:' + urllib.request.pathname2url(path)

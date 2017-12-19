@@ -2,8 +2,8 @@
 
 from outwiker.gui.baseaction import BaseAction
 
-from i18n import get_
-from tocwikimaker import TocWikiMaker
+from .i18n import get_
+from .tocwikimaker import TocWikiMaker
 
 
 class GenerateTOC (BaseAction):

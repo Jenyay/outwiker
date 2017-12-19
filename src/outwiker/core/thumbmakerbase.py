@@ -6,9 +6,7 @@ import os.path
 from .thumbexception import ThumbException
 
 
-class ThumbmakerBase(object):
-    __metaclass__ = ABCMeta
-
+class ThumbmakerBase(object, metaclass=ABCMeta):
     @abstractmethod
     def _rescale(self, image, width_new, height_new, fname_out):
         pass

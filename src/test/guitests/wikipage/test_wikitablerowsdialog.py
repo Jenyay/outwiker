@@ -18,7 +18,7 @@ class WikiTableRowsDialogTest (BaseMainWndTest):
         config = GeneralGuiConfig (self._application.config)
         config.tableColsCount.remove_option()
         factory = WikiPageFactory()
-        self._testpage = factory.create (self.wikiroot, u"Страница 1", [])
+        self._testpage = factory.create (self.wikiroot, "Страница 1", [])
 
 
     def tearDown (self):
@@ -26,7 +26,7 @@ class WikiTableRowsDialogTest (BaseMainWndTest):
 
 
     def testDefault (self):
-        suffix = u''
+        suffix = ''
         dlg = TableRowsDialog (self.wnd)
         Tester.dialogTester.appendOk()
 
@@ -35,14 +35,14 @@ class WikiTableRowsDialogTest (BaseMainWndTest):
 
         result = controller.getResult()
 
-        validResult = u'''(:row:)
+        validResult = '''(:row:)
 (:cell:)'''
 
         self.assertEqual (result, validResult, result)
 
 
     def testDefault_suffix (self):
-        suffix = u'20'
+        suffix = '20'
         dlg = TableRowsDialog (self.wnd)
         Tester.dialogTester.appendOk()
 
@@ -51,14 +51,14 @@ class WikiTableRowsDialogTest (BaseMainWndTest):
 
         result = controller.getResult()
 
-        validResult = u'''(:row20:)
+        validResult = '''(:row20:)
 (:cell20:)'''
 
         self.assertEqual (result, validResult, result)
 
 
     def testCells (self):
-        suffix = u''
+        suffix = ''
         dlg = TableRowsDialog (self.wnd)
         controller = TableRowsDialogController (dlg, suffix, self._application.config)
 
@@ -69,7 +69,7 @@ class WikiTableRowsDialogTest (BaseMainWndTest):
 
         result = controller.getResult()
 
-        validResult = u'''(:row:)
+        validResult = '''(:row:)
 (:cell:)
 (:cell:)
 (:cell:)
@@ -80,7 +80,7 @@ class WikiTableRowsDialogTest (BaseMainWndTest):
 
 
     def testRowsCells (self):
-        suffix = u''
+        suffix = ''
         dlg = TableRowsDialog (self.wnd)
         controller = TableRowsDialogController (dlg, suffix, self._application.config)
 
@@ -92,7 +92,7 @@ class WikiTableRowsDialogTest (BaseMainWndTest):
 
         result = controller.getResult()
 
-        validResult = u'''(:row:)
+        validResult = '''(:row:)
 (:cell:)
 (:cell:)
 (:cell:)
@@ -115,7 +115,7 @@ class WikiTableRowsDialogTest (BaseMainWndTest):
 
 
     def testColsCount (self):
-        suffix = u''
+        suffix = ''
         dlg = TableRowsDialog (self.wnd)
         Tester.dialogTester.appendOk()
 
@@ -133,7 +133,7 @@ class WikiTableRowsDialogTest (BaseMainWndTest):
 
 
     def testHCells (self):
-        suffix = u''
+        suffix = ''
         dlg = TableRowsDialog (self.wnd)
         controller = TableRowsDialogController (dlg, suffix, self._application.config)
 
@@ -146,7 +146,7 @@ class WikiTableRowsDialogTest (BaseMainWndTest):
 
         result = controller.getResult()
 
-        validResult = u'''(:row:)
+        validResult = '''(:row:)
 (:hcell:)
 (:hcell:)
 (:hcell:)

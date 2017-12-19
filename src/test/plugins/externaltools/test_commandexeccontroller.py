@@ -10,7 +10,7 @@ from outwiker.gui.tester import Tester
 
 class CommandExecControllerTest (unittest.TestCase):
     def setUp (self):
-        dirlist = [u'../plugins/externaltools']
+        dirlist = ['../plugins/externaltools']
 
         self.loader = PluginsLoader(Application)
         self.loader.load (dirlist)
@@ -39,7 +39,7 @@ class CommandExecControllerTest (unittest.TestCase):
 
         commands = [ExecInfo ('gvim', [])]
         title = self._controller.getStatusTitle (commands)
-        rightTitle = u'>>> gvim'
+        rightTitle = '>>> gvim'
 
         self.assertEqual (title, rightTitle)
 
@@ -53,7 +53,7 @@ class CommandExecControllerTest (unittest.TestCase):
         ]
 
         title = self._controller.getStatusTitle (commands)
-        rightTitle = u'>>> gvim ...'
+        rightTitle = '>>> gvim ...'
 
         self.assertEqual (title, rightTitle)
 
@@ -63,7 +63,7 @@ class CommandExecControllerTest (unittest.TestCase):
 
         commands = [ExecInfo ('gvim', ['abyrvalg'])]
         title = self._controller.getStatusTitle (commands)
-        rightTitle = u'>>> gvim abyrvalg'
+        rightTitle = '>>> gvim abyrvalg'
 
         self.assertEqual (title, rightTitle)
 
@@ -73,7 +73,7 @@ class CommandExecControllerTest (unittest.TestCase):
 
         commands = [ExecInfo ('gvim', ['abyrvalg', 'glavryba'])]
         title = self._controller.getStatusTitle (commands)
-        rightTitle = u'>>> gvim abyrvalg glavryba'
+        rightTitle = '>>> gvim abyrvalg glavryba'
 
         self.assertEqual (title, rightTitle)
 
@@ -83,7 +83,7 @@ class CommandExecControllerTest (unittest.TestCase):
 
         commands = [ExecInfo ('gvim', ['abyrvalg glavryba'])]
         title = self._controller.getStatusTitle (commands)
-        rightTitle = u'>>> gvim "abyrvalg glavryba"'
+        rightTitle = '>>> gvim "abyrvalg glavryba"'
 
         self.assertEqual (title, rightTitle)
 
@@ -96,7 +96,7 @@ class CommandExecControllerTest (unittest.TestCase):
             ExecInfo ('gvim', ['abyrvalg glavryba']),
         ]
         title = self._controller.getStatusTitle (commands)
-        rightTitle = u'>>> gvim "abyrvalg glavryba" ...'
+        rightTitle = '>>> gvim "abyrvalg glavryba" ...'
 
         self.assertEqual (title, rightTitle)
 
@@ -109,52 +109,52 @@ class CommandExecControllerTest (unittest.TestCase):
 
 
     def testCommandsList_02 (self):
-        urlparams = {u'com1': ['gvim']}
+        urlparams = {'com1': ['gvim']}
         commands = self._controller.getCommandsList (urlparams)
 
         self.assertEqual (len (commands), 1)
-        self.assertEqual (commands[0].command, u'gvim')
+        self.assertEqual (commands[0].command, 'gvim')
         self.assertEqual (commands[0].params, [])
 
 
     def testCommandsList_03 (self):
-        urlparams = {u'com1': ['gvim', 'abyrvalg']}
+        urlparams = {'com1': ['gvim', 'abyrvalg']}
         commands = self._controller.getCommandsList (urlparams)
 
         self.assertEqual (len (commands), 1)
-        self.assertEqual (commands[0].command, u'gvim')
-        self.assertEqual (commands[0].params, [u'abyrvalg'])
+        self.assertEqual (commands[0].command, 'gvim')
+        self.assertEqual (commands[0].params, ['abyrvalg'])
 
 
     def testCommandsList_04 (self):
         urlparams = {
-            u'com1': ['gvim', 'abyrvalg'],
-            u'com3': ['gvim', 'abyrvalg'],
+            'com1': ['gvim', 'abyrvalg'],
+            'com3': ['gvim', 'abyrvalg'],
         }
         commands = self._controller.getCommandsList (urlparams)
 
         self.assertEqual (len (commands), 1)
-        self.assertEqual (commands[0].command, u'gvim')
-        self.assertEqual (commands[0].params, [u'abyrvalg'])
+        self.assertEqual (commands[0].command, 'gvim')
+        self.assertEqual (commands[0].params, ['abyrvalg'])
 
 
     def testCommandsList_05 (self):
         urlparams = {
-            u'com1': ['gvim', 'abyrvalg'],
-            u'com2': ['krusader', 'glavryba'],
+            'com1': ['gvim', 'abyrvalg'],
+            'com2': ['krusader', 'glavryba'],
         }
         commands = self._controller.getCommandsList (urlparams)
 
         self.assertEqual (len (commands), 2)
-        self.assertEqual (commands[0].command, u'gvim')
-        self.assertEqual (commands[0].params, [u'abyrvalg'])
+        self.assertEqual (commands[0].command, 'gvim')
+        self.assertEqual (commands[0].params, ['abyrvalg'])
 
-        self.assertEqual (commands[1].command, u'krusader')
-        self.assertEqual (commands[1].params, [u'glavryba'])
+        self.assertEqual (commands[1].command, 'krusader')
+        self.assertEqual (commands[1].params, ['glavryba'])
 
 
     def testOnLinkClick_01 (self):
-        params = LinkClickParams (u'exec://exec/?com1=sometools')
+        params = LinkClickParams ('exec://exec/?com1=sometools')
 
         Tester.dialogTester.appendOk()
         self.assertEqual (Tester.dialogTester.count, 1)
@@ -165,7 +165,7 @@ class CommandExecControllerTest (unittest.TestCase):
 
 
     def testOnLinkClick_02 (self):
-        params = LinkClickParams (u'other://exec/?com1=sometools')
+        params = LinkClickParams ('other://exec/?com1=sometools')
 
         Tester.dialogTester.appendOk()
         self.assertEqual (Tester.dialogTester.count, 1)
@@ -176,7 +176,7 @@ class CommandExecControllerTest (unittest.TestCase):
 
 
     def testOnLinkClick_03 (self):
-        params = LinkClickParams (u'exec://other/?com1=sometools')
+        params = LinkClickParams ('exec://other/?com1=sometools')
 
         Tester.dialogTester.appendOk()
         self.assertEqual (Tester.dialogTester.count, 1)
@@ -187,7 +187,7 @@ class CommandExecControllerTest (unittest.TestCase):
 
 
     def testOnLinkClick_04 (self):
-        params = LinkClickParams (u'exec://exec/')
+        params = LinkClickParams ('exec://exec/')
 
         Tester.dialogTester.appendOk()
         self.assertEqual (Tester.dialogTester.count, 1)
@@ -198,7 +198,7 @@ class CommandExecControllerTest (unittest.TestCase):
 
 
     def testOnLinkClick_05 (self):
-        params = LinkClickParams (u'exec://exec/?title=qqq')
+        params = LinkClickParams ('exec://exec/?title=qqq')
 
         Tester.dialogTester.appendOk()
         self.assertEqual (Tester.dialogTester.count, 1)
@@ -213,7 +213,7 @@ class CommandExecControllerTest (unittest.TestCase):
         config = ExternalToolsConfig (Application.config)
         config.execWarning = True
 
-        params = LinkClickParams (u'exec://exec/?com1=sometools')
+        params = LinkClickParams ('exec://exec/?com1=sometools')
 
         Tester.dialogTester.appendOk()
         self.assertEqual (Tester.dialogTester.count, 1)
@@ -228,7 +228,7 @@ class CommandExecControllerTest (unittest.TestCase):
         config = ExternalToolsConfig (Application.config)
         config.execWarning = False
 
-        params = LinkClickParams (u'exec://exec/?com1=sometools')
+        params = LinkClickParams ('exec://exec/?com1=sometools')
 
         Tester.dialogTester.appendOk()
         self.assertEqual (Tester.dialogTester.count, 1)

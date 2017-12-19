@@ -333,7 +333,7 @@ class ProgressGauge(wx.PyWindow):
         rf, gf, bf = 0, 0, 0
         dc.SetBrush(wx.TRANSPARENT_BRUSH)
             
-        for ii in xrange(int(self._pos), int(self._pos+interval)):
+        for ii in range(int(self._pos), int(self._pos+interval)):
             currCol = (r1 + rf, g1 + gf, b1 + bf)                
             dc.SetPen(wx.Pen(currCol, 2))
             dc.DrawLine(ii, 1, ii, ysize-2)

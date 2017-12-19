@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 
-from StringIO import StringIO
+from io import StringIO
 
-from defines import (HTML_ORG_DIV_DATE_CLASS,
+from .defines import (HTML_ORG_DIV_DATE_CLASS,
                      HTML_ORG_TABLE_CLASS,
                      HTML_ORG_DIV_CLASS,
                      HTML_EMPTY_CELL_CONTENT)

@@ -41,10 +41,10 @@ class FakeParser(object):
         pass
 
     def parseWikiMarkup(self, text):
-        return u""
+        return ""
 
     def parseTextLevelMarkup(self, text):
-        return u""
+        return ""
 
 
 class TokenNamesTest(unittest.TestCase):
@@ -52,24 +52,24 @@ class TokenNamesTest(unittest.TestCase):
     Тесты токенов википарсера на правильность имен
     """
     def setUp(self):
-        self.path = mkdtemp(prefix=u'Абырвалг абыр')
+        self.path = mkdtemp(prefix='Абырвалг абыр')
 
     def tearDown(self):
         removeDir(self.path)
 
     def __createWiki(self):
         # Здесь будет создаваться вики
-        self.filesPath = u"../test/samplefiles/"
+        self.filesPath = "../test/samplefiles/"
 
         self.wikiroot = WikiDocument.create(self.path)
-        WikiPageFactory().create(self.wikiroot, u"Страница 2", [])
-        self.testPage = self.wikiroot[u"Страница 2"]
+        WikiPageFactory().create(self.wikiroot, "Страница 2", [])
+        self.testPage = self.wikiroot["Страница 2"]
 
-        files = [u"accept.png", u"add.png", u"anchor.png", u"filename.tmp",
-                 u"файл с пробелами.tmp", u"картинка с пробелами.png",
-                 u"image.jpg", u"image.jpeg", u"image.png", u"image.tif",
-                 u"image.tiff", u"image.gif",
-                 u"image_01.JPG", u"dir", u"dir.xxx", u"dir.png"]
+        files = ["accept.png", "add.png", "anchor.png", "filename.tmp",
+                 "файл с пробелами.tmp", "картинка с пробелами.png",
+                 "image.jpg", "image.jpeg", "image.png", "image.tif",
+                 "image.tiff", "image.gif",
+                 "image_01.JPG", "dir", "dir.xxx", "dir.png"]
 
         fullFilesPath = [os.path.join(self.filesPath, fname)
                          for fname in files]
@@ -94,303 +94,303 @@ class TokenNamesTest(unittest.TestCase):
     def testLinkName1(self):
         testtoken = LinkFactory.make(FakeParser()).setParseAction(
             lambda s, l, t: None)
-        text = u"[[бла-бла-бла -> http://jenyay.net]]"
-        validname = u"link"
+        text = "[[бла-бла-бла -> http://jenyay.net]]"
+        validname = "link"
 
         self._checkToken(testtoken, text, validname)
 
     def testLinkName2(self):
         testtoken = LinkFactory.make(FakeParser()).setParseAction(
             lambda s, l, t: None)
-        text = u"[[http://jenyay.net | бла-бла-бла]]"
-        validname = u"link"
+        text = "[[http://jenyay.net | бла-бла-бла]]"
+        validname = "link"
 
         self._checkToken(testtoken, text, validname)
 
     def testLinkName3(self):
         testtoken = LinkFactory.make(FakeParser()).setParseAction(
             lambda s, l, t: None)
-        text = u"[[http://jenyay.net]]"
-        validname = u"link"
+        text = "[[http://jenyay.net]]"
+        validname = "link"
 
         self._checkToken(testtoken, text, validname)
 
     def testFontItalic(self):
         testtoken = FontsFactory.makeItalic(FakeParser()).setParseAction(
             lambda s, l, t: None)
-        text = u"''Бла-бла-бла''"
-        validname = u"italic"
+        text = "''Бла-бла-бла''"
+        validname = "italic"
 
         self._checkToken(testtoken, text, validname)
 
     def testFontBold(self):
         testtoken = FontsFactory.makeBold(FakeParser()).setParseAction(
             lambda s, l, t: None)
-        text = u"'''Бла-бла-бла'''"
-        validname = u"bold"
+        text = "'''Бла-бла-бла'''"
+        validname = "bold"
 
         self._checkToken(testtoken, text, validname)
 
     def testFontBoldItalic(self):
         testtoken = FontsFactory.makeBoldItalic(FakeParser()).setParseAction(
             lambda s, l, t: None)
-        text = u"''''Бла-бла-бла''''"
-        validname = u"bold_italic"
+        text = "''''Бла-бла-бла''''"
+        validname = "bold_italic"
 
         self._checkToken(testtoken, text, validname)
 
     def testFontUnderline(self):
         testtoken = FontsFactory.makeUnderline(FakeParser()).setParseAction(
             lambda s, l, t: None)
-        text = u"{+Бла-бла-бла+}"
-        validname = u"underline"
+        text = "{+Бла-бла-бла+}"
+        validname = "underline"
 
         self._checkToken(testtoken, text, validname)
 
     def testFontStrike(self):
         testtoken = FontsFactory.makeStrike(FakeParser()).setParseAction(
             lambda s, l, t: None)
-        text = u"{-Бла-бла-бла-}"
-        validname = u"strike"
+        text = "{-Бла-бла-бла-}"
+        validname = "strike"
 
         self._checkToken(testtoken, text, validname)
 
     def testFontSubscript(self):
         testtoken = FontsFactory.makeSubscript(FakeParser()).setParseAction(
             lambda s, l, t: None)
-        text = u"'_Бла-бла-бла_'"
-        validname = u"subscript"
+        text = "'_Бла-бла-бла_'"
+        validname = "subscript"
 
         self._checkToken(testtoken, text, validname)
 
     def testFontSuperscript(self):
         testtoken = FontsFactory.makeSuperscript(FakeParser()).setParseAction(
             lambda s, l, t: None)
-        text = u"'^Бла-бла-бла^'"
-        validname = u"superscript"
+        text = "'^Бла-бла-бла^'"
+        validname = "superscript"
 
         self._checkToken(testtoken, text, validname)
 
     def testFontCode(self):
         testtoken = FontsFactory.makeCode(FakeParser()).setParseAction(
             lambda s, l, t: None)
-        text = u"@@Бла-бла-бла@@"
-        validname = u"code"
+        text = "@@Бла-бла-бла@@"
+        validname = "code"
 
         self._checkToken(testtoken, text, validname)
 
     def testFontSmall(self):
         testtoken = FontsFactory.makeSmall(FakeParser()).setParseAction(
             lambda s, l, t: None)
-        text = u"[-Бла-бла-бла-]"
-        validname = u"small"
+        text = "[-Бла-бла-бла-]"
+        validname = "small"
 
         self._checkToken(testtoken, text, validname)
 
     def testFontBig(self):
         testtoken = FontsFactory.makeBig(FakeParser()).setParseAction(
             lambda s, l, t: None)
-        text = u"[+Бла-бла-бла+]"
-        validname = u"big"
+        text = "[+Бла-бла-бла+]"
+        validname = "big"
 
         self._checkToken(testtoken, text, validname)
 
     def testQuote(self):
         testtoken = QuoteFactory.make(FakeParser()).setParseAction(
             lambda s, l, t: None)
-        text = u"[>Бла-бла-бла<]"
-        validname = u"quote"
+        text = "[>Бла-бла-бла<]"
+        validname = "quote"
 
         self._checkToken(testtoken, text, validname)
 
     def testHeading(self):
         testtoken = HeadingFactory.make(FakeParser()).setParseAction(
             lambda s, l, t: None)
-        text = u"!! Бла-бла-бла"
-        validname = u"heading"
+        text = "!! Бла-бла-бла"
+        validname = "heading"
 
         self._checkToken(testtoken, text, validname)
 
     def testNoFormat(self):
         testtoken = NoFormatFactory.make(FakeParser()).setParseAction(
             lambda s, l, t: None)
-        text = u"[=Бла-бла-бла=]"
-        validname = u"noformat"
+        text = "[=Бла-бла-бла=]"
+        validname = "noformat"
 
         self._checkToken(testtoken, text, validname)
 
     def testPreFormat(self):
         testtoken = PreFormatFactory.make(FakeParser()).setParseAction(
             lambda s, l, t: None)
-        text = u"[@Бла-бла-бла@]"
-        validname = u"preformat"
+        text = "[@Бла-бла-бла@]"
+        validname = "preformat"
 
         self._checkToken(testtoken, text, validname)
 
     def testHorline(self):
         testtoken = HorLineFactory.make(FakeParser()).setParseAction(
             lambda s, l, t: None)
-        text = u"""Бла-бла-бла
+        text = """Бла-бла-бла
 ----"""
-        validname = u"horline"
+        validname = "horline"
 
         self._checkToken(testtoken, text, validname)
 
     def testAlignCenter(self):
         testtoken = AlignFactory.make(FakeParser()).setParseAction(
             lambda s, l, t: None)
-        text = u"""%center% Бла-бла-бла"""
-        validname = u"alignment"
+        text = """%center% Бла-бла-бла"""
+        validname = "alignment"
 
         self._checkToken(testtoken, text, validname)
 
     def testAlignLeft(self):
         testtoken = AlignFactory.make(FakeParser()).setParseAction(
             lambda s, l, t: None)
-        text = u"%left% Бла-бла-бла"
-        validname = u"alignment"
+        text = "%left% Бла-бла-бла"
+        validname = "alignment"
 
         self._checkToken(testtoken, text, validname)
 
     def testAlignRight(self):
         testtoken = AlignFactory.make(FakeParser()).setParseAction(
             lambda s, l, t: None)
-        text = u"%right% Бла-бла-бла"
-        validname = u"alignment"
+        text = "%right% Бла-бла-бла"
+        validname = "alignment"
 
         self._checkToken(testtoken, text, validname)
 
     def testUrl(self):
         testtoken = UrlFactory.make(FakeParser()).setParseAction(
             lambda s, l, t: None)
-        text = u"http://jenyay.net"
-        validname = u"url"
+        text = "http://jenyay.net"
+        validname = "url"
 
         self._checkToken(testtoken, text, validname)
 
     def testUrlImage(self):
         testtoken = UrlImageFactory.make(FakeParser()).setParseAction(
             lambda s, l, t: None)
-        text = u"http://jenyay.net/image.png"
-        validname = u"image"
+        text = "http://jenyay.net/image.png"
+        validname = "image"
 
         self._checkToken(testtoken, text, validname)
 
     def testBoldSubscript(self):
         testtoken = AdHocFactory.make(FakeParser()).setParseAction(
             lambda s, l, t: None)
-        text = u"''''_Бла-бла-бла_''''"
-        validname = u"bold_subscript"
+        text = "''''_Бла-бла-бла_''''"
+        validname = "bold_subscript"
 
         self._checkToken(testtoken, text, validname)
 
     def testBoldSuperscript(self):
         testtoken = AdHocFactory.make(FakeParser()).setParseAction(
             lambda s, l, t: None)
-        text = u"''''^Бла-бла-бла^''''"
-        validname = u"bold_superscript"
+        text = "''''^Бла-бла-бла^''''"
+        validname = "bold_superscript"
 
         self._checkToken(testtoken, text, validname)
 
     def testItalicSubscript(self):
         testtoken = AdHocFactory.make(FakeParser()).setParseAction(
             lambda s, l, t: None)
-        text = u"'''_Бла-бла-бла_'''"
-        validname = u"italic_subscript"
+        text = "'''_Бла-бла-бла_'''"
+        validname = "italic_subscript"
 
         self._checkToken(testtoken, text, validname)
 
     def testItalicSuperscript(self):
         testtoken = AdHocFactory.make(FakeParser()).setParseAction(
             lambda s, l, t: None)
-        text = u"'''^Бла-бла-бла^'''"
-        validname = u"italic_superscript"
+        text = "'''^Бла-бла-бла^'''"
+        validname = "italic_superscript"
 
         self._checkToken(testtoken, text, validname)
 
     def testBoldItalicSubscript(self):
         testtoken = AdHocFactory.make(FakeParser()).setParseAction(
             lambda s, l, t: None)
-        text = u"'''''_Бла-бла-бла_'''''"
-        validname = u"bold_italic_subscript"
+        text = "'''''_Бла-бла-бла_'''''"
+        validname = "bold_italic_subscript"
 
         self._checkToken(testtoken, text, validname)
 
     def testBoldItalicSuperscript(self):
         testtoken = AdHocFactory.make(FakeParser()).setParseAction(
             lambda s, l, t: None)
-        text = u"'''''^Бла-бла-бла^'''''"
-        validname = u"bold_italic_superscript"
+        text = "'''''^Бла-бла-бла^'''''"
+        validname = "bold_italic_superscript"
 
         self._checkToken(testtoken, text, validname)
 
     def testList1(self):
         testtoken = ListFactory.make(FakeParser()).setParseAction(
             lambda s, l, t: None)
-        text = u"""* Бла-бла-бла
+        text = """* Бла-бла-бла
 ** фвывфаыва
 """
-        validname = u"list"
+        validname = "list"
 
         self._checkToken(testtoken, text, validname)
 
     def testList2(self):
         testtoken = ListFactory.make(FakeParser()).setParseAction(
             lambda s, l, t: None)
-        text = u"""# Бла-бла-бла
+        text = """# Бла-бла-бла
 ## фвывфаыва
 """
-        validname = u"list"
+        validname = "list"
 
         self._checkToken(testtoken, text, validname)
 
     def testTable(self):
         testtoken = TableFactory.make(FakeParser()).setParseAction(
             lambda s, l, t: None)
-        text = u"""||border=1
+        text = """||border=1
 ||Бла-бла-бла || asdfasdfsdaf ||
 ||Бла-бла-бла || asdfasdfsdaf ||"""
-        validname = u"table"
+        validname = "table"
 
         self._checkToken(testtoken, text, validname)
 
     def testLineBreak1(self):
         testtoken = LineBreakFactory.make(FakeParser()).setParseAction(
             lambda s, l, t: None)
-        text = u"Бла-бла-бла [[<<]]"
-        validname = u"linebreak"
+        text = "Бла-бла-бла [[<<]]"
+        validname = "linebreak"
 
         self._checkToken(testtoken, text, validname)
 
     def testLineBreak2(self):
         testtoken = LineBreakFactory.make(FakeParser()).setParseAction(
             lambda s, l, t: None)
-        text = u"Бла-бла-бла [[&lt;&lt;]]"
-        validname = u"linebreak"
+        text = "Бла-бла-бла [[&lt;&lt;]]"
+        validname = "linebreak"
 
         self._checkToken(testtoken, text, validname)
 
     def testLineJoin(self):
         testtoken = LineJoinFactory.make(FakeParser()).setParseAction(
             lambda s, l, t: None)
-        text = u"Бла-бла-бла \\\ndfaadsfdasf"
-        validname = u"linejoin"
+        text = "Бла-бла-бла \\\ndfaadsfdasf"
+        validname = "linejoin"
 
         self._checkToken(testtoken, text, validname)
 
     def testCommand(self):
         testtoken = CommandFactory.make(FakeParser()).setParseAction(
             lambda s, l, t: None)
-        text = u"(:command:)Бла-бла-бла(:commandend:)"
-        validname = u"command"
+        text = "(:command:)Бла-бла-бла(:commandend:)"
+        validname = "command"
 
         self._checkToken(testtoken, text, validname)
 
     def testThumbnail(self):
         testtoken = ThumbnailFactory.make(FakeParser()).setParseAction(
             lambda s, l, t: None)
-        text = u"%thumb%Attach:fname.png%%"
-        validname = u"thumbnail"
+        text = "%thumb%Attach:fname.png%%"
+        validname = "thumbnail"
 
         self._checkToken(testtoken, text, validname)
 
@@ -398,8 +398,8 @@ class TokenNamesTest(unittest.TestCase):
         self.__createWiki()
         testtoken = AttachFactory.make(self.parser).setParseAction(
             lambda s, l, t: None)
-        text = u"бла-бла-бла Attach:файл с пробелами.tmp ыфваыфвафв"
-        validname = u"attach"
+        text = "бла-бла-бла Attach:файл с пробелами.tmp ыфваыфвафв"
+        validname = "attach"
 
         self._checkToken(testtoken, text, validname)
 
@@ -407,7 +407,7 @@ class TokenNamesTest(unittest.TestCase):
         self.__createWiki()
         testtoken = AttachImagesFactory.make(self.parser).setParseAction(
             lambda s, l, t: None)
-        text = u"бла-бла-бла Attach:image.jpg ыфваыфвафв"
-        validname = u"attach"
+        text = "бла-бла-бла Attach:image.jpg ыфваыфвафв"
+        validname = "attach"
 
         self._checkToken(testtoken, text, validname)

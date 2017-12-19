@@ -10,7 +10,7 @@ from outwiker.core.htmlimproverfactory import HtmlImproverFactory
 class ParagraphHtmlImproverTest (unittest.TestCase):
 
     def setUp(self):
-        dirlist = [u"../plugins/htmlformatter"]
+        dirlist = ["../plugins/htmlformatter"]
 
         self.loader = PluginsLoader(Application)
         self.loader.load (dirlist)
@@ -22,26 +22,26 @@ class ParagraphHtmlImproverTest (unittest.TestCase):
         self.loader.clear()
 
     def test_empty(self):
-        src = u''
-        expectedResult = u''
+        src = ''
+        expectedResult = ''
 
         result = self.improver.run (src)
         self.assertEqual (expectedResult, result)
 
 
     def test_text_single_line (self):
-        src = u'Абырвалг'
-        expectedResult = u'<p>Абырвалг</p>'
+        src = 'Абырвалг'
+        expectedResult = '<p>Абырвалг</p>'
 
         result = self.improver.run (src)
         self.assertEqual (expectedResult, result)
 
 
     def test_text_br (self):
-        src = u'''Абырвалг
+        src = '''Абырвалг
 Foo
 Bar'''
-        expectedResult = u'''<p>Абырвалг<br/>
+        expectedResult = '''<p>Абырвалг<br/>
 Foo<br/>
 Bar</p>'''
 
@@ -51,11 +51,11 @@ Bar</p>'''
 
 
     def test_text_p_01 (self):
-        src = u'''Абырвалг
+        src = '''Абырвалг
 
 Второй параграф'''
 
-        expectedResult = u'''<p>Абырвалг</p>
+        expectedResult = '''<p>Абырвалг</p>
 <p>Второй параграф</p>'''
 
         result = self.improver.run (src)
@@ -64,7 +64,7 @@ Bar</p>'''
 
 
     def test_text_p_02 (self):
-        src = u'''Абырвалг
+        src = '''Абырвалг
 
 Второй параграф
 
@@ -73,7 +73,7 @@ Bar</p>'''
 
 '''
 
-        expectedResult = u'''<p>Абырвалг</p>
+        expectedResult = '''<p>Абырвалг</p>
 <p>Второй параграф</p>'''
 
         result = self.improver.run (src)
@@ -82,9 +82,9 @@ Bar</p>'''
 
 
     def test_improve_01 (self):
-        src = ur"""<h2>Attach links</h2>Attach:file.odt<br/><a href="__attach/file.odt">file.odt</a><br/><a href="__attach/file.odt">alternative text</a><br/><a href="__attach/file with spaces.pdf">file with spaces.pdf</a><h2>Images</h2>"""
+        src = r"""<h2>Attach links</h2>Attach:file.odt<br/><a href="__attach/file.odt">file.odt</a><br/><a href="__attach/file.odt">alternative text</a><br/><a href="__attach/file with spaces.pdf">file with spaces.pdf</a><h2>Images</h2>"""
 
-        expectedResult = ur"""<h2>Attach links</h2>
+        expectedResult = r"""<h2>Attach links</h2>
 <p>Attach:file.odt<br/>
 <a href="__attach/file.odt">file.odt</a><br/>
 <a href="__attach/file.odt">alternative text</a><br/>
@@ -97,7 +97,7 @@ Bar</p>'''
 
 
     def test_pre_01 (self):
-        src = ur"""qweqweqw qweqwe
+        src = r"""qweqweqw qweqwe
 qwewqeqwe wqe
 
 qweqweqw qwe qweqwe<pre>
@@ -113,7 +113,7 @@ sdfsdf sdfsdf
 sdfsdf
 sdf sdfsdf sdf"""
 
-        expectedResult = ur"""<p>qweqweqw qweqwe<br/>
+        expectedResult = r"""<p>qweqweqw qweqwe<br/>
 qwewqeqwe wqe</p>
 <p>qweqweqw qwe qweqwe</p>
 
@@ -135,9 +135,9 @@ sdf sdfsdf sdf</p>"""
 
 
     def test_pre_02 (self):
-        src = ur"""Абырвалг<pre><br/><h1>111</h1></pre>Абырвалг<pre><br/><h1>111</h1></pre>"""
+        src = r"""Абырвалг<pre><br/><h1>111</h1></pre>Абырвалг<pre><br/><h1>111</h1></pre>"""
 
-        expectedResult = ur"""<p>Абырвалг</p>
+        expectedResult = r"""<p>Абырвалг</p>
 
 <pre><br/><h1>111</h1></pre>
 
@@ -150,12 +150,12 @@ sdf sdfsdf sdf</p>"""
 
 
     def test_pre_03 (self):
-        src = ur"""Абырвалг
+        src = r"""Абырвалг
 <pre>111</pre>
 Абырвалг
 <pre>222</pre>"""
 
-        expectedResult = ur"""<p>Абырвалг</p>
+        expectedResult = r"""<p>Абырвалг</p>
 
 <pre>111</pre>
 
@@ -168,13 +168,13 @@ sdf sdfsdf sdf</p>"""
 
 
     def test_pre_04 (self):
-        src = ur"""Абырвалг
+        src = r"""Абырвалг
 <   pre   >111
 Абырвалг
 йцукен</   pre   >
 <pre>222</pre>"""
 
-        expectedResult = ur"""<p>Абырвалг</p>
+        expectedResult = r"""<p>Абырвалг</p>
 
 <   pre   >111
 Абырвалг
@@ -187,7 +187,7 @@ sdf sdfsdf sdf</p>"""
 
 
     def test_script_01 (self):
-        src = ur"""Абырвалг
+        src = r"""Абырвалг
 
 <script>Абырвалг
 йцукен
@@ -195,7 +195,7 @@ qwerty
 фыва
 </script>"""
 
-        expectedResult = ur"""<p>Абырвалг</p>
+        expectedResult = r"""<p>Абырвалг</p>
 
 <script>Абырвалг
 йцукен
@@ -208,14 +208,14 @@ qwerty
 
 
     def test_script_02 (self):
-        src = ur"""Абырвалг
+        src = r"""Абырвалг
 <script>Абырвалг
 йцукен
 qwerty
 фыва
 </script>"""
 
-        expectedResult = ur"""<p>Абырвалг</p>
+        expectedResult = r"""<p>Абырвалг</p>
 
 <script>Абырвалг
 йцукен
@@ -228,13 +228,13 @@ qwerty
 
 
     def test_script_03 (self):
-        src = ur"""Абырвалг
+        src = r"""Абырвалг
 <   script   >111
 Абырвалг
 йцукен</   script   >
 <script>222</script>"""
 
-        expectedResult = ur"""<p>Абырвалг</p>
+        expectedResult = r"""<p>Абырвалг</p>
 
 <   script   >111
 Абырвалг
@@ -248,7 +248,7 @@ qwerty
 
 
     def test_script_pre_01 (self):
-        src = ur"""Абырвалг
+        src = r"""Абырвалг
 <script>Абырвалг
 <pre>
 йцукен
@@ -257,7 +257,7 @@ qwerty
 фыва
 </script>"""
 
-        expectedResult = ur"""<p>Абырвалг</p>
+        expectedResult = r"""<p>Абырвалг</p>
 
 <script>Абырвалг
 <pre>
@@ -272,7 +272,7 @@ qwerty
 
 
     def test_script_pre_02 (self):
-        src = ur"""Абырвалг
+        src = r"""Абырвалг
 <script>Абырвалг
 <pre>
 йцукен
@@ -281,7 +281,7 @@ qwerty
 фыва
 </script>Абырвалг"""
 
-        expectedResult = ur"""<p>Абырвалг</p>
+        expectedResult = r"""<p>Абырвалг</p>
 
 <script>Абырвалг
 <pre>
@@ -298,9 +298,9 @@ qwerty
 
 
     def test_blockquote_01 (self):
-        src = ur"""<blockquote>Абырвалг</blockquote>"""
+        src = r"""<blockquote>Абырвалг</blockquote>"""
 
-        expectedResult = ur"""<blockquote>
+        expectedResult = r"""<blockquote>
 <p>Абырвалг</p>
 </blockquote>"""
 
@@ -309,9 +309,9 @@ qwerty
 
 
     def test_blockquote_02 (self):
-        src = ur"""Абзац 1<blockquote>Абырвалг</blockquote>Абзац 2"""
+        src = r"""Абзац 1<blockquote>Абырвалг</blockquote>Абзац 2"""
 
-        expectedResult = ur"""<p>Абзац 1</p>
+        expectedResult = r"""<p>Абзац 1</p>
 <blockquote>
 <p>Абырвалг</p>
 </blockquote>
@@ -322,13 +322,13 @@ qwerty
 
 
     def test_blockquote_03 (self):
-        src = ur"""Абзац 1
+        src = r"""Абзац 1
 
 <blockquote>Абырвалг</blockquote>
 
 Абзац 2"""
 
-        expectedResult = ur"""<p>Абзац 1</p>
+        expectedResult = r"""<p>Абзац 1</p>
 <blockquote>
 <p>Абырвалг</p>
 </blockquote>
@@ -339,7 +339,7 @@ qwerty
 
 
     def test_blockquote_04 (self):
-        src = ur"""Абзац 1
+        src = r"""Абзац 1
 
 <blockquote>
 Абырвалг
@@ -347,7 +347,7 @@ qwerty
 
 Абзац 2"""
 
-        expectedResult = ur"""<p>Абзац 1</p>
+        expectedResult = r"""<p>Абзац 1</p>
 <blockquote>
 <p>Абырвалг</p>
 </blockquote>
@@ -358,9 +358,9 @@ qwerty
 
 
     def test_table_01 (self):
-        src = ur"""Абзац 1<table><tr><td>Ячейка таблицы</td></tr></table>Абзац 2"""
+        src = r"""Абзац 1<table><tr><td>Ячейка таблицы</td></tr></table>Абзац 2"""
 
-        expectedResult = ur"""<p>Абзац 1
+        expectedResult = r"""<p>Абзац 1
 <table>
 <tr>
 <td>Ячейка таблицы</td>
@@ -373,11 +373,11 @@ qwerty
 
 
     def test_table_02 (self):
-        src = ur"""Абзац 1
+        src = r"""Абзац 1
 <table><tr><td>Ячейка таблицы</td></tr></table>
 Абзац 2"""
 
-        expectedResult = ur"""<p>Абзац 1
+        expectedResult = r"""<p>Абзац 1
 <table>
 <tr>
 <td>Ячейка таблицы</td>
@@ -390,12 +390,12 @@ qwerty
 
 
     def test_table_03 (self):
-        src = ur"""Абзац 1
+        src = r"""Абзац 1
 
 <table><tr><td>Ячейка таблицы</td></tr></table>
 Абзац 2"""
 
-        expectedResult = ur"""<p>Абзац 1</p>
+        expectedResult = r"""<p>Абзац 1</p>
 <p>
 <table>
 <tr>

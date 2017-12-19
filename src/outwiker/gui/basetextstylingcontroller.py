@@ -8,9 +8,7 @@ import wx
 from outwiker.gui.texteditor import ApplyStyleEvent
 
 
-class BaseTextStylingController(object):
-    __metaclass__ = ABCMeta
-
+class BaseTextStylingController(object, metaclass=ABCMeta):
     def __init__(self, application, pageTypeString=None):
         """
         Changed in version 2.0.0.801

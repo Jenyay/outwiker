@@ -4,13 +4,11 @@
 """
 import os.path
 
-from outwiker.core.system import getOS
 
-
-def getImagePath (imageName):
+def getImagePath(image_name):
     """
     Получить полный путь до картинки
     """
-    imagedir = unicode (os.path.join (os.path.dirname (__file__), "images"), getOS().filesEncoding)
-    fname = os.path.join (imagedir, imageName)
+    imagedir = os.path.join(os.path.dirname(__file__), "images")
+    fname = os.path.join(imagedir, image_name)
     return fname

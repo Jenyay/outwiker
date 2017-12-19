@@ -18,10 +18,10 @@ class ThumbListPluginTest (unittest.TestCase):
         self.maxDiff = None
         self.encoding = "utf8"
 
-        self.filesPath = u"../test/samplefiles/"
+        self.filesPath = "../test/samplefiles/"
         self.__createWiki()
 
-        dirlist = [u"../plugins/thumbgallery"]
+        dirlist = ["../plugins/thumbgallery"]
 
         self.loader = PluginsLoader(Application)
         self.loader.load (dirlist)
@@ -32,12 +32,12 @@ class ThumbListPluginTest (unittest.TestCase):
 
     def __createWiki (self):
         # Здесь будет создаваться вики
-        self.path = mkdtemp (prefix=u'Абырвалг абыр')
+        self.path = mkdtemp (prefix='Абырвалг абыр')
 
         self.wikiroot = WikiDocument.create (self.path)
 
-        WikiPageFactory().create (self.wikiroot, u"Страница 1", [])
-        self.testPage = self.wikiroot[u"Страница 1"]
+        WikiPageFactory().create (self.wikiroot, "Страница 1", [])
+        self.testPage = self.wikiroot["Страница 1"]
 
 
     def tearDown(self):
@@ -50,210 +50,210 @@ class ThumbListPluginTest (unittest.TestCase):
 
 
     def testContentParseEmpty (self):
-        text = u"""Бла-бла-бла (:thumblist:) бла-бла-бла"""
+        text = """Бла-бла-бла (:thumblist:) бла-бла-бла"""
 
-        validResult = u"""Бла-бла-бла <div class="thumblist"></div> бла-бла-бла"""
+        validResult = """Бла-бла-бла <div class="thumblist"></div> бла-бла-бла"""
 
         result = self.parser.toHtml (text)
         self.assertEqual (validResult, result)
-        self.assertTrue (u"<table" not in result)
+        self.assertTrue ("<table" not in result)
 
 
     def testAttachFull1 (self):
-        text = u"""Бла-бла-бла
+        text = """Бла-бла-бла
         (:thumblist:)
         бла-бла-бла"""
 
-        files = [u"first.jpg"]
+        files = ["first.jpg"]
         fullpath = [os.path.join (self.filesPath, fname) for fname in files]
         Attachment(self.testPage).attach (fullpath)
 
         result = self.parser.toHtml (text)
 
-        self.assertTrue (u'<A HREF="__attach/first.jpg">' in result)
-        self.assertTrue (u"__thumb" in result)
-        self.assertTrue (u"_first.jpg" in result)
+        self.assertTrue ('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue ("__thumb" in result)
+        self.assertTrue ("_first.jpg" in result)
 
         self.assertTrue (os.path.exists (os.path.join (self.testPage.path, "__attach", "__thumb")))
-        self.assertTrue (u"<table" not in result)
+        self.assertTrue ("<table" not in result)
 
 
     def testAttachThumbListFull2 (self):
-        text = u"""Бла-бла-бла
+        text = """Бла-бла-бла
         (:thumblist:)
         бла-бла-бла"""
 
-        files = [u"first.jpg", u"image_01.JPG", u"html.txt"]
+        files = ["first.jpg", "image_01.JPG", "html.txt"]
         fullpath = [os.path.join (self.filesPath, fname) for fname in files]
         Attachment(self.testPage).attach (fullpath)
 
         result = self.parser.toHtml (text)
 
-        self.assertTrue (u'<A HREF="__attach/first.jpg">' in result)
-        self.assertTrue (u"__thumb" in result)
-        self.assertTrue (u"_first.jpg" in result)
+        self.assertTrue ('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue ("__thumb" in result)
+        self.assertTrue ("_first.jpg" in result)
 
-        self.assertTrue (u'<A HREF="__attach/image_01.JPG">' in result)
-        self.assertTrue (u"_image_01.JPG" in result)
+        self.assertTrue ('<A HREF="__attach/image_01.JPG">' in result)
+        self.assertTrue ("_image_01.JPG" in result)
 
-        self.assertFalse (u"html.txt" in result)
-        self.assertTrue (u"<table" not in result)
+        self.assertFalse ("html.txt" in result)
+        self.assertTrue ("<table" not in result)
 
 
     def testAttachGalleryFull2 (self):
-        text = u"""Бла-бла-бла
+        text = """Бла-бла-бла
         (:thumbgallery:)
         бла-бла-бла"""
 
-        files = [u"first.jpg", u"image_01.JPG", u"html.txt"]
+        files = ["first.jpg", "image_01.JPG", "html.txt"]
         fullpath = [os.path.join (self.filesPath, fname) for fname in files]
         Attachment(self.testPage).attach (fullpath)
 
         result = self.parser.toHtml (text)
 
-        self.assertTrue (u'<A HREF="__attach/first.jpg">' in result)
-        self.assertTrue (u"__thumb" in result)
-        self.assertTrue (u"_first.jpg" in result)
+        self.assertTrue ('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue ("__thumb" in result)
+        self.assertTrue ("_first.jpg" in result)
 
-        self.assertTrue (u'<A HREF="__attach/image_01.JPG">' in result)
-        self.assertTrue (u"_image_01.JPG" in result)
+        self.assertTrue ('<A HREF="__attach/image_01.JPG">' in result)
+        self.assertTrue ("_image_01.JPG" in result)
 
-        self.assertFalse (u"html.txt" in result)
-        self.assertTrue (u"<table" not in result)
+        self.assertFalse ("html.txt" in result)
+        self.assertTrue ("<table" not in result)
 
 
     def testAttachEmpty1 (self):
-        text = u"""Бла-бла-бла
+        text = """Бла-бла-бла
         (:thumblist:)
         (:thumblistend:)
         бла-бла-бла"""
 
-        files = [u"first.jpg", u"image_01.JPG", u"html.txt"]
+        files = ["first.jpg", "image_01.JPG", "html.txt"]
         fullpath = [os.path.join (self.filesPath, fname) for fname in files]
         Attachment(self.testPage).attach (fullpath)
 
         result = self.parser.toHtml (text)
 
-        self.assertFalse (u'<A HREF="__attach/first.jpg">' in result)
-        self.assertFalse (u"__thumb" in result)
-        self.assertFalse (u"_first.jpg" in result)
+        self.assertFalse ('<A HREF="__attach/first.jpg">' in result)
+        self.assertFalse ("__thumb" in result)
+        self.assertFalse ("_first.jpg" in result)
 
-        self.assertFalse (u'<A HREF="__attach/image_01.JPG">' in result)
-        self.assertFalse (u"_image_01.JPG" in result)
+        self.assertFalse ('<A HREF="__attach/image_01.JPG">' in result)
+        self.assertFalse ("_image_01.JPG" in result)
 
-        self.assertFalse (u"html.txt" in result)
-        self.assertTrue (u"<table" not in result)
+        self.assertFalse ("html.txt" in result)
+        self.assertTrue ("<table" not in result)
 
 
     def testAttachGalleryEmpty1 (self):
-        text = u"""Бла-бла-бла
+        text = """Бла-бла-бла
         (:thumbgallery:)
         (:thumbgalleryend:)
         бла-бла-бла"""
 
-        files = [u"first.jpg", u"image_01.JPG", u"html.txt"]
+        files = ["first.jpg", "image_01.JPG", "html.txt"]
         fullpath = [os.path.join (self.filesPath, fname) for fname in files]
         Attachment(self.testPage).attach (fullpath)
 
         result = self.parser.toHtml (text)
 
-        self.assertFalse (u'<A HREF="__attach/first.jpg">' in result)
-        self.assertFalse (u"__thumb" in result)
-        self.assertFalse (u"_first.jpg" in result)
+        self.assertFalse ('<A HREF="__attach/first.jpg">' in result)
+        self.assertFalse ("__thumb" in result)
+        self.assertFalse ("_first.jpg" in result)
 
-        self.assertFalse (u'<A HREF="__attach/image_01.JPG">' in result)
-        self.assertFalse (u"_image_01.JPG" in result)
+        self.assertFalse ('<A HREF="__attach/image_01.JPG">' in result)
+        self.assertFalse ("_image_01.JPG" in result)
 
-        self.assertFalse (u"html.txt" in result)
-        self.assertTrue (u"<table" not in result)
+        self.assertFalse ("html.txt" in result)
+        self.assertTrue ("<table" not in result)
 
 
     def testAttachList1 (self):
-        text = u"""Бла-бла-бла
+        text = """Бла-бла-бла
         (:thumblist:)
             first.jpg
             particle_01.PNG
         (:thumblistend:)
         бла-бла-бла"""
 
-        files = [u"first.jpg", u"image_01.JPG", u"particle_01.PNG", u"image.png", u"html.txt"]
+        files = ["first.jpg", "image_01.JPG", "particle_01.PNG", "image.png", "html.txt"]
         fullpath = [os.path.join (self.filesPath, fname) for fname in files]
         Attachment(self.testPage).attach (fullpath)
 
         result = self.parser.toHtml (text)
 
-        self.assertTrue (u'<A HREF="__attach/first.jpg">' in result)
-        self.assertTrue (u"_first.jpg" in result)
-        self.assertTrue (u"__thumb" in result)
+        self.assertTrue ('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue ("_first.jpg" in result)
+        self.assertTrue ("__thumb" in result)
 
-        self.assertTrue (u'<A HREF="__attach/particle_01.PNG">' in result)
+        self.assertTrue ('<A HREF="__attach/particle_01.PNG">' in result)
         self.assertTrue ("_particle_01.PNG" in result)
 
-        self.assertFalse (u'<A HREF="__attach/image_01.JPG">' in result)
-        self.assertFalse (u"_image_01.JPG" in result)
+        self.assertFalse ('<A HREF="__attach/image_01.JPG">' in result)
+        self.assertFalse ("_image_01.JPG" in result)
 
-        self.assertFalse (u"html.txt" in result)
-        self.assertTrue (u"<table" not in result)
+        self.assertFalse ("html.txt" in result)
+        self.assertTrue ("<table" not in result)
 
 
     def testAttachList2 (self):
-        text = u"""Бла-бла-бла
+        text = """Бла-бла-бла
         (:thumblist:)
             Attach:first.jpg
             Attach:particle_01.PNG
         (:thumblistend:)
         бла-бла-бла"""
 
-        files = [u"first.jpg", u"image_01.JPG", u"particle_01.PNG", u"image.png", u"html.txt"]
+        files = ["first.jpg", "image_01.JPG", "particle_01.PNG", "image.png", "html.txt"]
         fullpath = [os.path.join (self.filesPath, fname) for fname in files]
         Attachment(self.testPage).attach (fullpath)
 
         result = self.parser.toHtml (text)
 
-        self.assertTrue (u'<A HREF="__attach/first.jpg">' in result)
-        self.assertTrue (u"_first.jpg" in result)
-        self.assertTrue (u"__thumb" in result)
+        self.assertTrue ('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue ("_first.jpg" in result)
+        self.assertTrue ("__thumb" in result)
 
-        self.assertTrue (u'<A HREF="__attach/particle_01.PNG">' in result)
+        self.assertTrue ('<A HREF="__attach/particle_01.PNG">' in result)
         self.assertTrue ("_particle_01.PNG" in result)
 
-        self.assertFalse (u'<A HREF="__attach/image_01.JPG">' in result)
-        self.assertFalse (u"_image_01.JPG" in result)
+        self.assertFalse ('<A HREF="__attach/image_01.JPG">' in result)
+        self.assertFalse ("_image_01.JPG" in result)
 
-        self.assertFalse (u"html.txt" in result)
-        self.assertTrue (u"<table" not in result)
+        self.assertFalse ("html.txt" in result)
+        self.assertTrue ("<table" not in result)
 
 
     def testAttachGalleryList2 (self):
-        text = u"""Бла-бла-бла
+        text = """Бла-бла-бла
         (:thumbgallery:)
             Attach:first.jpg
             Attach:particle_01.PNG
         (:thumbgalleryend:)
         бла-бла-бла"""
 
-        files = [u"first.jpg", u"image_01.JPG", u"particle_01.PNG", u"image.png", u"html.txt"]
+        files = ["first.jpg", "image_01.JPG", "particle_01.PNG", "image.png", "html.txt"]
         fullpath = [os.path.join (self.filesPath, fname) for fname in files]
         Attachment(self.testPage).attach (fullpath)
 
         result = self.parser.toHtml (text)
 
-        self.assertTrue (u'<A HREF="__attach/first.jpg">' in result)
-        self.assertTrue (u"_first.jpg" in result)
-        self.assertTrue (u"__thumb" in result)
+        self.assertTrue ('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue ("_first.jpg" in result)
+        self.assertTrue ("__thumb" in result)
 
-        self.assertTrue (u'<A HREF="__attach/particle_01.PNG">' in result)
+        self.assertTrue ('<A HREF="__attach/particle_01.PNG">' in result)
         self.assertTrue ("_particle_01.PNG" in result)
 
-        self.assertFalse (u'<A HREF="__attach/image_01.JPG">' in result)
-        self.assertFalse (u"_image_01.JPG" in result)
+        self.assertFalse ('<A HREF="__attach/image_01.JPG">' in result)
+        self.assertFalse ("_image_01.JPG" in result)
 
-        self.assertFalse (u"html.txt" in result)
-        self.assertTrue (u"<table" not in result)
+        self.assertFalse ("html.txt" in result)
+        self.assertTrue ("<table" not in result)
 
 
     def testAttachList3 (self):
-        text = u"""Бла-бла-бла
+        text = """Бла-бла-бла
         (:thumblist:)
 
             Attach:first.jpg
@@ -265,28 +265,28 @@ class ThumbListPluginTest (unittest.TestCase):
         (:thumblistend:)
         бла-бла-бла"""
 
-        files = [u"first.jpg", u"image_01.JPG", u"particle_01.PNG", u"image.png", u"html.txt"]
+        files = ["first.jpg", "image_01.JPG", "particle_01.PNG", "image.png", "html.txt"]
         fullpath = [os.path.join (self.filesPath, fname) for fname in files]
         Attachment(self.testPage).attach (fullpath)
 
         result = self.parser.toHtml (text)
 
-        self.assertTrue (u'<A HREF="__attach/first.jpg">' in result)
-        self.assertTrue (u"_first.jpg" in result)
-        self.assertTrue (u"__thumb" in result)
+        self.assertTrue ('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue ("_first.jpg" in result)
+        self.assertTrue ("__thumb" in result)
 
-        self.assertTrue (u'<A HREF="__attach/particle_01.PNG">' in result)
+        self.assertTrue ('<A HREF="__attach/particle_01.PNG">' in result)
         self.assertTrue ("_particle_01.PNG" in result)
 
-        self.assertFalse (u'<A HREF="__attach/image_01.JPG">' in result)
-        self.assertFalse (u"_image_01.JPG" in result)
+        self.assertFalse ('<A HREF="__attach/image_01.JPG">' in result)
+        self.assertFalse ("_image_01.JPG" in result)
 
-        self.assertFalse (u"html.txt" in result)
-        self.assertTrue (u"<table" not in result)
+        self.assertFalse ("html.txt" in result)
+        self.assertTrue ("<table" not in result)
 
 
     def testAttachGallery3 (self):
-        text = u"""Бла-бла-бла
+        text = """Бла-бла-бла
         (:thumbgallery:)
 
             Attach:first.jpg
@@ -298,28 +298,28 @@ class ThumbListPluginTest (unittest.TestCase):
         (:thumbgalleryend:)
         бла-бла-бла"""
 
-        files = [u"first.jpg", u"image_01.JPG", u"particle_01.PNG", u"image.png", u"html.txt"]
+        files = ["first.jpg", "image_01.JPG", "particle_01.PNG", "image.png", "html.txt"]
         fullpath = [os.path.join (self.filesPath, fname) for fname in files]
         Attachment(self.testPage).attach (fullpath)
 
         result = self.parser.toHtml (text)
 
-        self.assertTrue (u'<A HREF="__attach/first.jpg">' in result)
-        self.assertTrue (u"_first.jpg" in result)
-        self.assertTrue (u"__thumb" in result)
+        self.assertTrue ('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue ("_first.jpg" in result)
+        self.assertTrue ("__thumb" in result)
 
-        self.assertTrue (u'<A HREF="__attach/particle_01.PNG">' in result)
+        self.assertTrue ('<A HREF="__attach/particle_01.PNG">' in result)
         self.assertTrue ("_particle_01.PNG" in result)
 
-        self.assertFalse (u'<A HREF="__attach/image_01.JPG">' in result)
-        self.assertFalse (u"_image_01.JPG" in result)
+        self.assertFalse ('<A HREF="__attach/image_01.JPG">' in result)
+        self.assertFalse ("_image_01.JPG" in result)
 
-        self.assertFalse (u"html.txt" in result)
-        self.assertTrue (u"<table" not in result)
+        self.assertFalse ("html.txt" in result)
+        self.assertTrue ("<table" not in result)
 
 
     def testAttachGallerySpaces1 (self):
-        text = u"""Бла-бла-бла
+        text = """Бла-бла-бла
         (:thumbgallery:)
 
             Attach:first.jpg
@@ -331,28 +331,28 @@ class ThumbListPluginTest (unittest.TestCase):
         (:thumbgalleryend:)
         бла-бла-бла"""
 
-        files = [u"first.jpg", u"image_01.JPG", u"particle_01.PNG", u"image.png", u"html.txt", u"картинка с пробелами.png"]
+        files = ["first.jpg", "image_01.JPG", "particle_01.PNG", "image.png", "html.txt", "картинка с пробелами.png"]
         fullpath = [os.path.join (self.filesPath, fname) for fname in files]
         Attachment(self.testPage).attach (fullpath)
 
         result = self.parser.toHtml (text)
 
-        self.assertTrue (u'<A HREF="__attach/first.jpg">' in result)
-        self.assertTrue (u"_first.jpg" in result)
-        self.assertTrue (u"__thumb" in result)
+        self.assertTrue ('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue ("_first.jpg" in result)
+        self.assertTrue ("__thumb" in result)
 
-        self.assertTrue (u"картинка с пробелами.png" in result)
-        self.assertTrue (u"_картинка с пробелами.png" in result)
+        self.assertTrue ("картинка с пробелами.png" in result)
+        self.assertTrue ("_картинка с пробелами.png" in result)
 
-        self.assertFalse (u'<A HREF="__attach/image_01.JPG">' in result)
-        self.assertFalse (u"_image_01.JPG" in result)
+        self.assertFalse ('<A HREF="__attach/image_01.JPG">' in result)
+        self.assertFalse ("_image_01.JPG" in result)
 
-        self.assertFalse (u"html.txt" in result)
-        self.assertTrue (u"<table" not in result)
+        self.assertFalse ("html.txt" in result)
+        self.assertTrue ("<table" not in result)
 
 
     def testAttachGallerySpaces2 (self):
-        text = u"""Бла-бла-бла
+        text = """Бла-бла-бла
         (:thumbgallery:)
 
             Attach:first.jpg
@@ -364,28 +364,28 @@ class ThumbListPluginTest (unittest.TestCase):
         (:thumbgalleryend:)
         бла-бла-бла"""
 
-        files = [u"first.jpg", u"image_01.JPG", u"particle_01.PNG", u"image.png", u"html.txt", u"картинка с пробелами.png"]
+        files = ["first.jpg", "image_01.JPG", "particle_01.PNG", "image.png", "html.txt", "картинка с пробелами.png"]
         fullpath = [os.path.join (self.filesPath, fname) for fname in files]
         Attachment(self.testPage).attach (fullpath)
 
         result = self.parser.toHtml (text)
 
-        self.assertTrue (u'<A HREF="__attach/first.jpg">' in result)
-        self.assertTrue (u"_first.jpg" in result)
-        self.assertTrue (u"__thumb" in result)
+        self.assertTrue ('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue ("_first.jpg" in result)
+        self.assertTrue ("__thumb" in result)
 
-        self.assertTrue (u"картинка с пробелами.png" in result)
-        self.assertTrue (u"_картинка с пробелами.png" in result)
+        self.assertTrue ("картинка с пробелами.png" in result)
+        self.assertTrue ("_картинка с пробелами.png" in result)
 
-        self.assertFalse (u'<A HREF="__attach/image_01.JPG">' in result)
-        self.assertFalse (u"_image_01.JPG" in result)
+        self.assertFalse ('<A HREF="__attach/image_01.JPG">' in result)
+        self.assertFalse ("_image_01.JPG" in result)
 
-        self.assertFalse (u"html.txt" in result)
-        self.assertTrue (u"<table" not in result)
+        self.assertFalse ("html.txt" in result)
+        self.assertTrue ("<table" not in result)
 
 
     def testAttachGallerySize1 (self):
-        text = u"""Бла-бла-бла
+        text = """Бла-бла-бла
         (:thumbgallery maxsize=100:)
 
             Attach:first.jpg
@@ -397,31 +397,31 @@ class ThumbListPluginTest (unittest.TestCase):
         (:thumbgalleryend:)
         бла-бла-бла"""
 
-        files = [u"first.jpg", u"image_01.JPG", u"particle_01.PNG", u"image.png", u"html.txt", u"картинка с пробелами.png"]
+        files = ["first.jpg", "image_01.JPG", "particle_01.PNG", "image.png", "html.txt", "картинка с пробелами.png"]
         fullpath = [os.path.join (self.filesPath, fname) for fname in files]
         Attachment(self.testPage).attach (fullpath)
 
         result = self.parser.toHtml (text)
 
-        self.assertTrue (u'<A HREF="__attach/first.jpg">' in result)
-        self.assertTrue (u"maxsize_100_first.jpg" in result)
-        self.assertTrue (u"__thumb" in result)
+        self.assertTrue ('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue ("maxsize_100_first.jpg" in result)
+        self.assertTrue ("__thumb" in result)
 
-        self.assertTrue (u'<A HREF="__attach/particle_01.PNG">' in result)
+        self.assertTrue ('<A HREF="__attach/particle_01.PNG">' in result)
         self.assertTrue ("maxsize_100_particle_01.PNG" in result)
 
-        self.assertTrue (u"картинка с пробелами.png" in result)
-        self.assertTrue (u"maxsize_100_картинка с пробелами.png" in result)
+        self.assertTrue ("картинка с пробелами.png" in result)
+        self.assertTrue ("maxsize_100_картинка с пробелами.png" in result)
 
-        self.assertFalse (u'<A HREF="__attach/image_01.JPG">' in result)
-        self.assertFalse (u"maxsize_100_image_01.JPG" in result)
+        self.assertFalse ('<A HREF="__attach/image_01.JPG">' in result)
+        self.assertFalse ("maxsize_100_image_01.JPG" in result)
 
-        self.assertFalse (u"html.txt" in result)
-        self.assertTrue (u"<table" not in result)
+        self.assertFalse ("html.txt" in result)
+        self.assertTrue ("<table" not in result)
 
 
     def testAttachGallerySize2 (self):
-        text = u"""Бла-бла-бла
+        text = """Бла-бла-бла
         (:thumbgallery px=100:)
 
             Attach:first.jpg
@@ -433,28 +433,28 @@ class ThumbListPluginTest (unittest.TestCase):
         (:thumbgalleryend:)
         бла-бла-бла"""
 
-        files = [u"first.jpg", u"image_01.JPG", u"particle_01.PNG", u"image.png", u"html.txt"]
+        files = ["first.jpg", "image_01.JPG", "particle_01.PNG", "image.png", "html.txt"]
         fullpath = [os.path.join (self.filesPath, fname) for fname in files]
         Attachment(self.testPage).attach (fullpath)
 
         result = self.parser.toHtml (text)
 
-        self.assertTrue (u'<A HREF="__attach/first.jpg">' in result)
-        self.assertTrue (u"maxsize_100_first.jpg" in result)
-        self.assertTrue (u"__thumb" in result)
+        self.assertTrue ('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue ("maxsize_100_first.jpg" in result)
+        self.assertTrue ("__thumb" in result)
 
-        self.assertTrue (u'<A HREF="__attach/particle_01.PNG">' in result)
+        self.assertTrue ('<A HREF="__attach/particle_01.PNG">' in result)
         self.assertTrue ("maxsize_100_particle_01.PNG" in result)
 
-        self.assertFalse (u'<A HREF="__attach/image_01.JPG">' in result)
-        self.assertFalse (u"maxsize_100_image_01.JPG" in result)
+        self.assertFalse ('<A HREF="__attach/image_01.JPG">' in result)
+        self.assertFalse ("maxsize_100_image_01.JPG" in result)
 
-        self.assertFalse (u"html.txt" in result)
-        self.assertTrue (u"<table" not in result)
+        self.assertFalse ("html.txt" in result)
+        self.assertTrue ("<table" not in result)
 
 
     def testAttachListSize1 (self):
-        text = u"""Бла-бла-бла
+        text = """Бла-бла-бла
         (:thumblist maxsize=100:)
 
             Attach:first.jpg
@@ -466,28 +466,28 @@ class ThumbListPluginTest (unittest.TestCase):
         (:thumblistend:)
         бла-бла-бла"""
 
-        files = [u"first.jpg", u"image_01.JPG", u"particle_01.PNG", u"image.png", u"html.txt"]
+        files = ["first.jpg", "image_01.JPG", "particle_01.PNG", "image.png", "html.txt"]
         fullpath = [os.path.join (self.filesPath, fname) for fname in files]
         Attachment(self.testPage).attach (fullpath)
 
         result = self.parser.toHtml (text)
 
-        self.assertTrue (u'<A HREF="__attach/first.jpg">' in result)
-        self.assertTrue (u"maxsize_100_first.jpg" in result)
-        self.assertTrue (u"__thumb" in result)
+        self.assertTrue ('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue ("maxsize_100_first.jpg" in result)
+        self.assertTrue ("__thumb" in result)
 
-        self.assertTrue (u'<A HREF="__attach/particle_01.PNG">' in result)
+        self.assertTrue ('<A HREF="__attach/particle_01.PNG">' in result)
         self.assertTrue ("maxsize_100_particle_01.PNG" in result)
 
-        self.assertFalse (u'<A HREF="__attach/image_01.JPG">' in result)
-        self.assertFalse (u"maxsize_100_image_01.JPG" in result)
+        self.assertFalse ('<A HREF="__attach/image_01.JPG">' in result)
+        self.assertFalse ("maxsize_100_image_01.JPG" in result)
 
-        self.assertFalse (u"html.txt" in result)
-        self.assertTrue (u"<table" not in result)
+        self.assertFalse ("html.txt" in result)
+        self.assertTrue ("<table" not in result)
 
 
     def testAttachListSize2 (self):
-        text = u"""Бла-бла-бла
+        text = """Бла-бла-бла
         (:thumblist px=100:)
 
             Attach:first.jpg
@@ -499,28 +499,28 @@ class ThumbListPluginTest (unittest.TestCase):
         (:thumblistend:)
         бла-бла-бла"""
 
-        files = [u"first.jpg", u"image_01.JPG", u"particle_01.PNG", u"image.png", u"html.txt"]
+        files = ["first.jpg", "image_01.JPG", "particle_01.PNG", "image.png", "html.txt"]
         fullpath = [os.path.join (self.filesPath, fname) for fname in files]
         Attachment(self.testPage).attach (fullpath)
 
         result = self.parser.toHtml (text)
 
-        self.assertTrue (u'<A HREF="__attach/first.jpg">' in result)
-        self.assertTrue (u"maxsize_100_first.jpg" in result)
-        self.assertTrue (u"__thumb" in result)
+        self.assertTrue ('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue ("maxsize_100_first.jpg" in result)
+        self.assertTrue ("__thumb" in result)
 
-        self.assertTrue (u'<A HREF="__attach/particle_01.PNG">' in result)
+        self.assertTrue ('<A HREF="__attach/particle_01.PNG">' in result)
         self.assertTrue ("maxsize_100_particle_01.PNG" in result)
 
-        self.assertFalse (u'<A HREF="__attach/image_01.JPG">' in result)
-        self.assertFalse (u"maxsize_100_image_01.JPG" in result)
+        self.assertFalse ('<A HREF="__attach/image_01.JPG">' in result)
+        self.assertFalse ("maxsize_100_image_01.JPG" in result)
 
-        self.assertFalse (u"html.txt" in result)
-        self.assertTrue (u"<table" not in result)
+        self.assertFalse ("html.txt" in result)
+        self.assertTrue ("<table" not in result)
 
 
     def testAttachListComments1 (self):
-        text = u"""Бла-бла-бла
+        text = """Бла-бла-бла
         (:thumblist px=100:)
 
             Attach:first.jpg    | Первый
@@ -532,201 +532,201 @@ class ThumbListPluginTest (unittest.TestCase):
         (:thumblistend:)
         бла-бла-бла"""
 
-        files = [u"first.jpg", u"image_01.JPG", u"particle_01.PNG", u"image.png", u"html.txt"]
+        files = ["first.jpg", "image_01.JPG", "particle_01.PNG", "image.png", "html.txt"]
         fullpath = [os.path.join (self.filesPath, fname) for fname in files]
         Attachment(self.testPage).attach (fullpath)
 
         result = self.parser.toHtml (text)
 
-        self.assertTrue (u'<A HREF="__attach/first.jpg">' in result)
-        self.assertTrue (u"maxsize_100_first.jpg" in result)
-        self.assertTrue (u"__thumb" in result)
+        self.assertTrue ('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue ("maxsize_100_first.jpg" in result)
+        self.assertTrue ("__thumb" in result)
 
-        self.assertTrue (u'<A HREF="__attach/particle_01.PNG">' in result)
+        self.assertTrue ('<A HREF="__attach/particle_01.PNG">' in result)
         self.assertTrue ("maxsize_100_particle_01.PNG" in result)
 
-        self.assertFalse (u'<A HREF="__attach/image_01.JPG">' in result)
-        self.assertFalse (u"maxsize_100_image_01.JPG" in result)
+        self.assertFalse ('<A HREF="__attach/image_01.JPG">' in result)
+        self.assertFalse ("maxsize_100_image_01.JPG" in result)
 
-        self.assertFalse (u"html.txt" in result)
-        self.assertTrue (u"<table" not in result)
+        self.assertFalse ("html.txt" in result)
+        self.assertTrue ("<table" not in result)
 
 
     def testAttachListComments2 (self):
-        text = u"""Бла-бла-бла
+        text = """Бла-бла-бла
         (:thumblist:)
             Attach:first.jpg    | Первый
             Attach:particle_01.PNG|Комментарий к картинке
         (:thumblistend:)
         бла-бла-бла"""
 
-        files = [u"first.jpg", u"image_01.JPG", u"particle_01.PNG", u"image.png", u"html.txt"]
+        files = ["first.jpg", "image_01.JPG", "particle_01.PNG", "image.png", "html.txt"]
         fullpath = [os.path.join (self.filesPath, fname) for fname in files]
         Attachment(self.testPage).attach (fullpath)
 
         result = self.parser.toHtml (text)
 
-        self.assertTrue (u'<A HREF="__attach/first.jpg">' in result)
-        self.assertTrue (u"__thumb" in result)
+        self.assertTrue ('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue ("__thumb" in result)
 
-        self.assertTrue (u'<A HREF="__attach/particle_01.PNG">' in result)
-        self.assertFalse (u'<A HREF="__attach/image_01.JPG">' in result)
+        self.assertTrue ('<A HREF="__attach/particle_01.PNG">' in result)
+        self.assertFalse ('<A HREF="__attach/image_01.JPG">' in result)
 
-        self.assertFalse (u"html.txt" in result)
-        self.assertTrue (u"<table" not in result)
+        self.assertFalse ("html.txt" in result)
+        self.assertTrue ("<table" not in result)
 
 
     def testTable1 (self):
-        text = u"""Бла-бла-бла
+        text = """Бла-бла-бла
         (:thumblist cols=2:)
         бла-бла-бла"""
 
-        files = [u"first.jpg", u"image_01.JPG", u"particle_01.PNG", u"image.png", u"html.txt"]
+        files = ["first.jpg", "image_01.JPG", "particle_01.PNG", "image.png", "html.txt"]
         fullpath = [os.path.join (self.filesPath, fname) for fname in files]
         Attachment(self.testPage).attach (fullpath)
 
         result = self.parser.toHtml (text)
 
-        self.assertTrue (u'<A HREF="__attach/first.jpg">' in result)
-        self.assertTrue (u"__thumb" in result)
+        self.assertTrue ('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue ("__thumb" in result)
 
-        self.assertTrue (u'<A HREF="__attach/particle_01.PNG">' in result)
-        self.assertTrue (u'<A HREF="__attach/image_01.JPG">' in result)
+        self.assertTrue ('<A HREF="__attach/particle_01.PNG">' in result)
+        self.assertTrue ('<A HREF="__attach/image_01.JPG">' in result)
 
-        self.assertFalse (u"html.txt" in result)
+        self.assertFalse ("html.txt" in result)
 
-        self.assertTrue (u"<table" in result)
+        self.assertTrue ("<table" in result)
 
         # В таблице две строки
         self.assertEqual (len (result.split ("<tr")), 2 + 1)
 
 
     def testTable2 (self):
-        text = u"""Бла-бла-бла
+        text = """Бла-бла-бла
         (:thumblist cols=1:)
         бла-бла-бла"""
 
-        files = [u"first.jpg", u"image_01.JPG", u"particle_01.PNG", u"image.png", u"html.txt"]
+        files = ["first.jpg", "image_01.JPG", "particle_01.PNG", "image.png", "html.txt"]
         fullpath = [os.path.join (self.filesPath, fname) for fname in files]
         Attachment(self.testPage).attach (fullpath)
 
         result = self.parser.toHtml (text)
 
-        self.assertTrue (u'<A HREF="__attach/first.jpg">' in result)
-        self.assertTrue (u"__thumb" in result)
+        self.assertTrue ('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue ("__thumb" in result)
 
-        self.assertTrue (u'<A HREF="__attach/particle_01.PNG">' in result)
-        self.assertTrue (u'<A HREF="__attach/image_01.JPG">' in result)
+        self.assertTrue ('<A HREF="__attach/particle_01.PNG">' in result)
+        self.assertTrue ('<A HREF="__attach/image_01.JPG">' in result)
 
-        self.assertFalse (u"html.txt" in result)
+        self.assertFalse ("html.txt" in result)
 
-        self.assertTrue (u"<table" in result)
+        self.assertTrue ("<table" in result)
 
         # В таблице две строки
         self.assertEqual (len (result.split ("<tr")), 4 + 1)
 
 
     def testInvalidCols1 (self):
-        text = u"""Бла-бла-бла
+        text = """Бла-бла-бла
         (:thumblist cols:)
         бла-бла-бла"""
 
-        files = [u"first.jpg", u"image_01.JPG", u"html.txt"]
+        files = ["first.jpg", "image_01.JPG", "html.txt"]
         fullpath = [os.path.join (self.filesPath, fname) for fname in files]
         Attachment(self.testPage).attach (fullpath)
 
         result = self.parser.toHtml (text)
 
-        self.assertTrue (u'<A HREF="__attach/first.jpg">' in result)
-        self.assertTrue (u"__thumb" in result)
-        self.assertTrue (u"_first.jpg" in result)
+        self.assertTrue ('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue ("__thumb" in result)
+        self.assertTrue ("_first.jpg" in result)
 
-        self.assertTrue (u'<A HREF="__attach/image_01.JPG">' in result)
-        self.assertTrue (u"_image_01.JPG" in result)
+        self.assertTrue ('<A HREF="__attach/image_01.JPG">' in result)
+        self.assertTrue ("_image_01.JPG" in result)
 
-        self.assertFalse (u"html.txt" in result)
-        self.assertTrue (u"<table" not in result)
+        self.assertFalse ("html.txt" in result)
+        self.assertTrue ("<table" not in result)
 
 
     def testInvalidCols2 (self):
-        text = u"""Бла-бла-бла
+        text = """Бла-бла-бла
         (:thumblist cols=:)
         бла-бла-бла"""
 
-        files = [u"first.jpg", u"image_01.JPG", u"html.txt"]
+        files = ["first.jpg", "image_01.JPG", "html.txt"]
         fullpath = [os.path.join (self.filesPath, fname) for fname in files]
         Attachment(self.testPage).attach (fullpath)
 
         result = self.parser.toHtml (text)
 
-        self.assertTrue (u'<A HREF="__attach/first.jpg">' in result)
-        self.assertTrue (u"__thumb" in result)
-        self.assertTrue (u"_first.jpg" in result)
+        self.assertTrue ('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue ("__thumb" in result)
+        self.assertTrue ("_first.jpg" in result)
 
-        self.assertTrue (u'<A HREF="__attach/image_01.JPG">' in result)
-        self.assertTrue (u"_image_01.JPG" in result)
+        self.assertTrue ('<A HREF="__attach/image_01.JPG">' in result)
+        self.assertTrue ("_image_01.JPG" in result)
 
-        self.assertFalse (u"html.txt" in result)
-        self.assertTrue (u"<table" not in result)
+        self.assertFalse ("html.txt" in result)
+        self.assertTrue ("<table" not in result)
 
 
     def testInvalidCols3 (self):
-        text = u"""Бла-бла-бла
+        text = """Бла-бла-бла
         (:thumblist cols=abyrvalg:)
         бла-бла-бла"""
 
-        files = [u"first.jpg", u"image_01.JPG", u"html.txt"]
+        files = ["first.jpg", "image_01.JPG", "html.txt"]
         fullpath = [os.path.join (self.filesPath, fname) for fname in files]
         Attachment(self.testPage).attach (fullpath)
 
         result = self.parser.toHtml (text)
 
-        self.assertTrue (u'<A HREF="__attach/first.jpg">' in result)
-        self.assertTrue (u"__thumb" in result)
-        self.assertTrue (u"_first.jpg" in result)
+        self.assertTrue ('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue ("__thumb" in result)
+        self.assertTrue ("_first.jpg" in result)
 
-        self.assertTrue (u'<A HREF="__attach/image_01.JPG">' in result)
-        self.assertTrue (u"_image_01.JPG" in result)
+        self.assertTrue ('<A HREF="__attach/image_01.JPG">' in result)
+        self.assertTrue ("_image_01.JPG" in result)
 
-        self.assertFalse (u"html.txt" in result)
-        self.assertTrue (u"<table" not in result)
+        self.assertFalse ("html.txt" in result)
+        self.assertTrue ("<table" not in result)
 
 
     def testInvalidThumbSizeStream (self):
-        text = u"""Абырвалг
+        text = """Абырвалг
         (:thumblist px=abyrvalg:)
         бла-бла-бла"""
 
-        files = [u"first.jpg", u"image_01.JPG", u"html.txt"]
+        files = ["first.jpg", "image_01.JPG", "html.txt"]
         fullpath = [os.path.join (self.filesPath, fname) for fname in files]
         Attachment(self.testPage).attach (fullpath)
 
         result = self.parser.toHtml (text)
-        self.assertTrue (u"бла-бла-бла" in result)
+        self.assertTrue ("бла-бла-бла" in result)
 
-        self.assertTrue (u'<A HREF="__attach/first.jpg">' in result)
-        self.assertTrue (u"__thumb" in result)
-        self.assertTrue (u"_first.jpg" in result)
+        self.assertTrue ('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue ("__thumb" in result)
+        self.assertTrue ("_first.jpg" in result)
 
-        self.assertTrue (u'<A HREF="__attach/image_01.JPG">' in result)
-        self.assertTrue (u"_image_01.JPG" in result)
+        self.assertTrue ('<A HREF="__attach/image_01.JPG">' in result)
+        self.assertTrue ("_image_01.JPG" in result)
 
 
     def testInvalidThumbSizeTable (self):
-        text = u"""Абырвалг
+        text = """Абырвалг
         (:thumblist px=abyrvalg сщды=3:)
         бла-бла-бла"""
 
-        files = [u"first.jpg", u"image_01.JPG", u"html.txt"]
+        files = ["first.jpg", "image_01.JPG", "html.txt"]
         fullpath = [os.path.join (self.filesPath, fname) for fname in files]
         Attachment(self.testPage).attach (fullpath)
 
         result = self.parser.toHtml (text)
-        self.assertTrue (u"бла-бла-бла" in result)
+        self.assertTrue ("бла-бла-бла" in result)
 
-        self.assertTrue (u'<A HREF="__attach/first.jpg">' in result)
-        self.assertTrue (u"__thumb" in result)
-        self.assertTrue (u"_first.jpg" in result)
+        self.assertTrue ('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue ("__thumb" in result)
+        self.assertTrue ("_first.jpg" in result)
 
-        self.assertTrue (u'<A HREF="__attach/image_01.JPG">' in result)
-        self.assertTrue (u"_image_01.JPG" in result)
+        self.assertTrue ('<A HREF="__attach/image_01.JPG">' in result)
+        self.assertTrue ("_image_01.JPG" in result)

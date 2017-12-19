@@ -17,10 +17,10 @@ class HackPage_ChangePageUidTest(BaseMainWndTest):
         self._application = Application
 
         self.__createWiki()
-        self.testPage = self.wikiroot[u"Страница 1"]
-        self.testPage2 = self.wikiroot[u"Страница 2"]
+        self.testPage = self.wikiroot["Страница 1"]
+        self.testPage2 = self.wikiroot["Страница 2"]
 
-        dirlist = [u"../plugins/hackpage"]
+        dirlist = ["../plugins/hackpage"]
 
         self._loader = PluginsLoader(Application)
         self._loader.load(dirlist)
@@ -37,8 +37,8 @@ class HackPage_ChangePageUidTest(BaseMainWndTest):
         BaseMainWndTest.tearDown(self)
 
     def __createWiki(self):
-        WikiPageFactory().create(self.wikiroot, u"Страница 1", [])
-        WikiPageFactory().create(self.wikiroot, u"Страница 2", [])
+        WikiPageFactory().create(self.wikiroot, "Страница 1", [])
+        WikiPageFactory().create(self.wikiroot, "Страница 2", [])
 
     def _setValue(self, dialog, value):
         dialog.Value = value
@@ -59,7 +59,7 @@ class HackPage_ChangePageUidTest(BaseMainWndTest):
 
     def test_change_uid_01(self):
         from hackpage.utils import changeUidWithDialog
-        uid = u'dsfsfsfssg'
+        uid = 'dsfsfsfssg'
 
         Tester.dialogTester.append(self._setValue, uid)
 
@@ -72,7 +72,7 @@ class HackPage_ChangePageUidTest(BaseMainWndTest):
 
     def test_change_uid_02(self):
         from hackpage.utils import changeUidWithDialog
-        uid = u'     dsfsfsfssg      '
+        uid = '     dsfsfsfssg      '
 
         Tester.dialogTester.append(self._setValue, uid)
 
@@ -87,7 +87,7 @@ class HackPage_ChangePageUidTest(BaseMainWndTest):
         from hackpage.validators import ChangeUidValidator
         Tester.dialogTester.appendOk()
 
-        uid = u'dofiads7f89qwhrj'
+        uid = 'dofiads7f89qwhrj'
         uidvalidator = ChangeUidValidator(self._application, self.testPage)
 
         self.assertTrue(uidvalidator(uid))
@@ -97,7 +97,7 @@ class HackPage_ChangePageUidTest(BaseMainWndTest):
         from hackpage.validators import ChangeUidValidator
         Tester.dialogTester.appendOk()
 
-        uid = u'__dofiads7f89qwhrj__'
+        uid = '__dofiads7f89qwhrj__'
         uidvalidator = ChangeUidValidator(self._application, self.testPage)
 
         self.assertTrue(uidvalidator(uid))
@@ -107,7 +107,7 @@ class HackPage_ChangePageUidTest(BaseMainWndTest):
         from hackpage.validators import ChangeUidValidator
         Tester.dialogTester.appendOk()
 
-        uid = u'ывдратфыщшатф4е6'
+        uid = 'ывдратфыщшатф4е6'
         uidvalidator = ChangeUidValidator(self._application, self.testPage)
 
         self.assertTrue(uidvalidator(uid))
@@ -117,7 +117,7 @@ class HackPage_ChangePageUidTest(BaseMainWndTest):
         from hackpage.validators import ChangeUidValidator
         Tester.dialogTester.appendOk()
 
-        uid = u'dsfsf sfssgs'
+        uid = 'dsfsf sfssgs'
         uidvalidator = ChangeUidValidator(self._application, self.testPage)
 
         self.assertFalse(uidvalidator(uid))
@@ -137,7 +137,7 @@ class HackPage_ChangePageUidTest(BaseMainWndTest):
         from hackpage.validators import ChangeUidValidator
         Tester.dialogTester.appendOk()
 
-        uid = u'  dsfsfsfssgs  '
+        uid = '  dsfsfsfssgs  '
         uidvalidator = ChangeUidValidator(self._application, self.testPage)
 
         self.assertTrue(uidvalidator(uid))

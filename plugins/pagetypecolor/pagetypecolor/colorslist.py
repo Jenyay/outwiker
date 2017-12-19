@@ -45,8 +45,7 @@ class ColorsList(object):
                     self._colors[typeString] = color_param.value
 
     def _getNewColor(self):
-        colors_list = map(lambda color: self._parseColor(color),
-                          self._colors.values())
+        colors_list = [self._parseColor(color) for color in list(self._colors.values())]
         color_tuple = find_farthest_color(colors_list)
         color_text = u'#{:02X}{:02X}{:02X}'.format(*color_tuple)
         return color_text

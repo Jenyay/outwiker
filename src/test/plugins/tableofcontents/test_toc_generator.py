@@ -10,7 +10,7 @@ from outwiker.pages.wiki.wikiconfig import WikiConfig
 class TOC_GeneratorTest (unittest.TestCase):
     """Тесты плагина TableOfContents"""
     def setUp (self):
-        dirlist = [u"../plugins/tableofcontents"]
+        dirlist = ["../plugins/tableofcontents"]
 
         self.loader = PluginsLoader(Application)
         self.loader.load (dirlist)
@@ -28,7 +28,7 @@ class TOC_GeneratorTest (unittest.TestCase):
 
         result = generator.make (items)
 
-        result_valid = u''''''
+        result_valid = ''''''
 
         self.assertEqual (result, result_valid)
 
@@ -38,11 +38,11 @@ class TOC_GeneratorTest (unittest.TestCase):
         from tableofcontents.tocwikigenerator import TOCWikiGenerator
 
         generator = TOCWikiGenerator(Application.config)
-        items = [Section (u"Абырвалг 123", 1, u"")]
+        items = [Section ("Абырвалг 123", 1, "")]
 
         result = generator.make (items)
 
-        result_valid = u'''* Абырвалг 123'''
+        result_valid = '''* Абырвалг 123'''
 
         self.assertEqual (result, result_valid)
 
@@ -53,13 +53,13 @@ class TOC_GeneratorTest (unittest.TestCase):
 
         generator = TOCWikiGenerator(Application.config)
         items = [
-            Section (u"Абырвалг 123", 1, u""),
-            Section (u"Абырвалг 12345", 1, u""),
+            Section ("Абырвалг 123", 1, ""),
+            Section ("Абырвалг 12345", 1, ""),
         ]
 
         result = generator.make (items)
 
-        result_valid = u'''* Абырвалг 123
+        result_valid = '''* Абырвалг 123
 * Абырвалг 12345'''
 
         self.assertEqual (result, result_valid)
@@ -71,13 +71,13 @@ class TOC_GeneratorTest (unittest.TestCase):
 
         generator = TOCWikiGenerator(Application.config)
         items = [
-            Section (u"Абырвалг 123", 1, u""),
-            Section (u"Абырвалг 12345", 2, u""),
+            Section ("Абырвалг 123", 1, ""),
+            Section ("Абырвалг 12345", 2, ""),
         ]
 
         result = generator.make (items)
 
-        result_valid = u'''* Абырвалг 123
+        result_valid = '''* Абырвалг 123
 ** Абырвалг 12345'''
 
         self.assertEqual (result, result_valid)
@@ -89,13 +89,13 @@ class TOC_GeneratorTest (unittest.TestCase):
 
         generator = TOCWikiGenerator(Application.config)
         items = [
-            Section (u"Абырвалг 123", 1, u""),
-            Section (u"Абырвалг 12345", 5, u""),
+            Section ("Абырвалг 123", 1, ""),
+            Section ("Абырвалг 12345", 5, ""),
         ]
 
         result = generator.make (items)
 
-        result_valid = u'''* Абырвалг 123
+        result_valid = '''* Абырвалг 123
 ***** Абырвалг 12345'''
 
         self.assertEqual (result, result_valid)
@@ -107,15 +107,15 @@ class TOC_GeneratorTest (unittest.TestCase):
 
         generator = TOCWikiGenerator(Application.config)
         items = [
-            Section (u"Абырвалг 1", 1, u""),
-            Section (u"Абырвалг 2", 2, u""),
-            Section (u"Абырвалг 3", 3, u""),
-            Section (u"Абырвалг 1", 1, u""),
+            Section ("Абырвалг 1", 1, ""),
+            Section ("Абырвалг 2", 2, ""),
+            Section ("Абырвалг 3", 3, ""),
+            Section ("Абырвалг 1", 1, ""),
         ]
 
         result = generator.make (items)
 
-        result_valid = u'''* Абырвалг 1
+        result_valid = '''* Абырвалг 1
 ** Абырвалг 2
 *** Абырвалг 3
 * Абырвалг 1'''
@@ -129,13 +129,13 @@ class TOC_GeneratorTest (unittest.TestCase):
 
         generator = TOCWikiGenerator(Application.config)
         items = [
-            Section (u"Абырвалг 123", 2, u""),
-            Section (u"Абырвалг 12345", 3, u""),
+            Section ("Абырвалг 123", 2, ""),
+            Section ("Абырвалг 12345", 3, ""),
         ]
 
         result = generator.make (items)
 
-        result_valid = u'''* Абырвалг 123
+        result_valid = '''* Абырвалг 123
 ** Абырвалг 12345'''
 
         self.assertEqual (result, result_valid)
@@ -147,13 +147,13 @@ class TOC_GeneratorTest (unittest.TestCase):
 
         generator = TOCWikiGenerator(Application.config)
         items = [
-            Section (u"Абырвалг 123", 5, u""),
-            Section (u"Абырвалг 12345", 5, u""),
+            Section ("Абырвалг 123", 5, ""),
+            Section ("Абырвалг 12345", 5, ""),
         ]
 
         result = generator.make (items)
 
-        result_valid = u'''* Абырвалг 123
+        result_valid = '''* Абырвалг 123
 * Абырвалг 12345'''
 
         self.assertEqual (result, result_valid)
@@ -167,13 +167,13 @@ class TOC_GeneratorTest (unittest.TestCase):
 
         generator = TOCWikiGenerator(Application.config)
         items = [
-            Section (u"Абырвалг 1", 1, u"якорь1"),
-            Section (u"Абырвалг 2", 2, u"якорь2"),
+            Section ("Абырвалг 1", 1, "якорь1"),
+            Section ("Абырвалг 2", 2, "якорь2"),
         ]
 
         result = generator.make (items)
 
-        result_valid = u'''* [[Абырвалг 1 -> #якорь1]]
+        result_valid = '''* [[Абырвалг 1 -> #якорь1]]
 ** [[Абырвалг 2 -> #якорь2]]'''
 
         self.assertEqual (result, result_valid)
@@ -187,13 +187,13 @@ class TOC_GeneratorTest (unittest.TestCase):
 
         generator = TOCWikiGenerator(Application.config)
         items = [
-            Section (u"Абырвалг 1", 1, u"якорь1"),
-            Section (u"Абырвалг 2", 2, u"якорь2"),
+            Section ("Абырвалг 1", 1, "якорь1"),
+            Section ("Абырвалг 2", 2, "якорь2"),
         ]
 
         result = generator.make (items)
 
-        result_valid = u'''* [[#якорь1 | Абырвалг 1]]
+        result_valid = '''* [[#якорь1 | Абырвалг 1]]
 ** [[#якорь2 | Абырвалг 2]]'''
 
         self.assertEqual (result, result_valid)
@@ -207,13 +207,13 @@ class TOC_GeneratorTest (unittest.TestCase):
 
         generator = TOCWikiGenerator(Application.config)
         items = [
-            Section (u"Абырвалг 1", 1, u"якорь1"),
-            Section (u"Абырвалг 2", 2, u"якорь2"),
+            Section ("Абырвалг 1", 1, "якорь1"),
+            Section ("Абырвалг 2", 2, "якорь2"),
         ]
 
         result = generator.make (items)
 
-        result_valid = u'''* [[Абырвалг 1 -> #якорь1]]
+        result_valid = '''* [[Абырвалг 1 -> #якорь1]]
 ** [[Абырвалг 2 -> #якорь2]]'''
 
         self.assertEqual (result, result_valid)

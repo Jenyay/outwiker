@@ -2,16 +2,15 @@
 
 from abc import ABCMeta, abstractmethod
 import os.path
+import idna
 
 from outwiker.core.application import Application
 
 
-class UriIdentifier (object):
+class UriIdentifier (object, metaclass=ABCMeta):
     """
     Базовый класс для обработчиков ссылок HTML-движков
     """
-
-    __metaclass__ = ABCMeta
 
     def __init__ (self, currentpage, basepath):
         """
@@ -71,7 +70,7 @@ class UriIdentifier (object):
             uid = href[len (protocol):]
 
             try:
-                uid = unicode (uid.decode ("idna"))
+                uid = idna.decode(uid)
             except UnicodeError:
                 # Под IE ссылки не преобразуются в кодировку IDNA
                 pass

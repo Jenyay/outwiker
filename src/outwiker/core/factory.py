@@ -6,11 +6,10 @@ import os.path
 from .exceptions import ReadonlyException
 
 
-class PageFactory(object):
+class PageFactory(object, metaclass=ABCMeta):
     """
     Класс для создания страниц
     """
-    __metaclass__ = ABCMeta
 
     def create(self, parent, title, tags):
         """

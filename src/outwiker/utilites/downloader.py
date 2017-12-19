@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 
-import urllib2
-from StringIO import StringIO
+import urllib.request, urllib.error, urllib.parse
+from io import StringIO
 import gzip
 
 
@@ -21,7 +21,7 @@ class Downloader (object):
                          ('Accept-encoding', 'gzip')]
 
     def download(self, url):
-        opener = urllib2.build_opener()
+        opener = urllib.request.build_opener()
         opener.addheaders = self._headers
 
         response = opener.open(url, timeout=self._timeout)

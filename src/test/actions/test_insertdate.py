@@ -20,31 +20,31 @@ class InsertDateTest (BaseMainWndTest):
     def setUp (self):
         super (InsertDateTest, self).setUp()
 
-        WikiPageFactory().create (self.wikiroot, u"Викистраница", [])
-        HtmlPageFactory().create (self.wikiroot, u"HTML", [])
+        WikiPageFactory().create (self.wikiroot, "Викистраница", [])
+        HtmlPageFactory().create (self.wikiroot, "HTML", [])
 
-        self._wikipage = self.wikiroot[u"Викистраница"]
-        self._wikipage.content = u""
+        self._wikipage = self.wikiroot["Викистраница"]
+        self._wikipage.content = ""
 
-        self._htmlpage = self.wikiroot[u"Викистраница"]
-        self._htmlpage.content = u""
+        self._htmlpage = self.wikiroot["Викистраница"]
+        self._htmlpage.content = ""
 
         Application.wikiroot = self.wikiroot
         Application.selectedPage = self._wikipage
 
 
     def _setFormat_01 (self, dialog):
-        dialog.Value = u"%d; %m; %Y"
+        dialog.Value = "%d; %m; %Y"
         return wx.ID_OK
 
 
     def _setFormat_02_cancel (self, dialog):
-        dialog.Value = u"%d; %m; %Y"
+        dialog.Value = "%d; %m; %Y"
         return wx.ID_CANCEL
 
 
     def _setFormat_03_empty (self, dialog):
-        dialog.Value = u""
+        dialog.Value = ""
         return wx.ID_OK
 
 
@@ -87,7 +87,7 @@ class InsertDateTest (BaseMainWndTest):
         Application.selectedPage = None
         Application.selectedPage = self._wikipage
 
-        self.assertEqual (self._wikipage.content, u"")
+        self.assertEqual (self._wikipage.content, "")
         self.assertEqual (Tester.dialogTester.count, 0)
 
 
@@ -100,7 +100,7 @@ class InsertDateTest (BaseMainWndTest):
         Application.selectedPage = None
         Application.selectedPage = self._wikipage
 
-        self.assertEqual (self._wikipage.content, u"")
+        self.assertEqual (self._wikipage.content, "")
         self.assertEqual (Tester.dialogTester.count, 0)
 
 

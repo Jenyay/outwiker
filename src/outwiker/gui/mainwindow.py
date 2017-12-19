@@ -146,10 +146,10 @@ class MainWindow(wx.Frame):
         self.toolbars[self._pluginsToolbar.name] = self._pluginsToolbar
 
     def _initCoreControllers(self):
-        list(map(lambda controller: controller.initialize(), self._coreControllers))
+        [controller.initialize() for controller in self._coreControllers]
 
     def _destroyCoreControllers(self):
-        list(map(lambda controller: controller.clear(), self._coreControllers))
+        [controller.clear() for controller in self._coreControllers]
         self._coreControllers = []
 
     def createGui(self):
@@ -511,7 +511,7 @@ class MainWindow(wx.Frame):
 
                 self.__panesController.savePanesParams()
         except Exception as e:
-            cmd.MessageBox(_(u"Can't save config\n%s") % (unicode(e)),
+            cmd.MessageBox(_(u"Can't save config\n%s") % (str(e)),
                            _(u"Error"), wx.ICON_ERROR | wx.OK)
 
     def __setIcon(self):

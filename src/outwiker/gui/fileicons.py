@@ -6,11 +6,10 @@ from abc import abstractmethod, ABCMeta
 import wx
 
 
-class BaseFileIcons(object):
+class BaseFileIcons(object, metaclass=ABCMeta):
     """
     Базовый класс для получения иконок прикрепленных файлов
     """
-    __metaclass__ = ABCMeta
 
     def __init__(self):
         self.DEFAULT_FILE_ICON = 0

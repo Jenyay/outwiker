@@ -9,7 +9,7 @@ class SnippetsVarPanelTest(BaseMainWndTest):
     def setUp(self):
         BaseMainWndTest.setUp(self)
         mainWnd = Application.mainWindow
-        plugins_dir = [u"../plugins/snippets"]
+        plugins_dir = ["../plugins/snippets"]
 
         self.loader = PluginsLoader(Application)
         self.loader.load(plugins_dir)
@@ -26,27 +26,27 @@ class SnippetsVarPanelTest(BaseMainWndTest):
         self.assertEqual(variables, {})
 
     def test_single_empty(self):
-        self._panel.addStringVariable(u'test')
+        self._panel.addStringVariable('test')
         variables = self._panel.getVarDict()
-        self.assertEqual(variables, {u'test': u''})
+        self.assertEqual(variables, {'test': ''})
 
     def test_single(self):
-        self._panel.addStringVariable(u'test')
-        self._panel.setVarString(u'test', u'Проверка')
+        self._panel.addStringVariable('test')
+        self._panel.setVarString('test', 'Проверка')
 
         variables = self._panel.getVarDict()
-        self.assertEqual(variables, {u'test': u'Проверка'})
+        self.assertEqual(variables, {'test': 'Проверка'})
 
     def test_two_items(self):
-        self._panel.addStringVariable(u'test_1')
-        self._panel.addStringVariable(u'test_2')
+        self._panel.addStringVariable('test_1')
+        self._panel.addStringVariable('test_2')
 
-        self._panel.setVarString(u'test_1', u'Проверка_1')
-        self._panel.setVarString(u'test_2', u'Проверка_2')
+        self._panel.setVarString('test_1', 'Проверка_1')
+        self._panel.setVarString('test_2', 'Проверка_2')
 
         variables = self._panel.getVarDict()
-        self.assertEqual(variables, {u'test_1': u'Проверка_1',
-                                     u'test_2': u'Проверка_2'})
+        self.assertEqual(variables, {'test_1': 'Проверка_1',
+                                     'test_2': 'Проверка_2'})
 
     def test_no_item(self):
-        self.assertRaises(KeyError, self._panel.setVarString, u'test', u'test')
+        self.assertRaises(KeyError, self._panel.setVarString, 'test', 'test')

@@ -17,11 +17,11 @@ except wxversion.VersionError:
 import wx
 
 from outwiker.core.application import Application
-from runoutwiker import OutWiker
+from .runoutwiker import OutWiker
 
 
 def wikiparserProfile ():
-    from profiles import pro_parser
+    from .profiles import pro_parser
 
     # fname = "../profiles/test2.wiki"
     fname = "../profiles/text_gogol.wiki"

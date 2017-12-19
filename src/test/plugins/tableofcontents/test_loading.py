@@ -8,7 +8,7 @@ class TOCLoadingTest (BasePluginLoadingTest):
         """
         Должен возвращать путь до папки с тестируемым плагином
         """
-        return u"../plugins/tableofcontents"
+        return "../plugins/tableofcontents"
 
 
     def getPluginName (self):

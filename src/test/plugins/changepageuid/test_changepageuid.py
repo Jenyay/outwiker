@@ -14,10 +14,10 @@ class ChangePageUidTest (BaseMainWndTest):
     def setUp (self):
         BaseMainWndTest.setUp (self)
 
-        self.filesPath = u"../test/samplefiles/"
+        self.filesPath = "../test/samplefiles/"
         self.__createWiki()
 
-        dirlist = [u"../plugins/changepageuid"]
+        dirlist = ["../plugins/changepageuid"]
 
         self._loader = PluginsLoader(Application)
         self._loader.load (dirlist)
@@ -26,7 +26,7 @@ class ChangePageUidTest (BaseMainWndTest):
         self._dlg = ChangeUidDialog (Application.mainWindow)
         Tester.dialogTester.clear()
 
-        self.testPage = self.wikiroot[u"Страница 1"]
+        self.testPage = self.wikiroot["Страница 1"]
 
 
     def tearDown(self):
@@ -40,8 +40,8 @@ class ChangePageUidTest (BaseMainWndTest):
 
 
     def __createWiki (self):
-        WikiPageFactory().create (self.wikiroot, u"Страница 1", [])
-        WikiPageFactory().create (self.wikiroot, u"Страница 2", [])
+        WikiPageFactory().create (self.wikiroot, "Страница 1", [])
+        WikiPageFactory().create (self.wikiroot, "Страница 2", [])
 
 
     def testPluginLoad (self):
@@ -70,7 +70,7 @@ class ChangePageUidTest (BaseMainWndTest):
 
     def testUid_02 (self):
         controller = self._createDialogController()
-        uid = Application.pageUidDepot.createUid (self.wikiroot[u"Страница 2"])
+        uid = Application.pageUidDepot.createUid (self.wikiroot["Страница 2"])
 
         # Такой идентификатор уже есть
         self.assertNotEqual (len (controller.validate (uid)), 0)
@@ -79,10 +79,10 @@ class ChangePageUidTest (BaseMainWndTest):
     def testUid_03 (self):
         controller = self._createDialogController()
 
-        self.assertEqual (len (controller.validate (u"asdfsdfasdf_124323")), 0)
-        self.assertEqual (len (controller.validate (u"__Абырвалг")), 0)
-        self.assertNotEqual (len (controller.validate (u"adfadf/")), 0)
-        self.assertNotEqual (len (controller.validate (u"adfadf asdfasdf")), 0)
+        self.assertEqual (len (controller.validate ("asdfsdfasdf_124323")), 0)
+        self.assertEqual (len (controller.validate ("__Абырвалг")), 0)
+        self.assertNotEqual (len (controller.validate ("adfadf/")), 0)
+        self.assertNotEqual (len (controller.validate ("adfadf asdfasdf")), 0)
 
 
     def _createDialogController (self):

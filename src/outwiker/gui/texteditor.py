@@ -292,14 +292,14 @@ class TextEditor(TextEditorBase):
 
             if event.stylebytes is not None:
                 self.textCtrl.StartStyling(startByte,
-                                           0xff ^ wx.stc.STC_INDICS_MASK)
+                                           int(0xff ^ wx.stc.STC_INDICS_MASK))
                 self.textCtrl.SetStyleBytes(lenBytes,
-                                            stylebytesstr[startByte:endByte])
+                                            stylebytesstr[startByte:endByte].encode())
 
             if event.indicatorsbytes is not None:
                 self.textCtrl.StartStyling(startByte, wx.stc.STC_INDICS_MASK)
                 self.textCtrl.SetStyleBytes(lenBytes,
-                                            stylebytesstr[startByte:endByte])
+                                            stylebytesstr[startByte:endByte].encode())
 
             self._styleSet = True
 

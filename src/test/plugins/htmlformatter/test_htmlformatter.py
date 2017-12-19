@@ -11,7 +11,7 @@ from outwiker.core.htmlimproverfactory import HtmlImproverFactory
 class HtmlFormatterTest (unittest.TestCase):
     """Тесты плагина HtmlFormatter"""
     def setUp (self):
-        dirlist = [u"../plugins/htmlformatter"]
+        dirlist = ["../plugins/htmlformatter"]
 
         self.loader = PluginsLoader(Application)
         self.loader.load (dirlist)

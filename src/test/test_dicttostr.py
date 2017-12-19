@@ -10,77 +10,77 @@ class DictToStrTest(unittest.TestCase):
         params = {}
         result = dictToStr(params)
 
-        validResult = u''
+        validResult = ''
 
         self.assertEqual(result, validResult)
 
 
     def testDictToStr_02(self):
         params = {
-            u'param1': 10
+            'param1': 10
         }
         result = dictToStr(params)
 
-        validResult = u'param1="10"'
+        validResult = 'param1="10"'
 
         self.assertEqual(result, validResult)
 
 
     def testDictToStr_03(self):
         params = {
-            u'param1': 10,
-            u'Параметр2': u'абырвалг',
+            'param1': 10,
+            'Параметр2': 'абырвалг',
         }
         result = dictToStr(params)
 
-        validResult = u'param1="10", Параметр2="абырвалг"'
+        validResult = 'param1="10", Параметр2="абырвалг"'
 
         self.assertEqual(result, validResult)
 
 
     def testDictToStr_04(self):
         params = {
-            u'param1': 10,
-            u'Параметр2': u"абыр'валг",
+            'param1': 10,
+            'Параметр2': "абыр'валг",
         }
         result = dictToStr(params)
 
-        validResult = u'param1="10", Параметр2="абыр\'валг"'
+        validResult = 'param1="10", Параметр2="абыр\'валг"'
 
         self.assertEqual(result, validResult)
 
 
     def testDictToStr_05(self):
         params = {
-            u'param1': 10,
-            u'Параметр2': u'абыр"валг',
+            'param1': 10,
+            'Параметр2': 'абыр"валг',
         }
         result = dictToStr(params)
 
-        validResult = u'param1="10", Параметр2=\'абыр"валг\''
+        validResult = 'param1="10", Параметр2=\'абыр"валг\''
 
         self.assertEqual(result, validResult)
 
 
     def testDictToStr_06(self):
         params = {
-            u'param1': 10,
-            u'Параметр2': u'аб\'ыр"валг',
+            'param1': 10,
+            'Параметр2': 'аб\'ыр"валг',
         }
         result = dictToStr(params)
 
-        validResult = u'param1="10", Параметр2="аб\'ыр\\"валг"'
+        validResult = 'param1="10", Параметр2="аб\'ыр\\"валг"'
 
         self.assertEqual(result, validResult, result)
 
 
     def testDictToStr_07(self):
         params = {
-            u'param1': 10,
-            u'Параметр2': u'',
+            'param1': 10,
+            'Параметр2': '',
         }
         result = dictToStr(params)
 
-        validResult = u'param1="10", Параметр2=""'
+        validResult = 'param1="10", Параметр2=""'
 
         self.assertEqual(result, validResult, result)

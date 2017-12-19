@@ -33,8 +33,8 @@ class GuiCreator (object):
 
     def initialize (self):
         if self._application.mainWindow is not None:
-            map (lambda action: self._application.actionController.register (
-                action (self._application), None), self._actions)
+            list(map (lambda action: self._application.actionController.register (
+                action (self._application), None), self._actions))
 
 
     def createTools (self):
@@ -46,8 +46,8 @@ class GuiCreator (object):
         # Меню, куда будут добавляться команды
         menu = self._getPageView().commandsMenu
 
-        map (lambda action: self._application.actionController.appendMenuItem (
-            action.stringId, menu), self._actions)
+        list(map (lambda action: self._application.actionController.appendMenuItem (
+            action.stringId, menu), self._actions))
 
 
         # При необходимости добавить кнопки на панель
@@ -66,18 +66,18 @@ class GuiCreator (object):
         """
         Получить полный путь до картинки
         """
-        imagedir = unicode (os.path.join (os.path.dirname (__file__), "images"), getOS().filesEncoding)
+        imagedir = os.path.join (os.path.dirname (__file__), "images")
         fname = os.path.join (imagedir, imageName)
         return fname
 
 
     def removeTools (self):
         if self._application.mainWindow is not None:
-            map (lambda action: self._application.actionController.removeMenuItem (action.stringId),
-                 self._actions)
+            list(map (lambda action: self._application.actionController.removeMenuItem (action.stringId),
+                 self._actions))
 
-            map (lambda action: self._application.actionController.removeToolbarButton (action.stringId),
-                 self._actions)
+            list(map (lambda action: self._application.actionController.removeToolbarButton (action.stringId),
+                 self._actions))
 
             self._getPageView().Unbind (EVT_PAGE_TAB_CHANGED, handler=self._onTabChanged)
 
@@ -85,8 +85,8 @@ class GuiCreator (object):
 
     def destroy (self):
         if self._application.mainWindow is not None:
-            map (lambda action: self._application.actionController.removeAction (action.stringId),
-                 self._actions)
+            list(map (lambda action: self._application.actionController.removeAction (action.stringId),
+                 self._actions))
 
 
     def _onTabChanged (self, event):
@@ -100,8 +100,8 @@ class GuiCreator (object):
         pageView = self._getPageView()
         enabled = (pageView.selectedPageIndex == pageView.CODE_PAGE_INDEX)
 
-        map (lambda action: self._application.actionController.enableTools (action.stringId, enabled),
-             self._actions)
+        list(map (lambda action: self._application.actionController.enableTools (action.stringId, enabled),
+             self._actions))
 
 
     def _getPageView (self):

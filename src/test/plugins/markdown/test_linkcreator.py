@@ -9,15 +9,15 @@ from outwiker.core.application import Application
 class LinkCreatorTest (unittest.TestCase):
 
     def setUp(self):
-        dirlist = [u"../plugins/markdown"]
+        dirlist = ["../plugins/markdown"]
         self.loader = PluginsLoader(Application)
         self.loader.load(dirlist)
 
     def test_empty_01(self):
         from markdown.links.linkcreator import LinkCreator
         creator = LinkCreator()
-        link, reference = creator.create(u'', u'', u'')
-        link_right = u'[]()'
+        link, reference = creator.create('', '', '')
+        link_right = '[]()'
 
         self.assertEqual(link, link_right)
         self.assertIsNone(reference)
@@ -25,8 +25,8 @@ class LinkCreatorTest (unittest.TestCase):
     def test_empty_02(self):
         from markdown.links.linkcreator import LinkCreator
         creator = LinkCreator()
-        link, reference = creator.create(u'   ', u'', u'')
-        link_right = u'[]()'
+        link, reference = creator.create('   ', '', '')
+        link_right = '[]()'
 
         self.assertEqual(link, link_right)
         self.assertIsNone(reference)
@@ -34,8 +34,8 @@ class LinkCreatorTest (unittest.TestCase):
     def test_empty_03(self):
         from markdown.links.linkcreator import LinkCreator
         creator = LinkCreator()
-        link, reference = creator.create(u'', u'   ', u'')
-        link_right = u'[   ]()'
+        link, reference = creator.create('', '   ', '')
+        link_right = '[   ]()'
 
         self.assertEqual(link, link_right)
         self.assertIsNone(reference)
@@ -43,10 +43,10 @@ class LinkCreatorTest (unittest.TestCase):
     def test_link_01(self):
         from markdown.links.linkcreator import LinkCreator
         creator = LinkCreator()
-        link, reference = creator.create(u'http://jenyay.net',
-                                         u'Комментарий',
-                                         u'')
-        link_right = u'[Комментарий](http://jenyay.net)'
+        link, reference = creator.create('http://jenyay.net',
+                                         'Комментарий',
+                                         '')
+        link_right = '[Комментарий](http://jenyay.net)'
 
         self.assertEqual(link, link_right)
         self.assertIsNone(reference)
@@ -54,10 +54,10 @@ class LinkCreatorTest (unittest.TestCase):
     def test_title_01(self):
         from markdown.links.linkcreator import LinkCreator
         creator = LinkCreator()
-        link, reference = creator.create(u'http://jenyay.net',
-                                         u'Комментарий',
-                                         u'Заголовок')
-        link_right = u'[Комментарий](http://jenyay.net "Заголовок")'
+        link, reference = creator.create('http://jenyay.net',
+                                         'Комментарий',
+                                         'Заголовок')
+        link_right = '[Комментарий](http://jenyay.net "Заголовок")'
 
         self.assertEqual(link, link_right)
         self.assertIsNone(reference)

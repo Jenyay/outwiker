@@ -9,7 +9,7 @@ from outwiker.core.application import Application
 class TOC_ParserTest (unittest.TestCase):
     """Тесты плагина TableOfContents"""
     def setUp (self):
-        dirlist = [u"../plugins/tableofcontents"]
+        dirlist = ["../plugins/tableofcontents"]
 
         self.loader = PluginsLoader(Application)
         self.loader.load (dirlist)
@@ -28,7 +28,7 @@ class TOC_ParserTest (unittest.TestCase):
 
         parser = ContentsParser()
 
-        text = u""
+        text = ""
 
         contents = parser.parse (text)
 
@@ -40,7 +40,7 @@ class TOC_ParserTest (unittest.TestCase):
 
         parser = ContentsParser()
 
-        text = u'''  !! Абырвалг'''
+        text = '''  !! Абырвалг'''
 
         contents = parser.parse (text)
 
@@ -51,14 +51,14 @@ class TOC_ParserTest (unittest.TestCase):
 
         parser = ContentsParser()
 
-        text = u'''!! Абырвалг'''
+        text = '''!! Абырвалг'''
 
         contents = parser.parse (text)
 
         self.assertEqual (len (contents), 1)
-        self.assertEqual (contents[0].title, u"Абырвалг")
+        self.assertEqual (contents[0].title, "Абырвалг")
         self.assertEqual (contents[0].level, 1)
-        self.assertEqual (contents[0].anchor, u"")
+        self.assertEqual (contents[0].anchor, "")
 
 
     def testParser_04 (self):
@@ -66,14 +66,14 @@ class TOC_ParserTest (unittest.TestCase):
 
         parser = ContentsParser()
 
-        text = u'''!!    Абырвалг    '''
+        text = '''!!    Абырвалг    '''
 
         contents = parser.parse (text)
 
         self.assertEqual (len (contents), 1)
-        self.assertEqual (contents[0].title, u"Абырвалг")
+        self.assertEqual (contents[0].title, "Абырвалг")
         self.assertEqual (contents[0].level, 1)
-        self.assertEqual (contents[0].anchor, u"")
+        self.assertEqual (contents[0].anchor, "")
 
 
     def testParser_05 (self):
@@ -81,14 +81,14 @@ class TOC_ParserTest (unittest.TestCase):
 
         parser = ContentsParser()
 
-        text = u'''!! Абырвалг 123'''
+        text = '''!! Абырвалг 123'''
 
         contents = parser.parse (text)
 
         self.assertEqual (len (contents), 1)
-        self.assertEqual (contents[0].title, u"Абырвалг 123")
+        self.assertEqual (contents[0].title, "Абырвалг 123")
         self.assertEqual (contents[0].level, 1)
-        self.assertEqual (contents[0].anchor, u"")
+        self.assertEqual (contents[0].anchor, "")
 
 
     def testParser_06 (self):
@@ -96,15 +96,15 @@ class TOC_ParserTest (unittest.TestCase):
 
         parser = ContentsParser()
 
-        text = u'''!! Абырвалг\\
+        text = '''!! Абырвалг\\
  123'''
 
         contents = parser.parse (text)
 
         self.assertEqual (len (contents), 1)
-        self.assertEqual (contents[0].title, u'''Абырвалг 123''')
+        self.assertEqual (contents[0].title, '''Абырвалг 123''')
         self.assertEqual (contents[0].level, 1)
-        self.assertEqual (contents[0].anchor, u"")
+        self.assertEqual (contents[0].anchor, "")
 
 
     def testParser_07 (self):
@@ -112,19 +112,19 @@ class TOC_ParserTest (unittest.TestCase):
 
         parser = ContentsParser()
 
-        text = u'''!! Абырвалг 123
+        text = '''!! Абырвалг 123
 !!! Абырвалг 234'''
 
         contents = parser.parse (text)
 
         self.assertEqual (len (contents), 2)
-        self.assertEqual (contents[0].title, u"Абырвалг 123")
+        self.assertEqual (contents[0].title, "Абырвалг 123")
         self.assertEqual (contents[0].level, 1)
-        self.assertEqual (contents[0].anchor, u"")
+        self.assertEqual (contents[0].anchor, "")
 
-        self.assertEqual (contents[1].title, u"Абырвалг 234")
+        self.assertEqual (contents[1].title, "Абырвалг 234")
         self.assertEqual (contents[1].level, 2)
-        self.assertEqual (contents[1].anchor, u"")
+        self.assertEqual (contents[1].anchor, "")
 
 
     def testParser_08 (self):
@@ -132,20 +132,20 @@ class TOC_ParserTest (unittest.TestCase):
 
         parser = ContentsParser()
 
-        text = u'''!! Абырвалг 123
+        text = '''!! Абырвалг 123
 
 !!! Абырвалг 234'''
 
         contents = parser.parse (text)
 
         self.assertEqual (len (contents), 2)
-        self.assertEqual (contents[0].title, u"Абырвалг 123")
+        self.assertEqual (contents[0].title, "Абырвалг 123")
         self.assertEqual (contents[0].level, 1)
-        self.assertEqual (contents[0].anchor, u"")
+        self.assertEqual (contents[0].anchor, "")
 
-        self.assertEqual (contents[1].title, u"Абырвалг 234")
+        self.assertEqual (contents[1].title, "Абырвалг 234")
         self.assertEqual (contents[1].level, 2)
-        self.assertEqual (contents[1].anchor, u"")
+        self.assertEqual (contents[1].anchor, "")
 
 
     def testParser_09 (self):
@@ -153,7 +153,7 @@ class TOC_ParserTest (unittest.TestCase):
 
         parser = ContentsParser()
 
-        text = u'''ывп ыфвп ваы
+        text = '''ывп ыфвп ваы
 
 !! Абырвалг 123
 
@@ -165,13 +165,13 @@ class TOC_ParserTest (unittest.TestCase):
         contents = parser.parse (text)
 
         self.assertEqual (len (contents), 2)
-        self.assertEqual (contents[0].title, u"Абырвалг 123")
+        self.assertEqual (contents[0].title, "Абырвалг 123")
         self.assertEqual (contents[0].level, 1)
-        self.assertEqual (contents[0].anchor, u"")
+        self.assertEqual (contents[0].anchor, "")
 
-        self.assertEqual (contents[1].title, u"Абырвалг 234")
+        self.assertEqual (contents[1].title, "Абырвалг 234")
         self.assertEqual (contents[1].level, 2)
-        self.assertEqual (contents[1].anchor, u"")
+        self.assertEqual (contents[1].anchor, "")
 
 
     def testParser_10 (self):
@@ -179,7 +179,7 @@ class TOC_ParserTest (unittest.TestCase):
 
         parser = ContentsParser()
 
-        text = u'''ывп ыфвп ваы
+        text = '''ывп ыфвп ваы
 
 !! Абырвалг 123
 
@@ -195,13 +195,13 @@ class TOC_ParserTest (unittest.TestCase):
         contents = parser.parse (text)
 
         self.assertEqual (len (contents), 2)
-        self.assertEqual (contents[0].title, u"Абырвалг 123")
+        self.assertEqual (contents[0].title, "Абырвалг 123")
         self.assertEqual (contents[0].level, 1)
-        self.assertEqual (contents[0].anchor, u"")
+        self.assertEqual (contents[0].anchor, "")
 
-        self.assertEqual (contents[1].title, u"Абырвалг 234")
+        self.assertEqual (contents[1].title, "Абырвалг 234")
         self.assertEqual (contents[1].level, 2)
-        self.assertEqual (contents[1].anchor, u"")
+        self.assertEqual (contents[1].anchor, "")
 
 
     def testParser_11 (self):
@@ -209,7 +209,7 @@ class TOC_ParserTest (unittest.TestCase):
 
         parser = ContentsParser()
 
-        text = u'''ывп ыфвп ваы
+        text = '''ывп ыфвп ваы
 
 !! Абырвалг 123
 
@@ -228,13 +228,13 @@ asdf
         contents = parser.parse (text)
 
         self.assertEqual (len (contents), 2)
-        self.assertEqual (contents[0].title, u"Абырвалг 123")
+        self.assertEqual (contents[0].title, "Абырвалг 123")
         self.assertEqual (contents[0].level, 1)
-        self.assertEqual (contents[0].anchor, u"")
+        self.assertEqual (contents[0].anchor, "")
 
-        self.assertEqual (contents[1].title, u"Абырвалг 234")
+        self.assertEqual (contents[1].title, "Абырвалг 234")
         self.assertEqual (contents[1].level, 2)
-        self.assertEqual (contents[1].anchor, u"")
+        self.assertEqual (contents[1].anchor, "")
 
 
     def testParser_12 (self):
@@ -242,7 +242,7 @@ asdf
 
         parser = ContentsParser()
 
-        text = u'''ывп ыфвп ваы
+        text = '''ывп ыфвп ваы
 
 !! Абырвалг 123
 
@@ -268,7 +268,7 @@ asdf
 
         parser = ContentsParser()
 
-        text = u'''ывп ыфвп ваы
+        text = '''ывп ыфвп ваы
 
 !! [[#якорь1]]Абырвалг 123
 
@@ -287,13 +287,13 @@ asdf
         contents = parser.parse (text)
 
         self.assertEqual (len (contents), 3)
-        self.assertEqual (contents[0].title, u"Абырвалг 123")
+        self.assertEqual (contents[0].title, "Абырвалг 123")
         self.assertEqual (contents[0].level, 1)
-        self.assertEqual (contents[0].anchor, u"якорь1")
+        self.assertEqual (contents[0].anchor, "якорь1")
 
-        self.assertEqual (contents[1].title, u"Абырвалг 234")
+        self.assertEqual (contents[1].title, "Абырвалг 234")
         self.assertEqual (contents[1].level, 2)
-        self.assertEqual (contents[1].anchor, u"якорь2")
+        self.assertEqual (contents[1].anchor, "якорь2")
 
 
     def testParser_14 (self):
@@ -301,7 +301,7 @@ asdf
 
         parser = ContentsParser()
 
-        text = u'''ывп ыфвп ваы
+        text = '''ывп ыфвп ваы
 
 !! [[# якорь1  ]]Абырвалг 123
 
@@ -320,13 +320,13 @@ asdf
         contents = parser.parse (text)
 
         self.assertEqual (len (contents), 3)
-        self.assertEqual (contents[0].title, u"Абырвалг 123")
+        self.assertEqual (contents[0].title, "Абырвалг 123")
         self.assertEqual (contents[0].level, 1)
-        self.assertEqual (contents[0].anchor, u"якорь1")
+        self.assertEqual (contents[0].anchor, "якорь1")
 
-        self.assertEqual (contents[1].title, u"Абырвалг 234")
+        self.assertEqual (contents[1].title, "Абырвалг 234")
         self.assertEqual (contents[1].level, 2)
-        self.assertEqual (contents[1].anchor, u"якорь2")
+        self.assertEqual (contents[1].anchor, "якорь2")
 
 
     def testParser_15 (self):
@@ -334,7 +334,7 @@ asdf
 
         parser = ContentsParser()
 
-        text = u'''ывп ыфвп ваы
+        text = '''ывп ыфвп ваы
 
 [[#якорь1]]
 !! Абырвалг 123
@@ -355,13 +355,13 @@ asdf
         contents = parser.parse (text)
 
         self.assertEqual (len (contents), 3)
-        self.assertEqual (contents[0].title, u"Абырвалг 123")
+        self.assertEqual (contents[0].title, "Абырвалг 123")
         self.assertEqual (contents[0].level, 1)
-        self.assertEqual (contents[0].anchor, u"якорь1")
+        self.assertEqual (contents[0].anchor, "якорь1")
 
-        self.assertEqual (contents[1].title, u"Абырвалг 234")
+        self.assertEqual (contents[1].title, "Абырвалг 234")
         self.assertEqual (contents[1].level, 2)
-        self.assertEqual (contents[1].anchor, u"якорь2")
+        self.assertEqual (contents[1].anchor, "якорь2")
 
 
     def testParser_16 (self):
@@ -369,7 +369,7 @@ asdf
 
         parser = ContentsParser()
 
-        text = u'''ывп ыфвп ваы
+        text = '''ывп ыфвп ваы
 
 [[#якорь1]]   
 !! Абырвалг 123
@@ -390,13 +390,13 @@ asdf
         contents = parser.parse (text)
 
         self.assertEqual (len (contents), 3)
-        self.assertEqual (contents[0].title, u"Абырвалг 123")
+        self.assertEqual (contents[0].title, "Абырвалг 123")
         self.assertEqual (contents[0].level, 1)
-        self.assertEqual (contents[0].anchor, u"якорь1")
+        self.assertEqual (contents[0].anchor, "якорь1")
 
-        self.assertEqual (contents[1].title, u"Абырвалг 234")
+        self.assertEqual (contents[1].title, "Абырвалг 234")
         self.assertEqual (contents[1].level, 2)
-        self.assertEqual (contents[1].anchor, u"якорь2")
+        self.assertEqual (contents[1].anchor, "якорь2")
 
 
     def testParser_17 (self):
@@ -404,7 +404,7 @@ asdf
 
         parser = ContentsParser()
 
-        text = u'''ывп ыфвп ваы
+        text = '''ывп ыфвп ваы
 
 !! Абырвалг 123 [[#якорь1]]
 
@@ -423,13 +423,13 @@ asdf
         contents = parser.parse (text)
 
         self.assertEqual (len (contents), 3)
-        self.assertEqual (contents[0].title, u"Абырвалг 123")
+        self.assertEqual (contents[0].title, "Абырвалг 123")
         self.assertEqual (contents[0].level, 1)
-        self.assertEqual (contents[0].anchor, u"якорь1")
+        self.assertEqual (contents[0].anchor, "якорь1")
 
-        self.assertEqual (contents[1].title, u"Абырвалг 234")
+        self.assertEqual (contents[1].title, "Абырвалг 234")
         self.assertEqual (contents[1].level, 2)
-        self.assertEqual (contents[1].anchor, u"якорь2")
+        self.assertEqual (contents[1].anchor, "якорь2")
 
 
 
@@ -438,7 +438,7 @@ asdf
 
         parser = ContentsParser()
 
-        text = u'''ывп ыфвп ваы
+        text = '''ывп ыфвп ваы
 
 !! Абырвалг 123 [[#якорь1]]   
 
@@ -457,13 +457,13 @@ asdf
         contents = parser.parse (text)
 
         self.assertEqual (len (contents), 3)
-        self.assertEqual (contents[0].title, u"Абырвалг 123")
+        self.assertEqual (contents[0].title, "Абырвалг 123")
         self.assertEqual (contents[0].level, 1)
-        self.assertEqual (contents[0].anchor, u"якорь1")
+        self.assertEqual (contents[0].anchor, "якорь1")
 
-        self.assertEqual (contents[1].title, u"Абырвалг 234")
+        self.assertEqual (contents[1].title, "Абырвалг 234")
         self.assertEqual (contents[1].level, 2)
-        self.assertEqual (contents[1].anchor, u"якорь2")
+        self.assertEqual (contents[1].anchor, "якорь2")
 
 
     def testParser_19 (self):
@@ -471,7 +471,7 @@ asdf
 
         parser = ContentsParser()
 
-        text = u'''ывп ыфвп ваы
+        text = '''ывп ыфвп ваы
 
 !! Абырвалг [=123=] [[#якорь1]]
 
@@ -490,13 +490,13 @@ asdf
         contents = parser.parse (text)
 
         self.assertEqual (len (contents), 3)
-        self.assertEqual (contents[0].title, u"Абырвалг [=123=]")
+        self.assertEqual (contents[0].title, "Абырвалг [=123=]")
         self.assertEqual (contents[0].level, 1)
-        self.assertEqual (contents[0].anchor, u"якорь1")
+        self.assertEqual (contents[0].anchor, "якорь1")
 
-        self.assertEqual (contents[1].title, u"Абырвалг 234")
+        self.assertEqual (contents[1].title, "Абырвалг 234")
         self.assertEqual (contents[1].level, 2)
-        self.assertEqual (contents[1].anchor, u"якорь2")
+        self.assertEqual (contents[1].anchor, "якорь2")
 
 
     def testParser_20 (self):
@@ -504,7 +504,7 @@ asdf
 
         parser = ContentsParser()
 
-        text = u'''ывп ыфвп ваы
+        text = '''ывп ыфвп ваы
 
 !! Абырвалг 123
 
@@ -523,13 +523,13 @@ asdf
         contents = parser.parse (text)
 
         self.assertEqual (len (contents), 2)
-        self.assertEqual (contents[0].title, u"Абырвалг 123")
+        self.assertEqual (contents[0].title, "Абырвалг 123")
         self.assertEqual (contents[0].level, 1)
-        self.assertEqual (contents[0].anchor, u"")
+        self.assertEqual (contents[0].anchor, "")
 
-        self.assertEqual (contents[1].title, u"Абырвалг 234")
+        self.assertEqual (contents[1].title, "Абырвалг 234")
         self.assertEqual (contents[1].level, 2)
-        self.assertEqual (contents[1].anchor, u"")
+        self.assertEqual (contents[1].anchor, "")
 
 
     def testParser_21 (self):
@@ -537,7 +537,7 @@ asdf
 
         parser = ContentsParser()
 
-        text = u'''ывп ыфвп ваы
+        text = '''ывп ыфвп ваы
 
 !! Абырвалг 123
 
@@ -556,13 +556,13 @@ asdfasdf   =]
         contents = parser.parse (text)
 
         self.assertEqual (len (contents), 2)
-        self.assertEqual (contents[0].title, u"Абырвалг 123")
+        self.assertEqual (contents[0].title, "Абырвалг 123")
         self.assertEqual (contents[0].level, 1)
-        self.assertEqual (contents[0].anchor, u"")
+        self.assertEqual (contents[0].anchor, "")
 
-        self.assertEqual (contents[1].title, u"Абырвалг 234")
+        self.assertEqual (contents[1].title, "Абырвалг 234")
         self.assertEqual (contents[1].level, 2)
-        self.assertEqual (contents[1].anchor, u"")
+        self.assertEqual (contents[1].anchor, "")
 
 
     def testParser_22 (self):
@@ -570,7 +570,7 @@ asdfasdf   =]
 
         parser = ContentsParser()
 
-        text = u'''ывп ыфвп ваы
+        text = '''ывп ыфвп ваы
 
 [= asfsaf fasdg=]
 
@@ -591,13 +591,13 @@ asdfasdf   =]
         contents = parser.parse (text)
 
         self.assertEqual (len (contents), 2)
-        self.assertEqual (contents[0].title, u"Абырвалг 123")
+        self.assertEqual (contents[0].title, "Абырвалг 123")
         self.assertEqual (contents[0].level, 1)
-        self.assertEqual (contents[0].anchor, u"")
+        self.assertEqual (contents[0].anchor, "")
 
-        self.assertEqual (contents[1].title, u"Абырвалг 234")
+        self.assertEqual (contents[1].title, "Абырвалг 234")
         self.assertEqual (contents[1].level, 2)
-        self.assertEqual (contents[1].anchor, u"")
+        self.assertEqual (contents[1].anchor, "")
 
 
     def testParser_23 (self):
@@ -605,7 +605,7 @@ asdfasdf   =]
 
         parser = ContentsParser()
 
-        text = u'''ывп ыфвп ваы
+        text = '''ывп ыфвп ваы
 
 [= asfsaf fasdg
 
@@ -619,13 +619,13 @@ asdfasdf   =]
         contents = parser.parse (text)
 
         self.assertEqual (len (contents), 2)
-        self.assertEqual (contents[0].title, u"Абырвалг 123")
+        self.assertEqual (contents[0].title, "Абырвалг 123")
         self.assertEqual (contents[0].level, 1)
-        self.assertEqual (contents[0].anchor, u"")
+        self.assertEqual (contents[0].anchor, "")
 
-        self.assertEqual (contents[1].title, u"Абырвалг 234")
+        self.assertEqual (contents[1].title, "Абырвалг 234")
         self.assertEqual (contents[1].level, 2)
-        self.assertEqual (contents[1].anchor, u"")
+        self.assertEqual (contents[1].anchor, "")
 
 
     def testParser_24 (self):
@@ -633,7 +633,7 @@ asdfasdf   =]
 
         parser = ContentsParser()
 
-        text = u'''ывп ыфвп ваы
+        text = '''ывп ыфвп ваы
 
  asfsaf fasdg
 
@@ -649,13 +649,13 @@ asdfasdf   =]
         contents = parser.parse (text)
 
         self.assertEqual (len (contents), 2)
-        self.assertEqual (contents[0].title, u"Абырвалг 123")
+        self.assertEqual (contents[0].title, "Абырвалг 123")
         self.assertEqual (contents[0].level, 1)
-        self.assertEqual (contents[0].anchor, u"")
+        self.assertEqual (contents[0].anchor, "")
 
-        self.assertEqual (contents[1].title, u"Абырвалг 234")
+        self.assertEqual (contents[1].title, "Абырвалг 234")
         self.assertEqual (contents[1].level, 2)
-        self.assertEqual (contents[1].anchor, u"")
+        self.assertEqual (contents[1].anchor, "")
 
 
     def testParser_25 (self):
@@ -663,7 +663,7 @@ asdfasdf   =]
 
         parser = ContentsParser()
 
-        text = u'''ывп ыфвп ваы
+        text = '''ывп ыфвп ваы
 
 =]
  asfsaf fasdg
@@ -680,13 +680,13 @@ asdfasdf   =]
         contents = parser.parse (text)
 
         self.assertEqual (len (contents), 2)
-        self.assertEqual (contents[0].title, u"Абырвалг 123")
+        self.assertEqual (contents[0].title, "Абырвалг 123")
         self.assertEqual (contents[0].level, 1)
-        self.assertEqual (contents[0].anchor, u"")
+        self.assertEqual (contents[0].anchor, "")
 
-        self.assertEqual (contents[1].title, u"Абырвалг 234")
+        self.assertEqual (contents[1].title, "Абырвалг 234")
         self.assertEqual (contents[1].level, 2)
-        self.assertEqual (contents[1].anchor, u"")
+        self.assertEqual (contents[1].anchor, "")
 
 
     def testParser_26 (self):
@@ -694,7 +694,7 @@ asdfasdf   =]
 
         parser = ContentsParser()
 
-        text = u'''ывп ыфвп ваы
+        text = '''ывп ыфвп ваы
 
 [[#якорь1_2]]   
 !! [[#якорь1_1]] Абырвалг 123
@@ -715,13 +715,13 @@ asdfasdf   =]
         contents = parser.parse (text)
 
         self.assertEqual (len (contents), 3)
-        self.assertEqual (contents[0].title, u"Абырвалг 123")
+        self.assertEqual (contents[0].title, "Абырвалг 123")
         self.assertEqual (contents[0].level, 1)
-        self.assertEqual (contents[0].anchor, u"якорь1_1")
+        self.assertEqual (contents[0].anchor, "якорь1_1")
 
-        self.assertEqual (contents[1].title, u"Абырвалг 234")
+        self.assertEqual (contents[1].title, "Абырвалг 234")
         self.assertEqual (contents[1].level, 2)
-        self.assertEqual (contents[1].anchor, u"якорь2_2")
+        self.assertEqual (contents[1].anchor, "якорь2_2")
 
 
     def testParser_27 (self):
@@ -729,7 +729,7 @@ asdfasdf   =]
 
         parser = ContentsParser()
 
-        text = u'''ывп ыфвп ваы
+        text = '''ывп ыфвп ваы
 
 !! Абырвалг 123
 
@@ -745,13 +745,13 @@ asdfasdf   =]
         contents = parser.parse (text)
 
         self.assertEqual (len (contents), 2)
-        self.assertEqual (contents[0].title, u"Абырвалг 123")
+        self.assertEqual (contents[0].title, "Абырвалг 123")
         self.assertEqual (contents[0].level, 1)
-        self.assertEqual (contents[0].anchor, u"")
+        self.assertEqual (contents[0].anchor, "")
 
-        self.assertEqual (contents[1].title, u"Абырвалг 234")
+        self.assertEqual (contents[1].title, "Абырвалг 234")
         self.assertEqual (contents[1].level, 2)
-        self.assertEqual (contents[1].anchor, u"")
+        self.assertEqual (contents[1].anchor, "")
 
 
     def testParser_28 (self):
@@ -759,7 +759,7 @@ asdfasdf   =]
 
         parser = ContentsParser()
 
-        text = u'''ывп ыфвп ваы
+        text = '''ывп ыфвп ваы
 
 [=
 !! Это не заголовок
@@ -781,10 +781,10 @@ asdfasdf   =]
         contents = parser.parse (text)
 
         self.assertEqual (len (contents), 2)
-        self.assertEqual (contents[0].title, u"Абырвалг 123")
+        self.assertEqual (contents[0].title, "Абырвалг 123")
         self.assertEqual (contents[0].level, 1)
-        self.assertEqual (contents[0].anchor, u"")
+        self.assertEqual (contents[0].anchor, "")
 
-        self.assertEqual (contents[1].title, u"Абырвалг 234")
+        self.assertEqual (contents[1].title, "Абырвалг 234")
         self.assertEqual (contents[1].level, 2)
-        self.assertEqual (contents[1].anchor, u"")
+        self.assertEqual (contents[1].anchor, "")

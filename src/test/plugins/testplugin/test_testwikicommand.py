@@ -18,7 +18,7 @@ class PluginWikiCommandTest(unittest.TestCase):
     def setUp(self):
         self.__createWiki()
 
-        dirlist = [u"../test/plugins/testwikicommand"]
+        dirlist = ["../test/plugins/testwikicommand"]
 
         loader = PluginsLoader(Application)
         loader.load (dirlist)
@@ -29,12 +29,12 @@ class PluginWikiCommandTest(unittest.TestCase):
 
     def __createWiki (self):
         # Здесь будет создаваться вики
-        self.path = mkdtemp (prefix=u'Абырвалг абыр')
+        self.path = mkdtemp (prefix='Абырвалг абыр')
 
         self.wikiroot = WikiDocument.create (self.path)
 
-        WikiPageFactory().create (self.wikiroot, u"Страница 2", [])
-        self.testPage = self.wikiroot[u"Страница 2"]
+        WikiPageFactory().create (self.wikiroot, "Страница 2", [])
+        self.testPage = self.wikiroot["Страница 2"]
 
 
     def tearDown(self):
@@ -42,12 +42,12 @@ class PluginWikiCommandTest(unittest.TestCase):
 
 
     def testCommandTest (self):
-        text = u"""(: test Параметр1 Параметр2=2 Параметр3=3 :)
+        text = """(: test Параметр1 Параметр2=2 Параметр3=3 :)
 Текст внутри
 команды
 (:testend:)"""
 
-        result_right = u"""Command name: test
+        result_right = """Command name: test
 params: Параметр1 Параметр2=2 Параметр3=3
 content: Текст внутри
 команды"""

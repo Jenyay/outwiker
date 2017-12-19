@@ -2,7 +2,7 @@
 
 import os
 import os.path
-import ConfigParser
+import configparser
 
 import wx
 
@@ -249,7 +249,7 @@ class NotesTree(wx.Panel):
             expandedOption.value = expanded
         except IOError as e:
             outwiker.core.commands.MessageBox(
-                _(u"Can't save page options\n{}").format(unicode(e)),
+                _(u"Can't save page options\n{}").format(str(e)),
                 _(u"Error"), wx.ICON_ERROR | wx.OK)
 
     def __getItemExpandState(self, page):
@@ -278,9 +278,9 @@ class NotesTree(wx.Panel):
         try:
             expanded = page.params.getbool(self.pageOptionsSection,
                                            self.pageOptionExpand)
-        except ConfigParser.NoSectionError:
+        except configparser.NoSectionError:
             return False
-        except ConfigParser.NoOptionError:
+        except configparser.NoOptionError:
             return False
 
         return expanded

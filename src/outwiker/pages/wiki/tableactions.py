@@ -17,7 +17,7 @@ def getTableByPos(text, position):
     """
     Return suffix for command name for most nested (:tableNN:) command in the position
     """
-    regex = re.compile(r'table(?P<suffix>\d*)$', re.UNICODE)
+    regex = re.compile(r'table(?P<suffix>\d*)$')
     matches = getCommandsByPos(text, position)
     matches.reverse()
 
@@ -41,7 +41,7 @@ def getInsertTableActionFunc (application, parent, pageView):
             suffix = u'2'
         else:
             try:
-                suffix = unicode(int(tableSuffix) + 1)
+                suffix = str(int(tableSuffix) + 1)
             except ValueError:
                 suffix = u''
 
@@ -63,7 +63,7 @@ def getInsertTableRowsActionFunc (application, parent, pageView):
             suffix = u''
         else:
             try:
-                suffix = unicode(int(tableSuffix))
+                suffix = str(int(tableSuffix))
             except ValueError:
                 suffix = u''
 
@@ -85,7 +85,7 @@ def getInsertTableCellActionFunc (application, parent, pageView):
             suffix = u''
         else:
             try:
-                suffix = unicode(int(tableSuffix))
+                suffix = str(int(tableSuffix))
             except ValueError:
                 suffix = u''
 

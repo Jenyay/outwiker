@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 
-from tocwikigenerator import TOCWikiGenerator
-from contentsparser import ContentsParser
+from .tocwikigenerator import TOCWikiGenerator
+from .contentsparser import ContentsParser
 
 
 class TocWikiMaker (object):

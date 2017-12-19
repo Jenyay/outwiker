@@ -8,7 +8,7 @@ class SourceLoadingTest (BasePluginLoadingTest):
         """
         Должен возвращать путь до папки с тестируемым плагином
         """
-        return u"../plugins/source"
+        return "../plugins/source"
 
 
     def getPluginName (self):

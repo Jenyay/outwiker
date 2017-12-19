@@ -18,15 +18,15 @@ class ThumbnailsTest(unittest.TestCase):
     def setUp(self):
         self.encoding = "utf8"
 
-        self.filesPath = u"../test/samplefiles/"
+        self.filesPath = "../test/samplefiles/"
 
-        self.url1 = u"http://example.com"
-        self.url2 = u"http://jenyay.net/Photo/Nature?action=imgtpl&G=1&upname=tsaritsyno_01.jpg"
+        self.url1 = "http://example.com"
+        self.url2 = "http://jenyay.net/Photo/Nature?action=imgtpl&G=1&upname=tsaritsyno_01.jpg"
 
-        self.pagelinks = [u"Страница 1",
-                          u"/Страница 1",
-                          u"/Страница 2/Страница 3"]
-        self.pageComments = [u"Страницо 1", u"Страницо 1", u"Страницо 3"]
+        self.pagelinks = ["Страница 1",
+                          "/Страница 1",
+                          "/Страница 2/Страница 3"]
+        self.pageComments = ["Страницо 1", "Страницо 1", "Страницо 3"]
 
         self.__createWiki()
 
@@ -34,11 +34,11 @@ class ThumbnailsTest(unittest.TestCase):
 
     def __createWiki(self):
         # Здесь будет создаваться вики
-        self.path = mkdtemp(prefix=u'Абырвалг абыр')
+        self.path = mkdtemp(prefix='Абырвалг абыр')
 
         self.wikiroot = WikiDocument.create(self.path)
-        WikiPageFactory().create(self.wikiroot, u"Страница 2", [])
-        self.testPage = self.wikiroot[u"Страница 2"]
+        WikiPageFactory().create(self.wikiroot, "Страница 2", [])
+        self.testPage = self.wikiroot["Страница 2"]
 
     def tearDown(self):
         removeDir(self.path)
@@ -82,7 +82,7 @@ class ThumbnailsTest(unittest.TestCase):
             thumbDir)
 
     def testThumbnails2_attach(self):
-        fname = u"accept.png"
+        fname = "accept.png"
         attachPath = os.path.join(self.filesPath, fname)
         Attachment(self.parser.page).attach([attachPath])
 
@@ -92,7 +92,7 @@ class ThumbnailsTest(unittest.TestCase):
         self.assertFalse(os.path.exists(thumbDir))
 
     def testThumbnails3_attach(self):
-        fname = u"accept.png"
+        fname = "accept.png"
         attachPath = os.path.join(self.filesPath, fname)
         Attachment(self.parser.page).attach([attachPath])
 
@@ -102,7 +102,7 @@ class ThumbnailsTest(unittest.TestCase):
         self.assertTrue(os.path.exists(thumbDir))
 
     def testThumbnailsClear1_attach(self):
-        fname = u"accept.png"
+        fname = "accept.png"
         attachPath = os.path.join(self.filesPath, fname)
         Attachment(self.parser.page).attach([attachPath])
 

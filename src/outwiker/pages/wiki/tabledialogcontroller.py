@@ -84,7 +84,7 @@ class TableDialogController (BaseTableDialogController):
         """
         params = {}
         if self._dialog.borderWidth != 0:
-            params[u'border'] = unicode (self._dialog.borderWidth)
+            params['border'] = str (self._dialog.borderWidth)
 
         return params
 

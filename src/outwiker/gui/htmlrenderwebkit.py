@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 import os
-import urllib
+import urllib.request, urllib.parse, urllib.error
 
 import wx
 
@@ -45,7 +45,7 @@ class HtmlRenderWebKit(HtmlRender):
         self.ctrl.Print()
 
     def LoadPage (self, fname):
-        url = u'file://' + urllib.quote(fname.encode ("utf8"))
+        url = u'file://' + urllib.parse.quote(fname.encode ("utf8"))
         if APP_DATA_KEY_ANCHOR in Application.sharedData:
             url += Application.sharedData[APP_DATA_KEY_ANCHOR]
             del Application.sharedData[APP_DATA_KEY_ANCHOR]
@@ -64,7 +64,7 @@ class HtmlRenderWebKit(HtmlRender):
 
     def SetPage (self, htmltext, basepath):
         self.canOpenUrl = True
-        self._path = "file://" + urllib.quote (basepath.encode ("utf8")) + "/"
+        self._path = "file://" + urllib.parse.quote (basepath) + "/"
 
         self.ctrl.SetPage (htmltext, self._path)
 
@@ -81,7 +81,7 @@ class HtmlRenderWebKit(HtmlRender):
         uri = self.ctrl.GetCurrentURL()
 
         if uri is not None:
-            basepath = urllib.unquote (uri.encode('ascii')).decode ('utf8')
+            basepath = urllib.parse.unquote (uri)
             identifier = UriIdentifierWebKit (self._currentPage, basepath)
 
             return identifier.identify (href)
@@ -155,8 +155,8 @@ class HtmlRenderWebKit(HtmlRender):
         gtk_key_modifier - зажатые клавиши (1 - Shift, 4 - Ctrl)
         """
         source_href = href
-        href = urllib.unquote (href.encode('ascii')).decode ('utf8')
-        href = self._decodeIDNA (href)
+        href = urllib.parse.unquote(href)
+        href = self._decodeIDNA(href)
 
         (url, page, filename, anchor) = self.__identifyUri (href)
 

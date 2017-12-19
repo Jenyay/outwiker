@@ -17,13 +17,13 @@ class HackPage_ChangeTitleTest(BaseMainWndTest):
         self._application = Application
 
         self.testPage = WikiPageFactory().create(self.wikiroot,
-                                                 u"Страница 1",
+                                                 "Страница 1",
                                                  [])
         self.testPage2 = WikiPageFactory().create(self.wikiroot,
-                                                  u"Страница 2",
+                                                  "Страница 2",
                                                   [])
 
-        dirlist = [u"../plugins/hackpage"]
+        dirlist = ["../plugins/hackpage"]
 
         self._loader = PluginsLoader(Application)
         self._loader.load(dirlist)
@@ -51,31 +51,31 @@ class HackPage_ChangeTitleTest(BaseMainWndTest):
         setPageFolderWithDialog(self.testPage, self._application)
 
         self.assertEqual(self.testPage.alias, None)
-        self.assertEqual(self.testPage.title, u"Страница 1")
+        self.assertEqual(self.testPage.title, "Страница 1")
         self.assertEqual(Tester.dialogTester.count, 0)
 
     def test_change_title_default_02(self):
         from hackpage.utils import setPageFolderWithDialog
 
         Tester.dialogTester.appendOk()
-        self.testPage.alias = u'Псевдоним'
+        self.testPage.alias = 'Псевдоним'
 
         setPageFolderWithDialog(self.testPage, self._application)
 
-        self.assertEqual(self.testPage.alias, u'Псевдоним')
-        self.assertEqual(self.testPage.title, u"Страница 1")
+        self.assertEqual(self.testPage.alias, 'Псевдоним')
+        self.assertEqual(self.testPage.title, "Страница 1")
         self.assertEqual(Tester.dialogTester.count, 0)
 
     def test_change_title_cancel_01(self):
         from hackpage.utils import setPageFolderWithDialog
 
         Tester.dialogTester.appendCancel()
-        self.testPage.alias = u'Псевдоним'
+        self.testPage.alias = 'Псевдоним'
 
         setPageFolderWithDialog(self.testPage, self._application)
 
-        self.assertEqual(self.testPage.alias, u'Псевдоним')
-        self.assertEqual(self.testPage.title, u"Страница 1")
+        self.assertEqual(self.testPage.alias, 'Псевдоним')
+        self.assertEqual(self.testPage.title, "Страница 1")
         self.assertEqual(Tester.dialogTester.count, 0)
 
     def test_change_title_cancel_02(self):
@@ -87,7 +87,7 @@ class HackPage_ChangeTitleTest(BaseMainWndTest):
         setPageFolderWithDialog(self.testPage, self._application)
 
         self.assertEqual(self.testPage.alias, None)
-        self.assertEqual(self.testPage.title, u"Страница 1")
+        self.assertEqual(self.testPage.title, "Страница 1")
         self.assertEqual(Tester.dialogTester.count, 0)
 
     # def test_change_title_invalid_01(self):
@@ -108,7 +108,7 @@ class HackPage_ChangeTitleTest(BaseMainWndTest):
         from hackpage.utils import setPageFolderWithDialog
 
         old_title = self.testPage.title
-        new_title = u'Новая папка'
+        new_title = 'Новая папка'
 
         Tester.dialogTester.append(self._setValue, new_title)
         self.testPage.alias = None
@@ -122,13 +122,13 @@ class HackPage_ChangeTitleTest(BaseMainWndTest):
     def test_change_title_02(self):
         from hackpage.utils import setPageFolderWithDialog
 
-        new_title = u'Новая папка'
+        new_title = 'Новая папка'
 
         Tester.dialogTester.append(self._setValue, new_title)
-        self.testPage.alias = u'Псевдоним'
+        self.testPage.alias = 'Псевдоним'
 
         setPageFolderWithDialog(self.testPage, self._application)
 
-        self.assertEqual(self.testPage.alias, u'Псевдоним')
+        self.assertEqual(self.testPage.alias, 'Псевдоним')
         self.assertEqual(self.testPage.title, new_title)
         self.assertEqual(Tester.dialogTester.count, 0)

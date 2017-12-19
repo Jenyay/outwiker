@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import codecs
-import cgi
+import html
 
 import wx
 import wx.lib.newevent
@@ -220,7 +220,7 @@ class TextEditorBase(wx.Panel):
             #        (ord('U'),             wx.stc.STC_SCMOD_SHIFT | wx.stc.STC_SCMOD_CTRL,    wx.stc.STC_CMD_UPPERCASE),
         )
 
-        list(map(lambda key: self.textCtrl.CmdKeyAssign(*key), defaultHotKeys))
+        [self.textCtrl.CmdKeyAssign(*key) for key in defaultHotKeys]
 
     @property
     def searchPanel(self):
@@ -271,8 +271,7 @@ class TextEditorBase(wx.Panel):
         old_sel_end = self.GetSelectionEnd()
 
         first_line, last_line = self.GetSelectionLines()
-        list(map(lambda n: self.toddleLinePrefix(n, prefix),
-            range(first_line, last_line + 1)))
+        [self.toddleLinePrefix(n, prefix) for n in range(first_line, last_line + 1)]
 
         if old_sel_start != old_sel_end:
             new_sel_start = self.GetLineStartPosition(first_line)
@@ -301,7 +300,7 @@ class TextEditorBase(wx.Panel):
 
     def escapeHtml(self):
         selText = self.textCtrl.GetSelectedText()
-        text = cgi.escape(selText, quote=False)
+        text = html.escape(selText, quote=False)
         self.textCtrl.ReplaceSelection(text)
 
     def SetReadOnly(self, readonly):

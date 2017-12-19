@@ -24,29 +24,29 @@ from test.utils import removeDir
 class TestFooterWikiCommand(Command):
     def execute(self, params, content):
         self.parser.appendToFooter(content)
-        return u''
+        return ''
 
     @property
     def name(self):
-        return u"footer"
+        return "footer"
 
 
 class TestHeadWikiCommand(Command):
     def execute(self, params, content):
         self.parser.appendToHead(content)
-        return u''
+        return ''
 
     @property
     def name(self):
-        return u"head"
+        return "head"
 
 
 class WikiHtmlGeneratorTest(unittest.TestCase):
     def setUp(self):
-        self.filesPath = u"../test/samplefiles/"
+        self.filesPath = "../test/samplefiles/"
         self.__createWiki()
 
-        files = [u"image.jpg", u"dir"]
+        files = ["image.jpg", "dir"]
         self.wikicommands = [TestFooterWikiCommand,
                              TestHeadWikiCommand,
                              ]
@@ -55,12 +55,12 @@ class WikiHtmlGeneratorTest(unittest.TestCase):
                          for fname
                          in files]
 
-        self.attach_page2 = Attachment(self.wikiroot[u"Страница 2"])
+        self.attach_page2 = Attachment(self.wikiroot["Страница 2"])
 
         # Прикрепим к двум страницам файлы
         Attachment(self.testPage).attach(fullFilesPath)
 
-        self.wikitext = u"""Бла-бла-бла
+        self.wikitext = """Бла-бла-бла
         %thumb maxsize=250%Attach:image.jpg%%
         Бла-бла-бла"""
 
@@ -85,16 +85,15 @@ class WikiHtmlGeneratorTest(unittest.TestCase):
 
     def __createWiki(self):
         # Здесь будет создаваться вики
-        self.path = mkdtemp(prefix=u'Абырвалг абыр')
+        self.path = mkdtemp(prefix='Абырвалг абыр')
 
         self.wikiroot = WikiDocument.create(self.path)
 
-        WikiPageFactory().create(self.wikiroot, u"Страница 2", [])
-        self.testPage = self.wikiroot[u"Страница 2"]
+        WikiPageFactory().create(self.wikiroot, "Страница 2", [])
+        self.testPage = self.wikiroot["Страница 2"]
 
     def __onWikiParserPrepare(self, parser):
-        map(lambda command: parser.addCommand(command(parser)),
-            self.wikicommands)
+        list([parser.addCommand(command(parser)) for command in self.wikicommands])
 
     def tearDown(self):
         Application.onWikiParserPrepare -= self.__onWikiParserPrepare
@@ -102,13 +101,13 @@ class WikiHtmlGeneratorTest(unittest.TestCase):
         removeDir(self.path)
 
     def testEmpty1(self):
-        text = u"бла-бла-бла"
+        text = "бла-бла-бла"
 
         content = EmptyContent(Application.config)
         content.content = text
 
         # Очистим содержимое, чтобы использовать EmptyContent
-        self.testPage.content = u""
+        self.testPage.content = ""
 
         generator = HtmlGenerator(self.testPage)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
@@ -116,51 +115,51 @@ class WikiHtmlGeneratorTest(unittest.TestCase):
         self.assertTrue(text in result)
 
     def testEmpty2(self):
-        text = u"(:attachlist:)"
+        text = "(:attachlist:)"
 
         content = EmptyContent(Application.config)
         content.content = text
 
         # Очистим содержимое, чтобы использовать EmptyContent
-        self.testPage.content = u""
+        self.testPage.content = ""
 
         generator = HtmlGenerator(self.testPage)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
-        self.assertTrue(u"image.jpg" in result)
+        self.assertTrue("image.jpg" in result)
 
     def testFooter_01(self):
-        text = u'Бла-бла-бла(:footer:)Подвал 1(:footerend:)'
+        text = 'Бла-бла-бла(:footer:)Подвал 1(:footerend:)'
         self.testPage.content = text
 
         generator = HtmlGenerator(self.testPage)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
-        self.assertIn(u'Бла-бла-бла<br/>\nПодвал 1\n</body>',
-                      result.replace(u'\r\n', u'\n'))
+        self.assertIn('Бла-бла-бла<br/>\nПодвал 1\n</body>',
+                      result.replace('\r\n', '\n'))
 
     def testFooter_02(self):
-        text = u'Бла-бла-бла(:footer:)Подвал 1(:footerend:)(:footer:)Подвал 2(:footerend:)11111'
+        text = 'Бла-бла-бла(:footer:)Подвал 1(:footerend:)(:footer:)Подвал 2(:footerend:)11111'
         self.testPage.content = text
 
         generator = HtmlGenerator(self.testPage)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
-        self.assertIn(u'Бла-бла-бла11111<br/>\nПодвал 1Подвал 2\n</body>',
-                      result.replace(u'\r\n', u'\n'))
+        self.assertIn('Бла-бла-бла11111<br/>\nПодвал 1Подвал 2\n</body>',
+                      result.replace('\r\n', '\n'))
 
     def testHead_01(self):
-        text = u'Бла-бла-бла(:head:)Заголовок 1(:headend:)'
+        text = 'Бла-бла-бла(:head:)Заголовок 1(:headend:)'
         self.testPage.content = text
 
         generator = HtmlGenerator(self.testPage)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
-        self.assertIn(u'Заголовок 1\n</head>',
-                      result.replace(u'\r\n', u'\n'))
+        self.assertIn('Заголовок 1\n</head>',
+                      result.replace('\r\n', '\n'))
 
     def testHead_02(self):
-        text = u'''Бла-бла-бла
+        text = '''Бла-бла-бла
 (:head:)Заголовок 1(:headend:)
 (:head:)Заголовок 2(:headend:)
 '''
@@ -169,5 +168,5 @@ class WikiHtmlGeneratorTest(unittest.TestCase):
         generator = HtmlGenerator(self.testPage)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
-        self.assertIn(u'Заголовок 1Заголовок 2\n</head>',
-                      result.replace(u'\r\n', u'\n'))
+        self.assertIn('Заголовок 1Заголовок 2\n</head>',
+                      result.replace('\r\n', '\n'))

@@ -20,11 +20,10 @@ def getSortStrategies ():
             CreationDateAscendingSort()]
 
 
-class BaseSortStrategy (object):
+class BaseSortStrategy (object, metaclass=ABCMeta):
     """
     Базовый абстрактрый класс для стратегий сортировки
     """
-    __metaclass__ = ABCMeta
 
     @abstractmethod
     def sort (self, page1, page2):

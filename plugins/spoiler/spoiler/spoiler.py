@@ -5,19 +5,17 @@
 import os.path
 
 from outwiker.core.pluginbase import Plugin
-from outwiker.core.system import getOS
 from outwiker.core.commands import getCurrentVersion
 from outwiker.core.version import Version, StatusSet
 
 from .commandspoiler import SpoilerCommand
 
 
-__version__ = u"1.4.4"
+__version__ = u"2.0"
 
 
-# Для работы этого плагина требуется OutWiker 1.6.0.632
-if getCurrentVersion() < Version (1, 6, 0, 632, status=StatusSet.DEV):
-    print ("Spoiler plugin. OutWiker version requirement: 1.6.0.632")
+if getCurrentVersion() < Version(2, 1, 0, 833, status=StatusSet.DEV):
+    print ("Spoiler plugin. OutWiker version requirement: 2.1.0.833")
 else:
     class PluginSpoiler (Plugin):
         """
@@ -50,13 +48,13 @@ else:
 
 
         def _initlocale (self, domain):
-            langdir = unicode (os.path.join (os.path.dirname (__file__), "locale"), getOS().filesEncoding)
+            langdir = os.path.join (os.path.dirname (__file__), "locale")
             global _
 
             try:
                 _ = self._init_i18n (domain, langdir)
-            except BaseException, e:
-                print e
+            except BaseException as e:
+                print (e)
 
 
         @property
@@ -86,7 +84,7 @@ else:
 
 
         def _getImagePath (self):
-            imagedir = unicode (os.path.join (os.path.dirname (__file__), "images"), getOS().filesEncoding)
+            imagedir = os.path.join (os.path.dirname (__file__), "images")
             fname = os.path.join (imagedir, "spoiler.png")
             return fname
 

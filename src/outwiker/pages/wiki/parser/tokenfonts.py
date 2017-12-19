@@ -207,7 +207,7 @@ class SmallFontToken(TextBlockToken):
     """
     def getToken(self):
         return Regex(r"\[(?P<count>-{1,4})(?P<text>.*?)\1\]",
-                     re.MULTILINE | re.UNICODE | re.DOTALL).setParseAction(self.__parse)("small")
+                     re.MULTILINE | re.DOTALL).setParseAction(self.__parse)("small")
 
 
     def __parse(self, s, l, t):
@@ -223,7 +223,7 @@ class BigFontToken(TextBlockToken):
     """
     def getToken(self):
         return Regex(r"\[(?P<count>\+{1,5})(?P<text>.*?)\1\]",
-                     re.MULTILINE | re.UNICODE | re.DOTALL).setParseAction(self.__parse)("big")
+                     re.MULTILINE | re.DOTALL).setParseAction(self.__parse)("big")
 
 
     def __parse(self, s, l, t):

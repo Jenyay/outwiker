@@ -85,7 +85,7 @@ class FileIconsTestUnix (BaseMainWndTest):
         self.assertEqual (index, 0)
 
 
-@skipIf (os.name != "nt", u'Test executed under Windows only')
+@skipIf (os.name != "nt", 'Test executed under Windows only')
 class FileIconsTestWindows (BaseMainWndTest):
     def test_clear_after_folder_win (self):
         fi = WindowsFileIcons()

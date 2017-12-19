@@ -10,12 +10,12 @@ from outwiker.pages.wiki.emptycontent import EmptyContent
 
 class EmptyContentTest(unittest.TestCase):
     def setUp(self):
-        self.path = u"../test/testconfig.ini"
+        self.path = "../test/testconfig.ini"
 
         if os.path.exists(self.path):
             os.remove(self.path)
 
-        self.text = u"""Прикрепленные файлы:
+        self.text = """Прикрепленные файлы:
 (:attachlist:)
 ----
 Дочерние страницы:

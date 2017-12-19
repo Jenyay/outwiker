@@ -15,7 +15,7 @@ class TemplateTest (unittest.TestCase):
     def setUp (self):
         self.__createWiki()
 
-        dirlist = [u"../plugins/template"]
+        dirlist = ["../plugins/template"]
 
         self.loader = PluginsLoader(Application)
         self.loader.load (dirlist)
@@ -28,12 +28,12 @@ class TemplateTest (unittest.TestCase):
 
     def __createWiki (self):
         # Здесь будет создаваться вики
-        self.path = mkdtemp (prefix=u'Абырвалг абыр')
+        self.path = mkdtemp (prefix='Абырвалг абыр')
 
         self.wikiroot = WikiDocument.create (self.path)
 
-        WikiPageFactory().create (self.wikiroot, u"Страница 1", [])
-        self.testPage = self.wikiroot[u"Страница 1"]
+        WikiPageFactory().create (self.wikiroot, "Страница 1", [])
+        self.testPage = self.wikiroot["Страница 1"]
 
 
     def testPluginLoad (self):

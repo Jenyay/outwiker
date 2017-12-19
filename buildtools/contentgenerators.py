@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-from StringIO import StringIO
+from io import StringIO
 
 
 class DebChangelogGenerator(object):

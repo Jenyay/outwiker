@@ -28,4 +28,4 @@ class PluginAction (BaseAction):
 
 
     def run (self, params):
-        print "Run!"
+        print ("Run!")

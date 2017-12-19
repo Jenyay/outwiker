@@ -8,7 +8,7 @@ class SnippetsLoadingTest (BasePluginLoadingTest):
         """
         Must return path to plugin
         """
-        return u"../plugins/snippets"
+        return "../plugins/snippets"
 
     def getPluginName(self):
         """

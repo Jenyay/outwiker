@@ -1,6 +1,6 @@
 # -*- coding=utf-8 -*-
 
-from __future__ import print_function
+
 
 import wx
 from wx.lib.newevent import NewCommandEvent
@@ -56,8 +56,7 @@ class SwitchThemed(ScrolledPanel):
 
     def SetTheme(self, theme):
         self._theme = theme
-        list(map(lambda button: button.SetTheme(self._theme),
-            self._buttons + self._otherItems))
+        [button.SetTheme(self._theme) for button in self._buttons + self._otherItems]
 
     def Append(self, label=u'', bitmap=None):
         button = StickyButtonThemed(self, label=label, bitmap=bitmap)
@@ -96,7 +95,7 @@ class SwitchThemed(ScrolledPanel):
         assert index >= 0
         assert index < len(self._buttons)
 
-        list(map(lambda button: button.SetToggle(False), self._buttons))
+        [button.SetToggle(False) for button in self._buttons]
         self._buttons[index].SetToggle(True)
         self._buttons[index].SetFocus()
         self.Notify()
@@ -106,8 +105,7 @@ class SwitchThemed(ScrolledPanel):
 
     def SetButtonsHeight(self, height):
         self._buttonsHeight = height
-        list(map(lambda button: button.SetMinSize((-1, self._buttonsHeight)),
-            self._buttons))
+        [button.SetMinSize((-1, self._buttonsHeight)) for button in self._buttons]
         self.Layout()
 
 

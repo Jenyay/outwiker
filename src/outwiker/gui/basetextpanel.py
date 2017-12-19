@@ -245,7 +245,7 @@ class BaseTextPanel(BasePagePanel):
         try:
             self._getCursorPositionOption(page).value = self.GetCursorPosition()
         except IOError as e:
-            MessageBox(_(u"Can't save file %s") % (unicode(e.filename)),
+            MessageBox(_(u"Can't save file %s") % (str(e.filename)),
                        _(u"Error"),
                        wx.ICON_ERROR | wx.OK)
             return
@@ -257,7 +257,7 @@ class BaseTextPanel(BasePagePanel):
             page.content = self.GetContentFromGui()
         except IOError as e:
             # TODO: Проверить под Windows
-            MessageBox(_(u"Can't save file %s") % (unicode(e.filename)),
+            MessageBox(_(u"Can't save file %s") % (str(e.filename)),
                        _(u"Error"),
                        wx.ICON_ERROR | wx.OK)
 
@@ -292,8 +292,7 @@ class BaseTextPanel(BasePagePanel):
         """
 
         actionController = self._application.actionController
-        list(map(lambda item: actionController.getAction(item).setFunc(None),
-            self._baseTextPolyactions))
+        [actionController.getAction(item).setFunc(None) for item in self._baseTextPolyactions]
 
         self._application.onAttachmentPaste -= self.onAttachmentPaste
         self._application.onPreferencesDialogClose -= self.onPreferencesDialogClose
@@ -311,8 +310,7 @@ class BaseTextPanel(BasePagePanel):
         assert self.searchMenu is not None
 
         actionController = self._application.actionController
-        list(map(lambda item: actionController.removeMenuItem(item),
-            self._baseTextPolyactions))
+        [actionController.removeMenuItem(item) for item in self._baseTextPolyactions]
 
         actionController.removeMenuItem(SearchAction.stringId)
         actionController.removeMenuItem(SearchAndReplaceAction.stringId)
@@ -333,7 +331,7 @@ class BaseTextPanel(BasePagePanel):
         editMenu.Remove(self.wordMenuItem)
         editMenu.Remove(self.linesMenuItem)
 
-        list(map(lambda item: item[0].Remove(item[1]), self._menuSeparators))
+        [item[0].Remove(item[1]) for item in self._menuSeparators]
 
         self.searchMenu = None
         self.wordMenuItem = None

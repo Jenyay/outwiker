@@ -4,8 +4,8 @@ from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
 
 from .i18n import get_
 
-from preferencepanel import PreferencePanel
-from colorslist import ColorsList
+from .preferencepanel import PreferencePanel
+from .colorslist import ColorsList
 
 
 class Controller(object):

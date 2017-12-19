@@ -12,7 +12,7 @@ class MarkdownImageDialogTest(BaseMainWndTest):
         super(MarkdownImageDialogTest, self).setUp()
         self._application = Application
 
-        dirlist = [u"../plugins/markdown"]
+        dirlist = ["../plugins/markdown"]
         self.loader = PluginsLoader(self._application)
         self.loader.load(dirlist)
 
@@ -27,95 +27,95 @@ class MarkdownImageDialogTest(BaseMainWndTest):
     def test_empty(self):
         from markdown.images.imagedialogcontroller import ImageDialogController
 
-        selectedText = u''
+        selectedText = ''
         attachList = []
         controller = ImageDialogController(self._dlg, attachList, selectedText)
         controller.showDialog()
 
-        right_result = u'![]()'
+        right_result = '![]()'
         self.assertEqual(controller.result, right_result)
 
     def test_comment_01(self):
         from markdown.images.imagedialogcontroller import ImageDialogController
 
-        selectedText = u'Комментарий'
+        selectedText = 'Комментарий'
         attachList = []
 
         controller = ImageDialogController(self._dlg, attachList, selectedText)
         controller.showDialog()
 
-        right_result = u'![Комментарий]()'
+        right_result = '![Комментарий]()'
         self.assertEqual(controller.result, right_result)
 
-        self.assertEqual(self._dlg.comment, u'Комментарий')
-        self.assertEqual(self._dlg.fileName, u'')
+        self.assertEqual(self._dlg.comment, 'Комментарий')
+        self.assertEqual(self._dlg.fileName, '')
         self.assertEqual(self._dlg.filesList, [])
 
     def test_comment_02(self):
         from markdown.images.imagedialogcontroller import ImageDialogController
 
-        selectedText = u'__attach/image.png'
+        selectedText = '__attach/image.png'
         attachList = []
 
         controller = ImageDialogController(self._dlg, attachList, selectedText)
         controller.showDialog()
 
-        right_result = u'![__attach/image.png]()'
+        right_result = '![__attach/image.png]()'
         self.assertEqual(controller.result, right_result)
 
-        self.assertEqual(self._dlg.comment, u'__attach/image.png')
-        self.assertEqual(self._dlg.fileName, u'')
+        self.assertEqual(self._dlg.comment, '__attach/image.png')
+        self.assertEqual(self._dlg.fileName, '')
         self.assertEqual(self._dlg.filesList, [])
 
     def test_attach_01(self):
         from markdown.images.imagedialogcontroller import ImageDialogController
 
-        selectedText = u'__attach/image.png'
-        attachList = [u'image.png']
+        selectedText = '__attach/image.png'
+        attachList = ['image.png']
 
         controller = ImageDialogController(self._dlg, attachList, selectedText)
         controller.showDialog()
 
-        right_result = u'![](__attach/image.png)'
+        right_result = '![](__attach/image.png)'
         self.assertEqual(controller.result, right_result)
 
-        self.assertEqual(self._dlg.comment, u'')
-        self.assertEqual(self._dlg.fileName, u'__attach/image.png')
-        self.assertEqual(self._dlg.filesList, [u'__attach/image.png'])
+        self.assertEqual(self._dlg.comment, '')
+        self.assertEqual(self._dlg.fileName, '__attach/image.png')
+        self.assertEqual(self._dlg.filesList, ['__attach/image.png'])
 
     def test_attach_02(self):
         from markdown.images.imagedialogcontroller import ImageDialogController
 
-        selectedText = u'__attach/image.png'
-        attachList = [u'qqq.jpg', u'image.png', u'image.gif']
+        selectedText = '__attach/image.png'
+        attachList = ['qqq.jpg', 'image.png', 'image.gif']
 
         controller = ImageDialogController(self._dlg, attachList, selectedText)
         controller.showDialog()
 
-        right_result = u'![](__attach/image.png)'
+        right_result = '![](__attach/image.png)'
         self.assertEqual(controller.result, right_result)
 
-        self.assertEqual(self._dlg.comment, u'')
-        self.assertEqual(self._dlg.fileName, u'__attach/image.png')
-        self.assertEqual(self._dlg.filesList, [u'__attach/image.gif',
-                                               u'__attach/image.png',
-                                               u'__attach/qqq.jpg'])
+        self.assertEqual(self._dlg.comment, '')
+        self.assertEqual(self._dlg.fileName, '__attach/image.png')
+        self.assertEqual(self._dlg.filesList, ['__attach/image.gif',
+                                               '__attach/image.png',
+                                               '__attach/qqq.jpg'])
 
     def test_full_01(self):
         from markdown.images.imagedialogcontroller import ImageDialogController
 
-        selectedText = u'__attach/image.png'
-        attachList = [u'qqq.jpg', u'image.png', u'image.gif']
+        selectedText = '__attach/image.png'
+        attachList = ['qqq.jpg', 'image.png', 'image.gif']
 
         controller = ImageDialogController(self._dlg, attachList, selectedText)
-        self._dlg.comment = u'Комментарий'
+        self._dlg.comment = 'Комментарий'
         controller.showDialog()
 
-        right_result = u'![Комментарий](__attach/image.png)'
+        right_result = '![Комментарий](__attach/image.png)'
         self.assertEqual(controller.result, right_result)
 
-        self.assertEqual(self._dlg.comment, u'Комментарий')
-        self.assertEqual(self._dlg.fileName, u'__attach/image.png')
-        self.assertEqual(self._dlg.filesList, [u'__attach/image.gif',
-                                               u'__attach/image.png',
-                                               u'__attach/qqq.jpg'])
+        self.assertEqual(self._dlg.comment, 'Комментарий')
+        self.assertEqual(self._dlg.fileName, '__attach/image.png')
+        self.assertEqual(self._dlg.filesList, ['__attach/image.gif',
+                                               '__attach/image.png',
+                                               '__attach/qqq.jpg'])

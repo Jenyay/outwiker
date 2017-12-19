@@ -8,8 +8,8 @@ from outwiker.gui.searchreplacecontroller import LocalSearcher
 class LocalSearchTest(unittest.TestCase):
 
     def test1(self):
-        text = u"1111 sdf sdf 111 657 111 1111 sdf sdf1243"
-        phrase = u"111"
+        text = "1111 sdf sdf 111 657 111 1111 sdf sdf1243"
+        phrase = "111"
 
         searcher = LocalSearcher()
         searcher.search(text, phrase)
@@ -29,8 +29,8 @@ class LocalSearchTest(unittest.TestCase):
         self.assertEqual(searcher.result[3].phrase, phrase)
 
     def test2(self):
-        text = u"1111 sdf sdf 111 657 111 1111 sdf sdf1243"
-        phrase = u"222"
+        text = "1111 sdf sdf 111 657 111 1111 sdf sdf1243"
+        phrase = "222"
 
         searcher = LocalSearcher()
         searcher.search(text, phrase)
@@ -38,8 +38,8 @@ class LocalSearchTest(unittest.TestCase):
         self.assertEqual(len(searcher.result), 0)
 
     def test3(self):
-        text = u"бЛабл sdf sdf Бла 657 бла блА sdf sdf1243"
-        phrase = u"бЛа"
+        text = "бЛабл sdf sdf Бла 657 бла блА sdf sdf1243"
+        phrase = "бЛа"
 
         searcher = LocalSearcher()
         searcher.search(text, phrase)
@@ -59,8 +59,8 @@ class LocalSearchTest(unittest.TestCase):
         self.assertEqual(searcher.result[3].phrase.lower(), phrase.lower())
 
     def test4(self):
-        text = u"111 бла-Бла-блА"
-        phrase = u"бЛа-"
+        text = "111 бла-Бла-блА"
+        phrase = "бЛа-"
 
         searcher = LocalSearcher()
         searcher.search(text, phrase)

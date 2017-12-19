@@ -51,7 +51,7 @@ class ButtonsDialog(TestedDialog):
     def __createButtons(self, buttons, default, cancel):
         self.__buttons = [wx.Button(self, self.ID_MIN + index, text)
                           for text, index
-                          in zip(buttons, list(range(len(buttons))))]
+                          in zip(buttons, range(len(buttons)))]
 
         if default >= 0:
             default_id = self.__buttons[default].GetId() + self.ID_MIN

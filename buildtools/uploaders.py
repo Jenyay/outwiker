@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os.path
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 import sys
 
 from fabric.api import cd, put
@@ -36,13 +36,9 @@ class BinaryUploader(object):
                                                build=version[1])
                                   for fname in linux_tpl_files]
 
-        upload_files_win = map(
-            lambda item: os.path.join(windows_result_path, item),
-            files_for_upload_win)
+        upload_files_win = [os.path.join(windows_result_path, item) for item in files_for_upload_win]
 
-        upload_files_linux = map(
-            lambda item: os.path.join(self.facts.build_dir_linux, item),
-            files_for_upload_linux)
+        upload_files_linux = [os.path.join(self.facts.build_dir_linux, item) for item in files_for_upload_linux]
 
         self.upload_files = (upload_files_win +
                              upload_files_linux +
@@ -65,7 +61,7 @@ class BinaryUploader(object):
                 return False
             elif newOutWikerAppInfo.currentVersion == prevOutWikerAppInfo.currentVersion:
                 print(Fore.RED + 'Warning: Uploaded the same version')
-        except urllib2.HTTPError:
+        except urllib.error.HTTPError:
             pass
 
         return True

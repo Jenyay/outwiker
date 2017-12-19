@@ -15,7 +15,7 @@ class WebPageTest (BaseMainWndTest):
     def setUp (self):
         super (WebPageTest, self).setUp ()
 
-        self.dirlist = [u"../plugins/webpage"]
+        self.dirlist = ["../plugins/webpage"]
 
         self.loader = PluginsLoader(Application)
         self.loader.load (self.dirlist)
@@ -36,7 +36,7 @@ class WebPageTest (BaseMainWndTest):
         from webpage.webnotepage import WebPageFactory, WebNotePage
 
         wikiroot = WikiDocument.create (self.path)
-        test_page = WebPageFactory().create (wikiroot, u"Страница 1", [])
+        test_page = WebPageFactory().create (wikiroot, "Страница 1", [])
         self.assertEqual (type (test_page), WebNotePage)
 
         self.assertEqual (
@@ -59,7 +59,7 @@ class WebPageTest (BaseMainWndTest):
         wikiroot = WikiDocument.create (self.path)
         Application.wikiroot = wikiroot
 
-        test_page = WebPageFactory().create (wikiroot, u"Страница 1", [])
+        test_page = WebPageFactory().create (wikiroot, "Страница 1", [])
         Application.selectedPage = test_page
 
         self.loader.clear()
@@ -71,7 +71,7 @@ class WebPageTest (BaseMainWndTest):
         wikiroot = WikiDocument.create (self.path)
         Application.wikiroot = wikiroot
 
-        test_page = WebPageFactory().create (wikiroot, u"Страница 1", [])
+        test_page = WebPageFactory().create (wikiroot, "Страница 1", [])
         Application.selectedPage = test_page
         Application.selectedPage = None
 
@@ -83,7 +83,7 @@ class WebPageTest (BaseMainWndTest):
         from webpage.gui.webpageview import WebPageView
 
         wikiroot = WikiDocument.create (self.path)
-        test_page = WebPageFactory().create (wikiroot, u"Страница 1", [])
+        test_page = WebPageFactory().create (wikiroot, "Страница 1", [])
 
         Application.wikiroot = wikiroot
         Application.selectedPage = test_page
@@ -96,9 +96,9 @@ class WebPageTest (BaseMainWndTest):
         from webpage.webnotepage import WebPageFactory
 
         wikiroot = WikiDocument.create (self.path)
-        test_page = WebPageFactory().create (wikiroot, u"Страница 1", [])
+        test_page = WebPageFactory().create (wikiroot, "Страница 1", [])
 
-        test_page.content = u"Абырвалг"
+        test_page.content = "Абырвалг"
 
         Application.wikiroot = wikiroot
         Application.selectedPage = test_page
@@ -106,21 +106,21 @@ class WebPageTest (BaseMainWndTest):
         pageview = Application.mainWindow.pagePanel.pageView
         pageContent = pageview.codeEditor.GetText()
 
-        self.assertEqual (pageContent, u"Абырвалг")
+        self.assertEqual (pageContent, "Абырвалг")
 
 
     def testChangeContent (self):
         from webpage.webnotepage import WebPageFactory
 
         wikiroot = WikiDocument.create (self.path)
-        test_page = WebPageFactory().create (wikiroot, u"Страница 1", [])
-        test_page.content = u"Абырвалг"
+        test_page = WebPageFactory().create (wikiroot, "Страница 1", [])
+        test_page.content = "Абырвалг"
 
         Application.wikiroot = wikiroot
         Application.selectedPage = test_page
 
         pageview = Application.mainWindow.pagePanel.pageView
-        pageview.codeEditor.SetText (u"Бла-бла-бла")
+        pageview.codeEditor.SetText ("Бла-бла-бла")
         pageview.Save()
 
         Application.selectedPage = None
@@ -128,9 +128,9 @@ class WebPageTest (BaseMainWndTest):
 
         wikiroot_other = WikiDocument.load (self.path)
         Application.wikiroot = wikiroot_other
-        Application.selectedPage = wikiroot_other[u"Страница 1"]
+        Application.selectedPage = wikiroot_other["Страница 1"]
 
         pageview = Application.mainWindow.pagePanel.pageView
         pageContent = pageview.codeEditor.GetText()
 
-        self.assertEqual (pageContent, u"Бла-бла-бла")
+        self.assertEqual (pageContent, "Бла-бла-бла")

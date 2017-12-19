@@ -45,4 +45,4 @@ class ParserFactory (object):
 
         parser.addCommand (TableCommand (parser))
         for n in range (1, 6):
-            parser.addCommand (TableCommand (parser, unicode (n)))
+            parser.addCommand (TableCommand (parser, str (n)))

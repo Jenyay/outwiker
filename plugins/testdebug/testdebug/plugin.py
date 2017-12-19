@@ -14,13 +14,13 @@ from outwiker.core.pluginbase import Plugin
 from outwiker.core.system import getOS, getImagesDir
 from outwiker.gui.pagedialogpanels.iconspanel import IconsGroupInfo
 
-from debugaction import DebugAction
-from eventswatcher import EventsWatcher
-from timer import Timer
-from tokendebug import DebugTokenFactory
-from newpagedialogpanel import NewPageDialogPanel
-from debugconfig import DebugConfig
-from pagedialogcontroller import DebugPageDialogController
+from .debugaction import DebugAction
+from .eventswatcher import EventsWatcher
+from .timer import Timer
+from .tokendebug import DebugTokenFactory
+from .newpagedialogpanel import NewPageDialogPanel
+from .debugconfig import DebugConfig
+from .pagedialogcontroller import DebugPageDialogController
 
 
 class PluginDebug(Plugin):
@@ -69,14 +69,13 @@ class PluginDebug(Plugin):
         self.__ID_TREE_POPUP = wx.NewId()
         self.__ID_TRAY_POPUP = wx.NewId()
 
-        langdir = unicode(os.path.join(os.path.dirname(__file__), "locale"),
-                          getOS().filesEncoding)
+        langdir = os.path.join(os.path.dirname(__file__), "locale")
         global _
 
         try:
             _ = self._init_i18n(domain, langdir)
         except BaseException as e:
-            print e
+            print (e)
 
         self.__menuName = _(u"Debug")
 
@@ -205,7 +204,7 @@ class PluginDebug(Plugin):
         """
         Получить полный путь до картинки
         """
-        imagedir = unicode(os.path.join(os.path.dirname(__file__), "images"), getOS().filesEncoding)
+        imagedir = os.path.join(os.path.dirname(__file__), "images")
         fname = os.path.join(imagedir, imageName)
         return fname
 
@@ -282,9 +281,9 @@ class PluginDebug(Plugin):
             result = dlg.ShowModal()
 
             if result == wx.ID_CANCEL:
-                print u"Cancel"
+                print (u"Cancel")
             else:
-                print result
+                print (result)
 
     def __onPluginsList(self, event):
         pluginslist = [plugin.name + "\n" for plugin in self._application.plugins]
@@ -312,7 +311,7 @@ class PluginDebug(Plugin):
         if not self._enableOnLinkClick:
             return
 
-        print params.link
+        print (params.link)
         # params["process"] = True
 
     def __onEditorPopupMenu(self, page, params):
@@ -353,23 +352,23 @@ class PluginDebug(Plugin):
 
     def __onPageDialogPageTypeChanged(self, page, params):
         if self._enablePageDialogEvents:
-            print u'Selected page type: {}'.format(params.pageType)
+            print (u'Selected page type: {}'.format(params.pageType))
 
     def __onPageDialogPageTitleChanged(self, page, params):
         if self._enablePageDialogEvents:
-            print u'New page title: {}'.format(params.pageTitle)
+            print (u'New page title: {}'.format(params.pageTitle))
 
     def __onPageDialogPageStyleChanged(self, page, params):
         if self._enablePageDialogEvents:
-            print u'New page style: {}'.format(params.pageStyle)
+            print (u'New page style: {}'.format(params.pageStyle))
 
     def __onPageDialogPageIconChanged(self, page, params):
         if self._enablePageDialogEvents:
-            print u'New page icon: {}'.format(params.pageIcon)
+            print (u'New page icon: {}'.format(params.pageIcon))
 
     def __onPageDialogPageTagsChanged(self, page, params):
         if self._enablePageDialogEvents:
-            print u'New page tags: {}'.format(params.pageTags)
+            print (u'New page tags: {}'.format(params.pageTags))
 
     def __onPreWikiOpen(self, page, params):
         if self._enableOpeningTimeMeasure:

@@ -22,8 +22,8 @@ class PageTabsTest (BaseMainWndTest):
         self.config = GeneralGuiConfig (Application.config)
         self.config.pageTab.remove_option()
 
-        self.wikipage = WikiPageFactory().create (self.wikiroot, u'Викистраница', [])
-        self.htmlpage = HtmlPageFactory().create (self.wikiroot, u'HTML-страница', [])
+        self.wikipage = WikiPageFactory().create (self.wikiroot, 'Викистраница', [])
+        self.htmlpage = HtmlPageFactory().create (self.wikiroot, 'HTML-страница', [])
 
         Application.wikiroot = self.wikiroot
         Application.selectedPage = None
@@ -36,8 +36,8 @@ class PageTabsTest (BaseMainWndTest):
 
     def testDefaultEmptyContent (self):
         # Page contents are empty. Code tab is selected.
-        self.wikipage.content = u''
-        self.htmlpage.content = u''
+        self.wikipage.content = ''
+        self.htmlpage.content = ''
 
         # Select wiki page
         Application.selectedPage = self.wikipage
@@ -60,8 +60,8 @@ class PageTabsTest (BaseMainWndTest):
         self.config.pageTab.value = GeneralGuiConfig.PAGE_TAB_RECENT
 
         # Page contents are empty. Code tab is selected.
-        self.wikipage.content = u''
-        self.htmlpage.content = u''
+        self.wikipage.content = ''
+        self.htmlpage.content = ''
 
         # Select wiki page
         Application.selectedPage = self.wikipage
@@ -82,8 +82,8 @@ class PageTabsTest (BaseMainWndTest):
 
     def testDefaultNotEmptyContent (self):
         # Page contents are not empty. Preview tab is selected.
-        self.wikipage.content = u'Бла-бла-бла'
-        self.htmlpage.content = u'Бла-бла-бла'
+        self.wikipage.content = 'Бла-бла-бла'
+        self.htmlpage.content = 'Бла-бла-бла'
 
         # Select wiki page
         Application.selectedPage = self.wikipage
@@ -106,8 +106,8 @@ class PageTabsTest (BaseMainWndTest):
         self.config.pageTab.value = GeneralGuiConfig.PAGE_TAB_RECENT
 
         # Page contents are not empty. Preview tab is selected.
-        self.wikipage.content = u'Бла-бла-бла'
-        self.htmlpage.content = u'Бла-бла-бла'
+        self.wikipage.content = 'Бла-бла-бла'
+        self.htmlpage.content = 'Бла-бла-бла'
 
         # Select wiki page
         Application.selectedPage = self.wikipage
@@ -127,7 +127,7 @@ class PageTabsTest (BaseMainWndTest):
 
 
     def testDefaultRecentUsedTab_wiki_01 (self):
-        self.wikipage.content = u'Бла-бла-бла'
+        self.wikipage.content = 'Бла-бла-бла'
 
         Application.selectedPage = self.wikipage
         self._setSelectedTabIndex (WikiPageView.CODE_PAGE_INDEX)
@@ -141,7 +141,7 @@ class PageTabsTest (BaseMainWndTest):
     def testRecentRecentUsedTab_wiki_01 (self):
         self.config.pageTab.value = GeneralGuiConfig.PAGE_TAB_RECENT
 
-        self.wikipage.content = u'Бла-бла-бла'
+        self.wikipage.content = 'Бла-бла-бла'
 
         Application.selectedPage = self.wikipage
         self._setSelectedTabIndex (WikiPageView.CODE_PAGE_INDEX)
@@ -153,7 +153,7 @@ class PageTabsTest (BaseMainWndTest):
 
 
     def testDefaultRecentUsedTab_html_01 (self):
-        self.htmlpage.content = u'Бла-бла-бла'
+        self.htmlpage.content = 'Бла-бла-бла'
 
         Application.selectedPage = self.htmlpage
         self._setSelectedTabIndex (HtmlPageView.CODE_PAGE_INDEX)
@@ -167,7 +167,7 @@ class PageTabsTest (BaseMainWndTest):
     def testRecentRecentUsedTab_html_01 (self):
         self.config.pageTab.value = GeneralGuiConfig.PAGE_TAB_RECENT
 
-        self.htmlpage.content = u'Бла-бла-бла'
+        self.htmlpage.content = 'Бла-бла-бла'
 
         Application.selectedPage = self.htmlpage
         self._setSelectedTabIndex (HtmlPageView.CODE_PAGE_INDEX)
@@ -179,7 +179,7 @@ class PageTabsTest (BaseMainWndTest):
 
 
     def testDefaultRecentUsedTab_wiki_02 (self):
-        self.wikipage.content = u''
+        self.wikipage.content = ''
 
         Application.selectedPage = self.wikipage
         self._setSelectedTabIndex (WikiPageView.RESULT_PAGE_INDEX)
@@ -193,7 +193,7 @@ class PageTabsTest (BaseMainWndTest):
     def testRecentRecentUsedTab_wiki_02 (self):
         self.config.pageTab.value = GeneralGuiConfig.PAGE_TAB_RECENT
 
-        self.wikipage.content = u''
+        self.wikipage.content = ''
 
         Application.selectedPage = self.wikipage
         self._setSelectedTabIndex (WikiPageView.RESULT_PAGE_INDEX)
@@ -205,7 +205,7 @@ class PageTabsTest (BaseMainWndTest):
 
 
     def testDefaultRecentUsedTab_html_02 (self):
-        self.htmlpage.content = u'Бла-бла-бла'
+        self.htmlpage.content = 'Бла-бла-бла'
 
         Application.selectedPage = self.htmlpage
         self._setSelectedTabIndex (HtmlPageView.RESULT_PAGE_INDEX)
@@ -219,7 +219,7 @@ class PageTabsTest (BaseMainWndTest):
     def testRecentRecentUsedTab_html_02 (self):
         self.config.pageTab.value = GeneralGuiConfig.PAGE_TAB_RECENT
 
-        self.htmlpage.content = u'Бла-бла-бла'
+        self.htmlpage.content = 'Бла-бла-бла'
 
         Application.selectedPage = self.htmlpage
         self._setSelectedTabIndex (HtmlPageView.RESULT_PAGE_INDEX)
@@ -233,8 +233,8 @@ class PageTabsTest (BaseMainWndTest):
     def testTabEditorAlways_code_empty_01 (self):
         self.config.pageTab.value = GeneralGuiConfig.PAGE_TAB_CODE
 
-        self.wikipage.content = u''
-        self.htmlpage.content = u''
+        self.wikipage.content = ''
+        self.htmlpage.content = ''
 
         # Select wiki page
         Application.selectedPage = self.wikipage
@@ -256,8 +256,8 @@ class PageTabsTest (BaseMainWndTest):
     def testTabEditorAlways_code_not_empty_01 (self):
         self.config.pageTab.value = GeneralGuiConfig.PAGE_TAB_CODE
 
-        self.wikipage.content = u'Бла-бла-бла'
-        self.htmlpage.content = u'Бла-бла-бла'
+        self.wikipage.content = 'Бла-бла-бла'
+        self.htmlpage.content = 'Бла-бла-бла'
 
         # Select wiki page
         Application.selectedPage = self.wikipage
@@ -279,8 +279,8 @@ class PageTabsTest (BaseMainWndTest):
     def testTabEditorAlways_preview_empty_01 (self):
         self.config.pageTab.value = GeneralGuiConfig.PAGE_TAB_RESULT
 
-        self.wikipage.content = u''
-        self.htmlpage.content = u''
+        self.wikipage.content = ''
+        self.htmlpage.content = ''
 
         # Select wiki page
         Application.selectedPage = self.wikipage
@@ -302,8 +302,8 @@ class PageTabsTest (BaseMainWndTest):
     def testTabEditorAlways_preview_not_empty_01 (self):
         self.config.pageTab.value = GeneralGuiConfig.PAGE_TAB_RESULT
 
-        self.wikipage.content = u'Бла-бла-бла'
-        self.htmlpage.content = u'Бла-бла-бла'
+        self.wikipage.content = 'Бла-бла-бла'
+        self.htmlpage.content = 'Бла-бла-бла'
 
         # Select wiki page
         Application.selectedPage = self.wikipage
@@ -324,7 +324,7 @@ class PageTabsTest (BaseMainWndTest):
 
     def testRecentUsedTab_code_wiki (self):
         self.config.pageTab.value = GeneralGuiConfig.PAGE_TAB_CODE
-        self.wikipage.content = u'Бла-бла-бла'
+        self.wikipage.content = 'Бла-бла-бла'
         Application.selectedPage = self.wikipage
 
         self.assertEqual (self._getSelectedTabIndex(), WikiPageView.CODE_PAGE_INDEX)
@@ -339,7 +339,7 @@ class PageTabsTest (BaseMainWndTest):
 
     def testRecentUsedTab_preview_wiki (self):
         self.config.pageTab.value = GeneralGuiConfig.PAGE_TAB_RESULT
-        self.wikipage.content = u'Бла-бла-бла'
+        self.wikipage.content = 'Бла-бла-бла'
         Application.selectedPage = self.wikipage
 
         self.assertEqual (self._getSelectedTabIndex(), WikiPageView.RESULT_PAGE_INDEX)

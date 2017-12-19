@@ -143,8 +143,7 @@ class Controller (object):
 
 
     def _getImagePath (self, fname):
-        imagedir = unicode (os.path.join (os.path.dirname (__file__), "images"),
-                            getOS().filesEncoding)
+        imagedir = os.path.join (os.path.dirname (__file__), "images")
         return os.path.join (imagedir, fname)
 
 

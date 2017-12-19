@@ -18,7 +18,7 @@ class LightboxPluginTest (unittest.TestCase):
 
         self.__createWiki()
 
-        dirlist = [u"../plugins/lightbox"]
+        dirlist = ["../plugins/lightbox"]
 
         self.loader = PluginsLoader(Application)
         self.loader.load (dirlist)
@@ -29,12 +29,12 @@ class LightboxPluginTest (unittest.TestCase):
 
     def __createWiki (self):
         # Здесь будет создаваться вики
-        self.path = mkdtemp (prefix=u'Абырвалг абыр')
+        self.path = mkdtemp (prefix='Абырвалг абыр')
 
         self.wikiroot = WikiDocument.create (self.path)
 
-        WikiPageFactory().create (self.wikiroot, u"Страница 1", [])
-        self.testPage = self.wikiroot[u"Страница 1"]
+        WikiPageFactory().create (self.wikiroot, "Страница 1", [])
+        self.testPage = self.wikiroot["Страница 1"]
 
 
     def tearDown(self):
@@ -47,35 +47,35 @@ class LightboxPluginTest (unittest.TestCase):
 
 
     def testContentParse1 (self):
-        text = u"""Бла-бла-бла (:lightbox:) бла-бла-бла"""
+        text = """Бла-бла-бла (:lightbox:) бла-бла-бла"""
 
-        validResult = u"""$("a[href$='.jpg']"""
+        validResult = """$("a[href$='.jpg']"""
 
         result = self.parser.toHtml (text)
         self.assertTrue (validResult in result)
 
 
     def testHeaders (self):
-        text = u"""Бла-бла-бла (:lightbox:) бла-бла-бла"""
+        text = """Бла-бла-бла (:lightbox:) бла-бла-бла"""
 
         self.parser.toHtml (text)
 
-        self.assertTrue (u'<script type="text/javascript" src="./__attach/__thumb/jquery-1.7.2.min.js"></script>' in self.parser.head)
+        self.assertTrue ('<script type="text/javascript" src="./__attach/__thumb/jquery-1.7.2.min.js"></script>' in self.parser.head)
 
-        self.assertTrue (u'<link rel="stylesheet" href="./__attach/__thumb/jquery.fancybox.css" type="text/css" media="screen" />' in self.parser.head)
+        self.assertTrue ('<link rel="stylesheet" href="./__attach/__thumb/jquery.fancybox.css" type="text/css" media="screen" />' in self.parser.head)
 
-        self.assertTrue (u'<script type="text/javascript" src="./__attach/__thumb/jquery.fancybox.pack.js"></script>' in self.parser.head)
+        self.assertTrue ('<script type="text/javascript" src="./__attach/__thumb/jquery.fancybox.pack.js"></script>' in self.parser.head)
 
 
     def testSingleHeaders (self):
         """
         Проверка, что заголовки добавляются только один раз
         """
-        text = u"""Бла-бла-бла (:lightbox:) бла-бла-бла (:lightbox:)"""
+        text = """Бла-бла-бла (:lightbox:) бла-бла-бла (:lightbox:)"""
 
         self.parser.toHtml (text)
 
-        header = u'<script type="text/javascript" src="./__attach/__thumb/jquery-1.7.2.min.js"></script>'
+        header = '<script type="text/javascript" src="./__attach/__thumb/jquery-1.7.2.min.js"></script>'
 
         posfirst = self.parser.head.find (header)
         poslast = self.parser.head.rfind (header)
@@ -84,11 +84,11 @@ class LightboxPluginTest (unittest.TestCase):
 
 
     def testFiles (self):
-        text = u"""Бла-бла-бла (:lightbox:) бла-бла-бла"""
+        text = """Бла-бла-бла (:lightbox:) бла-бла-бла"""
 
         self.parser.toHtml (text)
 
-        dirname = u"__attach/__thumb"
+        dirname = "__attach/__thumb"
         files = ["jquery.fancybox.css",
                  "blank.gif",
                  "fancybox_loading.gif",

@@ -22,11 +22,11 @@ class SourceGuiPluginTest (unittest.TestCase):
     """
 
     def setUp(self):
-        self.__pluginname = u"Source"
+        self.__pluginname = "Source"
 
         self.__createWiki()
 
-        dirlist = [u"../plugins/source"]
+        dirlist = ["../plugins/source"]
         self._stylesCount = 29
 
         self.loader = PluginsLoader(Application)
@@ -42,12 +42,12 @@ class SourceGuiPluginTest (unittest.TestCase):
 
     def __createWiki (self):
         # Здесь будет создаваться вики
-        self.path = mkdtemp (prefix=u'Абырвалг абыр')
+        self.path = mkdtemp (prefix='Абырвалг абыр')
 
         self.wikiroot = WikiDocument.create (self.path)
 
-        WikiPageFactory().create (self.wikiroot, u"Страница 1", [])
-        self.testPage = self.wikiroot[u"Страница 1"]
+        WikiPageFactory().create (self.wikiroot, "Страница 1", [])
+        self.testPage = self.wikiroot["Страница 1"]
 
 
     def tearDown(self):
@@ -84,7 +84,7 @@ class SourceGuiPluginTest (unittest.TestCase):
         """
         Тест контроллера диалога для вставки команды (:source:)
         """
-        self.config.languageList.value = [u"python", u"cpp", u"haskell", u"text"]
+        self.config.languageList.value = ["python", "cpp", "haskell", "text"]
         self.config.defaultLanguage.value = "text"
 
         self.dialog.SetReturnCode (wx.ID_OK)
@@ -93,7 +93,7 @@ class SourceGuiPluginTest (unittest.TestCase):
         self.dialog.tabWidthSpin.SetValue (4)
         result = self.controller.getCommandStrings()
 
-        self.assertEqual (result, (u'(:source lang="text" tabwidth="4":)\n', u'\n(:sourceend:)'))
+        self.assertEqual (result, ('(:source lang="text" tabwidth="4":)\n', '\n(:sourceend:)'))
 
 
     def testDialogControllerResult2 (self):
@@ -108,14 +108,14 @@ class SourceGuiPluginTest (unittest.TestCase):
         self.dialog.tabWidthSpin.SetValue (8)
         result = self.controller.getCommandStrings()
 
-        self.assertEqual (result, (u'(:source lang="python" tabwidth="8":)\n', u'\n(:sourceend:)'))
+        self.assertEqual (result, ('(:source lang="python" tabwidth="8":)\n', '\n(:sourceend:)'))
 
 
     def testDialogControllerResult3 (self):
         """
         Тест контроллера диалога для вставки команды (:source:)
         """
-        self.config.languageList.value = [u"python", u"cpp", u"haskell", u"text"]
+        self.config.languageList.value = ["python", "cpp", "haskell", "text"]
         self.config.defaultLanguage.value = "text"
 
         self.dialog.SetReturnCode (wx.ID_OK)
@@ -124,14 +124,14 @@ class SourceGuiPluginTest (unittest.TestCase):
         self.dialog.tabWidthSpin.SetValue (4)
         result = self.controller.getCommandStrings()
 
-        self.assertEqual (result, (u'(:source lang="text" tabwidth="4":)\n', u'\n(:sourceend:)'))
+        self.assertEqual (result, ('(:source lang="text" tabwidth="4":)\n', '\n(:sourceend:)'))
 
 
     def testDialogControllerResult4 (self):
         """
         Тест контроллера диалога для вставки команды (:source:)
         """
-        self.config.languageList.value = [u"python", u"cpp", u"haskell", u"text"]
+        self.config.languageList.value = ["python", "cpp", "haskell", "text"]
         self.config.defaultLanguage.value = "text"
 
         self.dialog.SetReturnCode (wx.ID_OK)
@@ -140,14 +140,14 @@ class SourceGuiPluginTest (unittest.TestCase):
         self.dialog.tabWidthSpin.SetValue (0)
         result = self.controller.getCommandStrings()
 
-        self.assertEqual (result, (u'(:source lang="text":)\n', u'\n(:sourceend:)'))
+        self.assertEqual (result, ('(:source lang="text":)\n', '\n(:sourceend:)'))
 
 
     def testDialogControllerResult5 (self):
         """
         Тест контроллера диалога для вставки команды (:source:)
         """
-        self.config.languageList.value = [u"python", u"cpp", u"haskell", u"text"]
+        self.config.languageList.value = ["python", "cpp", "haskell", "text"]
         self.config.defaultLanguage.value = "text"
 
         self.dialog.SetReturnCode (wx.ID_OK)
@@ -157,14 +157,14 @@ class SourceGuiPluginTest (unittest.TestCase):
         self.dialog.tabWidthSpin.SetValue (0)
         result = self.controller.getCommandStrings()
 
-        self.assertEqual (result, (u'(:source lang="cpp":)\n', u'\n(:sourceend:)'))
+        self.assertEqual (result, ('(:source lang="cpp":)\n', '\n(:sourceend:)'))
 
 
     def testDialogControllerResult6 (self):
         """
         Тест контроллера диалога для вставки команды (:source:)
         """
-        self.config.languageList.value = [u"python", u"cpp", u"haskell", u"text"]
+        self.config.languageList.value = ["python", "cpp", "haskell", "text"]
         self.config.defaultLanguage.value = "text"
 
         self.dialog.SetReturnCode (wx.ID_OK)
@@ -174,81 +174,81 @@ class SourceGuiPluginTest (unittest.TestCase):
         self.dialog.tabWidthSpin.SetValue (0)
         result = self.controller.getCommandStrings()
 
-        self.assertEqual (result, (u'(:source lang="haskell":)\n', u'\n(:sourceend:)'))
+        self.assertEqual (result, ('(:source lang="haskell":)\n', '\n(:sourceend:)'))
 
 
     def testSourceConfig1 (self):
-        self.config.defaultLanguage.value = u"python"
+        self.config.defaultLanguage.value = "python"
         self.config.tabWidth.value = 8
         self.config.dialogWidth.value = 100
         self.config.dialogHeight.value = 200
-        self.config.languageList.value = [u"python", u"cpp", u"haskell"]
+        self.config.languageList.value = ["python", "cpp", "haskell"]
 
-        self.assertEqual (self.config.defaultLanguage.value, u"python")
+        self.assertEqual (self.config.defaultLanguage.value, "python")
         self.assertEqual (self.config.tabWidth.value, 8)
         self.assertEqual (self.config.dialogWidth.value, 100)
         self.assertEqual (self.config.dialogHeight.value, 200)
         self.assertEqual (self.config.languageList.value,
-                          [u"python", u"cpp", u"haskell"])
+                          ["python", "cpp", "haskell"])
 
 
     def testDialogLanguageValues1 (self):
-        self.config.languageList.value = [u"python", u"cpp", u"haskell"]
-        self.config.defaultLanguage.value = u"haskell"
+        self.config.languageList.value = ["python", "cpp", "haskell"]
+        self.config.defaultLanguage.value = "haskell"
 
         self.controller.showDialog()
 
         self.assertEqual (self.dialog.languageComboBox.GetItems(),
-                          [u"cpp", u"haskell", u"python"])
+                          ["cpp", "haskell", "python"])
 
         self.assertEqual (self.dialog.languageComboBox.GetSelection(), 1)
-        self.assertEqual (self.dialog.languageComboBox.GetValue(), u"haskell")
+        self.assertEqual (self.dialog.languageComboBox.GetValue(), "haskell")
 
         self.assertEqual (self.dialog.tabWidthSpin.GetValue(), 0)
 
 
     def testDialogLanguageValues2 (self):
         self.config.languageList.value = []
-        self.config.defaultLanguage.value = u"haskell"
+        self.config.defaultLanguage.value = "haskell"
 
         self.controller.showDialog()
 
-        self.assertEqual (self.dialog.languageComboBox.GetItems(), [u"text"])
+        self.assertEqual (self.dialog.languageComboBox.GetItems(), ["text"])
 
         self.assertEqual (self.dialog.languageComboBox.GetSelection(), 0)
-        self.assertEqual (self.dialog.languageComboBox.GetValue(), u"text")
+        self.assertEqual (self.dialog.languageComboBox.GetValue(), "text")
 
 
     def testDialogLanguageValues3 (self):
-        self.config.languageList.value = [u"python", u"cpp", u"haskell"]
-        self.config.defaultLanguage.value = u"c"
+        self.config.languageList.value = ["python", "cpp", "haskell"]
+        self.config.defaultLanguage.value = "c"
 
         self.controller.showDialog()
 
-        self.assertEqual (self.dialog.languageComboBox.GetItems(), [u"cpp", u"haskell", u"python"])
+        self.assertEqual (self.dialog.languageComboBox.GetItems(), ["cpp", "haskell", "python"])
 
         self.assertEqual (self.dialog.languageComboBox.GetSelection(), 0)
-        self.assertEqual (self.dialog.languageComboBox.GetValue(), u"cpp")
+        self.assertEqual (self.dialog.languageComboBox.GetValue(), "cpp")
 
 
     def testDialogLanguageValues4 (self):
-        self.config.languageList.value = [u"python", u"cpp", u"haskell"]
-        self.config.defaultLanguage.value = u"   haskell   "
+        self.config.languageList.value = ["python", "cpp", "haskell"]
+        self.config.defaultLanguage.value = "   haskell   "
 
         self.controller.showDialog()
 
         self.assertEqual (self.dialog.languageComboBox.GetItems(),
-                          [u"cpp", u"haskell", u"python"])
+                          ["cpp", "haskell", "python"])
 
         self.assertEqual (self.dialog.languageComboBox.GetSelection(), 1)
-        self.assertEqual (self.dialog.languageComboBox.GetValue(), u"haskell")
+        self.assertEqual (self.dialog.languageComboBox.GetValue(), "haskell")
 
         self.assertEqual (self.dialog.tabWidthSpin.GetValue(), 0)
 
 
     def testDialogStyleValues1 (self):
-        self.config.languageList.value = [u"python", u"cpp", u"haskell"]
-        self.config.defaultLanguage.value = u"python"
+        self.config.languageList.value = ["python", "cpp", "haskell"]
+        self.config.defaultLanguage.value = "python"
 
         self.controller.showDialog()
 
@@ -257,7 +257,7 @@ class SourceGuiPluginTest (unittest.TestCase):
 
         result = self.controller.getCommandStrings()
 
-        self.assertEqual (result, (u'(:source lang="python":)\n', u'\n(:sourceend:)'))
+        self.assertEqual (result, ('(:source lang="python":)\n', '\n(:sourceend:)'))
 
 
     def testDialogStyleValues2 (self):
@@ -293,10 +293,10 @@ class SourceGuiPluginTest (unittest.TestCase):
 
 
     def testDialogStyle1 (self):
-        self.config.languageList.value = [u"python", u"cpp", u"haskell"]
-        self.config.defaultLanguage.value = u"python"
-        self.config.defaultStyle.value = u"vim"
-        self.config.style.value = u"vim"
+        self.config.languageList.value = ["python", "cpp", "haskell"]
+        self.config.defaultLanguage.value = "python"
+        self.config.defaultStyle.value = "vim"
+        self.config.style.value = "vim"
 
         self.controller.showDialog()
 
@@ -305,14 +305,14 @@ class SourceGuiPluginTest (unittest.TestCase):
 
         result = self.controller.getCommandStrings()
 
-        self.assertEqual (result, (u'(:source lang="python":)\n', u'\n(:sourceend:)'))
+        self.assertEqual (result, ('(:source lang="python":)\n', '\n(:sourceend:)'))
 
 
     def testDialogStyle2 (self):
-        self.config.languageList.value = [u"python", u"cpp", u"haskell"]
-        self.config.defaultLanguage.value = u"python"
-        self.config.defaultStyle.value = u"vim"
-        self.config.style.value = u"default"
+        self.config.languageList.value = ["python", "cpp", "haskell"]
+        self.config.defaultLanguage.value = "python"
+        self.config.defaultStyle.value = "vim"
+        self.config.style.value = "default"
 
         self.controller.showDialog()
 
@@ -321,12 +321,12 @@ class SourceGuiPluginTest (unittest.TestCase):
 
         result = self.controller.getCommandStrings()
 
-        self.assertEqual (result, (u'(:source lang="python" style="default":)\n', u'\n(:sourceend:)'))
+        self.assertEqual (result, ('(:source lang="python" style="default":)\n', '\n(:sourceend:)'))
 
 
     def testDialogStyleText (self):
-        self.config.languageList.value = [u"python", u"cpp", u"haskell"]
-        self.config.defaultLanguage.value = u"python"
+        self.config.languageList.value = ["python", "cpp", "haskell"]
+        self.config.defaultLanguage.value = "python"
 
         self.controller.showDialog()
         self.dialog.styleComboBox.SetSelection (0)
@@ -336,16 +336,16 @@ class SourceGuiPluginTest (unittest.TestCase):
 
         result = self.controller.getCommandStrings()
 
-        self.assertEqual (result, (u'(:source lang="python" style="abap":)\n', u'\n(:sourceend:)'))
+        self.assertEqual (result, ('(:source lang="python" style="abap":)\n', '\n(:sourceend:)'))
 
 
     def testDialogStyleFile (self):
-        self.samplefilesPath = u"../test/samplefiles/sources"
-        Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, u"source_utf8.py")])
-        Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, u"source_cp1251.cs")])
+        self.samplefilesPath = "../test/samplefiles/sources"
+        Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, "source_utf8.py")])
+        Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, "source_cp1251.cs")])
 
-        self.config.languageList.value = [u"python", u"cpp", u"haskell"]
-        self.config.defaultLanguage.value = u"python"
+        self.config.languageList.value = ["python", "cpp", "haskell"]
+        self.config.defaultLanguage.value = "python"
 
         self.controller.showDialog()
 
@@ -358,16 +358,16 @@ class SourceGuiPluginTest (unittest.TestCase):
 
         result = self.controller.getCommandStrings()
 
-        self.assertEqual (result, (u'(:source file="Attach:source_cp1251.cs" lang="python" style="abap":)', u'(:sourceend:)'))
+        self.assertEqual (result, ('(:source file="Attach:source_cp1251.cs" lang="python" style="abap":)', '(:sourceend:)'))
 
 
     def testDialogStyleFile2 (self):
-        self.samplefilesPath = u"../test/samplefiles/sources"
-        Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, u"source_utf8.py")])
-        Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, u"source_cp1251.cs")])
+        self.samplefilesPath = "../test/samplefiles/sources"
+        Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, "source_utf8.py")])
+        Attachment(self.testPage).attach ([os.path.join (self.samplefilesPath, "source_cp1251.cs")])
 
-        self.config.languageList.value = [u"python", u"cpp", u"haskell"]
-        self.config.defaultLanguage.value = u"python"
+        self.config.languageList.value = ["python", "cpp", "haskell"]
+        self.config.defaultLanguage.value = "python"
 
         self.controller.showDialog()
 
@@ -381,12 +381,12 @@ class SourceGuiPluginTest (unittest.TestCase):
 
         result = self.controller.getCommandStrings()
 
-        self.assertEqual (result, (u'(:source file="Attach:source_cp1251.cs" style="abap":)', u'(:sourceend:)'))
+        self.assertEqual (result, ('(:source file="Attach:source_cp1251.cs" style="abap":)', '(:sourceend:)'))
 
 
     def testDialogStyleText2 (self):
-        self.config.languageList.value = [u"python", u"cpp", u"haskell"]
-        self.config.defaultLanguage.value = u"python"
+        self.config.languageList.value = ["python", "cpp", "haskell"]
+        self.config.defaultLanguage.value = "python"
 
         self.controller.showDialog()
         self.dialog.styleComboBox.SetSelection (0)
@@ -397,7 +397,7 @@ class SourceGuiPluginTest (unittest.TestCase):
 
         result = self.controller.getCommandStrings()
 
-        self.assertEqual (result, (u'(:source lang="python" tabwidth="5" style="abap":)\n', u'\n(:sourceend:)'))
+        self.assertEqual (result, ('(:source lang="python" tabwidth="5" style="abap":)\n', '\n(:sourceend:)'))
 
 
     def testStyleConfig1 (self):
@@ -434,21 +434,21 @@ class SourceGuiPluginTest (unittest.TestCase):
 
 
     def testParentBgConfig1 (self):
-        self.config.parentbg.value = u"  False  "
+        self.config.parentbg.value = "  False  "
         self.controller.showDialog ()
 
         self.assertEqual (self.dialog.parentbg, False)
 
 
     def testParentBgConfig2 (self):
-        self.config.parentbg.value = u"  True  "
+        self.config.parentbg.value = "  True  "
         self.controller.showDialog ()
 
         self.assertEqual (self.dialog.parentbg, True)
 
 
     def testParentBgConfig3 (self):
-        self.config.parentbg.value = u"  блаблабла  "
+        self.config.parentbg.value = "  блаблабла  "
         self.controller.showDialog ()
 
         self.assertEqual (self.dialog.parentbg, False)
@@ -469,53 +469,53 @@ class SourceGuiPluginTest (unittest.TestCase):
 
 
     def testLineNumConfig2 (self):
-        self.config.lineNum.value = u"  False  "
+        self.config.lineNum.value = "  False  "
         self.controller.showDialog ()
 
         self.assertEqual (self.dialog.lineNum, False)
 
 
     def testLineNumConfig3 (self):
-        self.config.lineNum.value = u"  блаблабла  "
+        self.config.lineNum.value = "  блаблабла  "
         self.controller.showDialog ()
 
         self.assertEqual (self.dialog.lineNum, False)
 
 
     def testLineNumConfig4 (self):
-        self.config.lineNum.value = u"True"
+        self.config.lineNum.value = "True"
         self.controller.showDialog ()
 
         self.assertEqual (self.dialog.lineNum, True)
 
 
     def testDialogParengBg (self):
-        self.config.languageList.value = [u"python", u"cpp", u"haskell"]
-        self.config.defaultLanguage.value = u"python"
+        self.config.languageList.value = ["python", "cpp", "haskell"]
+        self.config.defaultLanguage.value = "python"
 
         self.controller.showDialog()
         self.dialog.parentBgCheckBox.SetValue (True)
 
         result = self.controller.getCommandStrings()
 
-        self.assertEqual (result, (u'(:source lang="python" parentbg:)\n', u'\n(:sourceend:)'))
+        self.assertEqual (result, ('(:source lang="python" parentbg:)\n', '\n(:sourceend:)'))
 
 
     def testDialogLineNum (self):
-        self.config.languageList.value = [u"python", u"cpp", u"haskell"]
-        self.config.defaultLanguage.value = u"python"
+        self.config.languageList.value = ["python", "cpp", "haskell"]
+        self.config.defaultLanguage.value = "python"
 
         self.controller.showDialog()
         self.dialog.lineNumCheckBox.SetValue (True)
 
         result = self.controller.getCommandStrings()
 
-        self.assertEqual (result, (u'(:source lang="python" linenum:)\n', u'\n(:sourceend:)'))
+        self.assertEqual (result, ('(:source lang="python" linenum:)\n', '\n(:sourceend:)'))
 
 
     def testDialogParentBgLineNum (self):
-        self.config.languageList.value = [u"python", u"cpp", u"haskell"]
-        self.config.defaultLanguage.value = u"python"
+        self.config.languageList.value = ["python", "cpp", "haskell"]
+        self.config.defaultLanguage.value = "python"
 
         self.controller.showDialog()
         self.dialog.parentBgCheckBox.SetValue (True)
@@ -523,16 +523,16 @@ class SourceGuiPluginTest (unittest.TestCase):
 
         result = self.controller.getCommandStrings()
 
-        self.assertEqual (result, (u'(:source lang="python" parentbg linenum:)\n', u'\n(:sourceend:)'))
+        self.assertEqual (result, ('(:source lang="python" parentbg linenum:)\n', '\n(:sourceend:)'))
 
 
     def testDialogTabWidth (self):
-        self.config.languageList.value = [u"python", u"cpp", u"haskell"]
-        self.config.defaultLanguage.value = u"python"
+        self.config.languageList.value = ["python", "cpp", "haskell"]
+        self.config.defaultLanguage.value = "python"
 
         self.controller.showDialog()
         self.dialog.tabWidthSpin.SetValue (10)
 
         result = self.controller.getCommandStrings()
 
-        self.assertEqual (result, (u'(:source lang="python" tabwidth="10":)\n', u'\n(:sourceend:)'))
+        self.assertEqual (result, ('(:source lang="python" tabwidth="10":)\n', '\n(:sourceend:)'))

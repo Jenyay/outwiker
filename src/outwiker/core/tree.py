@@ -3,10 +3,11 @@
 import logging
 import os
 import os.path
-import ConfigParser
+import configparser
 import shutil
 import datetime
 from functools import cmp_to_key
+from functools import reduce
 
 from outwiker.core.config import PageConfig
 from outwiker.core.bookmarks import Bookmarks
@@ -345,7 +346,7 @@ class WikiDocument(RootWikiPage):
         """
         try:
             root = WikiDocument(path, readonly)
-        except ConfigParser.Error:
+        except configparser.Error:
             raise RootFormatError
 
         root.loadChildren()
@@ -719,7 +720,7 @@ class WikiPage(RootWikiPage):
         try:
             tagsString = configParser.get(RootWikiPage.sectionGeneral,
                                           WikiPage.paramTags)
-        except ConfigParser.NoOptionError:
+        except configparser.NoOptionError:
             return []
 
         tags = parseTagsList(tagsString)
@@ -734,12 +735,12 @@ class WikiPage(RootWikiPage):
         text = ""
 
         try:
-            with open(os.path.join(self.path, RootWikiPage.contentFile)) as fp:
+            with open(os.path.join(self.path, RootWikiPage.contentFile), encoding='utf-8') as fp:
                 text = fp.read()
         except IOError:
             pass
 
-        return unicode(text, "utf8", errors="replace")
+        return text
 
     @content.setter
     def content(self, text):

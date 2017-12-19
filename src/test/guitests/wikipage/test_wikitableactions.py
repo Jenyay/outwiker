@@ -19,7 +19,7 @@ class WikiTableActionsTest (BaseMainWndTest):
         config = GeneralGuiConfig(self._application.config)
         config.tableColsCount.remove_option()
         factory = WikiPageFactory()
-        self._testpage = factory.create(self.wikiroot, u"Страница 1", [])
+        self._testpage = factory.create(self.wikiroot, "Страница 1", [])
 
         self._application.wikiroot = self.wikiroot
         self._application.selectedPage = self._testpage
@@ -36,7 +36,7 @@ class WikiTableActionsTest (BaseMainWndTest):
         editor = self._getCodeEditor()
         self._application.actionController.getAction (TABLE_STR_ID).run (None)
 
-        validResult = u'''(:table border="1":)
+        validResult = '''(:table border="1":)
 (:row:)
 (:cell:)
 (:tableend:)'''
@@ -47,15 +47,15 @@ class WikiTableActionsTest (BaseMainWndTest):
     def testInsertTable_02 (self):
         editor = self._getCodeEditor()
 
-        initTextPart1 = u'(:table:)\n'
-        initTextPart2 = u'\n(:tableend:)'
+        initTextPart1 = '(:table:)\n'
+        initTextPart2 = '\n(:tableend:)'
 
         editor.SetText (initTextPart1 + initTextPart2)
         editor.SetSelection (len (initTextPart1), len (initTextPart1))
 
         self._application.actionController.getAction (TABLE_STR_ID).run (None)
 
-        validResult = u'''(:table:)
+        validResult = '''(:table:)
 (:table2 border="1":)
 (:row2:)
 (:cell2:)
@@ -68,11 +68,11 @@ class WikiTableActionsTest (BaseMainWndTest):
     def testInsertTable_03 (self):
         editor = self._getCodeEditor()
 
-        initTextPart1 = u'''(:table:)
+        initTextPart1 = '''(:table:)
 (:table10:)
 '''
 
-        initTextPart2 = u'''
+        initTextPart2 = '''
 (:table10end:)
 (:tableend:)'''
 
@@ -81,7 +81,7 @@ class WikiTableActionsTest (BaseMainWndTest):
 
         self._application.actionController.getAction (TABLE_STR_ID).run (None)
 
-        validResult = u'''(:table:)
+        validResult = '''(:table:)
 (:table10:)
 (:table11 border="1":)
 (:row11:)
@@ -96,15 +96,15 @@ class WikiTableActionsTest (BaseMainWndTest):
     def testInsertTable_04 (self):
         editor = self._getCodeEditor()
 
-        initTextPart1 = u'''(:table20:)\n'''
-        initTextPart2 = u'''\n(:table20end:)'''
+        initTextPart1 = '''(:table20:)\n'''
+        initTextPart2 = '''\n(:table20end:)'''
 
         editor.SetText (initTextPart1 + initTextPart2)
         editor.SetSelection (len (initTextPart1), len (initTextPart1))
 
         self._application.actionController.getAction (TABLE_STR_ID).run (None)
 
-        validResult = u'''(:table20:)
+        validResult = '''(:table20:)
 (:table21 border="1":)
 (:row21:)
 (:cell21:)
@@ -117,15 +117,15 @@ class WikiTableActionsTest (BaseMainWndTest):
     def testInsertTable_05 (self):
         editor = self._getCodeEditor()
 
-        initTextPart1 = u'''(:tableqqq:)\n'''
-        initTextPart2 = u'''\n(:tableqqqend:)'''
+        initTextPart1 = '''(:tableqqq:)\n'''
+        initTextPart2 = '''\n(:tableqqqend:)'''
 
         editor.SetText (initTextPart1 + initTextPart2)
         editor.SetSelection (len (initTextPart1), len (initTextPart1))
 
         self._application.actionController.getAction (TABLE_STR_ID).run (None)
 
-        validResult = u'''(:tableqqq:)
+        validResult = '''(:tableqqq:)
 (:table border="1":)
 (:row:)
 (:cell:)
@@ -138,18 +138,18 @@ class WikiTableActionsTest (BaseMainWndTest):
     def testInsertTable_06 (self):
         editor = self._getCodeEditor()
 
-        initTextPart1 = u'''(:table:)
+        initTextPart1 = '''(:table:)
 (:row:)
 (:cell:)'''
 
-        initTextPart2 = u'''\n(:tableend:)'''
+        initTextPart2 = '''\n(:tableend:)'''
 
         editor.SetText (initTextPart1 + initTextPart2)
         editor.SetSelection (len (initTextPart1), len (initTextPart1))
 
         self._application.actionController.getAction (TABLE_STR_ID).run (None)
 
-        validResult = u'''(:table:)
+        validResult = '''(:table:)
 (:row:)
 (:cell:)(:table2 border="1":)
 (:row2:)
@@ -163,15 +163,15 @@ class WikiTableActionsTest (BaseMainWndTest):
     def testInsertTable_07 (self):
         editor = self._getCodeEditor()
 
-        initTextPart1 = u'''(:table:)(:tableend:)\n'''
-        initTextPart2 = u'''\n(:table:)(:tableend:)'''
+        initTextPart1 = '''(:table:)(:tableend:)\n'''
+        initTextPart2 = '''\n(:table:)(:tableend:)'''
 
         editor.SetText (initTextPart1 + initTextPart2)
         editor.SetSelection (len (initTextPart1), len (initTextPart1))
 
         self._application.actionController.getAction (TABLE_STR_ID).run (None)
 
-        validResult = u'''(:table:)(:tableend:)
+        validResult = '''(:table:)(:tableend:)
 (:table border="1":)
 (:row:)
 (:cell:)
@@ -184,15 +184,15 @@ class WikiTableActionsTest (BaseMainWndTest):
     def testInsertTable_08 (self):
         editor = self._getCodeEditor()
 
-        initTextPart1 = u'''(:table2:)(:table2end:)\n'''
-        initTextPart2 = u'''\n(:table3:)(:table3end:)'''
+        initTextPart1 = '''(:table2:)(:table2end:)\n'''
+        initTextPart2 = '''\n(:table3:)(:table3end:)'''
 
         editor.SetText (initTextPart1 + initTextPart2)
         editor.SetSelection (len (initTextPart1), len (initTextPart1))
 
         self._application.actionController.getAction (TABLE_STR_ID).run (None)
 
-        validResult = u'''(:table2:)(:table2end:)
+        validResult = '''(:table2:)(:table2end:)
 (:table border="1":)
 (:row:)
 (:cell:)
@@ -206,7 +206,7 @@ class WikiTableActionsTest (BaseMainWndTest):
         editor = self._getCodeEditor()
         self._application.actionController.getAction (TABLE_ROW_STR_ID).run (None)
 
-        validResult = u'''(:row:)
+        validResult = '''(:row:)
 (:cell:)'''
 
         self.assertEqual (editor.GetText(), validResult)
@@ -215,15 +215,15 @@ class WikiTableActionsTest (BaseMainWndTest):
     def testInsertRow_02 (self):
         editor = self._getCodeEditor()
 
-        initTextPart1 = u'(:table:)\n'
-        initTextPart2 = u'\n(:tableend:)'
+        initTextPart1 = '(:table:)\n'
+        initTextPart2 = '\n(:tableend:)'
 
         editor.SetText (initTextPart1 + initTextPart2)
         editor.SetSelection (len (initTextPart1), len (initTextPart1))
 
         self._application.actionController.getAction (TABLE_ROW_STR_ID).run (None)
 
-        validResult = u'''(:table:)
+        validResult = '''(:table:)
 (:row:)
 (:cell:)
 (:tableend:)'''
@@ -234,15 +234,15 @@ class WikiTableActionsTest (BaseMainWndTest):
     def testInsertRow_03 (self):
         editor = self._getCodeEditor()
 
-        initTextPart1 = u'(:table2:)\n'
-        initTextPart2 = u'\n(:table2end:)'
+        initTextPart1 = '(:table2:)\n'
+        initTextPart2 = '\n(:table2end:)'
 
         editor.SetText (initTextPart1 + initTextPart2)
         editor.SetSelection (len (initTextPart1), len (initTextPart1))
 
         self._application.actionController.getAction (TABLE_ROW_STR_ID).run (None)
 
-        validResult = u'''(:table2:)
+        validResult = '''(:table2:)
 (:row2:)
 (:cell2:)
 (:table2end:)'''
@@ -253,15 +253,15 @@ class WikiTableActionsTest (BaseMainWndTest):
     def testInsertRow_04 (self):
         editor = self._getCodeEditor()
 
-        initTextPart1 = u'(:tableqqq:)\n'
-        initTextPart2 = u'\n(:tableqqqend:)'
+        initTextPart1 = '(:tableqqq:)\n'
+        initTextPart2 = '\n(:tableqqqend:)'
 
         editor.SetText (initTextPart1 + initTextPart2)
         editor.SetSelection (len (initTextPart1), len (initTextPart1))
 
         self._application.actionController.getAction (TABLE_ROW_STR_ID).run (None)
 
-        validResult = u'''(:tableqqq:)
+        validResult = '''(:tableqqq:)
 (:row:)
 (:cell:)
 (:tableqqqend:)'''
@@ -272,15 +272,15 @@ class WikiTableActionsTest (BaseMainWndTest):
     def testInsertRow_05 (self):
         editor = self._getCodeEditor()
 
-        initTextPart1 = u'(:table:)(:table2:)\n'
-        initTextPart2 = u'\n(:table2end:)(:tableend:)'
+        initTextPart1 = '(:table:)(:table2:)\n'
+        initTextPart2 = '\n(:table2end:)(:tableend:)'
 
         editor.SetText (initTextPart1 + initTextPart2)
         editor.SetSelection (len (initTextPart1), len (initTextPart1))
 
         self._application.actionController.getAction (TABLE_ROW_STR_ID).run (None)
 
-        validResult = u'''(:table:)(:table2:)
+        validResult = '''(:table:)(:table2:)
 (:row2:)
 (:cell2:)
 (:table2end:)(:tableend:)'''
@@ -292,7 +292,7 @@ class WikiTableActionsTest (BaseMainWndTest):
         editor = self._getCodeEditor()
         self._application.actionController.getAction (TABLE_CELL_STR_ID).run (None)
 
-        validResult = u'''(:cell:)'''
+        validResult = '''(:cell:)'''
 
         self.assertEqual (editor.GetText(), validResult)
 
@@ -300,15 +300,15 @@ class WikiTableActionsTest (BaseMainWndTest):
     def testInsertCell_02 (self):
         editor = self._getCodeEditor()
 
-        initTextPart1 = u'(:table:)\n'
-        initTextPart2 = u'\n(:tableend:)'
+        initTextPart1 = '(:table:)\n'
+        initTextPart2 = '\n(:tableend:)'
 
         editor.SetText (initTextPart1 + initTextPart2)
         editor.SetSelection (len (initTextPart1), len (initTextPart1))
 
         self._application.actionController.getAction (TABLE_CELL_STR_ID).run (None)
 
-        validResult = u'''(:table:)
+        validResult = '''(:table:)
 (:cell:)
 (:tableend:)'''
 
@@ -318,15 +318,15 @@ class WikiTableActionsTest (BaseMainWndTest):
     def testInsertCell_03 (self):
         editor = self._getCodeEditor()
 
-        initTextPart1 = u'(:table:)(:table2:)\n'
-        initTextPart2 = u'\n(:table2end:)(:tableend:)'
+        initTextPart1 = '(:table:)(:table2:)\n'
+        initTextPart2 = '\n(:table2end:)(:tableend:)'
 
         editor.SetText (initTextPart1 + initTextPart2)
         editor.SetSelection (len (initTextPart1), len (initTextPart1))
 
         self._application.actionController.getAction (TABLE_CELL_STR_ID).run (None)
 
-        validResult = u'''(:table:)(:table2:)
+        validResult = '''(:table:)(:table2:)
 (:cell2:)
 (:table2end:)(:tableend:)'''
 
