@@ -53,7 +53,6 @@ class BaseBinaryBuilder(object, metaclass=ABCMeta):
         return [
             'importlib',
             'urllib',
-            'urllib2',
             'outwiker.pages.wiki.wikipanel',
             'outwiker.gui.htmlrenderfactory',
             'outwiker.gui.controls.popupbutton',
@@ -65,8 +64,6 @@ class BaseBinaryBuilder(object, metaclass=ABCMeta):
             'PIL.BmpImagePlugin',
             'PIL.TiffImagePlugin',
             'enchant',
-            'htmlentitydefs',
-            'HTMLParser',
             'xml',
         ]
 
@@ -161,22 +158,16 @@ class PyInstallerBuilderWindows(BasePyInstallerBuilder):
     def get_remove_list(self):
         """Return list of the files or dirs to remove after build."""
         return [
-            u'mfc90.dll',
-            u'mfc90u.dll',
-            u'mfcm90.dll',
-            u'mfcm90u.dll',
-            u'Include',
-            u'Microsoft.VC90.MFC.manifest',
-            u'iconv.dll',
             u'_win32sysloader.pyd',
-            u'_winxptheme.pyd',
             u'win32com.shell.shell.pyd',
-            u'win32pipe.pyd',
             u'win32trace.pyd',
             u'win32wnet.pyd',
+            u'iconv.dll',
+            u'_winxptheme.pyd',
             u'enchant/iconv.dll',
             u'enchant/share',
             u'enchant/lib/enchant/README.txt',
+            u'mfc140u.dll',
         ]
 
 
