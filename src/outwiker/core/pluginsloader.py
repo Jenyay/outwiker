@@ -107,7 +107,7 @@ class PluginsLoader (object):
         """
         Включить отключенные плагины, если их больше нет в "черном списке"
         """
-        for plugin in self.__disabledPlugins.values():
+        for plugin in list(self.__disabledPlugins.values()):
             if plugin.name not in disableList:
                 plugin.initialize()
 
