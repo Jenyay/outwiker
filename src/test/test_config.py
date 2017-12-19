@@ -164,7 +164,7 @@ class ConfigOptionsTest(unittest.TestCase):
         self.path = "../test/testconfig.ini"
 
         # Создадим небольшой файл настроек
-        with open(self.path, "w") as fp:
+        with open(self.path, "w", encoding='utf8') as fp:
             fp.write("[Test]\n")
             fp.write("intval=100\n")
             fp.write("boolval=True\n")

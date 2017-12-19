@@ -4,8 +4,11 @@ from abc import ABCMeta, abstractmethod
 import configparser
 import datetime
 import shutil
+import logging
 
 from outwiker.gui.stcstyle import StcStyle
+
+logger = logging.getLogger('core')
 
 
 class Config(object):
@@ -25,12 +28,18 @@ class Config(object):
 
         try:
             self.__config.read(self.fname, encoding='utf8')
-        except configparser.Error:
-            shutil.copyfile(self.fname, self.fname + ".bak")
+        except (UnicodeDecodeError, IOError, configparser.Error):
+            backup_fname = self.fname + ".bak"
+            logger.error('Invalid config file: {src}. The file will be copied to {backup} and cleaned.'.format(src=fname, backup=backup_fname))
+
+            self._backup(self.fname, backup_fname)
             with open(self.fname, "w", encoding='utf8') as fp:
                 fp.write(self.getDefaultContent())
 
             self.__config.read(self.fname, encoding='utf8')
+
+    def _backup(self, fname, backup_fname):
+        shutil.copyfile(self.fname, backup_fname)
 
     def getDefaultContent(self):
         """
