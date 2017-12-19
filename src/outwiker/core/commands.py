@@ -449,13 +449,13 @@ def testPageTitle(title):
         tester.test(title)
 
     except PageTitleError as error:
-        MessageBox(error.message,
+        MessageBox(str(error),
                    _(u"The invalid page title"),
                    wx.OK | wx.ICON_ERROR)
         return False
 
     except PageTitleWarning as warning:
-        text = _(u"{0}\nContinue?").format(warning.message)
+        text = _(u"{0}\nContinue?").format(str(warning))
 
         if (MessageBox(text,
                        _(u"The page title"),
