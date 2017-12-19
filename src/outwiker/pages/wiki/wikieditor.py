@@ -88,7 +88,7 @@ class WikiEditor (TextEditor):
         self.textCtrl.SetLexer (wx.stc.STC_LEX_CONTAINER)
         self.textCtrl.SetModEventMask(wx.stc.STC_MOD_INSERTTEXT | wx.stc.STC_MOD_DELETETEXT)
 
-        for (styleid, style) in list(self._styles.items()):
+        for (styleid, style) in self._styles.items():
             self.textCtrl.StyleSetSpec (styleid, style)
             self.textCtrl.StyleSetSize (styleid, self.config.fontSize.value)
             self.textCtrl.StyleSetFaceName (styleid, self.config.fontName.value)

@@ -96,7 +96,7 @@ class ActionController(object):
         """
         Сохранить все горячие клавиши в конфиг
         """
-        for actionInfo in list(self._actionsInfo.values()):
+        for actionInfo in self._actionsInfo.values():
             option = HotKeyOption(self._config,
                                   self.configSection,
                                   actionInfo.action.stringId,
@@ -251,13 +251,13 @@ class ActionController(object):
         self._onCheck(self._actionsInfo[strid].action, checked)
 
     def _getActionInfoByMenuItemId(self, menuItemId):
-        for actionInfo in list(self._actionsInfo.values()):
+        for actionInfo in self._actionsInfo.values():
             if (actionInfo.menuItem is not None and
                     actionInfo.menuItem.GetId() == menuItemId):
                 return actionInfo
 
     def _getActionInfoByToolItemId(self, toolItemId):
-        for actionInfo in list(self._actionsInfo.values()):
+        for actionInfo in self._actionsInfo.values():
             if (actionInfo.toolItemId is not None and
                     actionInfo.toolItemId == toolItemId):
                 return actionInfo

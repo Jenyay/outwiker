@@ -7,6 +7,8 @@
 from datetime import datetime
 import os.path
 import shutil
+import logging
+import traceback
 
 import wx
 
@@ -28,6 +30,8 @@ from outwiker.gui.tester import Tester
 from outwiker.gui.testeddialog import TestedFileDialog
 from outwiker.utilites.textfile import readTextFile
 
+
+logger = logging.getLogger('core')
 
 def MessageBox(*args, **kwargs):
     """
@@ -191,13 +195,12 @@ def openWiki(path, readonly=False):
                                _(u"Opening notes tree..."))
     result = runner.run(os.path.realpath(path), readonly)
 
-    # result = WikiDocument.load (os.path.realpath (path), readonly)
-
     success = False
-    if isinstance(result, IOError):
-        __canNotLoadWikiMessage(path)
-    elif isinstance(result, outwiker.core.exceptions.RootFormatError):
+    if isinstance(result, outwiker.core.exceptions.RootFormatError):
         __rootFormatErrorHandle(path, readonly)
+    elif isinstance(result, Exception):
+        logger.error(result)
+        __canNotLoadWikiMessage(path)
     else:
         Application.wikiroot = result
         success = True
@@ -446,13 +449,13 @@ def testPageTitle(title):
         tester.test(title)
 
     except PageTitleError as error:
-        MessageBox(error.message,
+        MessageBox(str(error),
                    _(u"The invalid page title"),
                    wx.OK | wx.ICON_ERROR)
         return False
 
     except PageTitleWarning as warning:
-        text = _(u"{0}\nContinue?").format(warning.message)
+        text = _(u"{0}\nContinue?").format(str(warning))
 
         if (MessageBox(text,
                        _(u"The page title"),
@@ -534,7 +537,7 @@ def dictToStr(paramsDict):
     Return string like param_1="value1" param_2='value "" with double quotes'...
     """
     items = []
-    for name, value in list(paramsDict.items()):
+    for name, value in paramsDict.items():
         valueStr = str(value)
 
         hasSingleQuote = u"'" in valueStr

@@ -4,8 +4,11 @@ from abc import ABCMeta, abstractmethod
 import configparser
 import datetime
 import shutil
+import logging
 
 from outwiker.gui.stcstyle import StcStyle
+
+logger = logging.getLogger('core')
 
 
 class Config(object):
@@ -21,16 +24,22 @@ class Config(object):
         """
         self.readonly = readonly
         self.fname = fname
-        self.__config = configparser.ConfigParser(interpolation=None)
+        self._config = configparser.ConfigParser(interpolation=None)
 
         try:
-            self.__config.read(self.fname)
-        except configparser.Error:
-            shutil.copyfile(self.fname, self.fname + ".bak")
-            with open(self.fname, "w") as fp:
+            self._config.read(self.fname, encoding='utf8')
+        except (UnicodeDecodeError, IOError, configparser.Error):
+            backup_fname = self.fname + ".bak"
+            logger.error('Invalid config file: {src}. The file will be copied to {backup} and cleaned.'.format(src=fname, backup=backup_fname))
+
+            self._backup(self.fname, backup_fname)
+            with open(self.fname, "w", encoding='utf8') as fp:
                 fp.write(self.getDefaultContent())
 
-            self.__config.read(self.fname)
+            self._config.read(self.fname, encoding='utf8')
+
+    def _backup(self, fname, backup_fname):
+        shutil.copyfile(self.fname, backup_fname)
 
     def getDefaultContent(self):
         """
@@ -54,10 +63,10 @@ class Config(object):
         if self.readonly:
             return False
 
-        if not self.__config.has_section(section):
-            self.__config.add_section(section)
+        if not self._config.has_section(section):
+            self._config.add_section(section)
 
-        self.__config.set(section, param, str(value))
+        self._config.set(section, param, str(value))
 
         return self.save()
 
@@ -70,8 +79,8 @@ class Config(object):
         if self.readonly:
             return False
 
-        with open(self.fname, "w") as fp:
-            self.__config.write(fp)
+        with open(self.fname, "w", encoding='utf8') as fp:
+            self._config.write(fp)
 
         return True
 
@@ -83,7 +92,7 @@ class Config(object):
         Возващает строку с прочитанным значением
         Может бросать исключения
         """
-        return self.__config.get(section, param)
+        return self._config.get(section, param)
 
     def getint(self, section, param):
         """
@@ -112,7 +121,7 @@ class Config(object):
         Удалить текцию из файла конфига
         section - имя удаляемой секции
         """
-        result1 = self.__config.remove_section(section)
+        result1 = self._config.remove_section(section)
         result2 = self.save()
 
         return result1 and result2
@@ -123,7 +132,7 @@ class Config(object):
         section - имя секции, которой принадлежит опция
         option - имя удаляемой опции
         """
-        result1 = self.__config.remove_option(section, option)
+        result1 = self._config.remove_option(section, option)
         result2 = self.save()
         return result1 and result2
 
@@ -132,7 +141,7 @@ class Config(object):
         Возвращает True, если векция с именем section существует
         и False в противном случае
         """
-        return self.__config.has_section(section)
+        return self._config.has_section(section)
 
 
 class BaseOption(object, metaclass=ABCMeta):

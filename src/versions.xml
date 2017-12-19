@@ -7,7 +7,10 @@
 		<website>http://jenyay.net/Outwiker/UnstableEn</website>
 
 		<changelog>
-			<version number="2.1.0.833" status="dev">
+			<version number="2.1.0.835" status="dev">
+			</version>
+
+			<version number="2.1.0.834" status="dev" date="December 17, 2017">
 				<change>32-bit binary builds for Linux are no longer created.</change>
 				<change>Created AppImage packages for Linux</change>
 				<change>Fixed errors.</change>
@@ -43,7 +46,10 @@
 		<website>http://jenyay.net/Outwiker/Unstable</website>
 
 		<changelog>
-			<version number="2.1.0.833" status="dev">
+			<version number="2.1.0.835" status="dev">
+			</version>
+
+			<version number="2.1.0.834" status="dev" date="17.12.2017">
 				<change>Больше не создаются 32-битные бинарные сборки под Linux.</change>
 				<change>Теперь создаются пакеты AppImage для Linux.</change>
 				<change>Исправление ошибок.</change>
