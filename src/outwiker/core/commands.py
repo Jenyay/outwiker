@@ -534,7 +534,7 @@ def dictToStr(paramsDict):
     Return string like param_1="value1" param_2='value "" with double quotes'...
     """
     items = []
-    for name, value in list(paramsDict.items()):
+    for name, value in paramsDict.items():
         valueStr = str(value)
 
         hasSingleQuote = u"'" in valueStr

@@ -21,7 +21,7 @@ class FactorySelector(object):
 
     @staticmethod
     def getFactories():
-        return sorted(list(FactorySelector._factories.values()),
+        return sorted(FactorySelector._factories.values(),
                       key=lambda x: x.title)
 
     @staticmethod

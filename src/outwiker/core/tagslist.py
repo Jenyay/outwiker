@@ -28,7 +28,7 @@ class TagsList(object):
             for tag in page.tags:
                 tag_lower = tag.lower()
 
-                if tag_lower in list(self._tags.keys()):
+                if tag_lower in self._tags:
                     self._tags[tag_lower].append(page)
                 else:
                     self._tags[tag_lower] = [page]
@@ -48,7 +48,4 @@ class TagsList(object):
         return pages
 
     def __iter__(self):
-        tags = list(self._tags.keys())
-        tags.sort()
-
-        return iter(tags)
+        return iter(sorted(self._tags))

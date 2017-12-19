@@ -34,7 +34,7 @@ class HtmlTextEditor (TextEditor):
         textCtrl.SetLexer (wx.stc.STC_LEX_HTML)
         textCtrl.StyleClearAll()
 
-        for key in list(styles.keys()):
+        for key in styles:
             textCtrl.StyleSetSpec (key, styles[key])
             textCtrl.StyleSetSize (key, self.config.fontSize.value)
             textCtrl.StyleSetFaceName (key, self.config.fontName.value)
