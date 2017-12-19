@@ -8,28 +8,20 @@ class PageTitleError(Exception):
     """Exception raised for title if it can't be used in all OS systems
 
         Attributes:
-            expression -- input expression in which the error occurred
             message -- explanation of the error
         """
 
-    def __init__(self, expression, message):
-        self.expression = expression
+    def __init__(self, message):
         self.message = message
 
 class PageTitleWarning(Exception):
-    """
-    Исключение, которое бросается, если заголовок не может быть использован в
-    некоторых ОС (читай, под Windows)
-    """
     """Exception raised for title if it can't be used in Windows system
 
         Attributes:
-            expression -- input expression in which the error occurred
             message -- explanation of the error
-        """
+    """
 
-    def __init__(self, expression, message):
-        self.expression = expression
+    def __init__(self, message):
         self.message = message
 
 
