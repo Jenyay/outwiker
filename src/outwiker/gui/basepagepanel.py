@@ -41,7 +41,7 @@ class BasePagePanel (wx.Panel):
     def _removeAllTools(self):
         self.mainWindow.Freeze()
 
-        for toolKey in self._tools:
+        for toolKey in list(self._tools.keys()):
             self.removeTool(toolKey, fullUpdate=False)
 
         self.mainWindow.UpdateAuiManager()
