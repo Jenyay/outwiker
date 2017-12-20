@@ -118,7 +118,7 @@
 
 			</div>
 
-		{% for pluginName, pluginInfo in updatedAppInfo.iteritems() %}
+		{% for pluginName, pluginInfo in updatedAppInfo.items() %}
             {% if pluginName != 'OUTWIKER_STABLE' and pluginName != 'OUTWIKER_UNSTABLE' %}
                 <!-- {{pluginName}} block begin -->
                 <div class="version-block plugin-version {{pluginName|replace(' ', '_')}}">

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import urllib2
+import urllib.error
 import logging
 
 from outwiker.core.xmlversionparser import XmlVersionParser
@@ -9,7 +9,7 @@ from .i18n import get_
 from .loaders import NormalLoader
 
 
-logger = logging.getLogger('UpdateNotifierPlugin')
+logger = logging.getLogger('updatenotifier')
 
 
 class VersionList(object):
@@ -37,7 +37,7 @@ class VersionList(object):
         """
         latestInfo = {}
 
-        for name, url in self._updateUrls.iteritems():
+        for name, url in self._updateUrls.items():
             logger.info(u"Checking update for {}".format(name))
             appInfo = self.getAppInfoFromUrl(url)
             if appInfo is not None:
@@ -55,8 +55,8 @@ class VersionList(object):
         logger.info(u'Downloading {}'.format(url))
 
         try:
-            text = self._loader.load(url)
-        except (urllib2.HTTPError, urllib2.URLError, ValueError):
+            text = self._loader.load(url).decode('utf8')
+        except (urllib.error.HTTPError, urllib.error.URLError, ValueError):
             logger.warning(u"Can't download {}".format(url))
             return None
 

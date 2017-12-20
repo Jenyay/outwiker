@@ -1,13 +1,16 @@
 # -*- coding: utf-8 -*-
 
+import logging
 import os.path
 import sys
 
 from outwiker.core.pluginbase import Plugin
-from outwiker.core.system import getOS
 
 from .controller import Controller
 from .i18n import set_
+
+
+logger = logging.getLogger('updatenotifier')
 
 
 class PluginUpdateNotifier(Plugin):
@@ -46,22 +49,17 @@ Append menu item "Help -> Check for Updates..."''')
         return self._pluginPath
 
     def _initlocale(self, domain):
-        langdir = unicode(os.path.join(os.path.dirname(__file__), "locale"),
-                          getOS().filesEncoding)
+        langdir = os.path.join(os.path.dirname(__file__), "locale")
         global _
 
         try:
             _ = self._init_i18n(domain, langdir)
-        except BaseException, e:
-            print e
+        except BaseException as e:
+            logger(e)
 
         set_(_)
 
     def _correctSysPath(self):
-        syspath = [unicode(item, getOS().filesEncoding)
-                   if not isinstance(item, unicode)
-                   else item for item in sys.path]
-
         libspath = os.path.join(self._pluginPath, u'libs')
-        if libspath not in syspath:
+        if libspath not in sys.path:
             sys.path.insert(0, libspath)

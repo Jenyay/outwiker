@@ -1,11 +1,12 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 """
 Модуль с классами, предназначенными для загрузки страницы из интернета
 или эмуляции этого процесса
 """
 
 import os.path
-import urllib2
+import urllib.request
+import urllib.error
 
 from outwiker.utilites.textfile import readTextFile
 
@@ -21,10 +22,10 @@ class NormalLoader(object):
         if os.path.isfile(url):
             return readTextFile(url)
 
-        fp = urllib2.urlopen(url)
+        fp = urllib.request.urlopen(url)
 
         try:
-            text = unicode(fp.read(), 'utf8')
+            text = fp.read()
         finally:
             fp.close()
 
@@ -36,4 +37,4 @@ class DisconnectedLoader(object):
     Класс загрузчика, эмулирующий отсутствие интернета
     """
     def load(self, url):
-        raise urllib2.URLError("Disconnected")
+        raise urllib.error.URLError("Disconnected")

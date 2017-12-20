@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from xml.etree import ElementTree
 
@@ -26,7 +26,7 @@ class XmlVersionParser (object):
         Return AppInfo instance
         """
         try:
-            root = ElementTree.fromstring(text.encode('utf8'))
+            root = ElementTree.fromstring(text)
         except ElementTree.ParseError:
             appinfo = AppInfo(u'', None)
             return appinfo

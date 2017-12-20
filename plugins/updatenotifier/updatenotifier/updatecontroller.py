@@ -27,7 +27,7 @@ from .contentgenerator import ContentGenerator
 #     silenceMode - True if the theread was runned in the silence mode.
 UpdateVersionsEvent, EVT_UPDATE_VERSIONS = wx.lib.newevent.NewEvent()
 
-logger = logging.getLogger('UpdateNotifierPlugin')
+logger = logging.getLogger('updatenotifier')
 
 
 class UpdateController(object):
@@ -130,7 +130,7 @@ class UpdateController(object):
         """
         updatedPlugins = {}
 
-        for app_name, version_str in currentVersionsDict.iteritems():
+        for app_name, version_str in currentVersionsDict.items():
             if app_name not in latestAppInfoDict:
                 continue
 
@@ -197,8 +197,8 @@ class UpdateController(object):
                                for plugin
                                in self._application.plugins}
 
-        currentVersionsDict[self._OUTWIKER_STABLE_KEY] = unicode(currentVersion)
-        currentVersionsDict[self._OUTWIKER_UNSTABLE_KEY] = unicode(currentVersion)
+        currentVersionsDict[self._OUTWIKER_STABLE_KEY] = str(currentVersion)
+        currentVersionsDict[self._OUTWIKER_UNSTABLE_KEY] = str(currentVersion)
 
         return currentVersionsDict
 
