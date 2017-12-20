@@ -1,42 +1,34 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from .evthandler import EvtHandler
 
 
-class Window (EvtHandler):
-    def __init__ (self):
-        super (Window, self).__init__()
+class Window(EvtHandler):
+    def __init__(self):
+        super(Window, self).__init__()
 
         self.Enabled = True
 
+    def GetSizeTuple(self):
+        return(0, 0)
 
-    def GetSizeTuple (self):
-        return (0, 0)
+    def GetClientSize(self):
+        return(0, 0)
 
-
-    def GetClientSize (self):
-        return (0, 0)
-
-
-    def SetSizeWH (self, width, height):
+    def SetSizeWH(self, width, height):
         pass
 
-
-    def SetClientSizeWH (self, width, height):
+    def SetClientSize(self, width, height):
         pass
 
-
-    def Enable (self, enable):
+    def Enable(self, enable):
         self.Enabled = enable
 
-
-    def Disabled (self):
+    def Disabled(self):
         self.Enabled = False
 
-
-    def IsEnabled (self):
+    def IsEnabled(self):
         return self.Enabled
 
-
-    def SetFocus (self):
+    def SetFocus(self):
         pass

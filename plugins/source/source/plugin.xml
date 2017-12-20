@@ -6,7 +6,7 @@
         <outwiker>2.1.0.833 dev</outwiker>
         <os>Windows, Linux</os>
 		<packages>
-			<core>1.5</core>
+			<core>2.0</core>
 			<actions>1.1</actions>
 			<gui>2.0</gui>
 			<pages>2.0</pages>

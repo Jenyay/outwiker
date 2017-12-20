@@ -26,129 +26,129 @@ class OneSLexer(RegexLexer):
     mimetypes = ['text/x-1s']
 
     #: optional Comment or Whitespace
-    _ws = ur'(?:\s|//.*?\n|/[*].*?[*]/)+'
+    _ws = r'(?:\s|//.*?\n|/[*].*?[*]/)+'
 
 
     flags = re.IGNORECASE | re.MULTILINE | re.DOTALL | re.UNICODE
     tokens = {
         'whitespace': [
-            (ur'^\s*#', Comment.Preproc, 'macro'),
-            (ur'^\s*//#.*?\n', Comment.Preproc),
-            (ur'\n', Text),
-            (ur'\s+', Text),
-            (ur'\\\n', Text), # line continuation
-            (ur'//.*?\n', Comment),
+            (r'^\s*#', Comment.Preproc, 'macro'),
+            (r'^\s*//#.*?\n', Comment.Preproc),
+            (r'\n', Text),
+            (r'\s+', Text),
+            (r'\\\n', Text), # line continuation
+            (r'//.*?\n', Comment),
         ],
         'statements': [
-            (ur'L?"', String, 'string'),
-            (ur'(\s)*?\|', String, 'string'),
-            (ur'(0x[0-9a-fA-F]|0[0-7]+|(\d+\.\d*|\.\d+)|\d+)'
-             ur'e[+-]\d+[lL]?', Number.Float),
-            (ur'0x[0-9a-fA-F]+[Ll]?', Number.Hex),
-            (ur'0[0-7]+[Ll]?', Number.Oct),
-            (ur'(\d+\.\d*|\.\d+)', Number.Float),
-            (ur'\d+', Number.Integer),
-            (ur'\'[0-3][0-9]\.[0-1][0-9]\.([0-9][0-9]|[0-9][0-9][0-9][0-9])\'', Literal.Date),
-            (ur'[!%^&*()+=|\[\]:,.<>/?-]', Operator),
-            (ur'(Процедура|Функция|procedure|function)(\s+)', bygroups(Keyword, Text), 'funcname'),
-            (ur'(Перем|Var|Если|If|Тогда|Then|ИначеЕсли|Elsif|Иначе|Else|КонецЕсли|Endlf|'
-             ur'Цикл|Do|Для|For|По|To|Пока|While|'
-             ur'He|Not|Попытка|Try|Исключение|Except|КонецПопытки|'
-             ur'EndTry|ВызватьИсключение|Raise|Знач|Val|КонецЦикла|EndDo|Контекст|Context|'
-             ur'ОписаниеОшибки|GetErrorDescription|Перем|Var|Перейти|Goto|Возврат|Return|Продолжить|'
-             ur'Continue|Прервать|Break|И|And|Или|Or|Метаданные|MetaData)\b', Keyword.Reserved),
-            #(ur'(class|класс)(\s+)', bygroups(Keyword, Text), 'class'), # классы 1С++
-            (ur'(ПолучитьБазовыйКласс|GetBaseClass|НазначитьБазовыйКласс|' # Функционал классов 1С++
-            ur'ОтправитьСообщениеМодулюХоз|SendMessageOwnMod|ПолучитьПуть|'
-            ur'GetPathName|ПолучитьКонтекстОкружения|GetEnvContext|'
-            ur'ПолучитьСписокПараметров|GetParamsList|УстановитьПараметрПоИндексу|'
-            ur'SetOnIndexParams|стрИмяМетода|ЗаменитьЭксзБазовогоКласса|'
-            ur'ReplaceInstBaseClasses|_ПриОткрытии|_OnOpen|_ВыброситьИскл|'
-            ur'_Throw|_ПолучитьКод|_GetCode|_SQLCreate)\b', Keyword.Reserved),
-            (ur'(ИндексированнаяТаблица|IndexedTable|АктивИкс|ActiveX|' #  Классы 1С++
-            ur'РаботаСРегистромWin|WorkAsRegisterWin|ВыполняемыйМодуль|'
-            ur'ExecuteModule|Делегат|Delegate|МенеджерСобытий|EventManager|'
-            ur'Структура|Struct|DynaValue|Поток|Thread|GUID|BinaryData'
-            ur'ODBCDataBase|ODBCRecordSet|MetaDataWork|SQLLock)\b', Name.Class),
-            (ur'(РазделительСтраниц|PageBreak|РазделительСтрокLineBreak|'
-            ur'СимволТабуляции|TabSymbol)\b', Keyword.Constant),
-            (ur'(Число|Number|Строка|String|Дата|Date|Неопределенный|Undefine|void|' # типы данных
-            ur'ТаблицаЗначений|ValueTable|СписокЗначений|ValueList|'
-            ur'Неопределенный|Undefine|Запрос|Query|Константа|Const|'
-            ur'Справочник|Reference|Перечисление|Enum|Документ Document|' 
-            ur'Регистр|Register|ПланСчетов|ChartOfAccounts|Счет|Account|'
-            ur'ВидСубконто|SubcontoKind|Операция|Operation|БухгалтерскиеИтоги|'
-            ur'BookkeepingTotals|ЖурналРасчетов|CalcJournal|ВидРасчета|'
-            ur'CalculationKind|ГруппаРасчетов|CalculationGroup|Календарь|'
-            ur'Calendar|Запрос|Query|Текст|Text|Таблица|Table|СписокЗначений|'
-            ur'ValueList|ТаблицаЗначений|ValueTable|Картинка|Picture|'
-            ur'Периодический|Регiodic|ФС|FS|XBase|Xbase)\b', Keyword.Type),
-            (ur'(Окр|Round|Цел|Int|Мин|Min|Макс|Max|Лог10|Лог|Ln|СтрДлина|StrLen' # Математические функции
-            ur'ПустаяСтрока|IsBlankString|СокрЛ|TrimL|СокрП|TrimR|СокрЛП|TrimAll|' # Строковые функции
-            ur'Лев|Left|Прав|Right|Сред|Mid|Найти|Find|СтрЗаменить|StrReplace|'
-            ur'СтрЧислоВхождений|StrCountOccur|СтрКоличествоСтрок|StrLineCount|'
-            ur'СтрПолучитьСтроку|StrGetLine|Врег|Upper|НРег|Lower|OemToAnsi|'
-            ur'AnsiToOem|Симв|Chr|КодСимв|Asс|'
-            ur'РабочаяДата|WorkingDate|ТекущаяДата|CurDate|ДобавитьМесяц|AddMonth|' # Функции работы с датой
-            ur'НачМесяца|BegOfMonth|КонМесяца|EndOfMonth|НачКвартала|BegOfQuart|КонКвартала|'
-            ur'EndOfQuart|НачГода|BegOfYear|КонГода|EndOfYear|НачНедели|BegOfWeek|КонНедели|'
-            ur'EndOfWeek|ДатаГод|GetYear|ДатаМесяц|GetMonbh|ДатаЧисло|GetDay|НомерНеделиГода|'
-            ur'GetWeekOfYear|НомерДняГода|GetDayOfYear|НомерДняНедели|GetDayOfWeek|ПериодСтр|'
-            ur'РегiodStr|НачалоСтандартногоИнтервала|BegOfStandrdRange|КонецСтандартногоИнтервала|'
-            ur'ТекущееВремя|CurrentTime|' # Функции работы с временем
-            ur'СформироватьПозициюДокумента|MakeDocPosition|РазобратьПозициюДокумента|SplitDocPosition|' # Функции работы с позицией документа
-            ur'Пропись|Spelling|Формат|Format|Шаблон|Template|ФиксШаблон|FixTemplate' # Процедуры и функции форматирования
-            ur'ВвестиЗначение|InputValue|ВвестиЧисло|InputNumeric|ВвестиСтроку|InputString|' # Функции для вызова диалога ввода данных
-            ur'ВвестиДату|InputDate|ВвестиПериод|InputРегiod|ВвестиПеречисление|InputEnum|'
-            ur'Вопрос|DoQueryBox|Предупреждение|DoMessageBox|Сообщить|Message|' #Процедуры и функции общего назначения
-            ur'ОчиститьОкноСообщений|ClearMessageWindow|Состояние|Status|Сигнал|Веер|Разм|Dim|'
-            ur'ЗаголовокСистемы|SystemCaption|ИмяКомпьютера|ComputerName|ИмяПользователя|' # Функции среды исполнения
-            ur'UserName|ПолноеИмяПользователя|UserFullName|НазваниеНабораПрав|RightName|'
-            ur'ПравоДоступа|AccessRight|НазваниеИнтерфейса|UserInterfaceName|КаталогПользователя|'
-            ur'UserDir|КаталогИБ|IBDir|КаталогПрограммы|BinDir|КаталогВременныхФайлов|'
-            ur'TempFilesDir|МонопольныйРежим|ExclusiveMode|ОсновнойЯзык|GeneralLanguage|'
-            ur'НачатьТранзакцию|BeginTransaction|ЗафиксироватьТранзакцию|CommitTransation|' # Процедуры работы с транзакциями
-            ur'ОтменитьТранзакцию|RollBackTransaction|'
-            ur'СоздатьОбъект|CreateObject|СтатусВозврата|ReturnStatus|ОткрытьФорму|' # Специальные процедуры и функции
-            ur'OpenForm|ОткрытьФормуМодально|OpenFormModal|ТипЗначения|ValueType|ТипЗначенияСтр|'
-            ur'ValueTypeStr|ПустоеЗначение|EmptyValue|ПолучитьПустоеЗначение|GetEmptyValue|'
-            ur'НазначитьВид|SetKind|ЗаписьЖурналаРегистрации|LogMessageWrite|ПрефиксАвтоНумерации|'
-            ur'AutoNumPrefix|ПолучитьЗначенияОтбора|GetSelectionValues|КомандаСистемы|System|'
-            ur'ЗапуститьПриложение|RunApp|ЗавершитьРаботуСистемы|ExitSystem|НайтиПомеченныеНаУдаление|'
-            ur'FindMarkedForDelete|НайтиСсылки|FindReferences|УдалитьОбъекты|DeleteObjects|'
-            ur'ОбработкаОжидания|IdleProcessing|'
-            ur'ЗначениеВСтрокуВнутр|ValueToStringInternal|ЗначениеИзСтрокиВнутр|ValueFromStringInternal|' # Процедуры и функции обработки значений
-            ur'ЗначениеВСтроку|ValueToString|ЗначениеИзСтроки|ValueFromString|ЗначениеВФайл|'
-            ur'ValueToFile|ЗначениеИзФайла|ValueFromFile|СохранитьЗначение|SaveValue|'
-            ur'ВосстановитьЗначение|'
-            ur'ПолучитьТА|GetAP|ПолучитьДатуТА|GetDateOfAP|ПолучитьВремяТА|GetTimeOfAP' # Процедуры и функции компоненты <Оперативный учет>
-            ur'ПолучитьДокументТА|GetDocOfAP|ПолучитьПозициюТА|GetAPPosition|УстановитьТАна|'
-            ur'SetAPToBeg|УстановитьТАпо|SetAPToEnd|'
-            ur'ВыбранныйПланСчетов|DefaultChartOfAccounts|ОсновнойПланСчетов|MainChartOfAccounts|' # Процедуры и функции компоненты <Бухгалтерский учет>
-            ur'СчетПоКоду|AccountByCode|НачалоПериодаБИ|BeginOfРегiodBT|КонецПериодаБИ|'
-            ur'EndOfРегiodBT|КонецРассчитанногоПериодаБИ|EndOfCalculatedРегiodBT|'
-            ur'НазначитьСчет|SetAccount|ВвестиПланСчетов|InputChartOfAccounts|ВвестиВидСубконто|'
-            ur'InputSubcontoKind|МаксимальноеКоличествоСубконто|MaxSubcontoCount|'
-            ur'ОсновнойЖурналРасчетов|BasicCalcJournal|' # Процедуры и функции компоненты <Расчет>
-            ur'ПодключитьВнешнююКомпоненту|AttachAddIn|ЗагрузитьВнешнююКомпоненту|LoadAddin)\b', Keyword.Pseudo), # Внешние компоненты
-            (ur'(Экспорт|Export|Далее|Forward)\b', Keyword.Declaration),
-            (ur'~[a-zA-Zа-яА-Я_][a-zA-Zа-яА-Я0-9_]*:', Name.Label),
-            (ur'~[a-zA-Zа-яА-Я_][a-zA-Zа-яА-Я0-9_]*', Name.Label),
-            (ur'(КонецПроцедуры|EndProcedure|КонецФункции|EndFunction)\b', Keyword, '#pop'),
-            (ur'[a-zA-Zа-яА-Я_][a-zA-Zа-яА-Я0-9_]*', Name),
+            (r'L?"', String, 'string'),
+            (r'(\s)*?\|', String, 'string'),
+            (r'(0x[0-9a-fA-F]|0[0-7]+|(\d+\.\d*|\.\d+)|\d+)'
+             r'e[+-]\d+[lL]?', Number.Float),
+            (r'0x[0-9a-fA-F]+[Ll]?', Number.Hex),
+            (r'0[0-7]+[Ll]?', Number.Oct),
+            (r'(\d+\.\d*|\.\d+)', Number.Float),
+            (r'\d+', Number.Integer),
+            (r'\'[0-3][0-9]\.[0-1][0-9]\.([0-9][0-9]|[0-9][0-9][0-9][0-9])\'', Literal.Date),
+            (r'[!%^&*()+=|\[\]:,.<>/?-]', Operator),
+            (r'(Процедура|Функция|procedure|function)(\s+)', bygroups(Keyword, Text), 'funcname'),
+            (r'(Перем|Var|Если|If|Тогда|Then|ИначеЕсли|Elsif|Иначе|Else|КонецЕсли|Endlf|'
+             r'Цикл|Do|Для|For|По|To|Пока|While|'
+             r'He|Not|Попытка|Try|Исключение|Except|КонецПопытки|'
+             r'EndTry|ВызватьИсключение|Raise|Знач|Val|КонецЦикла|EndDo|Контекст|Context|'
+             r'ОписаниеОшибки|GetErrorDescription|Перем|Var|Перейти|Goto|Возврат|Return|Продолжить|'
+             r'Continue|Прервать|Break|И|And|Или|Or|Метаданные|MetaData)\b', Keyword.Reserved),
+            #(r'(class|класс)(\s+)', bygroups(Keyword, Text), 'class'), # классы 1С++
+            (r'(ПолучитьБазовыйКласс|GetBaseClass|НазначитьБазовыйКласс|' # Функционал классов 1С++
+            r'ОтправитьСообщениеМодулюХоз|SendMessageOwnMod|ПолучитьПуть|'
+            r'GetPathName|ПолучитьКонтекстОкружения|GetEnvContext|'
+            r'ПолучитьСписокПараметров|GetParamsList|УстановитьПараметрПоИндексу|'
+            r'SetOnIndexParams|стрИмяМетода|ЗаменитьЭксзБазовогоКласса|'
+            r'ReplaceInstBaseClasses|_ПриОткрытии|_OnOpen|_ВыброситьИскл|'
+            r'_Throw|_ПолучитьКод|_GetCode|_SQLCreate)\b', Keyword.Reserved),
+            (r'(ИндексированнаяТаблица|IndexedTable|АктивИкс|ActiveX|' #  Классы 1С++
+            r'РаботаСРегистромWin|WorkAsRegisterWin|ВыполняемыйМодуль|'
+            r'ExecuteModule|Делегат|Delegate|МенеджерСобытий|EventManager|'
+            r'Структура|Struct|DynaValue|Поток|Thread|GUID|BinaryData'
+            r'ODBCDataBase|ODBCRecordSet|MetaDataWork|SQLLock)\b', Name.Class),
+            (r'(РазделительСтраниц|PageBreak|РазделительСтрокLineBreak|'
+            r'СимволТабуляции|TabSymbol)\b', Keyword.Constant),
+            (r'(Число|Number|Строка|String|Дата|Date|Неопределенный|Undefine|void|' # типы данных
+            r'ТаблицаЗначений|ValueTable|СписокЗначений|ValueList|'
+            r'Неопределенный|Undefine|Запрос|Query|Константа|Const|'
+            r'Справочник|Reference|Перечисление|Enum|Документ Document|' 
+            r'Регистр|Register|ПланСчетов|ChartOfAccounts|Счет|Account|'
+            r'ВидСубконто|SubcontoKind|Операция|Operation|БухгалтерскиеИтоги|'
+            r'BookkeepingTotals|ЖурналРасчетов|CalcJournal|ВидРасчета|'
+            r'CalculationKind|ГруппаРасчетов|CalculationGroup|Календарь|'
+            r'Calendar|Запрос|Query|Текст|Text|Таблица|Table|СписокЗначений|'
+            r'ValueList|ТаблицаЗначений|ValueTable|Картинка|Picture|'
+            r'Периодический|Регiodic|ФС|FS|XBase|Xbase)\b', Keyword.Type),
+            (r'(Окр|Round|Цел|Int|Мин|Min|Макс|Max|Лог10|Лог|Ln|СтрДлина|StrLen' # Математические функции
+            r'ПустаяСтрока|IsBlankString|СокрЛ|TrimL|СокрП|TrimR|СокрЛП|TrimAll|' # Строковые функции
+            r'Лев|Left|Прав|Right|Сред|Mid|Найти|Find|СтрЗаменить|StrReplace|'
+            r'СтрЧислоВхождений|StrCountOccur|СтрКоличествоСтрок|StrLineCount|'
+            r'СтрПолучитьСтроку|StrGetLine|Врег|Upper|НРег|Lower|OemToAnsi|'
+            r'AnsiToOem|Симв|Chr|КодСимв|Asс|'
+            r'РабочаяДата|WorkingDate|ТекущаяДата|CurDate|ДобавитьМесяц|AddMonth|' # Функции работы с датой
+            r'НачМесяца|BegOfMonth|КонМесяца|EndOfMonth|НачКвартала|BegOfQuart|КонКвартала|'
+            r'EndOfQuart|НачГода|BegOfYear|КонГода|EndOfYear|НачНедели|BegOfWeek|КонНедели|'
+            r'EndOfWeek|ДатаГод|GetYear|ДатаМесяц|GetMonbh|ДатаЧисло|GetDay|НомерНеделиГода|'
+            r'GetWeekOfYear|НомерДняГода|GetDayOfYear|НомерДняНедели|GetDayOfWeek|ПериодСтр|'
+            r'РегiodStr|НачалоСтандартногоИнтервала|BegOfStandrdRange|КонецСтандартногоИнтервала|'
+            r'ТекущееВремя|CurrentTime|' # Функции работы с временем
+            r'СформироватьПозициюДокумента|MakeDocPosition|РазобратьПозициюДокумента|SplitDocPosition|' # Функции работы с позицией документа
+            r'Пропись|Spelling|Формат|Format|Шаблон|Template|ФиксШаблон|FixTemplate' # Процедуры и функции форматирования
+            r'ВвестиЗначение|InputValue|ВвестиЧисло|InputNumeric|ВвестиСтроку|InputString|' # Функции для вызова диалога ввода данных
+            r'ВвестиДату|InputDate|ВвестиПериод|InputРегiod|ВвестиПеречисление|InputEnum|'
+            r'Вопрос|DoQueryBox|Предупреждение|DoMessageBox|Сообщить|Message|' #Процедуры и функции общего назначения
+            r'ОчиститьОкноСообщений|ClearMessageWindow|Состояние|Status|Сигнал|Веер|Разм|Dim|'
+            r'ЗаголовокСистемы|SystemCaption|ИмяКомпьютера|ComputerName|ИмяПользователя|' # Функции среды исполнения
+            r'UserName|ПолноеИмяПользователя|UserFullName|НазваниеНабораПрав|RightName|'
+            r'ПравоДоступа|AccessRight|НазваниеИнтерфейса|UserInterfaceName|КаталогПользователя|'
+            r'UserDir|КаталогИБ|IBDir|КаталогПрограммы|BinDir|КаталогВременныхФайлов|'
+            r'TempFilesDir|МонопольныйРежим|ExclusiveMode|ОсновнойЯзык|GeneralLanguage|'
+            r'НачатьТранзакцию|BeginTransaction|ЗафиксироватьТранзакцию|CommitTransation|' # Процедуры работы с транзакциями
+            r'ОтменитьТранзакцию|RollBackTransaction|'
+            r'СоздатьОбъект|CreateObject|СтатусВозврата|ReturnStatus|ОткрытьФорму|' # Специальные процедуры и функции
+            r'OpenForm|ОткрытьФормуМодально|OpenFormModal|ТипЗначения|ValueType|ТипЗначенияСтр|'
+            r'ValueTypeStr|ПустоеЗначение|EmptyValue|ПолучитьПустоеЗначение|GetEmptyValue|'
+            r'НазначитьВид|SetKind|ЗаписьЖурналаРегистрации|LogMessageWrite|ПрефиксАвтоНумерации|'
+            r'AutoNumPrefix|ПолучитьЗначенияОтбора|GetSelectionValues|КомандаСистемы|System|'
+            r'ЗапуститьПриложение|RunApp|ЗавершитьРаботуСистемы|ExitSystem|НайтиПомеченныеНаУдаление|'
+            r'FindMarkedForDelete|НайтиСсылки|FindReferences|УдалитьОбъекты|DeleteObjects|'
+            r'ОбработкаОжидания|IdleProcessing|'
+            r'ЗначениеВСтрокуВнутр|ValueToStringInternal|ЗначениеИзСтрокиВнутр|ValueFromStringInternal|' # Процедуры и функции обработки значений
+            r'ЗначениеВСтроку|ValueToString|ЗначениеИзСтроки|ValueFromString|ЗначениеВФайл|'
+            r'ValueToFile|ЗначениеИзФайла|ValueFromFile|СохранитьЗначение|SaveValue|'
+            r'ВосстановитьЗначение|'
+            r'ПолучитьТА|GetAP|ПолучитьДатуТА|GetDateOfAP|ПолучитьВремяТА|GetTimeOfAP' # Процедуры и функции компоненты <Оперативный учет>
+            r'ПолучитьДокументТА|GetDocOfAP|ПолучитьПозициюТА|GetAPPosition|УстановитьТАна|'
+            r'SetAPToBeg|УстановитьТАпо|SetAPToEnd|'
+            r'ВыбранныйПланСчетов|DefaultChartOfAccounts|ОсновнойПланСчетов|MainChartOfAccounts|' # Процедуры и функции компоненты <Бухгалтерский учет>
+            r'СчетПоКоду|AccountByCode|НачалоПериодаБИ|BeginOfРегiodBT|КонецПериодаБИ|'
+            r'EndOfРегiodBT|КонецРассчитанногоПериодаБИ|EndOfCalculatedРегiodBT|'
+            r'НазначитьСчет|SetAccount|ВвестиПланСчетов|InputChartOfAccounts|ВвестиВидСубконто|'
+            r'InputSubcontoKind|МаксимальноеКоличествоСубконто|MaxSubcontoCount|'
+            r'ОсновнойЖурналРасчетов|BasicCalcJournal|' # Процедуры и функции компоненты <Расчет>
+            r'ПодключитьВнешнююКомпоненту|AttachAddIn|ЗагрузитьВнешнююКомпоненту|LoadAddin)\b', Keyword.Pseudo), # Внешние компоненты
+            (r'(Экспорт|Export|Далее|Forward)\b', Keyword.Declaration),
+            (r'~[a-zA-Zа-яА-Я_][a-zA-Zа-яА-Я0-9_]*:', Name.Label),
+            (r'~[a-zA-Zа-яА-Я_][a-zA-Zа-яА-Я0-9_]*', Name.Label),
+            (r'(КонецПроцедуры|EndProcedure|КонецФункции|EndFunction)\b', Keyword, '#pop'),
+            (r'[a-zA-Zа-яА-Я_][a-zA-Zа-яА-Я0-9_]*', Name),
         ],
         'root': [
             include('whitespace'),
             # classes
-            (ur'(class|класс)(\s+)'                          # class keyword
-             ur'([a-zA-Zа-яА-Я_][a-zA-Zа-яА-Я0-9_.]*)(\s*)'   # class name
-             ur'(=)(\s*)'                                    # operator =
-             ur'([^:^{^/]*)(:{0,1})(.*?)({)',                  # class path
+            (r'(class|класс)(\s+)'                          # class keyword
+             r'([a-zA-Zа-яА-Я_][a-zA-Zа-яА-Я0-9_.]*)(\s*)'   # class name
+             r'(=)(\s*)'                                    # operator =
+             r'([^:^{^/]*)(:{0,1})(.*?)({)',                  # class path
              bygroups(Keyword, Text, Name.Class, Text, Operator, Text, String, Operator, using(this), Keyword), 'classdef'),
             # functions
-            #(ur'(Процедура|Функция|procedure|function)(\s+)'
-            #ur'([a-zA-Zа-яА-Я_][a-zA-Zа-яА-Я0-9_]*)'
-            #ur'(\s*\([^;]*?\))',                           # signature
+            #(r'(Процедура|Функция|procedure|function)(\s+)'
+            #r'([a-zA-Zа-яА-Я_][a-zA-Zа-яА-Я0-9_]*)'
+            #r'(\s*\([^;]*?\))',                           # signature
             #bygroups(Keyword, Text, Name.Function, using(this)), 'function'),
             ('', Text, 'statement'),
         ],
@@ -159,38 +159,38 @@ class OneSLexer(RegexLexer):
         ],
         'classdef': [
             include('whitespace'),
-            (ur'([a-zA-Zа-яА-Я_][a-zA-Zа-яА-Я0-9_.]*)(\s+)' # return arguments
-             ur'([a-zA-Zа-яА-Я_][a-zA-Zа-яА-Я0-9_]*)'      # method name
-             ur'(\s*\([^;]*?\))'                           # signature
-             #ur'(' + _ws + ur')(;)',
-             ur'(;)',
+            (r'([a-zA-Zа-яА-Я_][a-zA-Zа-яА-Я0-9_.]*)(\s+)' # return arguments
+             r'([a-zA-Zа-яА-Я_][a-zA-Zа-яА-Я0-9_]*)'      # method name
+             r'(\s*\([^;]*?\))'                           # signature
+             #r'(' + _ws + r')(;)',
+             r'(;)',
              bygroups(using(this), Text, Name.Function, using(this), Text)),
             ('{', Keyword, '#push'),
             ('(}|}\s+;)', Keyword, '#pop'),
             include('statements'),
         ],
 #        'function': [
-#            (ur'(КонецПроцедуры|EndProcedure|КонецФункции|EndFunction)\b', Keyword, '#pop'),
+#            (r'(КонецПроцедуры|EndProcedure|КонецФункции|EndFunction)\b', Keyword, '#pop'),
 #            include('whitespace'),
 #            include('statements'),
 #            (';', Text),
 #        ],
         'funcname': [
-            (ur'[a-zа-яA-ZА-Я_][a-zа-яA-ZА-Я0-9_]*', Name.Function, '#pop')
+            (r'[a-zа-яA-ZА-Я_][a-zа-яA-ZА-Я0-9_]*', Name.Function, '#pop')
         ],
         'string': [
-            (ur'"', String, '#pop'),
-            (ur'\\([\\abfnrtv"\']|x[a-fA-F0-9]{2,4}|[0-7]{1,3})', String.Escape),
-            (ur'[^\\"\n]+', String), # all other characters
-            (ur'\\\n', String), # line continuation
-            (ur'\\', String), # stray backslash
+            (r'"', String, '#pop'),
+            (r'\\([\\abfnrtv"\']|x[a-fA-F0-9]{2,4}|[0-7]{1,3})', String.Escape),
+            (r'[^\\"\n]+', String), # all other characters
+            (r'\\\n', String), # line continuation
+            (r'\\', String), # stray backslash
         ],
         'macro': [
-            (ur'[^/\n]+', Comment.Preproc),
-            (ur'/[*](.|\n)*?[*]/', Comment),
-            (ur'//.*?\n', Comment, '#pop'),
-            (ur'/', Comment.Preproc),
-            (ur'(?<=\\)\n', Comment.Preproc),
-            (ur'\n', Comment.Preproc, '#pop'),
+            (r'[^/\n]+', Comment.Preproc),
+            (r'/[*](.|\n)*?[*]/', Comment),
+            (r'//.*?\n', Comment, '#pop'),
+            (r'/', Comment.Preproc),
+            (r'(?<=\\)\n', Comment.Preproc),
+            (r'\n', Comment.Preproc, '#pop'),
         ]
     }
