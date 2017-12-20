@@ -21,7 +21,7 @@ class ImageDialogController (object):
     def _initDialog(self):
         attach_str = u'__attach/'
 
-        filesList = filter(isImage, self._attachList)
+        filesList = list(filter(isImage, self._attachList))
         filesList.sort()
 
         comboItems = [attach_str + item for item in filesList]
