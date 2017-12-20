@@ -4,14 +4,13 @@ from .i18n import get_
 from .updatesconfig import UpdatesConfig
 
 
-class PrefPanelController (object):
+class PrefPanelController(object):
     """
     Контроллер для панели настроек
     """
-    def __init__ (self, owner, config):
+    def __init__(self, owner, config):
         self.__owner = owner
-        self.__config = UpdatesConfig (config)
-
+        self.__config = UpdatesConfig(config)
 
         global _
         _ = get_()
@@ -31,48 +30,42 @@ class PrefPanelController (object):
             30: _(u"Every month"),
         }
 
-
-    def loadState (self):
+    def loadState(self):
         self.__loadIntervalList()
-        self.__owner.ignoreUnstableCheckBox.SetValue (self.__config.ignoreUnstable)
+        self.__owner.ignoreUnstableCheckBox.SetValue(self.__config.ignoreUnstable)
 
-
-    def __loadIntervalList (self):
+    def __loadIntervalList(self):
         """
         Заполнить комбобокс с интервалами обновлений
         """
-        keys = self.intervalList.keys()
-        keys.sort()
+        keys = sorted(self.intervalList.keys())
 
         for key in keys:
-            self.__owner.intervalComboBox.Append (self.intervalList[key])
+            self.__owner.intervalComboBox.Append(self.intervalList[key])
 
         currentInterval = self.__config.updateInterval
 
         if currentInterval in keys:
             # Интервал обновлений есть в списке
-            self.__owner.intervalComboBox.SetSelection (keys.index (currentInterval))
+            self.__owner.intervalComboBox.SetSelection(keys.index(currentInterval))
         else:
             # В списке нет выбранного интервала обновлений
-            self.__owner.intervalComboBox.Append (_(u"Custom"))
-            self.__owner.intervalComboBox.SetSelection (len (keys))
+            self.__owner.intervalComboBox.Append(_(u"Custom"))
+            self.__owner.intervalComboBox.SetSelection(len(keys))
 
-
-    def save (self):
+    def save(self):
         self.__saveInterval()
         self.__config.ignoreUnstable = self.__owner.ignoreUnstableCheckBox.IsChecked()
 
-
-    def __saveInterval (self):
+    def __saveInterval(self):
         """
         Сохранить интервал проверки обновлений
         """
-        keys = self.intervalList.keys()
-        keys.sort()
+        keys = sorted(self.intervalList.keys())
 
-        selectedInterval = self.__owner.intervalComboBox.GetSelection ()
+        selectedInterval = self.__owner.intervalComboBox.GetSelection()
         assert selectedInterval >= 0
 
-        if selectedInterval < len (keys):
+        if selectedInterval < len(keys):
             # Выбран пункт не "Custom"
             self.__config.updateInterval = keys[selectedInterval]
