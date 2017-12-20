@@ -6,11 +6,12 @@ import logging
 from outwiker.core.pluginbase import Plugin
 from outwiker.core.commands import getCurrentVersion
 from outwiker.core.version import Version, StatusSet
-from outwiker.core.system import getOS
+
+logger = logging.getLogger('texequation')
 
 
-if getCurrentVersion() < Version(2, 0, 0, 812, status=StatusSet.DEV):
-    logging.warning("TexEquation plugin. OutWiker version requirement: 1.9.0.777")
+if getCurrentVersion() < Version(2, 1, 0, 835, status=StatusSet.DEV):
+    logger.warning("TexEquation plugin. OutWiker version requirement: 2.1.0.835")
 else:
     from .i18n import set_
     from .controller import Controller
@@ -57,14 +58,12 @@ else:
         #############################################
 
         def _initlocale(self, domain):
-            langdir = unicode(os.path.join(os.path.dirname(__file__),
-                                           "locale"),
-                              getOS().filesEncoding)
+            langdir = os.path.join(os.path.dirname(__file__), "locale")
             global _
 
             try:
                 _ = self._init_i18n(domain, langdir)
-            except BaseException, e:
-                print e
+            except BaseException as e:
+                logger(e)
 
             set_(_)

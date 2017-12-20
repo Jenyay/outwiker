@@ -9,7 +9,7 @@ from outwiker.core.system import getOS
 from outwiker.libs.pyparsing import QuotedString
 from outwiker.pages.wiki.thumbnails import Thumbnails
 
-from defines import KATEX_DIR_NAME
+from .defines import KATEX_DIR_NAME
 
 
 class TexFactory (object):
@@ -22,9 +22,7 @@ class TexFactory (object):
         return BigTexToken(parser).getToken()
 
 
-class BaseTexToken (object):
-    __metaclass__ = ABCMeta
-
+class BaseTexToken (object, metaclass=ABCMeta):
     def __init__(self, parser):
         self.parser = parser
         self._headers = [u'<link rel="stylesheet" href="__attach/__thumb/{katex}/katex.min.css">\n'.format(katex=KATEX_DIR_NAME),
@@ -86,7 +84,9 @@ katex.render("{code}", element_{index}, {{ displayMode: {displayMode}, throwOnEr
             return u""
 
         if self._headers[0] not in self.parser.head:
-            map(lambda head: self.parser.appendToHead(head), self._headers)
+            for head in self._headers:
+                self.parser.appendToHead(head)
+
             try:
                 self._copyKatexLibrary()
             except (shutil.Error, IOError):
@@ -139,7 +139,7 @@ katex.render("{code}", element_{index}, {{ displayMode: {displayMode}, throwOnEr
         """
         Get path to KaTeX library
         """
-        root = unicode(os.path.dirname(__file__), getOS().filesEncoding)
+        root = os.path.dirname(__file__)
         katexpath = os.path.join(root, u"tools", KATEX_DIR_NAME)
         return katexpath
 
