@@ -74,8 +74,10 @@ from outwiker.core.system import getOS
 
 logger = logging.getLogger('outwiker.gui.mainwindow')
 
+
 class MainWindow(wx.Frame):
     def __init__(self, *args, **kwds):
+        logger.debug(u'MainWindow initialize started')
         kwds["style"] = wx.DEFAULT_FRAME_STYLE
         wx.Frame.__init__(self, *args, **kwds)
 
@@ -85,31 +87,38 @@ class MainWindow(wx.Frame):
         # (например, копирования в буфер обмена) сообщение вернулось обратно
         self.__stdEventLoop = False
 
+        logger.debug(u'MainWindow. Setup icon')
         self.__setIcon()
         self.SetTitle(u"OutWiker")
 
+        logger.debug(u'MainWindow. Setup menu')
         self.mainMenu = MainMenu()
         self.SetMenuBar(self.mainMenu)
 
         self.__createStatusBar()
 
+        logger.debug(u'MainWindow. Create MainWndController')
         self.controller = MainWndController(self)
         self.controller.loadMainWindowParams()
 
         if self.mainWindowConfig.maximized.value:
             self.Maximize()
 
+        logger.debug(u'MainWindow. Create AuiManager')
         self.auiManager = wx.aui.AuiManager(self)
         self.__createAuiPanes()
         self.__createToolbars()
 
+        logger.debug(u'MainWindow. Create MainPanesController')
         self.__panesController = MainPanesController(Application, self)
 
         self.__bindGuiEvents()
 
+        logger.debug(u'MainWindow. Create tray icon')
         self.taskBarIconController = getTrayIconController(Application, self)
         self.taskBarIconController.initialize()
 
+        logger.debug(u'MainWindow. Create TabsController')
         self.tabsController = TabsController(self.pagePanel.panel.tabsCtrl,
                                              Application)
 
@@ -121,7 +130,10 @@ class MainWindow(wx.Frame):
             PrefController(Application),
         ]
 
+        logger.debug(u'MainWindow. Initialize the core controllers')
         self._initCoreControllers()
+
+        logger.debug(u'MainWindow initialize ended')
 
     @property
     def mainToolbar(self):
@@ -156,6 +168,7 @@ class MainWindow(wx.Frame):
         """
         Создать пункты меню, кнопки на панелях инструментов и т.п.
         """
+        logger.debug(u'MainWindow createGui started')
         self.__panesController.loadPanesSize()
         self.__addActionsGui()
         self.controller.enableGui()
@@ -165,6 +178,7 @@ class MainWindow(wx.Frame):
 
         if self.mainWindowConfig.fullscreen.value:
             Application.actionController.check(FullScreenAction.stringId, True)
+        logger.debug(u'MainWindow createGui ended')
 
     def __createSwitchToMenu(self):
         actionController = Application.actionController

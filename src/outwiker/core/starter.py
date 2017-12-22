@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-
+import logging
 import sys
 
 from outwiker.core.application import Application
@@ -9,6 +9,9 @@ from outwiker.core.commandline import CommandLine, CommandLineException
 from outwiker.core.commands import getCurrentVersion
 from outwiker.core.defines import APP_DATA_DISABLE_MINIMIZING, APP_DATA_DEBUG
 from outwiker.gui.guiconfig import GeneralGuiConfig
+
+
+logger = logging.getLogger('outwiker.core.starter')
 
 
 class StarterExit(BaseException):
@@ -20,7 +23,7 @@ class StarterExit(BaseException):
 
 class Starter(object):
     """
-    Класс для выполнения команд из командной строки(не для разбора параметров)
+    Класс для выполнения команд из командной строки (не для разбора параметров)
     и начального открытия вики
     """
     def __init__(self):
@@ -34,6 +37,7 @@ class Starter(object):
         if self._commandLine is None or self._commandLine.wikipath is None:
             self.__openRecentWiki()
         else:
+            logger.debug('Open wiki {}'.format(self._commandLine.wikipath))
             openWiki(self._commandLine.wikipath, self._commandLine.readonly)
 
         if self._commandLine is not None:
@@ -82,4 +86,5 @@ class Starter(object):
         openRecent = GeneralGuiConfig(Application.config).autoopen.value
 
         if openRecent and len(Application.recentWiki) > 0:
+            logger.debug('Open recently used wiki')
             openWiki(Application.recentWiki[0])

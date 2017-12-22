@@ -17,10 +17,12 @@ import outwiker.core.packageversion as pv
 
 from outwiker.core.defines import PLUGIN_VERSION_FILE_NAME
 from outwiker.core.pluginbase import Plugin, InvalidPlugin
-from outwiker.core.system import getOS
 from outwiker.core.xmlversionparser import XmlVersionParser
 from outwiker.gui.guiconfig import PluginsConfig
 from outwiker.utilites.textfile import readTextFile
+
+
+logger = logging.getLogger('outwiker.core.pluginsloader')
 
 
 class PluginsLoader (object):
@@ -64,7 +66,7 @@ class PluginsLoader (object):
 
     def _print(self, text):
         if self.enableOutput:
-            logging.error(text)
+            logger.error(text)
 
     @property
     def disabledPlugins(self):
@@ -126,26 +128,22 @@ class PluginsLoader (object):
         """
         assert dirlist is not None
 
+        logger.debug(u'Plugins loading started')
+
         for currentDir in dirlist:
             if os.path.exists(currentDir):
                 dirPackets = sorted(os.listdir(currentDir))
 
                 # Добавить путь до currentDir в sys.path
                 fullpath = os.path.abspath(currentDir)
-                # TODO: Разобраться с Unicode в следующей строке.
-                # Иногда выскакивает предупреждение:
-                # ...\outwiker\core\pluginsloader.py:41:
-                # UnicodeWarning: Unicode equal comparison failed to convert
-                # both arguments to Unicode - interpreting them as
-                # being unequal
 
-                syspath = [item for item in sys.path]
-
-                if fullpath not in syspath:
+                if fullpath not in sys.path:
                     sys.path.insert(0, fullpath)
 
                 # Все поддиректории попытаемся открыть как пакеты
                 self.__importModules(currentDir, dirPackets)
+
+        logger.debug(u'Plugins loading ended')
 
     def clear(self):
         """
@@ -196,6 +194,9 @@ class PluginsLoader (object):
                 initFile = os.path.join(packagePath, u'__init__.py')
                 if not os.path.exists(initFile):
                     continue
+
+                logger.debug(u'Trying to load the plug-in: {}'.format(
+                    packageName))
 
                 # Checking information from plugin.xml file
                 plugin_fname = os.path.join(packagePath,
@@ -263,7 +264,7 @@ class PluginsLoader (object):
                             if plugin is not None:
                                 plugin.version = appinfo.currentVersionStr
                     except BaseException as e:
-                        errors.append("*** Plugin {package} loading error ***\n{package}/{fileName}\n{error}\n{traceback}".format(
+                        errors.append("*** Plug-in {package} loading error ***\n{package}/{fileName}\n{error}\n{traceback}".format(
                             package=packageName,
                             fileName=fileName,
                             error=str(e),
@@ -285,6 +286,9 @@ class PluginsLoader (object):
                         InvalidPlugin(appinfo.appname,
                                       error,
                                       appinfo.currentVersionStr))
+                else:
+                    logger.debug(u'Successfully loaded plug-in: {}'.format(
+                        packageName))
 
     def _importSingleModule(self, packageName, fileName):
         """

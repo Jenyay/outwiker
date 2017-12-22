@@ -167,6 +167,7 @@ class TrayIconControllerLinux(TrayIconControllerBase):
     def __onExit(self, obj):
         self._application.actionController.getAction(ExitAction.stringId).run(None)
 
+
 class TrayIconWindows(wx.adv.TaskBarIcon):
     def __init__(self, application, mainWnd):
         super(TrayIconWindows, self).__init__()
@@ -209,8 +210,8 @@ class TrayIconLinux(object):
                                                   "outwiker_64x64.png"))
         assert os.path.exists(self._icon)
         self._indicator = AppIndicator3.Indicator.new("OutWiker",
-                                                 self._icon,
-                                                  AppIndicator3.IndicatorCategory.APPLICATION_STATUS)
+                                                      self._icon,
+                                                      AppIndicator3.IndicatorCategory.APPLICATION_STATUS)
         menu = gtk.Menu()
         self.restoreMenuItem = gtk.MenuItem(label=_('Restore'))
         self.restoreMenuItem.show()

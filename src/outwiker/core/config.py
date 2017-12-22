@@ -5,10 +5,11 @@ import configparser
 import datetime
 import shutil
 import logging
+import os
 
 from outwiker.gui.stcstyle import StcStyle
 
-logger = logging.getLogger('core')
+logger = logging.getLogger('outwiker.core.config')
 
 
 class Config(object):
@@ -30,7 +31,10 @@ class Config(object):
             self._config.read(self.fname, encoding='utf8')
         except (UnicodeDecodeError, IOError, configparser.Error):
             backup_fname = self.fname + ".bak"
-            logger.error('Invalid config file: {src}. The file will be copied to {backup} and cleaned.'.format(src=fname, backup=backup_fname))
+            logger.error('Invalid config file: {src}. The file will be copied to {backup} and cleaned.'.format(
+                src=fname,
+                backup=os.path.basename(backup_fname))
+            )
 
             self._backup(self.fname, backup_fname)
             with open(self.fname, "w", encoding='utf8') as fp:

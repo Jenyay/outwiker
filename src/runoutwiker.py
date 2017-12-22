@@ -57,7 +57,7 @@ class OutWiker(wx.App):
 
         logger = logging.getLogger('outwiker')
         for n, dirname in enumerate(getSpecialDirList(u'')):
-            logger.info(u'Special directory [{}]: {}'.format(n, dirname))
+            logger.debug(u'Special directory [{}]: {}'.format(n, dirname))
 
         from outwiker.gui.mainwindow import MainWindow
 
@@ -77,6 +77,7 @@ class OutWiker(wx.App):
         self.Bind(wx.EVT_QUERY_END_SESSION, self._onEndSession)
 
         starter.processGUI()
+        self.mainWnd.Show()
 
         return True
 
