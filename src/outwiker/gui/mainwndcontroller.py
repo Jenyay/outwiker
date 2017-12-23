@@ -25,21 +25,24 @@ from outwiker.actions.removepage import RemovePageAction
 from outwiker.actions.editpageprop import EditPagePropertiesAction
 from outwiker.actions.exit import ExitAction
 from outwiker.actions.addbookmark import AddBookmarkAction
-from outwiker.actions.tabs import AddTabAction, CloseTabAction, PreviousTabAction, NextTabAction
+from outwiker.actions.tabs import (AddTabAction,
+                                   CloseTabAction,
+                                   PreviousTabAction,
+                                   NextTabAction)
 from outwiker.actions.globalsearch import GlobalSearchAction
 from outwiker.actions.attachfiles import AttachFilesAction
 import outwiker.actions.clipboard as clipboard
 import outwiker.actions.tags as tags
 from outwiker.actions.reloadwiki import ReloadWikiAction
-from outwiker.actions.moving import (GoToParentAction,
-                                     GoToFirstChildAction,
-                                     GoToNextSiblingAction,
-                                     GoToPrevSiblingAction)
+from outwiker.actions.moving import(GoToParentAction,
+                                    GoToFirstChildAction,
+                                    GoToNextSiblingAction,
+                                    GoToPrevSiblingAction)
 from outwiker.actions.openattachfolder import OpenAttachFolderAction
 from outwiker.actions.applystyle import SetStyleToBranchAction
 
 
-class MainWndController (object):
+class MainWndController(object):
     """
     Контроллер для управления главным окном
     """
@@ -50,7 +53,8 @@ class MainWndController (object):
         """
         self._mainWindow = parent
 
-        # Идентификаторы пунктов меню и кнопок, которые надо задизаблить, если не открыта вики
+        # Идентификаторы пунктов меню и кнопок, которые надо задизаблить,
+        # если не открыта вики
         self.disabledTools = [
             wx.ID_UNDO,
             wx.ID_REDO,
@@ -59,7 +63,6 @@ class MainWndController (object):
             wx.ID_PASTE,
             wx.ID_SELECTALL,
         ]
-
 
         # Действия, которые надо дизаблить, если не открыта вики
         self._disabledActions = [
@@ -113,9 +116,9 @@ class MainWndController (object):
         Создать горячие клавиши, которые не попали в меню
         """
         aTable = wx.AcceleratorTable([
-            (wx.ACCEL_CTRL,  wx.WXK_INSERT, wx.ID_COPY),
-            (wx.ACCEL_SHIFT,  wx.WXK_INSERT, wx.ID_PASTE),
-            (wx.ACCEL_SHIFT,  wx.WXK_DELETE, wx.ID_CUT)])
+           (wx.ACCEL_CTRL,  wx.WXK_INSERT, wx.ID_COPY),
+           (wx.ACCEL_SHIFT,  wx.WXK_INSERT, wx.ID_PASTE),
+           (wx.ACCEL_SHIFT,  wx.WXK_DELETE, wx.ID_CUT)])
         self._mainWindow.SetAcceleratorTable(aTable)
 
     def init(self):
@@ -123,20 +126,18 @@ class MainWndController (object):
         Начальные установки для главного окна
         """
         self.__bindAppEvents()
-        self.mainWindow.Bind (wx.EVT_CLOSE, self.__onClose)
+        self.mainWindow.Bind(wx.EVT_CLOSE, self.__onClose)
 
-
-    def __onClose (self, event):
+    def __onClose(self, event):
         event.Veto()
-        if TrayConfig (Application.config).minimizeOnClose.value:
+        if TrayConfig(Application.config).minimizeOnClose.value:
             self._mainWindow.Iconize(True)
         else:
-            Application.actionController.getAction (ExitAction.stringId).run(None)
+            Application.actionController.getAction(ExitAction.stringId).run(None)
 
-
-    def destroy (self):
+    def destroy(self):
         self.__unbindAppEvents()
-        self.mainWindow.Unbind (wx.EVT_CLOSE, handler=self.__onClose)
+        self.mainWindow.Unbind(wx.EVT_CLOSE, handler=self.__onClose)
         self._mainWindow = None
 
     @property
@@ -147,32 +148,30 @@ class MainWndController (object):
     def mainMenu(self):
         return self.mainWindow.mainMenu
 
-
-    def updatePageDateTime (self):
+    def updatePageDateTime(self):
         statusbar_item = 1
-        config = GeneralGuiConfig (Application.config)
+        config = GeneralGuiConfig(Application.config)
 
         dateFormat = config.dateTimeFormat.value
         text = u""
 
-        if (Application.selectedPage is not None and
+        if(Application.selectedPage is not None and
                 Application.selectedPage.datetime is not None):
-            text = datetime.datetime.strftime (Application.selectedPage.datetime, dateFormat)
+            text = datetime.datetime.strftime(
+                Application.selectedPage.datetime,
+                dateFormat)
 
-        setStatusText (text, statusbar_item)
+        setStatusText(text, statusbar_item)
 
-
-    def removeMenuItemsById (self, menu, keys):
+    def removeMenuItemsById(self, menu, keys):
         """
         Удалить все элементы меню по идентификаторам
         """
         for key in keys:
-            menu.Delete (key)
-            self.mainWindow.Unbind (wx.EVT_MENU, id = key)
+            menu.Delete(key)
+            self.mainWindow.Unbind(wx.EVT_MENU, id=key)
 
-
-
-    def __bindAppEvents (self):
+    def __bindAppEvents(self):
         Application.onPageSelect += self.__onPageSelect
         Application.onPreferencesDialogClose += self.__onPreferencesDialogClose
         Application.onBookmarksChanged += self.__onBookmarksChanged
@@ -199,12 +198,10 @@ class MainWndController (object):
         self.updateTitle()
         self.updatePageDateTime()
 
-
-    def __onPageUpdate (self, page, **kwargs):
+    def __onPageUpdate(self, page, **kwargs):
         self.updatePageDateTime()
 
-
-    def __onWikiOpen (self, wikiroot):
+    def __onWikiOpen(self, wikiroot):
         """
         Обновить окно после того как загрузили вики
         """
@@ -213,8 +210,8 @@ class MainWndController (object):
                 Application.recentWiki.add(wikiroot.path)
                 self.updateRecentMenu()
             except IOError as e:
-                outwiker.core.commands.MessageBox (
-                    _(u"Can't add wiki to recent list.\nCan't save config.\n%s") % (str (e)),
+                outwiker.core.commands.MessageBox(
+                    _(u"Can't add wiki to recent list.\nCan't save config.\n%s") % (str(e)),
                     _(u"Error"), wx.ICON_ERROR | wx.OK)
 
         self.enableGui()
@@ -233,13 +230,13 @@ class MainWndController (object):
         self.updatePageDateTime()
         self._updateBookmarksState()
 
+    def _updateBookmarksState(self):
+        Application.actionController.enableTools(
+            AddBookmarkAction.stringId,
+            Application.selectedPage is not None
+        )
 
-    def _updateBookmarksState (self):
-        Application.actionController.enableTools (AddBookmarkAction.stringId,
-                                                  Application.selectedPage is not None)
-
-
-    def __onPreferencesDialogClose (self, prefDialog):
+    def __onPreferencesDialogClose(self, prefDialog):
         """
         Обработчик события изменения настроек главного окна
         """
@@ -264,24 +261,24 @@ class MainWndController (object):
 
         self._updateBookmarksState()
 
-
-    def __enableTools (self, enabled):
+    def __enableTools(self, enabled):
         for toolId in self.disabledTools:
-            if self.mainWindow.mainToolbar.FindById (toolId) is not None:
-                self.mainWindow.mainToolbar.EnableTool (toolId, enabled)
+            if self.mainWindow.mainToolbar.FindById(toolId) is not None:
+                self.mainWindow.mainToolbar.EnableTool(toolId, enabled)
 
-            if self.mainMenu.FindItemById (toolId) is not None:
-                self.mainMenu.Enable (toolId, enabled)
+            if self.mainMenu.FindItemById(toolId) is not None:
+                self.mainMenu.Enable(toolId, enabled)
 
-        [Application.actionController.enableTools (action.stringId, enabled) for action in self._disabledActions]
+        [Application.actionController.enableTools(action.stringId, enabled)
+         for action in self._disabledActions]
 
     #
     ###################################################
 
-
-    def updateTitle (self):
+    def updateTitle(self):
         """
-        Обновить заголовок главного окна в зависимости от шаблона и текущей страницы
+        Обновить заголовок главного окна в зависимости от шаблона
+            и текущей страницы
         """
         self.mainWindow.SetTitle(getMainWindowTitle(Application))
 
@@ -310,7 +307,8 @@ class MainWndController (object):
         """
         Обновление меню со списком последних открытых вики
         """
-        self.removeMenuItemsById(self.mainMenu.fileMenu, list(self._recentId.keys()))
+        self.removeMenuItemsById(self.mainMenu.fileMenu,
+                                 list(self._recentId.keys()))
         self._recentId = {}
 
         for n in range(len(Application.recentWiki)):
@@ -318,9 +316,10 @@ class MainWndController (object):
             path = Application.recentWiki[n]
             self._recentId[id] = path
 
-            title = path if n + 1 > 9 else u"&{n}. {path}".format (n=n+1, path=path)
+            title = path if n + 1 > 9 else u"&{n}. {path}".format(n=n+1,
+                                                                  path=path)
 
-            self.mainMenu.fileMenu.Append (id, title, "", wx.ITEM_NORMAL)
+            self.mainMenu.fileMenu.Append(id, title, "", wx.ITEM_NORMAL)
 
             self.mainWindow.Bind(wx.EVT_MENU, self.__onRecent, id=id)
 
@@ -328,7 +327,7 @@ class MainWndController (object):
         """
         Выбор пункта меню с недавно открытыми файлами
         """
-        outwiker.core.commands.openWiki (self._recentId[event.Id])
+        outwiker.core.commands.openWiki(self._recentId[event.Id])
 
     #
     ###################################################

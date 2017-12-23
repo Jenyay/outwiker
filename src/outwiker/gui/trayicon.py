@@ -9,7 +9,6 @@ import wx.adv
 import outwiker.core.commands
 from outwiker.actions.exit import ExitAction
 from outwiker.core.system import getImagesDir
-from outwiker.core.defines import APP_DATA_DISABLE_MINIMIZING
 from outwiker.gui.guiconfig import TrayConfig
 
 
@@ -34,15 +33,11 @@ class TrayIconController(wx.EvtHandler):
         self._application = application
         self._iconFileName = iconFileName
         self.config = TrayConfig(self._application.config)
-
-        self._trayIcon = None
+        self._trayIcon = self._createTrayIcon()
+        self._bind()
 
     def _createTrayIcon(self):
         return TrayIcon(self._application, self.mainWnd, self._iconFileName)
-
-    def initialize(self):
-        self._trayIcon = self._createTrayIcon()
-        self._bind()
 
     def destroy(self):
         self._trayIcon.removeTrayIcon()
@@ -63,7 +58,6 @@ class TrayIconController(wx.EvtHandler):
 
     def _bind(self):
         self.mainWnd.Bind(wx.EVT_ICONIZE, self.__onIconize)
-        self.mainWnd.Bind(wx.EVT_IDLE, self.__onIdle)
 
         self._trayIcon.Bind(wx.adv.EVT_TASKBAR_LEFT_DOWN,
                             self.__OnTrayLeftClick)
@@ -83,7 +77,6 @@ class TrayIconController(wx.EvtHandler):
 
     def _unbind(self):
         self.mainWnd.Unbind(wx.EVT_ICONIZE, handler=self.__onIconize)
-        self.mainWnd.Unbind(wx.EVT_IDLE, handler=self.__onIdle)
 
         self._trayIcon.Unbind(wx.adv.EVT_TASKBAR_LEFT_DOWN,
                               handler=self.__OnTrayLeftClick)
@@ -112,16 +105,6 @@ class TrayIconController(wx.EvtHandler):
             self._trayIcon.showTrayIcon()
         else:
             self._trayIcon.removeTrayIcon()
-
-    def __onIdle(self, event):
-        self.mainWnd.Unbind(wx.EVT_IDLE, handler=self.__onIdle)
-        if (self.config.startIconized.value and not
-                self._application.sharedData.get(APP_DATA_DISABLE_MINIMIZING,
-                                                 False)):
-            self.mainWnd.Iconize(True)
-        else:
-            self.mainWnd.Show()
-            self.updateTrayIcon()
 
     def __onPreferencesDialogClose(self, prefDialog):
         self.updateTrayIcon()

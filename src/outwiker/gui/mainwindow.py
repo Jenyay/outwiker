@@ -97,28 +97,24 @@ class MainWindow(wx.Frame):
 
         self.__createStatusBar()
 
-        logger.debug(u'MainWindow. Create MainWndController')
+        logger.debug(u'MainWindow. Create the MainWndController')
         self.controller = MainWndController(self)
         self.controller.loadMainWindowParams()
 
         if self.mainWindowConfig.maximized.value:
             self.Maximize()
 
-        logger.debug(u'MainWindow. Create AuiManager')
+        logger.debug(u'MainWindow. Create the AuiManager')
         self.auiManager = wx.aui.AuiManager(self)
         self.__createAuiPanes()
         self.__createToolbars()
 
-        logger.debug(u'MainWindow. Create MainPanesController')
+        logger.debug(u'MainWindow. Create the MainPanesController')
         self.__panesController = MainPanesController(Application, self)
 
         self.__bindGuiEvents()
 
-        logger.debug(u'MainWindow. Create tray icon')
-        self.taskBarIconController = getTrayIconController(Application, self)
-        self.taskBarIconController.initialize()
-
-        logger.debug(u'MainWindow. Create TabsController')
+        logger.debug(u'MainWindow. Create the TabsController')
         self.tabsController = TabsController(self.pagePanel.panel.tabsCtrl,
                                              Application)
 
@@ -132,6 +128,9 @@ class MainWindow(wx.Frame):
 
         logger.debug(u'MainWindow. Initialize the core controllers')
         self._initCoreControllers()
+
+        logger.debug(u'MainWindow. Create the tray icon')
+        self.taskBarIconController = getTrayIconController(Application, self)
 
         logger.debug(u'MainWindow initialize ended')
 

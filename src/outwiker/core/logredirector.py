@@ -31,3 +31,6 @@ class LogRedirector(object):
                 fp.write(u'\n\n{} - START\n'.format(self._runTime))
                 self._firstWrite = False
             fp.write(message)
+
+    def flush(self):
+        self._terminal.flush()
