@@ -29,7 +29,6 @@ class OutWiker(wx.App):
         wx.App.__init__(self, *args, **kwds)
 
     def OnInit(self):
-        getOS().init()
         getOS().migrateConfig()
 
         self._fullConfigPath = getConfigPath()

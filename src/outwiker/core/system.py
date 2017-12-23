@@ -53,9 +53,6 @@ class System(object):
 
 
 class Windows(System):
-    def init(self):
-        pass
-
     @property
     def name(self):
         return u'windows'
@@ -116,13 +113,6 @@ class Unix(System):
     def name(self):
         return u'unix'
 
-    def init(self):
-        import gi
-        gi.require_version('Gdk', '3.0')
-
-        from gi.repository import Gdk
-        Gdk.threads_init()
-
     def startFile(self, path):
         """
         Запустить программу по умолчанию для path
@@ -164,31 +154,7 @@ class Unix(System):
         в другие приложения.
         Под Linux'ом wx.FileDataObject не правильно работает с Unicode
         """
-        class GtkFileDataObject(wx.PyDataObjectSimple):
-            """
-            Класс данных для перетаскивания файлов. Использовать вместо
-            wx.FileDataObject, который по сути не работает с Unicode
-            """
-            def __init__(self):
-                wx.PyDataObjectSimple.__init__(self,
-                                               wx.DataFormat(wx.DF_FILENAME))
-                self._fnames = []
-
-            def AddFile(self, fname):
-                self._fnames.append(fname)
-
-            def GetDataHere(self):
-                result = ""
-                for fname in self._fnames:
-                    result += u"file:%s\r\n" % (fname)
-
-                # Преобразуем в строку
-                return result.strip().encode("utf8")
-
-            def GetDataSize(self):
-                return len(self.GetDataHere())
-
-        return GtkFileDataObject
+        return wx.FileDataObject
 
     @property
     def pageTitleTester(self):
