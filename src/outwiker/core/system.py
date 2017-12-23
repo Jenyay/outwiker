@@ -10,8 +10,6 @@ import shutil
 import sys
 import subprocess
 
-import wx
-
 from .pagetitletester import WindowsPageTitleTester, LinuxPageTitleTester
 from outwiker.gui.fileicons import WindowsFileIcons, UnixFileIcons
 from outwiker.core.defines import (ICONS_FOLDER_NAME,
@@ -73,15 +71,6 @@ class Windows(System):
         Кодировка, используемая для преобразования нажатой клавиши в строку
         """
         return "mbcs"
-
-    @property
-    def dragFileDataObject(self):
-        """
-        Получить класс для перетаскивания файлов
-        из окна OutWiker'а в другие приложения.
-        Под Linux'ом wx.FileDataObject не правильно работает с Unicode
-        """
-        return wx.FileDataObject
 
     @property
     def pageTitleTester(self):
@@ -146,15 +135,6 @@ class Unix(System):
             encoding = "utf8"
 
         return encoding
-
-    @property
-    def dragFileDataObject(self):
-        """
-        Получить класс для перетаскивания файлов из окна OutWiker'а
-        в другие приложения.
-        Под Linux'ом wx.FileDataObject не правильно работает с Unicode
-        """
-        return wx.FileDataObject
 
     @property
     def pageTitleTester(self):
