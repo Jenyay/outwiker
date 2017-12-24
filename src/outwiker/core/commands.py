@@ -8,7 +8,6 @@ from datetime import datetime
 import os.path
 import shutil
 import logging
-import traceback
 
 import wx
 
@@ -122,7 +121,7 @@ def removePage(page):
                    wx.ICON_ERROR | wx.OK)
         return
 
-    if (MessageBox(_(u'Remove page "{}" and all subpages?').format(page.title),
+    if (MessageBox(_(u'Remove page "{}" and all subpages?\nAll attached files will also be deleted.').format(page.title),
                    _(u"Remove page?"),
                    wx.YES_NO | wx.ICON_QUESTION) == wx.YES):
         try:

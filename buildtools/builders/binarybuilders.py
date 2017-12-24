@@ -229,3 +229,10 @@ class PyInstallerBuilderLinux(BasePyInstallerBuilder):
         params = super(PyInstallerBuilderLinux, self).get_params()
         params.append(u'--runtime-hook=linux_runtime_hook.py')
         return params
+
+    def get_includes(self):
+        result = super(PyInstallerBuilderLinux, self).get_includes()
+        # result.append('gi')
+        # result.append('gi.repository.Gtk')
+        # result.append('gi.repository.GdkPixbuf')
+        return result
