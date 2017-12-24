@@ -72,6 +72,7 @@ class OverwriteDialog(TestedDialog):
         """
         if self.flag == 0:
             self.textLabel.SetLabel(text)
+            self.Layout()
             return self.ShowModal()
 
         return self.flag
