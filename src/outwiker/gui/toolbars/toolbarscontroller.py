@@ -128,6 +128,8 @@ class ToolBarsController(object):
         Fix toolbars positions in the window to all toolbars were visible.
         '''
         mainWindowWidth = self._mainWindow.GetClientSize()[0]
+        if mainWindowWidth == 0:
+            return
 
         for name, toolbar_info in self._toolbars.items():
             toolbar = toolbar_info.toolbar
