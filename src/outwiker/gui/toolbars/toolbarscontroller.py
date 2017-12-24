@@ -19,8 +19,9 @@ class ToolBarsController(object):
 
         # Подменю для показа скрытия панелей
         self._toolbarsMenu = wx.Menu()
-        self._mainWindow.mainMenu.viewMenu.Append(-1, _(u"Toolbars"),
-                                                      self._toolbarsMenu)
+        self._mainWindow.mainMenu.viewMenu.Append(-1,
+                                                  _(u"Toolbars"),
+                                                  self._toolbarsMenu)
         self._mainWindow.auiManager.Bind(wx.aui.EVT_AUI_PANE_CLOSE,
                                          self.__onPaneClose)
         self._mainWindow.Bind(wx.EVT_SIZE, self.__onSizeChanged)
@@ -121,7 +122,8 @@ class ToolBarsController(object):
         return toolbarname in self._toolbars
 
     def updatePanesInfo(self):
-        [toolbar.toolbar.updatePaneInfo() for toolbar in self._toolbars.values()]
+        [toolbar.toolbar.updatePaneInfo()
+         for toolbar in self._toolbars.values()]
 
     def layout(self):
         '''
