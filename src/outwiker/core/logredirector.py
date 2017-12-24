@@ -34,3 +34,6 @@ class LogRedirector(object):
 
     def flush(self):
         self._terminal.flush()
+
+    def fileno(self):
+        return self._terminal.fileno()

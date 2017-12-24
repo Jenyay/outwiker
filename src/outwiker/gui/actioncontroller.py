@@ -321,12 +321,12 @@ class ActionController(object):
                                           fullUpdate=fullUpdate)
         elif issubclass(type(toolbar), wx.ToolBar):
             toolbarItem = toolbar.AddTool(actionid,
-                                               title,
-                                               bitmap,
-                                               wx.NullBitmap,
-                                               wx.ITEM_NORMAL,
-                                               title,
-                                               "")
+                                          title,
+                                          bitmap,
+                                          wx.NullBitmap,
+                                          wx.ITEM_NORMAL,
+                                          title,
+                                          "")
         else:
             raise ValueError(u'Invalid toolbar type')
 

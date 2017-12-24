@@ -33,9 +33,9 @@ class NotesTree(wx.Panel):
         kwds["style"] = wx.TAB_TRAVERSAL
         wx.Panel.__init__(self, *args, **kwds)
         self.toolbar = wx.ToolBar(
-            self,
-            -1,
+            parent=self,
             style=wx.TB_HORIZONTAL | wx.TB_FLAT | wx.TB_DOCKABLE)
+        # self.toolbar.SetMinSize((-1, 32))
 
         treeStyle = (wx.TR_HAS_BUTTONS | wx.TR_EDIT_LABELS | wx.SUNKEN_BORDER)
 
@@ -458,6 +458,7 @@ class NotesTree(wx.Panel):
         mainSizer.Add(self.toolbar, 1, wx.EXPAND, 0)
         mainSizer.Add(self.treeCtrl, 1, wx.EXPAND, 0)
         self.SetSizer(mainSizer)
+        self.Layout()
 
     def expand(self, page):
         item = self.getTreeItem(page)
@@ -480,7 +481,6 @@ class NotesTree(wx.Panel):
             rootname = os.path.basename(rootPage.path)
             rootItem = self.treeCtrl.AddRoot(
                 rootname,
-                #data=wx.TreeItemData(rootPage),
                 data=rootPage,
                 image=self.defaultImageId)
 
@@ -638,3 +638,4 @@ class NotesTree(wx.Panel):
             False)
 
         self.toolbar.Realize()
+        self.Layout()
