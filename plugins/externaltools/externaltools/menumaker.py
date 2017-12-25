@@ -33,31 +33,31 @@ class MenuMaker(object):
         Добавить пункт меню для открытия файла контента во внешнем редакторе
         """
         # Меню для открытия файла с текстом
-        contentMenu = wx.Menu()
-        self.__appendToolsMenu(contentMenu,
+        self.contentMenu = wx.Menu()
+        self.__appendToolsMenu(self.contentMenu,
                                self.__onOpenContentFile,
                                self._controller.tools)
 
         itemsCount = len(self._menu.GetMenuItems())
         self._menu.Insert(itemsCount - self._popupPosition,
-                              -1,
-                              _(u"Open Content File with..."),
-                              contentMenu,
-                              u"")
+                          -1,
+                          _(u"Open Content File with..."),
+                          self.contentMenu,
+                          u"")
 
     def insertResultMenuItem(self):
-        # Меню для открытия файла с результатом(HTML)
-        resultMenu = wx.Menu()
-        self.__appendToolsMenu(resultMenu,
+        # Меню для открытия файла с результатом (HTML)
+        self.resultMenu = wx.Menu()
+        self.__appendToolsMenu(self.resultMenu,
                                self.__onOpenResultFile,
                                self._controller.tools)
 
         itemsCount = len(self._menu.GetMenuItems())
         self._menu.Insert(itemsCount - self._popupPosition,
-                              -1,
-                              _(u"Open Result HTML File with..."),
-                              resultMenu,
-                              u"")
+                          -1,
+                          _(u"Open Result HTML File with..."),
+                          self.resultMenu,
+                          u"")
 
     def insertSeparator(self):
         itemsCount = len(self._menu.GetMenuItems())

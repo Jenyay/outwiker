@@ -5,8 +5,6 @@ import os.path
 
 import wx
 
-from outwiker.core.system import getOS
-
 from .scrolledpanel import ScrolledPanel
 from .toolsinfo import ToolsInfo
 from .i18n import get_
@@ -138,10 +136,7 @@ class ToolsItemCtrl(wx.Panel):
         wx.PostEvent(self.GetParent(), removeEvent)
 
     def __getImagePath(self, fname):
-        return unicode(os.path.join(os.path.dirname(__file__),
-                                    "images",
-                                    fname),
-                       getOS().filesEncoding)
+        return os.path.join(os.path.dirname(__file__), "images", fname)
 
     def __layout(self):
         sizer = wx.FlexGridSizer(1, 3, 0, 0)

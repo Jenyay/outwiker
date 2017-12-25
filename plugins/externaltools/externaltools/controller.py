@@ -2,9 +2,9 @@
 
 from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
 
-from i18n import get_
-from menutoolscontroller import MenuToolsController
-from commandexec.commandcontroller import CommandController
+from .i18n import get_
+from .menutoolscontroller import MenuToolsController
+from .commandexec.commandcontroller import CommandController
 
 
 class Controller(object):

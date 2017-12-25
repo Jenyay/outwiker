@@ -1,17 +1,17 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from abc import ABCMeta, abstractmethod
-import urllib
+import urllib.request
+import urllib.parse
+import urllib.error
 
-from commandparams import PROTO_COMMAND, PROTO_TITLE, EXEC_BEGIN, TITLE_NAME
+from .commandparams import PROTO_COMMAND, PROTO_TITLE, EXEC_BEGIN, TITLE_NAME
 
 
-class HtmlMaker(object):
+class HtmlMaker(object, metaclass=ABCMeta):
     """
     A base class for all HTML makers
     """
-    __metaclass__ = ABCMeta
-
     @abstractmethod
     def createHtml(self, commandsList, paramsDict):
         pass
@@ -27,7 +27,7 @@ class HtmlMaker(object):
             urldict[commandname] = [command.command.encode(u'utf-8')] + params_encoded
 
         urldict[PROTO_TITLE] = self._getTitle(commandsList, paramsDict).encode(u'utf-8')
-        urlparams = urllib.urlencode(urldict, True)
+        urlparams = urllib.parse.urlencode(urldict, True)
 
         return u''.join([EXEC_BEGIN, u'?', urlparams])
 

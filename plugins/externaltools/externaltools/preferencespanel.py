@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import ConfigParser
+import configparser
 
 import wx
 
@@ -94,7 +94,7 @@ class PrefController(object):
         try:
             toolsConfig.tools = self._prefPanel.toolsListPanel.tools
             toolsConfig.execWarning = self._prefPanel.warningCheckBox.GetValue()
-        except ConfigParser.Error:
+        except configparser.Error:
             MessageBox(_(u"Can't save options"),
                        _(u"Error"),
                        wx.OK | wx.ICON_ERROR)

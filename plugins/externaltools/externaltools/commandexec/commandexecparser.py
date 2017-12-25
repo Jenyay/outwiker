@@ -2,13 +2,13 @@
 
 import os.path
 import re
+import shlex
 
 from outwiker.core.attachment import Attachment
 from outwiker.core.defines import PAGE_CONTENT_FILE
 
-from externaltools.libs import ushlex
-from execinfo import ExecInfo
-import commandparams
+from .execinfo import ExecInfo
+from . import commandparams
 
 
 class CommandExecParser(object):
@@ -35,7 +35,7 @@ class CommandExecParser(object):
 
         result = []
         for line in lines:
-            items = ushlex.split(line)
+            items = shlex.split(line)
             assert len(items) != 0
 
             params = [self._substituteMacros(item) for item in items]

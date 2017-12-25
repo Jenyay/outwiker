@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 
 import os.path
-import ConfigParser
+import configparser
 
 import wx
 
 from outwiker.core.config import IntegerOption, BooleanOption
 
-from toolsinfo import ToolsInfo
+from .toolsinfo import ToolsInfo
 
 
 class ExternalToolsConfig(object):
@@ -98,7 +98,7 @@ class ExternalToolsConfig(object):
             paramname = self._toolsItemTemplate.format(index=len(toolsItems) + 1)
             try:
                 toolsPath = self._config.get(self._sectionName, paramname)
-            except ConfigParser.Error:
+            except configparser.Error:
                 break
 
             toolsName = os.path.basename(toolsPath)
@@ -128,7 +128,7 @@ class ExternalToolsConfig(object):
             try:
                 self._config.get(self._sectionName, paramname)
                 self._config.remove_option(self._sectionName, paramname)
-            except ConfigParser.Error:
+            except configparser.Error:
                 if index >= minCount:
                     break
 

@@ -1,11 +1,11 @@
 # -*- coding: UTF-8 -*-
 
-from StringIO import StringIO
+from io import StringIO
 
 import wx
 
-from externaltools.config import ExternalToolsConfig
-from externaltools.commandexec.commandparams import (
+from ..config import ExternalToolsConfig
+from ..commandexec.commandparams import (
     TITLE_NAME,
     FORMAT_NAME,
     FORMAT_BUTTON

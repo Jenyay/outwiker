@@ -1,17 +1,16 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
-import urlparse
+import urllib.parse
 import subprocess
-from StringIO import StringIO
+from io import StringIO
 
 import wx
 
-from outwiker.core.system import getOS
 from outwiker.core.commands import MessageBox
 
-from externaltools.commandexec.commandparams import EXEC_BEGIN, PROTO_COMMAND
-from externaltools.config import ExternalToolsConfig
-from externaltools.i18n import get_
+from .commandparams import EXEC_BEGIN, PROTO_COMMAND
+from ..config import ExternalToolsConfig
+from ..i18n import get_
 
 
 class CommandController(object):
@@ -99,8 +98,10 @@ class CommandController(object):
         Return dictionary with params from url.
         Every value in dictionary is list
         """
-        if(url is None or
-                not url.startswith(EXEC_BEGIN)):
+        if isinstance(url, bytes):
+            url = url.decode('utf8')
+
+        if url is None or not url.startswith(EXEC_BEGIN):
             return {}
 
         startpos = url.find(u'?')
@@ -111,7 +112,7 @@ class CommandController(object):
         params = url[startpos + 1:]
 
         try:
-            paramsDict = urlparse.parse_qs(str(params))
+            paramsDict = urllib.parse.parse_qs(params)
         except ValueError:
             return {}
 
@@ -136,15 +137,13 @@ class CommandController(object):
         """
         assert commands
 
-        encoding = getOS().filesEncoding
-
         buf = StringIO()
         buf.write(u'>>> ')
-        buf.write(self._getParamText(unicode(commands[0].command, encoding)))
+        buf.write(self._getParamText(commands[0].command))
 
         for param in commands[0].params:
             buf.write(u' ')
-            buf.write(self._getParamText(unicode(param, encoding)))
+            buf.write(self._getParamText(param))
 
         if len(commands) > 1:
             buf.write(u' ...')
@@ -201,13 +200,9 @@ class CommandController(object):
         comindex = 1
         comparams = PROTO_COMMAND.format(number=comindex)
 
-        encoding = getOS().filesEncoding
-
         while comparams in urlparams:
-            command = unicode(urlparams[comparams][0], "utf8").encode(encoding)
-            params = [unicode(param, "utf8").encode(encoding)
-                      for param
-                      in urlparams[comparams][1:]]
+            command = urlparams[comparams][0]
+            params = [param for param in urlparams[comparams][1:]]
 
             result.append(ExecInfo(command, params))
 

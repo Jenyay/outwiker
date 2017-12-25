@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os.path
 import subprocess
@@ -7,7 +7,6 @@ import wx
 
 from outwiker.core.tree import RootWikiPage
 from outwiker.core.commands import MessageBox
-from outwiker.core.system import getOS
 
 from .i18n import get_
 from .menumaker import MenuMaker
@@ -67,11 +66,8 @@ class MenuToolsController(object):
         self.__executeTools(tools.command, contentFname)
 
     def __executeTools(self, command, fname):
-        encoding = getOS().filesEncoding
-
         try:
-            subprocess.call([command.encode(encoding),
-                             fname.encode(encoding)])
+            subprocess.call([command, fname])
         except OSError:
             MessageBox(_(u"Can't execute tools"),
                        _(u"Error"),

@@ -36,9 +36,9 @@ class GuiCreator(object):
 
     def initialize(self):
         if self._application.mainWindow is not None:
-            map(lambda action: self._application.actionController.register(
+            list(map(lambda action: self._application.actionController.register(
                 action(self._application), None),
-                self._actions)
+                self._actions))
 
     def createTools(self):
         mainWindow = self._application.mainWindow
@@ -48,8 +48,8 @@ class GuiCreator(object):
 
         pluginMenu = wx.Menu()
 
-        map(lambda action: self._application.actionController.appendMenuItem(
-            action.stringId, pluginMenu), self._actions)
+        list(map(lambda action: self._application.actionController.appendMenuItem(
+            action.stringId, pluginMenu), self._actions))
 
         self._submenuItem = self._getParentMenu().AppendSubMenu(pluginMenu, _(u"ExternalTools"))
 
@@ -58,8 +58,8 @@ class GuiCreator(object):
 
     def removeTools(self):
         if self._application.mainWindow is not None:
-            map(lambda action: self._application.actionController.removeMenuItem(action.stringId),
-                self._actions)
+            list(map(lambda action: self._application.actionController.removeMenuItem(action.stringId),
+                     self._actions))
 
             self._getParentMenu().DestroyItem(self._submenuItem)
             self._submenuItem = None
@@ -69,8 +69,8 @@ class GuiCreator(object):
 
     def destroy(self):
         if self._application.mainWindow is not None:
-            map(lambda action: self._application.actionController.removeAction(action.stringId),
-                self._actions)
+            list(map(lambda action: self._application.actionController.removeAction(action.stringId),
+                     self._actions))
 
     def _onTabChanged(self, event):
         self._enableTools()
@@ -82,8 +82,8 @@ class GuiCreator(object):
         pageView = self._getPageView()
         enabled = (pageView.selectedPageIndex == pageView.CODE_PAGE_INDEX)
 
-        map(lambda action: self._application.actionController.enableTools(action.stringId, enabled),
-            self._actions)
+        list(map(lambda action: self._application.actionController.enableTools(action.stringId, enabled),
+                 self._actions))
 
     def _getParentMenu(self):
         return self._getPageView().toolsMenu
