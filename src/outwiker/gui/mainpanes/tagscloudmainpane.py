@@ -28,7 +28,6 @@ class TagsCloudMainPane (MainPane):
         if pane is None:
             pane = self._getPaneDefault()
 
-        # Из-за глюка http://trac.wxwidgets.org/ticket/12422 придется пока отказаться от плавающих панелек
         pane.Dock()
         pane.CloseButton()
         pane.Caption(self.caption)

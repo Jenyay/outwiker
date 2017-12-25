@@ -31,7 +31,6 @@ class TreeMainPane (MainPane):
         if pane is None:
             pane = wx.aui.AuiPaneInfo().Name("treePane").Caption(self.caption).Gripper(False).CaptionVisible(True).Layer(2).Position(0).CloseButton(True).MaximizeButton(False).Left().Dock()
 
-        # Из-за глюка http://trac.wxwidgets.org/ticket/12422 придется пока отказаться от плавающих панелек
         pane.Dock()
         pane.CloseButton()
         pane.Caption(self.caption)
