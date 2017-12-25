@@ -1,3 +1,4 @@
+wheel==0.30.0
 wxPython==4.0.0b2
 Pillow==4.3.0
 pyenchant==2.0.0
