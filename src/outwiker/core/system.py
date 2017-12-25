@@ -62,10 +62,6 @@ class Windows(System):
         os.startfile(path.replace("/", "\\"))
 
     @property
-    def filesEncoding(self):
-        return sys.getfilesystemencoding()
-
-    @property
     def inputEncoding(self):
         """
         Кодировка, используемая для преобразования нажатой клавиши в строку
@@ -122,10 +118,6 @@ class Unix(System):
             settingsDir = op.join(homeDir, settingsDir)
 
         return settingsDir
-
-    @property
-    def filesEncoding(self):
-        return sys.getfilesystemencoding()
 
     @property
     def inputEncoding(self):
@@ -272,9 +264,8 @@ def openInNewWindow(path, args=[]):
     """ Open wiki tree in the new OutWiker window
     """
     exeFile = getExeFile()
-    encoding = getOS().filesEncoding
 
-    params = [exeFile.encode(encoding), path.encode(encoding)] + args
+    params = [exeFile, path] + args
 
     env = os.environ.copy()
 

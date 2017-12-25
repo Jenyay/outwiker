@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import unittest
 from tempfile import mkdtemp
@@ -58,7 +58,6 @@ class SpoilerPluginTest (unittest.TestCase):
         from outwiker.pages.wiki.wikipanel import WikiPagePanel
         from outwiker.pages.wiki.parser.command import Command
 
-        getOS().filesEncoding
         StatusSet.DEV
         Command.parseParams
 
