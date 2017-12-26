@@ -755,7 +755,7 @@ def vm_linux_binary(is_stable=0):
         )
 
 
-@task
+@task(alias='linux_appimage')
 @linux_only
 def appimage(is_stable=0):
     builder = BuilderAppImage(is_stable=tobool(is_stable))

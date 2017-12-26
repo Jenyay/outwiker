@@ -6,7 +6,7 @@ import shutil
 from fabric.api import local, lcd
 
 from .base import BuilderBase
-from .binarybuilders import PyInstallerBuilderLinux
+from .binarybuilders import PyInstallerBuilderLinuxSimple
 
 from buildtools.defines import APPIMAGE_BUILD_DIR, NEED_FOR_BUILD_DIR
 
@@ -52,7 +52,7 @@ class BuilderAppImage(BuilderBase):
         src_dir = self.temp_sources_dir
         temp_dir = self.facts.temp_dir
 
-        linuxBuilder = PyInstallerBuilderLinux(src_dir, dest_dir, temp_dir)
+        linuxBuilder = PyInstallerBuilderLinuxSimple(src_dir, dest_dir, temp_dir)
         linuxBuilder.build()
 
     def _download_appimagetool(self):

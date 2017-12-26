@@ -6,7 +6,7 @@ import shutil
 from fabric.api import local, lcd
 
 from .base import BuilderBase
-from .binarybuilders import PyInstallerBuilderLinux
+from .binarybuilders import PyInstallerBuilderLinuxSimple
 
 from buildtools.defines import LINUX_BUILD_DIR
 
@@ -34,7 +34,7 @@ class BuilderLinuxBinary(BuilderBase):
         dest_dir = self._exe_path
         temp_dir = self.facts.temp_dir
 
-        builder = PyInstallerBuilderLinux(src_dir, dest_dir, temp_dir)
+        builder = PyInstallerBuilderLinuxSimple(src_dir, dest_dir, temp_dir)
         builder.build()
 
     def _create_plugins_dir(self):

@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from abc import ABCMeta, abstractmethod
+import glob
 import os
 import os.path
+from pathlib import Path
 import shutil
 
 from fabric.api import lcd, local
@@ -171,7 +173,7 @@ class PyInstallerBuilderWindows(BasePyInstallerBuilder):
         ]
 
 
-class PyInstallerBuilderLinux(BasePyInstallerBuilder):
+class PyInstallerBuilderLinuxBase(BasePyInstallerBuilder):
     def get_remove_list(self):
         return [
             u'lib',
@@ -184,6 +186,29 @@ class PyInstallerBuilderLinux(BasePyInstallerBuilder):
             u'_codecs_tw.so',
         ]
 
+    def build(self):
+        super(PyInstallerBuilderLinuxBase, self).build()
+        self._strip_binary()
+
+    def _strip_binary(self):
+        strip_path = Path(self._dest_dir)
+        files_for_strip = (list(strip_path.glob('libwx*.so.*')) +
+                           list(strip_path.glob('wx.*so')))
+
+        for fname in files_for_strip:
+            print_info(u'Strip {}'.format(fname))
+            if os.path.exists(fname):
+                local(u'strip -s -o "{fname}" "{fname}"'.format(fname=fname))
+
+    def get_includes(self):
+        result = super(PyInstallerBuilderLinuxBase, self).get_includes()
+        # result.append('gi')
+        # result.append('gi.repository.Gtk')
+        # result.append('gi.repository.GdkPixbuf')
+        return result
+
+
+class PyInstallerBuilderLinuxSimple(PyInstallerBuilderLinuxBase):
     def get_additional_files(self):
         pixbuf_dir_dest = u'lib/gdk-pixbuf'
         files = [
@@ -203,36 +228,7 @@ class PyInstallerBuilderLinux(BasePyInstallerBuilder):
 
         return files
 
-    def build(self):
-        super(PyInstallerBuilderLinux, self).build()
-        files_for_strip = [
-            u'wx._aui.so',
-            u'wx._combo.so',
-            u'wx._controls_.so',
-            u'wx._core_.so',
-            u'wx._gdi_.so',
-            u'wx._html.so',
-            u'wx._html2.so',
-            u'wx._misc_.so',
-            u'wx._stc.so',
-            u'wx._windows_.so',
-        ]
-
-        for fname in files_for_strip:
-            print_info(u'Strip {}'.format(fname))
-            with lcd(self._dest_dir):
-                full_path = os.path.join(self._dest_dir, fname)
-                if os.path.exists(full_path):
-                    local(u'strip -s -o "{fname}" "{fname}"'.format(fname=fname))
-
     def get_params(self):
-        params = super(PyInstallerBuilderLinux, self).get_params()
+        params = super(PyInstallerBuilderLinuxSimple, self).get_params()
         params.append(u'--runtime-hook=linux_runtime_hook.py')
         return params
-
-    def get_includes(self):
-        result = super(PyInstallerBuilderLinux, self).get_includes()
-        # result.append('gi')
-        # result.append('gi.repository.Gtk')
-        # result.append('gi.repository.GdkPixbuf')
-        return result

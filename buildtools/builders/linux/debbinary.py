@@ -7,11 +7,15 @@ import shutil
 from fabric.api import local, lcd, settings
 
 from ..base import BuilderBase
-from ..binarybuilders import PyInstallerBuilderLinux
+from ..binarybuilders import PyInstallerBuilderLinuxBase
 from buildtools.defines import (DEB_BINARY_BUILD_DIR,
                                 NEED_FOR_BUILD_DIR,
                                 )
 from buildtools.versions import getOutwikerVersion
+
+
+class PyInstallerBuilderLinuxForDeb(PyInstallerBuilderLinuxBase):
+    pass
 
 
 class BuilderDebBinaryFactory(object):
@@ -20,7 +24,7 @@ class BuilderDebBinaryFactory(object):
     '''
     @staticmethod
     def get_default(dir_name=DEB_BINARY_BUILD_DIR, is_stable=False):
-        return BuilderDebBinaryFactory.get_usr(dir_name, is_stable)
+        return BuilderDebBinaryFactory.get_opt(dir_name, is_stable)
 
     @staticmethod
     def get_usr(dir_name=DEB_BINARY_BUILD_DIR, is_stable=False):
@@ -144,9 +148,9 @@ class BuilderDebBinaryBase(BuilderBase, metaclass=ABCMeta):
         src_dir = self.temp_sources_dir
         temp_dir = self.facts.temp_dir
 
-        linuxBuilder = PyInstallerBuilderLinux(src_dir,
-                                               dest_dir,
-                                               temp_dir)
+        linuxBuilder = PyInstallerBuilderLinuxForDeb(src_dir,
+                                                     dest_dir,
+                                                     temp_dir)
         linuxBuilder.build()
 
         for fname in self._files_to_remove:
