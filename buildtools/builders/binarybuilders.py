@@ -169,6 +169,7 @@ class PyInstallerBuilderWindows(BasePyInstallerBuilder):
             u'enchant/share',
             u'enchant/lib/enchant/README.txt',
             u'mfc140u.dll',
+            u'include',
         ]
 
         to_remove += [fname.name for fname
