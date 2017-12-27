@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from abc import ABCMeta, abstractmethod
-import glob
 import os
 import os.path
 from pathlib import Path
@@ -159,7 +158,7 @@ class BasePyInstallerBuilder(BaseBinaryBuilder, metaclass=ABCMeta):
 class PyInstallerBuilderWindows(BasePyInstallerBuilder):
     def get_remove_list(self):
         """Return list of the files or dirs to remove after build."""
-        return [
+        to_remove = [
             u'_win32sysloader.pyd',
             u'win32com.shell.shell.pyd',
             u'win32trace.pyd',
@@ -171,6 +170,11 @@ class PyInstallerBuilderWindows(BasePyInstallerBuilder):
             u'enchant/lib/enchant/README.txt',
             u'mfc140u.dll',
         ]
+
+        to_remove += [fname.name for fname
+                      in Path(self._dist_dir, 'outwiker').glob('api-ms-win*.dll')]
+
+        return to_remove
 
 
 class PyInstallerBuilderLinuxBase(BasePyInstallerBuilder):
