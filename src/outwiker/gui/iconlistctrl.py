@@ -175,12 +175,15 @@ class IconListCtrl(wx.ScrolledWindow):
         self.margin = 1
         self.multiselect = multiselect
 
+        # Size of the control before icons layout
+        self._oldSize = (-1, -1)
+
         # Path to current page icon
         self._currentIcon = None
 
         self._lastClickedButton = None
 
-        self.SetScrollRate(0, 0)
+        # self.SetScrollRate(0, 0)
         self.SetBackgroundColour(wx.Colour(255, 255, 255))
 
         # Список картинок, которые хранятся в окне
@@ -192,7 +195,10 @@ class IconListCtrl(wx.ScrolledWindow):
         self.Bind(wx.EVT_SIZE, self.__onSize)
 
     def __onSize(self, event):
-        self.__layout()
+        newSize = self.GetSize()
+        if self._oldSize != newSize:
+            self.__layout()
+            self._oldSize = newSize
 
     def __onPaint(self, event):
         dc = wx.AutoBufferedPaintDCFactory(self._canvas)
@@ -352,9 +358,9 @@ class IconListCtrl(wx.ScrolledWindow):
             button.x = currx
             button.y = curry
 
-        self.Scroll(0, 0)
+        # self.Scroll(0, 0)
         self._canvas.SetSize(windowWidth,
-                               rowsCount * (self.cellHeight + self.margin))
+                             rowsCount * (self.cellHeight + self.margin))
 
         self.SetScrollbars(self.cellWidth,
                            self.cellHeight + self.margin,
