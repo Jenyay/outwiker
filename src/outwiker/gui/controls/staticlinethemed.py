@@ -21,6 +21,6 @@ class StaticLineThemed(wx.StaticLine):
 
         self.SetBackgroundColour(self._color)
         if self.IsVertical():
-            self.SetMinSize((3, -1))
+            self.SetMinSize((3, wx.DefaultCoord))
         else:
-            self.SetMinSize((-1, 3))
+            self.SetMinSize((wx.DefaultCoord, 3))
