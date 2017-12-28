@@ -89,7 +89,7 @@ class SwitchThemed(ScrolledPanel):
     def AppendSeparator(self):
         separator = StaticLineThemed(self, theme=self._theme)
         self._otherItems.append(separator)
-        self._mainSizer.Add(separator, flag=wx.EXPAND | wx.ALL, border=0)
+        self._mainSizer.Add(separator, flag=wx.EXPAND)
 
     def GetSelection(self):
         for n, button in enumerate(self._buttons):
