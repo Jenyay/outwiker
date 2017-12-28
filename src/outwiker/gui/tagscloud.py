@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os
 
@@ -9,13 +9,12 @@ from outwiker.gui.taglabel import TagLabel
 from outwiker.gui.guiconfig import TagsConfig
 
 
-class TagsCloud (wx.ScrolledWindow):
-    def __init__ (self, parent):
-        super (TagsCloud, self).__init__ (parent, style=wx.BORDER_THEME)
+class TagsCloud(wx.ScrolledWindow):
+    def __init__(self, parent):
+        super(TagsCloud, self).__init__(parent, style=wx.BORDER_THEME)
 
-        self.SetScrollRate (0, 0)
-        self.SetBackgroundColour (wx.Colour (255, 255, 255))
-
+        self.SetScrollRate(0, 0)
+        self.SetBackgroundColour(wx.Colour(255, 255, 255))
 
         # Отступ от края окна
         self.__margin = 4
@@ -26,22 +25,26 @@ class TagsCloud (wx.ScrolledWindow):
         # Шаг между строчками тегов
         self.__stepy = 28
 
+        # Size of the control before tags layout
+        self._oldSize = (-1, -1)
+
         self.__tags = {}
 
         # Ключ - имя метки, значение - контрол, отображающий эту метку
         self.__labels = {}
 
-        self.__loadColors ()
+        self.__loadColors()
 
-        self.Bind (wx.EVT_SIZE, self.__onSize)
+        self.Bind(wx.EVT_SIZE, self.__onSize)
 
+    def __onSize(self, event):
+        newSize = self.GetSize()
+        if self._oldSize != newSize:
+            self.__moveLabels()
+            self._oldSize = newSize
 
-    def __onSize (self, event):
-        self.__moveLabels()
-
-
-    def __loadColors (self):
-        config = TagsConfig (Application.config)
+    def __loadColors(self):
+        config = TagsConfig(Application.config)
         self.__tagNormalFontColor = config.colorFontNormal.value
         self.__tagNormalHoverFontColor = config.colorFontNormalHover.value
 
@@ -62,10 +65,9 @@ class TagsCloud (wx.ScrolledWindow):
     def updateTagLabels(self):
         self.__loadColors()
         for label in self.__labels.values():
-            self.__updateTagLabel (label)
+            self.__updateTagLabel(label)
 
-
-    def setTags (self, taglist):
+    def setTags(self, taglist):
         """
         Добавить теги в облако
         """
@@ -97,8 +99,7 @@ class TagsCloud (wx.ScrolledWindow):
         """
         [label.mark(False) for label in self.__labels.values()]
 
-
-    def isMarked (self, tag):
+    def isMarked(self, tag):
         return self.__labels[tag].isMarked
 
     def clear(self):
@@ -112,7 +113,7 @@ class TagsCloud (wx.ScrolledWindow):
         maxindex = -1
 
         if len(labels) == 0:
-            return (maxheight, maxindex)
+            return(maxheight, maxindex)
 
         for label, index in zip(labels, range(len(labels))):
             height = label.GetSize()[1]
@@ -120,7 +121,7 @@ class TagsCloud (wx.ScrolledWindow):
                 maxheight = height
                 maxindex = index
 
-        return (maxheight, maxindex)
+        return(maxheight, maxindex)
 
     def __getMaxCount(self):
         count = 0
@@ -141,17 +142,15 @@ class TagsCloud (wx.ScrolledWindow):
 
         return ratio
 
-
-    def __setSizeLabels (self):
+    def __setSizeLabels(self):
         for tagname in self.__tags:
-            count = len (self.__tags[tagname])
-            ratio = self.__calcSizeRatio (count)
+            count = len(self.__tags[tagname])
+            ratio = self.__calcSizeRatio(count)
 
             label = self.__labels[tagname]
-            label.setRatio (ratio)
+            label.setRatio(ratio)
 
-
-    def __layoutTags (self):
+    def __layoutTags(self):
         """
         Расположение тегов в окне
         """
@@ -160,7 +159,8 @@ class TagsCloud (wx.ScrolledWindow):
 
         self.__setSizeLabels()
 
-        # Дважды перемещаем метки, чтобы учесть, что может появиться полоса прокрутки
+        # Дважды перемещаем метки, чтобы учесть,
+        # что может появиться полоса прокрутки
         self.__moveLabels()
         self.__moveLabels()
 
@@ -197,11 +197,13 @@ class TagsCloud (wx.ScrolledWindow):
             currentLine.append(label)
             currentx += label.GetSize()[0] + self.__space
 
-        if len (self.__tags) != 0:
-            commonheight = currenty + self.__getMaxHeight (currentLine)[0] + self.__space
-            lineheight = commonheight / linesCount
+        if len(self.__tags) != 0:
+            commonheight = (currenty +
+                            self.__getMaxHeight(currentLine)[0] +
+                            self.__space)
+            lineheight = int(commonheight / linesCount)
 
-            self.SetScrollbars (0,
-                                lineheight,
-                                0,
-                                linesCount + 1)
+            self.SetScrollbars(0,
+                               lineheight,
+                               0,
+                               linesCount + 1)
