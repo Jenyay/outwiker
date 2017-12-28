@@ -20,6 +20,9 @@ class PageList(wx.ScrolledWindow):
 
         self.__space = 4
 
+        # Size of the control before layout
+        self._oldSize = (-1, -1)
+
         self.SetBackgroundColour(wx.Colour(255, 255, 255))
 
         # Список отображаемых элементов
@@ -33,7 +36,10 @@ class PageList(wx.ScrolledWindow):
         self.Bind(wx.EVT_SIZE, self.__onSize)
 
     def __onSize(self, event):
-        self.__updateScroll()
+        newSize = self.GetSize()
+        if self._oldSize != newSize:
+            self.__updateScroll()
+            self._oldSize = newSize
 
     def __updateScroll(self):
         self.SetScrollbars(0, 0, 0, 0)
