@@ -166,6 +166,12 @@ class ToggleButton(ThemedGenBitmapTextToggleButton):
         dc.SetLogicalFunction(wx.COPY)
 
     def DrawBezel(self, dc, x1, y1, x2, y2):
+        brushBackground = wx.Brush(self.colorNormal)
+        penBackground = wx.Pen(self.colorNormal)
+        dc.SetBrush(brushBackground)
+        dc.SetPen(penBackground)
+        dc.DrawRectangle((0, 0), self.GetSize())
+
         width_full = x2 - x1
         height_full = y2 - y1
 
@@ -274,7 +280,7 @@ class ToggleButton(ThemedGenBitmapTextToggleButton):
         dc.DrawText(label, pos_x + bw + self.marginImage, (height-th)/2+dy)
 
 
-class MyFrame(wx.Frame):
+class MyTestFrame(wx.Frame):
     def __init__(self, parent, title):
         wx.Frame.__init__(self, parent, wx.ID_ANY, title, size=(400, 300))
         panel = wx.Panel(self)
@@ -295,7 +301,7 @@ class MyFrame(wx.Frame):
 
 if __name__ == '__main__':
     app = wx.App()
-    frame = MyFrame(None, 'ToggleButton Test')
+    frame = MyTestFrame(None, 'ToggleButton Test')
     frame.Show()
     frame.SetSize((500, 600))
     app.MainLoop()
