@@ -66,6 +66,7 @@ class BaseBinaryBuilder(object, metaclass=ABCMeta):
             'PIL.TiffImagePlugin',
             'enchant',
             'xml',
+            'json',
         ]
 
     def get_additional_files(self):
