@@ -1,7 +1,6 @@
 # -*- coding: UTF-8 -*-
 
 import os.path
-from functools import cmp_to_key
 
 from outwiker.pages.wiki.parser.command import Command
 from outwiker.core.attachment import Attachment
@@ -80,26 +79,26 @@ class AttachListCommand (Command):
         attach = Attachment (self.parser.page)
 
         if u"sort" not in params_dict:
-            names.sort(key=cmp_to_key(Attachment.sortByName))
+            names.sort(key=str.lower)
             return
 
         sort = params_dict["sort"].lower()
 
         if sort == u"name":
-            names.sort(key=cmp_to_key(Attachment.sortByName))
+            names.sort(key=str.lower)
         elif sort == u"descendname":
-            names.sort(key=cmp_to_key(Attachment.sortByName), reverse=True)
+            names.sort(key=str.lower, reverse=True)
         elif sort == u"ext":
-            names.sort(key=cmp_to_key(Attachment.sortByExt))
+            names.sort(key=Attachment.sortByExt)
         elif sort == u"descendext":
-            names.sort(key=cmp_to_key(Attachment.sortByExt), reverse=True)
+            names.sort(key=Attachment.sortByExt, reverse=True)
         elif sort == u"size":
-            names.sort(key=cmp_to_key(attach.sortBySizeRelative))
+            names.sort(key=attach.sortBySizeRelative)
         elif sort == u"descendsize":
-            names.sort(key=cmp_to_key(attach.sortBySizeRelative), reverse=True)
+            names.sort(key=attach.sortBySizeRelative, reverse=True)
         elif sort == u"date":
-            names.sort(key=cmp_to_key(attach.sortByDateRelative))
+            names.sort(key=attach.sortByDateRelative)
         elif sort == u"descenddate":
-            names.sort(key=cmp_to_key(attach.sortByDateRelative), reverse=True)
+            names.sort(key=attach.sortByDateRelative, reverse=True)
         else:
-            names.sort(key=cmp_to_key(Attachment.sortByName))
+            names.sort(key=str.lower)

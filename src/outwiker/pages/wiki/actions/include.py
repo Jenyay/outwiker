@@ -1,7 +1,6 @@
 # -*- coding: UTF-8 -*-
 
 import wx
-from functools import cmp_to_key
 
 from outwiker.gui.baseaction import BaseAction
 from outwiker.gui.testeddialog import TestedDialog
@@ -78,7 +77,7 @@ class IncludeDialogController (object):
 
     def _fillAttaches (self):
         attachList = Attachment(self._selectedPage).getAttachRelative()
-        attachList.sort (key=cmp_to_key(Attachment.sortByName))
+        attachList.sort (key=str.lower)
 
         self._dialog.attachmentList = attachList
 
