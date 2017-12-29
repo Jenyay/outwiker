@@ -55,7 +55,7 @@ class VersionList(object):
         logger.info(u'Downloading {}'.format(url))
 
         try:
-            text = self._loader.load(url).decode('utf8')
+            text = self._loader.load(url)
         except (urllib.error.HTTPError, urllib.error.URLError, ValueError):
             logger.warning(u"Can't download {}".format(url))
             return None
