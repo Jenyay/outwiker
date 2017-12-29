@@ -1,18 +1,18 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from abc import ABCMeta, abstractmethod
 import os
 import os.path
 import re
-import urllib2
-import urlparse
-from StringIO import StringIO
+from io import BytesIO
+import urllib.request
+import urllib.error
+import urllib.parse
 import gzip
 
 import wx
 
-from bs4 import BeautifulSoup, UnicodeDammit
-from events import UpdateLogEvent
+from .events import UpdateLogEvent
 
 from .i18n import get_
 
@@ -26,20 +26,37 @@ class BaseDownloader(object):
         self._encoding = None
 
     def download(self, url):
-        opener = urllib2.build_opener()
+        if not os.path.isfile(url) and not url.startswith('file:/'):
+            url = self.fix_url(url)
+
+        opener = urllib.request.build_opener()
         opener.addheaders = [('User-agent', 'Mozilla/5.0(Windows NT 6.1) AppleWebKit/537.36(KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36 OutWiker/1'),
                              ('Accept-encoding', 'gzip')]
         response = opener.open(url, timeout=self._timeout)
         if response.info().get('Content-Encoding') == 'gzip':
-            buf = StringIO(response.read())
+            buf = BytesIO(response.read())
             zipfile = gzip.GzipFile(fileobj=buf)
             return zipfile
         return response
 
     def toUnicode(self, text):
+        from bs4 import UnicodeDammit
         dammit = UnicodeDammit(text)
         text = dammit.unicode_markup
         return text
+
+    def fix_url(self, url):
+        result = url
+        if isinstance(url, str):
+            (scheme, netloc, path, query, fragment) = urllib.parse.urlsplit(url)
+            scheme = urllib.parse.quote(scheme)
+            netloc = netloc.encode('idna').decode('utf8')
+            path = urllib.parse.quote(path)
+            query = urllib.parse.quote(query)
+            fragment = urllib.parse.quote(fragment)
+            result = urllib.parse.urlunsplit((scheme, netloc, path, query, fragment))
+
+        return result
 
 
 class Downloader(BaseDownloader):
@@ -56,9 +73,11 @@ class Downloader(BaseDownloader):
         self._success = False
 
     def start(self, url, controller):
+        from bs4 import BeautifulSoup
         self._success = False
         obj = self.download(url)
         html = obj.read()
+
         self._soup = BeautifulSoup(html, "html5lib")
         self._contentSrc = self._soup.prettify()
 
@@ -76,7 +95,7 @@ class Downloader(BaseDownloader):
 
         self._improveResult(self._soup, baseUrl)
 
-        self._contentResult = unicode(self._soup)
+        self._contentResult = str(self._soup)
         self._success = True
 
     def _getBaseUrl(self, soup, url):
@@ -160,12 +179,10 @@ class Downloader(BaseDownloader):
         return self._faviconPath
 
 
-class BaseDownloadController(BaseDownloader):
+class BaseDownloadController(BaseDownloader, metaclass=ABCMeta):
     '''
     Instance the class select action for every downloaded file
     '''
-    __metaclass__ = ABCMeta
-
     def __init__(self, timeout=20):
         super(BaseDownloadController, self).__init__(timeout)
         self.favicon = None
@@ -320,7 +337,7 @@ class DownloadController(BaseDownloadController):
         if u'://' in url:
             return url
 
-        return urlparse.urljoin(startUrl, url)
+        return urllib.parse.urljoin(startUrl, url)
 
     def _process(self, startUrl, url, node, processFunc):
         # Create dir for downloading
@@ -339,11 +356,11 @@ class DownloadController(BaseDownloadController):
                 obj = self.download(fullUrl)
                 with open(fullDownloadPath, 'wb') as fp:
                     text = processFunc(startUrl, url, node, obj.read())
-                    if isinstance(text, unicode):
+                    if isinstance(text, str):
                         fp.write(text.encode(u'utf8'))
                     else:
                         fp.write(text)
-            except(urllib2.URLError, IOError):
+            except(urllib.error.URLError, IOError):
                 self.log(_(u"Can't download {}\n").format(url))
             self._staticFiles[fullUrl] = relativeDownloadPath
 
@@ -360,7 +377,7 @@ class DownloadController(BaseDownloadController):
         if url in self._staticFiles:
             return self._staticFiles[url]
 
-        path = urlparse.urlparse(url).path
+        path = urllib.parse.urlparse(url).path
         if path.endswith(u'/'):
             path = path[:-1]
 

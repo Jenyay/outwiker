@@ -4,10 +4,10 @@ from outwiker.gui.htmltexteditor import HtmlTextEditor
 from outwiker.pages.html.basehtmlpanel import (BaseHtmlPanel,
                                                EVT_PAGE_TAB_CHANGED)
 
-from webpage.misc import polyActions
+from ..misc import polyActions
 
 
-class WebPageView (BaseHtmlPanel):
+class WebPageView(BaseHtmlPanel):
     def __init__(self, parent, application):
         super(WebPageView, self).__init__(parent, application)
         self.__htmlMenu = None

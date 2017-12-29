@@ -6,7 +6,7 @@ import wx
 
 from outwiker.core.commands import insertCurrentDate
 from outwiker.core.event import pagetype
-from outwiker.core.system import getOS, getImagesDir
+from outwiker.core.system import getImagesDir
 from outwiker.core.event import EVENT_PRIORITY_DEFAULT
 from outwiker.gui.tabledialog import TableDialog
 from outwiker.gui.tablerowsdialog import TableRowsDialog
@@ -18,18 +18,18 @@ from outwiker.pages.html.tabledialogcontroller import (
 )
 from outwiker.actions.polyactionsid import *
 
-from webpage.i18n import get_
-from webpage.webnotepage import WebNotePage
+from ..i18n import get_
+from ..webnotepage import WebNotePage
 
-from webpage.actions.downloadaction import (CreateChildWebPageAction,
-                                            CreateSiblingWebPageAction)
-from webpage.actions.opensourceurl import OpenSourceURLAction
-from webpage.actions.showpageinfo import ShowPageInfoAction
-from webpage.actions.disablescripts import DisableScriptsAction
-from webpage.actions.copysourceurl import CopySourceURLToClipboardAction
+from ..actions.downloadaction import (CreateChildWebPageAction,
+                                      CreateSiblingWebPageAction)
+from ..actions.opensourceurl import OpenSourceURLAction
+from ..actions.showpageinfo import ShowPageInfoAction
+from ..actions.disablescripts import DisableScriptsAction
+from ..actions.copysourceurl import CopySourceURLToClipboardAction
 
-from webpage.misc import polyActions, panelName
-from webpagetoolbar import WebPageToolBar
+from ..misc import polyActions, panelName
+from .webpagetoolbar import WebPageToolBar
 
 
 class GuiController (object):
@@ -768,7 +768,7 @@ class GuiController (object):
         """Return path to images directory."""
         selfdir = os.path.dirname(__file__)
         parentdir = os.path.dirname(selfdir)
-        imagedir = unicode(os.path.join(parentdir, "images"), getOS().filesEncoding)
+        imagedir = os.path.join(parentdir, "images")
         fname = os.path.join(imagedir, imageName)
         return fname
 

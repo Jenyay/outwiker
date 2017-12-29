@@ -2,7 +2,9 @@
 
 from threading import Event, Thread
 from tempfile import mkdtemp
-import urllib2
+import urllib.request
+import urllib.error
+import urllib.parse
 import os.path
 from shutil import rmtree
 
@@ -309,13 +311,13 @@ class DownloadThread(Thread):
 
         try:
             downloader.start(self._url, controller)
-        except urllib2.URLError as error:
+        except urllib.error.URLError as error:
             self._error(_(u'Download error: {}\n').format(
-                unicode(error.reason))
+                str(error.reason))
             )
         except(IOError, ValueError) as e:
             self._error(_(u'Invalid URL or file format\n'))
-            self._error(unicode(e))
+            self._error(str(e))
         else:
             self._log(_(u'Finish downloading\n'))
 

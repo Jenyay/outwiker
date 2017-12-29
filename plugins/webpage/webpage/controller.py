@@ -1,29 +1,28 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os
 import os.path
 import sys
 
 from outwiker.core.factoryselector import FactorySelector
-from outwiker.core.system import getOS
 from outwiker.utilites.textfile import writeTextFile
 
-from webnotepage import WebPageFactory, WebNotePage
-from spellcontroller import WebPageSpellController
-from i18n import get_
-from gui.guicontroller import GuiController
+from .webnotepage import WebPageFactory, WebNotePage
+from .spellcontroller import WebPageSpellController
+from .i18n import get_
+from .gui.guicontroller import GuiController
 
-from actions.downloadaction import(CreateChildWebPageAction,
-                                   CreateSiblingWebPageAction)
-from actions.opensourceurl import OpenSourceURLAction
-from actions.showpageinfo import ShowPageInfoAction
-from actions.disablescripts import DisableScriptsAction
-from actions.copysourceurl import CopySourceURLToClipboardAction
+from .actions.downloadaction import(CreateChildWebPageAction,
+                                    CreateSiblingWebPageAction)
+from .actions.opensourceurl import OpenSourceURLAction
+from .actions.showpageinfo import ShowPageInfoAction
+from .actions.disablescripts import DisableScriptsAction
+from .actions.copysourceurl import CopySourceURLToClipboardAction
 
-from misc import onPrepareHtmlEventString
-from events import PrepareHtmlEventParams
-from htmlprocessors.disablescripts import disableScripts
-from htmlprocessors.maxieversion import maxIEVersion
+from .misc import onPrepareHtmlEventString
+from .events import PrepareHtmlEventParams
+from .htmlprocessors.disablescripts import disableScripts
+from .htmlprocessors.maxieversion import maxIEVersion
 
 
 class Controller(object):
@@ -78,7 +77,7 @@ class Controller(object):
             self._guiController.destroy()
             self._unregisterActions()
 
-        if(self._application.selectedPage is not None and
+        if (self._application.selectedPage is not None and
                 self._application.selectedPage.getTypeString() == WebNotePage.getTypeString()):
             self._spellController.clear()
 
@@ -93,23 +92,18 @@ class Controller(object):
             self._application.getEvent(onPrepareHtmlEventString).unbind(proc)
 
     def _registerActions(self):
-        map(lambda actionTuple: self._application.actionController.register(
-            actionTuple[0](self._application), actionTuple[1]), self._actions)
+        [*map(lambda actionTuple: self._application.actionController.register(
+            actionTuple[0](self._application), actionTuple[1]), self._actions)]
 
     def _unregisterActions(self):
-        map(lambda actionTuple: self._application.actionController.removeAction(
-            actionTuple[0].stringId), self._actions)
+        [*map(lambda actionTuple: self._application.actionController.removeAction(
+            actionTuple[0].stringId), self._actions)]
 
     def _correctSysPath(self):
-        cmd_folder = unicode(os.path.dirname(os.path.abspath(__file__)),
-                             getOS().filesEncoding)
-        cmd_folder = os.path.join(cmd_folder, u'libs')
+        cmd_folder = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                  u'libs')
 
-        syspath = [unicode(item, getOS().filesEncoding)
-                   if not isinstance(item, unicode)
-                   else item for item in sys.path]
-
-        if cmd_folder not in syspath:
+        if cmd_folder not in sys.path:
             sys.path.insert(0, cmd_folder)
 
     def _onPageDialogPageFactoriesNeeded(self, page, params):

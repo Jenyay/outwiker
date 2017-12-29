@@ -1,0 +1,29 @@
+@import url(  "import1.css"  ); @import url(  import2.css  ); @import url(  'import3.css'  ); @import 'import4.css';
+
+.image1 {
+    background-image: url(  "back_img_01.png"  );
+}
+
+.image2 {
+	background-image: url(back_img_02.png);
+}
+
+.image3 {
+	background-image: url('back_img_03.png');
+}
+
+.image4 {
+	background-image: url("css/back_img_04.png");
+}
+
+.image5 {
+	background-image: url("css/subdir/back_img_05.png");
+}
+
+.image6 {
+	background: url("css/subdir/back_img_06.png");
+}
+
+.image7 {
+	background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAMAAADXqc3KAAAA6lBMVEXmICv////mICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICvmICumnhVtAAAATXRSTlMAAJ8Z+2aPFVaGFhCTbIEF61m37JKiF/qFjLYlpockuEf5GAP9ao2zy534lQf+IsShw46yuq8U9xKZmqxjZKgbqmgRnAGJiFpbBg1OUvIiNGIAAADiSURBVHhedc3VcsNAFATR8YqMDIntmMLMzMzz/7+Te0taa1UV9+t5aOTmhBzionzBmOoykizsmym1VikLa7RNMlCgbfvchYDaajNsl0fuw6O24yHOm8GjQoCkXYYJPFN6ge11TETVFYEPgYUvzPrmT8RfgXWBDTi1NsEtgSWBRRfO9lA/+A8OifqRwLHAiQtNnjIU+NR5LYXaBcm8wCWlqxSuKZUEcKNya+GO0j0UHqi1iwrFMjVPAXii5vd7vb5PLUAMeGOmd1hAxYUKUsCg48fgdwZwAeg2hsYMG13Awpz+AN2fNyTwjF1eAAAAAElFTkSuQmCC')
+}

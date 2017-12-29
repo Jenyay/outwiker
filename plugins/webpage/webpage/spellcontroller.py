@@ -1,7 +1,8 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from outwiker.gui.simplespellcontroller import SimpleSpellController
-from webnotepage import WebNotePage
+
+from .webnotepage import WebNotePage
 
 
 class WebPageSpellController (SimpleSpellController):
