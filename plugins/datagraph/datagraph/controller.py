@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from .i18n import get_
 from .guicreator import GuiCreator
@@ -55,7 +55,8 @@ class Controller(object):
         """
         Вызывается до разбора викитекста. Добавление команды(:counter:)
         """
-        map(lambda command: parser.addCommand(command(parser)), self._commands)
+        [*map(lambda command: parser.addCommand(command(parser)),
+              self._commands)]
 
     @property
     def _isCurrentWikiPage(self):

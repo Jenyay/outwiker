@@ -53,7 +53,7 @@ class StringSource(BaseSource):
         finish = False
 
         if len(self._text.strip()) == 0:
-            raise StopIteration
+            return
 
         linenumber = -1
         while not finish:

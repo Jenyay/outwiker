@@ -1,12 +1,12 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import re
 
 from outwiker.pages.wiki.parser.command import Command
 
-from renders.highcharts import HighChartsRender
-from graphbuilder import GraphBuilder
-import defines
+from .renders.highcharts import HighChartsRender
+from .graphbuilder import GraphBuilder
+from . import defines
 
 
 class BasePlotCommand(Command):
@@ -32,14 +32,14 @@ class BasePlotCommand(Command):
             param7 = " sample 'bla bla bla' example"
             param8 = ' test "bla-bla-bla" test '
         """
-        pattern = ur"""((?P<name>[\w.]+)
+        pattern = r"""((?P<name>[\w.]+)
    (\s*=\s*(?P<param>([-_\w.]+)|((?P<quote>["']).*?(?P=quote)) ) )?\s*)"""
 
         result = {}
 
         regex = re.compile(
             pattern,
-            re.IGNORECASE | re.MULTILINE | re.DOTALL | re.VERBOSE | re.UNICODE
+            re.IGNORECASE | re.MULTILINE | re.DOTALL | re.VERBOSE
         )
         matches = regex.finditer(params)
 

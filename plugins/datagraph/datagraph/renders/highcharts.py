@@ -1,16 +1,15 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 """ Module for the graph creation with HighCharts library
 """
 
 from datetime import datetime
+from json import dumps
 import os
 import os.path
 import shutil
 
 from outwiker.core.attachment import Attachment
-from outwiker.core.system import getOS
 
-from datagraph.libs.json import dumps
 from datagraph.libs.dateutil.parser import parser
 from datagraph import defines
 from datagraph.i18n import get_
@@ -61,7 +60,7 @@ class HighChartsRender(object):
                     self._wikiparser.appendToHead(header)
                     try:
                         self._setup(libname)
-                    except Exception, e:
+                    except Exception as e:
                         return str(e)
 
         script = self._getGraphScript(graph, name)
@@ -85,7 +84,7 @@ $(function() {{ $('#{name}').highcharts({prop}); }});
         Prepare to using the library
         """
         # Get path to JS files inside the plugin
-        dirname = unicode(os.path.dirname(os.path.abspath(__file__)), getOS().filesEncoding)
+        dirname = os.path.dirname(os.path.abspath(__file__))
         libpath = os.path.join(dirname, u'js', libname)
 
         # Get destination path fo JS files

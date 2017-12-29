@@ -6,8 +6,8 @@ import os.path
 
 import wx
 
-from outwiker.core.system import getOS
 from outwiker.pages.html.basehtmlpanel import EVT_PAGE_TAB_CHANGED
+
 from .i18n import get_
 from .toolbar import DataGraphToolBar
 
@@ -41,8 +41,9 @@ class GuiCreator(object):
 
     def initialize(self):
         if self._application.mainWindow is not None:
-            map(lambda action: self._application.actionController.register(
-                action(self._application), None), self._actions)
+            actionController = self._application.actionController
+            for action in self._actions:
+                actionController.register(action(self._application), None)
 
     def createTools(self):
         mainWindow = self._application.mainWindow
@@ -55,8 +56,8 @@ class GuiCreator(object):
         # Меню, куда будут добавляться команды
         menu = wx.Menu()
 
-        map(lambda action: self._application.actionController.appendMenuItem(
-            action.stringId, menu), self._actions)
+        [*map(lambda action: self._application.actionController.appendMenuItem(
+            action.stringId, menu), self._actions)]
 
         self._submenuItem = self._getPageView().toolsMenu.AppendSubMenu(
             menu,
@@ -101,18 +102,18 @@ class GuiCreator(object):
         """
         Получить полный путь до картинки
         """
-        imagedir = unicode(os.path.join(os.path.dirname(__file__), "images"), getOS().filesEncoding)
+        imagedir = os.path.join(os.path.dirname(__file__), "images")
         fname = os.path.join(imagedir, imageName)
         return fname
 
     def removeTools(self):
         if self._application.mainWindow is not None:
             self._application.mainWindow.toolbars.updatePanesInfo()
-            map(lambda action: self._application.actionController.removeMenuItem(action.stringId),
-                 self._actions)
+            [*map(lambda action: self._application.actionController.removeMenuItem(action.stringId),
+                  self._actions)]
 
-            map(lambda action: self._application.actionController.removeToolbarButton(action.stringId),
-                 self._actions)
+            [*map(lambda action: self._application.actionController.removeToolbarButton(action.stringId),
+                  self._actions)]
 
             self._destroyToolBar()
 
@@ -123,8 +124,9 @@ class GuiCreator(object):
 
     def destroy(self):
         if self._application.mainWindow is not None:
-            map(lambda action: self._application.actionController.removeAction(action.stringId),
-                 self._actions)
+            actionController = self._application.actionController
+            for action in self._actions:
+                actionController.removeAction(action.stringId)
 
     def _onTabChanged(self, event):
         self._enableTools()
@@ -134,10 +136,10 @@ class GuiCreator(object):
 
     def _enableTools(self):
         pageView = self._getPageView()
-        enabled =(pageView.selectedPageIndex == pageView.CODE_PAGE_INDEX and
+        enabled = (pageView.selectedPageIndex == pageView.CODE_PAGE_INDEX and
                    not self._application.selectedPage.readonly)
 
-        map(lambda action: self._application.actionController.enableTools(action.stringId, enabled), self._disabledActions)
+        [*map(lambda action: self._application.actionController.enableTools(action.stringId, enabled), self._disabledActions)]
 
     def _getPageView(self):
         """

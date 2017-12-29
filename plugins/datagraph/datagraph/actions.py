@@ -1,9 +1,8 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os.path
 
 from outwiker.gui.baseaction import BaseAction
-from outwiker.core.system import getOS, openInNewWindow
 from .i18n import get_
 
 
@@ -59,10 +58,9 @@ class OpenHelpAction(BaseAction):
         return _(u"[DataGraph] Open help in the new OutWiker window")
 
     def run(self, params):
-        encoding = getOS().filesEncoding
         helpDirName = u"help"
-        currentdir = unicode(os.path.dirname(__file__), encoding)
 
+        currentdir = os.path.dirname(__file__)
         helpPath = os.path.join(currentdir, helpDirName, _("datagraph_eng"))
 
         args = [u'--normal', u'--readonly']

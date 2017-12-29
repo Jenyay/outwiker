@@ -1,6 +1,6 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
-import defines
+from . import defines
 
 # Values types
 TYPE_OBJECT = 0

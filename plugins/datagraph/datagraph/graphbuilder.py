@@ -4,9 +4,9 @@ import re
 
 from outwiker.core.attachment import Attachment
 
-from graphelements import Graph, Curve
-from datasources import StringSource, FileSource
-import defines
+from .graphelements import Graph, Curve
+from .datasources import StringSource, FileSource
+from . import defines
 
 
 class GraphBuilder(object):
@@ -30,7 +30,7 @@ class GraphBuilder(object):
         """Set-up properties of the inner objects"""
         self._sep = u'.'
 
-        for key, val in params_dict.iteritems():
+        for key, val in params_dict.items():
             if key.endswith(self._sep):
                 key = key[:-1]
 
@@ -57,7 +57,7 @@ class GraphBuilder(object):
         curvename = re.compile(r'^(?P<name>curve\d*)\.', re.IGNORECASE)
         names = set([u'curve'])
 
-        for key in params_dict.keys():
+        for key in params_dict:
             match = curvename.match(key)
             if match is not None:
                 names.update(match.groups('name'))
