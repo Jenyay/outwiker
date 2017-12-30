@@ -34,28 +34,3 @@ def sortAlphabeticalFunction(page1, page2):
         return -1
 
     return 0
-
-
-def sortDateFunction(page1, page2):
-    """
-    Функция для сортировки страниц по дате последней правки
-    (первые - самые новые)
-    """
-    if page1.datetime > page2.datetime:
-        return 1
-    elif page1.datetime < page2.datetime:
-        return -1
-
-    return 0
-
-
-def sortCreationDateFunction(page1, page2):
-    """
-    Функция для сортировки страниц по дате создания(первые - самые новые)
-    """
-    if page1.creationdatetime > page2.creationdatetime:
-        return 1
-    elif page1.creationdatetime < page2.creationdatetime:
-        return -1
-
-    return 0
