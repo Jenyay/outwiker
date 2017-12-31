@@ -3,7 +3,6 @@
 import os.path
 import hashlib
 from io import StringIO
-from functools import cmp_to_key
 from functools import reduce
 
 from outwiker.core.attachment import Attachment
@@ -114,7 +113,7 @@ class WikiHashCalculator (object):
         attachroot = attach.getAttachPath()
 
         attachlist = attach.getAttachRelative (dirname)
-        attachlist.sort(key=cmp_to_key(Attachment.sortByName))
+        attachlist.sort(key=str.lower)
 
         for fname in attachlist:
             fullpath = os.path.join (attachroot, dirname, fname)

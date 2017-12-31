@@ -3,7 +3,6 @@
 import unittest
 import os.path
 from tempfile import mkdtemp
-from functools import cmp_to_key
 
 from outwiker.core.attachment import Attachment
 from .utils import removeDir
@@ -269,7 +268,7 @@ class AttachmentTest(unittest.TestCase):
         attach2 = Attachment(self.page)
         files_list = [os.path.basename(fname)
                       for fname in attach2.attachmentFull]
-        files_list.sort(key=cmp_to_key(Attachment.sortByName))
+        files_list.sort(key=str.lower)
 
         self.assertEqual(files_list[0], "add.png")
         self.assertEqual(files_list[1], "add.png2")
@@ -294,7 +293,7 @@ class AttachmentTest(unittest.TestCase):
         attach2 = Attachment(self.page)
         files_list = [os.path.basename(fname)
                       for fname in attach2.attachmentFull]
-        files_list.sort(key=cmp_to_key(Attachment.sortByExt))
+        files_list.sort(key=Attachment.sortByExt)
 
         self.assertEqual(files_list[0], "filename")
         self.assertEqual(files_list[1], "add.png")
@@ -317,7 +316,7 @@ class AttachmentTest(unittest.TestCase):
         attach.attach(fullFilesPath)
 
         files_list = attach.attachmentFull
-        files_list.sort(key=cmp_to_key(Attachment.sortByName))
+        files_list.sort(key=str.lower)
 
         os.utime(files_list[3], (1000000000, 1000000000))
         os.utime(files_list[0], (1000000000, 1100000000))
@@ -329,7 +328,7 @@ class AttachmentTest(unittest.TestCase):
 
         Attachment(self.page)
         files_list2 = attach.attachmentFull
-        files_list2.sort(key=cmp_to_key(Attachment.sortByDate))
+        files_list2.sort(key=Attachment.sortByDate)
 
         for n in range(1, len(files)):
             self.assertTrue(os.stat(files_list2[n - 1]).st_mtime <=
@@ -348,7 +347,7 @@ class AttachmentTest(unittest.TestCase):
         attach.attach(fullFilesPath)
 
         files_list = attach.attachmentFull
-        files_list.sort(key=cmp_to_key(Attachment.sortByName))
+        files_list.sort(key=str.lower)
 
         os.utime(files_list[3], (1000000000, 1000000000))
         os.utime(files_list[0], (1000000000, 1100000000))
@@ -360,7 +359,7 @@ class AttachmentTest(unittest.TestCase):
 
         attach2 = Attachment(self.page)
         files_list2 = attach.getAttachRelative()
-        files_list2.sort(key=cmp_to_key(attach2.sortByDateRelative))
+        files_list2.sort(key=attach2.sortByDateRelative)
 
         for n in range(1, len(files)):
             self.assertTrue(os.stat(attach2.getFullPath(files_list2[n - 1])).st_mtime <=
@@ -381,7 +380,7 @@ class AttachmentTest(unittest.TestCase):
 
         attach2 = Attachment(self.page)
         files_list = attach2.attachmentFull
-        files_list.sort(key=cmp_to_key(Attachment.sortBySize))
+        files_list.sort(key=Attachment.sortBySize)
 
         for n in range(1, len(files_list)):
             self.assertTrue(os.stat(files_list[n - 1]).st_size <=
@@ -402,7 +401,7 @@ class AttachmentTest(unittest.TestCase):
 
         attach2 = Attachment(self.page)
         files_list = attach2.getAttachRelative()
-        files_list.sort(key=cmp_to_key(attach2.sortBySizeRelative))
+        files_list.sort(key=attach2.sortBySizeRelative)
 
         for n in range(1, len(files_list)):
             self.assertTrue(os.stat(attach2.getFullPath(files_list[n - 1])).st_size <=
