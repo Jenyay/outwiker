@@ -4,8 +4,8 @@ import os
 import os.path
 
 import wx
+from wx.lib.scrolledpanel import ScrolledPanel
 
-from .scrolledpanel import ScrolledPanel
 from .toolsinfo import ToolsInfo
 from .i18n import get_
 
@@ -31,7 +31,7 @@ class ToolsListPanel(ScrolledPanel):
         self._mainSizer = wx.FlexGridSizer(rows=0, cols=1, vgap=0, hgap=0)
         self._mainSizer.AddGrowableCol(0)
         self.SetSizer(self._mainSizer)
-        self.SetAutoLayout(1)
+        self.SetupScrolling()
 
         self.Bind(EVT_REMOVE_TOOL, handler=self.__onRemoveTools)
 
@@ -61,6 +61,9 @@ class ToolsListPanel(ScrolledPanel):
         for toolsItem in newtools:
             self.addTool(toolsItem)
 
+        self.Layout()
+        self.SetupScrolling()
+
     def addTool(self, toolsItem=None):
         """
         Добавить новый элемент для инструмента
@@ -70,9 +73,6 @@ class ToolsListPanel(ScrolledPanel):
         toolGuiElement = ToolsItemCtrl(self, toolsItem)
         self._toolsGuiElements.append(toolGuiElement)
         self._mainSizer.Add(toolGuiElement, 1, wx.EXPAND | wx.ALL, border=2)
-
-        self.SetupScrolling(scrollToTop=False)
-        self.ScrollChildIntoView(toolGuiElement)
 
 
 class ToolsItemCtrl(wx.Panel):
