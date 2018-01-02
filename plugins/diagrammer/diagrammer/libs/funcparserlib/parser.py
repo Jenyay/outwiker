@@ -120,7 +120,7 @@ class Parser(object):
         try:
             (tree, _) = self.run(tokens, State())
             return tree
-        except NoParseError, e:
+        except NoParseError as e:
             max = e.state.max
             if len(tokens) > max:
                 tok = tokens[max]
@@ -177,7 +177,7 @@ class Parser(object):
         def _or(tokens, s):
             try:
                 return self.run(tokens, s)
-            except NoParseError, e:
+            except NoParseError as e:
                 return other.run(tokens, State(s.pos, e.state.max))
 
         _or.name = u'(%s | %s)' % (self.name, other.name)
@@ -291,7 +291,7 @@ def many(p):
             while True:
                 (v, s) = p.run(tokens, s)
                 res.append(v)
-        except NoParseError, e:
+        except NoParseError as e:
             return res, State(s.pos, e.state.max)
 
     _many.name = u'{ %s }' % p.name

@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from .i18n import get_
 from .guicreator import GuiCreator
@@ -6,11 +6,11 @@ from .commanddiagram import CommandDiagram
 from .diagramrender import DiagramRender
 
 
-class Controller (object):
+class Controller(object):
     """
     Класс отвечает за основную работу интерфейса плагина
     """
-    def __init__ (self, plugin, application):
+    def __init__(self, plugin, application):
         """
         """
         self._plugin = plugin
@@ -21,17 +21,17 @@ class Controller (object):
         # В этот список добавить новые викикоманды, если они нужны
         self._commands = [CommandDiagram]
 
-
-    def initialize (self):
+    def initialize(self):
         """
-        Инициализация контроллера при активации плагина. Подписка на нужные события
+        Инициализация контроллера при активации плагина.
+        Подписка на нужные события
         """
         global _
         _ = get_()
 
         DiagramRender.initialize()
 
-        self._guiCreator = GuiCreator (self, self._application)
+        self._guiCreator = GuiCreator(self, self._application)
         self._guiCreator.initialize()
 
         self._application.onWikiParserPrepare += self.__onWikiParserPrepare
@@ -39,10 +39,9 @@ class Controller (object):
         self._application.onPageViewDestroy += self.__onPageViewDestroy
 
         if self._isCurrentWikiPage:
-            self.__onPageViewCreate (self._application.selectedPage)
+            self.__onPageViewCreate(self._application.selectedPage)
 
-
-    def destroy (self):
+    def destroy(self):
         """
         Вызывается при отключении плагина
         """
@@ -53,24 +52,23 @@ class Controller (object):
         if self._isCurrentWikiPage:
             self._guiCreator.removeTools()
 
-        self._guiCreator.destroy ()
+        self._guiCreator.destroy()
 
-
-    def __onWikiParserPrepare (self, parser):
+    def __onWikiParserPrepare(self, parser):
         """
-        Вызывается до разбора викитекста. Добавление команды (:counter:)
+        Вызывается до разбора викитекста. Добавление команды(:counter:)
         """
-        map (lambda command: parser.addCommand (command (parser)), self._commands)
-
+        [*map(lambda command: parser.addCommand(command(parser)),
+              self._commands)]
 
     @property
-    def _isCurrentWikiPage (self):
+    def _isCurrentWikiPage(self):
         """
-        Возвращает True, если текущая страница - это викистраница, и False в противном случае
+        Возвращает True, если текущая страница - это викистраница,
+            и False в противном случае
         """
         return (self._application.selectedPage is not None and
                 self._application.selectedPage.getTypeString() == u"wiki")
-
 
     def __onPageViewCreate(self, page):
         """Обработка события после создания представления страницы"""
@@ -79,8 +77,7 @@ class Controller (object):
         if page.getTypeString() == u"wiki":
             self._guiCreator.createTools()
 
-
-    def __onPageViewDestroy (self, page):
+    def __onPageViewDestroy(self, page):
         """
         Обработка события перед удалением вида страницы
         """
@@ -89,8 +86,7 @@ class Controller (object):
         if page.getTypeString() == u"wiki":
             self._guiCreator.removeTools()
 
-
-    def _getPageView (self):
+    def _getPageView(self):
         """
         Получить указатель на панель представления страницы
         """

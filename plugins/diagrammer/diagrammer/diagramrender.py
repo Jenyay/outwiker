@@ -1,60 +1,59 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os
 import os.path
 
-from outwiker.core.system import getOS
 
-
-class DiagramRender (object):
+class DiagramRender(object):
     """
     Класс для создания диаграмм с помощью blockdiag
     """
     # Список возможных фигур
     shapes = []
 
-
-    def __init__ (self):
+    def __init__(self):
         self._fontDefault = u"Ubuntu-R.ttf"
 
-
     @classmethod
-    def _initPackage (cls, packagename, modulename):
+    def _initPackage(cls, packagename, modulename):
         """
         Инициализировать пакет с рендерами узлов
-        packagename - например, "blockdiag.noderenderer", а modulename - "circle"
+        packagename - например, "blockdiag.noderenderer",
+            а modulename - "circle"
         """
-        packageFullName = ".".join ([packagename, modulename])
+        packageFullName = ".".join([packagename, modulename])
 
         # Импортируем модуль, чтобы узнать полное имя файла до него
         try:
-            rootmodule = __import__ (packageFullName, fromlist=[modulename])
+            rootmodule = __import__(packageFullName, fromlist=[modulename])
         except (ImportError, ValueError):
             return
 
         if rootmodule is None:
             return
 
-        path = unicode (os.path.dirname(os.path.abspath(rootmodule.__file__)),
-                        getOS().filesEncoding)
+        try:
+            path = os.path.dirname(os.path.abspath(rootmodule.__file__))
+        except AttributeError:
+            return
 
         extension = ".py"
 
         # Перебираем все модули внутри пакета
-        for fname in os.listdir (path):
-            fullpath = os.path.join (path, fname)
+        for fname in os.listdir(path):
+            fullpath = os.path.join(path, fname)
 
             # Все папки пытаемся открыть как вложенный пакет
-            if os.path.isdir (fullpath):
-                DiagramRender._initPackage (packageFullName, fname.encode (getOS().filesEncoding))
+            if os.path.isdir(fullpath):
+                DiagramRender._initPackage(packageFullName, fname)
             else:
                 # Проверим, что файл может быть модулем
-                if fname.endswith (extension) and fname != "__init__.py":
-                    nestedmodulename = fname[: -len (extension)]
+                if fname.endswith(extension) and fname != "__init__.py":
+                    nestedmodulename = fname[: -len(extension)]
                     # Попытаться импортировать функцию setup из модуля
                     try:
                         currentmodulename = packageFullName + "." + nestedmodulename
-                        module = __import__ (currentmodulename, fromlist=["setup"])
+                        module = __import__(currentmodulename, fromlist=["setup"])
                     except ImportError:
                         continue
 
@@ -63,10 +62,10 @@ class DiagramRender (object):
                     except AttributeError:
                         continue
 
-                    cls._addShape (packageFullName + "." + nestedmodulename)
+                    cls._addShape(packageFullName + "." + nestedmodulename)
 
     @classmethod
-    def _addShape (cls, modulename):
+    def _addShape(cls, modulename):
         """
         Добавить фигуру в shapes по имени модуля
         """
@@ -74,23 +73,22 @@ class DiagramRender (object):
 
         assert parent in modulename
 
-        cls.shapes.append (modulename[len (parent):])
-
+        cls.shapes.append(modulename[len(parent):])
 
     @classmethod
-    def initialize (cls):
+    def initialize(cls):
         """
-        Инициализировать blockdiag. Нужно вызывать хотя бы один раз за время работы программы до рендеринга диаграмм.
+        Инициализировать blockdiag. Нужно вызывать хотя бы один раз
+            за время работы программы до рендеринга диаграмм.
         """
         cls.shapes = []
-        cls._initPackage ("blockdiag", "noderenderer")
+        cls._initPackage("blockdiag", "noderenderer")
         cls.shapes.sort()
 
         from blockdiag.imagedraw.png import setup
         setup(None)
 
-
-    def renderToFile (self, content, imagePath):
+    def renderToFile(self, content, imagePath):
         """
         content - текст, описывающий диаграмму
         imagePath - полный путь до создаваемого файла
@@ -100,18 +98,19 @@ class DiagramRender (object):
         from blockdiag.builder import ScreenNodeBuilder
         from blockdiag.utils.fontmap import FontMap
 
-        font = os.path.join (unicode (os.path.dirname(os.path.abspath(__file__)),
-                                      getOS().filesEncoding),
-                             u"fonts", self._fontDefault)
+        font = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                            u"fonts",
+                            self._fontDefault)
 
         fontmap = FontMap()
-        fontmap.set_default_font (font)
+        fontmap.set_default_font(font)
 
-        text = u"blockdiag {{ {content} }}".format (content=content)
+        text = u"blockdiag {{ {content} }}".format(content=content)
 
-        tree = parse_string (text)
-        diagram = ScreenNodeBuilder.build (tree)
+        tree = parse_string(text)
+        diagram = ScreenNodeBuilder.build(tree)
 
-        draw = DiagramDraw ("png", diagram, imagePath, fontmap=fontmap, antialias=True)
+        draw = DiagramDraw("png", diagram, imagePath,
+                           fontmap=fontmap, antialias=True)
         draw.draw()
         draw.save()
