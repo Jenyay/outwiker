@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import wx
 import wx.adv
@@ -19,16 +19,17 @@ class PluginsPanel (BasePrefPanel):
 
         self.__createGui()
         self.__controller = PluginsController(self)
-        self._setScrolling()
+        self.SetupScrolling()
 
     def __createGui(self):
         self.pluginsList = wx.CheckListBox(self, -1, style=wx.LB_SORT)
         self.pluginsList.SetMinSize((50, 20))
 
-        self.__downloadLink = wx.adv.HyperlinkCtrl(self,
-                                               -1,
-                                               _(u"Download more plugins"),
-                                               _(u"http://jenyay.net/Outwiker/PluginsEn"))
+        self.__downloadLink = wx.adv.HyperlinkCtrl(
+            self,
+            -1,
+            _(u"Download more plugins"),
+            _(u"http://jenyay.net/Outwiker/PluginsEn"))
 
         # Панель, которая потом заменится на HTML-рендер
         self.__blankPanel = wx.Panel(self)
@@ -88,13 +89,16 @@ class PluginsController (object):
     def __init__(self, pluginspanel):
         self.__owner = pluginspanel
 
-        # Т.к. под виндой к элементам CheckListBox нельзя прикреплять пользовательские данные,
+        # Т.к. под виндой к элементам CheckListBox нельзя
+        # прикреплять пользовательские данные,
         # придется их хранить отдельно.
         # Ключ - имя плагина, оно же текст строки
         # Значение - экземпляр плагина
         self.__pluginsItems = {}
 
-        self.__owner.Bind(wx.EVT_LISTBOX, self.__onSelectItem, self.__owner.pluginsList)
+        self.__owner.Bind(wx.EVT_LISTBOX,
+                          self.__onSelectItem,
+                          self.__owner.pluginsList)
 
     def __onSelectItem(self, event):
         htmlContent = u""

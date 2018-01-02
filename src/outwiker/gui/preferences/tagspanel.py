@@ -20,7 +20,7 @@ class TagsPanel(BasePrefPanel):
 
         self._config = TagsConfig (Application.config)
         self._createGui()
-        self._setScrolling()
+        self.SetupScrolling()
 
 
     def _createGui (self):

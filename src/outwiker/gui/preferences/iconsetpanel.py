@@ -59,6 +59,7 @@ class IconsetPanel(BasePrefPanel):
         self._groups.Bind(wx.EVT_KEY_DOWN, handler=self.__onKeyDown)
 
         self.__updateGroups()
+        self.SetupScrolling()
 
     def __createGuiElements(self):
         mainSizer = wx.FlexGridSizer(cols=2, rows=1, vgap=0, hgap=0)

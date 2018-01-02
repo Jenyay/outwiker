@@ -31,7 +31,7 @@ class PreferencePanel(BasePrefPanel):
         self._colorsList = ColorsList(self._application)
 
         self.__createGui()
-        self._setScrolling()
+        self.SetupScrolling()
 
     def __createGui(self):
         """

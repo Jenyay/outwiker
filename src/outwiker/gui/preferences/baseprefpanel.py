@@ -1,71 +1,41 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
-from abc import ABCMeta, abstractmethod
 import wx
-from functools import reduce
+from wx.lib.scrolledpanel import ScrolledPanel
 
 
-class BasePrefPanel (wx.ScrolledWindow):
-    #__metaclass__ = ABCMeta
-
-
-    def __init__ (self, parent):
+class BasePrefPanel(ScrolledPanel):
+    def __init__(self, parent):
         style = wx.TAB_TRAVERSAL | wx.HSCROLL | wx.VSCROLL
-        super (BasePrefPanel, self).__init__ (parent, style=style)
+        super(BasePrefPanel, self).__init__(parent, style=style)
 
-
-    def _setScrolling (self):
-        bottomElement = reduce (
-            lambda left, right: right if (left is None or
-                                          (right.GetPosition()[1] + right.GetSize()[1]) >
-                                          (left.GetPosition()[1] + left.GetSize()[1])) else left,
-            self.GetChildren(),
-            None
-        )
-
-        if bottomElement is not None:
-            btElementTop = bottomElement.GetPosition()[1]
-            btElementHeight = bottomElement.GetSize()[1]
-            scrollHeight = btElementHeight
-            scrollCount = (btElementTop + btElementHeight) / scrollHeight + 1
-
-            self.SetScrollbars (0, scrollHeight, 0, scrollCount)
-
-
-    #@abstractmethod
-    def LoadState (self):
+    def LoadState(self):
         pass
 
-
-    #@abstractmethod
     def Save(self):
         pass
 
-
-    def _addControlsPairToSizer (self, sizer, label, control):
+    def _addControlsPairToSizer(self, sizer, label, control):
         sizer.Add(label, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
         sizer.Add(control, 0, wx.ALL | wx.ALIGN_RIGHT, border=2)
 
+    def _createLabelAndComboBox(self, text, sizer):
+        label = wx.StaticText(self, label=text)
+        combobox = wx.ComboBox(self,
+                               -1,
+                               style=wx.CB_DROPDOWN | wx.CB_READONLY)
 
-    def _createLabelAndComboBox (self, text, sizer):
-        label = wx.StaticText (self, label = text)
-        combobox = wx.ComboBox (self,
-                                -1,
-                                style=wx.CB_DROPDOWN | wx.CB_READONLY)
+        self._addControlsPairToSizer(sizer, label, combobox)
+        return(label, combobox)
 
-        self._addControlsPairToSizer (sizer, label, combobox)
-        return (label, combobox)
+    def _createLabelAndColorPicker(self, text, sizer):
+        label = wx.StaticText(self, label=text)
+        colorPicker = wx.ColourPickerCtrl(self)
 
-
-    def _createLabelAndColorPicker (self, text, sizer):
-        label = wx.StaticText (self, label = text)
-        colorPicker = wx.ColourPickerCtrl (self)
-
-        self._addControlsPairToSizer (sizer, label, colorPicker)
+        self._addControlsPairToSizer(sizer, label, colorPicker)
         return (label, colorPicker)
 
-
-    def _createCheckBox (self, text, sizer):
-        checkBox = wx.CheckBox (self, label=text)
-        sizer.Add (checkBox, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
+    def _createCheckBox(self, text, sizer):
+        checkBox = wx.CheckBox(self, label=text)
+        sizer.Add(checkBox, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
         return checkBox

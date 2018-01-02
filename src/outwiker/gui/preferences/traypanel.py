@@ -24,7 +24,7 @@ class TrayPanel(BasePrefPanel):
 
         self.LoadState()
         self.updateCheckState()
-        self._setScrolling()
+        self.SetupScrolling()
 
     def __set_properties(self):
         DEFAULT_WIDTH = 520

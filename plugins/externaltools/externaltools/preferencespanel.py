@@ -6,13 +6,14 @@ import wx
 
 from outwiker.core.commands import MessageBox
 from outwiker.core.exceptions import PreferencesException
+from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
 
 from .toolslistpanel import ToolsListPanel
 from .i18n import get_
 from .config import ExternalToolsConfig
 
 
-class PreferencesPanel(wx.Panel):
+class PreferencesPanel(BasePrefPanel):
     """
     Панель с настройками
     """
@@ -21,7 +22,7 @@ class PreferencesPanel(wx.Panel):
         parent - родитель панели(должен быть wx.Treebook)
         config - настройки из plugin._application.config
         """
-        wx.Panel.__init__(self, parent, style=wx.TAB_TRAVERSAL)
+        super(PreferencesPanel, self).__init__(parent)
         self._config = config
 
         global _
@@ -29,6 +30,7 @@ class PreferencesPanel(wx.Panel):
 
         self.__makeGui()
         self.__controller = PrefController(self, config)
+        self.SetupScrolling()
 
     def __makeGui(self):
         self.warningCheckBox = wx.CheckBox(

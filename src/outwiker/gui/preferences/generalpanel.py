@@ -56,7 +56,7 @@ class GeneralPanel(BasePrefPanel):
         self.__do_layout()
 
         self.LoadState()
-        self._setScrolling()
+        self.SetupScrolling()
 
     def __set_properties(self):
         DEFAULT_WIDTH = 520

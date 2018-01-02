@@ -24,7 +24,7 @@ class EditorPanel(BasePrefPanel):
         self.__createGuiElements(self.__config)
         self.__do_layout()
         self.LoadState()
-        self._setScrolling()
+        self.SetupScrolling()
 
     def __createGuiElements(self, config):
         self.fontLabel = wx.StaticText(self, -1, _("Font"))

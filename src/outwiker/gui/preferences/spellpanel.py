@@ -19,7 +19,7 @@ class SpellPanel(BasePrefPanel):
 
         self._config = EditorConfig (Application.config)
         self._createGui()
-        self._setScrolling()
+        self.SetupScrolling()
 
 
     def _createGui (self):

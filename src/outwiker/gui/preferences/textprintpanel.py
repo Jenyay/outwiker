@@ -21,6 +21,7 @@ class TextPrintPanel(BasePrefPanel):
 
         self.config = TextPrintConfig (Application.config)
         self.LoadState()
+        self.SetupScrolling()
 
 
     def __createGuiElements (self):
