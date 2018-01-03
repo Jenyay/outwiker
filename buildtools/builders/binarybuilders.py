@@ -67,6 +67,7 @@ class BaseBinaryBuilder(object, metaclass=ABCMeta):
             'enchant',
             'xml',
             'json',
+            'asyncio',
         ]
 
     def get_additional_files(self):
