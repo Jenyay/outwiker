@@ -1,99 +1,91 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import html
 
 from outwiker.libs.pyparsing import QuotedString
 
 from .tokenattach import AttachToken
-from outwiker.core.attachment import Attachment
 from outwiker.core.defines import PAGE_ATTACH_DIR
 
 
-class LinkFactory (object):
+class LinkFactory(object):
     @staticmethod
-    def make (parser):
+    def make(parser):
         return LinkToken(parser).getToken()
 
 
-class LinkToken (object):
+class LinkToken(object):
     linkStart = "[["
     linkEnd = "]]"
     attachString = u"Attach:"
 
-    def __init__ (self, parser):
+    def __init__(self, parser):
         self.parser = parser
 
-
-    def getToken (self):
+    def getToken(self):
         return QuotedString(LinkToken.linkStart,
                             endQuoteChar=LinkToken.linkEnd,
                             multiline=False,
                             convertWhitespaceEscapes=False).setParseAction(self.__convertToLink)("link")
 
-
-    def __convertToLink (self, s, l, t):
+    def __convertToLink(self, s, l, t):
         """
         Преобразовать ссылку
         """
         if "->" in t[0]:
-            return self.__convertLinkArrow (t[0])
+            return self.__convertLinkArrow(t[0])
         elif "|" in t[0]:
-            return self.__convertLinkLine (t[0])
+            return self.__convertLinkLine(t[0])
 
-        return self.__convertEmptyLink (t[0])
+        return self.__convertEmptyLink(t[0])
 
-
-    def __convertLinkArrow (self, text):
+    def __convertLinkArrow(self, text):
         """
         Преобразовать ссылки в виде [[comment -> url]]
         """
-        comment, url = text.rsplit ("->", 1)
-        realurl = self.__prepareUrl (url)
+        comment, url = text.rsplit("->", 1)
+        realurl = self.__prepareUrl(url)
 
-        return self.__getUrlTag (realurl, html.escape (comment))
+        return self.__getUrlTag(realurl, html.escape(comment, False))
 
-
-    def __convertLinkLine (self, text):
+    def __convertLinkLine(self, text):
         """
         Преобразовать ссылки в виде [[url | comment]]
         """
         # Т.к. символ | может быть в ссылке и в тексте,
         # считаем, что после ссылки пользователь поставит пробел
         if " |" in text:
-            url, comment = text.split (" |", 1)
+            url, comment = text.split(" |", 1)
         else:
-            url, comment = text.rsplit ("|", 1)
-        realurl = self.__prepareUrl (url)
+            url, comment = text.rsplit("|", 1)
+        realurl = self.__prepareUrl(url)
 
-        return self.__getUrlTag (realurl, html.escape (comment))
+        return self.__getUrlTag(realurl, html.escape(comment, False))
 
-
-    def __prepareUrl (self, url):
+    def __prepareUrl(self, url):
         """
         Подготовить адрес для ссылки. Если ссылка - прикрепленный файл, то создать путь до него
         """
-        if url.strip().startswith (AttachToken.attachString):
-            return url.strip().replace (AttachToken.attachString, PAGE_ATTACH_DIR + "/", 1)
+        if url.strip().startswith(AttachToken.attachString):
+            return url.strip().replace(AttachToken.attachString, PAGE_ATTACH_DIR + "/", 1)
 
         return url
 
+    def __getUrlTag(self, url, comment):
+        return '<a href="%s">%s</a>' % (url.strip(), self.parser.parseLinkMarkup(comment.strip()))
 
-    def __getUrlTag (self, url, comment):
-        return '<a href="%s">%s</a>' % (url.strip(), self.parser.parseLinkMarkup (comment.strip()))
-
-
-    def __convertEmptyLink (self, text):
+    def __convertEmptyLink(self, text):
         """
         Преобразовать ссылки в виде [[link]]
         """
         textStrip = text.strip()
 
-        if textStrip.startswith (AttachToken.attachString):
+        if textStrip.startswith(AttachToken.attachString):
             # Ссылка на прикрепление
-            url = textStrip.replace (AttachToken.attachString, PAGE_ATTACH_DIR + "/", 1)
-            comment = textStrip.replace (AttachToken.attachString, "")
+            url = textStrip.replace(AttachToken.attachString, PAGE_ATTACH_DIR + "/", 1)
+            comment = textStrip.replace(AttachToken.attachString, "")
 
-        elif (textStrip.startswith ("#") and
+        elif (textStrip.startswith("#") and
                 self.parser.page is not None and
                 self.parser.page[textStrip] is None):
             # Ссылка начинается на #, но сложенных страниц с таким именем нет,
@@ -104,4 +96,4 @@ class LinkToken (object):
             url = text.strip()
             comment = text.strip()
 
-        return '<a href="%s">%s</a>' % (url, html.escape (comment))
+        return '<a href="%s">%s</a>' % (url, html.escape(comment, False))
