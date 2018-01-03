@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os
 import shutil
@@ -14,7 +14,7 @@ def getImagesPath():
 
 
 def getPluginPath():
-    return unicode(os.path.dirname(__file__), getOS().filesEncoding)
+    return os.path.dirname(__file__)
 
 
 def openHelp():

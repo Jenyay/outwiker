@@ -190,7 +190,7 @@ class VariablesDialogController(object):
 
         self.dialog.hideVarPanel()
         self.dialog.setSnippetText(template)
-        map(lambda var: self.dialog.addStringVariable(var), variables)
+        [*map(lambda var: self.dialog.addStringVariable(var), variables)]
 
         shortTemplateName = self._getShortTemplateName(template_path)
         self.dialog.templateFileName = shortTemplateName
@@ -331,7 +331,7 @@ class VaraiblesPanel(wx.ScrolledWindow):
 
     def clear(self):
         self._mainSizer.Clear()
-        map(lambda item: item[1].Destroy(), self._varControls)
+        [*map(lambda item: item[1].Destroy(), self._varControls)]
         self._varControls = []
 
 

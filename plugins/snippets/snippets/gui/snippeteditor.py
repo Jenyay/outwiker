@@ -47,10 +47,6 @@ class SnippetEditor(TextEditorBase):
                        self._comment_re,
                        self.STYLE_COMMENT)
 
-        stylebytesstr = "".join([chr(byte) for byte in stylelist])
-        self.textCtrl.StartStyling(0, 0xff)
-        self.textCtrl.SetStyleBytes(textlength, stylebytesstr)
-
     def _colorize(self, stylelist, fulltext, regexp, style):
         matches = regexp.finditer(fulltext)
         for match in matches:
@@ -59,7 +55,6 @@ class SnippetEditor(TextEditorBase):
             bytepos_start = self._helper.calcBytePos(fulltext, start)
             bytepos_end = self._helper.calcBytePos(fulltext, end)
 
-            self._helper.addStyle(stylelist,
-                                  style,
-                                  bytepos_start,
-                                  bytepos_end)
+            self.textCtrl.StartStyling(bytepos_start, 0xff)
+            textlength = bytepos_end - bytepos_start
+            self.textCtrl.SetStyling(textlength, style)

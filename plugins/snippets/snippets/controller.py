@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os
 
@@ -7,11 +7,11 @@ from outwiker.core.system import getSpecialDirList
 from .i18n import get_
 from .guicontroller import GuiController
 from .defines import SNIPPETS_DIR
-from snippets.actions.editsnippets import EditSnippetsAction
-from snippets.actions.runrecentsnippet import RunRecentSnippet
-from snippets.actions.openhelp import OpenHelpAction
-from snippets.wikicommand import CommandSnip
-from snippets.utils import getSnippetsDir
+from .actions.editsnippets import EditSnippetsAction
+from .actions.runrecentsnippet import RunRecentSnippet
+from .actions.openhelp import OpenHelpAction
+from .wikicommand import CommandSnip
+from .utils import getSnippetsDir
 
 
 class Controller(object):
@@ -95,9 +95,9 @@ class Controller(object):
         assert self._application.mainWindow is not None
 
     def _registerActions(self):
-        map(lambda actionTuple: self._application.actionController.register(
-            actionTuple[0](self._application), actionTuple[1]), self._actions)
+        [*map(lambda actionTuple: self._application.actionController.register(
+            actionTuple[0](self._application), actionTuple[1]), self._actions)]
 
     def _unregisterActions(self):
-        map(lambda actionTuple: self._application.actionController.removeAction(
-            actionTuple[0].stringId), self._actions)
+        [*map(lambda actionTuple: self._application.actionController.removeAction(
+            actionTuple[0].stringId), self._actions)]

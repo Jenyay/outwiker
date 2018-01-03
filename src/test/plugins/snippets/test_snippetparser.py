@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from datetime import datetime
 import os
@@ -386,25 +386,27 @@ class SnippetParserTest(unittest.TestCase):
 
         self.assertEqual(result, right_result)
 
-    def test_error_01(self):
-        from snippets.snippetparser import SnippetParser, SnippetException
+    def test_unicode_01(self):
+        from snippets.snippetparser import SnippetParser
+
+        page = self.testPage
         template = 'Переменная = {{переменная}}'
         selectedText = ''
         vars = {'переменная': 'Проверка 123'}
+        right_result = 'Переменная = Проверка 123'
 
-        page = self.testPage
         parser = SnippetParser(template, '.', self._application)
+        result = parser.process(selectedText, page, **vars)
+        self.assertEqual(result, right_result)
 
-        self.assertRaises(SnippetException,
-                          parser.process,
-                          selectedText,
-                          page,
-                          **vars)
-
-    def test_error_02(self):
-        from snippets.snippetparser import SnippetParser, SnippetException
+    def test_unicode_02(self):
+        from snippets.snippetparser import SnippetParser
         template = 'Переменная = {{переменная}}'
+        right_result = 'Переменная = '
+        selectedText = ''
+        page = self.testPage
+        vars = {}
 
         parser = SnippetParser(template, '.', self._application)
-
-        self.assertRaises(SnippetException, parser.getVariables)
+        result = parser.process(selectedText, page, **vars)
+        self.assertEqual(result, right_result)

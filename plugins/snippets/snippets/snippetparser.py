@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from datetime import datetime
 import os
@@ -13,7 +13,9 @@ from snippets.i18n import get_
 
 
 class SnippetException(Exception):
-    pass
+    def __init__(self, message):
+        super().__init__(message)
+        self.message = message
 
 
 def _convertExceptions(func):
@@ -28,23 +30,23 @@ def _convertExceptions(func):
             return func(self, *args, **kwargs)
         except TemplateNotFound as e:
             text = _(u'Snippet "{name}" not found').format(
-                name=unicode(e.name)
+                name=e.name
             )
             raise SnippetException(text)
         except TemplateSyntaxError as e:
             text = _(u'Snippet error at line {line}:\n{text}').format(
                 line=e.lineno,
-                text=unicode(e.message)
+                text=e.message
             )
             raise SnippetException(text)
         except EnvironmentError as e:
             text = _(u'Snippet reading error:\n{text}').format(
-                text=unicode(e)
+                text=str(e)
             )
             raise SnippetException(text)
         except BaseException as e:
             text = _(u'Snippet processing error:\n{text}').format(
-                text=unicode(e)
+                text=str(e)
             )
             raise SnippetException(text)
 
@@ -129,9 +131,6 @@ class VarList(object):
 
     def __str__(self):
         return ', '.join(self._data)
-
-    def __unicode__(self):
-        return u', '.join(self._data)
 
     def __iter__(self):
         return iter(self._data)

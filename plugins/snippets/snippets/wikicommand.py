@@ -64,7 +64,7 @@ class CommandSnip (Command):
                                             self.parser.page,
                                             **params_dict)
         except SnippetException as e:
-            text = _(u'Snippet error: \n') + e.message
+            text = _(u'Snippet error: \n') + str(e)
             return self._format_error(text)
         return self.parser.parseWikiMarkup(result)
 
