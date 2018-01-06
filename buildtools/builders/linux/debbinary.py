@@ -212,7 +212,7 @@ class BuilderDebBinaryBase(BuilderBase, metaclass=ABCMeta):
         self._create_changelog()
         self._setPermissions()
         self._buildDeb()
-        self._checkLintian()
+        # self._checkLintian()
 
 
 class BuilderDebBinary(BuilderDebBinaryBase):

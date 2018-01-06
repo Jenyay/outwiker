@@ -32,17 +32,23 @@
                 - "--exclude=build"
 
       - name: Install Python modules
-        pip: chdir={{ outwiker_dir }} requirements={{ item }} extra_args="--user"
-        virtualenv: "{{ venv_path }}"
+        pip:
+            virtualenv: "{{ venv_path }}"
+            virtualenv_command: "/usr/bin/python3.6 -m venv"
+            chdir: "{{ outwiker_dir }}"
+            extra_args: "--upgrade"
+            requirements: "{{ item }}"
         with_items:
             - "requirements.txt"
-            - "requirements_linux.txt"
             - "requirements_dev.txt"
 
       - name: Build deb binary package
-        command: {{venv_activate_command}} && fab deb_binary:{{ is_stable }}
+        shell: |
+            {{venv_activate_command}}
+            fab deb_binary:{{ is_stable }}
         args:
             chdir: "{{ outwiker_dir }}"
+            executable: "/bin/bash"
 
       - name: Download deb packages
         fetch:
@@ -51,9 +57,12 @@
             flat: true
 
       - name: Build binary assembly
-        command: {{venv_activate_command}} && fab linux_binary:{{ is_stable }}
+        shell: |
+            {{venv_activate_command}}
+            fab linux_binary:{{ is_stable }}
         args:
             chdir: "{{ outwiker_dir }}"
+            executable: "/bin/bash"
 
       - name: Rename result archive (7z)
         copy:
@@ -77,9 +86,12 @@
             - "{{ result_path }}/outwiker_linux{{ suffix }}.zip"
 
       - name: Build AppImage
-        command: {{venv_activate_command}} && fab appimage:{{ is_stable }}
+        shell: |
+            {{venv_activate_command}}
+            fab appimage:{{ is_stable }}
         args:
             chdir: "{{ outwiker_dir }}"
+            executable: "/bin/bash"
 
       - name: Download AppImage
         fetch:

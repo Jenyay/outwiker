@@ -19,14 +19,31 @@
       - name: Install software to build OutWiker
         apt: name={{ item }}
         with_items:
+          - python3.6-dev
           - git
           - python-pip
-          - fabric
+          - python3-pip
+          - python3-venv
+          - python3.6-venv
           - debhelper
           - devscripts
           - p7zip-full
           - libssl-dev
-          - python-virtualenv
+          - dpkg-dev
+          - build-essential
+          - libjpeg-dev
+          - libtiff-dev
+          - libsdl1.2-dev
+          # - libgstreamer-plugins-base0.10-dev
+          - libnotify-dev
+          - freeglut3
+          - freeglut3-dev
+          - libsm-dev
+          - libgtk-3-dev
+          - libwebkitgtk-3.0-dev
+          - libgstreamer-plugins-base1.0-dev
+          - libwebkit2gtk-4.0-dev
+          - libsdl2-dev
         become: true
 
       - name: Install additional software
@@ -52,4 +69,5 @@
       - name: Upgrade pip
         pip:
             name: pip
+            executable: pip3
 

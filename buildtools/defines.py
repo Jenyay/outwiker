@@ -102,7 +102,7 @@ except KeyError:
 
 VM_BUILD_PARAMS = {
     u'zesty_64': {
-        u'vagrant_path': 'need_for_build/virtual/build_machines/zesty_64',
+        u'vagrant_path': 'need_for_build/virtual/build_machines/amd64',
         u'host': u'192.168.101.64',
     },
 }
