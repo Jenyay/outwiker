@@ -26,9 +26,9 @@
 		</author>
 
 		<changelog>
-			<version number="1.0.10" date="December 14, 2017">
-                <download os="all">http://jenyay.net/uploads/Outwiker/DataGraph/datagraph-2.0.0.zip</download>
-				<change>Added wxPython 4.0 supporting</change>
+			<version number="1.1">
+                <download os="all">http://jenyay.net/uploads/Outwiker/DataGraph/datagraph-1.1.zip</download>
+				<change>Add OutWiker 2.1 support. Migrate to Python 3.6.</change>
 			</version>
 
 			<version number="1.0.9" date="May 28, 2017">
@@ -95,9 +95,9 @@
 		</author>
 
 		<changelog>
-			<version number="1.0.10" date="14.12.2017">
-                <download os="all">http://jenyay.net/uploads/Outwiker/DataGraph/datagraph-2.0.0.zip</download>
-				<change>Добавлена поддержка wxPython 4.0</change>
+			<version number="1.1">
+                <download os="all">http://jenyay.net/uploads/Outwiker/DataGraph/datagraph-1.1.zip</download>
+				<change>Добавлена поддержка OutWiker 2.1. Переход на Python 3.6.</change>
 			</version>
 
 			<version number="1.0.9" date="28.05.2017">

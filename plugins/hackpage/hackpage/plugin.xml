@@ -26,14 +26,9 @@
 		</author>
 
 		<changelog>
-			<version number="2.0.1" date="December 17, 2017">
-                <download os="all">http://jenyay.net/uploads/Outwiker/HackPage/hackpage-2.0.1.zip</download>
-                <change>Python 3.6 migration.</change>
-            </version>
-
-			<version number="2.0" date="December 14, 2017">
-                <download os="all">http://jenyay.net/uploads/Outwiker/HackPage/hackpage-2.0.zip</download>
-				<change>Update according to wxPython 4.0.</change>
+			<version number="1.2">
+                <download os="all">http://jenyay.net/uploads/Outwiker/HackPage/hackpage-1.2.zip</download>
+				<change>Add OutWiker 2.1 support. Migrate to Python 3.6.</change>
 			</version>
 
 			<version number="1.1" date="February 24, 2017">
@@ -59,14 +54,9 @@
 		</author>
 
 		<changelog>
-			<version number="2.0.1" date="17.12.2017">
-                <download os="all">http://jenyay.net/uploads/Outwiker/HackPage/hackpage-2.0.1.zip</download>
-                <change>Портирован на Python 3.6</change>
-            </version>
-
-			<version number="2.0" date="14.12.2017">
-                <download os="all">http://jenyay.net/uploads/Outwiker/HackPage/hackpage-2.0.zip</download>
-				<change>Обновление до wxPython 4.0.</change>
+			<version number="1.2">
+                <download os="all">http://jenyay.net/uploads/Outwiker/HackPage/hackpage-1.2.zip</download>
+				<change>Добавлена поддержка OutWiker 2.1. Переход на Python 3.6.</change>
 			</version>
 
 			<version number="1.1" date="24.02.2017">

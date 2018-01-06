@@ -26,9 +26,9 @@
 		</author>
 
 		<changelog>
-			<version number="2.0" date="December 14, 2017">
-                <download os="all">http://jenyay.net/uploads/Outwiker/ExternalTools/externaltools-2.0.zip</download>
-				<change>Update according to wxPython 4.0</change>
+			<version number="1.5">
+                <download os="all">http://jenyay.net/uploads/Outwiker/ExternalTools/externaltools-1.5.zip</download>
+				<change>Add OutWiker 2.1 support. Migrate to Python 3.6.</change>
 			</version>
 
 			<version number="1.4" date="September 24, 2017">
@@ -86,9 +86,9 @@
 		</author>
 
 		<changelog>
-			<version number="2.0" date="14.12.2017">
-                <download os="all">http://jenyay.net/uploads/Outwiker/ExternalTools/externaltools-1.4.zip</download>
-				<change>Обновлен в соответсвии с wxPython 4.0</change>
+			<version number="1.5">
+                <download os="all">http://jenyay.net/uploads/Outwiker/ExternalTools/externaltools-1.5.zip</download>
+				<change>Добавлена поддержка OutWiker 2.1. Переход на Python 3.6.</change>
 			</version>
 
 			<version number="1.4" date="24.09.2017">
