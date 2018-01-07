@@ -1,1 +1,2 @@
-amd64 ansible_host=192.168.101.64 ansible_port=22 ansible_ssh_private_key_file="amd64/.vagrant/machines/default/virtualbox/private_key"
+# zesty64 ansible_host=192.168.101.64 ansible_port=22 ansible_ssh_private_key_file="zesty64/.vagrant/machines/default/virtualbox/private_key"
+xenial64 ansible_host=192.168.101.65 ansible_port=22 ansible_ssh_private_key_file="xenial64/.vagrant/machines/default/virtualbox/private_key"

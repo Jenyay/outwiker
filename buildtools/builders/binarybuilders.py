@@ -204,7 +204,7 @@ class PyInstallerBuilderLinuxBase(BasePyInstallerBuilder):
 
         for fname in files_for_strip:
             print_info(u'Strip {}'.format(fname))
-            if os.path.exists(fname):
+            if os.path.exists(str(fname)):
                 local(u'strip -s -o "{fname}" "{fname}"'.format(fname=fname))
 
     def get_includes(self):
@@ -217,23 +217,38 @@ class PyInstallerBuilderLinuxBase(BasePyInstallerBuilder):
 
 class PyInstallerBuilderLinuxSimple(PyInstallerBuilderLinuxBase):
     def get_additional_files(self):
-        pixbuf_dir_dest = u'lib/gdk-pixbuf'
-        files = [
-            (u'need_for_build/linux/loaders.cache', pixbuf_dir_dest),
-        ]
+        files = []
+        self._append_pixbuf_files(files)
+        self._append_immodules_files(files)
+        # self._append_canberra_files(files)
+        return files
 
-        canberra_lib = u'/usr/lib/x86_64-linux-gnu/gtk-2.0/modules/libcanberra-gtk-module.so'
-        if os.path.exists(canberra_lib):
-            files.append((canberra_lib, u'.'))
+    def _append_immodules_files(self, files):
+        dir_dest = u'lib/immodules'
+        files.append((u'need_for_build/linux/immodules.cache', dir_dest))
+
+        src_immodules_dir = u'/usr/lib/x86_64-linux-gnu/gtk-3.0/3.0.0/immodules/'
+
+        for module_fname in os.listdir(src_immodules_dir):
+            if module_fname.endswith('.so'):
+                fname = os.path.join(src_immodules_dir, module_fname)
+                files.append((fname, dir_dest))
+
+    def _append_pixbuf_files(self, files):
+        dir_dest = u'lib/gdk-pixbuf'
+        files.append((u'need_for_build/linux/loaders.cache', dir_dest))
 
         pixbuf_loaders_dir = u'/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders'
 
         for pixbuf_type in os.listdir(pixbuf_loaders_dir):
             if pixbuf_type.endswith('.so'):
                 fname = os.path.join(pixbuf_loaders_dir, pixbuf_type)
-                files.append((fname, pixbuf_dir_dest))
+                files.append((fname, dir_dest))
 
-        return files
+    # def _append_canberra_files(self, files):
+    #     canberra_lib = u'/usr/lib/x86_64-linux-gnu/gtk-2.0/modules/libcanberra-gtk-module.so'
+    #     if os.path.exists(canberra_lib):
+    #         files.append((canberra_lib, u'.'))
 
     def get_params(self):
         params = super(PyInstallerBuilderLinuxSimple, self).get_params()

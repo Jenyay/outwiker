@@ -34,7 +34,7 @@
       - name: Install Python modules
         pip:
             virtualenv: "{{ venv_path }}"
-            virtualenv_command: "/usr/bin/python3.6 -m venv"
+            virtualenv_command: "/usr/bin/{{python}} -m venv"
             chdir: "{{ outwiker_dir }}"
             extra_args: "--upgrade"
             requirements: "{{ item }}"

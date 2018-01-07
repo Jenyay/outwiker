@@ -12,7 +12,7 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at с.
-  config.vm.box = "ubuntu/zesty64"
+  config.vm.box = "ubuntu/xenial64"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -26,7 +26,7 @@ Vagrant.configure("2") do |config|
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
-  config.vm.network "private_network", ip: "192.168.101.64"
+  config.vm.network "private_network", ip: "192.168.101.65"
 
   # config.ssh.insert_key = false
 
@@ -68,6 +68,6 @@ Vagrant.configure("2") do |config|
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", inline: <<-SHELL
     apt-get update
-	apt-get install -y python python2.7 python3.6 mc
+	apt-get install -y python python2.7
   SHELL
 end

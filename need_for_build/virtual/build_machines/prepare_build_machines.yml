@@ -19,12 +19,12 @@
       - name: Install software to build OutWiker
         apt: name={{ item }}
         with_items:
-          - python3.6-dev
           - git
+          - "{{python}}-dev"
           - python-pip
           - python3-pip
           - python3-venv
-          - python3.6-venv
+          - "{{python}}-venv"
           - debhelper
           - devscripts
           - p7zip-full
@@ -44,6 +44,7 @@
           - libgstreamer-plugins-base1.0-dev
           - libwebkit2gtk-4.0-dev
           - libsdl2-dev
+          - ibus-gtk3
         become: true
 
       - name: Install additional software

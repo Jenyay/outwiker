@@ -1,4 +1,0 @@
----
-suffix: "_amd64"
-additional_soft:
-    - python-wxgtk-webview3.0

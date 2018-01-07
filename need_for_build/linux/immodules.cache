@@ -1,0 +1,45 @@
+# GTK+ Input Method Modules file
+# Automatically generated file, do not edit
+# Created by /usr/lib/x86_64-linux-gnu/libgtk-3-0/gtk-query-immodules-3.0 from gtk+-3.22.25
+#
+# ModulesPath = lib/x86_64-pc-linux-gnu/immodules:lib/immodules:/usr/lib/x86_64-linux-gnu/gtk-3.0/x86_64-pc-linux-gnu/immodules:/usr/lib/x86_64-linux-gnu/gtk-3.0/immodules
+#
+"lib/immodules/im-cyrillic-translit.so" 
+"cyrillic_translit" "Cyrillic (Transliterated)" "gtk30" "/usr/share/locale" "" 
+
+"lib/immodules/im-broadway.so" 
+"broadway" "Broadway" "gtk30" "/usr/share/locale" "" 
+
+"lib/immodules/im-ti-er.so" 
+"ti_er" "Tigrigna-Eritrean (EZ+)" "gtk30" "/usr/share/locale" "ti" 
+
+"lib/immodules/im-viqr.so" 
+"viqr" "Vietnamese (VIQR)" "gtk30" "/usr/share/locale" "" 
+
+"lib/immodules/im-ipa.so" 
+"ipa" "IPA" "gtk30" "/usr/share/locale" "" 
+
+"lib/immodules/im-multipress.so" 
+"multipress" "Multipress" "gtk30" "" "" 
+
+"lib/immodules/im-am-et.so" 
+"am_et" "Amharic (EZ+)" "gtk30" "/usr/share/locale" "am" 
+
+"lib/immodules/im-cedilla.so" 
+"cedilla" "Cedilla" "gtk30" "/usr/share/locale" "az:ca:co:fr:gv:oc:pt:sq:tr:wa" 
+
+"lib/immodules/im-ibus.so" 
+"ibus" "IBus (Intelligent Input Bus)" "ibus" "" "ja:ko:zh:*" 
+
+"lib/immodules/im-inuktitut.so" 
+"inuktitut" "Inuktitut (Transliterated)" "gtk30" "/usr/share/locale" "iu" 
+
+"lib/immodules/im-xim.so" 
+"xim" "X Input Method" "gtk30" "/usr/share/locale" "ko:ja:th:zh" 
+
+"lib/immodules/im-thai.so" 
+"thai" "Thai-Lao" "gtk30" "/usr/share/locale" "lo:th" 
+
+"lib/immodules/im-ti-et.so" 
+"ti_et" "Tigrigna-Ethiopian (EZ+)" "gtk30" "/usr/share/locale" "ti" 
+
