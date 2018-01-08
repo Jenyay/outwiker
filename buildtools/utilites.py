@@ -1,7 +1,5 @@
 # -*- coding: UTF-8 -*-
 
-
-
 import sys
 import os
 import os.path
@@ -33,11 +31,7 @@ def getPython():
 
 
 def execute(command):
-    if os.name == 'posix':
-        #local(u'LD_PRELOAD=libwx_gtk2u_webview-3.0.so.0 ' + command)
-        local(command)
-    else:
-        local(command)
+    local(command)
 
 
 def getCurrentUbuntuDistribName():
@@ -87,6 +81,23 @@ def print_warning(text):
 
 def print_error(text):
     print(Fore.RED + text)
+
+
+def get_linux_distrib_info():
+    fname = '/etc/lsb-release'
+    with open(fname) as fp:
+        lines = fp.readlines()
+
+    result = {}
+    for line in lines:
+        if '=' not in line:
+            continue
+
+        line = line.strip()
+        key, value = line.split('=')
+        result[key] = value
+
+    return result
 
 
 def _os_only(func, os_str, name):

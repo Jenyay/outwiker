@@ -12,10 +12,34 @@ from buildtools.defines import (DEB_BINARY_BUILD_DIR,
                                 NEED_FOR_BUILD_DIR,
                                 )
 from buildtools.versions import getOutwikerVersion
+from ...utilites import get_linux_distrib_info
 
 
 class PyInstallerBuilderLinuxForDeb(PyInstallerBuilderLinuxBase):
-    pass
+    def get_additional_files(self):
+        files = []
+        self._append_pixbuf_files(files)
+        self._append_immodules_files(files)
+        return files
+
+    def _append_immodules_files(self, files):
+        dir_dest = u'lib/immodules'
+        modules_dir = u'/usr/lib/x86_64-linux-gnu/gtk-3.0/3.0.0/immodules/'
+
+        files.append(('need_for_build/debian_debbinary/immodules.cache', dir_dest))
+        self.append_so_files(files, modules_dir, dir_dest)
+
+    def _append_pixbuf_files(self, files):
+        dir_dest = u'lib/gdk-pixbuf'
+        modules_dir = u'/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders'
+
+        files.append(('need_for_build/debian_debbinary/loaders.cache', dir_dest))
+        self.append_so_files(files, modules_dir, dir_dest)
+
+    def get_params(self):
+        params = super().get_params()
+        params.append(u'--runtime-hook=linux_runtime_hook.py')
+        return params
 
 
 class BuilderDebBinaryFactory(object):
@@ -26,9 +50,9 @@ class BuilderDebBinaryFactory(object):
     def get_default(dir_name=DEB_BINARY_BUILD_DIR, is_stable=False):
         return BuilderDebBinaryFactory.get_opt(dir_name, is_stable)
 
-    @staticmethod
-    def get_usr(dir_name=DEB_BINARY_BUILD_DIR, is_stable=False):
-        return BuilderDebBinary(dir_name, is_stable)
+    # @staticmethod
+    # def get_usr(dir_name=DEB_BINARY_BUILD_DIR, is_stable=False):
+    #     return BuilderDebBinary(dir_name, is_stable)
 
     @staticmethod
     def get_opt(dir_name=DEB_BINARY_BUILD_DIR, is_stable=False):
@@ -38,11 +62,15 @@ class BuilderDebBinaryFactory(object):
 class BuilderDebBinaryBase(BuilderBase, metaclass=ABCMeta):
     def __init__(self, dir_name=DEB_BINARY_BUILD_DIR, is_stable=False):
         super(BuilderDebBinaryBase, self).__init__(dir_name, is_stable)
+        distrib_info = get_linux_distrib_info()
         version = getOutwikerVersion()
         architecture = self._getDebArchitecture()
-        self.debName = "outwiker-{}+{}_{}".format(version[0],
-                                                  version[1],
-                                                  architecture)
+        self.debName = "outwiker-{version}+{build}~{distrib}~{codename}_{architecture}".format(
+            version=version[0],
+            build=version[1],
+            distrib=distrib_info['DISTRIB_ID'],
+            codename=distrib_info['DISTRIB_CODENAME'],
+            architecture=architecture)
 
         # tmp/outwiker-x.x.x+xxx_.../
         self.debPath = self.facts.getTempSubpath(self.debName)
@@ -212,40 +240,40 @@ class BuilderDebBinaryBase(BuilderBase, metaclass=ABCMeta):
         self._create_changelog()
         self._setPermissions()
         self._buildDeb()
-        # self._checkLintian()
+        self._checkLintian()
 
 
-class BuilderDebBinary(BuilderDebBinaryBase):
-    '''
-    Class to create deb package from which will be installed to /usr/ folder
-    '''
-    def _getExecutableDirShort(self):
-        return u'usr/lib/outwiker'
-
-    def _createFoldersTree(self):
-        '''
-        Create folders tree inside tmp/outwiker-x.x.x+xxx_.../
-        and copy files to it.
-        '''
-        dir_names = [u'help',
-                     u'iconset',
-                     u'images',
-                     u'locale',
-                     u'spell',
-                     u'styles']
-
-        share_dir = os.path.join(self.debPath, u'usr', u'share', u'outwiker')
-        os.makedirs(share_dir)
-
-        exec_dir = self._getExecutableDir()
-
-        for dir_name in dir_names:
-            src_dir = os.path.join(exec_dir, dir_name)
-            dst_dir = os.path.join(share_dir, dir_name)
-            shutil.move(src_dir, dst_dir)
-            with lcd(self.debPath):
-                local(u'ln -s ../../share/outwiker/{dirname} usr/lib/outwiker'.format(dirname=dir_name))
-
+# class BuilderDebBinary(BuilderDebBinaryBase):
+#     '''
+#     Class to create deb package from which will be installed to /usr/ folder
+#     '''
+#     def _getExecutableDirShort(self):
+#         return u'usr/lib/outwiker'
+#
+#     def _createFoldersTree(self):
+#         '''
+#         Create folders tree inside tmp/outwiker-x.x.x+xxx_.../
+#         and copy files to it.
+#         '''
+#         dir_names = [u'help',
+#                      u'iconset',
+#                      u'images',
+#                      u'locale',
+#                      u'spell',
+#                      u'styles']
+#
+#         share_dir = os.path.join(self.debPath, u'usr', u'share', u'outwiker')
+#         os.makedirs(share_dir)
+#
+#         exec_dir = self._getExecutableDir()
+#
+#         for dir_name in dir_names:
+#             src_dir = os.path.join(exec_dir, dir_name)
+#             dst_dir = os.path.join(share_dir, dir_name)
+#             shutil.move(src_dir, dst_dir)
+#             with lcd(self.debPath):
+#                 local(u'ln -s ../../share/outwiker/{dirname} usr/lib/outwiker'.format(dirname=dir_name))
+#
 
 class BuilderDebBinaryOpt(BuilderDebBinaryBase):
     '''

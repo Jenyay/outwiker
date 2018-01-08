@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 import os
@@ -48,6 +48,8 @@ class OutWiker(wx.App):
         self._initLogger()
 
         logger = logging.getLogger('outwiker')
+
+        logger.debug(u'Current working directory: {}'.format(os.getcwd()))
         for n, dirname in enumerate(getSpecialDirList(u'')):
             logger.debug(u'Special directory [{}]: {}'.format(n, dirname))
 

@@ -156,6 +156,9 @@ class BasePyInstallerBuilder(BaseBinaryBuilder, metaclass=ABCMeta):
             print_info(u'Remove: {}'.format(fname))
             remove(fname)
 
+    def get_files_by_mask(self, directory, mask):
+        return [str(fname.resolve()) for fname in Path(directory).glob(mask)]
+
 
 class PyInstallerBuilderWindows(BasePyInstallerBuilder):
     def get_remove_list(self):
@@ -214,41 +217,31 @@ class PyInstallerBuilderLinuxBase(BasePyInstallerBuilder):
         # result.append('gi.repository.GdkPixbuf')
         return result
 
+    def append_so_files(self, files, modules_dir, dir_dest):
+        so_files = self.get_files_by_mask(modules_dir, '*.so')
+        files += [(fname, dir_dest) for fname in so_files]
+
 
 class PyInstallerBuilderLinuxSimple(PyInstallerBuilderLinuxBase):
     def get_additional_files(self):
         files = []
         self._append_pixbuf_files(files)
         self._append_immodules_files(files)
-        # self._append_canberra_files(files)
         return files
 
     def _append_immodules_files(self, files):
         dir_dest = u'lib/immodules'
-        files.append((u'need_for_build/linux/immodules.cache', dir_dest))
+        modules_dir = u'/usr/lib/x86_64-linux-gnu/gtk-3.0/3.0.0/immodules/'
 
-        src_immodules_dir = u'/usr/lib/x86_64-linux-gnu/gtk-3.0/3.0.0/immodules/'
-
-        for module_fname in os.listdir(src_immodules_dir):
-            if module_fname.endswith('.so'):
-                fname = os.path.join(src_immodules_dir, module_fname)
-                files.append((fname, dir_dest))
+        files.append(('need_for_build/linux/immodules.cache', dir_dest))
+        self.append_so_files(files, modules_dir, dir_dest)
 
     def _append_pixbuf_files(self, files):
         dir_dest = u'lib/gdk-pixbuf'
-        files.append((u'need_for_build/linux/loaders.cache', dir_dest))
+        modules_dir = u'/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders'
 
-        pixbuf_loaders_dir = u'/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders'
-
-        for pixbuf_type in os.listdir(pixbuf_loaders_dir):
-            if pixbuf_type.endswith('.so'):
-                fname = os.path.join(pixbuf_loaders_dir, pixbuf_type)
-                files.append((fname, dir_dest))
-
-    # def _append_canberra_files(self, files):
-    #     canberra_lib = u'/usr/lib/x86_64-linux-gnu/gtk-2.0/modules/libcanberra-gtk-module.so'
-    #     if os.path.exists(canberra_lib):
-    #         files.append((canberra_lib, u'.'))
+        files.append(('need_for_build/linux/loaders.cache', dir_dest))
+        self.append_so_files(files, modules_dir, dir_dest)
 
     def get_params(self):
         params = super(PyInstallerBuilderLinuxSimple, self).get_params()

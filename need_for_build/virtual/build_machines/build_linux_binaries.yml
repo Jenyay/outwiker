@@ -52,7 +52,7 @@
 
       - name: Download deb packages
         fetch:
-            src: "{{ result_path }}/outwiker-{{ version }}+{{ build }}{{ suffix }}.deb"
+            src: "{{ result_path }}/outwiker-{{ version }}+{{ build }}{{ deb_suffix }}.deb"
             dest: "{{ save_to }}/"
             flat: true
 

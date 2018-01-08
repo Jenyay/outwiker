@@ -1,3 +1,4 @@
 ---
 suffix: "_amd64"
+deb_suffix: "~Ubuntu~zesty_amd64"
 python: "python3.6"
