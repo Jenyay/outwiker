@@ -740,6 +740,7 @@ class WikiPage(RootWikiPage):
         except IOError:
             pass
 
+        text = text.replace('\r\n', '\n')
         return text
 
     @content.setter
@@ -747,6 +748,7 @@ class WikiPage(RootWikiPage):
         if self.readonly:
             raise ReadonlyException
 
+        text = text.replace('\r\n', '\n')
         if text != self.content or text == u"":
             path = os.path.join(self.path, RootWikiPage.contentFile)
 
