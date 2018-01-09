@@ -1,1 +1,1 @@
-comtypes==1.1.3.post2
+comtypes==1.1.4
