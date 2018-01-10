@@ -92,43 +92,6 @@ class BaseHtmlPanel(BaseTextPanel):
     def codeEditor(self):
         return self._codeEditor
 
-    def addTool(self,
-                menu,
-                idstring,
-                func,
-                menuText,
-                buttonText,
-                image,
-                alwaysEnabled=False,
-                fullUpdate=True,
-                panelname="pluginsToolBar"):
-        """
-        !!! Внимание. Это устаревший способ добавления элементов интерфейса.
-        Сохраняется только для совместимости со старыми версиями плагинов
-        и в будущих версиях программы может быть убран.
-
-        Добавить пункт меню и кнопку на панель
-        menu -- меню для добавления элемента
-        id -- идентификатор меню и кнопки
-        func -- обработчик
-        menuText -- название пунта меню
-        buttonText -- подсказка для кнопки
-        image -- имя файла с картинкой
-        alwaysEnabled -- Кнопка должна быть всегда активна
-        """
-        super(BaseHtmlPanel, self).addTool(menu,
-                                           idstring,
-                                           func,
-                                           menuText,
-                                           buttonText,
-                                           image,
-                                           alwaysEnabled,
-                                           fullUpdate,
-                                           panelname)
-
-        tool = self._tools[idstring]
-        self.enableTool(tool, self._isEnabledTool(tool))
-
     def Print(self):
         currpanel = self.notebook.GetCurrentPage()
         if currpanel is not None:

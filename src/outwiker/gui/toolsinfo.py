@@ -1,11 +1,11 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 
 class ToolsInfo (object):
     """
     Класс, описываемый инструмент, добавляемый на панель и/или в главное меню
     """
-    def __init__ (self, id, alwaysEnabled, menu, panelname):
+    def __init__(self, id, alwaysEnabled, menu, panelname):
         """
         id - идентификатор
         alwaysEnabled - кнопка всегда активна?

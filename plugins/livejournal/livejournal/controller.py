@@ -1,10 +1,8 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os.path
 
 import wx
-
-from outwiker.core.system import getOS
 
 from .i18n import get_
 from .ljcommand import LjUserCommand, LjCommunityCommand
@@ -78,23 +76,23 @@ class Controller (object):
             mainWnd.toolbars[self.ID_TOOLBAR] = LJToolBar (mainWnd, mainWnd.auiManager)
 
             pageView = self._getPageView()
-            pageView.addTool (pageView.commandsMenu,
-                              self.ID_LJUSER,
-                              self.__onLJUser,
-                              _(u"Livejournal User (:ljuser ...:)"),
-                              _(u"Livejournal User (:ljuser ...:)"),
-                              self._getImagePath ("ljuser.gif"),
-                              False,
-                              panelname=self.ID_TOOLBAR)
-
-            pageView.addTool (pageView.commandsMenu,
-                              self.ID_LJCOMMUNITY,
-                              self.__onLJCommunity,
-                              _(u"Livejournal Community (:ljcomm ...:)"),
-                              _(u"Livejournal Community (:ljcomm ...:)"),
-                              self._getImagePath ("ljcommunity.gif"),
-                              False,
-                              panelname=self.ID_TOOLBAR)
+            # pageView.addTool (pageView.commandsMenu,
+            #                   self.ID_LJUSER,
+            #                   self.__onLJUser,
+            #                   _(u"Livejournal User (:ljuser ...:)"),
+            #                   _(u"Livejournal User (:ljuser ...:)"),
+            #                   self._getImagePath ("ljuser.gif"),
+            #                   False,
+            #                   panelname=self.ID_TOOLBAR)
+            #
+            # pageView.addTool (pageView.commandsMenu,
+            #                   self.ID_LJCOMMUNITY,
+            #                   self.__onLJCommunity,
+            #                   _(u"Livejournal Community (:ljcomm ...:)"),
+            #                   _(u"Livejournal Community (:ljcomm ...:)"),
+            #                   self._getImagePath ("ljcommunity.gif"),
+            #                   False,
+            #                   panelname=self.ID_TOOLBAR)
 
             self.__toolbarCreated = True
 

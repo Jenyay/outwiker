@@ -1,124 +1,106 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 # Плагин для вставки свернутого текста
 
 import os.path
 
 from outwiker.core.pluginbase import Plugin
-from outwiker.core.commands import getCurrentVersion
-from outwiker.core.version import Version, StatusSet
 
 from .commandspoiler import SpoilerCommand
 
 
-__version__ = u"2.0"
-
-
-if getCurrentVersion() < Version(2, 1, 0, 833, status=StatusSet.DEV):
-    print ("Spoiler plugin. OutWiker version requirement: 2.1.0.833")
-else:
-    class PluginSpoiler (Plugin):
+class PluginSpoiler(Plugin):
+    """
+    Плагин, добавляющий обработку команды spoiler в википарсер
+    """
+    def __init__(self, application):
         """
-        Плагин, добавляющий обработку команды spoiler в википарсер
+        application - экземпляр класса core.application.ApplicationParams
         """
-        def __init__ (self, application):
-            """
-            application - экземпляр класса core.application.ApplicationParams
-            """
-            Plugin.__init__ (self, application)
-            self.__maxCommandIndex = 9
-            self.SPOILER_TOOL_ID = u"PLUGIN_SPOILER_TOOL_ID"
+        Plugin.__init__(self, application)
+        self.__maxCommandIndex = 9
+        self.SPOILER_TOOL_ID = u"PLUGIN_SPOILER_TOOL_ID"
 
+    def __onWikiParserPrepare(self, parser):
+        parser.addCommand(SpoilerCommand(parser, "spoiler", _))
 
-        def __onWikiParserPrepare (self, parser):
-            parser.addCommand (SpoilerCommand (parser, "spoiler", _))
+        for index in range(self.__maxCommandIndex + 1):
+            commandname = "spoiler{index}".format(index=index)
+            parser.addCommand(SpoilerCommand(parser, commandname, _))
 
-            for index in range (self.__maxCommandIndex + 1):
-                commandname = "spoiler{index}".format (index=index)
-                parser.addCommand (SpoilerCommand (parser, commandname, _))
+    def initialize(self):
+        self._application.onWikiParserPrepare += self.__onWikiParserPrepare
+        self._application.onPageViewCreate += self.__onPageViewCreate
+        self._initlocale(u"spoiler")
 
+        if self._isCurrentWikiPage:
+            self.__onPageViewCreate(self._application.selectedPage)
 
-        def initialize(self):
-            self._application.onWikiParserPrepare += self.__onWikiParserPrepare
-            self._application.onPageViewCreate += self.__onPageViewCreate
-            self._initlocale(u"spoiler")
+    def _initlocale(self, domain):
+        langdir = os.path.join(os.path.dirname(__file__), "locale")
+        global _
 
-            if self._isCurrentWikiPage:
-                self.__onPageViewCreate (self._application.selectedPage)
+        try:
+            _ = self._init_i18n(domain, langdir)
+        except BaseException as e:
+            print(e)
 
+    @property
+    def _isCurrentWikiPage(self):
+        return (self._application.selectedPage is not None and
+                self._application.selectedPage.getTypeString() == u"wiki")
 
-        def _initlocale (self, domain):
-            langdir = os.path.join (os.path.dirname (__file__), "locale")
-            global _
+    def __onPageViewCreate(self, page):
+        """Обработка события после создания представления страницы"""
+        assert self._application.mainWindow is not None
 
-            try:
-                _ = self._init_i18n (domain, langdir)
-            except BaseException as e:
-                print (e)
+        if not self._isCurrentWikiPage:
+            return
 
+        pageView = self._getPageView()
 
-        @property
-        def _isCurrentWikiPage (self):
-            return (self._application.selectedPage is not None and
-                    self._application.selectedPage.getTypeString() == u"wiki")
+        helpString = _(u"Collapse text(:spoiler:)")
+        image = self._getImagePath()
 
+        # pageView.addTool(pageView.commandsMenu,
+        #                  self.SPOILER_TOOL_ID,
+        #                  self.__onInsertCommand,
+        #                  helpString,
+        #                  helpString,
+        #                  image)
 
-        def __onPageViewCreate(self, page):
-            """Обработка события после создания представления страницы"""
-            assert self._application.mainWindow is not None
+    def _getImagePath(self):
+        imagedir = os.path.join(os.path.dirname(__file__), "images")
+        fname = os.path.join(imagedir, "spoiler.png")
+        return fname
 
-            if not self._isCurrentWikiPage:
-                return
+    def __onInsertCommand(self, event):
+        startCommand = u'(:spoiler:)'
+        endCommand = u'(:spoilerend:)'
 
-            pageView = self._getPageView()
+        pageView = self._getPageView()
+        pageView.codeEditor.turnText(startCommand, endCommand)
 
-            helpString = _(u"Collapse text (:spoiler:)")
-            image = self._getImagePath ()
+    def _getPageView(self):
+        """
+        Получить указатель на панель представления страницы
+        """
+        return self._application.mainWindow.pagePanel.pageView
 
-            pageView.addTool (pageView.commandsMenu,
-                              self.SPOILER_TOOL_ID,
-                              self.__onInsertCommand,
-                              helpString,
-                              helpString,
-                              image)
+    @property
+    def name(self):
+        return u"Spoiler"
 
-
-        def _getImagePath (self):
-            imagedir = os.path.join (os.path.dirname (__file__), "images")
-            fname = os.path.join (imagedir, "spoiler.png")
-            return fname
-
-
-        def __onInsertCommand (self, event):
-            startCommand = u'(:spoiler:)'
-            endCommand = u'(:spoilerend:)'
-
-            pageView = self._getPageView()
-            pageView.codeEditor.turnText (startCommand, endCommand)
-
-
-        def _getPageView (self):
-            """
-            Получить указатель на панель представления страницы
-            """
-            return self._application.mainWindow.pagePanel.pageView
-
-
-        @property
-        def name (self):
-            return u"Spoiler"
-
-
-        @property
-        def description (self):
-            return _(u"""Add command (:spoiler:) in wiki parser.
+    @property
+    def description(self):
+        return _(u"""Add command(:spoiler:) in wiki parser.
 
 <B>Usage:</B>
 <PRE>(:spoiler:)
 Text
 (:spoilerend:)</PRE>
 
-For nested spoilers use (:spoiler0:), (:spoiler1:)... (:spoiler9:) commands. 
+For nested spoilers use (:spoiler0:), (:spoiler1:)...(:spoiler9:) commands. 
 
 <U>Example:</U>
 
@@ -141,23 +123,16 @@ Text
 (:spoilerend:)</PRE>
 """)
 
+    @property
+    def url(self):
+        return _(u"http://jenyay.net/Outwiker/SpoilerEn")
 
-        @property
-        def version (self):
-            return __version__
+    def destroy(self):
+        """
+        Уничтожение(выгрузка) плагина. Здесь плагин должен отписаться от всех событий и удалить свои кнопки, пункты меню и т.п.
+        """
+        self._application.onWikiParserPrepare -= self.__onWikiParserPrepare
+        self._application.onPageViewCreate -= self.__onPageViewCreate
 
-
-        @property
-        def url (self):
-            return _(u"http://jenyay.net/Outwiker/SpoilerEn")
-
-
-        def destroy (self):
-            """
-            Уничтожение (выгрузка) плагина. Здесь плагин должен отписаться от всех событий и удалить свои кнопки, пункты меню и т.п.
-            """
-            self._application.onWikiParserPrepare -= self.__onWikiParserPrepare
-            self._application.onPageViewCreate -= self.__onPageViewCreate
-
-            if self._isCurrentWikiPage:
-                self._getPageView().removeTool (self.SPOILER_TOOL_ID)
+        if self._isCurrentWikiPage:
+            self._getPageView().removeTool(self.SPOILER_TOOL_ID)
