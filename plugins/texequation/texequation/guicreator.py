@@ -31,8 +31,8 @@ class GuiCreator(object):
 
     def initialize(self):
         if self._application.mainWindow is not None:
-            list(map(lambda action: self._application.actionController.register(
-                action(self._application), None), self._actions))
+            [*map(lambda action: self._application.actionController.register(
+                action(self._application), None), self._actions)]
 
     def createTools(self):
         mainWindow = self._application.mainWindow
@@ -43,8 +43,8 @@ class GuiCreator(object):
         # Меню, куда будут добавляться команды
         menu = self._getPageView().toolsMenu
 
-        map(lambda action: self._application.actionController.appendMenuItem(
-            action.stringId, menu), self._actions)
+        [*map(lambda action: self._application.actionController.appendMenuItem(
+            action.stringId, menu), self._actions)]
 
         # При необходимости добавить кнопки на панель
         toolbar = mainWindow.toolbars[mainWindow.PLUGINS_TOOLBAR_STR]
@@ -67,19 +67,19 @@ class GuiCreator(object):
 
     def removeTools(self):
         if self._application.mainWindow is not None:
-            map(lambda action: self._application.actionController.removeMenuItem(action.stringId),
-                self._actions)
+            [*map(lambda action: self._application.actionController.removeMenuItem(action.stringId),
+                  self._actions)]
 
-            map(lambda action: self._application.actionController.removeToolbarButton(action.stringId),
-                self._actions)
+            [*map(lambda action: self._application.actionController.removeToolbarButton(action.stringId),
+                  self._actions)]
 
             self._getPageView().Unbind(EVT_PAGE_TAB_CHANGED,
                                        handler=self._onTabChanged)
 
     def destroy(self):
         if self._application.mainWindow is not None:
-            map(lambda action: self._application.actionController.removeAction(action.stringId),
-                self._actions)
+            [*map(lambda action: self._application.actionController.removeAction(action.stringId),
+                  self._actions)]
 
     def _onTabChanged(self, event):
         self._enableTools()
@@ -92,8 +92,8 @@ class GuiCreator(object):
         enabled = (pageView.selectedPageIndex == pageView.CODE_PAGE_INDEX and
                    not self._application.selectedPage.readonly)
 
-        map(lambda action: self._application.actionController.enableTools(action.stringId, enabled),
-            self._actions)
+        [*map(lambda action: self._application.actionController.enableTools(action.stringId, enabled),
+              self._actions)]
 
     def _getPageView(self):
         """
