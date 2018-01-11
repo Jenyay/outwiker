@@ -6,7 +6,12 @@ import os.path
 
 from outwiker.core.pluginbase import Plugin
 
-from .commandspoiler import SpoilerCommand
+from .controller import Controller
+from .guicontroller import GUIController
+
+
+def _no_translate(text):
+    return text
 
 
 class PluginSpoiler(Plugin):
@@ -18,25 +23,16 @@ class PluginSpoiler(Plugin):
         application - экземпляр класса core.application.ApplicationParams
         """
         Plugin.__init__(self, application)
-        self.__maxCommandIndex = 9
-        self.SPOILER_TOOL_ID = u"PLUGIN_SPOILER_TOOL_ID"
-
-    def __onWikiParserPrepare(self, parser):
-        parser.addCommand(SpoilerCommand(parser, "spoiler", _))
-
-        for index in range(self.__maxCommandIndex + 1):
-            commandname = "spoiler{index}".format(index=index)
-            parser.addCommand(SpoilerCommand(parser, commandname, _))
+        self._controller = Controller(application)
+        self._GUIController = GUIController(application)
 
     def initialize(self):
-        self._application.onWikiParserPrepare += self.__onWikiParserPrepare
-        self._application.onPageViewCreate += self.__onPageViewCreate
         self._initlocale(u"spoiler")
-
-        if self._isCurrentWikiPage:
-            self.__onPageViewCreate(self._application.selectedPage)
+        self._controller.initialize()
+        self._GUIController.initialize()
 
     def _initlocale(self, domain):
+        from .i18n import set_
         langdir = os.path.join(os.path.dirname(__file__), "locale")
         global _
 
@@ -44,48 +40,9 @@ class PluginSpoiler(Plugin):
             _ = self._init_i18n(domain, langdir)
         except BaseException as e:
             print(e)
+            _ = _no_translate
 
-    @property
-    def _isCurrentWikiPage(self):
-        return (self._application.selectedPage is not None and
-                self._application.selectedPage.getTypeString() == u"wiki")
-
-    def __onPageViewCreate(self, page):
-        """Обработка события после создания представления страницы"""
-        assert self._application.mainWindow is not None
-
-        if not self._isCurrentWikiPage:
-            return
-
-        pageView = self._getPageView()
-
-        helpString = _(u"Collapse text(:spoiler:)")
-        image = self._getImagePath()
-
-        # pageView.addTool(pageView.commandsMenu,
-        #                  self.SPOILER_TOOL_ID,
-        #                  self.__onInsertCommand,
-        #                  helpString,
-        #                  helpString,
-        #                  image)
-
-    def _getImagePath(self):
-        imagedir = os.path.join(os.path.dirname(__file__), "images")
-        fname = os.path.join(imagedir, "spoiler.png")
-        return fname
-
-    def __onInsertCommand(self, event):
-        startCommand = u'(:spoiler:)'
-        endCommand = u'(:spoilerend:)'
-
-        pageView = self._getPageView()
-        pageView.codeEditor.turnText(startCommand, endCommand)
-
-    def _getPageView(self):
-        """
-        Получить указатель на панель представления страницы
-        """
-        return self._application.mainWindow.pagePanel.pageView
+        set_(_)
 
     @property
     def name(self):
@@ -93,7 +50,7 @@ class PluginSpoiler(Plugin):
 
     @property
     def description(self):
-        return _(u"""Add command(:spoiler:) in wiki parser.
+        return _(u"""Add (:spoiler:) wiki command to parser.
 
 <B>Usage:</B>
 <PRE>(:spoiler:)
@@ -129,10 +86,9 @@ Text
 
     def destroy(self):
         """
-        Уничтожение(выгрузка) плагина. Здесь плагин должен отписаться от всех событий и удалить свои кнопки, пункты меню и т.п.
+        Уничтожение(выгрузка) плагина.
+        Здесь плагин должен отписаться от всех событий и удалить свои кнопки,
+        пункты меню и т.п.
         """
-        self._application.onWikiParserPrepare -= self.__onWikiParserPrepare
-        self._application.onPageViewCreate -= self.__onPageViewCreate
-
-        if self._isCurrentWikiPage:
-            self._getPageView().removeTool(self.SPOILER_TOOL_ID)
+        self._controller.destroy()
+        self._GUIController.destroy()
