@@ -4,23 +4,21 @@ import os.path
 
 from outwiker.core.pluginbase import Plugin
 
-from .lightboxcommand import LightboxCommand
+from .controller import Controller
+from .guicontroller import GUIController
 
 
 class PluginLightbox(Plugin):
     """
-    Плагин, добавляющий обработку команды(:lightbox:) в википарсер
+    Плагин, добавляющий обработку команды (:lightbox:) в википарсер
     """
     def __init__(self, application):
         """
         application - экземпляр класса core.application.ApplicationParams
         """
-        Plugin.__init__(self, application)
-        self.LIGHTBOX_TOOL_ID = u"PLUGIN_LIGHTBOX_TOOL_ID"
-
-    def __onWikiParserPrepare(self, parser):
-        parser.addCommand(LightboxCommand(parser))
-        pass
+        super().__init__(application)
+        self._controller = Controller(application)
+        self._GUIController = GUIController(application)
 
     @property
     def name(self):
@@ -28,7 +26,7 @@ class PluginLightbox(Plugin):
 
     @property
     def description(self):
-        return _(u"""This plugin adds a command (:lightbox:), after adding a images from thumbnails will open in a preview window, rather than in an external program.
+        return _("""This plugin adds a command (:lightbox:), after adding a images from thumbnails will open in a preview window, rather than in an external program.
                 
 <B>Usage</B>
 
@@ -44,14 +42,12 @@ bla-bla-bla...
         return _(u"http://jenyay.net/Outwiker/LightboxEn")
 
     def initialize(self):
-        self._application.onWikiParserPrepare += self.__onWikiParserPrepare
-        self._application.onPageViewCreate += self.__onPageViewCreate
         self._initlocale(u"lightbox")
-
-        if self._isCurrentWikiPage:
-            self.__onPageViewCreate(self._application.selectedPage)
+        self._controller.initialize()
+        self._GUIController.initialize()
 
     def _initlocale(self, domain):
+        from .i18n import set_
         langdir = os.path.join(os.path.dirname(__file__), "locale")
         global _
 
@@ -60,47 +56,12 @@ bla-bla-bla...
         except BaseException as e:
             print(e)
 
-    def __onPageViewCreate(self, page):
-        """Обработка события после создания представления страницы"""
-        assert self._application.mainWindow is not None
-
-        if not self._isCurrentWikiPage:
-            return
-
-        pageView = self._getPageView()
-
-        helpString = _(u"Use lightbox(:lightbox:)")
-
-        # pageView.addTool(pageView.commandsMenu,
-        #                  self.LIGHTBOX_TOOL_ID,
-        #                  self.__onInsertCommand,
-        #                  helpString,
-        #                  helpString,
-        #                  None)
-
-    def __onInsertCommand(self, event):
-        command = u'(:lightbox:)'
-
-        pageView = self._getPageView()
-        pageView.codeEditor.replaceText(command)
-
-    def _getPageView(self):
-        """
-        Получить указатель на панель представления страницы
-        """
-        return self._application.mainWindow.pagePanel.pageView
-
-    @property
-    def _isCurrentWikiPage(self):
-        return (self._application.selectedPage is not None and
-                self._application.selectedPage.getTypeString() == u"wiki")
+        set_(_)
 
     def destroy(self):
         """
-        Уничтожение(выгрузка) плагина. Здесь плагин должен отписаться от всех событий
+        Уничтожение(выгрузка) плагина.
+        Здесь плагин должен отписаться от всех событий
         """
-        self._application.onWikiParserPrepare -= self.__onWikiParserPrepare
-        self._application.onPageViewCreate -= self.__onPageViewCreate
-
-        if self._isCurrentWikiPage:
-            self._getPageView().removeTool(self.LIGHTBOX_TOOL_ID)
+        self._controller.destroy()
+        self._GUIController.destroy()
