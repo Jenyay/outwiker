@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from outwiker.pages.wiki.parser.command import Command
 from outwiker.core.attachment import Attachment
@@ -9,7 +9,7 @@ from .thumbtablegenerator import ThumbTableGenerator
 from .utilites import isImage
 
 
-class ThumbListCommand (Command):
+class ThumbListCommand(Command):
     """
     Викикоманда, добавляющая стили к заголовку страницы
     Использование:
@@ -18,90 +18,92 @@ class ThumbListCommand (Command):
     Список файлов
     (:thumblistend:)
     """
-    def __init__ (self, parser):
+    def __init__(self, parser):
         """
         parser - экземпляр парсера
         """
-        Command.__init__ (self, parser)
-
+        Command.__init__(self, parser)
 
     @property
-    def name (self):
+    def name(self):
         """
         Возвращает имя команды, которую обрабатывает класс
         """
         return u"thumblist"
 
-
-    def execute (self, params, content):
+    def execute(self, params, content):
         """
         Запустить команду на выполнение.
-        Метод возвращает текст, который будет вставлен на место команды в вики-нотации
+        Метод возвращает текст, который будет
+        вставлен на место команды в вики-нотации
         """
-        paramsDict = Command.parseParams (params)
+        paramsDict = Command.parseParams(params)
         thumbsize = self._getThumbSize(paramsDict)
         columnsCount = self._getColumnsCount(paramsDict)
 
-        lineItems = self._parseContent (content)
+        lineItems = self._parseContent(content)
 
         if columnsCount == 0:
-            generator = ThumbStreamGenerator (lineItems, thumbsize, self.parser)
+            generator = ThumbStreamGenerator(lineItems, thumbsize, self.parser)
         else:
-            generator = ThumbTableGenerator (lineItems, thumbsize, self.parser, columnsCount)
+            generator = ThumbTableGenerator(lineItems,
+                                            thumbsize,
+                                            self.parser,
+                                            columnsCount)
 
         return generator.generate()
 
+    def _parseContent(self, content):
+        attach = Attachment(self.parser.page)
 
-    def _parseContent (self, content):
-        attach = Attachment (self.parser.page)
-
-        filesList = self._getLinesItems (content)
+        filesList = self._getLinesItems(content)
         allFiles = attach.getAttachRelative()
         allFiles.sort()
 
-        if len (content) == 0:
-            files = [(fname, u"") for fname in allFiles if isImage (fname)]
+        if len(content) == 0:
+            files = [(fname, u"") for fname in allFiles if isImage(fname)]
         else:
             files = [lineitem for lineitem
                      in filesList
-                     if isImage (lineitem[0]) and lineitem[0] in allFiles]
+                     if isImage(lineitem[0]) and lineitem[0] in allFiles]
 
         return files
 
-
-    def _getLinesItems (self, content):
+    def _getLinesItems(self, content):
         """
-        Возвращает список файлов и комментариев к ним, перечисленных в теле команды.
+        Возвращает список файлов и комментариев к ним,
+        перечисленных в теле команды.
         Возвращает список кортежей: (имя файла, комментарий)
         """
-        def _removeAttach (line):
+        def _removeAttach(line):
             """
             Удалить фразу "Attach:" в начале строки
             """
             attachPhrase = u"attach:"
-            return line[len (attachPhrase):] if line.lower().startswith (attachPhrase) else line
+            return (line[len(attachPhrase):]
+                    if line.lower().startswith(attachPhrase)
+                    else line)
 
-        lines = [self._splitLine (_removeAttach (fname.strip()))
+        lines = [self._splitLine(_removeAttach(fname.strip()))
                  for fname in content.split(u"\n")
-                 if len (fname.strip()) != 0]
+                 if len(fname.strip()) != 0]
 
         return lines
 
-
-    def _splitLine (self, line):
+    def _splitLine(self, line):
         """
-        Из строки в формате "Имя файла | Комментарий" делает кортеж (Имя файла, Комментарий)
+        Из строки в формате "Имя файла | Комментарий" делает кортеж
+        (Имя файла, Комментарий)
         """
-        splitItems = line.rsplit ("|", 1)
-        if len (splitItems) > 1:
+        splitItems = line.rsplit("|", 1)
+        if len(splitItems) > 1:
             result = (splitItems[0].strip(), splitItems[1].strip())
         else:
             result = (line, u"")
 
         return result
 
-
-    def _getColumnsCount (self, paramsDict):
+    def _getColumnsCount(self, paramsDict):
         """
         Возвращает количество столбцов для таблицы
         """
@@ -109,7 +111,7 @@ class ThumbListCommand (Command):
         cols = 0
 
         try:
-            cols = int (paramsDict[paramname])
+            cols = int(paramsDict[paramname])
         except KeyError:
             pass
         except ValueError:
@@ -117,8 +119,7 @@ class ThumbListCommand (Command):
 
         return cols
 
-
-    def _getThumbSize (self, paramsDict):
+    def _getThumbSize(self, paramsDict):
         sizeParamName1 = "px"
         sizeParamName2 = "maxsize"
 
@@ -127,7 +128,7 @@ class ThumbListCommand (Command):
         elif sizeParamName2 in paramsDict:
             thumbsize = paramsDict[sizeParamName2]
         else:
-            config = WikiConfig (self.parser.config)
+            config = WikiConfig(self.parser.config)
             thumbsize = config.thumbSizeOptions.value
 
         return thumbsize

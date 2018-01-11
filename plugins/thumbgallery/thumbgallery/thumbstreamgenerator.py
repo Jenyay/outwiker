@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from outwiker.core.attachment import Attachment
 
@@ -7,15 +7,18 @@ from .basethumbgenerator import BaseThumbGenerator
 
 class ThumbStreamGenerator (BaseThumbGenerator):
     """
-    Создание списка превьюшек в виде простой последовательсности (не в виде таблицы)
+    Создание списка превьюшек в виде простой последовательсности
+    (не в виде таблицы)
     """
-    def __init__ (self, items, thumbsize, parser):
+    def __init__(self, items, thumbsize, parser):
         """
-        items - список кортежей, описывающие прикрепленные файлов, из которых надо сделать превьюшки (первый элемент), и комментарии к ним (второй элемент)
+        items - список кортежей, описывающие прикрепленные файлов,
+            из которых надо сделать превьюшки (первый элемент),
+            и комментарии к ним (второй элемент)
         thumbsize - размер превьюшек (по наибольшей стороне)
         parser - экземпляр википарсера (Parser)
         """
-        super (ThumbStreamGenerator, self).__init__ (items, thumbsize, parser)
+        super().__init__(items, thumbsize, parser)
 
         # Обертка для галереи в целом
         self._fullTemplate = u'<div class="thumblist">{content}</div>'
@@ -27,32 +30,31 @@ class ThumbStreamGenerator (BaseThumbGenerator):
 <style>
     div.thumblist {
         }
-    
+
     div.thumblist-thumb {
         display: inline;
         }
-    
+
     div.thumblist-image {
         display: inline;
         }
-    
+
     div.thumblist-image img{
 		padding: 0.3em 0.3em 0.5em 0.5em;
         }
 </style>
 <!-- End Thumblist styles -->"""
 
-
-    def generate (self):
+    def generate(self):
         """
         Возвращает строку, содержащую HTML-текст галереи
         """
-        resultContent = u"".join ([self._singleThumbTemplate.format (attachdir=Attachment.attachDir,
-                                                                     imagename = item[0],
-                                                                     thumbpath=self._getThumbnail (self._parser.page, item[0]))
-                                   for item in self._items])
+        resultContent = u"".join([self._singleThumbTemplate.format(attachdir=Attachment.attachDir,
+                                                                   imagename=item[0],
+                                                                   thumbpath=self._getThumbnail(self._parser.page, item[0]))
+                                  for item in self._items])
 
         if self._style not in self._parser.head:
-            self._parser.appendToHead (self._style)
+            self._parser.appendToHead(self._style)
 
-        return self._fullTemplate.format (content = resultContent)
+        return self._fullTemplate.format(content=resultContent)

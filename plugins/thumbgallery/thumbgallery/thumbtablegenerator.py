@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from outwiker.core.attachment import Attachment
 
@@ -9,14 +9,16 @@ class ThumbTableGenerator (BaseThumbGenerator):
     """
     Создание списка превьюшек в виде таблицы
     """
-    def __init__ (self, items, thumbsize, parser, cols):
+    def __init__(self, items, thumbsize, parser, cols):
         """
-        items - список кортежей, описывающие прикрепленные файлов, из которых надо сделать превьюшки (первый элемент), и комментарии к ним (второй элемент)
+        items - список кортежей, описывающие прикрепленные файлов,
+            из которых надо сделать превьюшки (первый элемент),
+            и комментарии к ним (второй элемент)
         thumbsize - размер превьюшек (по наибольшей стороне)
         parser - экземпляр википарсера (Parser)
         cols - количество столбцов таблицы
         """
-        super (ThumbTableGenerator, self).__init__ (items, thumbsize, parser)
+        super().__init__(items, thumbsize, parser)
         self._cols = cols
 
         # Обертка для галереи в целом
@@ -52,39 +54,39 @@ class ThumbTableGenerator (BaseThumbGenerator):
 </style>
 <!-- End Thumblist styles -->"""
 
-
-    def generate (self):
+    def generate(self):
         """
         Возвращает строку, содержащую HTML-текст галереи
         """
         if self._style not in self._parser.head:
-            self._parser.appendToHead (self._style)
+            self._parser.appendToHead(self._style)
 
-        resultContent = self._generateRows (self._items)
+        resultContent = self._generateRows(self._items)
 
-        return self._fullTemplate.format (content = resultContent)
+        return self._fullTemplate.format(content=resultContent)
 
-
-    def _generateItemText (self, item):
+    def _generateItemText(self, item):
         """
         Возвращает оформленный элемент таблицы
         """
-        image = u"""<A HREF="{attachdir}/{imagename}"><IMG SRC="{thumbpath}"/></A>""".format (
+        image = u"""<A HREF="{attachdir}/{imagename}"><IMG SRC="{thumbpath}"/></A>""".format(
                 attachdir=Attachment.attachDir,
-                imagename = item[0],
-                thumbpath=self._getThumbnail (self._parser.page, item[0]))
+                imagename=item[0],
+                thumbpath=self._getThumbnail(self._parser.page, item[0]))
 
-        return self._singleThumbTemplate.format (thumbimage=image, comment=item[1])
+        return self._singleThumbTemplate.format(thumbimage=image, comment=item[1])
 
-
-    def _generateRows (self, items):
+    def _generateRows(self, items):
         """
         Возвращает список строк, описывающих строки таблицы
         """
-        itemsText = [self._generateItemText (item) for item in self._items]
+        itemsText = [self._generateItemText(item) for item in self._items]
 
         # Разрежем список на несколько списков, длиной self._cols
-        splitItems = [itemsText[i: i + self._cols] for i in range(0, len(itemsText), self._cols)]
+        splitItems = [itemsText[i: i + self._cols]
+                      for i in range(0, len(itemsText), self._cols)]
 
-        rows = [self._rowTemplate.format (row = u"".join (row)) for row in splitItems]
-        return u"".join (rows)
+        rows = [self._rowTemplate.format(row=u"".join(row))
+                for
+                row in splitItems]
+        return u"".join(rows)

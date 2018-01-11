@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import wx
 
@@ -7,15 +7,16 @@ from outwiker.gui.preferences.configelements import IntegerElement
 
 from .thumbconfig import ThumbConfig
 from .utilites import isImage
+from .i18n import get_
 
 
 class ThumbDialog(wx.Dialog):
-    def __init__(self, parent, page, lang, application):
-        super(ThumbDialog, self).__init__(
+    def __init__(self, parent, page, application):
+        super().__init__(
             parent,
             style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
         global _
-        _ = lang
+        _ = get_()
 
         self._page = page
         self._config = ThumbConfig(application.config)
@@ -31,7 +32,7 @@ class ThumbDialog(wx.Dialog):
         self.columnsLabel = wx.StaticText(
             self,
             -1,
-            _(u"Columns count(0 - without table)"))
+            _(u"Columns count (0 - without table)"))
         self.columns = wx.SpinCtrl(self,
                                    min=0,
                                    max=self._config.COLUMNS_COUNT_MAX)
@@ -41,7 +42,7 @@ class ThumbDialog(wx.Dialog):
         self.thumbSizeLabel = wx.StaticText(
             self,
             -1,
-            _(u"Thumbnails size(0 - default size)"))
+            _(u"Thumbnails size (0 - default size)"))
         self.thumbSizeCtrl = wx.SpinCtrl(self,
                                          min=0,
                                          max=self._config.THUMB_SIZE_MAX)
@@ -73,7 +74,8 @@ class ThumbDialog(wx.Dialog):
         self.LoadState()
 
     def _onAll(self, event):
-        self.attachFiles.SetChecked(list(range(self.attachFiles.GetCount())))
+        # self.attachFiles.SetChecked(list(range(self.attachFiles.GetCount())))
+        self.attachFiles.SetCheckedItems(range(self.attachFiles.GetCount()))
 
     def _onClear(self, event):
         self.attachFiles.SetChecked([])
