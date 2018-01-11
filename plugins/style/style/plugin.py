@@ -1,25 +1,26 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os.path
 
 from outwiker.core.pluginbase import Plugin
 
-from .stylecommand import StyleCommand
+from .controller import Controller
+
+
+def _no_translate(text):
+    return text
 
 
 class PluginStyle(Plugin):
     """
-    Плагин, добавляющий обработку команды(:style:) в википарсер
+    Плагин, добавляющий обработку команды (:style:) в википарсер
     """
     def __init__(self, application):
         """
         application - экземпляр класса core.application.ApplicationParams
         """
-        Plugin.__init__(self, application)
-        self.STYLE_TOOL_ID = u"PLUGIN_STYLE_TOOL_ID"
-
-    def __onWikiParserPrepare(self, parser):
-        parser.addCommand(StyleCommand(parser))
+        super().__init__(application)
+        self._controller = Controller(application)
 
     @property
     def name(self):
@@ -41,14 +42,11 @@ body {background-color: #EEE;}
 """)
 
     def initialize(self):
-        self._application.onWikiParserPrepare += self.__onWikiParserPrepare
-        self._application.onPageViewCreate += self.__onPageViewCreate
         self._initlocale(u"style")
-
-        if self._isCurrentWikiPage:
-            self.__onPageViewCreate(self._application.selectedPage)
+        self._controller.initialize()
 
     def _initlocale(self, domain):
+        from .i18n import set_
         langdir = os.path.join(os.path.dirname(__file__), "locale")
         global _
 
@@ -56,42 +54,9 @@ body {background-color: #EEE;}
             _ = self._init_i18n(domain, langdir)
         except BaseException as e:
             print(e)
+            _ = _no_translate
 
-    def __onPageViewCreate(self, page):
-        """Обработка события после создания представления страницы"""
-        assert self._application.mainWindow is not None
-
-        if not self._isCurrentWikiPage:
-            return
-
-        pageView = self._getPageView()
-
-        helpString = _(u"Custom Style(:style:)")
-
-        # pageView.addTool(pageView.commandsMenu,
-        #                  self.STYLE_TOOL_ID,
-        #                  self.__onInsertCommand,
-        #                  helpString,
-        #                  helpString,
-        #                  None)
-
-    def __onInsertCommand(self, event):
-        startCommand = u'(:style:)\n'
-        endCommand = u'\n(:styleend:)'
-
-        pageView = self._getPageView()
-        pageView.codeEditor.turnText(startCommand, endCommand)
-
-    def _getPageView(self):
-        """
-        Получить указатель на панель представления страницы
-        """
-        return self._application.mainWindow.pagePanel.pageView
-
-    @property
-    def _isCurrentWikiPage(self):
-        return (self._application.selectedPage is not None and
-                self._application.selectedPage.getTypeString() == u"wiki")
+        set_(_)
 
     @property
     def url(self):
@@ -102,8 +67,4 @@ body {background-color: #EEE;}
         Уничтожение (выгрузка) плагина.
         Здесь плагин должен отписаться от всех событий
         """
-        self._application.onWikiParserPrepare -= self.__onWikiParserPrepare
-        self._application.onPageViewCreate -= self.__onPageViewCreate
-
-        if self._isCurrentWikiPage:
-            self._getPageView().removeTool(self.STYLE_TOOL_ID)
+        self._controller.destroy()
