@@ -61,7 +61,8 @@ class GUIController(object):
             toolbar,
             self._getImagePath("spoiler.png"))
 
-        self._getPageView().Bind(EVT_PAGE_TAB_CHANGED, self._onTabChanged)
+        self._getPageView().Bind(EVT_PAGE_TAB_CHANGED,
+                                 handler=self._onTabChanged)
         self._enableTools()
 
     def _removeTools(self):
