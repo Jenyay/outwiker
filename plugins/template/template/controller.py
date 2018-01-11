@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from .i18n import get_
 from .guicreator import GuiCreator
@@ -15,7 +15,7 @@ class Controller(object):
         self._plugin = plugin
         self._application = application
 
-        self._guiCreator = None
+        self._guiCreator = GuiCreator(self, self._application)
 
         # В этот список добавить новые викикоманды, если они нужны
         self._commands = [CommandPlugin]
@@ -28,7 +28,6 @@ class Controller(object):
         global _
         _ = get_()
 
-        self._guiCreator = GuiCreator(self, self._application)
         self._guiCreator.initialize()
 
         self._application.onWikiParserPrepare += self.__onWikiParserPrepare
@@ -55,7 +54,8 @@ class Controller(object):
         """
         Вызывается до разбора викитекста. Добавление команды(:counter:)
         """
-        list(map(lambda command: parser.addCommand(command(parser)), self._commands))
+        [*map(lambda command: parser.addCommand(command(parser)),
+              self._commands)]
 
     @property
     def _isCurrentWikiPage(self):

@@ -1,12 +1,11 @@
-#!/usr/bin/python
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 """
 Модуль с классами для добавления пунктов меню и кнопок на панель
 """
 import os.path
 
-from outwiker.core.system import getOS
 from outwiker.pages.html.basehtmlpanel import EVT_PAGE_TAB_CHANGED
+
 from .i18n import get_
 
 # Импортировать все Actions
@@ -18,7 +17,6 @@ class GuiCreator(object):
     Создание элементов интерфейса с использованием actions
     """
     def __init__(self, controller, application):
-        self._controller = controller
         self._application = application
 
         # Сюда добавить все Actions
@@ -70,18 +68,19 @@ class GuiCreator(object):
         if self._application.mainWindow is not None:
             actionController = self._application.actionController
             list(map(lambda action: actionController.removeMenuItem(action.stringId),
-                self._actions))
+                     self._actions))
 
             list(map(lambda action: actionController.removeToolbarButton(action.stringId),
-                self._actions))
+                     self._actions))
 
-            self._getPageView().Unbind(EVT_PAGE_TAB_CHANGED, handler=self._onTabChanged)
+            self._getPageView().Unbind(EVT_PAGE_TAB_CHANGED,
+                                       handler=self._onTabChanged)
 
     def destroy(self):
         if self._application.mainWindow is not None:
             actionController = self._application.actionController
             list(map(lambda action: actionController.removeAction(action.stringId),
-                self._actions))
+                     self._actions))
 
     def _onTabChanged(self, event):
         self._enableTools()
@@ -95,7 +94,7 @@ class GuiCreator(object):
 
         actionController = self._application.actionController
         list(map(lambda action: actionController.enableTools(action.stringId, enabled),
-            self._actions))
+                 self._actions))
 
     def _getPageView(self):
         """
