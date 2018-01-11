@@ -6,13 +6,12 @@ from .stylecommand import StyleCommand
 class Controller(object):
     def __init__(self, application):
         self._application = application
-        self.STYLE_TOOL_ID = u"PLUGIN_STYLE_TOOL_ID"
 
     def initialize(self):
-        self._application.onWikiParserPrepare += self.__onWikiParserPrepare
+        self._application.onWikiParserPrepare += self._onWikiParserPrepare
 
     def destroy(self):
-        self._application.onWikiParserPrepare -= self.__onWikiParserPrepare
+        self._application.onWikiParserPrepare -= self._onWikiParserPrepare
 
-    def __onWikiParserPrepare(self, parser):
+    def _onWikiParserPrepare(self, parser):
         parser.addCommand(StyleCommand(parser))

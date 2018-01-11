@@ -61,7 +61,8 @@ class GUIController(object):
             [*map(lambda action: actionController.removeMenuItem(action.stringId),
                   self._actions)]
 
-            self._getPageView().Unbind(EVT_PAGE_TAB_CHANGED, handler=self._onTabChanged)
+            self._getPageView().Unbind(EVT_PAGE_TAB_CHANGED,
+                                       handler=self._onTabChanged)
 
     def destroy(self):
         self._application.onPageViewCreate -= self._onPageViewCreate
