@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os.path
 import logging
@@ -6,21 +6,23 @@ import logging
 import wx
 import wx.aui
 
-import outwiker.core.commands as cmd
+from outwiker.core.commands import MessageBox
 from outwiker.core.application import Application
+from outwiker.core.system import getOS
+from outwiker.core.system import getImagesDir
 
 from .guiconfig import MainWindowConfig
-
 from .mainmenu import MainMenu
 from .mainwndcontroller import MainWndController
 from .mainpanescontroller import MainPanesController
-from outwiker.gui.mainpanes.tagscloudmainpane import TagsCloudMainPane
-from outwiker.gui.mainpanes.attachmainpane import AttachMainPane
-from outwiker.gui.mainpanes.treemainpane import TreeMainPane
-from outwiker.gui.mainpanes.pagemainpane import PageMainPane
-from outwiker.gui.tabscontroller import TabsController
-from outwiker.gui.trayicon import getTrayIconController
-from outwiker.core.system import getImagesDir
+from .mainpanes.tagscloudmainpane import TagsCloudMainPane
+from .mainpanes.attachmainpane import AttachMainPane
+from .mainpanes.treemainpane import TreeMainPane
+from .mainpanes.pagemainpane import PageMainPane
+from .tabscontroller import TabsController
+from .trayicon import getTrayIconController
+from .preferences.prefcontroller import PrefController
+from .menucontroller import MenuController
 
 from .toolbars.generaltoolbar import GeneralToolBar
 from .toolbars.pluginstoolbar import PluginsToolBar
@@ -68,8 +70,6 @@ from outwiker.pages.wiki.wikipagecontroller import WikiPageController
 from outwiker.pages.html.htmlpagecontroller import HtmlPageController
 from outwiker.pages.text.textpagecontroller import TextPageController
 from outwiker.pages.search.searchpagecontroller import SearchPageController
-from outwiker.gui.preferences.prefcontroller import PrefController
-from outwiker.core.system import getOS
 
 
 logger = logging.getLogger('outwiker.gui.mainwindow')
@@ -94,6 +94,7 @@ class MainWindow(wx.Frame):
         logger.debug(u'MainWindow. Setup menu')
         self.mainMenu = MainMenu()
         self.SetMenuBar(self.mainMenu)
+        self.menuController = MenuController()
 
         self.__createStatusBar()
 
@@ -524,8 +525,8 @@ class MainWindow(wx.Frame):
 
                 self.__panesController.savePanesParams()
         except Exception as e:
-            cmd.MessageBox(_(u"Can't save config\n%s") % (str(e)),
-                           _(u"Error"), wx.ICON_ERROR | wx.OK)
+            MessageBox(_(u"Can't save config\n%s") % (str(e)),
+                       _(u"Error"), wx.ICON_ERROR | wx.OK)
 
     def __setIcon(self):
         """

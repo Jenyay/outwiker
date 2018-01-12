@@ -3,17 +3,12 @@
 import os.path
 
 from outwiker.pages.wiki.wikipage import WikiWikiPage
+from outwiker.pages.wiki.defines import MENU_WIKI_COMMANDS
 
 from .thumblistcommand import ThumbListCommand
 from .thumbgallerycommand import ThumbGalleryCommand
 from .actions import ThumbAction
-from .actionsguicontroller import ActionsGUIControllerBase, ActionGUIInfo
-
-
-class ActionsGUIController(ActionsGUIControllerBase):
-    def getMenu(self):
-        pageView = self._application.mainWindow.pagePanel.pageView
-        return pageView.commandsMenu
+from .actionsguicontroller import ActionsGUIController, ActionGUIInfo
 
 
 class Controller(object):
@@ -34,6 +29,7 @@ class Controller(object):
         if mainWindow is not None:
             action_gui_info = [
                 ActionGUIInfo(ThumbAction,
+                              MENU_WIKI_COMMANDS,
                               mainWindow.PLUGINS_TOOLBAR_STR,
                               os.path.join(self._imagesPath, 'gallery.png')),
             ]

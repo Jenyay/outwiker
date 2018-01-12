@@ -21,7 +21,7 @@ class ThumbAction (BaseAction):
 
     @property
     def title(self):
-        return _(u"Insert gallery (:thumbgallery:)")
+        return _(u"Gallery (:thumbgallery:)")
 
     @property
     def description(self):

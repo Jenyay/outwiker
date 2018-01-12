@@ -1,7 +1,6 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import wx
-from abc import ABCMeta, abstractmethod
 
 from outwiker.core.commands import MessageBox
 
@@ -16,8 +15,6 @@ from outwiker.pages.html.actions.switchcoderesult import SwitchCodeResultAction
 
 
 class BaseWikiPageView (BaseHtmlPanel):
-    #__metaclass__ = ABCMeta
-
     HTML_RESULT_PAGE_INDEX = BaseHtmlPanel.RESULT_PAGE_INDEX + 1
 
     def __init__(self, parent, application):
@@ -64,11 +61,9 @@ class BaseWikiPageView (BaseHtmlPanel):
         self.Bind(EVT_PAGE_TAB_CHANGED, handler=self.onTabChanged)
 
     # Методы, которые необходимо переопределить в производном классе
-    #@abstractmethod
     def _createWikiTools(self):
         pass
 
-    #@abstractmethod
     def _getPageTitle(self):
         """
         Метод должен возвращать строку, показываемую на вкладке
@@ -76,21 +71,24 @@ class BaseWikiPageView (BaseHtmlPanel):
         """
         pass
 
-    #@abstractmethod
     def _getMenuTitle(self):
         """
         Метод должен возвращать заголовок меню
         """
         pass
 
-    #@abstractmethod
+    def _getMenuId(self):
+        """
+        Метод должен возвращать идентификатор меню
+        """
+        pass
+
     def _createToolbars(self, mainWindow):
         """
         Метод должен возвращать экземпляр панели инструментов
         """
         pass
 
-    #@abstractmethod
     def _getPolyActions(self):
         """
         Метод должен возвращать список используемых полиморфных actions
@@ -98,7 +96,6 @@ class BaseWikiPageView (BaseHtmlPanel):
         """
         pass
 
-    #@abstractmethod
     def _getSpecificActions(self):
         """
         Метод должен возвращать список actions, которые нужно дизаблить при
@@ -106,7 +103,6 @@ class BaseWikiPageView (BaseHtmlPanel):
         """
         pass
 
-    #@abstractmethod
     def _isHtmlCodeShown(self):
         """
         Возвращает True, если нужно показывать вкладку с кодом HTML,
@@ -124,7 +120,7 @@ class BaseWikiPageView (BaseHtmlPanel):
             self.mainWindow.toolbars.updatePanesInfo()
             self.mainWindow.toolbars.destroyToolBar(toolbar.name)
 
-        super(BaseWikiPageView, self).Clear()
+        super().Clear()
 
     def onPreferencesDialogClose(self, prefDialog):
         super(BaseWikiPageView, self).onPreferencesDialogClose(prefDialog)
@@ -199,11 +195,12 @@ class BaseWikiPageView (BaseHtmlPanel):
         actionController = self._application.actionController
 
         # Активируем / дизактивируем собственные действия
-        [actionController.enableTools(action.stringId,
-                                                        enabled) for action in self.__wikiNotationActions]
+        [actionController.enableTools(action.stringId, enabled) for action
+         in self.__wikiNotationActions]
 
         # Активируем / дизактивируем полиморфные действия
-        [actionController.enableTools(strid, enabled) for strid in self.__polyActions]
+        [actionController.enableTools(strid, enabled) for strid
+         in self.__polyActions]
 
     def _onSwitchCodeHtml(self):
         assert self._currentpage is not None
@@ -256,6 +253,7 @@ class BaseWikiPageView (BaseHtmlPanel):
         assert index != wx.NOT_FOUND
 
         mainMenu.Remove(index)
+        self._application.mainWindow.menuController.removeMenu(self._getMenuId())
 
     def removeGui(self):
         super(BaseWikiPageView, self).removeGui()
@@ -271,6 +269,8 @@ class BaseWikiPageView (BaseHtmlPanel):
         self.mainWindow.mainMenu.Insert(self.__WIKI_MENU_INDEX,
                                         self.toolsMenu,
                                         self._getMenuTitle())
+        self.mainWindow.menuController.addMenu(self._getMenuId(),
+                                               self.toolsMenu)
 
         # Переключиться с кода на результат и обратно
         self._application.actionController.appendMenuItem(

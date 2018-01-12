@@ -3,19 +3,19 @@
 Модуль с классами для добавления пунктов меню
 """
 
-from abc import ABCMeta, abstractmethod
-
 from outwiker.pages.html.basehtmlpanel import EVT_PAGE_TAB_CHANGED
 
 
 class ActionGUIInfo(object):
-    def __init__(self, action, toolbar_id=None, image_fname=None):
+    def __init__(self, action, menu_id=None,
+                 toolbar_id=None, image_fname=None):
         self.action = action
+        self.menu_id = menu_id
         self.toolbar_id = toolbar_id
         self.image_fname = image_fname
 
 
-class ActionsGUIControllerBase(object, metaclass=ABCMeta):
+class ActionsGUIController(object):
     """
     Base class to create GUI for actions
     """
@@ -23,13 +23,6 @@ class ActionsGUIControllerBase(object, metaclass=ABCMeta):
         self._application = application
         self._pageTypeString = pageTypeString
         self._actionsInfoList = []
-
-    @abstractmethod
-    def getMenu(self):
-        '''
-        Return a parent menu for action
-        '''
-        pass
 
     def initialize(self, action_gui_info_list):
         self._actionsInfoList = action_gui_info_list[:]
@@ -57,12 +50,11 @@ class ActionsGUIControllerBase(object, metaclass=ABCMeta):
         if mainWindow is None:
             return
 
-        # Меню, куда будут добавляться команды
-        menu = self.getMenu()
-
         for action_info in self._actionsInfoList:
-            self._application.actionController.appendMenuItem(
-                action_info.action.stringId, menu)
+            if action_info.menu_id is not None:
+                self._application.actionController.appendMenuItem(
+                    action_info.action.stringId,
+                    mainWindow.menuController[action_info.menu_id])
 
             if action_info.toolbar_id is not None:
                 self._application.actionController.appendToolbarButton(
@@ -77,7 +69,9 @@ class ActionsGUIControllerBase(object, metaclass=ABCMeta):
         actionController = self._application.actionController
 
         for action_info in self._actionsInfoList:
-            actionController.removeMenuItem(action_info.action.stringId)
+            if action_info.menu_id is not None:
+                actionController.removeMenuItem(action_info.action.stringId)
+
             if action_info.toolbar_id is not None:
                 actionController.removeToolbarButton(action_info.action.stringId)
 

@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import wx
 import os
@@ -9,6 +9,7 @@ from outwiker.actions.polyactionsid import *
 from outwiker.core.commands import insertCurrentDate
 from outwiker.gui.toolbars.simpletoolbar import SimpleToolBar
 
+from .defines import MENU_WIKI, MENU_WIKI_COMMANDS
 from .wikieditor import WikiEditor
 from .wikiconfig import WikiConfig
 from .basewikipageview import BaseWikiPageView
@@ -32,7 +33,8 @@ class WikiPageView(BaseWikiPageView):
         super(WikiPageView, self).__init__(parent, application)
 
     def Clear(self):
-        super(WikiPageView, self).Clear()
+        super().Clear()
+        self.mainWindow.menuController.removeMenu(MENU_WIKI_COMMANDS)
 
     def getTextEditor(self):
         return WikiEditor
@@ -42,6 +44,9 @@ class WikiPageView(BaseWikiPageView):
 
     def _getMenuTitle(self):
         return _(u"Wiki")
+
+    def _getMenuId(self):
+        return MENU_WIKI
 
     def _isHtmlCodeShown(self):
         return WikiConfig(self._application.config).showHtmlCodeOptions.value
@@ -177,6 +182,8 @@ class WikiPageView(BaseWikiPageView):
         self.toolsMenu.AppendSubMenu(self._tableMenu, _(u"Tables"))
         self.toolsMenu.AppendSubMenu(self._listMenu, _(u"Lists"))
         self.toolsMenu.AppendSubMenu(self._commandsMenu, _(u"Commands"))
+        self.mainWindow.menuController.addMenu(MENU_WIKI_COMMANDS,
+                                               self._commandsMenu)
 
         self.__addCommandsTools()
 
@@ -185,7 +192,6 @@ class WikiPageView(BaseWikiPageView):
         self.__addListTools()
         self.__addHTools()
         self.__addTableTools()
-
 
         self.__addFormatTools()
         self._addSeparator()

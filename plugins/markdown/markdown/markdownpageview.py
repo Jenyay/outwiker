@@ -16,9 +16,9 @@ from outwiker.pages.wiki.wikieditor import WikiEditor
 
 from .links.linkdialog import LinkDialog
 from .links.linkdialogcontroller import LinkDialogController
-
 from .images.imagedialog import ImageDialog
 from .images.imagedialogcontroller import ImageDialogController
+from .defines import MENU_MARKDOWN
 
 
 class MarkdownPageView(BaseWikiPageView):
@@ -37,6 +37,9 @@ class MarkdownPageView(BaseWikiPageView):
 
     def _getMenuTitle(self):
         return _(u"Markdown")
+
+    def _getMenuId(self):
+        return MENU_MARKDOWN
 
     def _createToolbars(self, mainWindow):
         self._toolbar_general = SimpleToolBar(
