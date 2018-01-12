@@ -5,6 +5,7 @@ import wx
 from outwiker.gui.baseaction import BaseAction
 
 from .thumbdialog import ThumbDialog
+from .i18n import get_
 
 
 class ThumbAction (BaseAction):
@@ -15,6 +16,8 @@ class ThumbAction (BaseAction):
 
     def __init__(self, application):
         self._application = application
+        global _
+        _ = get_()
 
     @property
     def title(self):

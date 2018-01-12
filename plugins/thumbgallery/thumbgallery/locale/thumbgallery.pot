@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-03 22:11+0400\n"
+"POT-Creation-Date: 2018-01-12 21:33+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,38 +17,42 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: controller.py:56
-msgid "Thumbnails Gallery (:thumbgallery:)"
-msgstr ""
-
 #: thumbdialog.py:24
 msgid "Gallery"
 msgstr ""
 
-#: thumbdialog.py:32
+#: thumbdialog.py:35
 msgid "Columns count (0 - without table)"
 msgstr ""
 
-#: thumbdialog.py:37
+#: thumbdialog.py:45
 msgid "Thumbnails size (0 - default size)"
 msgstr ""
 
-#: thumbdialog.py:44
+#: thumbdialog.py:56
 msgid "All Images"
 msgstr ""
 
-#: thumbdialog.py:45
+#: thumbdialog.py:59
 msgid "Clear"
 msgstr ""
 
-#: thumbgallery.py:71
+#: plugin.py:60
 msgid "http://jenyay.net/Outwiker/ThumbGalleryEn"
 msgstr ""
 
-#: thumbgallery.py:78
+#: plugin.py:66
 msgid "locale/description.html"
 msgstr ""
 
-#: thumbgallery.py:86
+#: plugin.py:74
 msgid "Can't load description"
+msgstr ""
+
+#: actions.py:24
+msgid "Insert gallery (:thumbgallery:)"
+msgstr ""
+
+#: actions.py:28
+msgid "Insert (:thumbgallery:) wiki command to create the gallery."
 msgstr ""

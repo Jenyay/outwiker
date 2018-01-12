@@ -5,7 +5,6 @@ import os.path
 from outwiker.core.pluginbase import Plugin
 
 from .controller import Controller
-from .guicontroller import GUIController
 
 
 def _no_translate(text):
@@ -22,8 +21,7 @@ class PluginThumbGallery(Plugin):
         application - экземпляр класса core.application.ApplicationParams
         """
         super().__init__(application)
-        self._controller = Controller(application)
-        self._GUIController = GUIController(application)
+        self._controller = Controller(self, application)
 
     @property
     def name(self):
@@ -36,7 +34,6 @@ class PluginThumbGallery(Plugin):
     def initialize(self):
         self._initlocale(u"thumbgallery")
         self._controller.initialize()
-        self._GUIController.initialize()
 
     def _initlocale(self, domain):
         from .i18n import set_
@@ -57,7 +54,6 @@ class PluginThumbGallery(Plugin):
         Здесь плагин должен отписаться от всех событий
         """
         self._controller.destroy()
-        self._GUIController.destroy()
 
     @property
     def url(self):
