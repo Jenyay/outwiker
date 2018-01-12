@@ -79,7 +79,7 @@ class Controller(object):
         """
         assert self._application.mainWindow is not None
 
-        if page.getTypeString() == u"wiki":
+        if page.getTypeString():
             self._guiCreator.removeTools()
 
     def _getPageView(self):

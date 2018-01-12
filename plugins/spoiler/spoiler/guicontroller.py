@@ -126,7 +126,7 @@ class GUIController(object):
         """
         assert self._application.mainWindow is not None
 
-        if self._isCurrentWikiPage == u"wiki":
+        if self._isCurrentWikiPage:
             self._removeTools()
 
     def _getImagePath(self, fname):
