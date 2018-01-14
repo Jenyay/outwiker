@@ -7,10 +7,10 @@ ID_MOUSE_RIGHT = 3
 ID_KEY_SHIFT = 1
 ID_KEY_CTRL = 4
 
-MENU_HTML = 'Menu_HTML'
-MENU_EDIT = 'Menu_Edit'
-MENU_FILE = 'Menu_File'
-MENU_HELP = 'Menu_Help'
-MENU_VIEW = 'Menu_View'
-MENU_TOOLS = 'Menu_Tools'
-MENU_BOOKMARKS = 'Menu_Bookmarks'
+# MENU_FILE = 'Menu_File'
+# MENU_EDIT = 'Menu_Edit'
+# MENU_SEARCH = 'Menu_Search'
+# MENU_HELP = 'Menu_Help'
+# MENU_VIEW = 'Menu_View'
+# MENU_TOOLS = 'Menu_Tools'
+# MENU_BOOKMARKS = 'Menu_Bookmarks'

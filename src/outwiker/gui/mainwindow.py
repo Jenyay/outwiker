@@ -94,7 +94,7 @@ class MainWindow(wx.Frame):
         logger.debug(u'MainWindow. Setup menu')
         self.mainMenu = MainMenu()
         self.SetMenuBar(self.mainMenu)
-        self.menuController = MenuController()
+        self.menuController = MenuController(self.mainMenu)
 
         self.__createStatusBar()
 

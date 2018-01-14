@@ -9,7 +9,7 @@ from outwiker.actions.polyactionsid import *
 from outwiker.core.commands import insertCurrentDate
 from outwiker.gui.toolbars.simpletoolbar import SimpleToolBar
 
-from .defines import MENU_WIKI, MENU_WIKI_COMMANDS
+from .defines import MENU_WIKI, MENU_WIKI_COMMANDS, MENU_WIKI_FORMAT
 from .wikieditor import WikiEditor
 from .wikiconfig import WikiConfig
 from .basewikipageview import BaseWikiPageView
@@ -35,6 +35,7 @@ class WikiPageView(BaseWikiPageView):
     def Clear(self):
         super().Clear()
         self.mainWindow.menuController.removeMenu(MENU_WIKI_COMMANDS)
+        self.mainWindow.menuController.removeMenu(MENU_WIKI_FORMAT)
 
     def getTextEditor(self):
         return WikiEditor
@@ -178,9 +179,14 @@ class WikiPageView(BaseWikiPageView):
         self.toolsMenu.AppendSubMenu(self._headingMenu, _(u"Heading"))
         self.toolsMenu.AppendSubMenu(self._fontMenu, _(u"Font"))
         self.toolsMenu.AppendSubMenu(self._alignMenu, _(u"Alignment"))
+
         self.toolsMenu.AppendSubMenu(self._formatMenu, _(u"Formatting"))
+        self.mainWindow.menuController.addMenu(MENU_WIKI_FORMAT,
+                                               self._formatMenu)
+
         self.toolsMenu.AppendSubMenu(self._tableMenu, _(u"Tables"))
         self.toolsMenu.AppendSubMenu(self._listMenu, _(u"Lists"))
+
         self.toolsMenu.AppendSubMenu(self._commandsMenu, _(u"Commands"))
         self.mainWindow.menuController.addMenu(MENU_WIKI_COMMANDS,
                                                self._commandsMenu)

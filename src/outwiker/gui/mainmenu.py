@@ -5,7 +5,7 @@ import wx
 
 class MainMenu(wx.MenuBar):
     def __init__(self):
-        wx.MenuBar.__init__(self)
+        super().__init__()
 
         self.fileMenu = wx.Menu()
         self.Append(self.fileMenu, _(u"File"))
