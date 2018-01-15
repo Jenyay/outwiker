@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: thumbgallery\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-12 21:33+0300\n"
-"PO-Revision-Date: 2018-01-12 21:34+0300\n"
+"POT-Creation-Date: 2018-01-15 23:03+0300\n"
+"PO-Revision-Date: 2018-01-15 23:03+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: jenyay.net <jenyay.ilin@gmail.com>\n"
 "Language: ru_RU\n"
@@ -51,12 +51,15 @@ msgid "Can't load description"
 msgstr "Ошибка загрузки описания"
 
 #: actions.py:24
-msgid "Insert gallery (:thumbgallery:)"
-msgstr "Вставить галерею (:thumbgallery:)"
+msgid "Gallery (:thumbgallery:)"
+msgstr "Галерея (:thumbgallery:)"
 
 #: actions.py:28
 msgid "Insert (:thumbgallery:) wiki command to create the gallery."
 msgstr "Вставить команду вики-команду (:thumbgallery:) для создания галереи."
+
+#~ msgid "Insert gallery (:thumbgallery:)"
+#~ msgstr "Вставить галерею (:thumbgallery:)"
 
 #~ msgid "Thumbnails Gallery (:thumbgallery:)"
 #~ msgstr "Галерея (:thumbgallery:)"

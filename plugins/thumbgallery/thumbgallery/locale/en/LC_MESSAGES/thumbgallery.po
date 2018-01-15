@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: thumbgallery\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-03 22:11+0400\n"
-"PO-Revision-Date: 2014-10-03 22:12+0300\n"
+"POT-Creation-Date: 2018-01-15 23:03+0300\n"
+"PO-Revision-Date: 2018-01-15 23:03+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: jenyay.net <jenyay.ilin@gmail.com>\n"
 "Language: en_GB\n"
@@ -16,48 +16,53 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 1.5.4\n"
-
-#: controller.py:56
-msgid "Thumbnails Gallery (:thumbgallery:)"
-msgstr "Thumbnails Gallery (:thumbgallery:)"
+"X-Generator: Poedit 2.0.4\n"
 
 #: thumbdialog.py:24
 msgid "Gallery"
 msgstr "Thumbnails Gallery (:thumbgallery:)"
 
-#: thumbdialog.py:32
+#: thumbdialog.py:35
 msgid "Columns count (0 - without table)"
 msgstr "Columns count (0 - without table)"
 
-#: thumbdialog.py:37
+#: thumbdialog.py:45
 msgid "Thumbnails size (0 - default size)"
 msgstr "Thumbnails size (0 - default size)"
 
-#: thumbdialog.py:44
+#: thumbdialog.py:56
 msgid "All Images"
 msgstr "All Images"
 
-#: thumbdialog.py:45
+#: thumbdialog.py:59
 msgid "Clear"
 msgstr "Clear"
 
-#: thumbgallery.py:71
+#: plugin.py:60
 msgid "http://jenyay.net/Outwiker/ThumbGalleryEn"
 msgstr "http://jenyay.net/Outwiker/ThumbGalleryEn"
 
-#: thumbgallery.py:78
+#: plugin.py:66
 msgid "locale/description.html"
 msgstr "locale/en/LC_MESSAGES/description.html"
 
-#: thumbgallery.py:86
+#: plugin.py:74
 msgid "Can't load description"
 msgstr "Can't load description"
 
+#: actions.py:24
+msgid "Gallery (:thumbgallery:)"
+msgstr "Gallery (:thumbgallery:)"
+
+#: actions.py:28
+msgid "Insert (:thumbgallery:) wiki command to create the gallery."
+msgstr "Insert (:thumbgallery:) wiki command to create the gallery."
+
+#~ msgid "Thumbnails Gallery (:thumbgallery:)"
+#~ msgstr "Thumbnails Gallery (:thumbgallery:)"
+
 #~ msgid ""
-#~ "ThumbGallery plugin adds a command (:thumbgallery:) into the wiki "
-#~ "notation. This command can operate in two modes: show all attached images "
-#~ "or only selected files. \n"
+#~ "ThumbGallery plugin adds a command (:thumbgallery:) into the wiki notation. This command can operate in two modes: show all attached images or only selected files. \n"
 #~ "                    \n"
 #~ "<b>Syntax</b>\n"
 #~ "\n"
@@ -73,13 +78,9 @@ msgstr "Can't load description"
 #~ "\n"
 #~ "<b>Parameters</b>\n"
 #~ "<ul>\n"
-#~ "<li><i>cols = ...</i> An integer value. The number of columns in the "
-#~ "table. If <i>cols = 0</i> or not specified, then the gallery will be a "
-#~ "sequence of thumbnails without splitting into rows and columns.</li>\n"
+#~ "<li><i>cols = ...</i> An integer value. The number of columns in the table. If <i>cols = 0</i> or not specified, then the gallery will be a sequence of thumbnails without splitting into rows and columns.</li>\n"
 #~ "\n"
-#~ "<li><i>px = ...</i> An integer value. Specifies the size of the "
-#~ "thumbnails (on the larger side). If <i>px = 0</i>, or the parameter is "
-#~ "not specified, the default value from the program settings.</li>\n"
+#~ "<li><i>px = ...</i> An integer value. Specifies the size of the thumbnails (on the larger side). If <i>px = 0</i>, or the parameter is not specified, the default value from the program settings.</li>\n"
 #~ "</ul>\n"
 #~ "\n"
 #~ "<b>Examples</b>\n"
@@ -89,8 +90,7 @@ msgstr "Can't load description"
 #~ "(:thumbgallery:)\n"
 #~ "\n"
 #~ "\n"
-#~ "<u>Creating a gallery of all attached files with a given thumbnails size</"
-#~ "u>\n"
+#~ "<u>Creating a gallery of all attached files with a given thumbnails size</u>\n"
 #~ "\n"
 #~ "(:thumbgallery px=150:)\n"
 #~ "\n"
@@ -123,9 +123,7 @@ msgstr "Can't load description"
 #~ "    sev_beach2.jpg | Black Sea. Sevastopol\n"
 #~ "(:thumbgalleryend:)\n"
 #~ msgstr ""
-#~ "ThumbGallery plugin adds a command (:thumbgallery:) into the wiki "
-#~ "notation. This command can operate in two modes: show all attached images "
-#~ "or only selected files. \n"
+#~ "ThumbGallery plugin adds a command (:thumbgallery:) into the wiki notation. This command can operate in two modes: show all attached images or only selected files. \n"
 #~ "                    \n"
 #~ "<b>Syntax</b>\n"
 #~ "\n"
@@ -141,13 +139,9 @@ msgstr "Can't load description"
 #~ "\n"
 #~ "<b>Parameters</b>\n"
 #~ "<ul>\n"
-#~ "<li><i>cols = ...</i> An integer value. The number of columns in the "
-#~ "table. If <i>cols = 0</i> or not specified, then the gallery will be a "
-#~ "sequence of thumbnails without splitting into rows and columns.</li>\n"
+#~ "<li><i>cols = ...</i> An integer value. The number of columns in the table. If <i>cols = 0</i> or not specified, then the gallery will be a sequence of thumbnails without splitting into rows and columns.</li>\n"
 #~ "\n"
-#~ "<li><i>px = ...</i> An integer value. Specifies the size of the "
-#~ "thumbnails (on the larger side). If <i>px = 0</i>, or the parameter is "
-#~ "not specified, the default value from the program settings.</li>\n"
+#~ "<li><i>px = ...</i> An integer value. Specifies the size of the thumbnails (on the larger side). If <i>px = 0</i>, or the parameter is not specified, the default value from the program settings.</li>\n"
 #~ "</ul>\n"
 #~ "\n"
 #~ "<b>Examples</b>\n"
@@ -157,8 +151,7 @@ msgstr "Can't load description"
 #~ "(:thumbgallery:)\n"
 #~ "\n"
 #~ "\n"
-#~ "<u>Creating a gallery of all attached files with a given thumbnails size</"
-#~ "u>\n"
+#~ "<u>Creating a gallery of all attached files with a given thumbnails size</u>\n"
 #~ "\n"
 #~ "(:thumbgallery px=150:)\n"
 #~ "\n"
