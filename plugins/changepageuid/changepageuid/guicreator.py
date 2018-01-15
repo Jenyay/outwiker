@@ -1,9 +1,11 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 """
 Модуль с классами для добавления пунктов меню и кнопок на панель
 """
-from .i18n import get_
 
+from outwiker.gui.defines import MENU_TOOLS
+
+from .i18n import get_
 from .actions import ChangePageUIDAction
 
 
@@ -34,7 +36,7 @@ class GuiCreator(object):
             return
 
         # Меню, куда будут добавляться команды
-        menu = mainWindow.mainMenu.toolsMenu
+        menu = mainWindow.menuController[MENU_TOOLS]
 
         list(map(lambda action: self._application.actionController.appendMenuItem(
             action.stringId, menu), self._actions))
