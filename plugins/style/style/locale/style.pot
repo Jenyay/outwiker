@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-03 22:04+0400\n"
+"POT-Creation-Date: 2018-01-15 23:00+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: styleplugin.py:40
+#: plugin.py:33
 msgid ""
 "Add command (:style:) to wiki parser. This command allow the setting of a "
 "user CSS style for a page.\n"
@@ -33,10 +33,14 @@ msgid ""
 "(:styleend:)\n"
 msgstr ""
 
-#: styleplugin.py:87
+#: plugin.py:66
+msgid "http://jenyay.net/Outwiker/StylePluginEn"
+msgstr ""
+
+#: actions.py:21
 msgid "Custom Style (:style:)"
 msgstr ""
 
-#: styleplugin.py:120
-msgid "http://jenyay.net/Outwiker/StylePluginEn"
+#: actions.py:25
+msgid "Insert (:style:) wiki command to use a custom CSS style"
 msgstr ""
