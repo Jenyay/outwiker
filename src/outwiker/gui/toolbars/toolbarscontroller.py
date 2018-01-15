@@ -5,6 +5,8 @@ from .toolbarinfo import ToolBarInfo
 import wx
 import wx.aui
 
+from outwiker.gui.defines import MENU_VIEW
+
 
 class ToolBarsController(object):
     """
@@ -19,9 +21,9 @@ class ToolBarsController(object):
 
         # Подменю для показа скрытия панелей
         self._toolbarsMenu = wx.Menu()
-        self._mainWindow.mainMenu.viewMenu.Append(-1,
-                                                  _(u"Toolbars"),
-                                                  self._toolbarsMenu)
+        viewMenu = self._mainWindow.menuController[MENU_VIEW]
+        viewMenu.Append(-1, _(u"Toolbars"), self._toolbarsMenu)
+
         self._mainWindow.auiManager.Bind(wx.aui.EVT_AUI_PANE_CLOSE,
                                          self.__onPaneClose)
         self._mainWindow.Bind(wx.EVT_SIZE, self.__onSizeChanged)

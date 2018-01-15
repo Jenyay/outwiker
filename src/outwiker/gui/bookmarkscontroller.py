@@ -1,8 +1,9 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import wx
 
 from outwiker.core.application import Application
+from .defines import MENU_BOOKMARKS
 
 
 class BookmarksController (object):
@@ -21,7 +22,9 @@ class BookmarksController (object):
 
 
     def updateBookmarks (self):
-        self.controller.removeMenuItemsById (self.controller.mainMenu.bookmarksMenu, list(self._bookmarksId.keys()))
+        menu_bookmarks = self.controller.mainWindow.menuController[MENU_BOOKMARKS]
+        self.controller.removeMenuItemsById (menu_bookmarks,
+                                             list(self._bookmarksId.keys()))
         self._bookmarksId = {}
 
         if Application.wikiroot is not None:
@@ -42,7 +45,7 @@ class BookmarksController (object):
                 else:
                     label = page.display_title
 
-                self.controller.mainMenu.bookmarksMenu.Append (id, label, "", wx.ITEM_NORMAL)
+                menu_bookmarks.Append (id, label, "", wx.ITEM_NORMAL)
                 self.controller.mainWindow.Bind(wx.EVT_MENU, self.__onSelectBookmark, id=id)
 
 

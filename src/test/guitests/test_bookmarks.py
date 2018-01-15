@@ -1,9 +1,10 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from .basemainwnd import BaseMainWndTest
-from outwiker.pages.text.textpage import TextPageFactory
-from outwiker.core.application import Application
 from outwiker.actions.addbookmark import AddBookmarkAction
+from outwiker.core.application import Application
+from outwiker.gui.defines import MENU_BOOKMARKS
+from outwiker.pages.text.textpage import TextPageFactory
 
 
 class BookmarksGuiTest (BaseMainWndTest):
@@ -20,7 +21,7 @@ class BookmarksGuiTest (BaseMainWndTest):
 
     def testClearMenu (self):
         Application.wikiroot = self.wikiroot
-        bookmarksMenu = self.wnd.mainMenu.bookmarksMenu
+        bookmarksMenu = self.wnd.menuController[MENU_BOOKMARKS]
 
         self.assertNotEqual (bookmarksMenu, None)
         self.assertEqual (bookmarksMenu.GetMenuItemCount(), 2)
@@ -36,7 +37,7 @@ class BookmarksGuiTest (BaseMainWndTest):
 
     def testAddBookmarks1 (self):
         Application.wikiroot = self.wikiroot
-        bookmarksMenu = self.wnd.mainMenu.bookmarksMenu
+        bookmarksMenu = self.wnd.menuController[MENU_BOOKMARKS]
 
         self.wikiroot.bookmarks.add (self.wikiroot["Страница 1"])
 
@@ -54,7 +55,7 @@ class BookmarksGuiTest (BaseMainWndTest):
 
     def testAddBookmarks2 (self):
         Application.wikiroot = self.wikiroot
-        bookmarksMenu = self.wnd.mainMenu.bookmarksMenu
+        bookmarksMenu = self.wnd.menuController[MENU_BOOKMARKS]
 
         self.wikiroot.bookmarks.add (self.wikiroot["Страница 1"])
         self.wikiroot.bookmarks.add (self.wikiroot["Страница 2/Страница 3"])
@@ -80,7 +81,7 @@ class BookmarksGuiTest (BaseMainWndTest):
 
     def testTitleBookmarks (self):
         Application.wikiroot = self.wikiroot
-        bookmarksMenu = self.wnd.mainMenu.bookmarksMenu
+        bookmarksMenu = self.wnd.menuController[MENU_BOOKMARKS]
 
         self.wikiroot.bookmarks.add (self.wikiroot["Страница 1"])
         self.wikiroot.bookmarks.add (self.wikiroot["Страница 2/Страница 3"])
@@ -104,7 +105,7 @@ class BookmarksGuiTest (BaseMainWndTest):
 
         Application.wikiroot = self.wikiroot
 
-        bookmarksMenu = self.wnd.mainMenu.bookmarksMenu
+        bookmarksMenu = self.wnd.menuController[MENU_BOOKMARKS]
         items = bookmarksMenu.GetMenuItems()
         self.assertEqual (bookmarksMenu.GetMenuItemCount(), 5)
 
@@ -117,7 +118,7 @@ class BookmarksGuiTest (BaseMainWndTest):
         Application.wikiroot = self.wikiroot
         Application.selectedPage = self.wikiroot["Страница 1"]
 
-        bookmarksMenu = self.wnd.mainMenu.bookmarksMenu
+        bookmarksMenu = self.wnd.menuController[MENU_BOOKMARKS]
         self.assertEqual (bookmarksMenu.GetMenuItemCount(), 2)
 
         Application.actionController.getAction (AddBookmarkAction.stringId).run(None)
@@ -130,7 +131,7 @@ class BookmarksGuiTest (BaseMainWndTest):
 
 
     def testEnableDisable (self):
-        bookmarksMenu = self.wnd.mainMenu.bookmarksMenu
+        bookmarksMenu = self.wnd.menuController[MENU_BOOKMARKS]
 
         self.assertFalse (bookmarksMenu.GetMenuItems()[0].IsEnabled())
 

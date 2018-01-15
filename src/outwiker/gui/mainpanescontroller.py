@@ -1,10 +1,12 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import wx
 
 from outwiker.actions.showhideattaches import ShowHideAttachesAction
 from outwiker.actions.showhidetree import ShowHideTreeAction
 from outwiker.actions.showhidetags import ShowHideTagsAction
+
+from outwiker.gui.defines import MENU_VIEW
 
 
 class MainPanesController(object):
@@ -23,9 +25,10 @@ class MainPanesController(object):
 
     def createViewMenuItems(self):
         actionController = self.__application.actionController
+        viewMenu = self.__application.mainWindow.menuController[MENU_VIEW]
         [actionController.appendMenuCheckItem(
             action.stringId,
-            self.__mainWindow.mainMenu.viewMenu) for action in self.__actions]
+            viewMenu) for action in self.__actions]
 
     def __onPaneClose(self, event):
         paneName = event.GetPane().name

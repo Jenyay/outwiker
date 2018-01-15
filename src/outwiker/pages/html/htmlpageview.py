@@ -243,9 +243,10 @@ class HtmlPageView(BaseHtmlPanel):
         self.__addOtherTools()
         self._addRenderTools()
 
-        self.mainWindow.mainMenu.Insert(self.__HTML_MENU_INDEX,
-                                        self.__htmlMenu,
-                                        self._menuName)
+        mainMenu = self.mainWindow.menuController.getRootMenu()
+        mainMenu.Insert(self.__HTML_MENU_INDEX,
+                        self.__htmlMenu,
+                        self._menuName)
 
     def _addRenderTools(self):
         self._application.actionController.appendMenuItem(
@@ -661,7 +662,7 @@ class HtmlPageView(BaseHtmlPanel):
 
     def removeGui(self):
         super(HtmlPageView, self).removeGui()
-        mainMenu = self._application.mainWindow.mainMenu
+        mainMenu = self.mainWindow.menuController.getRootMenu()
         index = mainMenu.FindMenu(self._menuName)
         assert index != wx.NOT_FOUND
 

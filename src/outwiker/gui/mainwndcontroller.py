@@ -1,15 +1,16 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import datetime
 
 import wx
 
+import outwiker.core.commands
 from outwiker.core.application import Application
 from outwiker.core.commands import setStatusText, getMainWindowTitle
 from .bookmarkscontroller import BookmarksController
 from .autosavetimer import AutosaveTimer
 from .guiconfig import GeneralGuiConfig, TrayConfig
-import outwiker.core.commands
+from .defines import MENU_FILE
 
 from outwiker.actions.save import SaveAction
 from outwiker.actions.close import CloseAction
@@ -34,10 +35,10 @@ from outwiker.actions.attachfiles import AttachFilesAction
 import outwiker.actions.clipboard as clipboard
 import outwiker.actions.tags as tags
 from outwiker.actions.reloadwiki import ReloadWikiAction
-from outwiker.actions.moving import(GoToParentAction,
-                                    GoToFirstChildAction,
-                                    GoToNextSiblingAction,
-                                    GoToPrevSiblingAction)
+from outwiker.actions.moving import (GoToParentAction,
+                                     GoToFirstChildAction,
+                                     GoToNextSiblingAction,
+                                     GoToPrevSiblingAction)
 from outwiker.actions.openattachfolder import OpenAttachFolderAction
 from outwiker.actions.applystyle import SetStyleToBranchAction
 
@@ -146,7 +147,7 @@ class MainWndController(object):
 
     @property
     def mainMenu(self):
-        return self.mainWindow.mainMenu
+        return self.mainWindow.menuController.getRootMenu()
 
     def updatePageDateTime(self):
         statusbar_item = 1
@@ -307,7 +308,8 @@ class MainWndController(object):
         """
         Обновление меню со списком последних открытых вики
         """
-        self.removeMenuItemsById(self.mainMenu.fileMenu,
+        menu_file = self.mainWindow.menuController[MENU_FILE]
+        self.removeMenuItemsById(menu_file,
                                  list(self._recentId.keys()))
         self._recentId = {}
 
@@ -319,7 +321,7 @@ class MainWndController(object):
             title = path if n + 1 > 9 else u"&{n}. {path}".format(n=n+1,
                                                                   path=path)
 
-            self.mainMenu.fileMenu.Append(id, title, "", wx.ITEM_NORMAL)
+            menu_file.Append(id, title, "", wx.ITEM_NORMAL)
 
             self.mainWindow.Bind(wx.EVT_MENU, self.__onRecent, id=id)
 

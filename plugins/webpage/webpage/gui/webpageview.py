@@ -12,7 +12,6 @@ class WebPageView(BaseHtmlPanel):
         super(WebPageView, self).__init__(parent, application)
         self.__htmlMenu = None
 
-        self._application.mainWindow.updateShortcuts()
         self.mainWindow.UpdateAuiManager()
 
         self.Bind(EVT_PAGE_TAB_CHANGED, handler=self.onTabChanged)

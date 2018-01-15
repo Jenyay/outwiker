@@ -5,6 +5,9 @@
 """
 
 import wx
+
+from outwiker.gui.defines import MENU_HELP
+
 from .i18n import get_
 
 
@@ -111,4 +114,4 @@ class ActionGuiCreator (object):
 
     @property
     def _helpMenu (self):
-        return self._application.mainWindow.mainMenu.helpMenu
+        return self._application.mainWindow.menuController[MENU_HELP]

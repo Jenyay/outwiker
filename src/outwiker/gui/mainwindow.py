@@ -12,7 +12,6 @@ from outwiker.core.system import getOS
 from outwiker.core.system import getImagesDir
 
 from .guiconfig import MainWindowConfig
-from .mainmenu import MainMenu
 from .mainwndcontroller import MainWndController
 from .mainpanescontroller import MainPanesController
 from .mainpanes.tagscloudmainpane import TagsCloudMainPane
@@ -23,6 +22,7 @@ from .tabscontroller import TabsController
 from .trayicon import getTrayIconController
 from .preferences.prefcontroller import PrefController
 from .menucontroller import MenuController
+from . import defines as guidefines
 
 from .toolbars.generaltoolbar import GeneralToolBar
 from .toolbars.pluginstoolbar import PluginsToolBar
@@ -90,12 +90,7 @@ class MainWindow(wx.Frame):
         logger.debug(u'MainWindow. Setup icon')
         self.__setIcon()
         self.SetTitle(u"OutWiker")
-
-        logger.debug(u'MainWindow. Setup menu')
-        self.mainMenu = MainMenu()
-        self.SetMenuBar(self.mainMenu)
-        self.menuController = MenuController(self.mainMenu)
-
+        self.__createMenu()
         self.__createStatusBar()
 
         logger.debug(u'MainWindow. Create the MainWndController')
@@ -146,6 +141,34 @@ class MainWindow(wx.Frame):
         '''
         return self._pluginsToolbar
 
+    def __createMenu(self):
+        logger.debug(u'MainWindow. Create the main menu')
+        self._mainMenu = wx.MenuBar()
+        self.SetMenuBar(self._mainMenu)
+        self.menuController = MenuController(self._mainMenu)
+
+        self.menuController.createSubMenu(guidefines.MENU_FILE,
+                                          _('File'))
+
+        self.menuController.createSubMenu(guidefines.MENU_EDIT,
+                                          _('Edit'))
+
+        self.menuController.createSubMenu(guidefines.MENU_TREE,
+                                          _('Tree'))
+
+        self.menuController.createSubMenu(guidefines.MENU_TOOLS,
+                                          _('Tools'))
+
+        self.menuController.createSubMenu(guidefines.MENU_BOOKMARKS,
+                                          _('Bookmarks'))
+
+        self.menuController.createSubMenu(guidefines.MENU_VIEW, _('View'))
+        self.menuController.createSubMenu(guidefines.MENU_VIEW_GOTO,
+                                          _('Go to'),
+                                          guidefines.MENU_VIEW)
+
+        self.menuController.createSubMenu(guidefines.MENU_HELP, _('Help'))
+
     def __createToolbars(self):
         self._mainToolbar = GeneralToolBar(self, self.auiManager)
         self._pluginsToolbar = PluginsToolBar(self, self.auiManager)
@@ -182,7 +205,7 @@ class MainWindow(wx.Frame):
 
     def __createSwitchToMenu(self):
         actionController = Application.actionController
-        menu = Application.mainWindow.mainMenu.switchToMenu
+        menu = self.menuController[guidefines.MENU_VIEW_GOTO]
 
         actionController.appendMenuItem(
             switchto.SwitchToMainPanelAction.stringId,
@@ -200,13 +223,50 @@ class MainWindow(wx.Frame):
             switchto.SwitchToTagsCloudAction.stringId,
             menu)
 
+    def __createEditMenu(self):
+        editMenu = self.menuController[guidefines.MENU_EDIT]
+
+        editMenu.Append(wx.ID_UNDO,
+                        _(u"Undo") + "\tCtrl+Z",
+                        "",
+                        wx.ITEM_NORMAL)
+
+        editMenu.Append(wx.ID_REDO,
+                        _(u"Redo") + "\tCtrl+Y",
+                        "",
+                        wx.ITEM_NORMAL)
+
+        editMenu.AppendSeparator()
+
+        editMenu.Append(wx.ID_CUT,
+                        _(u"Cut") + "\tCtrl+X",
+                        "",
+                        wx.ITEM_NORMAL)
+
+        editMenu.Append(wx.ID_COPY,
+                        _(u"Copy") + "\tCtrl+C",
+                        "",
+                        wx.ITEM_NORMAL)
+
+        editMenu.Append(wx.ID_PASTE,
+                        _(u"Paste") + "\tCtrl+V",
+                        "",
+                        wx.ITEM_NORMAL)
+
+        editMenu.AppendSeparator()
+
+        editMenu.Append(wx.ID_SELECTALL,
+                        _(u"Select All") + "\tCtrl+A",
+                        "",
+                        wx.ITEM_NORMAL)
+
     def __createFileMenu(self):
         """
         Заполнить действиями меню Файл
         """
         imagesDir = getImagesDir()
         toolbar = Application.mainWindow.mainToolbar
-        menu = Application.mainWindow.mainMenu.fileMenu
+        menu = self.menuController[guidefines.MENU_FILE]
         actionController = Application.actionController
 
         # Создать...
@@ -268,7 +328,7 @@ class MainWindow(wx.Frame):
         Заполнить действиями меню Дерево
         """
         actionController = Application.actionController
-        menu = Application.mainWindow.mainMenu.treeMenu
+        menu = self.menuController[guidefines.MENU_TREE]
         toolbar = Application.mainWindow.mainToolbar
         imagesDir = getImagesDir()
 
@@ -332,7 +392,7 @@ class MainWindow(wx.Frame):
     def __createToolsMenu(self):
         imagesDir = getImagesDir()
         toolbar = Application.mainWindow.mainToolbar
-        menu = Application.mainWindow.mainMenu.toolsMenu
+        menu = self.menuController[guidefines.MENU_TOOLS]
         actionController = Application.actionController
 
         actionController.appendMenuItem(AddTabAction.stringId, menu)
@@ -398,13 +458,11 @@ class MainWindow(wx.Frame):
         actionController.appendMenuItem(SetStyleToBranchAction.stringId, menu)
 
     def __createHelpMenu(self):
-        menu = Application.mainWindow.mainMenu.helpMenu
+        menu = self.menuController[guidefines.MENU_HELP]
         actionController = Application.actionController
 
         actionController.appendMenuItem(OpenHelpAction.stringId, menu)
-
         actionController.appendMenuItem(AboutAction.stringId, menu)
-
         actionController.appendMenuItem(OpenPluginsFolderAction.stringId, menu)
 
     def __addActionsGui(self):
@@ -412,6 +470,7 @@ class MainWindow(wx.Frame):
         Создать элементы интерфейса, привязанные к actions
         """
         self.__createFileMenu()
+        self.__createEditMenu()
         self.__createTreeMenu()
         self.__createToolsMenu()
         self.__createHelpMenu()
@@ -420,29 +479,26 @@ class MainWindow(wx.Frame):
 
         actionController = Application.actionController
 
-        Application.mainWindow.mainMenu.viewMenu.AppendSeparator()
+        viewMenu = self.menuController[guidefines.MENU_VIEW]
+        viewMenu.AppendSeparator()
 
         # Полноэкранный режим
         actionController.appendMenuCheckItem(FullScreenAction.stringId,
-                                             self.mainMenu.viewMenu)
+                                             viewMenu)
 
         # Вызов диалога настроек
-        Application.mainWindow.mainMenu.editMenu.AppendSeparator()
+        menu_edit = self.menuController[guidefines.MENU_EDIT]
+        menu_edit.AppendSeparator()
 
-        actionController.appendMenuItem(
-            PreferencesAction.stringId,
-            Application.mainWindow.mainMenu.editMenu)
+        actionController.appendMenuItem(PreferencesAction.stringId, menu_edit)
 
         # Добавление / удаление закладки
+        menu_bookmarks = self.menuController[guidefines.MENU_BOOKMARKS]
         actionController.appendMenuItem(
             AddBookmarkAction.stringId,
-            Application.mainWindow.mainMenu.bookmarksMenu)
+            menu_bookmarks)
 
-        Application.mainWindow.mainMenu.bookmarksMenu.AppendSeparator()
-
-    # Оставлено, чтобы не ломать совместимость с плагином WebPage
-    def updateShortcuts(self):
-        pass
+        menu_bookmarks.AppendSeparator()
 
     def UpdateAuiManager(self):
         """
@@ -578,8 +634,6 @@ class MainWindow(wx.Frame):
         self.auiManager = None
 
         self.toolbars = None
-        self.SetMenuBar(None)
-        self.mainMenu.Destroy()
 
         self.pagePanel = None
         self.treePanel = None

@@ -48,7 +48,7 @@ class GuiController(object):
         _ = get_()
 
         if self._application.mainWindow is not None:
-            self._mainMenu = self._application.mainWindow.mainMenu
+            self._mainMenu = self._application.mainWindow.menuController.getRootMenu()
             self._menuName = _(u'Snippets')
             self._createMenu()
             self._varDialogController.onFinishDialogEvent += self._onFinishDialog

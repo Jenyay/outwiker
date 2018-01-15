@@ -248,7 +248,7 @@ class BaseWikiPageView (BaseHtmlPanel):
         self.selectedPageIndex = self.HTML_RESULT_PAGE_INDEX
 
     def removeMenu(self):
-        mainMenu = self._application.mainWindow.mainMenu
+        mainMenu = self._application.mainWindow.menuController.getRootMenu()
         index = mainMenu.FindMenu(self._getMenuTitle())
         assert index != wx.NOT_FOUND
 
@@ -266,9 +266,10 @@ class BaseWikiPageView (BaseHtmlPanel):
             self._onSwitchCodeHtml()
 
     def _createCommonTools(self):
-        self.mainWindow.mainMenu.Insert(self.__WIKI_MENU_INDEX,
-                                        self.toolsMenu,
-                                        self._getMenuTitle())
+        mainMenu = self._application.mainWindow.menuController.getRootMenu()
+        mainMenu.Insert(self.__WIKI_MENU_INDEX,
+                        self.toolsMenu,
+                        self._getMenuTitle())
         self.mainWindow.menuController.addMenu(self._getMenuId(),
                                                self.toolsMenu)
 

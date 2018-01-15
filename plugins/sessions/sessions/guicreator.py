@@ -1,9 +1,11 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 """
 Модуль с классами для добавления пунктов меню и кнопок на панель
 """
 
 import wx
+
+from outwiker.gui.defines import MENU_FILE
 
 from .i18n import get_
 from .sessionstorage import SessionStorage
@@ -14,11 +16,11 @@ from .saveaction import SaveSessionAction
 from .editaction import EditSessionsAction
 
 
-class GuiCreator (object):
+class GuiCreator(object):
     """
     Создание элементов интерфейса с использованием actions
     """
-    def __init__ (self, controller, application):
+    def __init__(self, controller, application):
         self._controller = controller
         self._application = application
 
@@ -39,88 +41,84 @@ class GuiCreator (object):
         global _
         _ = get_()
 
-
-    def initialize (self):
+    def initialize(self):
         if self._application.mainWindow is not None:
-            list(map (lambda action: self._application.actionController.register (
-                action (self._application, self), None), self._actions))
+            [*map(lambda action: self._application.actionController.register(
+                action(self._application, self), None), self._actions)]
 
         self.createTools()
 
-
-    def createTools (self):
+    def createTools(self):
         mainWindow = self._application.mainWindow
 
         if mainWindow is None:
             return
 
-        list(map (lambda action: self._application.actionController.appendMenuItem (
-            action.stringId, self._menu), self._actions))
+        [*map(lambda action: self._application.actionController.appendMenuItem(
+            action.stringId, self._menu), self._actions)]
 
         self._menu.AppendSeparator()
         self.updateMenu()
 
-        self._menuItem = self._getParentMenu().Insert(self._menuIndex, -1, _(u"Sessions"), submenu=self._menu)
+        self._menuItem = self._getParentMenu().Insert(self._menuIndex,
+                                                      -1,
+                                                      _(u"Sessions"),
+                                                      submenu=self._menu)
 
-
-    def removeTools (self):
+    def removeTools(self):
         if self._application.mainWindow is not None:
-            list(map (lambda action: self._application.actionController.removeMenuItem (action.stringId),
-                 self._actions))
+            [*map(lambda action: self._application.actionController.removeMenuItem(action.stringId),
+                  self._actions)]
 
-            self._getParentMenu().DestroyItem (self._menuItem)
+            self._getParentMenu().DestroyItem(self._menuItem)
             self._menuItem = None
 
-
-    def _getParentMenu (self):
+    def _getParentMenu(self):
         """
         Возвращает меню, куда будут добавляться действия
         """
         assert self._application.mainWindow is not None
 
-        return self._application.mainWindow.mainMenu.fileMenu
+        return self._application.mainWindow.menuController[MENU_FILE]
 
-
-    def destroy (self):
+    def destroy(self):
         self.removeTools()
 
         if self._application.mainWindow is not None:
-            list(map (lambda action: self._application.actionController.removeAction (action.stringId),
-                 self._actions))
+            [*map(lambda action: self._application.actionController.removeAction(action.stringId),
+                  self._actions)]
 
-
-    def updateMenu (self):
+    def updateMenu(self):
         """
         В меню обновить список сессий
         """
         self._clearSessionMenu()
         self._addSessionsMenuItems()
 
-
-    def _addSessionsMenuItems (self):
-        sessions = SessionStorage (self._application.config).getSessions()
+    def _addSessionsMenuItems(self):
+        sessions = SessionStorage(self._application.config).getSessions()
         for sessionName in sorted(sessions.keys(), key=str.lower):
             menuId = wx.NewId()
-            self._menu.Append (menuId, sessionName)
-            self._application.mainWindow.Bind (wx.EVT_MENU,
-                                               self._getSessionRestore (sessions[sessionName]),
-                                               id=menuId)
-            self._sessionsMenuId.append (menuId)
+            self._menu.Append(menuId, sessionName)
+            self._application.mainWindow.Bind(
+                wx.EVT_MENU,
+                self._getSessionRestore(sessions[sessionName]),
+                id=menuId)
+            self._sessionsMenuId.append(menuId)
 
-
-    def _getSessionRestore (self, session):
+    def _getSessionRestore(self, session):
         """
-        Метод, вовзращающий функцию, вызываемую при выборе пункта меню. За счет замыкания выбирается нужная сессия session.
+        Метод, вовзращающий функцию, вызываемую при выборе пункта меню.
+        За счет замыкания выбирается нужная сессия session.
         """
-        return lambda event: SessionController (self._application).restore (session)
+        return lambda event: SessionController(self._application).restore(session)
 
-
-    def _clearSessionMenu (self):
+    def _clearSessionMenu(self):
         """
         Удалить все пункты меню, связанные с сессиями
         """
         for menuId in self._sessionsMenuId:
-            self._menu.Remove (menuId)
-            self._application.mainWindow.Unbind (wx.EVT_MENU, id=menuId)
+            self._menu.Remove(menuId)
+            self._application.mainWindow.Unbind(wx.EVT_MENU, id=menuId)
 
         self._sessionsMenuId = []

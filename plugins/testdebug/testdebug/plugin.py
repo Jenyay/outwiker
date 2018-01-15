@@ -11,7 +11,7 @@ from outwiker.core.commands import MessageBox
 from outwiker.gui.dialogs.buttonsdialog import ButtonsDialog
 from outwiker.gui.hotkey import HotKey
 from outwiker.core.pluginbase import Plugin
-from outwiker.core.system import getOS, getImagesDir
+from outwiker.core.system import getImagesDir
 from outwiker.gui.pagedialogpanels.iconspanel import IconsGroupInfo
 
 from .debugaction import DebugAction
@@ -75,7 +75,7 @@ class PluginDebug(Plugin):
         try:
             _ = self._init_i18n(domain, langdir)
         except BaseException as e:
-            print (e)
+            print(e)
 
         self.__menuName = _(u"Debug")
 
@@ -107,6 +107,7 @@ class PluginDebug(Plugin):
         Уничтожение (выгрузка) плагина. Здесь плагин должен отписаться от всех событий
         """
         mainWindow = self._application.mainWindow
+        mainMenu = mainWindow.menuController.getRootMenu()
         if mainWindow is not None and mainWindow.PLUGINS_TOOLBAR_STR in mainWindow.toolbars:
             self._application.actionController.removeMenuItem(DebugAction.stringId)
             self._application.actionController.removeToolbarButton(DebugAction.stringId)
@@ -128,10 +129,10 @@ class PluginDebug(Plugin):
                                                 handler=self.__onStopWatchEvents,
                                                 id=self.ID_STOP_WATCH_EVENTS)
 
-            index = self._application.mainWindow.mainMenu.FindMenu(self.__menuName)
+            index = mainMenu.FindMenu(self.__menuName)
             assert index != wx.NOT_FOUND
 
-            index = self._application.mainWindow.mainMenu.Remove(index)
+            index = mainMenu.Remove(index)
 
             self._application.onTreePopupMenu -= self.__onTreePopupMenu
             self._application.onPostprocessing -= self.__onPostProcessing
@@ -160,7 +161,7 @@ class PluginDebug(Plugin):
         self.menu.Append(self.ID_STOP_WATCH_EVENTS, _(u"Stop watch events"))
         self.menu.Append(self.ID_RAISE_EXCEPTION, _(u"Raise exception"))
 
-        self._application.mainWindow.mainMenu.Append(self.menu, self.__menuName)
+        self._application.mainWindow.menuController.getRootMenu().Append(self.menu, self.__menuName)
 
         self._application.mainWindow.Bind(wx.EVT_MENU,
                                           self.__onPluginsList,

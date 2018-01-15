@@ -101,7 +101,7 @@ class GuiController (object):
 
     def _removeMenu(self):
         if self._menu is not None:
-            mainMenu = self._application.mainWindow.mainMenu
+            mainMenu = self._application.mainWindow.menuController.getRootMenu()
             index = mainMenu.FindMenu(self._menuName)
             assert index != wx.NOT_FOUND
 
@@ -211,9 +211,8 @@ class GuiController (object):
     def _createMenu(self):
         if self._application.mainWindow is not None and self._menu is None:
             self._menu = wx.Menu(u'')
-            self._application.mainWindow.mainMenu.Insert(self._MENU_INDEX,
-                                                         self._menu,
-                                                         self._menuName)
+            mainMenu = self._application.mainWindow.menuController.getRootMenu()
+            mainMenu.Insert(self._MENU_INDEX, self._menu, self._menuName)
             self._createSiblingWebPageAction()
             self._createChildWebPageAction()
 
