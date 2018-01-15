@@ -7,7 +7,9 @@ import os
 import os.path
 import glob
 import sys
-import urllib.request, urllib.error, urllib.parse
+import urllib.request
+import urllib.error
+import urllib.parse
 import shutil
 
 from fabric.api import local, lcd, settings, task, cd, put, hosts
@@ -49,8 +51,7 @@ from buildtools.versions import (getOutwikerVersion,
                                  downloadAppInfo,
                                  getLocalAppInfoList,
                                  )
-from buildtools.contentgenerators import (SiteChangelogGenerator,
-                                          SitePluginsTableGenerator)
+from buildtools.contentgenerators import SiteChangelogGenerator
 from buildtools.builders import (BuilderWindows,
                                  BuilderSources,
                                  BuilderPlugins,
@@ -394,31 +395,6 @@ def _print_changelog(path_to_xml, lang):
     generator = SiteChangelogGenerator(appinfo)
     changelog = generator.make()
     print(changelog)
-
-
-@task
-def plugins_list(lang=None):
-    '''
-    Print plugins list for th site
-    '''
-    if lang is None:
-        print_error(u'Error. No language specified')
-        sys.exit(1)
-
-    appinfo_list = []
-    for plugin_name in PLUGINS_LIST:
-        path_to_xml = os.path.join(PLUGINS_DIR,
-                                   plugin_name,
-                                   plugin_name,
-                                   PLUGIN_VERSIONS_FILENAME)
-        xml_content = readTextFile(path_to_xml)
-        parser = XmlVersionParser([lang])
-        appinfo = parser.parse(xml_content)
-        appinfo_list.append(appinfo)
-
-    generator = SitePluginsTableGenerator(appinfo_list)
-    text = generator.make()
-    print(text)
 
 
 @task

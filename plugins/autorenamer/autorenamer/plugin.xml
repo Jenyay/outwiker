@@ -3,16 +3,8 @@
 	<name>AutoRenamer</name>
 	<updates>http://jenyay.net/uploads/Outwiker/AutoRenamer/plugin.xml</updates>
     <requirements>
-        <outwiker>2.1.0.833 dev</outwiker>
         <os>Windows, Linux</os>
-		<packages>
-			<core>2.0</core>
-			<actions>1.0</actions>
-			<gui>2.0</gui>
-			<pages>1.0, 2.0</pages>
-			<utilites>1.0</utilites>
-			<libs>1.0</libs>
-		</packages>
+        <api>2.835</api>
     </requirements>
 
 	<data lang="en">

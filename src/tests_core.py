@@ -89,7 +89,6 @@ if __name__ == '__main__':
 
     from test.test_xmlversionparser import XmlVersionParserTest
     from test.test_packageversion import (PackageCheckVersionTest,
-                                          PackageCheckVersionAnyTest,
-                                          CheckPackagesVersionTest)
+                                          PackageCheckVersionAnyTest)
 
     unittest.main()

@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os
 import os.path
@@ -54,15 +54,6 @@ class PluginsLoader (object):
         # Установить в False, если не нужно выводить ошибки
         # (например, в тестах)
         self.enableOutput = True
-
-        self.__currentPackageVersions = [
-            outwiker.core.__version__,
-            outwiker.gui.__version__,
-            outwiker.pages.__version__,
-            outwiker.actions.__version__,
-            outwiker.utilites.__version__,
-            outwiker.libs.__version__,
-        ]
 
     def _print(self, text):
         if self.enableOutput:
@@ -164,17 +155,12 @@ class PluginsLoader (object):
         if appinfo is None:
             return pv.PLUGIN_MUST_BE_UPGRADED
 
-        required_versions = [
-            appinfo.requirements.packages_versions.get('core', [(1, 0)]),
-            appinfo.requirements.packages_versions.get(u'gui', [(1, 0)]),
-            appinfo.requirements.packages_versions.get(u'pages', [(1, 0)]),
-            appinfo.requirements.packages_versions.get(u'actions', [(1, 0)]),
-            appinfo.requirements.packages_versions.get(u'utilites', [(1, 0)]),
-            appinfo.requirements.packages_versions.get(u'libs', [(1, 0)]),
-        ]
+        api_required_version = appinfo.requirements.api_version
+        if not api_required_version:
+            api_required_version = [(0, 0)]
 
-        return pv.checkAllPackagesVersions(self.__currentPackageVersions,
-                                           required_versions)
+        return pv.checkVersionAny(outwiker.core.__version__,
+                                  api_required_version)
 
     def __importModules(self, baseDir, dirPackagesList):
         """

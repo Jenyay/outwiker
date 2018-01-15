@@ -2,14 +2,7 @@
 <info>
 	<name>TestFromFuture</name>
     <requirements>
-		<packages>
-			<core>10.0</core>
-			<actions>1.0</actions>
-			<gui>1.0, 2.0</gui>
-			<pages>1.0, 2.0</pages>
-			<utilites>1.0</utilites>
-			<libs>1.0</libs>
-		</packages>
+        <api>2000.835</api>
     </requirements>
 
 	<data lang="en">

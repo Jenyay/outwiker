@@ -220,7 +220,7 @@ class XmlVersionParserTest (unittest.TestCase):
             </info>'''
         result = XmlVersionParser().parse(text)
 
-        self.assertTrue(isinstance (result.author, AuthorInfo))
+        self.assertTrue(isinstance(result.author, AuthorInfo))
         self.assertEqual(result.author.name, '')
         self.assertEqual(result.author.email, '')
         self.assertEqual(result.author.website, '')
@@ -238,7 +238,7 @@ class XmlVersionParserTest (unittest.TestCase):
             </info>'''
         result = XmlVersionParser(['en']).parse(text)
 
-        self.assertTrue(isinstance (result.author, AuthorInfo))
+        self.assertTrue(isinstance(result.author, AuthorInfo))
         self.assertEqual(result.author.name, 'Eugeniy Ilin')
         self.assertEqual(result.author.email, 'en@example.com')
         self.assertEqual(result.author.website, 'http://example.com/en/')
@@ -264,7 +264,7 @@ class XmlVersionParserTest (unittest.TestCase):
             </info>'''
         result = XmlVersionParser(['en']).parse(text)
 
-        self.assertTrue(isinstance (result.author, AuthorInfo))
+        self.assertTrue(isinstance(result.author, AuthorInfo))
         self.assertEqual(result.author.name, 'Eugeniy Ilin')
         self.assertEqual(result.author.email, 'en@example.com')
         self.assertEqual(result.author.website, 'http://example.com/en/')
@@ -290,7 +290,7 @@ class XmlVersionParserTest (unittest.TestCase):
             </info>'''
         result = XmlVersionParser(['ru_RU']).parse(text)
 
-        self.assertTrue(isinstance (result.author, AuthorInfo))
+        self.assertTrue(isinstance(result.author, AuthorInfo))
         self.assertEqual(result.author.name, 'Евгений Ильин')
         self.assertEqual(result.author.email, 'ru@example.com')
         self.assertEqual(result.author.website, 'http://example.com/ru/')
@@ -316,7 +316,7 @@ class XmlVersionParserTest (unittest.TestCase):
             </info>'''
         result = XmlVersionParser(['ru_RU', 'en']).parse(text)
 
-        self.assertTrue(isinstance (result.author, AuthorInfo))
+        self.assertTrue(isinstance(result.author, AuthorInfo))
         self.assertEqual(result.author.name, 'Евгений Ильин')
         self.assertEqual(result.author.email, 'ru@example.com')
         self.assertEqual(result.author.website, 'http://example.com/ru/')
@@ -345,7 +345,7 @@ class XmlVersionParserTest (unittest.TestCase):
             </info>'''
         result = XmlVersionParser().parse(text)
 
-        self.assertEqual(len (result.versionsList), 0)
+        self.assertEqual(len(result.versionsList), 0)
         self.assertEqual(result.currentVersion, None)
 
     def test_versions_01(self):
@@ -360,11 +360,11 @@ class XmlVersionParserTest (unittest.TestCase):
             </info>'''
         result = XmlVersionParser().parse(text)
 
-        self.assertEqual(len (result.versionsList), 1)
+        self.assertEqual(len(result.versionsList), 1)
         self.assertEqual(result.versionsList[0].version, Version(1, 0))
         self.assertEqual(result.versionsList[0].date_str, '')
         self.assertEqual(result.versionsList[0].hidden, False)
-        self.assertEqual(len (result.versionsList[0].changes), 0)
+        self.assertEqual(len(result.versionsList[0].changes), 0)
         self.assertEqual(result.currentVersion, Version(1, 0))
 
     def test_versions_02(self):
@@ -379,11 +379,11 @@ class XmlVersionParserTest (unittest.TestCase):
             </info>'''
         result = XmlVersionParser().parse(text)
 
-        self.assertEqual(len (result.versionsList), 1)
+        self.assertEqual(len(result.versionsList), 1)
         self.assertEqual(result.versionsList[0].version, Version(1, 0, status=StatusSet.BETA))
         self.assertEqual(result.versionsList[0].date_str, '')
         self.assertEqual(result.versionsList[0].hidden, False)
-        self.assertEqual(len (result.versionsList[0].changes), 0)
+        self.assertEqual(len(result.versionsList[0].changes), 0)
         self.assertEqual(result.currentVersion, Version(1, 0, status=StatusSet.BETA))
 
     def test_versions_03(self):
@@ -398,11 +398,11 @@ class XmlVersionParserTest (unittest.TestCase):
             </info>'''
         result = XmlVersionParser().parse(text)
 
-        self.assertEqual(len (result.versionsList), 1)
+        self.assertEqual(len(result.versionsList), 1)
         self.assertEqual(result.versionsList[0].version, Version(1, 2, 3, 4, status=StatusSet.DEV))
         self.assertEqual(result.versionsList[0].date_str, '')
         self.assertEqual(result.versionsList[0].hidden, False)
-        self.assertEqual(len (result.versionsList[0].changes), 0)
+        self.assertEqual(len(result.versionsList[0].changes), 0)
         self.assertEqual(result.currentVersion, Version(1, 2, 3, 4, status=StatusSet.DEV))
 
     def test_versions_04(self):
@@ -418,13 +418,13 @@ class XmlVersionParserTest (unittest.TestCase):
             </info>'''
         result = XmlVersionParser().parse(text)
 
-        self.assertEqual(len (result.versionsList), 3)
+        self.assertEqual(len(result.versionsList), 3)
         self.assertEqual(result.versionsList[0].version, Version(1, 3))
         self.assertEqual(result.versionsList[1].version, Version(1, 2))
         self.assertEqual(result.versionsList[2].version, Version(1, 1))
-        self.assertEqual(len (result.versionsList[0].changes), 0)
-        self.assertEqual(len (result.versionsList[1].changes), 0)
-        self.assertEqual(len (result.versionsList[2].changes), 0)
+        self.assertEqual(len(result.versionsList[0].changes), 0)
+        self.assertEqual(len(result.versionsList[1].changes), 0)
+        self.assertEqual(len(result.versionsList[2].changes), 0)
         self.assertEqual(result.currentVersion, Version(1, 3))
 
     def test_date(self):
@@ -439,11 +439,11 @@ class XmlVersionParserTest (unittest.TestCase):
             </info>'''
         result = XmlVersionParser(['ru']).parse(text)
 
-        self.assertEqual(len (result.versionsList), 1)
+        self.assertEqual(len(result.versionsList), 1)
         self.assertEqual(result.versionsList[0].version, Version(1, 2))
         self.assertEqual(result.versionsList[0].date_str, '15 июня 2016')
         self.assertEqual(result.versionsList[0].hidden, False)
-        self.assertEqual(len (result.versionsList[0].changes), 0)
+        self.assertEqual(len(result.versionsList[0].changes), 0)
         self.assertEqual(result.currentVersion, Version(1, 2))
 
     def test_hidden_01(self):
@@ -458,11 +458,11 @@ class XmlVersionParserTest (unittest.TestCase):
             </info>'''
         result = XmlVersionParser(['ru']).parse(text)
 
-        self.assertEqual(len (result.versionsList), 1)
+        self.assertEqual(len(result.versionsList), 1)
         self.assertEqual(result.versionsList[0].version, Version(1, 2))
         self.assertEqual(result.versionsList[0].date_str, '')
         self.assertEqual(result.versionsList[0].hidden, True)
-        self.assertEqual(len (result.versionsList[0].changes), 0)
+        self.assertEqual(len(result.versionsList[0].changes), 0)
         self.assertEqual(result.currentVersion, Version(1, 2))
 
     def test_hidden_02(self):
@@ -477,11 +477,11 @@ class XmlVersionParserTest (unittest.TestCase):
             </info>'''
         result = XmlVersionParser(['ru']).parse(text)
 
-        self.assertEqual(len (result.versionsList), 1)
+        self.assertEqual(len(result.versionsList), 1)
         self.assertEqual(result.versionsList[0].version, Version(1, 2))
         self.assertEqual(result.versionsList[0].date_str, '')
         self.assertEqual(result.versionsList[0].hidden, True)
-        self.assertEqual(len (result.versionsList[0].changes), 0)
+        self.assertEqual(len(result.versionsList[0].changes), 0)
         self.assertEqual(result.currentVersion, Version(1, 2))
 
     def test_hidden_03(self):
@@ -496,11 +496,11 @@ class XmlVersionParserTest (unittest.TestCase):
             </info>'''
         result = XmlVersionParser(['ru']).parse(text)
 
-        self.assertEqual(len (result.versionsList), 1)
+        self.assertEqual(len(result.versionsList), 1)
         self.assertEqual(result.versionsList[0].version, Version(1, 2))
         self.assertEqual(result.versionsList[0].date_str, '')
         self.assertEqual(result.versionsList[0].hidden, True)
-        self.assertEqual(len (result.versionsList[0].changes), 0)
+        self.assertEqual(len(result.versionsList[0].changes), 0)
         self.assertEqual(result.currentVersion, Version(1, 2))
 
     def test_changes_01(self):
@@ -516,11 +516,11 @@ class XmlVersionParserTest (unittest.TestCase):
             </info>'''
         result = XmlVersionParser(['ru']).parse(text)
 
-        self.assertEqual(len (result.versionsList), 1)
+        self.assertEqual(len(result.versionsList), 1)
         self.assertEqual(result.versionsList[0].version, Version(1, 2))
         self.assertEqual(result.versionsList[0].date_str, '')
         self.assertEqual(result.versionsList[0].hidden, False)
-        self.assertEqual(len (result.versionsList[0].changes), 1)
+        self.assertEqual(len(result.versionsList[0].changes), 1)
         self.assertEqual(result.versionsList[0].changes[0], 'Изменение 1')
 
     def test_changes_02(self):
@@ -538,11 +538,11 @@ class XmlVersionParserTest (unittest.TestCase):
             </info>'''
         result = XmlVersionParser(['ru']).parse(text)
 
-        self.assertEqual(len (result.versionsList), 1)
+        self.assertEqual(len(result.versionsList), 1)
         self.assertEqual(result.versionsList[0].version, Version(1, 2))
         self.assertEqual(result.versionsList[0].date_str, '')
         self.assertEqual(result.versionsList[0].hidden, False)
-        self.assertEqual(len (result.versionsList[0].changes), 3)
+        self.assertEqual(len(result.versionsList[0].changes), 3)
         self.assertEqual(result.versionsList[0].changes[0], 'Изменение 1')
         self.assertEqual(result.versionsList[0].changes[1], 'Изменение 2')
         self.assertEqual(result.versionsList[0].changes[2], 'Изменение 3')
@@ -567,19 +567,19 @@ class XmlVersionParserTest (unittest.TestCase):
             </info>'''
         result = XmlVersionParser(['ru']).parse(text)
 
-        self.assertEqual(len (result.versionsList), 2)
+        self.assertEqual(len(result.versionsList), 2)
 
         self.assertEqual(result.versionsList[0].version, Version(1, 3))
         self.assertEqual(result.versionsList[0].date_str, '')
         self.assertEqual(result.versionsList[0].hidden, False)
-        self.assertEqual(len (result.versionsList[0].changes), 2)
+        self.assertEqual(len(result.versionsList[0].changes), 2)
         self.assertEqual(result.versionsList[0].changes[0], 'Изменение 4')
         self.assertEqual(result.versionsList[0].changes[1], 'Изменение 5')
 
         self.assertEqual(result.versionsList[1].version, Version(1, 2))
         self.assertEqual(result.versionsList[1].date_str, '')
         self.assertEqual(result.versionsList[1].hidden, False)
-        self.assertEqual(len (result.versionsList[1].changes), 3)
+        self.assertEqual(len(result.versionsList[1].changes), 3)
         self.assertEqual(result.versionsList[1].changes[0], 'Изменение 1')
         self.assertEqual(result.versionsList[1].changes[1], 'Изменение 2')
         self.assertEqual(result.versionsList[1].changes[2], 'Изменение 3')
@@ -597,11 +597,11 @@ class XmlVersionParserTest (unittest.TestCase):
             </info>'''
         result = XmlVersionParser(['ru']).parse(text)
 
-        self.assertEqual(len (result.versionsList), 1)
+        self.assertEqual(len(result.versionsList), 1)
         self.assertEqual(result.versionsList[0].version, Version(1, 0))
         self.assertEqual(result.versionsList[0].date_str, '')
         self.assertEqual(result.versionsList[0].hidden, False)
-        self.assertEqual(len (result.versionsList[0].changes), 0)
+        self.assertEqual(len(result.versionsList[0].changes), 0)
         self.assertEqual(result.versionsList[0].downloads,
                          {'all': 'http://example.com/1.0/'})
 
@@ -619,11 +619,11 @@ class XmlVersionParserTest (unittest.TestCase):
             </info>'''
         result = XmlVersionParser(['ru']).parse(text)
 
-        self.assertEqual(len (result.versionsList), 1)
+        self.assertEqual(len(result.versionsList), 1)
         self.assertEqual(result.versionsList[0].version, Version(1, 0))
         self.assertEqual(result.versionsList[0].date_str, '')
         self.assertEqual(result.versionsList[0].hidden, False)
-        self.assertEqual(len (result.versionsList[0].changes), 0)
+        self.assertEqual(len(result.versionsList[0].changes), 0)
         self.assertEqual(result.versionsList[0].downloads,
                          {'windows': 'http://example.com/1.0/windows/',
                           'unix': 'http://example.com/1.0/unix/'
@@ -639,7 +639,6 @@ class XmlVersionParserTest (unittest.TestCase):
 
         self.assertTrue(isinstance(result.requirements, RequirementsInfo))
         self.assertEqual(result.requirements.os, [])
-        self.assertEqual(result.requirements.outwiker_version, None)
 
     def test_requirements_version_01(self):
         text = '''<?xml version="1.1" encoding="UTF-8" ?>
@@ -652,7 +651,6 @@ class XmlVersionParserTest (unittest.TestCase):
 
         self.assertTrue(isinstance(result.requirements, RequirementsInfo))
         self.assertEqual(result.requirements.os, [])
-        self.assertEqual(result.requirements.outwiker_version, Version(2, 0))
 
     def test_requirements_version_02(self):
         text = '''<?xml version="1.1" encoding="UTF-8" ?>
@@ -665,7 +663,6 @@ class XmlVersionParserTest (unittest.TestCase):
 
         self.assertTrue(isinstance(result.requirements, RequirementsInfo))
         self.assertEqual(result.requirements.os, [])
-        self.assertEqual(result.requirements.outwiker_version, Version(2, 0, status=StatusSet.DEV))
 
     def test_requirements_os_01(self):
         text = '''<?xml version="1.1" encoding="UTF-8" ?>
@@ -678,7 +675,6 @@ class XmlVersionParserTest (unittest.TestCase):
 
         self.assertTrue(isinstance(result.requirements, RequirementsInfo))
         self.assertEqual(result.requirements.os, ['Linux'])
-        self.assertEqual(result.requirements.outwiker_version, None)
 
     def test_requirements_os_02(self):
         text = '''<?xml version="1.1" encoding="UTF-8" ?>
@@ -691,7 +687,6 @@ class XmlVersionParserTest (unittest.TestCase):
 
         self.assertTrue(isinstance(result.requirements, RequirementsInfo))
         self.assertEqual(result.requirements.os, ['Linux', 'Windows'])
-        self.assertEqual(result.requirements.outwiker_version, None)
 
     def test_requirements_os_03(self):
         text = '''<?xml version="1.1" encoding="UTF-8" ?>
@@ -704,101 +699,68 @@ class XmlVersionParserTest (unittest.TestCase):
 
         self.assertTrue(isinstance(result.requirements, RequirementsInfo))
         self.assertEqual(result.requirements.os, [])
-        self.assertEqual(result.requirements.outwiker_version, None)
 
     def test_requirements_packages_01(self):
         text = '''<?xml version="1.1" encoding="UTF-8" ?>
             <info>
                 <requirements>
-                    <packages>
-                    </packages>
                 </requirements>
             </info>'''
         result = XmlVersionParser().parse(text)
 
         self.assertTrue(isinstance(result.requirements, RequirementsInfo))
-        self.assertEqual(result.requirements.packages_versions, {})
+        self.assertEqual(result.requirements.api_version, [])
 
     def test_requirements_packages_02(self):
         text = '''<?xml version="1.1" encoding="UTF-8" ?>
             <info>
                 <requirements>
-                    <packages>
-                        <core>1.0</core>
-                    </packages>
+                    <api>1.0</api>
                 </requirements>
             </info>'''
         result = XmlVersionParser().parse(text)
 
-        packages_dict = {'core': [(1, 0)]}
+        api_versions_list = [(1, 0)]
 
         self.assertTrue(isinstance(result.requirements, RequirementsInfo))
-        self.assertEqual(result.requirements.packages_versions, packages_dict)
+        self.assertEqual(result.requirements.api_version, api_versions_list)
 
     def test_requirements_packages_03(self):
         text = '''<?xml version="1.1" encoding="UTF-8" ?>
             <info>
                 <requirements>
-                    <packages>
-                        <core></core>
-                    </packages>
+                    <api></api>
                 </requirements>
             </info>'''
         result = XmlVersionParser().parse(text)
 
-        packages_dict = {'core': []}
-
         self.assertTrue(isinstance(result.requirements, RequirementsInfo))
-        self.assertEqual(result.requirements.packages_versions, packages_dict)
+        self.assertEqual(result.requirements.api_version, [])
 
     def test_requirements_packages_04(self):
         text = '''<?xml version="1.1" encoding="UTF-8" ?>
             <info>
                 <requirements>
-                    <packages>
-                        <core>1.0, 2.0</core>
-                    </packages>
+                    <api>1.0, 2.0</api>
                 </requirements>
             </info>'''
         result = XmlVersionParser().parse(text)
 
-        packages_dict = {'core': [(1, 0), (2, 0)]}
+        api_versions_list = [(1, 0), (2, 0)]
 
         self.assertTrue(isinstance(result.requirements, RequirementsInfo))
-        self.assertEqual(result.requirements.packages_versions, packages_dict)
+        self.assertEqual(result.requirements.api_version, api_versions_list)
 
     def test_requirements_packages_05(self):
         text = '''<?xml version="1.1" encoding="UTF-8" ?>
             <info>
                 <requirements>
-                    <packages>
-                        <core>1.0,2.0</core>
-                    </packages>
+                    <api>1.0,2.0</api>
                 </requirements>
             </info>'''
         result = XmlVersionParser().parse(text)
 
-        packages_dict = {'core': [(1, 0), (2, 0)]}
+        api_versions_list = [(1, 0), (2, 0)]
 
         self.assertTrue(isinstance(result.requirements, RequirementsInfo))
-        self.assertEqual(result.requirements.packages_versions, packages_dict)
-
-    def test_requirements_packages_06(self):
-        text = '''<?xml version="1.1" encoding="UTF-8" ?>
-            <info>
-                <requirements>
-                    <packages>
-                        <core>1.0</core>
-                        <gui>1.5, 2.0</gui>
-                    </packages>
-                </requirements>
-            </info>'''
-        result = XmlVersionParser().parse(text)
-
-        packages_dict = {
-            'core': [(1, 0)],
-            'gui': [(1, 5), (2, 0)],
-        }
-
-        self.assertTrue(isinstance(result.requirements, RequirementsInfo))
-        self.assertEqual(result.requirements.packages_versions, packages_dict)
+        self.assertEqual(result.requirements.api_version, api_versions_list)

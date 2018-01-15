@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 
 class AppInfo (object):
@@ -82,13 +82,10 @@ class RequirementsInfo (object):
     """
     Plug-in's requirements
     """
-    def __init__(self, outwiker_version, os_list, packages_versions={}):
+    def __init__(self, os_list, api_version):
         """
-        outwiker_version - instance of the Version
         os_list - list of the supported OS
-        packages_versions - dictionary. Key - package's name (core, gui, etc),
-            value - list of the tuples with supported versions.
+        api_version - list of the tuples with supported API versions.
         """
-        self.outwiker_version = outwiker_version
         self.os = os_list[:]
-        self.packages_versions = packages_versions
+        self.api_version = api_version[:]
