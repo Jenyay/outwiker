@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-03 21:44+0400\n"
+"POT-Creation-Date: 2018-01-15 22:54+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,28 +17,16 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: commandspoiler.py:48
-msgid "Expand"
-msgstr ""
-
-#: commandspoiler.py:49
-msgid "Collapse"
-msgstr ""
-
-#: spoiler.py:75
-msgid "Collapse text (:spoiler:)"
-msgstr ""
-
-#: spoiler.py:114
+#: plugin.py:53
 msgid ""
-"Add command (:spoiler:) in wiki parser.\n"
+"Add (:spoiler:) wiki command to parser.\n"
 "\n"
 "<B>Usage:</B>\n"
 "<PRE>(:spoiler:)\n"
 "Text\n"
 "(:spoilerend:)</PRE>\n"
 "\n"
-"For nested spoilers use (:spoiler0:), (:spoiler1:)... (:spoiler9:) "
+"For nested spoilers use (:spoiler0:), (:spoiler1:)...(:spoiler9:) "
 "commands. \n"
 "\n"
 "<U>Example:</U>\n"
@@ -64,6 +52,22 @@ msgid ""
 "(:spoilerend:)</PRE>\n"
 msgstr ""
 
-#: spoiler.py:152
+#: plugin.py:85
 msgid "http://jenyay.net/Outwiker/SpoilerEn"
+msgstr ""
+
+#: actions.py:22
+msgid "(:spoiler:) Command"
+msgstr ""
+
+#: actions.py:26
+msgid "Insert (:spoiler:) wiki command"
+msgstr ""
+
+#: commandspoiler.py:51
+msgid "Expand"
+msgstr ""
+
+#: commandspoiler.py:52
+msgid "Collapse"
 msgstr ""
