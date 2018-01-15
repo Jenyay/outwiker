@@ -3,6 +3,8 @@
 import os.path
 
 from outwiker.gui.baseaction import BaseAction
+from outwiker.core.system import openInNewWindow
+
 from .i18n import get_
 
 
