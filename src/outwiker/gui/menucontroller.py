@@ -95,7 +95,7 @@ class MenuController(object):
         parent_menu = menu_info.parent.menu
         assert isinstance(parent_menu, wx.MenuBar)
         menus = parent_menu.GetMenus()
-        for n, menu in enumerate(menus):
+        for n, (menu, label) in enumerate(menus):
             if menu == menu_info.menu:
                 parent_menu.Remove(n)
                 break
