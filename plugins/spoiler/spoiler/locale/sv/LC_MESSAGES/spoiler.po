@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-03 21:44+0400\n"
-"PO-Revision-Date: 2016-08-16 16:39+0300\n"
+"POT-Creation-Date: 2018-01-15 22:54+0300\n"
+"PO-Revision-Date: 2018-01-16 21:01+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -11,33 +11,21 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.8\n"
+"X-Generator: Poedit 2.0.4\n"
 "X-Crowdin-Project: outwiker\n"
 "X-Crowdin-Language: sv-SE\n"
 "X-Crowdin-File: spoiler.pot\n"
 
-#: commandspoiler.py:48
-msgid "Expand"
-msgstr "Expandera"
-
-#: commandspoiler.py:49
-msgid "Collapse"
-msgstr "Komprimera"
-
-#: spoiler.py:75
-msgid "Collapse text (:spoiler:)"
-msgstr "Komprimera text (:spoiler:)"
-
-#: spoiler.py:114
+#: plugin.py:53
 msgid ""
-"Add command (:spoiler:) in wiki parser.\n"
+"Add (:spoiler:) wiki command to parser.\n"
 "\n"
 "<B>Usage:</B>\n"
 "<PRE>(:spoiler:)\n"
 "Text\n"
 "(:spoilerend:)</PRE>\n"
 "\n"
-"For nested spoilers use (:spoiler0:), (:spoiler1:)... (:spoiler9:) commands. \n"
+"For nested spoilers use (:spoiler0:), (:spoiler1:)...(:spoiler9:) commands. \n"
 "\n"
 "<U>Example:</U>\n"
 "\n"
@@ -88,6 +76,22 @@ msgstr ""
 "Text\n"
 "(:spoilerend:)</PRE>\n"
 
-#: spoiler.py:152
+#: plugin.py:85
 msgid "http://jenyay.net/Outwiker/SpoilerEn"
 msgstr "http://jenyay.net/Outwiker/SpoilerEn"
+
+#: actions.py:22
+msgid "(:spoiler:) Command"
+msgstr "(:spoiler:) Kommando"
+
+#: actions.py:26
+msgid "Insert (:spoiler:) wiki command"
+msgstr "Infoga (:spoiler:) wiki-kommando"
+
+#: commandspoiler.py:51
+msgid "Expand"
+msgstr "Expandera"
+
+#: commandspoiler.py:52
+msgid "Collapse"
+msgstr "Komprimera"

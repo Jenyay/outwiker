@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-03 21:26+0400\n"
-"PO-Revision-Date: 2016-08-16 16:30+0300\n"
+"POT-Creation-Date: 2018-01-15 22:47+0300\n"
+"PO-Revision-Date: 2018-01-16 21:01+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -11,24 +11,15 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.8\n"
+"X-Generator: Poedit 2.0.4\n"
 "X-Crowdin-Project: outwiker\n"
 "X-Crowdin-Language: sv-SE\n"
 "X-Crowdin-File: lightbox.pot\n"
 
-#: lightboxcommand.py:71
-#, python-brace-format
-msgid ""
-"<B>Can't copy script files</B>\n"
-"{0}"
-msgstr ""
-"<B>kan inte kopiera skriptfiler</B>\n"
-"{0}"
-
-#: lightbox.py:44
+#: plugin.py:29
 msgid ""
 "This plugin adds a command (:lightbox:), after adding a images from thumbnails will open in a preview window, rather than in an external program.\n"
-"                    \n"
+"                \n"
 "<B>Usage</B>\n"
 "\n"
 "(:lightbox:)\n"
@@ -45,12 +36,25 @@ msgstr ""
 "\n"
 "bla-bla-bla %thumb%Attach:bild_1.jpg%%\n"
 "bla-bla-bla...\n"
-"%thumb%Attach:ibild_2.png%%\n"
+"%thumb%Attach:bild_2.png%%\n"
 
-#: lightbox.py:63
+#: plugin.py:42
 msgid "http://jenyay.net/Outwiker/LightboxEn"
 msgstr "http://jenyay.net/Outwiker/LightboxEn"
 
-#: lightbox.py:94
-msgid "Use lightbox (:lightbox:)"
-msgstr "Använd lightbox (:lightbox:)"
+#: actions.py:21
+msgid "(:lightbox:) command"
+msgstr "(:lightbox:) kommando"
+
+#: actions.py:25
+msgid "Insert (:lightbox:) wiki command to show attached images inside OutWiker."
+msgstr "Infoga (:lightbox:) wiki-kommando för att visa bifogade bilder i OutWiker."
+
+#: lightboxcommand.py:69
+#, python-brace-format
+msgid ""
+"<B>Can't copy script files</B>\n"
+"{0}"
+msgstr ""
+"<B>kan inte kopiera skriptfiler</B>\n"
+"{0}"
