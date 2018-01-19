@@ -20,6 +20,7 @@
 			<version number="2.2">
                 <download os="all">http://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.2.zip</download>
 				<change>Add OutWiker 2.1 support. Migrate to Python 3.6.</change>
+				<change>Updated KaTeX engine.</change>
 			</version>
 
 			<version number="2.1" date="December 17, 2017">
@@ -85,6 +86,7 @@
             <version number="2.2">
                 <download os="all">http://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.0.zip</download>
 				<change>Добавлена поддержка OutWiker 2.1. Переход на Python 3.6.</change>
+				<change>Обновлен движок KaTeX.</change>
 			</version>
 
 			<version number="2.1" date="17.12.2017">
