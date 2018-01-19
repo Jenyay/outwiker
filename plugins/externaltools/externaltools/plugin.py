@@ -75,7 +75,7 @@ application.exe param1 "c:\\myfolder\\path to file name"
 (:execend:)</pre></code>''')
 
         example_4 = _(u'''Run a lot of applications:
-<code><pre>(:exec text="Run application_1, application_2 and application_3":)
+<code><pre>(:exec title="Run application_1, application_2 and application_3":)
 application_1.exe
 application_2.exe param_1 param_2
 application_3.exe param_1 param_2
