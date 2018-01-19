@@ -117,7 +117,7 @@ class ToolsItemCtrl(wx.Panel):
 
     def __onBrowse(self, event):
         if os.name == "nt":
-            wildcard = _(u"Executables(*.exe)|*.exe|All Files|*.*")
+            wildcard = _(u"Executables (*.exe)|*.exe|All Files|*.*")
         else:
             wildcard = _(u"All Files|*")
 
