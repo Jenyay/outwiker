@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os
 import re
@@ -9,10 +9,10 @@ from outwiker.actions.polyactionsid import *
 from outwiker.core.attachment import Attachment
 from outwiker.core.system import getImagesDir
 from outwiker.core.commands import insertCurrentDate
-from outwiker.gui.toolbars.simpletoolbar import SimpleToolBar
 from outwiker.pages.wiki.basewikipageview import BaseWikiPageView
 from outwiker.pages.wiki.htmlcache import HtmlCache
 from outwiker.pages.wiki.wikieditor import WikiEditor
+from outwiker.gui.toolbars.toolbar import ToolBar
 
 from .links.linkdialog import LinkDialog
 from .links.linkdialogcontroller import LinkDialogController
@@ -42,11 +42,12 @@ class MarkdownPageView(BaseWikiPageView):
         return MENU_MARKDOWN
 
     def _createToolbars(self, mainWindow):
-        self._toolbar_general = SimpleToolBar(
-                mainWindow,
-                mainWindow.auiManager,
-                u'markdown_general_toolbar',
-                _(u"Markdown"))
+        self._toolbar_general = ToolBar(
+            mainWindow,
+            mainWindow.auiManager,
+            self._application.config,
+            u'plugin_markdown_general',
+            _(u"Markdown"))
         return [self._toolbar_general]
 
     def _getPolyActions(self):

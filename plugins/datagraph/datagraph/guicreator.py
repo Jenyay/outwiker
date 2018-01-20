@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 """
 Модуль с классами для добавления пунктов меню и кнопок на панель
 """
@@ -7,9 +7,9 @@ import os.path
 import wx
 
 from outwiker.pages.html.basehtmlpanel import EVT_PAGE_TAB_CHANGED
+from outwiker.gui.toolbars.toolbar import ToolBar
 
 from .i18n import get_
-from .toolbar import DataGraphToolBar
 
 # Импортировать все Actions
 from .actions import PlotAction, OpenHelpAction
@@ -86,7 +86,13 @@ class GuiCreator(object):
         """
         if not self.__toolbarCreated:
             mainWnd = self._application.mainWindow
-            mainWnd.toolbars[self.ID_TOOLBAR] = DataGraphToolBar(mainWnd, mainWnd.auiManager)
+            mainWnd.toolbars[self.ID_TOOLBAR] = ToolBar(
+                mainWnd,
+                mainWnd.auiManager,
+                self._application.config,
+                'Plugin_datagraph',
+                _('DataGraph')
+            )
 
             self.__toolbarCreated = True
 

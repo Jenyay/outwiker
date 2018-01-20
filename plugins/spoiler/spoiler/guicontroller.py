@@ -5,6 +5,7 @@
 import os.path
 
 from outwiker.pages.html.basehtmlpanel import EVT_PAGE_TAB_CHANGED
+from outwiker.gui.defines import TOOLBAR_PLUGINS
 
 from .i18n import get_
 from .actions import SpoilerAction
@@ -54,7 +55,7 @@ class GUIController(object):
         [*map(lambda action: self._application.actionController.appendMenuItem(
             action.stringId, menu), self._actions)]
 
-        toolbar = mainWindow.toolbars[mainWindow.PLUGINS_TOOLBAR_STR]
+        toolbar = mainWindow.toolbars[TOOLBAR_PLUGINS]
 
         self._application.actionController.appendToolbarButton(
             SpoilerAction.stringId,

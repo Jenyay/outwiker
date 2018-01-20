@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os.path
 import re
@@ -13,6 +13,7 @@ from outwiker.gui.hotkey import HotKey
 from outwiker.core.pluginbase import Plugin
 from outwiker.core.system import getImagesDir
 from outwiker.gui.pagedialogpanels.iconspanel import IconsGroupInfo
+from outwiker.gui.defines import TOOLBAR_PLUGINS
 
 from .debugaction import DebugAction
 from .eventswatcher import EventsWatcher
@@ -108,7 +109,7 @@ class PluginDebug(Plugin):
         """
         mainWindow = self._application.mainWindow
         mainMenu = mainWindow.menuController.getRootMenu()
-        if mainWindow is not None and mainWindow.PLUGINS_TOOLBAR_STR in mainWindow.toolbars:
+        if mainWindow is not None and TOOLBAR_PLUGINS in mainWindow.toolbars:
             self._application.actionController.removeMenuItem(DebugAction.stringId)
             self._application.actionController.removeToolbarButton(DebugAction.stringId)
             self._application.actionController.removeAction(DebugAction.stringId)
@@ -186,10 +187,10 @@ class PluginDebug(Plugin):
     def __createTestAction(self):
         mainWindow = self._application.mainWindow
 
-        if mainWindow is not None and mainWindow.PLUGINS_TOOLBAR_STR in mainWindow.toolbars:
+        if mainWindow is not None and TOOLBAR_PLUGINS in mainWindow.toolbars:
             action = DebugAction(self._application)
             hotkey = HotKey("T", ctrl=True, shift=True, alt=True)
-            toolbar = mainWindow.toolbars[mainWindow.PLUGINS_TOOLBAR_STR]
+            toolbar = mainWindow.toolbars[TOOLBAR_PLUGINS]
             image = self.getImagePath("bug.png")
 
             controller = self._application.actionController

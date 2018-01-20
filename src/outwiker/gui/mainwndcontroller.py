@@ -10,7 +10,7 @@ from outwiker.core.commands import setStatusText, getMainWindowTitle
 from .bookmarkscontroller import BookmarksController
 from .autosavetimer import AutosaveTimer
 from .guiconfig import GeneralGuiConfig, TrayConfig
-from .defines import MENU_FILE
+from .defines import MENU_FILE, TOOLBAR_GENERAL
 
 from outwiker.actions.save import SaveAction
 from outwiker.actions.close import CloseAction
@@ -263,9 +263,11 @@ class MainWndController(object):
         self._updateBookmarksState()
 
     def __enableTools(self, enabled):
+        toolbar = self.mainWindow.toolbars[TOOLBAR_GENERAL]
+
         for toolId in self.disabledTools:
-            if self.mainWindow.mainToolbar.FindById(toolId) is not None:
-                self.mainWindow.mainToolbar.EnableTool(toolId, enabled)
+            if toolbar.FindById(toolId) is not None:
+                toolbar.EnableTool(toolId, enabled)
 
             if self.mainMenu.FindItemById(toolId) is not None:
                 self.mainMenu.Enable(toolId, enabled)

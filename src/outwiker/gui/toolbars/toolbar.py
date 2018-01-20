@@ -1,63 +1,62 @@
 # -*- coding: utf-8 -*-
 
-from abc import ABCMeta, abstractmethod, abstractproperty
+from configparser import NoSectionError
 
 import wx
 import wx.aui
 
-from outwiker.core.application import Application
-from outwiker.gui.guiconfig import MainWindowConfig
 
-
-class BaseToolBar(wx.aui.AuiToolBar):
+class ToolBar(wx.aui.AuiToolBar):
     """
     The base class for a toolbars.
     """
-    #__metaclass__ = ABCMeta
-
-    def __init__(self, parent, auiManager):
-        super(BaseToolBar, self).__init__(parent)
-        self._SECTION_NAME = MainWindowConfig.MAIN_WINDOW_SECTION
+    def __init__(self, parent, auiManager, config, name, caption):
+        super().__init__(parent)
+        self._SECTION_NAME = 'Toolbars'
 
         self._parent = parent
         self._auiManager = auiManager
+        self._config = config
+        self._name = name
+        self._caption = caption
         self._pane = self._loadPaneInfo()
 
-    #@abstractproperty
-    def caption(self):
-        pass
-
-    #@abstractproperty
+    @property
     def name(self):
-        return self.pane.name
+        return self._name
 
-    #@abstractmethod
+    @property
+    def caption(self):
+        return self._caption
+
     def _createPane(self):
-        """
-        The method must return the instance of the AuiPaneInfo
-        """
-        pass
+        return (wx.aui.AuiPaneInfo()
+                .Name(self.name)
+                .Caption(self.caption)
+                .ToolbarPane()
+                .Top()
+                .Position(0)
+                .Row(0))
 
     def _loadPaneInfo(self):
         try:
-            paneinfo = Application.config.get(self._SECTION_NAME, self.name)
+            paneinfo = self._config.get(self._SECTION_NAME, self.name)
             pane = wx.aui.AuiPaneInfo()
             self._auiManager.LoadPaneInfo(paneinfo, pane)
             pane.Caption(self.caption)
             pane.Dock()
-        except BaseException:
+        except (BaseException, NoSectionError):
             pane = self._createPane()
 
         return pane
 
     def savePaneInfo(self):
-        config = Application.config
         paneinfo = self._auiManager.SavePaneInfo(self.pane)
-        config.set(self._SECTION_NAME, self.name, paneinfo)
+        self._config.set(self._SECTION_NAME, self.name, paneinfo)
 
     def DeleteTool(self, toolid, fullUpdate=True):
         self.Freeze()
-        super(BaseToolBar, self).DeleteTool(toolid)
+        super().DeleteTool(toolid)
         self.UpdateToolBar()
         if fullUpdate:
             self._parent.UpdateAuiManager()
@@ -71,8 +70,7 @@ class BaseToolBar(wx.aui.AuiToolBar):
                 kind=wx.ITEM_NORMAL,
                 fullUpdate=True):
         self.Freeze()
-        item = super(BaseToolBar, self).AddTool(tool_id, label, bitmap,
-                                                short_help_string, kind)
+        item = super().AddTool(tool_id, label, bitmap, short_help_string, kind)
         self.UpdateToolBar()
         if fullUpdate:
             self._parent.UpdateAuiManager()
@@ -106,12 +104,12 @@ class BaseToolBar(wx.aui.AuiToolBar):
     def Hide(self):
         self.updatePaneInfo()
         self.pane.Hide()
-        super(BaseToolBar, self).Hide()
+        super().Hide()
 
     def Show(self):
         self.pane.Show()
-        super(BaseToolBar, self).Show()
+        super().Show()
 
     def Destroy(self):
         self.savePaneInfo()
-        super(BaseToolBar, self).Destroy()
+        super().Destroy()

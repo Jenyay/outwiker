@@ -38,7 +38,7 @@ from outwiker.core.tree import RootWikiPage
 from .basepagepanel import BasePagePanel
 from .dialogs.buttonsdialog import ButtonsDialog
 from .guiconfig import EditorConfig
-from .defines import MENU_EDIT
+from .defines import MENU_EDIT, TOOLBAR_GENERAL
 
 
 class BaseTextPanel(BasePagePanel):
@@ -316,7 +316,7 @@ class BaseTextPanel(BasePagePanel):
         actionController.removeMenuItem(SearchNextAction.stringId)
         actionController.removeMenuItem(SearchPrevAction.stringId)
 
-        if self.mainWindow.GENERAL_TOOLBAR_STR in self.mainWindow.toolbars:
+        if TOOLBAR_GENERAL in self.mainWindow.toolbars:
             actionController.removeToolbarButton(SearchAction.stringId)
             actionController.removeToolbarButton(SearchAndReplaceAction.stringId)
             actionController.removeToolbarButton(SearchNextAction.stringId)
@@ -351,7 +351,7 @@ class BaseTextPanel(BasePagePanel):
         mainMenu = self._application.mainWindow.menuController.getRootMenu()
         mainMenu.Insert(self.searchMenuIndex, self.searchMenu, _("Search"))
 
-        toolbar = self.mainWindow.toolbars[self.mainWindow.GENERAL_TOOLBAR_STR]
+        toolbar = self.mainWindow.toolbars[TOOLBAR_GENERAL]
 
         # Начать поиск на странице
         self._application.actionController.appendMenuItem(SearchAction.stringId, self.searchMenu)
@@ -383,7 +383,7 @@ class BaseTextPanel(BasePagePanel):
             self.searchMenu)
 
     def _addSpellTools(self):
-        generalToolbar = self.mainWindow.toolbars[self.mainWindow.GENERAL_TOOLBAR_STR]
+        generalToolbar = self.mainWindow.toolbars[TOOLBAR_GENERAL]
         editMenu = self._application.mainWindow.menuController[MENU_EDIT]
         self._application.actionController.getAction(SPELL_ON_OFF_ID).setFunc(self._spellOnOff)
 

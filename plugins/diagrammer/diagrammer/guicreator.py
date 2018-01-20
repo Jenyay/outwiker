@@ -8,9 +8,9 @@ import wx
 
 from outwiker.core.system import getOS
 from outwiker.pages.html.basehtmlpanel import EVT_PAGE_TAB_CHANGED
+from outwiker.gui.toolbars.toolbar import ToolBar
 
 from .i18n import get_
-from .diagramtoolbar import DiagramToolBar
 
 # Импортировать все Actions
 from .actions.insertdiagram import InsertDiagramAction
@@ -129,9 +129,13 @@ class GuiCreator(object):
         """
         if not self.__toolbarCreated:
             mainWnd = self._application.mainWindow
-            mainWnd.toolbars[self.ID_TOOLBAR] = DiagramToolBar(
+            mainWnd.toolbars[self.ID_TOOLBAR] = ToolBar(
                 mainWnd,
-                mainWnd.auiManager)
+                mainWnd.auiManager,
+                self._application.config,
+                'Plugin_Diagrammer',
+                _(u'Diagrammer')
+            )
 
             self.__toolbarCreated = True
 

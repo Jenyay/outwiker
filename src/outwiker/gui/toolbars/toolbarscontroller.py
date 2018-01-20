@@ -43,6 +43,7 @@ class ToolBarsController(object):
     def __getitem__(self, toolbarname):
         return self._toolbars[toolbarname].toolbar
 
+    # TODO: Replace to 'add' method
     def __setitem__(self, toolbarname, toolbar):
         if toolbarname in self._toolbars:
             raise KeyError()

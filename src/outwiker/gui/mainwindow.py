@@ -24,9 +24,8 @@ from .preferences.prefcontroller import PrefController
 from .menucontroller import MenuController
 from . import defines as guidefines
 
-from .toolbars.generaltoolbar import GeneralToolBar
-from .toolbars.pluginstoolbar import PluginsToolBar
 from .toolbars.toolbarscontroller import ToolBarsController
+from .toolbars.toolbar import ToolBar
 
 from outwiker.actions.new import NewAction
 from outwiker.actions.open import OpenAction
@@ -130,17 +129,6 @@ class MainWindow(wx.Frame):
 
         logger.debug(u'MainWindow initialize ended')
 
-    @property
-    def mainToolbar(self):
-        return self._mainToolbar
-
-    @property
-    def pluginsToolbar(self):
-        '''
-        Added in outwiker.gui 1.4
-        '''
-        return self._pluginsToolbar
-
     def __createMenu(self):
         logger.debug(u'MainWindow. Create the main menu')
         self._mainMenu = wx.MenuBar()
@@ -170,14 +158,19 @@ class MainWindow(wx.Frame):
         self.menuController.createSubMenu(guidefines.MENU_HELP, _('Help'))
 
     def __createToolbars(self):
-        self._mainToolbar = GeneralToolBar(self, self.auiManager)
-        self._pluginsToolbar = PluginsToolBar(self, self.auiManager)
+        self._mainToolbar = ToolBar(self,
+                                    self.auiManager,
+                                    Application.config,
+                                    guidefines.TOOLBAR_GENERAL,
+                                    _('General'))
+        self._pluginsToolbar = ToolBar(self,
+                                       self.auiManager,
+                                       Application.config,
+                                       guidefines.TOOLBAR_PLUGINS,
+                                       _('Plugins'))
 
-        self.GENERAL_TOOLBAR_STR = self._mainToolbar.name
-        self.PLUGINS_TOOLBAR_STR = self._pluginsToolbar.name
         self.toolbars = ToolBarsController(self)
-
-        self.toolbars[self.mainToolbar.name] = self.mainToolbar
+        self.toolbars[self._mainToolbar.name] = self._mainToolbar
         self.toolbars[self._pluginsToolbar.name] = self._pluginsToolbar
 
     def _initCoreControllers(self):
@@ -265,7 +258,7 @@ class MainWindow(wx.Frame):
         Заполнить действиями меню Файл
         """
         imagesDir = getImagesDir()
-        toolbar = Application.mainWindow.mainToolbar
+        toolbar = self.toolbars[guidefines.TOOLBAR_GENERAL]
         menu = self.menuController[guidefines.MENU_FILE]
         actionController = Application.actionController
 
@@ -329,7 +322,7 @@ class MainWindow(wx.Frame):
         """
         actionController = Application.actionController
         menu = self.menuController[guidefines.MENU_TREE]
-        toolbar = Application.mainWindow.mainToolbar
+        toolbar = self.toolbars[guidefines.TOOLBAR_GENERAL]
         imagesDir = getImagesDir()
 
         actionController.appendMenuItem(
@@ -391,7 +384,7 @@ class MainWindow(wx.Frame):
 
     def __createToolsMenu(self):
         imagesDir = getImagesDir()
-        toolbar = Application.mainWindow.mainToolbar
+        toolbar = self.toolbars[guidefines.TOOLBAR_GENERAL]
         menu = self.menuController[guidefines.MENU_TOOLS]
         actionController = Application.actionController
 

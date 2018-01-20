@@ -7,7 +7,7 @@ from io import StringIO
 
 from outwiker.actions.polyactionsid import *
 from outwiker.core.commands import insertCurrentDate
-from outwiker.gui.toolbars.simpletoolbar import SimpleToolBar
+from outwiker.gui.toolbars.toolbar import ToolBar
 
 from .defines import MENU_WIKI, MENU_WIKI_COMMANDS, MENU_WIKI_FORMAT
 from .wikieditor import WikiEditor
@@ -53,33 +53,38 @@ class WikiPageView(BaseWikiPageView):
         return WikiConfig(self._application.config).showHtmlCodeOptions.value
 
     def _createToolbars(self, mainWindow):
-        self._toolbar_general = SimpleToolBar(
+        self._toolbar_general = ToolBar(
             mainWindow,
             mainWindow.auiManager,
+            self._application.config,
             u"wiki_general_toolbar",
             _(u"Wiki"))
 
-        self._toolbar_heading = SimpleToolBar(
+        self._toolbar_heading = ToolBar(
             mainWindow,
             mainWindow.auiManager,
+            self._application.config,
             u"wiki_heading_toolbar",
             _(u"Heading"))
 
-        self._toolbar_font = SimpleToolBar(
+        self._toolbar_font = ToolBar(
             mainWindow,
             mainWindow.auiManager,
+            self._application.config,
             u"wiki_font_toolbar",
             _(u"Font"))
 
-        self._toolbar_align = SimpleToolBar(
+        self._toolbar_align = ToolBar(
             mainWindow,
             mainWindow.auiManager,
+            self._application.config,
             u"wiki_align_toolbar",
             _(u"Align"))
 
-        self._toolbar_table = SimpleToolBar(
+        self._toolbar_table = ToolBar(
             mainWindow,
             mainWindow.auiManager,
+            self._application.config,
             u"wiki_table_toolbar",
             _(u"Table"))
 

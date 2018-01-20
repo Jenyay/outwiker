@@ -1,15 +1,15 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os
 
 import wx
 
 from outwiker.core.commands import insertCurrentDate
-from outwiker.core.event import pagetype
+from outwiker.core.event import EVENT_PRIORITY_DEFAULT, pagetype
 from outwiker.core.system import getImagesDir
-from outwiker.core.event import EVENT_PRIORITY_DEFAULT
 from outwiker.gui.tabledialog import TableDialog
 from outwiker.gui.tablerowsdialog import TableRowsDialog
+from outwiker.gui.toolbars.toolbar import ToolBar
 from outwiker.pages.html.actions.switchcoderesult import SwitchCodeResultAction
 from outwiker.pages.html.actions.link import insertLink
 from outwiker.pages.html.tabledialogcontroller import (
@@ -29,7 +29,6 @@ from ..actions.disablescripts import DisableScriptsAction
 from ..actions.copysourceurl import CopySourceURLToClipboardAction
 
 from ..misc import polyActions, panelName
-from .webpagetoolbar import WebPageToolBar
 
 
 class GuiController (object):
@@ -114,9 +113,12 @@ class GuiController (object):
         if (mainWindow is not None and not self._addedWebPageMenuItems):
             controller = self._application.actionController
 
-            mainWindow.toolbars[panelName] = WebPageToolBar(
+            mainWindow.toolbars[panelName] = ToolBar(
                 mainWindow,
-                mainWindow.auiManager)
+                mainWindow.auiManager,
+                self._application.config,
+                'Plugin_WebPage',
+                _('Web Page'))
 
             self._menu.AppendSeparator()
 

@@ -3,6 +3,7 @@
 import os.path
 
 from outwiker.gui.defines import MENU_VIEW
+from outwiker.gui.defines import TOOLBAR_PLUGINS
 
 from .i18n import get_
 
@@ -29,7 +30,7 @@ class Controller (object):
         mainWindow = self._application.mainWindow
         # Проверяем, что главное окно и панель инструментов созданы
         if (mainWindow is not None and
-                mainWindow.PLUGINS_TOOLBAR_STR in mainWindow.toolbars):
+                TOOLBAR_PLUGINS in mainWindow.toolbars):
 
             viewMenu = self._application.mainWindow.menuController[MENU_VIEW]
             # Добавляем пункт меню с флажком в меню "Вид"
@@ -41,7 +42,7 @@ class Controller (object):
             # Добавляем кнопку-переключатель на панель инструментов
             self._application.actionController.appendToolbarCheckButton(
                 ReadingModeAction.stringId,
-                mainWindow.toolbars[mainWindow.PLUGINS_TOOLBAR_STR],
+                mainWindow.toolbars[TOOLBAR_PLUGINS],
                 image)
 
     def getImagePath(self, imageName):
@@ -60,7 +61,7 @@ class Controller (object):
         mainWindow = self._application.mainWindow
         # Проверяем, что главное окно и панель инструментов созданы
         if (mainWindow is not None and
-                mainWindow.PLUGINS_TOOLBAR_STR in mainWindow.toolbars):
+                TOOLBAR_PLUGINS in mainWindow.toolbars):
 
             # Удаляем добавленный пункт меню
             self._application.actionController.removeMenuItem(

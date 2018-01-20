@@ -5,6 +5,7 @@
 import os.path
 
 from outwiker.pages.html.basehtmlpanel import EVT_PAGE_TAB_CHANGED
+from outwiker.gui.defines import TOOLBAR_PLUGINS
 
 from .i18n import get_
 
@@ -46,7 +47,7 @@ class GuiCreator(object):
             action.stringId, menu), self._actions))
 
         # При необходимости добавить кнопки на панель
-        toolbar = mainWindow.toolbars[mainWindow.PLUGINS_TOOLBAR_STR]
+        toolbar = mainWindow.toolbars[TOOLBAR_PLUGINS]
 
         self._application.actionController.appendToolbarButton(
             PluginAction.stringId,

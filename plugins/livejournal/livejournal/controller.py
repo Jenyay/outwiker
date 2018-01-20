@@ -4,9 +4,10 @@ import os.path
 
 import wx
 
+from outwiker.gui.toolbars.toolbar import ToolBar
+
 from .i18n import get_
 from .ljcommand import LjUserCommand, LjCommunityCommand
-from .ljtoolbar import LJToolBar
 from .comboboxdialog import ComboBoxDialog
 from .dialogcontroller import UserDialogController, CommunityDialogController
 
@@ -73,7 +74,13 @@ class Controller (object):
         mainWnd = self._application.mainWindow
 
         if mainWnd is not None and not self.__toolbarCreated:
-            mainWnd.toolbars[self.ID_TOOLBAR] = LJToolBar (mainWnd, mainWnd.auiManager)
+            mainWnd.toolbars[self.ID_TOOLBAR] = ToolBar(
+                mainWnd,
+                mainWnd.auiManager,
+                self._application.config,
+                'Plugin_LiveJournal',
+                _('Livejournal')
+            )
 
             pageView = self._getPageView()
             # pageView.addTool (pageView.commandsMenu,

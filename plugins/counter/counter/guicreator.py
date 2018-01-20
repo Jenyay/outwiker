@@ -1,12 +1,13 @@
-#!/usr/bin/python
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 """
 Модуль с классами для добавления пунктов меню и кнопок на панель
 """
-from .misc import getImagePath
 
 from outwiker.pages.html.basehtmlpanel import EVT_PAGE_TAB_CHANGED
+from outwiker.gui.defines import TOOLBAR_PLUGINS
+
 from .actions import InsertCounterAction
+from .misc import getImagePath
 
 
 class GuiCreator (object):
@@ -31,7 +32,7 @@ class GuiCreator (object):
         if mainWindow is None:
             return
 
-        toolbar = mainWindow.toolbars[mainWindow.PLUGINS_TOOLBAR_STR]
+        toolbar = mainWindow.toolbars[TOOLBAR_PLUGINS]
 
         pageView = self._getPageView()
 

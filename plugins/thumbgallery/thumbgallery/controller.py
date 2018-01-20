@@ -4,6 +4,7 @@ import os.path
 
 from outwiker.pages.wiki.wikipage import WikiWikiPage
 from outwiker.pages.wiki.defines import MENU_WIKI_COMMANDS
+from outwiker.gui.defines import TOOLBAR_PLUGINS
 
 from .thumblistcommand import ThumbListCommand
 from .thumbgallerycommand import ThumbGalleryCommand
@@ -30,7 +31,7 @@ class Controller(object):
             action_gui_info = [
                 ActionGUIInfo(ThumbAction,
                               MENU_WIKI_COMMANDS,
-                              mainWindow.PLUGINS_TOOLBAR_STR,
+                              TOOLBAR_PLUGINS,
                               os.path.join(self._imagesPath, 'gallery.png')),
             ]
             self._actions_gui_controller.initialize(action_gui_info)

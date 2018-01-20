@@ -8,7 +8,7 @@ from outwiker.core.commands import insertCurrentDate
 from outwiker.gui.htmltexteditor import HtmlTextEditor
 from outwiker.gui.tabledialog import TableDialog
 from outwiker.gui.tablerowsdialog import TableRowsDialog
-from outwiker.gui.toolbars.simpletoolbar import SimpleToolBar
+from outwiker.gui.toolbars.toolbar import ToolBar
 from outwiker.pages.html.basehtmlpanel import (BaseHtmlPanel,
                                                EVT_PAGE_TAB_CHANGED)
 from outwiker.pages.html.tabledialogcontroller import (
@@ -81,32 +81,37 @@ class HtmlPageView(BaseHtmlPanel):
         self.Bind(EVT_PAGE_TAB_CHANGED, handler=self.onTabChanged)
 
     def _createToolbars(self):
-        self._toolbar_general = SimpleToolBar(self.mainWindow,
-                                              self.mainWindow.auiManager,
-                                              u"html_general_toolbar",
-                                              _(u"HTML"))
+        self._toolbar_general = ToolBar(self.mainWindow,
+                                        self.mainWindow.auiManager,
+                                        self._application.config,
+                                        u"html_general_toolbar",
+                                        _(u"HTML"))
 
-        self._toolbar_heading = SimpleToolBar(
+        self._toolbar_heading = ToolBar(
             self.mainWindow,
             self.mainWindow.auiManager,
+            self._application.config,
             u"html_heading_toolbar",
             _(u"Heading"))
 
-        self._toolbar_font = SimpleToolBar(
+        self._toolbar_font = ToolBar(
             self.mainWindow,
             self.mainWindow.auiManager,
+            self._application.config,
             u"html_font_toolbar",
             _(u"Font"))
 
-        self._toolbar_align = SimpleToolBar(
+        self._toolbar_align = ToolBar(
             self.mainWindow,
             self.mainWindow.auiManager,
+            self._application.config,
             u"html_align_toolbar",
             _(u"Align"))
 
-        self._toolbar_table = SimpleToolBar(
+        self._toolbar_table = ToolBar(
             self.mainWindow,
             self.mainWindow.auiManager,
+            self._application.config,
             u"html_table_toolbar",
             _(u"Table"))
 

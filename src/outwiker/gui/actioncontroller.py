@@ -1,10 +1,10 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import wx
 
 from outwiker.gui.hotkeyparser import HotKeyParser
 from outwiker.gui.hotkeyoption import HotKeyOption
-from outwiker.gui.toolbars.basetoolbar import BaseToolBar
+from outwiker.gui.toolbars.toolbar import ToolBar
 
 
 class ActionInfo(object):
@@ -174,7 +174,7 @@ class ActionController(object):
             toolid = self._actionsInfo[strid].toolItemId
             toolbar = self._actionsInfo[strid].toolbar
 
-            if issubclass(type(toolbar), BaseToolBar):
+            if issubclass(type(toolbar), ToolBar):
                 toolbar.DeleteTool(toolid, False)
             elif issubclass(type(toolbar), wx.ToolBar):
                 toolbar.DeleteTool(toolid)
@@ -201,7 +201,7 @@ class ActionController(object):
         strid - строковый идентификатор действия, для которого создается
             кнопка на панели инструментов
         toolbar - панель инструментов, куда будет добавлена кнопка
-            (класс, производный от BaseToolBar)
+            (класс, производный от ToolBar)
         image - путь до картинки, которая будет помещена на кнопку
         fullUpdate - нужно ли полностью обновить панель после добавления кнопки
         """
@@ -226,7 +226,7 @@ class ActionController(object):
         strid - строковый идентификатор действия,
             для которого создается кнопка на панели инструментов
         toolbar - панель инструментов, куда будет добавлена кнопка
-            (класс, производный от BaseToolBar)
+            (класс, производный от ToolBar)
         image - путь до картинки, которая будет помещена на кнопку
         fullUpdate - нужно ли полностью обновить панель после добавления кнопки
         """
@@ -304,7 +304,7 @@ class ActionController(object):
         """
         Общий метод для добавления кнопки на панель инструментов
         toolbar - панель инструментов, куда будет добавлена кнопка
-            (класс, производный от BaseToolBar)
+            (класс, производный от ToolBar)
         buttonType - тип кнопки (wx.ITEM_NORMAL для обычной кнопки и
             wx.ITEM_CHECK для зажимаемой кнопки)
         """
@@ -312,7 +312,7 @@ class ActionController(object):
         title = self._getToolbarItemTitle(strid)
         bitmap = wx.Bitmap(image)
 
-        if issubclass(type(toolbar), BaseToolBar):
+        if issubclass(type(toolbar), ToolBar):
             toolbarItem = toolbar.AddTool(actionid,
                                           title,
                                           bitmap,
