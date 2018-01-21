@@ -8,7 +8,6 @@ from outwiker.core.commands import insertCurrentDate
 from outwiker.gui.htmltexteditor import HtmlTextEditor
 from outwiker.gui.tabledialog import TableDialog
 from outwiker.gui.tablerowsdialog import TableRowsDialog
-from outwiker.gui.toolbars.toolbar import ToolBar
 from outwiker.pages.html.basehtmlpanel import (BaseHtmlPanel,
                                                EVT_PAGE_TAB_CHANGED)
 from outwiker.pages.html.tabledialogcontroller import (
@@ -18,18 +17,26 @@ from outwiker.pages.html.tabledialogcontroller import (
 from .actions.autolinewrap import HtmlAutoLineWrap
 from .actions.link import insertLink
 from .actions.switchcoderesult import SwitchCodeResultAction
+from . import defines
 from outwiker.actions.polyactionsid import *
 
 
 class HtmlPageView(BaseHtmlPanel):
     def __init__(self, parent, application):
-        super(HtmlPageView, self).__init__(parent, application)
+        super().__init__(parent, application)
 
         self.__HTML_MENU_INDEX = 7
         self._menuName = _(u"HTML")
 
-        self._toolbars = self._createToolbars()
-        [self.mainWindow.toolbars.addToolbar(toolbar) for toolbar in self._toolbars]
+        self._toolbars = [
+            (defines.TOOLBAR_HTML_GENERAL, _(u"HTML")),
+            (defines.TOOLBAR_HTML_HEADING, _(u"Heading")),
+            (defines.TOOLBAR_HTML_FONT, _(u"Font")),
+            (defines.TOOLBAR_HTML_ALIGN, _(u"Align")),
+            (defines.TOOLBAR_HTML_TABLE, _(u"Table")),
+        ]
+        for toolbar_id, title in self._toolbars:
+            self.mainWindow.toolbars.createToolBar(toolbar_id, title)
 
         # Список используемых полиморфных действий
         self.__polyActions = [
@@ -80,50 +87,6 @@ class HtmlPageView(BaseHtmlPanel):
 
         self.Bind(EVT_PAGE_TAB_CHANGED, handler=self.onTabChanged)
 
-    def _createToolbars(self):
-        self._toolbar_general = ToolBar(self.mainWindow,
-                                        self.mainWindow.auiManager,
-                                        self._application.config,
-                                        u"html_general_toolbar",
-                                        _(u"HTML"))
-
-        self._toolbar_heading = ToolBar(
-            self.mainWindow,
-            self.mainWindow.auiManager,
-            self._application.config,
-            u"html_heading_toolbar",
-            _(u"Heading"))
-
-        self._toolbar_font = ToolBar(
-            self.mainWindow,
-            self.mainWindow.auiManager,
-            self._application.config,
-            u"html_font_toolbar",
-            _(u"Font"))
-
-        self._toolbar_align = ToolBar(
-            self.mainWindow,
-            self.mainWindow.auiManager,
-            self._application.config,
-            u"html_align_toolbar",
-            _(u"Align"))
-
-        self._toolbar_table = ToolBar(
-            self.mainWindow,
-            self.mainWindow.auiManager,
-            self._application.config,
-            u"html_table_toolbar",
-            _(u"Table"))
-
-        toolbars = [self._toolbar_general,
-                    self._toolbar_heading,
-                    self._toolbar_font,
-                    self._toolbar_align,
-                    self._toolbar_table,
-                    ]
-
-        return toolbars
-
     def getTextEditor(self):
         return HtmlTextEditor
 
@@ -148,8 +111,8 @@ class HtmlPageView(BaseHtmlPanel):
         self._removeActionTools()
 
         self.mainWindow.toolbars.updatePanesInfo()
-        for toolbar in self._toolbars:
-            self.mainWindow.toolbars.destroyToolBar(toolbar.name)
+        for toolbar_info in self._toolbars:
+            self.mainWindow.toolbars.destroyToolBar(toolbar_info[0])
 
         super(HtmlPageView, self).Clear()
 
@@ -194,7 +157,7 @@ class HtmlPageView(BaseHtmlPanel):
         Create button and menu item to enable / disable lines wrap.
         """
         image = os.path.join(self.imagesDir, "linewrap.png")
-        toolbar = self._toolbar_general
+        toolbar = self._application.mainWindow.toolbars[defines.TOOLBAR_HTML_GENERAL]
         actionController = self._application.actionController
 
         actionController.appendMenuCheckItem(HtmlAutoLineWrap.stringId,
@@ -262,7 +225,7 @@ class HtmlPageView(BaseHtmlPanel):
         """
         Добавить инструменты, связанные со шрифтами
         """
-        toolbar = self._toolbar_font
+        toolbar = self._application.mainWindow.toolbars[defines.TOOLBAR_HTML_FONT]
         menu = self.__fontMenu
         actionController = self._application.actionController
 
@@ -347,7 +310,7 @@ class HtmlPageView(BaseHtmlPanel):
         """
         Добавить инструменты, связанные с выравниванием
         """
-        toolbar = self._toolbar_align
+        toolbar = self._application.mainWindow.toolbars[defines.TOOLBAR_HTML_ALIGN]
         menu = self.__alignMenu
         actionController = self._application.actionController
 
@@ -401,7 +364,7 @@ class HtmlPageView(BaseHtmlPanel):
         """
         Добавить инструменты, связанные с таблицами
         """
-        toolbar = self._toolbar_table
+        toolbar = self._application.mainWindow.toolbars[defines.TOOLBAR_HTML_TABLE]
         menu = self.__tableMenu
         actionController = self._application.actionController
 
@@ -442,7 +405,7 @@ class HtmlPageView(BaseHtmlPanel):
         """
         Добавить инструменты, связанные со списками
         """
-        toolbar = self._toolbar_align
+        toolbar = self._application.mainWindow.toolbars[defines.TOOLBAR_HTML_ALIGN]
         menu = self.__listMenu
         actionController = self._application.actionController
 
@@ -472,7 +435,7 @@ class HtmlPageView(BaseHtmlPanel):
         """
         Добавить инструменты для заголовочных тегов <H>
         """
-        toolbar = self._toolbar_heading
+        toolbar = self._application.mainWindow.toolbars[defines.TOOLBAR_HTML_HEADING]
         menu = self.__headingMenu
         actionController = self._application.actionController
 
@@ -537,7 +500,7 @@ class HtmlPageView(BaseHtmlPanel):
             fullUpdate=False)
 
     def __addFormatTools(self):
-        toolbar = self._toolbar_general
+        toolbar = self._application.mainWindow.toolbars[defines.TOOLBAR_HTML_GENERAL]
         menu = self.__formatMenu
         actionController = self._application.actionController
 
@@ -583,7 +546,7 @@ class HtmlPageView(BaseHtmlPanel):
         """
         Добавить остальные инструменты
         """
-        toolbar = self._toolbar_general
+        toolbar = self._application.mainWindow.toolbars[defines.TOOLBAR_HTML_GENERAL]
         menu = self.__htmlMenu
         actionController = self._application.actionController
 
@@ -662,7 +625,7 @@ class HtmlPageView(BaseHtmlPanel):
         actionController.appendMenuItem(HTML_ESCAPE_STR_ID, menu)
 
     def _addSeparator(self):
-        toolbar = self._toolbar_general
+        toolbar = self._application.mainWindow.toolbars[defines.TOOLBAR_HTML_GENERAL]
         toolbar.AddSeparator()
 
     def removeGui(self):

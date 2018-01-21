@@ -4,8 +4,6 @@ import os.path
 
 import wx
 
-from outwiker.gui.toolbars.toolbar import ToolBar
-
 from .i18n import get_
 from .ljcommand import LjUserCommand, LjCommunityCommand
 from .comboboxdialog import ComboBoxDialog
@@ -17,7 +15,7 @@ class Controller (object):
         self._application = application
         self.__toolbarCreated = False
 
-        self.ID_TOOLBAR = u"livejournal"
+        self.ID_TOOLBAR = u"Plugin_livejournal"
         self.ID_LJUSER = u"PLUGIN_LIVEJOURNAL_LJUSER_ID"
         self.ID_LJCOMMUNITY = u"PLUGIN_LIVEJOURNAL_LJCOMMUNITY_ID"
 
@@ -33,7 +31,7 @@ class Controller (object):
         self._application.onPageViewCreate += self.__onPageViewCreate
         self._application.onPageViewDestroy += self.__onPageViewDestroy
 
-        if self._isCurrentWikiPage:
+        if self._isWikiPage(self._application.selectedPage):
             self.__onPageViewCreate (self._application.selectedPage)
 
 
@@ -60,25 +58,18 @@ class Controller (object):
         """Обработка события после создания представления страницы"""
         assert self._application.mainWindow is not None
 
-        if not self._isCurrentWikiPage:
-            self.__destroyToolBar()
-            return
+        if self._isWikiPage(page):
+            self.__createToolBar()
 
-        self.__createToolBar()
-
-
-    def __createToolBar (self):
+    def __createToolBar(self):
         """
         Создание панели с кнопками, если она еще не была создана
         """
         mainWnd = self._application.mainWindow
 
         if mainWnd is not None and not self.__toolbarCreated:
-            mainWnd.toolbars[self.ID_TOOLBAR] = ToolBar(
-                mainWnd,
-                mainWnd.auiManager,
-                self._application.config,
-                'Plugin_LiveJournal',
+            mainWnd.toolbars.createToolBar(
+                self.ID_TOOLBAR,
                 _('Livejournal')
             )
 
@@ -108,17 +99,11 @@ class Controller (object):
         """
         Обработчик события выбора новой страницы
         """
-        self.__destroyToolBar()
+        if self._isWikiPage(page):
+            self.__destroyToolBar()
 
-
-    @property
-    def _isCurrentWikiPage (self):
-        """
-        Возвращает True, если текущая страница - это викистраница
-        """
-        return (self._application.selectedPage is not None and
-                self._application.selectedPage.getTypeString() == u"wiki")
-
+    def _isWikiPage(self, page):
+        return page is not None and page.getTypeString() == u"wiki"
 
     def __insertCommand (self, title, controllerType):
         assert self._application.mainWindow is not None

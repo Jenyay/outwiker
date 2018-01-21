@@ -7,7 +7,6 @@ import os.path
 import wx
 
 from outwiker.pages.html.basehtmlpanel import EVT_PAGE_TAB_CHANGED
-from outwiker.gui.toolbars.toolbar import ToolBar
 
 from .i18n import get_
 
@@ -34,7 +33,7 @@ class GuiCreator(object):
         self._submenuItem = None
 
         self.__toolbarCreated = False
-        self.ID_TOOLBAR = u'DataGraph'
+        self.ID_TOOLBAR = u'Plugin_DataGraph'
 
         global _
         _ = get_()
@@ -86,14 +85,7 @@ class GuiCreator(object):
         """
         if not self.__toolbarCreated:
             mainWnd = self._application.mainWindow
-            mainWnd.toolbars[self.ID_TOOLBAR] = ToolBar(
-                mainWnd,
-                mainWnd.auiManager,
-                self._application.config,
-                'Plugin_datagraph',
-                _('DataGraph')
-            )
-
+            mainWnd.toolbars.createToolBar(self.ID_TOOLBAR, _('DataGraph'))
             self.__toolbarCreated = True
 
     def _destroyToolBar(self):

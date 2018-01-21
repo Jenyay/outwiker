@@ -24,8 +24,7 @@ from .preferences.prefcontroller import PrefController
 from .menucontroller import MenuController
 from . import defines as guidefines
 
-from .toolbars.toolbarscontroller import ToolBarsController
-from .toolbars.toolbar import ToolBar
+from .toolbarscontroller import ToolBarsController
 
 from outwiker.actions.new import NewAction
 from outwiker.actions.open import OpenAction
@@ -158,20 +157,9 @@ class MainWindow(wx.Frame):
         self.menuController.createSubMenu(guidefines.MENU_HELP, _('Help'))
 
     def __createToolbars(self):
-        self._mainToolbar = ToolBar(self,
-                                    self.auiManager,
-                                    Application.config,
-                                    guidefines.TOOLBAR_GENERAL,
-                                    _('General'))
-        self._pluginsToolbar = ToolBar(self,
-                                       self.auiManager,
-                                       Application.config,
-                                       guidefines.TOOLBAR_PLUGINS,
-                                       _('Plugins'))
-
-        self.toolbars = ToolBarsController(self)
-        self.toolbars[self._mainToolbar.name] = self._mainToolbar
-        self.toolbars[self._pluginsToolbar.name] = self._pluginsToolbar
+        self.toolbars = ToolBarsController(self, Application)
+        self.toolbars.createToolBar(guidefines.TOOLBAR_GENERAL, _('General'))
+        self.toolbars.createToolBar(guidefines.TOOLBAR_PLUGINS, _('Plugins'))
 
     def _initCoreControllers(self):
         [controller.initialize() for controller in self._coreControllers]

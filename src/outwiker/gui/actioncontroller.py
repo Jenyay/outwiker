@@ -4,7 +4,7 @@ import wx
 
 from outwiker.gui.hotkeyparser import HotKeyParser
 from outwiker.gui.hotkeyoption import HotKeyOption
-from outwiker.gui.toolbars.toolbar import ToolBar
+from outwiker.gui.toolbarscontroller import ToolBar
 
 
 class ActionInfo(object):

@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 """
 Модуль с классами для добавления пунктов меню и кнопок на панель
 """
@@ -9,11 +9,11 @@ from .actions import TitleAction, DescriptionAction, KeywordsAction, CustomHeads
 from .i18n import get_
 
 
-class GuiCreator (object):
+class GuiCreator(object):
     """
     Создание элементов интерфейса с использованием actions
     """
-    def __init__ (self, controller, application):
+    def __init__(self, controller, application):
         self._controller = controller
         self._application = application
 
@@ -28,14 +28,12 @@ class GuiCreator (object):
         global _
         _ = get_()
 
-
-    def initialize (self):
+    def initialize(self):
         if self._application.mainWindow is not None:
-            list(map (lambda action: self._application.actionController.register (
-                action (self._application, self._controller), None), self._actions))
+            list(map(lambda action: self._application.actionController.register(
+                action(self._application, self._controller), None), self._actions))
 
-
-    def createTools (self):
+    def createTools(self):
         mainWindow = self._application.mainWindow
 
         if mainWindow is None:
@@ -43,52 +41,48 @@ class GuiCreator (object):
 
         headsMenu = wx.Menu()
 
-        list(map (lambda action: self._application.actionController.appendMenuItem (
+        list(map(lambda action: self._application.actionController.appendMenuItem(
             action.stringId, headsMenu), self._actions))
 
-        self._submenuItem = self._getParentMenu().AppendSubMenu (headsMenu, _(u"HTML Headers"))
+        self._submenuItem = self._getParentMenu().AppendSubMenu(
+            headsMenu,
+            _(u"HTML Headers"))
 
-        self._getPageView().Bind (EVT_PAGE_TAB_CHANGED, self._onTabChanged)
+        self._getPageView().Bind(EVT_PAGE_TAB_CHANGED, self._onTabChanged)
         self._enableTools()
 
-
-    def removeTools (self):
+    def removeTools(self):
         if self._application.mainWindow is not None:
-            list(map (lambda action: self._application.actionController.removeMenuItem (action.stringId),
+            list(map(lambda action: self._application.actionController.removeMenuItem(action.stringId),
                  self._actions))
 
-            self._getParentMenu().DestroyItem (self._submenuItem)
+            self._getParentMenu().DestroyItem(self._submenuItem)
             self._submenuItem = None
 
-            self._getPageView().Unbind (EVT_PAGE_TAB_CHANGED, handler=self._onTabChanged)
+            self._getPageView().Unbind(EVT_PAGE_TAB_CHANGED, handler=self._onTabChanged)
 
-
-    def destroy (self):
+    def destroy(self):
         if self._application.mainWindow is not None:
-            list(map (lambda action: self._application.actionController.removeAction (action.stringId),
+            list(map(lambda action: self._application.actionController.removeAction(action.stringId),
                  self._actions))
 
-
-    def _onTabChanged (self, event):
+    def _onTabChanged(self, event):
         self._enableTools()
 
         # Разрешить распространение события дальше
         event.Skip()
 
-
-    def _enableTools (self):
+    def _enableTools(self):
         pageView = self._getPageView()
         enabled = (pageView.selectedPageIndex == pageView.CODE_PAGE_INDEX)
 
-        list(map (lambda action: self._application.actionController.enableTools (action.stringId, enabled),
-             self._actions))
+        list(map(lambda action: self._application.actionController.enableTools(action.stringId, enabled),
+                 self._actions))
 
-
-    def _getParentMenu (self):
+    def _getParentMenu(self):
         return self._getPageView().toolsMenu
 
-
-    def _getPageView (self):
+    def _getPageView(self):
         """
         Получить указатель на панель представления страницы
         """

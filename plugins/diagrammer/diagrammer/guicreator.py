@@ -6,9 +6,7 @@ import os.path
 
 import wx
 
-from outwiker.core.system import getOS
 from outwiker.pages.html.basehtmlpanel import EVT_PAGE_TAB_CHANGED
-from outwiker.gui.toolbars.toolbar import ToolBar
 
 from .i18n import get_
 
@@ -129,11 +127,8 @@ class GuiCreator(object):
         """
         if not self.__toolbarCreated:
             mainWnd = self._application.mainWindow
-            mainWnd.toolbars[self.ID_TOOLBAR] = ToolBar(
-                mainWnd,
-                mainWnd.auiManager,
-                self._application.config,
-                'Plugin_Diagrammer',
+            mainWnd.toolbars.createToolBar(
+                self.ID_TOOLBAR,
                 _(u'Diagrammer')
             )
 

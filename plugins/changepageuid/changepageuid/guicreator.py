@@ -45,10 +45,10 @@ class GuiCreator(object):
         actionController = self._application.actionController
         if self._application.mainWindow is not None:
             list(map(lambda action: actionController.removeMenuItem(action.stringId),
-                self._actions))
+                     self._actions))
 
     def destroy(self):
         actionController = self._application.actionController
         if self._application.mainWindow is not None:
             list(map(lambda action: actionController.removeAction(action.stringId),
-                self._actions))
+                     self._actions))

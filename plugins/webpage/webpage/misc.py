@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from outwiker.actions.polyactionsid import *
 
@@ -38,7 +38,5 @@ polyActions = [
     CURRENT_DATE,
     MARK_STR_ID,
 ]
-
-panelName = "webPageToolBar"
 
 onPrepareHtmlEventString = 'WebPage_onPrepareHtml'

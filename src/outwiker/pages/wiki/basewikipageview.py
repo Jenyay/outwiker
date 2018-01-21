@@ -34,8 +34,9 @@ class BaseWikiPageView (BaseHtmlPanel):
         # результата или HTML
         self.__wikiNotationActions = self._getSpecificActions()
 
-        self._toolbars = self._createToolbars(self.mainWindow)
-        [self.mainWindow.toolbars.addToolbar(toolbar) for toolbar in self._toolbars]
+        self._toolbars = self._getToolbarsInfo(self.mainWindow)
+        for toolbar_id, title in self._toolbars:
+            self.mainWindow.toolbars.createToolBar(toolbar_id, title)
 
         self.notebook.SetPageText(0, self._getPageTitle())
 
@@ -83,9 +84,9 @@ class BaseWikiPageView (BaseHtmlPanel):
         """
         pass
 
-    def _createToolbars(self, mainWindow):
+    def _getToolbarsInfo(self, mainWindow):
         """
-        Метод должен возвращать экземпляр панели инструментов
+        Метод должен возвращать список кортежей: (id панели, заголовок панели)
         """
         pass
 
@@ -116,9 +117,9 @@ class BaseWikiPageView (BaseHtmlPanel):
         self._removeActionTools()
         self.Unbind(EVT_PAGE_TAB_CHANGED, handler=self.onTabChanged)
 
-        for toolbar in self._toolbars:
+        for toolbar_info in self._toolbars:
             self.mainWindow.toolbars.updatePanesInfo()
-            self.mainWindow.toolbars.destroyToolBar(toolbar.name)
+            self.mainWindow.toolbars.destroyToolBar(toolbar_info[0])
 
         super().Clear()
 
@@ -142,13 +143,15 @@ class BaseWikiPageView (BaseHtmlPanel):
 
         # Удалим кнопки с панелей инструментов
         if self._toolbars:
-            [actionController.removeToolbarButton(
-                    action.stringId) for action in self.__wikiNotationActions]
+            for action in self.__wikiNotationActions:
+                actionController.removeToolbarButton(action.stringId)
 
-            [actionController.removeToolbarButton(strid) for strid in self.__polyActions]
+            [actionController.removeToolbarButton(strid)
+             for strid in self.__polyActions]
 
         # Обнулим функции действия в полиморфных действиях
-        [actionController.getAction(strid).setFunc(None) for strid in self.__polyActions]
+        [actionController.getAction(strid).setFunc(None)
+         for strid in self.__polyActions]
 
     @property
     def toolsMenu(self):

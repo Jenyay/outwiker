@@ -39,7 +39,7 @@ class CommandController(object):
             self._guiCreator = GuiCreator(self._application)
             self._guiCreator.initialize()
 
-            if self._isCurrentWikiPage:
+            if self._isWikiPage(self._application.selectedPage):
                 self.__onPageViewCreate(self._application.selectedPage)
 
     def destroy(self):
@@ -50,7 +50,7 @@ class CommandController(object):
             self._application.onPageViewCreate -= self.__onPageViewCreate
             self._application.onPageViewDestroy -= self.__onPageViewDestroy
 
-            if self._isCurrentWikiPage:
+            if self._isWikiPage(self._application.selectedPage):
                 self._guiCreator.removeTools()
 
             self._guiCreator.destroy()
@@ -59,7 +59,7 @@ class CommandController(object):
         """Обработка события после создания представления страницы"""
         assert self._application.mainWindow is not None
 
-        if page.getTypeString() == u"wiki":
+        if self._isWikiPage(page):
             self._guiCreator.createTools()
 
     def __onPageViewDestroy(self, page):
@@ -68,7 +68,7 @@ class CommandController(object):
         """
         assert self._application.mainWindow is not None
 
-        if page.getTypeString() == u"wiki":
+        if self._isWikiPage(page):
             self._guiCreator.removeTools()
 
     def _getPageView(self):
@@ -77,14 +77,8 @@ class CommandController(object):
         """
         return self._application.mainWindow.pagePanel.pageView
 
-    @property
-    def _isCurrentWikiPage(self):
-        """
-        Возвращает True, если текущая страница - это викистраница,
-        и False в противном случае
-        """
-        return (self._application.selectedPage is not None and
-                self._application.selectedPage.getTypeString() == u"wiki")
+    def _isWikiPage(self, page):
+        return page is not None and page.getTypeString() == u"wiki"
 
     def __onWikiParserPrepare(self, parser):
         """

@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from abc import ABCMeta, abstractmethod
 import logging
 import os
 
@@ -26,14 +25,12 @@ PageTabChangedEvent, EVT_PAGE_TAB_CHANGED = wx.lib.newevent.NewEvent()
 
 
 class BaseHtmlPanel(BaseTextPanel):
-    #__metaclass__ = ABCMeta
-
     # Номера страниц-вкладок
     CODE_PAGE_INDEX = 0
     RESULT_PAGE_INDEX = 1
 
     def __init__(self, parent, application):
-        super(BaseHtmlPanel, self).__init__(parent, application)
+        super().__init__(parent, application)
 
         # Предыдущее содержимое результирующего HTML, чтобы не переписывать
         # его каждый раз
@@ -97,7 +94,6 @@ class BaseHtmlPanel(BaseTextPanel):
         if currpanel is not None:
             currpanel.Print()
 
-    #@abstractmethod
     def getTextEditor(self):
         pass
 
@@ -164,7 +160,6 @@ class BaseHtmlPanel(BaseTextPanel):
         self.SetSizer(mainSizer)
         self.Layout()
 
-    #@abstractmethod
     def _enableActions(self, enabled):
         pass
 

@@ -1,12 +1,12 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os
 
 from outwiker.core.event import pagetype
 from outwiker.core.factoryselector import FactorySelector
 from outwiker.core.style import Style
-from outwiker.gui.pagedialogpanels.appearancepanel import(AppearancePanel,
-                                                          AppearanceController)
+from outwiker.gui.pagedialogpanels.appearancepanel import (AppearancePanel,
+                                                           AppearanceController)
 from outwiker.pages.wiki.htmlcache import HtmlCache
 from outwiker.utilites.textfile import writeTextFile
 
@@ -35,7 +35,8 @@ class Controller(object):
 
     def initialize(self):
         """
-        Инициализация контроллера при активации плагина. Подписка на нужные события
+        Инициализация контроллера при активации плагина.
+        Подписка на нужные события
         """
         global _
         _ = get_()

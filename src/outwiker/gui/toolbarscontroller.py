@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from .toolbarinfo import ToolBarInfo
+from configparser import NoSectionError
 
 import wx
 import wx.aui
@@ -8,12 +8,24 @@ import wx.aui
 from outwiker.gui.defines import MENU_VIEW
 
 
+class ToolBarInfo (object):
+    def __init__(self, toolbar, menuitem):
+        """
+        toolbar - экземпляр класса панели инструментов (производный от ToolBar)
+        menuitem - экземпляр класса wx.MenuItem, представляющий элемент меню,
+            соответствующий данной панели инструментов
+        """
+        self.toolbar = toolbar
+        self.menuitem = menuitem
+
+
 class ToolBarsController(object):
     """
     Класс для управления панелями инструментов и меню, связанными с ними
     """
-    def __init__(self, mainWindow):
+    def __init__(self, mainWindow, application):
         self._mainWindow = mainWindow
+        self._application = application
 
         # Ключ - строка для нахождения панели инструментов
         # Значение - экземпляр класса ToolBarInfo
@@ -43,21 +55,19 @@ class ToolBarsController(object):
     def __getitem__(self, toolbarname):
         return self._toolbars[toolbarname].toolbar
 
-    # TODO: Replace to 'add' method
-    def __setitem__(self, toolbarname, toolbar):
-        if toolbarname in self._toolbars:
+    def createToolBar(self, toolbar_id, title):
+        if toolbar_id in self._toolbars:
             raise KeyError()
 
+        toolbar = ToolBar(self._mainWindow,
+                          self._mainWindow.auiManager,
+                          self._application.config,
+                          toolbar_id,
+                          title)
         newitem = self._addMenu(toolbar)
-        self._toolbars[toolbarname] = ToolBarInfo(toolbar, newitem)
+        self._toolbars[toolbar_id] = ToolBarInfo(toolbar, newitem)
         toolbar.UpdateToolBar()
         self.layout()
-
-    def addToolbar(self, toolbar):
-        '''
-        Added in outwiker.gui 1.4
-        '''
-        self[toolbar.name] = toolbar
 
     def _addMenu(self, toolbar):
         newitem = self._toolbarsMenu.AppendCheckItem(wx.ID_ANY,
@@ -239,3 +249,112 @@ class ToolBarsController(object):
             toolbar_pos = mainWindowWidth - rows_spaces[row_index] + 1
 
         self._moveToolbarTo(name, row_index, toolbar_pos)
+
+
+class ToolBar(wx.aui.AuiToolBar):
+    """
+    The base class for a toolbars.
+    """
+    def __init__(self, parent, auiManager, config, name, caption):
+        super().__init__(parent)
+        self._SECTION_NAME = 'Toolbars'
+
+        self._parent = parent
+        self._auiManager = auiManager
+        self._config = config
+        self._name = name
+        self._caption = caption
+        self._pane = self._loadPaneInfo()
+
+    @property
+    def name(self):
+        return self._name
+
+    @property
+    def caption(self):
+        return self._caption
+
+    def _createPane(self):
+        return (wx.aui.AuiPaneInfo()
+                .Name(self.name)
+                .Caption(self.caption)
+                .ToolbarPane()
+                .Top()
+                .Position(0)
+                .Row(0))
+
+    def _loadPaneInfo(self):
+        try:
+            paneinfo = self._config.get(self._SECTION_NAME, self.name)
+            pane = wx.aui.AuiPaneInfo()
+            self._auiManager.LoadPaneInfo(paneinfo, pane)
+            pane.Caption(self.caption)
+            pane.Dock()
+        except (BaseException, NoSectionError):
+            pane = self._createPane()
+
+        return pane
+
+    def savePaneInfo(self):
+        paneinfo = self._auiManager.SavePaneInfo(self.pane)
+        self._config.set(self._SECTION_NAME, self.name, paneinfo)
+
+    def DeleteTool(self, toolid, fullUpdate=True):
+        self.Freeze()
+        super().DeleteTool(toolid)
+        self.UpdateToolBar()
+        if fullUpdate:
+            self._parent.UpdateAuiManager()
+        self.Thaw()
+
+    def AddTool(self,
+                tool_id,
+                label,
+                bitmap,
+                short_help_string=wx.EmptyString,
+                kind=wx.ITEM_NORMAL,
+                fullUpdate=True):
+        self.Freeze()
+        item = super().AddTool(tool_id, label, bitmap, short_help_string, kind)
+        self.UpdateToolBar()
+        if fullUpdate:
+            self._parent.UpdateAuiManager()
+            self.updatePaneInfo()
+
+        self.Thaw()
+        return item
+
+    @property
+    def pane(self):
+        return self._pane
+
+    def updatePaneInfo(self):
+        currentpane = self._auiManager.GetPane(self)
+        (self.pane
+         .Position(currentpane.dock_pos)
+         .Row(currentpane.dock_row)
+         .Direction(currentpane.dock_direction)
+         .Layer(currentpane.dock_layer)
+         )
+
+    def UpdateToolBar(self):
+        self.Realize()
+        self._auiManager.DetachPane(self)
+        self._auiManager.AddPane(self, self.pane)
+        self.updatePaneInfo()
+
+    def FindById(self, toolid):
+        return self.FindTool(toolid)
+
+    def Hide(self):
+        self.updatePaneInfo()
+        self.pane.Hide()
+        super().Hide()
+
+    def Show(self):
+        self.pane.Show()
+        super().Show()
+
+    def Destroy(self):
+        self.savePaneInfo()
+        super().Destroy()

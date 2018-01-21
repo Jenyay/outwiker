@@ -27,7 +27,7 @@ class GUIController(object):
 
         if self._application.mainWindow is not None:
             self._registerActions()
-            if self._isCurrentWikiPage:
+            if self._isWikiPage(self._application.selectedPage):
                 self._onPageViewCreate(self._application.selectedPage)
 
     def _registerActions(self):
@@ -68,7 +68,7 @@ class GUIController(object):
         self._application.onPageViewDestroy -= self._onPageViewDestroy
 
         if self._application.mainWindow is not None:
-            if self._isCurrentWikiPage:
+            if self._isWikiPage(self._application.selectedPage):
                 self._removeTools()
 
             self._removeActions()
@@ -97,13 +97,11 @@ class GUIController(object):
         """Обработка события после создания представления страницы"""
         assert self._application.mainWindow is not None
 
-        if self._isCurrentWikiPage:
+        if self._isWikiPage(page):
             self._createTools()
 
-    @property
-    def _isCurrentWikiPage(self):
-        return (self._application.selectedPage is not None and
-                self._application.selectedPage.getTypeString() == u"wiki")
+    def _isWikiPage(self, page):
+        return page is not None and page.getTypeString() == u"wiki"
 
     def _onPageViewDestroy(self, page):
         """
@@ -111,5 +109,5 @@ class GUIController(object):
         """
         assert self._application.mainWindow is not None
 
-        if self._isCurrentWikiPage:
+        if self._isWikiPage(page):
             self._removeTools()

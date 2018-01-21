@@ -34,7 +34,7 @@ class Controller(object):
         self._application.onPageViewCreate += self.__onPageViewCreate
         self._application.onPageViewDestroy += self.__onPageViewDestroy
 
-        if self._isCurrentWikiPage:
+        if self._isWikiPage(self._application.selectedPage):
             self.__onPageViewCreate(self._application.selectedPage)
 
     def destroy(self):
@@ -45,32 +45,26 @@ class Controller(object):
         self._application.onPageViewCreate -= self.__onPageViewCreate
         self._application.onPageViewDestroy -= self.__onPageViewDestroy
 
-        if self._isCurrentWikiPage:
+        if self._isWikiPage(self._application.selectedPage):
             self._guiCreator.removeTools()
 
         self._guiCreator.destroy()
 
     def __onWikiParserPrepare(self, parser):
         """
-        Вызывается до разбора викитекста. Добавление команды(:counter:)
+        Вызывается до разбора викитекста. Добавление команды (:counter:)
         """
         [*map(lambda command: parser.addCommand(command(parser)),
               self._commands)]
 
-    @property
-    def _isCurrentWikiPage(self):
-        """
-        Возвращает True, если текущая страница - это викистраница,
-        и False в противном случае
-        """
-        return (self._application.selectedPage is not None and
-                self._application.selectedPage.getTypeString() == u"wiki")
+    def _isWikiPage(self, page):
+        return page is not None and page.getTypeString() == u"wiki"
 
     def __onPageViewCreate(self, page):
         """Обработка события после создания представления страницы"""
         assert self._application.mainWindow is not None
 
-        if page.getTypeString() == u"wiki":
+        if self._isWikiPage(page):
             self._guiCreator.createTools()
 
     def __onPageViewDestroy(self, page):
@@ -79,7 +73,7 @@ class Controller(object):
         """
         assert self._application.mainWindow is not None
 
-        if page.getTypeString():
+        if self._isWikiPage(page):
             self._guiCreator.removeTools()
 
     def _getPageView(self):

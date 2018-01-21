@@ -9,7 +9,6 @@ from outwiker.core.event import EVENT_PRIORITY_DEFAULT, pagetype
 from outwiker.core.system import getImagesDir
 from outwiker.gui.tabledialog import TableDialog
 from outwiker.gui.tablerowsdialog import TableRowsDialog
-from outwiker.gui.toolbars.toolbar import ToolBar
 from outwiker.pages.html.actions.switchcoderesult import SwitchCodeResultAction
 from outwiker.pages.html.actions.link import insertLink
 from outwiker.pages.html.tabledialogcontroller import (
@@ -27,8 +26,8 @@ from ..actions.opensourceurl import OpenSourceURLAction
 from ..actions.showpageinfo import ShowPageInfoAction
 from ..actions.disablescripts import DisableScriptsAction
 from ..actions.copysourceurl import CopySourceURLToClipboardAction
-
-from ..misc import polyActions, panelName
+from ..misc import polyActions
+from .defines import TOOLBAR_WEBPAGE
 
 
 class GuiController (object):
@@ -113,12 +112,7 @@ class GuiController (object):
         if (mainWindow is not None and not self._addedWebPageMenuItems):
             controller = self._application.actionController
 
-            mainWindow.toolbars[panelName] = ToolBar(
-                mainWindow,
-                mainWindow.auiManager,
-                self._application.config,
-                'Plugin_WebPage',
-                _('Web Page'))
+            mainWindow.toolbars.createToolBar(TOOLBAR_WEBPAGE, _('Web Page'))
 
             self._menu.AppendSeparator()
 
@@ -172,18 +166,18 @@ class GuiController (object):
             actionController.removeMenuItem(SwitchCodeResultAction.stringId)
             actionController.removeMenuItem(DisableScriptsAction.stringId)
 
-            if panelName in self._application.mainWindow.toolbars:
+            if TOOLBAR_WEBPAGE in self._application.mainWindow.toolbars:
                 self._application.mainWindow.toolbars.updatePanesInfo()
 
             self._removePolyActionTools()
-            if panelName in self._application.mainWindow.toolbars:
+            if TOOLBAR_WEBPAGE in self._application.mainWindow.toolbars:
                 actionController.removeToolbarButton(
                     SwitchCodeResultAction.stringId)
 
                 actionController.removeToolbarButton(
                     DisableScriptsAction.stringId)
 
-                self._application.mainWindow.toolbars.destroyToolBar(panelName)
+                self._application.mainWindow.toolbars.destroyToolBar(TOOLBAR_WEBPAGE)
 
             self._menu.DestroyItem(self._headingMenuItem)
             self._menu.DestroyItem(self._fontMenuItem)
@@ -202,7 +196,7 @@ class GuiController (object):
             polyActions)
 
         # Удалим кнопки с панелей инструментов
-        if panelName in self._application.mainWindow.toolbars:
+        if TOOLBAR_WEBPAGE in self._application.mainWindow.toolbars:
             map(lambda strid: actionController.removeToolbarButton(strid),
                 polyActions)
 
@@ -268,7 +262,7 @@ class GuiController (object):
             self.toolsMenu)
         self._application.actionController.appendToolbarButton(
             SwitchCodeResultAction.stringId,
-            self._application.mainWindow.toolbars[self._application.mainWindow.GENERAL_TOOLBAR_STR],
+            self._application.mainWindow.toolbars[TOOLBAR_WEBPAGE],
             os.path.join(self.imagesDir, "render.png"),
             fullUpdate=False)
 
@@ -277,7 +271,7 @@ class GuiController (object):
         Create button and menu item to enable / disable scripts.
         """
         image = self.getImagePath(u'script-delete.png')
-        toolbar = self._application.mainWindow.toolbars[panelName]
+        toolbar = self._application.mainWindow.toolbars[TOOLBAR_WEBPAGE]
         menu = self.toolsMenu
 
         self._application.actionController.appendMenuCheckItem(
@@ -293,7 +287,7 @@ class GuiController (object):
         """
         Добавить инструменты, связанные со шрифтами
         """
-        toolbar = self._application.mainWindow.toolbars[panelName]
+        toolbar = self._application.mainWindow.toolbars[TOOLBAR_WEBPAGE]
         menu = self._fontMenu
 
         # Полужирный шрифт
@@ -386,7 +380,7 @@ class GuiController (object):
         """
         Добавить инструменты, связанные с выравниванием
         """
-        toolbar = self._application.mainWindow.toolbars[panelName]
+        toolbar = self._application.mainWindow.toolbars[TOOLBAR_WEBPAGE]
         menu = self._alignMenu
 
         # Выравнивание по левому краю
@@ -447,7 +441,7 @@ class GuiController (object):
         """
         Добавить инструменты, связанные с таблицами
         """
-        toolbar = self._application.mainWindow.toolbars[panelName]
+        toolbar = self._application.mainWindow.toolbars[TOOLBAR_WEBPAGE]
         menu = self._tableMenu
 
         # Вставить таблицу
@@ -491,7 +485,7 @@ class GuiController (object):
         """
         Добавить инструменты, связанные со списками
         """
-        toolbar = self._application.mainWindow.toolbars[panelName]
+        toolbar = self._application.mainWindow.toolbars[TOOLBAR_WEBPAGE]
         menu = self._listMenu
 
         # Ненумерованный список
@@ -524,7 +518,7 @@ class GuiController (object):
         """
         Добавить инструменты для заголовочных тегов <H>
         """
-        toolbar = self._application.mainWindow.toolbars[panelName]
+        toolbar = self._application.mainWindow.toolbars[TOOLBAR_WEBPAGE]
         menu = self._headingMenu
 
         self._application.actionController.getAction(HEADING_1_STR_ID).setFunc(
@@ -600,7 +594,7 @@ class GuiController (object):
             fullUpdate=False)
 
     def _addFormatTools(self):
-        toolbar = self._application.mainWindow.toolbars[panelName]
+        toolbar = self._application.mainWindow.toolbars[TOOLBAR_WEBPAGE]
         menu = self._formatMenu
 
         # Preformat
@@ -647,7 +641,7 @@ class GuiController (object):
         """
         Добавить остальные инструменты
         """
-        toolbar = self._application.mainWindow.toolbars[panelName]
+        toolbar = self._application.mainWindow.toolbars[TOOLBAR_WEBPAGE]
         menu = self._menu
 
         # Вставить картинку
@@ -730,7 +724,7 @@ class GuiController (object):
             menu)
 
     def _addToolbarSeparator(self):
-        toolbar = self._application.mainWindow.toolbars[panelName]
+        toolbar = self._application.mainWindow.toolbars[TOOLBAR_WEBPAGE]
         toolbar.AddSeparator()
 
     def _createChildWebPageAction(self):
