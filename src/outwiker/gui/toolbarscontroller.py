@@ -37,13 +37,13 @@ class ToolBarsController(object):
         viewMenu.Append(-1, _(u"Toolbars"), self._toolbarsMenu)
 
         self._mainWindow.auiManager.Bind(wx.aui.EVT_AUI_PANE_CLOSE,
-                                         self.__onPaneClose)
-        self._mainWindow.Bind(wx.EVT_SIZE, self.__onSizeChanged)
+                                         self._onPaneClose)
+        self._mainWindow.Bind(wx.EVT_SIZE, self._onSizeChanged)
 
-    def __onSizeChanged(self, event):
+    def _onSizeChanged(self, event):
         self.layout()
 
-    def __onPaneClose(self, event):
+    def _onPaneClose(self, event):
         for toolbarinfo in self._toolbars.values():
             if event.GetPane().name == toolbarinfo.toolbar.name:
                 toolbarinfo.menuitem.Check(False)
@@ -74,16 +74,16 @@ class ToolBarsController(object):
                                                      toolbar.caption)
         newitem.Check(toolbar.pane.IsShown())
 
-        self._mainWindow.Bind(wx.EVT_MENU, self.__onToolBarMenuClick, newitem)
+        self._mainWindow.Bind(wx.EVT_MENU, self._onToolBarMenuClick, newitem)
         return newitem
 
     def _removeMenu(self, toolbarinfo):
         self._toolbarsMenu.Delete(toolbarinfo.menuitem)
         self._mainWindow.Unbind(wx.EVT_MENU,
                                 source=toolbarinfo.menuitem,
-                                handler=self.__onToolBarMenuClick)
+                                handler=self._onToolBarMenuClick)
 
-    def __onToolBarMenuClick(self, event):
+    def _onToolBarMenuClick(self, event):
         toolbarinfo = self._getToolBar(event.GetId())
         assert toolbarinfo is not None
 
@@ -125,8 +125,8 @@ class ToolBarsController(object):
         self.updatePanesInfo()
 
         self._mainWindow.auiManager.Unbind(wx.aui.EVT_AUI_PANE_CLOSE,
-                                           handler=self.__onPaneClose)
-        self._mainWindow.Unbind(wx.EVT_SIZE, handler=self.__onSizeChanged)
+                                           handler=self._onPaneClose)
+        self._mainWindow.Unbind(wx.EVT_SIZE, handler=self._onSizeChanged)
 
         for toolbarname in list(self._toolbars):
             self.destroyToolBar(toolbarname)
@@ -135,8 +135,8 @@ class ToolBarsController(object):
         return toolbarname in self._toolbars
 
     def updatePanesInfo(self):
-        [toolbar.toolbar.updatePaneInfo()
-         for toolbar in self._toolbars.values()]
+        for toolbar in self._toolbars.values():
+            toolbar.toolbar.updatePaneInfo()
 
     def layout(self):
         '''
