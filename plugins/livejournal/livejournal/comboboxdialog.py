@@ -1,8 +1,8 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import wx
 
-from .testeddialog import TestedDialog
+from outwiker.gui.testeddialog import TestedDialog
 
 
 class ComboBoxDialog(TestedDialog):
@@ -13,7 +13,7 @@ class ComboBoxDialog(TestedDialog):
         title - заголовок диалога
         readonly - должен ли быть комбобокс доступен только для чтения?
         """
-        super(ComboBoxDialog, self).__init__(parent)
+        super().__init__(parent)
 
         self.__createGui(comboStyle)
 

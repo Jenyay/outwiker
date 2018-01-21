@@ -3,6 +3,8 @@
 Модуль с классами для добавления пунктов меню
 """
 
+import os.path
+
 from outwiker.pages.html.basehtmlpanel import EVT_PAGE_TAB_CHANGED
 
 
@@ -17,15 +19,24 @@ class ActionGUIInfo(object):
 
 class ActionsGUIController(object):
     """
-    Class to create GUI for actions
+    Class to create buttons at toolbar and menu items for actions
     """
     def __init__(self, application, pageTypeString):
         self._application = application
         self._pageTypeString = pageTypeString
         self._actionsInfoList = []
+        self._new_toolbars = []
+        self._new_menus = []
 
-    def initialize(self, action_gui_info_list):
+    def initialize(self, action_gui_info_list,
+                   new_toolbars=None, new_menus=None):
+        '''
+        new_toolbars - list of the tuples (toolbar_id, toolbar_title)
+        new_menus - list of the tuples (menu_id, title, parent_menu_id)
+        '''
         self._actionsInfoList = action_gui_info_list[:]
+        self._new_toolbars = new_toolbars[:] if new_toolbars is not None else []
+        self._new_menus = new_menus[:] if new_menus is not None else []
 
         self._application.onPageViewCreate += self._onPageViewCreate
         self._application.onPageViewDestroy += self._onPageViewDestroy
@@ -51,6 +62,9 @@ class ActionsGUIController(object):
         if mainWindow is None:
             return
 
+        self._createToolBars()
+        self._createMenus()
+
         for action_info in self._actionsInfoList:
             if action_info.menu_id is not None:
                 self._application.actionController.appendMenuItem(
@@ -58,6 +72,7 @@ class ActionsGUIController(object):
                     mainWindow.menuController[action_info.menu_id])
 
             if action_info.toolbar_id is not None:
+                assert os.path.exists(action_info.image_fname)
                 self._application.actionController.appendToolbarButton(
                     action_info.action.stringId,
                     mainWindow.toolbars[action_info.toolbar_id],
@@ -65,7 +80,32 @@ class ActionsGUIController(object):
 
         self._enableTools()
 
+    def _createToolBars(self):
+        mainWindow = self._application.mainWindow
+        for toolbar_info in self._new_toolbars:
+            mainWindow.toolbars.createToolBar(toolbar_info[0], toolbar_info[1])
+
+    def _createMenus(self):
+        mainWindow = self._application.mainWindow
+        for menu_info in self._new_menus:
+            mainWindow.menuController.createSubMenu(menu_id=menu_info[0],
+                                                    title=menu_info[1],
+                                                    parent_id=menu_info[2])
+
+    def _destroyToolBars(self):
+        mainWindow = self._application.mainWindow
+        for toolbar_info in self._new_toolbars:
+            mainWindow.toolbars.destroyToolBar(toolbar_info[0])
+
+    def _destroyMenus(self):
+        mainWindow = self._application.mainWindow
+        for menu_info in self._new_menus:
+            mainWindow.menuController.removeMenu(menu_info[0])
+
     def _removeTools(self):
+        if self._application.mainWindow is None:
+            return
+
         actionController = self._application.actionController
 
         for action_info in self._actionsInfoList:
@@ -74,6 +114,9 @@ class ActionsGUIController(object):
 
             if action_info.toolbar_id is not None:
                 actionController.removeToolbarButton(action_info.action.stringId)
+
+        self._destroyToolBars()
+        self._destroyMenus()
 
     def destroy(self):
         self._application.onPageViewCreate -= self._onPageViewCreate

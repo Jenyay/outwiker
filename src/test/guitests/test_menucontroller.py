@@ -437,3 +437,45 @@ class MenuControllerTest(unittest.TestCase):
         self.assertNotIn(menu_id_02, controller)
         self.assertNotIn(menu_id_03, controller)
         self.assertEqual(len(controller[ROOT_MENU_ID].GetMenuItems()), 0)
+
+    def test_remove_07_menubar(self):
+        root = wx.MenuBar()
+        controller = MenuController(root)
+
+        title_01 = 'Menu title_01'
+        menu_id_01 = 'menu_id_01'
+
+        title_02 = 'Menu title_02'
+        menu_id_02 = 'menu_id_02'
+
+        title_03 = 'Menu title_03'
+        menu_id_03 = 'menu_id_03'
+
+        controller.createSubMenu(menu_id_01, title_01)
+        controller.createSubMenu(menu_id_02, title_02, menu_id_01)
+        controller.createSubMenu(menu_id_03, title_03, menu_id_02)
+
+        controller.removeMenu(menu_id_03)
+        controller.removeMenu(menu_id_02)
+        controller.removeMenu(menu_id_01)
+
+    def test_remove_07_menu(self):
+        root = wx.Menu()
+        controller = MenuController(root)
+
+        title_01 = 'Menu title_01'
+        menu_id_01 = 'menu_id_01'
+
+        title_02 = 'Menu title_02'
+        menu_id_02 = 'menu_id_02'
+
+        title_03 = 'Menu title_03'
+        menu_id_03 = 'menu_id_03'
+
+        controller.createSubMenu(menu_id_01, title_01)
+        controller.createSubMenu(menu_id_02, title_02, menu_id_01)
+        controller.createSubMenu(menu_id_03, title_03, menu_id_02)
+
+        controller.removeMenu(menu_id_03)
+        controller.removeMenu(menu_id_02)
+        controller.removeMenu(menu_id_01)

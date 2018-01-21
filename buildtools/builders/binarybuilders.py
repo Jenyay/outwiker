@@ -54,9 +54,9 @@ class BaseBinaryBuilder(object, metaclass=ABCMeta):
         return [
             'importlib',
             'urllib',
-            'outwiker.pages.wiki.wikipanel',
             'outwiker.gui.htmlrenderfactory',
             'outwiker.gui.controls.popupbutton',
+            'outwiker.utilites.actionsguicontroller',
             'PIL.Image',
             'PIL.ImageDraw',
             'PIL.ImageFont',

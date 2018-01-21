@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from abc import ABCMeta, abstractmethod, abstractproperty
 import sys
@@ -49,7 +49,6 @@ class Plugin (object, metaclass=ABCMeta):
     def pluginPath(self):
         '''
         Return path to plugin's directory.
-        Added in outwiker.core 1.4
         '''
         return self._pluginPath
 

@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from outwiker.core.config import ListOption
 
@@ -8,15 +8,15 @@ class LJConfig (object):
     USERS_PARAM = u"users"
     COMMUNITY_PARAM = u"communities"
 
-    def __init__ (self, config):
-        self.users = ListOption (
+    def __init__(self, config):
+        self.users = ListOption(
             config,
             LJConfig.SECTION,
             LJConfig.USERS_PARAM,
             []
         )
 
-        self.communities = ListOption (
+        self.communities = ListOption(
             config,
             LJConfig.SECTION,
             LJConfig.COMMUNITY_PARAM,

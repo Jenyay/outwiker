@@ -91,6 +91,16 @@ class MenuController(object):
             assert isinstance(menu_info.parent.menu, wx.Menu)
             menu_info.parent.menu.Remove(menu_info.menuitem)
 
+        # Remove menu from parent MenuInfo.children
+        index_in_parents = None
+        for n, info in enumerate(menu_info.parent.children):
+            if menu_info.menu_id == info.menu_id:
+                index_in_parents = n
+                break
+
+        assert index_in_parents is not None
+        del menu_info.parent.children[index_in_parents]
+
     def _destroyMenuFromMenuBar(self, menu_info):
         parent_menu = menu_info.parent.menu
         assert isinstance(parent_menu, wx.MenuBar)
