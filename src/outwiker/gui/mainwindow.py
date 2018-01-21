@@ -157,9 +157,9 @@ class MainWindow(wx.Frame):
         self.menuController.createSubMenu(guidefines.MENU_HELP, _('Help'))
 
     def _createToolbars(self):
-        self.toolbars = ToolBarsController(self, Application)
-        self.toolbars.createToolBar(guidefines.TOOLBAR_GENERAL, _('General'))
-        self.toolbars.createToolBar(guidefines.TOOLBAR_PLUGINS, _('Plugins'))
+        self._toolbars = ToolBarsController(self, Application)
+        self._toolbars.createToolBar(guidefines.TOOLBAR_GENERAL, _('General'))
+        self._toolbars.createToolBar(guidefines.TOOLBAR_PLUGINS, _('Plugins'))
 
     def _initCoreControllers(self):
         [controller.initialize() for controller in self._coreControllers]
@@ -614,14 +614,14 @@ class MainWindow(wx.Frame):
         self.auiManager.Destroy()
         self.auiManager = None
 
-        self.toolbars = None
+        self._toolbars = None
 
         self.pagePanel = None
         self.treePanel = None
         self.attachPanel = None
         self.tagsCloudPanel = None
 
-        super(MainWindow, self).Destroy()
+        super().Destroy()
         logger.debug(u'End MainWindow.Destroy.')
 
     def destroyPagePanel(self, save):
@@ -681,3 +681,11 @@ class MainWindow(wx.Frame):
             self.ShowFullScreen(False)
 
         self.__panesController.fromFullscreen()
+
+    @property
+    def toolbars(self):
+        return self._toolbars
+
+    @property
+    def pageView(self):
+        return self.pagePanel.pageView

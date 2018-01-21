@@ -17,7 +17,7 @@ class ActionGUIInfo(object):
 
 class ActionsGUIController(object):
     """
-    Base class to create GUI for actions
+    Class to create GUI for actions
     """
     def __init__(self, application, pageTypeString):
         self._application = application
@@ -31,18 +31,19 @@ class ActionsGUIController(object):
         self._application.onPageViewDestroy += self._onPageViewDestroy
 
         self._registerActions()
-        if self._isRequestedPageType:
+        if self._isRequestedPageType(self._application.selectedPage):
             self._onPageViewCreate(self._application.selectedPage)
 
     def _registerActions(self):
         actionController = self._application.actionController
-        [*map(lambda action_info: actionController.register(
-            action_info.action(self._application), None), self._actionsInfoList)]
+        for action_info in self._actionsInfoList:
+            actionController.register(action_info.action(self._application),
+                                      None)
 
     def _removeActions(self):
         actionController = self._application.actionController
-        [*map(lambda action_info: actionController.removeAction(action_info.action.stringId),
-              self._actionsInfoList)]
+        for action_info in self._actionsInfoList:
+            actionController.removeAction(action_info.action.stringId)
 
     def _createTools(self):
         mainWindow = self._application.mainWindow
@@ -62,7 +63,6 @@ class ActionsGUIController(object):
                     mainWindow.toolbars[action_info.toolbar_id],
                     action_info.image_fname)
 
-        self._getPageView().Bind(EVT_PAGE_TAB_CHANGED, self._onTabChanged)
         self._enableTools()
 
     def _removeTools(self):
@@ -75,14 +75,11 @@ class ActionsGUIController(object):
             if action_info.toolbar_id is not None:
                 actionController.removeToolbarButton(action_info.action.stringId)
 
-        self._getPageView().Unbind(EVT_PAGE_TAB_CHANGED,
-                                   handler=self._onTabChanged)
-
     def destroy(self):
         self._application.onPageViewCreate -= self._onPageViewCreate
         self._application.onPageViewDestroy -= self._onPageViewDestroy
 
-        if self._isRequestedPageType:
+        if self._isRequestedPageType(self._application.selectedPage):
             self._removeTools()
 
         self._removeActions()
@@ -98,25 +95,24 @@ class ActionsGUIController(object):
         enabled = (pageView.selectedPageIndex == pageView.CODE_PAGE_INDEX)
 
         actionController = self._application.actionController
-        [*map(lambda action: actionController.enableTools(action.action.stringId, enabled),
-              self._actionsInfoList)]
+        for action_info in self._actionsInfoList:
+            actionController.enableTools(action_info.action.stringId, enabled)
 
     def _getPageView(self):
         """
         Получить указатель на панель представления страницы
         """
-        return self._application.mainWindow.pagePanel.pageView
+        return self._application.mainWindow.pageView
 
     def _onPageViewCreate(self, page):
         """Обработка события после создания представления страницы"""
         assert self._application.mainWindow is not None
 
-        if self._isRequestedPageType:
+        if self._isRequestedPageType(page):
             self._createTools()
+            self._getPageView().Bind(EVT_PAGE_TAB_CHANGED, self._onTabChanged)
 
-    @property
-    def _isRequestedPageType(self):
-        page = self._application.selectedPage
+    def _isRequestedPageType(self, page):
         return (page is not None and
                 page.getTypeString() == self._pageTypeString)
 
@@ -126,5 +122,7 @@ class ActionsGUIController(object):
         """
         assert self._application.mainWindow is not None
 
-        if self._isRequestedPageType:
+        if self._isRequestedPageType(page):
             self._removeTools()
+            self._getPageView().Unbind(EVT_PAGE_TAB_CHANGED,
+                                       handler=self._onTabChanged)
