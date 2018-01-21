@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: livejournal\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-03 21:32+0400\n"
-"PO-Revision-Date: 2014-10-03 21:34+0300\n"
+"POT-Creation-Date: 2018-01-21 21:27+0300\n"
+"PO-Revision-Date: 2018-01-21 21:31+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: jenyay.net <jenyay.ilin@gmail.com>\n"
 "Language: ru_RU\n"
@@ -16,45 +16,87 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 2.0.4\n"
 
-#: ljtoolbar.py:30
+#: controller.py:46 controller.py:47
 msgid "LiveJournal"
 msgstr "LiveJournal"
 
-#: controller.py:84 controller.py:85
-msgid "Livejournal User (:ljuser ...:)"
-msgstr "Пользователь Livejournal (:ljuser ...:)"
-
-#: controller.py:93 controller.py:94
-msgid "Livejournal Community (:ljcomm ...:)"
-msgstr "Сообщество Livejournal (:ljcomm ...:)"
-
-#: controller.py:139
-msgid "Livejournal user"
-msgstr "Пользователь Livejournal"
-
-#: controller.py:147
-msgid "Livejournal community"
-msgstr "Сообщество Livejournal"
-
-#: livejournal.py:63
+#: plugin.py:46
 msgid ""
 "Add commands (:ljuser:) and (:ljcomm:) in wiki parser.\n"
 "\n"
-"                     <B>Usage:</B>\n"
-"                     (:ljuser username:)\n"
-"                     (:ljcomm communityname:)\n"
-"                     "
+"                 <B>Usage:</B>\n"
+"                 (:ljuser username:)\n"
+"                 (:ljcomm communityname:)\n"
+"                 "
 msgstr ""
-"Добавляет викикоманды (:ljuser:) и (:ljcomm:) для вставки ссылок на "
-"пользователя и сообщество livejournal.com соответственно.\n"
+"Добавляет команды (:ljuser:) и (:ljcomm:) в википарсер.\n"
 "\n"
-"<B>Использование:</B>\n"
-"(:ljuser username:)\n"
-"(:ljcomm communityname:)\n"
-"                     "
+"                 <B>Пример использования:</B>\n"
+"                 (:ljuser username:)\n"
+"                 (:ljcomm communityname:)"
 
-#: livejournal.py:78
+#: plugin.py:55
 msgid "http://jenyay.net/Outwiker/LivejournalPluginEn"
 msgstr "http://jenyay.net/Outwiker/LivejournalPlugin"
+
+#: actions.py:56
+msgid "LiveJournal user (:ljuser ...:)"
+msgstr "Пользователь LiveJournal (:ljuser ...:)"
+
+#: actions.py:60
+msgid ""
+"LiveJournal plugin. Insert (:ljuser... :) command to create the link to "
+"LiveJournal user"
+msgstr ""
+"Плагин LiveJournal. Вставить команду (:ljuser ... :) для создания "
+"ссылки на пользователя LiveJournal"
+
+#: actions.py:64
+msgid "LiveJournal user"
+msgstr "Пользователь LiveJournal"
+
+#: actions.py:76
+msgid "LiveJournal community (:ljcomm ...:)"
+msgstr "Сообщество LiveJournal (:ljcomm ...:)"
+
+#: actions.py:80
+msgid ""
+"LiveJournal plugin. Insert (:ljcomm... :) command to create the link to "
+"LiveJournal community"
+msgstr ""
+"Плагин LiveJournal. Вставить команду (:licomm ... :) для создания "
+"ссылки на сообщество LiveJournal"
+
+#: actions.py:84
+msgid "LiveJournal community"
+msgstr "Сообщество LiveJournal"
+
+#~ msgid "Livejournal User (:ljuser ...:)"
+#~ msgstr "Пользователь Livejournal (:ljuser ...:)"
+
+#~ msgid "Livejournal Community (:ljcomm ...:)"
+#~ msgstr "Сообщество Livejournal (:ljcomm ...:)"
+
+#~ msgid "Livejournal user"
+#~ msgstr "Пользователь Livejournal"
+
+#~ msgid "Livejournal community"
+#~ msgstr "Сообщество Livejournal"
+
+#~ msgid ""
+#~ "Add commands (:ljuser:) and (:ljcomm:) in wiki parser.\n"
+#~ "\n"
+#~ "                     <B>Usage:</B>\n"
+#~ "                     (:ljuser username:)\n"
+#~ "                     (:ljcomm communityname:)\n"
+#~ "                     "
+#~ msgstr ""
+#~ "Добавляет викикоманды (:ljuser:) и (:ljcomm:) для вставки ссылок на "
+#~ "пользователя и сообщество livejournal.com соответственно.\n"
+#~ "\n"
+#~ "<B>Использование:</B>\n"
+#~ "(:ljuser username:)\n"
+#~ "(:ljcomm communityname:)\n"
+#~ "                     "

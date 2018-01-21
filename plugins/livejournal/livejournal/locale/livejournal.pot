@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-03 21:32+0400\n"
+"POT-Creation-Date: 2018-01-21 21:27+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,36 +17,48 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ljtoolbar.py:30
+#: controller.py:46 controller.py:47
 msgid "LiveJournal"
 msgstr ""
 
-#: controller.py:84 controller.py:85
-msgid "Livejournal User (:ljuser ...:)"
-msgstr ""
-
-#: controller.py:93 controller.py:94
-msgid "Livejournal Community (:ljcomm ...:)"
-msgstr ""
-
-#: controller.py:139
-msgid "Livejournal user"
-msgstr ""
-
-#: controller.py:147
-msgid "Livejournal community"
-msgstr ""
-
-#: livejournal.py:63
+#: plugin.py:46
 msgid ""
 "Add commands (:ljuser:) and (:ljcomm:) in wiki parser.\n"
 "\n"
-"                     <B>Usage:</B>\n"
-"                     (:ljuser username:)\n"
-"                     (:ljcomm communityname:)\n"
-"                     "
+"                 <B>Usage:</B>\n"
+"                 (:ljuser username:)\n"
+"                 (:ljcomm communityname:)\n"
+"                 "
 msgstr ""
 
-#: livejournal.py:78
+#: plugin.py:55
 msgid "http://jenyay.net/Outwiker/LivejournalPluginEn"
+msgstr ""
+
+#: actions.py:56
+msgid "LiveJournal user (:ljuser ...:)"
+msgstr ""
+
+#: actions.py:60
+msgid ""
+"LiveJournal plugin. Insert (:ljuser... :) command to create the link to "
+"LiveJournal user"
+msgstr ""
+
+#: actions.py:64
+msgid "LiveJournal user"
+msgstr ""
+
+#: actions.py:76
+msgid "LiveJournal community (:ljcomm ...:)"
+msgstr ""
+
+#: actions.py:80
+msgid ""
+"LiveJournal plugin. Insert (:ljcomm... :) command to create the link to "
+"LiveJournal community"
+msgstr ""
+
+#: actions.py:84
+msgid "LiveJournal community"
 msgstr ""
