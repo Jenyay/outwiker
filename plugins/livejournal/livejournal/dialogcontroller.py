@@ -53,7 +53,7 @@ class DialogController(object, metaclass=ABCMeta):
                 command=self.getCommandName(),
                 name=name)
 
-            if(len(name) != 0 and name not in self._items):
+            if (len(name) != 0 and name not in self._items):
                 self._items.append(name)
 
                 clearItems = sorted([item

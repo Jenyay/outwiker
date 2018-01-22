@@ -7,6 +7,8 @@ from outwiker.core.application import Application
 from outwiker.core.style import Style
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.htmlgenerator import HtmlGenerator
+from outwiker.gui.tester import Tester
+
 from test.guitests.basemainwnd import BaseMainWndTest
 
 
@@ -28,6 +30,7 @@ class LivejournalPluginTest (BaseMainWndTest):
 
         LJConfig (Application.config).users.value = []
         LJConfig (Application.config).communities.value = []
+        Tester.dialogTester.clear()
 
 
     def __createWiki (self):
@@ -41,6 +44,7 @@ class LivejournalPluginTest (BaseMainWndTest):
         LJConfig (Application.config).users.value = []
         LJConfig (Application.config).communities.value = []
         self.loader.clear()
+        Tester.dialogTester.clear()
 
 
     def testPluginLoad (self):
@@ -80,7 +84,8 @@ class LivejournalPluginTest (BaseMainWndTest):
                               "",
                               wx.CB_DROPDOWN | wx.CB_SORT)
 
-        dlg.SetModalResult (wx.ID_OK)
+        # dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
 
         controller = UserDialogController (dlg, Application, "")
         controller.showDialog()
@@ -100,7 +105,8 @@ class LivejournalPluginTest (BaseMainWndTest):
                               "",
                               wx.CB_DROPDOWN | wx.CB_SORT)
 
-        dlg.SetModalResult (wx.ID_OK)
+        # dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
 
         controller = UserDialogController (dlg, Application, "jenyay")
         controller.showDialog()
@@ -120,11 +126,13 @@ class LivejournalPluginTest (BaseMainWndTest):
                               "",
                               "",
                               wx.CB_DROPDOWN | wx.CB_SORT)
-        dlg.SetModalResult (wx.ID_OK)
+        # dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
 
         controller = UserDialogController (dlg, Application, "jenyay")
         controller.showDialog()
 
+        Tester.dialogTester.appendOk()
         controller2 = UserDialogController (dlg, Application, "jenyay")
         controller2.showDialog()
 
@@ -141,11 +149,13 @@ class LivejournalPluginTest (BaseMainWndTest):
                               "",
                               wx.CB_DROPDOWN | wx.CB_SORT)
 
-        dlg.SetModalResult (wx.ID_OK)
+        # dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
 
         controller = UserDialogController (dlg, Application, "jenyay")
         controller.showDialog()
 
+        Tester.dialogTester.appendOk()
         controller2 = UserDialogController (dlg, Application, "jenyay_test")
         controller2.showDialog()
 
@@ -163,14 +173,16 @@ class LivejournalPluginTest (BaseMainWndTest):
                               "",
                               wx.CB_DROPDOWN | wx.CB_SORT)
 
-        dlg.SetModalResult (wx.ID_OK)
-
+        # dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         controller = UserDialogController (dlg, Application, "jenyay")
         controller.showDialog()
 
+        Tester.dialogTester.appendOk()
         controller2 = UserDialogController (dlg, Application, "jenyay_test")
         controller2.showDialog()
 
+        Tester.dialogTester.appendOk()
         controller3 = UserDialogController (dlg, Application, "jenyay")
         controller3.showDialog()
 
@@ -188,7 +200,8 @@ class LivejournalPluginTest (BaseMainWndTest):
                               "",
                               wx.CB_DROPDOWN | wx.CB_SORT)
 
-        dlg.SetModalResult (wx.ID_OK)
+        # dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
 
         LJConfig (Application.config).users.value = ["jenyay", "jenyay_test"]
 
@@ -210,11 +223,12 @@ class LivejournalPluginTest (BaseMainWndTest):
                               "",
                               wx.CB_DROPDOWN | wx.CB_SORT)
 
-        dlg.SetModalResult (wx.ID_OK)
-
+        # dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         controller = UserDialogController (dlg, Application, "jenyay")
         controller.showDialog()
 
+        Tester.dialogTester.appendOk()
         controller2 = UserDialogController (dlg, Application, "jenyay_test")
         controller2.showDialog()
 
@@ -223,8 +237,8 @@ class LivejournalPluginTest (BaseMainWndTest):
                                "",
                                wx.CB_DROPDOWN | wx.CB_SORT)
 
-        dlg2.SetModalResult (wx.ID_OK)
-
+        # dlg2.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         controller3 = UserDialogController (dlg2, Application, "jenyay")
         controller3.showDialog()
 
@@ -240,7 +254,8 @@ class LivejournalPluginTest (BaseMainWndTest):
                               "",
                               wx.CB_DROPDOWN | wx.CB_SORT)
 
-        dlg.SetModalResult (wx.ID_OK)
+        # dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
 
         controller = CommunityDialogController (dlg, Application, "")
         controller.showDialog()
@@ -260,7 +275,8 @@ class LivejournalPluginTest (BaseMainWndTest):
                               "",
                               wx.CB_DROPDOWN | wx.CB_SORT)
 
-        dlg.SetModalResult (wx.ID_OK)
+        # dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
 
         controller = CommunityDialogController (dlg, Application, "jenyay")
         controller.showDialog()
@@ -282,11 +298,12 @@ class LivejournalPluginTest (BaseMainWndTest):
                               "",
                               wx.CB_DROPDOWN | wx.CB_SORT)
 
-        dlg.SetModalResult (wx.ID_OK)
-
+        # dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         controller = CommunityDialogController (dlg, Application, "jenyay")
         controller.showDialog()
 
+        Tester.dialogTester.appendOk()
         controller2 = CommunityDialogController (dlg, Application, "jenyay")
         controller2.showDialog()
 
@@ -304,11 +321,12 @@ class LivejournalPluginTest (BaseMainWndTest):
                               "",
                               wx.CB_DROPDOWN | wx.CB_SORT)
 
-        dlg.SetModalResult (wx.ID_OK)
-
+        # dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         controller = CommunityDialogController (dlg, Application, "jenyay")
         controller.showDialog()
 
+        Tester.dialogTester.appendOk()
         controller2 = CommunityDialogController (dlg, Application, "jenyay_test")
         controller2.showDialog()
 
@@ -326,14 +344,16 @@ class LivejournalPluginTest (BaseMainWndTest):
                               "",
                               wx.CB_DROPDOWN | wx.CB_SORT)
 
-        dlg.SetModalResult (wx.ID_OK)
-
+        # dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         controller = CommunityDialogController (dlg, Application, "jenyay")
         controller.showDialog()
 
+        Tester.dialogTester.appendOk()
         controller2 = CommunityDialogController (dlg, Application, "jenyay_test")
         controller2.showDialog()
 
+        Tester.dialogTester.appendOk()
         controller3 = CommunityDialogController (dlg, Application, "jenyay")
         controller3.showDialog()
 
@@ -351,7 +371,8 @@ class LivejournalPluginTest (BaseMainWndTest):
                               "",
                               wx.CB_DROPDOWN | wx.CB_SORT)
 
-        dlg.SetModalResult (wx.ID_OK)
+        # dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
 
         LJConfig (Application.config).communities.value = ["jenyay", "jenyay_test"]
 
@@ -373,11 +394,12 @@ class LivejournalPluginTest (BaseMainWndTest):
                               "",
                               wx.CB_DROPDOWN | wx.CB_SORT)
 
-        dlg.SetModalResult (wx.ID_OK)
-
+        # dlg.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         controller = CommunityDialogController (dlg, Application, "jenyay")
         controller.showDialog()
 
+        Tester.dialogTester.appendOk()
         controller2 = CommunityDialogController (dlg, Application, "jenyay_test")
         controller2.showDialog()
 
@@ -386,8 +408,8 @@ class LivejournalPluginTest (BaseMainWndTest):
                                "",
                                wx.CB_DROPDOWN | wx.CB_SORT)
 
-        dlg2.SetModalResult (wx.ID_OK)
-
+        # dlg2.SetModalResult (wx.ID_OK)
+        Tester.dialogTester.appendOk()
         controller3 = CommunityDialogController (dlg2, Application, "jenyay")
         controller3.showDialog()
 

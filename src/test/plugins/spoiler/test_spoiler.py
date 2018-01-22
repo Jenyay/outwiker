@@ -13,7 +13,7 @@ from outwiker.pages.wiki.htmlgenerator import HtmlGenerator
 from test.utils import removeDir
 
 
-class SpoilerPluginTest (unittest.TestCase):
+class SpoilerPluginTest(unittest.TestCase):
     def setUp(self):
         self.__pluginname = "Spoiler"
 
@@ -27,7 +27,6 @@ class SpoilerPluginTest (unittest.TestCase):
         self.factory = ParserFactory()
         self.parser = self.factory.make (self.testPage, Application.config)
 
-
     def __createWiki (self):
         # Здесь будет создаваться вики
         self.path = mkdtemp (prefix='Абырвалг абыр')
@@ -37,15 +36,12 @@ class SpoilerPluginTest (unittest.TestCase):
         WikiPageFactory().create (self.wikiroot, "Страница 1", [])
         self.testPage = self.wikiroot["Страница 1"]
 
-
     def tearDown(self):
         removeDir (self.path)
         self.loader.clear()
 
-
     def testPluginLoad (self):
         self.assertEqual (len (self.loader), 1)
-
 
     def testInterface (self):
         """
@@ -55,12 +51,10 @@ class SpoilerPluginTest (unittest.TestCase):
         from outwiker.core.system import getOS
         from outwiker.core.commands import getCurrentVersion
         from outwiker.core.version import Version, StatusSet
-        from outwiker.pages.wiki.wikipanel import WikiPagePanel
         from outwiker.pages.wiki.parser.command import Command
 
         StatusSet.DEV
         Command.parseParams
-
 
     def testEmptyCommand (self):
         text = '''bla-bla-bla (:spoiler:) bla-bla-bla'''
@@ -72,7 +66,6 @@ class SpoilerPluginTest (unittest.TestCase):
 
         self.assertTrue ("bla-bla-bla" in result)
 
-
     def testSimple (self):
         text = "бла-бла-бла (:spoiler:)Текст(:spoilerend:)"
 
@@ -83,7 +76,6 @@ class SpoilerPluginTest (unittest.TestCase):
 
         self.assertTrue ("бла-бла-бла" in result)
         self.assertTrue ("Текст</div></div></div>" in result)
-
 
     def testSimpleNumbers (self):
         for index in range (10):
@@ -97,7 +89,6 @@ class SpoilerPluginTest (unittest.TestCase):
             self.assertTrue ("бла-бла-бла" in result)
             self.assertTrue ("Текст</div></div></div>" in result)
 
-
     def testWikiBoldContent (self):
         text = "бла-бла-бла (:spoiler:)'''Текст'''(:spoilerend:)"
 
@@ -108,7 +99,6 @@ class SpoilerPluginTest (unittest.TestCase):
 
         self.assertTrue ("бла-бла-бла" in result)
         self.assertTrue ("<b>Текст</b></div></div></div>" in result)
-
 
     def testExpandText (self):
         text = """бла-бла-бла (:spoiler expandtext="Раскукожить":)Текст(:spoilerend:)"""
@@ -122,7 +112,6 @@ class SpoilerPluginTest (unittest.TestCase):
         self.assertTrue ("Текст</div></div></div>" in result)
         self.assertTrue ("Раскукожить</a></span></div>" in result)
 
-
     def testCollapseText (self):
         text = """бла-бла-бла (:spoiler collapsetext="Скукожить":)Текст(:spoilerend:)"""
 
@@ -134,7 +123,6 @@ class SpoilerPluginTest (unittest.TestCase):
         self.assertTrue ("бла-бла-бла" in result)
         self.assertTrue ("Текст</div></div></div>" in result)
         self.assertTrue ("Скукожить</a>" in result)
-
 
     def testExpandCollapseText (self):
         text = """бла-бла-бла (:spoiler expandtext="Раскукожить" collapsetext="Скукожить":)Текст(:spoilerend:)"""
@@ -149,7 +137,6 @@ class SpoilerPluginTest (unittest.TestCase):
         self.assertTrue ("Раскукожить</a></span></div>" in result)
         self.assertTrue ("Скукожить</a>" in result)
 
-
     def testInline (self):
         text = "бла-бла-бла (:spoiler inline:)Текст(:spoilerend:)"
 
@@ -161,7 +148,6 @@ class SpoilerPluginTest (unittest.TestCase):
         self.assertTrue ("бла-бла-бла" in result)
         self.assertFalse ("Текст</div></div></div>" in result)
         self.assertTrue ("<span><span" in result)
-
 
     def testInlineExpandText (self):
         text = """бла-бла-бла (:spoiler expandtext="Раскукожить" inline:)Текст(:spoilerend:)"""

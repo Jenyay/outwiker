@@ -1,873 +1,841 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import wx
 
+from outwiker.core.application import Application
 from outwiker.gui.actioncontroller import ActionController
 from outwiker.gui.baseaction import BaseAction
 from outwiker.gui.hotkey import HotKey
 from outwiker.gui.hotkeyparser import HotKeyParser
 from outwiker.gui.hotkeyoption import HotKeyOption
-from outwiker.core.application import Application
-from outwiker.gui.defines import MENU_FILE
+from outwiker.gui.defines import MENU_FILE, TOOLBAR_PLUGINS
+
 from .basemainwnd import BaseMainWndTest
 
 
-class TestAction (BaseAction):
+class TestAction(BaseAction):
     stringId = "test_action"
 
-    def __init__ (self):
+    def __init__(self):
         self.runCount = 0
 
-
     @property
-    def title (self):
+    def title(self):
         return "Тестовый Action"
 
-
     @property
-    def description (self):
+    def description(self):
         return "Тестовый Action"
 
-
-    def run (self, params):
+    def run(self, params):
         self.runCount += 1
 
 
-class TestCheckAction (BaseAction):
+class TestCheckAction(BaseAction):
     stringId = "test_check_action"
 
-    def __init__ (self):
+    def __init__(self):
         self.runCount = 0
 
-
     @property
-    def title (self):
+    def title(self):
         return "Тестовый CheckAction"
 
-
     @property
-    def description (self):
+    def description(self):
         return "Тестовый CheckAction"
 
-
-    def run (self, params):
+    def run(self, params):
         if params:
             self.runCount += 1
         else:
             self.runCount -= 1
 
 
-class ActionControllerTest (BaseMainWndTest):
-    def setUp (self):
-        BaseMainWndTest.setUp (self)
+class ActionControllerTest(BaseMainWndTest):
+    def setUp(self):
+        BaseMainWndTest.setUp(self)
         self.actionController = ActionController(self.wnd, Application.config)
-        Application.config.remove_section (self.actionController.configSection)
+        Application.config.remove_section(self.actionController.configSection)
         self.fileMenu = self.wnd.menuController[MENU_FILE]
 
+    def tearDown(self):
+        BaseMainWndTest.tearDown(self)
+        Application.config.remove_section(self.actionController.configSection)
 
-    def tearDown (self):
-        BaseMainWndTest.tearDown (self)
-        Application.config.remove_section (self.actionController.configSection)
-
-
-    def testRegisterAction (self):
+    def testRegisterAction(self):
         action = TestAction()
 
-        self.assertEqual (len (self.actionController.getActionsStrId()), 0)
+        self.assertEqual(len(self.actionController.getActionsStrId()), 0)
 
-        self.actionController.register (action)
+        self.actionController.register(action)
 
-        self.assertEqual (len (self.actionController.getActionsStrId()), 1)
+        self.assertEqual(len(self.actionController.getActionsStrId()), 1)
 
-
-    def testHotKeys (self):
-        hotkey1 = HotKey ("F1")
+    def testHotKeys(self):
+        hotkey1 = HotKey("F1")
         action1 = TestAction()
 
-        hotkey2 = HotKey ("F2", ctrl=True)
+        hotkey2 = HotKey("F2", ctrl=True)
         action2 = TestCheckAction()
 
-        self.actionController.register (action1, hotkey1)
-        self.actionController.register (action2, hotkey2)
+        self.actionController.register(action1, hotkey1)
+        self.actionController.register(action2, hotkey2)
 
-        self.assertEqual (self.actionController.getHotKey(action1.stringId), hotkey1)
-        self.assertEqual (self.actionController.getHotKey(action2.stringId), hotkey2)
+        self.assertEqual(self.actionController.getHotKey(action1.stringId),
+                         hotkey1)
+        self.assertEqual(self.actionController.getHotKey(action2.stringId),
+                         hotkey2)
 
-
-    def testTitles (self):
+    def testTitles(self):
         action1 = TestAction()
         action2 = TestCheckAction()
 
-        self.actionController.register (action1)
-        self.actionController.register (action2)
+        self.actionController.register(action1)
+        self.actionController.register(action2)
 
-        self.assertEqual (self.actionController.getTitle(action1.stringId), action1.title)
-        self.assertEqual (self.actionController.getTitle(action2.stringId), action2.title)
+        self.assertEqual(self.actionController.getTitle(action1.stringId),
+                         action1.title)
+        self.assertEqual(self.actionController.getTitle(action2.stringId),
+                         action2.title)
 
-
-    def testAppendMenu (self):
+    def testAppendMenu(self):
         action = TestAction()
         menu = self.fileMenu
 
-        self.actionController.register (action)
-        self.actionController.appendMenuItem (action.stringId, menu)
-        self._assertMenuItemExists (menu, action.title, None)
+        self.actionController.register(action)
+        self.actionController.appendMenuItem(action.stringId, menu)
+        self._assertMenuItemExists(menu, action.title, None)
 
-
-    def testAppendCheckMenu (self):
+    def testAppendCheckMenu(self):
         action = TestCheckAction()
         menu = self.fileMenu
 
-        self.actionController.register (action)
-        self.actionController.appendMenuCheckItem (action.stringId, menu)
-        self._assertMenuItemExists (menu, action.title, None)
+        self.actionController.register(action)
+        self.actionController.appendMenuCheckItem(action.stringId, menu)
+        self._assertMenuItemExists(menu, action.title, None)
 
-
-    def testRemoveAction (self):
+    def testRemoveAction(self):
         action = TestAction()
         menu = self.fileMenu
-        toolbar = self.wnd.toolbars[self.wnd.PLUGINS_TOOLBAR_STR]
+        toolbar = self.wnd.toolbars[TOOLBAR_PLUGINS]
         image = "../test/images/save.png"
 
-        self.actionController.register (action)
-        self.actionController.appendMenuItem (action.stringId, menu)
-        self.actionController.appendToolbarButton (action.stringId,
-                                                   toolbar,
-                                                   image)
+        self.actionController.register(action)
+        self.actionController.appendMenuItem(action.stringId, menu)
+        self.actionController.appendToolbarButton(action.stringId,
+                                                  toolbar,
+                                                  image)
 
-        self.assertEqual (len (self.actionController.getActionsStrId()), 1)
-        self._assertMenuItemExists (menu, action.title, None)
-        self.assertEqual (toolbar.GetToolCount(), 1)
+        self.assertEqual(len(self.actionController.getActionsStrId()), 1)
+        self._assertMenuItemExists(menu, action.title, None)
+        self.assertEqual(toolbar.GetToolCount(), 1)
 
-        self.actionController.removeAction (action.stringId)
+        self.actionController.removeAction(action.stringId)
 
-        self.assertEqual (len (self.actionController.getActionsStrId()), 0)
-        self.assertEqual (menu.FindItem (action.title), wx.NOT_FOUND)
-        self.assertEqual (toolbar.GetToolCount(), 0)
+        self.assertEqual(len(self.actionController.getActionsStrId()), 0)
+        self.assertEqual(menu.FindItem(action.title), wx.NOT_FOUND)
+        self.assertEqual(toolbar.GetToolCount(), 0)
 
-
-    def testRemoveActionAndRun (self):
+    def testRemoveActionAndRun(self):
         action = TestAction()
         menu = self.fileMenu
-        toolbar = self.wnd.toolbars[self.wnd.PLUGINS_TOOLBAR_STR]
+        toolbar = self.wnd.toolbars[TOOLBAR_PLUGINS]
         image = "../test/images/save.png"
 
-        self.actionController.register (action)
-        self.actionController.appendMenuItem (action.stringId, menu)
-        self.actionController.appendToolbarButton (action.stringId,
-                                                   toolbar,
-                                                   image)
+        self.actionController.register(action)
+        self.actionController.appendMenuItem(action.stringId, menu)
+        self.actionController.appendToolbarButton(action.stringId,
+                                                  toolbar,
+                                                  image)
 
-        menuItemId = self._getMenuItemId (action.stringId)
-        toolItemId = self._getToolItemId (action.stringId)
+        menuItemId = self._getMenuItemId(action.stringId)
+        toolItemId = self._getToolItemId(action.stringId)
 
-        self._emulateMenuClick (menuItemId)
-        self.assertEqual (action.runCount, 1)
+        self._emulateMenuClick(menuItemId)
+        self.assertEqual(action.runCount, 1)
 
-        self._emulateButtonClick (toolItemId)
-        self.assertEqual (action.runCount, 2)
+        self._emulateButtonClick(toolItemId)
+        self.assertEqual(action.runCount, 2)
 
-        self.actionController.removeAction (action.stringId)
+        self.actionController.removeAction(action.stringId)
 
-        self._emulateMenuClick (menuItemId)
-        self.assertEqual (action.runCount, 2)
+        self._emulateMenuClick(menuItemId)
+        self.assertEqual(action.runCount, 2)
 
-        self._emulateButtonClick (toolItemId)
-        self.assertEqual (action.runCount, 2)
+        self._emulateButtonClick(toolItemId)
+        self.assertEqual(action.runCount, 2)
 
-
-    def testRunAction (self):
+    def testRunAction(self):
         action = TestAction()
         menu = self.fileMenu
 
-        self.actionController.register (action)
-        self.actionController.appendMenuItem (action.stringId, menu)
+        self.actionController.register(action)
+        self.actionController.appendMenuItem(action.stringId, menu)
 
-        menuItemId = self._getMenuItemId (action.stringId)
+        menuItemId = self._getMenuItemId(action.stringId)
 
-        self._emulateMenuClick (menuItemId)
+        self._emulateMenuClick(menuItemId)
 
-        self.assertEqual (action.runCount, 1)
+        self.assertEqual(action.runCount, 1)
 
-        self.actionController.removeAction (action.stringId)
+        self.actionController.removeAction(action.stringId)
 
-        # Убедимся, что после удаления пункта меню, событие больше не срабатывает
-        self._emulateMenuClick (menuItemId)
-        self.assertEqual (action.runCount, 1)
+        # Убедимся, что после удаления пункта меню,
+        # событие больше не срабатывает
+        self._emulateMenuClick(menuItemId)
+        self.assertEqual(action.runCount, 1)
 
-
-    def testAppendToolbarButton (self):
+    def testAppendToolbarButton(self):
         action = TestAction()
         menu = self.fileMenu
-        toolbar = self.wnd.toolbars[self.wnd.PLUGINS_TOOLBAR_STR]
+        toolbar = self.wnd.toolbars[TOOLBAR_PLUGINS]
         image = "../test/images/save.png"
 
-        self.actionController.register (action)
-        self.actionController.appendMenuItem (action.stringId, menu)
-        self.actionController.appendToolbarButton (action.stringId,
-                                                   toolbar,
-                                                   image)
+        self.actionController.register(action)
+        self.actionController.appendMenuItem(action.stringId, menu)
+        self.actionController.appendToolbarButton(action.stringId,
+                                                  toolbar,
+                                                  image)
 
-        self.assertEqual (toolbar.GetToolCount(), 1)
+        self.assertEqual(toolbar.GetToolCount(), 1)
 
-        self.actionController.removeAction (action.stringId)
+        self.actionController.removeAction(action.stringId)
 
-        self.assertEqual (toolbar.GetToolCount(), 0)
+        self.assertEqual(toolbar.GetToolCount(), 0)
 
-
-    def testAppendToolbarCheckButton (self):
+    def testAppendToolbarCheckButton(self):
         action = TestCheckAction()
-        toolbar = self.wnd.toolbars[self.wnd.PLUGINS_TOOLBAR_STR]
+        toolbar = self.wnd.toolbars[TOOLBAR_PLUGINS]
         image = "../test/images/save.png"
 
-        self.actionController.register (action)
-        self.actionController.appendToolbarCheckButton (action.stringId,
-                                                        toolbar,
-                                                        image)
+        self.actionController.register(action)
+        self.actionController.appendToolbarCheckButton(action.stringId,
+                                                       toolbar,
+                                                       image)
 
-        self.assertEqual (toolbar.GetToolCount(), 1)
+        self.assertEqual(toolbar.GetToolCount(), 1)
 
-        self.actionController.removeAction (action.stringId)
+        self.actionController.removeAction(action.stringId)
 
-        self.assertEqual (toolbar.GetToolCount(), 0)
+        self.assertEqual(toolbar.GetToolCount(), 0)
 
-
-    def testAppendToolbarCheckButtonAndRun (self):
+    def testAppendToolbarCheckButtonAndRun(self):
         action = TestCheckAction()
-        toolbar = self.wnd.toolbars[self.wnd.PLUGINS_TOOLBAR_STR]
+        toolbar = self.wnd.toolbars[TOOLBAR_PLUGINS]
         image = "../test/images/save.png"
 
-        self.actionController.register (action)
-        self.actionController.appendToolbarCheckButton (action.stringId,
-                                                        toolbar,
-                                                        image)
+        self.actionController.register(action)
+        self.actionController.appendToolbarCheckButton(action.stringId,
+                                                       toolbar,
+                                                       image)
 
-        toolItemId = self._getToolItemId (action.stringId)
+        toolItemId = self._getToolItemId(action.stringId)
 
-        self._emulateCheckButtonClick (toolItemId)
-        self.assertEqual (action.runCount, 1)
+        self._emulateCheckButtonClick(toolItemId)
+        self.assertEqual(action.runCount, 1)
 
-        self._emulateCheckButtonClick (toolItemId)
-        self.assertEqual (action.runCount, 0)
+        self._emulateCheckButtonClick(toolItemId)
+        self.assertEqual(action.runCount, 0)
 
-        self._emulateCheckButtonClick (toolItemId)
-        self.assertEqual (action.runCount, 1)
+        self._emulateCheckButtonClick(toolItemId)
+        self.assertEqual(action.runCount, 1)
 
-        self.actionController.removeAction (action.stringId)
+        self.actionController.removeAction(action.stringId)
 
-
-    def testCheckButtonAndMenuWithEvents (self):
+    def testCheckButtonAndMenuWithEvents(self):
         action = TestCheckAction()
         menu = self.fileMenu
-        toolbar = self.wnd.toolbars[self.wnd.PLUGINS_TOOLBAR_STR]
+        toolbar = self.wnd.toolbars[TOOLBAR_PLUGINS]
         image = "../test/images/save.png"
 
-        self.actionController.register (action)
-        self.actionController.appendToolbarCheckButton (action.stringId,
-                                                        toolbar,
-                                                        image)
-        self.actionController.appendMenuCheckItem (action.stringId, menu)
+        self.actionController.register(action)
+        self.actionController.appendToolbarCheckButton(action.stringId,
+                                                       toolbar,
+                                                       image)
+        self.actionController.appendMenuCheckItem(action.stringId, menu)
 
-        menuItem = self._getMenuItem (action.stringId)
-        toolItem = self._getToolItem (toolbar, action.stringId)
-        toolItemId = self._getToolItemId (action.stringId)
+        menuItem = self._getMenuItem(action.stringId)
+        toolItem = self._getToolItem(toolbar, action.stringId)
+        toolItemId = self._getToolItemId(action.stringId)
 
-        self.assertFalse (menuItem.IsChecked())
-        self.assertFalse (toolItem.GetState())
+        self.assertFalse(menuItem.IsChecked())
+        self.assertFalse(toolItem.GetState())
 
-        self._emulateCheckButtonClick (toolItemId)
+        self._emulateCheckButtonClick(toolItemId)
 
-        self.assertTrue (menuItem.IsChecked())
-        self.assertTrue (toolItem.GetState())
+        self.assertTrue(menuItem.IsChecked())
+        self.assertTrue(toolItem.GetState())
 
-        self._emulateCheckButtonClick (toolItemId)
+        self._emulateCheckButtonClick(toolItemId)
 
-        self.assertFalse (menuItem.IsChecked())
-        self.assertFalse (toolItem.GetState())
+        self.assertFalse(menuItem.IsChecked())
+        self.assertFalse(toolItem.GetState())
 
-
-    def testCheckButtonAndMenu (self):
+    def testCheckButtonAndMenu(self):
         action = TestCheckAction()
         menu = self.fileMenu
-        toolbar = self.wnd.toolbars[self.wnd.PLUGINS_TOOLBAR_STR]
+        toolbar = self.wnd.toolbars[TOOLBAR_PLUGINS]
         image = "../test/images/save.png"
 
-        self.actionController.register (action)
-        self.actionController.appendToolbarCheckButton (action.stringId,
-                                                        toolbar,
-                                                        image)
-        self.actionController.appendMenuCheckItem (action.stringId, menu)
+        self.actionController.register(action)
+        self.actionController.appendToolbarCheckButton(action.stringId,
+                                                       toolbar,
+                                                       image)
+        self.actionController.appendMenuCheckItem(action.stringId, menu)
 
-        menuItem = self._getMenuItem (action.stringId)
-        toolItem = self._getToolItem (toolbar, action.stringId)
+        menuItem = self._getMenuItem(action.stringId)
+        toolItem = self._getToolItem(toolbar, action.stringId)
 
-        self.assertFalse (menuItem.IsChecked())
-        self.assertFalse (toolItem.GetState())
-        self.assertEqual (action.runCount, 0)
+        self.assertFalse(menuItem.IsChecked())
+        self.assertFalse(toolItem.GetState())
+        self.assertEqual(action.runCount, 0)
 
-        self.actionController.check (action.stringId, True)
+        self.actionController.check(action.stringId, True)
 
-        self.assertTrue (menuItem.IsChecked())
-        self.assertTrue (toolItem.GetState())
-        self.assertEqual (action.runCount, 1)
+        self.assertTrue(menuItem.IsChecked())
+        self.assertTrue(toolItem.GetState())
+        self.assertEqual(action.runCount, 1)
 
-        self.actionController.check (action.stringId, True)
+        self.actionController.check(action.stringId, True)
 
-        self.assertTrue (menuItem.IsChecked())
-        self.assertTrue (toolItem.GetState())
-        self.assertEqual (action.runCount, 2)
+        self.assertTrue(menuItem.IsChecked())
+        self.assertTrue(toolItem.GetState())
+        self.assertEqual(action.runCount, 2)
 
-        self.actionController.check (action.stringId, False)
+        self.actionController.check(action.stringId, False)
 
-        self.assertFalse (menuItem.IsChecked())
-        self.assertFalse (toolItem.GetState())
-        self.assertEqual (action.runCount, 1)
+        self.assertFalse(menuItem.IsChecked())
+        self.assertFalse(toolItem.GetState())
+        self.assertEqual(action.runCount, 1)
 
-        self.actionController.check (action.stringId, False)
+        self.actionController.check(action.stringId, False)
 
-        self.assertFalse (menuItem.IsChecked())
-        self.assertFalse (toolItem.GetState())
-        self.assertEqual (action.runCount, 0)
+        self.assertFalse(menuItem.IsChecked())
+        self.assertFalse(toolItem.GetState())
+        self.assertEqual(action.runCount, 0)
 
-
-    def testRemoveCheckMenu (self):
+    def testRemoveCheckMenu(self):
         action = TestCheckAction()
         menu = self.fileMenu
-        toolbar = self.wnd.toolbars[self.wnd.PLUGINS_TOOLBAR_STR]
+        toolbar = self.wnd.toolbars[TOOLBAR_PLUGINS]
         image = "../test/images/save.png"
 
-        self.actionController.register (action)
-        self.actionController.appendToolbarCheckButton (action.stringId,
-                                                        toolbar,
-                                                        image)
+        self.actionController.register(action)
+        self.actionController.appendToolbarCheckButton(action.stringId,
+                                                       toolbar,
+                                                       image)
 
-        self.actionController.appendMenuCheckItem (action.stringId, menu)
-        self.actionController.removeMenuItem (action.stringId)
+        self.actionController.appendMenuCheckItem(action.stringId, menu)
+        self.actionController.removeMenuItem(action.stringId)
 
-        toolItem = self._getToolItem (toolbar, action.stringId)
-        toolItemId = self._getToolItemId (action.stringId)
+        toolItem = self._getToolItem(toolbar, action.stringId)
+        toolItemId = self._getToolItemId(action.stringId)
 
-        self.assertFalse (toolItem.GetState())
+        self.assertFalse(toolItem.GetState())
 
-        self._emulateCheckButtonClick (toolItemId)
+        self._emulateCheckButtonClick(toolItemId)
 
-        self.assertTrue (toolItem.GetState())
+        self.assertTrue(toolItem.GetState())
 
-        self._emulateCheckButtonClick (toolItemId)
+        self._emulateCheckButtonClick(toolItemId)
 
-        self.assertFalse (toolItem.GetState())
+        self.assertFalse(toolItem.GetState())
 
-
-    def testAppendToolbarButtonOnly (self):
+    def testAppendToolbarButtonOnly(self):
         action = TestAction()
-        toolbar = self.wnd.toolbars[self.wnd.PLUGINS_TOOLBAR_STR]
+        toolbar = self.wnd.toolbars[TOOLBAR_PLUGINS]
         image = "../test/images/save.png"
 
-        self.actionController.register (action)
-        self.actionController.appendToolbarButton (action.stringId,
-                                                   toolbar,
-                                                   image)
+        self.actionController.register(action)
+        self.actionController.appendToolbarButton(action.stringId,
+                                                  toolbar,
+                                                  image)
 
-        self.assertEqual (toolbar.GetToolCount(), 1)
+        self.assertEqual(toolbar.GetToolCount(), 1)
 
-        self.actionController.removeAction (action.stringId)
+        self.actionController.removeAction(action.stringId)
 
-        self.assertEqual (toolbar.GetToolCount(), 0)
+        self.assertEqual(toolbar.GetToolCount(), 0)
 
-
-    def testAppendToolbarButtonAndRun (self):
+    def testAppendToolbarButtonAndRun(self):
         action = TestAction()
         menu = self.fileMenu
-        toolbar = self.wnd.toolbars[self.wnd.PLUGINS_TOOLBAR_STR]
+        toolbar = self.wnd.toolbars[TOOLBAR_PLUGINS]
         image = "../test/images/save.png"
 
-        self.actionController.register (action)
-        self.actionController.appendMenuItem (action.stringId, menu)
-        self.actionController.appendToolbarButton (action.stringId,
-                                                   toolbar,
-                                                   image)
+        self.actionController.register(action)
+        self.actionController.appendMenuItem(action.stringId, menu)
+        self.actionController.appendToolbarButton(action.stringId,
+                                                  toolbar,
+                                                  image)
 
-        menuItemId = self._getMenuItemId (action.stringId)
+        menuItemId = self._getMenuItemId(action.stringId)
 
-        self._emulateMenuClick (menuItemId)
-        self.assertEqual (action.runCount, 1)
+        self._emulateMenuClick(menuItemId)
+        self.assertEqual(action.runCount, 1)
 
-        self.actionController.removeAction (action.stringId)
+        self.actionController.removeAction(action.stringId)
 
-        self._emulateMenuClick (menuItemId)
-        self.assertEqual (action.runCount, 1)
+        self._emulateMenuClick(menuItemId)
+        self.assertEqual(action.runCount, 1)
 
-
-    def testAppendToolbarButtonOnlyAndRun (self):
+    def testAppendToolbarButtonOnlyAndRun(self):
         action = TestAction()
-        toolbar = self.wnd.toolbars[self.wnd.PLUGINS_TOOLBAR_STR]
+        toolbar = self.wnd.toolbars[TOOLBAR_PLUGINS]
         image = "../test/images/save.png"
 
-        self.actionController.register (action)
-        self.actionController.appendToolbarButton (action.stringId,
-                                                   toolbar,
-                                                   image)
+        self.actionController.register(action)
+        self.actionController.appendToolbarButton(action.stringId,
+                                                  toolbar,
+                                                  image)
 
-        toolItemId = self._getToolItemId (action.stringId)
+        toolItemId = self._getToolItemId(action.stringId)
 
-        self._emulateButtonClick (toolItemId)
-        self.assertEqual (action.runCount, 1)
+        self._emulateButtonClick(toolItemId)
+        self.assertEqual(action.runCount, 1)
 
-        self.actionController.removeAction (action.stringId)
+        self.actionController.removeAction(action.stringId)
 
-        self._emulateButtonClick (toolItemId)
-        self.assertEqual (action.runCount, 1)
+        self._emulateButtonClick(toolItemId)
+        self.assertEqual(action.runCount, 1)
 
-
-    def testRemoveToolButton (self):
+    def testRemoveToolButton(self):
         action = TestAction()
         menu = self.fileMenu
-        toolbar = self.wnd.toolbars[self.wnd.PLUGINS_TOOLBAR_STR]
+        toolbar = self.wnd.toolbars[TOOLBAR_PLUGINS]
         image = "../test/images/save.png"
 
-        self.actionController.register (action)
-        self.actionController.appendMenuItem (action.stringId, menu)
-        self.actionController.appendToolbarButton (action.stringId,
-                                                   toolbar,
-                                                   image)
+        self.actionController.register(action)
+        self.actionController.appendMenuItem(action.stringId, menu)
+        self.actionController.appendToolbarButton(action.stringId,
+                                                  toolbar,
+                                                  image)
 
-        self.assertEqual (toolbar.GetToolCount(), 1)
-        self._assertMenuItemExists (menu, action.title, None)
+        self.assertEqual(toolbar.GetToolCount(), 1)
+        self._assertMenuItemExists(menu, action.title, None)
 
-        self.actionController.removeToolbarButton (action.stringId)
+        self.actionController.removeToolbarButton(action.stringId)
 
-        self.assertEqual (toolbar.GetToolCount(), 0)
-        self._assertMenuItemExists (menu, action.title, None)
+        self.assertEqual(toolbar.GetToolCount(), 0)
+        self._assertMenuItemExists(menu, action.title, None)
 
-
-    def testRemoveToolButtonInvalid (self):
+    def testRemoveToolButtonInvalid(self):
         action = TestAction()
         menu = self.fileMenu
-        toolbar = self.wnd.toolbars[self.wnd.PLUGINS_TOOLBAR_STR]
+        toolbar = self.wnd.toolbars[TOOLBAR_PLUGINS]
 
-        self.actionController.register (action)
-        self.actionController.appendMenuItem (action.stringId, menu)
+        self.actionController.register(action)
+        self.actionController.appendMenuItem(action.stringId, menu)
 
-        self.assertEqual (toolbar.GetToolCount(), 0)
-        self._assertMenuItemExists (menu, action.title, None)
+        self.assertEqual(toolbar.GetToolCount(), 0)
+        self._assertMenuItemExists(menu, action.title, None)
 
-        self.actionController.removeToolbarButton (action.stringId)
+        self.actionController.removeToolbarButton(action.stringId)
 
-        self.assertEqual (toolbar.GetToolCount(), 0)
-        self._assertMenuItemExists (menu, action.title, None)
+        self.assertEqual(toolbar.GetToolCount(), 0)
+        self._assertMenuItemExists(menu, action.title, None)
 
-
-    def testRemoveMenuItemInvalid (self):
+    def testRemoveMenuItemInvalid(self):
         action = TestAction()
         menu = self.fileMenu
-        toolbar = self.wnd.toolbars[self.wnd.PLUGINS_TOOLBAR_STR]
+        toolbar = self.wnd.toolbars[TOOLBAR_PLUGINS]
         image = "../test/images/save.png"
 
-        self.actionController.register (action)
-        self.actionController.appendToolbarButton (action.stringId,
-                                                   toolbar,
-                                                   image)
+        self.actionController.register(action)
+        self.actionController.appendToolbarButton(action.stringId,
+                                                  toolbar,
+                                                  image)
 
-        self.assertEqual (toolbar.GetToolCount(), 1)
-        self.assertEqual (menu.FindItem (action.title), wx.NOT_FOUND)
+        self.assertEqual(toolbar.GetToolCount(), 1)
+        self.assertEqual(menu.FindItem(action.title), wx.NOT_FOUND)
 
-        self.actionController.removeMenuItem (action.stringId)
+        self.actionController.removeMenuItem(action.stringId)
 
-        self.assertEqual (toolbar.GetToolCount(), 1)
-        self.assertEqual (menu.FindItem (action.title), wx.NOT_FOUND)
+        self.assertEqual(toolbar.GetToolCount(), 1)
+        self.assertEqual(menu.FindItem(action.title), wx.NOT_FOUND)
 
-
-    def testRemoveMenuItem (self):
+    def testRemoveMenuItem(self):
         action = TestAction()
         menu = self.fileMenu
-        toolbar = self.wnd.toolbars[self.wnd.PLUGINS_TOOLBAR_STR]
+        toolbar = self.wnd.toolbars[TOOLBAR_PLUGINS]
         image = "../test/images/save.png"
 
-        self.actionController.register (action)
-        self.actionController.appendMenuItem (action.stringId, menu)
-        self.actionController.appendToolbarButton (action.stringId,
-                                                   toolbar,
-                                                   image)
+        self.actionController.register(action)
+        self.actionController.appendMenuItem(action.stringId, menu)
+        self.actionController.appendToolbarButton(action.stringId,
+                                                  toolbar,
+                                                  image)
 
-        self.assertEqual (toolbar.GetToolCount(), 1)
-        self._assertMenuItemExists (menu, action.title, None)
+        self.assertEqual(toolbar.GetToolCount(), 1)
+        self._assertMenuItemExists(menu, action.title, None)
 
-        self.actionController.removeMenuItem (action.stringId)
+        self.actionController.removeMenuItem(action.stringId)
 
-        self.assertEqual (toolbar.GetToolCount(), 1)
-        self.assertEqual (menu.FindItem (action.title), wx.NOT_FOUND)
+        self.assertEqual(toolbar.GetToolCount(), 1)
+        self.assertEqual(menu.FindItem(action.title), wx.NOT_FOUND)
 
-
-    def testHotKeysDefaultMenu (self):
+    def testHotKeysDefaultMenu(self):
         action = TestAction()
         menu = self.fileMenu
-        hotkey = HotKey ("T", ctrl=True)
+        hotkey = HotKey("T", ctrl=True)
 
-        self.actionController.register (action, hotkey=hotkey)
-        self.assertEqual (self.actionController.getHotKey (action.stringId), hotkey)
+        self.actionController.register(action, hotkey=hotkey)
+        self.assertEqual(self.actionController.getHotKey(action.stringId),
+                         hotkey)
 
-        self.actionController.appendMenuItem (action.stringId, menu)
+        self.actionController.appendMenuItem(action.stringId, menu)
 
-        self._assertMenuItemExists (menu, action.title, hotkey)
+        self._assertMenuItemExists(menu, action.title, hotkey)
 
-
-    def testHotKeysDefaultToolBar (self):
+    def testHotKeysDefaultToolBar(self):
         action = TestAction()
-        hotkey = HotKey ("T", ctrl=True)
-        toolbar = self.wnd.toolbars[self.wnd.PLUGINS_TOOLBAR_STR]
+        hotkey = HotKey("T", ctrl=True)
+        toolbar = self.wnd.toolbars[TOOLBAR_PLUGINS]
         image = "../test/images/save.png"
 
-        self.actionController.register (action, hotkey=hotkey)
-        self.assertEqual (self.actionController.getHotKey (action.stringId), hotkey)
+        self.actionController.register(action, hotkey=hotkey)
+        self.assertEqual(self.actionController.getHotKey(action.stringId),
+                         hotkey)
 
-        self.actionController.appendToolbarButton (action.stringId,
-                                                   toolbar,
-                                                   image)
+        self.actionController.appendToolbarButton(action.stringId,
+                                                  toolbar,
+                                                  image)
 
-        self.assertEqual (self._getToolItemLabel (toolbar, action.stringId),
-                          "{0} ({1})".format (action.title, HotKeyParser.toString (hotkey)))
+        self.assertEqual(self._getToolItemLabel(toolbar, action.stringId),
+                         "{0} ({1})".format(action.title,
+                                            HotKeyParser.toString(hotkey)))
 
-
-    def testDisableTools (self):
+    def testDisableTools(self):
         action = TestAction()
-        hotkey = HotKey ("T", ctrl=True)
-        toolbar = self.wnd.toolbars[self.wnd.PLUGINS_TOOLBAR_STR]
+        hotkey = HotKey("T", ctrl=True)
+        toolbar = self.wnd.toolbars[TOOLBAR_PLUGINS]
         image = "../test/images/save.png"
 
-        self.actionController.register (action, hotkey=hotkey)
+        self.actionController.register(action, hotkey=hotkey)
 
-        self.actionController.appendToolbarButton (action.stringId,
-                                                   toolbar,
-                                                   image)
+        self.actionController.appendToolbarButton(action.stringId,
+                                                  toolbar,
+                                                  image)
 
-        toolid = self._getToolItemId (action.stringId)
+        toolid = self._getToolItemId(action.stringId)
 
-        self.actionController.enableTools (action.stringId, False)
-        self.assertFalse (toolbar.GetToolEnabled (toolid))
+        self.actionController.enableTools(action.stringId, False)
+        self.assertFalse(toolbar.GetToolEnabled(toolid))
 
-        self.actionController.enableTools (action.stringId, True)
-        self.assertTrue (toolbar.GetToolEnabled (toolid))
+        self.actionController.enableTools(action.stringId, True)
+        self.assertTrue(toolbar.GetToolEnabled(toolid))
 
-
-    def testDisableMenuItem (self):
+    def testDisableMenuItem(self):
         action = TestAction()
-        hotkey = HotKey ("T", ctrl=True)
+        hotkey = HotKey("T", ctrl=True)
         menu = self.fileMenu
 
-        self.actionController.register (action, hotkey=hotkey)
+        self.actionController.register(action, hotkey=hotkey)
 
-        self.actionController.appendMenuItem (action.stringId, menu)
+        self.actionController.appendMenuItem(action.stringId, menu)
 
-        menuItemId = self._getMenuItemId (action.stringId)
+        menuItemId = self._getMenuItemId(action.stringId)
 
-        self.actionController.enableTools (action.stringId, False)
-        self.assertFalse (menu.IsEnabled (menuItemId))
+        self.actionController.enableTools(action.stringId, False)
+        self.assertFalse(menu.IsEnabled(menuItemId))
 
-        self.actionController.enableTools (action.stringId, True)
-        self.assertTrue (menu.IsEnabled (menuItemId))
+        self.actionController.enableTools(action.stringId, True)
+        self.assertTrue(menu.IsEnabled(menuItemId))
 
-
-    def testDidableToolsAll (self):
+    def testDidableToolsAll(self):
         action = TestAction()
-        hotkey = HotKey ("T", ctrl=True)
-        toolbar = self.wnd.toolbars[self.wnd.PLUGINS_TOOLBAR_STR]
+        hotkey = HotKey("T", ctrl=True)
+        toolbar = self.wnd.toolbars[TOOLBAR_PLUGINS]
         image = "../test/images/save.png"
         menu = self.fileMenu
 
-        self.actionController.register (action, hotkey=hotkey)
+        self.actionController.register(action, hotkey=hotkey)
 
-        self.actionController.appendMenuItem (action.stringId, menu)
-        self.actionController.appendToolbarButton (action.stringId,
-                                                   toolbar,
-                                                   image)
+        self.actionController.appendMenuItem(action.stringId, menu)
+        self.actionController.appendToolbarButton(action.stringId,
+                                                  toolbar,
+                                                  image)
 
-        menuItemId = self._getMenuItemId (action.stringId)
-        toolid = self._getToolItemId (action.stringId)
+        menuItemId = self._getMenuItemId(action.stringId)
+        toolid = self._getToolItemId(action.stringId)
 
-        self.actionController.enableTools (action.stringId, False)
-        self.assertFalse (toolbar.GetToolEnabled (toolid))
-        self.assertFalse (menu.IsEnabled (menuItemId))
+        self.actionController.enableTools(action.stringId, False)
+        self.assertFalse(toolbar.GetToolEnabled(toolid))
+        self.assertFalse(menu.IsEnabled(menuItemId))
 
-        self.actionController.enableTools (action.stringId, True)
-        self.assertTrue (toolbar.GetToolEnabled (toolid))
-        self.assertTrue (menu.IsEnabled (menuItemId))
+        self.actionController.enableTools(action.stringId, True)
+        self.assertTrue(toolbar.GetToolEnabled(toolid))
+        self.assertTrue(menu.IsEnabled(menuItemId))
 
-
-    def testDisableToolsNone (self):
+    def testDisableToolsNone(self):
         action = TestAction()
-        hotkey = HotKey ("T", ctrl=True)
+        hotkey = HotKey("T", ctrl=True)
 
-        self.actionController.register (action, hotkey=hotkey)
-        self.actionController.enableTools (action.stringId, False)
+        self.actionController.register(action, hotkey=hotkey)
+        self.actionController.enableTools(action.stringId, False)
 
-
-    def testGetActions1 (self):
+    def testGetActions1(self):
         action1 = TestAction()
         action2 = TestCheckAction()
 
-        self.actionController.register (action1)
-        self.actionController.register (action2)
+        self.actionController.register(action1)
+        self.actionController.register(action2)
 
-        self.assertEqual (self.actionController.getAction(action1.stringId), action1)
-        self.assertEqual (self.actionController.getAction(action2.stringId), action2)
+        self.assertEqual(self.actionController.getAction(action1.stringId),
+                         action1)
+        self.assertEqual(self.actionController.getAction(action2.stringId),
+                         action2)
 
-
-    def testGetActions2 (self):
+    def testGetActions2(self):
         action1 = TestAction()
         action2 = TestCheckAction()
-        self.actionController.register (action1)
+        self.actionController.register(action1)
 
-        self.assertRaises (KeyError, self.actionController.getAction, action2.stringId)
+        self.assertRaises(KeyError, self.actionController.getAction,
+                          action2.stringId)
 
-
-    def testHotKeyLoadConfig (self):
+    def testHotKeyLoadConfig(self):
         action = TestAction()
-        hotKeyFromConfig = HotKey ("F11")
-        HotKeyOption (Application.config, self.actionController.configSection, action.stringId, None).value = hotKeyFromConfig
+        hotKeyFromConfig = HotKey("F11")
+        HotKeyOption(Application.config,
+                     self.actionController.configSection,
+                     action.stringId, None).value = hotKeyFromConfig
 
-        self.actionController.register (action, HotKey ("F12", ctrl=True))
+        self.actionController.register(action, HotKey("F12", ctrl=True))
 
-        self.assertEqual (self.actionController.getHotKey (action.stringId).key, "F11")
-        self.assertFalse (self.actionController.getHotKey (action.stringId).ctrl)
-        self.assertFalse (self.actionController.getHotKey (action.stringId).shift)
-        self.assertFalse (self.actionController.getHotKey (action.stringId).alt)
+        self.assertEqual(self.actionController.getHotKey(action.stringId).key,
+                         "F11")
+        self.assertFalse(self.actionController.getHotKey(action.stringId).ctrl)
+        self.assertFalse(self.actionController.getHotKey(action.stringId).shift)
+        self.assertFalse(self.actionController.getHotKey(action.stringId).alt)
 
-
-    def testHotKeySaveConfig1 (self):
+    def testHotKeySaveConfig1(self):
         action = TestAction()
-        hotkey = HotKey ("F11", ctrl=True)
+        hotkey = HotKey("F11", ctrl=True)
 
-        self.actionController.register (action, hotkey)
+        self.actionController.register(action, hotkey)
         self.actionController.saveHotKeys()
 
-        otherActionController = ActionController (self.wnd, Application.config)
-        otherActionController.register (action)
+        otherActionController = ActionController(self.wnd, Application.config)
+        otherActionController.register(action)
 
-        self.assertEqual (otherActionController.getHotKey (action.stringId).key, "F11")
-        self.assertTrue (otherActionController.getHotKey (action.stringId).ctrl)
-        self.assertFalse (otherActionController.getHotKey (action.stringId).shift)
-        self.assertFalse (otherActionController.getHotKey (action.stringId).alt)
+        self.assertEqual(otherActionController.getHotKey(action.stringId).key,
+                         "F11")
+        self.assertTrue(otherActionController.getHotKey(action.stringId).ctrl)
+        self.assertFalse(otherActionController.getHotKey(action.stringId).shift)
+        self.assertFalse(otherActionController.getHotKey(action.stringId).alt)
 
-
-    def testHotKeySaveConfig2 (self):
+    def testHotKeySaveConfig2(self):
         action = TestAction()
-        hotkey = HotKey ("F11", ctrl=True)
+        hotkey = HotKey("F11", ctrl=True)
 
-        self.actionController.register (action, hotkey)
+        self.actionController.register(action, hotkey)
         self.actionController.saveHotKeys()
 
-        otherActionController = ActionController (self.wnd, Application.config)
-        otherActionController.register (action, HotKey ("F1", shift=True))
+        otherActionController = ActionController(self.wnd, Application.config)
+        otherActionController.register(action, HotKey("F1", shift=True))
 
-        self.assertEqual (otherActionController.getHotKey (action.stringId).key, "F11")
-        self.assertTrue (otherActionController.getHotKey (action.stringId).ctrl)
-        self.assertFalse (otherActionController.getHotKey (action.stringId).shift)
-        self.assertFalse (otherActionController.getHotKey (action.stringId).alt)
+        self.assertEqual(otherActionController.getHotKey(action.stringId).key,
+                         "F11")
+        self.assertTrue(otherActionController.getHotKey(action.stringId).ctrl)
+        self.assertFalse(otherActionController.getHotKey(action.stringId).shift)
+        self.assertFalse(otherActionController.getHotKey(action.stringId).alt)
 
-
-    def testHotKeySaveConfig3 (self):
+    def testHotKeySaveConfig3(self):
         action = TestAction()
 
-        self.actionController.register (action)
+        self.actionController.register(action)
         self.actionController.saveHotKeys()
 
-        otherActionController = ActionController (self.wnd, Application.config)
-        otherActionController.register (action)
+        otherActionController = ActionController(self.wnd, Application.config)
+        otherActionController.register(action)
 
-        self.assertEqual (otherActionController.getHotKey (action.stringId).key, "")
-        self.assertFalse (otherActionController.getHotKey (action.stringId).ctrl)
-        self.assertFalse (otherActionController.getHotKey (action.stringId).shift)
-        self.assertFalse (otherActionController.getHotKey (action.stringId).alt)
+        self.assertEqual(otherActionController.getHotKey(action.stringId).key,
+                         "")
+        self.assertFalse(otherActionController.getHotKey(action.stringId).ctrl)
+        self.assertFalse(otherActionController.getHotKey(action.stringId).shift)
+        self.assertFalse(otherActionController.getHotKey(action.stringId).alt)
 
-
-    def testSetHotKey (self):
+    def testSetHotKey(self):
         action = TestAction()
-        self.actionController.register (action, None)
+        self.actionController.register(action, None)
 
-        hotkey = HotKey ("F11", ctrl=True)
-        self.actionController.setHotKey (action.stringId, hotkey)
-        self.assertEqual (self.actionController.getHotKey (action.stringId), hotkey)
+        hotkey = HotKey("F11", ctrl=True)
+        self.actionController.setHotKey(action.stringId, hotkey)
+        self.assertEqual(self.actionController.getHotKey(action.stringId),
+                         hotkey)
 
-
-    def testChangeHotkeyGui (self):
+    def testChangeHotkeyGui(self):
         menu = self.fileMenu
-        toolbar = self.wnd.toolbars[self.wnd.PLUGINS_TOOLBAR_STR]
+        toolbar = self.wnd.toolbars[TOOLBAR_PLUGINS]
         image = "../test/images/save.png"
 
-        hotkey = HotKey ("F11", ctrl=True)
+        hotkey = HotKey("F11", ctrl=True)
 
         action = TestAction()
-        self.actionController.register (action, None)
+        self.actionController.register(action, None)
 
-        self.actionController.appendMenuItem (action.stringId, menu)
-        self.actionController.appendToolbarButton (action.stringId,
-                                                   toolbar,
-                                                   image)
+        self.actionController.appendMenuItem(action.stringId, menu)
+        self.actionController.appendToolbarButton(action.stringId,
+                                                  toolbar,
+                                                  image)
 
-        self.actionController.setHotKey (action.stringId, hotkey)
+        self.actionController.setHotKey(action.stringId, hotkey)
 
-        self.assertEqual (self._getToolItemLabel (toolbar, action.stringId),
-                          "{} ({})".format (action.title, "Ctrl+F11"))
+        self.assertEqual(self._getToolItemLabel(toolbar, action.stringId),
+                         "{} ({})".format(action.title, "Ctrl+F11"))
 
-        self.assertEqual (self._getMenuItem(action.stringId).GetItemLabel(),
-                          "{}\t{}".format (action.title, "Ctrl+F11"))
+        self.assertEqual(self._getMenuItem(action.stringId).GetItemLabel(),
+                         "{}\t{}".format(action.title, "Ctrl+F11"))
 
-
-    def testChangeHotkeyGuiMenu (self):
+    def testChangeHotkeyGuiMenu(self):
         menu = self.fileMenu
 
-        hotkey = HotKey ("F11", ctrl=True)
+        hotkey = HotKey("F11", ctrl=True)
 
         action = TestAction()
-        self.actionController.register (action, None)
+        self.actionController.register(action, None)
 
-        self.actionController.appendMenuItem (action.stringId, menu)
+        self.actionController.appendMenuItem(action.stringId, menu)
 
-        self.actionController.setHotKey (action.stringId, hotkey)
+        self.actionController.setHotKey(action.stringId, hotkey)
 
-        self.assertEqual (self._getMenuItem(action.stringId).GetItemLabel(),
-                          "{}\t{}".format (action.title, "Ctrl+F11"))
+        self.assertEqual(self._getMenuItem(action.stringId).GetItemLabel(),
+                         "{}\t{}".format(action.title, "Ctrl+F11"))
 
-
-    def testChangeHotkeyToolbar (self):
-        toolbar = self.wnd.toolbars[self.wnd.PLUGINS_TOOLBAR_STR]
+    def testChangeHotkeyToolbar(self):
+        toolbar = self.wnd.toolbars[TOOLBAR_PLUGINS]
         image = "../test/images/save.png"
 
-        hotkey = HotKey ("F11", ctrl=True)
+        hotkey = HotKey("F11", ctrl=True)
 
         action = TestAction()
-        self.actionController.register (action, None)
+        self.actionController.register(action, None)
 
-        self.actionController.appendToolbarButton (action.stringId,
-                                                   toolbar,
-                                                   image)
+        self.actionController.appendToolbarButton(action.stringId,
+                                                  toolbar,
+                                                  image)
 
-        self.actionController.setHotKey (action.stringId, hotkey)
+        self.actionController.setHotKey(action.stringId, hotkey)
 
-        self.assertEqual (self._getToolItemLabel (toolbar, action.stringId),
-                          "{} ({})".format (action.title, "Ctrl+F11"))
+        self.assertEqual(self._getToolItemLabel(toolbar, action.stringId),
+                         "{} ({})".format(action.title, "Ctrl+F11"))
 
-
-    def testDelayChangeHotkeyToolbar (self):
-        toolbar = self.wnd.toolbars[self.wnd.PLUGINS_TOOLBAR_STR]
+    def testDelayChangeHotkeyToolbar(self):
+        toolbar = self.wnd.toolbars[TOOLBAR_PLUGINS]
         image = "../test/images/save.png"
 
-        hotkey = HotKey ("F11", ctrl=True)
+        hotkey = HotKey("F11", ctrl=True)
 
         action = TestAction()
-        self.actionController.register (action, HotKey ("F11"))
+        self.actionController.register(action, HotKey("F11"))
 
-        self.actionController.appendToolbarButton (action.stringId,
-                                                   toolbar,
-                                                   image)
+        self.actionController.appendToolbarButton(action.stringId,
+                                                  toolbar,
+                                                  image)
 
-        self.actionController.setHotKey (action.stringId, hotkey, False)
+        self.actionController.setHotKey(action.stringId, hotkey, False)
 
-        self.assertEqual (self._getToolItemLabel (toolbar, action.stringId),
-                          "{} ({})".format (action.title, "F11"))
+        self.assertEqual(self._getToolItemLabel(toolbar, action.stringId),
+                         "{} ({})".format(action.title, "F11"))
 
-        otherActionController = ActionController (self.wnd, Application.config)
-        otherActionController.register (action, None)
+        otherActionController = ActionController(self.wnd, Application.config)
+        otherActionController.register(action, None)
 
-        self.assertEqual (otherActionController.getHotKey (action.stringId),
-                          hotkey)
+        self.assertEqual(otherActionController.getHotKey(action.stringId),
+                         hotkey)
 
-
-    def testChangeHotkeyGuiChecked1 (self):
+    def testChangeHotkeyGuiChecked1(self):
         menu = self.fileMenu
-        toolbar = self.wnd.toolbars[self.wnd.PLUGINS_TOOLBAR_STR]
+        toolbar = self.wnd.toolbars[TOOLBAR_PLUGINS]
         image = "../test/images/save.png"
 
-        hotkey = HotKey ("F11", ctrl=True)
+        hotkey = HotKey("F11", ctrl=True)
 
         action = TestCheckAction()
-        self.actionController.register (action, None)
+        self.actionController.register(action, None)
 
-        self.actionController.appendMenuCheckItem (action.stringId, menu)
-        self.actionController.appendToolbarCheckButton (action.stringId,
-                                                        toolbar,
-                                                        image)
+        self.actionController.appendMenuCheckItem(action.stringId, menu)
+        self.actionController.appendToolbarCheckButton(action.stringId,
+                                                       toolbar,
+                                                       image)
 
-        self.actionController.setHotKey (action.stringId, hotkey)
+        self.actionController.setHotKey(action.stringId, hotkey)
 
-        self.assertEqual (self._getToolItemLabel (toolbar, action.stringId),
-                          "{} ({})".format (action.title, "Ctrl+F11"))
+        self.assertEqual(self._getToolItemLabel(toolbar, action.stringId),
+                         "{} ({})".format(action.title, "Ctrl+F11"))
 
-        self.assertEqual (self._getMenuItem(action.stringId).GetItemLabel(),
-                          "{}\t{}".format (action.title, "Ctrl+F11"))
+        self.assertEqual(self._getMenuItem(action.stringId).GetItemLabel(),
+                         "{}\t{}".format(action.title, "Ctrl+F11"))
 
-
-    def testChangeHotkeyGuiChecked2 (self):
+    def testChangeHotkeyGuiChecked2(self):
         menu = self.fileMenu
-        toolbar = self.wnd.toolbars[self.wnd.PLUGINS_TOOLBAR_STR]
+        toolbar = self.wnd.toolbars[TOOLBAR_PLUGINS]
         image = "../test/images/save.png"
 
-        hotkey = HotKey ("F11", ctrl=True)
+        hotkey = HotKey("F11", ctrl=True)
 
         action = TestCheckAction()
-        self.actionController.register (action, None)
+        self.actionController.register(action, None)
 
-        self.actionController.appendMenuCheckItem (action.stringId, menu)
-        self.actionController.appendToolbarCheckButton (action.stringId,
-                                                        toolbar,
-                                                        image)
+        self.actionController.appendMenuCheckItem(action.stringId, menu)
+        self.actionController.appendToolbarCheckButton(action.stringId,
+                                                       toolbar,
+                                                       image)
 
-        menuItem = self._getMenuItem (action.stringId)
-        toolItem = self._getToolItem (toolbar, action.stringId)
+        menuItem = self._getMenuItem(action.stringId)
+        toolItem = self._getToolItem(toolbar, action.stringId)
 
-        self.actionController.setHotKey (action.stringId, hotkey)
-        self.actionController.check (action.stringId, True)
+        self.actionController.setHotKey(action.stringId, hotkey)
+        self.actionController.check(action.stringId, True)
 
-        self.assertTrue (menuItem.IsChecked())
-        self.assertTrue (toolItem.GetState())
+        self.assertTrue(menuItem.IsChecked())
+        self.assertTrue(toolItem.GetState())
 
-
-    def _assertMenuItemExists (self, menu, title, hotkey):
+    def _assertMenuItemExists(self, menu, title, hotkey):
         """
-        Проверить, что в меню есть элемент с заголовком (title + '\t' + hotkey)
+        Проверить, что в меню есть элемент с заголовком(title + '\t' + hotkey)
         """
-        menuItemId = menu.FindItem (title)
-        self.assertNotEqual (menuItemId, wx.NOT_FOUND)
+        menuItemId = menu.FindItem(title)
+        self.assertNotEqual(menuItemId, wx.NOT_FOUND)
 
-        menuItem = menu.FindItemById (menuItemId)
+        menuItem = menu.FindItemById(menuItemId)
 
         if hotkey is not None:
-            self.assertEqual (menuItem.GetItemLabel(), title + "\t" + HotKeyParser.toString (hotkey))
+            self.assertEqual(menuItem.GetItemLabel(),
+                             title + "\t" + HotKeyParser.toString(hotkey))
         else:
-            self.assertEqual (menuItem.GetItemLabel(), title)
+            self.assertEqual(menuItem.GetItemLabel(), title)
 
-
-    def _emulateMenuClick (self, menuItemId):
+    def _emulateMenuClick(self, menuItemId):
         """
         Эмуляция события выбора пункта меню
         """
-        event = wx.CommandEvent (wx.wxEVT_COMMAND_MENU_SELECTED, menuItemId)
-        self.wnd.ProcessEvent (event)
+        event = wx.CommandEvent(wx.wxEVT_COMMAND_MENU_SELECTED, menuItemId)
+        self.wnd.ProcessEvent(event)
 
-
-    def _emulateButtonClick (self, toolitemId):
+    def _emulateButtonClick(self, toolitemId):
         """
         Эмуляция события выбора пункта меню
         """
-        event = wx.CommandEvent (wx.wxEVT_COMMAND_TOOL_CLICKED, toolitemId)
-        self.wnd.ProcessEvent (event)
+        event = wx.CommandEvent(wx.wxEVT_COMMAND_TOOL_CLICKED, toolitemId)
+        self.wnd.ProcessEvent(event)
 
-
-    def _emulateCheckButtonClick (self, toolitemId):
+    def _emulateCheckButtonClick(self, toolitemId):
         """
         Эмуляция события выбора пункта меню
         """
-        toolbar = self.wnd.toolbars[self.wnd.PLUGINS_TOOLBAR_STR]
-        toolitem = toolbar.FindTool (toolitemId)
+        toolbar = self.wnd.toolbars[TOOLBAR_PLUGINS]
+        toolitem = toolbar.FindTool(toolitemId)
         newState = not toolitem.GetState()
-        toolbar.ToggleTool (toolitemId, newState)
+        toolbar.ToggleTool(toolitemId, newState)
 
-        event = wx.CommandEvent (wx.wxEVT_COMMAND_TOOL_CLICKED, toolitemId)
-        event.SetInt (newState)
-        self.wnd.ProcessEvent (event)
+        event = wx.CommandEvent(wx.wxEVT_COMMAND_TOOL_CLICKED, toolitemId)
+        event.SetInt(newState)
+        self.wnd.ProcessEvent(event)
 
-
-    def _getMenuItemId (self, strid):
+    def _getMenuItemId(self, strid):
         result = None
 
         actionInfo = self.actionController.getActionInfo(strid)
@@ -876,8 +844,7 @@ class ActionControllerTest (BaseMainWndTest):
 
         return result
 
-
-    def _getMenuItem (self, strid):
+    def _getMenuItem(self, strid):
         result = None
 
         actionInfo = self.actionController.getActionInfo(strid)
@@ -886,8 +853,7 @@ class ActionControllerTest (BaseMainWndTest):
 
         return result
 
-
-    def _getToolItemId (self, strid):
+    def _getToolItemId(self, strid):
         """
         Получить идентификатор кнопки с панели инструментов
         """
@@ -899,23 +865,21 @@ class ActionControllerTest (BaseMainWndTest):
 
         return result
 
-
-    def _getToolItemLabel (self, toolbar, strid):
+    def _getToolItemLabel(self, toolbar, strid):
         result = None
 
-        item = self._getToolItem (toolbar, strid)
+        item = self._getToolItem(toolbar, strid)
 
         if item is not None:
             result = item.GetShortHelp()
 
         return result
 
-
-    def _getToolItem (self, toolbar, strid):
+    def _getToolItem(self, toolbar, strid):
         result = None
 
-        itemId = self._getToolItemId (strid)
+        itemId = self._getToolItemId(strid)
         if itemId is not None:
-            result = toolbar.FindTool (itemId)
+            result = toolbar.FindTool(itemId)
 
         return result
