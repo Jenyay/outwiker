@@ -272,5 +272,7 @@ def openInNewWindow(path, args=[]):
     if exeFile.endswith(".exe"):
         DETACHED_PROCESS = 0x00000008
         subprocess.Popen(params, creationflags=DETACHED_PROCESS, env=env)
-    else:
+    elif exeFile.endswith(".py"):
         subprocess.Popen(["python"] + params, env=env)
+    else:
+        subprocess.Popen(params, env=env)
