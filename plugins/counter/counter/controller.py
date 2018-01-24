@@ -1,15 +1,22 @@
 # -*- coding: utf-8 -*-
 
+import os.path
+
 import wx
 
-from outwiker.core.commands import testreadonly
 import outwiker.core.exceptions
+from outwiker.core.commands import testreadonly
+from outwiker.pages.wiki.wikipage import WikiWikiPage
+from outwiker.utilites.actionsguicontroller import (ActionsGUIController,
+                                                    ActionGUIInfo)
+from outwiker.pages.wiki.defines import MENU_WIKI_COMMANDS
+from outwiker.gui.defines import TOOLBAR_PLUGINS
 
 from .i18n import get_
-from .guicreator import GuiCreator
 from .commandcounter import CommandCounter
 from .insertdialog import InsertDialog
 from .insertdialogcontroller import InsertDialogController
+from .actions import InsertCounterAction
 
 
 class Controller(object):
@@ -24,7 +31,10 @@ class Controller(object):
         self._plugin = plugin
         self._application = application
 
-        self._guiCreator = None
+        self._GUIController = ActionsGUIController(
+            self._application,
+            WikiWikiPage.getTypeString(),
+        )
 
     def initialize(self):
         """
@@ -34,53 +44,38 @@ class Controller(object):
         global _
         _ = get_()
 
-        self._guiCreator = GuiCreator(self, self._application)
-        self._guiCreator.initialize()
-
         self._application.onWikiParserPrepare += self.__onWikiParserPrepare
-        self._application.onPageViewCreate += self.__onPageViewCreate
-        self._application.onPageViewDestroy += self.__onPageViewDestroy
+        self._initialize_guicontroller()
 
-        if self._isWikiPage(self._application.selectedPage):
-            self.__onPageViewCreate(self._application.selectedPage)
+    def _initialize_guicontroller(self):
+        imagesPath = os.path.join(self._plugin.pluginPath, 'images')
+
+        action_gui_info = [
+            ActionGUIInfo(InsertCounterAction(self._application, self),
+                          MENU_WIKI_COMMANDS,
+                          TOOLBAR_PLUGINS,
+                          os.path.join(imagesPath, 'counter.png')),
+        ]
+
+        if self._application.mainWindow is not None:
+            self._GUIController.initialize(action_gui_info)
 
     def destroy(self):
         """
         Вызывается при отключении плагина
         """
         self._application.onWikiParserPrepare -= self.__onWikiParserPrepare
-        self._application.onPageViewCreate -= self.__onPageViewCreate
-        self._application.onPageViewDestroy -= self.__onPageViewDestroy
+        self._destroy_guicontroller()
 
-        if self._isWikiPage(self._application.selectedPage):
-            self._guiCreator.removeTools()
-
-        self._guiCreator.destroy()
+    def _destroy_guicontroller(self):
+        if self._application.mainWindow is not None:
+            self._GUIController.destroy()
 
     def __onWikiParserPrepare(self, parser):
         """
         Вызывается до разбора викитекста. Добавление команды(:counter:)
         """
         parser.addCommand(CommandCounter(parser))
-
-    def _isWikiPage(self, page):
-        return page is not None and page.getTypeString() == u"wiki"
-
-    def __onPageViewCreate(self, page):
-        """Обработка события после создания представления страницы"""
-        assert self._application.mainWindow is not None
-
-        if self._isWikiPage(page):
-            self._guiCreator.createTools()
-
-    def __onPageViewDestroy(self, page):
-        """
-        Обработка события перед удалением вида страницы
-        """
-        assert self._application.mainWindow is not None
-
-        if self._isWikiPage(page):
-            self._guiCreator.removeTools()
 
     @testreadonly
     def insertCommand(self):
@@ -108,4 +103,4 @@ class Controller(object):
         """
         Получить указатель на панель представления страницы
         """
-        return self._application.mainWindow.pagePanel.pageView
+        return self._application.mainWindow.pageView

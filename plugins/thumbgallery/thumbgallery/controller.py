@@ -27,7 +27,7 @@ class Controller(object):
         imagesPath = os.path.join(self._plugin.pluginPath, 'images')
 
         action_gui_info = [
-            ActionGUIInfo(ThumbAction,
+            ActionGUIInfo(ThumbAction(self._application),
                           MENU_WIKI_COMMANDS,
                           TOOLBAR_PLUGINS,
                           os.path.join(imagesPath, 'gallery.png')),

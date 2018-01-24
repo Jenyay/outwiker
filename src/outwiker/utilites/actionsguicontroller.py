@@ -16,6 +16,9 @@ class ActionGUIInfo(object):
         self.toolbar_id = toolbar_id
         self.image_fname = image_fname
 
+        if toolbar_id is not None:
+            assert image_fname is not None
+
 
 class ActionsGUIController(object):
     """
@@ -48,8 +51,7 @@ class ActionsGUIController(object):
     def _registerActions(self):
         actionController = self._application.actionController
         for action_info in self._actionsInfoList:
-            actionController.register(action_info.action(self._application),
-                                      None)
+            actionController.register(action_info.action, None)
 
     def _removeActions(self):
         actionController = self._application.actionController
