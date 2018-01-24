@@ -9,15 +9,16 @@ from outwiker.pages.html.basehtmlpanel import EVT_PAGE_TAB_CHANGED
 
 
 class ActionGUIInfo(object):
-    def __init__(self, action, menu_id=None,
-                 toolbar_id=None, image_fname=None):
+    def __init__(self, action, menu_id=None, button_info=None):
         self.action = action
         self.menu_id = menu_id
+        self.button_info = button_info
+
+
+class ButtonInfo(object):
+    def __init__(self, toolbar_id, image_fname):
         self.toolbar_id = toolbar_id
         self.image_fname = image_fname
-
-        if toolbar_id is not None:
-            assert image_fname is not None
 
 
 class ActionsGUIController(object):
@@ -73,12 +74,12 @@ class ActionsGUIController(object):
                     action_info.action.stringId,
                     mainWindow.menuController[action_info.menu_id])
 
-            if action_info.toolbar_id is not None:
-                assert os.path.exists(action_info.image_fname)
+            if action_info.button_info is not None:
+                assert os.path.exists(action_info.button_info.image_fname)
                 self._application.actionController.appendToolbarButton(
                     action_info.action.stringId,
-                    mainWindow.toolbars[action_info.toolbar_id],
-                    action_info.image_fname)
+                    mainWindow.toolbars[action_info.button_info.toolbar_id],
+                    action_info.button_info.image_fname)
 
         self._enableTools()
 
@@ -114,7 +115,7 @@ class ActionsGUIController(object):
             if action_info.menu_id is not None:
                 actionController.removeMenuItem(action_info.action.stringId)
 
-            if action_info.toolbar_id is not None:
+            if action_info.button_info is not None:
                 actionController.removeToolbarButton(action_info.action.stringId)
 
         self._destroyToolBars()

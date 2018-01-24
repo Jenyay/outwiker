@@ -5,7 +5,8 @@ import os.path
 from outwiker.pages.wiki.wikipage import WikiWikiPage
 from outwiker.pages.wiki.defines import MENU_WIKI_COMMANDS
 from outwiker.utilites.actionsguicontroller import (ActionsGUIController,
-                                                    ActionGUIInfo)
+                                                    ActionGUIInfo,
+                                                    ButtonInfo)
 
 from .i18n import get_
 from .ljcommand import LjUserCommand, LjCommunityCommand
@@ -39,12 +40,14 @@ class Controller(object):
         action_gui_info = [
             ActionGUIInfo(LJUserAction(self._application),
                           defines.MENU_LIVEJOURNAL,
-                          defines.TOOLBAR_LIVEJOURNAL,
-                          os.path.join(imagesPath, 'ljuser.gif')),
+                          ButtonInfo(defines.TOOLBAR_LIVEJOURNAL,
+                                     os.path.join(imagesPath, 'ljuser.gif'))
+                          ),
             ActionGUIInfo(LJCommAction(self._application),
                           defines.MENU_LIVEJOURNAL,
-                          defines.TOOLBAR_LIVEJOURNAL,
-                          os.path.join(imagesPath, 'ljcommunity.gif')),
+                          ButtonInfo(defines.TOOLBAR_LIVEJOURNAL,
+                                     os.path.join(imagesPath, 'ljcommunity.gif'))
+                          ),
         ]
 
         new_toolbars = [(defines.TOOLBAR_LIVEJOURNAL, _('LiveJournal'))]

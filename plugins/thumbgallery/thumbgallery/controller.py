@@ -6,7 +6,8 @@ from outwiker.pages.wiki.wikipage import WikiWikiPage
 from outwiker.pages.wiki.defines import MENU_WIKI_COMMANDS
 from outwiker.gui.defines import TOOLBAR_PLUGINS
 from outwiker.utilites.actionsguicontroller import (ActionsGUIController,
-                                                    ActionGUIInfo)
+                                                    ActionGUIInfo,
+                                                    ButtonInfo)
 
 from .thumblistcommand import ThumbListCommand
 from .thumbgallerycommand import ThumbGalleryCommand
@@ -29,8 +30,9 @@ class Controller(object):
         action_gui_info = [
             ActionGUIInfo(ThumbAction(self._application),
                           MENU_WIKI_COMMANDS,
-                          TOOLBAR_PLUGINS,
-                          os.path.join(imagesPath, 'gallery.png')),
+                          ButtonInfo(TOOLBAR_PLUGINS,
+                                     os.path.join(imagesPath, 'gallery.png'))
+                          ),
         ]
 
         self._application.onWikiParserPrepare += self._onWikiParserPrepare

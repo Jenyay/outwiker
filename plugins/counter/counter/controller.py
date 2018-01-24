@@ -8,7 +8,8 @@ import outwiker.core.exceptions
 from outwiker.core.commands import testreadonly
 from outwiker.pages.wiki.wikipage import WikiWikiPage
 from outwiker.utilites.actionsguicontroller import (ActionsGUIController,
-                                                    ActionGUIInfo)
+                                                    ActionGUIInfo,
+                                                    ButtonInfo)
 from outwiker.pages.wiki.defines import MENU_WIKI_COMMANDS
 from outwiker.gui.defines import TOOLBAR_PLUGINS
 
@@ -53,8 +54,9 @@ class Controller(object):
         action_gui_info = [
             ActionGUIInfo(InsertCounterAction(self._application, self),
                           MENU_WIKI_COMMANDS,
-                          TOOLBAR_PLUGINS,
-                          os.path.join(imagesPath, 'counter.png')),
+                          ButtonInfo(TOOLBAR_PLUGINS,
+                                     os.path.join(imagesPath, 'counter.png'))
+                          ),
         ]
 
         if self._application.mainWindow is not None:
