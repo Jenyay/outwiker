@@ -1,9 +1,18 @@
 # -*- coding: utf-8 -*-
 
+from outwiker.pages.wiki.wikipage import WikiWikiPage
+from outwiker.pages.wiki.defines import MENU_WIKI
+from outwiker.utilites.actionsguicontroller import (ActionsGUIController,
+                                                    ActionGUIInfo)
+
 from .i18n import get_
-from .guicreator import GuiCreator
 from .commands import (TitleCommand, DescriptionCommand,
                        KeywordsCommand, CustomHeadsCommand)
+from .actions import (TitleAction,
+                      DescriptionAction,
+                      KeywordsAction,
+                      CustomHeadsAction)
+from . import defines
 
 
 class Controller(object):
@@ -18,11 +27,15 @@ class Controller(object):
         self._plugin = plugin
         self._application = application
 
-        self._guiCreator = None
         self._commands = [TitleCommand,
                           DescriptionCommand,
                           KeywordsCommand,
                           CustomHeadsCommand]
+
+        self._GUIController = ActionsGUIController(
+            self._application,
+            WikiWikiPage.getTypeString(),
+        )
 
     def initialize(self):
         """
@@ -32,28 +45,41 @@ class Controller(object):
         global _
         _ = get_()
 
-        self._guiCreator = GuiCreator(self, self._application)
-        self._guiCreator.initialize()
-
         self._application.onWikiParserPrepare += self.__onWikiParserPrepare
-        self._application.onPageViewCreate += self.__onPageViewCreate
-        self._application.onPageViewDestroy += self.__onPageViewDestroy
+        self._initialize_guicontroller()
 
-        if self._isWikiPage(self._application.selectedPage):
-            self.__onPageViewCreate(self._application.selectedPage)
+    def _initialize_guicontroller(self):
+        action_gui_info = [
+            ActionGUIInfo(TitleAction(self._application),
+                          defines.MENU_HTMLHEADS,
+                          ),
+            ActionGUIInfo(DescriptionAction(self._application),
+                          defines.MENU_HTMLHEADS,
+                          ),
+            ActionGUIInfo(KeywordsAction(self._application),
+                          defines.MENU_HTMLHEADS,
+                          ),
+            ActionGUIInfo(CustomHeadsAction(self._application),
+                          defines.MENU_HTMLHEADS,
+                          ),
+        ]
+
+        new_menus = [(defines.MENU_HTMLHEADS, _('HTML Headers'), MENU_WIKI)]
+
+        if self._application.mainWindow is not None:
+            self._GUIController.initialize(action_gui_info,
+                                           new_menus=new_menus)
 
     def destroy(self):
         """
         Вызывается при отключении плагина
         """
         self._application.onWikiParserPrepare -= self.__onWikiParserPrepare
-        self._application.onPageViewCreate -= self.__onPageViewCreate
-        self._application.onPageViewDestroy -= self.__onPageViewDestroy
+        self._destroy_guicontroller()
 
-        if self._isWikiPage(self._application.selectedPage):
-            self._guiCreator.removeTools()
-
-        self._guiCreator.destroy()
+    def _destroy_guicontroller(self):
+        if self._application.mainWindow is not None:
+            self._GUIController.destroy()
 
     def __onWikiParserPrepare(self, parser):
         """
@@ -61,28 +87,3 @@ class Controller(object):
         """
         list(map(lambda command: parser.addCommand(command(parser)),
                  self._commands))
-
-    def _isWikiPage(self, page):
-        return page is not None and page.getTypeString() == u"wiki"
-
-    def __onPageViewCreate(self, page):
-        """Обработка события после создания представления страницы"""
-        assert self._application.mainWindow is not None
-
-        if self._isWikiPage(page):
-            self._guiCreator.createTools()
-
-    def __onPageViewDestroy(self, page):
-        """
-        Обработка события перед удалением вида страницы
-        """
-        assert self._application.mainWindow is not None
-
-        if self._isWikiPage(page):
-            self._guiCreator.removeTools()
-
-    def _getPageView(self):
-        """
-        Получить указатель на панель представления страницы
-        """
-        return self._application.mainWindow.pagePanel.pageView
