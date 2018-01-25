@@ -138,7 +138,8 @@ class ActionsGUIController(object):
 
     def _enableTools(self):
         pageView = self._getPageView()
-        enabled = (pageView.selectedPageIndex == pageView.CODE_PAGE_INDEX)
+        enabled = (pageView.selectedPageIndex == pageView.CODE_PAGE_INDEX and
+                   not self._application.selectedPage.readonly)
 
         actionController = self._application.actionController
         for action_info in self._actionsInfoList:
