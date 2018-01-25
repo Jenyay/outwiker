@@ -3,7 +3,7 @@
 import os.path
 
 from outwiker.pages.wiki.wikipage import WikiWikiPage
-from outwiker.pages.wiki.defines import MENU_WIKI_COMMANDS
+from outwiker.pages.wiki.defines import MENU_WIKI
 from outwiker.utilites.actionsguicontroller import (ActionsGUIController,
                                                     ActionGUIInfo,
                                                     ButtonInfo)
@@ -51,7 +51,7 @@ class Controller(object):
         ]
 
         new_toolbars = [(defines.TOOLBAR_LIVEJOURNAL, _('LiveJournal'))]
-        new_menus = [(defines.MENU_LIVEJOURNAL, _('LiveJournal'), MENU_WIKI_COMMANDS)]
+        new_menus = [(defines.MENU_LIVEJOURNAL, _('LiveJournal'), MENU_WIKI)]
 
         if self._application.mainWindow is not None:
             self._GUIController.initialize(action_gui_info,
