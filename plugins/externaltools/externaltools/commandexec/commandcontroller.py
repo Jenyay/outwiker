@@ -17,68 +17,18 @@ class CommandController(object):
     def __init__(self, application):
         self._application = application
 
-        # Enable(:exec:) command only in the "new" OutWiker version.
-        # If Application have onLinkClick event
-        self._enableExecCommand = u'onLinkClick' in dir(self._application)
-
-        self._guiCreator = None
-
     def initialize(self):
         global _
         _ = get_()
 
-        if self._enableExecCommand:
-            from externaltools.commandexec.guicreator import GuiCreator
-
-            self._application.onWikiParserPrepare += self.__onWikiParserPrepare
-            self._application.onHoverLink += self._onHoverLink
-            self._application.onLinkClick += self.onLinkClick
-            self._application.onPageViewCreate += self.__onPageViewCreate
-            self._application.onPageViewDestroy += self.__onPageViewDestroy
-
-            self._guiCreator = GuiCreator(self._application)
-            self._guiCreator.initialize()
-
-            if self._isWikiPage(self._application.selectedPage):
-                self.__onPageViewCreate(self._application.selectedPage)
+        self._application.onWikiParserPrepare += self.__onWikiParserPrepare
+        self._application.onHoverLink += self._onHoverLink
+        self._application.onLinkClick += self.onLinkClick
 
     def destroy(self):
-        if self._enableExecCommand:
-            self._application.onWikiParserPrepare -= self.__onWikiParserPrepare
-            self._application.onHoverLink -= self._onHoverLink
-            self._application.onLinkClick -= self.onLinkClick
-            self._application.onPageViewCreate -= self.__onPageViewCreate
-            self._application.onPageViewDestroy -= self.__onPageViewDestroy
-
-            if self._isWikiPage(self._application.selectedPage):
-                self._guiCreator.removeTools()
-
-            self._guiCreator.destroy()
-
-    def __onPageViewCreate(self, page):
-        """Обработка события после создания представления страницы"""
-        assert self._application.mainWindow is not None
-
-        if self._isWikiPage(page):
-            self._guiCreator.createTools()
-
-    def __onPageViewDestroy(self, page):
-        """
-        Обработка события перед удалением вида страницы
-        """
-        assert self._application.mainWindow is not None
-
-        if self._isWikiPage(page):
-            self._guiCreator.removeTools()
-
-    def _getPageView(self):
-        """
-        Получить указатель на панель представления страницы
-        """
-        return self._application.mainWindow.pagePanel.pageView
-
-    def _isWikiPage(self, page):
-        return page is not None and page.getTypeString() == u"wiki"
+        self._application.onWikiParserPrepare -= self.__onWikiParserPrepare
+        self._application.onHoverLink -= self._onHoverLink
+        self._application.onLinkClick -= self.onLinkClick
 
     def __onWikiParserPrepare(self, parser):
         """

@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 """
 Плагин для открытия файлов заметок с помощью внешних программ,
@@ -20,7 +20,7 @@ class PluginExternalTools(Plugin):
         """
         from .controller import Controller
         Plugin.__init__(self, application)
-        self.__controller = Controller(self)
+        self.__controller = Controller(self, application)
 
     @property
     def application(self):
@@ -154,4 +154,4 @@ Attach:application.exe Attach:my_file.txt
 
             set_(_)
         except BaseException as e:
-            print (e)
+            print(e)
