@@ -83,3 +83,6 @@ DATA_FORMAT_COL = u'formatcol'
 DATA_SKIP_ROWS_NAME = u'skiprows'
 
 AXIS_MAJOR_TICK_INTERVAL_NAME = u'tickstep'
+
+TOOLBAR_DATAGRAPH = 'Plugin_DataGraph'
+MENU_DATAGRAPH = 'Plugin_DataGraph'

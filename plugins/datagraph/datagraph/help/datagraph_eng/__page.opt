@@ -5,5 +5,5 @@ expand = True
 selectedtab = 0
 
 [Tabs]
-tab_0 = Using plot command/All parameters
+tab_0 = About DataGraph
 

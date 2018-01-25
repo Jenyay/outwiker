@@ -1,8 +1,17 @@
 # -*- coding: utf-8 -*-
 
+import os.path
+
+from outwiker.pages.wiki.wikipage import WikiWikiPage
+from outwiker.pages.wiki.defines import MENU_WIKI
+from outwiker.utilites.actionsguicontroller import (ActionsGUIController,
+                                                    ActionGUIInfo,
+                                                    ButtonInfo)
+
 from .i18n import get_
-from .guicreator import GuiCreator
 from .commands import PlotCommand
+from . import defines
+from .actions import PlotAction, OpenHelpAction
 
 
 class Controller(object):
@@ -15,7 +24,10 @@ class Controller(object):
         self._plugin = plugin
         self._application = application
 
-        self._guiCreator = None
+        self._GUIController = ActionsGUIController(
+            self._application,
+            WikiWikiPage.getTypeString(),
+        )
 
         # В этот список добавить новые викикоманды, если они нужны
         self._commands = [PlotCommand]
@@ -28,57 +40,47 @@ class Controller(object):
         global _
         _ = get_()
 
-        self._guiCreator = GuiCreator(self, self._application)
-        self._guiCreator.initialize()
-
         self._application.onWikiParserPrepare += self.__onWikiParserPrepare
-        self._application.onPageViewCreate += self.__onPageViewCreate
-        self._application.onPageViewDestroy += self.__onPageViewDestroy
+        self._initialize_guicontroller()
 
-        if self._isWikiPage(self._application.selectedPage):
-            self.__onPageViewCreate(self._application.selectedPage)
+    def _initialize_guicontroller(self):
+        imagesPath = os.path.join(self._plugin.pluginPath, 'images')
+
+        action_gui_info = [
+            ActionGUIInfo(PlotAction(self._application),
+                          defines.MENU_DATAGRAPH,
+                          ButtonInfo(defines.TOOLBAR_DATAGRAPH,
+                                     os.path.join(imagesPath, 'plot.png'))
+                          ),
+            ActionGUIInfo(OpenHelpAction(self._application),
+                          defines.MENU_DATAGRAPH,
+                          ButtonInfo(defines.TOOLBAR_DATAGRAPH,
+                                     os.path.join(imagesPath, 'help.png'))
+                          ),
+        ]
+
+        new_toolbars = [(defines.TOOLBAR_DATAGRAPH, _('DataGraph'))]
+        new_menus = [(defines.MENU_DATAGRAPH, _('DataGraph'), MENU_WIKI)]
+
+        if self._application.mainWindow is not None:
+            self._GUIController.initialize(action_gui_info,
+                                           new_toolbars,
+                                           new_menus)
 
     def destroy(self):
         """
         Вызывается при отключении плагина
         """
         self._application.onWikiParserPrepare -= self.__onWikiParserPrepare
-        self._application.onPageViewCreate -= self.__onPageViewCreate
-        self._application.onPageViewDestroy -= self.__onPageViewDestroy
+        self._destroy_guicontroller()
 
-        if self._isWikiPage(self._application.selectedPage):
-            self._guiCreator.removeTools()
-
-        self._guiCreator.destroy()
+    def _destroy_guicontroller(self):
+        if self._application.mainWindow is not None:
+            self._GUIController.destroy()
 
     def __onWikiParserPrepare(self, parser):
         """
-        Вызывается до разбора викитекста. Добавление команды(:counter:)
+        Вызывается до разбора викитекста. Добавление команды (:plot:)
         """
         [*map(lambda command: parser.addCommand(command(parser)),
               self._commands)]
-
-    def _isWikiPage(self, page):
-        return page is not None and page.getTypeString() == u"wiki"
-
-    def __onPageViewCreate(self, page):
-        """Обработка события после создания представления страницы"""
-        assert self._application.mainWindow is not None
-
-        if self._isWikiPage(page):
-            self._guiCreator.createTools()
-
-    def __onPageViewDestroy(self, page):
-        """
-        Обработка события перед удалением вида страницы
-        """
-        assert self._application.mainWindow is not None
-
-        if self._isWikiPage(page):
-            self._guiCreator.removeTools()
-
-    def _getPageView(self):
-        """
-        Получить указатель на панель представления страницы
-        """
-        return self._application.mainWindow.pagePanel.pageView
