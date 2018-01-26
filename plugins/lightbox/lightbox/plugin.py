@@ -5,7 +5,6 @@ import os.path
 from outwiker.core.pluginbase import Plugin
 
 from .controller import Controller
-from .guicontroller import GUIController
 
 
 class PluginLightbox(Plugin):
@@ -18,7 +17,6 @@ class PluginLightbox(Plugin):
         """
         super().__init__(application)
         self._controller = Controller(application)
-        self._GUIController = GUIController(application)
 
     @property
     def name(self):
@@ -44,7 +42,6 @@ bla-bla-bla...
     def initialize(self):
         self._initlocale(u"lightbox")
         self._controller.initialize()
-        self._GUIController.initialize()
 
     def _initlocale(self, domain):
         from .i18n import set_
@@ -64,4 +61,3 @@ bla-bla-bla...
         Здесь плагин должен отписаться от всех событий
         """
         self._controller.destroy()
-        self._GUIController.destroy()
