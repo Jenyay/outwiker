@@ -7,7 +7,6 @@ import os.path
 from outwiker.core.pluginbase import Plugin
 
 from .controller import Controller
-from .guicontroller import GUIController
 
 
 def _no_translate(text):
@@ -23,13 +22,11 @@ class PluginSpoiler(Plugin):
         application - экземпляр класса core.application.ApplicationParams
         """
         Plugin.__init__(self, application)
-        self._controller = Controller(application)
-        self._GUIController = GUIController(application)
+        self._controller = Controller(self, application)
 
     def initialize(self):
         self._initlocale(u"spoiler")
         self._controller.initialize()
-        self._GUIController.initialize()
 
     def _initlocale(self, domain):
         from .i18n import set_
@@ -91,4 +88,3 @@ Text
         пункты меню и т.п.
         """
         self._controller.destroy()
-        self._GUIController.destroy()
