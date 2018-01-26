@@ -1,16 +1,18 @@
 # -*- coding: utf-8 -*-
 
-import wx
+import os.path
 
 from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
-from outwiker.core.commands import testreadonly
-import outwiker.core.exceptions
+from outwiker.gui.defines import TOOLBAR_PLUGINS
+from outwiker.pages.wiki.wikipage import WikiWikiPage
+from outwiker.pages.wiki.defines import MENU_WIKI_COMMANDS
+from outwiker.utilites.actionsguicontroller import (ActionsGUIController,
+                                                    ActionGUIInfo,
+                                                    ButtonInfo)
 
 from .i18n import get_
 from .preferencepanel import PreferencePanel
-from .insertdialog import InsertDialog
-from .insertdialogcontroller import InsertDialogController
-from .guicreator import GuiCreator
+from .actions import InsertSourceAction
 
 
 class Controller(object):
@@ -25,7 +27,10 @@ class Controller(object):
         self._plugin = plugin
         self._application = application
 
-        self._guiCreator = None
+        self._GUIController = ActionsGUIController(
+            self._application,
+            WikiWikiPage.getTypeString(),
+        )
 
     def initialize(self):
         """
@@ -35,31 +40,35 @@ class Controller(object):
         global _
         _ = get_()
 
-        self._guiCreator = GuiCreator(self, self._application)
-
-        self._guiCreator.initialize()
-
         self._application.onWikiParserPrepare += self.__onWikiParserPrepare
-        self._application.onPageViewCreate += self.__onPageViewCreate
-        self._application.onPageViewDestroy += self.__onPageViewDestroy
         self._application.onPreferencesDialogCreate += self.__onPreferencesDialogCreate
+        self._initialize_guicontroller()
 
-        if self._isWikiPage(self._application.selectedPage):
-            self.__onPageViewCreate(self._application.selectedPage)
+    def _initialize_guicontroller(self):
+        imagesPath = os.path.join(self._plugin.pluginPath, 'images')
+
+        action_gui_info = [
+            ActionGUIInfo(InsertSourceAction(self._application),
+                          MENU_WIKI_COMMANDS,
+                          ButtonInfo(TOOLBAR_PLUGINS,
+                                     os.path.join(imagesPath, 'source.png'))
+                          ),
+        ]
+
+        if self._application.mainWindow is not None:
+            self._GUIController.initialize(action_gui_info)
 
     def destroy(self):
         """
         Вызывается при отключении плагина
         """
         self._application.onWikiParserPrepare -= self.__onWikiParserPrepare
-        self._application.onPageViewCreate -= self.__onPageViewCreate
-        self._application.onPageViewDestroy -= self.__onPageViewDestroy
         self._application.onPreferencesDialogCreate -= self.__onPreferencesDialogCreate
+        self._destroy_guicontroller()
 
-        if self._isWikiPage(self._application.selectedPage):
-            self._guiCreator.removeTools()
-
-        self._guiCreator.destroy()
+    def _destroy_guicontroller(self):
+        if self._application.mainWindow is not None:
+            self._GUIController.destroy()
 
     def __onWikiParserPrepare(self, parser):
         """
@@ -77,51 +86,3 @@ class Controller(object):
         panelName = _(u"Source [Plugin]")
         panelsList = [PreferencePanelInfo(prefPanel, panelName)]
         dialog.appendPreferenceGroup(panelName, panelsList)
-
-    def _isWikiPage(self, page):
-        return page is not None and page.getTypeString() == u"wiki"
-
-    def __onPageViewCreate(self, page):
-        """Обработка события после создания представления страницы"""
-        assert self._application.mainWindow is not None
-
-        if self._isWikiPage(page):
-            self._guiCreator.createTools()
-
-    def __onPageViewDestroy(self, page):
-        """
-        Обработка события перед удалением вида страницы
-        """
-        assert self._application.mainWindow is not None
-
-        if self._isWikiPage(page):
-            self._guiCreator.removeTools()
-
-    @testreadonly
-    def insertCommand(self):
-        """
-        Вставка команды(:source:) в редактор
-        """
-        if self._application.selectedPage.readonly:
-            raise outwiker.core.exceptions.ReadonlyException
-
-        config = self._plugin.config
-
-        dlg = InsertDialog(self._application.mainWindow)
-
-        dlgController = InsertDialogController(self._application.selectedPage,
-                                               dlg, config)
-        resultDlg = dlgController.showDialog()
-
-        if resultDlg == wx.ID_OK:
-            command = dlgController.getCommandStrings()
-            pageView = self._getPageView()
-            pageView.codeEditor.turnText(command[0], command[1])
-
-        dlg.Destroy()
-
-    def _getPageView(self):
-        """
-        Получить указатель на панель представления страницы
-        """
-        return self._application.mainWindow.pagePanel.pageView

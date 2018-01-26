@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import logging
 import os.path
@@ -36,11 +36,6 @@ class PluginSource(Plugin):
 
         if cmd_folder not in sys.path:
             sys.path.insert(0, cmd_folder)
-
-    @property
-    def config(self):
-        from .sourceconfig import SourceConfig
-        return SourceConfig(self._application.config)
 
     @property
     def name(self):
