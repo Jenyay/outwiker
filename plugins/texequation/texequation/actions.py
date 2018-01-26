@@ -19,7 +19,7 @@ class TexEquationAction (BaseAction):
 
     @property
     def title(self):
-        return _(u"Equation")
+        return _(u"Equation...")
 
     @property
     def description(self):

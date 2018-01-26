@@ -6,22 +6,27 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: texequation\n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-02 12:13+0300\n"
+"POT-Creation-Date: 2018-01-26 22:14+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: jenyay <jenyay.ilin@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.12\n"
-"X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-Basepath: ..\n"
-"X-Poedit-SearchPath-0: .\n"
+
+#: plugin.py:41
+msgid "TeXEquation plug-in allow to insert equations in the TeX format."
+msgstr ""
+
+#: plugin.py:45
+msgid "http://jenyay.net/Outwiker/TexEquationEn"
+msgstr ""
 
 #: actions.py:22
-msgid "Equation"
+msgid "Equation..."
 msgstr ""
 
 #: actions.py:26
@@ -48,22 +53,6 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: plugin.py:43
-msgid "TeXEquation plug-in allow to insert equations in the TeX format."
-msgstr ""
-
-#: plugin.py:51
-msgid "http://jenyay.net/Outwiker/TexEquationEn"
-msgstr ""
-
-#: tokentex.py:65
-msgid "Can't create thumbnails directory"
-msgstr ""
-
-#: tokentex.py:75
-msgid "Can't remove KaTeX library"
-msgstr ""
-
-#: tokentex.py:79
+#: tokentex.py:93
 msgid "Can't copy KaTeX library"
 msgstr ""
