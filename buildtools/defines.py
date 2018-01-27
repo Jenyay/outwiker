@@ -9,7 +9,6 @@ UBUNTU_RELEASE_NAMES = [u"xenial", u"artful"]
 # List of the supported plugins
 PLUGINS_LIST = [
     u"autorenamer",
-    u"changepageuid",
     u"counter",
     u"diagrammer",
     u"datagraph",
