@@ -142,3 +142,8 @@ print "Hello World!"
         Здесь плагин должен отписаться от всех событий
         """
         self.__controller.destroy()
+
+    @property
+    def config(self):
+        from .sourceconfig import SourceConfig
+        return SourceConfig(self._application.config)
