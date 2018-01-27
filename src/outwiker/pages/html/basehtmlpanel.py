@@ -338,10 +338,12 @@ class BaseHtmlPanel(BaseTextPanel):
         if self._currentpage is None:
             return
 
-        if self._selectedPageIndex == self.CODE_PAGE_INDEX:
-            self._selectedPageIndex = self.RESULT_PAGE_INDEX
+        if self.GetPageMode() == PAGE_MODE_TEXT:
+            self.SetPageMode(PAGE_MODE_PREVIEW)
+        elif self.GetPageMode() == PAGE_MODE_PREVIEW:
+            self.SetPageMode(PAGE_MODE_TEXT)
         else:
-            self._selectedPageIndex = self.CODE_PAGE_INDEX
+            assert False
 
     def turnText(self, left, right):
         """

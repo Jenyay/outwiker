@@ -271,7 +271,7 @@ class BaseWikiPageView (BaseHtmlPanel):
         BaseHtmlPanel._selectedPageIndex.fset(self, selectedPage)
 
     def openHtmlCode(self):
-        self._selectedPageIndex = self.HTML_RESULT_PAGE_INDEX
+        self.SetPageMode(PAGE_MODE_HTML)
 
     def removeMenu(self):
         mainMenu = self._application.mainWindow.menuController.getRootMenu()
