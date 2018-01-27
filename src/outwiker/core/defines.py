@@ -50,8 +50,12 @@ STYLES_FOLDER_NAME = u"styles"
 PLUGINS_FOLDER_NAME = u"plugins"
 SPELL_FOLDER_NAME = u"spell"
 
+PAGE_MODE_TEXT = 0
+PAGE_MODE_PREVIEW = 1
+PAGE_MODE_HTML = 2
 
-# To translate this with xgettext
+
+# To translate this words with xgettext
 if __name__ == u'__main__':
     _('versions_lang')
 

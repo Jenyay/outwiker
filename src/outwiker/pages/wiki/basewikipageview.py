@@ -5,13 +5,15 @@ import wx
 from outwiker.core.commands import MessageBox
 
 from outwiker.gui.htmltexteditor import HtmlTextEditor
-from outwiker.pages.html.basehtmlpanel import (BaseHtmlPanel,
-                                               EVT_PAGE_TAB_CHANGED)
+from outwiker.pages.html.basehtmlpanel import BaseHtmlPanel
 from outwiker.utilites.textfile import readTextFile
 
 from .actions.openhtmlcode import WikiOpenHtmlCodeAction
 from .actions.updatehtml import WikiUpdateHtmlAction
 from outwiker.pages.html.actions.switchcoderesult import SwitchCodeResultAction
+from outwiker.core.defines import (PAGE_MODE_TEXT,
+                                   PAGE_MODE_PREVIEW,
+                                   PAGE_MODE_HTML)
 
 
 class BaseWikiPageView (BaseHtmlPanel):
@@ -59,7 +61,7 @@ class BaseWikiPageView (BaseHtmlPanel):
 
         self.Layout()
 
-        self.Bind(EVT_PAGE_TAB_CHANGED, handler=self.onTabChanged)
+        self._application.onPageModeChange += self.onTabChanged
 
     # Методы, которые необходимо переопределить в производном классе
     def _createWikiTools(self):
@@ -113,9 +115,32 @@ class BaseWikiPageView (BaseHtmlPanel):
 
     # Конец методов, которые необходимо переопределить в производном классе
 
+    def GetPageMode(self):
+        '''
+        Return the current page mode.
+        '''
+        if self._selectedPageIndex == self.CODE_PAGE_INDEX:
+            return PAGE_MODE_TEXT
+        elif self._selectedPageIndex == self.RESULT_PAGE_INDEX:
+            return PAGE_MODE_PREVIEW
+        elif self._selectedPageIndex == self.HTML_RESULT_PAGE_INDEX:
+            return PAGE_MODE_HTML
+
+        assert False
+
+    def SetPageMode(self, pagemode):
+        if pagemode == PAGE_MODE_TEXT:
+            self._selectedPageIndex = self.CODE_PAGE_INDEX
+        elif pagemode == PAGE_MODE_PREVIEW:
+            self._selectedPageIndex = self.RESULT_PAGE_INDEX
+        elif pagemode == PAGE_MODE_HTML:
+            self._selectedPageIndex = self.HTML_RESULT_PAGE_INDEX
+        else:
+            raise ValueError()
+
     def Clear(self):
         self._removeActionTools()
-        self.Unbind(EVT_PAGE_TAB_CHANGED, handler=self.onTabChanged)
+        self._application.onPageModeChange -= self.onTabChanged
 
         for toolbar_info in self._toolbars:
             self.mainWindow.toolbars.updatePanesInfo()
@@ -168,31 +193,29 @@ class BaseWikiPageView (BaseHtmlPanel):
         return self.pageCount - 1
 
     def SetFocus(self):
-        if self.selectedPageIndex == self.htmlcodePageIndex:
+        if self._selectedPageIndex == self.htmlcodePageIndex:
             self.htmlCodeWindow.SetFocus()
         else:
             super(BaseWikiPageView, self).SetFocus()
 
     def GetSearchPanel(self):
-        if self.selectedPageIndex == self.CODE_PAGE_INDEX:
+        if self._selectedPageIndex == self.CODE_PAGE_INDEX:
             return self.codeEditor.searchPanel
-        elif self.selectedPageIndex == self.htmlcodePageIndex:
+        elif self._selectedPageIndex == self.htmlcodePageIndex:
             return self.htmlCodeWindow.searchPanel
 
-    def onTabChanged(self, event):
+    def onTabChanged(self, page, params):
         if self._currentpage is not None:
-            if event.tab == self.CODE_PAGE_INDEX:
+            if params.pagemode == PAGE_MODE_TEXT:
                 self._onSwitchToCode()
-
-            elif event.tab == self.RESULT_PAGE_INDEX:
+            elif params.pagemode == PAGE_MODE_PREVIEW:
                 self._onSwitchToPreview()
-
-            elif event.tab == self.htmlcodePageIndex:
+            elif params.pagemode == PAGE_MODE_HTML:
                 self._onSwitchCodeHtml()
+            else:
+                assert False
 
             self.savePageTab(self._currentpage)
-
-        event.Skip()
 
     def _enableActions(self, enabled):
         actionController = self._application.actionController
@@ -233,8 +256,8 @@ class BaseWikiPageView (BaseHtmlPanel):
                        _(u"Error"),
                        wx.ICON_ERROR | wx.OK)
 
-    @BaseHtmlPanel.selectedPageIndex.setter
-    def selectedPageIndex(self, index):
+    @BaseHtmlPanel._selectedPageIndex.setter
+    def _selectedPageIndex(self, index):
         """
         Устанавливает выбранную страницу (код, просмотр или полученный HTML)
         """
@@ -245,10 +268,10 @@ class BaseWikiPageView (BaseHtmlPanel):
         else:
             selectedPage = index
 
-        BaseHtmlPanel.selectedPageIndex.fset(self, selectedPage)
+        BaseHtmlPanel._selectedPageIndex.fset(self, selectedPage)
 
     def openHtmlCode(self):
-        self.selectedPageIndex = self.HTML_RESULT_PAGE_INDEX
+        self._selectedPageIndex = self.HTML_RESULT_PAGE_INDEX
 
     def removeMenu(self):
         mainMenu = self._application.mainWindow.menuController.getRootMenu()
@@ -263,9 +286,9 @@ class BaseWikiPageView (BaseHtmlPanel):
         self.removeMenu()
 
     def updateHtml(self):
-        if self.selectedPageIndex == self.RESULT_PAGE_INDEX:
+        if self.GetPageMode() == PAGE_MODE_PREVIEW:
             self._onSwitchToPreview()
-        elif self.selectedPageIndex == self.HTML_RESULT_PAGE_INDEX:
+        elif self.GetPageMode() == PAGE_MODE_HTML:
             self._onSwitchCodeHtml()
 
     def _createCommonTools(self):

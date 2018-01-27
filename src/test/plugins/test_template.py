@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import unittest
 from tempfile import mkdtemp
@@ -10,31 +10,28 @@ from outwiker.pages.wiki.wikipage import WikiPageFactory
 from test.utils import removeDir
 
 
-class TemplateTest (unittest.TestCase):
+class TemplateTest(unittest.TestCase):
     """Тесты плагина Template"""
-    def setUp (self):
+    def setUp(self):
         self.__createWiki()
 
         dirlist = ["../plugins/template"]
 
         self.loader = PluginsLoader(Application)
-        self.loader.load (dirlist)
+        self.loader.load(dirlist)
 
-
-    def tearDown (self):
-        removeDir (self.path)
+    def tearDown(self):
+        removeDir(self.path)
         self.loader.clear()
 
-
-    def __createWiki (self):
+    def __createWiki(self):
         # Здесь будет создаваться вики
-        self.path = mkdtemp (prefix='Абырвалг абыр')
+        self.path = mkdtemp(prefix='Абырвалг абыр')
 
-        self.wikiroot = WikiDocument.create (self.path)
+        self.wikiroot = WikiDocument.create(self.path)
 
-        WikiPageFactory().create (self.wikiroot, "Страница 1", [])
+        WikiPageFactory().create(self.wikiroot, "Страница 1", [])
         self.testPage = self.wikiroot["Страница 1"]
 
-
-    def testPluginLoad (self):
-        self.assertEqual (len (self.loader), 1)
+    def testPluginLoad(self):
+        self.assertEqual(len(self.loader), 1)

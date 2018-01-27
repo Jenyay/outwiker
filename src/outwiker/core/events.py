@@ -226,8 +226,6 @@ class PageUpdateNeededParams(object):
 class PreWikiOpenParams(object):
     """
     Set of parameters for the onPreWikiOpen event
-
-    Added in OutWiker 2.0.0.795
     """
     def __init__(self, path, readonly):
         self.path = path
@@ -237,8 +235,6 @@ class PreWikiOpenParams(object):
 class PostWikiOpenParams(object):
     """
     Set of parameters for the onPostWikiOpen event
-
-    Added in OutWiker 2.0.0.795
     """
     def __init__(self, path, readonly, success):
         self.path = path
@@ -249,11 +245,21 @@ class PostWikiOpenParams(object):
 class IconsGroupsListInitParams(object):
     """
     Set of parameters for the onIconsGroupsListInit event
-
-    Added in OutWiker 2.1.0.831 (outwiker.core 1.5)
     """
     def __init__(self, groupsList):
         """
         groupsList - list of the outwiker.gui.iconspanel.IconsGroupInfo.
         """
         self.groupsList = groupsList
+
+
+class PageModeChangeParams(object):
+    """
+    Set of parameters for the PageModeChange event
+    """
+    def __init__(self, pagemode):
+        """
+        pagemode - constant from outwiker.core.defines (or other place):
+            PAGE_MODE_TEXT, PAGE_MODE_PREVIEW, PAGE_MODE_HTML
+        """
+        self.pagemode = pagemode

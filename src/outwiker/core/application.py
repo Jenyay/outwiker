@@ -287,6 +287,12 @@ class ApplicationParams(object):
         #     params - instance of the IconsGroupsListInitParams class
         self.onIconsGroupsListInit = Event()
 
+        # Event occurs after switch mode of a page: text / preview / HTML / ...
+        # Parameters:
+        #     page - current (selected) page
+        #     params - instance if the PageModeChangeParams class
+        self.onPageModeChange = Event()
+
     def init(self, configFilename):
         """
         Initialize config and locale

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
+from outwiker.core.defines import PAGE_MODE_TEXT, PAGE_MODE_PREVIEW
 from outwiker.gui.htmltexteditor import HtmlTextEditor
-from outwiker.pages.html.basehtmlpanel import (BaseHtmlPanel,
-                                               EVT_PAGE_TAB_CHANGED)
+from outwiker.pages.html.basehtmlpanel import BaseHtmlPanel
 
 from ..misc import polyActions
 
@@ -14,24 +14,24 @@ class WebPageView(BaseHtmlPanel):
 
         self.mainWindow.UpdateAuiManager()
 
-        self.Bind(EVT_PAGE_TAB_CHANGED, handler=self.onTabChanged)
+        self._application.onPageModeChange += self.onTabChanged
 
     def getTextEditor(self):
         return HtmlTextEditor
 
-    def onTabChanged(self, event):
+    def onTabChanged(self, page, params):
         if self._currentpage is not None:
-            if event.tab == self.RESULT_PAGE_INDEX:
+            if params.pagemode == PAGE_MODE_PREVIEW:
                 self._onSwitchToPreview()
-            else:
+            elif params.pagemode == PAGE_MODE_TEXT:
                 self._onSwitchToCode()
+            else:
+                assert False
 
             self.savePageTab(self._currentpage)
 
-        event.Skip()
-
     def Clear(self):
-        self.Unbind(EVT_PAGE_TAB_CHANGED, handler=self.onTabChanged)
+        self._application.onPageModeChange -= self.onTabChanged
         super(WebPageView, self).Clear()
 
     def _enableActions(self, enabled):

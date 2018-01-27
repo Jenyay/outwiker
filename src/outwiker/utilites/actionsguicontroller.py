@@ -5,7 +5,7 @@
 
 import os.path
 
-from outwiker.pages.html.basehtmlpanel import EVT_PAGE_TAB_CHANGED
+from outwiker.core.defines import PAGE_MODE_TEXT
 
 
 class ActionGUIInfo(object):
@@ -130,15 +130,12 @@ class ActionsGUIController(object):
 
         self._removeActions()
 
-    def _onTabChanged(self, event):
+    def _onTabChanged(self, page, params):
         self._enableTools()
-
-        # Разрешить распространение события дальше
-        event.Skip()
 
     def _enableTools(self):
         pageView = self._getPageView()
-        enabled = (pageView.selectedPageIndex == pageView.CODE_PAGE_INDEX and
+        enabled = (pageView.GetPageMode() == PAGE_MODE_TEXT and
                    not self._application.selectedPage.readonly)
 
         actionController = self._application.actionController
@@ -157,7 +154,7 @@ class ActionsGUIController(object):
 
         if self._isRequestedPageType(page):
             self._createTools()
-            self._getPageView().Bind(EVT_PAGE_TAB_CHANGED, self._onTabChanged)
+            self._application.onPageModeChange += self._onTabChanged
 
     def _isRequestedPageType(self, page):
         return (page is not None and
@@ -171,5 +168,4 @@ class ActionsGUIController(object):
 
         if self._isRequestedPageType(page):
             self._removeTools()
-            self._getPageView().Unbind(EVT_PAGE_TAB_CHANGED,
-                                       handler=self._onTabChanged)
+            self._application.onPageModeChange -= self._onTabChanged

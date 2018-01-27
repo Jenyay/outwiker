@@ -4,21 +4,22 @@ import os
 
 import wx
 
+from outwiker.actions.polyactionsid import *
 from outwiker.core.commands import insertCurrentDate
+from outwiker.core.defines import PAGE_MODE_TEXT, PAGE_MODE_PREVIEW
 from outwiker.gui.htmltexteditor import HtmlTextEditor
 from outwiker.gui.tabledialog import TableDialog
 from outwiker.gui.tablerowsdialog import TableRowsDialog
-from outwiker.pages.html.basehtmlpanel import (BaseHtmlPanel,
-                                               EVT_PAGE_TAB_CHANGED)
+from outwiker.pages.html.basehtmlpanel import BaseHtmlPanel
 from outwiker.pages.html.tabledialogcontroller import (
     TableDialogController,
     TableRowsDialogController
 )
+
 from .actions.autolinewrap import HtmlAutoLineWrap
 from .actions.link import insertLink
 from .actions.switchcoderesult import SwitchCodeResultAction
 from . import defines
-from outwiker.actions.polyactionsid import *
 
 
 class HtmlPageView(BaseHtmlPanel):
@@ -85,7 +86,7 @@ class HtmlPageView(BaseHtmlPanel):
         self.__createCustomTools()
         self.mainWindow.UpdateAuiManager()
 
-        self.Bind(EVT_PAGE_TAB_CHANGED, handler=self.onTabChanged)
+        self._application.onPageModeChange += self.onTabChanged
 
     def getTextEditor(self):
         return HtmlTextEditor
@@ -94,27 +95,26 @@ class HtmlPageView(BaseHtmlPanel):
     def toolsMenu(self):
         return self.__htmlMenu
 
-    def onTabChanged(self, event):
+    def onTabChanged(self, page, params):
         if self._currentpage is not None:
-            if event.tab == self.RESULT_PAGE_INDEX:
+            if params.pagemode == PAGE_MODE_PREVIEW:
                 self._onSwitchToPreview()
-            else:
+            elif params.pagemode == PAGE_MODE_TEXT:
                 self._onSwitchToCode()
+            else:
+                assert False
 
             self.savePageTab(self._currentpage)
 
-        event.Skip()
-
     def Clear(self):
-        self.Unbind(EVT_PAGE_TAB_CHANGED, handler=self.onTabChanged)
-
+        self._application.onPageModeChange -= self.onTabChanged
         self._removeActionTools()
 
         self.mainWindow.toolbars.updatePanesInfo()
         for toolbar_info in self._toolbars:
             self.mainWindow.toolbars.destroyToolBar(toolbar_info[0])
 
-        super(HtmlPageView, self).Clear()
+        super().Clear()
 
     def _removeActionTools(self):
         actionController = self._application.actionController

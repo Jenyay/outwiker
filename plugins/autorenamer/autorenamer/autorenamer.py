@@ -2,8 +2,9 @@
 
 import wx
 
+from outwiker.core.defines import PAGE_MODE_TEXT
 from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
-from outwiker.pages.html.basehtmlpanel import EVT_PAGE_TAB_CHANGED
+
 from .actions import AddAutoRenameTagAction
 from .preferencesPanel import PreferencesPanel
 from .commands import AutoRenameTagCommand
@@ -49,7 +50,7 @@ class AutoRenamer(object):
 
         if page.getTypeString() == u"wiki":
             self.addMenuItem()
-            self._application.mainWindow.pagePanel.pageView.Bind(EVT_PAGE_TAB_CHANGED, self._onTabChanged)
+            self._application.onPageModeChange += self._onTabChanged
             self.enableMenu()
 
     def __onPageViewDestroy(self, page):
@@ -57,20 +58,21 @@ class AutoRenamer(object):
 
         if page.getTypeString() == u"wiki":
             self.removeMenuItem()
-            self._application.mainWindow.pagePanel.pageView.Unbind(EVT_PAGE_TAB_CHANGED, handler=self._onTabChanged)
+            self._application.onPageModeChange -= self._onTabChanged
 
-    def _onTabChanged(self, event):
+    def _onTabChanged(self, page, params):
         self.enableMenu()
-        event.Skip()
 
     def __onWikiParserPrepare(self, parser):
         parser.addCommand(AutoRenameTagCommand(self._application, parser))
 
     def enableMenu(self):
         pageView = self._application.mainWindow.pagePanel.pageView
-        enabled = (pageView.selectedPageIndex == pageView.CODE_PAGE_INDEX and
+        enabled = (pageView.GetPageMode() == PAGE_MODE_TEXT and
                    not self._application.selectedPage.readonly)
-        self._application.actionController.enableTools(AddAutoRenameTagAction.stringId, enabled)
+        self._application.actionController.enableTools(
+            AddAutoRenameTagAction.stringId,
+            enabled)
 
     def addMenuItem(self):
         self._application.actionController.register(AddAutoRenameTagAction(self._application), None)

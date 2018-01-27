@@ -4,7 +4,6 @@ import logging
 import os
 
 import wx
-import wx.lib.newevent
 
 from outwiker.actions.search import (SearchAction,
                                      SearchNextAction,
@@ -14,14 +13,12 @@ from outwiker.core.commands import MessageBox, setStatusText
 from outwiker.core.system import getImagesDir
 from outwiker.core.attachment import Attachment
 from outwiker.core.config import IntegerOption
-from outwiker.core.events import PageUpdateNeededParams
+from outwiker.core.events import PageUpdateNeededParams, PageModeChangeParams
 from outwiker.core.system import getOS
 from outwiker.utilites.textfile import readTextFile
 from outwiker.gui.basetextpanel import BaseTextPanel
 from outwiker.gui.guiconfig import GeneralGuiConfig
-
-# Событие вызывается, когда переключаются вкладки страницы(код, HTML, ...)
-PageTabChangedEvent, EVT_PAGE_TAB_CHANGED = wx.lib.newevent.NewEvent()
+from outwiker.core.defines import PAGE_MODE_TEXT, PAGE_MODE_PREVIEW
 
 
 class BaseHtmlPanel(BaseTextPanel):
@@ -39,7 +36,7 @@ class BaseHtmlPanel(BaseTextPanel):
         # Страница, для которой уже есть сгенерированный HTML
         self._oldPage = None
 
-        # Где хранить параметы текущей страницы страницы(код, просмотр и т.д.)
+        # Где хранить параметы текущей страницы страницы (код, просмотр и т.д.)
         self.tabSectionName = u"Misc"
         self.tabParamName = u"PageIndex"
 
@@ -59,6 +56,24 @@ class BaseHtmlPanel(BaseTextPanel):
                   self.notebook)
         self.Bind(self.EVT_SPELL_ON_OFF, handler=self._onSpellOnOff)
         self._application.onPageUpdate += self._onPageUpdate
+
+    def GetPageMode(self):
+        '''
+        Return the current page mode.
+        '''
+        if self._selectedPageIndex == self.CODE_PAGE_INDEX:
+            return PAGE_MODE_TEXT
+        elif self._selectedPageIndex == self.RESULT_PAGE_INDEX:
+            return PAGE_MODE_PREVIEW
+        assert False
+
+    def SetPageMode(self, pagemode):
+        if pagemode == PAGE_MODE_TEXT:
+            self._selectedPageIndex = self.CODE_PAGE_INDEX
+        elif pagemode == PAGE_MODE_PREVIEW:
+            self._selectedPageIndex = self.RESULT_PAGE_INDEX
+        else:
+            raise ValueError()
 
     def Clear(self):
         self.Unbind(wx.EVT_NOTEBOOK_PAGE_CHANGED,
@@ -98,16 +113,16 @@ class BaseHtmlPanel(BaseTextPanel):
         pass
 
     @property
-    def selectedPageIndex(self):
+    def _selectedPageIndex(self):
         """
-        Возвращает номер выбранной страницы(код или просмотр)
+        Возвращает номер выбранной страницы (код или просмотр)
         """
         return self.notebook.GetSelection()
 
-    @selectedPageIndex.setter
-    def selectedPageIndex(self, index):
+    @_selectedPageIndex.setter
+    def _selectedPageIndex(self, index):
         """
-        Устанавливает выбранную страницу(код или просмотр)
+        Устанавливает выбранную страницу (код или просмотр)
         """
         if index >= 0 and index < self.pageCount:
             self.notebook.SetSelection(index)
@@ -123,7 +138,7 @@ class BaseHtmlPanel(BaseTextPanel):
         self.codeEditor.setDefaultSettings()
 
     def onAttachmentPaste(self, fnames):
-        if self.selectedPageIndex == self.CODE_PAGE_INDEX:
+        if self.GetPageMode() == PAGE_MODE_TEXT:
             text = self._getAttachString(fnames)
             self.codeEditor.AddText(text)
             self.codeEditor.SetFocus()
@@ -143,7 +158,7 @@ class BaseHtmlPanel(BaseTextPanel):
             tabIndex = self._getDefaultPage()
 
         self.codeEditor.SetFocus()
-        self.selectedPageIndex = tabIndex
+        self._selectedPageIndex = tabIndex
 
     def GetContentFromGui(self):
         return self.codeEditor.GetText()
@@ -173,23 +188,25 @@ class BaseHtmlPanel(BaseTextPanel):
         return self.CODE_PAGE_INDEX
 
     def _onTabChanged(self, event):
-        newevent = PageTabChangedEvent(tab=self.selectedPageIndex)
-        wx.PostEvent(self, newevent)
+        pagemode = self.GetPageMode()
+        params = PageModeChangeParams(pagemode)
+        self._application.onPageModeChange(self._application.selectedPage,
+                                           params)
 
     def savePageTab(self, page):
         """
-        Соханить текущую вкладку(код, просмотр и т.п.) в настройки страницы
+        Сохранить текущую вкладку (код, просмотр и т.п.) в настройки страницы
         """
         assert page is not None
         tabOption = IntegerOption(page.params,
                                   self.tabSectionName,
                                   self.tabParamName,
                                   -1)
-        tabOption.value = self.selectedPageIndex
+        tabOption.value = self._selectedPageIndex
 
     def loadPageTab(self, page):
         """
-        Прочитать из страницы настройки текущей вкладки(код, просмотр и т.п.)
+        Прочитать из страницы настройки текущей вкладки (код, просмотр и т.п.)
         """
         assert page is not None
 
@@ -274,7 +291,7 @@ class BaseHtmlPanel(BaseTextPanel):
 
     def _enableAllTools(self):
         """
-        Активировать или дезактивировать инструменты(пункты меню и кнопки)
+        Активировать или дезактивировать инструменты (пункты меню и кнопки)
         в зависимости от текущей выбранной вкладки
         """
         for tool in self.allTools:
@@ -282,7 +299,7 @@ class BaseHtmlPanel(BaseTextPanel):
 
         # Отдельно проверим возможность работы поиска по странице
         # Поиск не должен работать только на странице просмотра
-        searchEnabled = self.selectedPageIndex != self.RESULT_PAGE_INDEX
+        searchEnabled = self.GetPageMode() != PAGE_MODE_PREVIEW
 
         actionController = self._application.actionController
 
@@ -301,15 +318,15 @@ class BaseHtmlPanel(BaseTextPanel):
             return True
 
         assert self.notebook is not None
-        assert self.selectedPageIndex != -1
+        assert self._selectedPageIndex != -1
 
         enabled = (tool.alwaysEnabled or
-                   self.selectedPageIndex == self.CODE_PAGE_INDEX)
+                   self.GetPageMode() == PAGE_MODE_TEXT)
 
         return enabled
 
     def GetSearchPanel(self):
-        if self.selectedPageIndex == self.CODE_PAGE_INDEX:
+        if self.GetPageMode() == PAGE_MODE_TEXT:
             return self.codeEditor.searchPanel
 
         return None
@@ -321,10 +338,10 @@ class BaseHtmlPanel(BaseTextPanel):
         if self._currentpage is None:
             return
 
-        if self.selectedPageIndex == self.CODE_PAGE_INDEX:
-            self.selectedPageIndex = self.RESULT_PAGE_INDEX
+        if self._selectedPageIndex == self.CODE_PAGE_INDEX:
+            self._selectedPageIndex = self.RESULT_PAGE_INDEX
         else:
-            self.selectedPageIndex = self.CODE_PAGE_INDEX
+            self._selectedPageIndex = self.CODE_PAGE_INDEX
 
     def turnText(self, left, right):
         """
@@ -356,9 +373,9 @@ class BaseHtmlPanel(BaseTextPanel):
         self._codeEditor.setDefaultSettings()
 
     def SetFocus(self):
-        if self.selectedPageIndex == self.CODE_PAGE_INDEX:
+        if self.GetPageMode() == PAGE_MODE_TEXT:
             return self.codeEditor.SetFocus()
-        elif self.selectedPageIndex == self.RESULT_PAGE_INDEX:
+        elif self.GetPageMode() == PAGE_MODE_PREVIEW:
             return self.htmlWindow.SetFocus()
 
     def _onPageUpdate(self, sender, **kwargs):
