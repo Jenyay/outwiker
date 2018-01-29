@@ -22,6 +22,10 @@ class Plugin (object, metaclass=ABCMeta):
         # Load plugin's information
         self._version = u'0.0'
 
+        domain = self.name.lower()
+        langdir = os.path.join(self.pluginPath, "locale")
+        self._init_i18n(domain, langdir)
+
     def _init_i18n(self, domain, langdir):
         """
         Инициализация интернационализации
@@ -29,15 +33,15 @@ class Plugin (object, metaclass=ABCMeta):
         langdir - путь до папки с переводами
         """
         language = getLanguageFromConfig(self._application.config)
-        lang = loadLanguage(language, langdir, domain)
-        return lang.gettext
+        self.lang = loadLanguage(language, langdir, domain)
+        self.gettext = self.lang.gettext
+        return self.gettext
 
     @property
     def version(self):
         """
         Свойство должно возвращать строку, описывающую версию плагина
         в формате "x.y.z".
-        Will be reloaded for Outwiker version before 2.0.0.801
         """
         return self._version
 

@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import os.path
-
 from outwiker.core.pluginbase import Plugin
 
 from .i18n import set_
@@ -16,7 +14,7 @@ class PluginCounter (Plugin):
         """
         application - экземпляр класса core.application.ApplicationParams
         """
-        Plugin.__init__(self, application)
+        super().__init__(application)
         self.__controller = Controller(self, application)
 
     ###################################################
@@ -57,19 +55,8 @@ All parameters are optional.
         return _(u"http://jenyay.net/Outwiker/CounterEn")
 
     def initialize(self):
-        self._initlocale(u"counter")
+        set_(self.gettext)
         self.__controller.initialize()
-
-    def _initlocale(self, domain):
-        langdir = os.path.join(os.path.dirname(__file__), "locale")
-        global _
-
-        try:
-            _ = self._init_i18n(domain, langdir)
-        except BaseException as e:
-            print (e)
-
-        set_(_)
 
     def destroy(self):
         """

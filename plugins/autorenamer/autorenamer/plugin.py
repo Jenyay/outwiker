@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import os.path
-
 from outwiker.core.pluginbase import Plugin
 
 from .i18n import set_
@@ -30,17 +28,8 @@ class PluginAutoRenamer(Plugin):
         return u"https://github.com/AenBleidd/OutwikerPlugin"
 
     def initialize(self):
-        self._initlocale(u"AutoRenamer")
+        set_(self.gettext)
         self._autorenamer.initialize()
 
     def destroy(self):
         self._autorenamer.destroy()
-
-    def _initlocale(self, domain):
-        langdir = os.path.join(os.path.dirname(__file__), "locale")
-        global _
-        try:
-            _ = self._init_i18n(domain, langdir)
-        except BaseException as e:
-            print(e)
-        set_(_)

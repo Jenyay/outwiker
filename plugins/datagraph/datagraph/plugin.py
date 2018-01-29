@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import os.path
-
 from outwiker.core.pluginbase import Plugin
 
 from .i18n import set_
@@ -37,23 +35,8 @@ class PluginDataGraph(Plugin):
         return _(u"http://jenyay.net/Outwiker/DataGraphEn")
 
     def initialize(self):
-        if self._application.mainWindow is not None:
-            self._initlocale(u"datagraph")
-
+        set_(self.gettext)
         self.__controller.initialize()
 
     def destroy(self):
         self.__controller.destroy()
-
-    #############################################
-
-    def _initlocale(self, domain):
-        langdir = os.path.join(os.path.dirname(__file__), "locale")
-        global _
-
-        try:
-            _ = self._init_i18n(domain, langdir)
-        except BaseException as e:
-            print(e)
-
-        set_(_)

@@ -5,10 +5,7 @@ import os.path
 from outwiker.core.pluginbase import Plugin
 
 from .controller import Controller
-
-
-def _no_translate(text):
-    return text
+from .i18n import set_
 
 
 class PluginThumbGallery(Plugin):
@@ -32,25 +29,12 @@ class PluginThumbGallery(Plugin):
         return self._loadDescription()
 
     def initialize(self):
-        self._initlocale(u"thumbgallery")
+        set_(self.gettext)
         self._controller.initialize()
-
-    def _initlocale(self, domain):
-        from .i18n import set_
-        langdir = os.path.join(os.path.dirname(__file__), "locale")
-        global _
-
-        try:
-            _ = self._init_i18n(domain, langdir)
-        except BaseException as e:
-            print(e)
-            _ = _no_translate
-
-        set_(_)
 
     def destroy(self):
         """
-        Уничтожение(выгрузка) плагина.
+        Уничтожение (выгрузка) плагина.
         Здесь плагин должен отписаться от всех событий
         """
         self._controller.destroy()
