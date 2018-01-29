@@ -1,49 +1,40 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os.path
 
 from outwiker.core.pluginbase import Plugin
-from outwiker.core.commands import getCurrentVersion
-from outwiker.core.version import Version, StatusSet
 
-__version__ = u"2.0.1"
+from .i18n import set_
+from .controller import Controller
 
 
-if getCurrentVersion() < Version(2, 1, 0, 833, status=StatusSet.DEV):
-    print ("Counter plugin. OutWiker version requirement: 2.1.0.833")
-else:
-    from .i18n import set_
-    from .controller import Controller
-
-    class PluginCounter (Plugin):
+class PluginCounter (Plugin):
+    """
+    Плагин, добавляющий обработку команды (:counter:) в википарсер
+    """
+    def __init__(self, application):
         """
-        Плагин, добавляющий обработку команды (:counter:) в википарсер
+        application - экземпляр класса core.application.ApplicationParams
         """
-        def __init__ (self, application):
-            """
-            application - экземпляр класса core.application.ApplicationParams
-            """
-            Plugin.__init__ (self, application)
-            self.__controller = Controller(self, application)
+        Plugin.__init__(self, application)
+        self.__controller = Controller(self, application)
 
+    ###################################################
+    # Свойства и методы, которые необходимо определить
+    ###################################################
 
-        ###################################################
-        # Свойства и методы, которые необходимо определить
-        ###################################################
+    @property
+    def name(self):
+        return u"Counter"
 
-        @property
-        def name (self):
-            return u"Counter"
+    @property
+    def description(self):
+        description = _(u'''Plugin adds wiki-command (:counter:), allowing the automatic numbering anything on the page.''')
 
-
-        @property
-        def description (self):
-            description = _(u'''Plugin adds wiki-command (:counter:), allowing the automatic numbering anything on the page.''')
-
-            usage = _(u'''<b>Usage:</b>:
+        usage = _(u'''<b>Usage:</b>:
 (:counter parameters... :)''')
 
-            params = _(u'''<b>Parameters:</b>
+        params = _(u'''<b>Parameters:</b>
 All parameters are optional.
 <ul>
 <li><b>name</b> - sets the name of the counter. Counters with different names have independent current values.</li>
@@ -54,47 +45,37 @@ All parameters are optional.
 <li><b>hide</b> - parameter indicates that the counter need to hide, but to increase its value.</li>
 </ul>''')
 
-            return u"""{description}
+        return u"""{description}
 
 {usage}
 
 {params}
-""".format (description=description, usage=usage, params=params)
+""".format(description=description, usage=usage, params=params)
 
+    @property
+    def url(self):
+        return _(u"http://jenyay.net/Outwiker/CounterEn")
 
-        @property
-        def url (self):
-            return _(u"http://jenyay.net/Outwiker/CounterEn")
+    def initialize(self):
+        self._initlocale(u"counter")
+        self.__controller.initialize()
 
+    def _initlocale(self, domain):
+        langdir = os.path.join(os.path.dirname(__file__), "locale")
+        global _
 
-        @property
-        def version (self):
-            return __version__
+        try:
+            _ = self._init_i18n(domain, langdir)
+        except BaseException as e:
+            print (e)
 
+        set_(_)
 
-        def initialize(self):
-            if self._application.mainWindow is not None:
-                self._initlocale(u"counter")
+    def destroy(self):
+        """
+        Уничтожение (выгрузка) плагина.
+        Здесь плагин должен отписаться от всех событий
+        """
+        self.__controller.destroy()
 
-            self.__controller.initialize()
-
-
-        def _initlocale (self, domain):
-            langdir = os.path.join (os.path.dirname (__file__), "locale")
-            global _
-
-            try:
-                _ = self._init_i18n (domain, langdir)
-            except BaseException as e:
-                print (e)
-
-            set_(_)
-
-
-        def destroy (self):
-            """
-            Уничтожение (выгрузка) плагина. Здесь плагин должен отписаться от всех событий
-            """
-            self.__controller.destroy()
-
-        #############################################
+    #############################################
