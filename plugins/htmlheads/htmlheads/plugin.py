@@ -55,6 +55,9 @@ class PluginHtmlHeads(Plugin):
 
     def initialize(self):
         set_(self.gettext)
+
+        global _
+        _ = self.gettext
         self.__controller.initialize()
 
     def destroy(self):

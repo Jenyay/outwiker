@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-19 22:25+0300\n"
+"POT-Creation-Date: 2018-01-30 09:23+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,11 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: controller.py:37
+#: controller.py:67 commandexec/commandcontroller.py:127
+msgid "ExternalTools"
+msgstr ""
+
+#: controller.py:87
 msgid "External Tools [Plugin]"
 msgstr ""
 
@@ -65,20 +69,16 @@ msgstr ""
 msgid "Error"
 msgstr ""
 
-#: commandexec/commandcontroller.py:176
+#: commandexec/commandcontroller.py:120
 msgid ""
 "Run applications by ExternalTools plugin?\n"
 "It may be unsafe."
 msgstr ""
 
-#: commandexec/commandcontroller.py:178
+#: commandexec/commandcontroller.py:122
 msgid ""
 "Run application by ExternalTools plugin?\n"
 "It may be unsafe."
-msgstr ""
-
-#: commandexec/commandcontroller.py:183 commandexec/guicreator.py:54
-msgid "ExternalTools"
 msgstr ""
 
 #: commandexec/actions.py:43
@@ -153,21 +153,22 @@ msgstr ""
 msgid "Can't execute tools"
 msgstr ""
 
-#: plugin.py:39
+#: plugin.py:37
 msgid ""
-"Open notes files with external editor.\n"
+"ExternalTools plug-in allows to open the notes files with external "
+"applications.\n"
 "\n"
-"For OutWiker 1.9 and above ExternalTools adds the (:exec:) command for "
-"creation link or button for execute external applications from wiki page.\n"
+"The plug-in adds the (:exec:) command for creation link or button for "
+"execute external applications from wiki page.\n"
 "\n"
-"The (:exec:) command allow to run many applications. Every application must "
-"writed on the separated lines.\n"
+"The (:exec:) command allows to run many applications. Every application must "
+"be placed at the separated lines.\n"
 "\n"
-"If line begins with \"#\" this line will be ignored. \"#\" in begin of the "
+"If a line begins with \"#\" this line will be ignored. \"#\" in begin of the "
 "line is sign of the comment.\n"
 msgstr ""
 
-#: plugin.py:48
+#: plugin.py:46
 msgid ""
 "The (:exec:) command has the following optional parameters:\n"
 "<ul>\n"
@@ -177,7 +178,7 @@ msgid ""
 "</ul>"
 msgstr ""
 
-#: plugin.py:54
+#: plugin.py:52
 msgid ""
 "Inside (:exec:) command may be macroses. The macroses will be replaced by "
 "appropriate paths:\n"
@@ -193,17 +194,17 @@ msgid ""
 "</ul>"
 msgstr ""
 
-#: plugin.py:62
+#: plugin.py:60
 msgid "Examples"
 msgstr ""
 
-#: plugin.py:64
+#: plugin.py:62
 msgid ""
 "Creating a link for running application.exe:\n"
 "<code><pre>(:exec:)application.exe(:execend:)</pre></code>"
 msgstr ""
 
-#: plugin.py:67
+#: plugin.py:65
 msgid ""
 "Same but creating a button\n"
 "<code><pre>(:exec format=button:)\n"
@@ -211,7 +212,7 @@ msgid ""
 "(:execend:)</pre></code>"
 msgstr ""
 
-#: plugin.py:72
+#: plugin.py:70
 msgid ""
 "Create a link for running application.exe with parameters:\n"
 "<code><pre>(:exec:)\n"
@@ -219,7 +220,7 @@ msgid ""
 "(:execend:)</pre></code>"
 msgstr ""
 
-#: plugin.py:77
+#: plugin.py:75
 msgid ""
 "Run a lot of applications:\n"
 "<code><pre>(:exec title=\"Run application_1, application_2 and "
@@ -230,7 +231,7 @@ msgid ""
 "(:execend:)</pre></code>"
 msgstr ""
 
-#: plugin.py:84
+#: plugin.py:82
 msgid ""
 "Open attached file with application.exe:\n"
 "<code><pre>(:exec:)\n"
@@ -238,7 +239,7 @@ msgid ""
 "(:execend:)</pre></code>"
 msgstr ""
 
-#: plugin.py:89
+#: plugin.py:87
 msgid ""
 "Execute application.exe from attachments folder:\n"
 "<code><pre>(:exec:)\n"
@@ -250,6 +251,6 @@ msgid ""
 "(:execend:)</pre></code>"
 msgstr ""
 
-#: plugin.py:142
+#: plugin.py:143
 msgid "http://jenyay.net/Outwiker/ExternalToolsEn"
 msgstr ""

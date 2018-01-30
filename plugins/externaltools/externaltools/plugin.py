@@ -34,13 +34,13 @@ class PluginExternalTools(Plugin):
 
     @property
     def description(self):
-        description = _(u'''Open notes files with external editor.
+        description = _(u'''ExternalTools plug-in allows to open the notes files with external applications.
 
-For OutWiker 1.9 and above ExternalTools adds the (:exec:) command for creation link or button for execute external applications from wiki page.
+The plug-in adds the (:exec:) command for creation link or button for execute external applications from wiki page.
 
-The (:exec:) command allow to run many applications. Every application must writed on the separated lines.
+The (:exec:) command allows to run many applications. Every application must be placed at the separated lines.
 
-If line begins with "#" this line will be ignored. "#" in begin of the line is sign of the comment.
+If a line begins with "#" this line will be ignored. "#" in begin of the line is sign of the comment.
 ''')
 
         params = _(u'''The (:exec:) command has the following optional parameters:
@@ -126,6 +126,9 @@ Attach:application.exe Attach:my_file.txt
 
     def initialize(self):
         set_(self.gettext)
+
+        global _
+        _ = self.gettext
         self.__controller.initialize()
 
     def destroy(self):

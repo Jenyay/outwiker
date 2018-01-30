@@ -7,147 +7,102 @@ msgid ""
 msgstr ""
 "Project-Id-Version: diagrammer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-18 09:45+0400\n"
-"PO-Revision-Date: 2014-08-18 09:45+0300\n"
+"POT-Creation-Date: 2018-01-30 09:17+0300\n"
+"PO-Revision-Date: 2018-01-30 09:17+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: jenyay.net <jenyay.ilin@gmail.com>\n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 2.0.4\n"
 "X-Poedit-SourceCharset: UTF-8\n"
+
+#: controller.py:103 controller.py:104
+msgid "Diagrammer"
+msgstr "Diagrammer"
 
 #: commanddiagram.py:55
 msgid "Diagram parsing error"
 msgstr "Diagram parsing error"
 
-#: diagrammer.py:53
-msgid "Plugin for the construction of diagrams"
-msgstr "Plugin for the construction of diagrams"
-
-#: diagrammer.py:63
-msgid "http://jenyay.net/Outwiker/DiagrammerEn"
-msgstr "http://jenyay.net/Outwiker/DiagrammerEn"
-
-#: diagramtoolbar.py:25 guicreator.py:69
-msgid "Diagrammer"
-msgstr "Diagrammer"
-
-#: actions/help.py:24
+#: actions/help.py:23
 msgid "Online Help"
 msgstr "Online Help"
 
-#: actions/help.py:29
+#: actions/help.py:27
 msgid "Diagrammer. Go to blockdiag webpage"
 msgstr "Diagrammer. Go to blockdiag webpage"
+
+#: actions/insertgroup.py:25
+msgid "Insert group"
+msgstr "Insert group"
+
+#: actions/insertgroup.py:29
+msgid "Diagrammer. Insert new group"
+msgstr "Diagrammer. Insert new group"
+
+#: actions/insertnode.py:25
+msgid "Insert node"
+msgstr "Insert node"
+
+#: actions/insertnode.py:29
+msgid "Diagrammer. Insert new node"
+msgstr "Diagrammer. Insert new node"
 
 #: actions/insertdiagram.py:26
 msgid "Insert diagram"
 msgstr "Insert diagram"
 
-#: actions/insertdiagram.py:31
+#: actions/insertdiagram.py:30
 msgid "Diagrammer. Insert diagram"
 msgstr "Diagrammer. Insert diagram"
 
-#: actions/insertedge.py:59
+#: actions/insertedge.py:55
 msgid "Insert edge without any arrow"
 msgstr "Insert edge without any arrow"
 
-#: actions/insertedge.py:64
+#: actions/insertedge.py:59
 msgid "Diagrammer. Insert edge without any arrow"
 msgstr "Diagrammer. Insert edge without any arrow"
 
-#: actions/insertedge.py:87
+#: actions/insertedge.py:79
 msgid "Insert edge with the right arrow"
 msgstr "Insert edge with the right arrow"
 
-#: actions/insertedge.py:92
+#: actions/insertedge.py:83
 msgid "Diagrammer. Insert edge with the right arrow"
 msgstr "Diagrammer. Insert edge with the right arrow"
 
-#: actions/insertedge.py:115
+#: actions/insertedge.py:103
 msgid "Insert edge with the left arrow"
 msgstr "Insert edge with the left arrow"
 
-#: actions/insertedge.py:120
+#: actions/insertedge.py:107
 msgid "Diagrammer. Insert edge with the left arrow"
 msgstr "Diagrammer. Insert edge with the left arrow"
 
-#: actions/insertedge.py:142
+#: actions/insertedge.py:127
 msgid "Insert edge with the both arrows"
 msgstr "Insert edge with the both arrows"
 
-#: actions/insertedge.py:147
+#: actions/insertedge.py:131
 msgid "Diagrammer. Insert edge with the both arrows"
 msgstr "Diagrammer. Insert edge with the both arrows"
 
-#: actions/insertgroup.py:26
-msgid "Insert group"
-msgstr "Insert group"
+#: plugin.py:34
+msgid "Plugin for the construction of diagrams"
+msgstr "Plugin for the construction of diagrams"
 
-#: actions/insertgroup.py:31
-msgid "Diagrammer. Insert new group"
-msgstr "Diagrammer. Insert new group"
+#: plugin.py:38
+msgid "http://jenyay.net/Outwiker/DiagrammerEn"
+msgstr "http://jenyay.net/Outwiker/DiagrammerEn"
 
-#: actions/insertnode.py:26
-msgid "Insert node"
-msgstr "Insert node"
-
-#: actions/insertnode.py:31
-msgid "Diagrammer. Insert new node"
-msgstr "Diagrammer. Insert new node"
-
-#: gui/insertdiagramdialog.py:20
-msgid "Insert Diagram"
-msgstr "Insert Diagram"
-
-#: gui/insertdiagramdialog.py:48 gui/insertgroupdialog.py:48
-msgid "Orientation"
-msgstr "Orientation"
-
-#: gui/insertdiagramdialog.py:52
-msgid "Default nodes shape"
-msgstr "Default nodes shape"
-
-#: gui/insertdiagramdialog.py:56
-msgid "Set default nodes background color"
-msgstr "Set default nodes background color"
-
-#: gui/insertdiagramdialog.py:63
-msgid "Set default text color"
-msgstr "Set default text color"
-
-#: gui/insertdiagramdialog.py:70
-msgid "Set default font size"
-msgstr "Set default font size"
-
-#: gui/insertdiagramdialog.py:79
-msgid "Set default nodes width"
-msgstr "Set default nodes width"
-
-#: gui/insertdiagramdialog.py:88
-msgid "Set default nodes height"
-msgstr "Set default nodes height"
-
-#: gui/insertdiagramdialog.py:97
-msgid "Set default horizontal span between nodes"
-msgstr "Set default horizontal span between nodes"
-
-#: gui/insertdiagramdialog.py:106
-msgid "Set default vertical span between nodes"
-msgstr "Set default vertical span between nodes"
-
-#: gui/insertdiagramdialog.py:115 gui/insertedgedialog.py:113
-#: gui/insertgroupdialog.py:79 gui/insertnodedialog.py:134
-msgid "Open the documentation page"
-msgstr "Open the documentation page"
-
-#: gui/insertedgedialog.py:24
+#: gui/insertedgedialog.py:23
 msgid "Insert edge"
 msgstr "Insert edge"
 
-#: gui/insertedgedialog.py:35 gui/insertnodedialog.py:47
+#: gui/insertedgedialog.py:34 gui/insertnodedialog.py:48
 msgid "Options"
 msgstr "Options"
 
@@ -175,17 +130,17 @@ msgstr "Arrow style"
 msgid "Set line color"
 msgstr "Set line color"
 
-#: gui/insertedgedialog.py:87 gui/insertgroupdialog.py:43
-#: gui/insertnodedialog.py:75
+#: gui/insertedgedialog.py:87 gui/insertgroupdialog.py:44
+#: gui/insertnodedialog.py:76
 msgid "Label"
 msgstr "Label"
 
-#: gui/insertedgedialog.py:92 gui/insertnodedialog.py:107
+#: gui/insertedgedialog.py:92 gui/insertnodedialog.py:108
 msgid "Set font size"
 msgstr "Set font size"
 
-#: gui/insertedgedialog.py:101 gui/insertgroupdialog.py:59
-#: gui/insertnodedialog.py:100
+#: gui/insertedgedialog.py:101 gui/insertgroupdialog.py:60
+#: gui/insertnodedialog.py:101
 msgid "Set text color"
 msgstr "Set text color"
 
@@ -193,70 +148,86 @@ msgstr "Set text color"
 msgid "Folded"
 msgstr "Folded"
 
-#: gui/insertedgedialog.py:164
+#: gui/insertedgedialog.py:114 gui/insertdiagramdialog.py:116
+#: gui/insertgroupdialog.py:80 gui/insertnodedialog.py:135
+msgid "Open the documentation page"
+msgstr "Open the documentation page"
+
+#: gui/insertedgedialog.py:159
 msgid "Node1"
 msgstr "Node1"
 
-#: gui/insertedgedialog.py:168
+#: gui/insertedgedialog.py:163
 msgid "Node2"
 msgstr "Node2"
 
-#: gui/insertgroupdialog.py:17
+#: gui/insertdiagramdialog.py:21
+msgid "Insert Diagram"
+msgstr "Insert Diagram"
+
+#: gui/insertdiagramdialog.py:49 gui/insertgroupdialog.py:49
+msgid "Orientation"
+msgstr "Orientation"
+
+#: gui/insertdiagramdialog.py:53
+msgid "Default nodes shape"
+msgstr "Default nodes shape"
+
+#: gui/insertdiagramdialog.py:57
+msgid "Set default nodes background color"
+msgstr "Set default nodes background color"
+
+#: gui/insertdiagramdialog.py:64
+msgid "Set default text color"
+msgstr "Set default text color"
+
+#: gui/insertdiagramdialog.py:71
+msgid "Set default font size"
+msgstr "Set default font size"
+
+#: gui/insertdiagramdialog.py:80
+msgid "Set default nodes width"
+msgstr "Set default nodes width"
+
+#: gui/insertdiagramdialog.py:89
+msgid "Set default nodes height"
+msgstr "Set default nodes height"
+
+#: gui/insertdiagramdialog.py:98
+msgid "Set default horizontal span between nodes"
+msgstr "Set default horizontal span between nodes"
+
+#: gui/insertdiagramdialog.py:107
+msgid "Set default vertical span between nodes"
+msgstr "Set default vertical span between nodes"
+
+#: gui/insertgroupdialog.py:18
 msgid "Insert Group"
 msgstr "Insert Group"
 
-#: gui/insertgroupdialog.py:20
+#: gui/insertgroupdialog.py:21
 msgid "Box"
 msgstr "Box"
 
-#: gui/insertgroupdialog.py:21
+#: gui/insertgroupdialog.py:22
 msgid "Line"
 msgstr "Line"
 
-#: gui/insertgroupdialog.py:38 gui/insertnodedialog.py:66
+#: gui/insertgroupdialog.py:39 gui/insertnodedialog.py:67
 msgid "Node name"
 msgstr "Node name"
 
-#: gui/insertgroupdialog.py:52 gui/insertnodedialog.py:93
+#: gui/insertgroupdialog.py:53 gui/insertnodedialog.py:94
 msgid "Set background color"
 msgstr "Set background color"
 
-#: gui/insertgroupdialog.py:66
+#: gui/insertgroupdialog.py:67
 msgid "Border shape"
 msgstr "Border shape"
 
-#: gui/insertgroupdialog.py:75 gui/insertnodedialog.py:89
+#: gui/insertgroupdialog.py:76 gui/insertnodedialog.py:90
 msgid "Border style"
 msgstr "Border style"
-
-#: gui/insertnodedialog.py:20
-msgid "Insert Node"
-msgstr "Insert Node"
-
-#: gui/insertnodedialog.py:34 gui/propertyfactory.py:349
-#: gui/propertyfactory.py:405
-msgid "Default"
-msgstr "Default"
-
-#: gui/insertnodedialog.py:80
-msgid "Shape"
-msgstr "Shape"
-
-#: gui/insertnodedialog.py:84
-msgid "Stacked"
-msgstr "Stacked"
-
-#: gui/insertnodedialog.py:116
-msgid "Set width"
-msgstr "Set width"
-
-#: gui/insertnodedialog.py:125
-msgid "Set height"
-msgstr "Set height"
-
-#: gui/insertnodedialog.py:173
-msgid "Name of a node can't be empty"
-msgstr "Name of a node can't be empty"
 
 #: gui/propertyfactory.py:22
 msgid "Landscape"
@@ -265,6 +236,11 @@ msgstr "Landscape"
 #: gui/propertyfactory.py:23
 msgid "Portrait"
 msgstr "Portrait"
+
+#: gui/propertyfactory.py:349 gui/propertyfactory.py:406
+#: gui/insertnodedialog.py:35
+msgid "Default"
+msgstr "Default"
 
 #: gui/propertyfactory.py:350
 msgid "Solid"
@@ -278,17 +254,41 @@ msgstr "Dotted"
 msgid "Dashed"
 msgstr "Dashed"
 
-#: gui/propertyfactory.py:406
+#: gui/propertyfactory.py:407
 msgid "Generalization"
 msgstr "Generalization"
 
-#: gui/propertyfactory.py:407
+#: gui/propertyfactory.py:408
 msgid "Composition"
 msgstr "Composition"
 
-#: gui/propertyfactory.py:408
+#: gui/propertyfactory.py:409
 msgid "Aggregation"
 msgstr "Aggregation"
+
+#: gui/insertnodedialog.py:21
+msgid "Insert Node"
+msgstr "Insert Node"
+
+#: gui/insertnodedialog.py:81
+msgid "Shape"
+msgstr "Shape"
+
+#: gui/insertnodedialog.py:85
+msgid "Stacked"
+msgstr "Stacked"
+
+#: gui/insertnodedialog.py:117
+msgid "Set width"
+msgstr "Set width"
+
+#: gui/insertnodedialog.py:126
+msgid "Set height"
+msgstr "Set height"
+
+#: gui/insertnodedialog.py:174
+msgid "Name of a node can't be empty"
+msgstr "Name of a node can't be empty"
 
 #~ msgid "Go to help webpage"
 #~ msgstr "Go to help webpage"

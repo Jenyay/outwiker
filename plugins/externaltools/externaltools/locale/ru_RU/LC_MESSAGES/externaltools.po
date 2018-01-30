@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: externaltools\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-19 22:25+0300\n"
-"PO-Revision-Date: 2018-01-19 22:26+0300\n"
+"POT-Creation-Date: 2018-01-30 09:23+0300\n"
+"PO-Revision-Date: 2018-01-30 09:26+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: jenyay.net <jenyay.ilin@gmail.com>\n"
 "Language: ru_RU\n"
@@ -16,7 +16,11 @@ msgstr ""
 "X-Generator: Poedit 2.0.4\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: controller.py:37
+#: controller.py:67 commandexec/commandcontroller.py:127
+msgid "ExternalTools"
+msgstr "ExternalTools"
+
+#: controller.py:87
 msgid "External Tools [Plugin]"
 msgstr "External Tools [Плагин]"
 
@@ -64,7 +68,7 @@ msgstr "Ошибка сохранения настроек"
 msgid "Error"
 msgstr "Ошибка"
 
-#: commandexec/commandcontroller.py:176
+#: commandexec/commandcontroller.py:120
 msgid ""
 "Run applications by ExternalTools plugin?\n"
 "It may be unsafe."
@@ -72,17 +76,13 @@ msgstr ""
 "Запустить приложения с помощью плагина ExternalTools?\n"
 "Это может быть опасно."
 
-#: commandexec/commandcontroller.py:178
+#: commandexec/commandcontroller.py:122
 msgid ""
 "Run application by ExternalTools plugin?\n"
 "It may be unsafe."
 msgstr ""
 "Запустить приложение с помощью плагина ExternalTools?\n"
 "Это может быть опасно."
-
-#: commandexec/commandcontroller.py:183 commandexec/guicreator.py:54
-msgid "ExternalTools"
-msgstr "ExternalTools"
 
 #: commandexec/actions.py:43
 msgid "Run applications (:exec:)"
@@ -164,31 +164,33 @@ msgstr "Формат"
 msgid "Can't execute tools"
 msgstr "Ошибка запуска приложения"
 
-#: plugin.py:39
+#: plugin.py:37
 msgid ""
-"Open notes files with external editor.\n"
+"ExternalTools plug-in allows to open the notes files with external "
+"applications.\n"
 "\n"
-"For OutWiker 1.9 and above ExternalTools adds the (:exec:) command for "
-"creation link or button for execute external applications from wiki page.\n"
+"The plug-in adds the (:exec:) command for creation link or button for "
+"execute external applications from wiki page.\n"
 "\n"
-"The (:exec:) command allow to run many applications. Every application must "
-"writed on the separated lines.\n"
+"The (:exec:) command allows to run many applications. Every application must "
+"be placed at the separated lines.\n"
 "\n"
-"If line begins with \"#\" this line will be ignored. \"#\" in begin of the "
+"If a line begins with \"#\" this line will be ignored. \"#\" in begin of the "
 "line is sign of the comment.\n"
 msgstr ""
-"Открывает файлы заметок во внешних редакторах.\n"
+"Плагин ExternalTools позволяет открывать файлы заметок во внешних "
+"приложениях.\n"
 "\n"
-"Для OutWiker 1.9 и выше ExternalTools добавляет команду (:exec:) для "
-"создания ссылки или кнопки для запуска внешних приложений с викистраницы.\n"
+"Плагин добавляет команду (:exec:) для создания ссылки или кнопки, "
+"позволяющие запускать внешние приложения с викистраниц..\n"
 "\n"
-"Команда (:exec:) позволяет запускать несколько приложений. Каждое приложение "
-"должно быть записано на отдельной строке.\n"
+"Команда (:exec:) позволяет запускать несколько приложений одновременно. "
+"Каждое приложение должно располагаться на отдельной строке.\n"
 "\n"
-"Если строка начинается с \"#\", то эта строка игнорируется. \"#\" в начале "
-"строки - это знак комментария.\n"
+"Если строка начинается со знака \"#\", то эта строка игнорируется. Знак \"#"
+"\" в начале строки - это знак комментария.\n"
 
-#: plugin.py:48
+#: plugin.py:46
 msgid ""
 "The (:exec:) command has the following optional parameters:\n"
 "<ul>\n"
@@ -204,7 +206,7 @@ msgstr ""
 "<li>title. Этот параметр устанавливает текст для ссылки или кнопки.</li>\n"
 "</ul>"
 
-#: plugin.py:54
+#: plugin.py:52
 msgid ""
 "Inside (:exec:) command may be macroses. The macroses will be replaced by "
 "appropriate paths:\n"
@@ -232,11 +234,11 @@ msgstr ""
 "прикрепленными файлами без слеша на конце.</li>\n"
 "</ul>"
 
-#: plugin.py:62
+#: plugin.py:60
 msgid "Examples"
 msgstr "Примеры"
 
-#: plugin.py:64
+#: plugin.py:62
 msgid ""
 "Creating a link for running application.exe:\n"
 "<code><pre>(:exec:)application.exe(:execend:)</pre></code>"
@@ -244,7 +246,7 @@ msgstr ""
 "Создание ссылки для запуска application.exe:\n"
 "<code><pre>(:exec:)application.exe(:execend:)</pre></code>"
 
-#: plugin.py:67
+#: plugin.py:65
 msgid ""
 "Same but creating a button\n"
 "<code><pre>(:exec format=button:)\n"
@@ -256,7 +258,7 @@ msgstr ""
 "application.exe\n"
 "(:execend:)</pre></code>"
 
-#: plugin.py:72
+#: plugin.py:70
 msgid ""
 "Create a link for running application.exe with parameters:\n"
 "<code><pre>(:exec:)\n"
@@ -268,7 +270,7 @@ msgstr ""
 "application.exe param1 \"c:\\myfolder\\path to file name\"\n"
 "(:execend:)</pre></code>"
 
-#: plugin.py:77
+#: plugin.py:75
 msgid ""
 "Run a lot of applications:\n"
 "<code><pre>(:exec title=\"Run application_1, application_2 and "
@@ -286,7 +288,7 @@ msgstr ""
 "application_3.exe param_1 param_2\n"
 "(:execend:)</pre></code>"
 
-#: plugin.py:84
+#: plugin.py:82
 msgid ""
 "Open attached file with application.exe:\n"
 "<code><pre>(:exec:)\n"
@@ -298,7 +300,7 @@ msgstr ""
 "application.exe Attach:my_file.txt\n"
 "(:execend:)</pre></code>"
 
-#: plugin.py:89
+#: plugin.py:87
 msgid ""
 "Execute application.exe from attachments folder:\n"
 "<code><pre>(:exec:)\n"
@@ -318,9 +320,34 @@ msgstr ""
 "Attach:application.exe Attach:my_file.txt\n"
 "(:execend:)</pre></code>"
 
-#: plugin.py:142
+#: plugin.py:143
 msgid "http://jenyay.net/Outwiker/ExternalToolsEn"
 msgstr "http://jenyay.net/Outwiker/ExternalTools"
+
+#~ msgid ""
+#~ "Open notes files with external editor.\n"
+#~ "\n"
+#~ "For OutWiker 1.9 and above ExternalTools adds the (:exec:) command for "
+#~ "creation link or button for execute external applications from wiki "
+#~ "page.\n"
+#~ "\n"
+#~ "The (:exec:) command allow to run many applications. Every application "
+#~ "must writed on the separated lines.\n"
+#~ "\n"
+#~ "If line begins with \"#\" this line will be ignored. \"#\" in begin of "
+#~ "the line is sign of the comment.\n"
+#~ msgstr ""
+#~ "Открывает файлы заметок во внешних редакторах.\n"
+#~ "\n"
+#~ "Для OutWiker 1.9 и выше ExternalTools добавляет команду (:exec:) для "
+#~ "создания ссылки или кнопки для запуска внешних приложений с "
+#~ "викистраницы.\n"
+#~ "\n"
+#~ "Команда (:exec:) позволяет запускать несколько приложений. Каждое "
+#~ "приложение должно быть записано на отдельной строке.\n"
+#~ "\n"
+#~ "Если строка начинается с \"#\", то эта строка игнорируется. \"#\" в "
+#~ "начале строки - это знак комментария.\n"
 
 #~ msgid ""
 #~ "Run a lot of applications:\n"

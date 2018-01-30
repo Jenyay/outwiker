@@ -39,6 +39,9 @@ class PluginDiagrammer(Plugin):
 
     def initialize(self):
         set_(self.gettext)
+
+        global _
+        _ = self.gettext
         self.__correctSysPath()
         self.__controller.initialize()
 
