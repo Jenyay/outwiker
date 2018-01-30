@@ -38,7 +38,7 @@ class PluginDiagrammer(Plugin):
         return _(u"http://jenyay.net/Outwiker/DiagrammerEn")
 
     def initialize(self):
-        self._initlocale(self.name.lower())
+        set_(self.gettext)
         self.__correctSysPath()
         self.__controller.initialize()
 
@@ -55,16 +55,3 @@ class PluginDiagrammer(Plugin):
         Здесь плагин должен отписаться от всех событий
         """
         self.__controller.destroy()
-
-    #############################################
-
-    def _initlocale(self, domain):
-        langdir = os.path.join(os.path.dirname(__file__), "locale")
-        global _
-
-        try:
-            _ = self._init_i18n(domain, langdir)
-        except BaseException as e:
-            print(e)
-
-        set_(_)

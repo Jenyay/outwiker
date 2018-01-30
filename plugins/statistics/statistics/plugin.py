@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import os.path
-
 import wx
 
 from outwiker.core.pluginbase import Plugin
@@ -47,8 +45,10 @@ Statistics plugin append menu items <b>Tools -> Page Statistic</b> and <b>Tools 
         return _(u"http://jenyay.net/Outwiker/StatisticsEn")
 
     def initialize(self):
-        self._initlocale(u"statistics")
+        set_(self.gettext)
 
+        global _
+        _ = self.gettext
         if self._application.mainWindow is not None:
             self._addMenuItems()
 
@@ -57,17 +57,6 @@ Statistics plugin append menu items <b>Tools -> Page Statistic</b> and <b>Tools 
             self._removeMenu()
 
     #############################################
-
-    def _initlocale(self, domain):
-        langdir = os.path.join(os.path.dirname(__file__), "locale")
-        global _
-
-        try:
-            _ = self._init_i18n(domain, langdir)
-        except BaseException as e:
-            print(e)
-
-        set_(_)
 
     @property
     def toolsMenu(self):

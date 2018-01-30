@@ -1,46 +1,36 @@
-# -*- coding: UTF-8 -*-
-
-import os.path
+# -*- coding: utf-8 -*-
 
 from outwiker.core.pluginbase import Plugin
-from outwiker.core.commands import getCurrentVersion
-from outwiker.core.version import Version, StatusSet
-from outwiker.core.system import getOS
 
-__version__ = u"2.0.0"
-
-if getCurrentVersion() < Version(2, 1, 0, 833, status=StatusSet.DEV):
-    print("HtmlHeads plugin. OutWiker version requirement: 2.1.0.833")
-else:
-    from .i18n import set_
-    from .controller import Controller
+from .i18n import set_
+from .controller import Controller
 
 
-    class PluginHtmlHeads(Plugin):
+class PluginHtmlHeads(Plugin):
+    """
+    This is a main class for HtmlHeads plugin
+    """
+
+    def __init__(self, application):
         """
-        This is a main class for HtmlHeads plugin
+        application - экземпляр класса core.application.ApplicationParams
         """
+        Plugin.__init__(self, application)
+        self.__controller = Controller(self, application)
 
-        def __init__(self, application):
-            """
-            application - экземпляр класса core.application.ApplicationParams
-            """
-            Plugin.__init__(self, application)
-            self.__controller = Controller(self, application)
+    ###################################################
+    # Свойства и методы, которые необходимо определить
+    ###################################################
 
-        ###################################################
-        # Свойства и методы, которые необходимо определить
-        ###################################################
+    @property
+    def name(self):
+        return u"HtmlHeads"
 
-        @property
-        def name(self):
-            return u"HtmlHeads"
+    @property
+    def description(self):
+        description = _(u'''Plugin adds wiki-commands (:title:), (:description:), (:keywords:) and (:htmlhead:)''')
 
-        @property
-        def description(self):
-            description = _(u'''Plugin adds wiki-commands (:title:), (:description:), (:keywords:) and (:htmlhead:)''')
-
-            usage = _(u'''<b>Usage:</b>
+        usage = _(u'''<b>Usage:</b>
 (:title Page title:)
 
 (:description Page description:)
@@ -54,40 +44,22 @@ else:
 (:htmlheadend:)
 ''')
 
-            return u"""{description}
+        return u"""{description}
 
 {usage}
 """.format(description=description, usage=usage)
 
-        @property
-        def url(self):
-            return _(u"http://jenyay.net/Outwiker/HtmlHeadsEn")
+    @property
+    def url(self):
+        return _(u"http://jenyay.net/Outwiker/HtmlHeadsEn")
 
-        @property
-        def version(self):
-            return __version__
+    def initialize(self):
+        set_(self.gettext)
+        self.__controller.initialize()
 
-        def initialize(self):
-            if self._application.mainWindow is not None:
-                self._initlocale(u"htmlheads")
-
-            self.__controller.initialize()
-
-        def _initlocale(self, domain):
-            langdir = os.path.join(os.path.dirname(__file__), "locale")
-            global _
-
-            try:
-                _ = self._init_i18n(domain, langdir)
-            except BaseException as e:
-                print (e)
-
-            set_(_)
-
-        def destroy(self):
-            """
-            Уничтожение (выгрузка) плагина. Здесь плагин должен отписаться от всех событий
-            """
-            self.__controller.destroy()
-
-            #############################################
+    def destroy(self):
+        """
+        Уничтожение (выгрузка) плагина.
+        Здесь плагин должен отписаться от всех событий
+        """
+        self.__controller.destroy()

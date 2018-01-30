@@ -39,7 +39,10 @@ class PluginWebPage (Plugin):
         return _(u"http://jenyay.net/Outwiker/WebPageEn")
 
     def initialize(self):
-        self._initlocale(u'webpage')
+        set_(self.gettext)
+
+        global _
+        _ = self.gettext
         self.__controller.initialize()
 
     def destroy(self):

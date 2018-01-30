@@ -1,81 +1,49 @@
-# -*- coding: UTF-8 -*-
-
-import os.path
-import logging
+# -*- coding: utf-8 -*-
 
 from outwiker.core.pluginbase import Plugin
-from outwiker.core.commands import getCurrentVersion
-from outwiker.core.version import Version, StatusSet
-from outwiker.core.system import getOS
+
+from .i18n import set_
+from .controller import Controller
 
 
-__version__ = u'2.0.1'
+class PluginPageTypeColor(Plugin):
+    def __init__(self, application):
+        """
+        application - экземпляр класса core.application.ApplicationParams
+        """
+        super().__init__(application)
+        self.__controller = Controller(self, application)
 
+    @property
+    def application(self):
+        return self._application
 
-if getCurrentVersion() < Version(2, 1, 0, 833, status=StatusSet.DEV):
-    logging.warning ("PageTypeColor plugin. OutWiker version requirement: 2.1.0.833")
-else:
-    from .i18n import set_
-    from .controller import Controller
+    ###################################################
+    # Свойства и методы, которые необходимо определить
+    ###################################################
 
-    class PluginPageTypeColor (Plugin):
-        def __init__ (self, application):
-            """
-            application - экземпляр класса core.application.ApplicationParams
-            """
-            super (PluginPageTypeColor, self).__init__ (application)
-            self.__controller = Controller(self, application)
+    @property
+    def name(self):
+        return u"PageTypeColor"
 
+    @property
+    def description(self):
+        return _(u"Plugin colorize the page dialog controls in depending on the selected page type.")
 
-        @property
-        def application (self):
-            return self._application
+    @property
+    def url(self):
+        return _(u"http://jenyay.net/Outwiker/PageTypeColorEn")
 
+    def initialize(self):
+        set_(self.gettext)
 
-        ###################################################
-        # Свойства и методы, которые необходимо определить
-        ###################################################
+        global _
+        _ = self.gettext
+        self.__controller.initialize()
 
-        @property
-        def name (self):
-            return u"PageTypeColor"
-
-
-        @property
-        def description (self):
-            return _(u"Plugin colorize the page dialog controls in depending on the selected page type.")
-
-
-        @property
-        def version (self):
-            return __version__
-
-
-        @property
-        def url (self):
-            return _(u"http://jenyay.net/Outwiker/PageTypeColorEn")
-
-
-        def initialize(self):
-            self._initlocale(u"pagetypecolor")
-            self.__controller.initialize()
-
-
-        def destroy (self):
-            """
-            Уничтожение (выгрузка) плагина. Здесь плагин должен отписаться от всех событий
-            """
-            self.__controller.destroy()
-
-        #############################################
-
-        def _initlocale (self, domain):
-            langdir = os.path.join (os.path.dirname (__file__), "locale")
-            global _
-
-            try:
-                _ = self._init_i18n (domain, langdir)
-            except BaseException as e:
-                print (e)
-
-            set_(_)
+    def destroy(self):
+        """
+        Уничтожение (выгрузка) плагина.
+        Здесь плагин должен отписаться от всех событий
+        """
+        self.__controller.destroy()

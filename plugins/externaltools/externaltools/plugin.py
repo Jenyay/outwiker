@@ -6,8 +6,6 @@
 внешние программы.
 """
 
-import os.path
-
 from outwiker.core.pluginbase import Plugin
 
 from .i18n import set_
@@ -127,7 +125,7 @@ Attach:application.exe Attach:my_file.txt
             )
 
     def initialize(self):
-        self.__initlocale()
+        set_(self.gettext)
         self.__controller.initialize()
 
     def destroy(self):
@@ -140,18 +138,3 @@ Attach:application.exe Attach:my_file.txt
     @property
     def url(self):
         return _(u"http://jenyay.net/Outwiker/ExternalToolsEn")
-
-    #############################################
-
-    def __initlocale(self):
-        domain = u"externaltools"
-
-        langdir = os.path.join(os.path.dirname(__file__), "locale")
-
-        try:
-            global _
-            _ = self._init_i18n(domain, langdir)
-
-            set_(_)
-        except BaseException as e:
-            print(e)

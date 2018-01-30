@@ -1,15 +1,9 @@
 # -*- coding: utf-8 -*-
 
-import os.path
-import logging
-
 from outwiker.core.pluginbase import Plugin
 
 from .controller import Controller
-
-
-def _no_translate(text):
-    return text
+from .i18n import set_
 
 
 class PluginName(Plugin):
@@ -42,7 +36,10 @@ class PluginName(Plugin):
         return _(u"http://jenyay.net")
 
     def initialize(self):
-        self._initlocale(u"pluginname")
+        set_(self.gettext)
+
+        global _
+        _ = self.gettext
         self.__controller.initialize()
 
     def destroy(self):
@@ -51,17 +48,3 @@ class PluginName(Plugin):
         The plugin must unbind all events.
         """
         self.__controller.destroy()
-
-    #############################################
-
-    def _initlocale(self, domain):
-        from .i18n import set_
-        langdir = os.path.join(os.path.dirname(__file__), "locale")
-        global _
-
-        try:
-            _ = self._init_i18n(domain, langdir)
-        except BaseException:
-            _ = _no_translate
-
-        set_(_)

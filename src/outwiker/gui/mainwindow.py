@@ -75,7 +75,7 @@ logger = logging.getLogger('outwiker.gui.mainwindow')
 
 class MainWindow(wx.Frame):
     def __init__(self, *args, **kwds):
-        logger.debug(u'MainWindow initialize started')
+        logger.debug(u'MainWindow initializing begin')
         kwds["style"] = wx.DEFAULT_FRAME_STYLE
         wx.Frame.__init__(self, *args, **kwds)
 
@@ -126,7 +126,7 @@ class MainWindow(wx.Frame):
         logger.debug(u'MainWindow. Create the tray icon')
         self.taskBarIconController = getTrayIconController(Application, self)
 
-        logger.debug(u'MainWindow initialize ended')
+        logger.debug(u'MainWindow initializing end')
 
     def _createMenu(self):
         logger.debug(u'MainWindow. Create the main menu')

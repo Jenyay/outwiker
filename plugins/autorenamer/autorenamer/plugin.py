@@ -29,6 +29,9 @@ class PluginAutoRenamer(Plugin):
 
     def initialize(self):
         set_(self.gettext)
+
+        global _
+        _ = self.gettext
         self._autorenamer.initialize()
 
     def destroy(self):

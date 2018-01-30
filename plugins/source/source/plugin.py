@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import logging
 import os.path
 import sys
 
@@ -9,12 +8,9 @@ from outwiker.core.pluginbase import Plugin
 from .i18n import set_
 
 
-logger = logging.getLogger('source plug-in')
-
-
 class PluginSource(Plugin):
     """
-    Плагин, добавляющий обработку команды(:source:) в википарсер
+    Плагин, добавляющий обработку команды (:source:) в википарсер
     """
     def __init__(self, application):
         """
@@ -28,7 +24,10 @@ class PluginSource(Plugin):
         self.__controller = Controller(self, application)
 
     def initialize(self):
-        self._initlocale(u"source")
+        set_(self.gettext)
+
+        global _
+        _ = self.gettext
         self.__controller.initialize()
 
     def __correctSysPath(self):
@@ -43,7 +42,7 @@ class PluginSource(Plugin):
 
     @property
     def description(self):
-        description = _(u"Add command(:source:) in wiki parser. This command highlight your source code.")
+        description = _(u"Add command (:source:) in wiki parser. This command highlight your source code.")
 
         usage = _(u"""<B>Usage:</B>:
 (:source params... :)
@@ -124,17 +123,6 @@ print "Hello World!"
     @property
     def url(self):
         return _(u"http://jenyay.net/Outwiker/SourcePluginEn")
-
-    def _initlocale(self, domain):
-        langdir = os.path.join(os.path.dirname(__file__), "locale")
-        global _
-
-        try:
-            _ = self._init_i18n(domain, langdir)
-        except BaseException as e:
-            logger.warning(e)
-
-        set_(_)
 
     def destroy(self):
         """

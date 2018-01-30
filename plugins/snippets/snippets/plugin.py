@@ -5,9 +5,7 @@ import sys
 
 from outwiker.core.pluginbase import Plugin
 
-
-def _no_translate(text):
-    return text
+from .i18n import set_
 
 
 class PluginSnippets (Plugin):
@@ -15,7 +13,7 @@ class PluginSnippets (Plugin):
         """
         application - экземпляр класса core.application.ApplicationParams
         """
-        super(PluginSnippets, self).__init__(application)
+        super().__init__(application)
         self._correctSysPath()
 
         self.__controller = None
@@ -41,7 +39,10 @@ class PluginSnippets (Plugin):
         return _(u"http://jenyay.net/Outwiker/SnippetsEn")
 
     def initialize(self):
-        self._initlocale(u'snippets')
+        set_(self.gettext)
+
+        global _
+        _ = self.gettext
         from .controller import Controller
 
         self.__controller = Controller(self, self._application)
@@ -51,18 +52,6 @@ class PluginSnippets (Plugin):
         self.__controller.destroy()
 
     #############################################
-
-    def _initlocale(self, domain):
-        from .i18n import set_
-        langdir = os.path.join(os.path.dirname(__file__), "locale")
-        global _
-
-        try:
-            _ = self._init_i18n(domain, langdir)
-        except BaseException:
-            _ = _no_translate
-
-        set_(_)
 
     def _correctSysPath(self):
         libspath = os.path.join(self._pluginPath, u'libs')

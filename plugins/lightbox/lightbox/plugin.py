@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 
-import os.path
-
 from outwiker.core.pluginbase import Plugin
 
 from .controller import Controller
+from .i18n import set_
 
 
 class PluginLightbox(Plugin):
@@ -40,24 +39,15 @@ bla-bla-bla...
         return _(u"http://jenyay.net/Outwiker/LightboxEn")
 
     def initialize(self):
-        self._initlocale(u"lightbox")
-        self._controller.initialize()
+        set_(self.gettext)
 
-    def _initlocale(self, domain):
-        from .i18n import set_
-        langdir = os.path.join(os.path.dirname(__file__), "locale")
         global _
-
-        try:
-            _ = self._init_i18n(domain, langdir)
-        except BaseException as e:
-            print(e)
-
-        set_(_)
+        _ = self.gettext
+        self._controller.initialize()
 
     def destroy(self):
         """
-        Уничтожение(выгрузка) плагина.
+        Уничтожение (выгрузка) плагина.
         Здесь плагин должен отписаться от всех событий
         """
         self._controller.destroy()

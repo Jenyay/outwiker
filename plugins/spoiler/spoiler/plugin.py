@@ -2,15 +2,10 @@
 
 # Плагин для вставки свернутого текста
 
-import os.path
-
 from outwiker.core.pluginbase import Plugin
 
 from .controller import Controller
-
-
-def _no_translate(text):
-    return text
+from .i18n import set_
 
 
 class PluginSpoiler(Plugin):
@@ -25,21 +20,11 @@ class PluginSpoiler(Plugin):
         self._controller = Controller(self, application)
 
     def initialize(self):
-        self._initlocale(u"spoiler")
-        self._controller.initialize()
+        set_(self.gettext)
 
-    def _initlocale(self, domain):
-        from .i18n import set_
-        langdir = os.path.join(os.path.dirname(__file__), "locale")
         global _
-
-        try:
-            _ = self._init_i18n(domain, langdir)
-        except BaseException as e:
-            print(e)
-            _ = _no_translate
-
-        set_(_)
+        _ = self.gettext
+        self._controller.initialize()
 
     @property
     def name(self):

@@ -38,7 +38,10 @@ Append menu item "Help -> Check for Updates..."''')
         return _(u"http://jenyay.net/Outwiker/UpdateNotifierEn")
 
     def initialize(self):
-        self._initlocale(u"updatenotifier")
+        set_(self.gettext)
+
+        global _
+        _ = self.gettext
         self._controller.initialize()
 
     def destroy(self):
@@ -47,17 +50,6 @@ Append menu item "Help -> Check for Updates..."''')
     @property
     def pluginPath(self):
         return self._pluginPath
-
-    def _initlocale(self, domain):
-        langdir = os.path.join(os.path.dirname(__file__), "locale")
-        global _
-
-        try:
-            _ = self._init_i18n(domain, langdir)
-        except BaseException as e:
-            logger(e)
-
-        set_(_)
 
     def _correctSysPath(self):
         libspath = os.path.join(self._pluginPath, u'libs')

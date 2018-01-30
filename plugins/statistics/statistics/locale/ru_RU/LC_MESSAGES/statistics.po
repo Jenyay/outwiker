@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Statistics\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-15 22:01+0400\n"
-"PO-Revision-Date: 2013-05-15 22:03+0300\n"
+"POT-Creation-Date: 2018-01-29 23:31+0300\n"
+"PO-Revision-Date: 2018-01-29 23:33+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: jenyay.net <jenyay.ilin@gmail.com>\n"
 "Language: ru_RU\n"
@@ -16,7 +16,106 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 2.0.4\n"
+
+#: tagsinfo.py:35
+#, python-brace-format
+msgid "Tags count: {0}"
+msgstr "Количество меток: {0}"
+
+#: tagsinfo.py:39
+msgid "Most frequently used tags:"
+msgstr "Самые часто используемые метки:"
+
+#: tagsinfo.py:47
+msgid "Most rarely used tags:"
+msgstr "Самые редко используемые метки:"
+
+#: pageattachmentsizeinfo.py:21
+msgid ""
+"Pages with the largest size of attachments (in brackets the size of "
+"attachments):"
+msgstr ""
+"Страницы с наибольшим размером прикрепленных файлов (в скобках указан размер "
+"всех прикрепленных файлов):"
+
+#: pageattachmentsizeinfo.py:40
+msgid "kB"
+msgstr "кБ"
+
+#: maxdepthinfo.py:23
+#, python-brace-format
+msgid "Max page depth: {0}"
+msgstr "Максимальная глубина вложенности: {0}"
+
+#: pagestatdialog.py:22 plugin.py:73
+msgid "Page Statistic"
+msgstr "Статистика страницы"
+
+#: pagestatdialog.py:64
+msgid "Word count"
+msgstr "Количество слов"
+
+#: pagestatdialog.py:80
+msgid "Line count"
+msgstr "Количество строк"
+
+#: pagestatdialog.py:96
+msgid "Character count"
+msgstr "Количество символов"
+
+#: pagestatdialog.py:112
+msgid "Character count without spaces"
+msgstr "Количество символов, исключая пробелы"
+
+#: pagestatdialog.py:128
+msgid "Number of attachments"
+msgstr "Количество прикрепленных файлов"
+
+#: pagestatdialog.py:144
+msgid "Size of attachments (kB)"
+msgstr "Размер прикрепленных файлов (кБ)"
+
+#: pagecountinfo.py:17
+#, python-brace-format
+msgid "Page count: {0}"
+msgstr "Количество страниц: {0}"
+
+#: plugin.py:39
+msgid ""
+"The plugin to display statistics. \n"
+"                \n"
+"Statistics plugin append menu items <b>Tools -> Page Statistic</b> and "
+"<b>Tools -> Tree Statistic</b>."
+msgstr ""
+"Плагин для показа статистики. \n"
+"                \n"
+"Плагин Statistics добавляет пункт меню <b>Инструменты -> Статистика "
+"страницы</b> и <b>Инструменты -> Статистика дерева</b>."
+
+#: plugin.py:45
+msgid "http://jenyay.net/Outwiker/StatisticsEn"
+msgstr "http://jenyay.net/Outwiker/Statistics"
+
+#: plugin.py:79 treestatdialog.py:51
+msgid "Tree Statistic"
+msgstr "Статистика дерева"
+
+#: treestatdialog.py:95
+msgid "A tree has no pages"
+msgstr "В дереве нет страниц"
+
+#: treestatdialog.py:98
+msgid "Collecting statistics. Please wait..."
+msgstr "Сбор статистики. Пожалуйста, подождите..."
+
+#: treestatdialog.py:102
+msgid "Statistics"
+msgstr "Статистика"
+
+#: treestatdialog.py:103
+msgid "Collecting statistics..."
+msgstr "Сбор статистики..."
 
 #: datepageinfo.py:35
 msgid "Recent edited pages:"
@@ -26,105 +125,20 @@ msgstr "Последние измененные страницы:"
 msgid "Oldest pages:"
 msgstr "Самые старые страницы"
 
-#: maxdepthinfo.py:24
-msgid "Max page depth: {0}"
-msgstr "Максимальная глубина вложенности: {0}"
-
-#: pageattachmentsizeinfo.py:24
-msgid ""
-"Pages with the largest size of attachments (in brackets the size of "
-"attachments):"
-msgstr ""
-"Страницы с наибольшим размером прикрепленных файлов (в скобках указан размер "
-"всех прикрепленных файлов):"
-
-#: pageattachmentsizeinfo.py:43
-msgid "kB"
-msgstr "кБ"
-
-#: pagecontentlengthinfo.py:24
+#: pagecontentlengthinfo.py:21
 msgid "The longest notes (in brackets the number of characters):"
 msgstr "Самые длинные заметки (в скобках указано количество символов):"
 
-#: pagecountinfo.py:18
-msgid "Page count: {0}"
-msgstr "Количество страниц: {0}"
-
-#: pagestatdialog.py:23 statistics.py:108
-msgid "Page Statistic"
-msgstr "Статистика страницы"
-
-#: pagestatdialog.py:66
-msgid "Word count"
-msgstr "Количество слов"
-
-#: pagestatdialog.py:82
-msgid "Line count"
-msgstr "Количество строк"
-
-#: pagestatdialog.py:98
-msgid "Character count"
-msgstr "Количество символов"
-
-#: pagestatdialog.py:114
-msgid "Character count without spaces"
-msgstr "Количество символов, исключая пробелы"
-
-#: pagestatdialog.py:130
-msgid "Number of attachments"
-msgstr "Количество прикрепленных файлов"
-
-#: pagestatdialog.py:146
-msgid "Size of attachments (kB)"
-msgstr "Размер прикрепленных файлов (кБ)"
-
-#: statistics.py:49
-msgid ""
-"The plugin to display statistics. \n"
-"                    \n"
-"Statistics plugin append menu items <b>Tools -> Page Statistic</b> and "
-"<b>Tools -> Tree Statistic</b>."
-msgstr ""
-"Плагин для показа статистики. \n"
-"                    \n"
-"Плагин Statistics добавляет пункты меню <b>Инструменты -> Статистика "
-"страницы</b> и <b>Инструменты -> Статистика дерева</b>."
-
-#: statistics.py:61
-msgid "http://jenyay.net/Outwiker/StatisticsEn"
-msgstr "http://jenyay.net/Outwiker/Statistics"
-
-#: statistics.py:111 treestatdialog.py:53
-msgid "Tree Statistic"
-msgstr "Статистика дерева"
-
-#: tagsinfo.py:36
-msgid "Tags count: {0}"
-msgstr "Количество меток: {0}"
-
-#: tagsinfo.py:40
-msgid "Most frequently used tags:"
-msgstr "Самые часто используемые метки:"
-
-#: tagsinfo.py:48
-msgid "Most rarely used tags:"
-msgstr "Самые редко используемые метки:"
-
-#: treestatdialog.py:96
-msgid "A tree has no pages"
-msgstr "В дереве нет страниц"
-
-#: treestatdialog.py:99
-msgid "Collecting statistics. Please wait..."
-msgstr "Сбор статистики. Пожалуйста, подождите..."
-
-#: treestatdialog.py:103
-msgid "Statistics"
-msgstr "Статистика"
-
-#: treestatdialog.py:104
-msgid "Collecting statistics..."
-msgstr "Сбор статистики..."
+#~ msgid ""
+#~ "The plugin to display statistics. \n"
+#~ "                    \n"
+#~ "Statistics plugin append menu items <b>Tools -> Page Statistic</b> and "
+#~ "<b>Tools -> Tree Statistic</b>."
+#~ msgstr ""
+#~ "Плагин для показа статистики. \n"
+#~ "                    \n"
+#~ "Плагин Statistics добавляет пункты меню <b>Инструменты -> Статистика "
+#~ "страницы</b> и <b>Инструменты -> Статистика дерева</b>."
 
 #~ msgid "Plugin to display statistics"
 #~ msgstr "Плагин для показа статистики"

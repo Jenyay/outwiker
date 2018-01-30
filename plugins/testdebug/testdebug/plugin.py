@@ -22,6 +22,7 @@ from .tokendebug import DebugTokenFactory
 from .newpagedialogpanel import NewPageDialogPanel
 from .debugconfig import DebugConfig
 from .pagedialogcontroller import DebugPageDialogController
+from .i18n import set_
 
 
 class PluginDebug(Plugin):
@@ -64,19 +65,15 @@ class PluginDebug(Plugin):
         config.enableOnIconsGroupsListInit.value = self._enableOnIconsGroupsListInit
 
     def initialize(self):
+        set_(self.gettext)
+
+        global _
+        _ = self.gettext
+
         self.enableFeatures()
 
-        domain = u"testdebug"
         self.__ID_TREE_POPUP = wx.NewId()
         self.__ID_TRAY_POPUP = wx.NewId()
-
-        langdir = os.path.join(os.path.dirname(__file__), "locale")
-        global _
-
-        try:
-            _ = self._init_i18n(domain, langdir)
-        except BaseException as e:
-            print(e)
 
         self.__menuName = _(u"Debug")
 
@@ -391,7 +388,7 @@ class PluginDebug(Plugin):
 
     @property
     def name(self):
-        return u"Debug Plugin"
+        return u"TestDebug"
 
     @property
     def description(self):

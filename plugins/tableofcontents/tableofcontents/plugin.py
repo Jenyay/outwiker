@@ -1,80 +1,49 @@
-# -*- coding: UTF-8 -*-
-
-import os.path
+# -*- coding: utf-8 -*-
 
 from outwiker.core.pluginbase import Plugin
-from outwiker.core.commands import getCurrentVersion
-from outwiker.core.version import Version, StatusSet
-from outwiker.core.system import getOS
 
-__version__ = u"1.0.4"
+from .i18n import set_
+from .controller import Controller
 
 
-if getCurrentVersion() < Version (1, 8, 0, 731, status=StatusSet.DEV):
-    print ("ChangeUID plugin. OutWiker version requirement: 1.8.0.731")
-else:
-    from .i18n import set_
-    from .controller import Controller
+class PluginTableOfContents(Plugin):
+    def __init__(self, application):
+        """
+        application - экземпляр класса core.application.ApplicationParams
+        """
+        Plugin.__init__(self, application)
+        self.__controller = Controller(self, application)
 
+    @property
+    def application(self):
+        return self._application
 
-    class PluginTableOfContents (Plugin):
-        def __init__ (self, application):
-            """
-            application - экземпляр класса core.application.ApplicationParams
-            """
-            Plugin.__init__ (self, application)
-            self.__controller = Controller(self, application)
+    ###################################################
+    # Свойства и методы, которые необходимо определить
+    ###################################################
 
+    @property
+    def name(self):
+        return u"TableOfContents"
 
-        @property
-        def application (self):
-            return self._application
+    @property
+    def description(self):
+        return _(u'''Plugin add the menu "Wiki - Table of contents" and the wiki command (:toc:) for generation of the table of contents.''')
 
+    @property
+    def url(self):
+        return _(u"http://jenyay.net/Outwiker/ContentsEn")
 
-        ###################################################
-        # Свойства и методы, которые необходимо определить
-        ###################################################
+    def initialize(self):
+        set_(self.gettext)
 
-        @property
-        def name (self):
-            return u"TableOfContents"
+        global _
+        _ = self.gettext
+        self.__controller.initialize()
 
-
-        @property
-        def description (self):
-            return _(u'''Plugin add the menu "Wiki - Table of contents" and the wiki command (:toc:) for generation of the table of contents.''')
-
-
-        @property
-        def version (self):
-            return __version__
-
-
-        @property
-        def url (self):
-            return _(u"http://jenyay.net/Outwiker/ContentsEn")
-
-
-        def initialize(self):
-            self._initlocale(u"tableofcontents")
-            self.__controller.initialize()
-
-
-        def destroy (self):
-            """
-            Уничтожение (выгрузка) плагина. Здесь плагин должен отписаться от всех событий
-            """
-            self.__controller.destroy()
-
-        #############################################
-
-        def _initlocale (self, domain):
-            langdir = os.path.join (os.path.dirname (__file__), "locale")
-            global _
-
-            try:
-                _ = self._init_i18n (domain, langdir)
-            except BaseException as e:
-                print (e)
-
-            set_(_)
+    def destroy(self):
+        """
+        Уничтожение (выгрузка) плагина.
+        Здесь плагин должен отписаться от всех событий
+        """
+        self.__controller.destroy()

@@ -1,62 +1,43 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
-import os.path
 
 from outwiker.core.pluginbase import Plugin
-from outwiker.core.commands import getCurrentVersion
-from outwiker.core.version import Version, StatusSet
+
+from .guicontroller import GuiController
+from .i18n import set_
 
 
-def _no_translate(text):
-    return text
+class PluginHackPage(Plugin):
+    def __init__(self, application):
+        super().__init__(application)
 
+    @property
+    def application(self):
+        return self._application
 
-if getCurrentVersion() < Version(2, 1, 0, 833, status=StatusSet.DEV):
-    print(u"HackPage plugin. OutWiker version requirement: 2.1.0.833")
-else:
-    class PluginHackPage(Plugin):
-        def __init__(self, application):
-            super(PluginHackPage, self).__init__(application)
+    ###################################################
+    # Свойства и методы, которые необходимо определить
+    ###################################################
 
-        @property
-        def application(self):
-            return self._application
+    @property
+    def name(self):
+        return u"HackPage"
 
-        ###################################################
-        # Свойства и методы, которые необходимо определить
-        ###################################################
+    @property
+    def description(self):
+        return _(u"The HackPage plugin allow to edit hidden page properties")
 
-        @property
-        def name(self):
-            return u"HackPage"
+    @property
+    def url(self):
+        return _(u"http://jenyay.net/Outwiker/HackPageEn")
 
-        @property
-        def description(self):
-            return _(u"The HackPage plugin allow to edit hidden page properties")
+    def initialize(self):
+        set_(self.gettext)
 
-        @property
-        def url(self):
-            return _(u"http://jenyay.net/Outwiker/HackPageEn")
+        global _
+        _ = self.gettext
+        self.__controller = GuiController(self, self._application)
+        self.__controller.initialize()
 
-        def initialize(self):
-            from hackpage.guicontroller import GuiController
-            self._initlocale(u"hackpage")
-            self.__controller = GuiController(self, self._application)
-            self.__controller.initialize()
-
-        def destroy(self):
-            self.__controller.destroy()
-
-        #############################################
-
-        def _initlocale(self, domain):
-            from .i18n import set_
-            langdir = os.path.join(os.path.dirname(__file__), "locale")
-            global _
-
-            try:
-                _ = self._init_i18n(domain, langdir)
-            except BaseException:
-                _ = _no_translate
-
-            set_(_)
+    def destroy(self):
+        self.__controller.destroy()

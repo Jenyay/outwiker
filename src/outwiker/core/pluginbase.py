@@ -3,6 +3,7 @@
 from abc import ABCMeta, abstractmethod, abstractproperty
 import sys
 import os
+import logging
 
 from outwiker.core.i18n import getLanguageFromConfig, loadLanguage
 
@@ -22,6 +23,8 @@ class Plugin (object, metaclass=ABCMeta):
         # Load plugin's information
         self._version = u'0.0'
 
+        self.logger = logging.getLogger(self.name)
+
         domain = self.name.lower()
         langdir = os.path.join(self.pluginPath, "locale")
         self._init_i18n(domain, langdir)
@@ -34,8 +37,16 @@ class Plugin (object, metaclass=ABCMeta):
         """
         language = getLanguageFromConfig(self._application.config)
         self.lang = loadLanguage(language, langdir, domain)
-        self.gettext = self.lang.gettext
+
+        if self.lang is not None:
+            self.gettext = self.lang.gettext
+        else:
+            self.logger.debug('Localization not found.')
+            self.gettext = self._no_translate
         return self.gettext
+
+    def _no_translate(self, text):
+        return text
 
     @property
     def version(self):

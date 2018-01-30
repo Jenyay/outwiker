@@ -30,6 +30,9 @@ class PluginThumbGallery(Plugin):
 
     def initialize(self):
         set_(self.gettext)
+
+        global _
+        _ = self.gettext
         self._controller.initialize()
 
     def destroy(self):
@@ -48,11 +51,10 @@ class PluginThumbGallery(Plugin):
         Загрузить описание плагина из файла
         """
         path = _(u"locale/description.html")
-        currentDir = os.path.dirname(__file__)
-        fullpath = os.path.join(currentDir, path)
+        fullpath = os.path.join(self.pluginPath, path)
 
         try:
-            with open(fullpath) as fp:
+            with open(fullpath, encoding='utf8') as fp:
                 return fp.read()
         except IOError:
             return _(u"Can't load description")

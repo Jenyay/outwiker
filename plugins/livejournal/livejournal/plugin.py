@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import os.path
-
 from outwiker.core.pluginbase import Plugin
 
 from .controller import Controller
@@ -20,22 +18,11 @@ class PluginLivejournal(Plugin):
         """
         Инициализация плагина
         """
-        self._initlocale("livejournal")
-        self._controller.initialize()
+        set_(self.gettext)
 
-    def _initlocale(self, domain):
-        """
-        Загрузить перевод
-        """
-        langdir = os.path.join(os.path.dirname(__file__), "locale")
         global _
-
-        try:
-            _ = self._init_i18n(domain, langdir)
-        except BaseException as e:
-            print(e)
-
-        set_(_)
+        _ = self.gettext
+        self._controller.initialize()
 
     @property
     def name(self):

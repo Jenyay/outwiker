@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os
 import sys
@@ -40,7 +40,10 @@ class PluginMarkdown(Plugin):
         return _(u"http://jenyay.net/Outwiker/MarkdownEn")
 
     def initialize(self):
-        self._initlocale(u'markdown')
+        set_(self.gettext)
+
+        global _
+        _ = self.gettext
         self.__controller.initialize()
 
     def destroy(self):
@@ -56,14 +59,3 @@ class PluginMarkdown(Plugin):
 
         if libs_path not in sys.path:
             sys.path.insert(0, libs_path)
-
-    def _initlocale(self, domain):
-        langdir = os.path.join(self._pluginPath, "locale")
-        global _
-
-        try:
-            _ = self._init_i18n(domain, langdir)
-        except BaseException:
-            pass
-
-        set_(_)
