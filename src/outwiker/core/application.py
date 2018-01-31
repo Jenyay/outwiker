@@ -269,7 +269,7 @@ class ApplicationParams(object):
         self.onPageUpdateNeeded = Event()
 
         # Event occurs before wiki opening
-        # Parameters:
+        # Parameters:D:\0enter\jenyay\projects\outwiker\plugins\statistics\statistics\locale\sv\LC_MESSAGES\
         #    page - current (selected) page
         #    params - instance of the PreWikiOpenParams class
         self.onPreWikiOpen = Event()
@@ -292,6 +292,12 @@ class ApplicationParams(object):
         #     page - current (selected) page
         #     params - instance if the PageModeChangeParams class
         self.onPageModeChange = Event()
+
+        # Event occurs after change attached file list.
+        # Parameters:
+        #     page - current (selected) page
+        #     params - instance if the AttachListChangedParams class
+        self.onAttachListChanged = Event()
 
     def init(self, configFilename):
         """

@@ -165,6 +165,7 @@ class MainWindow(wx.Frame):
         [controller.initialize() for controller in self._coreControllers]
 
     def _destroyCoreControllers(self):
+        # TODO: the clear() methods replace to destroy()
         [controller.clear() for controller in self._coreControllers]
         self._coreControllers = []
 

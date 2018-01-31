@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from outwiker.gui.defines import ID_MOUSE_LEFT
 
@@ -255,7 +255,7 @@ class IconsGroupsListInitParams(object):
 
 class PageModeChangeParams(object):
     """
-    Set of parameters for the PageModeChange event
+    Set of parameters for theon PageModeChange event
     """
     def __init__(self, pagemode):
         """
@@ -263,3 +263,11 @@ class PageModeChangeParams(object):
             PAGE_MODE_TEXT, PAGE_MODE_PREVIEW, PAGE_MODE_HTML
         """
         self.pagemode = pagemode
+
+
+class AttachListChangedParams(object):
+    """
+    Set of parameters for the onAttachListChanged event
+    """
+    def __init__(self):
+        pass
