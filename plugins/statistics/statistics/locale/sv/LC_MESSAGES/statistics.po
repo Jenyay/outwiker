@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-15 22:01+0400\n"
-"PO-Revision-Date: 2016-08-16 16:41+0300\n"
+"POT-Creation-Date: 2018-01-29 23:31+0300\n"
+"PO-Revision-Date: 2018-01-31 13:33+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -11,10 +11,103 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.8\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Crowdin-Project: outwiker\n"
 "X-Crowdin-Language: sv-SE\n"
 "X-Crowdin-File: statistics.pot\n"
+
+#: tagsinfo.py:35
+#, python-brace-format
+msgid "Tags count: {0}"
+msgstr "Antal taggar: {0}"
+
+#: tagsinfo.py:39
+msgid "Most frequently used tags:"
+msgstr "Mest använda taggar:"
+
+#: tagsinfo.py:47
+msgid "Most rarely used tags:"
+msgstr "Minst använda taggar:"
+
+#: pageattachmentsizeinfo.py:21
+msgid "Pages with the largest size of attachments (in brackets the size of attachments):"
+msgstr "Sidor med mest bifogat (storlek inom parantes):"
+
+#: pageattachmentsizeinfo.py:40
+msgid "kB"
+msgstr "kB"
+
+#: maxdepthinfo.py:23
+#, python-brace-format
+msgid "Max page depth: {0}"
+msgstr "Max siddjup: {0}"
+
+#: pagestatdialog.py:22 plugin.py:73
+msgid "Page Statistic"
+msgstr "Sidstatistik"
+
+#: pagestatdialog.py:64
+msgid "Word count"
+msgstr "Antal ord"
+
+#: pagestatdialog.py:80
+msgid "Line count"
+msgstr "Antal rader"
+
+#: pagestatdialog.py:96
+msgid "Character count"
+msgstr "Antal tecken"
+
+#: pagestatdialog.py:112
+msgid "Character count without spaces"
+msgstr "Antal tecken utan mellanslag"
+
+#: pagestatdialog.py:128
+msgid "Number of attachments"
+msgstr "Antal bilagor"
+
+#: pagestatdialog.py:144
+msgid "Size of attachments (kB)"
+msgstr "Storlek på bilagor (kB)"
+
+#: pagecountinfo.py:17
+#, python-brace-format
+msgid "Page count: {0}"
+msgstr "Antal sidor {0}"
+
+#: plugin.py:39
+msgid ""
+"The plugin to display statistics. \n"
+"                \n"
+"Statistics plugin append menu items <b>Tools -> Page Statistic</b> and <b>Tools -> Tree Statistic</b>."
+msgstr ""
+"Insticksmodul för att visa statistik. \n"
+" \n"
+"Statistikinsticket läggs till menyalternativen <b>Verktyg-> Sidstatistik</b> och <b>Verktyg-> Trädstatistik</b>."
+
+#: plugin.py:45
+msgid "http://jenyay.net/Outwiker/StatisticsEn"
+msgstr "http://jenyay.net/Outwiker/StatisticsEn"
+
+#: plugin.py:79 treestatdialog.py:51
+msgid "Tree Statistic"
+msgstr "Trädstatistik"
+
+#: treestatdialog.py:95
+msgid "A tree has no pages"
+msgstr "Ett träd har inga sidor"
+
+#: treestatdialog.py:98
+msgid "Collecting statistics. Please wait..."
+msgstr "Samlar in statistik. Vänta..."
+
+#: treestatdialog.py:102
+msgid "Statistics"
+msgstr "Statistik"
+
+#: treestatdialog.py:103
+msgid "Collecting statistics..."
+msgstr "Samlar in statistik..."
 
 #: datepageinfo.py:35
 msgid "Recent edited pages:"
@@ -24,96 +117,6 @@ msgstr "Senast redigerade sidor:"
 msgid "Oldest pages:"
 msgstr "Äldsta sidorna:"
 
-#: maxdepthinfo.py:24
-msgid "Max page depth: {0}"
-msgstr "Max siddjup:"
-
-#: pageattachmentsizeinfo.py:24
-msgid "Pages with the largest size of attachments (in brackets the size of attachments):"
-msgstr "Sidor med mest bifogat (storlek inom parantes):"
-
-#: pageattachmentsizeinfo.py:43
-msgid "kB"
-msgstr "kB"
-
-#: pagecontentlengthinfo.py:24
+#: pagecontentlengthinfo.py:21
 msgid "The longest notes (in brackets the number of characters):"
 msgstr "Längsta notislängd (antal tecken inom parantes):"
-
-#: pagecountinfo.py:18
-msgid "Page count: {0}"
-msgstr "Antal sidor {0}"
-
-#: pagestatdialog.py:23 statistics.py:108
-msgid "Page Statistic"
-msgstr "Sidstatistik"
-
-#: pagestatdialog.py:66
-msgid "Word count"
-msgstr "Antal ord"
-
-#: pagestatdialog.py:82
-msgid "Line count"
-msgstr "Antal rader"
-
-#: pagestatdialog.py:98
-msgid "Character count"
-msgstr "Antal tecken"
-
-#: pagestatdialog.py:114
-msgid "Character count without spaces"
-msgstr "Antal tecken utan mellanslag"
-
-#: pagestatdialog.py:130
-msgid "Number of attachments"
-msgstr "Antal bilagor"
-
-#: pagestatdialog.py:146
-msgid "Size of attachments (kB)"
-msgstr "Storlek på bilagor (kB)"
-
-#: statistics.py:49
-msgid ""
-"The plugin to display statistics. \n"
-"                    \n"
-"Statistics plugin append menu items <b>Tools -> Page Statistic</b> and <b>Tools -> Tree Statistic</b>."
-msgstr ""
-"Insticksmodul för att visa statistik. \n"
-"                    \n"
-"Statistikinsticket lägger till menyobjekten <b>Verktyg -> Sidstatistik</b> och <b>Verktyg -> Trädstatistik</b>."
-
-#: statistics.py:61
-msgid "http://jenyay.net/Outwiker/StatisticsEn"
-msgstr "http://jenyay.net/Outwiker/StatisticsEn"
-
-#: statistics.py:111 treestatdialog.py:53
-msgid "Tree Statistic"
-msgstr "Trädstatistik"
-
-#: tagsinfo.py:36
-msgid "Tags count: {0}"
-msgstr "Antal taggar: {0}"
-
-#: tagsinfo.py:40
-msgid "Most frequently used tags:"
-msgstr "Mest använda taggar:"
-
-#: tagsinfo.py:48
-msgid "Most rarely used tags:"
-msgstr "Minst använda taggar:"
-
-#: treestatdialog.py:96
-msgid "A tree has no pages"
-msgstr "Ett träd har inga sidor"
-
-#: treestatdialog.py:99
-msgid "Collecting statistics. Please wait..."
-msgstr "Samlar in statistik. Vänta..."
-
-#: treestatdialog.py:103
-msgid "Statistics"
-msgstr "Statistik"
-
-#: treestatdialog.py:104
-msgid "Collecting statistics..."
-msgstr "Samlar in statistik..."

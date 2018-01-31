@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-19 22:25+0300\n"
-"PO-Revision-Date: 2018-01-22 12:33+0300\n"
+"POT-Creation-Date: 2018-01-30 09:23+0300\n"
+"PO-Revision-Date: 2018-01-31 13:32+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -11,12 +11,16 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.0.1\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Crowdin-Project: outwiker\n"
 "X-Crowdin-Language: sv-SE\n"
 "X-Crowdin-File: externaltools.po\n"
 
-#: controller.py:37
+#: controller.py:67 commandexec/commandcontroller.py:127
+msgid "ExternalTools"
+msgstr "ExternalTools"
+
+#: controller.py:87
 msgid "External Tools [Plugin]"
 msgstr "External Tools [Instick]"
 
@@ -64,7 +68,7 @@ msgstr "Kan inte spara alternativ"
 msgid "Error"
 msgstr "Fel"
 
-#: commandexec/commandcontroller.py:176
+#: commandexec/commandcontroller.py:120
 msgid ""
 "Run applications by ExternalTools plugin?\n"
 "It may be unsafe."
@@ -72,17 +76,13 @@ msgstr ""
 "Vill du köra program via ExternalTools-insticket?\n"
 "Det kan vara en säkerhetsrisk."
 
-#: commandexec/commandcontroller.py:178
+#: commandexec/commandcontroller.py:122
 msgid ""
 "Run application by ExternalTools plugin?\n"
 "It may be unsafe."
 msgstr ""
 "Vill du köra program via ExternalTools-insticket?\n"
 "Det kan vara en säkerhetsrisk."
-
-#: commandexec/commandcontroller.py:183 commandexec/guicreator.py:54
-msgid "ExternalTools"
-msgstr "ExternalTools"
 
 #: commandexec/actions.py:43
 msgid "Run applications (:exec:)"
@@ -148,25 +148,25 @@ msgstr "Format"
 msgid "Can't execute tools"
 msgstr "Kan inte starta verktyg"
 
-#: plugin.py:39
+#: plugin.py:37
 msgid ""
-"Open notes files with external editor.\n"
+"ExternalTools plug-in allows to open the notes files with external applications.\n"
 "\n"
-"For OutWiker 1.9 and above ExternalTools adds the (:exec:) command for creation link or button for execute external applications from wiki page.\n"
+"The plug-in adds the (:exec:) command for creation link or button for execute external applications from wiki page.\n"
 "\n"
-"The (:exec:) command allow to run many applications. Every application must writed on the separated lines.\n"
+"The (:exec:) command allows to run many applications. Every application must be placed at the separated lines.\n"
 "\n"
-"If line begins with \"#\" this line will be ignored. \"#\" in begin of the line is sign of the comment.\n"
+"If a line begins with \"#\" this line will be ignored. \"#\" in begin of the line is sign of the comment.\n"
 msgstr ""
-"Öppna notisfiler med extern redigerare.\n"
+"Externa verktygsinsticket gör det möjligt att öppna anteckningsfiler med externa program.\n"
 "\n"
-"I OutWiker 1.9 och senare, lägger ExternalTools till (:exec:)-kommandot som skapar länk eller knapp för körning av externa program från wiki-sidan.\n"
+"Insticket lägger till kommandot (:exec:), för att skapa länk eller knapp för köra externa program från wiki-sidan.\n"
 "\n"
-"(:exec:)-kommandot låter dig köra flera program. Varje program måste anges på separat rad.\n"
+"Kommandot (:exec:) låter dig köra många program. Varje program måste placeras på separerade rader.\n"
 "\n"
-"Om raden börjar med \"#\" kommer den att undantas. \"#\" i början på en rad är tecknet för kommentar.\n"
+"Om en rad börjar med ”#”, kommer denna rad att undantas. ”#” i börja av raden är ett kommentarstecken. \n"
 
-#: plugin.py:48
+#: plugin.py:46
 msgid ""
 "The (:exec:) command has the following optional parameters:\n"
 "<ul>\n"
@@ -180,7 +180,7 @@ msgstr ""
 "<li><b>title</b>. Parametern anger texten som länk eller knapp.</li>\n"
 "</ul>"
 
-#: plugin.py:54
+#: plugin.py:52
 msgid ""
 "Inside (:exec:) command may be macroses. The macroses will be replaced by appropriate paths:\n"
 "<ul>\n"
@@ -198,11 +198,11 @@ msgstr ""
 "<li><b>%attach%</b>. Makrot ersätts med fullständig sökväg till bilagemappen utan avslutande snedstreck.</li>\n"
 "</ul>"
 
-#: plugin.py:62
+#: plugin.py:60
 msgid "Examples"
 msgstr "Exempel"
 
-#: plugin.py:64
+#: plugin.py:62
 msgid ""
 "Creating a link for running application.exe:\n"
 "<code><pre>(:exec:)application.exe(:execend:)</pre></code>"
@@ -210,7 +210,7 @@ msgstr ""
 "Skapa en länk för att köra program.exe:\n"
 "<code><pre>(:exec:)program.exe(:execend:)</pre></code>"
 
-#: plugin.py:67
+#: plugin.py:65
 msgid ""
 "Same but creating a button\n"
 "<code><pre>(:exec format=button:)\n"
@@ -222,7 +222,7 @@ msgstr ""
 "program.exe\n"
 "(:execend:)</pre></code>"
 
-#: plugin.py:72
+#: plugin.py:70
 msgid ""
 "Create a link for running application.exe with parameters:\n"
 "<code><pre>(:exec:)\n"
@@ -234,7 +234,7 @@ msgstr ""
 "program.exe parameter1 \"c:\\din mapp\\sökväg till fil\"\n"
 "(:execend:)</pre></code>"
 
-#: plugin.py:77
+#: plugin.py:75
 msgid ""
 "Run a lot of applications:\n"
 "<code><pre>(:exec title=\"Run application_1, application_2 and application_3\":)\n"
@@ -250,7 +250,7 @@ msgstr ""
 "program_3.exe parameter_1 parameter_2\n"
 "(:execend:)</pre></code>"
 
-#: plugin.py:84
+#: plugin.py:82
 msgid ""
 "Open attached file with application.exe:\n"
 "<code><pre>(:exec:)\n"
@@ -262,7 +262,7 @@ msgstr ""
 "program.exe Attach:din_fil.txt\n"
 "(:execend:)</pre></code>"
 
-#: plugin.py:89
+#: plugin.py:87
 msgid ""
 "Execute application.exe from attachments folder:\n"
 "<code><pre>(:exec:)\n"
@@ -282,6 +282,6 @@ msgstr ""
 "Attach:program.exe Attach:din_fil.txt\n"
 "(:execend:)</pre></code>"
 
-#: plugin.py:142
+#: plugin.py:143
 msgid "http://jenyay.net/Outwiker/ExternalToolsEn"
 msgstr "http://jenyay.net/Outwiker/ExternalToolsEn"
