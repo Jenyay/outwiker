@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os
 import os.path
@@ -13,9 +13,6 @@ class Attachment(object):
     """
     Класс для работы с прикрепленными файлами
     """
-    # Depricated. Leave for compatibility with Thumbgallery plug-in.
-    attachDir = PAGE_ATTACH_DIR
-
     def __init__(self, page):
         """
         page - страница, для которой интересуют прикрепленные файлы

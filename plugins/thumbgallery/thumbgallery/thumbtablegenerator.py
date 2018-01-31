@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from outwiker.core.attachment import Attachment
+from outwiker.core.defines import PAGE_ATTACH_DIR
 
 from .basethumbgenerator import BaseThumbGenerator
 
@@ -70,7 +71,7 @@ class ThumbTableGenerator (BaseThumbGenerator):
         Возвращает оформленный элемент таблицы
         """
         image = u"""<A HREF="{attachdir}/{imagename}"><IMG SRC="{thumbpath}"/></A>""".format(
-                attachdir=Attachment.attachDir,
+                attachdir=PAGE_ATTACH_DIR,
                 imagename=item[0],
                 thumbpath=self._getThumbnail(self._parser.page, item[0]))
 
