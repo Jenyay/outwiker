@@ -1,21 +1,22 @@
 # -*- coding: UTF-8 -*-
 
 import os
-import unittest
 
 from outwiker.core.iconscollection import IconsCollection, DuplicateGroupError
-from test.utils import removeDir, getImageSize
+
+from .utils import removeDir, getImageSize
+from .basetestcases import BaseWxTestCase
 
 
-class IconsCollectionTest(unittest.TestCase):
+class IconsCollectionTest(BaseWxTestCase):
     def setUp(self):
+        super().setUp()
         self.tempDir1 = '../test/testIcons1'
         self.imagesDir = '../test/images'
 
-
     def tearDown(self):
+        super().tearDown()
         removeDir(self.tempDir1)
-
 
     def testEmpty_01(self):
         collection = IconsCollection('../test/icons/Без иконок')
@@ -26,7 +27,6 @@ class IconsCollectionTest(unittest.TestCase):
         self.assertRaises(KeyError, collection.getCover, 'Группа')
         self.assertIsNone(collection.getCover(None))
 
-
     def testEmpty_02(self):
         collection = IconsCollection('../test/icons/Без иконок')
 
@@ -36,14 +36,12 @@ class IconsCollectionTest(unittest.TestCase):
         self.assertRaises(KeyError, collection.getCover, 'Группа')
         self.assertIsNone(collection.getCover(''))
 
-
     def testSingleRoot(self):
         collection = IconsCollection('../test/icons/Без групп')
 
         self.assertEqual(len(collection.getIcons(None)), 4)
         self.assertEqual(collection.getGroups(), [])
         self.assertTrue(collection.getCover(None).endswith('__cover.png'))
-
 
     def testGroups_01(self):
         collection = IconsCollection('../test/icons/Иконки и группы')
@@ -57,7 +55,6 @@ class IconsCollectionTest(unittest.TestCase):
             collection.getCover('Группа 1').endswith('__cover.png'))
         self.assertIsNone(collection.getCover('Группа 2'))
 
-
     def testGroups_02(self):
         collection = IconsCollection('../test/icons/Только группы')
 
@@ -66,7 +63,6 @@ class IconsCollectionTest(unittest.TestCase):
         self.assertEqual(len(collection.getIcons('Группа 3')), 3)
         self.assertEqual(len(collection.getIcons('Группа 4')), 4)
         self.assertIsNone(collection.getCover(None))
-
 
     def testAddGroup_01(self):
         os.mkdir(self.tempDir1)
@@ -80,7 +76,6 @@ class IconsCollectionTest(unittest.TestCase):
         newcollection1 = IconsCollection(self.tempDir1)
         self.assertEqual(newcollection1.getGroups(), ['Новая группа'])
 
-
     def testAddGroup_02_invalid(self):
         os.mkdir(self.tempDir1)
         collection = IconsCollection(self.tempDir1)
@@ -92,7 +87,6 @@ class IconsCollectionTest(unittest.TestCase):
                           collection.addGroup,
                           'Абырвалг/Абырвалг')
         self.assertRaises(ValueError, collection.addGroup, '')
-
 
     def testAddGroup_03(self):
         os.mkdir(self.tempDir1)
@@ -109,7 +103,6 @@ class IconsCollectionTest(unittest.TestCase):
         self.assertEqual(newcollection.getGroups(),
                          ['Вторая группа', 'Новая группа'])
 
-
     def testRenameGroup_01(self):
         os.mkdir(self.tempDir1)
 
@@ -123,7 +116,6 @@ class IconsCollectionTest(unittest.TestCase):
         newcollection1 = IconsCollection(self.tempDir1)
         self.assertEqual(newcollection1.getGroups(),
                          ['Переименованная группа'])
-
 
     def testRenameGroup_02_invalid(self):
         os.mkdir(self.tempDir1)
@@ -149,7 +141,6 @@ class IconsCollectionTest(unittest.TestCase):
             'Новая группа',
             'Абырвалг\\Абырвалг')
 
-
     def testRenameGroup_03_self(self):
         os.mkdir(self.tempDir1)
 
@@ -161,7 +152,6 @@ class IconsCollectionTest(unittest.TestCase):
 
         newcollection = IconsCollection(self.tempDir1)
         self.assertEqual(newcollection.getGroups(), ['Новая группа'])
-
 
     def testRenameGroup_04_self(self):
         files = ['new.png', 'image_01.JPG']
@@ -180,7 +170,6 @@ class IconsCollectionTest(unittest.TestCase):
         self.assertEqual(newcollection.getGroups(), ['Новая группа'])
         self.assertEqual(len(newcollection.getIcons('Новая группа')), 2)
 
-
     def testRenameGroup_04_invalid(self):
         os.mkdir(self.tempDir1)
 
@@ -193,7 +182,6 @@ class IconsCollectionTest(unittest.TestCase):
             collection.renameGroup,
             'Новая группа',
             'Абырвалг')
-
 
     def testRemoveGroup_01(self):
         os.mkdir(self.tempDir1)
@@ -208,7 +196,6 @@ class IconsCollectionTest(unittest.TestCase):
         newcollection1 = IconsCollection(self.tempDir1)
         self.assertEqual(newcollection1.getGroups(), ['Другая группа'])
 
-
     def testRemoveGroup_02(self):
         os.mkdir(self.tempDir1)
 
@@ -217,7 +204,6 @@ class IconsCollectionTest(unittest.TestCase):
 
         collection.removeGroup('Новая группа')
         self.assertEqual(collection.getGroups(), [])
-
 
     def testRemoveGroup_03_invalid(self):
         os.mkdir(self.tempDir1)
@@ -235,7 +221,6 @@ class IconsCollectionTest(unittest.TestCase):
             collection.removeGroup,
             '')
 
-
     def testRemoveGroup_04(self):
         files = ['new.png', 'image_01.JPG']
         fullPaths = [os.path.join(self.imagesDir, fname) for fname in files]
@@ -249,7 +234,6 @@ class IconsCollectionTest(unittest.TestCase):
         collection.removeGroup('Новая группа')
         self.assertEqual(collection.getGroups(), [])
 
-
     def testAddIcons_01_empty(self):
         files = []
         fullPaths = [os.path.join(self.imagesDir, fname) for fname in files]
@@ -260,7 +244,6 @@ class IconsCollectionTest(unittest.TestCase):
 
         collection.addIcons('Новая группа', fullPaths)
         self.assertEqual(collection.getIcons('Новая группа'), [])
-
 
     def testAddIcons_02_empty(self):
         files = []
@@ -273,7 +256,6 @@ class IconsCollectionTest(unittest.TestCase):
         collection.addIcons('Новая группа', fullPaths)
         self.assertEqual(collection.getIcons('Новая группа'), [])
 
-
     def testAddIcons_03_empty(self):
         files = []
         fullPaths = [os.path.join(self.imagesDir, fname) for fname in files]
@@ -283,7 +265,6 @@ class IconsCollectionTest(unittest.TestCase):
 
         collection.addIcons('', fullPaths)
         self.assertEqual(collection.getIcons(None), [])
-
 
     def testAddIcons_04_invalid(self):
         files = ['new.png']
@@ -298,7 +279,6 @@ class IconsCollectionTest(unittest.TestCase):
             'Другая группа',
             fullPaths)
 
-
     def testAddIcons_05(self):
         files = ['new.png']
         fullPaths = [os.path.join(self.imagesDir, fname) for fname in files]
@@ -312,7 +292,6 @@ class IconsCollectionTest(unittest.TestCase):
         self.assertIn('new.png', icons[0])
         self.assertIsNone(collection.getCover(None))
 
-
     def testAddIcons_06(self):
         files = ['new.png']
         fullPaths = [os.path.join(self.imagesDir, fname) for fname in files]
@@ -324,7 +303,6 @@ class IconsCollectionTest(unittest.TestCase):
 
         icons = collection.getIcons(None)
         self.assertIn('new.png', icons[0])
-
 
     def testAddIcons_07(self):
         files = ['new.png', 'image_01.JPG']
@@ -338,7 +316,6 @@ class IconsCollectionTest(unittest.TestCase):
         icons = sorted(collection.getIcons(None))
         self.assertIn('image_01.png', icons[0])
         self.assertIn('new.png', icons[1])
-
 
     def testAddIcons_08(self):
         files = ['new.png', 'image_01.JPG']
@@ -358,7 +335,6 @@ class IconsCollectionTest(unittest.TestCase):
         self.assertIn('new.png', icons[1])
         self.assertIsNone(collection.getCover('Новая группа'))
 
-
     def testAddIcons_09(self):
         files = ['new.png', 'image_01.JPG', '__init__.py']
         fullPaths = [os.path.join(self.imagesDir, fname) for fname in files]
@@ -375,7 +351,6 @@ class IconsCollectionTest(unittest.TestCase):
         self.assertEqual(len(icons), 2)
         self.assertIn('image_01.png', icons[0])
         self.assertIn('new.png', icons[1])
-
 
     def testAddIcons_10_not_exists(self):
         files = ['new.png', 'image_01.JPG', 'notexists.png']
@@ -394,7 +369,6 @@ class IconsCollectionTest(unittest.TestCase):
         self.assertIn('image_01.png', icons[0])
         self.assertIn('new.png', icons[1])
 
-
     def testAddIcons_11(self):
         files = ['new.png', 'new.png']
         fullPaths = [os.path.join(self.imagesDir, fname) for fname in files]
@@ -411,7 +385,6 @@ class IconsCollectionTest(unittest.TestCase):
         self.assertEqual(len(icons), 2)
         self.assertIn('new.png', icons[0])
         self.assertIn('new_(1).png', icons[1])
-
 
     def testAddIcons_12(self):
         files = ['new.png', 'new.png', 'new.png', 'new.png']
@@ -432,7 +405,6 @@ class IconsCollectionTest(unittest.TestCase):
         self.assertIn('new_(2).png', icons[2])
         self.assertIn('new_(3).png', icons[3])
 
-
     def testAddIcons_13(self):
         files = ['__sample.png']
         fullPaths = [os.path.join(self.imagesDir, fname) for fname in files]
@@ -449,7 +421,6 @@ class IconsCollectionTest(unittest.TestCase):
         self.assertEqual(len(icons), 1)
         self.assertNotIn('__sample.png', icons[0])
         self.assertIn('sample.png', icons[0])
-
 
     def testAddIcons_14(self):
         files = ['______sample.png']
@@ -469,7 +440,6 @@ class IconsCollectionTest(unittest.TestCase):
         self.assertNotIn('__sample.png', icons[0])
         self.assertIn('sample.png', icons[0])
 
-
     def testAddIcons_15(self):
         files = ['______sample.png', '__sample.png']
         fullPaths = [os.path.join(self.imagesDir, fname) for fname in files]
@@ -488,7 +458,6 @@ class IconsCollectionTest(unittest.TestCase):
         self.assertIn('sample.png', icons[0])
         self.assertIn('sample_(1).png', icons[1])
 
-
     def testAddIcons_16_invalid(self):
         files = ['invalid.png']
         fullPaths = [os.path.join(self.imagesDir, fname) for fname in files]
@@ -503,7 +472,6 @@ class IconsCollectionTest(unittest.TestCase):
 
         icons = sorted(collection.getIcons(groupname))
         self.assertEqual(len(icons), 0)
-
 
     def testAddIcons_17_invalid(self):
         files = ['invalid.png', 'new.png']
@@ -521,7 +489,6 @@ class IconsCollectionTest(unittest.TestCase):
         self.assertEqual(len(icons), 1)
         self.assertIn('new.png', icons[0])
 
-
     def testAddIcons_18_invalid(self):
         files = ['new.png', 'invalid.png']
         fullPaths = [os.path.join(self.imagesDir, fname) for fname in files]
@@ -537,7 +504,6 @@ class IconsCollectionTest(unittest.TestCase):
         icons = sorted(collection.getIcons(groupname))
         self.assertEqual(len(icons), 1)
         self.assertIn('new.png', icons[0])
-
 
     def testAddIcons_19_resize(self):
         files = ['16x16.png',
@@ -566,7 +532,6 @@ class IconsCollectionTest(unittest.TestCase):
 
         for fname in files:
             self.assertEqual(getImageSize(icons[fname]), (16, 16))
-
 
     def testAddCover_01_group(self):
         files = []
@@ -597,7 +562,6 @@ class IconsCollectionTest(unittest.TestCase):
             IconsCollection.COVER_FILE_NAME))
         )
 
-
     def testAddCover_02_root(self):
         os.mkdir(self.tempDir1)
         collection = IconsCollection(self.tempDir1)
@@ -617,7 +581,6 @@ class IconsCollectionTest(unittest.TestCase):
             self.tempDir1,
             IconsCollection.COVER_FILE_NAME))
         )
-
 
     def testAddCover_03_root(self):
         os.mkdir(self.tempDir1)
@@ -639,7 +602,6 @@ class IconsCollectionTest(unittest.TestCase):
             IconsCollection.COVER_FILE_NAME))
         )
 
-
     def testAddCover_04_root_invalid(self):
         os.mkdir(self.tempDir1)
         collection = IconsCollection(self.tempDir1)
@@ -651,7 +613,6 @@ class IconsCollectionTest(unittest.TestCase):
             self.tempDir1,
             IconsCollection.COVER_FILE_NAME))
         )
-
 
     def testAddCover_05_root(self):
         os.mkdir(self.tempDir1)
@@ -668,7 +629,6 @@ class IconsCollectionTest(unittest.TestCase):
         self.assertEqual(self.__getMaxImageSize(os.path.join(
             self.tempDir1,
             IconsCollection.COVER_FILE_NAME)), 16)
-
 
     def testAddCover_06_group(self):
         files = ['new.png', '8x8.png']
@@ -693,7 +653,6 @@ class IconsCollectionTest(unittest.TestCase):
             os.path.abspath(newCoverPath),
             os.path.abspath(collection.getCover(groupname))
         )
-
 
     def __getMaxImageSize(self, fname):
         (width, height) = getImageSize(fname)

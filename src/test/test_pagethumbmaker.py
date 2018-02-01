@@ -1,19 +1,21 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os
 import os.path
-import unittest
 from tempfile import mkdtemp
 
 from outwiker.core.attachment import Attachment
 from outwiker.core.tree import WikiDocument
 from outwiker.pages.wiki.parser.pagethumbmaker import PageThumbmaker
 from outwiker.pages.text.textpage import TextPageFactory
-from test.utils import removeDir, getImageSize
+
+from .utils import removeDir, getImageSize
+from .basetestcases import BaseWxTestCase
 
 
-class PageThumbmakerTest(unittest.TestCase):
+class PageThumbmakerTest(BaseWxTestCase):
     def setUp(self):
+        super().setUp()
         self.thumbmaker = PageThumbmaker()
 
         # Здесь будет создаваться вики
@@ -31,6 +33,7 @@ class PageThumbmakerTest(unittest.TestCase):
         factory.create(self.wikiroot["Страница 1"], "Страница 5", [])
 
     def tearDown(self):
+        super().tearDown()
         removeDir(self.path)
 
     def testThumbByWidthJpeg(self):
