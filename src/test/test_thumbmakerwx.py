@@ -1,15 +1,16 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os
 import os.path
-import unittest
 
 from outwiker.core.thumbmakerwx import ThumbmakerWx
 from outwiker.core.thumbexception import ThumbException
-from test.utils import getImageSize
+
+from .utils import getImageSize
+from .basetestcases import BaseWxTestCase
 
 
-class ThumbmakerWxTest (unittest.TestCase):
+class ThumbmakerWxTest (BaseWxTestCase):
     """
     Тесты для создателя превьюшек с помощью ThumbmakerWx
     """

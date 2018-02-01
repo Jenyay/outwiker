@@ -2,14 +2,15 @@
 
 import os
 import os.path
-import unittest
 
 from outwiker.core.thumbmakerpil import ThumbmakerPil
 from outwiker.core.thumbexception import ThumbException
-from test.utils import getImageSize
+
+from .utils import getImageSize
+from .basetestcases import BaseWxTestCase
 
 
-class ThumbmakerPilTest (unittest.TestCase):
+class ThumbmakerPilTest (BaseWxTestCase):
     """
     Тесты для создателя превьюшек с помощью ThumbmakerPil
     """
