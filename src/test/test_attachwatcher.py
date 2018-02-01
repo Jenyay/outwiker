@@ -1,21 +1,20 @@
 # -*- coding: utf-8 -*-
 
-import unittest
-import os.path
+import os
 from tempfile import mkdtemp
 
-import wx
-
 from outwiker.core.attachment import Attachment
-from .utils import removeDir
 from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.core.application import Application
 from outwiker.core.attachwatcher import AttachWatcher
+from .utils import removeDir
+from .basetestcases import BaseWxTestCase
 
 
-class AttachWatcherTest(unittest.TestCase):
+class AttachWatcherTest(BaseWxTestCase):
     def setUp(self):
+        super().setUp()
         self._eventCount = 0
         self._application = Application
         self._application.onAttachListChanged += self._onAttachListChanged
@@ -33,21 +32,10 @@ class AttachWatcherTest(unittest.TestCase):
                                                 "Страница 2",
                                                 [])
 
-        self._wxapp = wx.App()
-
     def tearDown(self):
+        super().tearDown()
         self._application.onAttachListChanged -= self._onAttachListChanged
         removeDir(self.path)
-
-    def _myYield(self, eventsToProcess=wx.EVT_CATEGORY_ALL):
-        """
-        Since the tests are usually run before MainLoop is called then we
-        need to make our own EventLoop for Yield to actually do anything
-        useful.
-        """
-        evtLoop = self._wxapp.GetTraits().CreateEventLoop()
-        activator = wx.EventLoopActivator(evtLoop) # automatically restores the old one
-        evtLoop.YieldFor(eventsToProcess)
 
     def _onAttachListChanged(self, page, params):
         self._eventCount += 1
@@ -67,7 +55,7 @@ class AttachWatcherTest(unittest.TestCase):
         watcher = AttachWatcher(self._application)
         watcher.initialize()
 
-        self._myYield()
+        self.myYield()
         watcher.clear()
         self.assertEqual(self._eventCount, 0)
 
@@ -81,7 +69,7 @@ class AttachWatcherTest(unittest.TestCase):
         watcher = AttachWatcher(self._application)
         watcher.initialize()
 
-        self._myYield()
+        self.myYield()
         watcher.clear()
         self.assertEqual(self._eventCount, 0)
 
@@ -94,7 +82,7 @@ class AttachWatcherTest(unittest.TestCase):
         watcher.initialize()
         self._application.wikiroot = self.wikiroot
 
-        self._myYield()
+        self.myYield()
         watcher.clear()
         self.assertEqual(self._eventCount, 0)
 
@@ -109,7 +97,7 @@ class AttachWatcherTest(unittest.TestCase):
         watcher = AttachWatcher(self._application)
         watcher.initialize()
 
-        self._myYield()
+        self.myYield()
         watcher.clear()
         self.assertEqual(self._eventCount, 0)
 
@@ -124,7 +112,7 @@ class AttachWatcherTest(unittest.TestCase):
         self._application.wikiroot = self.wikiroot
         self._application.selectedPage = self.page_01
 
-        self._myYield()
+        self.myYield()
         watcher.clear()
         self.assertEqual(self._eventCount, 0)
 
@@ -140,7 +128,7 @@ class AttachWatcherTest(unittest.TestCase):
 
         self._application.selectedPage = self.page_01
 
-        self._myYield()
+        self.myYield()
         watcher.clear()
         self.assertEqual(self._eventCount, 0)
 
@@ -156,7 +144,7 @@ class AttachWatcherTest(unittest.TestCase):
 
         self._application.selectedPage = None
 
-        self._myYield()
+        self.myYield()
         watcher.clear()
         self.assertEqual(self._eventCount, 0)
 
@@ -172,7 +160,7 @@ class AttachWatcherTest(unittest.TestCase):
 
         self._application.selectedPage = self.page_02
 
-        self._myYield()
+        self.myYield()
         watcher.clear()
         self.assertEqual(self._eventCount, 0)
 
@@ -188,7 +176,7 @@ class AttachWatcherTest(unittest.TestCase):
 
         self._application.wikiroot = None
 
-        self._myYield()
+        self.myYield()
         watcher.clear()
         self.assertEqual(self._eventCount, 0)
 
@@ -201,7 +189,7 @@ class AttachWatcherTest(unittest.TestCase):
 
         Attachment(self._application.selectedPage).getAttachPath(True)
 
-        self._myYield()
+        self.myYield()
         watcher.clear()
         self.assertEqual(self._eventCount, 0)
 
@@ -214,7 +202,7 @@ class AttachWatcherTest(unittest.TestCase):
         watcher = AttachWatcher(self._application)
         watcher.initialize()
 
-        self._myYield()
+        self.myYield()
         watcher.clear()
         self.assertEqual(self._eventCount, 0)
 
@@ -229,7 +217,7 @@ class AttachWatcherTest(unittest.TestCase):
 
         self._application.selectedPage = self.page_01
 
-        self._myYield()
+        self.myYield()
         watcher.clear()
         self.assertEqual(self._eventCount, 0)
 
@@ -247,7 +235,7 @@ class AttachWatcherTest(unittest.TestCase):
         self._application.selectedPage = self.page_01
         self._application.selectedPage = self.page_02
 
-        self._myYield()
+        self.myYield()
         watcher.clear()
         self.assertEqual(self._eventCount, 0)
 
@@ -263,7 +251,7 @@ class AttachWatcherTest(unittest.TestCase):
         # Close the wiki
         self._application.wikiroot = None
 
-        self._myYield()
+        self.myYield()
         watcher.clear()
         self.assertEqual(self._eventCount, 0)
 
@@ -276,7 +264,7 @@ class AttachWatcherTest(unittest.TestCase):
 
         self._attach_files(self.page_01, ['add.png'])
 
-        self._myYield()
+        self.myYield()
         watcher.clear()
         self.assertEqual(self._eventCount, 1)
 
@@ -289,7 +277,7 @@ class AttachWatcherTest(unittest.TestCase):
 
         self._attach_files(self.page_01, ['add.png', 'dir.png'])
 
-        self._myYield()
+        self.myYield()
         watcher.clear()
 
         self.assertEqual(self._eventCount, 1)
@@ -302,11 +290,203 @@ class AttachWatcherTest(unittest.TestCase):
         watcher.initialize()
 
         self._attach_files(self.page_01, ['add.png'])
-        self._myYield()
+        self.myYield()
 
         self._attach_files(self.page_01, ['dir.png'])
-        self._myYield()
+        self.myYield()
 
         watcher.clear()
 
         self.assertEqual(self._eventCount, 2)
+
+    def test_attach_touch_read(self):
+        self._application.wikiroot = self.wikiroot
+        self._application.selectedPage = self.page_01
+        self._attach_files(self.page_01, ['add.png'])
+
+        watcher = AttachWatcher(self._application)
+        watcher.initialize()
+
+        attach = Attachment(self.page_01)
+        with open(attach.getFullPath('add.png')):
+            pass
+
+        self.myYield()
+        watcher.clear()
+        self.assertEqual(self._eventCount, 0)
+
+    def test_attach_touch_write(self):
+        self._application.wikiroot = self.wikiroot
+        self._application.selectedPage = self.page_01
+        self._attach_files(self.page_01, ['add.png'])
+
+        watcher = AttachWatcher(self._application)
+        watcher.initialize()
+
+        attach = Attachment(self.page_01)
+        with open(attach.getFullPath('add.png'), 'w'):
+            pass
+
+        self.myYield()
+        watcher.clear()
+        self.assertEqual(self._eventCount, 0)
+
+    def test_attach_rename(self):
+        self._application.wikiroot = self.wikiroot
+        self._application.selectedPage = self.page_01
+        self._attach_files(self.page_01, ['add.png'])
+
+        attach = Attachment(self.page_01)
+        src_fname = attach.getFullPath('add.png')
+        dest_fname = attach.getFullPath('newname.png')
+
+        watcher = AttachWatcher(self._application)
+        watcher.initialize()
+
+        os.rename(src_fname, dest_fname)
+
+        self.myYield()
+        watcher.clear()
+        self.assertEqual(self._eventCount, 1)
+
+    def test_attach_delete(self):
+        self._application.wikiroot = self.wikiroot
+        self._application.selectedPage = self.page_01
+        self._attach_files(self.page_01, ['add.png'])
+
+        watcher = AttachWatcher(self._application)
+        watcher.initialize()
+
+        attach = Attachment(self.page_01)
+        attach.removeAttach(['add.png'])
+
+        self.myYield()
+        watcher.clear()
+        self.assertEqual(self._eventCount, 1)
+
+    def test_switch_and_add_file(self):
+        self._application.wikiroot = self.wikiroot
+        self._application.selectedPage = self.page_01
+
+        self._attach_files(self.page_01, ['add.png'])
+        self._attach_files(self.page_02, ['add.png', 'dir.png'])
+
+        watcher = AttachWatcher(self._application)
+        watcher.initialize()
+
+        # Switch pages
+        self._application.selectedPage = self.page_02
+        self._attach_files(self.page_02, ['accept.png'])
+
+        self.myYield()
+        watcher.clear()
+        self.assertEqual(self._eventCount, 1)
+
+    def test_close_wiki(self):
+        self._application.wikiroot = self.wikiroot
+        self._application.selectedPage = self.page_01
+
+        self._attach_files(self.page_01, ['add.png'])
+
+        watcher = AttachWatcher(self._application)
+        watcher.initialize()
+
+        self._application.wikiroot = None
+        self._attach_files(self.page_01, ['dir.png'])
+
+        self.myYield()
+        watcher.clear()
+        self.assertEqual(self._eventCount, 0)
+
+    def test_unselect_page(self):
+        self._application.wikiroot = self.wikiroot
+        self._application.selectedPage = self.page_01
+
+        self._attach_files(self.page_01, ['add.png'])
+
+        watcher = AttachWatcher(self._application)
+        watcher.initialize()
+
+        self._application.selectedPage = None
+        self._attach_files(self.page_01, ['dir.png'])
+
+        self.myYield()
+        watcher.clear()
+        self.assertEqual(self._eventCount, 0)
+
+    def test_select_again(self):
+        self._application.wikiroot = self.wikiroot
+        self._application.selectedPage = self.page_01
+
+        self._attach_files(self.page_01, ['add.png'])
+
+        watcher = AttachWatcher(self._application)
+        watcher.initialize()
+
+        self._application.selectedPage = None
+        self._attach_files(self.page_01, ['dir.png'])
+        self._application.selectedPage = self.page_01
+
+        self.myYield()
+        watcher.clear()
+        self.assertEqual(self._eventCount, 0)
+
+    def test_select_again_and_add(self):
+        self._application.wikiroot = self.wikiroot
+        self._application.selectedPage = self.page_01
+
+        self._attach_files(self.page_01, ['add.png'])
+
+        watcher = AttachWatcher(self._application)
+        watcher.initialize()
+
+        self._application.selectedPage = None
+        self._attach_files(self.page_01, ['dir.png'])
+        self._application.selectedPage = self.page_01
+        self._attach_files(self.page_01, ['accept.png'])
+
+        self.myYield()
+        watcher.clear()
+        self.assertEqual(self._eventCount, 1)
+
+    def test_rename_page_01(self):
+        self._application.wikiroot = self.wikiroot
+        self._application.selectedPage = self.page_01
+
+        watcher = AttachWatcher(self._application)
+        watcher.initialize()
+
+        self.page_01.title = 'Новый заголовок'
+
+        self.myYield()
+        watcher.clear()
+        self.assertEqual(self._eventCount, 0)
+
+    def test_rename_page_02(self):
+        self._application.wikiroot = self.wikiroot
+        self._application.selectedPage = self.page_01
+        self._attach_files(self.page_01, ['add.png'])
+
+        watcher = AttachWatcher(self._application)
+        watcher.initialize()
+
+        self.page_01.title = 'Новый заголовок'
+
+        self.myYield()
+        watcher.clear()
+        self.assertEqual(self._eventCount, 0)
+
+    def test_rename_page_03(self):
+        self._application.wikiroot = self.wikiroot
+        self._application.selectedPage = self.page_01
+        self._attach_files(self.page_01, ['add.png'])
+
+        watcher = AttachWatcher(self._application)
+        watcher.initialize()
+
+        self.page_01.title = 'Новый заголовок'
+        self._attach_files(self.page_01, ['dir.png'])
+
+        self.myYield()
+        watcher.clear()
+        self.assertEqual(self._eventCount, 1)
