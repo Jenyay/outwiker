@@ -12,22 +12,24 @@ from outwiker.core.events import AttachListChangedParams
 class AttachWatcher(object):
     def __init__(self, application):
         self._application = application
-        self._watcher = wx.FileSystemWatcher()
+        self._watcher = None
         self._oldFilesList = []
         self._watchedPage = None
         self._watched_dir = None
 
     def initialize(self):
+        self._watcher = wx.FileSystemWatcher()
+        self._watcher.Bind(wx.EVT_FSWATCHER, handler=self._onFSWatcher)
         self._application.onWikiClose += self._onWikiClose
         self._application.onPageSelect += self._onPageSelect
         self._start_watch()
-        self._watcher.Bind(wx.EVT_FSWATCHER, handler=self._onFSWatcher)
 
     def clear(self):
         self._application.onWikiClose -= self._onWikiClose
         self._application.onPageSelect -= self._onPageSelect
         self._stop_watch()
         self._watcher.Unbind(wx.EVT_FSWATCHER)
+        self._watcher = None
 
     def _onWikiClose(self, root):
         self._stop_watch()
