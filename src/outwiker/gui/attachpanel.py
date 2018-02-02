@@ -22,7 +22,6 @@ class AttachPanel(wx.Panel):
         self.ID_PASTE = wx.NewId()
         self.ID_EXECUTE = wx.NewId()
         self.ID_OPEN_FOLDER = wx.NewId()
-        self.ID_REFRESH = wx.NewId()
 
         wx.Panel.__init__(self, *args, **kwds)
         self.__toolbar = self.__createToolBar(self, -1)
@@ -53,7 +52,6 @@ class AttachPanel(wx.Panel):
         self.Bind(wx.EVT_MENU, self.__onPaste, id=self.ID_PASTE)
         self.Bind(wx.EVT_MENU, self.__onExecute, id=self.ID_EXECUTE)
         self.Bind(wx.EVT_MENU, self.__onOpenFolder, id=self.ID_OPEN_FOLDER)
-        self.Bind(wx.EVT_MENU, self.__onRefresh, id=self.ID_REFRESH)
         self.Bind(wx.EVT_CLOSE, self.__onClose)
 
     def __unbindGuiEvents(self):
@@ -73,7 +71,6 @@ class AttachPanel(wx.Panel):
         self.Unbind(wx.EVT_MENU, handler=self.__onOpenFolder,
                     id=self.ID_OPEN_FOLDER)
 
-        self.Unbind(wx.EVT_MENU, handler=self.__onRefresh, id=self.ID_REFRESH)
         self.Unbind(wx.EVT_CLOSE, handler=self.__onClose)
 
     @property
@@ -87,11 +84,13 @@ class AttachPanel(wx.Panel):
     def __bindAppEvents(self):
         Application.onPageSelect += self.__onPageSelect
         Application.onPageUpdate += self.__onPageUpdate
+        Application.onAttachListChanged += self.__onAttachListChanged
         Application.onWikiOpen += self.__onWikiOpen
 
     def __unbindAppEvents(self):
         Application.onPageSelect -= self.__onPageSelect
         Application.onPageUpdate -= self.__onPageUpdate
+        Application.onAttachListChanged -= self.__onAttachListChanged
         Application.onWikiOpen -= self.__onWikiOpen
 
     def __onClose(self, event):
@@ -107,18 +106,6 @@ class AttachPanel(wx.Panel):
         imagesDir = getImagesDir()
 
         toolbar = wx.ToolBar(parent, id, style=wx.TB_DOCKABLE)
-
-        toolbar.AddTool(self.ID_REFRESH,
-                        _(u"Refresh"),
-                        wx.Bitmap(os.path.join(imagesDir, "reload.png"),
-                                  wx.BITMAP_TYPE_ANY),
-                        wx.NullBitmap,
-                        wx.ITEM_NORMAL,
-                        _(u"Refresh"),
-                        "")
-
-        toolbar.AddSeparator()
-
         toolbar.AddTool(self.ID_ATTACH,
                         _(u"Attach Files…"),
                         wx.Bitmap(os.path.join(imagesDir, "attach.png"),
@@ -191,7 +178,7 @@ class AttachPanel(wx.Panel):
         self.updateAttachments()
 
     def __onPageUpdate(self, page, **kwargs):
-        if(Application.selectedPage is not None and
+        if (Application.selectedPage is not None and
                 Application.selectedPage == page and
                 kwargs['change'] == PAGE_UPDATE_ATTACHMENT):
             self.updateAttachments()
@@ -300,9 +287,6 @@ class AttachPanel(wx.Panel):
     def __onPaste(self, event):
         self.__pasteLink()
 
-    def __onRefresh(self, event):
-        self.updateAttachments()
-
     def __onOpenFolder(self, event):
         Application.actionController.getAction(OpenAttachFolderAction.stringId).run(None)
 
@@ -329,6 +313,10 @@ class AttachPanel(wx.Panel):
 
         dragSource = wx.DropSource(data, self)
         dragSource.DoDragDrop()
+
+    def __onAttachListChanged(self, page, params):
+        if page is not None and page == Application.selectedPage:
+            self.updateAttachments()
 
     def SetFocus(self):
         self.__attachList.SetFocus()

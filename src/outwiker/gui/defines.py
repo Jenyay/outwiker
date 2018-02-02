@@ -18,3 +18,6 @@ MENU_HELP = 'Menu_Help'
 
 TOOLBAR_GENERAL = 'General'
 TOOLBAR_PLUGINS = 'Plugins'
+
+# Period for check changes in the attach folder (in ms)
+ATTACH_CHECK_PERIOD = 300

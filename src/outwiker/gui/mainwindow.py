@@ -6,8 +6,9 @@ import logging
 import wx
 import wx.aui
 
-from outwiker.core.commands import MessageBox
 from outwiker.core.application import Application
+from outwiker.core.attachwatcher import AttachWatcher
+from outwiker.core.commands import MessageBox
 from outwiker.core.system import getOS
 from outwiker.core.system import getImagesDir
 
@@ -118,6 +119,7 @@ class MainWindow(wx.Frame):
             TextPageController(Application),
             SearchPageController(Application),
             PrefController(Application),
+            AttachWatcher(Application, guidefines.ATTACH_CHECK_PERIOD),
         ]
 
         logger.debug(u'MainWindow. Initialize the core controllers')
