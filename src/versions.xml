@@ -8,6 +8,8 @@
 
 		<changelog>
 			<version number="2.1.0.835" status="dev">
+				<change>Migrate to Python 3.x and wxPython 4.0.0</change>
+				<change>Add watching for attached files for selected page.</change>
 			</version>
 
 			<version number="2.1.0.834" status="dev" date="December 17, 2017">
@@ -47,6 +49,8 @@
 
 		<changelog>
 			<version number="2.1.0.835" status="dev">
+				<change>Переход на Python 3.x и wxPython 4.0.0</change>
+				<change>Добавлено слежение за прикрепленными файлами для текущей страницы.</change>
 			</version>
 
 			<version number="2.1.0.834" status="dev" date="17.12.2017">
