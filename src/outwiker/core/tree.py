@@ -319,6 +319,12 @@ class WikiDocument(RootWikiPage):
         # Параметр - удаленная страница
         self.onPageRemove = Event()
 
+        # Event occurs after change attached file list.
+        # Parameters:
+        #     page - current (selected) page
+        #     params - instance if the AttachListChangedParams class
+        self.onAttachListChanged = Event()
+
     @staticmethod
     def clearConfigFile(path):
         """

@@ -113,13 +113,16 @@ class MainWindow(wx.Frame):
         self.tabsController = TabsController(self.pagePanel.panel.tabsCtrl,
                                              Application)
 
+        self.attachWatcher = AttachWatcher(Application,
+                                           guidefines.ATTACH_CHECK_PERIOD)
+
         self._coreControllers = [
             WikiPageController(Application),
             HtmlPageController(Application),
             TextPageController(Application),
             SearchPageController(Application),
             PrefController(Application),
-            AttachWatcher(Application, guidefines.ATTACH_CHECK_PERIOD),
+            self.attachWatcher,
         ]
 
         logger.debug(u'MainWindow. Initialize the core controllers')

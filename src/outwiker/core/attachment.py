@@ -4,9 +4,9 @@ import os
 import os.path
 import shutil
 
-from outwiker.core.exceptions import ReadonlyException
-from outwiker.core.defines import PAGE_ATTACH_DIR
-from . import events
+from .defines import PAGE_ATTACH_DIR
+from .exceptions import ReadonlyException
+from .events import AttachListChangedParams
 
 
 class Attachment(object):
@@ -76,8 +76,8 @@ class Attachment(object):
                 shutil.copy(name, attachPath)
 
         self.page.updateDateTime()
-        self.page.root.onPageUpdate(self.page,
-                                    change=events.PAGE_UPDATE_ATTACHMENT)
+        self.page.root.onAttachListChanged(self.page,
+                                           AttachListChangedParams())
 
     def removeAttach(self, files):
         """
@@ -97,14 +97,13 @@ class Attachment(object):
                 else:
                     os.remove(path)
             except OSError:
-                self.page.root.onPageUpdate(
-                    self.page,
-                    change=events.PAGE_UPDATE_ATTACHMENT)
+                self.page.root.onAttachListChanged(self.page,
+                                                   AttachListChangedParams())
                 raise IOError(u"Can't remove %s" % fname)
 
         self.page.updateDateTime()
-        self.page.root.onPageUpdate(self.page,
-                                    change=events.PAGE_UPDATE_ATTACHMENT)
+        self.page.root.onAttachListChanged(self.page,
+                                           AttachListChangedParams())
 
     @staticmethod
     def sortByName(fname):

@@ -13,11 +13,8 @@ PAGE_UPDATE_ICON = 2
 # Changed tags
 PAGE_UPDATE_TAGS = 4
 
-# Changes in the attach list
-PAGE_UPDATE_ATTACHMENT = 8
-
 # Changed page style
-PAGE_UPDATE_STYLE = 16
+PAGE_UPDATE_STYLE = 8
 
 
 class LinkClickParams(object):
