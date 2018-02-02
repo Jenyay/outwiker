@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+import shutil
 from tempfile import mkdtemp
 
 import wx
@@ -44,12 +45,18 @@ class AttachWatcherTest(BaseWxTestCase):
         self._eventCount += 1
 
     def _attach_files(self, page, files_list):
+        '''
+        Copy files to attachments without explicit
+            onAttachListChanged event calling.
+        '''
         files_full = [os.path.join(self._sample_path, fname)
                       for fname
                       in files_list]
 
         attach = Attachment(page)
-        attach.attach(files_full)
+        attach_path = attach.getAttachPath(True)
+        for fname in files_full:
+            shutil.copy(fname, attach_path)
 
     def test_empty_01(self):
         '''
@@ -533,7 +540,22 @@ class AttachWatcherTest(BaseWxTestCase):
         watcher.initialize()
 
         self._application.selectedPage = self.page_02
-        wx.MilliSleep(500)
+        wx.MilliSleep(1000)
         self.myYield()
         watcher.clear()
         self.assertEqual(self._eventCount, 0)
+
+    def test_race_02(self):
+        self._application.wikiroot = self.wikiroot
+        self._application.selectedPage = self.page_01
+
+        watcher = AttachWatcher(self._application, 500)
+        watcher.initialize()
+
+        self._attach_files(self.page_01, ['add.png'])
+        self._application.selectedPage = self.page_02
+
+        wx.MilliSleep(1000)
+        self.myYield()
+        watcher.clear()
+        self.assertEqual(self._eventCount, 1)
