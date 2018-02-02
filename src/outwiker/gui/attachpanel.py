@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os.path
 
@@ -8,7 +8,6 @@ from outwiker.core.application import Application
 from outwiker.core.commands import MessageBox
 from outwiker.core.system import getOS, getImagesDir
 from outwiker.core.attachment import Attachment
-from outwiker.core.events import PAGE_UPDATE_ATTACHMENT
 from outwiker.actions.attachfiles import AttachFilesAction
 from outwiker.actions.openattachfolder import OpenAttachFolderAction
 from outwiker.gui.guiconfig import AttachConfig
@@ -83,13 +82,11 @@ class AttachPanel(wx.Panel):
 
     def __bindAppEvents(self):
         Application.onPageSelect += self.__onPageSelect
-        Application.onPageUpdate += self.__onPageUpdate
         Application.onAttachListChanged += self.__onAttachListChanged
         Application.onWikiOpen += self.__onWikiOpen
 
     def __unbindAppEvents(self):
         Application.onPageSelect -= self.__onPageSelect
-        Application.onPageUpdate -= self.__onPageUpdate
         Application.onAttachListChanged -= self.__onAttachListChanged
         Application.onWikiOpen -= self.__onWikiOpen
 
@@ -176,12 +173,6 @@ class AttachPanel(wx.Panel):
 
     def __onPageSelect(self, page):
         self.updateAttachments()
-
-    def __onPageUpdate(self, page, **kwargs):
-        if (Application.selectedPage is not None and
-                Application.selectedPage == page and
-                kwargs['change'] == PAGE_UPDATE_ATTACHMENT):
-            self.updateAttachments()
 
     def updateAttachments(self):
         """

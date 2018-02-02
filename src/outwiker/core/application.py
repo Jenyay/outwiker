@@ -360,6 +360,7 @@ class ApplicationParams(object):
         wiki.onPageRename += self.onPageRename
         wiki.onPageCreate += self.onPageCreate
         wiki.onPageRemove += self.onPageRemove
+        wiki.onAttachListChanged += self.onAttachListChanged
         wiki.bookmarks.onBookmarksChanged += self.onBookmarksChanged
 
     def __unbindWikiEvents(self, wiki):
@@ -375,6 +376,7 @@ class ApplicationParams(object):
         wiki.onPageRename -= self.onPageRename
         wiki.onPageCreate -= self.onPageCreate
         wiki.onPageRemove -= self.onPageRemove
+        wiki.onAttachListChanged -= self.onAttachListChanged
         wiki.bookmarks.onBookmarksChanged -= self.onBookmarksChanged
 
     @property

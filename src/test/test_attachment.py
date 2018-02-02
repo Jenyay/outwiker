@@ -9,7 +9,6 @@ from .utils import removeDir
 from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.core.application import Application
-from outwiker.core.events import PAGE_UPDATE_ATTACHMENT
 from outwiker.core.defines import PAGE_ATTACH_DIR
 
 
@@ -42,10 +41,9 @@ class AttachmentTest(unittest.TestCase):
     def tearDown(self):
         removeDir(self.path)
 
-    def onPageUpdate(self, sender, **kwargs):
+    def onAttachListChanged(self, sender, params):
         self.pageUpdateCount += 1
         self.pageUpdateSender = sender
-        self.prev_kwargs = kwargs
 
     def testAttachPath1(self):
         attach = Attachment(self.page)
@@ -79,7 +77,7 @@ class AttachmentTest(unittest.TestCase):
     def testEvent(self):
         self.pageUpdateCount = 0
 
-        Application.onPageUpdate += self.onPageUpdate
+        Application.onAttachListChanged += self.onAttachListChanged
 
         attach = Attachment(self.page)
 
@@ -88,14 +86,13 @@ class AttachmentTest(unittest.TestCase):
 
         self.assertEqual(self.pageUpdateCount, 1)
         self.assertEqual(self.pageUpdateSender, self.page)
-        self.assertEqual(self.prev_kwargs['change'], PAGE_UPDATE_ATTACHMENT)
 
         attach.attach(self.fullFilesPath[2:])
 
         self.assertEqual(self.pageUpdateCount, 2)
         self.assertEqual(self.pageUpdateSender, self.page)
 
-        Application.onPageUpdate -= self.onPageUpdate
+        Application.onAttachListChanged -= self.onAttachListChanged
 
     def testAttachFull1(self):
         attach = Attachment(self.page)
@@ -160,7 +157,7 @@ class AttachmentTest(unittest.TestCase):
 
         attach.attach(self.fullFilesPath)
 
-        Application.onPageUpdate += self.onPageUpdate
+        Application.onAttachListChanged += self.onAttachListChanged
 
         attach.removeAttach([self.files[0]])
 
@@ -176,7 +173,7 @@ class AttachmentTest(unittest.TestCase):
         self.assertEqual(self.pageUpdateCount, 2)
         self.assertEqual(self.pageUpdateSender, self.page)
 
-        Application.onPageUpdate -= self.onPageUpdate
+        Application.onAttachListChanged -= self.onAttachListChanged
 
     def testRemoveAttaches1(self):
         attach = Attachment(self.page)
