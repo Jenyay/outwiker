@@ -61,7 +61,9 @@ class AttachWatcher(object):
         self._checkAttachListForPage(self._application.selectedPage)
 
     def _checkAttachListForPage(self, page):
-        if page is None or self._watchedPage != page:
+        if (page is None or
+                self._watchedPage != page or
+                self._watchedPage.isRemoved):
             return
 
         attach = Attachment(page)

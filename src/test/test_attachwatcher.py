@@ -531,6 +531,103 @@ class AttachWatcherTest(BaseWxTestCase):
         watcher.clear()
         self.assertEqual(self._eventCount, 1)
 
+    def test_delete_page_01(self):
+        self._application.wikiroot = self.wikiroot
+        self._application.selectedPage = self.page_01
+        self._attach_files(self.page_01, ['add.png'])
+
+        watcher = AttachWatcher(self._application, self._period_ms)
+        watcher.initialize()
+
+        self.page_01.remove()
+
+        wx.MilliSleep(500)
+        self.myYield()
+        watcher.clear()
+        self.assertEqual(self._eventCount, 0)
+
+    def test_delete_page_02(self):
+        self._application.wikiroot = self.wikiroot
+        self._application.selectedPage = self.page_01
+        self._attach_files(self.page_01, ['add.png'])
+
+        watcher = AttachWatcher(self._application, self._period_ms)
+        watcher.initialize()
+
+        self.page_01.remove()
+        self._application.selectedPage = self.page_02
+        self._attach_files(self.page_02, ['add.png'])
+
+        wx.MilliSleep(500)
+        self.myYield()
+        watcher.clear()
+        self.assertEqual(self._eventCount, 1)
+
+    def test_move_to_page_01(self):
+        self._application.wikiroot = self.wikiroot
+        self._application.selectedPage = self.page_01
+        self._attach_files(self.page_01, ['add.png'])
+
+        watcher = AttachWatcher(self._application, self._period_ms)
+        watcher.initialize()
+
+        self.page_01.moveTo(self.page_02)
+
+        wx.MilliSleep(500)
+        self.myYield()
+        watcher.clear()
+        self.assertEqual(self._eventCount, 0)
+
+    def test_move_to_page_02(self):
+        self._application.wikiroot = self.wikiroot
+        self._application.selectedPage = self.page_01
+
+        watcher = AttachWatcher(self._application, self._period_ms)
+        watcher.initialize()
+
+        self.page_01.moveTo(self.page_02)
+        self._attach_files(self.page_01, ['add.png'])
+
+        wx.MilliSleep(500)
+        self.myYield()
+        watcher.clear()
+        self.assertEqual(self._eventCount, 1)
+
+    def test_remove_empty_attach_dir(self):
+        self._application.wikiroot = self.wikiroot
+        self._application.selectedPage = self.page_01
+
+        attach = Attachment(self.page_01)
+        attach_dir = attach.getAttachPath(True)
+
+        watcher = AttachWatcher(self._application, self._period_ms)
+        watcher.initialize()
+
+        shutil.rmtree(attach_dir)
+
+        wx.MilliSleep(500)
+        self.myYield()
+        watcher.clear()
+        self.assertEqual(self._eventCount, 0)
+
+    def test_remove_attach_dir(self):
+        self._application.wikiroot = self.wikiroot
+        self._application.selectedPage = self.page_01
+
+        attach = Attachment(self.page_01)
+        attach_dir = attach.getAttachPath(True)
+        self._attach_files(self.page_01, ['add.png'])
+
+        watcher = AttachWatcher(self._application, self._period_ms)
+        watcher.initialize()
+
+        shutil.rmtree(attach_dir)
+
+        wx.MilliSleep(500)
+        self.myYield()
+        watcher.clear()
+        self.assertEqual(self._eventCount, 1)
+
     def test_race_01(self):
         self._application.wikiroot = self.wikiroot
         self._application.selectedPage = self.page_01
