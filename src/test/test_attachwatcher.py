@@ -3,6 +3,8 @@
 import os
 from tempfile import mkdtemp
 
+import wx
+
 from outwiker.core.attachment import Attachment
 from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
@@ -16,6 +18,7 @@ class AttachWatcherTest(BaseWxTestCase):
     def setUp(self):
         super().setUp()
         self._eventCount = 0
+        self._period_ms = 50
         self._application = Application
         self._application.onAttachListChanged += self._onAttachListChanged
 
@@ -52,9 +55,10 @@ class AttachWatcherTest(BaseWxTestCase):
         '''
         Wiki is not added to Application
         '''
-        watcher = AttachWatcher(self._application)
+        watcher = AttachWatcher(self._application, self._period_ms)
         watcher.initialize()
 
+        wx.MilliSleep(500)
         self.myYield()
         watcher.clear()
         self.assertEqual(self._eventCount, 0)
@@ -66,9 +70,10 @@ class AttachWatcherTest(BaseWxTestCase):
         '''
         self._application.wikiroot = self.wikiroot
 
-        watcher = AttachWatcher(self._application)
+        watcher = AttachWatcher(self._application, self._period_ms)
         watcher.initialize()
 
+        wx.MilliSleep(500)
         self.myYield()
         watcher.clear()
         self.assertEqual(self._eventCount, 0)
@@ -78,10 +83,11 @@ class AttachWatcherTest(BaseWxTestCase):
         Wiki added to Application _after_ AttachWatcher initializing.
         No selected pages.
         '''
-        watcher = AttachWatcher(self._application)
+        watcher = AttachWatcher(self._application, self._period_ms)
         watcher.initialize()
         self._application.wikiroot = self.wikiroot
 
+        wx.MilliSleep(500)
         self.myYield()
         watcher.clear()
         self.assertEqual(self._eventCount, 0)
@@ -94,9 +100,10 @@ class AttachWatcherTest(BaseWxTestCase):
         self._application.wikiroot = self.wikiroot
         self._application.selectedPage = self.page_01
 
-        watcher = AttachWatcher(self._application)
+        watcher = AttachWatcher(self._application, self._period_ms)
         watcher.initialize()
 
+        wx.MilliSleep(500)
         self.myYield()
         watcher.clear()
         self.assertEqual(self._eventCount, 0)
@@ -106,12 +113,13 @@ class AttachWatcherTest(BaseWxTestCase):
         Wiki added to Application _after_ AttachWatcher initializing.
         Selected page.
         '''
-        watcher = AttachWatcher(self._application)
+        watcher = AttachWatcher(self._application, self._period_ms)
         watcher.initialize()
 
         self._application.wikiroot = self.wikiroot
         self._application.selectedPage = self.page_01
 
+        wx.MilliSleep(500)
         self.myYield()
         watcher.clear()
         self.assertEqual(self._eventCount, 0)
@@ -123,11 +131,12 @@ class AttachWatcherTest(BaseWxTestCase):
         self._application.wikiroot = self.wikiroot
         self._application.selectedPage = None
 
-        watcher = AttachWatcher(self._application)
+        watcher = AttachWatcher(self._application, self._period_ms)
         watcher.initialize()
 
         self._application.selectedPage = self.page_01
 
+        wx.MilliSleep(500)
         self.myYield()
         watcher.clear()
         self.assertEqual(self._eventCount, 0)
@@ -139,11 +148,12 @@ class AttachWatcherTest(BaseWxTestCase):
         self._application.wikiroot = self.wikiroot
         self._application.selectedPage = self.page_01
 
-        watcher = AttachWatcher(self._application)
+        watcher = AttachWatcher(self._application, self._period_ms)
         watcher.initialize()
 
         self._application.selectedPage = None
 
+        wx.MilliSleep(500)
         self.myYield()
         watcher.clear()
         self.assertEqual(self._eventCount, 0)
@@ -155,11 +165,12 @@ class AttachWatcherTest(BaseWxTestCase):
         self._application.wikiroot = self.wikiroot
         self._application.selectedPage = self.page_01
 
-        watcher = AttachWatcher(self._application)
+        watcher = AttachWatcher(self._application, self._period_ms)
         watcher.initialize()
 
         self._application.selectedPage = self.page_02
 
+        wx.MilliSleep(500)
         self.myYield()
         watcher.clear()
         self.assertEqual(self._eventCount, 0)
@@ -171,11 +182,12 @@ class AttachWatcherTest(BaseWxTestCase):
         self._application.wikiroot = self.wikiroot
         self._application.selectedPage = self.page_01
 
-        watcher = AttachWatcher(self._application)
+        watcher = AttachWatcher(self._application, self._period_ms)
         watcher.initialize()
 
         self._application.wikiroot = None
 
+        wx.MilliSleep(500)
         self.myYield()
         watcher.clear()
         self.assertEqual(self._eventCount, 0)
@@ -184,11 +196,12 @@ class AttachWatcherTest(BaseWxTestCase):
         self._application.wikiroot = self.wikiroot
         self._application.selectedPage = self.page_01
 
-        watcher = AttachWatcher(self._application)
+        watcher = AttachWatcher(self._application, self._period_ms)
         watcher.initialize()
 
         Attachment(self._application.selectedPage).getAttachPath(True)
 
+        wx.MilliSleep(500)
         self.myYield()
         watcher.clear()
         self.assertEqual(self._eventCount, 0)
@@ -199,9 +212,10 @@ class AttachWatcherTest(BaseWxTestCase):
 
         self._attach_files(self.page_01, ['add.png'])
 
-        watcher = AttachWatcher(self._application)
+        watcher = AttachWatcher(self._application, self._period_ms)
         watcher.initialize()
 
+        wx.MilliSleep(500)
         self.myYield()
         watcher.clear()
         self.assertEqual(self._eventCount, 0)
@@ -212,11 +226,12 @@ class AttachWatcherTest(BaseWxTestCase):
 
         self._attach_files(self.page_01, ['add.png'])
 
-        watcher = AttachWatcher(self._application)
+        watcher = AttachWatcher(self._application, self._period_ms)
         watcher.initialize()
 
         self._application.selectedPage = self.page_01
 
+        wx.MilliSleep(500)
         self.myYield()
         watcher.clear()
         self.assertEqual(self._eventCount, 0)
@@ -228,13 +243,14 @@ class AttachWatcherTest(BaseWxTestCase):
         self._attach_files(self.page_01, ['add.png'])
         self._attach_files(self.page_02, ['add.png', 'dir.png'])
 
-        watcher = AttachWatcher(self._application)
+        watcher = AttachWatcher(self._application, self._period_ms)
         watcher.initialize()
 
         # Switch pages
         self._application.selectedPage = self.page_01
         self._application.selectedPage = self.page_02
 
+        wx.MilliSleep(500)
         self.myYield()
         watcher.clear()
         self.assertEqual(self._eventCount, 0)
@@ -245,12 +261,13 @@ class AttachWatcherTest(BaseWxTestCase):
         self._application.wikiroot = self.wikiroot
         self._application.selectedPage = self.page_01
 
-        watcher = AttachWatcher(self._application)
+        watcher = AttachWatcher(self._application, self._period_ms)
         watcher.initialize()
 
         # Close the wiki
         self._application.wikiroot = None
 
+        wx.MilliSleep(500)
         self.myYield()
         watcher.clear()
         self.assertEqual(self._eventCount, 0)
@@ -259,11 +276,12 @@ class AttachWatcherTest(BaseWxTestCase):
         self._application.wikiroot = self.wikiroot
         self._application.selectedPage = self.page_01
 
-        watcher = AttachWatcher(self._application)
+        watcher = AttachWatcher(self._application, self._period_ms)
         watcher.initialize()
 
         self._attach_files(self.page_01, ['add.png'])
 
+        wx.MilliSleep(500)
         self.myYield()
         watcher.clear()
         self.assertEqual(self._eventCount, 1)
@@ -272,11 +290,12 @@ class AttachWatcherTest(BaseWxTestCase):
         self._application.wikiroot = self.wikiroot
         self._application.selectedPage = self.page_01
 
-        watcher = AttachWatcher(self._application)
+        watcher = AttachWatcher(self._application, self._period_ms)
         watcher.initialize()
 
         self._attach_files(self.page_01, ['add.png', 'dir.png'])
 
+        wx.MilliSleep(500)
         self.myYield()
         watcher.clear()
 
@@ -286,13 +305,15 @@ class AttachWatcherTest(BaseWxTestCase):
         self._application.wikiroot = self.wikiroot
         self._application.selectedPage = self.page_01
 
-        watcher = AttachWatcher(self._application)
+        watcher = AttachWatcher(self._application, self._period_ms)
         watcher.initialize()
 
         self._attach_files(self.page_01, ['add.png'])
+        wx.MilliSleep(500)
         self.myYield()
 
         self._attach_files(self.page_01, ['dir.png'])
+        wx.MilliSleep(500)
         self.myYield()
 
         watcher.clear()
@@ -304,13 +325,14 @@ class AttachWatcherTest(BaseWxTestCase):
         self._application.selectedPage = self.page_01
         self._attach_files(self.page_01, ['add.png'])
 
-        watcher = AttachWatcher(self._application)
+        watcher = AttachWatcher(self._application, self._period_ms)
         watcher.initialize()
 
         attach = Attachment(self.page_01)
         with open(attach.getFullPath('add.png')):
             pass
 
+        wx.MilliSleep(500)
         self.myYield()
         watcher.clear()
         self.assertEqual(self._eventCount, 0)
@@ -320,13 +342,14 @@ class AttachWatcherTest(BaseWxTestCase):
         self._application.selectedPage = self.page_01
         self._attach_files(self.page_01, ['add.png'])
 
-        watcher = AttachWatcher(self._application)
+        watcher = AttachWatcher(self._application, self._period_ms)
         watcher.initialize()
 
         attach = Attachment(self.page_01)
         with open(attach.getFullPath('add.png'), 'w'):
             pass
 
+        wx.MilliSleep(500)
         self.myYield()
         watcher.clear()
         self.assertEqual(self._eventCount, 0)
@@ -340,11 +363,12 @@ class AttachWatcherTest(BaseWxTestCase):
         src_fname = attach.getFullPath('add.png')
         dest_fname = attach.getFullPath('newname.png')
 
-        watcher = AttachWatcher(self._application)
+        watcher = AttachWatcher(self._application, self._period_ms)
         watcher.initialize()
 
         os.rename(src_fname, dest_fname)
 
+        wx.MilliSleep(500)
         self.myYield()
         watcher.clear()
         self.assertEqual(self._eventCount, 1)
@@ -354,12 +378,13 @@ class AttachWatcherTest(BaseWxTestCase):
         self._application.selectedPage = self.page_01
         self._attach_files(self.page_01, ['add.png'])
 
-        watcher = AttachWatcher(self._application)
+        watcher = AttachWatcher(self._application, self._period_ms)
         watcher.initialize()
 
         attach = Attachment(self.page_01)
         attach.removeAttach(['add.png'])
 
+        wx.MilliSleep(500)
         self.myYield()
         watcher.clear()
         self.assertEqual(self._eventCount, 1)
@@ -371,13 +396,14 @@ class AttachWatcherTest(BaseWxTestCase):
         self._attach_files(self.page_01, ['add.png'])
         self._attach_files(self.page_02, ['add.png', 'dir.png'])
 
-        watcher = AttachWatcher(self._application)
+        watcher = AttachWatcher(self._application, self._period_ms)
         watcher.initialize()
 
         # Switch pages
         self._application.selectedPage = self.page_02
         self._attach_files(self.page_02, ['accept.png'])
 
+        wx.MilliSleep(500)
         self.myYield()
         watcher.clear()
         self.assertEqual(self._eventCount, 1)
@@ -388,12 +414,13 @@ class AttachWatcherTest(BaseWxTestCase):
 
         self._attach_files(self.page_01, ['add.png'])
 
-        watcher = AttachWatcher(self._application)
+        watcher = AttachWatcher(self._application, self._period_ms)
         watcher.initialize()
 
         self._application.wikiroot = None
         self._attach_files(self.page_01, ['dir.png'])
 
+        wx.MilliSleep(500)
         self.myYield()
         watcher.clear()
         self.assertEqual(self._eventCount, 0)
@@ -404,12 +431,13 @@ class AttachWatcherTest(BaseWxTestCase):
 
         self._attach_files(self.page_01, ['add.png'])
 
-        watcher = AttachWatcher(self._application)
+        watcher = AttachWatcher(self._application, self._period_ms)
         watcher.initialize()
 
         self._application.selectedPage = None
         self._attach_files(self.page_01, ['dir.png'])
 
+        wx.MilliSleep(500)
         self.myYield()
         watcher.clear()
         self.assertEqual(self._eventCount, 0)
@@ -420,13 +448,14 @@ class AttachWatcherTest(BaseWxTestCase):
 
         self._attach_files(self.page_01, ['add.png'])
 
-        watcher = AttachWatcher(self._application)
+        watcher = AttachWatcher(self._application, self._period_ms)
         watcher.initialize()
 
         self._application.selectedPage = None
         self._attach_files(self.page_01, ['dir.png'])
         self._application.selectedPage = self.page_01
 
+        wx.MilliSleep(500)
         self.myYield()
         watcher.clear()
         self.assertEqual(self._eventCount, 0)
@@ -437,7 +466,7 @@ class AttachWatcherTest(BaseWxTestCase):
 
         self._attach_files(self.page_01, ['add.png'])
 
-        watcher = AttachWatcher(self._application)
+        watcher = AttachWatcher(self._application, self._period_ms)
         watcher.initialize()
 
         self._application.selectedPage = None
@@ -445,6 +474,7 @@ class AttachWatcherTest(BaseWxTestCase):
         self._application.selectedPage = self.page_01
         self._attach_files(self.page_01, ['accept.png'])
 
+        wx.MilliSleep(500)
         self.myYield()
         watcher.clear()
         self.assertEqual(self._eventCount, 1)
@@ -453,11 +483,12 @@ class AttachWatcherTest(BaseWxTestCase):
         self._application.wikiroot = self.wikiroot
         self._application.selectedPage = self.page_01
 
-        watcher = AttachWatcher(self._application)
+        watcher = AttachWatcher(self._application, self._period_ms)
         watcher.initialize()
 
         self.page_01.title = 'Новый заголовок'
 
+        wx.MilliSleep(500)
         self.myYield()
         watcher.clear()
         self.assertEqual(self._eventCount, 0)
@@ -467,11 +498,12 @@ class AttachWatcherTest(BaseWxTestCase):
         self._application.selectedPage = self.page_01
         self._attach_files(self.page_01, ['add.png'])
 
-        watcher = AttachWatcher(self._application)
+        watcher = AttachWatcher(self._application, self._period_ms)
         watcher.initialize()
 
         self.page_01.title = 'Новый заголовок'
 
+        wx.MilliSleep(500)
         self.myYield()
         watcher.clear()
         self.assertEqual(self._eventCount, 0)
@@ -481,12 +513,27 @@ class AttachWatcherTest(BaseWxTestCase):
         self._application.selectedPage = self.page_01
         self._attach_files(self.page_01, ['add.png'])
 
-        watcher = AttachWatcher(self._application)
+        watcher = AttachWatcher(self._application, self._period_ms)
         watcher.initialize()
 
         self.page_01.title = 'Новый заголовок'
         self._attach_files(self.page_01, ['dir.png'])
 
+        wx.MilliSleep(500)
         self.myYield()
         watcher.clear()
         self.assertEqual(self._eventCount, 1)
+
+    def test_race_01(self):
+        self._application.wikiroot = self.wikiroot
+        self._application.selectedPage = self.page_01
+        self._attach_files(self.page_01, ['add.png'])
+
+        watcher = AttachWatcher(self._application, 500)
+        watcher.initialize()
+
+        self._application.selectedPage = self.page_02
+        wx.MilliSleep(500)
+        self.myYield()
+        watcher.clear()
+        self.assertEqual(self._eventCount, 0)
