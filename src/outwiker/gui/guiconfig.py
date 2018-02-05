@@ -222,7 +222,7 @@ class EditorConfig(object):
 
     # Цвет фона
     BACK_COLOR_SECTION = u'BackColor'
-    BACK_COLOR_DEFAULT = u'#D9D9D9'
+    BACK_COLOR_DEFAULT = u'#FFFFFF'
 
     # Selected text background color
     SEL_BACK_COLOR_SECTION = u'SelBackColor'
