@@ -16,30 +16,7 @@ from ...utilites import get_linux_distrib_info
 
 
 class PyInstallerBuilderLinuxForDeb(PyInstallerBuilderLinuxBase):
-    def get_additional_files(self):
-        files = []
-        self._append_pixbuf_files(files)
-        self._append_immodules_files(files)
-        return files
-
-    def _append_immodules_files(self, files):
-        dir_dest = u'lib/immodules'
-        modules_dir = u'/usr/lib/x86_64-linux-gnu/gtk-3.0/3.0.0/immodules/'
-
-        files.append(('need_for_build/debian_debbinary/immodules.cache', dir_dest))
-        self.append_so_files(files, modules_dir, dir_dest)
-
-    def _append_pixbuf_files(self, files):
-        dir_dest = u'lib/gdk-pixbuf'
-        modules_dir = u'/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders'
-
-        files.append(('need_for_build/debian_debbinary/loaders.cache', dir_dest))
-        self.append_so_files(files, modules_dir, dir_dest)
-
-    def get_params(self):
-        params = super().get_params()
-        params.append(u'--runtime-hook=linux_runtime_hook.py')
-        return params
+    pass
 
 
 class BuilderDebBinaryFactory(object):
@@ -65,7 +42,7 @@ class BuilderDebBinaryBase(BuilderBase, metaclass=ABCMeta):
         distrib_info = get_linux_distrib_info()
         version = getOutwikerVersion()
         architecture = self._getDebArchitecture()
-        self.debName = "outwiker-{version}+{build}~{distrib}~{codename}_{architecture}".format(
+        self.debName = "outwiker-{version}+{build}_{architecture}".format(
             version=version[0],
             build=version[1],
             distrib=distrib_info['DISTRIB_ID'],

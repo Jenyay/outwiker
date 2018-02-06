@@ -1,4 +1,4 @@
 ---
 suffix: "_amd64"
-deb_suffix: "~Ubuntu~xenial_amd64"
+deb_suffix: "_amd64"
 python: "python3.5"

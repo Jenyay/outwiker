@@ -186,15 +186,40 @@ class PyInstallerBuilderWindows(BasePyInstallerBuilder):
 class PyInstallerBuilderLinuxBase(BasePyInstallerBuilder):
     def get_remove_list(self):
         return [
-            u'lib',
-            u'include',
-            u'_codecs_cn.so',
-            u'_codecs_hk.so',
-            u'_codecs_iso2022.so',
-            u'_codecs_jp.so',
-            u'_codecs_kr.so',
-            u'_codecs_tw.so',
-        ]
+            'lib',
+            'include',
+            '_codecs_cn.so',
+            '_codecs_hk.so',
+            '_codecs_iso2022.so',
+            '_codecs_jp.so',
+            '_codecs_kr.so',
+            '_codecs_tw.so',
+            'libEGL.so.1',
+            'libX11-xcb.so.1',
+
+            # List of excludes from AppImage recomendations
+            # https://github.com/AppImage/AppImages/blob/master/excludelist
+            'libstdc++.so.6',
+            'libgio-2.0.so.0',
+            'libc.so.6',
+            'libGL.so.1',
+            'libdrm.so.2',
+            # 'libxcb.so.1',
+            'libX11.so.6',
+            'libasound.so.2',
+            'libgdk_pixbuf-2.0.so.0',
+            'libfontconfig.so.1',
+            'libexpat.so.1',
+            'libgcc_s.so.1',
+            'libglib-2.0.so.0',
+            'libgpg-error.so.0',
+            'libICE.so.6',
+            'libSM.so.6',
+            'libuuid.so.1',
+            'libz.so.1',
+            'libgobject-2.0.so.0',
+            'libgpg-error.so.0',
+            ]
 
     def build(self):
         super(PyInstallerBuilderLinuxBase, self).build()
@@ -223,27 +248,4 @@ class PyInstallerBuilderLinuxBase(BasePyInstallerBuilder):
 
 
 class PyInstallerBuilderLinuxSimple(PyInstallerBuilderLinuxBase):
-    def get_additional_files(self):
-        files = []
-        self._append_pixbuf_files(files)
-        self._append_immodules_files(files)
-        return files
-
-    def _append_immodules_files(self, files):
-        dir_dest = u'lib/immodules'
-        modules_dir = u'/usr/lib/x86_64-linux-gnu/gtk-3.0/3.0.0/immodules/'
-
-        files.append(('need_for_build/linux/immodules.cache', dir_dest))
-        self.append_so_files(files, modules_dir, dir_dest)
-
-    def _append_pixbuf_files(self, files):
-        dir_dest = u'lib/gdk-pixbuf'
-        modules_dir = u'/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders'
-
-        files.append(('need_for_build/linux/loaders.cache', dir_dest))
-        self.append_so_files(files, modules_dir, dir_dest)
-
-    def get_params(self):
-        params = super(PyInstallerBuilderLinuxSimple, self).get_params()
-        params.append(u'--runtime-hook=linux_runtime_hook.py')
-        return params
+    pass
