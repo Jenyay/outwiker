@@ -3,7 +3,7 @@
 import os
 import sys
 
-os.environ['LD_LIBRARY_PATH'] = sys._MEIPASS
+# os.environ['LD_LIBRARY_PATH'] = sys._MEIPASS
 # os.environ['GDK_PIXBUF_MODULE_FILE'] = sys._MEIPASS + '/lib/gdk-pixbuf/loaders.cache'
 # os.environ['GTK_IM_MODULE_FILE'] = sys._MEIPASS + '/lib/immodules/immodules.cache'
 # os.environ['GTK_THEME'] = 'Radiance'
