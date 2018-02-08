@@ -68,6 +68,7 @@ class BaseBinaryBuilder(object, metaclass=ABCMeta):
             'xml',
             'json',
             'asyncio',
+            'html.parser',
         ]
 
     def get_additional_files(self):
