@@ -1,7 +1,10 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
+import logging
 import os
-import urllib.request, urllib.parse, urllib.error
+import urllib.request
+import urllib.parse
+import urllib.error
 
 import wx
 
@@ -19,6 +22,8 @@ from outwiker.gui.defines import (ID_MOUSE_LEFT,
 
 from .htmlrender import HtmlRender
 
+logger = logging.getLogger('outwiker.gui.htmlrenderwebkit')
+
 
 class HtmlRenderWebKit(HtmlRender):
     def __init__(self, parent):
@@ -35,17 +40,17 @@ class HtmlRenderWebKit(HtmlRender):
 
         self.canOpenUrl = False                # Можно ли открывать ссылки
 
-        self.Bind (wx.EVT_MENU, self.__onCopyFromHtml, id=wx.ID_COPY)
-        self.Bind (wx.EVT_MENU, self.__onCopyFromHtml, id=wx.ID_CUT)
-        self.Bind (webview.EVT_WEBVIEW_NAVIGATING, self.__onNavigate)
+        self.Bind(wx.EVT_MENU, self.__onCopyFromHtml, id=wx.ID_COPY)
+        self.Bind(wx.EVT_MENU, self.__onCopyFromHtml, id=wx.ID_CUT)
+        self.Bind(webview.EVT_WEBVIEW_NAVIGATING, self.__onNavigate)
 
         self._path = None
 
-    def Print (self):
+    def Print(self):
         self.ctrl.Print()
 
-    def LoadPage (self, fname):
-        url = u'file://' + urllib.parse.quote(fname.encode ("utf8"))
+    def LoadPage(self, fname):
+        url = u'file://' + urllib.parse.quote(fname.encode("utf8"))
         if APP_DATA_KEY_ANCHOR in Application.sharedData:
             url += Application.sharedData[APP_DATA_KEY_ANCHOR]
             del Application.sharedData[APP_DATA_KEY_ANCHOR]
@@ -53,20 +58,20 @@ class HtmlRenderWebKit(HtmlRender):
         self.canOpenUrl = True
 
         try:
-            with open (fname) as fp:
+            with open(fname) as fp:
                 text = fp.read()
         except IOError:
             text = _(u"Can't read file %s") % (fname)
-            self.SetPage (text, os.path.dirname (fname))
+            self.SetPage(text, os.path.dirname(fname))
 
         self.ctrl.LoadURL(url)
         self.canOpenUrl = False
 
-    def SetPage (self, htmltext, basepath):
+    def SetPage(self, htmltext, basepath):
         self.canOpenUrl = True
-        self._path = "file://" + urllib.parse.quote (basepath) + "/"
+        self._path = "file://" + urllib.parse.quote(basepath) + "/"
 
-        self.ctrl.SetPage (htmltext, self._path)
+        self.ctrl.SetPage(htmltext, self._path)
 
         self.canOpenUrl = False
 
@@ -74,24 +79,25 @@ class HtmlRenderWebKit(HtmlRender):
         self.ctrl.Copy()
         event.Skip()
 
-    def __identifyUri (self, href):
+    def __identifyUri(self, href):
         """
         Определить тип ссылки и вернуть кортеж (url, page, filename, anchor)
         """
         uri = self.ctrl.GetCurrentURL()
 
         if uri is not None:
-            basepath = urllib.parse.unquote (uri)
-            identifier = UriIdentifierWebKit (self._currentPage, basepath)
+            basepath = urllib.parse.unquote(uri)
+            identifier = UriIdentifierWebKit(self._currentPage, basepath)
 
-            return identifier.identify (href)
+            return identifier.identify(href)
 
         return (None, None, None, None)
-
 
     def __onNavigate(self, event):
         # Проверка на то, что мы не пытаемся открыть вложенный фрейм
         frame = event.GetTarget()
+        logger.debug('__onNavigate. frame={frame}'.format(frame=frame))
+
         if len(frame) != 0:
             return
 
@@ -101,11 +107,10 @@ class HtmlRenderWebKit(HtmlRender):
         if not(self.canOpenUrl or href == curr_href):
             button = 1
             modifier = 0
-            if self.__onLinkClicked (href, button, modifier):
+            if self.__onLinkClicked(href, button, modifier):
                 event.Veto()
 
-
-    def __gtk2OutWikerKeyCode (self, gtk_key_modifier):
+    def __gtk2OutWikerKeyCode(self, gtk_key_modifier):
         """
         Convert from GTK key modifier to const from gui.defines
         """
@@ -122,8 +127,7 @@ class HtmlRenderWebKit(HtmlRender):
 
         return modifier
 
-
-    def __gtk2OutWikerMouseButtonCode (self, gtk_mouse_button):
+    def __gtk2OutWikerMouseButtonCode(self, gtk_mouse_button):
         """
         Convert from GTK mouse key modifier to const from gui.defines
         """
@@ -143,8 +147,7 @@ class HtmlRenderWebKit(HtmlRender):
 
         return mouse_button
 
-
-    def __onLinkClicked (self, href, gtk_mouse_button, gtk_key_modifier):
+    def __onLinkClicked(self, href, gtk_mouse_button, gtk_key_modifier):
         """
         Клик по ссылке
         Возвращает False, если обрабатывать ссылку разрешить компоненту,
@@ -158,40 +161,46 @@ class HtmlRenderWebKit(HtmlRender):
         href = urllib.parse.unquote(href)
         href = self._decodeIDNA(href)
 
-        (url, page, filename, anchor) = self.__identifyUri (href)
+        logger.debug('__onLinkClicked. href_src={source_href}; href_process={href}'.format(
+            source_href=source_href, href=href)
+        )
 
-        modifier = self.__gtk2OutWikerKeyCode (gtk_key_modifier)
-        mouse_button = self.__gtk2OutWikerMouseButtonCode (gtk_mouse_button)
+        (url, page, filename, anchor) = self.__identifyUri(href)
+        logger.debug('__onLinkClicked. url={url}, page={page}, filename={filename}, anchor={anchor}'.format(
+            url=url, page=page, filename=filename, anchor=anchor))
 
-        params = self._getClickParams (source_href.encode('ascii'),
-                                       mouse_button,
-                                       modifier,
-                                       url,
-                                       page,
-                                       filename,
-                                       anchor)
+        modifier = self.__gtk2OutWikerKeyCode(gtk_key_modifier)
+        mouse_button = self.__gtk2OutWikerMouseButtonCode(gtk_mouse_button)
 
-        Application.onLinkClick (self._currentPage, params)
+        params = self._getClickParams(source_href.encode('ascii'),
+                                      mouse_button,
+                                      modifier,
+                                      url,
+                                      page,
+                                      filename,
+                                      anchor)
+
+        Application.onLinkClick(self._currentPage, params)
         if params.process:
             return True
 
         if url is not None:
-            self.openUrl (url)
+            self.openUrl(url)
         elif (page is not None and
               (mouse_button == ID_MOUSE_MIDDLE or modifier == ID_KEY_CTRL)):
-            Application.mainWindow.tabsController.openInTab (page, True)
+            Application.mainWindow.tabsController.openInTab(page, True)
         elif page is not None:
             if anchor is not None:
                 Application.sharedData[APP_DATA_KEY_ANCHOR] = anchor
             self._currentPage.root.selectedPage = page
         elif filename is not None:
             try:
-                outwiker.core.system.getOS().startFile (filename)
+                outwiker.core.system.getOS().startFile(filename)
             except OSError:
                 text = _(u"Can't execute file '%s'") % filename
-                outwiker.core.commands.MessageBox (text,
-                                                   _(u"Error"),
-                                                   wx.ICON_ERROR | wx.OK)
+                outwiker.core.commands.MessageBox(text,
+                                                  _(u"Error"),
+                                                  wx.ICON_ERROR | wx.OK)
         elif anchor is not None:
             return False
 
