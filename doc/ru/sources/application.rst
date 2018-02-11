@@ -82,7 +82,6 @@ Application. Экземпляр класса ApplicationParams
                 * `PAGE_UPDATE_CONTENT` - изменилось содержимое страницы; 
                 * `PAGE_UPDATE_ICON` - изменилась иконка страницы;
                 * `PAGE_UPDATE_TAGS` - изменились теги страницы;
-                * `PAGE_UPDATE_ATTACHMENT` - изменился список прикрепленных файлов;
                 * `PAGE_UPDATE_STYLE` - изменился стиль страницы.
 
     .. py:attribute:: onPageCreate
@@ -290,6 +289,24 @@ Application. Экземпляр класса ApplicationParams
         **Событие.** Экземпляр класса :class:`outwiker.core.event.Events`. Вызывается после попытки открытия нового дерева заметок. Отличие от события `onWikiOpen` заключается в том, что `onPostWikiOpen` вызывается также после неудачных попыток открыть дерево заметок. Обработчик должен принимать параметры:
             * `page` - страница, для которой вызывается диалог. Экземпляр класса :class:`outwiker.core.tree.WikiPage` или производного от него.
             * `params` - экземпляр класса :class:`outwiker.core.events.PostWikiOpenParams`.
+
+    .. py:attribute:: onIconsGroupsListInit
+
+        **Событие.** Экземпляр класса :class:`outwiker.core.event.Events`. Вызывается после во время создания списка групп иконок. Обрабатывая это событие, плагин может добавлять или редактировать имеющийся список групп иконок. Обработчик должен принимать параметры:
+            * `page` - страница, для которой вызывается диалог. Экземпляр класса :class:`outwiker.core.tree.WikiPage` или производного от него.
+            * `params` - экземпляр класса :class:`outwiker.core.events.IconsGroupsListInitParams`.
+
+    .. py:attribute:: onPageModeChange
+
+        **Событие.** Экземпляр класса :class:`outwiker.core.event.Events`. Вызывается после переключения страницы из одного режима в другой (текст / просмотр / HTML). Обработчик должен принимать параметры:
+            * `page` - страница, для которой вызывается диалог. Экземпляр класса :class:`outwiker.core.tree.WikiPage` или производного от него.
+            * `params` - экземпляр класса :class:`outwiker.core.events.PageModeChangeParams`.
+
+    .. py:attribute:: onAttachListChanged
+
+        **Событие.** Экземпляр класса :class:`outwiker.core.event.Events`. Вызывается после изменения списка прикрепленных файлов: после добавления новых файлов, удаления или переименования файлов. Обработчик вызывается независимо от того, изменение списка файлов было сделано через интерфейс OutWiker или через файловый менеджер операционной системы. Обработчик должен принимать параметры:
+            * `page` - страница, для которой вызывается диалог. Экземпляр класса :class:`outwiker.core.tree.WikiPage` или производного от него.
+            * `params` - экземпляр класса :class:`outwiker.core.events.AttachListChangedParams`.
 
 
 
