@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from threading import Event, Thread
 from tempfile import mkdtemp
@@ -154,10 +154,9 @@ class DownloadDialogController(object):
                                                    text=text)
         self._logIndex += 1
 
-        self._dialog.logText.Value += logString
+        self._dialog.logText.AppendText(logString)
 
-        count = len(self._dialog.logText.Value)
-        self._dialog.logText.SetSelection(count, count)
+        count = self._dialog.logText.GetLastPosition()
         self._dialog.logText.ShowPosition(count)
 
     def resetLog(self):
