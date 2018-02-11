@@ -2,5 +2,5 @@
 suffix: "_amd64"
 deb_suffix: "_amd64"
 python: "python3.6"
-homedir: "/home/ubuntu"
-remote_user: "ubuntu"
+homedir: "/home/vagrant"
+remote_user: "vagrant"

@@ -1,7 +1,7 @@
 ---
 - name: Configure virtual machine for OutWiker build
   hosts: all
-  remote_user: ubuntu
+  remote_user: "{{remote_user}}"
   vars_files:
       - vars/common.yml
   tasks:
@@ -42,7 +42,7 @@
           - libgtk-3-dev
           - libwebkitgtk-3.0-dev
           - libgstreamer-plugins-base1.0-dev
-          - libwebkit2gtk-4.0-dev
+          # - libwebkit2gtk-4.0-dev    # The problem with the EVT_WEBVIEW_NAVIGATING event
           - libsdl2-dev
           - ibus-gtk3
         become: true

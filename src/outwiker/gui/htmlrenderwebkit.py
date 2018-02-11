@@ -96,7 +96,6 @@ class HtmlRenderWebKit(HtmlRender):
     def __onNavigate(self, event):
         # Проверка на то, что мы не пытаемся открыть вложенный фрейм
         frame = event.GetTarget()
-        logger.debug('__onNavigate. frame={frame}'.format(frame=frame))
 
         if len(frame) != 0:
             return
