@@ -27,7 +27,6 @@ PLUGINS_LIST = [
     u"source",
     u"spoiler",
     u"statistics",
-    u"style",
     u"tableofcontents",
     u"texequation",
     u"thumbgallery",
