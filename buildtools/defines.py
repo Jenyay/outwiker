@@ -10,8 +10,8 @@ UBUNTU_RELEASE_NAMES = [u"xenial", u"artful"]
 PLUGINS_LIST = [
     u"autorenamer",
     u"counter",
-    u"diagrammer",
     u"datagraph",
+    u"diagrammer",
     u"export2html",
     u"externaltools",
     u"hackpage",
