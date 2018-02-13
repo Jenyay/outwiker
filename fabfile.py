@@ -212,7 +212,7 @@ def sources_clear():
 @windows_only
 def win(is_stable=False, skipinstaller=False, skiparchives=False):
     '''
-    Build OutWiker for Windows with cx_Freeze
+    Build OutWiker for Windows
     '''
     builder = BuilderWindows(is_stable=tobool(is_stable),
                              create_archives=not tobool(skiparchives),
