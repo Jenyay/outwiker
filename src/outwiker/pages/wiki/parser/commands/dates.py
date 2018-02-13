@@ -44,7 +44,9 @@ class CommandDateBase (Command, metaclass=ABCMeta):
         else:
             formatStr = GeneralGuiConfig (Application.config).dateTimeFormat.value
 
-        result = str (self._getDate().strftime (formatStr))
+        date = self._getDate()
+        # Workaround for bug in Python: https://bugs.python.org/issue8304
+        result = date.strftime(formatStr.encode('unicode-escape').decode()).encode().decode('unicode-escape')
 
         return result
 
