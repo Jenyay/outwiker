@@ -1,9 +1,18 @@
-python-wxgtk3.0
-python-wxversion
-libwxgtk-webview3.0-0v5
-python-pil или python-imaging
-python-enchant
-python-appindicator
-python-gtk2
-python-wxgtk-webview3.0
+debhelper
+devscripts
+p7zip-full
+libssl-dev
+dpkg-dev
+build-essential
+libjpeg-dev
+libtiff-dev
+libsdl1.2-dev
+libnotify-dev
+freeglut3
+freeglut3-dev
+libsm-dev
+libgtk-3-dev
+libwebkitgtk-3.0-dev
+libsdl2-dev
 ibus-gtk3
+libgstreamer-plugins-base1.0-dev

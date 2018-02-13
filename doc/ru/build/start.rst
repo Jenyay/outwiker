@@ -3,9 +3,20 @@
 Быстрый старт
 =============
 
-Для получения исходного кода OutWiker вам понадобится git_. Также должны быть установлены `Python 2.7 <https://www.python.org/>`_ (в данный момент Python 3.x не поддерживается) и pip_.
+Для получения исходного кода OutWiker вам понадобится git_. Также должны быть установлены Python 3.5 или 3.6 и pip_. Рекомендуется Python 3.6.
 
-1. Чтобы получить исходный код выполните команду консоли:
+0. Если вы работаете под Linux, то убедитесь, что у вас установлены следующие пакеты:
+
+
+.. literalinclude:: requirements_linux.txt
+    :language: text
+
+
+Данный список составлен на основе имен пакетов в дистрибутиве Ubuntu. В других дистрибутивах имена пакетов могут отличаться.
+
+Данные пакеты требуются для успешной компиляции wxPython_ при установке зависимостей (требуется wxPython 4.0.x). Более подробно о требуемых зависимостях для wxPython смотрите `здесь <https://github.com/wxWidgets/Phoenix#prerequisites>`_. Также в этот список включены пакеты, необходимые для сборки deb-пакетов под Linux.
+
+1. Чтобы получить исходный код OutWiker выполните в консоли команду:
 
 .. code:: bash
 
@@ -23,21 +34,17 @@
 
 .. code:: bash
 
-    pip install --user -r requirements.txt
-    pip install --user -r requirements_dev.txt
+    pip install -r requirements.txt
+    pip install -r requirements_dev.txt
+
+Под Linux установка требуемых бибилиотек может занять достаточно долгое время (больше получаса), т.к. в этот момент происходит компиляция библиотеки wxPython_. Под Windows установка библиотек происходит достаточно быстро, т.к. компиляция не требуется.
 
 Если вы работаете под Windows, также необходимо выполнить следующую команду:
 
 .. code:: bash
 
-    pip install --user -r requirements_win.txt
+    pip install -r requirements_win.txt
 
-
-Если вы работаете под Linux, убедитесь, что у вас установлены требуемые пакеты:
-
-
-.. literalinclude:: requirements_linux.txt
-    :language: text
 
 4. Если все установилось без ошибок, то следующая команда должна запустить программу OutWiker:
 
@@ -54,3 +61,4 @@
 
 .. _git: https://git-scm.com/
 .. _pip: https://pip.pypa.io/en/stable/
+.. _wxPython: https://wxpython.org/
