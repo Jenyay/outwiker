@@ -18,7 +18,7 @@ from buildtools.buildfacts import BuildFacts
 
 from buildtools.utilites import (getPython,
                                  execute,
-                                 getCurrentUbuntuDistribName,
+                                 # getCurrentUbuntuDistribName,
                                  getPathToPlugin,
                                  tobool,
                                  print_info,
@@ -40,8 +40,8 @@ from buildtools.defines import (
     FILES_FOR_UPLOAD_UNSTABLE_LINUX,
     FILES_FOR_UPLOAD_STABLE_LINUX,
     NEED_FOR_BUILD_DIR,
-    PPA_UNSTABLE_PATH,
-    PPA_STABLE_PATH,
+    # PPA_UNSTABLE_PATH,
+    # PPA_STABLE_PATH,
     VM_BUILD_PARAMS,
     LINUX_BUILD_DIR,
     WINDOWS_BUILD_DIR,
@@ -58,7 +58,7 @@ from buildtools.builders import (BuilderWindows,
                                  BuilderLinuxBinary,
                                  BuilderDebBinaryFactory,
                                  BuilderDebSource,
-                                 BuilderDebSourcesIncluded,
+                                 # BuilderDebSourcesIncluded,
                                  BuilderAppImage,
                                  )
 
@@ -89,30 +89,30 @@ except ImportError:
 from buildtools.uploaders import BinaryUploader
 
 
-@task
-@linux_only
-def deb_sources_included(is_stable=False):
-    '''
-    Create files for uploading in PPA (including sources)
-    '''
-    builder = BuilderDebSourcesIncluded(DEB_SOURCE_BUILD_DIR,
-                                        UBUNTU_RELEASE_NAMES,
-                                        tobool(is_stable))
-    builder.build()
-    return builder.getResultPath()
+# @task
+# @linux_only
+# def deb_sources_included(is_stable=False):
+#     '''
+#     Create files for uploading in PPA (including sources)
+#     '''
+#     builder = BuilderDebSourcesIncluded(DEB_SOURCE_BUILD_DIR,
+#                                         UBUNTU_RELEASE_NAMES,
+#                                         tobool(is_stable))
+#     builder.build()
+#     return builder.getResultPath()
 
 
-@task
-@linux_only
-def deb(is_stable=False):
-    '''
-    Assemble the deb packages
-    '''
-    builder = BuilderDebSource(DEB_SOURCE_BUILD_DIR,
-                               UBUNTU_RELEASE_NAMES,
-                               tobool(is_stable))
-    builder.build()
-    return builder.getResultPath()
+# @task
+# @linux_only
+# def deb(is_stable=False):
+#     '''
+#     Assemble the deb packages
+#     '''
+#     builder = BuilderDebSource(DEB_SOURCE_BUILD_DIR,
+#                                UBUNTU_RELEASE_NAMES,
+#                                tobool(is_stable))
+#     builder.build()
+#     return builder.getResultPath()
 
 
 @task
@@ -127,49 +127,49 @@ def deb_clear():
     builder.clear()
 
 
-@task
-@linux_only
-def deb_single(is_stable=False):
-    '''
-    Assemble the deb package for the current Ubuntu release
-    '''
-    builder = BuilderDebSource(DEB_SOURCE_BUILD_DIR,
-                               [getCurrentUbuntuDistribName()],
-                               tobool(is_stable))
-    builder.build()
-    return builder.getResultPath()
+# @task
+# @linux_only
+# def deb_single(is_stable=False):
+#     '''
+#     Assemble the deb package for the current Ubuntu release
+#     '''
+#     builder = BuilderDebSource(DEB_SOURCE_BUILD_DIR,
+#                                [getCurrentUbuntuDistribName()],
+#                                tobool(is_stable))
+#     builder.build()
+#     return builder.getResultPath()
 
 
-@task
-@linux_only
-def deb_install(is_stable=False):
-    '''
-    Assemble deb package for current Ubuntu release
-    '''
-    result_path = deb_single(tobool(is_stable))
+# @task
+# @linux_only
+# def deb_install(is_stable=False):
+#     '''
+#     Assemble deb package for current Ubuntu release
+#     '''
+#     result_path = deb_single(tobool(is_stable))
+#
+#     version = getOutwikerVersion()
+#
+#     with lcd(result_path):
+#         local("sudo dpkg -i outwiker_{}+{}~{}_all.deb".format(
+#             version[0],
+#             version[1],
+#             getCurrentUbuntuDistribName()))
 
-    version = getOutwikerVersion()
 
-    with lcd(result_path):
-        local("sudo dpkg -i outwiker_{}+{}~{}_all.deb".format(
-            version[0],
-            version[1],
-            getCurrentUbuntuDistribName()))
-
-
-def _ppa_upload(ppa_path, deb_path):
-    '''
-    Upload the current OutWiker version in PPA
-    '''
-    version = getOutwikerVersion()
-
-    for distname in UBUNTU_RELEASE_NAMES:
-        with lcd(deb_path):
-            local("dput {} outwiker_{}+{}~{}_source.changes".format(
-                ppa_path,
-                version[0],
-                version[1],
-                distname))
+# def _ppa_upload(ppa_path, deb_path):
+#     '''
+#     Upload the current OutWiker version in PPA
+#     '''
+#     version = getOutwikerVersion()
+#
+#     for distname in UBUNTU_RELEASE_NAMES:
+#         with lcd(deb_path):
+#             local("dput {} outwiker_{}+{}~{}_source.changes".format(
+#                 ppa_path,
+#                 version[0],
+#                 version[1],
+#                 distname))
 
 
 @task
@@ -570,7 +570,7 @@ def build(is_stable=False):
 
     if sys.platform.startswith('linux'):
         vm_linux_binary(is_stable)
-        deb_sources_included(is_stable)
+        # deb_sources_included(is_stable)
     elif sys.platform.startswith('win32'):
         win(is_stable)
 
@@ -580,7 +580,7 @@ def build(is_stable=False):
 @linux_only
 def deploy(is_stable=False):
     '''
-    Upload unstable version to site
+    Upload to site
     '''
     if is_stable:
         deploy(False)
@@ -589,12 +589,12 @@ def deploy(is_stable=False):
         upload_plugin()
         upload_plugins_pack()
 
-    ppa_path = PPA_STABLE_PATH if is_stable else PPA_UNSTABLE_PATH
-
-    deb_path = BuilderDebSourcesIncluded(DEB_SOURCE_BUILD_DIR,
-                                         UBUNTU_RELEASE_NAMES,
-                                         tobool(is_stable)).getResultPath()
-    _ppa_upload(ppa_path, deb_path)
+    # ppa_path = PPA_STABLE_PATH if is_stable else PPA_UNSTABLE_PATH
+    #
+    # deb_path = BuilderDebSourcesIncluded(DEB_SOURCE_BUILD_DIR,
+    #                                      UBUNTU_RELEASE_NAMES,
+    #                                      tobool(is_stable)).getResultPath()
+    # _ppa_upload(ppa_path, deb_path)
 
     upload_binary(is_stable)
 
