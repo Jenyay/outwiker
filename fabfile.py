@@ -28,9 +28,9 @@ from buildtools.utilites import (getPython,
                                  linux_only
                                  )
 from buildtools.defines import (
-    UBUNTU_RELEASE_NAMES,
+    # UBUNTU_RELEASE_NAMES,
     BUILD_DIR,
-    DEB_SOURCE_BUILD_DIR,
+    # DEB_SOURCE_BUILD_DIR,
     DEB_BINARY_BUILD_DIR,
     PLUGINS_DIR,
     PLUGINS_LIST,
@@ -57,7 +57,7 @@ from buildtools.builders import (BuilderWindows,
                                  BuilderPlugins,
                                  BuilderLinuxBinary,
                                  BuilderDebBinaryFactory,
-                                 BuilderDebSource,
+                                 # BuilderDebSource,
                                  # BuilderDebSourcesIncluded,
                                  BuilderAppImage,
                                  )
@@ -115,16 +115,16 @@ from buildtools.uploaders import BinaryUploader
 #     return builder.getResultPath()
 
 
-@task
-@linux_only
-def deb_clear():
-    '''
-    Remove the deb packages
-    '''
-    builder = BuilderDebSource(DEB_SOURCE_BUILD_DIR,
-                               UBUNTU_RELEASE_NAMES,
-                               False)
-    builder.clear()
+# @task
+# @linux_only
+# def deb_clear():
+#     '''
+#     Remove the deb packages
+#     '''
+#     builder = BuilderDebSource(DEB_SOURCE_BUILD_DIR,
+#                                UBUNTU_RELEASE_NAMES,
+#                                False)
+#     builder.clear()
 
 
 # @task
@@ -356,7 +356,7 @@ def clear():
 
     if sys.platform.startswith('linux'):
         linux_clear()
-        deb_clear()
+        # deb_clear()
         deb_binary_clear()
     elif sys.platform.startswith('win32'):
         win_clear()
