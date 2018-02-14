@@ -15,7 +15,7 @@ class FileSourceTest(unittest.TestCase):
         self.loader = PluginsLoader(Application)
         self.loader.load(dirlist)
 
-        self._dataFile = NamedTemporaryFile(mode='w', delete=False)
+        self._dataFile = NamedTemporaryFile(mode='w', delete=False, encoding='utf8')
 
     def tearDown(self):
         self.loader.clear()
