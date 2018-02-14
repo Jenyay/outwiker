@@ -15,7 +15,7 @@
 			<name>Roman Sobolev</name>
 		</author>
 		<changelog>
-			<version number="1.1">
+			<version number="1.1" date="February 15, 2018">
                 <download os="all">http://jenyay.net/uploads/Outwiker/ReadingMode/readingmode-1.1.zip</download>
 				<change>Add OutWiker 2.1 support. Migrate to Python 3.6.</change>
 			</version>
@@ -56,7 +56,7 @@
 		</author>
 
 		<changelog>
-			<version number="1.1">
+			<version number="1.1" date="15.02.2018">
                 <download os="all">http://jenyay.net/uploads/Outwiker/ReadingMode/readingmode-1.1.zip</download>
 				<change>Добавлена поддержка OutWiker 2.1. Переход на Python 3.6.</change>
 			</version>
