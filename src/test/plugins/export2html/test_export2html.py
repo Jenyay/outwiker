@@ -239,7 +239,7 @@ class Export2HtmlTest (unittest.TestCase):
 
         text = ""
 
-        with open (os.path.join (self.outputdir, exportname + ".html")) as fp:
+        with open (os.path.join (self.outputdir, exportname + ".html"), encoding='utf8') as fp:
             text = fp.read()
 
         self.assertTrue ('<img src="{pagename}/add.png"/>'.format (pagename=exportname) in text)
@@ -329,7 +329,7 @@ class Export2HtmlTest (unittest.TestCase):
 
         text = ""
 
-        with open (os.path.join (self.outputdir, pagename + ".html")) as fp:
+        with open (os.path.join (self.outputdir, pagename + ".html"), encoding='utf8') as fp:
             text = fp.read()
 
         self.assertTrue ('&lt;a href=&quot;http://jenyay.net&quot;&gt;bla-bla-bla&lt;/a&gt;' in text)
@@ -354,7 +354,7 @@ class Export2HtmlTest (unittest.TestCase):
 
         text = ""
 
-        with open (os.path.join (self.outputdir, pagename + ".html")) as fp:
+        with open (os.path.join (self.outputdir, pagename + ".html"), encoding='utf8') as fp:
             text = fp.read()
 
         self.assertTrue ('<head>' in text)

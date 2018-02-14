@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from .exceptions import InvalidPageFormat
 from .htmlexporter import HtmlExporter
@@ -16,7 +16,9 @@ class ExporterFactory (object):
         from .i18n import _
         global _
 
-        if page.getTypeString() == "html" or page.getTypeString() == "wiki":
+        if (page.getTypeString() == "html" or
+                page.getTypeString() == "wiki" or
+                page.getTypeString() == "markdown"):
             exporter = HtmlExporter(page)
         elif page.getTypeString() == "text":
             exporter = TextExporter(page)

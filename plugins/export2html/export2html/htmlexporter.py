@@ -3,7 +3,7 @@
 import os.path
 import re
 
-# from BeautifulSoup import BeautifulSoup
+from outwiker.utilites.textfile import readTextFile
 
 from .baseexporter import BaseExporter
 
@@ -23,15 +23,11 @@ class HtmlExporter (BaseExporter):
         """
         Экспорт HTML-страниц
         """
-        assert (self._page.getTypeString() == "html" or
-                self._page.getTypeString() == "wiki")
-
         self.__htmlFileName = u"__content.html"
 
         # Чтение файла с содержимым
         try:
-            with open(os.path.join (self._page.path, self.__htmlFileName)) as fp:
-                content = fp.read()
+            content = readTextFile(os.path.join (self._page.path, self.__htmlFileName))
         except IOError:
             content = u""
 

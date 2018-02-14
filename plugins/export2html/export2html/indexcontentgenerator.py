@@ -3,6 +3,8 @@
 import html
 import os.path
 
+from outwiker.utilites.textfile import writeTextFile
+
 from .template import loadTemplate
 
 
@@ -34,8 +36,7 @@ class IndexContentGenerator (object):
 
         finalresult = self.__prepareResult (u"\n".join (resultList))
 
-        with open (fname, "w") as fp:
-            fp.write(finalresult)
+        writeTextFile(fname, finalresult)
 
 
     def __prepareResult (self, result):

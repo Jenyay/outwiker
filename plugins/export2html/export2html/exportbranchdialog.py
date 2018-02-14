@@ -2,11 +2,12 @@
 
 import wx
 
+from outwiker.gui.longprocessrunner import LongProcessRunner
+
 from .exportdialog import ExportDialog
 from .branchexporter import BranchExporter
 from .logdialog import LogDialog
 from .longnamegenerator import LongNameGenerator
-from .longprocessrunner import LongProcessRunner
 from .titlenamegenerator import TitleNameGenerator
 
 

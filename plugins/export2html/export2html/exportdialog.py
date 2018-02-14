@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from abc import abstractmethod, ABCMeta
 
@@ -124,13 +124,13 @@ class ExportDialog (wx.Dialog):
 
 
     def __layout (self):
-        folderSizer = wx.FlexGridSizer (rows=1, cols=2, vgap=0, hgap=0)
+        folderSizer = wx.FlexGridSizer (cols=2)
         folderSizer.AddGrowableCol (0)
         folderSizer.Add (self.__folderTextCtrl, flag=wx.EXPAND | wx.ALIGN_CENTER_VERTICAL)
         folderSizer.Add (self.__selFolderButton, flag=wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_LEFT)
 
 
-        self._mainSizer = wx.FlexGridSizer (rows=0, cols=1)
+        self._mainSizer = wx.FlexGridSizer (cols=1)
         self._mainSizer.AddGrowableCol (0)
         self._mainSizer.Add (self.__folderLabel, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
         self._mainSizer.Add (folderSizer, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND, border=2)

@@ -2,6 +2,8 @@
 
 import os.path
 
+from outwiker.utilites.textfile import writeTextFile
+
 from .indexcontentgenerator import IndexContentGenerator
 from .template import loadTemplate
 
@@ -36,5 +38,4 @@ class IndexGenerator (object):
         indextemplate = loadTemplate (self.__templatename)
         indexresult = indextemplate.substitute (contentfname=os.path.basename (contentfname))
 
-        with open (indexfname, "w") as fp:
-            fp.write (indexresult)
+        writeTextFile(indexfname, indexresult)

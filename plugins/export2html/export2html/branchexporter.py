@@ -3,9 +3,11 @@
 import os.path
 import re
 
+from outwiker.core.tree import WikiDocument
+from outwiker.utilites.textfile import readTextFile, writeTextFile
+
 from .exporterfactory import ExporterFactory
 from .indexgenerator import IndexGenerator
-from outwiker.core.tree import WikiDocument
 
 
 class BranchExporter (object):
@@ -34,11 +36,9 @@ class BranchExporter (object):
         # Ключ - страница, значение - имя ее директории или файла (без расширения) после экспорта
         self.__renames = {}
 
-
     @property
     def log (self):
         return self.__log
-
 
     def export (self, outdir, imagesonly, alwaysOverwrite):
         self.__log = []
@@ -58,7 +58,6 @@ class BranchExporter (object):
 
         return self.log
 
-
     def __createIndex (self, outdir, alwaysOverwrite):
         """
         Создать оглавление
@@ -69,7 +68,6 @@ class BranchExporter (object):
         indexgenerator = IndexGenerator (self.__startpage, self.__renames)
         indexgenerator.generatefiles (indexpath, contentpath)
 
-
     def __replacePageLinks (self, outdir):
         """
         Скорректировать ссылки на страницы
@@ -78,17 +76,11 @@ class BranchExporter (object):
             fullname = os.path.join (outdir, self.__renames[page] + u".html")
 
             try:
-                with open (fullname) as fp:
-                    text = fp.read ()
-
+                text = readTextFile(fullname)
                 newtext = self.__replacePageLinksInText (text, page, outdir)
-
-                with open(fullname, "w") as fp:
-                    fp.write(newtext)
+                writeTextFile(fullname, newtext)
             except BaseException as error:
                 self.__log.append (u"{0}: {1}".format (page.title, str(error)))
-
-
 
     def __replacePageLinksInText (self, text, page, outdir):
         matches = self.__a_tag_regex.findall (text)
@@ -142,7 +134,6 @@ class BranchExporter (object):
 
         return result
 
-
     def __getPageByProtocol (self, href):
         """
         Если href - протокол вида page://..., то возвращает страницу, на которую ведет ссылка (если она существует), в противном случае возвращает None.
@@ -169,7 +160,6 @@ class BranchExporter (object):
 
         return (page, anchor)
 
-
     def __getAnchor (self, href):
         """
         Попытаться найти якорь, если используется ссылка вида page://...
@@ -180,18 +170,15 @@ class BranchExporter (object):
 
         return None
 
-
     def __isInternetUrl (self, url):
         return (url.startswith ("http://") or
                 url.startswith ("https://") or
                 url.startswith ("ftp://") or
                 url.startswith ("mailto:"))
 
-
     def __isFileLink (self, url, outdir):
         fname = os.path.join (outdir, url)
         return os.path.exists (fname) and os.path.isfile (fname)
-
 
     def __export (self,
                   page,
