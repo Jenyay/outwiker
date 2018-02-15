@@ -7,7 +7,10 @@
 		<website>http://jenyay.net/Outwiker/UnstableEn</website>
 
 		<changelog>
-			<version number="2.1.0.836" status="dev">
+			<version number="2.1.0.837" status="dev">
+			</version>
+
+			<version number="2.1.0.836" status="dev" date="February 15, 2018">
 				<change>Migrate to Python 3.x and wxPython 4.0.0</change>
 				<change>Add watching for attached files for selected page.</change>
 			</version>
@@ -48,7 +51,10 @@
 		<website>http://jenyay.net/Outwiker/Unstable</website>
 
 		<changelog>
-			<version number="2.1.0.836" status="dev">
+			<version number="2.1.0.837" status="dev">
+			</version>
+
+			<version number="2.1.0.836" status="dev" date="15.02.2018">
 				<change>Переход на Python 3.x и wxPython 4.0.0</change>
 				<change>Добавлено слежение за прикрепленными файлами для текущей страницы.</change>
 			</version>
