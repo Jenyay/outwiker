@@ -498,7 +498,7 @@ def upload_plugin(*args):
         print_info(u'Uploading...')
 
         path_to_upload = os.path.dirname(appinfo_local.updatesUrl.replace(DEPLOY_SITE + u'/', DEPLOY_HOME_PATH))
-        version_local = unicode(appinfo_local.currentVersion)
+        version_local = str(appinfo_local.currentVersion)
         archive_name = u'{}-{}.zip'.format(pluginname, version_local)
         path_to_archive_local = os.path.join(path_to_plugin_local, archive_name)
 
@@ -512,7 +512,7 @@ def upload_plugin(*args):
 @task
 def upload_binary(is_stable=False):
     '''
-    Upload unstable version to site
+    Upload binary version to site
     '''
     facts = BuildFacts()
 
