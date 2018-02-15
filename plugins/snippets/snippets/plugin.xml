@@ -18,6 +18,11 @@
 		</author>
 
 		<changelog>
+			<version number="1.2.1">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Snippets/snippets-1.2.1.zip</download>
+				<change>GUI improvements.</change>
+            </version>
+
 			<version number="1.2" date="February 15, 2018">
                 <download os="all">http://jenyay.net/uploads/Outwiker/Snippets/snippets-1.2.zip</download>
 				<change>Add OutWiker 2.1 support. Migrate to Python 3.6.</change>
@@ -52,6 +57,11 @@
 		</author>
 
 		<changelog>
+			<version number="1.2.1">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Snippets/snippets-1.2.1.zip</download>
+				<change>Улучшения в интерфейсе.</change>
+            </version>
+
 			<version number="1.2" date="15.02.2018">
                 <download os="all">http://jenyay.net/uploads/Outwiker/Snippets/snippets-1.2.zip</download>
 				<change>Добавлена поддержка OutWiker 2.1. Переход на Python 3.6.</change>

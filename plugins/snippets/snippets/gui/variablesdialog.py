@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from collections import namedtuple
 import os
@@ -43,6 +43,10 @@ class VariablesDialog(TestedDialog):
         mainSizer.AddGrowableCol(0)
         mainSizer.AddGrowableRow(0)
 
+        # Panel with variables
+        self._varPanel = VaraiblesPanel(self)
+        self._varPanel.Hide()
+
         self._notebook = wx.Notebook(self)
 
         # Result panel
@@ -52,10 +56,6 @@ class VariablesDialog(TestedDialog):
         # Snippet panel
         self._snippetEditor = SnippetEditor(self._notebook)
         self._notebook.AddPage(self._snippetEditor, _(u'Snippet'))
-
-        # Panel with variables
-        self._varPanel = VaraiblesPanel(self)
-        self._varPanel.Hide()
 
         # Checkbox for wiki command
         self._wikiCommandCheckBox = wx.CheckBox(
@@ -111,6 +111,7 @@ class VariablesDialog(TestedDialog):
     def addStringVariable(self, varname):
         self._varPanel.Show()
         self._varPanel.addStringVariable(varname)
+        self._notebook.MoveAfterInTabOrder(self._varPanel)
         self.Layout()
 
     def setStringVariable(self, varname, value):
