@@ -9,6 +9,7 @@
 		<changelog>
 			<version number="2.1.0.837" status="dev">
 				<change>Add a new page style "rifle_green_and_red"</change>
+				<change>Fixed errors.</change>
 			</version>
 
 			<version number="2.1.0.836" status="dev" date="February 15, 2018">
@@ -54,6 +55,7 @@
 		<changelog>
 			<version number="2.1.0.837" status="dev">
 				<change>Добавлен новый стиль страниц "rifle_green_and_red".</change>
+				<change>Исправление ошибок.</change>
 			</version>
 
 			<version number="2.1.0.836" status="dev" date="15.02.2018">
