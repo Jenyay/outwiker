@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import logging
 import os.path
@@ -358,7 +358,7 @@ class IconListCtrl(wx.ScrolledWindow):
             button.x = currx
             button.y = curry
 
-        # self.Scroll(0, 0)
+        self.Scroll(0, 0)
         self._canvas.SetSize(windowWidth,
                              rowsCount * (self.cellHeight + self.margin))
 
