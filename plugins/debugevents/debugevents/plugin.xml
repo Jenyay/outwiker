@@ -5,6 +5,16 @@
     <requirements>
         <os>Windows, Linux</os>
         <api>2.835</api>
+
+		<!-- For backward compatibility with OutWiker 2.0 -->
+		<packages>
+			<core>3.0</core>
+			<actions>3.0</actions>
+			<gui>3.0</gui>
+			<pages>3.0</pages>
+			<utilites>3.0</utilites>
+			<libs>3.0</libs>
+		</packages>
     </requirements>
 
 	<data lang="en">
