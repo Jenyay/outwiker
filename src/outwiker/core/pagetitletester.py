@@ -14,6 +14,7 @@ class PageTitleError(Exception):
     def __init__(self, message):
         self.message = message
 
+
 class PageTitleWarning(Exception):
     """Exception raised for title if it can't be used in Windows system
 
@@ -98,7 +99,7 @@ class PageTitleTester(object, metaclass=ABCMeta):
 
     def replaceDangerousSymbols(self, title, replace):
         """Replace dangerous symbols by 'replace'"""
-        regexp = re.compile(r'[><|?*:"\\/]|(%[0-9a-fA-F]{2})', re.U)
+        regexp = re.compile(r'[><|?*:"\\/#]|(%[0-9a-fA-F]{2})')
         return regexp.sub(replace, title)
 
 

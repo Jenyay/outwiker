@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 """
 Команды для интерфейса
@@ -6,6 +6,7 @@
 
 from datetime import datetime
 import os.path
+import re
 import shutil
 import logging
 
@@ -31,6 +32,7 @@ from outwiker.utilites.textfile import readTextFile
 
 
 logger = logging.getLogger('core')
+
 
 def MessageBox(*args, **kwargs):
     """
@@ -584,4 +586,38 @@ def registerActions(application):
                                           item[0],
                                           item[1],
                                           item[2]),
-                                          item[3]) for item in polyactionsList]
+                               item[3]) for item in polyactionsList]
+
+
+def getAlternativeTitle(title,
+                        siblings,
+                        substitution='_',
+                        format='{title} ({number})'):
+    '''
+    The function proposes the page title based on the user title.
+    The function replace forbidden characters on the substitution symbol.
+
+    title - original title for the page (with forbidden characters).
+    siblings - list of the page titles on the same level.
+    substitution - forbidden characters will be replaced to this string.
+    format - format string for unique title.
+
+    Return title for the new page.
+    '''
+    newtitle = title.strip()
+    siblings_lower = [sibling.lower().strip() for sibling in siblings]
+
+    # 1. Replace forbidden characters
+    regexp = re.compile(r'[><|?*:"\\/#%]')
+    newtitle = regexp.sub(substitution, newtitle)
+
+    # 2. Make unique title
+    result = newtitle
+    n = 1
+    while (len(result.strip()) == 0 or
+           result.lower() in siblings_lower):
+        result = format.format(title=newtitle, number=n)
+        n += 1
+
+    result = result.strip()
+    return result

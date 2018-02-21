@@ -67,6 +67,7 @@ if __name__ == '__main__':
     from test.test_recenticonslist import RecentIconsListTest
     from test.test_dicttostr import DictToStrTest
     from test.test_attachwatcher import AttachWatcherTest
+    from test.test_alternativetitle import AlternativeTitleTest
 
     from test.spellchecker.test_dictsfinder import DictsFinderTest
     from test.spellchecker.test_spellchecker import SpellCheckerTest
