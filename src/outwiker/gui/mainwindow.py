@@ -549,14 +549,6 @@ class MainWindow(wx.Frame):
                     (width, height) = self.GetSize()
                     (xpos, ypos) = self.GetPosition()
 
-                    if xpos < 0:
-                        width += xpos
-                        xpos = 0
-
-                    if ypos < 0:
-                        height += ypos
-                        ypos = 0
-
                     self.mainWindowConfig.width.value = width
                     self.mainWindowConfig.height.value = height
 
