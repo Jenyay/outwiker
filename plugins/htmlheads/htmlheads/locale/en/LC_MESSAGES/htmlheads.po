@@ -7,54 +7,86 @@ msgid ""
 msgstr ""
 "Project-Id-Version: HtmlHeads\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-11 09:43+0400\n"
-"PO-Revision-Date: 2014-06-11 09:45+0300\n"
+"POT-Creation-Date: 2018-03-13 16:18+0300\n"
+"PO-Revision-Date: 2018-03-13 16:18+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: jenyay.net <jenyay.ilin@gmail.com>\n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.4\n"
-"Language: en\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-#: actions.py:37
+#: actions.py:32
 msgid "Title (:title ...:)"
 msgstr "Title (:title ...:)"
 
-#: actions.py:42
-msgid "HtmlHeads plugin. Insert (:title... :) command"
-msgstr "HtmlHeads plugin. Insert (:title... :) command"
+#: actions.py:36
+#| msgid ""
+#| "HtmlHeads plugin. Insert (:title... :) command to add <title> tag in the "
+#| "page head"
+msgid ""
+"HtmlHeads plugin. Insert (:title... :) command to add <title> tag in the "
+"page head."
+msgstr ""
+"HtmlHeads plugin. Insert (:title... :) command to add <title> tag in the "
+"page head."
 
-#: actions.py:59
+#: actions.py:50
 msgid "Description (:description ...:)"
 msgstr "Description (:description ...:)"
 
-#: actions.py:64
-msgid "HtmlHeads plugin. Insert (:description... :) command"
-msgstr "HtmlHeads plugin. Insert (:description... :) command"
+#: actions.py:54
+msgid ""
+"HtmlHeads plugin. Insert (:description... :) command to add description in "
+"the page head."
+msgstr ""
+"HtmlHeads plugin. Insert (:description... :) command to add description in "
+"the page head."
 
-#: actions.py:81
+#: actions.py:68
 msgid "Keywords (:keywords ...:)"
 msgstr "Keywords (:keywords ...:)"
 
-#: actions.py:86
-msgid "HtmlHeads plugin. Insert (:keywords... :) command"
-msgstr "HtmlHeads plugin. Insert (:keywords... :) command"
+#: actions.py:72
+msgid ""
+"HtmlHeads plugin. Insert (:keywords... :) command to add keywords in the "
+"page head."
+msgstr ""
+"HtmlHeads plugin. Insert (:keywords... :) command to add keywords in the "
+"page head."
 
-#: actions.py:102
+#: actions.py:86
 msgid "Custom head (:htmlhead:)"
 msgstr "Custom head (:htmlhead:)"
 
-#: actions.py:107
-msgid "HtmlHeads plugin. Insert (:htmlhead:) command"
-msgstr "HtmlHeads plugin. Insert (:htmlhead:) command"
+#: actions.py:90
+#| msgid ""
+#| "HtmlHeads plugin. Insert (:htmlhead:) command to add custom tag in the "
+#| "page head."
+msgid ""
+"HtmlHeads plugin. Insert (:htmlhead:) command to add custom tags in the page "
+"head."
+msgstr ""
+"HtmlHeads plugin. Insert (:htmlhead:) command to add custom tags in the page "
+"head."
 
-#: guicreator.py:42
+#: actions.py:104
+msgid "CSS Style (:style:)"
+msgstr "CSS Style (:style:)"
+
+#: actions.py:108
+msgid ""
+"HtmlHeads plugin. Insert (:style:) command to add custom CSS style to page."
+msgstr ""
+"HtmlHeads plugin. Insert (:style:) command to add custom CSS style to page."
+
+#: controller.py:73
 msgid "HTML Headers"
 msgstr "HTML Headers"
 
-#: htmlheads.py:40
+#: plugin.py:31
 msgid ""
 "Plugin adds wiki-commands (:title:), (:description:), (:keywords:) and (:"
 "htmlhead:)"
@@ -62,7 +94,7 @@ msgstr ""
 "Plugin adds wiki-commands (:title:), (:description:), (:keywords:) and (:"
 "htmlhead:)"
 
-#: htmlheads.py:42
+#: plugin.py:33
 msgid ""
 "<b>Usage:</b>\n"
 "(:title Page title:)\n"
@@ -90,6 +122,6 @@ msgstr ""
 "&lt;meta name='robots' content='index,follow' /&gt;\n"
 "(:htmlheadend:)\n"
 
-#: htmlheads.py:64
+#: plugin.py:54
 msgid "http://jenyay.net/Outwiker/HtmlHeadsEn"
 msgstr "http://jenyay.net/Outwiker/HtmlHeadsEn"

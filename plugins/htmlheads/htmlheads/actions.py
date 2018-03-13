@@ -33,7 +33,7 @@ class TitleAction(BaseHeadAction):
 
     @property
     def description(self):
-        return _(u"HtmlHeads plugin. Insert (:title... :) command")
+        return _(u"HtmlHeads plugin. Insert (:title... :) command to add <title> tag in the page head.")
 
     def run(self, params):
         self._getEditor().turnText(u"(:title ", u":)")
@@ -51,7 +51,7 @@ class DescriptionAction(BaseHeadAction):
 
     @property
     def description(self):
-        return _(u"HtmlHeads plugin. Insert (:description... :) command")
+        return _(u"HtmlHeads plugin. Insert (:description... :) command to add description in the page head.")
 
     def run(self, params):
         self._getEditor().turnText(u"(:description ", u":)")
@@ -69,7 +69,7 @@ class KeywordsAction(BaseHeadAction):
 
     @property
     def description(self):
-        return _(u"HtmlHeads plugin. Insert (:keywords... :) command")
+        return _(u"HtmlHeads plugin. Insert (:keywords... :) command to add keywords in the page head.")
 
     def run(self, params):
         self._getEditor().turnText(u"(:keywords ", u":)")
@@ -87,7 +87,7 @@ class CustomHeadsAction(BaseHeadAction):
 
     @property
     def description(self):
-        return _(u"HtmlHeads plugin. Insert (:htmlhead:) command")
+        return _(u"HtmlHeads plugin. Insert (:htmlhead:) command to add custom tags in the page head.")
 
     def run(self, params):
         self._getEditor().turnText(u"(:htmlhead:)\n", u"\n(:htmlheadend:)")
@@ -101,11 +101,11 @@ class StyleAction(BaseHeadAction):
 
     @property
     def title(self):
-        return _(u"Style (:style:)")
+        return _(u"CSS Style (:style:)")
 
     @property
     def description(self):
-        return _(u"HtmlHeads plugin. Insert (:style:) command")
+        return _(u"HtmlHeads plugin. Insert (:style:) command to add custom CSS style to page.")
 
     def run(self, params):
         self._getEditor().turnText(u"(:style:)\n", u"\n(:styleend:)")
