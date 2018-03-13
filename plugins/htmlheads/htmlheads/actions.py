@@ -91,3 +91,21 @@ class CustomHeadsAction(BaseHeadAction):
 
     def run(self, params):
         self._getEditor().turnText(u"(:htmlhead:)\n", u"\n(:htmlheadend:)")
+
+
+class StyleAction(BaseHeadAction):
+    """
+    Вставить команду (:style:)
+    """
+    stringId = u"HtmlHeads_InsertStyle"
+
+    @property
+    def title(self):
+        return _(u"Style (:style:)")
+
+    @property
+    def description(self):
+        return _(u"HtmlHeads plugin. Insert (:style:) command")
+
+    def run(self, params):
+        self._getEditor().turnText(u"(:style:)\n", u"\n(:styleend:)")

@@ -7,11 +7,13 @@ from outwiker.utilites.actionsguicontroller import (ActionsGUIController,
 
 from .i18n import get_
 from .commands import (TitleCommand, DescriptionCommand,
-                       KeywordsCommand, CustomHeadsCommand)
+                       KeywordsCommand, CustomHeadsCommand,
+                       StyleCommand)
 from .actions import (TitleAction,
                       DescriptionAction,
                       KeywordsAction,
-                      CustomHeadsAction)
+                      CustomHeadsAction,
+                      StyleAction)
 from . import defines
 
 
@@ -30,6 +32,7 @@ class Controller(object):
         self._commands = [TitleCommand,
                           DescriptionCommand,
                           KeywordsCommand,
+                          StyleCommand,
                           CustomHeadsCommand]
 
         self._GUIController = ActionsGUIController(
@@ -50,6 +53,9 @@ class Controller(object):
 
     def _initialize_guicontroller(self):
         action_gui_info = [
+            ActionGUIInfo(StyleAction(self._application),
+                          defines.MENU_HTMLHEADS,
+                          ),
             ActionGUIInfo(TitleAction(self._application),
                           defines.MENU_HTMLHEADS,
                           ),
