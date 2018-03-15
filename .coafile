@@ -1,4 +1,0 @@
-[default]
-files = src/**/*.py
-bears = PEP8Bear
-use_spaces = True

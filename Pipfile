@@ -1,0 +1,22 @@
+[[source]]
+
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+
+[requires]
+
+
+[packages]
+
+wxPython = "==4.0.1"
+Pillow = "==5.0.0"
+pyenchant = "==2.0.0"
+comtypes = {version = "==1.1.4", sys_platform = "== 'win32'"}
+
+
+[dev-packages]
+
+"Fabric3" = "==1.13.1.post1"
+PyInstaller = "==3.3.1"

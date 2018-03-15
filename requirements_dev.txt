@@ -1,2 +1,0 @@
-fabric3==1.13.1.post1
-pyinstaller==3.3.1
