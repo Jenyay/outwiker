@@ -60,14 +60,11 @@ README
 readme.md
     Более подробное описание программы, которое показывается в качестве описания проекта на сайте `github <https://github.com/Jenyay/outwiker>`_
 
-requirements.txt
-    Список общих Python-библиотек, необходимых для запуска и работы программы OutWiker. Этот файл используется для установки требуемых библиотек с помощью pip. Подробнее см. в разделе :ref:`tools`.
+Pipfile
+    Файл в формате Pipfile_, в котором указаны Python-библиотеки, необходимые для запуска OutWiker из исходников и используемые для разработки. Этот файл используется для установки требуемых библиотек с помощью pipenv_. Подробнее см. в разделе :ref:`tools`.
 
-requirements_win.txt
-    Список Python-библиотек, необходимых для запуска и работы программы OutWiker под Microsoft Windows. Этот файл используется для установки требуемых библиотек с помощью pip. Подробнее см. в разделе :ref:`tools`.
-
-requirements_dev.txt
-    Список Python-библиотек, используемых при разработке программы OutWiker. Для запуска OutWiker эти библиотеки не требуются. Этот файл используется для установки требуемых библиотек с помощью pip. Подробнее см. в разделе :ref:`tools`.
+requirements_doc.txt
+    Файл требуется для сборки документации на сервере readthedocs_. В данный момент этот файл пустой.
 
 Файлы test_build_*.py
     Файлы тестов системы сборки. Подробнее см. в разделе :ref:`ru_test`.
@@ -162,3 +159,6 @@ utilites
 .. _fatcow: http://www.fatcow.com/free-icons
 .. _gettext: http://ru.wikipedia.org/wiki/Gettext
 .. _pyparsing: http://pyparsing.wikispaces.com/
+.. _Pipfile: https://github.com/pypa/pipfile/
+.. _pipenv: https://docs.pipenv.org/
+.. _readthedocs: http://readthedocs.io/
