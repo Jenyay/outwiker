@@ -28,6 +28,7 @@
                 - "--exclude=.git"
                 - "--exclude=.ropeproject"
                 - "--exclude=build"
+            use_ssh_args: yes
 
       - name: Install Python modules
         command: pipenv update --dev
