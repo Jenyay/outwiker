@@ -7,6 +7,9 @@
 		<website>http://jenyay.net/Outwiker/UnstableEn</website>
 
 		<changelog>
+			<version number="2.1.0.839" status="dev">
+			</version>
+
 			<version number="2.1.0.838" status="dev" date="March 20, 2018">
 				<change>Add a new page style "rifle_green_and_red"</change>
 				<change>Fixed errors.</change>
@@ -53,6 +56,9 @@
 		<website>http://jenyay.net/Outwiker/Unstable</website>
 
 		<changelog>
+			<version number="2.1.0.839" status="dev">
+			</version>
+
 			<version number="2.1.0.838" status="dev" date="20.03.2018">
 				<change>Добавлен новый стиль страниц "rifle_green_and_red".</change>
 				<change>Исправление ошибок.</change>
