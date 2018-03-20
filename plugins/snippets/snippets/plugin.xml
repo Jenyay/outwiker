@@ -28,7 +28,7 @@
 		</author>
 
 		<changelog>
-			<version number="1.2.1">
+			<version number="1.2.1" date="March 20, 2018">
                 <download os="all">http://jenyay.net/uploads/Outwiker/Snippets/snippets-1.2.1.zip</download>
 				<change>GUI improvements.</change>
             </version>
@@ -67,7 +67,7 @@
 		</author>
 
 		<changelog>
-			<version number="1.2.1">
+			<version number="1.2.1" date="20.03.2018">
                 <download os="all">http://jenyay.net/uploads/Outwiker/Snippets/snippets-1.2.1.zip</download>
 				<change>Улучшения в интерфейсе.</change>
             </version>

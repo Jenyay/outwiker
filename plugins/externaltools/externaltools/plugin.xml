@@ -28,7 +28,7 @@
 		</author>
 
 		<changelog>
-			<version number="1.5.1">
+			<version number="1.5.1" date="March 20, 2018">
                 <download os="all">http://jenyay.net/uploads/Outwiker/ExternalTools/externaltools-1.5.1.zip</download>
 				<change>Fix errors.</change>
 			</version>
@@ -93,7 +93,7 @@
 		</author>
 
 		<changelog>
-			<version number="1.5.1">
+			<version number="1.5.1" date="20.03.2018">
                 <download os="all">http://jenyay.net/uploads/Outwiker/ExternalTools/externaltools-1.5.1.zip</download>
 				<change>Исправление ошибок.</change>
 			</version>
