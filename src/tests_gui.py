@@ -4,11 +4,14 @@
 """
 Unit-тесты
 """
+from gettext import NullTranslations
 
 import wx
 
 
 if __name__ == '__main__':
+    NullTranslations().install()
+
     from outwiker.core.application import Application
     Application.init ("../test/testconfig.ini")
 
@@ -25,7 +28,7 @@ if __name__ == '__main__':
 
     import unittest
 
-    from test.guitests.test_mainwnd import MainWndTest
+    # from test.guitests.test_mainwnd import MainWndTest
     from test.guitests.test_bookmarks import BookmarksGuiTest
     from test.guitests.test_attach import AttachPanelTest
     from test.guitests.test_tree import TreeTest
@@ -56,7 +59,6 @@ if __name__ == '__main__':
     from test.guitests.test_safeimagelist import SafeImageListTest
     from test.guitests.test_hotkeys import HotKeysTest
     from test.guitests.test_hotkeyctrl import HotkeyCtrlTest
-    from test.guitests.test_menucontroller import MenuControllerTest
 
     from test.guitests.htmlpage.test_htmlpageview import HtmlPageViewTest
     from test.guitests.htmlpage.test_htmltabledialog import HtmlTableDialogTest

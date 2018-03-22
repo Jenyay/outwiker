@@ -1,14 +1,17 @@
 #!/usr/bin/env python
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 """
 Unit-тесты
 """
+from gettext import NullTranslations
 
 import wx
 
 
 if __name__ == '__main__':
+    NullTranslations().install()
+
     from outwiker.core.application import Application
     Application.init("../test/testconfig.ini")
 

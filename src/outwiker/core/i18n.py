@@ -1,9 +1,12 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os
 import os.path
 import gettext
 import locale
+import logging
+
+import wx
 
 from .config import StringOption
 from .system import getCurrentDir
@@ -99,3 +102,22 @@ def getLanguages():
             languages.append(folder)
 
     return languages
+
+
+def initLocale(config):
+    """
+    Locale initialization
+
+    config - instance of the outwiker.core.config.Config class
+    """
+    locale = None
+    language = getLanguageFromConfig(config)
+    try:
+        init_i18n(language)
+    except IOError:
+        logging.warning(u"Can't load language: {}".format(language))
+
+    if wx.GetApp() is not None:
+        locale = wx.Locale(wx.LANGUAGE_DEFAULT)
+
+    return locale

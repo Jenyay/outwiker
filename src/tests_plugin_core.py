@@ -6,9 +6,12 @@ Unit-тесты
 """
 
 import wx
+from gettext import NullTranslations
 
 
 if __name__ == '__main__':
+    NullTranslations().install()
+
     from outwiker.core.application import Application
     Application.init("../test/testconfig.ini")
 

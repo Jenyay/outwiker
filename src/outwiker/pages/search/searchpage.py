@@ -154,7 +154,8 @@ class SearchPageFactory (PageFactory):
 
 
 class GlobalSearch (object):
-    pageTitle = _(u"# Search")
+    # TODO: Remove the call of the "_" function from class initialize
+    pageTitle = (u"# Search")
 
     @staticmethod
     def create (root, phrase = u"", tags = [], strategy = AllTagsSearchStrategy):
