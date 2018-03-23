@@ -1,8 +1,4 @@
-# -*- coding: UTF-8 -*-
-
-"""
-Тесты, связанные с созданием вики
-"""
+# -*- coding: utf-8 -*-
 
 import unittest
 from tempfile import mkdtemp
@@ -33,16 +29,13 @@ class BookmarksTest(unittest.TestCase):
         self.bookmarkSender = None
         Application.wikiroot = None
 
-
     def tearDown(self):
         Application.wikiroot = None
         removeDir(self.path)
 
-
     def onBookmark(self, bookmarks):
         self.bookmarkCount += 1
         self.bookmarkSender = bookmarks
-
 
     def testAddToBookmarks(self):
         # По умолчанию закладок нет
@@ -59,7 +52,6 @@ class BookmarksTest(unittest.TestCase):
         self.assertEqual(len(wiki.bookmarks), 1)
         self.assertEqual(wiki.bookmarks[0].title, "Страница 1")
 
-
     def testManyBookmarks(self):
         self.wikiroot.bookmarks.add(self.wikiroot["Страница 1"])
         self.wikiroot.bookmarks.add(self.wikiroot["Страница 2"])
@@ -70,7 +62,6 @@ class BookmarksTest(unittest.TestCase):
         self.assertEqual(self.wikiroot.bookmarks[1].subpath, "Страница 2")
         self.assertEqual(self.wikiroot.bookmarks[2].subpath,
                          "Страница 2/Страница 3")
-
 
     def testRemoveBookmarks(self):
         self.wikiroot.bookmarks.add(self.wikiroot["Страница 1"])
@@ -84,7 +75,6 @@ class BookmarksTest(unittest.TestCase):
         self.assertEqual(self.wikiroot.bookmarks[1].subpath,
                          "Страница 2/Страница 3")
 
-
     def testBookmarkEvent(self):
         Application.onBookmarksChanged += self.onBookmark
         Application.wikiroot = self.wikiroot
@@ -97,11 +87,9 @@ class BookmarksTest(unittest.TestCase):
         self.assertEqual(self.bookmarkCount, 2)
         self.assertEqual(self.bookmarkSender, self.wikiroot.bookmarks)
 
-
         self.wikiroot.bookmarks.remove(self.wikiroot["Страница 2"])
         self.assertEqual(self.bookmarkCount, 3)
         self.assertEqual(self.bookmarkSender, self.wikiroot.bookmarks)
-
 
     def testBookmarkNoEvent(self):
         Application.onBookmarksChanged += self.onBookmark
@@ -114,11 +102,9 @@ class BookmarksTest(unittest.TestCase):
         self.assertEqual(self.bookmarkCount, 0)
         self.assertEqual(self.bookmarkSender, None)
 
-
         self.wikiroot.bookmarks.remove(self.wikiroot["Страница 2"])
         self.assertEqual(self.bookmarkCount, 0)
         self.assertEqual(self.bookmarkSender, None)
-
 
     def testPageInBookmarks(self):
         self.wikiroot.bookmarks.add(self.wikiroot["Страница 1"])
@@ -138,7 +124,6 @@ class BookmarksTest(unittest.TestCase):
             self.wikiroot.bookmarks.pageMarked(
                 self.wikiroot["Страница 1/Страница 5"]),
             False)
-
 
     def testCloneBookmarks(self):
         """

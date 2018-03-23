@@ -54,6 +54,7 @@ class BaseOutWikerGUITest(unittest.TestCase, WikiTestMixin):
 
         generalConfig = GeneralGuiConfig(self.application.config)
         generalConfig.askBeforeExit.value = False
+        wx.Log.SetLogLevel(0)
 
         Tester.dialogTester.clear()
         self.application.wikiroot = None
