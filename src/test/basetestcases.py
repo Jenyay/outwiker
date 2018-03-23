@@ -48,6 +48,7 @@ class BaseOutWikerGUITest(unittest.TestCase, WikiTestMixin):
         self._config_path = self._getConfigPath()
 
         self.outwiker_app = OutWikerApplication(self._config_path)
+        self.outwiker_app.initMainWindow()
         self.application = self.outwiker_app.application
         self.mainWindow = self.outwiker_app.mainWnd
 

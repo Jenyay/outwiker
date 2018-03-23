@@ -30,6 +30,7 @@ if __name__ == "__main__":
     print_info()
 
     locale = initLocale(outwiker.application.config)
+    outwiker.initMainWindow()
 
     outwiker.loadPlugins()
     try:

@@ -36,10 +36,9 @@ class OutWikerApplication(wx.App):
     def OnInit(self):
         self.Bind(wx.EVT_QUERY_END_SESSION, self._onEndSession)
         NullTranslations().install()
-        self._initMainWindow()
         return True
 
-    def _initMainWindow(self):
+    def initMainWindow(self):
         self.mainWnd = MainWindow(None, -1, "")
         self.SetTopWindow(self.mainWnd)
 
