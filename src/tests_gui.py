@@ -28,11 +28,6 @@ if __name__ == '__main__':
 
     import unittest
 
-    from test.guitests.test_pagepanel import PagePanelTest
-    from test.guitests.test_tagspanel import TagsPanelTest
-    from test.guitests.test_tabs import TabsTest
-    from test.guitests.test_linkdialogcontrollertest import LinkDialogControllerTest
-    from test.guitests.test_thumbdialogcontrollertest import ThumbDialogControllerTest
     from test.guitests.test_textpageview import TextPageViewTest
     from test.guitests.test_actioncontroller import ActionControllerTest
     from test.guitests.test_mainpanes import MainPanesTest

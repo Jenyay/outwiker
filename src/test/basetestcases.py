@@ -69,6 +69,8 @@ class BaseOutWikerGUITest(unittest.TestCase, WikiTestMixin):
         if os.path.exists(self._config_path):
             os.remove(self._config_path)
 
+        Tester.dialogTester.clear()
+
     def _getConfigPath(self):
         with NamedTemporaryFile(prefix='outwiker_config_', delete=False) as tmp_fp:
             return tmp_fp.name

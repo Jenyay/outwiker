@@ -1,8 +1,5 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
-from .basemainwnd import BaseMainWndTest
-
-from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
 from outwiker.core.commands import copyTextToClipboard
 from outwiker.core.defines import PAGE_ATTACH_DIR
@@ -12,13 +9,16 @@ from outwiker.pages.html.htmllinkdialogcontroller import HtmlLinkDialogControlle
 from outwiker.pages.wiki.wikiconfig import WikiConfig
 from outwiker.pages.wiki.wikilinkdialogcontroller import WikiLinkDialogController
 from outwiker.pages.wiki.wikipage import WikiPageFactory
+from test.basetestcases import BaseOutWikerGUITest
 
 
-class LinkDialogControllerTest(BaseMainWndTest):
+class LinkDialogControllerTest(BaseOutWikerGUITest):
     def setUp(self):
-        super(LinkDialogControllerTest, self).setUp()
+        self.initApplication()
+        self.wikiroot = self.createWiki()
+
         copyTextToClipboard('')
-        self._config = WikiConfig(Application.config)
+        self._config = WikiConfig(self.application.config)
         self._config.linkStyleOptions.value = 0
 
         self.files = ['../test/samplefiles/accept.png',
@@ -30,15 +30,16 @@ class LinkDialogControllerTest(BaseMainWndTest):
         self._testpage = factory.create(self.wikiroot, "Страница 1", [])
 
     def tearDown(self):
-        super(LinkDialogControllerTest, self).tearDown()
+        self.destroyApplication()
+        self.destroyWiki(self.wikiroot)
         copyTextToClipboard('')
 
     def testEmpty_wiki(self):
-        parent = LinkDialog(self.wnd)
+        parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = ''
 
-        controller = WikiLinkDialogController(Application,
+        controller = WikiLinkDialogController(self.application,
                                               self._testpage,
                                               parent,
                                               selectedString)
@@ -49,7 +50,7 @@ class LinkDialogControllerTest(BaseMainWndTest):
         self.assertEqual(controller.linkResult, '[[]]')
 
     def testEmpty_html(self):
-        parent = LinkDialog(self.wnd)
+        parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = ''
 
@@ -64,11 +65,11 @@ class LinkDialogControllerTest(BaseMainWndTest):
         self.assertEqual(controller.linkResult, '<a href=""></a>')
 
     def testSelectedHttpLink_wiki(self):
-        parent = LinkDialog(self.wnd)
+        parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = 'http://jenyay.net'
 
-        controller = WikiLinkDialogController(Application,
+        controller = WikiLinkDialogController(self.application,
                                               self._testpage,
                                               parent,
                                               selectedString)
@@ -79,7 +80,7 @@ class LinkDialogControllerTest(BaseMainWndTest):
         self.assertEqual(controller.linkResult, '[[http://jenyay.net]]')
 
     def testSelectedHttpLink_html(self):
-        parent = LinkDialog(self.wnd)
+        parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = 'http://jenyay.net'
 
@@ -96,11 +97,11 @@ class LinkDialogControllerTest(BaseMainWndTest):
             '<a href="http://jenyay.net">http://jenyay.net</a>')
 
     def testSelectedPageLink_wiki(self):
-        parent = LinkDialog(self.wnd)
+        parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = 'page://__adsfadfasdf'
 
-        controller = WikiLinkDialogController(Application,
+        controller = WikiLinkDialogController(self.application,
                                               self._testpage,
                                               parent,
                                               selectedString)
@@ -111,7 +112,7 @@ class LinkDialogControllerTest(BaseMainWndTest):
         self.assertEqual(controller.linkResult, '[[page://__adsfadfasdf]]')
 
     def testSelectedPageLink_html(self):
-        parent = LinkDialog(self.wnd)
+        parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = 'page://__adsfadfasdf'
 
@@ -127,11 +128,11 @@ class LinkDialogControllerTest(BaseMainWndTest):
             '<a href="page://__adsfadfasdf">page://__adsfadfasdf</a>')
 
     def testSelectedHttpsLink_wiki(self):
-        parent = LinkDialog(self.wnd)
+        parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = 'https://jenyay.net'
 
-        controller = WikiLinkDialogController(Application,
+        controller = WikiLinkDialogController(self.application,
                                               self._testpage,
                                               parent,
                                               selectedString)
@@ -142,7 +143,7 @@ class LinkDialogControllerTest(BaseMainWndTest):
         self.assertEqual(controller.linkResult, '[[https://jenyay.net]]')
 
     def testSelectedHttpsLink_html(self):
-        parent = LinkDialog(self.wnd)
+        parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = 'https://jenyay.net'
 
@@ -158,11 +159,11 @@ class LinkDialogControllerTest(BaseMainWndTest):
             '<a href="https://jenyay.net">https://jenyay.net</a>')
 
     def testSelectedftpLink_wiki(self):
-        parent = LinkDialog(self.wnd)
+        parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = 'ftp://jenyay.net'
 
-        controller = WikiLinkDialogController(Application,
+        controller = WikiLinkDialogController(self.application,
                                               self._testpage,
                                               parent,
                                               selectedString)
@@ -173,7 +174,7 @@ class LinkDialogControllerTest(BaseMainWndTest):
         self.assertEqual(controller.linkResult, '[[ftp://jenyay.net]]')
 
     def testSelectedftpLink_html(self):
-        parent = LinkDialog(self.wnd)
+        parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = 'ftp://jenyay.net'
 
@@ -189,11 +190,11 @@ class LinkDialogControllerTest(BaseMainWndTest):
             '<a href="ftp://jenyay.net">ftp://jenyay.net</a>')
 
     def testSelectedHttpLink2_wiki(self):
-        parent = LinkDialog(self.wnd)
+        parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = 'HTTP://jenyay.net'
 
-        controller = WikiLinkDialogController(Application,
+        controller = WikiLinkDialogController(self.application,
                                               self._testpage,
                                               parent,
                                               selectedString)
@@ -204,7 +205,7 @@ class LinkDialogControllerTest(BaseMainWndTest):
         self.assertEqual(controller.linkResult, '[[HTTP://jenyay.net]]')
 
     def testSelectedHttpLink2_html(self):
-        parent = LinkDialog(self.wnd)
+        parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = 'HTTP://jenyay.net'
 
@@ -220,11 +221,11 @@ class LinkDialogControllerTest(BaseMainWndTest):
             '<a href="HTTP://jenyay.net">HTTP://jenyay.net</a>')
 
     def testSelectedText_wiki(self):
-        parent = LinkDialog(self.wnd)
+        parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = 'бла-бла-бла'
 
-        controller = WikiLinkDialogController(Application,
+        controller = WikiLinkDialogController(self.application,
                                               self._testpage,
                                               parent,
                                               selectedString)
@@ -235,7 +236,7 @@ class LinkDialogControllerTest(BaseMainWndTest):
         self.assertEqual(controller.linkResult, '[[бла-бла-бла -> ]]')
 
     def testSelectedText_html(self):
-        parent = LinkDialog(self.wnd)
+        parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = 'бла-бла-бла'
 
@@ -249,13 +250,13 @@ class LinkDialogControllerTest(BaseMainWndTest):
         self.assertEqual(controller.linkResult, '<a href="">бла-бла-бла</a>')
 
     def testClipboardHttpLink_wiki(self):
-        parent = LinkDialog(self.wnd)
+        parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = ''
         clipboardText = 'http://jenyay.net'
         copyTextToClipboard(clipboardText)
 
-        controller = WikiLinkDialogController(Application,
+        controller = WikiLinkDialogController(self.application,
                                               self._testpage,
                                               parent,
                                               selectedString)
@@ -266,7 +267,7 @@ class LinkDialogControllerTest(BaseMainWndTest):
         self.assertEqual(controller.linkResult, '[[http://jenyay.net]]')
 
     def testClipboardHttpLink_html(self):
-        parent = LinkDialog(self.wnd)
+        parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = ''
         clipboardText = 'http://jenyay.net'
@@ -284,13 +285,13 @@ class LinkDialogControllerTest(BaseMainWndTest):
             '<a href="http://jenyay.net">http://jenyay.net</a>')
 
     def testClipboardHttpLink2_wiki(self):
-        parent = LinkDialog(self.wnd)
+        parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = ''
         clipboardText = 'HTTP://jenyay.net'
         copyTextToClipboard(clipboardText)
 
-        controller = WikiLinkDialogController(Application,
+        controller = WikiLinkDialogController(self.application,
                                               self._testpage,
                                               parent,
                                               selectedString)
@@ -301,7 +302,7 @@ class LinkDialogControllerTest(BaseMainWndTest):
         self.assertEqual(controller.linkResult, '[[HTTP://jenyay.net]]')
 
     def testClipboardHttpLink2_html(self):
-        parent = LinkDialog(self.wnd)
+        parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = ''
         clipboardText = 'HTTP://jenyay.net'
@@ -319,13 +320,13 @@ class LinkDialogControllerTest(BaseMainWndTest):
             '<a href="HTTP://jenyay.net">HTTP://jenyay.net</a>')
 
     def testClipboardHttpsLink_wiki(self):
-        parent = LinkDialog(self.wnd)
+        parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = ''
         clipboardText = 'https://jenyay.net'
         copyTextToClipboard(clipboardText)
 
-        controller = WikiLinkDialogController(Application,
+        controller = WikiLinkDialogController(self.application,
                                               self._testpage,
                                               parent,
                                               selectedString)
@@ -336,7 +337,7 @@ class LinkDialogControllerTest(BaseMainWndTest):
         self.assertEqual(controller.linkResult, '[[https://jenyay.net]]')
 
     def testClipboardHttpsLink_html(self):
-        parent = LinkDialog(self.wnd)
+        parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = ''
         clipboardText = 'https://jenyay.net'
@@ -354,13 +355,13 @@ class LinkDialogControllerTest(BaseMainWndTest):
             '<a href="https://jenyay.net">https://jenyay.net</a>')
 
     def testClipboardFtpLink_wiki(self):
-        parent = LinkDialog(self.wnd)
+        parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = ''
         clipboardText = 'ftp://jenyay.net'
         copyTextToClipboard(clipboardText)
 
-        controller = WikiLinkDialogController(Application,
+        controller = WikiLinkDialogController(self.application,
                                               self._testpage,
                                               parent,
                                               selectedString)
@@ -371,7 +372,7 @@ class LinkDialogControllerTest(BaseMainWndTest):
         self.assertEqual(controller.linkResult, '[[ftp://jenyay.net]]')
 
     def testClipboardFtpLink_html(self):
-        parent = LinkDialog(self.wnd)
+        parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = ''
         clipboardText = 'ftp://jenyay.net'
@@ -389,13 +390,13 @@ class LinkDialogControllerTest(BaseMainWndTest):
             '<a href="ftp://jenyay.net">ftp://jenyay.net</a>')
 
     def testClipboardPageLink_wiki(self):
-        parent = LinkDialog(self.wnd)
+        parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = ''
         clipboardText = 'page://_asdfasdfasdf'
         copyTextToClipboard(clipboardText)
 
-        controller = WikiLinkDialogController(Application,
+        controller = WikiLinkDialogController(self.application,
                                               self._testpage,
                                               parent,
                                               selectedString)
@@ -406,7 +407,7 @@ class LinkDialogControllerTest(BaseMainWndTest):
         self.assertEqual(controller.linkResult, '[[page://_asdfasdfasdf]]')
 
     def testClipboardPageLink_html(self):
-        parent = LinkDialog(self.wnd)
+        parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = ''
         clipboardText = 'page://_asdfasdfasdf'
@@ -424,13 +425,13 @@ class LinkDialogControllerTest(BaseMainWndTest):
             '<a href="page://_asdfasdfasdf">page://_asdfasdfasdf</a>')
 
     def testClipboardAnchor_wiki(self):
-        parent = LinkDialog(self.wnd)
+        parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = ''
         clipboardText = '#anchor'
         copyTextToClipboard(clipboardText)
 
-        controller = WikiLinkDialogController(Application,
+        controller = WikiLinkDialogController(self.application,
                                               self._testpage,
                                               parent,
                                               selectedString)
@@ -441,7 +442,7 @@ class LinkDialogControllerTest(BaseMainWndTest):
         self.assertEqual(controller.linkResult, '[[#anchor]]')
 
     def testClipboardAnchor_html(self):
-        parent = LinkDialog(self.wnd)
+        parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = ''
         clipboardText = '#anchor'
@@ -460,11 +461,11 @@ class LinkDialogControllerTest(BaseMainWndTest):
 
     def testAttach_wiki(self):
         Attachment(self._testpage).attach(self.files)
-        parent = LinkDialog(self.wnd)
+        parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = ''
 
-        controller = WikiLinkDialogController(Application,
+        controller = WikiLinkDialogController(self.application,
                                               self._testpage,
                                               parent,
                                               selectedString)
@@ -476,7 +477,7 @@ class LinkDialogControllerTest(BaseMainWndTest):
 
     def testAttach_html(self):
         Attachment(self._testpage).attach(self.files)
-        parent = LinkDialog(self.wnd)
+        parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = ''
 
@@ -494,11 +495,11 @@ class LinkDialogControllerTest(BaseMainWndTest):
 
     def testSelectedAttach_wiki(self):
         Attachment(self._testpage).attach(self.files)
-        parent = LinkDialog(self.wnd)
+        parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = 'Attach:add.png'
 
-        controller = WikiLinkDialogController(Application,
+        controller = WikiLinkDialogController(self.application,
                                               self._testpage,
                                               parent,
                                               selectedString)
@@ -516,7 +517,7 @@ class LinkDialogControllerTest(BaseMainWndTest):
 
     def testSelectedAttach_html(self):
         Attachment(self._testpage).attach(self.files)
-        parent = LinkDialog(self.wnd)
+        parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = '{}/add.png'.format(PAGE_ATTACH_DIR)
 
@@ -545,11 +546,11 @@ class LinkDialogControllerTest(BaseMainWndTest):
     def testLinkStyle_01(self):
         self._config.linkStyleOptions.value = 0
 
-        dlg = LinkDialog(self.wnd)
+        dlg = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = ''
 
-        controller = WikiLinkDialogController(Application,
+        controller = WikiLinkDialogController(self.application,
                                               self._testpage,
                                               dlg,
                                               selectedString)
@@ -563,11 +564,11 @@ class LinkDialogControllerTest(BaseMainWndTest):
     def testLinkStyle_02(self):
         self._config.linkStyleOptions.value = 1
 
-        dlg = LinkDialog(self.wnd)
+        dlg = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = ''
 
-        controller = WikiLinkDialogController(Application,
+        controller = WikiLinkDialogController(self.application,
                                               self._testpage,
                                               dlg,
                                               selectedString)

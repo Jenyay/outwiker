@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os
 import unittest
@@ -12,11 +12,11 @@ from outwiker.core.attachment import Attachment
 from ..utils import removeDir
 
 
-class FakeThumbDialog (object):
+class FakeThumbDialog(object):
     """
     Фальшивый диалог для вставки превьюшки
     """
-    def __init__ (self, parent, filesList, selectedFile, thumbSize, fileName, scaleType):
+    def __init__(self, parent, filesList, selectedFile, thumbSize, fileName, scaleType):
         self.parent = parent
         self.filesList = filesList
         self.selectedFile = selectedFile
@@ -25,161 +25,146 @@ class FakeThumbDialog (object):
         self.fileName = fileName
         self.scaleType = scaleType
 
-
-    def ShowModal (self):
+    def ShowModal(self):
         return None
 
-
-    def Destroy (self):
+    def Destroy(self):
         pass
 
 
-class TestThumbDialogController (ThumbDialogController):
-    def __init__ (self,
-                  parent,
-                  page,
-                  selectedText,
-                  thumbSize,
-                  fileName,
-                  scaleType):
+class TestThumbDialogController(ThumbDialogController):
+    def __init__(self,
+                 parent,
+                 page,
+                 selectedText,
+                 thumbSize,
+                 fileName,
+                 scaleType):
         """
         thumbSize - размер, якобы выбранный в диалоге
         fileName - имя файла, якобы выбанное в диалоге
         scaleType - способ масштабирования, якобы выбанный в диалоге
         """
-        super (TestThumbDialogController, self).__init__ (parent, page, selectedText)
+        super(TestThumbDialogController, self).__init__(parent, page, selectedText)
         self._thumbSize = thumbSize
         self._fileName = fileName
         self._scaleType = scaleType
 
         self.dlg = None
 
-
-    def _createDialog (self, parent, filesList, selectedFile):
-        self.dlg = FakeThumbDialog (parent,
-                                    filesList,
-                                    selectedFile,
-                                    self._thumbSize,
-                                    self._fileName,
-                                    self._scaleType)
+    def _createDialog(self, parent, filesList, selectedFile):
+        self.dlg = FakeThumbDialog(parent,
+                                   filesList,
+                                   selectedFile,
+                                   self._thumbSize,
+                                   self._fileName,
+                                   self._scaleType)
 
         return self.dlg
 
 
-class ThumbDialogControllerTest (unittest.TestCase):
-    def setUp (self):
-        self.path = mkdtemp (prefix='Абырвалг абыр')
+class ThumbDialogControllerTest(unittest.TestCase):
+    def setUp(self):
+        self.path = mkdtemp(prefix='Абырвалг абыр')
 
-        self.wikiroot = WikiDocument.create (self.path)
+        self.wikiroot = WikiDocument.create(self.path)
 
-        WikiPageFactory().create (self.wikiroot, "Страница 1", [])
+        WikiPageFactory().create(self.wikiroot, "Страница 1", [])
         self.testPage = self.wikiroot["Страница 1"]
 
         filesPath = "../test/samplefiles/"
         self.files = ["accept.png", "add.png", "first.jpg", "image.jpeg", "файл с пробелами.tmp"]
-        self.fullFilesPath = [os.path.join (filesPath, fname) for fname in self.files]
+        self.fullFilesPath = [os.path.join(filesPath, fname) for fname in self.files]
 
+    def tearDown(self):
+        removeDir(self.path)
 
-
-    def tearDown (self):
-        removeDir (self.path)
-
-
-    def testEmpty (self):
-        controller = TestThumbDialogController (None, self.testPage, "", 0, "", ThumbDialog.WIDTH)
+    def testEmpty(self):
+        controller = TestThumbDialogController(None, self.testPage, "", 0, "", ThumbDialog.WIDTH)
         controller.showDialog()
 
-        self.assertEqual (controller.result, "%thumb%%%")
-        self.assertEqual (controller.dlg.filesList, [])
+        self.assertEqual(controller.result, "%thumb%%%")
+        self.assertEqual(controller.dlg.filesList, [])
 
-
-    def testAttachList (self):
-        Attachment (self.testPage).attach (self.fullFilesPath)
-        controller = TestThumbDialogController (None, self.testPage, "", 0, "", ThumbDialog.WIDTH)
+    def testAttachList(self):
+        Attachment(self.testPage).attach(self.fullFilesPath)
+        controller = TestThumbDialogController(None, self.testPage, "", 0, "", ThumbDialog.WIDTH)
         controller.showDialog()
 
-        self.assertTrue ("accept.png" in controller.dlg.filesList)
-        self.assertTrue ("add.png" in controller.dlg.filesList)
-        self.assertTrue ("first.jpg" in controller.dlg.filesList)
-        self.assertTrue ("image.jpeg" in controller.dlg.filesList)
-        self.assertFalse ("файл с пробелами.tmp" in controller.dlg.filesList)
+        self.assertTrue("accept.png" in controller.dlg.filesList)
+        self.assertTrue("add.png" in controller.dlg.filesList)
+        self.assertTrue("first.jpg" in controller.dlg.filesList)
+        self.assertTrue("image.jpeg" in controller.dlg.filesList)
+        self.assertFalse("файл с пробелами.tmp" in controller.dlg.filesList)
 
-
-    def testSelectedAttach1 (self):
-        Attachment (self.testPage).attach (self.fullFilesPath)
-        controller = TestThumbDialogController (None, self.testPage, "Attach:accept.png", 0, "", ThumbDialog.WIDTH)
+    def testSelectedAttach1(self):
+        Attachment(self.testPage).attach(self.fullFilesPath)
+        controller = TestThumbDialogController(None, self.testPage, "Attach:accept.png", 0, "", ThumbDialog.WIDTH)
         controller.showDialog()
 
-        self.assertEqual (controller.dlg.selectedFile, "accept.png")
+        self.assertEqual(controller.dlg.selectedFile, "accept.png")
 
-
-    def testSelectedAttach2 (self):
-        Attachment (self.testPage).attach (self.fullFilesPath)
-        controller = TestThumbDialogController (None, self.testPage, "бла-бла-бла", 0, "", ThumbDialog.WIDTH)
+    def testSelectedAttach2(self):
+        Attachment(self.testPage).attach(self.fullFilesPath)
+        controller = TestThumbDialogController(None, self.testPage, "бла-бла-бла", 0, "", ThumbDialog.WIDTH)
         controller.showDialog()
 
-        self.assertEqual (controller.dlg.selectedFile, "")
+        self.assertEqual(controller.dlg.selectedFile, "")
 
-
-    def testSelectedAttach3 (self):
-        Attachment (self.testPage).attach (self.fullFilesPath)
-        controller = TestThumbDialogController (None, self.testPage, "Attach:accept-2.png", 0, "", ThumbDialog.WIDTH)
+    def testSelectedAttach3(self):
+        Attachment(self.testPage).attach(self.fullFilesPath)
+        controller = TestThumbDialogController(None, self.testPage, "Attach:accept-2.png", 0, "", ThumbDialog.WIDTH)
         controller.showDialog()
 
-        self.assertEqual (controller.dlg.selectedFile, "")
+        self.assertEqual(controller.dlg.selectedFile, "")
 
-
-    def testSelectedAttach4 (self):
-        Attachment (self.testPage).attach (self.fullFilesPath)
-        controller = TestThumbDialogController (None, self.testPage, "  Attach:accept.png   ", 0, "", ThumbDialog.WIDTH)
+    def testSelectedAttach4(self):
+        Attachment(self.testPage).attach(self.fullFilesPath)
+        controller = TestThumbDialogController(None, self.testPage, "  Attach:accept.png   ", 0, "", ThumbDialog.WIDTH)
         controller.showDialog()
 
-        self.assertEqual (controller.dlg.selectedFile, "accept.png")
+        self.assertEqual(controller.dlg.selectedFile, "accept.png")
 
-
-    def testResult1 (self):
-        controller = TestThumbDialogController (None,
-                                                self.testPage,
-                                                "",
-                                                0,
-                                                "accept.png",
-                                                ThumbDialog.WIDTH)
+    def testResult1(self):
+        controller = TestThumbDialogController(None,
+                                               self.testPage,
+                                               "",
+                                               0,
+                                               "accept.png",
+                                               ThumbDialog.WIDTH)
         controller.showDialog()
 
-        self.assertEqual (controller.result, "%thumb%Attach:accept.png%%")
+        self.assertEqual(controller.result, "%thumb%Attach:accept.png%%")
 
-
-    def testResultWidth (self):
-        controller = TestThumbDialogController (None,
-                                                self.testPage,
-                                                "",
-                                                100,
-                                                "accept.png",
-                                                ThumbDialog.WIDTH)
+    def testResultWidth(self):
+        controller = TestThumbDialogController(None,
+                                               self.testPage,
+                                               "",
+                                               100,
+                                               "accept.png",
+                                               ThumbDialog.WIDTH)
         controller.showDialog()
 
-        self.assertEqual (controller.result, "%thumb width=100%Attach:accept.png%%")
+        self.assertEqual(controller.result, "%thumb width=100%Attach:accept.png%%")
 
-
-    def testResultHeight (self):
-        controller = TestThumbDialogController (None,
-                                                self.testPage,
-                                                "",
-                                                100,
-                                                "accept.png",
-                                                ThumbDialog.HEIGHT)
+    def testResultHeight(self):
+        controller = TestThumbDialogController(None,
+                                               self.testPage,
+                                               "",
+                                               100,
+                                               "accept.png",
+                                               ThumbDialog.HEIGHT)
         controller.showDialog()
 
-        self.assertEqual (controller.result, "%thumb height=100%Attach:accept.png%%")
+        self.assertEqual(controller.result, "%thumb height=100%Attach:accept.png%%")
 
-
-    def testResultMaxSize (self):
-        controller = TestThumbDialogController (None,
-                                                self.testPage,
-                                                "",
-                                                100,
-                                                "accept.png",
-                                                ThumbDialog.MAX_SIZE)
+    def testResultMaxSize(self):
+        controller = TestThumbDialogController(None,
+                                               self.testPage,
+                                               "",
+                                               100,
+                                               "accept.png",
+                                               ThumbDialog.MAX_SIZE)
         controller.showDialog()
 
-        self.assertEqual (controller.result, "%thumb maxsize=100%Attach:accept.png%%")
+        self.assertEqual(controller.result, "%thumb maxsize=100%Attach:accept.png%%")
