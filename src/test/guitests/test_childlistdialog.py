@@ -1,30 +1,31 @@
 # -*- coding: UTF-8 -*-
 
-from .basemainwnd import BaseMainWndTest
-from outwiker.pages.wiki.actions.childlist import ChildListDialog, ChildListDialogController
-from outwiker.core.application import Application
+from outwiker.pages.wiki.actions.childlist import (ChildListDialog,
+                                                   ChildListDialogController)
 from outwiker.gui.tester import Tester
+from test.basetestcases import BaseOutWikerGUITest
 
 
-class ChildListDialogTest (BaseMainWndTest):
+class ChildListDialogTest(BaseOutWikerGUITest):
     """
     Тесты диалога для вставки команды (:childlist:)
     """
-    def setUp (self):
-        BaseMainWndTest.setUp (self)
-        self._dialog = ChildListDialog (Application.mainWindow)
+    def setUp(self):
+        self.initApplication()
+        self._dialog = ChildListDialog(self.application.mainWindow)
 
+    def tearDown(self):
+        self.destroyApplication()
 
-    def testCancel (self):
-        controller = ChildListDialogController (self._dialog)
+    def testCancel(self):
+        controller = ChildListDialogController(self._dialog)
         Tester.dialogTester.appendCancel()
         result = controller.getDialogResult()
 
-        self.assertEqual (result, None)
+        self.assertEqual(result, None)
 
-
-    def testSortByOrder (self):
-        controller = ChildListDialogController (self._dialog)
+    def testSortByOrder(self):
+        controller = ChildListDialogController(self._dialog)
 
         Tester.dialogTester.appendOk()
         self._dialog.selectedSort = 0
@@ -32,11 +33,10 @@ class ChildListDialogTest (BaseMainWndTest):
 
         result = controller.getDialogResult()
 
-        self.assertEqual (result, "(:childlist:)")
+        self.assertEqual(result, "(:childlist:)")
 
-
-    def testSortByOrderDescend (self):
-        controller = ChildListDialogController (self._dialog)
+    def testSortByOrderDescend(self):
+        controller = ChildListDialogController(self._dialog)
 
         Tester.dialogTester.appendOk()
         self._dialog.selectedSort = 0
@@ -44,11 +44,10 @@ class ChildListDialogTest (BaseMainWndTest):
 
         result = controller.getDialogResult()
 
-        self.assertEqual (result, "(:childlist sort=descendorder:)")
+        self.assertEqual(result, "(:childlist sort=descendorder:)")
 
-
-    def testSortByName (self):
-        controller = ChildListDialogController (self._dialog)
+    def testSortByName(self):
+        controller = ChildListDialogController(self._dialog)
 
         Tester.dialogTester.appendOk()
         self._dialog.selectedSort = 1
@@ -56,11 +55,10 @@ class ChildListDialogTest (BaseMainWndTest):
 
         result = controller.getDialogResult()
 
-        self.assertEqual (result, "(:childlist sort=name:)")
+        self.assertEqual(result, "(:childlist sort=name:)")
 
-
-    def testSortByNameDescend (self):
-        controller = ChildListDialogController (self._dialog)
+    def testSortByNameDescend(self):
+        controller = ChildListDialogController(self._dialog)
 
         Tester.dialogTester.appendOk()
         self._dialog.selectedSort = 1
@@ -68,11 +66,10 @@ class ChildListDialogTest (BaseMainWndTest):
 
         result = controller.getDialogResult()
 
-        self.assertEqual (result, "(:childlist sort=descendname:)")
+        self.assertEqual(result, "(:childlist sort=descendname:)")
 
-
-    def testSortByCreation (self):
-        controller = ChildListDialogController (self._dialog)
+    def testSortByCreation(self):
+        controller = ChildListDialogController(self._dialog)
 
         Tester.dialogTester.appendOk()
         self._dialog.selectedSort = 2
@@ -80,11 +77,10 @@ class ChildListDialogTest (BaseMainWndTest):
 
         result = controller.getDialogResult()
 
-        self.assertEqual (result, "(:childlist sort=creation:)")
+        self.assertEqual(result, "(:childlist sort=creation:)")
 
-
-    def testSortByCreationDescend (self):
-        controller = ChildListDialogController (self._dialog)
+    def testSortByCreationDescend(self):
+        controller = ChildListDialogController(self._dialog)
 
         Tester.dialogTester.appendOk()
         self._dialog.selectedSort = 2
@@ -92,11 +88,10 @@ class ChildListDialogTest (BaseMainWndTest):
 
         result = controller.getDialogResult()
 
-        self.assertEqual (result, "(:childlist sort=descendcreation:)")
+        self.assertEqual(result, "(:childlist sort=descendcreation:)")
 
-
-    def testSortByEdit (self):
-        controller = ChildListDialogController (self._dialog)
+    def testSortByEdit(self):
+        controller = ChildListDialogController(self._dialog)
 
         Tester.dialogTester.appendOk()
         self._dialog.selectedSort = 3
@@ -104,11 +99,10 @@ class ChildListDialogTest (BaseMainWndTest):
 
         result = controller.getDialogResult()
 
-        self.assertEqual (result, "(:childlist sort=edit:)")
+        self.assertEqual(result, "(:childlist sort=edit:)")
 
-
-    def testSortByEditDescend (self):
-        controller = ChildListDialogController (self._dialog)
+    def testSortByEditDescend(self):
+        controller = ChildListDialogController(self._dialog)
 
         Tester.dialogTester.appendOk()
         self._dialog.selectedSort = 3
@@ -116,4 +110,4 @@ class ChildListDialogTest (BaseMainWndTest):
 
         result = controller.getDialogResult()
 
-        self.assertEqual (result, "(:childlist sort=descendedit:)")
+        self.assertEqual(result, "(:childlist sort=descendedit:)")

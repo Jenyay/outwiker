@@ -2,15 +2,13 @@
 
 import wx
 
-from outwiker.core.application import Application
 from outwiker.gui.actioncontroller import ActionController
 from outwiker.gui.baseaction import BaseAction
 from outwiker.gui.hotkey import HotKey
 from outwiker.gui.hotkeyparser import HotKeyParser
 from outwiker.gui.hotkeyoption import HotKeyOption
 from outwiker.gui.defines import MENU_FILE, TOOLBAR_PLUGINS
-
-from .basemainwnd import BaseMainWndTest
+from test.basetestcases import BaseOutWikerGUITest
 
 
 class TestAction(BaseAction):
@@ -52,16 +50,17 @@ class TestCheckAction(BaseAction):
             self.runCount -= 1
 
 
-class ActionControllerTest(BaseMainWndTest):
+class ActionControllerTest(BaseOutWikerGUITest):
     def setUp(self):
-        BaseMainWndTest.setUp(self)
-        self.actionController = ActionController(self.wnd, Application.config)
-        Application.config.remove_section(self.actionController.configSection)
-        self.fileMenu = self.wnd.menuController[MENU_FILE]
+        self.initApplication()
+
+        self.actionController = ActionController(self.mainWindow, self.application.config)
+        self.application.config.remove_section(self.actionController.configSection)
+        self.fileMenu = self.mainWindow.menuController[MENU_FILE]
 
     def tearDown(self):
-        BaseMainWndTest.tearDown(self)
-        Application.config.remove_section(self.actionController.configSection)
+        self.application.config.remove_section(self.actionController.configSection)
+        self.destroyApplication()
 
     def testRegisterAction(self):
         action = TestAction()
@@ -118,7 +117,7 @@ class ActionControllerTest(BaseMainWndTest):
     def testRemoveAction(self):
         action = TestAction()
         menu = self.fileMenu
-        toolbar = self.wnd.toolbars[TOOLBAR_PLUGINS]
+        toolbar = self.mainWindow.toolbars[TOOLBAR_PLUGINS]
         image = "../test/images/save.png"
 
         self.actionController.register(action)
@@ -140,7 +139,7 @@ class ActionControllerTest(BaseMainWndTest):
     def testRemoveActionAndRun(self):
         action = TestAction()
         menu = self.fileMenu
-        toolbar = self.wnd.toolbars[TOOLBAR_PLUGINS]
+        toolbar = self.mainWindow.toolbars[TOOLBAR_PLUGINS]
         image = "../test/images/save.png"
 
         self.actionController.register(action)
@@ -189,7 +188,7 @@ class ActionControllerTest(BaseMainWndTest):
     def testAppendToolbarButton(self):
         action = TestAction()
         menu = self.fileMenu
-        toolbar = self.wnd.toolbars[TOOLBAR_PLUGINS]
+        toolbar = self.mainWindow.toolbars[TOOLBAR_PLUGINS]
         image = "../test/images/save.png"
 
         self.actionController.register(action)
@@ -206,7 +205,7 @@ class ActionControllerTest(BaseMainWndTest):
 
     def testAppendToolbarCheckButton(self):
         action = TestCheckAction()
-        toolbar = self.wnd.toolbars[TOOLBAR_PLUGINS]
+        toolbar = self.mainWindow.toolbars[TOOLBAR_PLUGINS]
         image = "../test/images/save.png"
 
         self.actionController.register(action)
@@ -222,7 +221,7 @@ class ActionControllerTest(BaseMainWndTest):
 
     def testAppendToolbarCheckButtonAndRun(self):
         action = TestCheckAction()
-        toolbar = self.wnd.toolbars[TOOLBAR_PLUGINS]
+        toolbar = self.mainWindow.toolbars[TOOLBAR_PLUGINS]
         image = "../test/images/save.png"
 
         self.actionController.register(action)
@@ -246,7 +245,7 @@ class ActionControllerTest(BaseMainWndTest):
     def testCheckButtonAndMenuWithEvents(self):
         action = TestCheckAction()
         menu = self.fileMenu
-        toolbar = self.wnd.toolbars[TOOLBAR_PLUGINS]
+        toolbar = self.mainWindow.toolbars[TOOLBAR_PLUGINS]
         image = "../test/images/save.png"
 
         self.actionController.register(action)
@@ -275,7 +274,7 @@ class ActionControllerTest(BaseMainWndTest):
     def testCheckButtonAndMenu(self):
         action = TestCheckAction()
         menu = self.fileMenu
-        toolbar = self.wnd.toolbars[TOOLBAR_PLUGINS]
+        toolbar = self.mainWindow.toolbars[TOOLBAR_PLUGINS]
         image = "../test/images/save.png"
 
         self.actionController.register(action)
@@ -318,7 +317,7 @@ class ActionControllerTest(BaseMainWndTest):
     def testRemoveCheckMenu(self):
         action = TestCheckAction()
         menu = self.fileMenu
-        toolbar = self.wnd.toolbars[TOOLBAR_PLUGINS]
+        toolbar = self.mainWindow.toolbars[TOOLBAR_PLUGINS]
         image = "../test/images/save.png"
 
         self.actionController.register(action)
@@ -344,7 +343,7 @@ class ActionControllerTest(BaseMainWndTest):
 
     def testAppendToolbarButtonOnly(self):
         action = TestAction()
-        toolbar = self.wnd.toolbars[TOOLBAR_PLUGINS]
+        toolbar = self.mainWindow.toolbars[TOOLBAR_PLUGINS]
         image = "../test/images/save.png"
 
         self.actionController.register(action)
@@ -361,7 +360,7 @@ class ActionControllerTest(BaseMainWndTest):
     def testAppendToolbarButtonAndRun(self):
         action = TestAction()
         menu = self.fileMenu
-        toolbar = self.wnd.toolbars[TOOLBAR_PLUGINS]
+        toolbar = self.mainWindow.toolbars[TOOLBAR_PLUGINS]
         image = "../test/images/save.png"
 
         self.actionController.register(action)
@@ -382,7 +381,7 @@ class ActionControllerTest(BaseMainWndTest):
 
     def testAppendToolbarButtonOnlyAndRun(self):
         action = TestAction()
-        toolbar = self.wnd.toolbars[TOOLBAR_PLUGINS]
+        toolbar = self.mainWindow.toolbars[TOOLBAR_PLUGINS]
         image = "../test/images/save.png"
 
         self.actionController.register(action)
@@ -403,7 +402,7 @@ class ActionControllerTest(BaseMainWndTest):
     def testRemoveToolButton(self):
         action = TestAction()
         menu = self.fileMenu
-        toolbar = self.wnd.toolbars[TOOLBAR_PLUGINS]
+        toolbar = self.mainWindow.toolbars[TOOLBAR_PLUGINS]
         image = "../test/images/save.png"
 
         self.actionController.register(action)
@@ -423,7 +422,7 @@ class ActionControllerTest(BaseMainWndTest):
     def testRemoveToolButtonInvalid(self):
         action = TestAction()
         menu = self.fileMenu
-        toolbar = self.wnd.toolbars[TOOLBAR_PLUGINS]
+        toolbar = self.mainWindow.toolbars[TOOLBAR_PLUGINS]
 
         self.actionController.register(action)
         self.actionController.appendMenuItem(action.stringId, menu)
@@ -439,7 +438,7 @@ class ActionControllerTest(BaseMainWndTest):
     def testRemoveMenuItemInvalid(self):
         action = TestAction()
         menu = self.fileMenu
-        toolbar = self.wnd.toolbars[TOOLBAR_PLUGINS]
+        toolbar = self.mainWindow.toolbars[TOOLBAR_PLUGINS]
         image = "../test/images/save.png"
 
         self.actionController.register(action)
@@ -458,7 +457,7 @@ class ActionControllerTest(BaseMainWndTest):
     def testRemoveMenuItem(self):
         action = TestAction()
         menu = self.fileMenu
-        toolbar = self.wnd.toolbars[TOOLBAR_PLUGINS]
+        toolbar = self.mainWindow.toolbars[TOOLBAR_PLUGINS]
         image = "../test/images/save.png"
 
         self.actionController.register(action)
@@ -491,7 +490,7 @@ class ActionControllerTest(BaseMainWndTest):
     def testHotKeysDefaultToolBar(self):
         action = TestAction()
         hotkey = HotKey("T", ctrl=True)
-        toolbar = self.wnd.toolbars[TOOLBAR_PLUGINS]
+        toolbar = self.mainWindow.toolbars[TOOLBAR_PLUGINS]
         image = "../test/images/save.png"
 
         self.actionController.register(action, hotkey=hotkey)
@@ -509,7 +508,7 @@ class ActionControllerTest(BaseMainWndTest):
     def testDisableTools(self):
         action = TestAction()
         hotkey = HotKey("T", ctrl=True)
-        toolbar = self.wnd.toolbars[TOOLBAR_PLUGINS]
+        toolbar = self.mainWindow.toolbars[TOOLBAR_PLUGINS]
         image = "../test/images/save.png"
 
         self.actionController.register(action, hotkey=hotkey)
@@ -546,7 +545,7 @@ class ActionControllerTest(BaseMainWndTest):
     def testDidableToolsAll(self):
         action = TestAction()
         hotkey = HotKey("T", ctrl=True)
-        toolbar = self.wnd.toolbars[TOOLBAR_PLUGINS]
+        toolbar = self.mainWindow.toolbars[TOOLBAR_PLUGINS]
         image = "../test/images/save.png"
         menu = self.fileMenu
 
@@ -598,7 +597,7 @@ class ActionControllerTest(BaseMainWndTest):
     def testHotKeyLoadConfig(self):
         action = TestAction()
         hotKeyFromConfig = HotKey("F11")
-        HotKeyOption(Application.config,
+        HotKeyOption(self.application.config,
                      self.actionController.configSection,
                      action.stringId, None).value = hotKeyFromConfig
 
@@ -617,7 +616,7 @@ class ActionControllerTest(BaseMainWndTest):
         self.actionController.register(action, hotkey)
         self.actionController.saveHotKeys()
 
-        otherActionController = ActionController(self.wnd, Application.config)
+        otherActionController = ActionController(self.mainWindow, self.application.config)
         otherActionController.register(action)
 
         self.assertEqual(otherActionController.getHotKey(action.stringId).key,
@@ -633,7 +632,7 @@ class ActionControllerTest(BaseMainWndTest):
         self.actionController.register(action, hotkey)
         self.actionController.saveHotKeys()
 
-        otherActionController = ActionController(self.wnd, Application.config)
+        otherActionController = ActionController(self.mainWindow, self.application.config)
         otherActionController.register(action, HotKey("F1", shift=True))
 
         self.assertEqual(otherActionController.getHotKey(action.stringId).key,
@@ -648,7 +647,7 @@ class ActionControllerTest(BaseMainWndTest):
         self.actionController.register(action)
         self.actionController.saveHotKeys()
 
-        otherActionController = ActionController(self.wnd, Application.config)
+        otherActionController = ActionController(self.mainWindow, self.application.config)
         otherActionController.register(action)
 
         self.assertEqual(otherActionController.getHotKey(action.stringId).key,
@@ -668,7 +667,7 @@ class ActionControllerTest(BaseMainWndTest):
 
     def testChangeHotkeyGui(self):
         menu = self.fileMenu
-        toolbar = self.wnd.toolbars[TOOLBAR_PLUGINS]
+        toolbar = self.mainWindow.toolbars[TOOLBAR_PLUGINS]
         image = "../test/images/save.png"
 
         hotkey = HotKey("F11", ctrl=True)
@@ -705,7 +704,7 @@ class ActionControllerTest(BaseMainWndTest):
                          "{}\t{}".format(action.title, "Ctrl+F11"))
 
     def testChangeHotkeyToolbar(self):
-        toolbar = self.wnd.toolbars[TOOLBAR_PLUGINS]
+        toolbar = self.mainWindow.toolbars[TOOLBAR_PLUGINS]
         image = "../test/images/save.png"
 
         hotkey = HotKey("F11", ctrl=True)
@@ -723,7 +722,7 @@ class ActionControllerTest(BaseMainWndTest):
                          "{} ({})".format(action.title, "Ctrl+F11"))
 
     def testDelayChangeHotkeyToolbar(self):
-        toolbar = self.wnd.toolbars[TOOLBAR_PLUGINS]
+        toolbar = self.mainWindow.toolbars[TOOLBAR_PLUGINS]
         image = "../test/images/save.png"
 
         hotkey = HotKey("F11", ctrl=True)
@@ -740,7 +739,7 @@ class ActionControllerTest(BaseMainWndTest):
         self.assertEqual(self._getToolItemLabel(toolbar, action.stringId),
                          "{} ({})".format(action.title, "F11"))
 
-        otherActionController = ActionController(self.wnd, Application.config)
+        otherActionController = ActionController(self.mainWindow, self.application.config)
         otherActionController.register(action, None)
 
         self.assertEqual(otherActionController.getHotKey(action.stringId),
@@ -748,7 +747,7 @@ class ActionControllerTest(BaseMainWndTest):
 
     def testChangeHotkeyGuiChecked1(self):
         menu = self.fileMenu
-        toolbar = self.wnd.toolbars[TOOLBAR_PLUGINS]
+        toolbar = self.mainWindow.toolbars[TOOLBAR_PLUGINS]
         image = "../test/images/save.png"
 
         hotkey = HotKey("F11", ctrl=True)
@@ -771,7 +770,7 @@ class ActionControllerTest(BaseMainWndTest):
 
     def testChangeHotkeyGuiChecked2(self):
         menu = self.fileMenu
-        toolbar = self.wnd.toolbars[TOOLBAR_PLUGINS]
+        toolbar = self.mainWindow.toolbars[TOOLBAR_PLUGINS]
         image = "../test/images/save.png"
 
         hotkey = HotKey("F11", ctrl=True)
@@ -813,27 +812,27 @@ class ActionControllerTest(BaseMainWndTest):
         Эмуляция события выбора пункта меню
         """
         event = wx.CommandEvent(wx.wxEVT_COMMAND_MENU_SELECTED, menuItemId)
-        self.wnd.ProcessEvent(event)
+        self.mainWindow.ProcessEvent(event)
 
     def _emulateButtonClick(self, toolitemId):
         """
         Эмуляция события выбора пункта меню
         """
         event = wx.CommandEvent(wx.wxEVT_COMMAND_TOOL_CLICKED, toolitemId)
-        self.wnd.ProcessEvent(event)
+        self.mainWindow.ProcessEvent(event)
 
     def _emulateCheckButtonClick(self, toolitemId):
         """
         Эмуляция события выбора пункта меню
         """
-        toolbar = self.wnd.toolbars[TOOLBAR_PLUGINS]
+        toolbar = self.mainWindow.toolbars[TOOLBAR_PLUGINS]
         toolitem = toolbar.FindTool(toolitemId)
         newState = not toolitem.GetState()
         toolbar.ToggleTool(toolitemId, newState)
 
         event = wx.CommandEvent(wx.wxEVT_COMMAND_TOOL_CLICKED, toolitemId)
         event.SetInt(newState)
-        self.wnd.ProcessEvent(event)
+        self.mainWindow.ProcessEvent(event)
 
     def _getMenuItemId(self, strid):
         result = None

@@ -1,96 +1,91 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import wx
 
-from .basemainwnd import BaseMainWndTest
-from outwiker.core.application import Application
-from outwiker.core.commands import removePage
-from outwiker.pages.text.textpage import TextPageFactory
-from outwiker.gui.tester import Tester
 from outwiker.actions.removepage import RemovePageAction
+from outwiker.core.commands import removePage
+from outwiker.gui.tester import Tester
+from outwiker.pages.text.textpage import TextPageFactory
+from test.basetestcases import BaseOutWikerGUITest
 
 
-class RemovePageGuiTest (BaseMainWndTest):
+class RemovePageGuiTest(BaseOutWikerGUITest):
     """
     Тесты удаления страниц через интерфейс
     """
-    def setUp (self):
-        BaseMainWndTest.setUp (self)
+    def setUp(self):
+        self.initApplication()
+        self.wikiroot = self.createWiki()
 
         factory = TextPageFactory()
-        factory.create (self.wikiroot, "Страница 1", [])
-        factory.create (self.wikiroot, "Страница 2", [])
-        factory.create (self.wikiroot["Страница 2"], "Страница 3", [])
+        factory.create(self.wikiroot, "Страница 1", [])
+        factory.create(self.wikiroot, "Страница 2", [])
+        factory.create(self.wikiroot["Страница 2"], "Страница 3", [])
 
-        Tester.dialogTester.clear()
+    def tearDown(self):
+        self.destroyApplication()
+        self.destroyWiki(self.wikiroot)
 
     def testCommandRemove_01(self):
         Tester.dialogTester.appendNo()
 
-        Application.wikiroot = self.wikiroot
-        Application.selectedPage = self.wikiroot["Страница 1"]
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = self.wikiroot["Страница 1"]
 
-        removePage (self.wikiroot["Страница 1"])
+        removePage(self.wikiroot["Страница 1"])
 
-        self.assertNotEqual (self.wikiroot["Страница 1"], None)
+        self.assertNotEqual(self.wikiroot["Страница 1"], None)
 
-
-    def testCommandRemove_02 (self):
+    def testCommandRemove_02(self):
         Tester.dialogTester.appendYes()
 
-        Application.wikiroot = self.wikiroot
-        Application.selectedPage = self.wikiroot["Страница 1"]
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = self.wikiroot["Страница 1"]
 
-        removePage (self.wikiroot["Страница 1"])
+        removePage(self.wikiroot["Страница 1"])
 
-        self.assertEqual (self.wikiroot["Страница 1"], None)
+        self.assertEqual(self.wikiroot["Страница 1"], None)
 
-
-    def testCommandRemove_03 (self):
+    def testCommandRemove_03(self):
         Tester.dialogTester.appendYes()
 
-        Application.wikiroot = self.wikiroot
-        Application.selectedPage = None
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = None
 
-        removePage (self.wikiroot["Страница 1"])
+        removePage(self.wikiroot["Страница 1"])
 
-        self.assertEqual (self.wikiroot["Страница 1"], None)
+        self.assertEqual(self.wikiroot["Страница 1"], None)
 
-
-    def testCommandRemove_04 (self):
+    def testCommandRemove_04(self):
         Tester.dialogTester.appendYes()
 
-        removePage (self.wikiroot["Страница 1"])
+        removePage(self.wikiroot["Страница 1"])
 
-        self.assertEqual (self.wikiroot["Страница 1"], None)
+        self.assertEqual(self.wikiroot["Страница 1"], None)
 
-
-    def testCommandRemove_05_ReadOnly (self):
+    def testCommandRemove_05_ReadOnly(self):
         Tester.dialogTester.appendOk()
         self.wikiroot["Страница 1"].readonly = True
 
-        removePage (self.wikiroot["Страница 1"])
+        removePage(self.wikiroot["Страница 1"])
 
-        self.assertNotEqual (self.wikiroot["Страница 1"], None)
+        self.assertNotEqual(self.wikiroot["Страница 1"], None)
 
-
-    def testCommandRemove_06 (self):
+    def testCommandRemove_06(self):
         Tester.dialogTester.appendYes()
 
-        removePage (self.wikiroot["Страница 2/Страница 3"])
+        removePage(self.wikiroot["Страница 2/Страница 3"])
 
-        self.assertEqual (self.wikiroot["Страница 2/Страница 3"], None)
-        self.assertNotEqual (self.wikiroot["Страница 2"], None)
+        self.assertEqual(self.wikiroot["Страница 2/Страница 3"], None)
+        self.assertNotEqual(self.wikiroot["Страница 2"], None)
 
-
-    def testCommandRemove_08_root (self):
+    def testCommandRemove_08_root(self):
         Tester.dialogTester.appendYes()
-        removePage (self.wikiroot)
-        self.assertEqual (Tester.dialogTester.count, 0)
+        removePage(self.wikiroot)
+        self.assertEqual(Tester.dialogTester.count, 0)
 
-
-    def testCommandRemove_07_IOError (self):
-        def removeBeforeRemove (dialog):
+    def testCommandRemove_07_IOError(self):
+        def removeBeforeRemove(dialog):
             self.wikiroot["Страница 2/Страница 3"].remove()
             # Для сообщения об ошибке удаления
             Tester.dialogTester.appendOk()
@@ -101,38 +96,35 @@ class RemovePageGuiTest (BaseMainWndTest):
         removePage(self.wikiroot["Страница 2/Страница 3"])
 
         # Убедимся, что были показаны все сообщения
-        self.assertEqual (Tester.dialogTester.count, 0)
+        self.assertEqual(Tester.dialogTester.count, 0)
 
+    def testActionRemovePage_01(self):
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = None
 
-    def testActionRemovePage_01 (self):
-        Application.wikiroot = self.wikiroot
-        Application.selectedPage = None
+        self.application.actionController.getAction(RemovePageAction.stringId).run(None)
 
-        Application.actionController.getAction (RemovePageAction.stringId).run (None)
+        self.assertNotEqual(self.wikiroot["Страница 1"], None)
+        self.assertNotEqual(self.wikiroot["Страница 2"], None)
 
-        self.assertNotEqual (self.wikiroot["Страница 1"], None)
-        self.assertNotEqual (self.wikiroot["Страница 2"], None)
-
-
-    def testActionRemovePage_02 (self):
+    def testActionRemovePage_02(self):
         Tester.dialogTester.appendYes()
 
-        Application.wikiroot = self.wikiroot
-        Application.selectedPage = self.wikiroot["Страница 1"]
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = self.wikiroot["Страница 1"]
 
-        Application.actionController.getAction (RemovePageAction.stringId).run (None)
+        self.application.actionController.getAction(RemovePageAction.stringId).run(None)
 
-        self.assertEqual (self.wikiroot["Страница 1"], None)
-        self.assertNotEqual (self.wikiroot["Страница 2"], None)
+        self.assertEqual(self.wikiroot["Страница 1"], None)
+        self.assertNotEqual(self.wikiroot["Страница 2"], None)
 
-
-    def testActionRemovePage_03 (self):
+    def testActionRemovePage_03(self):
         Tester.dialogTester.appendYes()
 
-        Application.wikiroot = self.wikiroot
-        Application.selectedPage = self.wikiroot["Страница 2/Страница 3"]
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = self.wikiroot["Страница 2/Страница 3"]
 
-        Application.actionController.getAction (RemovePageAction.stringId).run (None)
+        self.application.actionController.getAction(RemovePageAction.stringId).run(None)
 
-        self.assertEqual (self.wikiroot["Страница 2/Страница 3"], None)
-        self.assertNotEqual (self.wikiroot["Страница 2"], None)
+        self.assertEqual(self.wikiroot["Страница 2/Страница 3"], None)
+        self.assertNotEqual(self.wikiroot["Страница 2"], None)

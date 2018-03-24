@@ -1,55 +1,58 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from outwiker.actions.showhidetree import ShowHideTreeAction
 from outwiker.actions.showhideattaches import ShowHideAttachesAction
 from outwiker.actions.showhidetags import ShowHideTagsAction
 from outwiker.actions.fullscreen import FullScreenAction
-
-from outwiker.core.application import Application
 from outwiker.core.system import getOS
-from .basemainwnd import BaseMainWndTest
+from test.basetestcases import BaseOutWikerGUITest
 
 
-class FullScreenTest (BaseMainWndTest):
-    def testFullScreenStart (self):
-        fullScreenActionInfo = Application.actionController.getActionInfo (FullScreenAction.stringId)
+class FullScreenTest(BaseOutWikerGUITest):
+    def setUp(self):
+        self.initApplication()
 
-        if getOS().name == 'windows':
-            self.assertFalse (self.wnd.IsFullScreen())
-
-        self.assertFalse (fullScreenActionInfo.menuItem.IsChecked())
-        self.assertTrue (self.wnd.treePanel.isShown())
-        self.assertTrue (self.wnd.attachPanel.isShown())
-        self.assertTrue (self.wnd.tagsCloudPanel.isShown())
-
-
-    def testFullScreen (self):
-        showHideTreeActionInfo = Application.actionController.getActionInfo (ShowHideTreeAction.stringId)
-        showHideAttachesActionInfo = Application.actionController.getActionInfo (ShowHideAttachesAction.stringId)
-        showHideTagsActionInfo = Application.actionController.getActionInfo (ShowHideTagsAction.stringId)
-
-        Application.actionController.check (FullScreenAction.stringId, True)
+    def testFullScreenStart(self):
+        fullScreenActionInfo = self.application.actionController.getActionInfo(FullScreenAction.stringId)
 
         if getOS().name == 'windows':
-            self.assertTrue (self.wnd.IsFullScreen())
+            self.assertFalse(self.mainWindow.IsFullScreen())
 
-        self.assertFalse (self.wnd.treePanel.isShown())
-        self.assertFalse (self.wnd.attachPanel.isShown())
-        self.assertFalse (self.wnd.tagsCloudPanel.isShown())
+        self.assertFalse(fullScreenActionInfo.menuItem.IsChecked())
+        self.assertTrue(self.mainWindow.treePanel.isShown())
+        self.assertTrue(self.mainWindow.attachPanel.isShown())
+        self.assertTrue(self.mainWindow.tagsCloudPanel.isShown())
 
-        self.assertFalse (showHideTreeActionInfo.menuItem.IsChecked())
-        self.assertFalse (showHideAttachesActionInfo.menuItem.IsChecked())
-        self.assertFalse (showHideTagsActionInfo.menuItem.IsChecked())
+    def tearDown(self):
+        self.destroyApplication()
 
-        Application.actionController.check (FullScreenAction.stringId, False)
+    def testFullScreen(self):
+        showHideTreeActionInfo = self.application.actionController.getActionInfo(ShowHideTreeAction.stringId)
+        showHideAttachesActionInfo = self.application.actionController.getActionInfo(ShowHideAttachesAction.stringId)
+        showHideTagsActionInfo = self.application.actionController.getActionInfo(ShowHideTagsAction.stringId)
+
+        self.application.actionController.check(FullScreenAction.stringId, True)
 
         if getOS().name == 'windows':
-            self.assertFalse (self.wnd.IsFullScreen())
+            self.assertTrue(self.mainWindow.IsFullScreen())
 
-        self.assertTrue (self.wnd.treePanel.isShown())
-        self.assertTrue (self.wnd.attachPanel.isShown())
-        self.assertTrue (self.wnd.tagsCloudPanel.isShown())
+        self.assertFalse(self.mainWindow.treePanel.isShown())
+        self.assertFalse(self.mainWindow.attachPanel.isShown())
+        self.assertFalse(self.mainWindow.tagsCloudPanel.isShown())
 
-        self.assertTrue (showHideTreeActionInfo.menuItem.IsChecked())
-        self.assertTrue (showHideAttachesActionInfo.menuItem.IsChecked())
-        self.assertTrue (showHideTagsActionInfo.menuItem.IsChecked())
+        self.assertFalse(showHideTreeActionInfo.menuItem.IsChecked())
+        self.assertFalse(showHideAttachesActionInfo.menuItem.IsChecked())
+        self.assertFalse(showHideTagsActionInfo.menuItem.IsChecked())
+
+        self.application.actionController.check(FullScreenAction.stringId, False)
+
+        if getOS().name == 'windows':
+            self.assertFalse(self.mainWindow.IsFullScreen())
+
+        self.assertTrue(self.mainWindow.treePanel.isShown())
+        self.assertTrue(self.mainWindow.attachPanel.isShown())
+        self.assertTrue(self.mainWindow.tagsCloudPanel.isShown())
+
+        self.assertTrue(showHideTreeActionInfo.menuItem.IsChecked())
+        self.assertTrue(showHideAttachesActionInfo.menuItem.IsChecked())
+        self.assertTrue(showHideTagsActionInfo.menuItem.IsChecked())

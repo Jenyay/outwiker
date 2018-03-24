@@ -1,26 +1,29 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
-from .basemainwnd import BaseMainWndTest
-from outwiker.core.application import Application
 from outwiker.pages.text.textpage import TextPageFactory
+from test.basetestcases import BaseOutWikerGUITest
 
 
-class TextEditorTest(BaseMainWndTest):
+class TextEditorTest(BaseOutWikerGUITest):
     """
     Тесты действий для викистраницы
     """
     def setUp(self):
-        BaseMainWndTest.setUp(self)
-
+        self.initApplication()
+        self.wikiroot = self.createWiki()
         TextPageFactory().create(self.wikiroot, "Страница", [])
 
         self.testpage = self.wikiroot["Страница"]
 
-        Application.wikiroot = self.wikiroot
-        Application.selectedPage = self.testpage
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = self.testpage
+
+    def tearDown(self):
+        self.destroyApplication()
+        self.destroyWiki(self.wikiroot)
 
     def _getEditor(self):
-        return Application.mainWindow.pagePanel.pageView.textEditor
+        return self.application.mainWindow.pagePanel.pageView.textEditor
 
     def testGetSetText(self):
         sourceText = "000 Проверка 111"
