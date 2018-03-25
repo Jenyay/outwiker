@@ -4,131 +4,133 @@ import os.path
 
 import wx
 
-from outwiker.core.application import Application
 from outwiker.core.defines import PAGE_RESULT_HTML
 from outwiker.core.tree import WikiDocument
 from outwiker.core.defines import PAGE_MODE_TEXT, PAGE_MODE_PREVIEW
 from outwiker.utilites.textfile import readTextFile
 from outwiker.pages.html.htmlpage import HtmlPageFactory
 from outwiker.pages.html.htmlpageview import HtmlPageView
+from test.basetestcases import BaseOutWikerGUITest
 
-from test.guitests.basemainwnd import BaseMainWndTest
 
-
-class HtmlPageViewTest(BaseMainWndTest):
+class HtmlPageViewTest(BaseOutWikerGUITest):
     """
     Тесты вида HTML-страниц
     """
     def setUp(self):
-        BaseMainWndTest.setUp(self)
-        Application.onPostprocessing.clear()
-        Application.onPreprocessing.clear()
+        self.initApplication()
+        self.wikiroot = self.createWiki()
+
+        self.application.onPostprocessing.clear()
+        self.application.onPreprocessing.clear()
 
         HtmlPageFactory().create(self.wikiroot, "HTML-страница", [])
         HtmlPageFactory().create(self.wikiroot, "HTML-страница 2", [])
 
     def tearDown(self):
-        BaseMainWndTest.tearDown(self)
-        Application.onPostprocessing.clear()
-        Application.onPreprocessing.clear()
+        self.application.onPostprocessing.clear()
+        self.application.onPreprocessing.clear()
+
+        self.destroyApplication()
+        self.destroyWiki(self.wikiroot)
 
     def testType(self):
-        Application.wikiroot = self.wikiroot
-        self.assertEqual(None, Application.mainWindow.pagePanel.pageView)
+        self.application.wikiroot = self.wikiroot
+        self.assertEqual(None, self.application.mainWindow.pagePanel.pageView)
 
-        Application.selectedPage = self.wikiroot["HTML-страница"]
+        self.application.selectedPage = self.wikiroot["HTML-страница"]
         self.assertEqual(HtmlPageView,
-                         type(Application.mainWindow.pagePanel.pageView))
+                         type(self.application.mainWindow.pagePanel.pageView))
 
-        Application.selectedPage = self.wikiroot["HTML-страница 2"]
+        self.application.selectedPage = self.wikiroot["HTML-страница 2"]
         self.assertEqual(HtmlPageView,
-                         type(Application.mainWindow.pagePanel.pageView))
+                         type(self.application.mainWindow.pagePanel.pageView))
 
-        Application.selectedPage = None
-        self.assertEqual(None, Application.mainWindow.pagePanel.pageView)
+        self.application.selectedPage = None
+        self.assertEqual(None, self.application.mainWindow.pagePanel.pageView)
 
     def testDefaultSelectedPage(self):
         """
         Тест на выбор вкладок по умолчанию
         """
-        Application.wikiroot = self.wikiroot
-        Application.selectedPage = self.wikiroot["HTML-страница"]
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = self.wikiroot["HTML-страница"]
 
         # Т.к. страница пустая, то по умолчанию выбирается вкладка с кодом
         self.assertEqual(
-            Application.mainWindow.pagePanel.pageView.GetPageMode(),
+            self.application.mainWindow.pagePanel.pageView.GetPageMode(),
             PAGE_MODE_TEXT)
 
         self.wikiroot["HTML-страница 2"].content = "Бла-бла-бла"
-        Application.selectedPage = self.wikiroot["HTML-страница 2"]
+        self.application.selectedPage = self.wikiroot["HTML-страница 2"]
 
         # Т.к. страница НЕ пустая, то по умолчанию выбирается
         # вкладка с просмотром
         self.assertEqual(
-            Application.mainWindow.pagePanel.pageView.GetPageMode(),
+            self.application.mainWindow.pagePanel.pageView.GetPageMode(),
             PAGE_MODE_PREVIEW)
 
     def testSelectedPage(self):
         """
         Тест на выбор вкладок
         """
-        Application.wikiroot = self.wikiroot
-        Application.selectedPage = self.wikiroot["HTML-страница"]
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = self.wikiroot["HTML-страница"]
 
         # Т.к. страница пустая, то по умолчанию выбирается вкладка с кодом
         self.assertEqual(
-            Application.mainWindow.pagePanel.pageView.GetPageMode(),
+            self.application.mainWindow.pagePanel.pageView.GetPageMode(),
             PAGE_MODE_TEXT)
 
-        Application.mainWindow.pagePanel.pageView._selectedPageIndex = HtmlPageView.RESULT_PAGE_INDEX
+        self.application.mainWindow.pagePanel.pageView._selectedPageIndex = HtmlPageView.RESULT_PAGE_INDEX
 
         self.assertEqual(
-            Application.mainWindow.pagePanel.pageView.GetPageMode(),
+            self.application.mainWindow.pagePanel.pageView.GetPageMode(),
             PAGE_MODE_PREVIEW)
 
-        Application.mainWindow.pagePanel.pageView._selectedPageIndex = HtmlPageView.CODE_PAGE_INDEX
+        self.application.mainWindow.pagePanel.pageView._selectedPageIndex = HtmlPageView.CODE_PAGE_INDEX
 
         self.assertEqual(
-            Application.mainWindow.pagePanel.pageView.GetPageMode(),
+            self.application.mainWindow.pagePanel.pageView.GetPageMode(),
             PAGE_MODE_TEXT)
 
     def testInvalidPageIndex(self):
-        Application.wikiroot = self.wikiroot
-        Application.selectedPage = self.wikiroot["HTML-страница"]
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = self.wikiroot["HTML-страница"]
 
         # Т.к. страница пустая, то по умолчанию выбирается вкладка с кодом
         self.assertEqual(
-            Application.mainWindow.pagePanel.pageView.GetPageMode(),
+            self.application.mainWindow.pagePanel.pageView.GetPageMode(),
             PAGE_MODE_TEXT)
 
-        Application.mainWindow.pagePanel.pageView._selectedPageIndex = 100
+        self.application.mainWindow.pagePanel.pageView._selectedPageIndex = 100
 
         self.assertEqual(
-            Application.mainWindow.pagePanel.pageView.GetPageMode(),
+            self.application.mainWindow.pagePanel.pageView.GetPageMode(),
             PAGE_MODE_TEXT)
 
-        Application.mainWindow.pagePanel.pageView._selectedPageIndex = -1
+        self.application.mainWindow.pagePanel.pageView._selectedPageIndex = -1
 
         self.assertEqual(
-            Application.mainWindow.pagePanel.pageView.GetPageMode(),
+            self.application.mainWindow.pagePanel.pageView.GetPageMode(),
             PAGE_MODE_TEXT)
 
-        Application.mainWindow.pagePanel.pageView._selectedPageIndex = HtmlPageView.RESULT_PAGE_INDEX
+        self.application.mainWindow.pagePanel.pageView._selectedPageIndex = HtmlPageView.RESULT_PAGE_INDEX
 
         self.assertEqual(
-            Application.mainWindow.pagePanel.pageView.GetPageMode(),
+            self.application.mainWindow.pagePanel.pageView.GetPageMode(),
             PAGE_MODE_PREVIEW)
 
-        Application.mainWindow.pagePanel.pageView._selectedPageIndex = 1000
+        self.application.mainWindow.pagePanel.pageView._selectedPageIndex = 1000
 
         self.assertEqual(
-            Application.mainWindow.pagePanel.pageView.GetPageMode(),
+            self.application.mainWindow.pagePanel.pageView.GetPageMode(),
             PAGE_MODE_PREVIEW)
 
-        Application.mainWindow.pagePanel.pageView._selectedPageIndex = -1
+        self.application.mainWindow.pagePanel.pageView._selectedPageIndex = -1
 
         self.assertEqual(
-            Application.mainWindow.pagePanel.pageView.GetPageMode(),
+            self.application.mainWindow.pagePanel.pageView.GetPageMode(),
             PAGE_MODE_PREVIEW)
 
     def testSavePageIndex(self):
@@ -138,107 +140,107 @@ class HtmlPageViewTest(BaseMainWndTest):
         self.wikiroot["HTML-страница"].content = "Бла-бла-бла"
         self.wikiroot["HTML-страница 2"].content = "Бла-бла-бла 2"
 
-        Application.wikiroot = self.wikiroot
-        Application.selectedPage = self.wikiroot["HTML-страница"]
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = self.wikiroot["HTML-страница"]
 
         # В начале по умолчанию выбирается вкладка с просмотром
         self.assertEqual(
-            Application.mainWindow.pagePanel.pageView.GetPageMode(),
+            self.application.mainWindow.pagePanel.pageView.GetPageMode(),
             PAGE_MODE_PREVIEW)
 
         # Переключимся на вкладку с кодом
-        Application.mainWindow.pagePanel.pageView._selectedPageIndex = HtmlPageView.CODE_PAGE_INDEX
+        self.application.mainWindow.pagePanel.pageView._selectedPageIndex = HtmlPageView.CODE_PAGE_INDEX
 
-        Application.selectedPage = self.wikiroot["HTML-страница"]
+        self.application.selectedPage = self.wikiroot["HTML-страница"]
         wx.GetApp().Yield()
 
         self.assertEqual(
-            Application.mainWindow.pagePanel.pageView.GetPageMode(),
+            self.application.mainWindow.pagePanel.pageView.GetPageMode(),
             PAGE_MODE_TEXT)
 
         # Переключимся на другую страницу. Опять должна быть выбрана
         # вкладка с просмотром
-        Application.selectedPage = self.wikiroot["HTML-страница 2"]
+        self.application.selectedPage = self.wikiroot["HTML-страница 2"]
         wx.GetApp().Yield()
 
         self.assertEqual(
-            Application.mainWindow.pagePanel.pageView.GetPageMode(),
+            self.application.mainWindow.pagePanel.pageView.GetPageMode(),
             HtmlPageView.RESULT_PAGE_INDEX)
 
         # А при возврате на предыдущую страницу, должна быть выбрана
         # страница с кодом
-        Application.selectedPage = self.wikiroot["HTML-страница"]
+        self.application.selectedPage = self.wikiroot["HTML-страница"]
         wx.GetApp().Yield()
 
         self.assertEqual(
-            Application.mainWindow.pagePanel.pageView.GetPageMode(),
+            self.application.mainWindow.pagePanel.pageView.GetPageMode(),
             PAGE_MODE_TEXT)
 
         # При переключении на другую страницу, выбиается вкладка с
         # результирующим HTML
-        Application.selectedPage = self.wikiroot["HTML-страница 2"]
+        self.application.selectedPage = self.wikiroot["HTML-страница 2"]
         wx.GetApp().Yield()
 
         self.assertEqual(
-            Application.mainWindow.pagePanel.pageView.GetPageMode(),
+            self.application.mainWindow.pagePanel.pageView.GetPageMode(),
             PAGE_MODE_PREVIEW)
 
     def testCursorPosition_01(self):
-        Application.wikiroot = self.wikiroot
-        Application.selectedPage = None
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = None
 
         self.wikiroot["HTML-страница"].content = "Бла-бла-бла"
-        Application.selectedPage = self.wikiroot["HTML-страница"]
+        self.application.selectedPage = self.wikiroot["HTML-страница"]
         self._getCodeEditor().SetSelection(3, 3)
 
-        Application.selectedPage = None
-        Application.selectedPage = self.wikiroot["HTML-страница"]
+        self.application.selectedPage = None
+        self.application.selectedPage = self.wikiroot["HTML-страница"]
         self.assertEqual(self._getCodeEditor().GetCurrentPosition(), 3)
 
     def testCursorPosition_02(self):
-        Application.wikiroot = self.wikiroot
-        Application.selectedPage = None
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = None
 
         self.wikiroot["HTML-страница"].content = "Бла-бла-бла"
-        Application.selectedPage = self.wikiroot["HTML-страница"]
+        self.application.selectedPage = self.wikiroot["HTML-страница"]
         self._getCodeEditor().SetSelection(0, 0)
 
-        Application.selectedPage = None
-        Application.selectedPage = self.wikiroot["HTML-страница"]
+        self.application.selectedPage = None
+        self.application.selectedPage = self.wikiroot["HTML-страница"]
         self.assertEqual(self._getCodeEditor().GetCurrentPosition(), 0)
 
     def testCursorPosition_readonly_01(self):
-        Application.wikiroot = self.wikiroot
-        Application.selectedPage = None
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = None
 
         # В исходном файле установим курсор на 3-ю позицию
         self.wikiroot["HTML-страница"].content = "Бла-бла-бла"
-        Application.selectedPage = self.wikiroot["HTML-страница"]
+        self.application.selectedPage = self.wikiroot["HTML-страница"]
         self._getCodeEditor().SetSelection(3, 3)
-        Application.selectedPage = None
+        self.application.selectedPage = None
 
         # Теперь загрузим эту вики в режиме только для чтения
         # и поменяем позицию
-        wikiroot_ro = WikiDocument.load(self.path, readonly=True)
-        Application.wikiroot = wikiroot_ro
-        Application.selectedPage = wikiroot_ro["HTML-страница"]
+        wikiroot_ro = WikiDocument.load(self.wikiroot.path, readonly=True)
+        self.application.wikiroot = wikiroot_ro
+        self.application.selectedPage = wikiroot_ro["HTML-страница"]
         self.assertEqual(self._getCodeEditor().GetCurrentPosition(), 3)
         self._getCodeEditor().SetSelection(0, 0)
 
         # После возвращения на страницу положение курсора не должно поменяться
-        Application.selectedPage = None
-        Application.selectedPage = wikiroot_ro["HTML-страница"]
+        self.application.selectedPage = None
+        self.application.selectedPage = wikiroot_ro["HTML-страница"]
         self.assertEqual(self._getCodeEditor().GetCurrentPosition(), 3)
 
     def testPostprocessing_01(self):
         """
         Тест на работу постпроцессинга
         """
-        Application.wikiroot = self.wikiroot
-        Application.selectedPage = self.wikiroot["HTML-страница"]
-        Application.onPostprocessing += self._onPostProcessing
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = self.wikiroot["HTML-страница"]
+        self.application.onPostprocessing += self._onPostProcessing
 
-        pageView = Application.mainWindow.pagePanel.pageView
+        pageView = self.application.mainWindow.pagePanel.pageView
 
         # В начале по умолчанию выбирается вкладка с просмотром
         wx.GetApp().Yield()
@@ -253,7 +255,7 @@ class HtmlPageViewTest(BaseMainWndTest):
         pageView._selectedPageIndex = HtmlPageView.RESULT_PAGE_INDEX
         wx.GetApp().Yield()
 
-        Application.onPostprocessing -= self._onPostProcessing
+        self.application.onPostprocessing -= self._onPostProcessing
 
         result = readTextFile(os.path.join(self.wikiroot["HTML-страница"].path,
                                            PAGE_RESULT_HTML))
@@ -264,11 +266,11 @@ class HtmlPageViewTest(BaseMainWndTest):
         """
         Тест на работу постпроцессинга
         """
-        Application.wikiroot = self.wikiroot
-        Application.selectedPage = self.wikiroot["HTML-страница"]
-        Application.onPostprocessing += self._onPostProcessing
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = self.wikiroot["HTML-страница"]
+        self.application.onPostprocessing += self._onPostProcessing
 
-        pageView = Application.mainWindow.pagePanel.pageView
+        pageView = self.application.mainWindow.pagePanel.pageView
 
         # В начале по умолчанию выбирается вкладка с просмотром
         wx.GetApp().Yield()
@@ -292,7 +294,7 @@ class HtmlPageViewTest(BaseMainWndTest):
         pageView._selectedPageIndex = HtmlPageView.CODE_PAGE_INDEX
         wx.GetApp().Yield()
 
-        Application.onPostprocessing -= self._onPostProcessing
+        self.application.onPostprocessing -= self._onPostProcessing
 
         result = readTextFile(os.path.join(self.wikiroot["HTML-страница"].path,
                                            PAGE_RESULT_HTML))
@@ -304,11 +306,11 @@ class HtmlPageViewTest(BaseMainWndTest):
         """
         Тест на работу препроцессинга
         """
-        Application.wikiroot = self.wikiroot
-        Application.selectedPage = self.wikiroot["HTML-страница"]
-        Application.onPreprocessing += self._onPreProcessing
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = self.wikiroot["HTML-страница"]
+        self.application.onPreprocessing += self._onPreProcessing
 
-        pageView = Application.mainWindow.pagePanel.pageView
+        pageView = self.application.mainWindow.pagePanel.pageView
 
         # Сначала по умолчанию выбирается вкладка с просмотром
         wx.GetApp().Yield()
@@ -323,7 +325,7 @@ class HtmlPageViewTest(BaseMainWndTest):
         pageView._selectedPageIndex = HtmlPageView.RESULT_PAGE_INDEX
         wx.GetApp().Yield()
 
-        Application.onPreprocessing -= self._onPreProcessing
+        self.application.onPreprocessing -= self._onPreProcessing
 
         result = readTextFile(os.path.join(self.wikiroot["HTML-страница"].path,
                                            PAGE_RESULT_HTML))
@@ -331,7 +333,7 @@ class HtmlPageViewTest(BaseMainWndTest):
         self.assertIn("Абырвалг 000", result)
 
     def _getPageView(self):
-        return Application.mainWindow.pagePanel.pageView
+        return self.application.mainWindow.pagePanel.pageView
 
     def _getCodeEditor(self):
         return self._getPageView().codeEditor

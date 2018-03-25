@@ -1,17 +1,20 @@
-# -*- coding: UTF-8 -*-
-
-import unittest
+# -*- coding: utf-8 -*-
 
 import wx
 
 from outwiker.gui.controls.safeimagelist import SafeImageList
+from test.basetestcases import BaseOutWikerGUITest
 
 
-class SafeImageListTest (unittest.TestCase):
+class SafeImageListTest(BaseOutWikerGUITest):
     def setUp(self):
+        self.initApplication()
         self.width = 16
         self.height = 16
         self.imagelist = SafeImageList(self.width, self.height)
+
+    def tearDown(self):
+        self.destroyApplication()
 
     def _addImage(self, fname):
         bitmap = wx.Bitmap(fname)

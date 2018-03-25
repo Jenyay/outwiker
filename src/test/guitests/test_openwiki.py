@@ -1,25 +1,25 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os.path
 from tempfile import mkdtemp
 
 import wx
 
-from .basemainwnd import BaseMainWndTest
-from outwiker.core.application import Application
 from outwiker.core.tree import WikiDocument
 from outwiker.core.commands import openWikiWithDialog, openWiki, findPage
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.gui.tester import Tester
 from test.utils import removeDir
+from test.basetestcases import BaseOutWikerGUITest
 
 
-class OpenWikiGuiTest(BaseMainWndTest):
+class OpenWikiGuiTest(BaseOutWikerGUITest):
     """
     Тесты открытия вики через интерфейс
     """
     def setUp(self):
-        BaseMainWndTest.setUp(self)
+        self.initApplication()
+        self.wikiroot = self.createWiki()
 
         self.path2 = mkdtemp(prefix='Абырвалг абырвалг')
 
@@ -31,30 +31,31 @@ class OpenWikiGuiTest(BaseMainWndTest):
         Tester.dialogTester.clear()
 
     def tearDown(self):
-        BaseMainWndTest.tearDown(self)
+        self.destroyApplication()
+        self.destroyWiki(self.wikiroot)
         removeDir(self.path2)
 
     def _selectFile(self, dialog):
-        fname = os.path.join(self.path, "__page.opt")
+        fname = os.path.join(self.wikiroot.path, "__page.opt")
         dialog.SetPathForTest(fname)
         return wx.ID_OK
 
     def _selectInvalidFile(self, dialog):
-        fname = os.path.join(self.path, "adsfadsas", "__page.opt")
+        fname = os.path.join(self.wikiroot.path, "adsfadsas", "__page.opt")
         dialog.SetPathForTest(fname)
         return wx.ID_OK
 
     def test_Open_01(self):
-        Application.wikiroot = None
+        self.application.wikiroot = None
 
         Tester.dialogTester.append(self._selectFile)
-        openWikiWithDialog(Application.mainWindow, False)
+        openWikiWithDialog(self.application.mainWindow, False)
 
         self.assertEqual(Tester.dialogTester.count, 0)
-        self.assertIsNotNone(Application.wikiroot)
-        self.assertIsNotNone(Application.wikiroot["Страница 1"])
-        self.assertFalse(Application.wikiroot.readonly)
-        self.assertFalse(Application.wikiroot["Страница 1"].readonly)
+        self.assertIsNotNone(self.application.wikiroot)
+        self.assertIsNotNone(self.application.wikiroot["Страница 1"])
+        self.assertFalse(self.application.wikiroot.readonly)
+        self.assertFalse(self.application.wikiroot["Страница 1"].readonly)
 
     def test_Open_02(self):
         wikiroot2 = WikiDocument.create(self.path2)
@@ -62,127 +63,127 @@ class OpenWikiGuiTest(BaseMainWndTest):
         factory.create(wikiroot2, "Страница 1_2", [])
         factory.create(wikiroot2, "Страница 2_2", [])
 
-        Application.wikiroot = wikiroot2
+        self.application.wikiroot = wikiroot2
 
         Tester.dialogTester.append(self._selectFile)
-        openWikiWithDialog(Application.mainWindow, False)
+        openWikiWithDialog(self.application.mainWindow, False)
 
         self.assertEqual(Tester.dialogTester.count, 0)
-        self.assertIsNotNone(Application.wikiroot)
-        self.assertIsNotNone(Application.wikiroot["Страница 1"])
+        self.assertIsNotNone(self.application.wikiroot)
+        self.assertIsNotNone(self.application.wikiroot["Страница 1"])
 
     def test_Open_03(self):
-        Application.wikiroot = self.wikiroot
-        Application.selectedPage = self.wikiroot["Страница 2/Страница 3"]
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = self.wikiroot["Страница 2/Страница 3"]
 
         Tester.dialogTester.append(self._selectFile)
-        openWikiWithDialog(Application.mainWindow, False)
+        openWikiWithDialog(self.application.mainWindow, False)
 
         self.assertEqual(Tester.dialogTester.count, 0)
-        self.assertIsNotNone(Application.wikiroot)
-        self.assertIsNotNone(Application.selectedPage)
-        self.assertEqual(Application.selectedPage.title, "Страница 3")
+        self.assertIsNotNone(self.application.wikiroot)
+        self.assertIsNotNone(self.application.selectedPage)
+        self.assertEqual(self.application.selectedPage.title, "Страница 3")
 
     def test_Open_04(self):
-        Application.wikiroot = self.wikiroot
-        Application.selectedPage = self.wikiroot["Страница 2/Страница 3"]
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = self.wikiroot["Страница 2/Страница 3"]
 
-        Application.wikiroot = None
-        Application.selectedPage = None
+        self.application.wikiroot = None
+        self.application.selectedPage = None
 
         Tester.dialogTester.append(self._selectFile)
-        openWikiWithDialog(Application.mainWindow, False)
+        openWikiWithDialog(self.application.mainWindow, False)
 
         self.assertEqual(Tester.dialogTester.count, 0)
-        self.assertIsNotNone(Application.wikiroot)
-        self.assertIsNotNone(Application.selectedPage)
-        self.assertEqual(Application.selectedPage.title, "Страница 3")
+        self.assertIsNotNone(self.application.wikiroot)
+        self.assertIsNotNone(self.application.selectedPage)
+        self.assertEqual(self.application.selectedPage.title, "Страница 3")
 
     def test_Open_05(self):
-        Application.wikiroot = self.wikiroot
-        Application.selectedPage = self.wikiroot["Страница 2/Страница 3"]
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = self.wikiroot["Страница 2/Страница 3"]
 
         Tester.dialogTester.append(self._selectInvalidFile)
         Tester.dialogTester.appendOk()
-        openWikiWithDialog(Application.mainWindow, False)
+        openWikiWithDialog(self.application.mainWindow, False)
 
         self.assertEqual(Tester.dialogTester.count, 0)
-        self.assertIsNotNone(Application.wikiroot)
-        self.assertIsNotNone(Application.selectedPage)
-        self.assertEqual(Application.selectedPage.title, "Страница 3")
+        self.assertIsNotNone(self.application.wikiroot)
+        self.assertIsNotNone(self.application.selectedPage)
+        self.assertEqual(self.application.selectedPage.title, "Страница 3")
 
     def test_Open_06(self):
-        Application.wikiroot = None
+        self.application.wikiroot = None
 
         Tester.dialogTester.append(self._selectFile)
-        openWikiWithDialog(Application.mainWindow, True)
+        openWikiWithDialog(self.application.mainWindow, True)
 
         self.assertEqual(Tester.dialogTester.count, 0)
-        self.assertIsNotNone(Application.wikiroot)
-        self.assertIsNotNone(Application.wikiroot["Страница 1"])
-        self.assertTrue(Application.wikiroot.readonly)
-        self.assertTrue(Application.wikiroot["Страница 1"].readonly)
+        self.assertIsNotNone(self.application.wikiroot)
+        self.assertIsNotNone(self.application.wikiroot["Страница 1"])
+        self.assertTrue(self.application.wikiroot.readonly)
+        self.assertTrue(self.application.wikiroot["Страница 1"].readonly)
 
     def test_openwiki_01(self):
-        Application.wikiroot = None
-        openWiki(self.path)
+        self.application.wikiroot = None
+        openWiki(self.wikiroot.path)
 
-        self.assertIsNotNone(Application.wikiroot)
-        self.assertIsNone(Application.selectedPage)
+        self.assertIsNotNone(self.application.wikiroot)
+        self.assertIsNone(self.application.selectedPage)
 
     def test_openwiki_02(self):
-        Application.wikiroot = None
-        openWiki(os.path.join(self.path, "__page.opt"))
+        self.application.wikiroot = None
+        openWiki(os.path.join(self.wikiroot.path, "__page.opt"))
 
-        self.assertIsNotNone(Application.wikiroot)
-        self.assertIsNone(Application.selectedPage)
+        self.assertIsNotNone(self.application.wikiroot)
+        self.assertIsNone(self.application.selectedPage)
 
     def test_findPage_01(self):
-        Application.wikiroot = None
-        page = findPage(Application, None)
+        self.application.wikiroot = None
+        page = findPage(self.application, None)
 
         self.assertIsNone(page)
 
     def test_findPage_02(self):
-        Application.wikiroot = self.wikiroot
-        page = findPage(Application, None)
+        self.application.wikiroot = self.wikiroot
+        page = findPage(self.application, None)
 
         self.assertIsNone(page)
 
     def test_findPage_03(self):
-        Application.wikiroot = self.wikiroot
-        page = findPage(Application, 'Страница 1')
+        self.application.wikiroot = self.wikiroot
+        page = findPage(self.application, 'Страница 1')
 
         self.assertIsNotNone(page)
         self.assertEqual(page.title, 'Страница 1')
 
     def test_findPage_04(self):
-        Application.wikiroot = self.wikiroot
-        page = findPage(Application, 'Страница 2/Страница 3')
+        self.application.wikiroot = self.wikiroot
+        page = findPage(self.application, 'Страница 2/Страница 3')
 
         self.assertIsNotNone(page)
         self.assertEqual(page.title, 'Страница 3')
 
     def test_findPage_05(self):
-        Application.wikiroot = self.wikiroot
-        page = findPage(Application, '/Страница 2/Страница 3')
+        self.application.wikiroot = self.wikiroot
+        page = findPage(self.application, '/Страница 2/Страница 3')
 
         self.assertIsNotNone(page)
         self.assertEqual(page.title, 'Страница 3')
 
     def test_findPage_06(self):
-        Application.wikiroot = self.wikiroot
-        uid = Application.pageUidDepot.createUid(self.wikiroot['/Страница 2/Страница 3'])
+        self.application.wikiroot = self.wikiroot
+        uid = self.application.pageUidDepot.createUid(self.wikiroot['/Страница 2/Страница 3'])
 
-        page = findPage(Application, uid)
+        page = findPage(self.application, uid)
         self.assertIsNotNone(page)
         self.assertEqual(page.title, 'Страница 3')
 
     def test_findPage_07(self):
-        Application.wikiroot = self.wikiroot
-        uid = Application.pageUidDepot.createUid(self.wikiroot['/Страница 2/Страница 3'])
+        self.application.wikiroot = self.wikiroot
+        uid = self.application.pageUidDepot.createUid(self.wikiroot['/Страница 2/Страница 3'])
         uid = 'page://' + uid
 
-        page = findPage(Application, uid)
+        page = findPage(self.application, uid)
         self.assertIsNotNone(page)
         self.assertEqual(page.title, 'Страница 3')

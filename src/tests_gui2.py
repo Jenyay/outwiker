@@ -33,5 +33,19 @@ if __name__ == '__main__':
     from test.guitests.test_includedialog import IncludeDialogTest
     from test.guitests.test_removepage import RemovePageGuiTest
     from test.guitests.test_renamepage import RenamePageGuiTest
+    from test.guitests.test_movepage import MovePageGuiTest
+    from test.guitests.test_openwiki import OpenWikiGuiTest
+    from test.guitests.test_newwiki import NewWikiGuiTest
+    from test.guitests.test_pagetabs import PageTabsTest
+    from test.guitests.test_uriidentifiers import (UriIdentifierIETest,
+                                                   UriIdentifierWebKitTest)
+    from test.guitests.test_safeimagelist import SafeImageListTest
+    from test.guitests.test_hotkeys import HotKeysTest
+    from test.guitests.test_hotkeyctrl import HotkeyCtrlTest
+
+    from test.guitests.htmlpage.test_htmlpageview import HtmlPageViewTest
+    from test.guitests.htmlpage.test_htmltablerowsdialog import HtmlTableRowsDialogTest
+    from test.guitests.htmlpage.test_htmltabledialog import HtmlTableDialogTest
+    from test.guitests.htmlpage.test_htmltableactions import HtmlTableActionsTest
 
     unittest.main()
