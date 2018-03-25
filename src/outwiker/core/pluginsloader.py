@@ -339,6 +339,31 @@ class PluginsLoader (object):
         return (pluginname not in self.__plugins and
                 pluginname not in self.__disabledPlugins)
 
+    def __chek_new_version_is_available(self, plugin_name):
+        '''
+            Verify plugin_name version in internet.
+            :return: True if new version is available, otherwise reterun False
+        '''
+
+        return False
+
+    def _updater(self):
+        '''
+
+        :return:
+        '''
+
+        self._print('test')
+        self._print(self.__disabledPlugins)
+        self._print(self.__plugins)
+        self._print(self.__invalidPlugins)
+        for plugin in self.invalidPlugins:
+            self._print(plugin.__dict__)
+            plugin_info = self.__loadPluginInfo(plugin.name)
+
+            #self._print(plugin_info)
+
+
     def __len__(self):
         return len(self.__plugins)
 
@@ -347,3 +372,4 @@ class PluginsLoader (object):
 
     def __iter__(self):
         return iter(self.__plugins.values())
+
