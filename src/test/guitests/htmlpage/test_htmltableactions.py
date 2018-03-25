@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from outwiker.gui.tester import Tester
 from outwiker.pages.html.htmlpage import HtmlPageFactory

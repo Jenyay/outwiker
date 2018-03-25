@@ -1,36 +1,35 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
-from test.guitests.basemainwnd import BaseMainWndTest
-
-from outwiker.core.application import Application
 from outwiker.gui.tester import Tester
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.gui.tabledialog import TableDialog
 from outwiker.pages.wiki.tabledialogcontroller import TableDialogController
 from outwiker.gui.guiconfig import GeneralGuiConfig
+from test.basetestcases import BaseOutWikerGUITest
 
 
-class WikiTableDialogTest (BaseMainWndTest):
-    def setUp (self):
-        super (WikiTableDialogTest, self).setUp()
-        self._application = Application
+class WikiTableDialogTest(BaseOutWikerGUITest):
+    def setUp(self):
+        self.initApplication()
+        self.wikiroot = self.createWiki()
 
-        config = GeneralGuiConfig (self._application.config)
+        config = GeneralGuiConfig(self.application.config)
         config.tableColsCount.remove_option()
         factory = WikiPageFactory()
-        self._testpage = factory.create (self.wikiroot, "Страница 1", [])
+        self._testpage = factory.create(self.wikiroot, "Страница 1", [])
 
+    def tearDown(self):
+        self.destroyApplication()
+        self.destroyWiki(self.wikiroot)
 
-    def tearDown (self):
-        super (WikiTableDialogTest, self).tearDown()
-
-
-    def testDefault (self):
+    def testDefault(self):
         suffix = ''
-        dlg = TableDialog (self.wnd)
+        dlg = TableDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
 
-        controller = TableDialogController (dlg, suffix, self._application.config)
+        controller = TableDialogController(dlg,
+                                           suffix,
+                                           self.application.config)
         controller.showDialog()
 
         result = controller.getResult()
@@ -40,15 +39,16 @@ class WikiTableDialogTest (BaseMainWndTest):
 (:cell:)
 (:tableend:)'''
 
-        self.assertEqual (result, validResult, result)
+        self.assertEqual(result, validResult, result)
 
-
-    def testDefault_suffix (self):
+    def testDefault_suffix(self):
         suffix = '20'
-        dlg = TableDialog (self.wnd)
+        dlg = TableDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
 
-        controller = TableDialogController (dlg, suffix, self._application.config)
+        controller = TableDialogController(dlg,
+                                           suffix,
+                                           self.application.config)
         controller.showDialog()
 
         result = controller.getResult()
@@ -58,13 +58,14 @@ class WikiTableDialogTest (BaseMainWndTest):
 (:cell20:)
 (:table20end:)'''
 
-        self.assertEqual (result, validResult, result)
+        self.assertEqual(result, validResult, result)
 
-
-    def testCells (self):
+    def testCells(self):
         suffix = ''
-        dlg = TableDialog (self.wnd)
-        controller = TableDialogController (dlg, suffix, self._application.config)
+        dlg = TableDialog(self.mainWindow)
+        controller = TableDialogController(dlg,
+                                           suffix,
+                                           self.application.config)
 
         dlg.colsCount = 5
         Tester.dialogTester.appendOk()
@@ -82,13 +83,14 @@ class WikiTableDialogTest (BaseMainWndTest):
 (:cell:)
 (:tableend:)'''
 
-        self.assertEqual (result, validResult, result)
+        self.assertEqual(result, validResult, result)
 
-
-    def testRowsCells (self):
+    def testRowsCells(self):
         suffix = ''
-        dlg = TableDialog (self.wnd)
-        controller = TableDialogController (dlg, suffix, self._application.config)
+        dlg = TableDialog(self.mainWindow)
+        controller = TableDialogController(dlg,
+                                           suffix,
+                                           self.application.config)
 
         dlg.colsCount = 5
         dlg.rowsCount = 3
@@ -119,13 +121,14 @@ class WikiTableDialogTest (BaseMainWndTest):
 (:cell:)
 (:tableend:)'''
 
-        self.assertEqual (result, validResult, result)
+        self.assertEqual(result, validResult, result)
 
-
-    def testBorder_01 (self):
+    def testBorder_01(self):
         suffix = ''
-        dlg = TableDialog (self.wnd)
-        controller = TableDialogController (dlg, suffix, self._application.config)
+        dlg = TableDialog(self.mainWindow)
+        controller = TableDialogController(dlg,
+                                           suffix,
+                                           self.application.config)
         Tester.dialogTester.appendOk()
 
         dlg.borderWidth = 10
@@ -138,13 +141,14 @@ class WikiTableDialogTest (BaseMainWndTest):
 (:cell:)
 (:tableend:)'''
 
-        self.assertEqual (result, validResult, result)
+        self.assertEqual(result, validResult, result)
 
-
-    def testBorder_02 (self):
+    def testBorder_02(self):
         suffix = ''
-        dlg = TableDialog (self.wnd)
-        controller = TableDialogController (dlg, suffix, self._application.config)
+        dlg = TableDialog(self.mainWindow)
+        controller = TableDialogController(dlg,
+                                           suffix,
+                                           self.application.config)
         Tester.dialogTester.appendOk()
 
         dlg.borderWidth = 0
@@ -157,31 +161,35 @@ class WikiTableDialogTest (BaseMainWndTest):
 (:cell:)
 (:tableend:)'''
 
-        self.assertEqual (result, validResult, result)
+        self.assertEqual(result, validResult, result)
 
-
-    def testColsCount (self):
+    def testColsCount(self):
         suffix = ''
-        dlg = TableDialog (self.wnd)
+        dlg = TableDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
 
-        controller = TableDialogController (dlg, suffix, self._application.config)
+        controller = TableDialogController(dlg,
+                                           suffix,
+                                           self.application.config)
         dlg.colsCount = 10
         controller.showDialog()
 
-        dlg2 = TableDialog (self.wnd)
-        controller2 = TableDialogController (dlg2, suffix, self._application.config)
+        dlg2 = TableDialog(self.mainWindow)
+        controller2 = TableDialogController(dlg2,
+                                            suffix,
+                                            self.application.config)
 
-        self.assertEqual (dlg2.colsCount, 10)
+        self.assertEqual(dlg2.colsCount, 10)
 
         Tester.dialogTester.appendOk()
         controller2.showDialog()
 
-
-    def testHCells (self):
+    def testHCells(self):
         suffix = ''
-        dlg = TableDialog (self.wnd)
-        controller = TableDialogController (dlg, suffix, self._application.config)
+        dlg = TableDialog(self.mainWindow)
+        controller = TableDialogController(dlg,
+                                           suffix,
+                                           self.application.config)
 
         dlg.colsCount = 5
         dlg.rowsCount = 3
@@ -213,4 +221,4 @@ class WikiTableDialogTest (BaseMainWndTest):
 (:cell:)
 (:tableend:)'''
 
-        self.assertEqual (result, validResult, result)
+        self.assertEqual(result, validResult, result)

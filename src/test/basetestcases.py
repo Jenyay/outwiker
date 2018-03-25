@@ -3,6 +3,7 @@
 import unittest
 import os
 from tempfile import mkdtemp, NamedTemporaryFile
+from gettext import NullTranslations
 
 import wx
 
@@ -11,6 +12,9 @@ from outwiker.gui.tester import Tester
 from outwiker.gui.owapplication import OutWikerApplication
 from outwiker.core.tree import WikiDocument
 from .utils import removeDir
+
+
+NullTranslations().install()
 
 
 class BaseWxTestCase(unittest.TestCase):
