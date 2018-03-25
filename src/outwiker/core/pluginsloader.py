@@ -5,6 +5,7 @@ import os.path
 import sys
 import traceback
 import logging
+import urllib.request
 
 import outwiker.core
 import outwiker.gui
@@ -216,7 +217,8 @@ class PluginsLoader (object):
                     self.__invalidPlugins.append(
                         InvalidPlugin(pluginname,
                                       error,
-                                      pluginversion)
+                                      pluginversion,
+                                      path=packagePath)
                     )
                     continue
                 elif versions_result == pv.OUTWIKER_MUST_BE_UPGRADED:
@@ -226,7 +228,8 @@ class PluginsLoader (object):
                     self.__invalidPlugins.append(
                         InvalidPlugin(pluginname,
                                       error,
-                                      pluginversion))
+                                      pluginversion,
+                                      path=packagePath))
                     continue
 
                 # Список строк, описывающий возникшие ошибки
@@ -339,11 +342,30 @@ class PluginsLoader (object):
         return (pluginname not in self.__plugins and
                 pluginname not in self.__disabledPlugins)
 
-    def __chek_new_version_is_available(self, plugin_name):
+    def __isNewVersionAvailable(self, updatesUrl, currentVersion):
         '''
-            Verify plugin_name version in internet.
+            Check plugin's version by updatesUrl and return True if update is available
             :return: True if new version is available, otherwise reterun False
         '''
+
+        # get data from the updatesUrl
+        try:
+            fp = urllib.request.urlopen(updatesUrl)
+        except:
+            logger.debug("The url %s cann't be opened" % updatesUrl)
+            return False
+
+        # read plugin.xml
+        mybytes = fp.read()
+        mystr = mybytes.decode("utf8")
+        fp.close()
+
+        # get currentVersion from internet
+        repo_info = XmlVersionParser().parse(mystr)
+
+        # return True if current version less than repository version
+        if repo_info:
+            return currentVersion < repo_info.currentVersion
 
         return False
 
@@ -353,15 +375,18 @@ class PluginsLoader (object):
         :return:
         '''
 
-        self._print('test')
-        self._print(self.__disabledPlugins)
-        self._print(self.__plugins)
-        self._print(self.__invalidPlugins)
-        for plugin in self.invalidPlugins:
-            self._print(plugin.__dict__)
-            plugin_info = self.__loadPluginInfo(plugin.name)
+        join = os.path.join
 
-            #self._print(plugin_info)
+        self._print('test')
+        for plugin in self:
+
+            # get plugins with plugin.xml files
+            if plugin.pluginPath:
+                plugin_info = self.__loadPluginInfo(join(plugin.pluginPath,PLUGIN_VERSION_FILE_NAME))
+
+                self._print(plugin_info.updatesUrl)
+
+                self._print(plugin_info)
 
 
     def __len__(self):
