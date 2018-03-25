@@ -1,18 +1,17 @@
 # -*- coding: utf-8 -*-
 
-import unittest
-
 import wx
 
 from outwiker.gui.menucontroller import MenuController, ROOT_MENU_ID
+from test.basetestcases import BaseOutWikerGUITest
 
 
-class MenuControllerTest(unittest.TestCase):
+class MenuControllerTest(BaseOutWikerGUITest):
     def setUp(self):
-        pass
+        self.initApplication()
 
     def tearDown(self):
-        pass
+        self.destroyApplication()
 
     def test_add_01_menubar(self):
         root = wx.MenuBar()

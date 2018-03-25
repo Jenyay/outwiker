@@ -37,6 +37,7 @@ from test.guitests.test_uriidentifiers import (UriIdentifierIETest,
 from test.guitests.test_safeimagelist import SafeImageListTest
 from test.guitests.test_hotkeys import HotKeysTest
 from test.guitests.test_hotkeyctrl import HotkeyCtrlTest
+from test.guitests.test_menucontroller import MenuControllerTest
 
 from test.guitests.htmlpage.test_htmlpageview import HtmlPageViewTest
 from test.guitests.htmlpage.test_htmltablerowsdialog import HtmlTableRowsDialogTest
