@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import unittest
 
@@ -7,26 +7,23 @@ from outwiker.core.application import Application
 from outwiker.core.htmlimproverfactory import HtmlImproverFactory
 
 
-
 class HtmlFormatterTest (unittest.TestCase):
     """Тесты плагина HtmlFormatter"""
-    def setUp (self):
+
+    def setUp(self):
         dirlist = ["../plugins/htmlformatter"]
 
         self.loader = PluginsLoader(Application)
-        self.loader.load (dirlist)
+        self.loader.load(dirlist)
 
-
-    def tearDown (self):
+    def tearDown(self):
         self.loader.clear()
 
+    def testPluginLoad(self):
+        self.assertEqual(len(self.loader), 1)
 
-    def testPluginLoad (self):
-        self.assertEqual (len (self.loader), 1)
-
-
-    def testFactory (self):
+    def testFactory(self):
         from htmlformatter.paragraphimprover import ParagraphHtmlImprover
-        factory = HtmlImproverFactory (Application)
+        factory = HtmlImproverFactory(Application)
 
-        self.assertEqual (type (factory['pimprover']), ParagraphHtmlImprover)
+        self.assertEqual(type(factory['pimprover']), ParagraphHtmlImprover)
