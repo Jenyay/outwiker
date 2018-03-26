@@ -10,6 +10,7 @@ from gettext import NullTranslations
 if __name__ == '__main__':
     NullTranslations().install()
 
+    # TODO: Remove Application initialize from here 
     from outwiker.core.application import Application
     Application.init("../test/testconfig.ini")
 
