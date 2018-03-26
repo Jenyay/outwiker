@@ -6,30 +6,12 @@ Unit-тесты
 """
 
 from gettext import NullTranslations
+import unittest
 
-import wx
+from test.plugins.livejournal.test_loading import LivejournalLoadingTest
+from test.plugins.livejournal.test_livejournal import LivejournalPluginTest
 
 
 if __name__ == '__main__':
     NullTranslations().install()
-
-    from outwiker.core.application import Application
-    Application.init("../test/testconfig.ini")
-
-    app = wx.App(redirect=False)
-
-    def emptyFunc():
-        pass
-
-    app.bindActivateApp = emptyFunc
-    app.unbindActivateApp = emptyFunc
-    loop = wx.GUIEventLoop()
-    wx.GUIEventLoop.SetActive(loop)
-    wx.Log.SetLogLevel(0)
-
-    import unittest
-
-    from test.plugins.livejournal.test_loading import LivejournalLoadingTest
-    from test.plugins.livejournal.test_livejournal import LivejournalPluginTest
-
     unittest.main()

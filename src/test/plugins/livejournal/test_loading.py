@@ -1,9 +1,9 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from test.plugins.baseloading import BasePluginLoadingTest
 
 
-class LivejournalLoadingTest (BasePluginLoadingTest):
+class LivejournalLoadingTest(BasePluginLoadingTest):
 
     def getPluginDir(self):
         """
