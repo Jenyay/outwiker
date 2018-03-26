@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from outwiker.core.application import Application
 from outwiker.core.pluginsloader import PluginsLoader
@@ -6,7 +6,7 @@ from outwiker.core.pluginsloader import PluginsLoader
 from test.actions.test_editor_polyactions import BaseEditorPolyactionsTest
 
 
-class MarkdownPolyactionsTest (BaseEditorPolyactionsTest):
+class MarkdownPolyactionsTest(BaseEditorPolyactionsTest):
     """Test polyactions for Markdown pages"""
     def setUp(self):
         dirlist = ["../plugins/markdown"]

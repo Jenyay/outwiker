@@ -1,28 +1,27 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
-from test.guitests.basemainwnd import BaseMainWndTest
-
-from outwiker.core.application import Application
 from outwiker.gui.tester import Tester
 from outwiker.core.pluginsloader import PluginsLoader
+from test.basetestcases import BaseOutWikerGUITest
 
 
-class MarkdownImageDialogTest(BaseMainWndTest):
+class MarkdownImageDialogTest(BaseOutWikerGUITest):
     def setUp(self):
-        super(MarkdownImageDialogTest, self).setUp()
-        self._application = Application
+        self.initApplication()
+        self.wikiroot = self.createWiki()
 
         dirlist = ["../plugins/markdown"]
-        self.loader = PluginsLoader(self._application)
+        self.loader = PluginsLoader(self.application)
         self.loader.load(dirlist)
 
         from markdown.images.imagedialog import ImageDialog
 
-        self._dlg = ImageDialog(self._application.mainWindow)
+        self._dlg = ImageDialog(self.application.mainWindow)
         Tester.dialogTester.appendOk()
 
     def tearDown(self):
-        super(MarkdownImageDialogTest, self).tearDown()
+        self.destroyApplication()
+        self.destroyWiki(self.wikiroot)
 
     def test_empty(self):
         from markdown.images.imagedialogcontroller import ImageDialogController

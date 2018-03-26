@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import unittest
 
@@ -12,6 +12,7 @@ from outwiker.core.style import Style
 
 class MarkdownTest(unittest.TestCase):
     """Markdown plug-in tests"""
+
     def setUp(self):
         self.__createWiki()
         dirlist = ["../plugins/markdown"]

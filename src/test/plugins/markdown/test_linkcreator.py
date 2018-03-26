@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import unittest
 
@@ -7,7 +7,6 @@ from outwiker.core.application import Application
 
 
 class LinkCreatorTest (unittest.TestCase):
-
     def setUp(self):
         dirlist = ["../plugins/markdown"]
         self.loader = PluginsLoader(Application)
