@@ -1,20 +1,18 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import wx
 
-from outwiker.core.application import Application
 from outwiker.core.pluginsloader import PluginsLoader
-from outwiker.pages.wiki.wikipage import WikiPageFactory
-
-from test.guitests.basemainwnd import BaseMainWndTest
-from test.utils import removeDir
 from outwiker.gui.tester import Tester
+from outwiker.pages.wiki.wikipage import WikiPageFactory
+from test.utils import removeDir
+from test.basetestcases import BaseOutWikerGUITest
 
 
-class HackPage_ChangePageUidTest(BaseMainWndTest):
+class HackPage_ChangePageUidTest(BaseOutWikerGUITest):
     def setUp(self):
-        BaseMainWndTest.setUp(self)
-        self._application = Application
+        self.initApplication()
+        self.wikiroot = self.createWiki()
 
         self.__createWiki()
         self.testPage = self.wikiroot["Страница 1"]
@@ -22,19 +20,18 @@ class HackPage_ChangePageUidTest(BaseMainWndTest):
 
         dirlist = ["../plugins/hackpage"]
 
-        self._loader = PluginsLoader(Application)
+        self._loader = PluginsLoader(self.application)
         self._loader.load(dirlist)
 
         Tester.dialogTester.clear()
 
     def tearDown(self):
         Tester.dialogTester.clear()
-        Application.wikiroot = None
-
-        removeDir(self.path)
+        self.application.wikiroot = None
+        removeDir(self.wikiroot.path)
         self._loader.clear()
-
-        BaseMainWndTest.tearDown(self)
+        self.destroyApplication()
+        self.destroyWiki(self.wikiroot)
 
     def __createWiki(self):
         WikiPageFactory().create(self.wikiroot, "Страница 1", [])
@@ -48,11 +45,11 @@ class HackPage_ChangePageUidTest(BaseMainWndTest):
         from hackpage.utils import changeUidWithDialog
 
         Tester.dialogTester.appendOk()
-        uid_old = Application.pageUidDepot.createUid(self.testPage)
+        uid_old = self.application.pageUidDepot.createUid(self.testPage)
 
-        changeUidWithDialog(self.testPage, self._application)
+        changeUidWithDialog(self.testPage, self.application)
 
-        uid_new = Application.pageUidDepot.createUid(self.testPage)
+        uid_new = self.application.pageUidDepot.createUid(self.testPage)
 
         self.assertEqual(uid_old, uid_new)
         self.assertEqual(Tester.dialogTester.count, 0)
@@ -63,9 +60,9 @@ class HackPage_ChangePageUidTest(BaseMainWndTest):
 
         Tester.dialogTester.append(self._setValue, uid)
 
-        changeUidWithDialog(self.testPage, self._application)
+        changeUidWithDialog(self.testPage, self.application)
 
-        uid_new = Application.pageUidDepot.createUid(self.testPage)
+        uid_new = self.application.pageUidDepot.createUid(self.testPage)
 
         self.assertEqual(Tester.dialogTester.count, 0)
         self.assertEqual(uid_new, uid)
@@ -76,9 +73,9 @@ class HackPage_ChangePageUidTest(BaseMainWndTest):
 
         Tester.dialogTester.append(self._setValue, uid)
 
-        changeUidWithDialog(self.testPage, self._application)
+        changeUidWithDialog(self.testPage, self.application)
 
-        uid_new = Application.pageUidDepot.createUid(self.testPage)
+        uid_new = self.application.pageUidDepot.createUid(self.testPage)
 
         self.assertEqual(Tester.dialogTester.count, 0)
         self.assertEqual(uid_new, uid.strip())
@@ -88,7 +85,7 @@ class HackPage_ChangePageUidTest(BaseMainWndTest):
         Tester.dialogTester.appendOk()
 
         uid = 'dofiads7f89qwhrj'
-        uidvalidator = ChangeUidValidator(self._application, self.testPage)
+        uidvalidator = ChangeUidValidator(self.application, self.testPage)
 
         self.assertTrue(uidvalidator(uid))
         self.assertEqual(Tester.dialogTester.count, 1)
@@ -98,7 +95,7 @@ class HackPage_ChangePageUidTest(BaseMainWndTest):
         Tester.dialogTester.appendOk()
 
         uid = '__dofiads7f89qwhrj__'
-        uidvalidator = ChangeUidValidator(self._application, self.testPage)
+        uidvalidator = ChangeUidValidator(self.application, self.testPage)
 
         self.assertTrue(uidvalidator(uid))
         self.assertEqual(Tester.dialogTester.count, 1)
@@ -108,7 +105,7 @@ class HackPage_ChangePageUidTest(BaseMainWndTest):
         Tester.dialogTester.appendOk()
 
         uid = 'ывдратфыщшатф4е6'
-        uidvalidator = ChangeUidValidator(self._application, self.testPage)
+        uidvalidator = ChangeUidValidator(self.application, self.testPage)
 
         self.assertTrue(uidvalidator(uid))
         self.assertEqual(Tester.dialogTester.count, 1)
@@ -118,7 +115,7 @@ class HackPage_ChangePageUidTest(BaseMainWndTest):
         Tester.dialogTester.appendOk()
 
         uid = 'dsfsf sfssgs'
-        uidvalidator = ChangeUidValidator(self._application, self.testPage)
+        uidvalidator = ChangeUidValidator(self.application, self.testPage)
 
         self.assertFalse(uidvalidator(uid))
         self.assertEqual(Tester.dialogTester.count, 0)
@@ -127,8 +124,8 @@ class HackPage_ChangePageUidTest(BaseMainWndTest):
         from hackpage.validators import ChangeUidValidator
         Tester.dialogTester.appendOk()
 
-        uid = Application.pageUidDepot.createUid(self.testPage2)
-        uidvalidator = ChangeUidValidator(self._application, self.testPage)
+        uid = self.application.pageUidDepot.createUid(self.testPage2)
+        uidvalidator = ChangeUidValidator(self.application, self.testPage)
 
         self.assertFalse(uidvalidator(uid))
         self.assertEqual(Tester.dialogTester.count, 0)
@@ -138,7 +135,7 @@ class HackPage_ChangePageUidTest(BaseMainWndTest):
         Tester.dialogTester.appendOk()
 
         uid = '  dsfsfsfssgs  '
-        uidvalidator = ChangeUidValidator(self._application, self.testPage)
+        uidvalidator = ChangeUidValidator(self.application, self.testPage)
 
         self.assertTrue(uidvalidator(uid))
         self.assertEqual(Tester.dialogTester.count, 1)

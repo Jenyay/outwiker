@@ -1,39 +1,38 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import wx
 
-from outwiker.core.application import Application
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.pages.wiki.wikipage import WikiPageFactory
-
-from test.guitests.basemainwnd import BaseMainWndTest
-from test.utils import removeDir
 from outwiker.gui.tester import Tester
+from test.utils import removeDir
+from test.basetestcases import BaseOutWikerGUITest
 
 
-class HackPage_SetAliasTest(BaseMainWndTest):
+class HackPage_SetAliasTest(BaseOutWikerGUITest):
     def setUp(self):
-        BaseMainWndTest.setUp(self)
-        self._application = Application
+        self.initApplication()
+        self.wikiroot = self.createWiki()
 
         self.__createWiki()
         self.testPage = self.wikiroot["Страница 1"]
 
         dirlist = ["../plugins/hackpage"]
 
-        self._loader = PluginsLoader(Application)
+        self._loader = PluginsLoader(self.application)
         self._loader.load(dirlist)
 
         Tester.dialogTester.clear()
 
     def tearDown(self):
         Tester.dialogTester.clear()
-        Application.wikiroot = None
+        self.application.wikiroot = None
 
-        removeDir(self.path)
+        removeDir(self.wikiroot.path)
         self._loader.clear()
 
-        BaseMainWndTest.tearDown(self)
+        self.destroyApplication()
+        self.destroyWiki(self.wikiroot)
 
     def __createWiki(self):
         WikiPageFactory().create(self.wikiroot, "Страница 1", [])
@@ -47,7 +46,7 @@ class HackPage_SetAliasTest(BaseMainWndTest):
 
         Tester.dialogTester.appendOk()
 
-        setAliasWithDialog(self.testPage, self._application)
+        setAliasWithDialog(self.testPage, self.application)
 
         self.assertEqual(self.testPage.alias, None)
         self.assertEqual(Tester.dialogTester.count, 0)
@@ -57,7 +56,7 @@ class HackPage_SetAliasTest(BaseMainWndTest):
 
         Tester.dialogTester.appendCancel()
 
-        setAliasWithDialog(self.testPage, self._application)
+        setAliasWithDialog(self.testPage, self.application)
 
         self.assertEqual(self.testPage.alias, None)
         self.assertEqual(Tester.dialogTester.count, 0)
@@ -69,7 +68,7 @@ class HackPage_SetAliasTest(BaseMainWndTest):
 
         Tester.dialogTester.append(self._setValue, alias)
 
-        setAliasWithDialog(self.testPage, self._application)
+        setAliasWithDialog(self.testPage, self.application)
 
         self.assertEqual(self.testPage.alias, alias)
         self.assertEqual(Tester.dialogTester.count, 0)
@@ -81,7 +80,7 @@ class HackPage_SetAliasTest(BaseMainWndTest):
 
         Tester.dialogTester.append(self._setValue, alias)
 
-        setAliasWithDialog(self.testPage, self._application)
+        setAliasWithDialog(self.testPage, self.application)
 
         self.assertEqual(self.testPage.alias, alias)
         self.assertEqual(Tester.dialogTester.count, 0)
@@ -93,7 +92,7 @@ class HackPage_SetAliasTest(BaseMainWndTest):
 
         Tester.dialogTester.append(self._setValue, '')
 
-        setAliasWithDialog(self.testPage, self._application)
+        setAliasWithDialog(self.testPage, self.application)
 
         self.assertEqual(self.testPage.alias, None)
         self.assertEqual(Tester.dialogTester.count, 0)
