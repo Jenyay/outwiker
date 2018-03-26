@@ -71,7 +71,7 @@ class Plugin (object, metaclass=ABCMeta):
         '''
         return self._pluginPath
 
-    def isNewVersionAvailable(self):
+    def latestVersion(self):
         '''
             Check plugin's version by updatesUrl and return latest
             :return: latest version of the plugin
@@ -158,3 +158,35 @@ class InvalidPlugin(object):
         Return path to plugin's directory.
         '''
         return self._pluginPath
+
+    def latestVersion(self):
+        '''
+            Check plugin's version by updatesUrl and return latest
+            :return: latest version of the plugin
+        '''
+        join = os.path.join
+
+        plugin_fname = join(self.pluginPath, PLUGIN_VERSION_FILE_NAME)
+        if not os.path.exists(plugin_fname):
+            return u''
+
+        xml_content = readTextFile(plugin_fname)
+        appinfo = XmlVersionParser().parse(xml_content)
+
+        # get data from the updatesUrl
+        try:
+            fp = urllib.request.urlopen(appinfo.updatesUrl)
+        except:
+            self.logger.debug("The url %s cann't be opened" % appinfo.updatesUrl)
+            return u''
+
+        # read plugin.xml
+        mybytes = fp.read()
+        mystr = mybytes.decode("utf8")
+        fp.close()
+
+        # get currentVersion from internet
+        repo_info = XmlVersionParser().parse(mystr)
+
+        # return latest version
+        return repo_info.currentVersion

@@ -135,7 +135,7 @@ class PluginsController (object):
 
         plugin_latest = u"""<B>{latest_header}:</B> {latest}""".format(
             latest_header=_(u"Latest"),
-            latest=plugin.isNewVersionAvailable())
+            latest=plugin.latestVersion())
 
         plugin_description = u"""<B>{description_head}:</B> {description}""".format(
             description_head=_(u"Description"),
