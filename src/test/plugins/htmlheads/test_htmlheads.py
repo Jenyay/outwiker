@@ -14,7 +14,6 @@ from test.utils import removeDir
 
 
 class HtmlHeadsTest(unittest.TestCase):
-
     def setUp(self):
         self.maxDiff = None
 
@@ -73,7 +72,8 @@ class HtmlHeadsTest(unittest.TestCase):
         generator = HtmlGenerator(self.testPage)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
-        self.assertIn('<meta name="description" content="Бла-бла-бла абырвалг"/>', result)
+        self.assertIn(
+            '<meta name="description" content="Бла-бла-бла абырвалг"/>', result)
 
     def testDescription_02(self):
         text = '(:description    Бла-бла-бла абырвалг   :)'
@@ -83,7 +83,8 @@ class HtmlHeadsTest(unittest.TestCase):
         generator = HtmlGenerator(self.testPage)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
-        self.assertIn('<meta name="description" content="Бла-бла-бла абырвалг"/>', result)
+        self.assertIn(
+            '<meta name="description" content="Бла-бла-бла абырвалг"/>', result)
 
     def testDescription_03(self):
         text = '(:description:)'
@@ -103,7 +104,8 @@ class HtmlHeadsTest(unittest.TestCase):
         generator = HtmlGenerator(self.testPage)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
-        self.assertIn('<meta name="keywords" content="Бла-бла-бла, абырвалг"/>', result)
+        self.assertIn(
+            '<meta name="keywords" content="Бла-бла-бла, абырвалг"/>', result)
 
     def testKeywords_02(self):
         text = '(:keywords     Бла-бла-бла, абырвалг    :)'
@@ -113,7 +115,8 @@ class HtmlHeadsTest(unittest.TestCase):
         generator = HtmlGenerator(self.testPage)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
-        self.assertIn('<meta name="keywords" content="Бла-бла-бла, абырвалг"/>', result)
+        self.assertIn(
+            '<meta name="keywords" content="Бла-бла-бла, абырвалг"/>', result)
 
     def testKeywords_03(self):
         text = '(:keywords:)'
@@ -133,7 +136,8 @@ class HtmlHeadsTest(unittest.TestCase):
         generator = HtmlGenerator(self.testPage)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
-        self.assertIn('<meta name="keywords" content="Бла-бла-бла, абырвалг"/>', result)
+        self.assertIn(
+            '<meta name="keywords" content="Бла-бла-бла, абырвалг"/>', result)
         self.assertNotIn("(:htmlhead:)", result)
 
     def testHtmlHead_02(self):
@@ -147,8 +151,10 @@ class HtmlHeadsTest(unittest.TestCase):
         generator = HtmlGenerator(self.testPage)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
-        self.assertIn('<meta name="keywords" content="Бла-бла-бла, абырвалг"/>', result)
-        self.assertIn('<meta name="description" content="Бла-бла-бла абырвалг"/>', result)
+        self.assertIn(
+            '<meta name="keywords" content="Бла-бла-бла, абырвалг"/>', result)
+        self.assertIn(
+            '<meta name="description" content="Бла-бла-бла абырвалг"/>', result)
         self.assertNotIn("(:htmlhead:)", result)
 
     def testHtmlHead_03(self):
