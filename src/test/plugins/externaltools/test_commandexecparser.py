@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import unittest
 import os.path
@@ -21,154 +21,147 @@ class CommandExecParserTest (unittest.TestCase):
 
         self.__createWiki()
         self.testPage = self.wikiroot['Страница 1']
-        self.testPageTextPath = os.path.join (self.testPage.path, '__page.text')
-        self.testPageHtmlPath = os.path.join (self.testPage.path, PAGE_RESULT_HTML)
-        self.testPageAttachPath = Attachment(self.testPage).getAttachPath(False)
+        self.testPageTextPath = os.path.join(self.testPage.path, '__page.text')
+        self.testPageHtmlPath = os.path.join(
+            self.testPage.path, PAGE_RESULT_HTML)
+        self.testPageAttachPath = Attachment(
+            self.testPage).getAttachPath(False)
 
         dirlist = ['../plugins/externaltools']
 
         self.loader = PluginsLoader(Application)
-        self.loader.load (dirlist)
+        self.loader.load(dirlist)
 
         self.factory = ParserFactory()
-        self.parser = self.factory.make (self.testPage, Application.config)
+        self.parser = self.factory.make(self.testPage, Application.config)
 
-
-    def __createWiki (self):
+    def __createWiki(self):
         # Здесь будет создаваться вики
-        self.path = mkdtemp (prefix='Абырвалг абыр')
-        self.wikiroot = WikiDocument.create (self.path)
-        WikiPageFactory().create (self.wikiroot, 'Страница 1', [])
-
+        self.path = mkdtemp(prefix='Абырвалг абыр')
+        self.wikiroot = WikiDocument.create(self.path)
+        WikiPageFactory().create(self.wikiroot, 'Страница 1', [])
 
     def tearDown(self):
-        removeDir (self.path)
+        removeDir(self.path)
         self.loader.clear()
 
+    def testPluginLoad(self):
+        self.assertEqual(len(self.loader), 1)
 
-    def testPluginLoad (self):
-        self.assertEqual (len (self.loader), 1)
-
-
-    def testEmpty (self):
+    def testEmpty(self):
         text = '(:exec:)(:execend:)'
         validResult = ''
 
-        result = self.parser.toHtml (text)
-        self.assertEqual (result, validResult)
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, validResult)
 
-
-    def testCommandExecParser_01_empty (self):
+    def testCommandExecParser_01_empty(self):
         from externaltools.commandexec.commandexecparser import CommandExecParser
         text = ''
 
-        parser = CommandExecParser (self.testPage)
-        result = parser.parse (text)
+        parser = CommandExecParser(self.testPage)
+        result = parser.parse(text)
 
-        self.assertEqual (len (result), 0)
+        self.assertEqual(len(result), 0)
 
-
-    def testCommandExecParser_02 (self):
+    def testCommandExecParser_02(self):
         from externaltools.commandexec.commandexecparser import CommandExecParser
         text = 'gvim'
 
-        parser = CommandExecParser (self.testPage)
-        result = parser.parse (text)
+        parser = CommandExecParser(self.testPage)
+        result = parser.parse(text)
 
-        self.assertEqual (len (result), 1)
-        self.assertEqual (result[0].command, 'gvim')
-        self.assertEqual (len (result[0].params), 0)
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0].command, 'gvim')
+        self.assertEqual(len(result[0].params), 0)
 
-
-    def testCommandExecParser_03 (self):
+    def testCommandExecParser_03(self):
         from externaltools.commandexec.commandexecparser import CommandExecParser
         text = '''gvim
 krusader'''
 
-        parser = CommandExecParser (self.testPage)
-        result = parser.parse (text)
+        parser = CommandExecParser(self.testPage)
+        result = parser.parse(text)
 
-        self.assertEqual (len (result), 2)
+        self.assertEqual(len(result), 2)
 
-        self.assertEqual (result[0].command, 'gvim')
-        self.assertEqual (len (result[0].params), 0)
+        self.assertEqual(result[0].command, 'gvim')
+        self.assertEqual(len(result[0].params), 0)
 
-        self.assertEqual (result[1].command, 'krusader')
-        self.assertEqual (len (result[1].params), 0)
+        self.assertEqual(result[1].command, 'krusader')
+        self.assertEqual(len(result[1].params), 0)
 
-
-    def testCommandExecParser_04 (self):
+    def testCommandExecParser_04(self):
         from externaltools.commandexec.commandexecparser import CommandExecParser
         text = '''
 
-    gvim  
+    gvim
 
 
-      krusader   
+      krusader
 
 '''
 
-        parser = CommandExecParser (self.testPage)
-        result = parser.parse (text)
+        parser = CommandExecParser(self.testPage)
+        result = parser.parse(text)
 
-        self.assertEqual (len (result), 2)
+        self.assertEqual(len(result), 2)
 
-        self.assertEqual (result[0].command, 'gvim')
-        self.assertEqual (len (result[0].params), 0)
+        self.assertEqual(result[0].command, 'gvim')
+        self.assertEqual(len(result[0].params), 0)
 
-        self.assertEqual (result[1].command, 'krusader')
-        self.assertEqual (len (result[1].params), 0)
+        self.assertEqual(result[1].command, 'krusader')
+        self.assertEqual(len(result[1].params), 0)
 
-
-    def testCommandExecParser_05_params (self):
+    def testCommandExecParser_05_params(self):
         from externaltools.commandexec.commandexecparser import CommandExecParser
         text = 'gvim -d файл1.txt файл2.txt'
 
-        parser = CommandExecParser (self.testPage)
-        result = parser.parse (text)
+        parser = CommandExecParser(self.testPage)
+        result = parser.parse(text)
 
-        self.assertEqual (len (result), 1)
-        self.assertEqual (result[0].command, 'gvim')
-        self.assertEqual (result[0].params, ['-d', 'файл1.txt', 'файл2.txt'])
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0].command, 'gvim')
+        self.assertEqual(result[0].params, ['-d', 'файл1.txt', 'файл2.txt'])
 
-
-    def testCommandExecParser_06_params (self):
+    def testCommandExecParser_06_params(self):
         from externaltools.commandexec.commandexecparser import CommandExecParser
         text = '  gvim   -d   файл1.txt   файл2.txt   '
 
-        parser = CommandExecParser (self.testPage)
-        result = parser.parse (text)
+        parser = CommandExecParser(self.testPage)
+        result = parser.parse(text)
 
-        self.assertEqual (len (result), 1)
-        self.assertEqual (result[0].command, 'gvim')
-        self.assertEqual (result[0].params, ['-d', 'файл1.txt', 'файл2.txt'])
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0].command, 'gvim')
+        self.assertEqual(result[0].params, ['-d', 'файл1.txt', 'файл2.txt'])
 
-
-    def testCommandExecParser_07_params (self):
+    def testCommandExecParser_07_params(self):
         from externaltools.commandexec.commandexecparser import CommandExecParser
         text = '  gvim   -d   "Имя файла 1.txt"   "Имя файла 2.txt"   '
 
-        parser = CommandExecParser (self.testPage)
-        result = parser.parse (text)
+        parser = CommandExecParser(self.testPage)
+        result = parser.parse(text)
 
-        self.assertEqual (len (result), 1)
-        self.assertEqual (result[0].command, 'gvim')
-        self.assertEqual (result[0].params, ['-d', 'Имя файла 1.txt', 'Имя файла 2.txt'])
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0].command, 'gvim')
+        self.assertEqual(
+            result[0].params, [
+                '-d', 'Имя файла 1.txt', 'Имя файла 2.txt'])
 
-
-    def testCommandExecParser_08_params (self):
+    def testCommandExecParser_08_params(self):
         from externaltools.commandexec.commandexecparser import CommandExecParser
         text = r'  gvim   -d   "Имя файла 1\".txt"   "Имя файла 2.txt"   '
 
-        parser = CommandExecParser (self.testPage)
-        result = parser.parse (text)
+        parser = CommandExecParser(self.testPage)
+        result = parser.parse(text)
 
-        self.assertEqual (len (result), 1)
-        self.assertEqual (result[0].command, 'gvim')
-        self.assertEqual (result[0].params, ['-d', 'Имя файла 1".txt', 'Имя файла 2.txt'])
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0].command, 'gvim')
+        self.assertEqual(
+            result[0].params, [
+                '-d', 'Имя файла 1".txt', 'Имя файла 2.txt'])
 
-
-    def testCommandExecParser_09_params (self):
+    def testCommandExecParser_09_params(self):
         from externaltools.commandexec.commandexecparser import CommandExecParser
         text = '''
         gvim   -d   "Имя файла 1.txt"   "Имя файла 2.txt"
@@ -178,49 +171,50 @@ krusader'''
 
         '''
 
-        parser = CommandExecParser (self.testPage)
-        result = parser.parse (text)
+        parser = CommandExecParser(self.testPage)
+        result = parser.parse(text)
 
-        self.assertEqual (len (result), 2)
+        self.assertEqual(len(result), 2)
 
-        self.assertEqual (result[0].command, 'gvim')
-        self.assertEqual (result[0].params, ['-d', 'Имя файла 1.txt', 'Имя файла 2.txt'])
+        self.assertEqual(result[0].command, 'gvim')
+        self.assertEqual(
+            result[0].params, [
+                '-d', 'Имя файла 1.txt', 'Имя файла 2.txt'])
 
-        self.assertEqual (result[1].command, 'krusader')
-        self.assertEqual (result[1].params, ['Параметр1', 'Параметр 2 с пробелом'])
+        self.assertEqual(result[1].command, 'krusader')
+        self.assertEqual(
+            result[1].params, [
+                'Параметр1', 'Параметр 2 с пробелом'])
 
-
-    def testCommandExecParser_10_join (self):
+    def testCommandExecParser_10_join(self):
         from externaltools.commandexec.commandexecparser import CommandExecParser
         text = r'''gvim \
 "Имя файла"
 '''
 
-        parser = CommandExecParser (self.testPage)
-        result = parser.parse (text)
+        parser = CommandExecParser(self.testPage)
+        result = parser.parse(text)
 
-        self.assertEqual (len (result), 1)
+        self.assertEqual(len(result), 1)
 
-        self.assertEqual (result[0].command, 'gvim')
-        self.assertEqual (result[0].params, ['Имя файла'])
+        self.assertEqual(result[0].command, 'gvim')
+        self.assertEqual(result[0].params, ['Имя файла'])
 
-
-    def testCommandExecParser_11_join (self):
+    def testCommandExecParser_11_join(self):
         from externaltools.commandexec.commandexecparser import CommandExecParser
-        text = r'''gvim \   
+        text = r'''gvim \
    "Имя файла"
 '''
 
-        parser = CommandExecParser (self.testPage)
-        result = parser.parse (text)
+        parser = CommandExecParser(self.testPage)
+        result = parser.parse(text)
 
-        self.assertEqual (len (result), 1)
+        self.assertEqual(len(result), 1)
 
-        self.assertEqual (result[0].command, 'gvim')
-        self.assertEqual (result[0].params, ['Имя файла'])
+        self.assertEqual(result[0].command, 'gvim')
+        self.assertEqual(result[0].params, ['Имя файла'])
 
-
-    def testCommandExecParser_join_01 (self):
+    def testCommandExecParser_join_01(self):
         from externaltools.commandexec.commandexecparser import CommandExecParser
         text = r'''gvim \
 
@@ -228,262 +222,244 @@ krusader'''
 "Имя файла"
 '''
 
-        parser = CommandExecParser (self.testPage)
-        result = parser.parse (text)
+        parser = CommandExecParser(self.testPage)
+        result = parser.parse(text)
 
-        self.assertEqual (len (result), 1)
+        self.assertEqual(len(result), 1)
 
-        self.assertEqual (result[0].command, 'gvim')
-        self.assertEqual (result[0].params, ['Имя файла'])
+        self.assertEqual(result[0].command, 'gvim')
+        self.assertEqual(result[0].params, ['Имя файла'])
 
-
-    def testCommandExecParser_13_invalid (self):
+    def testCommandExecParser_13_invalid(self):
         from externaltools.commandexec.commandexecparser import CommandExecParser
         text = r'''gvim \ asdfadsf'''
 
-        parser = CommandExecParser (self.testPage)
-        parser.parse (text)
+        parser = CommandExecParser(self.testPage)
+        parser.parse(text)
 
-
-    def testCommandExecParser_14_params (self):
+    def testCommandExecParser_14_params(self):
         from externaltools.commandexec.commandexecparser import CommandExecParser
         text = 'gvim -d'
 
-        parser = CommandExecParser (self.testPage)
-        result = parser.parse (text)
+        parser = CommandExecParser(self.testPage)
+        result = parser.parse(text)
 
-        self.assertEqual (len (result), 1)
-        self.assertEqual (result[0].command, 'gvim')
-        self.assertEqual (result[0].params, ['-d'])
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0].command, 'gvim')
+        self.assertEqual(result[0].params, ['-d'])
 
-
-    def testCommandExecParser_15_params (self):
+    def testCommandExecParser_15_params(self):
         from externaltools.commandexec.commandexecparser import CommandExecParser
         text = 'gvim "c:\\temp\\abyrvalg\\rrr\\nnn"'
 
-        parser = CommandExecParser (self.testPage)
-        result = parser.parse (text)
+        parser = CommandExecParser(self.testPage)
+        result = parser.parse(text)
 
-        self.assertEqual (len (result), 1)
-        self.assertEqual (result[0].command, 'gvim')
-        self.assertEqual (result[0].params, ['c:\\temp\\abyrvalg\\rrr\\nnn'])
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0].command, 'gvim')
+        self.assertEqual(result[0].params, ['c:\\temp\\abyrvalg\\rrr\\nnn'])
 
-
-    def testMacrosPage_01 (self):
+    def testMacrosPage_01(self):
         from externaltools.commandexec.commandexecparser import CommandExecParser
 
         text = '''gvim %page%'''
 
-        parser = CommandExecParser (self.testPage)
-        result = parser.parse (text)
+        parser = CommandExecParser(self.testPage)
+        result = parser.parse(text)
 
-        self.assertEqual (len (result), 1)
-        self.assertEqual (result[0].command, 'gvim')
-        self.assertEqual (result[0].params, [self.testPageTextPath])
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0].command, 'gvim')
+        self.assertEqual(result[0].params, [self.testPageTextPath])
 
-
-    def testMacrosPage_02 (self):
+    def testMacrosPage_02(self):
         from externaltools.commandexec.commandexecparser import CommandExecParser
 
         text = '''gvim %PAGE%'''
 
-        parser = CommandExecParser (self.testPage)
-        result = parser.parse (text)
+        parser = CommandExecParser(self.testPage)
+        result = parser.parse(text)
 
-        self.assertEqual (len (result), 1)
-        self.assertEqual (result[0].command, 'gvim')
-        self.assertEqual (result[0].params, ['%PAGE%'])
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0].command, 'gvim')
+        self.assertEqual(result[0].params, ['%PAGE%'])
 
-
-    def testMacrosPage_03 (self):
+    def testMacrosPage_03(self):
         from externaltools.commandexec.commandexecparser import CommandExecParser
 
         text = '''gvim \\
 %page%'''
 
-        parser = CommandExecParser (self.testPage)
-        result = parser.parse (text)
+        parser = CommandExecParser(self.testPage)
+        result = parser.parse(text)
 
-        self.assertEqual (len (result), 1)
-        self.assertEqual (result[0].command, 'gvim')
-        self.assertEqual (result[0].params, [self.testPageTextPath])
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0].command, 'gvim')
+        self.assertEqual(result[0].params, [self.testPageTextPath])
 
-
-    def testMacrosHtml_01 (self):
+    def testMacrosHtml_01(self):
         from externaltools.commandexec.commandexecparser import CommandExecParser
 
         text = '''gvim %html%'''
 
-        parser = CommandExecParser (self.testPage)
-        result = parser.parse (text)
+        parser = CommandExecParser(self.testPage)
+        result = parser.parse(text)
 
-        self.assertEqual (len (result), 1)
-        self.assertEqual (result[0].command, 'gvim')
-        self.assertEqual (result[0].params, [self.testPageHtmlPath])
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0].command, 'gvim')
+        self.assertEqual(result[0].params, [self.testPageHtmlPath])
 
-
-    def testMacrosFolder_01 (self):
+    def testMacrosFolder_01(self):
         from externaltools.commandexec.commandexecparser import CommandExecParser
 
         text = '''gvim %folder%'''
 
-        parser = CommandExecParser (self.testPage)
-        result = parser.parse (text)
+        parser = CommandExecParser(self.testPage)
+        result = parser.parse(text)
 
-        self.assertEqual (len (result), 1)
-        self.assertEqual (result[0].command, 'gvim')
-        self.assertEqual (result[0].params, [self.testPage.path])
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0].command, 'gvim')
+        self.assertEqual(result[0].params, [self.testPage.path])
 
-
-    def testMacrosFolder_02 (self):
+    def testMacrosFolder_02(self):
         from externaltools.commandexec.commandexecparser import CommandExecParser
 
         text = '''gvim %folder%/111.txt'''
 
-        parser = CommandExecParser (self.testPage)
-        result = parser.parse (text)
+        parser = CommandExecParser(self.testPage)
+        result = parser.parse(text)
 
-        self.assertEqual (len (result), 1)
-        self.assertEqual (result[0].command, 'gvim')
-        self.assertEqual (result[0].params, [self.testPage.path + '/111.txt'])
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0].command, 'gvim')
+        self.assertEqual(result[0].params, [self.testPage.path + '/111.txt'])
 
-
-    def testMacrosFolder_03 (self):
+    def testMacrosFolder_03(self):
         from externaltools.commandexec.commandexecparser import CommandExecParser
 
         text = '''gvim %FOLDER%'''
 
-        parser = CommandExecParser (self.testPage)
-        result = parser.parse (text)
+        parser = CommandExecParser(self.testPage)
+        result = parser.parse(text)
 
-        self.assertEqual (len (result), 1)
-        self.assertEqual (result[0].command, 'gvim')
-        self.assertEqual (result[0].params, ['%FOLDER%'])
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0].command, 'gvim')
+        self.assertEqual(result[0].params, ['%FOLDER%'])
 
-
-    def testMacrosAttach_01 (self):
+    def testMacrosAttach_01(self):
         from externaltools.commandexec.commandexecparser import CommandExecParser
 
         text = '''gvim %attach%'''
 
-        parser = CommandExecParser (self.testPage)
-        result = parser.parse (text)
+        parser = CommandExecParser(self.testPage)
+        result = parser.parse(text)
 
-        self.assertEqual (len (result), 1)
-        self.assertEqual (result[0].command, 'gvim')
-        self.assertEqual (result[0].params, [self.testPageAttachPath])
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0].command, 'gvim')
+        self.assertEqual(result[0].params, [self.testPageAttachPath])
 
-
-    def testMacrosAttach_02 (self):
+    def testMacrosAttach_02(self):
         from externaltools.commandexec.commandexecparser import CommandExecParser
 
         text = '''gvim %ATTACH%'''
 
-        parser = CommandExecParser (self.testPage)
-        result = parser.parse (text)
+        parser = CommandExecParser(self.testPage)
+        result = parser.parse(text)
 
-        self.assertEqual (len (result), 1)
-        self.assertEqual (result[0].command, 'gvim')
-        self.assertEqual (result[0].params, ['%ATTACH%'])
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0].command, 'gvim')
+        self.assertEqual(result[0].params, ['%ATTACH%'])
 
-
-    def testMacrosAttach_03 (self):
+    def testMacrosAttach_03(self):
         from externaltools.commandexec.commandexecparser import CommandExecParser
 
         text = '''gvim Attach:абырвалг.txt'''
 
-        attachPath = os.path.join (self.testPageAttachPath, 'абырвалг.txt')
+        attachPath = os.path.join(self.testPageAttachPath, 'абырвалг.txt')
 
-        parser = CommandExecParser (self.testPage)
-        result = parser.parse (text)
+        parser = CommandExecParser(self.testPage)
+        result = parser.parse(text)
 
-        self.assertEqual (len (result), 1)
-        self.assertEqual (result[0].command, 'gvim')
-        self.assertEqual (result[0].params, [attachPath])
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0].command, 'gvim')
+        self.assertEqual(result[0].params, [attachPath])
 
-
-    def testMacrosAttach_04 (self):
+    def testMacrosAttach_04(self):
         from externaltools.commandexec.commandexecparser import CommandExecParser
 
         text = '''gvim "Attach:абырвалг главрыба.txt"'''
 
-        attachPath = os.path.join (self.testPageAttachPath, 'абырвалг главрыба.txt')
+        attachPath = os.path.join(
+            self.testPageAttachPath,
+            'абырвалг главрыба.txt')
 
-        parser = CommandExecParser (self.testPage)
-        result = parser.parse (text)
+        parser = CommandExecParser(self.testPage)
+        result = parser.parse(text)
 
-        self.assertEqual (len (result), 1)
-        self.assertEqual (result[0].command, 'gvim')
-        self.assertEqual (result[0].params, [attachPath])
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0].command, 'gvim')
+        self.assertEqual(result[0].params, [attachPath])
 
-
-    def testMacrosAttach_05 (self):
+    def testMacrosAttach_05(self):
         from externaltools.commandexec.commandexecparser import CommandExecParser
 
         text = '''gvim xAttach:абырвалг.txt'''
 
-        parser = CommandExecParser (self.testPage)
-        result = parser.parse (text)
+        parser = CommandExecParser(self.testPage)
+        result = parser.parse(text)
 
-        self.assertEqual (len (result), 1)
-        self.assertEqual (result[0].command, 'gvim')
-        self.assertEqual (result[0].params, ['xAttach:абырвалг.txt'])
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0].command, 'gvim')
+        self.assertEqual(result[0].params, ['xAttach:абырвалг.txt'])
 
-
-    def testMacrosAttach_06 (self):
+    def testMacrosAttach_06(self):
         from externaltools.commandexec.commandexecparser import CommandExecParser
 
         text = '''gvim attach:абырвалг.txt'''
 
-        parser = CommandExecParser (self.testPage)
-        result = parser.parse (text)
+        parser = CommandExecParser(self.testPage)
+        result = parser.parse(text)
 
-        self.assertEqual (len (result), 1)
-        self.assertEqual (result[0].command, 'gvim')
-        self.assertEqual (result[0].params, ['attach:абырвалг.txt'])
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0].command, 'gvim')
+        self.assertEqual(result[0].params, ['attach:абырвалг.txt'])
 
-
-    def testMacrosApp_01 (self):
+    def testMacrosApp_01(self):
         from externaltools.commandexec.commandexecparser import CommandExecParser
 
         text = '''%folder%/gvim'''
 
-        parser = CommandExecParser (self.testPage)
-        result = parser.parse (text)
+        parser = CommandExecParser(self.testPage)
+        result = parser.parse(text)
 
-        self.assertEqual (len (result), 1)
-        self.assertEqual (result[0].command,
-                          self.testPage.path + '/gvim')
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0].command,
+                         self.testPage.path + '/gvim')
 
-
-    def testMacrosApp_02 (self):
+    def testMacrosApp_02(self):
         from externaltools.commandexec.commandexecparser import CommandExecParser
 
         text = '''%attach%/gvim'''
 
-        parser = CommandExecParser (self.testPage)
-        result = parser.parse (text)
+        parser = CommandExecParser(self.testPage)
+        result = parser.parse(text)
 
-        self.assertEqual (len (result), 1)
-        self.assertEqual (result[0].command,
-                          self.testPageAttachPath + '/gvim')
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0].command,
+                         self.testPageAttachPath + '/gvim')
 
-
-    def testComments_01 (self):
+    def testComments_01(self):
         from externaltools.commandexec.commandexecparser import CommandExecParser
 
         text = '''gvim fname
 # Комментарий'''
 
-        parser = CommandExecParser (self.testPage)
-        result = parser.parse (text)
+        parser = CommandExecParser(self.testPage)
+        result = parser.parse(text)
 
-        self.assertEqual (len (result), 1)
-        self.assertEqual (result[0].command, 'gvim')
-        self.assertEqual (result[0].params, ['fname'])
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0].command, 'gvim')
+        self.assertEqual(result[0].params, ['fname'])
 
-
-    def testComments_02 (self):
+    def testComments_02(self):
         from externaltools.commandexec.commandexecparser import CommandExecParser
 
         text = '''gvim fname
@@ -493,100 +469,93 @@ krusader'''
 
 '''
 
-        parser = CommandExecParser (self.testPage)
-        result = parser.parse (text)
+        parser = CommandExecParser(self.testPage)
+        result = parser.parse(text)
 
-        self.assertEqual (len (result), 1)
-        self.assertEqual (result[0].command, 'gvim')
-        self.assertEqual (result[0].params, ['fname'])
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0].command, 'gvim')
+        self.assertEqual(result[0].params, ['fname'])
 
-
-    def testComments_03 (self):
+    def testComments_03(self):
         from externaltools.commandexec.commandexecparser import CommandExecParser
 
         text = '''# Комментарий
 
 gvim fname'''
 
-        parser = CommandExecParser (self.testPage)
-        result = parser.parse (text)
+        parser = CommandExecParser(self.testPage)
+        result = parser.parse(text)
 
-        self.assertEqual (len (result), 1)
-        self.assertEqual (result[0].command, 'gvim')
-        self.assertEqual (result[0].params, ['fname'])
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0].command, 'gvim')
+        self.assertEqual(result[0].params, ['fname'])
 
-
-    def testComments_04 (self):
+    def testComments_04(self):
         from externaltools.commandexec.commandexecparser import CommandExecParser
 
         text = '''gvim fname # Комментарий'''
 
-        parser = CommandExecParser (self.testPage)
-        result = parser.parse (text)
+        parser = CommandExecParser(self.testPage)
+        result = parser.parse(text)
 
-        self.assertEqual (len (result), 1)
-        self.assertEqual (result[0].command, 'gvim')
-        self.assertEqual (result[0].params, ['fname', '#', 'Комментарий'])
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0].command, 'gvim')
+        self.assertEqual(result[0].params, ['fname', '#', 'Комментарий'])
 
-
-    def testComments_05 (self):
+    def testComments_05(self):
         from externaltools.commandexec.commandexecparser import CommandExecParser
 
         text = '''gvim fname
 #Комментарий'''
 
-        parser = CommandExecParser (self.testPage)
-        result = parser.parse (text)
+        parser = CommandExecParser(self.testPage)
+        result = parser.parse(text)
 
-        self.assertEqual (len (result), 1)
-        self.assertEqual (result[0].command, 'gvim')
-        self.assertEqual (result[0].params, ['fname'])
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0].command, 'gvim')
+        self.assertEqual(result[0].params, ['fname'])
 
-
-    def testComments_06 (self):
+    def testComments_06(self):
         from externaltools.commandexec.commandexecparser import CommandExecParser
 
         text = '''gvim fname \\
 #Комментарий'''
 
-        parser = CommandExecParser (self.testPage)
-        result = parser.parse (text)
+        parser = CommandExecParser(self.testPage)
+        result = parser.parse(text)
 
-        self.assertEqual (len (result), 1)
-        self.assertEqual (result[0].command, 'gvim')
-        self.assertEqual (result[0].params, ['fname'])
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0].command, 'gvim')
+        self.assertEqual(result[0].params, ['fname'])
 
-
-    def testComments_07 (self):
+    def testComments_07(self):
         from externaltools.commandexec.commandexecparser import CommandExecParser
 
         text = '''gvim \\
 #Комментарий
 fname'''
 
-        parser = CommandExecParser (self.testPage)
-        result = parser.parse (text)
+        parser = CommandExecParser(self.testPage)
+        result = parser.parse(text)
 
-        self.assertEqual (len (result), 1)
-        self.assertEqual (result[0].command, 'gvim')
-        self.assertEqual (result[0].params, ['fname'])
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0].command, 'gvim')
+        self.assertEqual(result[0].params, ['fname'])
 
-
-    def testComments_08 (self):
+    def testComments_08(self):
         from externaltools.commandexec.commandexecparser import CommandExecParser
 
         text = '''gvim \\
  #Комментарий'''
 
-        parser = CommandExecParser (self.testPage)
-        result = parser.parse (text)
+        parser = CommandExecParser(self.testPage)
+        result = parser.parse(text)
 
-        self.assertEqual (len (result), 1)
-        self.assertEqual (result[0].command, 'gvim')
-        self.assertEqual (result[0].params, ['#Комментарий'])
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0].command, 'gvim')
+        self.assertEqual(result[0].params, ['#Комментарий'])
 
-
-    def testComments_09 (self):
+    def testComments_09(self):
         from externaltools.commandexec.commandexecparser import CommandExecParser
 
         text = '''gvim \\
@@ -594,15 +563,14 @@ fname'''
 
 '''
 
-        parser = CommandExecParser (self.testPage)
-        result = parser.parse (text)
+        parser = CommandExecParser(self.testPage)
+        result = parser.parse(text)
 
-        self.assertEqual (len (result), 1)
-        self.assertEqual (result[0].command, 'gvim')
-        self.assertEqual (result[0].params, ['#Комментарий'])
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0].command, 'gvim')
+        self.assertEqual(result[0].params, ['#Комментарий'])
 
-
-    def testComments_10 (self):
+    def testComments_10(self):
         from externaltools.commandexec.commandexecparser import CommandExecParser
 
         text = '''gvim
@@ -611,13 +579,13 @@ krusader
 # Комментарий 2
 '''
 
-        parser = CommandExecParser (self.testPage)
-        result = parser.parse (text)
+        parser = CommandExecParser(self.testPage)
+        result = parser.parse(text)
 
-        self.assertEqual (len (result), 2)
+        self.assertEqual(len(result), 2)
 
-        self.assertEqual (result[0].command, 'gvim')
-        self.assertEqual (result[0].params, [])
+        self.assertEqual(result[0].command, 'gvim')
+        self.assertEqual(result[0].params, [])
 
-        self.assertEqual (result[1].command, 'krusader')
-        self.assertEqual (result[1].params, [])
+        self.assertEqual(result[1].command, 'krusader')
+        self.assertEqual(result[1].params, [])

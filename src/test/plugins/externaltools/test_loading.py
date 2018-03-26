@@ -3,7 +3,7 @@
 from test.plugins.baseloading import BasePluginLoadingTest
 
 
-class ExternalToolsLoadingTest (BasePluginLoadingTest):
+class ExternalToolsLoadingTest(BasePluginLoadingTest):
 
     def getPluginDir(self):
         """
