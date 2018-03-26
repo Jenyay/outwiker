@@ -121,6 +121,7 @@ class PluginsController (object):
 <BODY>
 {name}<BR>
 {version}<BR>
+{latest}<BR>
 {url}<BR>
 {description}<BR>
 </BODY>
@@ -128,9 +129,13 @@ class PluginsController (object):
 
         plugin_name = u"""<H3>{name}</H3>""".format(name=plugin.name)
 
-        plugin_version = u"""<B>{version_header}:</B> {version}""".format(
+        plugin_version = u"""<B>{version_header}:</B> {version}<BR>""".format(
             version_header=_(u"Version"),
             version=plugin.version)
+
+        plugin_latest = u"""<B>{latest_header}:</B> {latest}""".format(
+            latest_header=_(u"Latest"),
+            latest=plugin.isNewVersionAvailable())
 
         plugin_description = u"""<B>{description_head}:</B> {description}""".format(
             description_head=_(u"Description"),
@@ -146,6 +151,7 @@ class PluginsController (object):
         result = infoTemplate.format(
             name=plugin_name,
             version=plugin_version,
+            latest=plugin_latest,
             description=plugin_description,
             url=plugin_url)
 
