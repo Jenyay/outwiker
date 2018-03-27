@@ -1,155 +1,136 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
-import unittest
 import os.path
-from tempfile import mkdtemp
 
 from outwiker.core.pluginsloader import PluginsLoader
-from outwiker.core.tree import WikiDocument
-from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.html.htmlpage import HtmlPageFactory
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.pages.search.searchpage import SearchPageFactory
-from test.utils import removeDir
+from test.basetestcases import BaseOutWikerGUITest
 
 
-class PageStatisticsTest (unittest.TestCase):
+class PageStatisticsTest (BaseOutWikerGUITest):
     """Тесты плагина Statistics применительно к статистике страницы"""
-    def setUp (self):
-        self.__pluginname = "Statistics"
 
-        self.__createWiki()
+    def setUp(self):
+        self.__pluginname = "Statistics"
+        self.initApplication()
+        self.wikiroot = self.createWiki()
 
         dirlist = ["../plugins/statistics"]
 
-        self.loader = PluginsLoader(Application)
-        self.loader.load (dirlist)
+        self.loader = PluginsLoader(self.application)
+        self.loader.load(dirlist)
 
         filesPath = "../test/samplefiles/"
         self.files = ["accept.png", "add.png", "anchor.png", "dir"]
-        self.fullFilesPath = [os.path.join (filesPath, fname) for fname in self.files]
+        self.fullFilesPath = [os.path.join(filesPath, fname)
+                              for fname in self.files]
 
-
-    def tearDown (self):
-        removeDir (self.path)
+    def tearDown(self):
         self.loader.clear()
+        self.destroyApplication()
+        self.destroyWiki(self.wikiroot)
 
+    def testPluginLoad(self):
+        self.assertEqual(len(self.loader), 1)
 
-    def __createWiki (self):
-        # Здесь будет создаваться вики
-        self.path = mkdtemp (prefix='Абырвалг абыр')
-
-        self.wikiroot = WikiDocument.create (self.path)
-
-
-    def testPluginLoad (self):
-        self.assertEqual (len (self.loader), 1)
-
-
-    def testSymbolsCountWiki (self):
+    def testSymbolsCountWiki(self):
         from statistics.pagestat import PageStat
 
-        WikiPageFactory().create (self.wikiroot, "Страница 1", [])
+        WikiPageFactory().create(self.wikiroot, "Страница 1", [])
         testPage = self.wikiroot["Страница 1"]
 
         testPage.content = "Бла бла бла"
-        pageStat = PageStat (testPage)
+        pageStat = PageStat(testPage)
 
-        self.assertEqual (pageStat.symbols, 11)
+        self.assertEqual(pageStat.symbols, 11)
 
-
-    def testSymbolsCountHtml (self):
+    def testSymbolsCountHtml(self):
         from statistics.pagestat import PageStat
 
-        HtmlPageFactory().create (self.wikiroot, "Страница 1", [])
+        HtmlPageFactory().create(self.wikiroot, "Страница 1", [])
         testPage = self.wikiroot["Страница 1"]
 
         testPage.content = "Бла бла бла"
-        pageStat = PageStat (testPage)
+        pageStat = PageStat(testPage)
 
-        self.assertEqual (pageStat.symbols, 11)
+        self.assertEqual(pageStat.symbols, 11)
 
-
-    def testSymbolsCountText (self):
+    def testSymbolsCountText(self):
         from statistics.pagestat import PageStat
 
-        TextPageFactory().create (self.wikiroot, "Страница 1", [])
+        TextPageFactory().create(self.wikiroot, "Страница 1", [])
         testPage = self.wikiroot["Страница 1"]
 
         testPage.content = "Бла бла бла"
-        pageStat = PageStat (testPage)
+        pageStat = PageStat(testPage)
 
-        self.assertEqual (pageStat.symbols, 11)
+        self.assertEqual(pageStat.symbols, 11)
 
-
-    def testSymbolsCountSearch (self):
-        def runTest ():
+    def testSymbolsCountSearch(self):
+        def runTest():
             from statistics.pagestat import PageStat
 
-            SearchPageFactory().create (self.wikiroot, "Страница 1", [])
+            SearchPageFactory().create(self.wikiroot, "Страница 1", [])
             testPage = self.wikiroot["Страница 1"]
 
-            pageStat = PageStat (testPage)
+            pageStat = PageStat(testPage)
             pageStat.symbols
 
-        self.assertRaises (TypeError, runTest)
+        self.assertRaises(TypeError, runTest)
 
-
-    def testSymbolsNotWhiteSpacesWiki (self):
+    def testSymbolsNotWhiteSpacesWiki(self):
         from statistics.pagestat import PageStat
 
-        WikiPageFactory().create (self.wikiroot, "Страница 1", [])
+        WikiPageFactory().create(self.wikiroot, "Страница 1", [])
         testPage = self.wikiroot["Страница 1"]
 
         testPage.content = "Бла бла бла\r\n\t\t\tАбырвалг  "
-        pageStat = PageStat (testPage)
+        pageStat = PageStat(testPage)
 
-        self.assertEqual (pageStat.symbolsNotWhiteSpaces, 17)
+        self.assertEqual(pageStat.symbolsNotWhiteSpaces, 17)
 
-
-    def testSymbolsNotWhiteSpacesHtml (self):
+    def testSymbolsNotWhiteSpacesHtml(self):
         from statistics.pagestat import PageStat
 
-        HtmlPageFactory().create (self.wikiroot, "Страница 1", [])
+        HtmlPageFactory().create(self.wikiroot, "Страница 1", [])
         testPage = self.wikiroot["Страница 1"]
 
         testPage.content = "Бла бла бла\r\n\t\t\tАбырвалг  "
-        pageStat = PageStat (testPage)
+        pageStat = PageStat(testPage)
 
-        self.assertEqual (pageStat.symbolsNotWhiteSpaces, 17)
+        self.assertEqual(pageStat.symbolsNotWhiteSpaces, 17)
 
-
-    def testSymbolsNotWhiteSpacesText (self):
+    def testSymbolsNotWhiteSpacesText(self):
         from statistics.pagestat import PageStat
 
-        TextPageFactory().create (self.wikiroot, "Страница 1", [])
+        TextPageFactory().create(self.wikiroot, "Страница 1", [])
         testPage = self.wikiroot["Страница 1"]
 
         testPage.content = "Бла бла бла\r\n\t\t\tАбырвалг  "
-        pageStat = PageStat (testPage)
+        pageStat = PageStat(testPage)
 
-        self.assertEqual (pageStat.symbolsNotWhiteSpaces, 17)
+        self.assertEqual(pageStat.symbolsNotWhiteSpaces, 17)
 
-
-    def testSymbolsNotWhiteSpacesSearch (self):
-        def runTest ():
+    def testSymbolsNotWhiteSpacesSearch(self):
+        def runTest():
             from statistics.pagestat import PageStat
 
-            SearchPageFactory().create (self.wikiroot, "Страница 1", [])
+            SearchPageFactory().create(self.wikiroot, "Страница 1", [])
             testPage = self.wikiroot["Страница 1"]
 
-            pageStat = PageStat (testPage)
+            pageStat = PageStat(testPage)
             pageStat.symbolsNotWhiteSpaces
 
-        self.assertRaises (TypeError, runTest)
+        self.assertRaises(TypeError, runTest)
 
-
-    def testLinesWiki1 (self):
+    def testLinesWiki1(self):
         from statistics.pagestat import PageStat
 
-        WikiPageFactory().create (self.wikiroot, "Страница 1", [])
+        WikiPageFactory().create(self.wikiroot, "Страница 1", [])
         testPage = self.wikiroot["Страница 1"]
 
         testPage.content = """Бла бла бла
@@ -157,15 +138,14 @@ class PageStatisticsTest (unittest.TestCase):
 И еще строка
 Последняя строка"""
 
-        pageStat = PageStat (testPage)
+        pageStat = PageStat(testPage)
 
-        self.assertEqual (pageStat.lines, 4)
+        self.assertEqual(pageStat.lines, 4)
 
-
-    def testLinesWiki2 (self):
+    def testLinesWiki2(self):
         from statistics.pagestat import PageStat
 
-        WikiPageFactory().create (self.wikiroot, "Страница 1", [])
+        WikiPageFactory().create(self.wikiroot, "Страница 1", [])
         testPage = self.wikiroot["Страница 1"]
 
         testPage.content = """Бла бла бла
@@ -177,15 +157,14 @@ class PageStatisticsTest (unittest.TestCase):
 
 """
 
-        pageStat = PageStat (testPage)
+        pageStat = PageStat(testPage)
 
-        self.assertEqual (pageStat.lines, 4)
+        self.assertEqual(pageStat.lines, 4)
 
-
-    def testLinesHtml1 (self):
+    def testLinesHtml1(self):
         from statistics.pagestat import PageStat
 
-        HtmlPageFactory().create (self.wikiroot, "Страница 1", [])
+        HtmlPageFactory().create(self.wikiroot, "Страница 1", [])
         testPage = self.wikiroot["Страница 1"]
 
         testPage.content = """Бла бла бла
@@ -193,15 +172,14 @@ class PageStatisticsTest (unittest.TestCase):
 И еще строка
 Последняя строка"""
 
-        pageStat = PageStat (testPage)
+        pageStat = PageStat(testPage)
 
-        self.assertEqual (pageStat.lines, 4)
+        self.assertEqual(pageStat.lines, 4)
 
-
-    def testLinesHtml2 (self):
+    def testLinesHtml2(self):
         from statistics.pagestat import PageStat
 
-        HtmlPageFactory().create (self.wikiroot, "Страница 1", [])
+        HtmlPageFactory().create(self.wikiroot, "Страница 1", [])
         testPage = self.wikiroot["Страница 1"]
 
         testPage.content = """Бла бла бла
@@ -213,15 +191,14 @@ class PageStatisticsTest (unittest.TestCase):
 
 """
 
-        pageStat = PageStat (testPage)
+        pageStat = PageStat(testPage)
 
-        self.assertEqual (pageStat.lines, 4)
+        self.assertEqual(pageStat.lines, 4)
 
-
-    def testLinesText1 (self):
+    def testLinesText1(self):
         from statistics.pagestat import PageStat
 
-        TextPageFactory().create (self.wikiroot, "Страница 1", [])
+        TextPageFactory().create(self.wikiroot, "Страница 1", [])
         testPage = self.wikiroot["Страница 1"]
 
         testPage.content = """Бла бла бла
@@ -229,15 +206,14 @@ class PageStatisticsTest (unittest.TestCase):
 И еще строка
 Последняя строка"""
 
-        pageStat = PageStat (testPage)
+        pageStat = PageStat(testPage)
 
-        self.assertEqual (pageStat.lines, 4)
+        self.assertEqual(pageStat.lines, 4)
 
-
-    def testLinesText2 (self):
+    def testLinesText2(self):
         from statistics.pagestat import PageStat
 
-        TextPageFactory().create (self.wikiroot, "Страница 1", [])
+        TextPageFactory().create(self.wikiroot, "Страница 1", [])
         testPage = self.wikiroot["Страница 1"]
 
         testPage.content = """Бла бла бла
@@ -249,15 +225,14 @@ class PageStatisticsTest (unittest.TestCase):
 
 """
 
-        pageStat = PageStat (testPage)
+        pageStat = PageStat(testPage)
 
-        self.assertEqual (pageStat.lines, 4)
+        self.assertEqual(pageStat.lines, 4)
 
-
-    def testWordsWiki1 (self):
+    def testWordsWiki1(self):
         from statistics.pagestat import PageStat
 
-        WikiPageFactory().create (self.wikiroot, "Страница 1", [])
+        WikiPageFactory().create(self.wikiroot, "Страница 1", [])
         testPage = self.wikiroot["Страница 1"]
 
         testPage.content = """Бла бла бла
@@ -269,15 +244,14 @@ class PageStatisticsTest (unittest.TestCase):
 
 """
 
-        pageStat = PageStat (testPage)
+        pageStat = PageStat(testPage)
 
-        self.assertEqual (pageStat.words, 11)
+        self.assertEqual(pageStat.words, 11)
 
-
-    def testWordsWiki2 (self):
+    def testWordsWiki2(self):
         from statistics.pagestat import PageStat
 
-        WikiPageFactory().create (self.wikiroot, "Страница 1", [])
+        WikiPageFactory().create(self.wikiroot, "Страница 1", [])
         testPage = self.wikiroot["Страница 1"]
 
         testPage.content = """Бла бла бла.
@@ -289,15 +263,14 @@ class PageStatisticsTest (unittest.TestCase):
 
 """
 
-        pageStat = PageStat (testPage)
+        pageStat = PageStat(testPage)
 
-        self.assertEqual (pageStat.words, 13)
+        self.assertEqual(pageStat.words, 13)
 
-
-    def testWordsHtml1 (self):
+    def testWordsHtml1(self):
         from statistics.pagestat import PageStat
 
-        HtmlPageFactory().create (self.wikiroot, "Страница 1", [])
+        HtmlPageFactory().create(self.wikiroot, "Страница 1", [])
         testPage = self.wikiroot["Страница 1"]
 
         testPage.content = """Бла бла бла
@@ -309,15 +282,14 @@ class PageStatisticsTest (unittest.TestCase):
 
 """
 
-        pageStat = PageStat (testPage)
+        pageStat = PageStat(testPage)
 
-        self.assertEqual (pageStat.words, 11)
+        self.assertEqual(pageStat.words, 11)
 
-
-    def testWordsHtml2 (self):
+    def testWordsHtml2(self):
         from statistics.pagestat import PageStat
 
-        HtmlPageFactory().create (self.wikiroot, "Страница 1", [])
+        HtmlPageFactory().create(self.wikiroot, "Страница 1", [])
         testPage = self.wikiroot["Страница 1"]
 
         testPage.content = """Бла бла бла.
@@ -329,15 +301,14 @@ class PageStatisticsTest (unittest.TestCase):
 
 """
 
-        pageStat = PageStat (testPage)
+        pageStat = PageStat(testPage)
 
-        self.assertEqual (pageStat.words, 13)
+        self.assertEqual(pageStat.words, 13)
 
-
-    def testWordsText1 (self):
+    def testWordsText1(self):
         from statistics.pagestat import PageStat
 
-        TextPageFactory().create (self.wikiroot, "Страница 1", [])
+        TextPageFactory().create(self.wikiroot, "Страница 1", [])
         testPage = self.wikiroot["Страница 1"]
 
         testPage.content = """Бла бла бла
@@ -349,15 +320,14 @@ class PageStatisticsTest (unittest.TestCase):
 
 """
 
-        pageStat = PageStat (testPage)
+        pageStat = PageStat(testPage)
 
-        self.assertEqual (pageStat.words, 11)
+        self.assertEqual(pageStat.words, 11)
 
-
-    def testWordsText2 (self):
+    def testWordsText2(self):
         from statistics.pagestat import PageStat
 
-        TextPageFactory().create (self.wikiroot, "Страница 1", [])
+        TextPageFactory().create(self.wikiroot, "Страница 1", [])
         testPage = self.wikiroot["Страница 1"]
 
         testPage.content = """Бла бла бла.
@@ -369,137 +339,126 @@ class PageStatisticsTest (unittest.TestCase):
 
 """
 
-        pageStat = PageStat (testPage)
+        pageStat = PageStat(testPage)
 
-        self.assertEqual (pageStat.words, 13)
+        self.assertEqual(pageStat.words, 13)
 
-
-    def testWordsSearch (self):
-        def runTest ():
+    def testWordsSearch(self):
+        def runTest():
             from statistics.pagestat import PageStat
 
-            SearchPageFactory().create (self.wikiroot, "Страница 1", [])
+            SearchPageFactory().create(self.wikiroot, "Страница 1", [])
             testPage = self.wikiroot["Страница 1"]
 
-            pageStat = PageStat (testPage)
+            pageStat = PageStat(testPage)
             pageStat.words
 
-        self.assertRaises (TypeError, runTest)
+        self.assertRaises(TypeError, runTest)
 
-
-    def testAttachmentsCountWiki1 (self):
+    def testAttachmentsCountWiki1(self):
         from statistics.pagestat import PageStat
 
-        WikiPageFactory().create (self.wikiroot, "Страница 1", [])
+        WikiPageFactory().create(self.wikiroot, "Страница 1", [])
         testPage = self.wikiroot["Страница 1"]
 
-        pageStat = PageStat (testPage)
+        pageStat = PageStat(testPage)
 
-        self.assertEqual (pageStat.attachmentsCount, 0)
+        self.assertEqual(pageStat.attachmentsCount, 0)
 
-
-    def testAttachmentsCountWiki2 (self):
+    def testAttachmentsCountWiki2(self):
         from statistics.pagestat import PageStat
 
-        WikiPageFactory().create (self.wikiroot, "Страница 1", [])
+        WikiPageFactory().create(self.wikiroot, "Страница 1", [])
         testPage = self.wikiroot["Страница 1"]
-        Attachment (testPage).attach (self.fullFilesPath[0:1])
+        Attachment(testPage).attach(self.fullFilesPath[0:1])
 
-        pageStat = PageStat (testPage)
+        pageStat = PageStat(testPage)
 
-        self.assertEqual (pageStat.attachmentsCount, 1)
+        self.assertEqual(pageStat.attachmentsCount, 1)
 
-
-    def testAttachmentsCountWiki3 (self):
+    def testAttachmentsCountWiki3(self):
         from statistics.pagestat import PageStat
 
-        WikiPageFactory().create (self.wikiroot, "Страница 1", [])
+        WikiPageFactory().create(self.wikiroot, "Страница 1", [])
         testPage = self.wikiroot["Страница 1"]
-        Attachment (testPage).attach (self.fullFilesPath[0:3])
+        Attachment(testPage).attach(self.fullFilesPath[0:3])
 
-        pageStat = PageStat (testPage)
+        pageStat = PageStat(testPage)
 
-        self.assertEqual (pageStat.attachmentsCount, 3)
+        self.assertEqual(pageStat.attachmentsCount, 3)
 
-
-    def testAttachmentsCountWiki4 (self):
+    def testAttachmentsCountWiki4(self):
         from statistics.pagestat import PageStat
 
-        WikiPageFactory().create (self.wikiroot, "Страница 1", [])
+        WikiPageFactory().create(self.wikiroot, "Страница 1", [])
         testPage = self.wikiroot["Страница 1"]
-        Attachment (testPage).attach (self.fullFilesPath)
+        Attachment(testPage).attach(self.fullFilesPath)
 
-        pageStat = PageStat (testPage)
+        pageStat = PageStat(testPage)
 
-        self.assertEqual (pageStat.attachmentsCount, 6)
+        self.assertEqual(pageStat.attachmentsCount, 6)
 
-
-    def testAttachmentsCountSearch1 (self):
+    def testAttachmentsCountSearch1(self):
         from statistics.pagestat import PageStat
 
-        SearchPageFactory().create (self.wikiroot, "Страница 1", [])
+        SearchPageFactory().create(self.wikiroot, "Страница 1", [])
         testPage = self.wikiroot["Страница 1"]
-        Attachment (testPage).attach (self.fullFilesPath)
+        Attachment(testPage).attach(self.fullFilesPath)
 
-        pageStat = PageStat (testPage)
+        pageStat = PageStat(testPage)
 
-        self.assertEqual (pageStat.attachmentsCount, 6)
+        self.assertEqual(pageStat.attachmentsCount, 6)
 
-
-    def testAttachmentsSizeWiki1 (self):
+    def testAttachmentsSizeWiki1(self):
         from statistics.pagestat import PageStat
 
-        WikiPageFactory().create (self.wikiroot, "Страница 1", [])
+        WikiPageFactory().create(self.wikiroot, "Страница 1", [])
         testPage = self.wikiroot["Страница 1"]
 
-        pageStat = PageStat (testPage)
+        pageStat = PageStat(testPage)
 
-        self.assertEqual (pageStat.attachmentsSize, 0)
+        self.assertEqual(pageStat.attachmentsSize, 0)
 
-
-    def testAttachmentsSizeWiki2 (self):
+    def testAttachmentsSizeWiki2(self):
         from statistics.pagestat import PageStat
 
-        WikiPageFactory().create (self.wikiroot, "Страница 1", [])
+        WikiPageFactory().create(self.wikiroot, "Страница 1", [])
         testPage = self.wikiroot["Страница 1"]
-        Attachment (testPage).attach (self.fullFilesPath[0:1])
+        Attachment(testPage).attach(self.fullFilesPath[0:1])
 
-        pageStat = PageStat (testPage)
+        pageStat = PageStat(testPage)
 
-        self.assertEqual (pageStat.attachmentsSize, 781)
+        self.assertEqual(pageStat.attachmentsSize, 781)
 
-
-    def testAttachmentsSizeWiki3 (self):
+    def testAttachmentsSizeWiki3(self):
         from statistics.pagestat import PageStat
 
-        WikiPageFactory().create (self.wikiroot, "Страница 1", [])
+        WikiPageFactory().create(self.wikiroot, "Страница 1", [])
         testPage = self.wikiroot["Страница 1"]
-        Attachment (testPage).attach (self.fullFilesPath[0:3])
+        Attachment(testPage).attach(self.fullFilesPath[0:3])
 
-        pageStat = PageStat (testPage)
+        pageStat = PageStat(testPage)
 
-        self.assertEqual (pageStat.attachmentsSize, 2037)
+        self.assertEqual(pageStat.attachmentsSize, 2037)
 
-
-    def testAttachmentsSizeWiki4 (self):
+    def testAttachmentsSizeWiki4(self):
         from statistics.pagestat import PageStat
 
-        WikiPageFactory().create (self.wikiroot, "Страница 1", [])
+        WikiPageFactory().create(self.wikiroot, "Страница 1", [])
         testPage = self.wikiroot["Страница 1"]
-        Attachment (testPage).attach (self.fullFilesPath)
+        Attachment(testPage).attach(self.fullFilesPath)
 
-        pageStat = PageStat (testPage)
+        pageStat = PageStat(testPage)
 
-        self.assertAlmostEqual (pageStat.attachmentsSize, 11771, delta=300)
+        self.assertAlmostEqual(pageStat.attachmentsSize, 11771, delta=300)
 
-
-    def testAttachmentsSizeSearch1 (self):
+    def testAttachmentsSizeSearch1(self):
         from statistics.pagestat import PageStat
 
-        SearchPageFactory().create (self.wikiroot, "Страница 1", [])
+        SearchPageFactory().create(self.wikiroot, "Страница 1", [])
         testPage = self.wikiroot["Страница 1"]
-        Attachment (testPage).attach (self.fullFilesPath)
+        Attachment(testPage).attach(self.fullFilesPath)
 
-        pageStat = PageStat (testPage)
+        pageStat = PageStat(testPage)
 
-        self.assertAlmostEqual (pageStat.attachmentsSize, 11771, delta=300)
+        self.assertAlmostEqual(pageStat.attachmentsSize, 11771, delta=300)
