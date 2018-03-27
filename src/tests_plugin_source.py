@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from gettext import NullTranslations
 import unittest
 
 from test.plugins.source.test_source import SourcePluginTest
@@ -14,5 +13,4 @@ from test.plugins.source.test_loading import SourceLoadingTest
 
 
 if __name__ == '__main__':
-    NullTranslations().install()
     unittest.main()

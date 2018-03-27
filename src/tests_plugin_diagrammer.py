@@ -1,12 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""
-Unit-тесты
-"""
-
-from gettext import NullTranslations
-
 import unittest
 
 from test.plugins.diagrammer.test_diagrammer import DiagrammerTest
@@ -18,5 +12,4 @@ from test.plugins.diagrammer.test_loading import DiagrammerLoadingTest
 
 
 if __name__ == '__main__':
-    NullTranslations().install()
     unittest.main()

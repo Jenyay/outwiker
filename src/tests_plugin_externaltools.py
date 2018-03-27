@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from gettext import NullTranslations
 import unittest
 
 from test.plugins.externaltools.test_loading import ExternalToolsLoadingTest
@@ -12,5 +11,4 @@ from test.plugins.externaltools.test_execdialog import ExecDialogTest
 
 
 if __name__ == '__main__':
-    NullTranslations().install()
     unittest.main()

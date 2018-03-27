@@ -5,11 +5,12 @@ import logging
 import os
 import sys
 
-from outwiker.gui.owapplication import OutWikerApplication
+from outwiker.core.application import Application
 from outwiker.core.system import getOS, getConfigPath
 from outwiker.core.i18n import initLocale
 from outwiker.core.starter import Starter, StarterExit
 from outwiker.core.system import getSpecialDirList
+from outwiker.gui.owapplication import OutWikerApplication
 
 
 logger = logging.getLogger('outwiker')
@@ -25,7 +26,10 @@ if __name__ == "__main__":
     getOS().migrateConfig()
 
     config_path = getConfigPath()
-    outwiker = OutWikerApplication(config_path)
+    application = Application
+    application.init(config_path)
+    outwiker = OutWikerApplication(application)
+
     outwiker.initLogger()
     print_info()
 

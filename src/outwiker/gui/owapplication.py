@@ -7,7 +7,6 @@ from gettext import NullTranslations
 
 import wx
 
-from outwiker.core.application import Application
 from outwiker.core.commands import registerActions
 from outwiker.core.defines import APP_DATA_DEBUG, APP_DATA_DISABLE_MINIMIZING
 from outwiker.core.logredirector import LogRedirector
@@ -21,11 +20,9 @@ class OutWikerApplication(wx.App):
     """
     OutWiker application class
     """
-    def __init__(self, config_path):
+    def __init__(self, application):
         self.logFileName = u"outwiker.log"
-        self._fullConfigPath = config_path
-        self._application = Application
-        self._application.init(self._fullConfigPath)
+        self._application = application
 
         if APP_DATA_DEBUG not in self._application.sharedData:
             config = GeneralGuiConfig(self._application.config)
@@ -68,8 +65,10 @@ class OutWikerApplication(wx.App):
                  if self._application.sharedData.get(APP_DATA_DEBUG, False)
                  else logging.WARNING)
 
-        redirector = LogRedirector(self.getLogFileName(self._fullConfigPath),
-                                   level)
+        redirector = LogRedirector(
+            self.getLogFileName(self._application.fullConfigPath),
+            level)
+
         redirector.init()
         wx.Log.SetLogLevel(0)
 
