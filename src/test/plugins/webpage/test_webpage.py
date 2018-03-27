@@ -1,136 +1,133 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
+
+import os.path
+from tempfile import mkdtemp
 
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.tree import WikiDocument
-from outwiker.core.application import Application
 from outwiker.core.factoryselector import FactorySelector
 from outwiker.pages.text.textpage import TextPageFactory
+from test.basetestcases import BaseOutWikerGUITest
+from test.utils import removeDir
 
-from test.guitests.basemainwnd import BaseMainWndTest
 
-
-class WebPageTest (BaseMainWndTest):
+class WebPageTest (BaseOutWikerGUITest):
     """WebPage plugin tests"""
 
-    def setUp (self):
-        super (WebPageTest, self).setUp ()
+    def setUp(self):
+        self.initApplication()
 
         self.dirlist = ["../plugins/webpage"]
+        self.path = mkdtemp(prefix='OutWiker_Абырвалг абырвалг_' + str(self.__class__.__name__))
 
-        self.loader = PluginsLoader(Application)
-        self.loader.load (self.dirlist)
+        self.loader = PluginsLoader(self.application)
+        self.loader.load(self.dirlist)
 
-
-    def tearDown (self):
-        Application.selectedPage = None
-        Application.wikiroot = None
+    def tearDown(self):
+        self.application.selectedPage = None
+        self.application.wikiroot = None
         self.loader.clear()
-        super (WebPageTest, self).tearDown ()
+        self.destroyApplication()
+        if os.path.exists(self.path):
+            removeDir(self.path)
 
+    def testPluginLoad(self):
+        self.assertEqual(len(self.loader), 1)
 
-    def testPluginLoad (self):
-        self.assertEqual (len (self.loader), 1)
-
-
-    def testCreate (self):
+    def testCreate(self):
         from webpage.webnotepage import WebPageFactory, WebNotePage
 
-        wikiroot = WikiDocument.create (self.path)
-        test_page = WebPageFactory().create (wikiroot, "Страница 1", [])
-        self.assertEqual (type (test_page), WebNotePage)
+        wikiroot = WikiDocument.create(self.path)
+        test_page = WebPageFactory().create(wikiroot, "Страница 1", [])
+        self.assertEqual(type(test_page), WebNotePage)
 
-        self.assertEqual (
-            type (FactorySelector.getFactory (WebNotePage.getTypeString())),
+        self.assertEqual(
+            type(FactorySelector.getFactory(WebNotePage.getTypeString())),
             WebPageFactory)
 
         self.loader.clear()
-        self.assertEqual (type (FactorySelector.getFactory (WebNotePage.getTypeString())),
-                          TextPageFactory)
+        self.assertEqual(type(FactorySelector.getFactory(WebNotePage.getTypeString())),
+                         TextPageFactory)
 
-        self.loader.load (self.dirlist)
+        self.loader.load(self.dirlist)
 
-        self.assertEqual (type (FactorySelector.getFactory (WebNotePage.getTypeString())),
-                          WebPageFactory)
+        self.assertEqual(type(FactorySelector.getFactory(WebNotePage.getTypeString())),
+                         WebPageFactory)
 
-
-    def testClear_01 (self):
+    def testClear_01(self):
         from webpage.webnotepage import WebPageFactory
 
-        wikiroot = WikiDocument.create (self.path)
-        Application.wikiroot = wikiroot
+        wikiroot = WikiDocument.create(self.path)
+        self.application.wikiroot = wikiroot
 
-        test_page = WebPageFactory().create (wikiroot, "Страница 1", [])
-        Application.selectedPage = test_page
+        test_page = WebPageFactory().create(wikiroot, "Страница 1", [])
+        self.application.selectedPage = test_page
 
         self.loader.clear()
 
-
-    def testClear_02 (self):
+    def testClear_02(self):
         from webpage.webnotepage import WebPageFactory
 
-        wikiroot = WikiDocument.create (self.path)
-        Application.wikiroot = wikiroot
+        wikiroot = WikiDocument.create(self.path)
+        self.application.wikiroot = wikiroot
 
-        test_page = WebPageFactory().create (wikiroot, "Страница 1", [])
-        Application.selectedPage = test_page
-        Application.selectedPage = None
+        test_page = WebPageFactory().create(wikiroot, "Страница 1", [])
+        self.application.selectedPage = test_page
+        self.application.selectedPage = None
 
         self.loader.clear()
 
-
-    def testPageView (self):
+    def testPageView(self):
         from webpage.webnotepage import WebPageFactory
         from webpage.gui.webpageview import WebPageView
 
-        wikiroot = WikiDocument.create (self.path)
-        test_page = WebPageFactory().create (wikiroot, "Страница 1", [])
+        wikiroot = WikiDocument.create(self.path)
+        test_page = WebPageFactory().create(wikiroot, "Страница 1", [])
 
-        Application.wikiroot = wikiroot
-        Application.selectedPage = test_page
+        self.application.wikiroot = wikiroot
+        self.application.selectedPage = test_page
 
-        pageview = Application.mainWindow.pagePanel.pageView
-        self.assertEqual (type (pageview), WebPageView)
+        pageview = self.application.mainWindow.pagePanel.pageView
+        self.assertEqual(type(pageview), WebPageView)
 
-
-    def testLoadContent (self):
+    def testLoadContent(self):
         from webpage.webnotepage import WebPageFactory
 
-        wikiroot = WikiDocument.create (self.path)
-        test_page = WebPageFactory().create (wikiroot, "Страница 1", [])
+        wikiroot = WikiDocument.create(self.path)
+        test_page = WebPageFactory().create(wikiroot, "Страница 1", [])
 
         test_page.content = "Абырвалг"
 
-        Application.wikiroot = wikiroot
-        Application.selectedPage = test_page
+        self.application.wikiroot = wikiroot
+        self.application.selectedPage = test_page
 
-        pageview = Application.mainWindow.pagePanel.pageView
+        pageview = self.application.mainWindow.pagePanel.pageView
         pageContent = pageview.codeEditor.GetText()
 
-        self.assertEqual (pageContent, "Абырвалг")
+        self.assertEqual(pageContent, "Абырвалг")
 
-
-    def testChangeContent (self):
+    def testChangeContent(self):
         from webpage.webnotepage import WebPageFactory
 
-        wikiroot = WikiDocument.create (self.path)
-        test_page = WebPageFactory().create (wikiroot, "Страница 1", [])
+        wikiroot = WikiDocument.create(self.path)
+        test_page = WebPageFactory().create(wikiroot, "Страница 1", [])
         test_page.content = "Абырвалг"
 
-        Application.wikiroot = wikiroot
-        Application.selectedPage = test_page
+        self.application.wikiroot = wikiroot
+        self.application.selectedPage = test_page
 
-        pageview = Application.mainWindow.pagePanel.pageView
-        pageview.codeEditor.SetText ("Бла-бла-бла")
+        pageview = self.application.mainWindow.pagePanel.pageView
+        pageview.codeEditor.SetText("Бла-бла-бла")
         pageview.Save()
 
-        Application.selectedPage = None
-        Application.wikiroot = None
+        self.application.selectedPage = None
+        self.application.wikiroot = None
 
-        wikiroot_other = WikiDocument.load (self.path)
-        Application.wikiroot = wikiroot_other
-        Application.selectedPage = wikiroot_other["Страница 1"]
+        wikiroot_other = WikiDocument.load(self.path)
+        self.application.wikiroot = wikiroot_other
+        self.application.selectedPage = wikiroot_other["Страница 1"]
 
-        pageview = Application.mainWindow.pagePanel.pageView
+        pageview = self.application.mainWindow.pagePanel.pageView
         pageContent = pageview.codeEditor.GetText()
 
-        self.assertEqual (pageContent, "Бла-бла-бла")
+        self.assertEqual(pageContent, "Бла-бла-бла")
