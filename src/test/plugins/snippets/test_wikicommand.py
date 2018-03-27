@@ -1,30 +1,29 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os
-import unittest
-from tempfile import mkdtemp
 
-from outwiker.core.application import Application
 from outwiker.core.pluginsloader import PluginsLoader
-from outwiker.core.tree import WikiDocument
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
 from outwiker.utilites.textfile import writeTextFile
 from test.utils import removeDir
+from test.basetestcases import BaseOutWikerGUITest
 
 
-class SnippetsWikiCommandTest(unittest.TestCase):
-
+class SnippetsWikiCommandTest(BaseOutWikerGUITest):
     def setUp(self):
+        self.initApplication()
+        self.wikiroot = self.createWiki()
+        self.testPage = WikiPageFactory().create(self.wikiroot,
+                                                 "Страница 1",
+                                                 [])
         plugins_dir = ["../plugins/snippets"]
 
-        self.loader = PluginsLoader(Application)
+        self.loader = PluginsLoader(self.application)
         self.loader.load(plugins_dir)
-        self._createWiki()
-        self._application = Application
 
         factory = ParserFactory()
-        self.parser = factory.make(self.testPage, self._application.config)
+        self.parser = factory.make(self.testPage, self.application.config)
 
         from snippets.utils import getSnippetsDir
         root_snippets_dir = getSnippetsDir()
@@ -36,17 +35,10 @@ class SnippetsWikiCommandTest(unittest.TestCase):
 
     def tearDown(self):
         self.loader.clear()
-        self._application.wikiroot = None
-        removeDir(self.path)
+        self.application.wikiroot = None
         removeDir(self._snippets_dir)
-
-    def _createWiki(self):
-        self.path = mkdtemp(prefix='Абырвалг абыр')
-
-        self.wikiroot = WikiDocument.create(self.path)
-
-        WikiPageFactory().create(self.wikiroot, "Страница 1", [])
-        self.testPage = self.wikiroot["Страница 1"]
+        self.destroyApplication()
+        self.destroyWiki(self.wikiroot)
 
     def test_empty(self):
         # from snippets.utils import getSnippetsDir

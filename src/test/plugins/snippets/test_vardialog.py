@@ -1,17 +1,16 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
-from outwiker.core.application import Application
 from outwiker.core.pluginsloader import PluginsLoader
-from test.guitests.basemainwnd import BaseMainWndTest
+from test.basetestcases import BaseOutWikerGUITest
 
 
-class SnippetsVarDialogTest(BaseMainWndTest):
+class SnippetsVarDialogTest(BaseOutWikerGUITest):
     def setUp(self):
-        BaseMainWndTest.setUp(self)
-        mainWnd = Application.mainWindow
+        self.initApplication()
+        mainWnd = self.application.mainWindow
         plugins_dir = ["../plugins/snippets"]
 
-        self.loader = PluginsLoader(Application)
+        self.loader = PluginsLoader(self.application)
         self.loader.load(plugins_dir)
 
         from snippets.gui.variablesdialog import VariablesDialog
@@ -20,7 +19,7 @@ class SnippetsVarDialogTest(BaseMainWndTest):
     def tearDown(self):
         self._dialog.Destroy()
         self.loader.clear()
-        BaseMainWndTest.tearDown(self)
+        self.destroyApplication()
 
     def test_empty(self):
         variables = self._dialog.getVarDict()

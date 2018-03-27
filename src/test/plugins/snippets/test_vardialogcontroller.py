@@ -1,51 +1,39 @@
-# -*- coding: UTF-8 -*-
-
-from tempfile import mkdtemp
+# -*- coding: utf-8 -*-
 
 import wx
 
-from outwiker.core.application import Application
 from outwiker.core.pluginsloader import PluginsLoader
-from outwiker.core.tree import WikiDocument
 from outwiker.pages.wiki.wikipage import WikiPageFactory
-from test.guitests.basemainwnd import BaseMainWndTest
-from test.utils import removeDir
+from test.basetestcases import BaseOutWikerGUITest
 
 
-class SnippetsVarDialogControllerTest(BaseMainWndTest):
+class SnippetsVarDialogControllerTest(BaseOutWikerGUITest):
     def setUp(self):
-        BaseMainWndTest.setUp(self)
+        self.initApplication()
+        self.wikiroot = self.createWiki()
+        self.testPage = WikiPageFactory().create(self.wikiroot,
+                                                 "Страница 1",
+                                                 [])
         plugins_dir = ["../plugins/snippets"]
-        self._createWiki()
-        self._application = Application
-        self._createWiki()
-        self._application.wikiroot = self.wikiroot
+        self.application.wikiroot = self.wikiroot
 
-        self.loader = PluginsLoader(Application)
+        self.loader = PluginsLoader(self.application)
         self.loader.load(plugins_dir)
 
         from snippets.gui.variablesdialog import VariablesDialogController
-        self._controller = VariablesDialogController(self._application)
+        self._controller = VariablesDialogController(self.application)
 
     def tearDown(self):
         self._controller.destroy()
-        BaseMainWndTest.tearDown(self)
-        removeDir(self.path)
         self.loader.clear()
-
-    def _createWiki(self):
-        self.path = mkdtemp(prefix='Абырвалг абыр')
-
-        self.wikiroot = WikiDocument.create(self.path)
-
-        WikiPageFactory().create(self.wikiroot, "Страница 1", [])
-        self.testPage = self.wikiroot["Страница 1"]
+        self.destroyApplication()
+        self.destroyWiki(self.wikiroot)
 
     def test_empty(self):
         seltext = ''
         template = ''
         template_name = 'template'
-        self._application.selectedPage = self.testPage
+        self.application.selectedPage = self.testPage
 
         right_result = ''
 
@@ -59,7 +47,7 @@ class SnippetsVarDialogControllerTest(BaseMainWndTest):
         seltext = ''
         template = 'Шаблон'
         template_name = 'template'
-        self._application.selectedPage = self.testPage
+        self.application.selectedPage = self.testPage
 
         right_result = 'Шаблон'
 
@@ -73,7 +61,7 @@ class SnippetsVarDialogControllerTest(BaseMainWndTest):
         seltext = ''
         template = '{{__title}}'
         template_name = 'template'
-        self._application.selectedPage = self.testPage
+        self.application.selectedPage = self.testPage
 
         right_result = 'Страница 1'
 
@@ -89,7 +77,7 @@ class SnippetsVarDialogControllerTest(BaseMainWndTest):
         seltext = ''
         template = '{{__title}}'
         template_name = 'template'
-        self._application.selectedPage = self.testPage
+        self.application.selectedPage = self.testPage
 
         right_result = 'Псевдоним'
 
@@ -103,7 +91,7 @@ class SnippetsVarDialogControllerTest(BaseMainWndTest):
         seltext = ''
         template = 'Шаблон'
         template_name = 'template'
-        self._application.selectedPage = None
+        self.application.selectedPage = None
 
         right_result = 'Шаблон'
 
@@ -117,7 +105,7 @@ class SnippetsVarDialogControllerTest(BaseMainWndTest):
         seltext = ''
         template = 'Переменная = {{varname}}'
         template_name = 'template'
-        self._application.selectedPage = None
+        self.application.selectedPage = None
 
         right_result = 'Переменная = Абырвалг'
 
@@ -136,7 +124,7 @@ class SnippetsVarDialogControllerTest(BaseMainWndTest):
         seltext = ''
         template = 'Переменная = {{varname1}} = {{varname2}}'
         template_name = 'template'
-        self._application.selectedPage = None
+        self.application.selectedPage = None
 
         right_result = 'Переменная = Абырвалг1 = Абырвалг2'
 
@@ -157,7 +145,7 @@ class SnippetsVarDialogControllerTest(BaseMainWndTest):
         seltext = ''
         template = ''
         template_name = 'template'
-        self._application.selectedPage = None
+        self.application.selectedPage = None
 
         right_result = '(:snip file="template":)(:snipend:)'
 
@@ -172,7 +160,7 @@ class SnippetsVarDialogControllerTest(BaseMainWndTest):
         seltext = ''
         template = ''
         template_name = 'template'
-        self._application.selectedPage = None
+        self.application.selectedPage = None
 
         right_result = '(:snip file="template":)(:snipend:)'
 
@@ -187,7 +175,7 @@ class SnippetsVarDialogControllerTest(BaseMainWndTest):
         seltext = ''
         template = ''
         template_name = 'snippets\\template'
-        self._application.selectedPage = None
+        self.application.selectedPage = None
 
         right_result = '(:snip file="snippets/template":)(:snipend:)'
 
@@ -202,7 +190,7 @@ class SnippetsVarDialogControllerTest(BaseMainWndTest):
         seltext = ''
         template = '{{varname}}'
         template_name = 'template'
-        self._application.selectedPage = None
+        self.application.selectedPage = None
 
         right_result = '(:snip file="template" varname="Абырвалг":)(:snipend:)'
 
@@ -221,7 +209,7 @@ class SnippetsVarDialogControllerTest(BaseMainWndTest):
         seltext = ''
         template = '{{aaa}} {{ccc}} {{x}} {{a}}'
         template_name = 'template'
-        self._application.selectedPage = None
+        self.application.selectedPage = None
 
         right_result = '(:snip file="template" a="aaaaa" aaa="aaaaa" ccc="ccccc" x="xxxxx":)(:snipend:)'
 

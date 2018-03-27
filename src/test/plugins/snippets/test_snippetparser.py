@@ -2,41 +2,33 @@
 
 from datetime import datetime
 import os
-import unittest
-from tempfile import mkdtemp
 
-from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
 from outwiker.core.pluginsloader import PluginsLoader
-from outwiker.core.tree import WikiDocument
 from outwiker.pages.wiki.wikipage import WikiPageFactory
-from test.utils import removeDir
+from test.basetestcases import BaseOutWikerGUITest
 
 
-class SnippetParserTest(unittest.TestCase):
+class SnippetParserTest(BaseOutWikerGUITest):
     def setUp(self):
+        self.initApplication()
+        self.wikiroot = self.createWiki()
+        self.testPage = WikiPageFactory().create(self.wikiroot,
+                                                 "Страница 1",
+                                                 [])
         plugins_dir = ["../plugins/snippets"]
 
-        self.loader = PluginsLoader(Application)
+        self.loader = PluginsLoader(self.application)
         self.loader.load(plugins_dir)
-        self._createWiki()
-        self._application = Application
 
-        self._application.wikiroot = self.wikiroot
-        self._application.selectedPage = self.testPage
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = self.testPage
 
     def tearDown(self):
-        self._application.wikiroot = None
-        removeDir(self.path)
+        self.application.wikiroot = None
         self.loader.clear()
-
-    def _createWiki(self):
-        self.path = mkdtemp(prefix='Абырвалг абыр')
-
-        self.wikiroot = WikiDocument.create(self.path)
-
-        WikiPageFactory().create(self.wikiroot, "Страница 1", [])
-        self.testPage = self.wikiroot["Страница 1"]
+        self.destroyApplication()
+        self.destroyWiki(self.wikiroot)
 
     def test_empty(self):
         from snippets.snippetparser import SnippetParser
@@ -48,7 +40,7 @@ class SnippetParserTest(unittest.TestCase):
         right_variables = set()
 
         page = self.testPage
-        parser = SnippetParser(template, '.', self._application)
+        parser = SnippetParser(template, '.', self.application)
         result = parser.process(selectedText, page, **vars)
         variables = parser.getVariables()
 
@@ -65,7 +57,7 @@ class SnippetParserTest(unittest.TestCase):
         right_variables = set()
 
         page = self.testPage
-        parser = SnippetParser(template, '.', self._application)
+        parser = SnippetParser(template, '.', self.application)
         result = parser.process(selectedText, page, **vars)
         variables = parser.getVariables()
 
@@ -82,7 +74,7 @@ class SnippetParserTest(unittest.TestCase):
         right_variables = {'varname'}
 
         page = self.testPage
-        parser = SnippetParser(template, '.', self._application)
+        parser = SnippetParser(template, '.', self.application)
         result = parser.process(selectedText, page, **vars)
         variables = parser.getVariables()
 
@@ -102,7 +94,7 @@ class SnippetParserTest(unittest.TestCase):
         right_variables = {'varname'}
 
         page = self.testPage
-        parser = SnippetParser(template, '.', self._application)
+        parser = SnippetParser(template, '.', self.application)
         result = parser.process(selectedText, page, **vars)
         variables = parser.getVariables()
 
@@ -119,7 +111,7 @@ class SnippetParserTest(unittest.TestCase):
         right_variables = {'varname'}
 
         page = self.testPage
-        parser = SnippetParser(template, '.', self._application)
+        parser = SnippetParser(template, '.', self.application)
         result = parser.process(selectedText, page, **vars)
         variables = parser.getVariables()
 
@@ -141,7 +133,7 @@ class SnippetParserTest(unittest.TestCase):
         page = self.testPage
         parser = SnippetParser(template,
                                '../test/snippets',
-                               self._application)
+                               self.application)
         result = parser.process(selectedText, page, **vars)
         variables = parser.getVariables()
 
@@ -157,7 +149,7 @@ class SnippetParserTest(unittest.TestCase):
 
         right_result = page.title
 
-        parser = SnippetParser(template, '.', self._application)
+        parser = SnippetParser(template, '.', self.application)
         result = parser.process(selectedText, page, **vars)
 
         self.assertEqual(result, right_result)
@@ -171,7 +163,7 @@ class SnippetParserTest(unittest.TestCase):
 
         right_result = 'Проверка'
 
-        parser = SnippetParser(template, '.', self._application)
+        parser = SnippetParser(template, '.', self.application)
         result = parser.process(selectedText, page, **vars)
 
         self.assertEqual(result, right_result)
@@ -185,7 +177,7 @@ class SnippetParserTest(unittest.TestCase):
 
         right_result = page.subpath
 
-        parser = SnippetParser(template, '.', self._application)
+        parser = SnippetParser(template, '.', self.application)
         result = parser.process(selectedText, page, **vars)
 
         self.assertEqual(result, right_result)
@@ -199,7 +191,7 @@ class SnippetParserTest(unittest.TestCase):
 
         right_result = Attachment(page).getAttachPath(False)
 
-        parser = SnippetParser(template, '.', self._application)
+        parser = SnippetParser(template, '.', self.application)
         result = parser.process(selectedText, page, **vars)
 
         self.assertEqual(result, right_result)
@@ -214,7 +206,7 @@ class SnippetParserTest(unittest.TestCase):
 
         right_result = page.path
 
-        parser = SnippetParser(template, '.', self._application)
+        parser = SnippetParser(template, '.', self.application)
         result = parser.process(selectedText, page, **vars)
 
         self.assertEqual(result, right_result)
@@ -226,9 +218,9 @@ class SnippetParserTest(unittest.TestCase):
         selectedText = ''
         vars = {}
 
-        right_result = self._application.pageUidDepot.createUid(page)
+        right_result = self.application.pageUidDepot.createUid(page)
 
-        parser = SnippetParser(template, '.', self._application)
+        parser = SnippetParser(template, '.', self.application)
         result = parser.process(selectedText, page, **vars)
 
         self.assertEqual(result, right_result)
@@ -244,7 +236,7 @@ class SnippetParserTest(unittest.TestCase):
 
         right_result = str(date)
 
-        parser = SnippetParser(template, '.', self._application)
+        parser = SnippetParser(template, '.', self.application)
         result = parser.process(selectedText, page, **vars)
 
         self.assertEqual(result, right_result)
@@ -260,7 +252,7 @@ class SnippetParserTest(unittest.TestCase):
 
         right_result = str(date)
 
-        parser = SnippetParser(template, '.', self._application)
+        parser = SnippetParser(template, '.', self.application)
         result = parser.process(selectedText, page, **vars)
 
         self.assertEqual(result, right_result)
@@ -275,7 +267,7 @@ class SnippetParserTest(unittest.TestCase):
 
         right_result = 'test, проверка, тест'
 
-        parser = SnippetParser(template, '.', self._application)
+        parser = SnippetParser(template, '.', self.application)
         result = parser.process(selectedText, page, **vars)
 
         self.assertEqual(result, right_result)
@@ -290,7 +282,7 @@ class SnippetParserTest(unittest.TestCase):
 
         right_result = 'test---проверка---тест---'
 
-        parser = SnippetParser(template, '.', self._application)
+        parser = SnippetParser(template, '.', self.application)
         result = parser.process(selectedText, page, **vars)
 
         self.assertEqual(result, right_result)
@@ -305,7 +297,7 @@ class SnippetParserTest(unittest.TestCase):
 
         right_result = ''
 
-        parser = SnippetParser(template, '.', self._application)
+        parser = SnippetParser(template, '.', self.application)
         result = parser.process(selectedText, page, **vars)
 
         self.assertEqual(result, right_result)
@@ -323,7 +315,7 @@ class SnippetParserTest(unittest.TestCase):
 
         right_result = 'Страница 1, Страница 2, Страница 3'
 
-        parser = SnippetParser(template, '.', self._application)
+        parser = SnippetParser(template, '.', self.application)
         result = parser.process(selectedText, page, **vars)
 
         self.assertEqual(result, right_result)
@@ -345,7 +337,7 @@ class SnippetParserTest(unittest.TestCase):
 
         right_result = 'Страница 2, Страница 3, Страница 1'
 
-        parser = SnippetParser(template, '.', self._application)
+        parser = SnippetParser(template, '.', self.application)
         result = parser.process(selectedText, page, **vars)
 
         self.assertEqual(result, right_result)
@@ -359,7 +351,7 @@ class SnippetParserTest(unittest.TestCase):
 
         right_result = 'wiki'
 
-        parser = SnippetParser(template, '.', self._application)
+        parser = SnippetParser(template, '.', self.application)
         result = parser.process(selectedText, page, **vars)
 
         self.assertEqual(result, right_result)
@@ -381,7 +373,7 @@ class SnippetParserTest(unittest.TestCase):
 
         right_result = 'aaa.tmp, ccc.png, zzz.doc'
 
-        parser = SnippetParser(template, '.', self._application)
+        parser = SnippetParser(template, '.', self.application)
         result = parser.process(selectedText, page, **vars)
 
         self.assertEqual(result, right_result)
@@ -395,7 +387,7 @@ class SnippetParserTest(unittest.TestCase):
         vars = {'переменная': 'Проверка 123'}
         right_result = 'Переменная = Проверка 123'
 
-        parser = SnippetParser(template, '.', self._application)
+        parser = SnippetParser(template, '.', self.application)
         result = parser.process(selectedText, page, **vars)
         self.assertEqual(result, right_result)
 
@@ -407,6 +399,6 @@ class SnippetParserTest(unittest.TestCase):
         page = self.testPage
         vars = {}
 
-        parser = SnippetParser(template, '.', self._application)
+        parser = SnippetParser(template, '.', self.application)
         result = parser.process(selectedText, page, **vars)
         self.assertEqual(result, right_result)

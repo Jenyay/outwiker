@@ -1,9 +1,9 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from test.plugins.baseloading import BasePluginLoadingTest
 
 
-class SnippetsLoadingTest (BasePluginLoadingTest):
+class SnippetsLoadingTest(BasePluginLoadingTest):
     def getPluginDir(self):
         """
         Must return path to plugin
