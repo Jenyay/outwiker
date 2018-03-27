@@ -71,37 +71,51 @@ class Plugin (object, metaclass=ABCMeta):
         '''
         return self._pluginPath
 
-    def latestVersion(self):
+    @property
+    def info(self):
         '''
-            Check plugin's version by updatesUrl and return latest
-            :return: latest version of the plugin
+        return plugin info from plugin.xml file
+        :return: XmlVersionParser object with plugin.xml data or None
+
         '''
         join = os.path.join
 
-        plugin_fname = join(self.pluginPath, PLUGIN_VERSION_FILE_NAME)
-        if not os.path.exists(plugin_fname):
+        plugin_xml_fname = join(self.pluginPath, PLUGIN_VERSION_FILE_NAME)
+        if not os.path.exists(plugin_xml_fname):
+            return None
+
+        xml_content = readTextFile(plugin_xml_fname)
+        
+        return XmlVersionParser().parse(xml_content)
+
+    def latestVersion(self):
+        '''
+            Check plugin's version by updatesUrl and return latest
+            :return: latest version of the plugin or empty string
+        '''
+
+        plugin_info = self.info
+
+        if plugin_info:
+            # get data from the updatesUrl
+            try:
+                fp = urllib.request.urlopen(plugin_info.updatesUrl)
+            except:
+                self.logger.debug("The url %s cann't be opened" % plugin_info.updatesUrl)
+                return u''
+
+            # read plugin.xml
+            mybytes = fp.read()
+            mystr = mybytes.decode("utf8")
+            fp.close()
+
+            # read plugin.xml from repository
+            repo_info = XmlVersionParser().parse(mystr)
+
+            # return latest version
+            return repo_info.currentVersion
+        else:
             return u''
-
-        xml_content = readTextFile(plugin_fname)
-        appinfo = XmlVersionParser().parse(xml_content)
-
-        # get data from the updatesUrl
-        try:
-            fp = urllib.request.urlopen(appinfo.updatesUrl)
-        except:
-            self.logger.debug("The url %s cann't be opened" % appinfo.updatesUrl)
-            return u''
-
-        # read plugin.xml
-        mybytes = fp.read()
-        mystr = mybytes.decode("utf8")
-        fp.close()
-
-        # get currentVersion from internet
-        repo_info = XmlVersionParser().parse(mystr)
-
-        # return latest version
-        return repo_info.currentVersion
 
     ###################################################
     # Свойства и методы, которые необходимо определить
@@ -159,34 +173,47 @@ class InvalidPlugin(object):
         '''
         return self._pluginPath
 
-    def latestVersion(self):
+    @property
+    def info(self):
         '''
-            Check plugin's version by updatesUrl and return latest
-            :return: latest version of the plugin
+        return plugin info from plugin.xml file
+        :return: XmlVersionParser object with plugin.xml data or None
+
         '''
         join = os.path.join
 
-        plugin_fname = join(self.pluginPath, PLUGIN_VERSION_FILE_NAME)
-        if not os.path.exists(plugin_fname):
+        plugin_xml_fname = join(self.pluginPath, PLUGIN_VERSION_FILE_NAME)
+        if not os.path.exists(plugin_xml_fname):
+            return None
+
+        xml_content = readTextFile(plugin_xml_fname)
+
+        return XmlVersionParser().parse(xml_content)
+
+    def latestVersion(self):
+        '''
+            Check plugin's version by updatesUrl and return latest
+            :return: latest version of the plugin or empty string
+        '''
+
+        plugin_info = self.info
+
+        if plugin_info:
+            # get data from the updatesUrl
+            try:
+                fp = urllib.request.urlopen(plugin_info.updatesUrl)
+            except:
+                return u''
+
+            # read plugin.xml
+            mybytes = fp.read()
+            mystr = mybytes.decode("utf8")
+            fp.close()
+
+            # read plugin.xml from repository
+            repo_info = XmlVersionParser().parse(mystr)
+
+            # return latest version
+            return repo_info.currentVersion
+        else:
             return u''
-
-        xml_content = readTextFile(plugin_fname)
-        appinfo = XmlVersionParser().parse(xml_content)
-
-        # get data from the updatesUrl
-        try:
-            fp = urllib.request.urlopen(appinfo.updatesUrl)
-        except:
-            self.logger.debug("The url %s cann't be opened" % appinfo.updatesUrl)
-            return u''
-
-        # read plugin.xml
-        mybytes = fp.read()
-        mystr = mybytes.decode("utf8")
-        fp.close()
-
-        # get currentVersion from internet
-        repo_info = XmlVersionParser().parse(mystr)
-
-        # return latest version
-        return repo_info.currentVersion
