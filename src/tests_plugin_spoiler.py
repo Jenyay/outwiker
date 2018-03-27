@@ -1,35 +1,13 @@
 #!/usr/bin/env python
-# -*- coding: UTF-8 -*-
-
-"""
-Unit-тесты
-"""
+# -*- coding: utf-8 -*-
 
 from gettext import NullTranslations
+import unittest
 
-import wx
+from test.plugins.spoiler.test_loading import SpoilerLoadingTest
+from test.plugins.spoiler.test_spoiler import SpoilerPluginTest
 
 
 if __name__ == '__main__':
     NullTranslations().install()
-
-    from outwiker.core.application import Application
-    Application.init("../test/testconfig.ini")
-
-    app = wx.App(redirect=False)
-
-    def emptyFunc():
-        pass
-
-    app.bindActivateApp = emptyFunc
-    app.unbindActivateApp = emptyFunc
-    loop = wx.GUIEventLoop()
-    wx.GUIEventLoop.SetActive(loop)
-    wx.Log.SetLogLevel(0)
-
-    import unittest
-
-    from test.plugins.spoiler.test_loading import SpoilerLoadingTest
-    from test.plugins.spoiler.test_spoiler import SpoilerPluginTest
-
     unittest.main()
