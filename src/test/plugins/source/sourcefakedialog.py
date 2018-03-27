@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from .fakewx.spinctrl import SpinCtrl
 from .fakewx.combobox import ComboBox
@@ -12,69 +12,60 @@ class FakeInsertDialog (Dialog):
     """
     Заглушка вместо реального диалога для вставки команды (:source:)
     """
-    def __init__ (self):
-        super (FakeInsertDialog, self).__init__ ()
+    def __init__(self):
+        super(FakeInsertDialog, self).__init__()
 
         # Заглушки вместо интерфейса
-        self.tabWidthSpin = SpinCtrl ()
-        self.languageComboBox = ComboBox ()
+        self.tabWidthSpin = SpinCtrl()
+        self.languageComboBox = ComboBox()
 
         self.fileCheckBox = CheckBox()
 
-        self.attachmentLabel = StaticText ()
-        self.attachmentComboBox = ComboBox ()
+        self.attachmentLabel = StaticText()
+        self.attachmentComboBox = ComboBox()
 
-        self.encodingLabel = StaticText ()
-        self.encodingComboBox = ComboBox ()
+        self.encodingLabel = StaticText()
+        self.encodingComboBox = ComboBox()
 
-        self.styleLabel = StaticText ()
-        self.styleComboBox = ComboBox ()
+        self.styleLabel = StaticText()
+        self.styleComboBox = ComboBox()
 
         self.attachButton = Button()
-        self.parentBgCheckBox = CheckBox ()
-        self.lineNumCheckBox = CheckBox ()
-
+        self.parentBgCheckBox = CheckBox()
+        self.lineNumCheckBox = CheckBox()
 
     @property
-    def language (self):
+    def language(self):
         return self.languageComboBox.GetValue()
 
-
     @property
-    def tabWidth (self):
+    def tabWidth(self):
         return self.tabWidthSpin.GetValue()
 
-
     @property
-    def languageIndex (self):
+    def languageIndex(self):
         return self.languageComboBox.GetCurrentSelection()
 
-
     @property
-    def attachment (self):
+    def attachment(self):
         return self.attachmentComboBox.GetValue()
 
-
     @property
-    def encoding (self):
+    def encoding(self):
         return self.encodingComboBox.GetValue()
 
-
     @property
-    def insertFromFile (self):
+    def insertFromFile(self):
         return self.fileCheckBox.IsChecked()
 
-
     @property
-    def style (self):
+    def style(self):
         return self.styleComboBox.GetValue()
 
-
     @property
-    def parentbg (self):
+    def parentbg(self):
         return self.parentBgCheckBox.GetValue()
 
-
     @property
-    def lineNum (self):
+    def lineNum(self):
         return self.lineNumCheckBox.GetValue()
