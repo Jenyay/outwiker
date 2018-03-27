@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from test.plugins.baseloading import BasePluginLoadingTest
 
@@ -13,6 +13,7 @@ class UpdateNotifierLoadingTest (BasePluginLoadingTest):
 
     def getPluginName(self):
         """
-        Должен возвращать имя плагина, по которому его можно найти в PluginsLoader
+        Должен возвращать имя плагина,
+        по которому его можно найти в PluginsLoader
         """
         return "UpdateNotifier"

@@ -1,25 +1,27 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
-import unittest
 import logging
 
 from outwiker.core.pluginsloader import PluginsLoader
-from outwiker.core.application import Application
 from test.utils import SkipLogFilter
+from test.basetestcases import BaseOutWikerGUITest
 
 
 logger = logging.getLogger('UpdateNotifierPlugin')
 logger.addFilter(SkipLogFilter())
 
 
-class VersionListTest (unittest.TestCase):
+class VersionListTest (BaseOutWikerGUITest):
     """Tests for the UpdateNotifier plugin."""
+
     def setUp(self):
-        self.loader = PluginsLoader(Application)
+        self.initApplication()
+        self.loader = PluginsLoader(self.application)
         self.loader.load(["../plugins/updatenotifier"])
 
     def tearDown(self):
         self.loader.clear()
+        self.destroyApplication()
 
     def testPluginLoad(self):
         self.assertEqual(len(self.loader), 1)
