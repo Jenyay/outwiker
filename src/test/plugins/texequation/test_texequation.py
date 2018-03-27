@@ -1,43 +1,35 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
-import unittest
 import os.path
 
 from outwiker.core.pluginsloader import PluginsLoader
-from outwiker.core.tree import WikiDocument
-from outwiker.core.application import Application
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.thumbnails import Thumbnails
 from outwiker.pages.wiki.parserfactory import ParserFactory
-from test.utils import removeDir
+from test.basetestcases import BaseOutWikerGUITest
 
 
-class TexEquationTest(unittest.TestCase):
+class TexEquationTest(BaseOutWikerGUITest):
     def setUp(self):
-        self.filesPath = "../test/samplefiles/"
-        self.__createWiki()
+        self.initApplication()
+        self.wikiroot = self.createWiki()
+        self.testPage = WikiPageFactory().create(self.wikiroot,
+                                                 "Страница 1",
+                                                 [])
 
+        self.filesPath = "../test/samplefiles/"
         dirlist = ["../plugins/texequation"]
 
-        self.loader = PluginsLoader(Application)
+        self.loader = PluginsLoader(self.application)
         self.loader.load(dirlist)
 
         self.testPage = self.wikiroot["Страница 1"]
-        self.parser = ParserFactory().make(self.testPage, Application.config)
+        self.parser = ParserFactory().make(self.testPage, self.application.config)
 
     def tearDown(self):
-        removeDir(self.path)
         self.loader.clear()
-
-    def __createWiki(self):
-        # Здесь будет создаваться вики
-        self.path = "../test/testwiki"
-        removeDir(self.path)
-
-        self.wikiroot = WikiDocument.create(self.path)
-
-        WikiPageFactory().create(self.wikiroot, "Страница 1", [])
-        self.testPage = self.wikiroot["Страница 1"]
+        self.destroyApplication()
+        self.destroyWiki(self.wikiroot)
 
     def testPluginLoad(self):
         self.assertEqual(len(self.loader), 1)
@@ -142,7 +134,7 @@ class TexEquationTest(unittest.TestCase):
         eqn2 = "y = f2(x)"
 
         text = "{{$$ {eqn1} $$}} {{$$ {eqn2} $$}}".format(eqn1=eqn1,
-                                                           eqn2=eqn2)
+                                                          eqn2=eqn2)
 
         path = os.path.join(Thumbnails.getRelativeThumbDir(), KATEX_DIR_NAME)
 
@@ -175,7 +167,7 @@ class TexEquationTest(unittest.TestCase):
         eqn2 = "y = f2(x)"
 
         text = "{{$$ {eqn1} $$}} {{$ {eqn2} $}}".format(eqn1=eqn1,
-                                                         eqn2=eqn2)
+                                                        eqn2=eqn2)
 
         path = os.path.join(Thumbnails.getRelativeThumbDir(), KATEX_DIR_NAME)
 
