@@ -66,6 +66,7 @@ class BaseOutWikerGUITest(unittest.TestCase, WikiTestMixin):
     def destroyApplication(self):
         self.mainWindow.Destroy()
         self.outwiker_app.MainLoop()
+        self.application.clear()
         self.application = None
         self.mainWindow = None
         del self.outwiker_app

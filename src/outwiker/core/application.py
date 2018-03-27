@@ -304,6 +304,11 @@ class ApplicationParams(object):
         self.config = Config(fullConfigPath)
         self.recentWiki = RecentWiki(self.config)
 
+    def clear(self):
+        self.wikiroot = None
+        self.config = None
+        self.mainWindow = None
+
     @property
     def wikiroot(self):
         """
