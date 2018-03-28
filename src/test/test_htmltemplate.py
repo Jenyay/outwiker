@@ -1,27 +1,27 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os.path
-import unittest
 
-from outwiker.core.application import Application
 from outwiker.core.htmltemplate import HtmlTemplate
 from outwiker.core.system import getTemplatesDir
 from outwiker.core.htmlimprover import BrHtmlImprover
 from outwiker.gui.guiconfig import HtmlRenderConfig
 from outwiker.utilites.textfile import readTextFile
+from test.basetestcases import BaseOutWikerTest
 
 
-class HtmlTemplateTest(unittest.TestCase):
+class HtmlTemplateTest(BaseOutWikerTest):
     def setUp(self):
-        self.config = HtmlRenderConfig(Application.config)
+        self.initApplication()
+        self.config = HtmlRenderConfig(self.application.config)
         self.__clearConfig()
         self.maxDiff = None
 
     def tearDown(self):
-        self.__clearConfig()
+        self.destroyApplication()
 
     def __clearConfig(self):
-        Application.config.remove_section(HtmlRenderConfig.HTML_SECTION)
+        self.application.config.remove_section(HtmlRenderConfig.HTML_SECTION)
 
     def testDefault(self):
         content = "бла-бла-бла"

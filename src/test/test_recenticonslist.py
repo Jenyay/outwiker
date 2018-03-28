@@ -1,20 +1,21 @@
-# -*- coding=utf-8 -*-
+# -*- coding: utf-8 -*-
 
 import os.path
 from tempfile import mkdtemp
-from unittest import TestCase
 
-from outwiker.core.application import Application
 from outwiker.core.recenticonslist import RecentIconsList
 from test.utils import removeDir, createFile
+from test.basetestcases import BaseOutWikerTest
 
 
-class RecentIconsListTest(TestCase):
+class RecentIconsListTest(BaseOutWikerTest):
     def setUp(self):
-        self.config = Application.config
+        self.initApplication()
+        self.config = self.application.config
         self.icons_path = mkdtemp(suffix='значки', prefix='outwiker')
 
     def tearDown(self):
+        self.destroyApplication()
         removeDir(self.icons_path)
 
     def test_empty_01(self):

@@ -1,29 +1,28 @@
 # -*- coding: utf-8 -*-
 
-import unittest
-
 from outwiker.core.pluginsloader import PluginsLoader
-from outwiker.core.application import Application
 from outwiker.gui.guiconfig import PluginsConfig
+from test.basetestcases import BaseOutWikerTest
 
 
-class PluginsLoaderTest(unittest.TestCase):
+class PluginsLoaderTest(BaseOutWikerTest):
     def setUp(self):
-        self.config = PluginsConfig(Application.config)
+        self.initApplication()
+        self.config = PluginsConfig(self.application.config)
         self.config.disabledPlugins.value = []
 
     def tearDown(self):
-        self.config.disabledPlugins.value = []
+        self.destroyApplication()
 
     def testEmpty(self):
-        loader = PluginsLoader(Application)
+        loader = PluginsLoader(self.application)
         self.assertEqual(len(loader), 0)
 
     def testLoad(self):
         dirlist = ["../test/plugins/testempty1",
                    "../test/plugins/testempty2",
                    "../test/plugins/testempty2"]
-        loader = PluginsLoader(Application)
+        loader = PluginsLoader(self.application)
         loader.load(dirlist)
 
         self.assertEqual(len(loader), 2)
@@ -31,7 +30,7 @@ class PluginsLoaderTest(unittest.TestCase):
         self.assertEqual(loader["TestEmpty1"].version, "0.1")
         self.assertEqual(loader["TestEmpty1"].description,
                          "This plugin is empty")
-        self.assertEqual(loader["TestEmpty1"].application, Application)
+        self.assertEqual(loader["TestEmpty1"].application, self.application)
 
         self.assertEqual(loader["TestEmpty2"].name, "TestEmpty2")
         self.assertEqual(loader["TestEmpty2"].version, "0.1")
@@ -48,7 +47,7 @@ class PluginsLoaderTest(unittest.TestCase):
 
     def testVersion_01(self):
         dirlist = ["../test/plugins/testempty3"]
-        loader = PluginsLoader(Application)
+        loader = PluginsLoader(self.application)
         loader.load(dirlist)
 
         self.assertEqual(len(loader), 1)
@@ -57,7 +56,7 @@ class PluginsLoaderTest(unittest.TestCase):
 
     def testVersion_02(self):
         dirlist = ["../test/plugins/testempty4"]
-        loader = PluginsLoader(Application)
+        loader = PluginsLoader(self.application)
         loader.load(dirlist)
 
         self.assertEqual(len(loader), 1)
@@ -80,7 +79,7 @@ class PluginsLoaderTest(unittest.TestCase):
                    "../test/plugins/testfromfuture",
                    ]
 
-        loader = PluginsLoader(Application)
+        loader = PluginsLoader(self.application)
         loader.enableOutput = False
         loader.load(dirlist)
 
@@ -106,7 +105,7 @@ class PluginsLoaderTest(unittest.TestCase):
                    "../test/plugins/testempty2",
                    "../test/plugins/testwikicommand"]
 
-        loader = PluginsLoader(Application)
+        loader = PluginsLoader(self.application)
         loader.load(dirlist)
 
         self.assertEqual(len(loader), 2)
@@ -133,7 +132,7 @@ class PluginsLoaderTest(unittest.TestCase):
                    "../test/plugins/testempty2",
                    "../test/plugins/testwikicommand"]
 
-        loader = PluginsLoader(Application)
+        loader = PluginsLoader(self.application)
         loader.load(dirlist)
 
         self.assertEqual(len(loader), 3)
@@ -156,7 +155,7 @@ class PluginsLoaderTest(unittest.TestCase):
                    "../test/plugins/testempty2",
                    "../test/plugins/testwikicommand"]
 
-        loader = PluginsLoader(Application)
+        loader = PluginsLoader(self.application)
         loader.load(dirlist)
 
         self.assertEqual(len(loader), 3)
@@ -174,7 +173,7 @@ class PluginsLoaderTest(unittest.TestCase):
                    "../test/plugins/testempty2",
                    "../test/plugins/testwikicommand"]
 
-        loader = PluginsLoader(Application)
+        loader = PluginsLoader(self.application)
         loader.load(dirlist)
 
         self.assertEqual(len(loader), 3)
@@ -198,7 +197,7 @@ class PluginsLoaderTest(unittest.TestCase):
                                              "TestEmpty2",
                                              "TestWikiCommand"]
 
-        loader = PluginsLoader(Application)
+        loader = PluginsLoader(self.application)
         loader.load(dirlist)
 
         self.assertEqual(len(loader), 0)
@@ -221,7 +220,7 @@ class PluginsLoaderTest(unittest.TestCase):
                                              "TestEmpty2",
                                              "TestWikiCommand"]
 
-        loader = PluginsLoader(Application)
+        loader = PluginsLoader(self.application)
         loader.load(dirlist)
 
         self.assertEqual(len(loader), 0)
@@ -240,7 +239,7 @@ class PluginsLoaderTest(unittest.TestCase):
                    "../test/plugins/testempty2",
                    "../test/plugins/testwikicommand"]
 
-        loader = PluginsLoader(Application)
+        loader = PluginsLoader(self.application)
         loader.load(dirlist)
 
         self.assertEqual(len(loader), 3)
@@ -262,7 +261,7 @@ class PluginsLoaderTest(unittest.TestCase):
     def testLoadInvalid_02(self):
         dirlist = ["../test/plugins/testinvalid1"]
 
-        loader = PluginsLoader(Application)
+        loader = PluginsLoader(self.application)
         loader.enableOutput = False
         loader.load(dirlist)
 
@@ -274,7 +273,7 @@ class PluginsLoaderTest(unittest.TestCase):
     def testLoadInvalid_03(self):
         dirlist = ["../test/plugins/testfromfuture"]
 
-        loader = PluginsLoader(Application)
+        loader = PluginsLoader(self.application)
         loader.enableOutput = False
         loader.load(dirlist)
 
@@ -286,7 +285,7 @@ class PluginsLoaderTest(unittest.TestCase):
     def testLoadInvalid_04(self):
         dirlist = ["../test/plugins/testoutdated"]
 
-        loader = PluginsLoader(Application)
+        loader = PluginsLoader(self.application)
         loader.enableOutput = False
         loader.load(dirlist)
 
