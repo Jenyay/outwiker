@@ -1,11 +1,9 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os
 import os.path
-import unittest
 from tempfile import mkdtemp
 
-from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
 from outwiker.core.defines import PAGE_RESULT_HTML
 from outwiker.core.style import Style
@@ -19,6 +17,7 @@ from outwiker.pages.wiki.emptycontent import EmptyContent
 from outwiker.pages.wiki.wikiconfig import WikiConfig
 
 from test.utils import removeDir
+from test.basetestcases import BaseOutWikerTest
 
 
 class TestFooterWikiCommand(Command):
@@ -41,8 +40,9 @@ class TestHeadWikiCommand(Command):
         return "head"
 
 
-class WikiHtmlGeneratorTest(unittest.TestCase):
+class WikiHtmlGeneratorTest(BaseOutWikerTest):
     def setUp(self):
+        self.initApplication()
         self.filesPath = "../test/samplefiles/"
         self.__createWiki()
 
@@ -66,22 +66,22 @@ class WikiHtmlGeneratorTest(unittest.TestCase):
 
         self.testPage.content = self.wikitext
 
-        self.__htmlconfig = HtmlRenderConfig(Application.config)
+        self.__htmlconfig = HtmlRenderConfig(self.application.config)
         self.__setDefaultConfig()
 
         self.resultPath = os.path.join(self.testPage.path, PAGE_RESULT_HTML)
 
-        Application.onWikiParserPrepare += self.__onWikiParserPrepare
+        self.application.onWikiParserPrepare += self.__onWikiParserPrepare
 
     def __setDefaultConfig(self):
         # Установим размер превьюшки, не совпадающий с размером по умолчанию
-        Application.config.set(WikiConfig.WIKI_SECTION,
-                               WikiConfig.THUMB_SIZE_PARAM,
-                               WikiConfig.THUMB_SIZE_DEFAULT)
+        self.application.config.set(WikiConfig.WIKI_SECTION,
+                                    WikiConfig.THUMB_SIZE_PARAM,
+                                    WikiConfig.THUMB_SIZE_DEFAULT)
 
-        Application.config.set(HtmlRenderConfig.HTML_SECTION,
-                               HtmlRenderConfig.FONT_FACE_NAME_PARAM,
-                               HtmlRenderConfig.FONT_NAME_DEFAULT)
+        self.application.config.set(HtmlRenderConfig.HTML_SECTION,
+                                    HtmlRenderConfig.FONT_FACE_NAME_PARAM,
+                                    HtmlRenderConfig.FONT_NAME_DEFAULT)
 
     def __createWiki(self):
         # Здесь будет создаваться вики
@@ -93,17 +93,17 @@ class WikiHtmlGeneratorTest(unittest.TestCase):
         self.testPage = self.wikiroot["Страница 2"]
 
     def __onWikiParserPrepare(self, parser):
-        list([parser.addCommand(command(parser)) for command in self.wikicommands])
+        list([parser.addCommand(command(parser))
+              for command in self.wikicommands])
 
     def tearDown(self):
-        Application.onWikiParserPrepare -= self.__onWikiParserPrepare
-        self.__setDefaultConfig()
+        self.destroyApplication()
         removeDir(self.path)
 
     def testEmpty1(self):
         text = "бла-бла-бла"
 
-        content = EmptyContent(Application.config)
+        content = EmptyContent(self.application.config)
         content.content = text
 
         # Очистим содержимое, чтобы использовать EmptyContent
@@ -117,7 +117,7 @@ class WikiHtmlGeneratorTest(unittest.TestCase):
     def testEmpty2(self):
         text = "(:attachlist:)"
 
-        content = EmptyContent(Application.config)
+        content = EmptyContent(self.application.config)
         content.content = text
 
         # Очистим содержимое, чтобы использовать EmptyContent

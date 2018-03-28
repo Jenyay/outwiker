@@ -1,19 +1,18 @@
-# -*- coding: UTF-8 -*-
-
-import unittest
+# -*- coding: utf-8 -*-
 
 from outwiker.pages.wiki.linkcreator import LinkCreator
 from outwiker.pages.wiki.wikiconfig import WikiConfig
-from outwiker.core.application import Application
+from test.basetestcases import BaseOutWikerTest
 
 
-class WikiLinkCreatorTest(unittest.TestCase):
+class WikiLinkCreatorTest(BaseOutWikerTest):
     def setUp(self):
-        self.config = WikiConfig(Application.config)
+        self.initApplication()
+        self.config = WikiConfig(self.application.config)
         self.config.linkStyleOptions.value = 0
 
     def tearDown(self):
-        self.config.linkStyleOptions.value = 0
+        self.destroyApplication()
 
     def testCreateStyle0(self):
         comment = "Бла-бла-бла"

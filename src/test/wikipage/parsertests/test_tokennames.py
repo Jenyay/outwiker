@@ -37,6 +37,7 @@ class FakeParser(object):
     """
     Фальшивый парсер-заглушка
     """
+
     def __init__(self):
         pass
 
@@ -51,6 +52,7 @@ class TokenNamesTest(unittest.TestCase):
     """
     Тесты токенов википарсера на правильность имен
     """
+
     def setUp(self):
         self.path = mkdtemp(prefix='Абырвалг абыр')
 
