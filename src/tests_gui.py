@@ -7,7 +7,6 @@ GUI unit tests
 
 import unittest
 
-from test.utils import print_memory
 
 from test.guitests.test_mainwnd import MainWndTest
 from test.guitests.test_bookmarks import BookmarksGuiTest
@@ -54,4 +53,5 @@ from test.guitests.wikipage.test_wikitableactions import WikiTableActionsTest
 
 if __name__ == '__main__':
     unittest.main(exit=False)
-    print_memory()
+    # from test.utils import print_memory
+    # print_memory()
