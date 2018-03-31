@@ -138,7 +138,9 @@ class MainWndController(object):
 
     def destroy(self):
         self.__unbindAppEvents()
-        self.mainWindow.Unbind(wx.EVT_CLOSE, handler=self.__onClose)
+        self.__autosaveTimer.Destroy()
+        self.__autosaveTimer = None
+        self._mainWindow.Unbind(wx.EVT_CLOSE, handler=self.__onClose)
         self._mainWindow = None
 
     @property

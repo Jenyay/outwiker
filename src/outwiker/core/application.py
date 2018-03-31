@@ -305,6 +305,8 @@ class ApplicationParams(object):
         self.recentWiki = RecentWiki(self.config)
 
     def clear(self):
+        if self.wikiroot is not None:
+            self.__unbindWikiEvents(self.wikiroot)
         self.wikiroot = None
         self.config = None
         self.mainWindow = None

@@ -5,43 +5,39 @@ import wx
 from outwiker.gui.guiconfig import GeneralGuiConfig
 
 
-class AutosaveTimer (wx.EvtHandler):
+class AutosaveTimer(wx.EvtHandler):
     """
     Класс для автосохранения по таймеру
     """
-    def __init__ (self, application):
-        wx.EvtHandler.__init__ (self)
+    def __init__(self, application):
+        wx.EvtHandler.__init__(self)
 
         self.__application = application
-        self.__guiconfig = GeneralGuiConfig (self.__application.config)
+        self.__guiconfig = GeneralGuiConfig(self.__application.config)
 
         self.__application.onPreferencesDialogCreate += self.__onPreferencesDialogCreate
         self.__application.onPreferencesDialogClose += self.__onPreferencesDialogClose
-        self.Bind (wx.EVT_TIMER, self.__onTick)
+        self.Bind(wx.EVT_TIMER, self.__onTick)
 
-        self.__timer = wx.Timer (self)
+        self.__timer = wx.Timer(self)
         self.__setTimer()
 
-
-    def __onPreferencesDialogCreate (self, dialog):
+    def __onPreferencesDialogCreate(self, dialog):
         """
         На время показа диалога с настройками отключим таймер
         """
         self.__timer.Stop()
 
-
-    def __onPreferencesDialogClose (self, dialog):
+    def __onPreferencesDialogClose(self, dialog):
         self.__setTimer()
 
-
-    def __setTimer (self):
+    def __setTimer(self):
         interval = self.__guiconfig.autosaveInterval.value
 
         if interval > 0:
-            self.__timer.Start (interval * 1000)
+            self.__timer.Start(interval * 1000)
 
-
-    def __onTick (self, event):
+    def __onTick(self, event):
         """
         Этот метод вызывается, когда срабатывает таймер
         """
@@ -52,10 +48,10 @@ class AutosaveTimer (wx.EvtHandler):
         if wx.GetApp().IsActive():
             self.__application.onForceSave()
 
-
-    def Destroy (self):
+    def Destroy(self):
         self.__timer.Stop()
 
         self.__application.onPreferencesDialogCreate -= self.__onPreferencesDialogCreate
         self.__application.onPreferencesDialogClose -= self.__onPreferencesDialogClose
-        self.Unbind (wx.EVT_TIMER, self.__onTick)
+        self.Unbind(wx.EVT_TIMER, handler=self.__onTick)
+        self.__application = None

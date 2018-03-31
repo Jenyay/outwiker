@@ -592,6 +592,8 @@ class MainWindow(wx.Frame):
         self.toolbars.updatePanesInfo()
         self.destroyPagePanel(True)
         Application.actionController.saveHotKeys()
+        Application.wikiroot = None
+        self._removeActionsGui()
 
         self._destroyCoreControllers()
 
@@ -600,24 +602,26 @@ class MainWindow(wx.Frame):
         self.toolbars.destroyAllToolBars()
         self.tabsController.destroy()
 
-        self.auiManager.UnInit()
-
         self.pagePanel.close()
         self.__panesController.closePanes()
-        self.__panesController = None
+        # self.__panesController = None
 
         self.statusbar.Close()
         self.taskBarIconController.destroy()
+        # self.taskBarIconController = None
         self.controller.destroy()
+        Application.actionController.destroy()
+
+        # self._toolbars = None
+        #
+        # self.pagePanel = None
+        # self.treePanel = None
+        # self.attachPanel = None
+        # self.tagsCloudPanel = None
+
+        self.auiManager.UnInit()
         self.auiManager.Destroy()
-        self.auiManager = None
-
-        self._toolbars = None
-
-        self.pagePanel = None
-        self.treePanel = None
-        self.attachPanel = None
-        self.tagsCloudPanel = None
+        # self.auiManager = None
 
         super().Destroy()
         logger.debug(u'End MainWindow.Destroy.')
@@ -679,6 +683,70 @@ class MainWindow(wx.Frame):
             self.ShowFullScreen(False)
 
         self.__panesController.fromFullscreen()
+
+    def _destroyMenus(self):
+        self.menuController.removeMenu(guidefines.MENU_VIEW_GOTO)
+        self.menuController.removeMenu(guidefines.MENU_EDIT)
+        self.menuController.removeMenu(guidefines.MENU_FILE)
+        self.menuController.removeMenu(guidefines.MENU_TREE)
+        self.menuController.removeMenu(guidefines.MENU_TOOLS)
+        self.menuController.removeMenu(guidefines.MENU_HELP)
+        self.menuController.destroy()
+
+    def _removeActionsGui(self):
+        actionController = Application.actionController
+        actions = [
+            switchto.SwitchToMainPanelAction,
+            switchto.SwitchToTreeAction,
+            switchto.SwitchToAttachmentsAction,
+            switchto.SwitchToTagsCloudAction,
+            NewAction,
+            OpenAction,
+            OpenReadOnlyAction,
+            CloseAction,
+            PrintAction,
+            ExitAction,
+            HistoryBackAction,
+            HistoryForwardAction,
+            AddSiblingPageAction,
+            AddChildPageAction,
+            MovePageUpAction,
+            MovePageDownAction,
+            SortChildAlphabeticalAction,
+            SortSiblingsAlphabeticalAction,
+            GoToParentAction,
+            GoToFirstChildAction,
+            GoToPrevSiblingAction,
+            GoToNextSiblingAction,
+            RenamePageAction,
+            RemovePageAction,
+            EditPagePropertiesAction,
+            AddTabAction,
+            CloseTabAction,
+            PreviousTabAction,
+            NextTabAction,
+            GlobalSearchAction,
+            AttachFilesAction,
+            clipboard.CopyPageTitleAction,
+            clipboard.CopyPagePathAction,
+            clipboard.CopyAttachPathAction,
+            clipboard.CopyPageLinkAction,
+            OpenAttachFolderAction,
+            tags.AddTagsToBranchAction,
+            tags.RemoveTagsFromBranchAction,
+            tags.RenameTagAction,
+            ReloadWikiAction,
+            SetStyleToBranchAction,
+            OpenHelpAction,
+            AboutAction,
+            OpenPluginsFolderAction,
+            FullScreenAction,
+            PreferencesAction,
+            AddBookmarkAction,
+        ]
+
+        for action in actions:
+            actionController.removeAction(action.stringId)
 
     @property
     def toolbars(self):

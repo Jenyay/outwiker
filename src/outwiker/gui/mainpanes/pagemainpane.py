@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import wx.aui
 
@@ -6,28 +6,25 @@ from .mainpane import MainPane
 from ..currentpagepanel import CurrentPagePanel
 
 
-class PageMainPane (MainPane):
+class PageMainPane(MainPane):
     """
     Класс для работы с панелью с контентом страницы
     """
-    def _createPanel (self):
+    def _createPanel(self):
         return CurrentPagePanel(self.parent, -1)
 
-
-    def _createConfig (self):
+    def _createConfig(self):
         return None
 
     @property
-    def caption (self):
+    def caption(self):
         return _(u"Note")
 
-
     @property
-    def pageView (self):
+    def pageView(self):
         return self.panel.pageView
 
-
-    def _createPane (self):
+    def _createPane(self):
         """
         Создать класс с информацией о панели для auiManager
         """

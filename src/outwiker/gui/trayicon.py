@@ -43,6 +43,9 @@ class TrayIconController(wx.EvtHandler):
         self._trayIcon.removeTrayIcon()
         self._unbind()
         self._trayIcon.Destroy()
+        self._mainWindow = None
+        self._application = None
+        self._trayIcon = None
 
     def restoreWindow(self):
         if not self.config.alwaysShowTrayIcon.value:

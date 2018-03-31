@@ -168,31 +168,33 @@ class ActionController(object):
         Убрать кнопку с панели инструментов
         Если кнопка не была добавлена, то метод ничего не делает
         """
-        actionInfo = self._actionsInfo[strid]
+        if strid in self._actionsInfo:
+            actionInfo = self._actionsInfo[strid]
 
-        if actionInfo.toolbar is not None:
-            toolid = self._actionsInfo[strid].toolItemId
-            toolbar = self._actionsInfo[strid].toolbar
+            if actionInfo.toolbar is not None:
+                toolid = self._actionsInfo[strid].toolItemId
+                toolbar = self._actionsInfo[strid].toolbar
 
-            if issubclass(type(toolbar), ToolBar):
-                toolbar.DeleteTool(toolid, False)
-            elif issubclass(type(toolbar), wx.ToolBar):
-                toolbar.DeleteTool(toolid)
-            else:
-                raise ValueError(u'Invalid toolbar type')
+                if issubclass(type(toolbar), ToolBar):
+                    toolbar.DeleteTool(toolid, False)
+                elif issubclass(type(toolbar), wx.ToolBar):
+                    toolbar.DeleteTool(toolid)
+                else:
+                    raise ValueError(u'Invalid toolbar type')
 
-            self._mainWindow.Unbind(wx.EVT_TOOL, id=toolid)
-            actionInfo.toolbar = None
-            actionInfo.toolItemId = None
+                self._mainWindow.Unbind(wx.EVT_TOOL, id=toolid)
+                actionInfo.toolbar = None
+                actionInfo.toolItemId = None
 
     def removeMenuItem(self, strid):
-        actionInfo = self._actionsInfo[strid]
+        if strid in self._actionsInfo:
+            actionInfo = self._actionsInfo[strid]
 
-        if actionInfo.menuItem is not None:
-            self._mainWindow.Unbind(wx.EVT_MENU,
-                                    id=actionInfo.menuItem.GetId())
-            actionInfo.menuItem.Menu.DestroyItem(actionInfo.menuItem)
-            actionInfo.menuItem = None
+            if actionInfo.menuItem is not None:
+                self._mainWindow.Unbind(wx.EVT_MENU,
+                                        id=actionInfo.menuItem.GetId())
+                actionInfo.menuItem.Menu.DestroyItem(actionInfo.menuItem)
+                actionInfo.menuItem = None
 
     def appendToolbarButton(self, strid, toolbar, image, fullUpdate=False):
         """

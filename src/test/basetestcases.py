@@ -83,8 +83,9 @@ class BaseOutWikerGUITest(BaseOutWikerTest):
 
     def destroyApplication(self):
         Tester.dialogTester.clear()
-        self.mainWindow.Destroy()
+        self.outwiker_app.destroyMainWindow()
         self.outwiker_app.MainLoop()
         self.mainWindow = None
         del self.outwiker_app
+        self.outwiker_app = None
         super().destroyApplication()

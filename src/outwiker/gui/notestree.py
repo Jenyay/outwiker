@@ -198,8 +198,9 @@ class NotesTree(wx.Panel):
         self.__UnBindApplicationEvents()
         self.treeCtrl.DeleteAllItems()
         self.imagelist.RemoveAll()
-        self.toolbar.ClearTools()
         self._iconsCache = {}
+        self._removeButtons()
+        self.toolbar.ClearTools()
         self.Destroy()
 
     def __onPageCreate(self, newpage):
@@ -524,9 +525,9 @@ class NotesTree(wx.Panel):
         assert parentItem is not None
 
         item = self.treeCtrl.InsertItem(parentItem,
-                                              child.order,
-                                              child.display_title,
-                                              data=child)
+                                        child.order,
+                                        child.display_title,
+                                        data=child)
 
         self.treeCtrl.SetItemImage(item, self.__loadIcon(child))
 
@@ -639,3 +640,18 @@ class NotesTree(wx.Panel):
 
         self.toolbar.Realize()
         self.Layout()
+
+    def _removeButtons(self):
+        actionController = Application.actionController
+
+        actions = [
+            GoToParentAction,
+            MovePageDownAction,
+            MovePageUpAction,
+            AddSiblingPageAction,
+            AddChildPageAction,
+            RemovePageAction,
+            EditPagePropertiesAction,
+        ]
+        for action in actions:
+            actionController.removeToolbarButton(action.stringId)

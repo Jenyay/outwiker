@@ -50,5 +50,21 @@ from test.guitests.wikipage.test_wikitablerowsdialog import WikiTableRowsDialogT
 from test.guitests.wikipage.test_wikitableactions import WikiTableActionsTest
 
 
+def print_memory():
+    from pympler import muppy, summary
+    import gc
+    import wx
+
+    gc.collect()
+    all_objects = muppy.get_objects()
+    my_types = muppy.filter(all_objects, Type=wx.Object)
+    # my_types = muppy.filter(all_objects, Type=wx.Menu)
+    sum1 = summary.summarize(my_types)
+    summary.print_(sum1, limit=30)
+    # for t in my_types:
+    #     print(t)
+
+
 if __name__ == '__main__':
-    unittest.main()
+    unittest.main(exit=False)
+    # print_memory()

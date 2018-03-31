@@ -46,6 +46,12 @@ class OutWikerApplication(wx.App):
         registerActions(self._application)
         self.mainWnd.createGui()
 
+    def destroyMainWindow(self):
+        self.mainWnd.Destroy()
+        self.mainWnd = None
+        self._application.mainWindow = None
+        self._application = None
+
     def loadPlugins(self):
         self._application.plugins.load(getPluginsDirList())
 
