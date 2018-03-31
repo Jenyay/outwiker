@@ -120,33 +120,38 @@ class HtmlPageView(BaseHtmlPanel):
         actionController = self._application.actionController
 
         # Удалим элементы меню
-        [actionController.removeMenuItem(action.stringId) for action in self.__htmlNotationActions]
+        for action in self.__htmlNotationActions:
+            actionController.removeMenuItem(action.stringId)
 
         # Удалим элементы меню полиморфных действий
-        [actionController.removeMenuItem(strid) for strid in self.__polyActions]
+        for strid in self.__polyActions:
+            actionController.removeMenuItem(strid)
 
         actionController.removeMenuItem(HtmlAutoLineWrap.stringId)
         actionController.removeMenuItem(SwitchCodeResultAction.stringId)
 
         # Удалим кнопки с панелей инструментов
-        [actionController.removeToolbarButton(
-            action.stringId) for action in self.__htmlNotationActions]
+        for action in self.__htmlNotationActions:
+            actionController.removeToolbarButton(action.stringId)
 
-        [actionController.removeToolbarButton(strid) for strid in self.__polyActions]
+        for strid in self.__polyActions:
+            actionController.removeToolbarButton(strid)
 
         actionController.removeToolbarButton(HtmlAutoLineWrap.stringId)
 
         # Обнулим функции действия в полиморфных действиях
-        [actionController.getAction(strid).setFunc(None) for strid in self.__polyActions]
+        for strid in self.__polyActions:
+            actionController.getAction(strid).setFunc(None)
 
     def _enableActions(self, enabled):
         actionController = self._application.actionController
 
-        [actionController.enableTools(action.stringId,
-                                                        enabled) for action in self.__htmlNotationActions]
+        for action in self.__htmlNotationActions:
+            actionController.enableTools(action.stringId, enabled)
 
         # Активируем / дизактивируем полиморфные действия
-        [actionController.enableTools(strid, enabled) for strid in self.__polyActions]
+        for strid in self.__polyActions:
+            actionController.enableTools(strid, enabled)
 
     def UpdateView(self, page):
         self.__updateLineWrapTools()

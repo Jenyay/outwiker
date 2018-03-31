@@ -157,10 +157,12 @@ class BaseWikiPageView (BaseHtmlPanel):
         actionController = self._application.actionController
 
         # Удалим элементы меню
-        [actionController.removeMenuItem(action.stringId) for action in self.__wikiNotationActions]
+        for action in self.__wikiNotationActions:
+            actionController.removeMenuItem(action.stringId)
 
         # Удалим элементы меню полиморфных действий
-        [actionController.removeMenuItem(strid) for strid in self.__polyActions]
+        for strid in self.__polyActions:
+            actionController.removeMenuItem(strid)
 
         actionController.removeMenuItem(WikiOpenHtmlCodeAction.stringId)
         actionController.removeMenuItem(WikiUpdateHtmlAction.stringId)
@@ -171,12 +173,12 @@ class BaseWikiPageView (BaseHtmlPanel):
             for action in self.__wikiNotationActions:
                 actionController.removeToolbarButton(action.stringId)
 
-            [actionController.removeToolbarButton(strid)
-             for strid in self.__polyActions]
+            for strid in self.__polyActions:
+                actionController.removeToolbarButton(strid)
 
         # Обнулим функции действия в полиморфных действиях
-        [actionController.getAction(strid).setFunc(None)
-         for strid in self.__polyActions]
+        for strid in self.__polyActions:
+            actionController.getAction(strid).setFunc(None)
 
     @property
     def toolsMenu(self):
