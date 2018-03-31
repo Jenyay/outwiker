@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 """
 Вспомогательные функции для тестов
@@ -8,6 +8,7 @@ import logging
 import os
 import shutil
 import time
+import gc
 
 import wx
 
@@ -43,3 +44,18 @@ def createFile(fname):
 class SkipLogFilter(logging.Filter):
     def filter(self, record):
         return False
+
+
+def print_memory():
+    '''
+    Print the statistics of the objects in the memory.
+    Need pympler to use.
+    '''
+    from pympler import muppy, summary
+
+    gc.collect()
+    all_objects = muppy.get_objects()
+    my_types = muppy.filter(all_objects, Type=wx.Object)
+    sum1 = summary.summarize(my_types)
+    # sum1 = summary.summarize(all_objects)
+    summary.print_(sum1, limit=50)

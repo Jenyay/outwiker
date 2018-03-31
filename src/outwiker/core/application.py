@@ -307,9 +307,20 @@ class ApplicationParams(object):
     def clear(self):
         if self.wikiroot is not None:
             self.__unbindWikiEvents(self.wikiroot)
+
+        self._unbindAllEvents()
         self.wikiroot = None
         self.config = None
         self.mainWindow = None
+
+    def _unbindAllEvents(self):
+        for member_name in sorted(dir(self)):
+            member = getattr(self, member_name)
+            if isinstance(member, Event):
+                member.clear()
+
+        for key in list(self.customEvents.getKeys()):
+            self.customEvents.clear(key)
 
     @property
     def wikiroot(self):

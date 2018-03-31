@@ -528,17 +528,6 @@ class MainWindow(wx.Frame):
         self.Bind(wx.EVT_MENU, self._onStdEvent, id=wx.ID_PASTE)
         self.Bind(wx.EVT_MENU, self._onStdEvent, id=wx.ID_SELECTALL)
 
-    def _unbindGuiEvents(self):
-        """
-        Подписаться на события меню, кнопок и т.п.
-        """
-        self.Unbind(wx.EVT_MENU, id=wx.ID_UNDO, handler=self._onStdEvent)
-        self.Unbind(wx.EVT_MENU, id=wx.ID_REDO, handler=self._onStdEvent)
-        self.Unbind(wx.EVT_MENU, id=wx.ID_CUT, handler=self._onStdEvent)
-        self.Unbind(wx.EVT_MENU, id=wx.ID_COPY, handler=self._onStdEvent)
-        self.Unbind(wx.EVT_MENU, id=wx.ID_PASTE, handler=self._onStdEvent)
-        self.Unbind(wx.EVT_MENU, id=wx.ID_SELECTALL, handler=self._onStdEvent)
-
     def _saveParams(self):
         """
         Сохранить параметры в конфиг
@@ -580,48 +569,22 @@ class MainWindow(wx.Frame):
         """
         logger.debug(u'Begin MainWindow.Destroy.')
 
-        assert self.toolbars is not None
-        assert self.__panesController is not None
-        assert self.pagePanel is not None
-        assert self.treePanel is not None
-        assert self.attachPanel is not None
-        assert self.tagsCloudPanel is not None
-
         Application.plugins.clear()
         self._saveParams()
         self.toolbars.updatePanesInfo()
         self.destroyPagePanel(True)
+
         Application.actionController.saveHotKeys()
-        Application.wikiroot = None
-        self._removeActionsGui()
+        Application.clear()
+        Application.actionController.destroy()
 
         self._destroyCoreControllers()
 
-        self._unbindGuiEvents()
-
-        self.toolbars.destroyAllToolBars()
-        self.tabsController.destroy()
-
-        self.pagePanel.close()
-        self.__panesController.closePanes()
-        # self.__panesController = None
-
-        self.statusbar.Close()
         self.taskBarIconController.destroy()
-        # self.taskBarIconController = None
         self.controller.destroy()
-        Application.actionController.destroy()
-
-        # self._toolbars = None
-        #
-        # self.pagePanel = None
-        # self.treePanel = None
-        # self.attachPanel = None
-        # self.tagsCloudPanel = None
 
         self.auiManager.UnInit()
         self.auiManager.Destroy()
-        # self.auiManager = None
 
         super().Destroy()
         logger.debug(u'End MainWindow.Destroy.')
@@ -683,70 +646,6 @@ class MainWindow(wx.Frame):
             self.ShowFullScreen(False)
 
         self.__panesController.fromFullscreen()
-
-    def _destroyMenus(self):
-        self.menuController.removeMenu(guidefines.MENU_VIEW_GOTO)
-        self.menuController.removeMenu(guidefines.MENU_EDIT)
-        self.menuController.removeMenu(guidefines.MENU_FILE)
-        self.menuController.removeMenu(guidefines.MENU_TREE)
-        self.menuController.removeMenu(guidefines.MENU_TOOLS)
-        self.menuController.removeMenu(guidefines.MENU_HELP)
-        self.menuController.destroy()
-
-    def _removeActionsGui(self):
-        actionController = Application.actionController
-        actions = [
-            switchto.SwitchToMainPanelAction,
-            switchto.SwitchToTreeAction,
-            switchto.SwitchToAttachmentsAction,
-            switchto.SwitchToTagsCloudAction,
-            NewAction,
-            OpenAction,
-            OpenReadOnlyAction,
-            CloseAction,
-            PrintAction,
-            ExitAction,
-            HistoryBackAction,
-            HistoryForwardAction,
-            AddSiblingPageAction,
-            AddChildPageAction,
-            MovePageUpAction,
-            MovePageDownAction,
-            SortChildAlphabeticalAction,
-            SortSiblingsAlphabeticalAction,
-            GoToParentAction,
-            GoToFirstChildAction,
-            GoToPrevSiblingAction,
-            GoToNextSiblingAction,
-            RenamePageAction,
-            RemovePageAction,
-            EditPagePropertiesAction,
-            AddTabAction,
-            CloseTabAction,
-            PreviousTabAction,
-            NextTabAction,
-            GlobalSearchAction,
-            AttachFilesAction,
-            clipboard.CopyPageTitleAction,
-            clipboard.CopyPagePathAction,
-            clipboard.CopyAttachPathAction,
-            clipboard.CopyPageLinkAction,
-            OpenAttachFolderAction,
-            tags.AddTagsToBranchAction,
-            tags.RemoveTagsFromBranchAction,
-            tags.RenameTagAction,
-            ReloadWikiAction,
-            SetStyleToBranchAction,
-            OpenHelpAction,
-            AboutAction,
-            OpenPluginsFolderAction,
-            FullScreenAction,
-            PreferencesAction,
-            AddBookmarkAction,
-        ]
-
-        for action in actions:
-            actionController.removeAction(action.stringId)
 
     @property
     def toolbars(self):

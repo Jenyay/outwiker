@@ -74,6 +74,9 @@ class CustomEvents(object):
             self._events[key] = event
         event.bind(handler, priority)
 
+    def getKeys(self):
+        return self._events.keys()
+
     def unbind(self, key, handler):
         """
         Unbind handler from event by key
