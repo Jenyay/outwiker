@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from abc import ABCMeta, abstractmethod
+import unittest
 
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.pages.wiki.wikipage import WikiPageFactory
@@ -10,7 +11,8 @@ from outwiker.pages.search.searchpage import SearchPageFactory
 from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class BasePluginLoadingTest(BaseOutWikerGUIMixin, metaclass=ABCMeta):
+class BasePluginLoadingTest(unittest.TestCase, BaseOutWikerGUIMixin,
+                            metaclass=ABCMeta):
     @abstractmethod
     def getPluginDir(self):
         """
