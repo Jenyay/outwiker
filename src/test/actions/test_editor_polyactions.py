@@ -2,7 +2,6 @@
 
 from abc import ABCMeta, abstractmethod
 
-
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.html.htmlpage import HtmlPageFactory
 from outwiker.pages.text.textpage import TextPageFactory
@@ -11,7 +10,7 @@ from test.basetestcases import BaseOutWikerGUITest
 from outwiker.actions.polyactionsid import *
 
 
-class BaseEditorPolyactionsTest(BaseOutWikerGUITest, metaclass=ABCMeta):
+class BaseEditorPolyactionsTest(metaclass=ABCMeta):
     @abstractmethod
     def _createPage(self):
         pass
@@ -739,7 +738,7 @@ class BaseEditorPolyactionsTest(BaseOutWikerGUITest, metaclass=ABCMeta):
         self.assertEqual(newtext, 'слово ')
 
 
-class WikiEditorPolyactionsTest(BaseEditorPolyactionsTest):
+class WikiEditorPolyactionsTest(BaseEditorPolyactionsTest, BaseOutWikerGUITest):
     """
     Test polyactions for wiki pages
     """
@@ -750,7 +749,7 @@ class WikiEditorPolyactionsTest(BaseEditorPolyactionsTest):
         return self.application.mainWindow.pagePanel.pageView.codeEditor
 
 
-class HtmlEditorPolyactionsTest(BaseEditorPolyactionsTest):
+class HtmlEditorPolyactionsTest(BaseEditorPolyactionsTest, BaseOutWikerGUITest):
     """
     Test polyactions for HTML pages
     """
@@ -761,7 +760,7 @@ class HtmlEditorPolyactionsTest(BaseEditorPolyactionsTest):
         return self.application.mainWindow.pagePanel.pageView.codeEditor
 
 
-class TextEditorPolyactionsTest(BaseEditorPolyactionsTest):
+class TextEditorPolyactionsTest(BaseEditorPolyactionsTest, BaseOutWikerGUITest):
     """
     Test polyactions for text pages
     """
