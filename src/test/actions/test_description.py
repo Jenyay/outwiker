@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from test.basetestcases import BaseOutWikerGUITest
+import unittest
+
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class DescriptionActionTest (BaseOutWikerGUITest):
+class DescriptionActionTest (unittest.TestCase, BaseOutWikerGUIMixin):
     """
     Tests for search empty title and description of actions
     """

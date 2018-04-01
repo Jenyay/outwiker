@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 
+import unittest
+
 from outwiker.gui.tester import Tester
 from outwiker.core.pluginsloader import PluginsLoader
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class MarkdownImageDialogTest(BaseOutWikerGUITest):
+class MarkdownImageDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def setUp(self):
         self.initApplication()
         self.wikiroot = self.createWiki()

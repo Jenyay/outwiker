@@ -2,15 +2,16 @@
 
 import os.path
 from tempfile import mkdtemp
+import unittest
 
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
 from test.utils import removeDir
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class SessionsTest(BaseOutWikerGUITest):
+class SessionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
     """Тесты плагина Sessions"""
     def setUp(self):
         self.initApplication()

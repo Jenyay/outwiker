@@ -1,15 +1,17 @@
 # -*- coding: utf-8 -*-
 
+import unittest
+
 from outwiker.gui.tester import Tester
 from outwiker.pages.html.htmlpage import HtmlPageFactory
 from outwiker.gui.guiconfig import GeneralGuiConfig
 from outwiker.actions.polyactionsid import (TABLE_STR_ID,
                                             TABLE_ROW_STR_ID,
                                             TABLE_CELL_STR_ID)
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class HtmlTableActionsTest(BaseOutWikerGUITest):
+class HtmlTableActionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def setUp(self):
         self.initApplication()
         self.wikiroot = self.createWiki()

@@ -8,10 +8,10 @@ from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parser.command import Command
 from outwiker.pages.wiki.parserfactory import ParserFactory
 from test.utils import removeDir
-from test.basetestcases import BaseOutWikerTest
+from test.basetestcases import BaseOutWikerMixin
 
 
-class WikiCommandsTest (BaseOutWikerTest):
+class WikiCommandsTest (BaseOutWikerMixin):
     def setUp(self):
         self.initApplication()
         self.encoding = "utf8"

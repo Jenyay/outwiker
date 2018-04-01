@@ -2,14 +2,15 @@
 
 from tempfile import mkdtemp
 import os
+import unittest
 
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.application import Application
 from test.utils import removeDir
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class SnippetsLoaderTest(BaseOutWikerGUITest):
+class SnippetsLoaderTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def setUp(self):
         self.initApplication()
         dirlist = ["../plugins/snippets"]

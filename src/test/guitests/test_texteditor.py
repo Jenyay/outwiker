@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 
+import unittest
+
 from outwiker.pages.text.textpage import TextPageFactory
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class TextEditorTest(BaseOutWikerGUITest):
+class TextEditorTest(unittest.TestCase, BaseOutWikerGUIMixin):
     """
     Тесты действий для викистраницы
     """

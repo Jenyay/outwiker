@@ -2,6 +2,7 @@
 
 import os.path
 from tempfile import mkdtemp
+import unittest
 
 import wx
 
@@ -10,10 +11,10 @@ from outwiker.core.commands import openWikiWithDialog, openWiki, findPage
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.gui.tester import Tester
 from test.utils import removeDir
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class OpenWikiGuiTest(BaseOutWikerGUITest):
+class OpenWikiGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
     """
     Тесты открытия вики через интерфейс
     """

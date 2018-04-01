@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
 
+import unittest
+
 import wx
 
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.gui.tester import Tester
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class CounterDialogTest(BaseOutWikerGUITest):
+class CounterDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
     """
     Тесты диалога для плагина Counter
     """

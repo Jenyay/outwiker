@@ -1,15 +1,17 @@
 # -*- coding: utf-8 -*-
 
+import unittest
+
 import wx
 
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.gui.tester import Tester
 from test.utils import removeDir
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class HackPage_ChangeTitleTest(BaseOutWikerGUITest):
+class HackPage_ChangeTitleTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def setUp(self):
         self.initApplication()
         self.wikiroot = self.createWiki()

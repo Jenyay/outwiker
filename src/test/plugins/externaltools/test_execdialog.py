@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
 
+import unittest
+
 import wx
 
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.gui.tester import Tester
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class ExecDialogTest(BaseOutWikerGUITest):
+class ExecDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
     """
     Tests for ExecDialog and ExecDialogController
     """

@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import unittest
+
 import os
 
 from outwiker.core.pluginsloader import PluginsLoader
@@ -7,10 +9,10 @@ from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
 from outwiker.utilites.textfile import writeTextFile
 from test.utils import removeDir
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class SnippetsWikiCommandTest(BaseOutWikerGUITest):
+class SnippetsWikiCommandTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def setUp(self):
         self.initApplication()
         self.wikiroot = self.createWiki()

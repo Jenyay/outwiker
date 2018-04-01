@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 
+import unittest
+
 from outwiker.actions.tabs import AddTabAction, CloseTabAction, PreviousTabAction, NextTabAction
 from outwiker.pages.text.textpage import TextPageFactory
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class ActionTabsTest(BaseOutWikerGUITest):
+class ActionTabsTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def setUp(self):
         self.initApplication()
         self.wikiroot = self.createWiki()

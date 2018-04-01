@@ -2,15 +2,16 @@
 
 import os.path
 from tempfile import mkdtemp
+import unittest
 
 from outwiker.core.attachment import Attachment
 from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
 from test.utils import removeDir
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class AttachPanelTest(BaseOutWikerGUITest):
+class AttachPanelTest(unittest.TestCase, BaseOutWikerGUIMixin):
     """
     Тесты окна со списком прикрепленных файлов
     """

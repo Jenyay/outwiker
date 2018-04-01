@@ -48,7 +48,7 @@ class WikiTestMixin(object):
         removeDir(wikiroot.path)
 
 
-class BaseOutWikerTest(unittest.TestCase, WikiTestMixin):
+class BaseOutWikerMixin(WikiTestMixin):
     def initApplication(self):
         self._config_path = self._getConfigPath()
         self.application = Application
@@ -67,7 +67,7 @@ class BaseOutWikerTest(unittest.TestCase, WikiTestMixin):
             return tmp_fp.name
 
 
-class BaseOutWikerGUITest(BaseOutWikerTest):
+class BaseOutWikerGUIMixin(BaseOutWikerMixin):
     def initApplication(self):
         super().initApplication()
 

@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*-
 
+import unittest
 import os.path
 
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.thumbnails import Thumbnails
 from outwiker.pages.wiki.parserfactory import ParserFactory
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class TexEquationTest(BaseOutWikerGUITest):
+class TexEquationTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def setUp(self):
         self.initApplication()
         self.wikiroot = self.createWiki()

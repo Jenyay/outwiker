@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import unittest
+
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.pages.text.textpanel import TextPanel
 
@@ -12,10 +14,10 @@ from outwiker.pages.wiki.wikipageview import WikiPageView
 from outwiker.pages.search.searchpage import SearchPageFactory
 from outwiker.pages.search.searchpanel import SearchPanel
 
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class PagePanelTest(BaseOutWikerGUITest):
+class PagePanelTest(unittest.TestCase, BaseOutWikerGUIMixin):
     """
     Тесты окна с основным содержимым страницы
     """

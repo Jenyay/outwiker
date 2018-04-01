@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 
+import unittest
+
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.pages.wiki.wikiconfig import WikiConfig
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class TOC_GeneratorTest (BaseOutWikerGUITest):
+class TOC_GeneratorTest (unittest.TestCase, BaseOutWikerGUIMixin):
     """Тесты плагина TableOfContents"""
 
     def setUp(self):

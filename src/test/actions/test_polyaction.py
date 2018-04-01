@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 
+import unittest
+
 from outwiker.gui.polyaction import PolyAction
 from outwiker.gui.actioncontroller import ActionController
 from outwiker.gui.hotkey import HotKey
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class PolyActionTest(BaseOutWikerGUITest):
+class PolyActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
     """Тестирование класса PolyAction"""
     def setUp(self):
         self.initApplication()

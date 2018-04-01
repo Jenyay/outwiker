@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 
+import unittest
+
 from outwiker.gui.controls.hotkeyctrl import HotkeyCtrl
 from outwiker.gui.hotkey import HotKey
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class HotkeyCtrlTest(BaseOutWikerGUITest):
+class HotkeyCtrlTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def setUp(self):
         self.initApplication()
 

@@ -1,16 +1,17 @@
 # -*- coding: utf-8 -*-
 
 from abc import ABCMeta, abstractmethod
+import unittest
 
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.html.htmlpage import HtmlPageFactory
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.core.commands import getClipboardText
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 from outwiker.actions.polyactionsid import *
 
 
-class BaseEditorPolyactionsTest(metaclass=ABCMeta):
+class BaseEditorPolyactionsTest(unittest.TestCase, BaseOutWikerGUIMixin, metaclass=ABCMeta):
     @abstractmethod
     def _createPage(self):
         pass
@@ -19,8 +20,12 @@ class BaseEditorPolyactionsTest(metaclass=ABCMeta):
     def _getEditor(self):
         pass
 
+    def _postInitApplication(self):
+        pass
+
     def setUp(self):
         self.initApplication()
+        self._postInitApplication()
         self.wikiroot = self.createWiki()
         self.page = self._createPage()
         self.application.wikiroot = self.wikiroot

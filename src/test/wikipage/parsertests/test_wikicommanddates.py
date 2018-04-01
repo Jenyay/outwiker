@@ -9,10 +9,10 @@ from test.utils import removeDir
 from outwiker.pages.wiki.parser.commands.dates import CommandDateCreation, CommandDateEdition
 from outwiker.pages.wiki.parserfactory import ParserFactory
 from outwiker.gui.guiconfig import GeneralGuiConfig
-from test.basetestcases import BaseOutWikerTest
+from test.basetestcases import BaseOutWikerMixin
 
 
-class WikiCommandDatesTest (BaseOutWikerTest):
+class WikiCommandDatesTest (BaseOutWikerMixin):
     def setUp(self):
         self.initApplication()
         self.encoding = "utf8"

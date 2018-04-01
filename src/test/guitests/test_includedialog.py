@@ -1,16 +1,17 @@
 # -*- coding: utf-8 -*-
 
 import os.path
+import unittest
 
 from outwiker.pages.wiki.actions.include import (IncludeDialog,
                                                  IncludeDialogController)
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.core.attachment import Attachment
 from outwiker.gui.tester import Tester
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class IncludeDialogTest(BaseOutWikerGUITest):
+class IncludeDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
     """
     Тесты диалога для вставки команды (:include:)
     """

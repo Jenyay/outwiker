@@ -2,10 +2,10 @@
 
 from outwiker.pages.wiki.linkcreator import LinkCreator
 from outwiker.pages.wiki.wikiconfig import WikiConfig
-from test.basetestcases import BaseOutWikerTest
+from test.basetestcases import BaseOutWikerMixin
 
 
-class WikiLinkCreatorTest(BaseOutWikerTest):
+class WikiLinkCreatorTest(BaseOutWikerMixin):
     def setUp(self):
         self.initApplication()
         self.config = WikiConfig(self.application.config)

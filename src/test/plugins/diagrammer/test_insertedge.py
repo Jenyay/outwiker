@@ -5,10 +5,13 @@ import unittest
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.application import Application
 from outwiker.gui.tester import Tester
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class InsertEdgeTest(unittest.TestCase):
+class InsertEdgeTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def setUp(self):
+        self.initApplication()
+        self.wikiroot = self.createWiki()
         dirlist = ["../plugins/diagrammer"]
 
         self.loader = PluginsLoader(Application)
@@ -22,6 +25,8 @@ class InsertEdgeTest(unittest.TestCase):
     def tearDown(self):
         self.loader.clear()
         self._dlg.Destroy()
+        self.destroyApplication()
+        self.destroyWiki(self.wikiroot)
 
     def testArrows_01(self):
         import diagrammer.gui.insertedgedialog

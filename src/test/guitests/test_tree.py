@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 
 import os
+import unittest
 
 from outwiker.pages.text.textpage import TextPageFactory
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class TreeTest(BaseOutWikerGUITest):
+class TreeTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def setUp(self):
         self.initApplication()
         self.wikiroot = self.createWiki()

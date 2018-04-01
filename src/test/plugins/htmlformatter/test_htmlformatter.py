@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 
+import unittest
+
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.htmlimproverfactory import HtmlImproverFactory
-from test.basetestcases import BaseOutWikerTest
+from test.basetestcases import BaseOutWikerMixin
 
 
-class HtmlFormatterTest (BaseOutWikerTest):
+class HtmlFormatterTest (unittest.TestCase, BaseOutWikerMixin):
     """Тесты плагина HtmlFormatter"""
 
     def setUp(self):

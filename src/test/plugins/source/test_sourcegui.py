@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os.path
+import unittest
 
 import wx
 
@@ -8,11 +9,11 @@ from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.attachment import Attachment
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 from .sourcefakedialog import FakeInsertDialog
 
 
-class SourceGuiPluginTest (BaseOutWikerGUITest):
+class SourceGuiPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
     """
     Тесты интерфейса для плагина Source
     """

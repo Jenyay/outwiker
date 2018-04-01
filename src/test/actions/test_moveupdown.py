@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
 
+import unittest
+
 from outwiker.gui.tester import Tester
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.actions.movepageup import MovePageUpAction
 from outwiker.actions.movepagedown import MovePageDownAction
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class MovePageUpDownActionTest(BaseOutWikerGUITest):
+class MovePageUpDownActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
     """
     Tests for MovePageUpAction and MovePageDownAction
     """

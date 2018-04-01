@@ -1,15 +1,17 @@
 # -*- coding: utf-8 -*-
 
+import unittest
+
 import wx
 
 from outwiker.gui.tester import Tester
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.actions.dates import (WikiDateCreationAction,
                                                WikiDateEditionAction)
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class WikiDateActionTest(BaseOutWikerGUITest):
+class WikiDateActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
     """
     Tests for a inserting commands (:crdate:) and (:eddate:)
     """

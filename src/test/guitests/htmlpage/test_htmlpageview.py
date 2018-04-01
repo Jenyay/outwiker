@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os.path
+import unittest
 
 import wx
 
@@ -10,10 +11,10 @@ from outwiker.core.defines import PAGE_MODE_TEXT, PAGE_MODE_PREVIEW
 from outwiker.utilites.textfile import readTextFile
 from outwiker.pages.html.htmlpage import HtmlPageFactory
 from outwiker.pages.html.htmlpageview import HtmlPageView
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class HtmlPageViewTest(BaseOutWikerGUITest):
+class HtmlPageViewTest(unittest.TestCase, BaseOutWikerGUIMixin):
     """
     Тесты вида HTML-страниц
     """

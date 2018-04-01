@@ -1,8 +1,8 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os
 import os.path
-from unittest import skipIf
+from unittest import skipIf, TestCase
 from tempfile import mkdtemp
 
 from outwiker.core.tree import WikiDocument
@@ -15,10 +15,10 @@ from outwiker.gui.htmlcontrollerie import UriIdentifierIE
 from outwiker.gui.htmlcontrollerwebkit import UriIdentifierWebKit
 
 from test.utils import removeDir
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class UriIdentifierTest(BaseOutWikerGUITest):
+class UriIdentifierTest(TestCase, BaseOutWikerGUIMixin):
     """
     Базовый класс для тестов идентификации сслок разными HTML-движками
     """

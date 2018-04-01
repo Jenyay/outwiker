@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os.path
+import unittest
 
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.style import Style
@@ -8,10 +9,10 @@ from outwiker.core.attachment import Attachment
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
 from outwiker.pages.wiki.htmlgenerator import HtmlGenerator
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class SourceEncodingPluginTest(BaseOutWikerGUITest):
+class SourceEncodingPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
     """
     Тесты на работу с разными кодировками в плагине Source
     """

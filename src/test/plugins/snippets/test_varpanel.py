@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 
+import unittest
+
 from outwiker.core.pluginsloader import PluginsLoader
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class SnippetsVarPanelTest(BaseOutWikerGUITest):
+class SnippetsVarPanelTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def setUp(self):
         self.initApplication()
         mainWnd = self.application.mainWindow

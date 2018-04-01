@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
 
+import unittest
+
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.tree import WikiDocument
 from outwiker.core.factoryselector import FactorySelector
 from outwiker.pages.text.textpage import TextPageFactory
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class TestPageTest(BaseOutWikerGUITest):
+class TestPageTest(unittest.TestCase, BaseOutWikerGUIMixin):
     """Тесты плагина TestPage"""
 
     def setUp(self):

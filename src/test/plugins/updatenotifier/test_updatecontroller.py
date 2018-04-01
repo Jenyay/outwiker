@@ -1,19 +1,20 @@
 # -*- coding: utf-8 -*-
 
 import logging
+import unittest
 
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.appinfo import AppInfo, VersionInfo
 from outwiker.core.version import Version
 from test.utils import SkipLogFilter
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
 logger = logging.getLogger('UpdateNotifierPlugin')
 logger.addFilter(SkipLogFilter())
 
 
-class UpdateControllerTest(BaseOutWikerGUITest):
+class UpdateControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
     """Tests for the UpdateNotifier plugin."""
 
     def setUp(self):

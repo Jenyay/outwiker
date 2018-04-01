@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import unittest
+
 import wx
 
 from outwiker.core.pluginsloader import PluginsLoader
@@ -7,10 +9,10 @@ from outwiker.core.style import Style
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.htmlgenerator import HtmlGenerator
 from outwiker.gui.tester import Tester
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class LivejournalPluginTest(BaseOutWikerGUITest):
+class LivejournalPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def setUp(self):
         self.initApplication()
         self.wikiroot = self.createWiki()

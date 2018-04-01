@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 
+import unittest
+
 from outwiker.pages.html.htmlpage import HtmlPageFactory
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 from outwiker.actions.polyactionsid import *
 
 
-class HtmlActionsTest(BaseOutWikerGUITest):
+class HtmlActionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
     """
     Тесты действий для HTML-страницы
     """

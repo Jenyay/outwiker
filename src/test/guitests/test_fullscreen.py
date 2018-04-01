@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
 
+import unittest
+
 from outwiker.actions.showhidetree import ShowHideTreeAction
 from outwiker.actions.showhideattaches import ShowHideAttachesAction
 from outwiker.actions.showhidetags import ShowHideTagsAction
 from outwiker.actions.fullscreen import FullScreenAction
 from outwiker.core.system import getOS
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class FullScreenTest(BaseOutWikerGUITest):
+class FullScreenTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def setUp(self):
         self.initApplication()
 

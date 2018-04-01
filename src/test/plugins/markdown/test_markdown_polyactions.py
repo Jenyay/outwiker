@@ -9,14 +9,16 @@ from test.actions.test_editor_polyactions import BaseEditorPolyactionsTest
 class MarkdownPolyactionsTest(BaseEditorPolyactionsTest):
     """Test polyactions for Markdown pages"""
     def setUp(self):
+        super().setUp()
+
+    def _postInitApplication(self):
         dirlist = ["../plugins/markdown"]
         self.loader = PluginsLoader(Application)
         self.loader.load(dirlist)
-        super(MarkdownPolyactionsTest, self).setUp()
 
     def tearDown(self):
         self.loader.clear()
-        super(MarkdownPolyactionsTest, self).tearDown()
+        super().tearDown()
 
     def _createPage(self):
         from markdown.markdownpage import MarkdownPageFactory

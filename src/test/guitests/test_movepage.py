@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 
+import unittest
+
 from outwiker.core.commands import movePage
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.gui.tester import Tester
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class MovePageGuiTest(BaseOutWikerGUITest):
+class MovePageGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
     """
     Тесты перемещения страниц
     """

@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 
+import unittest
+
 from outwiker.actions.addbookmark import AddBookmarkAction
 from outwiker.gui.defines import MENU_BOOKMARKS
 from outwiker.pages.text.textpage import TextPageFactory
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class BookmarksGuiTest(BaseOutWikerGUITest):
+class BookmarksGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def setUp(self):
         self.initApplication()
         self.wikiroot = self.createWiki()

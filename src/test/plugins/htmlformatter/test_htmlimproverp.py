@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 
+import unittest
+
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.htmlimproverfactory import HtmlImproverFactory
-from test.basetestcases import BaseOutWikerTest
+from test.basetestcases import BaseOutWikerMixin
 
 
-class ParagraphHtmlImproverTest (BaseOutWikerTest):
+class ParagraphHtmlImproverTest (unittest.TestCase, BaseOutWikerMixin):
     def setUp(self):
         self.initApplication()
         dirlist = ["../plugins/htmlformatter"]

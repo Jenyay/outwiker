@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
 
+import unittest
+
 from outwiker.gui.tester import Tester
 from outwiker.pages.html.htmlpage import HtmlPageFactory
 from outwiker.gui.tabledialog import TableDialog
 from outwiker.pages.html.tabledialogcontroller import TableDialogController
 from outwiker.gui.guiconfig import GeneralGuiConfig
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class HtmlTableDialogTest(BaseOutWikerGUITest):
+class HtmlTableDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def setUp(self):
         self.initApplication()
         self.wikiroot = self.createWiki()

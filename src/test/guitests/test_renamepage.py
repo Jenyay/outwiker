@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
 
 from os.path import basename
+import unittest
 
 from outwiker.core.commands import renamePage
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.gui.tester import Tester
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class RenamePageGuiTest(BaseOutWikerGUITest):
+class RenamePageGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
     """
     Тесты переименования страниц
     """

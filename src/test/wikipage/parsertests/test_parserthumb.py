@@ -10,10 +10,10 @@ from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
 from outwiker.pages.wiki.wikiconfig import WikiConfig
 from test.utils import removeDir
-from test.basetestcases import BaseOutWikerTest
+from test.basetestcases import BaseOutWikerMixin
 
 
-class ParserThumbTest (BaseOutWikerTest):
+class ParserThumbTest (BaseOutWikerMixin):
     def setUp(self):
         self.initApplication()
         self.encoding = "utf8"
