@@ -17,10 +17,10 @@ from outwiker.pages.wiki.emptycontent import EmptyContent
 from outwiker.pages.wiki.wikiconfig import WikiConfig
 
 from test.utils import removeDir
-from test.basetestcases import BaseOutWikerTest
+from test.basetestcases import BaseOutWikerMixin
 
 
-class WikiHtmlCacheTest (BaseOutWikerTest):
+class WikiHtmlCacheTest (BaseOutWikerMixin):
     def setUp(self):
         self.initApplication()
         self.filesPath = "../test/samplefiles/"

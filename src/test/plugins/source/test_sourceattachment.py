@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*-
 
 import os.path
+import unittest
 
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.attachment import Attachment
 from outwiker.pages.wiki.wikipage import WikiPageFactory
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 from .sourcefakedialog import FakeInsertDialog
 
 
-class SourceAttachmentPluginTest (BaseOutWikerGUITest):
+class SourceAttachmentPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
     """
     Тесты интерфейса для плагина Source
     """

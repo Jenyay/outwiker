@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 
 from os.path import basename
+import unittest
 
 from outwiker.gui.guiconfig import MainWindowConfig
 from outwiker.pages.text.textpage import TextPageFactory
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class MainWndTest(BaseOutWikerGUITest):
+class MainWndTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def setUp(self):
         self.initApplication()
         self.wikiroot = self.createWiki()

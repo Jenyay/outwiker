@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 
+import unittest
+
 import wx
 
 from outwiker.gui.menucontroller import MenuController, ROOT_MENU_ID
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class MenuControllerTest(BaseOutWikerGUITest):
+class MenuControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def setUp(self):
         self.initApplication()
 

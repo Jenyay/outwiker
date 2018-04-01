@@ -7,10 +7,10 @@ from outwiker.core.system import getTemplatesDir
 from outwiker.core.htmlimprover import BrHtmlImprover
 from outwiker.gui.guiconfig import HtmlRenderConfig
 from outwiker.utilites.textfile import readTextFile
-from test.basetestcases import BaseOutWikerTest
+from test.basetestcases import BaseOutWikerMixin
 
 
-class HtmlTemplateTest(BaseOutWikerTest):
+class HtmlTemplateTest(BaseOutWikerMixin):
     def setUp(self):
         self.initApplication()
         self.config = HtmlRenderConfig(self.application.config)

@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
 
+import unittest
+
 import wx
 
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.pages.wiki.wikipage import WikiPageFactory
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class SnippetsVarDialogControllerTest(BaseOutWikerGUITest):
+class SnippetsVarDialogControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def setUp(self):
         self.initApplication()
         self.wikiroot = self.createWiki()

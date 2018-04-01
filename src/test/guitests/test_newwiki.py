@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
 
+import unittest
+
 import wx
 
 from outwiker.core.commands import createNewWiki
 from outwiker.gui.tester import Tester
 from test.utils import removeDir
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class NewWikiGuiTest(BaseOutWikerGUITest):
+class NewWikiGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
     """
     Тесты создания вики через интерфейс
     """

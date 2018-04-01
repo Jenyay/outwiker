@@ -17,7 +17,7 @@ from outwiker.pages.wiki.emptycontent import EmptyContent
 from outwiker.pages.wiki.wikiconfig import WikiConfig
 
 from test.utils import removeDir
-from test.basetestcases import BaseOutWikerTest
+from test.basetestcases import BaseOutWikerMixin
 
 
 class TestFooterWikiCommand(Command):
@@ -40,7 +40,7 @@ class TestHeadWikiCommand(Command):
         return "head"
 
 
-class WikiHtmlGeneratorTest(BaseOutWikerTest):
+class WikiHtmlGeneratorTest(BaseOutWikerMixin):
     def setUp(self):
         self.initApplication()
         self.filesPath = "../test/samplefiles/"

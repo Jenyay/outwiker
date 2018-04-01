@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime
+import unittest
 
 import wx
 
@@ -9,10 +10,10 @@ from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.html.htmlpage import HtmlPageFactory
 from outwiker.actions.polyactionsid import CURRENT_DATE
 from outwiker.gui.guiconfig import GeneralGuiConfig
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class InsertDateTest(BaseOutWikerGUITest):
+class InsertDateTest(unittest.TestCase, BaseOutWikerGUIMixin):
     """
     Tests for a inserting of the current date
     """

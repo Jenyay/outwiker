@@ -15,10 +15,10 @@ from outwiker.pages.wiki.wikiconfig import WikiConfig
 from outwiker.pages.wiki.wikihashcalculator import WikiHashCalculator
 
 from test.utils import removeDir
-from test.basetestcases import BaseOutWikerTest
+from test.basetestcases import BaseOutWikerMixin
 
 
-class WikiHashTest (BaseOutWikerTest):
+class WikiHashTest (BaseOutWikerMixin):
     def setUp(self):
         self.initApplication()
         self.encoding = "866"

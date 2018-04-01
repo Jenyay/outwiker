@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
 
+import unittest
+
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.actions.moving import (GoToParentAction,
                                      GoToFirstChildAction,
                                      GoToNextSiblingAction,
                                      GoToPrevSiblingAction)
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class MovingActionTest(BaseOutWikerGUITest):
+class MovingActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
     """
     Tests for moving on pages
     """

@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 
+import unittest
+
 from outwiker.pages.wiki.wikipage import WikiPageFactory
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 from outwiker.actions.polyactionsid import *
 
 
-class WikiActionsTest(BaseOutWikerGUITest):
+class WikiActionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
     """
     Тесты действий для викистраницы
     """

@@ -5,10 +5,10 @@ from tempfile import mkdtemp
 
 from outwiker.core.recenticonslist import RecentIconsList
 from test.utils import removeDir, createFile
-from test.basetestcases import BaseOutWikerTest
+from test.basetestcases import BaseOutWikerMixin
 
 
-class RecentIconsListTest(BaseOutWikerTest):
+class RecentIconsListTest(BaseOutWikerMixin):
     def setUp(self):
         self.initApplication()
         self.config = self.application.config

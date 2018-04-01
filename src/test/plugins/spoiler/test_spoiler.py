@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
 
+import unittest
+
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.style import Style
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
 from outwiker.pages.wiki.htmlgenerator import HtmlGenerator
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class SpoilerPluginTest(BaseOutWikerGUITest):
+class SpoilerPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def setUp(self):
         self.__pluginname = "Spoiler"
         self.initApplication()

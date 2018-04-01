@@ -7,10 +7,10 @@ from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.html.htmlpage import HtmlPageFactory
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.pages.search.searchpage import SearchPageFactory
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class BasePluginLoadingTest(BaseOutWikerGUITest, metaclass=ABCMeta):
+class BasePluginLoadingTest(BaseOutWikerGUIMixin, metaclass=ABCMeta):
     @abstractmethod
     def getPluginDir(self):
         """

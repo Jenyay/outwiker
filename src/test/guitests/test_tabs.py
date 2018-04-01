@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
 
 from os.path import basename
+import unittest
 
 from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.actions.history import HistoryBackAction, HistoryForwardAction
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class TabsTest(BaseOutWikerGUITest):
+class TabsTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def setUp(self):
         self.initApplication()
         self.wikiroot = self.createWiki()

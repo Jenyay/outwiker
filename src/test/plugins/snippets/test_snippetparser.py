@@ -2,14 +2,15 @@
 
 from datetime import datetime
 import os
+import unittest
 
 from outwiker.core.attachment import Attachment
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.pages.wiki.wikipage import WikiPageFactory
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class SnippetParserTest(BaseOutWikerGUITest):
+class SnippetParserTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def setUp(self):
         self.initApplication()
         self.wikiroot = self.createWiki()

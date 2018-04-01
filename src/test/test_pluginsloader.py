@@ -2,10 +2,10 @@
 
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.gui.guiconfig import PluginsConfig
-from test.basetestcases import BaseOutWikerTest
+from test.basetestcases import BaseOutWikerMixin
 
 
-class PluginsLoaderTest(BaseOutWikerTest):
+class PluginsLoaderTest(BaseOutWikerMixin):
     def setUp(self):
         self.initApplication()
         self.config = PluginsConfig(self.application.config)

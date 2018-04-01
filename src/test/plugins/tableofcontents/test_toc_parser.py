@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 
+import unittest
+
 from outwiker.core.pluginsloader import PluginsLoader
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class TOC_ParserTest(BaseOutWikerGUITest):
+class TOC_ParserTest(unittest.TestCase, BaseOutWikerGUIMixin):
     """Тесты плагина TableOfContents"""
 
     def setUp(self):

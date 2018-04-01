@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 
+import unittest
+
 from outwiker.gui.tester import Tester
 from outwiker.actions.globalsearch import GlobalSearchAction
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class GlobalSearchActionTest(BaseOutWikerGUITest):
+class GlobalSearchActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
     """
     Tests for GlobalSearchAction
     """

@@ -5,10 +5,13 @@ import unittest
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.application import Application
 from outwiker.gui.tester import Tester
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class InsertDiagramTest(unittest.TestCase):
+class InsertDiagramTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def setUp(self):
+        self.initApplication()
+        self.wikiroot = self.createWiki()
         dirlist = ["../plugins/diagrammer"]
 
         self.loader = PluginsLoader(Application)
@@ -26,6 +29,8 @@ class InsertDiagramTest(unittest.TestCase):
     def tearDown(self):
         self._dlg.Destroy()
         self.loader.clear()
+        self.destroyApplication()
+        self.destroyWiki(self.wikiroot)
 
     def testDefault(self):
         Tester.dialogTester.appendOk()

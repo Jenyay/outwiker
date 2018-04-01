@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os.path
+import unittest
 
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.attachment import Attachment
@@ -8,10 +9,10 @@ from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.html.htmlpage import HtmlPageFactory
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.pages.search.searchpage import SearchPageFactory
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class PageStatisticsTest (BaseOutWikerGUITest):
+class PageStatisticsTest (unittest.TestCase, BaseOutWikerGUIMixin):
     """Тесты плагина Statistics применительно к статистике страницы"""
 
     def setUp(self):

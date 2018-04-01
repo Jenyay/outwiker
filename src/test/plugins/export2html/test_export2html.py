@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os.path
+import unittest
 
 from outwiker.core.tree import WikiDocument
 from outwiker.core.pluginsloader import PluginsLoader
@@ -9,10 +10,10 @@ from outwiker.utilites.textfile import readTextFile
 from outwiker.core.defines import PAGE_RESULT_HTML
 
 from test.utils import removeDir
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class Export2HtmlTest(BaseOutWikerGUITest):
+class Export2HtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def setUp(self):
         self.initApplication()
         self.outputdir = "../test/temp"

@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
 
+import unittest
+
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.application import Application
 from outwiker.core.events import LinkClickParams
 from outwiker.gui.tester import Tester
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class CommandExecControllerTest(BaseOutWikerGUITest):
+class CommandExecControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def setUp(self):
         self.initApplication()
         dirlist = ['../plugins/externaltools']

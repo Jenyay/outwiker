@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import unittest
+
 from outwiker.core.attachment import Attachment
 from outwiker.core.commands import copyTextToClipboard
 from outwiker.core.defines import PAGE_ATTACH_DIR
@@ -9,10 +11,10 @@ from outwiker.pages.html.htmllinkdialogcontroller import HtmlLinkDialogControlle
 from outwiker.pages.wiki.wikiconfig import WikiConfig
 from outwiker.pages.wiki.wikilinkdialogcontroller import WikiLinkDialogController
 from outwiker.pages.wiki.wikipage import WikiPageFactory
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class LinkDialogControllerTest(BaseOutWikerGUITest):
+class LinkDialogControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def setUp(self):
         self.initApplication()
         self.wikiroot = self.createWiki()

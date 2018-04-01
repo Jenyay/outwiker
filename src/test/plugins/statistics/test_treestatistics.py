@@ -2,15 +2,16 @@
 
 import datetime
 import os.path
+import unittest
 
 from outwiker.core.attachment import Attachment
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.search.searchpage import SearchPageFactory
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class TreeStatisticsTest (BaseOutWikerGUITest):
+class TreeStatisticsTest (unittest.TestCase, BaseOutWikerGUIMixin):
     """Тесты для плагина Statistics, относящиеся к статистике дерева"""
 
     def setUp(self):

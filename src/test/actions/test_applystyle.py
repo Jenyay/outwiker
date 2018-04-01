@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os.path
+import unittest
 
 import wx
 
@@ -10,10 +11,10 @@ from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.pages.html.htmlpage import HtmlPageFactory
 from outwiker.pages.search.searchpage import SearchPageFactory
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class ApplyStyleActionTest(BaseOutWikerGUITest):
+class ApplyStyleActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
     """
     Tests for SetStyleToBranchAction
     """

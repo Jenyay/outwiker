@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 
+import unittest
+
 from outwiker.pages.wiki.actions.attachlist import (AttachListDialog,
                                                     AttachListDialogController)
 from outwiker.gui.tester import Tester
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class AttachListDialogTest (BaseOutWikerGUITest):
+class AttachListDialogTest (unittest.TestCase, BaseOutWikerGUIMixin):
     """
     Тесты диалога для вставки команды (:attachlist:)
     """

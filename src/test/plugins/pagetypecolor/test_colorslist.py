@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 
+import unittest
+
 from outwiker.core.config import StringOption
 from outwiker.core.pluginsloader import PluginsLoader
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class PageTypeColor_ColorsListTest(BaseOutWikerGUITest):
+class PageTypeColor_ColorsListTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def setUp(self):
         self.initApplication()
         plugins_dirs = ["../plugins/pagetypecolor"]

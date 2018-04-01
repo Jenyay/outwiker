@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
 
+import unittest
+
 from outwiker.core.tree import WikiDocument
 
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.pages.text.textpanel import TextPanel
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class TextPageViewTest(BaseOutWikerGUITest):
+class TextPageViewTest(unittest.TestCase, BaseOutWikerGUIMixin):
     """
     Тесты вида текстовых страниц
     """

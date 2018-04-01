@@ -5,10 +5,13 @@ import unittest
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.application import Application
 from outwiker.gui.tester import Tester
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class InsertNodeTest(unittest.TestCase):
+class InsertNodeTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def setUp(self):
+        self.initApplication()
+        self.wikiroot = self.createWiki()
         dirlist = ["../plugins/diagrammer"]
 
         self.loader = PluginsLoader(Application)
@@ -26,6 +29,8 @@ class InsertNodeTest(unittest.TestCase):
     def tearDown(self):
         self._dlg.Destroy()
         self.loader.clear()
+        self.destroyApplication()
+        self.destroyWiki(self.wikiroot)
 
     def testDestroy(self):
         Application.wikiroot = None

@@ -1,15 +1,17 @@
 # -*- coding: utf-8 -*-
 
+import unittest
+
 import wx
 
 from outwiker.actions.removepage import RemovePageAction
 from outwiker.core.commands import removePage
 from outwiker.gui.tester import Tester
 from outwiker.pages.text.textpage import TextPageFactory
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class RemovePageGuiTest(BaseOutWikerGUITest):
+class RemovePageGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
     """
     Тесты удаления страниц через интерфейс
     """

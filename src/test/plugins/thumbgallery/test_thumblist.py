@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*-
 
 import os.path
+import unittest
 
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.attachment import Attachment
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class ThumbListPluginTest (BaseOutWikerGUITest):
+class ThumbListPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
     def setUp(self):
         self.initApplication()
         self.wikiroot = self.createWiki()

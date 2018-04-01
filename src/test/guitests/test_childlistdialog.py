@@ -1,12 +1,14 @@
 # -*- coding: UTF-8 -*-
 
+import unittest
+
 from outwiker.pages.wiki.actions.childlist import (ChildListDialog,
                                                    ChildListDialogController)
 from outwiker.gui.tester import Tester
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class ChildListDialogTest(BaseOutWikerGUITest):
+class ChildListDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
     """
     Тесты диалога для вставки команды (:childlist:)
     """

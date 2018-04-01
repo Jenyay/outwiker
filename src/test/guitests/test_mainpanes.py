@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
 
+import unittest
+
 import wx.aui
 
 from outwiker.actions.showhideattaches import ShowHideAttachesAction
 from outwiker.actions.showhidetree import ShowHideTreeAction
 from outwiker.actions.showhidetags import ShowHideTagsAction
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class MainPanesTest(BaseOutWikerGUITest):
+class MainPanesTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def setUp(self):
         self.initApplication()
 

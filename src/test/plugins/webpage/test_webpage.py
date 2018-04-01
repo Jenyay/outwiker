@@ -2,16 +2,17 @@
 
 import os.path
 from tempfile import mkdtemp
+import unittest
 
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.tree import WikiDocument
 from outwiker.core.factoryselector import FactorySelector
 from outwiker.pages.text.textpage import TextPageFactory
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 from test.utils import removeDir
 
 
-class WebPageTest (BaseOutWikerGUITest):
+class WebPageTest (unittest.TestCase, BaseOutWikerGUIMixin):
     """WebPage plugin tests"""
 
     def setUp(self):

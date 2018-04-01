@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import unittest
+
 import wx
 
 from outwiker.gui.actioncontroller import ActionController
@@ -8,7 +10,7 @@ from outwiker.gui.hotkey import HotKey
 from outwiker.gui.hotkeyparser import HotKeyParser
 from outwiker.gui.hotkeyoption import HotKeyOption
 from outwiker.gui.defines import MENU_FILE, TOOLBAR_PLUGINS
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
 class TestAction(BaseAction):
@@ -50,7 +52,7 @@ class TestCheckAction(BaseAction):
             self.runCount -= 1
 
 
-class ActionControllerTest(BaseOutWikerGUITest):
+class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def setUp(self):
         self.initApplication()
 

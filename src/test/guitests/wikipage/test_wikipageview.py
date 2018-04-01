@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import unittest
+
 import wx
 
 from outwiker.core.defines import (PAGE_MODE_TEXT,
@@ -9,10 +11,10 @@ from outwiker.core.tree import WikiDocument
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.wikipageview import WikiPageView
 from outwiker.pages.wiki.wikiconfig import WikiConfig
-from test.basetestcases import BaseOutWikerGUITest
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class WikiPageViewTest(BaseOutWikerGUITest):
+class WikiPageViewTest(unittest.TestCase, BaseOutWikerGUIMixin):
     """
     Тесты вида викистраниц
     """
