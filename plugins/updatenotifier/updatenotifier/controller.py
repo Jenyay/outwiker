@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import datetime
-
+import logging
 import wx
 
 from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
@@ -12,6 +12,7 @@ from .preferencepanel import PreferencePanel
 from .updatesconfig import UpdatesConfig
 from .guicreators import OldGuiCreator, ActionGuiCreator
 
+logger = logging.getLogger('updatenotifier')
 
 class Controller(object):
     """
@@ -53,6 +54,14 @@ class Controller(object):
             self._application.mainWindow.Bind(wx.EVT_IDLE, handler=self.__onIdle)
 
         self._application.onPreferencesDialogCreate += self.__onPreferencesDialogCreate
+        self._application.onLinkClick += self.__onLinkClick
+
+    def __onLinkClick(self, page, params):
+        logger.info(u'_onLinkClick. page: {}'.format(page))
+        logger.info(u'_onLinkClick. params: {}'.format(params.__dict__))
+        #targetUrl = event.GetURL()
+        #logger.info(targetUrl) # format about:<link_info>
+        #event.Veto()  # stops the link from executing
 
     def destroy(self):
         """
@@ -60,6 +69,7 @@ class Controller(object):
         """
         self._guiCreator.destroy()
         self._application.onPreferencesDialogCreate -= self.__onPreferencesDialogCreate
+        self._application.onLinkClick -= self.__onLinkClick
 
     @property
     def debug(self):
