@@ -25,11 +25,10 @@ from .updateplugin import UpdatePlugin
 # The parameters:
 #     appInfoDict - dictionary. Key - plugin name or special id,
 #                               value - AppInfo instance.
-#     silenceMode - True if the theread was runned in the silence mode.
+#     silenceMode - True if the thread was run in the silence mode.
 UpdateVersionsEvent, EVT_UPDATE_VERSIONS = wx.lib.newevent.NewEvent()
 
 logger = logging.getLogger('updatenotifier')
-
 
 class UpdateController(object):
     """

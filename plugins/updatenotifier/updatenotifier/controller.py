@@ -100,7 +100,7 @@ class Controller(object):
 
     def __onLinkClick(self, page, params):
         '''
-        onLinkClick event handler. If params.link contain 'download:<PluginName>' when update <PluginName>
+        onLinkClick event handler. If params.link contain 'update:<PluginName>' when update <PluginName>
         otherwise do nothing
 
         :param page:
@@ -115,7 +115,7 @@ class Controller(object):
         #TODO: only for Linux
         params.link = params.link.decode('utf8')
 
-        if params.link.startswith('download:'):
+        if params.link.startswith('update:'):
             plugin_name = params.link.split(':')[-1]
 
             logger.info(u'Update plugin {}'.format(plugin_name))

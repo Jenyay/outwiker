@@ -36,6 +36,15 @@
 				margin: 0.7em 0em;
 			}
 
+			.update {
+				border-radius: 2px;
+				color: #fff;
+				font-weight: bold;
+				padding: 0.2em 1em;
+				text-decoration: none;
+				background-color: #518BDB;
+			}
+
 			.download {
 				border-radius: 2px;
 				color: #fff;
@@ -76,7 +85,9 @@
         {% set download_url = updatedAppInfo[id].appwebsite %}
 		{% set update_url = updatedAppInfo[id].versionsList[0].downloads %}
         <div class="controls">
-			<a class="update button" href="download:{{id}}">{{str_update}}</a>
+			{% if 'OUTWIKER_' not in id %}
+				<a class="update button" href="update:{{id}}">{{str_update}}</a>
+			{% endif %}
 
             {% if download_url %}
                 <a class="download button" href="{{download_url}}">{{str_download}}</a>
