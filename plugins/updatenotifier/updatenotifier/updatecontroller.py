@@ -19,8 +19,9 @@ from .updatesconfig import UpdatesConfig
 from .versionlist import VersionList
 from .i18n import get_
 from .contentgenerator import ContentGenerator
+from .updateplugin import UpdatePlugin
 
-# The event occures after finish cheching latest versions.
+# The event occurs after finish checking latest versions.
 # The parameters:
 #     appInfoDict - dictionary. Key - plugin name or special id,
 #                               value - AppInfo instance.
@@ -109,6 +110,7 @@ class UpdateController(object):
             u'str_version_history': _(u'Version history'),
             u'str_more_info': _(u'More info'),
             u'str_download': _(u'Download'),
+            u'str_update': _(u'Update'),
         }
 
         contentGenerator = ContentGenerator(template)
@@ -246,3 +248,25 @@ class UpdateController(object):
 
         if self._application.mainWindow:
             wx.PostEvent(self._application.mainWindow, event)
+
+    def update_plugin(self, id):
+        """
+        update plugin to latest version by id.
+        :return:
+        """
+
+        updates_url = self._updateUrls
+
+        verList = VersionList(updates_url)
+        appInfoDict = verList.loadAppInfo()
+
+        # get link to latest version
+        #TODO: add over OS
+        url = appInfoDict[id].versionsList[0].downloads.get('all')
+
+        logger.info('update_plugin: {}'.format(url))
+
+        plugin = self._application.plugins[id]
+        logger.info('update_plugin: {}'.format(plugin.pluginPath))
+        if url:
+            UpdatePlugin().update(url, plugin.pluginPath)

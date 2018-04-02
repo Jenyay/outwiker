@@ -74,7 +74,10 @@
 	<body>
         {% macro update_info(id)%}
         {% set download_url = updatedAppInfo[id].appwebsite %}
+		{% set update_url = updatedAppInfo[id].versionsList[0].downloads %}
         <div class="controls">
+			<a class="update button" href="download:{{id}}">{{str_update}}</a>
+
             {% if download_url %}
                 <a class="download button" href="{{download_url}}">{{str_download}}</a>
             {% endif %}

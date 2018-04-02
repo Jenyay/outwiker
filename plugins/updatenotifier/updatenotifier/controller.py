@@ -57,11 +57,13 @@ class Controller(object):
         self._application.onLinkClick += self.__onLinkClick
 
     def __onLinkClick(self, page, params):
-        logger.info(u'_onLinkClick. page: {}'.format(page))
-        logger.info(u'_onLinkClick. params: {}'.format(params.__dict__))
-        #targetUrl = event.GetURL()
-        #logger.info(targetUrl) # format about:<link_info>
-        #event.Veto()  # stops the link from executing
+        logger.info(u'_onLinkClick. downloads: {}'.format(params.__dict__))
+
+        if params.link.startswith('download:'):
+            plugin_name = params.link.split(':')[-1]
+
+            logger.info(u'Start update: {}'.format(plugin_name))
+            self._updatesChecker.update_plugin(plugin_name)
 
     def destroy(self):
         """
