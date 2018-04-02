@@ -56,15 +56,6 @@ class Controller(object):
         self._application.onPreferencesDialogCreate += self.__onPreferencesDialogCreate
         self._application.onLinkClick += self.__onLinkClick
 
-    def __onLinkClick(self, page, params):
-        logger.info(u'_onLinkClick. downloads: {}'.format(params.__dict__))
-
-        if params.link.startswith('download:'):
-            plugin_name = params.link.split(':')[-1]
-
-            logger.info(u'Start update: {}'.format(plugin_name))
-            self._updatesChecker.update_plugin(plugin_name)
-
     def destroy(self):
         """
         Вызывается при отключении плагина
@@ -106,3 +97,26 @@ class Controller(object):
         panelName = _(u"UpdateNotifier [Plugin]")
         panelsList = [PreferencePanelInfo(prefPanel, panelName)]
         dialog.appendPreferenceGroup(panelName, panelsList)
+
+    def __onLinkClick(self, page, params):
+        '''
+        onLinkClick event handler. If params.link contain 'download:<PluginName>' when update <PluginName>
+        otherwise do nothing
+
+        :param page:
+            not use in this handler
+        :param params:
+            LinkClickParams instance
+        :return:
+            None
+        '''
+        logger.debug(u'__onLinkClick. downloads: {}'.format(params.__dict__))
+
+        #TODO: only for Linux
+        params.link = params.link.decode('utf8')
+
+        if params.link.startswith('download:'):
+            plugin_name = params.link.split(':')[-1]
+
+            logger.info(u'Update plugin {}'.format(plugin_name))
+            self._updatesChecker.update_plugin(plugin_name)
