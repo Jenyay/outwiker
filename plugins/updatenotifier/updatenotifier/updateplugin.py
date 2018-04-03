@@ -1,13 +1,12 @@
 # -*- coding: UTF-8 -*-
 
 import tempfile
-import zipfile
+from zipfile import ZipFile
 import shutil
 import os.path
 import logging
 import urllib.request
-
-from .loaders import NormalLoader
+import urllib.error
 
 join, dirname = os.path.join, os.path.dirname
 logger = logging.getLogger('updatenotifier')
@@ -16,46 +15,68 @@ class UpdatePlugin (object):
     """
     Class is responsible to updating plugin.
     """
-    def __init__(self):
-        self.tmp_dir = tempfile.gettempdir()
-        self.zip = join(self.tmp_dir,'outwiker_plugin.zip')
-        self.unzip = ''
-        self.urlopen = urllib.request.urlopen
-
     def update(self, url, plugin_path):
+        """
+        :param url:
+            url where latest plugin zip file can be downloaded
+        :param plugin_path:
+            path to plugin folder on PC
+        :return:
+            True if plugin was updated, otherwise False
+        """
+        logger.info('Start update plugin: %s' % (plugin_path))
 
+        # Download the file from `url`, save it in a temporary directory and get the
+        # path to it (e.g. '/tmp/tmpb48zma.zip') in the `file_name` variable:
         try:
-            data = self.urlopen(url).read()
+            zip_name, headers = urllib.request.urlretrieve(url)
         except (urllib.error.HTTPError, urllib.error.URLError, ValueError):
             logger.warning(u"Can't download {}".format(url))
-            return None
+            return False
 
-        data = NormalLoader().load(url)
+        ## extract plugin to tmp dir
+        extracted_path = self._extract_plugin(zip_name)
 
-        logger.info('update')
-        if data:
-            with open(self.zip, 'wb') as f:
-                f.write(data)
-                self.plugin_updater(plugin_path)
-            os.remove(self.zip)
+        # remove plugin directory and copy new data to the plugins folder
+        self._replacetree(extracted_path, plugin_path)
 
-    def plugin_updater(self, plugin_path):
+        # remove temp files
+        if os.path.exists(extracted_path):
+            shutil.rmtree(extracted_path)
+        os.remove(zip_name)
+        return True
 
-        logger.info('plugin_updater')
-        # extract zip
-        my_zip = zipfile.ZipFile(self.zip)
-        my_zip.extractall(self.tmp_dir)
-        if my_zip.namelist():
-            self.unzip = join(self.tmp_dir, dirname(my_zip.namelist()[0]))
-        my_zip.close()
+    def _replacetree(self, src,  dst):
+        """
+        The function delete dst folder and than copy src to dst by shutil.copytree
+        """
 
-        pls_path, pl_folder_name = os.path.split(plugin_path)
+        pls_path, pl_folder_name = os.path.split(dst)
         pl_path = join(pls_path, pl_folder_name)
 
         if os.path.exists(pl_path):
             shutil.rmtree(pl_path)
-        shutil.copytree(self.unzip, pl_path)
 
-        # remove tmp
-        if os.path.exists(self.unzip):
-            shutil.rmtree(self.unzip)
+        if not os.path.exists(pl_path):
+            shutil.copytree(src, pl_path)
+
+    def _extract_plugin(self, zip_path):
+        """
+        Extract plugin.zip into temp folder and return path to extracted folder
+        :param zip_path:
+            full path to zipped plugin
+        :return:
+             path to extracted plugin folder (e.g. '/tmp/markdown')
+        """
+        tempdir = tempfile.gettempdir()
+
+        with ZipFile(zip_path) as myzip:
+            myzip.extractall(tempdir)
+
+            if myzip.namelist():
+                extracted_path = join(tempdir, dirname(myzip.namelist()[0]))
+            else:
+                logger.warning(u"Plugin zip file is empty")
+                return None
+
+        return extracted_path

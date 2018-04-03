@@ -112,8 +112,8 @@ class Controller(object):
         '''
         logger.debug(u'__onLinkClick. downloads: {}'.format(params.__dict__))
 
-        #TODO: only for Linux
-        params.link = params.link.decode('utf8')
+        if isinstance(params.link, bytes):
+            params.link = params.link.decode('utf8')
 
         if params.link.startswith('update:'):
             plugin_name = params.link.split(':')[-1]
