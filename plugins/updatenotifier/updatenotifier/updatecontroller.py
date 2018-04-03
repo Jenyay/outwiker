@@ -260,12 +260,13 @@ class UpdateController(object):
         appInfoDict = verList.loadAppInfo()
 
         # get link to latest version
-        #TODO: add over OS
+        #TODO: there is no
         url = appInfoDict[id].versionsList[0].downloads.get('all')
-
-        logger.info('update_plugin: {}'.format(url))
-
         plugin = self._application.plugins[id]
-        logger.info('update_plugin: {}'.format(plugin.pluginPath))
+
+        logger.info('update_plugin: {url} {path}'.format(url=url, path=plugin.pluginPath))
         if url:
             UpdatePlugin().update(url, plugin.pluginPath)
+            MessageBox(_(u"Plugin was updated. Please restart the application to apply changes"), u"UpdateNotifier")
+        else:
+            MessageBox(_(u"The download link was not found in plugin description. Please update plugin manually"), u"UpdateNotifier")

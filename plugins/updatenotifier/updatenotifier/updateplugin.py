@@ -5,20 +5,30 @@ import zipfile
 import shutil
 import os.path
 import logging
+import urllib.request
 
 from .loaders import NormalLoader
 
 join, dirname = os.path.join, os.path.dirname
-
 logger = logging.getLogger('updatenotifier')
 
 class UpdatePlugin (object):
-    def __init__ (self):
+    """
+    Class is responsible to updating plugin.
+    """
+    def __init__(self):
         self.tmp_dir = tempfile.gettempdir()
         self.zip = join(self.tmp_dir,'outwiker_plugin.zip')
         self.unzip = ''
+        self.urlopen = urllib.request.urlopen
 
     def update(self, url, plugin_path):
+
+        try:
+            data = self.urlopen(url).read()
+        except (urllib.error.HTTPError, urllib.error.URLError, ValueError):
+            logger.warning(u"Can't download {}".format(url))
+            return None
 
         data = NormalLoader().load(url)
 
