@@ -27,6 +27,11 @@
 			<site>http://jenyay.net</site>
 		</author>
 		<changelog>
+			<version number="2.2" date="March 04, 2018">
+                <download os="all">http://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-2.2.zip</download>
+				<change>Update plugin function was added</change>
+			</version>
+
 			<version number="2.1" date="February 15, 2018">
                 <download os="all">http://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-2.1.zip</download>
 				<change>Add OutWiker 2.1 support. Migrate to Python 3.6.</change>
@@ -78,6 +83,11 @@
 		</author>
 
 		<changelog>
+            <version number="2.2" date="04.03.2018">
+                <download os="all">http://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-2.2.zip</download>
+				<change>Добавлена функция обновления для плагинов</change>
+			</version>
+
             <version number="2.1" date="15.02.2018">
                 <download os="all">http://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-2.1.zip</download>
 				<change>Добавлена поддержка OutWiker 2.1. Переход на Python 3.6.</change>
