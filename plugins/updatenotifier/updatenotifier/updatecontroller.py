@@ -13,6 +13,8 @@ from outwiker.core.version import Version
 from outwiker.core.defines import PLUGIN_VERSION_FILE_NAME
 from outwiker.core.xmlversionparser import XmlVersionParser
 from outwiker.utilites.textfile import readTextFile
+from outwiker.core.system import getOS
+
 
 from .updatedialog import UpdateDialog
 from .updatesconfig import UpdatesConfig
@@ -53,6 +55,7 @@ class UpdateController(object):
 
         # Dictionary. Key - plugin name or special string id,
         # Value - URL to XML file with versions information.
+        #fixme: only already uploaded plugins will be added to _updateUrls.
         self._updateUrls = self._getPluginsUpdateUrls(self._application.plugins)
         self._updateUrls[self._OUTWIKER_STABLE_KEY] = u'http://jenyay.net/uploads/Soft/Outwiker/versions.xml'
         self._updateUrls[self._OUTWIKER_UNSTABLE_KEY] = u'http://jenyay.net/uploads/Outwiker/Unstable/versions.xml'
@@ -251,7 +254,7 @@ class UpdateController(object):
     def update_plugin(self, id):
         """
         update plugin to latest version by id.
-        :return:
+        :return: True if plugin was updated, otherwise False
         """
 
         updates_url = self._updateUrls
@@ -260,13 +263,25 @@ class UpdateController(object):
         appInfoDict = verList.loadAppInfo()
 
         # get link to latest version
-        #TODO: there is no
-        url = appInfoDict[id].versionsList[0].downloads.get('all')
+        plugin_downloads = appInfoDict[id].versionsList[0].downloads
+        if 'all' in plugin_downloads:
+            url = plugin_downloads.get('all')
+        elif getOS().name in plugin_downloads:
+            url = plugin_downloads.get(getOS().name)
+        else:
+            MessageBox(_(u"The download link was not found in plugin description. Please update plugin manually"),
+                       u"UpdateNotifier")
+            return False
+
         plugin = self._application.plugins[id]
 
         logger.info('update_plugin: {url} {path}'.format(url=url, path=plugin.pluginPath))
-        if url:
-            UpdatePlugin().update(url, plugin.pluginPath)
+
+        rez = UpdatePlugin().update(url, plugin.pluginPath)
+
+        if rez:
             MessageBox(_(u"Plugin was updated. Please restart the application to apply changes"), u"UpdateNotifier")
         else:
-            MessageBox(_(u"The download link was not found in plugin description. Please update plugin manually"), u"UpdateNotifier")
+            MessageBox(_(u"Plugin was NOT updated. Please update plugin manually"), u"UpdateNotifier")
+        return rez
+
