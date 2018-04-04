@@ -46,9 +46,6 @@ class PluginsLoader (object):
         # The list of the InvalidPlugin instance.
         self.__invalidPlugins = []
 
-        # Пути, где ищутся плагины
-        self.__dirlist = []
-
         # Имя классов плагинов должно начинаться с "Plugins"
         self.__pluginsStartName = "Plugin"
 
