@@ -316,37 +316,36 @@ class PluginsLoader (object):
         """
         options = PluginsConfig(self.__application.config)
 
-        for name in [attr for attr in dir(module)
-                     if attr.startswith(self.__pluginsStartName)]:
+        # get only attr starts with 'Plugin'
+        pluginClasses = [attr for attr in dir(module)
+                            if attr.startswith(self.__pluginsStartName)]
 
-            plugin = self.__createPlugin(module,
-                                         name,
-                                         options.disabledPlugins.value)
-            if plugin is not None:
+        for name in pluginClasses:
+
+            plugin = self.__createPlugin(module, name)
+
+            if plugin and self.__isNewPlugin(plugin.name):
+                if plugin.name in options.disabledPlugins.value:
+                    plugin.initialize()
+                    self.__plugins[plugin.name] = plugin
+                else:
+                    self.__disabledPlugins[plugin.name] = plugin
                 return plugin
 
-    def __createPlugin(self, module, name, disabledPlugins):
+    def __createPlugin(self, module, name):
         """
-        Попытаться загрузить класс, возможно, это плагин
-
-        module - модуль, откуда загружается класс
-        name - имя класса потенциального плагина
+        Create plugin instance if name is a subclass of Plugin
+        :param module:
+            module name
+        :param name:
+            attribute from the module
+        :return:
+            instance of name class or None
         """
         obj = getattr(module, name)
-        if obj == Plugin or not issubclass(obj, Plugin):
-            return
+        if issubclass(obj, Plugin) and obj != Plugin:
+            return obj(self.__application)
 
-        plugin = obj(self.__application)
-        if not self.__isNewPlugin(plugin.name):
-            return
-
-        if plugin.name not in disabledPlugins:
-            plugin.initialize()
-            self.__plugins[plugin.name] = plugin
-        else:
-            self.__disabledPlugins[plugin.name] = plugin
-
-        return plugin
 
     def __isNewPlugin(self, pluginname):
         """
