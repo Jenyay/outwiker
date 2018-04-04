@@ -171,30 +171,30 @@ class PluginsLoader (object):
         return pv.checkVersionAny(outwiker.core.__version__,
                                   api_required_version)
 
-    def __importModule(self, packagePath):
+    def __importModule(self, pluginRootPath):
         """
-        Function treys to load each subfolder of baseDir as a application plugin
+        Try import plugin from pluginRootPath
         :param baseDir:
             path to root plugins folder
         :return:
-            Fill the following field depending on result
-            self.__plugins
-            self.__disabledPlugins
-            self.__invalidPlugins
+            add plugin from pluginRootPath to one of the following lists:
+            - self.__plugins
+            - self.__disabledPlugins
+            - self.__invalidPlugins
         """
         # aliases
         join = os.path.join
-        packageName = os.path.basename(packagePath)
+        packageName = os.path.basename(pluginRootPath)
 
         # It may be plugin if __init__.py file exists
-        if not os.path.exists(join(packagePath, u'__init__.py')):
+        if not os.path.exists(join(pluginRootPath, u'__init__.py')):
             return
 
         logger.debug(u'Trying to load the plug-in: {}'.format(
             packageName))
 
         # Checking information from plugin.xml file
-        plugin_fname = join(packagePath,
+        plugin_fname = join(pluginRootPath,
                             PLUGIN_VERSION_FILE_NAME)
         try:
             appinfo = self.__loadPluginInfo(plugin_fname)
@@ -248,9 +248,9 @@ class PluginsLoader (object):
         oldPluginsCount = (len(self.__plugins) +
                            len(self.__disabledPlugins))
 
-        # Переберем все файлы внутри packagePath
+        # Переберем все файлы внутри pluginRootPath
         # и попытаемся их импортировать
-        pyFiles = [file for file in os.listdir(packagePath) if file.endswith('.py')]
+        pyFiles = [file for file in os.listdir(pluginRootPath) if file.endswith('.py')]
         pyFiles.remove('__init__.py')
         for fileName in sorted(pyFiles):
             try:
