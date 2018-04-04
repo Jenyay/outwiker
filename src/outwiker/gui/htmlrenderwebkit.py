@@ -171,7 +171,7 @@ class HtmlRenderWebKit(HtmlRender):
         modifier = self.__gtk2OutWikerKeyCode(gtk_key_modifier)
         mouse_button = self.__gtk2OutWikerMouseButtonCode(gtk_mouse_button)
 
-        params = self._getClickParams(source_href.encode('ascii'),
+        params = self._getClickParams(source_href,
                                       mouse_button,
                                       modifier,
                                       url,
