@@ -183,8 +183,7 @@ class PluginsLoader (object):
             packagePath = join(baseDir, packageName)
 
             # It may be plugin if __init__.py file exists
-            initFile = join(packagePath, u'__init__.py')
-            if not os.path.exists(initFile):
+            if not os.path.exists(join(packagePath, u'__init__.py')):
                 continue
 
             logger.debug(u'Trying to load the plug-in: {}'.format(
@@ -247,11 +246,13 @@ class PluginsLoader (object):
 
             # Переберем все файлы внутри packagePath
             # и попытаемся их импортировать
-            for fileName in sorted(os.listdir(packagePath)):
+            pyFiles = [file for file in os.listdir(packagePath) if file.endswith('.py')]
+            pyFiles.remove('__init__.py')
+            for fileName in sorted(pyFiles):
                 try:
                     module = self._importSingleModule(packageName,
                                                       fileName)
-                    if module is not None:
+                    if module:
                         plugin = self.__loadPlugin(module)
                         if plugin is not None:
                             plugin.version = appinfo.currentVersionStr
@@ -284,17 +285,20 @@ class PluginsLoader (object):
 
     def _importSingleModule(self, packageName, fileName):
         """
-        Импортировать один модуль по имени пакета и файла с модулем
+        Function import packageName.fileName module and return modulename
+        :param packageName:
+             name of folder contains __init__.py and fileName
+        :param fileName:
+            python module file (with .py/.pyc extension)
+        :return:
+            modulename attribute of imported fileName modules
+        :exception:
+            ImportError - No module named 'fileName'
         """
-        extension = ".py"
-        result = None
 
-        # Проверим, что файл может быть модулем
-        if fileName.endswith(extension) and fileName != "__init__.py":
-            modulename = fileName[: -len(extension)]
-            # Попытаться импортировать модуль
-            package = __import__(packageName + "." + modulename)
-            result = getattr(package, modulename)
+        modulename = os.path.splitext(fileName)[0]
+        package = __import__(packageName + "." + modulename)
+        result = getattr(package, modulename)
 
         return result
 
