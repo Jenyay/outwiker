@@ -28,7 +28,9 @@ logger = logging.getLogger('outwiker.core.pluginsloader')
 
 class PluginsLoader (object):
     """
-    Класс для загрузки плагинов
+    Load and keep plugins.
+    for loading all plugins packages from folder 'foo'
+        plugins = PluginsLoader(wx.app).load(['foo'])
     """
     def __init__(self, application):
         self.__application = application
@@ -109,11 +111,23 @@ class PluginsLoader (object):
 
     def load(self, dirlist):
         """
-        Загрузить плагины из указанных директорий.
-        Каждый вызов метода load() добавляет плагины в список загруженных
-            плагинов, не очищая его.
-        dirlist - список директорий, где могут располагаться плагины.
-            Каждый плагин расположен в своей поддиректории
+        :param dirlist:
+            List of paths from where plugins packages should be loaded.
+            For example to load 3 plugins the dirlist should be ['/path1', '/path2']
+            /path1/
+                plugin1/
+                    plugin.py
+                    plugin.xml
+                plugin2/
+                    plugin.py
+                    plugin.xml
+            /path2/
+                plugin3/
+                    plugin.py
+                    plugin.xml
+        :return:
+            function return None
+            the installed plugins can be get by properties
         """
         assert dirlist is not None
 
@@ -356,7 +370,7 @@ class PluginsLoader (object):
         """
         Reload plugin module and plugin instance in self.__plugins list
         :param pluginname:
-            plugin name id
+            plugin name id from the
         :return:
             None
         """
