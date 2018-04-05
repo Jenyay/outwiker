@@ -149,7 +149,7 @@ class PluginsLoader (object):
 
                 for packageName in dirPackagesList:
                     packagePath = os.path.join(currentDir, packageName)
-                    self.__importModule(packagePath)
+                    self.__importPackage(packagePath)
 
         logger.debug(u'Plugins loading ended')
 
@@ -182,30 +182,30 @@ class PluginsLoader (object):
         return pv.checkVersionAny(outwiker.core.__version__,
                                   api_required_version)
 
-    def __importModule(self, pluginRootPath):
+    def __importPackage(self, packagePath):
         """
-        Try import plugin from pluginRootPath
-        :param baseDir:
-            path to root plugins folder
+        Try to load plugin from packagePath
+        :param packagePath:
+            path to python package from where the plugin should be import
         :return:
-            add plugin from pluginRootPath to one of the following lists:
+            add packagePath to one of the following lists:
             - self.__plugins
             - self.__disabledPlugins
             - self.__invalidPlugins
         """
         # aliases
         join = os.path.join
-        packageName = os.path.basename(pluginRootPath)
+        packageName = os.path.basename(packagePath)
 
         # It may be plugin if __init__.py file exists
-        if not os.path.exists(join(pluginRootPath, u'__init__.py')):
+        if not os.path.exists(join(packagePath, u'__init__.py')):
             return
 
         logger.debug(u'Trying to load the plug-in: {}'.format(
             packageName))
 
         # Checking information from plugin.xml file
-        plugin_fname = join(pluginRootPath,
+        plugin_fname = join(packagePath,
                             PLUGIN_VERSION_FILE_NAME)
         try:
             appinfo = self.__loadPluginInfo(plugin_fname)
@@ -259,9 +259,9 @@ class PluginsLoader (object):
         oldPluginsCount = (len(self.__plugins) +
                            len(self.__disabledPlugins))
 
-        # Переберем все файлы внутри pluginRootPath
+        # Переберем все файлы внутри packagePath
         # и попытаемся их импортировать
-        pyFiles = [file for file in os.listdir(pluginRootPath) if file.endswith('.py')]
+        pyFiles = [file for file in os.listdir(packagePath) if file.endswith('.py')]
         pyFiles.remove('__init__.py')
         for fileName in sorted(pyFiles):
             try:
@@ -387,7 +387,7 @@ class PluginsLoader (object):
             importlib.reload(module)
 
             #
-            self.__importModule(plug_path)
+            self.__importPackage(plug_path)
 
 
     def __len__(self):
