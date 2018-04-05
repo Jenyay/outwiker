@@ -287,7 +287,6 @@ def test(*args):
     '''
     Run the unit tests
     '''
-    # _runTests(u'src', u'tests_', section, *args)
     with lcd('src'):
         local('{python} runtests.py {args}'.format(
             python=getPython(), args=' '.join(args)))
