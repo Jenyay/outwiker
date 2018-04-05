@@ -255,19 +255,18 @@ class PluginsLoader (object):
         oldPluginsCount = (len(self.__plugins) +
                            len(self.__disabledPlugins))
 
-        # Переберем все файлы внутри packagePath
-        # и попытаемся их импортировать
-        modules = [name for _, name, is_pkg in
-                   pkgutil.iter_modules([packagePath])
-                   if not is_pkg]
-        for module in modules:
+        # Find the module with Plugin root class and
+        # create  the instance of the class to
+        for _, module, is_pkg in pkgutil.iter_modules([packagePath]):
+            if is_pkg:
+                continue
+
             try:
                 module = importlib.import_module(packageName + "." + module)
 
-                if module:
-                    plugin = self.__loadPlugin(module)
-                    if plugin is not None:
-                        plugin.version = appinfo.currentVersionStr
+                plugin = self.__loadPlugin(module)
+                if plugin:
+                    plugin.version = appinfo.currentVersionStr
             except BaseException as e:
                 errors.append("*** Plug-in {package} loading error ***\n{package}/{fileName}\n{error}\n{traceback}".format(
                     package=packageName,
@@ -348,7 +347,7 @@ class PluginsLoader (object):
         """
         Reload plugin module and plugin instance in self.__plugins list
         :param pluginname:
-            plugin name id from the
+            name of the actual plugin
         :return:
             None
         """
