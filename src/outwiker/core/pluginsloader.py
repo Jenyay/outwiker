@@ -6,6 +6,7 @@ import sys
 import traceback
 import logging
 import importlib
+import pkgutil
 
 import outwiker.core
 import outwiker.gui
@@ -136,18 +137,17 @@ class PluginsLoader (object):
         for currentDir in dirlist:
             if os.path.exists(currentDir):
 
-                # Добавить путь до currentDir в sys.path
+                # Add currentDir to sys.path
                 fullpath = os.path.abspath(currentDir)
-
                 if fullpath not in sys.path:
                     sys.path.insert(0, fullpath)
 
-                # Все поддиректории попытаемся открыть как пакеты
+                # Get list of submodules in currentDir
+                # only folders with __init__.py can be submodules
+                packagesList = [pkg_name for _, pkg_name, is_pkg in
+                                   pkgutil.iter_modules([currentDir]) if is_pkg]
 
-                # get only folder names in baseDir
-                dirPackagesList = next(os.walk(currentDir))[1]
-
-                for packageName in dirPackagesList:
+                for packageName in packagesList:
                     packagePath = os.path.join(currentDir, packageName)
                     self.__importPackage(packagePath)
 
@@ -196,10 +196,6 @@ class PluginsLoader (object):
         # aliases
         join = os.path.join
         packageName = os.path.basename(packagePath)
-
-        # It may be plugin if __init__.py file exists
-        if not os.path.exists(join(packagePath, u'__init__.py')):
-            return
 
         logger.debug(u'Trying to load the plug-in: {}'.format(
             packageName))
@@ -261,12 +257,13 @@ class PluginsLoader (object):
 
         # Переберем все файлы внутри packagePath
         # и попытаемся их импортировать
-        pyFiles = [file for file in os.listdir(packagePath) if file.endswith('.py')]
-        pyFiles.remove('__init__.py')
-        for fileName in sorted(pyFiles):
+        modules = [name for _, name, is_pkg in
+                   pkgutil.iter_modules([packagePath])
+                   if not is_pkg]
+        for module in modules:
             try:
-                module = self._importSingleModule(packageName,
-                                                  fileName)
+                module = importlib.import_module(packageName + "." + module)
+
                 if module:
                     plugin = self.__loadPlugin(module)
                     if plugin is not None:
@@ -274,7 +271,7 @@ class PluginsLoader (object):
             except BaseException as e:
                 errors.append("*** Plug-in {package} loading error ***\n{package}/{fileName}\n{error}\n{traceback}".format(
                     package=packageName,
-                    fileName=fileName,
+                    fileName=module,
                     error=str(e),
                     traceback=traceback.format_exc()
                     ))
@@ -297,25 +294,6 @@ class PluginsLoader (object):
         else:
             logger.debug(u'Successfully loaded plug-in: {}'.format(
                 packageName))
-
-    def _importSingleModule(self, packageName, fileName):
-        """
-        Function import packageName.fileName module and return name of imported module
-        :param packageName:
-            name of folder contains __init__.py and fileName
-        :param fileName:
-            python module file (with .py/.pyc extension)
-        :return:
-            modulename attribute of imported fileName modules
-        :exception:
-            ImportError - No module named 'fileName'
-        """
-
-        modulename = os.path.splitext(fileName)[0]
-        package = __import__(packageName + "." + modulename)
-        result = getattr(package, modulename)
-
-        return result
 
     def __loadPlugin(self, module):
         """
@@ -384,9 +362,10 @@ class PluginsLoader (object):
             del self.__plugins[pluginname]
 
             # reload module
+            importlib.invalidate_caches()
             importlib.reload(module)
 
-            #
+            # import plugin again
             self.__importPackage(plug_path)
 
 
