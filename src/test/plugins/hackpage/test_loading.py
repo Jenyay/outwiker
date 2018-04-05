@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from test.plugins.baseloading import BasePluginLoadingTest
+import unittest
+
+from test.basetestcases import PluginLoadingMixin
 
 
-class HackPage_LoadingTest (BasePluginLoadingTest):
+class HackPage_LoadingTest (PluginLoadingMixin, unittest.TestCase):
     def getPluginDir(self):
         return "../plugins/hackpage"
 
