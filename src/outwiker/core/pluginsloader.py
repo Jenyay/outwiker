@@ -257,7 +257,7 @@ class PluginsLoader (object):
 
         # Find the module with Plugin root class and
         # create  the instance of the class to
-        for _, module, is_pkg in pkgutil.iter_modules([packagePath]):
+        for __, module, is_pkg in pkgutil.iter_modules([packagePath]):
             if is_pkg:
                 continue
 
@@ -313,7 +313,7 @@ class PluginsLoader (object):
             plugin = self.__createPlugin(module, name)
 
             if plugin and self.__isNewPlugin(plugin.name):
-                if plugin.name in options.disabledPlugins.value:
+                if plugin.name not in options.disabledPlugins.value:
                     plugin.initialize()
                     self.__plugins[plugin.name] = plugin
                 else:
@@ -351,10 +351,9 @@ class PluginsLoader (object):
         :return:
             None
         """
-
         if pluginname in self.__plugins:
             plug_path = self.__plugins[pluginname].pluginPath
-            module = self.__plugins[pluginname].__class__.__module__
+            module = sys.modules[self.__plugins[pluginname].__class__.__module__]
 
             # destroy plugin
             self.__plugins[pluginname].destroy()
