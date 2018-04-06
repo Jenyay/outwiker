@@ -14,7 +14,7 @@ from outwiker.core.tagscommands import(parseTagsList,
                                        removeTagsFromBranch,
                                        renameTag)
 
-from .utils import removeDir
+from test.utils import removeDir
 
 
 class TagsListTest(unittest.TestCase):

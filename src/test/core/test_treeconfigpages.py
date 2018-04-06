@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os.path
 import unittest
@@ -7,7 +7,7 @@ from tempfile import mkdtemp
 from outwiker.core.tree import WikiDocument
 from outwiker.core.config import StringOption
 from outwiker.pages.text.textpage import TextPageFactory
-from .utils import removeDir
+from test.utils import removeDir
 
 
 class ConfigPagesTest (unittest.TestCase):
