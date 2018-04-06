@@ -3,9 +3,12 @@
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.gui.guiconfig import PluginsConfig
 from test.basetestcases import BaseOutWikerMixin
+import unittest
+import shutil
+import os
+from time import sleep
 
-
-class PluginsLoaderTest(BaseOutWikerMixin):
+class PluginsLoaderTest(BaseOutWikerMixin, unittest.TestCase):
     def setUp(self):
         self.initApplication()
         self.config = PluginsConfig(self.application.config)
@@ -44,6 +47,38 @@ class PluginsLoaderTest(BaseOutWikerMixin):
 
         loader.clear()
         self.assertEqual(len(loader), 0)
+
+    def testReload(self):
+
+        tmp_plugin_dir = "../test/plugins/testreload"
+
+        # init test
+        shutil.copyfile('../test/plugins/testreload/testreload/testreload.v1',
+                  '../test/plugins/testreload/testreload/testreload.py')
+
+        dirlist = [tmp_plugin_dir]
+        loader = PluginsLoader(self.application)
+        loader.load(dirlist)
+
+        # pre-observation
+        self.assertEqual(len(loader), 1)
+        self.assertEqual(loader["TestReload"].name, "TestReload")
+        self.assertEqual(loader["TestReload"].version, "0.1")
+
+        # replace plugin file to ver 0.2
+        os.remove('../test/plugins/testreload/testreload/testreload.py')
+        sleep(1)
+        shutil.copyfile('../test/plugins/testreload/testreload/testreload.v2',
+                        '../test/plugins/testreload/testreload/testreload.py')
+
+        # observation
+        loader.reload("TestReload")
+        self.assertEqual(len(loader), 1)
+        self.assertEqual(loader["TestReload"].name, "TestReload")
+        self.assertEqual(loader["TestReload"].version, "0.2")
+
+        # restore
+        os.remove('../test/plugins/testreload/testreload/testreload.py')
 
     def testVersion_01(self):
         dirlist = ["../test/plugins/testempty3"]
