@@ -16,11 +16,11 @@ from outwiker.gui.dropfilestarget import DropFilesTarget
 
 class AttachPanel(wx.Panel):
     def __init__(self, *args, **kwds):
-        self.ID_ATTACH = wx.NewId()
-        self.ID_REMOVE = wx.NewId()
-        self.ID_PASTE = wx.NewId()
-        self.ID_EXECUTE = wx.NewId()
-        self.ID_OPEN_FOLDER = wx.NewId()
+        self.ID_ATTACH = None
+        self.ID_REMOVE = None
+        self.ID_PASTE = None
+        self.ID_EXECUTE = None
+        self.ID_OPEN_FOLDER = None
 
         wx.Panel.__init__(self, *args, **kwds)
         self.__toolbar = self.__createToolBar(self, -1)
@@ -103,52 +103,62 @@ class AttachPanel(wx.Panel):
         imagesDir = getImagesDir()
 
         toolbar = wx.ToolBar(parent, id, style=wx.TB_DOCKABLE)
-        toolbar.AddTool(self.ID_ATTACH,
-                        _(u"Attach Files…"),
-                        wx.Bitmap(os.path.join(imagesDir, "attach.png"),
-                                  wx.BITMAP_TYPE_ANY),
-                        wx.NullBitmap,
-                        wx.ITEM_NORMAL,
-                        _(u"Attach Files…"),
-                        "")
+        self.ID_ATTACH = toolbar.AddTool(
+            wx.ID_ANY,
+            _(u"Attach Files…"),
+            wx.Bitmap(os.path.join(imagesDir, "attach.png"),
+                      wx.BITMAP_TYPE_ANY),
+            wx.NullBitmap,
+            wx.ITEM_NORMAL,
+            _(u"Attach Files…"),
+            ""
+        ).GetId()
 
-        toolbar.AddTool(self.ID_REMOVE,
-                        _(u"Remove Files…"),
-                        wx.Bitmap(os.path.join(imagesDir, "delete.png"),
-                                  wx.BITMAP_TYPE_ANY),
-                        wx.NullBitmap,
-                        wx.ITEM_NORMAL,
-                        _(u"Remove Files…"),
-                        "")
+        self.ID_REMOVE = toolbar.AddTool(
+            wx.ID_ANY,
+            _(u"Remove Files…"),
+            wx.Bitmap(os.path.join(imagesDir, "delete.png"),
+                      wx.BITMAP_TYPE_ANY),
+            wx.NullBitmap,
+            wx.ITEM_NORMAL,
+            _(u"Remove Files…"),
+            ""
+        ).GetId()
 
         toolbar.AddSeparator()
 
-        toolbar.AddTool(self.ID_PASTE,
-                        _(u"Paste"),
-                        wx.Bitmap(os.path.join(imagesDir, "paste.png"),
-                                  wx.BITMAP_TYPE_ANY),
-                        wx.NullBitmap,
-                        wx.ITEM_NORMAL,
-                        _(u"Paste"),
-                        "")
+        self.ID_PASTE = toolbar.AddTool(
+            wx.ID_ANY,
+            _(u"Paste"),
+            wx.Bitmap(os.path.join(imagesDir, "paste.png"),
+                      wx.BITMAP_TYPE_ANY),
+            wx.NullBitmap,
+            wx.ITEM_NORMAL,
+            _(u"Paste"),
+            ""
+        ).GetId()
 
-        toolbar.AddTool(self.ID_EXECUTE,
-                        _(u"Execute"),
-                        wx.Bitmap(os.path.join(imagesDir, "execute.png"),
-                                  wx.BITMAP_TYPE_ANY),
-                        wx.NullBitmap,
-                        wx.ITEM_NORMAL,
-                        _(u"Execute"),
-                        "")
+        self.ID_EXECUTE = toolbar.AddTool(
+            wx.ID_ANY,
+            _(u"Execute"),
+            wx.Bitmap(os.path.join(imagesDir, "execute.png"),
+                      wx.BITMAP_TYPE_ANY),
+            wx.NullBitmap,
+            wx.ITEM_NORMAL,
+            _(u"Execute"),
+            ""
+        ).GetId()
 
-        toolbar.AddTool(self.ID_OPEN_FOLDER,
-                        _(u"Open Attachments Folder"),
-                        wx.Bitmap(os.path.join(imagesDir, "folder.png"),
-                                  wx.BITMAP_TYPE_ANY),
-                        wx.NullBitmap,
-                        wx.ITEM_NORMAL,
-                        _(u"Open Attachments Folder"),
-                        "")
+        self.ID_OPEN_FOLDER = toolbar.AddTool(
+            wx.ID_ANY,
+            _(u"Open Attachments Folder"),
+            wx.Bitmap(os.path.join(imagesDir, "folder.png"),
+                      wx.BITMAP_TYPE_ANY),
+            wx.NullBitmap,
+            wx.ITEM_NORMAL,
+            _(u"Open Attachments Folder"),
+            ""
+        ).GetId()
 
         toolbar.Realize()
         return toolbar
