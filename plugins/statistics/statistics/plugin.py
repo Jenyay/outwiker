@@ -19,9 +19,6 @@ class PluginStatistics(Plugin):
         """
         Plugin.__init__(self, application)
 
-        self.ID_PAGE_STAT = wx.NewId()
-        self.ID_TREE_STAT = wx.NewId()
-
         self._separatorMenuItem = None
         self._pageStatMenuItem = None
         self._treeStatMenuItem = None
@@ -72,17 +69,18 @@ Statistics plugin append menu items <b>Tools -> Page Statistic</b> and <b>Tools 
 
         self._separatorMenuItem = self.toolsMenu.AppendSeparator()
 
-        self._pageStatMenuItem = self.toolsMenu.Append(self.ID_PAGE_STAT,
+        self._pageStatMenuItem = self.toolsMenu.Append(wx.ID_ANY,
                                                        _(u"Page Statistic"))
+
         self._application.mainWindow.Bind(wx.EVT_MENU,
                                           self._onPageStat,
-                                          id=self.ID_PAGE_STAT)
+                                          id=self._pageStatMenuItem.GetId())
 
-        self._treeStatMenuItem = self.toolsMenu.Append(self.ID_TREE_STAT,
+        self._treeStatMenuItem = self.toolsMenu.Append(wx.ID_ANY,
                                                        _(u"Tree Statistic"))
         self._application.mainWindow.Bind(wx.EVT_MENU,
                                           self._onTreeStat,
-                                          id=self.ID_TREE_STAT)
+                                          id=self._treeStatMenuItem.GetId())
 
     def _removeMenu(self):
         """
