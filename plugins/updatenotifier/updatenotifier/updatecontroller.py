@@ -253,7 +253,7 @@ class UpdateController(object):
 
     def update_plugin(self, id):
         """
-        update plugin to latest version by id.
+        Update plugin to latest version by id.
         :return: True if plugin was updated, otherwise False
         """
 
@@ -280,6 +280,7 @@ class UpdateController(object):
         rez = UpdatePlugin().update(url, plugin.pluginPath)
 
         if rez:
+            #TODO: надо как то убрать плагин из диалога, но непонятно как получить к нему доступ при обработке евента
             self._application.plugins.reload(id)
             MessageBox(_(u"Plugin was successfully updated."), u"UpdateNotifier")
         else:
