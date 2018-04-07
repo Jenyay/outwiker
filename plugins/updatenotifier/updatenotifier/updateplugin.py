@@ -17,6 +17,7 @@ class UpdatePlugin (object):
     """
     def update(self, url, plugin_path):
         """
+        Download zip with plugin from url and extract it to plugin_path
         :param url:
             url where latest plugin zip file can be downloaded
         :param plugin_path:

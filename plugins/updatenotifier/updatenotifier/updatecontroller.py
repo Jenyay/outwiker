@@ -280,7 +280,8 @@ class UpdateController(object):
         rez = UpdatePlugin().update(url, plugin.pluginPath)
 
         if rez:
-            MessageBox(_(u"Plugin was updated. Please restart the application to apply changes"), u"UpdateNotifier")
+            self._application.plugins.reload(id)
+            MessageBox(_(u"Plugin was successfully updated."), u"UpdateNotifier")
         else:
             MessageBox(_(u"Plugin was NOT updated. Please update plugin manually"), u"UpdateNotifier")
         return rez
