@@ -65,13 +65,7 @@ class TrayIconController(wx.EvtHandler):
         self._trayIcon.Bind(wx.adv.EVT_TASKBAR_LEFT_DOWN,
                             self.__OnTrayLeftClick)
 
-        self._trayIcon.Bind(wx.EVT_MENU,
-                            self.__onExit,
-                            id=self._trayIcon.ID_EXIT)
-
-        self._trayIcon.Bind(wx.EVT_MENU,
-                            self.__onRestore,
-                            id=self._trayIcon.ID_RESTORE)
+        self._trayIcon.Bind(wx.EVT_MENU, self.__onPopupMenu)
 
         self._application.onPreferencesDialogClose += self.__onPreferencesDialogClose
         self._application.onPageSelect += self.__OnTaskBarUpdate
@@ -84,13 +78,7 @@ class TrayIconController(wx.EvtHandler):
         self._trayIcon.Unbind(wx.adv.EVT_TASKBAR_LEFT_DOWN,
                               handler=self.__OnTrayLeftClick)
 
-        self._trayIcon.Unbind(wx.EVT_MENU,
-                              handler=self.__onExit,
-                              id=self._trayIcon.ID_EXIT)
-
-        self._trayIcon.Unbind(wx.EVT_MENU,
-                              handler=self.__onRestore,
-                              id=self._trayIcon.ID_RESTORE)
+        self._trayIcon.Unbind(wx.EVT_MENU, handler=self.__onPopupMenu)
 
         self._application.onPreferencesDialogClose -= self.__onPreferencesDialogClose
         self._application.onPageSelect -= self.__OnTaskBarUpdate
@@ -121,36 +109,36 @@ class TrayIconController(wx.EvtHandler):
     def __OnTaskBarUpdate(self, page):
         self.updateTrayIcon()
 
-    def __onRestore(self, event):
-        self.restoreWindow()
-
     def __OnTrayLeftClick(self, event):
         if self.mainWnd.IsIconized():
             self.restoreWindow()
         else:
             self.mainWnd.Iconize()
 
-    def __onExit(self, event):
-        self._application.actionController.getAction(ExitAction.stringId).run(None)
+    def __onPopupMenu(self, event):
+        if event.GetId() == self._trayIcon.ID_RESTORE:
+            self.restoreWindow()
+        elif event.GetId() == self._trayIcon.ID_EXIT:
+            self._application.actionController.getAction(ExitAction.stringId).run(None)
 
 
 class TrayIcon(wx.adv.TaskBarIcon):
     def __init__(self, application, mainWnd, iconFileName):
-        super(TrayIcon, self).__init__()
+        super().__init__()
         self._application = application
         self.mainWnd = mainWnd
         self._iconFileName = iconFileName
 
         logger.debug(u'Tray icon available: {}'.format(self.IsAvailable()))
 
-        self.ID_RESTORE = wx.NewId()
-        self.ID_EXIT = wx.NewId()
+        self.ID_RESTORE = None
+        self.ID_EXIT = None
         self.icon = wx.Icon(self._iconFileName, wx.BITMAP_TYPE_ANY)
 
     def CreatePopupMenu(self):
         trayMenu = wx.Menu()
-        trayMenu.Append(self.ID_RESTORE, _(u"Restore"))
-        trayMenu.Append(self.ID_EXIT, _(u"Exit"))
+        self.ID_RESTORE = trayMenu.Append(wx.ID_ANY, _(u"Restore")).GetId()
+        self.ID_EXIT = trayMenu.Append(wx.ID_ANY, _(u"Exit")).GetId()
         return trayMenu
 
     def showTrayIcon(self):
