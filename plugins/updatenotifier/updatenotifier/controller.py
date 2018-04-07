@@ -76,6 +76,9 @@ class Controller(object):
     def checkForUpdatesSilence(self):
         self._updatesChecker.checkForUpdatesSilence()
 
+    def InstallPlugins(self):
+        pass
+
     def __onIdle(self, event):
         self.__autoUpdate()
         self._application.mainWindow.Unbind(wx.EVT_IDLE, handler=self.__onIdle)

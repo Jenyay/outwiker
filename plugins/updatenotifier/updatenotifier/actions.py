@@ -76,4 +76,4 @@ class InstallerAction(BaseAction):
         return _(u"UpdateNotifier plugin. Install new plugins or remove existing")
 
     def run(self, params):
-        self._controller.checkForUpdatesSilence()
+        self._controller.InstallPlugins()
