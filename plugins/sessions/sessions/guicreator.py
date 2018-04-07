@@ -20,6 +20,7 @@ class GuiCreator(object):
     """
     Создание элементов интерфейса с использованием actions
     """
+
     def __init__(self, controller, application):
         self._controller = controller
         self._application = application
@@ -111,7 +112,8 @@ class GuiCreator(object):
         Метод, вовзращающий функцию, вызываемую при выборе пункта меню.
         За счет замыкания выбирается нужная сессия session.
         """
-        return lambda event: SessionController(self._application).restore(session)
+        return lambda event: SessionController(
+            self._application).restore(session)
 
     def _clearSessionMenu(self):
         """
