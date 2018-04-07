@@ -14,10 +14,12 @@ from .guicreators import OldGuiCreator, ActionGuiCreator
 
 logger = logging.getLogger('updatenotifier')
 
+
 class Controller(object):
     """
     Класс отвечает за основную работу интерфейса плагина
     """
+
     def __init__(self, plugin, application):
         """
         plugin - Instance of the PluginUpdateNotifier class
@@ -84,7 +86,7 @@ class Controller(object):
         """
         config = UpdatesConfig(self._application.config)
 
-        if(config.updateInterval > 0 and
+        if (config.updateInterval > 0 and
                 datetime.datetime.today() - config.lastUpdate >= datetime.timedelta(config.updateInterval)):
             self.checkForUpdatesSilence()
 
@@ -112,11 +114,14 @@ class Controller(object):
         '''
         logger.debug(u'__onLinkClick. downloads: {}'.format(params.__dict__))
 
-        if isinstance(params.link, bytes):
-            params.link = params.link.decode('utf8')
-
         if params.link.startswith('update:'):
             plugin_name = params.link.split(':')[-1]
 
             logger.info(u'Update plugin {}'.format(plugin_name))
+            self._updatesChecker.update_plugin(plugin_name)
+
+        if params.link.startswith('install:'):
+            plugin_name = params.link.split(':')[-1]
+
+            logger.info(u'Install plugin {}'.format(plugin_name))
             self._updatesChecker.update_plugin(plugin_name)
