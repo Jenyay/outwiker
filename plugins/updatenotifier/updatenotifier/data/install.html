@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'/>
+    <meta http-equiv='content-type' content='text/html; charset=utf-8'/>
+
+    <style>
+			body {
+				font-size: 110%;
+			}
+
+			.changelog {
+				display: none;
+			}
+
+			.install {
+				border-radius: 2px;
+				color: #fff;
+				font-weight: bold;
+				padding: 0.2em 1em;
+				text-decoration: none;
+				background-color: #518BDB;
+			}
+
+			.uninstall {
+				border-radius: 2px;
+				color: #fff;
+				font-weight: bold;
+				padding: 0.2em 1em;
+				text-decoration: none;
+				background-color: #518BDB;
+			}
+
+    </style>
+</head>
+<body>
+{% macro update_info(plugin)%}
+<div class="controls">
+    {% if True %}
+    <a class="install button" href="install:{{plugin}}">{{str_install}}</a>
+    {% else %}
+    <a class="unistall button" href="install:{{plugin}}">{{str_uninstall}}</a>
+    {% endif %}
+    {%- endmacro %}
+
+    {% for plugin in plugins %}
+    {% set pluginName = plugins[plugin]["name"] %}
+    <!-- {{plugin}} block begin -->
+    <div class="version-block plugin-version {{plugin}}">
+        <div class="title">{{pluginName}}</div>
+        {{ update_info(plugin)}}
+    </div>
+    <!-- {{plugin}} block end -->
+    {% endfor %}
+</body>
+</html>
