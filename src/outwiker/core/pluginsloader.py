@@ -366,6 +366,30 @@ class PluginsLoader (object):
             # import plugin again
             self.__importPackage(plug_path)
 
+    def getInfo(self, pluginname, langlist=["en"]):
+        """
+        Retrieve a AppInfo for plugin_name
+        :param pluginname:
+            name of the loaded plugin
+        :param lang:
+            langlist - list of the languages name ("en", "ru_RU" etc)
+        :return:
+            AppInfo for pluginname
+            if pluginname cannot be located, then None is returned.
+        :exception IOError:
+            if plugin.xml cannot be read
+        """
+        if pluginname in self.__plugins:
+            module = self.__plugins[pluginname].__class__.__module__
+        elif pluginname in self.__disabledPlugins:
+            module = self.__disabledPlugins[pluginname].__class__.__module__
+        else:
+            module = ''
+
+        xml_content = pkgutil.get_data(module, PLUGIN_VERSION_FILE_NAME)
+        if xml_content:
+            return XmlVersionParser(langlist).parse(xml_content)
+
 
     def __len__(self):
         return len(self.__plugins)

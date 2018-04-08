@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from outwiker.core.pluginsloader import PluginsLoader
+from outwiker.core.appinfo import AppInfo
 from outwiker.gui.guiconfig import PluginsConfig
 from test.basetestcases import BaseOutWikerMixin
 import unittest
@@ -328,3 +329,40 @@ class PluginsLoaderTest(BaseOutWikerMixin, unittest.TestCase):
         self.assertEqual(len(loader.invalidPlugins), 1)
         # self.assertIn(u'Please, update the plug-in.',
         #               loader.invalidPlugins[0].description)
+
+    def testGetInfo(self):
+        dirlist = ["../test/plugins/testempty1",]
+        loader = PluginsLoader(self.application)
+        loader.load(dirlist)
+
+        self.assertEqual(len(loader), 1)
+        self.assertEqual(loader["TestEmpty1"].name, "TestEmpty1")
+        self.assertEqual(loader["TestEmpty1"].version, "0.1")
+
+        plugInfo = loader.getInfo("TestEmpty1")
+        self.assertIsInstance(plugInfo, AppInfo)
+
+    def testGetInfo_disabled(self):
+        # Добавим плагин TestEmpty1 в черный список
+        self.config.disabledPlugins.value = ["TestEmpty1"]
+
+        dirlist = ["../test/plugins/testempty1", ]
+        loader = PluginsLoader(self.application)
+        loader.load(dirlist)
+
+        self.assertEqual(len(loader), 0)
+        self.assertEqual(len(loader.disabledPlugins), 1)
+
+        plugInfo = loader.getInfo("TestEmpty1")
+        self.assertIsInstance(plugInfo, AppInfo)
+
+
+    def testGetInfo_None(self):
+        dirlist = ["../test/plugins/testempty1",]
+        loader = PluginsLoader(self.application)
+        loader.load(dirlist)
+
+        self.assertEqual(len(loader), 1)
+
+        plugInfo = loader.getInfo("Wring_module")
+        self.assertIs(plugInfo, None)

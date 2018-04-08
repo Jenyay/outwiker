@@ -20,7 +20,7 @@ from test.utils import removeDir
 from test.basetestcases import BaseOutWikerMixin
 
 
-class TestFooterWikiCommand(Command):
+class ExampleFooterWikiCommand(Command):
     def execute(self, params, content):
         self.parser.appendToFooter(content)
         return ''
@@ -30,7 +30,7 @@ class TestFooterWikiCommand(Command):
         return "footer"
 
 
-class TestHeadWikiCommand(Command):
+class ExampleHeadWikiCommand(Command):
     def execute(self, params, content):
         self.parser.appendToHead(content)
         return ''
@@ -47,8 +47,8 @@ class WikiHtmlGeneratorTest(BaseOutWikerMixin):
         self.__createWiki()
 
         files = ["image.jpg", "dir"]
-        self.wikicommands = [TestFooterWikiCommand,
-                             TestHeadWikiCommand,
+        self.wikicommands = [ExampleFooterWikiCommand,
+                             ExampleHeadWikiCommand,
                              ]
 
         fullFilesPath = [os.path.join(self.filesPath, fname)

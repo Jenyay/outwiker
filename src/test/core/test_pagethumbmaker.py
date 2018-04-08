@@ -9,8 +9,8 @@ from outwiker.core.tree import WikiDocument
 from outwiker.pages.wiki.parser.pagethumbmaker import PageThumbmaker
 from outwiker.pages.text.textpage import TextPageFactory
 
-from .utils import removeDir, getImageSize
-from .basetestcases import BaseWxTestCase
+from test.utils import removeDir, getImageSize
+from test.basetestcases import BaseWxTestCase
 
 
 class PageThumbmakerTest(BaseWxTestCase):

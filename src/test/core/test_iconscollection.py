@@ -1,11 +1,11 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os
 
 from outwiker.core.iconscollection import IconsCollection, DuplicateGroupError
 
-from .utils import removeDir, getImageSize
-from .basetestcases import BaseWxTestCase
+from test.utils import removeDir, getImageSize
+from test.basetestcases import BaseWxTestCase
 
 
 class IconsCollectionTest(BaseWxTestCase):
