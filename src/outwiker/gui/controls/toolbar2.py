@@ -54,11 +54,38 @@ class ToolBar2(wx.Panel):
     def DeleteTool(self, tool_id):
         for n, element in list(enumerate(self._elements)):
             if element.GetId() == tool_id:
-                self._mainSizer.Remove(n)
+                self._sizer.Remove(n)
                 element.Close()
                 del self._elements[n]
                 self._layout()
                 break
+
+    def EnableTool(self, tool_id, enable):
+        for element in self._elements:
+            if element.GetId() == tool_id:
+                element.Enable(enable)
+                return
+
+        raise KeyError('Tools not found: {}'.format(tool_id))
+
+    def FindById(self, tool_id):
+        for element in self._elements:
+            if element.GetId() == tool_id:
+                return element
+
+        return None
+
+    def ToggleTool(self, tool_id, checked):
+        pass
+
+    def IsFocusable(self):
+        return False
+
+    def AcceptsFocusRecursively(self):
+        return False
+
+    def AcceptsFocus(self):
+        return False
 
 
 class ToolBar2Container(wx.Panel):
@@ -87,11 +114,28 @@ class ToolBar2Container(wx.Panel):
         self._mainSizer.Add(toolbar, flag=wx.EXPAND)
         toolbar.Bind(wx.EVT_BUTTON, handler=self._onButtonClick)
         self.GetParent().Layout()
+        return toolbar
+
+    def destroyToolBar(self, toolbar_id):
+        toolbar = self.__getitem__(toolbar_id)
+        self._mainSizer.Detach(toolbar)
+        toolbar.Close()
+        del self._toolbars[toolbar_id]
+        self.GetParent().Layout()
 
     def _onButtonClick(self, event):
         new_event = event.Clone()
         new_event.SetEventType(wx.EVT_TOOL.typeId)
         wx.PostEvent(self, new_event)
+
+    def IsFocusable(self):
+        return False
+
+    def AcceptsFocusRecursively(self):
+        return False
+
+    def AcceptsFocus(self):
+        return False
 
 
 if __name__ == '__main__':

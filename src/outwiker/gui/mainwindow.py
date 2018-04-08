@@ -19,6 +19,7 @@ from .mainpanes.tagscloudmainpane import TagsCloudMainPane
 from .mainpanes.attachmainpane import AttachMainPane
 from .mainpanes.treemainpane import TreeMainPane
 from .mainpanes.pagemainpane import PageMainPane
+from .mainpanes.toolbarsmainpane import ToolBarsMainPane
 from .tabscontroller import TabsController
 from .trayicon import getTrayIconController
 from .preferences.prefcontroller import PrefController
@@ -69,6 +70,7 @@ from outwiker.pages.wiki.wikipagecontroller import WikiPageController
 from outwiker.pages.html.htmlpagecontroller import HtmlPageController
 from outwiker.pages.text.textpagecontroller import TextPageController
 from outwiker.pages.search.searchpagecontroller import SearchPageController
+from outwiker.gui.controls.toolbar2 import ToolBar2Container
 
 
 logger = logging.getLogger('outwiker.gui.mainwindow')
@@ -162,7 +164,9 @@ class MainWindow(wx.Frame):
         self.menuController.createSubMenu(guidefines.MENU_HELP, _('Help'))
 
     def _createToolbars(self):
-        self._toolbars = ToolBarsController(self, Application)
+        self._toolbars = ToolBarsController(self,
+                                            self.toolbarsPanel.panel,
+                                            Application)
         self._toolbars.createToolBar(guidefines.TOOLBAR_GENERAL, _('General'))
         self._toolbars.createToolBar(guidefines.TOOLBAR_PLUGINS, _('Plugins'))
 
@@ -498,6 +502,7 @@ class MainWindow(wx.Frame):
         """
         Создание плавающих панелей
         """
+        self.toolbarsPanel = ToolBarsMainPane(self, self.auiManager, Application)
         self.pagePanel = PageMainPane(self, self.auiManager, Application)
         self.treePanel = TreeMainPane(self, self.auiManager, Application)
         self.attachPanel = AttachMainPane(self, self.auiManager, Application)
@@ -571,7 +576,7 @@ class MainWindow(wx.Frame):
 
         Application.plugins.clear()
         self._saveParams()
-        self.toolbars.updatePanesInfo()
+        # self.toolbars.updatePanesInfo()
         self.destroyPagePanel(True)
 
         Application.actionController.saveHotKeys()

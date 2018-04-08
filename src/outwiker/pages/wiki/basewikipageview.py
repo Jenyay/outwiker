@@ -143,7 +143,7 @@ class BaseWikiPageView (BaseHtmlPanel):
         self._application.onPageModeChange -= self.onTabChanged
 
         for toolbar_info in self._toolbars:
-            self.mainWindow.toolbars.updatePanesInfo()
+            # self.mainWindow.toolbars.updatePanesInfo()
             self.mainWindow.toolbars.destroyToolBar(toolbar_info[0])
 
         super().Clear()

@@ -4,7 +4,7 @@ import wx
 
 from outwiker.gui.hotkeyparser import HotKeyParser
 from outwiker.gui.hotkeyoption import HotKeyOption
-from outwiker.gui.toolbarscontroller import ToolBar
+from outwiker.gui.controls.toolbar2 import ToolBar2
 
 
 class ActionInfo(object):
@@ -175,8 +175,8 @@ class ActionController(object):
                 toolid = self._actionsInfo[strid].toolItemId
                 toolbar = self._actionsInfo[strid].toolbar
 
-                if issubclass(type(toolbar), ToolBar):
-                    toolbar.DeleteTool(toolid, False)
+                if issubclass(type(toolbar), ToolBar2):
+                    toolbar.DeleteTool(toolid)
                 elif issubclass(type(toolbar), wx.ToolBar):
                     toolbar.DeleteTool(toolid)
                 else:
@@ -209,16 +209,16 @@ class ActionController(object):
         """
         actionid = wx.ID_ANY
         buttonType = wx.ITEM_NORMAL
-        toolbarItem = self._appendToolbarItem(strid,
-                                              toolbar,
-                                              image,
-                                              buttonType,
-                                              actionid,
-                                              fullUpdate)
+        toolbarItemId = self._appendToolbarItem(strid,
+                                                toolbar,
+                                                image,
+                                                buttonType,
+                                                actionid,
+                                                fullUpdate)
 
         self._mainWindow.Bind(wx.EVT_TOOL,
                               handler=self._onToolItemHandler,
-                              id=toolbarItem.GetId())
+                              id=toolbarItemId)
 
     def appendToolbarCheckButton(self, strid, toolbar, image,
                                  fullUpdate=False):
@@ -234,16 +234,16 @@ class ActionController(object):
         """
         actionid = wx.ID_ANY
         buttonType = wx.ITEM_CHECK
-        toolbarItem = self._appendToolbarItem(strid,
-                                              toolbar,
-                                              image,
-                                              buttonType,
-                                              actionid,
-                                              fullUpdate)
+        toolbarItemId = self._appendToolbarItem(strid,
+                                                toolbar,
+                                                image,
+                                                buttonType,
+                                                actionid,
+                                                fullUpdate)
 
         self._mainWindow.Bind(wx.EVT_TOOL,
                               handler=self._onCheckToolItemHandler,
-                              id=toolbarItem.GetId())
+                              id=toolbarItemId)
 
     def check(self, strid, checked):
         """
@@ -314,13 +314,8 @@ class ActionController(object):
         title = self._getToolbarItemTitle(strid)
         bitmap = wx.Bitmap(image)
 
-        if issubclass(type(toolbar), ToolBar):
-            toolbarItem = toolbar.AddTool(actionid,
-                                          title,
-                                          bitmap,
-                                          short_help_string=title,
-                                          kind=buttonType,
-                                          fullUpdate=fullUpdate)
+        if issubclass(type(toolbar), ToolBar2):
+            toolbarItemId = toolbar.AddButton(title, bitmap, actionid)
         elif issubclass(type(toolbar), wx.ToolBar):
             toolbarItem = toolbar.AddTool(actionid,
                                           title,
@@ -329,12 +324,13 @@ class ActionController(object):
                                           wx.ITEM_NORMAL,
                                           title,
                                           "")
+            toolbarItemId = toolbarItem.GetId()
         else:
             raise ValueError(u'Invalid toolbar type')
 
         self._actionsInfo[strid].toolbar = toolbar
-        self._actionsInfo[strid].toolItemId = toolbarItem.GetId()
-        return toolbarItem
+        self._actionsInfo[strid].toolItemId = toolbarItemId
+        return toolbarItemId
 
     def enableTools(self, strid, enabled=True):
         actionInfo = self._actionsInfo[strid]

@@ -29,7 +29,7 @@ class TreeMainPane (MainPane):
         pane = self._loadPaneInfo (self.config.pane)
 
         if pane is None:
-            pane = wx.aui.AuiPaneInfo().Name("treePane").Caption(self.caption).Gripper(False).CaptionVisible(True).Layer(2).Position(0).CloseButton(True).MaximizeButton(False).Left().Dock()
+            pane = wx.aui.AuiPaneInfo().Name("treePane").Caption(self.caption).Gripper(False).CaptionVisible(True).Layer(1).Position(0).CloseButton(True).MaximizeButton(False).Left().Dock()
 
         pane.Dock()
         pane.CloseButton()
