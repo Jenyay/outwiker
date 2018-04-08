@@ -15,17 +15,50 @@ class ToolBar2Info(object):
 
 class ToolBar2(wx.Panel):
     def __init__(self, parent):
-        super().__init__(parent, style=wx.BORDER_SIMPLE)
-        self._buttons = []
+        super().__init__(parent)
+        self._elements = []
         self._sizer = wx.BoxSizer(wx.HORIZONTAL)
         self.SetSizer(self._sizer)
 
-    def addTool(self, button_id, label, image_filename):
-        bmp = wx.Bitmap(image_filename)
+        self._reservedElements = 3
+        for n in range(self._reservedElements):
+            self.AddSeparator()
+
+    def GetElementsCount(self):
+        return len(self._elements) - self._reservedElements
+
+    def AddButton(self, label, bitmap, button_id=wx.ID_ANY):
+        '''
+        label - tool tip for the button.
+        bitmap - wx.Bitmap or file name.
+        '''
+        bmp = wx.Bitmap(bitmap)
         button = wx.BitmapButton(self, button_id, bmp, style=wx.NO_BORDER)
         button.SetToolTip(label)
-        self._sizer.Add(button, flag=wx.EXPAND)
-        self.Layout()
+        self._addElement(button)
+        return button.GetId()
+
+    def AddSeparator(self):
+        separator = wx.StaticLine(self, style=wx.LI_VERTICAL)
+        self._addElement(separator)
+        return separator.GetId()
+
+    def _addElement(self, element):
+        self._sizer.Add(element, flag=wx.EXPAND)
+        self._elements.append(element)
+        self._layout()
+
+    def _layout(self):
+        self.GetParent().GetParent().Layout()
+
+    def DeleteTool(self, tool_id):
+        for n, element in list(enumerate(self._elements)):
+            if element.GetId() == tool_id:
+                self._mainSizer.Remove(n)
+                element.Close()
+                del self._elements[n]
+                self._layout()
+                break
 
 
 class ToolBar2Container(wx.Panel):
@@ -38,10 +71,8 @@ class ToolBar2Container(wx.Panel):
         self._mainSizer = wx.WrapSizer()
         self.SetSizer(self._mainSizer)
 
-    def addButton(self, toolbar_id, button_id, label, image_filename):
-        toolbar = self._toolbars[toolbar_id].toolbar
-        toolbar.addTool(button_id, label, image_filename)
-        self._layout()
+    def __getitem__(self, toolbar_id):
+        return self._toolbars[toolbar_id].toolbar
 
     def createToolbar(self, toolbar_id, priority=1):
         if not toolbar_id:
@@ -54,10 +85,13 @@ class ToolBar2Container(wx.Panel):
         toolbar_info = ToolBar2Info(toolbar, priority)
         self._toolbars[toolbar_id] = toolbar_info
         self._mainSizer.Add(toolbar, flag=wx.EXPAND)
-        self._layout()
-
-    def _layout(self):
+        toolbar.Bind(wx.EVT_BUTTON, handler=self._onButtonClick)
         self.GetParent().Layout()
+
+    def _onButtonClick(self, event):
+        new_event = event.Clone()
+        new_event.SetEventType(wx.EVT_TOOL.typeId)
+        wx.PostEvent(self, new_event)
 
 
 if __name__ == '__main__':
@@ -70,6 +104,8 @@ if __name__ == '__main__':
                                           handler=self._onNewToolbar)
             self.newButtonAddButton.Bind(wx.EVT_BUTTON,
                                          handler=self._onNewButton)
+            self.newSeparatorButton.Bind(wx.EVT_BUTTON,
+                                         handler=self._onAddSeparator)
 
             self.Show()
 
@@ -79,7 +115,7 @@ if __name__ == '__main__':
 
             # ToolBar2
             self.toolbar = ToolBar2Container(self)
-            # self.toolbar.SetMinSize((-1, 40))
+            self.Bind(wx.EVT_TOOL, handler=self._onTool)
             self._mainSizer.Add(self.toolbar, flag=wx.EXPAND)
 
             self._createGUIAddPanel()
@@ -127,6 +163,11 @@ if __name__ == '__main__':
                                flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
                                border=2)
 
+            self.newSeparatorButton = wx.Button(self, label='Add separator')
+            newButtonSizer.Add(self.newSeparatorButton,
+                               flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+                               border=2)
+
             self._mainSizer.Add(newButtonSizer, flag=wx.EXPAND)
 
         def _onNewToolbar(self, event):
@@ -141,10 +182,17 @@ if __name__ == '__main__':
 
         def _onNewButton(self, event):
             toolbar_id = self.toolbarIdComboBox.GetStringSelection()
-            button_id = -1
             label = 'Бла-бла-бла'
-            image_filename = '../../../images/page.png'
-            self.toolbar.addButton(toolbar_id, button_id, label, image_filename)
+            # bitmap = '../../../images/page.png'
+            bitmap = wx.ArtProvider.GetBitmap(wx.ART_INFORMATION)
+            self.toolbar[toolbar_id].AddButton(label, bitmap)
+
+        def _onAddSeparator(self, event):
+            toolbar_id = self.toolbarIdComboBox.GetStringSelection()
+            self.toolbar[toolbar_id].AddSeparator()
+
+        def _onTool(self, event):
+            print(event.GetId())
 
     app = wx.App()
     frame = MyTestFrame(None, 'Test')
