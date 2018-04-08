@@ -283,21 +283,23 @@ def run(args=u''):
 
 
 @task
-def test(section=u'', *args):
+def test(*args):
     '''
     Run the unit tests
     '''
-    _runTests(u'src', u'tests_', section, *args)
-    if len(section) == 0:
-        test_build(section, *args)
+    with lcd('src'):
+        local('{python} runtests.py {args}'.format(
+            python=getPython(), args=' '.join(args)))
+
+    test_build()
 
 
 @task
-def test_build(section=u'', *args):
+def test_build(*args):
     '''
     Run the build unit tests
     '''
-    _runTests(u'.', u'test_build_', section, *args)
+    _runTests(u'.', u'test_build_', '', *args)
 
 
 def _runTests(testdir, prefix, section=u'', *args):

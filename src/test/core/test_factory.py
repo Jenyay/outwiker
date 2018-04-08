@@ -23,10 +23,8 @@ class FactorySelectorTest(unittest.TestCase):
         self.removeEventCount = 0
         self.eventFactory = None
 
-
     def tearDown(self):
         FactorySelector.reset()
-
 
     def testSelection(self):
         wikiroot = WikiDocument.load(self.path)
@@ -55,17 +53,15 @@ class FactorySelectorTest(unittest.TestCase):
             type(FactorySelector.getFactory(test_page.getTypeString())),
             TextPageFactory)
 
-
     def testAddFactory(self):
-        FactorySelector.addFactory(TestPageFactory())
+        FactorySelector.addFactory(ExamplePageFactory())
 
         wikiroot = WikiDocument.load(self.path)
 
         test_page = wikiroot["Типы страниц/TestPage"]
         self.assertEqual(
             type(FactorySelector.getFactory(test_page.getTypeString())),
-            TestPageFactory)
-
+            ExamplePageFactory)
 
     def testRemoveFactory_01(self):
         FactorySelector.removeFactory(WikiPageFactory().getTypeString())
@@ -76,7 +72,6 @@ class FactorySelectorTest(unittest.TestCase):
         self.assertEqual(
             type(FactorySelector.getFactory(wiki_page.getTypeString())),
             TextPageFactory)
-
 
     def testRemoveFactory_02(self):
         wikiroot = WikiDocument.load(self.path)
@@ -89,21 +84,19 @@ class FactorySelectorTest(unittest.TestCase):
             TextPageFactory)
 
 
-
-class TestPage(WikiPage):
+class ExamplePage(WikiPage):
     """
     Класс тестовых страниц
     """
     def __init__(self, path, title, parent, readonly=False):
         WikiPage.__init__(self, path, title, parent, readonly)
 
-
     @staticmethod
     def getTypeString():
         return "testpage"
 
 
-class TestPageFactory(PageFactory):
+class ExamplePageFactory(PageFactory):
     """
     Класс фабрики для тестирования.
     Эта фабрика используется для создания типа страниц "testedPage",
@@ -111,8 +104,7 @@ class TestPageFactory(PageFactory):
     что и TextWikiPage.
     """
     def getPageType(self):
-        return TestPage
-
+        return ExamplePage
 
     @property
     def title(self):
@@ -121,13 +113,11 @@ class TestPageFactory(PageFactory):
         """
         return "Test Page"
 
-
     def getPageView(self, parent):
         """
         Вернуть контрол, который будет отображать и редактировать страницу
         """
         return TextPanel(parent)
-
 
     def getPrefPanels(self, parent):
         return []

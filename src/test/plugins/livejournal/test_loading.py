@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from test.plugins.baseloading import BasePluginLoadingTest
+import unittest
+
+from test.basetestcases import PluginLoadingMixin
 
 
-class LivejournalLoadingTest(BasePluginLoadingTest):
+class LivejournalLoadingTest(PluginLoadingMixin, unittest.TestCase):
 
     def getPluginDir(self):
         """

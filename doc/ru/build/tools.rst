@@ -18,6 +18,9 @@
 `pipenv <https://docs.pipenv.org/>`_
     Используется для работы с файлами в формате Pipfile, который описывает необходимые библиотеки.
 
+`pytest <https://docs.pytest.org/en/latest/>`_
+    Используется для запуска unit-тестов.
+
 `Inno Setup <http://www.jrsoftware.org>`_
     Используется для создания инсталятора под Windows.
 

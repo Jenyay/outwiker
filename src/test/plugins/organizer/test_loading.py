@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from test.plugins.baseloading import BasePluginLoadingTest
+import unittest
+
+from test.basetestcases import PluginLoadingMixin
 
 
-class OrganizerLoadingTest(BasePluginLoadingTest):
+class OrganizerLoadingTest(PluginLoadingMixin, unittest.TestCase):
     def getPluginDir(self):
         """
         Must return path to plugin

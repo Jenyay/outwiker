@@ -56,9 +56,7 @@ class FormatCtrl(wx.Panel):
 
         for hint in self._hints:
             text = u"{0} - {1}".format(hint[0], hint[1])
-            newid = wx.NewId()
-            self._menu.Append(newid, text)
-
+            newid = self._menu.Append(wx.ID_ANY, text).GetId()
             self._menuItemsId[newid] = hint
 
     def __layout(self):

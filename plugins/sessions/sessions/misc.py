@@ -7,10 +7,10 @@ import os.path
 from outwiker.core.system import getOS
 
 
-def getImagePath (imageName):
+def getImagePath(imageName):
     """
     Получить полный путь до картинки
     """
-    imagedir = os.path.join (os.path.dirname (__file__), "images")
-    fname = os.path.join (imagedir, imageName)
+    imagedir = os.path.join(os.path.dirname(__file__), "images")
+    fname = os.path.join(imagedir, imageName)
     return fname

@@ -3,7 +3,6 @@
 from tempfile import mkdtemp
 
 from outwiker.core.tree import WikiDocument
-from outwiker.pages.wiki.parser.commands.test import TestCommand, ExceptionCommand
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parser.command import Command
 from outwiker.pages.wiki.parserfactory import ParserFactory
@@ -128,7 +127,7 @@ class WikiCommandsTest (BaseOutWikerMixin):
             ' проверка "bla-bla-bla" тест ')
 
     def testCommandTest1(self):
-        self.parser.addCommand(TestCommand(self.parser))
+        self.parser.addCommand(ExampleCommand(self.parser))
         text = """(: test Параметр1 Параметр2=2 Параметр3=3 :)
 Текст внутри
 команды
@@ -143,7 +142,7 @@ content: Текст внутри
         self.assertEqual(result_right, result, result)
 
     def testCommandTest2(self):
-        command = TestCommand(self.parser)
+        command = ExampleCommand(self.parser)
         params = "Параметр1 Параметр2=2 Параметр3=3"
         content = """Текст внутри
 команды"""
@@ -159,7 +158,7 @@ content: Текст внутри
         self.assertEqual(result_right, result, result)
 
     def testCommandTest3(self):
-        self.parser.addCommand(TestCommand(self.parser))
+        self.parser.addCommand(ExampleCommand(self.parser))
         text = """(: test Параметр1 Параметр2=2 Параметр3=3 :)"""
 
         result_right = """Command name: test
@@ -170,7 +169,7 @@ content: """
         self.assertEqual(result_right, result, result)
 
     def testCommandTest4(self):
-        self.parser.addCommand(TestCommand(self.parser))
+        self.parser.addCommand(ExampleCommand(self.parser))
         text = """(:test:)"""
 
         result_right = """Command name: test
@@ -181,7 +180,7 @@ content: """
         self.assertEqual(result_right, result, result)
 
     def testCommandTest5(self):
-        self.parser.addCommand(TestCommand(self.parser))
+        self.parser.addCommand(ExampleCommand(self.parser))
         text = """(: test Параметр1 Параметр2=2 Параметр3=3 :)"""
 
         result_right = """Command name: test
@@ -192,7 +191,7 @@ content: """
         self.assertEqual(result_right, result, result)
 
     def testCommandTest6(self):
-        self.parser.addCommand(TestCommand(self.parser))
+        self.parser.addCommand(ExampleCommand(self.parser))
         text = """(: test Параметр1 Параметр2=2 Параметр3=3 :)
 Текст внутри
 команды
@@ -218,7 +217,7 @@ content: Контент"""
         factory = ParserFactory()
 
         parser = factory.make(self.testPage, self.application.config)
-        parser.addCommand(TestCommand(parser))
+        parser.addCommand(ExampleCommand(parser))
 
         text = """(: test Параметр1 Параметр2=2 Параметр3=3 :)
 Текст внутри
@@ -269,7 +268,7 @@ content: Контент"""
         self.assertTrue("Exception" in result, result)
 
     def testCommand_remove(self):
-        command = TestCommand(self.parser)
+        command = ExampleCommand(self.parser)
 
         self.parser.addCommand(command)
         text = """(:test:)"""
@@ -287,7 +286,7 @@ content: """
         self.assertEqual(text, result)
 
     def testCommand_remove_none(self):
-        command = TestCommand(self.parser)
+        command = ExampleCommand(self.parser)
 
         self.parser.addCommand(command)
         text = """(:test:)"""
@@ -305,7 +304,7 @@ content: """
         self.assertEqual(result_right, result)
 
     def testCommand_remove_invalid(self):
-        command = TestCommand(self.parser)
+        command = ExampleCommand(self.parser)
 
         self.parser.addCommand(command)
         text = """(:test:)"""
@@ -321,3 +320,65 @@ content: """
 
         result = self.parser.toHtml(text)
         self.assertEqual(result_right, result)
+
+
+class ExampleCommand (Command):
+    """
+    Тестовая команда. Обрабатывает команды вида
+        (:test params... :) content (:testend:)
+    В результате выводит текст:
+        Command name: test
+        params: params
+        content: content
+    """
+
+    def __init__(self, parser):
+        """
+        parser - экземпляр парсера
+        """
+        Command.__init__(self, parser)
+
+    @property
+    def name(self):
+        """
+        Возвращает имя команды, которую обрабатывает класс
+        """
+        return u"test"
+
+    def execute(self, params, content):
+        """
+        Запустить команду на выполнение.
+        Метод возвращает текст, который будет вставлен на место команды
+        в вики-нотации
+        """
+        params_result = params if params is not None else u""
+        content_result = content if content is not None else u""
+
+        result = u"""Command name: test
+params: {params}
+content: {content}""".format(params=params_result.strip(),
+                             content=content_result.strip())
+
+        return result
+
+
+class ExceptionCommand (Command):
+    """
+    Тестовая команда, которая бросает исключение Exception
+    """
+
+    def __init__(self, parser):
+        """
+        parser - экземпляр парсера
+        """
+        Command.__init__(self, parser)
+
+    @property
+    def name(self):
+        """
+        Возвращает имя команды, которую обрабатывает класс
+        """
+        return u"exception"
+
+    def execute(self, params, content):
+        raise Exception

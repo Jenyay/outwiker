@@ -17,91 +17,90 @@ class SaveSessionAction (BaseAction):
     """
     stringId = u"Sessions_SaveSession"
 
-    def __init__ (self, application, guicreator):
+    def __init__(self, application, guicreator):
         self._application = application
         self._guicreator = guicreator
 
         global _
         _ = get_()
 
-
     @property
-    def title (self):
+    def title(self):
         return _(u"Save current session...")
 
-
     @property
-    def description (self):
+    def description(self):
         return _(u"Save currently opened tabs")
 
+    def run(self, params):
+        storage = SessionStorage(self._application.config)
+        names = sorted(storage.getSessions().keys())
 
-    def run (self, params):
-        storage = SessionStorage (self._application.config)
-        names = sorted (storage.getSessions().keys())
-
-        with SaveSessionDialog (self._application.mainWindow, self._application, names) as dlg:
+        with SaveSessionDialog(self._application.mainWindow, self._application, names) as dlg:
             if dlg.ShowModal() == wx.ID_OK:
-                session = SessionController(self._application).getCurrentSession()
-                storage.save (session, dlg.sessionName)
+                session = SessionController(
+                    self._application).getCurrentSession()
+                storage.save(session, dlg.sessionName)
                 self._guicreator.updateMenu()
 
 
 class SaveSessionDialog (TestedDialog):
-    def __init__ (self, parent, application, names):
+    def __init__(self, parent, application, names):
         """
         parent - родительское окно
         application - экземпляр класса Application
         names - список имен существующих сессий
         """
-        super (SaveSessionDialog, self).__init__(parent)
+        super(SaveSessionDialog, self).__init__(parent)
 
         self._application = application
         self._names = names
 
-        self.SetTitle (_(u"Save Session"))
-        self.__createGui ()
+        self.SetTitle(_(u"Save Session"))
+        self.__createGui()
         self._sessionComboBox.SetFocus()
 
-        self.Bind (wx.EVT_BUTTON, self.__onOk, id=wx.ID_OK)
+        self.Bind(wx.EVT_BUTTON, self.__onOk, id=wx.ID_OK)
 
-
-    def __onOk (self, event):
+    def __onOk(self, event):
         name = self.sessionName
-        if len (name.strip()) == 0:
-            MessageBox (_(u"The session name must not be empty"),
-                        _(u"Error"),
-                        wx.ICON_ERROR | wx.OK)
+        if len(name.strip()) == 0:
+            MessageBox(_(u"The session name must not be empty"),
+                       _(u"Error"),
+                       wx.ICON_ERROR | wx.OK)
             return
 
         if (name in self._names and
-            MessageBox (_(u'Session with name "{}" exists. Overwrite?').format (name),
-                        _(u"Overwrite session?"),
-                        wx.ICON_QUESTION | wx.YES | wx.NO) != wx.YES):
+            MessageBox(_(u'Session with name "{}" exists. Overwrite?').format(name),
+                       _(u"Overwrite session?"),
+                       wx.ICON_QUESTION | wx.YES | wx.NO) != wx.YES):
             return
 
         event.Skip()
 
-
-    def __createGui (self):
-        sessionNameLabel = wx.StaticText (self, label = _(u"Enter session name"))
-        self._sessionComboBox = wx.ComboBox (self, style=wx.CB_DROPDOWN)
-        self._sessionComboBox.SetMinSize ((200, -1))
+    def __createGui(self):
+        sessionNameLabel = wx.StaticText(self, label=_(u"Enter session name"))
+        self._sessionComboBox = wx.ComboBox(self, style=wx.CB_DROPDOWN)
+        self._sessionComboBox.SetMinSize((200, -1))
         self._sessionComboBox.Clear()
-        self._sessionComboBox.AppendItems (self._names)
+        self._sessionComboBox.AppendItems(self._names)
 
-        buttonsSizer = self.CreateButtonSizer (wx.OK | wx.CANCEL)
+        buttonsSizer = self.CreateButtonSizer(wx.OK | wx.CANCEL)
 
-        mainSizer = wx.FlexGridSizer (cols=2)
-        mainSizer.AddGrowableCol (1)
-        mainSizer.Add (sessionNameLabel, 1, wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=2)
-        mainSizer.Add (self._sessionComboBox, 1, wx.EXPAND | wx.ALL, border=2)
-        mainSizer.AddSpacer (1)
-        mainSizer.Add (buttonsSizer, 1, wx.ALIGN_RIGHT | wx.ALL, border = 2)
+        mainSizer = wx.FlexGridSizer(cols=2)
+        mainSizer.AddGrowableCol(1)
+        mainSizer.Add(
+            sessionNameLabel,
+            1,
+            wx.ALIGN_CENTER_VERTICAL | wx.ALL,
+            border=2)
+        mainSizer.Add(self._sessionComboBox, 1, wx.EXPAND | wx.ALL, border=2)
+        mainSizer.AddSpacer(1)
+        mainSizer.Add(buttonsSizer, 1, wx.ALIGN_RIGHT | wx.ALL, border=2)
 
-        self.SetSizer (mainSizer)
+        self.SetSizer(mainSizer)
         self.Fit()
 
-
     @property
-    def sessionName (self):
+    def sessionName(self):
         return self._sessionComboBox.GetValue()

@@ -21,3 +21,4 @@ comtypes = {version = "==1.1.4", sys_platform = "== 'win32'"}
 "Fabric3" = "==1.13.1.post1"
 PyInstaller = "==3.3.1"
 pympler = "==0.5"
+pytest = "==3.5"

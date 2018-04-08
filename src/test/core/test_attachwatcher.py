@@ -11,8 +11,8 @@ from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.core.application import Application
 from outwiker.core.attachwatcher import AttachWatcher
-from .utils import removeDir
-from .basetestcases import BaseWxTestCase
+from test.utils import removeDir
+from test.basetestcases import BaseWxTestCase
 
 
 class AttachWatcherTest(BaseWxTestCase):

@@ -5,15 +5,16 @@ import unittest
 from test.basetestcases import PluginLoadingMixin
 
 
-class TOCLoadingTest(PluginLoadingMixin, unittest.TestCase):
+class TexEquationLoadingTest(PluginLoadingMixin, unittest.TestCase):
     def getPluginDir(self):
         """
         Должен возвращать путь до папки с тестируемым плагином
         """
-        return "../plugins/tableofcontents"
+        return "../plugins/texequation"
 
     def getPluginName(self):
         """
-        Должен возвращать имя плагина, по которому его можно найти в PluginsLoader
+        Должен возвращать имя плагина,
+        по которому его можно найти в PluginsLoader
         """
-        return "TableOfContents"
+        return "TeXEquation"

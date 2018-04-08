@@ -1,15 +1,15 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import unittest
 import os.path
 from tempfile import mkdtemp
 
 from outwiker.core.attachment import Attachment
-from .utils import removeDir
 from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.core.application import Application
 from outwiker.core.defines import PAGE_ATTACH_DIR
+from test.utils import removeDir
 
 
 class AttachmentTest(unittest.TestCase):

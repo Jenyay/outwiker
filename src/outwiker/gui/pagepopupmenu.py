@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import wx
 
@@ -14,30 +14,29 @@ from outwiker.gui.pagedialog import createSiblingPage, createChildPage
 
 
 class PagePopupMenu (object):
-    def __init__ (self, parent, popupPage, application):
-        self.ID_ADD_CHILD = wx.NewId()
-        self.ID_ADD_SIBLING = wx.NewId()
-        self.ID_RENAME = wx.NewId()
-        self.ID_REMOVE = wx.NewId()
-        self.ID_PROPERTIES_POPUP = wx.NewId()
+    def __init__(self, parent, popupPage, application):
+        self.ID_ADD_CHILD = None
+        self.ID_ADD_SIBLING = None
+        self.ID_RENAME = None
+        self.ID_REMOVE = None
+        self.ID_PROPERTIES_POPUP = None
 
-        self.ID_COPY_PATH = wx.NewId()
-        self.ID_COPY_ATTACH_PATH = wx.NewId()
-        self.ID_COPY_TITLE = wx.NewId()
-        self.ID_COPY_LINK = wx.NewId()
-        self.ID_OPEN_ATTACH_FOLDER = wx.NewId()
+        self.ID_COPY_PATH = None
+        self.ID_COPY_ATTACH_PATH = None
+        self.ID_COPY_TITLE = None
+        self.ID_COPY_LINK = None
+        self.ID_OPEN_ATTACH_FOLDER = None
 
         self.parent = parent
         self._application = application
 
         # Страница, над элементом которой вызывается контекстное меню
         self.popupPage = popupPage
-        self.menu = self.__createPopupMenu (self.popupPage)
+        self.menu = self.__createPopupMenu(self.popupPage)
 
-        self._application.onTreePopupMenu (self.menu, popupPage)
+        self._application.onTreePopupMenu(self.menu, popupPage)
 
-
-    def __bindPopupMenuEvents (self, popupMenu):
+    def __bindPopupMenuEvents(self, popupMenu):
         popupMenu.Bind(wx.EVT_MENU, self.__onAddChild, id=self.ID_ADD_CHILD)
         popupMenu.Bind(wx.EVT_MENU, self.__onAddSibling, id=self.ID_ADD_SIBLING)
         popupMenu.Bind(wx.EVT_MENU, self.__onRemove, id=self.ID_REMOVE)
@@ -49,107 +48,90 @@ class PagePopupMenu (object):
         popupMenu.Bind(wx.EVT_MENU, self.__onOpenAttachFolder, id=self.ID_OPEN_ATTACH_FOLDER)
         popupMenu.Bind(wx.EVT_MENU, self.__onPropertiesPopup, id=self.ID_PROPERTIES_POPUP)
 
-
-    def __onAddChild (self, event):
+    def __onAddChild(self, event):
         assert self.popupPage is not None
-        createChildPage (self.parent, self.popupPage)
+        createChildPage(self.parent, self.popupPage)
 
-
-    def __onAddSibling (self, event):
+    def __onAddSibling(self, event):
         assert self.popupPage is not None
-        createSiblingPage (self.parent, self.popupPage)
+        createSiblingPage(self.parent, self.popupPage)
 
-
-    def __onPropertiesPopup (self, event):
+    def __onPropertiesPopup(self, event):
         assert self.popupPage is not None
         if self.popupPage.parent is not None:
-            outwiker.gui.pagedialog.editPage (self.parent, self.popupPage)
+            outwiker.gui.pagedialog.editPage(self.parent, self.popupPage)
 
-
-    def __createPopupMenu (self, popupPage):
+    def __createPopupMenu(self, popupPage):
         self.popupPage = popupPage
         actionController = self._application.actionController
 
-        popupMenu = wx.Menu ()
+        popupMenu = wx.Menu()
 
-        popupMenu.Append (self.ID_ADD_CHILD,
-                          actionController.getTitle (AddChildPageAction.stringId))
-
-        popupMenu.Append (self.ID_ADD_SIBLING,
-                          actionController.getTitle (AddSiblingPageAction.stringId))
-
-        popupMenu.Append (self.ID_REMOVE,
-                          actionController.getTitle (RemovePageAction.stringId))
-
-        popupMenu.Append (self.ID_RENAME,
-                          actionController.getTitle (RenamePageAction.stringId))
+        self.ID_ADD_CHILD = popupMenu.Append(wx.ID_ANY, actionController.getTitle(AddChildPageAction.stringId)).GetId()
+        self.ID_ADD_SIBLING = popupMenu.Append(wx.ID_ANY, actionController.getTitle(AddSiblingPageAction.stringId)).GetId()
+        self.ID_REMOVE = popupMenu.Append(wx.ID_ANY, actionController.getTitle(RemovePageAction.stringId)).GetId()
+        self.ID_RENAME = popupMenu.Append(wx.ID_ANY, actionController.getTitle(RenamePageAction.stringId)).GetId()
 
         popupMenu.AppendSeparator()
 
-        popupMenu.Append (self.ID_COPY_TITLE, _(u"Copy Page Title"))
-        popupMenu.Append (self.ID_COPY_PATH, _(u"Copy Page Path"))
-        popupMenu.Append (self.ID_COPY_ATTACH_PATH, _(u"Copy Attachments Path"))
-        popupMenu.Append (self.ID_COPY_LINK, _(u"Copy Page Link"))
-        popupMenu.Append (self.ID_OPEN_ATTACH_FOLDER, _(u"Open Attachments Folder"))
+        self.ID_COPY_TITLE = popupMenu.Append(wx.ID_ANY, _(u"Copy Page Title")).GetId()
+        self.ID_COPY_PATH = popupMenu.Append(wx.ID_ANY, _(u"Copy Page Path")).GetId()
+        self.ID_COPY_ATTACH_PATH = popupMenu.Append(wx.ID_ANY, _(u"Copy Attachments Path")).GetId()
+        self.ID_COPY_LINK = popupMenu.Append(wx.ID_ANY, _(u"Copy Page Link")).GetId()
+        self.ID_OPEN_ATTACH_FOLDER = popupMenu.Append(wx.ID_ANY, _(u"Open Attachments Folder")).GetId()
+
         popupMenu.AppendSeparator()
 
-        popupMenu.Append (self.ID_PROPERTIES_POPUP,
-                          actionController.getTitle (EditPagePropertiesAction.stringId))
+        self.ID_PROPERTIES_POPUP = popupMenu.Append(wx.ID_ANY, actionController.getTitle(EditPagePropertiesAction.stringId)).GetId()
 
-        self.__bindPopupMenuEvents (popupMenu)
+        self.__bindPopupMenuEvents(popupMenu)
 
         return popupMenu
 
-
-    def __onRemove (self, event):
+    def __onRemove(self, event):
         """
         Удалить страницу
         """
         assert self.popupPage is not None
         if self.popupPage is not None:
-            outwiker.core.commands.removePage (self.popupPage)
+            outwiker.core.commands.removePage(self.popupPage)
 
-
-    def __onRename (self, event):
+    def __onRename(self, event):
         """
         Переименовать страницу
         """
         assert self.popupPage is not None
-        self._application.mainWindow.treePanel.beginRename (self.popupPage)
+        self._application.mainWindow.treePanel.beginRename(self.popupPage)
 
-
-    def __onCopyLink (self, event):
+    def __onCopyLink(self, event):
         """
         Копировать ссылку на страницу в буфер обмена
         """
         assert self.popupPage is not None
-        outwiker.core.commands.copyLinkToClipboard (self.popupPage)
+        outwiker.core.commands.copyLinkToClipboard(self.popupPage)
 
-
-    def __onOpenAttachFolder (self, event):
+    def __onOpenAttachFolder(self, event):
         assert self.popupPage is not None
-        self._application.actionController.getAction (OpenAttachFolderAction.stringId).run (None)
+        self._application.actionController.getAction(
+            OpenAttachFolderAction.stringId).run(None)
 
-
-    def __onCopyTitle (self, event):
+    def __onCopyTitle(self, event):
         """
         Копировать заголовок страницы в буфер обмена
         """
         assert self.popupPage is not None
-        outwiker.core.commands.copyTitleToClipboard (self.popupPage)
+        outwiker.core.commands.copyTitleToClipboard(self.popupPage)
 
-
-    def __onCopyPath (self, event):
+    def __onCopyPath(self, event):
         """
         Копировать путь до страницы в буфер обмена
         """
         assert self.popupPage is not None
-        outwiker.core.commands.copyPathToClipboard (self.popupPage)
+        outwiker.core.commands.copyPathToClipboard(self.popupPage)
 
-
-    def __onCopyAttachPath (self, event):
+    def __onCopyAttachPath(self, event):
         """
         Копировать путь до прикрепленных файлов в буфер обмена
         """
         assert self.popupPage is not None
-        outwiker.core.commands.copyAttachPathToClipboard (self.popupPage)
+        outwiker.core.commands.copyAttachPathToClipboard(self.popupPage)
