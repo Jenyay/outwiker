@@ -8,6 +8,7 @@ from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
 
 from .i18n import get_
 from .updatecontroller import UpdateController
+from .installcontroller import InstallController
 from .preferencepanel import PreferencePanel
 from .updatesconfig import UpdatesConfig
 from .guicreators import OldGuiCreator, ActionGuiCreator
@@ -30,7 +31,10 @@ class Controller(object):
 
         # Add some new menu items in the debug mode
         self._debug = False
+
+        # Controllers
         self._updatesChecker = None
+        self._installer = None
 
         self._guiCreator = None
 
@@ -48,6 +52,8 @@ class Controller(object):
             self._guiCreator = OldGuiCreator(self, self._application)
 
         self._updatesChecker = UpdateController(self._application,
+                                                self._plugin.pluginPath)
+        self._installer = InstallController(self._application,
                                                 self._plugin.pluginPath)
 
         self._guiCreator.initialize()
@@ -77,7 +83,7 @@ class Controller(object):
         self._updatesChecker.checkForUpdatesSilence()
 
     def InstallPlugins(self):
-        self._updatesChecker.openPluginsInstallerDialog()
+        self._installer.openPluginsInstallerDialog()
 
     def __onIdle(self, event):
         self.__autoUpdate()

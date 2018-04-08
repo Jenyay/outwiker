@@ -336,6 +336,7 @@ class UpdateController(object):
     def install_plugin(self, id):
         """
         Install plugin by id.
+
         :return: True if plugin was updated, otherwise False
         """
 

@@ -48,10 +48,11 @@ class VersionList(object):
     def getAppInfoFromUrl(self, url):
         """
         Get a AppInfo object for url.
-            :param url:
-                URL of path to file to read versions information.
-            :return:
-                AppInfo or None
+
+        :param url:
+            URL of path to file to read versions information.
+        :returns:
+            AppInfo or None
         """
         if url is None:
             return None
