@@ -5,6 +5,8 @@ import os.path
 import sys
 import traceback
 import logging
+import importlib
+import pkgutil
 
 import outwiker.core
 import outwiker.gui
@@ -27,7 +29,9 @@ logger = logging.getLogger('outwiker.core.pluginsloader')
 
 class PluginsLoader (object):
     """
-    Класс для загрузки плагинов
+    Load and keep plugins.
+    for loading all plugins packages from folder 'foo'
+        plugins = PluginsLoader(wx.app).load(['foo'])
     """
     def __init__(self, application):
         self.__application = application
@@ -44,9 +48,6 @@ class PluginsLoader (object):
 
         # The list of the InvalidPlugin instance.
         self.__invalidPlugins = []
-
-        # Пути, где ищутся плагины
-        self.__dirlist = []
 
         # Имя классов плагинов должно начинаться с "Plugins"
         self.__pluginsStartName = "Plugin"
@@ -111,11 +112,23 @@ class PluginsLoader (object):
 
     def load(self, dirlist):
         """
-        Загрузить плагины из указанных директорий.
-        Каждый вызов метода load() добавляет плагины в список загруженных
-            плагинов, не очищая его.
-        dirlist - список директорий, где могут располагаться плагины.
-            Каждый плагин расположен в своей поддиректории
+        :param dirlist:
+            List of paths from where plugins packages should be loaded.
+            For example to load 3 plugins the dirlist should be ['/path1', '/path2']
+            /path1/
+                plugin1/
+                    plugin.py
+                    plugin.xml
+                plugin2/
+                    plugin.py
+                    plugin.xml
+            /path2/
+                plugin3/
+                    plugin.py
+                    plugin.xml
+        :return:
+            function return None
+            the installed plugins can be get by properties
         """
         assert dirlist is not None
 
@@ -123,22 +136,29 @@ class PluginsLoader (object):
 
         for currentDir in dirlist:
             if os.path.exists(currentDir):
-                dirPackets = sorted(os.listdir(currentDir))
 
-                # Добавить путь до currentDir в sys.path
+                # Add currentDir to sys.path
                 fullpath = os.path.abspath(currentDir)
-
                 if fullpath not in sys.path:
                     sys.path.insert(0, fullpath)
 
-                # Все поддиректории попытаемся открыть как пакеты
-                self.__importModules(currentDir, dirPackets)
+                # Get list of submodules in currentDir
+                # only folders with __init__.py can be submodules
+                packagesList = [pkg_name for _, pkg_name, is_pkg in
+                                   pkgutil.iter_modules([currentDir]) if is_pkg]
+
+                for packageName in packagesList:
+                    packagePath = os.path.join(currentDir, packageName)
+                    self.__importPackage(packagePath)
 
         logger.debug(u'Plugins loading ended')
 
     def clear(self):
         """
-        Уничтожить все загруженные плагины
+        Uninstall all active plugins and clear plugins list
+        Do not clear Disabled and Invalid plugins
+        :return:
+            None
         """
         [plugin.destroy() for plugin in self.__plugins.values()]
         self.__plugins = {}
@@ -162,174 +182,158 @@ class PluginsLoader (object):
         return pv.checkVersionAny(outwiker.core.__version__,
                                   api_required_version)
 
-    def __importModules(self, baseDir, dirPackagesList):
+    def __importPackage(self, packagePath):
         """
-        Попытаться импортировать пакеты
-        baseDir - директория, где расположены пакеты
-        dirPackagesList - список директорий (только имена директорий),
-            возможно являющихся пакетами
+        Try to load plugin from packagePath
+        :param packagePath:
+            path to python package from where the plugin should be import
+        :return:
+            add packagePath to one of the following lists:
+            - self.__plugins
+            - self.__disabledPlugins
+            - self.__invalidPlugins
         """
-        assert dirPackagesList is not None
+        # aliases
+        join = os.path.join
+        packageName = os.path.basename(packagePath)
 
-        for packageName in dirPackagesList:
-            packagePath = os.path.join(baseDir, packageName)
+        logger.debug(u'Trying to load the plug-in: {}'.format(
+            packageName))
 
-            # Проверить, что это директория
-            if os.path.isdir(packagePath):
-                # It may be plugin if __init__.py file exists
-                initFile = os.path.join(packagePath, u'__init__.py')
-                if not os.path.exists(initFile):
-                    continue
+        # Checking information from plugin.xml file
+        plugin_fname = join(packagePath,
+                            PLUGIN_VERSION_FILE_NAME)
+        try:
+            appinfo = self.__loadPluginInfo(plugin_fname)
+        except EnvironmentError:
+            error = _(u'Plug-in "{}". Can\'t read "{}" file').format(
+                packageName, PLUGIN_VERSION_FILE_NAME)
 
-                logger.debug(u'Trying to load the plug-in: {}'.format(
-                    packageName))
+            self._print(error)
+            self.__invalidPlugins.append(InvalidPlugin(packageName,
+                                                       error))
+            return
 
-                # Checking information from plugin.xml file
-                plugin_fname = os.path.join(packagePath,
-                                            PLUGIN_VERSION_FILE_NAME)
-                try:
-                    appinfo = self.__loadPluginInfo(plugin_fname)
-                except EnvironmentError:
-                    error = _(u'Plug-in "{}". Can\'t read "{}" file').format(
-                        packageName, PLUGIN_VERSION_FILE_NAME)
+        versions_result = self.__checkPackageVersions(appinfo)
 
-                    self._print(error)
-                    self.__invalidPlugins.append(InvalidPlugin(packageName,
-                                                               error))
-                    continue
+        pluginname = (appinfo.appname
+                      if (appinfo is not None and
+                          appinfo.appname is not None)
+                      else packageName)
 
-                versions_result = self.__checkPackageVersions(appinfo)
+        pluginversion = (appinfo.currentVersionStr
+                         if appinfo is not None
+                         else None)
 
-                pluginname = (appinfo.appname
-                              if (appinfo is not None and
-                                  appinfo.appname is not None)
-                              else packageName)
+        if versions_result == pv.PLUGIN_MUST_BE_UPGRADED:
+            error = _(u'Plug-in "{}" is outdated. Please, update the plug-in.').format(pluginname)
+            self._print(error)
 
-                pluginversion = (appinfo.currentVersionStr
-                                 if appinfo is not None
-                                 else None)
+            self.__invalidPlugins.append(
+                InvalidPlugin(pluginname,
+                              error,
+                              pluginversion)
+            )
+            return
+        elif versions_result == pv.OUTWIKER_MUST_BE_UPGRADED:
+            error = _(u'Plug-in "{}" is designed for a newer version OutWiker. Please, install a new OutWiker version.').format(pluginname)
+            self._print(error)
 
-                if versions_result == pv.PLUGIN_MUST_BE_UPGRADED:
-                    error = _(u'Plug-in "{}" is outdated. Please, update the plug-in.').format(pluginname)
-                    self._print(error)
+            self.__invalidPlugins.append(
+                InvalidPlugin(pluginname,
+                              error,
+                              pluginversion))
+            return
 
-                    self.__invalidPlugins.append(
-                        InvalidPlugin(pluginname,
-                                      error,
-                                      pluginversion)
-                    )
-                    continue
-                elif versions_result == pv.OUTWIKER_MUST_BE_UPGRADED:
-                    error = _(u'Plug-in "{}" is designed for a newer version OutWiker. Please, install a new OutWiker version.').format(pluginname)
-                    self._print(error)
+        # Список строк, описывающий возникшие ошибки
+        # во время импортирования
+        # Выводятся только если не удалось импортировать
+        # ни одного модуля
+        errors = []
 
-                    self.__invalidPlugins.append(
-                        InvalidPlugin(pluginname,
-                                      error,
-                                      pluginversion))
-                    continue
+        # Количество загруженных плагинов до импорта нового
+        oldPluginsCount = (len(self.__plugins) +
+                           len(self.__disabledPlugins))
 
-                # Список строк, описывающий возникшие ошибки
-                # во время импортирования
-                # Выводятся только если не удалось импортировать
-                # ни одного модуля
-                errors = []
+        # Find the module with Plugin root class and
+        # create  the instance of the class to
+        for __, module, is_pkg in pkgutil.iter_modules([packagePath]):
+            if is_pkg:
+                continue
 
-                # Количество загруженных плагинов до импорта нового
-                oldPluginsCount = (len(self.__plugins) +
-                                   len(self.__disabledPlugins))
+            try:
+                module = importlib.import_module(packageName + "." + module)
 
-                # Переберем все файлы внутри packagePath
-                # и попытаемся их импортировать
-                for fileName in sorted(os.listdir(packagePath)):
-                    try:
-                        module = self._importSingleModule(packageName,
-                                                          fileName)
-                        if module is not None:
-                            plugin = self.__loadPlugin(module)
-                            if plugin is not None:
-                                plugin.version = appinfo.currentVersionStr
-                    except BaseException as e:
-                        errors.append("*** Plug-in {package} loading error ***\n{package}/{fileName}\n{error}\n{traceback}".format(
-                            package=packageName,
-                            fileName=fileName,
-                            error=str(e),
-                            traceback=traceback.format_exc()
-                            ))
+                plugin = self.__loadPlugin(module)
+                if plugin:
+                    plugin.version = appinfo.currentVersionStr
+            except BaseException as e:
+                errors.append("*** Plug-in {package} loading error ***\n{package}/{fileName}\n{error}\n{traceback}".format(
+                    package=packageName,
+                    fileName=module,
+                    error=str(e),
+                    traceback=traceback.format_exc()
+                    ))
 
-                # Проверим, удалось ли загрузить плагин
-                newPluginsCount = (len(self.__plugins) +
-                                   len(self.__disabledPlugins))
+        # Проверим, удалось ли загрузить плагин
+        newPluginsCount = (len(self.__plugins) +
+                           len(self.__disabledPlugins))
 
-                # Вывод ошибок, если ни одного плагина из пакета не удалось
-                # импортировать
-                if newPluginsCount == oldPluginsCount and len(errors) != 0:
-                    error = u"\n\n".join(errors)
-                    self._print(error)
-                    self._print(u"**********\n")
+        # Вывод ошибок, если ни одного плагина из пакета не удалось
+        # импортировать
+        if newPluginsCount == oldPluginsCount and len(errors) != 0:
+            error = u"\n\n".join(errors)
+            self._print(error)
+            self._print(u"**********\n")
 
-                    self.__invalidPlugins.append(
-                        InvalidPlugin(appinfo.appname,
-                                      error,
-                                      appinfo.currentVersionStr))
-                else:
-                    logger.debug(u'Successfully loaded plug-in: {}'.format(
-                        packageName))
-
-    def _importSingleModule(self, packageName, fileName):
-        """
-        Импортировать один модуль по имени пакета и файла с модулем
-        """
-        extension = ".py"
-        result = None
-
-        # Проверим, что файл может быть модулем
-        if fileName.endswith(extension) and fileName != "__init__.py":
-            modulename = fileName[: -len(extension)]
-            # Попытаться импортировать модуль
-            package = __import__(packageName + "." + modulename)
-            result = getattr(package, modulename)
-
-        return result
+            self.__invalidPlugins.append(
+                InvalidPlugin(appinfo.appname,
+                              error,
+                              appinfo.currentVersionStr))
+        else:
+            logger.debug(u'Successfully loaded plug-in: {}'.format(
+                packageName))
 
     def __loadPlugin(self, module):
         """
-        Найти классы плагинов и создать экземпляр первого из них
+        Find Plugin class in module and try to make instance for it
+        :param module:
+            module already imported
+        :return:
+            The instance of loaded plugin or None
         """
-        assert module is not None
-
         options = PluginsConfig(self.__application.config)
 
-        for name in dir(module):
-            plugin = self.__createPlugin(module,
-                                         name,
-                                         options.disabledPlugins.value)
-            if plugin is not None:
+        # get only attr starts with 'Plugin'
+        pluginClasses = [attr for attr in dir(module)
+                            if attr.startswith(self.__pluginsStartName)]
+
+        for name in pluginClasses:
+
+            plugin = self.__createPlugin(module, name)
+
+            if plugin and self.__isNewPlugin(plugin.name):
+                if plugin.name not in options.disabledPlugins.value:
+                    plugin.initialize()
+                    self.__plugins[plugin.name] = plugin
+                else:
+                    self.__disabledPlugins[plugin.name] = plugin
                 return plugin
 
-    def __createPlugin(self, module, name, disabledPlugins):
+    def __createPlugin(self, module, name):
         """
-        Попытаться загрузить класс, возможно, это плагин
-
-        module - модуль, откуда загружается класс
-        name - имя класса потенциального плагина
+        Create plugin instance if name is a subclass of Plugin
+        :param module:
+            module name
+        :param name:
+            attribute from the module
+        :return:
+            instance of name class or None
         """
-        if name.startswith(self.__pluginsStartName):
-            obj = getattr(module, name)
-            if obj == Plugin or not issubclass(obj, Plugin):
-                return
+        obj = getattr(module, name)
+        if issubclass(obj, Plugin) and obj != Plugin:
+            return obj(self.__application)
 
-            plugin = obj(self.__application)
-            if not self.__isNewPlugin(plugin.name):
-                return
-
-            if plugin.name not in disabledPlugins:
-                plugin.initialize()
-                self.__plugins[plugin.name] = plugin
-            else:
-                self.__disabledPlugins[plugin.name] = plugin
-
-            return plugin
 
     def __isNewPlugin(self, pluginname):
         """
@@ -338,6 +342,54 @@ class PluginsLoader (object):
         """
         return (pluginname not in self.__plugins and
                 pluginname not in self.__disabledPlugins)
+
+    def reload(self, pluginname):
+        """
+        Reload plugin module and plugin instance in self.__plugins list
+        :param pluginname:
+            name of the actual plugin
+        :return:
+            None
+        """
+        if pluginname in self.__plugins:
+            plug_path = self.__plugins[pluginname].pluginPath
+            module = sys.modules[self.__plugins[pluginname].__class__.__module__]
+
+            # destroy plugin
+            self.__plugins[pluginname].destroy()
+            del self.__plugins[pluginname]
+
+            # reload module
+            importlib.invalidate_caches()
+            importlib.reload(module)
+
+            # import plugin again
+            self.__importPackage(plug_path)
+
+    def getInfo(self, pluginname, langlist=["en"]):
+        """
+        Retrieve a AppInfo for plugin_name
+        :param pluginname:
+            name of the loaded plugin
+        :param lang:
+            langlist - list of the languages name ("en", "ru_RU" etc)
+        :return:
+            AppInfo for pluginname
+            if pluginname cannot be located, then None is returned.
+        :exception IOError:
+            if plugin.xml cannot be read
+        """
+        if pluginname in self.__plugins:
+            module = self.__plugins[pluginname].__class__.__module__
+        elif pluginname in self.__disabledPlugins:
+            module = self.__disabledPlugins[pluginname].__class__.__module__
+        else:
+            module = ''
+
+        xml_content = pkgutil.get_data(module, PLUGIN_VERSION_FILE_NAME)
+        if xml_content:
+            return XmlVersionParser(langlist).parse(xml_content)
+
 
     def __len__(self):
         return len(self.__plugins)

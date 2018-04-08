@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import wx
 from wx.lib.newevent import NewEvent
@@ -7,7 +7,6 @@ from wx.lib.newevent import NewEvent
 PopupButtonMenuClick, EVT_POPUP_BUTTON_MENU_CLICK = NewEvent()
 
 
-# Added in outwiker.gui 1.3
 class PopupButton(wx.Panel):
     def __init__(self, parent, bitmap):
         super(PopupButton, self).__init__(parent)
@@ -18,9 +17,8 @@ class PopupButton(wx.Panel):
         self.Bind(wx.EVT_MENU, handler=self._onMenuClick)
 
     def appendMenuItem(self, title, obj):
-        menuitem_id = wx.NewId()
+        menuitem_id = self._menu.Append(wx.ID_ANY, title).GetId()
         self._items[menuitem_id] = obj
-        self._menu.Append(menuitem_id, title)
 
     def _createGUI(self, bitmap):
         self._menu = wx.Menu()

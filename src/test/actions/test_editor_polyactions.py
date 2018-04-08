@@ -11,7 +11,7 @@ from test.basetestcases import BaseOutWikerGUIMixin
 from outwiker.actions.polyactionsid import *
 
 
-class BaseEditorPolyactionsTest(unittest.TestCase, BaseOutWikerGUIMixin, metaclass=ABCMeta):
+class BaseEditorPolyactionsFixture(BaseOutWikerGUIMixin, metaclass=ABCMeta):
     @abstractmethod
     def _createPage(self):
         pass
@@ -743,7 +743,7 @@ class BaseEditorPolyactionsTest(unittest.TestCase, BaseOutWikerGUIMixin, metacla
         self.assertEqual(newtext, 'слово ')
 
 
-class WikiEditorPolyactionsTest(BaseEditorPolyactionsTest):
+class WikiEditorPolyactionsTest(BaseEditorPolyactionsFixture, unittest.TestCase):
     """
     Test polyactions for wiki pages
     """
@@ -754,7 +754,7 @@ class WikiEditorPolyactionsTest(BaseEditorPolyactionsTest):
         return self.application.mainWindow.pagePanel.pageView.codeEditor
 
 
-class HtmlEditorPolyactionsTest(BaseEditorPolyactionsTest):
+class HtmlEditorPolyactionsTest(BaseEditorPolyactionsFixture, unittest.TestCase):
     """
     Test polyactions for HTML pages
     """
@@ -765,7 +765,7 @@ class HtmlEditorPolyactionsTest(BaseEditorPolyactionsTest):
         return self.application.mainWindow.pagePanel.pageView.codeEditor
 
 
-class TextEditorPolyactionsTest(BaseEditorPolyactionsTest):
+class TextEditorPolyactionsTest(BaseEditorPolyactionsFixture, unittest.TestCase):
     """
     Test polyactions for text pages
     """

@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from test.plugins.baseloading import BasePluginLoadingTest
+import unittest
+
+from test.basetestcases import PluginLoadingMixin
 
 
-class UpdateNotifierLoadingTest (BasePluginLoadingTest):
+class UpdateNotifierLoadingTest (PluginLoadingMixin, unittest.TestCase):
 
     def getPluginDir(self):
         """

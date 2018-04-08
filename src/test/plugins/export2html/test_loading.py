@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from test.plugins.baseloading import BasePluginLoadingTest
+import unittest
+
+from test.basetestcases import PluginLoadingMixin
 
 
-class Export2HtmlLoadingTest(BasePluginLoadingTest):
+class Export2HtmlLoadingTest(PluginLoadingMixin, unittest.TestCase):
     def getPluginDir(self):
         """
         Должен возвращать путь до папки с тестируемым плагином
