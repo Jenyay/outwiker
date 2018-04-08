@@ -77,7 +77,7 @@ class Controller(object):
         self._updatesChecker.checkForUpdatesSilence()
 
     def InstallPlugins(self):
-        pass
+        self._updatesChecker.openPluginsInstallerDialog()
 
     def __onIdle(self, event):
         self.__autoUpdate()
@@ -115,16 +115,16 @@ class Controller(object):
         :return:
             None
         '''
-        logger.debug(u'__onLinkClick. downloads: {}'.format(params.__dict__))
+        logger.debug(u'__onLinkClick: {}'.format(params.__dict__))
 
         if params.link.startswith('update:'):
             plugin_name = params.link.split(':')[-1]
 
-            logger.info(u'Update plugin {}'.format(plugin_name))
+            logger.info(u'Update plugin "{}"'.format(plugin_name))
             self._updatesChecker.update_plugin(plugin_name)
 
         if params.link.startswith('install:'):
             plugin_name = params.link.split(':')[-1]
 
-            logger.info(u'Install plugin {}'.format(plugin_name))
-            self._updatesChecker.update_plugin(plugin_name)
+            logger.info(u'Install plugin "{}"'.format(plugin_name))
+            self._updatesChecker.install_plugin(plugin_name)

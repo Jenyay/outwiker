@@ -4,7 +4,7 @@
 	<updates>http://jenyay.net/uploads/Outwiker/UpdateNotifier/plugin.xml</updates>
     <requirements>
         <os>Windows, Linux</os>
-        <api>2.839</api>
+        <api>2.835</api>
 
 		<!-- For backward compatibility with OutWiker 2.0 -->
 		<packages>

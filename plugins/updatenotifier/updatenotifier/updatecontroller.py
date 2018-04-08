@@ -4,6 +4,7 @@ import datetime
 import logging
 import threading
 import os.path
+import json
 
 import wx
 
@@ -44,11 +45,15 @@ class UpdateController(object):
         '''
         global _
         _ = get_()
+        join = os.path.join
 
         self._application = application
         self._config = UpdatesConfig(self._application.config)
-        self._dataPath = os.path.join(pluginPath, u'data')
-        self._updateTemplatePath = os.path.join(self._dataPath, u'update.html')
+        self._dataPath = join(pluginPath, u'data')
+        self._updateTemplatePath = join(self._dataPath, u'update.html')
+        self._installTemplatePath = join(self._dataPath, u'install.html')
+        self._pluginsPath = join(self._dataPath, u'plugins.json')
+        self._installerPlugins = {}
 
         # Special string id for stable and unstable OutWiker URL
         self._OUTWIKER_STABLE_KEY = u'OUTWIKER_STABLE'
@@ -97,6 +102,15 @@ class UpdateController(object):
         progressRunner.run(self._updateUrls.copy(),
                            silenceMode=False)
 
+    def openPluginsInstallerDialog(self):
+        """
+        Open plugins installer dialog
+        """
+        plugins = json.loads(readTextFile(self._pluginsPath))
+
+        self._installerPlugins = plugins
+        self._showPluginsInstaller(plugins)
+
     def createHTMLContent(self, updatedAppInfo):
         currentVersion = getCurrentVersion()
         currentVersionsDict = self._getCurrentVersionsDict()
@@ -114,6 +128,27 @@ class UpdateController(object):
             u'str_more_info': _(u'More info'),
             u'str_download': _(u'Download'),
             u'str_update': _(u'Update'),
+        }
+
+        contentGenerator = ContentGenerator(template)
+        HTMLContent = contentGenerator.render(templateData)
+        return HTMLContent
+
+    def createInstallerHTMLContent(self, plugins):
+        """
+        Prepare plugins view based on install.html template
+        :param plugins:
+            Serealised dict from plugins.json
+        :return
+            html string
+        """
+        template = readTextFile(self._installTemplatePath)
+
+        templateData = {
+            u'plugins': plugins,
+            u'str_more_info': _(u'More info'),
+            u'str_install': _(u'Install'),
+            u'str_uninstall': _(u'Uninstall'),
         }
 
         contentGenerator = ContentGenerator(template)
@@ -220,19 +255,18 @@ class UpdateController(object):
             updateDialog.setContent(HTMLContent, basepath)
             updateDialog.ShowModal()
 
-    def _onVersionUpdate(self, event):
+    def _showPluginsInstaller(self, plugins):
         '''
-        Event handler for EVT_UPDATE_VERSIONS.
+        Show dialog with installed plugins information.
         '''
         setStatusText(u"")
 
-        updatedAppInfo = self._getUpdatedAppInfo(event.appInfoDict)
-        self._touchLastUpdateDate()
+        HTMLContent = self.createInstallerHTMLContent(plugins)
 
-        if updatedAppInfo:
-            self._showUpdates(updatedAppInfo)
-        elif not event.silenceMode:
-            MessageBox(_(u"Updates not found"), u"UpdateNotifier")
+        with UpdateDialog(self._application.mainWindow) as updateDialog:
+            basepath = self._dataPath
+            updateDialog.setContent(HTMLContent, basepath)
+            updateDialog.ShowModal()
 
     def _onVersionUpdate(self, event):
         '''
@@ -308,33 +342,34 @@ class UpdateController(object):
         :return: True if plugin was updated, otherwise False
         """
 
-        updates_url = self._updateUrls
+        plugin_info = self._installerPlugins.get(id, None)
+        if plugin_info:
+            xml_url = plugin_info["url"]
 
-        verList = VersionList(updates_url)
-        appInfoDict = verList.loadAppInfo()
+            verList = VersionList({id:xml_url})
+            appInfoDict = verList.loadAppInfo()
+            # get link to latest version
+            plugin_downloads = appInfoDict[id].versionsList[0].downloads
+            if 'all' in plugin_downloads:
+                url = plugin_downloads.get('all')
+            elif getOS().name in plugin_downloads:
+                url = plugin_downloads.get(getOS().name)
+            else:
+                MessageBox(_(u"The download link was not found in plugin description. Please update plugin manually"),
+                           u"UpdateNotifier")
+                return False
 
-        # get link to latest version
-        plugin_downloads = appInfoDict[id].versionsList[0].downloads
-        if 'all' in plugin_downloads:
-            url = plugin_downloads.get('all')
-        elif getOS().name in plugin_downloads:
-            url = plugin_downloads.get(getOS().name)
-        else:
-            MessageBox(_(u"The download link was not found in plugin description. Please update plugin manually"),
-                       u"UpdateNotifier")
-            return False
+            # 0 - папка рядом с запускаемым файлом, затем идут другие папки, если они есть
+            pluginPath = os.path.join(getPluginsDirList()[-1], id)
 
-        # 0 - папка рядом с запускаемым файлом, затем идут другие папки, если они есть
-        pluginPath = getPluginsDirList()[-1]
+            logger.info('update_plugin: {url} {path}'.format(url=url, path=pluginPath))
 
-        logger.info('update_plugin: {url} {path}'.format(url=url, path=pluginPath))
+            rez = UpdatePlugin().update(url, pluginPath)
 
-        rez = UpdatePlugin().update(url, pluginPath)
-
-        if rez:
-            # TODO: надо как то убрать плагин из диалога, но непонятно как получить к нему доступ при обработке евента
-            self._application.plugins.reload(id)
-            MessageBox(_(u"Plugin was successfully updated."), u"UpdateNotifier")
-        else:
-            MessageBox(_(u"Plugin was NOT updated. Please update plugin manually"), u"UpdateNotifier")
-        return rez
+            if rez:
+                # TODO: надо как то убрать плагин из диалога, но непонятно как получить к нему доступ при обработке евента
+                self._application.plugins.load(getPluginsDirList()[-1])
+                MessageBox(_(u"Plugin was successfully updated."), u"UpdateNotifier")
+            else:
+                MessageBox(_(u"Plugin was NOT updated. Please update plugin manually"), u"UpdateNotifier")
+            return rez
