@@ -14,30 +14,30 @@ logger = logging.getLogger('updatenotifier')
 
 class VersionList(object):
     """Class to read latest versions information."""
-    def __init__(self, updateUrls, loader=None):
+    def __init__(self, loader=None):
         """
-        updateUrls - dict which key is plugin name or other ID,
-            value is update url
         loader - instance of the loader from loaders.py or other.
             Is used for tests only.
         """
         global _
         _ = get_()
 
-        self._updateUrls = updateUrls
-
         if loader is None:
             self._loader = NormalLoader()
         else:
             self._loader = loader
 
-    def loadAppInfo(self):
+    def loadAppInfo(self, updateUrls):
         """
         Load latest versions information.
+        updateUrls - dict which key is plugin name or other ID,
+            value is update url
+        :returns:
+            dict {ID: AppInfo}
         """
         latestInfo = {}
 
-        for name, url in self._updateUrls.items():
+        for name, url in updateUrls.items():
             logger.info(u"Checking update for {}".format(name))
             appInfo = self.getAppInfoFromUrl(url)
             if appInfo is not None:
@@ -47,7 +47,11 @@ class VersionList(object):
 
     def getAppInfoFromUrl(self, url):
         """
-        url - URL of path to file to read versions information.
+        Get a AppInfo object for url.
+            :param url:
+                URL of path to file to read versions information.
+            :return:
+                AppInfo or None
         """
         if url is None:
             return None

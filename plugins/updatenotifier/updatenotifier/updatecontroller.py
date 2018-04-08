@@ -292,8 +292,7 @@ class UpdateController(object):
         """
         Thread function for silence updates checking
         """
-        verList = VersionList(updateUrls)
-        appInfoDict = verList.loadAppInfo()
+        appInfoDict = VersionList().loadAppInfo(updateUrls)
         event = UpdateVersionsEvent(appInfoDict=appInfoDict,
                                     silenceMode=silenceMode)
 
@@ -307,9 +306,7 @@ class UpdateController(object):
         """
 
         updates_url = self._updateUrls
-
-        verList = VersionList(updates_url)
-        appInfoDict = verList.loadAppInfo()
+        appInfoDict = VersionList().loadAppInfo(updates_url)
 
         # get link to latest version
         plugin_downloads = appInfoDict[id].versionsList[0].downloads
@@ -346,8 +343,7 @@ class UpdateController(object):
         if plugin_info:
             xml_url = plugin_info["url"]
 
-            verList = VersionList({id:xml_url})
-            appInfoDict = verList.loadAppInfo()
+            appInfoDict = VersionList().getAppInfoFromUrl(xml_url)
             # get link to latest version
             plugin_downloads = appInfoDict[id].versionsList[0].downloads
             if 'all' in plugin_downloads:
@@ -364,7 +360,7 @@ class UpdateController(object):
 
             logger.info('update_plugin: {url} {path}'.format(url=url, path=pluginPath))
 
-            rez = UpdatePlugin().update(url, pluginPath)
+            #rez = UpdatePlugin().update(url, pluginPath)
 
             if rez:
                 # TODO: надо как то убрать плагин из диалога, но непонятно как получить к нему доступ при обработке евента
