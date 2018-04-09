@@ -53,8 +53,7 @@ class Controller(object):
 
         self._updatesChecker = UpdateController(self._application,
                                                 self._plugin.pluginPath)
-        self._installer = InstallController(self._application,
-                                                self._plugin.pluginPath)
+        self._installer = InstallController(self._application)
 
         self._guiCreator.initialize()
 
@@ -83,7 +82,7 @@ class Controller(object):
         self._updatesChecker.checkForUpdatesSilence()
 
     def InstallPlugins(self):
-        self._installer.openPluginsInstallerDialog()
+        self._installer.run()
 
     def __onIdle(self, event):
         self.__autoUpdate()

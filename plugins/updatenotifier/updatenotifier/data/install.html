@@ -36,7 +36,7 @@
 <body>
 {% macro update_info(plugin)%}
 <div class="controls">
-    {% if True %}
+    {% if plugin in installed_plugins %}
     <a class="install button" href="install:{{plugin}}">{{str_install}}</a>
     {% else %}
     <a class="unistall button" href="install:{{plugin}}">{{str_uninstall}}</a>

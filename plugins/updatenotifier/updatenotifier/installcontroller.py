@@ -30,10 +30,9 @@ class InstallController(object):
     Controller for updates checking and show information.
     """
 
-    def __init__(self, application, pluginPath):
+    def __init__(self, application):
         '''
         application - instance of the ApplicationParams class.
-        pluginPath - path to UpdateNotifier plugin.
         '''
         global _
         _ = get_()
@@ -41,33 +40,37 @@ class InstallController(object):
 
         self._application = application
         self._config = UpdatesConfig(self._application.config)
-        self._dataPath = join(pluginPath, u'data')
+        self._dataPath = join(os.path.dirname(__file__), u'data')
         self._installTemplatePath = join(self._dataPath, u'install.html')
-        self._pluginsPath = join(self._dataPath, u'plugins.json')
+        self._pluginsRepoPath = join(self._dataPath, u'plugins.json')
         self._installerPlugins = {}
 
-
-    def openPluginsInstallerDialog(self):
+    def run(self):
         """
         Open plugins installer dialog
         """
-        plugins = json.loads(readTextFile(self._pluginsPath))
+        # read data/plugins.json
+        all_plugins = json.loads(readTextFile(self._pluginsRepoPath))
 
-        self._installerPlugins = plugins
-        self._showPluginsInstaller(plugins)
+        # get installed plugins
+        installed_plugins = self._application.plugins + self._application.plugins.disabledPlugins
 
-    def createInstallerHTMLContent(self, plugins):
+        # show dialog
+        self._showPluginsInstaller(all_plugins, installed_plugins)
+
+    def createInstallerHTMLContent(self, all_plugins, installed_plugins):
         """
         Prepare plugins view based on install.html template
         :param plugins:
-            Serealised dict from plugins.json
+            Serialised dict from plugins.json
         :return
-            html string
+            string for html render
         """
         template = readTextFile(self._installTemplatePath)
 
         templateData = {
-            u'plugins': plugins,
+            u'plugins': all_plugins,
+            u'installed_plugins': installed_plugins,
             u'str_more_info': _(u'More info'),
             u'str_install': _(u'Install'),
             u'str_uninstall': _(u'Uninstall'),
@@ -77,17 +80,16 @@ class InstallController(object):
         HTMLContent = contentGenerator.render(templateData)
         return HTMLContent
 
-    def _showPluginsInstaller(self, plugins):
+    def _showPluginsInstaller(self, all_plugins, installed_plugins):
         '''
         Show dialog with installed plugins information.
         '''
         setStatusText(u"")
 
-        HTMLContent = self.createInstallerHTMLContent(plugins)
+        HTMLContent = self.createInstallerHTMLContent(all_plugins, installed_plugins)
 
         with UpdateDialog(self._application.mainWindow) as updateDialog:
-            basepath = self._dataPath
-            updateDialog.setContent(HTMLContent, basepath)
+            updateDialog.setContent(HTMLContent, None)
             updateDialog.ShowModal()
 
     def install_plugin(self, id):
