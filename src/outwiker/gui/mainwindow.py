@@ -101,8 +101,18 @@ class MainWindow(wx.Frame):
         if self.mainWindowConfig.maximized.value:
             self.Maximize()
 
+        self._mainSizer = wx.FlexGridSizer(cols=1)
+        self._mainSizer.AddGrowableCol(0)
+        self._mainSizer.AddGrowableRow(1)
+        self._toolbarContainer = ToolBar2Container(self)
+        self._mainContentPanel = wx.Panel(self)
+
+        self._mainSizer.Add(self._toolbarContainer, flag=wx.EXPAND)
+        self._mainSizer.Add(self._mainContentPanel, flag=wx.EXPAND)
+        self.SetSizer(self._mainSizer)
+
         logger.debug(u'MainWindow. Create the AuiManager')
-        self.auiManager = wx.aui.AuiManager(self)
+        self.auiManager = wx.aui.AuiManager(self._mainContentPanel)
         self._createAuiPanes()
         self._createToolbars()
 
@@ -165,7 +175,7 @@ class MainWindow(wx.Frame):
 
     def _createToolbars(self):
         self._toolbars = ToolBarsController(self,
-                                            self.toolbarsPanel.panel,
+                                            self._toolbarContainer,
                                             Application)
         self._toolbars.createToolBar(guidefines.TOOLBAR_GENERAL, _('General'))
         self._toolbars.createToolBar(guidefines.TOOLBAR_PLUGINS, _('Plugins'))
@@ -502,11 +512,11 @@ class MainWindow(wx.Frame):
         """
         Создание плавающих панелей
         """
-        self.toolbarsPanel = ToolBarsMainPane(self, self.auiManager, Application)
-        self.pagePanel = PageMainPane(self, self.auiManager, Application)
-        self.treePanel = TreeMainPane(self, self.auiManager, Application)
-        self.attachPanel = AttachMainPane(self, self.auiManager, Application)
-        self.tagsCloudPanel = TagsCloudMainPane(self,
+        # self.toolbarsPanel = ToolBarsMainPane(self, self.auiManager, Application)
+        self.pagePanel = PageMainPane(self._mainContentPanel, self.auiManager, Application)
+        self.treePanel = TreeMainPane(self._mainContentPanel, self.auiManager, Application)
+        self.attachPanel = AttachMainPane(self._mainContentPanel, self.auiManager, Application)
+        self.tagsCloudPanel = TagsCloudMainPane(self._mainContentPanel,
                                                 self.auiManager,
                                                 Application)
 

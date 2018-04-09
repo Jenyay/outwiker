@@ -13,7 +13,18 @@ class ToolBar2Info(object):
         self.priority = priority
 
 
-class ToolBar2(wx.Panel):
+class ToolButton(wx.BitmapButton):
+    def IsFocusable(self):
+        return False
+
+    def AcceptsFocusRecursively(self):
+        return False
+
+    def AcceptsFocus(self):
+        return False
+
+
+class ToolBar2(wx.Window):
     def __init__(self, parent):
         super().__init__(parent)
         self._elements = []
@@ -33,7 +44,7 @@ class ToolBar2(wx.Panel):
         bitmap - wx.Bitmap or file name.
         '''
         bmp = wx.Bitmap(bitmap)
-        button = wx.BitmapButton(self, button_id, bmp, style=wx.NO_BORDER)
+        button = ToolButton(self, button_id, bmp, style=wx.NO_BORDER)
         button.SetToolTip(label)
         self._addElement(button)
         return button.GetId()
@@ -88,7 +99,7 @@ class ToolBar2(wx.Panel):
         return False
 
 
-class ToolBar2Container(wx.Panel):
+class ToolBar2Container(wx.Window):
     def __init__(self, parent):
         super().__init__(parent)
 
@@ -128,14 +139,14 @@ class ToolBar2Container(wx.Panel):
         new_event.SetEventType(wx.EVT_TOOL.typeId)
         wx.PostEvent(self, new_event)
 
-    def IsFocusable(self):
-        return False
+    # def IsFocusable(self):
+    #     return False
 
     def AcceptsFocusRecursively(self):
         return False
 
-    def AcceptsFocus(self):
-        return False
+    # def AcceptsFocus(self):
+    #     return False
 
 
 if __name__ == '__main__':
