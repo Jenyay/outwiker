@@ -27,7 +27,8 @@ logger = logging.getLogger('updatenotifier')
 
 class InstallController(object):
     """
-    Controller for updates checking and show information.
+    provide interfaces to install/remove plugins
+    responsible for plugin's installer dialog
     """
 
     def __init__(self, application):
@@ -53,7 +54,9 @@ class InstallController(object):
         all_plugins = json.loads(readTextFile(self._pluginsRepoPath))
 
         # get installed plugins
-        installed_plugins = self._application.plugins + self._application.plugins.disabledPlugins
+        # fixme: add to PluginLoader method loaded plugins
+        enabled_plugins = [p.name for p in self._application.plugins]
+        installed_plugins = enabled_plugins + list(self._application.plugins.disabledPlugins)
 
         # show dialog
         self._showPluginsInstaller(all_plugins, installed_plugins)
@@ -61,7 +64,7 @@ class InstallController(object):
     def createInstallerHTMLContent(self, all_plugins, installed_plugins):
         """
         Prepare plugins view based on install.html template
-        :param plugins:
+        :param all_plugins:
             Serialised dict from plugins.json
         :return
             string for html render
@@ -120,7 +123,7 @@ class InstallController(object):
 
             logger.info('update_plugin: {url} {path}'.format(url=url, path=pluginPath))
 
-            #rez = UpdatePlugin().update(url, pluginPath)
+            rez = UpdatePlugin().update(url, pluginPath)
 
             if rez:
                 # TODO: надо как то убрать плагин из диалога, но непонятно как получить к нему доступ при обработке евента
@@ -129,3 +132,13 @@ class InstallController(object):
             else:
                 MessageBox(_(u"Plugin was NOT updated. Please update plugin manually"), u"UpdateNotifier")
             return rez
+
+    def uninstall_plugin(self, name):
+        """
+        remove plugin from application._plugins and delete plugin folder from disk
+        :param id:
+        :return:
+            True if plugin was uninstalled successful, otherwise False
+        """
+        pass
+
