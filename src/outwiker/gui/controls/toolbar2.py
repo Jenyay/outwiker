@@ -14,6 +14,10 @@ class ToolBar2Info(object):
 
 
 class ToolButton(wx.BitmapButton):
+    def __init__(self, parent, button_id, bitmap):
+        super().__init__(parent, button_id, bitmap, style=wx.NO_BORDER)
+        self.SetMinSize((24, 24))
+
     def IsFocusable(self):
         return False
 
@@ -44,7 +48,7 @@ class ToolBar2(wx.Window):
         bitmap - wx.Bitmap or file name.
         '''
         bmp = wx.Bitmap(bitmap)
-        button = ToolButton(self, button_id, bmp, style=wx.NO_BORDER)
+        button = ToolButton(self, button_id, bmp)
         button.SetToolTip(label)
         self._addElement(button)
         return button.GetId()
