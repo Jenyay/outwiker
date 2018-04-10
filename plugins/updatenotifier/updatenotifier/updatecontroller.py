@@ -186,11 +186,13 @@ class UpdateController(object):
         return result
 
 
+
+
     def _getUpdatedAppInfo(self, latestVersionsDict):
         '''
         Get AppInfo instances for updated apps (plugins and OutWiker) only.
         latestVersionsDict - dictionary. Key - plugin name or special id,
-            value - instalnce of the AppInfo class.
+            value - instance of the AppInfo class.
 
         Return dictionary with the AppInfo instances for updated apps.
         '''
@@ -265,27 +267,24 @@ class UpdateController(object):
             wx.PostEvent(self._application.mainWindow, event)
 
 
-    def update_plugin(self, id):
+    def update_plugin(self, name):
         """
-        Update plugin to latest version by id.
+        Update plugin to latest version by name.
         :return: True if plugin was installed, otherwise False
         """
 
-        updates_url = self._updateUrls
-        appInfoDict = VersionList().loadAppInfo(updates_url)
+        appInfoDict = VersionList().loadAppInfo(self._updateUrls)
 
         # get link to latest version
-        plugin_downloads = appInfoDict[id].versionsList[0].downloads
-        if 'all' in plugin_downloads:
-            url = plugin_downloads.get('all')
-        elif getOS().name in plugin_downloads:
-            url = plugin_downloads.get(getOS().name)
-        else:
-            MessageBox(_(u"The download link was not found in plugin description. Please update plugin manually"),
-                       u"UpdateNotifier")
-            return False
+        appInfo = appInfoDict.get(name)
+        if appInfo:
+            url = VersionList().getDownlodUrl(appInfo)
+            if not url:
+                MessageBox(_(u"The download link was not found in plugin description. Please update plugin manually"),
+                           u"UpdateNotifier")
+                return False
 
-        plugin = self._application.plugins[id]
+        plugin = self._application.plugins[name]
 
         logger.info('update_plugin: {url} {path}'.format(url=url, path=plugin.pluginPath))
 
@@ -293,7 +292,7 @@ class UpdateController(object):
 
         if rez:
             # TODO: надо как то убрать плагин из диалога, но непонятно как получить к нему доступ при обработке евента
-            self._application.plugins.reload(id)
+            self._application.plugins.reload(name)
             MessageBox(_(u"Plugin was successfully updated."), u"UpdateNotifier")
         else:
             MessageBox(_(u"Plugin was NOT updated. Please update plugin manually"), u"UpdateNotifier")
