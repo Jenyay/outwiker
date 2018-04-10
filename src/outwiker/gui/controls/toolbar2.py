@@ -13,22 +13,7 @@ class ToolBar2Info(object):
         self.priority = priority
 
 
-class ToolButton(wx.BitmapButton):
-    def __init__(self, parent, button_id, bitmap):
-        super().__init__(parent, button_id, bitmap, style=wx.NO_BORDER)
-        self.SetMinSize((24, 24))
-
-    def IsFocusable(self):
-        return False
-
-    def AcceptsFocusRecursively(self):
-        return False
-
-    def AcceptsFocus(self):
-        return False
-
-
-class ToolBar2(wx.Window):
+class ToolBar2(wx.Panel):
     def __init__(self, parent):
         super().__init__(parent)
         self._elements = []
@@ -40,12 +25,11 @@ class ToolBar2(wx.Window):
         self._sizer.Add(self._toolbar, flag=wx.EXPAND)
         self.SetSizer(self._sizer)
 
-        self._reservedElements = 3
+        self._reservedElements = 0
         for n in range(self._reservedElements):
             self.AddSeparator()
-
-    # def GetElementsCount(self):
-    #     return len(self._elements) - self._reservedElements
+        
+        self.Fit()
 
     def AddButton(self, label, bitmap, button_id=wx.ID_ANY):
         '''
@@ -54,95 +38,65 @@ class ToolBar2(wx.Window):
         '''
         bmp = wx.Bitmap(bitmap)
         new_id = self._toolbar.AddTool(button_id, label, bmp, label).GetId()
-        self._toolbar.Realize()
-        self._layout()
+        self._setToolbarUpdated()
         return new_id
-        # button = ToolButton(self, button_id, bmp)
-        # button.SetToolTip(label)
-        # self._addElement(button)
-        # return button.GetId()
 
     def AddCheckButton(self, label, bitmap, button_id=wx.ID_ANY):
         '''
         label - tool tip for the button.
         bitmap - wx.Bitmap or file name.
         '''
+        self._setToolbarUpdated()
         bmp = wx.Bitmap(bitmap)
         new_id = self._toolbar.AddTool(button_id, label,
                                        bmp, label,
                                        wx.ITEM_CHECK).GetId()
-        self._toolbar.Realize()
-        self._layout()
         return new_id
 
     def AddSeparator(self):
+        self._setToolbarUpdated()
         new_id = self._toolbar.AddSeparator().GetId()
-        self._toolbar.Realize()
-        self._layout()
         return new_id
-        # separator = wx.StaticLine(self, style=wx.LI_VERTICAL)
-        # self._addElement(separator)
-        # return separator.GetId()
-
-    # def _addElement(self, element):
-    #     self._sizer.Add(element, flag=wx.EXPAND)
-    #     self._elements.append(element)
-    #     self._layout()
 
     def _layout(self):
         self.GetParent().GetParent().Layout()
 
-    def DeleteTool(self, tool_id):
-        self._toolbar.DeleteTool(tool_id)
+    def _setToolbarUpdated(self):
+        self.Bind(wx.EVT_IDLE, handler=self._onIdle)
+        self.Freeze()
+
+    def _onIdle(self, event):
+        self.Unbind(wx.EVT_IDLE, handler=self._onIdle)
         self._toolbar.Realize()
         self._layout()
-        # for n, element in list(enumerate(self._elements)):
-        #     if element.GetId() == tool_id:
-        #         self._sizer.Remove(n)
-        #         element.Close()
-        #         del self._elements[n]
-        #         self._layout()
-        #         break
+        self.Thaw()
+
+    def DeleteTool(self, tool_id):
+        self._setToolbarUpdated()
+        self._toolbar.DeleteTool(tool_id)
 
     def EnableTool(self, tool_id, enable):
         self._toolbar.EnableTool(tool_id, enable)
-        # for element in self._elements:
-        #     if element.GetId() == tool_id:
-        #         element.Enable(enable)
-        #         return
-        #
-        # raise KeyError('Tools not found: {}'.format(tool_id))
 
     def FindById(self, tool_id):
         return self._toolbar.FindById(tool_id)
-        # for element in self._elements:
-        #     if element.GetId() == tool_id:
-        #         return element
-        #
-        # return None
 
     def ToggleTool(self, tool_id, toggle):
         self._toolbar.ToggleTool(tool_id, toggle)
 
     def Hide(self):
+        self._setToolbarUpdated()
         super().Hide()
-        self._layout()
 
     def Show(self):
+        self._setToolbarUpdated()
         super().Show()
-        self._layout()
 
-    # def IsFocusable(self):
-    #     return False
-    #
-    # def AcceptsFocusRecursively(self):
-    #     return False
-    #
-    # def AcceptsFocus(self):
-    #     return False
+    def Destroy(self):
+        self.Unbind(wx.EVT_IDLE, handler=self._onIdle)
+        super().Destroy()
 
-
-class ToolBar2Container(wx.Window):
+class ToolBar2Container(wx.Panel):
     def __init__(self, parent):
         super().__init__(parent)
 
@@ -165,8 +119,7 @@ class ToolBar2Container(wx.Window):
         toolbar = ToolBar2(self)
         toolbar_info = ToolBar2Info(toolbar, priority)
         self._toolbars[toolbar_id] = toolbar_info
-        self._mainSizer.Add(toolbar, flag=wx.EXPAND)
-        # toolbar.Bind(wx.EVT_BUTTON, handler=self._onButtonClick)
+        self._mainSizer.Add(toolbar, flag=wx.EXPAND | wx.ALIGN_TOP | wx.ALL, border=4)
         self.GetParent().Layout()
         return toolbar
 
@@ -176,20 +129,6 @@ class ToolBar2Container(wx.Window):
         toolbar.Destroy()
         del self._toolbars[toolbar_id]
         self.GetParent().Layout()
-
-    # def _onButtonClick(self, event):
-    #     new_event = event.Clone()
-    #     new_event.SetEventType(wx.EVT_TOOL.typeId)
-    #     wx.PostEvent(self, new_event)
-
-    # def IsFocusable(self):
-    #     return False
-
-    # def AcceptsFocusRecursively(self):
-    #     return False
-
-    # def AcceptsFocus(self):
-    #     return False
 
 
 if __name__ == '__main__':
