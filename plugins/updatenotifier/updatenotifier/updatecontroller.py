@@ -14,7 +14,6 @@ from outwiker.core.version import Version
 from outwiker.core.defines import PLUGIN_VERSION_FILE_NAME
 from outwiker.core.xmlversionparser import XmlVersionParser
 from outwiker.utilites.textfile import readTextFile
-from outwiker.core.system import getOS, getPluginsDirList
 
 from .updatedialog import UpdateDialog
 from .updatesconfig import UpdatesConfig
@@ -58,8 +57,7 @@ class UpdateController(object):
 
         # Dictionary. Key - plugin name or special string id,
         # Value - URL to XML file with versions information.
-        # fixme: only already uploaded plugins will be added to _updateUrls.
-        self._updateUrls = self._getPluginsUpdateUrls(self._application.plugins)
+        self._updateUrls = {}
         self._updateUrls[self._OUTWIKER_STABLE_KEY] = u'http://jenyay.net/uploads/Soft/Outwiker/versions.xml'
         self._updateUrls[self._OUTWIKER_UNSTABLE_KEY] = u'http://jenyay.net/uploads/Outwiker/Unstable/versions.xml'
 
@@ -259,6 +257,7 @@ class UpdateController(object):
         """
         Thread function for silence updates checking
         """
+        updateUrls.update(self._getPluginsUpdateUrls(self._application.plugins))
         appInfoDict = VersionList().loadAppInfo(updateUrls)
         event = UpdateVersionsEvent(appInfoDict=appInfoDict,
                                     silenceMode=silenceMode)
