@@ -5,6 +5,7 @@ import logging
 import threading
 import os.path
 import json
+import shutil
 
 import wx
 
@@ -136,9 +137,42 @@ class InstallController(object):
     def uninstall_plugin(self, name):
         """
         remove plugin from application._plugins and delete plugin folder from disk
-        :param id:
+        :param name:
         :return:
             True if plugin was uninstalled successful, otherwise False
         """
-        pass
+        rez = True
+
+        plugin_path = self.get_plugin(name)
+
+        # remove plugin from applications._plugins
+        # TODO: added the method to PluginsLoader
+        rez = rez and True
+
+        # remove plugin folder
+        if rez and os.path.exists(plugin_path):
+            shutil.rmtree(plugin_path)
+
+        return rez
+
+    def get_plugin(self, name):
+        """
+        Retrieve Plugin object from app.plugins
+
+        :param name:
+            plugin name
+        :return:
+            The object with Plugin interface
+        """
+
+        # TODO: Seems the method should be add to PluginsLoader class
+
+        for p in self._application.plugins:
+            if p.name == name:
+                return p
+
+        if name in self._application.plugins.disabledPlugins:
+            return self._application.plugins.disabledPlugins[name]
+
+        return None
 
