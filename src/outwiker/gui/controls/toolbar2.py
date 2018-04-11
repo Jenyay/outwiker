@@ -15,20 +15,22 @@ class ToolBar2Info(object):
 
 class ToolBar2(wx.Panel):
     def __init__(self, parent):
+        '''
+        parent - instance of the ToolBar2Container
+        '''
+
         super().__init__(parent)
+        self._parent = parent
         self._elements = []
-        # self._sizer = wx.BoxSizer(wx.HORIZONTAL)
-        self._sizer = wx.FlexGridSizer(cols=1)
-        self._sizer.AddGrowableCol(0)
-        self._sizer.AddGrowableRow(0)
+        self._sizer = wx.BoxSizer(wx.HORIZONTAL)
         self._toolbar = wx.ToolBar(self)
-        self._sizer.Add(self._toolbar, flag=wx.EXPAND)
+        self._sizer.Add(self._toolbar)
         self.SetSizer(self._sizer)
 
         self._reservedElements = 0
         for n in range(self._reservedElements):
             self.AddSeparator()
-        
+
         self.Fit()
 
     def AddButton(self, label, bitmap, button_id=wx.ID_ANY):
@@ -58,18 +60,8 @@ class ToolBar2(wx.Panel):
         new_id = self._toolbar.AddSeparator().GetId()
         return new_id
 
-    def _layout(self):
-        self.GetParent().GetParent().Layout()
-
     def _setToolbarUpdated(self):
-        self.Bind(wx.EVT_IDLE, handler=self._onIdle)
-        self.Freeze()
-
-    def _onIdle(self, event):
-        self.Unbind(wx.EVT_IDLE, handler=self._onIdle)
-        self._toolbar.Realize()
-        self._layout()
-        self.Thaw()
+        self._parent.setToolbarsUpdated()
 
     def DeleteTool(self, tool_id):
         self._setToolbarUpdated()
@@ -93,18 +85,24 @@ class ToolBar2(wx.Panel):
         super().Show()
 
     def Destroy(self):
-        self.Unbind(wx.EVT_IDLE, handler=self._onIdle)
+        self._parent = None
         super().Destroy()
+
+    def Realize(self):
+        self._toolbar.Realize()
+
 
 class ToolBar2Container(wx.Panel):
     def __init__(self, parent):
         super().__init__(parent)
 
-        # Key - toolbar_id, value - instance of the ToolBar2
+        # Key - toolbar_id, value - instance of the ToolBar2Info
         self._toolbars = {}
+        self._isUpdated = False
 
         self._mainSizer = wx.WrapSizer()
         self.SetSizer(self._mainSizer)
+        self.Bind(wx.EVT_SIZE, handler=self._onSize)
 
     def __getitem__(self, toolbar_id):
         return self._toolbars[toolbar_id].toolbar
@@ -129,6 +127,26 @@ class ToolBar2Container(wx.Panel):
         toolbar.Destroy()
         del self._toolbars[toolbar_id]
         self.GetParent().Layout()
+
+    def setToolbarsUpdated(self):
+        if not self._isUpdated:
+            self.Bind(wx.EVT_IDLE, handler=self._onIdle)
+        self._isUpdated = True
+
+    def _onIdle(self, event):
+        self._isUpdated = False
+        self.Unbind(wx.EVT_IDLE, handler=self._onIdle)
+        self.Freeze()
+
+        for toolbar_info in self._toolbars.values():
+            toolbar_info.toolbar.Realize()
+
+        self.GetParent().Layout()
+        self.Thaw()
+
+    def _onSize(self, event):
+        self.setToolbarsUpdated()
+        event.Skip()
 
 
 if __name__ == '__main__':
