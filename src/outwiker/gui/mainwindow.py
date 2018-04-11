@@ -19,7 +19,6 @@ from .mainpanes.tagscloudmainpane import TagsCloudMainPane
 from .mainpanes.attachmainpane import AttachMainPane
 from .mainpanes.treemainpane import TreeMainPane
 from .mainpanes.pagemainpane import PageMainPane
-from .mainpanes.toolbarsmainpane import ToolBarsMainPane
 from .tabscontroller import TabsController
 from .trayicon import getTrayIconController
 from .preferences.prefcontroller import PrefController
@@ -512,10 +511,15 @@ class MainWindow(wx.Frame):
         """
         Создание плавающих панелей
         """
-        # self.toolbarsPanel = ToolBarsMainPane(self, self.auiManager, Application)
-        self.pagePanel = PageMainPane(self._mainContentPanel, self.auiManager, Application)
-        self.treePanel = TreeMainPane(self._mainContentPanel, self.auiManager, Application)
-        self.attachPanel = AttachMainPane(self._mainContentPanel, self.auiManager, Application)
+        self.pagePanel = PageMainPane(self._mainContentPanel,
+                                      self.auiManager,
+                                      Application)
+        self.treePanel = TreeMainPane(self._mainContentPanel,
+                                      self.auiManager,
+                                      Application)
+        self.attachPanel = AttachMainPane(self._mainContentPanel,
+                                          self.auiManager,
+                                          Application)
         self.tagsCloudPanel = TagsCloudMainPane(self._mainContentPanel,
                                                 self.auiManager,
                                                 Application)

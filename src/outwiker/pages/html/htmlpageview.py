@@ -110,7 +110,6 @@ class HtmlPageView(BaseHtmlPanel):
         self._application.onPageModeChange -= self.onTabChanged
         self._removeActionTools()
 
-        self.mainWindow.toolbars.updatePanesInfo()
         for toolbar_info in self._toolbars:
             self.mainWindow.toolbars.destroyToolBar(toolbar_info[0])
 

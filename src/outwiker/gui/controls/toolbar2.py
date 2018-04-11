@@ -91,6 +91,18 @@ class ToolBar2(wx.Panel):
     def Realize(self):
         self._toolbar.Realize()
 
+    def GetToolsCount(self):
+        return self._toolbar.GetToolsCount()
+
+    def GetToolState(self, tool_id):
+        return self._toolbar.GetToolState(tool_id)
+
+    def SetToolShortHelp(self, tool_id, helpString):
+        self._toolbar.SetToolShortHelp(tool_id, helpString)
+
+    def GetToolEnabled(self, tool_id):
+        return self._toolbar.GetToolEnabled(tool_id)
+
 
 class ToolBar2Container(wx.Panel):
     def __init__(self, parent):

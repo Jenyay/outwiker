@@ -130,13 +130,13 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.assertEqual(len(self.actionController.getActionsStrId()), 1)
         self._assertMenuItemExists(menu, action.title, None)
-        self.assertEqual(toolbar.GetToolCount(), 1)
+        self.assertEqual(toolbar.GetToolsCount(), 1)
 
         self.actionController.removeAction(action.stringId)
 
         self.assertEqual(len(self.actionController.getActionsStrId()), 0)
         self.assertEqual(menu.FindItem(action.title), wx.NOT_FOUND)
-        self.assertEqual(toolbar.GetToolCount(), 0)
+        self.assertEqual(toolbar.GetToolsCount(), 0)
 
     def testRemoveActionAndRun(self):
         action = ExampleAction()
@@ -199,11 +199,11 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
                                                   toolbar,
                                                   image)
 
-        self.assertEqual(toolbar.GetToolCount(), 1)
+        self.assertEqual(toolbar.GetToolsCount(), 1)
 
         self.actionController.removeAction(action.stringId)
 
-        self.assertEqual(toolbar.GetToolCount(), 0)
+        self.assertEqual(toolbar.GetToolsCount(), 0)
 
     def testAppendToolbarCheckButton(self):
         action = ExampleCheckAction()
@@ -215,11 +215,11 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
                                                        toolbar,
                                                        image)
 
-        self.assertEqual(toolbar.GetToolCount(), 1)
+        self.assertEqual(toolbar.GetToolsCount(), 1)
 
         self.actionController.removeAction(action.stringId)
 
-        self.assertEqual(toolbar.GetToolCount(), 0)
+        self.assertEqual(toolbar.GetToolsCount(), 0)
 
     def testAppendToolbarCheckButtonAndRun(self):
         action = ExampleCheckAction()
@@ -261,17 +261,17 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         toolItemId = self._getToolItemId(action.stringId)
 
         self.assertFalse(menuItem.IsChecked())
-        self.assertFalse(toolItem.GetState())
+        self.assertFalse(toolItem.IsToggled())
 
         self._emulateCheckButtonClick(toolItemId)
 
         self.assertTrue(menuItem.IsChecked())
-        self.assertTrue(toolItem.GetState())
+        self.assertTrue(toolItem.IsToggled())
 
         self._emulateCheckButtonClick(toolItemId)
 
         self.assertFalse(menuItem.IsChecked())
-        self.assertFalse(toolItem.GetState())
+        self.assertFalse(toolItem.IsToggled())
 
     def testCheckButtonAndMenu(self):
         action = ExampleCheckAction()
@@ -289,31 +289,31 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         toolItem = self._getToolItem(toolbar, action.stringId)
 
         self.assertFalse(menuItem.IsChecked())
-        self.assertFalse(toolItem.GetState())
+        self.assertFalse(toolItem.IsToggled())
         self.assertEqual(action.runCount, 0)
 
         self.actionController.check(action.stringId, True)
 
         self.assertTrue(menuItem.IsChecked())
-        self.assertTrue(toolItem.GetState())
+        self.assertTrue(toolItem.IsToggled())
         self.assertEqual(action.runCount, 1)
 
         self.actionController.check(action.stringId, True)
 
         self.assertTrue(menuItem.IsChecked())
-        self.assertTrue(toolItem.GetState())
+        self.assertTrue(toolItem.IsToggled())
         self.assertEqual(action.runCount, 2)
 
         self.actionController.check(action.stringId, False)
 
         self.assertFalse(menuItem.IsChecked())
-        self.assertFalse(toolItem.GetState())
+        self.assertFalse(toolItem.IsToggled())
         self.assertEqual(action.runCount, 1)
 
         self.actionController.check(action.stringId, False)
 
         self.assertFalse(menuItem.IsChecked())
-        self.assertFalse(toolItem.GetState())
+        self.assertFalse(toolItem.IsToggled())
         self.assertEqual(action.runCount, 0)
 
     def testRemoveCheckMenu(self):
@@ -333,15 +333,15 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         toolItem = self._getToolItem(toolbar, action.stringId)
         toolItemId = self._getToolItemId(action.stringId)
 
-        self.assertFalse(toolItem.GetState())
+        self.assertFalse(toolItem.IsToggled())
 
         self._emulateCheckButtonClick(toolItemId)
 
-        self.assertTrue(toolItem.GetState())
+        self.assertTrue(toolItem.IsToggled())
 
         self._emulateCheckButtonClick(toolItemId)
 
-        self.assertFalse(toolItem.GetState())
+        self.assertFalse(toolItem.IsToggled())
 
     def testAppendToolbarButtonOnly(self):
         action = ExampleAction()
@@ -353,11 +353,11 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
                                                   toolbar,
                                                   image)
 
-        self.assertEqual(toolbar.GetToolCount(), 1)
+        self.assertEqual(toolbar.GetToolsCount(), 1)
 
         self.actionController.removeAction(action.stringId)
 
-        self.assertEqual(toolbar.GetToolCount(), 0)
+        self.assertEqual(toolbar.GetToolsCount(), 0)
 
     def testAppendToolbarButtonAndRun(self):
         action = ExampleAction()
@@ -413,12 +413,12 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
                                                   toolbar,
                                                   image)
 
-        self.assertEqual(toolbar.GetToolCount(), 1)
+        self.assertEqual(toolbar.GetToolsCount(), 1)
         self._assertMenuItemExists(menu, action.title, None)
 
         self.actionController.removeToolbarButton(action.stringId)
 
-        self.assertEqual(toolbar.GetToolCount(), 0)
+        self.assertEqual(toolbar.GetToolsCount(), 0)
         self._assertMenuItemExists(menu, action.title, None)
 
     def testRemoveToolButtonInvalid(self):
@@ -429,12 +429,12 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.actionController.register(action)
         self.actionController.appendMenuItem(action.stringId, menu)
 
-        self.assertEqual(toolbar.GetToolCount(), 0)
+        self.assertEqual(toolbar.GetToolsCount(), 0)
         self._assertMenuItemExists(menu, action.title, None)
 
         self.actionController.removeToolbarButton(action.stringId)
 
-        self.assertEqual(toolbar.GetToolCount(), 0)
+        self.assertEqual(toolbar.GetToolsCount(), 0)
         self._assertMenuItemExists(menu, action.title, None)
 
     def testRemoveMenuItemInvalid(self):
@@ -448,12 +448,12 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
                                                   toolbar,
                                                   image)
 
-        self.assertEqual(toolbar.GetToolCount(), 1)
+        self.assertEqual(toolbar.GetToolsCount(), 1)
         self.assertEqual(menu.FindItem(action.title), wx.NOT_FOUND)
 
         self.actionController.removeMenuItem(action.stringId)
 
-        self.assertEqual(toolbar.GetToolCount(), 1)
+        self.assertEqual(toolbar.GetToolsCount(), 1)
         self.assertEqual(menu.FindItem(action.title), wx.NOT_FOUND)
 
     def testRemoveMenuItem(self):
@@ -468,12 +468,12 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
                                                   toolbar,
                                                   image)
 
-        self.assertEqual(toolbar.GetToolCount(), 1)
+        self.assertEqual(toolbar.GetToolsCount(), 1)
         self._assertMenuItemExists(menu, action.title, None)
 
         self.actionController.removeMenuItem(action.stringId)
 
-        self.assertEqual(toolbar.GetToolCount(), 1)
+        self.assertEqual(toolbar.GetToolsCount(), 1)
         self.assertEqual(menu.FindItem(action.title), wx.NOT_FOUND)
 
     def testHotKeysDefaultMenu(self):
@@ -792,7 +792,7 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.actionController.check(action.stringId, True)
 
         self.assertTrue(menuItem.IsChecked())
-        self.assertTrue(toolItem.GetState())
+        self.assertTrue(toolItem.IsToggled())
 
     def _assertMenuItemExists(self, menu, title, hotkey):
         """
@@ -828,8 +828,8 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         Эмуляция события выбора пункта меню
         """
         toolbar = self.mainWindow.toolbars[TOOLBAR_PLUGINS]
-        toolitem = toolbar.FindTool(toolitemId)
-        newState = not toolitem.GetState()
+        toolitem = toolbar.FindById(toolitemId)
+        newState = not toolitem.IsToggled()
         toolbar.ToggleTool(toolitemId, newState)
 
         event = wx.CommandEvent(wx.wxEVT_COMMAND_TOOL_CLICKED, toolitemId)
@@ -881,6 +881,6 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         itemId = self._getToolItemId(strid)
         if itemId is not None:
-            result = toolbar.FindTool(itemId)
+            result = toolbar.FindById(itemId)
 
         return result
