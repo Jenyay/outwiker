@@ -158,25 +158,27 @@ class UpdateController(object):
         return updatedPlugins
 
 
-    def _getPluginsUpdateUrls(self, plugins):
+    def _getPluginsUpdateUrls(self):
         '''
         plugins - instance of the PluginsLoader
         Return dict which key is plugin name, value is updatesUrl
         '''
-        result = {}
+        getInfo = self._application.plugins.getInfo
 
-        for plugin in plugins:
+        result = {}
+        plugin_names = [p.name for p in self._application.plugins]
+        for name in plugin_names:
 
             try:
-                appInfo = self._application.plugins.getInfo(plugin.name, [_(u'__updateLang'), u'en'])
+                appInfo = getInfo(name, [_(u'__updateLang'), u'en'])
             except IOError:
-                logger.warning(u"Can't read {} Info".format(plugin.name))
+                logger.warning(u"Can't read {} Info".format(name))
                 continue
             except ValueError:
-                logger.warning(u"Invalid format {}".format(plugin.name))
+                logger.warning(u"Invalid format {}".format(name))
                 continue
 
-            result[plugin.name] = appInfo.updatesUrl
+            result[name] = appInfo.updatesUrl
 
         return result
 
@@ -252,7 +254,9 @@ class UpdateController(object):
         """
         Thread function for silence updates checking
         """
-        updateUrls.update(self._getPluginsUpdateUrls(self._application.plugins))
+        # get update URLs from enabled plugins
+        updateUrls.update(self._getPluginsUpdateUrls())
+
         appInfoDict = VersionList().loadAppInfo(updateUrls)
         event = UpdateVersionsEvent(appInfoDict=appInfoDict,
                                     silenceMode=silenceMode)
