@@ -166,24 +166,19 @@ class UpdateController(object):
         result = {}
 
         for plugin in plugins:
-            xmlPath = os.path.join(plugin._pluginPath,
-                                   PLUGIN_VERSION_FILE_NAME)
+
             try:
-                xmlText = readTextFile(xmlPath)
+                appInfo = self._application.plugins.getInfo(plugin.name, [_(u'__updateLang'), u'en'])
             except IOError:
-                logger.warning(u"Can't read {}".format(xmlPath))
+                logger.warning(u"Can't read {} Info".format(plugin.name))
+                continue
+            except ValueError:
+                logger.warning(u"Invalid format {}".format(plugin.name))
                 continue
 
-            versionParser = XmlVersionParser([_(u'__updateLang'), u'en'])
-            try:
-                result[plugin.name] = versionParser.parse(xmlText).updatesUrl
-            except ValueError:
-                logger.warning(u"Invalid format {}".format(xmlPath))
-                continue
+            result[plugin.name] = appInfo.updatesUrl
 
         return result
-
-
 
 
     def _getUpdatedAppInfo(self, latestVersionsDict):
