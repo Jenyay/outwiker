@@ -366,3 +366,38 @@ class PluginsLoaderTest(BaseOutWikerMixin, unittest.TestCase):
 
         plugInfo = loader.getInfo("Wring_module")
         self.assertIs(plugInfo, None)
+
+    def testOnOffPlugins1(self):
+        # Test for remove plugin
+        dirlist = ["../test/plugins/testempty1",
+                   "../test/plugins/testempty2",
+                   "../test/plugins/testwikicommand"]
+
+        loader = PluginsLoader(self.application)
+        loader.load(dirlist)
+
+        # Disable TestEmpty2
+        self.config.disabledPlugins.value = ["TestEmpty2"]
+        loader.updateDisableList()
+
+        # pre-check
+        self.assertEqual(len(loader), 2)
+        self.assertEqual(len(loader.disabledPlugins), 1)
+
+        # remove "TestEmpty1" (enabled)
+        self.assertEqual(loader.remove("TestEmpty1"), True)
+
+        self.assertEqual(len(loader), 1)
+        self.assertEqual(len(loader.disabledPlugins), 1)
+
+        # remove "TestEmpty2" (disabled)
+        self.assertEqual(loader.remove("TestEmpty2"), True)
+
+        self.assertEqual(len(loader), 1)
+        self.assertEqual(len(loader.disabledPlugins), 0)
+
+        # remove "TestEmpty3" (None)
+        self.assertIs(loader.remove("TestEmpty3"), None)
+
+        self.assertEqual(len(loader), 1)
+        self.assertEqual(len(loader.disabledPlugins), 0)
