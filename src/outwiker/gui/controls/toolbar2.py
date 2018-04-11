@@ -111,6 +111,7 @@ class ToolBar2Container(wx.Panel):
         # Key - toolbar_id, value - instance of the ToolBar2Info
         self._toolbars = {}
         self._isUpdated = False
+        self._oldClientSize = self.GetClientSize()
 
         self._mainSizer = wx.WrapSizer()
         self.SetSizer(self._mainSizer)
@@ -157,7 +158,11 @@ class ToolBar2Container(wx.Panel):
         self.Thaw()
 
     def _onSize(self, event):
-        self.setToolbarsUpdated()
+        newClientSize = self.GetClientSize()
+        if newClientSize != self._oldClientSize:
+            self._oldClientSize = newClientSize
+            self.setToolbarsUpdated()
+
         event.Skip()
 
 
