@@ -40,7 +40,7 @@ class ToolBarsController(object):
 
     def createToolBar(self, toolbar_id,
                       title, order=TOOLBAR_ORDER_PLUGIN):
-        toolbar = self._toolbarcontainer.createToolbar(toolbar_id, order=order)
+        toolbar = self._toolbarcontainer.createToolBar(toolbar_id, order=order)
         newitem = self._addMenu(toolbar, title)
         self._toolbars[toolbar_id] = ToolBarInfo(toolbar, newitem)
         # self.layout()

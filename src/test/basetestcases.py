@@ -40,10 +40,19 @@ class BaseWxTestCase(unittest.TestCase):
 
     def setUp(self):
         self._wxapp = wx.App()
+        self.mainWindow = None
 
     def tearDown(self):
+        if self.mainWindow is not None:
+            self.mainWindow.Close()
+
         self._wxapp.MainLoop()
         del self._wxapp
+
+    def initMainWindow(self):
+        self.mainWindow = wx.Frame(None)
+        self._wxapp.SetTopWindow(self.mainWindow)
+        return self.mainWindow
 
 
 class WikiTestMixin(object):

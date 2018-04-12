@@ -76,10 +76,9 @@ logger = logging.getLogger('outwiker.gui.mainwindow')
 
 
 class MainWindow(wx.Frame):
-    def __init__(self, *args, **kwds):
+    def __init__(self):
+        super().__init__(None)
         logger.debug(u'MainWindow initializing begin')
-        kwds["style"] = wx.DEFAULT_FRAME_STYLE
-        wx.Frame.__init__(self, *args, **kwds)
 
         self.mainWindowConfig = MainWindowConfig(Application.config)
 

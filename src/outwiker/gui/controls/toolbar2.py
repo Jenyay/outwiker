@@ -28,12 +28,6 @@ class ToolBar2(wx.Panel):
         self._sizer.Add(self._toolbar)
         self.SetSizer(self._sizer)
 
-        # self._reservedElements = 0
-        # for n in range(self._reservedElements):
-        #     self.AddSeparator()
-
-        # self.Fit()
-
     def AddButton(self, label, bitmap, button_id=wx.ID_ANY):
         '''
         label - tool tip for the button.
@@ -74,6 +68,9 @@ class ToolBar2(wx.Panel):
     def FindById(self, tool_id):
         return self._toolbar.FindById(tool_id)
 
+    def __getitem__(self, tool_id):
+        return self.FindById(tool_id)
+
     def ToggleTool(self, tool_id, toggle):
         self._toolbar.ToggleTool(tool_id, toggle)
 
@@ -95,7 +92,10 @@ class ToolBar2(wx.Panel):
     def GetToolsCount(self):
         return self._toolbar.GetToolsCount()
 
-    def GetToolState(self, tool_id):
+    def __len__(self):
+        return self.GetToolsCount()
+
+    def IsChecked(self, tool_id):
         return self._toolbar.GetToolState(tool_id)
 
     def SetToolShortHelp(self, tool_id, helpString):
@@ -124,7 +124,10 @@ class ToolBar2Container(wx.Panel):
     def __getitem__(self, toolbar_id):
         return self._toolbars[toolbar_id].toolbar
 
-    def createToolbar(self, toolbar_id, order=1):
+    def __len__(self):
+        return len(self._toolbars)
+
+    def createToolBar(self, toolbar_id, order=0):
         if not toolbar_id:
             raise KeyError('Invalid toolbar ID: "{}"'.format(toolbar_id))
 
@@ -158,6 +161,15 @@ class ToolBar2Container(wx.Panel):
 
         return index
 
+    def getToolBarByIndex(self, index):
+        assert index < len(self._toolbars)
+
+        item = self._mainSizer.GetItem(index)
+        element = item.GetWindow()
+        assert isinstance(element, ToolBar2)
+
+        return element
+
     def destroyToolBar(self, toolbar_id):
         toolbar = self.__getitem__(toolbar_id)
         self._mainSizer.Detach(toolbar)
@@ -188,108 +200,3 @@ class ToolBar2Container(wx.Panel):
             self.setToolbarsUpdated()
 
         event.Skip()
-
-
-if __name__ == '__main__':
-    class MyTestFrame(wx.Frame):
-        def __init__(self, parent, title):
-            super().__init__(parent, wx.ID_ANY, title, size=(600, 400))
-            self._createGUI()
-
-            self.newToolbarAddButton.Bind(wx.EVT_BUTTON,
-                                          handler=self._onNewToolbar)
-            self.newButtonAddButton.Bind(wx.EVT_BUTTON,
-                                         handler=self._onNewButton)
-            self.newSeparatorButton.Bind(wx.EVT_BUTTON,
-                                         handler=self._onAddSeparator)
-
-            self.Show()
-
-        def _createGUI(self):
-            self._mainSizer = wx.FlexGridSizer(cols=1)
-            self._mainSizer.AddGrowableCol(0)
-
-            # ToolBar2
-            self.toolbar = ToolBar2Container(self)
-            self.Bind(wx.EVT_TOOL, handler=self._onTool)
-            self._mainSizer.Add(self.toolbar, flag=wx.EXPAND)
-
-            self._createGUIAddPanel()
-            self._createGUIAddButton()
-
-            self.SetSizer(self._mainSizer)
-
-        def _createGUIAddPanel(self):
-            newToolbarSizer = wx.BoxSizer(wx.HORIZONTAL)
-
-            newToolbarLabel = wx.StaticText(self, label='New panel ID')
-            newToolbarSizer.Add(newToolbarLabel,
-                                flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                                border=2)
-
-            self.newToolbarIdTextCtrl = wx.TextCtrl(self)
-            self.newToolbarIdTextCtrl.SetMinSize((200, -1))
-            newToolbarSizer.Add(self.newToolbarIdTextCtrl,
-                                flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                                border=2)
-
-            self.newToolbarAddButton = wx.Button(self, label='Add new toolbar')
-            newToolbarSizer.Add(self.newToolbarAddButton,
-                                flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                                border=2)
-
-            self._mainSizer.Add(newToolbarSizer, flag=wx.EXPAND)
-
-        def _createGUIAddButton(self):
-            newButtonSizer = wx.BoxSizer(wx.HORIZONTAL)
-
-            newButtonLabel = wx.StaticText(self, label='Toolbar ID')
-            newButtonSizer.Add(newButtonLabel,
-                               flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                               border=2)
-
-            self.toolbarIdComboBox = wx.ComboBox(self)
-            self.toolbarIdComboBox.SetMinSize((200, -1))
-            newButtonSizer.Add(self.toolbarIdComboBox,
-                               flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                               border=2)
-
-            self.newButtonAddButton = wx.Button(self, label='Add new button')
-            newButtonSizer.Add(self.newButtonAddButton,
-                               flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                               border=2)
-
-            self.newSeparatorButton = wx.Button(self, label='Add separator')
-            newButtonSizer.Add(self.newSeparatorButton,
-                               flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                               border=2)
-
-            self._mainSizer.Add(newButtonSizer, flag=wx.EXPAND)
-
-        def _onNewToolbar(self, event):
-            toolbar_id = self.newToolbarIdTextCtrl.GetValue().strip()
-            order = 1
-
-            if toolbar_id:
-                self.toolbarIdComboBox.Append(toolbar_id)
-                self.toolbarIdComboBox.SetSelection(self.toolbarIdComboBox.GetCount() - 1)
-                self.toolbar.createToolbar(toolbar_id, order)
-                self.newToolbarIdTextCtrl.SetValue('')
-
-        def _onNewButton(self, event):
-            toolbar_id = self.toolbarIdComboBox.GetStringSelection()
-            label = 'Бла-бла-бла'
-            # bitmap = '../../../images/page.png'
-            bitmap = wx.ArtProvider.GetBitmap(wx.ART_INFORMATION)
-            self.toolbar[toolbar_id].AddButton(label, bitmap)
-
-        def _onAddSeparator(self, event):
-            toolbar_id = self.toolbarIdComboBox.GetStringSelection()
-            self.toolbar[toolbar_id].AddSeparator()
-
-        def _onTool(self, event):
-            print(event.GetId())
-
-    app = wx.App()
-    frame = MyTestFrame(None, 'Test')
-    app.MainLoop()

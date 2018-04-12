@@ -291,7 +291,8 @@ def test(*args):
         local('{python} runtests.py {args}'.format(
             python=getPython(), args=' '.join(args)))
 
-    test_build()
+    if len(args) == 0:
+        test_build()
 
 
 @task
