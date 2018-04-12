@@ -14,7 +14,6 @@ from outwiker.core.version import Version
 from outwiker.core.defines import PLUGIN_VERSION_FILE_NAME
 from outwiker.core.xmlversionparser import XmlVersionParser
 from outwiker.utilites.textfile import readTextFile
-from outwiker.core.system import getOS, getPluginsDirList
 
 from .updatedialog import UpdateDialog
 from .updatesconfig import UpdatesConfig
@@ -58,8 +57,7 @@ class UpdateController(object):
 
         # Dictionary. Key - plugin name or special string id,
         # Value - URL to XML file with versions information.
-        # fixme: only already uploaded plugins will be added to _updateUrls.
-        self._updateUrls = self._getPluginsUpdateUrls(self._application.plugins)
+        self._updateUrls = {}
         self._updateUrls[self._OUTWIKER_STABLE_KEY] = u'http://jenyay.net/uploads/Soft/Outwiker/versions.xml'
         self._updateUrls[self._OUTWIKER_UNSTABLE_KEY] = u'http://jenyay.net/uploads/Outwiker/Unstable/versions.xml'
 
@@ -160,28 +158,27 @@ class UpdateController(object):
         return updatedPlugins
 
 
-    def _getPluginsUpdateUrls(self, plugins):
+    def _getPluginsUpdateUrls(self):
         '''
         plugins - instance of the PluginsLoader
         Return dict which key is plugin name, value is updatesUrl
         '''
+        getInfo = self._application.plugins.getInfo
+
         result = {}
+        plugin_names = [p.name for p in self._application.plugins]
+        for name in plugin_names:
 
-        for plugin in plugins:
-            xmlPath = os.path.join(plugin._pluginPath,
-                                   PLUGIN_VERSION_FILE_NAME)
             try:
-                xmlText = readTextFile(xmlPath)
+                appInfo = getInfo(name, [_(u'__updateLang'), u'en'])
             except IOError:
-                logger.warning(u"Can't read {}".format(xmlPath))
+                logger.warning(u"Can't read {} Info".format(name))
+                continue
+            except ValueError:
+                logger.warning(u"Invalid format {}".format(name))
                 continue
 
-            versionParser = XmlVersionParser([_(u'__updateLang'), u'en'])
-            try:
-                result[plugin.name] = versionParser.parse(xmlText).updatesUrl
-            except ValueError:
-                logger.warning(u"Invalid format {}".format(xmlPath))
-                continue
+            result[name] = appInfo.updatesUrl
 
         return result
 
@@ -190,7 +187,7 @@ class UpdateController(object):
         '''
         Get AppInfo instances for updated apps (plugins and OutWiker) only.
         latestVersionsDict - dictionary. Key - plugin name or special id,
-            value - instalnce of the AppInfo class.
+            value - instance of the AppInfo class.
 
         Return dictionary with the AppInfo instances for updated apps.
         '''
@@ -257,6 +254,9 @@ class UpdateController(object):
         """
         Thread function for silence updates checking
         """
+        # get update URLs from enabled plugins
+        updateUrls.update(self._getPluginsUpdateUrls())
+
         appInfoDict = VersionList().loadAppInfo(updateUrls)
         event = UpdateVersionsEvent(appInfoDict=appInfoDict,
                                     silenceMode=silenceMode)
@@ -265,27 +265,24 @@ class UpdateController(object):
             wx.PostEvent(self._application.mainWindow, event)
 
 
-    def update_plugin(self, id):
+    def update_plugin(self, name):
         """
-        Update plugin to latest version by id.
+        Update plugin to latest version by name.
         :return: True if plugin was installed, otherwise False
         """
 
-        updates_url = self._updateUrls
-        appInfoDict = VersionList().loadAppInfo(updates_url)
+        appInfoDict = VersionList().loadAppInfo(self._updateUrls)
 
         # get link to latest version
-        plugin_downloads = appInfoDict[id].versionsList[0].downloads
-        if 'all' in plugin_downloads:
-            url = plugin_downloads.get('all')
-        elif getOS().name in plugin_downloads:
-            url = plugin_downloads.get(getOS().name)
-        else:
-            MessageBox(_(u"The download link was not found in plugin description. Please update plugin manually"),
-                       u"UpdateNotifier")
-            return False
+        appInfo = appInfoDict.get(name)
+        if appInfo:
+            url = VersionList().getDownlodUrl(appInfo)
+            if not url:
+                MessageBox(_(u"The download link was not found in plugin description. Please update plugin manually"),
+                           u"UpdateNotifier")
+                return False
 
-        plugin = self._application.plugins[id]
+        plugin = self._application.plugins[name]
 
         logger.info('update_plugin: {url} {path}'.format(url=url, path=plugin.pluginPath))
 
@@ -293,7 +290,7 @@ class UpdateController(object):
 
         if rez:
             # TODO: надо как то убрать плагин из диалога, но непонятно как получить к нему доступ при обработке евента
-            self._application.plugins.reload(id)
+            self._application.plugins.reload(name)
             MessageBox(_(u"Plugin was successfully updated."), u"UpdateNotifier")
         else:
             MessageBox(_(u"Plugin was NOT updated. Please update plugin manually"), u"UpdateNotifier")

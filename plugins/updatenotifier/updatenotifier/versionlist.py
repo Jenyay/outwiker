@@ -4,6 +4,7 @@ import urllib.error
 import logging
 
 from outwiker.core.xmlversionparser import XmlVersionParser
+from outwiker.core.system import getOS
 
 from .i18n import get_
 from .loaders import NormalLoader
@@ -75,3 +76,24 @@ class VersionList(object):
             return None
 
         return appinfo
+
+    def getDownlodUrl(self, appInfo):
+        """
+        Return download url to latest version of plugin
+        The function returns url on current OS or all OS version
+
+        :param appInfo:
+            appInfo instance for for plugin
+        :return:
+            URL for latest version of plugin
+            otherwise None
+        """
+
+        if appInfo.versionsList:
+            downloads = appInfo.versionsList[0].downloads
+            for os in downloads:
+                if os in ['all', getOS().name]:
+                    return downloads[os]
+
+
+
