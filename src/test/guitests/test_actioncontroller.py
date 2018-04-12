@@ -127,12 +127,14 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.actionController.appendToolbarButton(action.stringId,
                                                   toolbar,
                                                   image)
+        toolbar.Realize()
 
         self.assertEqual(len(self.actionController.getActionsStrId()), 1)
         self._assertMenuItemExists(menu, action.title, None)
         self.assertEqual(toolbar.GetToolsCount(), 1)
 
         self.actionController.removeAction(action.stringId)
+        toolbar.Realize()
 
         self.assertEqual(len(self.actionController.getActionsStrId()), 0)
         self.assertEqual(menu.FindItem(action.title), wx.NOT_FOUND)
@@ -198,10 +200,12 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.actionController.appendToolbarButton(action.stringId,
                                                   toolbar,
                                                   image)
+        toolbar.Realize()
 
         self.assertEqual(toolbar.GetToolsCount(), 1)
 
         self.actionController.removeAction(action.stringId)
+        toolbar.Realize()
 
         self.assertEqual(toolbar.GetToolsCount(), 0)
 
@@ -214,10 +218,12 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.actionController.appendToolbarCheckButton(action.stringId,
                                                        toolbar,
                                                        image)
+        toolbar.Realize()
 
         self.assertEqual(toolbar.GetToolsCount(), 1)
 
         self.actionController.removeAction(action.stringId)
+        toolbar.Realize()
 
         self.assertEqual(toolbar.GetToolsCount(), 0)
 
@@ -352,12 +358,14 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.actionController.appendToolbarButton(action.stringId,
                                                   toolbar,
                                                   image)
+        toolbar.Realize()
 
         self.assertEqual(toolbar.GetToolsCount(), 1)
 
         self.actionController.removeAction(action.stringId)
 
         self.assertEqual(toolbar.GetToolsCount(), 0)
+        toolbar.Realize()
 
     def testAppendToolbarButtonAndRun(self):
         action = ExampleAction()
@@ -412,11 +420,13 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.actionController.appendToolbarButton(action.stringId,
                                                   toolbar,
                                                   image)
+        toolbar.Realize()
 
         self.assertEqual(toolbar.GetToolsCount(), 1)
         self._assertMenuItemExists(menu, action.title, None)
 
         self.actionController.removeToolbarButton(action.stringId)
+        toolbar.Realize()
 
         self.assertEqual(toolbar.GetToolsCount(), 0)
         self._assertMenuItemExists(menu, action.title, None)
@@ -428,11 +438,13 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.actionController.register(action)
         self.actionController.appendMenuItem(action.stringId, menu)
+        toolbar.Realize()
 
         self.assertEqual(toolbar.GetToolsCount(), 0)
         self._assertMenuItemExists(menu, action.title, None)
 
         self.actionController.removeToolbarButton(action.stringId)
+        toolbar.Realize()
 
         self.assertEqual(toolbar.GetToolsCount(), 0)
         self._assertMenuItemExists(menu, action.title, None)
@@ -447,11 +459,13 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.actionController.appendToolbarButton(action.stringId,
                                                   toolbar,
                                                   image)
+        toolbar.Realize()
 
         self.assertEqual(toolbar.GetToolsCount(), 1)
         self.assertEqual(menu.FindItem(action.title), wx.NOT_FOUND)
 
         self.actionController.removeMenuItem(action.stringId)
+        toolbar.Realize()
 
         self.assertEqual(toolbar.GetToolsCount(), 1)
         self.assertEqual(menu.FindItem(action.title), wx.NOT_FOUND)
@@ -467,11 +481,13 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.actionController.appendToolbarButton(action.stringId,
                                                   toolbar,
                                                   image)
+        toolbar.Realize()
 
         self.assertEqual(toolbar.GetToolsCount(), 1)
         self._assertMenuItemExists(menu, action.title, None)
 
         self.actionController.removeMenuItem(action.stringId)
+        toolbar.Realize()
 
         self.assertEqual(toolbar.GetToolsCount(), 1)
         self.assertEqual(menu.FindItem(action.title), wx.NOT_FOUND)
