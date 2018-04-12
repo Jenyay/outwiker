@@ -52,7 +52,7 @@ class InstallController(object):
         Open plugins installer dialog
         """
         # read data/plugins.json
-        all_plugins = json.loads(readTextFile(self._pluginsRepoPath))
+        self._installerPlugins = json.loads(readTextFile(self._pluginsRepoPath))
 
         # get installed plugins
         # fixme: add to PluginLoader method loaded plugins
@@ -60,7 +60,7 @@ class InstallController(object):
         installed_plugins = enabled_plugins + list(self._application.plugins.disabledPlugins)
 
         # show dialog
-        self._showPluginsInstaller(all_plugins, installed_plugins)
+        self._showPluginsInstaller(self._installerPlugins, installed_plugins)
 
     def createInstallerHTMLContent(self, all_plugins, installed_plugins):
         """
@@ -96,31 +96,33 @@ class InstallController(object):
             updateDialog.setContent(HTMLContent, None)
             updateDialog.ShowModal()
 
-    def install_plugin(self, id):
+    def install_plugin(self, name):
         """
-        Install plugin by id.
+        Install plugin by name.
 
         :return: True if plugin was updated, otherwise False
         """
+        getAppInfo = VersionList().getAppInfoFromUrl
+        getDownlodUrl = VersionList().getDownlodUrl
 
-        plugin_info = self._installerPlugins.get(id, None)
+        plugin_info = self._installerPlugins.get(name, None)
         if plugin_info:
-            xml_url = plugin_info["url"]
 
-            appInfoDict = VersionList().getAppInfoFromUrl(xml_url)
+            appInfo = getAppInfo( plugin_info["url"])
+            if not appInfo or not appInfo.versionsList:
+                MessageBox(_(u"The plugin description can't be downloaded. Please update plugin manually"),
+                           u"UpdateNotifier")
+                return False
+
             # get link to latest version
-            plugin_downloads = appInfoDict[id].versionsList[0].downloads
-            if 'all' in plugin_downloads:
-                url = plugin_downloads.get('all')
-            elif getOS().name in plugin_downloads:
-                url = plugin_downloads.get(getOS().name)
-            else:
+            url = getDownlodUrl(appInfo)
+            if not url:
                 MessageBox(_(u"The download link was not found in plugin description. Please update plugin manually"),
                            u"UpdateNotifier")
                 return False
 
             # 0 - папка рядом с запускаемым файлом, затем идут другие папки, если они есть
-            pluginPath = os.path.join(getPluginsDirList()[-1], id)
+            pluginPath = os.path.join(getPluginsDirList()[-1], name.lower())
 
             logger.info('update_plugin: {url} {path}'.format(url=url, path=pluginPath))
 
@@ -128,10 +130,10 @@ class InstallController(object):
 
             if rez:
                 # TODO: надо как то убрать плагин из диалога, но непонятно как получить к нему доступ при обработке евента
-                self._application.plugins.load(getPluginsDirList()[-1])
-                MessageBox(_(u"Plugin was successfully updated."), u"UpdateNotifier")
+                self._application.plugins.load([getPluginsDirList()[-1]])
+                MessageBox(_(u"Plugin was successfully Installed."), u"UpdateNotifier")
             else:
-                MessageBox(_(u"Plugin was NOT updated. Please update plugin manually"), u"UpdateNotifier")
+                MessageBox(_(u"Plugin was NOT Installed. Please update plugin manually"), u"UpdateNotifier")
             return rez
 
     def uninstall_plugin(self, name):

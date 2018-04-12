@@ -1,109 +1,109 @@
 {
-  "autorenamer": {
+  "AutoRenamer": {
     "name": "AutoRenamer",
     "url": "http://jenyay.net/uploads/Outwiker/AutoRenamer/plugin.xml"
   },
-  "counter": {
+  "Counter": {
     "name": "Counter",
     "url": "http://jenyay.net/uploads/Outwiker/Counter/plugin.xml"
   },
-  "datagraph": {
+  "DataGraph": {
     "name": "DataGraph",
     "url": "http://jenyay.net/uploads/Outwiker/DataGraph/plugin.xml"
   },
-  "debugevents": {
+  "DebugEventsPlugin": {
     "name": "DebugEventsPlugin",
     "url": "http://jenyay.net/uploads/Outwiker/DebugEvents/plugin.xml"
   },
-  "diagrammer": {
+  "Diagrammer": {
     "name": "Diagrammer",
     "url": "http://jenyay.net/uploads/Outwiker/Diagrammer/plugin.xml"
   },
-  "export2html": {
+  "Export2Html": {
     "name": "Export2Html",
     "url": "http://jenyay.net/uploads/Outwiker/Export2HtmlPlugin/plugin.xml"
   },
-  "externaltools": {
+  "ExternalTools": {
     "name": "ExternalTools",
     "url": "http://jenyay.net/uploads/Outwiker/ExternalTools/plugin.xml"
   },
-  "hackpage": {
+  "HackPage": {
     "name": "HackPage",
     "url": "http://jenyay.net/uploads/Outwiker/HackPage/plugin.xml"
   },
-  "htmlformatter": {
+  "HtmlFormatter": {
     "name": "HtmlFormatter",
     "url": "http://jenyay.net/uploads/Outwiker/HtmlFormatter/plugin.xml"
   },
-  "htmlheads": {
+  "HtmlHeads": {
     "name": "HtmlHeads",
     "url": "http://jenyay.net/uploads/Outwiker/HtmlHeads/plugin.xml"
   },
-  "lightbox": {
+  "Lightbox": {
     "name": "Lightbox",
     "url": "http://jenyay.net/uploads/Outwiker/Lightbox/plugin.xml"
   },
-  "livejournal": {
+  "Livejournal": {
     "name": "Livejournal",
     "url": "http://jenyay.net/uploads/Outwiker/LivejournalPlugin/plugin.xml"
   },
-  "markdown": {
+  "Markdown": {
     "name": "Markdown",
     "url": "http://jenyay.net/uploads/Outwiker/Markdown/plugin.xml"
   },
-  "organizer": {
+  "Organizer": {
     "name": "Organizer",
     "url": "http://jenyay.net/uploads/Outwiker/Organizer/plugin.xml"
   },
-  "pagetypecolor": {
+  "PageTypeColor": {
     "name": "PageTypeColor",
     "url": "http://jenyay.net/uploads/Outwiker/PageTypeColor/plugin.xml"
   },
-  "readingmode": {
+  "ReadingMode": {
     "name": "ReadingMode",
     "url": "http://jenyay.net/uploads/Outwiker/ReadingMode/plugin.xml"
   },
-  "sessions": {
+  "Sessions": {
     "name": "Sessions",
     "url": "http://jenyay.net/uploads/Outwiker/Sessions/plugin.xml"
   },
-  "snippets": {
+  "Snippets": {
     "name": "Snippets",
     "url": "http://jenyay.net/uploads/Outwiker/Snippets/plugin.xml"
   },
-  "source": {
+  "Source": {
     "name": "Source",
     "url": "http://jenyay.net/uploads/Outwiker/SourcePlugin/plugin.xml"
   },
-  "spoiler": {
+  "Spoiler": {
     "name": "Spoiler",
     "url": "http://jenyay.net/uploads/Outwiker/Spoiler/plugin.xml"
   },
-  "statistics": {
+  "Statistics": {
     "name": "Statistics",
     "url": "http://jenyay.net/uploads/Outwiker/Statistics/plugin.xml"
   },
-  "tableofcontents": {
+  "TableOfContents": {
     "name": "TableOfContents",
     "url": "http://jenyay.net/uploads/Outwiker/Contents/plugin.xml"
   },
-  "testdebug": {
+  "TestDebug": {
     "name": "TestDebug",
     "url": "http://jenyay.net/uploads/Outwiker/DebugPlugin/plugin.xml"
   },
-  "texequation": {
+  "TeXEquation": {
     "name": "TeXEquation",
     "url": "http://jenyay.net/uploads/Outwiker/TexEquation/plugin.xml"
   },
-  "thumbgallery": {
+  "ThumbGallery": {
     "name": "ThumbGallery",
     "url": "http://jenyay.net/uploads/Outwiker/ThumbGallery/plugin.xml"
   },
-  "updatenotifier": {
+  "UpdateNotifier": {
     "name": "UpdateNotifier",
     "url": "http://jenyay.net/uploads/Outwiker/UpdateNotifier/plugin.xml"
   },
-  "webpage": {
+  "WebPage": {
     "name": "WebPage",
     "url": "http://jenyay.net/uploads/Outwiker/WebPage/plugin.xml"
   }
