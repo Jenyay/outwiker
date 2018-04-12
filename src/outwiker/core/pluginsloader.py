@@ -390,6 +390,23 @@ class PluginsLoader (object):
         if xml_content:
             return XmlVersionParser(langlist).parse(xml_content)
 
+    def remove(self, pluginName):
+        """
+        Remove plugin module and plugin instance
+        :param pluginName:
+            plugin name which should be removed
+        :return:
+            True - if plugin was removed
+            None - if plugin name is absent in plugin list
+        """
+        if pluginName in self.__plugins:
+            # destroy plugin
+            self.__plugins[pluginName].destroy()
+            del self.__plugins[pluginName]
+            return True
+        elif pluginName in self.__disabledPlugins:
+            del self.__disabledPlugins[pluginName]
+            return True
 
     def __len__(self):
         return len(self.__plugins)
