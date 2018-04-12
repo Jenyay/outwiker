@@ -143,14 +143,18 @@ class InstallController(object):
         """
         rez = True
 
-        plugin_path = self.get_plugin(name)
+        plugin_path = self.get_plugin(name).pluginPath
+
+        logger.info('uninstall_plugin: {name} {path}'.format(name=name, path=plugin_path))
 
         # remove plugin from applications._plugins
-        # TODO: added the method to PluginsLoader
-        rez = rez and True
+        rez = rez and self._application.plugins.remove(name)
+
+        logger.info('uninstall_plugin: remove plugin {}'.format(rez))
 
         # remove plugin folder
         if rez and os.path.exists(plugin_path):
+            logger.info('uninstall_plugin: remove folder {}'.format(plugin_path))
             shutil.rmtree(plugin_path)
 
         return rez

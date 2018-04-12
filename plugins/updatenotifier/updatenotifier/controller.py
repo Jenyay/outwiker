@@ -132,4 +132,10 @@ class Controller(object):
             plugin_name = params.link.split(':')[-1]
 
             logger.info(u'Install plugin "{}"'.format(plugin_name))
-            self._updatesChecker.install_plugin(plugin_name)
+            self._installer.install_plugin(plugin_name)
+
+        if params.link.startswith('uninstall:'):
+            plugin_name = params.link.split(':')[-1]
+
+            logger.info(u'Uninstall plugin "{}"'.format(plugin_name))
+            self._installer.uninstall_plugin(plugin_name)
