@@ -173,11 +173,23 @@ class MainWindow(wx.Frame):
         self.menuController.createSubMenu(guidefines.MENU_HELP, _('Help'))
 
     def _createToolbars(self):
-        self._toolbars = ToolBarsController(self,
-                                            self._toolbarContainer,
-                                            Application)
-        self._toolbars.createToolBar(guidefines.TOOLBAR_GENERAL, _('General'))
-        self._toolbars.createToolBar(guidefines.TOOLBAR_PLUGINS, _('Plugins'))
+        self._toolbars = ToolBarsController(
+            self,
+            self._toolbarContainer,
+            Application
+        )
+
+        self._toolbars.createToolBar(
+            guidefines.TOOLBAR_GENERAL,
+            _('General'),
+            order=guidefines.TOOLBAR_ORDER_GENERAL
+        )
+
+        self._toolbars.createToolBar(
+            guidefines.TOOLBAR_PLUGINS,
+            _('Plugins'),
+            order=guidefines.TOOLBAR_ORDER_PLUGINS_OTHER
+        )
 
     def _initCoreControllers(self):
         [controller.initialize() for controller in self._coreControllers]

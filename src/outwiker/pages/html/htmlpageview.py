@@ -7,6 +7,7 @@ import wx
 from outwiker.actions.polyactionsid import *
 from outwiker.core.commands import insertCurrentDate
 from outwiker.core.defines import PAGE_MODE_TEXT, PAGE_MODE_PREVIEW
+from outwiker.gui.defines import TOOLBAR_ORDER_TEXT
 from outwiker.gui.htmltexteditor import HtmlTextEditor
 from outwiker.gui.tabledialog import TableDialog
 from outwiker.gui.tablerowsdialog import TableRowsDialog
@@ -37,7 +38,9 @@ class HtmlPageView(BaseHtmlPanel):
             (defines.TOOLBAR_HTML_TABLE, _(u"Table")),
         ]
         for toolbar_id, title in self._toolbars:
-            self.mainWindow.toolbars.createToolBar(toolbar_id, title)
+            self.mainWindow.toolbars.createToolBar(toolbar_id,
+                                                   title,
+                                                   order=TOOLBAR_ORDER_TEXT)
 
         # Список используемых полиморфных действий
         self.__polyActions = [

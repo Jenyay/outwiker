@@ -3,7 +3,7 @@
 import wx
 import wx.aui
 
-from outwiker.gui.defines import MENU_VIEW
+from outwiker.gui.defines import MENU_VIEW, TOOLBAR_ORDER_PLUGIN
 
 
 class ToolBarInfo (object):
@@ -38,8 +38,9 @@ class ToolBarsController(object):
     def __getitem__(self, toolbarname):
         return self._toolbarcontainer[toolbarname]
 
-    def createToolBar(self, toolbar_id, title, priority=1):
-        toolbar = self._toolbarcontainer.createToolbar(toolbar_id, priority)
+    def createToolBar(self, toolbar_id,
+                      title, order=TOOLBAR_ORDER_PLUGIN):
+        toolbar = self._toolbarcontainer.createToolbar(toolbar_id, order=order)
         newitem = self._addMenu(toolbar, title)
         self._toolbars[toolbar_id] = ToolBarInfo(toolbar, newitem)
         # self.layout()

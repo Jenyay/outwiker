@@ -4,34 +4,35 @@ import wx
 
 
 class ToolBar2Info(object):
-    def __init__(self, toolbar, priority):
+    def __init__(self, toolbar, order):
         '''
         toolbar - instance of the ToolBar2 class
-        priority - integer number define toolbars order on the window.
+        order - integer number define toolbars order on the window.
         '''
         self.toolbar = toolbar
-        self.priority = priority
+        self.order = order
 
 
 class ToolBar2(wx.Panel):
-    def __init__(self, parent):
+    def __init__(self, parent, order=0):
         '''
         parent - instance of the ToolBar2Container
         '''
 
         super().__init__(parent)
         self._parent = parent
+        self._order = order
         self._elements = []
         self._sizer = wx.BoxSizer(wx.HORIZONTAL)
         self._toolbar = wx.ToolBar(self)
         self._sizer.Add(self._toolbar)
         self.SetSizer(self._sizer)
 
-        self._reservedElements = 0
-        for n in range(self._reservedElements):
-            self.AddSeparator()
+        # self._reservedElements = 0
+        # for n in range(self._reservedElements):
+        #     self.AddSeparator()
 
-        self.Fit()
+        # self.Fit()
 
     def AddButton(self, label, bitmap, button_id=wx.ID_ANY):
         '''
@@ -103,6 +104,9 @@ class ToolBar2(wx.Panel):
     def GetToolEnabled(self, tool_id):
         return self._toolbar.GetToolEnabled(tool_id)
 
+    def GetOrder(self):
+        return self._order
+
 
 class ToolBar2Container(wx.Panel):
     def __init__(self, parent):
@@ -120,19 +124,39 @@ class ToolBar2Container(wx.Panel):
     def __getitem__(self, toolbar_id):
         return self._toolbars[toolbar_id].toolbar
 
-    def createToolbar(self, toolbar_id, priority=1):
+    def createToolbar(self, toolbar_id, order=1):
         if not toolbar_id:
             raise KeyError('Invalid toolbar ID: "{}"'.format(toolbar_id))
 
         if toolbar_id in self._toolbars:
             raise KeyError('Duplicate toolbars ID: "{}"'.format(toolbar_id))
 
-        toolbar = ToolBar2(self)
-        toolbar_info = ToolBar2Info(toolbar, priority)
+        toolbar = ToolBar2(self, order=order)
+        toolbar_info = ToolBar2Info(toolbar, order)
         self._toolbars[toolbar_id] = toolbar_info
-        self._mainSizer.Add(toolbar, flag=wx.EXPAND | wx.ALIGN_TOP | wx.ALL, border=4)
+        index = self._getToolBarIndex(order)
+        self._mainSizer.Insert(index,
+                               toolbar,
+                               flag=wx.EXPAND | wx.ALIGN_TOP | wx.ALL,
+                               border=4)
         self.GetParent().Layout()
         return toolbar
+
+    def _getToolBarIndex(self, order):
+        index = self._mainSizer.GetItemCount()
+        for n in range(self._mainSizer.GetItemCount(), -1, -1):
+            index = n
+            if n == 0:
+                break
+
+            item = self._mainSizer.GetItem(n - 1)
+            element = item.GetWindow()
+            assert isinstance(element, ToolBar2)
+
+            if element.GetOrder() <= order:
+                break
+
+        return index
 
     def destroyToolBar(self, toolbar_id):
         toolbar = self.__getitem__(toolbar_id)
@@ -244,12 +268,12 @@ if __name__ == '__main__':
 
         def _onNewToolbar(self, event):
             toolbar_id = self.newToolbarIdTextCtrl.GetValue().strip()
-            priority = 1
+            order = 1
 
             if toolbar_id:
                 self.toolbarIdComboBox.Append(toolbar_id)
                 self.toolbarIdComboBox.SetSelection(self.toolbarIdComboBox.GetCount() - 1)
-                self.toolbar.createToolbar(toolbar_id, priority)
+                self.toolbar.createToolbar(toolbar_id, order)
                 self.newToolbarIdTextCtrl.SetValue('')
 
         def _onNewButton(self, event):
