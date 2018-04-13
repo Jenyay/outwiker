@@ -3,16 +3,6 @@
 import wx
 
 
-class ToolBar2Info(object):
-    def __init__(self, toolbar, order):
-        '''
-        toolbar - instance of the ToolBar2 class
-        order - integer number define toolbars order on the window.
-        '''
-        self.toolbar = toolbar
-        self.order = order
-
-
 class ToolBar2(wx.Panel):
     def __init__(self, parent, order=0):
         '''
@@ -112,7 +102,7 @@ class ToolBar2Container(wx.Panel):
     def __init__(self, parent):
         super().__init__(parent)
 
-        # Key - toolbar_id, value - instance of the ToolBar2Info
+        # Key - toolbar_id, value - instance of the ToolBar2
         self._toolbars = {}
         self._isUpdated = False
         self._oldClientSize = self.GetClientSize()
@@ -122,7 +112,7 @@ class ToolBar2Container(wx.Panel):
         self.Bind(wx.EVT_SIZE, handler=self._onSize)
 
     def __getitem__(self, toolbar_id):
-        return self._toolbars[toolbar_id].toolbar
+        return self._toolbars[toolbar_id]
 
     def __len__(self):
         return len(self._toolbars)
@@ -135,8 +125,7 @@ class ToolBar2Container(wx.Panel):
             raise KeyError('Duplicate toolbars ID: "{}"'.format(toolbar_id))
 
         toolbar = ToolBar2(self, order=order)
-        toolbar_info = ToolBar2Info(toolbar, order)
-        self._toolbars[toolbar_id] = toolbar_info
+        self._toolbars[toolbar_id] = toolbar
         index = self._getToolBarIndex(order)
         self._mainSizer.Insert(index,
                                toolbar,
@@ -187,8 +176,8 @@ class ToolBar2Container(wx.Panel):
         self.Unbind(wx.EVT_IDLE, handler=self._onIdle)
         self.Freeze()
 
-        for toolbar_info in self._toolbars.values():
-            toolbar_info.toolbar.Realize()
+        for toolbar in self._toolbars.values():
+            toolbar.Realize()
 
         self.GetParent().Layout()
         self.Thaw()
