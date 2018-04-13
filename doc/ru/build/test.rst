@@ -17,7 +17,7 @@
 
 :file:`test/actions` - тесты actions (см. раздел :ref:`ru_outwiker_actions`).
 
-:file:`test/guitests` - тесты графического интерфейса.
+:file:`test/gui` - тесты графического интерфейса.
 
 :file:`test/wikiparser` - тесты википарсера (см. раздел :ref:`ru_outwiker_wiki_parser`).
 
