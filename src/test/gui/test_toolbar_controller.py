@@ -21,7 +21,7 @@ class ToolBarsControllerTest(unittest.TestCase, BaseOutWikerMixin):
         self.controller = ToolBarsController(
             self.parentMenu,
             self.toolbar_container,
-            self.application)
+            self.application.config)
 
     def tearDown(self):
         self.controller.destroyAllToolBars()

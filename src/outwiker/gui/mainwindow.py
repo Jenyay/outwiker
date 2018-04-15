@@ -175,7 +175,7 @@ class MainWindow(wx.Frame):
         self._toolbars = ToolBarsController(
             self.menuController[guidefines.MENU_VIEW],
             self._toolbarContainer,
-            Application
+            Application.config
         )
 
         self._toolbars.createToolBar(

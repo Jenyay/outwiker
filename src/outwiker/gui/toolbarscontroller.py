@@ -3,7 +3,10 @@
 import wx
 import wx.aui
 
+from outwiker.core.config import BooleanOption
 from outwiker.gui.defines import TOOLBAR_ORDER_PLUGIN
+from outwiker.core.defines import (CONFIG_TOOLBARS_SECTION,
+                                   CONFIG_TOOLBARS_VISIBLE_SUFFIX)
 
 
 class ToolBarInfo (object):
@@ -23,9 +26,9 @@ class ToolBarsController(object):
     """
     Класс для управления панелями инструментов и меню, связанными с ними
     """
-    def __init__(self, parentMenu, toolbarcontainer, application):
+    def __init__(self, parentMenu, toolbarcontainer, config):
         self._toolbarcontainer = toolbarcontainer
-        self._application = application
+        self._config = config
 
         # Ключ - строка для нахождения панели инструментов
         # Значение - экземпляр класса ToolBarInfo
@@ -44,6 +47,10 @@ class ToolBarsController(object):
         menu_item = self._addMenu(toolbar, title)
         self._toolbars[toolbar_id] = ToolBarInfo(toolbar, menu_item, order)
 
+        is_visible = self._getVisibleOption(toolbar_id).value
+        menu_item.Check(is_visible)
+        toolbar.Show(is_visible)
+
     def _addMenu(self, toolbar, title):
         newitem = self._toolbarsMenu.AppendCheckItem(wx.ID_ANY, title)
         newitem.Check(toolbar.IsShown())
@@ -58,21 +65,33 @@ class ToolBarsController(object):
                                   handler=self._onToolBarMenuClick)
 
     def _onToolBarMenuClick(self, event):
-        toolbarinfo = self._getToolBarByMenuId(event.GetId())
-        assert toolbarinfo is not None
+        toolbar_id, toolbarinfo = self._getToolBarByMenuId(event.GetId())
+
+        visible_option = self._getVisibleOption(toolbar_id)
 
         if toolbarinfo.menu_item.IsChecked():
             toolbarinfo.toolbar.Show()
+            visible_option.value = True
         else:
             toolbarinfo.toolbar.Hide()
+            visible_option.value = False
+
+    def _getVisibleOption(self, toolbar_id):
+        param_name = toolbar_id + CONFIG_TOOLBARS_VISIBLE_SUFFIX
+
+        visible_option = BooleanOption(self._config,
+                                       CONFIG_TOOLBARS_SECTION,
+                                       param_name,
+                                       True)
+        return visible_option
 
     def _getToolBarByMenuId(self, menuid):
         """
         Найти панель инструментов по идентификатору меню
         """
-        for toolbar_info in self._toolbars.values():
+        for toolbar_id, toolbar_info in self._toolbars.items():
             if menuid == toolbar_info.menu_item.GetId():
-                return toolbar_info
+                return (toolbar_id, toolbar_info)
 
     def destroyToolBar(self, toolbarname):
         """

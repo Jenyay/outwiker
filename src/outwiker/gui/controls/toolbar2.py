@@ -68,9 +68,9 @@ class ToolBar2(wx.Panel):
         self._setToolbarUpdated()
         super().Hide()
 
-    def Show(self):
+    def Show(self, visible=True):
         self._setToolbarUpdated()
-        super().Show()
+        super().Show(visible)
 
     def Destroy(self):
         self._parent = None
