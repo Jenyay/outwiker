@@ -173,7 +173,7 @@ class MainWindow(wx.Frame):
 
     def _createToolbars(self):
         self._toolbars = ToolBarsController(
-            self,
+            self.menuController[guidefines.MENU_VIEW],
             self._toolbarContainer,
             Application
         )
