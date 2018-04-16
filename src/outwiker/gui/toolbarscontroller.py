@@ -21,6 +21,12 @@ class ToolBarInfo (object):
         self.menu_item = menu_item
         self.order = order
 
+    def __str__(self):
+        return '{title}: order={order}'.format(
+            title=self.menu_item.GetText(),
+            order=self.order
+        )
+
 
 class ToolBarsController(object):
     """
@@ -38,25 +44,46 @@ class ToolBarsController(object):
         self._toolbarsMenu = wx.Menu()
         parentMenu.Append(-1, _(u"Toolbars"), self._toolbarsMenu)
 
+    def getMenu(self):
+        return self._toolbarsMenu
+
     def __getitem__(self, toolbarname):
         return self._toolbarcontainer[toolbarname]
 
     def createToolBar(self, toolbar_id,
                       title, order=TOOLBAR_ORDER_PLUGIN):
         toolbar = self._toolbarcontainer.createToolBar(toolbar_id, order=order)
-        menu_item = self._addMenu(toolbar, title)
+        menu_item_index = self._getMenuItemIndex(order)
+        menu_item = self._addMenu(toolbar, title, menu_item_index)
         self._toolbars[toolbar_id] = ToolBarInfo(toolbar, menu_item, order)
 
         is_visible = self._getVisibleOption(toolbar_id).value
         menu_item.Check(is_visible)
         toolbar.Show(is_visible)
 
-    def _addMenu(self, toolbar, title):
-        newitem = self._toolbarsMenu.AppendCheckItem(wx.ID_ANY, title)
-        newitem.Check(toolbar.IsShown())
+    def _getMenuItemIndex(self, order):
+        menu_items = sorted(self._toolbars.values(),
+                            key=lambda item: item.order,
+                            reverse=True)
+        index = 0
 
-        self._toolbarsMenu.Bind(wx.EVT_MENU, self._onToolBarMenuClick, newitem)
-        return newitem
+        for n, item in enumerate(menu_items):
+            if order >= item.order:
+                break
+
+            index += 1
+
+        index = len(menu_items) - index
+        return index
+
+    def _addMenu(self, toolbar, title, index):
+        menu_item = self._toolbarsMenu.InsertCheckItem(index, wx.ID_ANY, title)
+        menu_item.Check(toolbar.IsShown())
+
+        self._toolbarsMenu.Bind(wx.EVT_MENU,
+                                self._onToolBarMenuClick,
+                                menu_item)
+        return menu_item
 
     def _removeMenu(self, toolbarinfo):
         self._toolbarsMenu.Delete(toolbarinfo.menu_item)
