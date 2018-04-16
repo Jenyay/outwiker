@@ -15,6 +15,7 @@ MENU_BOOKMARKS = 'Menu_Bookmarks'
 MENU_VIEW = 'Menu_View'
 MENU_VIEW_GOTO = 'Menu_View_Goto'
 MENU_HELP = 'Menu_Help'
+MENU_TOOLBARS = 'Menu_Toolbars'
 
 TOOLBAR_GENERAL = 'General'
 TOOLBAR_PLUGINS = 'Plugins'

@@ -35,14 +35,11 @@ class ToolBarsController(object):
     def __init__(self, parentMenu, toolbarcontainer, config):
         self._toolbarcontainer = toolbarcontainer
         self._config = config
+        self._toolbarsMenu = parentMenu
 
         # Ключ - строка для нахождения панели инструментов
         # Значение - экземпляр класса ToolBarInfo
         self._toolbars = {}
-
-        # Подменю для показа скрытия панелей
-        self._toolbarsMenu = wx.Menu()
-        parentMenu.Append(-1, _(u"Toolbars"), self._toolbarsMenu)
 
     def getMenu(self):
         return self._toolbarsMenu

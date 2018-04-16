@@ -172,8 +172,13 @@ class MainWindow(wx.Frame):
         self.menuController.createSubMenu(guidefines.MENU_HELP, _('Help'))
 
     def _createToolbars(self):
+        toolbars_menu = self.menuController.createSubMenu(
+            guidefines.MENU_TOOLBARS,
+            _(u"Toolbars"),
+            guidefines.MENU_VIEW)
+
         self._toolbars = ToolBarsController(
-            self.menuController[guidefines.MENU_VIEW],
+            toolbars_menu,
             self._toolbarContainer,
             Application.config
         )
