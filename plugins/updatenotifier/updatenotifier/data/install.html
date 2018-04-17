@@ -34,21 +34,20 @@
     </style>
 </head>
 <body>
-{% macro update_info(plugin, pluginName)%}
+{% macro update_info(plugin)%}
 <div class="controls">
-    {% if pluginName in installed_plugins %}
-    <a class="uninstall button" href="unistall:{{plugin}}">{{str_uninstall}}</a>
+    {% if plugin in installed_plugins %}
+    <a class="uninstall button" href="uninstall:{{plugin}}">{{str_uninstall}}</a>
     {% else %}
     <a class="install button" href="install:{{plugin}}">{{str_install}}</a>
     {% endif %}
     {%- endmacro %}
 
     {% for plugin in plugins %}
-    {% set pluginName = plugins[plugin]["name"] %}
     <!-- {{plugin}} block begin -->
     <div class="version-block plugin-version {{plugin}}">
-        <div class="title">{{pluginName}}</div>
-        {{ update_info(plugin, pluginName)}}
+        <div class="title">{{plugin}}</div>
+        {{ update_info(plugin)}}
     </div>
     <!-- {{plugin}} block end -->
     {% endfor %}
