@@ -48,6 +48,8 @@ class InstallController(object):
         self._installerPlugins = {}
         self._dialog = None
 
+        ##logger.info('install_plugin: {}'.format(self._dataPath.replace(r'\\', r"/")))
+
     def run(self):
         """
         Open plugins installer dialog
@@ -79,6 +81,8 @@ class InstallController(object):
             u'str_more_info': _(u'More info'),
             u'str_install': _(u'Install'),
             u'str_uninstall': _(u'Uninstall'),
+            u'str_wait': _(u'Please wait'),
+            u'data_path': self._dataPath,
         }
 
         contentGenerator = ContentGenerator(template)

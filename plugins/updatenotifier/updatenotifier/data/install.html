@@ -31,21 +31,28 @@
 				background-color: #518BDB;
 			}
 
+			.load {
+			    float:right;
+			}
+
+
     </style>
 </head>
 <body>
-{% macro update_info(plugin)%}
-<div class="controls">
-    {% if plugin in installed_plugins %}
-    <a class="uninstall button" href="uninstall:{{plugin}}">{{str_uninstall}}</a>
-    {% else %}
-    <a class="install button" href="install:{{plugin}}">{{str_install}}</a>
-    {% endif %}
+    {% macro update_info(plugin)%}
+        <div class="controls">
+            {% if plugin in installed_plugins %}
+            <a class="uninstall button" href="uninstall:{{plugin}}">{{str_uninstall}}</a>
+            {% else %}
+            <a class="install button" href="install:{{plugin}}">{{str_install}}</a>
+            {% endif %}
+        </div>
     {%- endmacro %}
 
     {% for plugin in plugins %}
     <!-- {{plugin}} block begin -->
-    <div class="version-block plugin-version {{plugin}}">
+    <div style="height:50px" class="version-block plugin-version {{plugin}}">
+        <div class="load"><img src="file://{{data_path}}/install.gif" width="40" height="40" alt="{{data_path}}"> </div>
         <div class="title">{{plugin}}</div>
         {{ update_info(plugin)}}
     </div>
