@@ -46,6 +46,7 @@ class InstallController(object):
         self._installTemplatePath = join(self._dataPath, u'install.html')
         self._pluginsRepoPath = join(self._dataPath, u'plugins.json')
         self._installerPlugins = {}
+        self._dialog = None
 
     def run(self):
         """
@@ -93,6 +94,7 @@ class InstallController(object):
         HTMLContent = self.createInstallerHTMLContent(all_plugins, installed_plugins)
 
         with UpdateDialog(self._application.mainWindow) as updateDialog:
+            self._dialog = updateDialog
             updateDialog.setContent(HTMLContent, self._dataPath)
             updateDialog.ShowModal()
 
@@ -129,9 +131,8 @@ class InstallController(object):
             rez = UpdatePlugin().update(url, pluginPath)
 
             if rez:
-                # TODO: надо как то убрать плагин из диалога, но непонятно как получить к нему доступ при обработке евента
                 self._application.plugins.load([getPluginsDirList()[-1]])
-                MessageBox(_(u"Plugin was successfully Installed."), u"UpdateNotifier")
+                self._updateDialog()
             else:
                 MessageBox(_(u"Plugin was NOT Installed. Please update plugin manually"), u"UpdateNotifier")
             return rez
@@ -159,6 +160,7 @@ class InstallController(object):
             logger.info('uninstall_plugin: remove folder {}'.format(plugin_path))
             shutil.rmtree(plugin_path)
 
+        self._updateDialog()
         return rez
 
     def get_plugin(self, name):
@@ -182,3 +184,17 @@ class InstallController(object):
 
         return None
 
+    def _updateDialog(self):
+        """
+        Update content on the current opened installer dialog.
+        """
+        if self._dialog and self._dialog.IsModal():
+            # get installed plugins
+            # fixme: add to PluginLoader method loaded plugins
+            enabled_plugins = [p.name for p in self._application.plugins]
+            installed_plugins = enabled_plugins + list(self._application.plugins.disabledPlugins)
+
+            HTMLContent = self.createInstallerHTMLContent(self._installerPlugins, installed_plugins)
+
+            # Setup updated data to dialog render
+            self._dialog.setContent(HTMLContent, self._dataPath)
