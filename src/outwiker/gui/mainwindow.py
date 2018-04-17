@@ -69,16 +69,16 @@ from outwiker.pages.wiki.wikipagecontroller import WikiPageController
 from outwiker.pages.html.htmlpagecontroller import HtmlPageController
 from outwiker.pages.text.textpagecontroller import TextPageController
 from outwiker.pages.search.searchpagecontroller import SearchPageController
+from outwiker.gui.controls.toolbar2 import ToolBar2Container
 
 
 logger = logging.getLogger('outwiker.gui.mainwindow')
 
 
 class MainWindow(wx.Frame):
-    def __init__(self, *args, **kwds):
+    def __init__(self):
+        super().__init__(None)
         logger.debug(u'MainWindow initializing begin')
-        kwds["style"] = wx.DEFAULT_FRAME_STYLE
-        wx.Frame.__init__(self, *args, **kwds)
 
         self.mainWindowConfig = MainWindowConfig(Application.config)
 
@@ -99,8 +99,18 @@ class MainWindow(wx.Frame):
         if self.mainWindowConfig.maximized.value:
             self.Maximize()
 
+        self._mainSizer = wx.FlexGridSizer(cols=1)
+        self._mainSizer.AddGrowableCol(0)
+        self._mainSizer.AddGrowableRow(1)
+        self._toolbarContainer = ToolBar2Container(self)
+        self._mainContentPanel = wx.Panel(self)
+
+        self._mainSizer.Add(self._toolbarContainer, flag=wx.EXPAND)
+        self._mainSizer.Add(self._mainContentPanel, flag=wx.EXPAND)
+        self.SetSizer(self._mainSizer)
+
         logger.debug(u'MainWindow. Create the AuiManager')
-        self.auiManager = wx.aui.AuiManager(self)
+        self.auiManager = wx.aui.AuiManager(self._mainContentPanel)
         self._createAuiPanes()
         self._createToolbars()
 
@@ -162,9 +172,28 @@ class MainWindow(wx.Frame):
         self.menuController.createSubMenu(guidefines.MENU_HELP, _('Help'))
 
     def _createToolbars(self):
-        self._toolbars = ToolBarsController(self, Application)
-        self._toolbars.createToolBar(guidefines.TOOLBAR_GENERAL, _('General'))
-        self._toolbars.createToolBar(guidefines.TOOLBAR_PLUGINS, _('Plugins'))
+        toolbars_menu = self.menuController.createSubMenu(
+            guidefines.MENU_TOOLBARS,
+            _(u"Toolbars"),
+            guidefines.MENU_VIEW)
+
+        self._toolbars = ToolBarsController(
+            toolbars_menu,
+            self._toolbarContainer,
+            Application.config
+        )
+
+        self._toolbars.createToolBar(
+            guidefines.TOOLBAR_GENERAL,
+            _('General'),
+            order=guidefines.TOOLBAR_ORDER_GENERAL
+        )
+
+        self._toolbars.createToolBar(
+            guidefines.TOOLBAR_PLUGINS,
+            _('Plugins'),
+            order=guidefines.TOOLBAR_ORDER_PLUGINS_OTHER
+        )
 
     def _initCoreControllers(self):
         [controller.initialize() for controller in self._coreControllers]
@@ -498,10 +527,16 @@ class MainWindow(wx.Frame):
         """
         Создание плавающих панелей
         """
-        self.pagePanel = PageMainPane(self, self.auiManager, Application)
-        self.treePanel = TreeMainPane(self, self.auiManager, Application)
-        self.attachPanel = AttachMainPane(self, self.auiManager, Application)
-        self.tagsCloudPanel = TagsCloudMainPane(self,
+        self.pagePanel = PageMainPane(self._mainContentPanel,
+                                      self.auiManager,
+                                      Application)
+        self.treePanel = TreeMainPane(self._mainContentPanel,
+                                      self.auiManager,
+                                      Application)
+        self.attachPanel = AttachMainPane(self._mainContentPanel,
+                                          self.auiManager,
+                                          Application)
+        self.tagsCloudPanel = TagsCloudMainPane(self._mainContentPanel,
                                                 self.auiManager,
                                                 Application)
 
@@ -571,7 +606,7 @@ class MainWindow(wx.Frame):
 
         Application.plugins.clear()
         self._saveParams()
-        self.toolbars.updatePanesInfo()
+        # self.toolbars.updatePanesInfo()
         self.destroyPagePanel(True)
 
         Application.actionController.saveHotKeys()

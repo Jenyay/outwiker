@@ -11,19 +11,18 @@ class TagsCloudMainPane (MainPane):
     """
     Класс для работы с панелью с облаком тегов в главном окне
     """
-    def _createPanel (self):
-        return TagsCloudPanel (self.parent, self.application)
 
+    def _createPanel(self):
+        return TagsCloudPanel(self.parent, self.application)
 
-    def _createConfig (self):
-        return TagsCloudConfig (self.application.config)
+    def _createConfig(self):
+        return TagsCloudConfig(self.application.config)
 
-
-    def _createPane (self):
+    def _createPane(self):
         """
         Создать класс с информацией о панели для auiManager
         """
-        pane = self._loadPaneInfo (self.config.pane)
+        pane = self._loadPaneInfo(self.config.pane)
 
         if pane is None:
             pane = self._getPaneDefault()
@@ -32,14 +31,13 @@ class TagsCloudMainPane (MainPane):
         pane.CloseButton()
         pane.Caption(self.caption)
 
-        pane.BestSize ((self.config.width.value,
-                        self.config.height.value))
+        pane.BestSize((self.config.width.value,
+                       self.config.height.value))
 
         return pane
 
-
-    def _getPaneDefault (self):
-        treepane = self._auiManager.GetPane (self._parent.treePanel.panel)
+    def _getPaneDefault(self):
+        treepane = self._auiManager.GetPane(self._parent.GetParent().treePanel.panel)
         layer = treepane.dock_layer
         direction = treepane.dock_direction
         paneName = "TagsPane"
@@ -48,7 +46,6 @@ class TagsCloudMainPane (MainPane):
 
         return pane
 
-
     @property
-    def caption (self):
+    def caption(self):
         return _(u"Tags")

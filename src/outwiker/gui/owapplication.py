@@ -36,7 +36,7 @@ class OutWikerApplication(wx.App):
         return True
 
     def initMainWindow(self):
-        self.mainWnd = MainWindow(None, -1, "")
+        self.mainWnd = MainWindow()
         self.SetTopWindow(self.mainWnd)
 
         self._application.mainWindow = self.mainWnd

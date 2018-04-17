@@ -4,7 +4,7 @@ import wx
 
 from outwiker.gui.hotkeyparser import HotKeyParser
 from outwiker.gui.hotkeyoption import HotKeyOption
-from outwiker.gui.toolbarscontroller import ToolBar
+from outwiker.gui.controls.toolbar2 import ToolBar2
 
 
 class ActionInfo(object):
@@ -175,8 +175,8 @@ class ActionController(object):
                 toolid = self._actionsInfo[strid].toolItemId
                 toolbar = self._actionsInfo[strid].toolbar
 
-                if issubclass(type(toolbar), ToolBar):
-                    toolbar.DeleteTool(toolid, False)
+                if issubclass(type(toolbar), ToolBar2):
+                    toolbar.DeleteTool(toolid)
                 elif issubclass(type(toolbar), wx.ToolBar):
                     toolbar.DeleteTool(toolid)
                 else:
@@ -207,18 +207,30 @@ class ActionController(object):
         image - путь до картинки, которая будет помещена на кнопку
         fullUpdate - нужно ли полностью обновить панель после добавления кнопки
         """
-        actionid = wx.ID_ANY
-        buttonType = wx.ITEM_NORMAL
-        toolbarItem = self._appendToolbarItem(strid,
-                                              toolbar,
-                                              image,
-                                              buttonType,
-                                              actionid,
-                                              fullUpdate)
+        assert strid in self._actionsInfo
+        title = self._getToolbarItemTitle(strid)
+        bitmap = wx.Bitmap(image)
+
+        if issubclass(type(toolbar), ToolBar2):
+            toolbarItemId = toolbar.AddButton(title, bitmap, wx.ID_ANY)
+        elif issubclass(type(toolbar), wx.ToolBar):
+            toolbarItem = toolbar.AddTool(wx.ID_ANY,
+                                          title,
+                                          bitmap,
+                                          wx.NullBitmap,
+                                          wx.ITEM_NORMAL,
+                                          title,
+                                          "")
+            toolbarItemId = toolbarItem.GetId()
+        else:
+            raise ValueError(u'Invalid toolbar type')
+
+        self._actionsInfo[strid].toolbar = toolbar
+        self._actionsInfo[strid].toolItemId = toolbarItemId
 
         self._mainWindow.Bind(wx.EVT_TOOL,
                               handler=self._onToolItemHandler,
-                              id=toolbarItem.GetId())
+                              id=toolbarItemId)
 
     def appendToolbarCheckButton(self, strid, toolbar, image,
                                  fullUpdate=False):
@@ -232,18 +244,30 @@ class ActionController(object):
         image - путь до картинки, которая будет помещена на кнопку
         fullUpdate - нужно ли полностью обновить панель после добавления кнопки
         """
-        actionid = wx.ID_ANY
-        buttonType = wx.ITEM_CHECK
-        toolbarItem = self._appendToolbarItem(strid,
-                                              toolbar,
-                                              image,
-                                              buttonType,
-                                              actionid,
-                                              fullUpdate)
+        assert strid in self._actionsInfo
+        title = self._getToolbarItemTitle(strid)
+        bitmap = wx.Bitmap(image)
+
+        if issubclass(type(toolbar), ToolBar2):
+            toolbarItemId = toolbar.AddCheckButton(title, bitmap, wx.ID_ANY)
+        elif issubclass(type(toolbar), wx.ToolBar):
+            toolbarItem = toolbar.AddTool(wx.ID_ANY,
+                                          title,
+                                          bitmap,
+                                          wx.NullBitmap,
+                                          wx.ITEM_CHECK,
+                                          title,
+                                          "")
+            toolbarItemId = toolbarItem.GetId()
+        else:
+            raise ValueError(u'Invalid toolbar type')
+
+        self._actionsInfo[strid].toolbar = toolbar
+        self._actionsInfo[strid].toolItemId = toolbarItemId
 
         self._mainWindow.Bind(wx.EVT_TOOL,
                               handler=self._onCheckToolItemHandler,
-                              id=toolbarItem.GetId())
+                              id=toolbarItemId)
 
     def check(self, strid, checked):
         """
@@ -300,41 +324,6 @@ class ActionController(object):
             toolbar.Refresh()
 
         action.run(checked)
-
-    def _appendToolbarItem(self, strid, toolbar, image, buttonType,
-                           actionid=wx.ID_ANY, fullUpdate=True):
-        """
-        Общий метод для добавления кнопки на панель инструментов
-        toolbar - панель инструментов, куда будет добавлена кнопка
-            (класс, производный от ToolBar)
-        buttonType - тип кнопки (wx.ITEM_NORMAL для обычной кнопки и
-            wx.ITEM_CHECK для зажимаемой кнопки)
-        """
-        assert strid in self._actionsInfo
-        title = self._getToolbarItemTitle(strid)
-        bitmap = wx.Bitmap(image)
-
-        if issubclass(type(toolbar), ToolBar):
-            toolbarItem = toolbar.AddTool(actionid,
-                                          title,
-                                          bitmap,
-                                          short_help_string=title,
-                                          kind=buttonType,
-                                          fullUpdate=fullUpdate)
-        elif issubclass(type(toolbar), wx.ToolBar):
-            toolbarItem = toolbar.AddTool(actionid,
-                                          title,
-                                          bitmap,
-                                          wx.NullBitmap,
-                                          wx.ITEM_NORMAL,
-                                          title,
-                                          "")
-        else:
-            raise ValueError(u'Invalid toolbar type')
-
-        self._actionsInfo[strid].toolbar = toolbar
-        self._actionsInfo[strid].toolItemId = toolbarItem.GetId()
-        return toolbarItem
 
     def enableTools(self, strid, enabled=True):
         actionInfo = self._actionsInfo[strid]

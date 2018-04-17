@@ -46,7 +46,7 @@ class SkipLogFilter(logging.Filter):
         return False
 
 
-def print_memory():
+def print_memory(count=30):
     '''
     Print the statistics of the objects in the memory.
     Need pympler to use.
@@ -58,4 +58,4 @@ def print_memory():
     my_types = muppy.filter(all_objects, Type=wx.Object)
     sum1 = summary.summarize(my_types)
     # sum1 = summary.summarize(all_objects)
-    summary.print_(sum1, limit=50)
+    summary.print_(sum1, limit=count)

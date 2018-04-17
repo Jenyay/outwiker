@@ -8,21 +8,22 @@
 
 		<changelog>
 			<version number="2.1.0.839" status="dev">
+				<change>New toolbars.</change>
 			</version>
 
 			<version number="2.1.0.838" status="dev" date="March 20, 2018">
-				<change>Add a new page style "rifle_green_and_red"</change>
+				<change>Add a new page style "rifle_green_and_red".</change>
 				<change>Fixed errors.</change>
 			</version>
 
 			<version number="2.1.0.836" status="dev" date="February 15, 2018">
-				<change>Migrate to Python 3.x and wxPython 4.0.0</change>
+				<change>Migrate to Python 3.x and wxPython 4.0.0.</change>
 				<change>Add watching for attached files for selected page.</change>
 			</version>
 
 			<version number="2.1.0.834" status="dev" date="December 17, 2017">
 				<change>32-bit binary builds for Linux are no longer created.</change>
-				<change>Created AppImage packages for Linux</change>
+				<change>Created AppImage packages for Linux.</change>
 				<change>Fixed errors.</change>
 			</version>
 
@@ -57,6 +58,7 @@
 
 		<changelog>
 			<version number="2.1.0.839" status="dev">
+				<change>Новые панели инструментов.</change>
 			</version>
 
 			<version number="2.1.0.838" status="dev" date="20.03.2018">

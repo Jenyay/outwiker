@@ -54,6 +54,9 @@ PAGE_MODE_TEXT = 0
 PAGE_MODE_PREVIEW = 1
 PAGE_MODE_HTML = 2
 
+CONFIG_TOOLBARS_SECTION = 'Toolbars'
+CONFIG_TOOLBARS_VISIBLE_SUFFIX = '_visible'
+
 
 # To translate this words with xgettext
 if __name__ == u'__main__':

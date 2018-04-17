@@ -14,6 +14,7 @@ from outwiker.pages.html.actions.switchcoderesult import SwitchCodeResultAction
 from outwiker.core.defines import (PAGE_MODE_TEXT,
                                    PAGE_MODE_PREVIEW,
                                    PAGE_MODE_HTML)
+from outwiker.gui.defines import TOOLBAR_ORDER_TEXT
 
 
 class BaseWikiPageView (BaseHtmlPanel):
@@ -38,7 +39,9 @@ class BaseWikiPageView (BaseHtmlPanel):
 
         self._toolbars = self._getToolbarsInfo(self.mainWindow)
         for toolbar_id, title in self._toolbars:
-            self.mainWindow.toolbars.createToolBar(toolbar_id, title)
+            self.mainWindow.toolbars.createToolBar(toolbar_id,
+                                                   title,
+                                                   order=TOOLBAR_ORDER_TEXT)
 
         self.notebook.SetPageText(0, self._getPageTitle())
 
@@ -143,7 +146,7 @@ class BaseWikiPageView (BaseHtmlPanel):
         self._application.onPageModeChange -= self.onTabChanged
 
         for toolbar_info in self._toolbars:
-            self.mainWindow.toolbars.updatePanesInfo()
+            # self.mainWindow.toolbars.updatePanesInfo()
             self.mainWindow.toolbars.destroyToolBar(toolbar_info[0])
 
         super().Clear()

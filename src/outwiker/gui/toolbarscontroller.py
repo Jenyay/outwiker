@@ -1,107 +1,121 @@
 # -*- coding: utf-8 -*-
 
-from configparser import NoSectionError
-
 import wx
 import wx.aui
 
-from outwiker.gui.defines import MENU_VIEW
+from outwiker.core.config import BooleanOption
+from outwiker.gui.defines import TOOLBAR_ORDER_PLUGIN
+from outwiker.core.defines import (CONFIG_TOOLBARS_SECTION,
+                                   CONFIG_TOOLBARS_VISIBLE_SUFFIX)
 
 
 class ToolBarInfo (object):
-    def __init__(self, toolbar, menuitem):
+    def __init__(self, toolbar, menu_item, order):
         """
-        toolbar - экземпляр класса панели инструментов (производный от ToolBar)
-        menuitem - экземпляр класса wx.MenuItem, представляющий элемент меню,
+        toolbar - экземпляр класса панели инструментов ToolBar2
+        menu_item - экземпляр класса wx.menu_item, представляющий элемент меню,
             соответствующий данной панели инструментов
+        order - порядок следования панелей инструментов
         """
         self.toolbar = toolbar
-        self.menuitem = menuitem
+        self.menu_item = menu_item
+        self.order = order
+
+    def __str__(self):
+        return '{title}: order={order}'.format(
+            title=self.menu_item.GetText(),
+            order=self.order
+        )
 
 
 class ToolBarsController(object):
     """
     Класс для управления панелями инструментов и меню, связанными с ними
     """
-    def __init__(self, mainWindow, application):
-        self._mainWindow = mainWindow
-        self._application = application
+    def __init__(self, parentMenu, toolbarcontainer, config):
+        self._toolbarcontainer = toolbarcontainer
+        self._config = config
+        self._toolbarsMenu = parentMenu
 
         # Ключ - строка для нахождения панели инструментов
         # Значение - экземпляр класса ToolBarInfo
         self._toolbars = {}
 
-        # Подменю для показа скрытия панелей
-        self._toolbarsMenu = wx.Menu()
-        viewMenu = self._mainWindow.menuController[MENU_VIEW]
-        viewMenu.Append(-1, _(u"Toolbars"), self._toolbarsMenu)
-
-        self._mainWindow.auiManager.Bind(wx.aui.EVT_AUI_PANE_CLOSE,
-                                         self._onPaneClose)
-        self._mainWindow.Bind(wx.EVT_SIZE, self._onSizeChanged)
-
-    def _onSizeChanged(self, event):
-        self.layout()
-
-    def _onPaneClose(self, event):
-        for toolbarinfo in self._toolbars.values():
-            if event.GetPane().name == toolbarinfo.toolbar.name:
-                toolbarinfo.menuitem.Check(False)
-                toolbarinfo.toolbar.Hide()
-                return
-
-        event.Skip()
+    def getMenu(self):
+        return self._toolbarsMenu
 
     def __getitem__(self, toolbarname):
-        return self._toolbars[toolbarname].toolbar
+        return self._toolbarcontainer[toolbarname]
 
-    def createToolBar(self, toolbar_id, title):
-        if toolbar_id in self._toolbars:
-            raise KeyError()
+    def createToolBar(self, toolbar_id,
+                      title, order=TOOLBAR_ORDER_PLUGIN):
+        toolbar = self._toolbarcontainer.createToolBar(toolbar_id, order=order)
+        menu_item_index = self._getMenuItemIndex(order)
+        menu_item = self._addMenu(toolbar, title, menu_item_index)
+        self._toolbars[toolbar_id] = ToolBarInfo(toolbar, menu_item, order)
 
-        toolbar = ToolBar(self._mainWindow,
-                          self._mainWindow.auiManager,
-                          self._application.config,
-                          toolbar_id,
-                          title)
-        newitem = self._addMenu(toolbar)
-        self._toolbars[toolbar_id] = ToolBarInfo(toolbar, newitem)
-        toolbar.UpdateToolBar()
-        self.layout()
+        is_visible = self._getVisibleOption(toolbar_id).value
+        menu_item.Check(is_visible)
+        toolbar.Show(is_visible)
 
-    def _addMenu(self, toolbar):
-        newitem = self._toolbarsMenu.AppendCheckItem(wx.ID_ANY,
-                                                     toolbar.caption)
-        newitem.Check(toolbar.pane.IsShown())
+    def _getMenuItemIndex(self, order):
+        menu_items = sorted(self._toolbars.values(),
+                            key=lambda item: item.order,
+                            reverse=True)
+        index = 0
 
-        self._mainWindow.Bind(wx.EVT_MENU, self._onToolBarMenuClick, newitem)
-        return newitem
+        for n, item in enumerate(menu_items):
+            if order >= item.order:
+                break
+
+            index += 1
+
+        index = len(menu_items) - index
+        return index
+
+    def _addMenu(self, toolbar, title, index):
+        menu_item = self._toolbarsMenu.InsertCheckItem(index, wx.ID_ANY, title)
+        menu_item.Check(toolbar.IsShown())
+
+        self._toolbarsMenu.Bind(wx.EVT_MENU,
+                                self._onToolBarMenuClick,
+                                menu_item)
+        return menu_item
 
     def _removeMenu(self, toolbarinfo):
-        self._toolbarsMenu.Delete(toolbarinfo.menuitem)
-        self._mainWindow.Unbind(wx.EVT_MENU,
-                                source=toolbarinfo.menuitem,
-                                handler=self._onToolBarMenuClick)
+        self._toolbarsMenu.Delete(toolbarinfo.menu_item)
+        self._toolbarsMenu.Unbind(wx.EVT_MENU,
+                                  source=toolbarinfo.menu_item,
+                                  handler=self._onToolBarMenuClick)
 
     def _onToolBarMenuClick(self, event):
-        toolbarinfo = self._getToolBar(event.GetId())
-        assert toolbarinfo is not None
+        toolbar_id, toolbarinfo = self._getToolBarByMenuId(event.GetId())
 
-        if toolbarinfo.toolbar.IsShown():
-            toolbarinfo.toolbar.Hide()
-        else:
+        visible_option = self._getVisibleOption(toolbar_id)
+
+        if toolbarinfo.menu_item.IsChecked():
             toolbarinfo.toolbar.Show()
+            visible_option.value = True
+        else:
+            toolbarinfo.toolbar.Hide()
+            visible_option.value = False
 
-        toolbarinfo.toolbar.UpdateToolBar()
-        self._mainWindow.UpdateAuiManager()
+    def _getVisibleOption(self, toolbar_id):
+        param_name = toolbar_id + CONFIG_TOOLBARS_VISIBLE_SUFFIX
 
-    def _getToolBar(self, menuid):
+        visible_option = BooleanOption(self._config,
+                                       CONFIG_TOOLBARS_SECTION,
+                                       param_name,
+                                       True)
+        return visible_option
+
+    def _getToolBarByMenuId(self, menuid):
         """
         Найти панель инструментов по идентификатору меню
         """
-        for toolbarinfo in self._toolbars.values():
-            if menuid == toolbarinfo.menuitem.GetId():
-                return toolbarinfo
+        for toolbar_id, toolbar_info in self._toolbars.items():
+            if menuid == toolbar_info.menu_item.GetId():
+                return (toolbar_id, toolbar_info)
 
     def destroyToolBar(self, toolbarname):
         """
@@ -109,252 +123,25 @@ class ToolBarsController(object):
         Нужно вызывать до вызова auiManager.UnInit()
         """
         toolbarinfo = self._toolbars[toolbarname]
-        toolbarinfo.toolbar.updatePaneInfo()
         self._removeMenu(toolbarinfo)
-        self._mainWindow.auiManager.DetachPane(toolbarinfo.toolbar)
-
-        toolbarinfo.toolbar.Destroy()
         del self._toolbars[toolbarname]
-        self._mainWindow.UpdateAuiManager()
+        self._toolbarcontainer.destroyToolBar(toolbarname)
 
     def destroyAllToolBars(self):
         """
         Уничтожить все панели инструментов.
         Нужно вызывать до вызова auiManager.UnInit()
         """
-        self.updatePanesInfo()
-
-        self._mainWindow.auiManager.Unbind(wx.aui.EVT_AUI_PANE_CLOSE,
-                                           handler=self._onPaneClose)
-        self._mainWindow.Unbind(wx.EVT_SIZE, handler=self._onSizeChanged)
-
         for toolbarname in list(self._toolbars):
             self.destroyToolBar(toolbarname)
+
+    def getMenuItem(self, toolbar_id):
+        return self._toolbars[toolbar_id].menu_item
 
     def __contains__(self, toolbarname):
         return toolbarname in self._toolbars
 
+    # TODO: Deprecated.
+    # There is for backward compatibility with the WebPage plugin.
     def updatePanesInfo(self):
-        for toolbar in self._toolbars.values():
-            toolbar.toolbar.updatePaneInfo()
-
-    def layout(self):
-        '''
-        Fix toolbars positions in the window to all toolbars were visible.
-        '''
-        mainWindowWidth = self._mainWindow.GetClientSize()[0]
-        if mainWindowWidth == 0:
-            return
-
-        for name, toolbar_info in self._toolbars.items():
-            toolbar = toolbar_info.toolbar
-            toolbar_rect = toolbar.GetRect()
-            if toolbar_rect.GetLeft() >= mainWindowWidth:
-                self._moveToolbar(name)
-
-        self._packToolbarsRows()
-        self._mainWindow.UpdateAuiManager()
-
-    def _getPaneInfo(self, name):
-        auiManager = self._mainWindow.auiManager
-        toolbar = self[name]
-        pane_info = auiManager.GetPane(toolbar)
-        return pane_info
-
-    def _getToolbarRow(self, name):
-        toolbar = self[name]
-        pane_info = self._mainWindow.auiManager.GetPane(toolbar)
-        return pane_info.dock_row
-
-    def _getRowsCount(self):
-        maxIndex = -1
-        for name in self._toolbars:
-            toolbar_row = self._getToolbarRow(name)
-            if toolbar_row > maxIndex:
-                maxIndex = toolbar_row
-
-        return maxIndex + 1
-
-    def _moveToolbarTo(self, name, row, pos):
-        moved_pane_info = self._getPaneInfo(name)
-        moved_pane_info.Position(pos).Row(row)
-
-        moved_toolbar = self[name]
-        moved_toolbar.updatePaneInfo()
-
-    def _packToolbarsRows(self):
-        '''
-        Remove unused rows numbers
-        '''
-        rows = [1] * self._getRowsCount()
-
-        for name in self._toolbars:
-            toolbar_row = self._getToolbarRow(name)
-            rows[toolbar_row] = 0
-
-        for name in self._toolbars:
-            toolbar = self[name]
-            toolbar_row = self._getToolbarRow(name)
-            delta = sum(rows[:toolbar_row])
-            if delta == 0:
-                continue
-
-            row_new = toolbar_row - delta
-
-            pane_info = self._getPaneInfo(name)
-            pane_info.Row(row_new)
-            toolbar.updatePaneInfo()
-
-    def _getRowSpaces(self, moved_toolbar_name):
-        mainWindowWidth = self._mainWindow.GetClientSize()[0]
-
-        # Calculate empty space for each row
-        rows_spaces = [-1] * self._getRowsCount()
-        for toolbar_name in self._toolbars:
-            if toolbar_name == moved_toolbar_name:
-                continue
-
-            toolbar = self[toolbar_name]
-            toolbar_rect = toolbar.GetRect()
-            toolbar_row = self._getToolbarRow(toolbar_name)
-            space = mainWindowWidth - toolbar_rect.GetRight()
-
-            if (rows_spaces[toolbar_row] == -1 or
-                    space < rows_spaces[toolbar_row]):
-                rows_spaces[toolbar_row] = space
-
-        return rows_spaces
-
-    def _moveToolbar(self, name):
-        '''
-        Find location for toolbar and move it there.
-        '''
-        margin = 24
-        mainWindowWidth = self._mainWindow.GetClientSize()[0]
-
-        # Calculate empty space for each row
-        rows_spaces = self._getRowSpaces(name)
-
-        # Find row to move the toolbar
-        row_index = len(rows_spaces)
-        for n, space in enumerate(rows_spaces):
-            if space > margin:
-                row_index = n
-                break
-
-        # Find position for toolbar
-        if row_index == len(rows_spaces):
-            toolbar_pos = 0
-        else:
-            toolbar_pos = mainWindowWidth - rows_spaces[row_index] + 1
-
-        self._moveToolbarTo(name, row_index, toolbar_pos)
-
-
-class ToolBar(wx.aui.AuiToolBar):
-    """
-    The base class for a toolbars.
-    """
-    def __init__(self, parent, auiManager, config, name, caption):
-        super().__init__(parent)
-        self._SECTION_NAME = 'Toolbars'
-
-        self._parent = parent
-        self._auiManager = auiManager
-        self._config = config
-        self._name = name
-        self._caption = caption
-        self._pane = self._loadPaneInfo()
-
-    @property
-    def name(self):
-        return self._name
-
-    @property
-    def caption(self):
-        return self._caption
-
-    def _createPane(self):
-        return (wx.aui.AuiPaneInfo()
-                .Name(self.name)
-                .Caption(self.caption)
-                .ToolbarPane()
-                .Top()
-                .Position(0)
-                .Row(0))
-
-    def _loadPaneInfo(self):
-        try:
-            paneinfo = self._config.get(self._SECTION_NAME, self.name)
-            pane = wx.aui.AuiPaneInfo()
-            self._auiManager.LoadPaneInfo(paneinfo, pane)
-            pane.Caption(self.caption)
-            pane.Dock()
-        except (BaseException, NoSectionError):
-            pane = self._createPane()
-
-        return pane
-
-    def savePaneInfo(self):
-        paneinfo = self._auiManager.SavePaneInfo(self.pane)
-        self._config.set(self._SECTION_NAME, self.name, paneinfo)
-
-    def DeleteTool(self, toolid, fullUpdate=True):
-        self.Freeze()
-        super().DeleteTool(toolid)
-        self.UpdateToolBar()
-        if fullUpdate:
-            self._parent.UpdateAuiManager()
-        self.Thaw()
-
-    def AddTool(self,
-                tool_id,
-                label,
-                bitmap,
-                short_help_string=wx.EmptyString,
-                kind=wx.ITEM_NORMAL,
-                fullUpdate=True):
-        self.Freeze()
-        item = super().AddTool(tool_id, label, bitmap, short_help_string, kind)
-        self.UpdateToolBar()
-        if fullUpdate:
-            self._parent.UpdateAuiManager()
-            self.updatePaneInfo()
-
-        self.Thaw()
-        return item
-
-    @property
-    def pane(self):
-        return self._pane
-
-    def updatePaneInfo(self):
-        currentpane = self._auiManager.GetPane(self)
-        (self.pane
-         .Position(currentpane.dock_pos)
-         .Row(currentpane.dock_row)
-         .Direction(currentpane.dock_direction)
-         .Layer(currentpane.dock_layer)
-         )
-
-    def UpdateToolBar(self):
-        self.Realize()
-        self._auiManager.DetachPane(self)
-        self._auiManager.AddPane(self, self.pane)
-        self.updatePaneInfo()
-
-    def FindById(self, toolid):
-        return self.FindTool(toolid)
-
-    def Hide(self):
-        self.updatePaneInfo()
-        self.pane.Hide()
-        super().Hide()
-
-    def Show(self):
-        self.pane.Show()
-        super().Show()
-
-    def Destroy(self):
-        self.savePaneInfo()
-        super().Destroy()
+        pass
