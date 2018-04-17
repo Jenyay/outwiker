@@ -1,8 +1,4 @@
 {
-  "AutoRenamer": {
-    "name": "AutoRenamer",
-    "url": "http://jenyay.net/uploads/Outwiker/AutoRenamer/plugin.xml"
-  },
   "Counter": {
     "name": "Counter",
     "url": "http://jenyay.net/uploads/Outwiker/Counter/plugin.xml"
@@ -10,10 +6,6 @@
   "DataGraph": {
     "name": "DataGraph",
     "url": "http://jenyay.net/uploads/Outwiker/DataGraph/plugin.xml"
-  },
-  "DebugEventsPlugin": {
-    "name": "DebugEventsPlugin",
-    "url": "http://jenyay.net/uploads/Outwiker/DebugEvents/plugin.xml"
   },
   "Diagrammer": {
     "name": "Diagrammer",
@@ -51,10 +43,6 @@
     "name": "Markdown",
     "url": "http://jenyay.net/uploads/Outwiker/Markdown/plugin.xml"
   },
-  "Organizer": {
-    "name": "Organizer",
-    "url": "http://jenyay.net/uploads/Outwiker/Organizer/plugin.xml"
-  },
   "PageTypeColor": {
     "name": "PageTypeColor",
     "url": "http://jenyay.net/uploads/Outwiker/PageTypeColor/plugin.xml"
@@ -86,10 +74,6 @@
   "TableOfContents": {
     "name": "TableOfContents",
     "url": "http://jenyay.net/uploads/Outwiker/Contents/plugin.xml"
-  },
-  "TestDebug": {
-    "name": "TestDebug",
-    "url": "http://jenyay.net/uploads/Outwiker/DebugPlugin/plugin.xml"
   },
   "TeXEquation": {
     "name": "TeXEquation",

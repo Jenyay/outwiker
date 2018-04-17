@@ -93,14 +93,14 @@ class InstallController(object):
         HTMLContent = self.createInstallerHTMLContent(all_plugins, installed_plugins)
 
         with UpdateDialog(self._application.mainWindow) as updateDialog:
-            updateDialog.setContent(HTMLContent, None)
+            updateDialog.setContent(HTMLContent, self._dataPath)
             updateDialog.ShowModal()
 
     def install_plugin(self, name):
         """
         Install plugin by name.
 
-        :return: True if plugin was updated, otherwise False
+        :return: True if plugin was installed, otherwise False
         """
         getAppInfo = VersionList().getAppInfoFromUrl
         getDownlodUrl = VersionList().getDownlodUrl
@@ -110,21 +110,21 @@ class InstallController(object):
 
             appInfo = getAppInfo( plugin_info["url"])
             if not appInfo or not appInfo.versionsList:
-                MessageBox(_(u"The plugin description can't be downloaded. Please update plugin manually"),
+                MessageBox(_(u"The plugin description can't be downloaded. Please install plugin manually"),
                            u"UpdateNotifier")
                 return False
 
             # get link to latest version
             url = getDownlodUrl(appInfo)
             if not url:
-                MessageBox(_(u"The download link was not found in plugin description. Please update plugin manually"),
+                MessageBox(_(u"The download link was not found in plugin description. Please install plugin manually"),
                            u"UpdateNotifier")
                 return False
 
             # 0 - папка рядом с запускаемым файлом, затем идут другие папки, если они есть
             pluginPath = os.path.join(getPluginsDirList()[-1], name.lower())
 
-            logger.info('update_plugin: {url} {path}'.format(url=url, path=pluginPath))
+            logger.info('install_plugin: {url} {path}'.format(url=url, path=pluginPath))
 
             rez = UpdatePlugin().update(url, pluginPath)
 
