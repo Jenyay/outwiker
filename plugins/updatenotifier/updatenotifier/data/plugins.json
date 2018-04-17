@@ -1,4 +1,8 @@
 {
+  "AutoRenamer": {
+    "name": "AutoRenamer",
+    "url": "http://jenyay.net/uploads/Outwiker/AutoRenamer/plugin.xml"
+  },
   "Counter": {
     "name": "Counter",
     "url": "http://jenyay.net/uploads/Outwiker/Counter/plugin.xml"
