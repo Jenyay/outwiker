@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os
 import shutil
@@ -73,7 +73,7 @@ class BuilderPlugins(BuilderBase):
 
                 # Archive a single plug-in
                 with lcd("plugins/{}".format(plugin)):
-                    local('7z a -r -aoa -xr!*.pyc -xr!.ropeproject "{}" ./*'.format(archive_path))
+                    local('7z a -r -aoa -xr!*.pyc -xr!.ropeproject -x!doc "{}" ./*'.format(archive_path))
 
             # Add a plug-in to full archive
             with lcd("plugins/{}".format(plugin)):
