@@ -677,7 +677,7 @@ class AttachConfig(object):
     ACTION_OPEN = 1
 
     DOUBLE_CLICK_ACTION_PARAM = u'AttachDoubleClickAction'
-    DOUBLE_CLICK_ACTION_DEFAULT = ACTION_INSERT_LINK
+    DOUBLE_CLICK_ACTION_DEFAULT = ACTION_OPEN
 
     def __init__(self, config):
         self.config = config
