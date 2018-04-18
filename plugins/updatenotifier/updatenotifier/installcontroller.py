@@ -57,10 +57,7 @@ class InstallController(object):
         # read data/plugins.json
         self._installerPlugins = json.loads(readTextFile(self._pluginsRepoPath))
 
-        # get installed plugins
-        # fixme: add to PluginLoader method loaded plugins
-        enabled_plugins = [p.name for p in self._application.plugins]
-        installed_plugins = enabled_plugins + list(self._application.plugins.disabledPlugins)
+        installed_plugins = self._getInstalledPlugins()
 
         # show dialog
         self._showPluginsInstaller(self._installerPlugins, installed_plugins)
@@ -193,12 +190,21 @@ class InstallController(object):
         Update content on the current opened installer dialog.
         """
         if self._dialog and self._dialog.IsModal():
-            # get installed plugins
-            # fixme: add to PluginLoader method loaded plugins
-            enabled_plugins = [p.name for p in self._application.plugins]
-            installed_plugins = enabled_plugins + list(self._application.plugins.disabledPlugins)
+
+            installed_plugins = self._getInstalledPlugins()
 
             HTMLContent = self.createInstallerHTMLContent(self._installerPlugins, installed_plugins)
 
             # Setup updated data to dialog render
             self._dialog.setContent(HTMLContent, self._dataPath)
+
+    def _getInstalledPlugins(self):
+        """
+        Retrieve list with names of all installed plugins
+        """
+        #TODO: It seems the method should be moved to PluginsLoader
+
+        enabled_plugins = [p.name for p in self._application.plugins]
+        disabled_plugins = list(self._application.plugins.disabledPlugins)
+
+        return enabled_plugins + disabled_plugins
