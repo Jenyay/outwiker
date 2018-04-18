@@ -111,4 +111,8 @@ VM_BUILD_PARAMS = {
     #     u'vagrant_path': 'need_for_build/virtual/build_machines/artful64',
     #     u'host': u'192.168.101.66',
     # },
+    # u'trusty64': {
+    #     u'vagrant_path': 'need_for_build/virtual/build_machines/trusty64',
+    #     u'host': u'192.168.101.67',
+    # },
 }

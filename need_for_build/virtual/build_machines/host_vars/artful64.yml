@@ -4,3 +4,32 @@ deb_suffix: "_amd64"
 python: "python3.6"
 homedir: "/home/vagrant"
 remote_user: "vagrant"
+packages:
+  - mc
+  - vim
+  - git
+  - "{{python}}-dev"
+  - python-pip
+  - python3-pip
+  - python3-venv
+  - "{{python}}-venv"
+  - debhelper
+  - devscripts
+  - p7zip-full
+  - libssl-dev
+  - dpkg-dev
+  - build-essential
+  - libjpeg-dev
+  - libtiff-dev
+  - libsdl1.2-dev
+  # - libgstreamer-plugins-base0.10-dev
+  - libnotify-dev
+  - freeglut3
+  - freeglut3-dev
+  - libsm-dev
+  - libgtk-3-dev
+  - libwebkitgtk-3.0-dev
+  - libgstreamer-plugins-base1.0-dev
+  # - libwebkit2gtk-4.0-dev    # The problem with the EVT_WEBVIEW_NAVIGATING event
+  - libsdl2-dev
+  - ibus-gtk3
