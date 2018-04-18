@@ -680,7 +680,7 @@ def vm_prepare():
     '''
     vm_run()
     with lcd(u'need_for_build/virtual/build_machines'):
-        local(u'ansible-playbook prepare_build_machines.yml')
+        local(u'ANSIBLE_STDOUT_CALLBACK=debug ansible-playbook prepare_build_machines.yml')
 
 
 @task
@@ -700,7 +700,7 @@ def vm_linux_binary(is_stable=0):
         os.makedirs(path_to_result)
 
     with lcd(u'need_for_build/virtual/build_machines'):
-        local(u'ansible-playbook build_linux_binaries.yml --extra-vars "version={version} build={build} save_to={save_to} is_stable={is_stable}"'.format(
+        local(u'ANSIBLE_STDOUT_CALLBACK=debug ansible-playbook build_linux_binaries.yml --extra-vars "version={version} build={build} save_to={save_to} is_stable={is_stable}"'.format(
             version=version[0],
             build=version[1],
             save_to=path_to_result,

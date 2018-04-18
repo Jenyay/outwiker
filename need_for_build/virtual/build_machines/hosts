@@ -1,3 +1,4 @@
 # zesty64 ansible_host=192.168.101.64 ansible_port=22 ansible_ssh_private_key_file="zesty64/.vagrant/machines/default/virtualbox/private_key" ansible_ssh_extra_args="-o IdentitiesOnly=yes"
 xenial64 ansible_host=192.168.101.65 ansible_port=22 ansible_ssh_private_key_file="xenial64/.vagrant/machines/default/virtualbox/private_key" ansible_ssh_extra_args="-o IdentitiesOnly=yes"
 # artful64 ansible_host=192.168.101.66 ansible_port=22 ansible_ssh_private_key_file="artful64/.vagrant/machines/default/virtualbox/private_key" ansible_ssh_extra_args="-o IdentitiesOnly=yes"
+# trusty64 ansible_host=192.168.101.67 ansible_port=22 ansible_ssh_private_key_file="trusty64/.vagrant/machines/default/virtualbox/private_key" ansible_ssh_extra_args="-o IdentitiesOnly=yes"
