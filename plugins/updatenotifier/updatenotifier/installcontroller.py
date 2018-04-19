@@ -1,21 +1,15 @@
 # -*- coding: UTF-8 -*-
 
-import datetime
 import logging
-import threading
 import os.path
 import json
 import shutil
 
-import wx
-
-from outwiker.gui.longprocessrunner import LongProcessRunner
-from outwiker.core.commands import getCurrentVersion, MessageBox, setStatusText
-from outwiker.core.version import Version
-from outwiker.core.defines import PLUGIN_VERSION_FILE_NAME
-from outwiker.core.xmlversionparser import XmlVersionParser
+import outwiker.core
+from outwiker.core.commands import MessageBox, setStatusText
 from outwiker.utilites.textfile import readTextFile
-from outwiker.core.system import getOS, getPluginsDirList
+from outwiker.core.system import getPluginsDirList
+import outwiker.core.packageversion as pv
 
 from .updatedialog import UpdateDialog
 from .updatesconfig import UpdatesConfig
@@ -114,6 +108,12 @@ class InstallController(object):
             appInfo = getAppInfo( plugin_info["url"])
             if not appInfo or not appInfo.versionsList:
                 MessageBox(_(u"The plugin description can't be downloaded. Please install plugin manually"),
+                           u"UpdateNotifier")
+                return False
+
+            api_required_version = appInfo.requirements.api_version
+            if pv.checkVersionAny(outwiker.core.__version__, api_required_version) != 0:
+                MessageBox(_(u"The plugin required last version of Outwiker. Please update application"),
                            u"UpdateNotifier")
                 return False
 
