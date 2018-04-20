@@ -30,6 +30,9 @@ class PluginTestEmpty2 (Plugin):
     def version (self):
         return u"0.1"
 
+    @version.setter
+    def version(self, value):
+        self._version = value
 
     def initialize(self):
         pass

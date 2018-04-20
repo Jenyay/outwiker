@@ -43,6 +43,9 @@ class PluginTestWikiCommand (Plugin):
     def version (self):
         return u"0.1"
 
+    @version.setter
+    def version(self, value):
+        self._version = value
 
     def destroy (self):
         """
