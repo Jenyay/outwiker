@@ -61,6 +61,9 @@ class UpdateController(object):
         self._updateUrls[self._OUTWIKER_STABLE_KEY] = u'http://jenyay.net/uploads/Soft/Outwiker/versions.xml'
         self._updateUrls[self._OUTWIKER_UNSTABLE_KEY] = u'http://jenyay.net/uploads/Outwiker/Unstable/versions.xml'
 
+        # update dialog instance
+        self._dialog = None
+
         # The thread to check updates in the silence mode (after program start)
         self._silenceThread = None
         if self._application.mainWindow is not None:
@@ -223,8 +226,8 @@ class UpdateController(object):
         HTMLContent = self.createHTMLContent(updatedAppInfo)
 
         with UpdateDialog(self._application.mainWindow) as updateDialog:
-            basepath = self._dataPath
-            updateDialog.setContent(HTMLContent, basepath)
+            self._dialog = updateDialog
+            updateDialog.setContent(HTMLContent, self._dataPath)
             updateDialog.ShowModal()
 
 
@@ -264,14 +267,12 @@ class UpdateController(object):
         if self._application.mainWindow:
             wx.PostEvent(self._application.mainWindow, event)
 
-
     def update_plugin(self, name):
         """
         Update plugin to latest version by name.
         :return: True if plugin was installed, otherwise False
         """
-
-        appInfoDict = VersionList().loadAppInfo(self._updateUrls)
+        appInfoDict = VersionList().loadAppInfo(self._getPluginsUpdateUrls())
 
         # get link to latest version
         appInfo = appInfoDict.get(name)
@@ -281,6 +282,10 @@ class UpdateController(object):
                 MessageBox(_(u"The download link was not found in plugin description. Please update plugin manually"),
                            u"UpdateNotifier")
                 return False
+        else:
+            MessageBox(_(u"Plugin was NOT updated. Please update plugin manually"),
+                       u"UpdateNotifier")
+            return False
 
         plugin = self._application.plugins[name]
 
@@ -289,9 +294,9 @@ class UpdateController(object):
         rez = UpdatePlugin().update(url, plugin.pluginPath)
 
         if rez:
-            # TODO: надо как то убрать плагин из диалога, но непонятно как получить к нему доступ при обработке евента
             self._application.plugins.reload(name)
-            MessageBox(_(u"Plugin was successfully updated."), u"UpdateNotifier")
+            self._dialog.EndModal(wx.ID_OK)
+            self.checkForUpdates()
         else:
             MessageBox(_(u"Plugin was NOT updated. Please update plugin manually"), u"UpdateNotifier")
         return rez

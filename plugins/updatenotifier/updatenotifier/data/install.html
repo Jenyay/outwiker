@@ -32,7 +32,7 @@
 			}
 
 			.load {
-			    float:right;
+			    float:left;
 			}
 
 
@@ -52,9 +52,14 @@
     {% for plugin in plugins %}
     <!-- {{plugin}} block begin -->
     <div style="height:50px" class="version-block plugin-version {{plugin}}">
-        <div class="load"><img src="file://{{data_path}}/install.gif" width="40" height="40" alt="{{data_path}}"> </div>
         <div class="title">{{plugin}}</div>
-        {{ update_info(plugin)}}
+        {% if plugins[plugin]['load'] %}
+            <div class="load">
+                <img src="file://{{data_path}}/install.gif" width="20" height="20" alt="{{data_path}}">
+            </div>
+        {% else %}
+            {{ update_info(plugin)}}
+        {% endif %}
     </div>
     <!-- {{plugin}} block end -->
     {% endfor %}
