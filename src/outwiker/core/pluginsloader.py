@@ -25,7 +25,6 @@ from outwiker.utilites.textfile import readTextFile
 
 logger = logging.getLogger('outwiker.core.pluginsloader')
 
-
 class PluginsLoader(object):
     """
     Load and keep plugins.
@@ -154,8 +153,6 @@ class PluginsLoader(object):
         """
         Uninstall all active plugins and clear plugins list
         Do not clear Disabled and Invalid plugins
-        :return:
-            None
         """
         [plugin.destroy() for plugin in self.__plugins.values()]
         self.__plugins = {}
@@ -182,6 +179,7 @@ class PluginsLoader(object):
     def __importPackage(self, packagePath):
         """
         Try to load plugin from packagePath
+
         :param packagePath:
             path to python package from where the plugin should be import
         :return:
@@ -248,17 +246,21 @@ class PluginsLoader(object):
         # Should be displayed only if a plugin was not loaded
         errors = []
 
-        # Try to find plugin from package and
-        # add the instance of the class list
-        plugin = self.__loadPlugin(packageName, errors)
-        if plugin:
-            plugin.version = pluginversion
-        else:
-            # otherwise try to find plugin in modules of plugin paths
-            for __, module, is_pkg in pkgutil.iter_modules([packagePath]):
-                if is_pkg:
-                    continue
+        modules = [module for __, module, is_pkg
+                   in pkgutil.iter_modules([packagePath])
+                   if not is_pkg]
 
+        # Try to find plugin in package and
+        # add the instance of the class list
+        plugin = None
+        # At first check module with 'plugin.py' name
+        if 'plugin' in modules:
+            plugin = self.__loadPlugin(packageName + '.plugin', errors)
+            if plugin:
+                plugin.version = pluginversion
+        else:
+            # for old style plugins check the other modules.
+            for module in modules:
                 plugin = self.__loadPlugin(packageName + "." + module, errors)
                 logger.debug(plugin)
                 if plugin:
@@ -324,6 +326,7 @@ class PluginsLoader(object):
     def __createPlugin(self, module, name):
         """
         Create plugin instance if name is a subclass of Plugin
+
         :param module:
             module name
         :param name:
@@ -346,6 +349,7 @@ class PluginsLoader(object):
     def reload(self, pluginname):
         """
         Reload plugin module and plugin instance in self.__plugins list
+
         :param pluginname:
             name of the actual plugin
         :return:
@@ -369,6 +373,7 @@ class PluginsLoader(object):
     def getInfo(self, pluginname, langlist=["en"]):
         """
         Retrieve a AppInfo for plugin_name
+
         :param pluginname:
             name of the loaded plugin
         :param lang:
@@ -393,6 +398,7 @@ class PluginsLoader(object):
     def remove(self, pluginName):
         """
         Remove plugin module and plugin instance
+
         :param pluginName:
             plugin name which should be removed
         :return:
