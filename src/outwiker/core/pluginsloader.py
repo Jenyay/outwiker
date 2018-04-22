@@ -220,7 +220,13 @@ class PluginsLoader(object):
                          if appinfo is not None
                          else None)
 
-        if versions_result == pv.PLUGIN_MUST_BE_UPGRADED:
+        # Check module with 'plugin.py' name
+        modules = [module for __, module, is_pkg
+                   in pkgutil.iter_modules([packagePath])
+                   if not is_pkg]
+
+        if versions_result == pv.PLUGIN_MUST_BE_UPGRADED or \
+            'plugin' not in modules:
             error = _(u'Plug-in "{}" is outdated. Please, update the plug-in.').format(pluginname)
             self._print(error)
 
@@ -246,26 +252,11 @@ class PluginsLoader(object):
         # Should be displayed only if a plugin was not loaded
         errors = []
 
-        modules = [module for __, module, is_pkg
-                   in pkgutil.iter_modules([packagePath])
-                   if not is_pkg]
-
         # Try to find plugin in package and
         # add the instance of the class list
-        plugin = None
-        # At first check module with 'plugin.py' name
-        if 'plugin' in modules:
-            plugin = self.__loadPlugin(packageName + '.plugin', errors)
-            if plugin:
-                plugin.version = pluginversion
-        else:
-            # for old style plugins check the other modules.
-            for module in modules:
-                plugin = self.__loadPlugin(packageName + "." + module, errors)
-                logger.debug(plugin)
-                if plugin:
-                    plugin.version = pluginversion
-                    break
+        plugin = self.__loadPlugin(packageName + '.plugin', errors)
+        if plugin:
+            plugin.version = pluginversion
 
         # The errors should be printed if no plugins in the package
         if not plugin and errors:
