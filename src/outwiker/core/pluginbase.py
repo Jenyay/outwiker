@@ -95,15 +95,15 @@ class Plugin (object, metaclass=ABCMeta):
     @abstractmethod
     def initialize(self):
         """
-        Этот метод вызывается, когда плагин прошел все проверки.
-        Именно здесь плагин может начинать взаимодействовать с программой
+        The method is called if plugin has been successfully loaded
+        Generally the plugin starts to work with an application here.
         """
         pass
 
     @abstractmethod
     def destroy(self):
         """
-        Этот метод вызывается при отключении плагина
+        The method is called if plugin is disabled.
         """
         pass
 
