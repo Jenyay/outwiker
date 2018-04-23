@@ -9,6 +9,7 @@ import shutil
 import os
 from time import sleep
 
+
 class PluginsLoaderTest(BaseOutWikerMixin, unittest.TestCase):
     def setUp(self):
         self.initApplication()
@@ -49,13 +50,20 @@ class PluginsLoaderTest(BaseOutWikerMixin, unittest.TestCase):
         loader.clear()
         self.assertEqual(len(loader), 0)
 
+    def testImport(self):
+        dirlist = ["../test/plugins/testimport"]
+        loader = PluginsLoader(self.application)
+        loader.load(dirlist)
+
+        self.assertEqual(len(loader), 1)
+
     def testReload(self):
 
         tmp_plugin_dir = "../test/plugins/testreload"
 
         # init test
         shutil.copyfile('../test/plugins/testreload/testreload/testreload.v1',
-                  '../test/plugins/testreload/testreload/testreload.py')
+                        '../test/plugins/testreload/testreload/plugin.py')
 
         dirlist = [tmp_plugin_dir]
         loader = PluginsLoader(self.application)
@@ -67,10 +75,10 @@ class PluginsLoaderTest(BaseOutWikerMixin, unittest.TestCase):
         self.assertEqual(loader["TestReload"].version, "0.1")
 
         # replace plugin file to ver 0.2
-        os.remove('../test/plugins/testreload/testreload/testreload.py')
+        os.remove('../test/plugins/testreload/testreload/plugin.py')
         sleep(1)
         shutil.copyfile('../test/plugins/testreload/testreload/testreload.v2',
-                        '../test/plugins/testreload/testreload/testreload.py')
+                        '../test/plugins/testreload/testreload/plugin.py')
 
         # observation
         loader.reload("TestReload")
@@ -79,7 +87,7 @@ class PluginsLoaderTest(BaseOutWikerMixin, unittest.TestCase):
         self.assertEqual(loader["TestReload"].version, "0.2")
 
         # restore
-        os.remove('../test/plugins/testreload/testreload/testreload.py')
+        os.remove('../test/plugins/testreload/testreload/plugin.py')
 
     def testVersion_01(self):
         dirlist = ["../test/plugins/testempty3"]
@@ -107,6 +115,7 @@ class PluginsLoaderTest(BaseOutWikerMixin, unittest.TestCase):
                    "../test/plugins/testinvalid5",
                    "../test/plugins/testinvalid6",
                    "../test/plugins/testinvalid7",
+                   "../test/plugins/testinvalid8",              # no plugin.py file in the packages
                    "../test/plugins/testempty1",
                    "../test/plugins/testempty2",
                    "../test/plugins/testempty2",                # Ссылка на плагин testempty2 повторяется еще раз
@@ -331,7 +340,7 @@ class PluginsLoaderTest(BaseOutWikerMixin, unittest.TestCase):
         #               loader.invalidPlugins[0].description)
 
     def testGetInfo(self):
-        dirlist = ["../test/plugins/testempty1",]
+        dirlist = ["../test/plugins/testempty1", ]
         loader = PluginsLoader(self.application)
         loader.load(dirlist)
 
@@ -356,9 +365,8 @@ class PluginsLoaderTest(BaseOutWikerMixin, unittest.TestCase):
         plugInfo = loader.getInfo("TestEmpty1")
         self.assertIsInstance(plugInfo, AppInfo)
 
-
     def testGetInfo_None(self):
-        dirlist = ["../test/plugins/testempty1",]
+        dirlist = ["../test/plugins/testempty1", ]
         loader = PluginsLoader(self.application)
         loader.load(dirlist)
 
@@ -367,7 +375,7 @@ class PluginsLoaderTest(BaseOutWikerMixin, unittest.TestCase):
         plugInfo = loader.getInfo("Wring_module")
         self.assertIs(plugInfo, None)
 
-    def testOnOffPlugins1(self):
+    def testOnOffPlugins7(self):
         # Test for remove plugin
         dirlist = ["../test/plugins/testempty1",
                    "../test/plugins/testempty2",

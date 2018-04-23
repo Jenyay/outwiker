@@ -1,58 +1,54 @@
-#!/usr/bin/env python
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from outwiker.core.pluginbase import Plugin
 
+STRING = 'qqq'
+INTEGER = 10
+EXAMPLE_LIST = []
 
-class PluginTestEmpty1 (Plugin):
-    def __init__ (self, application):
+
+class TestImport(Plugin):
+    def __init__(self, application):
         """
         application - экземпляр класса core.application.ApplicationParams
         """
-        Plugin.__init__ (self, application)
+        super().__init__(application)
         self.__enabled = False
 
-    
     @property
-    def enabled (self):
+    def enabled(self):
         return self.__enabled
 
-
     @property
-    def application (self):
+    def application(self):
         return self._application
-
 
     ###################################################
     # Свойства и методы, которые необходимо определить
     ###################################################
 
     @property
-    def name (self):
-        return u"TestReload"
+    def name(self):
+        return u"TestEmpty1"
 
-    
     @property
-    def description (self):
+    def description(self):
         return _(u"This plugin is empty")
 
-
     @property
-    def version (self):
+    def version(self):
         return u"0.1"
 
     @version.setter
     def version(self, value):
         self._version = value
-    
+
     def initialize(self):
         self.__enabled = True
 
-
-    def destroy (self):
+    def destroy(self):
         """
-        Уничтожение (выгрузка) плагина. Здесь плагин должен отписаться от всех событий
+        Уничтожение(выгрузка) плагина.
+        Здесь плагин должен отписаться от всех событий
         """
         self.__enabled = False
-
-    #############################################

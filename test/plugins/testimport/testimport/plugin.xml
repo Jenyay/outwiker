@@ -1,0 +1,15 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+<info>
+	<name>TestImport</name>
+    <requirements>
+        <api>2.835</api>
+    </requirements>
+
+	<data lang="en">
+		<description>Test plug-in.</description>
+	</data>
+
+	<data lang="ru">
+		<description>Тестовый плагин.</description>
+	</data>
+</info>
