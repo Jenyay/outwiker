@@ -9,6 +9,7 @@ import shutil
 import os
 from time import sleep
 
+
 class PluginsLoaderTest(BaseOutWikerMixin, unittest.TestCase):
     def setUp(self):
         self.initApplication()
@@ -49,13 +50,20 @@ class PluginsLoaderTest(BaseOutWikerMixin, unittest.TestCase):
         loader.clear()
         self.assertEqual(len(loader), 0)
 
+    def testImport(self):
+        dirlist = ["../test/plugins/testimport"]
+        loader = PluginsLoader(self.application)
+        loader.load(dirlist)
+
+        self.assertEqual(len(loader), 1)
+
     def testReload(self):
 
         tmp_plugin_dir = "../test/plugins/testreload"
 
         # init test
         shutil.copyfile('../test/plugins/testreload/testreload/testreload.v1',
-                  '../test/plugins/testreload/testreload/plugin.py')
+                        '../test/plugins/testreload/testreload/plugin.py')
 
         dirlist = [tmp_plugin_dir]
         loader = PluginsLoader(self.application)
@@ -332,7 +340,7 @@ class PluginsLoaderTest(BaseOutWikerMixin, unittest.TestCase):
         #               loader.invalidPlugins[0].description)
 
     def testGetInfo(self):
-        dirlist = ["../test/plugins/testempty1",]
+        dirlist = ["../test/plugins/testempty1", ]
         loader = PluginsLoader(self.application)
         loader.load(dirlist)
 
@@ -357,9 +365,8 @@ class PluginsLoaderTest(BaseOutWikerMixin, unittest.TestCase):
         plugInfo = loader.getInfo("TestEmpty1")
         self.assertIsInstance(plugInfo, AppInfo)
 
-
     def testGetInfo_None(self):
-        dirlist = ["../test/plugins/testempty1",]
+        dirlist = ["../test/plugins/testempty1", ]
         loader = PluginsLoader(self.application)
         loader.load(dirlist)
 
@@ -368,7 +375,7 @@ class PluginsLoaderTest(BaseOutWikerMixin, unittest.TestCase):
         plugInfo = loader.getInfo("Wring_module")
         self.assertIs(plugInfo, None)
 
-    def testOnOffPlugins1(self):
+    def testOnOffPlugins7(self):
         # Test for remove plugin
         dirlist = ["../test/plugins/testempty1",
                    "../test/plugins/testempty2",

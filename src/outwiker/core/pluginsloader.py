@@ -25,6 +25,7 @@ from outwiker.utilites.textfile import readTextFile
 
 logger = logging.getLogger('outwiker.core.pluginsloader')
 
+
 class PluginsLoader(object):
     """
     Load and keep plugins.
@@ -298,7 +299,6 @@ class PluginsLoader(object):
                           if not attr.startswith("__")]
 
             for name in attributes:
-
                 plugin = self.__createPlugin(module, name)
 
                 if plugin and self.__isNewPlugin(plugin.name):
@@ -330,7 +330,9 @@ class PluginsLoader(object):
             instance of name class or None
         """
         obj = getattr(module, name)
-        if issubclass(obj, Plugin) and obj != Plugin:
+        if (isinstance(obj, type) and
+                issubclass(obj, Plugin) and
+                obj != Plugin):
             return obj(self.__application)
 
     def __isNewPlugin(self, pluginname):

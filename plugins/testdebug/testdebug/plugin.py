@@ -399,10 +399,6 @@ class PluginDebug(Plugin):
                  """)
 
     @property
-    def version(self):
-        return u"0.5"
-
-    @property
     def url(self):
         return self._url
 
