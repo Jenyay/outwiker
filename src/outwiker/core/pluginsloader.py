@@ -195,6 +195,16 @@ class PluginsLoader(object):
         logger.debug(u'Trying to load the plug-in: {}'.format(
             packageName))
 
+        # Check module 'plugin.py' name in package
+        modules = [module for __, module, is_pkg
+                   in pkgutil.iter_modules([packagePath])
+                   if not is_pkg]
+
+        if 'plugin' not in modules:
+            self._print(_(u'plugin.py was not found in the package {}').format(
+                packagePath))
+            return
+
         # Checking information from plugin.xml file
         plugin_fname = join(packagePath,
                             PLUGIN_VERSION_FILE_NAME)
@@ -220,13 +230,7 @@ class PluginsLoader(object):
                          if appinfo is not None
                          else None)
 
-        # Check module with 'plugin.py' name
-        modules = [module for __, module, is_pkg
-                   in pkgutil.iter_modules([packagePath])
-                   if not is_pkg]
-
-        if versions_result == pv.PLUGIN_MUST_BE_UPGRADED or \
-            'plugin' not in modules:
+        if versions_result == pv.PLUGIN_MUST_BE_UPGRADED:
             error = _(u'Plug-in "{}" is outdated. Please, update the plug-in.').format(pluginname)
             self._print(error)
 
