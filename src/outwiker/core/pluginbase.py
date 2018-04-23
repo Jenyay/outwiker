@@ -10,7 +10,10 @@ from outwiker.core.i18n import getLanguageFromConfig, loadLanguage
 
 class Plugin (object, metaclass=ABCMeta):
     """
-    Базовый класс для плагинов
+    Base class for plugins.
+    The class defines minimal plugin's interface.
+    Properties and settings under "Abstract properties and methods"
+    should be redefined in real class.
     """
 
     def __init__(self, application):
@@ -31,8 +34,8 @@ class Plugin (object, metaclass=ABCMeta):
 
     def _init_i18n(self, domain, langdir):
         """
-        Инициализация интернационализации
-        domain - домен в файлах перевода
+        init localisation settings
+        domain - domain in localisation files
         langdir - путь до папки с переводами
         """
         language = getLanguageFromConfig(self._application.config)
@@ -51,8 +54,8 @@ class Plugin (object, metaclass=ABCMeta):
     @property
     def version(self):
         """
-        Свойство должно возвращать строку, описывающую версию плагина
-        в формате "x.y.z".
+        Property should return the plugin version
+        as a formatted string: "x.y.z".
         """
         return self._version
 
@@ -67,21 +70,21 @@ class Plugin (object, metaclass=ABCMeta):
         '''
         return self._pluginPath
 
-    ###################################################
-    # Свойства и методы, которые необходимо определить
-    ###################################################
+    ###################################
+    # Abstract properties and methods #
+    ###################################
 
     @abstractproperty
     def name(self):
         """
-        Свойство должно возвращать имя плагина
+        The property should return the plugin's name
         """
         pass
 
     @abstractproperty
     def description(self):
         """
-        Свойство должно возвращать описание плагина
+        The property should return the plugin's description
         """
         pass
 
