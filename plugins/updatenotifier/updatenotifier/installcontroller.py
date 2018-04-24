@@ -156,10 +156,13 @@ class InstallController(object):
 
         logger.info('uninstall_plugin: remove plugin {}'.format(rez))
 
-        # remove plugin folder
+        # remove plugin folder or remove symbolic link to it.
         if rez and os.path.exists(plugin_path):
             logger.info('uninstall_plugin: remove folder {}'.format(plugin_path))
-            shutil.rmtree(plugin_path)
+            if os.path.islink(plugin_path):
+                os.unlink(plugin_path)
+            else:
+                shutil.rmtree(plugin_path)
 
         self._updateDialog()
         return rez
