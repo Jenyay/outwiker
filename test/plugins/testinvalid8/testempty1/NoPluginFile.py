@@ -7,7 +7,7 @@ from outwiker.core.pluginbase import Plugin
 class PluginTestEmpty1 (Plugin):
     def __init__ (self, application):
         """
-        application - экземпляр класса core.application.ApplicationParams
+        Plugin with an error. No plugin.py modules in the package.
         """
         Plugin.__init__ (self, application)
         self.__enabled = False
@@ -23,13 +23,13 @@ class PluginTestEmpty1 (Plugin):
         return self._application
 
 
-    ###################################################
-    # Свойства и методы, которые необходимо определить
-    ###################################################
+    ###############################
+    # Abstract settings and methods
+    ###############################
 
     @property
     def name (self):
-        return u"TestEmpty1"
+        return u"TestPlugin"
 
     
     @property
@@ -41,6 +41,10 @@ class PluginTestEmpty1 (Plugin):
     def version (self):
         return u"0.1"
 
+    @version.setter
+    def version(self, value):
+        self._version = value
+
     
     def initialize(self):
         self.__enabled = True
@@ -48,7 +52,8 @@ class PluginTestEmpty1 (Plugin):
 
     def destroy (self):
         """
-        Уничтожение (выгрузка) плагина. Здесь плагин должен отписаться от всех событий
+        Plugin destroy actions.
+        Plugin must unbind for all events here.
         """
         self.__enabled = False
 

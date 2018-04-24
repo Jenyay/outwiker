@@ -7,7 +7,11 @@
 		<website>http://jenyay.net/Outwiker/UnstableEn</website>
 
 		<changelog>
-			<version number="2.1.0.839" status="dev">
+			<version number="2.1.0.841" status="dev">
+				<change>Accelerated plug-ins loading.</change>
+			</version>
+
+			<version number="2.1.0.840" status="dev" date="April 22, 2018">
 				<change>New toolbars.</change>
 			</version>
 
@@ -57,7 +61,11 @@
 		<website>http://jenyay.net/Outwiker/Unstable</website>
 
 		<changelog>
-			<version number="2.1.0.839" status="dev">
+			<version number="2.1.0.841" status="dev">
+				<change>Ускорена загрузка плагинов.</change>
+			</version>
+
+			<version number="2.1.0.840" status="dev" date="22.04.2018">
 				<change>Новые панели инструментов.</change>
 			</version>
 

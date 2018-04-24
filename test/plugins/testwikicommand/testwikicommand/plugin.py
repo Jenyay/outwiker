@@ -3,8 +3,12 @@
 
 from outwiker.core.pluginbase import Plugin
 
+from .commandtest import TestCommand
 
-class PluginTestEmpty2 (Plugin):
+class PluginTestWikiCommand (Plugin):
+    """
+    Плагин, добавляющий обработку команды TestCommand в википарсер
+    """
     def __init__ (self, application):
         """
         application - экземпляр класса core.application.ApplicationParams
@@ -12,34 +16,41 @@ class PluginTestEmpty2 (Plugin):
         Plugin.__init__ (self, application)
 
 
-    ###################################################
+
+    def __onWikiParserPrepare (self, parser):
+        parser.addCommand (TestCommand (parser))
+
+
+    #############################################
     # Свойства и методы, которые необходимо определить
-    ###################################################
+    #############################################
+
+    def initialize(self):
+        self._application.onWikiParserPrepare += self.__onWikiParserPrepare
+
 
     @property
     def name (self):
-        return u"TestEmpty2"
+        return u"TestWikiCommand"
 
     
     @property
     def description (self):
-        return _(u"This plugin is empty")
+        return _(u"Add command (:test:) in wiki parser")
 
 
     @property
     def version (self):
         return u"0.1"
 
-
-    def initialize(self):
-        pass
-
-
+    @version.setter
+    def version(self, value):
+        self._version = value
 
     def destroy (self):
         """
         Уничтожение (выгрузка) плагина. Здесь плагин должен отписаться от всех событий
         """
-        pass
+        self._application.onWikiParserPrepare -= self.__onWikiParserPrepare
 
     #############################################

@@ -28,7 +28,7 @@
 		</author>
 
 		<changelog>
-			<version number="1.1.1">
+			<version number="1.1.1" date="April 22, 2018">
                 <download os="all">http://jenyay.net/uploads/Outwiker/Statistics/statistics-1.1.1.zip</download>
 				<change>Bug fixes.</change>
 			</version>
@@ -77,7 +77,7 @@
 		</author>
 
 		<changelog>
-			<version number="1.1.1">
+			<version number="1.1.1" date="22.04.2018">
                 <download os="all">http://jenyay.net/uploads/Outwiker/Statistics/statistics-1.1.1.zip</download>
 				<change>Исправление ошибок.</change>
 			</version>

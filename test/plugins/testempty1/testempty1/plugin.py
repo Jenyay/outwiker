@@ -29,7 +29,7 @@ class PluginTestEmpty1 (Plugin):
 
     @property
     def name (self):
-        return u"TestReload"
+        return u"TestEmpty1"
 
     
     @property
@@ -44,6 +44,7 @@ class PluginTestEmpty1 (Plugin):
     @version.setter
     def version(self, value):
         self._version = value
+
     
     def initialize(self):
         self.__enabled = True
