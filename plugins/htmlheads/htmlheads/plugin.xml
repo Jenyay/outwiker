@@ -28,6 +28,11 @@
 		</author>
 
 		<changelog>
+			<version number="1.2.1">
+                <download os="all">http://jenyay.net/uploads/Outwiker/HtmlHeads/htmlheads-1.2.1.zip</download>
+				<change>Updated the Ukrainian localization.</change>
+			</version>
+
 			<version number="1.2" date="March 20, 2018">
                 <download os="all">http://jenyay.net/uploads/Outwiker/HtmlHeads/htmlheads-1.2.zip</download>
 				<change>Added new command to insert custom CSS style.</change>
@@ -83,6 +88,11 @@
 		</author>
 
 		<changelog>
+			<version number="1.2.1">
+                <download os="all">http://jenyay.net/uploads/Outwiker/HtmlHeads/htmlheads-1.2.1.zip</download>
+				<change>Обновлена украинская локализация.</change>
+			</version>
+
 			<version number="1.2" date="20.03.2018">
                 <download os="all">http://jenyay.net/uploads/Outwiker/HtmlHeads/htmlheads-1.2.zip</download>
 				<change>Добавлена команда для вставки пользовательских CSS-стилей.</change>

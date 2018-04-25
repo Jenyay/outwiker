@@ -2,98 +2,209 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-19 09:28+0300\n"
-"PO-Revision-Date: 2016-08-19 09:28+0300\n"
-"Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
+"POT-Creation-Date: 2018-01-30 09:23+0300\n"
+"PO-Revision-Date: 2018-04-25 17:10+0300\n"
+"Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
+"X-Generator: Poedit 2.0.7\n"
 "X-Crowdin-Project: outwiker\n"
 "X-Crowdin-Language: uk\n"
 "X-Crowdin-File: externaltools.po\n"
 
-#: controller.py:40
+#: controller.py:67 commandexec/commandcontroller.py:127
+msgid "ExternalTools"
+msgstr "ExternalTools"
+
+#: controller.py:87
 msgid "External Tools [Plugin]"
 msgstr "External Tools [Розширення]"
 
-#: externaltools.py:50
-msgid ""
-"Open notes files with external editor.\n"
-"\n"
-"For OutWiker 1.9 and above ExternalTools adds the (:exec:) command for "
-"creation link or button for execute external applications from wiki page.\n"
-"\n"
-"The (:exec:) command allow to run many applications. Every application must "
-"writed on the separated lines.\n"
-"\n"
-"If line begins with \"#\" this line will be ignored. \"#\" in begin of the "
-"line is sign of the comment.\n"
-msgstr ""
-"Відкриває файли нотаток у зовнішніх редакторах.\n"
-"\n"
-"Для OutWiker 1.9 і вище ExternalTools додає команду (:exec:) для створення "
-"посилання або кнопки для запуску зовнішніх застосунків з вікісторінки.\n"
-"\n"
-"Команда (:exec:) дозволяє запускати декілька застосунків. Кожен застосунок "
-"повинен бути записаний на окремому рядку.\n"
-"\n"
-"Якщо рядок починається з \"#\", то цей рядок ігнорується. \"#\" на початку "
-"рядка - це знак коментаря.\n"
+#: toolslistpanel.py:105
+msgid "Open file dialog..."
+msgstr "Діалогове вікно відкриття файлу..."
 
-#: externaltools.py:59
+#: toolslistpanel.py:111
+msgid "Remove tool"
+msgstr "Видалити застосунок"
+
+#: toolslistpanel.py:120
+msgid "Executables (*.exe)|*.exe|All Files|*.*"
+msgstr "Виконувані файли (*.exe)|*.exe|Всі файли|*.*"
+
+#: toolslistpanel.py:122
+msgid "All Files|*"
+msgstr "Всі Файли|*"
+
+#: menumaker.py:44
+msgid "Open Content File with..."
+msgstr "Відкрити файл з текстом нотатки в..."
+
+#: menumaker.py:58
+msgid "Open Result HTML File with..."
+msgstr "Відкрити HTML-файл в..."
+
+#: preferencespanel.py:39
+msgid "Warn before executing applications by (:exec:) command"
+msgstr ""
+"Показувати попередження перед запуском\n"
+"застосунків за допомогою команди (:exec:)"
+
+#: preferencespanel.py:42
+msgid "Tools List"
+msgstr "Список засобів"
+
+#: preferencespanel.py:43
+msgid "Append Tools"
+msgstr "Додати застосунок"
+
+#: preferencespanel.py:100
+msgid "Can't save options"
+msgstr "Не вдалося зберегти параметри"
+
+#: preferencespanel.py:101 menutoolscontroller.py:73
+msgid "Error"
+msgstr "Помилка"
+
+#: commandexec/commandcontroller.py:120
+msgid ""
+"Run applications by ExternalTools plugin?\n"
+"It may be unsafe."
+msgstr ""
+"Запустити застосунки за допомогою додатку ExternalTools?\n"
+"Це може бути небезпечно."
+
+#: commandexec/commandcontroller.py:122
+msgid ""
+"Run application by ExternalTools plugin?\n"
+"It may be unsafe."
+msgstr ""
+"Запустити застосунок за допомогою додатку ExternalTools?\n"
+"Це може бути небезпечно."
+
+#: commandexec/actions.py:43
+msgid "Run applications (:exec:)"
+msgstr "Запустити застосунок (:exec:)"
+
+#: commandexec/actions.py:47
+msgid "ExternalTools plugin. Insert (:exec:) command"
+msgstr "Додаток ExternalTools. Вставити команду (:exec:)"
+
+#: commandexec/actions.py:67
+msgid "%page%. Current page. Text file"
+msgstr "%page%. Поточна сторінка. Текстовий файл"
+
+#: commandexec/actions.py:71
+msgid "ExternalTools plugin. Insert a %page% macros. The macros will be replaced by a path to current page text file."
+msgstr "Додаток ExternalTools. Вставити макрос %page%. Цей макрос буде замінений на шлях до текстового файлу поточної сторінки."
+
+#: commandexec/actions.py:85
+msgid "%html%. Current page. HTML file"
+msgstr "%html%. Поточна сторінка. HTML-файл"
+
+#: commandexec/actions.py:89
+msgid "ExternalTools plugin. Insert a %html% macros. The macros will be replaced by a path to current HTML file."
+msgstr "Додаток ExternalTools. Вставити макрос %html%. Цей макрос буде замінений на шлях до HTML-файлу поточної сторінки."
+
+#: commandexec/actions.py:103
+msgid "%attach%. Path to current attachments folder"
+msgstr "%attach%. Шлях до поточної папки долучених файлів"
+
+#: commandexec/actions.py:107
+msgid "ExternalTools plugin. Insert a %attach% macros. The macros will be replaced by a path to current attach folder."
+msgstr "Додаток ExternalTools. Вставити макрос %attach%. Цей макрос буде замінений на шлях до папки з долученими файлами поточної сторінки."
+
+#: commandexec/actions.py:121
+msgid "%folder%. Path to current page folder"
+msgstr "%folder%. Шлях до папки поточної сторінки"
+
+#: commandexec/actions.py:125
+msgid "ExternalTools plugin. Insert a %folder% macros. The macros will be replaced by a path to current page folder."
+msgstr "Додаток ExternalTools. Вставити макрос %folder%. Цей макрос буде замінений на шлях до папки поточної сторінки."
+
+#: commandexec/execdialog.py:17
+msgid "Link"
+msgstr "Посилання"
+
+#: commandexec/execdialog.py:17
+msgid "Button"
+msgstr "Кнопка"
+
+#: commandexec/execdialog.py:19
+msgid "Inserting (:exec:) command"
+msgstr "Вставка команди (:exec:)"
+
+#: commandexec/execdialog.py:29
+msgid "Title"
+msgstr "Заголовок"
+
+#: commandexec/execdialog.py:47
+msgid "Format"
+msgstr "Формат"
+
+#: menutoolscontroller.py:72
+msgid "Can't execute tools"
+msgstr "Не вдалося запустити застосунок"
+
+#: plugin.py:37
+msgid ""
+"ExternalTools plug-in allows to open the notes files with external applications.\n"
+"\n"
+"The plug-in adds the (:exec:) command for creation link or button for execute external applications from wiki page.\n"
+"\n"
+"The (:exec:) command allows to run many applications. Every application must be placed at the separated lines.\n"
+"\n"
+"If a line begins with \"#\" this line will be ignored. \"#\" in begin of the line is sign of the comment.\n"
+msgstr ""
+"Додаток ExternalTools дозволяє відкривати файли нотаток за допомогою завнішніх застосунків.\n"
+"\n"
+"Додаток додає команду (:exec:) для створення посилання або кнопки, які дозволяють запускати зовнішні застосункі з вікісторінок..\n"
+"\n"
+"Команда (:exec:) дозволяє запускати декілька застосунків одночасно. Кожен застосунок має бути розміщений на окремому рядку.\n"
+"\n"
+"Якщо рядок починається зі знаку \"#\", то цей рядок ігнорується. Знак \"#\" на початку рядка означає коментар.\n"
+
+#: plugin.py:46
 msgid ""
 "The (:exec:) command has the following optional parameters:\n"
 "<ul>\n"
-"<li><b>format</b>. If the parameter equals \"button\" command will create a "
-"button instead of a link.</li>\n"
+"<li><b>format</b>. If the parameter equals \"button\" command will create a button instead of a link.</li>\n"
 "<li><b>title</b>. The parameter sets the text for link or button.</li>\n"
 "</ul>"
 msgstr ""
 "Команда (:exec:) має наступні необов'язкові параметри:\n"
 "<ul>\n"
-"<li>format. Якщо цей параметр дорівнює \"button\", то команда створить "
-"кнопку замість посилання (за замовчуванням).</li>\n"
+"<li>format. Якщо цей параметр дорівнює \"button\", то команда створить кнопку замість посилання (за замовчуванням).</li>\n"
 "<li>title. Цей параметр встановлює текст для посилання або кнопки.</li>\n"
 "</ul>"
 
-#: externaltools.py:65
+#: plugin.py:52
 msgid ""
-"Inside (:exec:) command may be macroses. The macroses will be replaced by "
-"appropriate paths:\n"
+"Inside (:exec:) command may be macroses. The macroses will be replaced by appropriate paths:\n"
 "<ul>\n"
-"<li><b>%page%</b>. The macros will be replaced by full path to page text "
-"file.</li>\n"
-"<li><b>%html%</b>. The macros will be replaced by full path to HTML content "
-"file.</li>\n"
-"<li><b>%folder%</b>. The macros will be replaced by full path to page folder."
-"</li>\n"
-"<li><b>%attach%</b>. The macros will be replaced by full path to attach "
-"folder without slash on the end.</li>\n"
+"<li><b>%page%</b>. The macros will be replaced by full path to page text file.</li>\n"
+"<li><b>%html%</b>. The macros will be replaced by full path to HTML content file.</li>\n"
+"<li><b>%folder%</b>. The macros will be replaced by full path to page folder.</li>\n"
+"<li><b>%attach%</b>. The macros will be replaced by full path to attach folder without slash on the end.</li>\n"
 "</ul>"
 msgstr ""
-"Всередині команди (:exec:) можуть використовуватися макроси. Ці макроси "
-"будуть замінені на відповідні шляхи:\n"
+"Всередині команди (:exec:) можуть використовуватися макроси. Ці макроси будуть замінені на відповідні шляхи:\n"
 "<ul>\n"
-"<li><b>%page%</b>. Цей макрос буде замінений на повний шлях до файлу з "
-"текстом сторінки.</li>\n"
-"<li><b>%html%</b>. Цей макрос буде замінений на повний шлях до HTML-файлу "
-"сторінки.</li>\n"
-"<li><b>%folder%</b>. Цей макрос буде замінений на повний шлях до папки "
-"сторінки.</li>\n"
-"<li><b>%attach%</b>. Цей макрос буде замінений на повний шлях до папки з "
-"долученими файлами без слешу на кінці.</li>\n"
+"<li><b>%page%</b>. Цей макрос буде замінений на повний шлях до файлу з текстом сторінки.</li>\n"
+"<li><b>%html%</b>. Цей макрос буде замінений на повний шлях до HTML-файлу сторінки.</li>\n"
+"<li><b>%folder%</b>. Цей макрос буде замінений на повний шлях до папки сторінки.</li>\n"
+"<li><b>%attach%</b>. Цей макрос буде замінений на повний шлях до папки з долученими файлами без слешу на кінці.</li>\n"
 "</ul>"
 
-#: externaltools.py:73
+#: plugin.py:60
 msgid "Examples"
 msgstr "Приклади"
 
-#: externaltools.py:75
+#: plugin.py:62
 msgid ""
 "Creating a link for running application.exe:\n"
 "<code><pre>(:exec:)application.exe(:execend:)</pre></code>"
@@ -101,7 +212,7 @@ msgstr ""
 "Створення посилання для запуску application.exe:\n"
 "<code><pre>(:exec:)application.exe(:execend:)</pre></code>"
 
-#: externaltools.py:78
+#: plugin.py:65
 msgid ""
 "Same but creating a button\n"
 "<code><pre>(:exec format=button:)\n"
@@ -113,7 +224,7 @@ msgstr ""
 "application.exe\n"
 "(:execend:)</pre></code>"
 
-#: externaltools.py:83
+#: plugin.py:70
 msgid ""
 "Create a link for running application.exe with parameters:\n"
 "<code><pre>(:exec:)\n"
@@ -125,25 +236,23 @@ msgstr ""
 "application.exe param1 \"c:\\myfolder\\path to file name\"\n"
 "(:execend:)</pre></code>"
 
-#: externaltools.py:88
+#: plugin.py:75
 msgid ""
 "Run a lot of applications:\n"
-"<code><pre>(:exec text=\"Run application_1, application_2 and "
-"application_3\":)\n"
+"<code><pre>(:exec title=\"Run application_1, application_2 and application_3\":)\n"
 "application_1.exe\n"
 "application_2.exe param_1 param_2\n"
 "application_3.exe param_1 param_2\n"
 "(:execend:)</pre></code>"
 msgstr ""
-"Запустити декілька застосунків:\n"
-"<code><pre>(:exec text=\"Run application_1, application_2 and "
-"application_3\":)\n"
+"Запуск декількох застосунків:\n"
+"<code><pre>(:exec title=\"Запустити application_1, application_2 та application_3\":)\n"
 "application_1.exe\n"
 "application_2.exe param_1 param_2\n"
 "application_3.exe param_1 param_2\n"
 "(:execend:)</pre></code>"
 
-#: externaltools.py:95
+#: plugin.py:82
 msgid ""
 "Open attached file with application.exe:\n"
 "<code><pre>(:exec:)\n"
@@ -155,7 +264,7 @@ msgstr ""
 "application.exe Attach:my_file.txt\n"
 "(:execend:)</pre></code>"
 
-#: externaltools.py:100
+#: plugin.py:87
 msgid ""
 "Execute application.exe from attachments folder:\n"
 "<code><pre>(:exec:)\n"
@@ -175,152 +284,6 @@ msgstr ""
 "Attach:application.exe Attach:my_file.txt\n"
 "(:execend:)</pre></code>"
 
-#: externaltools.py:160
+#: plugin.py:143
 msgid "http://jenyay.net/Outwiker/ExternalToolsEn"
 msgstr "http://jenyay.net/Outwiker/ExternalTools"
-
-#: toolslistpanel.py:109
-msgid "Open file dialog..."
-msgstr "Діалогове вікно відкриття файлу..."
-
-#: toolslistpanel.py:115
-msgid "Remove tool"
-msgstr "Видалити застосунок"
-
-#: toolslistpanel.py:125
-msgid "Executables (*.exe)|*.exe|All Files|*.*"
-msgstr "Виконувані файли (*.exe)|*.exe|Всі файли|*.*"
-
-#: toolslistpanel.py:127
-msgid "All Files|*"
-msgstr "Всі Файли|*"
-
-#: menumaker.py:43
-msgid "Open Content File with..."
-msgstr "Відкрити файл з текстом нотатки в..."
-
-#: menumaker.py:56
-msgid "Open Result HTML File with..."
-msgstr "Відкрити HTML-файл в..."
-
-#: preferencespanel.py:38
-msgid "Warn before executing applications by (:exec:) command"
-msgstr ""
-"Показувати попередження перед запуском\n"
-"застосунків за допомогою команди (:exec:)"
-
-#: preferencespanel.py:41
-msgid "Tools List"
-msgstr "Список засобів"
-
-#: preferencespanel.py:42
-msgid "Append Tools"
-msgstr "Додати застосунок"
-
-#: preferencespanel.py:97
-msgid "Can't save options"
-msgstr "Не вдалося зберегти параметри"
-
-#: preferencespanel.py:98 menutoolscontroller.py:82
-msgid "Error"
-msgstr "Помилка"
-
-#: commandexec/commandcontroller.py:188
-msgid ""
-"Run applications by ExternalTools plugin?\n"
-"It may be unsafe."
-msgstr ""
-"Запустити застосунки за допомогою додатку ExternalTools?\n"
-"Це може бути небезпечно."
-
-#: commandexec/commandcontroller.py:190
-msgid ""
-"Run application by ExternalTools plugin?\n"
-"It may be unsafe."
-msgstr ""
-"Запустити застосунок за допомогою додатку ExternalTools?\n"
-"Це може бути небезпечно."
-
-#: commandexec/commandcontroller.py:195 commandexec/guicreator.py:56
-msgid "ExternalTools"
-msgstr "ExternalTools"
-
-#: commandexec/actions.py:46
-msgid "Run applications (:exec:)"
-msgstr "Запустити застосунок (:exec:)"
-
-#: commandexec/actions.py:51
-msgid "ExternalTools plugin. Insert (:exec:) command"
-msgstr "Додаток ExternalTools. Вставити команду (:exec:)"
-
-#: commandexec/actions.py:74
-msgid "%page%. Current page. Text file"
-msgstr "%page%. Поточна сторінка. Текстовий файл"
-
-#: commandexec/actions.py:79
-msgid ""
-"ExternalTools plugin. Insert a %page% macros. The macros will be replaced by "
-"a path to current page text file."
-msgstr ""
-"Додаток ExternalTools. Вставити макрос %page%. Цей макрос буде замінений на "
-"шлях до текстового файлу поточної сторінки."
-
-#: commandexec/actions.py:96
-msgid "%html%. Current page. HTML file"
-msgstr "%html%. Поточна сторінка. HTML-файл"
-
-#: commandexec/actions.py:101
-msgid ""
-"ExternalTools plugin. Insert a %html% macros. The macros will be replaced by "
-"a path to current HTML file."
-msgstr ""
-"Додаток ExternalTools. Вставити макрос %html%. Цей макрос буде замінений на "
-"шлях до HTML-файлу поточної сторінки."
-
-#: commandexec/actions.py:118
-msgid "%attach%. Path to current attachments folder"
-msgstr "%attach%. Шлях до поточної папки долучених файлів"
-
-#: commandexec/actions.py:123
-msgid ""
-"ExternalTools plugin. Insert a %attach% macros. The macros will be replaced "
-"by a path to current attach folder."
-msgstr ""
-"Додаток ExternalTools. Вставити макрос %attach%. Цей макрос буде замінений "
-"на шлях до папки з долученими файлами поточної сторінки."
-
-#: commandexec/actions.py:140
-msgid "%folder%. Path to current page folder"
-msgstr "%folder%. Шлях до папки поточної сторінки"
-
-#: commandexec/actions.py:145
-msgid ""
-"ExternalTools plugin. Insert a %folder% macros. The macros will be replaced "
-"by a path to current page folder."
-msgstr ""
-"Додаток ExternalTools. Вставити макрос %folder%. Цей макрос буде замінений "
-"на шлях до папки поточної сторінки."
-
-#: commandexec/execdialog.py:17
-msgid "Link"
-msgstr "Посилання"
-
-#: commandexec/execdialog.py:17
-msgid "Button"
-msgstr "Кнопка"
-
-#: commandexec/execdialog.py:19
-msgid "Inserting (:exec:) command"
-msgstr "Вставка команди (:exec:)"
-
-#: commandexec/execdialog.py:30
-msgid "Title"
-msgstr "Заголовок"
-
-#: commandexec/execdialog.py:48
-msgid "Format"
-msgstr "Формат"
-
-#: menutoolscontroller.py:81
-msgid "Can't execute tools"
-msgstr "Не вдалося запустити застосунок"
