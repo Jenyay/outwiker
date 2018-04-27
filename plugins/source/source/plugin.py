@@ -12,6 +12,7 @@ class PluginSource(Plugin):
     """
     Плагин, добавляющий обработку команды (:source:) в википарсер
     """
+
     def __init__(self, application):
         """
         application - экземпляр класса core.application.ApplicationParams
@@ -42,7 +43,8 @@ class PluginSource(Plugin):
 
     @property
     def description(self):
-        description = _(u"Add command (:source:) in wiki parser. This command highlight your source code.")
+        description = _(
+            u"Add command (:source:) in wiki parser. This command highlight your source code.")
 
         usage = _(u"""<B>Usage:</B>:
 (:source params... :)

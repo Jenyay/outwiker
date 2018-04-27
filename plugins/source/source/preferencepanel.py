@@ -14,6 +14,7 @@ class PreferencePanel(BasePrefPanel):
     """
     Панель с настройками
     """
+
     def __init__(self, parent, config):
         """
         parent - родитель панели(должен быть wx.Treebook)
@@ -175,6 +176,7 @@ class PrefPanelController(object):
     """
     Контроллер для панели настроек
     """
+
     def __init__(self, owner, config):
         self.MIN_TAB_WIDTH = 1
         self.MAX_TAB_WIDTH = 50
@@ -215,7 +217,8 @@ class PrefPanelController(object):
         self.__config.languageList.value = self.__owner.langList.GetCheckedStrings()
 
     def _onSelectAll(self, event):
-        self.__owner.langList.SetChecked(range(self.__owner.langList.GetCount()))
+        self.__owner.langList.SetChecked(
+            range(self.__owner.langList.GetCount()))
 
     def _onClear(self, event):
         self.__owner.langList.SetChecked([])
@@ -229,9 +232,8 @@ class PrefPanelController(object):
                      for lexer in LEXERS.values()]
 
         # Сделаем некоторые замены
-        languages = self._replaceLangItem(languages, "php3", "php")
+        languages = sorted(self._replaceLangItem(languages, "php3", "php"))
 
-        languages.sort()
         return languages
 
     def _replaceLangItem(self, items, oldname, newname):

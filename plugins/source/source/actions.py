@@ -30,7 +30,8 @@ class InsertSourceAction(BaseAction):
 
     @property
     def description(self):
-        return _(u"Source plugin. Insert (: source... :) command for source code highlighting")
+        return _(
+            u"Source plugin. Insert (: source... :) command for source code highlighting")
 
     def run(self, params):
         self._insertCommand()
