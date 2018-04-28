@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from outwiker.pages.wiki.parser.command import Command
 from outwiker.core.attachment import Attachment
@@ -6,17 +6,17 @@ from outwiker.core.attachment import Attachment
 from .sourceconfig import SourceConfig
 from .lexermaker import LexerMaker
 from .i18n import get_
-from .params import(FILE_PARAM_NAME,
-                    ENCODING_PARAM_NAME,
-                    ENCODING_DEFAULT,
-                    TAB_WIDTH_PARAM_NAME,
-                    HIGHLIGHT_STYLE,
-                    TAB_WIDTH_DEFAULT,
-                    STYLE_PARAM_NAME,
-                    PARENT_BACKGROUND_PARAM_NAME,
-                    LINE_NUM_PARAM_NAME,
-                    CUSTOM_STYLES
-                    )
+from .params import (FILE_PARAM_NAME,
+                     ENCODING_PARAM_NAME,
+                     ENCODING_DEFAULT,
+                     TAB_WIDTH_PARAM_NAME,
+                     HIGHLIGHT_STYLE,
+                     TAB_WIDTH_DEFAULT,
+                     STYLE_PARAM_NAME,
+                     PARENT_BACKGROUND_PARAM_NAME,
+                     LINE_NUM_PARAM_NAME,
+                     CUSTOM_STYLES
+                     )
 from .misc import getFileName, getDefaultStyle
 
 
@@ -37,6 +37,7 @@ class CommandSource(Command):
         (используется вместе с параметром file).
         Если кодировка не указана, используется UTF-8
     """
+
     def __init__(self, parser, config):
         """
         parser - экземпляр парсера
@@ -132,7 +133,7 @@ class CommandSource(Command):
 
     def __getStyle(self, params_dict):
         from pygments.styles import STYLE_MAP
-        if(STYLE_PARAM_NAME not in params_dict or
+        if (STYLE_PARAM_NAME not in params_dict or
                 params_dict[STYLE_PARAM_NAME] not in STYLE_MAP):
             return getDefaultStyle(self.__config)
 
@@ -173,7 +174,8 @@ class CommandSource(Command):
             sourceStyle += CUSTOM_STYLES.format(name=cssclass)
 
             if parentbg:
-                sourceStyle += u"\n.{name} {{color: inherit; background-color: inherit }}".format(name=cssclass)
+                sourceStyle += u"\n.{name} {{color: inherit; background-color: inherit }}".format(
+                    name=cssclass)
 
             styleTemplate = u"<STYLE>{0}</STYLE>"
             self.parser.appendToHead(styleTemplate.format(sourceStyle))

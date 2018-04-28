@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os.path
 
@@ -15,6 +15,7 @@ class InsertDialogController(object):
     """
     Класс для управления диалогом InsertDialog
     """
+
     def __init__(self, page, dialog, config):
         """
         page - текущая страница
@@ -67,8 +68,7 @@ class InsertDialogController(object):
         )
 
         if dlg.ShowModal() == wx.ID_OK:
-            files = dlg.GetPaths()
-            files.sort()
+            files = sorted(dlg.GetPaths())
             attachFiles(self._dialog, self._page, files)
 
             self._loadAttachmentState()
@@ -229,7 +229,7 @@ class InsertDialogController(object):
         """
         Изменение размера диалога
         """
-        currentWidth, currentHeight = self._dialog.GetSizeTuple()
+        currentWidth, currentHeight = self._dialog.GetSize()
         dialogWidth = max(self._config.dialogWidth.value, currentWidth)
         dialogHeight = max(self._config.dialogHeight.value, currentHeight)
 
@@ -237,8 +237,7 @@ class InsertDialogController(object):
 
     def _loadAttachmentState(self):
         attach = Attachment(self._page)
-        files = attach.getAttachRelative()
-        files.sort()
+        files = sorted(attach.getAttachRelative())
 
         self._dialog.attachmentComboBox.Clear()
         self._dialog.attachmentComboBox.AppendItems(files)

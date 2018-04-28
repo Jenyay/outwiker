@@ -9,7 +9,7 @@ class Window(EvtHandler):
 
         self.Enabled = True
 
-    def GetSizeTuple(self):
+    def GetSize(self):
         return(0, 0)
 
     def GetClientSize(self):
