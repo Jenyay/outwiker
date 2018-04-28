@@ -185,7 +185,6 @@ class UpdateController(object):
 
         return result
 
-
     def _getUpdatedAppInfo(self, latestVersionsDict):
         '''
         Get AppInfo instances for updated apps (plugins and OutWiker) only.
@@ -195,8 +194,8 @@ class UpdateController(object):
         Return dictionary with the AppInfo instances for updated apps.
         '''
         currentVersionsDict = self._getCurrentVersionsDict()
-        updatedAppInfo = self.filterUpdatedApps(currentVersionsDict,
-                                                latestVersionsDict)
+        #updatedAppInfo = self.filterUpdatedApps(currentVersionsDict, latestVersionsDict)
+        updatedAppInfo = latestVersionsDict
         return updatedAppInfo
 
 
@@ -245,6 +244,15 @@ class UpdateController(object):
         elif not event.silenceMode:
             MessageBox(_(u"Updates not found"), u"UpdateNotifier")
 
+    def _getUrlsForInstaller(self):
+
+        self._pluginsRepoPath = os.path.join(self._dataPath, u'plugins.json')
+
+        # read data/plugins.json
+        self._installerPlugins = json.loads(readTextFile(self._pluginsRepoPath))
+
+        updateUrls = {x['name']:x['url'] for x in self._installerPlugins.values()}
+        return updateUrls
 
     def _touchLastUpdateDate(self):
         '''
@@ -257,6 +265,8 @@ class UpdateController(object):
         """
         Thread function for silence updates checking
         """
+        # get update URLs from plugins.json
+        updateUrls.update(self._getUrlsForInstaller())
         # get update URLs from enabled plugins
         updateUrls.update(self._getPluginsUpdateUrls())
 
