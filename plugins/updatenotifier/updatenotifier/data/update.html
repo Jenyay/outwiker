@@ -67,6 +67,24 @@
 				border-left: 4px solid #518BDB;
 				padding-left: 1em;
 			}
+
+			.install {
+				border-radius: 2px;
+				color: #fff;
+				font-weight: bold;
+				padding: 0.2em 1em;
+				text-decoration: none;
+				background-color: #518BDB;
+			}
+
+			.uninstall {
+				border-radius: 2px;
+				color: #fff;
+				font-weight: bold;
+				padding: 0.2em 1em;
+				text-decoration: none;
+				background-color: #518BDB;
+			}
 		</style>
 
 		<script>
@@ -81,12 +99,18 @@
 		</script>
 	</head>
 	<body>
-        {% macro update_info(id)%}
-        {% set download_url = updatedAppInfo[id].appwebsite %}
-		{% set update_url = updatedAppInfo[id].versionsList[0].downloads %}
+        {% macro update_info(id, appInfo)%}
+        {% set download_url = appInfo.appwebsite %}
+		{% set update_url = appInfo.versionsList[0].downloads %}
         <div class="controls">
-			{% if 'OUTWIKER_' not in id %}
+			{% if 'OUTWIKER_' not in id and idcurrentVersionsDict %}
 				<a class="update button" href="update:{{id}}">{{str_update}}</a>
+			{% endif %}
+
+			{% if id in installed_plugins %}
+				<a class="uninstall button" href="uninstall:{{plugin}}">{{str_uninstall}}</a>
+			{% else %}
+				<a class="install button" href="install:{{plugin}}">{{str_install}}</a>
 			{% endif %}
 
             {% if download_url %}
@@ -100,7 +124,7 @@
                     <div id="{{id}}-changelog" class="changelog">
 						<h3>{{str_version_history}}</h3>
 
-						{% for version in updatedAppInfo[id].versionsList %}
+						{% for version in appInfo.versionsList %}
 						<h4>{{version.version}} {{(version.date)}}</h4>
 						<ul>
 							{% for change in version.changes %}
@@ -114,18 +138,18 @@
 		<div class="outwiker-current">{{str_outwiker_current_version}}: <span class="version version-current">{{outwiker_current_version}}</span></div>
 		<div class="version-block outwiker-version">
 
-            {% if 'OUTWIKER_STABLE' in updatedAppInfo%}
+            {% if 'OUTWIKER_STABLE' in outwikerAppInfo%}
 				<!-- Outwiker stable version block begin -->
-				<div class="outwiker-latest-stable">{{str_outwiker_latest_stable_version}}: <span class="version version-new">{{updatedAppInfo['OUTWIKER_STABLE'].currentVersionStr}}</span>
-                {{ update_info('OUTWIKER_STABLE') }}
+				<div class="outwiker-latest-stable">{{str_outwiker_latest_stable_version}}: <span class="version version-new">{{outwikerAppInfo['OUTWIKER_STABLE'].currentVersionStr}}</span>
+                {{ update_info('OUTWIKER_STABLE', outwikerAppInfo['OUTWIKER_STABLE']) }}
 				</div>
 				<!-- Outwiker stable version block end -->
             {% endif %}
 
-            {% if 'OUTWIKER_UNSTABLE' in  updatedAppInfo%}
+            {% if 'OUTWIKER_UNSTABLE' in outwikerAppInfo%}
 				<!-- Outwiker unstable version block begin -->
-				<div class="outwiker-latest-unstable">{{str_outwiker_latest_unstable_version}}: <span class="version version-new">{{updatedAppInfo['OUTWIKER_UNSTABLE'].currentVersionStr}}</span>
-					{{ update_info('OUTWIKER_UNSTABLE') }}
+				<div class="outwiker-latest-unstable">{{str_outwiker_latest_unstable_version}}: <span class="version version-new">{{outwikerAppInfo['OUTWIKER_UNSTABLE'].currentVersionStr}}</span>
+					{{ update_info('OUTWIKER_UNSTABLE', outwikerAppInfo['OUTWIKER_UNSTABLE']) }}
 				</div>
 				<!-- Outwiker unstable version block end -->
             {% endif %}
@@ -133,14 +157,12 @@
 			</div>
 
 		{% for pluginName, pluginInfo in updatedAppInfo.items() %}
-            {% if pluginName != 'OUTWIKER_STABLE' and pluginName != 'OUTWIKER_UNSTABLE' %}
                 <!-- {{pluginName}} block begin -->
                 <div class="version-block plugin-version {{pluginName|replace(' ', '_')}}">
                     <div class="title">{{pluginName}} <span class="version version-current">{{currentVersionsDict[pluginName]}}</span> &#x27f6; <span class="version version-new">{{pluginInfo.currentVersionStr}}</span></div>
-                    {{ update_info(pluginName) }}
+                    {{ update_info(pluginName, pluginInfo) }}
                 </div>
                 <!-- {{pluginName}} block end -->
-            {% endif %}
 		{% endfor %}
 	</body>
 </html>

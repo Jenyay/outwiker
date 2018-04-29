@@ -107,12 +107,31 @@ class UpdateController(object):
         currentVersion = getCurrentVersion()
         currentVersionsDict = self._getCurrentVersionsDict()
 
+        installed_plugins = self._getInstalledPlugins()
+
+        outwikerAppInfo = {}
+        updateAppInfo = {}
+        installedAppInfo = {}
+        otherAppInfo = {}
+        for x, y in updatedAppInfo.items():
+            if 'OUTWIKER_' in x:
+                outwikerAppInfo[x] = y
+            elif x in currentVersionsDict:
+                updateAppInfo[x] = y
+            elif x in installed_plugins:
+                installedAppInfo[x] = y
+            else:
+                otherAppInfo[x] = y
+
         template = readTextFile(self._updateTemplatePath)
 
         templateData = {
             u'outwiker_current_version': currentVersion,
-            u'updatedAppInfo': updatedAppInfo,
+            u'outwikerAppInfo': outwikerAppInfo,
+            u'updatedAppInfo': updateAppInfo,
             u'currentVersionsDict': currentVersionsDict,
+            u'installed_plugins': installedAppInfo,
+            u'otherAppInfo': otherAppInfo,
             u'str_outwiker_current_version': _(u'Installed OutWiker version'),
             u'str_outwiker_latest_stable_version': _(u'Latest stable OutWiker version'),
             u'str_outwiker_latest_unstable_version': _(u'Latest unstable OutWiker version'),
@@ -120,6 +139,8 @@ class UpdateController(object):
             u'str_more_info': _(u'More info'),
             u'str_download': _(u'Download'),
             u'str_update': _(u'Update'),
+            u'str_install': _(u'Install'),
+            u'str_uninstall': _(u'Uninstall'),
         }
 
         contentGenerator = ContentGenerator(template)
@@ -310,3 +331,14 @@ class UpdateController(object):
         else:
             MessageBox(_(u"Plugin was NOT updated. Please update plugin manually"), u"UpdateNotifier")
         return rez
+
+    def _getInstalledPlugins(self):
+        """
+        Retrieve list with names of all installed plugins
+        """
+        #TODO: It seems the method should be moved to PluginsLoader
+
+        enabled_plugins = [p.name for p in self._application.plugins]
+        disabled_plugins = list(self._application.plugins.disabledPlugins)
+
+        return enabled_plugins + disabled_plugins
