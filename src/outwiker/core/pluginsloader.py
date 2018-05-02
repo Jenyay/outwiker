@@ -202,7 +202,7 @@ class PluginsLoader(object):
                    if not is_pkg]
 
         if 'plugin' not in modules:
-            self._print(_(u'plugin.py was not found in the package {}').format(
+            logger.error('plugin.py was not found in the package {}'.format(
                 packagePath))
             return
 

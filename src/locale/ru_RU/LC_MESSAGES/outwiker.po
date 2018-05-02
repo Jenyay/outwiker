@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-02 18:59+0300\n"
+"POT-Creation-Date: 2018-05-02 19:07+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -18,10 +18,6 @@ msgstr ""
 #: outwiker/core/tree.py:262
 msgid "Error reading page {}"
 msgstr "Ошибка чтения страницы {}"
-
-#: outwiker/core/pluginsloader.py:205
-msgid "plugin.py was not found in the package {}"
-msgstr ""
 
 #: outwiker/core/pluginsloader.py:215
 msgid "Plug-in \"{}\". Can't read \"{}\" file"
@@ -1670,8 +1666,8 @@ msgid "Paragraphs separator"
 msgstr "Разделитель параграфов"
 
 #: outwiker/gui/preferences/htmlrenderpanel.py:41
-msgid "Additional styles(CSS):"
-msgstr ""
+msgid "Additional styles (CSS):"
+msgstr "Дополнительные стили (CSS):"
 
 #: outwiker/gui/preferences/textprintpanel.py:28
 msgid "This options for text printing only"
@@ -2525,9 +2521,6 @@ msgstr "Толщина рамки"
 
 #~ msgid "# Search"
 #~ msgstr "# Поиск"
-
-#~ msgid "Additional styles (CSS):"
-#~ msgstr "Дополнительные стили (CSS):"
 
 #~ msgid "Refresh"
 #~ msgstr "Обновить"
