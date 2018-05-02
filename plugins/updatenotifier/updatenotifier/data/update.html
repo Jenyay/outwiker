@@ -78,12 +78,10 @@
 			}
 
 			.uninstall {
-				border-radius: 2px;
-				color: #fff;
+				color: #ecebbd;
 				font-weight: bold;
-				padding: 0.2em 1em;
+				padding: 1em;
 				text-decoration: none;
-				background-color: #518BDB;
 			}
 		</style>
 
@@ -107,11 +105,34 @@
 				<a class="update button" href="update:{{id}}">{{str_update}}</a>
 			{% endif %}
 
-			{% if id in installed_plugins %}
-				<a class="uninstall button" href="uninstall:{{plugin}}">{{str_uninstall}}</a>
-			{% else %}
-				<a class="install button" href="install:{{plugin}}">{{str_install}}</a>
-			{% endif %}
+            {% if download_url %}
+                <a class="download button" href="{{download_url}}">{{str_download}}</a>
+            {% endif %}
+
+            <a class="show-changelog button" href="#"  onclick="toggleChangelog('{{id}}-changelog');">{{str_more_info}}</a>
+			<a class="uninstall button" href="uninstall:{{plugin}}">{{str_uninstall}}</a>
+					</div>
+
+                    <!-- {{id}} version changelog -->
+                    <div id="{{id}}-changelog" class="changelog">
+						<h3>{{str_version_history}}</h3>
+
+						{% for version in appInfo.versionsList %}
+						<h4>{{version.version}} {{(version.date)}}</h4>
+						<ul>
+							{% for change in version.changes %}
+							<li>{{change}}</li>
+							{% endfor %}
+						</ul>
+						{% endfor %}
+					</div>
+        {%- endmacro %}
+
+        {% macro instal_info(id, appInfo)%}
+        {% set download_url = appInfo.appwebsite %}
+		{% set update_url = appInfo.versionsList[0].downloads %}
+        <div class="controls">
+			<a class="install button" href="install:{{plugin}}">{{str_install}}</a>
 
             {% if download_url %}
                 <a class="download button" href="{{download_url}}">{{str_download}}</a>
@@ -133,6 +154,7 @@
 						</ul>
 						{% endfor %}
 					</div>
+
         {%- endmacro %}
 
 		<div class="outwiker-current">{{str_outwiker_current_version}}: <span class="version version-current">{{outwiker_current_version}}</span></div>
@@ -161,6 +183,24 @@
                 <div class="version-block plugin-version {{pluginName|replace(' ', '_')}}">
                     <div class="title">{{pluginName}} <span class="version version-current">{{currentVersionsDict[pluginName]}}</span> &#x27f6; <span class="version version-new">{{pluginInfo.currentVersionStr}}</span></div>
                     {{ update_info(pluginName, pluginInfo) }}
+                </div>
+                <!-- {{pluginName}} block end -->
+		{% endfor %}
+
+		{% for pluginName, pluginInfo in installedAppInfo.items() %}
+                <!-- {{pluginName}} block begin -->
+                <div class="version-block plugin-version {{pluginName|replace(' ', '_')}}">
+                    <div class="title">{{pluginName}} <span class="version version-current">{{currentVersionsDict[pluginName]}}</span> &#x27f6; <span class="version version-new">{{pluginInfo.currentVersionStr}}</span></div>
+                    {{ update_info(pluginName, pluginInfo) }}
+                </div>
+                <!-- {{pluginName}} block end -->
+		{% endfor %}
+
+		{% for pluginName, pluginInfo in otherAppInfo.items() %}
+                <!-- {{pluginName}} block begin -->
+                <div class="version-block plugin-version {{pluginName|replace(' ', '_')}}">
+                    <div class="title">{{pluginName}} <span class="version version-new">{{pluginInfo.currentVersionStr}}</span></div>
+                    {{ instal_info(pluginName, pluginInfo) }}
                 </div>
                 <!-- {{pluginName}} block end -->
 		{% endfor %}

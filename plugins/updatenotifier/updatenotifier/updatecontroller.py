@@ -103,35 +103,23 @@ class UpdateController(object):
                            silenceMode=False)
 
 
-    def createHTMLContent(self, updatedAppInfo):
+    def createHTMLContent(self, appInfoDict, updatedAppInfo, installerInfoDict):
         currentVersion = getCurrentVersion()
         currentVersionsDict = self._getCurrentVersionsDict()
 
-        installed_plugins = self._getInstalledPlugins()
+        updateAppInfo = self.filterUpdatedApps(currentVersionsDict, updatedAppInfo)
 
-        outwikerAppInfo = {}
-        updateAppInfo = {}
-        installedAppInfo = {}
-        otherAppInfo = {}
-        for x, y in updatedAppInfo.items():
-            if 'OUTWIKER_' in x:
-                outwikerAppInfo[x] = y
-            elif x in currentVersionsDict:
-                updateAppInfo[x] = y
-            elif x in installed_plugins:
-                installedAppInfo[x] = y
-            else:
-                otherAppInfo[x] = y
+        installedAppInfo = {x: y for x, y in updatedAppInfo.items() if x not in updateAppInfo}
 
         template = readTextFile(self._updateTemplatePath)
 
         templateData = {
             u'outwiker_current_version': currentVersion,
-            u'outwikerAppInfo': outwikerAppInfo,
+            u'outwikerAppInfo': appInfoDict,
             u'updatedAppInfo': updateAppInfo,
+            u'installedAppInfo': installedAppInfo,
+            u'otherAppInfo': installerInfoDict,
             u'currentVersionsDict': currentVersionsDict,
-            u'installed_plugins': installedAppInfo,
-            u'otherAppInfo': otherAppInfo,
             u'str_outwiker_current_version': _(u'Installed OutWiker version'),
             u'str_outwiker_latest_stable_version': _(u'Latest stable OutWiker version'),
             u'str_outwiker_latest_unstable_version': _(u'Latest unstable OutWiker version'),
@@ -190,7 +178,7 @@ class UpdateController(object):
         getInfo = self._application.plugins.getInfo
 
         result = {}
-        plugin_names = [p.name for p in self._application.plugins]
+        plugin_names = self._getInstalledPlugins()
         for name in plugin_names:
 
             try:
@@ -209,13 +197,14 @@ class UpdateController(object):
     def _getUpdatedAppInfo(self, latestVersionsDict):
         '''
         Get AppInfo instances for updated apps (plugins and OutWiker) only.
+
         latestVersionsDict - dictionary. Key - plugin name or special id,
             value - instance of the AppInfo class.
 
         Return dictionary with the AppInfo instances for updated apps.
         '''
         currentVersionsDict = self._getCurrentVersionsDict()
-        #updatedAppInfo = self.filterUpdatedApps(currentVersionsDict, latestVersionsDict)
+        updatedAppInfo = self.filterUpdatedApps(currentVersionsDict, latestVersionsDict)
         updatedAppInfo = latestVersionsDict
         return updatedAppInfo
 
@@ -237,13 +226,13 @@ class UpdateController(object):
         return currentVersionsDict
 
 
-    def _showUpdates(self, updatedAppInfo):
+    def _showUpdates(self, appInfoDict, updatedAppInfo, installerInfoDict):
         '''
         Show dialog with update information.
         '''
         setStatusText(u"")
 
-        HTMLContent = self.createHTMLContent(updatedAppInfo)
+        HTMLContent = self.createHTMLContent(appInfoDict, updatedAppInfo, installerInfoDict)
 
         with UpdateDialog(self._application.mainWindow) as updateDialog:
             self._dialog = updateDialog
@@ -256,14 +245,51 @@ class UpdateController(object):
         Event handler for EVT_UPDATE_VERSIONS.
         '''
         setStatusText(u"")
-
-        updatedAppInfo = self._getUpdatedAppInfo(event.appInfoDict)
         self._touchLastUpdateDate()
 
-        if updatedAppInfo:
-            self._showUpdates(updatedAppInfo)
-        elif not event.silenceMode:
-            MessageBox(_(u"Updates not found"), u"UpdateNotifier")
+        updatedAppInfo = self._getUpdatedAppInfo(event.plugInfoDict)
+
+
+        if event.silenceMode:
+            if updatedAppInfo:
+                self._showUpdates(event.appInfoDict, event.plugInfoDict, event.installerInfoDict)
+        else:
+            self._showUpdates(event.appInfoDict, event.plugInfoDict, event.installerInfoDict)
+
+
+    def _threadFunc(self, updateUrls, silenceMode):
+        """
+        Thread function for silence updates checking.
+        Get info data from the  updates Urls
+
+        :param:
+            updateUrls - dict which key is plugin name or other ID,
+                value is update url
+            silenceMode - True or False
+
+        :raise:
+            EVT_UPDATE_VERSIONS event
+        """
+
+        # get
+        appInfoDict = VersionList().loadAppInfo(updateUrls)
+
+        # get update URLs from installed plugins
+        plugInfoDict = VersionList().loadAppInfo(self._getPluginsUpdateUrls())
+
+        # get update URLs from plugins.json and remove installed.
+        installerInfoDict = {x: y for x,y in self._getUrlsForInstaller().items()
+                             if x not in plugInfoDict}
+        installerInfoDict = VersionList().loadAppInfo(installerInfoDict)
+
+
+        event = UpdateVersionsEvent(appInfoDict=appInfoDict,
+                                    plugInfoDict=plugInfoDict,
+                                    installerInfoDict=installerInfoDict,
+                                    silenceMode=silenceMode)
+
+        if self._application.mainWindow:
+            wx.PostEvent(self._application.mainWindow, event)
 
     def _getUrlsForInstaller(self):
 
@@ -275,28 +301,13 @@ class UpdateController(object):
         updateUrls = {x['name']:x['url'] for x in self._installerPlugins.values()}
         return updateUrls
 
+
     def _touchLastUpdateDate(self):
         '''
         Save latest updates checking time.
         '''
         self._config.lastUpdate = datetime.datetime.today()
 
-
-    def _threadFunc(self, updateUrls, silenceMode):
-        """
-        Thread function for silence updates checking
-        """
-        # get update URLs from plugins.json
-        updateUrls.update(self._getUrlsForInstaller())
-        # get update URLs from enabled plugins
-        updateUrls.update(self._getPluginsUpdateUrls())
-
-        appInfoDict = VersionList().loadAppInfo(updateUrls)
-        event = UpdateVersionsEvent(appInfoDict=appInfoDict,
-                                    silenceMode=silenceMode)
-
-        if self._application.mainWindow:
-            wx.PostEvent(self._application.mainWindow, event)
 
     def update_plugin(self, name):
         """
@@ -331,6 +342,7 @@ class UpdateController(object):
         else:
             MessageBox(_(u"Plugin was NOT updated. Please update plugin manually"), u"UpdateNotifier")
         return rez
+
 
     def _getInstalledPlugins(self):
         """
