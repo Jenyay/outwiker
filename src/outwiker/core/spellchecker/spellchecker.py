@@ -1,86 +1,81 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import re
 
 from .enchantwrapper import EnchantWrapper
 
 
-class SpellChecker (object):
+class SpellChecker(object):
     """
     Class for checking a word with dictionaries
     """
-    def __init__ (self, application, langlist, folders):
+
+    def __init__(self, langlist, folders):
         """
-        langlist - list of a languages for checking (for example ["ru_RU", "en_US"])
+        langlist - list of a languages for checking
+            (for example ["ru_RU", "en_US"])
         folders - list of paths to dictionaries
         """
-        self._application = application
-        self._realChecker = self._getSpellCheckerWrapper (langlist, folders)
+        self._realChecker = self._getSpellCheckerWrapper(langlist, folders)
 
-        self._wordRegex = re.compile (r'(?:(?:\w-\w)|\w)+', re.U)
-        self._digitRegex = re.compile ('\d', re.U)
+        self._wordRegex = re.compile(r'(?:(?:\w-\w)|\w)+', re.U)
+        self._digitRegex = re.compile('\d', re.U)
 
         self._skipWordsWithNumbers = True
-
 
     @property
     def skipWordsWithNumbers(self):
         return self._skipWordsWithNumbers
 
-
     @skipWordsWithNumbers.setter
-    def skipWordsWithNumbers (self, value):
+    def skipWordsWithNumbers(self, value):
         self._skipWordsWithNumbers = value
 
-
-    def check (self, word):
+    def check(self, word):
         """
-        Return True if word is contained in the dictionaries and False otherwise
+        Return True if word is contained in the dictionaries
+            or False otherwise
         """
         isValid = False
 
         if self._skipWordsWithNumbers:
-            match = self._digitRegex.search (word)
+            match = self._digitRegex.search(word)
             if match is not None:
                 isValid = True
 
         if not isValid:
-            isValid = self._realChecker.check (word)
+            isValid = self._realChecker.check(word)
 
         return isValid
 
-
-    def _getSpellCheckerWrapper (self, langlist, folders):
+    def _getSpellCheckerWrapper(self, langlist, folders):
         """
         Return wrapper for "real" spell checker (hunspell, enchant, etc)
         """
-        return EnchantWrapper (langlist, folders)
+        return EnchantWrapper(langlist, folders)
 
+    def addCustomDict(self, path):
+        self._realChecker.addCustomDict(path)
 
-    def addCustomDict (self, path):
-        self._realChecker.addCustomDict (path)
+    def addToCustomDict(self, dictIndex, word):
+        self._realChecker.addToCustomDict(dictIndex, word)
 
+    def getSuggest(self, word):
+        return self._realChecker.getSuggest(word)
 
-    def addToCustomDict (self, dictIndex, word):
-        self._realChecker.addToCustomDict (dictIndex, word)
-
-
-    def getSuggest (self, word):
-        return self._realChecker.getSuggest (word)
-
-
-    def findErrors (self, text):
+    def findErrors(self, text):
         """
-        Return list of tuples with positions of invalid words: (word, error_start, error_end)
+        Return list of tuples with positions of invalid words:
+            (word, error_start, error_end)
         """
         result = []
 
-        words = self._wordRegex.finditer (text)
+        words = self._wordRegex.finditer(text)
         for wordMatch in words:
             word = wordMatch.group(0)
-            isValid = self.check (word)
+            isValid = self.check(word)
 
             if not isValid:
-                result.append ((word, wordMatch.start(), wordMatch.end()))
+                result.append((word, wordMatch.start(), wordMatch.end()))
 
         return result
