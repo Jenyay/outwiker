@@ -8,11 +8,11 @@ import json
 
 import wx
 
+import outwiker.core
 from outwiker.gui.longprocessrunner import LongProcessRunner
 from outwiker.core.commands import getCurrentVersion, MessageBox, setStatusText
 from outwiker.core.version import Version
-from outwiker.core.defines import PLUGIN_VERSION_FILE_NAME
-from outwiker.core.xmlversionparser import XmlVersionParser
+from outwiker.core.system import getPluginsDirList
 from outwiker.utilites.textfile import readTextFile
 
 from .updatedialog import UpdateDialog
@@ -354,3 +354,63 @@ class UpdateController(object):
         disabled_plugins = list(self._application.plugins.disabledPlugins)
 
         return enabled_plugins + disabled_plugins
+
+
+    def _updateDialog(self):
+        """
+        Update content on the current opened update dialog.
+        """
+        if self._dialog and self._dialog.IsModal():
+
+            installed_plugins = self._getInstalledPlugins()
+
+            HTMLContent = self.createHTMLContent(self._installerPlugins, installed_plugins, )
+
+            # Setup updated data to dialog render
+            self._dialog.setContent(HTMLContent, self._dataPath)
+
+
+    def install_plugin(self, name):
+        """
+        Install plugin by name.
+
+        :return: True if plugin was installed, otherwise False
+        """
+        getAppInfo = VersionList().getAppInfoFromUrl
+        getDownlodUrl = VersionList().getDownlodUrl
+
+        plugin_info = self._installerPlugins.get(name, None)
+        if plugin_info:
+
+            appInfo = getAppInfo( plugin_info["url"])
+            if not appInfo or not appInfo.versionsList:
+                MessageBox(_(u"The plugin description can't be downloaded. Please install plugin manually"),
+                           u"UpdateNotifier")
+                return False
+
+            api_required_version = appInfo.requirements.api_version
+            if pv.checkVersionAny(outwiker.core.__version__, api_required_version) != 0:
+                MessageBox(_(u"The plugin required last version of Outwiker. Please update application"),
+                           u"UpdateNotifier")
+                return False
+
+            # get link to latest version
+            url = getDownlodUrl(appInfo)
+            if not url:
+                MessageBox(_(u"The download link was not found in plugin description. Please install plugin manually"),
+                           u"UpdateNotifier")
+                return False
+
+            # 0 - папка рядом с запускаемым файлом, затем идут другие папки, если они есть
+            pluginPath = os.path.join(getPluginsDirList()[-1], name.lower())
+
+            logger.info('install_plugin: {url} {path}'.format(url=url, path=pluginPath))
+
+            rez = UpdatePlugin().update(url, pluginPath)
+
+            if rez:
+                self._application.plugins.load([getPluginsDirList()[-1]])
+                self._updateDialog()
+            else:
+                MessageBox(_(u"Plugin was NOT Installed. Please update plugin manually"), u"UpdateNotifier")
+            return rez
