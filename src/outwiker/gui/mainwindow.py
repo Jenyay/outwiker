@@ -6,7 +6,6 @@ import logging
 import wx
 import wx.aui
 
-from outwiker.core.application import Application
 from outwiker.core.attachwatcher import AttachWatcher
 from outwiker.core.commands import MessageBox
 from outwiker.core.system import getOS
@@ -76,11 +75,12 @@ logger = logging.getLogger('outwiker.gui.mainwindow')
 
 
 class MainWindow(wx.Frame):
-    def __init__(self):
+    def __init__(self, application):
         super().__init__(None)
+        self._application = application
         logger.debug(u'MainWindow initializing begin')
 
-        self.mainWindowConfig = MainWindowConfig(Application.config)
+        self.mainWindowConfig = MainWindowConfig(self._application.config)
 
         # Флаг, обозначающий, что в цикле обработки стандартных сообщений
         # (например, копирования в буфер обмена) сообщение вернулось обратно
@@ -115,23 +115,23 @@ class MainWindow(wx.Frame):
         self._createToolbars()
 
         logger.debug(u'MainWindow. Create the MainPanesController')
-        self.__panesController = MainPanesController(Application, self)
+        self.__panesController = MainPanesController(self._application, self)
 
         self._bindGuiEvents()
 
         logger.debug(u'MainWindow. Create the TabsController')
         self.tabsController = TabsController(self.pagePanel.panel.tabsCtrl,
-                                             Application)
+                                             self._application)
 
-        self.attachWatcher = AttachWatcher(Application,
+        self.attachWatcher = AttachWatcher(self._application,
                                            guidefines.ATTACH_CHECK_PERIOD)
 
         self._coreControllers = [
-            WikiPageController(Application),
-            HtmlPageController(Application),
-            TextPageController(Application),
-            SearchPageController(Application),
-            PrefController(Application),
+            WikiPageController(self._application),
+            HtmlPageController(self._application),
+            TextPageController(self._application),
+            SearchPageController(self._application),
+            PrefController(self._application),
             self.attachWatcher,
         ]
 
@@ -139,7 +139,8 @@ class MainWindow(wx.Frame):
         self._initCoreControllers()
 
         logger.debug(u'MainWindow. Create the tray icon')
-        self.taskBarIconController = getTrayIconController(Application, self)
+        self.taskBarIconController = getTrayIconController(self._application,
+                                                           self)
 
         logger.debug(u'MainWindow initializing end')
 
@@ -180,7 +181,7 @@ class MainWindow(wx.Frame):
         self._toolbars = ToolBarsController(
             toolbars_menu,
             self._toolbarContainer,
-            Application.config
+            self._application.config
         )
 
         self._toolbars.createToolBar(
@@ -216,11 +217,12 @@ class MainWindow(wx.Frame):
         self.treePanel.panel.addButtons()
 
         if self.mainWindowConfig.fullscreen.value:
-            Application.actionController.check(FullScreenAction.stringId, True)
+            self._application.actionController.check(FullScreenAction.stringId,
+                                                     True)
         logger.debug(u'MainWindow createGui ended')
 
     def _createSwitchToMenu(self):
-        actionController = Application.actionController
+        actionController = self._application.actionController
         menu = self.menuController[guidefines.MENU_VIEW_GOTO]
 
         actionController.appendMenuItem(
@@ -283,7 +285,7 @@ class MainWindow(wx.Frame):
         imagesDir = getImagesDir()
         toolbar = self.toolbars[guidefines.TOOLBAR_GENERAL]
         menu = self.menuController[guidefines.MENU_FILE]
-        actionController = Application.actionController
+        actionController = self._application.actionController
 
         # Создать...
         actionController.appendMenuItem(
@@ -343,7 +345,7 @@ class MainWindow(wx.Frame):
         """
         Заполнить действиями меню Дерево
         """
-        actionController = Application.actionController
+        actionController = self._application.actionController
         menu = self.menuController[guidefines.MENU_TREE]
         toolbar = self.toolbars[guidefines.TOOLBAR_GENERAL]
         imagesDir = getImagesDir()
@@ -409,7 +411,7 @@ class MainWindow(wx.Frame):
         imagesDir = getImagesDir()
         toolbar = self.toolbars[guidefines.TOOLBAR_GENERAL]
         menu = self.menuController[guidefines.MENU_TOOLS]
-        actionController = Application.actionController
+        actionController = self._application.actionController
 
         actionController.appendMenuItem(AddTabAction.stringId, menu)
         actionController.appendMenuItem(CloseTabAction.stringId, menu)
@@ -475,7 +477,7 @@ class MainWindow(wx.Frame):
 
     def _createHelpMenu(self):
         menu = self.menuController[guidefines.MENU_HELP]
-        actionController = Application.actionController
+        actionController = self._application.actionController
 
         actionController.appendMenuItem(OpenHelpAction.stringId, menu)
         actionController.appendMenuItem(AboutAction.stringId, menu)
@@ -493,7 +495,7 @@ class MainWindow(wx.Frame):
         self._createSwitchToMenu()
         self.__panesController.createViewMenuItems()
 
-        actionController = Application.actionController
+        actionController = self._application.actionController
 
         viewMenu = self.menuController[guidefines.MENU_VIEW]
         viewMenu.AppendSeparator()
@@ -529,16 +531,16 @@ class MainWindow(wx.Frame):
         """
         self.pagePanel = PageMainPane(self._mainContentPanel,
                                       self.auiManager,
-                                      Application)
+                                      self._application)
         self.treePanel = TreeMainPane(self._mainContentPanel,
                                       self.auiManager,
-                                      Application)
+                                      self._application)
         self.attachPanel = AttachMainPane(self._mainContentPanel,
                                           self.auiManager,
-                                          Application)
+                                          self._application)
         self.tagsCloudPanel = TagsCloudMainPane(self._mainContentPanel,
                                                 self.auiManager,
-                                                Application)
+                                                self._application)
 
     def _createStatusBar(self):
         """
@@ -604,14 +606,14 @@ class MainWindow(wx.Frame):
         """
         logger.debug(u'Begin MainWindow.Destroy.')
 
-        Application.plugins.clear()
+        self._application.plugins.clear()
         self._saveParams()
-        # self.toolbars.updatePanesInfo()
         self.destroyPagePanel(True)
 
-        Application.actionController.saveHotKeys()
-        Application.clear()
-        Application.actionController.destroy()
+        self._application.actionController.saveHotKeys()
+        self._application.clear()
+        self._application.actionController.destroy()
+        self._application = None
 
         self._destroyCoreControllers()
 
