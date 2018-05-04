@@ -3,7 +3,6 @@
 import logging
 import sys
 
-from outwiker.core.application import Application
 from outwiker.core.commands import openWiki, findPage
 from outwiker.core.commandline import CommandLine, CommandLineException
 from outwiker.core.commands import getCurrentVersion
@@ -26,7 +25,8 @@ class Starter(object):
     Класс для выполнения команд из командной строки (не для разбора параметров)
     и начального открытия вики
     """
-    def __init__(self):
+    def __init__(self, application):
+        self._application = application
         self._commandLine = self.__parseCommandLine(sys.argv[1:])
 
     def processGUI(self):
@@ -41,9 +41,9 @@ class Starter(object):
             openWiki(self._commandLine.wikipath, self._commandLine.readonly)
 
         if self._commandLine is not None:
-            page = findPage(Application, self._commandLine.page_id)
-            if Application.wikiroot is not None and page is not None:
-                Application.selectedPage = page
+            page = findPage(self._application, self._commandLine.page_id)
+            if self._application.wikiroot is not None and page is not None:
+                self._application.selectedPage = page
 
     def processConsole(self):
         """
@@ -76,15 +76,15 @@ class Starter(object):
             print(r"""OutWiker {ver}""".format(ver=str(getCurrentVersion())))
             raise StarterExit
 
-        Application.sharedData[APP_DATA_DISABLE_MINIMIZING] = self._commandLine.disableMinimizing
-        Application.sharedData[APP_DATA_DEBUG] = self._commandLine.debug
+        self._application.sharedData[APP_DATA_DISABLE_MINIMIZING] = self._commandLine.disableMinimizing
+        self._application.sharedData[APP_DATA_DEBUG] = self._commandLine.debug
 
     def __openRecentWiki(self):
         """
         Открыть последнюю вики, если установлена соответствующая опция
         """
-        openRecent = GeneralGuiConfig(Application.config).autoopen.value
+        openRecent = GeneralGuiConfig(self._application.config).autoopen.value
 
-        if openRecent and len(Application.recentWiki) > 0:
+        if openRecent and len(self._application.recentWiki) > 0:
             logger.debug('Open recently used wiki')
-            openWiki(Application.recentWiki[0])
+            openWiki(self._application.recentWiki[0])
