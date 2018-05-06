@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-20 08:05+0300\n"
+"POT-Creation-Date: 2018-05-06 19:52+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -57,10 +57,6 @@ msgstr ""
 msgid "Custom"
 msgstr ""
 
-#: updatedialog.py:22
-msgid "UpdateNotifier"
-msgstr ""
-
 #: plugin.py:32
 msgid ""
 "Check for update OutWiker and plug-ins for it.\n"
@@ -72,111 +68,99 @@ msgstr ""
 msgid "http://jenyay.net/Outwiker/UpdateNotifierEn"
 msgstr ""
 
-#: guicreators.py:45 actions.py:22
-msgid "Check for Updates..."
+#: updatedialog.py:22
+msgid "UpdateNotifier"
 msgstr ""
 
-#: guicreators.py:49 actions.py:47
-msgid "Silence check for Updates..."
+#: controller.py:100
+msgid "UpdateNotifier [Plugin]"
+msgstr ""
+
+#: actions.py:22 guicreators.py:45
+msgid "Check for Updates..."
 msgstr ""
 
 #: actions.py:26
 msgid "UpdateNotifier plugin. Check for updates"
 msgstr ""
 
+#: actions.py:47 guicreators.py:49
+msgid "Silence check for Updates..."
+msgstr ""
+
 #: actions.py:51
 msgid "UpdateNotifier plugin. Check for updates. Silence mode"
 msgstr ""
 
-#: actions.py:72
-msgid "Install more plugins..."
-msgstr ""
-
-#: actions.py:76
-msgid "UpdateNotifier plugin. Install new plugins or remove existing"
-msgstr ""
-
-#: versionlist.py:70 updatecontroller.py:176
-msgid "__updateLang"
-msgstr ""
-
-#: controller.py:107
-msgid "UpdateNotifier [Plugin]"
-msgstr ""
-
-#: installcontroller.py:72 updatecontroller.py:120
-msgid "More info"
-msgstr ""
-
-#: installcontroller.py:73
-msgid "Install"
-msgstr ""
-
-#: installcontroller.py:74
-msgid "Uninstall"
-msgstr ""
-
-#: installcontroller.py:75
-msgid "Please wait"
-msgstr ""
-
-#: installcontroller.py:110
-msgid ""
-"The plugin description can't be downloaded. Please install plugin manually"
-msgstr ""
-
-#: installcontroller.py:116
-msgid "The plugin required last version of Outwiker. Please update application"
-msgstr ""
-
-#: installcontroller.py:123
-msgid ""
-"The download link was not found in plugin description. Please install plugin "
-"manually"
-msgstr ""
-
-#: installcontroller.py:138
-msgid "Plugin was NOT Installed. Please update plugin manually"
-msgstr ""
-
-#: updatecontroller.py:79 updatecontroller.py:94 updatecontroller.py:100
+#: updatecontroller.py:81 updatecontroller.py:96 updatecontroller.py:102
 msgid "Check for new versions..."
 msgstr ""
 
-#: updatecontroller.py:116
+#: updatecontroller.py:126
 msgid "Installed OutWiker version"
 msgstr ""
 
-#: updatecontroller.py:117
+#: updatecontroller.py:127
 msgid "Latest stable OutWiker version"
 msgstr ""
 
-#: updatecontroller.py:118
+#: updatecontroller.py:128
 msgid "Latest unstable OutWiker version"
 msgstr ""
 
-#: updatecontroller.py:119
+#: updatecontroller.py:129
 msgid "Version history"
 msgstr ""
 
-#: updatecontroller.py:121
+#: updatecontroller.py:130
+msgid "More info"
+msgstr ""
+
+#: updatecontroller.py:131
 msgid "Download"
 msgstr ""
 
-#: updatecontroller.py:122
+#: updatecontroller.py:132
 msgid "Update"
 msgstr ""
 
-#: updatecontroller.py:246
-msgid "Updates not found"
+#: updatecontroller.py:133
+msgid "Install"
 msgstr ""
 
-#: updatecontroller.py:282
+#: updatecontroller.py:134
+msgid "Uninstall"
+msgstr ""
+
+#: updatecontroller.py:188 versionlist.py:73
+msgid "__updateLang"
+msgstr ""
+
+#: updatecontroller.py:325
 msgid ""
 "The download link was not found in plugin description. Please update plugin "
 "manually"
 msgstr ""
 
-#: updatecontroller.py:286 updatecontroller.py:301
+#: updatecontroller.py:329 updatecontroller.py:344
 msgid "Plugin was NOT updated. Please update plugin manually"
+msgstr ""
+
+#: updatecontroller.py:383
+msgid ""
+"The plugin description can't be downloaded. Please install plugin manually"
+msgstr ""
+
+#: updatecontroller.py:389
+msgid "The plugin required last version of Outwiker. Please update application"
+msgstr ""
+
+#: updatecontroller.py:396
+msgid ""
+"The download link was not found in plugin description. Please install plugin "
+"manually"
+msgstr ""
+
+#: updatecontroller.py:411
+msgid "Plugin was NOT Installed. Please update plugin manually"
 msgstr ""

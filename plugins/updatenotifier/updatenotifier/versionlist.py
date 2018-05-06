@@ -2,13 +2,13 @@
 
 import urllib.error
 import logging
+from functools import lru_cache
 
 from outwiker.core.xmlversionparser import XmlVersionParser
 from outwiker.core.system import getOS
 
 from .i18n import get_
 from .loaders import NormalLoader
-
 
 logger = logging.getLogger('updatenotifier')
 
@@ -28,6 +28,8 @@ class VersionList(object):
         else:
             self._loader = loader
 
+        self.cash = {}
+
     def loadAppInfo(self, updateUrls):
         """
         Load latest versions information.
@@ -46,6 +48,7 @@ class VersionList(object):
 
         return latestInfo
 
+    @lru_cache(maxsize=64)
     def getAppInfoFromUrl(self, url):
         """
         Get a AppInfo object for url.
