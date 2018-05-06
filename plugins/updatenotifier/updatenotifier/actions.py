@@ -52,28 +52,3 @@ class CheckForUpdatesSilenceAction(BaseAction):
 
     def run(self, params):
         self._controller.checkForUpdatesSilence()
-
-
-class InstallerAction(BaseAction):
-    """
-    InstallerAction plugin action
-    """
-    stringId = u"UpdateNotifier_Installer"
-
-    def __init__(self, application, controller):
-        self._application = application
-        self._controller = controller
-
-        global _
-        _ = get_()
-
-    @property
-    def title(self):
-        return _(u"Install more plugins...")
-
-    @property
-    def description(self):
-        return _(u"UpdateNotifier plugin. Install new plugins or remove existing")
-
-    def run(self, params):
-        self._controller.InstallPlugins()

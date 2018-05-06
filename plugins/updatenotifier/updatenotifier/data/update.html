@@ -97,20 +97,15 @@
 		</script>
 	</head>
 	<body>
-        {% macro update_info(id, appInfo)%}
+        {% macro outwiker_info(id, appInfo)%}
         {% set download_url = appInfo.appwebsite %}
 		{% set update_url = appInfo.versionsList[0].downloads %}
         <div class="controls">
-			{% if 'OUTWIKER_' not in id and idcurrentVersionsDict %}
-				<a class="update button" href="update:{{id}}">{{str_update}}</a>
-			{% endif %}
-
             {% if download_url %}
                 <a class="download button" href="{{download_url}}">{{str_download}}</a>
             {% endif %}
 
             <a class="show-changelog button" href="#"  onclick="toggleChangelog('{{id}}-changelog');">{{str_more_info}}</a>
-			<a class="uninstall button" href="uninstall:{{plugin}}">{{str_uninstall}}</a>
 					</div>
 
                     <!-- {{id}} version changelog -->
@@ -128,11 +123,67 @@
 					</div>
         {%- endmacro %}
 
-        {% macro instal_info(id, appInfo)%}
+        {% macro update_info(id, appInfo)%}
         {% set download_url = appInfo.appwebsite %}
 		{% set update_url = appInfo.versionsList[0].downloads %}
         <div class="controls">
-			<a class="install button" href="install:{{plugin}}">{{str_install}}</a>
+			<a class="update button" href="update:{{id}}">{{str_update}}</a>
+
+            {% if download_url %}
+                <a class="download button" href="{{download_url}}">{{str_download}}</a>
+            {% endif %}
+
+            <a class="show-changelog button" href="#"  onclick="toggleChangelog('{{id}}-changelog');">{{str_more_info}}</a>
+			<a class="uninstall button" href="uninstall:{{id}}">{{str_uninstall}}</a>
+					</div>
+
+                    <!-- {{id}} version changelog -->
+                    <div id="{{id}}-changelog" class="changelog">
+						<h3>{{str_version_history}}</h3>
+
+						{% for version in appInfo.versionsList %}
+						<h4>{{version.version}} {{(version.date)}}</h4>
+						<ul>
+							{% for change in version.changes %}
+							<li>{{change}}</li>
+							{% endfor %}
+						</ul>
+						{% endfor %}
+					</div>
+        {%- endmacro %}
+
+        {% macro noupdate_info(id, appInfo)%}
+        {% set download_url = appInfo.appwebsite %}
+		{% set update_url = appInfo.versionsList[0].downloads %}
+        <div class="controls">
+            {% if download_url %}
+                <a class="download button" href="{{download_url}}">{{str_download}}</a>
+            {% endif %}
+
+            <a class="show-changelog button" href="#"  onclick="toggleChangelog('{{id}}-changelog');">{{str_more_info}}</a>
+			<a class="uninstall button" href="uninstall:{{id}}">{{str_uninstall}}</a>
+					</div>
+
+                    <!-- {{id}} version changelog -->
+                    <div id="{{id}}-changelog" class="changelog">
+						<h3>{{str_version_history}}</h3>
+
+						{% for version in appInfo.versionsList %}
+						<h4>{{version.version}} {{(version.date)}}</h4>
+						<ul>
+							{% for change in version.changes %}
+							<li>{{change}}</li>
+							{% endfor %}
+						</ul>
+						{% endfor %}
+					</div>
+        {%- endmacro %}
+
+        {% macro install_info(id, appInfo)%}
+        {% set download_url = appInfo.appwebsite %}
+		{% set update_url = appInfo.versionsList[0].downloads %}
+        <div class="controls">
+			<a class="install button" href="install:{{id}}">{{str_install}}</a>
 
             {% if download_url %}
                 <a class="download button" href="{{download_url}}">{{str_download}}</a>
@@ -163,7 +214,7 @@
             {% if 'OUTWIKER_STABLE' in outwikerAppInfo%}
 				<!-- Outwiker stable version block begin -->
 				<div class="outwiker-latest-stable">{{str_outwiker_latest_stable_version}}: <span class="version version-new">{{outwikerAppInfo['OUTWIKER_STABLE'].currentVersionStr}}</span>
-                {{ update_info('OUTWIKER_STABLE', outwikerAppInfo['OUTWIKER_STABLE']) }}
+                {{ outwiker_info('OUTWIKER_STABLE', outwikerAppInfo['OUTWIKER_STABLE']) }}
 				</div>
 				<!-- Outwiker stable version block end -->
             {% endif %}
@@ -171,11 +222,10 @@
             {% if 'OUTWIKER_UNSTABLE' in outwikerAppInfo%}
 				<!-- Outwiker unstable version block begin -->
 				<div class="outwiker-latest-unstable">{{str_outwiker_latest_unstable_version}}: <span class="version version-new">{{outwikerAppInfo['OUTWIKER_UNSTABLE'].currentVersionStr}}</span>
-					{{ update_info('OUTWIKER_UNSTABLE', outwikerAppInfo['OUTWIKER_UNSTABLE']) }}
+					{{ outwiker_info('OUTWIKER_UNSTABLE', outwikerAppInfo['OUTWIKER_UNSTABLE']) }}
 				</div>
 				<!-- Outwiker unstable version block end -->
             {% endif %}
-
 			</div>
 
 		{% for pluginName, pluginInfo in updatedAppInfo.items() %}
@@ -191,7 +241,7 @@
                 <!-- {{pluginName}} block begin -->
                 <div class="version-block plugin-version {{pluginName|replace(' ', '_')}}">
                     <div class="title">{{pluginName}} <span class="version version-current">{{currentVersionsDict[pluginName]}}</span> &#x27f6; <span class="version version-new">{{pluginInfo.currentVersionStr}}</span></div>
-                    {{ update_info(pluginName, pluginInfo) }}
+                    {{ noupdate_info(pluginName, pluginInfo) }}
                 </div>
                 <!-- {{pluginName}} block end -->
 		{% endfor %}
@@ -200,7 +250,7 @@
                 <!-- {{pluginName}} block begin -->
                 <div class="version-block plugin-version {{pluginName|replace(' ', '_')}}">
                     <div class="title">{{pluginName}} <span class="version version-new">{{pluginInfo.currentVersionStr}}</span></div>
-                    {{ instal_info(pluginName, pluginInfo) }}
+                    {{ install_info(pluginName, pluginInfo) }}
                 </div>
                 <!-- {{pluginName}} block end -->
 		{% endfor %}

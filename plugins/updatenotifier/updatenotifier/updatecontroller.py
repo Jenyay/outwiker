@@ -5,6 +5,7 @@ import logging
 import threading
 import os.path
 import json
+import shutil
 
 import wx
 
@@ -13,6 +14,7 @@ from outwiker.gui.longprocessrunner import LongProcessRunner
 from outwiker.core.commands import getCurrentVersion, MessageBox, setStatusText
 from outwiker.core.version import Version
 from outwiker.core.system import getPluginsDirList
+import outwiker.core.packageversion as pv
 from outwiker.utilites.textfile import readTextFile
 
 from .updatedialog import UpdateDialog
@@ -361,13 +363,8 @@ class UpdateController(object):
         Update content on the current opened update dialog.
         """
         if self._dialog and self._dialog.IsModal():
-
-            installed_plugins = self._getInstalledPlugins()
-
-            HTMLContent = self.createHTMLContent(self._installerPlugins, installed_plugins, )
-
-            # Setup updated data to dialog render
-            self._dialog.setContent(HTMLContent, self._dataPath)
+            self._dialog.EndModal(wx.ID_OK)
+            self.checkForUpdates()
 
 
     def install_plugin(self, name):
@@ -414,3 +411,55 @@ class UpdateController(object):
             else:
                 MessageBox(_(u"Plugin was NOT Installed. Please update plugin manually"), u"UpdateNotifier")
             return rez
+
+
+    def get_plugin(self, name):
+        """
+        Retrieve Plugin object from app.plugins
+
+        :param name:
+            plugin name
+        :return:
+            The object with Plugin interface
+        """
+
+        # TODO: Seems the method should be add to PluginsLoader class
+
+        for p in self._application.plugins:
+            if p.name == name:
+                return p
+
+        if name in self._application.plugins.disabledPlugins:
+            return self._application.plugins.disabledPlugins[name]
+
+        return None
+
+
+    def uninstall_plugin(self, name):
+        """
+        remove plugin from application._plugins and delete plugin folder from disk
+        :param name:
+        :return:
+            True if plugin was uninstalled successful, otherwise False
+        """
+        rez = True
+
+        plugin_path = self.get_plugin(name).pluginPath
+
+        logger.info('uninstall_plugin: {name} {path}'.format(name=name, path=plugin_path))
+
+        # remove plugin from applications._plugins
+        rez = rez and self._application.plugins.remove(name)
+
+        logger.info('uninstall_plugin: remove plugin {}'.format(rez))
+
+        # remove plugin folder or remove symbolic link to it.
+        if rez and os.path.exists(plugin_path):
+            logger.info('uninstall_plugin: remove folder {}'.format(plugin_path))
+            if os.path.islink(plugin_path):
+                os.unlink(plugin_path)
+            else:
+                shutil.rmtree(plugin_path)
+
+        self._updateDialog()
+        return rez
