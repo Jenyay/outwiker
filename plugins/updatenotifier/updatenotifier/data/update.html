@@ -97,6 +97,23 @@
 		</script>
 	</head>
 	<body>
+		{% macro show_chagelog(id, appInfo)%}
+			<!-- {{id}} version changelog -->
+			<div id="{{id}}-changelog" class="changelog">
+				<h3>{{str_version_history}}</h3>
+
+				{% for version in appInfo.versionsList %}
+				<h4>{{version.version}} {{(version.date)}}</h4>
+				<ul>
+					{% for change in version.changes %}
+					<li>{{change}}</li>
+					{% endfor %}
+				</ul>
+				{% endfor %}
+			</div>
+
+		{%- endmacro %}
+
         {% macro outwiker_info(id, appInfo)%}
         {% set download_url = appInfo.appwebsite %}
 		{% set update_url = appInfo.versionsList[0].downloads %}
@@ -108,19 +125,8 @@
             <a class="show-changelog button" href="#"  onclick="toggleChangelog('{{id}}-changelog');">{{str_more_info}}</a>
 					</div>
 
-                    <!-- {{id}} version changelog -->
-                    <div id="{{id}}-changelog" class="changelog">
-						<h3>{{str_version_history}}</h3>
+			{{ show_chagelog(id, appInfo)}}
 
-						{% for version in appInfo.versionsList %}
-						<h4>{{version.version}} {{(version.date)}}</h4>
-						<ul>
-							{% for change in version.changes %}
-							<li>{{change}}</li>
-							{% endfor %}
-						</ul>
-						{% endfor %}
-					</div>
         {%- endmacro %}
 
         {% macro update_info(id, appInfo)%}
@@ -137,19 +143,7 @@
 			<a class="uninstall button" href="uninstall:{{id}}">{{str_uninstall}}</a>
 					</div>
 
-                    <!-- {{id}} version changelog -->
-                    <div id="{{id}}-changelog" class="changelog">
-						<h3>{{str_version_history}}</h3>
-
-						{% for version in appInfo.versionsList %}
-						<h4>{{version.version}} {{(version.date)}}</h4>
-						<ul>
-							{% for change in version.changes %}
-							<li>{{change}}</li>
-							{% endfor %}
-						</ul>
-						{% endfor %}
-					</div>
+            {{ show_chagelog(id, appInfo)}}
         {%- endmacro %}
 
         {% macro noupdate_info(id, appInfo)%}
@@ -164,19 +158,7 @@
 			<a class="uninstall button" href="uninstall:{{id}}">{{str_uninstall}}</a>
 					</div>
 
-                    <!-- {{id}} version changelog -->
-                    <div id="{{id}}-changelog" class="changelog">
-						<h3>{{str_version_history}}</h3>
-
-						{% for version in appInfo.versionsList %}
-						<h4>{{version.version}} {{(version.date)}}</h4>
-						<ul>
-							{% for change in version.changes %}
-							<li>{{change}}</li>
-							{% endfor %}
-						</ul>
-						{% endfor %}
-					</div>
+            {{ show_chagelog(id, appInfo)}}
         {%- endmacro %}
 
         {% macro install_info(id, appInfo)%}
@@ -192,19 +174,7 @@
             <a class="show-changelog button" href="#"  onclick="toggleChangelog('{{id}}-changelog');">{{str_more_info}}</a>
 					</div>
 
-                    <!-- {{id}} version changelog -->
-                    <div id="{{id}}-changelog" class="changelog">
-						<h3>{{str_version_history}}</h3>
-
-						{% for version in appInfo.versionsList %}
-						<h4>{{version.version}} {{(version.date)}}</h4>
-						<ul>
-							{% for change in version.changes %}
-							<li>{{change}}</li>
-							{% endfor %}
-						</ul>
-						{% endfor %}
-					</div>
+            {{ show_chagelog(id, appInfo)}}
 
         {%- endmacro %}
 
