@@ -409,3 +409,21 @@ class PluginsLoaderTest(BaseOutWikerMixin, unittest.TestCase):
 
         self.assertEqual(len(loader), 1)
         self.assertEqual(len(loader.disabledPlugins), 0)
+
+    def testLoadedPlugins(self):
+        # Test for remove plugin
+        dirlist = ["../test/plugins/testempty1",
+                   "../test/plugins/testempty2",
+                   "../test/plugins/testwikicommand"]
+
+        loader = PluginsLoader(self.application)
+        loader.load(dirlist)
+
+        # Disable TestEmpty2
+        self.config.disabledPlugins.value = ["TestEmpty2"]
+        loader.updateDisableList()
+
+        self.assertEqual(len(loader.loadedPlugins), 3)
+        self.assertIn("TestEmpty1", loader.loadedPlugins)
+        self.assertIn("TestEmpty2", loader.loadedPlugins)
+        self.assertIn("TestWikiCommand", loader.loadedPlugins)
