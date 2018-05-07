@@ -53,6 +53,7 @@ class PluginsLoader(object):
         # (например, в тестах)
         self.enableOutput = True
 
+
     def _print(self, text):
         if self.enableOutput:
             logger.error(text)
@@ -76,6 +77,7 @@ class PluginsLoader(object):
     def invalidPlugins(self):
         return self.__invalidPlugins
 
+
     def updateDisableList(self):
         """
         Обновление состояния плагинов. Одни отключить, другие включить
@@ -90,6 +92,7 @@ class PluginsLoader(object):
         # что не попали в "черный список"
         self.__enableDisabledPlugins(options.disabledPlugins.value)
 
+
     def __disableEnabledPlugins(self, disableList):
         """
         Отключить загруженные плагины, попавшие в "черный список" (disableList)
@@ -101,6 +104,7 @@ class PluginsLoader(object):
                 assert pluginname not in self.__disabledPlugins
                 self.__disabledPlugins[pluginname] = self.__plugins[pluginname]
                 del self.__plugins[pluginname]
+
 
     def __enableDisabledPlugins(self, disableList):
         """
@@ -114,6 +118,7 @@ class PluginsLoader(object):
                 self.__plugins[plugin.name] = plugin
 
                 del self.__disabledPlugins[plugin.name]
+
 
     def load(self, dirlist):
         """
@@ -158,6 +163,7 @@ class PluginsLoader(object):
 
         logger.debug(u'Plugins loading ended')
 
+
     def clear(self):
         """
         Uninstall all active plugins and clear plugins list
@@ -166,6 +172,7 @@ class PluginsLoader(object):
         [plugin.destroy() for plugin in self.__plugins.values()]
         self.__plugins = {}
 
+
     def __loadPluginInfo(self, plugin_fname):
         if not os.path.exists(plugin_fname):
             return None
@@ -173,6 +180,7 @@ class PluginsLoader(object):
         xml_content = readTextFile(plugin_fname)
         appinfo = XmlVersionParser().parse(xml_content)
         return appinfo
+
 
     def __checkPackageVersions(self, appinfo):
         if appinfo is None:
@@ -184,6 +192,7 @@ class PluginsLoader(object):
 
         return pv.checkVersionAny(outwiker.core.__version__,
                                   api_required_version)
+
 
     def __importPackage(self, packagePath):
         """
@@ -285,6 +294,7 @@ class PluginsLoader(object):
             logger.debug(u'Successfully loaded plug-in: {}'.format(
                 packageName))
 
+
     def __loadPlugin(self, module, errors):
         """
         Find Plugin class in module and try to make instance for it
@@ -309,7 +319,7 @@ class PluginsLoader(object):
             for name in attributes:
                 plugin = self.__createPlugin(module, name)
 
-                if plugin and self.__isNewPlugin(plugin.name):
+                if plugin and plugin.name not in self.loadedPlugins:
                     if plugin.name not in options.disabledPlugins.value:
                         plugin.initialize()
                         self.__plugins[plugin.name] = plugin
@@ -325,6 +335,7 @@ class PluginsLoader(object):
             ))
 
         return rez
+
 
     def __createPlugin(self, module, name):
         """
@@ -342,14 +353,6 @@ class PluginsLoader(object):
                 issubclass(obj, Plugin) and
                 obj != Plugin):
             return obj(self.__application)
-
-    def __isNewPlugin(self, pluginname):
-        """
-        Проверка того, что плагин с таким именем еще не был загружен
-        newplugin - плагин, который надо проверить
-        """
-        return (pluginname not in self.__plugins and
-                pluginname not in self.__disabledPlugins)
 
 
     def reload(self, pluginname):
@@ -377,6 +380,7 @@ class PluginsLoader(object):
             # import plugin again
             self.__importPackage(plug_path)
 
+
     def getInfo(self, pluginname, langlist=["en"]):
         """
         Retrieve a AppInfo for plugin_name
@@ -402,6 +406,7 @@ class PluginsLoader(object):
         if xml_content:
             return XmlVersionParser(langlist).parse(xml_content)
 
+
     def remove(self, pluginName):
         """
         Remove plugin module and plugin instance
@@ -420,6 +425,7 @@ class PluginsLoader(object):
         elif pluginName in self.__disabledPlugins:
             del self.__disabledPlugins[pluginName]
             return True
+
 
     def __len__(self):
         return len(self.__plugins)
