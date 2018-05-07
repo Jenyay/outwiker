@@ -128,7 +128,6 @@ class UpdateController(object):
             u'str_outwiker_latest_unstable_version': _(u'Latest unstable OutWiker version'),
             u'str_version_history': _(u'Version history'),
             u'str_more_info': _(u'More info'),
-            u'str_download': _(u'Download'),
             u'str_update': _(u'Update'),
             u'str_install': _(u'Install'),
             u'str_uninstall': _(u'Uninstall'),
