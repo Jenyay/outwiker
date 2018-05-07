@@ -351,22 +351,24 @@ class PluginsLoader(object):
         return (pluginname not in self.__plugins and
                 pluginname not in self.__disabledPlugins)
 
+
     def reload(self, pluginname):
         """
-        Reload plugin module and plugin instance in self.__plugins list
+        Reload plugin module and plugin instance
 
         :param pluginname:
             name of the actual plugin
         :return:
             None
         """
-        if pluginname in self.__plugins:
-            plug_path = self.__plugins[pluginname].pluginPath
-            module = sys.modules[self.__plugins[pluginname].__class__.__module__]
+        if pluginname in self.loadedPlugins:
+            plugin = self.loadedPlugins[pluginname]
+
+            plug_path = plugin.pluginPath
+            module = sys.modules[plugin.__class__.__module__]
 
             # destroy plugin
-            self.__plugins[pluginname].destroy()
-            del self.__plugins[pluginname]
+            self.remove(pluginname)
 
             # reload module
             importlib.invalidate_caches()
