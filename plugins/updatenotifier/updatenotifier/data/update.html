@@ -178,15 +178,6 @@
                 <!-- {{pluginName}} block end -->
 		{% endfor %}
 
-		{% for pluginName, pluginInfo in installedAppInfo.items() %}
-                <!-- {{pluginName}} block begin -->
-                <div class="version-block plugin-version {{pluginName|replace(' ', '_')}}">
-                    <div class="title"> <a href="{{pluginInfo.appwebsite}}">{{pluginName}}</a> <span class="version version-current">{{currentVersionsDict[pluginName]}}</span> &#x27f6; <span class="version version-new">{{pluginInfo.currentVersionStr}}</span></div>
-                    {{ noupdate_info(pluginName, pluginInfo) }}
-                </div>
-                <!-- {{pluginName}} block end -->
-		{% endfor %}
-
 		{% for pluginName, pluginInfo in otherAppInfo.items() %}
                 <!-- {{pluginName}} block begin -->
                 <div class="version-block plugin-version {{pluginName|replace(' ', '_')}}">
@@ -195,5 +186,15 @@
                 </div>
                 <!-- {{pluginName}} block end -->
 		{% endfor %}
+
+		{% for pluginName, pluginInfo in installedAppInfo.items() %}
+                <!-- {{pluginName}} block begin -->
+                <div class="version-block plugin-version {{pluginName|replace(' ', '_')}}">
+                    <div class="title"> <a href="{{pluginInfo.appwebsite}}">{{pluginName}}</a> <span class="version version-current">{{currentVersionsDict[pluginName]}}</span></div>
+                    {{ noupdate_info(pluginName, pluginInfo) }}
+                </div>
+                <!-- {{pluginName}} block end -->
+		{% endfor %}
+
 	</body>
 </html>
