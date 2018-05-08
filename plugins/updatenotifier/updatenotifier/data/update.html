@@ -98,10 +98,10 @@
         {% macro noupdate_info(id, appInfo)%}
 		{% set update_url = appInfo.versionsList[0].downloads %}
         <div class="controls">
-            <a href="#" onclick="toggleChangelog('{{id}}-changelog');" title="{{str_more_info}}">
-                <img src="file://{{data_path}}/info.png" alt="{{str_more_info}}"></a>
-			<a href="uninstall:{{id}}" title="{{str_uninstall}}">
+            <a href="uninstall:{{id}}" title="{{str_uninstall}}">
                 <img src="file://{{data_path}}/delete.png" alt="{{str_uninstall}}"></a>
+			<a href="#" onclick="toggleChangelog('{{id}}-changelog');" title="{{str_more_info}}">
+                <img src="file://{{data_path}}/info.png" alt="{{str_more_info}}"></a>
         </div>
             {{ show_chagelog(id, appInfo)}}
         {%- endmacro %}
@@ -118,7 +118,7 @@
             {{ show_chagelog(id, appInfo)}}
         {%- endmacro %}
 
-        s
+
 		<div class="outwiker-current">{{str_outwiker_current_version}}: <span class="version version-current">{{outwiker_current_version}}</span></div>
 		<div class="version-block outwiker-version">
 
