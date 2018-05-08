@@ -7,6 +7,6 @@ before_install:
 install:
     - python -m pip install pipenv
     - python -m pipenv run pip install wxpython==4.0.1 -v
-    - python -m pipenv update --dev -v
+    - python -m pipenv update --dev
 script:
     - python -m pipenv run fab test
