@@ -1,5 +1,6 @@
 dist: trusty
 language: python
+cache: pip
 python:
     - "3.6"
 before_install:
@@ -9,4 +10,4 @@ install:
     - python -m pipenv run pip install wxpython==4.0.1 -v
     - python -m pipenv update --dev
 script:
-    - python -m pipenv run fab test
+    - LD_LIBRARY_PATH=$(pipenv --venv)/lib/site-packages/wx python -m pipenv run fab test
