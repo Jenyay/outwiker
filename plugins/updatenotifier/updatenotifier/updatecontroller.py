@@ -407,7 +407,7 @@ class UpdateController(object):
             rez = UpdatePlugin().update(url, pluginPath)
 
             if rez:
-                self._application.plugins.load([getPluginsDirList()[-1]])
+                self._application.plugins.load(getPluginsDirList())
                 self._updateDialog()
             else:
                 MessageBox(_(u"Plugin was NOT Installed. Please update plugin manually"), u"UpdateNotifier")
