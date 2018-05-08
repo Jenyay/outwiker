@@ -9,5 +9,9 @@ install:
     - python -m pip install pipenv
     - python -m pipenv run pip install wxpython==4.0.1 -v
     - python -m pipenv update --dev
+before_script:
+    - "export DISPLAY=:99.0"
+    - "sh -e /etc/init.d/xvfb start"
+    - sleep 3 # give xvfb some time to start
 script:
     - LD_LIBRARY_PATH=$(pipenv --venv)/lib/python3.6/site-packages/wx python -m pipenv run fab test
