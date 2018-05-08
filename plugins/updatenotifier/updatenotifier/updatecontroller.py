@@ -131,6 +131,7 @@ class UpdateController(object):
             u'str_update': _(u'Update'),
             u'str_install': _(u'Install'),
             u'str_uninstall': _(u'Uninstall'),
+            u'data_path': self._dataPath,
         }
 
         contentGenerator = ContentGenerator(template)

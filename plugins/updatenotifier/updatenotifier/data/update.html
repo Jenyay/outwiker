@@ -36,43 +36,9 @@
 				margin: 0.7em 0em;
 			}
 
-			.update {
-				border-radius: 2px;
-				color: #fff;
-				font-weight: bold;
-				padding: 0.2em 1em;
-				text-decoration: none;
-				background-color: #518BDB;
-			}
-
-			.show-changelog {
-				border-radius: 2px;
-				text-decoration: none;
-				padding: 0.2em 1em;
-				background-color: #fff;
-				border: 1px solid #518BDB;
-				color: #518BDB;
-			}
-
 			.version-block {
 				border-left: 4px solid #518BDB;
 				padding-left: 1em;
-			}
-
-			.install {
-				border-radius: 2px;
-				color: #fff;
-				font-weight: bold;
-				padding: 0.2em 1em;
-				text-decoration: none;
-				background-color: #518BDB;
-			}
-
-			.uninstall {
-				color: #ecebbd;
-				font-weight: bold;
-				padding: 1em;
-				text-decoration: none;
 			}
 		</style>
 
@@ -108,8 +74,9 @@
         {% macro outwiker_info(id, appInfo)%}
 		{% set update_url = appInfo.versionsList[0].downloads %}
         <div class="controls">
-            <a class="show-changelog button" href="#"  onclick="toggleChangelog('{{id}}-changelog');">{{str_more_info}}</a>
-					</div>
+            <a href="#" onclick="toggleChangelog('{{id}}-changelog');" title="{{str_more_info}}">
+                <img src="file://{{data_path}}/info.png" alt="{{str_more_info}}"></a>
+        </div>
 
 			{{ show_chagelog(id, appInfo)}}
 
@@ -118,10 +85,13 @@
         {% macro update_info(id, appInfo)%}
 		{% set update_url = appInfo.versionsList[0].downloads %}
         <div class="controls">
-			<a class="update button" href="update:{{id}}">{{str_update}}</a>
-            <a class="show-changelog button" href="#"  onclick="toggleChangelog('{{id}}-changelog');">{{str_more_info}}</a>
-			<a class="uninstall button" href="uninstall:{{id}}">{{str_uninstall}}</a>
-					</div>
+            <a href="update:{{id}}" title="{{str_update}}">
+                <img src="file://{{data_path}}/update.png" alt="{{str_update}}"></a>
+            <a href="#" onclick="toggleChangelog('{{id}}-changelog');" title="{{str_more_info}}">
+                <img src="file://{{data_path}}/info.png" alt="{{str_more_info}}"></a>
+			<a href="uninstall:{{id}}" title="{{str_uninstall}}">
+                <img src="file://{{data_path}}/delete.png" alt="{{str_uninstall}}"></a>
+        </div>
 
             {{ show_chagelog(id, appInfo)}}
         {%- endmacro %}
@@ -129,9 +99,11 @@
         {% macro noupdate_info(id, appInfo)%}
 		{% set update_url = appInfo.versionsList[0].downloads %}
         <div class="controls">
-            <a class="show-changelog button" href="#"  onclick="toggleChangelog('{{id}}-changelog');">{{str_more_info}}</a>
-			<a class="uninstall button" href="uninstall:{{id}}">{{str_uninstall}}</a>
-					</div>
+            <a href="#" onclick="toggleChangelog('{{id}}-changelog');" title="{{str_more_info}}">
+                <img src="file://{{data_path}}/info.png" alt="{{str_more_info}}"></a>
+			<a href="uninstall:{{id}}" title="{{str_uninstall}}">
+                <img src="file://{{data_path}}/delete.png" alt="{{str_uninstall}}"></a>
+        </div>
 
             {{ show_chagelog(id, appInfo)}}
         {%- endmacro %}
@@ -139,9 +111,11 @@
         {% macro install_info(id, appInfo)%}
 		{% set update_url = appInfo.versionsList[0].downloads %}
         <div class="controls">
-			<a class="install button" href="install:{{id}}">{{str_install}}</a>
-            <a class="show-changelog button" href="#"  onclick="toggleChangelog('{{id}}-changelog');">{{str_more_info}}</a>
-					</div>
+			<a href="install:{{id}}" title="{{str_install}}">
+                <img src="file://{{data_path}}/install.png" alt="{{str_install}}"></a>
+            <a href="#" onclick="toggleChangelog('{{id}}-changelog');" title="{{str_more_info}}">
+                <img src="file://{{data_path}}/info.png" alt="{{str_more_info}}"></a>
+        </div>
 
             {{ show_chagelog(id, appInfo)}}
 
