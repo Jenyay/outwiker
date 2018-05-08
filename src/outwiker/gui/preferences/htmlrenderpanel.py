@@ -38,7 +38,7 @@ class HtmlRenderPanel(BasePrefPanel):
         # User's styles elements
         self.userStyleLabel = wx.StaticText(self,
                                             -1,
-                                            _("Additional styles(CSS):"))
+                                            _("Additional styles (CSS):"))
 
         self.userStyleTextBox = wx.TextCtrl(
             self,

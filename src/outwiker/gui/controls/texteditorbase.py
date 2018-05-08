@@ -15,9 +15,6 @@ from outwiker.gui.texteditorhelper import TextEditorHelper
 
 
 class TextEditorBase(wx.Panel):
-    '''
-    Added in outwiker.gui 1.3
-    '''
     def __init__(self, parent):
         super(TextEditorBase, self).__init__(parent, style=0)
         self.textCtrl = StyledTextCtrl(self, -1)
@@ -38,11 +35,6 @@ class TextEditorBase(wx.Panel):
 
     def _bind(self):
         self.textCtrl.Bind(wx.EVT_KEY_DOWN, self.__onKeyDown)
-        # self.textCtrl.Bind(wx.EVT_CHAR, self.__OnChar_ImeWorkaround)
-        # self.textCtrl.Bind(wx.EVT_CHAR, self.__onChar)
-        # self.textCtrl.Bind(wx.EVT_CHAR_HOOK, self.__onCharHook)
-        # self.textCtrl.Bind(wx.stc.EVT_STC_CHARADDED, self.__onCharAdded)
-        # self.textCtrl.Bind(wx.stc.EVT_STC_KEY, self.__onStcKey)
 
     def _do_layout(self):
         mainSizer = wx.FlexGridSizer(rows=2, cols=0, vgap=0, hgap=0)
@@ -60,61 +52,13 @@ class TextEditorBase(wx.Panel):
         encoding = outwiker.core.system.getOS().inputEncoding
         self.mbcsEnc = codecs.getencoder(encoding)
 
-    # def __onStcKey(self, event):
-    #     print '__onStcKey'
-
-    # def __onCharAdded(self, event):
-    #     print '__onCharAdded'
-        # print type(event)
-        # print dir(event)
-        # from outwiker.core.application import Application
-        # wx.PostEvent(Application.mainWindow, event)
-        # event.StopPropagation()
-
-    # def __onChar(self, event):
-    #     print '__onChar'
-    #     event.Skip()
-
-    # def __onCharHook(self, event):
-    #     print '__onCharHook'
-        # key = event.GetKeyCode()
-        # print key
-        # event.ResumePropagation(20)
-        # event.Skip()
-        # event.DoAllowNextEvent()
-        # event.Skip()
-        # from outwiker.core.application import Application
-        # wx.PostEvent(Application.mainWindow, event)
-
     def __onKeyDown(self, event):
-        # print '__onKeyDown'
         key = event.GetKeyCode()
 
         if key == wx.WXK_ESCAPE:
             self._searchPanel.Close()
 
         event.Skip()
-
-    # def __OnChar_ImeWorkaround(self, evt):
-    #     """
-    #     Обработка клавиш вручную, чтобы не было проблем с вводом русских букв в Linux.
-    #     Основа кода взята из Wikidpad (WikiTxtCtrl.py -> OnChar_ImeWorkaround)
-    #     """
-    #     print '__OnChar_ImeWorkaround'
-    #     key = evt.GetKeyCode()
-    #
-    #     # Return if this doesn't seem to be a real character input
-    #     if evt.ControlDown() or (0 < key < 32):
-    #         evt.Skip()
-    #         return
-    #
-    #     if key >= wx.WXK_START and evt.GetUnicodeKey() != key:
-    #         evt.Skip()
-    #         return
-    #
-    #     unichar = unichr(evt.GetUnicodeKey())
-    #
-    #     self.textCtrl.ReplaceSelection(self.mbcsEnc (unichar, "replace")[0])
 
     def _setDefaultSettings(self):
         self.textCtrl.SetEndAtLastLine(False)
@@ -249,8 +193,6 @@ class TextEditorBase(wx.Panel):
         """
         If line with number "line" starts with prefix, prefix will be removed
         else prefix will be added.
-
-        Added in OutWiker 2.0.0.795.
         """
         assert line < self.GetLineCount()
         line_text = self.GetLine(line)
@@ -263,8 +205,6 @@ class TextEditorBase(wx.Panel):
     def toddleSelectedLinesPrefix(self, prefix):
         """
         Apply toddleLinePrefix method to selected lines
-
-        Added in OutWiker 2.0.0.795.
         """
         self.BeginUndoAction()
         old_sel_start = self.GetSelectionStart()
@@ -359,8 +299,6 @@ class TextEditorBase(wx.Panel):
     def GetSelectionLines(self):
         """
         Return tuple (first selected line, last selected line)
-
-        Added in OutWiker 2.0.0.795.
         """
         start_bytes = self.textCtrl.GetSelectionStart()
         end_bytes = self.textCtrl.GetSelectionEnd()
@@ -380,7 +318,6 @@ class TextEditorBase(wx.Panel):
     def GetLine(self, line):
         """
         Return line with the "line" number. \n included.
-        Added in OutWiker 2.0.0.795
         """
         return self.textCtrl.GetLine(line)
 
@@ -388,8 +325,6 @@ class TextEditorBase(wx.Panel):
         """
         Replace line with the number "line" newline.
         Newline will be ended with "\n" else line will be joined with next line
-
-        Added in OutWiker 2.0.0.795
         """
         linecount = self.GetLineCount()
         assert line < linecount
@@ -404,8 +339,6 @@ class TextEditorBase(wx.Panel):
     def GetLineStartPosition(self, line):
         """
         Retrieve the position at the start of a line in symbols (not bytes)
-
-        Added in OutWiker 2.0.0.795
         """
         return self._calcCharPos(self.textCtrl.PositionFromLine(line))
 
@@ -413,8 +346,6 @@ class TextEditorBase(wx.Panel):
         """
         Get the position after the last visible characters on a line
             in symbols (not bytes)
-
-        Added in OutWiker 2.0.0.795
         """
         return self._calcCharPos(self.textCtrl.GetLineEndPosition(line))
 
@@ -422,8 +353,6 @@ class TextEditorBase(wx.Panel):
         """
         Move the selected lines up one line,
         shifting the line above after the selection.
-
-        Added in OutWiker 2.0.0.795
         """
         self.textCtrl.MoveSelectedLinesUp()
 
@@ -431,44 +360,30 @@ class TextEditorBase(wx.Panel):
         """
         Move the selected lines down one line,
         shifting the line below before the selection.
-
-        Added in OutWiker 2.0.0.795
         """
         self.textCtrl.MoveSelectedLinesDown()
 
     def LineDuplicate(self):
         """
         Duplicate the current line.
-
-        Added in OutWiker 2.0.0.795
         """
         self.textCtrl.LineDuplicate()
 
     def LineDelete(self):
         """
         Delete the current line.
-
-        Added in OutWiker 2.0.0.795
         """
         self.textCtrl.LineDelete()
 
     def BeginUndoAction(self):
-        """
-        Added in OutWiker 2.0.0.797
-        """
         self.textCtrl.BeginUndoAction()
 
     def EndUndoAction(self):
-        """
-        Added in OutWiker 2.0.0.797
-        """
         self.textCtrl.EndUndoAction()
 
     def JoinLines(self):
         """
         Join selected lines
-
-        Added in OutWiker 2.0.0.797
         """
         first_line, last_line = self.GetSelectionLines()
         if first_line != last_line:
@@ -488,87 +403,50 @@ class TextEditorBase(wx.Panel):
         self.EndUndoAction()
 
     def DelWordLeft(self):
-        """
-        Added in OutWiker 2.0.0.797
-        """
         self.textCtrl.DelWordLeft()
 
     def DelWordRight(self):
-        """
-        Added in OutWiker 2.0.0.797
-        """
         self.textCtrl.DelWordRight()
 
     def DelLineLeft(self):
         """
         Delete back from the current position to the start of the line
-
-        Added in OutWiker 2.0.0.797
         """
         self.textCtrl.DelLineLeft()
 
     def DelLineRight(self):
         """
         Delete forwards from the current position to the end of the line
-
-        Added in OutWiker 2.0.0.797
         """
         self.textCtrl.DelLineRight()
 
     def WordLeft(self):
-        """
-        Added in outwiker.gui 1.2
-        """
         self.textCtrl.WordLeft()
 
     def WordRight(self):
-        """
-        Added in outwiker.gui 1.2
-        """
         self.textCtrl.WordRight()
 
     def WordLeftEnd(self):
-        """
-        Added in outwiker.gui 1.2
-        """
         self.textCtrl.WordLeftEnd()
 
     def WordRightEnd(self):
-        """
-        Added in outwiker.gui 1.2
-        """
         self.textCtrl.WordRightEnd()
 
     def WordLeftExtend(self):
-        """
-        Added in outwiker.gui 1.2
-        """
         self.textCtrl.WordLeftExtend()
 
     def WordRightExtend(self):
-        """
-        Added in outwiker.gui 1.2
-        """
         self.textCtrl.WordRightExtend()
 
     def GotoWordStart(self):
-        """
-        Added in outwiker.gui 1.2
-        """
         self.WordRight()
         self.WordLeft()
 
     def GotoWordEnd(self):
-        """
-        Added in outwiker.gui 1.2
-        """
         self.WordLeftEnd()
         self.WordRightEnd()
 
     def ScrollLineToCursor(self):
-        """
-        Added in outwiker.gui 1.1
-        """
         maxlines = self.textCtrl.LinesOnScreen()
         line = self.GetCurrentLine()
         if line >= maxlines:
@@ -579,17 +457,11 @@ class TextEditorBase(wx.Panel):
             self.ScrollToLine(line)
 
     def WordStartPosition(self, pos):
-        """
-        Added in outwiker.gui 1.2
-        """
         pos_bytes = self._helper.calcBytePos(self.GetText(), pos)
         result_bytes = self.textCtrl.WordStartPosition(pos_bytes, True)
         return self.getPosChar(result_bytes)
 
     def WordEndPosition(self, pos):
-        """
-        Added in outwiker.gui 1.2
-        """
         pos_bytes = self._helper.calcBytePos(self.GetText(), pos)
         result_bytes = self.textCtrl.WordEndPosition(pos_bytes, True)
         return self.getPosChar(result_bytes)

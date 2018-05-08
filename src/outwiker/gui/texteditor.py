@@ -307,7 +307,7 @@ class TextEditor(TextEditorBase):
         langlist = self._getDictsFromConfig()
         spellDirList = outwiker.core.system.getSpellDirList()
 
-        spellChecker = SpellChecker(Application, langlist, spellDirList)
+        spellChecker = SpellChecker(langlist, spellDirList)
         spellChecker.addCustomDict(os.path.join(spellDirList[-1], CUSTOM_DICT_FILE_NAME))
 
         return spellChecker

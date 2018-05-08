@@ -38,7 +38,7 @@ if __name__ == "__main__":
 
     outwiker.loadPlugins()
     try:
-        starter = Starter()
+        starter = Starter(application)
         starter.processConsole()
     except StarterExit:
         sys.exit()

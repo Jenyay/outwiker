@@ -14,4 +14,3 @@
    gui
    wiki_parser
    locale
-   apiversions

@@ -9,6 +9,7 @@
 		<changelog>
 			<version number="2.1.0.841" status="dev">
 				<change>Accelerated plug-ins loading.</change>
+				<change>Small design fixes.</change>
 			</version>
 
 			<version number="2.1.0.840" status="dev" date="April 22, 2018">
@@ -63,6 +64,7 @@
 		<changelog>
 			<version number="2.1.0.841" status="dev">
 				<change>Ускорена загрузка плагинов.</change>
+				<change>Небольшие исправлении в оформлении.</change>
 			</version>
 
 			<version number="2.1.0.840" status="dev" date="22.04.2018">
