@@ -281,8 +281,8 @@ class UpdateController(object):
         plugInfoDict = vl.loadAppInfo(self._getPluginsUpdateUrls())
 
         # get update URLs from plugins.json and remove installed.
-        installerInfoDict = {x: y for x,y in self._getUrlsForInstaller().items()
-                             if x not in plugInfoDict}
+        installerInfoDict = {x: y for x, y in self._getUrlsForInstaller().items()
+                             if x not in self._getInstalledPlugins()}
         installerInfoDict = vl.loadAppInfo(installerInfoDict)
 
 
