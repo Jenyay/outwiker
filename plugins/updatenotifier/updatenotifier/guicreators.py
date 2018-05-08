@@ -8,7 +8,7 @@ import wx
 
 from outwiker.gui.defines import MENU_HELP
 
-from .actions import CheckForUpdatesAction, CheckForUpdatesSilenceAction, InstallerAction
+from .actions import CheckForUpdatesAction, CheckForUpdatesSilenceAction
 from .i18n import get_
 
 
@@ -80,15 +80,6 @@ class ActionGuiCreator(object):
                 CheckForUpdatesAction.stringId,
                 self._helpMenu)
 
-        # Installer Action
-        if self._application.mainWindow is not None:
-            self._application.actionController.register(
-                InstallerAction(self._application, self._controller))
-
-            self._application.actionController.appendMenuItem(
-                InstallerAction.stringId,
-                self._helpMenu)
-
         # Silent Check For Updates Action
         if (self._controller.debug and
                 self._application.mainWindow is not None):
@@ -104,10 +95,6 @@ class ActionGuiCreator(object):
             # Check For Updates
             self._application.actionController.removeMenuItem(CheckForUpdatesAction.stringId)
             self._application.actionController.removeAction(CheckForUpdatesAction.stringId)
-
-            # Installer
-            self._application.actionController.removeMenuItem(InstallerAction.stringId)
-            self._application.actionController.removeAction(InstallerAction.stringId)
 
             # Silent check for update
             if self._controller.debug:

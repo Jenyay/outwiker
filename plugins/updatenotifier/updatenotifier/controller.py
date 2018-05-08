@@ -8,7 +8,6 @@ from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
 
 from .i18n import get_
 from .updatecontroller import UpdateController
-from .installcontroller import InstallController
 from .preferencepanel import PreferencePanel
 from .updatesconfig import UpdatesConfig
 from .guicreators import OldGuiCreator, ActionGuiCreator
@@ -34,7 +33,6 @@ class Controller(object):
 
         # Controllers
         self._updatesChecker = None
-        self._installer = None
 
         self._guiCreator = None
 
@@ -53,8 +51,6 @@ class Controller(object):
 
         self._updatesChecker = UpdateController(self._application,
                                                 self._plugin.pluginPath)
-        self._installer = InstallController(self._application)
-
         self._guiCreator.initialize()
 
         if self._application.mainWindow is not None:
@@ -80,9 +76,6 @@ class Controller(object):
 
     def checkForUpdatesSilence(self):
         self._updatesChecker.checkForUpdatesSilence()
-
-    def InstallPlugins(self):
-        self._installer.run()
 
     def __onIdle(self, event):
         self.__autoUpdate()
@@ -132,10 +125,10 @@ class Controller(object):
             plugin_name = params.link.split(':')[-1]
 
             logger.info(u'Install plugin "{}"'.format(plugin_name))
-            self._installer.install_plugin(plugin_name)
+            self._updatesChecker.install_plugin(plugin_name)
 
         if params.link.startswith('uninstall:'):
             plugin_name = params.link.split(':')[-1]
 
             logger.info(u'Uninstall plugin "{}"'.format(plugin_name))
-            self._installer.uninstall_plugin(plugin_name)
+            self._updatesChecker.uninstall_plugin(plugin_name)
