@@ -6,6 +6,7 @@ import threading
 import os.path
 import json
 import shutil
+import html
 
 import wx
 
@@ -132,6 +133,7 @@ class UpdateController(object):
             u'str_install': _(u'Install'),
             u'str_uninstall': _(u'Uninstall'),
             u'data_path': self._dataPath,
+            u'escape': html.escape,
         }
 
         contentGenerator = ContentGenerator(template)
