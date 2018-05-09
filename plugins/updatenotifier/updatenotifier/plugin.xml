@@ -27,9 +27,9 @@
 			<site>http://jenyay.net</site>
 		</author>
 		<changelog>
-			<version number="2.2" date="April 20, 2018">
+			<version number="2.2">
                 <download os="all">http://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-2.2.zip</download>
-				<change>Plugins can be Installed/Updated/Deleted through the Outwiker interface.</change>
+				<change>Plug-ins can be Installed/Updated/Deleted through the OutWiker interface.</change>
 			</version>
 
 			<version number="2.1" date="February 15, 2018">
@@ -83,9 +83,9 @@
 		</author>
 
 		<changelog>
-            <version number="2.2" date="20.04.2018">
+            <version number="2.2">
                 <download os="all">http://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-2.2.zip</download>
-				<change>Добавлена возможность устанвлвать/удалять и обновлять плагины через интерфейс outwiker</change>
+				<change>Добавлена возможность устанавлвать, удалять и обновлять плагины через интерфейс OutWiker</change>
 			</version>
 
             <version number="2.1" date="15.02.2018">
