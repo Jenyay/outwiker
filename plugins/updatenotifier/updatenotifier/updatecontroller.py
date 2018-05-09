@@ -388,7 +388,7 @@ class UpdateController(object):
 
             api_required_version = appInfo.requirements.api_version
             if pv.checkVersionAny(outwiker.core.__version__, api_required_version) != 0:
-                MessageBox(_(u"The plugin required last version of Outwiker. Please update application"),
+                MessageBox(_(u"The plugin required newer version of OutWiker. Please update OutWiker"),
                            u"UpdateNotifier")
                 return False
 

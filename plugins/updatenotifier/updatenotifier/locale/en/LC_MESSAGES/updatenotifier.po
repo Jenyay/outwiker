@@ -7,58 +7,96 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UpdateNotifier\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-28 20:36+0300\n"
-"PO-Revision-Date: 2017-08-28 20:36+0300\n"
+"POT-Creation-Date: 2018-05-09 18:27+0300\n"
+"PO-Revision-Date: 2018-05-09 18:28+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.1\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-#: controller.py:94
+#: controller.py:100
 msgid "UpdateNotifier [Plugin]"
 msgstr "UpdateNotifier [Plugin]"
 
-#: updatecontroller.py:81 versionlist.py:60
-msgid "__updateLang"
-msgstr "en"
-
-#: updatecontroller.py:130
-msgid "Installed OutWiker version"
-msgstr "Installed OutWiker version"
-
-#: updatecontroller.py:131
-msgid "Latest stable OutWiker version"
-msgstr "Latest stable OutWiker version"
-
-#: updatecontroller.py:132
-msgid "Latest unstable OutWiker version"
-msgstr "Latest unstable OutWiker version"
-
-#: updatecontroller.py:133
-msgid "Version history"
-msgstr "Version history"
-
-#: updatecontroller.py:134
-msgid "More info"
-msgstr "More info"
-
-#: updatecontroller.py:135
-msgid "Download"
-msgstr "Download"
-
-#: updatecontroller.py:205 updatecontroller.py:219 updatecontroller.py:225
+#: updatecontroller.py:82 updatecontroller.py:97 updatecontroller.py:103
 msgid "Check for new versions..."
 msgstr "Check for new versions..."
 
-#: updatecontroller.py:236
-msgid "Updates not found"
-msgstr "Updates not found"
+#: updatecontroller.py:127
+msgid "Installed OutWiker version"
+msgstr "Installed OutWiker version"
 
-#: plugin.py:29
+#: updatecontroller.py:128
+msgid "Latest stable OutWiker version"
+msgstr "Latest stable OutWiker version"
+
+#: updatecontroller.py:129
+msgid "Latest unstable OutWiker version"
+msgstr "Latest unstable OutWiker version"
+
+#: updatecontroller.py:130
+msgid "Version history"
+msgstr "Version history"
+
+#: updatecontroller.py:131
+msgid "More info"
+msgstr "More info"
+
+#: updatecontroller.py:132
+msgid "Update"
+msgstr "Update"
+
+#: updatecontroller.py:133
+msgid "Install"
+msgstr "Install"
+
+#: updatecontroller.py:134
+msgid "Uninstall"
+msgstr "Uninstall"
+
+#: updatecontroller.py:190 versionlist.py:73
+msgid "__updateLang"
+msgstr "en"
+
+#: updatecontroller.py:327
+msgid ""
+"The download link was not found in plugin description. Please update plugin "
+"manually"
+msgstr ""
+"The download link was not found in plugin description. Please update plugin "
+"manually"
+
+#: updatecontroller.py:331 updatecontroller.py:346
+msgid "Plugin was NOT updated. Please update plugin manually"
+msgstr "Plugin was NOT updated. Please update plugin manually"
+
+#: updatecontroller.py:385
+msgid ""
+"The plugin description can't be downloaded. Please install plugin manually"
+msgstr ""
+"The plugin description can't be downloaded. Please install plugin manually"
+
+#: updatecontroller.py:391
+msgid "The plugin required newer version of OutWiker. Please update OutWiker"
+msgstr "The plugin required newer version of OutWiker. Please update OutWiker"
+
+#: updatecontroller.py:398
+msgid ""
+"The download link was not found in plugin description. Please install plugin "
+"manually"
+msgstr ""
+"The download link was not found in plugin description. Please install plugin "
+"manually"
+
+#: updatecontroller.py:413
+msgid "Plugin was NOT Installed. Please update plugin manually"
+msgstr "Plugin was NOT Installed. Please update plugin manually"
+
+#: plugin.py:32
 msgid ""
 "Check for update OutWiker and plug-ins for it.\n"
 "\n"
@@ -68,69 +106,85 @@ msgstr ""
 "\n"
 "Append menu item \"Help -> Check for Updates...\""
 
-#: plugin.py:35
+#: plugin.py:38
 msgid "http://jenyay.net/Outwiker/UpdateNotifierEn"
 msgstr "http://jenyay.net/Outwiker/UpdateNotifierEn"
 
-#: actions.py:23 guicreators.py:45
+#: actions.py:22 guicreators.py:45
 msgid "Check for Updates..."
 msgstr "Check for Updates..."
 
-#: actions.py:28
+#: actions.py:26
 msgid "UpdateNotifier plugin. Check for updates"
 msgstr "UpdateNotifier plugin. Check for updates"
 
-#: actions.py:51 guicreators.py:49
+#: actions.py:47 guicreators.py:49
 msgid "Silence check for Updates..."
 msgstr "Silence check for Updates..."
 
-#: actions.py:56
+#: actions.py:51
 msgid "UpdateNotifier plugin. Check for updates. Silence mode"
 msgstr "UpdateNotifier plugin. Check for updates. Silence mode"
 
-#: preferencepanel.py:35
+#: preferencepanel.py:37
 msgid "Check for updates"
 msgstr "Check for updates"
 
-#: preferencepanel.py:56
+#: preferencepanel.py:64
 msgid "Ignore updates unstable versions"
 msgstr "Ignore updates unstable versions"
 
-#: updatedialog.py:21
+#: updatedialog.py:22
 msgid "UpdateNotifier"
 msgstr "UpdateNotifier"
 
-#: prefpanelcontroller.py:25
+#: prefpanelcontroller.py:24
 msgid "Never"
 msgstr "Never"
 
-#: prefpanelcontroller.py:26
+#: prefpanelcontroller.py:25
 msgid "Every day"
 msgstr "Every day"
 
-#: prefpanelcontroller.py:27
+#: prefpanelcontroller.py:26
 msgid "Every two days"
 msgstr "Every two days"
 
-#: prefpanelcontroller.py:28
+#: prefpanelcontroller.py:27
 msgid "Every three days"
 msgstr "Every three days"
 
-#: prefpanelcontroller.py:29
+#: prefpanelcontroller.py:28
 msgid "Every week"
 msgstr "Every week"
 
-#: prefpanelcontroller.py:30
+#: prefpanelcontroller.py:29
 msgid "Every two weeks"
 msgstr "Every two weeks"
 
-#: prefpanelcontroller.py:31
+#: prefpanelcontroller.py:30
 msgid "Every month"
 msgstr "Every month"
 
-#: prefpanelcontroller.py:57
+#: prefpanelcontroller.py:53
 msgid "Custom"
 msgstr "Custom"
+
+#~ msgid ""
+#~ "The plugin required newer version of Outwiker. Please update application"
+#~ msgstr ""
+#~ "The plugin required newer version of Outwiker. Please update application"
+
+#~ msgid ""
+#~ "The plugin required last version of Outwiker. Please update application"
+#~ msgstr ""
+#~ "The plugin required last version of Outwiker. Please update application"
+
+#~ msgid "Download"
+#~ msgstr "Download"
+
+#~ msgid "Updates not found"
+#~ msgstr "Updates not found"
 
 #~ msgid "http://jenyay.net/Outwiker/English"
 #~ msgstr "http://jenyay.net/Outwiker/English"
@@ -162,8 +216,12 @@ msgstr "Custom"
 #~ msgid "Updated plugins:"
 #~ msgstr "Updated plugins:"
 
-#~ msgid "Check for update OutWiker and plug-ins for it. Append menu item \"Help -> Check for Updates...\""
-#~ msgstr "Check for update OutWiker and plug-ins for it. Append menu item \"Help -> Check for Updates...\""
+#~ msgid ""
+#~ "Check for update OutWiker and plug-ins for it. Append menu item \"Help -> "
+#~ "Check for Updates...\""
+#~ msgstr ""
+#~ "Check for update OutWiker and plug-ins for it. Append menu item \"Help -> "
+#~ "Check for Updates...\""
 
 #~ msgid "Update..."
 #~ msgstr "Update..."
