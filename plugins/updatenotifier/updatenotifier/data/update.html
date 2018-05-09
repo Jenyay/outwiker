@@ -36,24 +36,6 @@
 				margin: 0.7em 0em;
 			}
 
-			.download {
-				border-radius: 2px;
-				color: #fff;
-				font-weight: bold;
-				padding: 0.2em 1em;
-				text-decoration: none;
-				background-color: #518BDB;
-			}
-
-			.show-changelog {
-				border-radius: 2px;
-				text-decoration: none;
-				padding: 0.2em 1em;
-				background-color: #fff;
-				border: 1px solid #518BDB;
-				color: #518BDB;
-			}
-
 			.version-block {
 				border-left: 4px solid #518BDB;
 				padding-left: 1em;
@@ -72,61 +54,122 @@
 		</script>
 	</head>
 	<body>
-        {% macro update_info(id)%}
-        {% set download_url = updatedAppInfo[id].appwebsite %}
+		{% macro show_chagelog(id, appInfo)%}
+			<!-- {{id}} version changelog -->
+			<div id="{{id}}-changelog" class="changelog">
+				<h3>{{str_version_history}}</h3>
+
+				{% for version in appInfo.versionsList %}
+				<h4>{{version.version}} {{(version.date)}}</h4>
+				<ul>
+					{% for change in version.changes %}
+					<li>{{change}}</li>
+					{% endfor %}
+				</ul>
+				{% endfor %}
+			</div>
+		{%- endmacro %}
+
+
+        {% macro outwiker_info(id, appInfo)%}
+		{% set update_url = appInfo.versionsList[0].downloads %}
         <div class="controls">
-            {% if download_url %}
-                <a class="download button" href="{{download_url}}">{{str_download}}</a>
-            {% endif %}
-
-            <a class="show-changelog button" href="#"  onclick="toggleChangelog('{{id}}-changelog');">{{str_more_info}}</a>
-					</div>
-
-                    <!-- {{id}} version changelog -->
-                    <div id="{{id}}-changelog" class="changelog">
-						<h3>{{str_version_history}}</h3>
-
-						{% for version in updatedAppInfo[id].versionsList %}
-						<h4>{{version.version}} {{(version.date)}}</h4>
-						<ul>
-							{% for change in version.changes %}
-							<li>{{change}}</li>
-							{% endfor %}
-						</ul>
-						{% endfor %}
-					</div>
+            <a href="#" onclick="toggleChangelog('{{id}}-changelog');" title="{{str_more_info}}">
+                <img src="file://{{data_path}}/info.png" alt="{{str_more_info}}"></a>
+        </div>
+			{{ show_chagelog(id, appInfo)}}
         {%- endmacro %}
+
+
+        {% macro update_info(id, appInfo)%}
+		{% set update_url = appInfo.versionsList[0].downloads %}
+        <div class="controls">
+            <a href="update:{{id}}" title="{{str_update}}">
+                <img src="file://{{data_path}}/update.png" alt="{{str_update}}"></a>
+            <a href="#" onclick="toggleChangelog('{{id}}-changelog');" title="{{str_more_info}}">
+                <img src="file://{{data_path}}/info.png" alt="{{str_more_info}}"></a>
+			<a href="uninstall:{{id}}" title="{{str_uninstall}}">
+                <img src="file://{{data_path}}/delete.png" alt="{{str_uninstall}}"></a>
+        </div>
+            {{ show_chagelog(id, appInfo)}}
+        {%- endmacro %}
+
+
+        {% macro noupdate_info(id, appInfo)%}
+		{% set update_url = appInfo.versionsList[0].downloads %}
+        <div class="controls">
+            <a href="uninstall:{{id}}" title="{{str_uninstall}}">
+                <img src="file://{{data_path}}/delete.png" alt="{{str_uninstall}}"></a>
+			<a href="#" onclick="toggleChangelog('{{id}}-changelog');" title="{{str_more_info}}">
+                <img src="file://{{data_path}}/info.png" alt="{{str_more_info}}"></a>
+        </div>
+            {{ show_chagelog(id, appInfo)}}
+        {%- endmacro %}
+
+
+        {% macro install_info(id, appInfo)%}
+		{% set update_url = appInfo.versionsList[0].downloads %}
+        <div class="controls">
+			<a href="install:{{id}}" title="{{str_install}}">
+                <img src="file://{{data_path}}/install.png" alt="{{str_install}}"></a>
+            <a href="#" onclick="toggleChangelog('{{id}}-changelog');" title="{{str_more_info}}">
+                <img src="file://{{data_path}}/info.png" alt="{{str_more_info}}"></a>
+        </div>
+            {{ show_chagelog(id, appInfo)}}
+        {%- endmacro %}
+
 
 		<div class="outwiker-current">{{str_outwiker_current_version}}: <span class="version version-current">{{outwiker_current_version}}</span></div>
 		<div class="version-block outwiker-version">
 
-            {% if 'OUTWIKER_STABLE' in updatedAppInfo%}
+            {% if 'OUTWIKER_STABLE' in outwikerAppInfo%}
 				<!-- Outwiker stable version block begin -->
-				<div class="outwiker-latest-stable">{{str_outwiker_latest_stable_version}}: <span class="version version-new">{{updatedAppInfo['OUTWIKER_STABLE'].currentVersionStr}}</span>
-                {{ update_info('OUTWIKER_STABLE') }}
+				<div class="outwiker-latest-stable"> <a href="{{outwikerAppInfo.appwebsite}}">{{str_outwiker_latest_stable_version}}:</a>
+                    <span class="version version-new">{{outwikerAppInfo['OUTWIKER_STABLE'].currentVersionStr}}</span>
+                {{ outwiker_info('OUTWIKER_STABLE', outwikerAppInfo['OUTWIKER_STABLE']) }}
 				</div>
 				<!-- Outwiker stable version block end -->
             {% endif %}
 
-            {% if 'OUTWIKER_UNSTABLE' in  updatedAppInfo%}
+            {% if 'OUTWIKER_UNSTABLE' in outwikerAppInfo%}
 				<!-- Outwiker unstable version block begin -->
-				<div class="outwiker-latest-unstable">{{str_outwiker_latest_unstable_version}}: <span class="version version-new">{{updatedAppInfo['OUTWIKER_UNSTABLE'].currentVersionStr}}</span>
-					{{ update_info('OUTWIKER_UNSTABLE') }}
+				<div class="outwiker-latest-unstable"> <a href="{{outwikerAppInfo.appwebsite}}">{{str_outwiker_latest_unstable_version}}:</a>
+                    <span class="version version-new">{{outwikerAppInfo['OUTWIKER_UNSTABLE'].currentVersionStr}}</span>
+					{{ outwiker_info('OUTWIKER_UNSTABLE', outwikerAppInfo['OUTWIKER_UNSTABLE']) }}
 				</div>
 				<!-- Outwiker unstable version block end -->
             {% endif %}
-
 			</div>
 
 		{% for pluginName, pluginInfo in updatedAppInfo.items() %}
-            {% if pluginName != 'OUTWIKER_STABLE' and pluginName != 'OUTWIKER_UNSTABLE' %}
                 <!-- {{pluginName}} block begin -->
                 <div class="version-block plugin-version {{pluginName|replace(' ', '_')}}">
-                    <div class="title">{{pluginName}} <span class="version version-current">{{currentVersionsDict[pluginName]}}</span> &#x27f6; <span class="version version-new">{{pluginInfo.currentVersionStr}}</span></div>
-                    {{ update_info(pluginName) }}
+                    <div  class="title"> <a href="{{pluginInfo.appwebsite}}">{{pluginName}}</a> <span class="version version-current">{{currentVersionsDict[pluginName]}}</span> &#x27f6; <span class="version version-new">{{pluginInfo.currentVersionStr}}</span></div>
+                    <div>"{{escape(pluginInfo.description)}}"</div>
+                    {{ update_info(pluginName, pluginInfo) }}
                 </div>
                 <!-- {{pluginName}} block end -->
-            {% endif %}
 		{% endfor %}
+
+		{% for pluginName, pluginInfo in otherAppInfo.items() %}
+                <!-- {{pluginName}} block begin -->
+                <div class="version-block plugin-version {{pluginName|replace(' ', '_')}}">
+                    <div class="title"><a href="{{pluginInfo.appwebsite}}">{{pluginName}}</a> <span class="version version-new">{{pluginInfo.currentVersionStr}}</span></div>
+                    <div>"{{escape(pluginInfo.description)}}"</div>
+                    {{ install_info(pluginName, pluginInfo) }}
+                </div>
+                <!-- {{pluginName}} block end -->
+		{% endfor %}
+
+		{% for pluginName, pluginInfo in installedAppInfo.items() %}
+                <!-- {{pluginName}} block begin -->
+                <div class="version-block plugin-version {{pluginName|replace(' ', '_')}}">
+                    <div class="title"> <a href="{{pluginInfo.appwebsite}}">{{pluginName}}</a> <span class="version version-current">{{currentVersionsDict[pluginName]}}</span></div>
+                    <div>"{{escape(pluginInfo.description)}}"</div>
+                    {{ noupdate_info(pluginName, pluginInfo) }}
+                </div>
+                <!-- {{pluginName}} block end -->
+		{% endfor %}
+
 	</body>
 </html>
