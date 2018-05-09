@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import tempfile
 from zipfile import ZipFile
@@ -11,10 +11,12 @@ import urllib.error
 join, dirname = os.path.join, os.path.dirname
 logger = logging.getLogger('updatenotifier')
 
+
 class UpdatePlugin (object):
     """
     Class is responsible to updating plugin.
     """
+
     def update(self, url, plugin_path):
         """
         Download zip with plugin from url and extract it to plugin_path
@@ -35,7 +37,7 @@ class UpdatePlugin (object):
             logger.warning(u"Can't download {}".format(url))
             return False
 
-        ## extract plugin to tmp dir
+        # extract plugin to tmp dir
         extracted_path = self._extract_plugin(zip_name)
 
         # remove plugin directory and copy new data to the plugins folder
@@ -47,7 +49,7 @@ class UpdatePlugin (object):
         os.remove(zip_name)
         return True
 
-    def _replacetree(self, src,  dst):
+    def _replacetree(self, src, dst):
         """
         The function delete dst folder and than copy src to dst by shutil.copytree
         """

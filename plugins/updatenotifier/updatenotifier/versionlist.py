@@ -97,6 +97,3 @@ class VersionList(object):
             for os in downloads:
                 if os in ['all', getOS().name]:
                     return downloads[os]
-
-
-

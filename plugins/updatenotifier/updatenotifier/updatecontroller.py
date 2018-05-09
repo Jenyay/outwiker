@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import datetime
 import logging
@@ -34,6 +34,7 @@ UpdateVersionsEvent, EVT_UPDATE_VERSIONS = wx.lib.newevent.NewEvent()
 
 logger = logging.getLogger('updatenotifier')
 vl = VersionList()
+
 
 class UpdateController(object):
     """
@@ -74,7 +75,6 @@ class UpdateController(object):
                 EVT_UPDATE_VERSIONS,
                 handler=self._onVersionUpdate)
 
-
     def checkForUpdatesSilence(self):
         """
         Execute the silence update checking.
@@ -88,7 +88,6 @@ class UpdateController(object):
                 args=(self._updateUrls.copy(), True)
             )
             self._silenceThread.start()
-
 
     def checkForUpdates(self):
         """
@@ -105,15 +104,18 @@ class UpdateController(object):
         progressRunner.run(self._updateUrls.copy(),
                            silenceMode=False)
 
-
-    def createHTMLContent(self, appInfoDict, updatedAppInfo, installerInfoDict):
+    def createHTMLContent(
+            self, appInfoDict, updatedAppInfo, installerInfoDict):
         currentVersion = getCurrentVersion()
         currentVersionsDict = self._getCurrentVersionsDict()
 
         appInfoDict = self.filterUpdatedApps(currentVersionsDict, appInfoDict)
-        updateAppInfo = self.filterUpdatedApps(currentVersionsDict, updatedAppInfo)
+        updateAppInfo = self.filterUpdatedApps(
+            currentVersionsDict, updatedAppInfo)
 
-        installedAppInfo = {x: y for x, y in updatedAppInfo.items() if x not in updateAppInfo}
+        installedAppInfo = {
+            x: y for x,
+            y in updatedAppInfo.items() if x not in updateAppInfo}
 
         template = readTextFile(self._updateTemplatePath)
 
@@ -139,7 +141,6 @@ class UpdateController(object):
         contentGenerator = ContentGenerator(template)
         HTMLContent = contentGenerator.render(templateData)
         return HTMLContent
-
 
     @staticmethod
     def filterUpdatedApps(currentVersionsDict, latestAppInfoDict):
@@ -173,7 +174,6 @@ class UpdateController(object):
                 updatedPlugins[app_name] = latestAppInfo
 
         return updatedPlugins
-
 
     def _getPluginsUpdateUrls(self):
         '''
@@ -209,9 +209,9 @@ class UpdateController(object):
         Return dictionary with the AppInfo instances for updated apps.
         '''
         currentVersionsDict = self._getCurrentVersionsDict()
-        updatedAppInfo = self.filterUpdatedApps(currentVersionsDict, latestVersionsDict)
+        updatedAppInfo = self.filterUpdatedApps(
+            currentVersionsDict, latestVersionsDict)
         return updatedAppInfo
-
 
     def _getCurrentVersionsDict(self):
         '''
@@ -229,20 +229,19 @@ class UpdateController(object):
 
         return currentVersionsDict
 
-
     def _showUpdates(self, appInfoDict, updatedAppInfo, installerInfoDict):
         '''
         Show dialog with update information.
         '''
         setStatusText(u"")
 
-        HTMLContent = self.createHTMLContent(appInfoDict, updatedAppInfo, installerInfoDict)
+        HTMLContent = self.createHTMLContent(
+            appInfoDict, updatedAppInfo, installerInfoDict)
 
         with UpdateDialog(self._application.mainWindow) as updateDialog:
             self._dialog = updateDialog
             updateDialog.setContent(HTMLContent, self._dataPath)
             updateDialog.ShowModal()
-
 
     def _onVersionUpdate(self, event):
         '''
@@ -255,10 +254,15 @@ class UpdateController(object):
 
         if event.silenceMode:
             if updatedAppInfo:
-                self._showUpdates(event.appInfoDict, event.plugInfoDict, event.installerInfoDict)
+                self._showUpdates(
+                    event.appInfoDict,
+                    event.plugInfoDict,
+                    event.installerInfoDict)
         else:
-            self._showUpdates(event.appInfoDict, event.plugInfoDict, event.installerInfoDict)
-
+            self._showUpdates(
+                event.appInfoDict,
+                event.plugInfoDict,
+                event.installerInfoDict)
 
     def _threadFunc(self, updateUrls, silenceMode):
         """
@@ -285,7 +289,6 @@ class UpdateController(object):
                              if x not in self._getInstalledPlugins()}
         installerInfoDict = vl.loadAppInfo(installerInfoDict)
 
-
         event = UpdateVersionsEvent(appInfoDict=appInfoDict,
                                     plugInfoDict=plugInfoDict,
                                     installerInfoDict=installerInfoDict,
@@ -299,18 +302,18 @@ class UpdateController(object):
         self._pluginsRepoPath = os.path.join(self._dataPath, u'plugins.json')
 
         # read data/plugins.json
-        self._installerPlugins = json.loads(readTextFile(self._pluginsRepoPath))
+        self._installerPlugins = json.loads(
+            readTextFile(self._pluginsRepoPath))
 
-        updateUrls = {x['name']:x['url'] for x in self._installerPlugins.values()}
+        updateUrls = {x['name']: x['url']
+                      for x in self._installerPlugins.values()}
         return updateUrls
-
 
     def _touchLastUpdateDate(self):
         '''
         Save latest updates checking time.
         '''
         self._config.lastUpdate = datetime.datetime.today()
-
 
     def update_plugin(self, name):
         """
@@ -334,7 +337,9 @@ class UpdateController(object):
 
         plugin = self.get_plugin(name)
 
-        logger.info('update_plugin: {url} {path}'.format(url=url, path=plugin.pluginPath))
+        logger.info(
+            'update_plugin: {url} {path}'.format(
+                url=url, path=plugin.pluginPath))
 
         rez = UpdatePlugin().update(url, plugin.pluginPath)
 
@@ -343,21 +348,21 @@ class UpdateController(object):
             self._dialog.EndModal(wx.ID_OK)
             self.checkForUpdates()
         else:
-            MessageBox(_(u"Plugin was NOT updated. Please update plugin manually"), u"UpdateNotifier")
+            MessageBox(
+                _(u"Plugin was NOT updated. Please update plugin manually"),
+                u"UpdateNotifier")
         return rez
-
 
     def _getInstalledPlugins(self):
         """
         Retrieve list with names of all installed plugins
         """
-        #TODO: It seems the method should be moved to PluginsLoader
+        # TODO: It seems the method should be moved to PluginsLoader
 
         enabled_plugins = [p.name for p in self._application.plugins]
         disabled_plugins = list(self._application.plugins.disabledPlugins)
 
         return enabled_plugins + disabled_plugins
-
 
     def _updateDialog(self):
         """
@@ -366,7 +371,6 @@ class UpdateController(object):
         if self._dialog and self._dialog.IsModal():
             self._dialog.EndModal(wx.ID_OK)
             self.checkForUpdates()
-
 
     def install_plugin(self, name):
         """
@@ -380,14 +384,15 @@ class UpdateController(object):
         plugin_info = self._installerPlugins.get(name, None)
         if plugin_info:
 
-            appInfo = getAppInfo( plugin_info["url"])
+            appInfo = getAppInfo(plugin_info["url"])
             if not appInfo or not appInfo.versionsList:
                 MessageBox(_(u"The plugin description can't be downloaded. Please install plugin manually"),
                            u"UpdateNotifier")
                 return False
 
             api_required_version = appInfo.requirements.api_version
-            if pv.checkVersionAny(outwiker.core.__version__, api_required_version) != 0:
+            if pv.checkVersionAny(outwiker.core.__version__,
+                                  api_required_version) != 0:
                 MessageBox(_(u"The plugin required newer version of OutWiker. Please update OutWiker"),
                            u"UpdateNotifier")
                 return False
@@ -399,10 +404,13 @@ class UpdateController(object):
                            u"UpdateNotifier")
                 return False
 
-            # 0 - папка рядом с запускаемым файлом, затем идут другие папки, если они есть
+            # 0 - папка рядом с запускаемым файлом, затем идут другие папки,
+            # если они есть
             pluginPath = os.path.join(getPluginsDirList()[-1], name.lower())
 
-            logger.info('install_plugin: {url} {path}'.format(url=url, path=pluginPath))
+            logger.info(
+                'install_plugin: {url} {path}'.format(
+                    url=url, path=pluginPath))
 
             rez = UpdatePlugin().update(url, pluginPath)
 
@@ -410,9 +418,10 @@ class UpdateController(object):
                 self._application.plugins.load(getPluginsDirList())
                 self._updateDialog()
             else:
-                MessageBox(_(u"Plugin was NOT Installed. Please update plugin manually"), u"UpdateNotifier")
+                MessageBox(
+                    _(u"Plugin was NOT Installed. Please update plugin manually"),
+                    u"UpdateNotifier")
             return rez
-
 
     def get_plugin(self, name):
         """
@@ -435,7 +444,6 @@ class UpdateController(object):
 
         return None
 
-
     def uninstall_plugin(self, name):
         """
         remove plugin from application._plugins and delete plugin folder from disk
@@ -447,7 +455,9 @@ class UpdateController(object):
 
         plugin_path = self.get_plugin(name).pluginPath
 
-        logger.info('uninstall_plugin: {name} {path}'.format(name=name, path=plugin_path))
+        logger.info(
+            'uninstall_plugin: {name} {path}'.format(
+                name=name, path=plugin_path))
 
         # remove plugin from applications._plugins
         rez = rez and self._application.plugins.remove(name)
@@ -456,7 +466,8 @@ class UpdateController(object):
 
         # remove plugin folder or remove symbolic link to it.
         if rez and os.path.exists(plugin_path):
-            logger.info('uninstall_plugin: remove folder {}'.format(plugin_path))
+            logger.info(
+                'uninstall_plugin: remove folder {}'.format(plugin_path))
             if os.path.islink(plugin_path):
                 os.unlink(plugin_path)
             else:
