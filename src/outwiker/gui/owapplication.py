@@ -64,6 +64,7 @@ class OutWikerApplication(wx.App):
         else:
             self.mainWnd.Show()
 
+        self.mainWnd.taskBarIconController.initialize()
         self.mainWnd.taskBarIconController.updateTrayIcon()
 
     def initLogger(self):
