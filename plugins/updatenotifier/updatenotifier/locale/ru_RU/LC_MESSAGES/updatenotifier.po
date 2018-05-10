@@ -7,58 +7,97 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UpdateNotifier\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-28 20:36+0300\n"
-"PO-Revision-Date: 2017-08-28 20:38+0300\n"
+"POT-Creation-Date: 2018-05-09 18:27+0300\n"
+"PO-Revision-Date: 2018-05-09 18:28+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language: ru_RU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.1\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-#: controller.py:94
+#: controller.py:100
 msgid "UpdateNotifier [Plugin]"
 msgstr "UpdateNotifier [Плагин]"
 
-#: updatecontroller.py:81 versionlist.py:60
-msgid "__updateLang"
-msgstr "ru"
-
-#: updatecontroller.py:130
-msgid "Installed OutWiker version"
-msgstr "Установленная версия OutWiker"
-
-#: updatecontroller.py:131
-msgid "Latest stable OutWiker version"
-msgstr "Последняя стабильная версия OutWiker"
-
-#: updatecontroller.py:132
-msgid "Latest unstable OutWiker version"
-msgstr "Последняя нестабильная версия OutWiker"
-
-#: updatecontroller.py:133
-msgid "Version history"
-msgstr "История версий"
-
-#: updatecontroller.py:134
-msgid "More info"
-msgstr "Подробности"
-
-#: updatecontroller.py:135
-msgid "Download"
-msgstr "Скачать"
-
-#: updatecontroller.py:205 updatecontroller.py:219 updatecontroller.py:225
+#: updatecontroller.py:82 updatecontroller.py:97 updatecontroller.py:103
 msgid "Check for new versions..."
 msgstr "Поиск новых версий..."
 
-#: updatecontroller.py:236
-msgid "Updates not found"
-msgstr "Обновления не найдены"
+#: updatecontroller.py:127
+msgid "Installed OutWiker version"
+msgstr "Установленная версия OutWiker"
 
-#: plugin.py:29
+#: updatecontroller.py:128
+msgid "Latest stable OutWiker version"
+msgstr "Последняя стабильная версия OutWiker"
+
+#: updatecontroller.py:129
+msgid "Latest unstable OutWiker version"
+msgstr "Последняя нестабильная версия OutWiker"
+
+#: updatecontroller.py:130
+msgid "Version history"
+msgstr "История версий"
+
+#: updatecontroller.py:131
+msgid "More info"
+msgstr "Подробности"
+
+#: updatecontroller.py:132
+msgid "Update"
+msgstr "Обновить"
+
+#: updatecontroller.py:133
+msgid "Install"
+msgstr "Установить"
+
+#: updatecontroller.py:134
+msgid "Uninstall"
+msgstr "Удалить"
+
+#: updatecontroller.py:190 versionlist.py:73
+msgid "__updateLang"
+msgstr "ru"
+
+#: updatecontroller.py:327
+msgid ""
+"The download link was not found in plugin description. Please update plugin "
+"manually"
+msgstr ""
+"В описании плагина не найдена ссылка для скачивания. Пожалуйста, обновите "
+"плагин вручную"
+
+#: updatecontroller.py:331 updatecontroller.py:346
+msgid "Plugin was NOT updated. Please update plugin manually"
+msgstr "Плагин НЕ БЫЛ обновлен. Пожалуйста, обновите плагин вручную"
+
+#: updatecontroller.py:385
+msgid ""
+"The plugin description can't be downloaded. Please install plugin manually"
+msgstr ""
+"Невозможно скачать описание плагина. Пожалуйста, установите плагин вручную"
+
+#: updatecontroller.py:391
+msgid "The plugin required newer version of OutWiker. Please update OutWiker"
+msgstr ""
+"Плагину требуется более новая версия OutWiker. Пожалуйста, обновите OuWiker"
+
+#: updatecontroller.py:398
+msgid ""
+"The download link was not found in plugin description. Please install plugin "
+"manually"
+msgstr ""
+"В описании плагина не найдена ссылка для скачивания. Пожалуйста, установите "
+"плагин вручную"
+
+#: updatecontroller.py:413
+msgid "Plugin was NOT Installed. Please update plugin manually"
+msgstr "Плагин не может быть установлен. Пожалуйста, обновите плагин вручную"
+
+#: plugin.py:32
 msgid ""
 "Check for update OutWiker and plug-ins for it.\n"
 "\n"
@@ -68,69 +107,81 @@ msgstr ""
 "\n"
 "Добавляет пункт меню \"Справка -> Проверить обновления...\""
 
-#: plugin.py:35
+#: plugin.py:38
 msgid "http://jenyay.net/Outwiker/UpdateNotifierEn"
 msgstr "http://jenyay.net/Outwiker/UpdateNotifier"
 
-#: actions.py:23 guicreators.py:45
+#: actions.py:22 guicreators.py:45
 msgid "Check for Updates..."
 msgstr "Проверить обновления..."
 
-#: actions.py:28
+#: actions.py:26
 msgid "UpdateNotifier plugin. Check for updates"
-msgstr "Плагин UpdateNotifier. Поиск обновлений."
+msgstr "Плагин UpdateNotifier. Поиск обновлений"
 
-#: actions.py:51 guicreators.py:49
+#: actions.py:47 guicreators.py:49
 msgid "Silence check for Updates..."
 msgstr "Тихая проверка обновлений..."
 
-#: actions.py:56
+#: actions.py:51
 msgid "UpdateNotifier plugin. Check for updates. Silence mode"
-msgstr "Плагин UpdateNotifier. Поиск обновлений. Тихий режим."
+msgstr "Плагин UpdateNotifier. Поиск обновлений. Тихий режим"
 
-#: preferencepanel.py:35
+#: preferencepanel.py:37
 msgid "Check for updates"
 msgstr "Проверка обновлений"
 
-#: preferencepanel.py:56
+#: preferencepanel.py:64
 msgid "Ignore updates unstable versions"
 msgstr "Игнорировать обновления нестабильных версий"
 
-#: updatedialog.py:21
+#: updatedialog.py:22
 msgid "UpdateNotifier"
 msgstr "UpdateNotifier"
 
-#: prefpanelcontroller.py:25
+#: prefpanelcontroller.py:24
 msgid "Never"
 msgstr "Никогда"
 
-#: prefpanelcontroller.py:26
+#: prefpanelcontroller.py:25
 msgid "Every day"
 msgstr "Каждый день"
 
-#: prefpanelcontroller.py:27
+#: prefpanelcontroller.py:26
 msgid "Every two days"
 msgstr "Раз в два дня"
 
-#: prefpanelcontroller.py:28
+#: prefpanelcontroller.py:27
 msgid "Every three days"
 msgstr "Раз в три дня"
 
-#: prefpanelcontroller.py:29
+#: prefpanelcontroller.py:28
 msgid "Every week"
 msgstr "Раз в неделю"
 
-#: prefpanelcontroller.py:30
+#: prefpanelcontroller.py:29
 msgid "Every two weeks"
 msgstr "Раз в две недели"
 
-#: prefpanelcontroller.py:31
+#: prefpanelcontroller.py:30
 msgid "Every month"
 msgstr "Раз в месяц"
 
-#: prefpanelcontroller.py:57
+#: prefpanelcontroller.py:53
 msgid "Custom"
 msgstr "Другое"
+
+#~ msgid ""
+#~ "The plugin required last version of Outwiker. Please update application"
+#~ msgstr ""
+#~ "Этот плагин требует более новой версии OutWiker. Пожалуйста, обновите "
+#~ "приложение"
+
+#~ msgid "Download"
+#~ msgstr "Скачать"
+
+#~ msgid "Updates not found"
+#~ msgstr "Обновления не найдены"
 
 #~ msgid "http://jenyay.net/Outwiker/English"
 #~ msgstr "http://jenyay.net/Soft/Outwiker"
@@ -162,8 +213,12 @@ msgstr "Другое"
 #~ msgid "Updated plugins:"
 #~ msgstr "Обновленные плагины:"
 
-#~ msgid "Check for update OutWiker and plug-ins for it. Append menu item \"Help -> Check for Updates...\""
-#~ msgstr "Проверка обновлений OutWiker и плагинов к нему. Плагин добавляет пункт меню \"Справка -> Проверить обновления...\""
+#~ msgid ""
+#~ "Check for update OutWiker and plug-ins for it. Append menu item \"Help -> "
+#~ "Check for Updates...\""
+#~ msgstr ""
+#~ "Проверка обновлений OutWiker и плагинов к нему. Плагин добавляет пункт "
+#~ "меню \"Справка -> Проверить обновления...\""
 
 #~ msgid "Check for new versions"
 #~ msgstr "Поиск новых версий"

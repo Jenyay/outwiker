@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import wx
 
@@ -9,7 +9,7 @@ from .i18n import get_
 
 
 class UpdateDialog(TestedDialog):
-    """Dialog to show new versions of hte OutWiekr and plugins"""
+    """Dialog to show new versions of hte OutWiker and plugins"""
 
     def __init__(self, parent):
         super(UpdateDialog, self).__init__(

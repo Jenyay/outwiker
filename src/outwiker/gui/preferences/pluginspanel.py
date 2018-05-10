@@ -113,31 +113,31 @@ class PluginsController (object):
     def __createPluginInfo(self, plugin):
         assert plugin is not None
 
-        infoTemplate = u"""<HTML>
-<HEAD>
-    <META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>
-</HEAD>
+        infoTemplate = u"""<html>
+<head>
+    <meta http-equiv='content-type' content='text/html; charset=utf-8'/>
+</head>
 
-<BODY>
-{name}<BR>
-{version}<BR>
-{url}<BR>
-{description}<BR>
-</BODY>
-</HTML>"""
+<body>
+{name}<br>
+{version}<br>
+{url}<br>
+{description}<br>
+</body>
+</html>"""
 
-        plugin_name = u"""<H3>{name}</H3>""".format(name=plugin.name)
+        plugin_name = u"""<h3>{name}</h3>""".format(name=plugin.name)
 
-        plugin_version = u"""<B>{version_header}:</B> {version}""".format(
+        plugin_version = u"""<b>{version_header}:</b> {version}""".format(
             version_header=_(u"Version"),
             version=plugin.version)
 
-        plugin_description = u"""<B>{description_head}:</B> {description}""".format(
+        plugin_description = u"""<b>{description_head}:</b> {description}""".format(
             description_head=_(u"Description"),
-            description=plugin.description.replace("\n", "<BR>"))
+            description=plugin.description.replace("\n", "<br>"))
 
-        if (plugin.url is not None):
-            plugin_url = u"""<BR><B>{site_head}</B>: <A HREF="{url}">{url}</a><BR>""".format(
+        if plugin.url is not None:
+            plugin_url = u"""<br><b>{site_head}</b>: <a href="{url}">{url}</a><br>""".format(
                 site_head=_("Site"),
                 url=plugin.url)
         else:
