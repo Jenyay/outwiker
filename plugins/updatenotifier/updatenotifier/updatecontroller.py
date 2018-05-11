@@ -54,6 +54,7 @@ class UpdateController(object):
         self._config = UpdatesConfig(self._application.config)
         self._dataPath = join(pluginPath, u'data')
         self._updateTemplatePath = join(self._dataPath, u'update.html')
+        self.__deletedPlugins = {}
 
         # Special string id for stable and unstable OutWiker URL
         self._OUTWIKER_STABLE_KEY = u'OUTWIKER_STABLE'
@@ -345,8 +346,7 @@ class UpdateController(object):
 
         if rez:
             self._application.plugins.reload(name)
-            self._dialog.EndModal(wx.ID_OK)
-            self.checkForUpdates()
+            self._updateDialog()
         else:
             MessageBox(
                 _(u"Plugin was NOT updated. Please update plugin manually"),
@@ -404,9 +404,10 @@ class UpdateController(object):
                            u"UpdateNotifier")
                 return False
 
-            # 0 - папка рядом с запускаемым файлом, затем идут другие папки,
+            # getPluginsDirList[0] - папка рядом с запускаемым файлом, затем идут другие папки,
             # если они есть
-            pluginPath = os.path.join(getPluginsDirList()[-1], name.lower())
+            pluginPath  = self.__deletedPlugins.get(name,
+                            os.path.join(getPluginsDirList()[-1], name.lower()))
 
             logger.info(
                 'install_plugin: {url} {path}'.format(
@@ -415,7 +416,7 @@ class UpdateController(object):
             rez = UpdatePlugin().update(url, pluginPath)
 
             if rez:
-                self._application.plugins.load(getPluginsDirList())
+                self._application.plugins.load([os.path.dirname(pluginPath)])
                 self._updateDialog()
             else:
                 MessageBox(
@@ -473,5 +474,8 @@ class UpdateController(object):
             else:
                 shutil.rmtree(plugin_path)
 
+            # Python can't unimport file, so save the deleted plugin
+            # If user re-installs it we just install it in same directory
+            self.__deletedPlugins[name] = plugin_path
         self._updateDialog()
         return rez
