@@ -77,12 +77,11 @@ class Config(object):
         if not self._config.has_section(section):
             self._config.add_section(section)
 
-        # no actions if the param already equal to value
+        # no actions if new value is equal to old.
         if self.get(section, param, fallback=None) == str(value):
             return True
 
         self._config.set(section, param, str(value))
-
         return self.save()
 
     def save(self):
@@ -104,10 +103,8 @@ class Config(object):
         Удалить текцию из файла конфига
         section - имя удаляемой секции
         """
-        result1 = self._config.remove_section(section)
-        result2 = self.save()
-
-        return result1 and result2
+        result = self._config.remove_section(section) and self.save()
+        return result
 
     def remove_option(self, section, option):
         """
@@ -115,9 +112,8 @@ class Config(object):
         section - имя секции, которой принадлежит опция
         option - имя удаляемой опции
         """
-        result1 = self._config.remove_option(section, option)
-        result2 = self.save()
-        return result1 and result2
+        result = self._config.remove_option(section, option) and self.save()
+        return result
 
 
 class BaseOption(object, metaclass=ABCMeta):
