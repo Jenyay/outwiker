@@ -41,7 +41,8 @@ class UpdatePlugin (object):
         extracted_path = self._extract_plugin(zip_name)
 
         # remove plugin directory and copy new data to the plugins folder
-        self._replacetree(extracted_path, plugin_path)
+        if not self._replacetree(extracted_path, plugin_path):
+            return False
 
         # remove temp files
         if os.path.exists(extracted_path):
@@ -53,15 +54,17 @@ class UpdatePlugin (object):
         """
         The function delete dst folder and than copy src to dst by shutil.copytree
         """
+        if os.path.exists(dst):
 
-        pls_path, pl_folder_name = os.path.split(dst)
-        pl_path = join(pls_path, pl_folder_name)
+            try:
+                shutil.rmtree(dst)
+            except:
+                return False
 
-        if os.path.exists(pl_path):
-            shutil.rmtree(pl_path)
+            if not os.path.exists(dst):
+                shutil.copytree(src, dst)
 
-        if not os.path.exists(pl_path):
-            shutil.copytree(src, pl_path)
+            return True
 
     def _extract_plugin(self, zip_path):
         """

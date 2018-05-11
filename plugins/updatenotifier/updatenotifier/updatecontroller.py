@@ -452,6 +452,10 @@ class UpdateController(object):
         :return:
             True if plugin was uninstalled successful, otherwise False
         """
+        def del_msg(function, path, excinfo):
+            "Error handler for shutil.rmtree"
+            MessageBox(_("Plugin's folder can't be deleted. Please delete the following path: \n {}").format(path))
+
         rez = True
 
         plugin_path = self.get_plugin(name).pluginPath
@@ -466,13 +470,15 @@ class UpdateController(object):
         logger.info('uninstall_plugin: remove plugin {}'.format(rez))
 
         # remove plugin folder or remove symbolic link to it.
-        if rez and os.path.exists(plugin_path):
-            logger.info(
-                'uninstall_plugin: remove folder {}'.format(plugin_path))
+        if rez:
             if os.path.islink(plugin_path):
                 os.unlink(plugin_path)
             else:
-                shutil.rmtree(plugin_path)
+                shutil.rmtree(plugin_path,
+                              onerror=lambda f, path, i:
+                              MessageBox(
+                                  _("Plugin's folder can't be deleted. Please delete the following path: \n {}"
+                                    ).format(path)))
 
             # Python can't unimport file, so save the deleted plugin
             # If user re-installs it we just install it in same directory
