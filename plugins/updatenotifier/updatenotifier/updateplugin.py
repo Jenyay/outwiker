@@ -61,10 +61,10 @@ class UpdatePlugin (object):
             except:
                 return False
 
-            if not os.path.exists(dst):
-                shutil.copytree(src, dst)
+        if not os.path.exists(dst):
+            shutil.copytree(src, dst)
 
-            return True
+        return True
 
     def _extract_plugin(self, zip_path):
         """
