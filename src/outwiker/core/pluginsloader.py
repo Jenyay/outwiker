@@ -57,12 +57,20 @@ class PluginsLoader(object):
         if self.enableOutput:
             logger.error(text)
 
+
+    @property
+    def loadedPlugins(self):
+        """ Return dict with successful loaded plugins"""
+        return {**self.__plugins, **self.__disabledPlugins}
+
+
     @property
     def disabledPlugins(self):
         """
         Возвращает список отключенных плагинов
         """
         return self.__disabledPlugins
+
 
     @property
     def invalidPlugins(self):
