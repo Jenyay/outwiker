@@ -42,6 +42,13 @@ class Config(object):
 
             self._config.read(self.fname, encoding='utf8')
 
+        # make aliases for the configparser methods
+        self.get = self._config.get
+        self.getint = self._config.getint
+        self.getbool = self._config.getboolean
+        self.getfloat = self._config.getfloat
+        self.has_section = self._config.has_section
+
     def _backup(self, fname, backup_fname):
         shutil.copyfile(self.fname, backup_fname)
 
@@ -88,38 +95,6 @@ class Config(object):
 
         return True
 
-    def get(self, section, param):
-        """
-        Получить значение из конфига
-        section - имя секции файла конфига
-        param - имя параметра
-        Возващает строку с прочитанным значением
-        Может бросать исключения
-        """
-        return self._config.get(section, param)
-
-    def getint(self, section, param):
-        """
-        Получить целочисленное значение из конфига
-        section - имя секции файла конфига
-        param - имя параметра
-        Возващает строку с прочитанным значением
-        Может бросать исключения
-        """
-        return int(self.get(section, param))
-
-    def getbool(self, section, param):
-        """
-        Получить булево значение из конфига
-        section - имя секции файла конфига
-        param - имя параметра
-        Возващает строку с прочитанным значением
-        Может бросать исключения
-        """
-        val = self.get(section, param)
-
-        return True if val.strip().lower() == "true" else False
-
     def remove_section(self, section):
         """
         Удалить текцию из файла конфига
@@ -139,13 +114,6 @@ class Config(object):
         result1 = self._config.remove_option(section, option)
         result2 = self.save()
         return result1 and result2
-
-    def has_section(self, section):
-        """
-        Возвращает True, если векция с именем section существует
-        и False в противном случае
-        """
-        return self._config.has_section(section)
 
 
 class BaseOption(object, metaclass=ABCMeta):
