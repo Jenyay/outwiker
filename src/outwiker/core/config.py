@@ -77,6 +77,10 @@ class Config(object):
         if not self._config.has_section(section):
             self._config.add_section(section)
 
+        # no actions if the param already equal to value
+        if self.get(section, param, fallback=None) == str(value):
+            return True
+
         self._config.set(section, param, str(value))
 
         return self.save()
