@@ -42,6 +42,12 @@ class Config(object):
 
             self._config.read(self.fname, encoding='utf8')
 
+        # make aliases for the configparser methods
+        self.get = self._config.get
+        self.getint = self._config.getint
+        self.getfloat = self._config.getfloat
+        self.has_section = self._config.has_section
+
     def _backup(self, fname, backup_fname):
         shutil.copyfile(self.fname, backup_fname)
 
@@ -70,8 +76,11 @@ class Config(object):
         if not self._config.has_section(section):
             self._config.add_section(section)
 
-        self._config.set(section, param, str(value))
+        # no actions if new value is equal to old.
+        if self.get(section, param, fallback=None) == str(value):
+            return True
 
+        self._config.set(section, param, str(value))
         return self.save()
 
     def save(self):
@@ -88,25 +97,22 @@ class Config(object):
 
         return True
 
-    def get(self, section, param):
+    def remove_section(self, section):
         """
-        Получить значение из конфига
-        section - имя секции файла конфига
-        param - имя параметра
-        Возващает строку с прочитанным значением
-        Может бросать исключения
+        Удалить текцию из файла конфига
+        section - имя удаляемой секции
         """
-        return self._config.get(section, param)
+        result = self._config.remove_section(section) and self.save()
+        return result
 
-    def getint(self, section, param):
+    def remove_option(self, section, option):
         """
-        Получить целочисленное значение из конфига
-        section - имя секции файла конфига
-        param - имя параметра
-        Возващает строку с прочитанным значением
-        Может бросать исключения
+        Удалить настройку из файла конфига
+        section - имя секции, которой принадлежит опция
+        option - имя удаляемой опции
         """
-        return int(self.get(section, param))
+        result = self._config.remove_option(section, option) and self.save()
+        return result
 
     def getbool(self, section, param):
         """
@@ -119,33 +125,6 @@ class Config(object):
         val = self.get(section, param)
 
         return True if val.strip().lower() == "true" else False
-
-    def remove_section(self, section):
-        """
-        Удалить текцию из файла конфига
-        section - имя удаляемой секции
-        """
-        result1 = self._config.remove_section(section)
-        result2 = self.save()
-
-        return result1 and result2
-
-    def remove_option(self, section, option):
-        """
-        Удалить настройку из файла конфига
-        section - имя секции, которой принадлежит опция
-        option - имя удаляемой опции
-        """
-        result1 = self._config.remove_option(section, option)
-        result2 = self.save()
-        return result1 and result2
-
-    def has_section(self, section):
-        """
-        Возвращает True, если векция с именем section существует
-        и False в противном случае
-        """
-        return self._config.has_section(section)
 
 
 class BaseOption(object, metaclass=ABCMeta):
