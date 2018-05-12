@@ -1,2 +1,1 @@
-
-
+from .plugin import PluginUpdateNotifier

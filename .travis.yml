@@ -1,0 +1,13 @@
+dist: trusty
+language: python
+cache: pip
+python:
+    - "3.6"
+before_install:
+    - sudo apt-get install debhelper devscripts debhelper devscripts p7zip-full libssl-dev dpkg-dev build-essential libjpeg-dev libtiff-dev libsdl1.2-dev libnotify-dev freeglut3 freeglut3-dev libsm-dev libgtk-3-dev libwebkitgtk-3.0-dev libgstreamer-plugins-base1.0-dev ibus-gtk3
+install:
+    - pip install pipenv
+    - pipenv run pip install wxpython==4.0.1 -v
+    - pipenv update --dev
+script:
+    - LD_LIBRARY_PATH=$(pipenv --venv)/lib/python3.6/site-packages/wx xvfb-run pipenv run fab test
