@@ -337,6 +337,41 @@ class ConfigOptionsTest(unittest.TestCase):
         self.assertEqual(newopt.value, True)
 
 
+    def testBoolOpt5(self):
+        self.config.set('Test', 'Boolval', True)
+        self.assertEqual(self.config.getbool('Test', 'Boolval'), True)
+
+
+    def testBoolOpt6(self):
+        self.config.set('Test', 'Boolval', False)
+        self.assertEqual(self.config.getbool('Test', 'Boolval'), False)
+
+
+    def testBoolOpt7(self):
+        self.config.set('Test', 'Boolval', 'True')
+        self.assertEqual(self.config.getbool('Test', 'Boolval'), True)
+
+
+    def testBoolOpt8(self):
+        self.config.set('Test', 'Boolval', 'False')
+        self.assertEqual(self.config.getbool('Test', 'Boolval'), False)
+
+
+    def testBoolOpt9(self):
+        self.config.set('Test', 'Boolval', '   True   ')
+        self.assertEqual(self.config.getbool('Test', 'Boolval'), True)
+
+
+    def testBoolOpt10(self):
+        self.config.set('Test', 'Boolval', '   False   ')
+        self.assertEqual(self.config.getbool('Test', 'Boolval'), False)
+
+
+    def testBoolOpt11(self):
+        self.config.set('Test', 'Boolval', '   sdfasgfadsf   ')
+        self.assertEqual(self.config.getbool('Test', 'Boolval'), False)
+
+
     def testRemoveOption1(self):
         opt = StringOption(self.config,
                            "Test",
