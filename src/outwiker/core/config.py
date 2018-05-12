@@ -45,7 +45,6 @@ class Config(object):
         # make aliases for the configparser methods
         self.get = self._config.get
         self.getint = self._config.getint
-        self.getbool = self._config.getboolean
         self.getfloat = self._config.getfloat
         self.has_section = self._config.has_section
 
@@ -114,6 +113,18 @@ class Config(object):
         """
         result = self._config.remove_option(section, option) and self.save()
         return result
+
+    def getbool(self, section, param):
+        """
+        Получить булево значение из конфига
+        section - имя секции файла конфига
+        param - имя параметра
+        Возващает строку с прочитанным значением
+        Может бросать исключения
+        """
+        val = self.get(section, param)
+
+        return True if val.strip().lower() == "true" else False
 
 
 class BaseOption(object, metaclass=ABCMeta):
