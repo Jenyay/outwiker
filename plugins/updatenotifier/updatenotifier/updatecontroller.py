@@ -54,6 +54,7 @@ class UpdateController(object):
         self._config = UpdatesConfig(self._application.config)
         self._dataPath = join(pluginPath, u'data')
         self._updateTemplatePath = join(self._dataPath, u'update.html')
+        self.__deletedPlugins = {}
 
         # Special string id for stable and unstable OutWiker URL
         self._OUTWIKER_STABLE_KEY = u'OUTWIKER_STABLE'
@@ -345,8 +346,7 @@ class UpdateController(object):
 
         if rez:
             self._application.plugins.reload(name)
-            self._dialog.EndModal(wx.ID_OK)
-            self.checkForUpdates()
+            self._updateDialog()
         else:
             MessageBox(
                 _(u"Plugin was NOT updated. Please update plugin manually"),
@@ -404,9 +404,10 @@ class UpdateController(object):
                            u"UpdateNotifier")
                 return False
 
-            # 0 - папка рядом с запускаемым файлом, затем идут другие папки,
+            # getPluginsDirList[0] - папка рядом с запускаемым файлом, затем идут другие папки,
             # если они есть
-            pluginPath = os.path.join(getPluginsDirList()[-1], name.lower())
+            pluginPath  = self.__deletedPlugins.get(name,
+                            os.path.join(getPluginsDirList()[-1], name.lower()))
 
             logger.info(
                 'install_plugin: {url} {path}'.format(
@@ -415,7 +416,7 @@ class UpdateController(object):
             rez = UpdatePlugin().update(url, pluginPath)
 
             if rez:
-                self._application.plugins.load(getPluginsDirList())
+                self._application.plugins.load([os.path.dirname(pluginPath)])
                 self._updateDialog()
             else:
                 MessageBox(
@@ -451,6 +452,10 @@ class UpdateController(object):
         :return:
             True if plugin was uninstalled successful, otherwise False
         """
+        def del_msg(function, path, excinfo):
+            "Error handler for shutil.rmtree"
+            MessageBox(_("Plugin's folder can't be deleted. Please delete the following path: \n {}").format(path))
+
         rez = True
 
         plugin_path = self.get_plugin(name).pluginPath
@@ -465,13 +470,18 @@ class UpdateController(object):
         logger.info('uninstall_plugin: remove plugin {}'.format(rez))
 
         # remove plugin folder or remove symbolic link to it.
-        if rez and os.path.exists(plugin_path):
-            logger.info(
-                'uninstall_plugin: remove folder {}'.format(plugin_path))
+        if rez:
             if os.path.islink(plugin_path):
                 os.unlink(plugin_path)
             else:
-                shutil.rmtree(plugin_path)
+                shutil.rmtree(plugin_path,
+                              onerror=lambda f, path, i:
+                              MessageBox(
+                                  _("Plugin's folder can't be deleted. Please delete the following path: \n {}"
+                                    ).format(path)))
 
+            # Python can't unimport file, so save the deleted plugin
+            # If user re-installs it we just install it in same directory
+            self.__deletedPlugins[name] = plugin_path
         self._updateDialog()
         return rez
