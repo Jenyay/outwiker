@@ -29,8 +29,9 @@ class UpdatePlugin (object):
         """
         logger.info('Start update plugin: %s' % (plugin_path))
 
-        # Download the file from `url`, save it in a temporary directory and get the
-        # path to it (e.g. '/tmp/tmpb48zma.zip') in the `file_name` variable:
+        # Download the file from `url`, save it in a temporary directory and
+        # get the path to it (e.g. '/tmp/tmpb48zma.zip') in
+        # the `file_name` variable:
         try:
             zip_name, headers = urllib.request.urlretrieve(url)
         except (urllib.error.HTTPError, urllib.error.URLError, ValueError):
@@ -52,13 +53,13 @@ class UpdatePlugin (object):
 
     def _replacetree(self, src, dst):
         """
-        The function delete dst folder and than copy src to dst by shutil.copytree
+        The function delete dst folder and than copy src to dst
+            by shutil.copytree
         """
         if os.path.exists(dst):
-
             try:
                 shutil.rmtree(dst)
-            except:
+            except OSError:
                 return False
 
         if not os.path.exists(dst):
