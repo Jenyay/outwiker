@@ -10,6 +10,7 @@ import wx
 
 from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
+from outwiker.core.i18n import I18nConfig
 from outwiker.gui.guiconfig import GeneralGuiConfig
 from outwiker.gui.tester import Tester
 from outwiker.gui.owapplication import OutWikerApplication
@@ -70,6 +71,11 @@ class BaseOutWikerMixin(WikiTestMixin):
         self.application = Application
         self.application.clear()
         self.application.init(self._config_path)
+        self.setLanguage('en')
+
+    def setLanguage(self, lang):
+        i18config = I18nConfig(self.application.config)
+        i18config.languageOption.value = lang
 
     def destroyApplication(self):
         self.application.clear()

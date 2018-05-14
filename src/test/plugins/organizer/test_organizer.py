@@ -18,9 +18,7 @@ class OrganizerTest (unittest.TestCase, BaseOutWikerGUIMixin):
 
     def setUp(self):
         self.initApplication()
-
-        i18config = I18nConfig(self.application.config)
-        i18config.languageOption.value = 'ru_RU'
+        self.setLanguage('ru_RU')
 
         self.__createWiki()
 
