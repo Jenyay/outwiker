@@ -23,6 +23,9 @@ class SpellCheckerTest (unittest.TestCase):
         shutil.copy(os.path.join(srcDictPath, lang + ".aff"),
                     self._pathToDicts)
 
+        # For file system sync
+        list(os.listdir(self._pathToDicts))
+
     def _copyDict(self, lang):
         self._copyDictFrom(lang, self._dictsSrc)
 
