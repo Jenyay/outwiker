@@ -33,7 +33,6 @@ from .updateplugin import UpdatePlugin
 UpdateVersionsEvent, EVT_UPDATE_VERSIONS = wx.lib.newevent.NewEvent()
 
 logger = logging.getLogger('updatenotifier')
-vl = VersionList()
 
 
 class UpdateController(object):
@@ -279,6 +278,7 @@ class UpdateController(object):
             EVT_UPDATE_VERSIONS event
         """
 
+        vl = VersionList()
         # get
         appInfoDict = vl.loadAppInfo(updateUrls)
 
@@ -321,6 +321,7 @@ class UpdateController(object):
         Update plugin to latest version by name.
         :return: True if plugin was installed, otherwise False
         """
+        vl = VersionList()
         appInfoDict = vl.loadAppInfo(self._getPluginsUpdateUrls())
 
         # get link to latest version
@@ -378,6 +379,7 @@ class UpdateController(object):
 
         :return: True if plugin was installed, otherwise False
         """
+        vl = VersionList()
         getAppInfo = vl.getAppInfoFromUrl
         getDownlodUrl = vl.getDownlodUrl
 
@@ -406,8 +408,9 @@ class UpdateController(object):
 
             # getPluginsDirList[0] - папка рядом с запускаемым файлом, затем идут другие папки,
             # если они есть
-            pluginPath  = self.__deletedPlugins.get(name,
-                            os.path.join(getPluginsDirList()[-1], name.lower()))
+            pluginPath = self.__deletedPlugins.get(
+                name,
+                os.path.join(getPluginsDirList()[-1], name.lower()))
 
             logger.info(
                 'install_plugin: {url} {path}'.format(
