@@ -183,7 +183,7 @@ class UpdateController(object):
         getInfo = self._application.plugins.getInfo
 
         result = {}
-        plugin_names = self._getInstalledPlugins()
+        plugin_names = self._application.plugins.loadedPlugins
         for name in plugin_names:
 
             try:
@@ -222,7 +222,7 @@ class UpdateController(object):
 
         currentVersionsDict = {plugin: self.get_plugin(plugin).version
                                for plugin
-                               in self._getInstalledPlugins()}
+                               in self._application.plugins.loadedPlugins}
 
         currentVersionsDict[self._OUTWIKER_STABLE_KEY] = str(currentVersion)
         currentVersionsDict[self._OUTWIKER_UNSTABLE_KEY] = str(currentVersion)
@@ -288,7 +288,7 @@ class UpdateController(object):
         # get update URLs from plugins.json and remove installed.
         installerInfoDict = {x: y for x, y
                              in self._getUrlsForInstaller().items()
-                             if x not in self._getInstalledPlugins()}
+                             if x not in self._application.plugins.loadedPlugins}
         installerInfoDict = vl.loadAppInfo(installerInfoDict)
 
         event = UpdateVersionsEvent(appInfoDict=appInfoDict,
@@ -355,16 +355,6 @@ class UpdateController(object):
                 u"UpdateNotifier")
         return rez
 
-    def _getInstalledPlugins(self):
-        """
-        Retrieve list with names of all installed plugins
-        """
-        # TODO: It seems the method should be moved to PluginsLoader
-
-        enabled_plugins = [p.name for p in self._application.plugins]
-        disabled_plugins = list(self._application.plugins.disabledPlugins)
-
-        return enabled_plugins + disabled_plugins
 
     def _updateDialog(self):
         """
