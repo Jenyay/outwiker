@@ -9,12 +9,14 @@ from outwiker.pages.wiki.wikipage import WikiPageFactory
 from test.utils import removeDir
 from outwiker.pages.wiki.htmlgenerator import HtmlGenerator
 from outwiker.core.style import Style
+from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class OrganizerTest (unittest.TestCase):
+class OrganizerTest (unittest.TestCase, BaseOutWikerGUIMixin):
     """Organizer plug-in tests"""
 
     def setUp(self):
+        self.initApplication()
         self.__createWiki()
 
         dirlist = ["../plugins/organizer"]
@@ -25,6 +27,7 @@ class OrganizerTest (unittest.TestCase):
     def tearDown(self):
         removeDir(self.path)
         self.loader.clear()
+        self.destroyApplication()
 
     def __createWiki(self):
         # Здесь будет создаваться вики
