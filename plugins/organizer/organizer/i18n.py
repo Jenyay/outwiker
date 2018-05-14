@@ -3,5 +3,5 @@ def set_(lang):
     _ = lang
 
 
-def get_ ():
+def get_():
     return _

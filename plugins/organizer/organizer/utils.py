@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 
-def splitTags (tagsStr):
+def splitTags(tagsStr):
     """
     Return list of the tags. Tags must be comma separated with optional spaces.
     The tags will be in lower case.
