@@ -35,7 +35,7 @@ Append menu item "Help -> Check for Updates..."''')
 
     @property
     def url(self):
-        return _(u"http://jenyay.net/Outwiker/UpdateNotifierEn")
+        return _(u"https://jenyay.net/Outwiker/UpdateNotifierEn")
 
     def initialize(self):
         set_(self.gettext)
