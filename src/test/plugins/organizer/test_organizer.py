@@ -5,11 +5,12 @@ import unittest
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
-from outwiker.pages.wiki.wikipage import WikiPageFactory
-from test.utils import removeDir
-from outwiker.pages.wiki.htmlgenerator import HtmlGenerator
 from outwiker.core.style import Style
+from outwiker.core.i18n import I18nConfig
+from outwiker.pages.wiki.wikipage import WikiPageFactory
+from outwiker.pages.wiki.htmlgenerator import HtmlGenerator
 from test.basetestcases import BaseOutWikerGUIMixin
+from test.utils import removeDir
 
 
 class OrganizerTest (unittest.TestCase, BaseOutWikerGUIMixin):
@@ -17,6 +18,10 @@ class OrganizerTest (unittest.TestCase, BaseOutWikerGUIMixin):
 
     def setUp(self):
         self.initApplication()
+
+        i18config = I18nConfig(self.application.config)
+        i18config.languageOption.value = 'ru_RU'
+
         self.__createWiki()
 
         dirlist = ["../plugins/organizer"]
