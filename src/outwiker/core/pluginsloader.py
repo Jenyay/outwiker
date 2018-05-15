@@ -7,6 +7,7 @@ import traceback
 import logging
 import importlib
 import pkgutil
+import collections
 
 import outwiker.core
 import outwiker.gui
@@ -46,6 +47,9 @@ class PluginsLoader(object):
         # Значение - экземпляр плагина
         self.__disabledPlugins = {}
 
+        # View for all successful loaded plugins
+        self.__loadedPlugins = collections.ChainMap(self.__plugins,self.__disabledPlugins)
+
         # The list of the InvalidPlugin instance.
         self.__invalidPlugins = []
 
@@ -62,7 +66,7 @@ class PluginsLoader(object):
     @property
     def loadedPlugins(self):
         """ Return dict with successful loaded plugins"""
-        return {**self.__plugins, **self.__disabledPlugins}
+        return self.__loadedPlugins
 
 
     @property
