@@ -610,7 +610,6 @@ class MainWindow(wx.Frame):
         self._saveParams()
         self.destroyPagePanel(True)
 
-        self._application.actionController.saveHotKeys()
         self._application.clear()
         self._application.actionController.destroy()
         self._application = None
