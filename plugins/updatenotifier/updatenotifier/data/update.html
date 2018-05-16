@@ -145,7 +145,7 @@
                 <!-- {{pluginName}} block begin -->
                 <div class="version-block plugin-version {{pluginName|replace(' ', '_')}}">
                     <div  class="title"> <a href="{{pluginInfo.appwebsite}}">{{pluginName}}</a> <span class="version version-current">{{currentVersionsDict[pluginName]}}</span> &#x27f6; <span class="version version-new">{{pluginInfo.currentVersionStr}}</span></div>
-                    <div>"{{escape(pluginInfo.description)}}"</div>
+                    <div>{{escape(pluginInfo.description)}}</div>
                     {{ update_info(pluginName, pluginInfo) }}
                 </div>
                 <!-- {{pluginName}} block end -->
@@ -155,7 +155,7 @@
                 <!-- {{pluginName}} block begin -->
                 <div class="version-block plugin-version {{pluginName|replace(' ', '_')}}">
                     <div class="title"><a href="{{pluginInfo.appwebsite}}">{{pluginName}}</a> <span class="version version-new">{{pluginInfo.currentVersionStr}}</span></div>
-                    <div>"{{escape(pluginInfo.description)}}"</div>
+                    <div>{{escape(pluginInfo.description)}}</div>
                     {{ install_info(pluginName, pluginInfo) }}
                 </div>
                 <!-- {{pluginName}} block end -->
@@ -165,7 +165,7 @@
                 <!-- {{pluginName}} block begin -->
                 <div class="version-block plugin-version {{pluginName|replace(' ', '_')}}">
                     <div class="title"> <a href="{{pluginInfo.appwebsite}}">{{pluginName}}</a> <span class="version version-current">{{currentVersionsDict[pluginName]}}</span></div>
-                    <div>"{{escape(pluginInfo.description)}}"</div>
+                    <div>{{escape(pluginInfo.description)}}</div>
                     {{ noupdate_info(pluginName, pluginInfo) }}
                 </div>
                 <!-- {{pluginName}} block end -->
