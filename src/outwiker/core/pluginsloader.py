@@ -26,6 +26,20 @@ from outwiker.utilites.textfile import readTextFile
 
 logger = logging.getLogger('outwiker.core.pluginsloader')
 
+class EnabledPlugins(dict):
+    """container for enabled plugins"""
+    def __init__(self, *args, **kwargs):
+        super(EnabledPlugins, self).__init__(*args, **kwargs)
+
+    def __setitem__(self, key, value):
+        value.initialize()
+        super(EnabledPlugins, self).__setitem__(key, value)
+
+    def __delitem__(self, key):
+        if key in self:
+            self[key].destroy()
+        super(EnabledPlugins, self).__delitem__(key)
+
 
 class PluginsLoader(object):
     """
@@ -40,7 +54,7 @@ class PluginsLoader(object):
         # Словарь с загруженными плагинами
         # Ключ - имя плагина
         # Значение - экземпляр плагина
-        self.__plugins = {}
+        self.__plugins = EnabledPlugins()
 
         # Словарь с плагинами, которые были отключены пользователем
         # Ключ - имя плагина
@@ -102,26 +116,20 @@ class PluginsLoader(object):
         Отключить загруженные плагины, попавшие в "черный список" (disableList)
         """
         for pluginname in disableList:
-            if pluginname in self.__plugins.keys():
+            if pluginname in self.__plugins:
                 self.__plugins[pluginname].destroy()
 
                 assert pluginname not in self.__disabledPlugins
-                self.__disabledPlugins[pluginname] = self.__plugins[pluginname]
-                del self.__plugins[pluginname]
-
+                self.__disabledPlugins[pluginname] = self.__plugins.pop(pluginname)
 
     def __enableDisabledPlugins(self, disableList):
         """
         Включить отключенные плагины, если их больше нет в "черном списке"
         """
-        for plugin in list(self.__disabledPlugins.values()):
-            if plugin.name not in disableList:
-                plugin.initialize()
-
-                assert plugin.name not in self.__plugins
-                self.__plugins[plugin.name] = plugin
-
-                del self.__disabledPlugins[plugin.name]
+        for plugin in list(self.__disabledPlugins):
+            if plugin not in disableList:
+                assert plugin not in self.__plugins
+                self.__plugins[plugin] = self.__disabledPlugins.pop(plugin)
 
 
     def load(self, dirlist):
@@ -173,8 +181,7 @@ class PluginsLoader(object):
         Uninstall all active plugins and clear plugins list
         Do not clear Disabled and Invalid plugins
         """
-        [plugin.destroy() for plugin in self.__plugins.values()]
-        self.__plugins = {}
+        self.__plugins.clear()
 
 
     def __loadPluginInfo(self, plugin_fname):
@@ -325,7 +332,6 @@ class PluginsLoader(object):
 
                 if plugin and plugin.name not in self.loadedPlugins:
                     if plugin.name not in options.disabledPlugins.value:
-                        plugin.initialize()
                         self.__plugins[plugin.name] = plugin
                     else:
                         self.__disabledPlugins[plugin.name] = plugin
@@ -399,10 +405,8 @@ class PluginsLoader(object):
         :exception IOError:
             if plugin.xml cannot be read
         """
-        if pluginname in self.__plugins:
+        if pluginname in self.loadedPlugins:
             module = self.__plugins[pluginname].__class__.__module__
-        elif pluginname in self.__disabledPlugins:
-            module = self.__disabledPlugins[pluginname].__class__.__module__
         else:
             module = ''
 
@@ -422,8 +426,6 @@ class PluginsLoader(object):
             None - if plugin name is absent in plugin list
         """
         if pluginName in self.__plugins:
-            # destroy plugin
-            self.__plugins[pluginName].destroy()
             del self.__plugins[pluginName]
             return True
         elif pluginName in self.__disabledPlugins:
