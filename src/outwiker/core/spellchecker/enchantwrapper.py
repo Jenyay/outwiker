@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
 
 import os.path
+import logging
 
 from enchant import Dict, DictWithPWL, Broker
 import enchant.errors
 
 from .dictsfinder import DictsFinder
 from .defines import CUSTOM_DICT_LANG
+
+logger = logging.getLogger('outwiker.core.spellchecker')
 
 
 class EnchantWrapper (object):
@@ -30,8 +33,9 @@ class EnchantWrapper (object):
             for path in dictsFinder.getFoldersForLang(lang):
                 try:
                     self._checkers.append(self._getDict(lang, path))
-                except enchant.errors.Error:
-                    pass
+                except enchant.errors.Error as err:
+                    logger.error('Spellchecker append error. path={}; lang={}'.format(path, lang))
+                    logger.error(err)
 
     def addToCustomDict(self, dictIndex, word):
         if dictIndex < len(self._customCheckers):
@@ -56,8 +60,8 @@ class EnchantWrapper (object):
     def addCustomDict(self, customDictPath):
         try:
             self._createCustomDictLang(self._folders[-1])
-        except IOError:
-            pass
+        except IOError as err:
+            logger.error("Can't create custom dictionary")
 
         key = (CUSTOM_DICT_LANG, customDictPath)
 
@@ -70,7 +74,9 @@ class EnchantWrapper (object):
                 currentDict = DictWithPWL(CUSTOM_DICT_LANG,
                                           customDictPath,
                                           broker=broker)
-            except enchant.errors.Error:
+            except enchant.errors.Error as err:
+                logger.error('Custom dictionary error. path={}; lang={}'.format(customDictPath, key))
+                logger.error(err)
                 return
 
             self._dictCache[key] = currentDict
