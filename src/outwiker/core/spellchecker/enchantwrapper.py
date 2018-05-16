@@ -90,6 +90,7 @@ class EnchantWrapper (object):
         if key not in self._dictCache:
             broker = Broker()
             broker.set_param('enchant.myspell.dictionary.path', path)
+            broker.set_ordering('*', 'myspell')
             currentDict = Dict(lang, broker)
             self._dictCache[key] = currentDict
         else:
@@ -102,6 +103,7 @@ class EnchantWrapper (object):
             return True
 
         for checker in self._checkers + self._customCheckers:
+            # checker, checker.tag, checker.check(word))
             if checker.check(word):
                 return True
 

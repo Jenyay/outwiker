@@ -11,20 +11,21 @@ from test.utils import removeDir
 
 class SpellCheckerTest (unittest.TestCase):
     def setUp(self):
-        self._pathToDicts = mkdtemp(prefix='Абырвалг spell')
+        self._pathToDicts = mkdtemp(prefix='tmp spell test')
+
+        if not os.path.exists(self._pathToDicts):
+            os.mkdir(self._pathToDicts)
         self._dictsSrc = 'spell'
 
     def tearDown(self):
         removeDir(self._pathToDicts)
 
     def _copyDictFrom(self, lang, srcDictPath):
-        shutil.copy(os.path.join(srcDictPath, lang + ".dic"),
-                    self._pathToDicts)
-        shutil.copy(os.path.join(srcDictPath, lang + ".aff"),
-                    self._pathToDicts)
+        fname_dic = os.path.join(srcDictPath, lang + ".dic")
+        fname_aff = os.path.join(srcDictPath, lang + ".aff")
 
-        # For file system sync
-        # list(os.listdir(self._pathToDicts))
+        shutil.copy(fname_dic, self._pathToDicts)
+        shutil.copy(fname_aff, self._pathToDicts)
 
     def _copyDict(self, lang):
         self._copyDictFrom(lang, self._dictsSrc)
@@ -47,6 +48,20 @@ class SpellCheckerTest (unittest.TestCase):
         checker = SpellChecker(['ru_RU'], [self._pathToDicts])
         self.assertTrue(checker.check('Проверка'))
         self.assertFalse(checker.check('ывпывапыяа'))
+
+    def testEn_01(self):
+        self._copyDict('en_US')
+        checker = SpellChecker(['en_US'], [self._pathToDicts])
+        self.assertTrue(checker.check('test'))
+        self.assertFalse(checker.check('asdfasfffadsf'))
+
+    def testEn_02(self):
+        self._copyDict('en_US')
+        checker = SpellChecker(['en_US'], [self._pathToDicts])
+        checker.skipWordsWithNumbers = True
+
+        errors = checker.findErrors('  test   ')
+        self.assertEqual(errors, [])
 
     def testNumbers_01(self):
         self._copyDict('ru_RU')
@@ -169,3 +184,10 @@ class SpellCheckerTest (unittest.TestCase):
 
         errors = checker.findErrors('проверка ййй ээээ тест')
         self.assertEqual(errors, [('ййй', 9, 12), ('ээээ', 13, 17)])
+
+    def testFindErrors_07(self):
+        checker = SpellChecker(['ru_RU'], ['spell'])
+        checker.skipWordsWithNumbers = True
+
+        errors = checker.findErrors('  проверка   ')
+        self.assertEqual(errors, [])

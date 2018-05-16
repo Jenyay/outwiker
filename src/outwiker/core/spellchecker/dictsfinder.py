@@ -28,10 +28,15 @@ class DictsFinder (object):
         """
         Return a list of folders which contains dictionary for lang language.
         """
-        return [path
-                for path in self._dirlist
-                if (os.path.exists(os.path.join(path, lang + self.dictExtensions[0])) and
-                    os.path.exists(os.path.join(path, lang + self.dictExtensions[1])))]
+        result = []
+        for path in self._dirlist:
+            fname_1 = os.path.join(path, lang + self.dictExtensions[0])
+            fname_2 = os.path.join(path, lang + self.dictExtensions[1])
+
+            if os.path.exists(fname_1) and os.path.exists(fname_2):
+                result.append(path)
+
+        return result
 
     def _findLangs(self, path):
         langs = set()
