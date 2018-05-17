@@ -406,7 +406,7 @@ class PluginsLoader(object):
             if plugin.xml cannot be read
         """
         if pluginname in self.loadedPlugins:
-            module = self.__plugins[pluginname].__class__.__module__
+            module = self.loadedPlugins[pluginname].__class__.__module__
         else:
             module = ''
 
@@ -425,11 +425,9 @@ class PluginsLoader(object):
             True - if plugin was removed
             None - if plugin name is absent in plugin list
         """
-        if pluginName in self.__plugins:
-            del self.__plugins[pluginName]
-            return True
-        elif pluginName in self.__disabledPlugins:
-            del self.__disabledPlugins[pluginName]
+        if pluginName in self.loadedPlugins:
+            if not self.__plugins.pop(pluginName, None):
+                del self.__disabledPlugins[pluginName]
             return True
 
 
