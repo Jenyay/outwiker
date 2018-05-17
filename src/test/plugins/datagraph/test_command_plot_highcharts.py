@@ -841,7 +841,8 @@ x.max = 0.2
 
         generator = HtmlGenerator(self.page)
         result = generator.makeHtml(Style().getPageStyle(self.page))
-        self.assertIn('"legend": {"enabled": false, "symbolWidth": 60}', result)
+        self.assertTrue('"legend": {"enabled": false, "symbolWidth": 60}' in result or
+                        '"legend": {"symbolWidth": 60, "enabled": false}' in result)
 
     def testLegend_02(self):
         text = '''(:plot legend:)
@@ -855,7 +856,8 @@ x.max = 0.2
 
         generator = HtmlGenerator(self.page)
         result = generator.makeHtml(Style().getPageStyle(self.page))
-        self.assertIn('"legend": {"enabled": true, "symbolWidth": 60}', result)
+        self.assertTrue('"legend": {"enabled": true, "symbolWidth": 60}' in result or
+                        '"legend": {"symbolWidth": 60, "enabled": true}' in result)
 
     def testLegend_03(self):
         text = '''(:plot legend=0:)
@@ -869,7 +871,8 @@ x.max = 0.2
 
         generator = HtmlGenerator(self.page)
         result = generator.makeHtml(Style().getPageStyle(self.page))
-        self.assertIn('"legend": {"enabled": false, "symbolWidth": 60}', result)
+        self.assertTrue('"legend": {"enabled": false, "symbolWidth": 60}' in result or
+                        '"legend": {"symbolWidth": 60, "enabled": false}' in result)
 
     def testLegend_04(self):
         text = '''(:plot legend=42:)
@@ -883,7 +886,8 @@ x.max = 0.2
 
         generator = HtmlGenerator(self.page)
         result = generator.makeHtml(Style().getPageStyle(self.page))
-        self.assertIn('"legend": {"enabled": true, "symbolWidth": 60}', result)
+        self.assertTrue('"legend": {"enabled": true, "symbolWidth": 60}' in result or
+                        '"legend": {"symbolWidth": 60, "enabled": true}' in result)
 
     def testSkipRows_01(self):
         text = '''(:plot curve.data.skiprows="3":)
