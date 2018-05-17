@@ -3,8 +3,6 @@
 OutWiker
 ========
 
-[![Documentation Status](https://readthedocs.org/projects/outwiker/badge/?version=latest)](http://outwiker.readthedocs.io/ru/latest/?badge=latest)
-
 Description
 -----------
 
