@@ -71,17 +71,17 @@ class PluginsLoader(object):
         # (например, в тестах)
         self.enableOutput = True
 
-
     def _print(self, text):
         if self.enableOutput:
             logger.error(text)
 
-
+    #############################
+    # plugin's repository methods
+    #############################
     @property
     def loadedPlugins(self):
         """ Return dict with successful loaded plugins"""
         return self.__loadedPlugins
-
 
     @property
     def disabledPlugins(self):
@@ -90,10 +90,33 @@ class PluginsLoader(object):
         """
         return self.__disabledPlugins
 
-
     @property
     def invalidPlugins(self):
         return self.__invalidPlugins
+
+
+    def remove(self, pluginName):
+        """
+        Remove plugin module and plugin instance
+
+        :param pluginName:
+            plugin name which should be removed
+        :return:
+            True - if plugin was removed
+            None - if plugin name is absent in plugin list
+        """
+        if pluginName in self.loadedPlugins:
+            if not self.__plugins.pop(pluginName, None):
+                del self.__disabledPlugins[pluginName]
+            return True
+
+    def clear(self):
+        """
+        Uninstall all active plugins and clear plugins list
+        """
+        self.__plugins.clear()
+        self.__disabledPlugins.clear()
+        self.__invalidPlugins.clear()
 
 
     def updateDisableList(self):
@@ -131,6 +154,18 @@ class PluginsLoader(object):
                 assert plugin not in self.__plugins
                 self.__plugins[plugin] = self.__disabledPlugins.pop(plugin)
 
+    def __len__(self):
+        return len(self.__plugins)
+
+    def __getitem__(self, pluginname):
+        return self.__plugins[pluginname]
+
+    def __iter__(self):
+        return iter(self.__plugins.values())
+
+    ############################
+    # import plugins methods
+    ###########################
 
     def load(self, dirlist):
         """
@@ -174,14 +209,6 @@ class PluginsLoader(object):
                     self.__importPackage(packagePath)
 
         logger.debug(u'Plugins loading ended')
-
-
-    def clear(self):
-        """
-        Uninstall all active plugins and clear plugins list
-        Do not clear Disabled and Invalid plugins
-        """
-        self.__plugins.clear()
 
 
     def __loadPluginInfo(self, plugin_fname):
@@ -390,7 +417,10 @@ class PluginsLoader(object):
             # import plugin again
             self.__importPackage(plug_path)
 
-
+    #######
+    # Other
+    # Seems the method should be move to plaginBase
+    #######
     def getInfo(self, pluginname, langlist=["en"]):
         """
         Retrieve a AppInfo for plugin_name
@@ -413,29 +443,3 @@ class PluginsLoader(object):
         xml_content = pkgutil.get_data(module, PLUGIN_VERSION_FILE_NAME)
         if xml_content:
             return XmlVersionParser(langlist).parse(xml_content)
-
-
-    def remove(self, pluginName):
-        """
-        Remove plugin module and plugin instance
-
-        :param pluginName:
-            plugin name which should be removed
-        :return:
-            True - if plugin was removed
-            None - if plugin name is absent in plugin list
-        """
-        if pluginName in self.loadedPlugins:
-            if not self.__plugins.pop(pluginName, None):
-                del self.__disabledPlugins[pluginName]
-            return True
-
-
-    def __len__(self):
-        return len(self.__plugins)
-
-    def __getitem__(self, pluginname):
-        return self.__plugins[pluginname]
-
-    def __iter__(self):
-        return iter(self.__plugins.values())
