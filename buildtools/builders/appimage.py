@@ -56,16 +56,6 @@ class BuilderAppImage(BuilderBase):
         linuxBuilder = PyInstallerBuilderLinuxSimple(src_dir, dest_dir, temp_dir)
         linuxBuilder.build()
 
-    def _create_plugins_dir(self):
-        """
-        Create empty 'plugins' dir if it not exists
-        """
-        pluginsdir = os.path.join(self.temp_sources_dir, u"plugins")
-
-        # Create the plugins folder(it is not appened to the git repository)
-        if not os.path.exists(pluginsdir):
-            os.mkdir(pluginsdir)
-
     def _download_appimagetool(self):
         with lcd(self._temp_dir):
             local(u'wget "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage"')

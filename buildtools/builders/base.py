@@ -82,3 +82,13 @@ class BuilderBase(object, metaclass=abc.ABCMeta):
             os.path.join(self.temp_sources_dir, OUTWIKER_VERSIONS_FILENAME))
 
         os.remove(os.path.join(self.temp_sources_dir, u'versions_stable.xml'))
+
+    def _create_plugins_dir(self):
+        """
+        Create empty 'plugins' dir if it not exists
+        """
+        pluginsdir = os.path.join(self.temp_sources_dir, u"plugins")
+
+        # Create the plugins folder(it is not appened to the git repository)
+        if not os.path.exists(pluginsdir):
+            os.mkdir(pluginsdir)
