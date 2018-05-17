@@ -28,7 +28,6 @@ class BuilderAppImage(BuilderBase):
                                               self._appimage_result_name)
 
     def clear(self):
-        super(BuilderAppImage, self).clear()
         self._remove(self._result_full_path)
 
     def _build(self):
