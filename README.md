@@ -1,3 +1,5 @@
+[![Documentation](https://media.readthedocs.org/static/projects/badges/passing.svg)](https://outwiker.readthedocs.io/ru/latest/) [![Build status](https://ci.appveyor.com/api/projects/status/s4o1qxj58ctfd39d?svg=true)](https://ci.appveyor.com/project/Jenyay/outwiker)
+
 OutWiker
 ========
 
