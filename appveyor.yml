@@ -10,6 +10,11 @@ install:
     cd C:\projects\outwiker
 
     py -m pipenv update --dev
+build_script:
+- cmd: >-
+    cd C:\projects\outwiker
+
+    py -m pipenv run fab win:0,1,0
 test_script:
 - cmd: >-
     cd C:\projects\outwiker
