@@ -94,7 +94,6 @@ class PluginsLoader(object):
     def invalidPlugins(self):
         return self.__invalidPlugins
 
-
     def remove(self, pluginName):
         """
         Remove plugin module and plugin instance
@@ -118,6 +117,20 @@ class PluginsLoader(object):
         self.__disabledPlugins.clear()
         self.__invalidPlugins.clear()
 
+    def disable(self, plugin_name):
+        """ Disable plugin """
+        if plugin_name in self.__plugins:
+            assert plugin_name not in self.__disabledPlugins
+            # pop() works strange here, and do not use __delitem__ method.
+            # So we destroy plugin directly
+            self.__disabledPlugins[plugin_name] = self.__plugins.pop(plugin_name)
+            self.__disabledPlugins[plugin_name].destroy()
+
+    def enable(self, plugin_name):
+        """ Enable plugin """
+        if plugin_name in self.__disabledPlugins:
+            assert plugin_name not in self.__plugins
+            self.__plugins[plugin_name] = self.__disabledPlugins.pop(plugin_name)
 
     def updateDisableList(self):
         """
@@ -139,11 +152,7 @@ class PluginsLoader(object):
         Отключить загруженные плагины, попавшие в "черный список" (disableList)
         """
         for pluginname in disableList:
-            if pluginname in self.__plugins:
-                self.__plugins[pluginname].destroy()
-
-                assert pluginname not in self.__disabledPlugins
-                self.__disabledPlugins[pluginname] = self.__plugins.pop(pluginname)
+            self.disable(pluginname)
 
     def __enableDisabledPlugins(self, disableList):
         """
@@ -152,7 +161,7 @@ class PluginsLoader(object):
         for plugin in list(self.__disabledPlugins):
             if plugin not in disableList:
                 assert plugin not in self.__plugins
-                self.__plugins[plugin] = self.__disabledPlugins.pop(plugin)
+                self.enable(plugin)
 
     def __len__(self):
         return len(self.__plugins)
