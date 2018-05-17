@@ -18,8 +18,8 @@ class SpellChecker(object):
         """
         self._realChecker = self._getSpellCheckerWrapper(langlist, folders)
 
-        self._wordRegex = re.compile(r'(?:(?:\w-\w)|\w)+', re.U)
-        self._digitRegex = re.compile('\d', re.U)
+        self._wordRegex = re.compile(r'(?:(?:\w-\w)|\w)+')
+        self._digitRegex = re.compile('\d')
 
         self._skipWordsWithNumbers = True
 

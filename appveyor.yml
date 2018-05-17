@@ -1,0 +1,22 @@
+version: 2.1.xxx.{build}
+clone_folder: c:\projects\outwiker
+init:
+- cmd: py -m pip install pipenv
+environment:
+  PY_PYTHON: 3.6-32
+  PYTHONIOENCODING: utf_8
+install:
+- cmd: >-
+    cd C:\projects\outwiker
+
+    py -m pipenv update --dev
+build_script:
+- cmd: >-
+    cd C:\projects\outwiker
+
+    py -m pipenv run fab win:0,1,0
+test_script:
+- cmd: >-
+    cd C:\projects\outwiker
+
+    py -m pipenv run fab test:"-s"

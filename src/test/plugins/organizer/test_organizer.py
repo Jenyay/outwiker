@@ -17,8 +17,7 @@ class OrganizerTest (unittest.TestCase, BaseOutWikerGUIMixin):
     """Organizer plug-in tests"""
 
     def setUp(self):
-        self.initApplication()
-        self.setLanguage('ru_RU')
+        self.initApplication('ru_RU')
 
         self.__createWiki()
 
