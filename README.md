@@ -1,7 +1,7 @@
+[![Documentation Status](https://readthedocs.org/projects/outwiker/badge/?version=latest)](http://outwiker.readthedocs.io/ru/latest/?badge=latest) [![Build status](https://ci.appveyor.com/api/projects/status/s4o1qxj58ctfd39d?svg=true)](https://ci.appveyor.com/project/Jenyay/outwiker)
+
 OutWiker
 ========
-
-[![Documentation Status](https://readthedocs.org/projects/outwiker/badge/?version=latest)](http://outwiker.readthedocs.io/ru/latest/?badge=latest)
 
 Description
 -----------
