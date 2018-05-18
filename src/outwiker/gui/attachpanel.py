@@ -4,7 +4,6 @@ import os.path
 
 import wx
 
-from outwiker.core.application import Application
 from outwiker.core.commands import MessageBox
 from outwiker.core.system import getOS, getImagesDir
 from outwiker.core.attachment import Attachment
@@ -15,14 +14,15 @@ from outwiker.gui.dropfilestarget import DropFilesTarget
 
 
 class AttachPanel(wx.Panel):
-    def __init__(self, *args, **kwds):
+    def __init__(self, parent, application):
+        super().__init__(parent)
+        self._application = application
         self.ID_ATTACH = None
         self.ID_REMOVE = None
         self.ID_PASTE = None
         self.ID_EXECUTE = None
         self.ID_OPEN_FOLDER = None
 
-        wx.Panel.__init__(self, *args, **kwds)
         self.__toolbar = self.__createToolBar(self, -1)
         self.__attachList = wx.ListCtrl(self,
                                         -1,
@@ -34,7 +34,7 @@ class AttachPanel(wx.Panel):
         self.__fileIcons = getOS().fileIcons
         self.__attachList.SetImageList(self.__fileIcons.imageList,
                                        wx.IMAGE_LIST_SMALL)
-        self._dropTarget = DropFilesTarget(Application, self)
+        self._dropTarget = DropFilesTarget(self._application, self)
 
         self.__bindGuiEvents()
         self.__bindAppEvents()
@@ -81,14 +81,14 @@ class AttachPanel(wx.Panel):
         return self.__toolbar
 
     def __bindAppEvents(self):
-        Application.onPageSelect += self.__onPageSelect
-        Application.onAttachListChanged += self.__onAttachListChanged
-        Application.onWikiOpen += self.__onWikiOpen
+        self._application.onPageSelect += self.__onPageSelect
+        self._application.onAttachListChanged += self.__onAttachListChanged
+        self._application.onWikiOpen += self.__onWikiOpen
 
     def __unbindAppEvents(self):
-        Application.onPageSelect -= self.__onPageSelect
-        Application.onAttachListChanged -= self.__onAttachListChanged
-        Application.onWikiOpen -= self.__onWikiOpen
+        self._application.onPageSelect -= self.__onPageSelect
+        self._application.onAttachListChanged -= self.__onAttachListChanged
+        self._application.onWikiOpen -= self.__onWikiOpen
 
     def __onClose(self, event):
         self._dropTarget.destroy()
@@ -190,8 +190,8 @@ class AttachPanel(wx.Panel):
         """
         self.__attachList.Freeze()
         self.__attachList.ClearAll()
-        if Application.selectedPage is not None:
-            files = Attachment(Application.selectedPage).attachmentFull
+        if self._application.selectedPage is not None:
+            files = Attachment(self._application.selectedPage).attachmentFull
             files.sort(key=str.lower, reverse=True)
 
             for fname in files:
@@ -231,10 +231,10 @@ class AttachPanel(wx.Panel):
         return files
 
     def __onAttach(self, event):
-        Application.actionController.getAction(AttachFilesAction.stringId).run(None)
+        self._application.actionController.getAction(AttachFilesAction.stringId).run(None)
 
     def __onRemove(self, event):
-        if Application.selectedPage is not None:
+        if self._application.selectedPage is not None:
             files = self.__getSelectedFiles()
 
             if len(files) == 0:
@@ -247,7 +247,7 @@ class AttachPanel(wx.Panel):
                           _(u"Remove files?"),
                           wx.YES_NO | wx.ICON_QUESTION) == wx.YES:
                 try:
-                    Attachment(Application.selectedPage).removeAttach(files)
+                    Attachment(self._application.selectedPage).removeAttach(files)
                 except IOError as e:
                     MessageBox(str(e), _(u"Error"), wx.ICON_ERROR | wx.OK)
 
@@ -265,10 +265,10 @@ class AttachPanel(wx.Panel):
                        wx.OK | wx.ICON_ERROR)
             return
 
-        Application.onAttachmentPaste(files)
+        self._application.onAttachmentPaste(files)
 
     def __executeFile(self):
-        if Application.selectedPage is not None:
+        if self._application.selectedPage is not None:
             files = self.__getSelectedFiles()
 
             if len(files) == 0:
@@ -278,7 +278,7 @@ class AttachPanel(wx.Panel):
                 return
 
             for file in files:
-                fullpath = os.path.join(Attachment(Application.selectedPage).getAttachPath(), file)
+                fullpath = os.path.join(Attachment(self._application.selectedPage).getAttachPath(), file)
                 try:
                     getOS().startFile(fullpath)
                 except OSError:
@@ -289,13 +289,13 @@ class AttachPanel(wx.Panel):
         self.__pasteLink()
 
     def __onOpenFolder(self, event):
-        Application.actionController.getAction(OpenAttachFolderAction.stringId).run(None)
+        self._application.actionController.getAction(OpenAttachFolderAction.stringId).run(None)
 
     def __onExecute(self, event):
         self.__executeFile()
 
     def __onDoubleClick(self, event):
-        config = AttachConfig(Application.config)
+        config = AttachConfig(self._application.config)
         if config.doubleClickAction.value == AttachConfig.ACTION_INSERT_LINK:
             self.__pasteLink()
         elif config.doubleClickAction.value == AttachConfig.ACTION_OPEN:
@@ -307,7 +307,7 @@ class AttachPanel(wx.Panel):
             return
 
         data = wx.FileDataObject()
-        attach_path = Attachment(Application.selectedPage).getAttachPath()
+        attach_path = Attachment(self._application.selectedPage).getAttachPath()
 
         for fname in self.__getSelectedFiles():
             data.AddFile(os.path.join(attach_path, fname))
@@ -316,7 +316,7 @@ class AttachPanel(wx.Panel):
         dragSource.DoDragDrop()
 
     def __onAttachListChanged(self, page, params):
-        if page is not None and page == Application.selectedPage:
+        if page is not None and page == self._application.selectedPage:
             self.updateAttachments()
 
     def SetFocus(self):
