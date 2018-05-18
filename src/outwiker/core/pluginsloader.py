@@ -71,6 +71,9 @@ class PluginsLoader(object):
         # (например, в тестах)
         self.enableOutput = True
 
+        # aliases
+        self.get = self.__loadedPlugins.get
+
     def _print(self, text):
         if self.enableOutput:
             logger.error(text)
