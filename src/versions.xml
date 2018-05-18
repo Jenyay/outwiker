@@ -1,15 +1,15 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <info>
 	<name>OutWiker</name>
-	<updates>http://jenyay.net/uploads/Outwiker/Unstable/versions.xml</updates>
+	<updates>https://jenyay.net/uploads/Outwiker/Unstable/versions.xml</updates>
 
 	<data lang="en">
-		<website>http://jenyay.net/Outwiker/UnstableEn</website>
+		<website>https://jenyay.net/Outwiker/UnstableEn</website>
 
 		<changelog>
 			<version number="2.1.0.841" status="dev">
 				<change>Accelerated plug-ins loading.</change>
-				<change>Small design fixes.</change>
+				<change>GUI fixes.</change>
 			</version>
 
 			<version number="2.1.0.840" status="dev" date="April 22, 2018">
@@ -59,12 +59,12 @@
 	</data>
 
 	<data lang="ru">
-		<website>http://jenyay.net/Outwiker/Unstable</website>
+		<website>https://jenyay.net/Outwiker/Unstable</website>
 
 		<changelog>
 			<version number="2.1.0.841" status="dev">
 				<change>Ускорена загрузка плагинов.</change>
-				<change>Небольшие исправлении в оформлении.</change>
+				<change>Исправления в интерфейсе.</change>
 			</version>
 
 			<version number="2.1.0.840" status="dev" date="22.04.2018">
