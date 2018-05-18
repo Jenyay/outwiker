@@ -2,7 +2,6 @@
 
 import wx
 
-from outwiker.core.application import Application
 from outwiker.gui.guiconfig import PageDialogConfig
 from outwiker.gui.pagedialogpanels.generalpanel import (GeneralPanel,
                                                         GeneralController)
@@ -14,7 +13,7 @@ from outwiker.core.events import (PageDialogInitParams,
 
 
 class BasePageDialog (TestedDialog):
-    def __init__(self, parentWnd, currentPage, parentPage):
+    def __init__(self, parentWnd, currentPage, parentPage, application):
         super(BasePageDialog, self).__init__(
             parent=parentWnd,
             style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER
@@ -23,11 +22,11 @@ class BasePageDialog (TestedDialog):
         self._parentPage = parentPage
         self._currentPage = currentPage
 
-        self._application = Application
+        self._application = application
         self._panels = []
         self._controllers = []
 
-        self._config = PageDialogConfig(Application.config)
+        self._config = PageDialogConfig(self._application.config)
 
         self._notebook = wx.Notebook(self, -1)
         self._createPanels()

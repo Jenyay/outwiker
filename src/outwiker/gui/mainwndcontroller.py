@@ -106,7 +106,7 @@ class MainWndController(object):
         # Ключ - id, значение - путь до вики
         self._recentId = {}
 
-        self.bookmarks = BookmarksController(self)
+        self.bookmarks = BookmarksController(self, Application)
         self.__autosaveTimer = AutosaveTimer(Application)
 
         self.init()

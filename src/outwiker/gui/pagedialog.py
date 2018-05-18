@@ -24,7 +24,7 @@ def editPage(parentWnd, currentPage):
                    wx.OK | wx.ICON_ERROR)
         return
 
-    with EditPageDialog(parentWnd, currentPage) as dlg:
+    with EditPageDialog(parentWnd, currentPage, Application) as dlg:
         if dlg.ShowModal() == wx.ID_OK:
             try:
                 currentPage.display_title = dlg.pageTitle
@@ -47,7 +47,7 @@ def createPageWithDialog(parentwnd, parentpage):
 
     page = None
 
-    with CreatePageDialog(parentwnd, parentpage) as dlg:
+    with CreatePageDialog(parentwnd, parentpage, Application) as dlg:
         if dlg.ShowModal() == wx.ID_OK:
             factory = dlg.selectedFactory
             title = dlg.pageTitle
@@ -98,10 +98,8 @@ def createChildPage(parentwnd, page):
 
 
 class CreatePageDialog(BasePageDialog):
-    def __init__(self, parentWnd, parentPage):
-        super(CreatePageDialog, self).__init__(parentWnd,
-                                               None,
-                                               parentPage)
+    def __init__(self, parentWnd, parentPage, application):
+        super().__init__(parentWnd, None, parentPage, application)
         self.SetTitle(_(u"Create Page"))
 
     def _validate(self):
@@ -116,12 +114,11 @@ class CreatePageDialog(BasePageDialog):
 
 
 class EditPageDialog(BasePageDialog):
-    def __init__(self, parentWnd, currentPage):
+    def __init__(self, parentWnd, currentPage, application):
         assert currentPage is not None
 
-        super(EditPageDialog, self).__init__(parentWnd,
-                                             currentPage,
-                                             currentPage.parent)
+        super().__init__(parentWnd, currentPage, currentPage.parent,
+                         application)
 
         self.SetTitle(_(u"Edit page properties"))
 
