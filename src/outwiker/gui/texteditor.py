@@ -24,8 +24,8 @@ ApplyStyleEvent, EVT_APPLY_STYLE = wx.lib.newevent.NewEvent()
 class TextEditor(TextEditorBase):
     _fontConfigSection = "Font"
 
-    def __init__(self, parent, *args, **kwds):
-        super(TextEditor, self).__init__(parent)
+    def __init__(self, parent):
+        super().__init__(parent)
 
         self._config = EditorConfig(Application.config)
 

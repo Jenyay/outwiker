@@ -12,33 +12,29 @@ from outwiker.core.application import Application
 from outwiker.core.system import getSpellDirList
 
 
-
-class HtmlTextEditor (TextEditor):
+class HtmlTextEditor(TextEditor):
     _htmlDictIsCopied = False
 
-
-    def __init__(self, *args, **kwds):
+    def __init__(self, parent):
         self._htmlStylesSection = "HtmlStyles"
-        TextEditor.__init__(self, *args, **kwds)
+        super().__init__(parent)
 
+    def setDefaultSettings(self):
+        super(HtmlTextEditor, self).setDefaultSettings()
+        self.setupHtmlStyles(self.textCtrl)
 
-    def setDefaultSettings (self):
-        super (HtmlTextEditor, self).setDefaultSettings()
-        self.setupHtmlStyles (self.textCtrl)
-
-
-    def setupHtmlStyles (self, textCtrl):
+    def setupHtmlStyles(self, textCtrl):
         # Устанавливаемые стили
         styles = self.loadStyles()
 
-        textCtrl.SetLexer (wx.stc.STC_LEX_HTML)
+        textCtrl.SetLexer(wx.stc.STC_LEX_HTML)
         textCtrl.StyleClearAll()
 
         for key in styles:
-            textCtrl.StyleSetSpec (key, styles[key])
-            textCtrl.StyleSetSize (key, self.config.fontSize.value)
-            textCtrl.StyleSetFaceName (key, self.config.fontName.value)
-            textCtrl.StyleSetBackground (key, self.config.backColor.value)
+            textCtrl.StyleSetSpec(key, styles[key])
+            textCtrl.StyleSetSize(key, self.config.fontSize.value)
+            textCtrl.StyleSetFaceName(key, self.config.fontName.value)
+            textCtrl.StyleSetBackground(key, self.config.backColor.value)
 
         tags = u"""a abbr acronym address applet area b base basefont
             bdo big blockquote body br button caption center
@@ -80,14 +76,13 @@ class HtmlTextEditor (TextEditor):
             datetime data-toggle data-default-title viewbox itemscope pubdate
             """
 
-        textCtrl.SetKeyWords (0, tags + " " + attributes)
+        textCtrl.SetKeyWords(0, tags + " " + attributes)
 
-
-    def loadStyles (self):
+    def loadStyles(self):
         """
         Загрузить стили из конфига
         """
-        config = HtmlEditorStylesConfig (Application.config)
+        config = HtmlEditorStylesConfig(Application.config)
 
         styles = {}
 
@@ -102,52 +97,50 @@ class HtmlTextEditor (TextEditor):
 
         return styles
 
-
-    def turnList (self, start, end, itemStart, itemEnd):
+    def turnList(self, start, end, itemStart, itemEnd):
         """
         Создать список
         """
         selText = self.textCtrl.GetSelectedText()
-        items = [item for item in selText.split ("\n") if len (item.strip()) > 0]
+        items = [item for item in selText.split("\n") if len(item.strip()) > 0]
 
         # Собираем все элементы
-        if len (items) > 0:
-            itemsList = reduce (lambda result, item: result + itemStart + item.strip() + itemEnd + "\n", items, "")
+        if len(items) > 0:
+            itemsList = reduce(lambda result, item: result + itemStart + item.strip() + itemEnd + "\n", items, "")
         else:
             itemsList = itemStart + itemEnd + "\n"
 
         result = start + itemsList + end
 
-        if len (end) == 0:
-            # Если нет завершающего тега (как в викинотации),
+        if len(end) == 0:
+            # Если нет завершающего тега(как в викинотации),
             # то не нужен перевод строки у последнего элемента
             result = result[: -1]
 
-        self.textCtrl.ReplaceSelection (result)
+        self.textCtrl.ReplaceSelection(result)
 
-        if len (items) == 0:
+        if len(items) == 0:
             endText = u"%s\n%s" % (itemEnd, end)
 
-            newPos = self.GetSelectionEnd() - len (endText)
-            self.SetSelection (newPos, newPos)
+            newPos = self.GetSelectionEnd() - len(endText)
+            self.SetSelection(newPos, newPos)
 
-
-    def getSpellChecker (self):
-        checker = super (HtmlTextEditor, self).getSpellChecker()
+    def getSpellChecker(self):
+        checker = super(HtmlTextEditor, self).getSpellChecker()
         htmlDictName = u'html.dic'
 
         # Copy html.dic dictionary to folder with user's permissions
         if not self._htmlDictIsCopied:
-            srcname = os.path.join (getSpellDirList()[0], htmlDictName)
-            dstname = os.path.join (getSpellDirList()[-1], htmlDictName)
+            srcname = os.path.join(getSpellDirList()[0], htmlDictName)
+            dstname = os.path.join(getSpellDirList()[-1], htmlDictName)
 
             if srcname != dstname:
                 try:
-                    shutil.copyfile (srcname, dstname)
+                    shutil.copyfile(srcname, dstname)
                 except IOError:
                     return checker
 
             self._htmlDictIsCopied = True
 
-        checker.addCustomDict (os.path.join (getSpellDirList()[-1], htmlDictName))
+        checker.addCustomDict(os.path.join(getSpellDirList()[-1], htmlDictName))
         return checker

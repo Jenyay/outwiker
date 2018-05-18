@@ -189,7 +189,7 @@ class BaseWikiPageView (BaseHtmlPanel):
 
     def __createHtmlCodePanel(self, parentSizer):
         # Окно для просмотра получившегося кода HTML
-        self.htmlCodeWindow = HtmlTextEditor(self.notebook, -1)
+        self.htmlCodeWindow = HtmlTextEditor(self.notebook)
         self.htmlCodeWindow.SetReadOnly(True)
         parentSizer.Add(self.htmlCodeWindow, 1,
                         wx.TOP | wx.BOTTOM | wx.EXPAND, 2)
