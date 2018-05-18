@@ -93,7 +93,7 @@ class MainWindow(wx.Frame):
         self._createStatusBar()
 
         logger.debug(u'MainWindow. Create the MainWndController')
-        self.controller = MainWndController(self)
+        self.controller = MainWndController(self, self._application)
         self.controller.loadMainWindowParams()
 
         if self.mainWindowConfig.maximized.value:

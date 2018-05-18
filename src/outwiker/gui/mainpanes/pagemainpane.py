@@ -11,7 +11,7 @@ class PageMainPane(MainPane):
     Класс для работы с панелью с контентом страницы
     """
     def _createPanel(self):
-        return CurrentPagePanel(self.parent, -1)
+        return CurrentPagePanel(self.parent, self._application)
 
     def _createConfig(self):
         return None

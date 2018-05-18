@@ -4,7 +4,6 @@ import os.path
 import wx
 
 from outwiker.actions.addbookmark import AddBookmarkAction
-from outwiker.core.application import Application
 from outwiker.core.factoryselector import FactorySelector
 from outwiker.core.commands import pageExists, openWiki, MessageBox
 import outwiker.core.system
@@ -12,7 +11,10 @@ from .tabsctrl import TabsCtrl
 
 
 class CurrentPagePanel(wx.Panel):
-    def __init__(self, *args, **kwds):
+    def __init__(self, parent, application):
+        super().__init__(parent, style=wx.TAB_TRAVERSAL)
+        self._application = application
+
         self.__pageView = None
         self.__currentPage = None
 
@@ -23,9 +25,6 @@ class CurrentPagePanel(wx.Panel):
 
         self.grayStarImage = os.path.join(self.imagesDir, "star_gray.png")
         self.goldStarImage = os.path.join(self.imagesDir, "star.png")
-
-        kwds["style"] = wx.TAB_TRAVERSAL
-        wx.Panel.__init__(self, *args, **kwds)
 
         self.tabsCtrl = TabsCtrl(self)
         self.bookmarkButton = wx.BitmapButton(
@@ -39,12 +38,12 @@ class CurrentPagePanel(wx.Panel):
 
         self.Bind(wx.EVT_BUTTON, self.__onBookmark, self.bookmarkButton)
 
-        Application.onWikiOpen += self.__onWikiOpen
-        Application.onPageSelect += self.__onPageSelect
-        Application.onPageRename += self.__onPageRename
-        Application.onPageUpdate += self.__onPageUpdate
-        Application.onBookmarksChanged += self.__onBookmarksChanged
-        Application.onForceSave += self.__onForceSave
+        self._application.onWikiOpen += self.__onWikiOpen
+        self._application.onPageSelect += self.__onPageSelect
+        self._application.onPageRename += self.__onPageRename
+        self._application.onPageUpdate += self.__onPageUpdate
+        self._application.onBookmarksChanged += self.__onBookmarksChanged
+        self._application.onForceSave += self.__onForceSave
 
         self.Bind(wx.EVT_CLOSE, self.__onClose)
 
@@ -57,17 +56,17 @@ class CurrentPagePanel(wx.Panel):
         return self.__pageView
 
     def Print(self):
-        if (Application.selectedPage is not None and
+        if (self._application.selectedPage is not None and
                 self.__pageView is not None):
             self.__pageView.Print()
 
     def __onClose(self, event):
-        Application.onWikiOpen -= self.__onWikiOpen
-        Application.onPageSelect -= self.__onPageSelect
-        Application.onPageRename -= self.__onPageRename
-        Application.onPageUpdate -= self.__onPageUpdate
-        Application.onForceSave -= self.__onForceSave
-        Application.onBookmarksChanged -= self.__onBookmarksChanged
+        self._application.onWikiOpen -= self.__onWikiOpen
+        self._application.onPageSelect -= self.__onPageSelect
+        self._application.onPageRename -= self.__onPageRename
+        self._application.onPageUpdate -= self.__onPageUpdate
+        self._application.onForceSave -= self.__onForceSave
+        self._application.onBookmarksChanged -= self.__onBookmarksChanged
 
         if self.__pageView is not None:
             self.destroyPageView()
@@ -95,18 +94,18 @@ class CurrentPagePanel(wx.Panel):
         self.bookmarkButton.Enable(page is not None)
 
     def __onPageUpdate(self, page, **kwargs):
-        if (Application.selectedPage is not None and
-                Application.selectedPage == page):
+        if (self._application.selectedPage is not None and
+                self._application.selectedPage == page):
             self.__updatePageInfo(page)
 
     def __updateBookmarkBtn(self):
         imagePath = self.grayStarImage
         tooltip = _(u"Add to Bookmarks")
 
-        page = Application.selectedPage
+        page = self._application.selectedPage
 
         if (page is not None and
-                page.root.bookmarks.pageMarked(Application.selectedPage)):
+                page.root.bookmarks.pageMarked(self._application.selectedPage)):
             imagePath = self.goldStarImage
             tooltip = _(u"Remove from Bookmarks")
 
@@ -143,7 +142,7 @@ class CurrentPagePanel(wx.Panel):
         """
         if page is not None:
             factory = FactorySelector.getFactory(page.getTypeString())
-            pageView = factory.getPageView(self, Application)
+            pageView = factory.getPageView(self, self._application)
             self.__pageView = pageView
             self.__pageView.page = page
 
@@ -151,7 +150,7 @@ class CurrentPagePanel(wx.Panel):
 
             self.contentSizer.Add(self.__pageView, 1, wx.EXPAND, 0)
             self.Layout()
-            Application.onPageViewCreate(page)
+            self._application.onPageViewCreate(page)
 
     def __updatePageInfo(self, page):
         """
@@ -191,7 +190,7 @@ class CurrentPagePanel(wx.Panel):
         """
         if self.__pageView is not None:
             assert self.__currentPage is not None
-            Application.onPageViewDestroy(self.__currentPage)
+            self._application.onPageViewDestroy(self.__currentPage)
 
             self.contentSizer.Detach(self.__pageView)
             self.__pageView.Close()
@@ -204,7 +203,7 @@ class CurrentPagePanel(wx.Panel):
         Нужно для перезагрузки вики
         """
         if self.__pageView is not None:
-            Application.onPageViewDestroy(self.__currentPage)
+            self._application.onPageViewDestroy(self.__currentPage)
 
             self.contentSizer.Detach(self.__pageView)
             self.__pageView.CloseWithoutSave()
@@ -219,7 +218,7 @@ class CurrentPagePanel(wx.Panel):
             return
 
         if self.__pageView is not None:
-            if not pageExists(Application.selectedPage.root):
+            if not pageExists(self._application.selectedPage.root):
                 # Нет папки с деревом
                 self.__saveProcessing = True
                 MessageBox(_(u"Can't save page. Wiki folder not exists. Wiki will be closed."),
@@ -227,10 +226,10 @@ class CurrentPagePanel(wx.Panel):
                            wx.OK | wx.ICON_ERROR)
                 self.__saveProcessing = False
 
-                Application.wikiroot = None
+                self._application.wikiroot = None
                 return
 
-            if not pageExists(Application.selectedPage):
+            if not pageExists(self._application.selectedPage):
                 # Похоже, страница удалена вручную, перезагрузим вики
                 self.__saveProcessing = True
                 MessageBox(_(u"Can't save page. Page folder not exists. Wiki will be reloaded."),
@@ -244,12 +243,12 @@ class CurrentPagePanel(wx.Panel):
             self.__pageView.Save()
 
     def __reloadWiki(self):
-        Application.selectedPage = None
-        openWiki(Application.wikiroot.path)
+        self._application.selectedPage = None
+        openWiki(self._application.wikiroot.path)
 
     def __onForceSave(self):
         self.Save()
 
     def __onBookmark(self, event):
-        controller = Application.actionController
+        controller = self._application.actionController
         controller.getAction(AddBookmarkAction.stringId).run(None)
