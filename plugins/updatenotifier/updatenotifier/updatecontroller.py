@@ -54,6 +54,7 @@ class UpdateController(object):
         self._dataPath = join(pluginPath, u'data')
         self._updateTemplatePath = join(self._dataPath, u'update.html')
         self.__deletedPlugins = {}
+        self.vl = VersionList() # to load app info from the internet.
 
         # Special string id for stable and unstable OutWiker URL
         self._OUTWIKER_STABLE_KEY = u'OUTWIKER_STABLE'
@@ -278,18 +279,17 @@ class UpdateController(object):
             EVT_UPDATE_VERSIONS event
         """
 
-        vl = VersionList()
         # get
-        appInfoDict = vl.loadAppInfo(updateUrls)
+        appInfoDict = self.vl.loadAppInfo(updateUrls)
 
         # get update URLs from installed plugins
-        plugInfoDict = vl.loadAppInfo(self._getPluginsUpdateUrls())
+        plugInfoDict = self.vl.loadAppInfo(self._getPluginsUpdateUrls())
 
         # get update URLs from plugins.json and remove installed.
         installerInfoDict = {x: y for x, y
                              in self._getUrlsForInstaller().items()
                              if x not in self._application.plugins.loadedPlugins}
-        installerInfoDict = vl.loadAppInfo(installerInfoDict)
+        installerInfoDict = self.vl.loadAppInfo(installerInfoDict)
 
         event = UpdateVersionsEvent(appInfoDict=appInfoDict,
                                     plugInfoDict=plugInfoDict,
@@ -322,13 +322,12 @@ class UpdateController(object):
         Update plugin to latest version by name.
         :return: True if plugin was installed, otherwise False
         """
-        vl = VersionList()
-        appInfoDict = vl.loadAppInfo(self._getPluginsUpdateUrls())
+        appInfoDict = self.vl.loadAppInfo(self._getPluginsUpdateUrls())
 
         # get link to latest version
         appInfo = appInfoDict.get(name)
         if appInfo:
-            url = vl.getDownlodUrl(appInfo)
+            url = self.vl.getDownlodUrl(appInfo)
             if not url:
                 MessageBox(_(u"The download link was not found in plugin description. Please update plugin manually"),
                            u"UpdateNotifier")
@@ -370,9 +369,8 @@ class UpdateController(object):
 
         :return: True if plugin was installed, otherwise False
         """
-        vl = VersionList()
-        getAppInfo = vl.getAppInfoFromUrl
-        getDownlodUrl = vl.getDownlodUrl
+        getAppInfo = self.vl.getAppInfoFromUrl
+        getDownlodUrl = self.vl.getDownlodUrl
 
         plugin_info = self._installerPlugins.get(name, None)
         if plugin_info:
