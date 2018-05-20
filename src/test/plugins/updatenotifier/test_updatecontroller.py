@@ -29,8 +29,8 @@ class UpdateControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def test_filter_empty_01(self):
         from updatenotifier.updatecontroller import UpdateController
 
-        pluginPath = self.loader['UpdateNotifier'].pluginPath
-        controller = UpdateController(self.application, pluginPath)
+        plugin = self.loader['UpdateNotifier']
+        controller = UpdateController(self.application, plugin)
 
         currentVersionsDict = {}
         latestVersionsDict = {}
@@ -43,8 +43,8 @@ class UpdateControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def test_filter_empty_02(self):
         from updatenotifier.updatecontroller import UpdateController
 
-        pluginPath = self.loader['UpdateNotifier'].pluginPath
-        controller = UpdateController(self.application, pluginPath)
+        plugin = self.loader['UpdateNotifier']
+        controller = UpdateController(self.application, plugin)
 
         currentVersionsDict = {'test_01': '0.1'}
         latestVersionsDict = {}
@@ -57,8 +57,8 @@ class UpdateControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def test_filter_empty_03(self):
         from updatenotifier.updatecontroller import UpdateController
 
-        pluginPath = self.loader['UpdateNotifier'].pluginPath
-        controller = UpdateController(self.application, pluginPath)
+        plugin = self.loader['UpdateNotifier']
+        controller = UpdateController(self.application, plugin)
 
         currentVersionsDict = {}
         latestVersionsDict = {
@@ -73,8 +73,8 @@ class UpdateControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def test_filter_empty_04(self):
         from updatenotifier.updatecontroller import UpdateController
 
-        pluginPath = self.loader['UpdateNotifier'].pluginPath
-        controller = UpdateController(self.application, pluginPath)
+        plugin = self.loader['UpdateNotifier']
+        controller = UpdateController(self.application, plugin)
 
         latestVersion = Version(1, 0)
         latestVersionInfo = VersionInfo(latestVersion)
@@ -94,8 +94,8 @@ class UpdateControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def test_filter_empty_05(self):
         from updatenotifier.updatecontroller import UpdateController
 
-        pluginPath = self.loader['UpdateNotifier'].pluginPath
-        controller = UpdateController(self.application, pluginPath)
+        plugin = self.loader['UpdateNotifier']
+        controller = UpdateController(self.application, plugin)
 
         latestVersion = Version(1, 0)
         latestVersionInfo = VersionInfo(latestVersion)
@@ -115,8 +115,8 @@ class UpdateControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def test_filter_empty_06(self):
         from updatenotifier.updatecontroller import UpdateController
 
-        pluginPath = self.loader['UpdateNotifier'].pluginPath
-        controller = UpdateController(self.application, pluginPath)
+        plugin = self.loader['UpdateNotifier']
+        controller = UpdateController(self.application, plugin)
 
         latestVersion = Version(1, 0)
         latestVersionInfo = VersionInfo(latestVersion)
@@ -136,8 +136,8 @@ class UpdateControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def test_filter_07(self):
         from updatenotifier.updatecontroller import UpdateController
 
-        pluginPath = self.loader['UpdateNotifier'].pluginPath
-        controller = UpdateController(self.application, pluginPath)
+        plugin = self.loader['UpdateNotifier']
+        controller = UpdateController(self.application, plugin)
 
         latestVersion = Version(1, 1)
         latestVersionInfo = VersionInfo(latestVersion)
@@ -158,8 +158,8 @@ class UpdateControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def test_filter_empty_08(self):
         from updatenotifier.updatecontroller import UpdateController
 
-        pluginPath = self.loader['UpdateNotifier'].pluginPath
-        controller = UpdateController(self.application, pluginPath)
+        plugin = self.loader['UpdateNotifier']
+        controller = UpdateController(self.application, plugin)
 
         latestVersion = Version(0, 9)
         latestVersionInfo = VersionInfo(latestVersion)
@@ -179,8 +179,8 @@ class UpdateControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def test_filter_09(self):
         from updatenotifier.updatecontroller import UpdateController
 
-        pluginPath = self.loader['UpdateNotifier'].pluginPath
-        controller = UpdateController(self.application, pluginPath)
+        plugin = self.loader['UpdateNotifier']
+        controller = UpdateController(self.application, plugin)
 
         latestVersion = Version(1, 1)
         latestVersionInfo = VersionInfo(latestVersion)
