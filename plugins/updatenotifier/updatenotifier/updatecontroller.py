@@ -40,7 +40,7 @@ class UpdateController(object):
     Controller for updates checking and show information.
     """
 
-    def __init__(self, application, pluginPath):
+    def __init__(self, application, plugin):
         '''
         application - instance of the ApplicationParams class.
         pluginPath - path to UpdateNotifier plugin.
@@ -50,8 +50,9 @@ class UpdateController(object):
         join = os.path.join
 
         self._application = application
+        self._plugin = plugin
         self._config = UpdatesConfig(self._application.config)
-        self._dataPath = join(pluginPath, u'data')
+        self._dataPath = join(plugin.pluginPath, u'data')
         self._updateTemplatePath = join(self._dataPath, u'update.html')
         self.__deletedPlugins = {}
         self.vl = VersionList() # to load app info from the internet.
@@ -423,19 +424,9 @@ class UpdateController(object):
         :param name:
             plugin name
         :return:
-            The object with Plugin interface
+            The object with Plugin interface or None
         """
-
-        # TODO: Seems the method should be add to PluginsLoader class
-
-        for p in self._application.plugins:
-            if p.name == name:
-                return p
-
-        if name in self._application.plugins.disabledPlugins:
-            return self._application.plugins.disabledPlugins[name]
-
-        return None
+        return self._application.plugins.loadedPlugins.get(name, None)
 
     def uninstall_plugin(self, name):
         """
@@ -475,5 +466,11 @@ class UpdateController(object):
             # Python can't unimport file, so save the deleted plugin
             # If user re-installs it we just install it in same directory
             self.__deletedPlugins[name] = plugin_path
-        self._updateDialog()
+
+        # reopen dialog
+        if name != self._plugin.name:
+            self._updateDialog()
+        else: # if UpdateNotifier was deleted, just close dialog
+            self._dialog.EndModal(wx.ID_OK)
+
         return rez
