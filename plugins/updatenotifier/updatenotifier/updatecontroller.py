@@ -40,7 +40,7 @@ class UpdateController(object):
     Controller for updates checking and show information.
     """
 
-    def __init__(self, application, pluginPath):
+    def __init__(self, application, plugin):
         '''
         application - instance of the ApplicationParams class.
         pluginPath - path to UpdateNotifier plugin.
@@ -50,10 +50,12 @@ class UpdateController(object):
         join = os.path.join
 
         self._application = application
+        self._plugin = plugin
         self._config = UpdatesConfig(self._application.config)
-        self._dataPath = join(pluginPath, u'data')
+        self._dataPath = join(plugin.pluginPath, u'data')
         self._updateTemplatePath = join(self._dataPath, u'update.html')
         self.__deletedPlugins = {}
+        self.vl = VersionList() # to load app info from the internet.
 
         # Special string id for stable and unstable OutWiker URL
         self._OUTWIKER_STABLE_KEY = u'OUTWIKER_STABLE'
@@ -278,18 +280,17 @@ class UpdateController(object):
             EVT_UPDATE_VERSIONS event
         """
 
-        vl = VersionList()
         # get
-        appInfoDict = vl.loadAppInfo(updateUrls)
+        appInfoDict = self.vl.loadAppInfo(updateUrls)
 
         # get update URLs from installed plugins
-        plugInfoDict = vl.loadAppInfo(self._getPluginsUpdateUrls())
+        plugInfoDict = self.vl.loadAppInfo(self._getPluginsUpdateUrls())
 
         # get update URLs from plugins.json and remove installed.
         installerInfoDict = {x: y for x, y
                              in self._getUrlsForInstaller().items()
                              if x not in self._application.plugins.loadedPlugins}
-        installerInfoDict = vl.loadAppInfo(installerInfoDict)
+        installerInfoDict = self.vl.loadAppInfo(installerInfoDict)
 
         event = UpdateVersionsEvent(appInfoDict=appInfoDict,
                                     plugInfoDict=plugInfoDict,
@@ -322,13 +323,12 @@ class UpdateController(object):
         Update plugin to latest version by name.
         :return: True if plugin was installed, otherwise False
         """
-        vl = VersionList()
-        appInfoDict = vl.loadAppInfo(self._getPluginsUpdateUrls())
+        appInfoDict = self.vl.loadAppInfo(self._getPluginsUpdateUrls())
 
         # get link to latest version
         appInfo = appInfoDict.get(name)
         if appInfo:
-            url = vl.getDownlodUrl(appInfo)
+            url = self.vl.getDownlodUrl(appInfo)
             if not url:
                 MessageBox(_(u"The download link was not found in plugin description. Please update plugin manually"),
                            u"UpdateNotifier")
@@ -370,9 +370,8 @@ class UpdateController(object):
 
         :return: True if plugin was installed, otherwise False
         """
-        vl = VersionList()
-        getAppInfo = vl.getAppInfoFromUrl
-        getDownlodUrl = vl.getDownlodUrl
+        getAppInfo = self.vl.getAppInfoFromUrl
+        getDownlodUrl = self.vl.getDownlodUrl
 
         plugin_info = self._installerPlugins.get(name, None)
         if plugin_info:
@@ -425,19 +424,9 @@ class UpdateController(object):
         :param name:
             plugin name
         :return:
-            The object with Plugin interface
+            The object with Plugin interface or None
         """
-
-        # TODO: Seems the method should be add to PluginsLoader class
-
-        for p in self._application.plugins:
-            if p.name == name:
-                return p
-
-        if name in self._application.plugins.disabledPlugins:
-            return self._application.plugins.disabledPlugins[name]
-
-        return None
+        return self._application.plugins.loadedPlugins.get(name, None)
 
     def uninstall_plugin(self, name):
         """
@@ -477,5 +466,11 @@ class UpdateController(object):
             # Python can't unimport file, so save the deleted plugin
             # If user re-installs it we just install it in same directory
             self.__deletedPlugins[name] = plugin_path
-        self._updateDialog()
+
+        # reopen dialog
+        if name != self._plugin.name:
+            self._updateDialog()
+        else: # if UpdateNotifier was deleted, just close dialog
+            self._dialog.EndModal(wx.ID_OK)
+
         return rez

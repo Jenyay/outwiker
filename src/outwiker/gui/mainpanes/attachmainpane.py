@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import wx.aui
 
@@ -9,7 +9,7 @@ from ..attachpanel import AttachPanel
 
 class AttachMainPane(MainPane):
     def _createPanel(self):
-        return AttachPanel(self.parent, -1)
+        return AttachPanel(self.parent, self.application)
 
     def _createConfig(self):
         return AttachConfig(self.application.config)

@@ -2,35 +2,36 @@
 
 import wx
 
-from outwiker.core.application import Application
 from .defines import MENU_BOOKMARKS
 
 
-class BookmarksController (object):
+class BookmarksController(object):
     """
     Класс для организации работы GUI с закладками
     """
-    def __init__ (self, controller):
+    def __init__(self, mainWndController, application):
         """
-        controller - экземпляр класса MainWndController
+        mainWndController - экземпляр класса MainWndController
         """
-        self.controller = controller
+        self.mainWndController = mainWndController
+        self._application = application
 
         # Идентификаторы для пунктов меню для открытия закладок
         # Ключ - id, значение - путь до страницы вики
         self._bookmarksId = {}
 
-
-    def updateBookmarks (self):
-        menu_bookmarks = self.controller.mainWindow.menuController[MENU_BOOKMARKS]
-        self.controller.removeMenuItemsById (menu_bookmarks,
-                                             list(self._bookmarksId.keys()))
+    def updateBookmarks(self):
+        menu_bookmarks = self.mainWndController.mainWindow.menuController[MENU_BOOKMARKS]
+        self.mainWndController.removeMenuItemsById(
+            menu_bookmarks,
+            list(self._bookmarksId.keys())
+        )
         self._bookmarksId = {}
 
-        if Application.wikiroot is not None:
-            for n in range (len (Application.wikiroot.bookmarks)):
+        if self._application.wikiroot is not None:
+            for n in range(len(self._application.wikiroot.bookmarks)):
                 id = wx.Window.NewControlId()
-                page = Application.wikiroot.bookmarks[n]
+                page = self._application.wikiroot.bookmarks[n]
                 if page is None:
                     continue
 
@@ -45,13 +46,14 @@ class BookmarksController (object):
                 else:
                     label = page.display_title
 
-                menu_bookmarks.Append (id, label, "", wx.ITEM_NORMAL)
-                self.controller.mainWindow.Bind(wx.EVT_MENU, self.__onSelectBookmark, id=id)
+                menu_bookmarks.Append(id, label, "", wx.ITEM_NORMAL)
+                self.mainWndController.mainWindow.Bind(wx.EVT_MENU,
+                                                       self.__onSelectBookmark,
+                                                       id=id)
 
-
-    def __onSelectBookmark (self, event):
+    def __onSelectBookmark(self, event):
         subpath = self._bookmarksId[event.Id]
-        page = Application.wikiroot[subpath]
+        page = self._application.wikiroot[subpath]
 
         if page is not None:
-            Application.wikiroot.selectedPage = Application.wikiroot[subpath]
+            self._application.wikiroot.selectedPage = self._application.wikiroot[subpath]

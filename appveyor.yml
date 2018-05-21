@@ -1,22 +1,43 @@
 version: 2.1.0.xxx.{build}
-init:
-- cmd: py -m pip install pipenv
+image:
+- Visual Studio 2015
+- Ubuntu
 environment:
   PY_PYTHON: 3.6-32
   PYTHONIOENCODING: utf_8
+  PIPENV_IGNORE_VIRTUALENVS: 1
+stack: Python 3.5.5
+init:
+- cmd: py -m pip install pipenv
+- sh: sudo apt-get -y install python3-pip python3-dev debhelper devscripts debhelper devscripts p7zip-full libssl-dev dpkg-dev build-essential libjpeg-dev libtiff-dev libsdl1.2-dev libnotify-dev freeglut3 freeglut3-dev libsm-dev libgtk-3-dev libwebkitgtk-3.0-dev libgstreamer-plugins-base1.0-dev ibus-gtk3 libsdl2-dev xvfb
+- sh: python3 -m pip install --user pipenv
 install:
-- cmd: >-
-    py -m pipenv update --dev
+- cmd: py -m pipenv update --dev
+- sh: pipenv run pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-16.04 wxPython==4.0.1
+- sh: pipenv update --dev
 build_script:
-- cmd: >-
-    py -m pipenv run fab win:0,1,0
+- cmd: py -m pipenv run fab win:0,1,0
+- sh: pipenv run fab linux_binary
+- sh: pipenv run fab linux_appimage
+- sh: pipenv run fab deb_binary
+- sh: pipenv run fab plugins
 test_script:
-- cmd: >-
-    py -m pipenv run fab test:"-s"
+- cmd: py -m pipenv run fab test:"-s"
+- sh: xvfb-run pipenv run fab test:"-s"
 artifacts:
 - path: build\*\windows\*.zip
-  name: zip
+  name: windows_zip
 - path: build\*\windows\*.7z
-  name: 7z
-cache:
-  - C:\Users\appveyor\.virtualenvs\outwiker-NhIuapJ3
+  name: linux_7z
+- path: build/*/linux/*.zip
+  name: linux_zip
+- path: build/*/linux/*.7z
+  name: linux_7z
+- path: build/*/linux/*.deb
+  name: linux_deb
+- path: build/*/linux/*.AppImage
+  name: linux_AppImage
+- path: build/*/plugins/*/*.zip
+  name: plugins
+# cache:
+#   - C:\Users\appveyor\.virtualenvs\outwiker-NhIuapJ3

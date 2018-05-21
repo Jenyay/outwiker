@@ -6,7 +6,6 @@ import configparser
 
 import wx
 
-from outwiker.core.application import Application
 import outwiker.core.commands
 import outwiker.core.system
 import outwiker.gui.pagedialog
@@ -25,17 +24,16 @@ from outwiker.gui.controls.safeimagelist import SafeImageList
 
 
 class NotesTree(wx.Panel):
-    def __init__(self, *args, **kwds):
+    def __init__(self, parent, application):
+        super().__init__(parent, style=wx.TAB_TRAVERSAL)
+        self._application = application
         # Переключатель, устанавливается в True,
         # если "внезапно" изменяется текущая страница
         self.__externalPageSelect = False
 
-        kwds["style"] = wx.TAB_TRAVERSAL
-        wx.Panel.__init__(self, *args, **kwds)
         self.toolbar = wx.ToolBar(
             parent=self,
             style=wx.TB_HORIZONTAL | wx.TB_FLAT | wx.TB_DOCKABLE)
-        # self.toolbar.SetMinSize((-1, 32))
 
         treeStyle = (wx.TR_HAS_BUTTONS | wx.TR_EDIT_LABELS | wx.SUNKEN_BORDER)
 
@@ -89,31 +87,31 @@ class NotesTree(wx.Panel):
         """
         Подписка на события контроллера
         """
-        Application.onWikiOpen += self.__onWikiOpen
-        Application.onTreeUpdate += self.__onTreeUpdate
-        Application.onPageCreate += self.__onPageCreate
-        Application.onPageOrderChange += self.__onPageOrderChange
-        Application.onPageSelect += self.__onPageSelect
-        Application.onPageRemove += self.__onPageRemove
-        Application.onPageUpdate += self.__onPageUpdate
+        self._application.onWikiOpen += self.__onWikiOpen
+        self._application.onTreeUpdate += self.__onTreeUpdate
+        self._application.onPageCreate += self.__onPageCreate
+        self._application.onPageOrderChange += self.__onPageOrderChange
+        self._application.onPageSelect += self.__onPageSelect
+        self._application.onPageRemove += self.__onPageRemove
+        self._application.onPageUpdate += self.__onPageUpdate
 
-        Application.onStartTreeUpdate += self.__onStartTreeUpdate
-        Application.onEndTreeUpdate += self.__onEndTreeUpdate
+        self._application.onStartTreeUpdate += self.__onStartTreeUpdate
+        self._application.onEndTreeUpdate += self.__onEndTreeUpdate
 
     def __UnBindApplicationEvents(self):
         """
         Отписка от событий контроллера
         """
-        Application.onWikiOpen -= self.__onWikiOpen
-        Application.onTreeUpdate -= self.__onTreeUpdate
-        Application.onPageCreate -= self.__onPageCreate
-        Application.onPageOrderChange -= self.__onPageOrderChange
-        Application.onPageSelect -= self.__onPageSelect
-        Application.onPageRemove -= self.__onPageRemove
-        Application.onPageUpdate -= self.__onPageUpdate
+        self._application.onWikiOpen -= self.__onWikiOpen
+        self._application.onTreeUpdate -= self.__onTreeUpdate
+        self._application.onPageCreate -= self.__onPageCreate
+        self._application.onPageOrderChange -= self.__onPageOrderChange
+        self._application.onPageSelect -= self.__onPageSelect
+        self._application.onPageRemove -= self.__onPageRemove
+        self._application.onPageUpdate -= self.__onPageUpdate
 
-        Application.onStartTreeUpdate -= self.__onStartTreeUpdate
-        Application.onEndTreeUpdate -= self.__onEndTreeUpdate
+        self._application.onStartTreeUpdate -= self.__onStartTreeUpdate
+        self._application.onEndTreeUpdate -= self.__onEndTreeUpdate
 
     def __onWikiOpen(self, root):
         self.__treeUpdate(root)
@@ -192,7 +190,7 @@ class NotesTree(wx.Panel):
             return
 
         page = self.treeCtrl.GetItemData(item)
-        Application.mainWindow.tabsController.openInTab(page, True)
+        self._application.mainWindow.tabsController.openInTab(page, True)
 
     def __onClose(self, event):
         self.__UnBindApplicationEvents()
@@ -293,7 +291,7 @@ class NotesTree(wx.Panel):
             return
 
         popupPage = self.treeCtrl.GetItemData(popupItem)
-        self.popupMenu = PagePopupMenu(self, popupPage, Application)
+        self.popupMenu = PagePopupMenu(self, popupPage, self._application)
         self.PopupMenu(self.popupMenu.menu)
 
     def beginRename(self, page=None):
@@ -301,7 +299,7 @@ class NotesTree(wx.Panel):
         Начать переименование страницы в дереве. Если page is None,
         то начать переименование текущей страницы
         """
-        pageToRename = page if page is not None else Application.selectedPage
+        pageToRename = page if page is not None else self._application.selectedPage
 
         if pageToRename is None or pageToRename.parent is None:
             outwiker.core.commands.MessageBox(
@@ -334,21 +332,21 @@ class NotesTree(wx.Panel):
         self.__unbindUpdateEvents()
 
     def __unbindUpdateEvents(self):
-        Application.onTreeUpdate -= self.__onTreeUpdate
-        Application.onPageCreate -= self.__onPageCreate
-        Application.onPageSelect -= self.__onPageSelect
-        Application.onPageOrderChange -= self.__onPageOrderChange
+        self._application.onTreeUpdate -= self.__onTreeUpdate
+        self._application.onPageCreate -= self.__onPageCreate
+        self._application.onPageSelect -= self.__onPageSelect
+        self._application.onPageOrderChange -= self.__onPageOrderChange
         self.Unbind(wx.EVT_TREE_SEL_CHANGED, handler=self.__onSelChanged)
 
     def __onEndTreeUpdate(self, root):
         self.__bindUpdateEvents()
-        self.__treeUpdate(Application.wikiroot)
+        self.__treeUpdate(self._application.wikiroot)
 
     def __bindUpdateEvents(self):
-        Application.onTreeUpdate += self.__onTreeUpdate
-        Application.onPageCreate += self.__onPageCreate
-        Application.onPageSelect += self.__onPageSelect
-        Application.onPageOrderChange += self.__onPageOrderChange
+        self._application.onTreeUpdate += self.__onTreeUpdate
+        self._application.onPageCreate += self.__onPageCreate
+        self._application.onPageSelect += self.__onPageSelect
+        self._application.onPageOrderChange += self.__onPageOrderChange
         self.Bind(wx.EVT_TREE_SEL_CHANGED, self.__onSelChanged)
 
     def __onBeginDrag(self, event):
@@ -398,10 +396,11 @@ class NotesTree(wx.Panel):
         shiftstate = wx.GetKeyState(wx.WXK_SHIFT)
 
         if(ctrlstate or shiftstate) and not self.__externalPageSelect:
-            Application.mainWindow.tabsController.openInTab(self.selectedPage,
-                                                            True)
+            self._application.mainWindow.tabsController.openInTab(
+                self.selectedPage,
+                True)
         else:
-            Application.selectedPage = self.selectedPage
+            self._application.selectedPage = self.selectedPage
 
     def __onPageOrderChange(self, sender):
         """
@@ -575,7 +574,7 @@ class NotesTree(wx.Panel):
         """
         Если текущая страница вылезла за пределы видимости, то прокрутить к ней
         """
-        selectedPage = Application.selectedPage
+        selectedPage = self._application.selectedPage
         if selectedPage is None:
             return
 
@@ -588,7 +587,7 @@ class NotesTree(wx.Panel):
         Add the buttons to notes tree panel.
         """
         imagesDir = outwiker.core.system.getImagesDir()
-        actionController = Application.actionController
+        actionController = self._application.actionController
 
         actionController.appendToolbarButton(
             GoToParentAction.stringId,
@@ -642,7 +641,7 @@ class NotesTree(wx.Panel):
         self.Layout()
 
     def _removeButtons(self):
-        actionController = Application.actionController
+        actionController = self._application.actionController
 
         actions = [
             GoToParentAction,

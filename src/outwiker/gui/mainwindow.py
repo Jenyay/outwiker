@@ -78,6 +78,12 @@ class MainWindow(wx.Frame):
     def __init__(self, application):
         super().__init__(None)
         self._application = application
+
+        # Variables to accurate watch for main window state
+        self._realSize = self.GetSize()
+        self._realPosition = self.GetPosition()
+        self._realMaximized = False
+
         logger.debug(u'MainWindow initializing begin')
 
         self.mainWindowConfig = MainWindowConfig(self._application.config)
@@ -93,7 +99,7 @@ class MainWindow(wx.Frame):
         self._createStatusBar()
 
         logger.debug(u'MainWindow. Create the MainWndController')
-        self.controller = MainWndController(self)
+        self.controller = MainWndController(self, self._application)
         self.controller.loadMainWindowParams()
 
         if self.mainWindowConfig.maximized.value:
@@ -564,6 +570,8 @@ class MainWindow(wx.Frame):
         self.Bind(wx.EVT_MENU, self._onStdEvent, id=wx.ID_COPY)
         self.Bind(wx.EVT_MENU, self._onStdEvent, id=wx.ID_PASTE)
         self.Bind(wx.EVT_MENU, self._onStdEvent, id=wx.ID_SELECTALL)
+        self.Bind(wx.EVT_SIZE, self._onSizeMove)
+        self.Bind(wx.EVT_MOVE, self._onSizeMove)
 
     def _saveParams(self):
         """
@@ -571,20 +579,21 @@ class MainWindow(wx.Frame):
         """
         try:
             if not self.IsIconized():
-                if (not self.IsFullScreen() and not self.IsMaximized()):
-                    (width, height) = self.GetSize()
-                    (xpos, ypos) = self.GetPosition()
-
-                    self.mainWindowConfig.width.value = width
-                    self.mainWindowConfig.height.value = height
-
-                    self.mainWindowConfig.xPos.value = xpos
-                    self.mainWindowConfig.yPos.value = ypos
-
                 self.mainWindowConfig.fullscreen.value = self.IsFullScreen()
-                self.mainWindowConfig.maximized.value = self.IsMaximized()
-
                 self.__panesController.savePanesParams()
+
+            if not self.IsFullScreen() and not self.IsMaximized():
+                (width, height) = self.GetSize()
+                (xpos, ypos) = self.GetPosition()
+            else:
+                (width, height) = self._realSize
+                (xpos, ypos) = self._realPosition
+
+            self.mainWindowConfig.width.value = width
+            self.mainWindowConfig.height.value = height
+            self.mainWindowConfig.xPos.value = xpos
+            self.mainWindowConfig.yPos.value = ypos
+            self.mainWindowConfig.maximized.value = self._realMaximized
         except Exception as e:
             MessageBox(_(u"Can't save config\n%s") % (str(e)),
                        _(u"Error"), wx.ICON_ERROR | wx.OK)
@@ -646,6 +655,16 @@ class MainWindow(wx.Frame):
             if target is not None:
                 target.ProcessEvent(event)
                 self.__stdEventLoop = False
+
+    def _onSizeMove(self, event):
+        if not self.IsIconized():
+            self._realMaximized = self.IsMaximized()
+
+        if (not self.IsIconized() and not self.IsFullScreen() and not self.IsMaximized()):
+                self._realSize = self.GetSize()
+                self._realPosition = self.GetPosition()
+
+        event.Skip()
 
     def setFullscreen(self, fullscreen):
         """
