@@ -27,7 +27,11 @@ from outwiker.utilites.textfile import readTextFile
 logger = logging.getLogger('outwiker.core.pluginsloader')
 
 class EnabledPlugins(dict):
-    """container for enabled plugins"""
+    """
+    Container for enabled plugins
+    value.initialize() is called when new key is added.
+    value.destroy() is called when key is deleted.
+    """
     def __init__(self, *args, **kwargs):
         super(EnabledPlugins, self).__init__(*args, **kwargs)
 
@@ -51,24 +55,22 @@ class PluginsLoader(object):
     def __init__(self, application):
         self.__application = application
 
-        # Словарь с загруженными плагинами
-        # Ключ - имя плагина
-        # Значение - экземпляр плагина
+        # Dict with enable plugins
+        # {<plugin name>: <object implementing Plugin interface>}
         self.__plugins = EnabledPlugins()
 
-        # Словарь с плагинами, которые были отключены пользователем
-        # Ключ - имя плагина
-        # Значение - экземпляр плагина
+        # Dict with enable plugins
+        # {<plugin name>: <object implementing Plugin interface>}
         self.__disabledPlugins = {}
 
         # View for all successful loaded plugins
-        self.__loadedPlugins = collections.ChainMap(self.__plugins,self.__disabledPlugins)
+        self.__loadedPlugins = collections.ChainMap(self.__plugins,
+                                                    self.__disabledPlugins)
 
         # The list of the InvalidPlugin instance.
         self.__invalidPlugins = []
 
-        # Установить в False, если не нужно выводить ошибки
-        # (например, в тестах)
+        # if True - the errors will be printed
         self.enableOutput = True
 
         # aliases
@@ -83,33 +85,36 @@ class PluginsLoader(object):
     #############################
     @property
     def loadedPlugins(self):
-        """ Return dict with successful loaded plugins"""
+        """
+        Return dict with successful loaded plugins
+        """
         return self.__loadedPlugins
 
     @property
     def disabledPlugins(self):
         """
-        Возвращает список отключенных плагинов
+        Return dict with disabled plugins
         """
         return self.__disabledPlugins
 
     @property
     def invalidPlugins(self):
+        """
+        Return list with invalid plugins
+        """
         return self.__invalidPlugins
 
     def remove(self, pluginName):
         """
-        Remove plugin module and plugin instance
+        Remove pluginName instance
 
-        :param pluginName:
-            plugin name which should be removed
         :return:
             True - if plugin was removed
             None - if plugin name is absent in plugin list
         """
         if pluginName in self.loadedPlugins:
-            if not self.__plugins.pop(pluginName, None):
-                del self.__disabledPlugins[pluginName]
+            if not self.__disabledPlugins.pop(pluginName, None):
+                del self.__plugins[pluginName]
             return True
 
     def clear(self):
@@ -121,7 +126,7 @@ class PluginsLoader(object):
         self.__invalidPlugins.clear()
 
     def disable(self, plugin_name):
-        """ Disable plugin """
+        """ Disable plugin_name """
         if plugin_name in self.__plugins:
             assert plugin_name not in self.__disabledPlugins
             # pop() works strange here, and do not use __delitem__ method.
@@ -130,41 +135,23 @@ class PluginsLoader(object):
             self.__disabledPlugins[plugin_name].destroy()
 
     def enable(self, plugin_name):
-        """ Enable plugin """
+        """ Enable plugin_name """
         if plugin_name in self.__disabledPlugins:
             assert plugin_name not in self.__plugins
             self.__plugins[plugin_name] = self.__disabledPlugins.pop(plugin_name)
 
     def updateDisableList(self):
         """
-        Обновление состояния плагинов. Одни отключить, другие включить
+        Enable/Disable plugins according to application.config: "disabledPlugins"
         """
         options = PluginsConfig(self.__application.config)
+        disable_list = options.disabledPlugins.value
 
-        # Пройтись по включенным плагинам и отключить те,
-        # что попали в черный список
-        self.__disableEnabledPlugins(options.disabledPlugins.value)
-
-        # Пройтись по отключенным плагинам и включить те,
-        # что не попали в "черный список"
-        self.__enableDisabledPlugins(options.disabledPlugins.value)
-
-
-    def __disableEnabledPlugins(self, disableList):
-        """
-        Отключить загруженные плагины, попавшие в "черный список" (disableList)
-        """
-        for pluginname in disableList:
-            self.disable(pluginname)
-
-    def __enableDisabledPlugins(self, disableList):
-        """
-        Включить отключенные плагины, если их больше нет в "черном списке"
-        """
-        for plugin in list(self.__disabledPlugins):
-            if plugin not in disableList:
-                assert plugin not in self.__plugins
-                self.enable(plugin)
+        for plugin_name in self.loadedPlugins:
+            if plugin_name in disable_list:
+                self.disable(plugin_name)
+            else:
+                self.enable(plugin_name)
 
     def __len__(self):
         return len(self.__plugins)
@@ -222,7 +209,6 @@ class PluginsLoader(object):
 
         logger.debug(u'Plugins loading ended')
 
-
     def __loadPluginInfo(self, plugin_fname):
         if not os.path.exists(plugin_fname):
             return None
@@ -230,7 +216,6 @@ class PluginsLoader(object):
         xml_content = readTextFile(plugin_fname)
         appinfo = XmlVersionParser().parse(xml_content)
         return appinfo
-
 
     def __checkPackageVersions(self, appinfo):
         if appinfo is None:
@@ -242,7 +227,6 @@ class PluginsLoader(object):
 
         return pv.checkVersionAny(outwiker.core.__version__,
                                   api_required_version)
-
 
     def __importPackage(self, packagePath):
         """
@@ -344,7 +328,6 @@ class PluginsLoader(object):
             logger.debug(u'Successfully loaded plug-in: {}'.format(
                 packageName))
 
-
     def __loadPlugin(self, module, errors):
         """
         Find Plugin class in module and try to make instance for it
@@ -385,7 +368,6 @@ class PluginsLoader(object):
 
         return rez
 
-
     def __createPlugin(self, module, name):
         """
         Create plugin instance if name is a subclass of Plugin
@@ -402,7 +384,6 @@ class PluginsLoader(object):
                 issubclass(obj, Plugin) and
                 obj != Plugin):
             return obj(self.__application)
-
 
     def reload(self, pluginname):
         """
