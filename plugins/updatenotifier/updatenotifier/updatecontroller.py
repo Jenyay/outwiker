@@ -24,6 +24,7 @@ from .versionlist import VersionList
 from .i18n import get_
 from .contentgenerator import ContentGenerator
 from .updateplugin import UpdatePlugin
+from .loaders import NormalLoader
 
 # The event occurs after finish checking latest versions.
 # The parameters:
@@ -301,15 +302,28 @@ class UpdateController(object):
             wx.PostEvent(self._application.mainWindow, event)
 
     def _getUrlsForInstaller(self):
+        """
+        Download plugins.json from URL and deserialize it to dict.
 
-        self._pluginsRepoPath = os.path.join(self._dataPath, u'plugins.json')
+        :return:
+        dictionary {<plagin name>: {
+                                 'name':<pluginname>
+                                 'url':<url to plugin.xml file>
+                                 }
+                    }
+        """
+        json_url = r"https://jenyay.net/uploads/Outwiker/Plugins/plugins.json"
+        pluginsRepo = NormalLoader().load(json_url)
 
-        # read data/plugins.json
-        self._installerPlugins = json.loads(
-            readTextFile(self._pluginsRepoPath))
+        if pluginsRepo:
+            # read data/plugins.json
+            self._installerPlugins = json.loads(pluginsRepo)
 
-        updateUrls = {x['name']: x['url']
-                      for x in self._installerPlugins.values()}
+            updateUrls = {x['name']: x['url']
+                          for x in self._installerPlugins.values()}
+        else:
+            updateUrls = {}
+
         return updateUrls
 
     def _touchLastUpdateDate(self):
