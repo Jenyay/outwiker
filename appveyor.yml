@@ -16,6 +16,7 @@ install:
 - sh: pipenv run pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-16.04 wxPython==4.0.1
 - sh: pipenv update --dev
 build_script:
+- cmd: py -m pipenv run fab test:"test/actions -s" 
 - cmd: py -m pipenv run fab win:0,1,0
 - sh: pipenv run fab linux_binary
 - sh: pipenv run fab linux_appimage
