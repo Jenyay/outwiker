@@ -26,15 +26,13 @@ from outwiker.utilites.textfile import readTextFile
 
 logger = logging.getLogger('outwiker.core.pluginsloader')
 
-class EnabledPlugins(dict):
+
+class EnabledPlugins(collections.UserDict):
     """
     Container for enabled plugins
     value.initialize() is called when new key is added.
     value.destroy() is called when key is deleted.
     """
-    def __init__(self, *args, **kwargs):
-        super(EnabledPlugins, self).__init__(*args, **kwargs)
-
     def __setitem__(self, key, value):
         value.initialize()
         super(EnabledPlugins, self).__setitem__(key, value)
@@ -43,7 +41,6 @@ class EnabledPlugins(dict):
         if key in self:
             self[key].destroy()
         super(EnabledPlugins, self).__delitem__(key)
-
 
 class PluginsLoader(object):
     """
