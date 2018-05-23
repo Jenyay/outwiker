@@ -28,7 +28,7 @@ artifacts:
 - path: build\*\windows\*.zip
   name: windows_zip
 - path: build\*\windows\*.7z
-  name: linux_7z
+  name: windows_7z
 - path: build/*/linux/*.zip
   name: linux_zip
 - path: build/*/linux/*.7z
@@ -37,7 +37,7 @@ artifacts:
   name: linux_deb
 - path: build/*/linux/*.AppImage
   name: linux_AppImage
-- path: build/*/plugins/*/*.zip
+- path: build\*\plugins\*\*.zip
   name: plugins
 # cache:
 #   - C:\Users\appveyor\.virtualenvs\outwiker-NhIuapJ3

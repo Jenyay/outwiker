@@ -22,8 +22,9 @@ class NormalLoader(object):
         if os.path.isfile(url):
             return readTextFile(url)
 
-        fp = urllib.request.urlopen(url)
+        fp = urllib.request.urlopen(url,timeout=10)
 
+        text = None
         try:
             text = fp.read()
         finally:
