@@ -27,6 +27,8 @@ test_script:
     - cmd: py -m pipenv run fab test:"-s"
     - sh: xvfb-run pipenv run fab test:"-s"
 artifacts:
+    - path: build/versions.xml
+      name: versions.xml
     - path: build\*\windows\*.zip
       name: windows_zip
     - path: build\*\windows\*.exe
