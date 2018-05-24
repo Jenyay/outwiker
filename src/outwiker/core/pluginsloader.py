@@ -409,7 +409,7 @@ class PluginsLoader(object):
 
     #######
     # Other
-    # Seems the method should be move to plaginBase
+    # Seems the method should be move to outwiker.core.pluginbase
     #######
     def getInfo(self, pluginname, langlist=["en"]):
         """
