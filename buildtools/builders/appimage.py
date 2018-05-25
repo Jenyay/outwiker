@@ -28,10 +28,10 @@ class BuilderAppImage(BuilderBase):
                                               self._appimage_result_name)
 
     def clear(self):
-        super(BuilderAppImage, self).clear()
         self._remove(self._result_full_path)
 
     def _build(self):
+        self._create_plugins_dir()
         self._copy_appimage_files()
         self._createdir_tree()
         self._create_binaries()

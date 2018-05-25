@@ -5,16 +5,20 @@ import unittest
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
-from outwiker.pages.wiki.wikipage import WikiPageFactory
-from test.utils import removeDir
-from outwiker.pages.wiki.htmlgenerator import HtmlGenerator
 from outwiker.core.style import Style
+from outwiker.core.i18n import I18nConfig
+from outwiker.pages.wiki.wikipage import WikiPageFactory
+from outwiker.pages.wiki.htmlgenerator import HtmlGenerator
+from test.basetestcases import BaseOutWikerGUIMixin
+from test.utils import removeDir
 
 
-class OrganizerTest (unittest.TestCase):
+class OrganizerTest (unittest.TestCase, BaseOutWikerGUIMixin):
     """Organizer plug-in tests"""
 
     def setUp(self):
+        self.initApplication('ru_RU')
+
         self.__createWiki()
 
         dirlist = ["../plugins/organizer"]
@@ -25,6 +29,7 @@ class OrganizerTest (unittest.TestCase):
     def tearDown(self):
         removeDir(self.path)
         self.loader.clear()
+        self.destroyApplication()
 
     def __createWiki(self):
         # Здесь будет создаваться вики
@@ -58,7 +63,7 @@ class OrganizerTest (unittest.TestCase):
         self.testPage.content = text
 
         generator = HtmlGenerator(self.testPage)
-        result = generator.makeHtml(Style().getPageStyle(self.testPage))
+        generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertIn('тег1', self.testPage.tags)
 
@@ -70,7 +75,7 @@ class OrganizerTest (unittest.TestCase):
         self.testPage.content = text
 
         generator = HtmlGenerator(self.testPage)
-        result = generator.makeHtml(Style().getPageStyle(self.testPage))
+        generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertIn('тег 1', self.testPage.tags)
         self.assertIn('тег 2', self.testPage.tags)
@@ -84,7 +89,7 @@ class OrganizerTest (unittest.TestCase):
         self.testPage.content = text
 
         generator = HtmlGenerator(self.testPage)
-        result = generator.makeHtml(Style().getPageStyle(self.testPage))
+        generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertIn('тег 1', self.testPage.tags)
         self.assertIn('тег 2', self.testPage.tags)
@@ -99,7 +104,7 @@ class OrganizerTest (unittest.TestCase):
         self.testPage.content = text
 
         generator = HtmlGenerator(self.testPage)
-        result = generator.makeHtml(Style().getPageStyle(self.testPage))
+        generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertNotIn('тег 1', self.testPage.tags)
         self.assertNotIn('тег 2', self.testPage.tags)
@@ -117,7 +122,7 @@ class OrganizerTest (unittest.TestCase):
         self.testPage.content = text
 
         generator = HtmlGenerator(self.testPage)
-        result = generator.makeHtml(Style().getPageStyle(self.testPage))
+        generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertIn('тег 1', self.testPage.tags)
         self.assertIn('тег 2', self.testPage.tags)
@@ -136,7 +141,7 @@ class OrganizerTest (unittest.TestCase):
         self.testPage.content = text
 
         generator = HtmlGenerator(self.testPage)
-        result = generator.makeHtml(Style().getPageStyle(self.testPage))
+        generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertIn('тег 1', self.testPage.tags)
         self.assertIn('тег 2', self.testPage.tags)
@@ -158,7 +163,7 @@ class OrganizerTest (unittest.TestCase):
         self.testPage.content = text
 
         generator = HtmlGenerator(self.testPage)
-        result = generator.makeHtml(Style().getPageStyle(self.testPage))
+        generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertIn('тег 1', self.testPage.tags)
         self.assertIn('тег 2', self.testPage.tags)
@@ -175,7 +180,7 @@ class OrganizerTest (unittest.TestCase):
         self.testPage.content = text
 
         generator = HtmlGenerator(self.testPage)
-        result = generator.makeHtml(Style().getPageStyle(self.testPage))
+        generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertNotIn('-', self.testPage.tags)
 

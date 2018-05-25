@@ -24,6 +24,7 @@ from .versionlist import VersionList
 from .i18n import get_
 from .contentgenerator import ContentGenerator
 from .updateplugin import UpdatePlugin
+from .loaders import NormalLoader
 
 # The event occurs after finish checking latest versions.
 # The parameters:
@@ -33,7 +34,6 @@ from .updateplugin import UpdatePlugin
 UpdateVersionsEvent, EVT_UPDATE_VERSIONS = wx.lib.newevent.NewEvent()
 
 logger = logging.getLogger('updatenotifier')
-vl = VersionList()
 
 
 class UpdateController(object):
@@ -41,7 +41,7 @@ class UpdateController(object):
     Controller for updates checking and show information.
     """
 
-    def __init__(self, application, pluginPath):
+    def __init__(self, application, plugin):
         '''
         application - instance of the ApplicationParams class.
         pluginPath - path to UpdateNotifier plugin.
@@ -51,9 +51,12 @@ class UpdateController(object):
         join = os.path.join
 
         self._application = application
+        self._plugin = plugin
         self._config = UpdatesConfig(self._application.config)
-        self._dataPath = join(pluginPath, u'data')
+        self._dataPath = join(plugin.pluginPath, u'data')
         self._updateTemplatePath = join(self._dataPath, u'update.html')
+        self.__deletedPlugins = {}
+        self.vl = VersionList() # to load app info from the internet.
 
         # Special string id for stable and unstable OutWiker URL
         self._OUTWIKER_STABLE_KEY = u'OUTWIKER_STABLE'
@@ -183,7 +186,7 @@ class UpdateController(object):
         getInfo = self._application.plugins.getInfo
 
         result = {}
-        plugin_names = self._getInstalledPlugins()
+        plugin_names = self._application.plugins.loadedPlugins
         for name in plugin_names:
 
             try:
@@ -222,7 +225,7 @@ class UpdateController(object):
 
         currentVersionsDict = {plugin: self.get_plugin(plugin).version
                                for plugin
-                               in self._getInstalledPlugins()}
+                               in self._application.plugins.loadedPlugins}
 
         currentVersionsDict[self._OUTWIKER_STABLE_KEY] = str(currentVersion)
         currentVersionsDict[self._OUTWIKER_UNSTABLE_KEY] = str(currentVersion)
@@ -279,15 +282,16 @@ class UpdateController(object):
         """
 
         # get
-        appInfoDict = vl.loadAppInfo(updateUrls)
+        appInfoDict = self.vl.loadAppInfo(updateUrls)
 
         # get update URLs from installed plugins
-        plugInfoDict = vl.loadAppInfo(self._getPluginsUpdateUrls())
+        plugInfoDict = self.vl.loadAppInfo(self._getPluginsUpdateUrls())
 
         # get update URLs from plugins.json and remove installed.
-        installerInfoDict = {x: y for x, y in self._getUrlsForInstaller().items()
-                             if x not in self._getInstalledPlugins()}
-        installerInfoDict = vl.loadAppInfo(installerInfoDict)
+        installerInfoDict = {x: y for x, y
+                             in self._getUrlsForInstaller().items()
+                             if x not in self._application.plugins.loadedPlugins}
+        installerInfoDict = self.vl.loadAppInfo(installerInfoDict)
 
         event = UpdateVersionsEvent(appInfoDict=appInfoDict,
                                     plugInfoDict=plugInfoDict,
@@ -298,15 +302,28 @@ class UpdateController(object):
             wx.PostEvent(self._application.mainWindow, event)
 
     def _getUrlsForInstaller(self):
+        """
+        Download plugins.json from URL and deserialize it to dict.
 
-        self._pluginsRepoPath = os.path.join(self._dataPath, u'plugins.json')
+        :return:
+        dictionary {<plagin name>: {
+                                 'name':<pluginname>
+                                 'url':<url to plugin.xml file>
+                                 }
+                    }
+        """
+        json_url = r"https://jenyay.net/uploads/Outwiker/Plugins/plugins.json"
+        pluginsRepo = NormalLoader().load(json_url)
 
-        # read data/plugins.json
-        self._installerPlugins = json.loads(
-            readTextFile(self._pluginsRepoPath))
+        if pluginsRepo:
+            # read data/plugins.json
+            self._installerPlugins = json.loads(pluginsRepo)
 
-        updateUrls = {x['name']: x['url']
-                      for x in self._installerPlugins.values()}
+            updateUrls = {x['name']: x['url']
+                          for x in self._installerPlugins.values()}
+        else:
+            updateUrls = {}
+
         return updateUrls
 
     def _touchLastUpdateDate(self):
@@ -320,12 +337,12 @@ class UpdateController(object):
         Update plugin to latest version by name.
         :return: True if plugin was installed, otherwise False
         """
-        appInfoDict = vl.loadAppInfo(self._getPluginsUpdateUrls())
+        appInfoDict = self.vl.loadAppInfo(self._getPluginsUpdateUrls())
 
         # get link to latest version
         appInfo = appInfoDict.get(name)
         if appInfo:
-            url = vl.getDownlodUrl(appInfo)
+            url = self.vl.getDownlodUrl(appInfo)
             if not url:
                 MessageBox(_(u"The download link was not found in plugin description. Please update plugin manually"),
                            u"UpdateNotifier")
@@ -345,24 +362,13 @@ class UpdateController(object):
 
         if rez:
             self._application.plugins.reload(name)
-            self._dialog.EndModal(wx.ID_OK)
-            self.checkForUpdates()
+            self._updateDialog()
         else:
             MessageBox(
                 _(u"Plugin was NOT updated. Please update plugin manually"),
                 u"UpdateNotifier")
         return rez
 
-    def _getInstalledPlugins(self):
-        """
-        Retrieve list with names of all installed plugins
-        """
-        # TODO: It seems the method should be moved to PluginsLoader
-
-        enabled_plugins = [p.name for p in self._application.plugins]
-        disabled_plugins = list(self._application.plugins.disabledPlugins)
-
-        return enabled_plugins + disabled_plugins
 
     def _updateDialog(self):
         """
@@ -378,8 +384,8 @@ class UpdateController(object):
 
         :return: True if plugin was installed, otherwise False
         """
-        getAppInfo = vl.getAppInfoFromUrl
-        getDownlodUrl = vl.getDownlodUrl
+        getAppInfo = self.vl.getAppInfoFromUrl
+        getDownlodUrl = self.vl.getDownlodUrl
 
         plugin_info = self._installerPlugins.get(name, None)
         if plugin_info:
@@ -404,9 +410,11 @@ class UpdateController(object):
                            u"UpdateNotifier")
                 return False
 
-            # 0 - папка рядом с запускаемым файлом, затем идут другие папки,
+            # getPluginsDirList[0] - папка рядом с запускаемым файлом, затем идут другие папки,
             # если они есть
-            pluginPath = os.path.join(getPluginsDirList()[-1], name.lower())
+            pluginPath = self.__deletedPlugins.get(
+                name,
+                os.path.join(getPluginsDirList()[-1], name.lower()))
 
             logger.info(
                 'install_plugin: {url} {path}'.format(
@@ -415,7 +423,7 @@ class UpdateController(object):
             rez = UpdatePlugin().update(url, pluginPath)
 
             if rez:
-                self._application.plugins.load(getPluginsDirList())
+                self._application.plugins.load([os.path.dirname(pluginPath)])
                 self._updateDialog()
             else:
                 MessageBox(
@@ -430,19 +438,9 @@ class UpdateController(object):
         :param name:
             plugin name
         :return:
-            The object with Plugin interface
+            The object with Plugin interface or None
         """
-
-        # TODO: Seems the method should be add to PluginsLoader class
-
-        for p in self._application.plugins:
-            if p.name == name:
-                return p
-
-        if name in self._application.plugins.disabledPlugins:
-            return self._application.plugins.disabledPlugins[name]
-
-        return None
+        return self._application.plugins.loadedPlugins.get(name, None)
 
     def uninstall_plugin(self, name):
         """
@@ -451,6 +449,10 @@ class UpdateController(object):
         :return:
             True if plugin was uninstalled successful, otherwise False
         """
+        def del_msg(function, path, excinfo):
+            "Error handler for shutil.rmtree"
+            MessageBox(_("Plugin's folder can't be deleted. Please delete the following path: \n {}").format(path))
+
         rez = True
 
         plugin_path = self.get_plugin(name).pluginPath
@@ -465,13 +467,24 @@ class UpdateController(object):
         logger.info('uninstall_plugin: remove plugin {}'.format(rez))
 
         # remove plugin folder or remove symbolic link to it.
-        if rez and os.path.exists(plugin_path):
-            logger.info(
-                'uninstall_plugin: remove folder {}'.format(plugin_path))
+        if rez:
             if os.path.islink(plugin_path):
                 os.unlink(plugin_path)
             else:
-                shutil.rmtree(plugin_path)
+                shutil.rmtree(plugin_path,
+                              onerror=lambda f, path, i:
+                              MessageBox(
+                                  _("Plugin's folder can't be deleted. Please delete the following path: \n {}"
+                                    ).format(path)))
 
-        self._updateDialog()
+            # Python can't unimport file, so save the deleted plugin
+            # If user re-installs it we just install it in same directory
+            self.__deletedPlugins[name] = plugin_path
+
+        # reopen dialog
+        if name != self._plugin.name:
+            self._updateDialog()
+        else: # if UpdateNotifier was deleted, just close dialog
+            self._dialog.EndModal(wx.ID_OK)
+
         return rez

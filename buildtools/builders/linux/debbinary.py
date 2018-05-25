@@ -233,6 +233,7 @@ class BuilderDebBinaryBase(BuilderBase, metaclass=ABCMeta):
             local(u'rm changelog')
 
     def _build(self):
+        self._create_plugins_dir()
         self._buildBinaries()
         self._copyDebianFiles()
         self._copy_share_files()

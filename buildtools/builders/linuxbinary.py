@@ -37,16 +37,6 @@ class BuilderLinuxBinary(BuilderBase):
         builder = PyInstallerBuilderLinuxSimple(src_dir, dest_dir, temp_dir)
         builder.build()
 
-    def _create_plugins_dir(self):
-        """
-        Create empty 'plugins' dir if it not exists
-        """
-        pluginsdir = os.path.join(self.temp_sources_dir, u"plugins")
-
-        # Create the plugins folder(it is not appened to the git repository)
-        if not os.path.exists(pluginsdir):
-            os.mkdir(pluginsdir)
-
     def _build(self):
         self._copy_necessary_files()
         self._create_plugins_dir()

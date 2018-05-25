@@ -4,7 +4,7 @@ from outwiker.core.config import StringOption
 
 
 class OrganizerConfig (object):
-    def __init__ (self, config):
+    def __init__(self, config):
         self._config = config
 
         self.ORGANIZER_SECTION = u'OrganizerPlugin'
@@ -12,11 +12,10 @@ class OrganizerConfig (object):
         self.DATETIME_FORMAT_PARAM = u'Organizer_DateTimeFormat'
         self.DATETIME_FORMAT_DEFAULT = u'%d.%m.%Y'
 
-        self.dateTimeFormat = StringOption (self._config,
-                                            self.ORGANIZER_SECTION,
-                                            self.DATETIME_FORMAT_PARAM,
-                                            self.DATETIME_FORMAT_DEFAULT)
-
+        self.dateTimeFormat = StringOption(self._config,
+                                           self.ORGANIZER_SECTION,
+                                           self.DATETIME_FORMAT_PARAM,
+                                           self.DATETIME_FORMAT_DEFAULT)
 
         self.ORG_STYLES_PARAM = u'Organizer_DateTimeFormat'
         self.ORG_STYLES_DEFAULT = u'''.org {
@@ -48,7 +47,7 @@ class OrganizerConfig (object):
 			text-align: center;
 		}'''
 
-        self.orgStyles = StringOption (self._config,
-                                       self.ORGANIZER_SECTION,
-                                       self.ORG_STYLES_PARAM,
-                                       self.ORG_STYLES_DEFAULT)
+        self.orgStyles = StringOption(self._config,
+                                      self.ORGANIZER_SECTION,
+                                      self.ORG_STYLES_PARAM,
+                                      self.ORG_STYLES_DEFAULT)

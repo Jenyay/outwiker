@@ -5,7 +5,6 @@ import datetime
 import wx
 
 import outwiker.core.commands
-from outwiker.core.application import Application
 from outwiker.core.commands import setStatusText, getMainWindowTitle
 from .bookmarkscontroller import BookmarksController
 from .autosavetimer import AutosaveTimer
@@ -48,11 +47,13 @@ class MainWndController(object):
     Контроллер для управления главным окном
     """
 
-    def __init__(self, parent):
+    def __init__(self, parent, application):
         """
-        parent - окно, которым управляет контроллер
+        parent - instance of the MainWindow class
+        application - instance of the ApplicationParams class
         """
         self._mainWindow = parent
+        self._application = application
 
         # Идентификаторы пунктов меню и кнопок, которые надо задизаблить,
         # если не открыта вики
@@ -106,8 +107,8 @@ class MainWndController(object):
         # Ключ - id, значение - путь до вики
         self._recentId = {}
 
-        self.bookmarks = BookmarksController(self)
-        self.__autosaveTimer = AutosaveTimer(Application)
+        self.bookmarks = BookmarksController(self, self._application)
+        self.__autosaveTimer = AutosaveTimer(self._application)
 
         self.init()
         self.__createAcceleratorTable()
@@ -131,10 +132,10 @@ class MainWndController(object):
 
     def __onClose(self, event):
         event.Veto()
-        if TrayConfig(Application.config).minimizeOnClose.value:
+        if TrayConfig(self._application.config).minimizeOnClose.value:
             self._mainWindow.Iconize(True)
         else:
-            Application.actionController.getAction(ExitAction.stringId).run(None)
+            self._application.actionController.getAction(ExitAction.stringId).run(None)
 
     def destroy(self):
         self.__unbindAppEvents()
@@ -142,6 +143,7 @@ class MainWndController(object):
         self.__autosaveTimer = None
         self._mainWindow.Unbind(wx.EVT_CLOSE, handler=self.__onClose)
         self._mainWindow = None
+        self._application = None
 
     @property
     def mainWindow(self):
@@ -153,15 +155,15 @@ class MainWndController(object):
 
     def updatePageDateTime(self):
         statusbar_item = 1
-        config = GeneralGuiConfig(Application.config)
+        config = GeneralGuiConfig(self._application.config)
 
         dateFormat = config.dateTimeFormat.value
         text = u""
 
-        if(Application.selectedPage is not None and
-                Application.selectedPage.datetime is not None):
+        if(self._application.selectedPage is not None and
+                self._application.selectedPage.datetime is not None):
             text = datetime.datetime.strftime(
-                Application.selectedPage.datetime,
+                self._application.selectedPage.datetime,
                 dateFormat)
 
         setStatusText(text, statusbar_item)
@@ -175,20 +177,20 @@ class MainWndController(object):
             self.mainWindow.Unbind(wx.EVT_MENU, id=key)
 
     def __bindAppEvents(self):
-        Application.onPageSelect += self.__onPageSelect
-        Application.onPreferencesDialogClose += self.__onPreferencesDialogClose
-        Application.onBookmarksChanged += self.__onBookmarksChanged
-        Application.onTreeUpdate += self.__onTreeUpdate
-        Application.onWikiOpen += self.__onWikiOpen
-        Application.onPageUpdate += self.__onPageUpdate
+        self._application.onPageSelect += self.__onPageSelect
+        self._application.onPreferencesDialogClose += self.__onPreferencesDialogClose
+        self._application.onBookmarksChanged += self.__onBookmarksChanged
+        self._application.onTreeUpdate += self.__onTreeUpdate
+        self._application.onWikiOpen += self.__onWikiOpen
+        self._application.onPageUpdate += self.__onPageUpdate
 
     def __unbindAppEvents(self):
-        Application.onPageSelect -= self.__onPageSelect
-        Application.onPreferencesDialogClose -= self.__onPreferencesDialogClose
-        Application.onBookmarksChanged -= self.__onBookmarksChanged
-        Application.onTreeUpdate -= self.__onTreeUpdate
-        Application.onWikiOpen -= self.__onWikiOpen
-        Application.onPageUpdate -= self.__onPageUpdate
+        self._application.onPageSelect -= self.__onPageSelect
+        self._application.onPreferencesDialogClose -= self.__onPreferencesDialogClose
+        self._application.onBookmarksChanged -= self.__onBookmarksChanged
+        self._application.onTreeUpdate -= self.__onTreeUpdate
+        self._application.onWikiOpen -= self.__onWikiOpen
+        self._application.onPageUpdate -= self.__onPageUpdate
 
     def __onBookmarksChanged(self, event):
         self.bookmarks.updateBookmarks()
@@ -210,7 +212,7 @@ class MainWndController(object):
         """
         if wikiroot is not None and not wikiroot.readonly:
             try:
-                Application.recentWiki.add(wikiroot.path)
+                self._application.recentWiki.add(wikiroot.path)
                 self.updateRecentMenu()
             except IOError as e:
                 outwiker.core.commands.MessageBox(
@@ -234,9 +236,9 @@ class MainWndController(object):
         self._updateBookmarksState()
 
     def _updateBookmarksState(self):
-        Application.actionController.enableTools(
+        self._application.actionController.enableTools(
             AddBookmarkAction.stringId,
-            Application.selectedPage is not None
+            self._application.selectedPage is not None
         )
 
     def __onPreferencesDialogClose(self, prefDialog):
@@ -255,7 +257,7 @@ class MainWndController(object):
         """
         Проверить открыта ли вики и включить или выключить кнопки на панели
         """
-        enabled = Application.wikiroot is not None
+        enabled = self._application.wikiroot is not None
 
         self.__enableTools(enabled)
         self.mainWindow.pagePanel.panel.Enable(enabled)
@@ -274,7 +276,7 @@ class MainWndController(object):
             if self.mainMenu.FindItemById(toolId) is not None:
                 self.mainMenu.Enable(toolId, enabled)
 
-        [Application.actionController.enableTools(action.stringId, enabled)
+        [self._application.actionController.enableTools(action.stringId, enabled)
          for action in self._disabledActions]
 
     #
@@ -285,7 +287,7 @@ class MainWndController(object):
         Обновить заголовок главного окна в зависимости от шаблона
             и текущей страницы
         """
-        self.mainWindow.SetTitle(getMainWindowTitle(Application))
+        self.mainWindow.SetTitle(getMainWindowTitle(self._application))
 
     def loadMainWindowParams(self):
         """
@@ -317,9 +319,9 @@ class MainWndController(object):
                                  list(self._recentId.keys()))
         self._recentId = {}
 
-        for n in range(len(Application.recentWiki)):
+        for n in range(len(self._application.recentWiki)):
             id = wx.Window.NewControlId()
-            path = Application.recentWiki[n]
+            path = self._application.recentWiki[n]
             self._recentId[id] = path
 
             title = path if n + 1 > 9 else u"&{n}. {path}".format(n=n+1,

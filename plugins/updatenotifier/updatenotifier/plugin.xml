@@ -1,7 +1,7 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <info>
 	<name>UpdateNotifier</name>
-	<updates>http://jenyay.net/uploads/Outwiker/UpdateNotifier/plugin.xml</updates>
+	<updates>https://jenyay.net/uploads/Outwiker/UpdateNotifier/plugin.xml</updates>
     <requirements>
         <os>Windows, Linux</os>
         <api>2.835</api>
@@ -18,111 +18,111 @@
     </requirements>
 
 	<data lang="en">
-		<website>http://jenyay.net/Outwiker/UpdateNotifierEn</website>
+		<website>https://jenyay.net/Outwiker/UpdateNotifierEn</website>
 		<description>Notification of version releases OutWiker and plug-ins.</description>
 
 		<author>
 			<name>Eugene Ilin (aka Jenyay)</name>
 			<email>jenyay.ilin@gmail.com</email>
-			<site>http://jenyay.net</site>
+			<site>https://jenyay.net</site>
 		</author>
 		<changelog>
-			<version number="2.2">
-                <download os="all">http://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-2.2.zip</download>
+			<version number="2.2" date="May 26, 2018">
+                <download os="all">https://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-2.2.zip</download>
 				<change>Plug-ins can be Installed/Updated/Deleted through the OutWiker interface.</change>
 			</version>
 
 			<version number="2.1" date="February 15, 2018">
-                <download os="all">http://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-2.1.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-2.1.zip</download>
 				<change>Add OutWiker 2.1 support. Migrate to Python 3.6.</change>
 			</version>
 
 			<version number="2.0" date="September 24, 2017">
-                <download os="all">http://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-2.0.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-2.0.zip</download>
 				<change>New user interface.</change>
 				<change>The way of detection of new versions is changed.</change>
 			</version>
 
 			<version number="1.1.3" date="October 17, 2016">
-                <download os="all">http://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-1.1.3.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-1.1.3.zip</download>
 				<change>Added OutWiker 2.0 supporting.</change>
 			</version>
 
 			<version number="1.1.2" date="August 20, 2016">
-                <download os="all">http://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-1.1.2.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-1.1.2.zip</download>
 				<change>Added the Swedish translation.</change>
 			</version>
 
 			<version number="1.1.1" date="January 20, 2015">
-                <download os="all">http://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-1.1.1.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-1.1.1.zip</download>
 				<change>Bug fixes.</change>
 				<change>Code cleanup.</change>
 			</version>
 
 			<version number="1.1" date="January 09, 2014">
-                <download os="all">http://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-1.1.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-1.1.zip</download>
 				<change>When using OutWiker 1.8 you can set a hotkey to check for updates.</change>
 				<change>Bug fixes.</change>
 			</version>
 
 			<version number="1.0" date="July 18, 2013">
-                <download os="all">http://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-1.0.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-1.0.zip</download>
 				<change>First version.</change>
 			</version>
 		</changelog>
 	</data>
 
 	<data lang="ru">
-		<website>http://jenyay.net/Outwiker/UpdateNotifier</website>
+		<website>https://jenyay.net/Outwiker/UpdateNotifier</website>
 		<description>Оповещения о новых версиях OutWiker и плагинов.</description>
 
 		<author>
 			<name>Евгений Ильин (aka Jenyay)</name>
 			<email>jenyay.ilin@gmail.com</email>
-			<site>http://jenyay.net</site>
+			<site>https://jenyay.net</site>
 		</author>
 
 		<changelog>
-            <version number="2.2">
-                <download os="all">http://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-2.2.zip</download>
+            <version number="2.2" date="26.05.2018">
+                <download os="all">https://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-2.2.zip</download>
 				<change>Добавлена возможность устанавлвать, удалять и обновлять плагины через интерфейс OutWiker</change>
 			</version>
 
             <version number="2.1" date="15.02.2018">
-                <download os="all">http://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-2.1.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-2.1.zip</download>
 				<change>Добавлена поддержка OutWiker 2.1. Переход на Python 3.6.</change>
 			</version>
 
 			<version number="2.0" date="24.09.2017">
-                <download os="all">http://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-2.0.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-2.0.zip</download>
 				<change>Новый интерфейс плагина.</change>
 				<change>Изменен способ обнаружения новых версий.</change>
 			</version>
 
 			<version number="1.1.3" date="17.10.2016">
-                <download os="all">http://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-1.1.3.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-1.1.3.zip</download>
 				<change>Добавлена поддержка OutWiker 2.0.</change>
 			</version>
 
 			<version number="1.1.2" date="20.08.2016">
-                <download os="all">http://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-1.1.2.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-1.1.2.zip</download>
 				<change>Добавлена поддержка шведского языка.</change>
 			</version>
 
 			<version number="1.1.1" date="20.01.2015">
-                <download os="all">http://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-1.1.1.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-1.1.1.zip</download>
 				<change>Исправление ошибок.</change>
 				<change>Подчистка кода.</change>
 			</version>
 
 			<version number="1.1" date="09.01.2014">
-                <download os="all">http://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-1.1.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-1.1.zip</download>
 				<change>При использовании OutWiker 1.8 можно задавать горячую клавишу для проверки обновлений.</change>
 				<change>Исправление ошибок.</change>
 			</version>
 
 			<version number="1.0" date="18.07.2013">
-                <download os="all">http://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-1.0.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-1.0.zip</download>
 				<change>Первая версия</change>
 			</version>
 		</changelog>

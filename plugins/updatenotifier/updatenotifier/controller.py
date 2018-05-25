@@ -50,7 +50,7 @@ class Controller(object):
             self._guiCreator = OldGuiCreator(self, self._application)
 
         self._updatesChecker = UpdateController(self._application,
-                                                self._plugin.pluginPath)
+                                                self._plugin)
         self._guiCreator.initialize()
 
         if self._application.mainWindow is not None:

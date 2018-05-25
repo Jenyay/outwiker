@@ -28,7 +28,7 @@
 		</author>
 
 		<changelog>
-			<version number="1.2.1">
+			<version number="1.2.1" date="May 26, 2018">
                 <download os="all">http://jenyay.net/uploads/Outwiker/ThumbGallery/thumbgallery-1.2.1.zip</download>
 				<change>Updated the Ukrainian localization.</change>
 			</version>
@@ -85,7 +85,7 @@
 		</author>
 
 		<changelog>
-			<version number="1.2.1">
+			<version number="1.2.1" date="26.05.2018">
                 <download os="all">http://jenyay.net/uploads/Outwiker/ThumbGallery/thumbgallery-1.2.1.zip</download>
 				<change>Обновлена украинская локализация.</change>
 			</version>

@@ -29,8 +29,9 @@ class UpdatePlugin (object):
         """
         logger.info('Start update plugin: %s' % (plugin_path))
 
-        # Download the file from `url`, save it in a temporary directory and get the
-        # path to it (e.g. '/tmp/tmpb48zma.zip') in the `file_name` variable:
+        # Download the file from `url`, save it in a temporary directory and
+        # get the path to it (e.g. '/tmp/tmpb48zma.zip') in
+        # the `file_name` variable:
         try:
             zip_name, headers = urllib.request.urlretrieve(url)
         except (urllib.error.HTTPError, urllib.error.URLError, ValueError):
@@ -41,7 +42,8 @@ class UpdatePlugin (object):
         extracted_path = self._extract_plugin(zip_name)
 
         # remove plugin directory and copy new data to the plugins folder
-        self._replacetree(extracted_path, plugin_path)
+        if not self._replacetree(extracted_path, plugin_path):
+            return False
 
         # remove temp files
         if os.path.exists(extracted_path):
@@ -51,17 +53,19 @@ class UpdatePlugin (object):
 
     def _replacetree(self, src, dst):
         """
-        The function delete dst folder and than copy src to dst by shutil.copytree
+        The function delete dst folder and than copy src to dst
+            by shutil.copytree
         """
+        if os.path.exists(dst):
+            try:
+                shutil.rmtree(dst)
+            except OSError:
+                return False
 
-        pls_path, pl_folder_name = os.path.split(dst)
-        pl_path = join(pls_path, pl_folder_name)
+        if not os.path.exists(dst):
+            shutil.copytree(src, dst)
 
-        if os.path.exists(pl_path):
-            shutil.rmtree(pl_path)
-
-        if not os.path.exists(pl_path):
-            shutil.copytree(src, pl_path)
+        return True
 
     def _extract_plugin(self, zip_path):
         """
