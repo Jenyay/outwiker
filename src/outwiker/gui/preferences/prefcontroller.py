@@ -78,8 +78,7 @@ class PrefController (object):
 
     def __onCancel(self, event):
         self._application.onPreferencesDialogClose(self)
-        self.__unbindFromDialog()
-        self._dialog.EndModal(wx.ID_CANCEL)
+        self.__Destroy()
 
     def __onOk(self, event):
         try:
@@ -89,8 +88,24 @@ class PrefController (object):
 
         self.__saveDialogPreperties()
         self._application.onPreferencesDialogClose(self._dialog)
+        self.__Destroy()
+
+    def __Destroy(self):
+        """
+        Destroy Preference Dialog
+
+        :return:
+            None
+        """
         self.__unbindFromDialog()
         self._dialog.EndModal(wx.ID_OK)
+
+        #self._dialog.treeBook.DeleteAllPages()
+        for pageIndex in range(self._dialog.treeBook.GetPageCount()):
+            page = self._dialog.treeBook.GetPage(pageIndex)
+
+
+        self._dialog.Destroy()
 
     def __onHelp(self, event):
         controller = self._application.actionController
