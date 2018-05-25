@@ -7,7 +7,7 @@
 		<website>https://jenyay.net/Outwiker/UnstableEn</website>
 
 		<changelog>
-			<version number="2.1.0.842" status="dev">
+			<version number="2.1.0.842" status="dev" date="May 26, 2018">
 				<change>Accelerated plug-ins loading.</change>
 				<change>GUI fixes.</change>
 			</version>
@@ -62,7 +62,7 @@
 		<website>https://jenyay.net/Outwiker/Unstable</website>
 
 		<changelog>
-			<version number="2.1.0.842" status="dev">
+			<version number="2.1.0.842" status="dev" date="26.05.2018">
 				<change>Ускорена загрузка плагинов.</change>
 				<change>Исправления в интерфейсе.</change>
 			</version>

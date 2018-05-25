@@ -27,7 +27,7 @@
 		</author>
 
 		<changelog>
-			<version number="0.0.0.6">
+			<version number="0.0.0.6" date="May 26, 2018">
                 <download os="all">http://jenyay.net/uploads/Outwiker/AutoRenamer/autorenamer-0.0.0.6.zip</download>
 				<change>Bug fixes</change>
 			</version>
@@ -61,7 +61,7 @@
 		</author>
 
 		<changelog>
-			<version number="0.0.0.6">
+			<version number="0.0.0.6" date="26.05.2018">
                 <download os="all">http://jenyay.net/uploads/Outwiker/AutoRenamer/autorenamer-0.0.0.6.zip</download>
 				<change>Исправление ошибок</change>
 			</version>
