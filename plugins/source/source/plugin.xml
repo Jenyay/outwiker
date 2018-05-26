@@ -28,8 +28,8 @@
 		</author>
 
 		<changelog>
-			<version number="1.16">
-                <download os="all">http://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.16.zip</download>
+			<version number="1.15.1" date="May 26, 2018">
+                <download os="all">http://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.15.1.zip</download>
 				<change>Bug fixes.</change>
 			</version>
 
@@ -158,8 +158,8 @@
 		</author>
 
 		<changelog>
-			<version number="1.16">
-                <download os="all">http://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.16.zip</download>
+			<version number="1.15.1" date="26.05.2018">
+                <download os="all">http://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.15.1.zip</download>
 				<change>Исправление ошибок.</change>
 			</version>
 
