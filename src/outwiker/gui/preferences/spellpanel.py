@@ -4,7 +4,6 @@ import os.path
 
 import wx
 
-from outwiker.core.application import Application
 from outwiker.core.system import getSpellDirList
 from outwiker.utilites.textfile import writeTextFile, readTextFile
 from outwiker.core.spellchecker.defines import CUSTOM_DICT_FILE_NAME
@@ -14,118 +13,106 @@ from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
 
 
 class SpellPanel(BasePrefPanel):
-    def __init__(self, parent):
-        super (type (self), self).__init__ (parent)
+    def __init__(self, parent, application):
+        super(type(self), self).__init__(parent)
 
-        self._config = EditorConfig (Application.config)
+        self._config = EditorConfig(application.config)
         self._createGui()
         self.SetupScrolling()
 
+    def _createGui(self):
+        mainSizer = wx.FlexGridSizer(cols=1)
+        mainSizer.AddGrowableCol(0)
+        mainSizer.AddGrowableRow(4)
 
-    def _createGui (self):
-        mainSizer = wx.FlexGridSizer (cols=1)
-        mainSizer.AddGrowableCol (0)
-        mainSizer.AddGrowableRow (4)
-
-        self._skipDigitsCheckBox = self._createCheckBox (
+        self._skipDigitsCheckBox = self._createCheckBox(
             _(u'Skip words with digits'),
             mainSizer
         )
-        self._createDictsList (mainSizer)
-        self._createCustomDict (mainSizer)
+        self._createDictsList(mainSizer)
+        self._createCustomDict(mainSizer)
 
-        self.SetSizer (mainSizer)
+        self.SetSizer(mainSizer)
 
+    def _createDictsList(self, mainSizer):
+        dictsLabel = wx.StaticText(self, label=_(u'Use dictionaries'))
+        self.dictsList = wx.CheckListBox(self)
 
-    def _createDictsList (self, mainSizer):
-        dictsLabel = wx.StaticText (self, label = _(u'Use dictionaries'))
-        self.dictsList = wx.CheckListBox (self)
-
-        mainSizer.Add (dictsLabel,
-                       0,
-                       wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                       border=2)
+        mainSizer.Add(dictsLabel,
+                      0,
+                      wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+                      border=2)
 
         mainSizer.Add(self.dictsList,
                       0,
                       wx.ALL | wx.EXPAND,
                       border=2)
 
+    def _createCustomDict(self, mainSizer):
+        dictLabel = wx.StaticText(self, label=_(u'Custom dictonary (one word per line)'))
+        self.customDict = wx.TextCtrl(self, style=wx.TE_MULTILINE)
 
-    def _createCustomDict (self, mainSizer):
-        dictLabel = wx.StaticText (self, label = _(u'Custom dictonary (one word per line)'))
-        self.customDict = wx.TextCtrl (self, style=wx.TE_MULTILINE)
-
-        mainSizer.Add (dictLabel,
-                       0,
-                       wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                       border=2)
+        mainSizer.Add(dictLabel,
+                      0,
+                      wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+                      border=2)
 
         mainSizer.Add(self.customDict,
                       0,
                       wx.ALL | wx.EXPAND,
                       border=2)
 
-
-    def _fillDictsList (self):
-        dicts = DictsFinder (getSpellDirList()).getLangList()
+    def _fillDictsList(self):
+        dicts = DictsFinder(getSpellDirList()).getLangList()
         dicts.sort()
         selectedDicts = [item for item in self._getDictsFromConfig() if item in dicts]
 
-
         self.dictsList.Clear()
-        self.dictsList.AppendItems (dicts)
-        self.dictsList.SetCheckedStrings (selectedDicts)
+        self.dictsList.AppendItems(dicts)
+        self.dictsList.SetCheckedStrings(selectedDicts)
 
-
-    def _loadCustomDict (self):
+    def _loadCustomDict(self):
         """
         Load and show custom dictionary
         """
-        self.customDict.SetValue (u'')
+        self.customDict.SetValue(u'')
         try:
-            text = readTextFile (self._getCustomDictFileName())
+            text = readTextFile(self._getCustomDictFileName())
         except (IOError, SystemError):
             return
 
-        self.customDict.SetValue (self._sanitizeDictText (text))
+        self.customDict.SetValue(self._sanitizeDictText(text))
 
-
-    def _sanitizeDictText (self, text):
-        text = u'\n'.join ([item.strip()
-                            for item
-                            in text.split (u'\n')
-                            if len (item.strip()) > 0])
+    def _sanitizeDictText(self, text):
+        text = u'\n'.join([item.strip()
+                           for item
+                           in text.split(u'\n')
+                           if len(item.strip()) > 0])
         return text
 
-
-    def _saveCustomDict (self):
-        text = self._sanitizeDictText (self.customDict.GetValue())
+    def _saveCustomDict(self):
+        text = self._sanitizeDictText(self.customDict.GetValue())
         try:
-            writeTextFile (self._getCustomDictFileName(), text)
+            writeTextFile(self._getCustomDictFileName(), text)
         except (IOError, SystemError):
             pass
 
+    def _getCustomDictFileName(self):
+        return os.path.join(getSpellDirList()[-1], CUSTOM_DICT_FILE_NAME)
 
-    def _getCustomDictFileName (self):
-        return os.path.join (getSpellDirList()[-1], CUSTOM_DICT_FILE_NAME)
-
-
-    def _getDictsFromConfig (self):
+    def _getDictsFromConfig(self):
         dictsStr = self._config.spellCheckerDicts.value
         return [item.strip()
                 for item
                 in dictsStr.split(',')
                 if item.strip()]
 
-
     def LoadState(self):
-        self._fillDictsList ()
-        self._loadCustomDict ()
-        self._skipDigitsCheckBox.SetValue (self._config.spellSkipDigits.value)
+        self._fillDictsList()
+        self._loadCustomDict()
+        self._skipDigitsCheckBox.SetValue(self._config.spellSkipDigits.value)
 
-
-    def Save (self):
-        self._config.spellCheckerDicts.value = u', '.join (self.dictsList.GetCheckedStrings())
+    def Save(self):
+        self._config.spellCheckerDicts.value = u', '.join(self.dictsList.GetCheckedStrings())
         self._saveCustomDict()
         self._config.spellSkipDigits.value = self._skipDigitsCheckBox.GetValue()

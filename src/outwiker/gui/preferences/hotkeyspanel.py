@@ -2,7 +2,6 @@
 
 import wx
 
-from outwiker.core.application import Application
 from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
 from outwiker.gui.controls.hotkeyctrl import HotkeyCtrl, EVT_HOTKEY_EDIT
 from outwiker.core.commands import MessageBox
@@ -12,9 +11,11 @@ class HotKeysPanel(BasePrefPanel):
     """
     Панель с настройками, связанными с редактором
     """
-    def __init__(self, parent):
+
+    def __init__(self, parent, application):
         super(type(self), self).__init__(parent)
 
+        self._application = application
         # Новые горячие клавиши
         # Ключ - strid, значение - горячая клавиша
         self.__hotkeys = {}
@@ -36,8 +37,8 @@ class HotKeysPanel(BasePrefPanel):
         oldActionStrId = self.__findConflict(newhotkey)
 
         if oldActionStrId is not None:
-            newAction = Application.actionController.getTitle(newActionStrId)
-            oldAction = Application.actionController.getTitle(oldActionStrId)
+            newAction = self._application.actionController.getTitle(newActionStrId)
+            oldAction = self._application.actionController.getTitle(oldActionStrId)
 
             text = _(u'{hotkey} hotkey assigned for "{old}".\nAssign this hotkey for "{new}"?').format(
                 hotkey=newhotkey,
@@ -151,7 +152,7 @@ class HotKeysPanel(BasePrefPanel):
         """
         Заполнить словарь __hotkeys текущими значениями
         """
-        actionController = Application.actionController
+        actionController = self._application.actionController
         strIdList = actionController.getActionsStrId()
         for strid in strIdList:
             self.__hotkeys[strid] = actionController.getHotKey(strid)
@@ -164,7 +165,7 @@ class HotKeysPanel(BasePrefPanel):
 
         strid = event.GetClientData()
         if strid is not None:
-            self.__descriptionText.Value = Application.actionController.getAction(strid).description
+            self.__descriptionText.Value = self._application.actionController.getAction(strid).description
             self.__hotkeyCtrl.Enable()
             self.__hotkeyCtrl.SetValue(self.__hotkeys[strid])
 
@@ -172,20 +173,20 @@ class HotKeysPanel(BasePrefPanel):
         """
         Заполнить список actions зарегистрированными действиями
         """
-        actionController = Application.actionController
+        actionController = self._application.actionController
         strIdList = actionController.getActionsStrId()
 
         # Список кортежей(заголовок, strid)
         # Отбросим те actions, что не удовлетворяют фильтру
         titleStridList = [
-           (actionController.getTitle(strid), strid)
-           for strid in strIdList
-           if self.__filter(actionController.getAction(strid))
+            (actionController.getTitle(strid), strid)
+            for strid in strIdList
+            if self.__filter(actionController.getAction(strid))
         ]
         titleStridList.sort()
 
         self.__actionsList.Clear()
-        for(title, strid) in titleStridList:
+        for (title, strid) in titleStridList:
             self.__actionsList.Append(title, strid)
 
     def __filter(self, action):
@@ -198,7 +199,7 @@ class HotKeysPanel(BasePrefPanel):
                 filterText in action.description.lower())
 
     def Save(self):
-        actionController = Application.actionController
+        actionController = self._application.actionController
 
         for strid, hotkey in self.__hotkeys.items():
             if actionController.getHotKey(strid) != hotkey:

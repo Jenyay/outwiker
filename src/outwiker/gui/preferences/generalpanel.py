@@ -6,7 +6,6 @@ import wx
 
 from . import configelements
 import outwiker.core.i18n
-from outwiker.core.application import Application
 from outwiker.core.system import getImagesDir
 from outwiker.gui.guiconfig import (GeneralGuiConfig,
                                     MainWindowConfig)
@@ -16,12 +15,12 @@ from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
 
 
 class GeneralPanel(BasePrefPanel):
-    def __init__(self, parent):
+    def __init__(self, parent, application):
         super(GeneralPanel, self).__init__(parent)
 
-        self.generalConfig = GeneralGuiConfig(Application.config)
-        self.mainWindowConfig = MainWindowConfig(Application.config)
-        self.i18nConfig = outwiker.core.i18n.I18nConfig(Application.config)
+        self.generalConfig = GeneralGuiConfig(application.config)
+        self.mainWindowConfig = MainWindowConfig(application.config)
+        self.i18nConfig = outwiker.core.i18n.I18nConfig(application.config)
 
         self.MIN_AUTOSAVE_INTERVAL = 0
         self.MAX_AUTOSAVE_INTERVAL = 3600
@@ -36,9 +35,9 @@ class GeneralPanel(BasePrefPanel):
         self.LANG_COMBO_WIDTH = 200
 
         self.pageTabChoises = [
-           (_(u'Recent used'), GeneralGuiConfig.PAGE_TAB_RECENT),
-           (_(u'Preview'), GeneralGuiConfig.PAGE_TAB_RESULT),
-           (_(u'Edit'), GeneralGuiConfig.PAGE_TAB_CODE),
+            (_(u'Recent used'), GeneralGuiConfig.PAGE_TAB_RECENT),
+            (_(u'Preview'), GeneralGuiConfig.PAGE_TAB_RESULT),
+            (_(u'Edit'), GeneralGuiConfig.PAGE_TAB_CODE),
         ]
 
         # Номер элемента при выборе "Авто" в списке языков

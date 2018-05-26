@@ -2,17 +2,16 @@
 
 import wx
 
-from outwiker.core.application import Application
 from outwiker.gui.editorstyleslist import EditorStylesList
 from outwiker.pages.wiki.wikiconfig import WikiConfig
 from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
 
 
 class WikiEditorPanel(BasePrefPanel):
-    def __init__(self, parent):
+    def __init__(self, parent, application):
         super(type(self), self).__init__(parent)
 
-        self._config = WikiConfig(Application.config)
+        self._config = WikiConfig(application.config)
         self.__createGui()
         self.__layout()
         self.SetupScrolling()

@@ -24,11 +24,10 @@ from .iconsetpanel import IconsetPanel
 from .tagspanel import TagsPanel
 from .attachpanel import AttachPanel
 
-
 logger = logging.getLogger('prefcontroller')
 
 
-class PrefController (object):
+class PrefController(object):
     def __init__(self, application):
         self._application = application
         self._dialog = None
@@ -133,13 +132,13 @@ class PrefController (object):
         """
         Создать страницы с подгруппой "Interface"
         """
-        generalPage = GeneralPanel(self._dialog.treeBook)
-        trayPage = TrayPanel(self._dialog.treeBook)
-        htmlRenderPage = HtmlRenderPanel(self._dialog.treeBook)
-        textPrintPage = TextPrintPanel(self._dialog.treeBook)
-        hotkeysPage = HotKeysPanel(self._dialog.treeBook)
-        tagsPage = TagsPanel(self._dialog.treeBook)
-        attachPage = AttachPanel(self._dialog.treeBook)
+        generalPage = GeneralPanel(self._dialog.treeBook, self._application)
+        trayPage = TrayPanel(self._dialog.treeBook, self._application)
+        htmlRenderPage = HtmlRenderPanel(self._dialog.treeBook, self._application)
+        textPrintPage = TextPrintPanel(self._dialog.treeBook, self._application)
+        hotkeysPage = HotKeysPanel(self._dialog.treeBook, self._application)
+        tagsPage = TagsPanel(self._dialog.treeBook, self._application)
+        attachPage = AttachPanel(self._dialog.treeBook, self._application)
 
         interfacePanelsList = [
             PreferencePanelInfo(generalPage, _(u"General")),
@@ -158,10 +157,10 @@ class PrefController (object):
         """
         Создать страницы с подгруппой "Редактор"
         """
-        editorPage = EditorPanel(self._dialog.treeBook)
-        spellPage = SpellPanel(self._dialog.treeBook)
-        htmlEditorPage = HtmlEditorPanel(self._dialog.treeBook)
-        wikiEditorPage = WikiEditorPanel(self._dialog.treeBook)
+        editorPage = EditorPanel(self._dialog.treeBook, self._application)
+        spellPage = SpellPanel(self._dialog.treeBook, self._application)
+        htmlEditorPage = HtmlEditorPanel(self._dialog.treeBook, self._application)
+        wikiEditorPage = WikiEditorPanel(self._dialog.treeBook, self._application)
 
         editorPanesList = [
             PreferencePanelInfo(editorPage, _(u"General")),
