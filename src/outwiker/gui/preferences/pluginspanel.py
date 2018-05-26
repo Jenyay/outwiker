@@ -166,43 +166,36 @@ class PluginsController (object):
         """
         Добавить загруженные плагины в список
         """
-        for plugin in Application.plugins:
-            index = self.__owner.pluginsList.Append(plugin.name)
+        enablePlugins = {plugin.name: plugin for plugin in Application.plugins}
 
-            assert plugin.name not in self.__pluginsItems
-            self.__pluginsItems[plugin.name] = plugin
+        self.__owner.pluginsList.Append(list(enablePlugins))
+        self.__pluginsItems.update(enablePlugins)
 
-            self.__owner.pluginsList.Check(index, True)
+        self.__owner.pluginsList.SetCheckedStrings(list(enablePlugins))
 
     def __appendDisabledPlugins(self):
         """
         Добавить отключенные плагины в список
         """
-        for plugin in Application.plugins.disabledPlugins.values():
-            index = self.__owner.pluginsList.Append(plugin.name)
-
-            assert plugin.name not in self.__pluginsItems
-            self.__pluginsItems[plugin.name] = plugin
-
-            self.__owner.pluginsList.Check(index, False)
+        self.__owner.pluginsList.Append(list(Application.plugins.disabledPlugins))
+        self.__pluginsItems.update(Application.plugins.disabledPlugins)
 
     def __appendInvalidPlugins(self):
-        for plugin in Application.plugins.invalidPlugins:
-            index = self.__owner.pluginsList.Append(plugin.name)
-
-            self.__pluginsItems[plugin.name] = plugin
-            self.__owner.pluginsList.Check(index, False)
+        self.__owner.pluginsList.Append(list(Application.plugins.invalidPlugins))
+        self.__pluginsItems.update(Application.plugins.invalidPlugins)
 
     def save(self):
         config = PluginsConfig(Application.config)
         config.disabledPlugins.value = self.__getDisabledPlugins()
+
+        # enable/disable plugins state
         Application.plugins.updateDisableList()
 
     def __getDisabledPlugins(self):
-        disabledList = []
-
-        for itemindex in range(self.__owner.pluginsList.GetCount()):
-            if not self.__owner.pluginsList.IsChecked(itemindex):
-                disabledList.append(self.__pluginsItems[self.__owner.pluginsList.GetString(itemindex)].name)
+        """
+        Return list of unchecked plugins
+        """
+        checked = self.__owner.pluginsList.GetCheckedStrings()
+        disabledList = list(set(self.__pluginsItems) - set(checked))
 
         return disabledList
