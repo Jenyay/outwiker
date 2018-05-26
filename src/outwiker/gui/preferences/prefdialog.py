@@ -5,7 +5,6 @@
 
 import wx
 
-from outwiker.core.application import Application
 from outwiker.gui.testeddialog import TestedDialog
 
 
@@ -13,12 +12,14 @@ class PrefDialog(TestedDialog):
     """
     Класс диалога настроек
     """
-    def __init__(self, parent):
+
+    def __init__(self, parent, application):
         style = wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER
         super(PrefDialog, self).__init__(parent, style=style)
+        self._application = application
         self.__treeBook = wx.Treebook(self, -1)
         self.__do_layout()
-        Application.onPreferencesDialogCreate(self)
+        self._application.onPreferencesDialogCreate(self)
 
     @property
     def treeBook(self):
