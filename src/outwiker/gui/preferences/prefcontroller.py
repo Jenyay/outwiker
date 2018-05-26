@@ -173,7 +173,7 @@ class PrefController (object):
         self._dialog.appendPreferenceGroup(_(u"Editor"), editorPanesList)
 
     def __createPluginsPage(self):
-        pluginsPage = PluginsPanel(self._dialog.treeBook)
+        pluginsPage = PluginsPanel(self._dialog.treeBook, self._application)
         self._dialog.treeBook.AddPage(pluginsPage, _(u"Plugins"))
 
     def __createIconsetPage(self):

@@ -4,21 +4,22 @@ import wx
 import wx.adv
 import logging
 
-from outwiker.core.application import Application
 from outwiker.gui.guiconfig import PluginsConfig
 from outwiker.core.system import getCurrentDir, getOS
 from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
 
-
 logger = logging.getLogger('pluginspanel')
 
 
-class PluginsPanel (BasePrefPanel):
+class PluginsPanel(BasePrefPanel):
     """
     Панель со списком установленных плагинов
     """
-    def __init__(self, parent):
+
+    def __init__(self, parent, application):
         super(PluginsPanel, self).__init__(parent)
+        self._application = application
+
         self.__htmlMinWidth = 150
 
         self.__createGui()
@@ -86,10 +87,11 @@ class PluginsPanel (BasePrefPanel):
         self.__controller.save()
 
 
-class PluginsController (object):
+class PluginsController(object):
     """
     Контроллер, отвечающий за работу панели со списком плагинов
     """
+
     def __init__(self, pluginspanel):
         self.__owner = pluginspanel
 
@@ -166,7 +168,7 @@ class PluginsController (object):
         """
         Добавить загруженные плагины в список
         """
-        enablePlugins = {plugin.name: plugin for plugin in Application.plugins}
+        enablePlugins = {plugin.name: plugin for plugin in self._application.plugins}
 
         self.__owner.pluginsList.Append(list(enablePlugins))
         self.__pluginsItems.update(enablePlugins)
@@ -177,19 +179,19 @@ class PluginsController (object):
         """
         Добавить отключенные плагины в список
         """
-        self.__owner.pluginsList.Append(list(Application.plugins.disabledPlugins))
-        self.__pluginsItems.update(Application.plugins.disabledPlugins)
+        self.__owner.pluginsList.Append(list(self._application.plugins.disabledPlugins))
+        self.__pluginsItems.update(self._application.plugins.disabledPlugins)
 
     def __appendInvalidPlugins(self):
-        self.__owner.pluginsList.Append(list(Application.plugins.invalidPlugins))
-        self.__pluginsItems.update(Application.plugins.invalidPlugins)
+        self.__owner.pluginsList.Append(list(self._application.plugins.invalidPlugins))
+        self.__pluginsItems.update(self._application.plugins.invalidPlugins)
 
     def save(self):
-        config = PluginsConfig(Application.config)
+        config = PluginsConfig(self._application.config)
         config.disabledPlugins.value = self.__getDisabledPlugins()
 
         # enable/disable plugins state
-        Application.plugins.updateDisableList()
+        self._application.plugins.updateDisableList()
 
     def __getDisabledPlugins(self):
         """
