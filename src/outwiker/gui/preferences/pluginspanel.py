@@ -168,7 +168,9 @@ class PluginsController(object):
         """
         Добавить загруженные плагины в список
         """
-        enablePlugins = {plugin.name: plugin for plugin in self._application.plugins}
+        enablePlugins = {plugin.name: plugin
+                         for plugin
+                         in self.__owner._application.plugins}
 
         self.__owner.pluginsList.Append(list(enablePlugins))
         self.__pluginsItems.update(enablePlugins)
@@ -179,19 +181,19 @@ class PluginsController(object):
         """
         Добавить отключенные плагины в список
         """
-        self.__owner.pluginsList.Append(list(self._application.plugins.disabledPlugins))
-        self.__pluginsItems.update(self._application.plugins.disabledPlugins)
+        self.__owner.pluginsList.Append(list(self.__owner._application.plugins.disabledPlugins))
+        self.__pluginsItems.update(self.__owner._application.plugins.disabledPlugins)
 
     def __appendInvalidPlugins(self):
-        self.__owner.pluginsList.Append(list(self._application.plugins.invalidPlugins))
-        self.__pluginsItems.update(self._application.plugins.invalidPlugins)
+        self.__owner.pluginsList.Append(list(self.__owner._application.plugins.invalidPlugins))
+        self.__pluginsItems.update(self.__owner._application.plugins.invalidPlugins)
 
     def save(self):
-        config = PluginsConfig(self._application.config)
+        config = PluginsConfig(self.__owner._application.config)
         config.disabledPlugins.value = self.__getDisabledPlugins()
 
         # enable/disable plugins state
-        self._application.plugins.updateDisableList()
+        self.__owner._application.plugins.updateDisableList()
 
     def __getDisabledPlugins(self):
         """
