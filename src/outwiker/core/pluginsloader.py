@@ -126,10 +126,7 @@ class PluginsLoader(object):
         """ Disable plugin_name """
         if plugin_name in self.__plugins:
             assert plugin_name not in self.__disabledPlugins
-            # pop() works strange here, and do not use __delitem__ method.
-            # So we destroy plugin directly
             self.__disabledPlugins[plugin_name] = self.__plugins.pop(plugin_name)
-            self.__disabledPlugins[plugin_name].destroy()
 
     def enable(self, plugin_name):
         """ Enable plugin_name """
