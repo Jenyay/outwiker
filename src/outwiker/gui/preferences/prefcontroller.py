@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 import wx
+import logging
 
 from outwiker.actions.openhelp import OpenHelpAction, OpenHelpParams
 from outwiker.core.event import (EVENT_PRIORITY_MAX_CORE,
@@ -22,6 +23,9 @@ from .wikieditorpanel import WikiEditorPanel
 from .iconsetpanel import IconsetPanel
 from .tagspanel import TagsPanel
 from .attachpanel import AttachPanel
+
+
+logger = logging.getLogger('prefcontroller')
 
 
 class PrefController (object):
@@ -99,12 +103,7 @@ class PrefController (object):
         """
         self.__unbindFromDialog()
         self._dialog.EndModal(wx.ID_OK)
-
-        #self._dialog.treeBook.DeleteAllPages()
-        for pageIndex in range(self._dialog.treeBook.GetPageCount()):
-            page = self._dialog.treeBook.GetPage(pageIndex)
-
-
+        self._dialog.treeBook.Destroy()
         self._dialog.Destroy()
 
     def __onHelp(self, event):

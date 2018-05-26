@@ -9,6 +9,7 @@ from outwiker.gui.guiconfig import PluginsConfig
 from outwiker.core.system import getCurrentDir, getOS
 from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
 
+
 logger = logging.getLogger('pluginspanel')
 
 
@@ -17,16 +18,12 @@ class PluginsPanel (BasePrefPanel):
     Панель со списком установленных плагинов
     """
     def __init__(self, parent):
-        logger.info("PluginsPanel: Init")
-        super(type(self), self).__init__(parent)
+        super(PluginsPanel, self).__init__(parent)
         self.__htmlMinWidth = 150
 
         self.__createGui()
         self.__controller = PluginsController(self)
         self.SetupScrolling()
-
-    def __exit__(self, exc_type, exc_value, traceback):
-        logger.info("PluginsPanel: Exit")
 
     def __createGui(self):
         self.pluginsList = wx.CheckListBox(self, -1, style=wx.LB_SORT)
