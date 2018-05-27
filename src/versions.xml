@@ -8,6 +8,7 @@
 
 		<changelog>
 			<version number="2.1.0.843" status="dev">
+				<change>Fix errors.</change>
 			</version>
 
 			<version number="2.1.0.842" status="dev" date="May 26, 2018">
@@ -66,6 +67,7 @@
 
 		<changelog>
 			<version number="2.1.0.843" status="dev">
+				<change>Исправление ошибок.</change>
 			</version>
 
 			<version number="2.1.0.842" status="dev" date="26.05.2018">
