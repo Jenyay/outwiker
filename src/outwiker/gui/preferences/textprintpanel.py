@@ -3,15 +3,14 @@
 import wx
 
 from . import configelements
-from outwiker.core.application import Application
 from outwiker.core.config import FontOption
 from outwiker.gui.guiconfig import TextPrintConfig
 from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
 
 
 class TextPrintPanel(BasePrefPanel):
-    def __init__(self, parent):
-        super (type (self), self).__init__ (parent)
+    def __init__(self, parent, application):
+        super(type(self), self).__init__(parent)
 
         self.__createGuiElements()
         self.__set_properties()
@@ -19,17 +18,17 @@ class TextPrintPanel(BasePrefPanel):
 
         self.Bind(wx.EVT_BUTTON, self.onPageOptions, self.pageOptionsBtn)
 
-        self.config = TextPrintConfig (Application.config)
+        self.config = TextPrintConfig(application.config)
         self.LoadState()
         self.SetupScrolling()
 
-
-    def __createGuiElements (self):
-        self.sharedTextLabel = wx.StaticText(self, -1, _("This options for text printing only"), style=wx.ALIGN_CENTRE)
+    def __createGuiElements(self):
+        self.sharedTextLabel = wx.StaticText(self, -1,
+                                             _("This options for text printing only"),
+                                             style=wx.ALIGN_CENTRE)
         self.fontLabel = wx.StaticText(self, -1, _("Font"))
         self.fontPicker = wx.FontPickerCtrl(self, -1)
         self.pageOptionsBtn = wx.Button(self, -1, _("Page Options..."))
-
 
     def __set_properties(self):
         DEFAULT_WIDTH = 400
@@ -38,7 +37,6 @@ class TextPrintPanel(BasePrefPanel):
 
         FONT_LABEL_WIDTH = 200
         self.fontLabel.SetMinSize((FONT_LABEL_WIDTH, -1))
-
 
     def __do_layout(self):
         fontSizer = wx.FlexGridSizer(1, 2, 0, 0)
@@ -55,14 +53,14 @@ class TextPrintPanel(BasePrefPanel):
         self.SetSizer(mainSizer)
 
     def onPageOptions(self, event):
-        pd = wx.PrintData ()
-        psdd = wx.PageSetupDialogData (pd)
+        pd = wx.PrintData()
+        psdd = wx.PageSetupDialogData(pd)
 
-        psdd.SetMarginTopLeft (wx.Point (self.config.marginLeft.value, self.config.marginTop.value))
-        psdd.SetMarginBottomRight (wx.Point (self.config.marginRight.value, self.config.marginBottom.value))
-        psdd.SetPaperId (self.config.paperId.value)
+        psdd.SetMarginTopLeft(wx.Point(self.config.marginLeft.value, self.config.marginTop.value))
+        psdd.SetMarginBottomRight(wx.Point(self.config.marginRight.value, self.config.marginBottom.value))
+        psdd.SetPaperId(self.config.paperId.value)
 
-        dlg = wx.PageSetupDialog (self, psdd)
+        dlg = wx.PageSetupDialog(self, psdd)
 
         if dlg.ShowModal() == wx.ID_OK:
             psdd_new = dlg.GetPageSetupData()
@@ -78,16 +76,14 @@ class TextPrintPanel(BasePrefPanel):
 
             self.config.paperId.value = psdd_new.GetPaperId()
 
-
     def LoadState(self):
         # Обычный шрифт
-        fontOption = FontOption (self.config.fontName,
-                                 self.config.fontSize,
-                                 self.config.fontIsBold,
-                                 self.config.fontIsItalic)
+        fontOption = FontOption(self.config.fontName,
+                                self.config.fontSize,
+                                self.config.fontIsBold,
+                                self.config.fontIsItalic)
 
-        self.font = configelements.FontElement (fontOption, self.fontPicker)
+        self.font = configelements.FontElement(fontOption, self.fontPicker)
 
-
-    def Save (self):
+    def Save(self):
         self.font.save()

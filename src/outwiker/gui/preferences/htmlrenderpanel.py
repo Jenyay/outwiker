@@ -3,7 +3,6 @@
 import wx
 
 from . import configelements
-from outwiker.core.application import Application
 from outwiker.core.config import FontOption
 from outwiker.core.htmlimproverfactory import HtmlImproverFactory
 from outwiker.gui.guiconfig import HtmlRenderConfig
@@ -11,10 +10,12 @@ from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
 
 
 class HtmlRenderPanel(BasePrefPanel):
-    def __init__(self, parent):
+    def __init__(self, parent, application):
         super(type(self), self).__init__(parent)
 
-        self.config = HtmlRenderConfig(Application.config)
+        self._application = application
+
+        self.config = HtmlRenderConfig(self._application.config)
 
         self._createGuiElements()
         self._do_layout()
@@ -94,7 +95,7 @@ class HtmlRenderPanel(BasePrefPanel):
     def _fillHtmlImprovers(self, config):
         self.improverComboBox.Clear()
 
-        factory = HtmlImproverFactory(Application)
+        factory = HtmlImproverFactory(self._application)
         for name in factory.names:
             self.improverComboBox.Append(factory.getDescription(name), name)
 

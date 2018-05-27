@@ -3,16 +3,15 @@
 import wx
 
 from . import configelements
-from outwiker.core.application import Application
 from outwiker.gui.guiconfig import TrayConfig
 from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
 
 
 class TrayPanel(BasePrefPanel):
-    def __init__(self, parent):
+    def __init__(self, parent, application):
         super(TrayPanel, self).__init__(parent)
 
-        self.trayConfig = TrayConfig(Application.config)
+        self.trayConfig = TrayConfig(application.config)
         self.__createTrayGui()
 
         self.__set_properties()

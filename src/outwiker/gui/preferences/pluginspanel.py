@@ -2,19 +2,24 @@
 
 import wx
 import wx.adv
+import logging
 
-from outwiker.core.application import Application
 from outwiker.gui.guiconfig import PluginsConfig
 from outwiker.core.system import getCurrentDir, getOS
 from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
 
+logger = logging.getLogger('pluginspanel')
 
-class PluginsPanel (BasePrefPanel):
+
+class PluginsPanel(BasePrefPanel):
     """
     Панель со списком установленных плагинов
     """
-    def __init__(self, parent):
-        super(type(self), self).__init__(parent)
+
+    def __init__(self, parent, application):
+        super(PluginsPanel, self).__init__(parent)
+        self._application = application
+
         self.__htmlMinWidth = 150
 
         self.__createGui()
@@ -82,10 +87,11 @@ class PluginsPanel (BasePrefPanel):
         self.__controller.save()
 
 
-class PluginsController (object):
+class PluginsController(object):
     """
     Контроллер, отвечающий за работу панели со списком плагинов
     """
+
     def __init__(self, pluginspanel):
         self.__owner = pluginspanel
 
@@ -162,43 +168,38 @@ class PluginsController (object):
         """
         Добавить загруженные плагины в список
         """
-        for plugin in Application.plugins:
-            index = self.__owner.pluginsList.Append(plugin.name)
+        enablePlugins = {plugin.name: plugin
+                         for plugin
+                         in self.__owner._application.plugins}
 
-            assert plugin.name not in self.__pluginsItems
-            self.__pluginsItems[plugin.name] = plugin
+        self.__owner.pluginsList.Append(list(enablePlugins))
+        self.__pluginsItems.update(enablePlugins)
 
-            self.__owner.pluginsList.Check(index, True)
+        self.__owner.pluginsList.SetCheckedStrings(list(enablePlugins))
 
     def __appendDisabledPlugins(self):
         """
         Добавить отключенные плагины в список
         """
-        for plugin in Application.plugins.disabledPlugins.values():
-            index = self.__owner.pluginsList.Append(plugin.name)
-
-            assert plugin.name not in self.__pluginsItems
-            self.__pluginsItems[plugin.name] = plugin
-
-            self.__owner.pluginsList.Check(index, False)
+        self.__owner.pluginsList.Append(list(self.__owner._application.plugins.disabledPlugins))
+        self.__pluginsItems.update(self.__owner._application.plugins.disabledPlugins)
 
     def __appendInvalidPlugins(self):
-        for plugin in Application.plugins.invalidPlugins:
-            index = self.__owner.pluginsList.Append(plugin.name)
-
-            self.__pluginsItems[plugin.name] = plugin
-            self.__owner.pluginsList.Check(index, False)
+        self.__owner.pluginsList.Append(list(self.__owner._application.plugins.invalidPlugins))
+        self.__pluginsItems.update(self.__owner._application.plugins.invalidPlugins)
 
     def save(self):
-        config = PluginsConfig(Application.config)
+        config = PluginsConfig(self.__owner._application.config)
         config.disabledPlugins.value = self.__getDisabledPlugins()
-        Application.plugins.updateDisableList()
+
+        # enable/disable plugins state
+        self.__owner._application.plugins.updateDisableList()
 
     def __getDisabledPlugins(self):
-        disabledList = []
-
-        for itemindex in range(self.__owner.pluginsList.GetCount()):
-            if not self.__owner.pluginsList.IsChecked(itemindex):
-                disabledList.append(self.__pluginsItems[self.__owner.pluginsList.GetString(itemindex)].name)
+        """
+        Return list of unchecked plugins
+        """
+        checked = self.__owner.pluginsList.GetCheckedStrings()
+        disabledList = list(set(self.__pluginsItems) - set(checked))
 
         return disabledList

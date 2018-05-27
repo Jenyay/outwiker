@@ -2,17 +2,16 @@
 
 import wx
 
-from outwiker.core.application import Application
 from outwiker.gui.editorstyleslist import EditorStylesList
 from outwiker.gui.guiconfig import HtmlEditorStylesConfig
 from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
 
 
 class HtmlEditorPanel(BasePrefPanel):
-    def __init__(self, parent):
+    def __init__(self, parent, application):
         super(type(self), self).__init__(parent)
 
-        self._config = HtmlEditorStylesConfig(Application.config)
+        self._config = HtmlEditorStylesConfig(application.config)
 
         self.__createGui()
         self.__layout()

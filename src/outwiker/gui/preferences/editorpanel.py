@@ -3,7 +3,6 @@
 import wx
 
 from . import configelements
-from outwiker.core.application import Application
 from outwiker.gui.guiconfig import EditorConfig
 from outwiker.gui.stcstyle import StcStyle
 from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
@@ -14,13 +13,13 @@ class EditorPanel(BasePrefPanel):
     """
     Панель с настройками, связанными с редактором
     """
-    def __init__(self, parent):
+    def __init__(self, parent, application):
         super(type(self), self).__init__(parent)
 
         self.MIN_TAB_WIDTH = 1
         self.MAX_TAB_WIDTH = 50
 
-        self.__config = EditorConfig(Application.config)
+        self.__config = EditorConfig(application.config)
         self.__createGuiElements(self.__config)
         self.__do_layout()
         self.LoadState()
