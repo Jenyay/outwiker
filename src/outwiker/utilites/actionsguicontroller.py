@@ -127,6 +127,7 @@ class ActionsGUIController(object):
 
         if self._isRequestedPageType(self._application.selectedPage):
             self._removeTools()
+            self._application.onPageModeChange -= self._onTabChanged
 
         self._removeActions()
 

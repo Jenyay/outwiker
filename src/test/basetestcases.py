@@ -22,6 +22,8 @@ from outwiker.pages.html.htmlpage import HtmlPageFactory
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.pages.search.searchpage import SearchPageFactory
 
+from outwiker.pages.html.actions.switchcoderesult import SwitchCodeResultAction
+
 
 NullTranslations().install()
 
@@ -185,3 +187,37 @@ class PluginLoadingMixin(BaseOutWikerGUIMixin, metaclass=ABCMeta):
         self.application.wikiroot = self.wikiroot
         self.application.selectedPage = self.wikiroot["Search"]
         self.loader.clear()
+
+    def testDestroy_07(self):
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = self.wikiroot["Викистраница"]
+        self.loader.disable(self.getPluginName())
+
+        action = self.application.actionController.getAction(SwitchCodeResultAction.stringId)
+        action.run(None)
+        self.loader.clear()
+
+    def testDestroy_08(self):
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = self.wikiroot["HTML"]
+        self.loader.disable(self.getPluginName())
+
+        action = self.application.actionController.getAction(SwitchCodeResultAction.stringId)
+        action.run(None)
+        self.loader.clear()
+
+    def testDestroy_09(self):
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = self.wikiroot["Викистраница"]
+        self.loader.clear()
+
+        action = self.application.actionController.getAction(SwitchCodeResultAction.stringId)
+        action.run(None)
+
+    def testDestroy_10(self):
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = self.wikiroot["HTML"]
+        self.loader.clear()
+
+        action = self.application.actionController.getAction(SwitchCodeResultAction.stringId)
+        action.run(None)
