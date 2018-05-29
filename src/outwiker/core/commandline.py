@@ -41,7 +41,7 @@ class CommandLine(object):
     def _createParser(self):
         parser = _SilentParser(prog='outwiker',
                                description=self._description,
-                               epilog="(c) Eugeniy Ilin (aka Jenyay), 2014. Released under the GNU GPL 3.",
+                               epilog="(c) Eugeniy Ilin (aka Jenyay), 2010-2018. Released under the GNU GPL 3.",
                                add_help=False)
 
         parser.add_argument('wikipath',
