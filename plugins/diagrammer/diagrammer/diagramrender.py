@@ -12,7 +12,7 @@ class DiagramRender(object):
     shapes = []
 
     def __init__(self):
-        self._fontDefault = u"Ubuntu-R.ttf"
+        self._fontDefault = u"mplus-2p-regular.ttf"
 
     @classmethod
     def _initPackage(cls, packagename, modulename):
