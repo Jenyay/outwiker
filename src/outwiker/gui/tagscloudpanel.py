@@ -21,7 +21,7 @@ class TagsCloudPanel(wx.Panel):
         self.__controller = TagsPanelController(self, application)
 
     def showPopup(self, pages):
-        pageListPopup = PageListPopup(self.__application.mainWindow)
+        pageListPopup = PageListPopup(self, self.__application.mainWindow)
         pageListPopup.SetSize((self.__popupWidth, self.__popupHeight))
         pageListPopup.setPageList(pages)
         pageListPopup.Popup()
