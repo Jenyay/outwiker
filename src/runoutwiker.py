@@ -3,7 +3,6 @@
 
 import logging
 import os
-import sys
 
 from outwiker.core.application import Application
 from outwiker.core.system import getOS, getConfigPath
@@ -35,18 +34,18 @@ if __name__ == "__main__":
 
     locale = initLocale(outwiker.application.config)
     outwiker.initMainWindow()
-
     outwiker.loadPlugins()
+
+    starter = Starter(application)
     try:
-        starter = Starter(application)
         starter.processConsole()
     except StarterExit:
-        sys.exit()
+        outwiker.destroyMainWindow()
+    else:
+        logger.debug('Run GUI mode')
+        outwiker.showMainWindow()
+        outwiker.bindActivateApp()
+        starter.processGUI()
+        outwiker.MainLoop()
 
-    outwiker.showMainWindow()
-    outwiker.bindActivateApp()
-
-    starter.processGUI()
-
-    outwiker.MainLoop()
     logger.debug('Exit')
