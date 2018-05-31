@@ -17,15 +17,7 @@ def getTagsString(tags):
     """
     Получить строку тегов
     """
-    result = u""
-    count = len(tags)
-
-    for n in range(count):
-        result += tags[n]
-        if n != count - 1:
-            result += ", "
-
-    return result
+    return ", ".join(tags)
 
 
 def removeTag(page, tag):
