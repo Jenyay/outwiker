@@ -1,24 +1,19 @@
 [[source]]
-
 url = "https://pypi.org/simple"
 verify_ssl = true
 name = "pypi"
 
-
 [requires]
 
-
 [packages]
-
 wxPython = "==4.0.1"
 Pillow = "==5.1.0"
 pyenchant = "==2.0.0"
 comtypes = {version = "==1.1.4", sys_platform = "== 'win32'"}
 
-
 [dev-packages]
-
-Fabric3 = "==1.14.post1"
+Fabric3 = "*"
 PyInstaller = "==3.3.1"
 pympler = "==0.5"
-pytest = "==3.5.1"
+pytest = "*"
+coverage = "*"

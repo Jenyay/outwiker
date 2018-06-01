@@ -1,0 +1,21 @@
+[paths]
+source =
+    .
+    ../plugins
+
+[report]
+omit =
+    outwiker/libs/*
+    ../test/*
+	../plugins/datagraph/datagraph/libs/*
+    ../plugins/diagrammer/diagrammer/libs/*
+	../plugins/snippets/snippets/libs/*
+    ../plugins/testlatexpage/testlatexpage/libs/*
+    ../plugins/updatenotifier/updatenotifier/libs/*
+	../plugins/webpage/webpage/libs/*
+precision = 2
+skip_covered = True
+show_missing = True
+
+[html]
+directory = ../tmp/htmlcov

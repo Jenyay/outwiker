@@ -287,9 +287,11 @@ def test(*args):
     '''
     Run the unit tests
     '''
+    command = getPython() if args else 'coverage run --rcfile="../.coveragerc"'
+
     with lcd('src'):
-        local('{python} runtests.py {args}'.format(
-            python=getPython(), args=' '.join(args)))
+        local('{command} runtests.py {args}'.format(
+            command=command, args=' '.join(args)))
 
     if len(args) == 0:
         test_build()
@@ -713,3 +715,9 @@ def vm_linux_binary(is_stable=0):
 def appimage(is_stable=0):
     builder = BuilderAppImage(is_stable=tobool(is_stable))
     builder.build()
+
+
+@task
+def coverage():
+    with lcd('src'):
+        local('coverage html --rcfile="../.coveragerc" -i')

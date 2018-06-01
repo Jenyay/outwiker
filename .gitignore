@@ -37,7 +37,6 @@ _build
 doxydoc
 profiles/*.profile
 test/*.profile
-.coverage
 htmlcov
 src/tests.log
 src/plugins/*
