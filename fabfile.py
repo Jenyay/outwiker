@@ -45,6 +45,7 @@ from buildtools.defines import (
     VM_BUILD_PARAMS,
     LINUX_BUILD_DIR,
     WINDOWS_BUILD_DIR,
+    COVERAGE_PARAMS,
 )
 from buildtools.versions import (getOutwikerVersion,
                                  getOutwikerVersionStr,
@@ -287,7 +288,7 @@ def test(*args):
     '''
     Run the unit tests
     '''
-    command = getPython() if args else 'coverage run --rcfile="../.coveragerc"'
+    command = getPython() if args else 'coverage run {}'.format(COVERAGE_PARAMS)
 
     with lcd('src'):
         local('{command} runtests.py {args}'.format(
@@ -720,4 +721,4 @@ def appimage(is_stable=0):
 @task
 def coverage():
     with lcd('src'):
-        local('coverage html --rcfile="../.coveragerc" -i')
+        local('coverage html {} -i'.format(COVERAGE_PARAMS))

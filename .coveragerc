@@ -7,15 +7,18 @@ source =
 omit =
     outwiker/libs/*
     ../test/*
-	../plugins/datagraph/datagraph/libs/*
+    ../plugins/datagraph/datagraph/libs/*
     ../plugins/diagrammer/diagrammer/libs/*
-	../plugins/snippets/snippets/libs/*
+    ../plugins/snippets/snippets/libs/*
     ../plugins/testlatexpage/testlatexpage/libs/*
     ../plugins/updatenotifier/updatenotifier/libs/*
-	../plugins/webpage/webpage/libs/*
+    ../plugins/webpage/webpage/libs/*
+    */.local/*
 precision = 2
 skip_covered = True
 show_missing = True
+sort = Cover
 
 [html]
-directory = ../tmp/htmlcov
+directory = ../build/htmlcov
+title = OutWiker coverage report

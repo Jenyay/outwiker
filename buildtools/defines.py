@@ -47,6 +47,7 @@ PLUGINS_DIR = u'plugins'
 PLUGIN_VERSIONS_FILENAME = u'plugin.xml'
 OUTWIKER_VERSIONS_FILENAME = u'versions.xml'
 NEED_FOR_BUILD_DIR = u'need_for_build'
+COVERAGE_PARAMS = '--rcfile="../.coveragerc"'
 
 FILES_FOR_UPLOAD_UNSTABLE_WIN = [
     u'outwiker_win_unstable.exe',
