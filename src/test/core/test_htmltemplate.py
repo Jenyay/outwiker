@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os.path
+from unittest import TestCase
 
 from outwiker.core.htmltemplate import HtmlTemplate
 from outwiker.core.system import getTemplatesDir
@@ -10,7 +11,7 @@ from outwiker.utilites.textfile import readTextFile
 from test.basetestcases import BaseOutWikerMixin
 
 
-class HtmlTemplateTest(BaseOutWikerMixin):
+class HtmlTemplateTest(BaseOutWikerMixin, TestCase):
     def setUp(self):
         self.initApplication()
         self.config = HtmlRenderConfig(self.application.config)
