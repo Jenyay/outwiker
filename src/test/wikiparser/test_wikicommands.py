@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from tempfile import mkdtemp
+from unittest import TestCase
 
 from outwiker.core.tree import WikiDocument
 from outwiker.pages.wiki.wikipage import WikiPageFactory
@@ -10,10 +11,9 @@ from test.utils import removeDir
 from test.basetestcases import BaseOutWikerMixin
 
 
-class WikiCommandsTest (BaseOutWikerMixin):
+class WikiCommandsTest (BaseOutWikerMixin, TestCase):
     def setUp(self):
         self.initApplication()
-        self.encoding = "utf8"
 
         self.filesPath = "../test/samplefiles/"
         self.__createWiki()

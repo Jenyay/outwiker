@@ -3,6 +3,7 @@
 import os
 import os.path
 from tempfile import mkdtemp
+from unittest import TestCase
 
 from outwiker.core.tree import WikiDocument
 from outwiker.core.attachment import Attachment
@@ -13,7 +14,7 @@ from test.utils import removeDir
 from test.basetestcases import BaseOutWikerMixin
 
 
-class ParserThumbTest (BaseOutWikerMixin):
+class ParserThumbTest (BaseOutWikerMixin, TestCase):
     def setUp(self):
         self.initApplication()
         self.encoding = "utf8"

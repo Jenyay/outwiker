@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 """
 Тесты, связанные с конфигом
 """
@@ -11,14 +11,14 @@ import shutil
 import datetime
 import tempfile
 
-from outwiker.core.config import(Config,
-                                 StringOption,
-                                 IntegerOption,
-                                 DateTimeOption,
-                                 BooleanOption,
-                                 ListOption,
-                                 StringListSection,
-                                 StcStyleOption)
+from outwiker.core.config import (Config,
+                                  StringOption,
+                                  IntegerOption,
+                                  DateTimeOption,
+                                  BooleanOption,
+                                  ListOption,
+                                  StringListSection,
+                                  StcStyleOption)
 from outwiker.core.system import getCurrentDir, getConfigPath, getOS
 from outwiker.gui.guiconfig import TrayConfig, EditorConfig
 from outwiker.gui.stcstyle import StcStyle
@@ -31,12 +31,8 @@ class ConfigTest(unittest.TestCase):
         self.tempdir = tempfile.mkdtemp()
         self.path = os.path.join(self.tempdir, "testconfig.ini")
 
-        if os.path.exists(self.path):
-            os.remove(self.path)
-
     def tearDown(self):
         removeDir(self.tempdir)
-
 
     def testGetSet(self):
         config = Config(self.path)
@@ -46,7 +42,6 @@ class ConfigTest(unittest.TestCase):
         self.assertEqual(config.get("Секция 1", "Параметр 1"),
                          "Значение 1")
         self.assertEqual(config.getint("Секция 1", "Параметр 2"), 111)
-
 
     def testWrite(self):
         """
@@ -61,7 +56,6 @@ class ConfigTest(unittest.TestCase):
                          "Значение 1")
         self.assertEqual(config2.getint("Секция 1", "Параметр 2"), 111)
 
-
     def testRemoveSection(self):
         config = Config(self.path)
         config.set("Секция 1", "Параметр 1", "Значение 1")
@@ -75,7 +69,6 @@ class ConfigTest(unittest.TestCase):
                           "Секция 1",
                           "Параметр 1")
 
-
     def testHasSection(self):
         config = Config(self.path)
         config.set("Секция 1", "Параметр 1", "Значение 1")
@@ -85,7 +78,6 @@ class ConfigTest(unittest.TestCase):
 
         config.remove_section("Секция 1")
         self.assertEqual(config.has_section("Секция 1"), False)
-
 
     def testPortableConfig(self):
         """
@@ -108,7 +100,6 @@ class ConfigTest(unittest.TestCase):
 
         # Удалим созданный файл
         os.remove(localPath)
-
 
     def testNotPortableConfig1(self):
         """
@@ -142,7 +133,6 @@ class ConfigTest(unittest.TestCase):
         if os.path.exists(homeDir):
             shutil.rmtree(homeDir)
 
-
     def testInvalidConfigFile(self):
         invalid_fname = "outwiker_invalid.ini"
         src_invalid_full_path = os.path.join("../test",
@@ -156,7 +146,6 @@ class ConfigTest(unittest.TestCase):
         Config(fullpath)
         self.assertTrue(os.path.exists(fullpath))
         self.assertTrue(os.path.exists(fullpath + ".bak"))
-
 
 
 class ConfigOptionsTest(unittest.TestCase):
@@ -192,21 +181,17 @@ class ConfigOptionsTest(unittest.TestCase):
 
         self.config = Config(self.path)
 
-
     def tearDown(self):
         os.remove(self.path)
-
 
     # Строковые опции
     def testStringOpt1(self):
         opt = StringOption(self.config, "Test", "strval", "defaultval")
         self.assertEqual(opt.value, "тест")
 
-
     def testStringOpt2(self):
         opt = StringOption(self.config, "Test", "strval2", "defaultval")
         self.assertEqual(opt.value, "defaultval")
-
 
     def testStringOpt3(self):
         opt = StringOption(self.config, "Test", "strval3", "defaultval")
@@ -217,7 +202,6 @@ class ConfigOptionsTest(unittest.TestCase):
 
         self.assertEqual(newopt.value, "проверка")
 
-
     def testStringOpt4(self):
         opt = StringOption(self.config, "Test", "strval3", "defaultval")
         newopt = StringOption(self.config, "Test", "strval3", "defaultval")
@@ -226,17 +210,14 @@ class ConfigOptionsTest(unittest.TestCase):
 
         self.assertEqual(newopt.value, "проверка")
 
-
     # Целочисленные опции
     def testIntOpt1(self):
         opt = IntegerOption(self.config, "Test", "intval", 777)
         self.assertEqual(opt.value, 100)
 
-
     def testIntOpt2(self):
         opt = IntegerOption(self.config, "Test", "intval2", 777)
         self.assertEqual(opt.value, 777)
-
 
     def testIntOpt3(self):
         opt = IntegerOption(self.config, "Test", "intval3", 777)
@@ -247,7 +228,6 @@ class ConfigOptionsTest(unittest.TestCase):
 
         self.assertEqual(newopt.value, 666)
 
-
     def testIntOpt4(self):
         opt = IntegerOption(self.config, "Test", "intval3", 777)
         newopt = IntegerOption(self.config, "Test", "intval3", 888)
@@ -255,7 +235,6 @@ class ConfigOptionsTest(unittest.TestCase):
         opt.value = 666
 
         self.assertEqual(newopt.value, 666)
-
 
     # Опции для хранения даты/времени
     def testDateTimeOpt1(self):
@@ -267,14 +246,12 @@ class ConfigOptionsTest(unittest.TestCase):
                               strdatetime,
                               DateTimeOption.formatDate))
 
-
     def testDateTimeOpt2(self):
         opt = DateTimeOption(self.config,
                              "Test",
                              "datetimeval_invalid",
                              None)
         self.assertEqual(opt.value, None)
-
 
     def testDateTimeOpt3(self):
         defaultValue = datetime.datetime(2012, 8, 25)
@@ -284,7 +261,6 @@ class ConfigOptionsTest(unittest.TestCase):
                              "datetimeval_invalid",
                              defaultValue)
         self.assertEqual(opt.value, defaultValue)
-
 
     def testDateTimeOpt4(self):
         newdate = datetime.datetime(2012, 8, 25)
@@ -296,7 +272,6 @@ class ConfigOptionsTest(unittest.TestCase):
 
         self.assertEqual(newopt.value, newdate)
 
-
     def testDateTimeOpt5(self):
         defaultValue = datetime.datetime(2012, 8, 25)
 
@@ -306,17 +281,14 @@ class ConfigOptionsTest(unittest.TestCase):
                              defaultValue)
         self.assertEqual(opt.value, defaultValue)
 
-
     # Булевы опции
     def testBoolOpt1(self):
         opt = BooleanOption(self.config, "Test", "Boolval", False)
         self.assertEqual(opt.value, True)
 
-
     def testBoolOpt2(self):
         opt = BooleanOption(self.config, "Test", "Boolval2", False)
         self.assertEqual(opt.value, False)
-
 
     def testBoolOpt3(self):
         opt = BooleanOption(self.config, "Test", "Boolval3", False)
@@ -327,7 +299,6 @@ class ConfigOptionsTest(unittest.TestCase):
 
         self.assertEqual(newopt.value, True)
 
-
     def testBoolOpt4(self):
         opt = BooleanOption(self.config, "Test", "Boolval3", False)
         newopt = BooleanOption(self.config, "Test", "Boolval3", False)
@@ -336,41 +307,33 @@ class ConfigOptionsTest(unittest.TestCase):
 
         self.assertEqual(newopt.value, True)
 
-
     def testBoolOpt5(self):
         self.config.set('Test', 'Boolval', True)
         self.assertEqual(self.config.getbool('Test', 'Boolval'), True)
-
 
     def testBoolOpt6(self):
         self.config.set('Test', 'Boolval', False)
         self.assertEqual(self.config.getbool('Test', 'Boolval'), False)
 
-
     def testBoolOpt7(self):
         self.config.set('Test', 'Boolval', 'True')
         self.assertEqual(self.config.getbool('Test', 'Boolval'), True)
-
 
     def testBoolOpt8(self):
         self.config.set('Test', 'Boolval', 'False')
         self.assertEqual(self.config.getbool('Test', 'Boolval'), False)
 
-
     def testBoolOpt9(self):
         self.config.set('Test', 'Boolval', '   True   ')
         self.assertEqual(self.config.getbool('Test', 'Boolval'), True)
-
 
     def testBoolOpt10(self):
         self.config.set('Test', 'Boolval', '   False   ')
         self.assertEqual(self.config.getbool('Test', 'Boolval'), False)
 
-
     def testBoolOpt11(self):
         self.config.set('Test', 'Boolval', '   sdfasgfadsf   ')
         self.assertEqual(self.config.getbool('Test', 'Boolval'), False)
-
 
     def testRemoveOption1(self):
         opt = StringOption(self.config,
@@ -381,7 +344,6 @@ class ConfigOptionsTest(unittest.TestCase):
 
         opt.remove_option()
         self.assertEqual(opt.value, "Значение по умолчанию")
-
 
     def testRemoveOption2(self):
         opt = StringOption(self.config,
@@ -396,14 +358,12 @@ class ConfigOptionsTest(unittest.TestCase):
                             "Значение по умолчанию")
         self.assertEqual(opt2.value, "Значение по умолчанию")
 
-
     def testRemoveOption3(self):
         opt = StringOption(self.config,
                            "Test",
                            "invalid",
                            "Значение по умолчанию")
         opt.remove_option()
-
 
     def testListOption1(self):
         opt1 = ListOption(self.config, "Test", "list1", [])
@@ -428,7 +388,6 @@ class ConfigOptionsTest(unittest.TestCase):
         opt7 = ListOption(self.config, "Test", "list7", [])
         self.assertEqual(opt7.value, [])
 
-
     def testListOption2(self):
         opt8 = ListOption(self.config, "Test", "list8", [], separator="|")
         self.assertEqual(opt8.value,
@@ -446,7 +405,6 @@ class ConfigOptionsTest(unittest.TestCase):
         opt12 = ListOption(self.config, "Test", "list12", [], separator="|")
         self.assertEqual(opt12.value, ["элемент 1", ""])
 
-
     def testSaveListOption1(self):
         testlist = ["элемент 1", "элемент 2", "элемент 3"]
 
@@ -462,7 +420,6 @@ class ConfigOptionsTest(unittest.TestCase):
         self.assertEqual(stringopt.value.strip(),
                          "элемент 1;элемент 2;элемент 3")
 
-
     def testSaveListOption2(self):
         testlist = ["элемент 1"]
 
@@ -477,7 +434,6 @@ class ConfigOptionsTest(unittest.TestCase):
         stringopt = StringOption(newconfig, "Test", "savelist", "")
         self.assertEqual(stringopt.value.strip(), "элемент 1")
 
-
     def testSaveListOption3(self):
         testlist = []
 
@@ -491,7 +447,6 @@ class ConfigOptionsTest(unittest.TestCase):
 
         stringopt = StringOption(newconfig, "Test", "savelist", "")
         self.assertEqual(stringopt.value.strip(), "")
-
 
     def testSaveListOption4(self):
         testlist = ["элемент 1", "элемент 2", "элемент 3"]
@@ -508,7 +463,6 @@ class ConfigOptionsTest(unittest.TestCase):
         self.assertEqual(stringopt.value.strip(),
                          "элемент 1|элемент 2|элемент 3")
 
-
     def testSaveListOption5(self):
         testlist = ["элемент 1"]
 
@@ -522,7 +476,6 @@ class ConfigOptionsTest(unittest.TestCase):
 
         stringopt = StringOption(newconfig, "Test", "savelist", "")
         self.assertEqual(stringopt.value.strip(), "элемент 1")
-
 
     def testSaveListOption6(self):
         testlist = []
@@ -538,7 +491,6 @@ class ConfigOptionsTest(unittest.TestCase):
         stringopt = StringOption(newconfig, "Test", "savelist", "")
         self.assertEqual(stringopt.value.strip(), "")
 
-
     def testSaveListOption7(self):
         testlist = [""]
 
@@ -552,7 +504,6 @@ class ConfigOptionsTest(unittest.TestCase):
 
         stringopt = StringOption(newconfig, "Test", "savelist", "")
         self.assertEqual(stringopt.value.strip(), "")
-
 
     def testSaveListOption8(self):
         testlist = [""]
@@ -568,7 +519,6 @@ class ConfigOptionsTest(unittest.TestCase):
         stringopt = StringOption(self.config, "Test", "savelist", "")
         self.assertEqual(stringopt.value.strip(), "")
 
-
     def testSaveListOption9(self):
         testlist = [""]
 
@@ -582,7 +532,6 @@ class ConfigOptionsTest(unittest.TestCase):
 
         stringopt = StringOption(self.config, "Test", "savelist", "")
         self.assertEqual(stringopt.value.strip(), "")
-
 
     def testStringListSection1(self):
         section = "listSection"
@@ -609,7 +558,6 @@ class ConfigOptionsTest(unittest.TestCase):
         self.assertEqual(self.config.get(section, "param_2"), "Строка 2")
         self.config.remove_section(section)
 
-
     def testStringListSection2(self):
         section = "listSection"
         paramname = "param_"
@@ -632,7 +580,6 @@ class ConfigOptionsTest(unittest.TestCase):
         self.assertEqual(opt_other.value[2], "Строка 2")
         self.config.remove_section(section)
 
-
     def testStcStyle_01(self):
         defaultStyle = StcStyle()
 
@@ -642,7 +589,6 @@ class ConfigOptionsTest(unittest.TestCase):
         self.assertEqual(opt.value.bold, True)
         self.assertEqual(opt.value.italic, True)
         self.assertEqual(opt.value.underline, True)
-
 
     def testStcStyle_02(self):
         defaultStyle = StcStyle()
@@ -654,7 +600,6 @@ class ConfigOptionsTest(unittest.TestCase):
         self.assertEqual(opt.value.italic, True)
         self.assertEqual(opt.value.underline, True)
 
-
     def testStcStyle_03(self):
         defaultStyle = StcStyle()
 
@@ -664,7 +609,6 @@ class ConfigOptionsTest(unittest.TestCase):
         self.assertEqual(opt.value.bold, True)
         self.assertEqual(opt.value.italic, False)
         self.assertEqual(opt.value.underline, False)
-
 
     def testStcStyle_invalid_01(self):
         defaultStyle = StcStyle()
@@ -680,7 +624,6 @@ class ConfigOptionsTest(unittest.TestCase):
         self.assertEqual(opt.value.underline, False)
 
 
-
 class TrayConfigTest(unittest.TestCase):
     def setUp(self):
         self.path = "../test/testconfig.ini"
@@ -688,17 +631,14 @@ class TrayConfigTest(unittest.TestCase):
 
         self.trayConfig = TrayConfig(self.config)
 
-
     def tearDown(self):
         if os.path.exists(self.path):
             os.remove(self.path)
-
 
     def testDefault(self):
         self.assertEqual(self.trayConfig.minimizeToTray.value, True)
         self.assertEqual(self.trayConfig.startIconized.value, False)
         self.assertEqual(self.trayConfig.alwaysShowTrayIcon.value, False)
-
 
     def testChange(self):
         newConfig = TrayConfig(self.config)
@@ -713,7 +653,6 @@ class TrayConfigTest(unittest.TestCase):
         self.assertEqual(self.trayConfig.alwaysShowTrayIcon.value, True)
 
 
-
 class EditorConfigTest(unittest.TestCase):
     def setUp(self):
         self.path = "../test/testconfig.ini"
@@ -721,11 +660,9 @@ class EditorConfigTest(unittest.TestCase):
 
         self.editorConfig = EditorConfig(self.config)
 
-
     def tearDown(self):
         if os.path.exists(self.path):
             os.remove(self.path)
-
 
     def testDefault(self):
         self.assertEqual(self.editorConfig.lineNumbers.value, False)
@@ -734,7 +671,6 @@ class EditorConfigTest(unittest.TestCase):
         self.assertEqual(self.editorConfig.fontName.value, "")
         self.assertEqual(self.editorConfig.fontIsBold.value, False)
         self.assertEqual(self.editorConfig.fontIsItalic.value, False)
-
 
     def testChange(self):
         newConfig = EditorConfig(self.config)

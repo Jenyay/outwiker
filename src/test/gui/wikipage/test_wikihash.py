@@ -3,6 +3,7 @@
 import os
 import os.path
 from tempfile import mkdtemp
+from unittest import TestCase
 
 from outwiker.core.tree import WikiDocument
 from outwiker.core.attachment import Attachment
@@ -18,10 +19,9 @@ from test.utils import removeDir
 from test.basetestcases import BaseOutWikerMixin
 
 
-class WikiHashTest (BaseOutWikerMixin):
+class WikiHashTest (BaseOutWikerMixin, TestCase):
     def setUp(self):
         self.initApplication()
-        self.encoding = "866"
 
         self.filesPath = "../test/samplefiles/"
         self.__createWiki()

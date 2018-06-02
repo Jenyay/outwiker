@@ -2,9 +2,6 @@
 
 import os.path
 from tempfile import mkdtemp
-import urllib.request
-import urllib.parse
-import urllib.error
 import unittest
 
 from outwiker.core.application import Application
@@ -101,20 +98,3 @@ class RealTest(unittest.TestCase):
         downloader.start(url, controller)
 
         self.assertTrue(downloader.success)
-
-    def _getTestController(self):
-        from webpage.downloader import BaseDownloadController
-
-        class TestController(BaseDownloadController):
-            def __init__(self):
-                self.files = []
-
-            def process(self, startUrl, url, node):
-                self.files.append((url, node))
-
-        return TestController()
-
-    @staticmethod
-    def _path2url(path):
-        path = os.path.abspath(path)
-        return 'file:' + urllib.request.pathname2url(path)

@@ -3,6 +3,7 @@
 import os
 import os.path
 from tempfile import mkdtemp
+from unittest import TestCase
 
 from outwiker.core.attachment import Attachment
 from outwiker.core.defines import PAGE_RESULT_HTML
@@ -40,7 +41,7 @@ class ExampleHeadWikiCommand(Command):
         return "head"
 
 
-class WikiHtmlGeneratorTest(BaseOutWikerMixin):
+class WikiHtmlGeneratorTest(BaseOutWikerMixin, TestCase):
     def setUp(self):
         self.initApplication()
         self.filesPath = "../test/samplefiles/"

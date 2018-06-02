@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 
+from unittest import TestCase
+
 from outwiker.pages.wiki.linkcreator import LinkCreator
 from outwiker.pages.wiki.wikiconfig import WikiConfig
 from test.basetestcases import BaseOutWikerMixin
 
 
-class WikiLinkCreatorTest(BaseOutWikerMixin):
+class WikiLinkCreatorTest(BaseOutWikerMixin, TestCase):
     def setUp(self):
         self.initApplication()
         self.config = WikiConfig(self.application.config)
