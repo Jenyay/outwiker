@@ -44,7 +44,7 @@ from .defines import MENU_EDIT, TOOLBAR_GENERAL
 class BaseTextPanel(BasePagePanel):
     """
     Базовый класс для представления текстовых страниц и им подобных
-   (где есть текстовый редактор)
+    (где есть текстовый редактор)
     """
     def __init__(self, parent, application):
         super(BaseTextPanel, self).__init__(parent, application)

@@ -15,7 +15,7 @@ class BasePagePanel(wx.Panel):
     Базовый класс для панелей представления страниц
     """
     def __init__(self, parent, application):
-        super(BasePagePanel, self).__init__(parent, style=wx.TAB_TRAVERSAL)
+        super().__init__(parent, style=wx.TAB_TRAVERSAL)
 
         self._currentpage = None
         self._application = application

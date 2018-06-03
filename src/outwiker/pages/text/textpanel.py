@@ -11,52 +11,46 @@ class TextPanel (BaseTextPanel):
     Класс для представления текстовых страниц
     """
 
-    def __init__ (self, parent, application):
-        super (TextPanel, self).__init__ (parent, application)
+    def __init__(self, parent, application):
+        super(TextPanel, self).__init__(parent, application)
 
         self.__createGui()
-        self.Bind (self.EVT_SPELL_ON_OFF, handler=self._onSpellOnOff)
+        self.Bind(self.EVT_SPELL_ON_OFF, handler=self._onSpellOnOff)
 
     def GetEditor(self):
         return self.textEditor
 
-    def Clear (self):
-        self.Unbind (self.EVT_SPELL_ON_OFF, handler=self._onSpellOnOff)
-        super (TextPanel, self).Clear()
+    def Clear(self):
+        self.Unbind(self.EVT_SPELL_ON_OFF, handler=self._onSpellOnOff)
+        super(TextPanel, self).Clear()
 
-
-    def SetCursorPosition (self, position):
+    def SetCursorPosition(self, position):
         """
         Установить курсор в текстовом редакторе в положение position
         """
-        self.textEditor.SetSelection (position, position)
+        self.textEditor.SetSelection(position, position)
         self.textEditor.ScrollLineToCursor()
 
-
-    def GetCursorPosition (self):
+    def GetCursorPosition(self):
         """
         Возвращает положение курсора в текстовом редакторе
         """
         return self.textEditor.GetCurrentPosition()
 
-
-    def Print (self):
+    def Print(self):
         self.textEditor.Print()
 
-
-    def onPreferencesDialogClose (self, prefDialog):
+    def onPreferencesDialogClose(self, prefDialog):
         self.textEditor.setDefaultSettings()
 
-
-    def UpdateView (self, page):
-        self.textEditor.SetText (self._currentpage.content)
+    def UpdateView(self, page):
+        self.textEditor.SetText(self._currentpage.content)
         self.textEditor.EmptyUndoBuffer()
-        self.textEditor.SetReadOnly (page.readonly)
-        self.SetCursorPosition (self._getCursorPositionOption (page).value)
+        self.textEditor.SetReadOnly(page.readonly)
+        self.SetCursorPosition(self._getCursorPositionOption(page).value)
         self.textEditor.SetFocus()
 
-
-    def __createGui (self):
+    def __createGui(self):
         self.textEditor = TextEditor(self)
 
         mainSizer = wx.FlexGridSizer(1, 1, 0, 0)
@@ -66,24 +60,19 @@ class TextPanel (BaseTextPanel):
         mainSizer.AddGrowableRow(0)
         mainSizer.AddGrowableCol(0)
 
-
-    def onAttachmentPaste (self, fnames):
-        text = self._getAttachString (fnames)
-        self.textEditor.AddText (text)
+    def onAttachmentPaste(self, fnames):
+        text = self._getAttachString(fnames)
+        self.textEditor.AddText(text)
         self.textEditor.SetFocus()
 
-
-    def GetContentFromGui (self):
+    def GetContentFromGui(self):
         return self.textEditor.GetText()
 
-
-    def GetSearchPanel (self):
+    def GetSearchPanel(self):
         return self.textEditor.searchPanel
 
-
-    def _isEnabledTool (self, tool):
+    def _isEnabledTool(self, tool):
         return True
 
-
-    def _onSpellOnOff (self, event):
+    def _onSpellOnOff(self, event):
         self.textEditor.setDefaultSettings()

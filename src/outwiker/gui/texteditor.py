@@ -209,7 +209,6 @@ class TextEditor(TextEditorBase):
                                        wx.stc.STC_SCMOD_ALT,
                                        wx.stc.STC_CMD_LINEENDDISPLAY)
 
-
     def __setMarginWidth(self, editor):
         """
         Установить размер левой области, где пишутся номера строк в
@@ -288,7 +287,6 @@ class TextEditor(TextEditorBase):
                                             event.indicatorsbytes)]
 
             stylebytesstr = "".join([chr(byte) for byte in self.__stylebytes])
-
 
             if event.stylebytes is not None:
                 self.textCtrl.StartStyling(startByte,
