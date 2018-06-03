@@ -4,6 +4,7 @@ import logging
 import os
 
 import wx
+import wx.aui
 
 from outwiker.actions.search import (SearchAction,
                                      SearchNextAction,
@@ -44,14 +45,14 @@ class BaseHtmlPanel(BaseTextPanel):
 
         self.imagesDir = getImagesDir()
 
-        self.notebook = wx.Notebook(self, -1, style=wx.NB_BOTTOM)
+        self.notebook = wx.aui.AuiNotebook(self, style=wx.aui.AUI_NB_BOTTOM)
         self._codeEditor = self.getTextEditor()(self.notebook)
 
         self.htmlWindow = getOS().getHtmlRender(self.notebook)
 
         self.__do_layout()
 
-        self.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED,
+        self.Bind(wx.aui.EVT_AUINOTEBOOK_PAGE_CHANGED,
                   self._onTabChanged,
                   self.notebook)
         self.Bind(self.EVT_SPELL_ON_OFF, handler=self._onSpellOnOff)
@@ -76,7 +77,7 @@ class BaseHtmlPanel(BaseTextPanel):
             raise ValueError()
 
     def Clear(self):
-        self.Unbind(wx.EVT_NOTEBOOK_PAGE_CHANGED,
+        self.Unbind(wx.aui.EVT_AUINOTEBOOK_PAGE_CHANGED,
                     source=self.notebook,
                     handler=self._onTabChanged)
         self.Unbind(self.EVT_SPELL_ON_OFF, handler=self._onSpellOnOff)
@@ -167,7 +168,7 @@ class BaseHtmlPanel(BaseTextPanel):
         self.addPage(self.codeEditor, _("HTML"))
         self.addPage(self.htmlWindow, _("Preview"))
 
-        mainSizer = wx.FlexGridSizer(1, 1, 0, 0)
+        mainSizer = wx.FlexGridSizer(cols=1)
         mainSizer.Add(self.notebook, 1, wx.EXPAND, 0)
         mainSizer.AddGrowableRow(0)
         mainSizer.AddGrowableCol(0)
