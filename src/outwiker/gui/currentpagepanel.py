@@ -40,8 +40,6 @@ class CurrentPagePanel(wx.Panel):
 
         self._application.onWikiOpen += self.__onWikiOpen
         self._application.onPageSelect += self.__onPageSelect
-        self._application.onPageRename += self.__onPageRename
-        self._application.onPageUpdate += self.__onPageUpdate
         self._application.onBookmarksChanged += self.__onBookmarksChanged
         self._application.onForceSave += self.__onForceSave
 
@@ -63,17 +61,12 @@ class CurrentPagePanel(wx.Panel):
     def __onClose(self, event):
         self._application.onWikiOpen -= self.__onWikiOpen
         self._application.onPageSelect -= self.__onPageSelect
-        self._application.onPageRename -= self.__onPageRename
-        self._application.onPageUpdate -= self.__onPageUpdate
         self._application.onForceSave -= self.__onForceSave
         self._application.onBookmarksChanged -= self.__onBookmarksChanged
 
         if self.__pageView is not None:
             self.destroyPageView()
         self.Destroy()
-
-    def __onPageRename(self, page, oldsubpath):
-        self.__onPageUpdate(page)
 
     def __onWikiOpen(self, root):
         self.__onPageSelect(root.selectedPage if root is not None else None)
@@ -92,11 +85,6 @@ class CurrentPagePanel(wx.Panel):
         self.__updatePageView(page)
         self.__updatePageInfo(page)
         self.bookmarkButton.Enable(page is not None)
-
-    def __onPageUpdate(self, page, **kwargs):
-        if (self._application.selectedPage is not None and
-                self._application.selectedPage == page):
-            self.__updatePageInfo(page)
 
     def __updateBookmarkBtn(self):
         imagePath = self.grayStarImage
@@ -156,13 +144,7 @@ class CurrentPagePanel(wx.Panel):
         """
         Обновить информацию о странице
         """
-        self.Freeze()
-        try:
-            if page is not None:
-                self.__updateBookmarkBtn()
-            self.Layout()
-        finally:
-            self.Thaw()
+        self.__updateBookmarkBtn()
 
     def __set_properties(self):
         self.bookmarkButton.SetSize(self.bookmarkButton.GetBestSize())

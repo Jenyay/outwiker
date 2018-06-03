@@ -232,7 +232,7 @@ class BaseTextPanel(BasePagePanel):
         """
         Сохранение содержимого страницы
         """
-        if(page is None or page.isRemoved or page.readonly):
+        if page is None or page.isRemoved or page.readonly:
             return
 
         try:
@@ -243,11 +243,12 @@ class BaseTextPanel(BasePagePanel):
                        wx.ICON_ERROR | wx.OK)
             return
 
-        if self.__stringsAreEqual(page.content, self.GetContentFromGui()):
+        newContent = self.GetContentFromGui()
+        if self.__stringsAreEqual(page.content, newContent):
             return
 
         try:
-            page.content = self.GetContentFromGui()
+            page.content = newContent
         except IOError as e:
             # TODO: Проверить под Windows
             MessageBox(_(u"Can't save file %s") % (str(e.filename)),

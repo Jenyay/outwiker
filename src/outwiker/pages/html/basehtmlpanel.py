@@ -182,7 +182,7 @@ class BaseHtmlPanel(BaseTextPanel):
     def _getDefaultPage(self):
         assert self._currentpage is not None
 
-        if(len(self._currentpage.content) > 0 or
+        if (len(self._currentpage.content) > 0 or
                 len(Attachment(self._currentpage).attachmentFull) > 0):
             return self.RESULT_PAGE_INDEX
 
