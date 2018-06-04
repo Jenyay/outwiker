@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import traceback
 
@@ -24,7 +24,6 @@ from .tokenquote import QuoteFactory
 
 from ..thumbnails import Thumbnails
 from outwiker.libs.pyparsing import NoMatch
-from outwiker.core.system import getOS
 
 
 class Parser(object):
