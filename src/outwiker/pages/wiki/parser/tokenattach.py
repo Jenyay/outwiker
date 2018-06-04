@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os.path
 from abc import ABCMeta, abstractmethod
@@ -12,64 +12,62 @@ from .utils import concatenate, isImage
 
 class AttachFactory (object):
     @staticmethod
-    def make (parser):
-        return AttachAllToken (parser).getToken()
+    def make(parser):
+        return AttachAllToken(parser).getToken()
 
 
 class AttachImagesFactory (object):
     @staticmethod
-    def make (parser):
-        return AttachImagesToken (parser).getToken()
+    def make(parser):
+        return AttachImagesToken(parser).getToken()
 
 
 class AttachToken (object, metaclass=ABCMeta):
     attachString = u"Attach:"
 
-    def __init__ (self, parser):
+    def __init__(self, parser):
         self.parser = parser
 
-
-    def getToken (self):
+    def getToken(self):
         """
         Создать элементы из прикрепленных файлов.
         Отдельно картинки, отдельно все файлы
         """
         attachesAll = []
 
-        attaches = Attachment (self.parser.page).attachmentFull
-        attaches.sort (key=len, reverse=True)
+        attaches = Attachment(self.parser.page).attachmentFull
+        attaches.sort(key=len, reverse=True)
 
         for attach in attaches:
-            fname = os.path.basename (attach)
-            if self.filterFile (fname):
-                attach = Literal (fname)
-                attachesAll.append (attach)
+            fname = os.path.basename(attach)
+            if self.filterFile(fname):
+                attach = Literal(fname)
+                attachesAll.append(attach)
 
-        finalToken = Literal (self.attachString) + concatenate (attachesAll)
-        finalToken = finalToken.setParseAction (self.convertToLink)("attach")
+        finalToken = Literal(self.attachString) + concatenate(attachesAll)
+        finalToken = finalToken.setParseAction(self.convertToLink)("attach")
         return finalToken
 
-
-    def convertToLink (self, s, l, t):
+    def convertToLink(self, s, l, t):
         fname = t[1]
 
-        if isImage (fname):
+        if isImage(fname):
             return '<img src="%s/%s"/>' % (PAGE_ATTACH_DIR, fname)
         else:
             return '<a href="%s/%s">%s</a>' % (PAGE_ATTACH_DIR, fname, fname)
 
     @abstractmethod
-    def filterFile (self, fname):
+    def filterFile(self, fname):
         """
         Должен возвращать True, если файл подходит для токена и False в противном случае
         """
 
 
 class AttachAllToken (AttachToken):
-    def filterFile (self, fname):
+    def filterFile(self, fname):
         return True
 
 
 class AttachImagesToken (AttachToken):
-    def filterFile (self, fname):
-        return isImage (fname)
+    def filterFile(self, fname):
+        return isImage(fname)

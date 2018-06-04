@@ -1,13 +1,11 @@
-# -*- coding: UTF-8 -*-
-
-import re
+# -*- coding: utf-8 -*-
 
 from outwiker.libs.pyparsing import Regex, OneOrMore, Optional, LineEnd, LineStart
 
 
 class TableFactory (object):
     @staticmethod
-    def make (parser):
+    def make(parser):
         return TableToken(parser).getToken()
 
 
@@ -15,24 +13,24 @@ class TableToken (object):
     """
     Токен для таблиц
     """
-    def __init__ (self, parser):
+
+    def __init__(self, parser):
         self.parser = parser
 
-
-    def getToken (self):
-        tableCell = Regex (r"(?P<text>(.|(\\\n))*?)(\\\n\s*)*\|\|")
+    def getToken(self):
+        tableCell = Regex(r"(?P<text>(.|(\\\n))*?)(\\\n\s*)*\|\|")
         tableCell.setParseAction(self.__convertTableCell)
 
-        tableRow = LineStart() + "||" + OneOrMore (tableCell) + Optional (LineEnd())
+        tableRow = LineStart() + "||" + OneOrMore(tableCell) + Optional(LineEnd())
         tableRow.setParseAction(self.__convertTableRow)
 
-        table = LineStart() + Regex (r"\|\| *(?P<params>.+)?") + LineEnd() + OneOrMore (tableRow)
+        table = LineStart() + Regex(r"\|\| *(?P<params>.+)?") + \
+            LineEnd() + OneOrMore(tableRow)
         table = table.setParseAction(self.__convertTable)("table")
 
         return table
 
-
-    def __convertTableCell (self, s, loc, toks):
+    def __convertTableCell(self, s, loc, toks):
         text = toks["text"]
 
         leftAlign = toks["text"][-1] in " \t"
@@ -50,16 +48,16 @@ class TableToken (object):
         elif rightAlign:
             align = u' align="right"'
 
-        result = u'<td%s>%s</td>' % (align, self.parser.parseWikiMarkup (text.strip()))
+        result = u'<td%s>%s</td>' % (align,
+                                     self.parser.parseWikiMarkup(text.strip()))
 
         return result
 
-
-    def __convertTableRow (self, s, l, t):
+    def __convertTableRow(self, s, l, t):
         if t[-1] == "\n":
-            lastindex = len (t) - 1
+            lastindex = len(t) - 1
         else:
-            lastindex = len (t)
+            lastindex = len(t)
 
         result = u"<tr>"
         for element in t[1: lastindex]:
@@ -69,8 +67,7 @@ class TableToken (object):
 
         return result
 
-
-    def __convertTable (self, s, l, t):
+    def __convertTable(self, s, l, t):
         result = u"<table %s>" % t[0][2:].strip()
         for element in t[2:]:
             result += element

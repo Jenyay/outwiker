@@ -219,12 +219,8 @@ class Parser(object):
         self._headingMarkup = None
         self._textLevelMarkup = None
 
-    def _createMarkup(self, tokensList):
-        markup = NoMatch()
-        for token in tokensList:
-            markup |= token
-
-        return markup
+    def _createMarkup(self, tokens_list):
+        return Markup(tokens_list)
 
     @property
     def head(self):
@@ -334,3 +330,13 @@ class Parser(object):
     def removeCommand(self, commandName):
         if commandName in self.commands:
             del self.commands[commandName]
+
+
+class Markup(object):
+    def __init__(self, tokens_list):
+        self._markup = NoMatch()
+        for token in tokens_list:
+            self._markup |= token
+
+    def transformString(self, text):
+        return self._markup.transformString(text)

@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import re
 
@@ -158,7 +158,6 @@ class StrikeToken(TextBlockToken):
                             convertWhitespaceEscapes=False).setParseAction(self.convertToHTML("<strike>", "</strike>"))("strike")
 
 
-
 class ItalicToken(TextBlockToken):
     """
     Токен для курсива
@@ -209,7 +208,6 @@ class SmallFontToken(TextBlockToken):
         return Regex(r"\[(?P<count>-{1,4})(?P<text>.*?)\1\]",
                      re.MULTILINE | re.DOTALL).setParseAction(self.__parse)("small")
 
-
     def __parse(self, s, l, t):
         # Расчет масштаба в зависимости от количества минусов
         size = 100 - len(t["count"]) * 20
@@ -224,7 +222,6 @@ class BigFontToken(TextBlockToken):
     def getToken(self):
         return Regex(r"\[(?P<count>\+{1,5})(?P<text>.*?)\1\]",
                      re.MULTILINE | re.DOTALL).setParseAction(self.__parse)("big")
-
 
     def __parse(self, s, l, t):
         # Расчет масштаба в зависимости от количества минусов
