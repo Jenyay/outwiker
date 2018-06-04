@@ -15,6 +15,7 @@ class Controller(object):
     """
     Класс отвечает за основную работу интерфейса плагина
     """
+
     def __init__(self, plugin, application):
         """
         """
