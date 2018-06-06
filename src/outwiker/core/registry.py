@@ -13,32 +13,28 @@ class Registry(object):
         '''
         self._items = items_dict
 
-    def has_section(self, section):
+    def has_section(self, *args):
         '''
-        section - string like '/section/subsection/.../subsection' or
-            '/section' or 'section'
+        *args - string list with path to section
         '''
-        if section.startswith('/'):
-            section = section[1:]
+        if not args:
+            raise KeyError
 
         try:
-            item = self._get_item(section.split('/'),
-                                  self._items)
+            item = self._get_item(args, self._items)
             return self._is_section(item)
         except KeyError:
             return False
 
-    def has_option(self, option):
+    def has_option(self, *args):
         '''
-        option - string like '/section/subsection/.../option' or 'option'
-            or '/option'
+        *args - string list with path to option
         '''
-        if option.startswith('/'):
-            option = option[1:]
+        if not args:
+            raise KeyError
 
         try:
-            item = self._get_item(option.split('/'),
-                                  self._items)
+            item = self._get_item(args, self._items)
             return not self._is_section(item)
         except KeyError:
             return False
@@ -61,3 +57,21 @@ class Registry(object):
             raise KeyError
 
         return self._get_item(path_elements[1:], next_section)
+
+    def get(self, *args, **kwargs):
+        '''
+        args - list of the node names to option.
+        kwargs can contain key 'default' for the value if option not exists.
+        '''
+        if not args:
+            raise KeyError
+
+        try:
+            item = self._get_item(args, self._items)
+        except KeyError:
+            return kwargs['default']
+
+        if self._is_section(item):
+            raise KeyError
+
+        return item
