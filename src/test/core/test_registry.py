@@ -197,3 +197,152 @@ class RegistryTest(TestCase):
         reg = Registry(items)
         self.assertEqual(reg.get('раздел-1', 'параметр-2',
                                  default=10), 10)
+
+    def test_get_bool_01(self):
+        items = {
+            'параметр': True,
+        }
+        reg = Registry(items)
+        self.assertTrue(reg.getbool('параметр'))
+
+    def test_get_bool_02(self):
+        items = {
+            'параметр': False,
+        }
+        reg = Registry(items)
+        self.assertFalse(reg.getbool('параметр'))
+
+    def test_get_bool_03(self):
+        items = {
+            'параметр': True,
+        }
+        reg = Registry(items)
+        self.assertTrue(reg.getbool('параметр', default=False))
+
+    def test_get_bool_04(self):
+        items = {
+        }
+        reg = Registry(items)
+        self.assertTrue(reg.getbool('параметр', default=True))
+
+    def test_get_bool_05(self):
+        items = {
+            'параметр': 110,
+        }
+        reg = Registry(items)
+        self.assertFalse(reg.getbool('параметр', default=False))
+
+    def test_get_bool_error_00(self):
+        items = {
+            'параметр': 110,
+        }
+        reg = Registry(items)
+        self.assertRaises(ValueError, reg.getbool, 'параметр')
+
+    def test_get_bool_error_01(self):
+        items = {
+        }
+        reg = Registry(items)
+        self.assertRaises(KeyError, reg.getbool, 'параметр')
+
+    def test_get_bool_error_02(self):
+        items = {
+            'раздел': {},
+        }
+        reg = Registry(items)
+        self.assertRaises(KeyError, reg.getbool, 'раздел')
+
+    def test_get_bool_error_04(self):
+        items = {
+        }
+        reg = Registry(items)
+        self.assertRaises(KeyError, reg.getbool)
+
+    def test_get_int_error_00(self):
+        items = {
+            'параметр': '111',
+        }
+        reg = Registry(items)
+        self.assertRaises(ValueError, reg.getint, 'параметр')
+
+    def test_get_int_error_01(self):
+        items = {
+            'параметр': {},
+        }
+        reg = Registry(items)
+        self.assertRaises(KeyError, reg.getint, 'параметр')
+
+    def test_get_int_01(self):
+        items = {
+            'параметр': 100,
+        }
+        reg = Registry(items)
+        self.assertEqual(reg.getint('параметр'), 100)
+
+    def test_get_int_02(self):
+        items = {
+        }
+        reg = Registry(items)
+        self.assertEqual(reg.getint('параметр', default=100), 100)
+
+    def test_get_float_error_00(self):
+        items = {
+            'параметр': '111',
+        }
+        reg = Registry(items)
+        self.assertRaises(ValueError, reg.getfloat, 'параметр')
+
+    def test_get_float_error_01(self):
+        items = {
+            'параметр': {},
+        }
+        reg = Registry(items)
+        self.assertRaises(KeyError, reg.getfloat, 'параметр')
+
+    def test_get_float_01(self):
+        items = {
+            'параметр': 100.0,
+        }
+        reg = Registry(items)
+        self.assertEqual(reg.getfloat('параметр'), 100.0)
+
+    def test_get_float_02(self):
+        items = {
+        }
+        reg = Registry(items)
+        self.assertEqual(reg.getfloat('параметр', default=100.0), 100.0)
+
+    def test_get_float_03(self):
+        items = {
+            'параметр': 100,
+        }
+        reg = Registry(items)
+        self.assertEqual(reg.getfloat('параметр'), 100)
+
+    def test_get_str_error_00(self):
+        items = {
+            'параметр': 111,
+        }
+        reg = Registry(items)
+        self.assertRaises(ValueError, reg.getstr, 'параметр')
+
+    def test_get_str_error_01(self):
+        items = {
+            'параметр': {},
+        }
+        reg = Registry(items)
+        self.assertRaises(KeyError, reg.getstr, 'параметр')
+
+    def test_get_str_01(self):
+        items = {
+            'параметр': 'абырвалг',
+        }
+        reg = Registry(items)
+        self.assertEqual(reg.getstr('параметр'), 'абырвалг')
+
+    def test_get_str_02(self):
+        items = {
+        }
+        reg = Registry(items)
+        self.assertEqual(reg.getstr('параметр', default='абырвалг'),
+                         'абырвалг')

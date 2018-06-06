@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from collections import MutableMapping
+from numbers import Real
 
 
 class Registry(object):
@@ -75,3 +76,45 @@ class Registry(object):
             raise KeyError
 
         return item
+
+    def _get_with_type(self, type, *args, **kwargs):
+        '''
+        args - list of the node names to option.
+        kwargs can contain key 'default' for the value if option not exists.
+        '''
+        result = self.get(*args, **kwargs)
+        if not isinstance(result, type):
+            if 'default' in kwargs:
+                return kwargs['default']
+            else:
+                raise ValueError
+
+        return result
+
+    def getbool(self, *args, **kwargs):
+        '''
+        args - list of the node names to option.
+        kwargs can contain key 'default' for the value if option not exists.
+        '''
+        return self._get_with_type(bool, *args, **kwargs)
+
+    def getint(self, *args, **kwargs):
+        '''
+        args - list of the node names to option.
+        kwargs can contain key 'default' for the value if option not exists.
+        '''
+        return self._get_with_type(int, *args, **kwargs)
+
+    def getfloat(self, *args, **kwargs):
+        '''
+        args - list of the node names to option.
+        kwargs can contain key 'default' for the value if option not exists.
+        '''
+        return float(self._get_with_type(Real, *args, **kwargs))
+
+    def getstr(self, *args, **kwargs):
+        '''
+        args - list of the node names to option.
+        kwargs can contain key 'default' for the value if option not exists.
+        '''
+        return self._get_with_type(str, *args, **kwargs)
