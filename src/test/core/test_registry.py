@@ -346,3 +346,67 @@ class RegistryTest(TestCase):
         reg = Registry(items)
         self.assertEqual(reg.getstr('параметр', default='абырвалг'),
                          'абырвалг')
+
+    def test_create_section_error_01(self):
+        items = {}
+        reg = Registry(items)
+        self.assertRaises(KeyError, reg.create_section)
+
+    def test_create_error_02(self):
+        items = {
+            'параметр': 111,
+        }
+        reg = Registry(items)
+
+        self.assertRaises(KeyError, reg.create_section, 'параметр')
+
+    def test_create_error_03(self):
+        items = {
+            'раздел': {
+                'параметр': 1000,
+            },
+        }
+        reg = Registry(items)
+
+        self.assertRaises(KeyError, reg.create_section, 'раздел', 'параметр')
+
+    def test_create_error_04(self):
+        items = {
+            'параметр': 111,
+        }
+        reg = Registry(items)
+
+        self.assertRaises(KeyError, reg.create_section, 'параметр', 'раздел')
+
+    def test_create_section_01(self):
+        items = {}
+        reg = Registry(items)
+        reg.create_section('раздел')
+
+        self.assertTrue(reg.has_section('раздел'))
+
+    def test_create_section_02(self):
+        items = {}
+        reg = Registry(items)
+        reg.create_section('раздел-1', 'раздел-2')
+
+        self.assertTrue(reg.has_section('раздел-1'))
+        self.assertTrue(reg.has_section('раздел-1', 'раздел-2'))
+
+    def test_create_section_03(self):
+        items = {
+            'раздел': {},
+        }
+        reg = Registry(items)
+        reg.create_section('раздел')
+
+        self.assertTrue(reg.has_section('раздел'))
+
+    def test_create_section_04(self):
+        items = {}
+        reg = Registry(items)
+        reg.create_section('раздел-1', 'раздел-2')
+        reg.create_section('раздел-1', 'раздел-2')
+
+        self.assertTrue(reg.has_section('раздел-1'))
+        self.assertTrue(reg.has_section('раздел-1', 'раздел-2'))

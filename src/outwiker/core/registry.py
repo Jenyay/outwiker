@@ -118,3 +118,26 @@ class Registry(object):
         kwargs can contain key 'default' for the value if option not exists.
         '''
         return self._get_with_type(str, *args, **kwargs)
+
+    def create_section(self, *args):
+        '''
+        Create section and all parent sections.
+        '''
+        if not args:
+            raise KeyError
+
+        self._create_section(self._items, args)
+
+    def _create_section(self, items_dict, path_elements):
+        if path_elements:
+            next_path_element = path_elements[0]
+            if next_path_element in items_dict:
+                if self._is_section(items_dict[next_path_element]):
+                    self._create_section(items_dict[next_path_element],
+                                         path_elements[1:])
+                else:
+                    raise KeyError
+            else:
+                items_dict[next_path_element] = {}
+                self._create_section(items_dict[next_path_element],
+                                     path_elements[1:])
