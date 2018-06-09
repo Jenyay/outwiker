@@ -550,3 +550,73 @@ class RegistryTest(TestCase):
         self.assertTrue(result)
         self.assertTrue(reg.has_section('раздел-1'))
         self.assertFalse(reg.has_section('раздел-1', 'раздел-2'))
+
+    def test_set_error_01(self):
+        items = {}
+        reg = Registry(items)
+        self.assertRaises(KeyError, reg.set)
+        self.assertRaises(KeyError, reg.set, 'bla-bla-bla')
+
+    def test_set_error_02(self):
+        items = {
+            'раздел': {}
+        }
+        reg = Registry(items)
+        self.assertRaises(KeyError, reg.set, 'раздел', 100)
+        self.assertTrue(reg.has_section('раздел'))
+
+    def test_set_error_03(self):
+        items = {
+            'раздел-1': {
+                'раздел-2': {},
+            }
+        }
+        reg = Registry(items)
+        self.assertRaises(KeyError, reg.set, 'раздел-1', 'раздел-2', 100)
+        self.assertTrue(reg.has_section('раздел-1', 'раздел-2'))
+
+    def test_set_01(self):
+        items = {}
+        reg = Registry(items)
+        reg.set('параметр', 100)
+
+        self.assertTrue(reg.has_option('параметр'))
+        self.assertEqual(reg.getint('параметр'), 100)
+
+    def test_set_02(self):
+        items = {
+            'параметр': '111',
+        }
+        reg = Registry(items)
+        reg.set('параметр', 100)
+
+        self.assertTrue(reg.has_option('параметр'))
+        self.assertEqual(reg.getint('параметр'), 100)
+
+    def test_set_03(self):
+        items = {
+            'раздел-1': {
+                'параметр': '111',
+            }
+        }
+        reg = Registry(items)
+        reg.set('раздел-1', 'параметр', 100)
+
+        self.assertTrue(reg.has_option('раздел-1', 'параметр'))
+        self.assertEqual(reg.getint('раздел-1', 'параметр'), 100)
+
+    def test_set_04(self):
+        items = {}
+        reg = Registry(items)
+        reg.set('раздел-1', 'параметр', 100)
+
+        self.assertTrue(reg.has_option('раздел-1', 'параметр'))
+        self.assertEqual(reg.getint('раздел-1', 'параметр'), 100)
+
+    def test_set_05(self):
+        items = {}
+        reg = Registry(items)
+        reg.set('раздел-1', 'раздел-2', 'параметр', 100)
+
+        self.assertTrue(reg.has_option('раздел-1', 'раздел-2', 'параметр'))
+        self.assertEqual(reg.getint('раздел-1', 'раздел-2', 'параметр'), 100)

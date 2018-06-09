@@ -181,3 +181,33 @@ class Registry(object):
         If path to option is path to section then raises KeyError exception.
         '''
         return self._remove_item(args, True)
+
+    def set(self, *args):
+        '''
+        Set value by path. Path to option is args[:-1], args[-1] is new value.
+        '''
+        if len(args) < 2:
+            raise KeyError
+
+        self._set(args[:-2], args[-2], args[-1])
+
+    def _set(self, path, option_name, value):
+        path_copy = list(path[:])
+        parent = self._items
+
+        # Find a parent section
+        while path_copy:
+            next = path_copy.pop(0)
+            if next not in parent:
+                parent[next] = {}
+
+            next_parent = parent[next]
+            if not self._is_section(next_parent):
+                raise KeyError
+
+            parent = next_parent
+
+        if option_name in parent and self._is_section(parent[option_name]):
+            raise KeyError
+
+        parent[option_name] = value
