@@ -410,3 +410,143 @@ class RegistryTest(TestCase):
 
         self.assertTrue(reg.has_section('раздел-1'))
         self.assertTrue(reg.has_section('раздел-1', 'раздел-2'))
+
+    def test_remove_option_error_01(self):
+        items = {}
+        reg = Registry(items)
+
+        self.assertRaises(KeyError, reg.remove_option)
+
+    def test_remove_option_error_02(self):
+        items = {}
+        reg = Registry(items)
+
+        self.assertFalse(reg.remove_option('параметр'))
+
+    def test_remove_option_error_03(self):
+        items = {
+            'раздел': {},
+        }
+        reg = Registry(items)
+
+        self.assertRaises(KeyError, reg.remove_option, 'раздел')
+
+    def test_remove_option_error_04(self):
+        items = {
+            'раздел-1': {
+                'раздел-2': {},
+            },
+        }
+        reg = Registry(items)
+
+        self.assertRaises(KeyError, reg.remove_option, 'раздел-1', 'раздел-2')
+
+    def test_remove_option_01(self):
+        items = {
+            'параметр': 100,
+        }
+        reg = Registry(items)
+        result = reg.remove_option('параметр')
+
+        self.assertTrue(result)
+        self.assertFalse(reg.has_option('параметр'))
+
+    def test_remove_option_02(self):
+        items = {
+            'раздел': {
+                'параметр': 100,
+            },
+        }
+        reg = Registry(items)
+        result = reg.remove_option('раздел', 'параметр')
+
+        self.assertTrue(result)
+        self.assertFalse(reg.has_option('раздел', 'параметр'))
+
+    def test_remove_option_03(self):
+        items = {
+            'раздел-1': {
+                'раздел-2': {
+                    'параметр': 100,
+                },
+            },
+        }
+        reg = Registry(items)
+        result = reg.remove_option('раздел-1', 'раздел-2', 'параметр')
+
+        self.assertTrue(result)
+        self.assertFalse(reg.has_option('раздел-1', 'раздел-2', 'параметр'))
+
+    def test_remove_section_error_01(self):
+        items = {}
+        reg = Registry(items)
+
+        result = reg.remove_section('раздел')
+        self.assertFalse(result)
+
+    def test_remove_section_error_02(self):
+        items = {}
+        reg = Registry(items)
+
+        self.assertRaises(KeyError, reg.remove_section)
+
+    def test_remove_section_error_03(self):
+        items = {
+            'параметр': 100,
+        }
+        reg = Registry(items)
+
+        self.assertRaises(KeyError, reg.remove_section)
+
+    def test_remove_section_error_04(self):
+        items = {
+            'раздел-1': {
+                'раздел-2': {
+                    'параметр': 100,
+                }
+            },
+        }
+        reg = Registry(items)
+
+        self.assertRaises(KeyError,
+                          reg.remove_section,
+                          'раздел-1', 'раздел-2', 'параметр')
+
+    def test_remove_section_01(self):
+        items = {
+            'раздел': {},
+        }
+        reg = Registry(items)
+        result = reg.remove_section('раздел')
+
+        self.assertTrue(result)
+        self.assertFalse(reg.has_section('раздел'))
+
+    def test_remove_section_02(self):
+        items = {
+            'раздел-1': {
+                'раздел-2': {
+                    'параметр': 100,
+                }
+            },
+        }
+        reg = Registry(items)
+        result = reg.remove_section('раздел-1')
+
+        self.assertTrue(result)
+        self.assertFalse(reg.has_section('раздел-1'))
+
+    def test_remove_section_03(self):
+        items = {
+            'раздел-1': {
+                'раздел-2': {
+                    'параметр': 100,
+                }
+            },
+        }
+        reg = Registry(items)
+        result = reg.remove_section('раздел-1', 'раздел-2')
+
+        self.assertTrue(result)
+        self.assertTrue(reg.has_section('раздел-1'))
+        self.assertFalse(reg.has_section('раздел-1', 'раздел-2'))

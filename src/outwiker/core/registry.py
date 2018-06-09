@@ -141,3 +141,43 @@ class Registry(object):
                 items_dict[next_path_element] = {}
                 self._create_section(items_dict[next_path_element],
                                      path_elements[1:])
+
+    def _remove_item(self, args, remove_section):
+        if not args:
+            raise KeyError
+
+        try:
+            deleting_item = self._get_item(args, self._items)
+        except KeyError:
+            return False
+
+        if self._is_section(deleting_item) != remove_section:
+            raise KeyError
+
+        if len(args) == 1:
+            parent = self._items
+        else:
+            parent = self._get_item(args[:-1], self._items)
+
+        option = args[-1]
+        if option not in parent:
+            return False
+
+        del parent[option]
+        return True
+
+    def remove_option(self, *args):
+        '''
+        Remove an option (not a section).
+        Return True if option was removed or False if option is not exists.
+        If path to option is path to section then raises KeyError exception.
+        '''
+        return self._remove_item(args, False)
+
+    def remove_section(self, *args):
+        '''
+        Remove an option (not a section).
+        Return True if option was removed or False if option is not exists.
+        If path to option is path to section then raises KeyError exception.
+        '''
+        return self._remove_item(args, True)
