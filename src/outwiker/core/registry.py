@@ -211,3 +211,13 @@ class Registry(object):
             raise KeyError
 
         parent[option_name] = value
+
+    def get_subregistry(self, *args):
+        if not args:
+            raise KeyError
+
+        item = self._get_item(args, self._items)
+        if not self._is_section(item):
+            raise KeyError
+
+        return Registry(item)

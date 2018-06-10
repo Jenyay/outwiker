@@ -14,6 +14,9 @@ PAGE_CONTENT_FILE = u'__page.text'
 # Page options (properties)
 PAGE_OPT_FILE = u'__page.opt'
 
+# Registry file (cache)
+REGISTRY_FILE = '__cache.tmp'
+
 # Base name for icons
 PAGE_ICON_NAME = u'__icon'
 
@@ -56,6 +59,8 @@ PAGE_MODE_HTML = 2
 
 CONFIG_TOOLBARS_SECTION = 'Toolbars'
 CONFIG_TOOLBARS_VISIBLE_SUFFIX = '_visible'
+
+REGISTRY_SECTION_PAGES = '__pages'
 
 
 # To translate this words with xgettext

@@ -338,6 +338,7 @@ class ApplicationParams(object):
         self.onWikiClose(self.__wikiroot)
 
         if self.__wikiroot is not None:
+            self.__wikiroot.save()
             self.__unbindWikiEvents(self.__wikiroot)
 
         self.__wikiroot = value

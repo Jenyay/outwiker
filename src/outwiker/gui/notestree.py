@@ -2,7 +2,6 @@
 
 import os
 import os.path
-import configparser
 
 import wx
 
@@ -16,7 +15,6 @@ from outwiker.actions.movepagedown import MovePageDownAction
 from outwiker.actions.removepage import RemovePageAction
 from outwiker.actions.editpageprop import EditPagePropertiesAction
 from outwiker.actions.moving import GoToParentAction
-from outwiker.core.config import BooleanOption
 from outwiker.core.events import PAGE_UPDATE_ICON
 from outwiker.core.defines import ICON_WIDTH, ICON_HEIGHT
 from outwiker.gui.pagepopupmenu import PagePopupMenu
@@ -238,18 +236,13 @@ class NotesTree(wx.Panel):
         assert itemid.IsOk()
 
         page = self.treeCtrl.GetItemData(itemid)
-        expanded = self.treeCtrl.IsExpanded(itemid)
-        expandedOption = BooleanOption(page.params,
-                                       self.pageOptionsSection,
-                                       self.pageOptionExpand,
-                                       False)
+        if page.readonly:
+            return
 
-        try:
-            expandedOption.value = expanded
-        except IOError as e:
-            outwiker.core.commands.MessageBox(
-                _(u"Can't save page options\n{}").format(str(e)),
-                _(u"Error"), wx.ICON_ERROR | wx.OK)
+        expanded = self.treeCtrl.IsExpanded(itemid)
+
+        page_registry = page.root.registry.get_page_registry(page)
+        page_registry.set(self.pageOptionExpand, expanded)
 
     def __getItemExpandState(self, page):
         """
@@ -266,7 +259,6 @@ class NotesTree(wx.Panel):
     def __getPageExpandState(self, page):
         """
         Проверить состояние "раскрытости" страницы
-        (что по этому поводу написано в настройках страницы)
         """
         if page is None:
             return True
@@ -274,13 +266,8 @@ class NotesTree(wx.Panel):
         if page.parent is None:
             return True
 
-        try:
-            expanded = page.params.getbool(self.pageOptionsSection,
-                                           self.pageOptionExpand)
-        except configparser.NoSectionError:
-            return False
-        except configparser.NoOptionError:
-            return False
+        page_registry = page.root.registry.get_page_registry(page)
+        expanded = page_registry.getbool(self.pageOptionExpand, default=False)
 
         return expanded
 

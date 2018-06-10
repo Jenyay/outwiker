@@ -620,3 +620,88 @@ class RegistryTest(TestCase):
 
         self.assertTrue(reg.has_option('раздел-1', 'раздел-2', 'параметр'))
         self.assertEqual(reg.getint('раздел-1', 'раздел-2', 'параметр'), 100)
+
+    def test_get_subregistry_error_01(self):
+        items = {}
+        reg = Registry(items)
+
+        self.assertRaises(KeyError, reg.get_subregistry)
+
+    def test_get_subregistry_error_02(self):
+        items = {}
+        reg = Registry(items)
+
+        self.assertRaises(KeyError, reg.get_subregistry, 'раздел')
+
+    def test_get_subregistry_error_03(self):
+        items = {
+            'параметр': 10,
+        }
+        reg = Registry(items)
+
+        self.assertRaises(KeyError, reg.get_subregistry, 'параметр')
+
+    def test_get_subregistry_error_04(self):
+        items = {
+            'раздел': {
+                'параметр': 10,
+            },
+        }
+        reg = Registry(items)
+
+        self.assertRaises(KeyError, reg.get_subregistry, 'раздел', 'параметр')
+
+    def test_get_subregistry_01(self):
+        items = {
+            'раздел': {
+                'параметр': 10,
+            },
+        }
+        reg = Registry(items)
+        subreg = reg.get_subregistry('раздел')
+
+        self.assertTrue(subreg.has_option('параметр'))
+
+    def test_get_subregistry_02(self):
+        items = {
+            'раздел-1': {
+                'раздел-2': {
+                    'параметр': 10,
+                },
+            },
+        }
+        reg = Registry(items)
+        subreg = reg.get_subregistry('раздел-1')
+
+        self.assertTrue(subreg.has_option('раздел-2', 'параметр'))
+
+    def test_get_subregistry_03_change(self):
+        items = {
+            'раздел-1': {
+                'раздел-2': {
+                    'параметр': 10,
+                },
+            },
+        }
+        reg = Registry(items)
+
+        subreg = reg.get_subregistry('раздел-1')
+        subreg.set('раздел-2', 'параметр', 1000)
+
+        self.assertEqual(subreg.getint('раздел-2', 'параметр'), 1000)
+        self.assertEqual(reg.getint('раздел-1', 'раздел-2', 'параметр'), 1000)
+
+    def test_get_subregistry_04_change(self):
+        items = {
+            'раздел-1': {
+                'раздел-2': {
+                    'параметр': 10,
+                },
+            },
+        }
+        reg = Registry(items)
+
+        subreg = reg.get_subregistry('раздел-1')
+        subreg.create_section('раздел-2', 'раздел-3')
+
+        self.assertTrue(reg.has_section('раздел-1', 'раздел-2', 'раздел-3'))

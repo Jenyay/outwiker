@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import logging
 import os
@@ -9,21 +9,17 @@ import datetime
 from functools import cmp_to_key
 from functools import reduce
 
-from outwiker.core.config import PageConfig
-from outwiker.core.bookmarks import Bookmarks
-from outwiker.core.event import Event
-from outwiker.core.exceptions import (ClearConfigError,
-                                      RootFormatError,
-                                      DuplicateTitle,
-                                      ReadonlyException,
-                                      TreeException)
-from outwiker.core.tagscommands import parseTagsList
-from outwiker.core.sortfunctions import (sortOrderFunction,
-                                         sortAlphabeticalFunction)
-from outwiker.core.defines import (PAGE_CONTENT_FILE,
-                                   PAGE_OPT_FILE)
-from outwiker.core.iconcontroller import IconController
-from outwiker.core.system import getIconsDirList
+from .config import PageConfig
+from .bookmarks import Bookmarks
+from .event import Event
+from .exceptions import (ClearConfigError, RootFormatError, DuplicateTitle,
+                         ReadonlyException, TreeException)
+from .tagscommands import parseTagsList
+from .sortfunctions import sortOrderFunction, sortAlphabeticalFunction
+from .defines import PAGE_CONTENT_FILE, PAGE_OPT_FILE, REGISTRY_FILE
+from .iconcontroller import IconController
+from .system import getIconsDirList
+from .registrynotestree import NotesTreeRegistry, JSONSaver
 from . import events
 
 
@@ -275,6 +271,11 @@ class WikiDocument(RootWikiPage):
         self._selectedPage = None
         self._createEvents()
         self.bookmarks = Bookmarks(self, self._params)
+        self._registry = NotesTreeRegistry(self._getRegistrySaver(self._path))
+
+    def _getRegistrySaver(self, path):
+        registry_path = os.path.join(path, REGISTRY_FILE)
+        return JSONSaver(registry_path)
 
     def _createEvents(self):
         # Выбор новой страницы
@@ -360,6 +361,10 @@ class WikiDocument(RootWikiPage):
         root.onTreeUpdate(root)
         return root
 
+    def save(self):
+        super().save()
+        self._registry.save()
+
     @staticmethod
     def create(path):
         """
@@ -401,6 +406,10 @@ class WikiDocument(RootWikiPage):
     @staticmethod
     def getTypeString():
         return u"document"
+
+    @property
+    def registry(self):
+        return self._registry
 
 
 class WikiPage(RootWikiPage):

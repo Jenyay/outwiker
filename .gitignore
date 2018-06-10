@@ -53,3 +53,4 @@ serverinfo.py
 .vscode
 Pipfile.lock
 .pytest_cache
+__cache.tmp
