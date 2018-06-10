@@ -3,6 +3,7 @@
 from abc import ABCMeta, abstractmethod
 import json
 import logging
+import pickle
 from collections import MutableMapping
 
 from .registry import Registry
@@ -40,6 +41,28 @@ class JSONSaver(BaseSaver):
         text = json.dumps(items)
         try:
             writeTextFile(self._fname, text)
+        except IOError:
+            logger.error('Error saving a notes tree registry')
+
+
+class PickleSaver(BaseSaver):
+    def __init__(self, fname):
+        self._fname = fname
+
+    def load(self):
+        try:
+            with open(self._fname, 'rb') as fp:
+                items = pickle.load(fp)
+        except (IOError, pickle.PickleError):
+            logger.error('Error reading a notes tree registry')
+            items = {}
+
+        return items
+
+    def save(self, items):
+        try:
+            with open(self._fname, 'wb') as fp:
+                pickle.dump(items, fp)
         except IOError:
             logger.error('Error saving a notes tree registry')
 

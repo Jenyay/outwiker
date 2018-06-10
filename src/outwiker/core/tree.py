@@ -19,7 +19,7 @@ from .sortfunctions import sortOrderFunction, sortAlphabeticalFunction
 from .defines import PAGE_CONTENT_FILE, PAGE_OPT_FILE, REGISTRY_FILE
 from .iconcontroller import IconController
 from .system import getIconsDirList
-from .registrynotestree import NotesTreeRegistry, JSONSaver
+from .registrynotestree import NotesTreeRegistry, PickleSaver
 from . import events
 
 
@@ -275,7 +275,7 @@ class WikiDocument(RootWikiPage):
 
     def _getRegistrySaver(self, path):
         registry_path = os.path.join(path, REGISTRY_FILE)
-        return JSONSaver(registry_path)
+        return PickleSaver(registry_path)
 
     def _createEvents(self):
         # Выбор новой страницы
