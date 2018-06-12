@@ -1,50 +1,45 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
-from outwiker.core.config import StringOption
-
+from .defines import REGISTRY_PAGE_HASH
 from .wikihashcalculator import WikiHashCalculator
 
 
 class HtmlCache (object):
     """
-    Класс для проверки того, можно ли использовать уже созданный HTML-файл для викистраницы или надо его создавать заново
+    Класс для проверки того, можно ли использовать уже созданный HTML-файл
+    для викистраницы или надо его создавать заново
     """
-    def __init__ (self, page, application):
+
+    def __init__(self, page, application):
         self._page = page
         self._application = application
 
-        self._hashKey = u"md5_hash"
         self._configSection = u"wiki"
 
+    def getHash(self, page):
+        return WikiHashCalculator(self._application).getHash(page)
 
-    def getHash (self, page):
-        return WikiHashCalculator (self._application).getHash (page)
-
-
-    def canReadFromCache (self):
+    def canReadFromCache(self):
         """
         Можно ли прочитать готовый HTML, или его надо создавать заново?
         """
-        hashoption = self._getHashOption()
-
-        return (self.getHash (self._page) == hashoption.value)
-
-
-    def resetHash (self):
-        self._getHashOption().value = u""
-
-
-    def _getHashOption (self):
-        return StringOption (self._page.params,
-                             self._configSection,
-                             self._hashKey,
-                             u"")
-
-
-    def saveHash (self):
+        reg = self._page.root.registry.get_page_registry(self._page)
         try:
-            self._getHashOption().value = self.getHash (self._page)
-        except IOError:
-            # Не самая страшная потеря, если не сохранится хэш.
-            # Максимум, что грозит пользователю, каждый раз генерить старницу
+            old_hash = reg.getstr(REGISTRY_PAGE_HASH, default='')
+        except KeyError:
+            old_hash = ''
+
+        return (self.getHash(self._page) == old_hash)
+
+    def resetHash(self):
+        self._setHash('')
+
+    def _setHash(self, value):
+        reg = self._page.root.registry.get_page_registry(self._page)
+        try:
+            reg.set(REGISTRY_PAGE_HASH, value)
+        except KeyError:
             pass
+
+    def saveHash(self):
+        self._setHash(self.getHash(self._page))

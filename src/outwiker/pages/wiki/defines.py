@@ -9,3 +9,5 @@ TOOLBAR_WIKI_HEADING = 'wiki_heading'
 TOOLBAR_WIKI_FONT = 'wiki_font'
 TOOLBAR_WIKI_ALIGN = 'wiki_align'
 TOOLBAR_WIKI_TABLE = 'wiki_table'
+
+REGISTRY_PAGE_HASH = 'md5_hash'

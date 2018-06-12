@@ -26,7 +26,6 @@ class BaseWikiPageView (BaseHtmlPanel):
         # Редактор с просмотром получившегося HTML (если есть)
         self.htmlCodeWindow = None
 
-        self._hashKey = u"md5_hash"
         self.__WIKI_MENU_INDEX = 7
 
         # Список используемых полиморфных действий
