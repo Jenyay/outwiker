@@ -533,6 +533,7 @@ class WikiPage(RootWikiPage):
         self._title = newtitle
 
         WikiPage._renamePaths(self, newpath)
+        self.root.registry.rename_page_sections(oldsubpath, self.subpath)
 
         self.root.onPageRename(self, oldsubpath)
         self.root.onTreeUpdate(self)

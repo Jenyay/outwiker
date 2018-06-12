@@ -141,3 +141,50 @@ class RegistryNotesTreeWikiTest(TestCase, BaseOutWikerMixin):
         page1.remove()
         self.assertFalse(self.wikiroot.registry.has_section_for_page(page1))
         self.assertFalse(self.wikiroot.registry.has_section_for_page(page2))
+
+    def test_registry_rename_page_01(self):
+        factory = TextPageFactory()
+        page1 = factory.create(self.wikiroot, "Страница 1", [])
+        reg = self.wikiroot.registry.get_page_registry(page1)
+        reg.set('option', 1000)
+
+        self.assertTrue(self.wikiroot.registry.has_section_for_page(page1))
+
+        page1.title = 'Бла-бла-бла'
+
+        self.assertTrue(self.wikiroot.registry.has_section_for_page(page1))
+
+        reg_new = self.wikiroot.registry.get_page_registry(page1)
+        self.assertEqual(reg_new.getint('option'), 1000)
+
+    def test_registry_rename_page_02_subpage(self):
+        factory = TextPageFactory()
+        page1 = factory.create(self.wikiroot, "Страница 1", [])
+        page2 = factory.create(page1, "Страница 2", [])
+        reg = self.wikiroot.registry.get_page_registry(page2)
+        reg.set('option', 1000)
+
+        self.assertTrue(self.wikiroot.registry.has_section_for_page(page2))
+
+        page2.title = 'Бла-бла-бла'
+
+        self.assertTrue(self.wikiroot.registry.has_section_for_page(page2))
+
+        reg_new = self.wikiroot.registry.get_page_registry(page2)
+        self.assertEqual(reg_new.getint('option'), 1000)
+
+    def test_registry_rename_page_03_with_children(self):
+        factory = TextPageFactory()
+        page1 = factory.create(self.wikiroot, "Страница 1", [])
+        page2 = factory.create(page1, "Страница 2", [])
+        reg = self.wikiroot.registry.get_page_registry(page2)
+        reg.set('option', 1000)
+
+        self.assertTrue(self.wikiroot.registry.has_section_for_page(page2))
+
+        page1.title = 'Бла-бла-бла'
+
+        self.assertTrue(self.wikiroot.registry.has_section_for_page(page2))
+
+        reg_new = self.wikiroot.registry.get_page_registry(page2)
+        self.assertEqual(reg_new.getint('option'), 1000)

@@ -119,11 +119,14 @@ class NotesTreeRegistry(Registry):
                                           self.get_key_for_page(page))
 
     def remove_page_section(self, page):
-        try:
-            page_key = self.get_key_for_page(page)
-            self.remove_section(REGISTRY_SECTION_PAGES, page_key)
-        except KeyError:
-            logger.error("Can't remove section from registry: {}".format(page_key))
+        page_key = self.get_key_for_page(page)
+        path = (REGISTRY_SECTION_PAGES, page_key)
+
+        if self.has_section(*path):
+            self.remove_section(*path)
+        elif self.has_option(*path):
+            logger.error("Item must be a section, not option: {}".format(page_key))
+            self.remove_option(*path)
 
     def has_section_for_page(self, page):
         return self.has_section(REGISTRY_SECTION_PAGES,
@@ -131,3 +134,20 @@ class NotesTreeRegistry(Registry):
 
     def get_key_for_page(self, page):
         return page.subpath
+
+    def rename_page_sections(self, old_subpath, new_subpath):
+        if REGISTRY_SECTION_PAGES not in self._items:
+            return
+
+        pages = self._items[REGISTRY_SECTION_PAGES]
+
+        # Rename all supbath in the REGISTRY_SECTION_PAGES section
+        for name in pages:
+            item = pages[name]
+            if not self._is_section(item):
+                continue
+
+            if name.startswith(old_subpath):
+                new_name = new_subpath + name[len(old_subpath):]
+                del pages[name]
+                pages[new_name] = item
