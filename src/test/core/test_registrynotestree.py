@@ -3,6 +3,9 @@
 from unittest import TestCase
 
 from outwiker.core.registrynotestree import BaseSaver, NotesTreeRegistry
+from outwiker.pages.text.textpage import TextPageFactory
+
+from test.basetestcases import BaseOutWikerMixin
 
 
 class SimpleSaver(BaseSaver):
@@ -93,3 +96,48 @@ class RegistryNotesTreeTest(TestCase):
         self.assertEqual(reg.getint('раздел-1', 'раздел-2', 'раздел-3',
                                     'параметр'),
                          100)
+
+
+class RegistryNotesTreeWikiTest(TestCase, BaseOutWikerMixin):
+    def setUp(self):
+        self.initApplication()
+        self.wikiroot = self.createWiki()
+
+    def tearDown(self):
+        self.destroyApplication()
+        self.destroyWiki(self.wikiroot)
+
+    def test_registry_remove_page_01(self):
+        factory = TextPageFactory()
+        page1 = factory.create(self.wikiroot, "Страница 1", [])
+        self.wikiroot.registry.get_page_registry(page1)
+
+        self.assertTrue(self.wikiroot.registry.has_section_for_page(page1))
+
+        page1.remove()
+        self.assertFalse(self.wikiroot.registry.has_section_for_page(page1))
+
+    def test_registry_remove_page_02_subpage(self):
+        factory = TextPageFactory()
+        page1 = factory.create(self.wikiroot, "Страница 1", [])
+        page2 = factory.create(page1, "Страница 2", [])
+
+        self.wikiroot.registry.get_page_registry(page2)
+        self.assertTrue(self.wikiroot.registry.has_section_for_page(page2))
+
+        page2.remove()
+        self.assertFalse(self.wikiroot.registry.has_section_for_page(page2))
+
+    def test_registry_remove_page_03_with_children(self):
+        factory = TextPageFactory()
+        page1 = factory.create(self.wikiroot, "Страница 1", [])
+        page2 = factory.create(page1, "Страница 2", [])
+
+        self.wikiroot.registry.get_page_registry(page1)
+        self.wikiroot.registry.get_page_registry(page2)
+        self.assertTrue(self.wikiroot.registry.has_section_for_page(page1))
+        self.assertTrue(self.wikiroot.registry.has_section_for_page(page2))
+
+        page1.remove()
+        self.assertFalse(self.wikiroot.registry.has_section_for_page(page1))
+        self.assertFalse(self.wikiroot.registry.has_section_for_page(page2))

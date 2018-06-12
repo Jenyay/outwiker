@@ -115,4 +115,19 @@ class NotesTreeRegistry(Registry):
         return Registry(parent)
 
     def get_page_registry(self, page):
-        return self.get_section_or_create(REGISTRY_SECTION_PAGES, page.subpath)
+        return self.get_section_or_create(REGISTRY_SECTION_PAGES,
+                                          self.get_key_for_page(page))
+
+    def remove_page_section(self, page):
+        try:
+            page_key = self.get_key_for_page(page)
+            self.remove_section(REGISTRY_SECTION_PAGES, page_key)
+        except KeyError:
+            logger.error("Can't remove section from registry: {}".format(page_key))
+
+    def has_section_for_page(self, page):
+        return self.has_section(REGISTRY_SECTION_PAGES,
+                                self.get_key_for_page(page))
+
+    def get_key_for_page(self, page):
+        return page.subpath

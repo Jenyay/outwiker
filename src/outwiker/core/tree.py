@@ -846,6 +846,7 @@ class WikiPage(RootWikiPage):
         self.root.onEndTreeUpdate(self.root)
 
     def _removePageFromTree(self, page):
+        page.root.registry.remove_page_section(page)
         page.parent.removeFromChildren(page)
 
         for child in page.children:
