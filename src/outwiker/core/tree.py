@@ -575,6 +575,7 @@ class WikiPage(RootWikiPage):
 
         oldpath = self.path
         oldparent = self.parent
+        oldsubpath = self.subpath
 
         # Новый путь для страницы
         newpath = os.path.join(newparent.path, self.title)
@@ -596,7 +597,9 @@ class WikiPage(RootWikiPage):
         oldparent.removeFromChildren(self)
         newparent.addToChildren(self)
 
+        newsubpath = self.subpath
         WikiPage._renamePaths(self, newpath)
+        self.root.registry.rename_page_sections(oldsubpath, newsubpath)
 
         self.root.onTreeUpdate(self)
 

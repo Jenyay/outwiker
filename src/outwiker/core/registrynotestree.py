@@ -147,7 +147,7 @@ class NotesTreeRegistry(Registry):
             if not self._is_section(item):
                 continue
 
-            if name.startswith(old_subpath):
+            if name == old_subpath or name.startswith(old_subpath + '/'):
                 new_name = new_subpath + name[len(old_subpath):]
                 del pages[name]
                 pages[new_name] = item

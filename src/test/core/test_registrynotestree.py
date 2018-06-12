@@ -176,7 +176,7 @@ class RegistryNotesTreeWikiTest(TestCase, BaseOutWikerMixin):
     def test_registry_rename_page_03_with_children(self):
         factory = TextPageFactory()
         page1 = factory.create(self.wikiroot, "Страница 1", [])
-        page2 = factory.create(page1, "Страница 2", [])
+        page2 = factory.create(page1, "Страница 20", [])
         reg = self.wikiroot.registry.get_page_registry(page2)
         reg.set('option', 1000)
 
@@ -187,4 +187,92 @@ class RegistryNotesTreeWikiTest(TestCase, BaseOutWikerMixin):
         self.assertTrue(self.wikiroot.registry.has_section_for_page(page2))
 
         reg_new = self.wikiroot.registry.get_page_registry(page2)
+        self.assertEqual(reg_new.getint('option'), 1000)
+
+    def test_registry_move_page_01(self):
+        factory = TextPageFactory()
+        page1 = factory.create(self.wikiroot, "Страница 1", [])
+        page2 = factory.create(self.wikiroot, "Страница 200", [])
+        reg = self.wikiroot.registry.get_page_registry(page1)
+        reg.set('option', 1000)
+
+        self.assertTrue(self.wikiroot.registry.has_section_for_page(page1))
+
+        page1.moveTo(page2)
+
+        self.assertTrue(self.wikiroot.registry.has_section_for_page(page1))
+
+        reg_new = self.wikiroot.registry.get_page_registry(page1)
+        self.assertEqual(reg_new.getint('option'), 1000)
+
+    def test_registry_move_page_02(self):
+        factory = TextPageFactory()
+        page1 = factory.create(self.wikiroot, "Страница 1", [])
+        page2 = factory.create(self.wikiroot, "Страница 200", [])
+        page3 = factory.create(page1, "Страница", [])
+
+        reg = self.wikiroot.registry.get_page_registry(page3)
+        reg.set('option', 1000)
+
+        self.assertTrue(self.wikiroot.registry.has_section_for_page(page3))
+
+        page3.moveTo(page2)
+
+        self.assertTrue(self.wikiroot.registry.has_section_for_page(page3))
+
+        reg_new = self.wikiroot.registry.get_page_registry(page3)
+        self.assertEqual(reg_new.getint('option'), 1000)
+
+    def test_registry_move_page_03(self):
+        factory = TextPageFactory()
+        page1 = factory.create(self.wikiroot, "Страница 1", [])
+        page2 = factory.create(page1, "Страница 200", [])
+        page3 = factory.create(page2, "Страница", [])
+
+        reg = self.wikiroot.registry.get_page_registry(page3)
+        reg.set('option', 1000)
+
+        self.assertTrue(self.wikiroot.registry.has_section_for_page(page3))
+
+        page3.moveTo(page1)
+
+        self.assertTrue(self.wikiroot.registry.has_section_for_page(page3))
+
+        reg_new = self.wikiroot.registry.get_page_registry(page3)
+        self.assertEqual(reg_new.getint('option'), 1000)
+
+    def test_registry_move_page_04(self):
+        factory = TextPageFactory()
+        page1 = factory.create(self.wikiroot, "Страница 1", [])
+        page2 = factory.create(page1, "Страница 200", [])
+        page3 = factory.create(page2, "Страница", [])
+
+        reg = self.wikiroot.registry.get_page_registry(page3)
+        reg.set('option', 1000)
+
+        self.assertTrue(self.wikiroot.registry.has_section_for_page(page3))
+
+        page3.moveTo(self.wikiroot)
+
+        self.assertTrue(self.wikiroot.registry.has_section_for_page(page3))
+
+        reg_new = self.wikiroot.registry.get_page_registry(page3)
+        self.assertEqual(reg_new.getint('option'), 1000)
+
+    def test_registry_move_page_05(self):
+        factory = TextPageFactory()
+        page1 = factory.create(self.wikiroot, "Страница 1", [])
+        page2 = factory.create(page1, "Страница 200", [])
+        page3 = factory.create(self.wikiroot, "Страница", [])
+
+        reg = self.wikiroot.registry.get_page_registry(page3)
+        reg.set('option', 1000)
+
+        self.assertTrue(self.wikiroot.registry.has_section_for_page(page3))
+
+        page3.moveTo(page2)
+
+        self.assertTrue(self.wikiroot.registry.has_section_for_page(page3))
+
+        reg_new = self.wikiroot.registry.get_page_registry(page3)
         self.assertEqual(reg_new.getint('option'), 1000)
