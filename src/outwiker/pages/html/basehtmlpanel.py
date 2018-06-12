@@ -14,6 +14,7 @@ from outwiker.core.commands import MessageBox, setStatusText
 from outwiker.core.system import getImagesDir
 from outwiker.core.attachment import Attachment
 from outwiker.core.config import IntegerOption
+from outwiker.core.defines import REGISTRY_PAGE_CURSOR_POSITION
 from outwiker.core.events import PageUpdateNeededParams, PageModeChangeParams
 from outwiker.core.system import getOS
 from outwiker.utilites.textfile import readTextFile
@@ -151,7 +152,14 @@ class BaseHtmlPanel(BaseTextPanel):
         self.codeEditor.SetText(self._currentpage.content)
         self.codeEditor.EmptyUndoBuffer()
         self.codeEditor.SetReadOnly(page.readonly)
-        self.SetCursorPosition(self._getCursorPositionOption(page).value)
+
+        reg = page.root.registry.get_page_registry(page)
+        try:
+            cursor_position = reg.getint(REGISTRY_PAGE_CURSOR_POSITION,
+                                         default=0)
+            self.SetCursorPosition(cursor_position)
+        except (KeyError, ValueError):
+            pass
 
         self._updateHtmlWindow()
         tabIndex = self.loadPageTab(self._currentpage)

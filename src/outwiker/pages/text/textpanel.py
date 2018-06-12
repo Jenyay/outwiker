@@ -2,6 +2,7 @@
 
 import wx
 
+from outwiker.core.defines import REGISTRY_PAGE_CURSOR_POSITION
 from outwiker.gui.basetextpanel import BaseTextPanel
 from outwiker.gui.texteditor import TextEditor
 
@@ -47,7 +48,15 @@ class TextPanel (BaseTextPanel):
         self.textEditor.SetText(self._currentpage.content)
         self.textEditor.EmptyUndoBuffer()
         self.textEditor.SetReadOnly(page.readonly)
-        self.SetCursorPosition(self._getCursorPositionOption(page).value)
+
+        reg = page.root.registry.get_page_registry(page)
+        try:
+            cursor_position = reg.getint(REGISTRY_PAGE_CURSOR_POSITION,
+                                         default=0)
+            self.SetCursorPosition(cursor_position)
+        except (KeyError, ValueError):
+            pass
+
         self.textEditor.SetFocus()
 
     def __createGui(self):

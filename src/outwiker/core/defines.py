@@ -61,6 +61,7 @@ CONFIG_TOOLBARS_SECTION = 'Toolbars'
 CONFIG_TOOLBARS_VISIBLE_SUFFIX = '_visible'
 
 REGISTRY_SECTION_PAGES = '__pages'
+REGISTRY_PAGE_CURSOR_POSITION = 'cursorposition'
 
 
 # To translate this words with xgettext

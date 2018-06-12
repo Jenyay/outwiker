@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import logging
 import os
 
 import wx
@@ -33,12 +34,13 @@ from outwiker.actions.polyactionsid import (SPELL_ON_OFF_ID,
 from outwiker.core.system import getImagesDir
 from outwiker.core.commands import MessageBox, pageExists, copyTextToClipboard
 from outwiker.core.attachment import Attachment
-from outwiker.core.config import IntegerOption
-from outwiker.core.tree import RootWikiPage
+from outwiker.core.defines import REGISTRY_PAGE_CURSOR_POSITION
 from .basepagepanel import BasePagePanel
 from .dialogs.buttonsdialog import ButtonsDialog
 from .guiconfig import EditorConfig
 from .defines import MENU_EDIT, TOOLBAR_GENERAL
+
+logger = logging.getLogger('outwiker.gui.basetextpanel')
 
 
 class BaseTextPanel(BasePagePanel):
@@ -235,13 +237,11 @@ class BaseTextPanel(BasePagePanel):
         if page is None or page.isRemoved or page.readonly:
             return
 
+        reg = page.root.registry.get_page_registry(page)
         try:
-            self._getCursorPositionOption(page).value = self.GetCursorPosition()
-        except IOError as e:
-            MessageBox(_(u"Can't save file %s") % (str(e.filename)),
-                       _(u"Error"),
-                       wx.ICON_ERROR | wx.OK)
-            return
+            reg.set(REGISTRY_PAGE_CURSOR_POSITION, self.GetCursorPosition())
+        except KeyError:
+            logger.error("Registry. Can't set cursor position")
 
         newContent = self.GetContentFromGui()
         if self.__stringsAreEqual(page.content, newContent):
@@ -254,16 +254,6 @@ class BaseTextPanel(BasePagePanel):
             MessageBox(_(u"Can't save file %s") % (str(e.filename)),
                        _(u"Error"),
                        wx.ICON_ERROR | wx.OK)
-
-    def _getCursorPositionOption(self, page):
-        section = RootWikiPage.sectionGeneral
-        cursor_section = u"CursorPosition"
-        default = 0
-
-        return IntegerOption(page.params,
-                             section,
-                             cursor_section,
-                             default)
 
     def _getAttachString(self, fnames):
         """
