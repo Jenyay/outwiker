@@ -13,7 +13,6 @@ from outwiker.actions.search import (SearchAction,
 from outwiker.core.commands import MessageBox, setStatusText
 from outwiker.core.system import getImagesDir
 from outwiker.core.attachment import Attachment
-from outwiker.core.config import IntegerOption
 from outwiker.core.defines import REGISTRY_PAGE_CURSOR_POSITION
 from outwiker.core.events import PageUpdateNeededParams, PageModeChangeParams
 from outwiker.core.system import getOS
@@ -21,6 +20,9 @@ from outwiker.utilites.textfile import readTextFile
 from outwiker.gui.basetextpanel import BaseTextPanel
 from outwiker.gui.guiconfig import GeneralGuiConfig
 from outwiker.core.defines import PAGE_MODE_TEXT, PAGE_MODE_PREVIEW
+
+
+logger = logging.getLogger('outwiker.pages.basehtmlpanel')
 
 
 class BaseHtmlPanel(BaseTextPanel):
@@ -39,7 +41,6 @@ class BaseHtmlPanel(BaseTextPanel):
         self._oldPage = None
 
         # Где хранить параметы текущей страницы страницы (код, просмотр и т.д.)
-        self.tabSectionName = u"Misc"
         self.tabParamName = u"PageIndex"
 
         self._statusbar_item = 0
@@ -207,11 +208,12 @@ class BaseHtmlPanel(BaseTextPanel):
         Сохранить текущую вкладку (код, просмотр и т.п.) в настройки страницы
         """
         assert page is not None
-        tabOption = IntegerOption(page.params,
-                                  self.tabSectionName,
-                                  self.tabParamName,
-                                  -1)
-        tabOption.value = self._selectedPageIndex
+
+        reg = page.root.registry.get_page_registry(page)
+        try:
+            reg.set(self.tabParamName, self._selectedPageIndex)
+        except KeyError:
+            logger.error("Can't set tab index for {}".format(page.subpath))
 
     def loadPageTab(self, page):
         """
@@ -229,11 +231,11 @@ class BaseHtmlPanel(BaseTextPanel):
             return self.RESULT_PAGE_INDEX
 
         # Get tab option from page
-        tabOption = IntegerOption(page.params,
-                                  self.tabSectionName,
-                                  self.tabParamName,
-                                  -1)
-        return tabOption.value
+        reg = page.root.registry.get_page_registry(page)
+        try:
+            return reg.getint(self.tabParamName, default=-1)
+        except (KeyError, ValueError):
+            return -1
 
     def _onSwitchToCode(self):
         """
@@ -291,7 +293,7 @@ class BaseHtmlPanel(BaseTextPanel):
                 self._oldHtmlResult = html
                 self._oldPage = self._currentpage
         except EnvironmentError as e:
-            logging.error(str(e))
+            logger.error(str(e))
             MessageBox(_(u'Page loading error: {}').format(
                 self._currentpage.title),
                 _(u'Error'), wx.ICON_ERROR | wx.OK)
