@@ -7,6 +7,10 @@
 		<website>https://jenyay.net/Outwiker/UnstableEn</website>
 
 		<changelog>
+			<version number="2.1.0.845" status="dev">
+				<change></change>
+			</version>
+
 			<version number="2.1.0.844" status="dev" date="June 16, 2018">
 				<change>Change the storage format for certain properties of the notes tree pages.</change>
 				<change>Fix errors.</change>
@@ -67,6 +71,10 @@
 		<website>https://jenyay.net/Outwiker/Unstable</website>
 
 		<changelog>
+			<version number="2.1.0.845" status="dev">
+				<change></change>
+			</version>
+
 			<version number="2.1.0.844" status="dev" date="16.06.2018">
 				<change>Изменение формата хранения некоторых настроек страниц в дереве заметок.</change>
 				<change>Исправление ошибок.</change>
