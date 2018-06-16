@@ -28,7 +28,7 @@
 		</author>
 
 		<changelog>
-			<version number="1.1.1">
+			<version number="1.1.1" date="June 16, 2018">
                 <download os="all">http://jenyay.net/uploads/Outwiker/Contents/tableofcontents-1.1.1.zip</download>
 				<change>Fix errors.</change>
 			</version>
@@ -76,7 +76,7 @@
 		</author>
 
 		<changelog>
-			<version number="1.1.1">
+			<version number="1.1.1" date="16.06.2018">
                 <download os="all">http://jenyay.net/uploads/Outwiker/Contents/tableofcontents-1.1.1.zip</download>
 				<change>Исправление ошибок.</change>
 			</version>
