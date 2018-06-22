@@ -10,7 +10,7 @@ before_install:
     - sudo apt-get -y install libwebkitgtk-3.0
 install:
     - pip install pipenv
-    - pipenv run pip install wxpython==4.0.2 -v
+    - pipenv run pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-14.04 wxPython==4.0.2
     - pipenv update --dev
 script:
     - LD_LIBRARY_PATH=$(pipenv --venv)/lib/python3.6/site-packages/wx xvfb-run pipenv run fab test
