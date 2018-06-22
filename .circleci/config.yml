@@ -39,7 +39,7 @@ jobs:
                     sudo apt-get -y install libwebkitgtk-3.0
                     # sudo apt-get -y install libwebkit2gtk-4.0
                     wget https://bootstrap.pypa.io/get-pip.py
-                    python3.6 get-pip.py
+                    python3.6 get-pip.py --user
                     python3.6 -m pip install --user pipenv
                     pipenv run pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-14.04 wxPython==4.0.2
                     pipenv update --dev
