@@ -21,6 +21,7 @@ from .tokenlinejoin import LineJoinFactory
 from .tokencommand import CommandFactory
 from .tokentext import TextFactory
 from .tokenquote import QuoteFactory
+from .tokenwikistyleinline import WikiStyleInlineFactory
 
 from ..thumbnails import Thumbnails
 from outwiker.libs.pyparsing import NoMatch
@@ -75,6 +76,7 @@ class Parser(object):
         self.lineJoin = LineJoinFactory.make(self)
         self.command = CommandFactory.make(self)
         self.text = TextFactory.make(self)
+        self.wikistyle_inline = WikiStyleInlineFactory.make(self)
 
         # Common wiki tokens
         self.wikiTokens = [
@@ -106,6 +108,7 @@ class Parser(object):
             self.lists,
             self.table,
             self.headings,
+            self.wikistyle_inline,
             self.command,
         ]
 
@@ -129,6 +132,7 @@ class Parser(object):
             self.lineBreak,
             self.lineJoin,
             self.noformat,
+            self.wikistyle_inline,
         ]
 
         # Tokens for using inside headings
@@ -155,6 +159,7 @@ class Parser(object):
             self.strike,
             self.horline,
             self.align,
+            self.wikistyle_inline,
             self.command,
         ]
 
@@ -182,6 +187,7 @@ class Parser(object):
             self.underlined,
             self.strike,
             self.horline,
+            self.wikistyle_inline,
             self.command,
         ]
 
@@ -210,6 +216,7 @@ class Parser(object):
             self.superscript,
             self.quote,
             self.attaches,
+            self.wikistyle_inline,
             self.command,
         ]
 
