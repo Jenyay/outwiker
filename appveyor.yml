@@ -17,7 +17,7 @@ init:
 install:
     - cmd: cinst innosetup
     - cmd: py -m pipenv update --dev
-    - sh: pipenv run pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-16.04 wxPython==4.0.2
+    - sh: pipenv run pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-16.04 wxPython==4.0.3
     - sh: pipenv update --dev
 build_script:
     - cmd: py -m pipenv run fab test:"test/actions -s" 
@@ -28,7 +28,7 @@ build_script:
     - sh: pipenv run fab plugins
 test_script:
     - cmd: py -m pipenv run fab test:"-s"
-  # - sh: xvfb-run pipenv run fab test:"-s"
+    - sh: xvfb-run pipenv run fab test:"-s"
 artifacts:
     - path: build/*/versions.xml
       name: versions.xml

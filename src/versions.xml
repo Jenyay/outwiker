@@ -8,7 +8,7 @@
 
 		<changelog>
 			<version number="2.1.0.845" status="dev">
-				<change>Migrate to wxPython 4.0.2.</change>
+				<change>Migrate to wxPython 4.0.3.</change>
 			</version>
 
 			<version number="2.1.0.844" status="dev" date="June 16, 2018">
@@ -72,7 +72,7 @@
 
 		<changelog>
 			<version number="2.1.0.845" status="dev">
-				<change>Миграция на wxPython 4.0.2.</change>
+				<change>Миграция на wxPython 4.0.3.</change>
 			</version>
 
 			<version number="2.1.0.844" status="dev" date="16.06.2018">
