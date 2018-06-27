@@ -108,3 +108,15 @@ class WikiStylesTest(unittest.TestCase):
         result = self.parser.toHtml(text)
 
         self.assertEqual(result_valid, result, result)
+
+    def testInline_many_styles_01(self):
+        text = "текст %class-red class-my%бла-бла-бла%% текст"
+        result = 'текст <span class="class-red class-my">бла-бла-бла</span> текст'
+
+        self.assertEqual(result, self.parser.toHtml(text))
+
+    def testInline_many_styles_02(self):
+        text = "текст %class-my class-red%бла-бла-бла%% текст"
+        result = 'текст <span class="class-my class-red">бла-бла-бла</span> текст'
+
+        self.assertEqual(result, self.parser.toHtml(text))
