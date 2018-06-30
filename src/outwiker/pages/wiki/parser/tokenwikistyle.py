@@ -9,7 +9,7 @@ from .tokennoformat import NoFormatFactory
 
 
 PARAM_NAME_COLOR = 'color'
-# PARAM_NAME_BACKGROUND_COLOR = 'bgcolor'
+PARAM_NAME_BACKGROUND_COLOR = 'bgcolor'
 
 
 class WikiStyleInlineFactory(object):
@@ -88,7 +88,7 @@ class WikiStyleInline(object):
             if param is None:
                 param = u""
 
-            result.append((name, self._removeQuotes(param)))
+            result.append((name.lower(), self._removeQuotes(param.lower())))
 
         return result
 
@@ -185,28 +185,40 @@ class StyleGenerator(object):
                         css_list.append(css)
                         self._added_styles.add(class_name)
 
-                elif class_name in self._standardColors:
-                    classes.append(class_name)
-                    css = self._create_css(class_name, color=class_name)
-                    if class_name not in self._added_styles:
-                        css_list.append(css)
-                        self._added_styles.add(class_name)
-                elif param.startswith('#'):
+                elif class_name in self._standardColors or param.startswith('#'):
                     color = param
+                elif ((class_name.startswith('bg-') or
+                        class_name.startswith('bg_')) and
+                        class_name[3:] in self._standardColors):
+                    bgcolor = class_name[3:]
                 else:
                     classes.append(class_name)
             elif param == PARAM_NAME_COLOR:
                 color = value
+            elif param == PARAM_NAME_BACKGROUND_COLOR:
+                bgcolor = value
 
+        # Custom styles or standard color only
         if not color and not bgcolor and not other_styles:
             return (classes, css_list)
 
+        # For standard color only
         if (color and color in self._standardColors and
                 not bgcolor and not other_styles):
             class_name = color
             classes.append(class_name)
             if class_name not in self._added_styles:
-                css = self._create_css(class_name, color=color)
+                css = self._create_css(class_name, color)
+                css_list.append(css)
+            return (classes, css_list)
+
+        # For standard background color only
+        if (bgcolor and bgcolor in self._standardColors and
+                not color and not other_styles):
+            class_name = 'bg-' + bgcolor
+            classes.append(class_name)
+            if class_name not in self._added_styles:
+                css = self._create_css(class_name, bgcolor=bgcolor)
                 css_list.append(css)
             return (classes, css_list)
 
@@ -217,7 +229,7 @@ class StyleGenerator(object):
             self._class_name_index += 1
 
             classes.append(class_name)
-            css = self._create_css(class_name, color=color)
+            css = self._create_css(class_name, color, bgcolor, other_styles)
             css_list.append(css)
             self._added_special_styles[hash] = class_name
         else:
@@ -234,6 +246,9 @@ class StyleGenerator(object):
         if color is not None:
             result += ' color: {color};'.format(color=color)
 
+        if bgcolor is not None:
+            result += ' background-color: {bgcolor};'.format(bgcolor=bgcolor)
+
         result += ' }'
         return result
 
@@ -243,6 +258,6 @@ class StyleGenerator(object):
     def _calc_hash(self, params_list):
         result = ''
         for param, value in params_list:
-            result += 'param' + '=' + value
+            result += param + '=' + value
 
         return result

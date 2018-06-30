@@ -130,6 +130,22 @@ class WikiStylesInlineTest(unittest.TestCase):
         self.assertIn('<style>span.red { color: red; }</style>\n',
                       self.parser.headItems)
 
+    def test_red_color_upper(self):
+        text = "текст %RED%бла-бла-бла%% текст"
+        result = 'текст <span class="red">бла-бла-бла</span> текст'
+
+        self.assertEqual(result, self.parser.toHtml(text))
+        self.assertIn('<style>span.red { color: red; }</style>\n',
+                      self.parser.headItems)
+
+    def test_red_color_param_upper(self):
+        text = "текст %color=RED%бла-бла-бла%% текст"
+        result = 'текст <span class="red">бла-бла-бла</span> текст'
+
+        self.assertEqual(result, self.parser.toHtml(text))
+        self.assertIn('<style>span.red { color: red; }</style>\n',
+                      self.parser.headItems)
+
     def test_red_color_param(self):
         text = "текст %color=red%бла-бла-бла%% текст"
         result = 'текст <span class="red">бла-бла-бла</span> текст'
@@ -154,52 +170,97 @@ class WikiStylesInlineTest(unittest.TestCase):
         self.assertIn('<style>span.red { color: red; }</style>\n',
                       self.parser.headItems)
 
-    def test_red_color_value_01(self):
+    def test_color_value_01(self):
         text = 'текст %color="#11AA55"%бла-бла-бла%% текст'
         result = 'текст <span class="style-1">бла-бла-бла</span> текст'
 
         self.assertEqual(result, self.parser.toHtml(text))
-        self.assertIn('<style>span.style-1 { color: #11AA55; }</style>\n',
+        self.assertIn('<style>span.style-1 { color: #11aa55; }</style>\n',
                       self.parser.headItems)
         self.assertEqual(len(self.parser.headItems), 1)
 
-    def test_red_color_value_02(self):
+    def test_color_value_02(self):
         text = 'текст %color="#11AA55"%бла-бла-бла%% текст %color="#22BB66"%бла-бла-бла%%'
         result = 'текст <span class="style-1">бла-бла-бла</span> текст <span class="style-2">бла-бла-бла</span>'
 
         self.assertEqual(result, self.parser.toHtml(text))
-        self.assertIn('<style>span.style-1 { color: #11AA55; }</style>\n',
+        self.assertIn('<style>span.style-1 { color: #11aa55; }</style>\n',
                       self.parser.headItems)
-        self.assertIn('<style>span.style-2 { color: #22BB66; }</style>\n',
+        self.assertIn('<style>span.style-2 { color: #22bb66; }</style>\n',
                       self.parser.headItems)
         self.assertEqual(len(self.parser.headItems), 2)
 
-    def test_red_color_value_03(self):
+    def test_color_value_03(self):
         text = 'текст %color=#11AA55%бла-бла-бла%% текст %color="#22BB66"%бла-бла-бла%%'
         result = 'текст <span class="style-1">бла-бла-бла</span> текст <span class="style-2">бла-бла-бла</span>'
 
         self.assertEqual(result, self.parser.toHtml(text))
-        self.assertIn('<style>span.style-1 { color: #11AA55; }</style>\n',
+        self.assertIn('<style>span.style-1 { color: #11aa55; }</style>\n',
                       self.parser.headItems)
-        self.assertIn('<style>span.style-2 { color: #22BB66; }</style>\n',
+        self.assertIn('<style>span.style-2 { color: #22bb66; }</style>\n',
                       self.parser.headItems)
         self.assertEqual(len(self.parser.headItems), 2)
 
-    def test_red_color_value_repeat_01(self):
+    def test_color_value_repeat_01(self):
         text = 'текст %color=#11AA55%бла-бла-бла%% текст %color="#11AA55"%бла-бла-бла%%'
         result = 'текст <span class="style-1">бла-бла-бла</span> текст <span class="style-1">бла-бла-бла</span>'
 
         self.assertEqual(result, self.parser.toHtml(text))
-        self.assertIn('<style>span.style-1 { color: #11AA55; }</style>\n',
+        self.assertIn('<style>span.style-1 { color: #11aa55; }</style>\n',
                       self.parser.headItems)
         self.assertEqual(len(self.parser.headItems), 1)
 
-    def test_red_color_value_number(self):
+    def test_color_value_number(self):
         text = 'текст %#11AA55%бла-бла-бла%% текст'
         result = 'текст <span class="style-1">бла-бла-бла</span> текст'
 
         self.assertEqual(result, self.parser.toHtml(text))
         self.assertIn('<style>span.style-1 { color: #11aa55; }</style>\n',
+                      self.parser.headItems)
+        self.assertEqual(len(self.parser.headItems), 1)
+
+    def test_bgcolor_value_number_01(self):
+        text = 'текст %bgcolor=#11AA55%бла-бла-бла%% текст'
+        result = 'текст <span class="style-1">бла-бла-бла</span> текст'
+
+        self.assertEqual(result, self.parser.toHtml(text))
+        self.assertIn('<style>span.style-1 { background-color: #11aa55; }</style>\n',
+                      self.parser.headItems)
+        self.assertEqual(len(self.parser.headItems), 1)
+
+    def test_bgcolor_value_number_02(self):
+        text = 'текст %bgcolor="#11AA55"%бла-бла-бла%% текст'
+        result = 'текст <span class="style-1">бла-бла-бла</span> текст'
+
+        self.assertEqual(result, self.parser.toHtml(text))
+        self.assertIn('<style>span.style-1 { background-color: #11aa55; }</style>\n',
+                      self.parser.headItems)
+        self.assertEqual(len(self.parser.headItems), 1)
+
+    def test_bgcolor_value_name(self):
+        text = 'текст %bgcolor="red"%бла-бла-бла%% текст'
+        result = 'текст <span class="bg-red">бла-бла-бла</span> текст'
+
+        self.assertEqual(result, self.parser.toHtml(text))
+        self.assertIn('<style>span.bg-red { background-color: red; }</style>\n',
+                      self.parser.headItems)
+        self.assertEqual(len(self.parser.headItems), 1)
+
+    def test_bgcolor_standard_name_01(self):
+        text = 'текст %bg-red%бла-бла-бла%% текст'
+        result = 'текст <span class="bg-red">бла-бла-бла</span> текст'
+
+        self.assertEqual(result, self.parser.toHtml(text))
+        self.assertIn('<style>span.bg-red { background-color: red; }</style>\n',
+                      self.parser.headItems)
+        self.assertEqual(len(self.parser.headItems), 1)
+
+    def test_bgcolor_standard_name_02(self):
+        text = 'текст %bg_red%бла-бла-бла%% текст'
+        result = 'текст <span class="bg-red">бла-бла-бла</span> текст'
+
+        self.assertEqual(result, self.parser.toHtml(text))
+        self.assertIn('<style>span.bg-red { background-color: red; }</style>\n',
                       self.parser.headItems)
         self.assertEqual(len(self.parser.headItems), 1)
 
@@ -273,3 +334,85 @@ class StyleGeneratorTest(unittest.TestCase):
         classes, css_list = style_generator.get_style(params_2)
         self.assertEqual(classes, ['style-2'])
         self.assertEqual(css_list, ['span.style-2 { color: #22BB66; }'])
+
+    def test_style_bgcolor_name(self):
+        style_generator = StyleGenerator({}, True)
+        params = [('bgcolor', 'red')]
+        classes, css_list = style_generator.get_style(params)
+
+        self.assertEqual(classes, ['bg-red'])
+        self.assertEqual(css_list, ['span.bg-red { background-color: red; }'])
+
+    def test_style_bgcolor_value(self):
+        style_generator = StyleGenerator({}, True)
+        params = [('bgcolor', '#10AA30')]
+        classes, css_list = style_generator.get_style(params)
+
+        self.assertEqual(classes, ['style-1'])
+        self.assertEqual(css_list, ['span.style-1 { background-color: #10AA30; }'])
+
+    def test_style_color_bgcolor_value(self):
+        style_generator = StyleGenerator({}, True)
+
+        params_1 = [('color', '#11AA55')]
+        classes, css_list = style_generator.get_style(params_1)
+        self.assertEqual(classes, ['style-1'])
+        self.assertEqual(css_list, ['span.style-1 { color: #11AA55; }'])
+
+        params_2 = [('bgcolor', '#11AA55')]
+        classes, css_list = style_generator.get_style(params_2)
+        self.assertEqual(classes, ['style-2'])
+        self.assertEqual(css_list, ['span.style-2 { background-color: #11AA55; }'])
+
+    def test_style_color_bgcolor_name(self):
+        style_generator = StyleGenerator({}, True)
+
+        params_1 = [('color', 'red')]
+        classes, css_list = style_generator.get_style(params_1)
+        self.assertEqual(classes, ['red'])
+        self.assertEqual(css_list, ['span.red { color: red; }'])
+
+        params_2 = [('bgcolor', 'red')]
+        classes, css_list = style_generator.get_style(params_2)
+        self.assertEqual(classes, ['bg-red'])
+        self.assertEqual(css_list, ['span.bg-red { background-color: red; }'])
+
+    def test_style_bgcolor_name_01(self):
+        style_generator = StyleGenerator({}, True)
+        params = [('bg-red', '')]
+        classes, css_list = style_generator.get_style(params)
+
+        self.assertEqual(classes, ['bg-red'])
+        self.assertEqual(css_list, ['span.bg-red { background-color: red; }'])
+
+    def test_style_bgcolor_name_02(self):
+        style_generator = StyleGenerator({}, True)
+        params = [('bg_red', '')]
+        classes, css_list = style_generator.get_style(params)
+
+        self.assertEqual(classes, ['bg-red'])
+        self.assertEqual(css_list, ['span.bg-red { background-color: red; }'])
+
+    def test_style_color_name_repeat_01(self):
+        style_generator = StyleGenerator({}, True)
+        params = [('bg-red', '')]
+
+        classes, css_list = style_generator.get_style(params)
+        self.assertEqual(classes, ['bg-red'])
+        self.assertEqual(css_list, ['span.bg-red { background-color: red; }'])
+
+        name, css = style_generator.get_style(params)
+        self.assertEqual(classes, ['bg-red'])
+        self.assertEqual(css_list, ['span.bg-red { background-color: red; }'])
+
+    def test_style_color_name_repeat_02(self):
+        style_generator = StyleGenerator({}, True)
+        params = [('bg_red', '')]
+
+        classes, css_list = style_generator.get_style(params)
+        self.assertEqual(classes, ['bg-red'])
+        self.assertEqual(css_list, ['span.bg-red { background-color: red; }'])
+
+        name, css = style_generator.get_style(params)
+        self.assertEqual(classes, ['bg-red'])
+        self.assertEqual(css_list, ['span.bg-red { background-color: red; }'])
