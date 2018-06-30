@@ -135,19 +135,19 @@ class StyleGeneratorTest(unittest.TestCase):
     def test_style_color_name(self):
         style_generator = StyleGenerator({}, True)
         params = [('red', None)]
-        name, css = style_generator.get_style(params)
+        classes, css_list = style_generator.get_style(params)
 
-        self.assertEqual(name, 'red')
-        self.assertEqual(css, 'span.red { color: red; }')
+        self.assertEqual(classes, ['red'])
+        self.assertEqual(css_list, ['span.red { color: red; }'])
 
     def test_style_color_name_repeat(self):
         style_generator = StyleGenerator({}, True)
         params = [('red', None)]
 
-        name, css = style_generator.get_style(params)
-        self.assertEqual(name, 'red')
-        self.assertEqual(css, 'span.red { color: red; }')
+        classes, css_list = style_generator.get_style(params)
+        self.assertEqual(classes, ['red'])
+        self.assertEqual(css_list, ['span.red { color: red; }'])
 
         name, css = style_generator.get_style(params)
-        self.assertEqual(name, 'red')
-        self.assertEqual(css, 'span.red { color: red; }')
+        self.assertEqual(classes, ['red'])
+        self.assertEqual(css_list, ['span.red { color: red; }'])
