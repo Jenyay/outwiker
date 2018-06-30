@@ -21,7 +21,7 @@ from .tokenlinejoin import LineJoinFactory
 from .tokencommand import CommandFactory
 from .tokentext import TextFactory
 from .tokenquote import QuoteFactory
-from .tokenwikistyleinline import WikiStyleInlineFactory
+from .tokenwikistyle import WikiStyleInlineFactory
 
 from ..thumbnails import Thumbnails
 from outwiker.libs.pyparsing import NoMatch
