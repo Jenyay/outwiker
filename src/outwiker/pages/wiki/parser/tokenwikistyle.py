@@ -8,8 +8,8 @@ from outwiker.libs.pyparsing import (Regex, Forward, ZeroOrMore, Literal,
 from .tokennoformat import NoFormatFactory
 
 
-COLOR_PARAM_NAME = 'color'
-# BACKGROUND_COLOR_PARAM_NAME = 'bgcolor'
+PARAM_NAME_COLOR = 'color'
+# PARAM_NAME_BACKGROUND_COLOR = 'bgcolor'
 
 
 class WikiStyleInlineFactory(object):
@@ -50,7 +50,6 @@ class WikiStyleInline(object):
 
     def conversionParseAction(self, s, l, t):
         params_list = self._parseParams(t['params'])
-        inside = self.parser.parseWikiMarkup(t[1])
 
         classes, css_list = self._style_generator.get_style(params_list)
 
@@ -62,6 +61,7 @@ class WikiStyleInline(object):
 
         classes_str = ' class="' + ' '.join(classes) + '"' if classes else ''
 
+        inside = self.parser.parseWikiMarkup(t[1])
         result = '<span{classes}>{inside}</span>'.format(
             classes=classes_str,
             inside=inside
@@ -75,7 +75,7 @@ class WikiStyleInline(object):
         Sample params:
             param1 Параметр2.subparam = 111 Параметр3 = " bla bla bla" param4.sub.param2 = "111" param5 =' 222 ' param7 = " sample 'bla bla bla' example" param8 = ' test "bla-bla-bla" test '
         """
-        pattern = r"""((?P<name>#?[\w.-]+)(\s*=\s*(?P<param>([-_\w.]+)|((?P<quote>["']).*?(?P=quote)) ) )?\s*)"""
+        pattern = r"""((?P<name>#?[\w.-]+)(\s*=\s*(?P<param>([-_\w.]+)|((?P<quote>["']).*?(?P=quote))))?\s*)"""
 
         result = []
 
@@ -175,6 +175,8 @@ class StyleGenerator(object):
             if not value:
                 if param in self._standardColors:
                     return param
+            elif param == PARAM_NAME_COLOR:
+                return value
 
     def _get_classes(self, color, bgcolor, other_styles, params_list):
         classes = []
