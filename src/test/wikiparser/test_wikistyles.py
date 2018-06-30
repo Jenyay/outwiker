@@ -264,6 +264,24 @@ class WikiStylesInlineTest(unittest.TestCase):
                       self.parser.headItems)
         self.assertEqual(len(self.parser.headItems), 1)
 
+    def test_color_bgcolor_standard(self):
+        text = 'текст %blue bg_red%бла-бла-бла%% текст'
+        result = 'текст <span class="style-1">бла-бла-бла</span> текст'
+
+        self.assertEqual(result, self.parser.toHtml(text))
+        self.assertIn('<style>span.style-1 { color: blue; background-color: red; }</style>\n',
+                      self.parser.headItems)
+        self.assertEqual(len(self.parser.headItems), 1)
+
+    def test_color_bgcolor_01(self):
+        text = 'текст %blue bgcolor=red%бла-бла-бла%% текст'
+        result = 'текст <span class="style-1">бла-бла-бла</span> текст'
+
+        self.assertEqual(result, self.parser.toHtml(text))
+        self.assertIn('<style>span.style-1 { color: blue; background-color: red; }</style>\n',
+                      self.parser.headItems)
+        self.assertEqual(len(self.parser.headItems), 1)
+
 
 class StyleGeneratorTest(unittest.TestCase):
     def test_style_color_name(self):
@@ -416,3 +434,19 @@ class StyleGeneratorTest(unittest.TestCase):
         name, css = style_generator.get_style(params)
         self.assertEqual(classes, ['bg-red'])
         self.assertEqual(css_list, ['span.bg-red { background-color: red; }'])
+
+    def test_style_color_bgcolor_name_01(self):
+        style_generator = StyleGenerator({}, True)
+        params = [('red', ''), ('bg_blue', '')]
+        classes, css_list = style_generator.get_style(params)
+
+        self.assertEqual(classes, ['style-1'])
+        self.assertEqual(css_list, ['span.style-1 { color: red; background-color: blue; }'])
+
+    def test_style_color_bgcolor_name_02(self):
+        style_generator = StyleGenerator({}, True)
+        params = [('red', ''), ('bgcolor', '#10aa30')]
+        classes, css_list = style_generator.get_style(params)
+
+        self.assertEqual(classes, ['style-1'])
+        self.assertEqual(css_list, ['span.style-1 { color: red; background-color: #10aa30; }'])
