@@ -32,7 +32,7 @@ class WikiStyleInline(object):
         self._style_generator = StyleGenerator(custom_styles, True)
 
     def getToken(self):
-        start = Regex(r'%\s*(?P<params>[\w\s."\'_=:;#()-]+?)\s*%')
+        start = Regex(r'%\s*(?P<params>[\w\s."\'_=:;#(),-]+?)\s*%')
         end = Literal('%%')
 
         token = Forward()
@@ -75,7 +75,7 @@ class WikiStyleInline(object):
         Sample params:
             param1 Параметр2.subparam = 111 Параметр3 = " bla bla bla" param4.sub.param2 = "111" param5 =' 222 ' param7 = " sample 'bla bla bla' example" param8 = ' test "bla-bla-bla" test '
         """
-        pattern = r"""((?P<name>#?[\w.-]+)(\s*=\s*(?P<param>([-_\w.]+)|((?P<quote>["']).*?(?P=quote))))?\s*)"""
+        pattern = r"""((?P<name>#?[\w.-]+)(\s*=\s*(?P<param>(#?[-_\w.]+)|((?P<quote>["']).*?(?P=quote))))?\s*)"""
 
         result = []
 
@@ -152,64 +152,97 @@ class StyleGenerator(object):
         self._custom_styles = custom_styles
         self._inline = inline
 
-        # Key - string with params, value - tuple (style name; CSS string).
-        # self._cache = {}
+        self._class_name_tpl = 'style-{index}'
+        self._class_name_index = 1
+
+        # Key - string of params, value - style name.
+        self._added_special_styles = {}
+
+        # Set of standard and custom styles name
+        self._added_styles = set()
 
     def get_style(self, params_list):
         '''
         params_list - list of tuples (param name, value).
         Return tuple: (style name; CSS string).
         '''
+        css_list = []
+        classes = []
+
+        color = None
         bgcolor = None
         other_styles = None
 
-        color = self._get_color(params_list)
-        classes = self._get_classes(color, bgcolor, other_styles, params_list)
+        for param, value in params_list:
+            param = param.lower()
+            if not value:
+                class_name = param
 
-        css_list = self._create_css_list(classes, color, bgcolor, other_styles)
+                if class_name in self._custom_styles:
+                    classes.append(class_name)
+                    css = self._custom_styles[class_name]
+                    if class_name not in self._added_styles:
+                        css_list.append(css)
+                        self._added_styles.add(class_name)
+
+                elif class_name in self._standardColors:
+                    classes.append(class_name)
+                    css = self._create_css(class_name, color=class_name)
+                    if class_name not in self._added_styles:
+                        css_list.append(css)
+                        self._added_styles.add(class_name)
+                elif param.startswith('#'):
+                    color = param
+                else:
+                    classes.append(class_name)
+            elif param == PARAM_NAME_COLOR:
+                color = value
+
+        if not color and not bgcolor and not other_styles:
+            return (classes, css_list)
+
+        if (color and color in self._standardColors and
+                not bgcolor and not other_styles):
+            class_name = color
+            classes.append(class_name)
+            if class_name not in self._added_styles:
+                css = self._create_css(class_name, color=color)
+                css_list.append(css)
+            return (classes, css_list)
+
+        hash = self._calc_hash(params_list)
+        if hash not in self._added_special_styles:
+            class_name = self._class_name_tpl.format(
+                index=self._class_name_index)
+            self._class_name_index += 1
+
+            classes.append(class_name)
+            css = self._create_css(class_name, color=color)
+            css_list.append(css)
+            self._added_special_styles[hash] = class_name
+        else:
+            class_name = self._added_special_styles[hash]
+            classes.append(class_name)
+
         return (classes, css_list)
 
-    def _get_color(self, params_list):
-        for param, value in params_list:
-            param = param.lower()
-            if not value:
-                if param in self._standardColors:
-                    return param
-            elif param == PARAM_NAME_COLOR:
-                return value
-
-    def _get_classes(self, color, bgcolor, other_styles, params_list):
-        classes = []
-        for param, value in params_list:
-            param = param.lower()
-            if not value:
-                classes.append(param)
-
-        if color and color not in classes and not bgcolor and not other_styles:
-            if color in self._standardColors:
-                classes.append(color)
-
-        return classes
-
-    def _create_css_list(self, classes, color, bgcolor, other_styles):
-        css_list = []
-        for style_name in classes:
-            if style_name in self._custom_styles:
-                css_list.append(self._custom_styles[style_name])
-
-        if color is None and bgcolor is None and other_styles is None:
-            return css_list
-
+    def _create_css(self, class_name,
+                    color=None, bgcolor=None, other_styles=None):
         tag = self._get_tag()
-        result = '{tag}.{name} {{'.format(tag=tag, name=style_name)
+        result = '{tag}.{name} {{'.format(tag=tag, name=class_name)
 
         if color is not None:
             result += ' color: {color};'.format(color=color)
 
         result += ' }'
-        css_list.append(result)
-
-        return css_list
+        return result
 
     def _get_tag(self):
         return 'span' if self._inline else 'div'
+
+    def _calc_hash(self, params_list):
+        result = ''
+        for param, value in params_list:
+            result += 'param' + '=' + value
+
+        return result
