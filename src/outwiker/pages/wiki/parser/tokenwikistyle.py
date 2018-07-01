@@ -1,11 +1,16 @@
 # -*- coding: utf-8 -*-
 
 from abc import ABCMeta, abstractmethod, abstractproperty
+import os.path
 import re
 
+from outwiker.core.defines import WIKISTYLES_FILE_NAME
+from outwiker.core.textstyles import TextStylesStorage
+from outwiker.core.system import getStylesDirList
 from outwiker.libs.pyparsing import (Regex, Forward, ZeroOrMore, Literal,
-                                     LineStart, LineEnd, White,
+                                     LineStart, LineEnd,
                                      SkipTo, originalTextFor)
+from outwiker.utilites.textfile import readTextFile
 
 from .tokennoformat import NoFormatFactory
 
@@ -17,7 +22,7 @@ PARAM_NAME_STYLE = 'style'
 
 class WikiStyleInlineFactory(object):
     """
-    The fabric to create inline wiki style tokens.
+    A factory to create inline wiki style tokens.
     """
     @staticmethod
     def make(parser):
@@ -26,7 +31,7 @@ class WikiStyleInlineFactory(object):
 
 class WikiStyleBlockFactory(object):
     """
-    The fabric to create block wiki style tokens.
+    A factory to create block wiki style tokens.
     """
     @staticmethod
     def make(parser):
@@ -55,9 +60,22 @@ class WikiStyleBase(object, metaclass=ABCMeta):
     def _getTag(self):
         pass
 
-    @abstractmethod
     def _loadCustomStyles(self):
-        pass
+        storage = TextStylesStorage()
+
+        for style_dir in getStylesDirList():
+            fname = os.path.join(style_dir, WIKISTYLES_FILE_NAME)
+            try:
+                css = readTextFile(fname)
+                storage.addStylesFromString(css)
+            except IOError:
+                pass
+
+        tag = self._getTag()
+        result = {name[len(tag) + 1:]: style
+                  for name, style
+                  in storage.filterByTag(tag).items()}
+        return result
 
     def getToken(self):
         begin = self._getBeginToken()
@@ -155,9 +173,6 @@ class WikiStyleInline(WikiStyleBase):
     def _getTag(self):
         return 'span'
 
-    def _loadCustomStyles(self):
-        return {}
-
 
 class WikiStyleBlock(WikiStyleBase):
     '''
@@ -181,9 +196,6 @@ class WikiStyleBlock(WikiStyleBase):
 
     def _getTag(self):
         return 'div'
-
-    def _loadCustomStyles(self):
-        return {}
 
 
 class StyleGenerator(object):
