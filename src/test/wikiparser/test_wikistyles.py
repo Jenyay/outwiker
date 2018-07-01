@@ -12,25 +12,145 @@ from outwiker.pages.wiki.parserfactory import ParserFactory
 from outwiker.pages.wiki.parser.tokenwikistyle import StyleGenerator
 
 
-class WikiStylesInlineTest(unittest.TestCase):
+class WikiStylesBlockTest(unittest.TestCase):
     def setUp(self):
-        self.filesPath = "../test/samplefiles/"
-
-        self.__createWiki()
+        self.maxDiff = None
+        self.path = mkdtemp(prefix='Абырвалг абыр')
+        self.wikiroot = WikiDocument.create(self.path)
+        self.testPage = WikiPageFactory().create(self.wikiroot, "Страница", [])
         factory = ParserFactory()
         self.parser = factory.make(self.testPage, Application.config)
-        self.maxDiff = None
 
     def tearDown(self):
         removeDir(self.path)
 
-    def __createWiki(self):
-        # Здесь будет создаваться вики
-        self.path = mkdtemp(prefix='Абырвалг абыр')
+    def test_inline_01(self):
+        text = "текст >>class-red<<бла-бла-бла>><< текст"
+        result = text
+        self.assertEqual(result, self.parser.toHtml(text))
 
+    def test_inline_02(self):
+        text = '''текст
+>>class-red<<бла-бла-бла>><< текст
+'''
+        result = text
+        self.assertEqual(result, self.parser.toHtml(text))
+
+    def test_inline_03(self):
+        text = '''текст
+>>class-red<<
+бла-бла-бла
+>><< текст
+'''
+        result = text
+        self.assertEqual(result, self.parser.toHtml(text))
+
+    def test_inline_04(self):
+        text = '''текст
+>>class-red<< текст
+бла-бла-бла
+>><<
+'''
+        result = text
+        self.assertEqual(result, self.parser.toHtml(text))
+
+    def test_inline_04_space_line_start(self):
+        text = '''текст
+   >>class-red<<
+бла-бла-бла
+>><<
+'''
+        result = text
+        self.assertEqual(result, self.parser.toHtml(text))
+
+    def test_inline_05_space_line_start(self):
+        text = '''текст
+>>class-red<<
+бла-бла-бла
+    >><<
+'''
+        result = text
+        self.assertEqual(result, self.parser.toHtml(text))
+
+    def test_block_01(self):
+        text = '''текст
+>>class-red<<
+бла-бла-бла
+>><<
+'''
+        result = '''текст
+<div class="class-red">бла-бла-бла
+</div>'''
+        self.assertEqual(result, self.parser.toHtml(text))
+
+    def test_block_standard(self):
+        text = '''текст
+>>red<<
+бла-бла-бла
+>><<
+'''
+        result = '''текст
+<div class="red">бла-бла-бла
+</div>'''
+        self.assertEqual(result, self.parser.toHtml(text))
+        self.assertIn('<style>div.red { color: red; }</style>\n',
+                      self.parser.headItems)
+
+    def test_block_space_begin_right(self):
+        text = '''текст
+>>red<<  
+бла-бла-бла
+>><<
+'''
+        result = '''текст
+<div class="red">бла-бла-бла
+</div>'''
+        self.assertEqual(result, self.parser.toHtml(text))
+        self.assertIn('<style>div.red { color: red; }</style>\n',
+                      self.parser.headItems)
+
+    def test_block_space_end_right(self):
+        text = '''текст
+>>red<<
+бла-бла-бла
+>><<   
+текст
+'''
+        result = '''текст
+<div class="red">бла-бла-бла
+</div>текст
+'''
+        self.assertEqual(result, self.parser.toHtml(text))
+        self.assertIn('<style>div.red { color: red; }</style>\n',
+                      self.parser.headItems)
+
+    def test_block_space(self):
+        text = '''текст
+>>red<<    
+бла-бла-бла
+>><<   
+текст
+'''
+        result = '''текст
+<div class="red">бла-бла-бла
+</div>текст
+'''
+        self.assertEqual(result, self.parser.toHtml(text))
+        self.assertIn('<style>div.red { color: red; }</style>\n',
+                      self.parser.headItems)
+
+
+class WikiStylesInlineTest(unittest.TestCase):
+    def setUp(self):
+        self.maxDiff = None
+        self.path = mkdtemp(prefix='Абырвалг абыр')
         self.wikiroot = WikiDocument.create(self.path)
-        WikiPageFactory().create(self.wikiroot, "Страница 2", [])
-        self.testPage = self.wikiroot["Страница 2"]
+        self.testPage = WikiPageFactory().create(self.wikiroot, "Страница", [])
+        factory = ParserFactory()
+        self.parser = factory.make(self.testPage, Application.config)
+
+    def tearDown(self):
+        removeDir(self.path)
 
     def test_style_01(self):
         text = "текст %class-red%бла-бла-бла%% текст"
@@ -303,7 +423,7 @@ class WikiStylesInlineTest(unittest.TestCase):
 
 class StyleGeneratorTest(unittest.TestCase):
     def test_style_color_name(self):
-        style_generator = StyleGenerator({}, True)
+        style_generator = StyleGenerator({}, 'span')
         params = [('red', '')]
         classes, css_list = style_generator.getStyle(params)
 
@@ -311,7 +431,7 @@ class StyleGeneratorTest(unittest.TestCase):
         self.assertEqual(css_list, ['span.red { color: red; }'])
 
     def test_style_color_name_repeat(self):
-        style_generator = StyleGenerator({}, True)
+        style_generator = StyleGenerator({}, 'span')
         params = [('red', '')]
 
         classes, css_list = style_generator.getStyle(params)
@@ -323,7 +443,7 @@ class StyleGeneratorTest(unittest.TestCase):
         self.assertEqual(css_list, ['span.red { color: red; }'])
 
     def test_style_color_name_param(self):
-        style_generator = StyleGenerator({}, True)
+        style_generator = StyleGenerator({}, 'span')
         params = [('color', 'red')]
         classes, css_list = style_generator.getStyle(params)
 
@@ -331,7 +451,7 @@ class StyleGeneratorTest(unittest.TestCase):
         self.assertEqual(css_list, ['span.red { color: red; }'])
 
     def test_style_color_value_01(self):
-        style_generator = StyleGenerator({}, True)
+        style_generator = StyleGenerator({}, 'span')
         params = [('color', '#1A5')]
         classes, css_list = style_generator.getStyle(params)
 
@@ -339,7 +459,7 @@ class StyleGeneratorTest(unittest.TestCase):
         self.assertEqual(css_list, ['span.style-1 { color: #1A5; }'])
 
     def test_style_color_value_02(self):
-        style_generator = StyleGenerator({}, True)
+        style_generator = StyleGenerator({}, 'span')
         params = [('color', '#11AA55')]
         classes, css_list = style_generator.getStyle(params)
 
@@ -347,7 +467,7 @@ class StyleGeneratorTest(unittest.TestCase):
         self.assertEqual(css_list, ['span.style-1 { color: #11AA55; }'])
 
     def test_style_color_value_repeat(self):
-        style_generator = StyleGenerator({}, True)
+        style_generator = StyleGenerator({}, 'span')
         params = [('color', '#11AA55')]
 
         classes, css_list = style_generator.getStyle(params)
@@ -359,7 +479,7 @@ class StyleGeneratorTest(unittest.TestCase):
         self.assertEqual(css_list, [])
 
     def test_style_color_value_many(self):
-        style_generator = StyleGenerator({}, True)
+        style_generator = StyleGenerator({}, 'span')
 
         params_1 = [('color', '#11AA55')]
         classes, css_list = style_generator.getStyle(params_1)
@@ -372,7 +492,7 @@ class StyleGeneratorTest(unittest.TestCase):
         self.assertEqual(css_list, ['span.style-2 { color: #22BB66; }'])
 
     def test_style_bgcolor_name(self):
-        style_generator = StyleGenerator({}, True)
+        style_generator = StyleGenerator({}, 'span')
         params = [('bgcolor', 'red')]
         classes, css_list = style_generator.getStyle(params)
 
@@ -380,7 +500,7 @@ class StyleGeneratorTest(unittest.TestCase):
         self.assertEqual(css_list, ['span.bg-red { background-color: red; }'])
 
     def test_style_bgcolor_value(self):
-        style_generator = StyleGenerator({}, True)
+        style_generator = StyleGenerator({}, 'span')
         params = [('bgcolor', '#10AA30')]
         classes, css_list = style_generator.getStyle(params)
 
@@ -388,7 +508,7 @@ class StyleGeneratorTest(unittest.TestCase):
         self.assertEqual(css_list, ['span.style-1 { background-color: #10AA30; }'])
 
     def test_style_color_bgcolor_value(self):
-        style_generator = StyleGenerator({}, True)
+        style_generator = StyleGenerator({}, 'span')
 
         params_1 = [('color', '#11AA55')]
         classes, css_list = style_generator.getStyle(params_1)
@@ -401,7 +521,7 @@ class StyleGeneratorTest(unittest.TestCase):
         self.assertEqual(css_list, ['span.style-2 { background-color: #11AA55; }'])
 
     def test_style_color_bgcolor_name(self):
-        style_generator = StyleGenerator({}, True)
+        style_generator = StyleGenerator({}, 'span')
 
         params_1 = [('color', 'red')]
         classes, css_list = style_generator.getStyle(params_1)
@@ -414,7 +534,7 @@ class StyleGeneratorTest(unittest.TestCase):
         self.assertEqual(css_list, ['span.bg-red { background-color: red; }'])
 
     def test_style_bgcolor_name_01(self):
-        style_generator = StyleGenerator({}, True)
+        style_generator = StyleGenerator({}, 'span')
         params = [('bg-red', '')]
         classes, css_list = style_generator.getStyle(params)
 
@@ -422,7 +542,7 @@ class StyleGeneratorTest(unittest.TestCase):
         self.assertEqual(css_list, ['span.bg-red { background-color: red; }'])
 
     def test_style_bgcolor_name_02(self):
-        style_generator = StyleGenerator({}, True)
+        style_generator = StyleGenerator({}, 'span')
         params = [('bg_red', '')]
         classes, css_list = style_generator.getStyle(params)
 
@@ -430,7 +550,7 @@ class StyleGeneratorTest(unittest.TestCase):
         self.assertEqual(css_list, ['span.bg-red { background-color: red; }'])
 
     def test_style_color_name_repeat_01(self):
-        style_generator = StyleGenerator({}, True)
+        style_generator = StyleGenerator({}, 'span')
         params = [('bg-red', '')]
 
         classes, css_list = style_generator.getStyle(params)
@@ -442,7 +562,7 @@ class StyleGeneratorTest(unittest.TestCase):
         self.assertEqual(css_list, ['span.bg-red { background-color: red; }'])
 
     def test_style_color_name_repeat_02(self):
-        style_generator = StyleGenerator({}, True)
+        style_generator = StyleGenerator({}, 'span')
         params = [('bg_red', '')]
 
         classes, css_list = style_generator.getStyle(params)
@@ -454,7 +574,7 @@ class StyleGeneratorTest(unittest.TestCase):
         self.assertEqual(css_list, ['span.bg-red { background-color: red; }'])
 
     def test_style_color_bgcolor_name_01(self):
-        style_generator = StyleGenerator({}, True)
+        style_generator = StyleGenerator({}, 'span')
         params = [('red', ''), ('bg_blue', '')]
         classes, css_list = style_generator.getStyle(params)
 
@@ -462,7 +582,7 @@ class StyleGeneratorTest(unittest.TestCase):
         self.assertEqual(css_list, ['span.style-1 { color: red; background-color: blue; }'])
 
     def test_style_color_bgcolor_name_02(self):
-        style_generator = StyleGenerator({}, True)
+        style_generator = StyleGenerator({}, 'span')
         params = [('red', ''), ('bgcolor', '#10aa30')]
         classes, css_list = style_generator.getStyle(params)
 
@@ -470,7 +590,7 @@ class StyleGeneratorTest(unittest.TestCase):
         self.assertEqual(css_list, ['span.style-1 { color: red; background-color: #10aa30; }'])
 
     def test_user_style__01(self):
-        style_generator = StyleGenerator({}, True)
+        style_generator = StyleGenerator({}, 'span')
         params = [('style', 'font-weight: bold;')]
         classes, css_list = style_generator.getStyle(params)
 
@@ -478,7 +598,7 @@ class StyleGeneratorTest(unittest.TestCase):
         self.assertEqual(css_list, ['span.style-1 { font-weight: bold; }'])
 
     def test_user_style_02(self):
-        style_generator = StyleGenerator({}, True)
+        style_generator = StyleGenerator({}, 'span')
         params = [('style', 'font-weight: bold;'), ('red', '')]
         classes, css_list = style_generator.getStyle(params)
 
@@ -486,7 +606,7 @@ class StyleGeneratorTest(unittest.TestCase):
         self.assertEqual(css_list, ['span.style-1 { color: red; font-weight: bold; }'])
 
     def test_user_style_03(self):
-        style_generator = StyleGenerator({}, True)
+        style_generator = StyleGenerator({}, 'span')
         params = [('style', 'font-weight: bold'), ('red', '')]
         classes, css_list = style_generator.getStyle(params)
 
@@ -494,7 +614,7 @@ class StyleGeneratorTest(unittest.TestCase):
         self.assertEqual(css_list, ['span.style-1 { color: red; font-weight: bold; }'])
 
     def test_user_style_04(self):
-        style_generator = StyleGenerator({}, True)
+        style_generator = StyleGenerator({}, 'span')
         params = [
             ('style', 'font-weight: bold;'),
             ('red', ''),

@@ -4,6 +4,7 @@ from abc import ABCMeta, abstractmethod, abstractproperty
 import re
 
 from outwiker.libs.pyparsing import (Regex, Forward, ZeroOrMore, Literal,
+                                     LineStart, LineEnd, White,
                                      SkipTo, originalTextFor)
 
 from .tokennoformat import NoFormatFactory
@@ -23,11 +24,20 @@ class WikiStyleInlineFactory(object):
         return WikiStyleInline(parser).getToken()
 
 
+class WikiStyleBlockFactory(object):
+    """
+    The fabric to create block wiki style tokens.
+    """
+    @staticmethod
+    def make(parser):
+        return WikiStyleBlock(parser).getToken()
+
+
 class WikiStyleBase(object, metaclass=ABCMeta):
     def __init__(self, parser):
         self.parser = parser
         custom_styles = self._loadCustomStyles()
-        self._style_generator = self._createStyleGenerator(custom_styles)
+        self._style_generator = StyleGenerator(custom_styles, self._getTag())
 
     @abstractproperty
     def name(self):
@@ -46,16 +56,12 @@ class WikiStyleBase(object, metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def _createStyleGenerator(self, custom_styles):
-        pass
-
-    @abstractmethod
     def _loadCustomStyles(self):
         pass
 
     def getToken(self):
         begin = self._getBeginToken()
-        end = self._getEndToken()
+        end = self._getEndToken().suppress()
 
         token = Forward()
         no_format = NoFormatFactory.make(self.parser)
@@ -133,6 +139,9 @@ class WikiStyleBase(object, metaclass=ABCMeta):
 
 
 class WikiStyleInline(WikiStyleBase):
+    '''
+    Token for inline style: %%class-name...%% ... %%
+    '''
     @property
     def name(self):
         return 'style_inline'
@@ -146,15 +155,39 @@ class WikiStyleInline(WikiStyleBase):
     def _getTag(self):
         return 'span'
 
-    def _createStyleGenerator(self, custom_styles):
-        return StyleGenerator(custom_styles, True)
+    def _loadCustomStyles(self):
+        return {}
+
+
+class WikiStyleBlock(WikiStyleBase):
+    '''
+    Token for block style:
+        >>class-name...<<
+        ...
+        >><<
+    '''
+    @property
+    def name(self):
+        return 'style_block'
+
+    def _getBeginToken(self):
+        return (LineStart()
+                + Regex(r'>>\s*(?P<params>[\w\s."\'_=:;#(),-]+?)\s*<<[ \t]*')
+                + LineEnd().suppress()
+                )
+
+    def _getEndToken(self):
+        return LineStart() + Regex(r'>><<[ \t]*') + LineEnd()
+
+    def _getTag(self):
+        return 'div'
 
     def _loadCustomStyles(self):
         return {}
 
 
 class StyleGenerator(object):
-    def __init__(self, custom_styles, inline):
+    def __init__(self, custom_styles, tagname):
         '''
         custom_styles - dictionary. A key is style name,
             a value is CSS description.
@@ -195,7 +228,7 @@ class StyleGenerator(object):
             "white", "whitesmoke", "yellow", "yellowgreen",
         ])
         self._custom_styles = custom_styles
-        self._inline = inline
+        self._tagname = tagname
 
         self._class_name_tpl = 'style-{index}'
         self._class_name_index = 1
@@ -287,8 +320,7 @@ class StyleGenerator(object):
 
     def _createCSS(self, class_name,
                    color=None, bgcolor=None, other_styles=None):
-        tag = self._getTag()
-        result = '{tag}.{name} {{'.format(tag=tag, name=class_name)
+        result = '{tag}.{name} {{'.format(tag=self._tagname, name=class_name)
 
         if color:
             result += ' color: {color};'.format(color=color)
@@ -305,9 +337,6 @@ class StyleGenerator(object):
 
         result += ' }'
         return result
-
-    def _getTag(self):
-        return 'span' if self._inline else 'div'
 
     def _calcHash(self, params_list):
         result = ''
