@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from abc import ABCMeta, abstractmethod, abstractproperty
 import re
 
 from outwiker.libs.pyparsing import (Regex, Forward, ZeroOrMore, Literal,
@@ -10,6 +11,7 @@ from .tokennoformat import NoFormatFactory
 
 PARAM_NAME_COLOR = 'color'
 PARAM_NAME_BACKGROUND_COLOR = 'bgcolor'
+PARAM_NAME_STYLE = 'style'
 
 
 class WikiStyleInlineFactory(object):
@@ -21,19 +23,39 @@ class WikiStyleInlineFactory(object):
         return WikiStyleInline(parser).getToken()
 
 
-class WikiStyleInline(object):
-    start_html = ''
-    end_html = '</span>'
-    name = 'wikistyle_inline'
-
+class WikiStyleBase(object, metaclass=ABCMeta):
     def __init__(self, parser):
         self.parser = parser
-        custom_styles = {}
-        self._style_generator = StyleGenerator(custom_styles, True)
+        custom_styles = self._loadCustomStyles()
+        self._style_generator = self._createStyleGenerator(custom_styles)
+
+    @abstractproperty
+    def name(self):
+        pass
+
+    @abstractmethod
+    def _getBeginToken(self):
+        pass
+
+    @abstractmethod
+    def _getEndToken(self):
+        pass
+
+    @abstractmethod
+    def _getTag(self):
+        pass
+
+    @abstractmethod
+    def _createStyleGenerator(self, custom_styles):
+        pass
+
+    @abstractmethod
+    def _loadCustomStyles(self):
+        pass
 
     def getToken(self):
-        start = Regex(r'%\s*(?P<params>[\w\s."\'_=:;#(),-]+?)\s*%')
-        end = Literal('%%')
+        begin = self._getBeginToken()
+        end = self._getEndToken()
 
         token = Forward()
         no_format = NoFormatFactory.make(self.parser)
@@ -42,7 +64,7 @@ class WikiStyleInline(object):
         nested_tokens = ZeroOrMore(SkipTo(token, failOn=end, ignore=no_format) + token)
 
         inside = originalTextFor(nested_tokens + before_end + SkipTo(end)).leaveWhitespace()
-        token << start + inside + end
+        token << begin + inside + end
 
         token = token.setParseAction(self.conversionParseAction)(self.name)
 
@@ -51,7 +73,7 @@ class WikiStyleInline(object):
     def conversionParseAction(self, s, l, t):
         params_list = self._parseParams(t['params'])
 
-        classes, css_list = self._style_generator.get_style(params_list)
+        classes, css_list = self._style_generator.getStyle(params_list)
 
         for css in css_list:
             html_style = '<style>{content}</style>\n'.format(content=css)
@@ -62,7 +84,9 @@ class WikiStyleInline(object):
         classes_str = ' class="' + ' '.join(classes) + '"' if classes else ''
 
         inside = self.parser.parseWikiMarkup(t[1])
-        result = '<span{classes}>{inside}</span>'.format(
+        tag = self._getTag()
+        result = '<{tag}{classes}>{inside}</{tag}>'.format(
+            tag=tag,
             classes=classes_str,
             inside=inside
         )
@@ -73,9 +97,13 @@ class WikiStyleInline(object):
         """
         Parse params string into parts: key - value. Key may contain a dot.
         Sample params:
-            param1 Параметр2.subparam = 111 Параметр3 = " bla bla bla" param4.sub.param2 = "111" param5 =' 222 ' param7 = " sample 'bla bla bla' example" param8 = ' test "bla-bla-bla" test '
+                param1
+                param2 = "bla bla bla"
+                param3 = '222'
+                param4 = "sample 'bla bla bla' example"
+                param5 = 'test "bla-bla-bla" test'
         """
-        pattern = r"""((?P<name>#?[\w.-]+)(\s*=\s*(?P<param>(#?[-_\w.]+)|((?P<quote>["']).*?(?P=quote))))?\s*)"""
+        pattern = r"""((?P<name>#?[\w_-]+)(\s*=\s*(?P<param>(#?[-_\w.]+)|((?P<quote>["']).*?(?P=quote))))?\s*)"""
 
         result = []
 
@@ -94,7 +122,8 @@ class WikiStyleInline(object):
 
     def _removeQuotes(self, text):
         """
-        Удалить начальные и конечные кавычки, которые остались после разбора параметров
+        Удалить начальные и конечные кавычки,
+        которые остались после разбора параметров
         """
         if (len(text) > 0 and
                 (text[0] == text[-1] == "'" or text[0] == text[-1] == '"')):
@@ -103,9 +132,25 @@ class WikiStyleInline(object):
         return text
 
 
-class StyleNotFound(Exception):
-    def __init__(self, style_name):
-        self.message = 'Style "{}" is not found'.format(style_name)
+class WikiStyleInline(WikiStyleBase):
+    @property
+    def name(self):
+        return 'style_inline'
+
+    def _getBeginToken(self):
+        return Regex(r'%\s*(?P<params>[\w\s."\'_=:;#(),-]+?)\s*%')
+
+    def _getEndToken(self):
+        return Literal('%%')
+
+    def _getTag(self):
+        return 'span'
+
+    def _createStyleGenerator(self, custom_styles):
+        return StyleGenerator(custom_styles, True)
+
+    def _loadCustomStyles(self):
+        return {}
 
 
 class StyleGenerator(object):
@@ -161,7 +206,7 @@ class StyleGenerator(object):
         # Set of standard and custom styles name
         self._added_styles = set()
 
-    def get_style(self, params_list):
+    def getStyle(self, params_list):
         '''
         params_list - list of tuples (param name, value).
         Return tuple: (style name; CSS string).
@@ -197,6 +242,8 @@ class StyleGenerator(object):
                 color = value
             elif param == PARAM_NAME_BACKGROUND_COLOR:
                 bgcolor = value
+            elif param == PARAM_NAME_STYLE:
+                other_styles = value
 
         # Custom styles or standard color only
         if not color and not bgcolor and not other_styles:
@@ -208,7 +255,7 @@ class StyleGenerator(object):
             class_name = color
             classes.append(class_name)
             if class_name not in self._added_styles:
-                css = self._create_css(class_name, color)
+                css = self._createCSS(class_name, color)
                 css_list.append(css)
             return (classes, css_list)
 
@@ -218,18 +265,18 @@ class StyleGenerator(object):
             class_name = 'bg-' + bgcolor
             classes.append(class_name)
             if class_name not in self._added_styles:
-                css = self._create_css(class_name, bgcolor=bgcolor)
+                css = self._createCSS(class_name, bgcolor=bgcolor)
                 css_list.append(css)
             return (classes, css_list)
 
-        hash = self._calc_hash(params_list)
+        hash = self._calcHash(params_list)
         if hash not in self._added_special_styles:
             class_name = self._class_name_tpl.format(
                 index=self._class_name_index)
             self._class_name_index += 1
 
             classes.append(class_name)
-            css = self._create_css(class_name, color, bgcolor, other_styles)
+            css = self._createCSS(class_name, color, bgcolor, other_styles)
             css_list.append(css)
             self._added_special_styles[hash] = class_name
         else:
@@ -238,24 +285,31 @@ class StyleGenerator(object):
 
         return (classes, css_list)
 
-    def _create_css(self, class_name,
-                    color=None, bgcolor=None, other_styles=None):
-        tag = self._get_tag()
+    def _createCSS(self, class_name,
+                   color=None, bgcolor=None, other_styles=None):
+        tag = self._getTag()
         result = '{tag}.{name} {{'.format(tag=tag, name=class_name)
 
-        if color is not None:
+        if color:
             result += ' color: {color};'.format(color=color)
 
-        if bgcolor is not None:
+        if bgcolor:
             result += ' background-color: {bgcolor};'.format(bgcolor=bgcolor)
+
+        if other_styles:
+            other_styles = other_styles.strip()
+            if not other_styles.endswith(';'):
+                other_styles += ';'
+
+            result += ' ' + other_styles
 
         result += ' }'
         return result
 
-    def _get_tag(self):
+    def _getTag(self):
         return 'span' if self._inline else 'div'
 
-    def _calc_hash(self, params_list):
+    def _calcHash(self, params_list):
         result = ''
         for param, value in params_list:
             result += param + '=' + value
