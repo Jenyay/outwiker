@@ -721,4 +721,5 @@ def appimage(is_stable=0):
 @task
 def coverage():
     with lcd('src'):
+        local('coverage report {} -i'.format(COVERAGE_PARAMS))
         local('coverage html {} -i'.format(COVERAGE_PARAMS))
