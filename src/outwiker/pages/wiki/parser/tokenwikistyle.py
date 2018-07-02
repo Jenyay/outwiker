@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 
 from abc import ABCMeta, abstractmethod, abstractproperty
-import os.path
 import re
 
 from outwiker.core.defines import WIKISTYLES_FILE_NAME
 from outwiker.core.textstyles import TextStylesStorage
-from outwiker.core.system import getStylesDirList
+from outwiker.core.system import getSpecialDirList
 from outwiker.libs.pyparsing import (Regex, Forward, ZeroOrMore, Literal,
                                      LineStart, LineEnd,
                                      SkipTo, originalTextFor)
@@ -63,8 +62,7 @@ class WikiStyleBase(object, metaclass=ABCMeta):
     def _loadCustomStyles(self):
         storage = TextStylesStorage()
 
-        for style_dir in getStylesDirList():
-            fname = os.path.join(style_dir, WIKISTYLES_FILE_NAME)
+        for fname in getSpecialDirList(WIKISTYLES_FILE_NAME):
             try:
                 css = readTextFile(fname)
                 storage.addStylesFromString(css)
