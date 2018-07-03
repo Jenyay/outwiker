@@ -76,3 +76,9 @@ div.frame {
 	margin: 1em;
 	border: 1px solid #000;
 }
+
+div.border {
+	padding: 1em;
+	margin: 1em;
+	border: 1px solid #000;
+}
