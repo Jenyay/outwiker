@@ -59,6 +59,9 @@ class WikiStyleBase(object, metaclass=ABCMeta):
     def _getTag(self):
         pass
 
+    def _prepareContent(self, content):
+        return content
+
     def _loadCustomStyles(self):
         storage = TextStylesStorage()
 
@@ -105,7 +108,8 @@ class WikiStyleBase(object, metaclass=ABCMeta):
 
         classes_str = ' class="' + ' '.join(classes) + '"' if classes else ''
 
-        inside = self.parser.parseWikiMarkup(t[1])
+        content = self._prepareContent(t[1])
+        inside = self.parser.parseWikiMarkup(content)
         tag = self._getTag()
         result = '<{tag}{classes}>{inside}</{tag}>'.format(
             tag=tag,
@@ -194,6 +198,11 @@ class WikiStyleBlock(WikiStyleBase):
 
     def _getTag(self):
         return 'div'
+
+    def _prepareContent(self, content):
+        if content.endswith('\n'):
+            content = content[:-1]
+        return content
 
 
 class StyleGenerator(object):

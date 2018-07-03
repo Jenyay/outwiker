@@ -79,8 +79,7 @@ class WikiStylesBlockTest(unittest.TestCase):
 >><<
 '''
         result = '''текст
-<div class="class-red">бла-бла-бла
-</div>'''
+<div class="class-red">бла-бла-бла</div>'''
         self.assertEqual(result, self.parser.toHtml(text))
 
     def test_block_standard(self):
@@ -90,8 +89,7 @@ class WikiStylesBlockTest(unittest.TestCase):
 >><<
 '''
         result = '''текст
-<div class="red">бла-бла-бла
-</div>'''
+<div class="red">бла-бла-бла</div>'''
         self.assertEqual(result, self.parser.toHtml(text))
         self.assertIn('<style>div.red { color: red; }</style>\n',
                       self.parser.headItems)
@@ -103,8 +101,7 @@ class WikiStylesBlockTest(unittest.TestCase):
 >><<
 '''
         result = '''текст
-<div class="red">бла-бла-бла
-</div>'''
+<div class="red">бла-бла-бла</div>'''
         self.assertEqual(result, self.parser.toHtml(text))
         self.assertIn('<style>div.red { color: red; }</style>\n',
                       self.parser.headItems)
@@ -117,8 +114,7 @@ class WikiStylesBlockTest(unittest.TestCase):
 текст
 '''
         result = '''текст
-<div class="red">бла-бла-бла
-</div>текст
+<div class="red">бла-бла-бла</div>текст
 '''
         self.assertEqual(result, self.parser.toHtml(text))
         self.assertIn('<style>div.red { color: red; }</style>\n',
@@ -132,8 +128,7 @@ class WikiStylesBlockTest(unittest.TestCase):
 текст
 '''
         result = '''текст
-<div class="red">бла-бла-бла
-</div>текст
+<div class="red">бла-бла-бла</div>текст
 '''
         self.assertEqual(result, self.parser.toHtml(text))
         self.assertIn('<style>div.red { color: red; }</style>\n',
