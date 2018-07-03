@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import re
 from io import StringIO
@@ -54,6 +54,13 @@ class ParagraphHtmlImprover (HtmlImprover):
         remove_p_before = r"<p>\s*(?=<(?:" + minopentags + r")[ >])"
         result = re.sub(remove_p_before, "", result, flags=re.I | re.M)
 
+        # Remove <p> tag before div elements
+        # remove_p_before = r"<p>(?=<(?:div.*?>))"
+        # result = re.sub(remove_p_before, "", result, flags=re.I)
+
+        # Remove </p> after div element
+        # result = result.replace('</div></p>', '</div>\n')
+
         # Remove </p> tag after some block elements
         remove_p_after = r"(<(?:" + opentags + r")(?: [^>]*?)?>|</(?:" + closetags + r")>)\s*</p>"
         result = re.sub(remove_p_after, r"\1", result, flags=re.I | re.M)
@@ -73,6 +80,13 @@ class ParagraphHtmlImprover (HtmlImprover):
         # Append line breaks after some elements (to improve readability)
         append_eol_after = r"(<(?:hr(?: [^>]*?)?/?|br\s*/?|/\s*(?:h\d|p|script|[uo]l|table))>)\n*"
         result = re.sub(append_eol_after, "\\1\n", result, flags=re.I | re.M)
+
+        # Normalize <p>...</p> inside <div>
+        append_p_inside = r"(?P<start><div((?!</div>).)*?>)(?P<content>((?!</div>).)*?</p>.*?)(?P<end></div>)"
+        result = re.sub(append_p_inside,
+                        "\\g<start><p>\\g<content></p>\\g<end>",
+                        result,
+                        flags=re.I | re.M | re.S)
 
         # Remove </p> at the begin
         remove_p_start = r"^</p>"
