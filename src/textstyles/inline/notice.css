@@ -1,0 +1,8 @@
+span.notice {
+	color: #333;
+	background-color: #e3f7fc;
+	border-radius: 1px;
+	padding: 2px 2px 2px 2px;
+	margin: 2px;
+	border:1px solid #8ed9f6;
+}

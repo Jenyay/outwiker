@@ -17,6 +17,8 @@ from outwiker.core.defines import (ICONS_FOLDER_NAME,
                                    STYLES_FOLDER_NAME,
                                    PLUGINS_FOLDER_NAME,
                                    SPELL_FOLDER_NAME,
+                                   STYLES_BLOCK_FOLDER_NAME,
+                                   STYLES_INLINE_FOLDER_NAME
                                    )
 
 
@@ -186,6 +188,11 @@ def getConfigPath(dirname=DEFAULT_CONFIG_DIR, fname=DEFAULT_CONFIG_NAME):
         spellDir = op.join(mainConfDir, SPELL_FOLDER_NAME)
         if not op.exists(spellDir):
             os.mkdir(spellDir)
+
+        os.makedirs(op.join(mainConfDir, STYLES_BLOCK_FOLDER_NAME),
+                    exist_ok=True)
+        os.makedirs(op.join(mainConfDir, STYLES_INLINE_FOLDER_NAME),
+                    exist_ok=True)
 
     return confPath
 

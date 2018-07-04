@@ -121,6 +121,7 @@ class BasePyInstallerBuilder(BaseBinaryBuilder, metaclass=ABCMeta):
                   u'--add-binary locale' + os.pathsep + u'locale',
                   u'--add-binary spell' + os.pathsep + u'spell',
                   u'--add-binary styles' + os.pathsep + u'styles',
+                  u'--add-binary textstyles' + os.pathsep + u'textstyles',
                   u'--add-binary plugins' + os.pathsep + u'plugins',
                   ]
 

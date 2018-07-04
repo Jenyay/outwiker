@@ -1,0 +1,8 @@
+div.success {
+	color: #333;
+	background-color: #e9ffd9;
+	border-radius: 10px;
+	padding: 10px 10px 10px 10px;
+	margin: 10px;
+	border:1px solid #a6ca8a;
+}

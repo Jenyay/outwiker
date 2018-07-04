@@ -56,6 +56,8 @@ IMAGES_FOLDER_NAME = u'images'
 STYLES_FOLDER_NAME = u"styles"
 PLUGINS_FOLDER_NAME = u"plugins"
 SPELL_FOLDER_NAME = u"spell"
+STYLES_BLOCK_FOLDER_NAME = os.path.join("textstyles", 'block')
+STYLES_INLINE_FOLDER_NAME = os.path.join("textstyles", 'inline')
 
 PAGE_MODE_TEXT = 0
 PAGE_MODE_PREVIEW = 1

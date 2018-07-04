@@ -1,0 +1,8 @@
+div.notice {
+	color: #333;
+	background-color: #e3f7fc;
+	border-radius: 10px;
+	padding: 10px 10px 10px 10px;
+	margin: 10px;
+	border:1px solid #8ed9f6;
+}
