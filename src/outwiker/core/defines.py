@@ -69,8 +69,6 @@ CONFIG_TOOLBARS_VISIBLE_SUFFIX = '_visible'
 REGISTRY_SECTION_PAGES = '__pages'
 REGISTRY_PAGE_CURSOR_POSITION = 'cursorposition'
 
-WIKISTYLES_FILE_NAME = os.path.join(STYLES_FOLDER_NAME, 'textstyles.css')
-
 
 # To translate this words with xgettext
 if __name__ == u'__main__':

@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 
 from abc import ABCMeta, abstractmethod, abstractproperty
+import os
 import re
 
-from outwiker.core.defines import WIKISTYLES_FILE_NAME
-from outwiker.core.textstyles import TextStylesStorage
+from outwiker.core.defines import (STYLES_BLOCK_FOLDER_NAME,
+                                   STYLES_INLINE_FOLDER_NAME,
+                                   )
 from outwiker.core.system import getSpecialDirList
 from outwiker.libs.pyparsing import (Regex, Forward, ZeroOrMore, Literal,
                                      LineStart, LineEnd,
@@ -59,24 +61,27 @@ class WikiStyleBase(object, metaclass=ABCMeta):
     def _getTag(self):
         pass
 
+    @abstractmethod
+    def _getStylesFolder(self):
+        pass
+
     def _prepareContent(self, content):
         return content
 
     def _loadCustomStyles(self):
-        storage = TextStylesStorage()
+        styles = {}
+        extension = '.css'
 
-        for fname in getSpecialDirList(WIKISTYLES_FILE_NAME):
-            try:
-                css = readTextFile(fname)
-                storage.addStylesFromString(css)
-            except IOError:
-                pass
-
-        tag = self._getTag()
-        result = {name[len(tag) + 1:]: style
-                  for name, style
-                  in storage.filterByTag(tag).items()}
-        return result
+        for folder in getSpecialDirList(self._getStylesFolder()):
+            for fname in os.listdir(folder):
+                if fname.endswith(extension):
+                    name = fname[:-len(extension)]
+                    try:
+                        css = readTextFile(os.path.join(folder, fname))
+                        styles[name] = css
+                    except IOError:
+                        pass
+        return styles
 
     def getToken(self):
         begin = self._getBeginToken()
@@ -175,6 +180,9 @@ class WikiStyleInline(WikiStyleBase):
     def _getTag(self):
         return 'span'
 
+    def _getStylesFolder(self):
+        return STYLES_INLINE_FOLDER_NAME
+
 
 class WikiStyleBlock(WikiStyleBase):
     '''
@@ -203,6 +211,9 @@ class WikiStyleBlock(WikiStyleBase):
         if content.endswith('\n'):
             content = content[:-1]
         return content
+
+    def _getStylesFolder(self):
+        return STYLES_BLOCK_FOLDER_NAME
 
 
 class StyleGenerator(object):
