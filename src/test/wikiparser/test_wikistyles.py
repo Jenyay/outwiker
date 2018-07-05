@@ -24,59 +24,11 @@ class WikiStylesBlockTest(unittest.TestCase):
     def tearDown(self):
         removeDir(self.path)
 
-    def test_inline_01(self):
-        text = "текст >>class-red<<бла-бла-бла>><< текст"
-        result = text
-        self.assertEqual(result, self.parser.toHtml(text))
-
-    def test_inline_02(self):
-        text = '''текст
->>class-red<<бла-бла-бла>><< текст
-'''
-        result = text
-        self.assertEqual(result, self.parser.toHtml(text))
-
-    def test_inline_03(self):
-        text = '''текст
->>class-red<<
-бла-бла-бла
->><< текст
-'''
-        result = text
-        self.assertEqual(result, self.parser.toHtml(text))
-
-    def test_inline_04(self):
-        text = '''текст
->>class-red<< текст
-бла-бла-бла
->><<
-'''
-        result = text
-        self.assertEqual(result, self.parser.toHtml(text))
-
-    def test_inline_04_space_line_start(self):
-        text = '''текст
-   >>class-red<<
-бла-бла-бла
->><<
-'''
-        result = text
-        self.assertEqual(result, self.parser.toHtml(text))
-
-    def test_inline_05_space_line_start(self):
-        text = '''текст
->>class-red<<
-бла-бла-бла
-    >><<
-'''
-        result = text
-        self.assertEqual(result, self.parser.toHtml(text))
-
     def test_block_01(self):
         text = '''текст
->>class-red<<
+%class-red%
 бла-бла-бла
->><<
+%%
 '''
         result = '''текст
 <div class="class-red">бла-бла-бла</div>'''
@@ -84,9 +36,9 @@ class WikiStylesBlockTest(unittest.TestCase):
 
     def test_block_standard(self):
         text = '''текст
->>red<<
+%red%
 бла-бла-бла
->><<
+%%
 '''
         result = '''текст
 <div class="red">бла-бла-бла</div>'''
@@ -96,9 +48,9 @@ class WikiStylesBlockTest(unittest.TestCase):
 
     def test_block_space_begin_right(self):
         text = '''текст
->>red<<  
+%red%  
 бла-бла-бла
->><<
+%%
 '''
         result = '''текст
 <div class="red">бла-бла-бла</div>'''
@@ -108,9 +60,9 @@ class WikiStylesBlockTest(unittest.TestCase):
 
     def test_block_space_end_right(self):
         text = '''текст
->>red<<
+%red%
 бла-бла-бла
->><<   
+%%   
 текст
 '''
         result = '''текст
@@ -122,9 +74,9 @@ class WikiStylesBlockTest(unittest.TestCase):
 
     def test_block_space(self):
         text = '''текст
->>red<<    
+%red%    
 бла-бла-бла
->><<   
+%%   
 текст
 '''
         result = '''текст
@@ -133,6 +85,19 @@ class WikiStylesBlockTest(unittest.TestCase):
         self.assertEqual(result, self.parser.toHtml(text))
         self.assertIn('<style>div.red { color: red; }</style>\n',
                       self.parser.headItems)
+
+    def test_noparse_01(self):
+        text = '''текст
+%class-red%
+бла-бла-бла
+[=%%=]
+'''
+        result = '''текст
+%class-red%
+бла-бла-бла
+%%
+'''
+        self.assertEqual(result, self.parser.toHtml(text))
 
 
 class WikiStylesInlineTest(unittest.TestCase):
@@ -414,6 +379,77 @@ class WikiStylesInlineTest(unittest.TestCase):
         self.assertIn('<style>span.style-1 { color: blue; font-weight: bold; }</style>\n',
                       self.parser.headItems)
         self.assertEqual(len(self.parser.headItems), 1)
+
+    def test_multiline_01(self):
+        text = '''текст
+%class-red%
+бла-бла-бла
+бла-бла-бла
+%% текст
+'''
+        result = '''текст
+<span class="class-red">
+бла-бла-бла
+бла-бла-бла
+</span> текст
+'''
+        self.assertEqual(result, self.parser.toHtml(text))
+
+    def test_multiline_02(self):
+        text = '''текст
+%class-red% текст
+бла-бла-бла
+%%
+'''
+        result = '''текст
+<span class="class-red"> текст
+бла-бла-бла
+</span>
+'''
+        self.assertEqual(result, self.parser.toHtml(text))
+
+    def test_multiline_03_space_line_start(self):
+        text = '''текст
+   %class-red%
+бла-бла-бла
+%%
+'''
+        result = '''текст
+   <span class="class-red">
+бла-бла-бла
+</span>
+'''
+        self.assertEqual(result, self.parser.toHtml(text))
+
+    def test_multiline_04_space_line_start(self):
+        text = '''текст
+%class-red%
+бла-бла-бла
+    %%
+'''
+        result = '''текст
+<span class="class-red">
+бла-бла-бла
+    </span>
+'''
+        self.assertEqual(result, self.parser.toHtml(text))
+
+    def test_multiparagraph_01(self):
+        text = '''текст
+%class-red%
+бла-бла-бла
+
+бла-бла-бла
+%% текст
+'''
+        result = text
+        self.assertEqual(result, self.parser.toHtml(text))
+
+    def test_noparse_01(self):
+        text = 'текст %class-red%бла-бла-бла[=%%=] текст'
+        result = 'текст %class-red%бла-бла-бла%% текст'
+        self.assertEqual(result, self.parser.toHtml(text))
+
 
 
 class StyleGeneratorTest(unittest.TestCase):

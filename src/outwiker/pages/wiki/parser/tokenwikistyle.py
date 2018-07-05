@@ -9,7 +9,7 @@ from outwiker.core.defines import (STYLES_BLOCK_FOLDER_NAME,
                                    )
 from outwiker.core.system import getSpecialDirList
 from outwiker.libs.pyparsing import (Regex, Forward, ZeroOrMore, Literal,
-                                     LineStart, LineEnd,
+                                     LineStart, LineEnd, NoMatch,
                                      SkipTo, originalTextFor)
 from outwiker.utilites.textfile import readTextFile
 
@@ -65,6 +65,9 @@ class WikiStyleBase(object, metaclass=ABCMeta):
     def _getStylesFolder(self):
         pass
 
+    def _getForbiddenToken(self):
+        return NoMatch()
+
     def _prepareContent(self, content):
         return content
 
@@ -87,13 +90,15 @@ class WikiStyleBase(object, metaclass=ABCMeta):
         begin = self._getBeginToken()
         end = self._getEndToken().suppress()
 
+        forbidden = self._getForbiddenToken()
+
         token = Forward()
         no_format = NoFormatFactory.make(self.parser)
 
-        before_end = SkipTo(no_format, failOn=end, ignore=no_format)
-        nested_tokens = ZeroOrMore(SkipTo(token, failOn=end, ignore=no_format) + token)
+        before_end = SkipTo(no_format, failOn=end | forbidden, ignore=no_format)
+        nested_tokens = ZeroOrMore(SkipTo(token, failOn=end | forbidden, ignore=no_format) + token)
 
-        inside = originalTextFor(nested_tokens + before_end + SkipTo(end)).leaveWhitespace()
+        inside = originalTextFor(nested_tokens + before_end + SkipTo(end, failOn=forbidden, ignore=no_format)).leaveWhitespace()
         token << begin + inside + end
 
         token = token.setParseAction(self.conversionParseAction)(self.name)
@@ -183,13 +188,16 @@ class WikiStyleInline(WikiStyleBase):
     def _getStylesFolder(self):
         return STYLES_INLINE_FOLDER_NAME
 
+    def _getForbiddenToken(self):
+        return Literal('\n\n').leaveWhitespace()
+
 
 class WikiStyleBlock(WikiStyleBase):
     '''
     Token for block style:
-        >>class-name...<<
+        %class-name...%
         ...
-        >><<
+        %%
     '''
     @property
     def name(self):
@@ -197,12 +205,12 @@ class WikiStyleBlock(WikiStyleBase):
 
     def _getBeginToken(self):
         return (LineStart()
-                + Regex(r'>>\s*(?P<params>[\w\s."\'_=:;#(),-]+?)\s*<<[ \t]*')
+                + Regex(r'%\s*(?P<params>[\w\s."\'_=:;#(),-]+?)\s*%[ \t]*')
                 + LineEnd().suppress()
                 )
 
     def _getEndToken(self):
-        return LineStart() + Regex(r'>><<[ \t]*') + LineEnd()
+        return LineStart() + Regex(r'%%[ \t]*') + LineEnd()
 
     def _getTag(self):
         return 'div'
