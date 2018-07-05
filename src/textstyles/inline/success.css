@@ -1,8 +1,9 @@
 span.success {
+	display: inline-block;
 	color: #333;
 	background-color: #e9ffd9;
 	border-radius: 1px;
-	padding: 2px 2px 2px 2px;
+	padding: 0px 2px 0px 2px;
 	margin: 2px;
 	border:1px solid #a6ca8a;
 }
