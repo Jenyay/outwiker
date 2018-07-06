@@ -174,7 +174,7 @@ class WikiStyleInline(WikiStyleBase):
         return 'style_inline'
 
     def _getBeginToken(self):
-        return Regex(r'%\s*(?P<params>[\w\s."\'_=:;#(),-]+?)\s*%')
+        return Regex(r'%(?P<params>[a-zA-Z_#][\w\s."\'_=:;#(),-]+?)\s*%') + ~LineEnd()
 
     def _getEndToken(self):
         return Literal('%%')
@@ -202,7 +202,7 @@ class WikiStyleBlock(WikiStyleBase):
 
     def _getBeginToken(self):
         return (LineStart()
-                + Regex(r'%\s*(?P<params>[\w\s."\'_=:;#(),-]+?)\s*%[ \t]*')
+                + Regex(r'%(?P<params>[a-zA-Z_#][\w\s."\'_=:;#(),-]+?)\s*%[ \t]*')
                 + LineEnd().suppress()
                 )
 

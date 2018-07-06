@@ -34,6 +34,61 @@ class WikiStylesBlockTest(unittest.TestCase):
 <div class="class-red">бла-бла-бла</div>'''
         self.assertEqual(result, self.parser.toHtml(text))
 
+    def test_block_02(self):
+        text = '''текст
+%_class-red%
+бла-бла-бла
+%%
+'''
+        result = '''текст
+<div class="_class-red">бла-бла-бла</div>'''
+        self.assertEqual(result, self.parser.toHtml(text))
+
+    def test_invalid_01_space(self):
+        text = '''текст
+% class-red%
+бла-бла-бла
+%%
+'''
+        result = text
+        self.assertEqual(result, self.parser.toHtml(text))
+
+    def test_invalid_02_space(self):
+        text = '''текст
+%1class-red%
+бла-бла-бла
+%%
+'''
+        result = text
+        self.assertEqual(result, self.parser.toHtml(text))
+
+    def test_invalid_03_space(self):
+        text = '''текст
+%русс-class-red%
+бла-бла-бла
+%%
+'''
+        result = text
+        self.assertEqual(result, self.parser.toHtml(text))
+
+    def test_invalid_04_space(self):
+        text = '''текст
+ %class-red%
+бла-бла-бла
+%%
+'''
+        result = text
+        self.assertEqual(result, self.parser.toHtml(text))
+
+    def test_invalid_05_space(self):
+        text = '''текст
+%class-red%
+бла-бла-бла
+ %%
+'''
+        result = text
+        self.assertEqual(result, self.parser.toHtml(text))
+
     def test_block_standard(self):
         text = '''текст
 %red%
@@ -107,6 +162,12 @@ class WikiStylesInlineTest(unittest.TestCase):
     def test_style_01(self):
         text = "текст %class-red%бла-бла-бла%% текст"
         result = 'текст <span class="class-red">бла-бла-бла</span> текст'
+
+        self.assertEqual(result, self.parser.toHtml(text))
+
+    def test_style_02(self):
+        text = "текст %_class-red%бла-бла-бла%% текст"
+        result = 'текст <span class="_class-red">бла-бла-бла</span> текст'
 
         self.assertEqual(result, self.parser.toHtml(text))
 
@@ -315,12 +376,7 @@ class WikiStylesInlineTest(unittest.TestCase):
 бла-бла-бла
 %% текст
 '''
-        result = '''текст
-<span class="class-red">
-бла-бла-бла
-бла-бла-бла
-</span> текст
-'''
+        result = text
         self.assertEqual(result, self.parser.toHtml(text))
 
     def test_multiline_02(self):
@@ -342,11 +398,7 @@ class WikiStylesInlineTest(unittest.TestCase):
 бла-бла-бла
 %%
 '''
-        result = '''текст
-   <span class="class-red">
-бла-бла-бла
-</span>
-'''
+        result = text
         self.assertEqual(result, self.parser.toHtml(text))
 
     def test_multiline_04_space_line_start(self):
@@ -355,11 +407,7 @@ class WikiStylesInlineTest(unittest.TestCase):
 бла-бла-бла
     %%
 '''
-        result = '''текст
-<span class="class-red">
-бла-бла-бла
-    </span>
-'''
+        result = text
         self.assertEqual(result, self.parser.toHtml(text))
 
     def test_multiparagraph_01(self):
@@ -386,6 +434,21 @@ class WikiStylesInlineTest(unittest.TestCase):
     def test_noparse_03(self):
         text = 'текст %class-red%бла-бла-бла [= =]%% текст %class-red%бла-бла-бла%%'
         result = 'текст <span class="class-red">бла-бла-бла  </span> текст <span class="class-red">бла-бла-бла</span>'
+        self.assertEqual(result, self.parser.toHtml(text))
+
+    def test_invalid_01_space(self):
+        text = 'текст % class-red%бла-бла-бла%% текст'
+        result = text
+        self.assertEqual(result, self.parser.toHtml(text))
+
+    def test_invalid_02_space(self):
+        text = 'текст %1class-red%бла-бла-бла%% текст'
+        result = text
+        self.assertEqual(result, self.parser.toHtml(text))
+
+    def test_invalid_03_space(self):
+        text = 'текст %русс-red%бла-бла-бла%% текст'
+        result = text
         self.assertEqual(result, self.parser.toHtml(text))
 
 
