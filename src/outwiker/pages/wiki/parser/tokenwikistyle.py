@@ -43,7 +43,7 @@ class WikiStyleBase(object, metaclass=ABCMeta):
     def __init__(self, parser):
         self.parser = parser
         custom_styles = self._loadCustomStyles()
-        self._style_generator = StyleGenerator(custom_styles, self._getTag())
+        self._style_generator = StyleGenerator(custom_styles)
 
     @abstractproperty
     def name(self):
@@ -103,7 +103,7 @@ class WikiStyleBase(object, metaclass=ABCMeta):
     def conversionParseAction(self, s, l, t):
         params_list = self._parseParams(t['params'])
 
-        classes, css_list = self._style_generator.getStyle(params_list)
+        classes, css_list, style = self._style_generator.getStyle(params_list)
 
         for css in css_list:
             html_style = '<style>{content}</style>\n'.format(content=css)
@@ -112,13 +112,15 @@ class WikiStyleBase(object, metaclass=ABCMeta):
                 self.parser.appendToHead(html_style)
 
         classes_str = ' class="' + ' '.join(classes) + '"' if classes else ''
+        style_str = ' style="' + style + '"' if style else ''
 
         content = self._prepareContent(t[1])
         inside = self.parser.parseWikiMarkup(content)
         tag = self._getTag()
-        result = '<{tag}{classes}>{inside}</{tag}>'.format(
+        result = '<{tag}{classes}{style}>{inside}</{tag}>'.format(
             tag=tag,
             classes=classes_str,
+            style=style_str,
             inside=inside
         )
 
@@ -220,7 +222,7 @@ class WikiStyleBlock(WikiStyleBase):
 
 
 class StyleGenerator(object):
-    def __init__(self, custom_styles, tagname):
+    def __init__(self, custom_styles):
         '''
         custom_styles - dictionary. A key is style name,
             a value is CSS description.
@@ -261,16 +263,12 @@ class StyleGenerator(object):
             "white", "whitesmoke", "yellow", "yellowgreen",
         ])
         self._custom_styles = custom_styles
-        self._tagname = tagname
 
         self._class_name_tpl = 'style-{index}'
         self._class_name_index = 1
 
         # Key - string of params, value - style name.
         self._added_special_styles = {}
-
-        # Set of standard and custom styles name
-        self._added_styles = set()
 
     def getStyle(self, params_list):
         '''
@@ -279,6 +277,7 @@ class StyleGenerator(object):
         '''
         css_list = []
         classes = []
+        style = ''
 
         color = None
         bgcolor = None
@@ -292,10 +291,7 @@ class StyleGenerator(object):
                 if class_name in self._custom_styles:
                     classes.append(class_name)
                     css = self._custom_styles[class_name]
-                    if class_name not in self._added_styles:
-                        css_list.append(css)
-                        self._added_styles.add(class_name)
-
+                    css_list.append(css)
                 elif class_name in self._standardColors or param.startswith('#'):
                     color = param
                 elif ((class_name.startswith('bg-') or
@@ -311,49 +307,11 @@ class StyleGenerator(object):
             elif param == PARAM_NAME_STYLE:
                 other_styles = value
 
-        # Custom styles or standard color only
-        if not color and not bgcolor and not other_styles:
-            return (classes, css_list)
+        style = self._createCSS(color, bgcolor, other_styles)
+        return (classes, css_list, style)
 
-        # For standard color only
-        if (color and color in self._standardColors and
-                not bgcolor and not other_styles):
-            class_name = color
-            classes.append(class_name)
-            if class_name not in self._added_styles:
-                css = self._createCSS(class_name, color)
-                css_list.append(css)
-            return (classes, css_list)
-
-        # For standard background color only
-        if (bgcolor and bgcolor in self._standardColors and
-                not color and not other_styles):
-            class_name = 'bg-' + bgcolor
-            classes.append(class_name)
-            if class_name not in self._added_styles:
-                css = self._createCSS(class_name, bgcolor=bgcolor)
-                css_list.append(css)
-            return (classes, css_list)
-
-        hash = self._calcHash(params_list)
-        if hash not in self._added_special_styles:
-            class_name = self._class_name_tpl.format(
-                index=self._class_name_index)
-            self._class_name_index += 1
-
-            classes.append(class_name)
-            css = self._createCSS(class_name, color, bgcolor, other_styles)
-            css_list.append(css)
-            self._added_special_styles[hash] = class_name
-        else:
-            class_name = self._added_special_styles[hash]
-            classes.append(class_name)
-
-        return (classes, css_list)
-
-    def _createCSS(self, class_name,
-                   color=None, bgcolor=None, other_styles=None):
-        result = '{tag}.{name} {{'.format(tag=self._tagname, name=class_name)
+    def _createCSS(self, color=None, bgcolor=None, other_styles=None):
+        result = ''
 
         if color:
             result += ' color: {color};'.format(color=color)
@@ -368,8 +326,7 @@ class StyleGenerator(object):
 
             result += ' ' + other_styles
 
-        result += ' }'
-        return result
+        return result.strip()
 
     def _calcHash(self, params_list):
         result = ''

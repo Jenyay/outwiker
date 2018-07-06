@@ -41,10 +41,8 @@ class WikiStylesBlockTest(unittest.TestCase):
 %%
 '''
         result = '''текст
-<div class="red">бла-бла-бла</div>'''
+<div style="color: red;">бла-бла-бла</div>'''
         self.assertEqual(result, self.parser.toHtml(text))
-        self.assertIn('<style>div.red { color: red; }</style>\n',
-                      self.parser.headItems)
 
     def test_block_space_begin_right(self):
         text = '''текст
@@ -53,10 +51,8 @@ class WikiStylesBlockTest(unittest.TestCase):
 %%
 '''
         result = '''текст
-<div class="red">бла-бла-бла</div>'''
+<div style="color: red;">бла-бла-бла</div>'''
         self.assertEqual(result, self.parser.toHtml(text))
-        self.assertIn('<style>div.red { color: red; }</style>\n',
-                      self.parser.headItems)
 
     def test_block_space_end_right(self):
         text = '''текст
@@ -66,11 +62,9 @@ class WikiStylesBlockTest(unittest.TestCase):
 текст
 '''
         result = '''текст
-<div class="red">бла-бла-бла</div>текст
+<div style="color: red;">бла-бла-бла</div>текст
 '''
         self.assertEqual(result, self.parser.toHtml(text))
-        self.assertIn('<style>div.red { color: red; }</style>\n',
-                      self.parser.headItems)
 
     def test_block_space(self):
         text = '''текст
@@ -80,11 +74,9 @@ class WikiStylesBlockTest(unittest.TestCase):
 текст
 '''
         result = '''текст
-<div class="red">бла-бла-бла</div>текст
+<div style="color: red;">бла-бла-бла</div>текст
 '''
         self.assertEqual(result, self.parser.toHtml(text))
-        self.assertIn('<style>div.red { color: red; }</style>\n',
-                      self.parser.headItems)
 
     def test_noparse_01(self):
         text = '''текст
@@ -204,181 +196,117 @@ class WikiStylesInlineTest(unittest.TestCase):
 
     def test_red_color(self):
         text = "текст %red%бла-бла-бла%% текст"
-        result = 'текст <span class="red">бла-бла-бла</span> текст'
+        result = 'текст <span style="color: red;">бла-бла-бла</span> текст'
 
         self.assertEqual(result, self.parser.toHtml(text))
-        self.assertIn('<style>span.red { color: red; }</style>\n',
-                      self.parser.headItems)
 
     def test_red_color_upper(self):
         text = "текст %RED%бла-бла-бла%% текст"
-        result = 'текст <span class="red">бла-бла-бла</span> текст'
+        result = 'текст <span style="color: red;">бла-бла-бла</span> текст'
 
         self.assertEqual(result, self.parser.toHtml(text))
-        self.assertIn('<style>span.red { color: red; }</style>\n',
-                      self.parser.headItems)
 
     def test_red_color_param_upper(self):
         text = "текст %color=RED%бла-бла-бла%% текст"
-        result = 'текст <span class="red">бла-бла-бла</span> текст'
+        result = 'текст <span style="color: red;">бла-бла-бла</span> текст'
 
         self.assertEqual(result, self.parser.toHtml(text))
-        self.assertIn('<style>span.red { color: red; }</style>\n',
-                      self.parser.headItems)
 
     def test_red_color_param(self):
         text = "текст %color=red%бла-бла-бла%% текст"
-        result = 'текст <span class="red">бла-бла-бла</span> текст'
+        result = 'текст <span style="color: red;">бла-бла-бла</span> текст'
 
         self.assertEqual(result, self.parser.toHtml(text))
-        self.assertIn('<style>span.red { color: red; }</style>\n',
-                      self.parser.headItems)
 
     def test_red_color_param_quote_single(self):
         text = "текст %color='red'%бла-бла-бла%% текст"
-        result = 'текст <span class="red">бла-бла-бла</span> текст'
+        result = 'текст <span style="color: red;">бла-бла-бла</span> текст'
 
         self.assertEqual(result, self.parser.toHtml(text))
-        self.assertIn('<style>span.red { color: red; }</style>\n',
-                      self.parser.headItems)
 
     def test_red_color_param_quote_double(self):
         text = 'текст %color="red"%бла-бла-бла%% текст'
-        result = 'текст <span class="red">бла-бла-бла</span> текст'
+        result = 'текст <span style="color: red;">бла-бла-бла</span> текст'
 
         self.assertEqual(result, self.parser.toHtml(text))
-        self.assertIn('<style>span.red { color: red; }</style>\n',
-                      self.parser.headItems)
 
     def test_color_value_01(self):
         text = 'текст %color="#11AA55"%бла-бла-бла%% текст'
-        result = 'текст <span class="style-1">бла-бла-бла</span> текст'
+        result = 'текст <span style="color: #11aa55;">бла-бла-бла</span> текст'
 
         self.assertEqual(result, self.parser.toHtml(text))
-        self.assertIn('<style>span.style-1 { color: #11aa55; }</style>\n',
-                      self.parser.headItems)
-        self.assertEqual(len(self.parser.headItems), 1)
 
     def test_color_value_02(self):
         text = 'текст %color="#11AA55"%бла-бла-бла%% текст %color="#22BB66"%бла-бла-бла%%'
-        result = 'текст <span class="style-1">бла-бла-бла</span> текст <span class="style-2">бла-бла-бла</span>'
+        result = 'текст <span style="color: #11aa55;">бла-бла-бла</span> текст <span style="color: #22bb66;">бла-бла-бла</span>'
 
         self.assertEqual(result, self.parser.toHtml(text))
-        self.assertIn('<style>span.style-1 { color: #11aa55; }</style>\n',
-                      self.parser.headItems)
-        self.assertIn('<style>span.style-2 { color: #22bb66; }</style>\n',
-                      self.parser.headItems)
-        self.assertEqual(len(self.parser.headItems), 2)
-
-    def test_color_value_03(self):
-        text = 'текст %color=#11AA55%бла-бла-бла%% текст %color="#22BB66"%бла-бла-бла%%'
-        result = 'текст <span class="style-1">бла-бла-бла</span> текст <span class="style-2">бла-бла-бла</span>'
-
-        self.assertEqual(result, self.parser.toHtml(text))
-        self.assertIn('<style>span.style-1 { color: #11aa55; }</style>\n',
-                      self.parser.headItems)
-        self.assertIn('<style>span.style-2 { color: #22bb66; }</style>\n',
-                      self.parser.headItems)
-        self.assertEqual(len(self.parser.headItems), 2)
 
     def test_color_value_repeat_01(self):
         text = 'текст %color=#11AA55%бла-бла-бла%% текст %color="#11AA55"%бла-бла-бла%%'
-        result = 'текст <span class="style-1">бла-бла-бла</span> текст <span class="style-1">бла-бла-бла</span>'
+        result = 'текст <span style="color: #11aa55;">бла-бла-бла</span> текст <span style="color: #11aa55;">бла-бла-бла</span>'
 
         self.assertEqual(result, self.parser.toHtml(text))
-        self.assertIn('<style>span.style-1 { color: #11aa55; }</style>\n',
-                      self.parser.headItems)
-        self.assertEqual(len(self.parser.headItems), 1)
 
     def test_color_value_number(self):
         text = 'текст %#11AA55%бла-бла-бла%% текст'
-        result = 'текст <span class="style-1">бла-бла-бла</span> текст'
+        result = 'текст <span style="color: #11aa55;">бла-бла-бла</span> текст'
 
         self.assertEqual(result, self.parser.toHtml(text))
-        self.assertIn('<style>span.style-1 { color: #11aa55; }</style>\n',
-                      self.parser.headItems)
-        self.assertEqual(len(self.parser.headItems), 1)
 
     def test_bgcolor_value_number_01(self):
         text = 'текст %bgcolor=#11AA55%бла-бла-бла%% текст'
-        result = 'текст <span class="style-1">бла-бла-бла</span> текст'
+        result = 'текст <span style="background-color: #11aa55;">бла-бла-бла</span> текст'
 
         self.assertEqual(result, self.parser.toHtml(text))
-        self.assertIn('<style>span.style-1 { background-color: #11aa55; }</style>\n',
-                      self.parser.headItems)
-        self.assertEqual(len(self.parser.headItems), 1)
 
     def test_bgcolor_value_number_02(self):
         text = 'текст %bgcolor="#11AA55"%бла-бла-бла%% текст'
-        result = 'текст <span class="style-1">бла-бла-бла</span> текст'
+        result = 'текст <span style="background-color: #11aa55;">бла-бла-бла</span> текст'
 
         self.assertEqual(result, self.parser.toHtml(text))
-        self.assertIn('<style>span.style-1 { background-color: #11aa55; }</style>\n',
-                      self.parser.headItems)
-        self.assertEqual(len(self.parser.headItems), 1)
 
     def test_bgcolor_value_name(self):
         text = 'текст %bgcolor="red"%бла-бла-бла%% текст'
-        result = 'текст <span class="bg-red">бла-бла-бла</span> текст'
+        result = 'текст <span style="background-color: red;">бла-бла-бла</span> текст'
 
         self.assertEqual(result, self.parser.toHtml(text))
-        self.assertIn('<style>span.bg-red { background-color: red; }</style>\n',
-                      self.parser.headItems)
-        self.assertEqual(len(self.parser.headItems), 1)
 
     def test_bgcolor_standard_name_01(self):
         text = 'текст %bg-red%бла-бла-бла%% текст'
-        result = 'текст <span class="bg-red">бла-бла-бла</span> текст'
+        result = 'текст <span style="background-color: red;">бла-бла-бла</span> текст'
 
         self.assertEqual(result, self.parser.toHtml(text))
-        self.assertIn('<style>span.bg-red { background-color: red; }</style>\n',
-                      self.parser.headItems)
-        self.assertEqual(len(self.parser.headItems), 1)
 
     def test_bgcolor_standard_name_02(self):
         text = 'текст %bg_red%бла-бла-бла%% текст'
-        result = 'текст <span class="bg-red">бла-бла-бла</span> текст'
+        result = 'текст <span style="background-color: red;">бла-бла-бла</span> текст'
 
         self.assertEqual(result, self.parser.toHtml(text))
-        self.assertIn('<style>span.bg-red { background-color: red; }</style>\n',
-                      self.parser.headItems)
-        self.assertEqual(len(self.parser.headItems), 1)
 
     def test_color_bgcolor_standard(self):
         text = 'текст %blue bg_red%бла-бла-бла%% текст'
-        result = 'текст <span class="style-1">бла-бла-бла</span> текст'
+        result = 'текст <span style="color: blue; background-color: red;">бла-бла-бла</span> текст'
 
         self.assertEqual(result, self.parser.toHtml(text))
-        self.assertIn('<style>span.style-1 { color: blue; background-color: red; }</style>\n',
-                      self.parser.headItems)
-        self.assertEqual(len(self.parser.headItems), 1)
 
     def test_color_bgcolor_01(self):
         text = 'текст %blue bgcolor=red%бла-бла-бла%% текст'
-        result = 'текст <span class="style-1">бла-бла-бла</span> текст'
+        result = 'текст <span style="color: blue; background-color: red;">бла-бла-бла</span> текст'
 
         self.assertEqual(result, self.parser.toHtml(text))
-        self.assertIn('<style>span.style-1 { color: blue; background-color: red; }</style>\n',
-                      self.parser.headItems)
-        self.assertEqual(len(self.parser.headItems), 1)
 
     def test_user_style_01(self):
-        text = 'текст %blue style="font-weight: bold;"%бла-бла-бла%% текст'
-        result = 'текст <span class="style-1">бла-бла-бла</span> текст'
+        text = 'текст %style="font-weight: bold;"%бла-бла-бла%% текст'
+        result = 'текст <span style="font-weight: bold;">бла-бла-бла</span> текст'
 
         self.assertEqual(result, self.parser.toHtml(text))
-        self.assertIn('<style>span.style-1 { color: blue; font-weight: bold; }</style>\n',
-                      self.parser.headItems)
-        self.assertEqual(len(self.parser.headItems), 1)
 
     def test_user_style_02(self):
         text = 'текст %blue style="font-weight: bold"%бла-бла-бла%% текст'
-        result = 'текст <span class="style-1">бла-бла-бла</span> текст'
+        result = 'текст <span style="color: blue; font-weight: bold;">бла-бла-бла</span> текст'
 
         self.assertEqual(result, self.parser.toHtml(text))
-        self.assertIn('<style>span.style-1 { color: blue; font-weight: bold; }</style>\n',
-                      self.parser.headItems)
-        self.assertEqual(len(self.parser.headItems), 1)
 
     def test_multiline_01(self):
         text = '''текст
@@ -461,207 +389,176 @@ class WikiStylesInlineTest(unittest.TestCase):
         self.assertEqual(result, self.parser.toHtml(text))
 
 
-
 class StyleGeneratorTest(unittest.TestCase):
     def test_style_color_name(self):
-        style_generator = StyleGenerator({}, 'span')
+        style_generator = StyleGenerator({})
         params = [('red', '')]
-        classes, css_list = style_generator.getStyle(params)
+        classes, css_list, style = style_generator.getStyle(params)
 
-        self.assertEqual(classes, ['red'])
-        self.assertEqual(css_list, ['span.red { color: red; }'])
-
-    def test_style_color_name_repeat(self):
-        style_generator = StyleGenerator({}, 'span')
-        params = [('red', '')]
-
-        classes, css_list = style_generator.getStyle(params)
-        self.assertEqual(classes, ['red'])
-        self.assertEqual(css_list, ['span.red { color: red; }'])
-
-        name, css = style_generator.getStyle(params)
-        self.assertEqual(classes, ['red'])
-        self.assertEqual(css_list, ['span.red { color: red; }'])
+        self.assertEqual(classes, [])
+        self.assertEqual(css_list, [])
+        self.assertEqual(style, 'color: red;')
 
     def test_style_color_name_param(self):
-        style_generator = StyleGenerator({}, 'span')
+        style_generator = StyleGenerator({})
         params = [('color', 'red')]
-        classes, css_list = style_generator.getStyle(params)
+        classes, css_list, style = style_generator.getStyle(params)
 
-        self.assertEqual(classes, ['red'])
-        self.assertEqual(css_list, ['span.red { color: red; }'])
+        self.assertEqual(classes, [])
+        self.assertEqual(css_list, [])
+        self.assertEqual(style, 'color: red;')
 
     def test_style_color_value_01(self):
-        style_generator = StyleGenerator({}, 'span')
+        style_generator = StyleGenerator({})
         params = [('color', '#1A5')]
-        classes, css_list = style_generator.getStyle(params)
+        classes, css_list, style = style_generator.getStyle(params)
 
-        self.assertEqual(classes, ['style-1'])
-        self.assertEqual(css_list, ['span.style-1 { color: #1A5; }'])
+        self.assertEqual(classes, [])
+        self.assertEqual(css_list, [])
+        self.assertEqual(style, 'color: #1A5;')
 
     def test_style_color_value_02(self):
-        style_generator = StyleGenerator({}, 'span')
+        style_generator = StyleGenerator({})
         params = [('color', '#11AA55')]
-        classes, css_list = style_generator.getStyle(params)
+        classes, css_list, style = style_generator.getStyle(params)
 
-        self.assertEqual(classes, ['style-1'])
-        self.assertEqual(css_list, ['span.style-1 { color: #11AA55; }'])
-
-    def test_style_color_value_repeat(self):
-        style_generator = StyleGenerator({}, 'span')
-        params = [('color', '#11AA55')]
-
-        classes, css_list = style_generator.getStyle(params)
-        self.assertEqual(classes, ['style-1'])
-        self.assertEqual(css_list, ['span.style-1 { color: #11AA55; }'])
-
-        classes, css_list = style_generator.getStyle(params)
-        self.assertEqual(classes, ['style-1'])
+        self.assertEqual(classes, [])
         self.assertEqual(css_list, [])
+        self.assertEqual(style, 'color: #11AA55;')
 
     def test_style_color_value_many(self):
-        style_generator = StyleGenerator({}, 'span')
+        style_generator = StyleGenerator({})
 
         params_1 = [('color', '#11AA55')]
-        classes, css_list = style_generator.getStyle(params_1)
-        self.assertEqual(classes, ['style-1'])
-        self.assertEqual(css_list, ['span.style-1 { color: #11AA55; }'])
+        classes, css_list, style = style_generator.getStyle(params_1)
+        self.assertEqual(classes, [])
+        self.assertEqual(css_list, [])
+        self.assertEqual(style, 'color: #11AA55;')
 
         params_2 = [('color', '#22BB66')]
-        classes, css_list = style_generator.getStyle(params_2)
-        self.assertEqual(classes, ['style-2'])
-        self.assertEqual(css_list, ['span.style-2 { color: #22BB66; }'])
+        classes, css_list, style = style_generator.getStyle(params_2)
+        self.assertEqual(classes, [])
+        self.assertEqual(css_list, [])
+        self.assertEqual(style, 'color: #22BB66;')
 
     def test_style_bgcolor_name(self):
-        style_generator = StyleGenerator({}, 'span')
+        style_generator = StyleGenerator({})
         params = [('bgcolor', 'red')]
-        classes, css_list = style_generator.getStyle(params)
+        classes, css_list, style = style_generator.getStyle(params)
 
-        self.assertEqual(classes, ['bg-red'])
-        self.assertEqual(css_list, ['span.bg-red { background-color: red; }'])
+        self.assertEqual(classes, [])
+        self.assertEqual(css_list, [])
+        self.assertEqual(style, 'background-color: red;')
 
     def test_style_bgcolor_value(self):
-        style_generator = StyleGenerator({}, 'span')
+        style_generator = StyleGenerator({})
         params = [('bgcolor', '#10AA30')]
-        classes, css_list = style_generator.getStyle(params)
+        classes, css_list, style = style_generator.getStyle(params)
 
-        self.assertEqual(classes, ['style-1'])
-        self.assertEqual(css_list, ['span.style-1 { background-color: #10AA30; }'])
-
-    def test_style_color_bgcolor_value(self):
-        style_generator = StyleGenerator({}, 'span')
-
-        params_1 = [('color', '#11AA55')]
-        classes, css_list = style_generator.getStyle(params_1)
-        self.assertEqual(classes, ['style-1'])
-        self.assertEqual(css_list, ['span.style-1 { color: #11AA55; }'])
-
-        params_2 = [('bgcolor', '#11AA55')]
-        classes, css_list = style_generator.getStyle(params_2)
-        self.assertEqual(classes, ['style-2'])
-        self.assertEqual(css_list, ['span.style-2 { background-color: #11AA55; }'])
-
-    def test_style_color_bgcolor_name(self):
-        style_generator = StyleGenerator({}, 'span')
-
-        params_1 = [('color', 'red')]
-        classes, css_list = style_generator.getStyle(params_1)
-        self.assertEqual(classes, ['red'])
-        self.assertEqual(css_list, ['span.red { color: red; }'])
-
-        params_2 = [('bgcolor', 'red')]
-        classes, css_list = style_generator.getStyle(params_2)
-        self.assertEqual(classes, ['bg-red'])
-        self.assertEqual(css_list, ['span.bg-red { background-color: red; }'])
+        self.assertEqual(classes, [])
+        self.assertEqual(css_list, [])
+        self.assertEqual(style, 'background-color: #10AA30;')
 
     def test_style_bgcolor_name_01(self):
-        style_generator = StyleGenerator({}, 'span')
+        style_generator = StyleGenerator({})
         params = [('bg-red', '')]
-        classes, css_list = style_generator.getStyle(params)
+        classes, css_list, style = style_generator.getStyle(params)
 
-        self.assertEqual(classes, ['bg-red'])
-        self.assertEqual(css_list, ['span.bg-red { background-color: red; }'])
+        self.assertEqual(classes, [])
+        self.assertEqual(css_list, [])
+        self.assertEqual(style, 'background-color: red;')
 
     def test_style_bgcolor_name_02(self):
-        style_generator = StyleGenerator({}, 'span')
+        style_generator = StyleGenerator({})
         params = [('bg_red', '')]
-        classes, css_list = style_generator.getStyle(params)
+        classes, css_list, style = style_generator.getStyle(params)
 
-        self.assertEqual(classes, ['bg-red'])
-        self.assertEqual(css_list, ['span.bg-red { background-color: red; }'])
+        self.assertEqual(classes, [])
+        self.assertEqual(css_list, [])
+        self.assertEqual(style, 'background-color: red;')
 
     def test_style_color_name_repeat_01(self):
-        style_generator = StyleGenerator({}, 'span')
+        style_generator = StyleGenerator({})
         params = [('bg-red', '')]
 
-        classes, css_list = style_generator.getStyle(params)
-        self.assertEqual(classes, ['bg-red'])
-        self.assertEqual(css_list, ['span.bg-red { background-color: red; }'])
+        classes, css_list, style = style_generator.getStyle(params)
 
-        name, css = style_generator.getStyle(params)
-        self.assertEqual(classes, ['bg-red'])
-        self.assertEqual(css_list, ['span.bg-red { background-color: red; }'])
-
-    def test_style_color_name_repeat_02(self):
-        style_generator = StyleGenerator({}, 'span')
-        params = [('bg_red', '')]
-
-        classes, css_list = style_generator.getStyle(params)
-        self.assertEqual(classes, ['bg-red'])
-        self.assertEqual(css_list, ['span.bg-red { background-color: red; }'])
-
-        name, css = style_generator.getStyle(params)
-        self.assertEqual(classes, ['bg-red'])
-        self.assertEqual(css_list, ['span.bg-red { background-color: red; }'])
+        self.assertEqual(classes, [])
+        self.assertEqual(css_list, [])
+        self.assertEqual(style, 'background-color: red;')
 
     def test_style_color_bgcolor_name_01(self):
-        style_generator = StyleGenerator({}, 'span')
+        style_generator = StyleGenerator({})
         params = [('red', ''), ('bg_blue', '')]
-        classes, css_list = style_generator.getStyle(params)
+        classes, css_list, style = style_generator.getStyle(params)
 
-        self.assertEqual(classes, ['style-1'])
-        self.assertEqual(css_list, ['span.style-1 { color: red; background-color: blue; }'])
+        self.assertEqual(classes, [])
+        self.assertEqual(css_list, [])
+        self.assertEqual(style, 'color: red; background-color: blue;')
 
     def test_style_color_bgcolor_name_02(self):
-        style_generator = StyleGenerator({}, 'span')
+        style_generator = StyleGenerator({})
         params = [('red', ''), ('bgcolor', '#10aa30')]
-        classes, css_list = style_generator.getStyle(params)
+        classes, css_list, style = style_generator.getStyle(params)
 
-        self.assertEqual(classes, ['style-1'])
-        self.assertEqual(css_list, ['span.style-1 { color: red; background-color: #10aa30; }'])
+        self.assertEqual(classes, [])
+        self.assertEqual(css_list, [])
+        self.assertEqual(style, 'color: red; background-color: #10aa30;')
 
     def test_user_style__01(self):
-        style_generator = StyleGenerator({}, 'span')
+        style_generator = StyleGenerator({})
         params = [('style', 'font-weight: bold;')]
-        classes, css_list = style_generator.getStyle(params)
+        classes, css_list, style = style_generator.getStyle(params)
 
-        self.assertEqual(classes, ['style-1'])
-        self.assertEqual(css_list, ['span.style-1 { font-weight: bold; }'])
+        self.assertEqual(classes, [])
+        self.assertEqual(css_list, [])
+        self.assertEqual(style, 'font-weight: bold;')
 
     def test_user_style_02(self):
-        style_generator = StyleGenerator({}, 'span')
+        style_generator = StyleGenerator({})
         params = [('style', 'font-weight: bold;'), ('red', '')]
-        classes, css_list = style_generator.getStyle(params)
+        classes, css_list, style = style_generator.getStyle(params)
 
-        self.assertEqual(classes, ['style-1'])
-        self.assertEqual(css_list, ['span.style-1 { color: red; font-weight: bold; }'])
+        self.assertEqual(classes, [])
+        self.assertEqual(css_list, [])
+        self.assertEqual(style, 'color: red; font-weight: bold;')
 
     def test_user_style_03(self):
-        style_generator = StyleGenerator({}, 'span')
+        style_generator = StyleGenerator({})
         params = [('style', 'font-weight: bold'), ('red', '')]
-        classes, css_list = style_generator.getStyle(params)
+        classes, css_list, style = style_generator.getStyle(params)
 
-        self.assertEqual(classes, ['style-1'])
-        self.assertEqual(css_list, ['span.style-1 { color: red; font-weight: bold; }'])
+        self.assertEqual(classes, [])
+        self.assertEqual(css_list, [])
+        self.assertEqual(style, 'color: red; font-weight: bold;')
 
     def test_user_style_04(self):
-        style_generator = StyleGenerator({}, 'span')
+        style_generator = StyleGenerator({})
         params = [
             ('style', 'font-weight: bold;'),
             ('red', ''),
             ('bg-blue', '')
         ]
-        classes, css_list = style_generator.getStyle(params)
+        classes, css_list, style = style_generator.getStyle(params)
 
-        self.assertEqual(classes, ['style-1'])
-        self.assertEqual(css_list, ['span.style-1 { color: red; background-color: blue; font-weight: bold; }'])
+        self.assertEqual(classes, [])
+        self.assertEqual(css_list, [])
+        self.assertEqual(style, 'color: red; background-color: blue; font-weight: bold;')
+
+    def test_custom_style_01_empty(self):
+        style_generator = StyleGenerator({})
+        params = [('my-red', '')]
+        classes, css_list, style = style_generator.getStyle(params)
+
+        self.assertEqual(classes, ['my-red'])
+        self.assertEqual(css_list, [])
+        self.assertEqual(style, '')
+
+    def test_custom_style_02(self):
+        style_generator = StyleGenerator({'my-red': 'test'})
+        params = [('my-red', '')]
+        classes, css_list, style = style_generator.getStyle(params)
+
+        self.assertEqual(classes, ['my-red'])
+        self.assertEqual(css_list, ['test'])
+        self.assertEqual(style, '')
