@@ -8,9 +8,9 @@ from outwiker.core.defines import (STYLES_BLOCK_FOLDER_NAME,
                                    STYLES_INLINE_FOLDER_NAME,
                                    )
 from outwiker.core.system import getSpecialDirList
-from outwiker.libs.pyparsing import (Regex, Forward, ZeroOrMore, Literal,
+from outwiker.libs.pyparsing import (Regex, Forward, Literal,
                                      LineStart, LineEnd, NoMatch,
-                                     SkipTo, originalTextFor)
+                                     SkipTo)
 from outwiker.utilites.textfile import readTextFile
 
 from .tokennoformat import NoFormatFactory
