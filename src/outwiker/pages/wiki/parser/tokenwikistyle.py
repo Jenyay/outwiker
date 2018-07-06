@@ -89,16 +89,11 @@ class WikiStyleBase(object, metaclass=ABCMeta):
     def getToken(self):
         begin = self._getBeginToken()
         end = self._getEndToken().suppress()
-
         forbidden = self._getForbiddenToken()
-
-        token = Forward()
         no_format = NoFormatFactory.make(self.parser)
 
-        before_end = SkipTo(no_format, failOn=end | forbidden, ignore=no_format)
-        nested_tokens = ZeroOrMore(SkipTo(token, failOn=end | forbidden, ignore=no_format) + token)
-
-        inside = originalTextFor(nested_tokens + before_end + SkipTo(end, failOn=forbidden, ignore=no_format)).leaveWhitespace()
+        token = Forward()
+        inside = SkipTo(end, failOn=forbidden, ignore=no_format | token).leaveWhitespace()
         token << begin + inside + end
 
         token = token.setParseAction(self.conversionParseAction)(self.name)
@@ -170,7 +165,7 @@ class WikiStyleBase(object, metaclass=ABCMeta):
 
 class WikiStyleInline(WikiStyleBase):
     '''
-    Token for inline style: %%class-name...%% ... %%
+    Token for inline style: %class-name...% ... %%
     '''
     @property
     def name(self):

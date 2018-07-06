@@ -450,6 +450,16 @@ class WikiStylesInlineTest(unittest.TestCase):
         result = 'текст %class-red%бла-бла-бла%% текст'
         self.assertEqual(result, self.parser.toHtml(text))
 
+    def test_noparse_02(self):
+        text = 'текст %class-red%бла-бла-бла [= =]%% текст'
+        result = 'текст <span class="class-red">бла-бла-бла  </span> текст'
+        self.assertEqual(result, self.parser.toHtml(text))
+
+    def test_noparse_03(self):
+        text = 'текст %class-red%бла-бла-бла [= =]%% текст %class-red%бла-бла-бла%%'
+        result = 'текст <span class="class-red">бла-бла-бла  </span> текст <span class="class-red">бла-бла-бла</span>'
+        self.assertEqual(result, self.parser.toHtml(text))
+
 
 
 class StyleGeneratorTest(unittest.TestCase):

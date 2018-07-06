@@ -6,7 +6,7 @@ from .utils import noConvert
 
 class NoFormatFactory (object):
     """
-    Фабрика для создания токена "без форматирования"ы
+    Фабрика для создания токена "без форматирования"
     """
     @staticmethod
     def make(parser):
@@ -21,7 +21,7 @@ class NoFormatToken (object):
         self.parser = parser
 
     def getToken(self):
-        return QuotedString(NoFormatToken.noFormatStart,
-                            endQuoteChar=NoFormatToken.noFormatEnd,
+        return QuotedString(self.noFormatStart,
+                            endQuoteChar=self.noFormatEnd,
                             multiline=True,
                             convertWhitespaceEscapes=False).setParseAction(noConvert)("noformat")
