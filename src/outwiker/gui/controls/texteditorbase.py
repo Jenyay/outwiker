@@ -211,7 +211,9 @@ class TextEditorBase(wx.Panel):
         old_sel_end = self.GetSelectionEnd()
 
         first_line, last_line = self.GetSelectionLines()
-        [self.toddleLinePrefix(n, prefix) for n in range(first_line, last_line + 1)]
+        [self.toddleLinePrefix(n, prefix)
+         for n
+         in range(first_line, last_line + 1)]
 
         if old_sel_start != old_sel_end:
             new_sel_start = self.GetLineStartPosition(first_line)
@@ -229,9 +231,8 @@ class TextEditorBase(wx.Panel):
 
         currPos = self.GetSelectionEnd()
         if len(selText) == 0:
-            """
-            Если не оборачиваем текст, а делаем пустой тег, то поместим каретку до закрывающегося тега
-            """
+            # Если не оборачиваем текст, а делаем пустой тег,
+            # то поместим каретку до закрывающегося тега
             newpos = currPos - len(righttext)
             self.SetSelection(newpos, newpos)
         else:

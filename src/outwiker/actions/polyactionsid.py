@@ -158,3 +158,9 @@ CLIPBOARD_COPY_WORD = "ClipboardCopyWord"
 
 # Cut the word to clipboard
 CLIPBOARD_CUT_WORD = "ClipboardCutWord"
+
+# Set text color
+TEXT_COLOR_STR_ID = "TextColor"
+
+# Set text background color
+TEXT_BACKGROUND_COLOR_STR_ID = "TextBackgroundColor"

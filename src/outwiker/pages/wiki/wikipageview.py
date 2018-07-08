@@ -15,6 +15,7 @@ from .basewikipageview import BaseWikiPageView
 from .tableactions import (getInsertTableActionFunc,
                            getInsertTableRowsActionFunc,
                            getInsertTableCellActionFunc)
+from .wikistyleutils import turnBlockOrInline, selectColor
 
 from .actions.fontsizebig import WikiFontSizeBigAction
 from .actions.fontsizesmall import WikiFontSizeSmallAction
@@ -93,6 +94,8 @@ class WikiPageView(BaseWikiPageView):
             STRIKE_STR_ID,
             SUBSCRIPT_STR_ID,
             SUPERSCRIPT_STR_ID,
+            TEXT_COLOR_STR_ID,
+            TEXT_BACKGROUND_COLOR_STR_ID,
             QUOTE_STR_ID,
             ALIGN_LEFT_STR_ID,
             ALIGN_CENTER_STR_ID,
@@ -300,6 +303,24 @@ class WikiPageView(BaseWikiPageView):
             WikiFontSizeSmallAction.stringId,
             toolbar,
             os.path.join(self.imagesDir, "text_small.png"),
+            fullUpdate=False)
+
+        # Text color
+        actionController.getAction(TEXT_COLOR_STR_ID).setFunc(self._setTextColor)
+        actionController.appendMenuItem(TEXT_COLOR_STR_ID, menu)
+        actionController.appendToolbarButton(
+            TEXT_COLOR_STR_ID,
+            toolbar,
+            os.path.join(self.imagesDir, "text_color.png"),
+            fullUpdate=False)
+
+        # Text background color
+        actionController.getAction(TEXT_BACKGROUND_COLOR_STR_ID).setFunc(self._setTextBackgroundColor)
+        actionController.appendMenuItem(TEXT_BACKGROUND_COLOR_STR_ID, menu)
+        actionController.appendToolbarButton(
+            TEXT_BACKGROUND_COLOR_STR_ID,
+            toolbar,
+            os.path.join(self.imagesDir, "text_color_background.png"),
             fullUpdate=False)
 
     def __addAlignTools(self):
@@ -756,3 +777,19 @@ class WikiPageView(BaseWikiPageView):
         elif startSelection == endSelection:
             editor.SetSelection(startSelection + appendSymbols,
                                 endSelection + appendSymbols)
+
+    def _setTextColor(self, param):
+        color = selectColor(self, _('Select text color'))
+        editor = self._application.mainWindow.pagePanel.pageView.codeEditor
+        if color:
+            text_begin = '%{color}%'.format(color=color)
+            text_end = '%%'
+            turnBlockOrInline(editor, text_begin, text_end)
+
+    def _setTextBackgroundColor(self, param):
+        color = selectColor(self, _('Select text background color'))
+        editor = self._application.mainWindow.pagePanel.pageView.codeEditor
+        if color:
+            text_begin = '%bgcolor={color}%'.format(color=color)
+            text_end = '%%'
+            turnBlockOrInline(editor, text_begin, text_end)
