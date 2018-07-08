@@ -790,6 +790,10 @@ class WikiPageView(BaseWikiPageView):
         color = selectColor(self, _('Select text background color'))
         editor = self._application.mainWindow.pagePanel.pageView.codeEditor
         if color:
-            text_begin = '%bgcolor={color}%'.format(color=color)
+            if color.startswith('#') or color.startswith('rgb('):
+                text_begin = '%bgcolor={color}%'.format(color=color)
+            else:
+                text_begin = '%bg-{color}%'.format(color=color)
+
             text_end = '%%'
             turnBlockOrInline(editor, text_begin, text_end)

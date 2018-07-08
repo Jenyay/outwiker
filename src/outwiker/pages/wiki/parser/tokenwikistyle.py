@@ -8,6 +8,7 @@ from outwiker.core.defines import (STYLES_BLOCK_FOLDER_NAME,
                                    STYLES_INLINE_FOLDER_NAME,
                                    )
 from outwiker.core.system import getSpecialDirList
+from outwiker.core.standardcolors import standardColorNames
 from outwiker.libs.pyparsing import (Regex, Forward, Literal,
                                      LineStart, LineEnd, NoMatch,
                                      SkipTo)
@@ -229,39 +230,6 @@ class StyleGenerator(object):
         If inline is True then CSS will be created for the <span> tag else for
             the <div> tag.
         '''
-        self._standardColors = set([
-            "aliceblue", "antiquewhite", "aqua", "aquamarine", "azure",
-            "beige", "bisque", "black", "blanchedalmond", "blue", "blueviolet",
-            "brown", "burlywood", "cadetblue", "chartreuse", "chocolate",
-            "coral", "cornflowerblue", "cornsilk", "crimson", "cyan",
-            "darkblue", "darkcyan", "darkgoldenrod", "darkgray", "darkgreen",
-            "darkgrey", "darkkhaki", "darkmagenta", "darkolivegreen",
-            "darkorange", "darkorchid", "darkred", "darksalmon",
-            "darkseagreen", "darkslateblue", "darkslategray", "darkslategrey",
-            "darkturquoise", "darkviolet", "deeppink", "deepskyblue",
-            "dimgray", "dimgrey", "dodgerblue", "firebrick", "floralwhite",
-            "forestgreen", "fuchsia", "gainsboro", "ghostwhite", "gold",
-            "goldenrod", "gray", "green", "greenyellow", "grey", "honeydew",
-            "hotpink", "indianred", "indigo", "ivory", "khaki", "lavender",
-            "lavenderblush", "lawngreen", "lemonchiffon", "lightblue",
-            "lightcoral", "lightcyan", "lightgoldenrodyellow", "lightgray",
-            "lightgreen", "lightgrey", "lightpink", "lightsalmon",
-            "lightseagreen", "lightskyblue", "lightslategray",
-            "lightslategrey", "lightsteelblue", "lightyellow", "lime",
-            "limegreen", "linen", "magenta", "maroon", "mediumaquamarine",
-            "mediumblue", "mediumorchid", "mediumpurple", "mediumseagreen",
-            "mediumslateblue", "mediumspringgreen", "mediumturquoise",
-            "mediumvioletred", "midnightblue", "mintcream", "mistyrose",
-            "moccasin", "navajowhite", "navy", "oldlace", "olive",
-            "olivedrab", "orange", "orangered", "orchid", "palegoldenrod",
-            "palegreen", "paleturquoise", "palevioletred", "papayawhip",
-            "peachpuff", "peru", "pink", "plum", "powderblue", "purple", "red",
-            "rosybrown", "royalblue", "saddlebrown", "salmon", "sandybrown",
-            "seagreen", "seashell", "sienna", "silver", "skyblue", "slateblue",
-            "slategray", "slategrey", "snow", "springgreen", "steelblue",
-            "tan", "teal", "thistle", "tomato", "turquoise", "violet", "wheat",
-            "white", "whitesmoke", "yellow", "yellowgreen",
-        ])
         self._custom_styles = custom_styles
 
         self._class_name_tpl = 'style-{index}'
@@ -292,11 +260,11 @@ class StyleGenerator(object):
                     classes.append(class_name)
                     css = self._custom_styles[class_name]
                     css_list.append(css)
-                elif class_name in self._standardColors or param.startswith('#'):
+                elif class_name in standardColorNames or param.startswith('#'):
                     color = param
                 elif ((class_name.startswith('bg-') or
                         class_name.startswith('bg_')) and
-                        class_name[3:] in self._standardColors):
+                        class_name[3:] in standardColorNames):
                     bgcolor = class_name[3:]
                 else:
                     classes.append(class_name)
