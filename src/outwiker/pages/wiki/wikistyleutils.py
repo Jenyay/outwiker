@@ -1,8 +1,12 @@
 # -*- coding: utf-8 -*-
 
+import os
+
 import wx
 
 from outwiker.core.standardcolors import StandardColors
+from outwiker.core.system import getSpecialDirList
+from outwiker.utilites.textfile import readTextFile
 
 
 def turnBlockOrInline(editor, text_begin, text_end):
@@ -56,3 +60,32 @@ def selectColor(parent, title):
                 color_str = StandardColors[color_str]
 
             return color_str
+
+
+def loadCustomStyles(styles_folder_name):
+    styles = {}
+    extension = '.css'
+
+    for folder in getSpecialDirList(styles_folder_name):
+        for fname in os.listdir(folder):
+            if fname.endswith(extension):
+                name = fname[:-len(extension)]
+                try:
+                    css = readTextFile(os.path.join(folder, fname))
+                    styles[name] = css
+                except IOError:
+                    pass
+    return styles
+
+
+def getCustomStylesNames(styles_folder_name):
+    styles = []
+    extension = '.css'
+
+    for folder in getSpecialDirList(styles_folder_name):
+        styles += [fname
+                   for fname
+                   in os.listdir(folder)
+                   if fname.endswith(extension)]
+
+    return styles

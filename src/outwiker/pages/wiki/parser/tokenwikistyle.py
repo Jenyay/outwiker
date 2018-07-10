@@ -1,20 +1,18 @@
 # -*- coding: utf-8 -*-
 
 from abc import ABCMeta, abstractmethod, abstractproperty
-import os
 import re
 
 from outwiker.core.defines import (STYLES_BLOCK_FOLDER_NAME,
                                    STYLES_INLINE_FOLDER_NAME,
                                    )
-from outwiker.core.system import getSpecialDirList
 from outwiker.core.standardcolors import standardColorNames
 from outwiker.libs.pyparsing import (Regex, Forward, Literal,
                                      LineStart, LineEnd, NoMatch,
                                      SkipTo)
-from outwiker.utilites.textfile import readTextFile
 
 from .tokennoformat import NoFormatFactory
+from ..wikistyleutils import loadCustomStyles
 
 
 PARAM_NAME_COLOR = 'color'
@@ -43,7 +41,7 @@ class WikiStyleBlockFactory(object):
 class WikiStyleBase(object, metaclass=ABCMeta):
     def __init__(self, parser):
         self.parser = parser
-        custom_styles = self._loadCustomStyles()
+        custom_styles = loadCustomStyles(self._getStylesFolder())
         self._style_generator = StyleGenerator(custom_styles)
 
     @abstractproperty
@@ -71,21 +69,6 @@ class WikiStyleBase(object, metaclass=ABCMeta):
 
     def _prepareContent(self, content):
         return content
-
-    def _loadCustomStyles(self):
-        styles = {}
-        extension = '.css'
-
-        for folder in getSpecialDirList(self._getStylesFolder()):
-            for fname in os.listdir(folder):
-                if fname.endswith(extension):
-                    name = fname[:-len(extension)]
-                    try:
-                        css = readTextFile(os.path.join(folder, fname))
-                        styles[name] = css
-                    except IOError:
-                        pass
-        return styles
 
     def getToken(self):
         begin = self._getBeginToken()

@@ -26,6 +26,7 @@ from .actions.attachlist import WikiAttachListAction
 from .actions.childlist import WikiChildListAction
 from .actions.include import WikiIncludeAction
 from .actions.dates import WikiDateCreationAction, WikiDateEditionAction
+from .actions.wikistyle import WikiStyleOnlyAction
 
 
 class WikiPageView(BaseWikiPageView):
@@ -134,7 +135,8 @@ class WikiPageView(BaseWikiPageView):
             WikiChildListAction,
             WikiIncludeAction,
             WikiDateCreationAction,
-            WikiDateEditionAction
+            WikiDateEditionAction,
+            WikiStyleOnlyAction,
         ]
 
     def _createWikiTools(self):
@@ -321,6 +323,14 @@ class WikiPageView(BaseWikiPageView):
             TEXT_BACKGROUND_COLOR_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_color_background.png"),
+            fullUpdate=False)
+
+        # Text style
+        actionController.appendMenuItem(WikiStyleOnlyAction.stringId, menu)
+        actionController.appendToolbarButton(
+            WikiStyleOnlyAction.stringId,
+            toolbar,
+            os.path.join(self.imagesDir, "text_style.png"),
             fullUpdate=False)
 
     def __addAlignTools(self):
