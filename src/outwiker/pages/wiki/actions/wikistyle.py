@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 
+import wx
+
 from outwiker.gui.baseaction import BaseAction
 from outwiker.core.defines import (STYLES_BLOCK_FOLDER_NAME,
                                    STYLES_INLINE_FOLDER_NAME,
                                    )
+from outwiker.core.system import getSpecialDirList
 
 from ..wikistyleutils import (turnBlockOrInline,
                               isSelectedBlock,
@@ -36,4 +39,16 @@ class WikiStyleOnlyAction (BaseAction):
 
         styles_folder = (STYLES_BLOCK_FOLDER_NAME if isSelectedBlock(editor)
                          else STYLES_INLINE_FOLDER_NAME)
-        styles = getCustomStylesNames(styles_folder)
+        dir_list = getSpecialDirList(styles_folder)
+        styles = sorted(getCustomStylesNames(dir_list))
+
+        title = _('Select style')
+        message = _('Styles')
+        mainWindow = self._application.mainWindow
+
+        with wx.SingleChoiceDialog(mainWindow, message, title, styles) as dlg:
+            if dlg.ShowModal() == wx.ID_OK:
+                style = dlg.GetStringSelection()
+                text_begin = '%{style}%'.format(style=style)
+                text_end = '%%'
+                turnBlockOrInline(editor, text_begin, text_end)

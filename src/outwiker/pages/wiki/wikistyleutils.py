@@ -5,7 +5,6 @@ import os
 import wx
 
 from outwiker.core.standardcolors import StandardColors
-from outwiker.core.system import getSpecialDirList
 from outwiker.utilites.textfile import readTextFile
 
 
@@ -62,11 +61,11 @@ def selectColor(parent, title):
             return color_str
 
 
-def loadCustomStyles(styles_folder_name):
+def loadCustomStyles(dir_list):
     styles = {}
     extension = '.css'
 
-    for folder in getSpecialDirList(styles_folder_name):
+    for folder in dir_list:
         for fname in os.listdir(folder):
             if fname.endswith(extension):
                 name = fname[:-len(extension)]
@@ -78,12 +77,12 @@ def loadCustomStyles(styles_folder_name):
     return styles
 
 
-def getCustomStylesNames(styles_folder_name):
+def getCustomStylesNames(dir_list):
     styles = []
     extension = '.css'
 
-    for folder in getSpecialDirList(styles_folder_name):
-        styles += [fname
+    for folder in dir_list:
+        styles += [fname[: -len(extension)]
                    for fname
                    in os.listdir(folder)
                    if fname.endswith(extension)]

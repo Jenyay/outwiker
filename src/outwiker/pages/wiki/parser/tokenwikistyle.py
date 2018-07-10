@@ -7,6 +7,7 @@ from outwiker.core.defines import (STYLES_BLOCK_FOLDER_NAME,
                                    STYLES_INLINE_FOLDER_NAME,
                                    )
 from outwiker.core.standardcolors import standardColorNames
+from outwiker.core.system import getSpecialDirList
 from outwiker.libs.pyparsing import (Regex, Forward, Literal,
                                      LineStart, LineEnd, NoMatch,
                                      SkipTo)
@@ -41,7 +42,10 @@ class WikiStyleBlockFactory(object):
 class WikiStyleBase(object, metaclass=ABCMeta):
     def __init__(self, parser):
         self.parser = parser
-        custom_styles = loadCustomStyles(self._getStylesFolder())
+
+        styles_folder_name = self._getStylesFolder()
+        dir_list = getSpecialDirList(styles_folder_name)
+        custom_styles = loadCustomStyles(dir_list)
         self._style_generator = StyleGenerator(custom_styles)
 
     @abstractproperty
