@@ -47,6 +47,7 @@ class WikiStyleOnlyAction (BaseAction):
         mainWindow = self._application.mainWindow
 
         with wx.SingleChoiceDialog(mainWindow, message, title, styles) as dlg:
+            dlg.SetSize((300, 400))
             if dlg.ShowModal() == wx.ID_OK:
                 style = dlg.GetStringSelection()
                 text_begin = '%{style}%'.format(style=style)

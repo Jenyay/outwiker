@@ -87,4 +87,4 @@ def getCustomStylesNames(dir_list):
                    in os.listdir(folder)
                    if fname.endswith(extension)]
 
-    return styles
+    return list(set(styles))
