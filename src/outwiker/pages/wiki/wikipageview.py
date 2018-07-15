@@ -26,7 +26,7 @@ from .actions.attachlist import WikiAttachListAction
 from .actions.childlist import WikiChildListAction
 from .actions.include import WikiIncludeAction
 from .actions.dates import WikiDateCreationAction, WikiDateEditionAction
-from .actions.wikistyle import WikiStyleOnlyAction
+from .actions.wikistyle import WikiStyleOnlyAction, WikiStyleAdvancedAction
 
 
 class WikiPageView(BaseWikiPageView):
@@ -332,6 +332,9 @@ class WikiPageView(BaseWikiPageView):
             toolbar,
             os.path.join(self.imagesDir, "text_style.png"),
             fullUpdate=False)
+
+        # Advanced text style
+        actionController.appendMenuItem(WikiStyleAdvancedAction.stringId, menu)
 
     def __addAlignTools(self):
         toolbar = self._application.mainWindow.toolbars[defines.TOOLBAR_WIKI_ALIGN]

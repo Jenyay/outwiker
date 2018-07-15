@@ -21,7 +21,7 @@ from .actions.attachlist import WikiAttachListAction
 from .actions.childlist import WikiChildListAction
 from .actions.include import WikiIncludeAction
 from .actions.dates import WikiDateCreationAction, WikiDateEditionAction
-from .actions.wikistyle import WikiStyleOnlyAction
+from .actions.wikistyle import WikiStyleOnlyAction, WikiStyleAdvancedAction
 
 
 wiki_actions = [
@@ -37,6 +37,7 @@ wiki_actions = [
    (WikiDateCreationAction, None),
    (WikiDateEditionAction, None),
    (WikiStyleOnlyAction, None),
+   (WikiStyleAdvancedAction, None),
 ]
 
 
