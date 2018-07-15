@@ -41,17 +41,24 @@ class StyleDialog(TestedDialog):
 </body>
 '''
 
-        self.SetSize((600, 400))
+        self.SetSize((500, 600))
         self.Center()
         self._create_gui()
 
-        self._style_name_combo.Bind(wx.EVT_COMBOBOX, handler=self._onUpdate)
-        self._text_color_check.Bind(wx.EVT_CHECKBOX, handler=self._onUpdate)
-        self._text_color_picker.Bind(wx.EVT_COLOURPICKER_CHANGED, handler=self._onUpdate)
-        self._text_background_check.Bind(wx.EVT_CHECKBOX, handler=self._onUpdate)
-        self._text_background_picker.Bind(wx.EVT_COLOURPICKER_CHANGED, handler=self._onUpdate)
-        self._custom_CSS_check.Bind(wx.EVT_CHECKBOX, handler=self._onUpdate)
-        self._custom_CSS_editor.Bind(wx.stc.EVT_STC_CHANGE, handler=self._onUpdate)
+        self._style_name_combo.Bind(wx.EVT_COMBOBOX,
+                                    handler=self._onUpdate)
+        self._text_color_check.Bind(wx.EVT_CHECKBOX,
+                                    handler=self._onUpdate)
+        self._text_color_picker.Bind(wx.EVT_COLOURPICKER_CHANGED,
+                                     handler=self._onTextColorPicker)
+        self._text_background_check.Bind(wx.EVT_CHECKBOX,
+                                         handler=self._onUpdate)
+        self._text_background_picker.Bind(wx.EVT_COLOURPICKER_CHANGED,
+                                          handler=self._onTextBackgroundPicker)
+        self._custom_CSS_check.Bind(wx.EVT_CHECKBOX,
+                                    handler=self._onUpdate)
+        self._custom_CSS_editor.Bind(wx.stc.EVT_STC_CHANGE,
+                                     handler=self._onEditCSS)
         self.updateExample()
 
     def updateExample(self):
@@ -60,6 +67,18 @@ class StyleDialog(TestedDialog):
 
     def _onUpdate(self, event):
         self.updateExample()
+
+    def _onTextColorPicker(self, event):
+        self._text_color_check.SetValue(True)
+        self._onUpdate(event)
+
+    def _onTextBackgroundPicker(self, event):
+        self._text_background_check.SetValue(True)
+        self._onUpdate(event)
+
+    def _onEditCSS(self, event):
+        self._custom_CSS_check.SetValue(True)
+        self._onUpdate(event)
 
     def getHTML(self):
         result = ''
@@ -100,10 +119,10 @@ class StyleDialog(TestedDialog):
         return html
 
     def _create_gui(self):
-        paramsPreviewSizer = wx.FlexGridSizer(cols=2)
-        paramsPreviewSizer.AddGrowableRow(0)
+        paramsPreviewSizer = wx.FlexGridSizer(cols=1)
+        paramsPreviewSizer.AddGrowableRow(0, 1)
+        paramsPreviewSizer.AddGrowableRow(1, 2)
         paramsPreviewSizer.AddGrowableCol(0)
-        paramsPreviewSizer.AddGrowableCol(1)
 
         paramsSizer = wx.FlexGridSizer(cols=1)
         paramsSizer.AddGrowableCol(0)
@@ -166,6 +185,7 @@ class StyleDialog(TestedDialog):
         # Custom CSS
         self._custom_CSS_check = wx.CheckBox(self, label=_('Custom CSS'))
         self._custom_CSS_editor = CSSEditor(self)
+        self._custom_CSS_editor.SetMinSize((-1, 100))
 
         paramsSizer.Add(self._custom_CSS_check, flag=wx.ALIGN_CENTER_VERTICAL)
         paramsSizer.Add(self._custom_CSS_editor,
@@ -184,7 +204,6 @@ class StyleDialog(TestedDialog):
 
         # Ok / Cancel buttons
         okCancel = self.CreateButtonSizer(wx.OK | wx.CANCEL)
-        paramsPreviewSizer.AddStretchSpacer()
         paramsPreviewSizer.Add(okCancel,
                                flag=wx.ALL | wx.ALIGN_RIGHT | wx.ALIGN_BOTTOM,
                                border=4)
