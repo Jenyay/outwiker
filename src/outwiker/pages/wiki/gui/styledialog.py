@@ -69,15 +69,15 @@ class StyleDialog(TestedDialog):
         self.updateExample()
 
     def _onTextColorPicker(self, event):
-        self._text_color_check.SetValue(True)
+        self.enableTextColor(True)
         self._onUpdate(event)
 
     def _onTextBackgroundPicker(self, event):
-        self._text_background_check.SetValue(True)
+        self.enableBackgroundColor(True)
         self._onUpdate(event)
 
     def _onEditCSS(self, event):
-        self._custom_CSS_check.SetValue(True)
+        self.enableCustomCSS(True)
         self._onUpdate(event)
 
     def getHTML(self):
@@ -219,6 +219,13 @@ class StyleDialog(TestedDialog):
                 if self._text_color_check.IsChecked()
                 else None)
 
+    def setTextColor(self, color: wx.Colour) -> None:
+        self.enableTextColor(True)
+        self._text_color_picker.SetColour(color)
+
+    def enableTextColor(self, enabled: bool) -> None:
+        self._text_color_check.SetValue(enabled)
+
     def getBackgroundColor(self) -> Optional[wx.Colour]:
         '''
         Return selected text background color if set appropriate check box
@@ -228,6 +235,13 @@ class StyleDialog(TestedDialog):
                 if self._text_background_check.IsChecked()
                 else None)
 
+    def setBackgroundColor(self, color: wx.Colour) -> None:
+        self.enableBackgroundColor(True)
+        self._text_background_picker.SetColour(color)
+
+    def enableBackgroundColor(self, enabled: bool) -> None:
+        self._text_background_check.SetValue(enabled)
+
     def getCustomStyleName(self) -> Optional[str]:
         '''
         Return selected custom style name or None.
@@ -236,6 +250,15 @@ class StyleDialog(TestedDialog):
                 if self._style_name_combo.GetSelection() > 0
                 else None)
 
+    def setCustomStyleName(self, style_name: str) -> None:
+        if style_name in self._styles:
+            for n, string in enumerate(self._style_name_combo.GetItems()):
+                if string == style_name:
+                    self._style_name_combo.SetSelection(n)
+
+    def disableCustomStyleName(self) -> None:
+        self._style_name_combo.SetSelection(0)
+
     def getCustomCSS(self) -> Optional[str]:
         '''
         Return custom CSS if set appropriate check box or None otherwise.
@@ -243,3 +266,10 @@ class StyleDialog(TestedDialog):
         return (self._custom_CSS_editor.GetText().strip()
                 if self._custom_CSS_check.IsChecked()
                 else None)
+
+    def setCustomCSS(self, css: str) -> None:
+        self.enableCustomCSS(True)
+        self._custom_CSS_editor.SetText(css)
+
+    def enableCustomCSS(self, enabled: bool) -> None:
+        self._custom_CSS_check.SetValue(enabled)
