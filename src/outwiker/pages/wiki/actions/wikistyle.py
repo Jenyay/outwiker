@@ -6,6 +6,7 @@ from outwiker.gui.baseaction import BaseAction
 from outwiker.core.defines import (STYLES_BLOCK_FOLDER_NAME,
                                    STYLES_INLINE_FOLDER_NAME,
                                    )
+from outwiker.core.standardcolors import StandardColors
 from outwiker.core.system import getSpecialDirList
 
 from ..wikistyleutils import (turnBlockOrInline,
@@ -74,6 +75,15 @@ class WikiStyleAdvancedAction (BaseAction):
     def description(self):
         return _(u"Show dialog for advanced text style settings")
 
+    def _color2str(self, color: wx.Colour) -> str:
+        assert color is not None
+
+        color_str = color.GetAsString(wx.C2S_HTML_SYNTAX).lower()
+        if color_str in StandardColors:
+            color_str = StandardColors[color_str]
+
+        return color_str
+
     def run(self, params):
         assert self._application.mainWindow is not None
         assert self._application.mainWindow.pagePanel is not None
@@ -97,12 +107,34 @@ class WikiStyleAdvancedAction (BaseAction):
 
         with StyleDialog(mainWindow, title, styles, example_html, tag) as dlg:
             if dlg.ShowModal() == wx.ID_OK:
-                pass
-        #
-        # with wx.SingleChoiceDialog(mainWindow, message, title, styles) as dlg:
-        #     dlg.SetSize((300, 400))
-        #     if dlg.ShowModal() == wx.ID_OK:
-        #         style = dlg.GetStringSelection()
-        #         text_begin = '%{style}%'.format(style=style)
-        #         text_end = '%%'
-        #         turnBlockOrInline(editor, text_begin, text_end)
+                color = dlg.getTextColor()
+                background_color = dlg.getBackgroundColor()
+                custom_style_name = dlg.getCustomStyleName()
+                custom_css = dlg.getCustomCSS()
+
+                begin = ''
+                if custom_style_name:
+                    begin += ' {}'.format(custom_style_name)
+
+                if color:
+                    color_str = self._color2str(color)
+                    if (color_str.startswith('#') or
+                            color_str.startswith('rgb(')):
+                        begin += ' color="{}"'.format(color_str)
+                    else:
+                        begin += ' {}'.format(color_str)
+
+                if background_color:
+                    background_color_str = self._color2str(background_color)
+                    if (background_color_str.startswith('#') or
+                            background_color_str.startswith('rgb(')):
+                        begin += ' bgcolor="{}"'.format(background_color_str)
+                    else:
+                        begin += ' bg-{}'.format(background_color_str)
+
+                if custom_css:
+                    begin += ' style="{}"'.format(custom_css.replace('\n', ' '))
+
+                begin = '%' + begin.strip() + '%'
+                end = '%%'
+                turnBlockOrInline(editor, begin, end)
