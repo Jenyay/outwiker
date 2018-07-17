@@ -143,6 +143,6 @@ polyactionsList = [
     (polyactions.CLIPBOARD_CUT_LINE, _(u"Cut line"), _(u"Cut the current line to clipboard"), None),
     (polyactions.CLIPBOARD_COPY_WORD, _(u"Copy word"), _(u"Copy the current word to clipboard"), None),
     (polyactions.CLIPBOARD_CUT_WORD, _(u"Cut word"), _(u"Cut the current word to clipboard"), None),
-    (polyactions.TEXT_COLOR_STR_ID, _(u"Text color"), _(u"Set text color"), HotKey("K", ctrl=True, shift=True)),
-    (polyactions.TEXT_BACKGROUND_COLOR_STR_ID, _(u"Text background color"), _(u"Set text background color"), HotKey("N", ctrl=True, shift=True)),
+    (polyactions.TEXT_COLOR_STR_ID, _(u"Text color..."), _(u"Set text color"), HotKey("K", ctrl=True, shift=True)),
+    (polyactions.TEXT_BACKGROUND_COLOR_STR_ID, _(u"Text background color..."), _(u"Set text background color"), HotKey("N", ctrl=True, shift=True)),
 ]

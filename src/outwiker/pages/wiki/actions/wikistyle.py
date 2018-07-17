@@ -28,7 +28,7 @@ class WikiStyleOnlyAction (BaseAction):
 
     @property
     def title(self):
-        return _(u"Text style")
+        return _(u"Text style...")
 
     @property
     def description(self):
@@ -69,7 +69,7 @@ class WikiStyleAdvancedAction (BaseAction):
 
     @property
     def title(self):
-        return _(u"Advanced style")
+        return _(u"Advanced style...")
 
     @property
     def description(self):
