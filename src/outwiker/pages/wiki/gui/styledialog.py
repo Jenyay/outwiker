@@ -132,7 +132,7 @@ class StyleDialog(TestedDialog):
         style_names = sorted(self._styles.keys())
         style_names.insert(0, self.NONE_STYLE)
 
-        style_name_label = wx.StaticText(self, label='Style name')
+        style_name_label = wx.StaticText(self, label=_('Style name'))
 
         self._style_name_combo = wx.ComboBox(self, choices=style_names)
         self._style_name_combo.SetSelection(0)
