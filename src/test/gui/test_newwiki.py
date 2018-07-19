@@ -24,7 +24,7 @@ class NewWikiGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.destroyWiki(self.wikiroot)
 
     def _selectFile(self, dialog):
-        dialog.SetPathForTest(self.wikiroot.path)
+        dialog.SetDataForTest(self.wikiroot.path)
         return wx.ID_OK
 
     def testCreate_01(self):

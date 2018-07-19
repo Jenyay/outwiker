@@ -38,12 +38,12 @@ class OpenWikiGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def _selectFile(self, dialog):
         fname = os.path.join(self.wikiroot.path, "__page.opt")
-        dialog.SetPathForTest(fname)
+        dialog.SetDataForTest(fname)
         return wx.ID_OK
 
     def _selectInvalidFile(self, dialog):
         fname = os.path.join(self.wikiroot.path, "adsfadsas", "__page.opt")
-        dialog.SetPathForTest(fname)
+        dialog.SetDataForTest(fname)
         return wx.ID_OK
 
     def test_Open_01(self):
