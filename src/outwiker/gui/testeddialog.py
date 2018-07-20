@@ -49,3 +49,15 @@ class TestedFileDialog(TestedStandardDialogMixin, wx.FileDialog):
     def GetPath(self):
         return (self._testedValue if self._testedValue is not None
                 else super(TestedFileDialog, self).GetPath())
+
+
+class TestedColourDialog(TestedStandardDialogMixin, wx.ColourDialog):
+    """
+    Диалог для выбора цвета, который можно тестировать
+    """
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def GetColourData(self) -> wx.ColourData:
+        return (self._testedValue if self._testedValue is not None
+                else super().GetColourData())

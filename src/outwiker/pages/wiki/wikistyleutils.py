@@ -6,6 +6,7 @@ import wx
 
 from outwiker.core.standardcolors import StandardColors
 from outwiker.utilites.textfile import readTextFile
+from outwiker.gui.testeddialog import TestedColourDialog
 
 
 def turnBlockOrInline(editor, text_begin, text_end):
@@ -49,7 +50,7 @@ def selectColor(parent, title):
     '''
     color_data = wx.ColourData()
     color_data.SetChooseFull(True)
-    with wx.ColourDialog(parent, color_data) as dialog:
+    with TestedColourDialog(parent, color_data) as dialog:
         dialog.SetTitle(title)
         if dialog.ShowModal() == wx.ID_OK:
             selected_color_data = dialog.GetColourData()
