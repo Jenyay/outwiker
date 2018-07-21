@@ -14,7 +14,96 @@
 		img{border:none}
 		
 	</style>
-	
+	<style>span.notice {
+	display: inline-block;
+	color: #333;
+	background-color: #e3f7fc;
+	border-radius: 1px;
+	padding: 0px 2px 0px 2px;
+	margin: 2px;
+	border:1px solid #8ed9f6;
+}
+</style>
+<style>span.success {
+	display: inline-block;
+	color: #333;
+	background-color: #e9ffd9;
+	border-radius: 1px;
+	padding: 0px 2px 0px 2px;
+	margin: 2px;
+	border:1px solid #a6ca8a;
+}
+</style>
+<style>span.warning {
+	display: inline-block;
+	color: #333;
+	background-color: #fff8c4;
+	border-radius: 1px;
+	padding: 0px 2px 0px 2px;
+	margin: 2px;
+	border:1px solid #f2c779;
+}
+</style>
+<style>span.error {
+	display: inline-block;
+	color: #333;
+	background-color: #ffecec;
+	border-radius: 1px;
+	padding: 0px 2px 0px 2px;
+	margin: 2px;
+	border:1px solid #f5aca6;
+}
+</style>
+<style>div.border {
+	padding: 1em;
+	margin: 1em;
+	border: 1px solid #000;
+}
+</style>
+<style>div.frame {
+	background-color: #ddd;
+	padding: 1em;
+	margin: 1em;
+	border: 1px solid #000;
+}
+</style>
+<style>div.notice {
+	color: #333;
+	background-color: #e3f7fc;
+	border-radius: 10px;
+	padding: 10px 10px 10px 10px;
+	margin: 10px;
+	border:1px solid #8ed9f6;
+}
+</style>
+<style>div.success {
+	color: #333;
+	background-color: #e9ffd9;
+	border-radius: 10px;
+	padding: 10px 10px 10px 10px;
+	margin: 10px;
+	border:1px solid #a6ca8a;
+}
+</style>
+<style>div.warning {
+	color: #333;
+	background-color: #fff8c4;
+	border-radius: 10px;
+	padding: 10px 10px 10px 10px;
+	margin: 10px;
+	border:1px solid #f2c779;
+}
+</style>
+<style>div.error {
+	color: #333;
+	background-color: #ffecec;
+	border-radius: 10px;
+	padding: 10px 10px 10px 10px;
+	margin: 10px;
+	border:1px solid #f5aca6;
+}
+</style>
+
 </head>
 
 <body>
@@ -24,10 +113,25 @@
 <li><a href="#colors">Встроенные цвета</a></li>
 </ul>
 <h2><a id="inline"></a> Встроенные строковые стили</h2>
+<p><span class="notice">Текст со стилем <b>notice</b></span><br/>
+<span class="success">Текст со стилем <b>success</b></span><br/>
+<span class="warning">Текст со стилем <b>warning</b></span><br/>
+<span class="error">Текст со стилем <b>error</b></span></p>
 <h2><a id="block"></a> Встроенные блоковые стили</h2>
+<div class="border">Текст со стилем <b>border</b></div><br/>
+<div class="frame">Текст со стилем <b>frame</b></div><br/>
+<div class="notice">Текст со стилем <b>notice</b></div><br/>
+<div class="success">Текст со стилем <b>success</b></div><br/>
+<div class="warning">Текст со стилем <b>warning</b></div><br/>
+<div class="error">Текст со стилем <b>error</b></div>
+
 <h2><a id="colors"></a> Встроенные цвета</h2>
 <p>
-<table aliceblue || %bg-aliceblue style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||>
+<table >
+<tr>
+<td align="left">aliceblue</td>
+<td align="center"><span style="background-color: aliceblue; width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"></span></td>
+</tr>
 <tr>
 <td align="left">antiquewhite</td>
 <td align="center"><span style="background-color: antiquewhite; width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"></span></td>

@@ -4,12 +4,41 @@
 
 !!! [[#inline]] Встроенные строковые стили
 
+%notice%Текст со стилем '''notice'''%%
+%success%Текст со стилем '''success'''%%
+%warning%Текст со стилем '''warning'''%%
+%error%Текст со стилем '''error'''%%
+
 
 !!! [[#block]] Встроенные блоковые стили
 
+%border%
+Текст со стилем '''border'''
+%%
+
+%frame%
+Текст со стилем '''frame'''
+%%
+
+%notice%
+Текст со стилем '''notice'''
+%%
+
+%success%
+Текст со стилем '''success'''
+%%
+
+%warning%
+Текст со стилем '''warning'''
+%%
+
+%error%
+Текст со стилем '''error'''
+%%
 
 !!! [[#colors]] Встроенные цвета
 
+||
 ||aliceblue || %bg-aliceblue style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
 ||antiquewhite || %bg-antiquewhite style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
 ||aqua || %bg-aqua style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
