@@ -3,6 +3,7 @@
 import wx
 
 from outwiker.gui.baseaction import BaseAction
+from outwiker.gui.testeddialog import TestedSingleChoiceDialog
 from outwiker.core.defines import (STYLES_BLOCK_FOLDER_NAME,
                                    STYLES_INLINE_FOLDER_NAME,
                                    )
@@ -49,7 +50,7 @@ class WikiStyleOnlyAction (BaseAction):
         message = _('Styles')
         mainWindow = self._application.mainWindow
 
-        with wx.SingleChoiceDialog(mainWindow, message, title, styles) as dlg:
+        with TestedSingleChoiceDialog(mainWindow, message, title, styles) as dlg:
             dlg.SetSize((300, 400))
             if dlg.ShowModal() == wx.ID_OK:
                 style = dlg.GetStringSelection()

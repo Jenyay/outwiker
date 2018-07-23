@@ -61,3 +61,16 @@ class TestedColourDialog(TestedStandardDialogMixin, wx.ColourDialog):
     def GetColourData(self) -> wx.ColourData:
         return (self._testedValue if self._testedValue is not None
                 else super().GetColourData())
+
+
+class TestedSingleChoiceDialog(TestedStandardDialogMixin,
+                               wx.SingleChoiceDialog):
+    """
+    Диалог для выбора строки из списка, который можно тестировать
+    """
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def GetStringSelection(self) -> str:
+        return (self._testedValue if self._testedValue is not None
+                else super().GetStringSelection())
