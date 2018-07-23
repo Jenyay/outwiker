@@ -6,6 +6,7 @@ from tempfile import mkdtemp
 
 from test.utils import removeDir
 
+from outwiker.core.attachment import Attachment
 from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
 from outwiker.pages.wiki.wikipage import WikiPageFactory
@@ -57,7 +58,7 @@ class WikiStylesBlockTest(unittest.TestCase):
         result = text
         self.assertEqual(result, self.parser.toHtml(text))
 
-    def test_invalid_02_space(self):
+    def test_invalid_02_name(self):
         text = '''текст
 %1class-red%
 бла-бла-бла
@@ -66,16 +67,16 @@ class WikiStylesBlockTest(unittest.TestCase):
         result = text
         self.assertEqual(result, self.parser.toHtml(text))
 
-    def test_invalid_03_space(self):
+    def test_invalid_03_name(self):
         text = '''текст
-%русс-class-red%
+%абырвалг-class-red%
 бла-бла-бла
 %%
 '''
         result = text
         self.assertEqual(result, self.parser.toHtml(text))
 
-    def test_invalid_04_space(self):
+    def test_invalid_04_space_begin(self):
         text = '''текст
  %class-red%
 бла-бла-бла
@@ -84,7 +85,7 @@ class WikiStylesBlockTest(unittest.TestCase):
         result = text
         self.assertEqual(result, self.parser.toHtml(text))
 
-    def test_invalid_05_space(self):
+    def test_invalid_05_space_end(self):
         text = '''текст
 %class-red%
 бла-бла-бла
@@ -148,6 +149,57 @@ class WikiStylesBlockTest(unittest.TestCase):
 бла-бла-бла
 %%
 '''
+        self.assertEqual(result, self.parser.toHtml(text))
+
+    def test_with_thumbnails_before(self):
+        Attachment(self.testPage).attach(['../test/images/icon.png'])
+        text = '''текст %thumb width=32%Attach:icon.png%%
+%class-red%
+бла-бла-бла
+%%
+'''
+        result = '''текст <a href="__attach/icon.png"><img src="__attach/__thumb/th_width_32_icon.png"/></a>
+<div class="class-red">бла-бла-бла</div>'''
+        self.assertEqual(result, self.parser.toHtml(text))
+
+    def test_with_thumbnails_after(self):
+        Attachment(self.testPage).attach(['../test/images/icon.png'])
+        text = '''текст
+%class-red%
+бла-бла-бла
+%%
+%thumb width=32%Attach:icon.png%%'''
+        result = '''текст
+<div class="class-red">бла-бла-бла</div><a href="__attach/icon.png"><img src="__attach/__thumb/th_width_32_icon.png"/></a>'''
+        self.assertEqual(result, self.parser.toHtml(text))
+
+    def test_with_thumbnails_inside(self):
+        Attachment(self.testPage).attach(['../test/images/icon.png'])
+        text = '''текст
+%class-red%
+бла-бла-бла %thumb width=32%Attach:icon.png%%
+%%'''
+        result = '''текст
+<div class="class-red">бла-бла-бла <a href="__attach/icon.png"><img src="__attach/__thumb/th_width_32_icon.png"/></a></div>'''
+        self.assertEqual(result, self.parser.toHtml(text))
+
+    def test_with_thumbnails_between(self):
+        Attachment(self.testPage).attach(['../test/images/icon.png'])
+        text = '''текст
+%class-red%
+бла-бла-бла
+%%
+
+%thumb width=32%Attach:icon.png%%
+
+%class-red%
+бла-бла-бла
+%%'''
+        result = '''текст
+<div class="class-red">бла-бла-бла</div>
+<a href="__attach/icon.png"><img src="__attach/__thumb/th_width_32_icon.png"/></a>
+
+<div class="class-red">бла-бла-бла</div>'''
         self.assertEqual(result, self.parser.toHtml(text))
 
 
@@ -453,6 +505,46 @@ class WikiStylesInlineTest(unittest.TestCase):
     def test_invalid_03_space(self):
         text = 'текст %русс-red%бла-бла-бла%% текст'
         result = text
+        self.assertEqual(result, self.parser.toHtml(text))
+
+    def test_thumbnail_before(self):
+        Attachment(self.testPage).attach(['../test/images/icon.png'])
+
+        text = "текст %thumb width=32%Attach:icon.png%% %class-red%бла-бла-бла%% текст"
+        result = 'текст <a href="__attach/icon.png"><img src="__attach/__thumb/th_width_32_icon.png"/></a> <span class="class-red">бла-бла-бла</span> текст'
+
+        self.assertEqual(result, self.parser.toHtml(text))
+
+    def test_thumbnail_after(self):
+        Attachment(self.testPage).attach(['../test/images/icon.png'])
+
+        text = "текст %class-red%бла-бла-бла%% текст %thumb width=32%Attach:icon.png%%"
+        result = 'текст <span class="class-red">бла-бла-бла</span> текст <a href="__attach/icon.png"><img src="__attach/__thumb/th_width_32_icon.png"/></a>'
+
+        self.assertEqual(result, self.parser.toHtml(text))
+
+    def test_thumbnail_inside(self):
+        Attachment(self.testPage).attach(['../test/images/icon.png'])
+
+        text = "текст %class-red%бла-бла-бла %thumb width=32%Attach:icon.png%%%% текст"
+        result = 'текст <span class="class-red">бла-бла-бла <a href="__attach/icon.png"><img src="__attach/__thumb/th_width_32_icon.png"/></a></span> текст'
+
+        self.assertEqual(result, self.parser.toHtml(text))
+
+    def test_thumbnail_between(self):
+        Attachment(self.testPage).attach(['../test/images/icon.png'])
+
+        text = "текст %class-red%бла-бла-бла%% текст %thumb width=32%Attach:icon.png%% %class-red%бла-бла-бла%%"
+        result = 'текст <span class="class-red">бла-бла-бла</span> текст <a href="__attach/icon.png"><img src="__attach/__thumb/th_width_32_icon.png"/></a> <span class="class-red">бла-бла-бла</span>'
+
+        self.assertEqual(result, self.parser.toHtml(text))
+
+    def test_thumbnail_serial(self):
+        Attachment(self.testPage).attach(['../test/images/icon.png'])
+
+        text = "текст %class-red%бла-бла-бла%% текст %thumb width=32%Attach:icon.png%% %class-red%бла-бла-бла%% %thumb width=32%Attach:icon.png%%"
+        result = 'текст <span class="class-red">бла-бла-бла</span> текст <a href="__attach/icon.png"><img src="__attach/__thumb/th_width_32_icon.png"/></a> <span class="class-red">бла-бла-бла</span> <a href="__attach/icon.png"><img src="__attach/__thumb/th_width_32_icon.png"/></a>'
+
         self.assertEqual(result, self.parser.toHtml(text))
 
 
