@@ -27,9 +27,9 @@ build_script:
     - sh: pipenv run fab deb_binary
     - sh: pipenv run fab plugins
 test_script:
-    - cmd: py -m pipenv run fab test:"-s"
+    - cmd: py -m pipenv run fab test
     - cmd: py -m pipenv run fab coverage
-    # - sh: xvfb-run pipenv run fab test:"-s"
+    # - sh: xvfb-run pipenv run fab test
 artifacts:
     - path: build/*/versions.xml
       name: versions.xml
