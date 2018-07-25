@@ -48,6 +48,12 @@ class GeneralGuiConfig(object):
     DEBUG_PARAM = u'debug'
     DEBUG_DEFAULT = False
 
+    RECENT_TEXT_COLORS_PARAM = 'RecentTextColors'
+    RECENT_TEXT_COLORS_DEFAULT = '#000000;#FFFFFF;#ff0000;#00ff00;#0000ff;#8a2be2;#7fff00;#d2691e;#6495ed;#dc143c;#00ffff;#a9a9a9;#ff8c00;#ff1493;#ffd700;#adff2f;#ffff00'.split(';')
+
+    RECENT_BACKGROUND_COLORS_PARAM = 'RecentBackgroundColors'
+    RECENT_BACKGROUND_COLORS_DEFAULT = '#000000;#FFFFFF;#ff0000;#00ff00;#0000ff;#8a2be2;#7fff00;#d2691e;#6495ed;#dc143c;#00ffff;#a9a9a9;#ff8c00;#ff1493;#ffd700;#adff2f;#ffff00'.split(';')
+
     def __init__(self, config):
         self.config = config
 
@@ -109,6 +115,19 @@ class GeneralGuiConfig(object):
                                             self.GENERAL_SECTION,
                                             self.TABLE_COLS_COUNT,
                                             self.TABLE_COLS_COUNT_DEFAULT)
+
+        self.recentTextColors = ListOption(self.config,
+                                           self.GENERAL_SECTION,
+                                           self.RECENT_TEXT_COLORS_PARAM,
+                                           self.RECENT_TEXT_COLORS_DEFAULT,
+                                           separator=u';')
+
+        self.recentBackgroundColors = ListOption(
+            self.config,
+            self.GENERAL_SECTION,
+            self.RECENT_BACKGROUND_COLORS_PARAM,
+            self.RECENT_BACKGROUND_COLORS_DEFAULT,
+            separator=u';')
 
         self.debug = BooleanOption(self.config,
                                    self.GENERAL_SECTION,

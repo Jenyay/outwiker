@@ -4,8 +4,8 @@ import os
 
 import wx
 
-from outwiker.core.standardcolors import StandardColors
 from outwiker.utilites.textfile import readTextFile
+from outwiker.gui.defines import RECENT_COLORS_COUNT
 from outwiker.gui.testeddialog import TestedColourDialog
 
 
@@ -44,20 +44,24 @@ def isSelectedBlock(editor):
     return is_begin_line and is_end_line
 
 
-def selectColor(parent, title):
+def selectColor(parent, title, colorsList):
     '''
     Select color with dialog
     '''
     color_data = wx.ColourData()
     color_data.SetChooseFull(True)
+    for n, color in enumerate(colorsList[:RECENT_COLORS_COUNT]):
+        color_data.SetCustomColour(n, color)
+
+    if colorsList:
+        color_data.SetColour(colorsList[0])
+
     with TestedColourDialog(parent, color_data) as dialog:
         dialog.SetTitle(title)
         if dialog.ShowModal() == wx.ID_OK:
             selected_color_data = dialog.GetColourData()
             color = selected_color_data.GetColour()
             color_str = color.GetAsString(wx.C2S_HTML_SYNTAX).lower()
-            if color_str in StandardColors:
-                color_str = StandardColors[color_str]
 
             return color_str
 

@@ -7,6 +7,9 @@ from io import StringIO
 
 from outwiker.actions.polyactionsid import *
 from outwiker.core.commands import insertCurrentDate
+from outwiker.core.standardcolors import StandardColors
+from outwiker.gui.guiconfig import GeneralGuiConfig
+from outwiker.gui.defines import RECENT_COLORS_COUNT
 
 from . import defines
 from .wikieditor import WikiEditor
@@ -792,21 +795,53 @@ class WikiPageView(BaseWikiPageView):
                                 endSelection + appendSymbols)
 
     def _setTextColor(self, param):
-        color = selectColor(self, _('Select text color'))
+        config = GeneralGuiConfig(self._application.config)
+        recent_colors = config.recentTextColors.value
+
+        color = selectColor(self, _('Select text color'), recent_colors)
+
         editor = self._application.mainWindow.pagePanel.pageView.codeEditor
         if color:
-            text_begin = '%{color}%'.format(color=color)
+            if color in recent_colors:
+                recent_colors.remove(color)
+
+            recent_colors.insert(0, color)
+            recent_colors = recent_colors[:RECENT_COLORS_COUNT]
+            config.recentTextColors.value = recent_colors
+
+            color_str = (StandardColors[color]
+                         if color in StandardColors
+                         else color)
+
+            text_begin = '%{color}%'.format(color=color_str)
             text_end = '%%'
             turnBlockOrInline(editor, text_begin, text_end)
 
     def _setTextBackgroundColor(self, param):
-        color = selectColor(self, _('Select text background color'))
+        config = GeneralGuiConfig(self._application.config)
+        recent_colors = config.recentBackgroundColors.value
+
+        color = selectColor(self,
+                            _('Select text background color'),
+                            recent_colors)
+
         editor = self._application.mainWindow.pagePanel.pageView.codeEditor
         if color:
-            if color.startswith('#') or color.startswith('rgb('):
-                text_begin = '%bgcolor={color}%'.format(color=color)
+            if color in recent_colors:
+                recent_colors.remove(color)
+
+            recent_colors.insert(0, color)
+            recent_colors = recent_colors[:RECENT_COLORS_COUNT]
+            config.recentBackgroundColors.value = recent_colors
+
+            color_str = (StandardColors[color]
+                         if color in StandardColors
+                         else color)
+
+            if color_str.startswith('#') or color_str.startswith('rgb('):
+                text_begin = '%bgcolor={color}%'.format(color=color_str)
             else:
-                text_begin = '%bg-{color}%'.format(color=color)
+                text_begin = '%bg-{color}%'.format(color=color_str)
 
             text_end = '%%'
             turnBlockOrInline(editor, text_begin, text_end)
