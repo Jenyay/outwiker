@@ -62,7 +62,7 @@ class WikiStyleNameActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.assertEqual(result, result_right)
 
-    def test_incapsulate_block(self):
+    def test_incapsulate_block_01(self):
         def dialog_func(dialog):
             dialog.SetDataForTest('test-style')
             return wx.ID_OK
@@ -82,6 +82,29 @@ class WikiStyleNameActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
 Бла-бла-бла
 %%
 
+Еще текст'''
+        result = self.editor.GetText()
+
+        self.assertEqual(result, result_right)
+
+    def test_incapsulate_block_02(self):
+        def dialog_func(dialog):
+            dialog.SetDataForTest('test-style')
+            return wx.ID_OK
+
+        Tester.dialogTester.append(dialog_func)
+
+        text = '''Блок текста
+Бла-бла-бла
+Еще текст'''
+        self.editor.SetText(text)
+        self.editor.SetSelection(12, 23)
+        self.action.run(None)
+
+        result_right = '''Блок текста
+%test-style%
+Бла-бла-бла
+%%
 Еще текст'''
         result = self.editor.GetText()
 

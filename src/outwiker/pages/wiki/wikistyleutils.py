@@ -37,9 +37,7 @@ def isSelectedBlock(editor):
 
     # If selected full paragraph (full line)
     is_begin_line = (sel_start == 0) or (full_text[sel_start - 1] == '\n')
-    is_end_line = (sel_end == text_length or
-                   sel_end == text_length - 1 or
-                   full_text[sel_end + 1] == '\n')
+    is_end_line = sel_end == text_length or full_text[sel_end] == '\n'
 
     return is_begin_line and is_end_line
 
