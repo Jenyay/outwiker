@@ -8,6 +8,7 @@
 
 		<changelog>
 			<version number="3.0.0.846" status="dev">
+				<change>Add new wiki commands for styles.</change>
 				<change>Migrate to wxPython 4.0.3.</change>
 			</version>
 
@@ -72,6 +73,7 @@
 
 		<changelog>
 			<version number="3.0.0.846" status="dev">
+				<change>Добавлены новые команды для викистилей.</change>
 				<change>Миграция на wxPython 4.0.3.</change>
 			</version>
 
