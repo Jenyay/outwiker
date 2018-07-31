@@ -1,4 +1,4 @@
-version: 2.1.0.xxx.{build}
+version: 3.0.0.xxx.{build}
 image:
     - Visual Studio 2015
     - Ubuntu
