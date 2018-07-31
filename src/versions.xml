@@ -7,6 +7,9 @@
 		<website>https://jenyay.net/Outwiker/UnstableEn</website>
 
 		<changelog>
+			<version number="3.0.0.847" status="dev">
+			</version>
+
 			<version number="3.0.0.846" status="dev" date="July 31, 2018">
 				<change>Add new wiki commands for styles.</change>
 				<change>Migrate to wxPython 4.0.3.</change>
@@ -72,6 +75,9 @@
 		<website>https://jenyay.net/Outwiker/Unstable</website>
 
 		<changelog>
+			<version number="3.0.0.847" status="dev">
+			</version>
+
 			<version number="3.0.0.846" status="dev" date="31.07.2018">
 				<change>Добавлены новые команды для викистилей.</change>
 				<change>Миграция на wxPython 4.0.3.</change>
