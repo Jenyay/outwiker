@@ -28,7 +28,7 @@
 		</author>
 
 		<changelog>
-			<version number="1.2.1">
+			<version number="1.2.1" date="July 31, 2018">
                 <download os="all">http://jenyay.net/uploads/Outwiker/HtmlFormatter/htmlformatter-1.2.1.zip</download>
 				<change>Improve block elements pricessing.</change>
 			</version>
@@ -70,7 +70,7 @@
 		</author>
 
 		<changelog>
-			<version number="1.2.1">
+			<version number="1.2.1" date="31.07.2018">
                 <download os="all">http://jenyay.net/uploads/Outwiker/HtmlFormatter/htmlformatter-1.2.1.zip</download>
 				<change>Улучшение обработки блоковых элементов.</change>
 			</version>
