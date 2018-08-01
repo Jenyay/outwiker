@@ -8,6 +8,7 @@
 
 		<changelog>
 			<version number="3.0.0.847" status="dev">
+				<change>Fix errors.</change>
 			</version>
 
 			<version number="3.0.0.846" status="dev" date="July 31, 2018">
@@ -76,6 +77,7 @@
 
 		<changelog>
 			<version number="3.0.0.847" status="dev">
+				<change>Исправление ошибок.</change>
 			</version>
 
 			<version number="3.0.0.846" status="dev" date="31.07.2018">
