@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import unittest
 from tempfile import mkdtemp
@@ -190,3 +190,9 @@ class ParserQuoteTest(unittest.TestCase):
         self.assertEqual(self.parser.toHtml(text),
                          result,
                          self.parser.toHtml(text).encode(self.encoding))
+
+    def testLineEnd_01(self):
+        text = "[>Проверка[[<<]]Проверка<]"
+        result = "<blockquote>Проверка<br/>Проверка</blockquote>"
+
+        self.assertEqual(self.parser.toHtml(text), result)

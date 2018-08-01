@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.pages.wiki.parser.tokenblock import SimpleNestedBlock
+from .tokenblock import SimpleNestedBlock
+from .tokenlinebreak import LineBreakToken
 
 
 class QuoteFactory(object):
@@ -18,3 +19,4 @@ class QuoteToken(SimpleNestedBlock):
     start_html = u'<blockquote>'
     end_html = u'</blockquote>'
     name = u'quote'
+    ignore = LineBreakToken().getToken()
