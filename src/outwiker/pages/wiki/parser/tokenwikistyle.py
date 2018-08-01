@@ -137,7 +137,7 @@ class WikiStyleBase(object, metaclass=ABCMeta):
             if param is None:
                 param = u""
 
-            result.append((name.lower(), self._removeQuotes(param.lower())))
+            result.append((name.lower(), self._removeQuotes(param)))
 
         return result
 
@@ -239,7 +239,6 @@ class StyleGenerator(object):
         other_styles = None
 
         for param, value in params_list:
-            param = param.lower()
             if not value:
                 class_name = param
 

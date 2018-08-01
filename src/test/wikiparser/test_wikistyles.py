@@ -325,7 +325,7 @@ class WikiStylesInlineTest(unittest.TestCase):
 
     def test_red_color_param_upper(self):
         text = "текст %color=RED%бла-бла-бла%% текст"
-        result = 'текст <span style="color: red;">бла-бла-бла</span> текст'
+        result = 'текст <span style="color: RED;">бла-бла-бла</span> текст'
 
         self.assertEqual(result, self.parser.toHtml(text))
 
@@ -349,19 +349,19 @@ class WikiStylesInlineTest(unittest.TestCase):
 
     def test_color_value_01(self):
         text = 'текст %color="#11AA55"%бла-бла-бла%% текст'
-        result = 'текст <span style="color: #11aa55;">бла-бла-бла</span> текст'
+        result = 'текст <span style="color: #11AA55;">бла-бла-бла</span> текст'
 
         self.assertEqual(result, self.parser.toHtml(text))
 
     def test_color_value_02(self):
         text = 'текст %color="#11AA55"%бла-бла-бла%% текст %color="#22BB66"%бла-бла-бла%%'
-        result = 'текст <span style="color: #11aa55;">бла-бла-бла</span> текст <span style="color: #22bb66;">бла-бла-бла</span>'
+        result = 'текст <span style="color: #11AA55;">бла-бла-бла</span> текст <span style="color: #22BB66;">бла-бла-бла</span>'
 
         self.assertEqual(result, self.parser.toHtml(text))
 
     def test_color_value_repeat_01(self):
         text = 'текст %color=#11AA55%бла-бла-бла%% текст %color="#11AA55"%бла-бла-бла%%'
-        result = 'текст <span style="color: #11aa55;">бла-бла-бла</span> текст <span style="color: #11aa55;">бла-бла-бла</span>'
+        result = 'текст <span style="color: #11AA55;">бла-бла-бла</span> текст <span style="color: #11AA55;">бла-бла-бла</span>'
 
         self.assertEqual(result, self.parser.toHtml(text))
 
@@ -373,13 +373,13 @@ class WikiStylesInlineTest(unittest.TestCase):
 
     def test_bgcolor_value_number_01(self):
         text = 'текст %bgcolor=#11AA55%бла-бла-бла%% текст'
-        result = 'текст <span style="background-color: #11aa55;">бла-бла-бла</span> текст'
+        result = 'текст <span style="background-color: #11AA55;">бла-бла-бла</span> текст'
 
         self.assertEqual(result, self.parser.toHtml(text))
 
     def test_bgcolor_value_number_02(self):
         text = 'текст %bgcolor="#11AA55"%бла-бла-бла%% текст'
-        result = 'текст <span style="background-color: #11aa55;">бла-бла-бла</span> текст'
+        result = 'текст <span style="background-color: #11AA55;">бла-бла-бла</span> текст'
 
         self.assertEqual(result, self.parser.toHtml(text))
 
@@ -422,6 +422,12 @@ class WikiStylesInlineTest(unittest.TestCase):
     def test_user_style_02(self):
         text = 'текст %blue style="font-weight: bold"%бла-бла-бла%% текст'
         result = 'текст <span style="color: blue; font-weight: bold;">бла-бла-бла</span> текст'
+
+        self.assertEqual(result, self.parser.toHtml(text))
+
+    def test_user_style_03(self):
+        text = 'текст %style="font-family:\'Times New Roman\'"%бла-бла-бла%% текст'
+        result = 'текст <span style="font-family:\'Times New Roman\';">бла-бла-бла</span> текст'
 
         self.assertEqual(result, self.parser.toHtml(text))
 
