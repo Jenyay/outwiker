@@ -36,6 +36,7 @@ class NestedBlockBase(object, metaclass=ABCMeta):
     start_html = None
     end_html = None
     name = None
+    ignore = None
 
     def __init__(self, parser):
         self.parser = parser
@@ -54,7 +55,7 @@ class NestedBlockBase(object, metaclass=ABCMeta):
         token = originalTextFor(nestedExpr(opener=self.start,
                                            closer=self.end,
                                            content=None,
-                                           ignoreExpr=None
+                                           ignoreExpr=self.ignore
                                            ))
         token = token.setParseAction(self.convertToHTML(self.start_html, self.end_html))(self.name)
 
