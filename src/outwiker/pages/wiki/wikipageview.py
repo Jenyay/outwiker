@@ -10,6 +10,7 @@ from outwiker.core.commands import insertCurrentDate
 from outwiker.core.standardcolors import StandardColors
 from outwiker.gui.guiconfig import GeneralGuiConfig
 from outwiker.gui.defines import RECENT_COLORS_COUNT
+from outwiker.utilites.collections import update_recent
 
 from . import defines
 from .wikieditor import WikiEditor
@@ -802,11 +803,10 @@ class WikiPageView(BaseWikiPageView):
 
         editor = self._application.mainWindow.pagePanel.pageView.codeEditor
         if color:
-            if color in recent_colors:
-                recent_colors.remove(color)
+            recent_colors = update_recent(recent_colors,
+                                          color.lower(),
+                                          RECENT_COLORS_COUNT)
 
-            recent_colors.insert(0, color)
-            recent_colors = recent_colors[:RECENT_COLORS_COUNT]
             config.recentTextColors.value = recent_colors
 
             color_str = (StandardColors[color]
@@ -827,11 +827,10 @@ class WikiPageView(BaseWikiPageView):
 
         editor = self._application.mainWindow.pagePanel.pageView.codeEditor
         if color:
-            if color in recent_colors:
-                recent_colors.remove(color)
+            recent_colors = update_recent(recent_colors,
+                                          color.lower(),
+                                          RECENT_COLORS_COUNT)
 
-            recent_colors.insert(0, color)
-            recent_colors = recent_colors[:RECENT_COLORS_COUNT]
             config.recentBackgroundColors.value = recent_colors
 
             color_str = (StandardColors[color]

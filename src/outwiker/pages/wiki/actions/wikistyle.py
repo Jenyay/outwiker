@@ -3,12 +3,15 @@
 import wx
 
 from outwiker.gui.baseaction import BaseAction
+from outwiker.gui.defines import RECENT_COLORS_COUNT
+from outwiker.gui.guiconfig import GeneralGuiConfig
 from outwiker.gui.testeddialog import TestedSingleChoiceDialog
 from outwiker.core.defines import (STYLES_BLOCK_FOLDER_NAME,
                                    STYLES_INLINE_FOLDER_NAME,
                                    )
 from outwiker.core.standardcolors import StandardColors
 from outwiker.core.system import getSpecialDirList
+from outwiker.utilites.collections import update_recent
 
 from ..wikistyleutils import (turnBlockOrInline,
                               isSelectedBlock,
@@ -52,6 +55,7 @@ class WikiStyleOnlyAction (BaseAction):
 
         with TestedSingleChoiceDialog(mainWindow, message, title, styles) as dlg:
             dlg.SetSize((300, 400))
+
             if dlg.ShowModal() == wx.ID_OK:
                 style = dlg.GetStringSelection()
                 text_begin = '%{style}%'.format(style=style)
@@ -89,6 +93,10 @@ class WikiStyleAdvancedAction (BaseAction):
         assert self._application.mainWindow is not None
         assert self._application.mainWindow.pagePanel is not None
 
+        config = GeneralGuiConfig(self._application.config)
+        recent_text_colors = config.recentTextColors.value
+        recent_background_colors = config.recentBackgroundColors.value
+
         editor = self._application.mainWindow.pagePanel.pageView.codeEditor
 
         if isSelectedBlock(editor):
@@ -107,6 +115,9 @@ class WikiStyleAdvancedAction (BaseAction):
         mainWindow = self._application.mainWindow
 
         with StyleDialog(mainWindow, title, styles, example_html, tag) as dlg:
+            dlg.setCustomTextColors(recent_text_colors)
+            dlg.setCustomBackgroundColors(recent_background_colors)
+
             if dlg.ShowModal() == wx.ID_OK:
                 color = dlg.getTextColor()
                 background_color = dlg.getBackgroundColor()
@@ -125,6 +136,13 @@ class WikiStyleAdvancedAction (BaseAction):
                     else:
                         begin += ' {}'.format(color_str)
 
+                    recent_text_colors = update_recent(
+                        recent_text_colors,
+                        color.GetAsString(wx.C2S_HTML_SYNTAX).lower(),
+                        RECENT_COLORS_COUNT
+                    )
+                    config.recentTextColors.value = recent_text_colors
+
                 if background_color:
                     background_color_str = self._color2str(background_color)
                     if (background_color_str.startswith('#') or
@@ -132,6 +150,12 @@ class WikiStyleAdvancedAction (BaseAction):
                         begin += ' bgcolor="{}"'.format(background_color_str)
                     else:
                         begin += ' bg-{}'.format(background_color_str)
+
+                    recent_background_colors = update_recent(
+                        recent_background_colors,
+                        background_color.GetAsString(wx.C2S_HTML_SYNTAX).lower(),
+                        RECENT_COLORS_COUNT)
+                    config.recentBackgroundColors.value = recent_background_colors
 
                 if custom_css:
                     begin += ' style="{}"'.format(custom_css.replace('\n', ' '))
