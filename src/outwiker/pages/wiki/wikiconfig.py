@@ -12,10 +12,10 @@ class WikiConfig (object):
     Класс, хранящий указатели на настройки, связанные с викиы
     """
     # Секция конфига для параметров, связанных с викистраницей
-    WIKI_PARAM = u"Wiki"
+    WIKI_SECTION = u"Wiki"
 
     # Секция, куда записывать параметры стилей оформления редактора
-    STYLES_PARAM = u"EditorStyles"
+    STYLES_SECTION = u"EditorStyles"
 
     # Имя параметра "Показывать ли код HTML?"
     SHOW_HTML_CODE_PARAM = u"ShowHtmlCode"
@@ -58,51 +58,51 @@ class WikiConfig (object):
         # Показывать вкладку с HTML-кодом?
         self.showHtmlCodeOptions = BooleanOption(
             self.config,
-            WikiConfig.WIKI_PARAM,
+            WikiConfig.WIKI_SECTION,
             WikiConfig.SHOW_HTML_CODE_PARAM,
             True)
 
         # Размер превьюшек по умолчанию
         self.thumbSizeOptions = IntegerOption(self.config,
-                                              WikiConfig.WIKI_PARAM,
+                                              WikiConfig.WIKI_SECTION,
                                               WikiConfig.THUMB_SIZE_PARAM,
                                               WikiConfig.THUMB_SIZE_DEFAULT)
 
         # Показывать список прикрепленных файлов вместо пустой страницы?
         self.showAttachInsteadBlankOptions = BooleanOption(
             self.config,
-            WikiConfig.WIKI_PARAM,
+            WikiConfig.WIKI_SECTION,
             WikiConfig.SHOW_ATTACH_BLANK_PARAM,
             True)
 
         # Стиль ссылок по умолчанию
         self.linkStyleOptions = IntegerOption(self.config,
-                                              WikiConfig.WIKI_PARAM,
+                                              WikiConfig.WIKI_SECTION,
                                               WikiConfig.LINK_STYLE_PARAM,
                                               WikiConfig.LINK_STYLE_DEFAULT)
 
         # Стили редактора
         self.link = StcStyleOption(self.config,
-                                   WikiConfig.STYLES_PARAM,
+                                   WikiConfig.STYLES_SECTION,
                                    WikiConfig.STYLE_LINK_PARAM,
                                    WikiConfig.STYLE_LINK_DEFAULT)
 
         self.heading = StcStyleOption(self.config,
-                                      WikiConfig.STYLES_PARAM,
+                                      WikiConfig.STYLES_SECTION,
                                       WikiConfig.STYLE_HEADING_PARAM,
                                       WikiConfig.STYLE_HEADING_DEFAULT)
 
         self.command = StcStyleOption(self.config,
-                                      WikiConfig.STYLES_PARAM,
+                                      WikiConfig.STYLES_SECTION,
                                       WikiConfig.STYLE_COMMAND_PARAM,
                                       WikiConfig.STYLE_COMMAND_DEFAULT)
 
         self.colorizeSyntax = BooleanOption(self.config,
-                                            self.WIKI_PARAM,
+                                            self.WIKI_SECTION,
                                             self.COLORIZE_SYNTAX_PARAM,
                                             self.COLORIZE_SYNTAX_DEFAULT)
 
         self.recentStyleName = StringOption(self.config,
-                                            self.WIKI_PARAM,
+                                            self.WIKI_SECTION,
                                             self.RECENT_STYLE_NAME_PARAM,
                                             self.RECENT_STYLE_NAME_DEFAULT)
