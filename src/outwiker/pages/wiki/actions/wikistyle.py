@@ -19,6 +19,7 @@ from ..wikistyleutils import (turnBlockOrInline,
                               loadCustomStyles,
                               )
 from ..gui.styledialog import StyleDialog
+from ..wikiconfig import WikiConfig
 
 
 class WikiStyleOnlyAction (BaseAction):
@@ -41,6 +42,9 @@ class WikiStyleOnlyAction (BaseAction):
     def run(self, params):
         assert self._application.mainWindow is not None
         assert self._application.mainWindow.pagePanel is not None
+        assert self._application.selectedPage is not None
+
+        config = WikiConfig(self._application.selectedPage.params)
 
         editor = self._application.mainWindow.pagePanel.pageView.codeEditor
 
@@ -48,6 +52,7 @@ class WikiStyleOnlyAction (BaseAction):
                          else STYLES_INLINE_FOLDER_NAME)
         dir_list = getSpecialDirList(styles_folder)
         styles = sorted(getCustomStylesNames(dir_list))
+        recent_style = config.recentStyleName.value
 
         title = _('Select style')
         message = _('Styles')
@@ -55,9 +60,12 @@ class WikiStyleOnlyAction (BaseAction):
 
         with TestedSingleChoiceDialog(mainWindow, message, title, styles) as dlg:
             dlg.SetSize((300, 400))
+            if recent_style in styles:
+                dlg.SetSelection(styles.index(recent_style))
 
             if dlg.ShowModal() == wx.ID_OK:
                 style = dlg.GetStringSelection()
+                config.recentStyleName.value = style
                 text_begin = '%{style}%'.format(style=style)
                 text_end = '%%'
                 turnBlockOrInline(editor, text_begin, text_end)
