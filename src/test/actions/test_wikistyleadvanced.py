@@ -212,3 +212,107 @@ class WikiStyleAdvancedActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
         result = self.editor.GetText()
 
         self.assertEqual(result, result_right)
+
+    def test_custom_colors(self):
+        def dialog_func(dialog):
+            dialog.setTextColor('#0000ff')
+            dialog.setBackgroundColor('#ff0000')
+            return wx.ID_OK
+
+        def test_dialog_func(dialog):
+            self.assertEqual(dialog.getCustomTextColors()[0], '#0000ff')
+            self.assertEqual(dialog.getCustomBackgroundColors()[0], '#ff0000')
+            return wx.ID_OK
+
+        Tester.dialogTester.append(dialog_func)
+        self.action.run(None)
+
+        Tester.dialogTester.append(test_dialog_func)
+        self.action.run(None)
+
+    def test_custom_colors_several_01(self):
+        def dialog_func_01(dialog):
+            dialog.setTextColor('#0000ff')
+            dialog.setBackgroundColor('#ff0000')
+            return wx.ID_OK
+
+        def dialog_func_02(dialog):
+            dialog.setTextColor('#0011ff')
+            dialog.setBackgroundColor('#ff1100')
+            return wx.ID_OK
+
+        def test_dialog_func(dialog):
+            self.assertEqual(dialog.getCustomTextColors()[0], '#0011ff')
+            self.assertEqual(dialog.getCustomTextColors()[1], '#0000ff')
+            self.assertEqual(dialog.getCustomBackgroundColors()[0], '#ff1100')
+            self.assertEqual(dialog.getCustomBackgroundColors()[1], '#ff0000')
+            return wx.ID_OK
+
+        Tester.dialogTester.append(dialog_func_01)
+        self.action.run(None)
+
+        Tester.dialogTester.append(dialog_func_02)
+        self.action.run(None)
+
+        Tester.dialogTester.append(test_dialog_func)
+        self.action.run(None)
+
+    def test_custom_colors_several_02(self):
+        def dialog_func_01(dialog):
+            dialog.setTextColor('#0000ff')
+            dialog.setBackgroundColor('#ff0000')
+            return wx.ID_OK
+
+        def dialog_func_02(dialog):
+            dialog.setTextColor('#0011ff')
+            dialog.setBackgroundColor('#ff1100')
+            return wx.ID_OK
+
+        def test_dialog_func(dialog):
+            self.assertEqual(dialog.getCustomTextColors()[0], '#0011ff')
+            self.assertEqual(dialog.getCustomTextColors()[1], '#0000ff')
+            self.assertEqual(dialog.getCustomBackgroundColors()[0], '#ff1100')
+            self.assertEqual(dialog.getCustomBackgroundColors()[1], '#ff0000')
+            return wx.ID_OK
+
+        Tester.dialogTester.append(dialog_func_01)
+        self.action.run(None)
+
+        Tester.dialogTester.append(dialog_func_02)
+        self.action.run(None)
+
+        Tester.dialogTester.append(dialog_func_02)
+        self.action.run(None)
+
+        Tester.dialogTester.append(test_dialog_func)
+        self.action.run(None)
+
+    def test_custom_colors_several_03(self):
+        def dialog_func_01(dialog):
+            dialog.setTextColor('#0000ff')
+            dialog.setBackgroundColor('#ff0000')
+            return wx.ID_OK
+
+        def dialog_func_02(dialog):
+            dialog.setTextColor('#0011ff')
+            dialog.setBackgroundColor('#ff1100')
+            return wx.ID_OK
+
+        def test_dialog_func(dialog):
+            self.assertEqual(dialog.getCustomTextColors()[0], '#0000ff')
+            self.assertEqual(dialog.getCustomTextColors()[1], '#0011ff')
+            self.assertEqual(dialog.getCustomBackgroundColors()[0], '#ff0000')
+            self.assertEqual(dialog.getCustomBackgroundColors()[1], '#ff1100')
+            return wx.ID_OK
+
+        Tester.dialogTester.append(dialog_func_01)
+        self.action.run(None)
+
+        Tester.dialogTester.append(dialog_func_02)
+        self.action.run(None)
+
+        Tester.dialogTester.append(dialog_func_01)
+        self.action.run(None)
+
+        Tester.dialogTester.append(test_dialog_func)
+        self.action.run(None)

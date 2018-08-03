@@ -262,7 +262,7 @@ class ColorPicker(wx.Button):
 
         :rtype: :class:`CustomColourData`
         """
-        return self.customColours
+        return self.customColours.Colours
 
     def SetCustomColours(self, colours):
         """

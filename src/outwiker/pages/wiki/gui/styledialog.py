@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from typing import Mapping, Optional, Iterable
+from typing import Mapping, Optional, Iterable, Union
 
 import wx
 
@@ -18,7 +18,7 @@ class StyleDialog(TestedDialog):
                  example_html: str,
                  tag: str):
         '''
-        styles - dictionary. Key - style name, value - CSS content.
+        styles - dictionary: key - style name, value - CSS content.
         '''
         super().__init__(parent,
                          title=title,
@@ -223,8 +223,11 @@ class StyleDialog(TestedDialog):
         self.enableTextColor(True)
         self._text_color_picker.SetColour(color)
 
-    def setCustomTextColors(self, colors: Iterable[wx.Colour]) -> None:
+    def setCustomTextColors(self, colors: Iterable[Union[wx.Colour, str]]) -> None:
         self._text_color_picker.SetCustomColours(colors)
+
+    def getCustomTextColors(self) -> Iterable[Union[wx.Colour, str]]:
+        return self._text_color_picker.GetCustomColours()
 
     def enableTextColor(self, enabled: bool) -> None:
         self._text_color_check.SetValue(enabled)
@@ -242,8 +245,11 @@ class StyleDialog(TestedDialog):
         self.enableBackgroundColor(True)
         self._text_background_picker.SetColour(color)
 
-    def setCustomBackgroundColors(self, colors: Iterable[wx.Colour]) -> None:
+    def setCustomBackgroundColors(self, colors: Iterable[Union[wx.Colour, str]]) -> None:
         self._text_background_picker.SetCustomColours(colors)
+
+    def getCustomBackgroundColors(self) -> Iterable[Union[wx.Colour, str]]:
+        return self._text_background_picker.GetCustomColours()
 
     def enableBackgroundColor(self, enabled: bool) -> None:
         self._text_background_check.SetValue(enabled)
