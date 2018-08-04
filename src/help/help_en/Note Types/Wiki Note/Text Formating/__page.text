@@ -46,6 +46,8 @@
 
 ||[=----=] || ---- || Horizontal line ||
 
+||[=%blue%Text with a style%%=] ||%blue%Text with a style%% || Read more at [[Text styles -> page://textstyles]] ||
+
 
 There are a few commands to insert a linebreak.
 

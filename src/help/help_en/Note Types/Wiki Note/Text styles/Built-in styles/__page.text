@@ -1,0 +1,188 @@
+* [[Built-in inline styles -> #inline]]
+* [[Built-in block styles -> #block]]
+* [[Built-in colors -> #colors]]
+
+!!! [[#inline]] Built-in inline styles
+
+%notice%Text with a '''notice''' style%%
+%success%Text with a '''success''' style%%
+%warn%Text with a '''warn''' style%%
+%error%Text with a '''error''' style%%
+
+
+!!! [[#block]] Built-in block styles
+
+%border%
+Text with a '''border''' style.
+%%
+
+%frame%
+Text with a '''frame''' style.
+%%
+
+%notice%
+Text with a '''notice''' style.
+%%
+
+%success%
+Text with a '''success''' style.
+%%
+
+%warn%
+Text with a '''warn''' style.
+%%
+
+%error%
+Text with a '''error''' style.
+%%
+
+!!! [[#colors]] Built-in colors
+
+||
+||aliceblue || %bg-aliceblue style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||antiquewhite || %bg-antiquewhite style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||aqua || %bg-aqua style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||aquamarine || %bg-aquamarine style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||azure || %bg-azure style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||beige || %bg-beige style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||bisque || %bg-bisque style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||black || %bg-black style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||blanchedalmond || %bg-blanchedalmond style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||blue || %bg-blue style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||blueviolet || %bg-blueviolet style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||brown || %bg-brown style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||burlywood || %bg-burlywood style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||cadetblue || %bg-cadetblue style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||chartreuse || %bg-chartreuse style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||chocolate || %bg-chocolate style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||coral || %bg-coral style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||cornflowerblue || %bg-cornflowerblue style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||cornsilk || %bg-cornsilk style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||crimson || %bg-crimson style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||cyan || %bg-cyan style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||darkblue || %bg-darkblue style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||darkcyan || %bg-darkcyan style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||darkgoldenrod || %bg-darkgoldenrod style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||darkgray || %bg-darkgray style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||darkgreen || %bg-darkgreen style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||darkgrey || %bg-darkgrey style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||darkkhaki || %bg-darkkhaki style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||darkmagenta || %bg-darkmagenta style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||darkolivegreen || %bg-darkolivegreen style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||darkorange || %bg-darkorange style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||darkorchid || %bg-darkorchid style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||darkred || %bg-darkred style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||darksalmon || %bg-darksalmon style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||darkseagreen || %bg-darkseagreen style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||darkslateblue || %bg-darkslateblue style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||darkslategray || %bg-darkslategray style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||darkslategrey || %bg-darkslategrey style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||darkturquoise || %bg-darkturquoise style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||darkviolet || %bg-darkviolet style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||deeppink || %bg-deeppink style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||deepskyblue || %bg-deepskyblue style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||dimgray || %bg-dimgray style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||dimgrey || %bg-dimgrey style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||dodgerblue || %bg-dodgerblue style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||firebrick || %bg-firebrick style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||floralwhite || %bg-floralwhite style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||forestgreen || %bg-forestgreen style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||fuchsia || %bg-fuchsia style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||gainsboro || %bg-gainsboro style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||ghostwhite || %bg-ghostwhite style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||gold || %bg-gold style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||goldenrod || %bg-goldenrod style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||gray || %bg-gray style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||green || %bg-green style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||greenyellow || %bg-greenyellow style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||grey || %bg-grey style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||honeydew || %bg-honeydew style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||hotpink || %bg-hotpink style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||indianred || %bg-indianred style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||indigo || %bg-indigo style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||ivory || %bg-ivory style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||khaki || %bg-khaki style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||lavender || %bg-lavender style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||lavenderblush || %bg-lavenderblush style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||lawngreen || %bg-lawngreen style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||lemonchiffon || %bg-lemonchiffon style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||lightblue || %bg-lightblue style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||lightcoral || %bg-lightcoral style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||lightcyan || %bg-lightcyan style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||lightgoldenrodyellow || %bg-lightgoldenrodyellow style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||lightgray || %bg-lightgray style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||lightgreen || %bg-lightgreen style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||lightgrey || %bg-lightgrey style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||lightpink || %bg-lightpink style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||lightsalmon || %bg-lightsalmon style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||lightseagreen || %bg-lightseagreen style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||lightskyblue || %bg-lightskyblue style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||lightslategray || %bg-lightslategray style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||lightslategrey || %bg-lightslategrey style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||lightsteelblue || %bg-lightsteelblue style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||lightyellow || %bg-lightyellow style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||lime || %bg-lime style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||limegreen || %bg-limegreen style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||linen || %bg-linen style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||magenta || %bg-magenta style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||maroon || %bg-maroon style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||mediumaquamarine || %bg-mediumaquamarine style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||mediumblue || %bg-mediumblue style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||mediumorchid || %bg-mediumorchid style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||mediumpurple || %bg-mediumpurple style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||mediumseagreen || %bg-mediumseagreen style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||mediumslateblue || %bg-mediumslateblue style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||mediumspringgreen || %bg-mediumspringgreen style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||mediumturquoise || %bg-mediumturquoise style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||mediumvioletred || %bg-mediumvioletred style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||midnightblue || %bg-midnightblue style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||mintcream || %bg-mintcream style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||mistyrose || %bg-mistyrose style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||moccasin || %bg-moccasin style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||navajowhite || %bg-navajowhite style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||navy || %bg-navy style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||oldlace || %bg-oldlace style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||olive || %bg-olive style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||olivedrab || %bg-olivedrab style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||orange || %bg-orange style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||orangered || %bg-orangered style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||orchid || %bg-orchid style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||palegoldenrod || %bg-palegoldenrod style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||palegreen || %bg-palegreen style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||paleturquoise || %bg-paleturquoise style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||palevioletred || %bg-palevioletred style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||papayawhip || %bg-papayawhip style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||peachpuff || %bg-peachpuff style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||peru || %bg-peru style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||pink || %bg-pink style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||plum || %bg-plum style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||powderblue || %bg-powderblue style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||purple || %bg-purple style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||red || %bg-red style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||rosybrown || %bg-rosybrown style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||royalblue || %bg-royalblue style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||saddlebrown || %bg-saddlebrown style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||salmon || %bg-salmon style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||sandybrown || %bg-sandybrown style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||seagreen || %bg-seagreen style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||seashell || %bg-seashell style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||sienna || %bg-sienna style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||silver || %bg-silver style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||skyblue || %bg-skyblue style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||slateblue || %bg-slateblue style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||slategray || %bg-slategray style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||slategrey || %bg-slategrey style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||snow || %bg-snow style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||springgreen || %bg-springgreen style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||steelblue || %bg-steelblue style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||tan || %bg-tan style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||teal || %bg-teal style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||thistle || %bg-thistle style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||tomato || %bg-tomato style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||turquoise || %bg-turquoise style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||violet || %bg-violet style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||wheat || %bg-wheat style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||white || %bg-white style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||whitesmoke || %bg-whitesmoke style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||yellow || %bg-yellow style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||
+||yellowgreen || %bg-yellowgreen style="width: 100px; height: 1.5em; display: inline-block; vertical-align: middle;"%%% ||

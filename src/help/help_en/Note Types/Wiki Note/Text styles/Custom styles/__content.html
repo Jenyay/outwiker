@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
+	<meta http-equiv='content-type' content='text/html; charset=utf-8'/>
+	<title>Custom text styles</title>
+
+	<style type='text/css'>
+		body, div, p, table {
+			font-size:10pt;
+			font-family:Verdana;
+		}
+
+		img{border:none}
+		
+	</style>
+	
+</head>
+
+<body>
+<p>If you familiar with CSS language then you can create a new text styles. The styles you can use on the wiki pages with %your-style%Text with new style.%% command.</p>
+<p>Any text styles are stored in the <i>textstyles</i> folder inside user profile (see section <a href="page://settings/#ini">Settings File Location</a>). Inline styles are stored inside <i>textstyles/inline</i> folder and block styles are stored inside <i>textstyles/block</i> folder.</p>
+<p>To create a new style you need to create a file with <i>.css</i> extension. A name of the file must be corresponded with a style name. For example, if you want create a new block style with a name <i>my-cool-style</i>, you must create a <i>my-cool-style.css</i> file in <i>textstyles/block</i> folder. If you want create an inline style of the same name, you must create a <i>my-cool-style.css</i> file in <i>textstyles/inline</i> folder.</p>
+<p>A new .css file must contain CSS code to be inserted on a wiki page code during of parsing. Inline styles will be applied to &lt;span&gt; tag and block styles to &lt;div&gt; tag. So an inline style with a name <i>my-cool-style</i> must contain the code:</p>
+
+<pre>span.my-cool-style {
+...
+}</pre>
+
+<p>A block style with the same name must contain the code:</p>
+
+<pre>div.my-cool-style {
+...
+}</pre>
+
+<p>A style file may contain any CSS code to be inserted to HTML code of the page.</p>
+</body>
+</html>

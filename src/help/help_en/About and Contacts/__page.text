@@ -20,7 +20,7 @@ e-mail: <a href="mailto:jenyay.ilin@gmail.com">jenyay.ilin@gmail.com</a>
 The program uses free icons sets downloaded from the following sites <a class='urllink' href='http://www.famfamfam.com/lab/icons/silk/'>famfamfam.com</a>, <a class='urllink' href='http://p.yusukekamiyamane.com/'>yusukekamiyamane.com</a> and <a href="http://www.fatcow.com/free-icons">fatcow.com</a>. Many thanks to the authors of those icon sets. 
 
 <ul>
-<li>Thanks to Vladimir Tuboltsev (<a href="https://github.com/twobolts">https://github.com/twobolts</a>) for the migration to wxPython 4.0.</li>
+<li>Thanks to Vladimir Tuboltsev (<a href="https://github.com/twobolts">https://github.com/twobolts</a>) for the migration to Python 3.x and wxPython 4.0.</li>
 <li>Thanks to Nabrodov Alexey (<a href="http://averr.in/">http://averr.in/</a>) for the program logo.</li>
 <li>Thanks to Gorbunov Anatoly for the new program logo.</li>
 <li>Thanks to Cheshkov Iliya (<a href="http://ilyuxaif.livejournal.com">http://ilyuxaif.livejournal.com</a>) for corrections of help in English.</li>

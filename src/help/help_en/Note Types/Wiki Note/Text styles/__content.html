@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
+	<meta http-equiv='content-type' content='text/html; charset=utf-8'/>
+	<title>Text styles</title>
+
+	<style type='text/css'>
+		body, div, p, table {
+			font-size:10pt;
+			font-family:Verdana;
+		}
+
+		img{border:none}
+		
+	</style>
+	<style>div.border {
+	padding: 1em;
+	margin: 1em;
+	border: 1px solid #000;
+}
+</style>
+<style>span.notice {
+	display: inline-block;
+	color: #333;
+	background-color: #e3f7fc;
+	border-radius: 1px;
+	padding: 0px 2px 0px 2px;
+	margin: 2px;
+	border:1px solid #8ed9f6;
+}
+</style>
+
+</head>
+
+<body>
+<p>To colorize a text on the wiki page a special command is provided. The command set text style (don't confuse with page styles). A common command format is %parameters%text to colorize%%. The command may be applied to text block (block style) or text inside paragraph (inline style).</p>
+<p>A block style applied with command format:</p>
+<div class="border">%style parameters%<br/>
+text to colorize<br/>
+%%</div><br/>
+It is important to strings %style parameters% and %% starts with a begin of the line. There should not be any gaps before them.</p>
+<p>A inline style applied with command format:</p>
+<div class="border">a text... %style parameters%text to colorize%% other text...</div>
+
+<p>Inside the string command % ...% ... %%  there should not be line breaks except for the command  [[<<]] . A block style can contain many lines and paragraphs.</p>
+<p>A both style formats may contain follows parameters:</p>
+<p>1. <a href="#stylename">Style name</a>.<br/>
+2. <a href="#color">Text color</a>.<br/>
+3. <a href="#bgcolor">Background color</a>.<br/>
+4. <a href="#css">Custom style settings</a>.<br/>
+5. <a href="#all">All of the above</a>.</p>
+<p>1. <a id="stylename"></a> <b>Style name.</b> OutWiker have a lot of the built-in inline and block styles. List of the styles you can see in the dialog to select style (menu item "Wiki - Font - Text style...") or in the section <a href="page://builtinstyles">Built-in styles and colors</a>. For example:</p>
+<div class="border"><p><i>Wiki notation:</i><br/>
+A simple text. %notice%A text with a notice style.%% A simple text again.</p>
+<p><i>Result:</i><br/>
+A simple text. <span class="notice">A text with a notice style.</span> A simple text again.</p></div>
+
+<p>2. <a id="color"></a> <b>Text color.</b> Instead of style name you can set text color by color name or with follows formats (like HTML and CSS): #RRGGBB, #RGB, rgb(r,g,b). Built-in color names is described in the section <a href="page://builtinstyles/#colors">Built-in colors</a>. For example:</p>
+<div class="border"><p><i>Wiki notation:</i><br/>
+A simple text. %blue%A blue text.%% A simple text again.</p>
+<p><i>Result:</i><br/>
+A simple text. <span style="color: blue;">A blue text.</span> A simple text again.</p></div><br/>
+<div class="border"><p><i>Wiki notation:</i><br/>
+A simple text. %#A2F%Colorized text.%% A simple text again.</p>
+<p><i>Result:</i><br/>
+A simple text. <span style="color: #a2f;">Colorized text.</span> A simple text again.</p></div><br/>
+<div class="border"><p><i>Wiki notation:</i><br/>
+A simple text. %#15acac%Colorized text.%% A simple text again.</p>
+<p><i>Result:</i><br/>
+A simple text. <span style="color: #15acac;">Colorized text.</span> A simple text again.</p></div><br/>
+You can set text color with a <i>color</i> parameter":</p>
+<div class="border"><p><i>Wiki notation:</i><br/>
+A simple text. %color=blue%Colorized text.%% A simple text again.</p>
+<p><i>Result:</i><br/>
+A simple text. <span style="color: blue;">Colorized text.</span> A simple text again.</p></div><br/>
+<div class="border"><p><i>Wiki notation:</i><br/>
+A simple text. %color=#A2F%Colorized text.%% A simple text again.</p>
+<p><i>Result:</i><br/>
+A simple text. <span style="color: #A2F;">Colorized text.</span> A simple text again.</p></div><br/>
+<div class="border"><p><i>Wiki notation:</i><br/>
+A simple text. %color=#15acac%Colorized text.%% A simple text again.</p>
+<p><i>Result:</i><br/>
+A simple text. <span style="color: #15acac;">Colorized text.</span> A simple text again.</p></div><br/>
+<div class="border"><p><i>Wiki notation:</i><br/>
+A simple text. %color="rgb(200, 90, 128)"%Colorized text.%% A simple text again.</p>
+<p><i>Result:</i><br/>
+A simple text. <span style="color: rgb(200, 90, 128);">Colorized text.</span> A simple text again.</p></div><br/>
+3. <a id="bgcolor"></a> <b>Background color</b>. There are several options to set background color for string or part of the string.</p>
+<p>To set background color for one of the standard named colors (see section <a href="page://builtinstyles/#colors">Built-in colors</a>) you can write color name with a "bg_" or "bg-" prefix. For example:</p>
+<div class="border"><p><i>Wiki notation:</i><br/>
+A simple text. %bg-yellow%Colorized text.%% A simple text again.</p>
+<p><i>Result:</i><br/>
+A simple text. <span style="background-color: yellow;">Colorized text.</span> A simple text again.</p></div><br/>
+<div class="border"><p><i>Wiki notation:</i><br/>
+A simple text. %bg_aqua%Colorized text.%% A simple text again.</p>
+<p><i>Result:</i><br/>
+A simple text. <span style="background-color: aqua;">Colorized text.</span> A simple text again.</p></div><br/>
+To set background color you can use a <i>bgcolor</i> parameter. The parameter allow you set background color by name or use one of formats: #RGB, #RRGGBB or rgb(r,g,b). For example:</p>
+<div class="border"><p><i>Wiki notation:</i><br/>
+A simple text. %bgcolor="#AB6"%Colorized text.%% A simple text again.</p>
+<p><i>Result:</i><br/>
+A simple text. <span style="background-color: #AB6;">Colorized text.</span> A simple text again.</p></div><br/>
+<div class="border"><p><i>Wiki notation:</i><br/>
+A simple text. %bgcolor="#AA66CC"%Colorized text.%% A simple text again.</p>
+<p><i>Result:</i><br/>
+A simple text. <span style="background-color: #AA66CC;">Colorized text.</span> A simple text again.</p></div><br/>
+<div class="border"><p><i>Wiki notation:</i><br/>
+A simple text. %bgcolor="rgb(200, 90, 128)"%Colorized text.%% A simple text again.</p>
+<p><i>Result:</i><br/>
+A simple text. <span style="background-color: rgb(200, 90, 128);">Colorized text.</span> A simple text again.</p></div>
+
+<p>4. <a id="css"></a> <b>Custom style settings.</b> You can apply arbitrary style from CSS with a <i>style</i> parameter. For example:</p>
+<div class="border"><p><i>Wiki notation:</i><br/>
+A simple text. %style="font-weight: bold; border: 1px; solid"%Colorized text.%% A simple text again.</p>
+<p><i>Result:</i><br/>
+A simple text. <span style="font-weight: bold; border: 1px solid;">Colorized text.</span> A simple text again.</p></div>
+
+<p>5. <a id="all"></a> <b>All of the above.</b> You can use all of the above parameters simultaneously. And you can apply several styles to text. For example:</p>
+<div class="border"><p><i>Wiki notation:</i><br/>
+A simple text. %style="blue bg-yellow font-weight: bold; border: 1px; solid"%Colorized text.%% A simple text again.</p>
+<p><i>Result:</i><br/>
+A simple text. <span style="color: blue; background-color: yellow; font-weight: bold; border: 1px solid;">Colorized text.</span> A simple text again.</p></div>
+</body>
+</html>
