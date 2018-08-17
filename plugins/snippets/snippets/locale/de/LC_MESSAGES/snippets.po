@@ -1,0 +1,323 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: outwiker\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-02-18 17:32+0300\n"
+"PO-Revision-Date: 2018-08-17 16:08+0300\n"
+"Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
+"Language-Team: German\n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.0.6\n"
+"X-Crowdin-Project: outwiker\n"
+"X-Crowdin-Language: de\n"
+"X-Crowdin-File: snippets.pot\n"
+
+#: guicontroller.py:52 gui/editdialog.py:384
+msgid "Snippets"
+msgstr "Schnipsel"
+
+#: guicontroller.py:156 gui/editdialog.py:585
+msgid ""
+"Can't read the snippet\n"
+"{}"
+msgstr ""
+"Der Schnipsel\n"
+" {} kann nicht gelesen werden"
+
+#: guicontroller.py:157 gui/editdialog.py:449 gui/editdialog.py:469
+#: gui/editdialog.py:497 gui/editdialog.py:547 gui/editdialog.py:586
+#: gui/editdialog.py:632 gui/editdialog.py:647 gui/editdialog.py:714
+msgid "Error"
+msgstr "Fehler"
+
+#: guicontroller.py:168
+msgid "Snippet error"
+msgstr "Schnipsel Fehler"
+
+#: actions/editsnippets.py:24
+msgid "Snippets management..."
+msgstr "Schnipsel Management..."
+
+#: actions/editsnippets.py:28
+msgid "Snippets. Open dialog to edit, create or remove snippets."
+msgstr "Schnipsel. Öffne das Dialogfeld um Schnipsel zu bearbeiten, erstellen oder entfernen."
+
+#: actions/openhelp.py:22 gui/editdialog.py:161
+msgid "Open help..."
+msgstr "Hilfe öffnen..."
+
+#: actions/openhelp.py:26
+msgid "Snippets. Open plugin help."
+msgstr "Schnipsel. Offene Plugin-Hilfe."
+
+#: actions/runrecentsnippet.py:30
+msgid "Run recent used snippet..."
+msgstr "Letzten verwendeten Schnipsel ausführen..."
+
+#: actions/runrecentsnippet.py:34
+msgid "Snippets. Run recent used snippet."
+msgstr "Schnipsel. Letzten verwendeten Schnipsel ausführen."
+
+#: utils.py:24
+msgid "help/en"
+msgstr "Hilfe/en"
+
+#: defines.py:20
+msgid "snippets"
+msgstr "Schnipsel"
+
+#: defines.py:21
+msgid "snippet"
+msgstr "Schnipsel"
+
+#: wikicommand.py:67 wikicommand.py:80
+msgid "Snippet error: \n"
+msgstr "Schnipsel Fehler: \n"
+
+#: wikicommand.py:81
+msgid "Can't read file '{}'"
+msgstr "Kann Datei nicht lesen '{}'"
+
+#: snippetparser.py:30
+#, python-brace-format
+msgid "Snippet \"{name}\" not found"
+msgstr "Schnipsel \"{name}\" nicht gefunden"
+
+#: snippetparser.py:35
+#, python-brace-format
+msgid ""
+"Snippet error at line {line}:\n"
+"{text}"
+msgstr ""
+"Schnipsel-Fehler in Zeile {line}:\n"
+"{text}"
+
+#: snippetparser.py:41
+#, python-brace-format
+msgid ""
+"Snippet reading error:\n"
+"{text}"
+msgstr ""
+"Schnipsel Lesefehler:\n"
+"{text}"
+
+#: snippetparser.py:46
+#, python-brace-format
+msgid ""
+"Snippet processing error:\n"
+"{text}"
+msgstr ""
+"Schnipsel Verarbeitung Fehler:\n"
+"{text}"
+
+#: plugin.py:44
+msgid "Plugin to store text snippets"
+msgstr "Plugin zum Speichern von Text-Schnipsel"
+
+#: plugin.py:48
+msgid "http://jenyay.net/Outwiker/SnippetsEn"
+msgstr "http://jenyay.net/Outwiker/SnippetsEn"
+
+#: gui/variablesdialog.py:51
+msgid "Preview"
+msgstr "Vorschau"
+
+#: gui/variablesdialog.py:55
+msgid "Snippet"
+msgstr "Schnipsel"
+
+#: gui/variablesdialog.py:63
+msgid "Insert as wiki command"
+msgstr "Als Wiki-Befehl einfügen"
+
+#: gui/variablesdialog.py:130
+msgid "{} | Snippet variables"
+msgstr "{} | Schnipsel Variablen"
+
+#: gui/variablesdialog.py:353 gui/variablesdialog.py:413
+msgid "Expand (Shift+Enter)"
+msgstr "Erweitern (Shift+Enter)"
+
+#: gui/variablesdialog.py:392
+msgid "Collapse"
+msgstr "Einklappen"
+
+#: gui/editdialog.py:60
+msgid "Selected text"
+msgstr "Markierter Text"
+
+#: gui/editdialog.py:61
+msgid "Current date"
+msgstr "Aktuelles Datum"
+
+#: gui/editdialog.py:62
+msgid "Page title"
+msgstr "Seitentitel"
+
+#: gui/editdialog.py:63
+msgid "Page type"
+msgstr "Seitentyp"
+
+#: gui/editdialog.py:64
+msgid "Page tags list"
+msgstr "Seiten Tags Liste"
+
+#: gui/editdialog.py:65
+msgid "Attachments path"
+msgstr "Anlagen-Pfad"
+
+#: gui/editdialog.py:66
+msgid "Path to page"
+msgstr "Pfad zur Seite"
+
+#: gui/editdialog.py:67
+msgid "Relative page path"
+msgstr "Relativer Seitenpfad"
+
+#: gui/editdialog.py:68
+msgid "Page creation date"
+msgstr "Seiten Erstellungsdatum"
+
+#: gui/editdialog.py:69
+msgid "Page modification date"
+msgstr "Seiten Änderungsdatum"
+
+#: gui/editdialog.py:70
+msgid "Page Id"
+msgstr "Seiten-Id"
+
+#: gui/editdialog.py:71
+msgid "Attachments list"
+msgstr "Anhänge-Liste"
+
+#: gui/editdialog.py:72
+msgid "Child pages"
+msgstr "Untergeordnete Seiten"
+
+#: gui/editdialog.py:76
+msgid "{% if %}"
+msgstr "{% if %}"
+
+#: gui/editdialog.py:77
+msgid "{% include %}"
+msgstr "{% include %}"
+
+#: gui/editdialog.py:78
+msgid "{# comment #}"
+msgstr "{# comment #}"
+
+#: gui/editdialog.py:82
+msgid "Snippets management"
+msgstr "Schnipsel Management"
+
+#: gui/editdialog.py:121
+msgid "Add new snippets group"
+msgstr "Neue Schnipsel Gruppe erstellen"
+
+#: gui/editdialog.py:129
+msgid "Create new snippet"
+msgstr "Neuen Schnipsel erstellen"
+
+#: gui/editdialog.py:137
+msgid "Rename"
+msgstr "Umbenennen"
+
+#: gui/editdialog.py:145
+msgid "Remove"
+msgstr "Entfernen"
+
+#: gui/editdialog.py:153
+msgid "Run snippet"
+msgstr "Schnipsel starten"
+
+#: gui/editdialog.py:205
+msgid "Insert variable"
+msgstr "Variable einfügen"
+
+#: gui/editdialog.py:212
+msgid "Other variable..."
+msgstr "Andere Variablen..."
+
+#: gui/editdialog.py:221
+msgid "Insert block"
+msgstr "Block einfügen"
+
+#: gui/editdialog.py:261
+msgid "Close"
+msgstr "Schließen"
+
+#: gui/editdialog.py:365
+msgid "No snippet errors"
+msgstr "Kein Schnipsel Fehler"
+
+#: gui/editdialog.py:437
+msgid "Remove directory \"{}\" and all snippets inside?"
+msgstr "Entferne Verzeichnis \"{}\" und alle enthaltene Schnipsel?"
+
+#: gui/editdialog.py:438
+msgid "Remove snippets directory"
+msgstr "Schnipsel-Verzeichnis löschen"
+
+#: gui/editdialog.py:448
+msgid "Can't remove directory \"{}\""
+msgstr "Verzeichnis kann nicht entfernt werden \"{}\""
+
+#: gui/editdialog.py:457
+msgid "Remove snippet \"{}\"?"
+msgstr "Schnipsel entfernen \"{}\"?"
+
+#: gui/editdialog.py:458
+msgid "Remove snippet"
+msgstr "Schnipsel entfernen"
+
+#: gui/editdialog.py:468
+msgid "Can't remove snippet \"{}\""
+msgstr "Schnipsel kann nicht entfernt werden \"{}\""
+
+#: gui/editdialog.py:496
+msgid ""
+"Can't create directory\n"
+"{}"
+msgstr ""
+"Verzeichnis kann nicht erstellt werden\n"
+"{}"
+
+#: gui/editdialog.py:546
+msgid ""
+"Can't rename the snippet '{}'\n"
+"{}"
+msgstr ""
+"Der Schnipsel\n"
+" {} kann nicht umbenannt werden"
+
+#: gui/editdialog.py:631
+msgid ""
+"Can't create snippet\n"
+"{}"
+msgstr ""
+"Der Schnipsel\n"
+" {} kann nicht erstellt werden"
+
+#: gui/editdialog.py:646
+msgid ""
+"Can't save snippet\n"
+"{}"
+msgstr ""
+"Der Schnipsel\n"
+" {} kann nicht gespeichert werden"
+
+#: gui/editdialog.py:701
+msgid "Enter variable name (English leters, numbers and _ only)"
+msgstr "Variablennamen eingeben (Nur englische Buchstaben, Zahlen und _)"
+
+#: gui/editdialog.py:702
+msgid "Variable name"
+msgstr "Variablenname"
+
+#: gui/editdialog.py:713
+msgid "Invalid variable name \"{}\""
+msgstr "Ungültiger Variablenname \"{}\""

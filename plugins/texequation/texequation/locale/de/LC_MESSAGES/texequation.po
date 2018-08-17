@@ -1,0 +1,57 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: outwiker\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-01-26 22:14+0300\n"
+"PO-Revision-Date: 2018-08-17 16:10+0300\n"
+"Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
+"Language-Team: German\n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.0.6\n"
+"X-Crowdin-Project: outwiker\n"
+"X-Crowdin-Language: de\n"
+"X-Crowdin-File: texequation.pot\n"
+
+#: plugin.py:41
+msgid "TeXEquation plug-in allow to insert equations in the TeX format."
+msgstr "TeXEquation Plugin erlaubt Gleichungen im TeX Format einzufügen."
+
+#: plugin.py:45
+msgid "http://jenyay.net/Outwiker/TexEquationEn"
+msgstr "http://jenyay.net/Outwiker/TexEquationEn"
+
+#: actions.py:22
+msgid "Equation..."
+msgstr "Gleichungen..."
+
+#: actions.py:26
+msgid "Insert the equation in te TeX format"
+msgstr "Füge eine Gleichung im TeX Format ein"
+
+#: actions.py:33
+msgid "Select the equation type"
+msgstr "Wähle den Gleichungs Typ aus"
+
+#: actions.py:34
+msgid "Insert the equation"
+msgstr "Füge die Gleichung ein"
+
+#: actions.py:35
+msgid "Inline"
+msgstr "In Reihe"
+
+#: actions.py:35
+msgid "Block"
+msgstr "Block"
+
+#: actions.py:35
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: tokentex.py:93
+msgid "Can't copy KaTeX library"
+msgstr "KaTeX Bibliothek kann nicht kopiert werden"

@@ -28,6 +28,11 @@
 		</author>
 
 		<changelog>
+			<version number="1.2">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Diagrammer/diagrammer-1.2.zip</download>
+				<change>Add German localization.</change>
+			</version>
+
 			<version number="1.1.1" date="June 16, 2018">
                 <download os="all">http://jenyay.net/uploads/Outwiker/Diagrammer/diagrammer-1.1.1.zip</download>
 				<change>Change default font.</change>
@@ -84,6 +89,11 @@
 		</author>
 
 		<changelog>
+			<version number="1.2">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Diagrammer/diagrammer-1.2.zip</download>
+				<change>Добавлена немецкая локализация.</change>
+			</version>
+
 			<version number="1.1.1" date="16.06.2018">
                 <download os="all">http://jenyay.net/uploads/Outwiker/Diagrammer/diagrammer-1.1.1.zip</download>
 				<change>Изменен шрифт по умолчанию.</change>

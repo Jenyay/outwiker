@@ -1,0 +1,241 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: outwiker\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-01-05 18:22+0400\n"
+"PO-Revision-Date: 2018-08-17 16:09+0300\n"
+"Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
+"Language-Team: German\n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.0.6\n"
+"X-Crowdin-Project: outwiker\n"
+"X-Crowdin-Language: de\n"
+"X-Crowdin-File: source.pot\n"
+
+#: actions.py:24 guicreators.py:105
+msgid "Source Code (:source ...:)"
+msgstr "Source Code (:source ...:)"
+
+#: actions.py:29
+msgid "Source plugin. Insert (: source... :) command for source code highlighting"
+msgstr "Source plugin. Einfügen (: source... :) Befehl zum Source Code hervorheben"
+
+#: commandsource.py:69
+msgid "<B>Source plugin: File '{0}' not found</B>"
+msgstr "<B>-source Plugin: Datei \"{0}\" nicht gefunden</B>"
+
+#: commandsource.py:72
+msgid "<B>Source plugin: Encoding error</B>"
+msgstr "<B>-source Plugin: Codierung Fehler</B>"
+
+#: commandsource.py:75
+msgid "<B>Source plugin: Unknown encoding</B>"
+msgstr "<B>Source Plugin: Unbekannte Kodierung</B>"
+
+#: controller.py:89
+msgid "Source [Plugin]"
+msgstr "Source [Plugin]"
+
+#: insertdialogcontroller.py:32
+msgid "Auto"
+msgstr "Automatisch"
+
+#: insertdialog.py:20
+msgid "Source code"
+msgstr "Source-code"
+
+#: insertdialog.py:97
+msgid "General"
+msgstr "Allgemeine"
+
+#: insertdialog.py:98
+msgid "Appearance"
+msgstr "Ansicht"
+
+#: insertdialog.py:148
+msgid "Use the page background for the code block"
+msgstr "Verwende die Seitenhintergrundfarbe für den Code Block"
+
+#: insertdialog.py:162
+msgid "Enable line numbers"
+msgstr "Zeilennummern aktivieren"
+
+#: insertdialog.py:179
+msgid "Language"
+msgstr "Sprache"
+
+#: insertdialog.py:215
+msgid "Tab Width (0 - Default Value)"
+msgstr "Tab-Breite (0 - Default-Wert)"
+
+#: insertdialog.py:252
+msgid "Style"
+msgstr "Stil"
+
+#: insertdialog.py:287
+msgid "Insert source from file"
+msgstr "Sourcecode aus Datei einfügen"
+
+#: insertdialog.py:300
+msgid "Attached file"
+msgstr "Angehängte Datei"
+
+#: insertdialog.py:319
+msgid "Attach new files"
+msgstr "Neue Dateien hinzufügen"
+
+#: insertdialog.py:337
+msgid "File encoding"
+msgstr "Dateikodierung"
+
+#: preferencepanel.py:54
+msgid "Default Tab Width"
+msgstr "Standard-Tab-Breite"
+
+#: preferencepanel.py:90
+msgid "Default Style"
+msgstr "Standard-Stil"
+
+#: preferencepanel.py:122
+msgid "Used Languages"
+msgstr "Verwendeten Sprachen"
+
+#: preferencepanel.py:143
+msgid "Select All"
+msgstr "Alles markieren"
+
+#: preferencepanel.py:144
+msgid "Clear"
+msgstr "Bereinigen"
+
+#: source.py:67
+msgid "Add command (:source:) in wiki parser. This command highlight your source code."
+msgstr "Den Befehl (:source:) in Wiki-Parser einfügen. Mit diesem Befehl wird der Sourcecode hervorgehoben."
+
+#: source.py:69
+msgid ""
+"<B>Usage:</B>:\n"
+"(:source params... :)\n"
+"source code\n"
+"(:sourceend:)"
+msgstr ""
+"<B>Nutzung:</B>:\n"
+"(:source params... :)\n"
+"source code\n"
+"(:sourceend:)"
+
+#: source.py:74
+msgid ""
+"<B>Params:</B>\n"
+"<U>lang</U> - programming language\n"
+"\n"
+"<U>tabwidth</U> - tab size\n"
+"\n"
+"<U>file</U> - attached source file\n"
+"\n"
+"<U>encoding</U> - encoding of the attached source file (default encoding - utf8)\n"
+"\n"
+"<U>style</U> - style of hightlighting\n"
+"\n"
+"<U>parentbg</U> - use the page background for the code block\n"
+"\n"
+"<U>linenum</U> - enable line numbers"
+msgstr ""
+"<B>Params:</B>\n"
+"<U>lang</U> - Programmiersprache\n"
+"\n"
+"<U>tabwidth</U> - Tab grösse\n"
+"\n"
+"<U>file</U> - Angehängte Sourcecodedatei\n"
+"\n"
+"<U>encoding</U> - Kodierung der angehängten Sourcecodedatei(Standard Kodierung - utf8)\n"
+"\n"
+"<U>style</U> - Stil der Hervorhebung\n"
+"\n"
+"<U>parentbg</U> - Benutzt die Seitenhintergrundfarbe für den Code Block\n"
+"\n"
+"<U>linenum</U> - Zeilennummern einblenden"
+
+#: source.py:89
+msgid ""
+"<B>Example 1:</B>\n"
+"<PRE>(:source lang=\"python\" tabwidth=4:)\n"
+"import os\n"
+"\n"
+"if __name__ == \"__main__\":\n"
+"    print \"Hello World!\"\n"
+"(:sourceend:)\n"
+"</PRE>"
+msgstr ""
+"<B>Example 1:</B>\n"
+"<PRE>(:source lang=\"python\" tabwidth=4:)\n"
+"import os\n"
+"\n"
+"if __name__ == \"__main__\":\n"
+"    print \"Hello World!\"\n"
+"(:sourceend:)\n"
+"</PRE>"
+
+#: source.py:98
+msgid ""
+"<B>Example 2:</B>\n"
+"<PRE>(:source lang=\"python\" style=\"autumn\":)\n"
+"import os\n"
+"\n"
+"if __name__ == \"__main__\":\n"
+"    print \"Hello World!\"\n"
+"(:sourceend:)\n"
+"</PRE>"
+msgstr ""
+"<B>Example 2:</B>\n"
+"<PRE>(:source lang=\"python\" style=\"autumn\":)\n"
+"import os\n"
+"\n"
+"if __name__ == \"__main__\":\n"
+"    print \"Hello World!\"\n"
+"(:sourceend:)\n"
+"</PRE>"
+
+#: source.py:107
+msgid ""
+"<B>Example 3:</B>\n"
+"<PRE>(:source lang=\"python\" tabwidth=4 parentbg linenum:)\n"
+"import os\n"
+"\n"
+"if __name__ == \"__main__\":\n"
+"    print \"Hello World!\"\n"
+"(:sourceend:)\n"
+"</PRE>"
+msgstr ""
+"<B>Example 3:</B>\n"
+"<PRE>(:source lang=\"python\" tabwidth=4 parentbg linenum:)\n"
+"import os\n"
+"\n"
+"if __name__ == \"__main__\":\n"
+"    print \"Hello World!\"\n"
+"(:sourceend:)\n"
+"</PRE>"
+
+#: source.py:116
+msgid ""
+"<B>Example 4:</B>\n"
+"<PRE>(:source file=\"Attach:example.cs\" encoding=\"cp1251\":)(:sourceend:)</PRE>"
+msgstr ""
+"<B>Example 4:</B>\n"
+"<PRE>(:source file=\"Attach:example.cs\" encoding=\"cp1251\":)(:sourceend:)</PRE>"
+
+#: source.py:119
+msgid ""
+"<B>Example 5:</B>\n"
+"<PRE>(:source file=\"Attach:example.txt\" lang=\"python\":)(:sourceend:)</PRE>"
+msgstr ""
+"<B>Example 5:</B>\n"
+"<PRE>(:source file=\"Attach:example.txt\" lang=\"python\":)(:sourceend:)</PRE>"
+
+#: source.py:154
+msgid "http://jenyay.net/Outwiker/SourcePluginEn"
+msgstr "http://jenyay.net/Outwiker/SourcePluginEn"

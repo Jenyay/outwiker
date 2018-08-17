@@ -1,0 +1,49 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: outwiker\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-10-25 16:45+0300\n"
+"PO-Revision-Date: 2018-08-17 16:07+0300\n"
+"Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
+"Language-Team: German\n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.0.6\n"
+"X-Crowdin-Project: outwiker\n"
+"X-Crowdin-Language: de\n"
+"X-Crowdin-File: pagetypecolor.pot\n"
+
+#: pagetypecolor.py:46
+msgid "Plugin colorize the page dialog controls in depending on the selected page type."
+msgstr "Plugin färbt die Seiten Dialogfeldelemente ein je nach ausgewählten Seiten Typ."
+
+#: pagetypecolor.py:56
+msgid "http://jenyay.net/Outwiker/PageTypeColorEn"
+msgstr "http://jenyay.net/Outwiker/PageTypeColorEn"
+
+#: controller.py:68
+msgid "PageTypeColor [Plugin]"
+msgstr "PageTypeColor [Plugin]"
+
+#: preferencepanel.py:36
+msgid "The colors for the various page types"
+msgstr "Die Farben für die verschiedenen Seitentypen"
+
+#: preferencepanel.py:43
+msgid "Wiki page"
+msgstr "Wiki-Seite"
+
+#: preferencepanel.py:48
+msgid "HTML page"
+msgstr "HTML-Seite"
+
+#: preferencepanel.py:53
+msgid "Text page"
+msgstr "Textseite"
+
+#: preferencepanel.py:58
+msgid "Search page"
+msgstr "Suchseite"

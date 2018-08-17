@@ -1,0 +1,60 @@
+ThumbGallery Plugin fügt den Befehl (:thumbgallery:) in die Wiki Natation ein. Der Befehl kann in zwei Modis benutzt werden: Alle Angehängte Dateien anzeigen oder nur ausgewählte Dateien. 
+
+<b>Syntax</b>
+
+(:thumbgallery [params]:)
+
+oder
+
+(:thumbgallery [params]:)
+[Attach:]picture_1 [| Comment]
+[Attach:]picture_2 [| Comment]
+...
+(:thumbgalleryend:)
+
+<b>Parameters</b>
+<ul>
+<li><i>cols = ...</i> Ein Ganzzahl Wert. Die Anzahl Spalten in der Tabelle. Wenn <i>cols = 0</i> oder nicht spezifiziert, dann wird die Gallerie nur aus einer Reihe ohne Spalten bestehen.</li>
+
+<li><i>px = ...</i> Ein Ganzzahl Wert. Die Grösse der Vorschaubilder definieren (auf die grössere Seite). Wenn <i>px = 0</i>, oder der Parameter ist nicht definiert, wird der standart aus den Programm Einstellungen genommen.</li>
+</ul>
+
+<b>Beispiel</b>
+
+<u>Erstellen einer Galerie aller angehängten Dateien</u>
+
+(:thumbgallery:)
+
+
+<u>Erstellen einer Galerie aller angehängten Dateien mit einem bestimmten Miniaturansichten Größe</u>
+
+(:thumbgallery px=150:)
+
+
+<u>Erstellen einer Galerie aller angehängten Dateien als Tabelle</u>
+
+(:thumbgallery px= 150 cols=3:)
+
+
+<u>Erstellen einer Galerie der ausgewählten Dateien als Tabelle</u>
+
+(:thumbgallery cols=3 px=150:)
+&nbsp;&nbsp;&nbsp;Attach:DSC_0567.jpg
+&nbsp;&nbsp;&nbsp;Attach:DSC_0604.jpg
+&nbsp;&nbsp;&nbsp;Attach:klyazma_2011_07.jpg
+&nbsp;&nbsp;&nbsp;Attach:smoke.jpg
+&nbsp;&nbsp;&nbsp;Attach:sunset_1.jpg
+&nbsp;&nbsp;&nbsp;Attach:sev_beach2.jpg
+(:thumbgalleryend:)
+
+
+<u>Erstellen einer Galerie der ausgewählten Dateien mit Kommentaren</u>
+
+(:thumbgallery cols=3 px=150:)
+&nbsp;&nbsp;&nbsp;DSC_0567.jpg
+&nbsp;&nbsp;&nbsp;DSC_0604.jpg
+&nbsp;&nbsp;&nbsp;klyazma_2011_07.jpg | Klyazma river
+&nbsp;&nbsp;&nbsp;smoke.jpg | Smoky summer in Moscow
+&nbsp;&nbsp;&nbsp;sunset_1.jpg
+&nbsp;&nbsp;&nbsp;sev_beach2.jpg | Black Sea. Sevastopol
+(:thumbgalleryend:)

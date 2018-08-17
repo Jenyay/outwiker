@@ -1,0 +1,33 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: outwiker\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-10-07 21:51+0300\n"
+"PO-Revision-Date: 2018-08-17 16:07+0300\n"
+"Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
+"Language-Team: German\n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.0.6\n"
+"X-Crowdin-Project: outwiker\n"
+"X-Crowdin-Language: de\n"
+"X-Crowdin-File: readingmode.pot\n"
+
+#: actions.py:25
+msgid "Reading Mode"
+msgstr "Lese Modus"
+
+#: actions.py:30
+msgid "Reading Mode disables the panel \"Tree\", \"Tag\", \"Attach Files\" without changing the geometry of the main window."
+msgstr "Der Lesemodus blendet die Menüleiste \"Baum\", \"Tag\", \"Angehängte Dateien\" aus ohne die grösse des Hauptfensters zu verändern."
+
+#: readingmode.py:35
+msgid "Plugin disables the panel \"Tree\", \"Tag\", \"Attach Files\" without changing the geometry of the main window."
+msgstr "Dieses Plugin blendet die Menüleiste \"Baum\", \"Tag\", \"Angehängte Dateien\" aus ohne die grösse des Hauptfensters zu verändern."
+
+#: readingmode.py:40
+msgid "http://jenyay.net/Outwiker/ReadingModeEn"
+msgstr "http://jenyay.net/Outwiker/ReadingModeEn"

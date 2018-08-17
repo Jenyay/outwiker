@@ -28,9 +28,14 @@
 		</author>
 
 		<changelog>
+			<version number="1.2">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Statistics/statistics-1.2.zip</download>
+				<change>Add German localization.</change>
+			</version>
+
 			<version number="1.1.2" date="May 26, 2018">
                 <download os="all">http://jenyay.net/uploads/Outwiker/Statistics/statistics-1.1.2.zip</download>
-				<change>Updated the Ukrainian localization.</change>
+				<change>Updated Ukrainian localization.</change>
 			</version>
 
 			<version number="1.1.1" date="April 22, 2018">
@@ -82,6 +87,11 @@
 		</author>
 
 		<changelog>
+			<version number="1.2">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Statistics/statistics-1.2.zip</download>
+				<change>Добавлена немецкая локализация.</change>
+			</version>
+
 			<version number="1.1.2" date="26.05.2018">
                 <download os="all">http://jenyay.net/uploads/Outwiker/Statistics/statistics-1.1.2.zip</download>
 				<change>Обновлена украинская локализация.</change>

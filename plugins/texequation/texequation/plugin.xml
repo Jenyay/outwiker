@@ -27,9 +27,14 @@
 			<site>http://jenyay.net</site>
 		</author>
 		<changelog>
+            <version number="2.3">
+                <download os="all">http://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.3.zip</download>
+				<change>Add German localization.</change>
+			</version>
+
             <version number="2.2.2" date="May 26, 2018">
                 <download os="all">http://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.2.2.zip</download>
-				<change>Updated the Ukrainian localization.</change>
+				<change>Updated Ukrainian localization.</change>
 			</version>
 
             <version number="2.2.1" date="March 20, 2018">
@@ -103,6 +108,11 @@
 		</author>
 
 		<changelog>
+            <version number="2.3">
+                <download os="all">http://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.3.zip</download>
+				<change>Добавлена немецкая локализация.</change>
+			</version>
+
             <version number="2.2.2" date="26.05.2018">
                 <download os="all">http://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.2.2.zip</download>
 				<change>Обновлена украинская локализация.</change>

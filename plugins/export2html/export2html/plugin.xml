@@ -28,6 +28,11 @@
 		</author>
 
 		<changelog>
+			<version number="1.5">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Export2HtmlPlugin/export2html-1.5.zip</download>
+				<change>Add German localization.</change>
+			</version>
+
 			<version number="1.4" date="February 15, 2018">
                 <download os="all">http://jenyay.net/uploads/Outwiker/Export2HtmlPlugin/export2html-1.4.zip</download>
 				<change>Add OutWiker 2.1 support. Migrate to Python 3.6.</change>
@@ -98,6 +103,11 @@
 		</author>
 
 		<changelog>
+			<version number="1.5">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Export2HtmlPlugin/export2html-1.5.zip</download>
+				<change>Добавлена немецкая локализация.</change>
+			</version>
+
 			<version number="1.4" date="15.02.2018">
                 <download os="all">http://jenyay.net/uploads/Outwiker/Export2HtmlPlugin/export2html-1.4.zip</download>
 				<change>Добавлена поддержка OutWiker 2.1. Переход на Python 3.6.</change>
