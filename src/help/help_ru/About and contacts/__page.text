@@ -21,7 +21,6 @@ e-mail: <a href="mailto:jenyay.ilin@gmail.com">jenyay.ilin@gmail.com</a>
 Особые благодарности:
 
 <ul>
-<li>Владимиру Тубольцеву (<a href="https://github.com/twobolts">https://github.com/twobolts</a>) за перевод программы на Python 3.x и wxPython 4.0.</li>
 <li>Набродову Алексею (<a href="http://averr.in/">http://averr.in/</a>) за иконку для программы.</li>
 <li>Горбунову Анатолию за новую иконку для программы.</li>
 <li>Чешкову Илье (<a href="http://ilyuxaif.livejournal.com">http://ilyuxaif.livejournal.com</a>) за исправление английского перевода справки.</li>
@@ -37,6 +36,8 @@ e-mail: <a href="mailto:jenyay.ilin@gmail.com">jenyay.ilin@gmail.com</a>
 <li>Роману Соболеву за стили "solarized_light" и "solarized_dark".</li>
 <li>Åke Engelbrektson за шведскую локализацию программы.</li>
 <li>С. Н. за исправление англоязычной справки.</li>
+<li>Владимиру Тубольцеву (<a href="https://github.com/twobolts">https://github.com/twobolts</a>) за перевод программы на Python 3.x и wxPython 4.0.</li>
+<li>bl00dy1837 за немецкую локализацию программы.</li>
 </ul>
 
 В программе используется словарь русского языка, созданный Александром Лебедевым (swan@scon155.phys.msu.su).
