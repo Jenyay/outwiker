@@ -1,0 +1,287 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: outwiker\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-01-30 09:23+0300\n"
+"PO-Revision-Date: 2018-08-17 16:04+0300\n"
+"Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
+"Language-Team: German\n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.0.6\n"
+"X-Crowdin-Project: outwiker\n"
+"X-Crowdin-Language: de\n"
+"X-Crowdin-File: externaltools.po\n"
+
+#: controller.py:67 commandexec/commandcontroller.py:127
+msgid "ExternalTools"
+msgstr "ExternalTools"
+
+#: controller.py:87
+msgid "External Tools [Plugin]"
+msgstr "Externe Tools [Plugin]"
+
+#: toolslistpanel.py:105
+msgid "Open file dialog..."
+msgstr "Dialogfeld \"Datei öffnen\"..."
+
+#: toolslistpanel.py:111
+msgid "Remove tool"
+msgstr "Werkzeug entfernen"
+
+#: toolslistpanel.py:120
+msgid "Executables (*.exe)|*.exe|All Files|*.*"
+msgstr "Ausführbare Dateien (*.exe)|*.exe|alle Dateien| *. *"
+
+#: toolslistpanel.py:122
+msgid "All Files|*"
+msgstr "Alle Dateien|*"
+
+#: menumaker.py:44
+msgid "Open Content File with..."
+msgstr "Öffne Datei mit..."
+
+#: menumaker.py:58
+msgid "Open Result HTML File with..."
+msgstr "Öffne Ergebnis HTML-Datei mit..."
+
+#: preferencespanel.py:39
+msgid "Warn before executing applications by (:exec:) command"
+msgstr "Warnen bevor der Ausführung von Anwendungen durch den Befehl (:exec:)"
+
+#: preferencespanel.py:42
+msgid "Tools List"
+msgstr "Werkzeugliste"
+
+#: preferencespanel.py:43
+msgid "Append Tools"
+msgstr "Tools hinzufügen"
+
+#: preferencespanel.py:100
+msgid "Can't save options"
+msgstr "Optionen können nicht gespeichert werden"
+
+#: preferencespanel.py:101 menutoolscontroller.py:73
+msgid "Error"
+msgstr "Fehler"
+
+#: commandexec/commandcontroller.py:120
+msgid ""
+"Run applications by ExternalTools plugin?\n"
+"It may be unsafe."
+msgstr ""
+"Anwendungen von ExternalTools Plugin laufen lassen? \n"
+"Es kann gefährlich sein."
+
+#: commandexec/commandcontroller.py:122
+msgid ""
+"Run application by ExternalTools plugin?\n"
+"It may be unsafe."
+msgstr ""
+"Anwendung von ExternalTools Plugin laufen lassen? \n"
+"Es kann gefährlich sein."
+
+#: commandexec/actions.py:43
+msgid "Run applications (:exec:)"
+msgstr "Anwendungen ausführen (:exec:)"
+
+#: commandexec/actions.py:47
+msgid "ExternalTools plugin. Insert (:exec:) command"
+msgstr "ExternalTools Plugin. Einfügebefehl (:exec:)"
+
+#: commandexec/actions.py:67
+msgid "%page%. Current page. Text file"
+msgstr "%page%. Aktuelle Seite. Text-Datei"
+
+#: commandexec/actions.py:71
+msgid "ExternalTools plugin. Insert a %page% macros. The macros will be replaced by a path to current page text file."
+msgstr "ExternalTools Plugin. Ein %page% -Makro einfügen. Die Makros werden durch einen Pfad zur aktuellen Seite Text-Datei ersetzt."
+
+#: commandexec/actions.py:85
+msgid "%html%. Current page. HTML file"
+msgstr "%html%. Aktuelle Seite. HTML-Datei"
+
+#: commandexec/actions.py:89
+msgid "ExternalTools plugin. Insert a %html% macros. The macros will be replaced by a path to current HTML file."
+msgstr "ExternalTools Plugin. Ein %html% -Makro einfügen. Die Makros werden durch einen Pfad zur aktuellen Seite HTML-Datei ersetzt."
+
+#: commandexec/actions.py:103
+msgid "%attach%. Path to current attachments folder"
+msgstr "%attach%. Pfad zu aktuellem Anhänge Ordner"
+
+#: commandexec/actions.py:107
+msgid "ExternalTools plugin. Insert a %attach% macros. The macros will be replaced by a path to current attach folder."
+msgstr "ExternalTools Plugin. Ein %attach% -Makro einfügen. Die Makros werden durch einen Pfad zur aktuellen Anhängeordner ersetzt."
+
+#: commandexec/actions.py:121
+msgid "%folder%. Path to current page folder"
+msgstr "%folder%. Pfad zu aktuellem Seiten Ordner"
+
+#: commandexec/actions.py:125
+msgid "ExternalTools plugin. Insert a %folder% macros. The macros will be replaced by a path to current page folder."
+msgstr "ExternalTools Plugin. Ein %folder% -Makro einfügen. Die Makros werden durch einen Pfad zur aktuellen Seitenordner ersetzt."
+
+#: commandexec/execdialog.py:17
+msgid "Link"
+msgstr "Link"
+
+#: commandexec/execdialog.py:17
+msgid "Button"
+msgstr "Knopf"
+
+#: commandexec/execdialog.py:19
+msgid "Inserting (:exec:) command"
+msgstr "Befehl (:exec:) einfügen"
+
+#: commandexec/execdialog.py:29
+msgid "Title"
+msgstr "Titel"
+
+#: commandexec/execdialog.py:47
+msgid "Format"
+msgstr "Format"
+
+#: menutoolscontroller.py:72
+msgid "Can't execute tools"
+msgstr "Werkzeug kann nicht ausgeführt werden"
+
+#: plugin.py:37
+msgid ""
+"ExternalTools plug-in allows to open the notes files with external applications.\n"
+"\n"
+"The plug-in adds the (:exec:) command for creation link or button for execute external applications from wiki page.\n"
+"\n"
+"The (:exec:) command allows to run many applications. Every application must be placed at the separated lines.\n"
+"\n"
+"If a line begins with \"#\" this line will be ignored. \"#\" in begin of the line is sign of the comment.\n"
+msgstr ""
+"ExternalTools-Plug-in ermöglicht es, um die Notizen mit externen Applikationen zu öffnen.\n"
+"\n"
+"Das Plugin fügt den (:exec:) Befehl hinzu, erstellt einen Link oder Knopf um mit externer Anwendung auszuführen.\n"
+"\n"
+"Der (:exec:) Befehl erlaubt es mehrere Anwendungen auszuführen. Jede Anwendung muss als eingene Linie angegeben werden.\n"
+"\n"
+"Wen die Zeile mit \"#\" beginnt, wird diese Zeile ignoriert. \"#\" als Begin einer Zeile ist ein Kommentar. \n"
+
+#: plugin.py:46
+msgid ""
+"The (:exec:) command has the following optional parameters:\n"
+"<ul>\n"
+"<li><b>format</b>. If the parameter equals \"button\" command will create a button instead of a link.</li>\n"
+"<li><b>title</b>. The parameter sets the text for link or button.</li>\n"
+"</ul>"
+msgstr ""
+"Der (:exec:) Befehl hat folgende Parameter als Option.:\n"
+"<ul>\n"
+"<li><b>Format</b>. Wenn der Parameter \"button\" ist, wird ein Knopf anstelle eines Links erzeugt.</li>\n"
+"<li><b>title</b>. Der Parameter setzt den Text für den Link oder den Knopf.</li>\n"
+"</ul>"
+
+#: plugin.py:52
+msgid ""
+"Inside (:exec:) command may be macroses. The macroses will be replaced by appropriate paths:\n"
+"<ul>\n"
+"<li><b>%page%</b>. The macros will be replaced by full path to page text file.</li>\n"
+"<li><b>%html%</b>. The macros will be replaced by full path to HTML content file.</li>\n"
+"<li><b>%folder%</b>. The macros will be replaced by full path to page folder.</li>\n"
+"<li><b>%attach%</b>. The macros will be replaced by full path to attach folder without slash on the end.</li>\n"
+"</ul>"
+msgstr ""
+"Im (:exec:) Befehl können Macros enthalten sein.Die Makros werden durch den entsprechenden Pfad ersetzt.:\n"
+"<ul>\n"
+"<li><b>%page%</b>. Die Makros werden durch den vollen Pfad der Seitendatei ersetzt.</li>\n"
+"<li><b>%html%</b>.Die Makros werden durch den vollen Pfad der HTML-Datei ersetzt.</li>\n"
+"<li><b>%folder%</b>. Die Makros werden durch den vollen Pfad des Seitenordners ersetzt.</li>\n"
+"<li><b>%attach%</b>. Die Makros werden durch den vollen Pfad des Anhängeordners ersetzt one Slash am Schluss.</li>\n"
+"</ul>"
+
+#: plugin.py:60
+msgid "Examples"
+msgstr "Beispiele"
+
+#: plugin.py:62
+msgid ""
+"Creating a link for running application.exe:\n"
+"<code><pre>(:exec:)application.exe(:execend:)</pre></code>"
+msgstr ""
+"Erstellt einen Link um application.exe auszuführen:\n"
+"<code><pre>(:exec:)application.exe(:execend:)</pre></code>"
+
+#: plugin.py:65
+msgid ""
+"Same but creating a button\n"
+"<code><pre>(:exec format=button:)\n"
+"application.exe\n"
+"(:execend:)</pre></code>"
+msgstr ""
+"Macht das gleiche jedoch einen Knopf\n"
+"<code><pre>(:exec format=button:)\n"
+"application.exe\n"
+"(:execend:)</pre></code>"
+
+#: plugin.py:70
+msgid ""
+"Create a link for running application.exe with parameters:\n"
+"<code><pre>(:exec:)\n"
+"application.exe param1 \"c:\\myfolder\\path to file name\"\n"
+"(:execend:)</pre></code>"
+msgstr ""
+"Erstellt einen Link zum ausführenvon application.exe mit Parameter:\n"
+"<code><pre>(:exec:)\n"
+"application.exe param1 \"c:\\myfolder\\path to file name\"\n"
+"(:execend:)</pre></code>"
+
+#: plugin.py:75
+msgid ""
+"Run a lot of applications:\n"
+"<code><pre>(:exec title=\"Run application_1, application_2 and application_3\":)\n"
+"application_1.exe\n"
+"application_2.exe param_1 param_2\n"
+"application_3.exe param_1 param_2\n"
+"(:execend:)</pre></code>"
+msgstr ""
+"Starte eine menge Applikationen:\n"
+"<code><pre>(:exec title=\"Run application_1, application_2 and application_3\":)\n"
+"application_1.exe\n"
+"application_2.exe param_1 param_2\n"
+"application_3.exe param_1 param_2\n"
+"(:execend:)</pre></code>"
+
+#: plugin.py:82
+msgid ""
+"Open attached file with application.exe:\n"
+"<code><pre>(:exec:)\n"
+"application.exe Attach:my_file.txt\n"
+"(:execend:)</pre></code>"
+msgstr ""
+"Angehängte Datei öffnen mit application.exe:\n"
+"<code><pre>(:exec:) \n"
+"application.exe Attach:my_file.txt\n"
+" (:execend:)</pre></code>"
+
+#: plugin.py:87
+msgid ""
+"Execute application.exe from attachments folder:\n"
+"<code><pre>(:exec:)\n"
+"%attach%/application.exe %attach%/my_file.txt\n"
+"(:execend:)</pre></code>\n"
+"or\n"
+"<code><pre>(:exec:)\n"
+"Attach:application.exe Attach:my_file.txt\n"
+"(:execend:)</pre></code>"
+msgstr ""
+"Führen Sie application.exe aus Anhängeordner aus: \n"
+"<code><pre>(:exec:) \n"
+"%attach%/application.exe %attach%/my_file.txt\n"
+" (:execend:)</pre></code>\n"
+"oder\n"
+"<code><pre>(:exec:)\n"
+"Attach:application.exe Attach:my_file.txt\n"
+" (:execend:)</pre></code>"
+
+#: plugin.py:143
+msgid "http://jenyay.net/Outwiker/ExternalToolsEn"
+msgstr "http://jenyay.net/Outwiker/ExternalToolsEn"

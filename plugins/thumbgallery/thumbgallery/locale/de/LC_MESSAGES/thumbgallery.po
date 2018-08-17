@@ -1,0 +1,57 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: outwiker\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-01-15 23:03+0300\n"
+"PO-Revision-Date: 2018-08-17 16:10+0300\n"
+"Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
+"Language-Team: German\n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.0.6\n"
+"X-Crowdin-Project: outwiker\n"
+"X-Crowdin-Language: de\n"
+"X-Crowdin-File: thumbgallery.pot\n"
+
+#: thumbdialog.py:24
+msgid "Gallery"
+msgstr "Gallerie"
+
+#: thumbdialog.py:35
+msgid "Columns count (0 - without table)"
+msgstr "Spalten Anzahl (0 - ohne Tabele)"
+
+#: thumbdialog.py:45
+msgid "Thumbnails size (0 - default size)"
+msgstr "Vorschaubild Grösse (0 - Standard Grösse)"
+
+#: thumbdialog.py:56
+msgid "All Images"
+msgstr "Alle Bilder"
+
+#: thumbdialog.py:59
+msgid "Clear"
+msgstr "Bereinigen"
+
+#: plugin.py:60
+msgid "http://jenyay.net/Outwiker/ThumbGalleryEn"
+msgstr "http://jenyay.net/Outwiker/ThumbGalleryEn"
+
+#: plugin.py:66
+msgid "locale/description.html"
+msgstr "locale/description.html"
+
+#: plugin.py:74
+msgid "Can't load description"
+msgstr "Beschreibung kann nicht geladen werden"
+
+#: actions.py:24
+msgid "Gallery (:thumbgallery:)"
+msgstr "Gallerie (:thumbgallery:)"
+
+#: actions.py:28
+msgid "Insert (:thumbgallery:) wiki command to create the gallery."
+msgstr "Füge den Wiki Befehl (:thumbgallery:) ein um eine Gallerie zu erzeugen."

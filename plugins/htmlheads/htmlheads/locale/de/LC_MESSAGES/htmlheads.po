@@ -1,0 +1,100 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: outwiker\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-03-13 16:18+0300\n"
+"PO-Revision-Date: 2018-08-17 16:05+0300\n"
+"Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
+"Language-Team: German\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.0.6\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Crowdin-Project: outwiker\n"
+"X-Crowdin-Language: de\n"
+"X-Crowdin-File: htmlheads.pot\n"
+"Language: de_DE\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: actions.py:32
+msgid "Title (:title ...:)"
+msgstr "Titel (:Titel ...:)"
+
+#: actions.py:36
+msgid "HtmlHeads plugin. Insert (:title... :) command to add <title> tag in the page head."
+msgstr "HtmlHeads Plugin. Einfügen (:Titel... :) Befehl <title> -Tag in der Seitenkopfzeile hinzufügen."
+
+#: actions.py:50
+msgid "Description (:description ...:)"
+msgstr "Beschreibung (:description ...:)"
+
+#: actions.py:54
+msgid "HtmlHeads plugin. Insert (:description... :) command to add description in the page head."
+msgstr "HtmlHeads Plugin. Einfügen (:description... :) Befehl um Beschreibung in der Seitenkopfzeile hinzuzufügen."
+
+#: actions.py:68
+msgid "Keywords (:keywords ...:)"
+msgstr "Schlüsselwörter (:keywords ...:)"
+
+#: actions.py:72
+msgid "HtmlHeads plugin. Insert (:keywords... :) command to add keywords in the page head."
+msgstr "HtmlHeads Plugin. Einfügen (:keywords... :) Befehl um Schlüsselwörter in der Seitenkopfzeile hinzuzufügen."
+
+#: actions.py:86
+msgid "Custom head (:htmlhead:)"
+msgstr "Benutzerdefinierte Kopf (:htmlhead:)"
+
+#: actions.py:90
+msgid "HtmlHeads plugin. Insert (:htmlhead:) command to add custom tags in the page head."
+msgstr "HtmlHeads Plugin. Einfügen (:htmlhead:) Befehl um Benutzerdefinierten Tag in der Seitenkopfzeile hinzufügen."
+
+#: actions.py:104
+msgid "CSS Style (:style:)"
+msgstr "CSS Stil (:style:)"
+
+#: actions.py:108
+msgid "HtmlHeads plugin. Insert (:style:) command to add custom CSS style to page."
+msgstr "HtmlHeads Plugin. Einfügen (:style:) Befehl um Benutzerdefinierten CSS Stil in der Seite hinzufügen."
+
+#: controller.py:73
+msgid "HTML Headers"
+msgstr "HTML Kopf"
+
+#: plugin.py:31
+msgid "Plugin adds wiki-commands (:title:), (:description:), (:keywords:) and (:htmlhead:)"
+msgstr "Plugin fügt Wiki-Befehle (:title:), (:description:), (:keywords:) und (:htmlhead:) ein"
+
+#: plugin.py:33
+msgid ""
+"<b>Usage:</b>\n"
+"(:title Page title:)\n"
+"\n"
+"(:description Page description:)\n"
+"\n"
+"(:keywords keyword_1, keyword_2, other keyword:)\n"
+"\n"
+"(:htmlhead:)\n"
+"&lt;meta http-equiv='Content-Type' content='text/html; charset=utf-8' /&gt;\n"
+"\n"
+"&lt;meta name='robots' content='index,follow' /&gt;\n"
+"(:htmlheadend:)\n"
+msgstr ""
+"<b>Usage:</b>\n"
+"(:title Page title:)\n"
+"\n"
+"(:description Page description:)\n"
+"\n"
+"(:keywords keyword_1, keyword_2, other keyword:)\n"
+"\n"
+"(:htmlhead:)\n"
+"&lt;meta http-equiv='Content-Type' content='text/html; charset=utf-8' /&gt;\n"
+"\n"
+"&lt;meta name='robots' content='index,follow' /&gt;\n"
+"(:htmlheadend:)\n"
+
+#: plugin.py:54
+msgid "http://jenyay.net/Outwiker/HtmlHeadsEn"
+msgstr "http://jenyay.net/Outwiker/HtmlHeadsEn"

@@ -1,0 +1,159 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: outwiker\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-05-09 18:27+0300\n"
+"PO-Revision-Date: 2018-08-17 16:11+0300\n"
+"Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
+"Language-Team: German\n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.0.6\n"
+"X-Crowdin-Project: outwiker\n"
+"X-Crowdin-Language: de\n"
+"X-Crowdin-File: updatenotifier.pot\n"
+
+#: controller.py:100
+msgid "UpdateNotifier [Plugin]"
+msgstr "UpdateNotifier [Plugin]"
+
+#: updatecontroller.py:82 updatecontroller.py:97 updatecontroller.py:103
+msgid "Check for new versions..."
+msgstr "Überprüfung auf neue Versionen..."
+
+#: updatecontroller.py:127
+msgid "Installed OutWiker version"
+msgstr "Installierte Version von OutWiker"
+
+#: updatecontroller.py:128
+msgid "Latest stable OutWiker version"
+msgstr "Letzte stabile Version von OutWiker"
+
+#: updatecontroller.py:129
+msgid "Latest unstable OutWiker version"
+msgstr "Letzte instabile Version von OutWiker"
+
+#: updatecontroller.py:130
+msgid "Version history"
+msgstr "Versions Verlauf"
+
+#: updatecontroller.py:131
+msgid "More info"
+msgstr "Mehr info"
+
+#: updatecontroller.py:132
+msgid "Update"
+msgstr "Update"
+
+#: updatecontroller.py:133
+msgid "Install"
+msgstr "Installieren"
+
+#: updatecontroller.py:134
+msgid "Uninstall"
+msgstr "Deinstallieren"
+
+#: updatecontroller.py:190 versionlist.py:73
+msgid "__updateLang"
+msgstr "__updateLang"
+
+#: updatecontroller.py:327
+msgid "The download link was not found in plugin description. Please update plugin manually"
+msgstr "Der Download-Link wurde nicht im Plugin-Beschreibung gefunden. Bitte Plugin manuell aktualisieren"
+
+#: updatecontroller.py:331 updatecontroller.py:346
+msgid "Plugin was NOT updated. Please update plugin manually"
+msgstr "Plugin wurde NICHT aktualisiert. Bitte Plugin manuell aktualisieren"
+
+#: updatecontroller.py:385
+msgid "The plugin description can't be downloaded. Please install plugin manually"
+msgstr "Die Plugin-Beschreibung kann nicht heruntergeladen werden. Bitte Plugin manuell installieren"
+
+#: updatecontroller.py:391
+msgid "The plugin required newer version of OutWiker. Please update OutWiker"
+msgstr "Das Plugin benötigt eine neuere Version von OutWiker. Bitte aktualisieren Sie OutWiker"
+
+#: updatecontroller.py:398
+msgid "The download link was not found in plugin description. Please install plugin manually"
+msgstr "Der Download-Link wurde nicht im Plugin-Beschreibung gefunden. Bitte Plugin manuell installieren"
+
+#: updatecontroller.py:413
+msgid "Plugin was NOT Installed. Please update plugin manually"
+msgstr "Plugin wurde NICHT installiert. Bitte Plugin manuell aktualisieren"
+
+#: plugin.py:32
+msgid ""
+"Check for update OutWiker and plug-ins for it.\n"
+"\n"
+"Append menu item \"Help -> Check for Updates...\""
+msgstr ""
+"Überprüfung auf Update für OutWiker und Plugins.\n"
+"\n"
+"Es wird ein Menüpunkt \"Hilfe -> überprüfen auf Aktualisierungen...\" eingefügt"
+
+#: plugin.py:38
+msgid "http://jenyay.net/Outwiker/UpdateNotifierEn"
+msgstr "http://jenyay.net/Outwiker/UpdateNotifierEn"
+
+#: actions.py:22 guicreators.py:45
+msgid "Check for Updates..."
+msgstr "Nach Updates suchen..."
+
+#: actions.py:26
+msgid "UpdateNotifier plugin. Check for updates"
+msgstr "UpdateNotifier-Plugin. Nach Updates suchen"
+
+#: actions.py:47 guicreators.py:49
+msgid "Silence check for Updates..."
+msgstr "Stille Updatessuche..."
+
+#: actions.py:51
+msgid "UpdateNotifier plugin. Check for updates. Silence mode"
+msgstr "UpdateNotifier-Plugin. Nach Updates suchen. Stillmodus"
+
+#: preferencepanel.py:37
+msgid "Check for updates"
+msgstr "Nach Updates suchen"
+
+#: preferencepanel.py:64
+msgid "Ignore updates unstable versions"
+msgstr "Aktuelles instabilen Versionen ignorieren"
+
+#: updatedialog.py:22
+msgid "UpdateNotifier"
+msgstr "UpdateNotifier"
+
+#: prefpanelcontroller.py:24
+msgid "Never"
+msgstr "Nie"
+
+#: prefpanelcontroller.py:25
+msgid "Every day"
+msgstr "Täglich"
+
+#: prefpanelcontroller.py:26
+msgid "Every two days"
+msgstr "Alle zwei Tage"
+
+#: prefpanelcontroller.py:27
+msgid "Every three days"
+msgstr "Alle drei Tage"
+
+#: prefpanelcontroller.py:28
+msgid "Every week"
+msgstr "Jede Woche"
+
+#: prefpanelcontroller.py:29
+msgid "Every two weeks"
+msgstr "Alle zwei Wochen"
+
+#: prefpanelcontroller.py:30
+msgid "Every month"
+msgstr "Jeden Monat"
+
+#: prefpanelcontroller.py:53
+msgid "Custom"
+msgstr "Anders"

@@ -1,0 +1,45 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: outwiker\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-08-24 21:59+0400\n"
+"PO-Revision-Date: 2018-08-17 16:10+0300\n"
+"Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
+"Language-Team: German\n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.0.6\n"
+"X-Crowdin-Project: outwiker\n"
+"X-Crowdin-Language: de\n"
+"X-Crowdin-File: tableofcontents.pot\n"
+
+#: tableofcontents.py:45
+msgid "Plugin add the menu \"Wiki - Table of contents\" and the wiki command (:toc:) for generation of the table of contents."
+msgstr "Plugin hinzufügen im Menü \"Wiki - Inhaltsverzeichnis\" und den Wiki Befehl (:toc:) für die Generierung des Inhaltsverzeichnisses."
+
+#: tableofcontents.py:55
+msgid "http://jenyay.net/Outwiker/ContentsEn"
+msgstr "http://jenyay.net/Outwiker/ContentsEn"
+
+#: guicreator.py:54
+msgid "Table of contents"
+msgstr "Inhaltsverzeichnis"
+
+#: actions.py:24
+msgid "Generate"
+msgstr "Generiert"
+
+#: actions.py:29
+msgid "TableOfContents. Generate table of contents"
+msgstr "Inhaltsverzeichnis. Generiert ein Inhaltsverzeichnis"
+
+#: actions.py:55
+msgid "Insert wiki command (:toc:)"
+msgstr "Den Wiki Befehl (:toc:) einfügen"
+
+#: actions.py:60
+msgid "TableOfContents. Insert the wiki command (:toc:) for dynamic generation of the table of content"
+msgstr "Inhaltsverzeichnis: Der Wiki Befehl (:toc:) einfügen um ein Inhaltsverzeichnis dynamisch zu erstellen"

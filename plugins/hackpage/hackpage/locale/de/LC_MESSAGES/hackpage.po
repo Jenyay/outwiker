@@ -1,0 +1,89 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: outwiker\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-01-23 20:36+0300\n"
+"PO-Revision-Date: 2018-08-17 16:05+0300\n"
+"Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
+"Language-Team: German\n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.0.6\n"
+"X-Crowdin-Project: outwiker\n"
+"X-Crowdin-Language: de\n"
+"X-Crowdin-File: hackpage.pot\n"
+
+#: guicontroller.py:87
+msgid "Change page identifier..."
+msgstr "Ändere Seiten Bezeichner..."
+
+#: guicontroller.py:89 actions/setalias.py:24
+msgid "Set page alias..."
+msgstr "Seite Alias setzen..."
+
+#: guicontroller.py:91 actions/changepagefolder.py:24
+msgid "Change page folder..."
+msgstr "Seite Ordner wechseln..."
+
+#: actions/setalias.py:28
+msgid "HackPage plugin. Set page alias"
+msgstr "HackPage Plugin. Seiten Alias setzen"
+
+#: actions/changepagefolder.py:28
+msgid "HackPage plugin. Change the current page folder"
+msgstr "HackPage Plugin. Den aktuelle Seiten Ordner ändern"
+
+#: actions/changeuid.py:24
+msgid "Change Page Identifier..."
+msgstr "Ändere Seiten Bezeichner..."
+
+#: actions/changeuid.py:28
+msgid "HackPage plugin. Change Page Identifier"
+msgstr "HackPage Plugin. Änderung von Seiten Bezeichner"
+
+#: utils.py:27
+msgid "Change page identifier"
+msgstr "Ändere Seiten Bezeichner"
+
+#: utils.py:28
+msgid "Enter new identifier for page \"{}\""
+msgstr "Geben Sie neue Kennung für Seite \"{}\" ein"
+
+#: utils.py:60
+msgid "Set page alias"
+msgstr "Seite Alias setzen"
+
+#: utils.py:61
+msgid "Enter alias for page"
+msgstr "Alias für Seite eingeben"
+
+#: utils.py:90
+msgid "Set page folder"
+msgstr "Seiten Ordner setzen"
+
+#: utils.py:91
+msgid "Enter the page folder name"
+msgstr "Namen des Seiten Ordners setzen"
+
+#: plugin.py:39
+msgid "The HackPage plugin allow to edit hidden page properties"
+msgstr "Das HackPage-Plugin ermöglicht versteckte Seiteneigenschaften zu bearbeiten"
+
+#: plugin.py:47
+msgid "http://jenyay.net/Outwiker/HackPageEn"
+msgstr "http://jenyay.net/Outwiker/HackPageEn"
+
+#: validators.py:31
+msgid "Same identifier exist already"
+msgstr "Gleicher Bezeichner ist bereits vorhanden"
+
+#: validators.py:32 validators.py:42
+msgid "Error"
+msgstr "Fehler"
+
+#: validators.py:41
+msgid "Identifier contain invalid character"
+msgstr "Bezeichner enthält ungültiges Zeichen"

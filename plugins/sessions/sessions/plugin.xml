@@ -28,6 +28,11 @@
 		</author>
 
 		<changelog>
+			<version number="1.2">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Sessions/sessions-1.2.zip</download>
+				<change>Add German localization.</change>
+			</version>
+
 			<version number="1.1.1" date="April 22, 2018">
                 <download os="all">http://jenyay.net/uploads/Outwiker/Sessions/sessions-1.1.1.zip</download>
 				<change>Bug fixes.</change>
@@ -77,6 +82,11 @@
 		</author>
 
 		<changelog>
+			<version number="1.2">
+                <download os="all">http://jenyay.net/uploads/Outwiker/Sessions/sessions-1.2.zip</download>
+				<change>Добавлена немецкая локализация.</change>
+			</version>
+
 			<version number="1.1.1" date="22.04.2018">
                 <download os="all">http://jenyay.net/uploads/Outwiker/Sessions/sessions-1.1.1.zip</download>
 				<change>Исправление ошибок.</change>

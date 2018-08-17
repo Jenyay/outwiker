@@ -27,10 +27,16 @@
 		</author>
 
 		<changelog>
+			<version number="0.0.0.7">
+                <download os="all">http://jenyay.net/uploads/Outwiker/AutoRenamer/autorenamer-0.0.0.7.zip</download>
+				<change>Add German localization.</change>
+			</version>
+
 			<version number="0.0.0.6" date="May 26, 2018">
                 <download os="all">http://jenyay.net/uploads/Outwiker/AutoRenamer/autorenamer-0.0.0.6.zip</download>
 				<change>Bug fixes</change>
 			</version>
+
 			<version number="0.0.0.5" date="February 15, 2018">
                 <download os="all">http://jenyay.net/uploads/Outwiker/AutoRenamer/autorenamer-0.0.0.5.zip</download>
 				<change>Add OutWiker 2.1 support. Migrate to Python 3.6</change>
@@ -61,6 +67,11 @@
 		</author>
 
 		<changelog>
+			<version number="0.0.0.7">
+                <download os="all">http://jenyay.net/uploads/Outwiker/AutoRenamer/autorenamer-0.0.0.7.zip</download>
+				<change>Добавлена немецкая локализация.</change>
+			</version>
+
 			<version number="0.0.0.6" date="26.05.2018">
                 <download os="all">http://jenyay.net/uploads/Outwiker/AutoRenamer/autorenamer-0.0.0.6.zip</download>
 				<change>Исправление ошибок</change>

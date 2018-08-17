@@ -1,0 +1,122 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: outwiker\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-01-29 23:31+0300\n"
+"PO-Revision-Date: 2018-08-17 16:09+0300\n"
+"Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
+"Language-Team: German\n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.0.6\n"
+"X-Crowdin-Project: outwiker\n"
+"X-Crowdin-Language: de\n"
+"X-Crowdin-File: statistics.pot\n"
+
+#: tagsinfo.py:35
+#, python-brace-format
+msgid "Tags count: {0}"
+msgstr "Tag Anzahl: {0}"
+
+#: tagsinfo.py:39
+msgid "Most frequently used tags:"
+msgstr "Meist benutzte Tags:"
+
+#: tagsinfo.py:47
+msgid "Most rarely used tags:"
+msgstr "Am wenigsten benutzte Tags:"
+
+#: pageattachmentsizeinfo.py:21
+msgid "Pages with the largest size of attachments (in brackets the size of attachments):"
+msgstr "Seiten mit der größten Größe der Anhänge (in Klammern die Größe der Anlagen):"
+
+#: pageattachmentsizeinfo.py:40
+msgid "kB"
+msgstr "kB"
+
+#: maxdepthinfo.py:23
+#, python-brace-format
+msgid "Max page depth: {0}"
+msgstr "Max Seitentiefe: {0}"
+
+#: pagestatdialog.py:22 plugin.py:73
+msgid "Page Statistic"
+msgstr "Seite Statistik"
+
+#: pagestatdialog.py:64
+msgid "Word count"
+msgstr "Anzahl Worte"
+
+#: pagestatdialog.py:80
+msgid "Line count"
+msgstr "Anzahl Zeilen"
+
+#: pagestatdialog.py:96
+msgid "Character count"
+msgstr "Anzahl Zeichen"
+
+#: pagestatdialog.py:112
+msgid "Character count without spaces"
+msgstr "Anzahl Zeichen ohne Spaces"
+
+#: pagestatdialog.py:128
+msgid "Number of attachments"
+msgstr "Anzahl Anhänge"
+
+#: pagestatdialog.py:144
+msgid "Size of attachments (kB)"
+msgstr "Größe der Anhänge (kB)"
+
+#: pagecountinfo.py:17
+#, python-brace-format
+msgid "Page count: {0}"
+msgstr "Seiten Anzahl: {0}"
+
+#: plugin.py:39
+msgid ""
+"The plugin to display statistics. \n"
+"                \n"
+"Statistics plugin append menu items <b>Tools -> Page Statistic</b> and <b>Tools -> Tree Statistic</b>."
+msgstr ""
+"Das Plugin um Statistiken anzuzeigen. \n"
+" \n"
+"Statistics Plugin als Menüelement einfügen <b>-Tools-> Seite Statistik</b> und <b>Werkzeuge -> Baum Statistik</b>."
+
+#: plugin.py:45
+msgid "http://jenyay.net/Outwiker/StatisticsEn"
+msgstr "http://jenyay.net/Outwiker/StatisticsEn"
+
+#: plugin.py:79 treestatdialog.py:51
+msgid "Tree Statistic"
+msgstr "Baum Statistik"
+
+#: treestatdialog.py:95
+msgid "A tree has no pages"
+msgstr "Ein Baum hat keine Seiten"
+
+#: treestatdialog.py:98
+msgid "Collecting statistics. Please wait..."
+msgstr "Sammle Statistiken. Bitte warten..."
+
+#: treestatdialog.py:102
+msgid "Statistics"
+msgstr "Statistik"
+
+#: treestatdialog.py:103
+msgid "Collecting statistics..."
+msgstr "Statistik sammeln..."
+
+#: datepageinfo.py:35
+msgid "Recent edited pages:"
+msgstr "Kürzlich bearbeitete Seiten:"
+
+#: datepageinfo.py:43
+msgid "Oldest pages:"
+msgstr "Älteste Seiten:"
+
+#: pagecontentlengthinfo.py:21
+msgid "The longest notes (in brackets the number of characters):"
+msgstr "Die längste Notiz (in Klammern die Anzahl der Zeichen):"

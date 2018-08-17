@@ -27,6 +27,11 @@
 			<site>https://jenyay.net</site>
 		</author>
 		<changelog>
+			<version number="2.3">
+                <download os="all">https://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-2.3.zip</download>
+				<change>Add German localization.</change>
+			</version>
+
 			<version number="2.2" date="May 26, 2018">
                 <download os="all">https://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-2.2.zip</download>
 				<change>Plug-ins can be Installed/Updated/Deleted through the OutWiker interface.</change>
@@ -83,6 +88,11 @@
 		</author>
 
 		<changelog>
+			<version number="2.3">
+                <download os="all">https://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-2.3.zip</download>
+				<change>Добавлена немецкая локализация.</change>
+			</version>
+
             <version number="2.2" date="26.05.2018">
                 <download os="all">https://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-2.2.zip</download>
 				<change>Добавлена возможность устанавлвать, удалять и обновлять плагины через интерфейс OutWiker</change>

@@ -1,0 +1,198 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: outwiker\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-10-09 21:54+0300\n"
+"PO-Revision-Date: 2018-08-17 16:12+0300\n"
+"Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
+"Language-Team: German\n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.0.6\n"
+"X-Crowdin-Project: outwiker\n"
+"X-Crowdin-Language: de\n"
+"X-Crowdin-File: webpage.pot\n"
+
+#: webpage.py:40
+msgid "Plug-in for downloading HTML pages from web"
+msgstr "Plug-in für HTML-Seiten aus Internet herunterladen"
+
+#: webpage.py:44
+msgid "http://jenyay.net/Outwiker/WebPageEn"
+msgstr "http://jenyay.net/Outwiker/WebPageEn"
+
+#: downloader.py:238
+msgid "Processing: {}\n"
+msgstr "Verarbeitung: {}\n"
+
+#: downloader.py:340
+msgid "Download: {}\n"
+msgstr "Download: {}\n"
+
+#: downloader.py:350
+msgid "Can't download {}\n"
+msgstr "{} kann nicht heruntergeladen werden\n"
+
+#: actions/copysourceurl.py:32
+msgid "Copy source URL to clipboard"
+msgstr "Quell-URL in die Zwischenablage kopieren"
+
+#: actions/copysourceurl.py:37
+msgid "WebPage. Copy source URL of the page to clipboard."
+msgstr "Webseite. Quell URL der Seite in die Zwischenablage kopieren."
+
+#: actions/opensourceurl.py:32
+msgid "Can't open URL '{}'"
+msgstr "URL kann nicht geöffnet werden '{}'"
+
+#: actions/opensourceurl.py:38
+msgid "Open source URL in browser"
+msgstr "Öffne Quell URL im Browser"
+
+#: actions/opensourceurl.py:43
+msgid "WebPage. Open source URL of the page in the browser."
+msgstr "Webseite. Quell URL der Seite im Browser öffnen."
+
+#: actions/showpageinfo.py:31
+msgid "Show web page information"
+msgstr "Webseiten Information anzeigen"
+
+#: actions/showpageinfo.py:36
+msgid "WebPage. Show current web page information."
+msgstr "WebPage. Zeigt momentanen Webseiten Informationen."
+
+#: actions/downloadaction.py:43
+msgid "Create child web page"
+msgstr "Unterwebseite erstellen"
+
+#: actions/downloadaction.py:48
+msgid "Download content from the Internet and create child web page"
+msgstr "Inhalt aus dem Internet herunterladen und Unterwebseite erstellen"
+
+#: actions/downloadaction.py:68
+msgid "Create sibling web page"
+msgstr "Gleichwertige Webseite erstellen"
+
+#: actions/downloadaction.py:73
+msgid "Download content from the Internet and create sibling web page"
+msgstr "Inhalt aus dem Internet herunterladen und Gleichwertige Webseite erstellen"
+
+#: actions/disablescripts.py:23
+msgid "Disable scripts on page"
+msgstr "Scripts in dieser Seite abschalten"
+
+#: actions/disablescripts.py:28
+msgid "WebPage. Enable / disable scripts on downloaded page."
+msgstr "Webseite. Ein- / ausschalten von Scripts auf der Download Seite."
+
+#: webnotepage.py:114
+msgid "Web Page"
+msgstr "Webseite"
+
+#: webnotepage.py:158 gui/guicontroller.py:54 gui/webpagetoolbar.py:25
+#: gui/downloaddialog.py:263
+msgid "Web page"
+msgstr "Webseite"
+
+#: gui/infodialog.py:30
+msgid "Web page information"
+msgstr "Webseiten Information"
+
+#: gui/infodialog.py:36
+msgid "Downloading log"
+msgstr "Log downloaden"
+
+#: gui/infodialog.py:49
+msgid "Source URL"
+msgstr "Quell URL"
+
+#: gui/infodialog.py:50
+msgid "Link"
+msgstr "Link"
+
+#: gui/guicontroller.py:219
+msgid "Heading"
+msgstr "Überschrift"
+
+#: gui/guicontroller.py:224
+msgid "Font"
+msgstr "Schriftart"
+
+#: gui/guicontroller.py:229
+msgid "Alignment"
+msgstr "Ausrichtung"
+
+#: gui/guicontroller.py:234
+msgid "Formatting"
+msgstr "Formatierung"
+
+#: gui/guicontroller.py:239
+msgid "Lists"
+msgstr "Listen"
+
+#: gui/guicontroller.py:244
+msgid "Tables"
+msgstr "Tabellen"
+
+#: gui/downloaddialog.py:49
+msgid "Download web page"
+msgstr "Download Webseite"
+
+#: gui/downloaddialog.py:59
+msgid "URL or local file"
+msgstr "URL oder eine lokale Datei"
+
+#: gui/downloaddialog.py:61
+msgid "..."
+msgstr "..."
+
+#: gui/downloaddialog.py:198
+msgid "Can't remove temp directory"
+msgstr "Tempvrzeichnis kann nicht entfernt werden"
+
+#: gui/downloaddialog.py:206
+msgid "Enter link for downloading"
+msgstr "Link zum Download eingeben"
+
+#: gui/downloaddialog.py:207
+msgid "Error"
+msgstr "Fehler"
+
+#: gui/downloaddialog.py:243
+msgid "HTML files (*.html; *.htm)|*.html;*.htm|All files|*.*"
+msgstr "HTML-Dateien (*.html; *.htm)|*.html;*.htm|All files|*.*"
+
+#: gui/downloaddialog.py:258 gui/downloaddialog.py:280
+msgid "Page creation is canceled."
+msgstr "Seiten Erstellung wird abgebrochen."
+
+#: gui/downloaddialog.py:272
+msgid "Enter a title for the page"
+msgstr "Geben Sie einen Titel für die Seite ein"
+
+#: gui/downloaddialog.py:273
+msgid "Page title"
+msgstr "Seitentitel"
+
+#: gui/downloaddialog.py:296
+msgid "Can't create the page. Perhaps the title of the page is too long."
+msgstr "Die Seite kann nicht erstellt werden. Vielleicht ist der Titel der Seite zu lang."
+
+#: gui/downloaddialog.py:324
+msgid "Start downloading\n"
+msgstr "Start downloading\n"
+
+#: gui/downloaddialog.py:329
+msgid "Download error: {}\n"
+msgstr "Download Fehler: {}\n"
+
+#: gui/downloaddialog.py:333
+msgid "Invalid URL or file format\n"
+msgstr "Ungültige URL oder Dateiformat\n"
+
+#: gui/downloaddialog.py:336
+msgid "Finish downloading\n"
+msgstr "Fertig downloading\n"

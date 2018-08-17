@@ -8,6 +8,7 @@
 
 		<changelog>
 			<version number="3.0.0.847" status="dev">
+				<change>Add German localization.</change>
 				<change>Fix errors.</change>
 			</version>
 
@@ -77,6 +78,7 @@
 
 		<changelog>
 			<version number="3.0.0.847" status="dev">
+				<change>Добавлена немецкая локализация.</change>
 				<change>Исправление ошибок.</change>
 			</version>
 
