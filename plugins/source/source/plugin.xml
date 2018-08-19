@@ -29,6 +29,10 @@
 
 		<changelog>
 			<version number="1.16">
+				<requirements>
+					<api>2.835</api>
+				</requirements>
+
                 <download os="all">http://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.16.zip</download>
 				<change>Add German localization.</change>
 			</version>
@@ -164,6 +168,10 @@
 
 		<changelog>
 			<version number="1.16">
+				<requirements>
+					<api>2.835</api>
+				</requirements>
+
                 <download os="all">http://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.16.zip</download>
 				<change>Добавлена немецкая локализация.</change>
 			</version>

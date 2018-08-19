@@ -29,6 +29,10 @@
 
 		<changelog>
 			<version number="1.5">
+				<requirements>
+					<api>2.835</api>
+				</requirements>
+
                 <download os="all">http://jenyay.net/uploads/Outwiker/Export2HtmlPlugin/export2html-1.5.zip</download>
 				<change>Add German localization.</change>
 			</version>
@@ -104,6 +108,10 @@
 
 		<changelog>
 			<version number="1.5">
+				<requirements>
+					<api>2.835</api>
+				</requirements>
+
                 <download os="all">http://jenyay.net/uploads/Outwiker/Export2HtmlPlugin/export2html-1.5.zip</download>
 				<change>Добавлена немецкая локализация.</change>
 			</version>

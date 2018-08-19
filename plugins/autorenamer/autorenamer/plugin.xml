@@ -28,6 +28,10 @@
 
 		<changelog>
 			<version number="0.0.0.7">
+				<requirements>
+					<api>2.835</api>
+				</requirements>
+
                 <download os="all">http://jenyay.net/uploads/Outwiker/AutoRenamer/autorenamer-0.0.0.7.zip</download>
 				<change>Add German localization.</change>
 			</version>
@@ -68,6 +72,10 @@
 
 		<changelog>
 			<version number="0.0.0.7">
+				<requirements>
+					<api>2.835</api>
+				</requirements>
+
                 <download os="all">http://jenyay.net/uploads/Outwiker/AutoRenamer/autorenamer-0.0.0.7.zip</download>
 				<change>Добавлена немецкая локализация.</change>
 			</version>

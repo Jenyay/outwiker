@@ -29,6 +29,10 @@
 
 		<changelog>
 			<version number="1.0">
+				<requirements>
+					<api>2.835</api>
+				</requirements>
+
                 <download os="all">http://example.com/pluginname/pluginname-1.0.zip</download>
 				<change>The first version.</change>
 			</version>
@@ -47,6 +51,10 @@
 
 		<changelog>
 			<version number="1.0">
+				<requirements>
+					<api>2.835</api>
+				</requirements>
+
                 <download os="all">http://example.com/pluginname/pluginname-1.0.zip</download>
 				<change>Первая версия.</change>
 			</version>

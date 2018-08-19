@@ -29,11 +29,19 @@
 
 		<changelog>
 			<version number="1.1">
+				<requirements>
+					<api>2.835</api>
+				</requirements>
+
                 <download os="all">http://jenyay.net/uploads/Outwiker/Organizer/organizer-1.1.zip</download>
 				<change>Add OutWiker 2.1 support. Migrate to Python 3.6.</change>
 			</version>
 
 			<version number="1.0">
+				<requirements>
+					<api>2.835</api>
+				</requirements>
+
                 <download os="all">http://jenyay.net/uploads/Outwiker/Organizer/organizer-1.0.zip</download>
 				<change>The first version</change>
 			</version>

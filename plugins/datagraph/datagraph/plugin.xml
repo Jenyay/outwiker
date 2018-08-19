@@ -29,6 +29,10 @@
 
 		<changelog>
 			<version number="1.2">
+				<requirements>
+					<api>2.835</api>
+				</requirements>
+
                 <download os="all">http://jenyay.net/uploads/Outwiker/DataGraph/datagraph-1.2.zip</download>
 				<change>Add German localization.</change>
 			</version>
@@ -103,6 +107,10 @@
 
 		<changelog>
 			<version number="1.2">
+				<requirements>
+					<api>2.835</api>
+				</requirements>
+
                 <download os="all">http://jenyay.net/uploads/Outwiker/DataGraph/datagraph-1.2.zip</download>
 				<change>Добавлена немецкая локализация.</change>
 			</version>

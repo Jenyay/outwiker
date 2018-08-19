@@ -29,6 +29,10 @@
 
 		<changelog>
 			<version number="1.6">
+				<requirements>
+					<api>2.835</api>
+				</requirements>
+
                 <download os="all">http://jenyay.net/uploads/Outwiker/ExternalTools/externaltools-1.6.zip</download>
 				<change>Add German localization.</change>
 			</version>
@@ -104,6 +108,10 @@
 
 		<changelog>
 			<version number="1.6">
+				<requirements>
+					<api>2.835</api>
+				</requirements>
+
                 <download os="all">http://jenyay.net/uploads/Outwiker/ExternalTools/externaltools-1.6.zip</download>
 				<change>Добавлена немецкая локализация.</change>
 			</version>

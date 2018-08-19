@@ -28,6 +28,10 @@
 		</author>
 		<changelog>
 			<version number="1.4">
+				<requirements>
+					<api>2.835</api>
+				</requirements>
+
                 <download os="all">http://jenyay.net/uploads/Outwiker/WebPage/webpage-1.4.zip</download>
 				<change>Add German localization.</change>
 			</version>
@@ -88,6 +92,10 @@
 		</author>
 		<changelog>
 			<version number="1.4">
+				<requirements>
+					<api>2.835</api>
+				</requirements>
+
                 <download os="all">http://jenyay.net/uploads/Outwiker/WebPage/webpage-1.4.zip</download>
 				<change>Добавлена немецкая локализация.</change>
 			</version>
