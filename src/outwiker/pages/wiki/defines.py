@@ -11,3 +11,7 @@ TOOLBAR_WIKI_ALIGN = 'wiki_align'
 TOOLBAR_WIKI_TABLE = 'wiki_table'
 
 REGISTRY_PAGE_HASH = 'md5_hash'
+
+CONFIG_STYLES_SECTION = 'wiki'
+CONFIG_STYLES_INLINE_OPTION = 'custom_styles_inline'
+CONFIG_STYLES_BLOCK_OPTION = 'custom_styles_block'

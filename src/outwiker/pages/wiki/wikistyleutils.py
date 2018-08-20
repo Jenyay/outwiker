@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 
 import os
+from typing import Dict
 
 import wx
 
-from outwiker.utilites.textfile import readTextFile
+from outwiker.core.config import Config, JSONOption
 from outwiker.gui.defines import RECENT_COLORS_COUNT
 from outwiker.gui.testeddialog import TestedColourDialog
+from outwiker.utilites.textfile import readTextFile
 
 
 def turnBlockOrInline(editor, text_begin, text_end):
@@ -78,6 +80,38 @@ def loadCustomStyles(dir_list):
                 except IOError:
                     pass
     return styles
+
+
+def loadCustomStylesFromConfig(config: Config,
+                               section_name: str,
+                               option_name: str) -> Dict[str, str]:
+    '''
+    Load saved styles from page config in JSON format.
+    Return dictionary: key - style name, value - CSS style.
+    '''
+    result = {}
+    opt = JSONOption(config, section_name, option_name, None)
+    styles = opt.value
+    if not isinstance(styles, dict):
+        return result
+
+    result = {
+        name: value
+        for name, value in styles.items()
+        if isinstance(name, str) and isinstance(value, str)
+    }
+    return result
+
+
+def saveCustomStylesToConfig(config: Config,
+                             section_name: str,
+                             option_name: str,
+                             styles: Dict[str, str]) -> None:
+    '''
+    Save custom styles to config in JSON format
+    '''
+    opt = JSONOption(config, section_name, option_name, None)
+    opt.value = styles
 
 
 def getCustomStylesNames(dir_list):

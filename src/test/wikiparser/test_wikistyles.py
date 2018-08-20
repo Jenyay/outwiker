@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import os
 import unittest
 from tempfile import mkdtemp
 
@@ -12,9 +11,6 @@ from outwiker.core.application import Application
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
 from outwiker.pages.wiki.parser.tokenwikistyle import StyleGenerator
-from outwiker.pages.wiki.wikistyleutils import (getCustomStylesNames,
-                                                loadCustomStyles)
-from outwiker.utilites.textfile import writeTextFile
 
 
 class WikiStylesBlockTest(unittest.TestCase):
@@ -558,144 +554,148 @@ class StyleGeneratorTest(unittest.TestCase):
     def test_style_color_name(self):
         style_generator = StyleGenerator({})
         params = [('red', '')]
-        classes, css_list, style = style_generator.getStyle(params)
+        styles_info = style_generator.getStyle(params)
 
-        self.assertEqual(classes, [])
-        self.assertEqual(css_list, [])
-        self.assertEqual(style, 'color: red;')
+        self.assertEqual(styles_info.custom_classes, {})
+        self.assertEqual(styles_info.unknown_classes, [])
+        self.assertEqual(styles_info.user_css, 'color: red;')
 
     def test_style_color_name_param(self):
         style_generator = StyleGenerator({})
         params = [('color', 'red')]
-        classes, css_list, style = style_generator.getStyle(params)
+        styles_info = style_generator.getStyle(params)
 
-        self.assertEqual(classes, [])
-        self.assertEqual(css_list, [])
-        self.assertEqual(style, 'color: red;')
+        self.assertEqual(styles_info.custom_classes, {})
+        self.assertEqual(styles_info.unknown_classes, [])
+        self.assertEqual(styles_info.user_css, 'color: red;')
 
     def test_style_color_value_01(self):
         style_generator = StyleGenerator({})
         params = [('color', '#1A5')]
-        classes, css_list, style = style_generator.getStyle(params)
+        styles_info = style_generator.getStyle(params)
 
-        self.assertEqual(classes, [])
-        self.assertEqual(css_list, [])
-        self.assertEqual(style, 'color: #1A5;')
+        self.assertEqual(styles_info.custom_classes, {})
+        self.assertEqual(styles_info.unknown_classes, [])
+        self.assertEqual(styles_info.user_css, 'color: #1A5;')
 
     def test_style_color_value_02(self):
         style_generator = StyleGenerator({})
         params = [('color', '#11AA55')]
-        classes, css_list, style = style_generator.getStyle(params)
+        styles_info = style_generator.getStyle(params)
 
-        self.assertEqual(classes, [])
-        self.assertEqual(css_list, [])
-        self.assertEqual(style, 'color: #11AA55;')
+        self.assertEqual(styles_info.custom_classes, {})
+        self.assertEqual(styles_info.unknown_classes, [])
+        self.assertEqual(styles_info.user_css, 'color: #11AA55;')
 
     def test_style_color_value_many(self):
         style_generator = StyleGenerator({})
 
         params_1 = [('color', '#11AA55')]
-        classes, css_list, style = style_generator.getStyle(params_1)
-        self.assertEqual(classes, [])
-        self.assertEqual(css_list, [])
-        self.assertEqual(style, 'color: #11AA55;')
+        styles_info = style_generator.getStyle(params_1)
+        self.assertEqual(styles_info.custom_classes, {})
+        self.assertEqual(styles_info.unknown_classes, [])
+        self.assertEqual(styles_info.user_css, 'color: #11AA55;')
 
         params_2 = [('color', '#22BB66')]
-        classes, css_list, style = style_generator.getStyle(params_2)
-        self.assertEqual(classes, [])
-        self.assertEqual(css_list, [])
-        self.assertEqual(style, 'color: #22BB66;')
+        styles_info = style_generator.getStyle(params_2)
+        self.assertEqual(styles_info.custom_classes, {})
+        self.assertEqual(styles_info.unknown_classes, [])
+        self.assertEqual(styles_info.user_css, 'color: #22BB66;')
 
     def test_style_bgcolor_name(self):
         style_generator = StyleGenerator({})
         params = [('bgcolor', 'red')]
-        classes, css_list, style = style_generator.getStyle(params)
+        styles_info = style_generator.getStyle(params)
 
-        self.assertEqual(classes, [])
-        self.assertEqual(css_list, [])
-        self.assertEqual(style, 'background-color: red;')
+        self.assertEqual(styles_info.custom_classes, {})
+        self.assertEqual(styles_info.unknown_classes, [])
+        self.assertEqual(styles_info.user_css, 'background-color: red;')
 
     def test_style_bgcolor_value(self):
         style_generator = StyleGenerator({})
         params = [('bgcolor', '#10AA30')]
-        classes, css_list, style = style_generator.getStyle(params)
+        styles_info = style_generator.getStyle(params)
 
-        self.assertEqual(classes, [])
-        self.assertEqual(css_list, [])
-        self.assertEqual(style, 'background-color: #10AA30;')
+        self.assertEqual(styles_info.custom_classes, {})
+        self.assertEqual(styles_info.unknown_classes, [])
+        self.assertEqual(styles_info.user_css, 'background-color: #10AA30;')
 
     def test_style_bgcolor_name_01(self):
         style_generator = StyleGenerator({})
         params = [('bg-red', '')]
-        classes, css_list, style = style_generator.getStyle(params)
+        styles_info = style_generator.getStyle(params)
 
-        self.assertEqual(classes, [])
-        self.assertEqual(css_list, [])
-        self.assertEqual(style, 'background-color: red;')
+        self.assertEqual(styles_info.custom_classes, {})
+        self.assertEqual(styles_info.unknown_classes, [])
+        self.assertEqual(styles_info.user_css, 'background-color: red;')
 
     def test_style_bgcolor_name_02(self):
         style_generator = StyleGenerator({})
         params = [('bg_red', '')]
-        classes, css_list, style = style_generator.getStyle(params)
+        styles_info = style_generator.getStyle(params)
 
-        self.assertEqual(classes, [])
-        self.assertEqual(css_list, [])
-        self.assertEqual(style, 'background-color: red;')
+        self.assertEqual(styles_info.custom_classes, {})
+        self.assertEqual(styles_info.unknown_classes, [])
+        self.assertEqual(styles_info.user_css, 'background-color: red;')
 
     def test_style_color_name_repeat_01(self):
         style_generator = StyleGenerator({})
         params = [('bg-red', '')]
 
-        classes, css_list, style = style_generator.getStyle(params)
+        styles_info = style_generator.getStyle(params)
 
-        self.assertEqual(classes, [])
-        self.assertEqual(css_list, [])
-        self.assertEqual(style, 'background-color: red;')
+        self.assertEqual(styles_info.custom_classes, {})
+        self.assertEqual(styles_info.unknown_classes, [])
+        self.assertEqual(styles_info.user_css, 'background-color: red;')
 
     def test_style_color_bgcolor_name_01(self):
         style_generator = StyleGenerator({})
         params = [('red', ''), ('bg_blue', '')]
-        classes, css_list, style = style_generator.getStyle(params)
+        styles_info = style_generator.getStyle(params)
 
-        self.assertEqual(classes, [])
-        self.assertEqual(css_list, [])
-        self.assertEqual(style, 'color: red; background-color: blue;')
+        self.assertEqual(styles_info.custom_classes, {})
+        self.assertEqual(styles_info.unknown_classes, [])
+        self.assertEqual(styles_info.user_css,
+                         'color: red; background-color: blue;')
 
     def test_style_color_bgcolor_name_02(self):
         style_generator = StyleGenerator({})
         params = [('red', ''), ('bgcolor', '#10aa30')]
-        classes, css_list, style = style_generator.getStyle(params)
+        styles_info = style_generator.getStyle(params)
 
-        self.assertEqual(classes, [])
-        self.assertEqual(css_list, [])
-        self.assertEqual(style, 'color: red; background-color: #10aa30;')
+        self.assertEqual(styles_info.custom_classes, {})
+        self.assertEqual(styles_info.unknown_classes, [])
+        self.assertEqual(styles_info.user_css,
+                         'color: red; background-color: #10aa30;')
 
     def test_user_style__01(self):
         style_generator = StyleGenerator({})
         params = [('style', 'font-weight: bold;')]
-        classes, css_list, style = style_generator.getStyle(params)
+        styles_info = style_generator.getStyle(params)
 
-        self.assertEqual(classes, [])
-        self.assertEqual(css_list, [])
-        self.assertEqual(style, 'font-weight: bold;')
+        self.assertEqual(styles_info.custom_classes, {})
+        self.assertEqual(styles_info.unknown_classes, [])
+        self.assertEqual(styles_info.user_css, 'font-weight: bold;')
 
     def test_user_style_02(self):
         style_generator = StyleGenerator({})
         params = [('style', 'font-weight: bold;'), ('red', '')]
-        classes, css_list, style = style_generator.getStyle(params)
+        styles_info = style_generator.getStyle(params)
 
-        self.assertEqual(classes, [])
-        self.assertEqual(css_list, [])
-        self.assertEqual(style, 'color: red; font-weight: bold;')
+        self.assertEqual(styles_info.custom_classes, {})
+        self.assertEqual(styles_info.unknown_classes, [])
+        self.assertEqual(styles_info.user_css,
+                         'color: red; font-weight: bold;')
 
     def test_user_style_03(self):
         style_generator = StyleGenerator({})
         params = [('style', 'font-weight: bold'), ('red', '')]
-        classes, css_list, style = style_generator.getStyle(params)
+        styles_info = style_generator.getStyle(params)
 
-        self.assertEqual(classes, [])
-        self.assertEqual(css_list, [])
-        self.assertEqual(style, 'color: red; font-weight: bold;')
+        self.assertEqual(styles_info.custom_classes, {})
+        self.assertEqual(styles_info.unknown_classes, [])
+        self.assertEqual(styles_info.user_css,
+                         'color: red; font-weight: bold;')
 
     def test_user_style_04(self):
         style_generator = StyleGenerator({})
@@ -704,158 +704,29 @@ class StyleGeneratorTest(unittest.TestCase):
             ('red', ''),
             ('bg-blue', '')
         ]
-        classes, css_list, style = style_generator.getStyle(params)
+        styles_info = style_generator.getStyle(params)
 
-        self.assertEqual(classes, [])
-        self.assertEqual(css_list, [])
-        self.assertEqual(style, 'color: red; background-color: blue; font-weight: bold;')
+        self.assertEqual(styles_info.custom_classes, {})
+        self.assertEqual(styles_info.unknown_classes, [])
+        self.assertEqual(
+            styles_info.user_css,
+            'color: red; background-color: blue; font-weight: bold;'
+        )
 
     def test_custom_style_01_empty(self):
         style_generator = StyleGenerator({})
         params = [('my-red', '')]
-        classes, css_list, style = style_generator.getStyle(params)
+        styles_info = style_generator.getStyle(params)
 
-        self.assertEqual(classes, ['my-red'])
-        self.assertEqual(css_list, [])
-        self.assertEqual(style, '')
+        self.assertEqual(styles_info.custom_classes, {})
+        self.assertEqual(styles_info.unknown_classes, ['my-red'])
+        self.assertEqual(styles_info.user_css, '')
 
     def test_custom_style_02(self):
         style_generator = StyleGenerator({'my-red': 'test'})
         params = [('my-red', '')]
-        classes, css_list, style = style_generator.getStyle(params)
+        styles_info = style_generator.getStyle(params)
 
-        self.assertEqual(classes, ['my-red'])
-        self.assertEqual(css_list, ['test'])
-        self.assertEqual(style, '')
-
-
-class WikiStyleUtilsTest(unittest.TestCase):
-    def setUp(self):
-        self._tmp_dirs = []
-
-    def tearDown(self):
-        for dirname in self._tmp_dirs:
-            removeDir(dirname)
-
-    def test_getCustomStylesNames_empty(self):
-        styles = getCustomStylesNames(self._tmp_dirs)
-        self.assertEqual(styles, [])
-
-    def test_getCustomStylesNames_empty_dirs(self):
-        for n in range(5):
-            dirname = mkdtemp()
-            self._tmp_dirs.append(dirname)
-
-        styles = getCustomStylesNames(self._tmp_dirs)
-        self.assertEqual(styles, [])
-
-    def test_getCustomStylesNames_single_dir(self):
-        dirname = mkdtemp()
-        self._tmp_dirs.append(dirname)
-
-        writeTextFile(os.path.join(dirname, 'style-1.css'), '')
-        writeTextFile(os.path.join(dirname, 'style-2.css'), '')
-        writeTextFile(os.path.join(dirname, 'style-3.css'), '')
-
-        styles = sorted(getCustomStylesNames(self._tmp_dirs))
-        self.assertEqual(styles, ['style-1', 'style-2', 'style-3'])
-
-    def test_getCustomStylesNames_more_dirs(self):
-        dirname_1 = mkdtemp()
-        dirname_2 = mkdtemp()
-        self._tmp_dirs.append(dirname_1)
-        self._tmp_dirs.append(dirname_2)
-
-        writeTextFile(os.path.join(dirname_1, 'style-1.css'), '')
-        writeTextFile(os.path.join(dirname_1, 'style-2.css'), '')
-        writeTextFile(os.path.join(dirname_1, 'style-3.css'), '')
-
-        writeTextFile(os.path.join(dirname_2, 'style-4.css'), '')
-        writeTextFile(os.path.join(dirname_2, 'style-5.css'), '')
-
-        styles = sorted(getCustomStylesNames(self._tmp_dirs))
-        self.assertEqual(styles, ['style-1', 'style-2', 'style-3',
-                                  'style-4', 'style-5'])
-
-    def test_getCustomStylesNames_more_dirs_repeat_names(self):
-        dirname_1 = mkdtemp()
-        dirname_2 = mkdtemp()
-        self._tmp_dirs.append(dirname_1)
-        self._tmp_dirs.append(dirname_2)
-
-        writeTextFile(os.path.join(dirname_1, 'style-1.css'), '')
-        writeTextFile(os.path.join(dirname_1, 'style-2.css'), '')
-        writeTextFile(os.path.join(dirname_1, 'style-3.css'), '')
-
-        writeTextFile(os.path.join(dirname_2, 'style-1.css'), '')
-        writeTextFile(os.path.join(dirname_2, 'style-5.css'), '')
-
-        styles = sorted(getCustomStylesNames(self._tmp_dirs))
-        self.assertEqual(styles, ['style-1', 'style-2', 'style-3', 'style-5'])
-
-    def test_loadCustomStyles_empty(self):
-        styles = loadCustomStyles(self._tmp_dirs)
-        self.assertEqual(styles, {})
-
-    def test_loadCustomStyles_empty_dirs(self):
-        for n in range(5):
-            dirname = mkdtemp()
-            self._tmp_dirs.append(dirname)
-
-        styles = loadCustomStyles(self._tmp_dirs)
-        self.assertEqual(styles, {})
-
-    def test_loadCustomStyles_single_dir(self):
-        dirname = mkdtemp()
-        self._tmp_dirs.append(dirname)
-
-        writeTextFile(os.path.join(dirname, 'style-1.css'), 'test-1')
-        writeTextFile(os.path.join(dirname, 'style-2.css'), 'test-2')
-        writeTextFile(os.path.join(dirname, 'style-3.css'), 'test-3')
-
-        styles = loadCustomStyles(self._tmp_dirs)
-        self.assertEqual(styles, {'style-1': 'test-1',
-                                  'style-2': 'test-2',
-                                  'style-3': 'test-3',
-                                  })
-
-    def test_loadCustomStyles_more_dirs(self):
-        dirname_1 = mkdtemp()
-        dirname_2 = mkdtemp()
-        self._tmp_dirs.append(dirname_1)
-        self._tmp_dirs.append(dirname_2)
-
-        writeTextFile(os.path.join(dirname_1, 'style-1.css'), 'test-1')
-        writeTextFile(os.path.join(dirname_1, 'style-2.css'), 'test-2')
-        writeTextFile(os.path.join(dirname_1, 'style-3.css'), 'test-3')
-
-        writeTextFile(os.path.join(dirname_2, 'style-4.css'), 'test-4')
-        writeTextFile(os.path.join(dirname_2, 'style-5.css'), 'test-5')
-
-        styles = loadCustomStyles(self._tmp_dirs)
-        self.assertEqual(styles, {'style-1': 'test-1',
-                                  'style-2': 'test-2',
-                                  'style-3': 'test-3',
-                                  'style-4': 'test-4',
-                                  'style-5': 'test-5',
-                                  })
-
-    def test_loadCustomStyles_more_dirs_repeat_names(self):
-        dirname_1 = mkdtemp()
-        dirname_2 = mkdtemp()
-        self._tmp_dirs.append(dirname_1)
-        self._tmp_dirs.append(dirname_2)
-
-        writeTextFile(os.path.join(dirname_1, 'style-1.css'), 'test-1')
-        writeTextFile(os.path.join(dirname_1, 'style-2.css'), 'test-2')
-        writeTextFile(os.path.join(dirname_1, 'style-3.css'), 'test-3')
-
-        writeTextFile(os.path.join(dirname_2, 'style-1.css'), 'test-1-new')
-        writeTextFile(os.path.join(dirname_2, 'style-5.css'), 'test-5')
-
-        styles = loadCustomStyles(self._tmp_dirs)
-        self.assertEqual(styles, {'style-1': 'test-1-new',
-                                  'style-2': 'test-2',
-                                  'style-3': 'test-3',
-                                  'style-5': 'test-5',
-                                  })
+        self.assertEqual(styles_info.custom_classes, {'my-red': 'test'})
+        self.assertEqual(styles_info.unknown_classes, [])
+        self.assertEqual(styles_info.user_css, '')
