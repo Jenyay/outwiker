@@ -7,8 +7,9 @@
 		<website>https://jenyay.net/Outwiker/UnstableEn</website>
 
 		<changelog>
-			<version number="3.0.0.847" status="dev">
+			<version number="3.0.0.848" status="dev">
 				<change>Add German localization.</change>
+				<change>Improve wiki styles interface.</change>
 				<change>Fix errors.</change>
 			</version>
 
@@ -77,8 +78,9 @@
 		<website>https://jenyay.net/Outwiker/Unstable</website>
 
 		<changelog>
-			<version number="3.0.0.847" status="dev">
+			<version number="3.0.0.848" status="dev">
 				<change>Добавлена немецкая локализация.</change>
+				<change>Улучшения в интерфейсе работы с викистилями.</change>
 				<change>Исправление ошибок.</change>
 			</version>
 
