@@ -17,12 +17,17 @@ from ..wikistyleutils import (turnBlockOrInline,
                               isSelectedBlock,
                               getCustomStylesNames,
                               loadCustomStyles,
+                              loadCustomStylesFromConfig,
                               )
 from ..gui.styledialog import StyleDialog
 from ..wikiconfig import WikiConfig
+from ..defines import (CONFIG_STYLES_SECTION,
+                       CONFIG_STYLES_INLINE_OPTION,
+                       CONFIG_STYLES_BLOCK_OPTION,
+                       )
 
 
-class WikiStyleOnlyAction (BaseAction):
+class WikiStyleOnlyAction(BaseAction):
     """
     Mark text with style name
     """
@@ -44,14 +49,26 @@ class WikiStyleOnlyAction (BaseAction):
         assert self._application.mainWindow.pagePanel is not None
         assert self._application.selectedPage is not None
 
-        config = WikiConfig(self._application.selectedPage.params)
-
         editor = self._application.mainWindow.pagePanel.pageView.codeEditor
+        is_block = isSelectedBlock(editor)
 
-        styles_folder = (STYLES_BLOCK_FOLDER_NAME if isSelectedBlock(editor)
+        # Load custom styles from folders
+        styles_folder = (STYLES_BLOCK_FOLDER_NAME if is_block
                          else STYLES_INLINE_FOLDER_NAME)
         dir_list = getSpecialDirList(styles_folder)
-        styles = sorted(getCustomStylesNames(dir_list))
+        custom_styles = getCustomStylesNames(dir_list)
+
+        # Load custom styles from page options
+        option_name = (CONFIG_STYLES_BLOCK_OPTION if is_block
+                       else CONFIG_STYLES_INLINE_OPTION)
+        styles_from_page = list(loadCustomStylesFromConfig(
+            self._application.selectedPage.params,
+            CONFIG_STYLES_SECTION,
+            option_name).keys())
+
+        styles = sorted(list(set(custom_styles + styles_from_page)))
+
+        config = WikiConfig(self._application.selectedPage.params)
         recent_style = config.recentStyleName.value
 
         title = _('Select style')
@@ -100,24 +117,37 @@ class WikiStyleAdvancedAction (BaseAction):
     def run(self, params):
         assert self._application.mainWindow is not None
         assert self._application.mainWindow.pagePanel is not None
+        assert self._application.selectedPage is not None
 
         config = GeneralGuiConfig(self._application.config)
         recent_text_colors = config.recentTextColors.value
         recent_background_colors = config.recentBackgroundColors.value
 
         editor = self._application.mainWindow.pagePanel.pageView.codeEditor
+        is_block = isSelectedBlock(editor)
 
-        if isSelectedBlock(editor):
+        if is_block:
             styles_folder = STYLES_BLOCK_FOLDER_NAME
             example_html = '''<div class="{css_class}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi maximus vel tortor a dictum. Sed elit ipsum, consectetur quis dui vitae, pretium dapibus lorem. Duis mattis sagittis magna, suscipit cursus ante sodales sed. Sed id orci in ipsum laoreet maximus.</div>'''
             tag = 'div'
+            option_name = CONFIG_STYLES_BLOCK_OPTION
         else:
             styles_folder = STYLES_INLINE_FOLDER_NAME
             example_html = '''Lorem ipsum dolor sit amet, consectetur adipiscing elit. <span class="{css_class}">Morbi maximus vel tortor a dictum. Sed elit ipsum, consectetur quis dui vitae, pretium dapibus lorem.</span> Duis mattis sagittis magna, suscipit cursus ante sodales sed. Sed id orci in ipsum laoreet maximus.'''
             tag = 'span'
+            option_name = CONFIG_STYLES_INLINE_OPTION
 
+        # Load custom styles from dirs
         dir_list = getSpecialDirList(styles_folder)
-        styles = loadCustomStyles(dir_list)
+        custom_styles = loadCustomStyles(dir_list)
+
+        # Load custom dirs from page params
+        styles_from_page = loadCustomStylesFromConfig(
+            self._application.selectedPage.params,
+            CONFIG_STYLES_SECTION,
+            option_name)
+
+        styles = {**styles_from_page, **custom_styles}
 
         title = _('Advanced style...')
         mainWindow = self._application.mainWindow

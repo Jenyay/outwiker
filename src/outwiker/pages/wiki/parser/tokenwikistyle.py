@@ -2,10 +2,15 @@
 
 from abc import ABCMeta, abstractmethod, abstractproperty
 import re
+from typing import List, Tuple
 
 from outwiker.core.defines import (STYLES_BLOCK_FOLDER_NAME,
-                                   STYLES_INLINE_FOLDER_NAME,
+                                   STYLES_INLINE_FOLDER_NAME
                                    )
+from ..defines import (CONFIG_STYLES_SECTION,
+                       CONFIG_STYLES_INLINE_OPTION,
+                       CONFIG_STYLES_BLOCK_OPTION,
+                       )
 from outwiker.core.standardcolors import standardColorNames
 from outwiker.core.system import getSpecialDirList
 from outwiker.libs.pyparsing import (Regex, Forward, Literal,
@@ -13,7 +18,9 @@ from outwiker.libs.pyparsing import (Regex, Forward, Literal,
                                      SkipTo)
 
 from .tokennoformat import NoFormatFactory
-from ..wikistyleutils import loadCustomStyles
+from ..wikistyleutils import (loadCustomStyles,
+                              loadCustomStylesFromConfig,
+                              saveCustomStylesToConfig)
 
 
 PARAM_NAME_COLOR = 'color'
@@ -42,14 +49,27 @@ class WikiStyleBlockFactory(object):
 class WikiStyleBase(object, metaclass=ABCMeta):
     def __init__(self, parser):
         self.parser = parser
+        self._custom_styles_on_page = {}
+
+        styles_from_page_params = loadCustomStylesFromConfig(
+            parser.page.params,
+            CONFIG_STYLES_SECTION,
+            self._getOptionNameForCustomStylesFromPage()
+        )
 
         styles_folder_name = self._getStylesFolder()
         dir_list = getSpecialDirList(styles_folder_name)
         custom_styles = loadCustomStyles(dir_list)
-        self._style_generator = StyleGenerator(custom_styles)
+
+        styles = {**styles_from_page_params, **custom_styles}
+        self._style_generator = StyleGenerator(styles)
 
     @abstractproperty
-    def name(self):
+    def name(self) -> str:
+        pass
+
+    @abstractmethod
+    def _getOptionNameForCustomStylesFromPage(self) -> str:
         pass
 
     @abstractmethod
@@ -61,17 +81,17 @@ class WikiStyleBase(object, metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def _getTag(self):
+    def _getTag(self) -> str:
         pass
 
     @abstractmethod
-    def _getStylesFolder(self):
+    def _getStylesFolder(self) -> str:
         pass
 
     def _getForbiddenToken(self):
         return NoMatch()
 
-    def _prepareContent(self, content):
+    def _prepareContent(self, content: str) -> str:
         return content
 
     def getToken(self):
@@ -91,16 +111,21 @@ class WikiStyleBase(object, metaclass=ABCMeta):
     def conversionParseAction(self, s, l, t):
         params_list = self._parseParams(t['params'])
 
-        classes, css_list, style = self._style_generator.getStyle(params_list)
+        styles_info = self._style_generator.getStyle(params_list)
+        classes = styles_info.unknown_classes + list(styles_info.custom_classes.keys())
 
-        for css in css_list:
-            html_style = '<style>{content}</style>\n'.format(content=css)
-            if (html_style is not None and
-                    html_style not in self.parser.headItems):
+        for class_name, css in styles_info.custom_classes.items():
+            if class_name not in self._custom_styles_on_page:
+                html_style = '<style>{content}</style>\n'.format(content=css)
                 self.parser.appendToHead(html_style)
+                self._custom_styles_on_page[class_name] = css
+                saveCustomStylesToConfig(self.parser.page.params,
+                                         CONFIG_STYLES_SECTION,
+                                         self._getOptionNameForCustomStylesFromPage(),
+                                         self._custom_styles_on_page)
 
         classes_str = ' class="' + ' '.join(classes) + '"' if classes else ''
-        style_str = ' style="' + style + '"' if style else ''
+        style_str = ' style="' + styles_info.user_css + '"' if styles_info.user_css else ''
 
         content = self._prepareContent(t[1])
         inside = self.parser.parseWikiMarkup(content)
@@ -176,6 +201,9 @@ class WikiStyleInline(WikiStyleBase):
     def _getForbiddenToken(self):
         return Literal('\n\n').leaveWhitespace()
 
+    def _getOptionNameForCustomStylesFromPage(self) -> str:
+        return CONFIG_STYLES_INLINE_OPTION
+
 
 class WikiStyleBlock(WikiStyleBase):
     '''
@@ -208,6 +236,16 @@ class WikiStyleBlock(WikiStyleBase):
     def _getStylesFolder(self):
         return STYLES_BLOCK_FOLDER_NAME
 
+    def _getOptionNameForCustomStylesFromPage(self) -> str:
+        return CONFIG_STYLES_BLOCK_OPTION
+
+
+class StylesInfo(object):
+    def __init__(self):
+        self.custom_classes = {}        # type: Dict[str, str]
+        self.unknown_classes = []       # type: List[str]
+        self.user_css = ''              # type: str
+
 
 class StyleGenerator(object):
     def __init__(self, custom_styles):
@@ -225,14 +263,8 @@ class StyleGenerator(object):
         # Key - string of params, value - style name.
         self._added_special_styles = {}
 
-    def getStyle(self, params_list):
-        '''
-        params_list - list of tuples (param name, value).
-        Return tuple: (style name; CSS string).
-        '''
-        css_list = []
-        classes = []
-        style = ''
+    def getStyle(self, params_list: List[Tuple[str, str]]) -> StylesInfo:
+        info = StylesInfo()
 
         color = None
         bgcolor = None
@@ -243,9 +275,7 @@ class StyleGenerator(object):
                 class_name = param
 
                 if class_name in self._custom_styles:
-                    classes.append(class_name)
-                    css = self._custom_styles[class_name]
-                    css_list.append(css)
+                    info.custom_classes[class_name] = self._custom_styles[class_name]
                 elif class_name in standardColorNames or param.startswith('#'):
                     color = param
                 elif ((class_name.startswith('bg-') or
@@ -253,7 +283,7 @@ class StyleGenerator(object):
                         class_name[3:] in standardColorNames):
                     bgcolor = class_name[3:]
                 else:
-                    classes.append(class_name)
+                    info.unknown_classes.append(class_name)
             elif param == PARAM_NAME_COLOR:
                 color = value
             elif param == PARAM_NAME_BACKGROUND_COLOR:
@@ -261,8 +291,8 @@ class StyleGenerator(object):
             elif param == PARAM_NAME_STYLE:
                 other_styles = value
 
-        style = self._createCSS(color, bgcolor, other_styles)
-        return (classes, css_list, style)
+        info.user_css = self._createCSS(color, bgcolor, other_styles)
+        return info
 
     def _createCSS(self, color=None, bgcolor=None, other_styles=None):
         result = ''

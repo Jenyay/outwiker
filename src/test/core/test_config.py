@@ -18,7 +18,8 @@ from outwiker.core.config import (Config,
                                   BooleanOption,
                                   ListOption,
                                   StringListSection,
-                                  StcStyleOption)
+                                  StcStyleOption,
+                                  JSONOption)
 from outwiker.core.system import getCurrentDir, getConfigPath, getOS
 from outwiker.gui.guiconfig import TrayConfig, EditorConfig
 from outwiker.gui.stcstyle import StcStyle
@@ -178,6 +179,12 @@ class ConfigOptionsTest(unittest.TestCase):
             fp.write("list10=\n")
             fp.write("list11=|\n")
             fp.write("list12=элемент 1|\n")
+
+            fp.write("jsonval_01={}\n")
+            fp.write('jsonval_02="строка"\n')
+            fp.write("jsonval_03=[]\n")
+            fp.write("jsonval_04=[1, 2, 3]\n")
+            fp.write('jsonval_05={"x": 100}\n')
 
         self.config = Config(self.path)
 
@@ -622,6 +629,54 @@ class ConfigOptionsTest(unittest.TestCase):
         self.assertEqual(opt.value.bold, False)
         self.assertEqual(opt.value.italic, False)
         self.assertEqual(opt.value.underline, False)
+
+    def testJSON_01(self):
+        opt = JSONOption(self.config, "Test", "jsonval_none", None)
+        self.assertEqual(opt.value, None)
+
+    def testJSON_02(self):
+        opt = JSONOption(self.config, "Test", "jsonval_01", None)
+        self.assertEqual(opt.value, {})
+
+    def testJSON_03(self):
+        opt = JSONOption(self.config, "Test", "jsonval_02", None)
+        self.assertEqual(opt.value, 'строка')
+
+    def testJSON_04(self):
+        opt = JSONOption(self.config, "Test", "jsonval_03", None)
+        self.assertEqual(opt.value, [])
+
+    def testJSON_05(self):
+        opt = JSONOption(self.config, "Test", "jsonval_04", None)
+        self.assertEqual(opt.value, [1, 2, 3])
+
+    def testJSON_06(self):
+        opt = JSONOption(self.config, "Test", "jsonval_05", None)
+        self.assertEqual(opt.value['x'], 100)
+
+    def testJSON_07(self):
+        opt = JSONOption(self.config, "Test", "json_test", None)
+        newopt = JSONOption(self.config, "Test", "json_test", None)
+
+        opt.value = [1, 2, 3]
+
+        self.assertEqual(newopt.value, [1, 2, 3])
+
+    def testJSON_08(self):
+        opt = JSONOption(self.config, "Test", "json_test", None)
+        newopt = JSONOption(self.config, "Test", "json_test", None)
+
+        opt.value = {'x': 100, 'y': 200}
+
+        self.assertEqual(newopt.value, {'x': 100, 'y': 200})
+
+    def testJSON_09(self):
+        opt = JSONOption(self.config, "Test", "json_test", None)
+        newopt = JSONOption(self.config, "Test", "json_test", None)
+
+        opt.value = '111\n222\n333'
+
+        self.assertEqual(newopt.value, '111\n222\n333')
 
 
 class TrayConfigTest(unittest.TestCase):

@@ -3,6 +3,7 @@
 from abc import ABCMeta, abstractmethod
 import configparser
 import datetime
+import json
 import shutil
 import logging
 import os
@@ -19,9 +20,8 @@ class Config(object):
 
     def __init__(self, fname, readonly=False):
         """
-            :
-                fname: config file name
-                readonly: True if config should be in readonly mode
+            fname: config file name
+            readonly: True if config should be in readonly mode
         """
         self.readonly = readonly
         self.fname = fname
@@ -179,9 +179,9 @@ class BaseOption(object, metaclass=ABCMeta):
         """
         pass
 
-    def _prepareToWrite(self, val):
+    def _prepareToWrite(self, val) -> str:
         """
-        Преобразовать(если надо) значение к виду, в котором оно будет
+        Преобразовать (если надо) значение к виду, в котором оно будет
     записано в конфиг
         """
         return val
@@ -222,18 +222,22 @@ class BooleanOption(BaseOption):
     Булевская настройка.
     Элемент управления - wx.CheckBox
     """
-
-    def __init__(self, config, section, param, defaultValue):
-        super(BooleanOption, self).__init__(config,
-                                            section,
-                                            param,
-                                            defaultValue)
-
     def _loadValue(self):
         """
         Получить значение. В производных классах этот метод переопределяется
         """
         return self.config.getbool(self.section, self.param)
+
+
+class JSONOption(BaseOption):
+    """
+    Options to store object in JSON format
+    """
+    def _loadValue(self):
+        return json.loads(self.config.get(self.section, self.param))
+
+    def _prepareToWrite(self, val) -> str:
+        return json.dumps(val)
 
 
 class StcStyleOption(BaseOption):
