@@ -46,6 +46,7 @@ from buildtools.defines import (
     LINUX_BUILD_DIR,
     WINDOWS_BUILD_DIR,
     COVERAGE_PARAMS,
+    LANGUAGES,
 )
 from buildtools.versions import (getOutwikerVersion,
                                  getOutwikerVersionStr,
@@ -266,12 +267,21 @@ def locale():
 
 @task(alias='plugin_locale')
 @linux_only
-def locale_plugin(pluginname):
+def locale_plugin(pluginname=None):
     '''
     Create or update the localization file for pluginname plug-in
     '''
-    with lcd(os.path.join("plugins", pluginname, pluginname)):
-        local(r'find . -iname "*.py" | xargs xgettext -o locale/{}.pot'.format(pluginname))
+    plugins = [pluginname] if pluginname else PLUGINS_LIST
+
+    for name in plugins:
+        print_info(name)
+        with lcd(os.path.join("plugins", name, name)):
+            local(r'find . -iname "*.py" | xargs xgettext -o locale/{}.pot'.format(name))
+
+            for lang in LANGUAGES:
+                if os.path.exists(os.path.join('plugins', name, name, 'locale', lang)):
+                    local(r'msgmerge -U -N --backup=none locale/{lang}/LC_MESSAGES/{pluginname}.po locale/{pluginname}.pot'.format(
+                        pluginname=name, lang=lang))
 
 
 @task

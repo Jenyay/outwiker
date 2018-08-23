@@ -34,6 +34,8 @@ PLUGINS_LIST = [
     u"webpage",
 ]
 
+LANGUAGES = ['en', 'de', 'it_IT', 'ru_RU', 'sv', 'uk_UA']
+
 BUILD_DIR = u'build'
 LINUX_BUILD_DIR = u"linux"
 WINDOWS_BUILD_DIR = u"windows"
