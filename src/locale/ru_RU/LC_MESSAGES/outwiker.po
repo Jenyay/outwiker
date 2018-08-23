@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-17 09:25+0300\n"
+"POT-Creation-Date: 2018-08-23 12:05+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -148,13 +148,13 @@ msgid ""
 "!! First Wiki Page\n"
 "\n"
 "This is the first page. You can use a text formatting: '''bold''', "
-"''italic'', {+underlined text+}, [[http://jenyay.net | link]] and others."
+"''italic'', {+underlined text+}, [[https://jenyay.net | link]] and others."
 msgstr ""
 "!! Первая викистраница\n"
 "\n"
 "Это первая страница. Здесь Вы можете использовать форматирование текста, "
 "например: '''полужирный шрифт''', ''курсив'', {+подчеркнутый текст+}, "
-"[[http://jenyay.net | ссылки]] и другое."
+"[[https://jenyay.net | ссылки]] и другое."
 
 #: outwiker/core/commands.py:281
 msgid "test"
@@ -406,16 +406,16 @@ msgstr "HTML"
 
 #: outwiker/pages/html/htmlpageview.py:35
 #: outwiker/pages/html/htmlpageview.py:203
-#: outwiker/pages/wiki/wikipageview.py:59
-#: outwiker/pages/wiki/wikipageview.py:155
+#: outwiker/pages/wiki/wikipageview.py:63
+#: outwiker/pages/wiki/wikipageview.py:159
 #: outwiker/gui/preferences/wikieditorpanel.py:34
 msgid "Heading"
 msgstr "Заголовки"
 
 #: outwiker/pages/html/htmlpageview.py:36
 #: outwiker/pages/html/htmlpageview.py:204
-#: outwiker/pages/wiki/wikipageview.py:60
-#: outwiker/pages/wiki/wikipageview.py:156
+#: outwiker/pages/wiki/wikipageview.py:64
+#: outwiker/pages/wiki/wikipageview.py:160
 #: outwiker/gui/preferences/editorpanel.py:29
 #: outwiker/gui/preferences/htmlrenderpanel.py:26
 #: outwiker/gui/preferences/textprintpanel.py:29
@@ -423,32 +423,32 @@ msgid "Font"
 msgstr "Шрифт"
 
 #: outwiker/pages/html/htmlpageview.py:37
-#: outwiker/pages/wiki/wikipageview.py:61
+#: outwiker/pages/wiki/wikipageview.py:65
 msgid "Align"
 msgstr "Выравнивание"
 
 #: outwiker/pages/html/htmlpageview.py:38
-#: outwiker/pages/wiki/wikipageview.py:62 outwiker/gui/actionslist.py:117
+#: outwiker/pages/wiki/wikipageview.py:66 outwiker/gui/actionslist.py:117
 msgid "Table"
 msgstr "Таблица"
 
 #: outwiker/pages/html/htmlpageview.py:205
-#: outwiker/pages/wiki/wikipageview.py:157
+#: outwiker/pages/wiki/wikipageview.py:161
 msgid "Alignment"
 msgstr "Выравнивание"
 
 #: outwiker/pages/html/htmlpageview.py:206
-#: outwiker/pages/wiki/wikipageview.py:159
+#: outwiker/pages/wiki/wikipageview.py:163
 msgid "Formatting"
 msgstr "Форматирование"
 
 #: outwiker/pages/html/htmlpageview.py:207
-#: outwiker/pages/wiki/wikipageview.py:164
+#: outwiker/pages/wiki/wikipageview.py:168
 msgid "Lists"
 msgstr "Списки"
 
 #: outwiker/pages/html/htmlpageview.py:208
-#: outwiker/pages/wiki/wikipageview.py:163
+#: outwiker/pages/wiki/wikipageview.py:167
 msgid "Tables"
 msgstr "Таблицы"
 
@@ -499,21 +499,21 @@ msgstr "Ошибка загрузки страницы: {}"
 msgid "Text Page"
 msgstr "Текстовая страница"
 
-#: outwiker/pages/wiki/wikipageview.py:45
-#: outwiker/pages/wiki/wikipageview.py:48
-#: outwiker/pages/wiki/wikipageview.py:58
+#: outwiker/pages/wiki/wikipageview.py:49
+#: outwiker/pages/wiki/wikipageview.py:52
+#: outwiker/pages/wiki/wikipageview.py:62
 msgid "Wiki"
 msgstr "Вики"
 
-#: outwiker/pages/wiki/wikipageview.py:166
+#: outwiker/pages/wiki/wikipageview.py:170
 msgid "Commands"
 msgstr "Команды"
 
-#: outwiker/pages/wiki/wikipageview.py:795
+#: outwiker/pages/wiki/wikipageview.py:802
 msgid "Select text color"
 msgstr "Выбор цвета текста"
 
-#: outwiker/pages/wiki/wikipageview.py:803
+#: outwiker/pages/wiki/wikipageview.py:825
 msgid "Select text background color"
 msgstr "Выбор цвета фона текста"
 
@@ -650,28 +650,28 @@ msgstr "Оформленное [=…=]"
 msgid "Non parsed text"
 msgstr "Текст без преобразования"
 
-#: outwiker/pages/wiki/actions/wikistyle.py:31
+#: outwiker/pages/wiki/actions/wikistyle.py:41
 msgid "Text style..."
 msgstr "Стиль текста..."
 
-#: outwiker/pages/wiki/actions/wikistyle.py:35
+#: outwiker/pages/wiki/actions/wikistyle.py:45
 msgid "Apply style to text"
 msgstr "Применить стиль к тексту"
 
-#: outwiker/pages/wiki/actions/wikistyle.py:48
+#: outwiker/pages/wiki/actions/wikistyle.py:74
 msgid "Select style"
 msgstr "Выберите стиль"
 
-#: outwiker/pages/wiki/actions/wikistyle.py:49
+#: outwiker/pages/wiki/actions/wikistyle.py:75
 msgid "Styles"
 msgstr "Стили"
 
-#: outwiker/pages/wiki/actions/wikistyle.py:72
-#: outwiker/pages/wiki/actions/wikistyle.py:105
+#: outwiker/pages/wiki/actions/wikistyle.py:102
+#: outwiker/pages/wiki/actions/wikistyle.py:152
 msgid "Advanced style..."
 msgstr "Расширенный стиль..."
 
-#: outwiker/pages/wiki/actions/wikistyle.py:76
+#: outwiker/pages/wiki/actions/wikistyle.py:106
 msgid "Show dialog for advanced text style settings"
 msgstr "Показать диалог для расширенных настроек стиля текста"
 
@@ -804,19 +804,19 @@ msgstr "<b>Ошибка кодировки файла %s</b>"
 msgid "<b>Can't create thumbnail for \"{}\"</b>"
 msgstr "<b>Ошибка создания миниатюры для \"{}\"</b>"
 
-#: outwiker/pages/wiki/gui/styledialog.py:25
+#: outwiker/pages/wiki/gui/styledialog.py:26
 msgid "None"
 msgstr "Нет"
 
-#: outwiker/pages/wiki/gui/styledialog.py:135
+#: outwiker/pages/wiki/gui/styledialog.py:136
 msgid "Style name"
 msgstr "Имя стиля"
 
-#: outwiker/pages/wiki/gui/styledialog.py:153
+#: outwiker/pages/wiki/gui/styledialog.py:154
 msgid "Text color"
 msgstr "Цвет текста"
 
-#: outwiker/pages/wiki/gui/styledialog.py:169
+#: outwiker/pages/wiki/gui/styledialog.py:170
 msgid "Text background"
 msgstr "Фон текста"
 
@@ -1662,8 +1662,8 @@ msgid "Download more plugins"
 msgstr "Скачать другие плагины"
 
 #: outwiker/gui/preferences/pluginspanel.py:37
-msgid "http://jenyay.net/Outwiker/PluginsEn"
-msgstr "http://jenyay.net/Outwiker/Plugins"
+msgid "https://jenyay.net/Outwiker/PluginsEn"
+msgstr "https://jenyay.net/Outwiker/Plugins"
 
 #: outwiker/gui/preferences/pluginspanel.py:138
 msgid "Version"
@@ -2470,8 +2470,8 @@ msgid "OutWiker's page:"
 msgstr "Страница программы:"
 
 #: outwiker/gui/dialogs/about.py:25
-msgid "http://jenyay.net/Outwiker/English"
-msgstr "http://jenyay.net/Soft/Outwiker"
+msgid "https://jenyay.net/Outwiker/English"
+msgstr "https://jenyay.net/Outwiker/"
 
 #: outwiker/gui/dialogs/about.py:27
 msgid "jenyay.ilin@gmail.com"
@@ -2498,16 +2498,16 @@ msgid "Facebook page"
 msgstr "Страница на Facebook"
 
 #: outwiker/gui/dialogs/about.py:29
-msgid "http://www.facebook.com/outwiker"
-msgstr "http://www.facebook.com/outwiker"
+msgid "https://www.facebook.com/outwiker"
+msgstr "https://www.facebook.com/outwiker"
 
 #: outwiker/gui/dialogs/about.py:30
 msgid "Livejournal community"
 msgstr "Сообщество в Livejournal"
 
 #: outwiker/gui/dialogs/about.py:30
-msgid "http://ru-outwiker.livejournal.com/?style=mine"
-msgstr "http://ru-outwiker.livejournal.com/?style=mine"
+msgid "https://ru-outwiker.livejournal.com/?style=mine"
+msgstr "https://ru-outwiker.livejournal.com/?style=mine"
 
 #: outwiker/gui/dialogs/about.py:31
 msgid "Twitter"
@@ -2522,8 +2522,8 @@ msgid "Vkontakte group"
 msgstr "Группа Вконтакте"
 
 #: outwiker/gui/dialogs/about.py:32
-msgid "http://vk.com/outwiker"
-msgstr "http://vk.com/outwiker"
+msgid "https://vk.com/outwiker"
+msgstr "https://vk.com/outwiker"
 
 #: outwiker/gui/dialogs/about.py:43 outwiker/gui/dialogs/about.py:88
 msgid "About"
@@ -2577,6 +2577,33 @@ msgstr "Вставить таблицу"
 #: outwiker/gui/tabledialog.py:114
 msgid "Border width"
 msgstr "Толщина рамки"
+
+#~ msgid ""
+#~ "!! First Wiki Page\n"
+#~ "\n"
+#~ "This is the first page. You can use a text formatting: '''bold''', "
+#~ "''italic'', {+underlined text+}, [[http://jenyay.net | link]] and others."
+#~ msgstr ""
+#~ "!! Первая викистраница\n"
+#~ "\n"
+#~ "Это первая страница. Здесь Вы можете использовать форматирование текста, "
+#~ "например: '''полужирный шрифт''', ''курсив'', {+подчеркнутый текст+}, "
+#~ "[[http://jenyay.net | ссылки]] и другое."
+
+#~ msgid "http://jenyay.net/Outwiker/PluginsEn"
+#~ msgstr "http://jenyay.net/Outwiker/Plugins"
+
+#~ msgid "http://jenyay.net/Outwiker/English"
+#~ msgstr "http://jenyay.net/Soft/Outwiker"
+
+#~ msgid "http://www.facebook.com/outwiker"
+#~ msgstr "http://www.facebook.com/outwiker"
+
+#~ msgid "http://ru-outwiker.livejournal.com/?style=mine"
+#~ msgstr "http://ru-outwiker.livejournal.com/?style=mine"
+
+#~ msgid "http://vk.com/outwiker"
+#~ msgstr "http://vk.com/outwiker"
 
 #~ msgid ""
 #~ "Can't save page options\n"
