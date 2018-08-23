@@ -2,29 +2,30 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-23 20:36+0300\n"
-"PO-Revision-Date: 2017-02-18 16:48+0300\n"
+"POT-Creation-Date: 2018-08-23 12:51+0300\n"
+"PO-Revision-Date: 2018-08-23 13:06+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 1.8.9\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Crowdin-Project: outwiker\n"
 "X-Crowdin-Language: uk\n"
 "X-Crowdin-File: hackpage.pot\n"
 
-#: guicontroller.py:87
+#: guicontroller.py:90
 msgid "Change page identifier..."
 msgstr "Змінити ідентифікатор сторінки..."
 
-#: guicontroller.py:89 actions/setalias.py:24
+#: guicontroller.py:92 actions/setalias.py:24
 msgid "Set page alias..."
 msgstr "Встановити псевдонім сторінки..."
 
-#: guicontroller.py:91 actions/changepagefolder.py:24
+#: guicontroller.py:94 actions/changepagefolder.py:24
 msgid "Change page folder..."
 msgstr "Змінити папку сторінки..."
 
@@ -68,13 +69,13 @@ msgstr "Встановити папку сторінки"
 msgid "Enter the page folder name"
 msgstr "Введіть им’я папки сторінки"
 
-#: plugin.py:39
+#: plugin.py:28
 msgid "The HackPage plugin allow to edit hidden page properties"
 msgstr "Додаток HackPage дозволяє редагувати приховані властивості сторінки"
 
-#: plugin.py:47
-msgid "http://jenyay.net/Outwiker/HackPageEn"
-msgstr "http://jenyay.net/Outwiker/HackPage"
+#: plugin.py:32
+msgid "https://jenyay.net/Outwiker/HackPageEn"
+msgstr "https://jenyay.net/Outwiker/HackPage"
 
 #: validators.py:31
 msgid "Same identifier exist already"
@@ -87,3 +88,6 @@ msgstr "Помилка"
 #: validators.py:41
 msgid "Identifier contain invalid character"
 msgstr "Ідентифікатор містить неприпустимі символи"
+
+#~ msgid "http://jenyay.net/Outwiker/HackPageEn"
+#~ msgstr "http://jenyay.net/Outwiker/HackPage"

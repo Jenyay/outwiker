@@ -2,25 +2,27 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-21 21:27+0300\n"
-"PO-Revision-Date: 2018-04-25 16:23+0300\n"
+"POT-Creation-Date: 2018-08-23 12:51+0300\n"
+"PO-Revision-Date: 2018-08-23 13:23+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
+"Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 "
+"&& n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 "
+"&& n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
 "X-Generator: Poedit 2.0.6\n"
 "X-Crowdin-Project: outwiker\n"
 "X-Crowdin-Language: uk\n"
 "X-Crowdin-File: livejournal.po\n"
 
-#: controller.py:46 controller.py:47
+#: controller.py:53 controller.py:54
 msgid "LiveJournal"
 msgstr "LiveJournal"
 
-#: plugin.py:46
+#: plugin.py:33
 msgid ""
 "Add commands (:ljuser:) and (:ljcomm:) in wiki parser.\n"
 "\n"
@@ -35,17 +37,21 @@ msgstr ""
 "                 (:ljuser username:)\n"
 "                 (:ljcomm communityname:)"
 
-#: plugin.py:55
-msgid "http://jenyay.net/Outwiker/LivejournalPluginEn"
-msgstr "http://jenyay.net/Outwiker/LivejournalPlugin"
+#: plugin.py:42
+msgid "https://jenyay.net/Outwiker/LivejournalPluginEn"
+msgstr "https://jenyay.net/Outwiker/LivejournalPlugin"
 
 #: actions.py:56
 msgid "LiveJournal user (:ljuser ...:)"
 msgstr "Користувач LiveJournal (:ljuser ...:)"
 
 #: actions.py:60
-msgid "LiveJournal plugin. Insert (:ljuser... :) command to create the link to LiveJournal user"
-msgstr "Додаток LiveJournal. Вставити команду (:ljuser ... :) для створення посилання на користувача LiveJournal"
+msgid ""
+"LiveJournal plugin. Insert (:ljuser... :) command to create the link to "
+"LiveJournal user"
+msgstr ""
+"Додаток LiveJournal. Вставити команду (:ljuser ... :) для створення "
+"посилання на користувача LiveJournal"
 
 #: actions.py:64
 msgid "LiveJournal user"
@@ -56,9 +62,16 @@ msgid "LiveJournal community (:ljcomm ...:)"
 msgstr "Спільнота Livejournal (:ljcomm ...:)"
 
 #: actions.py:80
-msgid "LiveJournal plugin. Insert (:ljcomm... :) command to create the link to LiveJournal community"
-msgstr "Додаток LiveJournal. Вставити команду (:licomm ... :) для створення посилання на спільноту LiveJournal"
+msgid ""
+"LiveJournal plugin. Insert (:ljcomm... :) command to create the link to "
+"LiveJournal community"
+msgstr ""
+"Додаток LiveJournal. Вставити команду (:licomm ... :) для створення "
+"посилання на спільноту LiveJournal"
 
 #: actions.py:84
 msgid "LiveJournal community"
 msgstr "Спільнота Livejournal"
+
+#~ msgid "http://jenyay.net/Outwiker/LivejournalPluginEn"
+#~ msgstr "http://jenyay.net/Outwiker/LivejournalPlugin"

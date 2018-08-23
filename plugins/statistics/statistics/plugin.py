@@ -39,7 +39,7 @@ Statistics plugin append menu items <b>Tools -> Page Statistic</b> and <b>Tools 
 
     @property
     def url(self):
-        return _(u"http://jenyay.net/Outwiker/StatisticsEn")
+        return _(u"https://jenyay.net/Outwiker/StatisticsEn")
 
     def initialize(self):
         set_(self.gettext)

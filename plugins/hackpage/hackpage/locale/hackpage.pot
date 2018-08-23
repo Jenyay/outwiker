@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-23 20:36+0300\n"
+"POT-Creation-Date: 2018-08-23 13:06+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,15 +17,15 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: guicontroller.py:87
+#: guicontroller.py:90
 msgid "Change page identifier..."
 msgstr ""
 
-#: guicontroller.py:89 actions/setalias.py:24
+#: guicontroller.py:92 actions/setalias.py:24
 msgid "Set page alias..."
 msgstr ""
 
-#: guicontroller.py:91 actions/changepagefolder.py:24
+#: guicontroller.py:94 actions/changepagefolder.py:24
 msgid "Change page folder..."
 msgstr ""
 
@@ -69,12 +69,12 @@ msgstr ""
 msgid "Enter the page folder name"
 msgstr ""
 
-#: plugin.py:39
+#: plugin.py:28
 msgid "The HackPage plugin allow to edit hidden page properties"
 msgstr ""
 
-#: plugin.py:47
-msgid "http://jenyay.net/Outwiker/HackPageEn"
+#: plugin.py:32
+msgid "https://jenyay.net/Outwiker/HackPageEn"
 msgstr ""
 
 #: validators.py:31

@@ -7,22 +7,22 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-18 17:33+0300\n"
-"PO-Revision-Date: 2017-02-18 17:33+0300\n"
+"POT-Creation-Date: 2018-08-23 12:47+0300\n"
+"PO-Revision-Date: 2018-08-23 13:28+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.9\n"
+"X-Generator: Poedit 2.0.6\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: guicontroller.py:52 gui/editdialog.py:384
 msgid "Snippets"
 msgstr "Snippets"
 
-#: guicontroller.py:156 gui/editdialog.py:585
+#: guicontroller.py:162 gui/editdialog.py:585
 msgid ""
 "Can't read the snippet\n"
 "{}"
@@ -30,13 +30,13 @@ msgstr ""
 "Can't read the snippet\n"
 "{}"
 
-#: guicontroller.py:157 gui/editdialog.py:449 gui/editdialog.py:469
+#: guicontroller.py:163 gui/editdialog.py:449 gui/editdialog.py:469
 #: gui/editdialog.py:497 gui/editdialog.py:547 gui/editdialog.py:586
 #: gui/editdialog.py:632 gui/editdialog.py:647 gui/editdialog.py:714
 msgid "Error"
 msgstr "Error"
 
-#: guicontroller.py:168
+#: guicontroller.py:174
 msgid "Snippet error"
 msgstr "Snippet error"
 
@@ -84,12 +84,12 @@ msgstr "Snippet error: \n"
 msgid "Can't read file '{}'"
 msgstr "Can't read file '{}'"
 
-#: snippetparser.py:30
+#: snippetparser.py:32
 #, python-brace-format
 msgid "Snippet \"{name}\" not found"
 msgstr "Snippet \"{name}\" not found"
 
-#: snippetparser.py:35
+#: snippetparser.py:37
 #, python-brace-format
 msgid ""
 "Snippet error at line {line}:\n"
@@ -98,7 +98,7 @@ msgstr ""
 "Snippet error at line {line}:\n"
 "{text}"
 
-#: snippetparser.py:41
+#: snippetparser.py:43
 #, python-brace-format
 msgid ""
 "Snippet reading error:\n"
@@ -107,7 +107,7 @@ msgstr ""
 "Snippet reading error:\n"
 "{text}"
 
-#: snippetparser.py:46
+#: snippetparser.py:48
 #, python-brace-format
 msgid ""
 "Snippet processing error:\n"
@@ -116,19 +116,19 @@ msgstr ""
 "Snippet processing error:\n"
 "{text}"
 
-#: plugin.py:44
+#: plugin.py:35
 msgid "Plugin to store text snippets"
 msgstr "Plugin to store text snippets"
 
-#: plugin.py:48
-msgid "http://jenyay.net/Outwiker/SnippetsEn"
-msgstr "http://jenyay.net/Outwiker/SnippetsEn"
+#: plugin.py:39
+msgid "https://jenyay.net/Outwiker/SnippetsEn"
+msgstr "https://jenyay.net/Outwiker/SnippetsEn"
 
-#: gui/variablesdialog.py:51
+#: gui/variablesdialog.py:54
 msgid "Preview"
 msgstr "Preview"
 
-#: gui/variablesdialog.py:55
+#: gui/variablesdialog.py:58
 msgid "Snippet"
 msgstr "Snippet"
 
@@ -136,15 +136,15 @@ msgstr "Snippet"
 msgid "Insert as wiki command"
 msgstr "Insert as wiki command"
 
-#: gui/variablesdialog.py:130
+#: gui/variablesdialog.py:149
 msgid "{} | Snippet variables"
 msgstr "{} | Snippet variables"
 
-#: gui/variablesdialog.py:353 gui/variablesdialog.py:413
+#: gui/variablesdialog.py:377 gui/variablesdialog.py:437
 msgid "Expand (Shift+Enter)"
 msgstr "Expand (Shift+Enter)"
 
-#: gui/variablesdialog.py:392
+#: gui/variablesdialog.py:416
 msgid "Collapse"
 msgstr "Collapse"
 
@@ -323,6 +323,9 @@ msgstr "Variable name"
 #: gui/editdialog.py:713
 msgid "Invalid variable name \"{}\""
 msgstr "Invalid variable name \"{}\""
+
+#~ msgid "http://jenyay.net/Outwiker/SnippetsEn"
+#~ msgstr "http://jenyay.net/Outwiker/SnippetsEn"
 
 #~ msgid "Open help"
 #~ msgstr "Open help"

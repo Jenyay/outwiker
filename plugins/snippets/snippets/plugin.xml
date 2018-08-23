@@ -1,7 +1,7 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <info>
 	<name>Snippets</name>
-    <updates>http://jenyay.net/uploads/Outwiker/Snippets/plugin.xml</updates>
+    <updates>https://jenyay.net/uploads/Outwiker/Snippets/plugin.xml</updates>
     <requirements>
         <os>Windows, Linux</os>
         <api>2.835</api>
@@ -18,13 +18,13 @@
     </requirements>
 
 	<data lang="en">
-		<website>http://jenyay.net/Outwiker/SnippetsEn</website>
+		<website>https://jenyay.net/Outwiker/SnippetsEn</website>
 		<description>Plugin to store text templates.</description>
 
 		<author>
 			<name>Eugene Ilin (Jenyay)</name>
 			<email>jenyay.ilin@gmail.com</email>
-			<site>http://jenyay.net</site>
+			<site>https://jenyay.net</site>
 		</author>
 
 		<changelog>
@@ -33,46 +33,46 @@
 					<api>2.835</api>
 				</requirements>
 
-                <download os="all">http://jenyay.net/uploads/Outwiker/Snippets/snippets-1.3.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/Snippets/snippets-1.3.zip</download>
 				<change>Add German localization.</change>
             </version>
 
 			<version number="1.2.1" date="March 20, 2018">
-                <download os="all">http://jenyay.net/uploads/Outwiker/Snippets/snippets-1.2.1.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/Snippets/snippets-1.2.1.zip</download>
 				<change>GUI improvements.</change>
             </version>
 
 			<version number="1.2" date="February 15, 2018">
-                <download os="all">http://jenyay.net/uploads/Outwiker/Snippets/snippets-1.2.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/Snippets/snippets-1.2.zip</download>
 				<change>Add OutWiker 2.1 support. Migrate to Python 3.6.</change>
 			</version>
 
 			<version number="1.1.1" date="May 22, 2017">
-                <download os="all">http://jenyay.net/uploads/Outwiker/Snippets/snippets-1.1.1.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/Snippets/snippets-1.1.1.zip</download>
 				<change>GUI improvement.</change>
 			</version>
 
 			<version number="1.1" date="February 24, 2017">
-                <download os="all">http://jenyay.net/uploads/Outwiker/Snippets/snippets-1.1.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/Snippets/snippets-1.1.zip</download>
 				<change>Added the Ukrainian localization.</change>
 				<change>Small GUI improvement.</change>
 			</version>
 
 			<version number="1.0" date="February 06, 2017">
-                <download os="all">http://jenyay.net/uploads/Outwiker/Snippets/snippets-1.0.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/Snippets/snippets-1.0.zip</download>
 				<change>The first version.</change>
 			</version>
 		</changelog>
 	</data>
 
 	<data lang="ru">
-		<website>http://jenyay.net/Outwiker/Snippets</website>
+		<website>https://jenyay.net/Outwiker/Snippets</website>
 		<description>Плагин для хранения шаблонов текстов.</description>
 
 		<author>
 			<name>Евгений Ильин (Jenyay)</name>
 			<email>jenyay.ilin@gmail.com</email>
-			<site>http://jenyay.net</site>
+			<site>https://jenyay.net</site>
 		</author>
 
 		<changelog>
@@ -81,33 +81,33 @@
 					<api>2.835</api>
 				</requirements>
 
-                <download os="all">http://jenyay.net/uploads/Outwiker/Snippets/snippets-1.3.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/Snippets/snippets-1.3.zip</download>
 				<change>Добавлена немецкая локализация.</change>
             </version>
 
 			<version number="1.2.1" date="20.03.2018">
-                <download os="all">http://jenyay.net/uploads/Outwiker/Snippets/snippets-1.2.1.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/Snippets/snippets-1.2.1.zip</download>
 				<change>Улучшения в интерфейсе.</change>
             </version>
 
 			<version number="1.2" date="15.02.2018">
-                <download os="all">http://jenyay.net/uploads/Outwiker/Snippets/snippets-1.2.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/Snippets/snippets-1.2.zip</download>
 				<change>Добавлена поддержка OutWiker 2.1. Переход на Python 3.6.</change>
 			</version>
 
 			<version number="1.1.1" date="22.05.2017">
-                <download os="all">http://jenyay.net/uploads/Outwiker/Snippets/snippets-1.1.1.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/Snippets/snippets-1.1.1.zip</download>
 				<change>Улучшения в интерфейсе.</change>
 			</version>
 
 			<version number="1.1" date="24.02.2017">
-                <download os="all">http://jenyay.net/uploads/Outwiker/Snippets/snippets-1.1.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/Snippets/snippets-1.1.zip</download>
 				<change>Добавлена украинская локализация.</change>
 				<change>Небольшие улучшения в интерфейсе.</change>
 			</version>
 
 			<version number="1.0" date="06.02.2017">
-                <download os="all">http://jenyay.net/uploads/Outwiker/Snippets/snippets-1.0.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/Snippets/snippets-1.0.zip</download>
 				<change>Первая версия.</change>
 			</version>
 		</changelog>

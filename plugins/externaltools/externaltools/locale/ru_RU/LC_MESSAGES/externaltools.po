@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: externaltools\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-30 09:23+0300\n"
-"PO-Revision-Date: 2018-01-30 09:26+0300\n"
+"POT-Creation-Date: 2018-08-23 12:51+0300\n"
+"PO-Revision-Date: 2018-08-23 13:03+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: jenyay.net <jenyay.ilin@gmail.com>\n"
 "Language: ru_RU\n"
@@ -13,7 +13,7 @@ msgstr ""
 "X-Poedit-KeywordsList: _;gettext;gettext_noop\n"
 "X-Poedit-Basepath: ../../..\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 2.0.4\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Poedit-SearchPath-0: .\n"
 
 #: controller.py:67 commandexec/commandcontroller.py:127
@@ -24,19 +24,19 @@ msgstr "ExternalTools"
 msgid "External Tools [Plugin]"
 msgstr "External Tools [Плагин]"
 
-#: toolslistpanel.py:105
+#: toolslistpanel.py:106
 msgid "Open file dialog..."
 msgstr "Открыть диалог выбора файла..."
 
-#: toolslistpanel.py:111
+#: toolslistpanel.py:112
 msgid "Remove tool"
 msgstr "Удалить приложение"
 
-#: toolslistpanel.py:120
+#: toolslistpanel.py:121
 msgid "Executables (*.exe)|*.exe|All Files|*.*"
 msgstr "Выполняемые файлы (*.exe)|*.exe|Все файлы|*.*"
 
-#: toolslistpanel.py:122
+#: toolslistpanel.py:123
 msgid "All Files|*"
 msgstr "Все файлы|*"
 
@@ -321,8 +321,11 @@ msgstr ""
 "(:execend:)</pre></code>"
 
 #: plugin.py:143
-msgid "http://jenyay.net/Outwiker/ExternalToolsEn"
-msgstr "http://jenyay.net/Outwiker/ExternalTools"
+msgid "https://jenyay.net/Outwiker/ExternalToolsEn"
+msgstr "https://jenyay.net/Outwiker/ExternalTools"
+
+#~ msgid "http://jenyay.net/Outwiker/ExternalToolsEn"
+#~ msgstr "http://jenyay.net/Outwiker/ExternalTools"
 
 #~ msgid ""
 #~ "Open notes files with external editor.\n"

@@ -7,24 +7,24 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pluginname\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-26 22:14+0300\n"
-"PO-Revision-Date: 2018-01-26 22:15+0300\n"
+"POT-Creation-Date: 2018-08-23 12:47+0300\n"
+"PO-Revision-Date: 2018-08-23 13:40+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: \n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.4\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-#: plugin.py:41
+#: plugin.py:31
 msgid "TeXEquation plug-in allow to insert equations in the TeX format."
 msgstr "TeXEquation plug-in allow to insert equations in the TeX format."
 
-#: plugin.py:45
-msgid "http://jenyay.net/Outwiker/TexEquationEn"
-msgstr "http://jenyay.net/Outwiker/TexEquationEn"
+#: plugin.py:35
+msgid "https://jenyay.net/Outwiker/TexEquationEn"
+msgstr "https://jenyay.net/Outwiker/TexEquationEn"
 
 #: actions.py:22
 msgid "Equation..."
@@ -57,6 +57,9 @@ msgstr "Cancel"
 #: tokentex.py:93
 msgid "Can't copy KaTeX library"
 msgstr "Can't copy KaTeX library"
+
+#~ msgid "http://jenyay.net/Outwiker/TexEquationEn"
+#~ msgstr "http://jenyay.net/Outwiker/TexEquationEn"
 
 #~ msgid "Equation"
 #~ msgstr "Equation"

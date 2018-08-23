@@ -1,7 +1,7 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <info>
 	<name>TeXEquation</name>
-	<updates>http://jenyay.net/uploads/Outwiker/TexEquation/plugin.xml</updates>
+	<updates>https://jenyay.net/uploads/Outwiker/TexEquation/plugin.xml</updates>
     <requirements>
         <os>Windows, Linux</os>
         <api>2.835</api>
@@ -18,13 +18,13 @@
     </requirements>
 
 	<data lang="en">
-		<website>http://jenyay.net/Outwiker/TexEquationEn</website>
+		<website>https://jenyay.net/Outwiker/TexEquationEn</website>
 		<description>Plug-in for inserting the equations in the TeX format.</description>
 
 		<author>
 			<name>Eugene Ilin (aka Jenyay)</name>
 			<email>jenyay.ilin@gmail.com</email>
-			<site>http://jenyay.net</site>
+			<site>https://jenyay.net</site>
 		</author>
 		<changelog>
             <version number="2.3">
@@ -32,83 +32,83 @@
 					<api>2.835</api>
 				</requirements>
 
-                <download os="all">http://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.3.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.3.zip</download>
 				<change>Add German localization.</change>
 			</version>
 
             <version number="2.2.2" date="May 26, 2018">
-                <download os="all">http://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.2.2.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.2.2.zip</download>
 				<change>Updated Ukrainian localization.</change>
 			</version>
 
             <version number="2.2.1" date="March 20, 2018">
-                <download os="all">http://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.2.1.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.2.1.zip</download>
 				<change>Updated KaTeX engine.</change>
 			</version>
 
 			<version number="2.2" date="February 15, 2018">
-                <download os="all">http://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.2.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.2.zip</download>
 				<change>Add OutWiker 2.1 support. Migrate to Python 3.6.</change>
 				<change>Updated KaTeX engine.</change>
 			</version>
 
 			<version number="2.1" date="December 17, 2017">
-                <download os="all">http://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.1.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.1.zip</download>
 				<change>Updated KaTeX engine.</change>
 			</version>
 
 			<version number="2.0.3" date="November 20, 2017">
-                <download os="all">http://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.0.3.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.0.3.zip</download>
 				<change>Fixed error with multiline equations.</change>
 			</version>
 
 			<version number="2.0.2" date="May 28, 2017">
-                <download os="all">http://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.0.2.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.0.2.zip</download>
 				<change>Fixed errors.</change>
 			</version>
 
 			<version number="2.0.1" date="April 25, 2017">
-                <download os="all">http://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.0.1.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.0.1.zip</download>
 				<change>Updated Ukrainian localization.</change>
 			</version>
 
 			<version number="2.0" date="March 18, 2017">
-                <download os="all">http://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.0.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.0.zip</download>
 				<change>Now the plug-in uses the Katex library instead mimeTex to render equations.</change>
 				<change>Added the ability to insert the block equations.</change>
 			</version>
 
 			<version number="1.0.3" date="October 17, 2016">
-                <download os="all">http://jenyay.net/uploads/Outwiker/TexEquation/texequation-1.0.3.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/TexEquation/texequation-1.0.3.zip</download>
 				<change>Added OutWiker 2.0 supporting.</change>
 				<change>Bug fixes.</change>
 			</version>
 
 			<version number="1.0.2" date="August 20, 2016">
-                <download os="all">http://jenyay.net/uploads/Outwiker/TexEquation/texequation-1.0.2.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/TexEquation/texequation-1.0.2.zip</download>
 				<change>Added the Swedish translation.</change>
 			</version>
 
 			<version number="1.0.1" date="February 11, 2016">
-                <download os="all">http://jenyay.net/uploads/Outwiker/TexEquation/texequation-1.0.1.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/TexEquation/texequation-1.0.1.zip</download>
 				<change>Bug fixes.</change>
 			</version>
 
 			<version number="1.0" date="October 30, 2015">
-                <download os="all">http://jenyay.net/uploads/Outwiker/TexEquation/texequation-1.0.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/TexEquation/texequation-1.0.zip</download>
 				<change>The first version.</change>
 			</version>
 		</changelog>
 	</data>
 
 	<data lang="ru">
-		<website>http://jenyay.net/Outwiker/TexEquation</website>
+		<website>https://jenyay.net/Outwiker/TexEquation</website>
 		<description>Вставка формул в формате TeX.</description>
 
 		<author>
 			<name>Евгений Ильин (aka Jenyay)</name>
 			<email>jenyay.ilin@gmail.com</email>
-			<site>http://jenyay.net</site>
+			<site>https://jenyay.net</site>
 		</author>
 
 		<changelog>
@@ -117,70 +117,70 @@
 					<api>2.835</api>
 				</requirements>
 
-                <download os="all">http://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.3.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.3.zip</download>
 				<change>Добавлена немецкая локализация.</change>
 			</version>
 
             <version number="2.2.2" date="26.05.2018">
-                <download os="all">http://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.2.2.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.2.2.zip</download>
 				<change>Обновлена украинская локализация.</change>
 			</version>
 
             <version number="2.2.1" date="20.03.2018">
-                <download os="all">http://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.2.1.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.2.1.zip</download>
 				<change>Обновлен движок KaTeX.</change>
 			</version>
 
             <version number="2.2" date="15.02.2018">
-                <download os="all">http://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.2.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.2.zip</download>
 				<change>Добавлена поддержка OutWiker 2.1. Переход на Python 3.6.</change>
 				<change>Обновлен движок KaTeX.</change>
 			</version>
 
 			<version number="2.1" date="17.12.2017">
-                <download os="all">http://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.1.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.1.zip</download>
 				<change>Обновлен движок KaTeX.</change>
 			</version>
 
 			<version number="2.0.3" date="20.11.2017">
-                <download os="all">http://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.0.3.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.0.3.zip</download>
 				<change>Исправлена ошибка с многострочными формулами.</change>
 			</version>
 
 			<version number="2.0.2" date="28.05.2017">
-                <download os="all">http://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.0.2.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.0.2.zip</download>
 				<change>Исправление ошибок.</change>
 			</version>
 
 			<version number="2.0.1" date="25.04.2017">
-                <download os="all">http://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.0.1.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.0.1.zip</download>
 				<change>Обновлена украинская локализация.</change>
 			</version>
 
 			<version number="2.0" date="18.03.2017">
-                <download os="all">http://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.0.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.0.zip</download>
 				<change>Теперь для отображения формул плагин использует библиотеку Katex вместо mimeTex.</change>
 				<change>Добавлена возможность вставки блочных формул.</change>
 			</version>
 
 			<version number="1.0.3" date="17.10.2016">
-                <download os="all">http://jenyay.net/uploads/Outwiker/TexEquation/texequation-1.0.3.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/TexEquation/texequation-1.0.3.zip</download>
 				<change>Исправление ошибок.</change>
 				<change>Добавлена поддержка OutWiker 2.0.</change>
 			</version>
 
 			<version number="1.0.2" date="20.08.2016">
-                <download os="all">http://jenyay.net/uploads/Outwiker/TexEquation/texequation-1.0.2.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/TexEquation/texequation-1.0.2.zip</download>
 				<change>Добавлена поддержка шведского языка.</change>
 			</version>
 
 			<version number="1.0.1" date="11.02.2016">
-                <download os="all">http://jenyay.net/uploads/Outwiker/TexEquation/texequation-1.0.1.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/TexEquation/texequation-1.0.1.zip</download>
 				<change>Исправление ошибок.</change>
 			</version>
 
 			<version number="1.0" date="30.10.2015">
-                <download os="all">http://jenyay.net/uploads/Outwiker/TexEquation/texequation-1.0.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/TexEquation/texequation-1.0.zip</download>
 				<change>Первая версия</change>
 			</version>
 		</changelog>

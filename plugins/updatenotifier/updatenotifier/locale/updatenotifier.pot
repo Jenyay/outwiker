@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-09 18:27+0300\n"
+"POT-Creation-Date: 2018-08-23 13:06+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,73 +21,79 @@ msgstr ""
 msgid "UpdateNotifier [Plugin]"
 msgstr ""
 
-#: updatecontroller.py:82 updatecontroller.py:97 updatecontroller.py:103
+#: updatecontroller.py:85 updatecontroller.py:99 updatecontroller.py:105
 msgid "Check for new versions..."
 msgstr ""
 
-#: updatecontroller.py:127
+#: updatecontroller.py:132
 msgid "Installed OutWiker version"
 msgstr ""
 
-#: updatecontroller.py:128
+#: updatecontroller.py:133
 msgid "Latest stable OutWiker version"
 msgstr ""
 
-#: updatecontroller.py:129
+#: updatecontroller.py:134
 msgid "Latest unstable OutWiker version"
 msgstr ""
 
-#: updatecontroller.py:130
+#: updatecontroller.py:135
 msgid "Version history"
 msgstr ""
 
-#: updatecontroller.py:131
+#: updatecontroller.py:136
 msgid "More info"
 msgstr ""
 
-#: updatecontroller.py:132
+#: updatecontroller.py:137
 msgid "Update"
 msgstr ""
 
-#: updatecontroller.py:133
+#: updatecontroller.py:138
 msgid "Install"
 msgstr ""
 
-#: updatecontroller.py:134
+#: updatecontroller.py:139
 msgid "Uninstall"
 msgstr ""
 
-#: updatecontroller.py:190 versionlist.py:73
+#: updatecontroller.py:193 versionlist.py:73
 msgid "__updateLang"
 msgstr ""
 
-#: updatecontroller.py:327
+#: updatecontroller.py:347
 msgid ""
 "The download link was not found in plugin description. Please update plugin "
 "manually"
 msgstr ""
 
-#: updatecontroller.py:331 updatecontroller.py:346
+#: updatecontroller.py:351 updatecontroller.py:368
 msgid "Plugin was NOT updated. Please update plugin manually"
 msgstr ""
 
-#: updatecontroller.py:385
+#: updatecontroller.py:395
 msgid ""
 "The plugin description can't be downloaded. Please install plugin manually"
 msgstr ""
 
-#: updatecontroller.py:391
+#: updatecontroller.py:402
 msgid "The plugin required newer version of OutWiker. Please update OutWiker"
 msgstr ""
 
-#: updatecontroller.py:398
+#: updatecontroller.py:409
 msgid ""
 "The download link was not found in plugin description. Please install plugin "
 "manually"
 msgstr ""
 
-#: updatecontroller.py:413
+#: updatecontroller.py:430
 msgid "Plugin was NOT Installed. Please update plugin manually"
+msgstr ""
+
+#: updatecontroller.py:454 updatecontroller.py:477
+msgid ""
+"Plugin's folder can't be deleted. Please delete the following path: \n"
+" {}"
 msgstr ""
 
 #: plugin.py:32
@@ -98,7 +104,7 @@ msgid ""
 msgstr ""
 
 #: plugin.py:38
-msgid "http://jenyay.net/Outwiker/UpdateNotifierEn"
+msgid "https://jenyay.net/Outwiker/UpdateNotifierEn"
 msgstr ""
 
 #: actions.py:22 guicreators.py:45

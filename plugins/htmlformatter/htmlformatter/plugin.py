@@ -32,7 +32,7 @@ class PluginName(Plugin):
 
     @property
     def url(self):
-        return _(u"http://jenyay.net/Outwiker/HtmlFormatterEn")
+        return _(u"https://jenyay.net/Outwiker/HtmlFormatterEn")
 
     def initialize(self):
         set_(self.gettext)

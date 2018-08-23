@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-15 22:47+0300\n"
-"PO-Revision-Date: 2018-08-17 16:06+0300\n"
+"POT-Creation-Date: 2018-08-23 12:51+0300\n"
+"PO-Revision-Date: 2018-08-23 13:09+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -16,9 +16,11 @@ msgstr ""
 "X-Crowdin-Language: de\n"
 "X-Crowdin-File: lightbox.pot\n"
 
-#: plugin.py:29
+#: plugin.py:26
 msgid ""
-"This plugin adds a command (:lightbox:), after adding a images from thumbnails will open in a preview window, rather than in an external program.\n"
+"This plugin adds a command (:lightbox:), after adding a images from "
+"thumbnails will open in a preview window, rather than in an external "
+"program.\n"
 "                \n"
 "<B>Usage</B>\n"
 "\n"
@@ -28,7 +30,9 @@ msgid ""
 "bla-bla-bla...\n"
 "%thumb%Attach:image_2.png%%\n"
 msgstr ""
-"Dieses Plugin fügt einen Befehl (:lightbox:) ein, nach dem Hinzufügen eines Bildes von der Miniaturansicht, öffnet es sich in einem Vorschaufenster, anstatt in einem externen Programm.\n"
+"Dieses Plugin fügt einen Befehl (:lightbox:) ein, nach dem Hinzufügen eines "
+"Bildes von der Miniaturansicht, öffnet es sich in einem Vorschaufenster, "
+"anstatt in einem externen Programm.\n"
 "\n"
 "<B>Nutzung</B>\n"
 "\n"
@@ -38,17 +42,20 @@ msgstr ""
 "bla-bla-bla...\n"
 "%thumb%Attach:image_2.png%%\n"
 
-#: plugin.py:42
-msgid "http://jenyay.net/Outwiker/LightboxEn"
-msgstr "http://jenyay.net/Outwiker/LightboxEn"
+#: plugin.py:39
+msgid "https://jenyay.net/Outwiker/LightboxEn"
+msgstr "https://jenyay.net/Outwiker/LightboxEn"
 
 #: actions.py:21
 msgid "(:lightbox:) command"
 msgstr "Befehl (:lightbox:)"
 
 #: actions.py:25
-msgid "Insert (:lightbox:) wiki command to show attached images inside OutWiker."
-msgstr "(:lightbox:) Wiki-Befehl einfügen, um die angehängten Bilder in OutWiker anzuzeigen."
+msgid ""
+"Insert (:lightbox:) wiki command to show attached images inside OutWiker."
+msgstr ""
+"(:lightbox:) Wiki-Befehl einfügen, um die angehängten Bilder in OutWiker "
+"anzuzeigen."
 
 #: lightboxcommand.py:69
 #, python-brace-format
@@ -58,3 +65,6 @@ msgid ""
 msgstr ""
 "<B>Skript Dateien können nicht kopiert werden</B>\n"
 "{0}"
+
+#~ msgid "http://jenyay.net/Outwiker/LightboxEn"
+#~ msgstr "http://jenyay.net/Outwiker/LightboxEn"

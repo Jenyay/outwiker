@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: thumbgallery\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-15 23:03+0300\n"
-"PO-Revision-Date: 2018-01-15 23:03+0300\n"
+"POT-Creation-Date: 2018-08-23 12:51+0300\n"
+"PO-Revision-Date: 2018-08-23 13:42+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: jenyay.net <jenyay.ilin@gmail.com>\n"
 "Language: ru_RU\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 2.0.4\n"
+"X-Generator: Poedit 2.0.6\n"
 
 #: thumbdialog.py:24
 msgid "Gallery"
@@ -38,15 +38,15 @@ msgstr "Все изображения"
 msgid "Clear"
 msgstr "Очистить"
 
-#: plugin.py:60
-msgid "http://jenyay.net/Outwiker/ThumbGalleryEn"
-msgstr "http://jenyay.net/Outwiker/ThumbGallery"
+#: plugin.py:47
+msgid "https://jenyay.net/Outwiker/ThumbGalleryEn"
+msgstr "https://jenyay.net/Outwiker/ThumbGallery"
 
-#: plugin.py:66
+#: plugin.py:53
 msgid "locale/description.html"
 msgstr "locale/ru_RU/LC_MESSAGES/description.html"
 
-#: plugin.py:74
+#: plugin.py:60
 msgid "Can't load description"
 msgstr "Ошибка загрузки описания"
 
@@ -57,6 +57,9 @@ msgstr "Галерея (:thumbgallery:)"
 #: actions.py:28
 msgid "Insert (:thumbgallery:) wiki command to create the gallery."
 msgstr "Вставить команду вики-команду (:thumbgallery:) для создания галереи."
+
+#~ msgid "http://jenyay.net/Outwiker/ThumbGalleryEn"
+#~ msgstr "http://jenyay.net/Outwiker/ThumbGallery"
 
 #~ msgid "Insert gallery (:thumbgallery:)"
 #~ msgstr "Вставить галерею (:thumbgallery:)"

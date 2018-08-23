@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-26 22:14+0300\n"
+"POT-Creation-Date: 2018-08-23 13:06+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,12 +17,12 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: plugin.py:41
+#: plugin.py:31
 msgid "TeXEquation plug-in allow to insert equations in the TeX format."
 msgstr ""
 
-#: plugin.py:45
-msgid "http://jenyay.net/Outwiker/TexEquationEn"
+#: plugin.py:35
+msgid "https://jenyay.net/Outwiker/TexEquationEn"
 msgstr ""
 
 #: actions.py:22

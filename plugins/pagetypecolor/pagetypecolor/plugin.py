@@ -32,7 +32,7 @@ class PluginPageTypeColor(Plugin):
 
     @property
     def url(self):
-        return _(u"http://jenyay.net/Outwiker/PageTypeColorEn")
+        return _(u"https://jenyay.net/Outwiker/PageTypeColorEn")
 
     def initialize(self):
         set_(self.gettext)

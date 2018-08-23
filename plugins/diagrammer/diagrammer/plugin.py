@@ -35,7 +35,7 @@ class PluginDiagrammer(Plugin):
 
     @property
     def url(self):
-        return _(u"http://jenyay.net/Outwiker/DiagrammerEn")
+        return _(u"https://jenyay.net/Outwiker/DiagrammerEn")
 
     def initialize(self):
         set_(self.gettext)

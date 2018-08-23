@@ -7,18 +7,22 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pluginname\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-25 16:46+0300\n"
-"PO-Revision-Date: 2015-10-25 16:46+0300\n"
+"POT-Creation-Date: 2018-08-23 12:47+0300\n"
+"PO-Revision-Date: 2018-08-23 13:25+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: \n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.4\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-#: pagetypecolor.py:46
+#: controller.py:57
+msgid "PageTypeColor [Plugin]"
+msgstr "PageTypeColor [Plugin]"
+
+#: plugin.py:31
 msgid ""
 "Plugin colorize the page dialog controls in depending on the selected page "
 "type."
@@ -26,33 +30,28 @@ msgstr ""
 "Plugin colorize the page dialog controls in depending on the selected page "
 "type."
 
-#: pagetypecolor.py:56
-msgid "http://jenyay.net/Outwiker/PageTypeColorEn"
-msgstr "http://jenyay.net/Outwiker/PageTypeColorEn"
+#: plugin.py:35
+msgid "https://jenyay.net/Outwiker/PageTypeColorEn"
+msgstr "https://jenyay.net/Outwiker/PageTypeColorEn"
 
-#: controller.py:68
-msgid "PageTypeColor [Plugin]"
-msgstr "PageTypeColor [Plugin]"
-
-#: preferencepanel.py:36
+#: preferencepanel.py:47
 msgid "The colors for the various page types"
 msgstr "The colors for the various page types"
 
-#: preferencepanel.py:43
-msgid "Wiki page"
-msgstr "Wiki page"
+#~ msgid "http://jenyay.net/Outwiker/PageTypeColorEn"
+#~ msgstr "http://jenyay.net/Outwiker/PageTypeColorEn"
 
-#: preferencepanel.py:48
-msgid "HTML page"
-msgstr "HTML page"
+#~ msgid "Wiki page"
+#~ msgstr "Wiki page"
 
-#: preferencepanel.py:53
-msgid "Text page"
-msgstr "Text page"
+#~ msgid "HTML page"
+#~ msgstr "HTML page"
 
-#: preferencepanel.py:58
-msgid "Search page"
-msgstr "Search page"
+#~ msgid "Text page"
+#~ msgstr "Text page"
+
+#~ msgid "Search page"
+#~ msgstr "Search page"
 
 #~ msgid "Menu Item Title"
 #~ msgstr "Menu Item Title"

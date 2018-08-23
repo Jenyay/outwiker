@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: diagrammer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-30 09:17+0300\n"
-"PO-Revision-Date: 2018-01-30 09:17+0300\n"
+"POT-Creation-Date: 2018-08-23 12:47+0300\n"
+"PO-Revision-Date: 2018-08-23 13:00+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: jenyay.net <jenyay.ilin@gmail.com>\n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.4\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: controller.py:103 controller.py:104
@@ -95,8 +95,8 @@ msgid "Plugin for the construction of diagrams"
 msgstr "Plugin for the construction of diagrams"
 
 #: plugin.py:38
-msgid "http://jenyay.net/Outwiker/DiagrammerEn"
-msgstr "http://jenyay.net/Outwiker/DiagrammerEn"
+msgid "https://jenyay.net/Outwiker/DiagrammerEn"
+msgstr "https://jenyay.net/Outwiker/DiagrammerEn"
 
 #: gui/insertedgedialog.py:23
 msgid "Insert edge"
@@ -289,6 +289,9 @@ msgstr "Set height"
 #: gui/insertnodedialog.py:174
 msgid "Name of a node can't be empty"
 msgstr "Name of a node can't be empty"
+
+#~ msgid "http://jenyay.net/Outwiker/DiagrammerEn"
+#~ msgstr "http://jenyay.net/Outwiker/DiagrammerEn"
 
 #~ msgid "Go to help webpage"
 #~ msgstr "Go to help webpage"

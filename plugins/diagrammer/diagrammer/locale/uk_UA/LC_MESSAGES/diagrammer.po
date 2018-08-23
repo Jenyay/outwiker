@@ -2,148 +2,101 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-18 09:45+0400\n"
-"PO-Revision-Date: 2014-08-21 21:31+0300\n"
+"POT-Creation-Date: 2018-08-23 12:51+0300\n"
+"PO-Revision-Date: 2018-08-23 13:01+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 2.0.6\n"
+
+#: controller.py:103 controller.py:104
+msgid "Diagrammer"
+msgstr "Diagrammer"
 
 #: commanddiagram.py:55
 msgid "Diagram parsing error"
 msgstr "Помилка розбору діаграми"
 
-#: diagrammer.py:53
-msgid "Plugin for the construction of diagrams"
-msgstr "Додаток для побудови діаграм"
-
-#: diagrammer.py:63
-msgid "http://jenyay.net/Outwiker/DiagrammerEn"
-msgstr "http://jenyay.net/Outwiker/DiagrammerEn"
-
-#: diagramtoolbar.py:25 guicreator.py:69
-msgid "Diagrammer"
-msgstr "Diagrammer"
-
-#: actions/help.py:24
+#: actions/help.py:23
 msgid "Online Help"
 msgstr "Онлайн-довідка"
 
-#: actions/help.py:29
+#: actions/help.py:27
 msgid "Diagrammer. Go to blockdiag webpage"
 msgstr "Diagrammer. Відкрити сторінку blockdiag"
+
+#: actions/insertgroup.py:25
+msgid "Insert group"
+msgstr "Вставити групу"
+
+#: actions/insertgroup.py:29
+msgid "Diagrammer. Insert new group"
+msgstr "Diagrammer. Вставити нову групу"
+
+#: actions/insertnode.py:25
+msgid "Insert node"
+msgstr "Вставити вузол"
+
+#: actions/insertnode.py:29
+msgid "Diagrammer. Insert new node"
+msgstr "Diagrammer. Вставити новий вузол"
 
 #: actions/insertdiagram.py:26
 msgid "Insert diagram"
 msgstr "Вставити діаграму"
 
-#: actions/insertdiagram.py:31
+#: actions/insertdiagram.py:30
 msgid "Diagrammer. Insert diagram"
 msgstr "Diagrammer. Вставити діаграму"
 
-#: actions/insertedge.py:59
+#: actions/insertedge.py:55
 msgid "Insert edge without any arrow"
 msgstr "Вставити ребро без стрілок"
 
-#: actions/insertedge.py:64
+#: actions/insertedge.py:59
 msgid "Diagrammer. Insert edge without any arrow"
 msgstr "Diagrammer. Вставити ребро без стрілок"
 
-#: actions/insertedge.py:87
+#: actions/insertedge.py:79
 msgid "Insert edge with the right arrow"
 msgstr "Вставити ребро зі стрілкою праворуч"
 
-#: actions/insertedge.py:92
+#: actions/insertedge.py:83
 msgid "Diagrammer. Insert edge with the right arrow"
 msgstr "Diagrammer. Вставити ребро зі стрілкою праворуч"
 
-#: actions/insertedge.py:115
+#: actions/insertedge.py:103
 msgid "Insert edge with the left arrow"
 msgstr "Вставити ребро зі стрілкою ліворуч"
 
-#: actions/insertedge.py:120
+#: actions/insertedge.py:107
 msgid "Diagrammer. Insert edge with the left arrow"
 msgstr "Diagrammer. Вставити ребро зі стрілкою ліворуч"
 
-#: actions/insertedge.py:142
+#: actions/insertedge.py:127
 msgid "Insert edge with the both arrows"
 msgstr "Вставити двонаправлене ребро"
 
-#: actions/insertedge.py:147
+#: actions/insertedge.py:131
 msgid "Diagrammer. Insert edge with the both arrows"
 msgstr "Diagrammer. Вставити двонаправлене ребро"
 
-#: actions/insertgroup.py:26
-msgid "Insert group"
-msgstr "Вставити групу"
+#: plugin.py:34
+msgid "Plugin for the construction of diagrams"
+msgstr "Додаток для побудови діаграм"
 
-#: actions/insertgroup.py:31
-msgid "Diagrammer. Insert new group"
-msgstr "Diagrammer. Вставити нову групу"
+#: plugin.py:38
+msgid "https://jenyay.net/Outwiker/DiagrammerEn"
+msgstr "https://jenyay.net/Outwiker/Diagrammer"
 
-#: actions/insertnode.py:26
-msgid "Insert node"
-msgstr "Вставити вузол"
-
-#: actions/insertnode.py:31
-msgid "Diagrammer. Insert new node"
-msgstr "Diagrammer. Вставити новий вузол"
-
-#: gui/insertdiagramdialog.py:20
-msgid "Insert Diagram"
-msgstr "Вставити діаграму"
-
-#: gui/insertdiagramdialog.py:48 gui/insertgroupdialog.py:48
-msgid "Orientation"
-msgstr "Орієнтація"
-
-#: gui/insertdiagramdialog.py:52
-msgid "Default nodes shape"
-msgstr "Форма вузлів за промовчанням"
-
-#: gui/insertdiagramdialog.py:56
-msgid "Set default nodes background color"
-msgstr "Встановити колір тла вузлів за промовчанням"
-
-#: gui/insertdiagramdialog.py:63
-msgid "Set default text color"
-msgstr "Встановити колір тексту за промовчанням"
-
-#: gui/insertdiagramdialog.py:70
-msgid "Set default font size"
-msgstr "Встановити розмір шрифту за промовчанням"
-
-#: gui/insertdiagramdialog.py:79
-msgid "Set default nodes width"
-msgstr "Встановити ширину вузлів за промовчанням"
-
-#: gui/insertdiagramdialog.py:88
-msgid "Set default nodes height"
-msgstr "Встановити висоту вузлів за промовчанням"
-
-#: gui/insertdiagramdialog.py:97
-msgid "Set default horizontal span between nodes"
-msgstr ""
-"Встановити горизонтальний відступ між вузлами за умовчанням (span_width)"
-
-#: gui/insertdiagramdialog.py:106
-msgid "Set default vertical span between nodes"
-msgstr ""
-"Встановити вертикальний відступ між вузлами за умовчанням (span_height)"
-
-#: gui/insertdiagramdialog.py:115 gui/insertedgedialog.py:113
-#: gui/insertgroupdialog.py:79 gui/insertnodedialog.py:134
-msgid "Open the documentation page"
-msgstr "Відкрити сторінку документації"
-
-#: gui/insertedgedialog.py:24
+#: gui/insertedgedialog.py:23
 msgid "Insert edge"
 msgstr "Вставити ребро"
 
-#: gui/insertedgedialog.py:35 gui/insertnodedialog.py:47
+#: gui/insertedgedialog.py:34 gui/insertnodedialog.py:48
 msgid "Options"
 msgstr "Параметри"
 
@@ -171,17 +124,17 @@ msgstr "Стиль стрілки (hstyle)"
 msgid "Set line color"
 msgstr "Встановити колір лінії (color)"
 
-#: gui/insertedgedialog.py:87 gui/insertgroupdialog.py:43
-#: gui/insertnodedialog.py:75
+#: gui/insertedgedialog.py:87 gui/insertgroupdialog.py:44
+#: gui/insertnodedialog.py:76
 msgid "Label"
 msgstr "Мітка (label)"
 
-#: gui/insertedgedialog.py:92 gui/insertnodedialog.py:107
+#: gui/insertedgedialog.py:92 gui/insertnodedialog.py:108
 msgid "Set font size"
 msgstr "Встановити розмір шрифту (fontsize)"
 
-#: gui/insertedgedialog.py:101 gui/insertgroupdialog.py:59
-#: gui/insertnodedialog.py:100
+#: gui/insertedgedialog.py:101 gui/insertgroupdialog.py:60
+#: gui/insertnodedialog.py:101
 msgid "Set text color"
 msgstr "Встановити колір тексту (textcolor)"
 
@@ -189,70 +142,86 @@ msgstr "Встановити колір тексту (textcolor)"
 msgid "Folded"
 msgstr "Складено (folded)"
 
-#: gui/insertedgedialog.py:164
+#: gui/insertedgedialog.py:114 gui/insertdiagramdialog.py:116
+#: gui/insertgroupdialog.py:80 gui/insertnodedialog.py:135
+msgid "Open the documentation page"
+msgstr "Відкрити сторінку документації"
+
+#: gui/insertedgedialog.py:159
 msgid "Node1"
 msgstr "Вузол1"
 
-#: gui/insertedgedialog.py:168
+#: gui/insertedgedialog.py:163
 msgid "Node2"
 msgstr "Вузол2"
 
-#: gui/insertgroupdialog.py:17
+#: gui/insertdiagramdialog.py:21
+msgid "Insert Diagram"
+msgstr "Вставити діаграму"
+
+#: gui/insertdiagramdialog.py:49 gui/insertgroupdialog.py:49
+msgid "Orientation"
+msgstr "Орієнтація"
+
+#: gui/insertdiagramdialog.py:53
+msgid "Default nodes shape"
+msgstr "Форма вузлів за промовчанням"
+
+#: gui/insertdiagramdialog.py:57
+msgid "Set default nodes background color"
+msgstr "Встановити колір тла вузлів за промовчанням"
+
+#: gui/insertdiagramdialog.py:64
+msgid "Set default text color"
+msgstr "Встановити колір тексту за промовчанням"
+
+#: gui/insertdiagramdialog.py:71
+msgid "Set default font size"
+msgstr "Встановити розмір шрифту за промовчанням"
+
+#: gui/insertdiagramdialog.py:80
+msgid "Set default nodes width"
+msgstr "Встановити ширину вузлів за промовчанням"
+
+#: gui/insertdiagramdialog.py:89
+msgid "Set default nodes height"
+msgstr "Встановити висоту вузлів за промовчанням"
+
+#: gui/insertdiagramdialog.py:98
+msgid "Set default horizontal span between nodes"
+msgstr "Встановити горизонтальний відступ між вузлами за умовчанням (span_width)"
+
+#: gui/insertdiagramdialog.py:107
+msgid "Set default vertical span between nodes"
+msgstr "Встановити вертикальний відступ між вузлами за умовчанням (span_height)"
+
+#: gui/insertgroupdialog.py:18
 msgid "Insert Group"
 msgstr "Вставити групу"
 
-#: gui/insertgroupdialog.py:20
+#: gui/insertgroupdialog.py:21
 msgid "Box"
 msgstr "Прямокутник"
 
-#: gui/insertgroupdialog.py:21
+#: gui/insertgroupdialog.py:22
 msgid "Line"
 msgstr "Лінія"
 
-#: gui/insertgroupdialog.py:38 gui/insertnodedialog.py:66
+#: gui/insertgroupdialog.py:39 gui/insertnodedialog.py:67
 msgid "Node name"
 msgstr "Ім’я вузла"
 
-#: gui/insertgroupdialog.py:52 gui/insertnodedialog.py:93
+#: gui/insertgroupdialog.py:53 gui/insertnodedialog.py:94
 msgid "Set background color"
 msgstr "Встановити колір тла (color)"
 
-#: gui/insertgroupdialog.py:66
+#: gui/insertgroupdialog.py:67
 msgid "Border shape"
 msgstr "Форма рамки (shape)"
 
-#: gui/insertgroupdialog.py:75 gui/insertnodedialog.py:89
+#: gui/insertgroupdialog.py:76 gui/insertnodedialog.py:90
 msgid "Border style"
 msgstr "Стиль рамки (style)"
-
-#: gui/insertnodedialog.py:20
-msgid "Insert Node"
-msgstr "Вставити вузол"
-
-#: gui/insertnodedialog.py:34 gui/propertyfactory.py:349
-#: gui/propertyfactory.py:405
-msgid "Default"
-msgstr "За промовчанням"
-
-#: gui/insertnodedialog.py:80
-msgid "Shape"
-msgstr "Фігура (shape)"
-
-#: gui/insertnodedialog.py:84
-msgid "Stacked"
-msgstr "відображати стопкою (shaped)"
-
-#: gui/insertnodedialog.py:116
-msgid "Set width"
-msgstr "Встановити ширину (width)"
-
-#: gui/insertnodedialog.py:125
-msgid "Set height"
-msgstr "Встановити висоту (height)"
-
-#: gui/insertnodedialog.py:173
-msgid "Name of a node can't be empty"
-msgstr "Ім'я вузла не може бути порожнім"
 
 #: gui/propertyfactory.py:22
 msgid "Landscape"
@@ -261,6 +230,11 @@ msgstr "Пейзажна (landscape)"
 #: gui/propertyfactory.py:23
 msgid "Portrait"
 msgstr "Портретна (portrait)"
+
+#: gui/propertyfactory.py:349 gui/propertyfactory.py:406
+#: gui/insertnodedialog.py:35
+msgid "Default"
+msgstr "За промовчанням"
 
 #: gui/propertyfactory.py:350
 msgid "Solid"
@@ -274,14 +248,41 @@ msgstr "Пунктирний (dotted)"
 msgid "Dashed"
 msgstr "Штриховий (dashed)"
 
-#: gui/propertyfactory.py:406
+#: gui/propertyfactory.py:407
 msgid "Generalization"
 msgstr "Узагальнення"
 
-#: gui/propertyfactory.py:407
+#: gui/propertyfactory.py:408
 msgid "Composition"
 msgstr "Композиція"
 
-#: gui/propertyfactory.py:408
+#: gui/propertyfactory.py:409
 msgid "Aggregation"
 msgstr "Агрегація"
+
+#: gui/insertnodedialog.py:21
+msgid "Insert Node"
+msgstr "Вставити вузол"
+
+#: gui/insertnodedialog.py:81
+msgid "Shape"
+msgstr "Фігура (shape)"
+
+#: gui/insertnodedialog.py:85
+msgid "Stacked"
+msgstr "відображати стопкою (shaped)"
+
+#: gui/insertnodedialog.py:117
+msgid "Set width"
+msgstr "Встановити ширину (width)"
+
+#: gui/insertnodedialog.py:126
+msgid "Set height"
+msgstr "Встановити висоту (height)"
+
+#: gui/insertnodedialog.py:174
+msgid "Name of a node can't be empty"
+msgstr "Ім'я вузла не може бути порожнім"
+
+#~ msgid "http://jenyay.net/Outwiker/DiagrammerEn"
+#~ msgstr "http://jenyay.net/Outwiker/DiagrammerEn"

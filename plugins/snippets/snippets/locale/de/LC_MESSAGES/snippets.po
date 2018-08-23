@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-18 17:32+0300\n"
-"PO-Revision-Date: 2018-08-17 16:08+0300\n"
+"POT-Creation-Date: 2018-08-23 12:51+0300\n"
+"PO-Revision-Date: 2018-08-23 13:27+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "Snippets"
 msgstr "Schnipsel"
 
-#: guicontroller.py:156 gui/editdialog.py:585
+#: guicontroller.py:162 gui/editdialog.py:585
 msgid ""
 "Can't read the snippet\n"
 "{}"
@@ -28,13 +28,13 @@ msgstr ""
 "Der Schnipsel\n"
 " {} kann nicht gelesen werden"
 
-#: guicontroller.py:157 gui/editdialog.py:449 gui/editdialog.py:469
+#: guicontroller.py:163 gui/editdialog.py:449 gui/editdialog.py:469
 #: gui/editdialog.py:497 gui/editdialog.py:547 gui/editdialog.py:586
 #: gui/editdialog.py:632 gui/editdialog.py:647 gui/editdialog.py:714
 msgid "Error"
 msgstr "Fehler"
 
-#: guicontroller.py:168
+#: guicontroller.py:174
 msgid "Snippet error"
 msgstr "Schnipsel Fehler"
 
@@ -44,7 +44,9 @@ msgstr "Schnipsel Management..."
 
 #: actions/editsnippets.py:28
 msgid "Snippets. Open dialog to edit, create or remove snippets."
-msgstr "Schnipsel. Öffne das Dialogfeld um Schnipsel zu bearbeiten, erstellen oder entfernen."
+msgstr ""
+"Schnipsel. Öffne das Dialogfeld um Schnipsel zu bearbeiten, erstellen oder "
+"entfernen."
 
 #: actions/openhelp.py:22 gui/editdialog.py:161
 msgid "Open help..."
@@ -82,12 +84,12 @@ msgstr "Schnipsel Fehler: \n"
 msgid "Can't read file '{}'"
 msgstr "Kann Datei nicht lesen '{}'"
 
-#: snippetparser.py:30
+#: snippetparser.py:32
 #, python-brace-format
 msgid "Snippet \"{name}\" not found"
 msgstr "Schnipsel \"{name}\" nicht gefunden"
 
-#: snippetparser.py:35
+#: snippetparser.py:37
 #, python-brace-format
 msgid ""
 "Snippet error at line {line}:\n"
@@ -96,7 +98,7 @@ msgstr ""
 "Schnipsel-Fehler in Zeile {line}:\n"
 "{text}"
 
-#: snippetparser.py:41
+#: snippetparser.py:43
 #, python-brace-format
 msgid ""
 "Snippet reading error:\n"
@@ -105,7 +107,7 @@ msgstr ""
 "Schnipsel Lesefehler:\n"
 "{text}"
 
-#: snippetparser.py:46
+#: snippetparser.py:48
 #, python-brace-format
 msgid ""
 "Snippet processing error:\n"
@@ -114,19 +116,19 @@ msgstr ""
 "Schnipsel Verarbeitung Fehler:\n"
 "{text}"
 
-#: plugin.py:44
+#: plugin.py:35
 msgid "Plugin to store text snippets"
 msgstr "Plugin zum Speichern von Text-Schnipsel"
 
-#: plugin.py:48
-msgid "http://jenyay.net/Outwiker/SnippetsEn"
-msgstr "http://jenyay.net/Outwiker/SnippetsEn"
+#: plugin.py:39
+msgid "https://jenyay.net/Outwiker/SnippetsEn"
+msgstr "https://jenyay.net/Outwiker/SnippetsEn"
 
-#: gui/variablesdialog.py:51
+#: gui/variablesdialog.py:54
 msgid "Preview"
 msgstr "Vorschau"
 
-#: gui/variablesdialog.py:55
+#: gui/variablesdialog.py:58
 msgid "Snippet"
 msgstr "Schnipsel"
 
@@ -134,15 +136,15 @@ msgstr "Schnipsel"
 msgid "Insert as wiki command"
 msgstr "Als Wiki-Befehl einfügen"
 
-#: gui/variablesdialog.py:130
+#: gui/variablesdialog.py:149
 msgid "{} | Snippet variables"
 msgstr "{} | Schnipsel Variablen"
 
-#: gui/variablesdialog.py:353 gui/variablesdialog.py:413
+#: gui/variablesdialog.py:377 gui/variablesdialog.py:437
 msgid "Expand (Shift+Enter)"
 msgstr "Erweitern (Shift+Enter)"
 
-#: gui/variablesdialog.py:392
+#: gui/variablesdialog.py:416
 msgid "Collapse"
 msgstr "Einklappen"
 
@@ -321,3 +323,6 @@ msgstr "Variablenname"
 #: gui/editdialog.py:713
 msgid "Invalid variable name \"{}\""
 msgstr "Ungültiger Variablenname \"{}\""
+
+#~ msgid "http://jenyay.net/Outwiker/SnippetsEn"
+#~ msgstr "http://jenyay.net/Outwiker/SnippetsEn"

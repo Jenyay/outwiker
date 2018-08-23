@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UpdateNotifier\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-09 18:27+0300\n"
-"PO-Revision-Date: 2018-05-09 18:28+0300\n"
+"POT-Creation-Date: 2018-08-23 12:47+0300\n"
+"PO-Revision-Date: 2018-08-23 13:43+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language: en\n"
@@ -22,47 +22,47 @@ msgstr ""
 msgid "UpdateNotifier [Plugin]"
 msgstr "UpdateNotifier [Plugin]"
 
-#: updatecontroller.py:82 updatecontroller.py:97 updatecontroller.py:103
+#: updatecontroller.py:85 updatecontroller.py:99 updatecontroller.py:105
 msgid "Check for new versions..."
 msgstr "Check for new versions..."
 
-#: updatecontroller.py:127
+#: updatecontroller.py:132
 msgid "Installed OutWiker version"
 msgstr "Installed OutWiker version"
 
-#: updatecontroller.py:128
+#: updatecontroller.py:133
 msgid "Latest stable OutWiker version"
 msgstr "Latest stable OutWiker version"
 
-#: updatecontroller.py:129
+#: updatecontroller.py:134
 msgid "Latest unstable OutWiker version"
 msgstr "Latest unstable OutWiker version"
 
-#: updatecontroller.py:130
+#: updatecontroller.py:135
 msgid "Version history"
 msgstr "Version history"
 
-#: updatecontroller.py:131
+#: updatecontroller.py:136
 msgid "More info"
 msgstr "More info"
 
-#: updatecontroller.py:132
+#: updatecontroller.py:137
 msgid "Update"
 msgstr "Update"
 
-#: updatecontroller.py:133
+#: updatecontroller.py:138
 msgid "Install"
 msgstr "Install"
 
-#: updatecontroller.py:134
+#: updatecontroller.py:139
 msgid "Uninstall"
 msgstr "Uninstall"
 
-#: updatecontroller.py:190 versionlist.py:73
+#: updatecontroller.py:193 versionlist.py:73
 msgid "__updateLang"
 msgstr "en"
 
-#: updatecontroller.py:327
+#: updatecontroller.py:347
 msgid ""
 "The download link was not found in plugin description. Please update plugin "
 "manually"
@@ -70,21 +70,21 @@ msgstr ""
 "The download link was not found in plugin description. Please update plugin "
 "manually"
 
-#: updatecontroller.py:331 updatecontroller.py:346
+#: updatecontroller.py:351 updatecontroller.py:368
 msgid "Plugin was NOT updated. Please update plugin manually"
 msgstr "Plugin was NOT updated. Please update plugin manually"
 
-#: updatecontroller.py:385
+#: updatecontroller.py:395
 msgid ""
 "The plugin description can't be downloaded. Please install plugin manually"
 msgstr ""
 "The plugin description can't be downloaded. Please install plugin manually"
 
-#: updatecontroller.py:391
+#: updatecontroller.py:402
 msgid "The plugin required newer version of OutWiker. Please update OutWiker"
 msgstr "The plugin required newer version of OutWiker. Please update OutWiker"
 
-#: updatecontroller.py:398
+#: updatecontroller.py:409
 msgid ""
 "The download link was not found in plugin description. Please install plugin "
 "manually"
@@ -92,9 +92,17 @@ msgstr ""
 "The download link was not found in plugin description. Please install plugin "
 "manually"
 
-#: updatecontroller.py:413
+#: updatecontroller.py:430
 msgid "Plugin was NOT Installed. Please update plugin manually"
 msgstr "Plugin was NOT Installed. Please update plugin manually"
+
+#: updatecontroller.py:454 updatecontroller.py:477
+msgid ""
+"Plugin's folder can't be deleted. Please delete the following path: \n"
+" {}"
+msgstr ""
+"Plugin's folder can't be deleted. Please delete the following path: \n"
+" {}"
 
 #: plugin.py:32
 msgid ""
@@ -107,8 +115,8 @@ msgstr ""
 "Append menu item \"Help -> Check for Updates...\""
 
 #: plugin.py:38
-msgid "http://jenyay.net/Outwiker/UpdateNotifierEn"
-msgstr "http://jenyay.net/Outwiker/UpdateNotifierEn"
+msgid "https://jenyay.net/Outwiker/UpdateNotifierEn"
+msgstr "https://jenyay.net/Outwiker/UpdateNotifierEn"
 
 #: actions.py:22 guicreators.py:45
 msgid "Check for Updates..."
@@ -169,6 +177,9 @@ msgstr "Every month"
 #: prefpanelcontroller.py:53
 msgid "Custom"
 msgstr "Custom"
+
+#~ msgid "http://jenyay.net/Outwiker/UpdateNotifierEn"
+#~ msgstr "http://jenyay.net/Outwiker/UpdateNotifierEn"
 
 #~ msgid ""
 #~ "The plugin required newer version of Outwiker. Please update application"

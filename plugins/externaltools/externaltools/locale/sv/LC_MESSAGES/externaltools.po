@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-30 09:23+0300\n"
-"PO-Revision-Date: 2018-01-31 13:32+0300\n"
+"POT-Creation-Date: 2018-08-23 12:51+0300\n"
+"PO-Revision-Date: 2018-08-23 13:03+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -24,19 +24,19 @@ msgstr "ExternalTools"
 msgid "External Tools [Plugin]"
 msgstr "External Tools [Instick]"
 
-#: toolslistpanel.py:105
+#: toolslistpanel.py:106
 msgid "Open file dialog..."
 msgstr "Öppna fildialog..."
 
-#: toolslistpanel.py:111
+#: toolslistpanel.py:112
 msgid "Remove tool"
 msgstr "Ta bort verktyg"
 
-#: toolslistpanel.py:120
+#: toolslistpanel.py:121
 msgid "Executables (*.exe)|*.exe|All Files|*.*"
 msgstr "Exekverbara (*.exe)|*.exe|Alla filer|*.*"
 
-#: toolslistpanel.py:122
+#: toolslistpanel.py:123
 msgid "All Files|*"
 msgstr "Alla filer|*"
 
@@ -97,32 +97,48 @@ msgid "%page%. Current page. Text file"
 msgstr "%page%. Aktuell sida. Textfil"
 
 #: commandexec/actions.py:71
-msgid "ExternalTools plugin. Insert a %page% macros. The macros will be replaced by a path to current page text file."
-msgstr "ExternalTools-instick. Infoga ett %page% -makro. Makrot kommer att ersättas med sökväg till aktuell sida."
+msgid ""
+"ExternalTools plugin. Insert a %page% macros. The macros will be replaced by "
+"a path to current page text file."
+msgstr ""
+"ExternalTools-instick. Infoga ett %page% -makro. Makrot kommer att ersättas "
+"med sökväg till aktuell sida."
 
 #: commandexec/actions.py:85
 msgid "%html%. Current page. HTML file"
 msgstr "%html%. Aktuell sida. HTML-fil"
 
 #: commandexec/actions.py:89
-msgid "ExternalTools plugin. Insert a %html% macros. The macros will be replaced by a path to current HTML file."
-msgstr "ExternalTools-instick. Infoga ett %html%-makro. Makrot kommer att ersättas med sökväg till aktuell HTML-fil."
+msgid ""
+"ExternalTools plugin. Insert a %html% macros. The macros will be replaced by "
+"a path to current HTML file."
+msgstr ""
+"ExternalTools-instick. Infoga ett %html%-makro. Makrot kommer att ersättas "
+"med sökväg till aktuell HTML-fil."
 
 #: commandexec/actions.py:103
 msgid "%attach%. Path to current attachments folder"
 msgstr "%attach%. Sökväg till aktuell bilagemapp"
 
 #: commandexec/actions.py:107
-msgid "ExternalTools plugin. Insert a %attach% macros. The macros will be replaced by a path to current attach folder."
-msgstr "ExternalTools-instick. Infoga ett %attach%-makro. Makrot kommer att ersättas med sökväg till aktuell bilagemapp."
+msgid ""
+"ExternalTools plugin. Insert a %attach% macros. The macros will be replaced "
+"by a path to current attach folder."
+msgstr ""
+"ExternalTools-instick. Infoga ett %attach%-makro. Makrot kommer att ersättas "
+"med sökväg till aktuell bilagemapp."
 
 #: commandexec/actions.py:121
 msgid "%folder%. Path to current page folder"
 msgstr "%folder%. Sökväg till aktuell sidmapp"
 
 #: commandexec/actions.py:125
-msgid "ExternalTools plugin. Insert a %folder% macros. The macros will be replaced by a path to current page folder."
-msgstr "ExternalTools-instick. Infoga ett %folder%-makro. Makrot kommer att ersättas med sökväg till aktuell sidmapp."
+msgid ""
+"ExternalTools plugin. Insert a %folder% macros. The macros will be replaced "
+"by a path to current page folder."
+msgstr ""
+"ExternalTools-instick. Infoga ett %folder%-makro. Makrot kommer att ersättas "
+"med sökväg till aktuell sidmapp."
 
 #: commandexec/execdialog.py:17
 msgid "Link"
@@ -150,52 +166,72 @@ msgstr "Kan inte starta verktyg"
 
 #: plugin.py:37
 msgid ""
-"ExternalTools plug-in allows to open the notes files with external applications.\n"
+"ExternalTools plug-in allows to open the notes files with external "
+"applications.\n"
 "\n"
-"The plug-in adds the (:exec:) command for creation link or button for execute external applications from wiki page.\n"
+"The plug-in adds the (:exec:) command for creation link or button for "
+"execute external applications from wiki page.\n"
 "\n"
-"The (:exec:) command allows to run many applications. Every application must be placed at the separated lines.\n"
+"The (:exec:) command allows to run many applications. Every application must "
+"be placed at the separated lines.\n"
 "\n"
-"If a line begins with \"#\" this line will be ignored. \"#\" in begin of the line is sign of the comment.\n"
+"If a line begins with \"#\" this line will be ignored. \"#\" in begin of the "
+"line is sign of the comment.\n"
 msgstr ""
-"Externa verktygsinsticket gör det möjligt att öppna anteckningsfiler med externa program.\n"
+"Externa verktygsinsticket gör det möjligt att öppna anteckningsfiler med "
+"externa program.\n"
 "\n"
-"Insticket lägger till kommandot (:exec:), för att skapa länk eller knapp för köra externa program från wiki-sidan.\n"
+"Insticket lägger till kommandot (:exec:), för att skapa länk eller knapp för "
+"köra externa program från wiki-sidan.\n"
 "\n"
-"Kommandot (:exec:) låter dig köra många program. Varje program måste placeras på separerade rader.\n"
+"Kommandot (:exec:) låter dig köra många program. Varje program måste "
+"placeras på separerade rader.\n"
 "\n"
-"Om en rad börjar med ”#”, kommer denna rad att undantas. ”#” i börja av raden är ett kommentarstecken. \n"
+"Om en rad börjar med ”#”, kommer denna rad att undantas. ”#” i börja av "
+"raden är ett kommentarstecken. \n"
 
 #: plugin.py:46
 msgid ""
 "The (:exec:) command has the following optional parameters:\n"
 "<ul>\n"
-"<li><b>format</b>. If the parameter equals \"button\" command will create a button instead of a link.</li>\n"
+"<li><b>format</b>. If the parameter equals \"button\" command will create a "
+"button instead of a link.</li>\n"
 "<li><b>title</b>. The parameter sets the text for link or button.</li>\n"
 "</ul>"
 msgstr ""
 "(:exec:)-kommandot har följande tilläggsparametrar:\n"
 "<ul>\n"
-"<li><b>format</b>. Om parametern är \"button\" skapar kommandot en knapp istället för en länk.</li>\n"
+"<li><b>format</b>. Om parametern är \"button\" skapar kommandot en knapp "
+"istället för en länk.</li>\n"
 "<li><b>title</b>. Parametern anger texten som länk eller knapp.</li>\n"
 "</ul>"
 
 #: plugin.py:52
 msgid ""
-"Inside (:exec:) command may be macroses. The macroses will be replaced by appropriate paths:\n"
+"Inside (:exec:) command may be macroses. The macroses will be replaced by "
+"appropriate paths:\n"
 "<ul>\n"
-"<li><b>%page%</b>. The macros will be replaced by full path to page text file.</li>\n"
-"<li><b>%html%</b>. The macros will be replaced by full path to HTML content file.</li>\n"
-"<li><b>%folder%</b>. The macros will be replaced by full path to page folder.</li>\n"
-"<li><b>%attach%</b>. The macros will be replaced by full path to attach folder without slash on the end.</li>\n"
+"<li><b>%page%</b>. The macros will be replaced by full path to page text "
+"file.</li>\n"
+"<li><b>%html%</b>. The macros will be replaced by full path to HTML content "
+"file.</li>\n"
+"<li><b>%folder%</b>. The macros will be replaced by full path to page folder."
+"</li>\n"
+"<li><b>%attach%</b>. The macros will be replaced by full path to attach "
+"folder without slash on the end.</li>\n"
 "</ul>"
 msgstr ""
-"(:exec:)-kommandot kan innehålla makron. Makron ersätts med respektive sökväg:\n"
+"(:exec:)-kommandot kan innehålla makron. Makron ersätts med respektive "
+"sökväg:\n"
 "<ul>\n"
-"<li><b>%page%</b>. Makrot ersätts med fullständig sökväg till sidans textfil.</li>\n"
-"<li><b>%html%</b>. Makrot ersätts med fullständig sökväg till HTML-filen.</li>\n"
-"<li><b>%folder%</b>. Makrot ersätts med fullständig sökväg till sidmappen.</li>\n"
-"<li><b>%attach%</b>. Makrot ersätts med fullständig sökväg till bilagemappen utan avslutande snedstreck.</li>\n"
+"<li><b>%page%</b>. Makrot ersätts med fullständig sökväg till sidans textfil."
+"</li>\n"
+"<li><b>%html%</b>. Makrot ersätts med fullständig sökväg till HTML-filen.</"
+"li>\n"
+"<li><b>%folder%</b>. Makrot ersätts med fullständig sökväg till sidmappen.</"
+"li>\n"
+"<li><b>%attach%</b>. Makrot ersätts med fullständig sökväg till bilagemappen "
+"utan avslutande snedstreck.</li>\n"
 "</ul>"
 
 #: plugin.py:60
@@ -237,7 +273,8 @@ msgstr ""
 #: plugin.py:75
 msgid ""
 "Run a lot of applications:\n"
-"<code><pre>(:exec title=\"Run application_1, application_2 and application_3\":)\n"
+"<code><pre>(:exec title=\"Run application_1, application_2 and "
+"application_3\":)\n"
 "application_1.exe\n"
 "application_2.exe param_1 param_2\n"
 "application_3.exe param_1 param_2\n"
@@ -283,5 +320,8 @@ msgstr ""
 "(:execend:)</pre></code>"
 
 #: plugin.py:143
-msgid "http://jenyay.net/Outwiker/ExternalToolsEn"
-msgstr "http://jenyay.net/Outwiker/ExternalToolsEn"
+msgid "https://jenyay.net/Outwiker/ExternalToolsEn"
+msgstr "https://jenyay.net/Outwiker/ExternalTools"
+
+#~ msgid "http://jenyay.net/Outwiker/ExternalToolsEn"
+#~ msgstr "http://jenyay.net/Outwiker/ExternalToolsEn"

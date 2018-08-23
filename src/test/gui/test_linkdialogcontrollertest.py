@@ -69,7 +69,7 @@ class LinkDialogControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def testSelectedHttpLink_wiki(self):
         parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
-        selectedString = 'http://jenyay.net'
+        selectedString = 'https://jenyay.net'
 
         controller = WikiLinkDialogController(self.application,
                                               self._testpage,
@@ -79,12 +79,12 @@ class LinkDialogControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.assertEqual(controller.link, selectedString)
         self.assertEqual(controller.comment, selectedString)
-        self.assertEqual(controller.linkResult, '[[http://jenyay.net]]')
+        self.assertEqual(controller.linkResult, '[[https://jenyay.net]]')
 
     def testSelectedHttpLink_html(self):
         parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
-        selectedString = 'http://jenyay.net'
+        selectedString = 'https://jenyay.net'
 
         controller = HtmlLinkDialogController(self._testpage,
                                               parent,
@@ -96,7 +96,7 @@ class LinkDialogControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(controller.comment, selectedString)
         self.assertEqual(
             controller.linkResult,
-            '<a href="http://jenyay.net">http://jenyay.net</a>')
+            '<a href="https://jenyay.net">https://jenyay.net</a>')
 
     def testSelectedPageLink_wiki(self):
         parent = LinkDialog(self.mainWindow)
@@ -194,7 +194,7 @@ class LinkDialogControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def testSelectedHttpLink2_wiki(self):
         parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
-        selectedString = 'HTTP://jenyay.net'
+        selectedString = 'HTTPS://jenyay.net'
 
         controller = WikiLinkDialogController(self.application,
                                               self._testpage,
@@ -204,12 +204,12 @@ class LinkDialogControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.assertEqual(controller.link, selectedString)
         self.assertEqual(controller.comment, selectedString)
-        self.assertEqual(controller.linkResult, '[[HTTP://jenyay.net]]')
+        self.assertEqual(controller.linkResult, '[[HTTPS://jenyay.net]]')
 
     def testSelectedHttpLink2_html(self):
         parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
-        selectedString = 'HTTP://jenyay.net'
+        selectedString = 'HTTPS://jenyay.net'
 
         controller = HtmlLinkDialogController(self._testpage,
                                               parent,
@@ -220,7 +220,7 @@ class LinkDialogControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(controller.comment, selectedString)
         self.assertEqual(
             controller.linkResult,
-            '<a href="HTTP://jenyay.net">HTTP://jenyay.net</a>')
+            '<a href="HTTPS://jenyay.net">HTTPS://jenyay.net</a>')
 
     def testSelectedText_wiki(self):
         parent = LinkDialog(self.mainWindow)
@@ -255,7 +255,7 @@ class LinkDialogControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = ''
-        clipboardText = 'http://jenyay.net'
+        clipboardText = 'https://jenyay.net'
         copyTextToClipboard(clipboardText)
 
         controller = WikiLinkDialogController(self.application,
@@ -266,13 +266,13 @@ class LinkDialogControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.assertEqual(controller.link, clipboardText)
         self.assertEqual(controller.comment, clipboardText)
-        self.assertEqual(controller.linkResult, '[[http://jenyay.net]]')
+        self.assertEqual(controller.linkResult, '[[https://jenyay.net]]')
 
     def testClipboardHttpLink_html(self):
         parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = ''
-        clipboardText = 'http://jenyay.net'
+        clipboardText = 'https://jenyay.net'
         copyTextToClipboard(clipboardText)
 
         controller = HtmlLinkDialogController(self._testpage,
@@ -284,13 +284,13 @@ class LinkDialogControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(controller.comment, clipboardText)
         self.assertEqual(
             controller.linkResult,
-            '<a href="http://jenyay.net">http://jenyay.net</a>')
+            '<a href="https://jenyay.net">https://jenyay.net</a>')
 
     def testClipboardHttpLink2_wiki(self):
         parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = ''
-        clipboardText = 'HTTP://jenyay.net'
+        clipboardText = 'HTTPS://jenyay.net'
         copyTextToClipboard(clipboardText)
 
         controller = WikiLinkDialogController(self.application,
@@ -301,13 +301,13 @@ class LinkDialogControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.assertEqual(controller.link, clipboardText)
         self.assertEqual(controller.comment, clipboardText)
-        self.assertEqual(controller.linkResult, '[[HTTP://jenyay.net]]')
+        self.assertEqual(controller.linkResult, '[[HTTPS://jenyay.net]]')
 
     def testClipboardHttpLink2_html(self):
         parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
         selectedString = ''
-        clipboardText = 'HTTP://jenyay.net'
+        clipboardText = 'HTTPS://jenyay.net'
         copyTextToClipboard(clipboardText)
 
         controller = HtmlLinkDialogController(self._testpage,
@@ -319,7 +319,7 @@ class LinkDialogControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(controller.comment, clipboardText)
         self.assertEqual(
             controller.linkResult,
-            '<a href="HTTP://jenyay.net">HTTP://jenyay.net</a>')
+            '<a href="HTTPS://jenyay.net">HTTPS://jenyay.net</a>')
 
     def testClipboardHttpsLink_wiki(self):
         parent = LinkDialog(self.mainWindow)

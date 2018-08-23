@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-29 16:31+0400\n"
-"PO-Revision-Date: 2018-08-17 16:08+0300\n"
+"POT-Creation-Date: 2018-08-23 12:51+0300\n"
+"PO-Revision-Date: 2018-08-23 13:26+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -20,94 +20,97 @@ msgstr ""
 msgid "Edit sessions..."
 msgstr "Bearbeitungssitzungen..."
 
-#: editaction.py:35
+#: editaction.py:34
 msgid "Edit (rename or delete) sessions"
 msgstr "Bearbeiten (umbenennen oder löschen) Sitzungen"
 
-#: editaction.py:43
+#: editaction.py:41
 msgid "Not created any session"
 msgstr "Keine Sitzung erstellt"
 
-#: editaction.py:44 saveaction.py:72
+#: editaction.py:42 saveaction.py:69
 msgid "Error"
 msgstr "Fehler"
 
-#: editaction.py:72
+#: editaction.py:69
 msgid "Edit Sessions"
 msgstr "Bearbeitungssitzungen"
 
-#: editaction.py:94
+#: editaction.py:89
 msgid "Remove session \"{}\"?"
 msgstr "Sitzung entfernen \"{}\"?"
 
-#: editaction.py:95
+#: editaction.py:90
 msgid "Remove session?"
 msgstr "Sitzung entfernen?"
 
-#: editaction.py:108
+#: editaction.py:102
 msgid "Enter new session name"
 msgstr "Neuen Sitzungsnamen eingeben"
 
-#: editaction.py:109
+#: editaction.py:103
 msgid "Rename session"
 msgstr "Sitzung umbenennen"
 
-#: editaction.py:115
+#: editaction.py:109
 msgid "Session name is empty"
 msgstr "Sitzungsname ist leer"
 
-#: editaction.py:116 editaction.py:125
+#: editaction.py:110 editaction.py:119
 msgid "Invalid session name"
 msgstr "Ungültiger Sitzungsname"
 
-#: editaction.py:124
+#: editaction.py:118
 msgid "Session \"{}\" already exists"
 msgstr "Sitzung \"{}\" ist bereits vorhanden"
 
-#: editaction.py:152
+#: editaction.py:146
 msgid "Rename session..."
 msgstr "Sitzung umbenennen..."
 
-#: editaction.py:158
+#: editaction.py:153
 msgid "Remove session..."
 msgstr "Sitzung entfernen..."
 
-#: guicreator.py:63
+#: guicreator.py:66
 msgid "Sessions"
 msgstr "Sitzungen"
 
-#: saveaction.py:30
+#: saveaction.py:29
 msgid "Save current session..."
 msgstr "Aktuelle Sitzung speichern..."
 
-#: saveaction.py:35
+#: saveaction.py:33
 msgid "Save currently opened tabs"
 msgstr "Aktuell geöffnete Tabs speichern"
 
-#: saveaction.py:61
+#: saveaction.py:59
 msgid "Save Session"
 msgstr "Sitzung speichern"
 
-#: saveaction.py:71
+#: saveaction.py:68
 msgid "The session name must not be empty"
 msgstr "Der Sitzungsnamen darf nicht leer sein"
 
-#: saveaction.py:77
+#: saveaction.py:74
 msgid "Session with name \"{}\" exists. Overwrite?"
 msgstr "Sitzung mit dem Namen \"{}\" ist bereits vorhanden. Überschreiben?"
 
-#: saveaction.py:78
+#: saveaction.py:75
 msgid "Overwrite session?"
 msgstr "Sitzung überschreiben?"
 
-#: saveaction.py:86
+#: saveaction.py:82
 msgid "Enter session name"
 msgstr "Neuen Sitzungsnamen eingeben"
 
-#: sessions.py:45
+#: plugin.py:31
 msgid "Save and restore tabs"
 msgstr "Speichern und Wiederherstellen von Registerkarten"
 
-#: sessions.py:55
-msgid "http://jenyay.net/Outwiker/SessionsEn"
-msgstr "http://jenyay.net/Outwiker/SessionsEn"
+#: plugin.py:35
+msgid "https://jenyay.net/Outwiker/SessionsEn"
+msgstr "https://jenyay.net/Outwiker/SessionsEn"
+
+#~ msgid "http://jenyay.net/Outwiker/SessionsEn"
+#~ msgstr "http://jenyay.net/Outwiker/SessionsEn"

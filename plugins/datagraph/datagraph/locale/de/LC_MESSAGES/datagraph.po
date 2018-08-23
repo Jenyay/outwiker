@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-08 21:37+0300\n"
-"PO-Revision-Date: 2018-08-17 16:03+0300\n"
+"POT-Creation-Date: 2018-08-23 12:51+0300\n"
+"PO-Revision-Date: 2018-08-23 12:58+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -16,38 +16,41 @@ msgstr ""
 "X-Crowdin-Language: de\n"
 "X-Crowdin-File: datagraph.pot\n"
 
-#: datagraph.py:42
-msgid "DataGraph plug-in designed for creation a charts by text data."
-msgstr "DataGraph-Plug-in entworfen für die Erstellung von Diagrammen aus Textdaten."
+#: controller.py:62 controller.py:63
+msgid "DataGraph"
+msgstr "DataGraph"
 
-#: datagraph.py:52
-msgid "http://jenyay.net/Outwiker/DataGraphEn"
-msgstr "http://jenyay.net/Outwiker/DataGraphEn"
-
-#: actions.py:26
-msgid "Plot graph (:plot:)"
-msgstr "Plot-Diagramm (:plot:)"
-
-#: actions.py:31
-msgid "[DataGraph] Insert (:plot:) command for graph plotting"
-msgstr "[DataGraph] Befehl (:plot:) einfügen für die Erschaffung der Grafik"
-
-#: actions.py:62
-msgid "Open help"
-msgstr "Hilfe öffnen"
-
-#: actions.py:67
-msgid "[DataGraph] Open help in the new OutWiker window"
-msgstr "[DataGraph] Hilfe öffnen in neuem OutWiker Fenster"
-
-#: actions.py:75
-msgid "datagraph_eng"
-msgstr "datagraph_eng"
-
-#: renders/highcharts.py:275
+#: renders/highcharts.py:258
 msgid "Curve {}"
 msgstr "Kurve {}"
 
-#: toolbar.py:25
-msgid "DataGraph"
-msgstr "DataGraph"
+#: plugin.py:31
+msgid "DataGraph plug-in designed for creation a charts by text data."
+msgstr "DataGraph-Plug-in entworfen für die Erstellung von Diagrammen aus Textdaten."
+
+#: plugin.py:35
+msgid "https://jenyay.net/Outwiker/DataGraphEn"
+msgstr "https://jenyay.net/Outwiker/DataGraphEn"
+
+#: actions.py:25
+msgid "Plot graph (:plot:)"
+msgstr "Plot-Diagramm (:plot:)"
+
+#: actions.py:29
+msgid "[DataGraph] Insert (:plot:) command for graph plotting"
+msgstr "[DataGraph] Befehl (:plot:) einfügen für die Erschaffung der Grafik"
+
+#: actions.py:56
+msgid "Open help"
+msgstr "Hilfe öffnen"
+
+#: actions.py:60
+msgid "[DataGraph] Open help in the new OutWiker window"
+msgstr "[DataGraph] Hilfe öffnen in neuem OutWiker Fenster"
+
+#: actions.py:66
+msgid "datagraph_eng"
+msgstr "datagraph_eng"
+
+#~ msgid "http://jenyay.net/Outwiker/DataGraphEn"
+#~ msgstr "http://jenyay.net/Outwiker/DataGraphEn"

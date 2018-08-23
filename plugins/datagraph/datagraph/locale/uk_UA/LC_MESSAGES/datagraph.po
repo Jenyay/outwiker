@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-08 21:37+0300\n"
-"PO-Revision-Date: 2015-01-09 09:31+0300\n"
+"POT-Creation-Date: 2018-08-23 12:51+0300\n"
+"PO-Revision-Date: 2018-08-23 12:59+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
@@ -12,43 +12,46 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Crowdin-Project: outwiker\n"
 "X-Crowdin-File: datagraph.pot\n"
 
-#: datagraph.py:42
+#: controller.py:62 controller.py:63
+msgid "DataGraph"
+msgstr "DataGraph"
+
+#: renders/highcharts.py:258
+msgid "Curve {}"
+msgstr "Крива {}"
+
+#: plugin.py:31
 msgid "DataGraph plug-in designed for creation a charts by text data."
 msgstr ""
 "Плагін DataGraph призначений для створення графіків за текстовими даними."
 
-#: datagraph.py:52
-msgid "http://jenyay.net/Outwiker/DataGraphEn"
-msgstr "http://jenyay.net/Outwiker/DataGraph"
+#: plugin.py:35
+msgid "https://jenyay.net/Outwiker/DataGraphEn"
+msgstr "https://jenyay.net/Outwiker/DataGraph"
 
-#: actions.py:26
+#: actions.py:25
 msgid "Plot graph (:plot:)"
 msgstr "Побудувати графік (:plot:)"
 
-#: actions.py:31
+#: actions.py:29
 msgid "[DataGraph] Insert (:plot:) command for graph plotting"
 msgstr "[DataGraph] Вставити команду (:plot:) для будування графіка"
 
-#: actions.py:62
+#: actions.py:56
 msgid "Open help"
 msgstr "Відкрити довідку"
 
-#: actions.py:67
+#: actions.py:60
 msgid "[DataGraph] Open help in the new OutWiker window"
 msgstr "[DataGraph] Відкрити довідку у новому вікні OutWiker"
 
-#: actions.py:75
+#: actions.py:66
 msgid "datagraph_eng"
 msgstr "datagraph_rus"
 
-#: renders/highcharts.py:275
-msgid "Curve {}"
-msgstr "Крива {}"
-
-#: toolbar.py:25
-msgid "DataGraph"
-msgstr "DataGraph"
+#~ msgid "http://jenyay.net/Outwiker/DataGraphEn"
+#~ msgstr "http://jenyay.net/Outwiker/DataGraph"

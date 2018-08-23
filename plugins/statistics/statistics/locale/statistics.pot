@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-29 23:31+0300\n"
+"POT-Creation-Date: 2018-08-23 13:06+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -78,7 +78,7 @@ msgstr ""
 msgid "Page count: {0}"
 msgstr ""
 
-#: plugin.py:39
+#: plugin.py:36
 msgid ""
 "The plugin to display statistics. \n"
 "                \n"
@@ -86,11 +86,11 @@ msgid ""
 "<b>Tools -> Tree Statistic</b>."
 msgstr ""
 
-#: plugin.py:45
-msgid "http://jenyay.net/Outwiker/StatisticsEn"
+#: plugin.py:42
+msgid "https://jenyay.net/Outwiker/StatisticsEn"
 msgstr ""
 
-#: plugin.py:79 treestatdialog.py:51
+#: plugin.py:80 treestatdialog.py:51
 msgid "Tree Statistic"
 msgstr ""
 

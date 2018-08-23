@@ -2,109 +2,112 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-29 16:31+0400\n"
-"PO-Revision-Date: 2014-07-29 16:32+0300\n"
+"POT-Creation-Date: 2018-08-23 12:51+0300\n"
+"PO-Revision-Date: 2018-08-23 13:27+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: editaction.py:30
 msgid "Edit sessions..."
 msgstr "Редагувати сесії..."
 
-#: editaction.py:35
+#: editaction.py:34
 msgid "Edit (rename or delete) sessions"
 msgstr "Редагування (перейменування або видалення) сесій"
 
-#: editaction.py:43
+#: editaction.py:41
 msgid "Not created any session"
 msgstr "Не створено жодної сесії"
 
-#: editaction.py:44 saveaction.py:72
+#: editaction.py:42 saveaction.py:69
 msgid "Error"
 msgstr "Помилка"
 
-#: editaction.py:72
+#: editaction.py:69
 msgid "Edit Sessions"
 msgstr "Редагування сесій"
 
-#: editaction.py:94
+#: editaction.py:89
 msgid "Remove session \"{}\"?"
 msgstr "Видалити сесію \"{}\"?"
 
-#: editaction.py:95
+#: editaction.py:90
 msgid "Remove session?"
 msgstr "Видалити сесію?"
 
-#: editaction.py:108
+#: editaction.py:102
 msgid "Enter new session name"
 msgstr "Введіть нове ім'я сесії"
 
-#: editaction.py:109
+#: editaction.py:103
 msgid "Rename session"
 msgstr "Перейменування сесії"
 
-#: editaction.py:115
+#: editaction.py:109
 msgid "Session name is empty"
 msgstr "Порожнє ім'я сесії"
 
-#: editaction.py:116 editaction.py:125
+#: editaction.py:110 editaction.py:119
 msgid "Invalid session name"
 msgstr "Невірне ім'я сесії"
 
-#: editaction.py:124
+#: editaction.py:118
 msgid "Session \"{}\" already exists"
 msgstr "Сесія з ім'ям \"{}\" вже існує"
 
-#: editaction.py:152
+#: editaction.py:146
 msgid "Rename session..."
 msgstr "Перейменувати сесію..."
 
-#: editaction.py:158
+#: editaction.py:153
 msgid "Remove session..."
 msgstr "Видалити сесію..."
 
-#: guicreator.py:63
+#: guicreator.py:66
 msgid "Sessions"
 msgstr "Сесії"
 
-#: saveaction.py:30
+#: saveaction.py:29
 msgid "Save current session..."
 msgstr "Зберегти поточну сесію..."
 
-#: saveaction.py:35
+#: saveaction.py:33
 msgid "Save currently opened tabs"
 msgstr "Зберегти відкриті в даний момент вкладки"
 
-#: saveaction.py:61
+#: saveaction.py:59
 msgid "Save Session"
 msgstr "Збереження сесії"
 
-#: saveaction.py:71
+#: saveaction.py:68
 msgid "The session name must not be empty"
 msgstr "Ім'я сесії не повинно бути порожнім"
 
-#: saveaction.py:77
+#: saveaction.py:74
 msgid "Session with name \"{}\" exists. Overwrite?"
 msgstr "Сесія з ім'ям \"{}\" існує. Перезаписати?"
 
-#: saveaction.py:78
+#: saveaction.py:75
 msgid "Overwrite session?"
 msgstr "Перезаписати сесію?"
 
-#: saveaction.py:86
+#: saveaction.py:82
 msgid "Enter session name"
 msgstr "Введіть ім'я сесії"
 
-#: sessions.py:45
+#: plugin.py:31
 msgid "Save and restore tabs"
 msgstr "Зберігає і поновлює вкладки"
 
-#: sessions.py:55
-msgid "http://jenyay.net/Outwiker/SessionsEn"
-msgstr "http://jenyay.net/Outwiker/Sessions"
+#: plugin.py:35
+msgid "https://jenyay.net/Outwiker/SessionsEn"
+msgstr "https://jenyay.net/Outwiker/Sessions"
+
+#~ msgid "http://jenyay.net/Outwiker/SessionsEn"
+#~ msgstr "http://jenyay.net/Outwiker/Sessions"

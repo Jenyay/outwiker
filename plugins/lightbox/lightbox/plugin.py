@@ -36,7 +36,7 @@ bla-bla-bla...
 
     @property
     def url(self):
-        return _(u"http://jenyay.net/Outwiker/LightboxEn")
+        return _(u"https://jenyay.net/Outwiker/LightboxEn")
 
     def initialize(self):
         set_(self.gettext)

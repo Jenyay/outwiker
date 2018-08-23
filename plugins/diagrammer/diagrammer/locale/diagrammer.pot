@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-30 09:17+0300\n"
+"POT-Creation-Date: 2018-08-23 13:06+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -94,7 +94,7 @@ msgid "Plugin for the construction of diagrams"
 msgstr ""
 
 #: plugin.py:38
-msgid "http://jenyay.net/Outwiker/DiagrammerEn"
+msgid "https://jenyay.net/Outwiker/DiagrammerEn"
 msgstr ""
 
 #: gui/insertedgedialog.py:23

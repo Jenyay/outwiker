@@ -32,7 +32,7 @@ class PluginSessions(Plugin):
 
     @property
     def url(self):
-        return _(u"http://jenyay.net/Outwiker/SessionsEn")
+        return _(u"https://jenyay.net/Outwiker/SessionsEn")
 
     def initialize(self):
         set_(self.gettext)

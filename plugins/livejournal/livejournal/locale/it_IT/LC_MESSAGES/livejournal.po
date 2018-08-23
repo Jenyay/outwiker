@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-03 21:32+0400\n"
-"PO-Revision-Date: 2014-10-03 21:33+0300\n"
+"POT-Creation-Date: 2018-08-23 12:51+0300\n"
+"PO-Revision-Date: 2018-08-23 13:22+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -11,44 +11,80 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 2.0.6\n"
 
-#: ljtoolbar.py:30
+#: controller.py:53 controller.py:54
 msgid "LiveJournal"
 msgstr "LiveJournal"
 
-#: controller.py:84 controller.py:85
-msgid "Livejournal User (:ljuser ...:)"
-msgstr "Utente LiveJournal (:ljuser ...:)"
-
-#: controller.py:93 controller.py:94
-msgid "Livejournal Community (:ljcomm ...:)"
-msgstr "Community LiveJournal (:ljcomm ...:)"
-
-#: controller.py:139
-msgid "Livejournal user"
-msgstr "Utente LiveJournal"
-
-#: controller.py:147
-msgid "Livejournal community"
-msgstr "Community LiveJournal"
-
-#: livejournal.py:63
+#: plugin.py:33
 msgid ""
 "Add commands (:ljuser:) and (:ljcomm:) in wiki parser.\n"
 "\n"
-"                     <B>Usage:</B>\n"
-"                     (:ljuser username:)\n"
-"                     (:ljcomm communityname:)\n"
-"                     "
+"                 <B>Usage:</B>\n"
+"                 (:ljuser username:)\n"
+"                 (:ljcomm communityname:)\n"
+"                 "
 msgstr ""
-"Aggiunge i comandi (:ljuser:) e (:ljcomm:) al parser wiki.\n"
-"\n"
-" <B>Utilizzo:</B>\n"
-" (:ljuser username:)\n"
-" (:ljcomm nomeCommunity:)\n"
-"                     "
 
-#: livejournal.py:78
-msgid "http://jenyay.net/Outwiker/LivejournalPluginEn"
-msgstr "http://jenyay.net/Outwiker/LivejournalPluginEn"
+#: plugin.py:42
+msgid "https://jenyay.net/Outwiker/LivejournalPluginEn"
+msgstr "https://jenyay.net/Outwiker/LivejournalPluginEn"
+
+#: actions.py:56
+msgid "LiveJournal user (:ljuser ...:)"
+msgstr ""
+
+#: actions.py:60
+msgid ""
+"LiveJournal plugin. Insert (:ljuser... :) command to create the link to "
+"LiveJournal user"
+msgstr ""
+
+#: actions.py:64
+msgid "LiveJournal user"
+msgstr ""
+
+#: actions.py:76
+msgid "LiveJournal community (:ljcomm ...:)"
+msgstr ""
+
+#: actions.py:80
+msgid ""
+"LiveJournal plugin. Insert (:ljcomm... :) command to create the link to "
+"LiveJournal community"
+msgstr ""
+
+#: actions.py:84
+msgid "LiveJournal community"
+msgstr ""
+
+#~ msgid "Livejournal User (:ljuser ...:)"
+#~ msgstr "Utente LiveJournal (:ljuser ...:)"
+
+#~ msgid "Livejournal Community (:ljcomm ...:)"
+#~ msgstr "Community LiveJournal (:ljcomm ...:)"
+
+#~ msgid "Livejournal user"
+#~ msgstr "Utente LiveJournal"
+
+#~ msgid "Livejournal community"
+#~ msgstr "Community LiveJournal"
+
+#~ msgid ""
+#~ "Add commands (:ljuser:) and (:ljcomm:) in wiki parser.\n"
+#~ "\n"
+#~ "                     <B>Usage:</B>\n"
+#~ "                     (:ljuser username:)\n"
+#~ "                     (:ljcomm communityname:)\n"
+#~ "                     "
+#~ msgstr ""
+#~ "Aggiunge i comandi (:ljuser:) e (:ljcomm:) al parser wiki.\n"
+#~ "\n"
+#~ " <B>Utilizzo:</B>\n"
+#~ " (:ljuser username:)\n"
+#~ " (:ljcomm nomeCommunity:)\n"
+#~ "                     "
+
+#~ msgid "http://jenyay.net/Outwiker/LivejournalPluginEn"
+#~ msgstr "http://jenyay.net/Outwiker/LivejournalPluginEn"

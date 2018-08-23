@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-21 21:27+0300\n"
-"PO-Revision-Date: 2018-08-17 16:06+0300\n"
+"POT-Creation-Date: 2018-08-23 12:51+0300\n"
+"PO-Revision-Date: 2018-08-23 13:22+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -16,11 +16,11 @@ msgstr ""
 "X-Crowdin-Language: de\n"
 "X-Crowdin-File: livejournal.po\n"
 
-#: controller.py:46 controller.py:47
+#: controller.py:53 controller.py:54
 msgid "LiveJournal"
 msgstr "LiveJournal"
 
-#: plugin.py:46
+#: plugin.py:33
 msgid ""
 "Add commands (:ljuser:) and (:ljcomm:) in wiki parser.\n"
 "\n"
@@ -36,17 +36,21 @@ msgstr ""
 " (:ljcomm communityname:)\n"
 "                 "
 
-#: plugin.py:55
-msgid "http://jenyay.net/Outwiker/LivejournalPluginEn"
-msgstr "http://jenyay.net/Outwiker/LivejournalPluginEn"
+#: plugin.py:42
+msgid "https://jenyay.net/Outwiker/LivejournalPluginEn"
+msgstr "https://jenyay.net/Outwiker/LivejournalPluginEn"
 
 #: actions.py:56
 msgid "LiveJournal user (:ljuser ...:)"
 msgstr "LiveJournal-Benutzer (:ljuser...:)"
 
 #: actions.py:60
-msgid "LiveJournal plugin. Insert (:ljuser... :) command to create the link to LiveJournal user"
-msgstr "LiveJournal-Plugin. (:ljuser... :) Befehl einfügen zum Erstellen einer Verknüpfung zum LiveJournal-Benutzer"
+msgid ""
+"LiveJournal plugin. Insert (:ljuser... :) command to create the link to "
+"LiveJournal user"
+msgstr ""
+"LiveJournal-Plugin. (:ljuser... :) Befehl einfügen zum Erstellen einer "
+"Verknüpfung zum LiveJournal-Benutzer"
 
 #: actions.py:64
 msgid "LiveJournal user"
@@ -57,9 +61,16 @@ msgid "LiveJournal community (:ljcomm ...:)"
 msgstr "Livejournal Gemeinschaft (:ljcomm ...:)"
 
 #: actions.py:80
-msgid "LiveJournal plugin. Insert (:ljcomm... :) command to create the link to LiveJournal community"
-msgstr "LiveJournal-Plugin. (:ljcomm... :) Befehl einfügen zum Erstellen einer Verknüpfung zum LiveJournal-Gemeinschaft"
+msgid ""
+"LiveJournal plugin. Insert (:ljcomm... :) command to create the link to "
+"LiveJournal community"
+msgstr ""
+"LiveJournal-Plugin. (:ljcomm... :) Befehl einfügen zum Erstellen einer "
+"Verknüpfung zum LiveJournal-Gemeinschaft"
 
 #: actions.py:84
 msgid "LiveJournal community"
 msgstr "LiveJournal Gemeinschaft"
+
+#~ msgid "http://jenyay.net/Outwiker/LivejournalPluginEn"
+#~ msgstr "http://jenyay.net/Outwiker/LivejournalPluginEn"

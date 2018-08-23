@@ -33,7 +33,7 @@ class PluginName(Plugin):
 
     @property
     def url(self):
-        return _(u"http://jenyay.net")
+        return _(u"https://jenyay.net")
 
     def initialize(self):
         set_(self.gettext)

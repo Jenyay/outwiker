@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: readingmode\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-07 21:51+0300\n"
-"PO-Revision-Date: 2017-02-20 21:12+0300\n"
+"POT-Creation-Date: 2018-08-23 12:51+0300\n"
+"PO-Revision-Date: 2018-08-23 13:26+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: jenyay.net <jenyay.ilin@gmail.com>\n"
 "Language: ru\n"
@@ -16,7 +16,19 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 1.8.9\n"
+"X-Generator: Poedit 2.0.6\n"
+
+#: plugin.py:23
+msgid ""
+"Plugin disables the panel \"Tree\", \"Tag\", \"Attach Files\" without "
+"changing the geometry of the main window."
+msgstr ""
+"Плагин отключает панели \"Дерево заметок\", \"Метки\" и \"Прикрепленные файлы"
+"\" без изменения геометрии главного окна программы."
+
+#: plugin.py:27
+msgid "https://jenyay.net/Outwiker/ReadingModeEn"
+msgstr "https://jenyay.net/Outwiker/ReadingMode"
 
 #: actions.py:25
 msgid "Reading Mode"
@@ -30,14 +42,5 @@ msgstr ""
 "Вид для чтения отключает панели \"Дерево заметок\", \"Метки\" и "
 "\"Прикрепленные файлы\" без изменения геометрии главного окна программы."
 
-#: readingmode.py:35
-msgid ""
-"Plugin disables the panel \"Tree\", \"Tag\", \"Attach Files\" without "
-"changing the geometry of the main window."
-msgstr ""
-"Плагин отключает панели \"Дерево заметок\", \"Метки\" и \"Прикрепленные файлы"
-"\" без изменения геометрии главного окна программы."
-
-#: readingmode.py:40
-msgid "http://jenyay.net/Outwiker/ReadingModeEn"
-msgstr "http://jenyay.net/Outwiker/ReadingMode"
+#~ msgid "http://jenyay.net/Outwiker/ReadingModeEn"
+#~ msgstr "http://jenyay.net/Outwiker/ReadingMode"

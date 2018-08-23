@@ -2,49 +2,34 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-05 21:55+0400\n"
-"PO-Revision-Date: 2012-11-23 20:49+0300\n"
+"POT-Creation-Date: 2018-08-23 12:51+0300\n"
+"PO-Revision-Date: 2018-08-23 13:02+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: crowdin.net\n"
-"X-Poedit-Language: Ukrainian\n"
-"X-Poedit-Country: UKRAINE\n"
+"X-Generator: Poedit 2.0.6\n"
 
-#: baseexporter.py:50
-#: baseexporter.py:104
-msgid "File {0} already exists"
-msgstr "Файл {0} вже існує"
-
-#: baseexporter.py:53
-msgid "Folder {0} not exists"
-msgstr "Тека {0} не існує"
-
-#: controller.py:37
+#: controller.py:30
 msgid "Export Page To HTML..."
 msgstr "Експорт сторінки в HTML..."
 
-#: controller.py:40
+#: controller.py:34
 msgid "Export Branch To HTML..."
 msgstr "Експорт гілки в HTML..."
 
-#: controller.py:50
+#: controller.py:48
 msgid "Please, select page"
 msgstr "Будь-ласка, виберіть сторінку"
 
-#: controller.py:51
-#: controller.py:59
-#: controller.py:73
-#: exportdialog.py:81
-#: exportpagedialog.py:32
+#: controller.py:49 controller.py:57 controller.py:73 exportpagedialog.py:34
+#: exportdialog.py:107
 msgid "Error"
 msgstr "Помилка"
 
-#: controller.py:58
-#: exporterfactory.py:25
+#: controller.py:56 exporterfactory.py:26
 msgid "This page type not support export to HTML"
 msgstr "Цей тип сторінки не підтримує експорт в HTML"
 
@@ -52,46 +37,63 @@ msgstr "Цей тип сторінки не підтримує експорт в
 msgid "Wiki is not open"
 msgstr "Вікі ще не відкрита"
 
-#: exportbranchdialog.py:32
-msgid "Use long file names (include parent name)"
-msgstr "Створювати файли з довгим іменем (включати заголовки батьківків)"
-
-#: exportdialog.py:15
-#: exportmenu.py:63
-#: exportmenu.py:81
-msgid "Export"
-msgstr "Експорт"
-
-#: exportdialog.py:19
-msgid "Folder for Export:"
-msgstr "Тека для експорту:"
-
-#: exportdialog.py:30
-msgid "Overwrite Existing Files"
-msgstr "Перезаписувати існуючі файли"
-
-#: exportdialog.py:31
-msgid "Attaches. Save Only Images"
-msgstr "Долучені файли. Зберігати лише малюнки"
-
-#: exportdialog.py:80
-msgid "Please, select folder for export"
-msgstr "Будь-ласка, оберіть теку для експорту"
-
-#: exportmenu.py:48
-#: exportmenu.py:75
-msgid "File menu not found"
-msgstr "Меню \"Файл\" не знайдено"
-
-#: htmlexporter.py:38
-msgid "{0} not found"
-msgstr "{0} не знайдено"
-
 #: logdialog.py:13
 msgid "Errors List"
 msgstr "Список помилок"
 
-#: pluginexport2html.py:40
+#: exportbranchdialog.py:52
+msgid "Use long file names (include parent name)"
+msgstr "Створювати файли з довгим іменем (включати заголовки батьківків)"
+
+#: exportbranchdialog.py:84
+msgid "Export to HTML"
+msgstr ""
+
+#: exportbranchdialog.py:85
+msgid "Please wait..."
+msgstr ""
+
+#: exportmenu.py:48 exportmenu.py:75
+msgid "File menu not found"
+msgstr "Меню \"Файл\" не знайдено"
+
+#: exportmenu.py:63 exportmenu.py:81 exportdialog.py:21
+msgid "Export"
+msgstr "Експорт"
+
+#: plugin.py:31
 msgid "Export pages to HTML"
 msgstr "Експорт сторінок в HTML"
 
+#: plugin.py:51
+msgid "https://jenyay.net/Outwiker/Export2HtmlPluginEn"
+msgstr "https://jenyay.net/Outwiker/Export2HtmlPlugin"
+
+#: exportdialog.py:25
+msgid "Folder for Export:"
+msgstr "Тека для експорту:"
+
+#: exportdialog.py:36
+msgid "Overwrite Existing Files"
+msgstr "Перезаписувати існуючі файли"
+
+#: exportdialog.py:37
+msgid "Attaches. Save Only Images"
+msgstr "Долучені файли. Зберігати лише малюнки"
+
+#: exportdialog.py:106
+msgid "Please, select folder for export"
+msgstr "Будь-ласка, оберіть теку для експорту"
+
+#: baseexporter.py:48 baseexporter.py:108
+#, python-brace-format
+msgid "File {0} already exists"
+msgstr "Файл {0} вже існує"
+
+#: baseexporter.py:51
+#, python-brace-format
+msgid "Folder {0} not exists"
+msgstr "Тека {0} не існує"
+
+#~ msgid "{0} not found"
+#~ msgstr "{0} не знайдено"

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-12 22:29+0300\n"
-"PO-Revision-Date: 2016-11-13 08:48+0300\n"
+"POT-Creation-Date: 2018-08-23 12:51+0300\n"
+"PO-Revision-Date: 2018-08-23 13:24+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -11,36 +11,28 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.9\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Crowdin-Project: outwiker\n"
 "X-Crowdin-Language: sv-SE\n"
 "X-Crowdin-File: markdown.pot\n"
 
-#: images/imagedialog.py:13
+#: images/imagedialog.py:17
 msgid "Image"
 msgstr "Bild"
 
-#: images/imagedialog.py:45
+#: images/imagedialog.py:49
 msgid "File name or link"
 msgstr "Filnamn eller länk"
 
-#: images/imagedialog.py:51 links/linkdialog.py:46
+#: images/imagedialog.py:55 links/linkdialog.py:51
 msgid "Comment"
 msgstr "Kommentar"
 
-#: controller.py:86
+#: controller.py:87
 msgid "Appearance"
 msgstr "Utseende"
 
-#: markdown.py:45
-msgid "The Markdown plug-in add a new page type with Markdown notation"
-msgstr "Markdown-insticket lägger till en ny sidtyp med Markdown-märkning"
-
-#: markdown.py:50
-msgid "http://jenyay.net/Outwiker/MarkdownEn"
-msgstr "https://crowdin.com/translate/outwiker/111/en-sv#1889298"
-
-#: markdownpageview.py:39 markdownpageview.py:42 toolbar.py:25
+#: markdownpageview.py:35 markdownpageview.py:38 markdownpageview.py:44
 msgid "Markdown"
 msgstr "Markdown"
 
@@ -52,14 +44,25 @@ msgstr "Teckensnitt"
 msgid "Heading"
 msgstr "Rubrik"
 
-#: links/linkdialog.py:20 links/linkdialog.py:34
+#: links/linkdialog.py:25 links/linkdialog.py:39
 msgid "Link"
 msgstr "Länk"
 
-#: links/linkdialog.py:58
+#: links/linkdialog.py:63
 msgid "Title"
 msgstr "Titel"
 
 #: markdownpage.py:41
 msgid "Markdown Page"
 msgstr "Markdown-sida"
+
+#: plugin.py:36
+msgid "The Markdown plug-in add a new page type with Markdown notation"
+msgstr "Markdown-insticket lägger till en ny sidtyp med Markdown-märkning"
+
+#: plugin.py:40
+msgid "https://jenyay.net/Outwiker/MarkdownEn"
+msgstr "https://jenyay.net/Outwiker/MarkdownEn"
+
+#~ msgid "http://jenyay.net/Outwiker/MarkdownEn"
+#~ msgstr "https://crowdin.com/translate/outwiker/111/en-sv#1889298"

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-28 20:35+0300\n"
-"PO-Revision-Date: 2017-08-30 16:24+0300\n"
+"POT-Creation-Date: 2018-08-23 12:51+0300\n"
+"PO-Revision-Date: 2018-08-23 13:44+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -11,52 +11,91 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.12\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Crowdin-Project: outwiker\n"
 "X-Crowdin-Language: sv-SE\n"
 "X-Crowdin-File: updatenotifier.pot\n"
 
-#: controller.py:94
+#: controller.py:100
 msgid "UpdateNotifier [Plugin]"
 msgstr "UpdateNotifier [Instick]"
 
-#: updatecontroller.py:81 versionlist.py:60
-msgid "__updateLang"
-msgstr "en"
-
-#: updatecontroller.py:130
-msgid "Installed OutWiker version"
-msgstr "Installerad OutWiker-version"
-
-#: updatecontroller.py:131
-msgid "Latest stable OutWiker version"
-msgstr "Senaste stabila OutWiker-version"
-
-#: updatecontroller.py:132
-msgid "Latest unstable OutWiker version"
-msgstr "Senaste instabila OutWiker-version"
-
-#: updatecontroller.py:133
-msgid "Version history"
-msgstr "Versionshistorik"
-
-#: updatecontroller.py:134
-msgid "More info"
-msgstr "Mer information"
-
-#: updatecontroller.py:135
-msgid "Download"
-msgstr "Ladda ner"
-
-#: updatecontroller.py:205 updatecontroller.py:219 updatecontroller.py:225
+#: updatecontroller.py:85 updatecontroller.py:99 updatecontroller.py:105
 msgid "Check for new versions..."
 msgstr "Sök efter ny version..."
 
-#: updatecontroller.py:236
-msgid "Updates not found"
-msgstr "Inga uppdateringar hittades"
+#: updatecontroller.py:132
+msgid "Installed OutWiker version"
+msgstr "Installerad OutWiker-version"
 
-#: plugin.py:29
+#: updatecontroller.py:133
+msgid "Latest stable OutWiker version"
+msgstr "Senaste stabila OutWiker-version"
+
+#: updatecontroller.py:134
+msgid "Latest unstable OutWiker version"
+msgstr "Senaste instabila OutWiker-version"
+
+#: updatecontroller.py:135
+msgid "Version history"
+msgstr "Versionshistorik"
+
+#: updatecontroller.py:136
+msgid "More info"
+msgstr "Mer information"
+
+#: updatecontroller.py:137
+msgid "Update"
+msgstr ""
+
+#: updatecontroller.py:138
+msgid "Install"
+msgstr ""
+
+#: updatecontroller.py:139
+msgid "Uninstall"
+msgstr ""
+
+#: updatecontroller.py:193 versionlist.py:73
+msgid "__updateLang"
+msgstr "en"
+
+#: updatecontroller.py:347
+msgid ""
+"The download link was not found in plugin description. Please update plugin "
+"manually"
+msgstr ""
+
+#: updatecontroller.py:351 updatecontroller.py:368
+msgid "Plugin was NOT updated. Please update plugin manually"
+msgstr ""
+
+#: updatecontroller.py:395
+msgid ""
+"The plugin description can't be downloaded. Please install plugin manually"
+msgstr ""
+
+#: updatecontroller.py:402
+msgid "The plugin required newer version of OutWiker. Please update OutWiker"
+msgstr ""
+
+#: updatecontroller.py:409
+msgid ""
+"The download link was not found in plugin description. Please install plugin "
+"manually"
+msgstr ""
+
+#: updatecontroller.py:430
+msgid "Plugin was NOT Installed. Please update plugin manually"
+msgstr ""
+
+#: updatecontroller.py:454 updatecontroller.py:477
+msgid ""
+"Plugin's folder can't be deleted. Please delete the following path: \n"
+" {}"
+msgstr ""
+
+#: plugin.py:32
 msgid ""
 "Check for update OutWiker and plug-ins for it.\n"
 "\n"
@@ -66,66 +105,75 @@ msgstr ""
 "\n"
 "Lägg till menyobjektet \"Hjälp -> Sök efter uppdateringar...\""
 
-#: plugin.py:35
-msgid "http://jenyay.net/Outwiker/UpdateNotifierEn"
-msgstr "http://jenyay.net/Outwiker/UpdateNotifierEn"
+#: plugin.py:38
+msgid "https://jenyay.net/Outwiker/UpdateNotifierEn"
+msgstr "https://jenyay.net/Outwiker/UpdateNotifierEn"
 
-#: actions.py:23 guicreators.py:45
+#: actions.py:22 guicreators.py:45
 msgid "Check for Updates..."
 msgstr "Sök efter uppdateringar..."
 
-#: actions.py:28
+#: actions.py:26
 msgid "UpdateNotifier plugin. Check for updates"
 msgstr "Uppdateringsinstick. Sök efter uppdateringar"
 
-#: actions.py:51 guicreators.py:49
+#: actions.py:47 guicreators.py:49
 msgid "Silence check for Updates..."
 msgstr "Tyst uppdateringssökning..."
 
-#: actions.py:56
+#: actions.py:51
 msgid "UpdateNotifier plugin. Check for updates. Silence mode"
 msgstr "Uppdateringsinstick. Sök efter uppdateringar. Tyst läge"
 
-#: preferencepanel.py:35
+#: preferencepanel.py:37
 msgid "Check for updates"
 msgstr "Sök efter uppdateringar"
 
-#: preferencepanel.py:56
+#: preferencepanel.py:64
 msgid "Ignore updates unstable versions"
 msgstr "Undanta instabila versioner"
 
-#: updatedialog.py:21
+#: updatedialog.py:22
 msgid "UpdateNotifier"
 msgstr "UpdateNotifier"
 
-#: prefpanelcontroller.py:25
+#: prefpanelcontroller.py:24
 msgid "Never"
 msgstr "Aldrig"
 
-#: prefpanelcontroller.py:26
+#: prefpanelcontroller.py:25
 msgid "Every day"
 msgstr "Varje dag"
 
-#: prefpanelcontroller.py:27
+#: prefpanelcontroller.py:26
 msgid "Every two days"
 msgstr "Varannan dag"
 
-#: prefpanelcontroller.py:28
+#: prefpanelcontroller.py:27
 msgid "Every three days"
 msgstr "Var tredje dag"
 
-#: prefpanelcontroller.py:29
+#: prefpanelcontroller.py:28
 msgid "Every week"
 msgstr "Varje vecka"
 
-#: prefpanelcontroller.py:30
+#: prefpanelcontroller.py:29
 msgid "Every two weeks"
 msgstr "Varannan vecka"
 
-#: prefpanelcontroller.py:31
+#: prefpanelcontroller.py:30
 msgid "Every month"
 msgstr "Varje månad"
 
-#: prefpanelcontroller.py:57
+#: prefpanelcontroller.py:53
 msgid "Custom"
 msgstr "Anpassat"
+
+#~ msgid "Download"
+#~ msgstr "Ladda ner"
+
+#~ msgid "Updates not found"
+#~ msgstr "Inga uppdateringar hittades"
+
+#~ msgid "http://jenyay.net/Outwiker/UpdateNotifierEn"
+#~ msgstr "http://jenyay.net/Outwiker/UpdateNotifierEn"

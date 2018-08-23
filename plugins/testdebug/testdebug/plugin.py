@@ -28,7 +28,7 @@ from .i18n import set_
 class PluginDebug(Plugin):
     def __init__(self, application):
         Plugin.__init__(self, application)
-        self._url = u"http://jenyay.net/Outwiker/DebugPlugin"
+        self._url = u"https://jenyay.net/Outwiker/DebugPlugin"
         self._watcher = EventsWatcher(self._application)
         self._timer = Timer()
         self._startWikiOpenTime = None
@@ -393,7 +393,7 @@ class PluginDebug(Plugin):
     @property
     def description(self):
         return _(u"""Debug Plugin
-                 <a href="http://jenyay.net">http://jenyay.net</a>
+                 <a href="https://jenyay.net">https://jenyay.net</a>
 
                  <a href="/111">Link to page</a>
                  """)

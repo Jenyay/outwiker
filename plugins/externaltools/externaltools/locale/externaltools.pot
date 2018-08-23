@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-30 09:23+0300\n"
+"POT-Creation-Date: 2018-08-23 13:06+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,19 +25,19 @@ msgstr ""
 msgid "External Tools [Plugin]"
 msgstr ""
 
-#: toolslistpanel.py:105
+#: toolslistpanel.py:106
 msgid "Open file dialog..."
 msgstr ""
 
-#: toolslistpanel.py:111
+#: toolslistpanel.py:112
 msgid "Remove tool"
 msgstr ""
 
-#: toolslistpanel.py:120
+#: toolslistpanel.py:121
 msgid "Executables (*.exe)|*.exe|All Files|*.*"
 msgstr ""
 
-#: toolslistpanel.py:122
+#: toolslistpanel.py:123
 msgid "All Files|*"
 msgstr ""
 
@@ -252,5 +252,5 @@ msgid ""
 msgstr ""
 
 #: plugin.py:143
-msgid "http://jenyay.net/Outwiker/ExternalToolsEn"
+msgid "https://jenyay.net/Outwiker/ExternalToolsEn"
 msgstr ""

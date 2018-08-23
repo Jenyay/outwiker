@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-29 23:31+0300\n"
-"PO-Revision-Date: 2018-01-31 13:33+0300\n"
+"POT-Creation-Date: 2018-08-23 12:51+0300\n"
+"PO-Revision-Date: 2018-08-23 13:38+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -30,7 +30,9 @@ msgid "Most rarely used tags:"
 msgstr "Minst använda taggar:"
 
 #: pageattachmentsizeinfo.py:21
-msgid "Pages with the largest size of attachments (in brackets the size of attachments):"
+msgid ""
+"Pages with the largest size of attachments (in brackets the size of "
+"attachments):"
 msgstr "Sidor med mest bifogat (storlek inom parantes):"
 
 #: pageattachmentsizeinfo.py:40
@@ -75,21 +77,23 @@ msgstr "Storlek på bilagor (kB)"
 msgid "Page count: {0}"
 msgstr "Antal sidor {0}"
 
-#: plugin.py:39
+#: plugin.py:36
 msgid ""
 "The plugin to display statistics. \n"
 "                \n"
-"Statistics plugin append menu items <b>Tools -> Page Statistic</b> and <b>Tools -> Tree Statistic</b>."
+"Statistics plugin append menu items <b>Tools -> Page Statistic</b> and "
+"<b>Tools -> Tree Statistic</b>."
 msgstr ""
 "Insticksmodul för att visa statistik. \n"
 " \n"
-"Statistikinsticket läggs till menyalternativen <b>Verktyg-> Sidstatistik</b> och <b>Verktyg-> Trädstatistik</b>."
+"Statistikinsticket läggs till menyalternativen <b>Verktyg-> Sidstatistik</b> "
+"och <b>Verktyg-> Trädstatistik</b>."
 
-#: plugin.py:45
-msgid "http://jenyay.net/Outwiker/StatisticsEn"
-msgstr "http://jenyay.net/Outwiker/StatisticsEn"
+#: plugin.py:42
+msgid "https://jenyay.net/Outwiker/StatisticsEn"
+msgstr "https://jenyay.net/Outwiker/StatisticsEn"
 
-#: plugin.py:79 treestatdialog.py:51
+#: plugin.py:80 treestatdialog.py:51
 msgid "Tree Statistic"
 msgstr "Trädstatistik"
 
@@ -120,3 +124,6 @@ msgstr "Äldsta sidorna:"
 #: pagecontentlengthinfo.py:21
 msgid "The longest notes (in brackets the number of characters):"
 msgstr "Längsta notislängd (antal tecken inom parantes):"
+
+#~ msgid "http://jenyay.net/Outwiker/StatisticsEn"
+#~ msgstr "http://jenyay.net/Outwiker/StatisticsEn"

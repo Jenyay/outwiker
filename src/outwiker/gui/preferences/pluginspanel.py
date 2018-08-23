@@ -34,7 +34,7 @@ class PluginsPanel(BasePrefPanel):
             self,
             -1,
             _(u"Download more plugins"),
-            _(u"http://jenyay.net/Outwiker/PluginsEn"))
+            _(u"https://jenyay.net/Outwiker/PluginsEn"))
 
         # Панель, которая потом заменится на HTML-рендер
         self.__blankPanel = wx.Panel(self)

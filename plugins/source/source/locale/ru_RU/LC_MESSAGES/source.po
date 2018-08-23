@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SourcePlugin 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-01-05 18:22+0400\n"
-"PO-Revision-Date: 2014-01-05 18:24+0300\n"
+"POT-Creation-Date: 2018-08-23 13:35+0300\n"
+"PO-Revision-Date: 2018-08-23 13:35+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language: ru_RU\n"
@@ -16,108 +16,78 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 2.0.6\n"
 
-#: actions.py:24 guicreators.py:105
-msgid "Source Code (:source ...:)"
-msgstr "Текст программы (:source ...:)"
-
-#: actions.py:29
-msgid ""
-"Source plugin. Insert (: source... :) command for source code highlighting"
-msgstr ""
-"Плагин Source. Вставка команды (:source... :), предназначенной для раскраски "
-"исходного кода"
-
-#: commandsource.py:69
-msgid "<B>Source plugin: File '{0}' not found</B>"
-msgstr "<B>Плагин Source: Файл '{0}' не найден</B>"
-
-#: commandsource.py:72
-msgid "<B>Source plugin: Encoding error</B>"
-msgstr "<B>Плагин Source: Ошибка кодировки</B>"
-
-#: commandsource.py:75
-msgid "<B>Source plugin: Unknown encoding</B>"
-msgstr "<B>Плагин Source: Неизвестная кодировка</B>"
-
-#: controller.py:89
+#: controller.py:87
 msgid "Source [Plugin]"
 msgstr "Source [Плагин]"
 
-#: insertdialogcontroller.py:32
-msgid "Auto"
-msgstr "Авто"
-
-#: insertdialog.py:20
+#: insertdialog.py:21
 msgid "Source code"
 msgstr "Текст программы"
 
-#: insertdialog.py:97
+#: insertdialog.py:88
 msgid "General"
 msgstr "Общее"
 
-#: insertdialog.py:98
+#: insertdialog.py:89
 msgid "Appearance"
 msgstr "Внешний вид"
 
-#: insertdialog.py:148
+#: insertdialog.py:137
 msgid "Use the page background for the code block"
 msgstr "Использовать фон страницы для блока кода"
 
-#: insertdialog.py:162
+#: insertdialog.py:151
 msgid "Enable line numbers"
 msgstr "Включить нумерацию строк"
 
-#: insertdialog.py:179
+#: insertdialog.py:167
 msgid "Language"
 msgstr "Язык"
 
-#: insertdialog.py:215
+#: insertdialog.py:203
 msgid "Tab Width (0 - Default Value)"
 msgstr "Размер табуляции (0 - значение по умолчанию)"
 
-#: insertdialog.py:252
+#: insertdialog.py:238
 msgid "Style"
 msgstr "Стиль"
 
-#: insertdialog.py:287
+#: insertdialog.py:271
 msgid "Insert source from file"
 msgstr "Вставить текст программы из файла"
 
-#: insertdialog.py:300
+#: insertdialog.py:284
 msgid "Attached file"
 msgstr "Прикрепленный файл"
 
-#: insertdialog.py:319
+#: insertdialog.py:303
 msgid "Attach new files"
 msgstr "Прикрепить новые файлы"
 
-#: insertdialog.py:337
+#: insertdialog.py:320
 msgid "File encoding"
 msgstr "Кодировка файла"
 
-#: preferencepanel.py:54
-msgid "Default Tab Width"
-msgstr "Размер табуляции по умолчанию"
+#: commandsource.py:73
+#, python-brace-format
+msgid "<B>Source plugin: File '{0}' not found</B>"
+msgstr "<B>Плагин Source: Файл '{0}' не найден</B>"
 
-#: preferencepanel.py:90
-msgid "Default Style"
-msgstr "Стиль, используемый по умолчанию"
+#: commandsource.py:77
+msgid "<B>Source plugin: Encoding error</B>"
+msgstr "<B>Плагин Source: Ошибка кодировки</B>"
 
-#: preferencepanel.py:122
-msgid "Used Languages"
-msgstr "Используемые языки"
+#: commandsource.py:79
+msgid "<B>Source plugin: Unknown encoding</B>"
+msgstr "<B>Плагин Source: Неизвестная кодировка</B>"
 
-#: preferencepanel.py:143
-msgid "Select All"
-msgstr "Выбрать все"
+#: insertdialogcontroller.py:33
+msgid "Auto"
+msgstr "Авто"
 
-#: preferencepanel.py:144
-msgid "Clear"
-msgstr "Очистить"
-
-#: source.py:67
+#: plugin.py:47
 msgid ""
 "Add command (:source:) in wiki parser. This command highlight your source "
 "code."
@@ -125,7 +95,7 @@ msgstr ""
 "Плагин добавляет вики-команду (:source:) для раскраски текста программы на "
 "различных языках программирования."
 
-#: source.py:69
+#: plugin.py:49
 msgid ""
 "<B>Usage:</B>:\n"
 "(:source params... :)\n"
@@ -137,7 +107,7 @@ msgstr ""
 "Исходный код\n"
 "(:sourceend:)"
 
-#: source.py:74
+#: plugin.py:54
 msgid ""
 "<B>Params:</B>\n"
 "<U>lang</U> - programming language\n"
@@ -171,7 +141,7 @@ msgstr ""
 "\n"
 "<U>linenum</U> - включить нумерацию строк"
 
-#: source.py:89
+#: plugin.py:69
 msgid ""
 "<B>Example 1:</B>\n"
 "<PRE>(:source lang=\"python\" tabwidth=4:)\n"
@@ -191,7 +161,7 @@ msgstr ""
 "(:sourceend:)\n"
 "</PRE>"
 
-#: source.py:98
+#: plugin.py:78
 msgid ""
 "<B>Example 2:</B>\n"
 "<PRE>(:source lang=\"python\" style=\"autumn\":)\n"
@@ -211,7 +181,7 @@ msgstr ""
 "(:sourceend:)\n"
 "</PRE>"
 
-#: source.py:107
+#: plugin.py:87
 msgid ""
 "<B>Example 3:</B>\n"
 "<PRE>(:source lang=\"python\" tabwidth=4 parentbg linenum:)\n"
@@ -231,7 +201,7 @@ msgstr ""
 "(:sourceend:)\n"
 "</PRE>"
 
-#: source.py:116
+#: plugin.py:96
 msgid ""
 "<B>Example 4:</B>\n"
 "<PRE>(:source file=\"Attach:example.cs\" encoding=\"cp1251\":)(:sourceend:)</"
@@ -241,7 +211,7 @@ msgstr ""
 "<PRE>(:source file=\"Attach:example.cs\" encoding=\"cp1251\":)(:sourceend:)</"
 "PRE>"
 
-#: source.py:119
+#: plugin.py:99
 msgid ""
 "<B>Example 5:</B>\n"
 "<PRE>(:source file=\"Attach:example.txt\" lang=\"python\":)(:sourceend:)</"
@@ -251,9 +221,95 @@ msgstr ""
 "<PRE>(:source file=\"Attach:example.txt\" lang=\"python\":)(:sourceend:)</"
 "PRE>"
 
-#: source.py:154
-msgid "http://jenyay.net/Outwiker/SourcePluginEn"
-msgstr "http://jenyay.net/Outwiker/SourcePlugin"
+#: plugin.py:127
+msgid "https://jenyay.net/Outwiker/SourcePluginEn"
+msgstr "https://jenyay.net/Outwiker/SourcePlugin"
+
+#: actions.py:29
+msgid "Source Code (:source ...:)"
+msgstr "Текст программы (:source ...:)"
+
+#: actions.py:34
+msgid ""
+"Source plugin. Insert (: source... :) command for source code highlighting"
+msgstr ""
+"Плагин Source. Вставка команды (:source... :), предназначенной для раскраски "
+"исходного кода"
+
+#: preferencepanel.py:53
+msgid "Default Tab Width"
+msgstr "Размер табуляции по умолчанию"
+
+#: preferencepanel.py:88
+msgid "Default Style"
+msgstr "Стиль, используемый по умолчанию"
+
+#: preferencepanel.py:120
+msgid "Used Languages"
+msgstr "Используемые языки"
+
+#: preferencepanel.py:141
+msgid "Select All"
+msgstr "Выбрать все"
+
+#: preferencepanel.py:142
+msgid "Clear"
+msgstr "Очистить"
+
+#~ msgid ""
+#~ "<B>Params:</B>\n"
+#~ "<U>lang</U> - programming language\n"
+#~ "\n"
+#~ "<U>tabwidth</U> - tab size\n"
+#~ "\n"
+#~ "<U>file</U> - attached source file\n"
+#~ "\n"
+#~ "<U>encoding</U> - encoding of the attached source file(default encoding - "
+#~ "utf8)\n"
+#~ "\n"
+#~ "<U>style</U> - style of hightlighting\n"
+#~ "\n"
+#~ "<U>parentbg</U> - use the page background for the code block\n"
+#~ "\n"
+#~ "<U>linenum</U> - enable line numbers"
+#~ msgstr ""
+#~ "<B>Параметры:</B>\n"
+#~ "<U>lang</U> - язык программирования\n"
+#~ "\n"
+#~ "<U>tabwidth</U> - размер табуляции\n"
+#~ "\n"
+#~ "<U>file</U> - прикрепленный файл с кодом\n"
+#~ "\n"
+#~ "<U>encoding</U> - кодировка прикрепленного файла с кодом (кодировка по "
+#~ "умолчанию - utf8)\n"
+#~ "\n"
+#~ "<U>style</U> - стиль раскраски\n"
+#~ "\n"
+#~ "<U>parentbg</U> - использовать фон страницы доя фона блока с кодом\n"
+#~ "\n"
+#~ "<U>linenum</U> - включить нумерацию строк"
+
+#~ msgid ""
+#~ "<B>Example 1:</B>\n"
+#~ "<PRE>(:source lang=\"python\" tabwidth=4:)\n"
+#~ "import os\n"
+#~ "\n"
+#~ "if __name__ == \"__main__\":\n"
+#~ "print \"Hello World!\"\n"
+#~ "(:sourceend:)\n"
+#~ "</PRE>"
+#~ msgstr ""
+#~ "<B>Пример 1:</B>\n"
+#~ "<PRE>(:source lang=\"python\" tabwidth=4:)\n"
+#~ "import os\n"
+#~ "\n"
+#~ "if __name__ == \"__main__\":\n"
+#~ "    print \"Hello World!\"\n"
+#~ "(:sourceend:)\n"
+#~ "</PRE>"
+
+#~ msgid "http://jenyay.net/Outwiker/SourcePluginEn"
+#~ msgstr "http://jenyay.net/Outwiker/SourcePlugin"
 
 #~ msgid ""
 #~ "Add command (:source:) in wiki parser. This command highlight your source "

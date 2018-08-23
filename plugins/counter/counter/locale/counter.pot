@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-05 10:05+0400\n"
+"POT-Creation-Date: 2018-08-23 13:06+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,27 +17,51 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: actions.py:24
-msgid "Counter (:counter ...:)"
+#: insertdialog.py:172
+msgid "Advanced"
 msgstr ""
 
-#: actions.py:29
-msgid "Counter plugin. Insert (:counter... :) command"
+#: insertdialog.py:174
+msgid "Start count from"
 msgstr ""
 
-#: counter.py:43
+#: insertdialog.py:177
+msgid "Step"
+msgstr ""
+
+#: insertdialog.py:180
+msgid "Hide counter"
+msgstr ""
+
+#: insertdialog.py:217
+msgid "Nested counter"
+msgstr ""
+
+#: insertdialog.py:219
+msgid "Parent counter name"
+msgstr ""
+
+#: insertdialog.py:223
+msgid "Separator"
+msgstr ""
+
+#: insertdialog.py:257
+msgid "Counter name"
+msgstr ""
+
+#: plugin.py:30
 msgid ""
 "Plugin adds wiki-command (:counter:), allowing the automatic numbering "
 "anything on the page."
 msgstr ""
 
-#: counter.py:45
+#: plugin.py:32
 msgid ""
 "<b>Usage:</b>:\n"
 "(:counter parameters... :)"
 msgstr ""
 
-#: counter.py:48
+#: plugin.py:35
 msgid ""
 "<b>Parameters:</b>\n"
 "All parameters are optional.\n"
@@ -56,38 +80,14 @@ msgid ""
 "</ul>"
 msgstr ""
 
-#: counter.py:71
-msgid "http://jenyay.net/Outwiker/CounterEn"
+#: plugin.py:55
+msgid "https://jenyay.net/Outwiker/CounterEn"
 msgstr ""
 
-#: insertdialog.py:147
-msgid "Advanced"
+#: actions.py:22
+msgid "Counter (:counter ...:)"
 msgstr ""
 
-#: insertdialog.py:149
-msgid "Start count from"
-msgstr ""
-
-#: insertdialog.py:152
-msgid "Step"
-msgstr ""
-
-#: insertdialog.py:155
-msgid "Hide counter"
-msgstr ""
-
-#: insertdialog.py:192
-msgid "Nested counter"
-msgstr ""
-
-#: insertdialog.py:194
-msgid "Parent counter name"
-msgstr ""
-
-#: insertdialog.py:198
-msgid "Separator"
-msgstr ""
-
-#: insertdialog.py:232
-msgid "Counter name"
+#: actions.py:26
+msgid "Counter plugin. Insert (:counter... :) command"
 msgstr ""

@@ -1,7 +1,7 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <info>
 	<name>PageTypeColor</name>
-	<updates>http://jenyay.net/uploads/Outwiker/PageTypeColor/plugin.xml</updates>
+	<updates>https://jenyay.net/uploads/Outwiker/PageTypeColor/plugin.xml</updates>
     <requirements>
         <os>Windows, Linux</os>
         <api>2.835</api>
@@ -18,13 +18,13 @@
     </requirements>
 
 	<data lang="en">
-		<website>http://jenyay.net/Outwiker/PageTypeColorEn</website>
+		<website>https://jenyay.net/Outwiker/PageTypeColorEn</website>
 		<description>Changing the page title field color when changing the page type.</description>
 
 		<author>
 			<name>Eugene Ilin (aka Jenyay)</name>
 			<email>jenyay.ilin@gmail.com</email>
-			<site>http://jenyay.net</site>
+			<site>https://jenyay.net</site>
 		</author>
 
 		<changelog>
@@ -33,60 +33,60 @@
 					<api>2.835</api>
 				</requirements>
 
-                <download os="all">http://jenyay.net/uploads/Outwiker/PageTypeColor/pagetypecolor-1.3.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/PageTypeColor/pagetypecolor-1.3.zip</download>
 				<change>Add German localization.</change>
 			</version>
 
 			<version number="1.2" date="February 15, 2018">
-                <download os="all">http://jenyay.net/uploads/Outwiker/PageTypeColor/pagetypecolor-1.2.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/PageTypeColor/pagetypecolor-1.2.zip</download>
 				<change>Add OutWiker 2.1 support. Migrate to Python 3.6.</change>
 			</version>
 
 			<version number="1.1.1" date="May 28, 2017">
-                <download os="all">http://jenyay.net/uploads/Outwiker/PageTypeColor/pagetypecolor-1.1.1.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/PageTypeColor/pagetypecolor-1.1.1.zip</download>
 				<change>Fixed errors.</change>
 			</version>
 
 			<version number="1.1" date="April 25, 2017">
-                <download os="all">http://jenyay.net/uploads/Outwiker/PageTypeColor/pagetypecolor-1.1.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/PageTypeColor/pagetypecolor-1.1.zip</download>
 				<change>Added Markdown page support.</change>
 			</version>
 
 			<version number="1.0.4" date="October 17, 2016">
-                <download os="all">http://jenyay.net/uploads/Outwiker/PageTypeColor/pagetypecolor-1.0.4.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/PageTypeColor/pagetypecolor-1.0.4.zip</download>
 				<change>Added OutWiker 2.0 supporting.</change>
 			</version>
 
 			<version number="1.0.3" date="August 20, 2016">
-                <download os="all">http://jenyay.net/uploads/Outwiker/PageTypeColor/pagetypecolor-1.0.3.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/PageTypeColor/pagetypecolor-1.0.3.zip</download>
 				<change>Added the Swedish translation.</change>
 			</version>
 
 			<version number="1.0.2" date="March 10, 2016">
-                <download os="all">http://jenyay.net/uploads/Outwiker/PageTypeColor/pagetypecolor-1.0.2.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/PageTypeColor/pagetypecolor-1.0.2.zip</download>
 				<change>Fixed misprints.</change>
 			</version>
 
 			<version number="1.0.1" date="November 27, 2015">
-                <download os="all">http://jenyay.net/uploads/Outwiker/PageTypeColor/pagetypecolor-1.0.1.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/PageTypeColor/pagetypecolor-1.0.1.zip</download>
 				<change>Minor design corrections.</change>
 			</version>
 
 			<version number="1.0" date="October 30, 2015">
-                <download os="all">http://jenyay.net/uploads/Outwiker/PageTypeColor/pagetypecolor-1.0.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/PageTypeColor/pagetypecolor-1.0.zip</download>
 				<change>The first version.</change>
 			</version>
 		</changelog>
 	</data>
 
 	<data lang="ru">
-		<website>http://jenyay.net/Outwiker/PageTypeColor</website>
+		<website>https://jenyay.net/Outwiker/PageTypeColor</website>
 		<description>Изменение цвета поля ввода заголовка страницы при ее создании в зависимости от ее типа.</description>
 
 		<author>
 			<name>Евгений Ильин (aka Jenyay)</name>
 			<email>jenyay.ilin@gmail.com</email>
-			<site>http://jenyay.net</site>
+			<site>https://jenyay.net</site>
 		</author>
 
 		<changelog>
@@ -95,47 +95,47 @@
 					<api>2.835</api>
 				</requirements>
 
-                <download os="all">http://jenyay.net/uploads/Outwiker/PageTypeColor/pagetypecolor-1.3.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/PageTypeColor/pagetypecolor-1.3.zip</download>
 				<change>Добавлена немецкая локализация.</change>
 			</version>
 
 			<version number="1.2" date="15.02.2018">
-                <download os="all">http://jenyay.net/uploads/Outwiker/PageTypeColor/pagetypecolor-1.2.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/PageTypeColor/pagetypecolor-1.2.zip</download>
 				<change>Добавлена поддержка OutWiker 2.1. Переход на Python 3.6.</change>
 			</version>
 
 			<version number="1.1.1" date="28.05.2017">
-                <download os="all">http://jenyay.net/uploads/Outwiker/PageTypeColor/pagetypecolor-1.1.1.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/PageTypeColor/pagetypecolor-1.1.1.zip</download>
 				<change>Исправление ошибок.</change>
 			</version>
 
 			<version number="1.1" date="25.04.2017">
-                <download os="all">http://jenyay.net/uploads/Outwiker/PageTypeColor/pagetypecolor-1.1.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/PageTypeColor/pagetypecolor-1.1.zip</download>
 				<change>Добавлена поддержка страниц Markdown.</change>
 			</version>
 
 			<version number="1.0.4" date="17.10.2016">
-                <download os="all">http://jenyay.net/uploads/Outwiker/PageTypeColor/pagetypecolor-1.0.4.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/PageTypeColor/pagetypecolor-1.0.4.zip</download>
 				<change>Добавлена поддержка OutWiker 2.0.</change>
 			</version>
 
 			<version number="1.0.3" date="20.08.2016">
-                <download os="all">http://jenyay.net/uploads/Outwiker/PageTypeColor/pagetypecolor-1.0.3.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/PageTypeColor/pagetypecolor-1.0.3.zip</download>
 				<change>Добавлена поддержка шведского языка.</change>
 			</version>
 
 			<version number="1.0.2" date="10.03.2016">
-                <download os="all">http://jenyay.net/uploads/Outwiker/PageTypeColor/pagetypecolor-1.0.2.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/PageTypeColor/pagetypecolor-1.0.2.zip</download>
 				<change>Исправление опечаток.</change>
 			</version>
 
 			<version number="1.0.1" date="27.11.2015">
-                <download os="all">http://jenyay.net/uploads/Outwiker/PageTypeColor/pagetypecolor-1.0.1.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/PageTypeColor/pagetypecolor-1.0.1.zip</download>
 				<change>Незначительные оформительские исправления.</change>
 			</version>
 
 			<version number="1.0" date="30.10.2015">
-                <download os="all">http://jenyay.net/uploads/Outwiker/PageTypeColor/pagetypecolor-1.0.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/PageTypeColor/pagetypecolor-1.0.zip</download>
 				<change>Первая версия</change>
 			</version>
 		</changelog>

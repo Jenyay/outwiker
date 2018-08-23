@@ -1,7 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
-"POT-Creation-Date: 2015-04-21 17:55+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-08-23 12:49+0300\n"
 "PO-Revision-Date: 2018-08-17 16:01+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: German\n"
@@ -17,34 +18,43 @@ msgstr ""
 "X-Crowdin-File: AutoRenamer.pot\n"
 "X-Poedit-SearchPath-0: D:/Dropbox/Development-1/OutwikerPlugin/AutoRenamer\n"
 
-#: D:\Dropbox\Development-1\OutwikerPlugin\AutoRenamer/actions.py:20
-msgid "AutoRename (:autorename:)"
-msgstr "Automatische Umbenennung (:autorename:)"
-
-#: D:\Dropbox\Development-1\OutwikerPlugin\AutoRenamer/actions.py:24
-msgid "Insert AutoRename (:autorename:) command"
-msgstr "Befehl automatische Umbenennung (:autorename:) einfügen"
-
-#: D:\Dropbox\Development-1\OutwikerPlugin\AutoRenamer/autorenamer.py:42
-msgid "AutoRenamer [Plugin]"
-msgstr "AutoRenamer [Plugin]"
-
-#: D:\Dropbox\Development-1\OutwikerPlugin\AutoRenamer/autorenamer.py:78
-msgid "AutoRenamer"
-msgstr "Automatische Umbenennung"
-
-#: D:\Dropbox\Development-1\OutwikerPlugin\AutoRenamer/pluginautorenamer.py:27
-msgid "Plugin allows to rename all pages automatically using the first line of the page or automatically rename just those pages where you place (:autorename:) mark"
-msgstr "Plugin erlaubt es, alle Seiten automatisch mit der ersten Zeile der Seite umzubenennen oder nur jene Seiten automatisch umzubenennen welche mit (:autorename:) markiert wurden"
-
-#: D:\Dropbox\Development-1\OutwikerPlugin\AutoRenamer/pluginautorenamer.py:28
-msgid "<b>Author:</b> Vitalii Koshura (delionkur-lestat@mail.ru)"
-msgstr "<b>Author:</b> Vitalii Koshura (delionkur-lestat@mail.ru)"
-
-#: D:\Dropbox\Development-1\OutwikerPlugin\AutoRenamer/preferencesPanel.py:22
+#: preferencesPanel.py:25
 msgid "Automatically rename all pages according to their first line"
 msgstr "Umbenennen Sie alle Seiten nach der ersten Zeile automatisch"
 
-#: D:\Dropbox\Development-1\OutwikerPlugin\AutoRenamer/preferencesPanel.py:25
-msgid "Automatically set first line of the page be the name of this page on page create"
-msgstr "Setzt automatisch den Seiten Namen wie den Inhalt der ersten Zeile der Seite"
+#: preferencesPanel.py:33
+msgid ""
+"Automatically set first line of the page be the name of this page on page "
+"create"
+msgstr ""
+"Setzt automatisch den Seiten Namen wie den Inhalt der ersten Zeile der Seite"
+
+#: autorenamer.py:44
+msgid "AutoRenamer [Plugin]"
+msgstr "AutoRenamer [Plugin]"
+
+#: autorenamer.py:81
+msgid "AutoRenamer"
+msgstr "Automatische Umbenennung"
+
+#: plugin.py:22
+msgid ""
+"Plugin allows to rename all pages automatically using the first line of the "
+"page or automatically rename just those pages where you place (:autorename:) "
+"mark"
+msgstr ""
+"Plugin erlaubt es, alle Seiten automatisch mit der ersten Zeile der Seite "
+"umzubenennen oder nur jene Seiten automatisch umzubenennen welche mit (:"
+"autorename:) markiert wurden"
+
+#: plugin.py:23
+msgid "<b>Author:</b> Vitalii Koshura (delionkur-lestat@mail.ru)"
+msgstr "<b>Author:</b> Vitalii Koshura (delionkur-lestat@mail.ru)"
+
+#: actions.py:18
+msgid "AutoRename (:autorename:)"
+msgstr "Automatische Umbenennung (:autorename:)"
+
+#: actions.py:22
+msgid "Insert AutoRename (:autorename:) command"
+msgstr "Befehl automatische Umbenennung (:autorename:) einfügen"

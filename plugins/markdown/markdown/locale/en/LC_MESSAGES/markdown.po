@@ -7,43 +7,35 @@ msgid ""
 msgstr ""
 "Project-Id-Version: markdown\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-12 22:29+0300\n"
-"PO-Revision-Date: 2016-11-12 22:29+0300\n"
+"POT-Creation-Date: 2018-08-23 12:47+0300\n"
+"PO-Revision-Date: 2018-08-23 13:23+0300\n"
 "Last-Translator: \n"
 "Language-Team: jenyay.net <jenyay.ilin@gmail.com>\n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.9\n"
+"X-Generator: Poedit 2.0.6\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-#: images/imagedialog.py:13
+#: images/imagedialog.py:17
 msgid "Image"
 msgstr "Image"
 
-#: images/imagedialog.py:45
+#: images/imagedialog.py:49
 msgid "File name or link"
 msgstr "File name or link"
 
-#: images/imagedialog.py:51 links/linkdialog.py:46
+#: images/imagedialog.py:55 links/linkdialog.py:51
 msgid "Comment"
 msgstr "Comment"
 
-#: controller.py:86
+#: controller.py:87
 msgid "Appearance"
 msgstr "Appearance"
 
-#: markdown.py:45
-msgid "The Markdown plug-in add a new page type with Markdown notation"
-msgstr "The Markdown plug-in add a new page type with Markdown notation"
-
-#: markdown.py:50
-msgid "http://jenyay.net/Outwiker/MarkdownEn"
-msgstr "http://jenyay.net/Outwiker/MarkdownEn"
-
-#: markdownpageview.py:39 markdownpageview.py:42 toolbar.py:25
+#: markdownpageview.py:35 markdownpageview.py:38 markdownpageview.py:44
 msgid "Markdown"
 msgstr "Markdown"
 
@@ -55,17 +47,28 @@ msgstr "Font"
 msgid "Heading"
 msgstr "Heading"
 
-#: links/linkdialog.py:20 links/linkdialog.py:34
+#: links/linkdialog.py:25 links/linkdialog.py:39
 msgid "Link"
 msgstr "Link"
 
-#: links/linkdialog.py:58
+#: links/linkdialog.py:63
 msgid "Title"
 msgstr "Title"
 
 #: markdownpage.py:41
 msgid "Markdown Page"
 msgstr "Markdown Page"
+
+#: plugin.py:36
+msgid "The Markdown plug-in add a new page type with Markdown notation"
+msgstr "The Markdown plug-in add a new page type with Markdown notation"
+
+#: plugin.py:40
+msgid "https://jenyay.net/Outwiker/MarkdownEn"
+msgstr "https://jenyay.net/Outwiker/MarkdownEn"
+
+#~ msgid "http://jenyay.net/Outwiker/MarkdownEn"
+#~ msgstr "http://jenyay.net/Outwiker/MarkdownEn"
 
 #~ msgid "File name"
 #~ msgstr "File name"

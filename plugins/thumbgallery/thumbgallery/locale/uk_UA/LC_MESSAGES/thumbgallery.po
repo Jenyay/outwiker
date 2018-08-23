@@ -2,16 +2,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-15 23:03+0300\n"
-"PO-Revision-Date: 2018-04-25 17:09+0300\n"
+"POT-Creation-Date: 2018-08-23 12:51+0300\n"
+"PO-Revision-Date: 2018-08-23 13:42+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
-"X-Generator: Poedit 2.0.7\n"
+"Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 "
+"&& n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 "
+"&& n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Crowdin-Project: outwiker\n"
 "X-Crowdin-Language: uk\n"
 "X-Crowdin-File: thumbgallery.pot\n"
@@ -36,15 +38,15 @@ msgstr "Всі зображення"
 msgid "Clear"
 msgstr "Очистити"
 
-#: plugin.py:60
-msgid "http://jenyay.net/Outwiker/ThumbGalleryEn"
-msgstr "http://jenyay.net/Outwiker/ThumbGallery"
+#: plugin.py:47
+msgid "https://jenyay.net/Outwiker/ThumbGalleryEn"
+msgstr "https://jenyay.net/Outwiker/ThumbGallery"
 
-#: plugin.py:66
+#: plugin.py:53
 msgid "locale/description.html"
 msgstr "locale/uk_UA/description.html"
 
-#: plugin.py:74
+#: plugin.py:60
 msgid "Can't load description"
 msgstr "Не вдалося завантажити опис"
 
@@ -55,3 +57,6 @@ msgstr "Галерея (:thumbgallery:)"
 #: actions.py:28
 msgid "Insert (:thumbgallery:) wiki command to create the gallery."
 msgstr "Вставити вікі-команду (:thumbgallery:) для створення галереї."
+
+#~ msgid "http://jenyay.net/Outwiker/ThumbGalleryEn"
+#~ msgstr "http://jenyay.net/Outwiker/ThumbGallery"

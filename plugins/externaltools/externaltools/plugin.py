@@ -140,4 +140,4 @@ Attach:application.exe Attach:my_file.txt
 
     @property
     def url(self):
-        return _(u"http://jenyay.net/Outwiker/ExternalToolsEn")
+        return _(u"https://jenyay.net/Outwiker/ExternalToolsEn")

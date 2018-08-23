@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: HtmlHeads\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-13 16:18+0300\n"
-"PO-Revision-Date: 2018-03-13 16:18+0300\n"
+"POT-Creation-Date: 2018-08-23 12:47+0300\n"
+"PO-Revision-Date: 2018-08-23 13:08+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: jenyay.net <jenyay.ilin@gmail.com>\n"
 "Language: en\n"
@@ -17,70 +17,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 2.0.6\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-
-#: actions.py:32
-msgid "Title (:title ...:)"
-msgstr "Title (:title ...:)"
-
-#: actions.py:36
-#| msgid ""
-#| "HtmlHeads plugin. Insert (:title... :) command to add <title> tag in the "
-#| "page head"
-msgid ""
-"HtmlHeads plugin. Insert (:title... :) command to add <title> tag in the "
-"page head."
-msgstr ""
-"HtmlHeads plugin. Insert (:title... :) command to add <title> tag in the "
-"page head."
-
-#: actions.py:50
-msgid "Description (:description ...:)"
-msgstr "Description (:description ...:)"
-
-#: actions.py:54
-msgid ""
-"HtmlHeads plugin. Insert (:description... :) command to add description in "
-"the page head."
-msgstr ""
-"HtmlHeads plugin. Insert (:description... :) command to add description in "
-"the page head."
-
-#: actions.py:68
-msgid "Keywords (:keywords ...:)"
-msgstr "Keywords (:keywords ...:)"
-
-#: actions.py:72
-msgid ""
-"HtmlHeads plugin. Insert (:keywords... :) command to add keywords in the "
-"page head."
-msgstr ""
-"HtmlHeads plugin. Insert (:keywords... :) command to add keywords in the "
-"page head."
-
-#: actions.py:86
-msgid "Custom head (:htmlhead:)"
-msgstr "Custom head (:htmlhead:)"
-
-#: actions.py:90
-#| msgid ""
-#| "HtmlHeads plugin. Insert (:htmlhead:) command to add custom tag in the "
-#| "page head."
-msgid ""
-"HtmlHeads plugin. Insert (:htmlhead:) command to add custom tags in the page "
-"head."
-msgstr ""
-"HtmlHeads plugin. Insert (:htmlhead:) command to add custom tags in the page "
-"head."
-
-#: actions.py:104
-msgid "CSS Style (:style:)"
-msgstr "CSS Style (:style:)"
-
-#: actions.py:108
-msgid ""
-"HtmlHeads plugin. Insert (:style:) command to add custom CSS style to page."
-msgstr ""
-"HtmlHeads plugin. Insert (:style:) command to add custom CSS style to page."
 
 #: controller.py:73
 msgid "HTML Headers"
@@ -123,5 +59,66 @@ msgstr ""
 "(:htmlheadend:)\n"
 
 #: plugin.py:54
-msgid "http://jenyay.net/Outwiker/HtmlHeadsEn"
-msgstr "http://jenyay.net/Outwiker/HtmlHeadsEn"
+msgid "https://jenyay.net/Outwiker/HtmlHeadsEn"
+msgstr "https://jenyay.net/Outwiker/HtmlHeadsEn"
+
+#: actions.py:32
+msgid "Title (:title ...:)"
+msgstr "Title (:title ...:)"
+
+#: actions.py:36
+msgid ""
+"HtmlHeads plugin. Insert (:title... :) command to add <title> tag in the "
+"page head."
+msgstr ""
+"HtmlHeads plugin. Insert (:title... :) command to add <title> tag in the "
+"page head."
+
+#: actions.py:50
+msgid "Description (:description ...:)"
+msgstr "Description (:description ...:)"
+
+#: actions.py:54
+msgid ""
+"HtmlHeads plugin. Insert (:description... :) command to add description in "
+"the page head."
+msgstr ""
+"HtmlHeads plugin. Insert (:description... :) command to add description in "
+"the page head."
+
+#: actions.py:68
+msgid "Keywords (:keywords ...:)"
+msgstr "Keywords (:keywords ...:)"
+
+#: actions.py:72
+msgid ""
+"HtmlHeads plugin. Insert (:keywords... :) command to add keywords in the "
+"page head."
+msgstr ""
+"HtmlHeads plugin. Insert (:keywords... :) command to add keywords in the "
+"page head."
+
+#: actions.py:86
+msgid "Custom head (:htmlhead:)"
+msgstr "Custom head (:htmlhead:)"
+
+#: actions.py:90
+msgid ""
+"HtmlHeads plugin. Insert (:htmlhead:) command to add custom tags in the page "
+"head."
+msgstr ""
+"HtmlHeads plugin. Insert (:htmlhead:) command to add custom tags in the page "
+"head."
+
+#: actions.py:104
+msgid "CSS Style (:style:)"
+msgstr "CSS Style (:style:)"
+
+#: actions.py:108
+msgid ""
+"HtmlHeads plugin. Insert (:style:) command to add custom CSS style to page."
+msgstr ""
+"HtmlHeads plugin. Insert (:style:) command to add custom CSS style to page."
+
+#~ msgid "http://jenyay.net/Outwiker/HtmlHeadsEn"
+#~ msgstr "http://jenyay.net/Outwiker/HtmlHeadsEn"

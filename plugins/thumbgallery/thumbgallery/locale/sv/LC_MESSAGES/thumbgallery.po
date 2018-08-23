@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-15 23:03+0300\n"
-"PO-Revision-Date: 2018-01-16 21:02+0300\n"
+"POT-Creation-Date: 2018-08-23 12:51+0300\n"
+"PO-Revision-Date: 2018-08-23 13:42+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.0.4\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Crowdin-Project: outwiker\n"
 "X-Crowdin-Language: sv-SE\n"
 "X-Crowdin-File: thumbgallery.pot\n"
@@ -36,15 +36,15 @@ msgstr "Alla bilder"
 msgid "Clear"
 msgstr "Rensa"
 
-#: plugin.py:60
-msgid "http://jenyay.net/Outwiker/ThumbGalleryEn"
-msgstr "http://jenyay.net/Outwiker/ThumbGalleryEn"
+#: plugin.py:47
+msgid "https://jenyay.net/Outwiker/ThumbGalleryEn"
+msgstr "https://jenyay.net/Outwiker/ThumbGalleryEn"
 
-#: plugin.py:66
+#: plugin.py:53
 msgid "locale/description.html"
 msgstr "locale/sv/LC_MESSAGES/description.html"
 
-#: plugin.py:74
+#: plugin.py:60
 msgid "Can't load description"
 msgstr "Kan inte läsa in beskrivning"
 
@@ -55,3 +55,6 @@ msgstr "Galleri (:thumbgallery:)"
 #: actions.py:28
 msgid "Insert (:thumbgallery:) wiki command to create the gallery."
 msgstr "Infoga (:thumbgallery:) wiki-kommando för att skapa galleriet."
+
+#~ msgid "http://jenyay.net/Outwiker/ThumbGalleryEn"
+#~ msgstr "http://jenyay.net/Outwiker/ThumbGalleryEn"

@@ -51,7 +51,7 @@ class PluginHtmlHeads(Plugin):
 
     @property
     def url(self):
-        return _(u"http://jenyay.net/Outwiker/HtmlHeadsEn")
+        return _(u"https://jenyay.net/Outwiker/HtmlHeadsEn")
 
     def initialize(self):
         set_(self.gettext)

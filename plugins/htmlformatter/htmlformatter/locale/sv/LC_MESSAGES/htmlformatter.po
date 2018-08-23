@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-24 22:03+0300\n"
-"PO-Revision-Date: 2016-08-16 16:26+0300\n"
+"POT-Creation-Date: 2018-08-23 12:51+0300\n"
+"PO-Revision-Date: 2018-08-23 13:08+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -11,19 +11,22 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.8\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Crowdin-Project: outwiker\n"
 "X-Crowdin-Language: sv-SE\n"
 "X-Crowdin-File: htmlformatter.pot\n"
 
-#: htmlformatter.py:42
-msgid "Plugin for more punctual HTML generation"
-msgstr "Insticksmodul för punktligare HTML-generation"
-
-#: htmlformatter.py:52
-msgid "http://jenyay.net/Outwiker/HtmlFormatterEn"
-msgstr "http://jenyay.net/Outwiker/HtmlFormatterEn"
-
 #: controller.py:39
 msgid "Paragraphs (<p>...</p>)"
 msgstr "Stycken (<p>...</p>)"
+
+#: plugin.py:31
+msgid "Plugin for more punctual HTML generation"
+msgstr "Insticksmodul för punktligare HTML-generation"
+
+#: plugin.py:35
+msgid "https://jenyay.net/Outwiker/HtmlFormatterEn"
+msgstr "https://jenyay.net/Outwiker/HtmlFormatterEn"
+
+#~ msgid "http://jenyay.net/Outwiker/HtmlFormatterEn"
+#~ msgstr "http://jenyay.net/Outwiker/HtmlFormatterEn"

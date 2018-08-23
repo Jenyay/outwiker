@@ -228,7 +228,7 @@ class DownloadDialogController(object):
     def _onSelectFile(self, event):
         with TestedFileDialog(
                 self._dialog,
-                wildcard=_("HTML files(*.html; *.htm)|*.html;*.htm|All files|*.*"),
+                wildcard=_("HTML files (*.html; *.htm)|*.html;*.htm|All files|*.*"),
                 style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as fileDialog:
             if fileDialog.ShowModal() == wx.ID_OK:
                 self._dialog.url = fileDialog.GetPath()

@@ -7,25 +7,28 @@ msgid ""
 msgstr ""
 "Project-Id-Version: htmlformatter\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-24 22:03+0300\n"
-"PO-Revision-Date: 2015-02-24 22:04+0300\n"
+"POT-Creation-Date: 2018-08-23 12:47+0300\n"
+"PO-Revision-Date: 2018-08-23 13:07+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: jenyay.net <jenyay.ilin@gmail.com>\n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-
-#: htmlformatter.py:42
-msgid "Plugin for more punctual HTML generation"
-msgstr "Plugin for more punctual HTML generation"
-
-#: htmlformatter.py:52
-msgid "http://jenyay.net/Outwiker/HtmlFormatterEn"
-msgstr "http://jenyay.net/Outwiker/HtmlFormatterEn"
 
 #: controller.py:39
 msgid "Paragraphs (<p>...</p>)"
 msgstr "Paragraphs (<p>...</p>)"
+
+#: plugin.py:31
+msgid "Plugin for more punctual HTML generation"
+msgstr "Plugin for more punctual HTML generation"
+
+#: plugin.py:35
+msgid "https://jenyay.net/Outwiker/HtmlFormatterEn"
+msgstr "https://jenyay.net/Outwiker/HtmlFormatterEn"
+
+#~ msgid "http://jenyay.net/Outwiker/HtmlFormatterEn"
+#~ msgstr "http://jenyay.net/Outwiker/HtmlFormatterEn"

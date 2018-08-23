@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-18 17:32+0300\n"
-"PO-Revision-Date: 2017-02-19 14:07+0300\n"
+"POT-Creation-Date: 2018-08-23 12:51+0300\n"
+"PO-Revision-Date: 2018-08-23 13:28+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.9\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Crowdin-Project: outwiker\n"
 "X-Crowdin-Language: sv-SE\n"
 "X-Crowdin-File: snippets.pot\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "Snippets"
 msgstr "Textutdrag"
 
-#: guicontroller.py:156 gui/editdialog.py:585
+#: guicontroller.py:162 gui/editdialog.py:585
 msgid ""
 "Can't read the snippet\n"
 "{}"
@@ -28,13 +28,13 @@ msgstr ""
 "Kan inte läsa utdraget\n"
 "{}"
 
-#: guicontroller.py:157 gui/editdialog.py:449 gui/editdialog.py:469
+#: guicontroller.py:163 gui/editdialog.py:449 gui/editdialog.py:469
 #: gui/editdialog.py:497 gui/editdialog.py:547 gui/editdialog.py:586
 #: gui/editdialog.py:632 gui/editdialog.py:647 gui/editdialog.py:714
 msgid "Error"
 msgstr "Fel"
 
-#: guicontroller.py:168
+#: guicontroller.py:174
 msgid "Snippet error"
 msgstr "Textudragsfel"
 
@@ -82,12 +82,12 @@ msgstr "Utdragsfel: \n"
 msgid "Can't read file '{}'"
 msgstr "Kan inte läsa filen \"{}\""
 
-#: snippetparser.py:30
+#: snippetparser.py:32
 #, python-brace-format
 msgid "Snippet \"{name}\" not found"
 msgstr "Textutdraget \"{name}\" hittades inte"
 
-#: snippetparser.py:35
+#: snippetparser.py:37
 #, python-brace-format
 msgid ""
 "Snippet error at line {line}:\n"
@@ -96,7 +96,7 @@ msgstr ""
 "Utdragsfel på rad {line}:\n"
 "{text}"
 
-#: snippetparser.py:41
+#: snippetparser.py:43
 #, python-brace-format
 msgid ""
 "Snippet reading error:\n"
@@ -105,7 +105,7 @@ msgstr ""
 "Inläsningsfel:\n"
 "{text}"
 
-#: snippetparser.py:46
+#: snippetparser.py:48
 #, python-brace-format
 msgid ""
 "Snippet processing error:\n"
@@ -114,19 +114,19 @@ msgstr ""
 "Bearbetningsfel: \n"
 "{text}"
 
-#: plugin.py:44
+#: plugin.py:35
 msgid "Plugin to store text snippets"
 msgstr "Insticksmodul för att lagra textutdrag"
 
-#: plugin.py:48
-msgid "http://jenyay.net/Outwiker/SnippetsEn"
-msgstr "http://jenyay.net/Outwiker/SnippetsEn"
+#: plugin.py:39
+msgid "https://jenyay.net/Outwiker/SnippetsEn"
+msgstr "https://jenyay.net/Outwiker/SnippetsEn"
 
-#: gui/variablesdialog.py:51
+#: gui/variablesdialog.py:54
 msgid "Preview"
 msgstr "Förhandsgranskning"
 
-#: gui/variablesdialog.py:55
+#: gui/variablesdialog.py:58
 msgid "Snippet"
 msgstr "Textutdrag"
 
@@ -134,15 +134,15 @@ msgstr "Textutdrag"
 msgid "Insert as wiki command"
 msgstr "Infoga som wiki-kommando"
 
-#: gui/variablesdialog.py:130
+#: gui/variablesdialog.py:149
 msgid "{} | Snippet variables"
 msgstr "{} | Utdragsvariabler"
 
-#: gui/variablesdialog.py:353 gui/variablesdialog.py:413
+#: gui/variablesdialog.py:377 gui/variablesdialog.py:437
 msgid "Expand (Shift+Enter)"
 msgstr "Expandera (Shift + Enter)"
 
-#: gui/variablesdialog.py:392
+#: gui/variablesdialog.py:416
 msgid "Collapse"
 msgstr "Komprimera"
 
@@ -321,3 +321,6 @@ msgstr "Variabelnamn"
 #: gui/editdialog.py:713
 msgid "Invalid variable name \"{}\""
 msgstr "Ogiltig variabelnamn \"{}\""
+
+#~ msgid "http://jenyay.net/Outwiker/SnippetsEn"
+#~ msgstr "http://jenyay.net/Outwiker/SnippetsEn"

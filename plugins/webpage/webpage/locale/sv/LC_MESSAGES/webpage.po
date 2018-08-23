@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-09 21:54+0300\n"
-"PO-Revision-Date: 2016-10-10 10:00+0300\n"
+"POT-Creation-Date: 2018-08-23 13:46+0300\n"
+"PO-Revision-Date: 2018-08-23 13:47+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -11,28 +11,20 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Crowdin-Project: outwiker\n"
 "X-Crowdin-Language: sv-SE\n"
 "X-Crowdin-File: webpage.pot\n"
 
-#: webpage.py:40
-msgid "Plug-in for downloading HTML pages from web"
-msgstr "Insticksmodul för nedladdning av HTML-sidor från nätet"
-
-#: webpage.py:44
-msgid "http://jenyay.net/Outwiker/WebPageEn"
-msgstr "http://jenyay.net/Outwiker/WebPageEn"
-
-#: downloader.py:238
+#: downloader.py:247
 msgid "Processing: {}\n"
 msgstr "Bearbetar: {}\n"
 
-#: downloader.py:340
+#: downloader.py:354
 msgid "Download: {}\n"
 msgstr "Ladda ner: {}\n"
 
-#: downloader.py:350
+#: downloader.py:364
 msgid "Can't download {}\n"
 msgstr "Kan inte ladda ner {}\n"
 
@@ -64,19 +56,19 @@ msgstr "Visa webbsideinformation"
 msgid "WebPage. Show current web page information."
 msgstr "WebPage. Visa aktuell webbsideinformation."
 
-#: actions/downloadaction.py:43
+#: actions/downloadaction.py:39
 msgid "Create child web page"
 msgstr "Skapa undersida"
 
-#: actions/downloadaction.py:48
+#: actions/downloadaction.py:43
 msgid "Download content from the Internet and create child web page"
 msgstr "Ladda ner innehåll från internet och skapa en undersida"
 
-#: actions/downloadaction.py:68
+#: actions/downloadaction.py:61
 msgid "Create sibling web page"
 msgstr "Skapa syskonsida"
 
-#: actions/downloadaction.py:73
+#: actions/downloadaction.py:65
 msgid "Download content from the Internet and create sibling web page"
 msgstr "Ladda ner innehåll från internet och skapa en syskonsida"
 
@@ -88,113 +80,123 @@ msgstr "Inaktivera skript på sidan"
 msgid "WebPage. Enable / disable scripts on downloaded page."
 msgstr "WebPage. Aktivera/Inaktivera skript på nedladdad sida."
 
-#: webnotepage.py:114
+#: webnotepage.py:114 gui/guicontroller.py:115
 msgid "Web Page"
 msgstr "WebPage"
 
-#: webnotepage.py:158 gui/guicontroller.py:54 gui/webpagetoolbar.py:25
-#: gui/downloaddialog.py:263
+#: webnotepage.py:158 gui/guicontroller.py:53 gui/downloaddialog.py:249
 msgid "Web page"
 msgstr "Webbsida"
 
-#: gui/infodialog.py:30
+#: plugin.py:35
+msgid "Plug-in for downloading HTML pages from web"
+msgstr "Insticksmodul för nedladdning av HTML-sidor från nätet"
+
+#: plugin.py:39
+msgid "https://jenyay.net/Outwiker/WebPageEn"
+msgstr "https://jenyay.net/Outwiker/WebPageEn"
+
+#: gui/infodialog.py:29
 msgid "Web page information"
 msgstr "Webbsideinformation"
 
-#: gui/infodialog.py:36
+#: gui/infodialog.py:34
 msgid "Downloading log"
 msgstr "Nerladdningslogg"
 
-#: gui/infodialog.py:49
+#: gui/infodialog.py:46
 msgid "Source URL"
 msgstr "Käll-URL"
 
-#: gui/infodialog.py:50
+#: gui/infodialog.py:49
 msgid "Link"
 msgstr "Länk"
 
-#: gui/guicontroller.py:219
+#: gui/guicontroller.py:227
 msgid "Heading"
 msgstr "Rubrik"
 
-#: gui/guicontroller.py:224
+#: gui/guicontroller.py:232
 msgid "Font"
 msgstr "Teckensnitt"
 
-#: gui/guicontroller.py:229
+#: gui/guicontroller.py:237
 msgid "Alignment"
 msgstr "Justering"
 
-#: gui/guicontroller.py:234
+#: gui/guicontroller.py:242
 msgid "Formatting"
 msgstr "Formatering"
 
-#: gui/guicontroller.py:239
+#: gui/guicontroller.py:247
 msgid "Lists"
 msgstr "Listor"
 
-#: gui/guicontroller.py:244
+#: gui/guicontroller.py:252
 msgid "Tables"
 msgstr "Tabeller"
 
-#: gui/downloaddialog.py:49
+#: gui/downloaddialog.py:50
 msgid "Download web page"
 msgstr "Ladda ner webbsida"
 
-#: gui/downloaddialog.py:59
+#: gui/downloaddialog.py:58
 msgid "URL or local file"
 msgstr "URL eller lokal fil"
 
-#: gui/downloaddialog.py:61
+#: gui/downloaddialog.py:60
 msgid "..."
 msgstr "..."
 
-#: gui/downloaddialog.py:198
+#: gui/downloaddialog.py:189
 msgid "Can't remove temp directory"
 msgstr "Kan inte ta bort tempmappen"
 
-#: gui/downloaddialog.py:206
+#: gui/downloaddialog.py:196
 msgid "Enter link for downloading"
 msgstr "Ange länk för nedladdning"
 
-#: gui/downloaddialog.py:207
+#: gui/downloaddialog.py:197
 msgid "Error"
 msgstr "Fel"
 
-#: gui/downloaddialog.py:243
+#: gui/downloaddialog.py:231
 msgid "HTML files (*.html; *.htm)|*.html;*.htm|All files|*.*"
 msgstr "HTML-filer (*.html; *.htm)|*.html;*.htm|Alla filer|*.*"
 
-#: gui/downloaddialog.py:258 gui/downloaddialog.py:280
+#: gui/downloaddialog.py:244 gui/downloaddialog.py:266
 msgid "Page creation is canceled."
 msgstr "Sidskapande avbröts."
 
-#: gui/downloaddialog.py:272
+#: gui/downloaddialog.py:258
 msgid "Enter a title for the page"
 msgstr "Ange titel för sidan"
 
-#: gui/downloaddialog.py:273
+#: gui/downloaddialog.py:259
 msgid "Page title"
 msgstr "Sidtitel"
 
-#: gui/downloaddialog.py:296
+#: gui/downloaddialog.py:282
 msgid "Can't create the page. Perhaps the title of the page is too long."
 msgstr "Kan inte skapa sidan. Sidans titel kanske är för lång."
 
-#: gui/downloaddialog.py:324
+#: gui/downloaddialog.py:309
 msgid "Start downloading\n"
 msgstr "Starta nedladdning\n"
 
-#: gui/downloaddialog.py:329
+#: gui/downloaddialog.py:314
 msgid "Download error: {}\n"
 msgstr ""
 "Nedladdningsfel: {}\n"
 "\n"
 
-#: gui/downloaddialog.py:333
+#: gui/downloaddialog.py:318
 msgid "Invalid URL or file format\n"
 msgstr "Ogiltig URL eller filformat\n"
 
-#: gui/downloaddialog.py:336
+#: gui/downloaddialog.py:321
 msgid "Finish downloading\n"
 msgstr "Avsluta nedladdning\n"
+
+#~ msgid "http://jenyay.net/Outwiker/WebPageEn"
+#~ msgstr "http://jenyay.net/Outwiker/WebPageEn"

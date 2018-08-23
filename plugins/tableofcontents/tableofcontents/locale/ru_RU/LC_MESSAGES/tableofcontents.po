@@ -7,18 +7,22 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tableofcontents\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-24 21:59+0400\n"
-"PO-Revision-Date: 2014-08-26 15:40+0300\n"
+"POT-Creation-Date: 2018-08-23 12:51+0300\n"
+"PO-Revision-Date: 2018-08-23 13:39+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: jenyay.net <jenyay.ilin@gmail.com>\n"
 "Language: ru_RU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-#: tableofcontents.py:45
+#: controller.py:52
+msgid "Table of contents"
+msgstr "Оглавление"
+
+#: plugin.py:31
 msgid ""
 "Plugin add the menu \"Wiki - Table of contents\" and the wiki command (:"
 "toc:) for generation of the table of contents."
@@ -26,19 +30,15 @@ msgstr ""
 "Плагин добавляет меню \"Вики - Оглавление\" и викикоманду (:toc:) для "
 "создания оглавления."
 
-#: tableofcontents.py:55
-msgid "http://jenyay.net/Outwiker/ContentsEn"
-msgstr "http://jenyay.net/Outwiker/Contents"
-
-#: guicreator.py:54
-msgid "Table of contents"
-msgstr "Оглавление"
+#: plugin.py:35
+msgid "https://jenyay.net/Outwiker/ContentsEn"
+msgstr "https://jenyay.net/Outwiker/Contents"
 
 #: actions.py:24
 msgid "Generate"
 msgstr "Создать"
 
-#: actions.py:29
+#: actions.py:28
 msgid "TableOfContents. Generate table of contents"
 msgstr "TableOfContents. Создать оглавление"
 
@@ -46,10 +46,13 @@ msgstr "TableOfContents. Создать оглавление"
 msgid "Insert wiki command (:toc:)"
 msgstr "Вставить викикоманду (:toc:)"
 
-#: actions.py:60
+#: actions.py:59
 msgid ""
 "TableOfContents. Insert the wiki command (:toc:) for dynamic generation of "
 "the table of content"
 msgstr ""
 "TableOfContents. Вставить викикоманду (:toc:) для динамического создания "
 "оглавления"
+
+#~ msgid "http://jenyay.net/Outwiker/ContentsEn"
+#~ msgstr "http://jenyay.net/Outwiker/Contents"

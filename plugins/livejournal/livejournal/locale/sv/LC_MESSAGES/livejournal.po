@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-21 21:27+0300\n"
-"PO-Revision-Date: 2018-01-22 12:33+0300\n"
+"POT-Creation-Date: 2018-08-23 12:51+0300\n"
+"PO-Revision-Date: 2018-08-23 13:23+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -11,16 +11,16 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.0.1\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Crowdin-Project: outwiker\n"
 "X-Crowdin-Language: sv-SE\n"
 "X-Crowdin-File: livejournal.po\n"
 
-#: controller.py:46 controller.py:47
+#: controller.py:53 controller.py:54
 msgid "LiveJournal"
 msgstr "LiveJournal"
 
-#: plugin.py:46
+#: plugin.py:33
 msgid ""
 "Add commands (:ljuser:) and (:ljcomm:) in wiki parser.\n"
 "\n"
@@ -36,17 +36,21 @@ msgstr ""
 "                     (:ljcomm gemenskapsnamn:)\n"
 "                 "
 
-#: plugin.py:55
-msgid "http://jenyay.net/Outwiker/LivejournalPluginEn"
-msgstr "http://jenyay.net/Outwiker/LivejournalPluginEn"
+#: plugin.py:42
+msgid "https://jenyay.net/Outwiker/LivejournalPluginEn"
+msgstr "https://jenyay.net/Outwiker/LivejournalPluginEn"
 
 #: actions.py:56
 msgid "LiveJournal user (:ljuser ...:)"
 msgstr "Livejournal-användare (:ljuser ...:)"
 
 #: actions.py:60
-msgid "LiveJournal plugin. Insert (:ljuser... :) command to create the link to LiveJournal user"
-msgstr "LiveJournal-instick. Infoga (: ljuser... :) kommandot för att skapa länken till LiveJournal-användaren"
+msgid ""
+"LiveJournal plugin. Insert (:ljuser... :) command to create the link to "
+"LiveJournal user"
+msgstr ""
+"LiveJournal-instick. Infoga (: ljuser... :) kommandot för att skapa länken "
+"till LiveJournal-användaren"
 
 #: actions.py:64
 msgid "LiveJournal user"
@@ -57,9 +61,16 @@ msgid "LiveJournal community (:ljcomm ...:)"
 msgstr "Livejournal-gemenskap (:ljcomm ...:)"
 
 #: actions.py:80
-msgid "LiveJournal plugin. Insert (:ljcomm... :) command to create the link to LiveJournal community"
-msgstr "LiveJournal-instick. Infoga (: ljcomm... :) kommandot för att skapa länken till LiveJournal-gemenskapen"
+msgid ""
+"LiveJournal plugin. Insert (:ljcomm... :) command to create the link to "
+"LiveJournal community"
+msgstr ""
+"LiveJournal-instick. Infoga (: ljcomm... :) kommandot för att skapa länken "
+"till LiveJournal-gemenskapen"
 
 #: actions.py:84
 msgid "LiveJournal community"
 msgstr "Livejournal-gemenskap"
+
+#~ msgid "http://jenyay.net/Outwiker/LivejournalPluginEn"
+#~ msgstr "http://jenyay.net/Outwiker/LivejournalPluginEn"

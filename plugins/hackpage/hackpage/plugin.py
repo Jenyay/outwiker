@@ -29,7 +29,7 @@ class PluginHackPage(Plugin):
 
     @property
     def url(self):
-        return _(u"http://jenyay.net/Outwiker/HackPageEn")
+        return _(u"https://jenyay.net/Outwiker/HackPageEn")
 
     def initialize(self):
         set_(self.gettext)

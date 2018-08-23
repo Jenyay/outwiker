@@ -1,7 +1,7 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <info>
 	<name>PLUGINNAME</name>
-    <updates>http://example.com/pluginname/plugin.xml</updates>
+    <updates>https://example.com/pluginname/plugin.xml</updates>
     <requirements>
         <os>Windows, Linux</os>
         <api>2.835</api>
@@ -18,13 +18,13 @@
     </requirements>
 
 	<data lang="en">
-		<website>http://example.com/pluginnameEn</website>
+		<website>https://example.com/pluginnameEn</website>
 		<description>Description.</description>
 
 		<author>
 			<name>Author name</name>
 			<email>example@example.com</email>
-			<site>http://example.com</site>
+			<site>https://example.com</site>
 		</author>
 
 		<changelog>
@@ -33,20 +33,20 @@
 					<api>2.835</api>
 				</requirements>
 
-                <download os="all">http://example.com/pluginname/pluginname-1.0.zip</download>
+                <download os="all">https://example.com/pluginname/pluginname-1.0.zip</download>
 				<change>The first version.</change>
 			</version>
 		</changelog>
 	</data>
 
 	<data lang="ru">
-		<website>http://example.com/pluginnameRu</website>
+		<website>https://example.com/pluginnameRu</website>
 		<description>Описание.</description>
 
 		<author>
 			<name>Author name</name>
 			<email>example@example.com</email>
-			<site>http://example.com</site>
+			<site>https://example.com</site>
 		</author>
 
 		<changelog>
@@ -55,7 +55,7 @@
 					<api>2.835</api>
 				</requirements>
 
-                <download os="all">http://example.com/pluginname/pluginname-1.0.zip</download>
+                <download os="all">https://example.com/pluginname/pluginname-1.0.zip</download>
 				<change>Первая версия.</change>
 			</version>
 		</changelog>

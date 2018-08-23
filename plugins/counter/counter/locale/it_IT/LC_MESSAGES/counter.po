@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-05 10:05+0400\n"
-"PO-Revision-Date: 2014-09-01 21:26+0300\n"
+"POT-Creation-Date: 2018-08-23 12:51+0300\n"
+"PO-Revision-Date: 2018-08-23 12:56+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -11,17 +11,41 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 2.0.6\n"
 
-#: actions.py:24
-msgid "Counter (:counter ...:)"
-msgstr "Contatore (:counter ...:)"
+#: insertdialog.py:172
+msgid "Advanced"
+msgstr "Avanzato"
 
-#: actions.py:29
-msgid "Counter plugin. Insert (:counter... :) command"
-msgstr "Plugin Counter. Inserisce il comando (:counter... :)"
+#: insertdialog.py:174
+msgid "Start count from"
+msgstr "Iniziare il conteggio da"
 
-#: counter.py:43
+#: insertdialog.py:177
+msgid "Step"
+msgstr "Incremento"
+
+#: insertdialog.py:180
+msgid "Hide counter"
+msgstr "Nascondi contatore"
+
+#: insertdialog.py:217
+msgid "Nested counter"
+msgstr "Contatore nidificato"
+
+#: insertdialog.py:219
+msgid "Parent counter name"
+msgstr "Nome del contatore superiore"
+
+#: insertdialog.py:223
+msgid "Separator"
+msgstr "Separatore"
+
+#: insertdialog.py:257
+msgid "Counter name"
+msgstr "Nome del contatore"
+
+#: plugin.py:30
 msgid ""
 "Plugin adds wiki-command (:counter:), allowing the automatic numbering "
 "anything on the page."
@@ -29,7 +53,7 @@ msgstr ""
 "Il plugin aggiunge il comando (:counter:) che consente la numerazione di un "
 "qualsiasi elemento della pagina."
 
-#: counter.py:45
+#: plugin.py:32
 msgid ""
 "<b>Usage:</b>:\n"
 "(:counter parameters... :)"
@@ -37,7 +61,7 @@ msgstr ""
 "<b>Utilizzo:</b>:\n"
 "(:counter parametri... :)"
 
-#: counter.py:48
+#: plugin.py:35
 msgid ""
 "<b>Parameters:</b>\n"
 "All parameters are optional.\n"
@@ -71,38 +95,17 @@ msgstr ""
 "suo valore non incrementi.</li>\n"
 "</ul>"
 
-#: counter.py:71
-msgid "http://jenyay.net/Outwiker/CounterEn"
-msgstr "http://jenyay.net/Outwiker/CounterEn"
+#: plugin.py:55
+msgid "https://jenyay.net/Outwiker/CounterEn"
+msgstr "https://jenyay.net/Outwiker/CounterEn"
 
-#: insertdialog.py:147
-msgid "Advanced"
-msgstr "Avanzato"
+#: actions.py:22
+msgid "Counter (:counter ...:)"
+msgstr "Contatore (:counter ...:)"
 
-#: insertdialog.py:149
-msgid "Start count from"
-msgstr "Iniziare il conteggio da"
+#: actions.py:26
+msgid "Counter plugin. Insert (:counter... :) command"
+msgstr "Plugin Counter. Inserisce il comando (:counter... :)"
 
-#: insertdialog.py:152
-msgid "Step"
-msgstr "Incremento"
-
-#: insertdialog.py:155
-msgid "Hide counter"
-msgstr "Nascondi contatore"
-
-#: insertdialog.py:192
-msgid "Nested counter"
-msgstr "Contatore nidificato"
-
-#: insertdialog.py:194
-msgid "Parent counter name"
-msgstr "Nome del contatore superiore"
-
-#: insertdialog.py:198
-msgid "Separator"
-msgstr "Separatore"
-
-#: insertdialog.py:232
-msgid "Counter name"
-msgstr "Nome del contatore"
+#~ msgid "http://jenyay.net/Outwiker/CounterEn"
+#~ msgstr "http://jenyay.net/Outwiker/CounterEn"

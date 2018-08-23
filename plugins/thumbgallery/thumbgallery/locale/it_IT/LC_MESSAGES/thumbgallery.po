@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-03 22:11+0400\n"
-"PO-Revision-Date: 2014-10-03 22:12+0300\n"
+"POT-Creation-Date: 2018-08-23 12:51+0300\n"
+"PO-Revision-Date: 2018-08-23 13:41+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -11,40 +11,50 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.5.4\n"
-
-#: controller.py:56
-msgid "Thumbnails Gallery (:thumbgallery:)"
-msgstr "Galleria di miniature (:thumbgallery:)"
+"X-Generator: Poedit 2.0.6\n"
 
 #: thumbdialog.py:24
 msgid "Gallery"
 msgstr "Galleria"
 
-#: thumbdialog.py:32
+#: thumbdialog.py:35
 msgid "Columns count (0 - without table)"
 msgstr "Numero di colonne (0 per nessuna tabella)"
 
-#: thumbdialog.py:37
+#: thumbdialog.py:45
 msgid "Thumbnails size (0 - default size)"
 msgstr "Dimensione miniature (0 per dimensioni predefinite)"
 
-#: thumbdialog.py:44
+#: thumbdialog.py:56
 msgid "All Images"
 msgstr "Seleziona tutte"
 
-#: thumbdialog.py:45
+#: thumbdialog.py:59
 msgid "Clear"
 msgstr "Deseleziona tutto"
 
-#: thumbgallery.py:71
-msgid "http://jenyay.net/Outwiker/ThumbGalleryEn"
-msgstr "http://jenyay.net/Outwiker/ThumbGalleryEn"
+#: plugin.py:47
+msgid "https://jenyay.net/Outwiker/ThumbGalleryEn"
+msgstr "https://jenyay.net/Outwiker/ThumbGalleryEn"
 
-#: thumbgallery.py:78
+#: plugin.py:53
 msgid "locale/description.html"
 msgstr "locale/description.html"
 
-#: thumbgallery.py:86
+#: plugin.py:60
 msgid "Can't load description"
 msgstr "Impossibile caricare la descrizione"
+
+#: actions.py:24
+msgid "Gallery (:thumbgallery:)"
+msgstr ""
+
+#: actions.py:28
+msgid "Insert (:thumbgallery:) wiki command to create the gallery."
+msgstr ""
+
+#~ msgid "Thumbnails Gallery (:thumbgallery:)"
+#~ msgstr "Galleria di miniature (:thumbgallery:)"
+
+#~ msgid "http://jenyay.net/Outwiker/ThumbGalleryEn"
+#~ msgstr "http://jenyay.net/Outwiker/ThumbGalleryEn"

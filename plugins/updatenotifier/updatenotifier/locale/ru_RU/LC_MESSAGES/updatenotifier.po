@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UpdateNotifier\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-09 18:27+0300\n"
-"PO-Revision-Date: 2018-05-09 18:28+0300\n"
+"POT-Creation-Date: 2018-08-23 12:51+0300\n"
+"PO-Revision-Date: 2018-08-23 13:44+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language: ru_RU\n"
@@ -22,47 +22,47 @@ msgstr ""
 msgid "UpdateNotifier [Plugin]"
 msgstr "UpdateNotifier [Плагин]"
 
-#: updatecontroller.py:82 updatecontroller.py:97 updatecontroller.py:103
+#: updatecontroller.py:85 updatecontroller.py:99 updatecontroller.py:105
 msgid "Check for new versions..."
 msgstr "Поиск новых версий..."
 
-#: updatecontroller.py:127
+#: updatecontroller.py:132
 msgid "Installed OutWiker version"
 msgstr "Установленная версия OutWiker"
 
-#: updatecontroller.py:128
+#: updatecontroller.py:133
 msgid "Latest stable OutWiker version"
 msgstr "Последняя стабильная версия OutWiker"
 
-#: updatecontroller.py:129
+#: updatecontroller.py:134
 msgid "Latest unstable OutWiker version"
 msgstr "Последняя нестабильная версия OutWiker"
 
-#: updatecontroller.py:130
+#: updatecontroller.py:135
 msgid "Version history"
 msgstr "История версий"
 
-#: updatecontroller.py:131
+#: updatecontroller.py:136
 msgid "More info"
 msgstr "Подробности"
 
-#: updatecontroller.py:132
+#: updatecontroller.py:137
 msgid "Update"
 msgstr "Обновить"
 
-#: updatecontroller.py:133
+#: updatecontroller.py:138
 msgid "Install"
 msgstr "Установить"
 
-#: updatecontroller.py:134
+#: updatecontroller.py:139
 msgid "Uninstall"
 msgstr "Удалить"
 
-#: updatecontroller.py:190 versionlist.py:73
+#: updatecontroller.py:193 versionlist.py:73
 msgid "__updateLang"
 msgstr "ru"
 
-#: updatecontroller.py:327
+#: updatecontroller.py:347
 msgid ""
 "The download link was not found in plugin description. Please update plugin "
 "manually"
@@ -70,22 +70,22 @@ msgstr ""
 "В описании плагина не найдена ссылка для скачивания. Пожалуйста, обновите "
 "плагин вручную"
 
-#: updatecontroller.py:331 updatecontroller.py:346
+#: updatecontroller.py:351 updatecontroller.py:368
 msgid "Plugin was NOT updated. Please update plugin manually"
 msgstr "Плагин НЕ БЫЛ обновлен. Пожалуйста, обновите плагин вручную"
 
-#: updatecontroller.py:385
+#: updatecontroller.py:395
 msgid ""
 "The plugin description can't be downloaded. Please install plugin manually"
 msgstr ""
 "Невозможно скачать описание плагина. Пожалуйста, установите плагин вручную"
 
-#: updatecontroller.py:391
+#: updatecontroller.py:402
 msgid "The plugin required newer version of OutWiker. Please update OutWiker"
 msgstr ""
 "Плагину требуется более новая версия OutWiker. Пожалуйста, обновите OuWiker"
 
-#: updatecontroller.py:398
+#: updatecontroller.py:409
 msgid ""
 "The download link was not found in plugin description. Please install plugin "
 "manually"
@@ -93,9 +93,18 @@ msgstr ""
 "В описании плагина не найдена ссылка для скачивания. Пожалуйста, установите "
 "плагин вручную"
 
-#: updatecontroller.py:413
+#: updatecontroller.py:430
 msgid "Plugin was NOT Installed. Please update plugin manually"
 msgstr "Плагин не может быть установлен. Пожалуйста, обновите плагин вручную"
+
+#: updatecontroller.py:454 updatecontroller.py:477
+msgid ""
+"Plugin's folder can't be deleted. Please delete the following path: \n"
+" {}"
+msgstr ""
+"Папка с плагином не может быть удалена. Пожалуйста, удалите следующие "
+"папки: \n"
+" {}"
 
 #: plugin.py:32
 msgid ""
@@ -108,8 +117,8 @@ msgstr ""
 "Добавляет пункт меню \"Справка -> Проверить обновления...\""
 
 #: plugin.py:38
-msgid "http://jenyay.net/Outwiker/UpdateNotifierEn"
-msgstr "http://jenyay.net/Outwiker/UpdateNotifier"
+msgid "https://jenyay.net/Outwiker/UpdateNotifierEn"
+msgstr "https://jenyay.net/Outwiker/UpdateNotifierEn"
 
 #: actions.py:22 guicreators.py:45
 msgid "Check for Updates..."
@@ -170,6 +179,9 @@ msgstr "Раз в месяц"
 #: prefpanelcontroller.py:53
 msgid "Custom"
 msgstr "Другое"
+
+#~ msgid "http://jenyay.net/Outwiker/UpdateNotifierEn"
+#~ msgstr "http://jenyay.net/Outwiker/UpdateNotifier"
 
 #~ msgid ""
 #~ "The plugin required last version of Outwiker. Please update application"

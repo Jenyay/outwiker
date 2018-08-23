@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-18 17:33+0300\n"
-"PO-Revision-Date: 2017-02-18 17:33+0300\n"
+"POT-Creation-Date: 2018-08-23 12:51+0300\n"
+"PO-Revision-Date: 2018-08-23 13:28+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.9\n"
+"X-Generator: Poedit 2.0.6\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
@@ -23,7 +23,7 @@ msgstr ""
 msgid "Snippets"
 msgstr "Шаблоны"
 
-#: guicontroller.py:156 gui/editdialog.py:585
+#: guicontroller.py:162 gui/editdialog.py:585
 msgid ""
 "Can't read the snippet\n"
 "{}"
@@ -31,13 +31,13 @@ msgstr ""
 "Невозможно прочитать шаблон\n"
 "{}"
 
-#: guicontroller.py:157 gui/editdialog.py:449 gui/editdialog.py:469
+#: guicontroller.py:163 gui/editdialog.py:449 gui/editdialog.py:469
 #: gui/editdialog.py:497 gui/editdialog.py:547 gui/editdialog.py:586
 #: gui/editdialog.py:632 gui/editdialog.py:647 gui/editdialog.py:714
 msgid "Error"
 msgstr "Ошибка"
 
-#: guicontroller.py:168
+#: guicontroller.py:174
 msgid "Snippet error"
 msgstr "Ошибка в шаблоне"
 
@@ -86,12 +86,12 @@ msgstr "Ошибка в шаблоне:\n"
 msgid "Can't read file '{}'"
 msgstr "Невозможно прочитать файл '{}'"
 
-#: snippetparser.py:30
+#: snippetparser.py:32
 #, python-brace-format
 msgid "Snippet \"{name}\" not found"
 msgstr "Шаблон \"{name}\" не найден"
 
-#: snippetparser.py:35
+#: snippetparser.py:37
 #, python-brace-format
 msgid ""
 "Snippet error at line {line}:\n"
@@ -100,7 +100,7 @@ msgstr ""
 "Ошибка шаблона в строке {line}:\n"
 "{text}"
 
-#: snippetparser.py:41
+#: snippetparser.py:43
 #, python-brace-format
 msgid ""
 "Snippet reading error:\n"
@@ -109,7 +109,7 @@ msgstr ""
 "Ошибка чтения шаблона:\n"
 "{text}"
 
-#: snippetparser.py:46
+#: snippetparser.py:48
 #, python-brace-format
 msgid ""
 "Snippet processing error:\n"
@@ -118,19 +118,19 @@ msgstr ""
 "Ошибка разбора шаблона:\n"
 "{text}"
 
-#: plugin.py:44
+#: plugin.py:35
 msgid "Plugin to store text snippets"
 msgstr "Плагин для хранения шаблонов текста"
 
-#: plugin.py:48
-msgid "http://jenyay.net/Outwiker/SnippetsEn"
-msgstr "http://jenyay.net/Outwiker/Snippets"
+#: plugin.py:39
+msgid "https://jenyay.net/Outwiker/SnippetsEn"
+msgstr "https://jenyay.net/Outwiker/Snippets"
 
-#: gui/variablesdialog.py:51
+#: gui/variablesdialog.py:54
 msgid "Preview"
 msgstr "Просмотр"
 
-#: gui/variablesdialog.py:55
+#: gui/variablesdialog.py:58
 msgid "Snippet"
 msgstr "Шаблон"
 
@@ -138,15 +138,15 @@ msgstr "Шаблон"
 msgid "Insert as wiki command"
 msgstr "Вставить как викикоманду"
 
-#: gui/variablesdialog.py:130
+#: gui/variablesdialog.py:149
 msgid "{} | Snippet variables"
 msgstr "{} | Переменные шаблона"
 
-#: gui/variablesdialog.py:353 gui/variablesdialog.py:413
+#: gui/variablesdialog.py:377 gui/variablesdialog.py:437
 msgid "Expand (Shift+Enter)"
 msgstr "Развернуть (Shift+Enter)"
 
-#: gui/variablesdialog.py:392
+#: gui/variablesdialog.py:416
 msgid "Collapse"
 msgstr "Свернуть"
 
@@ -327,6 +327,9 @@ msgstr "Имя переменной"
 #: gui/editdialog.py:713
 msgid "Invalid variable name \"{}\""
 msgstr "Неправильное имя переменной \"{}\""
+
+#~ msgid "http://jenyay.net/Outwiker/SnippetsEn"
+#~ msgstr "http://jenyay.net/Outwiker/Snippets"
 
 #~ msgid "Open help"
 #~ msgstr "Открыть справку"

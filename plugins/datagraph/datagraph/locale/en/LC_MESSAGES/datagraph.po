@@ -7,54 +7,57 @@ msgid ""
 msgstr ""
 "Project-Id-Version: datagraph\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-03 21:08+0300\n"
-"PO-Revision-Date: 2017-03-03 21:08+0300\n"
+"POT-Creation-Date: 2018-08-23 12:47+0300\n"
+"PO-Revision-Date: 2018-08-23 12:58+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: jenyay.net <jenyay.ilin@gmail.com>\n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.9\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-Basepath: ../../..\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: renders/highcharts.py:259
-msgid "Curve {}"
-msgstr "Curve {}"
-
-#: guicreator.py:63 toolbar.py:25
+#: controller.py:62 controller.py:63
 msgid "DataGraph"
 msgstr "DataGraph"
 
-#: plugin.py:42
+#: renders/highcharts.py:258
+msgid "Curve {}"
+msgstr "Curve {}"
+
+#: plugin.py:31
 msgid "DataGraph plug-in designed for creation a charts by text data."
 msgstr "DataGraph plug-in designed for creation a charts by text data."
 
-#: plugin.py:50
-msgid "http://jenyay.net/Outwiker/DataGraphEn"
-msgstr "http://jenyay.net/Outwiker/DataGraphEn"
+#: plugin.py:35
+msgid "https://jenyay.net/Outwiker/DataGraphEn"
+msgstr "https://jenyay.net/Outwiker/DataGraphEn"
 
-#: actions.py:24
+#: actions.py:25
 msgid "Plot graph (:plot:)"
 msgstr "Plot graph (:plot:)"
 
-#: actions.py:28
+#: actions.py:29
 msgid "[DataGraph] Insert (:plot:) command for graph plotting"
 msgstr "[DataGraph] Insert (:plot:) command for graph plotting"
 
-#: actions.py:55
+#: actions.py:56
 msgid "Open help"
 msgstr "Open help"
 
-#: actions.py:59
+#: actions.py:60
 msgid "[DataGraph] Open help in the new OutWiker window"
 msgstr "[DataGraph] Open help in the new OutWiker window"
 
 #: actions.py:66
 msgid "datagraph_eng"
 msgstr "datagraph_eng"
+
+#~ msgid "http://jenyay.net/Outwiker/DataGraphEn"
+#~ msgstr "http://jenyay.net/Outwiker/DataGraphEn"
 
 #~ msgid "Plot graph(:plot:)"
 #~ msgstr "Plot graph(:plot:)"

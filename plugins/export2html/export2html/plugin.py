@@ -48,4 +48,4 @@ class PluginExport2Html (Plugin):
 
     @property
     def url(self):
-        return _(u"http://jenyay.net/Outwiker/Export2HtmlPluginEn")
+        return _(u"https://jenyay.net/Outwiker/Export2HtmlPluginEn")

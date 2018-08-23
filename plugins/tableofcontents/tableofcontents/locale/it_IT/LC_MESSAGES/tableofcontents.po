@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-24 21:59+0400\n"
-"PO-Revision-Date: 2014-09-01 21:26+0300\n"
+"POT-Creation-Date: 2018-08-23 12:51+0300\n"
+"PO-Revision-Date: 2018-08-23 13:39+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -11,9 +11,13 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 2.0.6\n"
 
-#: tableofcontents.py:45
+#: controller.py:52
+msgid "Table of contents"
+msgstr "Sommario"
+
+#: plugin.py:31
 msgid ""
 "Plugin add the menu \"Wiki - Table of contents\" and the wiki command (:"
 "toc:) for generation of the table of contents."
@@ -21,19 +25,15 @@ msgstr ""
 "Il plugin aggiunge il menu \"Wiki - Sommario\" e il comando wiki (:toc:) per "
 "la generazione del sommario."
 
-#: tableofcontents.py:55
-msgid "http://jenyay.net/Outwiker/ContentsEn"
-msgstr "http://jenyay.net/Outwiker/ContentsEn"
-
-#: guicreator.py:54
-msgid "Table of contents"
-msgstr "Sommario"
+#: plugin.py:35
+msgid "https://jenyay.net/Outwiker/ContentsEn"
+msgstr "https://jenyay.net/Outwiker/ContentsEn"
 
 #: actions.py:24
 msgid "Generate"
 msgstr "Generare"
 
-#: actions.py:29
+#: actions.py:28
 msgid "TableOfContents. Generate table of contents"
 msgstr "TableOfContents. Generare il sommario"
 
@@ -41,10 +41,13 @@ msgstr "TableOfContents. Generare il sommario"
 msgid "Insert wiki command (:toc:)"
 msgstr "Inserisci il comando (:toc:)"
 
-#: actions.py:60
+#: actions.py:59
 msgid ""
 "TableOfContents. Insert the wiki command (:toc:) for dynamic generation of "
 "the table of content"
 msgstr ""
 "TableOfContents. Inserisce il comando (:toc:) per la generazione dinamica "
 "del sommario"
+
+#~ msgid "http://jenyay.net/Outwiker/ContentsEn"
+#~ msgstr "http://jenyay.net/Outwiker/ContentsEn"

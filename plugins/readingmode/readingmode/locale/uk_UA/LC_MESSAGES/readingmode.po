@@ -2,32 +2,44 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-07 21:51+0300\n"
-"PO-Revision-Date: 2015-10-08 21:47+0300\n"
+"POT-Creation-Date: 2018-08-23 12:51+0300\n"
+"PO-Revision-Date: 2018-08-23 13:26+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 1.7.5\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Crowdin-Project: outwiker\n"
 "X-Crowdin-Language: uk\n"
 "X-Crowdin-File: readingmode.pot\n"
+
+#: plugin.py:23
+msgid ""
+"Plugin disables the panel \"Tree\", \"Tag\", \"Attach Files\" without "
+"changing the geometry of the main window."
+msgstr ""
+"Плагін відключає панелі \"Дерево заміток\", \"Мітки\" і \"Прикріплені файли"
+"\" без зміни геометрії головного вікна програми."
+
+#: plugin.py:27
+msgid "https://jenyay.net/Outwiker/ReadingModeEn"
+msgstr "https://jenyay.net/Outwiker/ReadingMode"
 
 #: actions.py:25
 msgid "Reading Mode"
 msgstr "Вид для читання"
 
 #: actions.py:30
-msgid "Reading Mode disables the panel \"Tree\", \"Tag\", \"Attach Files\" without changing the geometry of the main window."
-msgstr "Вид для читання відключає панелі \"Дерево заміток\", \"Мітки\" і \"Прикріплені файли\" без зміни геометрії головного вікна програми."
+msgid ""
+"Reading Mode disables the panel \"Tree\", \"Tag\", \"Attach Files\" without "
+"changing the geometry of the main window."
+msgstr ""
+"Вид для читання відключає панелі \"Дерево заміток\", \"Мітки\" і "
+"\"Прикріплені файли\" без зміни геометрії головного вікна програми."
 
-#: readingmode.py:35
-msgid "Plugin disables the panel \"Tree\", \"Tag\", \"Attach Files\" without changing the geometry of the main window."
-msgstr "Плагін відключає панелі \"Дерево заміток\", \"Мітки\" і \"Прикріплені файли\" без зміни геометрії головного вікна програми."
-
-#: readingmode.py:40
-msgid "http://jenyay.net/Outwiker/ReadingModeEn"
-msgstr "http://jenyay.net/Outwiker/ReadingMode"
+#~ msgid "http://jenyay.net/Outwiker/ReadingModeEn"
+#~ msgstr "http://jenyay.net/Outwiker/ReadingMode"

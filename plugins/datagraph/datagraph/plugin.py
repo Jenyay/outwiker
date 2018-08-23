@@ -32,7 +32,7 @@ class PluginDataGraph(Plugin):
 
     @property
     def url(self):
-        return _(u"http://jenyay.net/Outwiker/DataGraphEn")
+        return _(u"https://jenyay.net/Outwiker/DataGraphEn")
 
     def initialize(self):
         set_(self.gettext)

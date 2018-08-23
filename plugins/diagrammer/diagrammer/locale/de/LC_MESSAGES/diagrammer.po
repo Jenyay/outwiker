@@ -1,0 +1,292 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: outwiker\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-08-23 12:51+0300\n"
+"PO-Revision-Date: 2018-08-23 13:00+0300\n"
+"Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
+"Language-Team: German\n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.0.6\n"
+"X-Crowdin-Project: outwiker\n"
+"X-Crowdin-Language: de\n"
+"X-Crowdin-File: diagrammer.pot\n"
+
+#: controller.py:103 controller.py:104
+msgid "Diagrammer"
+msgstr "Diagrammtool"
+
+#: commanddiagram.py:55
+msgid "Diagram parsing error"
+msgstr "Diagram verarbeitungs Fehler"
+
+#: actions/help.py:23
+msgid "Online Help"
+msgstr "Online-Hilfe"
+
+#: actions/help.py:27
+msgid "Diagrammer. Go to blockdiag webpage"
+msgstr "Diagrammtool. Gehe zu Blockdiag Webseite"
+
+#: actions/insertgroup.py:25
+msgid "Insert group"
+msgstr "Gruppe einfügen"
+
+#: actions/insertgroup.py:29
+msgid "Diagrammer. Insert new group"
+msgstr "Diagrammer. Neue Gruppe einfügen"
+
+#: actions/insertnode.py:25
+msgid "Insert node"
+msgstr "Knotenpunkt einfügen"
+
+#: actions/insertnode.py:29
+msgid "Diagrammer. Insert new node"
+msgstr "Diagrammer. Neuen Knotenpunkt einfügen"
+
+#: actions/insertdiagram.py:26
+msgid "Insert diagram"
+msgstr "Diagramm einfügen"
+
+#: actions/insertdiagram.py:30
+msgid "Diagrammer. Insert diagram"
+msgstr "Diagrammer. Diagramm einfügen"
+
+#: actions/insertedge.py:55
+msgid "Insert edge without any arrow"
+msgstr "Kante ohne jeden Pfeil einfügen"
+
+#: actions/insertedge.py:59
+msgid "Diagrammer. Insert edge without any arrow"
+msgstr "Diagrammer. Kante ohne jeden Pfeil einfügen"
+
+#: actions/insertedge.py:79
+msgid "Insert edge with the right arrow"
+msgstr "Kante mit rechten Pfeil einfügen"
+
+#: actions/insertedge.py:83
+msgid "Diagrammer. Insert edge with the right arrow"
+msgstr "Diagrammer. Kante mit rechten Pfeil einfügen"
+
+#: actions/insertedge.py:103
+msgid "Insert edge with the left arrow"
+msgstr "Kante mit linken Pfeil einfügen"
+
+#: actions/insertedge.py:107
+msgid "Diagrammer. Insert edge with the left arrow"
+msgstr "Diagrammer. Kante mit linken Pfeil einfügen"
+
+#: actions/insertedge.py:127
+msgid "Insert edge with the both arrows"
+msgstr "Kante mit beiden Pfeilen einfügen"
+
+#: actions/insertedge.py:131
+msgid "Diagrammer. Insert edge with the both arrows"
+msgstr "Diagrammer. Kante mit beiden Pfeilen einfügen"
+
+#: plugin.py:34
+msgid "Plugin for the construction of diagrams"
+msgstr "Plugin für den Bau von Diagrammen"
+
+#: plugin.py:38
+msgid "https://jenyay.net/Outwiker/DiagrammerEn"
+msgstr "https://jenyay.net/Outwiker/DiagrammerEn"
+
+#: gui/insertedgedialog.py:23
+msgid "Insert edge"
+msgstr "Kante einfügen"
+
+#: gui/insertedgedialog.py:34 gui/insertnodedialog.py:48
+msgid "Options"
+msgstr "Optionen"
+
+#: gui/insertedgedialog.py:50
+msgid "First node name"
+msgstr "Ersten Knotennamen"
+
+#: gui/insertedgedialog.py:55
+msgid "Second node name"
+msgstr "Zweite Knotennamen"
+
+#: gui/insertedgedialog.py:67
+msgid "Line style"
+msgstr "Linienart"
+
+#: gui/insertedgedialog.py:71
+msgid "Thick line"
+msgstr "Dicke Linie"
+
+#: gui/insertedgedialog.py:76
+msgid "Arrow style"
+msgstr "Pfeil-Stil"
+
+#: gui/insertedgedialog.py:80
+msgid "Set line color"
+msgstr "Linienfarbe setzen"
+
+#: gui/insertedgedialog.py:87 gui/insertgroupdialog.py:44
+#: gui/insertnodedialog.py:76
+msgid "Label"
+msgstr "Label"
+
+#: gui/insertedgedialog.py:92 gui/insertnodedialog.py:108
+msgid "Set font size"
+msgstr "Schriftgröße setzen"
+
+#: gui/insertedgedialog.py:101 gui/insertgroupdialog.py:60
+#: gui/insertnodedialog.py:101
+msgid "Set text color"
+msgstr "Textfarbe setzten"
+
+#: gui/insertedgedialog.py:108
+msgid "Folded"
+msgstr "Gefaltet"
+
+#: gui/insertedgedialog.py:114 gui/insertdiagramdialog.py:116
+#: gui/insertgroupdialog.py:80 gui/insertnodedialog.py:135
+msgid "Open the documentation page"
+msgstr "Öffnen Sie die Dokumentationsseite"
+
+#: gui/insertedgedialog.py:159
+msgid "Node1"
+msgstr "Knotenpunkt1"
+
+#: gui/insertedgedialog.py:163
+msgid "Node2"
+msgstr "Knotenpunkt2"
+
+#: gui/insertdiagramdialog.py:21
+msgid "Insert Diagram"
+msgstr "Diagramm einfügen"
+
+#: gui/insertdiagramdialog.py:49 gui/insertgroupdialog.py:49
+msgid "Orientation"
+msgstr "Orientierung"
+
+#: gui/insertdiagramdialog.py:53
+msgid "Default nodes shape"
+msgstr "Standard Knotenpunkt Form"
+
+#: gui/insertdiagramdialog.py:57
+msgid "Set default nodes background color"
+msgstr "Setzte standard Knotenpunkt Hintergrundfarbe"
+
+#: gui/insertdiagramdialog.py:64
+msgid "Set default text color"
+msgstr "Setze standard Textfarbe"
+
+#: gui/insertdiagramdialog.py:71
+msgid "Set default font size"
+msgstr "Setzte standard Textgrösse"
+
+#: gui/insertdiagramdialog.py:80
+msgid "Set default nodes width"
+msgstr "Setze standard Knotenpunkt Breite"
+
+#: gui/insertdiagramdialog.py:89
+msgid "Set default nodes height"
+msgstr "Setze standard Knotenpunkt Höhe"
+
+#: gui/insertdiagramdialog.py:98
+msgid "Set default horizontal span between nodes"
+msgstr "Setze standard horizontalen Abstand zwischen Knotenpunkten"
+
+#: gui/insertdiagramdialog.py:107
+msgid "Set default vertical span between nodes"
+msgstr "Setze standard vertikalen Abstand zwischen Knotenpunkten"
+
+#: gui/insertgroupdialog.py:18
+msgid "Insert Group"
+msgstr "Gruppe einfügen"
+
+#: gui/insertgroupdialog.py:21
+msgid "Box"
+msgstr "Box"
+
+#: gui/insertgroupdialog.py:22
+msgid "Line"
+msgstr "Zeile"
+
+#: gui/insertgroupdialog.py:39 gui/insertnodedialog.py:67
+msgid "Node name"
+msgstr "Knotennamen"
+
+#: gui/insertgroupdialog.py:53 gui/insertnodedialog.py:94
+msgid "Set background color"
+msgstr "Hintergrundfarbe setzen"
+
+#: gui/insertgroupdialog.py:67
+msgid "Border shape"
+msgstr "Rahmenform"
+
+#: gui/insertgroupdialog.py:76 gui/insertnodedialog.py:90
+msgid "Border style"
+msgstr "Rahmenart"
+
+#: gui/propertyfactory.py:22
+msgid "Landscape"
+msgstr "Landschaft"
+
+#: gui/propertyfactory.py:23
+msgid "Portrait"
+msgstr "Porträt"
+
+#: gui/propertyfactory.py:349 gui/propertyfactory.py:406
+#: gui/insertnodedialog.py:35
+msgid "Default"
+msgstr "Standard"
+
+#: gui/propertyfactory.py:350
+msgid "Solid"
+msgstr "Solid"
+
+#: gui/propertyfactory.py:351
+msgid "Dotted"
+msgstr "Gepunkted"
+
+#: gui/propertyfactory.py:352
+msgid "Dashed"
+msgstr "Gestrichelt"
+
+#: gui/propertyfactory.py:407
+msgid "Generalization"
+msgstr "Generalisierung"
+
+#: gui/propertyfactory.py:408
+msgid "Composition"
+msgstr "Zusammensetzung"
+
+#: gui/propertyfactory.py:409
+msgid "Aggregation"
+msgstr "Aggregation"
+
+#: gui/insertnodedialog.py:21
+msgid "Insert Node"
+msgstr "Knotenpunkt einfügen"
+
+#: gui/insertnodedialog.py:81
+msgid "Shape"
+msgstr "Form"
+
+#: gui/insertnodedialog.py:85
+msgid "Stacked"
+msgstr "Gestapelt"
+
+#: gui/insertnodedialog.py:117
+msgid "Set width"
+msgstr "Breite setzen"
+
+#: gui/insertnodedialog.py:126
+msgid "Set height"
+msgstr "Höhe setzen"
+
+#: gui/insertnodedialog.py:174
+msgid "Name of a node can't be empty"
+msgstr "Namen eines Knotens darf nicht leer sein"
+
+#~ msgid "http://jenyay.net/Outwiker/DiagrammerEn"
+#~ msgstr "http://jenyay.net/Outwiker/DiagrammerEn"

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-24 22:03+0300\n"
-"PO-Revision-Date: 2018-08-17 16:05+0300\n"
+"POT-Creation-Date: 2018-08-23 12:51+0300\n"
+"PO-Revision-Date: 2018-08-23 13:07+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -16,14 +16,17 @@ msgstr ""
 "X-Crowdin-Language: de\n"
 "X-Crowdin-File: htmlformatter.pot\n"
 
-#: htmlformatter.py:42
-msgid "Plugin for more punctual HTML generation"
-msgstr "Plugin für punktuelle HTML-Generierung"
-
-#: htmlformatter.py:52
-msgid "http://jenyay.net/Outwiker/HtmlFormatterEn"
-msgstr "http://jenyay.net/Outwiker/HtmlFormatterEn"
-
 #: controller.py:39
 msgid "Paragraphs (<p>...</p>)"
 msgstr "Paragraphen (<p>...</p>)"
+
+#: plugin.py:31
+msgid "Plugin for more punctual HTML generation"
+msgstr "Plugin für punktuelle HTML-Generierung"
+
+#: plugin.py:35
+msgid "https://jenyay.net/Outwiker/HtmlFormatterEn"
+msgstr "https://jenyay.net/Outwiker/HtmlFormatterEn"
+
+#~ msgid "http://jenyay.net/Outwiker/HtmlFormatterEn"
+#~ msgstr "http://jenyay.net/Outwiker/HtmlFormatterEn"

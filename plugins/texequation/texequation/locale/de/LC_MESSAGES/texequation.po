@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-26 22:14+0300\n"
-"PO-Revision-Date: 2018-08-17 16:10+0300\n"
+"POT-Creation-Date: 2018-08-23 12:51+0300\n"
+"PO-Revision-Date: 2018-08-23 13:40+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -16,13 +16,13 @@ msgstr ""
 "X-Crowdin-Language: de\n"
 "X-Crowdin-File: texequation.pot\n"
 
-#: plugin.py:41
+#: plugin.py:31
 msgid "TeXEquation plug-in allow to insert equations in the TeX format."
 msgstr "TeXEquation Plugin erlaubt Gleichungen im TeX Format einzufügen."
 
-#: plugin.py:45
-msgid "http://jenyay.net/Outwiker/TexEquationEn"
-msgstr "http://jenyay.net/Outwiker/TexEquationEn"
+#: plugin.py:35
+msgid "https://jenyay.net/Outwiker/TexEquationEn"
+msgstr "https://jenyay.net/Outwiker/TexEquationEn"
 
 #: actions.py:22
 msgid "Equation..."
@@ -55,3 +55,6 @@ msgstr "Abbrechen"
 #: tokentex.py:93
 msgid "Can't copy KaTeX library"
 msgstr "KaTeX Bibliothek kann nicht kopiert werden"
+
+#~ msgid "http://jenyay.net/Outwiker/TexEquationEn"
+#~ msgstr "http://jenyay.net/Outwiker/TexEquationEn"

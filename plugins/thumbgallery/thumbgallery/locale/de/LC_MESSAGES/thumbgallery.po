@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-15 23:03+0300\n"
-"PO-Revision-Date: 2018-08-17 16:10+0300\n"
+"POT-Creation-Date: 2018-08-23 12:51+0300\n"
+"PO-Revision-Date: 2018-08-23 13:41+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -36,15 +36,15 @@ msgstr "Alle Bilder"
 msgid "Clear"
 msgstr "Bereinigen"
 
-#: plugin.py:60
-msgid "http://jenyay.net/Outwiker/ThumbGalleryEn"
-msgstr "http://jenyay.net/Outwiker/ThumbGalleryEn"
+#: plugin.py:47
+msgid "https://jenyay.net/Outwiker/ThumbGalleryEn"
+msgstr "https://jenyay.net/Outwiker/ThumbGalleryEn"
 
-#: plugin.py:66
+#: plugin.py:53
 msgid "locale/description.html"
 msgstr "locale/description.html"
 
-#: plugin.py:74
+#: plugin.py:60
 msgid "Can't load description"
 msgstr "Beschreibung kann nicht geladen werden"
 
@@ -55,3 +55,6 @@ msgstr "Gallerie (:thumbgallery:)"
 #: actions.py:28
 msgid "Insert (:thumbgallery:) wiki command to create the gallery."
 msgstr "Füge den Wiki Befehl (:thumbgallery:) ein um eine Gallerie zu erzeugen."
+
+#~ msgid "http://jenyay.net/Outwiker/ThumbGalleryEn"
+#~ msgstr "http://jenyay.net/Outwiker/ThumbGalleryEn"

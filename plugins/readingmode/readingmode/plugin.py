@@ -24,7 +24,7 @@ class PluginReadingMode(Plugin):
 
     @property
     def url(self):
-        return _(u"http://jenyay.net/Outwiker/ReadingModeEn")
+        return _(u"https://jenyay.net/Outwiker/ReadingModeEn")
 
     def initialize(self):
         set_(self.gettext)

@@ -36,7 +36,7 @@ class PluginWebPage (Plugin):
 
     @property
     def url(self):
-        return _(u"http://jenyay.net/Outwiker/WebPageEn")
+        return _(u"https://jenyay.net/Outwiker/WebPageEn")
 
     def initialize(self):
         set_(self.gettext)

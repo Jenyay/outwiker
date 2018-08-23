@@ -2,37 +2,30 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-09 21:54+0300\n"
-"PO-Revision-Date: 2017-02-18 16:50+0300\n"
+"POT-Creation-Date: 2018-08-23 13:46+0300\n"
+"PO-Revision-Date: 2018-08-23 13:47+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 1.8.9\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Crowdin-Project: outwiker\n"
 "X-Crowdin-Language: uk\n"
 "X-Crowdin-File: webpage.pot\n"
 
-#: webpage.py:40
-msgid "Plug-in for downloading HTML pages from web"
-msgstr "Додаток для завантаження HTML-сторінок з Інтернету"
-
-#: webpage.py:44
-msgid "http://jenyay.net/Outwiker/WebPageEn"
-msgstr "http://jenyay.net/Outwiker/WebPage"
-
-#: downloader.py:238
+#: downloader.py:247
 msgid "Processing: {}\n"
 msgstr "Обробка: {}\n"
 
-#: downloader.py:340
+#: downloader.py:354
 msgid "Download: {}\n"
 msgstr "Завантаження: {}\n"
 
-#: downloader.py:350
+#: downloader.py:364
 msgid "Can't download {}\n"
 msgstr "Помилка при завантаженні {}\n"
 
@@ -64,19 +57,19 @@ msgstr "Показати інформацію про web-сторінку"
 msgid "WebPage. Show current web page information."
 msgstr "WebPage. Показати інформацію про поточну web-сторінку"
 
-#: actions/downloadaction.py:43
+#: actions/downloadaction.py:39
 msgid "Create child web page"
 msgstr "Створити дочірню web-сторінку"
 
-#: actions/downloadaction.py:48
+#: actions/downloadaction.py:43
 msgid "Download content from the Internet and create child web page"
 msgstr "Завантажити вміст з інтернету і створити дочірню web-сторінку"
 
-#: actions/downloadaction.py:68
+#: actions/downloadaction.py:61
 msgid "Create sibling web page"
 msgstr "Створити web-сторінку того ж рівня"
 
-#: actions/downloadaction.py:73
+#: actions/downloadaction.py:65
 msgid "Download content from the Internet and create sibling web page"
 msgstr "Завантажити вміст з інтернету і створити web-сторінку того ж рівня"
 
@@ -88,111 +81,121 @@ msgstr "Відключити скрипти на сторінці"
 msgid "WebPage. Enable / disable scripts on downloaded page."
 msgstr "WebPage. Включити / відключити скрипти на завантаженій сторінці."
 
-#: webnotepage.py:114
+#: webnotepage.py:114 gui/guicontroller.py:115
 msgid "Web Page"
 msgstr "Web-сторінка"
 
-#: webnotepage.py:158 gui/guicontroller.py:54 gui/webpagetoolbar.py:25
-#: gui/downloaddialog.py:263
+#: webnotepage.py:158 gui/guicontroller.py:53 gui/downloaddialog.py:249
 msgid "Web page"
 msgstr "Web-сторінка"
 
-#: gui/infodialog.py:30
+#: plugin.py:35
+msgid "Plug-in for downloading HTML pages from web"
+msgstr "Додаток для завантаження HTML-сторінок з Інтернету"
+
+#: plugin.py:39
+msgid "https://jenyay.net/Outwiker/WebPageEn"
+msgstr "https://jenyay.net/Outwiker/WebPage"
+
+#: gui/infodialog.py:29
 msgid "Web page information"
 msgstr "Інформація про web-сторінку"
 
-#: gui/infodialog.py:36
+#: gui/infodialog.py:34
 msgid "Downloading log"
 msgstr "Журнал завантаження"
 
-#: gui/infodialog.py:49
+#: gui/infodialog.py:46
 msgid "Source URL"
 msgstr "URL-адреса джерела"
 
-#: gui/infodialog.py:50
+#: gui/infodialog.py:49
 msgid "Link"
 msgstr "Посилання"
 
-#: gui/guicontroller.py:219
+#: gui/guicontroller.py:227
 msgid "Heading"
 msgstr "Заголовки"
 
-#: gui/guicontroller.py:224
+#: gui/guicontroller.py:232
 msgid "Font"
 msgstr "Шрифт"
 
-#: gui/guicontroller.py:229
+#: gui/guicontroller.py:237
 msgid "Alignment"
 msgstr "Вирівнювання"
 
-#: gui/guicontroller.py:234
+#: gui/guicontroller.py:242
 msgid "Formatting"
 msgstr "Форматування"
 
-#: gui/guicontroller.py:239
+#: gui/guicontroller.py:247
 msgid "Lists"
 msgstr "Списки"
 
-#: gui/guicontroller.py:244
+#: gui/guicontroller.py:252
 msgid "Tables"
 msgstr "Таблиці"
 
-#: gui/downloaddialog.py:49
+#: gui/downloaddialog.py:50
 msgid "Download web page"
 msgstr "Завантажити Web-сторінку"
 
-#: gui/downloaddialog.py:59
+#: gui/downloaddialog.py:58
 msgid "URL or local file"
 msgstr "URL або локальний файл"
 
-#: gui/downloaddialog.py:61
+#: gui/downloaddialog.py:60
 msgid "..."
 msgstr "..."
 
-#: gui/downloaddialog.py:198
+#: gui/downloaddialog.py:189
 msgid "Can't remove temp directory"
 msgstr "Помилка видалення тимчасової директорії"
 
-#: gui/downloaddialog.py:206
+#: gui/downloaddialog.py:196
 msgid "Enter link for downloading"
 msgstr "Введіть посилання для завантаження"
 
-#: gui/downloaddialog.py:207
+#: gui/downloaddialog.py:197
 msgid "Error"
 msgstr "Помилка"
 
-#: gui/downloaddialog.py:243
+#: gui/downloaddialog.py:231
 msgid "HTML files (*.html; *.htm)|*.html;*.htm|All files|*.*"
 msgstr "Файли HTML (*.html; *.htm)|*.html;*.htm|All files|*.*"
 
-#: gui/downloaddialog.py:258 gui/downloaddialog.py:280
+#: gui/downloaddialog.py:244 gui/downloaddialog.py:266
 msgid "Page creation is canceled."
 msgstr "Створення сторінки відмінено."
 
-#: gui/downloaddialog.py:272
+#: gui/downloaddialog.py:258
 msgid "Enter a title for the page"
 msgstr "Введіть заголовок сторінки"
 
-#: gui/downloaddialog.py:273
+#: gui/downloaddialog.py:259
 msgid "Page title"
 msgstr "Заголовок сторінки"
 
-#: gui/downloaddialog.py:296
+#: gui/downloaddialog.py:282
 msgid "Can't create the page. Perhaps the title of the page is too long."
 msgstr "Помилка створення сторінки. Можливо заголовок сторінки задовгий."
 
-#: gui/downloaddialog.py:324
+#: gui/downloaddialog.py:309
 msgid "Start downloading\n"
 msgstr "Початок завантаження\n"
 
-#: gui/downloaddialog.py:329
+#: gui/downloaddialog.py:314
 msgid "Download error: {}\n"
 msgstr "Помилка завантаження: {}\n"
 
-#: gui/downloaddialog.py:333
+#: gui/downloaddialog.py:318
 msgid "Invalid URL or file format\n"
 msgstr "Невірне посилання або формат файлу\n"
 
-#: gui/downloaddialog.py:336
+#: gui/downloaddialog.py:321
 msgid "Finish downloading\n"
 msgstr "Закінчення завантаження\n"
+
+#~ msgid "http://jenyay.net/Outwiker/WebPageEn"
+#~ msgstr "http://jenyay.net/Outwiker/WebPage"

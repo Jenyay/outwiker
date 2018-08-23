@@ -2,25 +2,49 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-05 10:05+0400\n"
-"PO-Revision-Date: 2014-06-12 10:15+0300\n"
+"POT-Creation-Date: 2018-08-23 12:51+0300\n"
+"PO-Revision-Date: 2018-08-23 12:57+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 2.0.6\n"
 
-#: actions.py:24
-msgid "Counter (:counter ...:)"
-msgstr "Лічильник (:counter ...:)"
+#: insertdialog.py:172
+msgid "Advanced"
+msgstr "Розширене"
 
-#: actions.py:29
-msgid "Counter plugin. Insert (:counter... :) command"
-msgstr "Додаток Counter. Вставити команду (:counter... :)"
+#: insertdialog.py:174
+msgid "Start count from"
+msgstr "Почати відлік з"
 
-#: counter.py:43
+#: insertdialog.py:177
+msgid "Step"
+msgstr "Крок"
+
+#: insertdialog.py:180
+msgid "Hide counter"
+msgstr "Приховати лічильник"
+
+#: insertdialog.py:217
+msgid "Nested counter"
+msgstr "Вкладений лічильник"
+
+#: insertdialog.py:219
+msgid "Parent counter name"
+msgstr "Назва батьківського лічильника"
+
+#: insertdialog.py:223
+msgid "Separator"
+msgstr "Розділювач"
+
+#: insertdialog.py:257
+msgid "Counter name"
+msgstr "Назва лічильника"
+
+#: plugin.py:30
 msgid ""
 "Plugin adds wiki-command (:counter:), allowing the automatic numbering "
 "anything on the page."
@@ -28,7 +52,7 @@ msgstr ""
 "Додаток додає команду  (:counter:), що дозволяє створювати автоматичну "
 "нумерацію на вікісторінці."
 
-#: counter.py:45
+#: plugin.py:32
 msgid ""
 "<b>Usage:</b>:\n"
 "(:counter parameters... :)"
@@ -36,7 +60,7 @@ msgstr ""
 "<b>Використання:</b>:\n"
 "(:counter параметри... :)"
 
-#: counter.py:48
+#: plugin.py:35
 msgid ""
 "<b>Parameters:</b>\n"
 "All parameters are optional.\n"
@@ -71,38 +95,17 @@ msgstr ""
 "значення, але сам при цьому не має відображатися.</li>\n"
 "</ul>"
 
-#: counter.py:71
-msgid "http://jenyay.net/Outwiker/CounterEn"
-msgstr "http://jenyay.net/Outwiker/Counter"
+#: plugin.py:55
+msgid "https://jenyay.net/Outwiker/CounterEn"
+msgstr "https://jenyay.net/Outwiker/Counter"
 
-#: insertdialog.py:147
-msgid "Advanced"
-msgstr "Розширене"
+#: actions.py:22
+msgid "Counter (:counter ...:)"
+msgstr "Лічильник (:counter ...:)"
 
-#: insertdialog.py:149
-msgid "Start count from"
-msgstr "Почати відлік з"
+#: actions.py:26
+msgid "Counter plugin. Insert (:counter... :) command"
+msgstr "Додаток Counter. Вставити команду (:counter... :)"
 
-#: insertdialog.py:152
-msgid "Step"
-msgstr "Крок"
-
-#: insertdialog.py:155
-msgid "Hide counter"
-msgstr "Приховати лічильник"
-
-#: insertdialog.py:192
-msgid "Nested counter"
-msgstr "Вкладений лічильник"
-
-#: insertdialog.py:194
-msgid "Parent counter name"
-msgstr "Назва батьківського лічильника"
-
-#: insertdialog.py:198
-msgid "Separator"
-msgstr "Розділювач"
-
-#: insertdialog.py:232
-msgid "Counter name"
-msgstr "Назва лічильника"
+#~ msgid "http://jenyay.net/Outwiker/CounterEn"
+#~ msgstr "http://jenyay.net/Outwiker/Counter"

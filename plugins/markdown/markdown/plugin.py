@@ -37,7 +37,7 @@ class PluginMarkdown(Plugin):
 
     @property
     def url(self):
-        return _(u"http://jenyay.net/Outwiker/MarkdownEn")
+        return _(u"https://jenyay.net/Outwiker/MarkdownEn")
 
     def initialize(self):
         set_(self.gettext)

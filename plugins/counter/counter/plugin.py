@@ -52,7 +52,7 @@ All parameters are optional.
 
     @property
     def url(self):
-        return _(u"http://jenyay.net/Outwiker/CounterEn")
+        return _(u"https://jenyay.net/Outwiker/CounterEn")
 
     def initialize(self):
         set_(self.gettext)

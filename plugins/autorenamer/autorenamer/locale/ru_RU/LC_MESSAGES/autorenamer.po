@@ -6,7 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: AutoRenamer 0.0.01\n"
-"POT-Creation-Date: 2015-04-21 17:56+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-08-23 12:51+0300\n"
 "PO-Revision-Date: 2015-04-23 13:46+0200\n"
 "Last-Translator: Vitalii Koshura <delionkur-lestat@mail.ru>\n"
 "Language-Team: \n"
@@ -21,23 +22,26 @@ msgstr ""
 "X-Poedit-SearchPath-0: D:\\Dropbox\\Development-1\\OutwikerPlugin"
 "\\AutoRenamer\n"
 
-#: D:\Dropbox\Development-1\OutwikerPlugin\AutoRenamer/actions.py:20
-msgid "AutoRename (:autorename:)"
-msgstr "Автоматическое переименование (:autorename:)"
+#: preferencesPanel.py:25
+msgid "Automatically rename all pages according to their first line"
+msgstr "Автоматически переименовывать все страницы по их первой строке"
 
-#: D:\Dropbox\Development-1\OutwikerPlugin\AutoRenamer/actions.py:24
-msgid "Insert AutoRename (:autorename:) command"
-msgstr "Вставить команду автоматического переименования (:autorename:)"
+#: preferencesPanel.py:33
+msgid ""
+"Automatically set first line of the page be the name of this page on page "
+"create"
+msgstr ""
+"Автоматически устанавливать первую строку по имени страницы при создании"
 
-#: D:\Dropbox\Development-1\OutwikerPlugin\AutoRenamer/autorenamer.py:42
+#: autorenamer.py:44
 msgid "AutoRenamer [Plugin]"
 msgstr "AutoRenamer [Плагин]"
 
-#: D:\Dropbox\Development-1\OutwikerPlugin\AutoRenamer/autorenamer.py:78
+#: autorenamer.py:81
 msgid "AutoRenamer"
 msgstr "Автоматическое переименование"
 
-#: D:\Dropbox\Development-1\OutwikerPlugin\AutoRenamer/pluginautorenamer.py:27
+#: plugin.py:22
 msgid ""
 "Plugin allows to rename all pages automatically using the first line of the "
 "page or automatically rename just those pages where you place (:autorename:) "
@@ -47,17 +51,14 @@ msgstr ""
 "согласно содержимому первой строки страницы или переименовывать только те "
 "страницы, которые содержат тег (:autorename:)"
 
-#: D:\Dropbox\Development-1\OutwikerPlugin\AutoRenamer/pluginautorenamer.py:28
+#: plugin.py:23
 msgid "<b>Author:</b> Vitalii Koshura (delionkur-lestat@mail.ru)"
 msgstr "<b>Автор:</b> Vitalii Koshura (delionkur-lestat@mail.ru)"
 
-#: D:\Dropbox\Development-1\OutwikerPlugin\AutoRenamer/preferencesPanel.py:22
-msgid "Automatically rename all pages according to their first line"
-msgstr "Автоматически переименовывать все страницы по их первой строке"
+#: actions.py:18
+msgid "AutoRename (:autorename:)"
+msgstr "Автоматическое переименование (:autorename:)"
 
-#: D:\Dropbox\Development-1\OutwikerPlugin\AutoRenamer/preferencesPanel.py:25
-msgid ""
-"Automatically set first line of the page be the name of this page on page "
-"create"
-msgstr ""
-"Автоматически устанавливать первую строку по имени страницы при создании"
+#: actions.py:22
+msgid "Insert AutoRename (:autorename:) command"
+msgstr "Вставить команду автоматического переименования (:autorename:)"

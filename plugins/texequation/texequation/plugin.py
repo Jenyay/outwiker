@@ -32,7 +32,7 @@ class PluginTexEquation(Plugin):
 
     @property
     def url(self):
-        return _(u"http://jenyay.net/Outwiker/TexEquationEn")
+        return _(u"https://jenyay.net/Outwiker/TexEquationEn")
 
     def initialize(self):
         set_(self.gettext)

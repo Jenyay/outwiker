@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Export2Html\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-17 09:26+0400\n"
-"PO-Revision-Date: 2013-05-17 09:28+0300\n"
+"POT-Creation-Date: 2018-08-23 12:51+0300\n"
+"PO-Revision-Date: 2018-08-23 13:02+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: jenyay.net <jenyay.ilin@gmail.com>\n"
 "Language: ru_RU\n"
@@ -16,34 +16,26 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 2.0.6\n"
 
-#: baseexporter.py:50 baseexporter.py:116
-msgid "File {0} already exists"
-msgstr "Файл {0} уже существует"
-
-#: baseexporter.py:53
-msgid "Folder {0} not exists"
-msgstr "Папка {0} не существует"
-
-#: controller.py:37
+#: controller.py:30
 msgid "Export Page To HTML..."
 msgstr "Экспорт страницы в HTML..."
 
-#: controller.py:40
+#: controller.py:34
 msgid "Export Branch To HTML..."
 msgstr "Экспорт ветки в HTML..."
 
-#: controller.py:50
+#: controller.py:48
 msgid "Please, select page"
 msgstr "Пожалуйста, выберите страницу"
 
-#: controller.py:51 controller.py:59 controller.py:73 exportdialog.py:83
-#: exportpagedialog.py:32
+#: controller.py:49 controller.py:57 controller.py:73 exportpagedialog.py:34
+#: exportdialog.py:107
 msgid "Error"
 msgstr "Ошибка"
 
-#: controller.py:58 exporterfactory.py:25
+#: controller.py:56 exporterfactory.py:26
 msgid "This page type not support export to HTML"
 msgstr "Этот тип страниц не поддерживает экспорт в HTML"
 
@@ -51,53 +43,66 @@ msgstr "Этот тип страниц не поддерживает экспо�
 msgid "Wiki is not open"
 msgstr "Вики еще не открыта"
 
-#: exportbranchdialog.py:31
+#: logdialog.py:13
+msgid "Errors List"
+msgstr "Список ошибок"
+
+#: exportbranchdialog.py:52
 msgid "Use long file names (include parent name)"
 msgstr "Создавать файлы с длинными именами (включать заголовки родителей)"
 
-#: exportbranchdialog.py:58
+#: exportbranchdialog.py:84
 msgid "Export to HTML"
 msgstr "Экспорт страниц в HTML"
 
-#: exportbranchdialog.py:59
+#: exportbranchdialog.py:85
 msgid "Please wait..."
 msgstr "Пожалуйста, подождите..."
-
-#: exportdialog.py:17 exportmenu.py:63 exportmenu.py:81
-msgid "Export"
-msgstr "Экспорт"
-
-#: exportdialog.py:21
-msgid "Folder for Export:"
-msgstr "Папка для экспорта:"
-
-#: exportdialog.py:32
-msgid "Overwrite Existing Files"
-msgstr "Перезаписывать существующие файлы"
-
-#: exportdialog.py:33
-msgid "Attaches. Save Only Images"
-msgstr "Прикреплённые файлы. Сохранять только картинки"
-
-#: exportdialog.py:82
-msgid "Please, select folder for export"
-msgstr "Пожалуйста, выберите папку для экспорта"
 
 #: exportmenu.py:48 exportmenu.py:75
 msgid "File menu not found"
 msgstr "Меню \"Файл\" не найдено"
 
-#: logdialog.py:13
-msgid "Errors List"
-msgstr "Список ошибок"
+#: exportmenu.py:63 exportmenu.py:81 exportdialog.py:21
+msgid "Export"
+msgstr "Экспорт"
 
-#: pluginexport2html.py:40
+#: plugin.py:31
 msgid "Export pages to HTML"
 msgstr "Экспорт страниц в HTML"
 
-#: pluginexport2html.py:64
-msgid "http://jenyay.net/Outwiker/Export2HtmlPluginEn"
-msgstr "http://jenyay.net/Outwiker/Export2HtmlPlugin"
+#: plugin.py:51
+msgid "https://jenyay.net/Outwiker/Export2HtmlPluginEn"
+msgstr "https://jenyay.net/Outwiker/Export2HtmlPlugin"
+
+#: exportdialog.py:25
+msgid "Folder for Export:"
+msgstr "Папка для экспорта:"
+
+#: exportdialog.py:36
+msgid "Overwrite Existing Files"
+msgstr "Перезаписывать существующие файлы"
+
+#: exportdialog.py:37
+msgid "Attaches. Save Only Images"
+msgstr "Прикреплённые файлы. Сохранять только картинки"
+
+#: exportdialog.py:106
+msgid "Please, select folder for export"
+msgstr "Пожалуйста, выберите папку для экспорта"
+
+#: baseexporter.py:48 baseexporter.py:108
+#, python-brace-format
+msgid "File {0} already exists"
+msgstr "Файл {0} уже существует"
+
+#: baseexporter.py:51
+#, python-brace-format
+msgid "Folder {0} not exists"
+msgstr "Папка {0} не существует"
+
+#~ msgid "http://jenyay.net/Outwiker/Export2HtmlPluginEn"
+#~ msgstr "http://jenyay.net/Outwiker/Export2HtmlPlugin"
 
 #~ msgid "{0} not found"
 #~ msgstr "{0} не найден"

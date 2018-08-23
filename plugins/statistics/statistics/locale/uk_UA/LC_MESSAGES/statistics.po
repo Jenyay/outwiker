@@ -2,16 +2,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-29 23:31+0300\n"
-"PO-Revision-Date: 2018-04-25 17:09+0300\n"
+"POT-Creation-Date: 2018-08-23 12:51+0300\n"
+"PO-Revision-Date: 2018-08-23 13:38+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
-"X-Generator: Poedit 2.0.7\n"
+"Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 "
+"&& n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 "
+"&& n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Crowdin-Project: outwiker\n"
 "X-Crowdin-Language: uk\n"
 "X-Crowdin-File: statistics.pot\n"
@@ -30,8 +32,12 @@ msgid "Most rarely used tags:"
 msgstr "Найрідше використовувані мітки:"
 
 #: pageattachmentsizeinfo.py:21
-msgid "Pages with the largest size of attachments (in brackets the size of attachments):"
-msgstr "Сторінки з найбільшим розміром долучених файлів (в дужках вказано розмір всіх долучених файлів):"
+msgid ""
+"Pages with the largest size of attachments (in brackets the size of "
+"attachments):"
+msgstr ""
+"Сторінки з найбільшим розміром долучених файлів (в дужках вказано розмір "
+"всіх долучених файлів):"
 
 #: pageattachmentsizeinfo.py:40
 msgid "kB"
@@ -75,21 +81,23 @@ msgstr "Розмір долучених файлів (кБ)"
 msgid "Page count: {0}"
 msgstr "Кількість сторінок: {0}"
 
-#: plugin.py:39
+#: plugin.py:36
 msgid ""
 "The plugin to display statistics. \n"
 "                \n"
-"Statistics plugin append menu items <b>Tools -> Page Statistic</b> and <b>Tools -> Tree Statistic</b>."
+"Statistics plugin append menu items <b>Tools -> Page Statistic</b> and "
+"<b>Tools -> Tree Statistic</b>."
 msgstr ""
 "Додаток для відображення статистики. \n"
 "                    \n"
-"Додаток Statistics додає пункти меню <b>Інструменти -> Статистика сторінки</b> та <b>Інструменти -> Статистика дерева</b>."
+"Додаток Statistics додає пункти меню <b>Інструменти -> Статистика сторінки</"
+"b> та <b>Інструменти -> Статистика дерева</b>."
 
-#: plugin.py:45
-msgid "http://jenyay.net/Outwiker/StatisticsEn"
-msgstr "http://jenyay.net/Outwiker/Statistics"
+#: plugin.py:42
+msgid "https://jenyay.net/Outwiker/StatisticsEn"
+msgstr "https://jenyay.net/Outwiker/Statistics"
 
-#: plugin.py:79 treestatdialog.py:51
+#: plugin.py:80 treestatdialog.py:51
 msgid "Tree Statistic"
 msgstr "Статистика дерева"
 
@@ -120,3 +128,6 @@ msgstr "Найстаріші сторінки:"
 #: pagecontentlengthinfo.py:21
 msgid "The longest notes (in brackets the number of characters):"
 msgstr "Найдовші нотатки (в дужках вказана кількість символів):"
+
+#~ msgid "http://jenyay.net/Outwiker/StatisticsEn"
+#~ msgstr "http://jenyay.net/Outwiker/Statistics"

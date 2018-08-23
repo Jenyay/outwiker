@@ -64,7 +64,7 @@ Text
 
     @property
     def url(self):
-        return _(u"http://jenyay.net/Outwiker/SpoilerEn")
+        return _(u"https://jenyay.net/Outwiker/SpoilerEn")
 
     def destroy(self):
         """

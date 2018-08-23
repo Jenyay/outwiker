@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: livejournal\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-21 21:27+0300\n"
-"PO-Revision-Date: 2018-01-21 21:31+0300\n"
+"POT-Creation-Date: 2018-08-23 12:51+0300\n"
+"PO-Revision-Date: 2018-08-23 13:23+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: jenyay.net <jenyay.ilin@gmail.com>\n"
 "Language: ru_RU\n"
@@ -16,13 +16,13 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 2.0.4\n"
+"X-Generator: Poedit 2.0.6\n"
 
-#: controller.py:46 controller.py:47
+#: controller.py:53 controller.py:54
 msgid "LiveJournal"
 msgstr "LiveJournal"
 
-#: plugin.py:46
+#: plugin.py:33
 msgid ""
 "Add commands (:ljuser:) and (:ljcomm:) in wiki parser.\n"
 "\n"
@@ -37,9 +37,9 @@ msgstr ""
 "                 (:ljuser username:)\n"
 "                 (:ljcomm communityname:)"
 
-#: plugin.py:55
-msgid "http://jenyay.net/Outwiker/LivejournalPluginEn"
-msgstr "http://jenyay.net/Outwiker/LivejournalPlugin"
+#: plugin.py:42
+msgid "https://jenyay.net/Outwiker/LivejournalPluginEn"
+msgstr "https://jenyay.net/Outwiker/LivejournalPlugin"
 
 #: actions.py:56
 msgid "LiveJournal user (:ljuser ...:)"
@@ -50,8 +50,8 @@ msgid ""
 "LiveJournal plugin. Insert (:ljuser... :) command to create the link to "
 "LiveJournal user"
 msgstr ""
-"Плагин LiveJournal. Вставить команду (:ljuser ... :) для создания "
-"ссылки на пользователя LiveJournal"
+"Плагин LiveJournal. Вставить команду (:ljuser ... :) для создания ссылки на "
+"пользователя LiveJournal"
 
 #: actions.py:64
 msgid "LiveJournal user"
@@ -66,12 +66,15 @@ msgid ""
 "LiveJournal plugin. Insert (:ljcomm... :) command to create the link to "
 "LiveJournal community"
 msgstr ""
-"Плагин LiveJournal. Вставить команду (:licomm ... :) для создания "
-"ссылки на сообщество LiveJournal"
+"Плагин LiveJournal. Вставить команду (:licomm ... :) для создания ссылки на "
+"сообщество LiveJournal"
 
 #: actions.py:84
 msgid "LiveJournal community"
 msgstr "Сообщество LiveJournal"
+
+#~ msgid "http://jenyay.net/Outwiker/LivejournalPluginEn"
+#~ msgstr "http://jenyay.net/Outwiker/LivejournalPlugin"
 
 #~ msgid "Livejournal User (:ljuser ...:)"
 #~ msgstr "Пользователь Livejournal (:ljuser ...:)"

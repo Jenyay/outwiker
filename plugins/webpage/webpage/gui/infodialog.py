@@ -47,7 +47,7 @@ class InfoDialog(TestedDialog):
         self.urlText = wx.HyperlinkCtrl(self,
                                         -1,
                                         _(u'Link'),
-                                        u'http://jenyay.net',
+                                        u'https://jenyay.net',
                                         style=wx.HL_ALIGN_LEFT | wx.NO_BORDER)
 
         sizer.Add(self.urlLabel,

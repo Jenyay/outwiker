@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Statistics\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-29 23:31+0300\n"
-"PO-Revision-Date: 2018-01-29 23:31+0300\n"
+"POT-Creation-Date: 2018-08-23 12:47+0300\n"
+"PO-Revision-Date: 2018-08-23 13:37+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: jenyay.net <jenyay.ilin@gmail.com>\n"
 "Language: en_GB\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 2.0.4\n"
+"X-Generator: Poedit 2.0.6\n"
 
 #: tagsinfo.py:35
 #, python-brace-format
@@ -81,7 +81,7 @@ msgstr "Size of attachments (kB)"
 msgid "Page count: {0}"
 msgstr "Page count: {0}"
 
-#: plugin.py:39
+#: plugin.py:36
 msgid ""
 "The plugin to display statistics. \n"
 "                \n"
@@ -93,11 +93,11 @@ msgstr ""
 "Statistics plugin append menu items <b>Tools -> Page Statistic</b> and "
 "<b>Tools -> Tree Statistic</b>."
 
-#: plugin.py:45
-msgid "http://jenyay.net/Outwiker/StatisticsEn"
-msgstr "http://jenyay.net/Outwiker/StatisticsEn"
+#: plugin.py:42
+msgid "https://jenyay.net/Outwiker/StatisticsEn"
+msgstr "https://jenyay.net/Outwiker/StatisticsEn"
 
-#: plugin.py:79 treestatdialog.py:51
+#: plugin.py:80 treestatdialog.py:51
 msgid "Tree Statistic"
 msgstr "Tree Statistic"
 
@@ -128,6 +128,9 @@ msgstr "Oldest pages:"
 #: pagecontentlengthinfo.py:21
 msgid "The longest notes (in brackets the number of characters):"
 msgstr "The longest notes (in brackets the number of characters):"
+
+#~ msgid "http://jenyay.net/Outwiker/StatisticsEn"
+#~ msgstr "http://jenyay.net/Outwiker/StatisticsEn"
 
 #~ msgid ""
 #~ "The plugin to display statistics. \n"

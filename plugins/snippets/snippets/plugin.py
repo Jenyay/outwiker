@@ -36,7 +36,7 @@ class PluginSnippets (Plugin):
 
     @property
     def url(self):
-        return _(u"http://jenyay.net/Outwiker/SnippetsEn")
+        return _(u"https://jenyay.net/Outwiker/SnippetsEn")
 
     def initialize(self):
         set_(self.gettext)

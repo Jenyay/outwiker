@@ -39,7 +39,7 @@ class PluginLivejournal(Plugin):
 
     @property
     def url(self):
-        return _(u"http://jenyay.net/Outwiker/LivejournalPluginEn")
+        return _(u"https://jenyay.net/Outwiker/LivejournalPluginEn")
 
     def destroy(self):
         """

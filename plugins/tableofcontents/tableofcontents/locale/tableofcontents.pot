@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-24 21:59+0400\n"
+"POT-Creation-Date: 2018-08-23 13:06+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,25 +17,25 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: tableofcontents.py:45
+#: controller.py:52
+msgid "Table of contents"
+msgstr ""
+
+#: plugin.py:31
 msgid ""
 "Plugin add the menu \"Wiki - Table of contents\" and the wiki command (:"
 "toc:) for generation of the table of contents."
 msgstr ""
 
-#: tableofcontents.py:55
-msgid "http://jenyay.net/Outwiker/ContentsEn"
-msgstr ""
-
-#: guicreator.py:54
-msgid "Table of contents"
+#: plugin.py:35
+msgid "https://jenyay.net/Outwiker/ContentsEn"
 msgstr ""
 
 #: actions.py:24
 msgid "Generate"
 msgstr ""
 
-#: actions.py:29
+#: actions.py:28
 msgid "TableOfContents. Generate table of contents"
 msgstr ""
 
@@ -43,7 +43,7 @@ msgstr ""
 msgid "Insert wiki command (:toc:)"
 msgstr ""
 
-#: actions.py:60
+#: actions.py:59
 msgid ""
 "TableOfContents. Insert the wiki command (:toc:) for dynamic generation of "
 "the table of content"

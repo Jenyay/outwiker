@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-29 23:31+0300\n"
-"PO-Revision-Date: 2018-08-17 16:09+0300\n"
+"POT-Creation-Date: 2018-08-23 12:51+0300\n"
+"PO-Revision-Date: 2018-08-23 13:37+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -30,8 +30,11 @@ msgid "Most rarely used tags:"
 msgstr "Am wenigsten benutzte Tags:"
 
 #: pageattachmentsizeinfo.py:21
-msgid "Pages with the largest size of attachments (in brackets the size of attachments):"
-msgstr "Seiten mit der größten Größe der Anhänge (in Klammern die Größe der Anlagen):"
+msgid ""
+"Pages with the largest size of attachments (in brackets the size of "
+"attachments):"
+msgstr ""
+"Seiten mit der größten Größe der Anhänge (in Klammern die Größe der Anlagen):"
 
 #: pageattachmentsizeinfo.py:40
 msgid "kB"
@@ -75,21 +78,23 @@ msgstr "Größe der Anhänge (kB)"
 msgid "Page count: {0}"
 msgstr "Seiten Anzahl: {0}"
 
-#: plugin.py:39
+#: plugin.py:36
 msgid ""
 "The plugin to display statistics. \n"
 "                \n"
-"Statistics plugin append menu items <b>Tools -> Page Statistic</b> and <b>Tools -> Tree Statistic</b>."
+"Statistics plugin append menu items <b>Tools -> Page Statistic</b> and "
+"<b>Tools -> Tree Statistic</b>."
 msgstr ""
 "Das Plugin um Statistiken anzuzeigen. \n"
 " \n"
-"Statistics Plugin als Menüelement einfügen <b>-Tools-> Seite Statistik</b> und <b>Werkzeuge -> Baum Statistik</b>."
+"Statistics Plugin als Menüelement einfügen <b>-Tools-> Seite Statistik</b> "
+"und <b>Werkzeuge -> Baum Statistik</b>."
 
-#: plugin.py:45
-msgid "http://jenyay.net/Outwiker/StatisticsEn"
-msgstr "http://jenyay.net/Outwiker/StatisticsEn"
+#: plugin.py:42
+msgid "https://jenyay.net/Outwiker/StatisticsEn"
+msgstr "https://jenyay.net/Outwiker/StatisticsEn"
 
-#: plugin.py:79 treestatdialog.py:51
+#: plugin.py:80 treestatdialog.py:51
 msgid "Tree Statistic"
 msgstr "Baum Statistik"
 
@@ -120,3 +125,6 @@ msgstr "Älteste Seiten:"
 #: pagecontentlengthinfo.py:21
 msgid "The longest notes (in brackets the number of characters):"
 msgstr "Die längste Notiz (in Klammern die Anzahl der Zeichen):"
+
+#~ msgid "http://jenyay.net/Outwiker/StatisticsEn"
+#~ msgstr "http://jenyay.net/Outwiker/StatisticsEn"

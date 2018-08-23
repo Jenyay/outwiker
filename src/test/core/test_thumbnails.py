@@ -21,7 +21,7 @@ class ThumbnailsTest(unittest.TestCase):
         self.filesPath = "../test/samplefiles/"
 
         self.url1 = "http://example.com"
-        self.url2 = "http://jenyay.net/Photo/Nature?action=imgtpl&G=1&upname=tsaritsyno_01.jpg"
+        self.url2 = "https://jenyay.net/Photo/Nature?action=imgtpl&G=1&upname=tsaritsyno_01.jpg"
 
         self.pagelinks = ["Страница 1",
                           "/Страница 1",

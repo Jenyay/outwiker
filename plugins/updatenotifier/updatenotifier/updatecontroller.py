@@ -65,8 +65,8 @@ class UpdateController(object):
         # Dictionary. Key - plugin name or special string id,
         # Value - URL to XML file with versions information.
         self._updateUrls = {}
-        self._updateUrls[self._OUTWIKER_STABLE_KEY] = u'http://jenyay.net/uploads/Soft/Outwiker/versions.xml'
-        self._updateUrls[self._OUTWIKER_UNSTABLE_KEY] = u'http://jenyay.net/uploads/Outwiker/Unstable/versions.xml'
+        self._updateUrls[self._OUTWIKER_STABLE_KEY] = u'https://jenyay.net/uploads/Soft/Outwiker/versions.xml'
+        self._updateUrls[self._OUTWIKER_UNSTABLE_KEY] = u'https://jenyay.net/uploads/Outwiker/Unstable/versions.xml'
 
         # update dialog instance
         self._dialog = None

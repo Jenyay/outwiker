@@ -44,7 +44,7 @@ class PluginThumbGallery(Plugin):
 
     @property
     def url(self):
-        return _(u"http://jenyay.net/Outwiker/ThumbGalleryEn")
+        return _(u"https://jenyay.net/Outwiker/ThumbGalleryEn")
 
     def _loadDescription(self):
         """

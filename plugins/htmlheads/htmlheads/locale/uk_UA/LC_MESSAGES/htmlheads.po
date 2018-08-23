@@ -2,70 +2,36 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-13 16:18+0300\n"
-"PO-Revision-Date: 2018-04-25 17:10+0300\n"
+"POT-Creation-Date: 2018-08-23 12:51+0300\n"
+"PO-Revision-Date: 2018-08-23 13:09+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Ukrainian\n"
+"Language: uk_UA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.7\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-Basepath: ..\n"
-"Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
+"Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 "
+"&& n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 "
+"&& n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
 "X-Crowdin-Project: outwiker\n"
 "X-Crowdin-Language: uk\n"
 "X-Crowdin-File: htmlheads.pot\n"
-"Language: uk_UA\n"
 "X-Poedit-SearchPath-0: .\n"
-
-#: actions.py:32
-msgid "Title (:title ...:)"
-msgstr "Заголовок (:title ...:)"
-
-#: actions.py:36
-msgid "HtmlHeads plugin. Insert (:title... :) command to add <title> tag in the page head."
-msgstr "Додаток HtmlHeads. Вставити команду (:title ...:) для додавання тегу <title> у заголовок сторінки."
-
-#: actions.py:50
-msgid "Description (:description ...:)"
-msgstr "Опис (:description ...:)"
-
-#: actions.py:54
-msgid "HtmlHeads plugin. Insert (:description... :) command to add description in the page head."
-msgstr "Додаток HtmlHeads. Вставити команду (:description ...:) для додавання опису у заголовок сторінки."
-
-#: actions.py:68
-msgid "Keywords (:keywords ...:)"
-msgstr "Ключові слова (:keywords ...:)"
-
-#: actions.py:72
-msgid "HtmlHeads plugin. Insert (:keywords... :) command to add keywords in the page head."
-msgstr "Додаток HtmlHeads. Вставити команду (:keywords ...:) для додавання ключових слів у заголовок сторінки."
-
-#: actions.py:86
-msgid "Custom head (:htmlhead:)"
-msgstr "Довільний заголовок (:htmlhead:)"
-
-#: actions.py:90
-msgid "HtmlHeads plugin. Insert (:htmlhead:) command to add custom tags in the page head."
-msgstr "Додаток HtmlHeads. Вставити команду (:htmlhead ...:) для додавання тегів користувача у заголовок сторінки."
-
-#: actions.py:104
-msgid "CSS Style (:style:)"
-msgstr "Стиль CSS (:style:)"
-
-#: actions.py:108
-msgid "HtmlHeads plugin. Insert (:style:) command to add custom CSS style to page."
-msgstr "Додаток HtmlHeads. Вставити команду (:style:) для додавання CSS стилю користувача у заголовок сторінки."
 
 #: controller.py:73
 msgid "HTML Headers"
 msgstr "Заголовки HTML"
 
 #: plugin.py:31
-msgid "Plugin adds wiki-commands (:title:), (:description:), (:keywords:) and (:htmlhead:)"
-msgstr "Додаток додає команди (:title:), (:description:), (:keywords:) та (:htmlhead:) для вікісторінок."
+msgid ""
+"Plugin adds wiki-commands (:title:), (:description:), (:keywords:) and (:"
+"htmlhead:)"
+msgstr ""
+"Додаток додає команди (:title:), (:description:), (:keywords:) та (:"
+"htmlhead:) для вікісторінок."
 
 #: plugin.py:33
 msgid ""
@@ -96,5 +62,67 @@ msgstr ""
 "(:htmlheadend:)\n"
 
 #: plugin.py:54
-msgid "http://jenyay.net/Outwiker/HtmlHeadsEn"
-msgstr "http://jenyay.net/Outwiker/HtmlHeads"
+msgid "https://jenyay.net/Outwiker/HtmlHeadsEn"
+msgstr "https://jenyay.net/Outwiker/HtmlHeads"
+
+#: actions.py:32
+msgid "Title (:title ...:)"
+msgstr "Заголовок (:title ...:)"
+
+#: actions.py:36
+msgid ""
+"HtmlHeads plugin. Insert (:title... :) command to add <title> tag in the "
+"page head."
+msgstr ""
+"Додаток HtmlHeads. Вставити команду (:title ...:) для додавання тегу <title> "
+"у заголовок сторінки."
+
+#: actions.py:50
+msgid "Description (:description ...:)"
+msgstr "Опис (:description ...:)"
+
+#: actions.py:54
+msgid ""
+"HtmlHeads plugin. Insert (:description... :) command to add description in "
+"the page head."
+msgstr ""
+"Додаток HtmlHeads. Вставити команду (:description ...:) для додавання опису "
+"у заголовок сторінки."
+
+#: actions.py:68
+msgid "Keywords (:keywords ...:)"
+msgstr "Ключові слова (:keywords ...:)"
+
+#: actions.py:72
+msgid ""
+"HtmlHeads plugin. Insert (:keywords... :) command to add keywords in the "
+"page head."
+msgstr ""
+"Додаток HtmlHeads. Вставити команду (:keywords ...:) для додавання ключових "
+"слів у заголовок сторінки."
+
+#: actions.py:86
+msgid "Custom head (:htmlhead:)"
+msgstr "Довільний заголовок (:htmlhead:)"
+
+#: actions.py:90
+msgid ""
+"HtmlHeads plugin. Insert (:htmlhead:) command to add custom tags in the page "
+"head."
+msgstr ""
+"Додаток HtmlHeads. Вставити команду (:htmlhead ...:) для додавання тегів "
+"користувача у заголовок сторінки."
+
+#: actions.py:104
+msgid "CSS Style (:style:)"
+msgstr "Стиль CSS (:style:)"
+
+#: actions.py:108
+msgid ""
+"HtmlHeads plugin. Insert (:style:) command to add custom CSS style to page."
+msgstr ""
+"Додаток HtmlHeads. Вставити команду (:style:) для додавання CSS стилю "
+"користувача у заголовок сторінки."
+
+#~ msgid "http://jenyay.net/Outwiker/HtmlHeadsEn"
+#~ msgstr "http://jenyay.net/Outwiker/HtmlHeads"

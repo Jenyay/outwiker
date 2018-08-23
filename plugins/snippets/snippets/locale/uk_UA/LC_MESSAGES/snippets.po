@@ -2,16 +2,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-18 17:32+0300\n"
-"PO-Revision-Date: 2017-02-20 20:42+0300\n"
+"POT-Creation-Date: 2018-08-23 12:51+0300\n"
+"PO-Revision-Date: 2018-08-23 13:28+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 1.8.9\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Crowdin-Project: outwiker\n"
 "X-Crowdin-Language: uk\n"
 "X-Crowdin-File: snippets.pot\n"
@@ -20,7 +21,7 @@ msgstr ""
 msgid "Snippets"
 msgstr "Фрагменти"
 
-#: guicontroller.py:156 gui/editdialog.py:585
+#: guicontroller.py:162 gui/editdialog.py:585
 msgid ""
 "Can't read the snippet\n"
 "{}"
@@ -28,13 +29,13 @@ msgstr ""
 "Не вдалося прочитати фрагмент\n"
 "{}"
 
-#: guicontroller.py:157 gui/editdialog.py:449 gui/editdialog.py:469
+#: guicontroller.py:163 gui/editdialog.py:449 gui/editdialog.py:469
 #: gui/editdialog.py:497 gui/editdialog.py:547 gui/editdialog.py:586
 #: gui/editdialog.py:632 gui/editdialog.py:647 gui/editdialog.py:714
 msgid "Error"
 msgstr "Помилка"
 
-#: guicontroller.py:168
+#: guicontroller.py:174
 msgid "Snippet error"
 msgstr "Помилка у фрагменті"
 
@@ -44,7 +45,9 @@ msgstr "Управління фрагментами..."
 
 #: actions/editsnippets.py:28
 msgid "Snippets. Open dialog to edit, create or remove snippets."
-msgstr "Фрагменти. Відкрити діалог для редагування, створення або видалення фрагментів."
+msgstr ""
+"Фрагменти. Відкрити діалог для редагування, створення або видалення "
+"фрагментів."
 
 #: actions/openhelp.py:22 gui/editdialog.py:161
 msgid "Open help..."
@@ -82,12 +85,12 @@ msgstr "Помилка у фрагменті:\n"
 msgid "Can't read file '{}'"
 msgstr "Помилка читання файлу '{}'"
 
-#: snippetparser.py:30
+#: snippetparser.py:32
 #, python-brace-format
 msgid "Snippet \"{name}\" not found"
 msgstr "Фрагмент \"{name}\" не знайдено"
 
-#: snippetparser.py:35
+#: snippetparser.py:37
 #, python-brace-format
 msgid ""
 "Snippet error at line {line}:\n"
@@ -96,7 +99,7 @@ msgstr ""
 "Помилка фрагменту в рядку {line}:\n"
 "{text}"
 
-#: snippetparser.py:41
+#: snippetparser.py:43
 #, python-brace-format
 msgid ""
 "Snippet reading error:\n"
@@ -105,7 +108,7 @@ msgstr ""
 "Помилка читання фрагменту:\n"
 "{text}"
 
-#: snippetparser.py:46
+#: snippetparser.py:48
 #, python-brace-format
 msgid ""
 "Snippet processing error:\n"
@@ -114,19 +117,19 @@ msgstr ""
 "Помилка обробки фрагменту:\n"
 "{text}"
 
-#: plugin.py:44
+#: plugin.py:35
 msgid "Plugin to store text snippets"
 msgstr "Додаток для зберігання текстових фрагментів"
 
-#: plugin.py:48
-msgid "http://jenyay.net/Outwiker/SnippetsEn"
-msgstr "http://jenyay.net/Outwiker/Snippets"
+#: plugin.py:39
+msgid "https://jenyay.net/Outwiker/SnippetsEn"
+msgstr "https://jenyay.net/Outwiker/Snippets"
 
-#: gui/variablesdialog.py:51
+#: gui/variablesdialog.py:54
 msgid "Preview"
 msgstr "Перегляд"
 
-#: gui/variablesdialog.py:55
+#: gui/variablesdialog.py:58
 msgid "Snippet"
 msgstr "Фрагмент"
 
@@ -134,15 +137,15 @@ msgstr "Фрагмент"
 msgid "Insert as wiki command"
 msgstr "Вставити як вікі-команду"
 
-#: gui/variablesdialog.py:130
+#: gui/variablesdialog.py:149
 msgid "{} | Snippet variables"
 msgstr "{} | Змінні фрагменту"
 
-#: gui/variablesdialog.py:353 gui/variablesdialog.py:413
+#: gui/variablesdialog.py:377 gui/variablesdialog.py:437
 msgid "Expand (Shift+Enter)"
 msgstr "Розгорнути"
 
-#: gui/variablesdialog.py:392
+#: gui/variablesdialog.py:416
 msgid "Collapse"
 msgstr "Згорнути"
 
@@ -321,3 +324,6 @@ msgstr "Ім'я змінної"
 #: gui/editdialog.py:713
 msgid "Invalid variable name \"{}\""
 msgstr "Неприпустиме ім'я змінної \"{}\""
+
+#~ msgid "http://jenyay.net/Outwiker/SnippetsEn"
+#~ msgstr "http://jenyay.net/Outwiker/Snippets"

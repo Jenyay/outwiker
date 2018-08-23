@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-17 09:26+0400\n"
+"POT-Creation-Date: 2018-08-23 13:06+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,32 +17,24 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: baseexporter.py:50 baseexporter.py:116
-msgid "File {0} already exists"
-msgstr ""
-
-#: baseexporter.py:53
-msgid "Folder {0} not exists"
-msgstr ""
-
-#: controller.py:37
+#: controller.py:30
 msgid "Export Page To HTML..."
 msgstr ""
 
-#: controller.py:40
+#: controller.py:34
 msgid "Export Branch To HTML..."
 msgstr ""
 
-#: controller.py:50
+#: controller.py:48
 msgid "Please, select page"
 msgstr ""
 
-#: controller.py:51 controller.py:59 controller.py:73 exportdialog.py:83
-#: exportpagedialog.py:32
+#: controller.py:49 controller.py:57 controller.py:73 exportpagedialog.py:34
+#: exportdialog.py:107
 msgid "Error"
 msgstr ""
 
-#: controller.py:58 exporterfactory.py:25
+#: controller.py:56 exporterfactory.py:26
 msgid "This page type not support export to HTML"
 msgstr ""
 
@@ -50,50 +42,60 @@ msgstr ""
 msgid "Wiki is not open"
 msgstr ""
 
-#: exportbranchdialog.py:31
+#: logdialog.py:13
+msgid "Errors List"
+msgstr ""
+
+#: exportbranchdialog.py:52
 msgid "Use long file names (include parent name)"
 msgstr ""
 
-#: exportbranchdialog.py:58
+#: exportbranchdialog.py:84
 msgid "Export to HTML"
 msgstr ""
 
-#: exportbranchdialog.py:59
+#: exportbranchdialog.py:85
 msgid "Please wait..."
-msgstr ""
-
-#: exportdialog.py:17 exportmenu.py:63 exportmenu.py:81
-msgid "Export"
-msgstr ""
-
-#: exportdialog.py:21
-msgid "Folder for Export:"
-msgstr ""
-
-#: exportdialog.py:32
-msgid "Overwrite Existing Files"
-msgstr ""
-
-#: exportdialog.py:33
-msgid "Attaches. Save Only Images"
-msgstr ""
-
-#: exportdialog.py:82
-msgid "Please, select folder for export"
 msgstr ""
 
 #: exportmenu.py:48 exportmenu.py:75
 msgid "File menu not found"
 msgstr ""
 
-#: logdialog.py:13
-msgid "Errors List"
+#: exportmenu.py:63 exportmenu.py:81 exportdialog.py:21
+msgid "Export"
 msgstr ""
 
-#: pluginexport2html.py:40
+#: plugin.py:31
 msgid "Export pages to HTML"
 msgstr ""
 
-#: pluginexport2html.py:64
-msgid "http://jenyay.net/Outwiker/Export2HtmlPluginEn"
+#: plugin.py:51
+msgid "https://jenyay.net/Outwiker/Export2HtmlPluginEn"
+msgstr ""
+
+#: exportdialog.py:25
+msgid "Folder for Export:"
+msgstr ""
+
+#: exportdialog.py:36
+msgid "Overwrite Existing Files"
+msgstr ""
+
+#: exportdialog.py:37
+msgid "Attaches. Save Only Images"
+msgstr ""
+
+#: exportdialog.py:106
+msgid "Please, select folder for export"
+msgstr ""
+
+#: baseexporter.py:48 baseexporter.py:108
+#, python-brace-format
+msgid "File {0} already exists"
+msgstr ""
+
+#: baseexporter.py:51
+#, python-brace-format
+msgid "Folder {0} not exists"
 msgstr ""

@@ -58,7 +58,7 @@ source code
 
 <U>file</U> - attached source file
 
-<U>encoding</U> - encoding of the attached source file(default encoding - utf8)
+<U>encoding</U> - encoding of the attached source file (default encoding - utf8)
 
 <U>style</U> - style of hightlighting
 
@@ -71,7 +71,7 @@ source code
 import os
 
 if __name__ == "__main__":
-print "Hello World!"
+    print "Hello World!"
 (:sourceend:)
 </PRE>""")
 
@@ -80,7 +80,7 @@ print "Hello World!"
 import os
 
 if __name__ == "__main__":
-print "Hello World!"
+    print "Hello World!"
 (:sourceend:)
 </PRE>""")
 
@@ -89,7 +89,7 @@ print "Hello World!"
 import os
 
 if __name__ == "__main__":
-print "Hello World!"
+    print "Hello World!"
 (:sourceend:)
 </PRE>""")
 
@@ -124,7 +124,7 @@ print "Hello World!"
 
     @property
     def url(self):
-        return _(u"http://jenyay.net/Outwiker/SourcePluginEn")
+        return _(u"https://jenyay.net/Outwiker/SourcePluginEn")
 
     def destroy(self):
         """

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-15 23:03+0300\n"
+"POT-Creation-Date: 2018-08-23 13:06+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,15 +37,15 @@ msgstr ""
 msgid "Clear"
 msgstr ""
 
-#: plugin.py:60
-msgid "http://jenyay.net/Outwiker/ThumbGalleryEn"
+#: plugin.py:47
+msgid "https://jenyay.net/Outwiker/ThumbGalleryEn"
 msgstr ""
 
-#: plugin.py:66
+#: plugin.py:53
 msgid "locale/description.html"
 msgstr ""
 
-#: plugin.py:74
+#: plugin.py:60
 msgid "Can't load description"
 msgstr ""
 

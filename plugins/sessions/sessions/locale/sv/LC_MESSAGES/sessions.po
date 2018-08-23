@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-29 16:31+0400\n"
-"PO-Revision-Date: 2016-08-16 16:36+0300\n"
+"POT-Creation-Date: 2018-08-23 12:51+0300\n"
+"PO-Revision-Date: 2018-08-23 13:27+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.8\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Crowdin-Project: outwiker\n"
 "X-Crowdin-Language: sv-SE\n"
 "X-Crowdin-File: sessions.pot\n"
@@ -20,94 +20,97 @@ msgstr ""
 msgid "Edit sessions..."
 msgstr "Redigera sessioner..."
 
-#: editaction.py:35
+#: editaction.py:34
 msgid "Edit (rename or delete) sessions"
 msgstr "Redigera sessioner (byt namn eller ta bort)"
 
-#: editaction.py:43
+#: editaction.py:41
 msgid "Not created any session"
 msgstr "Ingen session skapad"
 
-#: editaction.py:44 saveaction.py:72
+#: editaction.py:42 saveaction.py:69
 msgid "Error"
 msgstr "Fel"
 
-#: editaction.py:72
+#: editaction.py:69
 msgid "Edit Sessions"
 msgstr "Redigera sessioner"
 
-#: editaction.py:94
+#: editaction.py:89
 msgid "Remove session \"{}\"?"
 msgstr "Vill du ta bort session \"{}\"?"
 
-#: editaction.py:95
+#: editaction.py:90
 msgid "Remove session?"
 msgstr "Vill du ta bort sessionen?"
 
-#: editaction.py:108
+#: editaction.py:102
 msgid "Enter new session name"
 msgstr "Ange nytt sessionsnamn"
 
-#: editaction.py:109
+#: editaction.py:103
 msgid "Rename session"
 msgstr "Byt sessionsnamn"
 
-#: editaction.py:115
+#: editaction.py:109
 msgid "Session name is empty"
 msgstr "Sessionsnamnet saknas"
 
-#: editaction.py:116 editaction.py:125
+#: editaction.py:110 editaction.py:119
 msgid "Invalid session name"
 msgstr "Ogiltigt sessionsnamn"
 
-#: editaction.py:124
+#: editaction.py:118
 msgid "Session \"{}\" already exists"
 msgstr "Session \"{}\" finns redan"
 
-#: editaction.py:152
+#: editaction.py:146
 msgid "Rename session..."
 msgstr "Byt sessionsnamn..."
 
-#: editaction.py:158
+#: editaction.py:153
 msgid "Remove session..."
 msgstr "Ta bort session..."
 
-#: guicreator.py:63
+#: guicreator.py:66
 msgid "Sessions"
 msgstr "Sessioner"
 
-#: saveaction.py:30
+#: saveaction.py:29
 msgid "Save current session..."
 msgstr "Spara aktuell session..."
 
-#: saveaction.py:35
+#: saveaction.py:33
 msgid "Save currently opened tabs"
 msgstr "Spara öppna flikar"
 
-#: saveaction.py:61
+#: saveaction.py:59
 msgid "Save Session"
 msgstr "Spara session"
 
-#: saveaction.py:71
+#: saveaction.py:68
 msgid "The session name must not be empty"
 msgstr "Sessionsnummer kan inte utelämnas"
 
-#: saveaction.py:77
+#: saveaction.py:74
 msgid "Session with name \"{}\" exists. Overwrite?"
 msgstr "Session med namnet \"{}\" finns redan. Vill du skriva över den?"
 
-#: saveaction.py:78
+#: saveaction.py:75
 msgid "Overwrite session?"
 msgstr "Vill du skriva över sessionen?"
 
-#: saveaction.py:86
+#: saveaction.py:82
 msgid "Enter session name"
 msgstr "Ange sessionsnamn"
 
-#: sessions.py:45
+#: plugin.py:31
 msgid "Save and restore tabs"
 msgstr "Spara och återställ flikar"
 
-#: sessions.py:55
-msgid "http://jenyay.net/Outwiker/SessionsEn"
-msgstr "http://jenyay.net/Outwiker/SessionsEn"
+#: plugin.py:35
+msgid "https://jenyay.net/Outwiker/SessionsEn"
+msgstr "https://jenyay.net/Outwiker/SessionsEn"
+
+#~ msgid "http://jenyay.net/Outwiker/SessionsEn"
+#~ msgstr "http://jenyay.net/Outwiker/SessionsEn"

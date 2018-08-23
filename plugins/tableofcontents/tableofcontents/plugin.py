@@ -32,7 +32,7 @@ class PluginTableOfContents(Plugin):
 
     @property
     def url(self):
-        return _(u"http://jenyay.net/Outwiker/ContentsEn")
+        return _(u"https://jenyay.net/Outwiker/ContentsEn")
 
     def initialize(self):
         set_(self.gettext)

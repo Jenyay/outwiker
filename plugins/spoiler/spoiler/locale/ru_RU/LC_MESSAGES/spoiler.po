@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: spoiler\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-15 22:54+0300\n"
-"PO-Revision-Date: 2018-01-15 22:58+0300\n"
+"POT-Creation-Date: 2018-08-23 12:51+0300\n"
+"PO-Revision-Date: 2018-08-23 13:37+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language: ru_RU\n"
@@ -16,9 +16,9 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 2.0.4\n"
+"X-Generator: Poedit 2.0.6\n"
 
-#: plugin.py:53
+#: plugin.py:35
 msgid ""
 "Add (:spoiler:) wiki command to parser.\n"
 "\n"
@@ -84,9 +84,9 @@ msgstr ""
 "Текст\n"
 "(:spoilerend:)</PRE>\n"
 
-#: plugin.py:85
-msgid "http://jenyay.net/Outwiker/SpoilerEn"
-msgstr "http://jenyay.net/Outwiker/Spoiler"
+#: plugin.py:67
+msgid "https://jenyay.net/Outwiker/SpoilerEn"
+msgstr "https://jenyay.net/Outwiker/Spoiler"
 
 #: actions.py:22
 msgid "(:spoiler:) Command"
@@ -103,6 +103,9 @@ msgstr "Развернуть"
 #: commandspoiler.py:52
 msgid "Collapse"
 msgstr "Свернуть"
+
+#~ msgid "http://jenyay.net/Outwiker/SpoilerEn"
+#~ msgstr "http://jenyay.net/Outwiker/Spoiler"
 
 #~ msgid "Collapse text (:spoiler:)"
 #~ msgstr "Свёрнутый текст (:spoiler:)"
