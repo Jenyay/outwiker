@@ -27,7 +27,7 @@
 			<site>https://jenyay.net</site>
 		</author>
 		<changelog>
-			<version number="1.4">
+			<version number="1.4" date="August 26, 2018">
 				<requirements>
 					<api>2.835</api>
 				</requirements>
@@ -91,7 +91,7 @@
 			<site>https://jenyay.net</site>
 		</author>
 		<changelog>
-			<version number="1.4">
+			<version number="1.4" date="26.08.2018">
 				<requirements>
 					<api>2.835</api>
 				</requirements>
