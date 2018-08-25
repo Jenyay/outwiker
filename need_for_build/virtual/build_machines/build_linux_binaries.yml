@@ -7,6 +7,7 @@
   vars:
       sources_root: "../../../../"
       result_path: "{{ outwiker_dir }}/build/{{ version }}.{{ build }}/linux"
+      wxpython_version: "4.0.3"
   environment:
       PATH: "{{ ansible_env.PATH }}:{{homedir}}/.local/bin"
   tasks:
@@ -29,6 +30,11 @@
                 - "--exclude=.ropeproject"
                 - "--exclude=build"
             use_ssh_args: yes
+
+      - name: Install wxPython
+        command: "pipenv run pip install -f {{ wxpython_path }} wxPython=={{ wxpython_version }}"
+        args:
+            chdir: "{{ outwiker_dir }}"
 
       - name: Install Python modules
         command: pipenv update --dev

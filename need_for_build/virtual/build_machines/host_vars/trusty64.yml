@@ -33,3 +33,4 @@ packages:
   - ibus-gtk3
     # - libgstreamer-plugins-base0.10-dev
     # - libwebkit2gtk-4.0-dev    # The problem with the EVT_WEBVIEW_NAVIGATING event
+wxpython_path: https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-14.04

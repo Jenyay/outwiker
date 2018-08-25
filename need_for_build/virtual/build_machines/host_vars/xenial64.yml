@@ -33,3 +33,4 @@ packages:
   # - libwebkit2gtk-4.0-dev    # The problem with the EVT_WEBVIEW_NAVIGATING event
   - libsdl2-dev
   - ibus-gtk3
+wxpython_path: https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-16.04

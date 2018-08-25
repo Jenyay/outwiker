@@ -224,6 +224,10 @@ class PyInstallerBuilderLinuxBase(BasePyInstallerBuilder):
             'libuuid.so.1',
             'libgpg-error.so.0',
             'libX11-xcb.so.1',
+            # 'libfreetype.so.6',
+            # 'libfreetype-550560cb.so',
+            # 'libgbm.so.1',
+            # 'libglapi.so.0',
 
             # 'libxcb.so.1',
             ]
