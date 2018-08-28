@@ -8,6 +8,7 @@
 
 		<changelog>
 			<version number="3.0.0.849" status="dev">
+				<change>Add a new wiki style "code".</change>
 			</version>
 
 			<version number="3.0.0.848" status="dev" date="August 26, 2018">
@@ -82,6 +83,7 @@
 
 		<changelog>
 			<version number="3.0.0.849" status="dev">
+				<change>Добавлен новый викистиль "code".</change>
 			</version>
 
 			<version number="3.0.0.848" status="dev" date="26.08.2018">
