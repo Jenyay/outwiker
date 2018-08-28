@@ -733,3 +733,26 @@ def coverage():
     with lcd('src'):
         local('coverage report {} -i'.format(COVERAGE_PARAMS))
         local('coverage html {} -i'.format(COVERAGE_PARAMS))
+
+
+@task
+def docker_build_create():
+    '''
+    Create a Docker image to build process
+    '''
+    with lcd('need_for_build/build_docker'):
+        local('docker build -t outwiker/build_linux .')
+
+
+@task
+def docker_build(*args):
+    '''
+    Run the build process inside Docker container
+    '''
+    tasks_str = ' '.join(args)
+    current_dir = os.path.abspath('.')
+    command = 'docker run -v "{path}:/project" --device /dev/fuse --cap-add SYS_ADMIN --security-opt apparmor:unconfined outwiker/build_linux {tasks}'.format(
+        path=current_dir,
+        tasks=tasks_str
+    )
+    local(command)
