@@ -751,7 +751,7 @@ def docker_build(*args):
     '''
     tasks_str = ' '.join(args)
     current_dir = os.path.abspath('.')
-    command = 'docker run -v "{path}:/project" --device /dev/fuse --cap-add SYS_ADMIN --security-opt apparmor:unconfined outwiker/build_linux {tasks}'.format(
+    command = 'docker run -v "{path}:/home/user/project" --user $(id -u):$(id -g) outwiker/build_linux {tasks}'.format(
         path=current_dir,
         tasks=tasks_str
     )

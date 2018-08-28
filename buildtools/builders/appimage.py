@@ -62,7 +62,8 @@ class BuilderAppImage(BuilderBase):
 
     def _build_appimage(self):
         with lcd(self._temp_dir):
-            local(u'export ARCH=x86_64 && ./appimagetool-x86_64.AppImage {}'.format(self._appdir_name))
+            local('./appimagetool-*.AppImage --appimage-extract')
+            local(u'ARCH=x86_64 squashfs-root/AppRun {}'.format(self._appdir_name))
 
     def _copy_result(self):
         src = os.path.join(self._temp_dir, self._appimage_result_name)

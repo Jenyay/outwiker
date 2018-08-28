@@ -2,15 +2,23 @@ FROM ubuntu:xenial
 
 LABEL maintainer="Eugene Ilin <jenyay.ilin@gmail.com>"
 
-ENV LC_ALL=C.UTF-8 LANG=C.UTF-8
-
 RUN apt-get -y update && apt-get -y install python3-pip python3-dev debhelper devscripts debhelper devscripts p7zip-full libssl-dev dpkg-dev build-essential libjpeg-dev libtiff-dev libsdl1.2-dev libnotify-dev freeglut3 ibus-gtk3 xvfb wget fuse
 RUN apt-get -y install libwebkit2gtk-4.0
-RUN python3 -m pip install pipenv
+
+ENV LC_ALL=C.UTF-8 LANG=C.UTF-8 HOME=/home/user
+ENV PROJECT_HOME=$HOME/project PATH=$PATH:$HOME/.local/bin
+
+RUN mkdir -p $HOME
+RUN mkdir -p $PROJECT_HOME
+
+RUN groupadd -r user && useradd -r -g user -d $HOME -s /sbin/nologin -c "Docker image user" user
+RUN chown -R user:user $HOME
+RUN chmod -R 777 $HOME
+
 COPY build.sh /
 
-WORKDIR /project
-RUN pipenv run pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-16.04 wxPython==4.0.3
+USER user
+WORKDIR $PROJECT_HOME
 
 ENTRYPOINT ["/bin/sh", "/build.sh"]
 CMD ["linux_binary", "linux_appimage", "deb_binary", "plugins"]
