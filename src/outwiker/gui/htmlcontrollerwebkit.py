@@ -52,7 +52,7 @@ class UriIdentifierWebKit(UriIdentifier):
     def _findWikiPage(self, href):
         """
         Попытка найти страницу вики, если ссылка, на которую щелкнули
-        не интернетная(http, ftp, mailto)
+        не интернетная (http, ftp, mailto)
         """
         if self._currentPage is None:
             return None

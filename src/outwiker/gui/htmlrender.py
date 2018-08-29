@@ -1,7 +1,5 @@
 # -*- coding: UTF-8 -*-
 
-from abc import abstractmethod
-from abc import ABCMeta
 import idna
 
 import wx
@@ -15,8 +13,6 @@ class HtmlRender (wx.Panel):
     """
     Базовый класс для HTML-рендеров
     """
-    #__metaclass__ = ABCMeta
-
     def __init__(self, parent):
         wx.Panel.__init__(self, parent)
 
@@ -24,46 +20,41 @@ class HtmlRender (wx.Panel):
         self._status_item = 0
         self._currentPage = None
 
-
-    #@abstractmethod
-    def LoadPage (self, fname):
+    def LoadPage(self, fname):
         """
         Загрузить страницу из файла
         """
         pass
 
-
-    def SetPage (self, htmltext, basepath):
+    def SetPage(self, htmltext, basepath):
         """
         Загрузить страницу из строки
         htmltext - текст страницы
-        basepath - путь до папки, относительно которой ищутся локальные ресурсы (картинки)
+        basepath - путь до папки, относительно которой будут искаться
+            локальные ресурсы (картинки)
         """
         pass
 
-
     @property
-    def page (self):
+    def page(self):
         return self._currentPage
 
-
     @page.setter
-    def page (self, value):
+    def page(self, value):
         self._currentPage = value
 
-
-    def openUrl (self, href):
+    def openUrl(self, href):
         """
         Открыть ссылку в браузере (или почтовый адрес в почтовике)
         """
         try:
-            outwiker.core.system.getOS().startFile (href)
+            outwiker.core.system.getOS().startFile(href)
         except OSError:
             text = _(u"Can't execute file '%s'") % (href)
-            outwiker.core.commands.MessageBox (text, "Error", wx.ICON_ERROR | wx.OK)
+            outwiker.core.commands.MessageBox(
+                text, "Error", wx.ICON_ERROR | wx.OK)
 
-
-    def _getLinkProtocol (self, link):
+    def _getLinkProtocol(self, link):
         """
         Return protocol for link or None if link contains not protocol
         """
@@ -71,14 +62,13 @@ class HtmlRender (wx.Panel):
             return None
 
         endProtocol = u"://"
-        pos = link.find (endProtocol)
+        pos = link.find(endProtocol)
         if pos == -1:
             return None
 
-        return link[:pos + len (endProtocol)]
+        return link[:pos + len(endProtocol)]
 
-
-    def _decodeIDNA (self, link):
+    def _decodeIDNA(self, link):
         """
         Decode link like protocol://xn--80afndtacjikc
         """
@@ -87,7 +77,7 @@ class HtmlRender (wx.Panel):
 
         protocol = self._getLinkProtocol(link)
         if protocol is not None:
-            url = link[len (protocol):]
+            url = link[len(protocol):]
             try:
                 link = u"{}{}".format(
                     protocol,
@@ -98,15 +88,14 @@ class HtmlRender (wx.Panel):
 
         return link
 
-
-    def _getClickParams (self,
-                         href,
-                         button,
-                         modifier,
-                         isurl,
-                         ispage,
-                         isfilename,
-                         isanchor):
+    def _getClickParams(self,
+                        href,
+                        button,
+                        modifier,
+                        isurl,
+                        ispage,
+                        isfilename,
+                        isanchor):
         linktype = None
 
         if isanchor:
@@ -119,21 +108,20 @@ class HtmlRender (wx.Panel):
         elif isfilename:
             linktype = u"filename"
 
-        return LinkClickParams (
-            link = href,
-            button = button,
-            modifier = modifier,
-            linktype = linktype,
+        return LinkClickParams(
+            link=href,
+            button=button,
+            modifier=modifier,
+            linktype=linktype,
         )
 
-
-    def setStatusText (self, link, text):
+    def setStatusText(self, link, text):
         """
         Execute onHoverLink event and set status text
         """
-        link_decoded = self._decodeIDNA (link)
+        link_decoded = self._decodeIDNA(link)
 
-        params = HoverLinkParams (link = link_decoded, text = text)
-        Application.onHoverLink (page=self._currentPage, params = params)
+        params = HoverLinkParams(link=link_decoded, text=text)
+        Application.onHoverLink(page=self._currentPage, params=params)
 
-        outwiker.core.commands.setStatusText (params.text, self._status_item)
+        outwiker.core.commands.setStatusText(params.text, self._status_item)
