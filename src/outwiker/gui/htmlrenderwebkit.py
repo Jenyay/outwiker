@@ -55,25 +55,18 @@ class HtmlRenderWebKit(HtmlRender):
             url += Application.sharedData[APP_DATA_KEY_ANCHOR]
             del Application.sharedData[APP_DATA_KEY_ANCHOR]
 
-        self.canOpenUrl = True
-
-        try:
-            with open(fname) as fp:
-                text = fp.read()
-        except IOError:
+        if os.path.exists(fname) and os.path.isfile(fname):
+            self.canOpenUrl = True
+            self.ctrl.LoadURL(url)
+        else:
             text = _(u"Can't read file %s") % (fname)
             self.SetPage(text, os.path.dirname(fname))
 
-        self.ctrl.LoadURL(url)
-        self.canOpenUrl = False
-
     def SetPage(self, htmltext, basepath):
-        self.canOpenUrl = True
         self._path = "file://" + urllib.parse.quote(basepath) + "/"
 
+        self.canOpenUrl = True
         self.ctrl.SetPage(htmltext, self._path)
-
-        self.canOpenUrl = False
 
     def __onCopyFromHtml(self, event):
         self.ctrl.Copy()
@@ -103,11 +96,13 @@ class HtmlRenderWebKit(HtmlRender):
         href = event.GetURL()
         curr_href = self.ctrl.GetCurrentURL()
 
-        if not(self.canOpenUrl or href == curr_href):
+        if not (self.canOpenUrl or href == curr_href):
             button = 1
             modifier = 0
             if self.__onLinkClicked(href, button, modifier):
                 event.Veto()
+
+        self.canOpenUrl = False
 
     def __gtk2OutWikerKeyCode(self, gtk_key_modifier):
         """
