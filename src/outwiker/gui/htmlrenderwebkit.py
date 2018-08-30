@@ -95,7 +95,9 @@ class HtmlRenderWebKit(HtmlRender):
 
         # Проверка на то, что мы не пытаемся открыть вложенный фрейм
         frame = event.GetTarget()
-        if len(frame) != 0:
+        if frame:
+            logger.debug('__onNavigating ({nav_id}) frame={frame}'.format(nav_id=nav_id, frame=frame))
+            logger.debug('__onNavigating ({nav_id}) end'.format(nav_id=nav_id))
             return
 
         href = event.GetURL()
