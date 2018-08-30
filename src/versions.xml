@@ -9,6 +9,8 @@
 		<changelog>
 			<version number="3.0.0.849" status="dev">
 				<change>Add a new wiki style "code".</change>
+				<change>Fix errors.</change>
+				<change>Return back to wxPython 4.0.1.</change>
 			</version>
 
 			<version number="3.0.0.848" status="dev" date="August 26, 2018">
@@ -84,6 +86,8 @@
 		<changelog>
 			<version number="3.0.0.849" status="dev">
 				<change>Добавлен новый викистиль "code".</change>
+				<change>Исправление ошибок.</change>
+				<change>Возврат на wxPython 4.0.1.</change>
 			</version>
 
 			<version number="3.0.0.848" status="dev" date="26.08.2018">
