@@ -12,8 +12,8 @@ from outwiker.pages.wiki.parserfactory import ParserFactory
 
 
 class ParserTableTest (unittest.TestCase):
-
     def setUp(self):
+        self.maxDiff = None
         self.encoding = "utf8"
         self.filesPath = "../test/samplefiles/"
 
@@ -109,8 +109,7 @@ sdfsdf || centered || right aligned||
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text))
 
     def testTable5(self):
         text = """||border=1
@@ -119,24 +118,19 @@ sdfsdf || centered || right aligned||
 
         result = '''<table border=1><tr><td>x01</td></tr></table>'''
 
-        self.assertEqual(
-            self.parser.toHtml(text),
-            result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+        self.assertEqual(self.parser.toHtml(text), result)
 
     def testTable6(self):
         text = """||border=1
 ||x01\\
     ||"""
 
-        result = '''<table border=1><tr><td>x01</td></tr></table>'''
+        result = '''<table border=1><tr><td align="left">x01</td></tr></table>'''
 
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text))
 
     def testTable7(self):
         """
@@ -161,7 +155,7 @@ sdfsdf || centered || right aligned||
     \\
     ||"""
 
-        result = '''<table border=1><tr><td>x01</td></tr></table>'''
+        result = '''<table border=1><tr><td align="left">x01</td></tr></table>'''
 
         self.assertEqual(
             self.parser.toHtml(text),
@@ -169,7 +163,7 @@ sdfsdf || centered || right aligned||
             self.parser.toHtml(text).encode(
                 self.encoding))
 
-    def testTable9(self):
+    def testTable_tab(self):
         text = """бла-бла-бла
 || border=1
 || Ячейка 1 ||Ячейка 2 || Ячейка 3||
@@ -178,6 +172,36 @@ sdfsdf || centered || right aligned||
 
         result = '''бла-бла-бла
 <table border=1><tr><td align="center">Ячейка 1</td><td align="left">Ячейка 2</td><td align="right">Ячейка 3</td></tr><tr><td>Ячейка 4</td><td>\\t</td><td>Ячейка 6</td></tr></table>'''
+
+        self.assertEqual(
+            self.parser.toHtml(text),
+            result,
+            self.parser.toHtml(text).encode(
+                self.encoding))
+
+    def testTable_space_01(self):
+        text = """бла-бла-бла
+|| border=1
+|| Ячейка 1 ||Ячейка 2 || Ячейка 3||
+||Ячейка 4|| ||Ячейка 6||
+"""
+
+        result = '''бла-бла-бла
+<table border=1><tr><td align="center">Ячейка 1</td><td align="left">Ячейка 2</td><td align="right">Ячейка 3</td></tr><tr><td>Ячейка 4</td><td></td><td>Ячейка 6</td></tr></table>'''
+
+        self.assertEqual(
+            self.parser.toHtml(text),
+            result)
+
+    def testTable_space_02(self):
+        text = """бла-бла-бла
+|| border=1
+|| Ячейка 1 ||Ячейка 2 || Ячейка 3||
+||Ячейка 4||     ||Ячейка 6||
+"""
+
+        result = '''бла-бла-бла
+<table border=1><tr><td align="center">Ячейка 1</td><td align="left">Ячейка 2</td><td align="right">Ячейка 3</td></tr><tr><td>Ячейка 4</td><td></td><td>Ячейка 6</td></tr></table>'''
 
         self.assertEqual(
             self.parser.toHtml(text),
