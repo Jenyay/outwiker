@@ -21,7 +21,6 @@ class TableToken (object):
 
     def getToken(self):
         tableCell = Regex(r"(?P<text>(.|(\\\n))*?)\|\|")
-        # tableCell = Regex(r"(?P<text>(.|(\\\n))*?)(\\\n\s*)*\|\|")
         tableCell.setParseAction(self.__convertTableCell)
 
         tableRow = LineStart() + Literal("||") + OneOrMore(tableCell).leaveWhitespace() + Optional(LineEnd())
