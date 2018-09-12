@@ -23,6 +23,13 @@ class AlternativeTitleTest(unittest.TestCase):
         newtitle = getAlternativeTitle(title, siblings)
         self.assertEqual(newtitle, '(1)')
 
+    def test_empty_03(self):
+        title = ''
+        siblings = ['(1)']
+
+        newtitle = getAlternativeTitle(title, siblings)
+        self.assertEqual(newtitle, '(2)')
+
     def test_title_ok_01(self):
         title = 'Проверка'
         siblings = []

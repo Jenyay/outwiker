@@ -86,6 +86,10 @@ class GeneralController(BasePageDialogController):
     def pageTitle(self):
         return self._generalPanel.titleTextCtrl.GetValue().strip()
 
+    @pageTitle.setter
+    def pageTitle(self, value):
+        self._generalPanel.titleTextCtrl.SetValue(value)
+
     @property
     def selectedFactory(self):
         index = self._generalPanel.typeCombo.GetSelection()

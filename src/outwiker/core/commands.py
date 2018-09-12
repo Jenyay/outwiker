@@ -616,7 +616,7 @@ def getAlternativeTitle(title,
     n = 1
     while (len(result.strip()) == 0 or
            result.lower() in siblings_lower):
-        result = format.format(title=newtitle, number=n)
+        result = format.format(title=newtitle, number=n).strip()
         n += 1
 
     result = result.strip()
