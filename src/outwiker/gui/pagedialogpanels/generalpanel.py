@@ -58,6 +58,14 @@ class GeneralPanel(wx.Panel):
         self.tagsSelector = TagsSelector(self)
         self.typeLabel = wx.StaticText(self, -1, _(u"Page type"))
 
+    @property
+    def pageTitle(self):
+        return self.titleTextCtrl.GetValue()
+
+    @pageTitle.setter
+    def pageTitle(self, value):
+        self.titleTextCtrl.SetValue(value)
+
 
 class GeneralController(BasePageDialogController):
     def __init__(self, generalPanel, application, dialog):

@@ -82,6 +82,9 @@ class BasePageDialog (TestedDialog):
         self._panels.append(panel)
         self.getPanelsParent().AddPage(panel, title)
 
+    def getPanel(self, index):
+        return self._panels[index]
+
     def removePanel(self, panel):
         if panel in self._panels:
             index = self._panels.index(panel)
@@ -96,6 +99,9 @@ class BasePageDialog (TestedDialog):
         if controller in self._controllers:
             controller.clear()
             self._controllers.remove(controller)
+
+    def getController(self, index):
+        return self._controllers[index]
 
     @property
     def currentPage(self):

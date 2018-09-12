@@ -56,6 +56,9 @@ class DialogTester(object):
         """
         self.append(self._returnResult, wx.NO)
 
+    def appendError(self):
+        self.append(self._error)
+
     def pop(self):
         """
         Возвращает None, если список функций пуст или первый элемент в списке,
@@ -80,6 +83,9 @@ class DialogTester(object):
 
     def _returnResult(self, dialog, result):
         return result
+
+    def _error(self, dialog):
+        assert False
 
 
 class TesterInterface(object):
