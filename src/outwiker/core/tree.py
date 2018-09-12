@@ -467,17 +467,11 @@ class WikiPage(RootWikiPage):
 
     @property
     def alias(self):
-        '''
-        Added in outwiker.core 1.2
-        '''
         alias = self.params.aliasOption.value
         return None if not alias else alias
 
     @alias.setter
     def alias(self, value):
-        '''
-        Added in outwiker.core 1.2
-        '''
         if self.readonly:
             raise ReadonlyException
 
@@ -490,16 +484,10 @@ class WikiPage(RootWikiPage):
 
     @property
     def display_title(self):
-        '''
-        Added in outwiker.core 1.2
-        '''
         return self.alias if self.alias else self.title
 
     @display_title.setter
     def display_title(self, value):
-        '''
-        Added in outwiker.core 1.2
-        '''
         if not value:
             self.alias = None
         elif self.alias is not None:

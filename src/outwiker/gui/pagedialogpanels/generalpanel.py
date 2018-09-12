@@ -4,7 +4,6 @@ import wx
 
 from outwiker.core.tagslist import TagsList
 from outwiker.core.commands import testPageTitle, MessageBox
-from outwiker.core.tree import RootWikiPage
 from outwiker.core.events import (PageDialogPageTypeChangedParams,
                                   PageDialogPageTitleChangedParams,
                                   PageDialogPageTagsChangedParams,
@@ -152,16 +151,6 @@ class GeneralController(BasePageDialogController):
         return True
 
     def validateBeforeCreation(self, parentPage):
-        if not self._validateCommon(parentPage, None):
-            return False
-
-        if(parentPage is not None and
-                not RootWikiPage.testDublicate(parentPage, self.pageTitle)):
-            MessageBox(_(u"A page with some title already exists"),
-                       _(u"Error"),
-                       wx.ICON_ERROR | wx.OK)
-            return False
-
         return True
 
     def validateBeforeEditing(self, page):
