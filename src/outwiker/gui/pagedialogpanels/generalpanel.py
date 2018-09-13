@@ -3,7 +3,6 @@
 import wx
 
 from outwiker.core.tagslist import TagsList
-from outwiker.core.commands import testPageTitle, MessageBox
 from outwiker.core.events import (PageDialogPageTypeChangedParams,
                                   PageDialogPageTitleChangedParams,
                                   PageDialogPageTagsChangedParams,
@@ -154,27 +153,10 @@ class GeneralController(BasePageDialogController):
         self._generalPanel.typeCombo.Disable()
         self.__onPageTypeChanged(None)
 
-    def _validateCommon(self, parentPage, pageAlias):
-        if not pageAlias and not testPageTitle(self.pageTitle):
-            self._generalPanel.titleTextCtrl.SetFocus()
-            self._generalPanel.titleTextCtrl.SetSelection(-1, -1)
-            return False
-
-        return True
-
     def validateBeforeCreation(self, parentPage):
         return True
 
     def validateBeforeEditing(self, page):
-        if not self._validateCommon(page.parent, page.alias):
-            return False
-
-        if page.alias is not None and not page.canRename(self.pageTitle):
-            MessageBox(_(u"Can't rename page when page with that title already exists"),
-                       _(u"Error"),
-                       wx.ICON_ERROR | wx.OK)
-            return False
-
         return True
 
     def clear(self):

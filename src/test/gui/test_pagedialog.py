@@ -150,3 +150,43 @@ class RenamePageWithDialogTest(BasePageDialogTest):
         self.assertEqual(page.display_title, 'Викистраница')
         self.assertIsNotNone(self.wikiroot['Викистраница'])
         self.assertIsNone(self.wikiroot['Викистраница'].alias)
+
+    def test_special_chars(self):
+        page = WikiPageFactory().create(self.wikiroot, 'Викистраница', [])
+        Tester.dialogTester.append(self._set_title_func, 'Тест ><|?*:"\\/#% проверка')
+        Tester.dialogTester.appendError()
+
+        editPage(self.application.mainWindow, page)
+
+        self.assertEqual(page.title, 'Тест ___________ проверка')
+        self.assertEqual(page.display_title, 'Тест ><|?*:"\\/#% проверка')
+        self.assertEqual(page.alias, 'Тест ><|?*:"\\/#% проверка')
+        self.assertIsNotNone(self.wikiroot['Тест ___________ проверка'])
+
+    def test_rename_duplicate_01(self):
+        WikiPageFactory().create(self.wikiroot, 'Викистраница', [])
+        page2 = WikiPageFactory().create(self.wikiroot, 'Викистраница - 2', [])
+        Tester.dialogTester.append(self._set_title_func, 'Викистраница')
+        Tester.dialogTester.appendError()
+
+        editPage(self.application.mainWindow, page2)
+
+        self.assertEqual(page2.title, 'Викистраница (1)')
+        self.assertEqual(page2.alias, 'Викистраница')
+        self.assertEqual(page2.display_title, 'Викистраница')
+        self.assertIsNotNone(self.wikiroot['Викистраница (1)'])
+
+    def test_rename_duplicate_02(self):
+        WikiPageFactory().create(self.wikiroot, 'Викистраница', [])
+        WikiPageFactory().create(self.wikiroot, 'Викистраница (1)', [])
+
+        page3 = WikiPageFactory().create(self.wikiroot, 'Викистраница - 3', [])
+        Tester.dialogTester.append(self._set_title_func, 'Викистраница')
+        Tester.dialogTester.appendError()
+
+        editPage(self.application.mainWindow, page3)
+
+        self.assertEqual(page3.title, 'Викистраница (2)')
+        self.assertEqual(page3.alias, 'Викистраница')
+        self.assertEqual(page3.display_title, 'Викистраница')
+        self.assertIsNotNone(self.wikiroot['Викистраница (2)'])

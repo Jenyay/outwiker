@@ -22,9 +22,12 @@ class RenamePageGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         factory.create(self.wikiroot, "Страница 2", [])
         factory.create(self.wikiroot["Страница 2"], "Страница 3", [])
 
+        Tester.dialogTester.clear()
+
     def tearDown(self):
         self.destroyApplication()
         self.destroyWiki(self.wikiroot)
+        Tester.dialogTester.clear()
 
     def testCommand_01(self):
         renamePage(self.wikiroot["Страница 1"], "Абырвалг")
@@ -33,33 +36,33 @@ class RenamePageGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertIsNotNone(self.wikiroot["Абырвалг"])
 
     def testCommand_02(self):
-        Tester.dialogTester.appendOk()
+        Tester.dialogTester.appendError()
         renamePage(self.wikiroot["Страница 1"], "Страница 2")
 
-        self.assertIsNotNone(self.wikiroot["Страница 1"])
+        self.assertIsNone(self.wikiroot["Страница 1"])
         self.assertIsNotNone(self.wikiroot["Страница 2"])
-        self.assertEqual(Tester.dialogTester.count, 0)
+        self.assertIsNotNone(self.wikiroot["Страница 2 (1)"])
 
     def testCommand_03(self):
-        Tester.dialogTester.appendOk()
+        Tester.dialogTester.appendError()
         renamePage(self.wikiroot["Страница 1"], "safsd/Абырвалг")
 
-        self.assertIsNotNone(self.wikiroot["Страница 1"])
-        self.assertEqual(Tester.dialogTester.count, 0)
+        self.assertIsNone(self.wikiroot["Страница 1"])
+        self.assertIsNotNone(self.wikiroot["safsd_Абырвалг"])
 
     def testCommand_04(self):
-        Tester.dialogTester.appendOk()
+        Tester.dialogTester.appendError()
         renamePage(self.wikiroot["Страница 1"], "")
 
-        self.assertIsNotNone(self.wikiroot["Страница 1"])
-        self.assertEqual(Tester.dialogTester.count, 0)
+        self.assertIsNone(self.wikiroot["Страница 1"])
+        self.assertIsNotNone(self.wikiroot["(1)"])
 
     def testCommand_05(self):
-        Tester.dialogTester.appendOk()
+        Tester.dialogTester.appendError()
         renamePage(self.wikiroot["Страница 1"], "    \t\n")
 
-        self.assertIsNotNone(self.wikiroot["Страница 1"])
-        self.assertEqual(Tester.dialogTester.count, 0)
+        self.assertIsNone(self.wikiroot["Страница 1"])
+        self.assertIsNotNone(self.wikiroot["(1)"])
 
     def testCommand_06(self):
         Tester.dialogTester.appendOk()
@@ -88,28 +91,25 @@ class RenamePageGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(Tester.dialogTester.count, 0)
 
     def testCommand_09(self):
-        Tester.dialogTester.appendOk()
+        Tester.dialogTester.appendError()
         renamePage(self.wikiroot["Страница 1"], "..\\")
 
-        self.assertIsNotNone(self.wikiroot["Страница 1"])
-        self.assertIsNone(self.wikiroot["..\\"])
-        self.assertEqual(Tester.dialogTester.count, 0)
+        self.assertIsNone(self.wikiroot["Страница 1"])
+        self.assertIsNotNone(self.wikiroot[".._"])
 
     def testCommand_10(self):
-        Tester.dialogTester.appendOk()
+        Tester.dialogTester.appendError()
         renamePage(self.wikiroot["Страница 1"], "../sadfasdf")
 
-        self.assertIsNotNone(self.wikiroot["Страница 1"])
-        self.assertIsNone(self.wikiroot["../sadfasdf"])
-        self.assertEqual(Tester.dialogTester.count, 0)
+        self.assertIsNone(self.wikiroot["Страница 1"])
+        self.assertIsNotNone(self.wikiroot[".._sadfasdf"])
 
     def testCommand_11(self):
-        Tester.dialogTester.appendOk()
+        Tester.dialogTester.appendError()
         renamePage(self.wikiroot["Страница 1"], "..\\Абырвалг")
 
-        self.assertIsNotNone(self.wikiroot["Страница 1"])
-        self.assertIsNone(self.wikiroot["..\\Абырвалг"])
-        self.assertEqual(Tester.dialogTester.count, 0)
+        self.assertIsNone(self.wikiroot["Страница 1"])
+        self.assertIsNotNone(self.wikiroot[".._Абырвалг"])
 
     def testCommand_12(self):
         renamePage(self.wikiroot["Страница 2/Страница 3"], "Абырвалг")
@@ -119,12 +119,11 @@ class RenamePageGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertIsNotNone(self.wikiroot["Страница 2/Абырвалг"])
 
     def testCommand_13(self):
-        Tester.dialogTester.appendOk()
+        Tester.dialogTester.appendError()
         renamePage(self.wikiroot["Страница 2/Страница 3"], "..")
 
-        self.assertIsNotNone(self.wikiroot["Страница 2/Страница 3"])
+        self.assertIsNone(self.wikiroot["Страница 2/Страница 3"])
         self.assertIsNone(self.wikiroot[".."])
-        self.assertEqual(Tester.dialogTester.count, 0)
 
     def testCommand_14_root(self):
         Tester.dialogTester.appendOk()

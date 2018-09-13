@@ -426,19 +426,27 @@ def renamePage(page, newtitle):
         return
 
     newtitle = newtitle.strip()
-    if page.alias is None and not testPageTitle(newtitle):
+
+    if newtitle == page.display_title:
         return
 
+    siblings = [child.title
+                for child in page.parent.children
+                if child != page]
+
+    real_title = getAlternativeTitle(newtitle, siblings)
+
     try:
-        page.display_title = newtitle
-    except outwiker.core.exceptions.DuplicateTitle:
-        MessageBox(_(u"Can't move page when page with that title already exists"),
-                   _(u"Error"),
-                   wx.ICON_ERROR | wx.OK)
+        page.title = real_title
     except OSError:
         MessageBox(_(u'Can\'t rename page "{}" to "{}"').format(page.title, newtitle),
                    _(u"Error"),
                    wx.ICON_ERROR | wx.OK)
+
+    if real_title != newtitle:
+        page.alias = newtitle
+    else:
+        page.alias = None
 
 
 def testPageTitle(title):
