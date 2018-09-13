@@ -5,13 +5,13 @@ import unittest
 import wx
 
 from outwiker.gui.tester import Tester
-from outwiker.gui.pagedialog import createPageWithDialog
+from outwiker.gui.pagedialog import createPageWithDialog, editPage
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 
 from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class CreatePageWithDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
+class BasePageDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def setUp(self):
         self.initApplication()
         self.wikiroot = self.createWiki()
@@ -27,6 +27,8 @@ class CreatePageWithDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
         dialog.getPanel(0).pageTitle = title
         return wx.ID_OK
 
+
+class CreatePageWithDialogTest(BasePageDialogTest):
     def test_normal_root(self):
         Tester.dialogTester.append(self._set_title_func, 'Новая страница')
         Tester.dialogTester.appendError()
@@ -98,3 +100,25 @@ class CreatePageWithDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertIsNotNone(self.wikiroot['Страница1 _ Страница2'])
         self.assertEqual(self.wikiroot['Страница1 _ Страница2'].alias,
                          'Страница1 / Страница2')
+
+
+class RenamePageWithDialogTest(BasePageDialogTest):
+    def test_simple(self):
+        page = WikiPageFactory().create(self.wikiroot, 'Викистраница', [])
+        Tester.dialogTester.append(self._set_title_func, 'Новое имя')
+        Tester.dialogTester.appendError()
+
+        editPage(self.application.mainWindow, page)
+
+        self.assertIsNotNone(self.wikiroot['Новое имя'])
+        self.assertIsNone(self.wikiroot['Новое имя'].alias)
+
+    def test_simple_spaces(self):
+        page = WikiPageFactory().create(self.wikiroot, 'Викистраница', [])
+        Tester.dialogTester.append(self._set_title_func, '    Новое имя    ')
+        Tester.dialogTester.appendError()
+
+        editPage(self.application.mainWindow, page)
+
+        self.assertIsNotNone(self.wikiroot['Новое имя'])
+        self.assertIsNone(self.wikiroot['Новое имя'].alias)
