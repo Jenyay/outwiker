@@ -6,14 +6,11 @@ from tempfile import mkdtemp
 
 from outwiker.core.attachment import Attachment
 from outwiker.core.application import Application
-from outwiker.core.commands import renamePage
 from outwiker.core.exceptions import DuplicateTitle
 from outwiker.core.tree import WikiDocument
-from outwiker.gui.tester import Tester
 from outwiker.pages.text.textpage import TextPageFactory
 
 from test.utils import removeDir
-from test.basetestcases import BaseOutWikerGUIMixin
 
 
 class RenameTest(unittest.TestCase):
@@ -193,92 +190,3 @@ class RenameTest(unittest.TestCase):
                     os.path.exists(self.wikiroot["Новое имя"].path)
                 )
                 self.assertEqual(self.wikiroot["Страница 2"], None)
-
-
-class RenameWithCommandTest(unittest.TestCase, BaseOutWikerGUIMixin):
-    def setUp(self):
-        self.initApplication()
-        self.wikiroot = self.createWiki()
-        self.page = TextPageFactory().create(self.wikiroot, 'Викистраница', [])
-        self.application.wikiroot = self.wikiroot
-        Tester.dialogTester.clear()
-        Tester.dialogTester.appendError()
-
-    def tearDown(self):
-        Tester.dialogTester.clear()
-        self.destroyApplication()
-        self.destroyWiki(self.wikiroot)
-
-    def test_rename_simple(self):
-        renamePage(self.page, 'Новое имя')
-
-        self.assertEqual(self.page.title, 'Новое имя')
-        self.assertEqual(self.page.display_title, 'Новое имя')
-        self.assertIsNotNone(self.wikiroot['Новое имя'])
-        self.assertIsNone(self.wikiroot['Новое имя'].alias)
-
-    def test_rename_simple_spaces(self):
-        renamePage(self.page, '   Новое имя   ')
-
-        self.assertEqual(self.page.title, 'Новое имя')
-        self.assertEqual(self.page.display_title, 'Новое имя')
-        self.assertIsNotNone(self.wikiroot['Новое имя'])
-        self.assertIsNone(self.wikiroot['Новое имя'].alias)
-
-    def test_rename_some_name(self):
-        renamePage(self.page, 'Викистраница')
-
-        self.assertEqual(self.page.title, 'Викистраница')
-        self.assertEqual(self.page.display_title, 'Викистраница')
-        self.assertIsNotNone(self.wikiroot['Викистраница'])
-        self.assertIsNone(self.wikiroot['Викистраница'].alias)
-
-    def test_rename_some_name_spaces(self):
-        renamePage(self.page, '   Викистраница   ')
-
-        self.assertEqual(self.page.title, 'Викистраница')
-        self.assertEqual(self.page.display_title, 'Викистраница')
-        self.assertIsNotNone(self.wikiroot['Викистраница'])
-        self.assertIsNone(self.wikiroot['Викистраница'].alias)
-
-    def test_rename_special_chars(self):
-        renamePage(self.page, 'Тест ><|?*:"\\/#% проверка')
-
-        self.assertEqual(self.page.title, 'Тест ___________ проверка')
-        self.assertEqual(self.page.alias, 'Тест ><|?*:"\\/#% проверка')
-        self.assertEqual(self.page.display_title, 'Тест ><|?*:"\\/#% проверка')
-        self.assertIsNotNone(self.wikiroot['Тест ___________ проверка'])
-
-    def test_rename_duplicate_01(self):
-        page2 = TextPageFactory().create(self.wikiroot, 'Викистраница - 2', [])
-        renamePage(page2, 'Викистраница')
-
-        self.assertEqual(page2.title, 'Викистраница (1)')
-        self.assertEqual(page2.alias, 'Викистраница')
-        self.assertEqual(page2.display_title, 'Викистраница')
-        self.assertIsNotNone(self.wikiroot['Викистраница (1)'])
-
-    def test_rename_duplicate_02(self):
-        page2 = TextPageFactory().create(self.wikiroot, 'Викистраница - 2', [])
-        page3 = TextPageFactory().create(self.wikiroot, 'Викистраница - 3', [])
-        renamePage(page2, 'Викистраница')
-        renamePage(page3, 'Викистраница')
-
-        self.assertEqual(page2.title, 'Викистраница (1)')
-        self.assertEqual(page2.alias, 'Викистраница')
-        self.assertEqual(page2.display_title, 'Викистраница')
-        self.assertIsNotNone(self.wikiroot['Викистраница (1)'])
-
-        self.assertEqual(page3.title, 'Викистраница (2)')
-        self.assertEqual(page3.alias, 'Викистраница')
-        self.assertEqual(page3.display_title, 'Викистраница')
-        self.assertIsNotNone(self.wikiroot['Викистраница (2)'])
-
-    def test_alias_01(self):
-        self.page.alias = 'Бла-бла-бла'
-        renamePage(self.page, 'Викистраница')
-
-        self.assertEqual(self.page.title, 'Викистраница')
-        self.assertEqual(self.page.display_title, 'Викистраница')
-        self.assertIsNotNone(self.wikiroot['Викистраница'])
-        self.assertIsNone(self.wikiroot['Викистраница'].alias)

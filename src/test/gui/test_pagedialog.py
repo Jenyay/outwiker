@@ -82,6 +82,18 @@ class CreatePageWithDialogTest(BasePageDialogTest):
         self.assertEqual(self.wikiroot['Викистраница (2)'].alias,
                          'Викистраница')
 
+    def test_duplicate_03(self):
+        WikiPageFactory().create(self.wikiroot, "(1)", [])
+
+        Tester.dialogTester.append(self._set_title_func, '.')
+        Tester.dialogTester.appendError()
+        createPageWithDialog(self.application.mainWindow, self.wikiroot)
+
+        self.assertEqual(len(self.wikiroot), 2)
+        self.assertIsNotNone(self.wikiroot['(2)'])
+
+        self.assertEqual(self.wikiroot['(2)'].alias, '.')
+
     def test_space(self):
         Tester.dialogTester.append(self._set_title_func, '  Новая страница  ')
         Tester.dialogTester.appendError()
@@ -100,6 +112,51 @@ class CreatePageWithDialogTest(BasePageDialogTest):
         self.assertIsNotNone(self.wikiroot['Страница1 _ Страница2'])
         self.assertEqual(self.wikiroot['Страница1 _ Страница2'].alias,
                          'Страница1 / Страница2')
+
+    def test_double_dots(self):
+        Tester.dialogTester.append(self._set_title_func, '..')
+        Tester.dialogTester.appendError()
+        createPageWithDialog(self.application.mainWindow, self.wikiroot)
+
+        self.assertEqual(len(self.wikiroot), 1)
+        self.assertIsNotNone(self.wikiroot['(1)'])
+        self.assertEqual(self.wikiroot['(1)'].alias, '..')
+
+    def test_dot(self):
+        Tester.dialogTester.append(self._set_title_func, '.')
+        Tester.dialogTester.appendError()
+        createPageWithDialog(self.application.mainWindow, self.wikiroot)
+
+        self.assertEqual(len(self.wikiroot), 1)
+        self.assertIsNotNone(self.wikiroot['(1)'])
+        self.assertEqual(self.wikiroot['(1)'].alias, '.')
+
+    def test_dots_01(self):
+        Tester.dialogTester.append(self._set_title_func, '...')
+        Tester.dialogTester.appendError()
+        createPageWithDialog(self.application.mainWindow, self.wikiroot)
+
+        self.assertEqual(len(self.wikiroot), 1)
+        self.assertIsNotNone(self.wikiroot['...'])
+        self.assertIsNone(self.wikiroot['...'].alias)
+
+    def test_dots_02(self):
+        Tester.dialogTester.append(self._set_title_func, '../.')
+        Tester.dialogTester.appendError()
+        createPageWithDialog(self.application.mainWindow, self.wikiroot)
+
+        self.assertEqual(len(self.wikiroot), 1)
+        self.assertIsNotNone(self.wikiroot['.._.'])
+        self.assertEqual(self.wikiroot['.._.'].alias, '../.')
+
+    def test_double_underline(self):
+        Tester.dialogTester.append(self._set_title_func, '__attach')
+        Tester.dialogTester.appendError()
+        createPageWithDialog(self.application.mainWindow, self.wikiroot)
+
+        self.assertEqual(len(self.wikiroot), 1)
+        self.assertIsNotNone(self.wikiroot['--attach'])
+        self.assertEqual(self.wikiroot['--attach'].alias, '__attach')
 
 
 class RenamePageWithDialogTest(BasePageDialogTest):
@@ -190,3 +247,57 @@ class RenamePageWithDialogTest(BasePageDialogTest):
         self.assertEqual(page3.alias, 'Викистраница')
         self.assertEqual(page3.display_title, 'Викистраница')
         self.assertIsNotNone(self.wikiroot['Викистраница (2)'])
+
+    def test_begin_underlines(self):
+        page = WikiPageFactory().create(self.wikiroot, 'Викистраница', [])
+        Tester.dialogTester.append(self._set_title_func, '__Викистраница')
+        Tester.dialogTester.appendError()
+
+        editPage(self.application.mainWindow, page)
+
+        self.assertIsNone(self.wikiroot['Викистраница'])
+        self.assertEqual(page.title, '--Викистраница')
+        self.assertEqual(page.display_title, '__Викистраница')
+        self.assertIsNotNone(self.wikiroot['--Викистраница'])
+        self.assertEqual(self.wikiroot['--Викистраница'].alias,
+                         '__Викистраница')
+
+    def test_begin_special_chars_underlines(self):
+        page = WikiPageFactory().create(self.wikiroot, 'Викистраница', [])
+        Tester.dialogTester.append(self._set_title_func, '##Викистраница')
+        Tester.dialogTester.appendError()
+
+        editPage(self.application.mainWindow, page)
+
+        self.assertIsNone(self.wikiroot['Викистраница'])
+        self.assertEqual(page.title, '--Викистраница')
+        self.assertEqual(page.display_title, '##Викистраница')
+        self.assertIsNotNone(self.wikiroot['--Викистраница'])
+        self.assertEqual(self.wikiroot['--Викистраница'].alias,
+                         '##Викистраница')
+
+    def test_dots(self):
+        page = WikiPageFactory().create(self.wikiroot, 'Викистраница', [])
+        Tester.dialogTester.append(self._set_title_func, '..')
+        Tester.dialogTester.appendError()
+
+        editPage(self.application.mainWindow, page)
+
+        self.assertIsNone(self.wikiroot['Викистраница'])
+        self.assertEqual(page.title, '(1)')
+        self.assertEqual(page.display_title, '..')
+        self.assertIsNotNone(self.wikiroot['(1)'])
+        self.assertEqual(self.wikiroot['(1)'].alias, '..')
+
+    def test_dot(self):
+        page = WikiPageFactory().create(self.wikiroot, 'Викистраница', [])
+        Tester.dialogTester.append(self._set_title_func, '.')
+        Tester.dialogTester.appendError()
+
+        editPage(self.application.mainWindow, page)
+
+        self.assertIsNone(self.wikiroot['Викистраница'])
+        self.assertEqual(page.title, '(1)')
+        self.assertEqual(page.display_title, '.')
+        self.assertIsNotNone(self.wikiroot['(1)'])
+        self.assertEqual(self.wikiroot['(1)'].alias, '.')

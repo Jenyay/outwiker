@@ -620,7 +620,16 @@ def getAlternativeTitle(title,
     regexp = re.compile(r'[><|?*:"\\/#%]')
     newtitle = regexp.sub(substitution, newtitle)
 
-    # 2. Make unique title
+    # 2. Replace double underline in the begin title
+    if newtitle.startswith('__'):
+        newtitle = '--' + newtitle[2:]
+
+    # 3. Check for special names
+    special_names = ['..', '.']
+    if newtitle in special_names:
+        newtitle = ''
+
+    # 4. Make unique title
     result = newtitle
     n = 1
     while (len(result.strip()) == 0 or
