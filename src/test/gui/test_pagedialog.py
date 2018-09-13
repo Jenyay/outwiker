@@ -110,6 +110,8 @@ class RenamePageWithDialogTest(BasePageDialogTest):
 
         editPage(self.application.mainWindow, page)
 
+        self.assertEqual(page.title, 'Новое имя')
+        self.assertEqual(page.display_title, 'Новое имя')
         self.assertIsNotNone(self.wikiroot['Новое имя'])
         self.assertIsNone(self.wikiroot['Новое имя'].alias)
 
@@ -120,5 +122,31 @@ class RenamePageWithDialogTest(BasePageDialogTest):
 
         editPage(self.application.mainWindow, page)
 
+        self.assertEqual(page.title, 'Новое имя')
+        self.assertEqual(page.display_title, 'Новое имя')
         self.assertIsNotNone(self.wikiroot['Новое имя'])
         self.assertIsNone(self.wikiroot['Новое имя'].alias)
+
+    def test_some_name(self):
+        page = WikiPageFactory().create(self.wikiroot, 'Викистраница', [])
+        Tester.dialogTester.append(self._set_title_func, 'Викистраница')
+        Tester.dialogTester.appendError()
+
+        editPage(self.application.mainWindow, page)
+
+        self.assertEqual(page.title, 'Викистраница')
+        self.assertEqual(page.display_title, 'Викистраница')
+        self.assertIsNotNone(self.wikiroot['Викистраница'])
+        self.assertIsNone(self.wikiroot['Викистраница'].alias)
+
+    def test_some_name_spaces(self):
+        page = WikiPageFactory().create(self.wikiroot, 'Викистраница', [])
+        Tester.dialogTester.append(self._set_title_func, '   Викистраница   ')
+        Tester.dialogTester.appendError()
+
+        editPage(self.application.mainWindow, page)
+
+        self.assertEqual(page.title, 'Викистраница')
+        self.assertEqual(page.display_title, 'Викистраница')
+        self.assertIsNotNone(self.wikiroot['Викистраница'])
+        self.assertIsNone(self.wikiroot['Викистраница'].alias)

@@ -425,6 +425,7 @@ def renamePage(page, newtitle):
                    wx.ICON_ERROR | wx.OK)
         return
 
+    newtitle = newtitle.strip()
     if page.alias is None and not testPageTitle(newtitle):
         return
 
