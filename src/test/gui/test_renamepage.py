@@ -176,8 +176,9 @@ class RenamePageGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         renamePage(self.wikiroot["Страница 1"], "...")
 
         self.assertIsNone(self.wikiroot["Страница 1"])
-        self.assertIsNotNone(self.wikiroot["..."])
-        self.assertIsNone(self.wikiroot["..."].alias)
+        self.assertIsNone(self.wikiroot["..."])
+        self.assertIsNotNone(self.wikiroot["(1)"])
+        self.assertEqual(self.wikiroot["(1)"].alias, '...')
 
     def testCommand_09(self):
         Tester.dialogTester.appendError()
