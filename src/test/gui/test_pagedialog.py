@@ -137,8 +137,8 @@ class CreatePageWithDialogTest(BasePageDialogTest):
         createPageWithDialog(self.application.mainWindow, self.wikiroot)
 
         self.assertEqual(len(self.wikiroot), 1)
-        self.assertIsNotNone(self.wikiroot['...'])
-        self.assertIsNone(self.wikiroot['...'].alias)
+        self.assertIsNotNone(self.wikiroot['(1)'])
+        self.assertEqual(self.wikiroot['(1)'].alias, '...')
 
     def test_dots_02(self):
         Tester.dialogTester.append(self._set_title_func, '../.')

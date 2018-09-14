@@ -625,8 +625,7 @@ def getAlternativeTitle(title,
         newtitle = '--' + newtitle[2:]
 
     # 3. Check for special names
-    special_names = ['..', '.']
-    if newtitle in special_names:
+    if re.match(r'^\.+$', newtitle):
         newtitle = ''
 
     # 4. Make unique title
