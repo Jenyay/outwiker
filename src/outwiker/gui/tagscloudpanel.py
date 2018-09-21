@@ -13,7 +13,7 @@ class TagsCloudPanel(wx.Panel):
         self.__application = application
         self.__tagscloud = TagsCloud(self)
 
-        self.__popupWidth = 300
+        self.__popupWidth = 600
         self.__popupHeight = 200
 
         self.__layout()
