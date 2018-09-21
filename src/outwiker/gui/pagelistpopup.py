@@ -2,7 +2,7 @@
 
 import wx
 
-from .pagelist import PageList
+from .controls.pagelist import PageList
 
 
 class PageListPopup(wx.PopupTransientWindow):
