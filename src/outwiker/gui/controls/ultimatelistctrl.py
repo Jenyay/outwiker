@@ -4614,12 +4614,11 @@ class UltimateListLineData(object):
                     dc.SetFont(self._owner.GetHyperTextFont())
                     if item.GetVisited():
                         dc.SetTextForeground(self._owner.GetHyperTextVisitedColour())
-                        font = True
-                        coloured = True
                     else:
                         dc.SetTextForeground(self._owner.GetHyperTextNewColour())
-                        font = True
-                        coloured = True
+
+                    font = True
+                    coloured = True
                 else:
                     if font:
                         dc.SetFont(item.GetFont())
