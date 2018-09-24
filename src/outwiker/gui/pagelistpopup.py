@@ -10,7 +10,6 @@ class PageListPopup(wx.PopupTransientWindow):
         super(PageListPopup, self).__init__(parent)
         self._mainWindow = mainWindow
 
-        self.SetWindowStyle(wx.BORDER_SUNKEN)
         self.__pagelist = PageList(self)
         self.__layout()
 

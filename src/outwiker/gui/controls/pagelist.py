@@ -63,7 +63,10 @@ class PageList(wx.Panel):
         self._listCtrl.SetColumnWidth(1, 200)
 
         self._listCtrl.InsertColumn(2, _('Tags'))
-        self._listCtrl.SetColumnWidth(2, -3)
+        self._listCtrl.SetColumnWidth(2, 200)
+
+        self._listCtrl.InsertColumn(3, _('Modify date'))
+        self._listCtrl.SetColumnWidth(3, 200)
 
     def setPageList(self, pages):
         """
@@ -95,7 +98,10 @@ class PageList(wx.Panel):
             # Tags
             self._listCtrl.SetStringItem(index, 2, ', '.join(page.tags))
 
-            item = self._listCtrl.GetItem(index)
+            # Modify date
+            date = page.datetime.strftime('%d.%m.%Y %H:%M')
+            self._listCtrl.SetStringItem(index, 3, date)
+
             self._listCtrl.SetItemPyData(index, data)
 
         self._listCtrl.Thaw()
