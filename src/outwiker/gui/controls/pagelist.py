@@ -42,7 +42,8 @@ class PageList(wx.Panel):
         self.SetSizer(self._sizer)
 
     def _onPageClick(self, event):
-        pageData = event.GetItem().GetPyData()
+        item = event.GetItem()
+        pageData = item.GetPyData()
         if pageData:
             page = pageData.page
             assert page is not None
@@ -92,14 +93,12 @@ class PageList(wx.Panel):
                     parent_page.display_subpath + '/')
                 # self._listCtrl.SetItemHyperText(index, 1)
                 data.parent = parent_page
-            else:
-                self._listCtrl.SetStringItem(index, 1, '')
 
             # Tags
             self._listCtrl.SetStringItem(index, 2, ', '.join(page.tags))
 
             # Modify date
-            date = page.datetime.strftime('%d.%m.%Y %H:%M')
+            date = page.datetime.strftime('%d.%m.%Y     %H:%M')
             self._listCtrl.SetStringItem(index, 3, date)
 
             self._listCtrl.SetItemPyData(index, data)

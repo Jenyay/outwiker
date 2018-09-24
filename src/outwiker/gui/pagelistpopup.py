@@ -7,7 +7,7 @@ from .controls.pagelist import PageList
 
 class PageListPopup(wx.PopupTransientWindow):
     def __init__(self, parent, mainWindow):
-        super(PageListPopup, self).__init__(parent)
+        super().__init__(parent)
         self._mainWindow = mainWindow
 
         self.__pagelist = PageList(self)
