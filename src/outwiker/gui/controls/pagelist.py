@@ -11,9 +11,16 @@ import outwiker.gui.controls.ultimatelistctrl as ULC
 PageClickEvent, EVT_PAGE_CLICK = wx.lib.newevent.NewEvent()
 
 
+class PageData(object):
+    def __init__(self, page, parent=None):
+        self.page = page
+        self.parent = parent
+
+
 class PageList(wx.Panel):
     def __init__(self, parent):
         super().__init__(parent)
+        self._propagationLevel = 15
         self.SetBackgroundColour(wx.Colour(255, 255, 255))
 
         self._sizer = wx.FlexGridSizer(cols=1)
@@ -25,9 +32,23 @@ class PageList(wx.Panel):
             agwStyle=ULC.ULC_REPORT | ULC.ULC_SINGLE_SEL | ULC.ULC_VRULES | ULC.ULC_HRULES | ULC.ULC_SHOW_TOOLTIPS | ULC.ULC_NO_HIGHLIGHT
         )
 
+        self._listCtrl.Bind(ULC.EVT_LIST_ITEM_HYPERLINK,
+                            handler=self._onPageClick)
+        self._listCtrl.SetHyperTextNewColour(wx.BLUE)
+        self._listCtrl.SetHyperTextVisitedColour(wx.BLUE)
+
         self._sizer.Add(self._listCtrl, flag=wx.EXPAND)
 
         self.SetSizer(self._sizer)
+
+    def _onPageClick(self, event):
+        pageData = event.GetItem().GetPyData()
+        if pageData:
+            page = pageData.page
+            assert page is not None
+            event = PageClickEvent(page=page)
+            event.ResumePropagation(self._propagationLevel)
+            wx.PostEvent(self, event)
 
     def clear(self):
         """
@@ -52,10 +73,11 @@ class PageList(wx.Panel):
         self.clear()
 
         for page in pages:
+            data = PageData(page)
             # Title
             index = self._listCtrl.InsertStringItem(sys.maxsize,
                                                     page.display_title)
-            # item = self._listCtrl.GetItem(index)
+
             self._listCtrl.SetItemHyperText(index, 0)
 
             # Parent
@@ -66,12 +88,14 @@ class PageList(wx.Panel):
                     1,
                     parent_page.display_subpath + '/')
                 # self._listCtrl.SetItemHyperText(index, 1)
+                data.parent = parent_page
             else:
                 self._listCtrl.SetStringItem(index, 1, '')
 
             # Tags
             self._listCtrl.SetStringItem(index, 2, ', '.join(page.tags))
-            # self._listCtrl.SetItemHyperText(index, 1)
-            # self._listCtrl.SetItemHyperText(index, 0)
+
+            item = self._listCtrl.GetItem(index)
+            self._listCtrl.SetItemPyData(index, data)
 
         self._listCtrl.Thaw()
