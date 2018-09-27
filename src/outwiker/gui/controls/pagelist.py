@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from typing import List
+
 import wx
 import wx.lib.newevent
 
@@ -18,19 +20,22 @@ class BaseColumn(object):
     '''
     Base class to manage columns
     '''
-    def __init__(self, title, width, visible=True):
+    def __init__(self, title: str, width: int, visible=True):
         self.title = title
         self.width = width
         self.visible = visible
 
-    def insertColumn(self, listCtrl, column):
+    def insertColumn(self, listCtrl: 'PageList', position: int):
         '''
         Add column
         '''
-        listCtrl.InsertColumn(column, self.title)
-        listCtrl.SetColumnWidth(column, self.width)
+        listCtrl.InsertColumn(position, self.title)
+        listCtrl.SetColumnWidth(position, self.width)
 
-    def setCellProperties(self, listCtrl, item_index, column):
+    def setCellProperties(self,
+                          listCtrl: 'PageList',
+                          item_index: ULC.UltimateListItem,
+                          position: int):
         pass
 
     def getCellContent(self, page):
@@ -41,8 +46,11 @@ class PageTitleColumn(BaseColumn):
     '''
     Column with page title (link to page)
     '''
-    def setCellProperties(self, listCtrl, item_index, column):
-        listCtrl.SetItemHyperText(item_index, column)
+    def setCellProperties(self,
+                          listCtrl: 'PageList',
+                          item_index: ULC.UltimateListItem,
+                          position: int):
+        listCtrl.SetItemHyperText(item_index, position)
 
     def getCellContent(self, page):
         return page.display_title
@@ -52,9 +60,6 @@ class ParentPageColumn(BaseColumn):
     '''
     Column with page parent path
     '''
-    def setCellProperties(self, listCtrl, item_index, column):
-        pass
-
     def getCellContent(self, page):
         parent_page = page.parent
         if parent_page.parent:
@@ -67,9 +72,6 @@ class TagsColumn(BaseColumn):
     '''
     Column with page tags
     '''
-    def setCellProperties(self, listCtrl, item_index, column):
-        pass
-
     def getCellContent(self, page):
         return ', '.join(page.tags)
 
@@ -78,21 +80,14 @@ class ModifyDateColumn(BaseColumn):
     '''
     Column with modify date of page
     '''
-    def setCellProperties(self, listCtrl, item_index, column):
-        pass
-
     def getCellContent(self, page):
         return page.datetime.strftime('%d.%m.%Y     %H:%M')
 
 
 class PageList(wx.Panel):
-    def __init__(self, parent):
+    def __init__(self, parent: wx.Window, columns: List[BaseColumn]):
         super().__init__(parent)
-        self._columns = []
-        self._columns.append(PageTitleColumn(_('Title'), 200, True))
-        self._columns.append(ParentPageColumn(_('Parent'), 200, True))
-        self._columns.append(TagsColumn(_('Tags'), 200, True))
-        self._columns.append(ModifyDateColumn(_('Modify date'), 200, True))
+        self._columns = columns
 
         self._propagationLevel = 15
         self.SetBackgroundColour(wx.Colour(255, 255, 255))
