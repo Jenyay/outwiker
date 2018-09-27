@@ -740,6 +740,9 @@ class TagsCloudConfig(object):
     PANE_OPTIONS_SECTION = u'TagsCloudPane'
     PANE_OPTIONS_DEFAULT = u''
 
+    POPUP_HEADERS_SECTION = 'PopupHeaders'
+    POPUP_HEADERS_DEFAULT = 'title:200,parent:200,tags:200,moddate:200'
+
     def __init__(self, config):
         self.config = config
 
@@ -758,6 +761,12 @@ class TagsCloudConfig(object):
                                  MainWindowConfig.MAIN_WINDOW_SECTION,
                                  self.PANE_OPTIONS_SECTION,
                                  self.PANE_OPTIONS_DEFAULT)
+
+        self.popupHeaders = ListOption(self.config,
+                                       MainWindowConfig.MAIN_WINDOW_SECTION,
+                                       self.POPUP_HEADERS_SECTION,
+                                       self.POPUP_HEADERS_DEFAULT,
+                                       separator=u',')
 
 
 class PageDialogConfig(object):

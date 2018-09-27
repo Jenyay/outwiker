@@ -20,10 +20,9 @@ class BaseColumn(object):
     '''
     Base class to manage columns
     '''
-    def __init__(self, title: str, width: int, visible=True):
+    def __init__(self, title: str, width: int):
         self.title = title
         self.width = width
-        self.visible = visible
 
     def insertColumn(self, listCtrl: 'PageList', position: int):
         '''
@@ -126,12 +125,8 @@ class PageList(wx.Panel):
         """
         self._listCtrl.ClearAll()
 
-    @property
-    def _visibleColumns(self):
-        return [column for column in self._columns if column.visible]
-
     def _createColumns(self):
-        for n, column in enumerate(self._visibleColumns):
+        for n, column in enumerate(self._columns):
             column.insertColumn(self._listCtrl, n)
 
     def setPageList(self, pages):
@@ -145,9 +140,9 @@ class PageList(wx.Panel):
         for page in pages:
             items = [column.getCellContent(page)
                      for column
-                     in self._visibleColumns]
+                     in self._columns]
             item_index = self._listCtrl.Append(items)
-            for n, column in enumerate(self._visibleColumns):
+            for n, column in enumerate(self._columns):
                 column.setCellProperties(self._listCtrl, item_index, n)
 
             data = PageData(page)

@@ -1,24 +1,20 @@
 # -*- coding: utf-8 -*-
 
+from typing import List
+
 import wx
 
-from .controls.pagelist import (PageList,
-                                PageTitleColumn,
-                                ParentPageColumn,
-                                TagsColumn,
-                                ModifyDateColumn)
+from .controls.pagelist import PageList, BaseColumn
 from .controls.popupwindow import PopupWindow
 
 
 class PageListPopup(PopupWindow):
-    def createGUI(self):
-        columns = []
-        columns.append(PageTitleColumn(_('Title'), 200, True))
-        columns.append(ParentPageColumn(_('Parent'), 200, True))
-        columns.append(TagsColumn(_('Tags'), 200, True))
-        columns.append(ModifyDateColumn(_('Modify date'), 200, True))
+    def __init__(self, parent, mainWindow, columns: List[BaseColumn]):
+        self._columns = columns
+        super().__init__(parent, mainWindow)
 
-        self._pagelist = PageList(self, columns)
+    def createGUI(self):
+        self._pagelist = PageList(self, self._columns)
         sizer = wx.FlexGridSizer(cols=1)
         sizer.AddGrowableCol(0)
         sizer.AddGrowableRow(0)
