@@ -10,6 +10,47 @@ import outwiker.gui.controls.ultimatelistctrl as ULC
 # Событие, возникающее при клике по элементу, описывающий страницу
 PageClickEvent, EVT_PAGE_CLICK = wx.lib.newevent.NewEvent()
 
+WIDTH_DEFAULT = 200
+
+
+def createColumn(name: str, width: int) -> 'BaseColumn':
+    types = [PageTitleColumn, ParentPageColumn, TagsColumn, ModifyDateColumn]
+    for col_type in types:
+        if name == col_type.name:
+            return col_type(width)
+
+    raise ValueError
+
+
+def createDefaultColumns() -> List['BaseColumn']:
+    default = []
+    default.append(PageTitleColumn(WIDTH_DEFAULT))
+    default.append(ParentPageColumn(WIDTH_DEFAULT))
+    default.append(TagsColumn(WIDTH_DEFAULT))
+    default.append(ModifyDateColumn(WIDTH_DEFAULT))
+    return default
+
+
+def createColumnsFromString(string: str) -> List['BaseColumn']:
+    '''
+    The function can raise ValueError exception.
+    '''
+    item_params = [item_str.strip() for item_str in string.split(',')]
+
+    columns = []
+    for item in item_params:
+        name, width = item.split(':')
+        width = int(width)
+        column = createColumn(name, width)
+        columns.append(column)
+
+    return columns
+
+
+def createStringFromColumns(columns: List['BaseColumn']) -> str:
+    return ','.join(['{name}:{width}'.format(name=col.name, width=col.width)
+                     for col in columns])
+
 
 class PageData(object):
     def __init__(self, page):
@@ -20,15 +61,14 @@ class BaseColumn(object):
     '''
     Base class to manage columns
     '''
-    def __init__(self, title: str, width: int):
-        self.title = title
+    def __init__(self, width: int):
         self.width = width
 
     def insertColumn(self, listCtrl: 'PageList', position: int):
         '''
         Add column
         '''
-        listCtrl.InsertColumn(position, self.title)
+        listCtrl.InsertColumn(position, self.getTitle())
         listCtrl.SetColumnWidth(position, self.width)
 
     def setCellProperties(self,
@@ -37,7 +77,10 @@ class BaseColumn(object):
                           position: int):
         pass
 
-    def getCellContent(self, page):
+    def getCellContent(self, page) -> str:
+        pass
+
+    def getTitle(self) -> str:
         pass
 
 
@@ -45,6 +88,8 @@ class PageTitleColumn(BaseColumn):
     '''
     Column with page title (link to page)
     '''
+    name = 'title'
+
     def setCellProperties(self,
                           listCtrl: 'PageList',
                           item_index: ULC.UltimateListItem,
@@ -54,11 +99,16 @@ class PageTitleColumn(BaseColumn):
     def getCellContent(self, page):
         return page.display_title
 
+    def getTitle(self) -> str:
+        return _('Title')
+
 
 class ParentPageColumn(BaseColumn):
     '''
     Column with page parent path
     '''
+    name = 'parent'
+
     def getCellContent(self, page):
         parent_page = page.parent
         if parent_page.parent:
@@ -66,21 +116,34 @@ class ParentPageColumn(BaseColumn):
 
         return ''
 
+    def getTitle(self) -> str:
+        return _('Parent')
+
 
 class TagsColumn(BaseColumn):
     '''
     Column with page tags
     '''
+    name = 'tags'
+
     def getCellContent(self, page):
         return ', '.join(page.tags)
+
+    def getTitle(self) -> str:
+        return _('Tags')
 
 
 class ModifyDateColumn(BaseColumn):
     '''
     Column with modify date of page
     '''
+    name = 'moddate'
+
     def getCellContent(self, page):
         return page.datetime.strftime('%d.%m.%Y     %H:%M')
+
+    def getTitle(self) -> str:
+        return _('Modify date')
 
 
 class PageList(wx.Panel):

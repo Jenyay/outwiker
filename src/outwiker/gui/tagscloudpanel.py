@@ -10,62 +10,28 @@ from .tagscloud import TagsCloud
 from .pagelistpopup import PageListPopup
 from .tagspanelcontroller import TagsPanelController
 from .controls.pagelist import (BaseColumn,
-                                PageTitleColumn,
-                                ParentPageColumn,
-                                TagsColumn,
-                                ModifyDateColumn)
-
-PLP_HEADER_TITLE = 'title'
-PLP_HEADER_PARENT = 'parent'
-PLP_HEADER_TAGS = 'tags'
-PLP_HEADER_MODDATE = 'moddate'
+                                createColumnsFromString,
+                                createDefaultColumns)
 
 
 class TagsCloudPanel(wx.Panel):
     def __init__(self, parent, application):
-        wx.Panel.__init__(self, parent)
-        self._application = application
-        self._tagscloud = TagsCloud(self)
-
+        super().__init__(parent)
         self._popupHeight = 200
+        self._application = application
 
-        self._layout()
-
+        self._createGUI()
         self._controller = TagsPanelController(self, application)
 
     def _getPageListColumns(self) -> List[BaseColumn]:
-        default = []
-        default.append(PageTitleColumn(_('Title'), 200))
-        default.append(ParentPageColumn(_('Parent'), 200))
-        default.append(TagsColumn(_('Tags'), 200))
-        default.append(ModifyDateColumn(_('Modify date'), 150))
-
         config = TagsCloudConfig(self._application.config)
-        item_params = [item_str.strip()
-                       for item_str
-                       in config.popupHeaders.value.split(',')]
-
-        columns = []
-        for item in item_params:
-            try:
-                name, width = item.split(':')
-                width = int(width)
-            except ValueError:
-                return default
-
-            if name == PLP_HEADER_TITLE:
-                columns.append(PageTitleColumn(_('Title'), width))
-            elif name == PLP_HEADER_PARENT:
-                columns.append(ParentPageColumn(_('Parent'), width))
-            elif name == PLP_HEADER_TAGS:
-                columns.append(TagsColumn(_('Tags'), width))
-            elif name == PLP_HEADER_MODDATE:
-                columns.append(ModifyDateColumn(_('Modify date'), width))
-            else:
-                return default
+        try:
+            columns = createColumnsFromString(config.popupHeaders.value)
+        except ValueError:
+            columns = createDefaultColumns()
 
         if not columns:
-            columns = default
+            columns = createDefaultColumns()
 
         return columns
 
@@ -96,7 +62,8 @@ class TagsCloudPanel(wx.Panel):
     def updateTagLabels(self):
         self._tagscloud.updateTagLabels()
 
-    def _layout(self):
+    def _createGUI(self):
+        self._tagscloud = TagsCloud(self)
         mainSizer = wx.FlexGridSizer(1, 1, 0)
         mainSizer.AddGrowableCol(0)
         mainSizer.AddGrowableRow(0)
