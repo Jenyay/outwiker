@@ -29,3 +29,69 @@ def test_createColumn_invalid_name():
     factory = pl.ColumnsFactory()
     with pytest.raises(ValueError):
         factory.createColumn('invalid')
+
+
+def test_createColumnsFromString_empty():
+    text = ''
+    factory = pl.ColumnsFactory()
+    columns = factory.createColumnsFromString(text)
+
+    assert len(columns) == 0
+
+
+def test_createColumnsFromString_single_title():
+    text = 'title:100:True'
+    factory = pl.ColumnsFactory()
+    columns = factory.createColumnsFromString(text)
+
+    assert len(columns) == 1
+    assert type(columns[0]) == pl.PageTitleColumn
+    assert columns[0].width == 100
+    assert columns[0].visible
+
+
+def test_createColumnsFromString_single_parent():
+    text = 'parent:200:False'
+    factory = pl.ColumnsFactory()
+    columns = factory.createColumnsFromString(text)
+
+    assert len(columns) == 1
+    assert type(columns[0]) == pl.ParentPageColumn
+    assert columns[0].width == 200
+    assert not columns[0].visible
+
+
+def test_createColumnsFromString_single_tags():
+    text = 'tags:300:True'
+    factory = pl.ColumnsFactory()
+    columns = factory.createColumnsFromString(text)
+
+    assert len(columns) == 1
+    assert type(columns[0]) == pl.TagsColumn
+    assert columns[0].width == 300
+    assert columns[0].visible
+
+
+def test_createColumnsFromString_single_moddate():
+    text = 'moddate:400:True'
+    factory = pl.ColumnsFactory()
+    columns = factory.createColumnsFromString(text)
+
+    assert len(columns) == 1
+    assert type(columns[0]) == pl.ModifyDateColumn
+    assert columns[0].width == 400
+    assert columns[0].visible
+
+
+def test_createColumnsFromString_several():
+    text = 'moddate:400:False,title:200:True'
+    factory = pl.ColumnsFactory()
+    columns = factory.createColumnsFromString(text)
+
+    assert len(columns) == 2
+    assert type(columns[0]) == pl.ModifyDateColumn
+    assert type(columns[1]) == pl.PageTitleColumn
+    assert columns[0].width == 400
+    assert columns[1].width == 200
+    assert not columns[0].visible
+    assert columns[1].visible

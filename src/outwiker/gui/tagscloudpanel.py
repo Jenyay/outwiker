@@ -5,7 +5,7 @@ from typing import List
 
 import wx
 
-from .guiconfig import TagsCloudConfig
+from .guiconfig import TagsConfig
 from .tagscloud import TagsCloud
 from .pagelistpopup import PageListPopup
 from .tagspanelcontroller import TagsPanelController
@@ -23,7 +23,7 @@ class TagsCloudPanel(wx.Panel):
 
     def _getPageListColumns(self) -> List[BaseColumn]:
         colFactory = ColumnsFactory()
-        config = TagsCloudConfig(self._application.config)
+        config = TagsConfig(self._application.config)
         try:
             columns = colFactory.createColumnsFromString(config.popupHeaders.value)
         except ValueError:
@@ -36,7 +36,9 @@ class TagsCloudPanel(wx.Panel):
 
     def showPopup(self, pages):
         columns = self._getPageListColumns()
-        width = reduce(lambda w, col: w + col.width, columns, 25)
+        width = reduce(lambda w, col: w + (col.width if col.visible else 0),
+                       columns,
+                       25)
 
         pageListPopup = PageListPopup(self,
                                       self._application.mainWindow,

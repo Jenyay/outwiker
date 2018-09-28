@@ -21,10 +21,16 @@ class ColumnsFactory(object):
                              ModifyDateColumn,
                              ]
 
-    def createColumn(self, name: str, width: int = WIDTH_DEFAULT) -> 'BaseColumn':
+    @property
+    def typesCount(self):
+        return len(self._allColTypes)
+
+    def createColumn(self, name: str,
+                     width: int = WIDTH_DEFAULT,
+                     visible: bool = True) -> 'BaseColumn':
         for col_type in self._allColTypes:
             if name == col_type.name:
-                return col_type(width)
+                return col_type(width, visible)
 
         raise ValueError
 
@@ -35,27 +41,39 @@ class ColumnsFactory(object):
         columns.append(TagsColumn(WIDTH_DEFAULT, True))
         columns.append(ModifyDateColumn(WIDTH_DEFAULT, True))
 
-        assert len(columns) == len(self._allColTypes)
+        assert len(columns) == self.typesCount
         return columns
 
     def createColumnsFromString(self, string: str) -> List['BaseColumn']:
         '''
         The function can raise ValueError exception.
         '''
-        item_params = [item_str.strip() for item_str in string.split(',')]
-
         columns = []
+
+        if not string.strip():
+            return columns
+
+        if ',' in string:
+            item_params = [item_str.strip()
+                           for item_str
+                           in string.strip().split(',')]
+        else:
+            item_params = [string.strip()]
+
         for item in item_params:
-            name, width = item.split(':')
+            name, width, visible = item.split(':')
             width = int(width)
-            column = createColumn(name, width)
+            visible = visible.lower() == 'true'
+            column = self.createColumn(name, width, visible)
             columns.append(column)
 
         return columns
 
     def createStringFromColumns(self, columns: List['BaseColumn']) -> str:
-        return ','.join(['{name}:{width}'.format(name=col.name, width=col.width)
-                         for col in columns if col.visible])
+        return ','.join(['{name}:{width}:{visible}'.format(name=col.name,
+                                                           width=col.width,
+                                                           visible=col.visible)
+                         for col in columns])
 
 
 class PageData(object):

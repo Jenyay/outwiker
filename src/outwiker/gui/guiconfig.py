@@ -740,9 +740,6 @@ class TagsCloudConfig(object):
     PANE_OPTIONS_SECTION = u'TagsCloudPane'
     PANE_OPTIONS_DEFAULT = u''
 
-    POPUP_HEADERS_SECTION = 'PopupHeaders'
-    POPUP_HEADERS_DEFAULT = ''
-
     def __init__(self, config):
         self.config = config
 
@@ -761,11 +758,6 @@ class TagsCloudConfig(object):
                                  MainWindowConfig.MAIN_WINDOW_SECTION,
                                  self.PANE_OPTIONS_SECTION,
                                  self.PANE_OPTIONS_DEFAULT)
-
-        self.popupHeaders = StringOption(self.config,
-                                         MainWindowConfig.MAIN_WINDOW_SECTION,
-                                         self.POPUP_HEADERS_SECTION,
-                                         self.POPUP_HEADERS_DEFAULT)
 
 
 class PageDialogConfig(object):
@@ -859,6 +851,9 @@ class TagsConfig(object):
     MIDDLE_CLICK_ACTION_PARAM = u'MiddleClickAction'
     MIDDLE_CLICK_ACTION_DEFAULT = ACTION_MARK_TOGGLE
 
+    POPUP_HEADERS_SECTION = 'PopupHeaders'
+    POPUP_HEADERS_DEFAULT = ''
+
     def __init__(self, config):
         self.config = config
 
@@ -909,4 +904,11 @@ class TagsConfig(object):
             self.SECTION,
             self.MIDDLE_CLICK_ACTION_PARAM,
             self.MIDDLE_CLICK_ACTION_DEFAULT
+        )
+
+        self.popupHeaders = StringOption(
+            self.config,
+            MainWindowConfig.MAIN_WINDOW_SECTION,
+            self.POPUP_HEADERS_SECTION,
+            self.POPUP_HEADERS_DEFAULT
         )

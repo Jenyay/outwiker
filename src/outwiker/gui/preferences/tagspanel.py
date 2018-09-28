@@ -97,11 +97,31 @@ class TagsPanel(BasePrefPanel):
         self._popupHeaders = wx.CheckListBox(self)
         self._popupHeaders.SetMinSize((250, 100))
 
+        self._fillHeaders()
+
         mainsizer.Add(text, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
         mainsizer.Add(self._popupHeaders,
                       0,
                       wx.ALL,
                       border=2)
+
+    def _fillHeaders(self):
+        factory = ColumnsFactory()
+        text = self._config.popupHeaders.value
+        print(text)
+        try:
+            columns = factory.createColumnsFromString(text)
+        except ValueError:
+            columns = factory.createDefaultColumns()
+
+        if len(columns) != factory.typesCount:
+            columns = factory.createDefaultColumns()
+
+        self._popupHeaders.Clear()
+        for col in columns:
+            index = self._popupHeaders.Append(col.getTitle())
+            self._popupHeaders.Check(index, col.visible)
+            self._popupHeaders.SetClientData(index, col)
 
     def _fillActionsCombos(self):
         for action in self._actions:
@@ -150,6 +170,20 @@ class TagsPanel(BasePrefPanel):
         self._config.leftClickAction.value = self._actions[leftClickAction][1]
         self._config.middleClickAction.value = self._actions[middleClickAction][1]
 
+    def _saveHeadersState(self):
+        columns = []
+        for n in range(self._popupHeaders.GetCount()):
+            col = self._popupHeaders.GetClientData(n)
+            col.visible = self._popupHeaders.IsChecked(n) or col.name == 'title'
+
+            columns.append(col)
+
+        factory = ColumnsFactory()
+        text = factory.createStringFromColumns(columns)
+        print(text)
+        self._config.popupHeaders.value = text
+
     def Save(self):
         self._saveColorsState()
         self._saveActionsState()
+        self._saveHeadersState()
