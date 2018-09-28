@@ -38,12 +38,12 @@ class TagsCloudPanel(wx.Panel):
         default.append(PageTitleColumn(_('Title'), 200))
         default.append(ParentPageColumn(_('Parent'), 200))
         default.append(TagsColumn(_('Tags'), 200))
-        default.append(ModifyDateColumn(_('Modify date'), 200))
+        default.append(ModifyDateColumn(_('Modify date'), 150))
 
         config = TagsCloudConfig(self._application.config)
         item_params = [item_str.strip()
                        for item_str
-                       in config.popupHeaders.value]
+                       in config.popupHeaders.value.split(',')]
 
         columns = []
         for item in item_params:
@@ -63,6 +63,9 @@ class TagsCloudPanel(wx.Panel):
                 columns.append(ModifyDateColumn(_('Modify date'), width))
             else:
                 return default
+
+        if not columns:
+            columns = default
 
         return columns
 
