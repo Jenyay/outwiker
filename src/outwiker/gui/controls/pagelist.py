@@ -13,43 +13,49 @@ PageClickEvent, EVT_PAGE_CLICK = wx.lib.newevent.NewEvent()
 WIDTH_DEFAULT = 200
 
 
-def createColumn(name: str, width: int) -> 'BaseColumn':
-    types = [PageTitleColumn, ParentPageColumn, TagsColumn, ModifyDateColumn]
-    for col_type in types:
-        if name == col_type.name:
-            return col_type(width)
+class ColumnsFactory(object):
+    def __init__(self):
+        self._allColTypes = [PageTitleColumn,
+                             ParentPageColumn,
+                             TagsColumn,
+                             ModifyDateColumn,
+                             ]
 
-    raise ValueError
+    def createColumn(self, name: str, width: int = WIDTH_DEFAULT) -> 'BaseColumn':
+        for col_type in self._allColTypes:
+            if name == col_type.name:
+                return col_type(width)
 
+        raise ValueError
 
-def createDefaultColumns() -> List['BaseColumn']:
-    default = []
-    default.append(PageTitleColumn(WIDTH_DEFAULT))
-    default.append(ParentPageColumn(WIDTH_DEFAULT))
-    default.append(TagsColumn(WIDTH_DEFAULT))
-    default.append(ModifyDateColumn(WIDTH_DEFAULT))
-    return default
+    def createDefaultColumns(self) -> List['BaseColumn']:
+        columns = []
+        columns.append(PageTitleColumn(WIDTH_DEFAULT, True))
+        columns.append(ParentPageColumn(WIDTH_DEFAULT, True))
+        columns.append(TagsColumn(WIDTH_DEFAULT, True))
+        columns.append(ModifyDateColumn(WIDTH_DEFAULT, True))
 
+        assert len(columns) == len(self._allColTypes)
+        return columns
 
-def createColumnsFromString(string: str) -> List['BaseColumn']:
-    '''
-    The function can raise ValueError exception.
-    '''
-    item_params = [item_str.strip() for item_str in string.split(',')]
+    def createColumnsFromString(self, string: str) -> List['BaseColumn']:
+        '''
+        The function can raise ValueError exception.
+        '''
+        item_params = [item_str.strip() for item_str in string.split(',')]
 
-    columns = []
-    for item in item_params:
-        name, width = item.split(':')
-        width = int(width)
-        column = createColumn(name, width)
-        columns.append(column)
+        columns = []
+        for item in item_params:
+            name, width = item.split(':')
+            width = int(width)
+            column = createColumn(name, width)
+            columns.append(column)
 
-    return columns
+        return columns
 
-
-def createStringFromColumns(columns: List['BaseColumn']) -> str:
-    return ','.join(['{name}:{width}'.format(name=col.name, width=col.width)
-                     for col in columns])
+    def createStringFromColumns(self, columns: List['BaseColumn']) -> str:
+        return ','.join(['{name}:{width}'.format(name=col.name, width=col.width)
+                         for col in columns if col.visible])
 
 
 class PageData(object):
@@ -61,8 +67,9 @@ class BaseColumn(object):
     '''
     Base class to manage columns
     '''
-    def __init__(self, width: int):
+    def __init__(self, width: int, visible=True):
         self.width = width
+        self.visible = visible
 
     def insertColumn(self, listCtrl: 'PageList', position: int):
         '''
@@ -172,6 +179,10 @@ class PageList(wx.Panel):
 
         self.SetSizer(self._sizer)
 
+    @property
+    def _visibleColumns(self):
+        return [col for col in self._columns if col.visible]
+
     def _onPageClick(self, event):
         item = event.GetItem()
         pageData = item.GetPyData()
@@ -189,7 +200,7 @@ class PageList(wx.Panel):
         self._listCtrl.ClearAll()
 
     def _createColumns(self):
-        for n, column in enumerate(self._columns):
+        for n, column in enumerate(self._visibleColumns):
             column.insertColumn(self._listCtrl, n)
 
     def setPageList(self, pages):
@@ -203,9 +214,9 @@ class PageList(wx.Panel):
         for page in pages:
             items = [column.getCellContent(page)
                      for column
-                     in self._columns]
+                     in self._visibleColumns]
             item_index = self._listCtrl.Append(items)
-            for n, column in enumerate(self._columns):
+            for n, column in enumerate(self._visibleColumns):
                 column.setCellProperties(self._listCtrl, item_index, n)
 
             data = PageData(page)

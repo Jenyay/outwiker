@@ -9,9 +9,7 @@ from .guiconfig import TagsCloudConfig
 from .tagscloud import TagsCloud
 from .pagelistpopup import PageListPopup
 from .tagspanelcontroller import TagsPanelController
-from .controls.pagelist import (BaseColumn,
-                                createColumnsFromString,
-                                createDefaultColumns)
+from .controls.pagelist import BaseColumn, ColumnsFactory
 
 
 class TagsCloudPanel(wx.Panel):
@@ -24,14 +22,15 @@ class TagsCloudPanel(wx.Panel):
         self._controller = TagsPanelController(self, application)
 
     def _getPageListColumns(self) -> List[BaseColumn]:
+        colFactory = ColumnsFactory()
         config = TagsCloudConfig(self._application.config)
         try:
-            columns = createColumnsFromString(config.popupHeaders.value)
+            columns = colFactory.createColumnsFromString(config.popupHeaders.value)
         except ValueError:
-            columns = createDefaultColumns()
+            columns = colFactory.createDefaultColumns()
 
         if not columns:
-            columns = createDefaultColumns()
+            columns = colFactory.createDefaultColumns()
 
         return columns
 

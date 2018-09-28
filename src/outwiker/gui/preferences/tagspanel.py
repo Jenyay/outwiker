@@ -1,9 +1,10 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import wx
 
 from outwiker.gui.guiconfig import TagsConfig
 from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
+from outwiker.gui.controls.pagelist import ColumnsFactory
 
 
 class TagsPanel(BasePrefPanel):
@@ -27,6 +28,7 @@ class TagsPanel(BasePrefPanel):
 
         self._createColorsGui(mainSizer)
         self._createActionsGui(mainSizer)
+        self._createHeadersGui(mainSizer)
 
         self.SetSizer(mainSizer)
 
@@ -89,6 +91,17 @@ class TagsPanel(BasePrefPanel):
             _(u'Middle click on the tag'), actionsSizer)
 
         mainsizer.Add(actionsSizer, 0, wx.EXPAND | wx.ALL, border=2)
+
+    def _createHeadersGui(self, mainsizer):
+        text = wx.StaticText(self, label=_('Headers in the popup window: '))
+        self._popupHeaders = wx.CheckListBox(self)
+        self._popupHeaders.SetMinSize((250, 100))
+
+        mainsizer.Add(text, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
+        mainsizer.Add(self._popupHeaders,
+                      0,
+                      wx.ALL,
+                      border=2)
 
     def _fillActionsCombos(self):
         for action in self._actions:
