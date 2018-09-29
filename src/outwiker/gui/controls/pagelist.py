@@ -25,7 +25,8 @@ class ColumnsFactory(object):
     def typesCount(self):
         return len(self._allColTypes)
 
-    def createColumn(self, name: str,
+    def createColumn(self,
+                     name: str,
                      width: int = WIDTH_DEFAULT,
                      visible: bool = True) -> 'BaseColumn':
         for col_type in self._allColTypes:
@@ -69,7 +70,7 @@ class ColumnsFactory(object):
 
         return columns
 
-    def createStringFromColumns(self, columns: List['BaseColumn']) -> str:
+    def toString(self, columns: List['BaseColumn']) -> str:
         return ','.join(['{name}:{width}:{visible}'.format(name=col.name,
                                                            width=col.width,
                                                            visible=col.visible)

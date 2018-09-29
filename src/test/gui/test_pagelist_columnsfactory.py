@@ -95,3 +95,19 @@ def test_createColumnsFromString_several():
     assert columns[1].width == 200
     assert not columns[0].visible
     assert columns[1].visible
+
+
+def test_toString_empty():
+    factory = pl.ColumnsFactory()
+    columns = []
+    assert factory.toString(columns) == ''
+
+
+def test_toString_two_items():
+    factory = pl.ColumnsFactory()
+    columns = [
+        factory.createColumn('title', 100, True),
+        factory.createColumn('parent', 200, False),
+    ]
+
+    assert factory.toString(columns) == 'title:100:True,parent:200:False'

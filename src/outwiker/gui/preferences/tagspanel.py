@@ -9,7 +9,7 @@ from outwiker.gui.controls.pagelist import ColumnsFactory
 
 class TagsPanel(BasePrefPanel):
     def __init__(self, parent, application):
-        super(type(self), self).__init__(parent)
+        super().__init__(parent)
 
         self.ACTIONS_COMBOBOX_WIDTH = 300
 
@@ -179,7 +179,7 @@ class TagsPanel(BasePrefPanel):
             columns.append(col)
 
         factory = ColumnsFactory()
-        text = factory.createStringFromColumns(columns)
+        text = factory.toString(columns)
         print(text)
         self._config.popupHeaders.value = text
 
