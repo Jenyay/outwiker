@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-23 12:05+0300\n"
+"POT-Creation-Date: 2018-09-29 20:19+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -44,9 +44,8 @@ msgstr "Page is opened as read-only"
 #: outwiker/core/commands.py:290 outwiker/core/commands.py:298
 #: outwiker/core/commands.py:306 outwiker/core/commands.py:316
 #: outwiker/core/commands.py:389 outwiker/core/commands.py:395
-#: outwiker/core/commands.py:424 outwiker/core/commands.py:435
-#: outwiker/core/commands.py:439 outwiker/core/textprinter.py:106
-#: outwiker/pages/html/basehtmlpanel.py:299
+#: outwiker/core/commands.py:424 outwiker/core/commands.py:443
+#: outwiker/core/textprinter.py:106 outwiker/pages/html/basehtmlpanel.py:299
 #: outwiker/pages/wiki/actions/include.py:37
 #: outwiker/pages/wiki/basewikipageview.py:260
 #: outwiker/actions/sortchildalpha.py:37
@@ -64,14 +63,12 @@ msgstr "Page is opened as read-only"
 #: outwiker/gui/renametagdialog.py:75 outwiker/gui/renametagdialog.py:79
 #: outwiker/gui/currentpagepanel.py:80 outwiker/gui/currentpagepanel.py:207
 #: outwiker/gui/currentpagepanel.py:218 outwiker/gui/tabscontroller.py:246
-#: outwiker/gui/pagedialogpanels/generalpanel.py:161
-#: outwiker/gui/pagedialogpanels/generalpanel.py:173
 #: outwiker/gui/pagedialogpanels/iconspanel.py:174
 #: outwiker/gui/pagedialogpanels/appearancepanel.py:74
-#: outwiker/gui/pagedialog.py:23 outwiker/gui/pagedialog.py:33
-#: outwiker/gui/notestree.py:294 outwiker/gui/mainwindow.py:605
-#: outwiker/gui/basetextpanel.py:255 outwiker/gui/mainwndcontroller.py:220
-#: outwiker/gui/htmlrenderie.py:215 outwiker/gui/htmlrenderwebkit.py:201
+#: outwiker/gui/pagedialog.py:26 outwiker/gui/notestree.py:294
+#: outwiker/gui/mainwindow.py:605 outwiker/gui/basetextpanel.py:255
+#: outwiker/gui/mainwndcontroller.py:220 outwiker/gui/htmlrenderie.py:215
+#: outwiker/gui/htmlrenderwebkit.py:212
 msgid "Error"
 msgstr "Error"
 
@@ -171,7 +168,7 @@ msgstr "Can't open clipboard"
 msgid "Can't copy text to clipboard"
 msgstr "Can't copy text to clipboard"
 
-#: outwiker/core/commands.py:388 outwiker/core/commands.py:434
+#: outwiker/core/commands.py:388
 msgid "Can't move page when page with that title already exists"
 msgstr "Can't move page when page with that title already exists"
 
@@ -183,15 +180,15 @@ msgstr "Can't move page"
 msgid "You can't rename the root element"
 msgstr "You can't rename the root element"
 
-#: outwiker/core/commands.py:438
+#: outwiker/core/commands.py:442
 msgid "Can't rename page \"{}\" to \"{}\""
 msgstr "Can't rename page \"{}\" to \"{}\""
 
-#: outwiker/core/commands.py:454
+#: outwiker/core/commands.py:463
 msgid "The invalid page title"
 msgstr "The invalid page title"
 
-#: outwiker/core/commands.py:459
+#: outwiker/core/commands.py:468
 #, python-brace-format
 msgid ""
 "{0}\n"
@@ -200,15 +197,15 @@ msgstr ""
 "{0}\n"
 "Continue?"
 
-#: outwiker/core/commands.py:462
+#: outwiker/core/commands.py:471
 msgid "The page title"
 msgstr "The page title"
 
-#: outwiker/core/commands.py:514
+#: outwiker/core/commands.py:523
 msgid "Enter format of the date"
 msgstr "Enter format of the date"
 
-#: outwiker/core/commands.py:515 outwiker/pages/wiki/actions/dates.py:27
+#: outwiker/core/commands.py:524 outwiker/pages/wiki/actions/dates.py:27
 msgid "Date format"
 msgstr "Date format"
 
@@ -339,7 +336,7 @@ msgid "All tags"
 msgstr "All tags"
 
 #: outwiker/pages/search/searchpanel.py:48 outwiker/actions/switchto.py:86
-#: outwiker/actions/showhidetags.py:18
+#: outwiker/actions/showhidetags.py:18 outwiker/gui/controls/pagelist.py:159
 #: outwiker/gui/mainpanes/tagscloudmainpane.py:51
 msgid "Tags"
 msgstr "Tags"
@@ -372,7 +369,8 @@ msgid "Last modified date: {0}"
 msgstr "Last modified date: {0}"
 
 #: outwiker/pages/search/sortstrategies.py:64
-#: outwiker/gui/pagedialogpanels/generalpanel.py:49
+#: outwiker/gui/controls/pagelist.py:129
+#: outwiker/gui/pagedialogpanels/generalpanel.py:47
 msgid "Title"
 msgstr "Title"
 
@@ -824,7 +822,7 @@ msgid "Custom CSS"
 msgstr "Custom CSS"
 
 #: outwiker/pages/wiki/wikipagecontroller.py:75
-#: outwiker/gui/basepagedialog.py:124
+#: outwiker/gui/basepagedialog.py:130
 #: outwiker/gui/preferences/prefcontroller.py:144
 #: outwiker/gui/preferences/prefcontroller.py:166
 #: outwiker/gui/mainwindow.py:201
@@ -1021,7 +1019,7 @@ msgstr "Global Search…"
 msgid "Create or open page for global search"
 msgstr "Create or open page for global search"
 
-#: outwiker/actions/globalsearch.py:40 outwiker/gui/pagedialog.py:58
+#: outwiker/actions/globalsearch.py:40 outwiker/gui/pagedialog.py:68
 msgid "Can't create page"
 msgstr "Can't create page"
 
@@ -1209,7 +1207,7 @@ msgstr "Open \"About\" dialog"
 msgid "Page Properties…"
 msgstr "Page Properties…"
 
-#: outwiker/actions/editpageprop.py:24 outwiker/gui/pagedialog.py:123
+#: outwiker/actions/editpageprop.py:24 outwiker/gui/pagedialog.py:133
 msgid "Edit page properties"
 msgstr "Edit page properties"
 
@@ -1306,7 +1304,7 @@ msgstr "Save current page before reload?"
 msgid "Save?"
 msgstr "Save?"
 
-#: outwiker/gui/basepagedialog.py:127
+#: outwiker/gui/basepagedialog.py:133
 msgid "Icon"
 msgstr "Icon"
 
@@ -1675,41 +1673,45 @@ msgstr "Description"
 msgid "Site"
 msgstr "Site"
 
-#: outwiker/gui/preferences/tagspanel.py:16
+#: outwiker/gui/preferences/tagspanel.py:17
 msgid "Search pages with the tag"
 msgstr "Search pages with the tag"
 
-#: outwiker/gui/preferences/tagspanel.py:17
+#: outwiker/gui/preferences/tagspanel.py:18
 msgid "Toggle tag selection"
 msgstr "Toggle tag selection"
 
-#: outwiker/gui/preferences/tagspanel.py:53
+#: outwiker/gui/preferences/tagspanel.py:55
 msgid "Tag color"
 msgstr "Tag color"
 
-#: outwiker/gui/preferences/tagspanel.py:56
+#: outwiker/gui/preferences/tagspanel.py:58
 msgid "Hover tag color"
 msgstr "Hover tag color"
 
-#: outwiker/gui/preferences/tagspanel.py:58
+#: outwiker/gui/preferences/tagspanel.py:60
 msgid "Marked tag color"
 msgstr "Marked tag color"
 
-#: outwiker/gui/preferences/tagspanel.py:62
+#: outwiker/gui/preferences/tagspanel.py:64
 msgid "Hover marked tag color"
 msgstr "Hover marked tag color"
 
-#: outwiker/gui/preferences/tagspanel.py:65
+#: outwiker/gui/preferences/tagspanel.py:67
 msgid "Marked tag background color"
 msgstr "Marked tag background color"
 
-#: outwiker/gui/preferences/tagspanel.py:86
+#: outwiker/gui/preferences/tagspanel.py:88
 msgid "Left click on the tag"
 msgstr "Left click on the tag"
 
-#: outwiker/gui/preferences/tagspanel.py:89
+#: outwiker/gui/preferences/tagspanel.py:91
 msgid "Middle click on the tag"
 msgstr "Middle click on the tag"
+
+#: outwiker/gui/preferences/tagspanel.py:96
+msgid "Headers in the popup window: "
+msgstr "Headers in the popup window: "
 
 #: outwiker/gui/preferences/htmlrenderpanel.py:32
 msgid "Paragraphs separator"
@@ -1764,8 +1766,8 @@ msgstr "You did not select a file to paste"
 msgid "You did not select a file to execute"
 msgstr "You did not select a file to execute"
 
-#: outwiker/gui/attachpanel.py:285 outwiker/gui/htmlrender.py:62
-#: outwiker/gui/htmlrenderie.py:214 outwiker/gui/htmlrenderwebkit.py:199
+#: outwiker/gui/attachpanel.py:285 outwiker/gui/htmlrender.py:53
+#: outwiker/gui/htmlrenderie.py:214 outwiker/gui/htmlrenderwebkit.py:210
 #, python-format
 msgid "Can't execute file '%s'"
 msgstr "Can't execute file '%s'"
@@ -2251,17 +2253,17 @@ msgstr "Year with century"
 msgid "A literal '%' character"
 msgstr "A literal '%' character"
 
-#: outwiker/gui/pagedialogpanels/generalpanel.py:60
+#: outwiker/gui/controls/pagelist.py:146
+msgid "Parent"
+msgstr "Parent"
+
+#: outwiker/gui/controls/pagelist.py:172
+msgid "Modify date"
+msgstr "Modify date"
+
+#: outwiker/gui/pagedialogpanels/generalpanel.py:58
 msgid "Page type"
 msgstr "Page type"
-
-#: outwiker/gui/pagedialogpanels/generalpanel.py:160
-msgid "A page with some title already exists"
-msgstr "A page with some title already exists"
-
-#: outwiker/gui/pagedialogpanels/generalpanel.py:172
-msgid "Can't rename page when page with that title already exists"
-msgstr "Can't rename page when page with that title already exists"
 
 #: outwiker/gui/pagedialogpanels/iconspanel.py:139
 msgid "Recent"
@@ -2288,16 +2290,12 @@ msgstr "Can't set page style\n"
 msgid "Do not change"
 msgstr "Do not change"
 
-#: outwiker/gui/pagedialog.py:22
+#: outwiker/gui/pagedialog.py:25
 #, python-format
 msgid "Page \"%s\" not found"
 msgstr "Page \"%s\" not found"
 
-#: outwiker/gui/pagedialog.py:32
-msgid "Can't rename page\n"
-msgstr "Can't rename page\n"
-
-#: outwiker/gui/pagedialog.py:103
+#: outwiker/gui/pagedialog.py:113
 msgid "Create Page"
 msgstr "Create Page"
 
@@ -2526,7 +2524,7 @@ msgstr "Author: Ilin Eugeniy (aka Jenyay)"
 msgid "Contacts"
 msgstr "Contacts"
 
-#: outwiker/gui/htmlrenderwebkit.py:64
+#: outwiker/gui/htmlrenderwebkit.py:63
 #, python-format
 msgid "Can't read file %s"
 msgstr "Can't read file %s"
@@ -2566,6 +2564,15 @@ msgstr "Insert table"
 #: outwiker/gui/tabledialog.py:114
 msgid "Border width"
 msgstr "Border width"
+
+#~ msgid "A page with some title already exists"
+#~ msgstr "A page with some title already exists"
+
+#~ msgid "Can't rename page when page with that title already exists"
+#~ msgstr "Can't rename page when page with that title already exists"
+
+#~ msgid "Can't rename page\n"
+#~ msgstr "Can't rename page\n"
 
 #~ msgid ""
 #~ "!! First Wiki Page\n"
