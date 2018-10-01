@@ -8,9 +8,11 @@
 
 		<changelog>
 			<version number="3.0.0.849" status="dev">
+				<change>Now you can use any symbols in the notes.</change>
+				<change>New design for popup window when clicking on the tag.</change>
 				<change>Add a new wiki style "code".</change>
-				<change>Fix errors.</change>
 				<change>Return back to wxPython 4.0.1.</change>
+				<change>Fix errors.</change>
 			</version>
 
 			<version number="3.0.0.848" status="dev" date="August 26, 2018">
@@ -85,9 +87,11 @@
 
 		<changelog>
 			<version number="3.0.0.849" status="dev">
+				<change>Теперь в заметках можно использовать любые символы.</change>
+				<change>Новый интерфейс всплывающего окна при клике на тег.</change>
 				<change>Добавлен новый викистиль "code".</change>
-				<change>Исправление ошибок.</change>
 				<change>Возврат на wxPython 4.0.1.</change>
+				<change>Исправление ошибок.</change>
 			</version>
 
 			<version number="3.0.0.848" status="dev" date="26.08.2018">
