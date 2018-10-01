@@ -61,7 +61,7 @@ class Windows(System):
         """
         Запустить программу по умолчанию для path
         """
-        os.startfile(path.replace("/", "\\"))
+        os.startfile(path)
 
     @property
     def inputEncoding(self):
