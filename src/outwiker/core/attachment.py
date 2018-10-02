@@ -121,6 +121,19 @@ class Attachment(object):
         return fname.lower()
 
     @staticmethod
+    def sortByType(fname):
+        NOT_EXISTS = 0
+        IS_FILE = 1
+        IS_DIR = 2
+
+        if not os.path.exists(fname):
+            return NOT_EXISTS
+        if os.path.isdir(fname):
+            return IS_DIR
+
+        return IS_FILE
+
+    @staticmethod
     def sortByExt(fname):
         """
         Метод для сортировки файлов по расширению

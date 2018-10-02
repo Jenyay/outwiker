@@ -184,6 +184,11 @@ class AttachPanel(wx.Panel):
     def __onPageSelect(self, page):
         self.updateAttachments()
 
+    def __sortFilesList(self, files_list):
+        result = sorted(files_list, key=str.lower, reverse=True)
+        result.sort(key=Attachment.sortByType)
+        return result
+
     def updateAttachments(self):
         """
         Обновить список прикрепленных файлов
@@ -192,7 +197,7 @@ class AttachPanel(wx.Panel):
         self.__attachList.ClearAll()
         if self._application.selectedPage is not None:
             files = Attachment(self._application.selectedPage).attachmentFull
-            files.sort(key=str.lower, reverse=True)
+            files = self.__sortFilesList(files)
 
             for fname in files:
                 if (not os.path.basename(fname).startswith("__") or
