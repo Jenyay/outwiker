@@ -7,7 +7,7 @@
 		<website>https://jenyay.net/Outwiker/UnstableEn</website>
 
 		<changelog>
-			<version number="3.0.0.850" status="dev">
+			<version number="3.0.0.850" status="dev" date="October 04, 2018">
 				<change>Now you can use any symbols in the notes.</change>
 				<change>New design for popup window when clicking on the tag.</change>
 				<change>Add a new wiki style "code".</change>
@@ -86,7 +86,7 @@
 		<website>https://jenyay.net/Outwiker/Unstable</website>
 
 		<changelog>
-			<version number="3.0.0.850" status="dev">
+			<version number="3.0.0.850" status="dev" date="04.10.2018">
 				<change>Теперь в заметках можно использовать любые символы.</change>
 				<change>Новый интерфейс всплывающего окна при клике на тег.</change>
 				<change>Добавлен новый викистиль "code".</change>
