@@ -62,6 +62,7 @@ from buildtools.builders import (BuilderWindows,
                                  # BuilderDebSource,
                                  # BuilderDebSourcesIncluded,
                                  BuilderAppImage,
+                                 BuilderSnap,
                                  )
 
 from outwiker.utilites.textfile import readTextFile
@@ -756,3 +757,9 @@ def docker_build(*args):
         tasks=tasks_str
     )
     local(command)
+
+
+@task(alias='linux_snap')
+def snap(is_stable=0):
+    builder = BuilderSnap(is_stable=tobool(is_stable))
+    builder.build()

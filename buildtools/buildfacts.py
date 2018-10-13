@@ -47,6 +47,9 @@ class BuildFacts(object):
         # need_for_build/virtual
         self.nfb_virtual = os.path.join(self.need_for_build, u'virtual')
 
+        # need_for_build/snap
+        self.nfb_snap = os.path.join(self.need_for_build, u'snap')
+
     def getTempSubpath(self, *args):
         '''
         Return path inside tmp folder

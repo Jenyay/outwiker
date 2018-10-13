@@ -48,4 +48,4 @@ class BuilderSources(BuilderBase):
 
         print_info(u'Create minimal sources archive...')
         with lcd(self.temp_sources_dir):
-            local(u'7z a -r -aoa -xr!*.pyc -xr!.ropeproject -xr!tests.py -xr!profile.py -xr!setup_tests.py -xr!tests_*.py -xr!setup.py -xr!test -xr!profiles "{}" ./*'.format(self._min_archive_path))
+            local(u'7z a -r -aoa -xr!__pycache__ -xr!*.pyc -xr!.ropeproject -xr!tests.py -xr!profile.py -xr!setup_tests.py -xr!tests_*.py -xr!setup.py -xr!test -xr!profiles "{}" ./*'.format(self._min_archive_path))

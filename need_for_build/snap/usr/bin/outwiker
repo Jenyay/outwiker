@@ -1,0 +1,4 @@
+#!/bin/sh
+
+cd $SNAP/usr/share/outwiker
+python3 runoutwiker.py "$@"

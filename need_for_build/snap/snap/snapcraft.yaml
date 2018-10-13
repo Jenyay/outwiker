@@ -1,0 +1,54 @@
+name: outwiker
+version: '{version}'
+summary: Cross-platform software for keeping your notes in a tree
+description: |
+  OutWiker is a cross-platform software for keeping your notes in a tree.
+  Similar programs call "outliner", "tree-like editor" or personal wiki.
+  Main difference OutWiker from other programs is a keeping notes as folders on disk.
+  A notes can to have attached files. OutWiker can contain pages of different types,
+  currently supports three types of pages: plain text, HTML pages and wiki pages.
+
+grade: devel # must be 'stable' to release into candidate/stable channels
+confinement: strict # use 'strict' once you have the right plugs and slots
+# confinement: devmode # use 'strict' once you have the right plugs and slots
+icon: share/icons/outwiker.svg
+
+apps:
+    outwiker:
+        command: desktop-launch $SNAP/usr/bin/outwiker
+        plugs: [x11, unity7, pulseaudio, home, gsettings, network]
+        desktop: share/applications/outwiker.desktop
+        environment:
+            LD_LIBRARY_PATH: $LD_LIBRARY_PATH:$SNAP/usr/lib/x86_64-linux-gnu/pulseaudio
+
+parts:
+  outwiker:
+    plugin: python
+    python-version: python3
+    source: .
+    stage-packages:
+        - libssl-dev
+        - libjpeg-dev
+        - libtiff-dev
+        - libsdl1.2-dev
+        - libnotify-dev
+        - freeglut3
+        - ibus-gtk3
+        - libwebkitgtk-3.0-0
+        - zlib1g
+        - libsm6
+        - libpulse0
+        # - enchant
+        # - libenchant1c2a
+    after: [desktop-gtk3]
+    python-packages:
+        # - https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-18.04/wxPython-4.0.3-cp36-cp36m-linux_x86_64.whl
+        - https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-16.04/wxPython-4.0.1-cp35-cp35m-linux_x86_64.whl
+        - Pillow==5.1.0
+        - pyenchant==2.0.0
+        - idna==2.7
+    override-build: |
+        snapcraftctl build
+        cp -r $SNAPCRAFT_PART_SRC/usr $SNAPCRAFT_PART_INSTALL
+        cp -r $SNAPCRAFT_PART_SRC/share $SNAPCRAFT_PART_INSTALL
+        chmod +x $SNAPCRAFT_PART_INSTALL/usr/bin/outwiker

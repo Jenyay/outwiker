@@ -44,6 +44,8 @@ WINDOWS_INSTALLER_FILENAME = u"outwiker_win_unstable.exe"
 DEB_BINARY_BUILD_DIR = u'linux'
 DEB_SOURCE_BUILD_DIR = u'linux/deb_source'
 APPIMAGE_BUILD_DIR = u'linux'
+SNAP_BUILD_DIR = u'linux'
+
 SOURCES_DIR = u'sources'
 PLUGINS_DIR = u'plugins'
 PLUGIN_VERSIONS_FILENAME = u'plugin.xml'
