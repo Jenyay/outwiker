@@ -1,5 +1,0 @@
-#!/bin/sh
-
-cd /usr/share/outwiker
-#LD_PRELOAD=libwx_gtk2u_webview-3.0.so.0 python2.7 runoutwiker.py "$@"
-python2.7 runoutwiker.py "$@"
