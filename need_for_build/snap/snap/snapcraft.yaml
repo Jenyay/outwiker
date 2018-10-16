@@ -16,7 +16,18 @@ icon: share/icons/outwiker.svg
 apps:
     outwiker:
         command: desktop-launch $SNAP/usr/bin/outwiker
-        plugs: [x11, unity7, pulseaudio, home, gsettings, network]
+        plugs: 
+            - x11
+            - unity7
+            - wayland
+            - pulseaudio
+            - home
+            - gsettings
+            - network
+            - cups-control
+            - desktop
+            - desktop-legacy
+            - removable-media
         desktop: share/applications/outwiker.desktop
         environment:
             LD_LIBRARY_PATH: $LD_LIBRARY_PATH:$SNAP/usr/lib/x86_64-linux-gnu/pulseaudio
@@ -39,6 +50,8 @@ parts:
         - libsm6
         - libpulse0
         # - enchant
+        # - aspell
+        # - python3-enchant
         # - libenchant1c2a
     after: [desktop-gtk3]
     python-packages:
