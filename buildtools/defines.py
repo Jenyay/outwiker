@@ -4,7 +4,7 @@ import os
 
 
 # Supported Ubuntu releases
-UBUNTU_RELEASE_NAMES = [u"xenial", u"artful"]
+UBUNTU_RELEASE_NAMES = [u"xenial"]
 
 # List of the supported plugins
 PLUGINS_LIST = [

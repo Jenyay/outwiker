@@ -28,6 +28,9 @@ class BuilderBase(object, metaclass=abc.ABCMeta):
     def _postBuild(self):
         pass
 
+    def _getBuildReturnValue(self):
+        return None
+
     def clear(self):
         self._remove(self.build_dir)
 
@@ -48,6 +51,7 @@ class BuilderBase(object, metaclass=abc.ABCMeta):
         print_info(u'Build to {}'.format(self.build_dir))
         self._build()
         self._postBuild()
+        return self._getBuildReturnValue()
 
     def _createRootDir(self):
         if not os.path.exists(self.facts.root_dir):

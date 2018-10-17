@@ -50,6 +50,9 @@ class BuildFacts(object):
         # need_for_build/snap
         self.nfb_snap = os.path.join(self.need_for_build, u'snap')
 
+        # Source plugins dir
+        self.src_plugins_dir = os.path.abspath(defines.PLUGINS_DIR)
+
     def getTempSubpath(self, *args):
         '''
         Return path inside tmp folder

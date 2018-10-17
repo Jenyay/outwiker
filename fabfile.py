@@ -761,5 +761,17 @@ def docker_build(*args):
 
 @task(alias='linux_snap')
 def snap(is_stable=0):
-    builder = BuilderSnap(is_stable=tobool(is_stable))
+    is_stable = tobool(is_stable)
+    builder = BuilderSnap(is_stable)
     builder.build()
+
+
+@task(alias='linux_snap_publish')
+def snap_publish():
+    builder = BuilderSnap(False)
+    snap_files = builder.get_snap_files()
+
+    for snap_file in snap_files:
+        print_info('Publish snap: {fname}'.format(fname=snap_file))
+        local('snapcraft push "{fname}"'.format(fname=snap_file))
+        local('snapcraft sign-build "{fname}"'.format(fname=snap_file))
