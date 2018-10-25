@@ -11,6 +11,7 @@ import sys
 import subprocess
 
 from .pagetitletester import WindowsPageTitleTester, LinuxPageTitleTester
+from .spellchecker.enchantwrapper import EnchantWrapper
 from outwiker.gui.fileicons import WindowsFileIcons, UnixFileIcons
 from outwiker.core.defines import (ICONS_FOLDER_NAME,
                                    IMAGES_FOLDER_NAME,
@@ -94,6 +95,12 @@ class Windows(System):
         from outwiker.gui.htmlrenderie import HtmlRenderIE
         return HtmlRenderIE(parent)
 
+    def getSpellChecker(self, langlist, folders):
+        """
+        Return wrapper for "real" spell checker (hunspell, enchant, etc)
+        """
+        return EnchantWrapper(langlist, folders)
+
 
 class Unix(System):
     @property
@@ -141,6 +148,12 @@ class Unix(System):
     def getHtmlRender(self, parent):
         from outwiker.gui.htmlrenderwebkit import HtmlRenderWebKit
         return HtmlRenderWebKit(parent)
+
+    def getSpellChecker(self, langlist, folders):
+        """
+        Return wrapper for "real" spell checker (hunspell, enchant, etc)
+        """
+        return EnchantWrapper(langlist, folders)
 
 
 def getOS():

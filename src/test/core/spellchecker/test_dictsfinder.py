@@ -4,7 +4,7 @@ import os.path
 import unittest
 from tempfile import mkdtemp
 
-from outwiker.core.spellchecker import DictsFinder
+from outwiker.core.spellchecker.dictsfinder import DictsFinder
 from test.utils import removeDir
 
 

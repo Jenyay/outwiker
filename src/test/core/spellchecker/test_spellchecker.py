@@ -5,7 +5,8 @@ from tempfile import mkdtemp
 import os.path
 import shutil
 
-from outwiker.core.spellchecker import SpellChecker, DictsFinder
+from outwiker.core.spellchecker.spellchecker import SpellChecker
+from outwiker.core.spellchecker.dictsfinder import DictsFinder
 from test.utils import removeDir
 
 

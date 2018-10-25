@@ -103,7 +103,6 @@ class EnchantWrapper (object):
             return True
 
         for checker in self._checkers + self._customCheckers:
-            # checker, checker.tag, checker.check(word))
             if checker.check(word):
                 return True
 

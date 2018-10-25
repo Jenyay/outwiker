@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import re
-
-from .enchantwrapper import EnchantWrapper
+from outwiker.core.system import getOS
 
 
 class SpellChecker(object):
@@ -16,7 +15,7 @@ class SpellChecker(object):
             (for example ["ru_RU", "en_US"])
         folders - list of paths to dictionaries
         """
-        self._realChecker = self._getSpellCheckerWrapper(langlist, folders)
+        self._realChecker = getOS().getSpellChecker(langlist, folders)
 
         self._wordRegex = re.compile(r'(?:(?:\w-\w)|\w)+')
         self._digitRegex = re.compile('\d')
@@ -47,12 +46,6 @@ class SpellChecker(object):
             isValid = self._realChecker.check(word)
 
         return isValid
-
-    def _getSpellCheckerWrapper(self, langlist, folders):
-        """
-        Return wrapper for "real" spell checker (hunspell, enchant, etc)
-        """
-        return EnchantWrapper(langlist, folders)
 
     def addCustomDict(self, path):
         self._realChecker.addCustomDict(path)

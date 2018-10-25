@@ -9,7 +9,7 @@ import wx.lib.newevent
 
 import outwiker.core.system
 from outwiker.core.application import Application
-from outwiker.core.spellchecker import SpellChecker
+from outwiker.core.spellchecker.spellchecker import SpellChecker
 from outwiker.core.spellchecker.defines import CUSTOM_DICT_FILE_NAME
 from outwiker.core.events import EditorPopupMenuParams
 from outwiker.gui.controls.texteditorbase import TextEditorBase
