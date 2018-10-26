@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import wx
 
@@ -34,7 +34,6 @@ class SafeImageList (wx.ImageList):
         dc.SelectObject(wx.NullBitmap)
         bitmap_new.SetMaskColour("magenta")
 
-        # maxsize = max(size_src[0], size_src[1])
         scale_x = float(size_src[0]) / float(self._width)
         scale_y = float(size_src[1]) / float(self._height)
 
