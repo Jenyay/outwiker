@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os.path
-import shutil
+# import shutil
 from functools import reduce
 
 import wx
@@ -10,6 +10,8 @@ from outwiker.gui.texteditor import TextEditor
 from outwiker.gui.guiconfig import HtmlEditorStylesConfig
 from outwiker.core.application import Application
 from outwiker.core.system import getSpellDirList
+from outwiker.core.spellchecker.spellchecker import SpellChecker
+from outwiker.core.spellchecker.defines import CUSTOM_DICT_FILE_NAME
 
 
 class HtmlTextEditor(TextEditor):
@@ -113,7 +115,7 @@ class HtmlTextEditor(TextEditor):
         result = start + itemsList + end
 
         if len(end) == 0:
-            # Если нет завершающего тега(как в викинотации),
+            # Если нет завершающего тега (как в викинотации),
             # то не нужен перевод строки у последнего элемента
             result = result[: -1]
 
@@ -126,21 +128,11 @@ class HtmlTextEditor(TextEditor):
             self.SetSelection(newPos, newPos)
 
     def getSpellChecker(self):
-        checker = super(HtmlTextEditor, self).getSpellChecker()
-        htmlDictName = u'html.dic'
+        langlist = self._getDictsFromConfig() + ['html']
+        spellDirList = getSpellDirList()
 
-        # Copy html.dic dictionary to folder with user's permissions
-        if not self._htmlDictIsCopied:
-            srcname = os.path.join(getSpellDirList()[0], htmlDictName)
-            dstname = os.path.join(getSpellDirList()[-1], htmlDictName)
+        spellChecker = SpellChecker(langlist, spellDirList)
+        spellChecker.addCustomDict(os.path.join(spellDirList[-1],
+                                                CUSTOM_DICT_FILE_NAME))
 
-            if srcname != dstname:
-                try:
-                    shutil.copyfile(srcname, dstname)
-                except IOError:
-                    return checker
-
-            self._htmlDictIsCopied = True
-
-        checker.addCustomDict(os.path.join(getSpellDirList()[-1], htmlDictName))
-        return checker
+        return spellChecker

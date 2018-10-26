@@ -9,7 +9,7 @@ import enchant.errors
 from .dictsfinder import DictsFinder
 from .defines import CUSTOM_DICT_LANG
 
-logger = logging.getLogger('outwiker.core.spellchecker')
+logger = logging.getLogger('outwiker.core.spellchecker.enchant')
 
 
 class EnchantWrapper (object):
@@ -23,6 +23,7 @@ class EnchantWrapper (object):
         """
         langlist - list of the languages ("ru_RU", "en_US", etc)
         """
+        logger.debug('Initialize Enchant spell checker')
         self._folders = folders
         self._checkers = []
         self._customCheckers = []
@@ -32,6 +33,7 @@ class EnchantWrapper (object):
         for lang in langlist:
             for path in dictsFinder.getFoldersForLang(lang):
                 try:
+                    logger.debug('Add dictionary. path={}; lang={}'.format(path, lang))
                     self._checkers.append(self._getDict(lang, path))
                 except enchant.errors.Error as err:
                     logger.error('Spellchecker append error. path={}; lang={}'.format(path, lang))

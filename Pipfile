@@ -8,7 +8,8 @@ name = "pypi"
 [packages]
 wxPython = "==4.0.1"
 Pillow = "==5.1.0"
-pyenchant = "==2.0.0"
+pyenchant = {version = "==2.0.0", sys_platform = "== 'win32'"}
+hunspell = {version = "==0.5.5", sys_platform = "== 'linux'"}
 idna = "==2.7"
 comtypes = {version = "==1.1.4", sys_platform = "== 'win32'"}
 

@@ -37,6 +37,8 @@ parts:
     plugin: python
     python-version: python3
     source: .
+    build-packages:
+        - libhunspell-dev
     stage-packages:
         - libssl-dev
         - libjpeg-dev
@@ -49,16 +51,12 @@ parts:
         - zlib1g
         - libsm6
         - libpulse0
-        # - enchant
-        # - aspell
-        # - python3-enchant
-        # - libenchant1c2a
     after: [desktop-gtk3]
     python-packages:
         # - https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-18.04/wxPython-4.0.3-cp36-cp36m-linux_x86_64.whl
         - https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-16.04/wxPython-4.0.1-cp35-cp35m-linux_x86_64.whl
         - Pillow==5.1.0
-        - pyenchant==2.0.0
+        - hunspell==0.5.5
         - idna==2.7
     override-build: |
         snapcraftctl build
