@@ -16,9 +16,9 @@ from outwiker.actions.removepage import RemovePageAction
 from outwiker.actions.editpageprop import EditPagePropertiesAction
 from outwiker.actions.moving import GoToParentAction
 from outwiker.core.events import PAGE_UPDATE_ICON
-from outwiker.core.defines import ICON_WIDTH, ICON_HEIGHT
-from outwiker.gui.pagepopupmenu import PagePopupMenu
-from outwiker.gui.controls.safeimagelist import SafeImageList
+from outwiker.core.defines import ICON_HEIGHT
+from .pagepopupmenu import PagePopupMenu
+from .imagelistcache import ImageListCache
 
 
 class NotesTree(wx.Panel):
@@ -46,17 +46,13 @@ class NotesTree(wx.Panel):
 
         self.defaultBitmap = wx.Bitmap(self.defaultIcon)
         assert self.defaultBitmap.IsOk()
-
         self.defaultBitmap.SetHeight(self.iconHeight)
-
-        # Key - path to icon, value - icon ID in self.imagelist
-        self._iconsCache = {}
 
         self.dragItem = None
 
         # Картинки для дерева
-        self.imagelist = SafeImageList(ICON_WIDTH, self.iconHeight)
-        self.treeCtrl.AssignImageList(self.imagelist)
+        self._iconsCache = ImageListCache(self.defaultBitmap)
+        self.treeCtrl.AssignImageList(self._iconsCache.getImageList())
 
         # Кеш для страниц, чтобы было проще искать элемент дерева по странице
         # Словарь. Ключ - страница, значение - элемент дерева wx.TreeItemId
@@ -124,24 +120,16 @@ class NotesTree(wx.Panel):
         Добавляет иконку страницы в ImageList и возвращает ее идентификатор.
         Если иконки нет, то возвращает идентификатор иконки по умолчанию
         """
-        imageId = self.defaultImageId
         icon = page.icon
 
         if not icon:
-            return imageId
+            return self._iconsCache.getDefaultImageId()
 
         icon = os.path.abspath(icon)
+        imageId = self._iconsCache.add(icon)
 
-        if icon in self._iconsCache:
-            return self._iconsCache[icon]
-
-        image = wx.Bitmap(icon)
-        if image.IsOk():
-            imageId = self.imagelist.Add(image)
-
-        page_path = os.path.abspath(page.path)
-        if not icon.startswith(page_path):
-            self._iconsCache[icon] = imageId
+        if imageId is None:
+            imageId = self._iconsCache.getDefaultImageId()
 
         return imageId
 
@@ -193,8 +181,7 @@ class NotesTree(wx.Panel):
     def __onClose(self, event):
         self.__UnBindApplicationEvents()
         self.treeCtrl.DeleteAllItems()
-        self.imagelist.RemoveAll()
-        self._iconsCache = {}
+        self._iconsCache.clear()
         self._removeButtons()
         self.toolbar.ClearTools()
         self.Destroy()
@@ -457,9 +444,7 @@ class NotesTree(wx.Panel):
         Обновить дерево
         """
         self.treeCtrl.DeleteAllItems()
-        self.imagelist.RemoveAll()
-        self._iconsCache = {}
-        self.defaultImageId = self.imagelist.Add(self.defaultBitmap)
+        self._iconsCache.clear()
 
         # Ключ - страница, значение - экземпляр класса TreeItemId
         self._pageCache = {}
@@ -469,7 +454,7 @@ class NotesTree(wx.Panel):
             rootItem = self.treeCtrl.AddRoot(
                 rootname,
                 data=rootPage,
-                image=self.defaultImageId)
+                image=self._iconsCache.getDefaultImageId())
 
             self._pageCache[rootPage] = rootItem
             self.__mountItem(rootItem, rootPage)
