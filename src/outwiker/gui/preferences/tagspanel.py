@@ -108,7 +108,6 @@ class TagsPanel(BasePrefPanel):
     def _fillHeaders(self):
         factory = ColumnsFactory()
         text = self._config.popupHeaders.value
-        print(text)
         try:
             columns = factory.createColumnsFromString(text)
         except ValueError:
@@ -180,7 +179,6 @@ class TagsPanel(BasePrefPanel):
 
         factory = ColumnsFactory()
         text = factory.toString(columns)
-        print(text)
         self._config.popupHeaders.value = text
 
     def Save(self):
