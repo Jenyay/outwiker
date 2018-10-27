@@ -1,13 +1,14 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os.path
 
 import wx
 
 from outwiker.core.system import getSpellDirList
-from outwiker.utilites.textfile import writeTextFile, readTextFile
 from outwiker.core.spellchecker.defines import CUSTOM_DICT_FILE_NAME
 from outwiker.core.spellchecker.dictsfinder import DictsFinder
+from outwiker.core.spellchecker.spelldict import (get_words_from_dic_file,
+                                                  write_to_dic_file)
 from outwiker.gui.guiconfig import EditorConfig
 from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
 
@@ -49,7 +50,9 @@ class SpellPanel(BasePrefPanel):
                       border=2)
 
     def _createCustomDict(self, mainSizer):
-        dictLabel = wx.StaticText(self, label=_(u'Custom dictonary (one word per line)'))
+        dictLabel = wx.StaticText(
+            self,
+            label=_(u'Custom dictonary (one word per line)'))
         self.customDict = wx.TextCtrl(self, style=wx.TE_MULTILINE)
 
         mainSizer.Add(dictLabel,
@@ -65,7 +68,9 @@ class SpellPanel(BasePrefPanel):
     def _fillDictsList(self):
         dicts = DictsFinder(getSpellDirList()).getLangList()
         dicts.sort()
-        selectedDicts = [item for item in self._getDictsFromConfig() if item in dicts]
+        selectedDicts = [item
+                         for item in self._getDictsFromConfig()
+                         if item in dicts]
 
         self.dictsList.Clear()
         self.dictsList.AppendItems(dicts)
@@ -77,23 +82,19 @@ class SpellPanel(BasePrefPanel):
         """
         self.customDict.SetValue(u'')
         try:
-            text = readTextFile(self._getCustomDictFileName())
+            words = get_words_from_dic_file(self._getCustomDictFileName())
+            text = '\n'.join(words)
+            self.customDict.SetValue(text)
         except (IOError, SystemError):
-            return
-
-        self.customDict.SetValue(self._sanitizeDictText(text))
-
-    def _sanitizeDictText(self, text):
-        text = u'\n'.join([item.strip()
-                           for item
-                           in text.split(u'\n')
-                           if len(item.strip()) > 0])
-        return text
+            pass
 
     def _saveCustomDict(self):
-        text = self._sanitizeDictText(self.customDict.GetValue())
+        words = [item.strip()
+                 for item in self.customDict.GetValue().split('\n')
+                 if item.strip()]
+
         try:
-            writeTextFile(self._getCustomDictFileName(), text)
+            write_to_dic_file(self._getCustomDictFileName(), words)
         except (IOError, SystemError):
             pass
 
