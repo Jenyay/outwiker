@@ -38,7 +38,10 @@ def fix_dic_file(dic_file):
 
     fixed = False
     try:
-        int(lines[0])
+        count = int(lines[0])
+        if count != len(lines) - 1:
+            lines[0] = str(len(lines) - 1)
+            fixed = True
     except IndexError:
         lines = ['1', 'test']
         fixed = True
