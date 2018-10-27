@@ -7,7 +7,10 @@ import hunspell
 
 from .dictsfinder import DictsFinder
 from .defines import CUSTOM_DICT_LANG
-from .spelldict import create_new_dic_file, create_new_aff_file, fix_dic_file
+from .spelldict import (create_new_dic_file,
+                        create_new_aff_file,
+                        fix_dic_file,
+                        add_word_to_dic_file)
 
 logger = logging.getLogger('outwiker.core.spellchecker.hunspell')
 
@@ -56,15 +59,7 @@ class HunspellWrapper (object):
         assert key in self._checkers
 
         self._checkers[key].add(word)
-
-        with open(dic_file, encoding='utf8') as fp:
-            lines = fp.readlines()
-
-        lines.append(word)
-        lines[0] = str(len(lines) - 1)
-
-        with open(dic_file, 'w', encoding='utf8') as fp:
-            fp.write('\n'.join(lines))
+        add_word_to_dic_file(dic_file, word)
 
     def addCustomDict(self, customDictPath):
         logger.debug('Add custom dictionary: {}'.format(customDictPath))
