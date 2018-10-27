@@ -7,6 +7,7 @@ import hunspell
 
 from .dictsfinder import DictsFinder
 from .defines import CUSTOM_DICT_LANG
+from .spelldict import create_new_dic_file, create_new_aff_file, fix_dic_file
 
 logger = logging.getLogger('outwiker.core.spellchecker.hunspell')
 
@@ -65,17 +66,6 @@ class HunspellWrapper (object):
         with open(dic_file, 'w', encoding='utf8') as fp:
             fp.write('\n'.join(lines))
 
-    def _createCustomDictLang(self, dic_file, aff_file):
-        if not os.path.exists(dic_file):
-            logger.debug('Create custom .dic file: {}'.format(dic_file))
-            with open(dic_file, 'w', encoding='utf8') as fp:
-                fp.write('1\ntest')
-
-        if not os.path.exists(aff_file):
-            logger.debug('Create custom .aff file: {}'.format(aff_file))
-            with open(aff_file, 'w') as fp:
-                fp.write('SET UTF-8')
-
     def addCustomDict(self, customDictPath):
         logger.debug('Add custom dictionary: {}'.format(customDictPath))
 
@@ -88,33 +78,14 @@ class HunspellWrapper (object):
         aff_file = customDictPath[:-4] + '.aff'
 
         try:
-            self._createCustomDictLang(dic_file, aff_file)
-            self._fixDicFile(dic_file)
+            create_new_dic_file(dic_file)
+            create_new_aff_file(aff_file)
+            fix_dic_file(dic_file)
             checker = hunspell.HunSpell(dic_file, aff_file)
             self._checkers[key] = checker
             self._customDicts.append((key, dic_file))
         except IOError as err:
             logger.error("Can't create custom dictionary: {}".format(customDictPath))
-
-    def _fixDicFile(self, dic_file):
-        with open(dic_file, encoding='utf8') as fp:
-            lines = fp.readlines()
-
-        lines = [line.strip() for line in lines if line.strip()]
-
-        fixed = False
-        try:
-            int(lines[0])
-        except IndexError:
-            lines = ['1', 'test']
-            fixed = True
-        except ValueError:
-            lines.insert(0, str(len(lines)))
-            fixed = True
-
-        if fixed:
-            with open(dic_file, 'w', encoding='utf8') as fp:
-                fp.write('\n'.join(lines))
 
     def check(self, word):
         if not self._checkers:
