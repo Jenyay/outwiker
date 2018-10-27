@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import html
 
@@ -8,6 +8,10 @@ import wx.html
 from .commands import MessageBox
 from .application import Application
 from outwiker.gui.guiconfig import TextPrintConfig
+
+
+class MyPrintout(wx.html.HtmlPrintout):
+    pass
 
 
 class TextPrinter(object):
@@ -56,8 +60,8 @@ class TextPrinter(object):
         return result
 
     def _getPrintout(self, htmltext):
-        printout = wx.html.HtmlPrintout()
-        printout.SetFonts(self.normalFont, self.monoFont)
+        printout = MyPrintout()
+        printout.SetFonts(self.normalFont, self.monoFont, list(range(10, 17)))
         printout.SetMargins(self.margins[0],
                             self.margins[1],
                             self.margins[2],
@@ -80,15 +84,13 @@ class TextPrinter(object):
         Получить настройки диалога печати по умолчанию
         """
         pdd = wx.PrintDialogData(printdata)
-        pdd.SetAllPages(True)
+        # pdd.SetAllPages(True)
         pdd.EnableSelection(False)
         return pdd
 
     def printout(self, text):
         htmltext = self._preparetext(text)
         printout = self._getPrintout(htmltext)
-        pd = self._getPrintData()
-        pdd = self._getPrintDialogData(pd)
 
         # По-хорошему, надо было бы примерно таким образом
         # (еще учесть предпросмотр), но под Linux'ом падает libgnomeprint
@@ -98,6 +100,8 @@ class TextPrinter(object):
         #     printer = wx.Printer(pdd_new)
         #     printer.Print(self.parent, printout, False)
 
+        pd = self._getPrintData()
+        pdd = self._getPrintDialogData(pd)
         printer = wx.Printer(pdd)
         printer.Print(self.parent, printout, True)
 
