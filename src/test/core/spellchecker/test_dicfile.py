@@ -8,7 +8,8 @@ import outwiker.core.spellchecker.spelldict as spelldict
 
 class TestReadDicFile:
     def setup_method(self, method):
-        self.tempfilename = tempfile.mkstemp()[1]
+        fp, self.tempfilename = tempfile.mkstemp()
+        os.close(fp)
 
     def teardown_method(self, method):
         os.remove(self.tempfilename)
