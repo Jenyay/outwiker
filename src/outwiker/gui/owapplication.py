@@ -6,13 +6,16 @@ import logging
 from gettext import NullTranslations
 
 import wx
+import wx.html
 
 from outwiker.core.commands import registerActions
 from outwiker.core.defines import APP_DATA_DEBUG, APP_DATA_DISABLE_MINIMIZING
 from outwiker.core.logredirector import LogRedirector
 from outwiker.core.system import getPluginsDirList
 from outwiker.gui.actioncontroller import ActionController
-from outwiker.gui.guiconfig import GeneralGuiConfig, TrayConfig
+from outwiker.gui.guiconfig import (GeneralGuiConfig,
+                                    TrayConfig,
+                                    TextPrintConfig)
 from outwiker.gui.mainwindow import MainWindow
 
 
@@ -23,6 +26,10 @@ class OutWikerApplication(wx.App):
     def __init__(self, application):
         self.logFileName = u"outwiker.log"
         self._application = application
+
+        config = TextPrintConfig(self._application.config)
+        self.normalFont = config.fontName.value
+        self.monoFont = config.fontName.value
 
         if APP_DATA_DEBUG not in self._application.sharedData:
             config = GeneralGuiConfig(self._application.config)
@@ -45,6 +52,13 @@ class OutWikerApplication(wx.App):
 
         registerActions(self._application)
         self.mainWnd.createGui()
+        self.initPrinting()
+
+    def initPrinting(self):
+        self.printing = wx.html.HtmlEasyPrinting(parentWindow=self.mainWnd)
+        self.printing.SetFonts(self.normalFont,
+                               self.monoFont,
+                               list(range(10, 17)))
 
     def destroyMainWindow(self):
         self.mainWnd.Destroy()
