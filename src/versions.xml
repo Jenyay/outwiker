@@ -8,6 +8,8 @@
 
 		<changelog>
 			<version number="3.0.0.851" status="dev">
+				<change>Create snap package.</change>
+				<change>Fix errors.</change>
 			</version>
 
 			<version number="3.0.0.850" status="dev" date="October 04, 2018">
@@ -90,6 +92,8 @@
 
 		<changelog>
 			<version number="3.0.0.851" status="dev">
+				<change>Создан snap-пакет.</change>
+				<change>Исправление ошибок.</change>
 			</version>
 
 			<version number="3.0.0.850" status="dev" date="04.10.2018">
