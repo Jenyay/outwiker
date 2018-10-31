@@ -224,8 +224,9 @@ class PyInstallerBuilderLinuxBase(BasePyInstallerBuilder):
             'libuuid.so.1',
             'libgpg-error.so.0',
             'libX11-xcb.so.1',
-            # 'libfreetype.so.6',
-            # 'libfreetype-550560cb.so',
+            'libfreetype.so.6',
+
+            'libfreetype-550560cb.so',
             # 'libgbm.so.1',
             # 'libglapi.so.0',
 
@@ -247,7 +248,8 @@ class PyInstallerBuilderLinuxBase(BasePyInstallerBuilder):
                 local(u'strip -s -o "{fname}" "{fname}"'.format(fname=fname))
 
     def get_includes(self):
-        result = super(PyInstallerBuilderLinuxBase, self).get_includes()
+        result = super().get_includes()
+        result.append('hunspell')
         # result.append('gi')
         # result.append('gi.repository.Gtk')
         # result.append('gi.repository.GdkPixbuf')
