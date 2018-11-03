@@ -7,6 +7,9 @@
 		<website>https://jenyay.net/Outwiker/UnstableEn</website>
 
 		<changelog>
+			<version number="3.0.0.853" status="dev">
+			</version>
+
 			<version number="3.0.0.852" status="dev" date="November 03, 2018">
 				<change>Create snap package.</change>
 				<change>Fix errors.</change>
@@ -91,6 +94,9 @@
 		<website>https://jenyay.net/Outwiker/Unstable</website>
 
 		<changelog>
+			<version number="3.0.0.853" status="dev">
+			</version>
+
 			<version number="3.0.0.852" status="dev" date="03.11.2018">
 				<change>Создан snap-пакет.</change>
 				<change>Исправление ошибок.</change>
