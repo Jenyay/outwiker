@@ -42,6 +42,7 @@ class EnabledPlugins(collections.UserDict):
             self[key].destroy()
         super(EnabledPlugins, self).__delitem__(key)
 
+
 class PluginsLoader(object):
     """
     Load and keep plugins.
@@ -184,7 +185,7 @@ class PluginsLoader(object):
 
         logger.debug(u'Plugins loading started')
 
-        for currentDir in dirlist:
+        for currentDir in reversed(dirlist):
             if os.path.exists(currentDir):
 
                 # Add currentDir to sys.path
