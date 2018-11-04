@@ -8,6 +8,8 @@
 
 		<changelog>
 			<version number="3.0.0.853" status="dev">
+				<change>Improve GUI.</change>
+				<change>Fix errors.</change>
 			</version>
 
 			<version number="3.0.0.852" status="dev" date="November 03, 2018">
@@ -95,6 +97,8 @@
 
 		<changelog>
 			<version number="3.0.0.853" status="dev">
+				<change>Улучшения в интерфейсе.</change>
+				<change>Исправление ошибок.</change>
 			</version>
 
 			<version number="3.0.0.852" status="dev" date="03.11.2018">
