@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
 
+import os
 from typing import List
 
 import wx
 import wx.lib.newevent
 
 import outwiker.gui.controls.ultimatelistctrl as ULC
+from outwiker.core.system import getImagesDir
+from outwiker.gui.imagelistcache import ImageListCache
 
 # Событие, возникающее при клике по элементу, описывающий страницу
 PageClickEvent, EVT_PAGE_CLICK = wx.lib.newevent.NewEvent()
@@ -98,9 +101,10 @@ class BaseColumn(object):
         listCtrl.SetColumnWidth(position, self.width)
 
     def setCellProperties(self,
-                          listCtrl: 'PageList',
+                          pageList: 'PageList',
                           item_index: ULC.UltimateListItem,
-                          position: int):
+                          position: int,
+                          page):
         pass
 
     def getCellContent(self, page) -> str:
@@ -117,10 +121,17 @@ class PageTitleColumn(BaseColumn):
     name = 'title'
 
     def setCellProperties(self,
-                          listCtrl: 'PageList',
+                          pageList: 'PageList',
                           item_index: ULC.UltimateListItem,
-                          position: int):
-        listCtrl.SetItemHyperText(item_index, position)
+                          position: int,
+                          page):
+        if page.icon:
+            image_index = pageList.imageList.add(page.icon)
+        else:
+            image_index = 0
+
+        pageList.listCtrl.SetItemImage(item_index, image_index)
+        pageList.listCtrl.SetItemHyperText(item_index, position)
 
     def getCellContent(self, page):
         return page.display_title
@@ -176,6 +187,8 @@ class PageList(wx.Panel):
     def __init__(self, parent: wx.Window, columns: List[BaseColumn]):
         super().__init__(parent)
         self._columns = columns
+        self._defaultIcon = os.path.join(getImagesDir(), "page.png")
+        self._imageList = ImageListCache(self._defaultIcon)
 
         self._propagationLevel = 15
         self.SetBackgroundColour(wx.Colour(255, 255, 255))
@@ -193,10 +206,20 @@ class PageList(wx.Panel):
                             handler=self._onPageClick)
         self._listCtrl.SetHyperTextNewColour(wx.BLUE)
         self._listCtrl.SetHyperTextVisitedColour(wx.BLUE)
+        self._listCtrl.AssignImageList(self._imageList.getImageList(),
+                                       wx.IMAGE_LIST_SMALL)
 
         self._sizer.Add(self._listCtrl, flag=wx.EXPAND)
 
         self.SetSizer(self._sizer)
+
+    @property
+    def listCtrl(self):
+        return self._listCtrl
+
+    @property
+    def imageList(self):
+        return self._imageList
 
     @property
     def _visibleColumns(self):
@@ -236,7 +259,7 @@ class PageList(wx.Panel):
                      in self._visibleColumns]
             item_index = self._listCtrl.Append(items)
             for n, column in enumerate(self._visibleColumns):
-                column.setCellProperties(self._listCtrl, item_index, n)
+                column.setCellProperties(self, item_index, n, page)
 
             data = PageData(page)
             self._listCtrl.SetItemPyData(item_index, data)
