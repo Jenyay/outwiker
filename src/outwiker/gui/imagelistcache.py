@@ -6,11 +6,14 @@ from .controls.safeimagelist import SafeImageList
 
 
 class ImageListCache(object):
-    def __init__(self, defaultImage: wx.Bitmap):
-        self._imagelist = SafeImageList(defaultImage.Width, defaultImage.Height)
-        self._defaultImage = defaultImage
+    def __init__(self, defaultImage: str):
+        self._defaultImage = wx.Bitmap(defaultImage)
+        assert self._defaultImage.IsOk()
 
-        self._iconsCache = {}
+        self._imagelist = SafeImageList(self._defaultImage.Width,
+                                        self._defaultImage.Height)
+
+        self._iconsCache = {}           # type: Dict[str, int]
         self._defaultId = None
         self.clear()
 

@@ -44,14 +44,10 @@ class NotesTree(wx.Panel):
                                         "page.png")
         self.iconHeight = ICON_HEIGHT
 
-        self.defaultBitmap = wx.Bitmap(self.defaultIcon)
-        assert self.defaultBitmap.IsOk()
-        self.defaultBitmap.SetHeight(self.iconHeight)
-
         self.dragItem = None
 
         # Картинки для дерева
-        self._iconsCache = ImageListCache(self.defaultBitmap)
+        self._iconsCache = ImageListCache(self.defaultIcon)
         self.treeCtrl.AssignImageList(self._iconsCache.getImageList())
 
         # Кеш для страниц, чтобы было проще искать элемент дерева по странице

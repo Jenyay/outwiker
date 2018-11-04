@@ -9,7 +9,7 @@ def test_empty():
     app = wx.App()
     wx.Log.SetLogLevel(0)
 
-    defaultImage = wx.Bitmap('../test/images/new.png')
+    defaultImage = '../test/images/new.png'
     cache = ImageListCache(defaultImage)
 
     imageList = cache.getImageList()
@@ -24,7 +24,7 @@ def test_single():
     app = wx.App()
     wx.Log.SetLogLevel(0)
 
-    defaultImage = wx.Bitmap('../test/images/new.png')
+    defaultImage = '../test/images/new.png'
     cache = ImageListCache(defaultImage)
 
     index = cache.add('../test/images/16x16.png')
@@ -41,7 +41,7 @@ def test_error_not_exists():
     app = wx.App()
     wx.Log.SetLogLevel(0)
 
-    defaultImage = wx.Bitmap('../test/images/new.png')
+    defaultImage = '../test/images/new.png'
     cache = ImageListCache(defaultImage)
 
     index = cache.add('../test/images/not_exists.png')
@@ -58,7 +58,7 @@ def test_error_invalid_file():
     app = wx.App()
     wx.Log.SetLogLevel(0)
 
-    defaultImage = wx.Bitmap('../test/images/new.png')
+    defaultImage = '../test/images/new.png'
     cache = ImageListCache(defaultImage)
 
     index = cache.add('../test/images/invalid.png')
@@ -75,7 +75,7 @@ def test_duplicate():
     app = wx.App()
     wx.Log.SetLogLevel(0)
 
-    defaultImage = wx.Bitmap('../test/images/new.png')
+    defaultImage = '../test/images/new.png'
     cache = ImageListCache(defaultImage)
 
     cache.add('../test/images/16x16.png')
