@@ -3,7 +3,7 @@
 import os
 import os.path
 
-from .defines import CUSTOM_DICT_LANG
+from .defines import ENCHANT_CUSTOM_DICT_LANG, HUNSPELL_CUSTOM_DICT_LANG
 
 
 class DictsFinder (object):
@@ -43,7 +43,8 @@ class DictsFinder (object):
         for fname in os.listdir(path):
             if fname.endswith(self.dictExtensions[0]):
                 lang = fname[:-len(self.dictExtensions[0])]
-                if lang == CUSTOM_DICT_LANG:
+                if (lang == ENCHANT_CUSTOM_DICT_LANG or
+                        lang == HUNSPELL_CUSTOM_DICT_LANG):
                     continue
 
                 fname_dic = lang + self.dictExtensions[1]

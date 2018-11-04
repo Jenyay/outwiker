@@ -6,7 +6,7 @@ import logging
 import hunspell
 
 from .dictsfinder import DictsFinder
-from .defines import CUSTOM_DICT_LANG
+from .defines import HUNSPELL_CUSTOM_DICT_LANG
 from .spelldict import (create_new_dic_file,
                         create_new_aff_file,
                         fix_dic_file,
@@ -64,7 +64,7 @@ class HunspellWrapper (object):
     def addCustomDict(self, customDictPath):
         logger.debug('Add custom dictionary: {}'.format(customDictPath))
 
-        key = (CUSTOM_DICT_LANG, customDictPath)
+        key = (HUNSPELL_CUSTOM_DICT_LANG, customDictPath)
         if key in self._checkers:
             logger.debug('Dictionary already added: {}'.format(customDictPath))
             return

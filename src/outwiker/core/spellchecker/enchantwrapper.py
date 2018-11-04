@@ -7,7 +7,7 @@ from enchant import Dict, DictWithPWL, Broker
 import enchant.errors
 
 from .dictsfinder import DictsFinder
-from .defines import CUSTOM_DICT_LANG
+from .defines import ENCHANT_CUSTOM_DICT_LANG
 
 logger = logging.getLogger('outwiker.core.spellchecker.enchant')
 
@@ -46,10 +46,10 @@ class EnchantWrapper (object):
     def _createCustomDictLang(self, pathToDict):
         # Create fake language for custom dictionary
         dicFile = os.path.join(pathToDict,
-                               CUSTOM_DICT_LANG + u'.dic')
+                               ENCHANT_CUSTOM_DICT_LANG + u'.dic')
 
         affFile = os.path.join(pathToDict,
-                               CUSTOM_DICT_LANG + u'.aff')
+                               ENCHANT_CUSTOM_DICT_LANG + u'.aff')
 
         if not os.path.exists(dicFile):
             with open(dicFile, 'w') as fp:
@@ -65,7 +65,7 @@ class EnchantWrapper (object):
         except IOError as err:
             logger.error("Can't create custom dictionary")
 
-        key = (CUSTOM_DICT_LANG, customDictPath)
+        key = (ENCHANT_CUSTOM_DICT_LANG, customDictPath)
 
         if key not in self._dictCache:
             broker = Broker()
@@ -73,7 +73,7 @@ class EnchantWrapper (object):
                              self._folders[-1])
 
             try:
-                currentDict = DictWithPWL(CUSTOM_DICT_LANG,
+                currentDict = DictWithPWL(ENCHANT_CUSTOM_DICT_LANG,
                                           customDictPath,
                                           broker=broker)
             except enchant.errors.Error as err:
