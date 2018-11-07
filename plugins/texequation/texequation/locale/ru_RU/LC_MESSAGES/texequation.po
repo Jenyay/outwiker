@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plugin name\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-23 12:51+0300\n"
-"PO-Revision-Date: 2018-08-23 13:40+0300\n"
+"POT-Creation-Date: 2018-11-07 10:07+0300\n"
+"PO-Revision-Date: 2018-11-07 10:10+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -17,6 +17,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 2.0.6\n"
 "X-Poedit-SourceCharset: UTF-8\n"
+
+#: controller.py:98
+msgid "TeXEquation [Plugin]"
+msgstr "TeXEquation [Плагин]"
 
 #: plugin.py:31
 msgid "TeXEquation plug-in allow to insert equations in the TeX format."
@@ -54,9 +58,17 @@ msgstr "Блоковая"
 msgid "Cancel"
 msgstr "Отмена"
 
-#: tokentex.py:93
+#: tokentex.py:102
 msgid "Can't copy KaTeX library"
 msgstr "Ошибка копирования библиотеки KaTeX"
+
+#: preferencepanel.py:34
+msgid "Inline equations scale"
+msgstr "Масштаб строчных формул"
+
+#: preferencepanel.py:46
+msgid "Block equations scale"
+msgstr "Масштаб блоковых формул"
 
 #~ msgid "http://jenyay.net/Outwiker/TexEquationEn"
 #~ msgstr "http://jenyay.net/Outwiker/TexEquation"
