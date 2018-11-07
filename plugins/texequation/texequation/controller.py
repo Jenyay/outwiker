@@ -3,6 +3,7 @@
 
 import os.path
 
+from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
 from outwiker.gui.defines import TOOLBAR_PLUGINS
 from outwiker.pages.wiki.wikipage import WikiWikiPage
 from outwiker.pages.wiki.defines import MENU_WIKI_COMMANDS
@@ -12,6 +13,7 @@ from outwiker.utilites.actionsguicontroller import (ActionsGUIController,
 
 from .actions import TexEquationAction
 from .i18n import get_
+from .preferencepanel import PreferencePanel
 
 
 class Controller(object):
@@ -38,6 +40,7 @@ class Controller(object):
         _ = get_()
 
         self._application.onWikiParserPrepare += self.__onWikiParserPrepare
+        self._application.onPreferencesDialogCreate += self.__onPreferencesDialogCreate
         self._initialize_guicontroller()
 
     def _initialize_guicontroller(self):
@@ -59,6 +62,7 @@ class Controller(object):
         Вызывается при отключении плагина
         """
         self._application.onWikiParserPrepare -= self.__onWikiParserPrepare
+        self._application.onPreferencesDialogCreate -= self.__onPreferencesDialogCreate
         self._destroy_guicontroller()
 
     def _destroy_guicontroller(self):
@@ -84,3 +88,13 @@ class Controller(object):
 
         parser.listItemsTokens.append(tex_big)
         parser.listItemsTokens.append(tex_inline)
+
+    def __onPreferencesDialogCreate(self, dialog):
+        """
+        Add page to preferences dialog
+        """
+        prefPanel = PreferencePanel(dialog.treeBook, self._application.config)
+
+        panelName = _(u"TeXEquation [Plugin]")
+        panelsList = [PreferencePanelInfo(prefPanel, panelName)]
+        dialog.appendPreferenceGroup(panelName, panelsList)

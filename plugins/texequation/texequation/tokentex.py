@@ -5,11 +5,12 @@ import os
 import os.path
 import shutil
 
-from outwiker.core.system import getOS
 from outwiker.libs.pyparsing import QuotedString
 from outwiker.pages.wiki.thumbnails import Thumbnails
+from outwiker.pages.wiki.parser.wikiparser import Parser
 
 from .defines import KATEX_DIR_NAME
+from .texconfig import TeXConfig
 
 
 class TexFactory (object):
@@ -23,10 +24,18 @@ class TexFactory (object):
 
 
 class BaseTexToken (object, metaclass=ABCMeta):
-    def __init__(self, parser):
+    def __init__(self, parser: Parser):
         self.parser = parser
-        self._headers = [u'<link rel="stylesheet" href="__attach/__thumb/{katex}/katex.min.css">\n'.format(katex=KATEX_DIR_NAME),
-                         u'<script src="__attach/__thumb/{katex}/katex.min.js"></script>'.format(katex=KATEX_DIR_NAME)]
+
+        config = TeXConfig(self.parser.config)
+        scale_inline = config.scaleInline.value
+        scale_block = config.scaleBlock.value
+
+        self._headers = ['<link rel="stylesheet" href="__attach/__thumb/{katex}/katex.min.css">\n'.format(katex=KATEX_DIR_NAME),
+                         '<script src="__attach/__thumb/{katex}/katex.min.js"></script>\n'.format(katex=KATEX_DIR_NAME),
+                         '<style type="text/css">.texequation-inline {{ font-size: {size_percent}% }} </style>\n'.format(size_percent=scale_inline),
+                         '<style type="text/css">.texequation-block {{ font-size: {size_percent}% }} </style>'.format(size_percent=scale_block),
+                         ]
         self._divIndex = 0
 
         self._equationTemplate = u'<span class="{classname}" id="{idname}-{index}"></span>'

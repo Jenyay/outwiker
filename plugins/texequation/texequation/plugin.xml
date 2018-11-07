@@ -27,6 +27,15 @@
 			<site>https://jenyay.net</site>
 		</author>
 		<changelog>
+            <version number="2.4">
+				<requirements>
+					<api>2.835</api>
+				</requirements>
+
+                <download os="all">https://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.4.zip</download>
+				<change>Add options to scale equations.</change>
+			</version>
+
             <version number="2.3" date="August 26, 2018">
 				<requirements>
 					<api>2.835</api>
@@ -112,6 +121,15 @@
 		</author>
 
 		<changelog>
+            <version number="2.4">
+				<requirements>
+					<api>2.835</api>
+				</requirements>
+
+                <download os="all">https://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.4.zip</download>
+				<change>Добавлены настройки для масштабирования формул.</change>
+			</version>
+
             <version number="2.3" date="26.08.2018">
 				<requirements>
 					<api>2.835</api>
