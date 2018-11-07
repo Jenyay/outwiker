@@ -30,8 +30,10 @@ class PreferencePanel(BasePrefPanel):
         mainSizer.AddGrowableCol(1)
 
         # Scale of inline equation
-        scale_inline_label = wx.StaticText(self,
-                                           label=_('Inline equations scale'))
+        scale_inline_label = wx.StaticText(
+            self,
+            label=_('Inline equations scale (%)'))
+
         self.scale_inline_spin = wx.SpinCtrl(
             self,
             style=wx.SP_ARROW_KEYS,
@@ -42,8 +44,10 @@ class PreferencePanel(BasePrefPanel):
         self.scale_inline_spin.SetMinSize((150, -1))
 
         # Scale of block equation
-        scale_block_label = wx.StaticText(self,
-                                          label=_('Block equations scale'))
+        scale_block_label = wx.StaticText(
+            self,
+            label=_('Block equations scale (%)'))
+
         self.scale_block_spin = wx.SpinCtrl(
             self,
             style=wx.SP_ARROW_KEYS,
