@@ -28,6 +28,15 @@
 		</author>
 
 		<changelog>
+			<version number="1.16.1">
+				<requirements>
+					<api>2.835</api>
+				</requirements>
+
+                <download os="all">https://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.16.1.zip</download>
+				<change>Fix errors.</change>
+			</version>
+
 			<version number="1.16" date="August 26, 2018">
 				<requirements>
 					<api>2.835</api>
@@ -167,6 +176,15 @@
 		</author>
 
 		<changelog>
+			<version number="1.16.1">
+				<requirements>
+					<api>2.835</api>
+				</requirements>
+
+                <download os="all">https://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.16.1.zip</download>
+				<change>Исправление ошибок.</change>
+			</version>
+
 			<version number="1.16" date="26.08.2018">
 				<requirements>
 					<api>2.835</api>

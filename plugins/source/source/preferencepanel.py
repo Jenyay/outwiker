@@ -54,7 +54,7 @@ class PreferencePanel(BasePrefPanel):
 
         self.tabWidthSpin = wx.SpinCtrl(
             self,
-            style=wx.SP_ARROW_KEYS | wx.TE_AUTO_URL
+            style=wx.SP_ARROW_KEYS
         )
         self.tabWidthSpin.SetMinSize(wx.Size(150, -1))
 
