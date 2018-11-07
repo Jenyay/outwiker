@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from abc import ABCMeta, abstractmethod
 import os
 from typing import List
 
@@ -85,7 +86,7 @@ class PageData(object):
         self.page = page
 
 
-class BaseColumn(object):
+class BaseColumn(metaclass=ABCMeta):
     '''
     Base class to manage columns
     '''
@@ -107,11 +108,20 @@ class BaseColumn(object):
                           page):
         pass
 
+    @abstractmethod
     def getCellContent(self, page) -> str:
         pass
 
+    @abstractmethod
     def getTitle(self) -> str:
         pass
+
+    def sortFunction(self,
+                     item1: ULC.UltimateListItem,
+                     item2: ULC.UltimateListItem) -> int:
+        content1 = self.getCellContent(item1.GetPyData().page)
+        content2 = self.getCellContent(item2.GetPyData().page)
+        return (content1 > content2) - (content1 < content2)
 
 
 class PageTitleColumn(BaseColumn):
@@ -204,6 +214,8 @@ class PageList(wx.Panel):
 
         self._listCtrl.Bind(ULC.EVT_LIST_ITEM_HYPERLINK,
                             handler=self._onPageClick)
+        self._listCtrl.Bind(ULC.EVT_LIST_COL_CLICK,
+                            handler=self._onColClick)
         self._listCtrl.SetHyperTextNewColour(wx.BLUE)
         self._listCtrl.SetHyperTextVisitedColour(wx.BLUE)
         self._listCtrl.AssignImageList(self._imageList.getImageList(),
@@ -234,6 +246,11 @@ class PageList(wx.Panel):
             event = PageClickEvent(page=page)
             event.ResumePropagation(self._propagationLevel)
             wx.PostEvent(self, event)
+
+    def _onColClick(self, event):
+        col_index = event.GetColumn()
+        column = self._visibleColumns[col_index]
+        self._listCtrl.SortItems(column.sortFunction)
 
     def clear(self):
         """
