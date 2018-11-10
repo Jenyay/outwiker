@@ -4,18 +4,18 @@ import os.path
 import unittest
 
 from outwiker.core.attachment import Attachment
-from outwiker.pages.wiki.wikipage import WikiPageFactory
+from outwiker.pages.html.htmlpage import HtmlPageFactory
 from test.basetestcases import BaseOutWikerGUIMixin
 
 
-class WikiEditorDropTargetTest(unittest.TestCase, BaseOutWikerGUIMixin):
+class HTMLEditorDropTargetTest(unittest.TestCase, BaseOutWikerGUIMixin):
     """
-    Test for drop files to the wiki editor
+    Test for drop files to the HTML editor
     """
     def setUp(self):
         self.initApplication()
         self.wikiroot = self.createWiki()
-        self.testpage = WikiPageFactory().create(self.wikiroot, "Страница", [])
+        self.testpage = HtmlPageFactory().create(self.wikiroot, "Страница", [])
 
         self.application.wikiroot = self.wikiroot
         self.application.selectedPage = self.testpage
@@ -58,7 +58,7 @@ class WikiEditorDropTargetTest(unittest.TestCase, BaseOutWikerGUIMixin):
         files = sorted(attach.attachmentFull)
         self.dropTarget.OnDropFiles(0, 0, files)
 
-        expected_text = 'Attach:icon.png'
+        expected_text = '__attach/icon.png'
         self.assertEqual(self.editor.GetText(), expected_text)
 
     def test_drop_several_attach(self):
@@ -68,7 +68,7 @@ class WikiEditorDropTargetTest(unittest.TestCase, BaseOutWikerGUIMixin):
         files = sorted(attach.attachmentFull)
         self.dropTarget.OnDropFiles(0, 0, files)
 
-        expected_text = 'Attach:first.png Attach:icon.png'
+        expected_text = '__attach/first.png __attach/icon.png'
         self.assertEqual(self.editor.GetText(), expected_text)
 
     def test_drop_several_mixed(self):
@@ -79,7 +79,7 @@ class WikiEditorDropTargetTest(unittest.TestCase, BaseOutWikerGUIMixin):
                  [os.path.abspath('../test/images/icon.png')])
         self.dropTarget.OnDropFiles(0, 0, files)
 
-        expected_text = ('Attach:first.png '
+        expected_text = ('__attach/first.png '
                          + os.path.abspath('../test/images/icon.png'))
 
         self.assertEqual(self.editor.GetText(), expected_text)
