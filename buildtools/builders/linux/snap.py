@@ -33,8 +33,8 @@ class BuilderSnap(BuilderBase):
     def get_snap_files(self):
         snap_files = []
 
-        for fname in glob.glob(os.path.join(self.facts.temp_dir, '*.snap')):
-            snap_files.append(os.path.join(self.facts.build_dir_linux, fname))
+        for fname in glob.glob(os.path.join(self.facts.build_dir_linux, '*.snap')):
+            snap_files.append(fname)
 
         return snap_files
 
