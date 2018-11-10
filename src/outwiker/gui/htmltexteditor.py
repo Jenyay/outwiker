@@ -141,7 +141,7 @@ class HtmlTextEditor(TextEditor):
 
 class HtmlEditorDropTarget(BaseEditorDropTarget):
     """
-    Class to drag files to the wiki editor
+    Class to drag files to the HTML editor
     """
     def correctAttachFileName(self, fname):
         return '__attach/' + fname

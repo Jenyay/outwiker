@@ -4,7 +4,7 @@ import wx
 
 from outwiker.core.defines import REGISTRY_PAGE_CURSOR_POSITION
 from outwiker.gui.basetextpanel import BaseTextPanel
-from outwiker.gui.texteditor import TextEditor
+from .textpageeditor import TextPageEditor
 
 
 class TextPanel (BaseTextPanel):
@@ -13,7 +13,7 @@ class TextPanel (BaseTextPanel):
     """
 
     def __init__(self, parent, application):
-        super(TextPanel, self).__init__(parent, application)
+        super().__init__(parent, application)
 
         self.__createGui()
         self.Bind(self.EVT_SPELL_ON_OFF, handler=self._onSpellOnOff)
@@ -23,7 +23,7 @@ class TextPanel (BaseTextPanel):
 
     def Clear(self):
         self.Unbind(self.EVT_SPELL_ON_OFF, handler=self._onSpellOnOff)
-        super(TextPanel, self).Clear()
+        super().Clear()
 
     def SetCursorPosition(self, position):
         """
@@ -60,7 +60,7 @@ class TextPanel (BaseTextPanel):
         self.textEditor.SetFocus()
 
     def __createGui(self):
-        self.textEditor = TextEditor(self)
+        self.textEditor = TextPageEditor(self)
 
         mainSizer = wx.FlexGridSizer(1, 1, 0, 0)
         mainSizer.Add(self.textEditor, 1, wx.EXPAND, 0)
