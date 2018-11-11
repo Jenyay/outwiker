@@ -351,6 +351,7 @@ def deb_binary(is_stable=False):
     builder = BuilderDebBinaryFactory.get_default(DEB_BINARY_BUILD_DIR,
                                                   tobool(is_stable))
     builder.build()
+    print_info('Deb created: {}'.format(builder.get_deb_files()))
 
 
 @task
