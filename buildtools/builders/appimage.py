@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import glob
 import os
 import shutil
 
@@ -8,7 +9,9 @@ from fabric.api import local, lcd
 from .base import BuilderBase
 from .binarybuilders import PyInstallerBuilderLinuxSimple
 
-from buildtools.defines import APPIMAGE_BUILD_DIR, NEED_FOR_BUILD_DIR
+from buildtools.defines import (APPIMAGE_BUILD_DIR,
+                                NEED_FOR_BUILD_DIR,
+                                PLUGINS_DIR)
 
 
 class BuilderAppImage(BuilderBase):
@@ -24,6 +27,7 @@ class BuilderAppImage(BuilderBase):
         self._app_dir = os.path.join(self._temp_dir, self._appdir_name)
         self._opt_dir = os.path.join(self._app_dir, u'opt')
         self._binary_dir = os.path.join(self._opt_dir, u'outwiker')
+        self._plugins_dir = os.path.join(self._binary_dir, PLUGINS_DIR)
         self._result_full_path = os.path.join(self.build_dir,
                                               self._appimage_result_name)
 
@@ -35,6 +39,7 @@ class BuilderAppImage(BuilderBase):
         self._copy_appimage_files()
         self._createdir_tree()
         self._create_binaries()
+        self._copy_plugins(self._plugins_dir)
         self._download_appimagetool()
         self._build_appimage()
         self._copy_result()
@@ -69,3 +74,12 @@ class BuilderAppImage(BuilderBase):
         src = os.path.join(self._temp_dir, self._appimage_result_name)
         dest = self.build_dir
         shutil.copy(src, dest)
+
+    def get_appimage_files(self):
+        result_files = []
+
+        for fname in glob.glob(os.path.join(self.facts.build_dir_linux,
+                                            '*.AppImage')):
+            result_files.append(fname)
+
+        return result_files

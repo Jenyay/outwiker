@@ -4,7 +4,7 @@ import abc
 import os
 import shutil
 
-from buildtools.defines import OUTWIKER_VERSIONS_FILENAME
+from buildtools.defines import OUTWIKER_VERSIONS_FILENAME, PLUGINS_LIST
 from buildtools.buildfacts import BuildFacts
 from buildtools.utilites import print_info
 
@@ -116,3 +116,20 @@ class BuilderBase(object, metaclass=abc.ABCMeta):
         # Create the plugins folder(it is not appened to the git repository)
         if not os.path.exists(pluginsdir):
             os.mkdir(pluginsdir)
+
+        return pluginsdir
+
+    def _copy_plugins(self, plugins_dir):
+        print_info('Copy plugins:')
+        if not os.path.exists(plugins_dir):
+            os.mkdir(plugins_dir)
+
+        for plugin_name in PLUGINS_LIST:
+            print_info('    {}'.format(plugin_name))
+
+            src_dir = os.path.join(self.facts.src_plugins_dir,
+                                   plugin_name,
+                                   plugin_name)
+            shutil.copytree(src_dir,
+                            os.path.join(plugins_dir, plugin_name),
+                            ignore=shutil.ignore_patterns('__pycache__'))
