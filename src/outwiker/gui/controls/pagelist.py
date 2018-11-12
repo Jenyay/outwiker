@@ -199,6 +199,7 @@ class PageList(wx.Panel):
         self._columns = columns
         self._defaultIcon = os.path.join(getImagesDir(), "page.png")
         self._imageList = ImageListCache(self._defaultIcon)
+        self._pages = []
 
         self._propagationLevel = 15
         self.SetBackgroundColour(wx.Colour(255, 255, 255))
@@ -250,13 +251,15 @@ class PageList(wx.Panel):
     def _onColClick(self, event):
         col_index = event.GetColumn()
         column = self._visibleColumns[col_index]
-        self._listCtrl.SortItems(column.sortFunction)
+        # self._listCtrl.SortItems(column.sortFunction)
+        self.setPageList(self._pages)
 
     def clear(self):
         """
         Удалить все элементы из списка
         """
         self._listCtrl.ClearAll()
+        self._pages = []
 
     def _createColumns(self):
         for n, column in enumerate(self._visibleColumns):
@@ -268,6 +271,7 @@ class PageList(wx.Panel):
         """
         self._listCtrl.Freeze()
         self.clear()
+        self._pages = pages
         self._createColumns()
 
         for page in pages:
