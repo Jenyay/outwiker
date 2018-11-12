@@ -351,6 +351,7 @@ def deb_binary(is_stable=False):
     builder = BuilderDebBinaryFactory.get_default(DEB_BINARY_BUILD_DIR,
                                                   tobool(is_stable))
     builder.build()
+    print_info('Deb created: {}'.format(builder.get_deb_files()))
 
 
 @task
@@ -727,6 +728,7 @@ def vm_linux_binary(is_stable=0):
 def appimage(is_stable=0):
     builder = BuilderAppImage(is_stable=tobool(is_stable))
     builder.build()
+    print_info('AppImage created: {}'.format(builder.get_appimage_files()))
 
 
 @task

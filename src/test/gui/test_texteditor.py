@@ -7,9 +7,6 @@ from test.basetestcases import BaseOutWikerGUIMixin
 
 
 class TextEditorTest(unittest.TestCase, BaseOutWikerGUIMixin):
-    """
-    Тесты действий для викистраницы
-    """
     def setUp(self):
         self.initApplication()
         self.wikiroot = self.createWiki()

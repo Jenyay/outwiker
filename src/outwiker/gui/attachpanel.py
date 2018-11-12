@@ -4,13 +4,12 @@ import os.path
 
 import wx
 
-from outwiker.core.commands import MessageBox
+from outwiker.core.commands import MessageBox, attachFiles
 from outwiker.core.system import getOS, getImagesDir
 from outwiker.core.attachment import Attachment
 from outwiker.actions.attachfiles import AttachFilesAction
 from outwiker.actions.openattachfolder import OpenAttachFolderAction
 from outwiker.gui.guiconfig import AttachConfig
-from outwiker.gui.dropfilestarget import DropFilesTarget
 
 
 class AttachPanel(wx.Panel):
@@ -34,7 +33,7 @@ class AttachPanel(wx.Panel):
         self.__fileIcons = getOS().fileIcons
         self.__attachList.SetImageList(self.__fileIcons.imageList,
                                        wx.IMAGE_LIST_SMALL)
-        self._dropTarget = DropFilesTarget(self._application, self)
+        self._dropTarget = DropAttachFilesTarget(self._application, self)
 
         self.__bindGuiEvents()
         self.__bindAppEvents()
@@ -331,3 +330,42 @@ class AttachPanel(wx.Panel):
                 self.__attachList.GetFocusedItem() == -1):
             self.__attachList.Focus(0)
             self.__attachList.Select(0)
+
+
+class DropAttachFilesTarget(wx.FileDropTarget):
+    """
+    Класс для возможности перетаскивания файлов
+    между другими программами и панелью с прикрепленными файлами.
+    """
+    def __init__(self, application, dropWnd):
+        wx.FileDropTarget.__init__(self)
+        self._application = application
+        self._dropWnd = dropWnd
+        self._dropWnd.SetDropTarget(self)
+
+    def destroy(self):
+        self._dropWnd.SetDropTarget(None)
+        self._dropWnd = None
+
+    def OnDropFiles(self, x, y, files):
+        if len(files) == 1 and '\n' in files[0]:
+            files = files[0].split('\n')
+
+        file_protocol = 'file://'
+
+        correctedFiles = []
+        for fname in files:
+            if not fname.strip():
+                continue
+
+            if fname.startswith(file_protocol):
+                fname = fname[len(file_protocol):]
+
+            correctedFiles.append(fname)
+
+        if (self._application.wikiroot is not None and
+                self._application.wikiroot.selectedPage is not None):
+            attachFiles(self._application.mainWindow,
+                        self._application.wikiroot.selectedPage,
+                        correctedFiles)
+            return True

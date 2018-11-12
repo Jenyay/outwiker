@@ -7,7 +7,7 @@ import shutil
 from fabric.api import local, lcd
 
 from ..base import BuilderBase
-from buildtools.defines import SNAP_BUILD_DIR, PLUGINS_DIR, PLUGINS_LIST
+from buildtools.defines import SNAP_BUILD_DIR, PLUGINS_DIR
 from buildtools.template import substitute_in_file
 from buildtools.utilites import print_info
 
@@ -33,8 +33,9 @@ class BuilderSnap(BuilderBase):
     def get_snap_files(self):
         snap_files = []
 
-        for fname in glob.glob(os.path.join(self.facts.temp_dir, '*.snap')):
-            snap_files.append(os.path.join(self.facts.build_dir_linux, fname))
+        for fname in glob.glob(os.path.join(self.facts.build_dir_linux,
+                                            '*.snap')):
+            snap_files.append(fname)
 
         return snap_files
 
@@ -73,23 +74,8 @@ class BuilderSnap(BuilderBase):
         self._prepare_snapcraft_file(os.path.join(snap, 'snapcraft.yaml'))
 
         # Copy plug-ins
-        self._copy_plugins(usr_share_outwiker)
-
-    def _copy_plugins(self, usr_share_outwiker):
-        print_info('Copy plugins:')
         dest_plugins_dir = os.path.join(usr_share_outwiker, PLUGINS_DIR)
-        if not os.path.exists(dest_plugins_dir):
-            os.mkdir(dest_plugins_dir)
-
-        for plugin_name in PLUGINS_LIST:
-            print_info('    {}'.format(plugin_name))
-
-            src_dir = os.path.join(self.facts.src_plugins_dir,
-                                   plugin_name,
-                                   plugin_name)
-            shutil.copytree(src_dir,
-                            os.path.join(dest_plugins_dir, plugin_name),
-                            ignore=shutil.ignore_patterns('__pycache__'))
+        self._copy_plugins(dest_plugins_dir)
 
     def _prepare_snapcraft_file(self, snapcraft_file):
         substitute_in_file(snapcraft_file,

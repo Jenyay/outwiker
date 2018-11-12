@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 from abc import ABCMeta, abstractmethod
+import glob
 import os
 import shutil
 
@@ -10,6 +11,7 @@ from ..base import BuilderBase
 from ..binarybuilders import PyInstallerBuilderLinuxBase
 from buildtools.defines import (DEB_BINARY_BUILD_DIR,
                                 NEED_FOR_BUILD_DIR,
+                                PLUGINS_DIR,
                                 )
 from buildtools.versions import getOutwikerVersion
 from ...utilites import get_linux_distrib_info
@@ -62,7 +64,7 @@ class BuilderDebBinaryFactory(object):
 
 class BuilderDebBinaryBase(BuilderBase, metaclass=ABCMeta):
     def __init__(self, dir_name=DEB_BINARY_BUILD_DIR, is_stable=False):
-        super(BuilderDebBinaryBase, self).__init__(dir_name, is_stable)
+        super().__init__(dir_name, is_stable)
         distrib_info = get_linux_distrib_info()
         version = getOutwikerVersion()
         architecture = self._getDebArchitecture()
@@ -76,6 +78,8 @@ class BuilderDebBinaryBase(BuilderBase, metaclass=ABCMeta):
         # tmp/outwiker-x.x.x+xxx_.../
         self.debPath = self.facts.getTempSubpath(self.debName)
         self.debFileName = u'{}.deb'.format(self.debName)
+        self.pluginsDir = os.path.join(self._getExecutableDir(),
+                                       PLUGINS_DIR)
 
         self._files_to_remove = [
             u'LICENSE.txt',
@@ -235,6 +239,7 @@ class BuilderDebBinaryBase(BuilderBase, metaclass=ABCMeta):
     def _build(self):
         self._create_plugins_dir()
         self._buildBinaries()
+        self._copy_plugins(self.pluginsDir)
         self._copyDebianFiles()
         self._copy_share_files()
         self._createFoldersTree()
@@ -243,6 +248,15 @@ class BuilderDebBinaryBase(BuilderBase, metaclass=ABCMeta):
         self._setPermissions()
         self._buildDeb()
         self._checkLintian()
+
+    def get_deb_files(self):
+        result_files = []
+
+        for fname in glob.glob(os.path.join(self.facts.build_dir_linux,
+                                            '*.deb')):
+            result_files.append(fname)
+
+        return result_files
 
 
 # class BuilderDebBinary(BuilderDebBinaryBase):
