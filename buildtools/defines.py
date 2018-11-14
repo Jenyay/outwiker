@@ -4,88 +4,89 @@ import os
 
 
 # Supported Ubuntu releases
-UBUNTU_RELEASE_NAMES = [u"xenial"]
+UBUNTU_RELEASE_NAMES = ["xenial"]
 
 # List of the supported plugins
 PLUGINS_LIST = [
-    u"autorenamer",
-    u"counter",
-    u"datagraph",
-    u"diagrammer",
-    u"export2html",
-    u"externaltools",
-    u"hackpage",
-    u"htmlformatter",
-    u"htmlheads",
-    u"lightbox",
-    u"livejournal",
-    u"markdown",
-    u"pagetypecolor",
-    u"readingmode",
-    u"sessions",
-    u"snippets",
-    u"source",
-    u"spoiler",
-    u"statistics",
-    u"tableofcontents",
-    u"texequation",
-    u"thumbgallery",
-    u"updatenotifier",
-    u"webpage",
+    "autorenamer",
+    "counter",
+    "datagraph",
+    "diagrammer",
+    "export2html",
+    "externaltools",
+    "hackpage",
+    "htmlformatter",
+    "htmlheads",
+    "lightbox",
+    "livejournal",
+    "markdown",
+    "pagetypecolor",
+    "readingmode",
+    "sessions",
+    "snippets",
+    "source",
+    "spoiler",
+    "statistics",
+    "tableofcontents",
+    "texequation",
+    "thumbgallery",
+    "updatenotifier",
+    "webpage",
 ]
 
-LANGUAGES = ['en', 'de', 'it_IT', 'ru_RU', 'sv', 'uk_UA']
+LANGUAGES = ['en', 'de', 'it_IT', 'ru_R', 'sv', 'uk_UA']
 
-BUILD_DIR = u'build'
-LINUX_BUILD_DIR = u"linux"
-WINDOWS_BUILD_DIR = u"windows"
-WINDOWS_EXECUTABLE_DIR = u"outwiker_exe"
-WINDOWS_INSTALLER_FILENAME = u"outwiker_win_unstable.exe"
-DEB_BINARY_BUILD_DIR = u'linux'
-DEB_SOURCE_BUILD_DIR = u'linux/deb_source'
-APPIMAGE_BUILD_DIR = u'linux'
-SNAP_BUILD_DIR = u'linux'
+BUILD_DIR = 'build'
+BUILD_LIB_DIR = 'libs'
+LINUX_BUILD_DIR = "linux"
+WINDOWS_BUILD_DIR = "windows"
+WINDOWS_EXECUTABLE_DIR = "outwiker_exe"
+WINDOWS_INSTALLER_FILENAME = "outwiker_win_unstable.exe"
+DEB_BINARY_BUILD_DIR = 'linux'
+DEB_SOURCE_BUILD_DIR = 'linux/deb_source'
+APPIMAGE_BUILD_DIR = 'linux'
+SNAP_BUILD_DIR = 'linux'
 
-SOURCES_DIR = u'sources'
-PLUGINS_DIR = u'plugins'
-PLUGIN_VERSIONS_FILENAME = u'plugin.xml'
-OUTWIKER_VERSIONS_FILENAME = u'versions.xml'
-NEED_FOR_BUILD_DIR = u'need_for_build'
+SOURCES_DIR = 'sources'
+PLUGINS_DIR = 'plugins'
+PLUGIN_VERSIONS_FILENAME = 'plugin.xml'
+OUTWIKER_VERSIONS_FILENAME = 'versions.xml'
+NEED_FOR_BUILD_DIR = 'need_for_build'
 COVERAGE_PARAMS = '--rcfile="../.coveragerc"'
 
 FILES_FOR_UPLOAD_UNSTABLE_WIN = [
-    u'outwiker_win_unstable.exe',
-    u'outwiker_win_unstable.zip',
-    u'outwiker_win_unstable.7z',
-    u'outwiker_win_unstable_all_plugins.zip',
-    u'outwiker_win_unstable_all_plugins.7z',
+    'outwiker_win_unstable.exe',
+    'outwiker_win_unstable.zip',
+    'outwiker_win_unstable.7z',
+    'outwiker_win_unstable_all_plugins.zip',
+    'outwiker_win_unstable_all_plugins.7z',
 ]
 
 FILES_FOR_UPLOAD_STABLE_WIN = [
-    u'outwiker_{version}_win.exe',
-    u'outwiker_{version}_win.zip',
-    u'outwiker_{version}_win.7z',
-    u'outwiker_{version}_win_all_plugins.zip',
-    u'outwiker_{version}_win_all_plugins.7z',
+    'outwiker_{version}_win.exe',
+    'outwiker_{version}_win.zip',
+    'outwiker_{version}_win.7z',
+    'outwiker_{version}_win_all_plugins.zip',
+    'outwiker_{version}_win_all_plugins.7z',
 ]
 
 FILES_FOR_UPLOAD_UNSTABLE_LINUX = [
-    u'outwiker_linux_amd64.zip',
-    u'outwiker_linux_amd64.7z',
-    u'outwiker-{version}+{build}_amd64.deb',
-    u'Outwiker-x86_64.AppImage',
+    'outwiker_linux_amd64.zip',
+    'outwiker_linux_amd64.7z',
+    'outwiker-{version}+{build}_amd64.deb',
+    'Outwiker-x86_64.AppImage',
 ]
 
 FILES_FOR_UPLOAD_STABLE_LINUX = [
-    u'outwiker_linux_{version}_amd64.zip',
-    u'outwiker_linux_{version}_amd64.7z',
-    u'outwiker-{version}+{build}_amd64.deb',
-    u'Outwiker-x86_64.AppImage',
+    'outwiker_linux_{version}_amd64.zip',
+    'outwiker_linux_{version}_amd64.7z',
+    'outwiker-{version}+{build}_amd64.deb',
+    'Outwiker-x86_64.AppImage',
 ]
 
-PPA_DEV_PATH = u'ppa:outwiker-team/dev'
-PPA_UNSTABLE_PATH = u'ppa:outwiker-team/unstable'
-PPA_STABLE_PATH = u'ppa:outwiker-team/ppa'
+PPA_DEV_PATH = 'ppa:outwiker-team/dev'
+PPA_UNSTABLE_PATH = 'ppa:outwiker-team/unstable'
+PPA_STABLE_PATH = 'ppa:outwiker-team/ppa'
 
 # Timeout in seconds
 DOWNLOAD_TIMEOUT = 15
@@ -95,29 +96,29 @@ TIMEZONE = '+0300'
 try:
     DEB_MAINTAINER = os.environ['DEBFULLNAME']
 except KeyError:
-    DEB_MAINTAINER = u'Eugeniy Ilin'
+    DEB_MAINTAINER = 'Eugeniy Ilin'
 
 try:
     DEB_MAINTAINER_EMAIL = os.environ['DEBEMAIL']
 except KeyError:
-    DEB_MAINTAINER_EMAIL = u'jenyay.ilin@gmail.com'
+    DEB_MAINTAINER_EMAIL = 'jenyay.ilin@gmail.com'
 
 
 VM_BUILD_PARAMS = {
-    # u'zesty64': {
-    #     u'vagrant_path': 'need_for_build/virtual/build_machines/zesty64',
-    #     u'host': u'192.168.101.64',
+    # 'zesty64': {
+    #     'vagrant_path': 'need_for_build/virtual/build_machines/zesty64',
+    #     'host': '192.168.101.64',
     # },
-    u'xenial64': {
-        u'vagrant_path': 'need_for_build/virtual/build_machines/xenial64',
-        u'host': u'192.168.101.65',
+    'xenial64': {
+        'vagrant_path': 'need_for_build/virtual/build_machines/xenial64',
+        'host': '192.168.101.65',
     },
-    # u'artful64': {
-    #     u'vagrant_path': 'need_for_build/virtual/build_machines/artful64',
-    #     u'host': u'192.168.101.66',
+    # 'artful64': {
+    #     'vagrant_path': 'need_for_build/virtual/build_machines/artful64',
+    #     'host': '192.168.101.66',
     # },
-    # u'trusty64': {
-    #     u'vagrant_path': 'need_for_build/virtual/build_machines/trusty64',
-    #     u'host': u'192.168.101.67',
+    # 'trusty64': {
+    #     'vagrant_path': 'need_for_build/virtual/build_machines/trusty64',
+    #     'host': '192.168.101.67',
     # },
 }
