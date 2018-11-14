@@ -251,8 +251,8 @@ class PageList(wx.Panel):
     def _onColClick(self, event):
         col_index = event.GetColumn()
         column = self._visibleColumns[col_index]
-        # self._listCtrl.SortItems(column.sortFunction)
-        self.setPageList(self._pages)
+        self._listCtrl.SortItems(column.sortFunction)
+        # self.setPageList(self._pages)
 
     def clear(self):
         """
