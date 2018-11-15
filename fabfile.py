@@ -749,31 +749,41 @@ def docker_build(*args):
     '''
     Run the build process inside the Docker container
     '''
+    docker_build_create()
+
     tasks_str = ' '.join(args)
     current_dir = os.path.abspath('.')
-    command = 'docker run -v "{path}:/home/user/project" --user $(id -u):$(id -g) outwiker/build_linux {tasks}'.format(
+    command = 'docker run -v "{path}:/home/user/project" --user $(id -u):$(id -g) -i -t outwiker/build_linux {tasks}'.format(
         path=current_dir,
         tasks=tasks_str
     )
     local(command)
 
 
-@task(alias='wx_ubuntu_16.04')
-def docker_build_wx_ubuntu_16_04():
-    '''
-    Run the build wxPython inside the Docker container
-    '''
-    docker_build_wx('16.04')
-
-
-def docker_build_wx(ubuntu_version: str):
+@task
+def docker_build_wx(ubuntu_version: str, wx_version: str):
+    # Create dest dir
     build_dir = os.path.abspath(os.path.join(BUILD_DIR, BUILD_LIB_DIR))
     if not os.path.exists(build_dir):
         os.mkdir(build_dir)
 
-    command = 'docker run -v "{path}:/home/user/build" --user $(id -u):$(id -g) wxpython/ubuntu_{ubuntu_version}_4.0.1_webkit1'.format(
+    # Create Docker image
+    docker_image = 'wxpython/ubuntu_{ubuntu_version}_webkit1'.format(ubuntu_version=ubuntu_version)
+
+    dockerfile_path = os.path.join(
+        NEED_FOR_BUILD_DIR,
+        'build_wxpython',
+        'ubuntu_{ubuntu_version}'.format(ubuntu_version=ubuntu_version)
+    )
+
+    with lcd(dockerfile_path):
+        local('docker build -t {docker_image} .'.format(docker_image=docker_image))
+
+    # Build wxPython
+    command = 'docker run -v "{path}:/home/user/build" --user $(id -u):$(id -g) -i -t -e "WX_VERSION={wx_version}" {docker_image}'.format(
         path=build_dir,
-        ubuntu_version=ubuntu_version
+        docker_image=docker_image,
+        wx_version=wx_version
     )
     local(command)
 
