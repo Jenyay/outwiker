@@ -61,6 +61,7 @@ class InsertDialogController(object):
         lang_list = [lang_name
                      for lang_name in self._langList.allNames()
                      if lang_name not in current_langs]
+        lang_list.sort(key=str.lower)
 
         with FilterListDialog(self._dialog,
                               lang_list,
