@@ -780,7 +780,7 @@ def docker_build_wx(ubuntu_version: str, wx_version: str):
         local('docker build -t {docker_image} .'.format(docker_image=docker_image))
 
     # Build wxPython
-    command = 'docker run -v "{path}:/home/user/build" --user $(id -u):$(id -g) -i -t -e "WX_VERSION={wx_version}" {docker_image}'.format(
+    command = 'docker run -v "{path}:/home/user/build" --rm --user $(id -u):$(id -g) -i -t -e "WX_VERSION={wx_version}" {docker_image}'.format(
         path=build_dir,
         docker_image=docker_image,
         wx_version=wx_version
