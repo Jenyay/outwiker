@@ -79,7 +79,7 @@ class BoldSuperscriptToken(AdHocToken):
 
     def getToken(self):
         token = (BoldToken.start +
-                 Regex(".*?'\^.*?\^'") +
+                 Regex(r".*?'\^.*?\^'") +
                  BoldToken.end)("bold_superscript")
 
         token.setParseAction(self.getAction(u'<b>', u'</b>'))
@@ -111,7 +111,7 @@ class ItalicSuperscriptToken(AdHocToken):
 
     def getToken(self):
         token = (ItalicToken.start +
-                 Regex(".*?'\^.*?\^'") +
+                 Regex(r".*?'\^.*?\^'") +
                  ItalicToken.end)("italic_superscript")
 
         token.setParseAction(self.getAction(u'<i>', u'</i>'))
@@ -143,7 +143,7 @@ class BoldItalicSuperscriptToken(AdHocToken):
 
     def getToken(self):
         token = (BoldItalicToken.start +
-                 Regex(".*?'\^.*?\^'") +
+                 Regex(r".*?'\^.*?\^'") +
                  BoldItalicToken.end)("bold_italic_superscript")
 
         token.setParseAction(self.getAction(u'<b><i>', u'</i></b>'))

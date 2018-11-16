@@ -16,8 +16,8 @@ class HtmlImprover(object, metaclass=ABCMeta):
         flags = re.I | re.S | re.M
 
         # List of tuples of the regexp for opening and closing tags
-        self._tagsRegexp = [(re.compile(u'\n?<\s*{}.*?>'.format(name), flags),
-                             re.compile(u'</\s*{}\s*>\n?'.format(name), flags))
+        self._tagsRegexp = [(re.compile(r'\n?<\s*{}.*?>'.format(name), flags),
+                             re.compile(r'</\s*{}\s*>\n?'.format(name), flags))
                             for name in specialTags]
 
     def run(self, text):
