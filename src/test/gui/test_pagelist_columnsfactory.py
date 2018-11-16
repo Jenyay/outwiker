@@ -2,7 +2,7 @@
 
 import pytest
 
-import outwiker.gui.controls.pagelist as pl
+import outwiker.gui.controls.pagelist_columns as pl
 
 
 def test_createDefaultColumns_len():

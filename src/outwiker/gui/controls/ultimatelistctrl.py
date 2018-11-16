@@ -10361,8 +10361,8 @@ class UltimateListMainWindow(wx.ScrolledWindow):
         in the :class:`UltimateListCtrl`. The function should return a negative, zero or positive
         value if the first line is less than, equal to or greater than the second one.
 
-        :param `line1`: an instance of :class:`UltimateListItem`;
-        :param `line2`: another instance of :class:`UltimateListItem`.
+        :param `line1`: an instance of :class:`UltimateListLineData`;
+        :param `line2`: another instance of :class:`UltimateListLineData`.
 
         :note: The base class version compares lines by their index.
         """
@@ -10376,9 +10376,9 @@ class UltimateListMainWindow(wx.ScrolledWindow):
         data2 = item2._data
 
         if self.__func:
-            return self.__func(data1, data2)
+            return self.__func(item1, item2)
         else:
-            return cmp(data1, data2)
+            return (data1 > data2) - (data1 < data2)
 
 
     def SortItems(self, func):

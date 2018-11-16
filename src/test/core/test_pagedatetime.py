@@ -33,6 +33,7 @@ class PageDateTimeTest(unittest.TestCase):
             PageConfig.sectionName,
             PageConfig.datetimeParamName
         )
+        self.wikiroot = WikiDocument.load(self.path)
         self.assertEqual(self.wikiroot["Страница 1"].datetime, None)
 
     def testCreateDate_01(self):

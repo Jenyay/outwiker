@@ -4,7 +4,7 @@ import wx
 
 from outwiker.gui.guiconfig import TagsConfig
 from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
-from outwiker.gui.controls.pagelist import ColumnsFactory
+from outwiker.gui.controls.pagelist_columns import ColumnsFactory
 
 
 class TagsPanel(BasePrefPanel):
