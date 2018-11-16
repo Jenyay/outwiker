@@ -71,7 +71,8 @@ class InsertDialogController(object):
                 new_lang_designation = self._langList.getDesignation(new_lang_name)
                 self._config.languageList.value = self._config.languageList.value + [new_lang_designation]
                 self._config.defaultLanguage.value = new_lang_designation
-                self.loadLanguagesState()
+
+            self.loadLanguagesState()
 
     def _onfileChecked(self, event):
         """
