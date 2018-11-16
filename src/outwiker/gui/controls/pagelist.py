@@ -119,8 +119,12 @@ class BaseColumn(metaclass=ABCMeta):
     def sortFunction(self,
                      item1: ULC.UltimateListItem,
                      item2: ULC.UltimateListItem) -> int:
-        content1 = self.getCellContent(item1.GetPyData().page)
-        content2 = self.getCellContent(item2.GetPyData().page)
+        page1 = item1.GetPyData().page
+        page2 = item2.GetPyData().page
+
+        content1 = self.getCellContent(page1).lower()
+        content2 = self.getCellContent(page2).lower()
+
         return (content1 > content2) - (content1 < content2)
 
 
@@ -192,6 +196,17 @@ class ModifyDateColumn(BaseColumn):
     def getTitle(self) -> str:
         return _('Modify date')
 
+    def sortFunction(self,
+                     item1: ULC.UltimateListItem,
+                     item2: ULC.UltimateListItem) -> int:
+        page1 = item1.GetPyData().page
+        page2 = item2.GetPyData().page
+
+        content1 = page1.datetime
+        content2 = page2.datetime
+
+        return (content1 < content2) - (content1 > content2)
+
 
 class PageList(wx.Panel):
     def __init__(self, parent: wx.Window, columns: List[BaseColumn]):
@@ -199,7 +214,6 @@ class PageList(wx.Panel):
         self._columns = columns
         self._defaultIcon = os.path.join(getImagesDir(), "page.png")
         self._imageList = ImageListCache(self._defaultIcon)
-        self._pages = []
 
         self._propagationLevel = 15
         self.SetBackgroundColour(wx.Colour(255, 255, 255))
@@ -250,16 +264,17 @@ class PageList(wx.Panel):
 
     def _onColClick(self, event):
         col_index = event.GetColumn()
+        self._sortByColumn(col_index)
+
+    def _sortByColumn(self, col_index):
         column = self._visibleColumns[col_index]
         self._listCtrl.SortItems(column.sortFunction)
-        # self.setPageList(self._pages)
 
     def clear(self):
         """
         Удалить все элементы из списка
         """
         self._listCtrl.ClearAll()
-        self._pages = []
 
     def _createColumns(self):
         for n, column in enumerate(self._visibleColumns):
@@ -271,7 +286,6 @@ class PageList(wx.Panel):
         """
         self._listCtrl.Freeze()
         self.clear()
-        self._pages = pages
         self._createColumns()
 
         for page in pages:

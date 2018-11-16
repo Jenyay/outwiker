@@ -51,6 +51,7 @@ class RootWikiPage(object):
             self.readonly = True
 
         self._params = RootWikiPage._readParams(self.path, self.readonly)
+        self._datetime = self._getDateTime()
 
     @staticmethod
     def _readParams(path, readonly=False):
@@ -194,6 +195,9 @@ class RootWikiPage(object):
         Получить дату и время изменения страницы в виде экземпляра
         класса datetime.datetime
         """
+        return self._datetime
+
+    def _getDateTime(self):
         date = self.params.datetimeOption.value
         if date is None:
             # Если дата не установлена, то возвратим дату последнего
@@ -210,6 +214,7 @@ class RootWikiPage(object):
     @datetime.setter
     def datetime(self, date):
         self.params.datetimeOption.value = date
+        self._datetime = date
 
     @property
     def creationdatetime(self):
@@ -438,6 +443,9 @@ class WikiPage(RootWikiPage):
         RootWikiPage.__init__(self, path, readonly)
         self._title = title
         self._parent = parent
+        self._alias = self.params.aliasOption.value
+        if len(self._alias) == 0:
+            self._alias = None
 
     @property
     def order(self):
@@ -467,8 +475,7 @@ class WikiPage(RootWikiPage):
 
     @property
     def alias(self):
-        alias = self.params.aliasOption.value
-        return None if not alias else alias
+        return self._alias
 
     @alias.setter
     def alias(self, value):
@@ -476,8 +483,10 @@ class WikiPage(RootWikiPage):
             raise ReadonlyException
 
         if not value:
+            self._alias = None
             self.params.aliasOption.remove_option()
         else:
+            self._alias = value
             self.params.aliasOption.value = value
 
         self.root.onTreeUpdate(self)
