@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from typing import Union, List, Tuple
+from typing import Union, Tuple, Iterator
 
 
 class LangList:
@@ -12,14 +12,16 @@ class LangList:
 
         # Key - full language name,
         # Value - tuple of designations of the language
-        self._languages = {translate_func(lexer[1]): lexer[2] for lexer in LEXERS.values()}
+        self._languages = {translate_func(lexer[1]): lexer[2]
+                           for lexer
+                           in LEXERS.values()}
 
     def _empty_translate(self, text: str) -> str:
         return text
 
-    def allNames(self) -> List[Tuple[str]]:
+    def allNames(self) -> Iterator[str]:
         '''
-        Return list of names of the all languages
+        Return list iterator of names of the all languages
         '''
         return self._languages.keys()
 

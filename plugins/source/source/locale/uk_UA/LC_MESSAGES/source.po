@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-16 10:00+0300\n"
+"POT-Creation-Date: 2018-11-16 21:52+0300\n"
 "PO-Revision-Date: 2018-08-23 13:36+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Ukrainian\n"
@@ -85,11 +85,15 @@ msgstr "<B>Додаток Source: Помилка кодування</B>"
 msgid "<B>Source plugin: Unknown encoding</B>"
 msgstr "<B>Додаток Source: Невідоме кодування</B>"
 
-#: insertdialogcontroller.py:37
+#: insertdialogcontroller.py:42
 msgid "Auto"
 msgstr "Авто"
 
-#: insertdialogcontroller.py:289
+#: insertdialogcontroller.py:67
+msgid "Add other language"
+msgstr ""
+
+#: insertdialogcontroller.py:310
 msgid "Other..."
 msgstr ""
 

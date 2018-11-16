@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-16 10:00+0300\n"
+"POT-Creation-Date: 2018-11-16 21:52+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -90,11 +90,15 @@ msgstr ""
 msgid "<B>Source plugin: Unknown encoding</B>"
 msgstr ""
 
-#: insertdialogcontroller.py:37
+#: insertdialogcontroller.py:42
 msgid "Auto"
 msgstr ""
 
-#: insertdialogcontroller.py:289
+#: insertdialogcontroller.py:67
+msgid "Add other language"
+msgstr ""
+
+#: insertdialogcontroller.py:310
 msgid "Other..."
 msgstr ""
 

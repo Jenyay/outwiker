@@ -12,6 +12,7 @@ from .misc import getDefaultStyle, fillStyleComboBox
 from .insertdialog import InsertDialog
 from .langlist import LangList
 from .i18n import get_
+from .gui.filterlistdialog import FilterListDialog
 
 
 class InsertDialogController(object):
@@ -45,16 +46,32 @@ class InsertDialogController(object):
                                        handler=self._onfileChecked)
         self._dialog.attachButton.Bind(wx.EVT_BUTTON,
                                        handler=self._onAttach)
-        # self._dialog.languageComboBox.Bind(wx.EVT_COMBOBOX,
-        #                                    handler=self._onLangSelect)
+        self._dialog.languageComboBox.Bind(wx.EVT_COMBOBOX,
+                                           handler=self._onLangSelect)
 
     def _onLangSelect(self, event):
         count = self._dialog.languageComboBox.GetCount()
         sel_index = self._dialog.languageComboBox.GetSelection()
 
         if sel_index == count - 1:
-            new_index = 0
-            self._dialog.languageComboBox.SetSelection(new_index)
+            self._addNewLang()
+
+    def _addNewLang(self):
+        current_langs = self._getLangList()
+        lang_list = [lang_name
+                     for lang_name in self._langList.allNames()
+                     if lang_name not in current_langs]
+
+        with FilterListDialog(self._dialog,
+                              lang_list,
+                              _('Add other language')) as dialog:
+            dialog.SetSize((300, 450))
+            if dialog.ShowModal() == wx.ID_OK:
+                new_lang_name = dialog.selectedLanguage
+                new_lang_designation = self._langList.getDesignation(new_lang_name)
+                self._config.languageList.value = self._config.languageList.value + [new_lang_designation]
+                self._config.defaultLanguage.value = new_lang_designation
+                self.loadLanguagesState()
 
     def _onfileChecked(self, event):
         """
@@ -290,8 +307,7 @@ class InsertDialogController(object):
         """
         Заполнение списка языков программирования
         """
-        # languages = self._getLangList() + [_('Other...')]
-        languages = self._getLangList()
+        languages = self._getLangList() + [_('Other...')]
 
         if self._dialog.insertFromFile:
             languages = [self.AUTO_LANGUAGE] + languages
