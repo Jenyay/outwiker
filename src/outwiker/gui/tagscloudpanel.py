@@ -9,7 +9,7 @@ from .guiconfig import TagsConfig
 from .tagscloud import TagsCloud
 from .pagelistpopup import PageListPopup
 from .tagspanelcontroller import TagsPanelController
-from .controls.pagelist import BaseColumn, ColumnsFactory
+from .controls.pagelist_columns import BaseColumn, ColumnsFactory
 
 
 class TagsCloudPanel(wx.Panel):
