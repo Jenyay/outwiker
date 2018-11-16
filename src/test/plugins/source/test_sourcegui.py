@@ -185,10 +185,10 @@ class SourceGuiPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         self.controller.showDialog()
 
         self.assertEqual(self.dialog.languageComboBox.GetItems(),
-                         ["cpp", "haskell", "python"])
+                         ["C++", "Haskell", "Python"])
 
         self.assertEqual(self.dialog.languageComboBox.GetSelection(), 1)
-        self.assertEqual(self.dialog.languageComboBox.GetValue(), "haskell")
+        self.assertEqual(self.dialog.languageComboBox.GetValue(), "Haskell")
 
         self.assertEqual(self.dialog.tabWidthSpin.GetValue(), 0)
 
@@ -210,10 +210,10 @@ class SourceGuiPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         self.controller.showDialog()
 
         self.assertEqual(self.dialog.languageComboBox.GetItems(), [
-                         "cpp", "haskell", "python"])
+                         "C++", "Haskell", "Python"])
 
         self.assertEqual(self.dialog.languageComboBox.GetSelection(), 0)
-        self.assertEqual(self.dialog.languageComboBox.GetValue(), "cpp")
+        self.assertEqual(self.dialog.languageComboBox.GetValue(), "C++")
 
     def testDialogLanguageValues4(self):
         self.config.languageList.value = ["python", "cpp", "haskell"]
@@ -222,10 +222,10 @@ class SourceGuiPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         self.controller.showDialog()
 
         self.assertEqual(self.dialog.languageComboBox.GetItems(),
-                         ["cpp", "haskell", "python"])
+                         ["C++", "Haskell", "Python"])
 
         self.assertEqual(self.dialog.languageComboBox.GetSelection(), 1)
-        self.assertEqual(self.dialog.languageComboBox.GetValue(), "haskell")
+        self.assertEqual(self.dialog.languageComboBox.GetValue(), "Haskell")
 
         self.assertEqual(self.dialog.tabWidthSpin.GetValue(), 0)
 

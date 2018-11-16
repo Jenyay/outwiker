@@ -8,6 +8,7 @@ from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
 from .sourceconfig import SourceConfig
 from .i18n import get_
 from .misc import fillStyleComboBox
+from .langlist import LangList
 
 
 class PreferencePanel(BasePrefPanel):
@@ -20,7 +21,7 @@ class PreferencePanel(BasePrefPanel):
         parent - родитель панели(должен быть wx.Treebook)
         config - настройки из plugin._application.config
         """
-        super(PreferencePanel, self).__init__(parent)
+        super().__init__(parent)
 
         global _
         _ = get_()
@@ -180,81 +181,53 @@ class PrefPanelController(object):
     def __init__(self, owner, config):
         self.MIN_TAB_WIDTH = 1
         self.MAX_TAB_WIDTH = 50
+        self._langList = LangList(get_())
 
-        self.__owner = owner
-        self.__config = SourceConfig(config)
+        self._owner = owner
+        self._config = SourceConfig(config)
 
-        self.__owner.selectAllButton.Bind(wx.EVT_BUTTON, self._onSelectAll)
-        self.__owner.clearButton.Bind(wx.EVT_BUTTON, self._onClear)
+        self._owner.selectAllButton.Bind(wx.EVT_BUTTON, self._onSelectAll)
+        self._owner.clearButton.Bind(wx.EVT_BUTTON, self._onClear)
 
     def loadState(self):
         self._tabWidthOption = IntegerElement(
-            self.__config.tabWidth,
-            self.__owner.tabWidthSpin,
+            self._config.tabWidth,
+            self._owner.tabWidthSpin,
             self.MIN_TAB_WIDTH,
             self.MAX_TAB_WIDTH
         )
 
-        fillStyleComboBox(self.__config,
-                          self.__owner.styleComboBox,
-                          self.__config.defaultStyle.value.strip())
+        fillStyleComboBox(self._config,
+                          self._owner.styleComboBox,
+                          self._config.defaultStyle.value.strip())
 
         allLanguages = self._getAllLanguages()
-        self.__owner.langList.Clear()
-        self.__owner.langList.AppendItems(allLanguages)
+        self._owner.langList.Clear()
+        self._owner.langList.AppendItems(allLanguages)
 
-        # Уберем языки, которых нет в списке
-        selectedLanguages = [item
-                             for item
-                             in self.__config.languageList.value
-                             if item in allLanguages]
+        selectedLanguages = [self._langList.getLangName(designation)
+                             for designation
+                             in self._config.languageList.value]
 
-        self.__owner.langList.SetCheckedStrings(selectedLanguages)
+        self._owner.langList.SetCheckedStrings(selectedLanguages)
 
     def save(self):
         self._tabWidthOption.save()
-        self.__config.defaultStyle.value = self.__owner.styleComboBox.GetValue()
-        self.__config.languageList.value = self.__owner.langList.GetCheckedStrings()
+        self._config.defaultStyle.value = self._owner.styleComboBox.GetValue()
+
+        designations = [self._langList.getDesignation(name)
+                        for name in self._owner.langList.GetCheckedStrings()]
+        self._config.languageList.value = designations
 
     def _onSelectAll(self, event):
-        self.__owner.langList.SetChecked(
-            range(self.__owner.langList.GetCount()))
+        self._owner.langList.SetChecked(
+            range(self._owner.langList.GetCount()))
 
     def _onClear(self, event):
-        self.__owner.langList.SetChecked([])
+        self._owner.langList.SetChecked([])
 
     def _getAllLanguages(self):
         """
         Получить список всех языков, о которых знает pygments
         """
-        from .pygments.lexers._mapping import LEXERS
-        languages = [self._getLongestName(lexer[2]).lower()
-                     for lexer in LEXERS.values()]
-
-        # Сделаем некоторые замены
-        languages = sorted(self._replaceLangItem(languages, "php3", "php"))
-
-        return languages
-
-    def _replaceLangItem(self, items, oldname, newname):
-        """
-        Заменить элемент в списке
-        Возвращает новый список
-        """
-        return [newname if item == oldname else item for item in items]
-
-    @staticmethod
-    def _getLongestName(namelist):
-        """
-        Возвращает самое длинное название языка из списка имен одного
-            и того же языка
-        """
-        maxlen = 0
-        bestname = u""
-
-        for name in namelist:
-            if len(name) > maxlen:
-                maxlen = len(name)
-                bestname = name
-
-        return bestname
+        return sorted(self._langList.allNames())

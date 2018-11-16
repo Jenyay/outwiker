@@ -194,7 +194,7 @@ class SourceAttachmentPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.dialog.attachmentComboBox.SetSelection(0)
         self.dialog.encodingComboBox.SetSelection(0)
-        self.dialog.languageComboBox.SetSelection(2)
+        self.dialog.languageComboBox.SetSelection(1)
 
         result = self.controller.getCommandStrings()
 
@@ -221,7 +221,7 @@ class SourceAttachmentPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.dialog.attachmentComboBox.SetSelection(0)
         self.dialog.encodingComboBox.SetSelection(0)
-        self.dialog.languageComboBox.SetSelection(2)
+        self.dialog.languageComboBox.SetSelection(1)
         self.dialog.tabWidthSpin.SetValue(10)
 
         result = self.controller.getCommandStrings()

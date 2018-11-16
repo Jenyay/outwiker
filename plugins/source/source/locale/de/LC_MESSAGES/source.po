@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-23 13:35+0300\n"
+"POT-Creation-Date: 2018-11-16 10:00+0300\n"
 "PO-Revision-Date: 2018-08-23 13:35+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: German\n"
@@ -68,6 +68,14 @@ msgstr "Neue Dateien hinzufügen"
 msgid "File encoding"
 msgstr "Dateikodierung"
 
+#: lang_translate.py:4
+msgid "1S"
+msgstr ""
+
+#: lang_translate.py:5
+msgid "Text only"
+msgstr ""
+
 #: commandsource.py:73
 #, python-brace-format
 msgid "<B>Source plugin: File '{0}' not found</B>"
@@ -81,9 +89,13 @@ msgstr "<B>-source Plugin: Codierung Fehler</B>"
 msgid "<B>Source plugin: Unknown encoding</B>"
 msgstr "<B>Source Plugin: Unbekannte Kodierung</B>"
 
-#: insertdialogcontroller.py:33
+#: insertdialogcontroller.py:37
 msgid "Auto"
 msgstr "Automatisch"
+
+#: insertdialogcontroller.py:289
+msgid "Other..."
+msgstr ""
 
 #: plugin.py:47
 msgid ""
@@ -233,23 +245,23 @@ msgid ""
 msgstr ""
 "Source plugin. Einfügen (: source... :) Befehl zum Source Code hervorheben"
 
-#: preferencepanel.py:53
+#: preferencepanel.py:54
 msgid "Default Tab Width"
 msgstr "Standard-Tab-Breite"
 
-#: preferencepanel.py:88
+#: preferencepanel.py:89
 msgid "Default Style"
 msgstr "Standard-Stil"
 
-#: preferencepanel.py:120
+#: preferencepanel.py:121
 msgid "Used Languages"
 msgstr "Verwendeten Sprachen"
 
-#: preferencepanel.py:141
+#: preferencepanel.py:142
 msgid "Select All"
 msgstr "Alles markieren"
 
-#: preferencepanel.py:142
+#: preferencepanel.py:143
 msgid "Clear"
 msgstr "Bereinigen"
 

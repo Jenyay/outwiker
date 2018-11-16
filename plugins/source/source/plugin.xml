@@ -28,12 +28,13 @@
 		</author>
 
 		<changelog>
-			<version number="1.16.1">
+			<version number="1.17">
 				<requirements>
 					<api>2.835</api>
 				</requirements>
 
-                <download os="all">https://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.16.1.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.17.zip</download>
+				<change>Improve programming languages view.</change>
 				<change>Fix errors.</change>
 			</version>
 
@@ -176,12 +177,13 @@
 		</author>
 
 		<changelog>
-			<version number="1.16.1">
+			<version number="1.17">
 				<requirements>
 					<api>2.835</api>
 				</requirements>
 
-                <download os="all">https://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.16.1.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.17.zip</download>
+				<change>Улучшено представление списка языков программирования.</change>
 				<change>Исправление ошибок.</change>
 			</version>
 

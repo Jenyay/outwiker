@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import wx
 
@@ -15,7 +15,7 @@ class InsertDialog (wx.Dialog):
         global _
         _ = get_()
 
-        super(InsertDialog, self).__init__(
+        super().__init__(
             parent,
             style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER,
             title=_(u"Source code"))
@@ -24,7 +24,7 @@ class InsertDialog (wx.Dialog):
         self._indent = 50
         self._fieldsWidth = 200
 
-        self.__createGui()
+        self._createGui()
         self.fileCheckBox.SetFocus()
         self.Center(wx.BOTH)
 
@@ -64,7 +64,7 @@ class InsertDialog (wx.Dialog):
     def lineNum(self):
         return self.lineNumCheckBox.GetValue()
 
-    def __createGui(self):
+    def _createGui(self):
         """
         Создать элементы управления
         """
@@ -81,9 +81,9 @@ class InsertDialog (wx.Dialog):
             border=2
         )
 
-        self.generalPanel = self.__createGeneralPanel()
-        self.appearancePanel = self.__createAppearancePanel()
-        self.__createOkCancelButtons(mainSizer)
+        self.generalPanel = self._createGeneralPanel()
+        self.appearancePanel = self._createAppearancePanel()
+        self._createOkCancelButtons(mainSizer)
 
         self.notebook.AddPage(self.generalPanel, _(u"General"))
         self.notebook.AddPage(self.appearancePanel, _(u"Appearance"))
@@ -92,33 +92,33 @@ class InsertDialog (wx.Dialog):
         self.Layout()
         self.Fit()
 
-    def __createGeneralPanel(self):
+    def _createGeneralPanel(self):
         generalPanel = wx.Panel(self.notebook)
 
         generalSizer = wx.FlexGridSizer(cols=1)
         generalSizer.AddGrowableCol(0)
         generalPanel.SetSizer(generalSizer)
 
-        self.__createFileGui(generalSizer, generalPanel)
-        self.__createLanguageGui(generalSizer, generalPanel)
+        self._createFileGui(generalSizer, generalPanel)
+        self._createLanguageGui(generalSizer, generalPanel)
 
         return generalPanel
 
-    def __createAppearancePanel(self):
+    def _createAppearancePanel(self):
         appearancePanel = wx.Panel(self.notebook)
 
         appearanceSizer = wx.FlexGridSizer(cols=1)
         appearanceSizer.AddGrowableCol(0)
         appearancePanel.SetSizer(appearanceSizer)
 
-        self.__createStyleGui(appearanceSizer, appearancePanel)
-        self.__createTabWidthGui(appearanceSizer, appearancePanel)
-        self.__createLineNumGui(appearanceSizer, appearancePanel)
-        self.__createParentBgGui(appearanceSizer, appearancePanel)
+        self._createStyleGui(appearanceSizer, appearancePanel)
+        self._createTabWidthGui(appearanceSizer, appearancePanel)
+        self._createLineNumGui(appearanceSizer, appearancePanel)
+        self._createParentBgGui(appearanceSizer, appearancePanel)
 
         return appearancePanel
 
-    def __createOkCancelButtons(self, mainSizer):
+    def _createOkCancelButtons(self, mainSizer):
         okCancel = self.CreateButtonSizer(wx.OK | wx.CANCEL)
         mainSizer.AddStretchSpacer()
         mainSizer.Add(
@@ -128,7 +128,7 @@ class InsertDialog (wx.Dialog):
             border=2
         )
 
-    def __createParentBgGui(self, mainSizer, parent):
+    def _createParentBgGui(self, mainSizer, parent):
         """
         Создать элементы интерфейса для опции
             "Использовать фон страницы для блока кода"
@@ -143,7 +143,7 @@ class InsertDialog (wx.Dialog):
             border=4
         )
 
-    def __createLineNumGui(self, mainSizer, parent):
+    def _createLineNumGui(self, mainSizer, parent):
         """
         Создать элементы интерфейса для добавления номеров строк
         """
@@ -157,11 +157,11 @@ class InsertDialog (wx.Dialog):
             border=4
         )
 
-    def __createLanguageGui(self, mainSizer, parent):
+    def _createLanguageGui(self, mainSizer, parent):
         """
         Создать интерфейс, связанный с языком программирования
         """
-        langSizer = wx.FlexGridSizer(0, 2, 0, 0)
+        langSizer = wx.FlexGridSizer(cols=2)
         langSizer.AddGrowableCol(1)
 
         languageLabel = wx.StaticText(parent, -1, _(u"Language"))
@@ -192,7 +192,7 @@ class InsertDialog (wx.Dialog):
             border=2
         )
 
-    def __createTabWidthGui(self, mainSizer, parent):
+    def _createTabWidthGui(self, mainSizer, parent):
         """
         Создать интерфейс, связанный с размером табуляции
         """
@@ -228,7 +228,7 @@ class InsertDialog (wx.Dialog):
             border=2
         )
 
-    def __createStyleGui(self, mainSizer, parent):
+    def _createStyleGui(self, mainSizer, parent):
         """
         Создать интерфейс, связанный с выбором стиля оформления
         """
@@ -262,7 +262,7 @@ class InsertDialog (wx.Dialog):
             border=2
         )
 
-    def __createFileGui(self, mainSizer, parent):
+    def _createFileGui(self, mainSizer, parent):
         """
         Создать интерфейс, связанный со вставкой исходников из вложенных файлов
         """

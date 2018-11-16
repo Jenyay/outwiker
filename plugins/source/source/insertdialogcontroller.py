@@ -9,6 +9,9 @@ from outwiker.core.commands import attachFiles, testreadonly
 import outwiker.core.exceptions
 
 from .misc import getDefaultStyle, fillStyleComboBox
+from .insertdialog import InsertDialog
+from .langlist import LangList
+from .i18n import get_
 
 
 class InsertDialogController(object):
@@ -16,7 +19,7 @@ class InsertDialogController(object):
     Класс для управления диалогом InsertDialog
     """
 
-    def __init__(self, page, dialog, config):
+    def __init__(self, page, dialog: InsertDialog, config):
         """
         page - текущая страница
         dialog - экземпляр класса InsertDialog,
@@ -27,17 +30,33 @@ class InsertDialogController(object):
         self._dialog = dialog
         self._config = config
 
+        global _
+        _ = get_()
+
+        self._langList = LangList(_)
+
         self.MIN_TAB_WIDTH = 0
         self.MAX_TAB_WIDTH = 50
 
         self.AUTO_LANGUAGE = _(u"Auto")
 
-    def __bindEvents(self):
+    def _bindEvents(self):
         self._dialog.fileCheckBox.Bind(wx.EVT_CHECKBOX,
-                                       handler=self.__onfileChecked)
-        self._dialog.attachButton.Bind(wx.EVT_BUTTON, handler=self.__onAttach)
+                                       handler=self._onfileChecked)
+        self._dialog.attachButton.Bind(wx.EVT_BUTTON,
+                                       handler=self._onAttach)
+        # self._dialog.languageComboBox.Bind(wx.EVT_COMBOBOX,
+        #                                    handler=self._onLangSelect)
 
-    def __onfileChecked(self, event):
+    def _onLangSelect(self, event):
+        count = self._dialog.languageComboBox.GetCount()
+        sel_index = self._dialog.languageComboBox.GetSelection()
+
+        if sel_index == count - 1:
+            new_index = 0
+            self._dialog.languageComboBox.SetSelection(new_index)
+
+    def _onfileChecked(self, event):
         """
         Обработчик события при установке/снятии флажка
             "Вставить текст программы из файла"
@@ -53,7 +72,7 @@ class InsertDialogController(object):
         self.loadLanguagesState()
 
     @testreadonly
-    def __onAttach(self, event):
+    def _onAttach(self, event):
         """
         Обработчик события при нажатии на кнопку для прикрепления файла
         """
@@ -141,7 +160,9 @@ class InsertDialogController(object):
         Возвращает кортеж строк для случая оформления исходников
             из текста (не из файла)
         """
-        langStr = u' lang="{language}"'.format(language=self._dialog.language)
+        langStr = u' lang="{language}"'.format(
+            language=self._langList.getDesignation(self._dialog.language))
+
         commonparams = self._getCommonParams()
 
         startCommand = u'(:source{lang}{commonparams}:)\n'.format(
@@ -161,7 +182,7 @@ class InsertDialogController(object):
         encoding = self._dialog.encoding
         language = (None
                     if self._dialog.languageComboBox.GetSelection() == 0
-                    else self._dialog.language)
+                    else self._langList.getDesignation(self._dialog.language))
 
         fnameStr = u' file="Attach:{fname}"'.format(fname=fname)
         encodingStr = (
@@ -195,7 +216,7 @@ class InsertDialogController(object):
             return self._getStringsForText()
 
     def _getLangList(self):
-        languages = [item
+        languages = [self._langList.getLangName(item)
                      for item
                      in self._config.languageList.value
                      if len(item.strip()) > 0]
@@ -223,7 +244,7 @@ class InsertDialogController(object):
         self._updateDialogSize()
         self.enableFileGuiElements(False)
 
-        self.__bindEvents()
+        self._bindEvents()
 
     def _updateDialogSize(self):
         """
@@ -269,6 +290,7 @@ class InsertDialogController(object):
         """
         Заполнение списка языков программирования
         """
+        # languages = self._getLangList() + [_('Other...')]
         languages = self._getLangList()
 
         if self._dialog.insertFromFile:
@@ -281,9 +303,10 @@ class InsertDialogController(object):
             self._dialog.languageComboBox.SetSelection(0)
         else:
             try:
-                selindex = languages.index(
-                    self._config.defaultLanguage.value.lower().strip()
-                )
+                default_lang = self._langList.getLangName(
+                    self._config.defaultLanguage.value.lower().strip())
+
+                selindex = languages.index(default_lang)
                 self._dialog.languageComboBox.SetSelection(selindex)
             except ValueError:
                 self._dialog.languageComboBox.SetSelection(0)
@@ -292,9 +315,9 @@ class InsertDialogController(object):
         """
         Сохранить настройки диалога
         """
-        if(not self._dialog.insertFromFile or
+        if (not self._dialog.insertFromFile or
                 self._dialog.languageComboBox.GetSelection() != 0):
-            self._config.defaultLanguage.value = self._dialog.language
+            self._config.defaultLanguage.value = self._langList.getDesignation(self._dialog.language)
 
         currentWidth, currentHeight = self._dialog.GetClientSize()
         self._config.dialogWidth.value = currentWidth

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SourcePlugin 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-23 13:35+0300\n"
-"PO-Revision-Date: 2018-08-23 13:35+0300\n"
+"POT-Creation-Date: 2018-11-16 10:00+0300\n"
+"PO-Revision-Date: 2018-11-16 10:02+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language: ru_RU\n"
@@ -70,6 +70,14 @@ msgstr "Прикрепить новые файлы"
 msgid "File encoding"
 msgstr "Кодировка файла"
 
+#: lang_translate.py:4
+msgid "1S"
+msgstr "1С"
+
+#: lang_translate.py:5
+msgid "Text only"
+msgstr "Только текст"
+
 #: commandsource.py:73
 #, python-brace-format
 msgid "<B>Source plugin: File '{0}' not found</B>"
@@ -83,9 +91,13 @@ msgstr "<B>Плагин Source: Ошибка кодировки</B>"
 msgid "<B>Source plugin: Unknown encoding</B>"
 msgstr "<B>Плагин Source: Неизвестная кодировка</B>"
 
-#: insertdialogcontroller.py:33
+#: insertdialogcontroller.py:37
 msgid "Auto"
 msgstr "Авто"
+
+#: insertdialogcontroller.py:289
+msgid "Other..."
+msgstr "Другой..."
 
 #: plugin.py:47
 msgid ""
@@ -236,23 +248,23 @@ msgstr ""
 "Плагин Source. Вставка команды (:source... :), предназначенной для раскраски "
 "исходного кода"
 
-#: preferencepanel.py:53
+#: preferencepanel.py:54
 msgid "Default Tab Width"
 msgstr "Размер табуляции по умолчанию"
 
-#: preferencepanel.py:88
+#: preferencepanel.py:89
 msgid "Default Style"
 msgstr "Стиль, используемый по умолчанию"
 
-#: preferencepanel.py:120
+#: preferencepanel.py:121
 msgid "Used Languages"
 msgstr "Используемые языки"
 
-#: preferencepanel.py:141
+#: preferencepanel.py:142
 msgid "Select All"
 msgstr "Выбрать все"
 
-#: preferencepanel.py:142
+#: preferencepanel.py:143
 msgid "Clear"
 msgstr "Очистить"
 
