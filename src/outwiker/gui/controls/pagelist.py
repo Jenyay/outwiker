@@ -90,9 +90,14 @@ class BaseColumn(metaclass=ABCMeta):
     '''
     Base class to manage columns
     '''
+    SORT_NONE = 0
+    SORT_NORMAL = 1
+    SORT_INVERSE = 2
+
     def __init__(self, width: int, visible=True):
         self.width = width
         self.visible = visible
+        self.sort_type = self.SORT_NONE
 
     def insertColumn(self, listCtrl: 'PageList', position: int):
         '''
@@ -126,6 +131,11 @@ class BaseColumn(metaclass=ABCMeta):
         content2 = self.getCellContent(page2).lower()
 
         return (content1 > content2) - (content1 < content2)
+
+    def sortFunctionInverse(self,
+                            item1: ULC.UltimateListItem,
+                            item2: ULC.UltimateListItem) -> int:
+        return -self.sortFunction(item1, item2)
 
 
 class PageTitleColumn(BaseColumn):
@@ -263,12 +273,23 @@ class PageList(wx.Panel):
             wx.PostEvent(self, event)
 
     def _onColClick(self, event):
-        col_index = event.GetColumn()
-        self._sortByColumn(col_index)
+        self._sortByColumn(event.GetColumn())
 
     def _sortByColumn(self, col_index):
+        for n, column in enumerate(self._visibleColumns):
+            if n != col_index:
+                column.sort_type = BaseColumn.SORT_NONE
+
         column = self._visibleColumns[col_index]
-        self._listCtrl.SortItems(column.sortFunction)
+        if column.sort_type == BaseColumn.SORT_NORMAL:
+            column.sort_type = BaseColumn.SORT_INVERSE
+        else:
+            column.sort_type = BaseColumn.SORT_NORMAL
+
+        if column.sort_type == BaseColumn.SORT_INVERSE:
+            self._listCtrl.SortItems(column.sortFunctionInverse)
+        else:
+            self._listCtrl.SortItems(column.sortFunction)
 
     def clear(self):
         """
@@ -299,4 +320,5 @@ class PageList(wx.Panel):
             data = PageData(page)
             self._listCtrl.SetItemPyData(item_index, data)
 
+        self._sortByColumn(0)
         self._listCtrl.Thaw()
