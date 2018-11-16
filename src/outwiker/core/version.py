@@ -141,7 +141,7 @@ class Version(object):
         """
         Создать версию по строке
         """
-        regex = "^\s*(?P<major>\d+)(?P<minor>(\.\d+)*)(?P<status>.+)?"
+        regex = r"^\s*(?P<major>\d+)(?P<minor>(\.\d+)*)(?P<status>.+)?"
         m = re.match(regex, string, re.IGNORECASE)
         if not m:
             raise ValueError
