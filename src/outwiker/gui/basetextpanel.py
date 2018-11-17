@@ -33,7 +33,6 @@ from outwiker.actions.polyactionsid import (SPELL_ON_OFF_ID,
                                             )
 from outwiker.core.system import getImagesDir
 from outwiker.core.commands import MessageBox, pageExists, copyTextToClipboard
-from outwiker.core.attachment import Attachment
 from outwiker.core.defines import REGISTRY_PAGE_CURSOR_POSITION
 from .basepagepanel import BasePagePanel
 from .dialogs.buttonsdialog import ButtonsDialog
@@ -260,15 +259,7 @@ class BaseTextPanel(BasePagePanel):
         Функция возвращает текст, который будет вставлен на страницу при
         вставке выбранных прикрепленных файлов из панели вложений
         """
-        text = ""
-        count = len(fnames)
-
-        for n in range(count):
-            text += Attachment.attachDir + "/" + fnames[n]
-            if n != count - 1:
-                text += "\n"
-
-        return text
+        return ' '.join(fnames)
 
     def Clear(self):
         """

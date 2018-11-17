@@ -6,7 +6,9 @@ import wx
 
 from outwiker.actions.polyactionsid import *
 from outwiker.core.commands import insertCurrentDate
-from outwiker.core.defines import PAGE_MODE_TEXT, PAGE_MODE_PREVIEW
+from outwiker.core.defines import (PAGE_MODE_TEXT,
+                                   PAGE_MODE_PREVIEW,
+                                   PAGE_ATTACH_DIR)
 from outwiker.gui.defines import TOOLBAR_ORDER_TEXT
 from outwiker.gui.htmltexteditor import HtmlTextEditor
 from outwiker.gui.tabledialog import TableDialog
@@ -663,3 +665,10 @@ class HtmlPageView(BaseHtmlPanel):
             if controller.showDialog() == wx.ID_OK:
                 result = controller.getResult()
                 editor.replaceText(result)
+
+    def _getAttachString(self, fnames):
+        """
+        Функция возвращает текст, который будет вставлен на страницу при
+        вставке выбранных прикрепленных файлов из панели вложений
+        """
+        return ' '.join([PAGE_ATTACH_DIR + "/" + fname for fname in fnames])

@@ -26,8 +26,8 @@ class HtmlWikiPage (WikiPage):
     """
     Класс HTML-страниц
     """
-    def __init__ (self, path, title, parent, readonly=False):
-        WikiPage.__init__ (self, path, title, parent, readonly)
+    def __init__(self, path, title, parent, readonly=False):
+        WikiPage.__init__(self, path, title, parent, readonly)
 
         self.__autoLineWrapSection = u"General"
         self.__autoLineWrapParam = u"LineWrap"
@@ -74,14 +74,13 @@ class HtmlPageFactory (PageFactory):
         Зарегистрировать все действия, связанные с HTML-страницей
         """
         [application.actionController.register(
-            actionTuple[0](application), actionTuple[1]) for actionTuple in html_actions]
-
+            actionTuple[0](application), actionTuple[1])
+            for actionTuple in html_actions]
 
     @staticmethod
-    def removeActions (application):
+    def removeActions(application):
         [application.actionController.removeAction(
             actionTuple[0].stringId) for actionTuple in html_actions]
-
 
     def getPageType(self):
         return HtmlWikiPage

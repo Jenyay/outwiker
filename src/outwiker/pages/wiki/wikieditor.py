@@ -4,7 +4,6 @@ import wx.stc
 
 from outwiker.core.application import Application
 from outwiker.gui.texteditor import TextEditor
-from outwiker.gui.baseeditordroptarget import BaseEditorDropTarget
 from .wikiconfig import WikiConfig
 from functools import reduce
 
@@ -15,7 +14,6 @@ class WikiEditor (TextEditor):
         self._styles = {}
 
         super(WikiEditor, self).__init__(parent)
-        self.dropTarget = WikiEditorDropTarget(Application, self)
 
     def __createStyles(self, config):
         self._styles = {}
@@ -137,14 +135,3 @@ class WikiEditor (TextEditor):
         itemsList = itemsList[: -1]
 
         self.textCtrl.ReplaceSelection(itemsList)
-
-
-class WikiEditorDropTarget(BaseEditorDropTarget):
-    """
-    Class to drag files to the wiki editor
-    """
-    def correctAttachFileName(self, fname):
-        return 'Attach:' + fname
-
-    def correctFileName(self, fname):
-        return fname

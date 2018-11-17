@@ -73,15 +73,7 @@ class WikiPageView(BaseWikiPageView):
 
         Перегрузка метода из BaseTextPanel
         """
-        text = ""
-        count = len(fnames)
-
-        for n in range(count):
-            text += "Attach:" + fnames[n]
-            if n != count - 1:
-                text += "\n"
-
-        return text
+        return ' '.join(["Attach:" + fname for fname in fnames])
 
     @property
     def commandsMenu(self):

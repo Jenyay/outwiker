@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from abc import abstractmethod
 import os.path
 
 import wx
@@ -8,7 +7,7 @@ import wx
 from outwiker.core.attachment import Attachment
 
 
-class BaseEditorDropTarget(wx.FileDropTarget):
+class EditorFilesDropTarget(wx.FileDropTarget):
     """
     Base class to drag files to the editors
     """
@@ -39,6 +38,8 @@ class BaseEditorDropTarget(wx.FileDropTarget):
             attach_path += os.sep
 
         correctedFiles = []
+        is_attached = False
+
         for fname in files:
             if not fname.strip():
                 continue
@@ -52,21 +53,15 @@ class BaseEditorDropTarget(wx.FileDropTarget):
             # Is attached file?
             prefix = os.path.commonprefix([corrected_fname, attach_path])
             if prefix == attach_path:
-                corrected_fname = self.correctAttachFileName(corrected_fname[len(prefix):])
-            else:
-                corrected_fname = self.correctFileName(corrected_fname)
+                is_attached = True
+                corrected_fname = corrected_fname[len(prefix):]
 
             correctedFiles.append(corrected_fname)
 
-        text = ' '.join(correctedFiles)
-        self._editor.replaceText(text)
+        if is_attached:
+            self._application.onAttachmentPaste(correctedFiles)
+        else:
+            text = ' '.join(correctedFiles)
+            self._editor.replaceText(text)
 
         return True
-
-    @abstractmethod
-    def correctAttachFileName(self, fname):
-        pass
-
-    @abstractmethod
-    def correctFileName(self, fname):
-        pass

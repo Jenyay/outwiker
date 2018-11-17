@@ -11,7 +11,6 @@ from outwiker.core.application import Application
 from outwiker.core.system import getSpellDirList
 from outwiker.core.spellchecker.spellchecker import SpellChecker
 from outwiker.core.spellchecker.defines import CUSTOM_DICT_FILE_NAME
-from outwiker.gui.baseeditordroptarget import BaseEditorDropTarget
 
 
 class HtmlTextEditor(TextEditor):
@@ -20,7 +19,6 @@ class HtmlTextEditor(TextEditor):
     def __init__(self, parent):
         self._htmlStylesSection = "HtmlStyles"
         super().__init__(parent)
-        self.dropTarget = HtmlEditorDropTarget(Application, self)
 
     def setDefaultSettings(self):
         super(HtmlTextEditor, self).setDefaultSettings()
@@ -137,14 +135,3 @@ class HtmlTextEditor(TextEditor):
                                                 CUSTOM_DICT_FILE_NAME))
 
         return spellChecker
-
-
-class HtmlEditorDropTarget(BaseEditorDropTarget):
-    """
-    Class to drag files to the HTML editor
-    """
-    def correctAttachFileName(self, fname):
-        return '__attach/' + fname
-
-    def correctFileName(self, fname):
-        return fname

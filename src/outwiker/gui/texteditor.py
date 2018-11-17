@@ -15,6 +15,7 @@ from outwiker.core.events import EditorPopupMenuParams
 from outwiker.gui.controls.texteditorbase import TextEditorBase
 from outwiker.gui.guiconfig import EditorConfig
 from outwiker.gui.texteditormenu import TextEditorMenu
+from outwiker.gui.editorfilesdroptarget import EditorFilesDropTarget
 from outwiker.core.events import EditorStyleNeededParams
 
 
@@ -58,6 +59,7 @@ class TextEditor(TextEditorBase):
         self._lastEdit = datetime.now() - self._DELAY * 2
 
         self.__showlinenumbers = self._config.lineNumbers.value
+        self.dropTarget = EditorFilesDropTarget(Application, self)
 
         self.setDefaultSettings()
         self.__bindEvents()

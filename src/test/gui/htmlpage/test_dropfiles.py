@@ -70,16 +70,3 @@ class HTMLEditorDropTargetTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         expected_text = '__attach/first.png __attach/icon.png'
         self.assertEqual(self.editor.GetText(), expected_text)
-
-    def test_drop_several_mixed(self):
-        attach = Attachment(self.testpage)
-        attach.attach(['../test/images/first.png'])
-
-        files = (attach.attachmentFull +
-                 [os.path.abspath('../test/images/icon.png')])
-        self.dropTarget.OnDropFiles(0, 0, files)
-
-        expected_text = ('__attach/first.png '
-                         + os.path.abspath('../test/images/icon.png'))
-
-        self.assertEqual(self.editor.GetText(), expected_text)
