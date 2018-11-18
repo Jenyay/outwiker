@@ -219,7 +219,11 @@ class CurrentPagePanel(wx.Panel):
                            wx.OK | wx.ICON_ERROR)
                 self.__saveProcessing = False
 
-                self.__reloadWiki()
+                try:
+                    self.__reloadWiki()
+                except OSError:
+                    self._application.wikiroot = None
+
                 return
 
             self.__pageView.Save()

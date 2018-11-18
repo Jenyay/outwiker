@@ -1,10 +1,14 @@
 # -*- coding: utf-8 -*-
 
+import logging
+
 from outwiker.core.config import Config
 from outwiker.core.event import Event, CustomEvents
 from outwiker.core.recent import RecentWiki
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.pageuiddepot import PageUidDepot
+
+logger = logging.getLogger('outwiker.core.application')
 
 
 class ApplicationParams(object):
@@ -338,8 +342,12 @@ class ApplicationParams(object):
         self.onWikiClose(self.__wikiroot)
 
         if self.__wikiroot is not None:
-            self.__wikiroot.save()
             self.__unbindWikiEvents(self.__wikiroot)
+            try:
+                self.__wikiroot.save()
+            except OSError:
+                logger.error("Can't save notes tree settings: {}".format(self.__wikiroot.path))
+                self.__wikiroot = None
 
         self.__wikiroot = value
 
