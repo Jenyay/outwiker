@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-18 18:22+0300\n"
+"POT-Creation-Date: 2018-11-18 19:12+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -201,7 +201,7 @@ msgstr "Невозможно создать страницу"
 #: ../../../outwiker/gui/htmlrenderie.py:209
 #: ../../../outwiker/gui/htmlrenderwebkit.py:212
 #: ../../../outwiker/gui/mainwindow.py:605
-#: ../../../outwiker/gui/mainwndcontroller.py:220
+#: ../../../outwiker/gui/mainwndcontroller.py:221
 #: ../../../outwiker/gui/notestree.py:277
 #: ../../../outwiker/gui/pagedialog.py:26
 #: ../../../outwiker/gui/pagedialogpanels/appearancepanel.py:74
@@ -440,7 +440,7 @@ msgstr "Начать поиск и замену по странице"
 #: ../../../outwiker/actions/showhideattaches.py:18
 #: ../../../outwiker/actions/switchto.py:63
 #: ../../../outwiker/gui/mainpanes/attachmainpane.py:19
-#: ../../../outwiker/gui/preferences/prefcontroller.py:151
+#: ../../../outwiker/gui/preferences/prefcontroller.py:152
 msgid "Attachments"
 msgstr "Прикрепленные файлы"
 
@@ -1042,7 +1042,7 @@ msgid "Insert the current date"
 msgstr "Вставить текущую дату"
 
 #: ../../../outwiker/gui/actionslist.py:122
-#: ../../../outwiker/gui/preferences/prefcontroller.py:170
+#: ../../../outwiker/gui/preferences/prefcontroller.py:172
 msgid "Spell checking"
 msgstr "Проверка орфографии"
 
@@ -1261,8 +1261,8 @@ msgstr "Ошибка запуска файла '%s'"
 
 #: ../../../outwiker/gui/basepagedialog.py:130
 #: ../../../outwiker/gui/mainwindow.py:201
-#: ../../../outwiker/gui/preferences/prefcontroller.py:146
-#: ../../../outwiker/gui/preferences/prefcontroller.py:169
+#: ../../../outwiker/gui/preferences/prefcontroller.py:147
+#: ../../../outwiker/gui/preferences/prefcontroller.py:171
 #: ../../../outwiker/pages/wiki/wikipagecontroller.py:75
 msgid "General"
 msgstr "Общие"
@@ -1591,7 +1591,7 @@ msgid "Toolbars"
 msgstr "Панели инструментов"
 
 #: ../../../outwiker/gui/mainwindow.py:207
-#: ../../../outwiker/gui/preferences/prefcontroller.py:179
+#: ../../../outwiker/gui/preferences/prefcontroller.py:181
 msgid "Plugins"
 msgstr "Плагины"
 
@@ -1629,7 +1629,7 @@ msgstr ""
 "Невозможно сохранить настройки\n"
 "%s"
 
-#: ../../../outwiker/gui/mainwndcontroller.py:219
+#: ../../../outwiker/gui/mainwndcontroller.py:220
 #, python-format
 msgid ""
 "Can't add wiki to recent list.\n"
@@ -1745,7 +1745,7 @@ msgid "Recent used"
 msgstr "Последний используемый"
 
 #: ../../../outwiker/gui/preferences/generalpanel.py:38
-#: ../../../outwiker/gui/preferences/prefcontroller.py:149
+#: ../../../outwiker/gui/preferences/prefcontroller.py:150
 #: ../../../outwiker/pages/html/basehtmlpanel.py:178
 msgid "Preview"
 msgstr "Просмотр"
@@ -1925,19 +1925,23 @@ msgstr "Удалить выбранные значки?"
 msgid "Remove icons"
 msgstr "Удалить значки"
 
-#: ../../../outwiker/gui/preferences/mainwindowpanel.py:42
+#: ../../../outwiker/gui/preferences/mainwindowpanel.py:35
+msgid "Show status panel"
+msgstr "Отображать статусную панель"
+
+#: ../../../outwiker/gui/preferences/mainwindowpanel.py:48
 msgid "Wiki file name"
 msgstr "Имя файла загруженной вики"
 
-#: ../../../outwiker/gui/preferences/mainwindowpanel.py:43
+#: ../../../outwiker/gui/preferences/mainwindowpanel.py:49
 msgid "Page title"
 msgstr "Заголовок страницы"
 
-#: ../../../outwiker/gui/preferences/mainwindowpanel.py:44
+#: ../../../outwiker/gui/preferences/mainwindowpanel.py:50
 msgid "Relative path to current page"
 msgstr "Относительный путь до текущей страницы"
 
-#: ../../../outwiker/gui/preferences/mainwindowpanel.py:49
+#: ../../../outwiker/gui/preferences/mainwindowpanel.py:55
 msgid "Main window title format"
 msgstr "Формат заголовка главного окна"
 
@@ -1961,47 +1965,43 @@ msgstr "Описание"
 msgid "Site"
 msgstr "Сайт"
 
-#: ../../../outwiker/gui/preferences/prefcontroller.py:147
+#: ../../../outwiker/gui/preferences/prefcontroller.py:148
 msgid "Main window"
 msgstr "Главное окно"
 
-#: ../../../outwiker/gui/preferences/prefcontroller.py:148
+#: ../../../outwiker/gui/preferences/prefcontroller.py:149
 msgid "Tray icon"
 msgstr "Значок в панели задач"
 
-#: ../../../outwiker/gui/preferences/prefcontroller.py:150
+#: ../../../outwiker/gui/preferences/prefcontroller.py:151
 msgid "Tags cloud"
 msgstr "Облако меток"
 
-#: ../../../outwiker/gui/preferences/prefcontroller.py:152
+#: ../../../outwiker/gui/preferences/prefcontroller.py:153
 msgid "Hotkeys"
 msgstr "Горячие клавиши"
 
-#: ../../../outwiker/gui/preferences/prefcontroller.py:153
-msgid "Text printout"
-msgstr "Печать текста"
-
-#: ../../../outwiker/gui/preferences/prefcontroller.py:156
+#: ../../../outwiker/gui/preferences/prefcontroller.py:158
 msgid "Interface"
 msgstr "Интерфейс"
 
-#: ../../../outwiker/gui/preferences/prefcontroller.py:171
+#: ../../../outwiker/gui/preferences/prefcontroller.py:173
 msgid "HTML Editor"
 msgstr "HTML-редактор"
 
-#: ../../../outwiker/gui/preferences/prefcontroller.py:172
+#: ../../../outwiker/gui/preferences/prefcontroller.py:174
 msgid "Wiki Editor"
 msgstr "Викиредактор"
 
-#: ../../../outwiker/gui/preferences/prefcontroller.py:175
+#: ../../../outwiker/gui/preferences/prefcontroller.py:177
 msgid "Editor"
 msgstr "Редактор"
 
-#: ../../../outwiker/gui/preferences/prefcontroller.py:183
+#: ../../../outwiker/gui/preferences/prefcontroller.py:185
 msgid "User's iconset"
 msgstr "Значки пользователя"
 
-#: ../../../outwiker/gui/preferences/prefcontroller.py:188
+#: ../../../outwiker/gui/preferences/prefcontroller.py:190
 msgid "Preferences"
 msgstr "Параметры"
 
@@ -2642,6 +2642,9 @@ msgstr "[[комментарий -> ссылка]]"
 #: ../../../outwiker/pages/wiki/wikipreferences.py:41
 msgid "[[link | comment]]"
 msgstr "[[ссылка | комментарий]]"
+
+#~ msgid "Text printout"
+#~ msgstr "Печать текста"
 
 #~ msgid "Printing error"
 #~ msgstr "Ошибка печати"

@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import wx
 
@@ -600,6 +600,9 @@ class MainWindowConfig(object):
     DATETIME_STATUS_WIDTH_SECTION = u'datetime_status_width'
     DATETIME_STATUS_WIDTH_DEFAULT = 250
 
+    STATUSBAR_VISIBLE_SECTION = 'statusbar_visible'
+    STATUSBAR_VISIBLE_DEFAULT = True
+
     def __init__(self, config):
         self.config = config
 
@@ -642,8 +645,13 @@ class MainWindowConfig(object):
             self.config,
             MainWindowConfig.MAIN_WINDOW_SECTION,
             self.DATETIME_STATUS_WIDTH_SECTION,
-            self.DATETIME_STATUS_WIDTH_DEFAULT
-        )
+            self.DATETIME_STATUS_WIDTH_DEFAULT)
+
+        self.statusbar_visible = BooleanOption(
+            self.config,
+            MainWindowConfig.MAIN_WINDOW_SECTION,
+            self.STATUSBAR_VISIBLE_SECTION,
+            self.STATUSBAR_VISIBLE_DEFAULT)
 
 
 class TreeConfig(object):

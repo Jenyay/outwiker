@@ -14,25 +14,31 @@ from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
 class MainWindowPanel(BasePrefPanel):
     def __init__(self, parent, application):
         super().__init__(parent)
-
         self.mainWindowConfig = MainWindowConfig(application.config)
-
-        self.__createTitleFormatGui()
-
-        self.__set_properties()
-        self.__do_layout()
+        self._createGUI()
 
         self.LoadState()
         self.SetupScrolling()
 
-    def __set_properties(self):
-        DEFAULT_WIDTH = 520
-        DEFAULT_HEIGHT = 420
+    def _createGUI(self):
+        main_sizer = wx.FlexGridSizer(cols=1)
+        main_sizer.AddGrowableCol(0)
 
-        self.SetSize((DEFAULT_WIDTH, DEFAULT_HEIGHT))
-        self.SetScrollRate(0, 0)
+        self._createTitleFormatGUI(main_sizer)
+        self._createStatusbarGUI(main_sizer)
 
-    def __createTitleFormatGui(self):
+        self.SetSizer(main_sizer)
+
+    def _createStatusbarGUI(self, main_sizer):
+        self.statusbarVisibleCheckBox = wx.CheckBox(
+            self,
+            label=_('Show status panel')
+        )
+        main_sizer.Add(self.statusbarVisibleCheckBox,
+                       flag=wx.ALIGN_LEFT | wx.ALL,
+                       border=2)
+
+    def _createTitleFormatGUI(self, main_sizer):
         """
         Создать элементы интерфейса, связанные с форматом заголовка
             главного окна
@@ -67,18 +73,7 @@ class MainWindowPanel(BasePrefPanel):
                                   2)
 
         self.titleFormatSizer.AddGrowableCol(1)
-
-    def __addStaticLine(self, main_sizer):
-        static_line = wx.StaticLine(self, -1)
-        main_sizer.Add(static_line, 0, wx.EXPAND, 0)
-
-    def __do_layout(self):
-        main_sizer = wx.FlexGridSizer(cols=1)
-        main_sizer.AddGrowableCol(0)
-
         main_sizer.Add(self.titleFormatSizer, 1, wx.EXPAND, 0)
-
-        self.SetSizer(main_sizer)
 
     def LoadState(self):
         """
@@ -90,8 +85,14 @@ class MainWindowPanel(BasePrefPanel):
             self.titleFormatText
         )
 
+        self.statusbarVisible = configelements.BooleanElement(
+            self.mainWindowConfig.statusbar_visible,
+            self.statusbarVisibleCheckBox
+        )
+
     def Save(self):
         """
         Сохранить состояние страницы в конфиг
         """
         self.titleFormat.save()
+        self.statusbarVisible.save()

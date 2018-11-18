@@ -127,6 +127,7 @@ class MainWndController(object):
         """
         Начальные установки для главного окна
         """
+        self.updateStatusBar()
         self.__bindAppEvents()
         self.mainWindow.Bind(wx.EVT_CLOSE, self.__onClose)
 
@@ -247,6 +248,7 @@ class MainWndController(object):
         """
         self.updateTitle()
         self.updatePageDateTime()
+        self.updateStatusBar()
     #
     ###################################################
 
@@ -288,6 +290,10 @@ class MainWndController(object):
             и текущей страницы
         """
         self.mainWindow.SetTitle(getMainWindowTitle(self._application))
+
+    def updateStatusBar(self):
+        config = self.mainWindow.mainWindowConfig
+        self.mainWindow.statusbar.Show(config.statusbar_visible.value)
 
     def loadMainWindowParams(self):
         """
