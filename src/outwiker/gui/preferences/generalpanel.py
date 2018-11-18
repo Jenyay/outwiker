@@ -9,7 +9,6 @@ import outwiker.core.i18n
 from outwiker.core.system import getImagesDir
 from outwiker.gui.guiconfig import (GeneralGuiConfig,
                                     MainWindowConfig)
-from outwiker.gui.controls.formatctrl import FormatCtrl
 from outwiker.gui.controls.datetimeformatctrl import DateTimeFormatCtrl
 from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
 
@@ -46,7 +45,6 @@ class GeneralPanel(BasePrefPanel):
         self.__createMiscGui()
         self.__createAutosaveGui(self.generalConfig)
         self.__createHistoryGui(self.generalConfig)
-        self.__createTitleFormatGui()
         self.__createDateTimeFormatGui(self.generalConfig)
         self.__createOpenPageTabGui()
         self.__createLanguageGui()
@@ -189,42 +187,6 @@ class GeneralPanel(BasePrefPanel):
                               wx.ALL | wx.ALIGN_RIGHT,
                               2)
 
-    def __createTitleFormatGui(self):
-        """
-        Создать элементы интерфейса, связанные с форматом заголовка
-            главного окна
-        """
-
-        hints = [
-            (u"{file}", _(u"Wiki file name")),
-            (u"{page}", _(u"Page title")),
-            (u"{subpath}", _(u"Relative path to current page")),
-        ]
-
-        self.titleFormatLabel = wx.StaticText(self,
-                                              -1,
-                                              _("Main window title format"))
-
-        hintBitmap = wx.Bitmap(os.path.join(getImagesDir(), u"wand.png"))
-        self.titleFormatText = FormatCtrl(
-            self,
-            self.mainWindowConfig.titleFormat.value,
-            hints,
-            hintBitmap)
-
-        self.titleFormatSizer = wx.FlexGridSizer(1, 2, 0, 0)
-        self.titleFormatSizer.Add(self.titleFormatLabel,
-                                  0,
-                                  wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                                  2)
-
-        self.titleFormatSizer.Add(self.titleFormatText,
-                                  0,
-                                  wx.ALL | wx.EXPAND,
-                                  2)
-
-        self.titleFormatSizer.AddGrowableCol(1)
-
     def __createLanguageGui(self):
         """
         Создать элементы интерфейса, связанные с выбором языка
@@ -295,7 +257,6 @@ class GeneralPanel(BasePrefPanel):
                        2)
 
         self.__addStaticLine(main_sizer)
-        main_sizer.Add(self.titleFormatSizer, 1, wx.EXPAND, 0)
         main_sizer.Add(self.dateTimeSizer, 1, wx.EXPAND, 0)
 
         self.__addStaticLine(main_sizer)
@@ -346,12 +307,6 @@ class GeneralPanel(BasePrefPanel):
             self.askBeforeExitCheckBox
         )
 
-        # Формат заголовка страницы
-        self.titleFormat = configelements.StringElement(
-            self.mainWindowConfig.titleFormat,
-            self.titleFormatText
-        )
-
         self.dateTimeFormat = configelements.StringElement(
             self.generalConfig.dateTimeFormat,
             self.dateTimeFormatCtrl
@@ -396,7 +351,6 @@ class GeneralPanel(BasePrefPanel):
         self.autoopen.save()
         self.autosaveInterval.save()
         self.dateTimeFormat.save()
-        self.titleFormat.save()
         self.__saveLanguage()
         self.__savePageTab()
 

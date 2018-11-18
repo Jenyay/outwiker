@@ -11,6 +11,7 @@ from outwiker.gui.guiconfig import PrefDialogConfig
 
 from .preferencepanelinfo import PreferencePanelInfo
 from .generalpanel import GeneralPanel
+from .mainwindowpanel import MainWindowPanel
 from .traypanel import TrayPanel
 from .editorpanel import EditorPanel
 from .spellpanel import SpellPanel
@@ -133,21 +134,25 @@ class PrefController(object):
         Создать страницы с подгруппой "Interface"
         """
         generalPage = GeneralPanel(self._dialog.treeBook, self._application)
+        mainWindowPage = MainWindowPanel(self._dialog.treeBook, self._application)
         trayPage = TrayPanel(self._dialog.treeBook, self._application)
         htmlRenderPage = HtmlRenderPanel(self._dialog.treeBook, self._application)
-        textPrintPage = TextPrintPanel(self._dialog.treeBook, self._application)
+        # TODO: Uncomment after wxPython 4.0.4 release
+        # textPrintPage = TextPrintPanel(self._dialog.treeBook, self._application)
         hotkeysPage = HotKeysPanel(self._dialog.treeBook, self._application)
         tagsPage = TagsPanel(self._dialog.treeBook, self._application)
         attachPage = AttachPanel(self._dialog.treeBook, self._application)
 
         interfacePanelsList = [
             PreferencePanelInfo(generalPage, _(u"General")),
+            PreferencePanelInfo(mainWindowPage, _(u"Main window")),
             PreferencePanelInfo(trayPage, _(u"Tray icon")),
             PreferencePanelInfo(htmlRenderPage, _(u"Preview")),
             PreferencePanelInfo(tagsPage, _(u"Tags cloud")),
             PreferencePanelInfo(attachPage, _(u"Attachments")),
             PreferencePanelInfo(hotkeysPage, _(u"Hotkeys")),
-            PreferencePanelInfo(textPrintPage, _(u"Text Printout")),
+            # TODO: Uncomment after wxPython 4.0.4 release
+            # PreferencePanelInfo(textPrintPage, _(u"Text printout")),
         ]
 
         self._dialog.appendPreferenceGroup(_(u"Interface"),
