@@ -1,39 +1,59 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 """
 Классы для взаимодействия конфига и GUI
 """
+
+from abc import ABCMeta, abstractmethod
+
 import wx
 
 
-class StringElement (object):
-    def __init__(self, option, control):
+class BaseElement(metaclass=ABCMeta):
+    def __init__(self,
+                 option,
+                 control: wx.Control):
         """
-        Элемент для строковой настрйоки.
-        Элемент управления - TextCtrl
         option - опция из core.config
-        defaultValue - значение по умолчанию
         """
         self.option = option
         self.control = control
-        self._updateGUI()
+        self._setGUIValue()
 
     def isValueChanged(self):
         """
         Изменилось ли значение в интерфейсном элементе
         """
-        return self._getGuiValue() != self.option.value
+        return self._getGUIValue() != self.option.value
 
     def save(self):
-        self.option.value = self._getGuiValue()
+        self.option.value = self._getGUIValue()
 
-    def _getGuiValue(self):
+    @abstractmethod
+    def _getGUIValue(self):
+        """
+        Получить значение из интерфейстного элемента
+        В производных классах этот метод переопределяется
+        """
+        pass
+
+    @abstractmethod
+    def _setGUIValue(self):
+        """
+        Обновить интерфейсный элемент.
+        В производных классах этот метод переопределяется
+        """
+        pass
+
+
+class StringElement (BaseElement):
+    def _getGUIValue(self):
         """
         Получить значение из интерфейстного элемента
         В производных классах этот метод переопределяется
         """
         return self.control.GetValue()
 
-    def _updateGUI(self):
+    def _setGUIValue(self):
         """
         Обновить интерфейсный элемент.
         В производных классах этот метод переопределяется
@@ -41,45 +61,82 @@ class StringElement (object):
         self.control.SetValue(self.option.value)
 
 
-class BooleanElement (StringElement):
+class BooleanElement (BaseElement):
     """
     Булевская настройка.
     Элемент управления - wx.CheckBox
     """
-
-    def __init__(self, option, control):
-        StringElement.__init__(self, option, control)
-
-    def _getGuiValue(self):
+    def _getGUIValue(self):
         """
         Получить значение из интерфейстного элемента
         В производных классах этот метод переопределяется
         """
         return self.control.IsChecked()
 
+    def _setGUIValue(self):
+        """
+        Обновить интерфейсный элемент.
+        В производных классах этот метод переопределяется
+        """
+        self.control.SetValue(self.option.value)
 
-class IntegerElement (StringElement):
+
+class ColourElement (BaseElement):
+    """
+    Настройка цвета.
+    Элемент управления - wx.ColourPickerCtrl
+    """
+    def _getGUIValue(self):
+        """
+        Получить значение из интерфейстного элемента
+        В производных классах этот метод переопределяется
+        """
+        return self.control.GetColour().GetAsString(wx.C2S_HTML_SYNTAX)
+
+    def _setGUIValue(self):
+        """
+        Обновить интерфейсный элемент.
+        В производных классах этот метод переопределяется
+        """
+        self.control.SetColour(self.option.value)
+
+
+class IntegerElement (BaseElement):
     """
     Настройка для целых чисел.
     Элемент управления - wx.SpinCtrl
     """
 
     def __init__(self, option, control, minValue, maxValue):
-        StringElement.__init__(self, option, control)
+        super().__init__(option, control)
         self.control.SetRange(minValue, maxValue)
-        self._updateGUI()
+        self._setGUIValue()
+
+    def _getGUIValue(self):
+        """
+        Получить значение из интерфейстного элемента
+        В производных классах этот метод переопределяется
+        """
+        return self.control.GetValue()
+
+    def _setGUIValue(self):
+        """
+        Обновить интерфейсный элемент.
+        В производных классах этот метод переопределяется
+        """
+        self.control.SetValue(self.option.value)
 
 
 class FontElement (object):
     """
-    Настройка для выбра шрифта
+    Настройка для выбора шрифта
     Элемент управления - wx.FontPickerCtrl
     """
 
     def __init__(self, option, control):
         self.option = option
         self.control = control
-        self._updateGUI()
+        self._setGUIValue()
 
     def isValueChanged(self):
         """
@@ -96,7 +153,7 @@ class FontElement (object):
         self.option.bold.value = newFont.GetWeight() == wx.FONTWEIGHT_BOLD
         self.option.italic.value = newFont.GetStyle() == wx.FONTSTYLE_ITALIC
 
-    def _updateGUI(self):
+    def _setGUIValue(self):
         """
         Обновить интерфейсный элемент.
         В производных классах этот метод переопределяется
