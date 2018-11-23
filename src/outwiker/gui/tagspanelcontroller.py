@@ -9,7 +9,7 @@ from .taglabel import EVT_TAG_LEFT_CLICK, EVT_TAG_MIDDLE_CLICK
 from outwiker.core.tagslist import TagsList
 from outwiker.core.tagscommands import removeTag, appendTag
 from outwiker.core.sortfunctions import sortAlphabeticalFunction
-from outwiker.gui.guiconfig import TagsConfig
+from outwiker.gui.guiconfig import TagsConfig, MainWindowConfig
 
 
 class TagsPanelController (object):
@@ -24,10 +24,7 @@ class TagsPanelController (object):
         self.__tagsPanel.Bind(EVT_TAG_MIDDLE_CLICK, self.__onTagMiddleClick)
         self.__tagsPanel.Bind(wx.EVT_CLOSE, self.__onClose)
 
-        self.__application.onStartTreeUpdate += self.__onStartUpdate
-        self.__application.onEndTreeUpdate += self.__onEndUpdate
-        self.__application.onPageSelect += self.__onPageSelect
-
+        self.__set_panel_properties()
         self.updateTags()
 
     def __onClose(self, event):
@@ -37,10 +34,6 @@ class TagsPanelController (object):
         self.__tagsPanel.Unbind(EVT_TAG_MIDDLE_CLICK,
                                 handler=self.__onTagMiddleClick)
         self.__tagsPanel.Unbind(wx.EVT_CLOSE, handler=self.__onClose)
-
-        self.__application.onStartTreeUpdate -= self.__onStartUpdate
-        self.__application.onEndTreeUpdate -= self.__onEndUpdate
-        self.__application.onPageSelect -= self.__onPageSelect
 
         self.__unbindAppEvents()
         self.__tagsPanel.clearTags()
@@ -101,7 +94,10 @@ class TagsPanelController (object):
         self.__application.onPageCreate += self.__onUpdate
         self.__application.onTreeUpdate += self.__onUpdate
         self.__application.onWikiOpen += self.__onUpdate
-        self.__application.onPreferencesDialogClose += self.__onUpdate
+        self.__application.onPreferencesDialogClose += self.__onPreferencesDialogClose
+        self.__application.onStartTreeUpdate += self.__onStartUpdate
+        self.__application.onEndTreeUpdate += self.__onEndUpdate
+        self.__application.onPageSelect += self.__onPageSelect
 
     def __unbindAppEvents(self):
         self.__application.onPageUpdate -= self.__onUpdate
@@ -109,7 +105,18 @@ class TagsPanelController (object):
         self.__application.onPageCreate -= self.__onUpdate
         self.__application.onTreeUpdate -= self.__onUpdate
         self.__application.onWikiOpen -= self.__onUpdate
-        self.__application.onPreferencesDialogClose -= self.__onUpdate
+        self.__application.onPreferencesDialogClose -= self.__onPreferencesDialogClose
+        self.__application.onStartTreeUpdate -= self.__onStartUpdate
+        self.__application.onEndTreeUpdate -= self.__onEndUpdate
+        self.__application.onPageSelect -= self.__onPageSelect
+
+    def __onPreferencesDialogClose(self, dialog):
+        self.__set_panel_properties()
+        self.updateTags()
+
+    def __set_panel_properties(self):
+        config = MainWindowConfig(self.__application.config)
+        self.__tagsPanel.SetBackgroundColour(config.mainPanesBackgroundColor.value)
 
     def __onPageSelect(self, page):
         self.__markTags()

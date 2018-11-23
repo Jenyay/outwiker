@@ -57,6 +57,15 @@ class TagLabel(HyperLinkCtrl):
         self.updateColors()
 
     @property
+    def normalBackColor(self):
+        return self.__normalBackColor
+
+    @normalBackColor.setter
+    def normalBackColor(self, value):
+        self.__normalBackColor = value
+        self.updateColors()
+
+    @property
     def markedFontColor(self):
         return self.__markedFontColor
 

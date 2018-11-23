@@ -11,10 +11,9 @@ from outwiker.gui.guiconfig import TagsConfig
 
 class TagsCloud(wx.ScrolledWindow):
     def __init__(self, parent):
-        super(TagsCloud, self).__init__(parent, style=wx.BORDER_THEME)
+        super().__init__(parent, style=wx.BORDER_THEME)
 
         self.SetScrollRate(0, 0)
-        self.SetBackgroundColour(wx.Colour(255, 255, 255))
 
         # Отступ от края окна
         self.__margin = 4
@@ -35,7 +34,12 @@ class TagsCloud(wx.ScrolledWindow):
 
         self.__loadColors()
 
+        self.SetBackgroundColour(wx.Colour(255, 255, 255))
         self.Bind(wx.EVT_SIZE, self.__onSize)
+
+    def SetBackgroundColour(self, colour):
+        super().SetBackgroundColour(colour)
+        self.updateTagLabels()
 
     def __onSize(self, event):
         newSize = self.GetSize()
@@ -61,6 +65,7 @@ class TagsCloud(wx.ScrolledWindow):
         tagLabel.markedHoverFontColor = self.__tagSelectedHoverFontColor
 
         tagLabel.markedBackColor = self.__tagSelectedBackColor
+        tagLabel.normalBackColor = self.GetBackgroundColour()
 
     def updateTagLabels(self):
         self.__loadColors()
