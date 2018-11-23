@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OutWiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-18 19:11+0300\n"
+"POT-Creation-Date: 2018-11-23 14:02+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Eugene Ilin <jenyay.ilin@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.0.7\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -73,8 +73,8 @@ msgstr ""
 msgid "Default"
 msgstr ""
 
-#: outwiker/actions/attachfiles.py:22 outwiker/gui/attachpanel.py:107
-#: outwiker/gui/attachpanel.py:112
+#: outwiker/actions/attachfiles.py:22 outwiker/gui/attachpanel.py:115
+#: outwiker/gui/attachpanel.py:120
 msgid "Attach Files…"
 msgstr ""
 
@@ -176,14 +176,14 @@ msgstr ""
 #: outwiker/core/commands.py:298 outwiker/core/commands.py:306
 #: outwiker/core/commands.py:316 outwiker/core/commands.py:389
 #: outwiker/core/commands.py:395 outwiker/core/commands.py:424
-#: outwiker/core/commands.py:443 outwiker/gui/attachpanel.py:246
-#: outwiker/gui/attachpanel.py:256 outwiker/gui/attachpanel.py:268
-#: outwiker/gui/attachpanel.py:280 outwiker/gui/attachpanel.py:290
-#: outwiker/gui/basetextpanel.py:254 outwiker/gui/currentpagepanel.py:80
-#: outwiker/gui/currentpagepanel.py:207 outwiker/gui/currentpagepanel.py:218
+#: outwiker/core/commands.py:443 outwiker/gui/attachpanel.py:254
+#: outwiker/gui/attachpanel.py:264 outwiker/gui/attachpanel.py:276
+#: outwiker/gui/attachpanel.py:288 outwiker/gui/attachpanel.py:298
+#: outwiker/gui/basetextpanel.py:254 outwiker/gui/currentpagepanel.py:88
+#: outwiker/gui/currentpagepanel.py:217 outwiker/gui/currentpagepanel.py:228
 #: outwiker/gui/htmlrenderie.py:209 outwiker/gui/htmlrenderwebkit.py:212
 #: outwiker/gui/mainwindow.py:605 outwiker/gui/mainwndcontroller.py:221
-#: outwiker/gui/notestree.py:277 outwiker/gui/pagedialog.py:26
+#: outwiker/gui/notestree.py:283 outwiker/gui/pagedialog.py:26
 #: outwiker/gui/pagedialogpanels/appearancepanel.py:74
 #: outwiker/gui/pagedialogpanels/iconspanel.py:174
 #: outwiker/gui/preferences/iconsetpanel.py:215
@@ -276,8 +276,8 @@ msgstr ""
 msgid "Open tree notes"
 msgstr ""
 
-#: outwiker/actions/openattachfolder.py:23 outwiker/gui/attachpanel.py:153
-#: outwiker/gui/attachpanel.py:158 outwiker/gui/pagepopupmenu.py:81
+#: outwiker/actions/openattachfolder.py:23 outwiker/gui/attachpanel.py:161
+#: outwiker/gui/attachpanel.py:166 outwiker/gui/pagepopupmenu.py:81
 msgid "Open Attachments Folder"
 msgstr ""
 
@@ -637,7 +637,7 @@ msgstr ""
 msgid "Can't move page"
 msgstr ""
 
-#: outwiker/core/commands.py:423 outwiker/gui/notestree.py:276
+#: outwiker/core/commands.py:423 outwiker/gui/notestree.py:282
 msgid "You can't rename the root element"
 msgstr ""
 
@@ -1151,40 +1151,40 @@ msgstr ""
 msgid "Set text background color"
 msgstr ""
 
-#: outwiker/gui/attachpanel.py:118 outwiker/gui/attachpanel.py:123
+#: outwiker/gui/attachpanel.py:126 outwiker/gui/attachpanel.py:131
 msgid "Remove Files…"
 msgstr ""
 
-#: outwiker/gui/attachpanel.py:131 outwiker/gui/attachpanel.py:136
+#: outwiker/gui/attachpanel.py:139 outwiker/gui/attachpanel.py:144
 #: outwiker/gui/mainwindow.py:282 outwiker/gui/texteditormenu.py:16
 msgid "Paste"
 msgstr ""
 
-#: outwiker/gui/attachpanel.py:142 outwiker/gui/attachpanel.py:147
+#: outwiker/gui/attachpanel.py:150 outwiker/gui/attachpanel.py:155
 msgid "Execute"
 msgstr ""
 
-#: outwiker/gui/attachpanel.py:245
+#: outwiker/gui/attachpanel.py:253
 msgid "You did not select a file to remove"
 msgstr ""
 
-#: outwiker/gui/attachpanel.py:250
+#: outwiker/gui/attachpanel.py:258
 msgid "Remove selected files?"
 msgstr ""
 
-#: outwiker/gui/attachpanel.py:251
+#: outwiker/gui/attachpanel.py:259
 msgid "Remove files?"
 msgstr ""
 
-#: outwiker/gui/attachpanel.py:267
+#: outwiker/gui/attachpanel.py:275
 msgid "You did not select a file to paste"
 msgstr ""
 
-#: outwiker/gui/attachpanel.py:279
+#: outwiker/gui/attachpanel.py:287
 msgid "You did not select a file to execute"
 msgstr ""
 
-#: outwiker/gui/attachpanel.py:289 outwiker/gui/htmlrender.py:53
+#: outwiker/gui/attachpanel.py:297 outwiker/gui/htmlrender.py:53
 #: outwiker/gui/htmlrenderie.py:207 outwiker/gui/htmlrenderwebkit.py:210
 #, python-format
 msgid "Can't execute file '%s'"
@@ -1317,23 +1317,23 @@ msgstr ""
 msgid "Modify date"
 msgstr ""
 
-#: outwiker/gui/currentpagepanel.py:79
+#: outwiker/gui/currentpagepanel.py:87
 msgid "Can't open page. Page folder not exists"
 msgstr ""
 
-#: outwiker/gui/currentpagepanel.py:91
+#: outwiker/gui/currentpagepanel.py:99
 msgid "Add to Bookmarks"
 msgstr ""
 
-#: outwiker/gui/currentpagepanel.py:98
+#: outwiker/gui/currentpagepanel.py:106
 msgid "Remove from Bookmarks"
 msgstr ""
 
-#: outwiker/gui/currentpagepanel.py:206
+#: outwiker/gui/currentpagepanel.py:216
 msgid "Can't save page. Wiki folder not exists. Wiki will be closed."
 msgstr ""
 
-#: outwiker/gui/currentpagepanel.py:217
+#: outwiker/gui/currentpagepanel.py:227
 msgid "Can't save page. Page folder not exists. Wiki will be reloaded."
 msgstr ""
 
@@ -1825,23 +1825,31 @@ msgstr ""
 msgid "Remove icons"
 msgstr ""
 
-#: outwiker/gui/preferences/mainwindowpanel.py:35
-msgid "Show status panel"
-msgstr ""
-
-#: outwiker/gui/preferences/mainwindowpanel.py:48
-msgid "Wiki file name"
-msgstr ""
-
-#: outwiker/gui/preferences/mainwindowpanel.py:49
-msgid "Page title"
-msgstr ""
-
-#: outwiker/gui/preferences/mainwindowpanel.py:50
-msgid "Relative path to current page"
+#: outwiker/gui/preferences/mainwindowpanel.py:41
+msgid "Main panels background color"
 msgstr ""
 
 #: outwiker/gui/preferences/mainwindowpanel.py:55
+msgid "Main panels text color"
+msgstr ""
+
+#: outwiker/gui/preferences/mainwindowpanel.py:71
+msgid "Show status panel"
+msgstr ""
+
+#: outwiker/gui/preferences/mainwindowpanel.py:84
+msgid "Wiki file name"
+msgstr ""
+
+#: outwiker/gui/preferences/mainwindowpanel.py:85
+msgid "Page title"
+msgstr ""
+
+#: outwiker/gui/preferences/mainwindowpanel.py:86
+msgid "Relative path to current page"
+msgstr ""
+
+#: outwiker/gui/preferences/mainwindowpanel.py:91
 msgid "Main window title format"
 msgstr ""
 
