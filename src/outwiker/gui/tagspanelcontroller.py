@@ -19,6 +19,11 @@ class TagsPanelController (object):
         self.__currentTags = None
 
         self.__bindAppEvents()
+
+        self.__application.onStartTreeUpdate += self.__onStartUpdate
+        self.__application.onEndTreeUpdate += self.__onEndUpdate
+        self.__application.onPageSelect += self.__onPageSelect
+
         self.__tagsPanel.Bind(EVT_PAGE_CLICK, self.__onPageClick)
         self.__tagsPanel.Bind(EVT_TAG_LEFT_CLICK, self.__onTagLeftClick)
         self.__tagsPanel.Bind(EVT_TAG_MIDDLE_CLICK, self.__onTagMiddleClick)
@@ -34,7 +39,12 @@ class TagsPanelController (object):
                                 handler=self.__onTagMiddleClick)
         self.__tagsPanel.Unbind(wx.EVT_CLOSE, handler=self.__onClose)
 
+        self.__application.onStartTreeUpdate -= self.__onStartUpdate
+        self.__application.onEndTreeUpdate -= self.__onEndUpdate
+        self.__application.onPageSelect -= self.__onPageSelect
+
         self.__unbindAppEvents()
+
         self.__tagsPanel.clearTags()
         self.__tagsPanel.Destroy()
 
@@ -94,9 +104,6 @@ class TagsPanelController (object):
         self.__application.onTreeUpdate += self.__onUpdate
         self.__application.onWikiOpen += self.__onUpdate
         self.__application.onPreferencesDialogClose += self.__onPreferencesDialogClose
-        self.__application.onStartTreeUpdate += self.__onStartUpdate
-        self.__application.onEndTreeUpdate += self.__onEndUpdate
-        self.__application.onPageSelect += self.__onPageSelect
 
     def __unbindAppEvents(self):
         self.__application.onPageUpdate -= self.__onUpdate
@@ -105,9 +112,6 @@ class TagsPanelController (object):
         self.__application.onTreeUpdate -= self.__onUpdate
         self.__application.onWikiOpen -= self.__onUpdate
         self.__application.onPreferencesDialogClose -= self.__onPreferencesDialogClose
-        self.__application.onStartTreeUpdate -= self.__onStartUpdate
-        self.__application.onEndTreeUpdate -= self.__onEndUpdate
-        self.__application.onPageSelect -= self.__onPageSelect
 
     def __onPreferencesDialogClose(self, dialog):
         self.updateTags()
