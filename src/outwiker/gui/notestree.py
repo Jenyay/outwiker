@@ -8,6 +8,7 @@ import wx
 import outwiker.core.commands
 import outwiker.core.system
 import outwiker.gui.pagedialog
+from outwiker.gui.guiconfig import MainWindowConfig
 from outwiker.actions.addsiblingpage import AddSiblingPageAction
 from outwiker.actions.addchildpage import AddChildPageAction
 from outwiker.actions.movepageup import MovePageUpAction
@@ -84,9 +85,9 @@ class NotesTree(wx.Panel):
         self._application.onPageSelect += self.__onPageSelect
         self._application.onPageRemove += self.__onPageRemove
         self._application.onPageUpdate += self.__onPageUpdate
-
         self._application.onStartTreeUpdate += self.__onStartTreeUpdate
         self._application.onEndTreeUpdate += self.__onEndTreeUpdate
+        self._application.onPreferencesDialogClose += self.__onPreferencesDialogClose
 
     def __UnBindApplicationEvents(self):
         """
@@ -99,9 +100,18 @@ class NotesTree(wx.Panel):
         self._application.onPageSelect -= self.__onPageSelect
         self._application.onPageRemove -= self.__onPageRemove
         self._application.onPageUpdate -= self.__onPageUpdate
-
         self._application.onStartTreeUpdate -= self.__onStartTreeUpdate
         self._application.onEndTreeUpdate -= self.__onEndTreeUpdate
+        self._application.onPreferencesDialogClose -= self.__onPreferencesDialogClose
+
+    def __onPreferencesDialogClose(self, dialog):
+        self.__setColors()
+
+    def __setColors(self):
+        config = MainWindowConfig(self._application.config)
+        self.treeCtrl.SetBackgroundColour(config.mainPanesBackgroundColor.value)
+        self.treeCtrl.SetForegroundColour(config.mainPanesTextColor.value)
+        self.treeCtrl.Refresh()
 
     def __onWikiOpen(self, root):
         self.__treeUpdate(root)
@@ -420,6 +430,7 @@ class NotesTree(wx.Panel):
 
     def __set_properties(self):
         self.SetSize((256, 260))
+        self.__setColors()
 
     def __do_layout(self):
         mainSizer = wx.FlexGridSizer(cols=1)
