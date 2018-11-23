@@ -9,7 +9,7 @@ from .taglabel import EVT_TAG_LEFT_CLICK, EVT_TAG_MIDDLE_CLICK
 from outwiker.core.tagslist import TagsList
 from outwiker.core.tagscommands import removeTag, appendTag
 from outwiker.core.sortfunctions import sortAlphabeticalFunction
-from outwiker.gui.guiconfig import TagsConfig, MainWindowConfig
+from outwiker.gui.guiconfig import TagsConfig
 
 
 class TagsPanelController (object):
@@ -24,7 +24,6 @@ class TagsPanelController (object):
         self.__tagsPanel.Bind(EVT_TAG_MIDDLE_CLICK, self.__onTagMiddleClick)
         self.__tagsPanel.Bind(wx.EVT_CLOSE, self.__onClose)
 
-        self.__set_panel_properties()
         self.updateTags()
 
     def __onClose(self, event):
@@ -111,12 +110,7 @@ class TagsPanelController (object):
         self.__application.onPageSelect -= self.__onPageSelect
 
     def __onPreferencesDialogClose(self, dialog):
-        self.__set_panel_properties()
         self.updateTags()
-
-    def __set_panel_properties(self):
-        config = MainWindowConfig(self.__application.config)
-        self.__tagsPanel.SetBackgroundColour(config.mainPanesBackgroundColor.value)
 
     def __onPageSelect(self, page):
         self.__markTags()

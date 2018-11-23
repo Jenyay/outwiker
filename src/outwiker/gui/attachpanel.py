@@ -38,6 +38,14 @@ class AttachPanel(wx.Panel):
         self.__bindGuiEvents()
         self.__bindAppEvents()
 
+    def SetBackgroundColour(self, colour):
+        super().SetBackgroundColour(colour)
+        self.__attachList.SetBackgroundColour(colour)
+
+    def SetForegroundColour(self, colour):
+        super().SetForegroundColour(colour)
+        self.__attachList.SetForegroundColour(colour)
+
     def __bindGuiEvents(self):
         self.Bind(wx.EVT_LIST_BEGIN_DRAG,
                   self.__onBeginDrag, self.__attachList)
@@ -83,13 +91,11 @@ class AttachPanel(wx.Panel):
         self._application.onPageSelect += self.__onPageSelect
         self._application.onAttachListChanged += self.__onAttachListChanged
         self._application.onWikiOpen += self.__onWikiOpen
-        self._application.onPreferencesDialogClose += self.__onPreferencesDialogClose
 
     def __unbindAppEvents(self):
         self._application.onPageSelect -= self.__onPageSelect
         self._application.onAttachListChanged -= self.__onAttachListChanged
         self._application.onWikiOpen -= self.__onWikiOpen
-        self._application.onPreferencesDialogClose -= self.__onPreferencesDialogClose
 
     def __onClose(self, event):
         self._dropTarget.destroy()
@@ -165,11 +171,7 @@ class AttachPanel(wx.Panel):
         return toolbar
 
     def __set_properties(self):
-        config = MainWindowConfig(self._application.config)
-
         self.__attachList.SetMinSize((-1, 100))
-        self.__attachList.SetBackgroundColour(config.mainPanesBackgroundColor.value)
-        self.__attachList.SetForegroundColour(config.mainPanesTextColor.value)
 
     def __do_layout(self):
         attachSizer_copy = wx.FlexGridSizer(2, 1, 0, 0)
@@ -188,10 +190,6 @@ class AttachPanel(wx.Panel):
 
     def __onPageSelect(self, page):
         self.updateAttachments()
-
-    def __onPreferencesDialogClose(self, dialog):
-        self.__set_properties()
-        self.__attachList.Refresh()
 
     def __sortFilesList(self, files_list):
         result = sorted(files_list, key=str.lower, reverse=True)

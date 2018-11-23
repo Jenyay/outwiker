@@ -21,6 +21,15 @@ class TabsCtrl(wx.Panel):
         self._tabs.SetPadding(wx.Size(10, -1))
         self.__layout()
 
+    def SetBackgroundColour(self, colour):
+        super().SetBackgroundColour(colour)
+        self._tabs.SetBackgroundColour(colour)
+        self._tabs.SetTabAreaColour(colour)
+
+    def SetForegroundColour(self, colour):
+        super().SetForegroundColour(colour)
+        self._tabs.SetForegroundColour(colour)
+
     def __layout(self):
         mainSizer = wx.FlexGridSizer(1, 0, 0, 0)
 

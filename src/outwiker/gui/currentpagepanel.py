@@ -45,6 +45,14 @@ class CurrentPagePanel(wx.Panel):
 
         self.Bind(wx.EVT_CLOSE, self.__onClose)
 
+    def SetBackgroundColour(self, colour):
+        super().SetBackgroundColour(colour)
+        self.tabsCtrl.SetBackgroundColour(colour)
+
+    def SetForegroundColour(self, colour):
+        super().SetForegroundColour(colour)
+        self.tabsCtrl.SetForegroundColour(colour)
+
     def SetFocus(self):
         if self.__pageView is not None:
             self.__pageView.SetFocus()
@@ -131,6 +139,8 @@ class CurrentPagePanel(wx.Panel):
         if page is not None:
             factory = FactorySelector.getFactory(page.getTypeString())
             pageView = factory.getPageView(self, self._application)
+            pageView.SetBackgroundColour(self.GetBackgroundColour())
+            pageView.SetForegroundColour(self.GetForegroundColour())
             self.__pageView = pageView
             self.__pageView.page = page
 

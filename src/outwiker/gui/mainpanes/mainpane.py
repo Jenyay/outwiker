@@ -77,6 +77,12 @@ class MainPane(object, metaclass=ABCMeta):
     def setFocus(self):
         self.panel.SetFocus()
 
+    def setBackgroundColour(self, colour):
+        self.panel.SetBackgroundColour(colour)
+
+    def setForegroundColour(self, colour):
+        self.panel.SetForegroundColour(colour)
+
     @abstractproperty
     def caption(self):
         pass

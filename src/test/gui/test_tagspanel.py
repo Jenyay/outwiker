@@ -8,6 +8,7 @@ from outwiker.core.tree import WikiDocument
 from outwiker.core.application import ApplicationParams
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.gui.tagspanelcontroller import TagsPanelController
+from outwiker.core.tagslist import TagsList
 
 
 class TagsPanelTest(unittest.TestCase):
@@ -155,8 +156,7 @@ class FakeTagsPanel(object):
     def clearTags(self):
         self.tags = []
 
-    def setTags(self, tagsList):
-        # tagsList должен быть экземпляром класса outwiker.core.tagslist.TagsList
+    def setTags(self, tagsList: TagsList):
         self.tags = tagsList.tags
 
     def clearMarks(self):
@@ -173,3 +173,9 @@ class FakeTagsPanel(object):
 
     def __removeMark(self, tag):
         self.marks.remove(tag)
+
+    def SetBackgroundColour(self, colour):
+        pass
+
+    def SetForegroundColour(self, colour):
+        pass

@@ -249,6 +249,7 @@ class MainWndController(object):
         self.updateTitle()
         self.updatePageDateTime()
         self.updateStatusBar()
+        self.updateColors()
     #
     ###################################################
 
@@ -310,8 +311,24 @@ class MainWndController(object):
         self.mainWindow.SetSize(
             xpos, ypos, width, height, sizeFlags=wx.SIZE_FORCE)
 
+        self.updateColors()
         self.mainWindow.Layout()
         self.mainWindow.Thaw()
+
+    def updateColors(self):
+        config = self.mainWindow.mainWindowConfig
+        panels = [
+            self.mainWindow.treePanel,
+            self.mainWindow.attachPanel,
+            self.mainWindow.tagsCloudPanel,
+            # self.mainWindow.pagePanel,
+        ]
+
+        for panel in panels:
+            panel.setBackgroundColour(config.mainPanesBackgroundColor.value)
+            panel.setForegroundColour(config.mainPanesTextColor.value)
+
+        self.mainWindow.Refresh()
 
     ###################################################
     # Список последних открытых вики
