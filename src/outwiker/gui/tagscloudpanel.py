@@ -74,3 +74,4 @@ class TagsCloudPanel(wx.Panel):
     def SetBackgroundColour(self, colour):
         super().SetBackgroundColour(colour)
         self._tagscloud.SetBackgroundColour(colour)
+        self.Refresh()
