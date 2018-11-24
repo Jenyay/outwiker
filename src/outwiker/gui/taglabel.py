@@ -113,7 +113,7 @@ class TagLabel(HyperLinkCtrl):
                             self.__normalFontColor,
                             self.__normalHoverFontColor)
 
-        self.Refresh()
+        self.UpdateLink()
 
     def __onMouseLeftDown(self, event):
         self.__sendTagEvent(TagLeftClickEvent)
