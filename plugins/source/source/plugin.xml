@@ -28,7 +28,7 @@
 		</author>
 
 		<changelog>
-			<version number="1.17">
+			<version number="1.17" date="November 24, 2018">
 				<requirements>
 					<api>2.835</api>
 				</requirements>
@@ -177,7 +177,7 @@
 		</author>
 
 		<changelog>
-			<version number="1.17">
+			<version number="1.17" date="24.11.2018">
 				<requirements>
 					<api>2.835</api>
 				</requirements>
