@@ -26,7 +26,6 @@ class TagsPanel(BasePrefPanel):
         mainSizer = wx.FlexGridSizer(cols=1)
         mainSizer.AddGrowableCol(0)
 
-        self._createColorsGui(mainSizer)
         self._createActionsGui(mainSizer)
         self._createHeadersGui(mainSizer)
 
@@ -35,38 +34,6 @@ class TagsPanel(BasePrefPanel):
     def _addControlsPairToSizer(self, sizer, label, control):
         sizer.Add(label, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
         sizer.Add(control, 0, wx.ALL | wx.ALIGN_RIGHT, border=2)
-
-    def _createLabelAndColorPicker(self, text, sizer):
-        label = wx.StaticText(
-            self,
-            label=text)
-
-        colorPicker = wx.ColourPickerCtrl(self)
-
-        self._addControlsPairToSizer(sizer, label, colorPicker)
-
-        return (label, colorPicker)
-
-    def _createColorsGui(self, mainsizer):
-        colorsSizer = wx.FlexGridSizer(cols=2)
-        colorsSizer.AddGrowableCol(0)
-        colorsSizer.AddGrowableCol(1)
-
-        colorFontNormalLabel, self.colorFontNormalPicker = self._createLabelAndColorPicker(_(u'Tag color'), colorsSizer)
-
-        colorFontNormalHoverLabel, self.colorFontNormalHoverPicker = self._createLabelAndColorPicker(
-            _(u'Hover tag color'), colorsSizer)
-
-        colorFontSelectedLabel, self.colorFontSelectedPicker = self._createLabelAndColorPicker(_(u'Marked tag color'),
-                                                                                               colorsSizer)
-
-        colorFontSelectedHoverLabel, self.colorFontSelectedHoverPicker = self._createLabelAndColorPicker(
-            _(u'Hover marked tag color'), colorsSizer)
-
-        colorBackSelectedLabel, self.colorBackSelectedPicker = self._createLabelAndColorPicker(
-            _(u'Marked tag background color'), colorsSizer)
-
-        mainsizer.Add(colorsSizer, 0, wx.EXPAND | wx.ALL, border=2)
 
     def _createLabelAndComboBox(self, text, sizer):
         label = wx.StaticText(self, label=text)
@@ -140,25 +107,6 @@ class TagsPanel(BasePrefPanel):
     def LoadState(self):
         self._fillActionsCombos()
 
-        self.colorFontNormalPicker.SetColour(self._config.colorFontNormal.value)
-        self.colorFontNormalHoverPicker.SetColour(self._config.colorFontNormalHover.value)
-
-        self.colorFontSelectedPicker.SetColour(self._config.colorFontSelected.value)
-        self.colorFontSelectedHoverPicker.SetColour(self._config.colorFontSelectedHover.value)
-
-        self.colorBackSelectedPicker.SetColour(self._config.colorBackSelected.value)
-
-    def _saveColorsState(self):
-        self._config.colorFontNormal.value = self.colorFontNormalPicker.GetColour().GetAsString(wx.C2S_HTML_SYNTAX)
-        self._config.colorFontNormalHover.value = self.colorFontNormalHoverPicker.GetColour().GetAsString(
-            wx.C2S_HTML_SYNTAX)
-
-        self._config.colorFontSelected.value = self.colorFontSelectedPicker.GetColour().GetAsString(wx.C2S_HTML_SYNTAX)
-        self._config.colorFontSelectedHover.value = self.colorFontSelectedHoverPicker.GetColour().GetAsString(
-            wx.C2S_HTML_SYNTAX)
-
-        self._config.colorBackSelected.value = self.colorBackSelectedPicker.GetColour().GetAsString(wx.C2S_HTML_SYNTAX)
-
     def _saveActionsState(self):
         leftClickAction = self.leftClickActionCombo.GetSelection()
         middleClickAction = self.middleClickActionCombo.GetSelection()
@@ -182,6 +130,5 @@ class TagsPanel(BasePrefPanel):
         self._config.popupHeaders.value = text
 
     def Save(self):
-        self._saveColorsState()
         self._saveActionsState()
         self._saveHeadersState()
