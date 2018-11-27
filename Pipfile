@@ -15,7 +15,7 @@ comtypes = {version = "==1.1.4", sys_platform = "== 'win32'"}
 
 [dev-packages]
 Fabric3 = "==1.14.post1"
-PyInstaller = "==3.3.1"
+PyInstaller = "==3.4"
 pympler = "==0.5"
 pytest = "*"
 coverage = "*"
