@@ -31,23 +31,6 @@ class TagsPanel(BasePrefPanel):
 
         self.SetSizer(mainSizer)
 
-    def _addControlsPairToSizer(self, sizer, label, control):
-        sizer.Add(label, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
-        sizer.Add(control, 0, wx.ALL | wx.ALIGN_RIGHT, border=2)
-
-    def _createLabelAndComboBox(self, text, sizer):
-        label = wx.StaticText(self, label=text)
-
-        combobox = wx.ComboBox(self,
-                               -1,
-                               style=wx.CB_DROPDOWN | wx.CB_READONLY)
-
-        combobox.SetMinSize((self.ACTIONS_COMBOBOX_WIDTH, -1))
-
-        self._addControlsPairToSizer(sizer, label, combobox)
-
-        return (label, combobox)
-
     def _createActionsGui(self, mainsizer):
         actionsSizer = wx.FlexGridSizer(cols=2)
         actionsSizer.AddGrowableCol(0)

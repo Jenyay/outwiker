@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from typing import Tuple
+
 import wx
 
 from . import configelements
@@ -28,63 +30,36 @@ class ColorsPanel(BasePrefPanel):
         self.SetSizer(main_sizer)
         self.Layout()
 
-    def _createSection(self, main_sizer, title):
-        staticBox = wx.StaticBox(self, label=title)
-        staticBoxSizer = wx.StaticBoxSizer(staticBox, wx.VERTICAL)
-
-        colorsSizer = wx.FlexGridSizer(cols=2)
-        colorsSizer.AddGrowableCol(0)
-        colorsSizer.AddGrowableCol(1)
-
-        staticBoxSizer.Add(colorsSizer, flag=wx.EXPAND)
-        main_sizer.Add(staticBoxSizer, flag=wx.EXPAND | wx.ALL, border=2)
-        return (staticBox, colorsSizer)
-
     def _createMainWindowColorsGUI(self, main_sizer):
         parent, sizer = self._createSection(main_sizer, _('Main window'))
 
         # Panels background color
-        panelsBackgroundColorLabel, self.panelsBackgroundColorPicker = self._createLabelAndColorPicker(
-            _(u"Main panels background color"), sizer
-        )
+        self.panelsBackgroundColorPicker = self._createLabelAndColorPicker(
+            _(u"Main panels background color"), sizer)[1]
 
         # Panels text color
-        panelsTextColorLabel, self.panelsTextColorPicker = self._createLabelAndColorPicker(
-            _(u"Main panels text color"), sizer
-        )
+        self.panelsTextColorPicker = self._createLabelAndColorPicker(
+            _(u"Main panels text color"), sizer)[1]
 
     def _createTagsColorsGUI(self, main_sizer):
-        parent, sizer = self._createSection(main_sizer, _('Tags'))
+        parent, sizer = self._createSection(main_sizer, _('Tags cloud'))
 
-        colorFontNormalLabel, self.colorFontNormalPicker = self._createLabelAndColorPicker(
-            _(u'Tag color'), sizer)
+        self.tagsFontNormalColorPicker = self._createLabelAndColorPicker(
+            _(u'Tag color'), sizer)[1]
 
-        colorFontNormalHoverLabel, self.colorFontNormalHoverPicker = self._createLabelAndColorPicker(
-            _(u'Hover tag color'), sizer)
+        self.tagsFontNormalHoverColorPicker = self._createLabelAndColorPicker(
+            _(u'Hover tag color'), sizer)[1]
 
-        colorFontSelectedLabel, self.colorFontSelectedPicker = self._createLabelAndColorPicker(
-            _(u'Marked tag color'), sizer)
+        self.tagsFontSelectedColorPicker = self._createLabelAndColorPicker(
+            _(u'Marked tag color'), sizer)[1]
 
-        colorFontSelectedHoverLabel, self.colorFontSelectedHoverPicker = self._createLabelAndColorPicker(
-            _(u'Hover marked tag color'), sizer)
+        self.tagsFontSelectedHoverColorPicker = self._createLabelAndColorPicker(
+            _(u'Hover marked tag color'), sizer)[1]
 
-        colorBackSelectedLabel, self.colorBackSelectedPicker = self._createLabelAndColorPicker(
-            _(u'Marked tag background color'), sizer)
-
-    def _addControlsPairToSizer(self, sizer, label, control):
-        sizer.Add(label, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
-        sizer.Add(control, 0, wx.ALL | wx.ALIGN_RIGHT, border=2)
-
-    def _createLabelAndColorPicker(self, text, sizer):
-        label = wx.StaticText(self, label=text)
-        colorPicker = wx.ColourPickerCtrl(self)
-        self._addControlsPairToSizer(sizer, label, colorPicker)
-        return (label, colorPicker)
+        self.tagsBackSelectedColorPicker = self._createLabelAndColorPicker(
+            _(u'Marked tag background color'), sizer)[1]
 
     def LoadState(self):
-        """
-        Загрузить состояние страницы из конфига
-        """
         # Main panels
         self.panelsBackgroundColor = configelements.ColourElement(
             self.mainWindowConfig.mainPanesBackgroundColor,
@@ -97,28 +72,25 @@ class ColorsPanel(BasePrefPanel):
         # Tags
         self.tagsFontNormal = configelements.ColourElement(
             self.tagsConfig.colorFontNormal,
-            self.colorFontNormalPicker)
+            self.tagsFontNormalColorPicker)
 
         self.tagsFontNormalHover = configelements.ColourElement(
             self.tagsConfig.colorFontNormalHover,
-            self.colorFontNormalHoverPicker)
+            self.tagsFontNormalHoverColorPicker)
 
         self.tagsFontSelected = configelements.ColourElement(
             self.tagsConfig.colorFontSelected,
-            self.colorFontSelectedPicker)
+            self.tagsFontSelectedColorPicker)
 
         self.tagsFontSelectedHover = configelements.ColourElement(
             self.tagsConfig.colorFontSelectedHover,
-            self.colorFontSelectedHoverPicker)
+            self.tagsFontSelectedHoverColorPicker)
 
         self.tagsBackSelected = configelements.ColourElement(
             self.tagsConfig.colorBackSelected,
-            self.colorBackSelectedPicker)
+            self.tagsBackSelectedColorPicker)
 
     def Save(self):
-        """
-        Сохранить состояние страницы в конфиг
-        """
         # Main panels
         self.panelsBackgroundColor.save()
         self.panelsTextColor.save()
