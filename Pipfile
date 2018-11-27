@@ -7,15 +7,15 @@ name = "pypi"
 
 [packages]
 wxPython = "==4.0.1"
-Pillow = "==5.1.0"
+Pillow = "==5.3.0"
 pyenchant = {version = "==2.0.0", sys_platform = "== 'win32'"}
 hunspell = {version = "==0.5.5", sys_platform = "== 'linux'"}
 idna = "==2.7"
-comtypes = {version = "==1.1.4", sys_platform = "== 'win32'"}
+comtypes = {version = "==1.1.7", sys_platform = "== 'win32'"}
 
 [dev-packages]
 Fabric3 = "==1.14.post1"
 PyInstaller = "==3.4"
-pympler = "==0.5"
+pympler = "==0.6"
 pytest = "*"
 coverage = "*"
