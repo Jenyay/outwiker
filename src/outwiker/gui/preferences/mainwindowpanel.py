@@ -26,44 +26,8 @@ class MainWindowPanel(BasePrefPanel):
 
         self._createTitleFormatGUI(main_sizer)
         self._createStatusbarGUI(main_sizer)
-        self._createColorsGUI(main_sizer)
 
         self.SetSizer(main_sizer)
-
-    def _createColorsGUI(self, main_sizer):
-        colorsSizer = wx.FlexGridSizer(cols=2)
-        colorsSizer.AddGrowableCol(0)
-        colorsSizer.AddGrowableCol(1)
-
-        # Panels background color
-        self.panelsBackgroundColorLabel = wx.StaticText(
-            self,
-            label=_(u"Main panels background color"))
-
-        self.panelsBackgroundColorPicker = wx.ColourPickerCtrl(self)
-
-        colorsSizer.Add(self.panelsBackgroundColorLabel,
-                        flag=wx.ALIGN_LEFT | wx.ALL,
-                        border=2)
-        colorsSizer.Add(self.panelsBackgroundColorPicker,
-                        flag=wx.ALIGN_RIGHT | wx.ALL,
-                        border=2)
-
-        # Panels text color
-        self.panelsTextColorLabel = wx.StaticText(
-            self,
-            label=_(u"Main panels text color"))
-
-        self.panelsTextColorPicker = wx.ColourPickerCtrl(self)
-
-        colorsSizer.Add(self.panelsTextColorLabel,
-                        flag=wx.ALIGN_LEFT | wx.ALL,
-                        border=2)
-        colorsSizer.Add(self.panelsTextColorPicker,
-                        flag=wx.ALIGN_RIGHT | wx.ALL,
-                        border=2)
-
-        main_sizer.Add(colorsSizer, flag=wx.EXPAND | wx.ALL, border=2)
 
     def _createStatusbarGUI(self, main_sizer):
         self.statusbarVisibleCheckBox = wx.CheckBox(
@@ -126,21 +90,9 @@ class MainWindowPanel(BasePrefPanel):
             self.statusbarVisibleCheckBox
         )
 
-        self.panelsBackgroundColor = configelements.ColourElement(
-            self.mainWindowConfig.mainPanesBackgroundColor,
-            self.panelsBackgroundColorPicker
-        )
-
-        self.panelsTextColor = configelements.ColourElement(
-            self.mainWindowConfig.mainPanesTextColor,
-            self.panelsTextColorPicker
-        )
-
     def Save(self):
         """
         Сохранить состояние страницы в конфиг
         """
         self.titleFormat.save()
         self.statusbarVisible.save()
-        self.panelsBackgroundColor.save()
-        self.panelsTextColor.save()

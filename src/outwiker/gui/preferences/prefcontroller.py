@@ -24,6 +24,7 @@ from .wikieditorpanel import WikiEditorPanel
 from .iconsetpanel import IconsetPanel
 from .tagspanel import TagsPanel
 from .attachpanel import AttachPanel
+from .colorspanel import ColorsPanel
 
 logger = logging.getLogger('prefcontroller')
 
@@ -135,6 +136,7 @@ class PrefController(object):
         """
         generalPage = GeneralPanel(self._dialog.treeBook, self._application)
         mainWindowPage = MainWindowPanel(self._dialog.treeBook, self._application)
+        colorsPage = ColorsPanel(self._dialog.treeBook, self._application)
         trayPage = TrayPanel(self._dialog.treeBook, self._application)
         htmlRenderPage = HtmlRenderPanel(self._dialog.treeBook, self._application)
         # TODO: Uncomment after wxPython 4.0.4 release
@@ -146,6 +148,7 @@ class PrefController(object):
         interfacePanelsList = [
             PreferencePanelInfo(generalPage, _(u"General")),
             PreferencePanelInfo(mainWindowPage, _(u"Main window")),
+            PreferencePanelInfo(colorsPage, _(u"Colors")),
             PreferencePanelInfo(trayPage, _(u"Tray icon")),
             PreferencePanelInfo(htmlRenderPage, _(u"Preview")),
             PreferencePanelInfo(tagsPage, _(u"Tags cloud")),
