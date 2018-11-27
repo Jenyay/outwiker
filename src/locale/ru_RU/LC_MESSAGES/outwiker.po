@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-27 16:06+0300\n"
+"POT-Creation-Date: 2018-11-27 22:34+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 2.2\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: ../../..\n"
 
@@ -150,19 +150,19 @@ msgstr "Полноэкранный режим"
 msgid "Fullscreen mode on/off"
 msgstr "Полноэкранный режим вкл/выкл"
 
-#: outwiker/actions/globalsearch.py:22
+#: outwiker/actions/globalsearch.py:21
 msgid "Global Search…"
 msgstr "Глобальный поиск…"
 
-#: outwiker/actions/globalsearch.py:27
+#: outwiker/actions/globalsearch.py:25
 msgid "Create or open page for global search"
 msgstr "Создать или открыть страницу для глобального поиска"
 
-#: outwiker/actions/globalsearch.py:40 outwiker/gui/pagedialog.py:68
+#: outwiker/actions/globalsearch.py:36 outwiker/gui/pagedialog.py:68
 msgid "Can't create page"
 msgstr "Невозможно создать страницу"
 
-#: outwiker/actions/globalsearch.py:41 outwiker/actions/movepagedown.py:40
+#: outwiker/actions/globalsearch.py:37 outwiker/actions/movepagedown.py:40
 #: outwiker/actions/movepageup.py:40 outwiker/actions/openattachfolder.py:38
 #: outwiker/actions/openpluginsfolder.py:37
 #: outwiker/actions/sortchildalpha.py:37
@@ -1383,7 +1383,7 @@ msgstr "Страница программы:"
 
 #: outwiker/gui/dialogs/about.py:25
 msgid "https://jenyay.net/Outwiker/English"
-msgstr "https://jenyay.net/Outwiker/"
+msgstr "https://jenyay.net/Outwiker"
 
 #: outwiker/gui/dialogs/about.py:27
 msgid "jenyay.ilin@gmail.com"
@@ -2207,9 +2207,13 @@ msgstr "Дата последнего изменения: {0}"
 msgid "Tags: "
 msgstr "Метки: "
 
-#: outwiker/pages/search/searchpage.py:146
+#: outwiker/pages/search/searchpage.py:144
 msgid "Search Page"
 msgstr "Страница поиска"
+
+#: outwiker/pages/search/searchpage.py:160
+msgid "# Search"
+msgstr "# Поиск"
 
 #: outwiker/pages/search/searchpanel.py:38
 msgid "Phrase for search:"
@@ -2641,9 +2645,6 @@ msgstr "[[ссылка | комментарий]]"
 #~ msgstr ""
 #~ "Невозможно сохранить параметры страницы\n"
 #~ "{}"
-
-#~ msgid "# Search"
-#~ msgstr "# Поиск"
 
 #~ msgid "Refresh"
 #~ msgstr "Обновить"

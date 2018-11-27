@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: outwiker 1.9\n"
+"Project-Id-Version: outwiker 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-27 16:06+0300\n"
+"POT-Creation-Date: 2018-11-27 22:34+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 2.0.7\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: ../../..\n"
 
@@ -149,19 +149,19 @@ msgstr "Fullscreen"
 msgid "Fullscreen mode on/off"
 msgstr "Fullscreen mode on/off"
 
-#: outwiker/actions/globalsearch.py:22
+#: outwiker/actions/globalsearch.py:21
 msgid "Global Search…"
 msgstr "Global Search…"
 
-#: outwiker/actions/globalsearch.py:27
+#: outwiker/actions/globalsearch.py:25
 msgid "Create or open page for global search"
 msgstr "Create or open page for global search"
 
-#: outwiker/actions/globalsearch.py:40 outwiker/gui/pagedialog.py:68
+#: outwiker/actions/globalsearch.py:36 outwiker/gui/pagedialog.py:68
 msgid "Can't create page"
 msgstr "Can't create page"
 
-#: outwiker/actions/globalsearch.py:41 outwiker/actions/movepagedown.py:40
+#: outwiker/actions/globalsearch.py:37 outwiker/actions/movepagedown.py:40
 #: outwiker/actions/movepageup.py:40 outwiker/actions/openattachfolder.py:38
 #: outwiker/actions/openpluginsfolder.py:37
 #: outwiker/actions/sortchildalpha.py:37
@@ -2198,9 +2198,13 @@ msgstr "Last modified date: {0}"
 msgid "Tags: "
 msgstr "Tags: "
 
-#: outwiker/pages/search/searchpage.py:146
+#: outwiker/pages/search/searchpage.py:144
 msgid "Search Page"
 msgstr "Search Page"
+
+#: outwiker/pages/search/searchpage.py:160
+msgid "# Search"
+msgstr "# Search"
 
 #: outwiker/pages/search/searchpanel.py:38
 msgid "Phrase for search:"
@@ -2629,9 +2633,6 @@ msgstr "[[link | comment]]"
 #~ msgstr ""
 #~ "Can't save page options\n"
 #~ "{}"
-
-#~ msgid "# Search"
-#~ msgstr "# Search"
 
 #~ msgid "Refresh"
 #~ msgstr "Refresh"

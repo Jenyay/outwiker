@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OutWiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-27 16:06+0300\n"
+"POT-Creation-Date: 2018-11-27 22:34+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Eugene Ilin <jenyay.ilin@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.7\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -154,19 +154,19 @@ msgstr ""
 msgid "Fullscreen mode on/off"
 msgstr ""
 
-#: outwiker/actions/globalsearch.py:22
+#: outwiker/actions/globalsearch.py:21
 msgid "Global Search…"
 msgstr ""
 
-#: outwiker/actions/globalsearch.py:27
+#: outwiker/actions/globalsearch.py:25
 msgid "Create or open page for global search"
 msgstr ""
 
-#: outwiker/actions/globalsearch.py:40 outwiker/gui/pagedialog.py:68
+#: outwiker/actions/globalsearch.py:36 outwiker/gui/pagedialog.py:68
 msgid "Can't create page"
 msgstr ""
 
-#: outwiker/actions/globalsearch.py:41 outwiker/actions/movepagedown.py:40
+#: outwiker/actions/globalsearch.py:37 outwiker/actions/movepagedown.py:40
 #: outwiker/actions/movepageup.py:40 outwiker/actions/openattachfolder.py:38
 #: outwiker/actions/openpluginsfolder.py:37
 #: outwiker/actions/sortchildalpha.py:37
@@ -2170,8 +2170,12 @@ msgstr ""
 msgid "Tags: "
 msgstr ""
 
-#: outwiker/pages/search/searchpage.py:146
+#: outwiker/pages/search/searchpage.py:144
 msgid "Search Page"
+msgstr ""
+
+#: outwiker/pages/search/searchpage.py:160
+msgid "# Search"
 msgstr ""
 
 #: outwiker/pages/search/searchpanel.py:38
