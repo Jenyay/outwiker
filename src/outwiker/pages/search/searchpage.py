@@ -157,7 +157,8 @@ class GlobalSearch (object):
         Создать страницу с поиском. Если страница существует,
         то сделать ее активной
         """
-        title = _(u"# Search")
+        searchTitle = _(u"# Search")
+        title = searchTitle
         number = 1
         page = None
 
@@ -170,7 +171,7 @@ class GlobalSearch (object):
                 page.icon = os.path.join(imagesDir, "global_search.png")
             elif page.getTypeString() != SearchWikiPage.getTypeString():
                 number += 1
-                title = u"%s %d" % (title, number)
+                title = u"%s %d" % (searchTitle, number)
                 page = None
 
         page.phrase = phrase
