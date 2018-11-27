@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-23 14:02+0300\n"
+"POT-Creation-Date: 2018-11-27 16:06+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -405,7 +405,7 @@ msgstr "Begin search and replace on page"
 
 #: outwiker/actions/showhideattaches.py:18 outwiker/actions/switchto.py:63
 #: outwiker/gui/mainpanes/attachmainpane.py:19
-#: outwiker/gui/preferences/prefcontroller.py:152
+#: outwiker/gui/preferences/prefcontroller.py:155
 msgid "Attachments"
 msgstr "Attachments"
 
@@ -994,7 +994,7 @@ msgid "Insert the current date"
 msgstr "Insert the current date"
 
 #: outwiker/gui/actionslist.py:122
-#: outwiker/gui/preferences/prefcontroller.py:172
+#: outwiker/gui/preferences/prefcontroller.py:175
 msgid "Spell checking"
 msgstr "Spell checking"
 
@@ -1206,8 +1206,8 @@ msgid "Can't execute file '%s'"
 msgstr "Can't execute file '%s'"
 
 #: outwiker/gui/basepagedialog.py:130 outwiker/gui/mainwindow.py:201
-#: outwiker/gui/preferences/prefcontroller.py:147
-#: outwiker/gui/preferences/prefcontroller.py:171
+#: outwiker/gui/preferences/prefcontroller.py:149
+#: outwiker/gui/preferences/prefcontroller.py:174
 #: outwiker/pages/wiki/wikipagecontroller.py:75
 msgid "General"
 msgstr "General"
@@ -1524,7 +1524,7 @@ msgid "Toolbars"
 msgstr "Toolbars"
 
 #: outwiker/gui/mainwindow.py:207
-#: outwiker/gui/preferences/prefcontroller.py:181
+#: outwiker/gui/preferences/prefcontroller.py:184
 msgid "Plugins"
 msgstr "Plugins"
 
@@ -1618,6 +1618,44 @@ msgstr "Open file"
 msgid "Double click on an attached file"
 msgstr "Double click on an attached file"
 
+#: outwiker/gui/preferences/colorspanel.py:34
+#: outwiker/gui/preferences/prefcontroller.py:150
+msgid "Main window"
+msgstr "Main window"
+
+#: outwiker/gui/preferences/colorspanel.py:38
+msgid "Main panels background color"
+msgstr "Main panels background color"
+
+#: outwiker/gui/preferences/colorspanel.py:42
+msgid "Main panels text color"
+msgstr "Main panels text color"
+
+#: outwiker/gui/preferences/colorspanel.py:45
+#: outwiker/gui/preferences/prefcontroller.py:154
+msgid "Tags cloud"
+msgstr "Tags cloud"
+
+#: outwiker/gui/preferences/colorspanel.py:48
+msgid "Tag color"
+msgstr "Tag color"
+
+#: outwiker/gui/preferences/colorspanel.py:51
+msgid "Hover tag color"
+msgstr "Hover tag color"
+
+#: outwiker/gui/preferences/colorspanel.py:54
+msgid "Marked tag color"
+msgstr "Marked tag color"
+
+#: outwiker/gui/preferences/colorspanel.py:57
+msgid "Hover marked tag color"
+msgstr "Hover marked tag color"
+
+#: outwiker/gui/preferences/colorspanel.py:60
+msgid "Marked tag background color"
+msgstr "Marked tag background color"
+
 #: outwiker/gui/preferences/editorpanel.py:29
 #: outwiker/gui/preferences/htmlrenderpanel.py:26
 #: outwiker/gui/preferences/textprintpanel.py:29
@@ -1673,7 +1711,7 @@ msgid "Recent used"
 msgstr "Recent used"
 
 #: outwiker/gui/preferences/generalpanel.py:38
-#: outwiker/gui/preferences/prefcontroller.py:150
+#: outwiker/gui/preferences/prefcontroller.py:153
 #: outwiker/pages/html/basehtmlpanel.py:178
 msgid "Preview"
 msgstr "Preview"
@@ -1853,33 +1891,23 @@ msgstr "Remove selected icons?"
 msgid "Remove icons"
 msgstr "Remove icons"
 
-#: outwiker/gui/preferences/mainwindowpanel.py:41
-#| msgid "Marked tag background color"
-msgid "Main panels background color"
-msgstr "Main panels background color"
-
-#: outwiker/gui/preferences/mainwindowpanel.py:55
-#| msgid "Set text color"
-msgid "Main panels text color"
-msgstr "Main panels text color"
-
-#: outwiker/gui/preferences/mainwindowpanel.py:71
+#: outwiker/gui/preferences/mainwindowpanel.py:35
 msgid "Show status panel"
 msgstr "Show status panel"
 
-#: outwiker/gui/preferences/mainwindowpanel.py:84
+#: outwiker/gui/preferences/mainwindowpanel.py:48
 msgid "Wiki file name"
 msgstr "Wiki file name"
 
-#: outwiker/gui/preferences/mainwindowpanel.py:85
+#: outwiker/gui/preferences/mainwindowpanel.py:49
 msgid "Page title"
 msgstr "Page title"
 
-#: outwiker/gui/preferences/mainwindowpanel.py:86
+#: outwiker/gui/preferences/mainwindowpanel.py:50
 msgid "Relative path to current page"
 msgstr "Relative path to current page"
 
-#: outwiker/gui/preferences/mainwindowpanel.py:91
+#: outwiker/gui/preferences/mainwindowpanel.py:55
 msgid "Main window title format"
 msgstr "Main window title format"
 
@@ -1903,43 +1931,39 @@ msgstr "Description"
 msgid "Site"
 msgstr "Site"
 
-#: outwiker/gui/preferences/prefcontroller.py:148
-msgid "Main window"
-msgstr "Main window"
+#: outwiker/gui/preferences/prefcontroller.py:151
+msgid "Colors"
+msgstr "Colors"
 
-#: outwiker/gui/preferences/prefcontroller.py:149
+#: outwiker/gui/preferences/prefcontroller.py:152
 msgid "Tray icon"
 msgstr "Tray icon"
 
-#: outwiker/gui/preferences/prefcontroller.py:151
-msgid "Tags cloud"
-msgstr "Tags cloud"
-
-#: outwiker/gui/preferences/prefcontroller.py:153
+#: outwiker/gui/preferences/prefcontroller.py:156
 msgid "Hotkeys"
 msgstr "Hotkeys"
 
-#: outwiker/gui/preferences/prefcontroller.py:158
+#: outwiker/gui/preferences/prefcontroller.py:161
 msgid "Interface"
 msgstr "Interface"
 
-#: outwiker/gui/preferences/prefcontroller.py:173
+#: outwiker/gui/preferences/prefcontroller.py:176
 msgid "HTML Editor"
 msgstr "HTML Editor"
 
-#: outwiker/gui/preferences/prefcontroller.py:174
+#: outwiker/gui/preferences/prefcontroller.py:177
 msgid "Wiki Editor"
 msgstr "Wiki Editor"
 
-#: outwiker/gui/preferences/prefcontroller.py:177
+#: outwiker/gui/preferences/prefcontroller.py:180
 msgid "Editor"
 msgstr "Editor"
 
-#: outwiker/gui/preferences/prefcontroller.py:185
+#: outwiker/gui/preferences/prefcontroller.py:188
 msgid "User's iconset"
 msgstr "User's iconset"
 
-#: outwiker/gui/preferences/prefcontroller.py:190
+#: outwiker/gui/preferences/prefcontroller.py:193
 msgid "Preferences"
 msgstr "Preferences"
 
@@ -1963,35 +1987,15 @@ msgstr "Search pages with the tag"
 msgid "Toggle tag selection"
 msgstr "Toggle tag selection"
 
-#: outwiker/gui/preferences/tagspanel.py:55
-msgid "Tag color"
-msgstr "Tag color"
-
-#: outwiker/gui/preferences/tagspanel.py:58
-msgid "Hover tag color"
-msgstr "Hover tag color"
-
-#: outwiker/gui/preferences/tagspanel.py:60
-msgid "Marked tag color"
-msgstr "Marked tag color"
-
-#: outwiker/gui/preferences/tagspanel.py:64
-msgid "Hover marked tag color"
-msgstr "Hover marked tag color"
-
-#: outwiker/gui/preferences/tagspanel.py:67
-msgid "Marked tag background color"
-msgstr "Marked tag background color"
-
-#: outwiker/gui/preferences/tagspanel.py:88
+#: outwiker/gui/preferences/tagspanel.py:38
 msgid "Left click on the tag"
 msgstr "Left click on the tag"
 
-#: outwiker/gui/preferences/tagspanel.py:91
+#: outwiker/gui/preferences/tagspanel.py:41
 msgid "Middle click on the tag"
 msgstr "Middle click on the tag"
 
-#: outwiker/gui/preferences/tagspanel.py:96
+#: outwiker/gui/preferences/tagspanel.py:46
 msgid "Headers in the popup window: "
 msgstr "Headers in the popup window: "
 
@@ -2547,7 +2551,7 @@ msgstr "Select text color"
 msgid "Select text background color"
 msgstr "Select text background color"
 
-#: outwiker/pages/wiki/wikipreferences.py:22
+#: outwiker/pages/wiki/wikipreferences.py:21
 msgid "Show HTML Code Tab"
 msgstr "Show HTML Code Tab"
 
@@ -2559,19 +2563,19 @@ msgstr "Highlight the Wiki Notation"
 msgid "Thumbnail Size"
 msgstr "Thumbnail Size"
 
-#: outwiker/pages/wiki/wikipreferences.py:32
+#: outwiker/pages/wiki/wikipreferences.py:33
 msgid "Template for empty page"
 msgstr "Template for empty page"
 
-#: outwiker/pages/wiki/wikipreferences.py:37
+#: outwiker/pages/wiki/wikipreferences.py:39
 msgid "Default link style"
 msgstr "Default link style"
 
-#: outwiker/pages/wiki/wikipreferences.py:40
+#: outwiker/pages/wiki/wikipreferences.py:43
 msgid "[[comment -> link]]"
 msgstr "[[comment -> link]]"
 
-#: outwiker/pages/wiki/wikipreferences.py:41
+#: outwiker/pages/wiki/wikipreferences.py:44
 msgid "[[link | comment]]"
 msgstr "[[link | comment]]"
 
