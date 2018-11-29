@@ -69,6 +69,7 @@ from outwiker.pages.html.htmlpagecontroller import HtmlPageController
 from outwiker.pages.text.textpagecontroller import TextPageController
 from outwiker.pages.search.searchpagecontroller import SearchPageController
 from outwiker.gui.controls.toolbar2 import ToolBar2Container
+from outwiker.gui.controls.toastercontroller import ToasterController
 
 
 logger = logging.getLogger('outwiker.gui.mainwindow')
@@ -227,6 +228,7 @@ class MainWindow(wx.Frame):
         self.controller.updateRecentMenu()
         self.__panesController.updateViewMenu()
         self.treePanel.panel.addButtons()
+        self.toaster = ToasterController(self)
 
         if self.mainWindowConfig.fullscreen.value:
             self._application.actionController.check(FullScreenAction.stringId,
