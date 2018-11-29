@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from outwiker.gui.baseaction import BaseAction
 from outwiker.core.commands import openWikiWithDialog
@@ -10,19 +10,16 @@ class OpenAction (BaseAction):
     """
     stringId = u"OpenTree"
 
-    def __init__ (self, application):
+    def __init__(self, application):
         self._application = application
 
-
     @property
-    def title (self):
+    def title(self):
         return _(u"Open…")
 
-
     @property
-    def description (self):
+    def description(self):
         return _(u"Open tree notes")
 
-
-    def run (self, params):
-        openWikiWithDialog (self._application.mainWindow, False)
+    def run(self, params):
+        openWikiWithDialog(self._application.mainWindow, False)
