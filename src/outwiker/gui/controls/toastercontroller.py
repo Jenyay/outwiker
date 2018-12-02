@@ -21,6 +21,15 @@ class ToasterController(object):
 
         return (x, y)
 
+    def destroy(self):
+        toasterbox = tb.ToasterBox(
+            self._parent,
+            tbstyle=tb.TB_COMPLEX,
+            closingstyle=tb.TB_ONTIME | tb.TB_ONCLICK
+        )
+        toasterbox.CleanList()
+        tb.winlist = []
+
     def showMessage(self, message):
         width = 250
         height = 100

@@ -623,6 +623,7 @@ class MainWindow(wx.Frame):
         """
         logger.debug(u'Begin MainWindow.Destroy.')
 
+        self.toaster.destroy()
         self._application.plugins.clear()
         self._saveParams()
         self.destroyPagePanel(True)
