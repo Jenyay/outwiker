@@ -13,4 +13,9 @@ class Theme(object):
         self.colorTextNormal = wx.Colour(0, 0, 0)
         self.colorTextSelected = wx.Colour(255, 255, 255)
         self.colorStaticLine = self.colorBackgroundSelected
+        self.colorErrorBackground = wx.Colour("#c80003")
+        self.colorErrorForeground = wx.Colour("#E3E3E3")
+        self.colorInfoBackground = wx.Colour("#1989FF")
+        self.colorInfoForeground = wx.Colour("#E3E3E3")
+        self.colorToasterBackground = wx.Colour(255, 255, 255)
         self.roundRadius = 0

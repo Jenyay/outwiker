@@ -247,8 +247,8 @@ def __canNotLoadWikiMessage(path):
     """
     Вывести сообщение о том, что невоможно открыть вики
     """
-    text = _(u"Can't load wiki '%s'") % path
-    Application.mainWindow.toaster.showMessage(text)
+    text = _(u"Can't load wiki:\n") + path
+    Application.mainWindow.toaster.showError(text)
 
 
 def __wantClearWikiOptions(path):
