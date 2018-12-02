@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OutWiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-27 22:34+0300\n"
+"POT-Creation-Date: 2018-12-02 23:00+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Eugene Ilin <jenyay.ilin@gmail.com>\n"
@@ -172,18 +172,19 @@ msgstr ""
 #: outwiker/actions/sortchildalpha.py:37
 #: outwiker/actions/sortsiblingsalpha.py:37 outwiker/core/commands.py:63
 #: outwiker/core/commands.py:122 outwiker/core/commands.py:133
-#: outwiker/core/commands.py:251 outwiker/core/commands.py:290
-#: outwiker/core/commands.py:298 outwiker/core/commands.py:306
-#: outwiker/core/commands.py:316 outwiker/core/commands.py:389
-#: outwiker/core/commands.py:395 outwiker/core/commands.py:424
-#: outwiker/core/commands.py:443 outwiker/gui/attachpanel.py:254
-#: outwiker/gui/attachpanel.py:264 outwiker/gui/attachpanel.py:276
-#: outwiker/gui/attachpanel.py:288 outwiker/gui/attachpanel.py:298
-#: outwiker/gui/basetextpanel.py:254 outwiker/gui/currentpagepanel.py:88
-#: outwiker/gui/currentpagepanel.py:217 outwiker/gui/currentpagepanel.py:228
-#: outwiker/gui/htmlrenderie.py:209 outwiker/gui/htmlrenderwebkit.py:212
-#: outwiker/gui/mainwindow.py:605 outwiker/gui/mainwndcontroller.py:221
-#: outwiker/gui/notestree.py:283 outwiker/gui/pagedialog.py:26
+#: outwiker/core/commands.py:289 outwiker/core/commands.py:297
+#: outwiker/core/commands.py:305 outwiker/core/commands.py:315
+#: outwiker/core/commands.py:388 outwiker/core/commands.py:394
+#: outwiker/core/commands.py:423 outwiker/core/commands.py:442
+#: outwiker/gui/attachpanel.py:254 outwiker/gui/attachpanel.py:264
+#: outwiker/gui/attachpanel.py:276 outwiker/gui/attachpanel.py:288
+#: outwiker/gui/attachpanel.py:298 outwiker/gui/basetextpanel.py:254
+#: outwiker/gui/controls/toastercontroller.py:35
+#: outwiker/gui/currentpagepanel.py:88 outwiker/gui/currentpagepanel.py:217
+#: outwiker/gui/currentpagepanel.py:228 outwiker/gui/htmlrenderie.py:209
+#: outwiker/gui/htmlrenderwebkit.py:212 outwiker/gui/mainwindow.py:607
+#: outwiker/gui/mainwndcontroller.py:221 outwiker/gui/notestree.py:283
+#: outwiker/gui/pagedialog.py:26
 #: outwiker/gui/pagedialogpanels/appearancepanel.py:74
 #: outwiker/gui/pagedialogpanels/iconspanel.py:174
 #: outwiker/gui/preferences/iconsetpanel.py:215
@@ -268,11 +269,11 @@ msgstr ""
 msgid "Create a new tree notes"
 msgstr ""
 
-#: outwiker/actions/open.py:19
+#: outwiker/actions/open.py:18
 msgid "Open…"
 msgstr ""
 
-#: outwiker/actions/open.py:24
+#: outwiker/actions/open.py:22
 msgid "Open tree notes"
 msgstr ""
 
@@ -290,7 +291,7 @@ msgstr ""
 msgid "Can't open folder '{}'"
 msgstr ""
 
-#: outwiker/actions/openhelp.py:25 outwiker/gui/mainwindow.py:185
+#: outwiker/actions/openhelp.py:25 outwiker/gui/mainwindow.py:186
 msgid "Help"
 msgstr ""
 
@@ -584,11 +585,10 @@ msgid "Opening notes tree..."
 msgstr ""
 
 #: outwiker/core/commands.py:250
-#, python-format
-msgid "Can't load wiki '%s'"
+msgid "Can't load notes tree:\n"
 msgstr ""
 
-#: outwiker/core/commands.py:259
+#: outwiker/core/commands.py:258
 #, python-format
 msgid ""
 "Can't load wiki '%s'\n"
@@ -597,15 +597,15 @@ msgid ""
 "Bookmarks will be lost"
 msgstr ""
 
-#: outwiker/core/commands.py:260
+#: outwiker/core/commands.py:259
 msgid "__page.opt error"
 msgstr ""
 
-#: outwiker/core/commands.py:271
+#: outwiker/core/commands.py:270
 msgid "First Wiki Page"
 msgstr ""
 
-#: outwiker/core/commands.py:272
+#: outwiker/core/commands.py:271
 msgid ""
 "!! First Wiki Page\n"
 "\n"
@@ -613,58 +613,58 @@ msgid ""
 "''italic'', {+underlined text+}, [[https://jenyay.net | link]] and others."
 msgstr ""
 
-#: outwiker/core/commands.py:281
+#: outwiker/core/commands.py:280
 msgid "test"
 msgstr ""
 
-#: outwiker/core/commands.py:289
+#: outwiker/core/commands.py:288
 msgid "Can't create wiki\n"
 msgstr ""
 
-#: outwiker/core/commands.py:297 outwiker/core/commands.py:315
+#: outwiker/core/commands.py:296 outwiker/core/commands.py:314
 msgid "Can't open clipboard"
 msgstr ""
 
-#: outwiker/core/commands.py:305
+#: outwiker/core/commands.py:304
 msgid "Can't copy text to clipboard"
 msgstr ""
 
-#: outwiker/core/commands.py:388
+#: outwiker/core/commands.py:387
 msgid "Can't move page when page with that title already exists"
 msgstr ""
 
-#: outwiker/core/commands.py:394
+#: outwiker/core/commands.py:393
 msgid "Can't move page"
 msgstr ""
 
-#: outwiker/core/commands.py:423 outwiker/gui/notestree.py:282
+#: outwiker/core/commands.py:422 outwiker/gui/notestree.py:282
 msgid "You can't rename the root element"
 msgstr ""
 
-#: outwiker/core/commands.py:442
+#: outwiker/core/commands.py:441
 msgid "Can't rename page \"{}\" to \"{}\""
 msgstr ""
 
-#: outwiker/core/commands.py:463
+#: outwiker/core/commands.py:462
 msgid "The invalid page title"
 msgstr ""
 
-#: outwiker/core/commands.py:468
+#: outwiker/core/commands.py:467
 #, python-brace-format
 msgid ""
 "{0}\n"
 "Continue?"
 msgstr ""
 
-#: outwiker/core/commands.py:471
+#: outwiker/core/commands.py:470
 msgid "The page title"
 msgstr ""
 
-#: outwiker/core/commands.py:523
+#: outwiker/core/commands.py:522
 msgid "Enter format of the date"
 msgstr ""
 
-#: outwiker/core/commands.py:524 outwiker/pages/wiki/actions/dates.py:27
+#: outwiker/core/commands.py:523 outwiker/pages/wiki/actions/dates.py:27
 msgid "Date format"
 msgstr ""
 
@@ -1156,7 +1156,7 @@ msgid "Remove Files…"
 msgstr ""
 
 #: outwiker/gui/attachpanel.py:139 outwiker/gui/attachpanel.py:144
-#: outwiker/gui/mainwindow.py:282 outwiker/gui/texteditormenu.py:16
+#: outwiker/gui/mainwindow.py:284 outwiker/gui/texteditormenu.py:16
 msgid "Paste"
 msgstr ""
 
@@ -1190,7 +1190,7 @@ msgstr ""
 msgid "Can't execute file '%s'"
 msgstr ""
 
-#: outwiker/gui/basepagedialog.py:130 outwiker/gui/mainwindow.py:201
+#: outwiker/gui/basepagedialog.py:130 outwiker/gui/mainwindow.py:202
 #: outwiker/gui/preferences/prefcontroller.py:149
 #: outwiker/gui/preferences/prefcontroller.py:174
 #: outwiker/pages/wiki/wikipagecontroller.py:75
@@ -1474,64 +1474,64 @@ msgstr ""
 msgid "Notes"
 msgstr ""
 
-#: outwiker/gui/mainwindow.py:166
+#: outwiker/gui/mainwindow.py:167
 msgid "File"
 msgstr ""
 
-#: outwiker/gui/mainwindow.py:169 outwiker/gui/preferences/generalpanel.py:39
+#: outwiker/gui/mainwindow.py:170 outwiker/gui/preferences/generalpanel.py:39
 msgid "Edit"
 msgstr ""
 
-#: outwiker/gui/mainwindow.py:172
+#: outwiker/gui/mainwindow.py:173
 msgid "Tree"
 msgstr ""
 
-#: outwiker/gui/mainwindow.py:175
+#: outwiker/gui/mainwindow.py:176
 msgid "Tools"
 msgstr ""
 
-#: outwiker/gui/mainwindow.py:178
+#: outwiker/gui/mainwindow.py:179
 msgid "Bookmarks"
 msgstr ""
 
-#: outwiker/gui/mainwindow.py:180
+#: outwiker/gui/mainwindow.py:181
 msgid "View"
 msgstr ""
 
-#: outwiker/gui/mainwindow.py:182
+#: outwiker/gui/mainwindow.py:183
 msgid "Go to"
 msgstr ""
 
-#: outwiker/gui/mainwindow.py:190
+#: outwiker/gui/mainwindow.py:191
 msgid "Toolbars"
 msgstr ""
 
-#: outwiker/gui/mainwindow.py:207
+#: outwiker/gui/mainwindow.py:208
 #: outwiker/gui/preferences/prefcontroller.py:184
 msgid "Plugins"
 msgstr ""
 
-#: outwiker/gui/mainwindow.py:260 outwiker/gui/texteditormenu.py:11
+#: outwiker/gui/mainwindow.py:262 outwiker/gui/texteditormenu.py:11
 msgid "Undo"
 msgstr ""
 
-#: outwiker/gui/mainwindow.py:265 outwiker/gui/texteditormenu.py:12
+#: outwiker/gui/mainwindow.py:267 outwiker/gui/texteditormenu.py:12
 msgid "Redo"
 msgstr ""
 
-#: outwiker/gui/mainwindow.py:272 outwiker/gui/texteditormenu.py:14
+#: outwiker/gui/mainwindow.py:274 outwiker/gui/texteditormenu.py:14
 msgid "Cut"
 msgstr ""
 
-#: outwiker/gui/mainwindow.py:277 outwiker/gui/texteditormenu.py:15
+#: outwiker/gui/mainwindow.py:279 outwiker/gui/texteditormenu.py:15
 msgid "Copy"
 msgstr ""
 
-#: outwiker/gui/mainwindow.py:289 outwiker/gui/texteditormenu.py:18
+#: outwiker/gui/mainwindow.py:291 outwiker/gui/texteditormenu.py:18
 msgid "Select All"
 msgstr ""
 
-#: outwiker/gui/mainwindow.py:604
+#: outwiker/gui/mainwindow.py:606
 #, python-format
 msgid ""
 "Can't save config\n"

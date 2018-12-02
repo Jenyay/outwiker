@@ -247,7 +247,7 @@ def __canNotLoadWikiMessage(path):
     """
     Вывести сообщение о том, что невоможно открыть вики
     """
-    text = _(u"Can't load wiki:\n") + path
+    text = _(u"Can't load notes tree:\n") + path
     Application.mainWindow.toaster.showError(text)
 
 
