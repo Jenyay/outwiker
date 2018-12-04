@@ -53,19 +53,12 @@ class ToasterController(object):
                     title,
                     captionBackgroundColor,
                     captionForegroundColor):
-        width = 300
-        height = 100
-
-        x, y = self._calcPopupPos(width, height)
 
         toasterbox = tb.ToasterBox(
             self._parent,
             tbstyle=tb.TB_COMPLEX,
             closingstyle=tb.TB_ONTIME | tb.TB_ONCLICK
         )
-        toasterbox.SetPopupPauseTime(self.DELAY_SEC)
-        toasterbox.SetPopupSize((width, height))
-        toasterbox.SetPopupPosition((x, y))
 
         parent = toasterbox.GetToasterBoxWindow()
         panel = InfoPanel(parent,
@@ -73,6 +66,12 @@ class ToasterController(object):
                           captionBackgroundColor, captionForegroundColor)
         parent.SetBackgroundColour(self._theme.colorToasterBackground)
         toasterbox.AddPanel(panel)
+        toasterbox.SetPopupPauseTime(self.DELAY_SEC)
+
+        width, height = panel.GetSize()
+        toasterbox.SetPopupSize((width, height))
+        x, y = self._calcPopupPos(width, height)
+        toasterbox.SetPopupPosition((x, y))
         toasterbox.Play()
 
 
@@ -84,21 +83,44 @@ class InfoPanel(wx.Panel):
                  captionBackgroundColor,
                  captionForegroundColor):
         super().__init__(parent, style=wx.BORDER_SIMPLE)
+        self._margin = 4
+        self._margin_bottom = 15
+        self._width = 300
+        self._height = 500
         self._captionBackgroundColor = captionBackgroundColor
         self._captionForegroundColor = captionForegroundColor
-        self._createGUI(parent, message, title)
+        self._createGUI(message, title)
 
-    def _createGUI(self, parent, message, title):
-        self._messageLabel = wx.StaticText(parent, label=message)
+    def _createGUI(self, message, title):
+        self.SetMinClientSize((self._width, -1))
+
         sizer = wx.FlexGridSizer(cols=1)
         sizer.AddGrowableCol(0)
         sizer.AddGrowableRow(1)
 
         captionPanel = self._createCaptionPanel(title)
+        messageLabel = self._createMessageLabel(message)
+
         sizer.Add(captionPanel, flag=wx.EXPAND)
-        sizer.Add(self._messageLabel, flag=wx.EXPAND | wx.ALL, border=4)
+        sizer.Add(messageLabel, flag=wx.EXPAND | wx.ALL, border=self._margin)
         self.SetSizer(sizer)
-        self.GetParent().Fit()
+        self.Fit()
+
+    def _createMessageLabel(self, message: str) -> wx.StaticText:
+        messageLabel = wx.StaticText(self, label=message + '\n')
+
+        label_width = self._width - 2 * self._margin
+        messageLabel.Wrap(label_width)
+
+        width, height = messageLabel.GetBestSize()
+        messageLabel.SetMinSize((self._width, height))
+
+        messageLabel.Bind(wx.EVT_LEFT_DOWN, handler=self._onClick)
+        return messageLabel
+
+    def _onClick(self, event):
+        event.ResumePropagation(1)
+        event.Skip()
 
     def _createCaptionPanel(self, caption):
         captionPanel = wx.Panel(self, style=wx.BORDER_SIMPLE)
@@ -115,4 +137,6 @@ class InfoPanel(wx.Panel):
             border=4)
 
         captionPanel.SetSizer(sizer)
+        captionLabel.Bind(wx.EVT_LEFT_DOWN, handler=self._onClick)
+        captionPanel.Bind(wx.EVT_LEFT_DOWN, handler=self._onClick)
         return captionPanel

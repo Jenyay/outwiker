@@ -38,6 +38,7 @@ class PluginDebug(Plugin):
         self.ID_START_WATCH_EVENTS = wx.NewId()
         self.ID_STOP_WATCH_EVENTS = wx.NewId()
         self.ID_RAISE_EXCEPTION = wx.NewId()
+        self.ID_SHOW_TOASTER = wx.NewId()
 
     def enableFeatures(self):
         config = DebugConfig(self._application.config)
@@ -127,6 +128,10 @@ class PluginDebug(Plugin):
                                                 handler=self.__onStopWatchEvents,
                                                 id=self.ID_STOP_WATCH_EVENTS)
 
+            self._application.mainWindow.Unbind(wx.EVT_MENU,
+                                                handler=self.__onShowToaster,
+                                                id=self.ID_SHOW_TOASTER)
+
             index = mainMenu.FindMenu(self.__menuName)
             assert index != wx.NOT_FOUND
 
@@ -158,6 +163,7 @@ class PluginDebug(Plugin):
         self.menu.Append(self.ID_START_WATCH_EVENTS, _(u"Start watch events"))
         self.menu.Append(self.ID_STOP_WATCH_EVENTS, _(u"Stop watch events"))
         self.menu.Append(self.ID_RAISE_EXCEPTION, _(u"Raise exception"))
+        self.menu.Append(self.ID_SHOW_TOASTER, _(u"Show toaster"))
 
         self._application.mainWindow.menuController.getRootMenu().Append(self.menu, self.__menuName)
 
@@ -180,6 +186,10 @@ class PluginDebug(Plugin):
         self._application.mainWindow.Bind(wx.EVT_MENU,
                                           self.__onRaiseException,
                                           id=self.ID_RAISE_EXCEPTION)
+
+        self._application.mainWindow.Bind(wx.EVT_MENU,
+                                          self.__onShowToaster,
+                                          id=self.ID_SHOW_TOASTER)
 
     def __createTestAction(self):
         mainWindow = self._application.mainWindow
@@ -381,6 +391,10 @@ class PluginDebug(Plugin):
                 path=params.path,
                 time=interval)
             logging.info(text)
+
+    def __onShowToaster(self, event):
+        text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nPellentesque malesuada mollis tortor, eget mattis nisi lobortis et. Vestibulum accumsan vehicula volutpat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vestibulum bibendum arcu augue, sit amet finibus augue posuere et.\nSed sem purus, fermentum et hendrerit eget, laoreet faucibus massa.'
+        self._application.mainWindow.toaster.showError(text)
 
     ###################################################
     # Свойства и методы, которые необходимо определить
