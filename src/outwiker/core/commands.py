@@ -59,9 +59,7 @@ def testreadonly(func):
         try:
             return func(*args, **kwargs)
         except outwiker.core.exceptions.ReadonlyException:
-            MessageBox(_(u"Page is opened as read-only"),
-                       _(u"Error"),
-                       wx.ICON_ERROR | wx.OK)
+            Application.mainWindow.toaster.showError(_(u"Page is opened as read-only"))
 
     return readOnlyWrap
 
@@ -118,9 +116,7 @@ def removePage(page):
         raise outwiker.core.exceptions.ReadonlyException
 
     if page.parent is None:
-        MessageBox(_(u"You can't remove the root element"),
-                   _(u"Error"),
-                   wx.ICON_ERROR | wx.OK)
+        Application.mainWindow.toaster.showError(_(u"You can't remove the root element"))
         return
 
     if (MessageBox(_(u'Remove page "{}" and all subpages?\nAll attached files will also be deleted.').format(page.title),
@@ -129,9 +125,7 @@ def removePage(page):
         try:
             page.remove()
         except IOError:
-            MessageBox(_(u"Can't remove page"),
-                       _(u"Error"),
-                       wx.ICON_ERROR | wx.OK)
+            Application.mainWindow.toaster.showError(_(u"Can't remove page"))
 
 
 def openWikiWithDialog(parent, readonly=False):
@@ -285,25 +279,20 @@ This is the first page. You can use a text formatting: '''bold''', ''italic'', {
             Application.wikiroot.selectedPage = firstPage
         except (IOError, OSError) as e:
             # TODO: проверить под Windows
-            MessageBox(_(u"Can't create wiki\n") + e.filename,
-                       _(u"Error"), wx.OK | wx.ICON_ERROR)
+            Application.mainWindow.toaster.showError(_(u"Can't create wiki\n") + e.filename)
 
     dlg.Destroy()
 
 
 def copyTextToClipboard(text):
     if not wx.TheClipboard.Open():
-        MessageBox(_(u"Can't open clipboard"),
-                   _(u"Error"),
-                   wx.ICON_ERROR | wx.OK)
+        Application.mainWindow.toaster.showError(_(u"Can't open clipboard"))
         return
 
     data = wx.TextDataObject(text)
 
     if not wx.TheClipboard.SetData(data):
-        MessageBox(_(u"Can't copy text to clipboard"),
-                   _(u"Error"),
-                   wx.ICON_ERROR | wx.OK)
+        Application.mainWindow.toaster.showError(_(u"Can't copy text to clipboard"))
 
     wx.TheClipboard.Flush()
     wx.TheClipboard.Close()
@@ -311,9 +300,7 @@ def copyTextToClipboard(text):
 
 def getClipboardText():
     if not wx.TheClipboard.Open():
-        MessageBox(_(u"Can't open clipboard"),
-                   _(u"Error"),
-                   wx.ICON_ERROR | wx.OK)
+        Application.mainWindow.toaster.showError(_(u"Can't open clipboard"))
         return
 
     data = wx.TextDataObject()
@@ -384,15 +371,10 @@ def movePage(page, newParent):
         page.moveTo(newParent)
     except outwiker.core.exceptions.DuplicateTitle:
         # Невозможно переместить из-за дублирования имен
-        MessageBox(_(u"Can't move page when page with that title already exists"),
-                   _(u"Error"),
-                   wx.ICON_ERROR | wx.OK)
-
+        Application.mainWindow.toaster.showError(_(u"Can't move page when page with that title already exists"))
     except outwiker.core.exceptions.TreeException:
         # Невозможно переместить по другой причине
-        MessageBox(_(u"Can't move page"),
-                   _(u"Error"),
-                   wx.ICON_ERROR | wx.OK)
+        Application.mainWindow.toaster.showError(_(u"Can't move page: {}".format(page.display_title)))
 
 
 def setStatusText(text, index=0):
@@ -419,9 +401,7 @@ def getCurrentVersion():
 @testreadonly
 def renamePage(page, newtitle):
     if page.parent is None:
-        MessageBox(_(u"You can't rename the root element"),
-                   _(u"Error"),
-                   wx.ICON_ERROR | wx.OK)
+        Application.mainWindow.toaster.showError(_(u"You can't rename the root element"))
         return
 
     newtitle = newtitle.strip()
@@ -438,9 +418,7 @@ def renamePage(page, newtitle):
     try:
         page.title = real_title
     except OSError:
-        MessageBox(_(u'Can\'t rename page "{}" to "{}"').format(page.title, newtitle),
-                   _(u"Error"),
-                   wx.ICON_ERROR | wx.OK)
+        Application.mainWindow.toaster.showError(_(u'Can\'t rename page "{}" to "{}"').format(page.display_title, newtitle))
 
     if real_title != newtitle:
         page.alias = newtitle
@@ -459,7 +437,7 @@ def testPageTitle(title):
 
     except PageTitleError as error:
         MessageBox(str(error),
-                   _(u"The invalid page title"),
+                   _(u"Invalid page title"),
                    wx.OK | wx.ICON_ERROR)
         return False
 
