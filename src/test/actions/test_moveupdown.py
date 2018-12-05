@@ -101,10 +101,14 @@ class MovePageUpDownActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.application.selectedPage = self.wikiroot["Страница 1"]
         self.wikiroot["Страница 1"].readonly = True
 
-        Tester.dialogTester.appendOk()
+        self.application.mainWindow.toaster.counter.clear()
         self.application.actionController.getAction(MovePageDownAction.stringId).run(None)
-        self.assertEqual(Tester.dialogTester.count, 0)
+        self.assertEqual(
+            self.application.mainWindow.toaster.counter.showErrorCount,
+            1)
 
-        Tester.dialogTester.appendOk()
+        self.application.mainWindow.toaster.counter.clear()
         self.application.actionController.getAction(MovePageUpAction.stringId).run(None)
-        self.assertEqual(Tester.dialogTester.count, 0)
+        self.assertEqual(
+            self.application.mainWindow.toaster.counter.showErrorCount,
+            1)

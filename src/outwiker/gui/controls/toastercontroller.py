@@ -13,6 +13,9 @@ class ToasterController(object):
         self._parent = parent
         self._theme = Theme()
 
+        # Use in tests, not for normal code
+        self.counter = ToasterCounter()
+
         self.DELAY_SEC = 7000
 
     def _calcPopupPos(self, width, height) -> Tuple[int, int]:
@@ -39,6 +42,7 @@ class ToasterController(object):
                          title,
                          captionBackgroundColor,
                          captionForegroundColor)
+        self.counter.incShowErrorCount()
 
     def showInfo(self, title, message):
         captionBackgroundColor = self._theme.colorInfoBackground
@@ -47,6 +51,7 @@ class ToasterController(object):
                          title,
                          captionBackgroundColor,
                          captionForegroundColor)
+        self.counter.incShowInfoCount()
 
     def showMessage(self,
                     message,
@@ -73,6 +78,7 @@ class ToasterController(object):
         x, y = self._calcPopupPos(width, height)
         toasterbox.SetPopupPosition((x, y))
         toasterbox.Play()
+        self.counter.incShowCount()
 
 
 class InfoPanel(wx.Panel):
@@ -140,3 +146,22 @@ class InfoPanel(wx.Panel):
         captionLabel.Bind(wx.EVT_LEFT_DOWN, handler=self._onClick)
         captionPanel.Bind(wx.EVT_LEFT_DOWN, handler=self._onClick)
         return captionPanel
+
+
+class ToasterCounter:
+    def __init__(self):
+        self.clear()
+
+    def clear(self):
+        self.showCount = 0
+        self.showErrorCount = 0
+        self.showInfoCount = 0
+
+    def incShowCount(self):
+        self.showCount += 1
+
+    def incShowErrorCount(self):
+        self.showErrorCount += 1
+
+    def incShowInfoCount(self):
+        self.showInfoCount += 1

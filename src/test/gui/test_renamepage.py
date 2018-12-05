@@ -154,14 +154,16 @@ class RenamePageGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(self.wikiroot["--asdasdf"].alias, '##asdasdf')
 
     def testCommand_07_readonly(self):
-        Tester.dialogTester.appendOk()
+        self.application.mainWindow.toaster.counter.clear()
         self.wikiroot["Страница 1"].readonly = True
 
         renamePage(self.wikiroot["Страница 1"], "Абырвалг")
 
         self.assertIsNotNone(self.wikiroot["Страница 1"])
         self.assertIsNone(self.wikiroot["Абырвалг"])
-        self.assertEqual(Tester.dialogTester.count, 0)
+        self.assertEqual(
+            self.application.mainWindow.toaster.counter.showErrorCount,
+            1)
 
     def testCommand_double_dots(self):
         Tester.dialogTester.appendError()
@@ -216,8 +218,11 @@ class RenamePageGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertIsNone(self.wikiroot[".."])
 
     def testCommand_14_root(self):
-        Tester.dialogTester.appendOk()
+        self.application.mainWindow.toaster.counter.clear()
         renamePage(self.wikiroot, "Абырвалг")
 
         self.assertEqual(Tester.dialogTester.count, 0)
         self.assertEqual(self.wikiroot.title, basename(self.wikiroot.path))
+        self.assertEqual(
+            self.application.mainWindow.toaster.counter.showErrorCount,
+            1)

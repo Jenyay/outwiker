@@ -2,7 +2,6 @@
 
 import unittest
 
-from outwiker.gui.tester import Tester
 from outwiker.actions.globalsearch import GlobalSearchAction
 from test.basetestcases import BaseOutWikerGUIMixin
 
@@ -36,12 +35,14 @@ class GlobalSearchActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.application.wikiroot = self.wikiroot
         self.application.wikiroot.readonly = True
 
-        Tester.dialogTester.appendOk()
+        self.application.mainWindow.toaster.counter.clear()
 
         self.application.actionController.getAction(GlobalSearchAction.stringId).run(None)
 
         self.assertEqual(len(self.application.wikiroot.children), 0)
-        self.assertEqual(Tester.dialogTester.count, 0)
+        self.assertEqual(
+            self.application.mainWindow.toaster.counter.showErrorCount,
+            1)
 
     def testExecSeveralTimes(self):
         self.application.wikiroot = self.wikiroot

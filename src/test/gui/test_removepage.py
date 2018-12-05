@@ -82,9 +82,15 @@ class RemovePageGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertNotEqual(self.wikiroot["Страница 2"], None)
 
     def testCommandRemove_08_root(self):
-        Tester.dialogTester.appendYes()
+        # Tester.dialogTester.appendYes()
+        self.application.mainWindow.toaster.counter.clear()
+
         removePage(self.wikiroot)
-        self.assertEqual(Tester.dialogTester.count, 0)
+
+        # self.assertEqual(Tester.dialogTester.count, 0)
+        self.assertEqual(
+            self.application.mainWindow.toaster.counter.showErrorCount,
+            1)
 
     def testCommandRemove_07_IOError(self):
         def removeBeforeRemove(dialog):
@@ -93,12 +99,15 @@ class RemovePageGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
             Tester.dialogTester.appendOk()
             return wx.YES
 
+        self.application.mainWindow.toaster.counter.clear()
         Tester.dialogTester.append(removeBeforeRemove)
 
         removePage(self.wikiroot["Страница 2/Страница 3"])
 
         # Убедимся, что были показаны все сообщения
-        self.assertEqual(Tester.dialogTester.count, 0)
+        self.assertEqual(
+            self.application.mainWindow.toaster.counter.showErrorCount,
+            1)
 
     def testActionRemovePage_01(self):
         self.application.wikiroot = self.wikiroot
