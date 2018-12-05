@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import wx
 
@@ -13,30 +13,27 @@ class AttachFilesAction (BaseAction):
     """
     stringId = u"AttachFiles"
 
-    def __init__ (self, application):
+    def __init__(self, application):
         self._application = application
 
-
     @property
-    def title (self):
+    def title(self):
         return _(u"Attach Files…")
 
-
     @property
-    def description (self):
+    def description(self):
         return _(u"Attach files to current page")
 
-
-    def run (self, params):
+    def run(self, params):
         assert self._application.mainWindow is not None
 
         if self._application.selectedPage is not None:
-            self._attachFilesWithDialog (self._application.mainWindow,
-                                         self._application.wikiroot.selectedPage)
-
+            self._attachFilesWithDialog(
+                self._application.mainWindow,
+                self._application.wikiroot.selectedPage)
 
     @testreadonly
-    def _attachFilesWithDialog (self, parent, page):
+    def _attachFilesWithDialog(self, parent, page):
         """
         Вызвать диалог для приаттачивания файлов к странице
         parent - родительское окно
@@ -45,12 +42,13 @@ class AttachFilesAction (BaseAction):
         if page.readonly:
             raise ReadonlyException
 
-        dlg = wx.FileDialog (parent,
-                             style = wx.FD_OPEN | wx.FD_FILE_MUST_EXIST | wx.FD_MULTIPLE)
+        dlg = wx.FileDialog(
+            parent,
+            style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST | wx.FD_MULTIPLE)
 
         if dlg.ShowModal() == wx.ID_OK:
             files = dlg.GetPaths()
             files.sort()
-            attachFiles (parent, page, files)
+            attachFiles(parent, page, files)
 
         dlg.Destroy()

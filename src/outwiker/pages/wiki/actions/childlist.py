@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import wx
 
@@ -12,35 +12,32 @@ class WikiChildListAction (BaseAction):
     """
     stringId = u"WikiChildList"
 
-    def __init__ (self, application):
+    def __init__(self, application):
         self._application = application
 
-
     @property
-    def title (self):
+    def title(self):
         return _(u"Children (:childlist:)")
 
-
     @property
-    def description (self):
+    def description(self):
         return _(u"Insert (:childlist:) command")
 
-
-    def run (self, params):
+    def run(self, params):
         assert self._application.mainWindow is not None
         assert self._application.mainWindow.pagePanel is not None
 
-        with ChildListDialog (self._application.mainWindow) as dlg:
-            controller = ChildListDialogController (dlg)
+        with ChildListDialog(self._application.mainWindow) as dlg:
+            controller = ChildListDialogController(dlg)
 
             text = controller.getDialogResult()
             if text is not None:
-                self._application.mainWindow.pagePanel.pageView.codeEditor.replaceText (text)
-
+                self._application.mainWindow.pagePanel.pageView.codeEditor.replaceText(
+                    text)
 
 
 class ChildListDialogController (object):
-    def __init__ (self, dialog):
+    def __init__(self, dialog):
         # Параметры сортировки
         self._sortStrings = [
             u"order",
@@ -58,21 +55,18 @@ class ChildListDialogController (object):
         ]
 
         self._dialog = dialog
-        self._dialog.setSortOrders (self._dialogSortStrings)
+        self._dialog.setSortOrders(self._dialogSortStrings)
         self._dialog.selectedSort = 0
 
-
-    def getDialogResult (self):
+    def getDialogResult(self):
         if self._dialog.ShowModal() == wx.ID_OK:
             return self._getCommand()
 
+    def _getCommand(self):
+        params = self._getParams()
+        return u"(:childlist{}:)".format(params)
 
-    def _getCommand (self):
-        params = self._getParams ()
-        return u"(:childlist{}:)".format (params)
-
-
-    def _getParams (self):
+    def _getParams(self):
         """
         Возвращает строку, описывающую параметры согласно настройкам в диалоге
         """
@@ -86,68 +80,67 @@ class ChildListDialogController (object):
         if descend:
             sortname = "descend" + sortname
 
-        return u" sort={}".format (sortname)
+        return u" sort={}".format(sortname)
 
 
 class ChildListDialog (TestedDialog):
     """
     Диалог для вставки команды (:childlist:)
     """
-    def __init__ (self, parent):
-        super (ChildListDialog, self).__init__ (parent)
-        self.SetTitle (_(u"Insert (:childlist:) command"))
 
-        self.__createGui ()
+    def __init__(self, parent):
+        super(ChildListDialog, self).__init__(parent)
+        self.SetTitle(_(u"Insert (:childlist:) command"))
+
+        self.__createGui()
         self.__layout()
 
-
-    def setSortOrders (self, sortStrings):
+    def setSortOrders(self, sortStrings):
         self._sortComboBox.Clear()
-        self._sortComboBox.AppendItems (sortStrings)
+        self._sortComboBox.AppendItems(sortStrings)
 
+    def __createGui(self):
+        self._sortLabel = wx.StaticText(self, label=_(u"Sort"))
 
-    def __createGui (self):
-        self._sortLabel = wx.StaticText (self, label = _(u"Sort"))
+        self._sortComboBox = wx.ComboBox(
+            self, style=wx.CB_DROPDOWN | wx.CB_READONLY)
+        self._descendCheckBox = wx.CheckBox(self, label=_("Descending sort"))
+        self._buttonsSizer = self.CreateButtonSizer(wx.OK | wx.CANCEL)
 
-        self._sortComboBox = wx.ComboBox (self, style = wx.CB_DROPDOWN | wx.CB_READONLY)
-        self._descendCheckBox = wx.CheckBox (self, label = _("Descending sort"))
-        self._buttonsSizer = self.CreateButtonSizer (wx.OK | wx.CANCEL)
+    def __layout(self):
+        mainSizer = wx.FlexGridSizer(cols=2)
+        mainSizer.AddGrowableCol(0)
+        mainSizer.AddGrowableCol(1)
 
-
-    def __layout (self):
-        mainSizer = wx.FlexGridSizer (cols=2)
-        mainSizer.AddGrowableCol (0)
-        mainSizer.AddGrowableCol (1)
-
-        mainSizer.Add (self._sortLabel, 0, flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL, border = 2)
-        mainSizer.Add (self._sortComboBox, 0, flag = wx.EXPAND | wx.ALL | wx.ALIGN_CENTER_VERTICAL, border = 2)
-        mainSizer.Add (self._descendCheckBox, 0, flag = wx.EXPAND | wx.ALL | wx.ALIGN_CENTER_VERTICAL, border = 2)
+        mainSizer.Add(self._sortLabel, 0, flag=wx.ALL |
+                      wx.ALIGN_CENTER_VERTICAL, border=2)
+        mainSizer.Add(self._sortComboBox, 0, flag=wx.EXPAND |
+                      wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
+        mainSizer.Add(self._descendCheckBox, 0, flag=wx.EXPAND |
+                      wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
         mainSizer.AddStretchSpacer()
         mainSizer.AddStretchSpacer()
-        mainSizer.Add (self._buttonsSizer, 0, flag = wx.EXPAND | wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT, border = 2)
+        mainSizer.Add(self._buttonsSizer, 0, flag=wx.EXPAND | wx.ALL |
+                      wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT, border=2)
 
-        self.SetSizer (mainSizer)
+        self.SetSizer(mainSizer)
         self.Fit()
 
-
     @property
-    def selectedSort (self):
+    def selectedSort(self):
         """
         Возвращает номер выбранного пункта списка
         """
         return self._sortComboBox.GetSelection()
 
-
     @selectedSort.setter
-    def selectedSort (self, value):
-        self._sortComboBox.SetSelection (value)
-
+    def selectedSort(self, value):
+        self._sortComboBox.SetSelection(value)
 
     @property
-    def isDescend (self):
+    def isDescend(self):
         return self._descendCheckBox.IsChecked()
 
-
     @isDescend.setter
-    def isDescend (self, value):
-        self._descendCheckBox.SetValue (value)
+    def isDescend(self, value):
+        self._descendCheckBox.SetValue(value)

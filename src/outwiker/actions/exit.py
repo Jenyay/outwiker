@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import wx
 
@@ -13,26 +13,22 @@ class ExitAction (BaseAction):
     """
     stringId = u"Exit"
 
-    def __init__ (self, application):
+    def __init__(self, application):
         self._application = application
 
-
     @property
-    def title (self):
+    def title(self):
         return _(u"Exit…")
 
-
     @property
-    def description (self):
+    def description(self):
         return _(u"Close OutWiker")
 
-
-    def run (self, params):
+    def run(self, params):
         if (self.__allowExit()):
             self._application.mainWindow.Destroy()
 
-
-    def __allowExit (self):
+    def __allowExit(self):
         """
         Return True, if the window can be closed
         """
@@ -40,6 +36,6 @@ class ExitAction (BaseAction):
         askBeforeExit = generalConfig.askBeforeExit.value
 
         return (not askBeforeExit or
-                MessageBox (_(u"Really exit?"),
-                            _(u"Exit"),
-                            wx.YES_NO | wx.ICON_QUESTION) == wx.YES)
+                MessageBox(_(u"Really exit?"),
+                           _(u"Exit"),
+                           wx.YES_NO | wx.ICON_QUESTION) == wx.YES)

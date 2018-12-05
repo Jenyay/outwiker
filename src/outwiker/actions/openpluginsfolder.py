@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import wx
 
@@ -13,25 +13,23 @@ class OpenPluginsFolderAction (BaseAction):
     """
     stringId = u"OpenPluginsFolder"
 
-    def __init__ (self, application):
+    def __init__(self, application):
         self._application = application
 
-
     @property
-    def title (self):
+    def title(self):
         return _(u"Open Plugins Folder")
 
-
     @property
-    def description (self):
+    def description(self):
         return _(u"Open folder with plugins")
 
-
-    def run (self, params):
-        # 0 - папка рядом с запускаемым файлом, затем идут другие папки, если они есть
-        pluginsDir = getPluginsDirList ()[-1]
+    def run(self, params):
+        # 0 - папка рядом с запускаемым файлом,
+        # затем идут другие папки, если они есть
+        pluginsDir = getPluginsDirList()[-1]
         try:
-            getOS().startFile (pluginsDir)
+            getOS().startFile(pluginsDir)
         except OSError:
-            text = _(u"Can't open folder '{}'".format (pluginsDir))
-            MessageBox (text, _(u"Error"), wx.ICON_ERROR | wx.OK)
+            text = _(u"Can't open folder '{}'".format(pluginsDir))
+            MessageBox(text, _(u"Error"), wx.ICON_ERROR | wx.OK)

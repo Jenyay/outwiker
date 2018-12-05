@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import wx
 
@@ -12,26 +12,23 @@ class WikiThumbAction (BaseAction):
     """
     stringId = u"WikiThumbnail"
 
-    def __init__ (self, application):
+    def __init__(self, application):
         self._application = application
 
-
     @property
-    def title (self):
+    def title(self):
         return _(u"Thumbnail")
 
-
     @property
-    def description (self):
+    def description(self):
         return _(u"Insert thumbnail")
 
-
-    def run (self, params):
+    def run(self, params):
         codeEditor = self._application.mainWindow.pagePanel.pageView.codeEditor
 
-        dlgController = ThumbDialogController (self._application.mainWindow,
-                                               self._application.selectedPage,
-                                               codeEditor.GetSelectedText())
+        dlgController = ThumbDialogController(self._application.mainWindow,
+                                              self._application.selectedPage,
+                                              codeEditor.GetSelectedText())
 
         if dlgController.showDialog() == wx.ID_OK:
-            codeEditor.replaceText (dlgController.result)
+            codeEditor.replaceText(dlgController.result)

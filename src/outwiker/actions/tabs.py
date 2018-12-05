@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from outwiker.gui.baseaction import BaseAction
 
@@ -9,17 +9,15 @@ class CloseTabAction (BaseAction):
     """
     stringId = u"CloseTab"
 
-    def __init__ (self, application):
+    def __init__(self, application):
         self._application = application
 
-
     @property
-    def title (self):
+    def title(self):
         return _(u"Close Tab")
 
-
     @property
-    def description (self):
+    def description(self):
         return _(u"Close current tab")
 
     def run(self, params):
@@ -44,12 +42,7 @@ class AddTabAction (BaseAction):
         return _(u"Add Tab")
 
     @property
-    def title (self):
-        return _(u"Add Tab")
-
-
-    @property
-    def description (self):
+    def description(self):
         return _(u"Add tab")
 
     def run(self, params):
@@ -63,24 +56,20 @@ class NextTabAction (BaseAction):
     """
     stringId = u"NextTab"
 
-    def __init__ (self, application):
+    def __init__(self, application):
         self._application = application
 
-
     @property
-    def title (self):
+    def title(self):
         return _(u"Next Tab")
 
-
     @property
-    def description (self):
+    def description(self):
         return _(u"Go to next tab")
 
-
-    def run (self, params):
+    def run(self, params):
         assert self._application.mainWindow is not None
         self._application.mainWindow.tabsController.nextTab()
-
 
 
 class PreviousTabAction (BaseAction):
@@ -89,20 +78,17 @@ class PreviousTabAction (BaseAction):
     """
     stringId = u"PreviousTab"
 
-    def __init__ (self, application):
+    def __init__(self, application):
         self._application = application
 
-
     @property
-    def title (self):
+    def title(self):
         return _(u"Previous Tab")
 
-
     @property
-    def description (self):
+    def description(self):
         return _(u"Go to previous tab")
 
-
-    def run (self, params):
+    def run(self, params):
         assert self._application.mainWindow is not None
         self._application.mainWindow.tabsController.previousTab()

@@ -1,9 +1,7 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 """
 Действия, связанные с кнопками вперед / назад
 """
-
-import wx
 
 from outwiker.gui.baseaction import BaseAction
 
@@ -14,21 +12,18 @@ class HistoryBackAction (BaseAction):
     """
     stringId = u"HistoryBack"
 
-    def __init__ (self, application):
+    def __init__(self, application):
         self._application = application
 
-
     @property
-    def title (self):
+    def title(self):
         return _(u"Back")
 
-
     @property
-    def description (self):
+    def description(self):
         return _(u"Open previous page")
-    
 
-    def run (self, params):
+    def run(self, params):
         self._application.mainWindow.tabsController.historyBack()
 
 
@@ -38,19 +33,16 @@ class HistoryForwardAction (BaseAction):
     """
     stringId = u"HistoryForward"
 
-    def __init__ (self, application):
+    def __init__(self, application):
         self._application = application
 
-
     @property
-    def title (self):
+    def title(self):
         return _(u"Forward")
 
-
     @property
-    def description (self):
+    def description(self):
         return _(u"Open next page")
-    
 
-    def run (self, params):
+    def run(self, params):
         self._application.mainWindow.tabsController.historyForward()

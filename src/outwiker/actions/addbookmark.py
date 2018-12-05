@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from outwiker.gui.baseaction import BaseAction
 
@@ -9,26 +9,23 @@ class AddBookmarkAction (BaseAction):
     """
     stringId = u"AddBookmark"
 
-    def __init__ (self, application):
+    def __init__(self, application):
         self._application = application
 
-
     @property
-    def title (self):
+    def title(self):
         return _(u"Add/Remove Bookmark")
 
-
     @property
-    def description (self):
+    def description(self):
         return _(u"Add/Remove Bookmark")
 
-
-    def run (self, params):
+    def run(self, params):
         if self._application.selectedPage is not None:
             wikiroot = self._application.wikiroot
             selectedPage = wikiroot.selectedPage
 
-            if not wikiroot.bookmarks.pageMarked (selectedPage):
-                wikiroot.bookmarks.add (selectedPage)
+            if not wikiroot.bookmarks.pageMarked(selectedPage):
+                wikiroot.bookmarks.add(selectedPage)
             else:
-                wikiroot.bookmarks.remove (selectedPage)
+                wikiroot.bookmarks.remove(selectedPage)

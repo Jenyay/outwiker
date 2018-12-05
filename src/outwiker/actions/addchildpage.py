@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from outwiker.gui.baseaction import BaseAction
 from outwiker.gui.pagedialog import createChildPage
@@ -10,20 +10,17 @@ class AddChildPageAction (BaseAction):
     """
     stringId = u"AddChildPage"
 
-    def __init__ (self, application):
+    def __init__(self, application):
         self._application = application
 
-
     @property
-    def title (self):
+    def title(self):
         return _(u"Add Child Page…")
 
-
     @property
-    def description (self):
+    def description(self):
         return _(u"Add child page")
 
-
-    def run (self, params):
-        createChildPage (self._application.mainWindow,
-                         self._application.selectedPage)
+    def run(self, params):
+        createChildPage(self._application.mainWindow,
+                        self._application.selectedPage)

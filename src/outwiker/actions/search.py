@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from outwiker.gui.baseaction import BaseAction
 
@@ -7,17 +7,15 @@ class BaseSearchAction (BaseAction):
     """
     Базовый класс для actions поиска по странице
     """
-    def __init__ (self, application):
+
+    def __init__(self, application):
         self._application = application
 
-
-    def _getPageView (self):
+    def _getPageView(self):
         return self._application.mainWindow.pagePanel.panel.pageView
 
-
-    def _getSearchPanel (self):
+    def _getSearchPanel(self):
         return self._getPageView().GetSearchPanel()
-
 
 
 class SearchAction (BaseSearchAction):
@@ -27,16 +25,14 @@ class SearchAction (BaseSearchAction):
     stringId = u"Search"
 
     @property
-    def title (self):
+    def title(self):
         return _(u"Search")
 
-
     @property
-    def description (self):
+    def description(self):
         return _(u"Find on page")
 
-
-    def run (self, params):
+    def run(self, params):
         searchPanel = self._getSearchPanel()
 
         if searchPanel is not None:
@@ -52,16 +48,14 @@ class SearchNextAction (BaseSearchAction):
     stringId = u"SearchNext"
 
     @property
-    def title (self):
+    def title(self):
         return _(u"Find next")
 
-
     @property
-    def description (self):
+    def description(self):
         return _(u"Find next on page")
 
-
-    def run (self, params):
+    def run(self, params):
         searchPanel = self._getSearchPanel()
 
         if searchPanel is not None:
@@ -76,16 +70,14 @@ class SearchPrevAction (BaseSearchAction):
     stringId = u"SearchPrev"
 
     @property
-    def title (self):
+    def title(self):
         return _(u"Find previous")
 
-
     @property
-    def description (self):
+    def description(self):
         return _(u"Find previous on page")
 
-
-    def run (self, params):
+    def run(self, params):
         searchPanel = self._getSearchPanel()
 
         if searchPanel is not None:
@@ -100,16 +92,14 @@ class SearchAndReplaceAction (BaseSearchAction):
     stringId = u"SearchReplace"
 
     @property
-    def title (self):
+    def title(self):
         return _(u"Search and Replace")
 
-
     @property
-    def description (self):
+    def description(self):
         return _(u"Begin search and replace on page")
 
-
-    def run (self, params):
+    def run(self, params):
         searchPanel = self._getSearchPanel()
 
         if searchPanel is not None:

@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import wx
 
@@ -12,31 +12,27 @@ class SortSiblingsAlphabeticalAction (BaseAction):
     """
     stringId = u"SortSiblingsAlphabetically"
 
-    def __init__ (self, application):
+    def __init__(self, application):
         self._application = application
 
-
     @property
-    def title (self):
+    def title(self):
         return _(u"Sort Siblings Pages Alphabetically")
 
-
     @property
-    def description (self):
+    def description(self):
         return _(u"Sort siblings pages alphabetically")
 
-
-    def run (self, params):
+    def run(self, params):
         self.sortChildren()
 
-
     @testreadonly
-    def sortChildren (self):
+    def sortChildren(self):
         if self._application.wikiroot is None:
-            MessageBox (_(u"Wiki is not open"),
-                        _(u"Error"),
-                        wx.ICON_ERROR | wx.OK)
+            MessageBox(_(u"Wiki is not open"),
+                       _(u"Error"),
+                       wx.ICON_ERROR | wx.OK)
             return
 
         if self._application.wikiroot.selectedPage is not None:
-            self._application.wikiroot.selectedPage.parent.sortChildrenAlphabetical ()
+            self._application.wikiroot.selectedPage.parent.sortChildrenAlphabetical()

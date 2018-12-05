@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from outwiker.gui.baseaction import BaseAction
 
@@ -9,19 +9,16 @@ class FullScreenAction (BaseAction):
     """
     stringId = u"Fullscreen"
 
-    def __init__ (self, application):
+    def __init__(self, application):
         self._application = application
 
-
     @property
-    def title (self):
+    def title(self):
         return _(u"Fullscreen")
 
-
     @property
-    def description (self):
+    def description(self):
         return _(u"Fullscreen mode on/off")
 
-
-    def run (self, params):
-        self._application.mainWindow.setFullscreen (params)
+    def run(self, params):
+        self._application.mainWindow.setFullscreen(params)

@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from outwiker.gui.baseaction import BaseAction
 from outwiker.core.commands import closeWiki
@@ -10,19 +10,16 @@ class CloseAction (BaseAction):
     """
     stringId = u"CloseWiki"
 
-    def __init__ (self, application):
+    def __init__(self, application):
         self._application = application
 
-
     @property
-    def title (self):
+    def title(self):
         return _(u"Close")
 
-
     @property
-    def description (self):
+    def description(self):
         return _(u"Close a tree notes")
 
-
-    def run (self, params):
-        closeWiki (self._application)
+    def run(self, params):
+        closeWiki(self._application)

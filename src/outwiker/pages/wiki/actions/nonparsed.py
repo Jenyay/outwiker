@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from outwiker.gui.baseaction import BaseAction
 
@@ -9,23 +9,20 @@ class WikiNonParsedAction (BaseAction):
     """
     stringId = u"WikiNonParsed"
 
-    def __init__ (self, application):
+    def __init__(self, application):
         self._application = application
 
-
     @property
-    def title (self):
+    def title(self):
         return _(u"Non-parsed [=…=]")
 
-
     @property
-    def description (self):
+    def description(self):
         return _(u"Non parsed text")
 
-
-    def run (self, params):
+    def run(self, params):
         assert self._application.mainWindow is not None
         assert self._application.mainWindow.pagePanel is not None
 
         codeEditor = self._application.mainWindow.pagePanel.pageView.codeEditor
-        codeEditor.turnText (u"[=", u"=]")
+        codeEditor.turnText(u"[=", u"=]")

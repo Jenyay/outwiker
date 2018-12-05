@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os.path
 
@@ -19,130 +19,122 @@ class SetStyleToBranchAction (BaseAction):
     """
     stringId = u"SetStyleToBranch"
 
-    def __init__ (self, application):
+    def __init__(self, application):
         self._application = application
 
-
     @property
-    def title (self):
+    def title(self):
         return _(u"Set Style to Branch…")
 
-
     @property
-    def description (self):
+    def description(self):
         return _(u"Set Style to Branch")
 
-
-    def run (self, params):
+    def run(self, params):
         assert self._application.mainWindow is not None
 
         if self._application.wikiroot is None:
             return
 
         if self._application.selectedPage is None:
-            self.addStyleToBranchGui (self._application.wikiroot,
-                                      self._application.mainWindow)
+            self.addStyleToBranchGui(self._application.wikiroot,
+                                     self._application.mainWindow)
         else:
-            self.addStyleToBranchGui (self._application.selectedPage,
-                                      self._application.mainWindow)
+            self.addStyleToBranchGui(self._application.selectedPage,
+                                     self._application.mainWindow)
 
-
-    def addStyleToBranchGui (self, page, parent):
+    def addStyleToBranchGui(self, page, parent):
         """
         Установить стиль для всей ветки, в том числе и для текущей страницы
         """
-        with AddStyleDialog (self._application.mainWindow) as dlg:
+        with AddStyleDialog(self._application.mainWindow) as dlg:
             if dlg.ShowModal() == wx.ID_OK:
                 wiki = self._application.wikiroot
 
                 # Чтобы не вызывались никакие события при обновлении стиля
                 self._application.wikiroot = None
 
-                runner = LongProcessRunner (self.__applyStyle,
-                                            self._application.mainWindow,
-                                            _(u"Set Style to Branch"),
-                                            _(u"Please wait..."))
+                runner = LongProcessRunner(self.__applyStyle,
+                                           self._application.mainWindow,
+                                           _(u"Set Style to Branch"),
+                                           _(u"Please wait..."))
 
-                runner.run (self._application, page, dlg.style)
+                runner.run(self._application, page, dlg.style)
                 # Вернем открытую вики
                 self._application.wikiroot = wiki
 
-
-    def __applyStyle (self, application, page, style):
+    def __applyStyle(self, application, page, style):
         if page.parent is not None and not page.readonly:
             # Если это не корень вики и страница открыта не только для чтения
-            Style().setPageStyle (page, style)
+            Style().setPageStyle(page, style)
             application.onPageUpdateNeeded(page,
                                            PageUpdateNeededParams(False))
 
-        [self.__applyStyle(application, child, style) for child in page.children]
-
+        [self.__applyStyle(application, child, style)
+         for child in page.children]
 
 
 class AddStyleDialog (TestedDialog):
-    def __init__ (self, parent):
-        super (AddStyleDialog, self).__init__ (parent,
-                                               style = wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
+    def __init__(self, parent):
+        super(AddStyleDialog, self).__init__(
+            parent,
+            style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
 
-        self.__stylesList = StylesList (getStylesDirList ())
+        self.__stylesList = StylesList(getStylesDirList())
 
-        self.SetMinSize ((300, 80))
+        self.SetMinSize((300, 80))
         self.__createGui()
         self.Center(wx.BOTH)
 
+    def __createGui(self):
+        self.SetTitle(_(u"Set style to branch"))
 
-    def __createGui (self):
-        self.SetTitle (_(u"Set style to branch"))
+        styleLabel = wx.StaticText(parent=self,
+                                   label=_(u"Style"))
 
-        styleLabel = wx.StaticText (parent = self,
-                                    label = _(u"Style"))
+        self.stylesCombo = wx.ComboBox(parent=self,
+                                       style=wx.CB_DROPDOWN | wx.CB_READONLY)
+        self.stylesCombo.SetMinSize((200, -1))
 
-        self.stylesCombo = wx.ComboBox (parent = self,
-                                          style=wx.CB_DROPDOWN | wx.CB_READONLY)
-        self.stylesCombo.SetMinSize ((200, -1))
+        mainSizer = wx.FlexGridSizer(cols=2)
+        mainSizer.AddGrowableCol(1)
+        mainSizer.AddGrowableRow(1)
 
-        mainSizer = wx.FlexGridSizer (cols=2)
-        mainSizer.AddGrowableCol (1)
-        mainSizer.AddGrowableRow (1)
+        mainSizer.Add(styleLabel,
+                      flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+                      border=4)
 
-        mainSizer.Add (styleLabel,
-                       flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                       border = 4)
+        mainSizer.Add(self.stylesCombo,
+                      flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND,
+                      border=4)
 
-        mainSizer.Add (self.stylesCombo,
-                       flag = wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND,
-                       border = 4)
+        self.__createOkCancelButtons(mainSizer)
 
-        self.__createOkCancelButtons (mainSizer)
-
-        self.SetSizer (mainSizer)
+        self.SetSizer(mainSizer)
         self.Fit()
 
-        self.__fillStyles (self.stylesCombo)
+        self.__fillStyles(self.stylesCombo)
 
-
-    def __fillStyles (self, combobox):
-        names_list = [_(u"Default")] + [os.path.basename (style)
+    def __fillStyles(self, combobox):
+        names_list = [_(u"Default")] + [os.path.basename(style)
                                         for style
                                         in self.__stylesList]
 
         combobox.Clear()
-        combobox.AppendItems (names_list)
-        combobox.SetSelection (0)
+        combobox.AppendItems(names_list)
+        combobox.SetSelection(0)
 
-
-    def __createOkCancelButtons (self, mainSizer):
-        okCancel = self.CreateButtonSizer (wx.OK | wx.CANCEL)
+    def __createOkCancelButtons(self, mainSizer):
+        okCancel = self.CreateButtonSizer(wx.OK | wx.CANCEL)
         mainSizer.AddStretchSpacer()
-        mainSizer.Add (
+        mainSizer.Add(
             okCancel,
             flag=wx.ALL | wx.ALIGN_RIGHT | wx.ALIGN_BOTTOM,
             border=4
         )
 
-
     @property
-    def style (self):
+    def style(self):
         selItem = self.stylesCombo.GetSelection()
         if selItem == 0:
             return Style().getDefaultStyle()

@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from .fontsizebase import WikiFontSizeBaseAction
 
@@ -10,14 +10,12 @@ class WikiFontSizeBigAction (WikiFontSizeBaseAction):
     stringId = u"WikiBigFont"
 
     @property
-    def title (self):
+    def title(self):
         return _(u"Big font")
-
 
     @property
-    def description (self):
+    def description(self):
         return _(u"Big font")
 
-
-    def run (self, params):
-        self.selectFontSize (4)
+    def run(self, params):
+        self.selectFontSize(4)

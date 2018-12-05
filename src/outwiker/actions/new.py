@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from outwiker.gui.baseaction import BaseAction
 from outwiker.core.commands import createNewWiki
@@ -10,19 +10,16 @@ class NewAction (BaseAction):
     """
     stringId = u"NewTree"
 
-    def __init__ (self, application):
+    def __init__(self, application):
         self._application = application
 
-
     @property
-    def title (self):
+    def title(self):
         return _(u"New…")
 
-
     @property
-    def description (self):
+    def description(self):
         return _(u"Create a new tree notes")
 
-
-    def run (self, params):
-        createNewWiki (self._application.mainWindow)
+    def run(self, params):
+        createNewWiki(self._application.mainWindow)

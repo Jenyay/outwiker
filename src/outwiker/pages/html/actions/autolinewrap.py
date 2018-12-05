@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from outwiker.gui.baseaction import BaseAction
 
@@ -8,17 +8,15 @@ class HtmlAutoLineWrap (BaseAction):
 
     stringId = u"HtmlAutoLineWrap"
 
-    def __init__ (self, application):
+    def __init__(self, application):
         self._application = application
 
-
     @property
-    def title (self):
+    def title(self):
         return _(u"Auto Line Wrap")
 
-
     @property
-    def description (self):
+    def description(self):
         return _(u"Auto line wrap for HTML pages")
 
     def run(self, checked):

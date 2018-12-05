@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from outwiker.core.events import PageUpdateNeededParams
 from outwiker.gui.baseaction import BaseAction
@@ -10,21 +10,18 @@ class WikiUpdateHtmlAction (BaseAction):
     """
     stringId = u"WikiUpdateHtml"
 
-    def __init__ (self, application):
+    def __init__(self, application):
         self._application = application
 
-
     @property
-    def title (self):
+    def title(self):
         return _(u"Update HTML Code")
 
-
     @property
-    def description (self):
+    def description(self):
         return _(u"Update HTML code for wiki page")
 
-
-    def run (self, params):
+    def run(self, params):
         selectedPage = self._application.selectedPage
 
         assert selectedPage is not None

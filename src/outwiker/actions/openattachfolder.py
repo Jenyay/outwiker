@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import wx
 
@@ -14,25 +14,23 @@ class OpenAttachFolderAction (BaseAction):
     """
     stringId = u"OpenAttachFolder"
 
-    def __init__ (self, application):
+    def __init__(self, application):
         self._application = application
 
-
     @property
-    def title (self):
+    def title(self):
         return _(u"Open Attachments Folder")
 
-
     @property
-    def description (self):
+    def description(self):
         return _(u"Open folder with attached files")
 
-
-    def run (self, params):
+    def run(self, params):
         if self._application.selectedPage is not None:
-            folder = Attachment (self._application.selectedPage).getAttachPath (create=True)
+            folder = Attachment(
+                self._application.selectedPage).getAttachPath(create=True)
             try:
-                getOS().startFile (folder)
+                getOS().startFile(folder)
             except OSError:
-                text = _(u"Can't open folder '{}'".format (folder))
-                MessageBox (text, _(u"Error"), wx.ICON_ERROR | wx.OK)
+                text = _(u"Can't open folder '{}'".format(folder))
+                MessageBox(text, _(u"Error"), wx.ICON_ERROR | wx.OK)

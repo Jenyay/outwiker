@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from .fontsizebase import WikiFontSizeBaseAction
 
@@ -10,14 +10,12 @@ class WikiFontSizeSmallAction (WikiFontSizeBaseAction):
     stringId = u"WikiSmallFont"
 
     @property
-    def title (self):
+    def title(self):
         return _(u"Small font")
-
 
     @property
-    def description (self):
+    def description(self):
         return _(u"Small font")
 
-
-    def run (self, params):
-        self.selectFontSize (3)
+    def run(self, params):
+        self.selectFontSize(3)

@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from outwiker.actions.showhidebase import ShowHideBaseAction
 
@@ -9,19 +9,16 @@ class ShowHideTreeAction (ShowHideBaseAction):
     """
     stringId = u"ShowHideTree"
 
-    def __init__ (self, application):
-        super (ShowHideTreeAction, self).__init__ (application)
-
+    def __init__(self, application):
+        super(ShowHideTreeAction, self).__init__(application)
 
     @property
-    def title (self):
+    def title(self):
         return _(u"Notes Tree")
 
-
     @property
-    def description (self):
+    def description(self):
         return _(u"Show / hide a notes tree panel")
 
-
-    def getPanel (self):
+    def getPanel(self):
         return self._application.mainWindow.treePanel
