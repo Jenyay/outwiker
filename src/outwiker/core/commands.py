@@ -50,6 +50,22 @@ def MessageBox(*args, **kwargs):
     return result
 
 
+def showError(mainWindow: "outwiker.gui.mainwindow.MainWindow", message: str):
+    '''
+    Show error message with Toaster
+    '''
+    mainWindow.toaster.showError(message)
+
+
+def showInfo(mainWindow: "outwiker.gui.mainwindow.MainWindow",
+             title: str,
+             message: str):
+    '''
+    Show info message with Toaster
+    '''
+    mainWindow.toaster.showInfo(message)
+
+
 def testreadonly(func):
     """
     Декоратор для отлавливания исключения
@@ -59,7 +75,7 @@ def testreadonly(func):
         try:
             return func(*args, **kwargs)
         except outwiker.core.exceptions.ReadonlyException:
-            Application.mainWindow.toaster.showError(_(u"Page is opened as read-only"))
+            showError(Application.mainWindow, _(u"Page is opened as read-only"))
 
     return readOnlyWrap
 
@@ -116,7 +132,7 @@ def removePage(page):
         raise outwiker.core.exceptions.ReadonlyException
 
     if page.parent is None:
-        Application.mainWindow.toaster.showError(_(u"You can't remove the root element"))
+        showError(Application.mainWindow, _(u"You can't remove the root element"))
         return
 
     if (MessageBox(_(u'Remove page "{}" and all subpages?\nAll attached files will also be deleted.').format(page.title),
@@ -125,7 +141,7 @@ def removePage(page):
         try:
             page.remove()
         except IOError:
-            Application.mainWindow.toaster.showError(_(u"Can't remove page"))
+            showError(Application.mainWindow, _(u"Can't remove page"))
 
 
 def openWikiWithDialog(parent, readonly=False):
@@ -242,7 +258,7 @@ def __canNotLoadWikiMessage(path):
     Вывести сообщение о том, что невоможно открыть вики
     """
     text = _(u"Can't load notes tree:\n") + path
-    Application.mainWindow.toaster.showError(text)
+    showError(Application.mainWindow, text)
 
 
 def __wantClearWikiOptions(path):
@@ -279,20 +295,20 @@ This is the first page. You can use a text formatting: '''bold''', ''italic'', {
             Application.wikiroot.selectedPage = firstPage
         except (IOError, OSError) as e:
             # TODO: проверить под Windows
-            Application.mainWindow.toaster.showError(_(u"Can't create wiki\n") + e.filename)
+            showError(Application.mainWindow, _(u"Can't create wiki\n") + e.filename)
 
     dlg.Destroy()
 
 
 def copyTextToClipboard(text):
     if not wx.TheClipboard.Open():
-        Application.mainWindow.toaster.showError(_(u"Can't open clipboard"))
+        showError(Application.mainWindow, _(u"Can't open clipboard"))
         return
 
     data = wx.TextDataObject(text)
 
     if not wx.TheClipboard.SetData(data):
-        Application.mainWindow.toaster.showError(_(u"Can't copy text to clipboard"))
+        showError(Application.mainWindow, _(u"Can't copy text to clipboard"))
 
     wx.TheClipboard.Flush()
     wx.TheClipboard.Close()
@@ -300,7 +316,7 @@ def copyTextToClipboard(text):
 
 def getClipboardText():
     if not wx.TheClipboard.Open():
-        Application.mainWindow.toaster.showError(_(u"Can't open clipboard"))
+        showError(Application.mainWindow, _(u"Can't open clipboard"))
         return
 
     data = wx.TextDataObject()
@@ -371,10 +387,10 @@ def movePage(page, newParent):
         page.moveTo(newParent)
     except outwiker.core.exceptions.DuplicateTitle:
         # Невозможно переместить из-за дублирования имен
-        Application.mainWindow.toaster.showError(_(u"Can't move page when page with that title already exists"))
+        showError(Application.mainWindow, _(u"Can't move page when page with that title already exists"))
     except outwiker.core.exceptions.TreeException:
         # Невозможно переместить по другой причине
-        Application.mainWindow.toaster.showError(_(u"Can't move page: {}".format(page.display_title)))
+        showError(Application.mainWindow, _(u"Can't move page: {}".format(page.display_title)))
 
 
 def setStatusText(text, index=0):
@@ -401,7 +417,7 @@ def getCurrentVersion():
 @testreadonly
 def renamePage(page, newtitle):
     if page.parent is None:
-        Application.mainWindow.toaster.showError(_(u"You can't rename the root element"))
+        showError(Application.mainWindow, _(u"You can't rename the root element"))
         return
 
     newtitle = newtitle.strip()
@@ -418,7 +434,8 @@ def renamePage(page, newtitle):
     try:
         page.title = real_title
     except OSError:
-        Application.mainWindow.toaster.showError(_(u'Can\'t rename page "{}" to "{}"').format(page.display_title, newtitle))
+        showError(Application.mainWindow,
+                  _(u'Can\'t rename page "{}" to "{}"').format(page.display_title, newtitle))
 
     if real_title != newtitle:
         page.alias = newtitle

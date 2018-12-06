@@ -278,7 +278,10 @@ class NotesTree(wx.Panel):
         pageToRename = page if page is not None else self._application.selectedPage
 
         if pageToRename is None or pageToRename.parent is None:
-            self._application.mainWindow.toaster.showError(_(u"You can't rename the root element"))
+            mainWindow = self._application.mainWindow
+            outwiker.core.commands.showError(
+                mainWindow,
+                _(u"You can't rename the root element"))
             return
 
         selectedItem = self._pageCache[pageToRename]
