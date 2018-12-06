@@ -22,14 +22,12 @@ class MovePageUpDownActionTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.destroyWiki(self.wikiroot)
 
     def testNoneWiki(self):
-        Tester.dialogTester.appendOk()
-        Tester.dialogTester.appendOk()
         self.application.wikiroot = None
 
         self.application.actionController.getAction(MovePageUpAction.stringId).run(None)
         self.application.actionController.getAction(MovePageDownAction.stringId).run(None)
 
-        self.assertEqual(Tester.dialogTester.count, 0)
+        self.assertEqual(self.application.mainWindow.toaster.counter.showErrorCount, 2)
 
     def testEmpty(self):
         self.application.wikiroot = self.wikiroot
