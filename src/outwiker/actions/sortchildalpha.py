@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 
-import wx
-
 from outwiker.gui.baseaction import BaseAction
-from outwiker.core.commands import testreadonly, MessageBox
+from outwiker.core.commands import testreadonly, showError
 
 
 class SortChildAlphabeticalAction (BaseAction):
@@ -29,9 +27,7 @@ class SortChildAlphabeticalAction (BaseAction):
     @testreadonly
     def sortChildren(self):
         if self._application.wikiroot is None:
-            MessageBox(_(u"Wiki is not open"),
-                       _(u"Error"),
-                       wx.ICON_ERROR | wx.OK)
+            showError(self._application.mainWindow, _(u"Wiki is not open"))
             return
 
         if self._application.wikiroot.selectedPage is not None:

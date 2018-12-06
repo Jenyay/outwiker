@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 
-import wx
-
 from outwiker.gui.baseaction import BaseAction
-from outwiker.core.commands import MessageBox
+from outwiker.core.commands import showError
 from outwiker.core.attachment import Attachment
 from outwiker.core.system import getOS
 
@@ -33,4 +31,4 @@ class OpenAttachFolderAction (BaseAction):
                 getOS().startFile(folder)
             except OSError:
                 text = _(u"Can't open folder '{}'".format(folder))
-                MessageBox(text, _(u"Error"), wx.ICON_ERROR | wx.OK)
+                showError(self._application.mainWindow, text)

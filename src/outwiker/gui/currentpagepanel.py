@@ -5,7 +5,7 @@ import wx
 
 from outwiker.actions.addbookmark import AddBookmarkAction
 from outwiker.core.factoryselector import FactorySelector
-from outwiker.core.commands import pageExists, openWiki, MessageBox
+from outwiker.core.commands import pageExists, openWiki, showError
 import outwiker.core.system
 from .tabsctrl import TabsCtrl
 
@@ -84,9 +84,8 @@ class CurrentPagePanel(wx.Panel):
         Событие при выборе страницы
         """
         if page is not None and not pageExists(page):
-            MessageBox(_(u"Can't open page. Page folder not exists"),
-                       _(u"Error"),
-                       wx.OK | wx.ICON_ERROR)
+            showError(self._application.mainWindow,
+                      _(u"Can't open page. Page folder not exists"))
             self.__reloadWiki()
             return
 
@@ -213,9 +212,8 @@ class CurrentPagePanel(wx.Panel):
             if not pageExists(self._application.selectedPage.root):
                 # Нет папки с деревом
                 self.__saveProcessing = True
-                MessageBox(_(u"Can't save page. Wiki folder not exists. Wiki will be closed."),
-                           _(u"Error"),
-                           wx.OK | wx.ICON_ERROR)
+                showError(self._application.mainWindow,
+                          _(u"Can't save page. Wiki folder not exists. Wiki will be closed."))
                 self.__saveProcessing = False
 
                 self._application.wikiroot = None
@@ -224,9 +222,8 @@ class CurrentPagePanel(wx.Panel):
             if not pageExists(self._application.selectedPage):
                 # Похоже, страница удалена вручную, перезагрузим вики
                 self.__saveProcessing = True
-                MessageBox(_(u"Can't save page. Page folder not exists. Wiki will be reloaded."),
-                           _(u"Error"),
-                           wx.OK | wx.ICON_ERROR)
+                showError(self._application.mainWindow,
+                          _(u"Can't save page. Page folder not exists. Wiki will be reloaded."))
                 self.__saveProcessing = False
 
                 try:

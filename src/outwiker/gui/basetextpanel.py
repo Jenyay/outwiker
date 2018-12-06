@@ -32,7 +32,7 @@ from outwiker.actions.polyactionsid import (SPELL_ON_OFF_ID,
                                             CLIPBOARD_CUT_WORD,
                                             )
 from outwiker.core.system import getImagesDir
-from outwiker.core.commands import MessageBox, pageExists, copyTextToClipboard
+from outwiker.core.commands import pageExists, copyTextToClipboard, showError
 from outwiker.core.defines import REGISTRY_PAGE_CURSOR_POSITION
 from .basepagepanel import BasePagePanel
 from .dialogs.buttonsdialog import ButtonsDialog
@@ -250,9 +250,8 @@ class BaseTextPanel(BasePagePanel):
             page.content = newContent
         except IOError as e:
             # TODO: Проверить под Windows
-            MessageBox(_(u"Can't save file %s") % (str(e.filename)),
-                       _(u"Error"),
-                       wx.ICON_ERROR | wx.OK)
+            showError(self._application.mainWindow,
+                      _(u"Can't save file %s") % (str(e.filename)))
 
     def _getAttachString(self, fnames):
         """

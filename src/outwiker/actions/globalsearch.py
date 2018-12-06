@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 
-import wx
-
 from outwiker.gui.baseaction import BaseAction
-from outwiker.core.commands import testreadonly, MessageBox
+from outwiker.core.commands import testreadonly, showError
 from outwiker.pages.search.searchpage import GlobalSearch
 
 
@@ -33,6 +31,5 @@ class GlobalSearchAction (BaseAction):
             try:
                 GlobalSearch.create(self._application.wikiroot)
             except IOError:
-                MessageBox(_(u"Can't create page"),
-                           _(u"Error"),
-                           wx.ICON_ERROR | wx.OK)
+                showError(self._application.mainWindow,
+                          _(u"Can't create page"))

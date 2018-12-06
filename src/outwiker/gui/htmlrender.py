@@ -51,8 +51,7 @@ class HtmlRender (wx.Panel):
             outwiker.core.system.getOS().startFile(href)
         except OSError:
             text = _(u"Can't execute file '%s'") % (href)
-            outwiker.core.commands.MessageBox(
-                text, "Error", wx.ICON_ERROR | wx.OK)
+            outwiker.core.commands.showError(Application.mainWindow, text)
 
     def _getLinkProtocol(self, link):
         """

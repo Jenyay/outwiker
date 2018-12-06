@@ -4,12 +4,12 @@ import os.path
 
 import wx
 
-from outwiker.core.commands import MessageBox, attachFiles
+from outwiker.core.commands import MessageBox, attachFiles, showError
 from outwiker.core.system import getOS, getImagesDir
 from outwiker.core.attachment import Attachment
 from outwiker.actions.attachfiles import AttachFilesAction
 from outwiker.actions.openattachfolder import OpenAttachFolderAction
-from outwiker.gui.guiconfig import AttachConfig, MainWindowConfig
+from outwiker.gui.guiconfig import AttachConfig
 
 
 class AttachPanel(wx.Panel):
@@ -250,9 +250,8 @@ class AttachPanel(wx.Panel):
             files = self.__getSelectedFiles()
 
             if len(files) == 0:
-                MessageBox(_(u"You did not select a file to remove"),
-                           _(u"Error"),
-                           wx.OK | wx.ICON_ERROR)
+                showError(self._application.mainWindow,
+                          _(u"You did not select a file to remove"))
                 return
 
             if MessageBox(_(u"Remove selected files?"),
@@ -261,7 +260,7 @@ class AttachPanel(wx.Panel):
                 try:
                     Attachment(self._application.selectedPage).removeAttach(files)
                 except IOError as e:
-                    MessageBox(str(e), _(u"Error"), wx.ICON_ERROR | wx.OK)
+                    showError(self._application.mainWindow, str(e))
 
                 self.updateAttachments()
 
@@ -272,9 +271,8 @@ class AttachPanel(wx.Panel):
         """
         files = self.__getSelectedFiles()
         if len(files) == 0:
-            MessageBox(_(u"You did not select a file to paste"),
-                       _(u"Error"),
-                       wx.OK | wx.ICON_ERROR)
+            showError(self._application.mainWindow,
+                      _(u"You did not select a file to paste"))
             return
 
         self._application.onAttachmentPaste(files)
@@ -284,9 +282,8 @@ class AttachPanel(wx.Panel):
             files = self.__getSelectedFiles()
 
             if len(files) == 0:
-                MessageBox(_(u"You did not select a file to execute"),
-                           _(u"Error"),
-                           wx.OK | wx.ICON_ERROR)
+                showError(self._application.mainWindow,
+                          _(u"You did not select a file to execute"))
                 return
 
             for file in files:
@@ -295,7 +292,7 @@ class AttachPanel(wx.Panel):
                     getOS().startFile(fullpath)
                 except OSError:
                     text = _(u"Can't execute file '%s'") % file
-                    MessageBox(text, _(u"Error"), wx.ICON_ERROR | wx.OK)
+                    showError(self._application.mainWindow, text)
 
     def __onPaste(self, event):
         self.__pasteLink()

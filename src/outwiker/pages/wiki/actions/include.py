@@ -5,10 +5,10 @@ import wx
 from outwiker.gui.baseaction import BaseAction
 from outwiker.gui.testeddialog import TestedDialog
 from outwiker.core.attachment import Attachment
-from outwiker.core.commands import MessageBox
+from outwiker.core.commands import showError
 
 
-class WikiIncludeAction (BaseAction):
+class WikiIncludeAction(BaseAction):
     """
     Вставка команды для вставки содержимого прикрепленного файла
     """
@@ -30,9 +30,8 @@ class WikiIncludeAction (BaseAction):
         assert self._application.mainWindow.pagePanel is not None
 
         if len(Attachment(self._application.selectedPage).attachmentFull) == 0:
-            MessageBox(_(u"Current page does not have any attachments"),
-                       _(u"Error"),
-                       wx.OK | wx.ICON_INFORMATION)
+            showError(self._application.mainWindow,
+                      _(u"Current page does not have any attachments"))
             return
 
         with IncludeDialog(self._application.mainWindow) as dlg:

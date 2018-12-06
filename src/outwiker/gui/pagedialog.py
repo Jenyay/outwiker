@@ -6,7 +6,7 @@ import outwiker.core.commands
 from .basepagedialog import BasePageDialog
 from outwiker.core.application import Application
 from outwiker.core.commands import (pageExists,
-                                    MessageBox,
+                                    showError,
                                     getAlternativeTitle,
                                     renamePage)
 
@@ -22,20 +22,12 @@ def editPage(parentWnd, currentPage):
         raise outwiker.core.exceptions.ReadonlyException
 
     if not pageExists(currentPage):
-        MessageBox(_(u'Page "%s" not found') % currentPage.display_title,
-                   _(u"Error"),
-                   wx.OK | wx.ICON_ERROR)
+        showError(Application.mainWindow,
+                  _(u'Page "%s" not found') % currentPage.display_title)
         return
 
     with EditPageDialog(parentWnd, currentPage, Application) as dlg:
         if dlg.ShowModal() == wx.ID_OK:
-            # try:
-            #     currentPage.display_title = dlg.pageTitle
-            # except EnvironmentError as e:
-            #     MessageBox(_(u"Can't rename page\n") + str(e),
-            #                _(u"Error"),
-            #                wx.ICON_ERROR | wx.OK)
-            #
             renamePage(currentPage, dlg.pageTitle)
             if not dlg.setPageProperties(currentPage):
                 return None
@@ -65,9 +57,7 @@ def createPageWithDialog(parentwnd, parentpage):
                 if title != alias:
                     page.alias = alias
             except EnvironmentError:
-                MessageBox(_(u"Can't create page"),
-                           "Error",
-                           wx.ICON_ERROR | wx.OK)
+                showError(Application.mainWindow, _(u"Can't create page"))
                 return None
 
             assert page is not None

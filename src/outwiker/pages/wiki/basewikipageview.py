@@ -2,7 +2,7 @@
 
 import wx
 
-from outwiker.core.commands import MessageBox
+from outwiker.core.commands import showError
 
 from outwiker.gui.htmltexteditor import HtmlTextEditor
 from outwiker.pages.html.basehtmlpanel import BaseHtmlPanel
@@ -256,9 +256,8 @@ class BaseWikiPageView (BaseHtmlPanel):
             self.htmlCodeWindow.SetText(html)
             self.htmlCodeWindow.SetReadOnly(True)
         except IOError as e:
-            MessageBox(_(u"Can't load file %s") % (unicode(e.filename)),
-                       _(u"Error"),
-                       wx.ICON_ERROR | wx.OK)
+            showError(self._application.mainWindow,
+                      _(u"Can't load file %s") % (unicode(e.filename)))
 
     @BaseHtmlPanel._selectedPageIndex.setter
     def _selectedPageIndex(self, index):

@@ -7,7 +7,7 @@ import wx
 import wx.aui
 
 from outwiker.core.attachwatcher import AttachWatcher
-from outwiker.core.commands import MessageBox
+from outwiker.core.commands import showError
 from outwiker.core.system import getOS
 from outwiker.core.system import getImagesDir
 
@@ -603,8 +603,7 @@ class MainWindow(wx.Frame):
 
             self.mainWindowConfig.maximized.value = self._realMaximized
         except Exception as e:
-            MessageBox(_(u"Can't save config\n%s") % (str(e)),
-                       _(u"Error"), wx.ICON_ERROR | wx.OK)
+            showError(self, _(u"Can't save config\n%s") % (str(e)))
 
     def _setIcon(self):
         """

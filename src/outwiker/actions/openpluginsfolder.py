@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 
-import wx
-
 from outwiker.gui.baseaction import BaseAction
-from outwiker.core.commands import MessageBox
+from outwiker.core.commands import showError
 from outwiker.core.system import getOS, getPluginsDirList
 
 
@@ -32,4 +30,4 @@ class OpenPluginsFolderAction (BaseAction):
             getOS().startFile(pluginsDir)
         except OSError:
             text = _(u"Can't open folder '{}'".format(pluginsDir))
-            MessageBox(text, _(u"Error"), wx.ICON_ERROR | wx.OK)
+            showError(self._application.mainWindow, text)

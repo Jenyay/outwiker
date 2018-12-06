@@ -205,8 +205,6 @@ class HtmlRenderIE (HtmlRender):
                 outwiker.core.system.getOS().startFile(filename)
             except OSError:
                 text = _(u"Can't execute file '%s'") % filename
-                outwiker.core.commands.MessageBox(text,
-                                                  _(u"Error"),
-                                                  wx.ICON_ERROR | wx.OK)
+                outwiker.core.commands.showError(Application.mainWindow, text)
         elif anchor is not None:
             self.LoadPage(href)

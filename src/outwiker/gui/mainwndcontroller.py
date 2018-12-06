@@ -216,9 +216,9 @@ class MainWndController(object):
                 self._application.recentWiki.add(wikiroot.path)
                 self.updateRecentMenu()
             except IOError as e:
-                outwiker.core.commands.MessageBox(
-                    _(u"Can't add wiki to recent list.\nCan't save config.\n%s") % (str(e)),
-                    _(u"Error"), wx.ICON_ERROR | wx.OK)
+                outwiker.core.commands.showError(
+                    self._application.mainWindow,
+                    _(u"Can't add wiki to recent list.\nCan't save config.\n%s") % (str(e)))
 
         self.enableGui()
         self.bookmarks.updateBookmarks()
