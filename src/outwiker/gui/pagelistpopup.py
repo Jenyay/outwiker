@@ -5,10 +5,10 @@ from typing import List
 import wx
 
 from .controls.pagelist import PageList, BaseColumn
-from .controls.popupwindow import PopupWindow
+from .controls.popupwindow import ResizablePopupWindow
 
 
-class PageListPopup(PopupWindow):
+class PageListPopup(ResizablePopupWindow):
     def __init__(self, parent, mainWindow, columns: List[BaseColumn]):
         self._columns = columns
         super().__init__(parent, mainWindow)
