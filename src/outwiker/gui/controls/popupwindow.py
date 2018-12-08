@@ -6,7 +6,7 @@ import wx
 
 
 class PopupMixin:
-    def getBestPosition(self) -> Tuple[int, int]:
+    def getBestPosition(self, mainWindow) -> Tuple[int, int]:
         """
         Рассчитывает координаты окна таким образом, чтобы оно было около
         курсора, но не вылезало за пределы окна
@@ -14,7 +14,7 @@ class PopupMixin:
         mousePosition = wx.GetMousePosition()
 
         width, height = self.GetSize()
-        parent_window_rect = self._mainWindow.GetScreenRect()
+        parent_window_rect = mainWindow.GetScreenRect()
 
         if mousePosition.x < parent_window_rect.x + parent_window_rect.width / 2:
             popup_x = mousePosition.x
@@ -33,18 +33,17 @@ class PopupWindow(PopupMixin, wx.PopupTransientWindow):
     '''
     Popup window with accurate position
     '''
-    def __init__(self, parent, mainWindow):
+    def __init__(self, parent):
         super().__init__(parent)
-        self._mainWindow = mainWindow
         self.createGUI()
 
     def createGUI(self):
         pass
 
-    def Popup(self):
+    def Popup(self, mainWindow):
         self.Dismiss()
         self.Layout()
-        self.SetPosition(self.getBestPosition())
+        self.SetPosition(self.getBestPosition(mainWindow))
         super().Popup()
 
 
@@ -52,11 +51,10 @@ class ResizablePopupWindow(PopupMixin, wx.MiniFrame):
     '''
     Popup window with accurate position
     '''
-    def __init__(self, parent, mainWindow):
+    def __init__(self, parent):
         super().__init__(
             parent,
             style=wx.RESIZE_BORDER | wx.FRAME_NO_TASKBAR | wx.FRAME_FLOAT_ON_PARENT)
-        self._mainWindow = mainWindow
         self.createGUI()
         self.Bind(wx.EVT_CLOSE, handler=self._onClose)
         self.Bind(wx.EVT_ACTIVATE, handler=self._onActivate)
@@ -67,11 +65,10 @@ class ResizablePopupWindow(PopupMixin, wx.MiniFrame):
 
     def _onClose(self, event):
         self.Hide()
-        self.Destroy()
 
     def createGUI(self):
         pass
 
-    def Popup(self):
-        self.SetPosition(self.getBestPosition())
+    def Popup(self, mainWindow):
+        self.SetPosition(self.getBestPosition(mainWindow))
         self.Show()

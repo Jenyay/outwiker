@@ -9,8 +9,8 @@ from .controls.popupwindow import ResizablePopupWindow
 
 
 class PageListPopup(ResizablePopupWindow):
-    def __init__(self, parent, mainWindow):
-        super().__init__(parent, mainWindow)
+    def __init__(self, parent):
+        super().__init__(parent)
 
     def createGUI(self):
         self._pagelist = PageList(self)
