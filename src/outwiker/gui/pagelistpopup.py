@@ -9,12 +9,11 @@ from .controls.popupwindow import ResizablePopupWindow
 
 
 class PageListPopup(ResizablePopupWindow):
-    def __init__(self, parent, mainWindow, columns: List[BaseColumn]):
-        self._columns = columns
+    def __init__(self, parent, mainWindow):
         super().__init__(parent, mainWindow)
 
     def createGUI(self):
-        self._pagelist = PageList(self, self._columns)
+        self._pagelist = PageList(self)
         sizer = wx.FlexGridSizer(cols=1)
         sizer.AddGrowableCol(0)
         sizer.AddGrowableRow(0)
@@ -24,3 +23,9 @@ class PageListPopup(ResizablePopupWindow):
 
     def setPageList(self, pagelist):
         self._pagelist.setPageList(pagelist)
+
+    def setColumns(self, columns: List[BaseColumn]):
+        self._pagelist.setColumns(columns)
+
+    def sortByColumn(self, col_index: int):
+        self._pagelist.sortByColumn(col_index)

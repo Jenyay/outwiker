@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from functools import reduce
 from typing import List
 
 import wx
@@ -15,7 +14,6 @@ from .controls.pagelist_columns import BaseColumn, ColumnsFactory
 class TagsCloudPanel(wx.Panel):
     def __init__(self, parent, application):
         super().__init__(parent)
-        self._popupHeight = 200
         self._application = application
 
         self._createGUI()
@@ -35,17 +33,17 @@ class TagsCloudPanel(wx.Panel):
         return columns
 
     def showPopup(self, pages):
+        config = TagsConfig(self._application.config)
         columns = self._getPageListColumns()
-        width = reduce(lambda w, col: w + (col.width if col.visible else 0),
-                       columns,
-                       25)
+        width = config.popupWidth.value
+        height = config.popupHeight.value
 
-        pageListPopup = PageListPopup(self,
-                                      self._application.mainWindow,
-                                      columns)
+        pageListPopup = PageListPopup(self, self._application.mainWindow)
 
-        pageListPopup.SetSize((width, self._popupHeight))
+        pageListPopup.setColumns(columns)
         pageListPopup.setPageList(pages)
+        pageListPopup.sortByColumn(0)
+        pageListPopup.SetSize((width, height))
         pageListPopup.Popup()
 
     def clearTags(self):
