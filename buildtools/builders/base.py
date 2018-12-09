@@ -88,7 +88,6 @@ class BuilderBase(object, metaclass=abc.ABCMeta):
         except IOError:
             pass
 
-        os.remove(os.path.join(root, 'profile.py'))
         os.remove(os.path.join(root, 'runtests.py'))
         os.remove(os.path.join(root, '__init__.py'))
 
