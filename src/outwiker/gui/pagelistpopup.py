@@ -29,3 +29,7 @@ class PageListPopup(ResizablePopupWindow):
 
     def sortByColumn(self, col_index: int):
         self._pagelist.sortByColumn(col_index)
+
+    def getColumns(self) -> List[BaseColumn]:
+        self._pagelist.updateColumnsWidth()
+        return self._pagelist.getColumns()

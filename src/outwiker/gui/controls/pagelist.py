@@ -133,3 +133,15 @@ class PageList(wx.Panel):
 
             data = PageData(page)
             self._listCtrl.SetItemPyData(item_index, data)
+
+    def updateColumnsWidth(self):
+        n = 0
+        for col in self._columns:
+            if not col.visible:
+                continue
+
+            col.width = self._listCtrl.GetColumnWidth(n)
+            n += 1
+
+    def getColumns(self) -> List[BaseColumn]:
+        return self._columns

@@ -59,13 +59,14 @@ class ColumnsFactory(object):
         for item in item_params:
             name, width, visible = item.split(':')
             width = int(width)
-            visible = visible.lower() == 'true'
+            visible = (visible.lower() == 'true')
             column = self.createColumn(name, width, visible)
             columns.append(column)
 
         return columns
 
-    def toString(self, columns: List['BaseColumn']) -> str:
+    @staticmethod
+    def toString(columns: List['BaseColumn']) -> str:
         return ','.join(['{name}:{width}:{visible}'.format(name=col.name,
                                                            width=col.width,
                                                            visible=col.visible)
@@ -84,7 +85,7 @@ class BaseColumn(metaclass=ABCMeta):
                  width: int,
                  visible=True):
         self._width = width
-        self.visible = visible
+        self._visible = visible
         self._sort_type = self.SORT_NONE
         self._column = None
         self._column_index = None
@@ -92,6 +93,18 @@ class BaseColumn(metaclass=ABCMeta):
     @property
     def width(self):
         return self._width
+
+    @width.setter
+    def width(self, value):
+        self._width = value
+
+    @property
+    def visible(self):
+        return self._visible
+
+    @visible.setter
+    def visible(self, value):
+        self._visible = value
 
     @property
     def sort_type(self):

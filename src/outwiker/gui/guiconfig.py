@@ -940,7 +940,7 @@ class TagsConfig(object):
 
         self.popupHeaders = StringOption(
             self.config,
-            MainWindowConfig.MAIN_WINDOW_SECTION,
+            self.SECTION,
             self.POPUP_HEADERS_SECTION,
             self.POPUP_HEADERS_DEFAULT
         )

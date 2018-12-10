@@ -36,10 +36,19 @@ class TagsCloudPanel(wx.Panel):
 
     def _onPopupClose(self, event):
         config = TagsConfig(self._application.config)
+        self._savePopupSize(config)
+        self._saveHeaders(config)
+        event.Skip()
+
+    def _saveHeaders(self, config: TagsConfig):
+        columns = self._pageListPopup.getColumns()
+        headers_str = ColumnsFactory.toString(columns)
+        config.popupHeaders.value = headers_str
+
+    def _savePopupSize(self, config: TagsConfig):
         width, height = self._pageListPopup.GetClientSize()
         config.popupWidth.value = width
         config.popupHeight.value = height
-        event.Skip()
 
     def showPopup(self, pages):
         config = TagsConfig(self._application.config)
