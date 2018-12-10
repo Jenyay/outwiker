@@ -1,10 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from abc import ABCMeta, abstractmethod
-import os
 from typing import List
-
-import wx
 
 import outwiker.gui.controls.ultimatelistctrl as ULC
 
@@ -86,11 +83,15 @@ class BaseColumn(metaclass=ABCMeta):
     def __init__(self,
                  width: int,
                  visible=True):
-        self.width = width
+        self._width = width
         self.visible = visible
         self._sort_type = self.SORT_NONE
         self._column = None
         self._column_index = None
+
+    @property
+    def width(self):
+        return self._width
 
     @property
     def sort_type(self):
@@ -234,4 +235,3 @@ class ModifyDateColumn(BaseColumn):
         content2 = page2.datetime
 
         return (content1 < content2) - (content1 > content2)
-
