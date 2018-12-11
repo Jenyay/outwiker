@@ -18,8 +18,7 @@ class TagsCloudPanel(wx.Panel):
 
         self._createGUI()
         self._controller = TagsPanelController(self, application)
-        self._pageListPopup = PageListPopup(self)
-        self._pageListPopup.Bind(wx.EVT_CLOSE, handler=self._onPopupClose)
+        self._pageListPopup = None
 
     def _getPageListColumns(self) -> List[BaseColumn]:
         colFactory = ColumnsFactory()
@@ -35,9 +34,13 @@ class TagsCloudPanel(wx.Panel):
         return columns
 
     def _onPopupClose(self, event):
+        assert self._pageListPopup is not None
         config = TagsConfig(self._application.config)
         self._savePopupSize(config)
         self._saveHeaders(config)
+        self._pageListPopup.Unbind(wx.EVT_CLOSE, handler=self._onPopupClose)
+        self._pageListPopup.Destroy()
+        self._pageListPopup = None
         event.Skip()
 
     def _saveHeaders(self, config: TagsConfig):
@@ -51,16 +54,20 @@ class TagsCloudPanel(wx.Panel):
         config.popupHeight.value = height
 
     def showPopup(self, pages):
+        assert self._pageListPopup is None
+
         config = TagsConfig(self._application.config)
         columns = self._getPageListColumns()
         width = config.popupWidth.value
         height = config.popupHeight.value
 
+        self._pageListPopup = PageListPopup(self)
         self._pageListPopup.setColumns(columns)
         self._pageListPopup.setPageList(pages)
         self._pageListPopup.sortByColumn(0)
         self._pageListPopup.SetClientSize((width, height))
         self._pageListPopup.Popup(self._application.mainWindow)
+        self._pageListPopup.Bind(wx.EVT_CLOSE, handler=self._onPopupClose)
 
     def clearTags(self):
         self._tagscloud.clear()

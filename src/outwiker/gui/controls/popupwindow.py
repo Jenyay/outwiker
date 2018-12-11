@@ -72,3 +72,4 @@ class ResizablePopupWindow(PopupMixin, wx.MiniFrame):
     def Popup(self, mainWindow):
         self.SetPosition(self.getBestPosition(mainWindow))
         self.Show()
+        self.Raise()
