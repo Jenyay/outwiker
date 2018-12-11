@@ -23,10 +23,13 @@ class PageData(object):
 class PageList(wx.Panel):
     def __init__(self, parent: wx.Window):
         super().__init__(parent)
-        self._columns = []
+        self._columns = []                     # type: List[BaseColumn]
         self._pages = []
         self._defaultIcon = os.path.join(getImagesDir(), "page.png")
         self._imageList = ImageListCache(self._defaultIcon)
+
+        # Key - MenuItem ID, value - item from self._columns
+        self._popupMenuColumnItems = {}        # type: Dict[int, BaseColumn]
 
         self._propagationLevel = 15
         self.SetBackgroundColour(wx.Colour(255, 255, 255))
@@ -44,6 +47,8 @@ class PageList(wx.Panel):
                             handler=self._onPageClick)
         self._listCtrl.Bind(ULC.EVT_LIST_COL_CLICK,
                             handler=self._onColClick)
+        self._listCtrl.Bind(ULC.EVT_LIST_COL_RIGHT_CLICK,
+                            handler=self._onColRightClick)
         self._listCtrl.SetHyperTextNewColour(wx.BLUE)
         self._listCtrl.SetHyperTextVisitedColour(wx.BLUE)
         self._listCtrl.AssignImageList(self._imageList.getImageList(),
@@ -52,6 +57,13 @@ class PageList(wx.Panel):
         self._sizer.Add(self._listCtrl, flag=wx.EXPAND)
 
         self.SetSizer(self._sizer)
+        self.Bind(wx.EVT_MENU, handler=self._onPopupMenuClick)
+
+    def _onPopupMenuClick(self, event):
+        col = self._popupMenuColumnItems[event.GetId()]
+        col.visible = not col.visible
+        self._popupMenuColumnItems = {}
+        self._updatePageList()
 
     @property
     def listCtrl(self):
@@ -77,6 +89,17 @@ class PageList(wx.Panel):
 
     def _onColClick(self, event):
         self.sortByColumn(event.GetColumn())
+
+    def _onColRightClick(self, event):
+        menu = wx.Menu()
+        self._popupMenuColumnItems = {}
+
+        for col in self._columns[1:]:
+            menu_item = menu.AppendCheckItem(wx.ID_ANY, col.getTitle())
+            menu_item.Check(col.visible)
+            self._popupMenuColumnItems[menu_item.GetId()] = col
+
+        self.PopupMenu(menu)
 
     def sortByColumn(self, col_index: int):
         for n, column in enumerate(self._visibleColumns):
