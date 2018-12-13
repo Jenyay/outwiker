@@ -100,7 +100,6 @@ class IconsController(BasePageDialogController):
         self._appendGroups()
         group_index = 0 if len(self._recentIconsList) else 1
         self._iconsPanel.groupCtrl.SetSelection(group_index)
-        self._switchToCurrentGroup()
 
     def _getGroupsInfo(self):
         result = []
@@ -186,6 +185,10 @@ class IconsController(BasePageDialogController):
 
         if currentPage.icon is not None:
             self._selectedIcon = os.path.abspath(currentPage.icon)
+            for n, group_info in enumerate(self._groupsInfo[1:]):
+                if self._selectedIcon in group_info.iconslist:
+                    self._iconsPanel.groupCtrl.SetSelection(n + 1)
+                    break
 
     def _addCurrentIcon(self):
         if self._selectedIcon is not None:
@@ -263,9 +266,9 @@ class IconsController(BasePageDialogController):
         return icons
 
     def _onGroupSelect(self, event):
-        self._switchToCurrentGroup()
+        self._updateCurrentGroup()
 
-    def _switchToCurrentGroup(self):
+    def _updateCurrentGroup(self):
         icons = self._getCurrentIcons()
         self._iconsPanel.iconsList.setIconsList(icons)
         self._addCurrentIcon()
