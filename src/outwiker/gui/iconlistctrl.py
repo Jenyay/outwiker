@@ -2,6 +2,7 @@
 
 import logging
 import os.path
+from typing import Union
 
 import wx
 from wx.lib.newevent import NewEvent
@@ -193,6 +194,14 @@ class IconListCtrl(wx.ScrolledWindow):
         self.defaultIcon = os.path.join(getImagesDir(), "page.png")
 
         self.Bind(wx.EVT_SIZE, self.__onSize)
+
+    def _findButtonByFileName(self, fname: str) -> Union[IconButton, None]:
+        fname = os.path.abspath(fname)
+        for button in self.buttons:
+            if os.path.abspath(button.iconFileName) == fname:
+                return button
+
+        return None
 
     def __onSize(self, event):
         newSize = self.GetSize()
@@ -387,10 +396,17 @@ class IconListCtrl(wx.ScrolledWindow):
         if self._currentIcon is None:
             return
 
-        self._iconFileNames.insert(0, fname)
-        self.__addButton(self._currentIcon)
-        self.__layout()
-        self.__selectSingleButton(self.buttons[0])
+        currentButton = self._findButtonByFileName(fname)
+        if currentButton is None:
+            self._iconFileNames.insert(0, fname)
+            self.__addButton(self._currentIcon)
+            self.__layout()
+            self.__selectSingleButton(self.buttons[0])
+        else:
+            self.__selectSingleButton(currentButton)
+            dy = self.GetScrollPixelsPerUnit()[1]
+            self.Scroll(0, currentButton.y / dy)
+
         self._sendIconSelectedEvent()
 
     def _sendIconSelectedEvent(self):
