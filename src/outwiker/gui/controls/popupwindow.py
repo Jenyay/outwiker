@@ -55,13 +55,26 @@ class ResizablePopupWindow(PopupMixin, wx.MiniFrame):
         super().__init__(
             parent,
             style=wx.RESIZE_BORDER | wx.FRAME_NO_TASKBAR | wx.FRAME_FLOAT_ON_PARENT)
+
+        # To skip closing after deactivate
+        self._skipDeactivateCount = 0
+
         self.createGUI()
         self.Bind(wx.EVT_CLOSE, handler=self._onClose)
         self.Bind(wx.EVT_ACTIVATE, handler=self._onActivate)
 
-    def _onActivate(self, event):
+    def setDeactivateCount(self, value: int):
+        '''
+        value - How many times to skip deactivate
+        '''
+        self._skipDeactivateCount = value
+
+    def _onActivate(self, event: wx.ActivateEvent):
         if not event.GetActive():
-            self.Close()
+            if self._skipDeactivateCount > 0:
+                self._skipDeactivateCount -= 1
+            else:
+                self.Close()
 
     def _onClose(self, event):
         self.Hide()
