@@ -62,3 +62,6 @@ class RecentIconsList(object):
             icons_for_config.append(icon)
 
         self._recentIconsConfig.value = icons_for_config
+
+    def __len__(self):
+        return len(self._recentIcons)

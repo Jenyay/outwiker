@@ -5,7 +5,6 @@ import os
 import os.path
 
 import wx
-#import wx.combo
 
 from outwiker.core.system import getIconsDirList, getImagesDir
 from outwiker.core.iconscollection import IconsCollection
@@ -45,7 +44,7 @@ class IconsPanel(wx.Panel):
     Class of the panel in the "Icon" tab.
     """
     def __init__(self, parent):
-        super(IconsPanel, self).__init__(parent)
+        super().__init__(parent)
         self._groupsButtonHeight = 32
         self._theme = Theme()
         self._createGui()
@@ -99,7 +98,8 @@ class IconsController(BasePageDialogController):
         self._groupsInfo = self._getGroupsInfo()
 
         self._appendGroups()
-        self._iconsPanel.groupCtrl.SetSelection(0)
+        group_index = 0 if len(self._recentIconsList) else 1
+        self._iconsPanel.groupCtrl.SetSelection(group_index)
         self._switchToCurrentGroup()
 
     def _getGroupsInfo(self):
