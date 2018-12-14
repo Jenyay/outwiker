@@ -636,6 +636,7 @@ def doc():
 
 
 @task
+@linux_only
 def prepare_virtual():
     '''
     Prepare virtual machine
@@ -645,6 +646,7 @@ def prepare_virtual():
 
 
 @task
+@linux_only
 def vm_run():
     '''
     Run virtual machines for build
@@ -655,6 +657,7 @@ def vm_run():
 
 
 @task
+@linux_only
 def vm_update():
     '''
     Update the virtual machines
@@ -665,6 +668,7 @@ def vm_update():
 
 
 @task(alias='vm_halt')
+@linux_only
 def vm_stop():
     '''
     Stop virtual machines for build
@@ -686,6 +690,7 @@ def vm_remove_keys():
 
 
 @task
+@linux_only
 def vm_prepare():
     '''
     Prepare virtual machines for build
@@ -696,6 +701,7 @@ def vm_prepare():
 
 
 @task
+@linux_only
 def vm_linux_binary(is_stable=0):
     '''
     Create 64-bit assembly on virtual machines
@@ -723,6 +729,9 @@ def vm_linux_binary(is_stable=0):
 @task(alias='linux_appimage')
 @linux_only
 def appimage(is_stable=0):
+    '''
+    Build AppImage package
+    '''
     builder = BuilderAppImage(is_stable=tobool(is_stable))
     builder.build()
     print_info('AppImage created: {}'.format(builder.get_appimage_files()))
@@ -730,12 +739,16 @@ def appimage(is_stable=0):
 
 @task
 def coverage():
+    '''
+    Create test coverage statistics
+    '''
     with lcd('src'):
         local('coverage report {} -i'.format(COVERAGE_PARAMS))
         local('coverage html {} -i'.format(COVERAGE_PARAMS))
 
 
 @task
+@linux_only
 def docker_build_create():
     '''
     Create a Docker image to build process
@@ -745,6 +758,7 @@ def docker_build_create():
 
 
 @task
+@linux_only
 def docker_build(*args):
     '''
     Run the build process inside the Docker container
@@ -761,7 +775,11 @@ def docker_build(*args):
 
 
 @task
+@linux_only
 def docker_build_wx(ubuntu_version: str, wx_version: str):
+    '''
+    Build a wxPython library from sources
+    '''
     # Create dest dir
     build_dir = os.path.abspath(os.path.join(BUILD_DIR, BUILD_LIB_DIR))
     if not os.path.exists(build_dir):
@@ -789,14 +807,22 @@ def docker_build_wx(ubuntu_version: str, wx_version: str):
 
 
 @task(alias='linux_snap')
+@linux_only
 def snap(is_stable=0):
+    '''
+    Build clean snap package
+    '''
     is_stable = tobool(is_stable)
     builder = BuilderSnap(is_stable)
     builder.build()
 
 
 @task(alias='linux_snap_publish')
+@linux_only
 def snap_publish():
+    '''
+    Publish created snap package
+    '''
     builder = BuilderSnap(False)
     snap_files = builder.get_snap_files()
 

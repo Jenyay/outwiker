@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 
+from functools import wraps
 import sys
 import os
 import os.path
@@ -107,6 +108,7 @@ def _os_only(func, os_str, name):
             https://docs.python.org/2/library/sys.html#sys.platform
         name - OS name for users.
     '''
+    @wraps(func)
     def wrapped(*args, **kwargs):
         if not sys.platform.startswith(os_str):
             print_error(u'Error. This task can only be run on {name}.'.format(
@@ -116,8 +118,6 @@ def _os_only(func, os_str, name):
         else:
             return func(*args, **kwargs)
 
-    wrapped.__name__ = func.__name__
-    wrapped.__doc__ = func.__doc__
     return wrapped
 
 
