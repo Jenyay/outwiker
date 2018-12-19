@@ -1,7 +1,4 @@
-# -*- coding: UTF-8 -*-
-
-# This file was copied from outwiker/gui/dialogs to
-# maintain backward compatibility with OutWiker 1.9
+# -*- coding: utf-8 -*-
 
 import wx
 
