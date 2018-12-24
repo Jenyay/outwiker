@@ -41,7 +41,7 @@ class BaseTexToken (object, metaclass=ABCMeta):
         self._equationTemplate = u'<span class="{classname}" id="{idname}-{index}"></span>'
 
         self._scriptActionsTemplate = u'''var element_{index} = document.getElementById("{idname}-{index}");
-katex.render("{code}", element_{index}, {{ displayMode: {displayMode}, throwOnError: false }});'''
+katex.render("{code}", element_{index}, {{ displayMode: {displayMode}, throwOnError: false, macros: {{'\\\\frac': '{{#1 \\\\above{{max(1px, 0.04em)}} #2}}'}} }});'''
 
         self._scriptTemplate = u'''<script>
 // {comment_begin}
