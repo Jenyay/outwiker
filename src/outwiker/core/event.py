@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 EVENT_PRIORITY_DEFAULT = 0
 EVENT_PRIORITY_MAX_CORE = 100

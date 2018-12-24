@@ -37,16 +37,36 @@ class PagePopupMenu (object):
         self._application.onTreePopupMenu(self.menu, popupPage)
 
     def __bindPopupMenuEvents(self, popupMenu):
-        popupMenu.Bind(wx.EVT_MENU, self.__onAddChild, id=self.ID_ADD_CHILD)
-        popupMenu.Bind(wx.EVT_MENU, self.__onAddSibling, id=self.ID_ADD_SIBLING)
-        popupMenu.Bind(wx.EVT_MENU, self.__onRemove, id=self.ID_REMOVE)
-        popupMenu.Bind(wx.EVT_MENU, self.__onRename, id=self.ID_RENAME)
-        popupMenu.Bind(wx.EVT_MENU, self.__onCopyTitle, id=self.ID_COPY_TITLE)
-        popupMenu.Bind(wx.EVT_MENU, self.__onCopyPath, id=self.ID_COPY_PATH)
-        popupMenu.Bind(wx.EVT_MENU, self.__onCopyAttachPath, id=self.ID_COPY_ATTACH_PATH)
-        popupMenu.Bind(wx.EVT_MENU, self.__onCopyLink, id=self.ID_COPY_LINK)
-        popupMenu.Bind(wx.EVT_MENU, self.__onOpenAttachFolder, id=self.ID_OPEN_ATTACH_FOLDER)
-        popupMenu.Bind(wx.EVT_MENU, self.__onPropertiesPopup, id=self.ID_PROPERTIES_POPUP)
+        popupMenu.Bind(wx.EVT_MENU,
+                       self.__onAddChild,
+                       id=self.ID_ADD_CHILD)
+        popupMenu.Bind(wx.EVT_MENU,
+                       self.__onAddSibling,
+                       id=self.ID_ADD_SIBLING)
+        popupMenu.Bind(wx.EVT_MENU,
+                       self.__onRemove,
+                       id=self.ID_REMOVE)
+        popupMenu.Bind(wx.EVT_MENU,
+                       self.__onRename,
+                       id=self.ID_RENAME)
+        popupMenu.Bind(wx.EVT_MENU,
+                       self.__onCopyTitle,
+                       id=self.ID_COPY_TITLE)
+        popupMenu.Bind(wx.EVT_MENU,
+                       self.__onCopyPath,
+                       id=self.ID_COPY_PATH)
+        popupMenu.Bind(wx.EVT_MENU,
+                       self.__onCopyAttachPath,
+                       id=self.ID_COPY_ATTACH_PATH)
+        popupMenu.Bind(wx.EVT_MENU,
+                       self.__onCopyLink,
+                       id=self.ID_COPY_LINK)
+        popupMenu.Bind(wx.EVT_MENU,
+                       self.__onOpenAttachFolder,
+                       id=self.ID_OPEN_ATTACH_FOLDER)
+        popupMenu.Bind(wx.EVT_MENU,
+                       self.__onPropertiesPopup,
+                       id=self.ID_PROPERTIES_POPUP)
 
     def __onAddChild(self, event):
         assert self.popupPage is not None

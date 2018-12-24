@@ -27,6 +27,15 @@
 			<site>https://jenyay.net</site>
 		</author>
 		<changelog>
+			<version number="2.3.1" date="December 26, 2018">
+				<requirements>
+					<api>2.835</api>
+				</requirements>
+
+                <download os="all">https://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-2.3.1.zip</download>
+				<change>Fix errors.</change>
+			</version>
+
 			<version number="2.3" date="August 26, 2018">
 				<requirements>
 					<api>2.835</api>
@@ -92,6 +101,15 @@
 		</author>
 
 		<changelog>
+			<version number="2.3.1" date="26.12.2018">
+				<requirements>
+					<api>2.835</api>
+				</requirements>
+
+                <download os="all">https://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-2.3.1.zip</download>
+				<change>Исправление ошибок.</change>
+			</version>
+
 			<version number="2.3" date="26.08.2018">
 				<requirements>
 					<api>2.835</api>

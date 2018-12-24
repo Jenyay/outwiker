@@ -1,11 +1,10 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from datetime import datetime
 
 import wx
 
 from outwiker.gui.controls.formatctrl import FormatCtrl
-from outwiker.core.system import getOS
 
 
 class DateTimeFormatCtrl(wx.Panel):

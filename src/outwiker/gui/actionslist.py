@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import outwiker.actions as actions
 import outwiker.actions.polyactionsid as polyactions
