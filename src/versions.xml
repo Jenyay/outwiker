@@ -7,7 +7,9 @@
 		<website>https://jenyay.net/Outwiker/UnstableEn</website>
 
 		<changelog>
-			<version number="3.0.0.855" status="dev">
+			<version number="3.0.0.856" status="dev" date="December 26, 2018">
+				<change>Improve GUI.</change>
+				<change>Fix errors.</change>
 			</version>
 
 			<version number="3.0.0.854" status="dev" date="November 24, 2018">
@@ -99,7 +101,9 @@
 		<website>https://jenyay.net/Outwiker/Unstable</website>
 
 		<changelog>
-			<version number="3.0.0.855" status="dev">
+			<version number="3.0.0.856" status="dev" date="26.12.2018">
+				<change>Улучшения в интерфейсе.</change>
+				<change>Исправление ошибок.</change>
 			</version>
 
 			<version number="3.0.0.854" status="dev" date="24.11.2018">
