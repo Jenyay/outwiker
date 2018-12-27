@@ -41,11 +41,30 @@ class BaseTexToken (object, metaclass=ABCMeta):
         self._equationTemplate = u'<span class="{classname}" id="{idname}-{index}"></span>'
 
         self._scriptActionsTemplate = u'''var element_{index} = document.getElementById("{idname}-{index}");
-katex.render("{code}", element_{index}, {{ displayMode: {displayMode}, throwOnError: false, macros: {{'\\\\frac': '{{#1 \\\\above{{max(1px, 0.04em)}} #2}}'}} }});'''
+katex.render("{code}", element_{index}, {{ displayMode: {displayMode}, throwOnError: false }});'''
+
+        self._additionalScript = r'''function fix_frac_line()
+{
+    var win = window;
+    var frac_lines = document.getElementsByClassName("frac-line");
+    for (var i = 0; i < frac_lines.length; i++) {
+        var frac = frac_lines[i];
+        if (win.getComputedStyle) {
+            style = win.getComputedStyle(frac, '');
+            if (style['border-bottom-width'] == '0px') {
+                frac.style['border-bottom-width'] = '1px';
+            }
+        }
+    }
+};
+
+fix_frac_line();'''
 
         self._scriptTemplate = u'''<script>
 // {comment_begin}
 {actions}
+
+{script}
 // {comment_end}
 </script>
 '''
@@ -132,7 +151,8 @@ katex.render("{code}", element_{index}, {{ displayMode: {displayMode}, throwOnEr
 
         script = self._scriptTemplate.format(actions=script_code,
                                              comment_begin=comment_begin,
-                                             comment_end=comment_end)
+                                             comment_end=comment_end,
+                                             script=self._additionalScript)
         index = None
         for n, footer in enumerate(parser.footerItems):
             if comment_begin in footer and comment_end in footer:
