@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from typing import List, Optional, Dict, Tuple
+
 
 class AppInfo (object):
     """
@@ -8,13 +10,13 @@ class AppInfo (object):
     Added in OutWiker 2.0.0.795.
     """
     def __init__(self,
-                 appname,
-                 author,
-                 versionsList=[],
-                 description=u"",
-                 appwebsite=u"",
-                 updatesUrl=u"",
-                 requirements=None):
+                 appname: str,
+                 author: 'AuthorInfo',
+                 versionsList: List['VersionInfo']=[],
+                 description: str=u"",
+                 appwebsite: str=u"",
+                 updatesUrl: str=u"",
+                 requirements: Optional['RequirementsInfo']=None):
         """
         appname - application or plug-in name.
         author - author info. It is instance of the AuthorInfo class.
@@ -51,7 +53,7 @@ class AuthorInfo (object):
     """
     Information about plug-in's author
     """
-    def __init__(self, name=u"", email=u"", website=u""):
+    def __init__(self, name: str=u"", email: str=u"", website: str=u""):
         self.name = name
         self.email = email
         self.website = website
@@ -61,8 +63,12 @@ class VersionInfo (object):
     """
     Information about single version (version, change log, URL to download)
     """
-    def __init__(self, version, date_str=u"",
-                 downloads={}, changes=[], hidden=False):
+    def __init__(self,
+                 version: 'outwiker.core.Version',
+                 date_str: str=u"",
+                 downloads: Dict[str, str]={},
+                 changes: List[str]=[],
+                 hidden: bool=False):
         """
         version   - instance of the Version class.
         date_str  - release date (string)
@@ -82,7 +88,9 @@ class RequirementsInfo (object):
     """
     Plug-in's requirements
     """
-    def __init__(self, os_list, api_version):
+    def __init__(self,
+                 os_list: List[str],
+                 api_version: List[Tuple[int, int]]):
         """
         os_list - list of the supported OS
         api_version - list of the tuples with supported API versions.

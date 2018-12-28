@@ -1,6 +1,7 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os
+from typing import List
 
 from outwiker.core.xmlversionparser import XmlVersionParser
 from outwiker.utilites.textfile import readTextFile
@@ -14,7 +15,7 @@ from buildtools.defines import (
 )
 
 
-def readAppInfo(fname):
+def readAppInfo(fname: str) -> 'outwiker.core.appinfo.AppInfo':
     text = readTextFile(fname)
     return XmlVersionParser([u'en']).parse(text)
 
@@ -51,7 +52,7 @@ def getOutwikerVersionStr():
     return u'{}.{}'.format(version[0], version[1])
 
 
-def getLocalAppInfoList():
+def getLocalAppInfoList() -> List['outwiker.core.appinfo.AppInfo']:
     """
     Return AppInfo list for OutWiker and plug-ins.
     """

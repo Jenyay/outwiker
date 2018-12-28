@@ -21,7 +21,7 @@ class XmlVersionParser (object):
         """
         self._langlist = langlist
 
-    def parse(self, text):
+    def parse(self, text: str) -> AppInfo:
         """
         Return AppInfo instance
         """
