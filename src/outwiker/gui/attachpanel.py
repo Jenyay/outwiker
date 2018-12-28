@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os.path
+from typing import List
 
 import wx
 
@@ -9,7 +10,8 @@ from outwiker.core.system import getOS, getImagesDir
 from outwiker.core.attachment import Attachment
 from outwiker.actions.attachfiles import AttachFilesAction
 from outwiker.actions.openattachfolder import OpenAttachFolderAction
-from outwiker.gui.guiconfig import AttachConfig
+from .guiconfig import AttachConfig
+from .dropfiles import BaseDropFilesTarget
 
 
 class AttachPanel(wx.Panel):
@@ -337,36 +339,13 @@ class AttachPanel(wx.Panel):
             self.__attachList.Select(0)
 
 
-class DropAttachFilesTarget(wx.FileDropTarget):
+class DropAttachFilesTarget(BaseDropFilesTarget):
     """
     Класс для возможности перетаскивания файлов
     между другими программами и панелью с прикрепленными файлами.
     """
-    def __init__(self, application, dropWnd):
-        wx.FileDropTarget.__init__(self)
-        self._application = application
-        self._dropWnd = dropWnd
-        self._dropWnd.SetDropTarget(self)
-
-    def destroy(self):
-        self._dropWnd.SetDropTarget(None)
-        self._dropWnd = None
-
-    def OnDropFiles(self, x, y, files):
-        if len(files) == 1 and '\n' in files[0]:
-            files = files[0].split('\n')
-
-        file_protocol = 'file://'
-
-        correctedFiles = []
-        for fname in files:
-            if not fname.strip():
-                continue
-
-            if fname.startswith(file_protocol):
-                fname = fname[len(file_protocol):]
-
-            correctedFiles.append(fname)
+    def OnDropFiles(self, x: int, y: int, files: List[str]) -> bool:
+        correctedFiles = self.correctFileNames(files)
 
         if (self._application.wikiroot is not None and
                 self._application.wikiroot.selectedPage is not None):
@@ -374,3 +353,5 @@ class DropAttachFilesTarget(wx.FileDropTarget):
                         self._application.wikiroot.selectedPage,
                         correctedFiles)
             return True
+
+        return False

@@ -9,6 +9,7 @@ import os.path
 import re
 import shutil
 import logging
+from typing import List
 
 import wx
 
@@ -81,11 +82,14 @@ def testreadonly(func):
 
 
 @testreadonly
-def attachFiles(parent, page, files):
+def attachFiles(parent: wx.Window,
+                page: 'outwiker.core.tree.WikiPage',
+                files: List[str]):
     """
-    Прикрепить файлы к странице с диалогом о перезаписи при необходимости
-    parent - родительское окно
-    page - страница, куда прикрепляем файлы
+    Attach files to page. Show overwrite dialog if necessary
+    parent - parent for dialog window
+    page - page to attach
+    files - list of the files to attach
     """
     if page.readonly:
         raise outwiker.core.exceptions.ReadonlyException
@@ -97,35 +101,32 @@ def attachFiles(parent, page, files):
     # Список файлов, которые будут добавлены
     newAttaches = []
 
-    overwriteDialog = OverwriteDialog(parent)
-
-    for fname in files:
-        if fname in oldAttachesFull:
-            continue
-
-        if os.path.basename(fname).lower() in oldAttaches:
-            text = _(u"File '%s' exists already") % (os.path.basename(fname))
-            result = overwriteDialog.ShowDialog(text)
-
-            if result == overwriteDialog.ID_SKIP:
+    with OverwriteDialog(parent) as overwriteDialog:
+        for fname in files:
+            if fname in oldAttachesFull:
                 continue
-            elif result == wx.ID_CANCEL:
-                break
 
-        newAttaches.append(fname)
+            if os.path.basename(fname).lower() in oldAttaches:
+                text = _(u"File '%s' exists already") % (os.path.basename(fname))
+                result = overwriteDialog.ShowDialog(text)
 
-    try:
-        Attachment(page).attach(newAttaches)
-    except IOError as e:
-        text = _(u'Error copying files\n{0}').format(str(e))
-    except shutil.Error as e:
-        text = _(u'Error copying files\n{0}').format(str(e))
+                if result == overwriteDialog.ID_SKIP:
+                    continue
+                elif result == wx.ID_CANCEL:
+                    break
 
-    overwriteDialog.Destroy()
+            newAttaches.append(fname)
+
+        try:
+            Attachment(page).attach(newAttaches)
+        except (IOError, shutil.Error) as e:
+            text = _(u'Error copying files\n{0}').format(str(e))
+            logger.error(text)
+            showError(Application.mainWindow, text)
 
 
 @testreadonly
-def removePage(page):
+def removePage(page: 'outwiker.core.tree.WikiPage'):
     assert page is not None
 
     if page.readonly:

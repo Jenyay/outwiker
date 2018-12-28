@@ -2,10 +2,12 @@
 
 import os
 import os.path
+from typing import Optional
 
 import wx
 
-import outwiker.core.commands
+from outwiker.core.commands import (MessageBox, attachFiles, showError,
+                                    renamePage, movePage)
 import outwiker.core.system
 import outwiker.gui.pagedialog
 from outwiker.actions.addsiblingpage import AddSiblingPageAction
@@ -19,6 +21,7 @@ from outwiker.core.events import PAGE_UPDATE_ICON
 from outwiker.core.defines import ICON_HEIGHT
 from .pagepopupmenu import PagePopupMenu
 from .imagelistcache import ImageListCache
+from .dropfiles import BaseDropFilesTarget
 
 
 class NotesTree(wx.Panel):
@@ -64,6 +67,9 @@ class NotesTree(wx.Panel):
 
         self.__BindApplicationEvents()
         self.__BindGuiEvents()
+        self._dropTarget = NotesTreeDropFilesTarget(self._application,
+                                                    self.treeCtrl,
+                                                    self)
 
     def SetBackgroundColour(self, colour):
         super().SetBackgroundColour(colour)
@@ -73,13 +79,18 @@ class NotesTree(wx.Panel):
         super().SetForegroundColour(colour)
         self.treeCtrl.SetForegroundColour(colour)
 
-    def getTreeItem(self, page):
+    def getTreeItem(self, page: 'outwiker.core.tree.WikiPage') -> Optional[wx.TreeItemId]:
         """
         Получить элемент дерева по странице.
         Если для страницы не создан элемент дерева, возвращается None
         """
         if page in self._pageCache:
             return self._pageCache[page]
+
+    def getPageByItemId(self, item_id: wx.TreeItemId) -> 'outwiker.core.tree.WikiPage':
+        for page, item in self._pageCache.items():
+            if item == item_id:
+                return page
 
     def __BindApplicationEvents(self):
         """
@@ -181,6 +192,7 @@ class NotesTree(wx.Panel):
         self._application.mainWindow.tabsController.openInTab(page, True)
 
     def __onClose(self, event):
+        self._dropTarget.destroy()
         self.__UnBindApplicationEvents()
         self.treeCtrl.DeleteAllItems()
         self._iconsCache.clear()
@@ -279,9 +291,7 @@ class NotesTree(wx.Panel):
 
         if pageToRename is None or pageToRename.parent is None:
             mainWindow = self._application.mainWindow
-            outwiker.core.commands.showError(
-                mainWindow,
-                _(u"You can't rename the root element"))
+            showError(mainWindow, _(u"You can't rename the root element"))
             return
 
         selectedItem = self._pageCache[pageToRename]
@@ -301,8 +311,7 @@ class NotesTree(wx.Panel):
         page = self.treeCtrl.GetItemData(item)
         # Не доверяем переименовывать элементы системе
         event.Veto()
-
-        outwiker.core.commands.renamePage(page, label)
+        renamePage(page, label)
 
     def __onStartTreeUpdate(self, root):
         self.__unbindUpdateEvents()
@@ -344,7 +353,7 @@ class NotesTree(wx.Panel):
 
                 # Moving page to itself is ignored
                 if newParent != draggedPage:
-                    outwiker.core.commands.movePage(draggedPage, newParent)
+                    movePage(draggedPage, newParent)
                     self.expand(newParent)
 
         self.dragItem = None
@@ -628,3 +637,39 @@ class NotesTree(wx.Panel):
         ]
         for action in actions:
             actionController.removeToolbarButton(action.stringId)
+
+
+class NotesTreeDropFilesTarget(BaseDropFilesTarget):
+    """
+    Class to drop files to notes in the notes tree panel.
+    """
+    def __init__(self, application,
+                 targetWindow: wx.TreeCtrl,
+                 notesTree: NotesTree):
+        super().__init__(application, targetWindow)
+        self._notesTree = notesTree
+
+    def OnDropFiles(self, x, y, files):
+        correctedFiles = self.correctFileNames(files)
+        flags_mask = wx.TREE_HITTEST_ONITEMICON | wx.TREE_HITTEST_ONITEMLABEL
+        item, flags = self.targetWindow.HitTest((x, y))
+
+        if flags & flags_mask:
+            page = self._notesTree.getPageByItemId(item)
+            if page is not None:
+                file_names = [os.path.basename(fname)
+                              for fname
+                              in correctedFiles]
+
+                title = _("Attach files to the note '{title}'?").format(
+                    title=page.display_title)
+
+                text = '\n'.join(file_names)
+
+                if MessageBox(text,
+                              title,
+                              wx.YES_NO | wx.ICON_QUESTION) == wx.YES:
+                    attachFiles(self._application.mainWindow, page, correctedFiles)
+                return True
+
+        return False
