@@ -661,13 +661,13 @@ class NotesTreeDropFilesTarget(BaseDropFilesTarget):
                               for fname
                               in correctedFiles]
 
-                title = _("Attach files to the note '{title}'?").format(
-                    title=page.display_title)
-
-                text = '\n'.join(file_names)
+                text = _("Attach files to the note '{title}'?\n\n{files}").format(
+                    title=page.display_title,
+                    files='\n'.join(file_names)
+                )
 
                 if MessageBox(text,
-                              title,
+                              _("Attach files to the note?"),
                               wx.YES_NO | wx.ICON_QUESTION) == wx.YES:
                     attachFiles(self._application.mainWindow, page, correctedFiles)
                 return True
