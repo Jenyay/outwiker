@@ -49,14 +49,14 @@ class AdHocToken(object):
     def __init__(self, parser):
         self.parser = parser
 
-    def getDefaultToken(self, o_s, o_e, i_s, i_e):
-        """
-        o_s - outerStart, o_e - outerEnd, i_s - innerStart, i_e - innerEnd
-        """
-        o_e_2, i_s, i_e = (escapeTextForRE(c) for c in (o_e, i_s, i_e))
-        return (o_s +
-                Regex('(?:(?!' + o_e_2 + ').)*?' + i_s + '.*?' + i_e) +
-                o_e)
+    def getDefaultToken(self, outerStart, outerEnd, innerStart, innerEnd):
+        outerEnd_for_RE = escapeTextForRE(outerEnd)
+        innerStart_for_RE = escapeTextForRE(innerStart)
+        innerEnd_for_RE = escapeTextForRE(innerEnd)
+
+        return (outerStart +
+                Regex('(?:(?!' + outerEnd_for_RE + ').)*?' + innerStart_for_RE + '.*?' + innerEnd_for_RE) +
+                outerEnd)
 
     def getAction(self, opening, closing):
         def conversionParseAction(s, l, t):
