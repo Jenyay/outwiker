@@ -2,7 +2,8 @@
 
 from outwiker.libs.pyparsing import Regex
 
-from .tokenfonts import SubscriptToken, BoldToken, ItalicToken, BoldItalicToken
+from .tokenfonts import SubscriptToken, SuperscriptToken, BoldToken, ItalicToken, BoldItalicToken
+from .utils import escapeTextForRE
 
 
 class AdHocFactory(object):
@@ -48,6 +49,15 @@ class AdHocToken(object):
     def __init__(self, parser):
         self.parser = parser
 
+    def getDefaultToken(self, outerStart, outerEnd, innerStart, innerEnd):
+        outerEnd_for_RE = escapeTextForRE(outerEnd)
+        innerStart_for_RE = escapeTextForRE(innerStart)
+        innerEnd_for_RE = escapeTextForRE(innerEnd)
+
+        return (outerStart +
+                Regex('(?:(?!' + outerEnd_for_RE + ').)*?' + innerStart_for_RE + '.*?' + innerEnd_for_RE) +
+                outerEnd)
+
     def getAction(self, opening, closing):
         def conversionParseAction(s, l, t):
             return opening + self.parser.parseTextLevelMarkup(t[1]) + closing
@@ -62,10 +72,9 @@ class BoldSubscriptToken(AdHocToken):
         AdHocToken.__init__(self, parser)
 
     def getToken(self):
-        token = (BoldToken.start +
-                 Regex('.*?' + SubscriptToken.start + '.*?' + SubscriptToken.end) +
-                 BoldToken.end)("bold_subscript")
-
+        token = self.getDefaultToken(
+                    BoldToken.start, BoldToken.end,
+                    SubscriptToken.start, SubscriptToken.end)("bold_subscript")
         token.setParseAction(self.getAction(u'<b>', u'</b>'))
         return token
 
@@ -78,9 +87,9 @@ class BoldSuperscriptToken(AdHocToken):
         AdHocToken.__init__(self, parser)
 
     def getToken(self):
-        token = (BoldToken.start +
-                 Regex(r".*?'\^.*?\^'") +
-                 BoldToken.end)("bold_superscript")
+        token = self.getDefaultToken(
+                    BoldToken.start, BoldToken.end,
+                    SuperscriptToken.start, SuperscriptToken.end)("bold_superscript")
 
         token.setParseAction(self.getAction(u'<b>', u'</b>'))
         return token
@@ -94,9 +103,9 @@ class ItalicSubscriptToken(AdHocToken):
         AdHocToken.__init__(self, parser)
 
     def getToken(self):
-        token = (ItalicToken.start +
-                 Regex('.*?' + SubscriptToken.start + '.*?' + SubscriptToken.end) +
-                 ItalicToken.end)("italic_subscript")
+        token = self.getDefaultToken(
+                    ItalicToken.start, ItalicToken.end,
+                    SubscriptToken.start, SubscriptToken.end)("italic_subscript")
 
         token.setParseAction(self.getAction(u'<i>', u'</i>'))
         return token
@@ -110,9 +119,9 @@ class ItalicSuperscriptToken(AdHocToken):
         AdHocToken.__init__(self, parser)
 
     def getToken(self):
-        token = (ItalicToken.start +
-                 Regex(r".*?'\^.*?\^'") +
-                 ItalicToken.end)("italic_superscript")
+        token = self.getDefaultToken(
+                    ItalicToken.start, ItalicToken.end,
+                    SuperscriptToken.start, SuperscriptToken.end)("italic_superscript")
 
         token.setParseAction(self.getAction(u'<i>', u'</i>'))
         return token
@@ -126,9 +135,9 @@ class BoldItalicSubscriptToken(AdHocToken):
         AdHocToken.__init__(self, parser)
 
     def getToken(self):
-        token = (BoldItalicToken.start +
-                 Regex('.*?' + SubscriptToken.start + '.*?' + SubscriptToken.end) +
-                 BoldItalicToken.end)("bold_italic_subscript")
+        token = self.getDefaultToken(
+                    BoldItalicToken.start, BoldItalicToken.end,
+                    SubscriptToken.start, SubscriptToken.end)("bold_italic_subscript")
 
         token.setParseAction(self.getAction(u'<b><i>', u'</i></b>'))
         return token
@@ -142,9 +151,9 @@ class BoldItalicSuperscriptToken(AdHocToken):
         AdHocToken.__init__(self, parser)
 
     def getToken(self):
-        token = (BoldItalicToken.start +
-                 Regex(r".*?'\^.*?\^'") +
-                 BoldItalicToken.end)("bold_italic_superscript")
+        token = self.getDefaultToken(
+                    BoldItalicToken.start, BoldItalicToken.end,
+                    SuperscriptToken.start, SuperscriptToken.end)("bold_italic_superscript")
 
         token.setParseAction(self.getAction(u'<b><i>', u'</i></b>'))
         return token

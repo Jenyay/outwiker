@@ -40,3 +40,9 @@ def isImage(fname):
             return True
 
     return False
+
+
+def escapeTextForRE(text):
+    for char in r'\^$.*+?[]{}()|#':
+        text = text.replace(char, '\\' + char)
+    return text
