@@ -1,0 +1,107 @@
+(:title Plugin TableOfContents :)
+(:description TableOfContents plugin allow you to create a table of contents by headings on the page :)
+(:linebreaks:)
+
+Attach:Soft/Outwiker/ru.png [[Русская версия -> Outwiker/Contents]]
+
+TableOfContents plugin search the headings on the page and build table of contents. If heading contains an anchor then items of the table of contents will be links on the anchors.
+
+[[TableOfContents 1.0.4 -> Attach:Outwiker/Contents/tableofcontents-1.0.4.zip]] ('''Required OutWiker version: 1.8 - 2.1.0.834''')
+
+[[TableOfContents {{ version_full }} -> Attach:Outwiker/Contents/tableofcontents-{{ version_full }}.zip]] ('''Required OutWiker version: 2.1.0.836 and above''')
+
+<!--#version stable {{ version_full }} -->
+
+(:DonateOWEn:)
+
+
+!!! [[#using]] Using
+
+TableOfContents plugin give two way to create a table of contents. First way is to insert wiki command [=(:toc:)=] on the page. In that case the table of contents will be rebuild by every rendering of the page.
+
+If you do not like the table of contents which create command [=(:toc:)=] then you can to use the menu item "Wiki - Table of contents - Generate". In that case will be created the table of contents as wiki notation which you can change.
+
+Consider a few examples.
+
+
+!!!! Table of contents without links
+
+Let the page contains a follow struct:
+
+(:source lang="text":)
+!! Intro
+...
+!! Chapter 1
+...
+!!! Section 1.1
+...
+!!! Section 1.2
+...
+!! Chapter 2
+...
+!! Resume
+(:sourceend:)
+
+If you select menu item "Wiki - Table of contents - Generate" then in page the following text will be inserted:
+
+(:source lang="text":)
+* Intro
+* Chapter 1
+** Section 1.1
+** Section 1.2
+* Chapter 2
+* Resume
+(:sourceend:)
+
+As a result the table of contents will look like
+
+Attach:result_01.png
+
+Similat result can with [=(:toc:)=] wiki command.
+
+
+!!!! Links in the table of contents
+
+If headings contains anchors then TableOfContents plugin create the links on this anchors in table. The anchors can be in the following positions relative to heading:
+
+* direct before the tags !!...
+* right after the tags !!...
+* after heading
+
+These occurrences shown in the following example:
+
+(:source lang="text":)
+!! [[#intro]] Intro
+...
+!! [[#chapter1]] Chapter 1
+...
+[[#section1_1]]
+!!! Section 1.1
+...
+[[#section1_2]]
+!!! Section 1.2
+...
+!! [[#chapter1]] Chapter 2
+...
+!! Resume [[#resume]]
+(:sourceend:)
+
+For this struct of the page the table of contents will be as follow:
+
+(:source lang="text":)
+* [[Intro -> #intro]]
+* [[Chapter 1 -> #chapter1]]
+** [[Section 1.1 -> #section1_1]]
+** [[Section 1.2 -> #section1_2]]
+* [[Chapter 2 -> #chapter1]]
+* [[Resume -> #resume]]
+(:sourceend:)
+
+All headings will be as the links:
+
+Attach:result_02.png
+
+Similarly will be the result of the command [=(:toc:)=].
+
+{% include 'changelog.en.txt' %}
+(:rater:)

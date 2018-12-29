@@ -1,0 +1,70 @@
+(:title OutWiker. Нестабильные версии:)
+(:description Версии программы OutWiker, которые находятся в стадии разработки.:)
+
+%center%(:ad:)
+
+Attach:Soft/Outwiker/us.png [[Outwiker/UnstableEn | English version]]
+
+>>lframe<<
+Attach:outwiker_100_white.png
+>><<
+
+>>rframe<<
+%center%[[Attach:Soft/Outwiker/twitter.png -> https://twitter.com/#!/OutWiker]] [[Attach:Soft/Outwiker/livejournal.png -> http://ru-outwiker.livejournal.com/]] [[Attach:Soft/Outwiker/gogle_plus_48.png -> https://plus.google.com/113404982971748285098]] [[Attach:Soft/Outwiker/facebook.png -> http://www.facebook.com/outwiker]] [[Attach:Soft/Outwiker/vk.png -> http://vk.com/outwiker]] 
+>><<
+
+Здесь находятся версии программы [[OutWiker -> Soft/Outwiker]], которые собраны из текущей ветки разработки. Эти версии могут иметь глюки, но зато вы можете попробовать новые возможности до того, как они появятся в стабильной версии.
+
+Текущая версия: '''{{ version_full }}''' (от {{ date }})
+
+
+!! Скачать
+
+(:DonateOW:)
+
+
+!!! Windows
+
+Инсталятор: [[Attach:outwiker_win_unstable.zip | outwiker_win_unstable.zip]], или [[Attach:outwiker_win_unstable.7z | outwiker_win_unstable.7z]], или [[Attach:outwiker_win_unstable.exe | outwiker_win_unstable.exe]].
+
+Архив с программой и всеми плагинами: [[Attach:outwiker_win_unstable_all_plugins.zip | outwiker_win_unstable_all_plugins.zip]], или [[Attach:outwiker_win_unstable_all_plugins.7z | outwiker_win_unstable_all_plugins.7z]].
+
+
+!!! Linux
+
+Архив с бинарной сборкой: [[Attach:outwiker_linux_bin.zip | outwiker_linux_bin.zip]] или [[Attach:outwiker_linux_bin.7z | outwiker_linux_bin.7z]].
+
+Бинарные deb-пакет: [[http://jenyay.net/uploads/Outwiker/Unstable/outwiker-{{ version_main }}%2B{{ version_build }}_amd64.deb | outwiker-{{ version_main }}+{{ version_build }}_amd64.deb]].
+
+AppImage: [[http://jenyay.net/uploads/Outwiker/Unstable/Outwiker-x86_64.AppImage | Outwiker-x86_64.AppImage]].
+
+Для установки из snap выполните следующие команды:
+
+(:source lang=text:)
+sudo snap install --beta outwiker
+sudo snap connect outwiker:cups-control
+sudo snap connect outwiker:removable-media
+(:sourceend:)
+
+
+!! Изменения в версии 3.0
+
+* Теперь в именах заметок можно использовать любые символы.
+* Переделаны панели инструментов.
+* Новый интерфейс выбора значков заметок.
+* Новый интерфейс всплывающего окна при клике на тег.
+* Другие улучшения в интерфейсе. 
+* Новые викикоманды для раскраски текста и применения пользовательских стилей.
+* Добавлено слежение за прикрепленными файлами для текущей страницы.
+* В файлы стилей страниц добавлена новая переменная $title.
+* Добавлен новый стиль страниц "rifle_green_and_red".
+* Изменение формата хранения некоторых настроек страниц в дереве заметок.
+* Изменен способ хранения стандартных значков в заметках.
+* Добавлена немецкая локализация.
+* Переход на Python 3.x и wxPython 4.0.
+* Созданы бинарные сборки для Linux.
+* Создан snap-пакет.
+
+{% include 'changelog.ru.txt' %}
+
+'''[[Обсудить на форуме -> http://jenyay.net/forum/topic/28/nestabilnye-versii-outwiker/]]'''

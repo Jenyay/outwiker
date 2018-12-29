@@ -1,0 +1,125 @@
+(:title Плагин ExternalTools. Открытие файлов заметок во внешних приложениях:)
+(:description Плагин ExternalTools позволяет открывать тексты заметок и полученные HTML-файлы во внешних приложениях :)
+(:linebreaks:)
+%center%(:ad:)
+
+Attach:Soft/Outwiker/us.png [[English version -> Outwiker/ExternalToolsEn]]
+
+Плагин ExternalTools выполняет две функции: 
+
+# Позволяет открывать текст страниц во внешних редакторах.
+# Добавляет викикоманду [=(:exec:)=], которая в режиме "Просмотр" создает ссылку или кнопку, с помощью которой можно запускать указанные приложения. (Только для OutWiker 1.9.0.768 и выше)
+
+Ниже более подробно описаны каждая из этих функций.
+
+[[#download]]
+[[ExternalTools 1.4 -> Attach:externaltools-1.4.zip]] ('''Требуемая версия OutWiker: 1.8 - 2.1.0.834''')
+
+[[ExternalTools {{ version_full }} -> Attach:externaltools-{{ version_full }}.zip]] ('''Требуемая версия OutWiker: 2.1.0.836 и выше''')
+
+<!--#version stable {{ version_full }} -->
+
+(:DonateOW:)
+
+[[#using]]
+!!! Использование плагина
+
+!!!! Открытие страниц во внешних редакторах
+
+После установки плагина нужно зайти в окно настроек (меню "Правка - Параметры") и в появившемся разделе "External Tools [Плагин]" добавить те программы, которые вы хотите использовать в дальнейшем.
+
+%center%(:thumb externaltools_options.png px=300:) (:thumb externaltools_options_2.png px=300:)
+
+После этого в контекстном меню, появляющемся при клике правой кнопкой мыши на заметке в дереве заметок, появятся пункты меню "Открыть файл с текстом заметки в...", а для HTML- и викистраниц также появится пункт меню "Открыть HTML-файл в..." В качестве вложенных подменю будут перечислены те приложения, которые вы добавили в настройках.
+
+%center% (:thumb externaltools_1.png px=250:) (:thumb externaltools_2.png px=250:)
+
+
+!!!! Использование команды [=(:exec:)=]
+
+Команда [=(:exec:)=] позволяет запускать Одно или несколько приложений при клике по ссылке или кнопке на викистранице. Каждое приложение должно быть записано на отдельной строке.
+
+Если строка начинается с "#", то эта строка игнорируется. "#" в начале строки - это знак комментария.
+
+Команда [=(:exec:)=] имеет следующие необязательные параметры:
+
+* '''format'''. Если этот параметр равен "'''button'''", то команда создаст кнопку вместо ссылки (по умолчанию).
+* '''title'''. Этот параметр устанавливает текст для ссылки или кнопки.
+
+Внутри команды [=(:exec:)=] могут использоваться макросы. Эти макросы будут заменены на соответствующие пути:
+
+* '''%page%'''. Этот макрос будет заменен на полный путь до файла с текстом страницы (до файла __page.text).
+* '''%html%'''. Этот макрос будет заменен на полный путь до HTML-файла страницы (до файла __content.html).
+* '''%folder%'''. Этот путь будет заменен на полный путь до папки страницы.
+* '''%attach%'''. Этот макрос будет заменен на полный путь до папки с прикрепленными файлами без слеша на конце.
+
+
+!!!!! Примеры
+
+Создание ссылки для запуска application.exe:
+
+(:source lang="text":)
+(:exec:)application.exe(:execend:)
+(:sourceend:)
+
+
+То же самое, но для создания кнопки
+
+(:source lang="text":)
+(:exec format=button:)
+application.exe
+(:execend:)
+(:sourceend:)
+
+
+Создать ссылку для запуска application.exe с параметрами:
+
+(:source lang="text":)
+(:exec:)
+application.exe param1 "c:\myfolder\path to file name"
+(:execend:)
+(:sourceend:)
+
+
+Запустить несколько приложений:
+
+(:source lang="text":)
+(:exec title="Run application_1, application_2 and application_3":)
+application_1.exe
+application_2.exe param_1 param_2
+application_3.exe param_1 param_2
+(:execend:)
+(:sourceend:)
+
+
+Открыть прикрепленный файл с помощью application.exe:
+
+(:source lang="text":)
+(:exec:)
+application.exe Attach:my_file.txt
+(:execend:)
+(:sourceend:)
+
+
+Запустить application.exe из папки с прикрепленынми файлами:
+
+(:source lang="text":)
+(:exec:)
+%attach%/application.exe %attach%/my_file.txt
+(:execend:)
+(:sourceend:)
+
+или
+
+(:source lang="text":)
+(:exec:)
+Attach:application.exe Attach:my_file.txt
+(:execend:)
+(:sourceend:)
+
+{% include 'changelog.ru.txt' %}
+
+[[http://jenyay.net/forum/topic/6/plagin-externaltools/ | '''Обсуждение плагина на форуме''']]
+
+(:rater:) 
+%center%(:ad:)

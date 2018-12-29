@@ -1,0 +1,36 @@
+(:title Плагин TeXEquation. Вставка формул в формате TeX:)
+(:description Плагин TeXEquation позволяет выставлять формулы в формате TeX на викистраницы. :)
+(:linebreaks:)
+
+%center%(:ad:)
+
+Attach:Soft/Outwiker/us.png [[English version -> Outwiker/TexEquationEn]]
+
+Плагин TeXEquation добавляет новые команды для викинотации, позволяющие вставлять формулы в формате TeX.
+
+[[#download]] 
+!!! Скачать
+
+(:DonateOW:)
+[[TeXEquation 2.1 -> Attach:texequation-2.1.zip]] ('''Требуемая версия OutWiker: 2.0 - 2.1.0.834''')
+
+[[TeXEquation {{ version_full }} -> Attach:texequation-{{ version_full }}.zip]] ('''Требуемая версия OutWiker: 2.1.0.836 и выше''')
+
+<!--#version stable {{ version_full }} -->
+
+%center% (:thumb texequation_result.png px=500:) (:thumb texequation_wiki.png px=500:)
+
+>>frame<<
+'''Внимание!''' Все русские буквы в формуле должны находиться внутри команды \text{...}, иначе формула не будет отображаться.
+>><<
+
+Плагин TeXEquation добавляет две новые команды для викисинтаксиса, связанные с добавлением формул:
+
+* [={$...$}=] вставляет строчную формулу, т.е. формулу, которая не разрывает строку.
+* [={$$...$$}=] вставляет блочную формулу, которая отображается в виде отдельного абзаца, при этом формула выравнивается по центру.
+
+{% include 'changelog.ru.txt' %}
+
+%center%(:ad:)
+
+(:rater:)

@@ -1,0 +1,37 @@
+(:title Markdown. Плагин для создания заметок в формате Markdown :)
+(:description Плагин для создания заметок в формате Markdown. Имеется поддержка подсветки кода и интерфейс для вставки основных элементов нотации. :)
+(:linebreaks:)
+
+(:ad:)
+
+Attach:Soft/Outwiker/us.png [[English version -> Outwiker/MarkdownEn]]
+
+Плагин Markdown добавляет в OutWiker новый тип страниц, на которых текст заметки можно оформлять с использованием языка разметки Markdown.
+
+[[Markdown 1.3.2 -> Attach:markdown-1.3.2.zip]] ('''Требуемая версия OutWiker: 2.0 - 2.1.0.834''')
+
+[[Markdown {{ version_full }} -> Attach:markdown-{{ version_full }}.zip]] ('''Требуемая версия OutWiker: 2.1.0.836 и выше''')
+
+<!--#version stable {{ version_full }} -->
+
+(:DonateOW:)
+(:thumbgallery cols=2 px=400 align=center:)
+markdown_code.png
+markdown_view.png
+(:thumbgalleryend:)
+
+!!! Использование плагина Markdown
+
+После установки плагина в диалоге создания страниц появится новы тип страниц "Markdown-страница". Во всем остальном Markdown-страница подобна встроенной викистранице. Она также имеет вкладки для редактирования кода, просмотра результата и полученного HTML-кода.
+
+%center%Attach:dialog.png
+
+На панель инструментов выведены кнопки для вставки различных элементов разметки в формате Markdown: заголовки, ссылки, выделение текста полужирным и/или курсивным шрифтом и др.
+
+{% include 'changelog.ru.txt' %}
+
+(:rater:)
+
+(:ad:)
+
+(:include Site.FoxCommentBox:)

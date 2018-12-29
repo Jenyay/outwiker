@@ -1,0 +1,61 @@
+(:title OutWiker. Unstable versions:)
+(:description Versions of the OutWiker program which are in a development stage.:)
+
+Attach:Outwiker/English/ru.png [[Outwiker/Unstable | Русская версия]]
+
+>>lframe<<
+Attach:Outwiker/Unstable/outwiker_100_white.png
+>><<
+
+There are program versions [[OutWiker -> Outwiker/English]] which are make from the current branch of development (trunk). These versions can have problems, but you can try new possibilities before they will appear in the stable version.
+
+Current version: '''{{ version_full }}''' ({{ date }})
+
+
+!! Download
+
+(:DonateOWEn:)
+
+!!! Windows
+
+Installer: [[Attach:Outwiker/Unstable/outwiker_win_unstable.zip | outwiker_win_unstable.zip]], or [[Attach:Outwiker/Unstable/outwiker_win_unstable.7z | outwiker_win_unstable.7z]], or [[Attach:Outwiker/Unstable/outwiker_win_unstable.exe | outwiker_win_unstable.exe]].
+
+Application and all plug-ins: [[Attach:Outwiker/Unstable/outwiker_win_unstable_all_plugins.zip | outwiker_win_unstable_all_plugins.zip]], or [[Attach:Outwiker/Unstable/outwiker_win_unstable_all_plugins.7z | outwiker_win_unstable_all_plugins.7z]].
+
+
+!!! Linux
+
+Binary assembly: [[Attach:Outwiker/Unstable/outwiker_linux_bin.zip | outwiker_linux_bin.zip]] or [[Attach:Outwiker/Unstable/outwiker_linux_bin.7z | outwiker_linux_bin.7z]].
+
+Binary deb package: [[http://jenyay.net/uploads/Outwiker/Unstable/outwiker-{{ version_main}}%2B{{ version_build }}_amd64.deb | outwiker-{{ version_main}}+{{ version_build }}_amd64.deb]].
+
+AppImage: [[http://jenyay.net/uploads/Outwiker/Unstable/Outwiker-x86_64.AppImage | Outwiker-x86_64.AppImage]].
+
+To install from snap run the commands:
+
+(:source lang=text:)
+sudo snap install --beta outwiker
+sudo snap connect outwiker:cups-control
+sudo snap connect outwiker:removable-media
+(:sourceend:)
+
+
+!! Changes in version 3.0
+
+* Now you can use any symbols in the notes title.
+* New toolbars.
+* New design for popup window when clicking on the tag.
+* New interface to select notes icons.
+* Other interface improvements.
+* New commands for wiki pages to change text color and apply custom styles.
+* Add watching for attached files for selected page.
+* Added a new $title variable for the page style files .
+* Add a new page style "rifle_green_and_red".
+* Change the storage format for certain properties of the notes tree pages.
+* Change the way of storing standard icons in notes.
+* Add German localization.
+* Migrate to Python 3.x and wxPython 4.0.
+* Created binary assembly for Linux.
+* Add the snap package for Linux.
+
+{% include 'changelog.en.txt' %}

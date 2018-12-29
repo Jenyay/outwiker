@@ -1,0 +1,280 @@
+(:title Counter plugin. Plugin for automatic numbering :)
+(:description Counter plugin for the OutWiker, designed for automatic numbering of anything on wiki pages :)
+(:linebreaks:)
+
+Attach:Soft/Outwiker/ru.png [[Русская версия -> Outwiker/Counter]]
+
+Plugin adds wiki-command [= (:counter:) =], allowing the automatic numbering anything on the page.
+
+[[Counter 1.0.6 -> Attach:Outwiker/Counter/counter-1.0.6.zip]] ('''Required OutWiker version: 1.8 - 2.1.0.834''')
+
+[[Counter {{ version_full }} -> Attach:Outwiker/Counter/counter-{{ version_full }}.zip]] ('''Required OutWiker version: 2.1.0.836 and above''')
+
+<!--#version stable {{ version_full }} -->
+
+(:DonateOWEn:)
+
+
+!!! Using
+
+[=(:counter parameters... :)=]
+
+
+!!! Parameters
+
+All parameters are optional.
+
+* '''name''' - sets the name of the counter. Counters with different names have independent current values.
+* '''start''' - value, with which to start a new count. With this option, you can "reset" the counter to the required value.
+* '''step''' - increment for the counter.
+* '''parent''' - name of the parent counter to create a numbering like 1.1, 1.2.3, etc.
+* '''separator''' - separator between a given counter and the parent counter (the default value - dot).
+* '''hide''' - parameter indicates that the counter need to hide, but to increase its value.
+
+%center%Attach:counter_en.png
+
+
+!!! Examples of usage
+
+!!!! Example 1
+
+If we want to have only one numbering on the page, you can use the [=(:counter:)=] without parameters.
+
+For example:
+
+(:source lang="text":)
+Picture (:counter:).
+
+Picture (:counter:).
+
+Picture (:counter:).
+(:sourceend:)
+
+As a result, we obtain the following numbering:
+
+(:source lang="text":)
+Picture 1.
+
+Picture 2.
+
+Picture 3.
+(:sourceend:)
+
+
+!!!! Example 2
+
+If we want to renumber and pictures, and equations, we use the '' name'' parameter. Counters with different parameter value of the ''name'' parameters numbered independently. Lack ''name'' parameter is equivalent to ''name = ""''.
+
+For example:
+
+(:source lang="text":)
+Picture (:counter name="picture":).
+
+Equation ((:counter name="eq":))
+Equation ((:counter name="eq":))
+
+Picture (:counter name="picture":).
+
+Equation ((:counter name="eq":))
+Equation ((:counter name="eq":))
+
+Picture (:counter name="picture":).
+(:sourceend:)
+
+The result will look as follows:
+
+(:source lang="text":)
+Picture 1.
+
+Equation (1)
+Equation (2)
+
+Picture 2.
+
+Equation (3)
+Equation (4)
+
+Picture 3.
+(:sourceend:)
+
+
+!!!! Example 3
+
+''start'' parameter allows you to "reset" the counter to some initial value, which goes from a new count.
+
+For example:
+
+(:source lang="text":)
+Picture (:counter:).
+
+Picture (:counter:).
+
+Picture (:counter start=10:).
+
+Picture (:counter:).
+(:sourceend:)
+
+The result will look as follows:
+
+(:source lang="text":)
+Picture 1.
+
+Picture 2.
+
+Picture 10.
+
+Picture 11.
+(:sourceend:)
+
+
+!!!! Example 4
+
+''step'' parameter indicates that the counter should increase its value not by 1 but the specified number, which can be negative.
+
+For example:
+
+(:source lang="text":)
+Picture (:counter:).
+
+Picture (:counter:).
+
+Picture (:counter step=2:).
+
+Picture (:counter step=3:).
+
+Picture (:counter step=-10:).
+(:sourceend:)
+
+The result will look as follows:
+
+(:source lang="text":)
+Picture 1.
+
+Picture 2.
+
+Picture 4.
+
+Picture 7.
+
+Picture -3.
+(:sourceend:)
+
+
+!!!! Example 5
+
+Если у вас на странице есть Sectionы, то это хороший объект для автоматической нумерации. Often sections contain subsections whose numbers depend on the parent section, for example, 1.2, 1.3, 1.2.3, 1.2.4, 1.2.5, etc. To create such a numbering using the ''parent'' parameter, which shall be equal to the name (parameter'' name'') parent counter.
+
+For example:
+
+(:source lang="text":)
+Section (:counter name="level 1":)
+Section (:counter name="level 1":)
+
+Section (:counter name="level 2" parent="level 1":)
+Section (:counter name="level 3" parent="level 2":)
+Section (:counter name="level 3" parent="level 2":)
+Section (:counter name="level 3" parent="level 2":)
+
+Section (:counter name="level 2" parent="level 1":)
+Section (:counter name="level 2" parent="level 1":)
+
+Section (:counter name="level 3" parent="level 2":)
+Section (:counter name="level 3" parent="level 2":)
+Section (:counter name="level 3" parent="level 2":)
+
+Section (:counter name="level 1":)
+Section (:counter name="level 2" parent="level 1":)
+Section (:counter name="level 2" parent="level 1":)
+Section (:counter name="level 2" parent="level 1":)
+(:sourceend:)
+
+The result will look as follows:
+
+(:source lang="text":)
+Section 1
+Section 2
+
+Section 2.1
+Section 2.1.1
+Section 2.1.2
+Section 2.1.3
+
+Section 2.2
+Section 2.3
+
+Section 2.3.1
+Section 2.3.2
+Section 2.3.3
+
+Section 3
+Section 3.1
+Section 3.2
+Section 3.3
+(:sourceend:)
+
+
+!!!! Example 6
+
+If you use the ''name'' parameter, you can change the separator between the values ​​of the parent and child counters. For this is used ''separator'' parameter.
+
+For example:
+
+(:source lang="text":)
+Section (:counter name="level 1":)
+Section (:counter name="level 2" parent="level 1" separator=":":)
+Section (:counter name="level 3" parent="level 2" separator="-":)
+Section (:counter name="level 3" parent="level 2" separator="-":)
+Section (:counter name="level 3" parent="level 2" separator="-":)
+(:sourceend:)
+
+The result will look as follows:
+
+(:source lang="text":)
+Section 1
+Section 1:1
+Section 1:1-1
+Section 1:1-2
+Section 1:1-3
+(:sourceend:)
+
+
+!!!! Example 7
+
+If you want to counter increased by one, but value was not shown, used the ''hide'' parameter.
+
+For example:
+
+(:source lang="text":)
+(:counter name="level 1" hide:)
+Section (:counter name="level 2" parent="level 1":)
+Section (:counter name="level 2" parent="level 1":)
+
+(:counter name="level 1" hide:)
+Section (:counter name="level 2" parent="level 1":)
+Section (:counter name="level 2" parent="level 1":)
+
+(:counter name="level 1" hide:)
+Section (:counter name="level 2" parent="level 1":)
+Section (:counter name="level 2" parent="level 1":)
+(:sourceend:)
+
+The result will look as follows:
+
+(:source lang="text":)
+
+Section 1.1
+Section 1.2
+
+
+Section 2.1
+Section 2.2
+
+
+Section 3.1
+Section 3.2
+(:sourceend:)
+
+{% include 'changelog.en.txt' %}
+
+(:rater:)
+

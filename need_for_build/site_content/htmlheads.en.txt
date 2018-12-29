@@ -1,0 +1,53 @@
+(:title HtmlHeads Plugin. Adding HTML-header on the wiki pages :)
+(:description HtmlHeads plugin for OutWiker program allows you to add headers title, description, keywords or custom headers :)
+(:linebreaks:)
+
+Attach:Soft/Outwiker/ru.png [[Русская версия -> Outwiker/HtmlHeads]]
+
+HtmlHeads plugin will be useful if you are using OutWiker for creating HTML-pages. This plugin adds new commands to wiki pages that insert tags &lt;title&gt;, &lt;meta name="description"&gt; and &lt;meta name="keywords"&gt; or any custom tags in the page head (between  &lt;head&gt;...&lt;/head&gt;).
+
+[[HtmlHeads 1.0.5 -> Attach:Outwiker/HtmlHeads/htmlheads-1.0.5.zip]] ('''Required OutWiker version: 1.8 - 2.1.0.834''')
+
+[[HtmlHeads {{ version_full }} -> Attach:Outwiker/HtmlHeads/htmlheads-{{ version_full }}.zip]] ('''Required OutWiker version: 2.1.0.836 and above''')
+
+<!--#version stable {{ version_full }} -->
+(:DonateOWEn:)
+
+!!! [[#using]] Using
+
+HtmlHeads plugin adds the following commands:
+
+'''[=(:title:)=]''' to add tag &lt;title&gt;. 
+
+(:source lang="text":)
+(:title Page Title:)
+(:sourceend:)
+
+
+'''[=(:description:)=]''' to add tag &lt;meta name="description" ...&gt;.
+
+(:source lang="text":)
+(:description Page Description:)
+(:sourceend:)
+
+
+'''[=(:keywords:)=]''' to add tag &lt;meta name="keywords" ...&gt;.
+
+(:source lang="text":)
+(:keywords keyword_1, keyword_2, other keyword:)
+(:sourceend:)
+
+
+'''[=(:htmlhead:)=]''' to add custom head.
+
+(:source lang="text":)
+(:htmlhead:)
+<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+
+<meta name='robots' content='index,follow' />
+(:htmlheadend:)
+(:sourceend:)
+
+{% include 'changelog.en.txt' %}
+
+(:rater:)

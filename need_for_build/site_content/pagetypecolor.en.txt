@@ -1,0 +1,29 @@
+(:title PageTypeColor Plug-in. Changing the page title field color when changing the page type :)
+(:description PageTypeColor plug-in highlight page title field depending on selected page type :)
+(:linebreaks:)
+
+Attach:Soft/Outwiker/ru.png [[Русская версия -> Outwiker/PageTypeColor]]
+
+In case you use constantly the same page type, then you don't notice to the page type field by page creation. But some time situation occur, when you need to create a page with other type. After that OutWiker will suggest that to you recent used page type default. You may don't note it and create a page for other type. Sure, there is nothing terrible, you can delete just created page and create new page with valid type. However there are excess actions.
+
+So as to avoid such situation the PageTypeColor plug-in had been created. That plug-in highlight the page title field in the page dialog by various colors depending selected page type. And you will take note of different color by page creation ans will switch the page type.
+
+Advice. Set white color in preferences for the most used page type, in that case you certainly notice page type changing.
+
+
+%center%(:thumb pagetypecolor_wiki.jpg px=250:) (:thumb pagetypecolor_html.jpg px=250:)
+
+%center%(:thumb pagetypecolor_text.jpg px=250:) (:thumb pagetypecolor_search.jpg px=250:)
+
+%center%(:thumb pagetypecolor_settings.jpg px=250:) 
+
+[[#download]] 
+[[PageTypeColor 1.1.1 -> Attach:pagetypecolor-1.1.1.zip]] ('''Требуемая версия OutWiker: 1.9 - 2.1.0.834''')
+
+[[PageTypeColor {{ version_full }} -> Attach:pagetypecolor-{{ version_full }}.zip]] ('''Требуемая версия OutWiker: 2.1.0.836 и выше''')
+
+<!--#version stable {{ version_full }} -->
+
+(:DonateOWEn:)
+
+{% include 'changelog.en.txt' %}

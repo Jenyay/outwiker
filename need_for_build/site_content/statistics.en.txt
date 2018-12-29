@@ -1,0 +1,37 @@
+(:title Statistics plugin. Showing statistics by notes:)
+(:description Statistics plugin for OutWiker programm show statistics by single page and full tree:)
+(:linebreaks:)
+
+Attach:ru.png [[Outwiker/Statistics | Русская версия]]
+
+The plugin append menu items '''Tools -> Page Statistic''' and '''Tools -> Tree Statistic'''.
+
+[[Statistics 1.0.4 -> Attach:Outwiker/Statistics/statistics-1.0.4.zip]] ('''Required OutWiker version: 1.7 - 2.1.0.834''')
+
+[[Statistics {{ version_full }} -> Attach:Outwiker/Statistics/statistics-{{ version_full }}.zip]] ('''Required OutWiker version: 2.1.0.836 and above''')
+
+<!--#version stable {{ version_full }} -->
+
+(:DonateOWEn:)
+
+!!! Screenshots
+
+Page statistic sample:
+
+%center% Attach:page.png
+
+Tree statistic sample:
+
+(:thumbgallery cols=2 px=300 align=center:)
+tree_06.png
+tree_05.png
+tree_04.png
+tree_03.png
+tree_02.png
+tree_01.png
+(:thumbgalleryend:)
+
+{% include 'changelog.en.txt' %}
+
+[[#allcomments]]
+(:include Site.FoxCommentBoxEn:)

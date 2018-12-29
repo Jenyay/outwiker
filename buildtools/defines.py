@@ -46,12 +46,14 @@ DEB_BINARY_BUILD_DIR = 'linux'
 DEB_SOURCE_BUILD_DIR = 'linux/deb_source'
 APPIMAGE_BUILD_DIR = 'linux'
 SNAP_BUILD_DIR = 'linux'
+SITE_CONTENT_BUILD_DIR = 'site_content'
 
 SOURCES_DIR = 'sources'
 PLUGINS_DIR = 'plugins'
 PLUGIN_VERSIONS_FILENAME = 'plugin.xml'
 OUTWIKER_VERSIONS_FILENAME = 'versions.xml'
 NEED_FOR_BUILD_DIR = 'need_for_build'
+SITE_CONTENT_DIR = 'site_content'
 COVERAGE_PARAMS = '--rcfile="../.coveragerc"'
 
 FILES_FOR_UPLOAD_UNSTABLE_WIN = [

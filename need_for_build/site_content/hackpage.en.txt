@@ -1,0 +1,78 @@
+(:title HackPage. The changing the hidden notes parameters:)
+(:description  The HackPage plug-in. The plug-in designed to change the hidden notes parameters:)
+(:linebreaks:)
+
+Attach:Soft/Outwiker/ru.png [[Русская версия -> Outwiker/HackPage]]
+
+The HackPage plug-in designed to change the hidden parameters of the notes, which unavailable through the basic program interface.
+
+[[HackPage 1.1 -> Attach:Outwiker/HackPage/hackpage-1.1.zip]] ('''Required OutWiker version: 2.0 - 2.1.0.834''')
+
+[[HackPage {{ version_full }} -> Attach:Outwiker/HackPage/hackpage-{{ version_full }}.zip]] ('''Required OutWiker version: 2.1.0.836 and above''')
+
+<!--#version stable {{ version_full }} -->
+
+(:DonateOWEn:) 
+
+
+!!! [[#using]] Using
+
+A new submenu "HackPage" will be adding to "Tools" menu after plug-in installation.
+
+%center%%thumb width=550%Attach:main_menu.png%%
+
+The same submenu will be adding to the context menu when showed after right-click on the note.
+
+%center%%thumb width=550%Attach:popup_menu.png%%
+
+The HackPage plug-in can perform the following actions:
+
+* To change page identifier
+* To set the alias for a page.
+* To change the storage folder of note without changing the note name.
+
+Consider these possibilities in more detail.
+
+
+!!!! [[#changeuid]] Change page identifier
+
+Starting with OutWiker 1.8.0.732 has been adding the opportunity to make the links between pages with the page identifier (without page names). To get a link to the page designed menu "Tools -> Copy Link to Page".
+
+The original identifiers looks like so {+[=page://__49ee3b83-dff4-479c-b1ad-a3edd2ace99e=]+}. Such identifiers are unique but not descriptive for users.
+
+If you often use this feature, then you may want to change this identifier for something more meaningful. For example {+[=page://my-page-id=]+}
+
+When you select a menu item "HackPage - Change page identifier..." will be open the dialog, where you will be able to change the page identifier.
+
+%center%Attach:dialog_change_page_uid.png
+
+
+!!!! [[#setalias]] Set page alias
+
+Before OutWiker 2.0.0.808 the names of the notes had been matching to the folder name, where these notes are located in the file system. Since the specified version the pages can have aliases, and then in the program interface they will be displayed not by folder names, but by the alias. The basic interface do not have the ability to set any alias. This is designed that not to confuse inexperienced users.
+
+With the HackPage plug-in you can set the aliases page. To set an alias select the menu item "HackPage - Set page alias..." from the context menu or the menu "Tools" in the main menu.
+
+In this case a following dialog will be shown to enter a alias.
+
+%center%Attach:set_alias.png
+
+With the aliases the notes can have names with all the symbols which unacceptable for the file system of the operating system. With the plug-in you can create multiple notes with identical display names within the same parent notes.
+
+%center%Attach:notes_with_alias.png
+
+
+!!!! [[#changefolder]] The page folder name changing
+
+Menu item "HackPage - Change page folder..." allows to rename the notes folder, but at the same time to set the alias, appropriate the original folder name. Thus, from the user's point of view the note does not change the name, but the notes folder will be renamed
+
+After selecting the menu item "HackPage - Change page folder..." a dialog will be showing to enter a new folder name
+
+%center%Attach:change_folder_name.png
+
+When you enter a new folder name you need to consider, what the name is limited of the operating system as and the names of the notes. For example, in Windows you can't use characters such as quotes, asterisk, colon, etc. In Linux you can't use only direct- and backslashes.
+
+{% include 'changelog.en.txt' %}
+
+[[#comment]]
+(:include Site.FoxCommentBoxEn:)

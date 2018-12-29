@@ -1,0 +1,97 @@
+(:title Plugin Diagrammer for creation of the diagrams and the flowcharts :)
+(:description Plugin diagrammer add command "diagram" for creatoin of a diagrams and a flowcharts:)
+(:linebreaks:)
+
+Attach:Soft/Outwiker/ru.png [[Русская версия -> Outwiker/Diagrammer]]
+
+Plugin Diagrammer add a wiki command [=(:diagram:)...(:diagramend:)=] for creation of a diagrams and a flowcharts. The notation for the command [=(:diagram:)...(:diagramend:)=] is the notation of [[blockdiag -> http://blockdiag.com/en/blockdiag/index.html]] library. The notation like the notation of DOT from graphviz but has a slightly more modest capabilities.
+
+[[Diagrammer 1.0.5 -> Attach:Outwiker/Diagrammer/diagrammer-1.0.5.zip]] ('''Required OutWiker version: 1.8 - 2.1.0.834''')
+
+[[Diagrammer {{ version_full }} -> Attach:Outwiker/Diagrammer/diagrammer-{{ version_full }}.zip]] ('''Required OutWiker version: 2.1.0.836 and above''')
+
+<!--#version stable {{ version_full }} -->
+(:DonateOWEn:)
+
+
+!!! [[#using]] Using
+
+Diagrammer give graphic interface for the easier using notation of the blockdiag. Majority of options of diagram, nodes, edges and groups can set from dialogs.
+
+%center%Attach:toolbar.png
+
+(:thumbgallery cols=2 px=250 align=center:)
+    dlg_diagrammer_en.png | Dialog with the diagram settings
+    dlg_node_en.png | Dialog with the node settings
+    dlg_group_en.png | Dialog with the group settings
+    dlg_edge_en.png | Dialog with the edge settings
+(:thumbgalleryend:)
+
+
+!!! [[#examples]] Examples
+
+Hereinafter shown examples and the result of the command [=(:diagram:)=]. The examples show only part features of the Diagrammer plugin and [[blockdiag -> http://blockdiag.com/en/blockdiag/index.html]] library.
+
+
+!!!! Types of the edges
+
+(:source lang="text":)
+(:diagram:)
+A <-> B -> C
+B -- D
+(:diagramend:)
+(:sourceend:)
+
+%center%Attach:diagram_1.png
+
+
+!!!! Using the various arrow head
+
+(:source lang="text":)
+(:diagram:)
+A <- B [hstyle = generalization]
+C <- D [hstyle = composition]
+E <- F [hstyle = aggregation]
+(:diagramend:)
+(:sourceend:)
+
+%center%Attach:diagram_2.png
+
+
+!!!! Design notes and edges
+
+(:source lang="text":)
+(:diagram:)
+orientation = portrait;
+A [shape = circle, color = "#F0C538"];
+B [shape = cloud, style = dashed, textcolor = "#314BE2"];
+C [color = "black", textcolor = "red"];
+
+B <- A;
+B <- C [style = "10,4", thick, color = "red"]
+(:diagramend:)
+(:sourceend:)
+
+%center%Attach:diagram_3.png
+
+
+!!!! Using groups
+
+(:source lang="text":)
+(:diagram:)
+A <-> B -> C
+B -- D
+
+group {
+    C
+    D
+}
+(:diagramend:)
+(:sourceend:)
+
+%center%Attach:diagram_4.png
+
+{% include 'changelog.en.txt' %}
+
+(:rater:)
+

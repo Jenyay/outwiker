@@ -18,8 +18,6 @@ from buildtools.buildfacts import BuildFacts
 
 from buildtools.utilites import (getPython,
                                  execute,
-                                 # getCurrentUbuntuDistribName,
-                                 getPathToPlugin,
                                  tobool,
                                  print_info,
                                  print_warning,
@@ -44,22 +42,23 @@ from buildtools.defines import (
     WINDOWS_BUILD_DIR,
     COVERAGE_PARAMS,
     LANGUAGES,
+    SITE_CONTENT_BUILD_DIR,
+    SITE_CONTENT_DIR,
 )
 from buildtools.versions import (getOutwikerVersion,
                                  getOutwikerVersionStr,
                                  downloadAppInfo,
                                  getLocalAppInfoList,
                                  )
-from buildtools.contentgenerators import SiteChangelogGenerator
 from buildtools.builders import (BuilderWindows,
                                  BuilderSources,
                                  BuilderPlugins,
                                  BuilderLinuxBinary,
                                  BuilderDebBinaryFactory,
-                                 # BuilderDebSource,
-                                 # BuilderDebSourcesIncluded,
                                  BuilderAppImage,
                                  BuilderSnap,
+                                 SiteContentBuilder,
+                                 SiteContentSource,
                                  )
 
 from outwiker.utilites.textfile import readTextFile
@@ -87,89 +86,6 @@ except ImportError:
                                        )
 
 from buildtools.uploaders import BinaryUploader
-
-
-# @task
-# @linux_only
-# def deb_sources_included(is_stable=False):
-#     '''
-#     Create files for uploading in PPA (including sources)
-#     '''
-#     builder = BuilderDebSourcesIncluded(DEB_SOURCE_BUILD_DIR,
-#                                         UBUNTU_RELEASE_NAMES,
-#                                         tobool(is_stable))
-#     builder.build()
-#     return builder.getResultPath()
-
-
-# @task
-# @linux_only
-# def deb(is_stable=False):
-#     '''
-#     Assemble the deb packages
-#     '''
-#     builder = BuilderDebSource(DEB_SOURCE_BUILD_DIR,
-#                                UBUNTU_RELEASE_NAMES,
-#                                tobool(is_stable))
-#     builder.build()
-#     return builder.getResultPath()
-
-
-# @task
-# @linux_only
-# def deb_clear():
-#     '''
-#     Remove the deb packages
-#     '''
-#     builder = BuilderDebSource(DEB_SOURCE_BUILD_DIR,
-#                                UBUNTU_RELEASE_NAMES,
-#                                False)
-#     builder.clear()
-
-
-# @task
-# @linux_only
-# def deb_single(is_stable=False):
-#     '''
-#     Assemble the deb package for the current Ubuntu release
-#     '''
-#     builder = BuilderDebSource(DEB_SOURCE_BUILD_DIR,
-#                                [getCurrentUbuntuDistribName()],
-#                                tobool(is_stable))
-#     builder.build()
-#     return builder.getResultPath()
-
-
-# @task
-# @linux_only
-# def deb_install(is_stable=False):
-#     '''
-#     Assemble deb package for current Ubuntu release
-#     '''
-#     result_path = deb_single(tobool(is_stable))
-#
-#     version = getOutwikerVersion()
-#
-#     with lcd(result_path):
-#         local("sudo dpkg -i outwiker_{}+{}~{}_all.deb".format(
-#             version[0],
-#             version[1],
-#             getCurrentUbuntuDistribName()))
-
-
-# def _ppa_upload(ppa_path, deb_path):
-#     '''
-#     Upload the current OutWiker version in PPA
-#     '''
-#     version = getOutwikerVersion()
-#
-#     for distname in UBUNTU_RELEASE_NAMES:
-#         with lcd(deb_path):
-#             local("dput {} outwiker_{}+{}~{}_source.changes".format(
-#                 ppa_path,
-#                 version[0],
-#                 version[1],
-#                 distname))
 
 
 @task
@@ -375,34 +291,6 @@ def clear():
         deb_binary_clear()
     elif sys.platform.startswith('win32'):
         win_clear()
-
-
-@task
-def plugin_changelog(plugin, lang):
-    '''
-    Generate plugin's changelog for the site
-    '''
-    path_to_xml = os.path.join(getPathToPlugin(plugin),
-                               PLUGIN_VERSIONS_FILENAME)
-    _print_changelog(path_to_xml, lang)
-
-
-@task
-def outwiker_changelog(lang):
-    '''
-    Generate OutWiker's changelog for the site
-    '''
-    path_to_xml = os.path.join(u'src', 'versions.xml')
-    _print_changelog(path_to_xml, lang)
-
-
-def _print_changelog(path_to_xml, lang):
-    xml_content = readTextFile(path_to_xml)
-    parser = XmlVersionParser([lang])
-    appinfo = parser.parse(xml_content)
-    generator = SiteChangelogGenerator(appinfo)
-    changelog = generator.make()
-    print(changelog)
 
 
 @task
@@ -830,3 +718,49 @@ def snap_publish():
         print_info('Publish snap: {fname}'.format(fname=snap_file))
         local('snapcraft push "{fname}"'.format(fname=snap_file))
         local('snapcraft sign-build "{fname}"'.format(fname=snap_file))
+
+
+@task
+def site_content(is_stable=False):
+    path_to_templates = os.path.join(NEED_FOR_BUILD_DIR,
+                                     SITE_CONTENT_DIR)
+    # List of SiteContentSource
+    apps = []
+    apps.append(SiteContentSource(
+        os.path.join('src', 'versions.xml'),
+        'ru',
+        'outwiker_unstable.ru.txt'))
+
+    apps.append(SiteContentSource(
+        os.path.join('src', 'versions.xml'),
+        'en',
+        'outwiker_unstable.en.txt'))
+
+    apps.append(SiteContentSource(
+        os.path.join('src', 'versions_stable.xml'),
+        'ru',
+        'outwiker_stable.ru.txt'))
+
+    apps.append(SiteContentSource(
+        os.path.join('src', 'versions_stable.xml'),
+        'en',
+        'outwiker_stable.en.txt'))
+
+    for plugin in PLUGINS_LIST:
+        item_ru = SiteContentSource(
+            os.path.join('plugins', plugin, plugin, 'plugin.xml'),
+            'ru',
+            '{}.ru.txt'.format(plugin))
+
+        item_en = SiteContentSource(
+            os.path.join('plugins', plugin, plugin, 'plugin.xml'),
+            'en',
+            '{}.en.txt'.format(plugin))
+
+        apps.append(item_ru)
+        apps.append(item_en)
+
+    builder = SiteContentBuilder(SITE_CONTENT_BUILD_DIR,
+                                 apps,
+                                 path_to_templates)
+    builder.build()

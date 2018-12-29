@@ -1,0 +1,58 @@
+(:title Плагин HtmlHeads. Добавление HTML-заголовков на викистраницу :)
+(:description Плагин HtmlHeads для программы OutWiker позволяет добавлять заголовки title, description, keywords или пользовательские заголовки :)
+(:linebreaks:)
+%center%(:ad:)
+
+Attach:Soft/Outwiker/us.png [[English version -> Outwiker/HtmlHeadsEn]]
+
+Плагин HtmlHeads будет вам полезен, если вы используете OutWiker для создания HTML-страниц. Этот плагин добавляет новые команды для викистраниц, которые вставляют теги &lt;title&gt;, &lt;meta name="description"&gt; и &lt;meta name="keywords"&gt; или произвольные пользовательские теги в заголовок страницы (между тегами &lt;head&gt;...&lt;/head&gt;).
+
+[[HtmlHeads 1.0.5 -> Attach:htmlheads-1.0.5.zip]] ('''Требуемая версия OutWiker: 1.8 - 2.1.0.834''')
+
+[[HtmlHeads {{ version_full }} -> Attach:htmlheads-{{ version_full }}.zip]] ('''Требуемая версия OutWiker: 2.1.0.836 и выше''')
+
+<!--#version stable {{ version_full }}-->
+
+(:DonateOW:)
+
+!!! [[#using]] Использование
+
+Плагин HtmlHeads добавляет следующие команды:
+
+'''[=(:title:)=]''' для добавления тега &lt;title&gt;. 
+
+(:source lang="text":)
+(:title Заголовок страницы:)
+(:sourceend:)
+
+
+'''[=(:description:)=]''' для добавления тега &lt;meta name="description" ...&gt;.
+
+(:source lang="text":)
+(:description Описание страницы:)
+(:sourceend:)
+
+
+'''[=(:keywords:)=]''' для добавления тега &lt;meta name="keywords" ...&gt;.
+
+(:source lang="text":)
+(:keywords ключевое слово, другое ключевое слово, абырвалг:)
+(:sourceend:)
+
+
+'''[=(:htmlhead:)=]''' для добавления произвольного заголовка.
+
+(:source lang="text":)
+(:htmlhead:)
+<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+
+<meta name='robots' content='index,follow' />
+(:htmlheadend:)
+(:sourceend:)
+
+{% include 'changelog.ru.txt' %}
+
+'''[[http://jenyay.net/forum/post/485/ | Обсудить на форуме]]'''
+
+(:rater:)
+%center%(:ad:)

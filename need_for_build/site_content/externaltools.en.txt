@@ -1,0 +1,118 @@
+(:title ExternalTools Plugin. Open notes files in external applications :)
+(:description ExternalTools plugin allows you to open text notes or the resulting HTML files in external applications :)
+(:linebreaks:)
+
+
+Attach:Soft/Outwiker/ru.png [[Outwiker/ExternalTools | Русская версия]]
+
+ExternalTools plugin performs two functions:
+
+# Allows open page text in the external applications.
+# Adds [=(:exec:)=] wiki command which in "Preview mode" creates link or button for executing given applications. (Only for OutWiker 1.9.0.768 and above).
+
+Below this functions will be descriped.
+
+[[#download]]
+[[ExternalTools 1.4 -> Attach:Outwiker/ExternalTools/externaltools-1.4.zip]] ('''Required OutWiker version: 1.8 - 2.1.0.834''')
+
+[[ExternalTools {{ version_full }} -> Attach:Outwiker/ExternalTools/externaltools-{{ version_full }}.zip]] ('''Required OutWiker version: 2.1.0.836 and above''')
+
+<!--#version stable {{ version_full }} -->
+(:DonateOWEn:)
+
+[[#using]]
+!!! Using
+
+!!!! Открытие страниц во внешних редакторах
+
+After installing the plugin you need to go out the window settings (menu "Edit - Preferences") and then in the section "External Tools [extension]" to add the programs you want to use in the future.
+
+%center%(:thumb externaltools_options.png px=350:)
+
+After that, the context menu that appears when you right-click on the article notes in a tree, there will be menu items "Open content file with...", and for HTML- and wikipage will also appear the menu item "Open result HTML file with...". As a submenu will list those applications that you added in the settings.
+
+%center% (:thumb externaltools_1.png px=250:) (:thumb externaltools_1.png px=250:)
+
+!!!! Использование команды [=(:exec:)=]
+
+For OutWiker 1.9 and above ExternalTools adds the [=(:exec:)=] command for creation link or button for execute external applications from wiki page.
+
+[=(:exec:)=] command allow to run single or many applications. Every application must writed on the separated lines.
+
+If line begins with "#" this line will be ignored. "#" in begin of the line is sign of the comment.
+
+The [=(:exec:)=] command has the following optional parameters:
+
+* '''format'''. If the parameter equals "'''button'''" command will create a button instead of a link.
+* '''title'''. The parameter sets the text for link or button.
+
+Inside [=(:exec:)=] command may be macroses. The macroses will be replaced by appropriate paths:
+
+* '''%page%'''. The macros will be replaced by full path to page text file (to __page.text file).
+* '''%html%'''. The macros will be replaced by full path to HTML content file (to __content.html file).
+* '''%folder%'''. The macros will be replaced by full path to page folder.
+* '''%attach%'''. The macros will be replaced by full path to attach folder without slash on the end.
+
+
+!!!!! Examples
+
+Creating a link for running application.exe:
+(:source lang="text":)
+(:exec:)application.exe(:execend:)
+(:sourceend:)
+
+
+Same but creating a button
+(:source lang="text":)
+(:exec format=button:)
+application.exe
+(:execend:)
+(:sourceend:)
+
+
+Create a link for running application.exe with parameters:
+(:source lang="text":)
+(:exec:)
+application.exe param1 "c:\myfolder\path to file name"
+(:execend:)
+(:sourceend:)
+
+
+Run a lot of applications:
+(:source lang="text":)
+(:exec title="Run application_1, application_2 and application_3":)
+application_1.exe
+application_2.exe param_1 param_2
+application_3.exe param_1 param_2
+(:execend:)
+(:sourceend:)
+
+
+Open attached file with application.exe:
+(:source lang="text":)
+(:exec:)
+application.exe Attach:my_file.txt
+(:execend:)
+(:sourceend:)
+
+
+Execute application.exe from attachments folder:
+(:source lang="text":)
+(:exec:)
+%attach%/application.exe %attach%/my_file.txt
+(:execend:)
+(:sourceend:)
+
+or
+(:source lang="text":)
+(:exec:)
+Attach:application.exe Attach:my_file.txt
+(:execend:)
+(:sourceend:)
+
+{% include 'changelog.en.txt' %}
+
+(:rater:)
+
+[[#comments]]
+(:include Site.FoxCommentBox:)

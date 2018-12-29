@@ -1,0 +1,49 @@
+(:title AutoRenamer. Plugin for automatic page renaming :)
+(:description AutoRenamer plugin for OutWiker intended for automatic page renaming in keeping with the first line of content :)
+(:linebreaks:)
+
+Attach:Soft/Outwiker/ru.png [[Русская версия -> Outwiker/AutoRenamer]]
+
+This plugin is designed to reach two main goals:
+
+* Automatic page renaming after changing its first line
+* Automatic set the first line of the empty page according to page's name
+
+
+[[AutoRenamer 0.0.0.4 -> Attach:Outwiker/AutoRenamer/autorenamer-0.0.0.4.zip]] ('''Required OutWiker version: 1.8.1 - 2.1.0.834''')
+
+[[AutoRenamer {{ version_full }} -> Attach:Outwiker/AutoRenamer/autorenamer-{{ version_full }}.zip]] ('''Required OutWiker version: 2.1.0.836 and above''')
+
+<!--#version stable {{ version_full }} -->
+(:DonateOWEn:)
+
+Plugin's page - https://github.com/AenBleidd/OutwikerPlugin
+Plugin's author - Vitalii Koshura ([[github -> https://github.com/AenBleidd]])
+Write your wish and bug report to [[Issue Tracker -> https://github.com/AenBleidd/OutwikerPlugin/issues]]
+
+
+!!! Plugin using
+
+!!!! Automatic page renaming
+
+Automatic page renaming based on page's first line is performed in next cases:
+
+* Option '''Automatically rename all pages according to their first line''' is on. In this case all pages will be renamed automatically
+
+* Page content has service command [=(:autorename:)=]. In this case the page will be renamed only if page's content has this service command. To add this service command inside the page content in the wiki edit mode user can chose menu command '''Wiki -> AutoRenamer -> Insert AutoRename [=(:autorename:)=] command'''.
+
+User should remember that page name will not be 100% same as page's first line because page's file is also renamed in the file system and it shouldn't content some symbols. These symbols wiil be deleted from page's name. Also user should remember that after manual page rename it's name will be automatically renamed again if one of the options above is active.
+
+This option is off by default.
+
+!!!! Automatic set the first line of the page
+
+If blank page was created then after its first line will be set according to page's name. This behavior will be performed if option '''Automatically set first line of the page be the name of this page on page create''' is on. User should remember that the first line will be set is case when all content of the page is deleted
+
+This option is off by default.
+
+%center%%thumb width=600%Attach:autorenamer_en.png%%
+
+{% include 'changelog.en.txt' %}
+(:rater:)
+

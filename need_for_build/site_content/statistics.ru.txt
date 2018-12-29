@@ -1,0 +1,40 @@
+(:title Плагин Statistics. Показ статистики по заметкам:)
+(:description Плагин Statistics для программы OutWiker, предназначенный для показа различной статистики по заметкам:)
+(:linebreaks:)
+%center%(:ad:)
+
+Attach:us.png [[English version -> Outwiker/StatisticsEn]]
+
+Плагин добавляет пункты меню '''Инструменты -> Статистика страницы''' и '''Инструменты -> Статистика дерева'''.
+
+[[Statistics 1.0.4 -> Attach:statistics-1.0.4.zip]] ('''Требуемая версия OutWiker: 1.7 - 2.1.0.834''')
+
+[[Statistics {{ version_full }} -> Attach:statistics-{{ version_full }}.zip]] ('''Требуемая версия OutWiker: 2.1.0.836 и выше''')
+
+<!--#version stable {{ version_full }} -->
+
+(:DonateOW:)
+
+!!! Скриншоты
+
+Пример статистики страницы:
+
+%center% Attach:page.png
+
+Пример статистики дерева
+
+(:thumbgallery cols=2 px=300 align=center:)
+tree_06.png
+tree_05.png
+tree_04.png
+tree_03.png
+tree_02.png
+tree_01.png
+(:thumbgalleryend:)
+
+{% include 'changelog.ru.txt' %}
+
+[[http://jenyay.net/forum/topic/34/plagin-statistics/ | '''Обсуждение на форуме''']]
+
+(:rater:)
+%center%(:ad:)

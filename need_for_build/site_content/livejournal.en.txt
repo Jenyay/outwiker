@@ -1,0 +1,43 @@
+(:title Livejournal plugin. Decoration links to livejournal.com users and communities:)
+(:description Livejournal plugin, instend for decoration links to livejournal.com users and communities:)
+(:linebreaks:)
+
+
+Attach:Soft/Outwiker/ru.png [[Русская версия -> Outwiker/LivejournalPlugin]]
+
+This plugin append wiki commands [=(:ljuser:)=] and [=(:ljcomm:)=] for insert link to user and community accordingly.
+
+
+[[Livejournal 1.3.4 -> Attach:Outwiker/LivejournalPlugin/livejournal-1.3.4.zip]] ('''Required OutWiker version: 1.7 - 2.1.0.834''')
+
+[[Livejournal {{ version_full }} -> Attach:Outwiker/LivejournalPlugin/livejournal-{{ version_full }}.zip]] ('''Required OutWiker version: 2.1.0.836 and above''')
+
+<!--#version stable {{ version_full }} -->
+(:DonateOWEn:)
+
+The [=(:ljuser:)=] command is intended for an insert of the link to the user of a site http://livejournal.com so that outwardly this reference looked the same as it is accepted in livejournal.com. 
+
+Similarly, the [= (: ljcomm:) =] command is intended for an insert of the link to community in livejournal.com.
+
+Commands syntax:
+
+[=(:ljuser username:)=]
+[=(:ljcomm commname:)=]
+
+Here ''username'' - a user name on which it is necessary to put the link; ''commname'' - a name of community on which it is necessary to put the link.
+
+'''Note''' that the icon for the user and the community is downloaded from the Internet (from livejournal.com), which can slow down page display, using these commands. In addition, if the developers will change the way Learn to these images, it will lead to the fact that the picture will not be displayed.
+
+!!! Examples
+
+The following table shows the work of commands [=(:ljuser:)=] and [=(:ljcomm:)=]
+
+||border=1 width=400
+|| '''Command''' || '''Result''' ||
+|| [=(:ljuser jenyay:)=] || Attach:Outwiker/LivejournalPlugin/ljuser.png ||
+|| [=(:ljcomm ljournalist:)=] || Attach:Outwiker/LivejournalPlugin/ljcomm.png ||
+
+{% include 'changelog.en.txt' %}
+
+[[#comments]]
+(:include Site.FoxCommentBoxEn:)

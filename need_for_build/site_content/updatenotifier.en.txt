@@ -1,0 +1,30 @@
+(:title UpdateNotifier plugin. Notification of version releases OutWiker and plug-ins:)
+(:description UpdateNotifier plugin for the OutWiker program, designed to notifying about new versions of the OutWiker and plug-ins:)
+(:linebreaks:)
+
+Attach:ru.png [[Русская версия -> Outwiker/UpdateNotifier]]
+
+[[UpdateNotifier 2.0 -> Attach:Outwiker/UpdateNotifier/updatenotifier-2.0.zip]] ('''Required OutWiker version: 1.7 - 2.1.0.834''')
+
+[[UpdateNotifier {{ version_full }} -> Attach:Outwiker/UpdateNotifier/updatenotifier-{{ version_full }}.zip]] ('''Required OutWiker version: 2.1.0.836 and above''')
+
+<!--#version stable {{ version_full }} -->
+
+(:DonateOWEn:)
+
+!!! Using
+
+The plug-in adds a menu item ''"Help -> Check for Updates..."''. When you choose this menu item starts the search for new versions of the program and plug-ins, and if they are found, a message window appears with a list of what updated.
+
+%center%Attach:updatenotifier_en_linux.png
+
+When you click on a link to a page where you can download the latest version of OutWiker or plug-in.
+
+In the plug-in settings ('' Edit -> Preferences -> UpdateNotifier [plugin]''), you can specify the interval at which the plug-in will automatically check for updates, select whether to notify the release of the next "unstable" versions OutWiker.
+
+{% include 'changelog.en.txt' %}
+
+%center%(:ad:)
+
+[[#comments]]
+(:include Site.FoxCommentBoxEn:)

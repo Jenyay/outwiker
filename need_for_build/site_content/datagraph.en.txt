@@ -1,0 +1,107 @@
+(:title DataGraph. Plug-in for chart plotting on wiki page :)
+(:description DataGraph plug-in designed for chart plotting on the wiki pages by text data. :)
+(:linebreaks:)
+
+Attach:Soft/Outwiker/ru.png [[Русская версия -> Outwiker/DataGraph]]
+
+Plug-in append the [=(:plot:)=] command when allow to plot the charts on wiki pages. The charts can be plotted by floating point data and by calendar data type.
+
+
+[[DataGraph 1.0.9 -> Attach:Outwiker/DataGraph/datagraph-1.0.9.zip]] ('''Required OutWiker version: 1.8 - 2.1.0.834''')
+
+[[DataGraph {{ version_full }} -> Attach:Outwiker/DataGraph/datagraph-{{ version_full }}.zip]] ('''Required OutWiker version: 2.1.0.836 and above''')
+
+<!--#version stable {{ version_full }} -->
+(:DonateOWEn:)
+
+%center%(:thumbgallery cols=2 px=350 align=center:)
+    datagraph_example_01.png
+    datagraph_example_02.png
+(:thumbgalleryend:)
+
+!!! Using
+
+[@(:plot <parameters> :)
+<data>
+(:plotend:)
+@]
+
+Data may be represented as follow (columns separator may be changed):
+
+[@
+1    10    20
+2    11    22
+3    13    24
+4    15    25
+5    16    26
+6    18    27
+7    20    30
+8    20    30
+9    20    30
+10   20    30
+@]
+
+Data can be read from [=(:plot:)=] command body and from attached files.
+
+
+!!! Parameters
+
+Detailed parameter description is given in the help, included in plug-in (to open help select menu item "Wiki - DataGraph - Open help").
+
+Hereinafter will be used notation ''curve[n].param_name'' which signifies what chart contain several objects (curves). In practice will be used notations ''curve1.param_name'', ''curve2.param_name'', etc.
+
+* [[Curves parameters -> #curves]]
+* [[Data parameters -> #data]]
+* [[Chart parameters -> #graph]]
+* [[Axis parameters -> #axis]]
+
+
+
+!!!! [[#curves]] Curves parameters
+
+||border=1
+||''''curve[n].data'''' ||Set data source for curve ||
+||''''curve[n].xcol'''' ||Set column number for X coordinates. The columns are numbered from 1 ||
+||''''curve[n].ycol'''' ||Set column number for Y coordinates. The columns are numbered from 1 ||
+||''''curve[n].color'''' ||Set curve color (for example "#1CE81C", "#0BA", "rgb(180, 64, 180)", "black") ||
+||''''curve[n].style'''' ||Set curve style by name or number. List of the styles is being given in the help ||
+||''''curve[n].hide'''' ||Hide curve ||
+||''''curve[n].title'''' ||Set curve title ||
+
+----
+
+
+!!!! [[#data]] Data parameters
+
+||border=1
+||''''curve[n].data'''' ||Set data source for curve ||
+||''''curve[n].data.colsep'''' ||Set regular expression or string which is used for separate data columns ||
+||''''curve[n].data.skiprows'''' ||Allow to skip specified number first lines in the data ||
+||''''curve[n].data.formatcol[m]'''' ||Set calendar data format for column number ''m'' ||
+
+----
+
+
+!!!! [[#graph]] Chart parameters
+
+||border=1
+||''''width'''' ||Set chart width ||
+||''''height'''' ||Set chart height ||
+||''''tooltip'''' ||Turn on the tooltip with point data ||
+||''''legend'''' ||Turn on the legend ||
+
+----
+
+
+!!!! [[#axis]] Axis parameters
+
+||border=1
+||''''x.min''''[[<<]]''''y.min'''' ||Set min value for axis X / Y ||
+||''''x.max''''[[<<]]''''y.max'''' ||Set max value for axis X / Y ||
+||''''x.type''''[[<<]]''''y.type'''' ||If this value equals "datetime", on axis will be shown calendar data (turn on calendar axis type) ||
+||''''x.title''''[[<<]]''''y.title'''' ||Set title for X / Y axis ||
+||''''x.tickstep''''[[<<]]''''y.tickstep'''' ||Set interval besides ticks (grid step) for axis X / Y. Does not work for calendar data type ||
+
+{% include 'changelog.en.txt' %}
+
+(:rater:)

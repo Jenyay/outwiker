@@ -1,0 +1,32 @@
+(:title Markdown. Plugin to create the pages in the Markdown format :)
+(:description Plugin to create the pages in the Markdown format. The plugin adds code highlighting and graphical user interface to insert the general Markdown notatiion items :)
+(:linebreaks:)
+
+
+Attach:Soft/Outwiker/ru.png [[Русская версия -> Outwiker/Markdown]]
+
+The Markdown plug-in adds to program new type of pages where you can make out the text notes using Markdown markup language.
+
+[[Markdown 1.3.2 -> Attach:Outwiker/Markdown/markdown-1.3.2.zip]] ('''Required OutWiker version: 2.0 - 2.1.0.834''')
+
+[[Markdown {{ version_full }} -> Attach:Outwiker/Markdown/markdown-{{ version_full }}.zip]] ('''Required OutWiker version: 2.1.0.836 and above''')
+
+<!--#version stable {{ version_full }} -->
+
+(:DonateOWEn:)
+
+(:thumbgallery cols=2 px=400 align=center:)
+markdown_code.png
+markdown_view.png
+(:thumbgalleryend:)
+
+!!! Using the Markdown plug-in
+
+After installing the plug-in will be added to page creation dialog the new page type - "Markdown page". In all other Markdown-page similar to the built-in wiki page. It also has tabs for editing code, show result and generated HTML code.
+
+%center%Attach:dialog.png
+
+
+The toolbar has the buttons to insert a Markdown elements: headers, links, text emphasis with bold and / or italic, etc.
+
+{% include 'changelog.en.txt' %}

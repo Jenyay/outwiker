@@ -1,0 +1,35 @@
+(:title Sessions plugin. Save the opened tabs :)
+(:description Sessions plugin for OutWiker allows you to save the current state of the program and restore the previously saved state:)
+(:linebreaks:)
+
+Attach:Soft/Outwiker/ru.png [[Русская версия -> Outwiker/Sessions]]
+
+With Sessions plugin you can save the current program status (open tree notes, opened tabs) that in the future quickly go back to this state.
+
+[[Sessions 1.0.4 -> Attach:Outwiker/Sessions/sessions-1.0.4.zip]] ('''Required OutWiker version: 1.8 - 2.1.0.834''')
+
+[[Sessions {{ version_full }} -> Attach:Outwiker/Sessions/sessions-{{ version_full }}.zip]] ('''Required OutWiker version: 2.1.0.836 and above''')
+
+<!--#version stable {{ version_full }} -->
+
+(:DonateOWEn:)
+
+
+!!! [[#using]] Using
+
+After installing the plugin in the "File" menu will be added to the submenu "Sessions". The submenu contains items "Save Current Session..." and "Edit sessions...". Here will be the names of saved sessions.
+
+%center%Attach:sessions_menu_small.png
+
+After selecting "Save current session..." you will be prompted to enter the name of the session, after which the name of the new session will be in the same menu "Sessions".
+
+To rename and delete sessions intended the menu item "Edit sessions..." After his selection opens the dialog shown below.
+
+%center%Attach:sessions_dialog.png
+
+Use the buttons to the right of the sessions list for rename and remove sessions.
+
+{% include 'changelog.en.txt' %}
+
+(:rater:)
+

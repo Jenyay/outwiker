@@ -1,0 +1,67 @@
+(:title Plugin Spoiler. Hiding part of the text on the page:)
+(:description Spoiler plugin for OutWiker, designed to hide part of the text on the wiki pages:)
+(:linebreaks:)
+
+
+Attach:Soft/Outwiker/ru.png [[Русская версия -> Outwiker/Spoiler]]
+
+This plugin adds wiki command [= (:spoiler:) =], which makes the text that appears before the command [= (:spoilerend:) =], hidden (spoiler added).
+
+[[Spoiler 1.4.4 -> Attach:Outwiker/Spoiler/spoiler-1.4.4.zip]] ('''Required OutWiker version: 1.6 - 2.1.0.834''')
+
+[[Spoiler {{ version_full }} -> Attach:Outwiker/Spoiler/spoiler-{{ version_full }}.zip]] ('''Required OutWiker version: 2.1.0.836 and above''')
+
+<!--#version stable {{ version_full }} -->
+
+(:DonateOWEn:)
+
+!!! Using
+ 
+
+(\
+:spoiler params... :)
+Collapsed text
+(:spoilerend:)
+
+
+!!!! Params
+
+'''inline''' - Spoiler will be in inline mode.
+'''expandtext''' -  Link text for the collapsed spoiler. Default: "Expand".
+'''collapsetext''' - Link text for the expanded spoiler. Default: "Collapse".
+
+
+!!!! Nested spoilers
+
+For nested spoilers use [=(:spoiler0:)=], [=(:spoiler1:)=]... [=(:spoiler9:)=] commands.
+
+----
+
+!!! Examples
+
+!!!! Using
+
+%center% %thumb width=800%Attach:sample_1_en.png%%
+
+----
+
+!!!! Spoilers with extra params
+
+%center% %thumb width=800%Attach:sample_params_en.png%%
+
+----
+
+!!!! Nested spoilers
+
+%center%Attach:sample_nested_en.png
+
+----
+
+!!!! Inline spoilers
+
+%center%Attach:spoiler_inline.png
+
+{% include 'changelog.en.txt' %}
+
+[[#comments]]
+(:include Site.FoxCommentBox:)

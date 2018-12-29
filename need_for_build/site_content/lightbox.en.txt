@@ -1,0 +1,53 @@
+(:title Lightbox. Plugin for opening images in the preview window:)
+(:description Lightbox plugin is designed to open image in the preview window, and not in an external application:)
+(:linebreaks:)
+
+Attach:Soft/Outwiker/ru.png [[Русская версия -> Outwiker/Lightbox]]
+
+By default, when you click on a link pointing to the image, the image is opened in an external program installed for viewing images.
+
+Lightbox plugin adds the command [=(:lightbox:)=]. If this command to insert a wiki page, the image will open in a preview window.
+
+[[Lightbox 1.1.4 -> Attach:Outwiker/Lightbox/lightbox-1.1.4.zip]] ('''Required OutWiker version: 1.7 - 2.1.0.834''')
+
+[[Lightbox {{ version_full }} -> Attach:Outwiker/Lightbox/lightbox-{{ version_full }}.zip]] ('''Required OutWiker version: 2.1.0.836 and above''')
+
+<!--#version stable {{ version_full }} -->
+(:DonateOWEn:)
+
+The [=(: lightbox :) =] command does not use any additional parameters.
+
+[[#example]]
+!!! Example
+
+Viewing images without using the command [=(:lightbox:)=]:
+
+%center%(:thumbgallery px=250:)
+lightbox_none.jpeg
+(:thumbgalleryend:)
+
+Viewing images using the command [=(:lightbox:)=]:
+
+%center%(:thumbgallery px=250:)
+lightbox.jpeg
+(:thumbgalleryend:)
+
+[[#tech]]
+!!! Technical details
+
+To open the image in the preview window using JavaScript, and more precisely fancybox from the library jQuery. When you use the [=(: lightbox :)=] in the directory pages are copied to the files with scripts.
+
+
+[[#thanks]]
+!!! Thanks
+
+This plugin is based on style, sent by [[https://plus.google.com/107841895323520912026 | Eugene Stefanenko]]. I thought that the plugin is better suited for meaning.
+
+{% include 'changelog.en.txt' %}
+
+%center%(:ad:)
+
+(:rater:)
+
+[[#comments]]
+(:include Site.FoxCommentBoxEn:)

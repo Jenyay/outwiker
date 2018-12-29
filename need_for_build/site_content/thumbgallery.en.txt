@@ -1,0 +1,127 @@
+(:title ThumbGallery plugin. Creating a gallery of the attached pictures:)
+(:description ThumbGallery plugin, intended for creation of galleries of the attached files on wiki pages. It is possible to customize the look of the gallery. :)
+(:linebreaks:)
+
+
+Attach:Soft/Outwiker/ru.png [[Русская версия -> Outwiker/ThumbGallery]]
+
+ThumbGallery plugin designed to create galleries of the attached files on wiki pages.
+
+[[ThumbGallery 1.1.5 -> Attach:Outwiker/ThumbGallery/thumbgallery-1.1.5.zip]] ('''Required OutWiker version: 1.6 - 2.1.0.834''')
+
+[[ThumbGallery {{ version_full }} -> Attach:Outwiker/ThumbGallery/thumbgallery-{{ version_full }}.zip]] ('''Required OutWiker version: 2.1.0.836 and above''')
+
+<!--#version stable {{ version_full }} -->
+
+(:DonateOWEn:)
+
+[[#using]]
+!!! Using
+
+ThumbGallery plugin adds a command [= (:thumbgallery:) =] into the wiki notation. This command can operate in two modes: show all attached images or only selected files. To facilitate the use of commands when you click on the plugin button Attach:gallery.png (or by selecting the appropriate menu item) to open the dialog shown in the following figure:
+
+%center%Attach:gallery_dialog.jpeg
+
+The syntax of the command [= (:thumbgallery:) =] to show all attached images as follows:
+
+[=(:thumbgallery [params]:)=]
+
+[= (:thumbgallery:) =] command can take the following parameters:
+
+* ''cols = ...'' An integer value. The number of columns in the table. If ''cols = 0'' or not specified, then the gallery will be a sequence of thumbnails without splitting into rows and columns.
+
+* ''px = ...'' An integer value. Specifies the size of the thumbnails (on the larger side). If ''px = 0'', or the parameter is not specified, the default value from the program settings.
+
+In the gallery you can also place the selected images, this is the following syntax:
+
+[=
+(:thumbgallery [params]:)
+[Attach:]picture_1 [| Comment]
+[Attach:]picture_2 [| Comment]
+...
+(:thumbgalleryend:)
+=]
+
+Possible parameters in this case are the same as described above. Comments on the use of images is not required. Also, do not necessarily write [=Attach:=] before the file name.
+
+[[#examples]]
+!!! Examples
+
+More clearly using the command [= (: thumbgallery :) =] will be seen in the following examples.
+
+!!!!! Creating a gallery of all attached files
+
+(:source lang="text":)
+(:thumbgallery:)
+(:sourceend:)
+
+%center%(:thumb px=250 gallery_01.jpeg:)
+
+!!!!! Creating a gallery of all attached files with a given thumbnails size
+
+(:source lang="text":)
+(:thumbgallery px=150:)
+(:sourceend:)
+
+%center%(:thumb px=250 gallery_02.jpeg:)
+
+!!!!! Creating a gallery of all attached files as a table design
+
+(:source lang="text":)
+(:thumbgallery px= 150 cols=3:)
+(:sourceend:)
+
+%center%(:thumb px=250 gallery_03.jpeg:)
+
+!!!!! Creating a gallery of the selected files as a table design
+
+(:source lang="text":)
+(:thumbgallery cols=3 px=150:)
+    Attach:DSC_0567.jpg
+    Attach:DSC_0604.jpg
+    Attach:klyazma_2011_07.jpg
+    Attach:smoke.jpg
+    Attach:sunset_1.jpg
+    Attach:sev_beach2.jpg
+(:thumbgalleryend:)
+(:sourceend:)
+
+%center%(:thumb px=250 gallery_04.jpeg:)
+
+
+!!!!! Creating a gallery of the selected files with comments
+
+(:source lang="text":)
+(:thumbgallery cols=3 px=150:)
+    DSC_0567.jpg
+    DSC_0604.jpg
+    klyazma_2011_07.jpg | Klyazma river
+    smoke.jpg | Smoky summer in Moscow
+    sunset_1.jpg
+    sev_beach2.jpg | Black Sea. Sevastopol
+(:thumbgalleryend:)
+(:sourceend:)
+
+%center%(:thumb px=250 gallery_05.jpeg:)
+
+[[#extra]]
+!!! For more information
+
+Plugin ThumbGallery created so that where possible, have the syntax compatibility with the plugin [[http://www.pmwiki.org/wiki/Cookbook/ThumbList | ThumbList]] for pmWiki. I will not go into details of the plug-in, except to say that it adds two commands [= (:thumblist:) =] to create a gallery of all pictures, and [= (:thumbgallery:) =] to create a gallery of selected images. As I tried to plugin ThumbGallery combine these commands into one, but added a synonym for the command [= (:thumbgallery:) =] - [= (:thumblist:) =]. Thus, wherever it is written [= (:thumbgallery:) =] you can use [= (:thumblist:) =].
+
+I thought that the name of the parameter ''px'' not very informative, so I added it a synonym for - ''maxsize'', by analogy with the same parameter when creating a thumbnail.
+
+The [= (:thumbgallery:) =] command can be used in the form [= (:thumbgallery:) =], as well as [= (:thumbgallery:) ... (:thumbgalleryend:) =]. If a page is to use this command on both accounts, then the parser will have problems with the definition of the end of the command [= (:thumbgallery:) =]. In this case, you can do in two ways:
+
+# For all galleries uses, non-closable command the notation [= (:thumblist:) =], but for all the galleries with individual images to use the recording [= (: thumbgallery :) ... (: thumbgalleryend :) =]. Or vice versa.
+
+# Always use a closing command [= (:thumbgallery:)(:thumbgalleryend:) =]. Take care to ensure that between the opening and closing command are no spaces, otherwise it will be seen as creating a gallery with no images. It's not a bug, it was made specifically to be able to hide the gallery if necessary, without removing the entire team.
+
+Enjoy the use of plugin!
+
+{% include 'changelog.en.txt' %}
+
+(:rater:)
+
+[[#comments]]
+(:include Site.FoxCommentBoxEn:)

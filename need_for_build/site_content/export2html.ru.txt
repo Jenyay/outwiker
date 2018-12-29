@@ -1,0 +1,31 @@
+(:title Плагин Export2Html. Экспорт заметок в HTML-файлы:)
+(:description Плагин Export2Html для OutWiker, предназначенный для экспорта заметок в файлы формата HTML:)
+(:linebreaks:)
+%center%(:ad:)
+
+Attach:us.png [[English version -> Outwiker/Export2HtmlPluginEn]]
+
+Плагин добавляет пункты меню ''Файл - {+Экспорт - Экспорт страницы в HTML+}'' и ''{+Экспорт ветки в HTML+}''.
+
+[[Export2Html 1.3.5 -> Attach:export2html-1.3.5.zip]] ('''Требуемая версия OutWiker: 1.7 - 2.1.0.834''')
+
+[[Export2Html {{ version_full }} -> Attach:export2html-{{ version_full }}.zip]] ('''Требуемая версия OutWiker: 2.1.0.836 и выше''')
+
+<!--#version stable {{ version_full }}-->
+
+(:DonateOW:)
+
+Сохраняемые плагином имена файлов могут быть длинные (включать в себя имена родительских заметок) или короткими (соответствующими заголовкам заметок). На следующих картинках показано исходное дерево заметок и файлы, полученные после экспорта.
+
+||border=0 width=100%
+|| '''Дерево заметок''' || '''Просмотр результата в браузере (__index.html)''' ||
+|| %center%Attach:tree.png || %thumb width=400%Attach:index.png%% ||
+|| '''Короткие имена''' || '''Длинные имена''' ||
+|| %thumb width=400px%Attach:short_names_1_1.png%% || %thumb width=400px%Attach:long_names_1_1.png%% ||
+
+{% include 'changelog.ru.txt' %}
+
+[[http://jenyay.net/forum/topic/5/plagin-export2html/ | '''Обсуждение на форуме''']]
+
+(:rater:)
+%center%(:ad:)

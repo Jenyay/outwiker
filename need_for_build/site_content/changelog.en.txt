@@ -1,0 +1,7 @@
+[[#history]]
+!! Versions history
+{% for version in versions_list %}
+!!! {{ version.version }} ({{ version.date_str }})
+{% for change in version.changes %}
+* {{ change }}{% endfor %}
+{% endfor %}

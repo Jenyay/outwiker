@@ -1,0 +1,100 @@
+(:title Source plug-in. Highlight source code:)
+(:description Source plugin for OutWiker program. This plugin allows you to colorize the source code in different programming languages:)
+(:linebreaks:)
+
+
+Attach:ru.png [[Outwiker/SourcePlugin | Русская версия]]
+
+Plug-in append command [=(:source:)=] in wiki parser.
+
+[[Source 1.14.5 -> Attach:Outwiker/SourcePlugin/source-1.14.5.zip]] ('''Required OutWiker version: 1.8.1 - 2.1.0.834''')
+
+[[Source {{ version_full }} -> Attach:Outwiker/SourcePlugin/source-{{ version_full }}.zip]] ('''Required OutWiker version: 2.1.0.836 and above''')
+
+<!--#version stable {{ version_full }} -->
+
+(:DonateOWEn:)
+
+!!! Using
+
+(\
+:source params... :)
+source code
+(:sourceend:)
+
+
+!!! Params
+
+{+lang+} - programming language
+{+tabwidth+} - tab size
+{+file+} - attached source file
+{+encoding+} - encoding of the attached source file (default encoding - utf8)
+{+style+} - style of hightlighting
+{+parentbg+} - use the page background for the code block
+{+linenum+} - enable line numbers
+
+!!! Example 1
+
+||border=1
+|| Code || Result ||
+|| Attach:Outwiker/SourcePlugin/source_example_01_code.png || Attach:Outwiker/SourcePlugin/source_example_01_result.png ||
+
+
+!!! Example 2
+
+||border=1
+|| Code || Result ||
+|| Attach:Outwiker/SourcePlugin/source_example_02_code.png || Attach:Outwiker/SourcePlugin/source_example_02_result.png ||
+
+
+!!! Example 3
+
+||border=1
+|| Code || Result ||
+|| Attach:Outwiker/SourcePlugin/source_example_03_code.png || Attach:Outwiker/SourcePlugin/source_example_03_result.png ||
+
+
+!!! Example 4
+||border=1
+|| Code || Result ||
+|| Attach:Outwiker/SourcePlugin/source_example_04_noparentbg_code.png || Attach:Outwiker/SourcePlugin/source_example_04_noparentbg.png ||
+|| Attach:Outwiker/SourcePlugin/source_example_04_parentbg_code.png || Attach:Outwiker/SourcePlugin/source_example_04_parentbg.png ||
+
+
+!!! Example 5
+
+Insert the cource code from the attached file by specifying the encoding. Prefix [=Attach:=] in the parameter ''file'' can be omitted.
+
+>>frame<<
+[=(:source file="Attach:example.cs" encoding="cp1251":)(:sourceend:)=]
+>><<
+
+
+!!! Example 6
+
+Insert the source code from the attached file and explicitly specified language. The default encoding is UTF-8.
+
+>>frame<<
+[=(:source file="Attach:example.txt" lang="python":)(:sourceend:)=]
+>><<
+
+
+!!! Style examples
+
+||border=0
+|| Default style [[<<]] Attach:Outwiker/SourcePlugin/style_default.png || Style emacs: [[<<]] Attach:Outwiker/SourcePlugin/style_emacs.png ||
+|| Style vim: [[<<]] Attach:Outwiker/SourcePlugin/style_vim.png || Style colorful: [[<<]] Attach:Outwiker/SourcePlugin/style_colorful.png ||
+
+
+!!! Screenshots
+
+(:thumbgallery cols=2 px=200:)
+source_scr_dialog_1.png
+source_scr_dialog_2.png
+source_scr_params.png
+(:thumbgalleryend:)
+
+{% include 'changelog.en.txt' %}
+
+[[#comments]]
+(:include Site.FoxCommentBoxEn:)

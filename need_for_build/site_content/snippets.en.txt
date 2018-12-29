@@ -1,0 +1,209 @@
+(:title Snippets.  Plug-in to insert templated text:)
+(:description  Snippets plug-in. Plug-in to store and insert templated text:)
+(:linebreaks:)
+
+(:ad:)
+
+Attach:Soft/Outwiker/ru.png [[Русская версия -> Outwiker/Snippets]]
+
+Plug-in to insert templated text
+
+[[Snippets 1.1.1 -> Attach:Outwiker/Snippets/snippets-1.1.1.zip]] ('''Required OutWiker version: 2.0 - 2.1.0.834''')
+
+[[Snippets {{ version_full }} -> Attach:Outwiker/Snippets/snippets-{{ version_full }}.zip]] ('''Required OutWiker version: 2.1.0.836 and above''')
+
+<!--#version stable {{ version_full }} -->
+
+(:DonateOWEn:)
+
+* [[Brief description -> #brief]]
+* [[Snippets management -> #management]]
+* [[Entering the template text -> #enter]]
+* [[Insert snippet as wiki command -> #wikicommand]]
+* [[Snippet language -> #language]]
+** [[Setting variables -> #var]]
+** [[Built-in variables -> #globalvar]]
+** [[Other language constructs -> #blocks]]
+*** [[The if operator -> #if]]
+*** [[The include operator -> #include]]
+* [[Snippets storage features -> #advanced]]
+* [[Version History -> #changelog]]
+
+
+{% raw %}
+!!! [[#brief]] Brief description
+
+The Snippets plug-in designed to save the text templates (snippets) which often occurs in the notes. This plug-in allow don't repeat the text entering every time. The variables may be used in the snippet text. The variables values entered by user when the snippet executed. In addition, if you know the [[Jinja2 -> http://jinja.pocoo.org/]] template engine, you can use rich ability of the library in yours snippets. The Snippets plug-in uses this library for the text generation on the snippet.
+
+%center%%thumb width=700%Attach:snippets_eng_vardialog_snippet.png%%
+
+
+!!! [[#management]] Snippets management
+
+To create a snippet, select menu item "Snippet - Snippets management...". Thereafter the "Snippets management" dialog window will be opening. The tree snippet will be showing in the left part of the window. You can unite the snippets in the folders.
+
+%center%%thumb width=700%Attach:snippets_eng_management.png%%
+
+The toolbar with two the button groups located in the upper part of the dialog window.
+
+The left group includes the buttons for creating the snippets folders, creating the new snippet, renaming the folder or snippet, removing the snippet, executing its.
+
+The right group includes the button for inserting built-in or custom variables and button for inserting some [[Jinja language constructs -> #language]]
+
+If the entered snippet has any syntactically error, it will be displaying in the lower right information box.
+
+All snippets will saved automatically, and thus the dialog window does not have a button to save the snippet.
+
+All created snippets located in the "Snippets" menu of the main OutWiker window. All created folders with snippets in this menu presented as nested submenu. The nesting of folders is almost limitless.
+
+%center%Attach:snippets_eng_menu_snippets.png
+
+
+!!! [[#enter]] Entering the template text
+
+The Snippets plug-in allows you to insert the snippets in two modes: as generated text and as the wiki command. (the second mode works only for the wiki pages).
+
+To put the template text at the page, you can select the appropriate snippet in the "Snippets" menu or execute the snippet from the dialog management snippets. Thereafter the dialog to enter the variables will be opened. You can enter variable values in the left part of the window (variable values may be blank). On the right part you will seeing the result which will insert in the text page and the snippet source text.
+
+%center%%thumb width=600%Attach:snippets_eng_vardialog_result.png%%
+
+%center%%thumb width=600%Attach:snippets_eng_vardialog_snippet.png%%
+
+The check box "Insert as wiki command" located in the left bottom part of the dialog window. If the check box is '''not checked''' the result directly will be inserted in the page. If the check box is '''checked''', [[wiki command -> #wikicommand]] will be inserted in the page text. The wiki command will be converted to text in the "Preview" mode. The "Insert as wiki command" check box showed only for wiki pages.
+
+
+!!! [[#wikicommand]] Insert snippet as wiki command
+
+If in the [[dialog to enter the variable values -> #enter]] you checked the "Insert as wiki command" check box, in the page text will insert not a generated text, but [=(:snip:)=] wiki command. This wiki command will convert to appropriate text in the "Preview" mode. This command has the following format: 
+
+[@
+(:snip file="path to snippet/snippet name" parameter1="variable value", parameter2="variable value", ...:)
+Optional text
+(:snipend:)
+@]
+
+If the "file" parameter was set, the snippet specifying as value this parameter is used. The path to snippet is specified relative the snippets root folder. Thus if a template with the name "My snippets" directly visible in the "Snippets" menu, then the "file" parameter value must be equal to “My snippets”. If the "My template" snippet located in the submenu "Snippets – My concrete snippets", the parameter value file must be equal to "My concrete snippets/My template". In this way always used forward slashes (/).
+
+''parameter1'', ''parameter1'' and etc are the variable names used in the snippet text. ''Optional text'' will be saved as the built-in ''__text'' variable, which can be used in the template.
+
+In this case, the ''__text'' variable will be storing the text between [=(:snip:)=] and [=(:snipend:)=] commands.
+
+If the ''file'' parameter is not specified in the [=(:snip:)=] wiki command, it is considered the text template is specified between [=(:snip:)=] and [=(:snipend:)=]:
+
+[@
+(:snip parameter1="variable value", parameter1="variable value", ...:)
+Snippet text
+(:snipend:)
+@]
+
+In this case [[built-in variable -> #globalvar]] ''__text'' will be equal to an empty string "".
+
+
+!!! [[#language]] Snippet language
+
+The Snippet plug-in uses the language of the [[jinja2 -> http://jinja.pocoo.org/]] template engine. This is a very powerful library, but in this section will be showed only the most simple and frequently used features. The plug-in's interface designed for user, who does not know this library, however if you are a programmer and worked with this library, you can use all of its features which is not to be mentioned. Description of all possibilities of this library you can find in the [[Jinja2 documentation -> http://jinja.pocoo.org/docs/dev/templates/]].
+
+
+!!!! [[#var]] Setting variables
+
+The most important part of the syntax of snippets are variables. The variable value in the snippet inserted with the construction {{''varname''}}, where ''varname'' is the name of the variable. The name of the variable may include only Latin letters, numbers and the underscore "_", but the first character in the variable name must be Latin letter.
+
+The Snippets plug-in has a the set of built-in variables, which cannot be defined in the dialog to input variables. Values of the built-in variables depends from the properties of the current page or the current date. A complete list of these variables listed in section [[Built-in variables -> #variables]]. The names of the built-in variables start with the double underscore "__". 
+
+Consider this snippet:
+
+[@
+from outwiker.core.commands import MessageBox
+
+MessageBox(
+ _(u'{{message}}'),
+ _(u'{{title}}'),
+ wx.ICON_ERROR | wx.OK)
+@]
+
+
+In this snippet uses two variables: ''message'' and ''title'', the Snippet plug-in will ask to define them in the dialog that will be open when you calling this snippet:
+
+%center%%thumb width=600%Attach:snippets_eng_vardialog_result.png%%
+
+
+!!!! [[#globalvar]]Built-in variables
+
+In addition to the users variables, the Snippets plug-in has a set of the set of built-in variables, the values of the built-in variables depend of the properties of the current page. The names of all built-in variables start with two underscores "__".
+
+If you click to button to inserting of the variables in the dialog of snippets management, you can see the names of built-in variables.
+
+%center%%thumb width=600%Attach:snippets_eng_globalvar.png%%
+
+For example. The ''__text'' contains text selected on the page when you invoke the snippet. Also ''__text'' variable used with the [=(:snip:)=] wiki command, which inserts a snippet from a file (if the parameter ''file'' is set). In this case, the ''__text'' variable contains the text located between [=(:snip:)=] and [=(:snipend:)=]. 
+
+The ''__type'' variable equal to the ''wiki'' for wiki pages, ''html'' for HTML pages, ''text'' for simple text pages etc. This variable jointly with [[if operator -> #if]] you can use to change the behavior of the snippet depending on page type.
+ 
+
+!!!! [[#blocks]] Other language constructs
+
+The Snippet plug-in uses inside it the [[Jinja2 -> http://jinja.pocoo.org/]] template engine. This engine supports a sufficiently large number of the template constructs, but with the graphic users interface you can insert only some of them. You can use all features of Jinja2 engine if you know this library.
+
+With the interface you can insert three language constructs: [[if operator -> #if]], [[include operator -> #include]] and comments.
+
+%center%%thumb width=600%Attach:snippets_eng_blocks.png%%
+
+The comments are enclosed in braces of the form [={# … #}=] and during processing of the snippet are removed. The comments needed to explain the snippet text: for which it is used, the meaning of the variables, etc.
+
+!!!!! [[#if]] The if operator
+
+If operator designed for the organization of branching in the snippet and inserting the text depending on the variables value. The syntax of the ''if'' operator is as follows:
+
+[@
+{% if condition_1 %}
+ Content 1
+{% elif condition_2 %}
+ Content 2
+{% elif condition_3 %}
+ Content 3
+...
+{% else %}
+ Content N.
+{% endif %}
+@]
+
+Most likely this syntax you know on any other programming language.
+
+Please note, all variables except those that contain dates are string variables, therefore their values need to compare with strings, even if it means, that variable will contain only numbers. So the correct expression, can be as follows:
+
+[@
+{% if var == '1' %}100{% elif var == '2' %}200{% elif var == '3' %}300{% else %}xxx{% endif %}
+@]
+
+and that expression will be wrong (will always run branch else)
+
+[@
+{% if var == 1 %}100{% elif var == 2 %}200{% elif var == 3 %}300{% else %}xxx{% endif %}
+@]
+
+
+!!!!! [[#include]] The include operator
+
+The ''include'' operator is designed to insert a snippet into another snippet, in this case own variables may be declared in the inserted snippet. The syntax the ''include'' operator is as follows:
+
+[@
+{% include "inserted snippet" %}
+@]
+
+In this operator "inserted snippet" is the name of the snippet located in the same folder that the parent snippet (which is located inside the ''include'' operator) or in a sub-folder, in this case the operator will look like the following
+
+[@
+{% include "Folder 1/Folder 2/inserted snippet" %}
+@]
+
+
+!!! [[#advanced]] Snippets storage features
+
+All snippets are stored as separate files in the ''snippets'' folder inside the program settings directory (in MS Windows is C:\Users\USERNAME\AppData\Roaming\outwiker\snippets\, in Linux is /home/USERNAME/.config/outwiker/snippets/). The name of the snippet corresponds to a file name, so usually these are files without extensions. Folders in the templates is ordinary folders in the same directory snippets.
+
+{% endraw %}
+
+{% include 'changelog.en.txt' %}
+
+[[#comments]]
+(:include Site.FoxCommentBoxEn:)

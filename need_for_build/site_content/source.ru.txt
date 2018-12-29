@@ -1,0 +1,102 @@
+(:title Плагин Source. Раскраска исходных текстов программ:)
+(:description Плагин Source для программы OutWiker, который раскрашивает исходный текст программы на различных языках:)
+(:linebreaks:)
+%center%(:ad:)
+
+Attach:us.png [[English version -> Outwiker/SourcePluginEn]]
+
+Плагин добавляет вики-команду [=(:source:)=] для раскраски текста программы на различных языках программирования.
+
+[[Source 1.14.5 -> Attach:source-1.14.5.zip]] ('''Требуемая версия OutWiker: 1.8.1 - 2.1.0.834''')
+
+[[Source {{ version_full }} -> Attach:source-{{ version_full }}.zip]] ('''Требуемая версия OutWiker: 2.1.0.836 и выше''')
+
+<!--#version stable {{ version_full }} -->
+
+(:DonateOW:)
+
+!!! Использование
+
+(\
+:source параметры... :)
+Исходный код
+(:sourceend:)
+
+
+
+!!! Параметры
+{+lang+} - язык программирования
+{+tabwidth+} - размер табуляции
+{+file+} - прикрепленный файл с текстом программы
+{+encoding+} - кодировка прикрепленного файла с текстом программы (кодировка по умолчанию - utf8)
+{+style+} - стиль оформления
+{+linenum+} - включить нумерацию строк
+{+parentbg+} - использовать фон страницы для блока кода
+
+
+!!! Пример 1
+
+||border=1
+|| Код || Результат ||
+|| Attach:source_example_01_code.png || Attach:source_example_01_result.png ||
+
+
+!!! Пример 2
+
+||border=1
+|| Код || Результат ||
+|| Attach:source_example_02_code.png || Attach:source_example_02_result.png ||
+
+
+!!! Пример 3
+
+||border=1
+|| Код || Результат ||
+|| Attach:source_example_03_code.png || Attach:source_example_03_result.png ||
+
+
+!!! Пример 4
+||border=1
+|| Код || Результат ||
+|| Attach:source_example_04_noparentbg_code.png || Attach:source_example_04_noparentbg.png ||
+|| Attach:source_example_04_parentbg_code.png || Attach:source_example_04_parentbg.png ||
+
+
+!!! Пример 5
+Вставка текста программы из прикрепленного файла с указанием кодировки. Приставку [="Attach:"=] в параметре ''file'' можно опускать.
+
+>>frame<<
+[=(:source file="Attach:example.cs" encoding="cp1251":)(:sourceend:)=]
+>><<
+
+
+!!! Пример 6
+
+Вставка текста программы из прикрепленного файла с явным указанием языка программирования. По умолчанию используется кодировка UTF-8.
+
+>>frame<<
+[=(:source file="example.txt" lang="python":)(:sourceend:)=]
+>><<
+
+
+!!! Примеры стилей
+
+||border=0
+|| Стиль default: [[<<]] Attach:style_default.png || Стиль emacs: [[<<]] Attach:style_emacs.png ||
+|| Стиль vim: [[<<]] Attach:style_vim.png || Стиль colorful: [[<<]] Attach:style_colorful.png ||
+
+
+!!! Скриншоты
+
+(:thumbgallery cols=2 px=200:)
+source_scr_dialog_1.png
+source_scr_dialog_2.png
+source_params.png
+(:thumbgalleryend:)
+
+{% include 'changelog.ru.txt' %}
+
+[[http://jenyay.net/forum/topic/9/plagin-source/ | '''Обсуждение на форуме''']]
+
+(:rater:)
+%center%(:ad:)

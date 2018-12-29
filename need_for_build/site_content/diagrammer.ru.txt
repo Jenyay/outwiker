@@ -1,0 +1,102 @@
+(:title Плагин Diagrammer для рисования диаграмм и блок-схем :)
+(:description Плагин Diagrammer позволяет рисовать диаграммы и блок-схемы на викистраинцах :)
+(:linebreaks:)
+%center%(:ad:)
+
+Attach:Soft/Outwiker/us.png [[English version -> Outwiker/DiagrammerEn]]
+
+Плагин Diagrammer добавляет викикоманду [=(:diagram:)...(:diagramend:)=] внутри которой можно задавать текстовое описание диаграммы с помощью нотации, используемой в библиотеке [[blockdiag -> http://blockdiag.com/en/blockdiag/index.html]]. По своей сути нотация blockdiag напоминает нотацию DOT из graphviz, но (пока?) имеет чуть более скромные возможности.
+
+[[Diagrammer 1.0.5 -> Attach:diagrammer-1.0.5.zip]] ('''Требуемая версия OutWiker: 1.8 - 2.1.0.834''')
+
+[[Diagrammer {{ version_full }} -> Attach:diagrammer-{{ version_full }}.zip]] ('''Требуемая версия OutWiker: 2.1.0.836 и выше''')
+
+<!--#version stable {{ version_full }} -->
+
+(:DonateOW:)
+
+
+!!! [[#using]] Использование
+
+Для облегчения использования нотации blockdiag плагин Diagrammer предоставляет интерфейс в виде диалогов для задания большинства настроек диаграммы в целом, узлов, ребер (дуг) и групп узлов.
+
+%center%Attach:toolbar.png
+
+%center%(:thumbgallery cols=2 px=250 align=center:)
+    dlg_diagrammer.png | Диалог для задания параметров диаграммы 
+    dlg_node.png | Диалог для задания параметров узла
+    dlg_group.png | Диалог для задания параметров группы узлов
+    dlg_edge.png | Диалог для задания параметров ребер (дуг)
+(:thumbgalleryend:)
+
+
+!!! [[#examples]] Примеры использования
+
+Ниже приводятся примеры использования команды [=(:diagram:)=] и результаты ее работы. Эти примеры демонстрируют только некоторые возможности плагина Diagrammer и библиотеки blockdiag.
+
+
+!!!! Виды связей между узлами
+
+(:source lang="text":)
+(:diagram:)
+A <-> B -> C
+B -- D
+(:diagramend:)
+(:sourceend:)
+
+%center%Attach:diagram_1.png
+
+
+!!!! Использование разных типов стрелок 
+
+(:source lang="text":)
+(:diagram:)
+A <- B [hstyle = generalization]
+C <- D [hstyle = composition]
+E <- F [hstyle = aggregation]
+(:diagramend:)
+(:sourceend:)
+
+%center%Attach:diagram_2.png
+
+
+!!!! Оформление узлов и ребер
+
+(:source lang="text":)
+(:diagram:)
+orientation = portrait;
+A [shape = circle, color = "#F0C538"];
+B [shape = cloud, style = dashed, textcolor = "#314BE2"];
+C [color = "black", textcolor = "red"];
+
+B <- A;
+B <- C [style = "10,4", thick, color = "red"]
+(:diagramend:)
+(:sourceend:)
+
+%center%Attach:diagram_3.png
+
+
+!!!! Группировка узлов
+
+(:source lang="text":)
+(:diagram:)
+A <-> B -> C
+B -- D
+
+group {
+    C
+    D
+}
+(:diagramend:)
+(:sourceend:)
+
+%center%Attach:diagram_4.png
+
+'''[[Обсудить на форуме -> http://jenyay.net/forum/post/492/]]'''
+
+{% include 'changelog.ru.txt' %}
+
+(:rater:)
+%center%(:ad:)
+

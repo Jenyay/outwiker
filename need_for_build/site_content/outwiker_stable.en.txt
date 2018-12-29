@@ -1,0 +1,167 @@
+(:title OutWiker - the tree notes organizer:)
+(:keywords outliner, tree notes, outwiker, wiki, html editor :)
+(:description Outwiker. The Program for Storing Notes in a Tree :)
+
+Attach:ru.png [[Soft/Outwiker | Русская версия]]
+
+>>frame<<
+* [[#description | Description]]
+* [[#download | Downloads]]
+* [[#screenshots | Screenshots]]
+* [[#features | Key Features]]
+* [[#faq | FAQ]]
+* [[#source | Run from source code]]
+* [[#history| Version History]]
+* [[#allcomments | Comments]]
+>><<
+
+[[#description]]
+!! Description
+
+OutWiker is designed to store notes in a tree. Such programs are called "outliner", personal wiki, or tree-like editors.  OutWiker's main difference from the other similar programs is keeping the tree of notes in the form of directories on disk, and encouraging changing the base by external sources and programs. 
+
+Also any number of files can be attached to the page. OutWiker can contain pages of different types, currently supports three types of pages: plain text, HTML pages and wiki pages, but the number of types of pages will increase in future.
+
+The program uses some sets of free icons taken from sites [[http://www.famfamfam.com/lab/icons/silk/ | famfamfam.com]], [[http://p.yusukekamiyamane.com/ | yusukekamiyamane.com]] and [[fatcow.com -> http://fatcow.com]]. Many thanks to the authors of those sites. 
+
+OutWiker distributed with source code under the  [[GPL 3 -> http://www.gnu.org/licenses/gpl.html]].
+
+
+[[#download]]
+!! Downloads
+
+Current version - ''{{ version_full }}'''
+<!--#version stable {{ version_main }}-->
+
+'''OutWiker for Windows'''[[<<]]
+[[Attach:Soft/Outwiker/outwiker_{{ version_main }}_win.exe | outwiker_{{ version_main }}_win.exe]] (installer, 20 МБ).[[<<]]
+[[Attach:Soft/Outwiker/outwiker_{{ version_main }}_win.7z | outwiker_{{ version_main }}_win.7z]] (7z archive, 20 МБ).[[<<]]
+[[Attach:Soft/Outwiker/outwiker_{{ version_main }}_win.zip | outwiker_{{ version_main }}_win.zip]] (zip archive, 26 МБ).[[<<]]
+
+'''OutWiker for Windows with all plug-ins'''[[<<]]
+[[Attach:Soft/Outwiker/outwiker_{{ version_main }}_win_all_plugins.zip | outwiker_{{ version_main }}_win_all_plugins.zip]] (archive 7z, 33 МБ).[[<<]]
+[[Attach:Soft/Outwiker/outwiker_{{ version_main }}_win_all_plugins.7z | outwiker_{{ version_main }}_win_all_plugins.7z]] (archive 7z, 25 МБ).[[<<]]
+
+(:DonateOWEn:)
+
+For '''Linux''' users created PPA-repository. To install OutWiker from the repository, perform the following commands:
+
+(:source lang="bash":)
+sudo apt-add-repository ppa:outwiker-team/ppa
+sudo apt-get update
+sudo apt-get install outwiker
+(:sourceend:)
+
+For others Linux distributions see [[Sources -> #source]]
+
+[[Plugins -> Outwiker/PluginsEn]][[<<]]
+[[Unstable version -> Outwiker/UnstableEn]]
+
+[[#screenshots]]
+!! Screenshots
+
+(:thumbgallery width=300 cols=3:)
+outwiker_2.0.0_01_en.png
+outwiker_2.0.0_02_en.png
+outwiker_2.0.0_03_en.png
+outwiker_2.0.0_04_en.png
+outwiker_2.0.0_05_en.png
+outwiker_2.0.0_06_en.png
+outwiker_2.0.0_07_en.png
+(:thumbgalleryend:)
+
+
+[[#features]]
+!! Key Features
+
+* The base is stored as a directory tree on disk. 
+* [[Plugins -> Outwiker/PluginsEn]] supporting.
+* Any number of files can be attached to each note. 
+* Pages can be of different types.
+* Attached images can be inserted into the HTML-page. 
+* HTML syntax highlighting.
+* Tags support.
+* Support for bookmarks.
+* Each tree branch can be opened as a separate wiki. 
+* Icons for notes. 
+* Cross-platform (Windows and Linux). 
+* Portability. Program all the settings can be stored in its directory. 
+* Open-source program.
+* The ability to create links between pages.
+* Global search on your notes and search by tags.
+* Batch job with the tags.
+
+
+[[#faq]]
+!! FAQ
+
+!!!! May it be better to make the program keep notes in one file?
+
+Keeping notes in a tree - the main feature, for which the program was developed. This does not mean that someday I will not add the option for choosing ways of storing your notes, but this will not happen in the near future.
+
+
+!!!! Will there be a visual editor for the pages?
+
+There are some thoughts to make a separate page type format RichTextFormat with the visual editor. Please do not exclude the possibility that there will be a visual editor for HTML-pages. But still I can't talk about dates.
+
+!!!! How to install plugins
+
+If you use OutWiker in the portable mode then to install the plug-ins need to unzip the downloaded archive to ''plugins'' folder close to the executable.
+
+If you use OutWiker in the usual mode then select "Help - Open Plugins Folder" menu item. After that will be open folder for plugins.
+
+In MS Windows 7 / 8.x / 10 it would be:
+
+(:source lang="text":)
+C:\Users\USERNAME\AppData\Roaming\outwiker\plugins
+(:sourceend:)
+
+In Ubuntu Linux:
+
+(:source lang="text":)
+/home/USERNAME/.config/outwiker/plugins
+(:sourceend:)
+
+Take note what each plugin is a folder with the files. This plugin folder need to copy in the folder with plugins. In the preferences dialog (Edit - Preferences - Plugins) can disable plugins without remove their files from ''plugins'' folder.
+
+
+[[#source]]
+!! Run from source code
+
+Source code of OutWiker is free.
+
+To get a stable version of the source code, run:
+
+>>frame<<
+git clone https://github.com/Jenyay/outwiker.git
+>><<
+
+To get the source code version of the program, which is in development, run:
+
+>>frame<<
+git clone https://github.com/Jenyay/outwiker.git[[<<]]
+cd outwiker[[<<]]
+git checkout stable
+>><<
+
+To run the command (in the directory src):
+
+>>frame<<
+python runoutwiker.py
+>><<
+
+[[#history]]
+!! Version History
+
+!!! {{ versions_list[0].version }} ({{ versions_list[0].date_str }})
+{% for change in versions_list[0].changes %}
+* {{ change }}{% endfor %}
+
+
+[[History of the previous versions -> Outwiker/VersionHistoryEn]]
+
+%center%(:ad:)
+
+[[#allcomments]]
+(:include Site.FoxCommentBoxEn:)
+

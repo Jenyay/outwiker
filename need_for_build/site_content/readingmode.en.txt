@@ -1,0 +1,34 @@
+(:title ReadingMode plugin. Switch main window to reading mode :)
+(:description ReadingMode plugin allow to take on / take off mode to note read. It hide unnecessary at present panels.:)
+(:linebreaks:)
+
+Attach:Soft/Outwiker/us.png [[Русская версия -> Outwiker/ReadingMode]]
+
+'''Plugin's author:''' Roman Sobolev.
+
+ReadingMode plug-in (view for reading) hide "Tree", "Tags" and "Attachments" panels without changing main window size.
+
+The following images show OutWiker main window in normal mode and in reading mode (don't confuse with read-only mode).
+
+%center%(:thumb readingmode_01.png px=300:) (:thumb readingmode_02.png px=300:)
+
+
+[[#download]] 
+[[ReadingMode 1.0.4 -> Attach:Outwiker/ReadingMode/readingmode-1.0.4.zip]] ('''Required OutWiker version: 1.8 - 2.1.0.834''')
+
+[[ReadingMode {{ version_full }}-> Attach:Outwiker/ReadingMode/readingmode-{{ version_full }}.zip]] ('''Required OutWiker version: 2.1.0.836 and above''')
+
+<!--#version stable {{ version_full }} -->
+(:DonateOWEn:)
+
+!!! [[#using]]Using
+
+Plug-in allow with switch-button on the plug-ins panel easily hide and show "Notes Tree", "Tags" and "Attachments" panels without changing main window size. This action available in "View" menu or with hot keys.
+
+Hot keys can change with menu '''Edit -&gt; Preferences... -&gt; Hot keys -&gt; Reading mode'''. Your changes will take effect without restarting the program.
+
+If you don't needed the plug-in, it can be disabled with standard means without restarting the program: '''Edit -&gt; Preferences... -&gt; Plugins -&gt; Reading mode'''.
+
+{% include 'changelog.en.txt' %}
+
+(:rater:)

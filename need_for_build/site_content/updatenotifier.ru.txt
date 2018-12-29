@@ -1,0 +1,32 @@
+(:title Плагин UpdateNotifier. Оповещения о новых версиях OutWiker и плагинов:)
+(:description Плагин UpdateNotifier для программы OutWiker, предназначенный для оповещении о появлении новых версий программы OutWiker и плагинов к ней:)
+(:linebreaks:)
+%center%(:ad:)
+
+Attach:us.png [[English version -> Outwiker/UpdateNotifierEn]]
+
+[[UpdateNotifier 2.0 -> Attach:updatenotifier-2.0.zip]] ('''Требуемая версия OutWiker: 1.7 - 2.1.0.834''')
+
+[[UpdateNotifier {{ version_full }} -> Attach:updatenotifier-{{ version_full }}.zip]] ('''Требуемая версия OutWiker: 2.1.0.836 и выше''')
+
+<!--#version stable {{ version_full }} -->
+
+(:DonateOW:)
+
+!!! Использование
+
+Плагин добавляет пункт меню ''"Справка -> Проверить обновления..."''. При выборе этого пункта меню запустится поиск новых версий программы и плагинов, и если они будут найдены, то появится окно с перечислением того, что обновилось.
+
+%center%%thumb width=500%Attach:updatenotifier.png%%
+
+При нажатии на ссылку откроется страница, где можно скачать последнюю версию программы или плагина.
+
+В настройках плагина (''Правка -> Параметры -> UpdateNotifier [Плагин]'') можно указать интервал, через который плагин будет автоматически проверять обновления и указать плагину, нужно ли уведомлять о выходе очередной "нестабильной" версии OutWiker.
+
+{% include 'changelog.ru.txt' %}
+
+[[http://jenyay.net/forum/topic/45/plagin-updatenotifier/ | '''Обсуждение на форуме''']]
+
+%center%(:ad:)
+
+(:rater:)

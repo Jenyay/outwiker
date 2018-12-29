@@ -1,0 +1,61 @@
+(:title WebPage. Plug-in allow you to download Internet page :)
+(:description The WebPage plug-in for OutWiker allow you to create a page on the basis of the web page from Internet. :)
+(:linebreaks:)
+
+
+Attach:Soft/Outwiker/ru.png [[Русская версия -> Outwiker/WebPage]]
+
+The WebPage plug-in designed for keeping of the pages downloaded from Internet. The web pages remind build-in HTML pages and allow you to edit source HTML code of the downloaded page. All pictures, CSS and JavaScript files will be saving also inside the ''__download'' folder inside web page. This allows read the pages without Internet connection.
+
+%center%(:thumbgallery width=500:)
+main_window_en.png
+(:thumbgalleryend:)
+
+[[WebPage 1.2.2 -> Attach:Outwiker/WebPage/webpage-1.2.2.zip]] ('''Required OutWiker version: 2.0 - 2.1.0.834''')
+
+[[WebPage {{ version_full }} -> Attach:Outwiker/WebPage/webpage-{{ version_full }}.zip]] ('''Required OutWiker version: 2.1.0.836 and above''')
+
+<!--#version stable {{ version_full }} -->
+
+
+!!! Using
+
+!!!! Creating of web pages
+
+You can't create web page with the standard page dialog. After installing WebPage plug-in the menu ''Web page'' will be added. The menu contain items for web page creation.
+
+%center%Attach:menu_en.png
+
+You can do these actions with new buttons on tree notes toolbar:
+
+%center%Attach:tree_buttons_en.png
+
+After pressing the buttons will be open the dialog in which you may enter link to page and tags if desired. After you click ''Ok'' button, the process of downloading the page will be start.
+
+%center%Attach:dialog_download_progress_en.png
+
+If all goes well a new web page will be added to notes tree.
+
+
+!!!! Editing web page
+
+Outwardly web page remind the build-in HTML pages. Likewise you can switch between ''Preview'' and ''HTML'' mode and edit source code of the page. But web pages has the additional button-toggle ''Disable scripts on page'' (it pressed default) which allows to disable scripts on the page.
+
+%center%Attach:disable_script_button_en.png
+
+If a page displayed incorrectly without scripts, you can allow run the scripts on the page. If ''Disable scripts on page'' button is pressed source code of the page does not change, the scripts removed only to display the page in ''Preview'' mode.
+
+
+
+!!!! Other features
+
+When you choose web page in notes tree ''Web page'' menu will be supplemented by new items.
+
+%center%Attach:menu_full_en.png
+
+The items allow you to open source URL of the web page in the browser, to copy URL to clipboard and to see downloading log.
+
+
+%center%Attach:dialog_log_en.png
+
+{% include 'changelog.en.txt' %}

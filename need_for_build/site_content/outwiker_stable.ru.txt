@@ -1,0 +1,169 @@
+(:title OutWiker - Программа для хранения заметок:)
+(:keywords древовидный редактор, программа, хранение заметок, outliner, софт, вики, wiki, редактор :)
+(:description Outwiker. Программа для хранения заметок в виде дерева :)
+
+%center%(:ad:)
+
+Attach:us.png [[English version -> Outwiker/English]]
+
+>>rframe<<
+%center%[[Attach:Soft/Outwiker/twitter.png -> https://twitter.com/#!/OutWiker]] [[Attach:Soft/Outwiker/livejournal.png -> http://ru-outwiker.livejournal.com/]] [[Attach:Soft/Outwiker/gogle_plus_48.png -> https://plus.google.com/113404982971748285098]] [[Attach:Soft/Outwiker/facebook.png -> http://www.facebook.com/outwiker]] [[Attach:Soft/Outwiker/vk.png -> http://vk.com/outwiker]] 
+>><<
+
+* [[#description | Описание]]
+* [[#download | Скачать программу]]
+-->[[#windows | Для Windows]]
+-->[[#linux | Для Linux]]
+* [[#screenshots | Скриншоты]]
+* [[#features | Основные возможности]]
+* [[#faq | Часто задаваемые вопросы (ЧаВо)]]
+* [[#source | Исходники программы]]
+* [[#history| История версий]]
+* [[http://jenyay.net/forum/ | Обсудить на форуме]]
+
+
+[[#description]]
+!! Описание
+
+Текущая версия OutWiker - '''{{ version_full }}'''
+<!--#version stable {{ version_main }} -->
+
+OutWiker - это бесплатная кроссплатформенная программа для хранения заметок в виде дерева. Такие программы называют outliner-ами, персональными вики-системами или древовидными редакторами. Основное отличие OutWiker от других подобных программ заключается в том, что OutWiker хранит дерево заметок в виде обычных директорий на диске, а не в одном файле. Также к заметкам может быть прикреплено любое количество файлов. Про остальные особенности программы вы можете прочитать в разделе [[#features | Основные возможности]].
+
+OutWiker может содержать страницы разного типа, в данный момент поддерживаются четыре типа страниц: страница с поддержкой вики-нотации, обычный текст, HTML-страницы и страница поиска по дереву, но в будущем количество типов страниц будет увеличиваться. Некоторые подробности о программе OutWiker вы можете узнать, прочитав записи с тегом [[http://jenyay.net/blog/tag/outwiker/ | outwiker]] в [[http://jenyay.net/blog/ | блоге]].
+
+Особая благодарность разработчикам сайтов [[http://www.famfamfam.com/lab/icons/silk/ | famfamfam.com]], [[http://p.yusukekamiyamane.com/ | yusukekamiyamane.com]] и [[http://www.fatcow.com/free-icons | fatcow.com]] за бесплатные иконки, которые используются в OutWiker'е.
+
+Программа OutWiker распространяется с исходными текстами под лицензией [[GPL 3 -> http://www.gnu.org/licenses/gpl.html]].
+
+Автор не несет ответственность за последствия использования программы.
+
+
+[[#download]]
+!! Скачать программу
+
+(:DonateOW:)
+
+[[#windows]]'''Версия для Windows'''[[<<]]
+[[Attach:outwiker_{{ version_main }}_win.exe | outwiker_{{ version_main }}_win.exe]] (инсталлятор, 20 МБ).[[<<]]
+[[Attach:outwiker_{{ version_main }}_win.7z | outwiker_{{ version_main }}_win.7z]] (архив 7z, 20 МБ).[[<<]]
+[[Attach:outwiker_{{ version_main }}_win.zip | outwiker_{{ version_main }}_win.zip]] (архив zip, 26 МБ).[[<<]]
+
+'''Версия под Windows со всеми плагинами'''[[<<]]
+[[Attach:outwiker_{{ version_main }}_win_all_plugins.zip | outwiker_{{ version_main }}_win_all_plugins.zip]] (архив zip, 33 МБ).[[<<]]
+[[Attach:outwiker_{{ version_main }}_win_all_plugins.7z | outwiker_{{ version_main }}_win_all_plugins.7z]] (архив 7z, 25 МБ).[[<<]]
+
+[[#linux]]
+[[#ubuntu]]Для пользователей Linux на основе '''Ubuntu''', имеется [[PPA-репозиторий -> https://launchpad.net/~outwiker-team/+archive/ubuntu/ppa]]. Для установки OutWiker из репозитория нужно выполнить следующие команды:
+
+(:source lang="bash":)
+sudo apt-add-repository ppa:outwiker-team/ppa
+sudo apt-get update
+sudo apt-get install outwiker
+(:sourceend:)
+
+Для запуска из исходников см. раздел [[исходники программ -> #source]].
+
+[[#screenshots]]
+!! Скриншоты
+
+(:thumbgallery width=300 cols=3:)
+outwiker_2.0.0_01_ru.png
+outwiker_2.0.0_02_ru.png
+outwiker_2.0.0_03_ru.png
+outwiker_2.0.0_04_ru.png
+outwiker_2.0.0_05_ru.png
+outwiker_2.0.0_06_ru.png
+outwiker_2.0.0_07_ru.png
+outwiker_2.0.0_markdown_code_ru.png
+outwiker_2.0.0_markdown_view_ru.png
+(:thumbgalleryend:)
+
+[[#features]]
+!! Основные возможности
+
+* База заметок хранится в виде директорий на диске, а не в одном файле.
+* К заметкам можно прикреплять любые файлы. Прикрепленные таким образом картинки можно показывать на странице.
+* С помощью [[плагинов -> http://jenyay.net/Outwiker/Plugins]] можно добавлять новые возможности.
+* Можно проверять орфографию одновременно для нескольких языках.
+* Страницы могут быть разных типов. В данный момент поддерживаются текстовые страницы, страницы в формате HTML и вики-страницы. С помощью плагина [[Markdown -> http://jenyay.net/Outwiker/Markdown]] можно писать заметки с использованием языка Markdown.
+* На странице редактирования заметки работает раскраска синтаксиса HTML и викинотации.
+* Страницы можно помечать тегами (метками).
+* Можно устанавливать закладки на страницы.
+* Можно менять внешний вид страниц с помощью стилей CSS.
+* Каждой странице можно присвоить иконку из набора встроенных картинок или из внешнего файла.
+* Можно создавать ссылки между страницами.
+* Есть поиск текста в заметках и поиск по тегам.
+* Дерево заметок можно открывать в режиме "только для чтения".
+* Есть возможность работать сразу с группой меток.
+* Можно вставлять формулы в формате TeX (с помощью плагина [[TeXEquation -> http://jenyay.net/Outwiker/TexEquation]]).
+* Есть возможность раскраски исходных текстов программ на различных языках программирования (с помощью плагина [[Source -> http://jenyay.net/Outwiker/SourcePlugin]]).
+* Программа может работать в портабельном режиме, т.е. может хранить все настройки рядом с запускаемым файлом (для этого рядом с запускаемым файлом нужно создать файл outwiker.ini).
+* Программа работает под Windows и Linux.
+* Программа распространяется с открытыми исходниками (страница на [[github -> https://github.com/Jenyay/outwiker]])
+
+
+[[#faq]]
+!! Часто задаваемые вопросы (ЧаВо)
+
+'''Как сделать так, чтобы программа хранила настройки в папке с запускаемым файлом?'''
+
+Скопируйте файл ''outwiker.ini'' из папки ''.outwiker'' внутри папки профиля пользователя (под Windows 7 / 8.x / 10 - {+C:\Users\USERNAME\AppData\Roaming\outwiker\+}, под Linux - {+/home/USERNAME/.config/outwiker/+}) в папку с программой.
+
+'''Как устанавливать плагины'''
+
+Если вы используете OutWiker в портабельном режиме (файл ''outwiker.ini'' расположен в той же папке, что и запускаемый файл ''outwiker.exe''), каждый архив с плагином нужно распаковывать в папку ''plugins'' рядом с запускаемым файлом.
+
+Если вы не используете портабельный режим, то проще всего добраться до папки с плагинами, выбрав пункт меню "Справка - Открыть папку с плагинами".
+
+Под Windows 7 / 8.x / 10 это будет:
+
+(:source lang="text":)
+C:\Users\USERNAME\AppData\Roaming\outwiker\plugins
+(:sourceend:)
+
+Под Ubuntu Linux, если у вас не установлена переменная окружения ''$XDG_CONFIG_HOME'', папка с плагинами может иметь такой путь:
+
+(:source lang="text":)
+/home/USERNAME/.config/outwiker/plugins
+(:sourceend:)
+
+Обратите внимание, что каждый плагин - это папка с файлами, именно эту папку и нужно копировать в ''plugins''. В окне настроек (Правка - Параметры... - Расширения) вы можете отключать плагины без удаления их из папки ''plugins''.
+
+
+[[#source]]
+!! Исходники программы
+
+Исходники программы открыты и распространяются под лицензией GPL 3 и расположены на [[https://github.com/Jenyay/outwiker | github]].
+
+
+Чтобы получить последнюю версию исходников, выполните команду
+
+>>frame<<
+git clone https://github.com/Jenyay/outwiker.git
+>><<
+
+Если вы хотите получить исходники последней стабильной версии, то для этого надо переключиться на ветку stable:
+
+>>frame<<
+git clone https://github.com/Jenyay/outwiker.git[[<<]]
+cd outwiker[[<<]]
+git checkout stable
+>><<
+
+Более подробно про запуск OutWiker из исходников читайте в [[http://outwiker.readthedocs.io/ru/latest/ru/build/start.html | документации]].
+
+
+[[#history]]
+!! История версий
+
+!!! {{ versions_list[0].version }} ({{ versions_list[0].date_str }})
+{% for change in versions_list[0].changes %}
+* {{ change }}{% endfor %}
+
+
+[[История предыдущих версий -> Outwiker/VersionHistory]]
+
+
+[[http://jenyay.net/forum/ | '''Обсудить на форуме''']]
+(:rater:)

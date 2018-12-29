@@ -1,0 +1,32 @@
+(:title TeXEquation. Plug-in for inserting the equations in the TeX format:)
+(:description TeXEquation allow to insert the equations in the TeX format. :)
+(:linebreaks:)
+
+Attach:Soft/Outwiker/ru.png [[Русская версия -> Outwiker/TexEquation]]
+
+The TeXEquation plug-in add two new commands to wiki notation. The commands allow you to insert the equations with TeX format.
+
+[[#download]] 
+
+!!!! Download
+[[TeXEquation 2.1 -> Attach:Outwiker/TexEquation/texequation-2.1.zip]] ('''Required OutWiker version: 2.0 - 2.1.0.834''')
+
+[[TeXEquation {{ version_full }} -> Attach:Outwiker/TexEquation/texequation-{{ version_full }}.zip]] ('''Required OutWiker version: 2.1.0.836 and above''')
+
+<!--#version stable {{ version_full }} -->
+
+(:DonateOWEn:)
+
+%center% (:thumb texequation_result.png px=500:) (:thumb texequation_wiki.png px=500:)
+
+
+>>frame<<
+'''Warning!''' All non Latin letters in an equation must be encapsulated in the \text{...} command, otherwise the equation will not be displayed.
+>><<
+
+TeXEquation plug-in adds the following commands to wiki notation:
+
+* [={$...$}=] to insert the in-line equation which do not break the line.
+* [={$$...$$}=] to insert the block equation which display as separated paragraph. This equation will be centered.
+
+{% include 'changelog.en.txt' %}

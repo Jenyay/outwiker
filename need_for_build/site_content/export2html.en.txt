@@ -1,0 +1,27 @@
+(:title Export2Html plug-in. Export notes to HTML:)
+(:description Export2Html plug-in. Export notes to HTML:)
+(:linebreaks:)
+
+Attach:ru.png [[Outwiker/Export2HtmlPlugin | Русская версия]]
+
+Plug-in insert menu item ''{+File - Export - Export page to HTML+}'' and ''{+Export Branch to HTML+}''
+
+[[Export2Html 1.3.5 -> Attach:Outwiker/Export2HtmlPlugin/export2html-1.3.5.zip]] ('''Required OutWiker version: 1.7 - 2.1.0.834''')
+
+[[Export2Html {{ version_full }} -> Attach:Outwiker/Export2HtmlPlugin/export2html-{{ version_full }}.zip]] ('''Required OutWiker version: 2.1.0.836 and above''')
+
+<!--#version stable {{ version_full }} -->
+(:DonateOWEn:)
+
+Saved file names can be long (include names of parents' notes) or short (relevant headings notes). The following pictures show the original tree notes and files that are received after the export.
+
+||border=0 width=100%
+|| '''Tree notes''' || '''Result in browser (__index.html)''' ||
+|| %center%Attach:Outwiker/Export2HtmlPlugin/tree.png || %thumb width=400%Attach:Outwiker/Export2HtmlPlugin/index.png%% ||
+|| '''Short names''' || '''Long names''' ||
+|| %thumb width=400px%Attach:Outwiker/Export2HtmlPlugin/short_names_1_1.png%% || %thumb width=400px%Attach:Outwiker/Export2HtmlPlugin/long_names_1_1.png%% ||
+
+{% include 'changelog.en.txt' %}
+
+[[#comments]]
+(:include Site.FoxCommentBoxEn:)
