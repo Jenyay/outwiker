@@ -18,28 +18,63 @@ class AboutDialog(wx.Dialog):
         self.versionLabel = wx.StaticText(self, -1, "")
         self.notebook = wx.Notebook(self, -1, style=0)
         self.aboutPane = wx.Panel(self.notebook, -1)
-        self.logo = wx.StaticBitmap(self.aboutPane, -1, wx.Bitmap(
-            os.path.join(self.imagesDir, "outwiker_64x64.png"), wx.BITMAP_TYPE_ANY))
+        self.logo = wx.StaticBitmap(
+            self.aboutPane,
+            -1,
+            wx.Bitmap(os.path.join(self.imagesDir, "outwiker_64x64.png"), wx.BITMAP_TYPE_ANY)
+        )
+
         self.description = wx.StaticText(
-            self.aboutPane, -1, _("OutWiker is personal wiki system and tree notes outliner."))
+            self.aboutPane,
+            -1,
+            _("OutWiker is personal wiki system and tree notes outliner.")
+        )
+
         self.license = wx.StaticText(self.aboutPane, -1, _("License: GPL 3"))
+
         self.siteLabel = wx.StaticText(
-            self.aboutPane, -1, _("OutWiker's page:"))
-        self.outwikerUrl = HyperLinkCtrl(self.aboutPane, -1, label=_(
-            "https://jenyay.net/Outwiker/English"), URL=_("https://jenyay.net/Outwiker/English"))
+            self.aboutPane,
+            -1,
+            _("OutWiker's page:")
+        )
+
+        self.outwikerUrl = HyperLinkCtrl(
+            self.aboutPane,
+            -1,
+            label=_("https://jenyay.net/Outwiker/English"),
+            URL=_("https://jenyay.net/Outwiker/English")
+        )
+
         self.contactsPane = wx.Panel(self.notebook, -1)
-        self.email = HyperLinkCtrl(self.contactsPane, -1, label=_(
-            u"jenyay.ilin@gmail.com"), URL=_(u"mailto:jenyay.ilin@gmail.com"))
-        self.googleplus = HyperLinkCtrl(self.contactsPane, -1, label=_(u"Google+ page"), URL=_(
-            u"https://plus.google.com/u/0/b/113404982971748285098/113404982971748285098/posts"))
-        self.facebook = HyperLinkCtrl(self.contactsPane, -1, label=_(
-            u"Facebook page"), URL=_(u"https://www.facebook.com/outwiker"))
-        self.livejournal = HyperLinkCtrl(self.contactsPane, -1, label=_(
-            u"Livejournal community"), URL=_(u"https://ru-outwiker.livejournal.com/?style=mine"))
+
+        self.email = HyperLinkCtrl(
+            self.contactsPane,
+            -1,
+            label="jenyay.ilin@gmail.com",
+            URL=_(u"mailto:jenyay.ilin@gmail.com")
+        )
+
+        self.facebook = HyperLinkCtrl(
+            self.contactsPane,
+            -1,
+            label=_(u"Facebook page"),
+            URL=_(u"https://www.facebook.com/outwiker")
+        )
+
         self.twitter = HyperLinkCtrl(
-            self.contactsPane, -1, label=_(u"Twitter"), URL=_(u"https://twitter.com/OutWiker"))
+            self.contactsPane,
+            -1,
+            label=_(u"Twitter"),
+            URL=_(u"https://twitter.com/OutWiker")
+        )
+
         self.vkontakte = HyperLinkCtrl(
-            self.contactsPane, -1, label=_(u"Vkontakte group"), URL=_(u"https://vk.com/outwiker"))
+            self.contactsPane,
+            -1,
+            label=_(u"Vkontakte group"),
+            URL=_(u"https://vk.com/outwiker")
+        )
+
         self.okButton = wx.Button(self, wx.ID_OK, "")
 
         self.__set_properties()
@@ -52,7 +87,12 @@ class AboutDialog(wx.Dialog):
         self.SetTitle(_("About"))
         self.SetSize((500, 350))
         self.titleLabel.SetFont(wx.Font(
-            15, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, 0, ""))
+            15,
+            wx.FONTFAMILY_DEFAULT,
+            wx.FONTSTYLE_NORMAL,
+            wx.FONTWEIGHT_NORMAL,
+            0,
+            ""))
         self.description.SetMinSize((-1, 50))
         self.okButton.SetFocus()
         self.okButton.SetDefault()
@@ -63,8 +103,13 @@ class AboutDialog(wx.Dialog):
         grid_sizer_3 = wx.FlexGridSizer(cols=1)
         sizeSizer = wx.FlexGridSizer(cols=2)
         grid_sizer_1 = wx.FlexGridSizer(cols=2)
-        main_sizer.Add(self.titleLabel, 0, wx.ALL |
-                       wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL, 2)
+
+        main_sizer.Add(
+            self.titleLabel,
+            0,
+            wx.ALL | wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL,
+            2)
+
         grid_sizer_1.Add(self.versionTitleLabel, 0, wx.ALL | wx.ALIGN_RIGHT, 2)
         grid_sizer_1.Add(self.versionLabel, 0, wx.ALL, 2)
         grid_sizer_1.AddGrowableRow(0)
@@ -92,9 +137,7 @@ class AboutDialog(wx.Dialog):
         grid_sizer_4 = wx.FlexGridSizer(cols=1)
         grid_sizer_4.AddGrowableCol(0)
         grid_sizer_4.Add(self.email, 1, wx.ALL | wx.ALIGN_CENTER, 2)
-        grid_sizer_4.Add(self.googleplus, 1, wx.ALL | wx.ALIGN_CENTER, 2)
         grid_sizer_4.Add(self.facebook, 1, wx.ALL | wx.ALIGN_CENTER, 2)
-        grid_sizer_4.Add(self.livejournal, 1, wx.ALL | wx.ALIGN_CENTER, 2)
         grid_sizer_4.Add(self.twitter, 1, wx.ALL | wx.ALIGN_CENTER, 2)
         grid_sizer_4.Add(self.vkontakte, 1, wx.ALL | wx.ALIGN_CENTER, 2)
         self.contactsPane.SetSizer(grid_sizer_4)
