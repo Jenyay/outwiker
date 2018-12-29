@@ -1363,7 +1363,7 @@ msgstr "Страница программы:"
 
 #: outwiker/gui/dialogs/about.py:29
 msgid "https://jenyay.net/Outwiker/English"
-msgstr "https://jenyay.net/Outwiker"
+msgstr "https://jenyay.net/Soft/Outwiker"
 
 #: outwiker/gui/dialogs/about.py:32
 msgid "jenyay.ilin@gmail.com"
