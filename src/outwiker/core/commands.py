@@ -193,17 +193,21 @@ def openWiki(path: str, readonly: bool=False) -> Optional[WikiDocument]:
         __canNotLoadWikiMessage(path)
         return
 
-    # Если передан путь до файла настроек (а не до папки с вики),
-    # то оставим только папку
-    if not os.path.isdir(path):
-        path = os.path.split(path)[0]
-
     preWikiOpenParams = PreWikiOpenParams(path, readonly)
     Application.onPreWikiOpen(Application.selectedPage,
                               preWikiOpenParams)
     if preWikiOpenParams.abortOpen:
         logger.debug('Opening notes tree aborted')
         return
+
+    # The path may be changed in event handlers
+    path = preWikiOpenParams.path
+    logger.debug('Notes tree path after onPreWikiOpen: {}'.format(path))
+
+    # Если передан путь до файла настроек (а не до папки с вики),
+    # то оставим только папку
+    if not os.path.isdir(path):
+        path = os.path.split(path)[0]
 
     runner = LongProcessRunner(threadFunc,
                                Application.mainWindow,
