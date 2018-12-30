@@ -4,6 +4,7 @@ import logging
 
 from outwiker.core.config import Config
 from outwiker.core.event import Event, CustomEvents
+from outwiker.core.events import PostWikiCloseParams, PreWikiCloseParams
 from outwiker.core.recent import RecentWiki
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.pageuiddepot import PageUidDepot
@@ -40,8 +41,10 @@ class ApplicationParams(object):
 
         # Closing wiki event
         # Parameters:
-        #     root - closed wiki root (it may be None)
-        self.onWikiClose = Event()
+        #     page - current (selected) page
+        #     params - instance of the outwiker.core.events.PreWikiCloseParams
+        #              class
+        self.onPreWikiClose = Event()
 
         # Updating page wiki event
         # Parameters:
@@ -208,7 +211,7 @@ class ApplicationParams(object):
 
         # Event occurs after page dialog creation
         # Parameters:
-        #     page - current(selected) page
+        #     page - current (selected) page
         #     params - instance of the PageDialogInitParams class
         self.onPageDialogInit = Event()
 
@@ -281,6 +284,11 @@ class ApplicationParams(object):
         #    params - instance of the PostWikiOpenParams class
         self.onPostWikiOpen = Event()
 
+        # Event occurs after wiki closing
+        # Parameters:
+        #    params - instance of the PostWikiCloseParams class
+        self.onPostWikiClose = Event()
+
         # Event occurs in the IconsPanel after generation list of
         # the icons groups.
         # Parameters:
@@ -345,15 +353,24 @@ class ApplicationParams(object):
         """
         Set wiki as current
         """
-        self.onWikiClose(self.__wikiroot)
-
         if self.__wikiroot is not None:
+            wikiPath = self.__wikiroot.path
+
+            preWikiCloseParams = PreWikiCloseParams(self.__wikiroot)
+            self.onPreWikiClose(self.selectedPage, preWikiCloseParams)
+            if preWikiCloseParams.abortClose:
+                logger.debug('Wiki closing aborted: {}'.format(wikiPath))
+                return
+
             self.__unbindWikiEvents(self.__wikiroot)
             try:
                 self.__wikiroot.save()
             except OSError:
                 logger.error("Can't save notes tree settings: {}".format(self.__wikiroot.path))
                 self.__wikiroot = None
+
+            postWikiCloseParams = PostWikiCloseParams(wikiPath)
+            self.onPostWikiClose(postWikiCloseParams)
 
         self.__wikiroot = value
 

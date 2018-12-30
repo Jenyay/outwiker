@@ -17,13 +17,13 @@ class AttachWatcher(object):
     def initialize(self):
         self._timer = wx.Timer()
         self._timer.Bind(wx.EVT_TIMER, handler=self._onTimer)
-        self._application.onWikiClose += self._onWikiClose
+        self._application.onPostWikiClose += self._onPostWikiClose
         self._application.onPageSelect += self._onPageSelect
         self._application.onAttachListChanged += self._onAttachListChanged
         self._start_watch()
 
     def clear(self):
-        self._application.onWikiClose -= self._onWikiClose
+        self._application.onPostWikiClose -= self._onPostWikiClose
         self._application.onPageSelect -= self._onPageSelect
         self._application.onAttachListChanged -= self._onAttachListChanged
         self._stop_watch()
@@ -35,7 +35,7 @@ class AttachWatcher(object):
             attach = Attachment(self._watchedPage)
             self._oldFilesList = attach.getAttachRelative()
 
-    def _onWikiClose(self, root):
+    def _onPostWikiClose(self, params):
         self._stop_watch()
 
     def _onPageSelect(self, page):

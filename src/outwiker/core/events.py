@@ -240,6 +240,14 @@ class PostWikiOpenParams(object):
         self.success = success
 
 
+class PostWikiCloseParams(object):
+    """
+    Set of parameters for the onPostWikiClose event
+    """
+    def __init__(self, path):
+        self.path = path
+
+
 class IconsGroupsListInitParams(object):
     """
     Set of parameters for the onIconsGroupsListInit event
@@ -298,3 +306,9 @@ class TextEditorKeyDownParams(object):
 
         # Set True if current character should not be added to editor
         self.disableOutput = False
+
+
+class PreWikiCloseParams(object):
+    def __init__(self, wikiroot: 'outwiker.core.tree.WikiDocument'):
+        self.wikiroot = wikiroot
+        self.abortClose = False
