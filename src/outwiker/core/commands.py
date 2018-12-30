@@ -9,7 +9,7 @@ import os.path
 import re
 import shutil
 import logging
-from typing import List
+from typing import List, Optional
 
 import wx
 
@@ -32,7 +32,7 @@ from outwiker.gui.testeddialog import TestedFileDialog
 from outwiker.utilites.textfile import readTextFile
 
 
-logger = logging.getLogger('core')
+logger = logging.getLogger('outwiker.core.commands')
 
 
 def MessageBox(*args, **kwargs):
@@ -181,7 +181,14 @@ def findPage(application, page_id):
         return application.pageUidDepot[page_id]
 
 
-def openWiki(path, readonly=False):
+def openWiki(path: str, readonly: bool=False) -> Optional[WikiDocument]:
+    def threadFunc(path, readonly):
+        try:
+            return WikiDocument.load(path, readonly)
+        except BaseException as e:
+            return e
+
+    logger.debug('Opening notes tree from: {}'.format(path))
     if not os.path.exists(path):
         __canNotLoadWikiMessage(path)
         return
@@ -191,15 +198,12 @@ def openWiki(path, readonly=False):
     if not os.path.isdir(path):
         path = os.path.split(path)[0]
 
-    def threadFunc(path, readonly):
-        try:
-            return WikiDocument.load(path, readonly)
-        except BaseException as e:
-            return e
-
     preWikiOpenParams = PreWikiOpenParams(path, readonly)
     Application.onPreWikiOpen(Application.selectedPage,
                               preWikiOpenParams)
+    if preWikiOpenParams.abortOpen:
+        logger.debug('Opening notes tree aborted')
+        return
 
     runner = LongProcessRunner(threadFunc,
                                Application.mainWindow,
@@ -258,6 +262,7 @@ def __canNotLoadWikiMessage(path):
     """
     Вывести сообщение о том, что невоможно открыть вики
     """
+    logger.warning("Can't load notes tree: {}".format(path))
     text = _(u"Can't load notes tree:\n") + path
     showError(Application.mainWindow, text)
 

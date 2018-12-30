@@ -227,6 +227,7 @@ class PreWikiOpenParams(object):
     def __init__(self, path, readonly):
         self.path = path
         self.readonly = readonly
+        self.abortOpen = False
 
 
 class PostWikiOpenParams(object):

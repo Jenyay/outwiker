@@ -270,7 +270,7 @@ class ApplicationParams(object):
         self.onPageUpdateNeeded = Event()
 
         # Event occurs before wiki opening
-        # Parameters:D:\0enter\jenyay\projects\outwiker\plugins\statistics\statistics\locale\sv\LC_MESSAGES\
+        # Parameters:
         #    page - current (selected) page
         #    params - instance of the PreWikiOpenParams class
         self.onPreWikiOpen = Event()
