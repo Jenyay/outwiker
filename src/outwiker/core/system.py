@@ -9,6 +9,7 @@ import os.path as op
 import shutil
 import sys
 import subprocess
+import logging
 
 from .pagetitletester import WindowsPageTitleTester, LinuxPageTitleTester
 from outwiker.gui.fileicons import WindowsFileIcons, UnixFileIcons
@@ -33,6 +34,8 @@ DEFAULT_OLD_CONFIG_DIR = u".outwiker"
 # то берется значение по умолчанию т.е. ~/.config
 # http://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html
 DEFAULT_CONFIG_DIR = u"outwiker"
+
+logger = logging.getLogger('outwiker.core.system')
 
 
 class System(object):
@@ -290,12 +293,14 @@ def openInNewWindow(path, args=[]):
 
     params = [exeFile, path] + args
 
+    logger.debug('openInNewWindow. Params: {}'.format(params))
+
     env = os.environ.copy()
 
     if exeFile.endswith(".exe"):
         DETACHED_PROCESS = 0x00000008
         subprocess.Popen(params, creationflags=DETACHED_PROCESS, env=env)
     elif exeFile.endswith(".py"):
-        subprocess.Popen(["python"] + params, env=env)
+        subprocess.Popen(["python3"] + params, env=env)
     else:
         subprocess.Popen(params, env=env)
