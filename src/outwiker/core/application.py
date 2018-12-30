@@ -291,14 +291,20 @@ class ApplicationParams(object):
         # Event occurs after switch mode of a page: text / preview / HTML / ...
         # Parameters:
         #     page - current (selected) page
-        #     params - instance if the PageModeChangeParams class
+        #     params - instance of the PageModeChangeParams class
         self.onPageModeChange = Event()
 
         # Event occurs after change attached file list.
         # Parameters:
         #     page - current (selected) page
-        #     params - instance if the AttachListChangedParams class
+        #     params - instance of the AttachListChangedParams class
         self.onAttachListChanged = Event()
+
+        # Event occurs after key pressing in the notes text editor
+        # Parameters:
+        #     page - current (selected) page
+        #     params - instance of the TextEditorKeyDownParams class
+        self.onTextEditorKeyDown = Event()
 
     def init(self, fullConfigPath):
         """

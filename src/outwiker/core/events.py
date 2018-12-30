@@ -264,7 +264,36 @@ class PageModeChangeParams(object):
 
 class AttachListChangedParams(object):
     """
-    Set of parameters for the onAttachListChanged event
+    Parameters set for the onAttachListChanged event
     """
     def __init__(self):
         pass
+
+
+class TextEditorKeyDownParams(object):
+    '''
+    Parameters set for onTextEditorKeyDown event
+    '''
+    def __init__(self,
+                 editor: 'outwiker.gui.texteditor.TextEditor',
+                 keyCode: int,
+                 keyUnicode: int,
+                 ctrl: bool,
+                 shift: bool,
+                 alt: bool,
+                 cmd: bool,
+                 meta: bool):
+        self.editor = editor
+        self.keyCode = keyCode
+        self.keyUnicode = keyUnicode
+        self.ctrl = ctrl
+        self.shift = shift
+        self.alt = alt
+        self.cmd = cmd
+        self.meta = meta
+
+        # Set True if the event was processed
+        self.processed = False
+
+        # Set True if current character should not be added to editor
+        self.disableOutput = False

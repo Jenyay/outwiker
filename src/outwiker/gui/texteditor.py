@@ -11,7 +11,7 @@ import outwiker.core.system
 from outwiker.core.application import Application
 from outwiker.core.spellchecker.spellchecker import SpellChecker
 from outwiker.core.spellchecker.defines import CUSTOM_DICT_FILE_NAME
-from outwiker.core.events import EditorPopupMenuParams
+from outwiker.core.events import EditorPopupMenuParams, TextEditorKeyDownParams
 from outwiker.gui.controls.texteditorbase import TextEditorBase
 from outwiker.gui.guiconfig import EditorConfig
 from outwiker.gui.texteditormenu import TextEditorMenu
@@ -401,3 +401,18 @@ class TextEditor(TextEditorBase):
         self.textCtrl.SetSelection(self._spellStartByteError,
                                    self._spellEndByteError)
         self.textCtrl.ReplaceSelection(word)
+
+    def onKeyDown(self, event: wx.KeyEvent):
+        eventParams = TextEditorKeyDownParams(self,
+                                              event.GetKeyCode(),
+                                              event.GetUnicodeKey(),
+                                              event.ControlDown(),
+                                              event.ShiftDown(),
+                                              event.AltDown(),
+                                              event.CmdDown(),
+                                              event.MetaDown())
+        Application.onTextEditorKeyDown(Application.selectedPage,
+                                        eventParams)
+
+        if not eventParams.disableOutput:
+            super().onKeyDown(event)

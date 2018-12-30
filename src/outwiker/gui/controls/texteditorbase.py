@@ -34,7 +34,7 @@ class TextEditorBase(wx.Panel):
         self._setDefaultSettings()
 
     def _bind(self):
-        self.textCtrl.Bind(wx.EVT_KEY_DOWN, self.__onKeyDown)
+        self.textCtrl.Bind(wx.EVT_KEY_DOWN, self.onKeyDown)
 
     def _do_layout(self):
         mainSizer = wx.FlexGridSizer(rows=2, cols=0, vgap=0, hgap=0)
@@ -52,7 +52,7 @@ class TextEditorBase(wx.Panel):
         encoding = outwiker.core.system.getOS().inputEncoding
         self.mbcsEnc = codecs.getencoder(encoding)
 
-    def __onKeyDown(self, event):
+    def onKeyDown(self, event):
         key = event.GetKeyCode()
 
         if key == wx.WXK_ESCAPE:

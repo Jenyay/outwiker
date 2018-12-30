@@ -53,6 +53,7 @@ class PluginDebug(Plugin):
         self._enablePageDialogEvents = config.enablePageDialogEvents.value
         self._enableOpeningTimeMeasure = config.enableOpeningTimeMeasure.value
         self._enableOnIconsGroupsListInit = config.enableOnIconsGroupsListInit.value
+        self._enableOnTextEditorKeyDown = config.enableOnTextEditorKeyDown.value
 
         config.enablePreprocessing.value = self._enablePreProcessing
         config.enablePostprocessing.value = self._enablePostProcessing
@@ -64,6 +65,7 @@ class PluginDebug(Plugin):
         config.enablePageDialogEvents.value = self._enablePageDialogEvents
         config.enableOpeningTimeMeasure.value = self._enableOpeningTimeMeasure
         config.enableOnIconsGroupsListInit.value = self._enableOnIconsGroupsListInit
+        config.enableOnTextEditorKeyDown.value = self._enableOnTextEditorKeyDown
 
     def initialize(self):
         set_(self.gettext)
@@ -100,6 +102,7 @@ class PluginDebug(Plugin):
             self._application.onPreWikiOpen += self.__onPreWikiOpen
             self._application.onPostWikiOpen += self.__onPostWikiOpen
             self._application.onIconsGroupsListInit += self.__onIconsGroupsListInit
+            self._application.onTextEditorKeyDown += self.__onTextEditorKeyDown
 
     def destroy(self):
         """
@@ -391,6 +394,16 @@ class PluginDebug(Plugin):
                 path=params.path,
                 time=interval)
             logging.info(text)
+
+    def __onTextEditorKeyDown(self, page, params):
+        if self._enableOnTextEditorKeyDown:
+            if params.processed:
+                return
+
+            if params.keyUnicode == ord('('):
+                params.editor.turnText('(', ')')
+                params.disableOutput = True
+                params.processed = True
 
     def __onShowToaster(self, event):
         text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nPellentesque malesuada mollis tortor, eget mattis nisi lobortis et. Vestibulum accumsan vehicula volutpat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vestibulum bibendum arcu augue, sit amet finibus augue posuere et.\nSed sem purus, fermentum et hendrerit eget, laoreet faucibus massa.'

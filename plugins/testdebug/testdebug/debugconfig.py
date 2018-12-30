@@ -70,3 +70,9 @@ class DebugConfig(object):
             self.SECTION,
             u'enableOnIconsGroupsListInit',
             False)
+
+        self.enableOnTextEditorKeyDown = BooleanOption(
+            self.config,
+            self.SECTION,
+            u'enableOnTextEditorKeyDown',
+            False)
