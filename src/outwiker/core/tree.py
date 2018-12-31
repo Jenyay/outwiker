@@ -21,6 +21,7 @@ from .iconcontroller import IconController
 from .system import getIconsDirList
 from .registrynotestree import NotesTreeRegistry, PickleSaver
 from . import events
+from outwiker.utilites.textfile import readTextFile, writeTextFile
 
 
 logger = logging.getLogger('core')
@@ -749,14 +750,14 @@ class WikiPage(RootWikiPage):
         Прочитать файл-содержимое страницы
         """
         text = ""
+        path = os.path.join(self.path, RootWikiPage.contentFile)
 
         try:
-            with open(os.path.join(self.path, RootWikiPage.contentFile), encoding='utf8') as fp:
-                text = fp.read()
+            text = readTextFile(path)
+            text = text.replace('\r\n', '\n')
         except IOError:
             pass
 
-        text = text.replace('\r\n', '\n')
         return text
 
     @content.setter
@@ -767,10 +768,7 @@ class WikiPage(RootWikiPage):
         text = text.replace('\r\n', '\n')
         if text != self.content or text == u"":
             path = os.path.join(self.path, RootWikiPage.contentFile)
-
-            with open(path, "w", encoding='utf8') as fp:
-                fp.write(text)
-
+            writeTextFile(path, text)
             self.updateDateTime()
             self.root.onPageUpdate(self, change=events.PAGE_UPDATE_CONTENT)
 
