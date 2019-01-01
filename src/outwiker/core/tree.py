@@ -332,6 +332,20 @@ class WikiDocument(RootWikiPage):
         #     params - instance if the AttachListChangedParams class
         self.onAttachListChanged = Event()
 
+        # Event occurs after page content reading. The content can be changed
+        # by event handlers
+        # Parameters:
+        #     page - current (selected) page
+        #     params - instance of the PostContentReadingParams class
+        self.onPostContentReading = Event()
+
+        # Event occurs before page content writing. The content can be changed
+        # by event handlers
+        # Parameters:
+        #     page - current (selected) page
+        #     params - instance of the PreContentWritingParams class
+        self.onPreContentWriting = Event()
+
     @staticmethod
     def clearConfigFile(path):
         """
@@ -758,6 +772,10 @@ class WikiPage(RootWikiPage):
         except IOError:
             pass
 
+        params = events.PostContentReadingParams(text)
+        self.root.onPostContentReading(self, params)
+        text = params.content
+
         return text
 
     @content.setter
@@ -766,8 +784,14 @@ class WikiPage(RootWikiPage):
             raise ReadonlyException
 
         text = text.replace('\r\n', '\n')
+
+        params = events.PreContentWritingParams(text)
+        self.root.onPreContentWriting(self, params)
+        text = params.content
+
         if text != self.content or text == u"":
             path = os.path.join(self.path, RootWikiPage.contentFile)
+
             writeTextFile(path, text)
             self.updateDateTime()
             self.root.onPageUpdate(self, change=events.PAGE_UPDATE_CONTENT)

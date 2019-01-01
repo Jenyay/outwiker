@@ -309,6 +309,25 @@ class TextEditorKeyDownParams(object):
 
 
 class PreWikiCloseParams(object):
+    '''
+    Parameters set for onPreWikiClose event
+    '''
     def __init__(self, wikiroot: 'outwiker.core.tree.WikiDocument'):
         self.wikiroot = wikiroot
         self.abortClose = False
+
+
+class PostContentReadingParams(object):
+    '''
+    Parameters set for onPostContentReading event
+    '''
+    def __init__(self, content):
+        self.content = content
+
+
+class PreContentWritingParams(object):
+    '''
+    Parameters set for onPreContentWriting event
+    '''
+    def __init__(self, content):
+        self.content = content

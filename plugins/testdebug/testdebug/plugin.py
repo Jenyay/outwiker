@@ -32,6 +32,7 @@ class PluginDebug(Plugin):
         self._watcher = EventsWatcher(self._application)
         self._timer = Timer()
         self._startWikiOpenTime = None
+        self._prePostContentPrefix = "'''DEBUG PrePostContent'''"
 
         self.ID_PLUGINSLIST = wx.NewId()
         self.ID_BUTTONSDIALOG = wx.NewId()
@@ -54,6 +55,7 @@ class PluginDebug(Plugin):
         self._enableOpeningTimeMeasure = config.enableOpeningTimeMeasure.value
         self._enableOnIconsGroupsListInit = config.enableOnIconsGroupsListInit.value
         self._enableOnTextEditorKeyDown = config.enableOnTextEditorKeyDown.value
+        self._enableOnPrePostContent = config.enableOnPrePostContent.value
 
         config.enablePreprocessing.value = self._enablePreProcessing
         config.enablePostprocessing.value = self._enablePostProcessing
@@ -66,6 +68,7 @@ class PluginDebug(Plugin):
         config.enableOpeningTimeMeasure.value = self._enableOpeningTimeMeasure
         config.enableOnIconsGroupsListInit.value = self._enableOnIconsGroupsListInit
         config.enableOnTextEditorKeyDown.value = self._enableOnTextEditorKeyDown
+        config.enableOnPrePostContent.value = self._enableOnPrePostContent
 
     def initialize(self):
         set_(self.gettext)
@@ -103,6 +106,8 @@ class PluginDebug(Plugin):
             self._application.onPostWikiOpen += self.__onPostWikiOpen
             self._application.onIconsGroupsListInit += self.__onIconsGroupsListInit
             self._application.onTextEditorKeyDown += self.__onTextEditorKeyDown
+            self._application.onPreContentWriting += self.__onPreContentWriting
+            self._application.onPostContentReading += self.__onPostContentReading
 
     def destroy(self):
         """
@@ -158,6 +163,9 @@ class PluginDebug(Plugin):
             self._application.onPreWikiOpen -= self.__onPreWikiOpen
             self._application.onPostWikiOpen -= self.__onPostWikiOpen
             self._application.onIconsGroupsListInit -= self.__onIconsGroupsListInit
+            self._application.onTextEditorKeyDown -= self.__onTextEditorKeyDown
+            self._application.onPreContentWriting -= self.__onPreContentWriting
+            self._application.onPostContentReading -= self.__onPostContentReading
 
     def __createMenu(self):
         self.menu = wx.Menu(u"")
@@ -404,6 +412,15 @@ class PluginDebug(Plugin):
                 params.editor.turnText('(', ')')
                 params.disableOutput = True
                 params.processed = True
+
+    def __onPreContentWriting(self, page, params):
+        if self._enableOnPrePostContent:
+            params.content = self._prePostContentPrefix + params.content
+
+    def __onPostContentReading(self, page, params):
+        if self._enableOnPrePostContent:
+            if params.content.startswith(self._prePostContentPrefix):
+                params.content = params.content[len(self._prePostContentPrefix):]
 
     def __onShowToaster(self, event):
         text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nPellentesque malesuada mollis tortor, eget mattis nisi lobortis et. Vestibulum accumsan vehicula volutpat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vestibulum bibendum arcu augue, sit amet finibus augue posuere et.\nSed sem purus, fermentum et hendrerit eget, laoreet faucibus massa.'
