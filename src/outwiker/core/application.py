@@ -314,6 +314,20 @@ class ApplicationParams(object):
         #     params - instance of the TextEditorKeyDownParams class
         self.onTextEditorKeyDown = Event()
 
+        # Event occurs after page content reading. The content can be changed
+        # by event handlers
+        # Parameters:
+        #     page - current (selected) page
+        #     params - instance of the PostContentReadingParams class
+        self.onPostContentReading = Event()
+
+        # Event occurs before page content writing. The content can be changed
+        # by event handlers
+        # Parameters:
+        #     page - current (selected) page
+        #     params - instance of the PreContentWritingParams class
+        self.onPreContentWriting = Event()
+
     def init(self, fullConfigPath):
         """
         Initialize config and locale
@@ -409,6 +423,8 @@ class ApplicationParams(object):
         wiki.onPageRemove += self.onPageRemove
         wiki.onAttachListChanged += self.onAttachListChanged
         wiki.bookmarks.onBookmarksChanged += self.onBookmarksChanged
+        wiki.onPostContentReading += self.onPostContentReading
+        wiki.onPreContentWriting += self.onPreContentWriting
 
     def __unbindWikiEvents(self, wiki):
         """
@@ -425,6 +441,8 @@ class ApplicationParams(object):
         wiki.onPageRemove -= self.onPageRemove
         wiki.onAttachListChanged -= self.onAttachListChanged
         wiki.bookmarks.onBookmarksChanged -= self.onBookmarksChanged
+        wiki.onPostContentReading -= self.onPostContentReading
+        wiki.onPreContentWriting -= self.onPreContentWriting
 
     @property
     def selectedPage(self):

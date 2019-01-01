@@ -76,3 +76,9 @@ class DebugConfig(object):
             self.SECTION,
             u'enableOnTextEditorKeyDown',
             False)
+
+        self.enableOnPrePostContent = BooleanOption(
+            self.config,
+            self.SECTION,
+            u'enableOnPrePostContent',
+            False)
