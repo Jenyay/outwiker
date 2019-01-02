@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 import unittest
 from tempfile import mkdtemp
 
@@ -24,14 +25,14 @@ class PageAliasTest(unittest.TestCase):
         self.page = TextPageFactory().create(self.wikiroot, 'Страница 1', [])
         Application.wikiroot = self.wikiroot
 
-        Application.onTreeUpdate += self._onTreeUpdate
+        Application.onPageUpdate += self._onPageUpdate
 
     def tearDown(self):
-        Application.onTreeUpdate -= self._onTreeUpdate
+        Application.onTreeUpdate -= self._onPageUpdate
         Application.wikiroot = None
         removeDir(self.path)
 
-    def _onTreeUpdate(self, sender):
+    def _onPageUpdate(self, sender, **kwargs):
         self.updateCount += 1
         self.updateSender = sender
 

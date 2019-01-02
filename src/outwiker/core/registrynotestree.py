@@ -142,7 +142,7 @@ class NotesTreeRegistry(Registry):
         pages = self._items[REGISTRY_SECTION_PAGES]
 
         # Rename all supbath in the REGISTRY_SECTION_PAGES section
-        for name in pages:
+        for name in list(pages.keys()):
             item = pages[name]
             if not self._is_section(item):
                 continue

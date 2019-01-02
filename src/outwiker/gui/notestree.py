@@ -17,7 +17,7 @@ from outwiker.actions.movepagedown import MovePageDownAction
 from outwiker.actions.removepage import RemovePageAction
 from outwiker.actions.editpageprop import EditPagePropertiesAction
 from outwiker.actions.moving import GoToParentAction
-from outwiker.core.events import PAGE_UPDATE_ICON
+from outwiker.core.events import PAGE_UPDATE_ICON, PAGE_UPDATE_TITLE
 from outwiker.core.defines import ICON_HEIGHT
 from .pagepopupmenu import PagePopupMenu
 from .imagelistcache import ImageListCache
@@ -88,9 +88,7 @@ class NotesTree(wx.Panel):
             return self._pageCache[page]
 
     def getPageByItemId(self, item_id: wx.TreeItemId) -> 'outwiker.core.tree.WikiPage':
-        for page, item in self._pageCache.items():
-            if item == item_id:
-                return page
+        return self.treeCtrl.GetItemData(item_id)
 
     def __BindApplicationEvents(self):
         """
@@ -123,10 +121,14 @@ class NotesTree(wx.Panel):
     def __onWikiOpen(self, root):
         self.__treeUpdate(root)
 
-    def __onPageUpdate(self, sender, **kwargs):
+    def __onPageUpdate(self, page, **kwargs):
         change = kwargs['change']
-        if change == PAGE_UPDATE_ICON:
-            self.__updateIcon(sender)
+        if change & PAGE_UPDATE_ICON:
+            self.__updateIcon(page)
+
+        if change & PAGE_UPDATE_TITLE:
+            item = self._pageCache[page]
+            self.treeCtrl.SetItemText(item, page.display_title)
 
     def __loadIcon(self, page):
         """

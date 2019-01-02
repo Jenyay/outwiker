@@ -6,6 +6,7 @@ import wx
 
 import outwiker.core.commands
 from outwiker.core.commands import setStatusText, getMainWindowTitle
+from outwiker.core.events import PAGE_UPDATE_TITLE
 from .bookmarkscontroller import BookmarksController
 from .autosavetimer import AutosaveTimer
 from .guiconfig import GeneralGuiConfig, TrayConfig
@@ -206,6 +207,9 @@ class MainWndController(object):
 
     def __onPageUpdate(self, page, **kwargs):
         self.updatePageDateTime()
+        if kwargs['change'] & PAGE_UPDATE_TITLE:
+            self.updateTitle()
+            self.bookmarks.updateBookmarks()
 
     def __onWikiOpen(self, wikiroot):
         """

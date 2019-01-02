@@ -301,7 +301,7 @@ class TreeTest(unittest.TestCase, BaseOutWikerGUIMixin):
         newPageItem = tree.GetNextSibling(firstItem)
 
         self.assertEqual(tree.GetChildrenCount(newPageItem, False), 1)
-        self.assertEqual(tree.GetChildrenCount(newPageItem, True), 1)
+        self.assertEqual(tree.GetChildrenCount(newPageItem, True), 2)
         self.assertEqual(tree.GetItemData(newPageItem), self.wikiroot["Переименованная страница"])
         self.assertEqual(tree.GetItemText(newPageItem), "Переименованная страница")
 

@@ -48,7 +48,7 @@ class ApplicationParams(object):
 
         # Updating page wiki event
         # Parameters:
-        #     sender - updated page
+        #     page - updated page
         #     **kwargs
         # kwargs contain 'change' key, which contain changing flags
         self.onPageUpdate = Event()

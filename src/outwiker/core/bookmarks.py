@@ -44,6 +44,7 @@ class Bookmarks(object):
             subpath = self.__pages[n]
             if subpath.startswith(oldSubpath):
                 self.__pages[n] = subpath.replace(oldSubpath, page.subpath, 1)
+                self.save()
 
     def __len__(self):
         return len(self.__pages)

@@ -153,7 +153,6 @@ class TabsController (object):
         self._application.onPageCreate += self.__onPageUpdate
         self._application.onTreeUpdate += self.__onPageUpdate
         self._application.onPageRemove += self.__onPageUpdate
-        self._application.onPageRename += self.__onPageRename
         self._application.onEndTreeUpdate += self.__onPageUpdate
 
         self.__bindGuiEvents()
@@ -165,7 +164,6 @@ class TabsController (object):
         self._application.onPageCreate -= self.__onPageUpdate
         self._application.onTreeUpdate -= self.__onPageUpdate
         self._application.onPageRemove -= self.__onPageUpdate
-        self._application.onPageRename -= self.__onPageRename
         self._application.onEndTreeUpdate -= self.__onPageUpdate
 
         self.__unbindGuiEvents()
@@ -245,9 +243,6 @@ class TabsController (object):
             except IOError as e:
                 showError(self._application.mainWindow,
                           _(u"Can't save file %s") % (str(e.filename)))
-
-    def __onPageRename(self, page, oldSubpath):
-        self.__onPageUpdate(self._application.selectedPage)
 
     def __onWikiOpen(self, root):
         self.__loadTabs(root)

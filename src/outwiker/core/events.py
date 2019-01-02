@@ -16,6 +16,9 @@ PAGE_UPDATE_TAGS = 4
 # Changed page style
 PAGE_UPDATE_STYLE = 8
 
+# Changed page style
+PAGE_UPDATE_TITLE = 16
+
 
 class LinkClickParams(object):
     """
