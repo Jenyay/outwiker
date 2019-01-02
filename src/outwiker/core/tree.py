@@ -497,8 +497,8 @@ class WikiPage(RootWikiPage):
         if self.readonly:
             raise ReadonlyException
 
-        # if self._alias == value:
-        #     return
+        if self._alias == value:
+            return
 
         if not value:
             self._alias = None
@@ -507,7 +507,6 @@ class WikiPage(RootWikiPage):
             self._alias = value
             self.params.aliasOption.value = value
 
-        # self.root.onTreeUpdate(self)
         self.root.onPageUpdate(self, change=events.PAGE_UPDATE_TITLE)
 
     @property
@@ -552,7 +551,6 @@ class WikiPage(RootWikiPage):
         self.root.registry.rename_page_sections(oldsubpath, self.subpath)
 
         self.root.onPageRename(self, oldsubpath)
-        # self.root.onTreeUpdate(self)
         self.root.onPageUpdate(self, change=events.PAGE_UPDATE_TITLE)
 
     def canRename(self, newtitle):
