@@ -173,7 +173,7 @@ class BaseTextPanel(BasePagePanel):
         """
         Проверить, что страница не изменена внешними средствами
         """
-        if(self._oldContent is not None and
+        if (self._oldContent is not None and
                 self._oldContent != self.page.content):
             # Старое содержимое не совпадает с содержимым страницы.
             # Значит содержимое страницы кто-то изменил
