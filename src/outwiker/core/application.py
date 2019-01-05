@@ -314,6 +314,12 @@ class ApplicationParams(object):
         #     params - instance of the TextEditorKeyDownParams class
         self.onTextEditorKeyDown = Event()
 
+        # Event occurs after caret moving in a text editor
+        # Parameters:
+        #     page - current (selected) page
+        #     params - instance of the TextEditorCaretMoveParams class
+        self.onTextEditorCaretMove = Event()
+
         # Event occurs after page content reading. The content can be changed
         # by event handlers
         # Parameters:

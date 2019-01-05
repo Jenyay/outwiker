@@ -82,3 +82,9 @@ class DebugConfig(object):
             self.SECTION,
             u'enableOnPrePostContent',
             False)
+
+        self.enableOnTextEditorCaretMove = BooleanOption(
+            self.config,
+            self.SECTION,
+            u'enableOnTextEditorCaretMove',
+            False)

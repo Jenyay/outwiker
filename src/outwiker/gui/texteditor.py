@@ -11,7 +11,9 @@ import outwiker.core.system
 from outwiker.core.application import Application
 from outwiker.core.spellchecker.spellchecker import SpellChecker
 from outwiker.core.spellchecker.defines import CUSTOM_DICT_FILE_NAME
-from outwiker.core.events import EditorPopupMenuParams, TextEditorKeyDownParams
+from outwiker.core.events import (EditorPopupMenuParams,
+                                  TextEditorKeyDownParams,
+                                  TextEditorCaretMoveParams)
 from outwiker.gui.controls.texteditorbase import TextEditorBase
 from outwiker.gui.guiconfig import EditorConfig
 from outwiker.gui.texteditormenu import TextEditorMenu
@@ -42,6 +44,9 @@ class TextEditor(TextEditorBase):
         self._suggestMenuItems = []
         self._spellStartByteError = -1
         self._spellEndByteError = -1
+
+        self._oldStartSelection = None
+        self._oldEndSelection = None
 
         # Уже были установлены стили текста(раскраска)
         self._styleSet = False
@@ -85,9 +90,10 @@ class TextEditor(TextEditorBase):
                            id=wx.ID_SELECTALL)
 
         self.textCtrl.Bind(wx.EVT_CONTEXT_MENU, self.__onContextMenu)
-
-        # self.textCtrl.Bind(wx.stc.EVT_STC_STYLENEEDED, self._onStyleNeeded)
         self.textCtrl.Bind(wx.EVT_IDLE, self._onStyleNeeded)
+        self.textCtrl.Bind(wx.EVT_LEFT_DOWN, self._onMouseLeftDown)
+        self.textCtrl.Bind(wx.EVT_LEFT_UP, self._onMouseLeftUp)
+
         self.Bind(EVT_APPLY_STYLE, self._onApplyStyle)
 
         # При перехвате этого сообщения в других классах,
@@ -416,3 +422,27 @@ class TextEditor(TextEditorBase):
 
         if not eventParams.disableOutput:
             super().onKeyDown(event)
+
+        self._checkCaretMoving()
+
+    def _checkCaretMoving(self):
+        new_start_selection = self.textCtrl.GetSelectionStart()
+        new_end_selection = self.textCtrl.GetSelectionEnd()
+
+        if (self._oldStartSelection != new_start_selection or
+                self._oldEndSelection != new_end_selection):
+            self._oldStartSelection = new_start_selection
+            self._oldEndSelection = new_end_selection
+            event_params = TextEditorCaretMoveParams(self,
+                                                     new_start_selection,
+                                                     new_end_selection)
+            Application.onTextEditorCaretMove(Application.selectedPage,
+                                              event_params)
+
+    def _onMouseLeftDown(self, event):
+        self._checkCaretMoving()
+        event.Skip()
+
+    def _onMouseLeftUp(self, event):
+        self._checkCaretMoving()
+        event.Skip()

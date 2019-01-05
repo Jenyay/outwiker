@@ -337,3 +337,17 @@ class PreContentWritingParams(object):
     '''
     def __init__(self, content):
         self.content = content
+
+
+class TextEditorCaretMoveParams(object):
+    '''
+    Parameters for onTextEditorCaretMove event
+    '''
+    def __init__(self,
+                 editor: 'outwiker.gui.texteditor.TextEditor',
+                 startSelection: int,
+                 endSelection: int
+                 ):
+        self.editor = editor
+        self.startSelection = startSelection
+        self.endSelection = endSelection
