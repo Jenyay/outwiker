@@ -11,6 +11,7 @@ from outwiker.core.tree import WikiDocument
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.wikipageview import WikiPageView
 from outwiker.pages.wiki.wikiconfig import WikiConfig
+from outwiker.pages.wiki.listautocomplete import listComplete_wiki
 from test.basetestcases import BaseOutWikerGUIMixin
 
 
@@ -510,6 +511,190 @@ class WikiPageViewTest(unittest.TestCase, BaseOutWikerGUIMixin):
         wx.GetApp().Yield()
 
         self.assertEqual(page.content, "Абырвалг")
+
+    def test_list_autocomplete_none_01(self):
+        text = ''
+        page = self.wikiroot["Викистраница"]
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = page
+
+        editor = self._getCodeEditor()
+        editor.SetText(text)
+        editor.GotoPos(0)
+
+        result = listComplete_wiki(editor)
+        self.assertFalse(result)
+        self.assertEqual(editor.GetText(), text)
+
+    def test_list_autocomplete_none_02(self):
+        text = '** бла-бла-бла'
+        page = self.wikiroot["Викистраница"]
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = page
+
+        editor = self._getCodeEditor()
+        editor.SetText(text)
+        editor.GotoPos(1)
+
+        result = listComplete_wiki(editor)
+        self.assertFalse(result)
+        self.assertEqual(editor.GetText(), text)
+
+    def test_list_autocomplete_none_03(self):
+        text = '** бла-бла-бла'
+        page = self.wikiroot["Викистраница"]
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = page
+
+        editor = self._getCodeEditor()
+        editor.SetText(text)
+        editor.SetSelection(5, 8)
+
+        result = listComplete_wiki(editor)
+        self.assertFalse(result)
+        self.assertEqual(editor.GetText(), text)
+
+    def test_list_autocomplete_none_04(self):
+        text = '** бла-бла-бла\n** бла-бла-бла'
+        page = self.wikiroot["Викистраница"]
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = page
+
+        editor = self._getCodeEditor()
+        editor.SetText(text)
+        editor.GotoPos(16)
+
+        result = listComplete_wiki(editor)
+        self.assertFalse(result)
+        self.assertEqual(editor.GetText(), text)
+
+    def test_list_autocomplete_01(self):
+        text = '* бла-бла-бла'
+        text_result = '* бла-бла-бла\n* '
+        page = self.wikiroot["Викистраница"]
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = page
+
+        editor = self._getCodeEditor()
+        editor.SetText(text)
+        editor.GotoPos(len(text))
+
+        result = listComplete_wiki(editor)
+        self.assertTrue(result)
+        self.assertEqual(editor.GetText(), text_result)
+        self.assertEqual(editor.GetSelectionStart(), len(text_result))
+
+    def test_list_autocomplete_02(self):
+        text = '* бла-бла-бла'
+        text_result = '* бла\n* -бла-бла'
+        page = self.wikiroot["Викистраница"]
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = page
+
+        editor = self._getCodeEditor()
+        editor.SetText(text)
+        editor.GotoPos(5)
+
+        result = listComplete_wiki(editor)
+        self.assertTrue(result)
+        self.assertEqual(editor.GetText(), text_result)
+        self.assertEqual(editor.GetSelectionStart(), 8)
+
+    def test_list_autocomplete_03(self):
+        text = '** бла-бла-бла'
+        text_result = '** бла-бла-бла\n** '
+        page = self.wikiroot["Викистраница"]
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = page
+
+        editor = self._getCodeEditor()
+        editor.SetText(text)
+        editor.GotoPos(len(text))
+
+        result = listComplete_wiki(editor)
+        self.assertTrue(result)
+        self.assertEqual(editor.GetText(), text_result)
+        self.assertEqual(editor.GetSelectionStart(), len(text_result))
+
+    def test_list_autocomplete_04(self):
+        text = '** бла-бла-бла'
+        text_result = '** бла\n** -бла-бла'
+        page = self.wikiroot["Викистраница"]
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = page
+
+        editor = self._getCodeEditor()
+        editor.SetText(text)
+        editor.GotoPos(6)
+
+        result = listComplete_wiki(editor)
+        self.assertTrue(result)
+        self.assertEqual(editor.GetText(), text_result)
+        self.assertEqual(editor.GetSelectionStart(), 10)
+
+    def test_list_autocomplete_05(self):
+        text = '# бла-бла-бла'
+        text_result = '# бла-бла-бла\n# '
+        page = self.wikiroot["Викистраница"]
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = page
+
+        editor = self._getCodeEditor()
+        editor.SetText(text)
+        editor.GotoPos(len(text))
+
+        result = listComplete_wiki(editor)
+        self.assertTrue(result)
+        self.assertEqual(editor.GetText(), text_result)
+        self.assertEqual(editor.GetSelectionStart(), len(text_result))
+
+    def test_list_autocomplete_06(self):
+        text = '## бла-бла-бла'
+        text_result = '## бла-бла-бла\n## '
+        page = self.wikiroot["Викистраница"]
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = page
+
+        editor = self._getCodeEditor()
+        editor.SetText(text)
+        editor.GotoPos(len(text))
+
+        result = listComplete_wiki(editor)
+        self.assertTrue(result)
+        self.assertEqual(editor.GetText(), text_result)
+        self.assertEqual(editor.GetSelectionStart(), len(text_result))
+
+    def test_list_autocomplete_07(self):
+        text = '* бла-бла-бла'
+        text_result = '*\n*  бла-бла-бла'
+        page = self.wikiroot["Викистраница"]
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = page
+
+        editor = self._getCodeEditor()
+        editor.SetText(text)
+        editor.GotoPos(1)
+
+        result = listComplete_wiki(editor)
+        self.assertTrue(result)
+        self.assertEqual(editor.GetText(), text_result)
+        self.assertEqual(editor.GetSelectionStart(), 4)
+
+    def test_list_autocomplete_remove_01(self):
+        text = '* '
+        text_result = ''
+        page = self.wikiroot["Викистраница"]
+        self.application.wikiroot = self.wikiroot
+        self.application.selectedPage = page
+
+        editor = self._getCodeEditor()
+        editor.SetText(text)
+        editor.GotoPos(len(text))
+
+        result = listComplete_wiki(editor)
+        self.assertTrue(result)
+        self.assertEqual(editor.GetText(), text_result)
+        self.assertEqual(editor.GetSelectionStart(), len(text_result))
 
     def _getPageView(self):
         return self.application.mainWindow.pagePanel.pageView

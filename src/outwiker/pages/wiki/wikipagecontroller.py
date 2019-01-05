@@ -2,10 +2,12 @@
 
 import os
 
+import wx
+
 from outwiker.core.style import Style
 from outwiker.core.event import pagetype
-from outwiker.gui.pagedialogpanels.appearancepanel import(AppearancePanel,
-                                                          AppearanceController)
+from outwiker.gui.pagedialogpanels.appearancepanel import (AppearancePanel,
+                                                           AppearanceController)
 from outwiker.gui.preferences.preferencepanelinfo import PreferencePanelInfo
 from outwiker.pages.wiki.htmlcache import HtmlCache
 from outwiker.pages.wiki.htmlgenerator import HtmlGenerator
@@ -14,6 +16,7 @@ from outwiker.utilites.textfile import writeTextFile
 from .wikipage import WikiWikiPage, WikiPageFactory
 from .wikipreferences import WikiPrefGeneralPanel
 from .wikicolorizercontroller import WikiColorizerController
+from .listautocomplete import listComplete_wiki
 
 
 class WikiPageController(object):
@@ -34,6 +37,7 @@ class WikiPageController(object):
         self._application.onPageViewDestroy += self.__onPageViewDestroy
         self._application.onPageDialogPageFactoriesNeeded += self.__onPageDialogPageFactoriesNeeded
         self._application.onPageUpdateNeeded += self.__onPageUpdateNeeded
+        self._application.onTextEditorKeyDown += self.__onTextEditorKeyDown
 
     def clear(self):
         self._application.onPageDialogPageTypeChanged -= self.__onPageDialogPageTypeChanged
@@ -43,6 +47,7 @@ class WikiPageController(object):
         self._application.onPageViewDestroy -= self.__onPageViewDestroy
         self._application.onPageDialogPageFactoriesNeeded -= self.__onPageDialogPageFactoriesNeeded
         self._application.onPageUpdateNeeded -= self.__onPageUpdateNeeded
+        self._application.onTextEditorKeyDown -= self.__onTextEditorKeyDown
         self._colorizerController.clear()
 
     def _addTab(self, dialog):
@@ -97,6 +102,15 @@ class WikiPageController(object):
         if not params.allowCache:
             HtmlCache(page, self._application).resetHash()
         self._updatePage(page)
+
+    def __onTextEditorKeyDown(self,
+                              page: 'outwiker.core.tree.WikiPage',
+                              params: 'outwiker.core.events.TextEditorKeyDownParams') -> None:
+        if params.keyCode == wx.WXK_RETURN and not params.hasModifiers():
+            result = listComplete_wiki(params.editor)
+            if result:
+                params.processed = True
+                params.disableOutput = True
 
     def _updatePage(self, page):
         path = page.getHtmlPath()

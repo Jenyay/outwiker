@@ -310,6 +310,9 @@ class TextEditorKeyDownParams(object):
         # Set True if current character should not be added to editor
         self.disableOutput = False
 
+    def hasModifiers(self):
+        return self.ctrl or self.shift or self.alt or self.cmd or self.meta
+
 
 class PreWikiCloseParams(object):
     '''

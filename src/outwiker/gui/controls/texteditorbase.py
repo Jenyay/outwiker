@@ -247,23 +247,32 @@ class TextEditorBase(wx.Panel):
     def SetReadOnly(self, readonly):
         self.textCtrl.SetReadOnly(readonly)
 
-    def GetReadOnly(self):
+    def GetReadOnly(self) -> bool:
         return self.textCtrl.GetReadOnly()
 
-    def GetText(self):
+    def GetText(self) -> str:
         return self.textCtrl.GetText()
 
-    def SetText(self, text):
+    def SetText(self, text: str) -> None:
         self.textCtrl.SetText(text)
 
     def EmptyUndoBuffer(self):
         self.textCtrl.EmptyUndoBuffer()
 
-    def GetSelectedText(self):
+    def GetSelectedText(self) -> str:
         return self.textCtrl.GetSelectedText()
 
-    def GetCurrentLine(self):
+    def GetCurrentLine(self) -> int:
+        '''
+        Returns the line number of the line with the caret.
+        '''
         return self.textCtrl.GetCurrentLine()
+
+    def GetCurrentLineText(self) -> str:
+        '''
+        Retrieve the text of the line containing the caret.
+        '''
+        return self.textCtrl.GetCurLine()[0]
 
     def ScrollToLine(self, line):
         self.textCtrl.ScrollToLine(line)
@@ -311,6 +320,9 @@ class TextEditorBase(wx.Panel):
         Возвращает позицию конца выбранной области в символах, а не в байтах
         """
         return self._calcCharPos(self.textCtrl.GetSelectionEnd())
+
+    def GetLineEndPosition(self, line: int) -> int:
+        return self._calcCharPos(self.textCtrl.GetLineEndPosition())
 
     def SetFocus(self):
         self.textCtrl.SetFocus()
@@ -473,6 +485,20 @@ class TextEditorBase(wx.Panel):
         word_end_bytes = self.textCtrl.WordEndPosition(pos_bytes, True)
         word = self.textCtrl.GetTextRange(word_start_bytes, word_end_bytes)
         return word
+
+    def GetLineSelStartPosition(self, line: int) -> int:
+        '''
+        Retrieve the position of the end of the selection at the given line
+        (wx.stc.STC_INVALID_POSITION if no selection on this line).
+        '''
+        return self.textCtrl.GetLineSelStartPosition(line)
+
+    def GetLineSelEndPosition(self, line: int) -> int:
+        '''
+        Retrieve the position of the end of the selection at the given line
+        (wx.stc.STC_INVALID_POSITION if no selection on this line).
+        '''
+        return self.textCtrl.GetLineSelEndPosition(line)
 
     def _calcCharPos(self, pos_bytes):
         """
