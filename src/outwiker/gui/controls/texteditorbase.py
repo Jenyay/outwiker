@@ -321,9 +321,6 @@ class TextEditorBase(wx.Panel):
         """
         return self._calcCharPos(self.textCtrl.GetSelectionEnd())
 
-    def GetLineEndPosition(self, line: int) -> int:
-        return self._calcCharPos(self.textCtrl.GetLineEndPosition())
-
     def SetFocus(self):
         self.textCtrl.SetFocus()
         self.textCtrl.SetSTCFocus(True)
@@ -355,7 +352,7 @@ class TextEditorBase(wx.Panel):
         """
         return self._calcCharPos(self.textCtrl.PositionFromLine(line))
 
-    def GetLineEndPosition(self, line):
+    def GetLineEndPosition(self, line: int) -> int:
         """
         Get the position after the last visible characters on a line
             in symbols (not bytes)
