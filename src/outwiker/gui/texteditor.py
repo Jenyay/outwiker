@@ -93,6 +93,7 @@ class TextEditor(TextEditorBase):
         self.textCtrl.Bind(wx.EVT_IDLE, self._onStyleNeeded)
         self.textCtrl.Bind(wx.EVT_LEFT_DOWN, self._onMouseLeftDown)
         self.textCtrl.Bind(wx.EVT_LEFT_UP, self._onMouseLeftUp)
+        self.textCtrl.Bind(wx.EVT_KEY_UP, self._onKeyUp)
 
         self.Bind(EVT_APPLY_STYLE, self._onApplyStyle)
 
@@ -425,9 +426,12 @@ class TextEditor(TextEditorBase):
 
         self._checkCaretMoving()
 
+    def _onKeyUp(self, event):
+        self._checkCaretMoving()
+
     def _checkCaretMoving(self):
-        new_start_selection = self.textCtrl.GetSelectionStart()
-        new_end_selection = self.textCtrl.GetSelectionEnd()
+        new_start_selection = self.GetSelectionStart()
+        new_end_selection = self.GetSelectionEnd()
 
         if (self._oldStartSelection != new_start_selection or
                 self._oldEndSelection != new_end_selection):

@@ -8,12 +8,13 @@ import time
 import wx
 
 from outwiker.core.commands import MessageBox
-from outwiker.gui.dialogs.buttonsdialog import ButtonsDialog
-from outwiker.gui.hotkey import HotKey
 from outwiker.core.pluginbase import Plugin
 from outwiker.core.system import getImagesDir
+from outwiker.gui.dialogs.buttonsdialog import ButtonsDialog
+from outwiker.gui.hotkey import HotKey
 from outwiker.gui.pagedialogpanels.iconspanel import IconsGroupInfo
 from outwiker.gui.defines import TOOLBAR_PLUGINS
+from outwiker.utilites.text import positionInside
 
 from .debugaction import DebugAction
 from .eventswatcher import EventsWatcher
@@ -427,7 +428,12 @@ class PluginDebug(Plugin):
 
     def __onTextEditorCaretMove(self, page, params):
         if self._enableOnTextEditorCaretMove:
+            text = params.editor.GetText()
             print(params.startSelection, params.endSelection)
+
+            if (params.startSelection == params.endSelection
+                    and positionInside(text, params.startSelection, '{$', '$}')):
+                print('Equation!')
 
     def __onShowToaster(self, event):
         text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nPellentesque malesuada mollis tortor, eget mattis nisi lobortis et. Vestibulum accumsan vehicula volutpat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vestibulum bibendum arcu augue, sit amet finibus augue posuere et.\nSed sem purus, fermentum et hendrerit eget, laoreet faucibus massa.'
