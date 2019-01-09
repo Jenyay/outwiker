@@ -6,7 +6,7 @@ name = "pypi"
 [requires]
 
 [packages]
-wxPython = "==4.0.1"
+wxPython = "==4.0.4"
 Pillow = "==5.3.0"
 pyenchant = {version = "==2.0.0", sys_platform = "== 'win32'"}
 hunspell = {version = "==0.5.5", sys_platform = "== 'linux'"}

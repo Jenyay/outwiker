@@ -15,7 +15,7 @@ icon: share/icons/outwiker.svg
 
 apps:
     outwiker:
-        command: desktop-launch $SNAP/usr/bin/outwiker
+        command: desktop-launch snapcraft-preload $SNAP/usr/bin/outwiker
         plugs: 
             - x11
             - unity7
@@ -30,36 +30,45 @@ apps:
             - removable-media
         desktop: share/applications/outwiker.desktop
         environment:
-            LD_LIBRARY_PATH: $LD_LIBRARY_PATH:$SNAP/usr/lib/x86_64-linux-gnu/pulseaudio
+            LD_LIBRARY_PATH: $SNAP/usr/lib/x86_64-linux-gnu/webkit2gtk-4.0/:$SNAP/usr/lib/x86_64-linux-gnu/pulseaudio:$LD_LIBRARY_PATH
 
 parts:
-  outwiker:
-    plugin: python
-    python-version: python3
-    source: .
-    build-packages:
-        - libhunspell-dev
-    stage-packages:
-        - libssl-dev
-        - libjpeg-dev
-        - libtiff-dev
-        - libsdl1.2-dev
-        - libnotify-dev
-        - freeglut3
-        - ibus-gtk3
-        - libwebkitgtk-3.0-0
-        - zlib1g
-        - libsm6
-        - libpulse0
-    after: [desktop-gtk3]
-    python-packages:
-        # - https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-18.04/wxPython-4.0.3-cp36-cp36m-linux_x86_64.whl
-        - https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-16.04/wxPython-4.0.1-cp35-cp35m-linux_x86_64.whl
-        - Pillow==5.1.0
-        - hunspell==0.5.5
-        - idna==2.7
-    override-build: |
-        snapcraftctl build
-        cp -r $SNAPCRAFT_PART_SRC/usr $SNAPCRAFT_PART_INSTALL
-        cp -r $SNAPCRAFT_PART_SRC/share $SNAPCRAFT_PART_INSTALL
-        chmod +x $SNAPCRAFT_PART_INSTALL/usr/bin/outwiker
+    outwiker:
+        plugin: python
+        python-version: python3
+        source: .
+        build-packages:
+            - libhunspell-dev
+        stage-packages:
+            - libssl-dev
+            - libjpeg-dev
+            - libtiff-dev
+            - libsdl1.2-dev
+            - libnotify-dev
+            - freeglut3
+            - ibus-gtk3
+            - libwebkitgtk-3.0-0
+            - libwebkit2gtk-4.0-37
+            - zlib1g
+            - libsm6
+            - libpulse0
+        after:
+            - desktop-gtk3
+            - snapcraft-preload
+        python-packages:
+            # - https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-18.04/wxPython-4.0.4-cp36-cp36m-linux_x86_64.whl
+            - https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-16.04/wxPython-4.0.4-cp35-cp35m-linux_x86_64.whl
+            - Pillow==5.1.0
+            - hunspell==0.5.5
+            - idna==2.7
+        override-build: |
+            snapcraftctl build
+            cp -r $SNAPCRAFT_PART_SRC/usr $SNAPCRAFT_PART_INSTALL
+            cp -r $SNAPCRAFT_PART_SRC/share $SNAPCRAFT_PART_INSTALL
+            chmod +x $SNAPCRAFT_PART_INSTALL/usr/bin/outwiker
+    snapcraft-preload:
+        source: https://github.com/sergiusens/snapcraft-preload.git
+        plugin: cmake
+        build-packages:
+          - gcc-multilib
+          - g++-multilib
