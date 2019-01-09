@@ -24,7 +24,7 @@ class UriIdentifierWebKit(UriIdentifier):
 
         result = self.__removeFileProtokol(href)
 
-        if(result.startswith(currentpage.path) and
+        if (result.startswith(currentpage.path) and
                 len(result) > len(currentpage.path)):
 
             # Если после полного пути до страницы есть символ #

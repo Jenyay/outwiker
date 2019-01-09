@@ -91,6 +91,7 @@ class HtmlRenderWebKit(HtmlRender):
         nav_id = self._navigate_id
         self._navigate_id += 1
 
+        # from pudb import set_trace; set_trace()
         logger.debug('__onNavigating ({nav_id}) begin'.format(nav_id=nav_id))
 
         # Проверка на то, что мы не пытаемся открыть вложенный фрейм
@@ -104,6 +105,11 @@ class HtmlRenderWebKit(HtmlRender):
         curr_href = self.ctrl.GetCurrentURL()
         logger.debug('__onNavigating ({nav_id}). href={href}; curr_href={curr_href}; canOpenUrl={canOpenUrl}'.format(
             nav_id=nav_id, href=href, curr_href=curr_href, canOpenUrl=self.canOpenUrl))
+
+        if href == 'about:blank':
+            logger.debug('__onNavigating. Skip about:blank')
+            event.Veto()
+            return
 
         if not self.canOpenUrl and href != curr_href:
             button = 1
