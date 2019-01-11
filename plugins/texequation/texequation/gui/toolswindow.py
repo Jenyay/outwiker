@@ -10,23 +10,23 @@ import wx.html2
 
 from outwiker.core.htmltemplate import MyTemplate
 from outwiker.utilites.textfile import readTextFile
+from outwiker.gui.mainpanes.mainpane import MainPane
 
-from ..defines import KATEX_DIR_NAME
+from ..defines import KATEX_DIR_NAME, TOOLS_PANE_NAME
+from ..texconfig import TeXConfig
 
 logger = logging.getLogger('TeXEquation')
 
 
-class ToolsWindow(wx.Frame):
+class ToolsPanel(wx.Panel):
     def __init__(self, parent):
-        super().__init__(parent,
-                         style=wx.RESIZE_BORDER | wx.FRAME_NO_TASKBAR | wx.FRAME_FLOAT_ON_PARENT | wx.FRAME_TOOL_WINDOW | wx.CLOSE_BOX)
+        super().__init__(parent)
 
         self._oldEquation = ''
         self._template_fname = str(Path(__file__).parents[1].joinpath('data', 'equation.html'))
         self._katexdir = 'file://' + str(Path(__file__).parents[1].joinpath('tools', KATEX_DIR_NAME)).replace('\\', '/')
 
         self.createGUI()
-        self.Bind(wx.EVT_CLOSE, handler=self._onClose)
 
     def createGUI(self):
         self._htmlRender = wx.html2.WebView.New(self)
@@ -39,10 +39,6 @@ class ToolsWindow(wx.Frame):
 
         self.SetSizer(mainSizer)
         self.Layout()
-
-    def _onClose(self, event):
-        self.Hide()
-        event.Veto()
 
     def setEquation(self, equation: str) -> None:
         '''
@@ -68,3 +64,35 @@ class ToolsWindow(wx.Frame):
         katexdir = self._katexdir
 
         return template.safe_substitute(katexdir=katexdir, equation=equation)
+
+
+class ToolsPane(MainPane):
+    def beginRename(self, page=None):
+        self.panel.beginRename(page)
+
+    def _createPanel(self):
+        return ToolsPanel(self.parent)
+
+    def _createConfig(self):
+        return TeXConfig(self.application.config)
+
+    @property
+    def caption(self):
+        return 'TeXEquation'
+
+    def _createPane(self):
+        pane = self._loadPaneInfo(self.config.pane)
+
+        if pane is None:
+            pane = wx.aui.AuiPaneInfo().Name(TOOLS_PANE_NAME).Caption(self.caption).Gripper(False).CaptionVisible(True).CloseButton(True).MaximizeButton(False).Float()
+
+        pane.CloseButton()
+        pane.Caption(self.caption)
+
+        pane.BestSize((self.config.width.value,
+                       self.config.height.value))
+
+        return pane
+
+    def setEquation(self, equation: str) -> None:
+        self.panel.setEquation(equation)

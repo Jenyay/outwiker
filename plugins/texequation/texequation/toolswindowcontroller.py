@@ -1,34 +1,41 @@
 # -*- coding: utf-8 -*-
 
+import wx.aui
 
 from outwiker.utilites.text import positionInside
 
-from .gui.toolswindow import ToolsWindow
+from .gui.toolswindow import ToolsPane
 from .i18n import get_
 from .tokentex import InlineTexToken
+from .defines import TOOLS_PANE_NAME
 
 
 class ToolsWindowController(object):
     def __init__(self, application):
         self._application = application
-        self._toolsWindow = None
+        self._toolsPane = None
         self._prevPositionInsideEquation = False
+        self._auiManager = self._application.mainWindow.auiManager
 
     def initialize(self):
         global _
         _ = get_()
 
         self._application.onTextEditorCaretMove += self.__onTextEditorCaretMove
+        self._auiManager.Bind(wx.aui.EVT_AUI_PANE_CLOSE,
+                              handler=self._onPaneClose)
 
     def destroy(self):
+        self._auiManager.Unbind(wx.aui.EVT_AUI_PANE_CLOSE,
+                                handler=self._onPaneClose)
         self._application.onTextEditorCaretMove -= self.__onTextEditorCaretMove
         self._destroyToolsWindow()
 
     def _destroyToolsWindow(self):
         self._hideToolsWindow()
-        if self._toolsWindow is not None:
-            self._toolsWindow.Destroy()
-            self._toolsWindow = None
+        if self._toolsPane is not None:
+            self._toolsPane.close()
+            self._toolsPane = None
 
     def __onTextEditorCaretMove(self,
                                 page: 'outwiker.core.tree.WikiPage',
@@ -55,23 +62,29 @@ class ToolsWindowController(object):
     def _showToolsWindow(self):
         '''
         Show tools window (with equation preview). The window will be created
-        if _toolsWindow is None.
+        if _toolsPane is None.
         '''
-        if self._toolsWindow is None:
-            self._toolsWindow = ToolsWindow(self._application.mainWindow)
+        if self._toolsPane is None:
+            self._toolsPane = ToolsPane(
+                self._application.mainWindow,
+                self._application.mainWindow.auiManager,
+                self._application)
+            self._application.mainWindow.UpdateAuiManager()
 
-        if not self._toolsWindow.IsShown():
-            self._toolsWindow.Show()
+        if not self._toolsPane.isShown():
+            self._toolsPane.show()
+            self._application.mainWindow.UpdateAuiManager()
 
     def _hideToolsWindow(self):
-        if self._toolsWindow is not None:
-            self._toolsWindow.Hide()
+        if self._toolsPane is not None:
+            self._toolsPane.hide()
+            self._application.mainWindow.UpdateAuiManager()
 
     def _updateEquation(self, text, position):
         equation = self.extractEquation(text, position)
-        assert self._toolsWindow is not None
+        assert self._toolsPane is not None
 
-        self._toolsWindow.setEquation(equation)
+        self._toolsPane.setEquation(equation)
 
     @staticmethod
     def extractEquation(text: str, position: int):
@@ -88,3 +101,10 @@ class ToolsWindowController(object):
             equation = equation[1:-1]
 
         return equation
+
+    def _onPaneClose(self, event):
+        paneName = event.GetPane().name
+        if paneName == TOOLS_PANE_NAME:
+            self._toolsPane.saveParams()
+
+        event.Skip()
