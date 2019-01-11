@@ -22,7 +22,7 @@ class ToolsWindow(wx.Frame):
 
         self._oldEquation = ''
         self._template_fname = str(Path(__file__).parents[1].joinpath('data', 'equation.html'))
-        self._katexdir = str(Path(__file__).parents[1].joinpath('tools', KATEX_DIR_NAME))
+        self._katexdir = 'file://' + str(Path(__file__).parents[1].joinpath('tools', KATEX_DIR_NAME)).replace('\\', '/')
 
         self.createGUI()
         self.Bind(wx.EVT_CLOSE, handler=self._onClose)
