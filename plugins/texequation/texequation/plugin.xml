@@ -27,12 +27,12 @@
 			<site>https://jenyay.net</site>
 		</author>
 		<changelog>
-            <version number="2.4.1">
+            <version number="2.5">
 				<requirements>
-					<api>2.835</api>
+					<api>2.858</api>
 				</requirements>
 
-                <download os="all">https://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.4.1.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.5.zip</download>
 				<change>Update KaTeX version (0.10.0).</change>
 			</version>
 
@@ -130,12 +130,12 @@
 		</author>
 
 		<changelog>
-            <version number="2.4.1">
+            <version number="2.5">
 				<requirements>
-					<api>2.835</api>
+					<api>2.858</api>
 				</requirements>
 
-                <download os="all">https://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.4.1.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.5.zip</download>
 				<change>Обновление движка KaTeX до версии 0.10.0.</change>
 			</version>
 
