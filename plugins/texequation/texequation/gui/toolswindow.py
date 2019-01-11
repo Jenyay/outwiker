@@ -37,6 +37,7 @@ class ToolsWindow(wx.Frame):
         mainSizer.Add(self._htmlRender, flag=wx.EXPAND)
 
         self.SetSizer(mainSizer)
+        self.Layout()
 
     def _onClose(self, event):
         self.Hide()
