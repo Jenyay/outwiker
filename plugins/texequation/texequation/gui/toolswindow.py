@@ -2,11 +2,12 @@
 
 import logging
 import os.path
+import urllib
 from pathlib import Path
 
 import wx
+import wx.html2
 
-from outwiker.core.system import getOS
 from outwiker.core.htmltemplate import MyTemplate
 from outwiker.utilites.textfile import readTextFile
 
@@ -28,7 +29,7 @@ class ToolsWindow(wx.Frame):
         self.Bind(wx.EVT_CLOSE, handler=self._onClose)
 
     def createGUI(self):
-        self._htmlRender = getOS().getHtmlRender(self)
+        self._htmlRender = wx.html2.WebView.New(self)
 
         mainSizer = wx.FlexGridSizer(cols=1)
         mainSizer.AddGrowableCol(0)
@@ -52,7 +53,8 @@ class ToolsWindow(wx.Frame):
 
         equation = equation.replace('\\', '\\\\')
         html = self._getHTML(equation)
-        self._htmlRender.SetPage(html, os.path.abspath('.'))
+        path = "file://" + urllib.parse.quote(os.path.abspath('.').replace('\\', '/')) + "/"
+        self._htmlRender.SetPage(html, path)
 
     def _getHTML(self, equation):
         try:
