@@ -85,6 +85,7 @@ class ToolsWindowController(object):
         assert self._toolsPane is not None
 
         self._toolsPane.setEquation(equation)
+        self._application.mainWindow.Raise()
 
     @staticmethod
     def extractEquation(text: str, position: int):

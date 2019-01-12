@@ -25,11 +25,13 @@ class ToolsPanel(wx.Panel):
         self._oldEquation = ''
         self._template_fname = str(Path(__file__).parents[1].joinpath('data', 'equation.html'))
         self._katexdir = 'file://' + str(Path(__file__).parents[1].joinpath('tools', KATEX_DIR_NAME)).replace('\\', '/')
+        self._firstLoad = True
 
         self.createGUI()
 
     def createGUI(self):
         self._htmlRender = wx.html2.WebView.New(self)
+        self._htmlRender.Disable()
 
         mainSizer = wx.FlexGridSizer(cols=1)
         mainSizer.AddGrowableCol(0)
@@ -44,13 +46,17 @@ class ToolsPanel(wx.Panel):
         '''
         Update equation in the preview window if equation was changed
         '''
-        if equation != self._oldEquation:
-            pass
+        if equation == self._oldEquation:
+            return
 
+        self._oldEquation = equation
         equation = equation.replace('\\', '\\\\')
         html = self._getHTML(equation)
         path = "file://" + urllib.parse.quote(os.path.abspath('.').replace('\\', '/')) + "/"
         self._htmlRender.SetPage(html, path)
+        if self._firstLoad:
+            self._htmlRender.Reload()
+            self._firstLoad = False
 
     def _getHTML(self, equation):
         try:
