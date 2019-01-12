@@ -9,6 +9,7 @@ import wx
 import wx.html2
 
 from outwiker.core.htmltemplate import MyTemplate
+from outwiker.core.system import getOS
 from outwiker.utilites.textfile import readTextFile
 from outwiker.gui.mainpanes.mainpane import MainPane
 
@@ -54,7 +55,7 @@ class ToolsPanel(wx.Panel):
         html = self._getHTML(equation)
         path = "file://" + urllib.parse.quote(os.path.abspath('.').replace('\\', '/')) + "/"
         self._htmlRender.SetPage(html, path)
-        if self._firstLoad:
+        if self._firstLoad and getOS().name == 'windows':
             self._htmlRender.Reload()
             self._firstLoad = False
 
