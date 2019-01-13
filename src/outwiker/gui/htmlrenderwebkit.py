@@ -38,8 +38,11 @@ class HtmlRenderWebKit(HtmlRender):
         sizer.Add(self.ctrl, 0, wx.EXPAND)
         self.SetSizer(sizer)
 
+        self._symlinkPath = '/tmp/outwiker_page'
+        self._symlinkURL = self._pathToURL(self._symlinkPath)
         self.canOpenUrl = False                # Можно ли открывать ссылки
         self._navigate_id = 1
+        self._realDirNameURL = ''
 
         self.Bind(wx.EVT_MENU, self.__onCopyFromHtml, id=wx.ID_COPY)
         self.Bind(wx.EVT_MENU, self.__onCopyFromHtml, id=wx.ID_CUT)
@@ -51,23 +54,54 @@ class HtmlRenderWebKit(HtmlRender):
         self.ctrl.Print()
 
     def LoadPage(self, fname):
-        url = u'file://' + urllib.parse.quote(fname.encode("utf8"))
-        if APP_DATA_KEY_ANCHOR in Application.sharedData:
-            url += Application.sharedData[APP_DATA_KEY_ANCHOR]
-            del Application.sharedData[APP_DATA_KEY_ANCHOR]
-
         if os.path.exists(fname) and os.path.isfile(fname):
+            dirname = os.path.dirname(fname)
+            try:
+                self._createSymLink(dirname)
+            except IOError as e:
+                logger.error("Can't create symlink")
+                logger.error(str(e))
+                return
+
+            basename = os.path.basename(fname)
+            new_fname = os.path.join(self._symlinkPath, basename)
+            url_symlink = self._pathToURL(new_fname)
+            self._realDirNameURL = self._pathToURL(dirname)
+
+            # Add anchor for references
+            if APP_DATA_KEY_ANCHOR in Application.sharedData:
+                url_symlink += Application.sharedData[APP_DATA_KEY_ANCHOR]
+                del Application.sharedData[APP_DATA_KEY_ANCHOR]
+
             self.canOpenUrl = True
-            self.ctrl.LoadURL(url)
+            self.ctrl.LoadURL(url_symlink)
         else:
             text = _(u"Can't read file %s") % (fname)
             self.SetPage(text, os.path.dirname(fname))
 
+    def _pathToURL(self, path: str) -> str:
+        '''
+        Convert file system path to file:// URL
+        '''
+        return 'file://' + urllib.parse.quote(path)
+
     def SetPage(self, htmltext, basepath):
-        self._path = "file://" + urllib.parse.quote(basepath) + "/"
+        self._path = self._pathToURL(basepath) + "/"
 
         self.canOpenUrl = True
         self.ctrl.SetPage(htmltext, self._path)
+
+    def _createSymLink(self, path: str) -> None:
+        if os.path.lexists(self._symlinkPath):
+            try:
+                os.remove(self._symlinkPath)
+            except IOError as e:
+                logger.error("Can't remove symlink: {}".format(self._symlinkPath))
+                logger.error(str(e))
+                raise
+
+        os.symlink(path, self._symlinkPath, True)
+        print(path)
 
     def __onCopyFromHtml(self, event):
         self.ctrl.Copy()
@@ -91,7 +125,6 @@ class HtmlRenderWebKit(HtmlRender):
         nav_id = self._navigate_id
         self._navigate_id += 1
 
-        # from pudb import set_trace; set_trace()
         logger.debug('__onNavigating ({nav_id}) begin'.format(nav_id=nav_id))
 
         # Проверка на то, что мы не пытаемся открыть вложенный фрейм
@@ -173,6 +206,9 @@ class HtmlRenderWebKit(HtmlRender):
         (1 - левая, 2 - средняя, 3 - правая, -1 - не известно)
         gtk_key_modifier - зажатые клавиши (1 - Shift, 4 - Ctrl)
         """
+        # if href.startswith(self._symlinkURL):
+        #     href = href.replace(self._symlinkURL, self._realDirNameURL)
+
         source_href = href
         href = urllib.parse.unquote(href)
         href = self._decodeIDNA(href)
