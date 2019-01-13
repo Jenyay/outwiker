@@ -11,8 +11,8 @@ init:
     - cmd: py -m pip install pipenv
     - sh: sudo apt-get -y update
     - sh: sudo apt-get -y install python3-pip python3-dev debhelper devscripts debhelper devscripts p7zip-full libssl-dev dpkg-dev build-essential libjpeg-dev libtiff-dev libsdl1.2-dev libnotify-dev freeglut3 ibus-gtk3 xvfb libhunspell-dev
-    # - sh: sudo apt-get -y install libwebkit2gtk-4.0
-    - sh: sudo apt-get -y install libwebkitgtk-3.0
+    - sh: sudo apt-get -y install libwebkit2gtk-4.0
+    # - sh: sudo apt-get -y install libwebkitgtk-3.0
     - sh: python3 -m pip install --user pipenv
 install:
     - cmd: cinst innosetup
