@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from collections import MutableMapping
+from collections.abc import MutableMapping
 from numbers import Real
 
 
