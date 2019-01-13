@@ -101,7 +101,6 @@ class HtmlRenderWebKit(HtmlRender):
                 raise
 
         os.symlink(path, self._symlinkPath, True)
-        print(path)
 
     def __onCopyFromHtml(self, event):
         self.ctrl.Copy()
