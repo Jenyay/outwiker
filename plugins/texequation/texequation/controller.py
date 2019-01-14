@@ -14,6 +14,7 @@ from outwiker.utilites.actionsguicontroller import (ActionsGUIController,
 from .actions import TexEquationAction
 from .i18n import get_
 from .preferencepanel import PreferencePanel
+from .toolswindowcontroller import ToolsWindowController
 
 
 class Controller(object):
@@ -30,6 +31,7 @@ class Controller(object):
             self._application,
             WikiWikiPage.getTypeString(),
         )
+        self._toolsWindowController = ToolsWindowController(self._application)
 
     def initialize(self):
         """
@@ -42,6 +44,9 @@ class Controller(object):
         self._application.onWikiParserPrepare += self.__onWikiParserPrepare
         self._application.onPreferencesDialogCreate += self.__onPreferencesDialogCreate
         self._initialize_guicontroller()
+
+        if self._application.mainWindow is not None:
+            self._toolsWindowController.initialize()
 
     def _initialize_guicontroller(self):
         imagesPath = os.path.join(self._plugin.pluginPath, 'images')
@@ -64,6 +69,9 @@ class Controller(object):
         self._application.onWikiParserPrepare -= self.__onWikiParserPrepare
         self._application.onPreferencesDialogCreate -= self.__onPreferencesDialogCreate
         self._destroy_guicontroller()
+
+        if self._application.mainWindow is not None:
+            self._toolsWindowController.destroy()
 
     def _destroy_guicontroller(self):
         if self._application.mainWindow is not None:

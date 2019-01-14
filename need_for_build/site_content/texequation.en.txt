@@ -11,7 +11,7 @@ The TeXEquation plug-in add two new commands to wiki notation. The commands allo
 !!!! Download
 [[TeXEquation 2.1 -> Attach:Outwiker/TexEquation/texequation-2.1.zip]] ('''Required OutWiker version: 2.0 - 2.1.0.834''')
 
-[[TeXEquation {{ version_full }} -> Attach:Outwiker/TexEquation/texequation-{{ version_full }}.zip]] ('''Required OutWiker version: 2.1.0.836 and above''')
+[[TeXEquation {{ version_full }} -> Attach:Outwiker/TexEquation/texequation-{{ version_full }}.zip]] ('''Required OutWiker version: 3.0.0.858 and above''')
 
 <!--#version stable {{ version_full }} -->
 

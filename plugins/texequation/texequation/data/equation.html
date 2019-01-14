@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
+	<meta http-equiv='content-type' content='text/html; charset=utf-8'/>
+	<title>Equation</title>
+
+	<link rel="stylesheet" href="$katexdir/katex.min.css">
+	<script src="$katexdir/katex.min.js"></script>
+	<style type="text/css">.texequation-block { font-size: 100%; } </style>
+</head>
+
+<body>
+	<div align="center"><span class="texequation-block" id="equation"></span></div>
+
+<script>
+function fix_frac_line() {
+	var win = window;
+	var frac_lines = document.getElementsByClassName("frac-line");
+	for (var i = 0; i < frac_lines.length; i++) {
+		var frac = frac_lines[i];
+		if (win.getComputedStyle) {
+			style = win.getComputedStyle(frac, '');
+			if (style['border-bottom-width'] == '0px') {
+				frac.style['border-bottom-width'] = '1px';
+			}
+		}
+	}
+};
+
+function render_equation() {
+	var element_0 = document.getElementById("equation");
+	katex.render("$equation", element_0, { displayMode: false, throwOnError: false });
+	fix_frac_line();
+};
+
+render_equation();
+</script>
+</body>
+</html>
+
