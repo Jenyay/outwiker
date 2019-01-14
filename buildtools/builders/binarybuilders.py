@@ -57,6 +57,7 @@ class BaseBinaryBuilder(object, metaclass=ABCMeta):
             'outwiker.gui.htmlrenderfactory',
             'outwiker.gui.controls.popupbutton',
             'outwiker.utilites.actionsguicontroller',
+            'outwiker.utilites.text',
             'PIL.Image',
             'PIL.ImageDraw',
             'PIL.ImageFont',
