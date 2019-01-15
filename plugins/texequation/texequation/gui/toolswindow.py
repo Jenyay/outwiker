@@ -52,6 +52,7 @@ class ToolsPanel(wx.Panel):
 
         self._oldEquation = equation
         equation = equation.replace('\\', '\\\\')
+        equation = equation.replace('"', '\\"')
         html = self._getHTML(equation)
         path = "file://" + urllib.parse.quote(os.path.abspath('.').replace('\\', '/')) + "/"
         self._htmlRender.SetPage(html, path)
