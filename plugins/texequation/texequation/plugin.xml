@@ -33,6 +33,7 @@
 				</requirements>
 
                 <download os="all">https://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.5.zip</download>
+				<change>Add equation preview window.</change>
 				<change>Update KaTeX version (0.10.0).</change>
 			</version>
 
@@ -136,6 +137,7 @@
 				</requirements>
 
                 <download os="all">https://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.5.zip</download>
+				<change>AДобавлено окно просмотра формулы.</change>
 				<change>Обновление движка KaTeX до версии 0.10.0.</change>
 			</version>
 
