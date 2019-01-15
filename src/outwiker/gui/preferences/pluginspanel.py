@@ -2,6 +2,7 @@
 
 import wx
 import wx.adv
+from wx.lib.mixins.listctrl import CheckListCtrlMixin, ListCtrlAutoWidthMixin
 import logging
 
 from outwiker.gui.guiconfig import PluginsConfig
@@ -9,6 +10,15 @@ from outwiker.core.system import getCurrentDir, getOS
 from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
 
 logger = logging.getLogger('pluginspanel')
+
+
+class CheckListCtrl(wx.ListCtrl, CheckListCtrlMixin, ListCtrlAutoWidthMixin):
+
+    def __init__(self, parent):
+        wx.ListCtrl.__init__(self, parent, wx.ID_ANY, style=wx.LC_REPORT |
+                                                            wx.SUNKEN_BORDER)
+        CheckListCtrlMixin.__init__(self)
+        ListCtrlAutoWidthMixin.__init__(self)
 
 
 class PluginsPanel(BasePrefPanel):
@@ -27,8 +37,10 @@ class PluginsPanel(BasePrefPanel):
         self.SetupScrolling()
 
     def __createGui(self):
-        self.pluginsList = wx.CheckListBox(self, -1, style=wx.LB_SORT)
+        self.pluginsList = CheckListCtrl(self)
         self.pluginsList.SetMinSize((50, 20))
+        self.pluginsList.InsertColumn(0, 'Plugin', width=120)
+        self.pluginsList.InsertColumn(1, 'Version', width=50)
 
         self.__downloadLink = wx.adv.HyperlinkCtrl(
             self,
@@ -102,37 +114,48 @@ class PluginsController(object):
         # Значение - экземпляр плагина
         self.__pluginsItems = {}
 
-        self.__owner.Bind(wx.EVT_LISTBOX,
+        self.__owner.Bind(wx.EVT_LIST_ITEM_SELECTED,
                           self.__onSelectItem,
                           self.__owner.pluginsList)
 
     def __onSelectItem(self, event):
-        htmlContent = u""
-        if event.IsSelection():
-            plugin = self.__pluginsItems[event.GetString()]
-            assert plugin is not None
+        """
+        Fill the PluginInfo page for selected plugin.
+        Handler for EVT_LIST_ITEM_SELECTED event of wx.ListCtrl
 
-            htmlContent = self.__createPluginInfo(plugin)
+        wx.LC_SINGLE_SEL should be applied
+
+        :param event:
+            the object of wx.ListEvent
+        :return:
+            None
+        """
+
+        plugin = self.__pluginsItems[event.GetText()]
+        assert plugin is not None
+
+        htmlContent = self.__createPluginInfo(plugin)
 
         self.__owner.pluginsInfo.SetPage(htmlContent, getCurrentDir())
 
     def __createPluginInfo(self, plugin):
         assert plugin is not None
 
-        infoTemplate = u"""<html>
-<head>
-    <meta http-equiv='content-type' content='text/html; charset=utf-8'/>
-</head>
+        infoTemplate = u"""
+            <html>
+            <head>
+                <meta http-equiv='content-type' content='text/html; charset=utf-8'/>
+            </head>
+            
+            <body>
+            {name}<br>
+            {version}<br>
+            {description}<br>
+            </body>
+            </html>
+            """
 
-<body>
-{name}<br>
-{version}<br>
-{url}<br>
-{description}<br>
-</body>
-</html>"""
-
-        plugin_name = u"""<h3>{name}</h3>""".format(name=plugin.name)
+        plugin_name = u"""<a href="{url}"><h3>{name}</h3></a>""".format(url=plugin.url, name=plugin.name)
 
         plugin_version = u"""<b>{version_header}:</b> {version}""".format(
             version_header=_(u"Version"),
@@ -142,51 +165,45 @@ class PluginsController(object):
             description_head=_(u"Description"),
             description=plugin.description.replace("\n", "<br>"))
 
-        if plugin.url is not None:
-            plugin_url = u"""<br><b>{site_head}</b>: <a href="{url}">{url}</a><br>""".format(
-                site_head=_("Site"),
-                url=plugin.url)
-        else:
-            plugin_url = u""
-
         result = infoTemplate.format(
             name=plugin_name,
             version=plugin_version,
-            description=plugin_description,
-            url=plugin_url)
+            description=plugin_description)
 
         return result
 
     def loadState(self):
         self.__pluginsItems = {}
-        self.__owner.pluginsList.Clear()
-        self.__appendEnabledPlugins()
-        self.__appendDisabledPlugins()
-        self.__appendInvalidPlugins()
+        self.__owner.pluginsList.DeleteAllItems()
 
-    def __appendEnabledPlugins(self):
+        plugins = self.__owner._application.plugins
+        enablePlugins = {plugin.name: plugin for plugin in plugins}
+        invalidPlugins = {plugin.name: plugin for plugin in plugins.invalidPlugins}
+
+        # append plugins to the pluginList
+        self.__append(enablePlugins, checked=True)
+        self.__append(plugins.disabledPlugins, checked=False)
+        self.__append(invalidPlugins, checked=False)
+
+    def __append(self, PluginsDict, checked=True):
         """
-        Добавить загруженные плагины в список
+        Append PluginsDict to the list on the plugins panel
+
+        :param PluginsDict:
+            {PluginName: plugin instance}
+        :param checked:
+            True - if plugin is enabled
+        :return:
+            None
         """
-        enablePlugins = {plugin.name: plugin
-                         for plugin
-                         in self.__owner._application.plugins}
+        pluginList = self.__owner.pluginsList
 
-        self.__owner.pluginsList.Append(list(enablePlugins))
-        self.__pluginsItems.update(enablePlugins)
+        for name, plugin in PluginsDict.items():
+            index = pluginList.Append((name, plugin.version))
+            if checked:
+                pluginList.CheckItem(index)
 
-        self.__owner.pluginsList.SetCheckedStrings(list(enablePlugins))
-
-    def __appendDisabledPlugins(self):
-        """
-        Добавить отключенные плагины в список
-        """
-        self.__owner.pluginsList.Append(list(self.__owner._application.plugins.disabledPlugins))
-        self.__pluginsItems.update(self.__owner._application.plugins.disabledPlugins)
-
-    def __appendInvalidPlugins(self):
-        self.__owner.pluginsList.Append(list(self.__owner._application.plugins.invalidPlugins))
-        self.__pluginsItems.update(self.__owner._application.plugins.invalidPlugins)
+        self.__pluginsItems.update(PluginsDict)
 
     def save(self):
         config = PluginsConfig(self.__owner._application.config)
@@ -199,7 +216,11 @@ class PluginsController(object):
         """
         Return list of unchecked plugins
         """
-        checked = self.__owner.pluginsList.GetCheckedStrings()
+        pluginsList = self.__owner.pluginsList
+        num = pluginsList.GetItemCount()
+
+        checked = [pluginsList.GetItemText(i) for i in range(num)
+                   if pluginsList.IsChecked(i)]
         disabledList = list(set(self.__pluginsItems) - set(checked))
 
         return disabledList
