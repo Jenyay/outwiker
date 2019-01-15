@@ -185,8 +185,11 @@ class PluginsController(object):
         self.__pluginsItems.update(self.__owner._application.plugins.disabledPlugins)
 
     def __appendInvalidPlugins(self):
-        self.__owner.pluginsList.Append(list(self.__owner._application.plugins.invalidPlugins))
-        self.__pluginsItems.update(self.__owner._application.plugins.invalidPlugins)
+        invalid_plugins = self.__owner._application.plugins.invalidPlugins
+
+        for plugin in invalid_plugins:
+            self.__owner.pluginsList.Append(plugin.name)
+            self.__pluginsItems[plugin.name] = plugin
 
     def save(self):
         config = PluginsConfig(self.__owner._application.config)
