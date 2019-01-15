@@ -5,8 +5,6 @@ from outwiker.core.pluginbase import Plugin
 from .i18n import set_
 from .controller import Controller
 
-import sdasdgasd
-
 
 class PluginTexEquation(Plugin):
     def __init__(self, application):
