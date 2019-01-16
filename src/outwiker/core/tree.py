@@ -261,7 +261,7 @@ class RootWikiPage(object):
                 try:
                     page = WikiPage.load(fullpath, self, self.root.readonly)
                 except Exception as e:
-                    text = _(u'Error reading page {}').format(fullpath)
+                    text = 'Error reading page {}'.format(fullpath)
                     logging.error(text)
                     logging.error(u'    ' + str(e))
                     continue
@@ -769,11 +769,13 @@ class WikiPage(RootWikiPage):
         text = ""
         path = os.path.join(self.path, RootWikiPage.contentFile)
 
-        try:
-            text = readTextFile(path)
-            text = text.replace('\r\n', '\n')
-        except IOError:
-            pass
+        if os.path.exists(path):
+            try:
+                text = readTextFile(path)
+                text = text.replace('\r\n', '\n')
+            except Exception as e:
+                logger.error("Can't read page content for {}".format(path))
+                logger.error(str(e))
 
         params = events.PostContentReadingParams(text)
         self.root.onPostContentReading(self, params)

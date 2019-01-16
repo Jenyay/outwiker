@@ -63,4 +63,7 @@ class LongProcessRunner(object):
         progressDlg.Destroy()
         self._parent.Raise()
 
-        return result[0]
+        if result:
+            return result[0]
+        else:
+            return None
