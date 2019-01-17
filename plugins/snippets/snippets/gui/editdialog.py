@@ -6,11 +6,12 @@ import shutil
 
 import wx
 
+from outwiker.core.commands import MessageBox
+from outwiker.core.system import getSpecialDirList
 from outwiker.gui.controls.popupbutton import (PopupButton,
                                                EVT_POPUP_BUTTON_MENU_CLICK)
 from outwiker.gui.controls.safeimagelist import SafeImageList
-from outwiker.core.commands import MessageBox
-from outwiker.core.system import getSpecialDirList
+from outwiker.gui.guiconfig import MainWindowConfig
 from outwiker.utilites.textfile import readTextFile, writeTextFile
 
 from snippets.events import RunSnippetParams
@@ -338,8 +339,10 @@ class EditSnippetsDialogController(object):
         self._snippetChanged = False
         self._dialog = EditSnippetsDialog(self._application.mainWindow)
         self._config = SnippetsConfig(self._application.config)
+        self._mainWindowconfig = MainWindowConfig(self._application.config)
         self._dialog.SetClientSize((self._config.editDialogWidth,
                                     self._config.editDialogHeight))
+        self._dialog.SetBackgroundColour(self._mainWindowconfig.mainPanesBackgroundColor.value)
         self._bind()
 
     def _bind(self):
