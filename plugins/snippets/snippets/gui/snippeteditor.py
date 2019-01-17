@@ -26,6 +26,7 @@ class SnippetEditor(TextEditorBase):
         self.textCtrl.SetMarginWidth(0, 35)
         self.textCtrl.SetMarginWidth(1, 5)
         self.textCtrl.Bind(wx.stc.EVT_STC_STYLENEEDED, self._onStyleNeeded)
+        self._bindStandardMenuItems()
 
     def _onStyleNeeded(self, event):
         fulltext = self._getTextForParse()

@@ -9,7 +9,6 @@ import wx
 from outwiker.gui.controls.popupbutton import (PopupButton,
                                                EVT_POPUP_BUTTON_MENU_CLICK)
 from outwiker.gui.controls.safeimagelist import SafeImageList
-from outwiker.gui.testeddialog import TestedDialog
 from outwiker.core.commands import MessageBox
 from outwiker.core.system import getSpecialDirList
 from outwiker.utilites.textfile import readTextFile, writeTextFile
@@ -34,14 +33,14 @@ class TreeItemInfo(object):
         self.root = root
 
 
-class EditSnippetsDialog(TestedDialog):
+class EditSnippetsDialog(wx.Frame):
     '''
     Dialog to create, edit and remove snippets and folders.
     '''
     def __init__(self, parent):
-        super(EditSnippetsDialog, self).__init__(
+        super().__init__(
             parent,
-            style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER
+            style=wx.CAPTION | wx.CLOSE | wx.SYSTEM_MENU | wx.MINIMIZE_BOX | wx.MAXIMIZE_BOX | wx.CLOSE_BOX | wx.RESIZE_BORDER | wx.FRAME_TOOL_WINDOW | wx.FRAME_NO_TASKBAR | wx.FRAME_FLOAT_ON_PARENT
         )
         global _
         _ = get_()
@@ -260,7 +259,50 @@ class EditSnippetsDialog(TestedDialog):
         mainSizer.AddStretchSpacer()
         self.closeBtn = wx.Button(self, id=wx.ID_CLOSE, label=_(u'Close'))
         mainSizer.Add(self.closeBtn, flag=wx.ALL | wx.ALIGN_RIGHT, border=2)
-        self.SetEscapeId(wx.ID_CLOSE)
+
+    def _createMenu(self):
+        self._menuBar = wx.MenuBar()
+        editMenu = self._createEditMenu()
+        self._menuBar.Append(editMenu, _('Edit'))
+        self.SetMenuBar(self._menuBar)
+
+    def _createEditMenu(self):
+        editMenu = wx.Menu()
+
+        editMenu.Append(wx.ID_UNDO,
+                        _(u"Undo") + "\tCtrl+Z",
+                        "",
+                        wx.ITEM_NORMAL)
+
+        editMenu.Append(wx.ID_REDO,
+                        _(u"Redo") + "\tCtrl+Y",
+                        "",
+                        wx.ITEM_NORMAL)
+
+        editMenu.AppendSeparator()
+
+        editMenu.Append(wx.ID_CUT,
+                        _(u"Cut") + "\tCtrl+X",
+                        "",
+                        wx.ITEM_NORMAL)
+
+        editMenu.Append(wx.ID_COPY,
+                        _(u"Copy") + "\tCtrl+C",
+                        "",
+                        wx.ITEM_NORMAL)
+
+        editMenu.Append(wx.ID_PASTE,
+                        _(u"Paste") + "\tCtrl+V",
+                        "",
+                        wx.ITEM_NORMAL)
+
+        editMenu.AppendSeparator()
+
+        editMenu.Append(wx.ID_SELECTALL,
+                        _(u"Select All") + "\tCtrl+A",
+                        "",
+                        wx.ITEM_NORMAL)
+        return editMenu
 
     def _createGUI(self):
         # Main Sizer
@@ -272,6 +314,7 @@ class EditSnippetsDialog(TestedDialog):
         self._createTreePanel(mainSizer)
         self._createSnippetPanel(mainSizer)
         self._createBottomButtons(mainSizer)
+        self._createMenu()
 
         self.SetSizer(mainSizer)
         self.Layout()
