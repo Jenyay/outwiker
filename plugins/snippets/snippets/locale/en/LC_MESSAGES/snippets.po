@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-17 09:38+0300\n"
-"PO-Revision-Date: 2019-01-17 09:39+0300\n"
+"POT-Creation-Date: 2019-01-17 13:53+0300\n"
+"PO-Revision-Date: 2019-01-17 13:53+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.1.1\n"
+"X-Generator: Poedit 2.2\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: actions/editsnippets.py:24
@@ -26,7 +26,7 @@ msgstr "Snippets management..."
 msgid "Snippets. Open dialog to edit, create or remove snippets."
 msgstr "Snippets. Open dialog to edit, create or remove snippets."
 
-#: actions/openhelp.py:22 gui/editdialog.py:160
+#: actions/openhelp.py:22 gui/editdialog.py:161 gui/editdialog.py:285
 msgid "Open help..."
 msgstr "Open help..."
 
@@ -50,127 +50,135 @@ msgstr "snippets"
 msgid "snippet"
 msgstr "snippet"
 
-#: gui/editdialog.py:59
+#: gui/editdialog.py:60
 msgid "Selected text"
 msgstr "Selected text"
 
-#: gui/editdialog.py:60
+#: gui/editdialog.py:61
 msgid "Current date"
 msgstr "Current date"
 
-#: gui/editdialog.py:61
+#: gui/editdialog.py:62
 msgid "Page title"
 msgstr "Page title"
 
-#: gui/editdialog.py:62
+#: gui/editdialog.py:63
 msgid "Page type"
 msgstr "Page type"
 
-#: gui/editdialog.py:63
+#: gui/editdialog.py:64
 msgid "Page tags list"
 msgstr "Page tags list"
 
-#: gui/editdialog.py:64
+#: gui/editdialog.py:65
 msgid "Attachments path"
 msgstr "Attachments path"
 
-#: gui/editdialog.py:65
+#: gui/editdialog.py:66
 msgid "Path to page"
 msgstr "Path to page"
 
-#: gui/editdialog.py:66
+#: gui/editdialog.py:67
 msgid "Relative page path"
 msgstr "Relative page path"
 
-#: gui/editdialog.py:67
+#: gui/editdialog.py:68
 msgid "Page creation date"
 msgstr "Page creation date"
 
-#: gui/editdialog.py:68
+#: gui/editdialog.py:69
 msgid "Page modification date"
 msgstr "Page modification date"
 
-#: gui/editdialog.py:69
+#: gui/editdialog.py:70
 msgid "Page Id"
 msgstr "Page Id"
 
-#: gui/editdialog.py:70
+#: gui/editdialog.py:71
 msgid "Attachments list"
 msgstr "Attachments list"
 
-#: gui/editdialog.py:71
+#: gui/editdialog.py:72
 msgid "Child pages"
 msgstr "Child pages"
 
-#: gui/editdialog.py:75
+#: gui/editdialog.py:76
 msgid "{% if %}"
 msgstr "{% if %}"
 
-#: gui/editdialog.py:76
+#: gui/editdialog.py:77
 msgid "{% include %}"
 msgstr "{% include %}"
 
-#: gui/editdialog.py:77
+#: gui/editdialog.py:78
 msgid "{# comment #}"
 msgstr "{# comment #}"
 
-#: gui/editdialog.py:81
+#: gui/editdialog.py:82
 msgid "Snippets management"
 msgstr "Snippets management"
 
-#: gui/editdialog.py:120
+#: gui/editdialog.py:121 gui/editdialog.py:276
 msgid "Add new snippets group"
 msgstr "Add new snippets group"
 
-#: gui/editdialog.py:128
+#: gui/editdialog.py:129 gui/editdialog.py:277
 msgid "Create new snippet"
 msgstr "Create new snippet"
 
-#: gui/editdialog.py:136
+#: gui/editdialog.py:137 gui/editdialog.py:278
 msgid "Rename"
 msgstr "Rename"
 
-#: gui/editdialog.py:144
+#: gui/editdialog.py:145 gui/editdialog.py:279
 msgid "Remove"
 msgstr "Remove"
 
-#: gui/editdialog.py:152
+#: gui/editdialog.py:153 gui/editdialog.py:280
 msgid "Run snippet"
 msgstr "Run snippet"
 
-#: gui/editdialog.py:204
+#: gui/editdialog.py:205
 msgid "Insert variable"
 msgstr "Insert variable"
 
-#: gui/editdialog.py:211
+#: gui/editdialog.py:212
 msgid "Other variable..."
 msgstr "Other variable..."
 
-#: gui/editdialog.py:220
+#: gui/editdialog.py:221
 msgid "Insert block"
 msgstr "Insert block"
 
-#: gui/editdialog.py:260
+#: gui/editdialog.py:261
 msgid "Close"
 msgstr "Close"
 
-#: gui/editdialog.py:266
+#: gui/editdialog.py:269
+msgid "File"
+msgstr "File"
+
+#: gui/editdialog.py:270
 msgid "Edit"
 msgstr "Edit"
 
-#: gui/editdialog.py:273
+#: gui/editdialog.py:271
+msgid "Help"
+msgstr "Help"
+
+#: gui/editdialog.py:290
 msgid "Undo"
 msgstr "Undo"
 
-#: gui/editdialog.py:278
+#: gui/editdialog.py:291
 msgid "Redo"
 msgstr "Redo"
 
-#: gui/editdialog.py:285
+#: gui/editdialog.py:293
 msgid "Cut"
 msgstr "Cut"
 
-#: gui/editdialog.py:290
+#: gui/editdialog.py:294
 msgid "Copy"
 msgstr "Copy"
 
@@ -178,49 +186,49 @@ msgstr "Copy"
 msgid "Paste"
 msgstr "Paste"
 
-#: gui/editdialog.py:302
+#: gui/editdialog.py:297
 msgid "Select All"
 msgstr "Select All"
 
-#: gui/editdialog.py:408
+#: gui/editdialog.py:427
 msgid "No snippet errors"
 msgstr "No snippet errors"
 
-#: gui/editdialog.py:427 guicontroller.py:52
+#: gui/editdialog.py:446 guicontroller.py:52
 msgid "Snippets"
 msgstr "Snippets"
 
-#: gui/editdialog.py:480
+#: gui/editdialog.py:499
 msgid "Remove directory \"{}\" and all snippets inside?"
 msgstr "Remove directory \"{}\" and all snippets inside?"
 
-#: gui/editdialog.py:481
+#: gui/editdialog.py:500
 msgid "Remove snippets directory"
 msgstr "Remove snippets directory"
 
-#: gui/editdialog.py:491
+#: gui/editdialog.py:510
 msgid "Can't remove directory \"{}\""
 msgstr "Can't remove directory \"{}\""
 
-#: gui/editdialog.py:492 gui/editdialog.py:512 gui/editdialog.py:540
-#: gui/editdialog.py:590 gui/editdialog.py:629 gui/editdialog.py:675
-#: gui/editdialog.py:690 gui/editdialog.py:757 guicontroller.py:163
+#: gui/editdialog.py:511 gui/editdialog.py:531 gui/editdialog.py:559
+#: gui/editdialog.py:609 gui/editdialog.py:648 gui/editdialog.py:694
+#: gui/editdialog.py:709 gui/editdialog.py:776 guicontroller.py:163
 msgid "Error"
 msgstr "Error"
 
-#: gui/editdialog.py:500
+#: gui/editdialog.py:519
 msgid "Remove snippet \"{}\"?"
 msgstr "Remove snippet \"{}\"?"
 
-#: gui/editdialog.py:501
+#: gui/editdialog.py:520
 msgid "Remove snippet"
 msgstr "Remove snippet"
 
-#: gui/editdialog.py:511
+#: gui/editdialog.py:530
 msgid "Can't remove snippet \"{}\""
 msgstr "Can't remove snippet \"{}\""
 
-#: gui/editdialog.py:539
+#: gui/editdialog.py:558
 msgid ""
 "Can't create directory\n"
 "{}"
@@ -228,7 +236,7 @@ msgstr ""
 "Can't create directory\n"
 "{}"
 
-#: gui/editdialog.py:589
+#: gui/editdialog.py:608
 msgid ""
 "Can't rename the snippet '{}'\n"
 "{}"
@@ -236,7 +244,7 @@ msgstr ""
 "Can't rename the snippet '{}'\n"
 "{}"
 
-#: gui/editdialog.py:628 guicontroller.py:162
+#: gui/editdialog.py:647 guicontroller.py:162
 msgid ""
 "Can't read the snippet\n"
 "{}"
@@ -244,7 +252,7 @@ msgstr ""
 "Can't read the snippet\n"
 "{}"
 
-#: gui/editdialog.py:674
+#: gui/editdialog.py:693
 msgid ""
 "Can't create snippet\n"
 "{}"
@@ -252,7 +260,7 @@ msgstr ""
 "Can't create snippet\n"
 "{}"
 
-#: gui/editdialog.py:689
+#: gui/editdialog.py:708
 msgid ""
 "Can't save snippet\n"
 "{}"
@@ -260,15 +268,15 @@ msgstr ""
 "Can't save snippet\n"
 "{}"
 
-#: gui/editdialog.py:744
+#: gui/editdialog.py:763
 msgid "Enter variable name (English leters, numbers and _ only)"
 msgstr "Enter variable name (English leters, numbers and _ only)"
 
-#: gui/editdialog.py:745
+#: gui/editdialog.py:764
 msgid "Variable name"
 msgstr "Variable name"
 
-#: gui/editdialog.py:756
+#: gui/editdialog.py:775
 msgid "Invalid variable name \"{}\""
 msgstr "Invalid variable name \"{}\""
 

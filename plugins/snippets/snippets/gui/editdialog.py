@@ -264,46 +264,38 @@ class EditSnippetsDialog(wx.Frame):
     def _createMenu(self):
         self._menuBar = wx.MenuBar()
         editMenu = self._createEditMenu()
+        fileMenu = self._createFileMenu()
+        helpMenu = self._createHelpMenu()
+        self._menuBar.Append(fileMenu, _('File'))
         self._menuBar.Append(editMenu, _('Edit'))
+        self._menuBar.Append(helpMenu, _('Help'))
         self.SetMenuBar(self._menuBar)
 
+    def _createFileMenu(self):
+        menu = wx.Menu()
+        menu.Append(self.addGroupBtn.GetId(), _(u"Add new snippets group"))
+        menu.Append(self.addSnippetBtn.GetId(), _(u"Create new snippet"))
+        menu.Append(self.renameBtn.GetId(), _(u"Rename"))
+        menu.Append(self.removeBtn.GetId(), _(u"Remove"))
+        menu.Append(self.runSnippetBtn.GetId(), _(u"Run snippet"))
+        return menu
+
+    def _createHelpMenu(self):
+        menu = wx.Menu()
+        menu.Append(self.openHelpBtn.GetId(), _(u"Open help..."))
+        return menu
+
     def _createEditMenu(self):
-        editMenu = wx.Menu()
-
-        editMenu.Append(wx.ID_UNDO,
-                        _(u"Undo") + "\tCtrl+Z",
-                        "",
-                        wx.ITEM_NORMAL)
-
-        editMenu.Append(wx.ID_REDO,
-                        _(u"Redo") + "\tCtrl+Y",
-                        "",
-                        wx.ITEM_NORMAL)
-
-        editMenu.AppendSeparator()
-
-        editMenu.Append(wx.ID_CUT,
-                        _(u"Cut") + "\tCtrl+X",
-                        "",
-                        wx.ITEM_NORMAL)
-
-        editMenu.Append(wx.ID_COPY,
-                        _(u"Copy") + "\tCtrl+C",
-                        "",
-                        wx.ITEM_NORMAL)
-
-        editMenu.Append(wx.ID_PASTE,
-                        _(u"Paste") + "\tCtrl+V",
-                        "",
-                        wx.ITEM_NORMAL)
-
-        editMenu.AppendSeparator()
-
-        editMenu.Append(wx.ID_SELECTALL,
-                        _(u"Select All") + "\tCtrl+A",
-                        "",
-                        wx.ITEM_NORMAL)
-        return editMenu
+        menu = wx.Menu()
+        menu.Append(wx.ID_UNDO, _(u"Undo") + "\tCtrl+Z")
+        menu.Append(wx.ID_REDO, _(u"Redo") + "\tCtrl+Y")
+        menu.AppendSeparator()
+        menu.Append(wx.ID_CUT, _(u"Cut") + "\tCtrl+X")
+        menu.Append(wx.ID_COPY, _(u"Copy") + "\tCtrl+C")
+        menu.Append(wx.ID_PASTE, _(u"Paste") + "\tCtrl+V")
+        menu.AppendSeparator()
+        menu.Append(wx.ID_SELECTALL, _(u"Select All") + "\tCtrl+A")
+        return menu
 
     def _createGUI(self):
         # Main Sizer
@@ -350,14 +342,38 @@ class EditSnippetsDialogController(object):
 
         # Buttons
         self._dialog.closeBtn.Bind(wx.EVT_BUTTON, handler=self._onCloseBtn)
+
         self._dialog.addGroupBtn.Bind(wx.EVT_BUTTON, handler=self._onAddGroup)
+        self._dialog.Bind(wx.EVT_MENU,
+                          id=self._dialog.addGroupBtn.GetId(),
+                          handler=self._onAddGroup)
+
         self._dialog.addSnippetBtn.Bind(wx.EVT_BUTTON,
                                         handler=self._onAddSnippet)
+        self._dialog.Bind(wx.EVT_MENU,
+                          id=self._dialog.addSnippetBtn.GetId(),
+                          handler=self._onAddSnippet)
+
         self._dialog.removeBtn.Bind(wx.EVT_BUTTON, handler=self._onRemove)
+        self._dialog.Bind(wx.EVT_MENU,
+                          id=self._dialog.removeBtn.GetId(),
+                          handler=self._onRemove)
+
         self._dialog.renameBtn.Bind(wx.EVT_BUTTON, handler=self._onRenameClick)
+        self._dialog.Bind(wx.EVT_MENU,
+                          id=self._dialog.renameBtn.GetId(),
+                          handler=self._onRenameClick)
+
         self._dialog.runSnippetBtn.Bind(wx.EVT_BUTTON,
                                         handler=self._onRunSnippet)
+        self._dialog.Bind(wx.EVT_MENU,
+                          id=self._dialog.runSnippetBtn.GetId(),
+                          handler=self._onRunSnippet)
+
         self._dialog.openHelpBtn.Bind(wx.EVT_BUTTON, handler=self._onOpenHelp)
+        self._dialog.Bind(wx.EVT_MENU,
+                          id=self._dialog.openHelpBtn.GetId(),
+                          handler=self._onOpenHelp)
 
         self._dialog.insertVariableBtn.Bind(EVT_POPUP_BUTTON_MENU_CLICK,
                                             handler=self._onInsertVariable)
