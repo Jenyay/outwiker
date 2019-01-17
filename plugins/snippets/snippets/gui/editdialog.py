@@ -273,16 +273,18 @@ class EditSnippetsDialog(wx.Frame):
 
     def _createFileMenu(self):
         menu = wx.Menu()
-        menu.Append(self.addGroupBtn.GetId(), _(u"Add new snippets group"))
-        menu.Append(self.addSnippetBtn.GetId(), _(u"Create new snippet"))
-        menu.Append(self.renameBtn.GetId(), _(u"Rename"))
-        menu.Append(self.removeBtn.GetId(), _(u"Remove"))
-        menu.Append(self.runSnippetBtn.GetId(), _(u"Run snippet"))
+        menu.Append(self.addGroupBtn.GetId(),
+                    _(u"Add new snippets group") + '\tCtrl+Shift+N')
+        menu.Append(self.addSnippetBtn.GetId(),
+                    _(u"Create new snippet") + '\tCtrl+N')
+        menu.Append(self.renameBtn.GetId(), _(u"Rename") + '\tF2')
+        menu.Append(self.removeBtn.GetId(), _(u"Remove") + '\tCtrl+Del')
+        menu.Append(self.runSnippetBtn.GetId(), _(u"Run snippet") + '\tF5')
         return menu
 
     def _createHelpMenu(self):
         menu = wx.Menu()
-        menu.Append(self.openHelpBtn.GetId(), _(u"Open help..."))
+        menu.Append(self.openHelpBtn.GetId(), _(u"Open help...") + '\tF1')
         return menu
 
     def _createEditMenu(self):
