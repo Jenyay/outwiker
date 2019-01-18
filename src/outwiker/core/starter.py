@@ -29,6 +29,13 @@ class Starter(object):
         self._application = application
         self._commandLine = self.__parseCommandLine(sys.argv[1:])
 
+        self._config = GeneralGuiConfig(self._application.config)
+        debug_config = self._config.debug.value
+        debug_cl = self._commandLine.debug
+
+        self._application.sharedData[APP_DATA_DEBUG] = debug_cl or debug_config
+        self._application.sharedData[APP_DATA_DISABLE_MINIMIZING] = self._commandLine.disableMinimizing
+
     def processGUI(self):
         """
         Выполнить команды после создания GUI
@@ -53,15 +60,12 @@ class Starter(object):
             self.__processConsoleCommands()
 
     def __parseCommandLine(self, args):
-        cl = None
-
-        if len(args) > 0:
-            cl = CommandLine()
-            try:
-                cl.parseParams(args)
-            except CommandLineException:
-                print(cl.format_help())
-                raise StarterExit
+        cl = CommandLine()
+        try:
+            cl.parseParams(args)
+        except CommandLineException:
+            print(cl.format_help())
+            raise StarterExit
 
         return cl
 
@@ -76,14 +80,11 @@ class Starter(object):
             print(r"""OutWiker {ver}""".format(ver=str(getCurrentVersion())))
             raise StarterExit
 
-        self._application.sharedData[APP_DATA_DISABLE_MINIMIZING] = self._commandLine.disableMinimizing
-        self._application.sharedData[APP_DATA_DEBUG] = self._commandLine.debug
-
     def __openRecentWiki(self):
         """
         Открыть последнюю вики, если установлена соответствующая опция
         """
-        openRecent = GeneralGuiConfig(self._application.config).autoopen.value
+        openRecent = self._config.autoopen.value
 
         if openRecent and len(self._application.recentWiki) > 0:
             logger.debug('Open recently used wiki')

@@ -60,6 +60,10 @@ class Windows(System):
     def name(self):
         return u'windows'
 
+    @property
+    def python(self):
+        return 'python'
+
     def startFile(self, path):
         """
         Запустить программу по умолчанию для path
@@ -109,6 +113,10 @@ class Unix(System):
     @property
     def name(self):
         return u'unix'
+
+    @property
+    def python(self):
+        return 'python3'
 
     def startFile(self, path):
         """
@@ -290,8 +298,8 @@ def openInNewWindow(path, args=[]):
     """ Open wiki tree in the new OutWiker window
     """
     exeFile = getExeFile()
-
     params = [exeFile, path] + args
+    python = getOS().python
 
     logger.debug('openInNewWindow. Params: {}'.format(params))
 
@@ -301,6 +309,6 @@ def openInNewWindow(path, args=[]):
         DETACHED_PROCESS = 0x00000008
         subprocess.Popen(params, creationflags=DETACHED_PROCESS, env=env)
     elif exeFile.endswith(".py"):
-        subprocess.Popen(["python3"] + params, env=env)
+        subprocess.Popen([python] + params, env=env)
     else:
         subprocess.Popen(params, env=env)

@@ -24,18 +24,13 @@ class OutWikerApplication(wx.App):
     OutWiker application class
     """
     def __init__(self, application):
+        super().__init__()
         self.logFileName = u"outwiker.log"
         self._application = application
 
         config = TextPrintConfig(self._application.config)
         self.normalFont = config.fontName.value
         self.monoFont = config.fontName.value
-
-        if APP_DATA_DEBUG not in self._application.sharedData:
-            config = GeneralGuiConfig(self._application.config)
-            self._application.sharedData[APP_DATA_DEBUG] = config.debug.value
-
-        super().__init__()
 
     def OnInit(self):
         self.Bind(wx.EVT_QUERY_END_SESSION, self._onEndSession)

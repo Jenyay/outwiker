@@ -27,16 +27,17 @@ if __name__ == "__main__":
     config_path = getConfigPath()
     application = Application
     application.init(config_path)
+
     outwiker = OutWikerApplication(application)
+    locale = initLocale(outwiker.application.config)
+    starter = Starter(application)
 
     outwiker.initLogger()
     print_info()
 
-    locale = initLocale(outwiker.application.config)
     outwiker.initMainWindow()
     outwiker.loadPlugins()
 
-    starter = Starter(application)
     try:
         starter.processConsole()
     except StarterExit:

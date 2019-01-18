@@ -2,11 +2,10 @@
 
 import argparse
 
-from outwiker.core.system import getOS
 from outwiker.core.commands import getCurrentVersion
 
 
-class CommandLineException(BaseException):
+class CommandLineException(Exception):
     pass
 
 
@@ -41,7 +40,7 @@ class CommandLine(object):
     def _createParser(self):
         parser = _SilentParser(prog='outwiker',
                                description=self._description,
-                               epilog="(c) Eugeniy Ilin (aka Jenyay), 2010-2018. Released under the GNU GPL 3.",
+                               epilog="(c) Eugeniy Ilin (aka Jenyay), 2010-2019. Released under the GNU GPL 3.",
                                add_help=False)
 
         parser.add_argument('wikipath',
@@ -81,7 +80,8 @@ class CommandLine(object):
                             action='store_const',
                             const=True,
                             default=False,
-                            help=u"Enable debug mode")
+                            help=u"Enable debug mode",
+                            dest='debug')
 
         return parser
 
@@ -114,7 +114,6 @@ class CommandLine(object):
     @property
     def readonly(self):
         return self._namespace.readonly
-
 
     @property
     def version(self):
