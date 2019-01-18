@@ -37,17 +37,18 @@ if __name__ == "__main__":
     outwiker.initLogger(starter.isDebugMode)
     print_info()
 
-    outwiker.initMainWindow()
-
-    if starter.pluginsEnabled:
-        outwiker.loadPlugins()
-
     try:
         starter.processConsole()
     except StarterExit:
         outwiker.destroyMainWindow()
     else:
         logger.debug('Run GUI mode')
+
+        outwiker.initMainWindow()
+
+        if starter.pluginsEnabled:
+            outwiker.loadPlugins()
+
         outwiker.showMainWindow(starter.allowMinimizingMainWindow)
         outwiker.bindActivateApp()
         starter.processGUI()

@@ -30,7 +30,7 @@ class CommandLine(object):
 
     def parseParams(self, args):
         """
-        args - параметры командной строки(исключая outwiker.py или outwiker.exe), т.е. это argv[1:]
+        args - параметры командной строки (исключая outwiker.py или outwiker.exe), т.е. это argv[1:]
         """
         try:
             self._namespace = self._parser.parse_args(args)

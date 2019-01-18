@@ -59,13 +59,6 @@ class Starter(object):
             if self._application.wikiroot is not None and page is not None:
                 self._application.selectedPage = page
 
-    def processConsole(self):
-        """
-        Выполнить команды командной строки до создания интерфейса
-        """
-        if self._commandLine is not None:
-            self.__processConsoleCommands()
-
     def __parseCommandLine(self, args):
         cl = CommandLine()
         try:
@@ -76,7 +69,10 @@ class Starter(object):
 
         return cl
 
-    def __processConsoleCommands(self):
+    def processConsole(self):
+        """
+        Выполнить команды командной строки до создания интерфейса
+        """
         # Вывод справки
         if self._commandLine.help:
             print(self._commandLine.format_help())
