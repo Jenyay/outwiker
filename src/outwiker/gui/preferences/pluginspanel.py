@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 
-import wx
-import wx.adv
 import logging
 
+import wx
+import wx.adv
+import wx.html2
+
 from outwiker.gui.guiconfig import PluginsConfig
-from outwiker.core.system import getCurrentDir, getOS
+from outwiker.core.system import getCurrentDir
 from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
 
 logger = logging.getLogger('pluginspanel')
@@ -36,28 +38,9 @@ class PluginsPanel(BasePrefPanel):
             _(u"Download more plugins"),
             _(u"https://jenyay.net/Outwiker/PluginsEn"))
 
-        # Панель, которая потом заменится на HTML-рендер
-        self.__blankPanel = wx.Panel(self)
-        self.__blankPanel.SetMinSize((self.__htmlMinWidth, -1))
-
-        self.__pluginsInfo = None
+        self.pluginsInfo = wx.html2.WebView.New(self)
 
         self.__layout()
-
-    @property
-    def pluginsInfo(self):
-        if self.__pluginsInfo is None:
-            # Удалим пустую панель, а вместо нее добавим HTML-рендер
-            self.pluginsSizer.Detach(self.__blankPanel)
-            self.__blankPanel.Destroy()
-
-            self.__pluginsInfo = getOS().getHtmlRender(self)
-            self.__pluginsInfo.SetMinSize((self.__htmlMinWidth, -1))
-
-            self.pluginsSizer.Insert(1, self.__pluginsInfo, flag=wx.EXPAND)
-            self.Layout()
-
-        return self.__pluginsInfo
 
     def __layout(self):
         self.mainSizer = wx.FlexGridSizer(cols=1)
@@ -69,7 +52,7 @@ class PluginsPanel(BasePrefPanel):
         self.pluginsSizer.AddGrowableCol(0)
         self.pluginsSizer.AddGrowableCol(1)
         self.pluginsSizer.Add(self.pluginsList, flag=wx.EXPAND)
-        self.pluginsSizer.Add(self.__blankPanel, flag=wx.EXPAND)
+        self.pluginsSizer.Add(self.pluginsInfo, flag=wx.EXPAND)
 
         self.mainSizer.Add(self.pluginsSizer,
                            flag=wx.ALL | wx.EXPAND,
