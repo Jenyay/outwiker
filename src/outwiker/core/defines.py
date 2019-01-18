@@ -40,10 +40,11 @@ PLUGIN_VERSION_FILE_NAME = u'plugin.xml'
 # Anchor for transition during the opening other page
 APP_DATA_KEY_ANCHOR = u'__anchor'
 
-# Debug mode
 APP_DATA_DEBUG = u'__debug'
 
 APP_DATA_DISABLE_MINIMIZING = u'__disableMinimizing'
+
+APP_DATA_DISABLE_PLUGINS = '__disablePlugins'
 
 ICONS_STD_PREFIX = u'__std_'
 ICONS_EXTENSIONS = [u'png', u'jpg', u'jpeg', u'gif', u'bmp', u'ico']

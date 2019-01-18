@@ -83,6 +83,13 @@ class CommandLine(object):
                             help=u"Enable debug mode",
                             dest='debug')
 
+        parser.add_argument('--disable-plugins',
+                            action='store_const',
+                            const=True,
+                            default=False,
+                            help=u"Disable all plug-ins",
+                            dest='disablePlugins')
+
         return parser
 
     @property
@@ -126,6 +133,10 @@ class CommandLine(object):
     @property
     def debug(self):
         return self._namespace.debug
+
+    @property
+    def disablePlugins(self):
+        return self._namespace.disablePlugins
 
     def format_help(self):
         """

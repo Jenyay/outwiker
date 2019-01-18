@@ -5,6 +5,7 @@ import logging
 import os
 
 from outwiker.core.application import Application
+from outwiker.core.defines import APP_DATA_DEBUG
 from outwiker.core.system import getOS, getConfigPath
 from outwiker.core.i18n import initLocale
 from outwiker.core.starter import Starter, StarterExit
@@ -32,11 +33,14 @@ if __name__ == "__main__":
     locale = initLocale(outwiker.application.config)
     starter = Starter(application)
 
-    outwiker.initLogger()
+    application.sharedData[APP_DATA_DEBUG] = starter.isDebugMode
+    outwiker.initLogger(starter.isDebugMode)
     print_info()
 
     outwiker.initMainWindow()
-    outwiker.loadPlugins()
+
+    if starter.pluginsEnabled:
+        outwiker.loadPlugins()
 
     try:
         starter.processConsole()
@@ -44,7 +48,7 @@ if __name__ == "__main__":
         outwiker.destroyMainWindow()
     else:
         logger.debug('Run GUI mode')
-        outwiker.showMainWindow()
+        outwiker.showMainWindow(starter.allowMinimizingMainWindow)
         outwiker.bindActivateApp()
         starter.processGUI()
         outwiker.MainLoop()

@@ -6,7 +6,6 @@ import sys
 from outwiker.core.commands import openWiki, findPage
 from outwiker.core.commandline import CommandLine, CommandLineException
 from outwiker.core.commands import getCurrentVersion
-from outwiker.core.defines import APP_DATA_DISABLE_MINIMIZING, APP_DATA_DEBUG
 from outwiker.gui.guiconfig import GeneralGuiConfig
 
 
@@ -28,13 +27,21 @@ class Starter(object):
     def __init__(self, application):
         self._application = application
         self._commandLine = self.__parseCommandLine(sys.argv[1:])
-
         self._config = GeneralGuiConfig(self._application.config)
+
+    @property
+    def isDebugMode(self):
         debug_config = self._config.debug.value
         debug_cl = self._commandLine.debug
+        return debug_cl or debug_config
 
-        self._application.sharedData[APP_DATA_DEBUG] = debug_cl or debug_config
-        self._application.sharedData[APP_DATA_DISABLE_MINIMIZING] = self._commandLine.disableMinimizing
+    @property
+    def pluginsEnabled(self):
+        return not self._commandLine.disablePlugins
+
+    @property
+    def allowMinimizingMainWindow(self):
+        return not self._commandLine.disableMinimizing
 
     def processGUI(self):
         """

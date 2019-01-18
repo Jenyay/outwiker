@@ -9,13 +9,10 @@ import wx
 import wx.html
 
 from outwiker.core.commands import registerActions
-from outwiker.core.defines import APP_DATA_DEBUG, APP_DATA_DISABLE_MINIMIZING
 from outwiker.core.logredirector import LogRedirector
 from outwiker.core.system import getPluginsDirList
 from outwiker.gui.actioncontroller import ActionController
-from outwiker.gui.guiconfig import (GeneralGuiConfig,
-                                    TrayConfig,
-                                    TextPrintConfig)
+from outwiker.gui.guiconfig import TrayConfig, TextPrintConfig
 from outwiker.gui.mainwindow import MainWindow
 
 
@@ -64,21 +61,17 @@ class OutWikerApplication(wx.App):
     def loadPlugins(self):
         self._application.plugins.load(getPluginsDirList())
 
-    def showMainWindow(self):
+    def showMainWindow(self, allowMinimizingMainWindow=True):
         config = TrayConfig(self._application.config)
-        if (config.startIconized.value and not
-                self._application.sharedData.get(APP_DATA_DISABLE_MINIMIZING,
-                                                 False)):
+        if config.startIconized.value and allowMinimizingMainWindow:
             self.mainWnd.Iconize(True)
         else:
             self.mainWnd.Show()
 
         self.mainWnd.taskBarIconController.updateTrayIcon()
 
-    def initLogger(self):
-        level = (logging.DEBUG
-                 if self._application.sharedData.get(APP_DATA_DEBUG, False)
-                 else logging.WARNING)
+    def initLogger(self, debugMode=False):
+        level = logging.DEBUG if debugMode else logging.WARNING
 
         redirector = LogRedirector(
             self.getLogFileName(self._application.fullConfigPath),
