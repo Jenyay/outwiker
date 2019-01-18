@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import wx
+import wx.html2
 
-from outwiker.gui.htmlrenderfactory import getHtmlRender
 from outwiker.core.system import getCurrentDir
 
 from .i18n import get_
@@ -63,19 +63,7 @@ class TreeStatDialog(wx.Dialog):
         mainSizer.AddGrowableCol(0)
         mainSizer.AddGrowableRow(0)
 
-        self._htmlRender = getHtmlRender(self)
-
-        # Шаманство, связанное с тем, что HTML-рендер ожидает,
-        # что есть выбранная страница.
-        # Если бы ему это было не обязательно, то достаточно
-        # было бы использовать только следующую строку
-        # self._htmlRender.page = self._application.selectedPage
-
-        if self._application.selectedPage is not None:
-            self._htmlRender.page = self._application.selectedPage
-        elif len(self._application.wikiroot.children) != 0:
-            self._htmlRender.page = self._application.wikiroot.children[0]
-
+        self._htmlRender = wx.html2.WebView.New(self)
         mainSizer.Add(self._htmlRender, flag=wx.EXPAND | wx.ALL, border=4)
 
         # Кнопка Ok
@@ -89,12 +77,6 @@ class TreeStatDialog(wx.Dialog):
         self.Layout()
 
     def _updateStatistics(self):
-        # Шаманство, связанное с тем, что HTML-рендер ожидает,
-        # что есть выбранная страница
-        if self._htmlRender.page is None:
-            self._setHtml(_(u"A tree has no pages"))
-            return
-
         self._setHtml(_(u"Collecting statistics. Please wait..."))
 
         runner = LongProcessRunner(self._getContent,
@@ -115,7 +97,6 @@ class TreeStatDialog(wx.Dialog):
         """
         infoList = [
             PageCountInfo(self._treestat.pageCount),
-            MaxDepthInfo(self._treestat.maxDepth),
             TagsInfo(self._treestat.frequentTags,
                      self._itemsCount),
             DatePageInfo(self._treestat.pageDate,
@@ -124,7 +105,8 @@ class TreeStatDialog(wx.Dialog):
             PageContentLengthInfo(self._treestat.pageContentLength,
                                   self._itemsCount),
             PageAttachmentSizeInfo(self._treestat.pageAttachmentsSize,
-                                   self._itemsCount)
+                                   self._itemsCount),
+            MaxDepthInfo(self._treestat.maxDepth),
         ]
 
         return u"".join([info.content for info in infoList])
