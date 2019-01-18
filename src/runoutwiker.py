@@ -3,6 +3,7 @@
 
 import logging
 import os
+import sys
 
 from outwiker.core.application import Application
 from outwiker.core.defines import APP_DATA_DEBUG
@@ -31,7 +32,11 @@ if __name__ == "__main__":
 
     outwiker = OutWikerApplication(application)
     locale = initLocale(outwiker.application.config)
-    starter = Starter(application)
+
+    try:
+        starter = Starter(application)
+    except StarterExit:
+        sys.exit(1)
 
     application.sharedData[APP_DATA_DEBUG] = starter.isDebugMode
     outwiker.initLogger(starter.isDebugMode)
@@ -41,17 +46,18 @@ if __name__ == "__main__":
         starter.processConsole()
     except StarterExit:
         outwiker.destroyMainWindow()
-    else:
-        logger.debug('Run GUI mode')
+        sys.exit(0)
 
-        outwiker.initMainWindow()
+    logger.debug('Run GUI mode')
 
-        if starter.pluginsEnabled:
-            outwiker.loadPlugins()
+    outwiker.initMainWindow()
 
-        outwiker.showMainWindow(starter.allowMinimizingMainWindow)
-        outwiker.bindActivateApp()
-        starter.processGUI()
-        outwiker.MainLoop()
+    if starter.pluginsEnabled:
+        outwiker.loadPlugins()
+
+    outwiker.showMainWindow(starter.allowMinimizingMainWindow)
+    outwiker.bindActivateApp()
+    starter.processGUI()
+    outwiker.MainLoop()
 
     logger.debug('Exit')
