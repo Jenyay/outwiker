@@ -1,6 +1,6 @@
 Программа outwiker может принимать параметры командной строки. Формат аргументов следующий:
 
-[>[@outwiker [-h] [-v] [-r] [--normal] [-p page] [ path ]@]<]
+[>[@outwiker [--page PAGE] [--help] [--version] [--readonly] [--normal] [--debug] [--disable-plugins] [path]@]<]
 
 '''path''' - путь до дерева заметок. Например: 
 
@@ -26,3 +26,5 @@ outwiker.exe --page="[=page://__1640eea0-1bb0-453b-ba4c-07f1c298ce76=]" "C:\temp
 '''--normal''' - Не минимизировать главное окно OutWiker при запуске.
 
 '''--debug''' - Запуск в режиме отладки.
+
+'''--disable-plugins''' - Не загружать установленные плагины.

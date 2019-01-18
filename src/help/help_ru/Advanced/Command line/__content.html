@@ -3,6 +3,7 @@
 <head>
 	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
 	<meta http-equiv='content-type' content='text/html; charset=utf-8'/>
+	<title>Параметры командной строки</title>
 
 	<style type='text/css'>
 		body, div, p, table {
@@ -17,25 +18,37 @@
 </head>
 
 <body>
-<p>Программа outwiker может принимать параметры командной строки. Формат аргументов следующий:</p>
+Программа outwiker может принимать параметры командной строки. Формат аргументов следующий:<br/>
+<br/>
 <blockquote>
-<pre>outwiker [-h] [-v] [-r] [--normal] [-p page] [ path ]</pre>
-</blockquote>
-<p><b>path</b> - путь до дерева заметок. Например:</p>
-<blockquote>
-<p>outwiker.exe "C:\temp\samplewiki"</p>
-<p>outwiker.exe "C:\temp\samplewiki\__page.opt"</p>
-</blockquote>
-<p><b>-p, --page</b> - UID или относительный путь до страницы, которую нужно открыть при запуске OutWiker. Например:</p>
-<blockquote>
-<p>outwiker.exe --page="Страница 1/Страница 2/Страница 3" "C:\temp\samplewiki"</p>
-<p>outwiker.exe -p "Страница 1/Страница 2/Страница 3" "C:\temp\samplewiki"</p>
-<p>outwiker.exe --page="page://__1640eea0-1bb0-453b-ba4c-07f1c298ce76" "C:\temp\samplewiki"</p>
-</blockquote>
-<p><b>-h, --help</b> - Показать справку по параметрам командной строки.</p>
-<p><b>-v, --version</b> - Показать версию OutWiker.</p>
-<p><b>-r, --readonly</b> - Открыть дерево заметок в режиме "только для чтения".</p>
-<p><b>--normal</b> - Не минимизировать главное окно OutWiker при запуске.</p>
-<p><b>--debug</b> - Запуск в режиме отладки.</p>
+<pre>outwiker [--page PAGE] [--help] [--version] [--readonly] [--normal] [--debug] [--disable-plugins] [path]</pre>
+</blockquote><br/>
+<br/>
+<b>path</b> - путь до дерева заметок. Например: <br/>
+<br/>
+<blockquote>outwiker.exe "C:\temp\samplewiki"<br/>
+<br/>
+outwiker.exe "C:\temp\samplewiki\__page.opt"</blockquote><br/>
+<br/>
+<b>-p, --page</b> - UID или относительный путь до страницы, которую нужно открыть при запуске OutWiker. Например:<br/>
+<br/>
+<blockquote>outwiker.exe --page="Страница 1/Страница 2/Страница 3" "C:\temp\samplewiki"<br/>
+<br/>
+outwiker.exe -p "Страница 1/Страница 2/Страница 3" "C:\temp\samplewiki"<br/>
+<br/>
+outwiker.exe --page="page://__1640eea0-1bb0-453b-ba4c-07f1c298ce76" "C:\temp\samplewiki"<br/>
+</blockquote><br/>
+<br/>
+<b>-h, --help</b> - Показать справку по параметрам командной строки.<br/>
+<br/>
+<b>-v, --version</b> - Показать версию OutWiker.<br/>
+<br/>
+<b>-r, --readonly</b> - Открыть дерево заметок в режиме "только для чтения".<br/>
+<br/>
+<b>--normal</b> - Не минимизировать главное окно OutWiker при запуске.<br/>
+<br/>
+<b>--debug</b> - Запуск в режиме отладки.<br/>
+<br/>
+<b>--disable-plugins</b> - Не загружать установленные плагины.
 </body>
 </html>
