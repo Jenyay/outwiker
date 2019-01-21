@@ -45,7 +45,6 @@ if __name__ == "__main__":
     try:
         starter.processConsole()
     except StarterExit:
-        outwiker.destroyMainWindow()
         sys.exit(0)
 
     logger.debug('Run GUI mode')
