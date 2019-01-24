@@ -8,17 +8,17 @@ environment:
     PIPENV_IGNORE_VIRTUALENVS: 1
 stack: Python 3.5.6
 init:
-    - cmd: py -m pip install --upgrade pip==18.1
     - cmd: py -m pip install pipenv
     - sh: sudo apt-get -y update
     - sh: sudo apt-get -y install python3-pip python3-dev debhelper devscripts debhelper devscripts p7zip-full libssl-dev dpkg-dev build-essential libjpeg-dev libtiff-dev libsdl1.2-dev libnotify-dev freeglut3 ibus-gtk3 xvfb libhunspell-dev
     # - sh: sudo apt-get -y install libwebkit2gtk-4.0
     - sh: sudo apt-get -y install libwebkitgtk-3.0
-    - sh: python3 -m pip install --upgrade pip==18.1
     - sh: python3 -m pip install --user pipenv
 install:
     - cmd: cinst innosetup
+    - cmd: py -m pipenv run pip install --no-use-pep517 PyInstaller==3.4
     - cmd: py -m pipenv update --dev
+    - sh: pipenv run pip install --no-use-pep517 PyInstaller==3.4
     - sh: pipenv run pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-16.04 wxPython==4.0.1
     - sh: pipenv update --dev
 build_script:
