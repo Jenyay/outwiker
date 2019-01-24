@@ -7,7 +7,10 @@
 		<website>https://jenyay.net/Outwiker/UnstableEn</website>
 
 		<changelog>
-			<version number="3.0.0.857" status="dev">
+			<version number="3.0.0.858" status="dev" date="January 24, 2019">
+				<change>Add list autocomplete for wiki pages.</change>
+				<change>Add "--disable-plugins" command line parameter.</change>
+				<change>New events for API.</change>
 				<change>Fix errors.</change>
 			</version>
 
@@ -105,7 +108,10 @@
 		<website>https://jenyay.net/Outwiker/Unstable</website>
 
 		<changelog>
-			<version number="3.0.0.857" status="dev">
+			<version number="3.0.0.858" status="dev" date="24.01.2019">
+				<change>Добавлено автодополнение списков для викистраниц.</change>
+				<change>Добавлен параметр командной строки "--disable-plugins".</change>
+				<change>Новые события в API.</change>
 				<change>Исправление ошибок.</change>
 			</version>
 
