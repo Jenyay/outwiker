@@ -88,11 +88,7 @@ Attach:us.png [[English version -> Outwiker/SourcePluginEn]]
 
 !!! Скриншоты
 
-(:thumbgallery cols=2 px=200:)
-source_scr_dialog_1.png
-source_scr_dialog_2.png
-source_params.png
-(:thumbgalleryend:)
+%center% %thumb width=450%Attach:source_scr_dialog_1_ru.png%% %thumb width=450%Attach:source_scr_dialog_2_ru.png%% %thumb width=450%Attach:source_scr_params_ru.png%%
 
 {% include 'changelog.ru.txt' %}
 
