@@ -27,6 +27,15 @@
 			<site>https://jenyay.net</site>
 		</author>
 		<changelog>
+            <version number="2.5.1">
+				<requirements>
+					<api>2.858</api>
+				</requirements>
+
+                <download os="all">https://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.5.1.zip</download>
+				<change>Update the Ukrainian localization.</change>
+			</version>
+
             <version number="2.5" date="January 24, 2019">
 				<requirements>
 					<api>2.858</api>
@@ -131,6 +140,15 @@
 		</author>
 
 		<changelog>
+            <version number="2.5.1">
+				<requirements>
+					<api>2.858</api>
+				</requirements>
+
+                <download os="all">https://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.5.1.zip</download>
+				<change>Обновление украинской локализации.</change>
+			</version>
+
             <version number="2.5" date="24.01.2019">
 				<requirements>
 					<api>2.858</api>

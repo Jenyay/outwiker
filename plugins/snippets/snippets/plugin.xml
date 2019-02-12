@@ -28,6 +28,16 @@
 		</author>
 
 		<changelog>
+			<version number="1.3.2">
+				<requirements>
+					<api>2.858</api>
+				</requirements>
+
+                <download os="all">https://jenyay.net/uploads/Outwiker/Snippets/snippets-1.3.2.zip</download>
+				<change>Update the Ukrainian localization.</change>
+				<change>Update the German localization.</change>
+            </version>
+
             <version number="1.3.1" date="January 24, 2019">
 				<requirements>
 					<api>2.858</api>
@@ -86,6 +96,16 @@
 		</author>
 
 		<changelog>
+			<version number="1.3.2">
+				<requirements>
+					<api>2.858</api>
+				</requirements>
+
+                <download os="all">https://jenyay.net/uploads/Outwiker/Snippets/snippets-1.3.2.zip</download>
+				<change>Обновление украинской локализации.</change>
+				<change>Обновление немецкой локализации.</change>
+            </version>
+
 			<version number="1.3.1" date="24.01.2019">
 				<requirements>
 					<api>2.858</api>

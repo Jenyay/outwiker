@@ -3,14 +3,18 @@ msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-11-16 21:52+0300\n"
-"PO-Revision-Date: 2018-08-23 13:36+0300\n"
-"Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
+"PO-Revision-Date: 2019-02-12 08:43+0300\n"
+"Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.6\n"
+"Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
+"X-Generator: Poedit 2.1.1\n"
+"X-Crowdin-Project: outwiker\n"
+"X-Crowdin-Language: uk\n"
+"X-Crowdin-File: source.pot\n"
 
 #: controller.py:87
 msgid "Source [Plugin]"
@@ -66,11 +70,11 @@ msgstr "Кодування файлу"
 
 #: lang_translate.py:4
 msgid "1S"
-msgstr ""
+msgstr "1С"
 
 #: lang_translate.py:5
 msgid "Text only"
-msgstr ""
+msgstr "Лише текст"
 
 #: commandsource.py:73
 #, python-brace-format
@@ -91,19 +95,15 @@ msgstr "Авто"
 
 #: insertdialogcontroller.py:67
 msgid "Add other language"
-msgstr ""
+msgstr "Додати іншу мову"
 
 #: insertdialogcontroller.py:310
 msgid "Other..."
-msgstr ""
+msgstr "Інший..."
 
 #: plugin.py:47
-msgid ""
-"Add command (:source:) in wiki parser. This command highlight your source "
-"code."
-msgstr ""
-"Додаток додає вікі-команду (:source:) для розфарбовування тексту програми на "
-"різних мовах програмування."
+msgid "Add command (:source:) in wiki parser. This command highlight your source code."
+msgstr "Додаток додає вікі-команду (:source:) для розфарбовування тексту програми на різних мовах програмування."
 
 #: plugin.py:49
 msgid ""
@@ -126,8 +126,7 @@ msgid ""
 "\n"
 "<U>file</U> - attached source file\n"
 "\n"
-"<U>encoding</U> - encoding of the attached source file (default encoding - "
-"utf8)\n"
+"<U>encoding</U> - encoding of the attached source file (default encoding - utf8)\n"
 "\n"
 "<U>style</U> - style of hightlighting\n"
 "\n"
@@ -142,8 +141,7 @@ msgstr ""
 "\n"
 "<U>file</U> - долучений файл з текстом програми\n"
 "\n"
-"<U>encoding</U> - кодування долученого файлу з текстом програми (кодування "
-"за замовчуванням - utf8)\n"
+"<U>encoding</U> - кодування долученого файлу з текстом програми (кодування за замовчуванням - utf8)\n"
 "\n"
 "<U>style</U> - стиль оформлення, що використовується\n"
 "\n"
@@ -214,22 +212,18 @@ msgstr ""
 #: plugin.py:96
 msgid ""
 "<B>Example 4:</B>\n"
-"<PRE>(:source file=\"Attach:example.cs\" encoding=\"cp1251\":)(:sourceend:)</"
-"PRE>"
+"<PRE>(:source file=\"Attach:example.cs\" encoding=\"cp1251\":)(:sourceend:)</PRE>"
 msgstr ""
 "<B>Приклад 4:</B>\n"
-"<PRE>(:source file=\"Attach:example.cs\" encoding=\"cp1251\":)(:sourceend:)</"
-"PRE>"
+"<PRE>(:source file=\"Attach:example.cs\" encoding=\"cp1251\":)(:sourceend:)</PRE>"
 
 #: plugin.py:99
 msgid ""
 "<B>Example 5:</B>\n"
-"<PRE>(:source file=\"Attach:example.txt\" lang=\"python\":)(:sourceend:)</"
-"PRE>"
+"<PRE>(:source file=\"Attach:example.txt\" lang=\"python\":)(:sourceend:)</PRE>"
 msgstr ""
 "<B>Приклад 5:</B>\n"
-"<PRE>(:source file=\"Attach:example.txt\" lang=\"python\":)(:sourceend:)</"
-"PRE>"
+"<PRE>(:source file=\"Attach:example.txt\" lang=\"python\":)(:sourceend:)</PRE>"
 
 #: plugin.py:127
 msgid "https://jenyay.net/Outwiker/SourcePluginEn"
@@ -240,11 +234,8 @@ msgid "Source Code (:source ...:)"
 msgstr "Текст програми (:source ...:)"
 
 #: actions.py:34
-msgid ""
-"Source plugin. Insert (: source... :) command for source code highlighting"
-msgstr ""
-"Додаток Source. Вставка команди (:source... :), призначеної для "
-"розфарбовування програмного коду"
+msgid "Source plugin. Insert (: source... :) command for source code highlighting"
+msgstr "Додаток Source. Вставка команди (:source... :), призначеної для розфарбовування програмного коду"
 
 #: preferencepanel.py:54
 msgid "Default Tab Width"
@@ -265,6 +256,3 @@ msgstr "Виділити все"
 #: preferencepanel.py:143
 msgid "Clear"
 msgstr "Очистити"
-
-#~ msgid "http://jenyay.net/Outwiker/SourcePluginEn"
-#~ msgstr "http://jenyay.net/Outwiker/SourcePlugin"

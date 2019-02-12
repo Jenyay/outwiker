@@ -2,17 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-23 12:51+0300\n"
-"PO-Revision-Date: 2018-08-23 13:44+0300\n"
+"POT-Creation-Date: 2018-08-23 13:06+0300\n"
+"PO-Revision-Date: 2019-02-12 08:43+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 2.0.6\n"
+"Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
+"X-Generator: Poedit 2.1.1\n"
 "X-Crowdin-Project: outwiker\n"
 "X-Crowdin-Language: uk\n"
 "X-Crowdin-File: updatenotifier.pot\n"
@@ -47,54 +46,51 @@ msgstr "Детальніше"
 
 #: updatecontroller.py:137
 msgid "Update"
-msgstr ""
+msgstr "Оновити"
 
 #: updatecontroller.py:138
 msgid "Install"
-msgstr ""
+msgstr "Встановити"
 
 #: updatecontroller.py:139
 msgid "Uninstall"
-msgstr ""
+msgstr "Видалити"
 
 #: updatecontroller.py:193 versionlist.py:73
 msgid "__updateLang"
 msgstr "ru"
 
 #: updatecontroller.py:347
-msgid ""
-"The download link was not found in plugin description. Please update plugin "
-"manually"
-msgstr ""
+msgid "The download link was not found in plugin description. Please update plugin manually"
+msgstr "Посилання на завантаження в описі додатку не знайдено. Будь ласка, оновіть додаток вручну"
 
 #: updatecontroller.py:351 updatecontroller.py:368
 msgid "Plugin was NOT updated. Please update plugin manually"
-msgstr ""
+msgstr "Додаток НЕ оновлено. Будь ласка, оновіть додаток вручну"
 
 #: updatecontroller.py:395
-msgid ""
-"The plugin description can't be downloaded. Please install plugin manually"
-msgstr ""
+msgid "The plugin description can't be downloaded. Please install plugin manually"
+msgstr "Опис додатку не може бути завантажений. Будь ласка, встановіть додаток вручну"
 
 #: updatecontroller.py:402
 msgid "The plugin required newer version of OutWiker. Please update OutWiker"
-msgstr ""
+msgstr "Додатку потрібна новіша версія OutWiker. Будь ласка, оновіть OutWiker"
 
 #: updatecontroller.py:409
-msgid ""
-"The download link was not found in plugin description. Please install plugin "
-"manually"
-msgstr ""
+msgid "The download link was not found in plugin description. Please install plugin manually"
+msgstr "Не знайдено посилання на завантаження в описі додатку. Будь ласка, встановіть додаток вручну"
 
 #: updatecontroller.py:430
 msgid "Plugin was NOT Installed. Please update plugin manually"
-msgstr ""
+msgstr "Додаток НЕ встановлено. Оновіть додаток вручну"
 
 #: updatecontroller.py:454 updatecontroller.py:477
 msgid ""
 "Plugin's folder can't be deleted. Please delete the following path: \n"
 " {}"
 msgstr ""
+"Не можна видалити папку плагіна. Будь ласка, видаліть наступний шлях: \n"
+" {}"
 
 #: plugin.py:32
 msgid ""
@@ -169,12 +165,3 @@ msgstr "Щомісяця"
 #: prefpanelcontroller.py:53
 msgid "Custom"
 msgstr "Інше"
-
-#~ msgid "Download"
-#~ msgstr "Завантажити"
-
-#~ msgid "Updates not found"
-#~ msgstr "Оновлення не знайдено"
-
-#~ msgid "http://jenyay.net/Outwiker/UpdateNotifierEn"
-#~ msgstr "http://jenyay.net/Outwiker/UpdateNotifier"
