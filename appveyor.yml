@@ -16,9 +16,7 @@ init:
     - sh: python3 -m pip install --user pipenv
 install:
     - cmd: cinst innosetup
-    - cmd: py -m pipenv run pip install --no-use-pep517 PyInstaller==3.4
     - cmd: py -m pipenv update --dev
-    - sh: pipenv run pip install --no-use-pep517 PyInstaller==3.4
     - sh: pipenv run pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-16.04 wxPython==4.0.1
     - sh: pipenv update --dev
 build_script:
