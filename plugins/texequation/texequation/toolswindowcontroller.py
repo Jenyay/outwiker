@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from typing import Tuple
+
 import wx.aui
 
 from outwiker.utilites.text import positionInside
@@ -81,27 +83,29 @@ class ToolsWindowController(object):
             self._application.mainWindow.UpdateAuiManager()
 
     def _updateEquation(self, text, position):
-        equation = self.extractEquation(text, position)
+        equation, blockMode = self.extractEquation(text, position)
         assert self._toolsPane is not None
 
-        self._toolsPane.setEquation(equation)
+        self._toolsPane.setEquation(equation, blockMode)
         self._application.mainWindow.Raise()
 
     @staticmethod
-    def extractEquation(text: str, position: int):
+    def extractEquation(text: str, position: int) -> Tuple[str, bool]:
         left_token = InlineTexToken.texStart
         right_token = InlineTexToken.texEnd
         left_pos = text.rfind(left_token, 0, position)
         right_pos = text.find(right_token, position)
 
+        blockMode = False
         if left_pos == -1 or right_pos == -1:
-            return ''
+            return ('', blockMode)
 
         equation = text[left_pos + len(left_token): right_pos]
         if equation.startswith('$') and equation.endswith('$'):
             equation = equation[1:-1]
+            blockMode = True
 
-        return equation
+        return (equation, blockMode)
 
     def _onPaneClose(self, event):
         paneName = event.GetPane().name

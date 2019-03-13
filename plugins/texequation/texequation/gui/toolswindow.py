@@ -23,7 +23,7 @@ class ToolsPanel(wx.Panel):
     def __init__(self, parent):
         super().__init__(parent)
 
-        self._oldEquation = ''
+        self._oldEquationHash = ''
         self._template_fname = str(Path(__file__).parents[1].joinpath('data', 'equation.html'))
         self._katexdir = 'file://' + str(Path(__file__).parents[1].joinpath('tools', KATEX_DIR_NAME)).replace('\\', '/')
         self._firstLoad = True
@@ -43,24 +43,29 @@ class ToolsPanel(wx.Panel):
         self.SetSizer(mainSizer)
         self.Layout()
 
-    def setEquation(self, equation: str) -> None:
+    def _getEquationHash(self, equation: str, blockMode: bool) -> str:
+        return '{}{}'.format(equation, blockMode)
+
+    def setEquation(self, equation: str, blockMode: bool) -> None:
         '''
         Update equation in the preview window if equation was changed
         '''
-        if equation == self._oldEquation:
+        equationHash = self._getEquationHash(equation, blockMode)
+
+        if equationHash == self._oldEquationHash:
             return
 
-        self._oldEquation = equation
+        self._oldEquationHash = equationHash
         equation = equation.replace('\\', '\\\\')
         equation = equation.replace('"', '\\"')
-        html = self._getHTML(equation)
+        html = self._getHTML(equation, blockMode)
         path = "file://" + urllib.parse.quote(os.path.abspath('.').replace('\\', '/')) + "/"
         self._htmlRender.SetPage(html, path)
         if self._firstLoad and getOS().name == 'windows':
             self._htmlRender.Reload()
             self._firstLoad = False
 
-    def _getHTML(self, equation):
+    def _getHTML(self, equation: str, blockMode: bool):
         try:
             template_str = readTextFile(self._template_fname)
         except IOError as e:
@@ -70,8 +75,11 @@ class ToolsPanel(wx.Panel):
 
         template = MyTemplate(template_str)
         katexdir = self._katexdir
+        blockModeStr = str(blockMode).lower()
 
-        return template.safe_substitute(katexdir=katexdir, equation=equation)
+        return template.safe_substitute(katexdir=katexdir,
+                                        equation=equation,
+                                        blockMode=blockModeStr)
 
 
 class ToolsPane(MainPane):
@@ -102,5 +110,5 @@ class ToolsPane(MainPane):
 
         return pane
 
-    def setEquation(self, equation: str) -> None:
-        self.panel.setEquation(equation)
+    def setEquation(self, equation: str, blockMode: bool) -> None:
+        self.panel.setEquation(equation, blockMode)

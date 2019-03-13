@@ -34,8 +34,10 @@ class TexEquationToolsWindowTest(unittest.TestCase, BaseOutWikerGUIMixin):
         text = ''
         position = 0
 
-        equation = ToolsWindowController.extractEquation(text, position)
+        equation, blockMode = ToolsWindowController.extractEquation(text,
+                                                                    position)
         self.assertEqual(equation, '')
+        self.assertFalse(blockMode)
 
     def test_equationExtract_miss_01(self):
         from texequation.toolswindowcontroller import ToolsWindowController
@@ -43,8 +45,10 @@ class TexEquationToolsWindowTest(unittest.TestCase, BaseOutWikerGUIMixin):
         text = '{$a=b$}'
         position = 0
 
-        equation = ToolsWindowController.extractEquation(text, position)
+        equation, blockMode = ToolsWindowController.extractEquation(text,
+                                                                    position)
         self.assertEqual(equation, '')
+        self.assertFalse(blockMode)
 
     def test_equationExtract_inline_01(self):
         from texequation.toolswindowcontroller import ToolsWindowController
@@ -52,8 +56,10 @@ class TexEquationToolsWindowTest(unittest.TestCase, BaseOutWikerGUIMixin):
         text = '{$a=b$}'
         position = 2
 
-        equation = ToolsWindowController.extractEquation(text, position)
+        equation, blockMode = ToolsWindowController.extractEquation(text,
+                                                                    position)
         self.assertEqual(equation, 'a=b')
+        self.assertFalse(blockMode)
 
     def test_equationExtract_block_01(self):
         from texequation.toolswindowcontroller import ToolsWindowController
@@ -61,8 +67,10 @@ class TexEquationToolsWindowTest(unittest.TestCase, BaseOutWikerGUIMixin):
         text = '{$$a=b$$}'
         position = 3
 
-        equation = ToolsWindowController.extractEquation(text, position)
+        equation, blockMode = ToolsWindowController.extractEquation(text,
+                                                                    position)
         self.assertEqual(equation, 'a=b')
+        self.assertTrue(blockMode)
 
     def test_equationExtract_block_02(self):
         from texequation.toolswindowcontroller import ToolsWindowController
@@ -70,8 +78,10 @@ class TexEquationToolsWindowTest(unittest.TestCase, BaseOutWikerGUIMixin):
         text = '{$$a=b$$}'
         position = 6
 
-        equation = ToolsWindowController.extractEquation(text, position)
+        equation, blockMode = ToolsWindowController.extractEquation(text,
+                                                                    position)
         self.assertEqual(equation, 'a=b')
+        self.assertTrue(blockMode)
 
     def test_equationExtract_block_03(self):
         from texequation.toolswindowcontroller import ToolsWindowController
@@ -79,8 +89,10 @@ class TexEquationToolsWindowTest(unittest.TestCase, BaseOutWikerGUIMixin):
         text = '{$$a=b$$}'
         position = 7
 
-        equation = ToolsWindowController.extractEquation(text, position)
+        equation, blockMode = ToolsWindowController.extractEquation(text,
+                                                                    position)
         self.assertEqual(equation, 'a=b')
+        self.assertTrue(blockMode)
 
     def test_equationExtract_block_miss_02(self):
         from texequation.toolswindowcontroller import ToolsWindowController
@@ -88,8 +100,10 @@ class TexEquationToolsWindowTest(unittest.TestCase, BaseOutWikerGUIMixin):
         text = '{$$a=b$$}'
         position = 9
 
-        equation = ToolsWindowController.extractEquation(text, position)
+        equation, blockMode = ToolsWindowController.extractEquation(text,
+                                                                    position)
         self.assertEqual(equation, '')
+        self.assertFalse(blockMode)
 
     def test_equationExtract_inline_02(self):
         from texequation.toolswindowcontroller import ToolsWindowController
@@ -97,5 +111,7 @@ class TexEquationToolsWindowTest(unittest.TestCase, BaseOutWikerGUIMixin):
         text = '{$...$} {$a=b$} {$...$}'
         position = 10
 
-        equation = ToolsWindowController.extractEquation(text, position)
+        equation, blockMode = ToolsWindowController.extractEquation(text,
+                                                                    position)
         self.assertEqual(equation, 'a=b')
+        self.assertFalse(blockMode)

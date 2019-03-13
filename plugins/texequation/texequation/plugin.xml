@@ -33,6 +33,7 @@
 				</requirements>
 
                 <download os="all">https://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.5.1.zip</download>
+				<change>Preview window improvements.</change>
 				<change>Update the Ukrainian localization.</change>
 			</version>
 
@@ -146,6 +147,7 @@
 				</requirements>
 
                 <download os="all">https://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.5.1.zip</download>
+				<change>Улучшения в окне предпросмотра.</change>
 				<change>Обновление украинской локализации.</change>
 			</version>
 
