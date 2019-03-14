@@ -6,12 +6,12 @@ import shutil
 
 import wx
 
+from outwiker.core.commands import MessageBox
+from outwiker.core.system import getSpecialDirList
 from outwiker.gui.controls.popupbutton import (PopupButton,
                                                EVT_POPUP_BUTTON_MENU_CLICK)
 from outwiker.gui.controls.safeimagelist import SafeImageList
-from outwiker.gui.testeddialog import TestedDialog
-from outwiker.core.commands import MessageBox
-from outwiker.core.system import getSpecialDirList
+from outwiker.gui.guiconfig import MainWindowConfig
 from outwiker.utilites.textfile import readTextFile, writeTextFile
 
 from snippets.events import RunSnippetParams
@@ -34,14 +34,14 @@ class TreeItemInfo(object):
         self.root = root
 
 
-class EditSnippetsDialog(TestedDialog):
+class EditSnippetsDialog(wx.Frame):
     '''
     Dialog to create, edit and remove snippets and folders.
     '''
     def __init__(self, parent):
-        super(EditSnippetsDialog, self).__init__(
+        super().__init__(
             parent,
-            style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER
+            style=wx.CAPTION | wx.CLOSE | wx.SYSTEM_MENU | wx.MINIMIZE_BOX | wx.MAXIMIZE_BOX | wx.CLOSE_BOX | wx.RESIZE_BORDER | wx.FRAME_TOOL_WINDOW | wx.FRAME_NO_TASKBAR | wx.FRAME_FLOAT_ON_PARENT
         )
         global _
         _ = get_()
@@ -260,7 +260,44 @@ class EditSnippetsDialog(TestedDialog):
         mainSizer.AddStretchSpacer()
         self.closeBtn = wx.Button(self, id=wx.ID_CLOSE, label=_(u'Close'))
         mainSizer.Add(self.closeBtn, flag=wx.ALL | wx.ALIGN_RIGHT, border=2)
-        self.SetEscapeId(wx.ID_CLOSE)
+
+    def _createMenu(self):
+        self._menuBar = wx.MenuBar()
+        editMenu = self._createEditMenu()
+        fileMenu = self._createFileMenu()
+        helpMenu = self._createHelpMenu()
+        self._menuBar.Append(fileMenu, _('File'))
+        self._menuBar.Append(editMenu, _('Edit'))
+        self._menuBar.Append(helpMenu, _('Help'))
+        self.SetMenuBar(self._menuBar)
+
+    def _createFileMenu(self):
+        menu = wx.Menu()
+        menu.Append(self.addGroupBtn.GetId(),
+                    _(u"Add new snippets group") + '\tCtrl+Shift+N')
+        menu.Append(self.addSnippetBtn.GetId(),
+                    _(u"Create new snippet") + '\tCtrl+N')
+        menu.Append(self.renameBtn.GetId(), _(u"Rename") + '\tF2')
+        menu.Append(self.removeBtn.GetId(), _(u"Remove") + '\tCtrl+Del')
+        menu.Append(self.runSnippetBtn.GetId(), _(u"Run snippet") + '\tF5')
+        return menu
+
+    def _createHelpMenu(self):
+        menu = wx.Menu()
+        menu.Append(self.openHelpBtn.GetId(), _(u"Open help...") + '\tF1')
+        return menu
+
+    def _createEditMenu(self):
+        menu = wx.Menu()
+        menu.Append(wx.ID_UNDO, _(u"Undo") + "\tCtrl+Z")
+        menu.Append(wx.ID_REDO, _(u"Redo") + "\tCtrl+Y")
+        menu.AppendSeparator()
+        menu.Append(wx.ID_CUT, _(u"Cut") + "\tCtrl+X")
+        menu.Append(wx.ID_COPY, _(u"Copy") + "\tCtrl+C")
+        menu.Append(wx.ID_PASTE, _(u"Paste") + "\tCtrl+V")
+        menu.AppendSeparator()
+        menu.Append(wx.ID_SELECTALL, _(u"Select All") + "\tCtrl+A")
+        return menu
 
     def _createGUI(self):
         # Main Sizer
@@ -272,6 +309,7 @@ class EditSnippetsDialog(TestedDialog):
         self._createTreePanel(mainSizer)
         self._createSnippetPanel(mainSizer)
         self._createBottomButtons(mainSizer)
+        self._createMenu()
 
         self.SetSizer(mainSizer)
         self.Layout()
@@ -295,8 +333,10 @@ class EditSnippetsDialogController(object):
         self._snippetChanged = False
         self._dialog = EditSnippetsDialog(self._application.mainWindow)
         self._config = SnippetsConfig(self._application.config)
+        self._mainWindowconfig = MainWindowConfig(self._application.config)
         self._dialog.SetClientSize((self._config.editDialogWidth,
                                     self._config.editDialogHeight))
+        self._dialog.SetBackgroundColour(self._mainWindowconfig.mainPanesBackgroundColor.value)
         self._bind()
 
     def _bind(self):
@@ -304,14 +344,38 @@ class EditSnippetsDialogController(object):
 
         # Buttons
         self._dialog.closeBtn.Bind(wx.EVT_BUTTON, handler=self._onCloseBtn)
+
         self._dialog.addGroupBtn.Bind(wx.EVT_BUTTON, handler=self._onAddGroup)
+        self._dialog.Bind(wx.EVT_MENU,
+                          id=self._dialog.addGroupBtn.GetId(),
+                          handler=self._onAddGroup)
+
         self._dialog.addSnippetBtn.Bind(wx.EVT_BUTTON,
                                         handler=self._onAddSnippet)
+        self._dialog.Bind(wx.EVT_MENU,
+                          id=self._dialog.addSnippetBtn.GetId(),
+                          handler=self._onAddSnippet)
+
         self._dialog.removeBtn.Bind(wx.EVT_BUTTON, handler=self._onRemove)
+        self._dialog.Bind(wx.EVT_MENU,
+                          id=self._dialog.removeBtn.GetId(),
+                          handler=self._onRemove)
+
         self._dialog.renameBtn.Bind(wx.EVT_BUTTON, handler=self._onRenameClick)
+        self._dialog.Bind(wx.EVT_MENU,
+                          id=self._dialog.renameBtn.GetId(),
+                          handler=self._onRenameClick)
+
         self._dialog.runSnippetBtn.Bind(wx.EVT_BUTTON,
                                         handler=self._onRunSnippet)
+        self._dialog.Bind(wx.EVT_MENU,
+                          id=self._dialog.runSnippetBtn.GetId(),
+                          handler=self._onRunSnippet)
+
         self._dialog.openHelpBtn.Bind(wx.EVT_BUTTON, handler=self._onOpenHelp)
+        self._dialog.Bind(wx.EVT_MENU,
+                          id=self._dialog.openHelpBtn.GetId(),
+                          handler=self._onOpenHelp)
 
         self._dialog.insertVariableBtn.Bind(EVT_POPUP_BUTTON_MENU_CLICK,
                                             handler=self._onInsertVariable)

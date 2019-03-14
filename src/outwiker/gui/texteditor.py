@@ -70,24 +70,7 @@ class TextEditor(TextEditorBase):
         self.__bindEvents()
 
     def __bindEvents(self):
-        self.textCtrl.Bind(wx.EVT_MENU,
-                           self.__onCopyFromEditor,
-                           id=wx.ID_COPY)
-        self.textCtrl.Bind(wx.EVT_MENU,
-                           self.__onCutFromEditor,
-                           id=wx.ID_CUT)
-        self.textCtrl.Bind(wx.EVT_MENU,
-                           self.__onPasteToEditor,
-                           id=wx.ID_PASTE)
-        self.textCtrl.Bind(wx.EVT_MENU,
-                           self.__onUndo,
-                           id=wx.ID_UNDO)
-        self.textCtrl.Bind(wx.EVT_MENU,
-                           self.__onRedo,
-                           id=wx.ID_REDO)
-        self.textCtrl.Bind(wx.EVT_MENU,
-                           self.__onSelectAll,
-                           id=wx.ID_SELECTALL)
+        self._bindStandardMenuItems()
 
         self.textCtrl.Bind(wx.EVT_CONTEXT_MENU, self.__onContextMenu)
         self.textCtrl.Bind(wx.EVT_IDLE, self._onStyleNeeded)
@@ -118,24 +101,6 @@ class TextEditor(TextEditorBase):
         self._styleSet = False
         self._lastEdit = datetime.now()
         self.__setMarginWidth(self.textCtrl)
-
-    def __onCopyFromEditor(self, event):
-        self.textCtrl.Copy()
-
-    def __onCutFromEditor(self, event):
-        self.textCtrl.Cut()
-
-    def __onPasteToEditor(self, event):
-        self.textCtrl.Paste()
-
-    def __onUndo(self, event):
-        self.textCtrl.Undo()
-
-    def __onRedo(self, event):
-        self.textCtrl.Redo()
-
-    def __onSelectAll(self, event):
-        self.textCtrl.SelectAll()
 
     def setDefaultSettings(self):
         """

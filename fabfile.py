@@ -764,3 +764,12 @@ def site_content(is_stable=False):
                                  apps,
                                  path_to_templates)
     builder.build()
+
+
+@task
+def snap_restart():
+    '''
+    Restart snap daemons
+    '''
+    local('sudo systemctl stop snap.lxd.daemon.unix.socket')
+    local('sudo systemctl restart snap.lxd.daemon')

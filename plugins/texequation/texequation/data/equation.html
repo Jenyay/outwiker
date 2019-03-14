@@ -30,7 +30,7 @@ function fix_frac_line() {
 
 function render_equation() {
 	var element_0 = document.getElementById("equation");
-	katex.render("$equation", element_0, { displayMode: false, throwOnError: false });
+	katex.render("$equation", element_0, { displayMode: $blockMode, throwOnError: false });
 	fix_frac_line();
 };
 

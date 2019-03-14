@@ -9,7 +9,7 @@ Attach:us.png [[English version -> Outwiker/StatisticsEn]]
 
 [[Statistics 1.0.4 -> Attach:statistics-1.0.4.zip]] ('''Требуемая версия OutWiker: 1.7 - 2.1.0.834''')
 
-[[Statistics {{ version_full }} -> Attach:statistics-{{ version_full }}.zip]] ('''Требуемая версия OutWiker: 2.1.0.836 и выше''')
+[[Statistics {{ version_full }} -> Attach:statistics-{{ version_full }}.zip]] ('''Требуемая версия OutWiker: 3.0.0.858 и выше''')
 
 <!--#version stable {{ version_full }} -->
 

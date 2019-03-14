@@ -1,6 +1,6 @@
 OutWiker can take some command line parameters. The syntax is as follows:
 
-[>[@outwiker [-h] [-v] [-r] [--normal] [-p page] [ path ]@]<]
+[>[@outwiker [--page PAGE] [--help] [--version] [--readonly] [--normal] [--debug] [--disable-plugins] [path]@]<]
 
 '''path''' - path to the note tree. For example: 
 [>outwiker.exe "C:\temp\samplewiki"
@@ -24,3 +24,5 @@ outwiker.exe --page="[=page://__1640eea0-1bb0-453b-ba4c-07f1c298ce76=]" "C:\temp
 '''--normal''' - does not allow minimising the main window when starting OutWiker.
 
 '''--debug''' - forces OutWiker to run in debug mode.
+
+'''--disable-plugins''' - Do not load any installed plug-in.

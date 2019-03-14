@@ -8,7 +8,7 @@ The plugin append menu items '''Tools -> Page Statistic''' and '''Tools -> Tree 
 
 [[Statistics 1.0.4 -> Attach:Outwiker/Statistics/statistics-1.0.4.zip]] ('''Required OutWiker version: 1.7 - 2.1.0.834''')
 
-[[Statistics {{ version_full }} -> Attach:Outwiker/Statistics/statistics-{{ version_full }}.zip]] ('''Required OutWiker version: 2.1.0.836 and above''')
+[[Statistics {{ version_full }} -> Attach:Outwiker/Statistics/statistics-{{ version_full }}.zip]] ('''Required OutWiker version: 3.0.0.858 and above''')
 
 <!--#version stable {{ version_full }} -->
 

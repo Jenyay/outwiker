@@ -2,11 +2,10 @@
 
 import argparse
 
-from outwiker.core.system import getOS
 from outwiker.core.commands import getCurrentVersion
 
 
-class CommandLineException(BaseException):
+class CommandLineException(Exception):
     pass
 
 
@@ -31,7 +30,7 @@ class CommandLine(object):
 
     def parseParams(self, args):
         """
-        args - параметры командной строки(исключая outwiker.py или outwiker.exe), т.е. это argv[1:]
+        args - параметры командной строки (исключая outwiker.py или outwiker.exe), т.е. это argv[1:]
         """
         try:
             self._namespace = self._parser.parse_args(args)
@@ -41,7 +40,7 @@ class CommandLine(object):
     def _createParser(self):
         parser = _SilentParser(prog='outwiker',
                                description=self._description,
-                               epilog="(c) Eugeniy Ilin (aka Jenyay), 2010-2018. Released under the GNU GPL 3.",
+                               epilog="(c) Eugeniy Ilin (aka Jenyay), 2010-2019. Released under the GNU GPL 3.",
                                add_help=False)
 
         parser.add_argument('wikipath',
@@ -81,7 +80,15 @@ class CommandLine(object):
                             action='store_const',
                             const=True,
                             default=False,
-                            help=u"Enable debug mode")
+                            help=u"Enable debug mode",
+                            dest='debug')
+
+        parser.add_argument('--disable-plugins',
+                            action='store_const',
+                            const=True,
+                            default=False,
+                            help=u"Disable all plug-ins",
+                            dest='disablePlugins')
 
         return parser
 
@@ -115,7 +122,6 @@ class CommandLine(object):
     def readonly(self):
         return self._namespace.readonly
 
-
     @property
     def version(self):
         return self._namespace.version
@@ -127,6 +133,10 @@ class CommandLine(object):
     @property
     def debug(self):
         return self._namespace.debug
+
+    @property
+    def disablePlugins(self):
+        return self._namespace.disablePlugins
 
     def format_help(self):
         """

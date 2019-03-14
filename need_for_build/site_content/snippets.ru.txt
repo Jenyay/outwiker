@@ -10,7 +10,7 @@ Attach:Soft/Outwiker/us.png [[English version -> Outwiker/SnippetsEn]]
 
 [[Snippets 1.1.1 -> Attach:snippets-1.1.1.zip]] ('''Требуемая версия OutWiker: 2.0 - 2.1.0.834''')
 
-[[Snippets {{ version_full }} -> Attach:snippets-{{ version_full }}.zip]] ('''Требуемая версия OutWiker: 2.1.0.836 и выше''')
+[[Snippets {{ version_full }} -> Attach:snippets-{{ version_full }}.zip]] ('''Требуемая версия OutWiker: 3.0.0.858 и выше''')
 
 <!--#version stable {{ version_full }} -->
 
@@ -27,7 +27,7 @@ Attach:Soft/Outwiker/us.png [[English version -> Outwiker/SnippetsEn]]
 *** [[Оператор if -> #if]]
 *** [[Оператор include -> #include]]
 * [[Особенности хранения шаблонов -> #advanced]]
-* [[История версий -> #changelog]]
+* [[История версий -> #history]]
 * [[Комментарии -> #comments]]
 
 {% raw %}

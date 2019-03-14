@@ -46,6 +46,8 @@ sudo snap connect outwiker:cups-control
 sudo snap connect outwiker:removable-media
 (:sourceend:)
 
+%center%%thumb width=500%Attach:outwiker_3.0.0_02_ru.png%%
+
 
 !! Изменения в версии 3.0
 

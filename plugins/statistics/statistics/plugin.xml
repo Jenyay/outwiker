@@ -28,6 +28,16 @@
 		</author>
 
 		<changelog>
+			<version number="1.2.1" date="January 24, 2019">
+				<requirements>
+					<api>2.858</api>
+				</requirements>
+
+                <download os="all">https://jenyay.net/uploads/Outwiker/Statistics/statistics-1.2.1.zip</download>
+				<change>Add support Makdown and web pages.</change>
+				<change>Bug fixes.</change>
+			</version>
+
 			<version number="1.2" date="August 26, 2018">
 				<requirements>
 					<api>2.835</api>
@@ -91,6 +101,16 @@
 		</author>
 
 		<changelog>
+			<version number="1.2.1" date="24.01.2019">
+				<requirements>
+					<api>2.858</api>
+				</requirements>
+
+                <download os="all">https://jenyay.net/uploads/Outwiker/Statistics/statistics-1.2.1.zip</download>
+				<change>Добавлена поддержка Markdown- и web-страниц.</change>
+				<change>Исправление ошибок.</change>
+			</version>
+
 			<version number="1.2" date="26.08.2018">
 				<requirements>
 					<api>2.835</api>

@@ -27,12 +27,23 @@
 			<site>https://jenyay.net</site>
 		</author>
 		<changelog>
-            <version number="2.5">
+            <version number="2.5.1">
+				<requirements>
+					<api>2.858</api>
+				</requirements>
+
+                <download os="all">https://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.5.1.zip</download>
+				<change>Preview window improvements.</change>
+				<change>Update the Ukrainian localization.</change>
+			</version>
+
+            <version number="2.5" date="January 24, 2019">
 				<requirements>
 					<api>2.858</api>
 				</requirements>
 
                 <download os="all">https://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.5.zip</download>
+				<change>Add equation preview window.</change>
 				<change>Update KaTeX version (0.10.0).</change>
 			</version>
 
@@ -130,12 +141,23 @@
 		</author>
 
 		<changelog>
-            <version number="2.5">
+            <version number="2.5.1">
+				<requirements>
+					<api>2.858</api>
+				</requirements>
+
+                <download os="all">https://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.5.1.zip</download>
+				<change>Улучшения в окне предпросмотра.</change>
+				<change>Обновление украинской локализации.</change>
+			</version>
+
+            <version number="2.5" date="24.01.2019">
 				<requirements>
 					<api>2.858</api>
 				</requirements>
 
                 <download os="all">https://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.5.zip</download>
+				<change>Добавлено окно просмотра формулы.</change>
 				<change>Обновление движка KaTeX до версии 0.10.0.</change>
 			</version>
 

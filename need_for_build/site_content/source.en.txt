@@ -88,11 +88,7 @@ Insert the source code from the attached file and explicitly specified language.
 
 !!! Screenshots
 
-(:thumbgallery cols=2 px=200:)
-source_scr_dialog_1.png
-source_scr_dialog_2.png
-source_scr_params.png
-(:thumbgalleryend:)
+%center% %thumb width=450%Attach:source_scr_dialog_1_en.png%% %thumb width=450%Attach:source_scr_dialog_2_en.png%% %thumb width=450%Attach:source_scr_params_en.png%%
 
 {% include 'changelog.en.txt' %}
 

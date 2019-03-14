@@ -6,7 +6,6 @@ import sys
 from outwiker.core.commands import openWiki, findPage
 from outwiker.core.commandline import CommandLine, CommandLineException
 from outwiker.core.commands import getCurrentVersion
-from outwiker.core.defines import APP_DATA_DISABLE_MINIMIZING, APP_DATA_DEBUG
 from outwiker.gui.guiconfig import GeneralGuiConfig
 
 
@@ -28,6 +27,21 @@ class Starter(object):
     def __init__(self, application):
         self._application = application
         self._commandLine = self.__parseCommandLine(sys.argv[1:])
+        self._config = GeneralGuiConfig(self._application.config)
+
+    @property
+    def isDebugMode(self):
+        debug_config = self._config.debug.value
+        debug_cl = self._commandLine.debug
+        return debug_cl or debug_config
+
+    @property
+    def pluginsEnabled(self):
+        return not self._commandLine.disablePlugins
+
+    @property
+    def allowMinimizingMainWindow(self):
+        return not self._commandLine.disableMinimizing
 
     def processGUI(self):
         """
@@ -45,27 +59,20 @@ class Starter(object):
             if self._application.wikiroot is not None and page is not None:
                 self._application.selectedPage = page
 
+    def __parseCommandLine(self, args):
+        cl = CommandLine()
+        try:
+            cl.parseParams(args)
+        except CommandLineException:
+            print(cl.format_help())
+            raise StarterExit
+
+        return cl
+
     def processConsole(self):
         """
         Выполнить команды командной строки до создания интерфейса
         """
-        if self._commandLine is not None:
-            self.__processConsoleCommands()
-
-    def __parseCommandLine(self, args):
-        cl = None
-
-        if len(args) > 0:
-            cl = CommandLine()
-            try:
-                cl.parseParams(args)
-            except CommandLineException:
-                print(cl.format_help())
-                raise StarterExit
-
-        return cl
-
-    def __processConsoleCommands(self):
         # Вывод справки
         if self._commandLine.help:
             print(self._commandLine.format_help())
@@ -76,14 +83,11 @@ class Starter(object):
             print(r"""OutWiker {ver}""".format(ver=str(getCurrentVersion())))
             raise StarterExit
 
-        self._application.sharedData[APP_DATA_DISABLE_MINIMIZING] = self._commandLine.disableMinimizing
-        self._application.sharedData[APP_DATA_DEBUG] = self._commandLine.debug
-
     def __openRecentWiki(self):
         """
         Открыть последнюю вики, если установлена соответствующая опция
         """
-        openRecent = GeneralGuiConfig(self._application.config).autoopen.value
+        openRecent = self._config.autoopen.value
 
         if openRecent and len(self._application.recentWiki) > 0:
             logger.debug('Open recently used wiki')
