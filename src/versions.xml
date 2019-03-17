@@ -7,7 +7,7 @@
 		<website>https://jenyay.net/Outwiker/UnstableEn</website>
 
 		<changelog>
-			<version number="3.0.0.859" status="dev">
+			<version number="3.0.0.860" status="dev">
 				<change>Fix errors.</change>
 				<change>Update localizations.</change>
 			</version>
@@ -113,7 +113,7 @@
 		<website>https://jenyay.net/Outwiker/Unstable</website>
 
 		<changelog>
-			<version number="3.0.0.859" status="dev">
+			<version number="3.0.0.860" status="dev">
 				<change>Исправление ошибок.</change>
 				<change>Обновление локализаций.</change>
 			</version>
