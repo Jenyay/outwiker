@@ -1,4 +1,4 @@
-SET UTF-8
+SET ISO8859-1
 KEY qwertyuiop|asdfghjkl|zxcvbnm
 TRY esianrtolcdugmphbyfvkwzESIANRTOLCDUGMPHBYFVKWZ'-
 NOSUGGEST !
