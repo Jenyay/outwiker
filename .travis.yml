@@ -1,16 +1,16 @@
-dist: trusty
+dist: xenial
 language: python
 cache: pip
 python:
-    - "3.6"
+    - "3.6.7"
 before_install:
     - sudo apt-get -y update
-    - sudo apt-get -y install python3-pip python3-dev debhelper devscripts debhelper devscripts p7zip-full libssl-dev dpkg-dev build-essential libjpeg-dev libtiff-dev libsdl1.2-dev libnotify-dev freeglut3 ibus-gtk3 xvfb
+    - sudo apt-get -y install python3-pip python3-dev debhelper devscripts debhelper devscripts p7zip-full libssl-dev dpkg-dev build-essential libjpeg-dev libtiff-dev libsdl1.2-dev libnotify-dev freeglut3 ibus-gtk3 xvfb libhunspell-dev
     # - sudo apt-get -y install libwebkit2gtk-4.0
     - sudo apt-get -y install libwebkitgtk-3.0
 install:
-    - pip install pipenv
-    - pipenv run pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-14.04 wxPython==4.0.3
+    - python -m pip install pipenv
+    - pipenv run pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-16.04 wxPython==4.0.1
     - pipenv update --dev
 script:
-    - LD_LIBRARY_PATH=$(pipenv --venv)/lib/python3.6/site-packages/wx xvfb-run pipenv run fab test
+    - xvfb-run pipenv run fab test
