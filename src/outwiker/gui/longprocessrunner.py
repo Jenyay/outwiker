@@ -3,9 +3,7 @@
 import threading
 import time
 
-import wx
-
-from wx.lib.agw.pyprogress import PyProgress
+from .controls.progress import ProgressWindow
 
 
 class LongProcessRunner(object):
@@ -31,22 +29,11 @@ class LongProcessRunner(object):
         # Интервал обновления диалога, с
         self.updateGaugeInterval = 0.1
 
-        # Размер бегающей чисти линии прогресса
-        self.gaugeProportion = 0.2
-
-        # Количество шагов пробегания линии прогресса
-        self.gaugeSteps = 20
-
     def run(self, *args, **kwargs):
-        progressDlg = PyProgress(self._parent,
-                                 -1,
-                                 self._dialogTitle,
-                                 self._dialogText,
-                                 agwStyle=wx.PD_APP_MODAL)
-
-        progressDlg.SetGaugeProportion(self.gaugeProportion)
-        progressDlg.SetGaugeSteps(self.gaugeSteps)
-        progressDlg.UpdatePulse()
+        progressDlg = ProgressWindow(self._parent,
+                                     self._dialogTitle,
+                                     self._dialogText)
+        progressDlg.Show()
 
         result = []
         thread = threading.Thread(
