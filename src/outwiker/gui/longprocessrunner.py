@@ -27,7 +27,7 @@ class LongProcessRunner(object):
         self._dialogText = dialogText
 
         # Интервал обновления диалога, с
-        self.updateGaugeInterval = 0.1
+        self.updateInterval = 0.1
 
     def run(self, *args, **kwargs):
         progressDlg = ProgressWindow(self._parent,
@@ -45,7 +45,7 @@ class LongProcessRunner(object):
 
         while thread.isAlive():
             progressDlg.UpdatePulse()
-            time.sleep(self.updateGaugeInterval)
+            time.sleep(self.updateInterval)
 
         progressDlg.Destroy()
         self._parent.Raise()
