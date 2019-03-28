@@ -58,6 +58,7 @@ class ProgressWindow(wx.Frame):
         self._updateCount += 1
         self._textLabel.SetLabel(self._text + self._getTextSuffix(self._updateCount))
         self.Raise()
+        self.Update()
         wx.SafeYield()
 
     def _onDestroy(self, event):
