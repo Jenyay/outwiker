@@ -140,5 +140,5 @@ class BasePagePanel(wx.Panel):
         Закрытие панели без сохранения.
         """
         self.Clear()
-        super(BasePagePanel, self).Close()
+        super().Close()
         self.Destroy()
