@@ -4,13 +4,14 @@ from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.pages.html.htmlpage import HtmlPageFactory
 from outwiker.pages.search.searchpage import SearchPageFactory
 from outwiker.pages.wiki.wikipage import WikiPageFactory
+from outwiker.gui.unknownpagetype import UnknownPageTypeFactory
 
 
 class FactorySelector(object):
     """
     Класс, который выбирает нужную фабрику для каждой страницы
     """
-    _defaultFactory = TextPageFactory()
+    _defaultFactory = UnknownPageTypeFactory()
 
     _factories = {factory.getTypeString(): factory
                   for factory
