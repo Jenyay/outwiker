@@ -17,7 +17,7 @@ class UnknownPageTypePanel(BasePagePanel):
 
     def _createGUI(self):
         message = _(
-            'Unknown page type.\n It is possible that an additional plugin is required to open this page.')
+            'Unknown page type.\nIt is possible that an additional plugin is required to display this page.')
         self._messageStaticText = wx.StaticText(
             self,
             label=message,
