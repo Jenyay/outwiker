@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 """
 Тесты для проверки фабрик страниц
@@ -14,6 +14,7 @@ from outwiker.pages.text.textpanel import TextPanel
 from outwiker.core.tree import WikiDocument, WikiPage
 from outwiker.core.factory import PageFactory
 from outwiker.core.factoryselector import FactorySelector
+from outwiker.gui.unknownpagetype import UnknownPageTypeFactory
 
 
 class FactorySelectorTest(unittest.TestCase):
@@ -51,7 +52,7 @@ class FactorySelectorTest(unittest.TestCase):
         test_page = wikiroot["Типы страниц/TestPage"]
         self.assertEqual(
             type(FactorySelector.getFactory(test_page.getTypeString())),
-            TextPageFactory)
+            UnknownPageTypeFactory)
 
     def testAddFactory(self):
         FactorySelector.addFactory(ExamplePageFactory())
@@ -71,7 +72,7 @@ class FactorySelectorTest(unittest.TestCase):
         wiki_page = wikiroot["Типы страниц/wiki-страница"]
         self.assertEqual(
             type(FactorySelector.getFactory(wiki_page.getTypeString())),
-            TextPageFactory)
+            UnknownPageTypeFactory)
 
     def testRemoveFactory_02(self):
         wikiroot = WikiDocument.load(self.path)
@@ -81,7 +82,7 @@ class FactorySelectorTest(unittest.TestCase):
         wiki_page = wikiroot["Типы страниц/wiki-страница"]
         self.assertEqual(
             type(FactorySelector.getFactory(wiki_page.getTypeString())),
-            TextPageFactory)
+            UnknownPageTypeFactory)
 
 
 class ExamplePage(WikiPage):

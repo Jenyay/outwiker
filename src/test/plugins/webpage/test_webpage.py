@@ -7,9 +7,9 @@ import unittest
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.tree import WikiDocument
 from outwiker.core.factoryselector import FactorySelector
-from outwiker.pages.text.textpage import TextPageFactory
 from test.basetestcases import BaseOutWikerGUIMixin
 from test.utils import removeDir
+from outwiker.gui.unknownpagetype import UnknownPageTypeFactory
 
 
 class WebPageTest (unittest.TestCase, BaseOutWikerGUIMixin):
@@ -48,7 +48,7 @@ class WebPageTest (unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.loader.clear()
         self.assertEqual(type(FactorySelector.getFactory(WebNotePage.getTypeString())),
-                         TextPageFactory)
+                         UnknownPageTypeFactory)
 
         self.loader.load(self.dirlist)
 
