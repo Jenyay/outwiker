@@ -10,6 +10,7 @@ from outwiker.core.tagslist import TagsList
 from outwiker.core.tagscommands import removeTag, appendTag
 from outwiker.core.sortfunctions import sortAlphabeticalFunction
 from outwiker.gui.guiconfig import TagsConfig
+from outwiker.core.commands import showError
 
 
 class TagsPanelController (object):
@@ -70,6 +71,11 @@ class TagsPanelController (object):
     def __toggleMarkTag(self, tagname):
         selectedPage = self.__application.selectedPage
         if selectedPage is None:
+            return
+
+        if selectedPage.readonly:
+            showError(self.__application.mainWindow,
+                      _('The page is open only for reading'))
             return
 
         if tagname in selectedPage.tags:
