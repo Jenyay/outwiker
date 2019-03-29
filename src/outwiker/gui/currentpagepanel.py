@@ -152,7 +152,9 @@ class CurrentPagePanel(wx.Panel):
         if self.__pageView is not None:
             self.contentSizer.Add(self.__pageView, flag=wx.EXPAND)
             self.Layout()
-            self._application.onPageViewCreate(page)
+
+            if page is not None:
+                self._application.onPageViewCreate(page)
 
     def __createRootPageView(self):
         self.__pageView = RootPagePanel(self, self._application)
@@ -198,9 +200,10 @@ class CurrentPagePanel(wx.Panel):
         Уничтожить текущий контрол
         """
         if self.__pageView is not None:
-            self._application.onPageViewDestroy(self.__currentPage)
+            if self.__currentPage is not None:
+                self._application.onPageViewDestroy(self.__currentPage)
 
-            self.contentSizer.Detach(self.__pageView)
+            # self.contentSizer.Detach(self.__pageView)
             self.__pageView.Close()
             self.__pageView = None
             self.__currentPage = None
@@ -211,9 +214,10 @@ class CurrentPagePanel(wx.Panel):
         Нужно для перезагрузки вики
         """
         if self.__pageView is not None:
-            self._application.onPageViewDestroy(self.__currentPage)
+            if self.__currentPage is not None:
+                self._application.onPageViewDestroy(self.__currentPage)
 
-            self.contentSizer.Detach(self.__pageView)
+            # self.contentSizer.Detach(self.__pageView)
             self.__pageView.CloseWithoutSave()
             self.__pageView = None
             self.__currentPage = None
