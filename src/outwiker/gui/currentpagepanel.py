@@ -18,6 +18,7 @@ class CurrentPagePanel(wx.Panel):
 
         self.__pageView = None
         self.__currentPage = None
+        self.__wikiroot = None
 
         # Флаг обозначает, что выполняется метод Save
         self.__saveProcessing = False
@@ -78,7 +79,12 @@ class CurrentPagePanel(wx.Panel):
         self.Destroy()
 
     def __onWikiOpen(self, root):
-        self.__onPageSelect(root.selectedPage if root is not None else None)
+        self.__wikiroot = root
+
+        if root is None:
+            self.destroyPageView()
+        else:
+            self.__onPageSelect(root.selectedPage)
 
     def __onPageSelect(self, page):
         """
@@ -118,9 +124,11 @@ class CurrentPagePanel(wx.Panel):
         """
         # Если новая страница имеет другой тип,
         # то удалить старое представление и создать новое
-        if (type(self.__currentPage) != type(page) or
-                self.__pageView is None):
+        if type(self.__currentPage) != type(page):
             self.destroyPageView()
+            self.__createPageView(page)
+
+        if self.__pageView is None:
             self.__createPageView(page)
 
         # Если представление создано, то загрузим в него новую страницу
@@ -138,7 +146,7 @@ class CurrentPagePanel(wx.Panel):
         """
         if page is not None:
             self.__createConcretePageView(page)
-        elif page is None and self._application.wikiroot is not None:
+        elif page is None and self.__wikiroot is not None:
             self.__createRootPageView()
 
         if self.__pageView is not None:

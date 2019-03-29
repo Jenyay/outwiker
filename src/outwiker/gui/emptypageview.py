@@ -42,7 +42,8 @@ class RootPagePanel(BasePagePanel):
         self.Layout()
 
     def UpdateView(self, page):
-        pass
+        if self._application.wikiroot is not None:
+            self._pathTextCtrl.SetValue(self._application.wikiroot.path)
 
     def Print(self):
         pass
