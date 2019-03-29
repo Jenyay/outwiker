@@ -13,6 +13,7 @@ from outwiker.pages.wiki.wikipageview import WikiPageView
 from outwiker.pages.wiki.wikiconfig import WikiConfig
 from outwiker.pages.wiki.listautocomplete import listComplete_wiki
 from test.basetestcases import BaseOutWikerGUIMixin
+from outwiker.gui.emptypageview import RootPagePanel
 
 
 class WikiPageViewTest(unittest.TestCase, BaseOutWikerGUIMixin):
@@ -39,7 +40,8 @@ class WikiPageViewTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def testType(self):
         self.application.wikiroot = self.wikiroot
-        self.assertEqual(None, self.application.mainWindow.pagePanel.pageView)
+        self.assertEqual(RootPagePanel,
+                         type(self.mainWindow.pagePanel.pageView))
 
         self.application.selectedPage = self.wikiroot["Викистраница"]
         self.assertEqual(WikiPageView,
@@ -50,13 +52,15 @@ class WikiPageViewTest(unittest.TestCase, BaseOutWikerGUIMixin):
                          type(self.application.mainWindow.pagePanel.pageView))
 
         self.application.selectedPage = None
-        self.assertEqual(None, self.application.mainWindow.pagePanel.pageView)
+        self.assertEqual(RootPagePanel,
+                         type(self.mainWindow.pagePanel.pageView))
 
     def testSwitch(self):
         WikiConfig(self.application.config).showHtmlCodeOptions.value = True
 
         self.application.wikiroot = self.wikiroot
-        self.assertEqual(None, self.application.mainWindow.pagePanel.pageView)
+        self.assertEqual(RootPagePanel,
+                         type(self.mainWindow.pagePanel.pageView))
 
         self.application.selectedPage = self.wikiroot["Викистраница"]
         self.assertEqual(WikiPageView,
@@ -67,7 +71,8 @@ class WikiPageViewTest(unittest.TestCase, BaseOutWikerGUIMixin):
                          type(self.application.mainWindow.pagePanel.pageView))
 
         self.application.selectedPage = None
-        self.assertEqual(None, self.application.mainWindow.pagePanel.pageView)
+        self.assertEqual(RootPagePanel,
+                         type(self.mainWindow.pagePanel.pageView))
 
     def testDefaultSelectedPage(self):
         """
