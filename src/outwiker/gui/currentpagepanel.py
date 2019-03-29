@@ -80,11 +80,7 @@ class CurrentPagePanel(wx.Panel):
 
     def __onWikiOpen(self, root):
         self.__wikiroot = root
-
-        if root is None:
-            self.destroyPageView()
-        else:
-            self.__onPageSelect(root.selectedPage)
+        self.__onPageSelect(root.selectedPage if root is not None else None)
 
     def __onPageSelect(self, page):
         """
@@ -124,7 +120,7 @@ class CurrentPagePanel(wx.Panel):
         """
         # Если новая страница имеет другой тип,
         # то удалить старое представление и создать новое
-        if type(self.__currentPage) != type(page):
+        if type(self.__currentPage) != type(page) or self.__wikiroot is None:
             self.destroyPageView()
             self.__createPageView(page)
 
