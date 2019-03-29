@@ -3,6 +3,7 @@
 import wx
 
 from .basepagepanel import BasePagePanel
+from outwiker.actions.addchildpage import AddChildPageAction
 
 
 class RootPagePanel(BasePagePanel):
@@ -13,6 +14,7 @@ class RootPagePanel(BasePagePanel):
         self._createGUI()
 
     def _createGUI(self):
+        # Path to wiki GUI
         self._pathStaticText = wx.StaticText(
             self,
             label=_('Path to current notes tree'),
@@ -21,6 +23,11 @@ class RootPagePanel(BasePagePanel):
         self._pathTextCtrl = wx.TextCtrl(self,
                                          style=wx.TE_READONLY,
                                          value=self._application.wikiroot.path)
+
+        # Add new note button
+        self._addNewPageButton = wx.Button(self,
+                                           label=_('Create new page...'))
+        self._addNewPageButton.Bind(wx.EVT_BUTTON, handler=self._onNewPage)
 
         mainSizer = wx.FlexGridSizer(cols=1)
         mainSizer.AddGrowableCol(0)
@@ -38,8 +45,15 @@ class RootPagePanel(BasePagePanel):
                       flag=wx.EXPAND | wx.ALIGN_CENTER_VERTICAL | wx.ALL,
                       border=4)
 
+        mainSizer.Add(self._addNewPageButton,
+                      flag=wx.ALIGN_LEFT | wx.ALL,
+                      border=4)
+
         self.SetSizer(mainSizer)
         self.Layout()
+
+    def _onNewPage(self, event):
+        self._application.actionController.getAction(AddChildPageAction.stringId).run(None)
 
     def UpdateView(self, page):
         if self._application.wikiroot is not None:

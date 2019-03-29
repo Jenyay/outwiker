@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OutWiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-29 21:39+0300\n"
+"POT-Creation-Date: 2019-03-29 22:04+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Eugene Ilin <jenyay.ilin@gmail.com>\n"
@@ -1402,8 +1402,12 @@ msgstr ""
 msgid "Overwrite Files"
 msgstr ""
 
-#: outwiker/gui/emptypageview.py:18
+#: outwiker/gui/emptypageview.py:20
 msgid "Path to current notes tree"
+msgstr ""
+
+#: outwiker/gui/emptypageview.py:29
+msgid "Create new page..."
 msgstr ""
 
 #: outwiker/gui/htmlrenderwebkit.py:63
