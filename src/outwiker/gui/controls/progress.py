@@ -50,7 +50,6 @@ class ProgressWindow(wx.Frame):
         self.CenterOnParent()
         self.Show()
         self.Restore()
-        # self.SetFocus()
         self.UpdatePulse()
         self.Raise()
 

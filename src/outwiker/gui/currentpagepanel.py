@@ -3,11 +3,12 @@
 import os.path
 import wx
 
+import outwiker.core.system
 from outwiker.actions.addbookmark import AddBookmarkAction
 from outwiker.core.factoryselector import FactorySelector
 from outwiker.core.commands import pageExists, openWiki, showError
-import outwiker.core.system
 from .tabsctrl import TabsCtrl
+from .emptypageview import RootPagePanel
 
 
 class CurrentPagePanel(wx.Panel):
@@ -117,13 +118,13 @@ class CurrentPagePanel(wx.Panel):
         """
         # Если новая страница имеет другой тип,
         # то удалить старое представление и создать новое
-        if type(self.__currentPage) != type(page):
+        if (type(self.__currentPage) != type(page) or
+                self.__pageView is None):
             self.destroyPageView()
             self.__createPageView(page)
 
         # Если представление создано, то загрузим в него новую страницу
         if self.__pageView is not None:
-            assert page is not None
             self.__pageView.page = page
             self.__pageView.SetFocus()
 
@@ -136,18 +137,27 @@ class CurrentPagePanel(wx.Panel):
         Создать панель просмотра для страницы
         """
         if page is not None:
-            factory = FactorySelector.getFactory(page.getTypeString())
-            pageView = factory.getPageView(self, self._application)
-            pageView.SetBackgroundColour(self.GetBackgroundColour())
-            pageView.SetForegroundColour(self.GetForegroundColour())
-            self.__pageView = pageView
-            self.__pageView.page = page
+            self.__createConcretePageView(page)
+        elif page is None and self._application.wikiroot is not None:
+            self.__createRootPageView()
 
-            assert self.__pageView is not None
-
-            self.contentSizer.Add(self.__pageView, 1, wx.EXPAND, 0)
+        if self.__pageView is not None:
+            self.contentSizer.Add(self.__pageView, flag=wx.EXPAND)
             self.Layout()
             self._application.onPageViewCreate(page)
+
+    def __createRootPageView(self):
+        self.__pageView = RootPagePanel(self, self._application)
+        self.__pageView.SetBackgroundColour(self.GetBackgroundColour())
+        self.__pageView.SetForegroundColour(self.GetForegroundColour())
+
+    def __createConcretePageView(self, page):
+        factory = FactorySelector.getFactory(page.getTypeString())
+        pageView = factory.getPageView(self, self._application)
+        pageView.SetBackgroundColour(self.GetBackgroundColour())
+        pageView.SetForegroundColour(self.GetForegroundColour())
+        self.__pageView = pageView
+        self.__pageView.page = page
 
     def __updatePageInfo(self, page):
         """
@@ -180,7 +190,6 @@ class CurrentPagePanel(wx.Panel):
         Уничтожить текущий контрол
         """
         if self.__pageView is not None:
-            assert self.__currentPage is not None
             self._application.onPageViewDestroy(self.__currentPage)
 
             self.contentSizer.Detach(self.__pageView)
@@ -208,7 +217,7 @@ class CurrentPagePanel(wx.Panel):
         if self.__saveProcessing:
             return
 
-        if self.__pageView is not None:
+        if self.__pageView is not None and self._application.selectedPage is not None:
             if not pageExists(self._application.selectedPage.root):
                 # Нет папки с деревом
                 self.__saveProcessing = True
