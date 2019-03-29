@@ -75,7 +75,7 @@ class TagsPanelController (object):
 
         if selectedPage.readonly:
             showError(self.__application.mainWindow,
-                      _('The page is open only for reading'))
+                      _('Page is opened as read-only'))
             return
 
         if tagname in selectedPage.tags:

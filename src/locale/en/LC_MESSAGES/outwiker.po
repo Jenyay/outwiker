@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-28 21:46+0300\n"
+"POT-Creation-Date: 2019-03-29 21:39+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -504,7 +504,7 @@ msgstr "Rename Tag…"
 msgid "Rename tag"
 msgstr "Rename tag"
 
-#: outwiker/core/commands.py:79
+#: outwiker/core/commands.py:79 outwiker/gui/tagspanelcontroller.py:78
 msgid "Page is opened as read-only"
 msgstr "Page is opened as read-only"
 
@@ -1308,23 +1308,23 @@ msgstr "Modify date"
 msgid "Error"
 msgstr "Error"
 
-#: outwiker/gui/currentpagepanel.py:88
+#: outwiker/gui/currentpagepanel.py:91
 msgid "Can't open page. Page folder not exists"
 msgstr "Can't open page. Page folder not exists"
 
-#: outwiker/gui/currentpagepanel.py:98
+#: outwiker/gui/currentpagepanel.py:101
 msgid "Add to Bookmarks"
 msgstr "Add to Bookmarks"
 
-#: outwiker/gui/currentpagepanel.py:105
+#: outwiker/gui/currentpagepanel.py:108
 msgid "Remove from Bookmarks"
 msgstr "Remove from Bookmarks"
 
-#: outwiker/gui/currentpagepanel.py:216
+#: outwiker/gui/currentpagepanel.py:233
 msgid "Can't save page. Wiki folder not exists. Wiki will be closed."
 msgstr "Can't save page. Wiki folder not exists. Wiki will be closed."
 
-#: outwiker/gui/currentpagepanel.py:226
+#: outwiker/gui/currentpagepanel.py:243
 msgid "Can't save page. Page folder not exists. Wiki will be reloaded."
 msgstr "Can't save page. Page folder not exists. Wiki will be reloaded."
 
@@ -1416,6 +1416,10 @@ msgstr "Skip all"
 #: outwiker/gui/dialogs/overwritedialog.py:40
 msgid "Overwrite Files"
 msgstr "Overwrite Files"
+
+#: outwiker/gui/emptypageview.py:18
+msgid "Path to current notes tree"
+msgstr "Path to current notes tree"
 
 #: outwiker/gui/htmlrenderwebkit.py:63
 #, python-format
@@ -2561,6 +2565,9 @@ msgstr "[[comment -> link]]"
 #: outwiker/pages/wiki/wikipreferences.py:44
 msgid "[[link | comment]]"
 msgstr "[[link | comment]]"
+
+#~ msgid "The page is open as read only"
+#~ msgstr "The page is open as read only"
 
 #~ msgid ""
 #~ "Unknown page type.\n"
