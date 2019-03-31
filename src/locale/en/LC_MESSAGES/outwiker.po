@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-29 22:04+0300\n"
+"POT-Creation-Date: 2019-03-31 22:40+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -1308,23 +1308,23 @@ msgstr "Modify date"
 msgid "Error"
 msgstr "Error"
 
-#: outwiker/gui/currentpagepanel.py:91
+#: outwiker/gui/currentpagepanel.py:92
 msgid "Can't open page. Page folder not exists"
 msgstr "Can't open page. Page folder not exists"
 
-#: outwiker/gui/currentpagepanel.py:101
+#: outwiker/gui/currentpagepanel.py:102
 msgid "Add to Bookmarks"
 msgstr "Add to Bookmarks"
 
-#: outwiker/gui/currentpagepanel.py:108
+#: outwiker/gui/currentpagepanel.py:109
 msgid "Remove from Bookmarks"
 msgstr "Remove from Bookmarks"
 
-#: outwiker/gui/currentpagepanel.py:233
+#: outwiker/gui/currentpagepanel.py:253
 msgid "Can't save page. Wiki folder not exists. Wiki will be closed."
 msgstr "Can't save page. Wiki folder not exists. Wiki will be closed."
 
-#: outwiker/gui/currentpagepanel.py:243
+#: outwiker/gui/currentpagepanel.py:263
 msgid "Can't save page. Page folder not exists. Wiki will be reloaded."
 msgstr "Can't save page. Page folder not exists. Wiki will be reloaded."
 
@@ -1417,11 +1417,27 @@ msgstr "Skip all"
 msgid "Overwrite Files"
 msgstr "Overwrite Files"
 
-#: outwiker/gui/emptypageview.py:20
+#: outwiker/gui/emptypageview.py:25
+msgid "Create new notes tree..."
+msgstr "Create new notes tree..."
+
+#: outwiker/gui/emptypageview.py:33
+msgid "Open notes tree from disk..."
+msgstr "Open notes tree from disk..."
+
+#: outwiker/gui/emptypageview.py:49
+msgid "Recently used notes tree:"
+msgstr "Recently used notes tree:"
+
+#: outwiker/gui/emptypageview.py:55
+msgid "Open"
+msgstr "Open"
+
+#: outwiker/gui/emptypageview.py:130
 msgid "Path to current notes tree"
 msgstr "Path to current notes tree"
 
-#: outwiker/gui/emptypageview.py:29
+#: outwiker/gui/emptypageview.py:139
 msgid "Create new page..."
 msgstr "Create new page..."
 
@@ -1565,6 +1581,7 @@ msgid "Do not change"
 msgstr "Do not change"
 
 #: outwiker/gui/pagedialogpanels/generalpanel.py:58
+#: outwiker/gui/unknownpagetype.py:28
 msgid "Page type"
 msgstr "Page type"
 
@@ -2094,7 +2111,7 @@ msgstr "Spell"
 msgid "Restore"
 msgstr "Restore"
 
-#: outwiker/gui/unknownpagetype.py:20
+#: outwiker/gui/unknownpagetype.py:21
 msgid ""
 "Unknown page type.\n"
 "It is possible that an additional plugin is required to display this page."
@@ -2102,7 +2119,7 @@ msgstr ""
 "Unknown page type.\n"
 "It is possible that an additional plugin is required to display this page."
 
-#: outwiker/gui/unknownpagetype.py:26
+#: outwiker/gui/unknownpagetype.py:42
 msgid "Page content:"
 msgstr "Page content:"
 
