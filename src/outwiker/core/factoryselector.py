@@ -11,8 +11,6 @@ class FactorySelector(object):
     """
     Класс, который выбирает нужную фабрику для каждой страницы
     """
-    _defaultFactory = UnknownPageTypeFactory()
-
     _factories = {factory.getTypeString(): factory
                   for factory
                   in [WikiPageFactory(),
@@ -32,7 +30,7 @@ class FactorySelector(object):
         (со страницей данного типа). Или вернуть фабрику по умолчанию
         """
         return FactorySelector._factories.get(page_type,
-                                              FactorySelector._defaultFactory)
+                                              UnknownPageTypeFactory(page_type))
 
     @staticmethod
     def reset():

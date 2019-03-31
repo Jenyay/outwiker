@@ -16,6 +16,7 @@ class UnknownPageTypePanel(BasePagePanel):
         self._createGUI()
 
     def _createGUI(self):
+        # Title
         message = _(
             'Unknown page type.\nIt is possible that an additional plugin is required to display this page.')
         self._messageStaticText = wx.StaticText(
@@ -23,6 +24,21 @@ class UnknownPageTypePanel(BasePagePanel):
             label=message,
             style=wx.ALIGN_CENTER_HORIZONTAL)
 
+        # Page type
+        self._pageTypeStaticText = wx.StaticText(self, label=_('Page type'))
+        self._pageTypeTextCtrl = wx.TextCtrl(self, style=wx.TE_READONLY)
+        self._pageTypeTextCtrl.SetMinSize((150, -1))
+
+        pageTypeSizer = wx.FlexGridSizer(cols=2)
+        pageTypeSizer.AddGrowableCol(1)
+        pageTypeSizer.Add(self._pageTypeStaticText,
+                          flag=wx.ALIGN_CENTER_VERTICAL | wx.ALL,
+                          border=4)
+        pageTypeSizer.Add(self._pageTypeTextCtrl,
+                          flag=wx.ALIGN_LEFT| wx.ALL,
+                          border=4)
+
+        # Content
         self._contentStaticText = wx.StaticText(self, label=_('Page content:'))
 
         self._contentTextCtrl = wx.TextCtrl(
@@ -31,11 +47,15 @@ class UnknownPageTypePanel(BasePagePanel):
 
         sizer = wx.FlexGridSizer(cols=1)
         sizer.AddGrowableCol(0)
-        sizer.AddGrowableRow(2)
+        sizer.AddGrowableRow(3)
 
         sizer.Add(self._messageStaticText,
                   flag=wx.ALIGN_CENTER | wx.ALIGN_CENTER_VERTICAL | wx.ALL,
                   border=16)
+
+        sizer.Add(pageTypeSizer,
+                  flag=wx.ALIGN_CENTER_VERTICAL | wx.ALL,
+                  border=4)
 
         sizer.Add(self._contentStaticText,
                   flag=wx.ALIGN_LEFT | wx.ALIGN_CENTER_VERTICAL | wx.ALL,
@@ -50,6 +70,7 @@ class UnknownPageTypePanel(BasePagePanel):
 
     def UpdateView(self, page):
         self._contentTextCtrl.SetValue(page.content)
+        self._pageTypeTextCtrl.SetValue(page.getTypeString())
 
     def Print(self):
         pass
@@ -69,8 +90,18 @@ class UnknownPageTypeFactory (PageFactory):
     The fabric to create UnknownPageTypePanel
     """
 
+    def __init__(self, pageTypeString):
+        if not pageTypeString:
+            pageTypeString = 'unknown'
+
+        self._pageTypeString = pageTypeString
+
     def getPageType(self):
-        return UnknownPage
+        typeName = self._pageTypeString + 'PageType'
+        attributes = {'getTypeString':
+                      staticmethod(lambda: self._pageTypeString)}
+        pagetype = type(typeName, (UnknownPage, ), attributes)
+        return pagetype
 
     @property
     def title(self):
@@ -83,7 +114,3 @@ class UnknownPageTypeFactory (PageFactory):
 class UnknownPage (WikiPage):
     def __init__(self, path, title, parent, readonly=False):
         WikiPage.__init__(self, path, title, parent, readonly=True)
-
-    @staticmethod
-    def getTypeString():
-        return 'unknown'
