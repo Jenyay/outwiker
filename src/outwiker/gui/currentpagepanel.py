@@ -121,7 +121,9 @@ class CurrentPagePanel(wx.Panel):
         """
         # Если новая страница имеет другой тип,
         # то удалить старое представление и создать новое
-        if type(self.__currentPage) != type(page) or self.__wikiroot is None:
+        if (type(self.__currentPage) != type(page) or
+                self.__wikiroot is None or
+                self.__currentPage is None):
             self.destroyPageView()
             self.__createPageView(page)
 
