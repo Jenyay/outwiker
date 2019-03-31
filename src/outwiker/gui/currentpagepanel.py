@@ -8,7 +8,7 @@ from outwiker.actions.addbookmark import AddBookmarkAction
 from outwiker.core.factoryselector import FactorySelector
 from outwiker.core.commands import pageExists, openWiki, showError
 from .tabsctrl import TabsCtrl
-from .emptypageview import RootPagePanel
+from .emptypageview import RootPagePanel, ClosedTreePanel
 
 
 class CurrentPagePanel(wx.Panel):
@@ -46,6 +46,7 @@ class CurrentPagePanel(wx.Panel):
         self._application.onForceSave += self.__onForceSave
 
         self.Bind(wx.EVT_CLOSE, self.__onClose)
+        self.__onPageSelect(None)
 
     def SetBackgroundColour(self, colour):
         super().SetBackgroundColour(colour)
@@ -144,6 +145,8 @@ class CurrentPagePanel(wx.Panel):
             self.__createConcretePageView(page)
         elif page is None and self.__wikiroot is not None:
             self.__createRootPageView()
+        elif self.__wikiroot is None:
+            self.__createClosedTreePanel()
 
         if self.__pageView is not None:
             self.contentSizer.Add(self.__pageView, flag=wx.EXPAND)
@@ -153,11 +156,25 @@ class CurrentPagePanel(wx.Panel):
                 self._application.onPageViewCreate(page)
 
     def __createRootPageView(self):
+        '''
+        Create panel for selected notes root element
+        '''
         self.__pageView = RootPagePanel(self, self._application)
         self.__pageView.SetBackgroundColour(self.GetBackgroundColour())
         self.__pageView.SetForegroundColour(self.GetForegroundColour())
 
+    def __createClosedTreePanel(self):
+        '''
+        Create panel for closed notes tree
+        '''
+        self.__pageView = ClosedTreePanel(self, self._application)
+        self.__pageView.SetBackgroundColour(self.GetBackgroundColour())
+        self.__pageView.SetForegroundColour(self.GetForegroundColour())
+
     def __createConcretePageView(self, page):
+        '''
+        Create panel for the page self
+        '''
         factory = FactorySelector.getFactory(page.getTypeString())
         pageView = factory.getPageView(self, self._application)
         pageView.SetBackgroundColour(self.GetBackgroundColour())
@@ -225,7 +242,8 @@ class CurrentPagePanel(wx.Panel):
         if self.__saveProcessing:
             return
 
-        if self.__pageView is not None and self._application.selectedPage is not None:
+        if (self.__pageView is not None and
+                self._application.selectedPage is not None):
             if not pageExists(self._application.selectedPage.root):
                 # Нет папки с деревом
                 self.__saveProcessing = True
