@@ -14,7 +14,7 @@ from outwiker.pages.wiki.wikipageview import WikiPageView
 from outwiker.pages.search.searchpage import SearchPageFactory
 from outwiker.pages.search.searchpanel import SearchPanel
 
-from outwiker.gui.emptypageview import RootPagePanel
+from outwiker.gui.emptypageview import RootPagePanel, ClosedTreePanel
 
 from test.basetestcases import BaseOutWikerGUIMixin
 
@@ -45,6 +45,9 @@ class PagePanelTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.destroyWiki(self.wikiroot)
 
     def testEmpty(self):
+        self.assertEqual(ClosedTreePanel,
+                         type(self.mainWindow.pagePanel.pageView))
+
         self.application.wikiroot = self.wikiroot
         self.assertNotEqual(None, self.mainWindow.pagePanel.panel)
         self.assertEqual(RootPagePanel, type(
@@ -148,7 +151,8 @@ class PagePanelTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         # "Закроем" вики
         self.application.wikiroot = None
-        self.assertEqual(None, self.mainWindow.pagePanel.pageView)
+        self.assertEqual(ClosedTreePanel,
+                         type(self.mainWindow.pagePanel.pageView))
 
         # Откроем ее еще раз
         self.application.wikiroot = self.wikiroot
