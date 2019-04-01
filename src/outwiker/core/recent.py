@@ -24,13 +24,6 @@ class RecentWiki(object):
 
         self._recentes = self._load()
 
-    def onWikiOpen(self, wikiroot):
-        """
-        Обработчик события на открытие вики
-        """
-        if wikiroot is not None and not wikiroot.readonly:
-            self.add(wikiroot.path)
-
     def _load(self):
         """
         Загрузка последних открытых вики из файла конфига
@@ -76,6 +69,9 @@ class RecentWiki(object):
 
     def __getitem__(self, index):
         return self._recentes[index]
+
+    def get_all(self):
+        return self._recentes
 
     @property
     def maxlen(self):

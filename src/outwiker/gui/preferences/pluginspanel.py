@@ -4,10 +4,9 @@ import logging
 
 import wx
 import wx.adv
-import wx.html2
 
 from outwiker.gui.guiconfig import PluginsConfig
-from outwiker.core.system import getCurrentDir
+from outwiker.core.system import getCurrentDir, getOS
 from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
 
 logger = logging.getLogger('pluginspanel')
@@ -38,7 +37,7 @@ class PluginsPanel(BasePrefPanel):
             _(u"Download more plugins"),
             _(u"https://jenyay.net/Outwiker/PluginsEn"))
 
-        self.pluginsInfo = wx.html2.WebView.New(self)
+        self.pluginsInfo = getOS().getHtmlRender(self)
 
         self.__layout()
 

@@ -5,8 +5,8 @@ import unittest
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.tree import WikiDocument
 from outwiker.core.factoryselector import FactorySelector
-from outwiker.pages.text.textpage import TextPageFactory
 from test.basetestcases import BaseOutWikerGUIMixin
+from outwiker.gui.unknownpagetype import UnknownPageTypeFactory
 
 
 class TestPageTest(unittest.TestCase, BaseOutWikerGUIMixin):
@@ -44,7 +44,7 @@ class TestPageTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.loader.clear()
         self.assertEqual(type(FactorySelector.getFactory(plugin.TestPage.getTypeString())),
-                         TextPageFactory)
+                         UnknownPageTypeFactory)
 
         self.loader.load(self.dirlist)
 

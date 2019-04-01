@@ -121,7 +121,7 @@ class BasePagePanel(wx.Panel):
         self.Save()
         self._currentpage = page
 
-        if not os.path.exists(page.path):
+        if page is not None and not os.path.exists(page.path):
             return
 
         self._onSetPage(page)
@@ -140,5 +140,5 @@ class BasePagePanel(wx.Panel):
         Закрытие панели без сохранения.
         """
         self.Clear()
-        super(BasePagePanel, self).Close()
+        super().Close()
         self.Destroy()

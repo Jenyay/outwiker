@@ -267,7 +267,6 @@ class MainWndController(object):
         enabled = self._application.wikiroot is not None
 
         self.__enableTools(enabled)
-        self.mainWindow.pagePanel.panel.Enable(enabled)
         self.mainWindow.treePanel.panel.Enable(enabled)
         self.mainWindow.attachPanel.panel.Enable(enabled)
 

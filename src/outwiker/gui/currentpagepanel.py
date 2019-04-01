@@ -3,11 +3,13 @@
 import os.path
 import wx
 
+import outwiker.core.system
 from outwiker.actions.addbookmark import AddBookmarkAction
 from outwiker.core.factoryselector import FactorySelector
 from outwiker.core.commands import pageExists, openWiki, showError
-import outwiker.core.system
 from .tabsctrl import TabsCtrl
+from .emptypageview import RootPagePanel, ClosedTreePanel
+from outwiker.core.system import getOS
 
 
 class CurrentPagePanel(wx.Panel):
@@ -17,6 +19,10 @@ class CurrentPagePanel(wx.Panel):
 
         self.__pageView = None
         self.__currentPage = None
+        self.__wikiroot = None
+        
+        self.__htmlRender = None
+        self.__htmlRenderorrowed = False
 
         # Флаг обозначает, что выполняется метод Save
         self.__saveProcessing = False
@@ -44,6 +50,7 @@ class CurrentPagePanel(wx.Panel):
         self._application.onForceSave += self.__onForceSave
 
         self.Bind(wx.EVT_CLOSE, self.__onClose)
+        self.__onPageSelect(None)
 
     def SetBackgroundColour(self, colour):
         super().SetBackgroundColour(colour)
@@ -74,9 +81,13 @@ class CurrentPagePanel(wx.Panel):
 
         if self.__pageView is not None:
             self.destroyPageView()
-        self.Destroy()
+        # self.Destroy()
+
+        self.__pageView.Close()
+        event.Skip()
 
     def __onWikiOpen(self, root):
+        self.__wikiroot = root
         self.__onPageSelect(root.selectedPage if root is not None else None)
 
     def __onPageSelect(self, page):
@@ -117,13 +128,17 @@ class CurrentPagePanel(wx.Panel):
         """
         # Если новая страница имеет другой тип,
         # то удалить старое представление и создать новое
-        if type(self.__currentPage) != type(page):
+        if (type(self.__currentPage) != type(page) or
+                self.__wikiroot is None or
+                self.__currentPage is None):
             self.destroyPageView()
+            self.__createPageView(page)
+
+        if self.__pageView is None:
             self.__createPageView(page)
 
         # Если представление создано, то загрузим в него новую страницу
         if self.__pageView is not None:
-            assert page is not None
             self.__pageView.page = page
             self.__pageView.SetFocus()
 
@@ -136,18 +151,45 @@ class CurrentPagePanel(wx.Panel):
         Создать панель просмотра для страницы
         """
         if page is not None:
-            factory = FactorySelector.getFactory(page.getTypeString())
-            pageView = factory.getPageView(self, self._application)
-            pageView.SetBackgroundColour(self.GetBackgroundColour())
-            pageView.SetForegroundColour(self.GetForegroundColour())
-            self.__pageView = pageView
-            self.__pageView.page = page
+            self.__createConcretePageView(page)
+        elif page is None and self.__wikiroot is not None:
+            self.__createRootPageView()
+        elif self.__wikiroot is None:
+            self.__createClosedTreePanel()
 
-            assert self.__pageView is not None
-
-            self.contentSizer.Add(self.__pageView, 1, wx.EXPAND, 0)
+        if self.__pageView is not None:
+            self.contentSizer.Add(self.__pageView, flag=wx.EXPAND)
             self.Layout()
-            self._application.onPageViewCreate(page)
+
+            if page is not None:
+                self._application.onPageViewCreate(page)
+
+    def __createRootPageView(self):
+        '''
+        Create panel for selected notes root element
+        '''
+        self.__pageView = RootPagePanel(self, self._application)
+        self.__pageView.SetBackgroundColour(self.GetBackgroundColour())
+        self.__pageView.SetForegroundColour(self.GetForegroundColour())
+
+    def __createClosedTreePanel(self):
+        '''
+        Create panel for closed notes tree
+        '''
+        self.__pageView = ClosedTreePanel(self, self._application)
+        self.__pageView.SetBackgroundColour(self.GetBackgroundColour())
+        self.__pageView.SetForegroundColour(self.GetForegroundColour())
+
+    def __createConcretePageView(self, page):
+        '''
+        Create panel for the page self
+        '''
+        factory = FactorySelector.getFactory(page.getTypeString())
+        pageView = factory.getPageView(self, self._application)
+        pageView.SetBackgroundColour(self.GetBackgroundColour())
+        pageView.SetForegroundColour(self.GetForegroundColour())
+        self.__pageView = pageView
+        self.__pageView.page = page
 
     def __updatePageInfo(self, page):
         """
@@ -180,10 +222,10 @@ class CurrentPagePanel(wx.Panel):
         Уничтожить текущий контрол
         """
         if self.__pageView is not None:
-            assert self.__currentPage is not None
-            self._application.onPageViewDestroy(self.__currentPage)
+            if self.__currentPage is not None:
+                self._application.onPageViewDestroy(self.__currentPage)
 
-            self.contentSizer.Detach(self.__pageView)
+            # self.contentSizer.Detach(self.__pageView)
             self.__pageView.Close()
             self.__pageView = None
             self.__currentPage = None
@@ -194,9 +236,10 @@ class CurrentPagePanel(wx.Panel):
         Нужно для перезагрузки вики
         """
         if self.__pageView is not None:
-            self._application.onPageViewDestroy(self.__currentPage)
+            if self.__currentPage is not None:
+                self._application.onPageViewDestroy(self.__currentPage)
 
-            self.contentSizer.Detach(self.__pageView)
+            # self.contentSizer.Detach(self.__pageView)
             self.__pageView.CloseWithoutSave()
             self.__pageView = None
             self.__currentPage = None
@@ -208,7 +251,8 @@ class CurrentPagePanel(wx.Panel):
         if self.__saveProcessing:
             return
 
-        if self.__pageView is not None:
+        if (self.__pageView is not None and
+                self._application.selectedPage is not None):
             if not pageExists(self._application.selectedPage.root):
                 # Нет папки с деревом
                 self.__saveProcessing = True
@@ -245,3 +289,21 @@ class CurrentPagePanel(wx.Panel):
     def __onBookmark(self, event):
         controller = self._application.actionController
         controller.getAction(AddBookmarkAction.stringId).run(None)
+
+    def borrowHtmlRender(self, new_parent):
+        if self.__htmlRender is None:
+            assert not self.__htmlRenderorrowed
+            self.__htmlRender = getOS().getHtmlRender(new_parent)
+            self.__htmlRenderorrowed = True
+        else:
+            assert not self.__htmlRenderorrowed
+            self.__htmlRenderorrowed = True
+            self.__htmlRender.Reparent(new_parent)
+
+        return self.__htmlRender
+
+    def freeHtmlRender(self):
+        assert self.__htmlRenderorrowed
+        self.__htmlRenderorrowed = False
+        self.__htmlRender.Reparent(self)
+        self.__htmlRender.Hide()

@@ -570,7 +570,7 @@ def vm_stop():
 @linux_only
 def vm_remove_keys():
     '''
-    Remove local SSH keys for remote virual machines
+    Remove local SSH keys for remote virtual machines
     '''
     for host_param in VM_BUILD_PARAMS.values():
         host = host_param[u'host']

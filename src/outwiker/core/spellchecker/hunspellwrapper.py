@@ -101,7 +101,10 @@ class HunspellWrapper (object):
     def getSuggest(self, word):
         suggest_set = set()
         for checker in self._checkers.values():
-            suggest_set |= set(checker.suggest(word))
+            try:
+                suggest_set |= set(checker.suggest(word))
+            except UnicodeEncodeError:
+                continue
 
         suggest = sorted(
             [item for item in suggest_set if len(item.strip()) > 0])

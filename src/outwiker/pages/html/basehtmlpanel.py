@@ -15,7 +15,6 @@ from outwiker.core.system import getImagesDir
 from outwiker.core.attachment import Attachment
 from outwiker.core.defines import REGISTRY_PAGE_CURSOR_POSITION
 from outwiker.core.events import PageUpdateNeededParams, PageModeChangeParams
-from outwiker.core.system import getOS
 from outwiker.utilites.textfile import readTextFile
 from outwiker.gui.basetextpanel import BaseTextPanel
 from outwiker.gui.guiconfig import GeneralGuiConfig
@@ -30,7 +29,8 @@ class BaseHtmlPanel(BaseTextPanel):
     CODE_PAGE_INDEX = 0
     RESULT_PAGE_INDEX = 1
 
-    def __init__(self, parent, application):
+    def __init__(self, parent: 'outwiker.gui.currentpagepanel.CurrentPagePanel',
+                 application):
         super().__init__(parent, application)
 
         # Предыдущее содержимое результирующего HTML, чтобы не переписывать
@@ -50,7 +50,7 @@ class BaseHtmlPanel(BaseTextPanel):
         self.notebook = wx.aui.AuiNotebook(self, style=wx.aui.AUI_NB_BOTTOM)
         self._codeEditor = self.getTextEditor()(self.notebook)
 
-        self.htmlWindow = getOS().getHtmlRender(self.notebook)
+        self.htmlWindow = parent.borrowHtmlRender(self.notebook)
 
         self.__do_layout()
 
@@ -85,7 +85,12 @@ class BaseHtmlPanel(BaseTextPanel):
         self.Unbind(self.EVT_SPELL_ON_OFF, handler=self._onSpellOnOff)
         self._application.onPageUpdate -= self._onPageUpdate
 
-        super(BaseHtmlPanel, self).Clear()
+        for n in range(self.pageCount):
+            self.notebook.RemovePage(0)
+
+        self.GetParent().freeHtmlRender()
+        self.htmlWindow = None
+        super().Clear()
 
     def SetCursorPosition(self, position):
         """

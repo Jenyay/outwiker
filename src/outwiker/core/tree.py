@@ -423,6 +423,10 @@ class WikiDocument(RootWikiPage):
     def title(self):
         return os.path.basename(self.path)
 
+    @property
+    def display_title(self):
+        return self.title
+
     @staticmethod
     def getTypeString():
         return u"document"

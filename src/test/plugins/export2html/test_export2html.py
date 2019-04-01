@@ -698,8 +698,7 @@ class Export2HtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):
             alwaysOverwrite=False
         )
 
-        self.assertEqual(len(result), 1)
-        self.assertTrue("Страница поиска" in result[0])
+        self.assertEqual(len(result), 3)
 
         self.assertTrue(os.path.exists(os.path.join(self.outputdir,
                                                     wikiname + "_Страница 1")))

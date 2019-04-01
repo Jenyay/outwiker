@@ -12,6 +12,7 @@ from outwiker.utilites.textfile import readTextFile
 from outwiker.pages.html.htmlpage import HtmlPageFactory
 from outwiker.pages.html.htmlpageview import HtmlPageView
 from test.basetestcases import BaseOutWikerGUIMixin
+from outwiker.gui.emptypageview import RootPagePanel
 
 
 class HtmlPageViewTest(unittest.TestCase, BaseOutWikerGUIMixin):
@@ -37,7 +38,8 @@ class HtmlPageViewTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def testType(self):
         self.application.wikiroot = self.wikiroot
-        self.assertEqual(None, self.application.mainWindow.pagePanel.pageView)
+        self.assertEqual(RootPagePanel,
+                         type(self.mainWindow.pagePanel.pageView))
 
         self.application.selectedPage = self.wikiroot["HTML-страница"]
         self.assertEqual(HtmlPageView,
@@ -48,7 +50,8 @@ class HtmlPageViewTest(unittest.TestCase, BaseOutWikerGUIMixin):
                          type(self.application.mainWindow.pagePanel.pageView))
 
         self.application.selectedPage = None
-        self.assertEqual(None, self.application.mainWindow.pagePanel.pageView)
+        self.assertEqual(RootPagePanel,
+                         type(self.mainWindow.pagePanel.pageView))
 
     def testDefaultSelectedPage(self):
         """

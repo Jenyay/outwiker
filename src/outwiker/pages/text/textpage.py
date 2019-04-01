@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 """
 Необходимые классы для создания страниц с текстом
 """
@@ -12,12 +12,12 @@ class TextWikiPage (WikiPage):
     """
     Класс текстовых страниц
     """
-    def __init__(self, path, title, parent, readonly = False):
-        WikiPage.__init__ (self, path, title, parent, readonly)
 
+    def __init__(self, path, title, parent, readonly=False):
+        WikiPage.__init__(self, path, title, parent, readonly)
 
     @staticmethod
-    def getTypeString ():
+    def getTypeString():
         return u"text"
 
 
@@ -25,20 +25,19 @@ class TextPageFactory (PageFactory):
     """
     Фабрика для создания текстовой страницы и ее представления
     """
+
     def getPageType(self):
         return TextWikiPage
 
-
     @property
-    def title (self):
+    def title(self):
         """
         Название страницы, показываемое пользователю
         """
         return _(u"Text Page")
 
-
-    def getPageView (self, parent, application):
+    def getPageView(self, parent, application):
         """
         Вернуть контрол, который будет отображать и редактировать страницу
         """
-        return TextPanel (parent, application)
+        return TextPanel(parent, application)
