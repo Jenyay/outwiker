@@ -24,7 +24,7 @@ addons:
             - ibus-gtk3
             - xvfb
             - libhunspell-dev
-            - libwebkitgtk-3.0
+            - libwebkitgtk-4.0
 install:
     - python -m pip install pipenv
     - pipenv run pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-16.04 wxPython==4.0.4
