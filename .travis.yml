@@ -27,7 +27,7 @@ addons:
             - libwebkitgtk-3.0
 install:
     - python -m pip install pipenv
-    - pipenv run pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-16.04 wxPython==4.0.1
+    - pipenv run pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-16.04 wxPython==4.0.4
     - pipenv update --dev
 script:
     - xvfb-run pipenv run fab test:"-v"
