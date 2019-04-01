@@ -9,6 +9,7 @@ from outwiker.core.factoryselector import FactorySelector
 from outwiker.core.commands import pageExists, openWiki, showError
 from .tabsctrl import TabsCtrl
 from .emptypageview import RootPagePanel, ClosedTreePanel
+from outwiker.core.system import getOS
 
 
 class CurrentPagePanel(wx.Panel):
@@ -19,6 +20,9 @@ class CurrentPagePanel(wx.Panel):
         self.__pageView = None
         self.__currentPage = None
         self.__wikiroot = None
+        
+        self.__htmlRender = None
+        self.__htmlRenderorrowed = False
 
         # Флаг обозначает, что выполняется метод Save
         self.__saveProcessing = False
@@ -77,7 +81,10 @@ class CurrentPagePanel(wx.Panel):
 
         if self.__pageView is not None:
             self.destroyPageView()
-        self.Destroy()
+        # self.Destroy()
+
+        self.__pageView.Close()
+        event.Skip()
 
     def __onWikiOpen(self, root):
         self.__wikiroot = root
@@ -282,3 +289,21 @@ class CurrentPagePanel(wx.Panel):
     def __onBookmark(self, event):
         controller = self._application.actionController
         controller.getAction(AddBookmarkAction.stringId).run(None)
+
+    def borrowHtmlRender(self, new_parent):
+        if self.__htmlRender is None:
+            assert not self.__htmlRenderorrowed
+            self.__htmlRender = getOS().getHtmlRender(new_parent)
+            self.__htmlRenderorrowed = True
+        else:
+            assert not self.__htmlRenderorrowed
+            self.__htmlRenderorrowed = True
+            self.__htmlRender.Reparent(new_parent)
+
+        return self.__htmlRender
+
+    def freeHtmlRender(self):
+        assert self.__htmlRenderorrowed
+        self.__htmlRenderorrowed = False
+        self.__htmlRender.Reparent(self)
+        self.__htmlRender.Hide()
