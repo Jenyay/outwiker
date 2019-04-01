@@ -291,15 +291,14 @@ class CurrentPagePanel(wx.Panel):
         controller.getAction(AddBookmarkAction.stringId).run(None)
 
     def borrowHtmlRender(self, new_parent):
+        assert not self.__htmlRenderorrowed
+
         if self.__htmlRender is None:
-            assert not self.__htmlRenderorrowed
             self.__htmlRender = getOS().getHtmlRender(new_parent)
-            self.__htmlRenderorrowed = True
         else:
-            assert not self.__htmlRenderorrowed
-            self.__htmlRenderorrowed = True
             self.__htmlRender.Reparent(new_parent)
 
+        self.__htmlRenderorrowed = True
         return self.__htmlRender
 
     def freeHtmlRender(self):
