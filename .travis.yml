@@ -24,6 +24,8 @@ addons:
             - ibus-gtk3
             - xvfb
             - libhunspell-dev
+            - gstreamer1.0-pulseaudio
+            - gstreamer0.10-alsa
             - libwebkit2gtk-4.0
 install:
     - python -m pip install pipenv
