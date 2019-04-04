@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
+import cProfile
 import sys
+import os
 
 import pytest
 
@@ -10,6 +12,14 @@ if __name__ == '__main__':
     args = sys.argv[1:]
     args.append('-s')
 
-    result = pytest.main(args)
+    profile_dir = '../tmp'
+    profile_name = 'test_profile'
+    if not os.path.exists(profile_dir):
+        os.mkdir(profile_dir)
+
+    profile_fname = os.path.join(profile_dir, profile_name)
+    cProfile.run('pytest.main(args)', profile_fname)
+
+    # result = pytest.main(args)
     # print_memory()
-    sys.exit(result)
+    # sys.exit(result)
