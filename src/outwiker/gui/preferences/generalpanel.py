@@ -33,6 +33,9 @@ class GeneralPanel(BasePrefPanel):
         self.PAGE_TAB_COMBO_WIDTH = 200
         self.LANG_COMBO_WIDTH = 200
 
+        self.MIN_TOASTER_DELAY = 1
+        self.MAX_TOASTER_DELAY = 600
+
         self.pageTabChoises = [
             (_(u'Recent used'), GeneralGuiConfig.PAGE_TAB_RECENT),
             (_(u'Preview'), GeneralGuiConfig.PAGE_TAB_RESULT),
@@ -44,6 +47,7 @@ class GeneralPanel(BasePrefPanel):
 
         self.__createMiscGui()
         self.__createAutosaveGui(self.generalConfig)
+        self.__createToasterDelayGui(self.generalConfig)
         self.__createHistoryGui(self.generalConfig)
         self.__createDateTimeFormatGui(self.generalConfig)
         self.__createOpenPageTabGui()
@@ -78,7 +82,7 @@ class GeneralPanel(BasePrefPanel):
             str(generalConfig.AUTOSAVE_INTERVAL_DEFAULT),
             min=self.MIN_AUTOSAVE_INTERVAL,
             max=self.MAX_AUTOSAVE_INTERVAL,
-            style=wx.SP_ARROW_KEYS | wx.TE_PROCESS_ENTER | wx.TE_PROCESS_TAB | wx.TE_AUTO_URL)
+            style=wx.SP_ARROW_KEYS)
 
         self.autosaveSizer = wx.FlexGridSizer(1, 2, 0, 0)
         self.autosaveSizer.Add(autosaveLabel,
@@ -93,6 +97,30 @@ class GeneralPanel(BasePrefPanel):
         self.autosaveSizer.AddGrowableRow(0)
         self.autosaveSizer.AddGrowableCol(0)
         self.autosaveSizer.AddGrowableCol(1)
+
+    def __createToasterDelayGui(self, generalConfig):
+        delayLabel = wx.StaticText(self, label=_("Toaster delay in seconds"))
+
+        self.toasterDelaySpin = wx.SpinCtrl(
+            self,
+            -1,
+            str(generalConfig.TOASTER_DELAY_DEFAULT),
+            min=self.MIN_TOASTER_DELAY,
+            max=self.MAX_TOASTER_DELAY,
+            style=wx.SP_ARROW_KEYS)
+
+        self.toasterDelaySizer = wx.FlexGridSizer(cols=2)
+        self.toasterDelaySizer.AddGrowableRow(0)
+        self.toasterDelaySizer.AddGrowableCol(0)
+        self.toasterDelaySizer.AddGrowableCol(1)
+
+        self.toasterDelaySizer.Add(delayLabel,
+                                   flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+                                   border=2)
+
+        self.toasterDelaySizer.Add(self.toasterDelaySpin,
+                                   flag=wx.ALL | wx.ALIGN_RIGHT,
+                                   border=2)
 
     def __createDateTimeFormatGui(self, generalConfig):
         """
@@ -142,7 +170,7 @@ class GeneralPanel(BasePrefPanel):
             str(generalConfig.RECENT_ICONS_COUNT_DEFAULT),
             min=self.MIN_ICON_HISTORY_LENGTH,
             max=self.MAX_ICON_HISTORY_LENGTH,
-            style=wx.SP_ARROW_KEYS | wx.TE_PROCESS_ENTER | wx.TE_PROCESS_TAB | wx.TE_AUTO_URL)
+            style=wx.SP_ARROW_KEYS)
 
         # Recently opened files
         history_label = wx.StaticText(
@@ -156,7 +184,7 @@ class GeneralPanel(BasePrefPanel):
             str(generalConfig.RECENT_WIKI_COUNT_DEFAULT),
             min=self.MIN_HISTORY_LENGTH,
             max=self.MAX_HISTORY_LENGTH,
-            style=wx.SP_ARROW_KEYS | wx.TE_PROCESS_ENTER | wx.TE_PROCESS_TAB | wx.TE_AUTO_URL)
+            style=wx.SP_ARROW_KEYS)
 
         self.autoopenCheckBox = wx.CheckBox(
             self,
@@ -260,6 +288,7 @@ class GeneralPanel(BasePrefPanel):
         main_sizer.Add(self.dateTimeSizer, 1, wx.EXPAND, 0)
 
         self.__addStaticLine(main_sizer)
+        main_sizer.Add(self.toasterDelaySizer, 1, wx.EXPAND, 0)
         main_sizer.Add(self.pageTabSizer, 1, wx.EXPAND, 0)
         main_sizer.Add(self.languageSizer, 1, wx.EXPAND, 0)
 
@@ -321,6 +350,7 @@ class GeneralPanel(BasePrefPanel):
         )
 
         self.__loadLanguages()
+        self.toasterDelaySpin.SetValue(self.generalConfig.toasterDelay.value // 1000)
 
     def __loadLanguages(self):
         languages = outwiker.core.i18n.getLanguages()
@@ -353,6 +383,7 @@ class GeneralPanel(BasePrefPanel):
         self.dateTimeFormat.save()
         self.__saveLanguage()
         self.__savePageTab()
+        self.generalConfig.toasterDelay.value = self.toasterDelaySpin.GetValue() * 1000
 
     def __saveLanguage(self):
         index = self.langCombo.GetSelection()

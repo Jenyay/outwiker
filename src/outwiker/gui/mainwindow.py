@@ -228,7 +228,7 @@ class MainWindow(wx.Frame):
         self.controller.updateRecentMenu()
         self.__panesController.updateViewMenu()
         self.treePanel.panel.addButtons()
-        self.toaster = ToasterController(self)
+        self.toaster = ToasterController(self, self._application)
 
         if self.mainWindowConfig.fullscreen.value:
             self._application.actionController.check(FullScreenAction.stringId,
