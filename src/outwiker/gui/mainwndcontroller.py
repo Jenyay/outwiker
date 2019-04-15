@@ -1,15 +1,14 @@
 # -*- coding: utf-8 -*-
 
-import datetime
 
 import wx
 
 import outwiker.core.commands
-from outwiker.core.commands import setStatusText, getMainWindowTitle
+from outwiker.core.commands import getMainWindowTitle
 from outwiker.core.events import PAGE_UPDATE_TITLE
 from .bookmarkscontroller import BookmarksController
 from .autosavetimer import AutosaveTimer
-from .guiconfig import GeneralGuiConfig, TrayConfig
+from .guiconfig import TrayConfig
 from .defines import MENU_FILE, TOOLBAR_GENERAL
 
 from outwiker.actions.save import SaveAction
@@ -128,7 +127,6 @@ class MainWndController(object):
         """
         Начальные установки для главного окна
         """
-        self.updateStatusBar()
         self.__bindAppEvents()
         self.mainWindow.Bind(wx.EVT_CLOSE, self.__onClose)
 
@@ -154,21 +152,6 @@ class MainWndController(object):
     @property
     def mainMenu(self):
         return self.mainWindow.menuController.getRootMenu()
-
-    def updatePageDateTime(self):
-        statusbar_item = 1
-        config = GeneralGuiConfig(self._application.config)
-
-        dateFormat = config.dateTimeFormat.value
-        text = u""
-
-        if(self._application.selectedPage is not None and
-                self._application.selectedPage.datetime is not None):
-            text = datetime.datetime.strftime(
-                self._application.selectedPage.datetime,
-                dateFormat)
-
-        setStatusText(text, statusbar_item)
 
     def removeMenuItemsById(self, menu, keys):
         """
@@ -203,10 +186,8 @@ class MainWndController(object):
         """
         self.bookmarks.updateBookmarks()
         self.updateTitle()
-        self.updatePageDateTime()
 
     def __onPageUpdate(self, page, **kwargs):
-        self.updatePageDateTime()
         if kwargs['change'] & PAGE_UPDATE_TITLE:
             self.updateTitle()
             self.bookmarks.updateBookmarks()
@@ -227,7 +208,6 @@ class MainWndController(object):
         self.enableGui()
         self.bookmarks.updateBookmarks()
         self.updateTitle()
-        self.updatePageDateTime()
 
     ###################################################
     # Обработка событий
@@ -237,7 +217,6 @@ class MainWndController(object):
         Обработчик события выбора страницы в дереве
         """
         self.updateTitle()
-        self.updatePageDateTime()
         self._updateBookmarksState()
 
     def _updateBookmarksState(self):
@@ -251,8 +230,6 @@ class MainWndController(object):
         Обработчик события изменения настроек главного окна
         """
         self.updateTitle()
-        self.updatePageDateTime()
-        self.updateStatusBar()
         self.updateColors()
     #
     ###################################################
@@ -294,10 +271,6 @@ class MainWndController(object):
             и текущей страницы
         """
         self.mainWindow.SetTitle(getMainWindowTitle(self._application))
-
-    def updateStatusBar(self):
-        config = self.mainWindow.mainWindowConfig
-        self.mainWindow.statusbar.Show(config.statusbar_visible.value)
 
     def loadMainWindowParams(self):
         """
