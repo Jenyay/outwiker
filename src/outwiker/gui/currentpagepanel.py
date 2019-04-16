@@ -8,7 +8,8 @@ from outwiker.actions.addbookmark import AddBookmarkAction
 from outwiker.core.factoryselector import FactorySelector
 from outwiker.core.commands import pageExists, openWiki, showError
 from .tabsctrl import TabsCtrl
-from .emptypageview import RootPagePanel, ClosedTreePanel
+from .emptypageview import ClosedTreePanel
+from .rootpagepanel import RootPagePanel
 
 
 class CurrentPagePanel(wx.Panel):
