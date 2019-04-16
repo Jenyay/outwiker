@@ -3,6 +3,8 @@
 import wx
 
 from .basepagepanel import BasePagePanel
+from .controls.pagelist import PageList, EVT_PAGE_CLICK
+from .controls.pagelist_columns import ColumnsFactory
 from outwiker.actions.addchildpage import AddChildPageAction
 
 
@@ -16,7 +18,8 @@ class RootPagePanel(BasePagePanel):
     def _createGUI(self):
         self._panels = [
             NotesTreePathPanel(self, self._application),
-            ButtonsPanel(self, self._application)
+            ButtonsPanel(self, self._application),
+            BookmarksPanel(self, self._application),
         ]
 
         mainSizer = wx.FlexGridSizer(cols=1)
@@ -114,3 +117,55 @@ class NotesTreePathPanel(wx.Panel):
                       border=4)
 
         self.SetSizer(pathSizer)
+
+
+class BookmarksPanel(wx.Panel):
+    '''
+    Panel with bookmarks list
+    '''
+    def __init__(self, parent, application):
+        super().__init__(parent)
+        self._application = application
+        self._createGUI()
+
+    def updatePanel(self):
+        self._updateBookmarks()
+
+    def clear(self):
+        wx.SafeYield()
+
+    def _updateBookmarks(self):
+        assert self._application.wikiroot is not None
+
+        wikiroot = self._application.wikiroot
+        page_list = [wikiroot.bookmarks[n]
+                     for n
+                     in range(len(wikiroot.bookmarks))
+                     if wikiroot.bookmarks[n] is not None]
+        self._pageList.setPageList(page_list)
+
+    def _createGUI(self):
+        self._bookmarksLabel = wx.StaticText(self, label=_('Bookmarks'))
+
+        self._pageList = PageList(self)
+        self._pageList.SetMinSize((-1, 250))
+        columns = ColumnsFactory().createDefaultColumns()
+        self._pageList.setColumns(columns)
+        self._pageList.Bind(EVT_PAGE_CLICK, handler=self._onPageClick)
+
+        bookmarksSizer = wx.FlexGridSizer(cols=1)
+        bookmarksSizer.AddGrowableCol(0)
+        bookmarksSizer.AddGrowableRow(1)
+
+        bookmarksSizer.Add(self._bookmarksLabel,
+                           flag=wx.ALIGN_CENTER_VERTICAL | wx.ALL,
+                           border=4)
+
+        bookmarksSizer.Add(self._pageList,
+                           flag=wx.EXPAND | wx.ALL,
+                           border=4)
+
+        self.SetSizer(bookmarksSizer)
+
+    def _onPageClick(self, event):
+        self._application.selectedPage = event.page
