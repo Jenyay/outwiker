@@ -58,6 +58,10 @@ class GeneralGuiConfig(object):
     TOASTER_DELAY_PARAM = 'ToasterDelay'
     TOASTER_DELAY_DEFAULT = 7000
 
+    # Headers for bookmarks page list in RootPagePanel
+    BOOKMARKS_HEADERS_PARAM = 'BookmarksHeaders'
+    BOOKMARKS_HEADERS_DEFAULT = ''
+
     def __init__(self, config):
         self.config = config
 
@@ -142,6 +146,11 @@ class GeneralGuiConfig(object):
                                           self.GENERAL_SECTION,
                                           self.TOASTER_DELAY_PARAM,
                                           self.TOASTER_DELAY_DEFAULT)
+
+        self.bookmarksHeaders = StringOption(self.config,
+                                             self.GENERAL_SECTION,
+                                             self.BOOKMARKS_HEADERS_PARAM,
+                                             self.BOOKMARKS_HEADERS_DEFAULT)
 
 
 class PluginsConfig(object):

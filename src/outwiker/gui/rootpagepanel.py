@@ -6,6 +6,7 @@ from .basepagepanel import BasePagePanel
 from .controls.pagelist import PageList, EVT_PAGE_CLICK
 from .controls.pagelist_columns import ColumnsFactory
 from outwiker.actions.addchildpage import AddChildPageAction
+from outwiker.gui.guiconfig import GeneralGuiConfig
 
 
 class RootPagePanel(BasePagePanel):
@@ -126,6 +127,7 @@ class BookmarksPanel(wx.Panel):
     def __init__(self, parent, application):
         super().__init__(parent)
         self._application = application
+        self._config = GeneralGuiConfig(self._application.config)
         self._createGUI()
 
     def updatePanel(self):
@@ -133,6 +135,9 @@ class BookmarksPanel(wx.Panel):
 
     def clear(self):
         wx.SafeYield()
+        self._pageList.updateColumnsWidth()
+        columns_string = ColumnsFactory.toString(self._pageList.getColumns())
+        self._config.bookmarksHeaders.value = columns_string
 
     def _updateBookmarks(self):
         assert self._application.wikiroot is not None
@@ -144,14 +149,22 @@ class BookmarksPanel(wx.Panel):
                      if wikiroot.bookmarks[n] is not None]
         self._pageList.setPageList(page_list)
 
+    def _createPageList(self):
+        pageList = PageList(self)
+        pageList.SetMinSize((-1, 250))
+
+        columnsFactory = ColumnsFactory()
+        columns = columnsFactory.createColumnsFromString(self._config.bookmarksHeaders.value)
+        if not columns:
+            columns = columnsFactory.createDefaultColumns()
+
+        pageList.setColumns(columns)
+        pageList.Bind(EVT_PAGE_CLICK, handler=self._onPageClick)
+        return pageList
+
     def _createGUI(self):
         self._bookmarksLabel = wx.StaticText(self, label=_('Bookmarks'))
-
-        self._pageList = PageList(self)
-        self._pageList.SetMinSize((-1, 250))
-        columns = ColumnsFactory().createDefaultColumns()
-        self._pageList.setColumns(columns)
-        self._pageList.Bind(EVT_PAGE_CLICK, handler=self._onPageClick)
+        self._pageList = self._createPageList()
 
         bookmarksSizer = wx.FlexGridSizer(cols=1)
         bookmarksSizer.AddGrowableCol(0)
