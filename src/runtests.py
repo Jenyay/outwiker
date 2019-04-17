@@ -17,8 +17,13 @@ if __name__ == '__main__':
     if not os.path.exists(profile_dir):
         os.mkdir(profile_dir)
 
-    profile_fname = os.path.join(profile_dir, profile_name)
-    cProfile.run('pytest.main(args)', profile_fname)
+    profile_path = os.path.join(profile_dir, profile_name)
+
+    profile = cProfile.Profile()
+    profile.enable()
+    pytest.main(args)
+    profile.create_stats()
+    profile.dump_stats(profile_path)
 
     # result = pytest.main(args)
     # print_memory()
