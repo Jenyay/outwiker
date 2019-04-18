@@ -182,8 +182,8 @@ def findPage(application, page_id):
         return application.pageUidDepot[page_id]
 
 
-@profile
-def openWiki(path: str, readonly: bool=False) -> Optional[WikiDocument]:
+@profile(prefix='commands_')
+def openWiki(path: str, readonly: bool = False) -> Optional[WikiDocument]:
     def threadFunc(path, readonly):
         try:
             return WikiDocument.load(path, readonly)

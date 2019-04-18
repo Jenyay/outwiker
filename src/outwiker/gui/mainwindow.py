@@ -219,7 +219,7 @@ class MainWindow(wx.Frame):
         [controller.clear() for controller in self._coreControllers]
         self._coreControllers = []
 
-    @profile
+    @profile(prefix='MainWindow_')
     def createGui(self):
         """
         Создать пункты меню, кнопки на панелях инструментов и т.п.
@@ -616,7 +616,7 @@ class MainWindow(wx.Frame):
 
         self.SetIcon(icon)
 
-    @profile
+    @profile(prefix='MainWindow_')
     def Destroy(self):
         """
         Убрать за собой
