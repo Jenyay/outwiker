@@ -22,6 +22,7 @@ from outwiker.core.pagetitletester import PageTitleError, PageTitleWarning
 from outwiker.core.system import getOS, getCurrentDir
 from outwiker.core.tree import WikiDocument
 from outwiker.core.xmlversionparser import XmlVersionParser
+from outwiker.utilites.profile import profile
 from outwiker.gui.dialogs.overwritedialog import OverwriteDialog
 from outwiker.gui.longprocessrunner import LongProcessRunner
 from outwiker.gui.polyaction import PolyAction
@@ -181,6 +182,7 @@ def findPage(application, page_id):
         return application.pageUidDepot[page_id]
 
 
+@profile
 def openWiki(path: str, readonly: bool=False) -> Optional[WikiDocument]:
     def threadFunc(path, readonly):
         try:

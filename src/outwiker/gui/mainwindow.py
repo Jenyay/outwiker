@@ -10,6 +10,7 @@ from outwiker.core.attachwatcher import AttachWatcher
 from outwiker.core.commands import showError
 from outwiker.core.system import getOS
 from outwiker.core.system import getImagesDir
+from outwiker.utilites.profile import profile
 
 from .guiconfig import MainWindowConfig
 from .mainwndcontroller import MainWndController
@@ -218,6 +219,7 @@ class MainWindow(wx.Frame):
         [controller.clear() for controller in self._coreControllers]
         self._coreControllers = []
 
+    @profile
     def createGui(self):
         """
         Создать пункты меню, кнопки на панелях инструментов и т.п.
@@ -614,6 +616,7 @@ class MainWindow(wx.Frame):
 
         self.SetIcon(icon)
 
+    @profile
     def Destroy(self):
         """
         Убрать за собой
