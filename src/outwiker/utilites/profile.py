@@ -17,8 +17,9 @@ def profile(func):
 
         profile = cProfile.Profile()
         profile.enable()
-        func(*args, **kwargs)
+        result = func(*args, **kwargs)
         profile.create_stats()
         profile.dump_stats(profile_path)
+        return result
 
     return new_func
