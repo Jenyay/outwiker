@@ -4,18 +4,20 @@ import logging
 import os.path
 
 import wx
+from wx.lib.scrolledpanel import ScrolledPanel
 
 from outwiker.core.event import Event
 
 logger = logging.getLogger('outwiker.gui.pasepagepanel')
 
 
-class BasePagePanel(wx.Panel):
+class BasePagePanel(ScrolledPanel):
     """
     Базовый класс для панелей представления страниц
     """
     def __init__(self, parent, application):
-        super().__init__(parent, style=wx.TAB_TRAVERSAL)
+        style = wx.TAB_TRAVERSAL | wx.HSCROLL | wx.VSCROLL
+        super().__init__(parent, style=style)
 
         self._currentpage = None
         self._application = application

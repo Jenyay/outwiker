@@ -31,6 +31,7 @@ class RootPagePanel(BasePagePanel):
 
         self.SetSizer(mainSizer)
         self.Layout()
+        self.SetupScrolling()
 
     def UpdateView(self, page):
         for panel in self._panels:
