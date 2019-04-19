@@ -25,6 +25,7 @@ from .tokenwikistyle import WikiStyleInlineFactory, WikiStyleBlockFactory
 
 from ..thumbnails import Thumbnails
 from outwiker.libs.pyparsing import NoMatch
+from outwiker.utilites.profile import profile
 
 
 class Parser(object):
@@ -275,6 +276,7 @@ class Parser(object):
         """
         self.__footers.append(footer)
 
+    @profile('wikiparser_')
     def toHtml(self, text):
         """
         Сгенерить HTML без заголовков типа <HTML> и т.п.
