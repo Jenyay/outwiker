@@ -12,7 +12,7 @@ from outwiker.utilites.textfile import readTextFile
 from outwiker.pages.html.htmlpage import HtmlPageFactory
 from outwiker.pages.html.htmlpageview import HtmlPageView
 from test.basetestcases import BaseOutWikerGUIMixin
-from outwiker.gui.emptypageview import RootPagePanel
+from outwiker.gui.rootpagepanel import RootPagePanel
 
 
 class HtmlPageViewTest(unittest.TestCase, BaseOutWikerGUIMixin):

@@ -13,7 +13,7 @@ from outwiker.pages.wiki.wikipageview import WikiPageView
 from outwiker.pages.wiki.wikiconfig import WikiConfig
 from outwiker.pages.wiki.listautocomplete import listComplete_wiki
 from test.basetestcases import BaseOutWikerGUIMixin
-from outwiker.gui.emptypageview import RootPagePanel
+from outwiker.gui.rootpagepanel import RootPagePanel
 
 
 class WikiPageViewTest(unittest.TestCase, BaseOutWikerGUIMixin):
