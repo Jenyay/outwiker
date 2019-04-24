@@ -6,17 +6,27 @@ import wx
 import wx.lib.agw.toasterbox as tb
 
 from outwiker.gui.theme import Theme
+from outwiker.gui.guiconfig import GeneralGuiConfig
 
 
 class ToasterController(object):
-    def __init__(self, parent):
+    def __init__(self, parent, application):
         self._parent = parent
+        self._application = application
         self._theme = Theme()
+        self._config = GeneralGuiConfig(application.config)
+        self._updateSettings()
+
+        self._application.onPreferencesDialogClose += self._onPreferencesDialogClose
 
         # Use in tests, not for normal code
         self.counter = ToasterCounter()
 
-        self.DELAY_SEC = 7000
+    def _updateSettings(self):
+        self.toaster_delay = self._config.toasterDelay.value
+
+    def _onPreferencesDialogClose(self, dialog):
+        self._updateSettings()
 
     def _calcPopupPos(self, width, height) -> Tuple[int, int]:
         rect = self._parent.GetRect()
@@ -33,6 +43,7 @@ class ToasterController(object):
         )
         toasterbox.CleanList()
         tb.winlist = []
+        self._application.onPreferencesDialogClose -= self._onPreferencesDialogClose
 
     def showError(self, message):
         title = _('Error')
@@ -71,7 +82,7 @@ class ToasterController(object):
                           captionBackgroundColor, captionForegroundColor)
         parent.SetBackgroundColour(self._theme.colorToasterBackground)
         toasterbox.AddPanel(panel)
-        toasterbox.SetPopupPauseTime(self.DELAY_SEC)
+        toasterbox.SetPopupPauseTime(self.toaster_delay)
 
         width, height = panel.GetSize()
         toasterbox.SetPopupSize((width, height))
