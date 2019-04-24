@@ -68,8 +68,9 @@ from outwiker.pages.wiki.wikipagecontroller import WikiPageController
 from outwiker.pages.html.htmlpagecontroller import HtmlPageController
 from outwiker.pages.text.textpagecontroller import TextPageController
 from outwiker.pages.search.searchpagecontroller import SearchPageController
-from outwiker.gui.controls.toolbar2 import ToolBar2Container
-from outwiker.gui.controls.toastercontroller import ToasterController
+from .controls.toolbar2 import ToolBar2Container
+from .controls.toastercontroller import ToasterController
+from .statusbar import StatusBarController
 
 
 logger = logging.getLogger('outwiker.gui.mainwindow')
@@ -228,7 +229,7 @@ class MainWindow(wx.Frame):
         self.controller.updateRecentMenu()
         self.__panesController.updateViewMenu()
         self.treePanel.panel.addButtons()
-        self.toaster = ToasterController(self)
+        self.toaster = ToasterController(self, self._application)
 
         if self.mainWindowConfig.fullscreen.value:
             self._application.actionController.check(FullScreenAction.stringId,
@@ -561,12 +562,9 @@ class MainWindow(wx.Frame):
         Создание статусной панели
         """
         self.statusbar = wx.StatusBar(self, -1)
-
-        datetime_width = self.mainWindowConfig.datetimeStatusWidth.value
-        items_count = 2
-        self.statusbar.SetFieldsCount(items_count)
-        self.statusbar.SetStatusWidths([-1, datetime_width])
         self.SetStatusBar(self.statusbar)
+        self._statusBarController = StatusBarController(self.statusbar,
+                                                        self._application)
 
     def _bindGuiEvents(self):
         """
@@ -623,6 +621,7 @@ class MainWindow(wx.Frame):
         logger.debug(u'Begin MainWindow.Destroy.')
 
         self.toaster.destroy()
+        self._statusBarController.destroy()
         self.pagePanel.panel.Save()
         self._application.plugins.clear()
         self._saveParams()

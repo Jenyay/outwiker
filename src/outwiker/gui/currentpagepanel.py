@@ -8,8 +8,9 @@ from outwiker.actions.addbookmark import AddBookmarkAction
 from outwiker.core.factoryselector import FactorySelector
 from outwiker.core.commands import pageExists, openWiki, showError
 from .tabsctrl import TabsCtrl
-from .emptypageview import RootPagePanel, ClosedTreePanel
 from outwiker.core.system import getOS
+from .emptypageview import ClosedTreePanel
+from .rootpagepanel import RootPagePanel
 
 
 class CurrentPagePanel(wx.Panel):
@@ -20,7 +21,7 @@ class CurrentPagePanel(wx.Panel):
         self.__pageView = None
         self.__currentPage = None
         self.__wikiroot = None
-        
+
         self.__htmlRender = None
         self.__htmlRenderorrowed = False
 
@@ -291,15 +292,14 @@ class CurrentPagePanel(wx.Panel):
         controller.getAction(AddBookmarkAction.stringId).run(None)
 
     def borrowHtmlRender(self, new_parent):
+        assert not self.__htmlRenderorrowed
+
         if self.__htmlRender is None:
-            assert not self.__htmlRenderorrowed
             self.__htmlRender = getOS().getHtmlRender(new_parent)
-            self.__htmlRenderorrowed = True
         else:
-            assert not self.__htmlRenderorrowed
-            self.__htmlRenderorrowed = True
             self.__htmlRender.Reparent(new_parent)
 
+        self.__htmlRenderorrowed = True
         return self.__htmlRender
 
     def freeHtmlRender(self):

@@ -54,6 +54,14 @@ class GeneralGuiConfig(object):
     RECENT_BACKGROUND_COLORS_PARAM = 'RecentBackgroundColors'
     RECENT_BACKGROUND_COLORS_DEFAULT = '#000000;#FFFFFF;#ff0000;#00ff00;#0000ff;#8a2be2;#7fff00;#d2691e;#6495ed;#dc143c;#00ffff;#a9a9a9;#ff8c00;#ff1493;#ffd700;#adff2f;#ffff00'.split(';')
 
+    # Toaster delay in milliseconds
+    TOASTER_DELAY_PARAM = 'ToasterDelay'
+    TOASTER_DELAY_DEFAULT = 7000
+
+    # Headers for bookmarks page list in RootPagePanel
+    BOOKMARKS_HEADERS_PARAM = 'BookmarksHeaders'
+    BOOKMARKS_HEADERS_DEFAULT = ''
+
     def __init__(self, config):
         self.config = config
 
@@ -133,6 +141,16 @@ class GeneralGuiConfig(object):
                                    self.GENERAL_SECTION,
                                    self.DEBUG_PARAM,
                                    self.DEBUG_DEFAULT)
+
+        self.toasterDelay = IntegerOption(self.config,
+                                          self.GENERAL_SECTION,
+                                          self.TOASTER_DELAY_PARAM,
+                                          self.TOASTER_DELAY_DEFAULT)
+
+        self.bookmarksHeaders = StringOption(self.config,
+                                             self.GENERAL_SECTION,
+                                             self.BOOKMARKS_HEADERS_PARAM,
+                                             self.BOOKMARKS_HEADERS_DEFAULT)
 
 
 class PluginsConfig(object):

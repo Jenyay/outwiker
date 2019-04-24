@@ -96,6 +96,22 @@ def wrap_block_reference_call(original_call):
     return update_wrapper(__call__, original_call)
 
 
+def wrap_macro_invoke(original_invoke):
+    @internalcode
+    async def async_invoke(self, arguments, autoescape):
+        rv = await self._func(*arguments)
+        if autoescape:
+            rv = Markup(rv)
+        return rv
+
+    @internalcode
+    def _invoke(self, arguments, autoescape):
+        if not self._environment.is_async:
+            return original_invoke(self, arguments, autoescape)
+        return async_invoke(self, arguments, autoescape)
+    return update_wrapper(_invoke, original_invoke)
+
+
 @internalcode
 async def get_default_module_async(self):
     if self._module is not None:
@@ -138,9 +154,10 @@ def patch_template():
 
 
 def patch_runtime():
-    from jinja2.runtime import BlockReference
+    from jinja2.runtime import BlockReference, Macro
     BlockReference.__call__ = wrap_block_reference_call(
         BlockReference.__call__)
+    Macro._invoke = wrap_macro_invoke(Macro._invoke)
 
 
 def patch_filters():
@@ -172,9 +189,9 @@ async def auto_aiter(iterable):
 
 class AsyncLoopContext(LoopContextBase):
 
-    def __init__(self, async_iterator, after, length, recurse=None,
+    def __init__(self, async_iterator, undefined, after, length, recurse=None,
                  depth0=0):
-        LoopContextBase.__init__(self, recurse, depth0)
+        LoopContextBase.__init__(self, undefined, recurse, depth0)
         self._async_iterator = async_iterator
         self._after = after
         self._length = length
@@ -204,15 +221,16 @@ class AsyncLoopContextIterator(object):
         ctx.index0 += 1
         if ctx._after is _last_iteration:
             raise StopAsyncIteration()
-        next_elem = ctx._after
+        ctx._before = ctx._current
+        ctx._current = ctx._after
         try:
             ctx._after = await ctx._async_iterator.__anext__()
         except StopAsyncIteration:
             ctx._after = _last_iteration
-        return next_elem, ctx
+        return ctx._current, ctx
 
 
-async def make_async_loop_context(iterable, recurse=None, depth0=0):
+async def make_async_loop_context(iterable, undefined, recurse=None, depth0=0):
     # Length is more complicated and less efficient in async mode.  The
     # reason for this is that we cannot know if length will be used
     # upfront but because length is a property we cannot lazily execute it
@@ -234,4 +252,5 @@ async def make_async_loop_context(iterable, recurse=None, depth0=0):
         after = await async_iterator.__anext__()
     except StopAsyncIteration:
         after = _last_iteration
-    return AsyncLoopContext(async_iterator, after, length, recurse, depth0)
+    return AsyncLoopContext(async_iterator, undefined, after, length, recurse,
+                            depth0)

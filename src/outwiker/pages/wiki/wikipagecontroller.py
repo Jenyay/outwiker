@@ -103,6 +103,7 @@ class WikiPageController(object):
             HtmlCache(page, self._application).resetHash()
         self._updatePage(page)
 
+    @pagetype(WikiWikiPage)
     def __onTextEditorKeyDown(self,
                               page: 'outwiker.core.tree.WikiPage',
                               params: 'outwiker.core.events.TextEditorKeyDownParams') -> None:

@@ -208,8 +208,7 @@ class TabsController (object):
 
         for tab in tabsList:
             page = wikiroot[tab]
-            if page is not None:
-                self._tabsCtrl.AddPage(self.__getTitle(page), page)
+            self._tabsCtrl.AddPage(self.__getTitle(page), page)
 
         pageCount = self._tabsCtrl.GetPageCount()
 
@@ -227,10 +226,9 @@ class TabsController (object):
     def __saveTabs(self):
         if self._application.wikiroot is not None:
             try:
-                pageSubpathList = [page.subpath
+                pageSubpathList = [page.subpath if page is not None else ''
                                    for page
-                                   in self._tabsCtrl.GetPages()
-                                   if page is not None]
+                                   in self._tabsCtrl.GetPages()]
 
                 self.__createStringListConfig(
                     self._application.wikiroot.params).value = pageSubpathList
@@ -276,7 +274,7 @@ class TabsController (object):
             selectedIndex = self.getSelection()
             page = self.getPage(index)
 
-            if (page is None or page.isRemoved) and index != selectedIndex:
+            if (page is not None and page.isRemoved) and index != selectedIndex:
                 self._tabsCtrl.DeletePage(index)
                 index -= 1
             elif page is None or page.display_title != self.getTabTitle(index):
