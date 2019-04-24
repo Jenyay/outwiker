@@ -21,10 +21,9 @@ if __name__ == '__main__':
 
     profile = cProfile.Profile()
     profile.enable()
-    pytest.main(args)
+    result = pytest.main(args)
     profile.create_stats()
     profile.dump_stats(profile_path)
 
-    # result = pytest.main(args)
     # print_memory()
-    # sys.exit(result)
+    sys.exit(result)
