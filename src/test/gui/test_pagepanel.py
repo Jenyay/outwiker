@@ -14,7 +14,8 @@ from outwiker.pages.wiki.wikipageview import WikiPageView
 from outwiker.pages.search.searchpage import SearchPageFactory
 from outwiker.pages.search.searchpanel import SearchPanel
 
-from outwiker.gui.emptypageview import RootPagePanel, ClosedTreePanel
+from outwiker.gui.emptypageview import ClosedTreePanel
+from outwiker.gui.rootpagepanel import RootPagePanel
 
 from test.basetestcases import BaseOutWikerGUIMixin
 

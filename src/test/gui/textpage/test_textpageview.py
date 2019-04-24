@@ -7,7 +7,7 @@ from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.pages.text.textpanel import TextPanel
 from test.basetestcases import BaseOutWikerGUIMixin
-from outwiker.gui.emptypageview import RootPagePanel
+from outwiker.gui.rootpagepanel import RootPagePanel
 
 
 class TextPageViewTest(unittest.TestCase, BaseOutWikerGUIMixin):
