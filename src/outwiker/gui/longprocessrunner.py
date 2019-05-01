@@ -43,7 +43,7 @@ class LongProcessRunner(object):
             kwargs=kwargs)
         thread.start()
 
-        while thread.isAlive():
+        while thread.is_alive():
             progressDlg.UpdatePulse()
             time.sleep(self.updateInterval)
 
