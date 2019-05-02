@@ -35,6 +35,12 @@ class HtmlRender (wx.Panel):
         """
         pass
 
+    def Sleep(self):
+        pass
+
+    def Awake(self):
+        pass
+
     @property
     def page(self):
         return self._currentPage

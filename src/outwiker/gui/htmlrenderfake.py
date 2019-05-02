@@ -18,3 +18,9 @@ class HtmlRenderFake(HtmlRender):
 
     def SetPage(self, htmltext, basepath):
         pass
+
+    def Sleep(self):
+        pass
+
+    def Awake(self):
+        pass

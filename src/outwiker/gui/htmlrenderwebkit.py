@@ -40,16 +40,9 @@ class HtmlRenderWebKit(HtmlRender):
 
         self._symlinkPath = '/tmp/outwiker_page'
         self._symlinkURL = self._pathToURL(self._symlinkPath)
-        self.canOpenUrl = False                # Можно ли открывать ссылки
-        self._navigate_id = 1
-        self._realDirNameURL = ''
 
-        self.Bind(wx.EVT_MENU, handler=self.__onCopyFromHtml, id=wx.ID_COPY)
-        self.Bind(wx.EVT_MENU, handler=self.__onCopyFromHtml, id=wx.ID_CUT)
-        self.ctrl.Bind(webview.EVT_WEBVIEW_NAVIGATING, handler=self.__onNavigating)
+        self.Awake()
         self.Bind(wx.EVT_CLOSE, handler=self.__onClose)
-
-        self._path = None
 
     def Print(self):
         self.ctrl.Print()
@@ -76,11 +69,29 @@ class HtmlRenderWebKit(HtmlRender):
                 url_symlink += Application.sharedData[APP_DATA_KEY_ANCHOR]
                 del Application.sharedData[APP_DATA_KEY_ANCHOR]
 
-            self.canOpenUrl = True
+            self.canOpenUrl += 1
             self.ctrl.LoadURL(url_symlink)
         else:
             text = _(u"Can't read file %s") % (fname)
+            self.canOpenUrl += 1
             self.SetPage(text, os.path.dirname(fname))
+
+    def Sleep(self):
+        import wx.html2 as webview
+        self.ctrl.Unbind(webview.EVT_WEBVIEW_NAVIGATING, handler=self.__onNavigating)
+        self.Unbind(wx.EVT_MENU, handler=self.__onCopyFromHtml, id=wx.ID_COPY)
+        self.Unbind(wx.EVT_MENU, handler=self.__onCopyFromHtml, id=wx.ID_CUT)
+
+    def Awake(self):
+        self.canOpenUrl = 0
+        self._navigate_id = 1
+        self._realDirNameURL = ''
+        self._path = None
+
+        import wx.html2 as webview
+        self.Bind(wx.EVT_MENU, handler=self.__onCopyFromHtml, id=wx.ID_COPY)
+        self.Bind(wx.EVT_MENU, handler=self.__onCopyFromHtml, id=wx.ID_CUT)
+        self.ctrl.Bind(webview.EVT_WEBVIEW_NAVIGATING, handler=self.__onNavigating)
 
     def _pathToURL(self, path: str) -> str:
         '''
@@ -91,7 +102,7 @@ class HtmlRenderWebKit(HtmlRender):
     def SetPage(self, htmltext, basepath):
         self._path = self._pathToURL(basepath) + "/"
 
-        self.canOpenUrl = True
+        self.canOpenUrl += 1
         self.ctrl.SetPage(htmltext, self._path)
 
     def _createSymLink(self, path: str) -> None:
@@ -133,7 +144,9 @@ class HtmlRenderWebKit(HtmlRender):
         nav_id = self._navigate_id
         self._navigate_id += 1
 
-        logger.debug('__onNavigating ({nav_id}) begin'.format(nav_id=nav_id))
+        logger.debug('__onNavigating ({nav_id}) begin. canOpenUrl = {can_open_url}'.format(
+            nav_id=nav_id,
+            can_open_url=self.canOpenUrl))
 
         # Проверка на то, что мы не пытаемся открыть вложенный фрейм
         frame = event.GetTarget()
@@ -147,25 +160,22 @@ class HtmlRenderWebKit(HtmlRender):
         logger.debug('__onNavigating ({nav_id}). href={href}; curr_href={curr_href}; canOpenUrl={canOpenUrl}'.format(
             nav_id=nav_id, href=href, curr_href=curr_href, canOpenUrl=self.canOpenUrl))
 
-        if href == 'about:blank':
+        if href == 'about:blank' or href == '':
             logger.debug('__onNavigating. Skip about:blank')
             event.Veto()
             return
 
-        if not self.canOpenUrl and href != curr_href:
+        if self.canOpenUrl == 0:
             button = 1
             modifier = 0
-            manual_process = self.__onLinkClicked(href, button, modifier)
-            if manual_process:
-                logger.debug('__onNavigating ({nav_id}). Veto'.format(nav_id=nav_id))
-                event.Veto()
-            else:
-                self.canOpenUrl = True
+            self.__onLinkClicked(href, button, modifier)
+            event.Veto()
+            return
 
-        else:
-            self.canOpenUrl = False
+        self.canOpenUrl -= 1
 
-        logger.debug('__onNavigating ({nav_id}) end'.format(nav_id=nav_id))
+        logger.debug('__onNavigating ({nav_id}) end. canOpenUrl={canOpenUrl}'.format(
+            nav_id=nav_id, canOpenUrl=self.canOpenUrl))
 
     def __gtk2OutWikerKeyCode(self, gtk_key_modifier):
         """

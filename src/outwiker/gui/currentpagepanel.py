@@ -299,6 +299,7 @@ class CurrentPagePanel(wx.Panel):
         if self.__htmlRender is None:
             self.__htmlRender = getOS().getHtmlRender(new_parent)
         else:
+            self.__htmlRender.Awake()
             self.__htmlRender.Reparent(new_parent)
 
         self.__htmlRenderorrowed = True
@@ -307,5 +308,6 @@ class CurrentPagePanel(wx.Panel):
     def freeHtmlRender(self):
         assert self.__htmlRenderorrowed
         self.__htmlRenderorrowed = False
+        self.__htmlRender.Sleep()
         self.__htmlRender.Reparent(self)
         self.__htmlRender.Hide()
