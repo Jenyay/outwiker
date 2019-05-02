@@ -626,6 +626,7 @@ class MainWindow(wx.Frame):
         self._application.plugins.clear()
         self._saveParams()
         self.destroyPagePanel(False)
+        self.pagePanel.panel.Close()
 
         self._application.clear()
         self._application.actionController.destroy()

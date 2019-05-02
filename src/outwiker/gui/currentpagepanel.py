@@ -82,9 +82,11 @@ class CurrentPagePanel(wx.Panel):
 
         if self.__pageView is not None:
             self.destroyPageView()
-        # self.Destroy()
+            self.__pageView.Close()
 
-        self.__pageView.Close()
+        if self.__htmlRender is not None:
+            self.__htmlRender.Close()
+            self.__htmlRender = None
         event.Skip()
 
     def __onWikiOpen(self, root):

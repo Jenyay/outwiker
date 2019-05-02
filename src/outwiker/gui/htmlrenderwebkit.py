@@ -44,9 +44,10 @@ class HtmlRenderWebKit(HtmlRender):
         self._navigate_id = 1
         self._realDirNameURL = ''
 
-        self.Bind(wx.EVT_MENU, self.__onCopyFromHtml, id=wx.ID_COPY)
-        self.Bind(wx.EVT_MENU, self.__onCopyFromHtml, id=wx.ID_CUT)
-        self.Bind(webview.EVT_WEBVIEW_NAVIGATING, self.__onNavigating)
+        self.Bind(wx.EVT_MENU, handler=self.__onCopyFromHtml, id=wx.ID_COPY)
+        self.Bind(wx.EVT_MENU, handler=self.__onCopyFromHtml, id=wx.ID_CUT)
+        self.ctrl.Bind(webview.EVT_WEBVIEW_NAVIGATING, handler=self.__onNavigating)
+        self.Bind(wx.EVT_CLOSE, handler=self.__onClose)
 
         self._path = None
 
@@ -54,6 +55,8 @@ class HtmlRenderWebKit(HtmlRender):
         self.ctrl.Print()
 
     def LoadPage(self, fname):
+        self.ctrl.Stop()
+
         if os.path.exists(fname) and os.path.isfile(fname):
             dirname = os.path.dirname(fname)
             try:
@@ -101,6 +104,12 @@ class HtmlRenderWebKit(HtmlRender):
                 raise
 
         os.symlink(path, self._symlinkPath, True)
+
+    def __onClose(self, event):
+        import wx.html2 as webview
+        self.ctrl.Unbind(webview.EVT_WEBVIEW_NAVIGATING, handler=self.__onNavigating)
+        self.ctrl.Stop()
+        event.Skip()
 
     def __onCopyFromHtml(self, event):
         self.ctrl.Copy()

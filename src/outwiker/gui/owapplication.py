@@ -28,6 +28,7 @@ class OutWikerApplication(wx.App):
         config = TextPrintConfig(self._application.config)
         self.normalFont = config.fontName.value
         self.monoFont = config.fontName.value
+        self.use_fake_html_render = False
 
     def OnInit(self):
         self.Bind(wx.EVT_QUERY_END_SESSION, self._onEndSession)
