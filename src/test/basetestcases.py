@@ -96,7 +96,7 @@ class BaseOutWikerGUIMixin(BaseOutWikerMixin):
         super().initApplication(lang)
 
         self.outwiker_app = OutWikerApplication(self.application)
-        self.outwiker_app.use_fake_html_render = False
+        self.outwiker_app.use_fake_html_render = True
         self.outwiker_app.initMainWindow()
         self.mainWindow = self.outwiker_app.mainWnd
 

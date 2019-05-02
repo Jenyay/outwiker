@@ -13,6 +13,7 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
+from pkg_resources import iter_entry_points
 from blockdiag.utils.logging import warning
 
 loaded_plugins = []
@@ -21,7 +22,6 @@ general_handlers = {}
 
 
 def load(plugins, diagram, **kwargs):
-    from pkg_resources import iter_entry_points
     for name in plugins:
         if name in loaded_plugins:
             warning('plugin "%s" is already loaded. ignored.', name)

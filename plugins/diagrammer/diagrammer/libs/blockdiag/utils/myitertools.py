@@ -14,33 +14,40 @@
 #  limitations under the License.
 
 from itertools import cycle
+from itertools import islice
 
 
 def istep(seq, step=2):
     iterable = iter(seq)
     while True:
-        yield [next(iterable) for _ in range(step)]
+        item = list(islice(iterable, step))
+        if len(item) < step:
+            break
+        yield item
 
 
 def stepslice(iterable, steps):
-    iterable = iter(iterable)
-    step = cycle(steps)
+    try:
+        iterable = iter(iterable)
+        step = cycle(steps)
 
-    while True:
-        # skip (1)
-        n = next(step)
-        if n == 0:
-            pass
-        elif n == 1:
-            o = next(iterable)
-            yield o
-            yield o
-        else:
-            yield next(iterable)
-            for _ in range(n - 2):
+        while True:
+            # skip (1)
+            n = next(step)
+            if n == 0:
+                pass
+            elif n == 1:
+                o = next(iterable)
+                yield o
+                yield o
+            else:
+                yield next(iterable)
+                for _ in range(n - 2):
+                    next(iterable)
+                yield next(iterable)
+
+            # skip (2)
+            for _ in range(next(step)):
                 next(iterable)
-            yield next(iterable)
-
-        # skip (2)
-        for _ in range(next(step)):
-            next(iterable)
+    except StopIteration:
+        return
