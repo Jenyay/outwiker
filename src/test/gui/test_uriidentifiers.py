@@ -312,6 +312,9 @@ class UriIdentifierWebKitTest(UriIdentifierTest):
     """
     Тесты идентификации ссылок для WebKit
     """
+    def setUp(self):
+        super().setUp()
+
     def _getBasePath(self, page):
         """
         Возвращает путь до файла __content.html

@@ -7,13 +7,12 @@ class UriIdentifierWebKit(UriIdentifier):
     """
     Класс для идентификации ссылок. На что ссылки
     """
-    def __init__(self, currentpage, basepath, currentPagePath):
+    def __init__(self, currentpage, basepath):
         """
         currentpage - страница, которая в данный момент открыта
         basepath - базовый путь для HTML-рендера
         """
-        UriIdentifier.__init__(self, currentpage, basepath)
-        self._currentPagePath = currentPagePath
+        super().__init__(currentpage, basepath)
 
     def _removeAnchor(self, href, currentpage):
         """
@@ -25,11 +24,11 @@ class UriIdentifierWebKit(UriIdentifier):
 
         result = self.__removeFileProtokol(href)
 
-        if (result.startswith(currentpage.path) and
-                len(result) > len(currentpage.path)):
+        if (result.startswith(href) and
+                len(result) > len(href)):
 
             # Если после полного пути до страницы есть символ #
-            index = result.find("#", len(currentpage.path))
+            index = result.find("#", len(href))
             if index != -1:
                 result = result[:index]
 
@@ -58,8 +57,8 @@ class UriIdentifierWebKit(UriIdentifier):
         if self._currentPage is None:
             return None
 
-        if href.startswith(self._currentPagePath):
-            href = href[len(self._currentPagePath) + 1:]
+        if href.startswith(self._basepath):
+            href = href[len(self._basepath) + 1:]
 
         if len(href) == 0:
             return None
@@ -85,3 +84,19 @@ class UriIdentifierWebKit(UriIdentifier):
                 newSelectedPage = self._currentPage.root[href]
 
         return newSelectedPage
+
+    def _findAnchor(self, href):
+        """
+        Проверить, а не указывает ли href на якорь
+        """
+        basepath = self._basepath
+        if not basepath.endswith('/'):
+            basepath += '/'
+
+        anchor = None
+        if (href.startswith(basepath) and
+                len(href) > len(basepath) and
+                href[len(basepath)] == "#"):
+            anchor = href[len(basepath):]
+
+        return anchor

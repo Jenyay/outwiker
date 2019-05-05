@@ -18,6 +18,7 @@ from outwiker.gui.defines import (ID_MOUSE_LEFT,
                                   ID_MOUSE_RIGHT,
                                   ID_KEY_CTRL,
                                   ID_KEY_SHIFT)
+from outwiker.utilites.textfile import readTextFile
 
 
 from .htmlrender import HtmlRender
@@ -50,31 +51,42 @@ class HtmlRenderWebKit(HtmlRender):
     def LoadPage(self, fname):
         self.ctrl.Stop()
 
-        if os.path.exists(fname) and os.path.isfile(fname):
-            dirname = os.path.dirname(fname)
-            try:
-                self._createSymLink(dirname)
-            except IOError as e:
-                logger.error("Can't create symlink")
-                logger.error(str(e))
-                return
-
-            basename = os.path.basename(fname)
-            new_fname = os.path.join(self._symlinkPath, basename)
-            url_symlink = self._pathToURL(new_fname)
-            self._realDirNameURL = self._pathToURL(dirname)
-
-            # Add anchor for references
-            if APP_DATA_KEY_ANCHOR in Application.sharedData:
-                url_symlink += Application.sharedData[APP_DATA_KEY_ANCHOR]
-                del Application.sharedData[APP_DATA_KEY_ANCHOR]
-
-            self.canOpenUrl += 1
-            self.ctrl.LoadURL(url_symlink)
-        else:
+        try:
+            html = readTextFile(fname)
+        except IOError:
             text = _(u"Can't read file %s") % (fname)
             self.canOpenUrl += 1
             self.SetPage(text, os.path.dirname(fname))
+
+        dirname = os.path.dirname(fname)
+        try:
+            self._createSymLink(dirname)
+        except IOError as e:
+            logger.error("Can't create symlink")
+            logger.error(str(e))
+            return
+
+        basename = self._symlinkPath
+        self._realDirNameURL = self._pathToURL(dirname)
+
+        if not basename.endswith('/'):
+            basename += '/'
+
+        # Add anchor for references
+        anchor = None
+        if APP_DATA_KEY_ANCHOR in Application.sharedData:
+            anchor = Application.sharedData[APP_DATA_KEY_ANCHOR]
+            del Application.sharedData[APP_DATA_KEY_ANCHOR]
+
+        self.SetPage(html, basename, anchor)
+
+    def SetPage(self, htmltext, basepath, anchor=None):
+        path = self._pathToURL(basepath)
+        if anchor:
+            path += anchor
+
+        self.canOpenUrl += 1
+        self.ctrl.SetPage(htmltext, path)
 
     def Sleep(self):
         import wx.html2 as webview
@@ -86,7 +98,6 @@ class HtmlRenderWebKit(HtmlRender):
         self.canOpenUrl = 0
         self._navigate_id = 1
         self._realDirNameURL = ''
-        self._path = None
 
         import wx.html2 as webview
         self.Bind(wx.EVT_MENU, handler=self.__onCopyFromHtml, id=wx.ID_COPY)
@@ -98,12 +109,6 @@ class HtmlRenderWebKit(HtmlRender):
         Convert file system path to file:// URL
         '''
         return 'file://' + urllib.parse.quote(path)
-
-    def SetPage(self, htmltext, basepath):
-        self._path = self._pathToURL(basepath) + "/"
-
-        self.canOpenUrl += 1
-        self.ctrl.SetPage(htmltext, self._path)
 
     def _createSymLink(self, path: str) -> None:
         if os.path.lexists(self._symlinkPath):
@@ -131,11 +136,10 @@ class HtmlRenderWebKit(HtmlRender):
         Определить тип ссылки и вернуть кортеж (url, page, filename, anchor)
         """
         uri = self.ctrl.GetCurrentURL()
-        print(uri)
 
         if uri is not None:
-            basepath = urllib.parse.unquote(uri)
-            identifier = UriIdentifierWebKit(self._currentPage, basepath, self._symlinkPath)
+            basepath = self._symlinkPath
+            identifier = UriIdentifierWebKit(self._currentPage, basepath)
 
             return identifier.identify(href)
 
@@ -171,8 +175,10 @@ class HtmlRenderWebKit(HtmlRender):
         if self.canOpenUrl == 0:
             button = 1
             modifier = 0
-            self.__onLinkClicked(href, button, modifier)
-            event.Veto()
+            processed = self.__onLinkClicked(href, button, modifier)
+            if processed:
+                event.Veto()
+                logger.debug('__onNavigating ({nav_id}) end. Veto'.format(nav_id=nav_id))
             return
 
         self.canOpenUrl -= 1
@@ -227,9 +233,6 @@ class HtmlRenderWebKit(HtmlRender):
         (1 - левая, 2 - средняя, 3 - правая, -1 - не известно)
         gtk_key_modifier - зажатые клавиши (1 - Shift, 4 - Ctrl)
         """
-        # if href.startswith(self._symlinkURL):
-        #     href = href.replace(self._symlinkURL, self._realDirNameURL)
-
         source_href = href
         href = urllib.parse.unquote(href)
         href = self._decodeIDNA(href)
