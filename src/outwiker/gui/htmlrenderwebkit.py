@@ -131,10 +131,11 @@ class HtmlRenderWebKit(HtmlRender):
         Определить тип ссылки и вернуть кортеж (url, page, filename, anchor)
         """
         uri = self.ctrl.GetCurrentURL()
+        print(uri)
 
         if uri is not None:
             basepath = urllib.parse.unquote(uri)
-            identifier = UriIdentifierWebKit(self._currentPage, basepath)
+            identifier = UriIdentifierWebKit(self._currentPage, basepath, self._symlinkPath)
 
             return identifier.identify(href)
 
@@ -160,11 +161,13 @@ class HtmlRenderWebKit(HtmlRender):
         logger.debug('__onNavigating ({nav_id}). href={href}; curr_href={curr_href}; canOpenUrl={canOpenUrl}'.format(
             nav_id=nav_id, href=href, curr_href=curr_href, canOpenUrl=self.canOpenUrl))
 
+        # Open empty page
         if href == 'about:blank' or href == '':
             logger.debug('__onNavigating. Skip about:blank')
             event.Veto()
             return
 
+        # Link clicked
         if self.canOpenUrl == 0:
             button = 1
             modifier = 0

@@ -7,12 +7,13 @@ class UriIdentifierWebKit(UriIdentifier):
     """
     Класс для идентификации ссылок. На что ссылки
     """
-    def __init__(self, currentpage, basepath):
+    def __init__(self, currentpage, basepath, currentPagePath):
         """
         currentpage - страница, которая в данный момент открыта
         basepath - базовый путь для HTML-рендера
         """
         UriIdentifier.__init__(self, currentpage, basepath)
+        self._currentPagePath = currentPagePath
 
     def _removeAnchor(self, href, currentpage):
         """
@@ -57,8 +58,8 @@ class UriIdentifierWebKit(UriIdentifier):
         if self._currentPage is None:
             return None
 
-        if href.startswith(self._currentPage.path):
-            href = href[len(self._currentPage.path) + 1:]
+        if href.startswith(self._currentPagePath):
+            href = href[len(self._currentPagePath) + 1:]
 
         if len(href) == 0:
             return None
