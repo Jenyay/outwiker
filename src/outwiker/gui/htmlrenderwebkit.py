@@ -175,10 +175,14 @@ class HtmlRenderWebKit(HtmlRender):
         if self.canOpenUrl == 0:
             button = 1
             modifier = 0
+            logger.debug('__onNavigating ({nav_id}). Link clicked.'.format(nav_id=nav_id))
             processed = self.__onLinkClicked(href, button, modifier)
             if processed:
                 event.Veto()
                 logger.debug('__onNavigating ({nav_id}) end. Veto'.format(nav_id=nav_id))
+            else:
+                logger.debug('__onNavigating ({nav_id}) end. Allow href processing. href={href}'.format(
+                    nav_id=nav_id, href=href))
             return
 
         self.canOpenUrl -= 1
