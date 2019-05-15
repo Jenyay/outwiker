@@ -12,7 +12,6 @@ init:
     - sh: sudo apt-get -y update
     - sh: sudo apt-get -y install python3-pip python3-dev debhelper devscripts debhelper devscripts p7zip-full libssl-dev dpkg-dev build-essential libjpeg-dev libtiff-dev libsdl1.2-dev libnotify-dev freeglut3 ibus-gtk3 xvfb libhunspell-dev
     - sh: sudo apt-get -y install libwebkit2gtk-4.0
-    # - sh: sudo apt-get -y install libwebkitgtk-3.0
 install:
     - cmd: cinst innosetup
     - cmd: py -m pipenv update --dev
@@ -22,10 +21,10 @@ install:
 build_script:
     - cmd: py -m pipenv run fab test:"test/actions -s"
     - cmd: py -m pipenv run fab win
-    - sh: pipenv run fab linux_binary
-    - sh: pipenv run fab linux_appimage
-    - sh: pipenv run fab deb_binary
-    - sh: pipenv run fab plugins
+    # - sh: pipenv run fab linux_binary
+    # - sh: pipenv run fab linux_appimage
+    # - sh: pipenv run fab deb_binary
+    # - sh: pipenv run fab plugins
 test_script:
     - cmd: py -m pipenv run fab test
     - cmd: py -m pipenv run fab coverage
