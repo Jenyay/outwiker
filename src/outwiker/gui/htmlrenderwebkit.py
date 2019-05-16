@@ -58,16 +58,7 @@ class HtmlRenderWebKit(HtmlRender):
             self.canOpenUrl += 1
             self.SetPage(text, os.path.dirname(fname))
 
-        dirname = os.path.dirname(fname)
-        try:
-            self._createSymLink(dirname)
-        except IOError as e:
-            logger.error("Can't create symlink")
-            logger.error(str(e))
-            return
-
-        basename = self._symlinkPath
-        self._realDirNameURL = self._pathToURL(dirname)
+        basename = os.path.dirname(fname)
 
         if not basename.endswith('/'):
             basename += '/'
@@ -97,7 +88,6 @@ class HtmlRenderWebKit(HtmlRender):
     def Awake(self):
         self.canOpenUrl = 0
         self._navigate_id = 1
-        self._realDirNameURL = ''
 
         import wx.html2 as webview
         self.Bind(wx.EVT_MENU, handler=self.__onCopyFromHtml, id=wx.ID_COPY)
@@ -109,17 +99,6 @@ class HtmlRenderWebKit(HtmlRender):
         Convert file system path to file:// URL
         '''
         return 'file://' + urllib.parse.quote(path)
-
-    def _createSymLink(self, path: str) -> None:
-        if os.path.lexists(self._symlinkPath):
-            try:
-                os.remove(self._symlinkPath)
-            except IOError as e:
-                logger.error("Can't remove symlink: {}".format(self._symlinkPath))
-                logger.error(str(e))
-                raise
-
-        os.symlink(path, self._symlinkPath, True)
 
     def __onClose(self, event):
         import wx.html2 as webview
