@@ -5,6 +5,10 @@ import html
 import wx
 import wx.html
 
+from .commands import MessageBox
+from .application import Application
+from outwiker.gui.guiconfig import TextPrintConfig
+
 
 class TextPrinter(object):
     """
@@ -12,6 +16,24 @@ class TextPrinter(object):
     """
     def __init__(self, parent):
         self.parent = parent
+
+        self.config = TextPrintConfig(Application.config)
+
+        self.normalFont = self.config.fontName.value
+        self.monoFont = self.config.fontName.value
+        self.fontSizes = list(range(10, 17))
+
+        # Поля на странице: верхнее, нижнее, левое, правое,
+        # расстояние между шапкой/подвалом и текстом в мм
+        headerspace = 0.0
+
+        self.margins = (self.config.marginTop.value,
+                        self.config.marginBottom.value,
+                        self.config.marginLeft.value,
+                        self.config.marginRight.value,
+                        headerspace)
+
+        self.paperId = self.config.paperId.value
 
         self.htmltemplate = r"""<HTML>
 <HEAD>
@@ -28,13 +50,51 @@ class TextPrinter(object):
         """
         # Заменим спецсимволы HTML и установим переводы строк
         newtext = html.escape(text, True)
+        newtext = newtext.replace("\n\n", "<P>")
         newtext = newtext.replace("\n", "<BR>")
 
         result = self.htmltemplate.format(content=newtext)
         return result
 
-    def printout(self, text):
-        printing = wx.GetApp().printing
+    def _getPrintout(self, htmltext):
+        printout = wx.html.HtmlPrintout()
+        printout.SetFonts(self.normalFont, self.monoFont, self.fontSizes)
+        printout.SetMargins(self.margins[0],
+                            self.margins[1],
+                            self.margins[2],
+                            self.margins[3],
+                            self.margins[4])
+        printout.SetHtmlText(htmltext)
+        return printout
 
-        html = self._preparetext(text)
-        printing.PrintText(html)
+    def _getPrintData(self):
+        """
+        Получить параметры печати(страницы) по умолчанию
+        """
+        pd = wx.PrintData()
+        pd.SetPaperId(self.paperId)
+        pd.SetOrientation(wx.PORTRAIT)
+        return pd
+
+    def _getPrintDialogData(self, printdata):
+        """
+        Получить настройки диалога печати по умолчанию
+        """
+        pdd = wx.PrintDialogData(printdata)
+        pdd.EnableSelection(False)
+        return pdd
+
+    def printout(self, text):
+        htmltext = self._preparetext(text)
+        printout = self._getPrintout(htmltext)
+        pd = self._getPrintData()
+        pdd = self._getPrintDialogData(pd)
+
+        printer = wx.Printer(pdd)
+        printer.Print(self.parent, printout, True)
+
+        if printer.GetLastError() == wx.PRINTER_ERROR:
+            MessageBox(_(u"Printing error"),
+                       _(u"Error"),
+                       wx.OK | wx.ICON_ERROR,
+                       self.parent)
