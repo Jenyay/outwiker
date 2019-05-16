@@ -33,7 +33,7 @@
 				</requirements>
 
                 <download os="all">https://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.5.3.zip</download>
-				<change>Clean the code.</change>
+				<change>Update the KaTeX engine.</change>
 			</version>
 
 			<version number="2.5.2">
@@ -165,7 +165,7 @@
 				</requirements>
 
                 <download os="all">https://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.5.3.zip</download>
-				<change>Подчистка кода плагина.</change>
+				<change>Обновление движка KaTeX.</change>
 			</version>
 
             <version number="2.5.2">
