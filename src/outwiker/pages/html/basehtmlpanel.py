@@ -51,6 +51,7 @@ class BaseHtmlPanel(BaseTextPanel):
         self._codeEditor = self.getTextEditor()(self.notebook)
 
         self.htmlWindow = parent.borrowHtmlRender(self.notebook)
+        self.htmlWindow.Show()
 
         self.__do_layout()
 

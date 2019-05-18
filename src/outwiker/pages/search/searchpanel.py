@@ -53,6 +53,7 @@ class SearchPanel(BasePagePanel):
         self.clearTagsBtn = wx.Button(self, -1, _(u"Clear all tags"))
         self.searchBtn = wx.Button(self, -1, _(u"Find"))
         self.resultWindow = parent.borrowHtmlRender(self)
+        self.resultWindow.Show()
 
         self.sortLabel = wx.StaticText(self, -1, _(u"Sort by "))
         self.sortStrategy = wx.ComboBox(self,
