@@ -484,7 +484,7 @@ class UriIdentifierWebKitTest(UriIdentifierTest):
         (url, page, filename, anchor) = identifier.identify(currentpage.path)
 
         self.assertEqual(url, None)
-        self.assertEqual(page, None)
+        self.assertEqual(page, currentpage)
         self.assertEqual(filename, currentpage.path)
         self.assertEqual(anchor, None)
 

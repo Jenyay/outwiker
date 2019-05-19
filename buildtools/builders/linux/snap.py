@@ -46,8 +46,8 @@ class BuilderSnap(BuilderBase):
     def _build_snap(self):
         print_info('Build snap')
         with lcd(self.facts.temp_dir):
-            # local('snapcraft cleanbuild')
-            local('docker run --rm -v "$PWD":/build -w /build snapcore/snapcraft bash -c "apt update && snapcraft"')
+            local('snapcraft cleanbuild')
+            # local('docker run --rm -v "$PWD":/build -w /build snapcore/snapcraft bash -c "apt update && snapcraft"')
 
     def _create_dirs_tree(self):
         root = self.facts.temp_dir
