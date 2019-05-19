@@ -29,7 +29,7 @@ class DiagramRender(object):
         except (ImportError, ValueError):
             return
 
-        if rootmodule is None:
+        if rootmodule is None or rootmodule.__file__ is None:
             return
 
         try:
