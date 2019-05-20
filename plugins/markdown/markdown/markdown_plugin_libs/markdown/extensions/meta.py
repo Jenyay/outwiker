@@ -34,11 +34,14 @@ END_RE = re.compile(r'^(-{3}|\.{3})(\s.*)?')
 class MetaExtension (Extension):
     """ Meta-Data extension for Python-Markdown. """
 
-    def extendMarkdown(self, md, md_globals):
+    def extendMarkdown(self, md):
         """ Add MetaPreprocessor to Markdown instance. """
-        md.preprocessors.add("meta",
-                             MetaPreprocessor(md),
-                             ">normalize_whitespace")
+        md.registerExtension(self)
+        self.md = md
+        md.preprocessors.register(MetaPreprocessor(md), 'meta', 27)
+
+    def reset(self):
+        self.md.Meta = {}
 
 
 class MetaPreprocessor(Preprocessor):
@@ -70,9 +73,9 @@ class MetaPreprocessor(Preprocessor):
                 else:
                     lines.insert(0, line)
                     break  # no meta data - done
-        self.markdown.Meta = meta
+        self.md.Meta = meta
         return lines
 
 
-def makeExtension(*args, **kwargs):
-    return MetaExtension(*args, **kwargs)
+def makeExtension(**kwargs):  # pragma: no cover
+    return MetaExtension(**kwargs)

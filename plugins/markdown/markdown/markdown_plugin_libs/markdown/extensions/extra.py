@@ -37,40 +37,37 @@ from .. import util
 import re
 
 extensions = [
-    'markdown.extensions.smart_strong',
-    'markdown.extensions.fenced_code',
-    'markdown.extensions.footnotes',
-    'markdown.extensions.attr_list',
-    'markdown.extensions.def_list',
-    'markdown.extensions.tables',
-    'markdown.extensions.abbr'
+    'fenced_code',
+    'footnotes',
+    'attr_list',
+    'def_list',
+    'tables',
+    'abbr'
 ]
 
 
 class ExtraExtension(Extension):
     """ Add various extensions to Markdown class."""
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, **kwargs):
         """ config is a dumb holder which gets passed to actual ext later. """
-        self.config = kwargs.pop('configs', {})
-        self.config.update(kwargs)
+        self.config = kwargs
 
-    def extendMarkdown(self, md, md_globals):
+    def extendMarkdown(self, md):
         """ Register extension instances. """
         md.registerExtensions(extensions, self.config)
-        if not md.safeMode:
-            # Turn on processing of markdown text within raw html
-            md.preprocessors['html_block'].markdown_in_raw = True
-            md.parser.blockprocessors.add('markdown_block',
-                                          MarkdownInHtmlProcessor(md.parser),
-                                          '_begin')
-            md.parser.blockprocessors.tag_counter = -1
-            md.parser.blockprocessors.contain_span_tags = re.compile(
-                r'^(p|h[1-6]|li|dd|dt|td|th|legend|address)$', re.IGNORECASE)
+        # Turn on processing of markdown text within raw html
+        md.preprocessors['html_block'].markdown_in_raw = True
+        md.parser.blockprocessors.register(
+            MarkdownInHtmlProcessor(md.parser), 'markdown_block', 105
+        )
+        md.parser.blockprocessors.tag_counter = -1
+        md.parser.blockprocessors.contain_span_tags = re.compile(
+            r'^(p|h[1-6]|li|dd|dt|td|th|legend|address)$', re.IGNORECASE)
 
 
-def makeExtension(*args, **kwargs):
-    return ExtraExtension(*args, **kwargs)
+def makeExtension(**kwargs):  # pragma: no cover
+    return ExtraExtension(**kwargs)
 
 
 class MarkdownInHtmlProcessor(BlockProcessor):
@@ -98,7 +95,7 @@ class MarkdownInHtmlProcessor(BlockProcessor):
                  block[nest_index[-1][1]:], True)                      # nest
 
     def run(self, parent, blocks, tail=None, nest=False):
-        self._tag_data = self.parser.markdown.htmlStash.tag_data
+        self._tag_data = self.parser.md.htmlStash.tag_data
 
         self.parser.blockprocessors.tag_counter += 1
         tag = self._tag_data[self.parser.blockprocessors.tag_counter]

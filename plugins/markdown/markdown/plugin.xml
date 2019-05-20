@@ -28,6 +28,15 @@
 		</author>
 
 		<changelog>
+			<version number="1.5.1">
+				<requirements>
+					<api>2.835</api>
+				</requirements>
+
+                <download os="all">https://jenyay.net/uploads/Outwiker/Markdown/markdown-1.5.1.zip</download>
+				<change>Update used libraries.</change>
+			</version>
+
 			<version number="1.5" date="August 26, 2018">
 				<requirements>
 					<api>2.835</api>
@@ -87,6 +96,15 @@
 		</author>
 
 		<changelog>
+			<version number="1.5.1">
+				<requirements>
+					<api>2.835</api>
+				</requirements>
+
+                <download os="all">https://jenyay.net/uploads/Outwiker/Markdown/markdown-1.5.1.zip</download>
+				<change>Обновление используемых библиотек.</change>
+			</version>
+
 			<version number="1.5" date="26.08.2018">
 				<requirements>
 					<api>2.835</api>
