@@ -178,7 +178,7 @@ class OneSLexer(RegexLexer):
              r'(;)',
              bygroups(using(this), Text, Name.Function, using(this), Text)),
             ('{', Keyword, '#push'),
-            ('(}|}\s+;)', Keyword, '#pop'),
+            (r'(}|}\s+;)', Keyword, '#pop'),
             include('statements'),
         ],
         #        'function': [
