@@ -37,7 +37,7 @@ def getDefaultStyle(config):
     """
     Получить стиль, который используется по уомлчанию
     """
-    from pygments.styles import STYLE_MAP
+    from .pygments.styles import STYLE_MAP
     style = config.defaultStyle.value
 
     if style not in STYLE_MAP:
@@ -54,7 +54,7 @@ def fillStyleComboBox(config, comboBox, selectedStyle):
     comboBox - ComboBox, который будет заполняться
     selectedStyle - стиль, который должен быть выбран по умолчанию
     """
-    from pygments.styles import STYLE_MAP
+    from .pygments.styles import STYLE_MAP
 
     styles = sorted(STYLE_MAP.keys())
 
