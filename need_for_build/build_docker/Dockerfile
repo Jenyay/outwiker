@@ -10,7 +10,7 @@ ENV PATH=$PATH:$HOME/.local/bin
 
 RUN add-apt-repository --yes ppa:ubuntu-toolchain-r/test && apt-get update && apt-get -y install gcc-6 g++-6 cmake
 RUN cd /tmp && wget https://www.webkitgtk.org/releases/$WEBKITGTK_NAME.tar.xz && tar -xJf $WEBKITGTK_NAME.tar.xz
-RUN cd /tmp/$WEBKITGTK_NAME && cmake -DCMAKE_INSTALL_PREFIX=/ -DCMAKE_BUILD_TYPE=Release -DPORT=GTK -DENABLE_WEB_CRYPTO=0 -DUSE_OPENJPEG=0 -DUSE_WOFF2=0 -DUSE_GSTREAMER_GL=0 -DENABLE_MEDIA_SOURCE=0 -DCMAKE_C_COMPILER=gcc-6 -DCMAKE_CXX_COMPILER=g++-6 . && make -j$(nproc) && make install
+RUN cd /tmp/$WEBKITGTK_NAME && cmake -DCMAKE_INSTALL_PREFIX=/ -DCMAKE_BUILD_TYPE=Release -DPORT=GTK -DENABLE_WEB_CRYPTO=0 -DUSE_OPENJPEG=0 -DUSE_WOFF2=0 -DUSE_GSTREAMER_GL=0 -DENABLE_MEDIA_SOURCE=0 -DLIBEXEC_INSTALL_DIR=/usr/libexec/webkit2gtk-4.0 -DCMAKE_C_COMPILER=gcc-6 -DCMAKE_CXX_COMPILER=g++-6 . && make -j$(nproc) && make install
 
 RUN mkdir -p $HOME && mkdir -p $CONFIG_PATH && mkdir -p $PROJECT_HOME
 
