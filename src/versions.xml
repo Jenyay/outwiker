@@ -7,6 +7,9 @@
 		<website>https://jenyay.net/Outwiker/UnstableEn</website>
 
 		<changelog>
+			<version number="3.0.0.863" status="dev">
+			</version>
+
 			<version number="3.0.0.862" status="dev" date="May 26, 2019">
 				<change>New GUI displayed if the notes tree is not currently open.</change>
 				<change>New GUI when selecting the root of the notes tree.</change>
@@ -124,6 +127,9 @@
 		<website>https://jenyay.net/Outwiker/Unstable</website>
 
 		<changelog>
+			<version number="3.0.0.863" status="dev">
+			</version>
+
 			<version number="3.0.0.862" status="dev" date="26.05.2019">
 				<change>Новый интерфейс, отображаемый, если в данный момент не открыто дерево заметок.</change>
 				<change>Новый интерфейс при выборе корня дерева заметок.</change>
