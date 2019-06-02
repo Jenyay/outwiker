@@ -182,6 +182,9 @@ class PyInstallerBuilderWindows(BasePyInstallerBuilder):
             u'include',
         ]
 
+        to_remove += [fname.name for fname
+                      in Path(self._dist_dir, 'outwiker').glob('api-ms-win*.dll')]
+
         return to_remove
 
 
@@ -231,7 +234,7 @@ class PyInstallerBuilderLinuxBase(BasePyInstallerBuilder):
             # 'libglapi.so.0',
 
             # 'libxcb.so.1',
-            ]
+        ]
 
     def build(self):
         super(PyInstallerBuilderLinuxBase, self).build()
