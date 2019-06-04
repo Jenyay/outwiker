@@ -54,6 +54,9 @@ class RootWikiPage(object):
         self._params = RootWikiPage._readParams(self.path, self.readonly)
         self._datetime = self._getDateTime()
 
+    def __bool__(self):
+        return True
+
     @staticmethod
     def _readParams(path, readonly=False):
         return PageConfig(os.path.join(path, PAGE_OPT_FILE), readonly)

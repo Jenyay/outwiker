@@ -10,7 +10,8 @@ class HtmlReport (object):
     """
     Класс для генерации HTML-а, для вывода найденных страниц
     """
-    def __init__ (self, pages, searchPhrase, searchTags, application):
+
+    def __init__(self, pages, searchPhrase, searchTags, application):
         """
         pages - список найденных страниц
         searchPhrase - искомая фраза
@@ -21,7 +22,7 @@ class HtmlReport (object):
         self.__searchTags = searchTags
         self.__application = application
 
-    def generate (self):
+    def generate(self):
         """
         Сгенерить отчет
         """
@@ -39,63 +40,60 @@ class HtmlReport (object):
         items = u""
 
         for page in self.__pages:
-            items += self.generataPageView (page)
+            items += self.generataPageView(page)
 
         result = shell % items
         return result
 
-
-    def generataPageView (self, page):
+    def generataPageView(self, page):
         """
         Вернуть представление для одной страницы
         """
-        item = u'<b><a href="/%s">%s</a></b>' % (html.escape (page.subpath, True), page.title)
+        item = u'<b><a href="page://%s">%s</a></b>' % (
+            html.escape(page.subpath, True), page.title)
         if page.parent.parent is not None:
             item += u" (%s)" % page.parent.subpath
 
-        item += u"<br>" + self.generatePageInfo (page) + "<p></p>"
+        item += u"<br>" + self.generatePageInfo(page) + "<p></p>"
 
         result = u"<li>%s</li>\n" % item
 
         return result
 
+    def generatePageInfo(self, page):
+        tags = self.generatePageTags(page)
+        date = self.generateDate(page)
 
-    def generatePageInfo (self, page):
-        tags = self.generatePageTags (page)
-        date = self.generateDate (page)
-
-        pageinfo = u"<font size='-1'>{tags}<br>{date}</font>".format (tags=tags, date=date)
+        pageinfo = u"<font size='-1'>{tags}<br>{date}</font>".format(
+            tags=tags, date=date)
         return pageinfo
 
-
-    def generateDate (self, page):
-        config = GeneralGuiConfig (self.__application.config)
+    def generateDate(self, page):
+        config = GeneralGuiConfig(self.__application.config)
         dateStr = page.datetime.strftime(config.dateTimeFormat.value)
-        result = _(u"Last modified date: {0}").format (dateStr)
+        result = _(u"Last modified date: {0}").format(dateStr)
 
         return result
 
-
-    def generatePageTags (self, page):
+    def generatePageTags(self, page):
         """
         Создать список тегов для страницы
         """
         result = _(u"Tags: ")
         for tag in page.tags:
-            result += self.generageTagView (tag) + u", "
+            result += self.generageTagView(tag) + u", "
 
-        if result.endswith (", "):
-            result = result [: -2]
+        if result.endswith(", "):
+            result = result[: -2]
 
         return result
 
-
-    def generageTagView (self, tag):
+    def generageTagView(self, tag):
         """
         Оформление для одного тега
         """
         if tag in self.__searchTags:
             style = u"font-weight: bold; background-color: rgb(255,255,36);"
-            return u"<span style='{style}'>{tag}</span>".format (style=style, tag=tag)
+            return u"<span style='{style}'>{tag}</span>".format(style=style, tag=tag)
         else:
             return tag

@@ -76,7 +76,9 @@ class UriIdentifier (object, metaclass=ABCMeta):
             if uid.endswith("/"):
                 uid = uid[:-1]
 
-            page = Application.pageUidDepot[uid]
+            page = (Application.pageUidDepot[uid] or
+                    Application.selectedPage[uid] or
+                    Application.wikiroot[uid])
 
         return page
 
