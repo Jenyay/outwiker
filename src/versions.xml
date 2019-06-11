@@ -7,7 +7,8 @@
 		<website>https://jenyay.net/Outwiker/UnstableEn</website>
 
 		<changelog>
-			<version number="3.0.0.863" status="dev">
+			<version number="3.0.0.864" status="dev" date="June 12, 2019">
+                <change>Fix errors.</change>
 			</version>
 
 			<version number="3.0.0.862" status="dev" date="May 26, 2019">
@@ -127,7 +128,8 @@
 		<website>https://jenyay.net/Outwiker/Unstable</website>
 
 		<changelog>
-			<version number="3.0.0.863" status="dev">
+			<version number="3.0.0.864" status="dev" date="12.06.2019">
+                <change>Исправление ошибок.</change>
 			</version>
 
 			<version number="3.0.0.862" status="dev" date="26.05.2019">
