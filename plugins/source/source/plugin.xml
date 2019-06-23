@@ -28,6 +28,15 @@
 		</author>
 
 		<changelog>
+			<version number="1.17.2" date="May 26, 2019">
+				<requirements>
+					<api>2.835</api>
+				</requirements>
+
+                <download os="all">https://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.17.2.zip</download>
+				<change>Update Pygments library.</change>
+			</version>
+
 			<version number="1.17.1" date="March 22, 2019">
 				<requirements>
 					<api>2.835</api>
@@ -187,6 +196,15 @@
 		</author>
 
 		<changelog>
+            <version number="1.17.2" date="26.05.2019">
+				<requirements>
+					<api>2.835</api>
+				</requirements>
+
+                <download os="all">https://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.17.2.zip</download>
+				<change>Обновление библиотеки Pygments.</change>
+            </version>
+
 			<version number="1.17.1" date="22.03.2019">
 				<requirements>
 					<api>2.835</api>

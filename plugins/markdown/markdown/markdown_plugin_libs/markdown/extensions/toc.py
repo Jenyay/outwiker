@@ -25,8 +25,8 @@ import unicodedata
 def slugify(value, separator):
     """ Slugify a string, to make it URL friendly. """
     value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore')
-    value = re.sub('[^\w\s-]', '', value.decode('ascii')).strip().lower()
-    return re.sub('[%s\s]+' % separator, separator, value)
+    value = re.sub(r'[^\w\s-]', '', value.decode('ascii')).strip().lower()
+    return re.sub(r'[%s\s]+' % separator, separator, value)
 
 
 IDCOUNT_RE = re.compile(r'^(.*)_([0-9]+)$')
@@ -49,11 +49,9 @@ def stashedHTML2text(text, md):
     def _html_sub(m):
         """ Substitute raw html with plain text. """
         try:
-            raw, safe = md.htmlStash.rawHtmlBlocks[int(m.group(1))]
+            raw = md.htmlStash.rawHtmlBlocks[int(m.group(1))]
         except (IndexError, TypeError):  # pragma: no cover
             return m.group(0)
-        if md.safeMode and not safe:  # pragma: no cover
-            return ''
         # Strip out tags and entities - leaveing text
         return re.sub(r'(<[^>]+>)|(&[\#a-zA-Z0-9]+;)', '', raw)
 
@@ -136,14 +134,24 @@ class TocTreeprocessor(Treeprocessor):
         self.use_permalinks = parseBoolValue(config["permalink"], False)
         if self.use_permalinks is None:
             self.use_permalinks = config["permalink"]
-
         self.header_rgx = re.compile("[Hh][123456]")
+        if isinstance(config["toc_depth"], string_type) and '-' in config["toc_depth"]:
+            self.toc_top, self.toc_bottom = [int(x) for x in config["toc_depth"].split('-')]
+        else:
+            self.toc_top = 1
+            self.toc_bottom = int(config["toc_depth"])
 
-    def iterparent(self, root):
-        ''' Iterator wrapper to get parent and child all at once. '''
-        for parent in root.iter():
-            for child in parent:
-                yield parent, child
+    def iterparent(self, node):
+        ''' Iterator wrapper to get allowed parent and child all at once. '''
+
+        # We do not allow the marker inside a header as that
+        # would causes an enless loop of placing a new TOC
+        # inside previously generated TOC.
+        for child in node:
+            if not self.header_rgx.match(child.tag) and child.tag not in ['pre', 'code']:
+                yield node, child
+                for p, c in self.iterparent(child):
+                    yield p, c
 
     def replace_marker(self, root, elem):
         ''' Replace marker with elem. '''
@@ -155,11 +163,7 @@ class TocTreeprocessor(Treeprocessor):
             # To keep the output from screwing up the
             # validation by putting a <div> inside of a <p>
             # we actually replace the <p> in its entirety.
-            # We do not allow the marker inside a header as that
-            # would causes an enless loop of placing a new TOC
-            # inside previously generated TOC.
-            if c.text and c.text.strip() == self.marker and \
-               not self.header_rgx.match(c.tag) and c.tag not in ['pre', 'code']:
+            if c.text and c.text.strip() == self.marker:
                 for i in range(len(p)):
                     if p[i] == c:
                         p[i] = elem
@@ -180,7 +184,7 @@ class TocTreeprocessor(Treeprocessor):
         c.text = ""
         for elem in c:
             anchor.append(elem)
-        while c:
+        while len(c):
             c.remove(c[0])
         c.append(anchor)
 
@@ -218,9 +222,10 @@ class TocTreeprocessor(Treeprocessor):
             return ul
 
         build_etree_ul(toc_list, div)
-        prettify = self.markdown.treeprocessors.get('prettify')
-        if prettify:
-            prettify.run(div)
+
+        if 'prettify' in self.md.treeprocessors:
+            self.md.treeprocessors['prettify'].run(div)
+
         return div
 
     def run(self, doc):
@@ -234,40 +239,48 @@ class TocTreeprocessor(Treeprocessor):
         for el in doc.iter():
             if isinstance(el.tag, string_type) and self.header_rgx.match(el.tag):
                 self.set_level(el)
+                if int(el.tag[-1]) < self.toc_top or int(el.tag[-1]) > self.toc_bottom:
+                    continue
                 text = ''.join(el.itertext()).strip()
 
                 # Do not override pre-existing ids
                 if "id" not in el.attrib:
-                    innertext = stashedHTML2text(text, self.markdown)
+                    innertext = stashedHTML2text(text, self.md)
                     el.attrib["id"] = unique(self.slugify(innertext, self.sep), used_ids)
 
                 toc_tokens.append({
                     'level': int(el.tag[-1]),
                     'id': el.attrib["id"],
-                    'name': text
+                    'name': el.attrib.get('data-toc-label', text)
                 })
+
+                # Remove the data-toc-label attribute as it is no longer needed
+                if 'data-toc-label' in el.attrib:
+                    del el.attrib['data-toc-label']
 
                 if self.use_anchors:
                     self.add_anchor(el, el.attrib["id"])
                 if self.use_permalinks:
                     self.add_permalink(el, el.attrib["id"])
 
-        div = self.build_toc_div(nest_toc_tokens(toc_tokens))
+        toc_tokens = nest_toc_tokens(toc_tokens)
+        div = self.build_toc_div(toc_tokens)
         if self.marker:
             self.replace_marker(doc, div)
 
         # serialize and attach to markdown instance.
-        toc = self.markdown.serializer(div)
-        for pp in self.markdown.postprocessors.values():
+        toc = self.md.serializer(div)
+        for pp in self.md.postprocessors:
             toc = pp.run(toc)
-        self.markdown.toc = toc
+        self.md.toc_tokens = toc_tokens
+        self.md.toc = toc
 
 
 class TocExtension(Extension):
 
     TreeProcessorClass = TocTreeprocessor
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, **kwargs):
         self.config = {
             "marker": ['[TOC]',
                        'Text to find and replace with Table of Contents - '
@@ -285,12 +298,19 @@ class TocExtension(Extension):
             "slugify": [slugify,
                         "Function to generate anchors based on header text - "
                         "Defaults to the headerid ext's slugify function."],
-            'separator': ['-', 'Word separator. Defaults to "-".']
+            'separator': ['-', 'Word separator. Defaults to "-".'],
+            "toc_depth": [6,
+                          'Define the range of section levels to include in'
+                          'the Table of Contents. A single integer (b) defines'
+                          'the bottom section level (<h1>..<hb>) only.'
+                          'A string consisting of two digits separated by a hyphen'
+                          'in between ("2-5"), define the top (t) and the'
+                          'bottom (b) (<ht>..<hb>). Defaults to `6` (bottom).'],
         }
 
-        super(TocExtension, self).__init__(*args, **kwargs)
+        super(TocExtension, self).__init__(**kwargs)
 
-    def extendMarkdown(self, md, md_globals):
+    def extendMarkdown(self, md):
         md.registerExtension(self)
         self.md = md
         self.reset()
@@ -300,11 +320,12 @@ class TocExtension(Extension):
         # by the header id extension) if both are used. Same goes for
         # attr_list extension. This must come last because we don't want
         # to redefine ids after toc is created. But we do want toc prettified.
-        md.treeprocessors.add("toc", tocext, "_end")
+        md.treeprocessors.register(tocext, 'toc', 5)
 
     def reset(self):
         self.md.toc = ''
+        self.md.toc_tokens = []
 
 
-def makeExtension(*args, **kwargs):
-    return TocExtension(*args, **kwargs)
+def makeExtension(**kwargs):  # pragma: no cover
+    return TocExtension(**kwargs)

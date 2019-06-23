@@ -200,23 +200,29 @@ class CodeHilite(object):
 class HiliteTreeprocessor(Treeprocessor):
     """ Hilight source code in code blocks. """
 
+    def code_unescape(self, text):
+        """Unescape code."""
+        text = text.replace("&amp;", "&")
+        text = text.replace("&lt;", "<")
+        text = text.replace("&gt;", ">")
+        return text
+
     def run(self, root):
         """ Find code blocks and store in htmlStash. """
         blocks = root.iter('pre')
         for block in blocks:
             if len(block) == 1 and block[0].tag == 'code':
                 code = CodeHilite(
-                    block[0].text,
+                    self.code_unescape(block[0].text),
                     linenums=self.config['linenums'],
                     guess_lang=self.config['guess_lang'],
                     css_class=self.config['css_class'],
                     style=self.config['pygments_style'],
                     noclasses=self.config['noclasses'],
-                    tab_length=self.markdown.tab_length,
+                    tab_length=self.md.tab_length,
                     use_pygments=self.config['use_pygments']
                 )
-                placeholder = self.markdown.htmlStash.store(code.hilite(),
-                                                            safe=True)
+                placeholder = self.md.htmlStash.store(code.hilite())
                 # Clear codeblock in etree instance
                 block.clear()
                 # Change to p element which will later
@@ -228,7 +234,7 @@ class HiliteTreeprocessor(Treeprocessor):
 class CodeHiliteExtension(Extension):
     """ Add source code hilighting to markdown codeblocks. """
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, **kwargs):
         # define default configs
         self.config = {
             'linenums': [None,
@@ -250,16 +256,16 @@ class CodeHiliteExtension(Extension):
                              'Default: True']
             }
 
-        super(CodeHiliteExtension, self).__init__(*args, **kwargs)
+        super(CodeHiliteExtension, self).__init__(**kwargs)
 
-    def extendMarkdown(self, md, md_globals):
+    def extendMarkdown(self, md):
         """ Add HilitePostprocessor to Markdown instance. """
         hiliter = HiliteTreeprocessor(md)
         hiliter.config = self.getConfigs()
-        md.treeprocessors.add("hilite", hiliter, "<inline")
+        md.treeprocessors.register(hiliter, 'hilite', 30)
 
         md.registerExtension(self)
 
 
-def makeExtension(*args, **kwargs):
-    return CodeHiliteExtension(*args, **kwargs)
+def makeExtension(**kwargs):  # pragma: no cover
+    return CodeHiliteExtension(**kwargs)

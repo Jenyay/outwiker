@@ -28,7 +28,7 @@ class BaseTextStylingController(object, metaclass=ABCMeta):
             return
 
         if (self._colorizingThread is None or
-                not self._colorizingThread.isAlive()):
+                not self._colorizingThread.is_alive()):
 
             thread = self.getColorizingThread(
                 page,

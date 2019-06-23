@@ -8,9 +8,9 @@ from gettext import NullTranslations
 
 import wx
 
-from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
 from outwiker.core.i18n import I18nConfig
+from outwiker.core.tree import WikiDocument
 from outwiker.gui.guiconfig import GeneralGuiConfig
 from outwiker.gui.tester import Tester
 from outwiker.gui.owapplication import OutWikerApplication
@@ -96,6 +96,7 @@ class BaseOutWikerGUIMixin(BaseOutWikerMixin):
         super().initApplication(lang)
 
         self.outwiker_app = OutWikerApplication(self.application)
+        self.outwiker_app.use_fake_html_render = True
         self.outwiker_app.initMainWindow()
         self.mainWindow = self.outwiker_app.mainWnd
 

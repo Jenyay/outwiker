@@ -18,6 +18,7 @@ from outwiker.gui.defines import (ID_MOUSE_LEFT,
                                   ID_MOUSE_RIGHT,
                                   ID_KEY_CTRL,
                                   ID_KEY_SHIFT)
+from outwiker.utilites.textfile import readTextFile
 
 
 from .htmlrender import HtmlRender
@@ -38,36 +39,72 @@ class HtmlRenderWebKit(HtmlRender):
         sizer.Add(self.ctrl, 0, wx.EXPAND)
         self.SetSizer(sizer)
 
-        self.canOpenUrl = False                # Можно ли открывать ссылки
-        self._navigate_id = 1
+        self._symlinkPath = '/tmp/outwiker_page'
+        self._symlinkURL = self._pathToURL(self._symlinkPath)
 
-        self.Bind(wx.EVT_MENU, self.__onCopyFromHtml, id=wx.ID_COPY)
-        self.Bind(wx.EVT_MENU, self.__onCopyFromHtml, id=wx.ID_CUT)
-        self.Bind(webview.EVT_WEBVIEW_NAVIGATING, self.__onNavigating)
-
-        self._path = None
+        self.Awake()
+        self.Bind(wx.EVT_CLOSE, handler=self.__onClose)
 
     def Print(self):
         self.ctrl.Print()
 
     def LoadPage(self, fname):
-        url = u'file://' + urllib.parse.quote(fname.encode("utf8"))
-        if APP_DATA_KEY_ANCHOR in Application.sharedData:
-            url += Application.sharedData[APP_DATA_KEY_ANCHOR]
-            del Application.sharedData[APP_DATA_KEY_ANCHOR]
+        self.ctrl.Stop()
 
-        if os.path.exists(fname) and os.path.isfile(fname):
-            self.canOpenUrl = True
-            self.ctrl.LoadURL(url)
-        else:
+        try:
+            html = readTextFile(fname)
+        except IOError:
             text = _(u"Can't read file %s") % (fname)
+            self.canOpenUrl += 1
             self.SetPage(text, os.path.dirname(fname))
 
-    def SetPage(self, htmltext, basepath):
-        self._path = "file://" + urllib.parse.quote(basepath) + "/"
+        basename = os.path.dirname(fname)
 
-        self.canOpenUrl = True
-        self.ctrl.SetPage(htmltext, self._path)
+        if not basename.endswith('/'):
+            basename += '/'
+
+        # Add anchor for references
+        anchor = None
+        if APP_DATA_KEY_ANCHOR in Application.sharedData:
+            anchor = Application.sharedData[APP_DATA_KEY_ANCHOR]
+            del Application.sharedData[APP_DATA_KEY_ANCHOR]
+
+        self.SetPage(html, basename, anchor)
+
+    def SetPage(self, htmltext, basepath, anchor=None):
+        path = self._pathToURL(basepath)
+        if anchor:
+            path += anchor
+
+        self.canOpenUrl += 1
+        self.ctrl.SetPage(htmltext, path)
+
+    def Sleep(self):
+        import wx.html2 as webview
+        self.ctrl.Unbind(webview.EVT_WEBVIEW_NAVIGATING, handler=self.__onNavigating)
+        self.Unbind(wx.EVT_MENU, handler=self.__onCopyFromHtml, id=wx.ID_COPY)
+        self.Unbind(wx.EVT_MENU, handler=self.__onCopyFromHtml, id=wx.ID_CUT)
+
+    def Awake(self):
+        self.canOpenUrl = 0
+        self._navigate_id = 1
+
+        import wx.html2 as webview
+        self.Bind(wx.EVT_MENU, handler=self.__onCopyFromHtml, id=wx.ID_COPY)
+        self.Bind(wx.EVT_MENU, handler=self.__onCopyFromHtml, id=wx.ID_CUT)
+        self.ctrl.Bind(webview.EVT_WEBVIEW_NAVIGATING, handler=self.__onNavigating)
+
+    def _pathToURL(self, path: str) -> str:
+        '''
+        Convert file system path to file:// URL
+        '''
+        return 'file://' + urllib.parse.quote(path)
+
+    def __onClose(self, event):
+        import wx.html2 as webview
+        self.ctrl.Unbind(webview.EVT_WEBVIEW_NAVIGATING, handler=self.__onNavigating)
+        self.ctrl.Stop()
+        event.Skip()
 
     def __onCopyFromHtml(self, event):
         self.ctrl.Copy()
@@ -80,7 +117,7 @@ class HtmlRenderWebKit(HtmlRender):
         uri = self.ctrl.GetCurrentURL()
 
         if uri is not None:
-            basepath = urllib.parse.unquote(uri)
+            basepath = self._symlinkPath
             identifier = UriIdentifierWebKit(self._currentPage, basepath)
 
             return identifier.identify(href)
@@ -91,7 +128,9 @@ class HtmlRenderWebKit(HtmlRender):
         nav_id = self._navigate_id
         self._navigate_id += 1
 
-        logger.debug('__onNavigating ({nav_id}) begin'.format(nav_id=nav_id))
+        logger.debug('__onNavigating ({nav_id}) begin. canOpenUrl = {can_open_url}'.format(
+            nav_id=nav_id,
+            can_open_url=self.canOpenUrl))
 
         # Проверка на то, что мы не пытаемся открыть вложенный фрейм
         frame = event.GetTarget()
@@ -105,20 +144,30 @@ class HtmlRenderWebKit(HtmlRender):
         logger.debug('__onNavigating ({nav_id}). href={href}; curr_href={curr_href}; canOpenUrl={canOpenUrl}'.format(
             nav_id=nav_id, href=href, curr_href=curr_href, canOpenUrl=self.canOpenUrl))
 
-        if not self.canOpenUrl and href != curr_href:
+        # Open empty page
+        if href == 'about:blank' or href == '':
+            logger.debug('__onNavigating. Skip about:blank')
+            event.Veto()
+            return
+
+        # Link clicked
+        if self.canOpenUrl == 0:
             button = 1
             modifier = 0
-            manual_process = self.__onLinkClicked(href, button, modifier)
-            if manual_process:
-                logger.debug('__onNavigating ({nav_id}). Veto'.format(nav_id=nav_id))
+            logger.debug('__onNavigating ({nav_id}). Link clicked.'.format(nav_id=nav_id))
+            processed = self.__onLinkClicked(href, button, modifier)
+            if processed:
                 event.Veto()
+                logger.debug('__onNavigating ({nav_id}) end. Veto'.format(nav_id=nav_id))
             else:
-                self.canOpenUrl = True
+                logger.debug('__onNavigating ({nav_id}) end. Allow href processing. href={href}'.format(
+                    nav_id=nav_id, href=href))
+            return
 
-        else:
-            self.canOpenUrl = False
+        self.canOpenUrl -= 1
 
-        logger.debug('__onNavigating ({nav_id}) end'.format(nav_id=nav_id))
+        logger.debug('__onNavigating ({nav_id}) end. canOpenUrl={canOpenUrl}'.format(
+            nav_id=nav_id, canOpenUrl=self.canOpenUrl))
 
     def __gtk2OutWikerKeyCode(self, gtk_key_modifier):
         """

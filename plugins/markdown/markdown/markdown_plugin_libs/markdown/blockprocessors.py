@@ -1,4 +1,24 @@
+# -*- coding: utf-8 -*-
 """
+Python Markdown
+
+A Python implementation of John Gruber's Markdown.
+
+Documentation: https://python-markdown.github.io/
+GitHub: https://github.com/Python-Markdown/markdown/
+PyPI: https://pypi.org/project/Markdown/
+
+Started by Manfred Stienstra (http://www.dwerg.net/).
+Maintained for a few years by Yuri Takhteyev (http://www.freewisdom.org).
+Currently maintained by Waylan Limberg (https://github.com/waylan),
+Dmitry Shachnev (https://github.com/mitya57) and Isaac Muse (https://github.com/facelessuser).
+
+Copyright 2007-2018 The Python Markdown Project (v. 1.7 and later)
+Copyright 2004, 2005, 2006 Yuri Takhteyev (v. 0.2-1.6b)
+Copyright 2004 Manfred Stienstra (the original version)
+
+License: BSD (see LICENSE.md for details).
+
 CORE MARKDOWN BLOCKPARSER
 ===========================================================================
 
@@ -6,7 +26,7 @@ This parser handles basic parsing of Markdown blocks.  It doesn't concern
 itself with inline elements such as **bold** or *italics*, but rather just
 catches blocks, lists, quotes, etc.
 
-The BlockParser is made up of a bunch of BlockProssors, each handling a
+The BlockParser is made up of a bunch of BlockProcessors, each handling a
 different type of block. Extensions may add/replace/remove BlockProcessors
 as they need to alter how markdown blocks are parsed.
 """
@@ -22,19 +42,19 @@ from .blockparser import BlockParser
 logger = logging.getLogger('MARKDOWN')
 
 
-def build_block_parser(md_instance, **kwargs):
+def build_block_parser(md, **kwargs):
     """ Build the default block parser used by Markdown. """
-    parser = BlockParser(md_instance)
-    parser.blockprocessors['empty'] = EmptyBlockProcessor(parser)
-    parser.blockprocessors['indent'] = ListIndentProcessor(parser)
-    parser.blockprocessors['code'] = CodeBlockProcessor(parser)
-    parser.blockprocessors['hashheader'] = HashHeaderProcessor(parser)
-    parser.blockprocessors['setextheader'] = SetextHeaderProcessor(parser)
-    parser.blockprocessors['hr'] = HRProcessor(parser)
-    parser.blockprocessors['olist'] = OListProcessor(parser)
-    parser.blockprocessors['ulist'] = UListProcessor(parser)
-    parser.blockprocessors['quote'] = BlockQuoteProcessor(parser)
-    parser.blockprocessors['paragraph'] = ParagraphProcessor(parser)
+    parser = BlockParser(md)
+    parser.blockprocessors.register(EmptyBlockProcessor(parser), 'empty', 100)
+    parser.blockprocessors.register(ListIndentProcessor(parser), 'indent', 90)
+    parser.blockprocessors.register(CodeBlockProcessor(parser), 'code', 80)
+    parser.blockprocessors.register(HashHeaderProcessor(parser), 'hashheader', 70)
+    parser.blockprocessors.register(SetextHeaderProcessor(parser), 'setextheader', 60)
+    parser.blockprocessors.register(HRProcessor(parser), 'hr', 50)
+    parser.blockprocessors.register(OListProcessor(parser), 'olist', 40)
+    parser.blockprocessors.register(UListProcessor(parser), 'ulist', 30)
+    parser.blockprocessors.register(BlockQuoteProcessor(parser), 'quote', 20)
+    parser.blockprocessors.register(ParagraphProcessor(parser), 'paragraph', 10)
     return parser
 
 
@@ -51,7 +71,7 @@ class BlockProcessor(object):
 
     def __init__(self, parser):
         self.parser = parser
-        self.tab_length = parser.markdown.tab_length
+        self.tab_length = parser.md.tab_length
 
     def lastChild(self, parent):
         """ Return the last child of an etree element. """
@@ -239,14 +259,14 @@ class CodeBlockProcessor(BlockProcessor):
             code = sibling[0]
             block, theRest = self.detab(block)
             code.text = util.AtomicString(
-                '%s\n%s\n' % (code.text, block.rstrip())
+                '%s\n%s\n' % (code.text, util.code_escape(block.rstrip()))
             )
         else:
             # This is a new codeblock. Create the elements and insert text.
             pre = util.etree.SubElement(parent, 'pre')
             code = util.etree.SubElement(pre, 'code')
             block, theRest = self.detab(block)
-            code.text = util.AtomicString('%s\n' % block.rstrip())
+            code.text = util.AtomicString('%s\n' % util.code_escape(block.rstrip()))
         if theRest:
             # This block contained unindented line(s) after the first indented
             # line. Insert these lines as the first block of the master blocks
@@ -268,7 +288,7 @@ class BlockQuoteProcessor(BlockProcessor):
             before = block[:m.start()]  # Lines before blockquote
             # Pass lines before blockquote in recursively for parsing forst.
             self.parser.parseBlocks(parent, [before])
-            # Remove ``> `` from begining of each line.
+            # Remove ``> `` from beginning of each line.
             block = '\n'.join(
                 [self.clean(line) for line in block[m.start():].split('\n')]
             )
@@ -305,6 +325,8 @@ class OListProcessor(BlockProcessor):
     #   3. Item
     # The ol tag will get starts="3" attribute
     STARTSWITH = '1'
+    # Lazy ol - ignore startswith
+    LAZY_OL = True
     # List of allowed sibling tags.
     SIBLING_TAGS = ['ol', 'ul']
 
@@ -365,7 +387,7 @@ class OListProcessor(BlockProcessor):
             # This is a new list so create parent with appropriate tag.
             lst = util.etree.SubElement(parent, self.TAG)
             # Check if a custom start integer is set
-            if not self.parser.markdown.lazy_ol and self.STARTSWITH != '1':
+            if not self.LAZY_OL and self.STARTSWITH != '1':
                 lst.attrib['start'] = self.STARTSWITH
 
         self.parser.state.set('list')
@@ -423,7 +445,7 @@ class HashHeaderProcessor(BlockProcessor):
     """ Process Hash Headers. """
 
     # Detect a header at start of any line in block
-    RE = re.compile(r'(^|\n)(?P<level>#{1,6})(?P<header>.*?)#*(\n|$)')
+    RE = re.compile(r'(?:^|\n)(?P<level>#{1,6})(?P<header>(?:\\.|[^\\])*?)#*(?:\n|$)')
 
     def test(self, parent, block):
         return bool(self.RE.search(block))

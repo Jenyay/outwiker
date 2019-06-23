@@ -7,7 +7,22 @@
 		<website>https://jenyay.net/Outwiker/UnstableEn</website>
 
 		<changelog>
-			<version number="3.0.0.861" status="dev">
+			<version number="3.0.0.865" status="dev">
+			</version>
+
+			<version number="3.0.0.864" status="dev" date="June 12, 2019">
+                <change>Fix errors.</change>
+			</version>
+
+			<version number="3.0.0.862" status="dev" date="May 26, 2019">
+				<change>New GUI displayed if the notes tree is not currently open.</change>
+				<change>New GUI when selecting the root of the notes tree.</change>
+				<change>New GUI to show a page with unknown type.</change>
+				<change>Changing the appearance of a window reporting a lengthy operation (for example, opening a notes tree).</change>
+				<change>Update German localization.</change>
+				<change>Other GUI improvements.</change>
+                <change>Fix errors.</change>
+                <change>Update used libraries.</change>
 			</version>
 
 			<version number="3.0.0.860" status="dev" date="March 22, 2019">
@@ -116,7 +131,22 @@
 		<website>https://jenyay.net/Outwiker/Unstable</website>
 
 		<changelog>
-			<version number="3.0.0.861" status="dev">
+			<version number="3.0.0.865" status="dev">
+			</version>
+
+			<version number="3.0.0.864" status="dev" date="12.06.2019">
+                <change>Исправление ошибок.</change>
+			</version>
+
+			<version number="3.0.0.862" status="dev" date="26.05.2019">
+				<change>Новый интерфейс, отображаемый, если в данный момент не открыто дерево заметок.</change>
+				<change>Новый интерфейс при выборе корня дерева заметок.</change>
+				<change>Новый интерфейс для отображения страниц неизвестного типа.</change>
+				<change>Изменение внешнего вида окна, сообщающего о длительной операции (например, открытия дерева заметок).</change>
+				<change>Обновление немецкой локализации.</change>
+				<change>Другие небольшие изменения в интерфейсе.</change>
+                <change>Исправление ошибок.</change>
+                <change>Обновление используемых библиотек.</change>
 			</version>
 
 			<version number="3.0.0.860" status="dev" date="22.03.2019">

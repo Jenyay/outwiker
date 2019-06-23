@@ -11,6 +11,8 @@ import sys
 import subprocess
 import logging
 
+import wx
+
 from .pagetitletester import WindowsPageTitleTester, LinuxPageTitleTester
 from outwiker.gui.fileicons import WindowsFileIcons, UnixFileIcons
 from outwiker.core.defines import (ICONS_FOLDER_NAME,
@@ -19,7 +21,7 @@ from outwiker.core.defines import (ICONS_FOLDER_NAME,
                                    PLUGINS_FOLDER_NAME,
                                    SPELL_FOLDER_NAME,
                                    STYLES_BLOCK_FOLDER_NAME,
-                                   STYLES_INLINE_FOLDER_NAME
+                                   STYLES_INLINE_FOLDER_NAME,
                                    )
 
 
@@ -98,8 +100,12 @@ class Windows(System):
         return appdata
 
     def getHtmlRender(self, parent):
-        from outwiker.gui.htmlrenderie import HtmlRenderIE
-        return HtmlRenderIE(parent)
+        if wx.GetApp().use_fake_html_render:
+            from outwiker.gui.htmlrenderfake import HtmlRenderFake
+            return HtmlRenderFake(parent)
+        else:
+            from outwiker.gui.htmlrenderie import HtmlRenderIE
+            return HtmlRenderIE(parent)
 
     def getSpellChecker(self, langlist, folders):
         """
@@ -157,8 +163,12 @@ class Unix(System):
         return UnixFileIcons()
 
     def getHtmlRender(self, parent):
-        from outwiker.gui.htmlrenderwebkit import HtmlRenderWebKit
-        return HtmlRenderWebKit(parent)
+        if wx.GetApp().use_fake_html_render:
+            from outwiker.gui.htmlrenderfake import HtmlRenderFake
+            return HtmlRenderFake(parent)
+        else:
+            from outwiker.gui.htmlrenderwebkit import HtmlRenderWebKit
+            return HtmlRenderWebKit(parent)
 
     def getSpellChecker(self, langlist, folders):
         """
@@ -166,8 +176,6 @@ class Unix(System):
         """
         from .spellchecker.hunspellwrapper import HunspellWrapper
         return HunspellWrapper(langlist, folders)
-        # from .spellchecker.enchantwrapper import EnchantWrapper
-        # return EnchantWrapper(langlist, folders)
 
 
 def getOS():

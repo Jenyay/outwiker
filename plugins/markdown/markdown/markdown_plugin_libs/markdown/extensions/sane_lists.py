@@ -25,6 +25,7 @@ import re
 class SaneOListProcessor(OListProcessor):
 
     SIBLING_TAGS = ['ol']
+    LAZY_OL = False
 
     def __init__(self, parser):
         super(SaneOListProcessor, self).__init__(parser)
@@ -45,11 +46,11 @@ class SaneUListProcessor(UListProcessor):
 class SaneListExtension(Extension):
     """ Add sane lists to Markdown. """
 
-    def extendMarkdown(self, md, md_globals):
+    def extendMarkdown(self, md):
         """ Override existing Processors. """
-        md.parser.blockprocessors['olist'] = SaneOListProcessor(md.parser)
-        md.parser.blockprocessors['ulist'] = SaneUListProcessor(md.parser)
+        md.parser.blockprocessors.register(SaneOListProcessor(md.parser), 'olist', 40)
+        md.parser.blockprocessors.register(SaneUListProcessor(md.parser), 'ulist', 30)
 
 
-def makeExtension(*args, **kwargs):
-    return SaneListExtension(*args, **kwargs)
+def makeExtension(**kwargs):  # pragma: no cover
+    return SaneListExtension(**kwargs)

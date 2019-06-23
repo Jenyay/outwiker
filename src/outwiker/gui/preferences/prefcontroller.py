@@ -139,8 +139,7 @@ class PrefController(object):
         colorsPage = ColorsPanel(self._dialog.treeBook, self._application)
         trayPage = TrayPanel(self._dialog.treeBook, self._application)
         htmlRenderPage = HtmlRenderPanel(self._dialog.treeBook, self._application)
-        # TODO: Uncomment after wxPython 4.0.4 release
-        # textPrintPage = TextPrintPanel(self._dialog.treeBook, self._application)
+        textPrintPage = TextPrintPanel(self._dialog.treeBook, self._application)
         hotkeysPage = HotKeysPanel(self._dialog.treeBook, self._application)
         tagsPage = TagsPanel(self._dialog.treeBook, self._application)
         attachPage = AttachPanel(self._dialog.treeBook, self._application)
@@ -154,8 +153,7 @@ class PrefController(object):
             PreferencePanelInfo(tagsPage, _(u"Tags cloud")),
             PreferencePanelInfo(attachPage, _(u"Attachments")),
             PreferencePanelInfo(hotkeysPage, _(u"Hotkeys")),
-            # TODO: Uncomment after wxPython 4.0.4 release
-            # PreferencePanelInfo(textPrintPage, _(u"Text printout")),
+            PreferencePanelInfo(textPrintPage, _(u"Text printout")),
         ]
 
         self._dialog.appendPreferenceGroup(_(u"Interface"),

@@ -54,6 +54,12 @@ class HtmlRenderIE (HtmlRender):
         self.render.LoadString(htmltext)
         self.canOpenUrl = False
 
+    def Sleep(self):
+        pass
+
+    def Awake(self):
+        pass
+
     def StatusTextChange(self, status):
         statustext = u""
 

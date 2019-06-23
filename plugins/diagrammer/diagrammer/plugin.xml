@@ -28,6 +28,15 @@
 		</author>
 
 		<changelog>
+			<version number="1.2.1" date="May 26, 2019">
+				<requirements>
+					<api>2.835</api>
+				</requirements>
+
+                <download os="all">https://jenyay.net/uploads/Outwiker/Diagrammer/diagrammer-1.2.1.zip</download>
+				<change>Fixed work with Python 3.7.</change>
+			</version>
+
 			<version number="1.2" date="August 26, 2018">
 				<requirements>
 					<api>2.835</api>
@@ -93,6 +102,15 @@
 		</author>
 
 		<changelog>
+			<version number="1.2.1" date="26.05.2019">
+				<requirements>
+					<api>2.835</api>
+				</requirements>
+
+                <download os="all">https://jenyay.net/uploads/Outwiker/Diagrammer/diagrammer-1.2.1.zip</download>
+				<change>Исправлена работа с Python 3.7.</change>
+			</version>
+
 			<version number="1.2" date="26.08.2018">
 				<requirements>
 					<api>2.835</api>

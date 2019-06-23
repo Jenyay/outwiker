@@ -8,7 +8,6 @@ from outwiker.core.search import (Searcher,
 from outwiker.core.tagslist import TagsList
 from outwiker.core.commands import pageExists
 from outwiker.core.config import IntegerOption
-from outwiker.core.system import getOS
 from outwiker.gui.basepagepanel import BasePagePanel
 from outwiker.gui.tagscloud import TagsCloud
 from outwiker.gui.taglabel import EVT_TAG_LEFT_CLICK
@@ -53,7 +52,8 @@ class SearchPanel(BasePagePanel):
 
         self.clearTagsBtn = wx.Button(self, -1, _(u"Clear all tags"))
         self.searchBtn = wx.Button(self, -1, _(u"Find"))
-        self.resultWindow = getOS().getHtmlRender(self)
+        self.resultWindow = parent.borrowHtmlRender(self)
+        self.resultWindow.Show()
 
         self.sortLabel = wx.StaticText(self, -1, _(u"Sort by "))
         self.sortStrategy = wx.ComboBox(self,
@@ -149,7 +149,8 @@ class SearchPanel(BasePagePanel):
         self.resultWindow.Print()
 
     def Clear(self):
-        pass
+        self.GetParent().freeHtmlRender()
+        self.resultWindow = None
 
     def __updatePageInfo(self):
         """

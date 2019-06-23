@@ -40,8 +40,10 @@ FORMATTER_ENTRY_POINT = 'pygments.formatters'
 STYLE_ENTRY_POINT = 'pygments.styles'
 FILTER_ENTRY_POINT = 'pygments.filters'
 
+
 def iter_entry_points(group_name):
     return []
+
 
 def find_plugin_lexers():
     for entrypoint in iter_entry_points(LEXER_ENTRY_POINT):

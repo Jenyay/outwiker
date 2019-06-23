@@ -12,7 +12,7 @@ from outwiker.core.commands import registerActions
 from outwiker.core.logredirector import LogRedirector
 from outwiker.core.system import getPluginsDirList
 from outwiker.gui.actioncontroller import ActionController
-from outwiker.gui.guiconfig import TrayConfig, TextPrintConfig
+from outwiker.gui.guiconfig import TrayConfig
 from outwiker.gui.mainwindow import MainWindow
 
 
@@ -25,9 +25,7 @@ class OutWikerApplication(wx.App):
         self.logFileName = u"outwiker.log"
         self._application = application
 
-        config = TextPrintConfig(self._application.config)
-        self.normalFont = config.fontName.value
-        self.monoFont = config.fontName.value
+        self.use_fake_html_render = False
 
     def OnInit(self):
         self.Bind(wx.EVT_QUERY_END_SESSION, self._onEndSession)
@@ -44,13 +42,6 @@ class OutWikerApplication(wx.App):
 
         registerActions(self._application)
         self.mainWnd.createGui()
-        self.initPrinting()
-
-    def initPrinting(self):
-        self.printing = wx.html.HtmlEasyPrinting(parentWindow=self.mainWnd)
-        self.printing.SetFonts(self.normalFont,
-                               self.monoFont,
-                               list(range(10, 17)))
 
     def destroyMainWindow(self):
         self.mainWnd.Destroy()

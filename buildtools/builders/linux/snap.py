@@ -16,6 +16,7 @@ class BuilderSnap(BuilderBase):
     """
     A class to build snap package
     """
+
     def __init__(self, is_stable):
         super().__init__(SNAP_BUILD_DIR, is_stable)
 
@@ -47,27 +48,38 @@ class BuilderSnap(BuilderBase):
         print_info('Build snap')
         with lcd(self.facts.temp_dir):
             local('snapcraft cleanbuild')
+        # local('docker run --rm -v "$PWD":/build -w /build snapcore/snapcraft bash -c "apt update && snapcraft"')
+
+    def _build_man(self, usr_share):
+        '''
+        Copy man files and archive them
+        '''
+        man_path = os.path.join(usr_share, 'man')
+        shutil.copytree(os.path.join(self.facts.nfb_linux, 'man'), man_path)
+
+        with lcd(os.path.join(man_path, 'man1')):
+            local('gzip outwiker.1')
+
+        with lcd(os.path.join(man_path, 'ru', 'man1')):
+            local('gzip outwiker.1')
 
     def _create_dirs_tree(self):
         root = self.facts.temp_dir
         usr = os.path.join(root, 'usr')
-        share = os.path.join(root, 'share')
         snap = os.path.join(root, 'snap')
 
         # Create tmp/usr/share
         usr_share = os.path.join(usr, 'share')
-        os.makedirs(usr_share, exist_ok=True)
+
+        # Copy usr folder
+        shutil.copytree(os.path.join(self.facts.nfb_snap, 'usr'),
+                        os.path.join(root, 'usr'))
+
+        self._build_man(usr_share)
 
         # Create tmp/usr/share/outwiker
         usr_share_outwiker = os.path.join(usr_share, 'outwiker')
         shutil.move(self.temp_sources_dir, usr_share_outwiker)
-
-        # Create tmp/usr/share/bin
-        shutil.copytree(os.path.join(self.facts.nfb_snap, 'usr', 'bin'),
-                        os.path.join(usr, 'bin'))
-
-        # Create tmp/share
-        shutil.copytree(os.path.join(self.facts.nfb_snap, 'share'), share)
 
         # Create tmp/snap
         shutil.copytree(os.path.join(self.facts.nfb_snap, 'snap'), snap)

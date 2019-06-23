@@ -27,6 +27,15 @@
 			<site>https://jenyay.net</site>
 		</author>
 		<changelog>
+			<version number="2.5.3" date="May 26, 2019">
+				<requirements>
+					<api>2.862</api>
+				</requirements>
+
+                <download os="all">https://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.5.3.zip</download>
+				<change>Update the KaTeX engine.</change>
+			</version>
+
 			<version number="2.5.2">
 				<requirements>
 					<api>2.858</api>
@@ -150,6 +159,15 @@
 		</author>
 
 		<changelog>
+			<version number="2.5.3" date="26.05.2019">
+				<requirements>
+					<api>2.862</api>
+				</requirements>
+
+                <download os="all">https://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.5.3.zip</download>
+				<change>Обновление движка KaTeX.</change>
+			</version>
+
             <version number="2.5.2">
 				<requirements>
 					<api>2.858</api>

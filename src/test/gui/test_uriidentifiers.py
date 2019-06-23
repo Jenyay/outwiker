@@ -312,6 +312,9 @@ class UriIdentifierWebKitTest(UriIdentifierTest):
     """
     Тесты идентификации ссылок для WebKit
     """
+    def setUp(self):
+        super().setUp()
+
     def _getBasePath(self, page):
         """
         Возвращает путь до файла __content.html
@@ -481,7 +484,7 @@ class UriIdentifierWebKitTest(UriIdentifierTest):
         (url, page, filename, anchor) = identifier.identify(currentpage.path)
 
         self.assertEqual(url, None)
-        self.assertEqual(page, None)
+        self.assertEqual(page, currentpage)
         self.assertEqual(filename, currentpage.path)
         self.assertEqual(anchor, None)
 

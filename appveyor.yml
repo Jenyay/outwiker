@@ -6,26 +6,28 @@ environment:
     PY_PYTHON: 3.6-32
     PYTHONIOENCODING: utf_8
     PIPENV_IGNORE_VIRTUALENVS: 1
-stack: Python 3.5.6
+stack: Python 3.5.7
 init:
     - cmd: py -m pip install pipenv
     - sh: sudo apt-get -y update
     - sh: sudo apt-get -y install python3-pip python3-dev debhelper devscripts debhelper devscripts p7zip-full libssl-dev dpkg-dev build-essential libjpeg-dev libtiff-dev libsdl1.2-dev libnotify-dev freeglut3 ibus-gtk3 xvfb libhunspell-dev
-    # - sh: sudo apt-get -y install libwebkit2gtk-4.0
-    - sh: sudo apt-get -y install libwebkitgtk-3.0
+    - sh: sudo apt-get -y install libwebkit2gtk-4.0
 install:
     - cmd: cinst innosetup
     - cmd: py -m pipenv update --dev
+    - cmd: py -m pipenv run python -m pip list
+    - cmd: py -m pipenv run python -m comtypes.client._generate shdocvw.dll
+    - cmd: py -m pipenv run python -c "import wx.lib.iewin"
     - sh: python -m pip install pipenv
-    - sh: pipenv run pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-16.04 wxPython==4.0.1
+    - sh: pipenv run pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-16.04 wxPython==4.0.6
     - sh: pipenv update --dev
 build_script:
-    - cmd: py -m pipenv run fab test:"test/actions -s"
+    # - cmd: py -m pipenv run fab test:"test/actions -s"
     - cmd: py -m pipenv run fab win
-    - sh: pipenv run fab linux_binary
-    - sh: pipenv run fab linux_appimage
-    - sh: pipenv run fab deb_binary
-    - sh: pipenv run fab plugins
+    # - sh: pipenv run fab linux_binary
+    # - sh: pipenv run fab linux_appimage
+    # - sh: pipenv run fab deb_binary
+    # - sh: pipenv run fab plugins
 test_script:
     - cmd: py -m pipenv run fab test
     - cmd: py -m pipenv run fab coverage
@@ -49,5 +51,3 @@ artifacts:
       name: linux_AppImage
     - path: build\*\plugins\*\*.zip
       name: plugins
-# cache:
-#   - C:\Users\appveyor\.virtualenvs\outwiker-NhIuapJ3

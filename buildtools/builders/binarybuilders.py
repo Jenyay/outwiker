@@ -30,23 +30,21 @@ class BaseBinaryBuilder(object, metaclass=ABCMeta):
             'PyQt4',
             'PyQt5',
             'unittest',
-            'distutils',
-            'setuptools',
-            'pycparser',
             'sqlite3',
             'numpy',
             'pydoc',
-            'xmlrpclib',
             'test',
+            'pycparser',
+            'xmlrpclib',
             'bz2',
             'cffi',
+            'bsddb',
             'PIL.SunImagePlugin',
             'PIL.IptcImagePlugin',
             'PIL.McIdasImagePlugin',
             'PIL.DdsImagePlugin',
             'PIL.FpxImagePlugin',
             'PIL.PixarImagePlugin',
-            'bsddb',
         ]
 
     def get_includes(self):
@@ -59,12 +57,16 @@ class BaseBinaryBuilder(object, metaclass=ABCMeta):
             'outwiker.utilites.actionsguicontroller',
             'outwiker.utilites.text',
             'PIL.Image',
+            'PIL.ImageFile',
             'PIL.ImageDraw',
+            'PIL.ImageDraw2',
             'PIL.ImageFont',
             'PIL.ImageFilter',
             'PIL.IcoImagePlugin',
+            'PIL.PngImagePlugin',
             'PIL.BmpImagePlugin',
             'PIL.TiffImagePlugin',
+            'PIL.JpegImagePlugin',
             'enchant',
             'xml',
             'json',
@@ -180,6 +182,9 @@ class PyInstallerBuilderWindows(BasePyInstallerBuilder):
             u'include',
         ]
 
+        to_remove += [fname.name for fname
+                      in Path(self._dist_dir, 'outwiker').glob('api-ms-win*.dll')]
+
         return to_remove
 
 
@@ -229,7 +234,7 @@ class PyInstallerBuilderLinuxBase(BasePyInstallerBuilder):
             # 'libglapi.so.0',
 
             # 'libxcb.so.1',
-            ]
+        ]
 
     def build(self):
         super(PyInstallerBuilderLinuxBase, self).build()

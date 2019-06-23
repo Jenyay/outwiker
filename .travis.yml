@@ -2,7 +2,7 @@ dist: xenial
 language: python
 cache: pip
 python:
-    - "3.6.7"
+    - "3.5"
 addons:
     apt:
         packages:
@@ -24,10 +24,12 @@ addons:
             - ibus-gtk3
             - xvfb
             - libhunspell-dev
-            - libwebkitgtk-3.0
+            - gstreamer1.0-pulseaudio
+            - gstreamer0.10-alsa
+            - libwebkit2gtk-4.0
 install:
     - python -m pip install pipenv
-    - pipenv run pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-16.04 wxPython==4.0.1
+    - pipenv run pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-16.04 wxPython==4.0.6
     - pipenv update --dev
 script:
-    - xvfb-run pipenv run fab test:"-v"
+    - xvfb-run pipenv run fab test
