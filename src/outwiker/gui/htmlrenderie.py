@@ -130,7 +130,7 @@ class HtmlRenderIE (HtmlRender):
 
     def BeforeNavigate2(self, this, pDisp, URL, Flags,
                         TargetFrameName, PostData, Headers, Cancel):
-        href = URL[0]
+        href = urllib.parse.unquote(URL[0])
         curr_href = self.__cleanUpUrl(self.render.locationurl)
 
         # Пока другого признака о том, что пытаемся открыть встроенный фрейм,
