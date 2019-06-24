@@ -33,8 +33,10 @@ class WikiEditorPanel(BasePrefPanel):
         self._stylesList.addStyle(_(u"Link"), self._config.link.value)
         self._stylesList.addStyle(_(u"Heading"), self._config.heading.value)
         self._stylesList.addStyle(_(u"Command"), self._config.command.value)
+        self._stylesList.addStyle(_(u"Comment"), self._config.comment.value)
 
     def Save(self):
         self._config.link.value = self._stylesList.getStyle(0)
         self._config.heading.value = self._stylesList.getStyle(1)
         self._config.command.value = self._stylesList.getStyle(2)
+        self._config.comment.value = self._stylesList.getStyle(3)
