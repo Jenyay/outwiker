@@ -164,3 +164,6 @@ TEXT_COLOR_STR_ID = "TextColor"
 
 # Set text background color
 TEXT_BACKGROUND_COLOR_STR_ID = "TextBackgroundColor"
+
+# Comment
+COMMENT_STR_ID = "Comment"

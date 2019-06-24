@@ -119,6 +119,7 @@ class WikiPageView(BaseWikiPageView):
             TABLE_ROW_STR_ID,
             TABLE_CELL_STR_ID,
             MARK_STR_ID,
+            COMMENT_STR_ID,
         ] + self._baseTextPolyactions
 
     def _getSpecificActions(self):
@@ -499,7 +500,17 @@ class WikiPageView(BaseWikiPageView):
             lambda param: self.turnText(u"[@", u"@]"))
         actionController.appendMenuItem(PREFORMAT_STR_ID, menu)
 
-        # Цитата
+        # Comment
+        actionController.getAction(COMMENT_STR_ID).setFunc(
+            lambda param: self.turnText(u"<!--", u"-->"))
+        actionController.appendMenuItem(COMMENT_STR_ID, menu)
+        actionController.appendToolbarButton(
+            COMMENT_STR_ID,
+            toolbar,
+            os.path.join(self.imagesDir, "comment.png"),
+            fullUpdate=False)
+
+        # Quote
         actionController.getAction(QUOTE_STR_ID).setFunc(
             lambda param: self.turnText(u'[>', u'<]'))
 
@@ -521,7 +532,7 @@ class WikiPageView(BaseWikiPageView):
             os.path.join(self.imagesDir, "mark.png"),
             fullUpdate=False)
 
-        # Моноширинный шрифт
+        # Monospace font
         actionController.getAction(CODE_STR_ID).setFunc(
             lambda param: self.turnText(u'@@', u'@@'))
 
