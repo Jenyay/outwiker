@@ -79,6 +79,7 @@ class HtmlPageView(BaseHtmlPanel):
             IMAGE_STR_ID,
             CURRENT_DATE,
             MARK_STR_ID,
+            COMMENT_STR_ID,
         ] + self._baseTextPolyactions
 
         # Список действий, которые нужно удалять с панелей и из меню.
@@ -517,6 +518,16 @@ class HtmlPageView(BaseHtmlPanel):
         actionController.getAction(PREFORMAT_STR_ID).setFunc(
             lambda param: self.turnText(u"<pre>", u"</pre>"))
         actionController.appendMenuItem(PREFORMAT_STR_ID, menu)
+
+        # Comment
+        actionController.getAction(COMMENT_STR_ID).setFunc(
+            lambda param: self.turnText(u"<!--", u"-->"))
+        actionController.appendMenuItem(COMMENT_STR_ID, menu)
+        actionController.appendToolbarButton(
+            COMMENT_STR_ID,
+            toolbar,
+            os.path.join(self.imagesDir, "comment.png"),
+            fullUpdate=False)
 
         # Цитирование
         actionController.getAction(QUOTE_STR_ID).setFunc(
