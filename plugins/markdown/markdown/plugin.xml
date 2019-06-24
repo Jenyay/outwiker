@@ -35,6 +35,7 @@
 
                 <download os="all">https://jenyay.net/uploads/Outwiker/Markdown/markdown-1.6.zip</download>
 				<change>Add comment button and comment highlighting.</change>
+				<change>Update Markdown parser library.</change>
 			</version>
 
 			<version number="1.5.1" date="May 26, 2019">
@@ -112,6 +113,7 @@
 
                 <download os="all">https://jenyay.net/uploads/Outwiker/Markdown/markdown-1.6.zip</download>
 				<change>Добавлена кнопка для вставки комментариев и подсветка комментариев.</change>
+				<change>Обновление библиотеки разбора формата Markdown.</change>
 			</version>
 
 			<version number="1.5.1" date="26.05.2019">
