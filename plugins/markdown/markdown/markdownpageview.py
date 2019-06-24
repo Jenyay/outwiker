@@ -63,6 +63,7 @@ class MarkdownPageView(BaseWikiPageView):
             # LIST_NUMBERS_STR_ID,
             HTML_ESCAPE_STR_ID,
             CURRENT_DATE,
+            COMMENT_STR_ID,
         ] + self._baseTextPolyactions
 
     def _getSpecificActions(self):
@@ -138,6 +139,16 @@ class MarkdownPageView(BaseWikiPageView):
             BOLD_ITALIC_STR_ID,
             toolbar,
             os.path.join(self.imagesDir, "text_bold_italic.png"),
+            fullUpdate=False)
+
+        # Comment
+        actionController.getAction(COMMENT_STR_ID).setFunc(
+            lambda param: self.turnText(u"<!--", u"-->"))
+        actionController.appendMenuItem(COMMENT_STR_ID, menu)
+        actionController.appendToolbarButton(
+            COMMENT_STR_ID,
+            toolbar,
+            os.path.join(self.imagesDir, "comment.png"),
             fullUpdate=False)
 
     def _addHeadingTools(self):

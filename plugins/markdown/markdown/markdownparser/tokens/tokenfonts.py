@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from outwiker.libs.pyparsing import QuotedString
 
@@ -34,6 +34,13 @@ class FontsFactory(object):
         Create token for the code block
         """
         return CodeToken().getToken()
+
+    @staticmethod
+    def makeComment():
+        """
+        Create comment token
+        """
+        return CommentToken().getToken()
 
 
 class BlockToken(object):
@@ -98,3 +105,14 @@ class CodeToken(BlockToken):
                             endQuoteChar=CodeToken.end,
                             multiline=True,
                             convertWhitespaceEscapes=False)("code")
+
+
+class CommentToken(BlockToken):
+    start = "<!--"
+    end = "-->"
+
+    def getToken(self):
+        return QuotedString(CommentToken.start,
+                            endQuoteChar=CommentToken.end,
+                            multiline=True,
+                            convertWhitespaceEscapes=False)("comment")
