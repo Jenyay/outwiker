@@ -46,6 +46,9 @@ class WikiConfig (object):
     STYLE_COMMAND_PARAM = u"command"
     STYLE_COMMAND_DEFAULT = StcStyle.parse(u"fore:#6A686B")
 
+    STYLE_COMMENT_PARAM = u"comment"
+    STYLE_COMMENT_DEFAULT = StcStyle.parse(u"fore:#12B535")
+
     COLORIZE_SYNTAX_PARAM = u'ColorizeSyntax'
     COLORIZE_SYNTAX_DEFAULT = True
 
@@ -96,6 +99,11 @@ class WikiConfig (object):
                                       WikiConfig.STYLES_SECTION,
                                       WikiConfig.STYLE_COMMAND_PARAM,
                                       WikiConfig.STYLE_COMMAND_DEFAULT)
+
+        self.comment = StcStyleOption(self.config,
+                                      WikiConfig.STYLES_SECTION,
+                                      WikiConfig.STYLE_COMMENT_PARAM,
+                                      WikiConfig.STYLE_COMMENT_DEFAULT)
 
         self.colorizeSyntax = BooleanOption(self.config,
                                             self.WIKI_SECTION,

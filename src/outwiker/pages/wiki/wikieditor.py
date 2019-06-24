@@ -1,19 +1,20 @@
 # -*- coding: utf-8 -*-
 
+from functools import reduce
+
 import wx.stc
 
 from outwiker.core.application import Application
 from outwiker.gui.texteditor import TextEditor
 from .wikiconfig import WikiConfig
-from functools import reduce
 
 
-class WikiEditor (TextEditor):
+class WikiEditor(TextEditor):
     def __init__(self, parent):
         self._colorizeSyntax = True
         self._styles = {}
 
-        super(WikiEditor, self).__init__(parent)
+        super().__init__(parent)
 
     def __createStyles(self, config):
         self._styles = {}
@@ -25,6 +26,7 @@ class WikiEditor (TextEditor):
         self.STYLE_LINK_ID = 1 << 3
         self.STYLE_HEADING_ID = 1 << 4
         self.STYLE_COMMAND_ID = (1 << 4) + 1
+        self.STYLE_COMMENT_ID = (1 << 4) + 2
 
         # Комбинации стилей
         self.STYLE_BOLD_ITALIC_UNDERLINE_ID = (self.STYLE_BOLD_ID |
@@ -76,6 +78,7 @@ class WikiEditor (TextEditor):
         self._styles[self.STYLE_LINK_BOLD_ID] = self._styles[self.STYLE_LINK_ID] + ",bold"
         self._styles[self.STYLE_HEADING_ID] = config.heading.value.tostr()
         self._styles[self.STYLE_COMMAND_ID] = config.command.value.tostr()
+        self._styles[self.STYLE_COMMENT_ID] = config.comment.value.tostr()
 
     def setDefaultSettings(self):
         super(WikiEditor, self).setDefaultSettings()
