@@ -39,9 +39,6 @@ class HtmlRenderWebKit(HtmlRender):
         sizer.Add(self.ctrl, 0, wx.EXPAND)
         self.SetSizer(sizer)
 
-        self._symlinkPath = '/tmp/outwiker_page'
-        self._symlinkURL = self._pathToURL(self._symlinkPath)
-
         self.Awake()
         self.Bind(wx.EVT_CLOSE, handler=self.__onClose)
 
@@ -117,7 +114,7 @@ class HtmlRenderWebKit(HtmlRender):
         uri = self.ctrl.GetCurrentURL()
 
         if uri is not None:
-            basepath = self._symlinkPath
+            basepath = self._currentPage.path
             identifier = UriIdentifierWebKit(self._currentPage, basepath)
 
             return identifier.identify(href)
