@@ -11,7 +11,7 @@ import outwiker.core.system
 import outwiker.core.commands
 from outwiker.core.application import Application
 from outwiker.core.defines import APP_DATA_KEY_ANCHOR
-from outwiker.gui.htmlrender import HtmlRender
+from outwiker.gui.htmlrender import HtmlRenderForPage
 from outwiker.gui.htmlcontrollerie import UriIdentifierIE
 from outwiker.gui.defines import (ID_MOUSE_LEFT,
                                   ID_KEY_CTRL,
@@ -19,12 +19,12 @@ from outwiker.gui.defines import (ID_MOUSE_LEFT,
 from outwiker.gui.guiconfig import GeneralGuiConfig
 
 
-class HtmlRenderIE (HtmlRender):
+class HtmlRenderIE(HtmlRenderForPage):
     """
     Класс для рендеринга HTML с использованием движка IE под Windows
     """
     def __init__(self, parent):
-        HtmlRender.__init__(self, parent)
+        super().__init__(parent)
         config = GeneralGuiConfig(Application.config)
 
         self.render = wx.lib.iewin.IEHtmlWindow(self)

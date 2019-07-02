@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from .htmlrender import HtmlRender
+from .htmlrender import HtmlRenderForPage
 
 
-class HtmlRenderFake(HtmlRender):
+class HtmlRenderFake(HtmlRenderForPage):
     def __init__(self, parent):
         HtmlRender.__init__(self, parent)
 

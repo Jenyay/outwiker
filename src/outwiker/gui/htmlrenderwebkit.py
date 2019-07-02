@@ -21,14 +21,14 @@ from outwiker.gui.defines import (ID_MOUSE_LEFT,
 from outwiker.utilites.textfile import readTextFile
 
 
-from .htmlrender import HtmlRender
+from .htmlrender import HtmlRenderForPage
 
 logger = logging.getLogger('outwiker.gui.htmlrenderwebkit')
 
 
-class HtmlRenderWebKit(HtmlRender):
+class HtmlRenderWebKit(HtmlRenderForPage):
     def __init__(self, parent):
-        HtmlRender.__init__(self, parent)
+        super().__init__(parent)
 
         import wx.html2 as webview
         self.ctrl = webview.WebView.New(self)

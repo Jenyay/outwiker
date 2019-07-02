@@ -9,16 +9,12 @@ from outwiker.core.application import Application
 from outwiker.core.events import LinkClickParams, HoverLinkParams
 
 
-class HtmlRender (wx.Panel):
+class HtmlRender(wx.Panel):
     """
     Базовый класс для HTML-рендеров
     """
     def __init__(self, parent):
-        wx.Panel.__init__(self, parent)
-
-        # Номер элемента статусной панели, куда выводится текст
-        self._status_item = 0
-        self._currentPage = None
+        super().__init__(parent)
 
     def LoadPage(self, fname):
         """
@@ -40,14 +36,6 @@ class HtmlRender (wx.Panel):
 
     def Awake(self):
         pass
-
-    @property
-    def page(self):
-        return self._currentPage
-
-    @page.setter
-    def page(self, value):
-        self._currentPage = value
 
     def openUrl(self, href):
         """
@@ -120,6 +108,15 @@ class HtmlRender (wx.Panel):
             linktype=linktype,
         )
 
+
+class HtmlRenderForPage(HtmlRender):
+    def __init__(self, parent):
+        super().__init__(parent)
+
+        # Номер элемента статусной панели, куда выводится текст
+        self._status_item = 0
+        self._currentPage = None
+
     def setStatusText(self, link, text):
         """
         Execute onHoverLink event and set status text
@@ -130,3 +127,11 @@ class HtmlRender (wx.Panel):
         Application.onHoverLink(page=self._currentPage, params=params)
 
         outwiker.core.commands.setStatusText(params.text, self._status_item)
+
+    @property
+    def page(self):
+        return self._currentPage
+
+    @page.setter
+    def page(self, value):
+        self._currentPage = value

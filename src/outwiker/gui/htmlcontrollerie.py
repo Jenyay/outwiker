@@ -7,7 +7,7 @@ import urllib.error
 from .htmlcontroller import UriIdentifier
 
 
-class UriIdentifierIE (UriIdentifier):
+class UriIdentifierIE(UriIdentifier):
     """
     Класс для идентификации ссылок. На что ссылки
     """
