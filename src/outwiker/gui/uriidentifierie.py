@@ -4,7 +4,7 @@ import urllib.request
 import urllib.parse
 import urllib.error
 
-from .htmlcontroller import UriIdentifier
+from .uriidentifier import UriIdentifier
 
 
 class UriIdentifierIE(UriIdentifier):

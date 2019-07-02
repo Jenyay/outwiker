@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from .htmlcontroller import UriIdentifier
+from .uriidentifier import UriIdentifier
 
 
 class UriIdentifierWebKit(UriIdentifier):

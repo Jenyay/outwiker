@@ -12,7 +12,7 @@ import outwiker.core.system
 import outwiker.core.commands
 from outwiker.core.application import Application
 from outwiker.core.defines import APP_DATA_KEY_ANCHOR
-from outwiker.gui.htmlcontrollerwebkit import UriIdentifierWebKit
+from outwiker.gui.uriidentifierwebkit import UriIdentifierWebKit
 from outwiker.gui.defines import (ID_MOUSE_LEFT,
                                   ID_MOUSE_MIDDLE,
                                   ID_MOUSE_RIGHT,

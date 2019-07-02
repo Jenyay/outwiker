@@ -11,8 +11,8 @@ from outwiker.core.defines import PAGE_RESULT_HTML
 from outwiker.core.commands import generateLink
 
 from outwiker.pages.wiki.wikipage import WikiPageFactory
-from outwiker.gui.htmlcontrollerie import UriIdentifierIE
-from outwiker.gui.htmlcontrollerwebkit import UriIdentifierWebKit
+from outwiker.gui.uriidentifierie import UriIdentifierIE
+from outwiker.gui.uriidentifierwebkit import UriIdentifierWebKit
 
 from test.utils import removeDir
 from test.basetestcases import BaseOutWikerGUIMixin
