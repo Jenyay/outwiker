@@ -84,19 +84,3 @@ class UriIdentifierWebKit(UriIdentifier):
                 newSelectedPage = self._currentPage.root[href]
 
         return newSelectedPage
-
-    def _findAnchor(self, href):
-        """
-        Проверить, а не указывает ли href на якорь
-        """
-        basepath = self._basepath
-        if not basepath.endswith('/'):
-            basepath += '/'
-
-        anchor = None
-        if (href.startswith(basepath) and
-                len(href) > len(basepath) and
-                href[len(basepath)] == "#"):
-            anchor = href[len(basepath):]
-
-        return anchor

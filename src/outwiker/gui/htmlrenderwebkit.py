@@ -22,7 +22,7 @@ from outwiker.utilites.textfile import readTextFile
 
 
 from .htmlrender import HtmlRenderForPage
-from .urirecognizers import URLRecognizer
+from .urirecognizers import URLRecognizer, AnchorRecognizerWebKit
 
 logger = logging.getLogger('outwiker.gui.htmlrenderwebkit')
 
@@ -118,8 +118,9 @@ class HtmlRenderWebKit(HtmlRenderForPage):
             basepath = self._currentPage.path
             identifier = UriIdentifierWebKit(self._currentPage, basepath)
 
-            page, fileName, anchor = identifier.identify(href)
+            page, fileName = identifier.identify(href)
             url = URLRecognizer().recognize(href)
+            anchor = AnchorRecognizerWebKit(basepath).recognize(href)
             return (url, page, fileName, anchor)
 
         return (None, None, None, None)

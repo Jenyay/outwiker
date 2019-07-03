@@ -41,3 +41,119 @@ def test_recognize_url_invalid():
 
     result = recognizer.recognize(href)
     assert result is None
+
+
+def test_recognize_url_none():
+    href = None
+    recognizer = ur.URLRecognizer()
+
+    result = recognizer.recognize(href)
+    assert result is None
+
+
+def test_recognize_anchor_ie_none():
+    href = None
+    basepath = 'c:/tmp'
+    recognizer = ur.AnchorRecognizerIE(basepath)
+
+    result = recognizer.recognize(href)
+    assert result is None
+
+
+def test_recognize_anchor_webkit_none():
+    href = None
+    basepath = '/tmp'
+    recognizer = ur.AnchorRecognizerWebKit(basepath)
+
+    result = recognizer.recognize(href)
+    assert result is None
+
+
+def test_recognize_anchor_ie_empty():
+    href = ''
+    basepath = 'c:/tmp'
+    recognizer = ur.AnchorRecognizerIE(basepath)
+
+    result = recognizer.recognize(href)
+    assert result is None
+
+
+def test_recognize_anchor_webkit_empty():
+    href = ''
+    basepath = '/tmp'
+    recognizer = ur.AnchorRecognizerWebKit(basepath)
+
+    result = recognizer.recognize(href)
+    assert result is None
+
+
+def test_recognize_anchor_ie_not():
+    href = 'c:/tmp/'
+    basepath = 'c:/tmp'
+    recognizer = ur.AnchorRecognizerIE(basepath)
+
+    result = recognizer.recognize(href)
+    assert result is None
+
+
+def test_recognize_anchor_webkit_not():
+    href = '/tmp/'
+    basepath = '/tmp'
+    recognizer = ur.AnchorRecognizerWebKit(basepath)
+
+    result = recognizer.recognize(href)
+    assert result is None
+
+
+def test_recognize_anchor_ie_anchor():
+    href = 'c:/tmp#anchor'
+    basepath = 'c:/tmp'
+    recognizer = ur.AnchorRecognizerIE(basepath)
+
+    result = recognizer.recognize(href)
+    assert result == '#anchor'
+
+
+def test_recognize_anchor_webkit_anchor_1():
+    href = '/tmp/#anchor'
+    basepath = '/tmp'
+    recognizer = ur.AnchorRecognizerWebKit(basepath)
+
+    result = recognizer.recognize(href)
+    assert result == '#anchor'
+
+
+def test_recognize_anchor_webkit_anchor_2():
+    href = '/tmp/#anchor'
+    basepath = '/tmp/'
+    recognizer = ur.AnchorRecognizerWebKit(basepath)
+
+    result = recognizer.recognize(href)
+    assert result == '#anchor'
+
+
+def test_recognize_anchor_webkit_anchor_3():
+    href = 'file:///tmp/#anchor'
+    basepath = '/tmp/'
+    recognizer = ur.AnchorRecognizerWebKit(basepath)
+
+    result = recognizer.recognize(href)
+    assert result == '#anchor'
+
+
+def test_recognize_anchor_ie_page_protocol():
+    href = 'page://qqqqq/#anchor'
+    basepath = 'c:/tmp'
+    recognizer = ur.AnchorRecognizerIE(basepath)
+
+    result = recognizer.recognize(href)
+    assert result == '#anchor'
+
+
+def test_recognize_anchor_webkit_page_protocol():
+    href = 'page://qqqqq/#anchor'
+    basepath = 'file:///tmp'
+    recognizer = ur.AnchorRecognizerIE(basepath)
+
+    result = recognizer.recognize(href)
+    assert result == '#anchor'

@@ -22,31 +22,19 @@ class UriIdentifier (object, metaclass=ABCMeta):
 
     def identify(self, href):
         """
-        Определить тип ссылки и вернуть кортеж (page, filename, anchor)
+        Определить тип ссылки и вернуть кортеж (page, filename)
         """
         page = self._getPageByProtocol(href)
 
         if page is not None:
-            anchor = self._getAnchorByProtocol(href)
-            return (page, None, anchor)
+            return (page, None)
 
         href_clear = self._prepareHref(href)
 
         page = self._findWikiPage(href_clear)
         filename = self._findFile(href_clear)
-        anchor = self._findAnchor(href_clear)
 
-        return (page, filename, anchor)
-
-    def _getAnchorByProtocol(self, href):
-        """
-        Попытаться найти якорь, если используется ссылка вида page://...
-        """
-        pos = href.rfind("/#")
-        if pos != -1:
-            return href[pos + 1:]
-
-        return None
+        return (page, filename)
 
     def _getPageByProtocol(self, href):
         """
@@ -82,7 +70,7 @@ class UriIdentifier (object, metaclass=ABCMeta):
     @abstractmethod
     def _prepareHref(self, href):
         """
-        Подготовить ссылку к распознаванию, удалить file:// в начале
+        Подготовить ссылку к распознаванию
         """
         pass
 
@@ -106,15 +94,3 @@ class UriIdentifier (object, metaclass=ABCMeta):
         Удалить якорь из адреса текущей загруженной страницы
         """
         pass
-
-    def _findAnchor(self, href):
-        """
-        Проверить, а не указывает ли href на якорь
-        """
-        anchor = None
-        if (href.startswith(self._basepath) and
-                len(href) > len(self._basepath) and
-                href[len(self._basepath)] == "#"):
-            anchor = href[len(self._basepath):]
-
-        return anchor

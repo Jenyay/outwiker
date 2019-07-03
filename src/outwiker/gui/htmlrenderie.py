@@ -18,7 +18,7 @@ from outwiker.gui.defines import (ID_MOUSE_LEFT,
                                   ID_KEY_SHIFT)
 from outwiker.gui.guiconfig import GeneralGuiConfig
 
-from .urirecognizers import URLRecognizer
+from .urirecognizers import URLRecognizer, AnchorRecognizerIE
 
 
 class HtmlRenderIE(HtmlRenderForPage):
@@ -164,8 +164,9 @@ class HtmlRenderIE(HtmlRenderForPage):
             self.__cleanUpUrl(self.render.locationurl)
         )
 
-        page, fileName, anchor = identifier.identify(href)
+        page, fileName = identifier.identify(href)
         url = URLRecognizer().recognize(href)
+        anchor = AnchorRecognizerIE(basepath).recognize(href)
         return (url, page, fileName, anchor)
 
     def __getKeyCode(self):

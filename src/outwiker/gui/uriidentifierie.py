@@ -18,26 +18,6 @@ class UriIdentifierIE(UriIdentifier):
         """
         self().__init__(currentpage, basepath)
 
-    def __removeFileProtokol(self, href):
-        """
-        Избавиться от протокола file:///, то избавимся от этой надписи
-        """
-        fileprotocol = u"file:///"
-        if href.startswith(fileprotocol):
-            return href[len(fileprotocol):]
-
-        return href
-
-    def _prepareHref(self, href):
-        """
-        Обработать ссылку, если требуется
-        """
-        result = self.__removeFileProtokol(href)
-        result = urllib.parse.unquote(result)
-        result = result.replace("/", u"\\")
-
-        return result
-
     def _findWikiPage(self, subpath):
         """
         Попытка найти страницу вики
