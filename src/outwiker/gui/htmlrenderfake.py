@@ -5,7 +5,7 @@ from .htmlrender import HtmlRenderForPage
 
 class HtmlRenderFake(HtmlRenderForPage):
     def __init__(self, parent):
-        HtmlRender.__init__(self, parent)
+        super().__init__(parent)
 
     def Print(self):
         pass
