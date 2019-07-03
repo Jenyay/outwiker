@@ -22,16 +22,13 @@ class UriIdentifier (object, metaclass=ABCMeta):
 
     def identify(self, href):
         """
-        Определить тип ссылки и вернуть кортеж (url, page, filename, anchor)
+        Определить тип ссылки и вернуть кортеж (page, filename, anchor)
         """
-        if self._isUrl(href):
-            return (href, None, None, None)
-
         page = self._getPageByProtocol(href)
 
         if page is not None:
             anchor = self._getAnchorByProtocol(href)
-            return (None, page, None, anchor)
+            return (page, None, anchor)
 
         href_clear = self._prepareHref(href)
 
@@ -39,7 +36,7 @@ class UriIdentifier (object, metaclass=ABCMeta):
         filename = self._findFile(href_clear)
         anchor = self._findAnchor(href_clear)
 
-        return (None, page, filename, anchor)
+        return (page, filename, anchor)
 
     def _getAnchorByProtocol(self, href):
         """
@@ -121,12 +118,3 @@ class UriIdentifier (object, metaclass=ABCMeta):
             anchor = href[len(self._basepath):]
 
         return anchor
-
-    def _isUrl(self, href):
-        """
-        Является ли href ссылкой на интернет?
-        """
-        return (href.lower().startswith("http:") or
-                href.lower().startswith("https:") or
-                href.lower().startswith("ftp:") or
-                href.lower().startswith("mailto:"))

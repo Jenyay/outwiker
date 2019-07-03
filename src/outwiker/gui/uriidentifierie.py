@@ -16,7 +16,7 @@ class UriIdentifierIE(UriIdentifier):
         currentpage - страница, которая в данный момент открыта
         basepath - базовый путь для HTML-рендера
         """
-        UriIdentifier.__init__(self, currentpage, basepath)
+        self().__init__(currentpage, basepath)
 
     def __removeFileProtokol(self, href):
         """
