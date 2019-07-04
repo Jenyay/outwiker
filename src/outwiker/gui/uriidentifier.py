@@ -22,19 +22,16 @@ class UriIdentifier (object, metaclass=ABCMeta):
 
     def identify(self, href):
         """
-        Определить тип ссылки и вернуть кортеж (page, filename)
+        Определить тип ссылки и вернуть page
         """
         page = self._getPageByProtocol(href)
 
         if page is not None:
-            return (page, None)
+            return page
 
         href_clear = self._prepareHref(href)
-
         page = self._findWikiPage(href_clear)
-        filename = self._findFile(href_clear)
-
-        return (page, filename)
+        return page
 
     def _getPageByProtocol(self, href):
         """

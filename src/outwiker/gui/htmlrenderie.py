@@ -18,13 +18,15 @@ from outwiker.gui.defines import (ID_MOUSE_LEFT,
                                   ID_KEY_SHIFT)
 from outwiker.gui.guiconfig import GeneralGuiConfig
 
-from .urirecognizers import URLRecognizer, AnchorRecognizerIE
+from .urirecognizers import (
+    URLRecognizer, AnchorRecognizerIE, FileRecognizerIE)
 
 
 class HtmlRenderIE(HtmlRenderForPage):
     """
     Класс для рендеринга HTML с использованием движка IE под Windows
     """
+
     def __init__(self, parent):
         super().__init__(parent)
         config = GeneralGuiConfig(Application.config)
@@ -164,10 +166,11 @@ class HtmlRenderIE(HtmlRenderForPage):
             self.__cleanUpUrl(self.render.locationurl)
         )
 
-        page, fileName = identifier.identify(href)
+        page = identifier.identify(href)
         url = URLRecognizer().recognize(href)
         anchor = AnchorRecognizerIE(basepath).recognize(href)
-        return (url, page, fileName, anchor)
+        filename = FileRecognizerIE(basepath).recognize(href)
+        return (url, page, filename, anchor)
 
     def __getKeyCode(self):
         modifier = 0

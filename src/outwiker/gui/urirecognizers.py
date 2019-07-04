@@ -4,18 +4,8 @@ Classes to recognize href URI for HtmlRenders
 '''
 
 from abc import ABCMeta, abstractmethod
+from pathlib import Path
 from typing import Union
-
-
-def _removeFileProtokol(href):
-    """
-    Remove 'file://' protocol
-    """
-    fileprotocol = u"file://"
-    if href.startswith(fileprotocol):
-        return href[len(fileprotocol):]
-
-    return href
 
 
 def _recognizeAnchor(href: str, basepath: str) -> Union[str, None]:
@@ -32,12 +22,27 @@ def _recognizeAnchor(href: str, basepath: str) -> Union[str, None]:
     return anchor
 
 
+def _recognizeFile(href: str, basepath: str) -> Union[str, None]:
+    href_path_abs = Path(href)
+    if href_path_abs.exists():
+        return str(href_path_abs.resolve())
+
+    href_path_relative = Path(basepath, href)
+    if href_path_relative.exists():
+        return str(href_path_relative.resolve())
+
+
 class Recognizer(metaclass=ABCMeta):
     def recognize(self, href: Union[str, None]) -> Union[str, None]:
         if href is None:
             return None
 
+        href = self._prepareHref(href)
         return self._recognize(href)
+
+    @abstractmethod
+    def _prepareHref(self, href: str) -> str:
+        pass
 
     @abstractmethod
     def _recognize(self, href: str) -> str:
@@ -49,6 +54,9 @@ class URLRecognizer(Recognizer):
     Recognize internet URL
     '''
 
+    def _prepareHref(self, href: str) -> str:
+        return href
+
     def _recognize(self, href: str) -> str:
         isUrl = (href.lower().startswith("http:") or
                  href.lower().startswith("https:") or
@@ -58,7 +66,37 @@ class URLRecognizer(Recognizer):
         return href if isUrl else None
 
 
-class AnchorRecognizerIE(Recognizer):
+class RecognizerIE(Recognizer, metaclass=ABCMeta):
+    '''
+    Base class for Recognizers for Internet Explorer
+    '''
+
+    def _prepareHref(self, href: str) -> str:
+        return href
+
+
+class RecognizerWebKit(Recognizer, metaclass=ABCMeta):
+    '''
+    Base class for Recognizers for WebKit
+    '''
+
+    def _prepareHref(self, href: str) -> str:
+        # WebKit appends 'file://' string to end of URI without protocol.
+        href = self._removeFileProtokol(href)
+        return href
+
+    def _removeFileProtokol(self, href):
+        """
+        Remove 'file://' protocol
+        """
+        fileprotocol = u"file://"
+        if href.startswith(fileprotocol):
+            return href[len(fileprotocol):]
+
+        return href
+
+
+class AnchorRecognizerIE(RecognizerIE):
     '''
     Recognize an anchor in href.
     For Internet Explorer engine.
@@ -75,7 +113,7 @@ class AnchorRecognizerIE(Recognizer):
         return _recognizeAnchor(href, basepath)
 
 
-class AnchorRecognizerWebKit(Recognizer):
+class AnchorRecognizerWebKit(RecognizerWebKit):
     '''
     Recognize an anchor in href.
     For WebKit engine.
@@ -92,6 +130,27 @@ class AnchorRecognizerWebKit(Recognizer):
         if not basepath.endswith('/'):
             basepath += '/'
 
-        # WebKit appends 'file://' string to end of URI without protocol.
-        href = _removeFileProtokol(href)
         return _recognizeAnchor(href, basepath)
+
+
+class FileRecognizerIE(RecognizerIE):
+    def __init__(self, basepath: str):
+        '''
+        basepath - path to directory with current HTML file for HTML render.
+        '''
+        self._basepath = basepath
+
+    def _recognize(self, href: str) -> Union[str, None]:
+        return _recognizeFile(href, self._basepath)
+
+
+class FileRecognizerWebKit(RecognizerWebKit):
+    def __init__(self, basepath: str):
+        '''
+        basepath - path to directory with current HTML file for HTML render.
+        '''
+        self._basepath = basepath
+
+    def _recognize(self, href: str) -> Union[str, None]:
+        return _recognizeFile(href, self._basepath)
+

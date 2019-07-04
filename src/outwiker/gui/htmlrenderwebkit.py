@@ -22,7 +22,8 @@ from outwiker.utilites.textfile import readTextFile
 
 
 from .htmlrender import HtmlRenderForPage
-from .urirecognizers import URLRecognizer, AnchorRecognizerWebKit
+from .urirecognizers import (
+    URLRecognizer, AnchorRecognizerWebKit, FileRecognizerWebKit)
 
 logger = logging.getLogger('outwiker.gui.htmlrenderwebkit')
 
@@ -79,7 +80,8 @@ class HtmlRenderWebKit(HtmlRenderForPage):
 
     def Sleep(self):
         import wx.html2 as webview
-        self.ctrl.Unbind(webview.EVT_WEBVIEW_NAVIGATING, handler=self.__onNavigating)
+        self.ctrl.Unbind(webview.EVT_WEBVIEW_NAVIGATING,
+                         handler=self.__onNavigating)
         self.Unbind(wx.EVT_MENU, handler=self.__onCopyFromHtml, id=wx.ID_COPY)
         self.Unbind(wx.EVT_MENU, handler=self.__onCopyFromHtml, id=wx.ID_CUT)
 
@@ -90,7 +92,8 @@ class HtmlRenderWebKit(HtmlRenderForPage):
         import wx.html2 as webview
         self.Bind(wx.EVT_MENU, handler=self.__onCopyFromHtml, id=wx.ID_COPY)
         self.Bind(wx.EVT_MENU, handler=self.__onCopyFromHtml, id=wx.ID_CUT)
-        self.ctrl.Bind(webview.EVT_WEBVIEW_NAVIGATING, handler=self.__onNavigating)
+        self.ctrl.Bind(webview.EVT_WEBVIEW_NAVIGATING,
+                       handler=self.__onNavigating)
 
     def _pathToURL(self, path: str) -> str:
         '''
@@ -100,7 +103,8 @@ class HtmlRenderWebKit(HtmlRenderForPage):
 
     def __onClose(self, event):
         import wx.html2 as webview
-        self.ctrl.Unbind(webview.EVT_WEBVIEW_NAVIGATING, handler=self.__onNavigating)
+        self.ctrl.Unbind(webview.EVT_WEBVIEW_NAVIGATING,
+                         handler=self.__onNavigating)
         self.ctrl.Stop()
         event.Skip()
 
@@ -118,10 +122,11 @@ class HtmlRenderWebKit(HtmlRenderForPage):
             basepath = self._currentPage.path
             identifier = UriIdentifierWebKit(self._currentPage, basepath)
 
-            page, fileName = identifier.identify(href)
+            page = identifier.identify(href)
             url = URLRecognizer().recognize(href)
             anchor = AnchorRecognizerWebKit(basepath).recognize(href)
-            return (url, page, fileName, anchor)
+            filename = FileRecognizerWebKit(basepath).recognize(href)
+            return (url, page, filename, anchor)
 
         return (None, None, None, None)
 
@@ -136,7 +141,8 @@ class HtmlRenderWebKit(HtmlRenderForPage):
         # Проверка на то, что мы не пытаемся открыть вложенный фрейм
         frame = event.GetTarget()
         if frame:
-            logger.debug('__onNavigating ({nav_id}) frame={frame}'.format(nav_id=nav_id, frame=frame))
+            logger.debug('__onNavigating ({nav_id}) frame={frame}'.format(
+                nav_id=nav_id, frame=frame))
             logger.debug('__onNavigating ({nav_id}) end'.format(nav_id=nav_id))
             return
 
@@ -155,11 +161,13 @@ class HtmlRenderWebKit(HtmlRenderForPage):
         if self.canOpenUrl == 0:
             button = 1
             modifier = 0
-            logger.debug('__onNavigating ({nav_id}). Link clicked.'.format(nav_id=nav_id))
+            logger.debug(
+                '__onNavigating ({nav_id}). Link clicked.'.format(nav_id=nav_id))
             processed = self.__onLinkClicked(href, button, modifier)
             if processed:
                 event.Veto()
-                logger.debug('__onNavigating ({nav_id}) end. Veto'.format(nav_id=nav_id))
+                logger.debug(
+                    '__onNavigating ({nav_id}) end. Veto'.format(nav_id=nav_id))
             else:
                 logger.debug('__onNavigating ({nav_id}) end. Allow href processing. href={href}'.format(
                     nav_id=nav_id, href=href))
