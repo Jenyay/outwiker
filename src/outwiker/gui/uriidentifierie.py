@@ -16,7 +16,7 @@ class UriIdentifierIE(UriIdentifier):
         currentpage - страница, которая в данный момент открыта
         basepath - базовый путь для HTML-рендера
         """
-        self().__init__(currentpage, basepath)
+        super().__init__(currentpage, basepath)
 
     def _findWikiPage(self, subpath):
         """
@@ -96,3 +96,18 @@ class UriIdentifierIE(UriIdentifier):
                 result = result[:index]
 
         return result
+
+    def _prepareHref(self, href):
+        return href
+
+    def _findAnchor(self, href):
+        """
+        Проверить, а не указывает ли href на якорь
+        """
+        anchor = None
+        if (href.startswith(self._basepath) and
+                len(href) > len(self._basepath) and
+                href[len(self._basepath)] == "#"):
+            anchor = href[len(self._basepath):]
+
+        return anchor

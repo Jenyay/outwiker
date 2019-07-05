@@ -161,10 +161,8 @@ class HtmlRenderIE(HtmlRenderForPage):
         """
         Определить тип ссылки и вернуть кортеж (url, page, filename, anchor)
         """
-        identifier = UriIdentifierIE(
-            self._currentPage,
-            self.__cleanUpUrl(self.render.locationurl)
-        )
+        basepath = self.__cleanUpUrl(self.render.locationurl)
+        identifier = UriIdentifierIE(self._currentPage, basepath)
 
         page = identifier.identify(href)
         url = URLRecognizer().recognize(href)

@@ -20,32 +20,10 @@ class Recognizer(metaclass=ABCMeta):
         href = self._prepareHref(href)
         return self._recognize(href)
 
-    @abstractmethod
-    def _prepareHref(self, href: str) -> str:
-        pass
-
-    @abstractmethod
-    def _recognize(self, href: str) -> str:
-        pass
-
-
-class PrepareHrefMixinIE():
-    '''
-    Mixin to realize _prepareHref for IE
-    '''
-
-    def _prepareHref(self, href: str) -> str:
-        return href
-
-
-class PrepareHrefMixinWebKit():
-    '''
-    Mixin to realize _prepareHref for WebKit
-    '''
-
     def _prepareHref(self, href: str) -> str:
         # WebKit appends 'file://' string to end of URI without protocol.
         href = self._removeFileProtokol(href)
+        href = href.replace('\\', '/')
         return href
 
     def _removeFileProtokol(self, href):
@@ -57,6 +35,10 @@ class PrepareHrefMixinWebKit():
             return href[len(fileprotocol):]
 
         return href
+
+    @abstractmethod
+    def _recognize(self, href: str) -> str:
+        pass
 
 
 # URL recognizer
@@ -100,18 +82,21 @@ class AnchorRecognizerBase(Recognizer):
         return anchor
 
 
-class AnchorRecognizerIE(PrepareHrefMixinIE, AnchorRecognizerBase):
+class AnchorRecognizerIE(AnchorRecognizerBase):
     '''
     Recognize an anchor in href.
     For Internet Explorer engine.
     '''
 
     def _recognize(self, href: str) -> str:
-        basepath = self._basepath
+        basepath = self._basepath.replace('\\', '/')
+        if href.startswith('/'):
+            href = href[1:]
+        
         return self._recognizeAnchor(href, basepath)
 
 
-class AnchorRecognizerWebKit(PrepareHrefMixinWebKit, AnchorRecognizerBase):
+class AnchorRecognizerWebKit(AnchorRecognizerBase):
     '''
     Recognize an anchor in href.
     For WebKit engine.
@@ -138,18 +123,27 @@ class FileRecognizerBase(Recognizer):
         return self._recognizeFile(href, self._basepath)
 
     def _recognizeFile(self, href: str, basepath: str) -> Union[str, None]:
-        href_path_abs = Path(href)
-        if href_path_abs.exists():
-            return str(href_path_abs.resolve())
+        try:
+            href_path_abs = Path(href)
+            # Check absolute path
+            if href_path_abs.exists():
+                return str(href_path_abs.resolve())
 
-        href_path_relative = Path(basepath, href)
-        if href_path_relative.exists():
-            return str(href_path_relative.resolve())
+            # Check relative path
+            basepath = Path(basepath)
+            if basepath.is_file():
+                basepath = basepath.parent
+
+            href_path_relative = Path(basepath, href)
+            if href_path_relative.exists():
+                return str(href_path_relative.resolve())
+        except OSError:
+            return None
 
 
-class FileRecognizerIE(PrepareHrefMixinIE, FileRecognizerBase):
+class FileRecognizerIE(FileRecognizerBase):
     pass
 
 
-class FileRecognizerWebKit(PrepareHrefMixinWebKit, FileRecognizerBase):
+class FileRecognizerWebKit(FileRecognizerBase):
     pass

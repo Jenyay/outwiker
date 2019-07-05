@@ -55,7 +55,7 @@ def test_recognize_url_none():
 
 def test_recognize_anchor_ie_none():
     href = None
-    basepath = 'c:/tmp'
+    basepath = 'c:/tmp/__content.html'
     recognizer = ur.AnchorRecognizerIE(basepath)
 
     result = recognizer.recognize(href)
@@ -73,7 +73,7 @@ def test_recognize_anchor_webkit_none():
 
 def test_recognize_anchor_ie_empty():
     href = ''
-    basepath = 'c:/tmp'
+    basepath = 'c:/tmp/__content.html'
     recognizer = ur.AnchorRecognizerIE(basepath)
 
     result = recognizer.recognize(href)
@@ -90,8 +90,8 @@ def test_recognize_anchor_webkit_empty():
 
 
 def test_recognize_anchor_ie_not():
-    href = 'c:/tmp/'
-    basepath = 'c:/tmp'
+    href = 'c:/tmp/__content.html'
+    basepath = 'c:/tmp/__content.html'
     recognizer = ur.AnchorRecognizerIE(basepath)
 
     result = recognizer.recognize(href)
@@ -108,8 +108,8 @@ def test_recognize_anchor_webkit_not():
 
 
 def test_recognize_anchor_ie_anchor():
-    href = 'c:/tmp#anchor'
-    basepath = 'c:/tmp'
+    href = 'c:/tmp/__content.html#anchor'
+    basepath = 'c:/tmp/__content.html'
     recognizer = ur.AnchorRecognizerIE(basepath)
 
     result = recognizer.recognize(href)
@@ -145,7 +145,7 @@ def test_recognize_anchor_webkit_anchor_3():
 
 def test_recognize_anchor_ie_page_protocol():
     href = 'page://qqqqq/#anchor'
-    basepath = 'c:/tmp'
+    basepath = 'c:/tmp/__content.html'
     recognizer = ur.AnchorRecognizerIE(basepath)
 
     result = recognizer.recognize(href)
@@ -163,7 +163,7 @@ def test_recognize_anchor_webkit_page_protocol():
 
 def test_recognize_file_ie_absolute_path():
     href = '../test/images/16x16.png'
-    basepath = 'c:/tmp'
+    basepath = 'c:/tmp/__content.html'
     recognizer = ur.FileRecognizerIE(basepath)
 
     result = recognizer.recognize(href)
@@ -188,13 +188,22 @@ def test_recognize_file_webkit_absolute_path_02():
     assert result == str(Path('../test/images/16x16.png').resolve())
 
 
-def test_recognize_file_ie_relative_path():
+def test_recognize_file_ie_relative_path_01():
     href = '16x16.png'
     basepath = '../test/images'
     recognizer = ur.FileRecognizerIE(basepath)
 
     result = recognizer.recognize(href)
     assert result == str(Path(basepath, href).resolve())
+
+
+def test_recognize_file_ie_relative_path_02():
+    href = '16x16.png'
+    basepath = '../test/images/__init__.py'
+    recognizer = ur.FileRecognizerIE(basepath)
+
+    result = recognizer.recognize(href)
+    assert result == str(Path('../test/images/16x16.png').resolve())
 
 
 def test_recognize_file_webkit_relative_path():
