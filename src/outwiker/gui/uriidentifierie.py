@@ -85,8 +85,6 @@ class UriIdentifierIE(UriIdentifier):
         if currentpage is None:
             return href
 
-        # assert currentpage != None
-
         result = href
 
         if (result.startswith(currentpage.path) and

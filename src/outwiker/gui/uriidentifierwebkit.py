@@ -59,6 +59,8 @@ class UriIdentifierWebKit(UriIdentifier):
 
         if href.startswith(self._basepath):
             href = href[len(self._basepath):]
+            if href.startswith('/'):
+                href = href[1:]
 
         if len(href) == 0:
             return None
