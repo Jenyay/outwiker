@@ -87,12 +87,26 @@ class AnchorRecognizerIE(AnchorRecognizerBase):
     Recognize an anchor in href.
     For Internet Explorer engine.
     '''
+    def _removeAnchor(self, basepath: str) -> str:
+        basepath_processed = basepath.replace('\\', '/')
+        last_slash_pos = basepath.rfind('/')
+        if last_slash_pos == -1:
+            return basepath
+
+        sharp_pos = basepath_processed.rfind('#')
+        if sharp_pos > last_slash_pos:
+            return basepath[:sharp_pos]
+
+        return basepath
 
     def _recognize(self, href: str) -> str:
         basepath = self._basepath.replace('\\', '/')
         if href.startswith('/'):
             href = href[1:]
-        
+
+        # Remove anchor from basepath
+        basepath = self._removeAnchor(basepath)
+
         return self._recognizeAnchor(href, basepath)
 
 

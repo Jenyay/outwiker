@@ -107,9 +107,27 @@ def test_recognize_anchor_webkit_not():
     assert result is None
 
 
-def test_recognize_anchor_ie_anchor():
+def test_recognize_anchor_ie_anchor_01():
     href = 'c:/tmp/__content.html#anchor'
     basepath = 'c:/tmp/__content.html'
+    recognizer = ur.AnchorRecognizerIE(basepath)
+
+    result = recognizer.recognize(href)
+    assert result == '#anchor'
+
+
+def test_recognize_anchor_ie_anchor_02():
+    href = 'c:/tmp/__content.html#anchor'
+    basepath = 'c:\\tmp\\__content.html'
+    recognizer = ur.AnchorRecognizerIE(basepath)
+
+    result = recognizer.recognize(href)
+    assert result == '#anchor'
+
+
+def test_recognize_anchor_ie_anchor_03():
+    href = 'c:/tmp/__content.html#anchor'
+    basepath = 'c:\\tmp\\__content.html#oldanchor'
     recognizer = ur.AnchorRecognizerIE(basepath)
 
     result = recognizer.recognize(href)
