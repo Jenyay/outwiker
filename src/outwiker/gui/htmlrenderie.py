@@ -19,7 +19,7 @@ from outwiker.gui.defines import (ID_MOUSE_LEFT,
 from outwiker.gui.guiconfig import GeneralGuiConfig
 
 from .urirecognizers import (
-    URLRecognizer, AnchorRecognizerIE, FileRecognizerIE)
+    URLRecognizer, AnchorRecognizerIE, FileRecognizerIE, PageRecognizerIE)
 
 
 logger = logging.getLogger('outwiker.gui.htmlrenderie')

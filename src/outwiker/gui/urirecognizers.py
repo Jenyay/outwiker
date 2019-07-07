@@ -256,16 +256,16 @@ class PageRecognizerIE(PageRecognizerBase):
             return currentPage[anchor.replace("\\", "/")]
 
         if len(href) > 1 and href[1] == ":":
-            if href.startswith(currentPage.path):
+            if href.startswith(currentPage.path.replace("\\", "/")):
                 href = href[len(currentPage.path) + 1:]
-            elif href.startswith(currentPage.root.path):
+            elif href.startswith(currentPage.root.path.replace("\\", "/")):
                 href = href[len(currentPage.root.path):]
             else:
                 href = href[2:]
 
-            href = href.replace("\\", "/")
             if len(href) > 1 and href.endswith("/"):
                 href = href[:-1]
+
 
         if href.startswith("about:"):
             href = self._removeAboutBlank(href).replace("\\", "/")
