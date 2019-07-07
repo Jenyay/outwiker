@@ -10,7 +10,7 @@ from test.basetestcases import BaseOutWikerMixin
 
 def test_recognize_url_http():
     href = 'http://jenyay.net'
-    recognizer = ur.URLRecognizer()
+    recognizer = ur.URLRecognizer('')
 
     result = recognizer.recognize(href)
     assert result == href
@@ -18,7 +18,8 @@ def test_recognize_url_http():
 
 def test_recognize_url_https():
     href = 'https://jenyay.net'
-    recognizer = ur.URLRecognizer()
+    basepath = ''
+    recognizer = ur.URLRecognizer('')
 
     result = recognizer.recognize(href)
     assert result == href
@@ -26,7 +27,7 @@ def test_recognize_url_https():
 
 def test_recognize_url_mailto():
     href = 'mailto:example@example.com'
-    recognizer = ur.URLRecognizer()
+    recognizer = ur.URLRecognizer('')
 
     result = recognizer.recognize(href)
     assert result == href
@@ -34,7 +35,7 @@ def test_recognize_url_mailto():
 
 def test_recognize_url_ftp():
     href = 'ftp://jenyay.net'
-    recognizer = ur.URLRecognizer()
+    recognizer = ur.URLRecognizer('')
 
     result = recognizer.recognize(href)
     assert result == href
@@ -42,7 +43,7 @@ def test_recognize_url_ftp():
 
 def test_recognize_url_invalid():
     href = 'page://jenyay.net'
-    recognizer = ur.URLRecognizer()
+    recognizer = ur.URLRecognizer('')
 
     result = recognizer.recognize(href)
     assert result is None
@@ -50,7 +51,7 @@ def test_recognize_url_invalid():
 
 def test_recognize_url_none():
     href = None
-    recognizer = ur.URLRecognizer()
+    recognizer = ur.URLRecognizer('')
 
     result = recognizer.recognize(href)
     assert result is None
@@ -364,10 +365,26 @@ class PageRecognizerTest(unittest.TestCase, BaseOutWikerMixin):
         result = recognizer.recognize(href)
         assert result == self.page_2
 
+    def test_page_path_ie_01(self):
+        href = self.page_2.subpath
+        basepath = self._getBasePathIE(self.application.selectedPage)
+        recognizer = ur.PageRecognizerIE(basepath, self.application)
+
+        result = recognizer.recognize(href)
+        assert result == self.page_2
+
     def test_page_path_webkit_02(self):
         href = '/' + self.page_2.subpath
         basepath = self._getBasePathWebKit(self.application.selectedPage)
         recognizer = ur.PageRecognizerWebKit(basepath, self.application)
+
+        result = recognizer.recognize(href)
+        assert result == self.page_2
+
+    def test_page_path_ie_02(self):
+        href = '/' + self.page_2.subpath
+        basepath = self._getBasePathIE(self.application.selectedPage)
+        recognizer = ur.PageRecognizerIE(basepath, self.application)
 
         result = recognizer.recognize(href)
         assert result == self.page_2
@@ -380,6 +397,14 @@ class PageRecognizerTest(unittest.TestCase, BaseOutWikerMixin):
         result = recognizer.recognize(href)
         assert result == self.page_1_1
 
+    def test_page_path_ie_03(self):
+        href = self.page_1_1.subpath
+        basepath = self._getBasePathIE(self.application.selectedPage)
+        recognizer = ur.PageRecognizerIE(basepath, self.application)
+
+        result = recognizer.recognize(href)
+        assert result == self.page_1_1
+
     def test_page_path_webkit_04(self):
         href = '/' + self.page_1_1.subpath
         basepath = self._getBasePathWebKit(self.application.selectedPage)
@@ -388,10 +413,26 @@ class PageRecognizerTest(unittest.TestCase, BaseOutWikerMixin):
         result = recognizer.recognize(href)
         assert result == self.page_1_1
 
+    def test_page_path_ie_04(self):
+        href = '/' + self.page_1_1.subpath
+        basepath = self._getBasePathIE(self.application.selectedPage)
+        recognizer = ur.PageRecognizerIE(basepath, self.application)
+
+        result = recognizer.recognize(href)
+        assert result == self.page_1_1
+
     def test_page_path_webkit_05(self):
         href = self.page_1_1.title
         basepath = self._getBasePathWebKit(self.application.selectedPage)
         recognizer = ur.PageRecognizerWebKit(basepath, self.application)
+
+        result = recognizer.recognize(href)
+        assert result == self.page_1_1
+
+    def test_page_path_ie_05(self):
+        href = self.page_1_1.title
+        basepath = self._getBasePathIE(self.application.selectedPage)
+        recognizer = ur.PageRecognizerIE(basepath, self.application)
 
         result = recognizer.recognize(href)
         assert result == self.page_1_1

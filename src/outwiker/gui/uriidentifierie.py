@@ -46,7 +46,7 @@ class UriIdentifierIE(UriIdentifier):
                 subpath = subpath[:-1]
 
         if subpath.startswith("about:"):
-            subpath = self.__removeAboutBlank(subpath).replace("\\", "/")
+            subpath = self._removeAboutBlank(subpath).replace("\\", "/")
 
         if len(subpath) > 0 and subpath[0] == "/":
             # Поиск страниц осуществляем только с корня
@@ -61,7 +61,7 @@ class UriIdentifierIE(UriIdentifier):
 
         return newSelectedPage
 
-    def __removeAboutBlank(self, href):
+    def _removeAboutBlank(self, href):
         """
         Удалить about: и about:blank из начала адреса
         """
@@ -76,38 +76,38 @@ class UriIdentifierIE(UriIdentifier):
             result = result[len(about_short):]
 
         return result
-
-    def _removeAnchor(self, href, currentpage):
-        """
-        Удалить якорь из адреса текущей загруженной страницы
-        То есть из x:\\bla-bla-bla\\__content.html#anchor сделать x:\\bla-bla-bla\\__content.html
-        """
-        if currentpage is None:
-            return href
-
-        result = href
-
-        if (result.startswith(currentpage.path) and
-                len(result) > len(currentpage.path)):
-
-            # Если после полного пути до страницы есть символ #
-            index = result.find("#")
-            if index != -1 and index >= len(currentpage.path):
-                result = result[:index]
-
-        return result
-
-    def _prepareHref(self, href):
-        return href
-
-    def _findAnchor(self, href):
-        """
-        Проверить, а не указывает ли href на якорь
-        """
-        anchor = None
-        if (href.startswith(self._basepath) and
-                len(href) > len(self._basepath) and
-                href[len(self._basepath)] == "#"):
-            anchor = href[len(self._basepath):]
-
-        return anchor
+    #
+    # def _removeAnchor(self, href, currentpage):
+    #     """
+    #     Удалить якорь из адреса текущей загруженной страницы
+    #     То есть из x:\\bla-bla-bla\\__content.html#anchor сделать x:\\bla-bla-bla\\__content.html
+    #     """
+    #     if currentpage is None:
+    #         return href
+    #
+    #     result = href
+    #
+    #     if (result.startswith(currentpage.path) and
+    #             len(result) > len(currentpage.path)):
+    #
+    #         # Если после полного пути до страницы есть символ #
+    #         index = result.find("#")
+    #         if index != -1 and index >= len(currentpage.path):
+    #             result = result[:index]
+    #
+    #     return result
+    #
+    # def _prepareHref(self, href):
+    #     return href
+    #
+    # def _findAnchor(self, href):
+    #     """
+    #     Проверить, а не указывает ли href на якорь
+    #     """
+    #     anchor = None
+    #     if (href.startswith(self._basepath) and
+    #             len(href) > len(self._basepath) and
+    #             href[len(self._basepath)] == "#"):
+    #         anchor = href[len(self._basepath):]
+    #
+    #     return anchor

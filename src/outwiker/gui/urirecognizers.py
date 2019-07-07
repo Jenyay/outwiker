@@ -14,6 +14,23 @@ class Recognizer(metaclass=ABCMeta):
     '''
     Base class for all recognizers
     '''
+    def __init__(self, basepath: str):
+        '''
+        basepath - path to directory with current HTML file for HTML render.
+        '''
+        self._basepath = basepath.replace('\\', '/')
+        self._basepath = self._removeAnchor(self._basepath)
+
+    def _removeAnchor(self, basepath: str) -> str:
+        last_slash_pos = basepath.rfind('/')
+        if last_slash_pos == -1:
+            return basepath
+
+        sharp_pos = basepath.rfind('#')
+        if sharp_pos > last_slash_pos:
+            return basepath[:sharp_pos]
+
+        return basepath
 
     def recognize(self, href: Union[str, None]) -> Union[str, None]:
         if href is None:
@@ -64,12 +81,6 @@ class URLRecognizer(Recognizer):
 # Anchor recognizers
 
 class AnchorRecognizerBase(Recognizer):
-    def __init__(self, basepath: str):
-        '''
-        basepath - path to directory with current HTML file for HTML render.
-        '''
-        self._basepath = basepath
-
     def _recognizeAnchor(self, href: str, basepath: str) -> Union[str, None]:
         anchor = None
         if (href.startswith(basepath) and
@@ -90,27 +101,11 @@ class AnchorRecognizerIE(AnchorRecognizerBase):
     For Internet Explorer engine.
     '''
 
-    def _removeAnchor(self, basepath: str) -> str:
-        basepath_processed = basepath.replace('\\', '/')
-        last_slash_pos = basepath.rfind('/')
-        if last_slash_pos == -1:
-            return basepath
-
-        sharp_pos = basepath_processed.rfind('#')
-        if sharp_pos > last_slash_pos:
-            return basepath[:sharp_pos]
-
-        return basepath
-
     def _recognize(self, href: str) -> str:
-        basepath = self._basepath.replace('\\', '/')
         if href.startswith('/'):
             href = href[1:]
 
-        # Remove anchor from basepath
-        basepath = self._removeAnchor(basepath)
-
-        return self._recognizeAnchor(href, basepath)
+        return self._recognizeAnchor(href, self._basepath)
 
 
 class AnchorRecognizerWebKit(AnchorRecognizerBase):
@@ -130,12 +125,6 @@ class AnchorRecognizerWebKit(AnchorRecognizerBase):
 # File recognizers
 
 class FileRecognizerBase(Recognizer):
-    def __init__(self, basepath: str):
-        '''
-        basepath - path to directory with current HTML file for HTML render.
-        '''
-        self._basepath = basepath
-
     def _recognize(self, href: str) -> Union[str, None]:
         return self._recognizeFile(href, self._basepath)
 
@@ -170,7 +159,7 @@ class FileRecognizerWebKit(FileRecognizerBase):
 
 class PageRecognizerBase(Recognizer, metaclass=ABCMeta):
     def __init__(self, basepath: str, application):
-        self._basepath = basepath
+        super().__init__(basepath)
         self._application = application
 
     @abstractmethod
@@ -253,4 +242,71 @@ class PageRecognizerWebKit(PageRecognizerBase):
 
 class PageRecognizerIE(PageRecognizerBase):
     def _findPageByPath(self, href: str):
-        return None
+        currentPage = self._application.selectedPage
+
+        if currentPage is None:
+            return None
+
+        newSelectedPage = None
+
+        # Проверим, вдруг IE посчитал, что это не ссылка, а якорь
+        # В этом случае ссылка будет выглядеть, как x:\...\{contentfile}#link
+        anchor = self._findAnchor(href)
+        if anchor is not None and currentPage[anchor.replace("\\", "/")] is not None:
+            return currentPage[anchor.replace("\\", "/")]
+
+        if len(href) > 1 and href[1] == ":":
+            if href.startswith(currentPage.path):
+                href = href[len(currentPage.path) + 1:]
+            elif href.startswith(currentPage.root.path):
+                href = href[len(currentPage.root.path):]
+            else:
+                href = href[2:]
+
+            href = href.replace("\\", "/")
+            if len(href) > 1 and href.endswith("/"):
+                href = href[:-1]
+
+        if href.startswith("about:"):
+            href = self._removeAboutBlank(href).replace("\\", "/")
+
+        if len(href) > 0 and href[0] == "/":
+            # Поиск страниц осуществляем только с корня
+            newSelectedPage = currentPage.root[href[1:]]
+        elif len(href) > 0:
+            # Сначала попробуем найти вложенные страницы с таким href
+            newSelectedPage = currentPage[href]
+
+            if newSelectedPage is None:
+                # Если страница не найдена, попробуем поискать, начиная с корня
+                newSelectedPage = currentPage.root[href]
+
+        return newSelectedPage
+
+    def _removeAboutBlank(self, href):
+        """
+        Удалить about: и about:blank из начала адреса
+        """
+        about_full = u"about:blank"
+        about_short = u"about:"
+
+        result = href
+        if result.startswith(about_full):
+            result = result[len(about_full):]
+
+        elif result.startswith(about_short):
+            result = result[len(about_short):]
+
+        return result
+
+    def _findAnchor(self, href):
+        """
+        Проверить, а не указывает ли href на якорь
+        """
+        anchor = None
+        if (href.startswith(self._basepath) and
+                len(href) > len(self._basepath) and
+                href[len(self._basepath)] == "#"):
+            anchor = href[len(self._basepath):]
+
+        return anchor

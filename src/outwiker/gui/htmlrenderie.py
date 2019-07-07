@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import logging
 import urllib.request
 import urllib.parse
 import urllib.error
@@ -12,7 +13,6 @@ import outwiker.core.commands
 from outwiker.core.application import Application
 from outwiker.core.defines import APP_DATA_KEY_ANCHOR
 from outwiker.gui.htmlrender import HtmlRenderForPage
-from outwiker.gui.uriidentifierie import UriIdentifierIE
 from outwiker.gui.defines import (ID_MOUSE_LEFT,
                                   ID_KEY_CTRL,
                                   ID_KEY_SHIFT)
@@ -20,6 +20,9 @@ from outwiker.gui.guiconfig import GeneralGuiConfig
 
 from .urirecognizers import (
     URLRecognizer, AnchorRecognizerIE, FileRecognizerIE)
+
+
+logger = logging.getLogger('outwiker.gui.htmlrenderie')
 
 
 class HtmlRenderIE(HtmlRenderForPage):
@@ -161,13 +164,26 @@ class HtmlRenderIE(HtmlRenderForPage):
         """
         Определить тип ссылки и вернуть кортеж (url, page, filename, anchor)
         """
-        basepath = self.__cleanUpUrl(self.render.locationurl)
-        identifier = UriIdentifierIE(self._currentPage, basepath)
+        location = self.render.locationurl
+        basepath = self.__cleanUpUrl(location)
 
-        page = identifier.identify(href)
-        url = URLRecognizer().recognize(href)
+        logger.debug('__identifyUri. href={href}'.format(href=href))
+        logger.debug(
+            '__identifyUri. current location={location}'.format(location=location))
+        logger.debug(
+            '__identifyUri. basepath={basepath}'.format(basepath=basepath))
+
+        url = URLRecognizer(basepath).recognize(href)
+        page = PageRecognizerIE(basepath, Application).recognize(href)
         anchor = AnchorRecognizerIE(basepath).recognize(href)
         filename = FileRecognizerIE(basepath).recognize(href)
+
+        logger.debug('__identifyUri. url={url}'.format(url=url))
+        logger.debug('__identifyUri. page={page}'.format(page=page))
+        logger.debug(
+            '__identifyUri. filename={filename}'.format(filename=filename))
+        logger.debug('__identifyUri. anchor={anchor}'.format(anchor=anchor))
+
         return (url, page, filename, anchor)
 
     def __getKeyCode(self):

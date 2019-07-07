@@ -118,13 +118,24 @@ class HtmlRenderWebKit(HtmlRenderForPage):
         """
         uri = self.ctrl.GetCurrentURL()
 
+        logger.debug('__identifyUri. href={href}'.format(href=href))
+        logger.debug('__identifyUri. current URI={uri}'.format(uri=uri))
+
         if uri is not None:
             basepath = self._currentPage.path
 
-            url = URLRecognizer().recognize(href)
+            url = URLRecognizer(basepath).recognize(href)
             page = PageRecognizerWebKit(basepath, Application).recognize(href)
-            anchor = AnchorRecognizerWebKit(basepath).recognize(href)
             filename = FileRecognizerWebKit(basepath).recognize(href)
+            anchor = AnchorRecognizerWebKit(basepath).recognize(href)
+
+            logger.debug('__identifyUri. url={url}'.format(url=url))
+            logger.debug('__identifyUri. page={page}'.format(page=page))
+            logger.debug(
+                '__identifyUri. filename={filename}'.format(filename=filename))
+            logger.debug(
+                '__identifyUri. anchor={anchor}'.format(anchor=anchor))
+
             return (url, page, filename, anchor)
 
         return (None, None, None, None)
@@ -228,13 +239,11 @@ class HtmlRenderWebKit(HtmlRenderForPage):
         href = urllib.parse.unquote(href)
         href = self._decodeIDNA(href)
 
-        logger.debug('__onLinkClicked. href_src={source_href}; href_process={href}'.format(
-            source_href=source_href, href=href)
+        logger.debug('__onLinkClicked. href_src={source_href}'.format(
+            source_href=source_href)
         )
 
         (url, page, filename, anchor) = self.__identifyUri(href)
-        logger.debug('__onLinkClicked. url={url}, page={page}, filename={filename}, anchor={anchor}'.format(
-            url=url, page=page, filename=filename, anchor=anchor))
 
         modifier = self.__gtk2OutWikerKeyCode(gtk_key_modifier)
         mouse_button = self.__gtk2OutWikerMouseButtonCode(gtk_mouse_button)
