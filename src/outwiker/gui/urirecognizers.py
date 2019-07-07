@@ -7,6 +7,8 @@ from abc import ABCMeta, abstractmethod
 from pathlib import Path
 from typing import Union
 
+import idna
+
 
 class Recognizer(metaclass=ABCMeta):
     '''
@@ -87,6 +89,7 @@ class AnchorRecognizerIE(AnchorRecognizerBase):
     Recognize an anchor in href.
     For Internet Explorer engine.
     '''
+
     def _removeAnchor(self, basepath: str) -> str:
         basepath_processed = basepath.replace('\\', '/')
         last_slash_pos = basepath.rfind('/')
@@ -161,3 +164,93 @@ class FileRecognizerIE(FileRecognizerBase):
 
 class FileRecognizerWebKit(FileRecognizerBase):
     pass
+
+
+# Page recognizers
+
+class PageRecognizerBase(Recognizer, metaclass=ABCMeta):
+    def __init__(self, basepath: str, application):
+        self._basepath = basepath
+        self._application = application
+
+    @abstractmethod
+    def _findPageByPath(self, href: str):
+        pass
+
+    def _findPageByProtocol(self, href: str):
+        """
+        Find page by href like page://..
+        """
+        protocol = u"page://"
+        page = None
+
+        # Если есть якорь, то отсечем его
+        anchorpos = href.rfind("/#")
+        if anchorpos != -1:
+            href = href[:anchorpos]
+
+        if href.startswith(protocol):
+            uid = href[len(protocol):]
+
+            try:
+                uid = idna.decode(uid)
+            except UnicodeError:
+                # With Internet Explorer will be thrown UnicodeError exception
+                pass
+
+            if uid.endswith("/"):
+                uid = uid[:-1]
+
+            page = (self._application.pageUidDepot[uid] or
+                    self._application.selectedPage[uid] or
+                    self._application.wikiroot[uid])
+
+        return page
+
+    def _recognize(self, href: str) -> str:
+        page = (self._findPageByProtocol(href) or
+                self._findPageByPath(href))
+        return page
+
+
+class PageRecognizerWebKit(PageRecognizerBase):
+    def _findPageByPath(self, href: str):
+        currentPage = self._application.selectedPage
+
+        if currentPage is None:
+            return None
+
+        if href.startswith(self._basepath):
+            href = href[len(self._basepath):]
+            if href.startswith('/'):
+                href = href[1:]
+
+        if len(href) == 0:
+            return None
+
+        newSelectedPage = None
+
+        if href[0] == "/":
+            if href.startswith(currentPage.root.path):
+                href = href[len(currentPage.root.path):]
+
+            if len(href) > 1 and href.endswith("/"):
+                href = href[:-1]
+
+        if href[0] == "/":
+            # Поиск страниц осуществляем только с корня
+            newSelectedPage = currentPage.root[href[1:]]
+        else:
+            # Сначала попробуем найти вложенные страницы с таким href
+            newSelectedPage = currentPage[href]
+
+            if newSelectedPage is None:
+                # Если страница не найдена, попробуем поискать, начиная с корня
+                newSelectedPage = currentPage.root[href]
+
+        return newSelectedPage
+
+
+class PageRecognizerIE(PageRecognizerBase):
+    def _findPageByPath(self, href: str):
+        return None

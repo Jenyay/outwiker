@@ -12,7 +12,6 @@ import outwiker.core.system
 import outwiker.core.commands
 from outwiker.core.application import Application
 from outwiker.core.defines import APP_DATA_KEY_ANCHOR
-from outwiker.gui.uriidentifierwebkit import UriIdentifierWebKit
 from outwiker.gui.defines import (ID_MOUSE_LEFT,
                                   ID_MOUSE_MIDDLE,
                                   ID_MOUSE_RIGHT,
@@ -23,7 +22,8 @@ from outwiker.utilites.textfile import readTextFile
 
 from .htmlrender import HtmlRenderForPage
 from .urirecognizers import (
-    URLRecognizer, AnchorRecognizerWebKit, FileRecognizerWebKit)
+    URLRecognizer, AnchorRecognizerWebKit, FileRecognizerWebKit,
+    PageRecognizerWebKit)
 
 logger = logging.getLogger('outwiker.gui.htmlrenderwebkit')
 
@@ -120,10 +120,9 @@ class HtmlRenderWebKit(HtmlRenderForPage):
 
         if uri is not None:
             basepath = self._currentPage.path
-            identifier = UriIdentifierWebKit(self._currentPage, basepath)
 
-            page = identifier.identify(href)
             url = URLRecognizer().recognize(href)
+            page = PageRecognizerWebKit(basepath, Application).recognize(href)
             anchor = AnchorRecognizerWebKit(basepath).recognize(href)
             filename = FileRecognizerWebKit(basepath).recognize(href)
             return (url, page, filename, anchor)
