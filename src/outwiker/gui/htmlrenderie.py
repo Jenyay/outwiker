@@ -12,7 +12,7 @@ import outwiker.core.system
 import outwiker.core.commands
 from outwiker.core.application import Application
 from outwiker.core.defines import APP_DATA_KEY_ANCHOR
-from outwiker.gui.htmlrender import HtmlRenderForPage
+from outwiker.gui.htmlrender import HtmlRenderBase
 from outwiker.gui.defines import (ID_MOUSE_LEFT,
                                   ID_KEY_CTRL,
                                   ID_KEY_SHIFT)
@@ -25,13 +25,15 @@ from .urirecognizers import (
 logger = logging.getLogger('outwiker.gui.htmlrenderie')
 
 
-class HtmlRenderIE(HtmlRenderForPage):
+class HtmlRenderIEForPage(HtmlRenderBase):
     """
     Класс для рендеринга HTML с использованием движка IE под Windows
     """
 
     def __init__(self, parent):
         super().__init__(parent)
+
+        self._currentPage = None
         config = GeneralGuiConfig(Application.config)
 
         self.render = wx.lib.iewin.IEHtmlWindow(self)
@@ -42,10 +44,21 @@ class HtmlRenderIE(HtmlRenderForPage):
 
         self.canOpenUrl = False                # Можно ли открывать ссылки
 
+        # Номер элемента статусной панели, куда выводится текст
+        self._status_item = 0
+
         self.__layout()
 
         self.Bind(wx.EVT_MENU, self.__onCopyFromHtml, id=wx.ID_COPY)
         self.Bind(wx.EVT_MENU, self.__onCopyFromHtml, id=wx.ID_CUT)
+
+    @property
+    def page(self):
+        return self._currentPage
+
+    @page.setter
+    def page(self, value):
+        self._currentPage = value
 
     def Print(self):
         self.render.Print(True)
@@ -86,7 +99,18 @@ class HtmlRenderIE(HtmlRenderForPage):
             else:
                 statustext = status
 
-        self.setStatusText(status, statustext)
+        self._setStatusText(status, statustext)
+
+    def _setStatusText(self, link, text):
+        """
+        Execute onHoverLink event and set status text
+        """
+        link_decoded = self._decodeIDNA(link)
+
+        params = HoverLinkParams(link=link_decoded, text=text)
+        Application.onHoverLink(page=self._currentPage, params=params)
+
+        outwiker.core.commands.setStatusText(params.text, self._status_item)
 
     def __onCopyFromHtml(self, event):
         document = self.render.document

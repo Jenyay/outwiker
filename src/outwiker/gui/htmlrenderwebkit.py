@@ -20,7 +20,7 @@ from outwiker.gui.defines import (ID_MOUSE_LEFT,
 from outwiker.utilites.textfile import readTextFile
 
 
-from .htmlrender import HtmlRenderForPage
+from .htmlrender import HtmlRenderBase
 from .urirecognizers import (
     URLRecognizer, AnchorRecognizerWebKit, FileRecognizerWebKit,
     PageRecognizerWebKit)
@@ -28,9 +28,10 @@ from .urirecognizers import (
 logger = logging.getLogger('outwiker.gui.htmlrenderwebkit')
 
 
-class HtmlRenderWebKit(HtmlRenderForPage):
+class HtmlRenderWebKitForPage(HtmlRenderBase):
     def __init__(self, parent):
         super().__init__(parent)
+        self._currentPage = None
 
         import wx.html2 as webview
         self.ctrl = webview.WebView.New(self)
@@ -43,6 +44,14 @@ class HtmlRenderWebKit(HtmlRenderForPage):
 
         self.Awake()
         self.Bind(wx.EVT_CLOSE, handler=self.__onClose)
+
+    @property
+    def page(self):
+        return self._currentPage
+
+    @page.setter
+    def page(self, value):
+        self._currentPage = value
 
     def Print(self):
         self.ctrl.Print()

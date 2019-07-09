@@ -1,11 +1,19 @@
 # -*- coding: utf-8 -*-
 
-from .htmlrender import HtmlRenderForPage
+from .htmlrender import HtmlRenderBase
 
 
-class HtmlRenderFake(HtmlRenderForPage):
+class HtmlRenderFake(HtmlRenderBase):
     def __init__(self, parent):
         super().__init__(parent)
+
+    @property
+    def page(self):
+        return None
+
+    @page.setter
+    def page(self, value):
+        pass
 
     def Print(self):
         pass
