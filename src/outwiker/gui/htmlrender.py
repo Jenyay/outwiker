@@ -7,6 +7,7 @@ import wx
 import outwiker.core
 from outwiker.core.application import Application
 from outwiker.core.events import LinkClickParams, HoverLinkParams
+from outwiker.gui.defines import ID_KEY_CTRL, ID_KEY_SHIFT
 
 
 class HtmlRenderBase(wx.Panel):
@@ -107,3 +108,14 @@ class HtmlRenderBase(wx.Panel):
             modifier=modifier,
             linktype=linktype,
         )
+
+    def _getKeyCode(self):
+        modifier = 0
+
+        if wx.GetKeyState(wx.WXK_SHIFT):
+            modifier |= ID_KEY_SHIFT
+
+        if wx.GetKeyState(wx.WXK_CONTROL):
+            modifier |= ID_KEY_CTRL
+
+        return modifier

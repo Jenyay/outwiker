@@ -47,10 +47,10 @@ class HtmlRenderIEForPage(HtmlRenderBase):
         # Номер элемента статусной панели, куда выводится текст
         self._status_item = 0
 
-        self.__layout()
+        self._layout()
 
-        self.Bind(wx.EVT_MENU, self.__onCopyFromHtml, id=wx.ID_COPY)
-        self.Bind(wx.EVT_MENU, self.__onCopyFromHtml, id=wx.ID_CUT)
+        self.Bind(wx.EVT_MENU, self._onCopyFromHtml, id=wx.ID_COPY)
+        self.Bind(wx.EVT_MENU, self._onCopyFromHtml, id=wx.ID_CUT)
 
     @property
     def page(self):
@@ -84,7 +84,7 @@ class HtmlRenderIEForPage(HtmlRenderBase):
         statustext = u""
 
         if len(status) != 0:
-            (url, page, filename, anchor) = self.__identifyUri(status)
+            (url, page, filename, anchor) = self._identifyUri(status)
 
             if page is not None:
                 text = page.display_subpath
@@ -112,7 +112,7 @@ class HtmlRenderIEForPage(HtmlRenderBase):
 
         outwiker.core.commands.setStatusText(params.text, self._status_item)
 
-    def __onCopyFromHtml(self, event):
+    def _onCopyFromHtml(self, event):
         document = self.render.document
         selection = document.selection
 
@@ -122,7 +122,7 @@ class HtmlRenderIEForPage(HtmlRenderBase):
                 outwiker.core.commands.copyTextToClipboard(selrange.text)
                 event.Skip()
 
-    def __layout(self):
+    def _layout(self):
         self.box = wx.BoxSizer(wx.VERTICAL)
         self.box.Add(self.render, 1, wx.EXPAND)
 
@@ -139,17 +139,17 @@ class HtmlRenderIEForPage(HtmlRenderBase):
 
         self.render.Navigate(path)
 
-    def __cleanUpUrl(self, href):
+    def _cleanUpUrl(self, href):
         """
         Почистить ссылку, убрать file:///
         """
-        result = self.__removeFileProtokol(href)
+        result = self._removeFileProtokol(href)
         result = urllib.parse.unquote(result)
         result = result.replace("/", u"\\")
 
         return result
 
-    def __removeFileProtokol(self, href):
+    def _removeFileProtokol(self, href):
         """
         Избавиться от протокола file:///, то избавимся от этой надписи
         """
@@ -162,7 +162,7 @@ class HtmlRenderIEForPage(HtmlRenderBase):
     def BeforeNavigate2(self, this, pDisp, URL, Flags,
                         TargetFrameName, PostData, Headers, Cancel):
         href = urllib.parse.unquote(URL[0])
-        curr_href = self.__cleanUpUrl(self.render.locationurl)
+        curr_href = self._cleanUpUrl(self.render.locationurl)
 
         # Пока другого признака о том, что пытаемся открыть встроенный фрейм,
         # не нашел
@@ -175,60 +175,49 @@ class HtmlRenderIEForPage(HtmlRenderBase):
             self.canOpenUrl = False
         else:
             Cancel[0] = True
-            self.__onLinkClicked(href)
+            self._onLinkClicked(href)
 
     def NewWindow3(self, this, pDisp, Cancel, dwFlags, currentURL, href):
         Cancel[0] = True
 
-        (url, page, filename, anchor) = self.__identifyUri(href)
+        (url, page, filename, anchor) = self._identifyUri(href)
         if page is not None:
             Application.mainWindow.tabsController.openInTab(page, True)
 
-    def __identifyUri(self, href):
+    def _identifyUri(self, href):
         """
         Определить тип ссылки и вернуть кортеж (url, page, filename, anchor)
         """
         location = self.render.locationurl
-        basepath = self.__cleanUpUrl(location)
+        basepath = self._cleanUpUrl(location)
 
-        logger.debug('__identifyUri. href={href}'.format(href=href))
+        logger.debug('_identifyUri. href={href}'.format(href=href))
         logger.debug(
-            '__identifyUri. current location={location}'.format(location=location))
+            '_identifyUri. current location={location}'.format(location=location))
         logger.debug(
-            '__identifyUri. basepath={basepath}'.format(basepath=basepath))
+            '_identifyUri. basepath={basepath}'.format(basepath=basepath))
 
         url = URLRecognizer(basepath).recognize(href)
         page = PageRecognizerIE(basepath, Application).recognize(href)
         anchor = AnchorRecognizerIE(basepath).recognize(href)
         filename = FileRecognizerIE(basepath).recognize(href)
 
-        logger.debug('__identifyUri. url={url}'.format(url=url))
-        logger.debug('__identifyUri. page={page}'.format(page=page))
+        logger.debug('_identifyUri. url={url}'.format(url=url))
+        logger.debug('_identifyUri. page={page}'.format(page=page))
         logger.debug(
-            '__identifyUri. filename={filename}'.format(filename=filename))
-        logger.debug('__identifyUri. anchor={anchor}'.format(anchor=anchor))
+            '_identifyUri. filename={filename}'.format(filename=filename))
+        logger.debug('_identifyUri. anchor={anchor}'.format(anchor=anchor))
 
         return (url, page, filename, anchor)
 
-    def __getKeyCode(self):
-        modifier = 0
-
-        if wx.GetKeyState(wx.WXK_SHIFT):
-            modifier |= ID_KEY_SHIFT
-
-        if wx.GetKeyState(wx.WXK_CONTROL):
-            modifier |= ID_KEY_CTRL
-
-        return modifier
-
-    def __onLinkClicked(self, href):
+    def _onLinkClicked(self, href):
         """
         Клик по ссылке
         """
-        (url, page, filename, anchor) = self.__identifyUri(href)
+        (url, page, filename, anchor) = self._identifyUri(href)
 
         button = ID_MOUSE_LEFT
-        modifier = self.__getKeyCode()
+        modifier = self._getKeyCode()
 
         params = self._getClickParams(self._decodeIDNA(href),
                                       button,
