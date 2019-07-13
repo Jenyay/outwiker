@@ -6,7 +6,7 @@ import wx
 
 import outwiker.core
 from outwiker.core.application import Application
-from outwiker.core.events import LinkClickParams, HoverLinkParams
+from outwiker.core.events import LinkClickParams
 from outwiker.gui.defines import ID_KEY_CTRL, ID_KEY_SHIFT
 
 
