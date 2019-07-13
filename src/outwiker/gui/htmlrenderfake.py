@@ -1,11 +1,16 @@
 # -*- coding: utf-8 -*-
 
+import wx
+
 from .htmlrender import HtmlRenderBase
 
 
 class HtmlRenderFake(HtmlRenderBase):
     def __init__(self, parent):
         super().__init__(parent)
+
+    def _createRender(self):
+        return wx.Panel(self)
 
     @property
     def page(self):
