@@ -34,15 +34,6 @@ class HtmlRenderWebKitBase(HtmlRenderBase):
         super().__init__(parent)
         self._basepath = None
 
-        import wx.html2 as webview
-        self.ctrl = webview.WebView.New(self)
-
-        sizer = wx.FlexGridSizer(1)
-        sizer.AddGrowableCol(0)
-        sizer.AddGrowableRow(0)
-        sizer.Add(self.ctrl, 0, wx.EXPAND)
-        self.SetSizer(sizer)
-
         self.Awake()
         self.Bind(wx.EVT_CLOSE, handler=self._onClose)
 
@@ -54,11 +45,15 @@ class HtmlRenderWebKitBase(HtmlRenderBase):
     def LoadPage(self, fname: str) -> None:
         pass
 
+    def _createRender(self):
+        import wx.html2
+        return wx.html2.WebView.New(self)
+
     def getBasePath(self) -> str:
         return self._basepath
 
     def Print(self):
-        self.ctrl.Print()
+        self.render.Print()
 
     def SetPage(self, htmltext, basepath, anchor=None):
         self._basepath = basepath
@@ -67,12 +62,12 @@ class HtmlRenderWebKitBase(HtmlRenderBase):
             path += anchor
 
         self.canOpenUrl += 1
-        self.ctrl.SetPage(htmltext, path)
+        self.render.SetPage(htmltext, path)
 
     def Sleep(self):
         import wx.html2 as webview
-        self.ctrl.Unbind(webview.EVT_WEBVIEW_NAVIGATING,
-                         handler=self._onNavigating)
+        self.render.Unbind(webview.EVT_WEBVIEW_NAVIGATING,
+                           handler=self._onNavigating)
         self.Unbind(wx.EVT_MENU, handler=self._onCopyFromHtml, id=wx.ID_COPY)
         self.Unbind(wx.EVT_MENU, handler=self._onCopyFromHtml, id=wx.ID_CUT)
 
@@ -83,8 +78,8 @@ class HtmlRenderWebKitBase(HtmlRenderBase):
         import wx.html2 as webview
         self.Bind(wx.EVT_MENU, handler=self._onCopyFromHtml, id=wx.ID_COPY)
         self.Bind(wx.EVT_MENU, handler=self._onCopyFromHtml, id=wx.ID_CUT)
-        self.ctrl.Bind(webview.EVT_WEBVIEW_NAVIGATING,
-                       handler=self._onNavigating)
+        self.render.Bind(webview.EVT_WEBVIEW_NAVIGATING,
+                         handler=self._onNavigating)
 
     def _pathToURL(self, path: str) -> str:
         '''
@@ -94,13 +89,13 @@ class HtmlRenderWebKitBase(HtmlRenderBase):
 
     def _onClose(self, event):
         import wx.html2 as webview
-        self.ctrl.Unbind(webview.EVT_WEBVIEW_NAVIGATING,
-                         handler=self._onNavigating)
-        self.ctrl.Stop()
+        self.render.Unbind(webview.EVT_WEBVIEW_NAVIGATING,
+                           handler=self._onNavigating)
+        self.render.Stop()
         event.Skip()
 
     def _onCopyFromHtml(self, event):
-        self.ctrl.Copy()
+        self.render.Copy()
         event.Skip()
 
     def _onNavigating(self, event):
@@ -120,7 +115,7 @@ class HtmlRenderWebKitBase(HtmlRenderBase):
             return
 
         href = event.GetURL()
-        curr_href = self.ctrl.GetCurrentURL()
+        curr_href = self.render.GetCurrentURL()
         logger.debug('_onNavigating ({nav_id}). href={href}; curr_href={curr_href}; canOpenUrl={canOpenUrl}'.format(
             nav_id=nav_id, href=href, curr_href=curr_href, canOpenUrl=self.canOpenUrl))
 
@@ -168,7 +163,7 @@ class HtmlRenderWebKitForPage(HtmlRenderWebKitBase, HTMLRenderForPageMixin):
         self._currentPage = value
 
     def LoadPage(self, fname):
-        self.ctrl.Stop()
+        self.render.Stop()
 
         try:
             html = readTextFile(fname)
@@ -195,7 +190,7 @@ class HtmlRenderWebKitForPage(HtmlRenderWebKitBase, HTMLRenderForPageMixin):
         Recognize href type and return tuple (url, page, filename, anchor).
         Every tuple item may be None.
         """
-        uri = self.ctrl.GetCurrentURL()
+        uri = self.render.GetCurrentURL()
 
         logger.debug('_identifyUri. href={href}'.format(href=href))
         logger.debug('_identifyUri. current URI={uri}'.format(uri=uri))
@@ -280,7 +275,7 @@ class HtmlRenderWebKitGeneral(HtmlRenderWebKitBase):
         super().__init__(parent)
 
     def LoadPage(self, fname):
-        self.ctrl.Stop()
+        self.render.Stop()
 
         try:
             html = readTextFile(fname)
@@ -300,7 +295,7 @@ class HtmlRenderWebKitGeneral(HtmlRenderWebKitBase):
         """
         Определить тип ссылки и вернуть кортеж (url, filename, anchor)
         """
-        uri = self.ctrl.GetCurrentURL()
+        uri = self.render.GetCurrentURL()
 
         logger.debug('_identifyUri. href={href}'.format(href=href))
         logger.debug('_identifyUri. current URI={uri}'.format(uri=uri))

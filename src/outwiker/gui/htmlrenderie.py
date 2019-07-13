@@ -35,8 +35,6 @@ class HtmlRenderIEBase(HtmlRenderBase):
         super().__init__(parent)
 
         config = GeneralGuiConfig(Application.config)
-
-        self.render = wx.lib.iewin.IEHtmlWindow(self)
         self.render.silent = not config.debug.value
 
         # Подпишемся на события IE
@@ -44,17 +42,11 @@ class HtmlRenderIEBase(HtmlRenderBase):
 
         self.canOpenUrl = False                # Можно ли открывать ссылки
 
-        self._layout()
-
         self.Bind(wx.EVT_MENU, self._onCopyFromHtml, id=wx.ID_COPY)
         self.Bind(wx.EVT_MENU, self._onCopyFromHtml, id=wx.ID_CUT)
 
-    def _layout(self):
-        self.box = wx.BoxSizer(wx.VERTICAL)
-        self.box.Add(self.render, 1, wx.EXPAND)
-
-        self.SetSizer(self.box)
-        self.Layout()
+    def _createRender(self):
+        return wx.lib.iewin.IEHtmlWindow(self)
 
     def Print(self):
         self.render.Print(True)

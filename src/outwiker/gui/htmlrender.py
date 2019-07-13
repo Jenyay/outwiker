@@ -18,6 +18,13 @@ class HtmlRenderBase(wx.Panel):
     def __init__(self, parent):
         super().__init__(parent)
 
+        self._render = self._createRender()
+        sizer = wx.FlexGridSizer(1)
+        sizer.AddGrowableCol(0)
+        sizer.AddGrowableRow(0)
+        sizer.Add(self._render, 0, wx.EXPAND)
+        self.SetSizer(sizer)
+
     def LoadPage(self, fname):
         """
         Загрузить страницу из файла
@@ -38,6 +45,16 @@ class HtmlRenderBase(wx.Panel):
 
     def Awake(self):
         pass
+
+    def _createRender(self):
+        '''
+        Must return instance of HTML render engine
+        '''
+        pass
+
+    @property
+    def render(self):
+        return self._render
 
     def openUrl(self, href):
         """
