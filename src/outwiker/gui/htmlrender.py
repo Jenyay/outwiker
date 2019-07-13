@@ -14,6 +14,7 @@ class HtmlRenderBase(wx.Panel):
     """
     Базовый класс для HTML-рендеров
     """
+
     def __init__(self, parent):
         super().__init__(parent)
 
@@ -62,7 +63,7 @@ class HtmlRenderBase(wx.Panel):
 
         return link[:pos + len(endProtocol)]
 
-    def _decodeIDNA(self, link):
+    def decodeIDNA(self, link):
         """
         Decode link like protocol://xn--80afndtacjikc
         """
@@ -82,14 +83,16 @@ class HtmlRenderBase(wx.Panel):
 
         return link
 
-    def _getClickParams(self,
-                        href,
-                        button,
-                        modifier,
-                        isurl,
-                        ispage,
-                        isfilename,
-                        isanchor):
+
+class HTMLRenderForPageMixin:
+    def getClickParams(self,
+                       href,
+                       button,
+                       modifier,
+                       isurl,
+                       ispage,
+                       isfilename,
+                       isanchor):
         linktype = None
 
         if isanchor:
@@ -109,7 +112,7 @@ class HtmlRenderBase(wx.Panel):
             linktype=linktype,
         )
 
-    def _getKeyCode(self):
+    def getKeyCode(self):
         modifier = 0
 
         if wx.GetKeyState(wx.WXK_SHIFT):

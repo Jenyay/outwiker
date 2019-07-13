@@ -17,7 +17,7 @@ from outwiker.gui.defines import ID_KEY_CTRL, ID_KEY_SHIFT, ID_MOUSE_LEFT
 from outwiker.utilites.textfile import readTextFile
 
 
-from .htmlrender import HtmlRenderBase
+from .htmlrender import HtmlRenderBase, HTMLRenderForPageMixin
 from .urirecognizers import (
     URLRecognizer, AnchorRecognizerWebKit, FileRecognizerWebKit,
     PageRecognizerWebKit)
@@ -29,6 +29,7 @@ class HtmlRenderWebKitBase(HtmlRenderBase):
     '''
     A base class for HTML render. Engine - WebKit.
     '''
+
     def __init__(self, parent):
         super().__init__(parent)
         self._basepath = None
@@ -149,10 +150,11 @@ class HtmlRenderWebKitBase(HtmlRenderBase):
             nav_id=nav_id, canOpenUrl=self.canOpenUrl))
 
 
-class HtmlRenderWebKitForPage(HtmlRenderWebKitBase):
+class HtmlRenderWebKitForPage(HtmlRenderWebKitBase, HTMLRenderForPageMixin):
     '''
     HTML render for using as note page render. Engine - WebKit.
     '''
+
     def __init__(self, parent):
         super().__init__(parent)
         self._currentPage = None
@@ -224,11 +226,11 @@ class HtmlRenderWebKitForPage(HtmlRenderWebKitBase):
         в противном случае - True (если обрабатываем сами)
         href - ссылка
         """
-        modifier = self._getKeyCode()
+        modifier = self.getKeyCode()
         mouse_button = ID_MOUSE_LEFT
         source_href = href
         href = urllib.parse.unquote(href)
-        href = self._decodeIDNA(href)
+        href = self.decodeIDNA(href)
 
         logger.debug('_onLinkClicked. href_src={source_href}'.format(
             source_href=source_href)
@@ -236,13 +238,13 @@ class HtmlRenderWebKitForPage(HtmlRenderWebKitBase):
 
         (url, page, filename, anchor) = self._identifyUri(href)
 
-        params = self._getClickParams(source_href,
-                                      mouse_button,
-                                      modifier,
-                                      url,
-                                      page,
-                                      filename,
-                                      anchor)
+        params = self.getClickParams(source_href,
+                                     mouse_button,
+                                     modifier,
+                                     url,
+                                     page,
+                                     filename,
+                                     anchor)
 
         Application.onLinkClick(self._currentPage, params)
         if params.process:
@@ -273,6 +275,7 @@ class HtmlRenderWebKitGeneral(HtmlRenderWebKitBase):
     '''
     HTML render for common using. Engine - WebKit.
     '''
+
     def __init__(self, parent):
         super().__init__(parent)
 
@@ -328,7 +331,7 @@ class HtmlRenderWebKitGeneral(HtmlRenderWebKitBase):
         """
         source_href = href
         href = urllib.parse.unquote(href)
-        href = self._decodeIDNA(href)
+        href = self.decodeIDNA(href)
 
         logger.debug('_onLinkClicked. href_src={source_href}'.format(
             source_href=source_href)

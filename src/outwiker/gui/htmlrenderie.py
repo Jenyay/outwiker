@@ -12,7 +12,7 @@ import outwiker.core.system
 import outwiker.core.commands
 from outwiker.core.application import Application
 from outwiker.core.defines import APP_DATA_KEY_ANCHOR
-from outwiker.gui.htmlrender import HtmlRenderBase
+from outwiker.gui.htmlrender import HtmlRenderBase, HTMLRenderForPageMixin
 from outwiker.gui.defines import (ID_MOUSE_LEFT,
                                   ID_KEY_CTRL,
                                   ID_KEY_SHIFT)
@@ -30,6 +30,7 @@ class HtmlRenderIEBase(HtmlRenderBase):
     '''
     A base class for HTML render. Engine - Internet Explorer.
     '''
+
     def __init__(self, parent):
         super().__init__(parent)
 
@@ -124,7 +125,7 @@ class HtmlRenderIEBase(HtmlRenderBase):
             self._onLinkClicked(href)
 
 
-class HtmlRenderIEForPage(HtmlRenderIEBase):
+class HtmlRenderIEForPage(HtmlRenderIEBase, HTMLRenderForPageMixin):
     """
     HTML render for using as note page render. Engine - Internet Explorer.
     """
@@ -169,7 +170,7 @@ class HtmlRenderIEForPage(HtmlRenderIEBase):
         """
         Execute onHoverLink event and set status text
         """
-        link_decoded = self._decodeIDNA(link)
+        link_decoded = self.decodeIDNA(link)
 
         params = HoverLinkParams(link=link_decoded, text=text)
         Application.onHoverLink(page=self._currentPage, params=params)
@@ -226,15 +227,15 @@ class HtmlRenderIEForPage(HtmlRenderIEBase):
         (url, page, filename, anchor) = self._identifyUri(href)
 
         button = ID_MOUSE_LEFT
-        modifier = self._getKeyCode()
+        modifier = self.getKeyCode()
 
-        params = self._getClickParams(self._decodeIDNA(href),
-                                      button,
-                                      modifier,
-                                      url,
-                                      page,
-                                      filename,
-                                      anchor)
+        params = self.getClickParams(self.decodeIDNA(href),
+                                     button,
+                                     modifier,
+                                     url,
+                                     page,
+                                     filename,
+                                     anchor)
 
         Application.onLinkClick(self._currentPage, params)
         if params.process:
