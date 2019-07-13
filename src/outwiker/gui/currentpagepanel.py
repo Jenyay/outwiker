@@ -297,7 +297,7 @@ class CurrentPagePanel(wx.Panel):
         assert not self.__htmlRenderorrowed
 
         if self.__htmlRender is None:
-            self.__htmlRender = getOS().getHtmlRender(new_parent)
+            self.__htmlRender = getOS().getHtmlRenderForPage(new_parent)
         else:
             self.__htmlRender.Awake()
             self.__htmlRender.Reparent(new_parent)

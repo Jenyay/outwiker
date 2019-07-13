@@ -107,6 +107,14 @@ class Windows(System):
             from outwiker.gui.htmlrenderie import HtmlRenderIEForPage
             return HtmlRenderIEForPage(parent)
 
+    def getHtmlRenderForPage(self, parent):
+        if wx.GetApp().use_fake_html_render:
+            from outwiker.gui.htmlrenderfake import HtmlRenderFake
+            return HtmlRenderFake(parent)
+        else:
+            from outwiker.gui.htmlrenderie import HtmlRenderIEForPage
+            return HtmlRenderIEForPage(parent)
+
     def getSpellChecker(self, langlist, folders):
         """
         Return wrapper for "real" spell checker (hunspell, enchant, etc)
@@ -163,6 +171,14 @@ class Unix(System):
         return UnixFileIcons()
 
     def getHtmlRender(self, parent):
+        if wx.GetApp().use_fake_html_render:
+            from outwiker.gui.htmlrenderfake import HtmlRenderFake
+            return HtmlRenderFake(parent)
+        else:
+            from outwiker.gui.htmlrenderwebkit import HtmlRenderWebKitGeneral
+            return HtmlRenderWebKitGeneral(parent)
+
+    def getHtmlRenderForPage(self, parent):
         if wx.GetApp().use_fake_html_render:
             from outwiker.gui.htmlrenderfake import HtmlRenderFake
             return HtmlRenderFake(parent)
