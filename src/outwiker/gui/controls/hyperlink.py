@@ -563,6 +563,7 @@ class HyperLinkCtrl(StaticText):
         """
 
         self._URL = URL
+        self.SetToolTip(wx.ToolTip(self._URL))
 
 
     def GetURL(self):

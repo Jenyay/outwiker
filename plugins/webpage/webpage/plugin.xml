@@ -27,6 +27,15 @@
 			<site>https://jenyay.net</site>
 		</author>
 		<changelog>
+			<version number="1.4.1">
+				<requirements>
+					<api>2.866</api>
+				</requirements>
+
+                <download os="all">https://jenyay.net/uploads/Outwiker/WebPage/webpage-1.4.1.zip</download>
+				<change>Fixed errors.</change>
+			</version>
+
 			<version number="1.4" date="August 26, 2018">
 				<requirements>
 					<api>2.835</api>
@@ -91,6 +100,15 @@
 			<site>https://jenyay.net</site>
 		</author>
 		<changelog>
+			<version number="1.4.1">
+				<requirements>
+					<api>2.866</api>
+				</requirements>
+
+                <download os="all">https://jenyay.net/uploads/Outwiker/WebPage/webpage-1.4.1.zip</download>
+				<change>Исправление ошибок.</change>
+			</version>
+
 			<version number="1.4" date="26.08.2018">
 				<requirements>
 					<api>2.835</api>

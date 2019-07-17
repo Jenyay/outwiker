@@ -1,14 +1,16 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import wx
 
 from outwiker.gui.testeddialog import TestedDialog
+from outwiker.gui.controls.hyperlink import HyperLinkCtrl
 
 from webpage.i18n import get_
 
 
 class InfoDialog(TestedDialog):
     """Dialog with Web page information(log, source url, etc)"""
+
     def __init__(self, parent):
         super(InfoDialog, self).__init__(parent)
         global _
@@ -44,11 +46,9 @@ class InfoDialog(TestedDialog):
         sizer.AddGrowableCol(1)
 
         self.urlLabel = wx.StaticText(self, label=_(u'Source URL'))
-        self.urlText = wx.HyperlinkCtrl(self,
-                                        -1,
-                                        _(u'Link'),
-                                        u'https://jenyay.net',
-                                        style=wx.HL_ALIGN_LEFT | wx.NO_BORDER)
+        self.urlText = HyperLinkCtrl(self,
+                                     label=_(u'Link'),
+                                     URL=u'https://jenyay.net')
 
         sizer.Add(self.urlLabel,
                   0,
@@ -81,6 +81,7 @@ class InfoDialog(TestedDialog):
 
 class InfoDialogController(object):
     """Controller for InfoDialog"""
+
     def __init__(self, dialog, application, page):
         """
         Constructor.
