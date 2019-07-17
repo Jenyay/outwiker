@@ -30,8 +30,10 @@ class BaseDownloader(object):
             url = self.fix_url(url)
 
         opener = urllib.request.build_opener()
-        opener.addheaders = [('User-agent', 'Mozilla/5.0(Windows NT 6.1) AppleWebKit/537.36(KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36 OutWiker/1'),
-                             ('Accept-encoding', 'gzip')]
+        opener.addheaders = [
+            ('User-agent', 'Mozilla/5.0(Windows NT 6.1) AppleWebKit/537.36(KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36 OutWiker/1'),
+            ('Accept-encoding', 'gzip'),
+        ]
         response = opener.open(url, timeout=self._timeout)
         if response.info().get('Content-Encoding') == 'gzip':
             buf = BytesIO(response.read())
@@ -52,9 +54,14 @@ class BaseDownloader(object):
             scheme = urllib.parse.quote(scheme)
             netloc = netloc.encode('idna').decode('utf8')
             path = urllib.parse.quote(path)
+
+            # Restore '@' symbol after quote
+            # For example: https://vk.com/@etorabotaet-10-luchshih-non-fiction-knig-2017-goda
+            path = path.replace('%40', '@')
             query = urllib.parse.quote(query)
             fragment = urllib.parse.quote(fragment)
-            result = urllib.parse.urlunsplit((scheme, netloc, path, query, fragment))
+            result = urllib.parse.urlunsplit(
+                (scheme, netloc, path, query, fragment))
 
         return result
 
@@ -183,6 +190,7 @@ class BaseDownloadController(BaseDownloader, metaclass=ABCMeta):
     '''
     Instance the class select action for every downloaded file
     '''
+
     def __init__(self, timeout=20):
         super(BaseDownloadController, self).__init__(timeout)
         self.favicon = None
@@ -227,6 +235,7 @@ class DownloadController(BaseDownloadController):
     """
     Class with main logic for downloading
     """
+
     def __init__(self, rootDownloadDir, staticDir, timeout=20):
         super(DownloadController, self).__init__(timeout)
 
@@ -328,7 +337,8 @@ class DownloadController(BaseDownloadController):
                                                  1)
             )
 
-            result = result[:match.start() + delta] + replace + result[match.end() + delta:]
+            result = result[:match.start() + delta] + replace + \
+                result[match.end() + delta:]
             delta += len(replace) - (match.end() - match.start())
 
         return result
@@ -419,6 +429,7 @@ class WebPageDownloadController(DownloadController):
     Downloading can be terminated with event.
     Log will be send with UpdateLogEvent
     """
+
     def __init__(self, runEvent, rootDownloadDir, staticDir, dialog, timeout=20):
         super(WebPageDownloadController, self).__init__(rootDownloadDir,
                                                         staticDir,

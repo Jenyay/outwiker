@@ -2,9 +2,7 @@
 
 from threading import Event, Thread
 from tempfile import mkdtemp
-import urllib.request
 import urllib.error
-import urllib.parse
 import os.path
 from shutil import rmtree
 
