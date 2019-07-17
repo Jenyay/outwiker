@@ -37,7 +37,7 @@ class HtmlTextEditor(TextEditor):
             textCtrl.StyleSetFaceName(key, self.config.fontName.value)
             textCtrl.StyleSetBackground(key, self.config.backColor.value)
 
-        tags = u"""a abbr acronym address applet area b base basefont
+        tags = """a abbr acronym address applet area b base basefont
             bdo big blockquote body br button caption center
             cite code col colgroup dd del dfn dir div dl dt em
             fieldset font form frame frameset h1 h2 h3 h4 h5 h6
@@ -52,8 +52,8 @@ class HtmlTextEditor(TextEditor):
             audio embed source track video
             """
 
-        attributes = u"""abbr accept-charset accept accesskey action align alink
-            alt archive axis background bgcolor border
+        attributes = """abbr accept-charset accept accesskey action align 
+            alink alt archive axis background bgcolor border
             cellpadding cellspacing char charoff charset checked cite
             class classid clear codebase codetype color cols colspan
             compact content coords
@@ -75,6 +75,7 @@ class HtmlTextEditor(TextEditor):
             text password checkbox radio submit reset
             file hidden image property sizes async role autocomplete itemprop
             datetime data-toggle data-default-title viewbox itemscope pubdate
+            srcset
             """
 
         textCtrl.SetKeyWords(0, tags + " " + attributes)
@@ -107,7 +108,8 @@ class HtmlTextEditor(TextEditor):
 
         # Собираем все элементы
         if len(items) > 0:
-            itemsList = reduce(lambda result, item: result + itemStart + item.strip() + itemEnd + "\n", items, "")
+            itemsList = reduce(lambda result, item: result +
+                               itemStart + item.strip() + itemEnd + "\n", items, "")
         else:
             itemsList = itemStart + itemEnd + "\n"
 
