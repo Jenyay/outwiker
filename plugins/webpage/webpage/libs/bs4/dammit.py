@@ -6,8 +6,7 @@ necessary. It is heavily based on code from Mark Pilgrim's Universal
 Feed Parser. It works best on XML and HTML, but it does not rewrite the
 XML or HTML to reflect a new encoding; that's the tree builder's job.
 """
-# Use of this source code is governed by a BSD-style license that can be
-# found in the LICENSE file.
+# Use of this source code is governed by the MIT license.
 __license__ = "MIT"
 
 import codecs
@@ -46,9 +45,9 @@ except ImportError:
     pass
 
 xml_encoding_re = re.compile(
-    '^<\?.*encoding=[\'"](.*?)[\'"].*\?>'.encode(), re.I)
+    '^<\\?.*encoding=[\'"](.*?)[\'"].*\\?>'.encode(), re.I)
 html_meta_re = re.compile(
-    '<\s*meta[^>]+charset\s*=\s*["\']?([^>]*?)[ /;\'">]'.encode(), re.I)
+    '<\\s*meta[^>]+charset\\s*=\\s*["\']?([^>]*?)[ /;\'">]'.encode(), re.I)
 
 class EntitySubstitution(object):
 
@@ -82,7 +81,7 @@ class EntitySubstitution(object):
         }
 
     BARE_AMPERSAND_OR_BRACKET = re.compile("([<>]|"
-                                           "&(?!#\d+;|#x[0-9a-fA-F]+;|\w+;)"
+                                           "&(?!#\\d+;|#x[0-9a-fA-F]+;|\\w+;)"
                                            ")")
 
     AMPERSAND_OR_BRACKET = re.compile("([<>&])")

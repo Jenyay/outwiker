@@ -1,13 +1,18 @@
-# Use of this source code is governed by a BSD-style license that can be
-# found in the LICENSE file.
+# Use of this source code is governed by the MIT license.
+__license__ = "MIT"
+
 __all__ = [
     'LXMLTreeBuilderForXML',
     'LXMLTreeBuilder',
     ]
 
+try:
+    from collections.abc import Callable # Python 3.6
+except ImportError as e:
+    from collections import Callable
+
 from io import BytesIO
 from io import StringIO
-import collections
 from lxml import etree
 from bs4.element import (
     Comment,
@@ -28,6 +33,10 @@ from bs4.dammit import EncodingDetector
 
 LXML = 'lxml'
 
+def _invert(d):
+    "Invert a dictionary."
+    return dict((v,k) for k, v in list(d.items()))
+
 class LXMLTreeBuilderForXML(TreeBuilder):
     DEFAULT_PARSER_CLASS = etree.XMLParser
 
@@ -44,7 +53,29 @@ class LXMLTreeBuilderForXML(TreeBuilder):
 
     # This namespace mapping is specified in the XML Namespace
     # standard.
-    DEFAULT_NSMAPS = {'http://www.w3.org/XML/1998/namespace' : "xml"}
+    DEFAULT_NSMAPS = dict(xml='http://www.w3.org/XML/1998/namespace')
+
+    DEFAULT_NSMAPS_INVERTED = _invert(DEFAULT_NSMAPS)
+
+    def initialize_soup(self, soup):
+        """Let the BeautifulSoup object know about the standard namespace
+        mapping.
+        """
+        super(LXMLTreeBuilderForXML, self).initialize_soup(soup)
+        self._register_namespaces(self.DEFAULT_NSMAPS)
+
+    def _register_namespaces(self, mapping):
+        """Let the BeautifulSoup object know about namespaces encountered
+        while parsing the document.
+
+        This might be useful later on when creating CSS selectors.
+        """
+        for key, value in list(mapping.items()):
+            if key and key not in self.soup._namespaces:
+                # Let the BeautifulSoup object know about a new namespace.
+                # If there are multiple namespaces defined with the same
+                # prefix, the first one in the document takes precedence.
+                self.soup._namespaces[key] = value
 
     def default_parser(self, encoding):
         # This can either return a parser object or a class, which
@@ -58,7 +89,7 @@ class LXMLTreeBuilderForXML(TreeBuilder):
         # Use the default parser.
         parser = self.default_parser(encoding)
 
-        if isinstance(parser, collections.Callable):
+        if isinstance(parser, Callable):
             # Instantiate the parser with default arguments
             parser = parser(target=self, strip_cdata=False, encoding=encoding)
         return parser
@@ -71,8 +102,8 @@ class LXMLTreeBuilderForXML(TreeBuilder):
         if empty_element_tags is not None:
             self.empty_element_tags = set(empty_element_tags)
         self.soup = None
-        self.nsmaps = [self.DEFAULT_NSMAPS]
-
+        self.nsmaps = [self.DEFAULT_NSMAPS_INVERTED]
+        
     def _getNsTag(self, tag):
         # Split the namespace URL out of a fully-qualified lxml tag
         # name. Copied from lxml's src/lxml/sax.py.
@@ -140,22 +171,28 @@ class LXMLTreeBuilderForXML(TreeBuilder):
             raise ParserRejectedMarkup(str(e))
 
     def close(self):
-        self.nsmaps = [self.DEFAULT_NSMAPS]
+        self.nsmaps = [self.DEFAULT_NSMAPS_INVERTED]
 
     def start(self, name, attrs, nsmap={}):
         # Make sure attrs is a mutable dict--lxml may send an immutable dictproxy.
         attrs = dict(attrs)
         nsprefix = None
         # Invert each namespace map as it comes in.
-        if len(self.nsmaps) > 1:
-            # There are no new namespaces for this tag, but
-            # non-default namespaces are in play, so we need a
-            # separate tag stack to know when they end.
-            self.nsmaps.append(None)
+        if len(nsmap) == 0 and len(self.nsmaps) > 1:
+                # There are no new namespaces for this tag, but
+                # non-default namespaces are in play, so we need a
+                # separate tag stack to know when they end.
+                self.nsmaps.append(None)
         elif len(nsmap) > 0:
             # A new namespace mapping has come into play.
-            inverted_nsmap = dict((value, key) for key, value in list(nsmap.items()))
-            self.nsmaps.append(inverted_nsmap)
+
+            # First, Let the BeautifulSoup object know about it.
+            self._register_namespaces(nsmap)
+
+            # Then, add it to our running list of inverted namespace
+            # mappings.
+            self.nsmaps.append(_invert(nsmap))
+
             # Also treat the namespace mapping as a set of attributes on the
             # tag, so we can recreate it later.
             attrs = attrs.copy()
