@@ -299,6 +299,30 @@ class DownloaderTest(unittest.TestCase):
         self.assertTrue(os.path.exists(fname3))
         self.assertTrue(os.path.exists(fname4))
 
+    def testDownloading_img_urlquote(self):
+        from webpage.downloader import Downloader, DownloadController
+
+        template = '<img src="{path}"'
+
+        controller = DownloadController(self._tempDir, self._staticDirName)
+        downloader = Downloader()
+
+        examplePath = '../test/webpage/example_urlquote/'
+        exampleHtmlPath = os.path.join(examplePath, 'example_urlquote.html')
+
+        downloader.start(self._path2url(exampleHtmlPath), controller)
+
+        downloadDir = os.path.join(self._tempDir, self._staticDirName)
+
+        fname = os.path.join(self._tempDir, self._staticDirName, 'рисунок.png')
+
+        self.assertTrue(os.path.exists(downloadDir))
+        self.assertTrue(os.path.exists(fname))
+
+        self.assertIn(
+            template.format(path=self._staticDirName + '/рисунок.png'),
+            downloader.contentResult)
+
     def testDownloading_img_srcset_files(self):
         from webpage.downloader import Downloader, DownloadController
 

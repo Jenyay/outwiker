@@ -144,7 +144,8 @@ class Downloader(BaseDownloader):
 
                 try:
                     relative_path = controller.processImg(startUrl, url, None)
-                    item_processed = ' '.join([relative_path] + srcset_params[1:])
+                    item_processed = ' '.join(
+                        [relative_path] + srcset_params[1:])
                     srcset_items_processed.append(item_processed)
                 except BaseException as e:
                     controller.log(str(e))
@@ -161,7 +162,7 @@ class Downloader(BaseDownloader):
     def _downloadCSS(self, soup, controller, startUrl):
         links = soup.find_all(u'link')
         for link in links:
-            if(link.has_attr('rel') and
+            if (link.has_attr('rel') and
                     link.has_attr('href') and
                     link['rel'][0].lower() == u'stylesheet'):
                 try:
@@ -269,7 +270,8 @@ class DownloadController(BaseDownloadController):
 
     def processImg(self, startUrl, url, node):
         if not(url.startswith(u'data:') or url.startswith(u'mhtml:')):
-            relative_path = self._process(startUrl, url, node, self._processFuncNone)
+            relative_path = self._process(
+                startUrl, url, node, self._processFuncNone)
 
             if node is not None and node.name == 'img':
                 node['src'] = relative_path
@@ -278,7 +280,8 @@ class DownloadController(BaseDownloadController):
 
     def processCSS(self, startUrl, url, node):
         self.log(_(u'Processing CSS: {}\n').format(url))
-        relative_path = self._process(startUrl, url, node, self._processFuncCSS)
+        relative_path = self._process(
+            startUrl, url, node, self._processFuncCSS)
 
         if node is not None and node.name == 'link':
             node['href'] = relative_path
@@ -286,7 +289,8 @@ class DownloadController(BaseDownloadController):
         return relative_path
 
     def processScript(self, startUrl, url, node):
-        relative_path = self._process(startUrl, url, node, self._processFuncNone)
+        relative_path = self._process(
+            startUrl, url, node, self._processFuncNone)
 
         if node is not None and node.name == 'script':
             node['src'] = relative_path
@@ -383,10 +387,10 @@ class DownloadController(BaseDownloadController):
         return urllib.parse.urljoin(startUrl, url)
 
     def _process(self,
-            startUrl: str,
-            url: str,
-            node: 'bs4.element.Tag',
-            processFunc: Callable[[str, str, 'bs4.element.Tag', bytes], str]) -> str:
+                 startUrl: str,
+                 url: str,
+                 node: 'bs4.element.Tag',
+                 processFunc: Callable[[str, str, 'bs4.element.Tag', bytes], str]) -> str:
         fullUrl = self.urljoin(startUrl, url)
 
         relativeDownloadPath = self._getRelativeDownloadPath(fullUrl)
@@ -427,6 +431,8 @@ class DownloadController(BaseDownloadController):
             fname = path[slashpos + 1:]
         else:
             fname = path
+
+        fname = urllib.parse.unquote(fname)
 
         relativeDownloadPath = u'{}/{}'.format(self._staticDir, fname)
         result = relativeDownloadPath
