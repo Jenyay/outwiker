@@ -27,9 +27,6 @@ class BaseDownloader(object):
         self._encoding = None
 
     def download(self, url):
-        # if not os.path.isfile(url) and not url.startswith('file:/'):
-        #     url = self.fix_url(url)
-
         opener = urllib.request.build_opener()
         opener.addheaders = [
             ('User-agent', 'Mozilla/5.0(Windows NT 6.1) AppleWebKit/537.36(KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36 OutWiker/1'),
@@ -262,6 +259,10 @@ class DownloadController(BaseDownloadController):
         self._fullStaticDir = os.path.join(rootDownloadDir,
                                            staticDir).replace(u'\\', u'/')
 
+        # Create a directory for downloaded files
+        if not os.path.exists(self._fullStaticDir):
+            os.mkdir(self._fullStaticDir)
+
         # Key - url from source HTML page,
         # value - relative path to downloaded file
         self._staticFiles = {}
@@ -276,7 +277,7 @@ class DownloadController(BaseDownloadController):
             return relative_path
 
     def processCSS(self, startUrl, url, node):
-        self.log(_(u'Processing: {}\n').format(url))
+        self.log(_(u'Processing CSS: {}\n').format(url))
         relative_path = self._process(startUrl, url, node, self._processFuncCSS)
 
         if node is not None and node.name == 'link':
@@ -338,7 +339,6 @@ class DownloadController(BaseDownloadController):
 
     def _processCSSContent(self, startUrl, url, text, regexp, replace_tpl):
         delta = 0
-
         result = text
 
         for match in regexp.finditer(text):
@@ -387,10 +387,6 @@ class DownloadController(BaseDownloadController):
             url: str,
             node: 'bs4.element.Tag',
             processFunc: Callable[[str, str, 'bs4.element.Tag', bytes], str]) -> str:
-        # Create a directory for downloaded files
-        if not os.path.exists(self._fullStaticDir):
-            os.mkdir(self._fullStaticDir)
-
         fullUrl = self.urljoin(startUrl, url)
 
         relativeDownloadPath = self._getRelativeDownloadPath(fullUrl)
@@ -398,20 +394,19 @@ class DownloadController(BaseDownloadController):
                                         relativeDownloadPath)
 
         if fullUrl not in self._staticFiles:
-            self.log(_(u'Download: {}\n').format(fullUrl))
+            self._staticFiles[fullUrl] = relativeDownloadPath
+            self.log(_('Download: {}\n').format(fullUrl))
             try:
                 obj = self.download(fullUrl)
-                with open(fullDownloadPath, 'wb') as fp:
-                    data = obj.read()
-                    text = processFunc(startUrl, url, node, data)
-                    if isinstance(text, str):
-                        fp.write(text.encode(u'utf8'))
-                    else:
-                        fp.write(text)
-            except(urllib.error.URLError, IOError):
-                self.log(_(u"Can't download {}\n").format(url))
+                data = obj.read()
+                text = processFunc(startUrl, url, node, data)
+                if isinstance(text, str):
+                    text = text.encode('utf8')
 
-            self._staticFiles[fullUrl] = relativeDownloadPath
+                with open(fullDownloadPath, 'wb') as fp:
+                    fp.write(text)
+            except(urllib.error.URLError, IOError):
+                self.log(_("Can't download {}\n").format(fullUrl))
 
         return relativeDownloadPath
 
