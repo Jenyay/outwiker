@@ -302,14 +302,14 @@ class DownloadController(BaseDownloadController):
         url - favicon url.
         node - link node instance if this tag exists or None otherwise.
         """
-        if self.favicon is None:
-            relativeDownloadPath = self._process(startUrl,
-                                                 url,
-                                                 node)
-            fullDownloadPath = os.path.join(self._rootDownloadDir,
-                                            relativeDownloadPath)
-            if os.path.exists(fullDownloadPath):
+        relativeDownloadPath = self._process(startUrl, url, node)
+        fullDownloadPath = os.path.join(self._rootDownloadDir,
+                                        relativeDownloadPath)
+        if os.path.exists(fullDownloadPath):
+            if self.favicon is None:
                 self.favicon = fullDownloadPath
+
+            node['href'] = relativeDownloadPath
 
     def _processFuncCSS(self, startUrl, url, node, text):
         text = self.toUnicode(text)
@@ -391,15 +391,14 @@ class DownloadController(BaseDownloadController):
                  startUrl: str,
                  url: str,
                  node: 'bs4.element.Tag',
-                 processDataFunc: Callable[[str, str, 'bs4.element.Tag', bytes], str]=None,
-                 processFileName: Callable[[str, str, 'bs4.element.Tag', str], str]=None) -> str:
+                 processDataFunc: Callable[[str, str, 'bs4.element.Tag', bytes], str] = None,
+                 processFileName: Callable[[str, str, 'bs4.element.Tag', str], str] = None) -> str:
         fullUrl = self.urljoin(startUrl, url)
 
         relativeDownloadPath = self._getRelativeDownloadPath(fullUrl)
         if processFileName is not None:
             relativeDownloadPath = processFileName(startUrl, url, node,
-                    relativeDownloadPath)
-
+                                                   relativeDownloadPath)
 
         fullDownloadPath = os.path.join(self._rootDownloadDir,
                                         relativeDownloadPath)
