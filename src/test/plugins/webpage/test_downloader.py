@@ -323,6 +323,29 @@ class DownloaderTest(unittest.TestCase):
             template.format(path=self._staticDirName + '/рисунок.png'),
             downloader.contentResult)
 
+    def testDownloading_css_rename(self):
+        from webpage.downloader import Downloader, DownloadController
+
+        template = 'href="{path}"'
+        downloadDir = os.path.join(self._tempDir, self._staticDirName)
+
+        controller = DownloadController(self._tempDir, self._staticDirName)
+        downloader = Downloader()
+
+        examplePath = '../test/webpage/example_css_rename/'
+        exampleHtmlPath = os.path.join(examplePath, 'example.html')
+
+        downloader.start(self._path2url(exampleHtmlPath), controller)
+
+        fname = os.path.join(self._tempDir, self._staticDirName, 'style.php.css')
+
+        self.assertTrue(os.path.exists(downloadDir))
+        self.assertTrue(os.path.exists(fname))
+
+        self.assertIn(
+            template.format(path=self._staticDirName + '/style.php.css'),
+            downloader.contentResult)
+
     def testDownloading_img_srcset_files(self):
         from webpage.downloader import Downloader, DownloadController
 

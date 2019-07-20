@@ -270,8 +270,7 @@ class DownloadController(BaseDownloadController):
 
     def processImg(self, startUrl, url, node):
         if not(url.startswith(u'data:') or url.startswith(u'mhtml:')):
-            relative_path = self._process(
-                startUrl, url, node, self._processFuncNone)
+            relative_path = self._process(startUrl, url, node)
 
             if node is not None and node.name == 'img':
                 node['src'] = relative_path
@@ -281,7 +280,8 @@ class DownloadController(BaseDownloadController):
     def processCSS(self, startUrl, url, node):
         self.log(_(u'Processing CSS: {}\n').format(url))
         relative_path = self._process(
-            startUrl, url, node, self._processFuncCSS)
+            startUrl, url, node, self._processFuncCSS,
+            self._processFuncCSSFileName)
 
         if node is not None and node.name == 'link':
             node['href'] = relative_path
@@ -289,8 +289,7 @@ class DownloadController(BaseDownloadController):
         return relative_path
 
     def processScript(self, startUrl, url, node):
-        relative_path = self._process(
-            startUrl, url, node, self._processFuncNone)
+        relative_path = self._process(startUrl, url, node)
 
         if node is not None and node.name == 'script':
             node['src'] = relative_path
@@ -306,15 +305,11 @@ class DownloadController(BaseDownloadController):
         if self.favicon is None:
             relativeDownloadPath = self._process(startUrl,
                                                  url,
-                                                 node,
-                                                 self._processFuncNone)
+                                                 node)
             fullDownloadPath = os.path.join(self._rootDownloadDir,
                                             relativeDownloadPath)
             if os.path.exists(fullDownloadPath):
                 self.favicon = fullDownloadPath
-
-    def _processFuncNone(self, startUrl, url, node, text):
-        return text
 
     def _processFuncCSS(self, startUrl, url, node, text):
         text = self.toUnicode(text)
@@ -362,7 +357,7 @@ class DownloadController(BaseDownloadController):
 
             processFunc = (self._processFuncCSS
                            if url_found.endswith(u'.css')
-                           else self._processFuncNone)
+                           else None)
 
             relativeDownloadPath = self._process(startUrl,
                                                  relativeurl,
@@ -380,6 +375,12 @@ class DownloadController(BaseDownloadController):
 
         return result
 
+    def _processFuncCSSFileName(self, startUrl, url, node, relativeDownloadPath):
+        if not relativeDownloadPath.endswith('.css'):
+            return relativeDownloadPath + '.css'
+
+        return relativeDownloadPath
+
     def urljoin(self, startUrl, url):
         if u'://' in url:
             return url
@@ -390,10 +391,16 @@ class DownloadController(BaseDownloadController):
                  startUrl: str,
                  url: str,
                  node: 'bs4.element.Tag',
-                 processFunc: Callable[[str, str, 'bs4.element.Tag', bytes], str]) -> str:
+                 processDataFunc: Callable[[str, str, 'bs4.element.Tag', bytes], str]=None,
+                 processFileName: Callable[[str, str, 'bs4.element.Tag', str], str]=None) -> str:
         fullUrl = self.urljoin(startUrl, url)
 
         relativeDownloadPath = self._getRelativeDownloadPath(fullUrl)
+        if processFileName is not None:
+            relativeDownloadPath = processFileName(startUrl, url, node,
+                    relativeDownloadPath)
+
+
         fullDownloadPath = os.path.join(self._rootDownloadDir,
                                         relativeDownloadPath)
 
@@ -403,12 +410,15 @@ class DownloadController(BaseDownloadController):
             try:
                 obj = self.download(fullUrl)
                 data = obj.read()
-                text = processFunc(startUrl, url, node, data)
-                if isinstance(text, str):
-                    text = text.encode('utf8')
+
+                if processDataFunc is not None:
+                    data = processDataFunc(startUrl, url, node, data)
+
+                if isinstance(data, str):
+                    data = data.encode('utf8')
 
                 with open(fullDownloadPath, 'wb') as fp:
-                    fp.write(text)
+                    fp.write(data)
             except(urllib.error.URLError, IOError):
                 self.log(_("Can't download {}\n").format(fullUrl))
 
