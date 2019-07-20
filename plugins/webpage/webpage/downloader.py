@@ -27,8 +27,8 @@ class BaseDownloader(object):
         self._encoding = None
 
     def download(self, url):
-        if not os.path.isfile(url) and not url.startswith('file:/'):
-            url = self.fix_url(url)
+        # if not os.path.isfile(url) and not url.startswith('file:/'):
+        #     url = self.fix_url(url)
 
         opener = urllib.request.build_opener()
         opener.addheaders = [
@@ -59,7 +59,7 @@ class BaseDownloader(object):
             # Restore '@' symbol after quote
             # For example: https://vk.com/@etorabotaet-10-luchshih-non-fiction-knig-2017-goda
             path = path.replace('%40', '@')
-            query = urllib.parse.quote(query)
+            # query = urllib.parse.quote(query)
             fragment = urllib.parse.quote(fragment)
             result = urllib.parse.urlunsplit(
                 (scheme, netloc, path, query, fragment))
@@ -83,6 +83,10 @@ class Downloader(BaseDownloader):
     def start(self, url, controller):
         from bs4 import BeautifulSoup
         self._success = False
+
+        if not os.path.isfile(url) and not url.startswith('file:/'):
+            url = self.fix_url(url)
+
         obj = self.download(url)
         html = obj.read()
 
@@ -394,7 +398,7 @@ class DownloadController(BaseDownloadController):
                                         relativeDownloadPath)
 
         if fullUrl not in self._staticFiles:
-            self.log(_(u'Download: {}\n').format(url))
+            self.log(_(u'Download: {}\n').format(fullUrl))
             try:
                 obj = self.download(fullUrl)
                 with open(fullDownloadPath, 'wb') as fp:
