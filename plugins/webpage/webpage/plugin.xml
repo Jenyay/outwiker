@@ -27,12 +27,13 @@
 			<site>https://jenyay.net</site>
 		</author>
 		<changelog>
-			<version number="1.4.1">
+			<version number="1.5">
 				<requirements>
 					<api>2.866</api>
 				</requirements>
 
-                <download os="all">https://jenyay.net/uploads/Outwiker/WebPage/webpage-1.4.1.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/WebPage/webpage-1.5.zip</download>
+				<change>Improve pages downloading.</change>
 				<change>Fixed errors.</change>
 			</version>
 
@@ -100,12 +101,13 @@
 			<site>https://jenyay.net</site>
 		</author>
 		<changelog>
-			<version number="1.4.1">
+			<version number="1.5">
 				<requirements>
 					<api>2.866</api>
 				</requirements>
 
-                <download os="all">https://jenyay.net/uploads/Outwiker/WebPage/webpage-1.4.1.zip</download>
+                <download os="all">https://jenyay.net/uploads/Outwiker/WebPage/webpage-1.5.zip</download>
+				<change>Улучшено скачивание страниц.</change>
 				<change>Исправление ошибок.</change>
 			</version>
 
