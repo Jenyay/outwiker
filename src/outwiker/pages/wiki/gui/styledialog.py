@@ -80,6 +80,7 @@ class StyleDialog(TestedDialog):
     def _onEditCSS(self, event):
         self.enableCustomCSS(True)
         self._onUpdate(event)
+        event.Skip()
 
     def getHTML(self):
         result = ''

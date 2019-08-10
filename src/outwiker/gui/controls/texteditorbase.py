@@ -5,19 +5,23 @@ import html
 
 import wx
 import wx.lib.newevent
-from wx.stc import StyledTextCtrl
+from wx.stc import StyledTextCtrl, STC_CP_UTF8
 
 import outwiker.core.system
 from outwiker.core.textprinter import TextPrinter
 from outwiker.gui.searchreplacecontroller import SearchReplaceController
 from outwiker.gui.searchreplacepanel import SearchReplacePanel
 from outwiker.gui.texteditorhelper import TextEditorHelper
+from outwiker.core.commands import getClipboardText
 
 
 class TextEditorBase(wx.Panel):
     def __init__(self, parent):
         super(TextEditorBase, self).__init__(parent, style=0)
         self.textCtrl = StyledTextCtrl(self, -1)
+
+        # Used to fix text encoding after clipboard pasting
+        self._needFixTextEncoding = False
 
         # Создание панели поиска и ее контроллера
         self._searchPanel = SearchReplacePanel(self)
@@ -28,13 +32,17 @@ class TextEditorBase(wx.Panel):
 
         self._do_layout()
 
-        self.__createCoders()
         self._helper = TextEditorHelper()
         self._bind()
         self._setDefaultSettings()
 
     def _bind(self):
         self.textCtrl.Bind(wx.EVT_KEY_DOWN, self.onKeyDown)
+        self.textCtrl.Bind(wx.stc.EVT_STC_CHANGE, self.__onChange)
+
+        # To check inserted text encoding
+        self.textCtrl.SetModEventMask(wx.stc.STC_MOD_BEFOREINSERT)
+        self.textCtrl.Bind(wx.stc.EVT_STC_MODIFIED, self.__onModified)
 
     def _do_layout(self):
         mainSizer = wx.FlexGridSizer(rows=2, cols=0, vgap=0, hgap=0)
@@ -48,12 +56,8 @@ class TextEditorBase(wx.Panel):
         self._searchPanel.Hide()
         self.Layout()
 
-    def __createCoders(self):
-        encoding = outwiker.core.system.getOS().inputEncoding
-        self.mbcsEnc = codecs.getencoder(encoding)
-
     def onKeyDown(self, event):
-        key = event.GetKeyCode()
+        key = event.GetUnicodeKey()
 
         if key == wx.WXK_ESCAPE:
             self._searchPanel.Close()
@@ -254,6 +258,7 @@ class TextEditorBase(wx.Panel):
         return self.textCtrl.GetText()
 
     def SetText(self, text: str) -> None:
+        text = self._fixTextEncoding(text)
         self.textCtrl.SetText(text)
 
     def EmptyUndoBuffer(self):
@@ -546,3 +551,28 @@ class TextEditorBase(wx.Panel):
 
     def __onSelectAll(self, event):
         self.textCtrl.SelectAll()
+
+    def __onModified(self, event):
+        text = event.GetText()
+        if text != text.encode('utf-8', errors='replace').decode('utf-8'):
+            self._needFixTextEncoding = True
+
+    def __onChange(self, event):
+        if self._needFixTextEncoding:
+            self._needFixTextEncoding = False
+            self._fixText()
+
+        event.Skip()
+
+    def _fixTextEncoding(self, text: str) -> str:
+        result = text.encode('utf-8', errors='replace').decode('utf-8')
+        return result
+
+    def _fixText(self):
+        old_text = self.GetText()
+        new_text = self._fixTextEncoding(old_text)
+        if old_text != new_text:
+            old_selection_start = self.GetSelectionStart()
+            old_selection_end = self.GetSelectionEnd()
+            self.SetText(new_text)
+            self.SetSelection(old_selection_start, old_selection_end)

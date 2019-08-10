@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import codecs
+from typing import Tuple
 
 import wx.stc
 
@@ -9,15 +10,14 @@ class TextEditorHelper (object):
     def __init__(self):
         self.SPELL_ERROR_INDICATOR_MASK = wx.stc.STC_INDIC0_MASK
 
-        self._encoder = codecs.getencoder("utf-8")
-
     def calcByteLen(self, text):
         """Посчитать длину строки в байтах, а не в символах"""
-        return len(self._encoder(text)[0])
+        result = len(codecs.encode(text, errors='replace'))
+        return result
 
     def calcBytePos(self, text, pos):
         """Преобразовать позицию в символах в позицию в байтах"""
-        return len(self._encoder(text[: pos])[0])
+        return self.calcByteLen(text[: pos])
 
     @staticmethod
     def addStyle(stylelist, styleid, bytepos_start, bytepos_end):

@@ -101,6 +101,7 @@ class TextEditor(TextEditorBase):
         self._styleSet = False
         self._lastEdit = datetime.now()
         self.__setMarginWidth(self.textCtrl)
+        event.Skip()
 
     def setDefaultSettings(self):
         """

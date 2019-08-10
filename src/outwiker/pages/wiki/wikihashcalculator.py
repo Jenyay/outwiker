@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os.path
 import hashlib
@@ -72,7 +72,7 @@ class WikiHashCalculator (object):
         result = content.getvalue()
         content.close()
 
-        return result.encode('utf-8')
+        return result.encode('utf-8', errors='ignore')
 
     def __getStyleContent(self, page):
         """

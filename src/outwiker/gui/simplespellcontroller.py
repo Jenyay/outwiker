@@ -10,14 +10,15 @@ class SimpleSpellController(BaseTextStylingController):
     """
     Base class for styling controller which spell check only
     """
+
     def getColorizingThread(self, page, params, runEvent):
         return threading.Thread(
-                None,
-                self._colorizeThreadFunc,
-                args=(params.text,
-                      params.editor,
-                      params.enableSpellChecking)
-            )
+            None,
+            self._colorizeThreadFunc,
+            args=(params.text,
+                  params.editor,
+                  params.enableSpellChecking)
+        )
 
     def _colorizeThreadFunc(self, text, editor, enableSpellChecking):
         helper = TextEditorHelper()
