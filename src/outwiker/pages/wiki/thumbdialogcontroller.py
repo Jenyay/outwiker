@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from outwiker.core.attachment import Attachment
+from outwiker.core.commands import isImage
 
 from .thumbdialog import ThumbDialog
-from .parser.utils import isImage
 
 
 class ThumbDialogController (object):

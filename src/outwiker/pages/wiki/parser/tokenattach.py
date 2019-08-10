@@ -4,10 +4,11 @@ import os.path
 from abc import ABCMeta, abstractmethod
 
 from outwiker.core.attachment import Attachment
+from outwiker.core.commands import isImage
 from outwiker.core.defines import PAGE_ATTACH_DIR
 from outwiker.libs.pyparsing import Literal
 
-from .utils import concatenate, isImage
+from .utils import concatenate
 
 
 class AttachFactory (object):

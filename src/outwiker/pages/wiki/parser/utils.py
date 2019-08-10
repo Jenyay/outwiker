@@ -32,16 +32,6 @@ def convertToHTML(opening, closing, parser):
     return conversionParseAction
 
 
-def isImage(fname):
-    images_ext = [".png", ".bmp", ".gif", ".tif", ".tiff", ".jpg", ".jpeg"]
-
-    for ext in images_ext:
-        if fname.lower().endswith(ext):
-            return True
-
-    return False
-
-
 def escapeTextForRE(text):
     for char in r'\^$.*+?[]{}()|#':
         text = text.replace(char, '\\' + char)

@@ -543,7 +543,8 @@ def isImage(fname):
             fnameLower.endswith(".jpg") or
             fnameLower.endswith(".jpeg") or
             fnameLower.endswith(".bmp") or
-            fnameLower.endswith(".gif"))
+            fnameLower.endswith(".gif") or
+            fnameLower.endswith(".webp"))
 
 
 def dictToStr(paramsDict):
