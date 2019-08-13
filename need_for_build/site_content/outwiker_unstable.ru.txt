@@ -32,14 +32,6 @@ Attach:outwiker_100_white.png
 
 !!! Linux
 
-<!--
-Архив с бинарной сборкой: [[Attach:outwiker_linux_bin.zip | outwiker_linux_bin.zip]] или [[Attach:outwiker_linux_bin.7z | outwiker_linux_bin.7z]].
-
-Бинарные deb-пакет: [[http://jenyay.net/uploads/Outwiker/Unstable/outwiker-{{ version_main }}%2B{{ version_build }}_amd64.deb | outwiker-{{ version_main }}+{{ version_build }}_amd64.deb]].
-
-AppImage: [[http://jenyay.net/uploads/Outwiker/Unstable/Outwiker-x86_64.AppImage | Outwiker-x86_64.AppImage]].
--->
-
 Для установки из snap выполните следующие команды:
 
 (:source lang=text:)

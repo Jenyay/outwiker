@@ -24,13 +24,6 @@ Application and all plug-ins: [[Attach:Outwiker/Unstable/outwiker_win_unstable_a
 
 
 !!! Linux
-<!--
-Binary assembly: [[Attach:Outwiker/Unstable/outwiker_linux_bin.zip | outwiker_linux_bin.zip]] or [[Attach:Outwiker/Unstable/outwiker_linux_bin.7z | outwiker_linux_bin.7z]].
-
-Binary deb package: [[http://jenyay.net/uploads/Outwiker/Unstable/outwiker-{{ version_main}}%2B{{ version_build }}_amd64.deb | outwiker-{{ version_main}}+{{ version_build }}_amd64.deb]].
-
-AppImage: [[http://jenyay.net/uploads/Outwiker/Unstable/Outwiker-x86_64.AppImage | Outwiker-x86_64.AppImage]].
--->
 
 To install from snap run the commands:
 
