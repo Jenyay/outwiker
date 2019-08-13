@@ -7,6 +7,9 @@
 		<website>https://jenyay.net/Outwiker/UnstableEn</website>
 
 		<changelog>
+			<version number="3.0.0.868" status="dev">
+			</version>
+
 			<version number="3.0.0.866" status="dev"  date="August 13, 2019">
                 <change>Add comments to wiki notation.</change>
                 <change>Fix errors.</change>
@@ -133,6 +136,9 @@
 		<website>https://jenyay.net/Outwiker/Unstable</website>
 
 		<changelog>
+			<version number="3.0.0.868" status="dev">
+			</version>
+
 			<version number="3.0.0.866" status="dev" date="13.08.2019">
                 <change>Добавлена возможность вставки комментариев в викинотаци.</change>
                 <change>Исправление ошибок.</change>
