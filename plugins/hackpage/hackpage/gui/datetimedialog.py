@@ -19,7 +19,9 @@ class DateTimeDialog(TestedDialog):
         global _
         _ = get_()
 
-        super().__init__(parent, title=title)
+        super().__init__(parent,
+                         title=title,
+                         style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
         self._createGUI()
         self.setDateTime(selectedDateTime)
 
@@ -45,7 +47,7 @@ class DateTimeDialog(TestedDialog):
         self._dateLabel = wx.StaticText(self, label=_('Date'))
         self._calendarCtrl = wx.adv.CalendarCtrl(
             self,
-            style=wx.adv.CAL_SHOW_HOLIDAYS)
+            style=wx.adv.CAL_SHOW_HOLIDAYS | wx.adv.CAL_MONDAY_FIRST)
 
         self._timeLabel = wx.StaticText(self, label=_('Time'))
         self._timeCtrl = wx.adv.TimePickerCtrl(self)
@@ -53,6 +55,7 @@ class DateTimeDialog(TestedDialog):
     def _layoutControls(self):
         mainSizer = wx.FlexGridSizer(cols=1)
         mainSizer.AddGrowableCol(0)
+        mainSizer.AddGrowableRow(3)
 
         self._layoutCalendar(mainSizer)
         self._layoutTime(mainSizer)
