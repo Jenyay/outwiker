@@ -4,6 +4,7 @@ import wx
 
 from outwiker.core.commands import testreadonly, testPageTitle
 from outwiker.core.exceptions import ReadonlyException
+from outwiker.core.events import PAGE_UPDATE_CONTENT
 
 from .gui.textentrydialog import TextEntryDialog
 from .gui.datetimedialog import DateTimeDialog
@@ -114,3 +115,17 @@ def setPageCreationDate(page, application):
                         selectedDateTime=selectedDateTime) as dlg:
         if dlg.ShowModal() == wx.ID_OK:
             page.creationdatetime = dlg.getDateTime()
+            application.onPageUpdate(page, change=PAGE_UPDATE_CONTENT)
+
+
+@testreadonly
+def setPageChangeDate(page, application):
+    title = _('Date and time of change of the page')
+    selectedDateTime = page.datetime
+
+    with DateTimeDialog(application.mainWindow,
+                        title=title,
+                        selectedDateTime=selectedDateTime) as dlg:
+        if dlg.ShowModal() == wx.ID_OK:
+            page.datetime = dlg.getDateTime()
+            application.onPageUpdate(page, change=PAGE_UPDATE_CONTENT)

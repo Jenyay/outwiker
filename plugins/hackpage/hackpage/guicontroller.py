@@ -11,7 +11,8 @@ from hackpage.actions.changepagefolder import ChangePageFolderAction
 from hackpage.utils import (changeUidWithDialog,
                             setAliasWithDialog,
                             setPageFolderWithDialog,
-                            setPageCreationDate)
+                            setPageCreationDate,
+                            setPageChangeDate)
 
 
 class GuiController(object):
@@ -39,6 +40,7 @@ class GuiController(object):
         self.SET_PAGE_ALIAS_UID = wx.NewId()
         self.SET_PAGE_FOLDER_UID = wx.NewId()
         self.SET_PAGE_CREATION_DATE_UID = wx.NewId()
+        self.SET_PAGE_CHANGE_DATE_UID = wx.NewId()
 
         self._popupSubmenu = None
 
@@ -95,7 +97,9 @@ class GuiController(object):
         self._popupSubmenu.Append(self.SET_PAGE_FOLDER_UID,
                                   _(u"Change page folder..."))
         self._popupSubmenu.Append(self.SET_PAGE_CREATION_DATE_UID,
-                                  _(u"Change page creation date and time..."))
+                                  _(u"Edit page creation date and time..."))
+        self._popupSubmenu.Append(self.SET_PAGE_CHANGE_DATE_UID,
+                                  _(u"Edit date and time of change of the page..."))
 
         menu.AppendSubMenu(self._popupSubmenu, u"HackPage")
 
@@ -123,6 +127,12 @@ class GuiController(object):
             handler=self.__onSetPageCreationDatePopupClick
         )
 
+        self._application.mainWindow.Bind(
+            wx.EVT_MENU,
+            id=self.SET_PAGE_CHANGE_DATE_UID,
+            handler=self.__onSetPageChangeDatePopupClick
+        )
+
     def __onChangePageUIDPopupClick(self, event):
         assert self._selectedPage is not None
         changeUidWithDialog(self._selectedPage, self._application)
@@ -147,6 +157,12 @@ class GuiController(object):
         self._unbindPopupMenu()
         self._selectedPage = None
 
+    def __onSetPageChangeDatePopupClick(self, event):
+        assert self._selectedPage is not None
+        setPageChangeDate(self._selectedPage, self._application)
+        self._unbindPopupMenu()
+        self._selectedPage = None
+
     def _unbindPopupMenu(self):
         self._application.mainWindow.Unbind(wx.EVT_MENU,
                                             id=self.SET_PAGE_FOLDER_UID)
@@ -156,3 +172,5 @@ class GuiController(object):
                                             id=self.CHANGE_PAGE_UID)
         self._application.mainWindow.Unbind(wx.EVT_MENU,
                                             id=self.SET_PAGE_CREATION_DATE_UID)
+        self._application.mainWindow.Unbind(wx.EVT_MENU,
+                                            id=self.SET_PAGE_CHANGE_DATE_UID)
