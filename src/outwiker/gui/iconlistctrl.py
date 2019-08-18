@@ -154,6 +154,7 @@ class IconListCtrl(wx.ScrolledWindow):
     """
     Control with icons for pages
     """
+
     def __init__(self, parent, multiselect=False, theme=None):
         wx.ScrolledWindow.__init__(self, parent, style=wx.BORDER_THEME)
         self._theme = theme
@@ -259,7 +260,7 @@ class IconListCtrl(wx.ScrolledWindow):
 
     def __addButton(self, fname):
         """
-        Add the button with icons fname(full path)
+        Add the button with icons fname (full path)
         """
         try:
             button = IconButton(self._canvas,

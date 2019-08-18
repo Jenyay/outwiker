@@ -9,7 +9,7 @@ import wx
 from outwiker.core.system import getIconsDirList, getImagesDir
 from outwiker.core.iconscollection import IconsCollection
 from outwiker.core.recenticonslist import RecentIconsList
-from outwiker.core.defines import ICON_WIDTH, ICON_HEIGHT
+from outwiker.core.defines import ICON_WIDTH, ICON_HEIGHT, ICON_DEFAULT
 from outwiker.core.commands import MessageBox
 from outwiker.core.events import (PageDialogPageIconChangedParams,
                                   IconsGroupsListInitParams)
@@ -43,6 +43,7 @@ class IconsPanel(wx.Panel):
     """
     Class of the panel in the "Icon" tab.
     """
+
     def __init__(self, parent):
         super().__init__(parent)
         self._groupsButtonHeight = 32
@@ -73,13 +74,16 @@ class IconsPanel(wx.Panel):
 
 class IconsController(BasePageDialogController):
     def __init__(self, iconsPanel, application, dialog):
-        super(IconsController, self).__init__(application)
+        super().__init__(application)
         self._dialog = dialog
         self._iconsPanel = iconsPanel
         self._groupsMaxWidth = 200
         self._page = None
         self._default_group_cover = os.path.join(getImagesDir(),
                                                  u'icons_cover_default.png')
+        self._default_icon_filename = os.path.abspath(
+            os.path.join(getIconsDirList()[0], ICON_DEFAULT))
+
         guiconfig = GeneralGuiConfig(application.config)
 
         self._recentIconsList = RecentIconsList(
@@ -94,7 +98,7 @@ class IconsController(BasePageDialogController):
         self._iconsPanel.groupCtrl.Bind(EVT_SWITCH,
                                         handler=self._onGroupSelect)
 
-        self._selectedIcon = None
+        self._selectedIcon = self._default_icon_filename
         self._groupsInfo = self._getGroupsInfo()
 
         self._appendGroups()
@@ -148,26 +152,30 @@ class IconsController(BasePageDialogController):
 
     @property
     def icon(self):
-        return self._selectedIcon
+        return (self._selectedIcon
+                if self._selectedIcon != self._default_icon_filename
+                else None)
 
     def setPageProperties(self, page):
         """
         Return True if success and False otherwise
         """
-        if self.icon is None:
+        icon_filename = (os.path.abspath(self.icon)
+                         if self.icon is not None
+                         else None)
+
+        if ((page.icon is not None and icon_filename == os.path.abspath(page.icon)) or
+                (page.icon is None and icon_filename is None)):
+            # Icon was not changed
             return True
 
-        icon = os.path.abspath(self.icon)
+        if icon_filename is not None:
+            self._recentIconsList.add(icon_filename)
 
-        if page.icon is not None and icon == os.path.abspath(page.icon):
-            return True
-
-        self._recentIconsList.add(icon)
-
-        # If icon not exists, page may be renamed. Don't will to change icon
-        if os.path.exists(icon):
+        # If icon_filename not exists, page may be renamed. Don't will to change icon
+        if icon_filename is None or os.path.exists(icon_filename):
             try:
-                page.icon = icon
+                page.icon = icon_filename
             except EnvironmentError as e:
                 MessageBox(_(u"Can't set page icon\n") + str(e),
                            _(u"Error"),
@@ -191,8 +199,7 @@ class IconsController(BasePageDialogController):
                     break
 
     def _addCurrentIcon(self):
-        if self._selectedIcon is not None:
-            self._iconsPanel.iconsList.setCurrentIcon(self._selectedIcon)
+        self._iconsPanel.iconsList.setCurrentIcon(self._selectedIcon)
 
     def clear(self):
         self._iconsPanel.iconsList.Unbind(EVT_ICON_SELECTED,

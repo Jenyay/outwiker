@@ -656,7 +656,7 @@ class WikiPage(RootWikiPage):
     @icon.setter
     def icon(self, iconpath):
         '''
-        Return page icon.
+        Set page icon.
         '''
         return self.iconController.set_icon(self, iconpath)
 

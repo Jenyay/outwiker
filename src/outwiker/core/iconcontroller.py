@@ -4,6 +4,7 @@
 import os
 import os.path
 import shutil
+from typing import Union
 
 from outwiker.core.defines import (ICONS_STD_PREFIX,
                                    PAGE_ICON_NAME,
@@ -69,7 +70,7 @@ class IconController(object):
 
         page.params.iconOption.value = u''
 
-    def set_icon(self, page, icon_fname):
+    def set_icon(self, page, icon_fname: Union[str, None]) -> Union[str, None]:
         '''
         Set icon (icon_fname - icon file name) for a page.
         If icon_fname is built-in icon then link to icon will be added to page
@@ -82,34 +83,49 @@ class IconController(object):
         if page.readonly:
             raise ReadonlyException
 
-        if not self._check_icon_extension(icon_fname):
-            raise ValueError
-
-        icon_fname = os.path.abspath(icon_fname)
-
-        if self.is_builtin_icon(icon_fname):
+        if icon_fname is None and self.get_icon(page) is None:
+            return None
+        elif icon_fname is None:
             self._remove_icon(page)
-
-            # Set built-in icon
-            rel_icon_path = os.path.relpath(icon_fname, self._builtin_icons_path)
-            page.params.iconOption.value = rel_icon_path
+            page.params.iconOption.remove_option()
+        elif self.is_builtin_icon(icon_fname):
+            self._set_builtin_icon(page, icon_fname)
         else:
-            # Set custom icon
-            dot = icon_fname.rfind(".")
-            extension = icon_fname[dot:]
-
-            newname = PAGE_ICON_NAME + extension
-            newpath = os.path.abspath(os.path.join(page.path, newname))
-
-            if icon_fname != newpath:
-                self._remove_icon(page)
-                shutil.copyfile(icon_fname, newpath)
+            self._set_custom_icon(page, icon_fname)
 
         page.updateDateTime()
         page.root.onPageUpdate(page, change=PAGE_UPDATE_ICON)
         return icon_fname
 
-    def get_icon(self, page):
+    def _set_custom_icon(self, page, icon_fname):
+        assert icon_fname is not None
+
+        icon_fname = os.path.abspath(icon_fname)
+        if not self._check_icon_extension(icon_fname):
+            raise ValueError
+
+        dot = icon_fname.rfind(".")
+        extension = icon_fname[dot:]
+
+        newname = PAGE_ICON_NAME + extension
+        newpath = os.path.abspath(os.path.join(page.path, newname))
+
+        if icon_fname != newpath:
+            self._remove_icon(page)
+            shutil.copyfile(icon_fname, newpath)
+
+    def _set_builtin_icon(self, page, icon_fname):
+        assert icon_fname is not None
+
+        icon_fname = os.path.abspath(icon_fname)
+        if not self._check_icon_extension(icon_fname):
+            raise ValueError
+
+        self._remove_icon(page)
+        rel_icon_path = os.path.relpath(icon_fname, self._builtin_icons_path)
+        page.params.iconOption.value = rel_icon_path
+
+    def get_icon(self, page) -> Union[str, None]:
         '''
         Return path to a page icon or None if icon is not installed.
         The existence of a built-in icons is not checked.

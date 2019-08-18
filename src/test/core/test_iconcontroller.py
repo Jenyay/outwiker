@@ -348,6 +348,37 @@ class IconControllerTest(unittest.TestCase):
         self.assertNotEqual(self._page.params.iconOption.value, '')
         self.assertEqual(icon_fname, self._page.params.iconOption.value)
 
+    def test_set_icon_none_after_builtin(self):
+        path_main = 'tmp'
+        controller = IconController(path_main)
+
+        icon_fname = ICONS_STD_PREFIX + 'icon.png'
+        icon_path = os.path.join(path_main, icon_fname)
+
+        controller.set_icon(self._page, icon_path)
+        controller.set_icon(self._page, None)
+
+        self.assertIsNone(self._page.icon)
+
+    def test_set_icon_none_after_custom(self):
+        path_main = 'tmp'
+        controller = IconController(path_main)
+
+        icon_path = '../test/images/icon.png'
+
+        controller.set_icon(self._page, icon_path)
+        controller.set_icon(self._page, None)
+
+        self.assertIsNone(self._page.icon)
+
+    def test_set_icon_none_after_none(self):
+        path_main = 'tmp'
+        controller = IconController(path_main)
+
+        controller.set_icon(self._page, None)
+
+        self.assertIsNone(self._page.icon)
+
     def test_set_icon_builtin_event(self):
         path_main = 'tmp'
         controller = IconController(path_main)
