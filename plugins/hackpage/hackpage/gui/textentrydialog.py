@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import wx
 
@@ -13,7 +13,7 @@ class TextEntryDialog(TestedDialog):
                  title=u'', message=u'', prefix=u'',
                  value=u'',
                  validator=None):
-        super(TextEntryDialog, self).__init__(
+        super().__init__(
             parent,
             style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER,
             title=title

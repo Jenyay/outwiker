@@ -5,7 +5,8 @@ import wx
 from outwiker.core.commands import testreadonly, testPageTitle
 from outwiker.core.exceptions import ReadonlyException
 
-from hackpage.gui.textentrydialog import TextEntryDialog
+from .gui.textentrydialog import TextEntryDialog
+from .gui.datetimedialog import DateTimeDialog
 from hackpage.i18n import get_
 from hackpage.validators import ChangeUidValidator
 
@@ -101,3 +102,15 @@ def setPageFolderWithDialog(page, application):
             if page.title != dlg.GetValue():
                 page.title = dlg.GetValue()
                 page.alias = oldDisplayTitle
+
+
+@testreadonly
+def setPageCreationDate(page, application):
+    title = _('Page creation date and time')
+    selectedDateTime = page.creationdatetime
+
+    with DateTimeDialog(application.mainWindow,
+                        title=title,
+                        selectedDateTime=selectedDateTime) as dlg:
+        if dlg.ShowModal() == wx.ID_OK:
+            page.creationdatetime = dlg.getDateTime()
