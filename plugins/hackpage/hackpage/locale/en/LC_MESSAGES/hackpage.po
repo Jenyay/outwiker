@@ -7,33 +7,21 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hackpage\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-23 12:47+0300\n"
-"PO-Revision-Date: 2018-08-23 13:05+0300\n"
+"POT-Creation-Date: 2019-08-18 19:00+0300\n"
+"PO-Revision-Date: 2019-08-18 19:00+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.2.1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-#: guicontroller.py:90
-msgid "Change page identifier..."
-msgstr "Change page identifier..."
-
-#: guicontroller.py:92 actions/setalias.py:24
-msgid "Set page alias..."
-msgstr "Set page alias..."
-
-#: guicontroller.py:94 actions/changepagefolder.py:24
+#: actions/changepagefolder.py:24 guicontroller.py:98
 msgid "Change page folder..."
 msgstr "Change page folder..."
-
-#: actions/setalias.py:28
-msgid "HackPage plugin. Set page alias"
-msgstr "HackPage plugin. Set page alias"
 
 #: actions/changepagefolder.py:28
 msgid "HackPage plugin. Change the current page folder"
@@ -47,29 +35,33 @@ msgstr "Change Page Identifier..."
 msgid "HackPage plugin. Change Page Identifier"
 msgstr "HackPage plugin. Change Page Identifier"
 
-#: utils.py:27
-msgid "Change page identifier"
-msgstr "Change page identifier"
+#: actions/setalias.py:24 guicontroller.py:96
+msgid "Set page alias..."
+msgstr "Set page alias..."
 
-#: utils.py:28
-msgid "Enter new identifier for page \"{}\""
-msgstr "Enter new identifier for page \"{}\""
+#: actions/setalias.py:28
+msgid "HackPage plugin. Set page alias"
+msgstr "HackPage plugin. Set page alias"
 
-#: utils.py:60
-msgid "Set page alias"
-msgstr "Set page alias"
+#: gui/datetimedialog.py:40
+msgid "Date"
+msgstr "Date"
 
-#: utils.py:61
-msgid "Enter alias for page"
-msgstr "Enter alias for page"
+#: gui/datetimedialog.py:45
+msgid "Time"
+msgstr "Time"
 
-#: utils.py:90
-msgid "Set page folder"
-msgstr "Set page folder"
+#: guicontroller.py:94
+msgid "Change page identifier..."
+msgstr "Change page identifier..."
 
-#: utils.py:91
-msgid "Enter the page folder name"
-msgstr "Enter the page folder name"
+#: guicontroller.py:100
+msgid "Edit page creation date and time..."
+msgstr "Edit page creation date and time..."
+
+#: guicontroller.py:102
+msgid "Edit date and time of change of the page..."
+msgstr "Edit date and time of change of the page..."
 
 #: plugin.py:28
 msgid "The HackPage plugin allow to edit hidden page properties"
@@ -78,6 +70,38 @@ msgstr "The HackPage plugin allow to edit hidden page properties"
 #: plugin.py:32
 msgid "https://jenyay.net/Outwiker/HackPageEn"
 msgstr "https://jenyay.net/Outwiker/HackPageEn"
+
+#: utils.py:29
+msgid "Change page identifier"
+msgstr "Change page identifier"
+
+#: utils.py:30
+msgid "Enter new identifier for page \"{}\""
+msgstr "Enter new identifier for page \"{}\""
+
+#: utils.py:62
+msgid "Set page alias"
+msgstr "Set page alias"
+
+#: utils.py:63
+msgid "Enter alias for page"
+msgstr "Enter alias for page"
+
+#: utils.py:92
+msgid "Set page folder"
+msgstr "Set page folder"
+
+#: utils.py:93
+msgid "Enter the page folder name"
+msgstr "Enter the page folder name"
+
+#: utils.py:110
+msgid "Page creation date and time"
+msgstr "Page creation date and time"
+
+#: utils.py:123
+msgid "Date and time of change of the page"
+msgstr "Date and time of change of the page"
 
 #: validators.py:31
 msgid "Same identifier exist already"

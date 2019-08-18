@@ -107,6 +107,9 @@ def setPageFolderWithDialog(page, application):
 
 @testreadonly
 def setPageCreationDate(page, application):
+    global _
+    _ = get_()
+
     title = _('Page creation date and time')
     selectedDateTime = page.creationdatetime
 
@@ -120,6 +123,9 @@ def setPageCreationDate(page, application):
 
 @testreadonly
 def setPageChangeDate(page, application):
+    global _
+    _ = get_()
+
     title = _('Date and time of change of the page')
     selectedDateTime = page.datetime
 

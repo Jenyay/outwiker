@@ -8,12 +8,17 @@ import wx.adv
 
 from outwiker.gui.testeddialog import TestedDialog
 
+from ..i18n import get_
+
 
 class DateTimeDialog(TestedDialog):
     def __init__(self,
                  parent: wx.Window,
                  title: str = '',
                  selectedDateTime: Union[datetime, None] = None):
+        global _
+        _ = get_()
+
         super().__init__(parent, title=title)
         self._createGUI()
         self.setDateTime(selectedDateTime)
