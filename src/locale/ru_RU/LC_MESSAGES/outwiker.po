@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-24 21:14+0300\n"
+"POT-Creation-Date: 2019-08-19 20:35+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -68,8 +68,8 @@ msgstr "Стиль"
 msgid "Default"
 msgstr "По умолчанию"
 
-#: outwiker/actions/attachfiles.py:21 outwiker/gui/attachpanel.py:117
-#: outwiker/gui/attachpanel.py:122
+#: outwiker/actions/attachfiles.py:21 outwiker/gui/attachpanel.py:115
+#: outwiker/gui/attachpanel.py:120
 msgid "Attach Files…"
 msgstr "Прикрепить файлы…"
 
@@ -240,8 +240,8 @@ msgstr "Открыть…"
 msgid "Open tree notes"
 msgstr "Открыть дерево заметок"
 
-#: outwiker/actions/openattachfolder.py:20 outwiker/gui/attachpanel.py:163
-#: outwiker/gui/attachpanel.py:168 outwiker/gui/pagepopupmenu.py:101
+#: outwiker/actions/openattachfolder.py:20 outwiker/gui/attachpanel.py:161
+#: outwiker/gui/attachpanel.py:166 outwiker/gui/pagepopupmenu.py:101
 msgid "Open Attachments Folder"
 msgstr "Открыть папку с прикрепленными файлами"
 
@@ -254,7 +254,7 @@ msgstr "Открывает папку с прикрепленными файла
 msgid "Can't open folder '{}'"
 msgstr "Ошибка открытия папки '{}'"
 
-#: outwiker/actions/openhelp.py:25 outwiker/gui/mainwindow.py:187
+#: outwiker/actions/openhelp.py:25 outwiker/gui/mainwindow.py:186
 msgid "Help"
 msgstr "Справка"
 
@@ -338,7 +338,7 @@ msgstr "Сохранить"
 msgid "Save current note"
 msgstr "Сохранить текущую заметку"
 
-#: outwiker/actions/search.py:29 outwiker/gui/basetextpanel.py:333
+#: outwiker/actions/search.py:29 outwiker/gui/basetextpanel.py:332
 #: outwiker/gui/preferences/hotkeyspanel.py:83
 #: outwiker/pages/search/searchpanel.py:274
 msgid "Search"
@@ -615,7 +615,7 @@ msgstr ""
 msgid "Can't move page: {}"
 msgstr "Невозможно переместить страницу: {}"
 
-#: outwiker/core/commands.py:430 outwiker/gui/notestree.py:296
+#: outwiker/core/commands.py:430 outwiker/gui/notestree.py:295
 msgid "You can't rename the root element"
 msgstr "Нельзя переименовать корневой элемент"
 
@@ -770,12 +770,12 @@ msgstr "Ошибка печати"
 #: outwiker/core/textprinter.py:98
 #: outwiker/gui/controls/toastercontroller.py:49
 #: outwiker/gui/pagedialogpanels/appearancepanel.py:72
-#: outwiker/gui/pagedialogpanels/iconspanel.py:173
-#: outwiker/gui/preferences/iconsetpanel.py:215
-#: outwiker/gui/preferences/iconsetpanel.py:271
-#: outwiker/gui/preferences/iconsetpanel.py:277
-#: outwiker/gui/preferences/iconsetpanel.py:283
-#: outwiker/gui/preferences/iconsetpanel.py:323
+#: outwiker/gui/pagedialogpanels/iconspanel.py:181
+#: outwiker/gui/preferences/iconsetpanel.py:212
+#: outwiker/gui/preferences/iconsetpanel.py:268
+#: outwiker/gui/preferences/iconsetpanel.py:274
+#: outwiker/gui/preferences/iconsetpanel.py:280
+#: outwiker/gui/preferences/iconsetpanel.py:320
 #: outwiker/gui/renametagdialog.py:77 outwiker/gui/renametagdialog.py:82
 #: outwiker/pages/html/basehtmlpanel.py:305
 msgid "Error"
@@ -1153,6 +1153,7 @@ msgstr "Установить цвет фона текста"
 
 #: outwiker/gui/actionslist.py:202 outwiker/gui/dialogs/linkdialog.py:46
 #: outwiker/gui/preferences/htmleditorpanel.py:53
+#: outwiker/gui/preferences/wikieditorpanel.py:36
 msgid "Comment"
 msgstr "Комментарий"
 
@@ -1160,28 +1161,28 @@ msgstr "Комментарий"
 msgid "Mark text as comment"
 msgstr "Пометить текст как комментарий"
 
-#: outwiker/gui/attachpanel.py:128 outwiker/gui/attachpanel.py:133
+#: outwiker/gui/attachpanel.py:126 outwiker/gui/attachpanel.py:131
 msgid "Remove Files…"
 msgstr "Удалить файлы…"
 
-#: outwiker/gui/attachpanel.py:141 outwiker/gui/attachpanel.py:146
-#: outwiker/gui/mainwindow.py:285 outwiker/gui/texteditormenu.py:16
+#: outwiker/gui/attachpanel.py:139 outwiker/gui/attachpanel.py:144
+#: outwiker/gui/mainwindow.py:284 outwiker/gui/texteditormenu.py:16
 msgid "Paste"
 msgstr "Вставить"
 
-#: outwiker/gui/attachpanel.py:152 outwiker/gui/attachpanel.py:157
+#: outwiker/gui/attachpanel.py:150 outwiker/gui/attachpanel.py:155
 msgid "Execute"
 msgstr "Запустить"
 
-#: outwiker/gui/attachpanel.py:256
+#: outwiker/gui/attachpanel.py:255
 msgid "You did not select a file to remove"
 msgstr "Вы не выбрали файл(ы) для удаления"
 
-#: outwiker/gui/attachpanel.py:259
+#: outwiker/gui/attachpanel.py:258
 msgid "Remove selected files?"
 msgstr "Удалить выбранные файлы?"
 
-#: outwiker/gui/attachpanel.py:260
+#: outwiker/gui/attachpanel.py:259
 msgid "Remove files?"
 msgstr "Удалить файлы?"
 
@@ -1193,13 +1194,14 @@ msgstr "Вы не выбрали файл(ы) для вставки"
 msgid "You did not select a file to execute"
 msgstr "Вы не выбрали файл(ы) для запуска"
 
-#: outwiker/gui/attachpanel.py:296 outwiker/gui/htmlrender.py:59
-#: outwiker/gui/htmlrenderie.py:213 outwiker/gui/htmlrenderwebkit.py:259
+#: outwiker/gui/attachpanel.py:297 outwiker/gui/htmlrender.py:66
+#: outwiker/gui/htmlrenderie.py:250 outwiker/gui/htmlrenderie.py:308
+#: outwiker/gui/htmlrenderwebkit.py:261 outwiker/gui/htmlrenderwebkit.py:343
 #, python-format
 msgid "Can't execute file '%s'"
 msgstr "Ошибка запуска файла '%s'"
 
-#: outwiker/gui/basepagedialog.py:130 outwiker/gui/mainwindow.py:203
+#: outwiker/gui/basepagedialog.py:130 outwiker/gui/mainwindow.py:202
 #: outwiker/gui/preferences/prefcontroller.py:148
 #: outwiker/gui/preferences/prefcontroller.py:172
 #: outwiker/pages/wiki/wikipagecontroller.py:80
@@ -1210,37 +1212,37 @@ msgstr "Общие"
 msgid "Icon"
 msgstr "Значок"
 
-#: outwiker/gui/basetextpanel.py:210 outwiker/gui/dialogs/overwritedialog.py:15
+#: outwiker/gui/basetextpanel.py:209 outwiker/gui/dialogs/overwritedialog.py:15
 msgid "Overwrite"
 msgstr "Перезаписать"
 
-#: outwiker/gui/basetextpanel.py:210
+#: outwiker/gui/basetextpanel.py:209
 msgid "Load"
 msgstr "Загрузить"
 
-#: outwiker/gui/basetextpanel.py:210 outwiker/gui/dialogs/overwritedialog.py:19
+#: outwiker/gui/basetextpanel.py:209 outwiker/gui/dialogs/overwritedialog.py:19
 msgid "Cancel"
 msgstr "Отмена"
 
-#: outwiker/gui/basetextpanel.py:212
+#: outwiker/gui/basetextpanel.py:211
 #, python-format
 msgid "Page \"%s\" is changed by the external program"
 msgstr "Содержимое страницы \"%s\" изменено сторонней программой"
 
-#: outwiker/gui/basetextpanel.py:215
+#: outwiker/gui/basetextpanel.py:214
 msgid "Owerwrite?"
 msgstr "Перезаписать?"
 
-#: outwiker/gui/basetextpanel.py:254 outwiker/gui/tabscontroller.py:243
+#: outwiker/gui/basetextpanel.py:253 outwiker/gui/tabscontroller.py:243
 #, python-format
 msgid "Can't save file %s"
 msgstr "Ошибка записи в файл %s"
 
-#: outwiker/gui/basetextpanel.py:470
+#: outwiker/gui/basetextpanel.py:469
 msgid "Word"
 msgstr "Слово"
 
-#: outwiker/gui/basetextpanel.py:549
+#: outwiker/gui/basetextpanel.py:548
 msgid "Lines"
 msgstr "Строки"
 
@@ -1313,7 +1315,7 @@ msgid "A literal '%' character"
 msgstr "Символ '%'"
 
 #: outwiker/gui/controls/pagelist_columns.py:196
-#: outwiker/gui/pagedialogpanels/generalpanel.py:47
+#: outwiker/gui/pagedialogpanels/generalpanel.py:49
 #: outwiker/pages/search/sortstrategies.py:64
 msgid "Title"
 msgstr "Заголовок"
@@ -1326,94 +1328,94 @@ msgstr "Родитель"
 msgid "Modify date"
 msgstr "Дата изменения"
 
-#: outwiker/gui/currentpagepanel.py:102
+#: outwiker/gui/currentpagepanel.py:99
 msgid "Can't open page. Page folder not exists"
 msgstr "Невозможно открыть страницу. Папка со страницей отсутствует"
 
-#: outwiker/gui/currentpagepanel.py:112
+#: outwiker/gui/currentpagepanel.py:109
 msgid "Add to Bookmarks"
 msgstr "Добавить в закладки"
 
-#: outwiker/gui/currentpagepanel.py:119
+#: outwiker/gui/currentpagepanel.py:116
 msgid "Remove from Bookmarks"
 msgstr "Удалить из закладок"
 
-#: outwiker/gui/currentpagepanel.py:263
+#: outwiker/gui/currentpagepanel.py:260
 msgid "Can't save page. Wiki folder not exists. Wiki will be closed."
 msgstr ""
 "Невозможно сохранить страницу. \n"
 "Папка с вики не существует. \n"
 "Вики будет закрыта."
 
-#: outwiker/gui/currentpagepanel.py:273
+#: outwiker/gui/currentpagepanel.py:270
 msgid "Can't save page. Page folder not exists. Wiki will be reloaded."
 msgstr ""
 "Невозможно сохранить страницу. \n"
 "Папка со страницей не существует. \n"
 "Вики будет перезагружена."
 
-#: outwiker/gui/dialogs/about.py:16
+#: outwiker/gui/dialogs/about.py:14
 msgid "OutWiker"
 msgstr "OutWiker"
 
-#: outwiker/gui/dialogs/about.py:17
+#: outwiker/gui/dialogs/about.py:15
 msgid "Version:"
 msgstr "Версия:"
 
-#: outwiker/gui/dialogs/about.py:30
+#: outwiker/gui/dialogs/about.py:28
 msgid "OutWiker is personal wiki system and tree notes outliner."
 msgstr ""
 "OutWiker - это персональная викисистема и древовидный редактор заметок."
 
-#: outwiker/gui/dialogs/about.py:33
+#: outwiker/gui/dialogs/about.py:31
 msgid "License: GPL 3"
 msgstr "Лицензия: GPL 3"
 
-#: outwiker/gui/dialogs/about.py:38
+#: outwiker/gui/dialogs/about.py:36
 msgid "OutWiker's page:"
 msgstr "Страница программы:"
 
-#: outwiker/gui/dialogs/about.py:44 outwiker/gui/dialogs/about.py:45
+#: outwiker/gui/dialogs/about.py:42 outwiker/gui/dialogs/about.py:43
 msgid "https://jenyay.net/Outwiker/English"
 msgstr "https://jenyay.net/Soft/Outwiker"
 
-#: outwiker/gui/dialogs/about.py:54
+#: outwiker/gui/dialogs/about.py:52
 msgid "mailto:jenyay.ilin@gmail.com"
 msgstr "mailto:jenyay.ilin@gmail.com"
 
-#: outwiker/gui/dialogs/about.py:60
+#: outwiker/gui/dialogs/about.py:58
 msgid "Facebook page"
 msgstr "Страница на Facebook"
 
-#: outwiker/gui/dialogs/about.py:61
+#: outwiker/gui/dialogs/about.py:59
 msgid "https://www.facebook.com/outwiker"
 msgstr "https://www.facebook.com/outwiker"
 
-#: outwiker/gui/dialogs/about.py:67
+#: outwiker/gui/dialogs/about.py:65
 msgid "Twitter"
 msgstr "Twitter"
 
-#: outwiker/gui/dialogs/about.py:68
+#: outwiker/gui/dialogs/about.py:66
 msgid "https://twitter.com/OutWiker"
 msgstr "https://twitter.com/OutWiker"
 
-#: outwiker/gui/dialogs/about.py:74
+#: outwiker/gui/dialogs/about.py:72
 msgid "Vkontakte group"
 msgstr "Группа Вконтакте"
 
-#: outwiker/gui/dialogs/about.py:75
+#: outwiker/gui/dialogs/about.py:73
 msgid "https://vk.com/outwiker"
 msgstr "https://vk.com/outwiker"
 
-#: outwiker/gui/dialogs/about.py:87 outwiker/gui/dialogs/about.py:145
+#: outwiker/gui/dialogs/about.py:85 outwiker/gui/dialogs/about.py:143
 msgid "About"
 msgstr "О программе"
 
-#: outwiker/gui/dialogs/about.py:123
+#: outwiker/gui/dialogs/about.py:121
 msgid "Author: Ilin Eugeniy (aka Jenyay)"
 msgstr "Автор: Евгений Ильин (aka Jenyay)"
 
-#: outwiker/gui/dialogs/about.py:146
+#: outwiker/gui/dialogs/about.py:144
 msgid "Contacts"
 msgstr "Контакты"
 
@@ -1453,13 +1455,13 @@ msgstr "Последние используемые деревья замето�
 msgid "Open"
 msgstr "Открыть"
 
-#: outwiker/gui/htmlrenderwebkit.py:57
+#: outwiker/gui/htmlrenderwebkit.py:171 outwiker/gui/htmlrenderwebkit.py:283
 #, python-format
 msgid "Can't read file %s"
 msgstr "Ошибка чтения файла %s"
 
 #: outwiker/gui/iconlistctrl.py:53
-#: outwiker/gui/pagedialogpanels/iconspanel.py:249
+#: outwiker/gui/pagedialogpanels/iconspanel.py:256
 msgid "Invalid icon file: {}"
 msgstr "Ошибка в файле значка: {}"
 
@@ -1479,64 +1481,64 @@ msgstr "Заметка"
 msgid "Notes"
 msgstr "Заметки"
 
-#: outwiker/gui/mainwindow.py:168
+#: outwiker/gui/mainwindow.py:167
 msgid "File"
 msgstr "Файл"
 
-#: outwiker/gui/mainwindow.py:171 outwiker/gui/preferences/generalpanel.py:42
+#: outwiker/gui/mainwindow.py:170 outwiker/gui/preferences/generalpanel.py:42
 msgid "Edit"
 msgstr "Правка"
 
-#: outwiker/gui/mainwindow.py:174
+#: outwiker/gui/mainwindow.py:173
 msgid "Tree"
 msgstr "Дерево"
 
-#: outwiker/gui/mainwindow.py:177
+#: outwiker/gui/mainwindow.py:176
 msgid "Tools"
 msgstr "Инструменты"
 
-#: outwiker/gui/mainwindow.py:180 outwiker/gui/rootpagepanel.py:167
+#: outwiker/gui/mainwindow.py:179 outwiker/gui/rootpagepanel.py:167
 msgid "Bookmarks"
 msgstr "Закладки"
 
-#: outwiker/gui/mainwindow.py:182
+#: outwiker/gui/mainwindow.py:181
 msgid "View"
 msgstr "Вид"
 
-#: outwiker/gui/mainwindow.py:184
+#: outwiker/gui/mainwindow.py:183
 msgid "Go to"
 msgstr "Перейти к"
 
-#: outwiker/gui/mainwindow.py:192
+#: outwiker/gui/mainwindow.py:191
 msgid "Toolbars"
 msgstr "Панели инструментов"
 
-#: outwiker/gui/mainwindow.py:209
+#: outwiker/gui/mainwindow.py:208
 #: outwiker/gui/preferences/prefcontroller.py:182
 msgid "Plugins"
 msgstr "Плагины"
 
-#: outwiker/gui/mainwindow.py:263 outwiker/gui/texteditormenu.py:11
+#: outwiker/gui/mainwindow.py:262 outwiker/gui/texteditormenu.py:11
 msgid "Undo"
 msgstr "Отменить"
 
-#: outwiker/gui/mainwindow.py:268 outwiker/gui/texteditormenu.py:12
+#: outwiker/gui/mainwindow.py:267 outwiker/gui/texteditormenu.py:12
 msgid "Redo"
 msgstr "Вернуть"
 
-#: outwiker/gui/mainwindow.py:275 outwiker/gui/texteditormenu.py:14
+#: outwiker/gui/mainwindow.py:274 outwiker/gui/texteditormenu.py:14
 msgid "Cut"
 msgstr "Вырезать"
 
-#: outwiker/gui/mainwindow.py:280 outwiker/gui/texteditormenu.py:15
+#: outwiker/gui/mainwindow.py:279 outwiker/gui/texteditormenu.py:15
 msgid "Copy"
 msgstr "Копировать"
 
-#: outwiker/gui/mainwindow.py:292 outwiker/gui/texteditormenu.py:18
+#: outwiker/gui/mainwindow.py:291 outwiker/gui/texteditormenu.py:18
 msgid "Select All"
 msgstr "Выделить всё"
 
-#: outwiker/gui/mainwindow.py:604
+#: outwiker/gui/mainwindow.py:600
 #, python-format
 msgid ""
 "Can't save config\n"
@@ -1556,7 +1558,7 @@ msgstr ""
 "Невозможно сохранить настройки.\n"
 "%s"
 
-#: outwiker/gui/notestree.py:666
+#: outwiker/gui/notestree.py:664
 #, python-brace-format
 msgid ""
 "Attach files to the note '{title}'?\n"
@@ -1567,7 +1569,7 @@ msgstr ""
 "\n"
 "{files}"
 
-#: outwiker/gui/notestree.py:672
+#: outwiker/gui/notestree.py:670
 msgid "Attach files to the note?"
 msgstr "Прикрепить файлы к заметке?"
 
@@ -1592,21 +1594,21 @@ msgstr "Ошибка установки стиля страницы\n"
 msgid "Do not change"
 msgstr "Не изменять"
 
-#: outwiker/gui/pagedialogpanels/generalpanel.py:58
+#: outwiker/gui/pagedialogpanels/generalpanel.py:60
 #: outwiker/gui/unknownpagetype.py:28
 msgid "Page type"
 msgstr "Тип страницы"
 
-#: outwiker/gui/pagedialogpanels/iconspanel.py:113
-#: outwiker/gui/preferences/iconsetpanel.py:160
+#: outwiker/gui/pagedialogpanels/iconspanel.py:117
+#: outwiker/gui/preferences/iconsetpanel.py:157
 msgid "Not in groups"
 msgstr "Без групп"
 
-#: outwiker/gui/pagedialogpanels/iconspanel.py:138
+#: outwiker/gui/pagedialogpanels/iconspanel.py:142
 msgid "Recent"
 msgstr "Последнее"
 
-#: outwiker/gui/pagedialogpanels/iconspanel.py:172
+#: outwiker/gui/pagedialogpanels/iconspanel.py:180
 msgid "Can't set page icon\n"
 msgstr "Ошибка установки значка страницы\n"
 
@@ -1664,7 +1666,7 @@ msgstr "Цвет фона выбранной метки"
 #: outwiker/gui/preferences/htmlrenderpanel.py:26
 #: outwiker/gui/preferences/textprintpanel.py:29
 #: outwiker/pages/html/htmlpageview.py:38
-#: outwiker/pages/html/htmlpageview.py:206
+#: outwiker/pages/html/htmlpageview.py:207
 #: outwiker/pages/wiki/wikipageview.py:64
 #: outwiker/pages/wiki/wikipageview.py:154
 msgid "Font"
@@ -1720,43 +1722,47 @@ msgstr "Последний используемый"
 msgid "Preview"
 msgstr "Просмотр"
 
-#: outwiker/gui/preferences/generalpanel.py:78
+#: outwiker/gui/preferences/generalpanel.py:79
 msgid "Autosave interval in seconds(0 - disabled)"
 msgstr "Период автосохранения (0 - отключено)"
 
-#: outwiker/gui/preferences/generalpanel.py:102
+#: outwiker/gui/preferences/generalpanel.py:103
 msgid "Toaster delay in seconds"
 msgstr "Задержка окна сообщений в секундах"
 
-#: outwiker/gui/preferences/generalpanel.py:130
+#: outwiker/gui/preferences/generalpanel.py:131
 msgid "Date and time format"
 msgstr "Формат даты и времени"
 
 #: outwiker/gui/preferences/generalpanel.py:155
+msgid "New page title template"
+msgstr "Шаблон заголовка новой страницы"
+
+#: outwiker/gui/preferences/generalpanel.py:181
 msgid "Ask before exit"
 msgstr "Спрашивать подтверждение перед выходом"
 
-#: outwiker/gui/preferences/generalpanel.py:165
+#: outwiker/gui/preferences/generalpanel.py:191
 msgid "Length of recently used icons history"
 msgstr "Размер истории последних используемых значков"
 
-#: outwiker/gui/preferences/generalpanel.py:179
+#: outwiker/gui/preferences/generalpanel.py:205
 msgid "Length of recently opened files history"
 msgstr "Размер истории последних открытых файлов"
 
-#: outwiker/gui/preferences/generalpanel.py:192
+#: outwiker/gui/preferences/generalpanel.py:218
 msgid "Automatically open the recent file"
 msgstr "При запуске открывать последний открытый файл"
 
-#: outwiker/gui/preferences/generalpanel.py:228
+#: outwiker/gui/preferences/generalpanel.py:254
 msgid "Language(restart required)"
 msgstr "Язык (требуется перезапуск)"
 
-#: outwiker/gui/preferences/generalpanel.py:245
+#: outwiker/gui/preferences/generalpanel.py:271
 msgid "Default opening page mode"
 msgstr "Режим открытия страниц по умолчанию"
 
-#: outwiker/gui/preferences/generalpanel.py:361
+#: outwiker/gui/preferences/generalpanel.py:394
 msgid "Auto"
 msgstr "Авто"
 
@@ -1813,89 +1819,89 @@ msgstr "Разделитель параграфов"
 msgid "Additional styles (CSS):"
 msgstr "Дополнительные стили (CSS):"
 
-#: outwiker/gui/preferences/iconsetpanel.py:69
+#: outwiker/gui/preferences/iconsetpanel.py:66
 msgid "Add new group"
 msgstr "Добавить новую группу"
 
-#: outwiker/gui/preferences/iconsetpanel.py:77
+#: outwiker/gui/preferences/iconsetpanel.py:74
 msgid "Remove group"
 msgstr "Удалить группу"
 
-#: outwiker/gui/preferences/iconsetpanel.py:85
+#: outwiker/gui/preferences/iconsetpanel.py:82
 msgid "Rename group"
 msgstr "Переименовать группу"
 
-#: outwiker/gui/preferences/iconsetpanel.py:112
+#: outwiker/gui/preferences/iconsetpanel.py:109
 msgid "Add icons"
 msgstr "Добавить значки"
 
-#: outwiker/gui/preferences/iconsetpanel.py:120
+#: outwiker/gui/preferences/iconsetpanel.py:117
 msgid "Remove selected icons"
 msgstr "Удалить выбранные значки"
 
-#: outwiker/gui/preferences/iconsetpanel.py:128
+#: outwiker/gui/preferences/iconsetpanel.py:125
 msgid "Set icon as group cover"
 msgstr "Установить значок как обложку группы"
 
-#: outwiker/gui/preferences/iconsetpanel.py:214
+#: outwiker/gui/preferences/iconsetpanel.py:211
 msgid "Can't create directory for icons group"
 msgstr "Ошибка создания директории для группы значков"
 
-#: outwiker/gui/preferences/iconsetpanel.py:243
+#: outwiker/gui/preferences/iconsetpanel.py:240
 msgid "New group{}"
 msgstr "Новая группа{}"
 
-#: outwiker/gui/preferences/iconsetpanel.py:270
+#: outwiker/gui/preferences/iconsetpanel.py:267
 msgid "Can't rename directory for icons group"
 msgstr "Ошибка переименования группы значков"
 
-#: outwiker/gui/preferences/iconsetpanel.py:276
+#: outwiker/gui/preferences/iconsetpanel.py:273
 msgid "Group with name \"{}\" exists already"
 msgstr "Группа с именем \"{}\" уже существует"
 
-#: outwiker/gui/preferences/iconsetpanel.py:282
+#: outwiker/gui/preferences/iconsetpanel.py:279
 msgid "Invalid group name \"{}\""
 msgstr "Недопустимое имя группы \"{}\""
 
-#: outwiker/gui/preferences/iconsetpanel.py:315
+#: outwiker/gui/preferences/iconsetpanel.py:312
 msgid "Remove group \"{}\" and all icons inside it?"
 msgstr "Удалить группу \"{}\" и все значки внутри нее?"
 
-#: outwiker/gui/preferences/iconsetpanel.py:316
+#: outwiker/gui/preferences/iconsetpanel.py:313
 msgid "Remove group?"
 msgstr "Удалить группу?"
 
-#: outwiker/gui/preferences/iconsetpanel.py:322
+#: outwiker/gui/preferences/iconsetpanel.py:319
 msgid "Can't remove group directory"
 msgstr "Невозможно удалить директорию группы"
 
-#: outwiker/gui/preferences/iconsetpanel.py:330
+#: outwiker/gui/preferences/iconsetpanel.py:327
 msgid "All image files"
 msgstr "Все файлы с картинками"
 
-#: outwiker/gui/preferences/iconsetpanel.py:331
+#: outwiker/gui/preferences/iconsetpanel.py:328
 msgid "All files"
 msgstr "Все файлы"
 
-#: outwiker/gui/preferences/iconsetpanel.py:336
+#: outwiker/gui/preferences/iconsetpanel.py:333
 msgid "Select images"
 msgstr "Выберите изображения"
 
-#: outwiker/gui/preferences/iconsetpanel.py:352
-#: outwiker/gui/preferences/iconsetpanel.py:376
+#: outwiker/gui/preferences/iconsetpanel.py:349
+#: outwiker/gui/preferences/iconsetpanel.py:373
 msgid "You have not selected any icons"
 msgstr "Вы не выбрали ни одного значка"
 
-#: outwiker/gui/preferences/iconsetpanel.py:353
-#: outwiker/gui/preferences/iconsetpanel.py:377
+#: outwiker/gui/preferences/iconsetpanel.py:350
+#: outwiker/gui/preferences/iconsetpanel.py:374
 msgid "Select icons"
 msgstr "Выберите значки"
 
-#: outwiker/gui/preferences/iconsetpanel.py:358
+#: outwiker/gui/preferences/iconsetpanel.py:355
 msgid "Remove selected icons?"
 msgstr "Удалить выбранные значки?"
 
-#: outwiker/gui/preferences/iconsetpanel.py:359
+#: outwiker/gui/preferences/iconsetpanel.py:356
 msgid "Remove icons"
 msgstr "Удалить значки"
 
@@ -2037,7 +2043,7 @@ msgstr "Сворачивать при закрытии окна"
 
 #: outwiker/gui/preferences/wikieditorpanel.py:34
 #: outwiker/pages/html/htmlpageview.py:37
-#: outwiker/pages/html/htmlpageview.py:205
+#: outwiker/pages/html/htmlpageview.py:206
 #: outwiker/pages/wiki/wikipageview.py:63
 #: outwiker/pages/wiki/wikipageview.py:153
 msgid "Heading"
@@ -2200,22 +2206,22 @@ msgstr "Внешний вид"
 msgid "Align"
 msgstr "Выравнивание"
 
-#: outwiker/pages/html/htmlpageview.py:207
+#: outwiker/pages/html/htmlpageview.py:208
 #: outwiker/pages/wiki/wikipageview.py:155
 msgid "Alignment"
 msgstr "Выравнивание"
 
-#: outwiker/pages/html/htmlpageview.py:208
+#: outwiker/pages/html/htmlpageview.py:209
 #: outwiker/pages/wiki/wikipageview.py:157
 msgid "Formatting"
 msgstr "Форматирование"
 
-#: outwiker/pages/html/htmlpageview.py:209
+#: outwiker/pages/html/htmlpageview.py:210
 #: outwiker/pages/wiki/wikipageview.py:162
 msgid "Lists"
 msgstr "Списки"
 
-#: outwiker/pages/html/htmlpageview.py:210
+#: outwiker/pages/html/htmlpageview.py:211
 #: outwiker/pages/wiki/wikipageview.py:161
 msgid "Tables"
 msgstr "Таблицы"
@@ -2506,19 +2512,19 @@ msgstr "Размер шрифта"
 msgid "None"
 msgstr "Нет"
 
-#: outwiker/pages/wiki/gui/styledialog.py:136
+#: outwiker/pages/wiki/gui/styledialog.py:137
 msgid "Style name"
 msgstr "Имя стиля"
 
-#: outwiker/pages/wiki/gui/styledialog.py:154
+#: outwiker/pages/wiki/gui/styledialog.py:155
 msgid "Text color"
 msgstr "Цвет текста"
 
-#: outwiker/pages/wiki/gui/styledialog.py:170
+#: outwiker/pages/wiki/gui/styledialog.py:171
 msgid "Text background"
 msgstr "Фон текста"
 
-#: outwiker/pages/wiki/gui/styledialog.py:186
+#: outwiker/pages/wiki/gui/styledialog.py:187
 msgid "Custom CSS"
 msgstr "Дополнительные стили CSS"
 

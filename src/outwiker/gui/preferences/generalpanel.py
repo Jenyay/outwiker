@@ -50,6 +50,7 @@ class GeneralPanel(BasePrefPanel):
         self.__createToasterDelayGui(self.generalConfig)
         self.__createHistoryGui(self.generalConfig)
         self.__createDateTimeFormatGui(self.generalConfig)
+        self.__createPageTitleTemplateGui(self.generalConfig)
         self.__createOpenPageTabGui()
         self.__createLanguageGui()
 
@@ -124,7 +125,7 @@ class GeneralPanel(BasePrefPanel):
 
     def __createDateTimeFormatGui(self, generalConfig):
         """
-        Создать элементы, связанные с выбором формата даты и времени
+        Create GUI for selection date and time format
         """
         initial = generalConfig.dateTimeFormat.value
         dateTimeLabel = wx.StaticText(self, -1, _("Date and time format"))
@@ -144,6 +145,31 @@ class GeneralPanel(BasePrefPanel):
                                0,
                                wx.ALL | wx.EXPAND,
                                border=2)
+
+    def __createPageTitleTemplateGui(self, generalConfig):
+        """
+        Create GUI for selection page title template
+        """
+        initial = generalConfig.pageTitleTemplate.value
+        titleTemplateLabel = wx.StaticText(
+            self, -1, _("New page title template"))
+
+        hintBitmap = wx.Bitmap(getBuiltinImagePath('wand.png'))
+        self.pageTitleTemplateCtrl = DateTimeFormatCtrl(
+            self, hintBitmap, initial)
+
+        self.pageTitleTemplateSizer = wx.FlexGridSizer(1, 2, 0, 0)
+        self.pageTitleTemplateSizer.AddGrowableRow(0)
+        self.pageTitleTemplateSizer.AddGrowableCol(1)
+
+        self.pageTitleTemplateSizer.Add(titleTemplateLabel,
+                                        0,
+                                        wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+                                        border=2)
+        self.pageTitleTemplateSizer.Add(self.pageTitleTemplateCtrl,
+                                        0,
+                                        wx.ALL | wx.EXPAND,
+                                        border=2)
 
     def __createMiscGui(self):
         """
@@ -286,6 +312,7 @@ class GeneralPanel(BasePrefPanel):
 
         self.__addStaticLine(main_sizer)
         main_sizer.Add(self.dateTimeSizer, 1, wx.EXPAND, 0)
+        main_sizer.Add(self.pageTitleTemplateSizer, 1, wx.EXPAND, 0)
 
         self.__addStaticLine(main_sizer)
         main_sizer.Add(self.toasterDelaySizer, 1, wx.EXPAND, 0)
@@ -341,6 +368,11 @@ class GeneralPanel(BasePrefPanel):
             self.dateTimeFormatCtrl
         )
 
+        self.pageTitleTemplate = configelements.StringElement(
+            self.generalConfig.pageTitleTemplate,
+            self.pageTitleTemplateCtrl
+        )
+
         # Автосохранение
         self.autosaveInterval = configelements.IntegerElement(
             self.generalConfig.autosaveInterval,
@@ -350,7 +382,8 @@ class GeneralPanel(BasePrefPanel):
         )
 
         self.__loadLanguages()
-        self.toasterDelaySpin.SetValue(self.generalConfig.toasterDelay.value // 1000)
+        self.toasterDelaySpin.SetValue(
+            self.generalConfig.toasterDelay.value // 1000)
 
     def __loadLanguages(self):
         languages = outwiker.core.i18n.getLanguages()
@@ -381,6 +414,7 @@ class GeneralPanel(BasePrefPanel):
         self.autoopen.save()
         self.autosaveInterval.save()
         self.dateTimeFormat.save()
+        self.pageTitleTemplate.save()
         self.__saveLanguage()
         self.__savePageTab()
         self.generalConfig.toasterDelay.value = self.toasterDelaySpin.GetValue() * 1000

@@ -32,6 +32,9 @@ class GeneralGuiConfig(object):
     DATETIME_FORMAT_PARAM = u'DateTimeFormat'
     DATETIME_FORMAT_DEFAULT = u'%c'
 
+    PAGE_TITLE_TEMPLATE_PARAM = u'PageTitleTemplate'
+    PAGE_TITLE_TEMPLATE_DEFAULT = ''
+
     # Последний используемый формат представления даты
     RECENT_DATETIME_FORMAT_PARAM = u'RecentDateTimeFormat'
 
@@ -102,6 +105,11 @@ class GeneralGuiConfig(object):
                                            self.GENERAL_SECTION,
                                            self.DATETIME_FORMAT_PARAM,
                                            self.DATETIME_FORMAT_DEFAULT)
+
+        self.pageTitleTemplate = StringOption(self.config,
+                                           self.GENERAL_SECTION,
+                                           self.PAGE_TITLE_TEMPLATE_PARAM,
+                                           self.PAGE_TITLE_TEMPLATE_DEFAULT)
 
         # Последний используемый формат для представления даты и времени
         # модификиции страниц
