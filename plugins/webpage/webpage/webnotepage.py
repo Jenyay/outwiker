@@ -137,14 +137,17 @@ class WebPageFactory(PageFactory):
         tmpStaticDir - path to downloaded static files.
         logContent - log of downloading.
         """
-        title = self._getTitle(parentPage, title)
-        page = self.create(parentPage, title, [])
+        title_correct = self._getTitle(parentPage, title)
+        page = self.create(parentPage, title_correct, [])
         page.tags = tags
         page.content = content
         page.source = url
         page.log = logContent
         if favicon is not None:
             page.icon = favicon
+
+        if title != title_correct:
+            page.alias = title
 
         staticDir = os.path.join(page.path, STATIC_DIR_NAME)
         try:
