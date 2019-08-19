@@ -7,8 +7,7 @@ import wx
 from . import configelements
 import outwiker.core.i18n
 from outwiker.core.system import getBuiltinImagePath
-from outwiker.gui.guiconfig import (GeneralGuiConfig,
-                                    MainWindowConfig)
+from outwiker.gui.guiconfig import GeneralGuiConfig, MainWindowConfig
 from outwiker.gui.controls.datetimeformatctrl import DateTimeFormatCtrl
 from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
 
@@ -49,8 +48,8 @@ class GeneralPanel(BasePrefPanel):
         self.__createAutosaveGui(self.generalConfig)
         self.__createToasterDelayGui(self.generalConfig)
         self.__createHistoryGui(self.generalConfig)
-        self.__createDateTimeFormatGui(self.generalConfig)
-        self.__createPageTitleTemplateGui(self.generalConfig)
+        self.__createTemplatesGui(self.generalConfig)
+        # self.__createPageTitleTemplateGui(self.generalConfig)
         self.__createOpenPageTabGui()
         self.__createLanguageGui()
 
@@ -123,53 +122,46 @@ class GeneralPanel(BasePrefPanel):
                                    flag=wx.ALL | wx.ALIGN_RIGHT,
                                    border=2)
 
-    def __createDateTimeFormatGui(self, generalConfig):
+    def __createTemplatesGui(self, generalConfig):
         """
         Create GUI for selection date and time format
+        and new page title template
         """
-        initial = generalConfig.dateTimeFormat.value
-        dateTimeLabel = wx.StaticText(self, -1, _("Date and time format"))
+        # Config values
+        initial_date_format = generalConfig.dateTimeFormat.value
+        initial_page_title = generalConfig.pageTitleTemplate.value
+
+        # Create labels
+        dateTimeLabel = wx.StaticText(self, label=_("Date and time format"))
+        pageTitleTemplateLabel = wx.StaticText(
+            self, label=_("New page title template"))
 
         hintBitmap = wx.Bitmap(getBuiltinImagePath('wand.png'))
-        self.dateTimeFormatCtrl = DateTimeFormatCtrl(self, hintBitmap, initial)
 
-        self.dateTimeSizer = wx.FlexGridSizer(1, 2, 0, 0)
-        self.dateTimeSizer.AddGrowableRow(0)
-        self.dateTimeSizer.AddGrowableCol(1)
+        # Create main controls
+        self.dateTimeFormatCtrl = DateTimeFormatCtrl(
+            self, hintBitmap, initial_date_format)
 
-        self.dateTimeSizer.Add(dateTimeLabel,
-                               0,
-                               wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                               border=2)
-        self.dateTimeSizer.Add(self.dateTimeFormatCtrl,
-                               0,
-                               wx.ALL | wx.EXPAND,
-                               border=2)
-
-    def __createPageTitleTemplateGui(self, generalConfig):
-        """
-        Create GUI for selection page title template
-        """
-        initial = generalConfig.pageTitleTemplate.value
-        titleTemplateLabel = wx.StaticText(
-            self, -1, _("New page title template"))
-
-        hintBitmap = wx.Bitmap(getBuiltinImagePath('wand.png'))
         self.pageTitleTemplateCtrl = DateTimeFormatCtrl(
-            self, hintBitmap, initial)
+            self, hintBitmap, initial_page_title)
 
-        self.pageTitleTemplateSizer = wx.FlexGridSizer(1, 2, 0, 0)
-        self.pageTitleTemplateSizer.AddGrowableRow(0)
-        self.pageTitleTemplateSizer.AddGrowableCol(1)
+        # Create common sizer
+        self.templateSizer = wx.FlexGridSizer(cols=2)
+        self.templateSizer.AddGrowableCol(1)
 
-        self.pageTitleTemplateSizer.Add(titleTemplateLabel,
-                                        0,
-                                        wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                                        border=2)
-        self.pageTitleTemplateSizer.Add(self.pageTitleTemplateCtrl,
-                                        0,
-                                        wx.ALL | wx.EXPAND,
-                                        border=2)
+        self.templateSizer.Add(dateTimeLabel,
+                               flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+                               border=2)
+        self.templateSizer.Add(self.dateTimeFormatCtrl,
+                               flag=wx.ALL | wx.EXPAND,
+                               border=2)
+
+        self.templateSizer.Add(pageTitleTemplateLabel,
+                               flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+                               border=2)
+        self.templateSizer.Add(self.pageTitleTemplateCtrl,
+                               flag=wx.ALL | wx.EXPAND,
+                               border=2)
 
     def __createMiscGui(self):
         """
@@ -311,8 +303,7 @@ class GeneralPanel(BasePrefPanel):
                        2)
 
         self.__addStaticLine(main_sizer)
-        main_sizer.Add(self.dateTimeSizer, 1, wx.EXPAND, 0)
-        main_sizer.Add(self.pageTitleTemplateSizer, 1, wx.EXPAND, 0)
+        main_sizer.Add(self.templateSizer, 1, wx.EXPAND, 0)
 
         self.__addStaticLine(main_sizer)
         main_sizer.Add(self.toasterDelaySizer, 1, wx.EXPAND, 0)

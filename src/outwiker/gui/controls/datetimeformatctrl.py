@@ -53,13 +53,11 @@ class DateTimeFormatCtrl(wx.Panel):
         self.exampleText = wx.TextCtrl(self, style=wx.TE_READONLY)
         self.exampleText.Enable(False)
 
-        dateTimeSizer = wx.FlexGridSizer(cols=1)
-        dateTimeSizer.AddGrowableCol(0)
+        dateTimeSizer = wx.BoxSizer(wx.VERTICAL)
         dateTimeSizer.Add(self.dateTimeFormatCtrl,
-                          0,
-                          wx.ALL | wx.EXPAND,
+                          flag=wx.ALL | wx.EXPAND,
                           border=2)
-        dateTimeSizer.Add(self.exampleText, 0, wx.ALL | wx.EXPAND, border=2)
+        dateTimeSizer.Add(self.exampleText, flag=wx.ALL | wx.EXPAND, border=2)
 
         self.SetSizer(dateTimeSizer)
 

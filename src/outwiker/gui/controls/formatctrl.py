@@ -14,7 +14,7 @@ class FormatCtrl(wx.Panel):
             второй элемент - комментарий
         hintButtonBitmap - Картинка для кнопки - экземпляр класса wx.Bitmap
         """
-        super(FormatCtrl, self).__init__(parent)
+        super().__init__(parent)
 
         # Список кортежей.
         # Первый элемент - подстановочный символ
@@ -60,16 +60,13 @@ class FormatCtrl(wx.Panel):
             self._menuItemsId[newid] = hint
 
     def __layout(self):
-        mainSizer = wx.FlexGridSizer(1, 2, 0, 0)
+        mainSizer = wx.FlexGridSizer(cols=2)
         mainSizer.AddGrowableCol(0)
-        mainSizer.AddGrowableRow(0)
         mainSizer.Add(self.formatCtrl,
-                      0,
-                      wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND,
+                      flag=wx.RIGHT | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND,
                       border=2)
         mainSizer.Add(self.hintBtn,
-                      0,
-                      wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.RIGHT,
+                      flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.RIGHT,
                       border=0)
 
         self.SetSizer(mainSizer)
