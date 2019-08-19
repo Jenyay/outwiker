@@ -6,7 +6,7 @@ from typing import List
 import wx
 
 from outwiker.core.commands import MessageBox, attachFiles, showError
-from outwiker.core.system import getOS, getImagesDir
+from outwiker.core.system import getOS, getBuiltinImagePath
 from outwiker.core.attachment import Attachment
 from outwiker.actions.attachfiles import AttachFilesAction
 from outwiker.actions.openattachfolder import OpenAttachFolderAction
@@ -109,13 +109,11 @@ class AttachPanel(wx.Panel):
         self.Destroy()
 
     def __createToolBar(self, parent, id):
-        imagesDir = getImagesDir()
-
         toolbar = wx.ToolBar(parent, id, style=wx.TB_DOCKABLE)
         self.ID_ATTACH = toolbar.AddTool(
             wx.ID_ANY,
             _(u"Attach Files…"),
-            wx.Bitmap(os.path.join(imagesDir, "attach.png"),
+            wx.Bitmap(getBuiltinImagePath("attach.png"),
                       wx.BITMAP_TYPE_ANY),
             wx.NullBitmap,
             wx.ITEM_NORMAL,
@@ -126,7 +124,7 @@ class AttachPanel(wx.Panel):
         self.ID_REMOVE = toolbar.AddTool(
             wx.ID_ANY,
             _(u"Remove Files…"),
-            wx.Bitmap(os.path.join(imagesDir, "delete.png"),
+            wx.Bitmap(getBuiltinImagePath("delete.png"),
                       wx.BITMAP_TYPE_ANY),
             wx.NullBitmap,
             wx.ITEM_NORMAL,
@@ -139,7 +137,7 @@ class AttachPanel(wx.Panel):
         self.ID_PASTE = toolbar.AddTool(
             wx.ID_ANY,
             _(u"Paste"),
-            wx.Bitmap(os.path.join(imagesDir, "paste.png"),
+            wx.Bitmap(getBuiltinImagePath("paste.png"),
                       wx.BITMAP_TYPE_ANY),
             wx.NullBitmap,
             wx.ITEM_NORMAL,
@@ -150,7 +148,7 @@ class AttachPanel(wx.Panel):
         self.ID_EXECUTE = toolbar.AddTool(
             wx.ID_ANY,
             _(u"Execute"),
-            wx.Bitmap(os.path.join(imagesDir, "execute.png"),
+            wx.Bitmap(getBuiltinImagePath("execute.png"),
                       wx.BITMAP_TYPE_ANY),
             wx.NullBitmap,
             wx.ITEM_NORMAL,
@@ -161,7 +159,7 @@ class AttachPanel(wx.Panel):
         self.ID_OPEN_FOLDER = toolbar.AddTool(
             wx.ID_ANY,
             _(u"Open Attachments Folder"),
-            wx.Bitmap(os.path.join(imagesDir, "folder.png"),
+            wx.Bitmap(getBuiltinImagePath("folder.png"),
                       wx.BITMAP_TYPE_ANY),
             wx.NullBitmap,
             wx.ITEM_NORMAL,
@@ -245,7 +243,8 @@ class AttachPanel(wx.Panel):
         return files
 
     def __onAttach(self, event):
-        self._application.actionController.getAction(AttachFilesAction.stringId).run(None)
+        self._application.actionController.getAction(
+            AttachFilesAction.stringId).run(None)
 
     def __onRemove(self, event):
         if self._application.selectedPage is not None:
@@ -260,7 +259,8 @@ class AttachPanel(wx.Panel):
                           _(u"Remove files?"),
                           wx.YES_NO | wx.ICON_QUESTION) == wx.YES:
                 try:
-                    Attachment(self._application.selectedPage).removeAttach(files)
+                    Attachment(
+                        self._application.selectedPage).removeAttach(files)
                 except IOError as e:
                     showError(self._application.mainWindow, str(e))
 
@@ -289,7 +289,8 @@ class AttachPanel(wx.Panel):
                 return
 
             for file in files:
-                fullpath = os.path.join(Attachment(self._application.selectedPage).getAttachPath(), file)
+                fullpath = os.path.join(Attachment(
+                    self._application.selectedPage).getAttachPath(), file)
                 try:
                     getOS().startFile(fullpath)
                 except OSError:
@@ -300,7 +301,8 @@ class AttachPanel(wx.Panel):
         self.__pasteLink()
 
     def __onOpenFolder(self, event):
-        self._application.actionController.getAction(OpenAttachFolderAction.stringId).run(None)
+        self._application.actionController.getAction(
+            OpenAttachFolderAction.stringId).run(None)
 
     def __onExecute(self, event):
         self.__executeFile()
@@ -318,7 +320,8 @@ class AttachPanel(wx.Panel):
             return
 
         data = wx.FileDataObject()
-        attach_path = Attachment(self._application.selectedPage).getAttachPath()
+        attach_path = Attachment(
+            self._application.selectedPage).getAttachPath()
 
         for fname in self.__getSelectedFiles():
             data.AddFile(os.path.join(attach_path, fname))
@@ -344,6 +347,7 @@ class DropAttachFilesTarget(BaseDropFilesTarget):
     Класс для возможности перетаскивания файлов
     между другими программами и панелью с прикрепленными файлами.
     """
+
     def OnDropFiles(self, x: int, y: int, files: List[str]) -> bool:
         correctedFiles = self.correctFileNames(files)
 

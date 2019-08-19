@@ -21,14 +21,13 @@ class BaseFileIcons(object, metaclass=ABCMeta):
         self._iconsDict = {}
 
     def initialize(self):
-        from outwiker.core.system import getImagesDir
-        imagesDir = getImagesDir()
-        self._imageList.Add(wx.Bitmap(os.path.join(imagesDir,
-                                                   "file_icon_default.png"),
-                                      wx.BITMAP_TYPE_ANY))
-        self._imageList.Add(wx.Bitmap(os.path.join(imagesDir,
-                                                   "folder.png"),
-                                      wx.BITMAP_TYPE_ANY))
+        from outwiker.core.system import getBuiltinImagePath
+
+        self._imageList.Add(wx.Bitmap(getBuiltinImagePath(
+            "file_icon_default.png"), wx.BITMAP_TYPE_ANY))
+
+        self._imageList.Add(
+            wx.Bitmap(getBuiltinImagePath("folder.png"), wx.BITMAP_TYPE_ANY))
 
     def getFileImage(self, filepath):
         if self.imageListCount == 0:
@@ -68,6 +67,7 @@ class UnixFileIcons(BaseFileIcons):
     Класс для получения иконок прикрепленных
     файлов под Unix(все иконки берутся из прилагающихся картинок)
     """
+
     def _getFileImage(self, filepath):
         """
         Возвращает номер картинки в imageList для файла по его расширению.
@@ -101,12 +101,11 @@ class UnixFileIcons(BaseFileIcons):
         """
         Получить картинку по расширению или None, если такой картинки нет
         """
+        from outwiker.core.system import getBuiltinImagePath
         iconfolder = "fileicons"
-        from outwiker.core.system import getImagesDir
-        iconpath = os.path.join(getImagesDir(), iconfolder)
-
         filename = u"file_extension_{}.png".format(ext)
-        imagePath = os.path.join(iconpath, filename)
+
+        imagePath = getBuiltinImagePath(iconfolder, filename)
 
         if os.path.exists(imagePath):
             return wx.Bitmap(imagePath, wx.BITMAP_TYPE_ANY)
@@ -118,6 +117,7 @@ class WindowsFileIcons(BaseFileIcons):
     """
     Класс для получения иконок прикрепленных файлов под Windows
     """
+
     def __getExeIcon(self, filepath):
         """
         Возвращает картинку exe-шника

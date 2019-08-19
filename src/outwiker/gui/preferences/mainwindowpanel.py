@@ -5,7 +5,7 @@ import os
 import wx
 
 from . import configelements
-from outwiker.core.system import getImagesDir
+from outwiker.core.system import getBuiltinImagePath
 from outwiker.gui.guiconfig import MainWindowConfig
 from outwiker.gui.controls.formatctrl import FormatCtrl
 from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
@@ -45,16 +45,16 @@ class MainWindowPanel(BasePrefPanel):
         """
 
         hints = [
-            (u"{file}", _(u"Wiki file name")),
-            (u"{page}", _(u"Page title")),
-            (u"{subpath}", _(u"Relative path to current page")),
+            ("{file}", _("Wiki file name")),
+            ("{page}", _("Page title")),
+            ("{subpath}", _("Relative path to current page")),
         ]
 
         self.titleFormatLabel = wx.StaticText(self,
                                               -1,
                                               _("Main window title format"))
 
-        hintBitmap = wx.Bitmap(os.path.join(getImagesDir(), u"wand.png"))
+        hintBitmap = wx.Bitmap(getBuiltinImagePath("wand.png"))
         self.titleFormatText = FormatCtrl(
             self,
             self.mainWindowConfig.titleFormat.value,

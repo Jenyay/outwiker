@@ -3,7 +3,7 @@
 import os.path
 
 import wx
-from outwiker.core.system import getImagesDir
+from outwiker.core.system import getBuiltinImagePath
 
 
 class SearchReplacePanel (wx.Panel):
@@ -99,7 +99,7 @@ class SearchReplacePanel (wx.Panel):
         self._closeBtn = wx.BitmapButton(
             self,
             -1,
-            wx.Bitmap(os.path.join(getImagesDir(), "close-button.png"),
+            wx.Bitmap(getBuiltinImagePath("close-button.png"),
                       wx.BITMAP_TYPE_ANY))
 
         self._layout()

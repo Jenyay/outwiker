@@ -3,7 +3,7 @@ import os.path
 
 from outwiker.core.tree import WikiPage
 from outwiker.core.search import AllTagsSearchStrategy, AnyTagSearchStrategy
-from outwiker.core.system import getImagesDir
+from outwiker.core.system import getBuiltinImagePath
 from outwiker.core.application import Application
 from outwiker.core.factory import PageFactory
 from outwiker.core.exceptions import ReadonlyException
@@ -162,13 +162,11 @@ class GlobalSearch (object):
         number = 1
         page = None
 
-        imagesDir = getImagesDir()
-
         while page is None:
             page = root[title]
             if page is None:
                 page = SearchPageFactory().create(root, title, [])
-                page.icon = os.path.join(imagesDir, "global_search.png")
+                page.icon = getBuiltinImagePath("global_search.png")
             elif page.getTypeString() != SearchWikiPage.getTypeString():
                 number += 1
                 title = u"%s %d" % (searchTitle, number)

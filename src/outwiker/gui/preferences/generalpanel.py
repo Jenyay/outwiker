@@ -6,7 +6,7 @@ import wx
 
 from . import configelements
 import outwiker.core.i18n
-from outwiker.core.system import getImagesDir
+from outwiker.core.system import getBuiltinImagePath
 from outwiker.gui.guiconfig import (GeneralGuiConfig,
                                     MainWindowConfig)
 from outwiker.gui.controls.datetimeformatctrl import DateTimeFormatCtrl
@@ -129,7 +129,7 @@ class GeneralPanel(BasePrefPanel):
         initial = generalConfig.dateTimeFormat.value
         dateTimeLabel = wx.StaticText(self, -1, _("Date and time format"))
 
-        hintBitmap = wx.Bitmap(os.path.join(getImagesDir(), u"wand.png"))
+        hintBitmap = wx.Bitmap(getBuiltinImagePath('wand.png'))
         self.dateTimeFormatCtrl = DateTimeFormatCtrl(self, hintBitmap, initial)
 
         self.dateTimeSizer = wx.FlexGridSizer(1, 2, 0, 0)

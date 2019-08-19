@@ -3,12 +3,11 @@
 import os.path
 import wx
 
-import outwiker.core.system
 from outwiker.actions.addbookmark import AddBookmarkAction
 from outwiker.core.factoryselector import FactorySelector
 from outwiker.core.commands import pageExists, openWiki, showError
 from .tabsctrl import TabsCtrl
-from outwiker.core.system import getOS
+from outwiker.core.system import getOS, getBuiltinImagePath
 from .emptypageview import ClosedTreePanel
 from .rootpagepanel import RootPagePanel
 
@@ -28,16 +27,14 @@ class CurrentPagePanel(wx.Panel):
         # Флаг обозначает, что выполняется метод Save
         self.__saveProcessing = False
 
-        self.imagesDir = outwiker.core.system.getImagesDir()
-
-        self.grayStarImage = os.path.join(self.imagesDir, "star_gray.png")
-        self.goldStarImage = os.path.join(self.imagesDir, "star.png")
+        self.grayStarImage = getBuiltinImagePath("star_gray.png")
+        self.goldStarImage = getBuiltinImagePath("star.png")
 
         self.tabsCtrl = TabsCtrl(self)
         self.bookmarkButton = wx.BitmapButton(
             self,
             -1,
-            wx.Bitmap(os.path.join(self.imagesDir, "star_gray.png"),
+            wx.Bitmap(getBuiltinImagePath("star_gray.png"),
                       wx.BITMAP_TYPE_ANY))
 
         self.__set_properties()

@@ -8,8 +8,7 @@ import wx.aui
 
 from outwiker.core.attachwatcher import AttachWatcher
 from outwiker.core.commands import showError
-from outwiker.core.system import getOS
-from outwiker.core.system import getImagesDir
+from outwiker.core.system import getOS, getBuiltinImagePath
 
 from .guiconfig import MainWindowConfig
 from .mainwndcontroller import MainWndController
@@ -297,7 +296,6 @@ class MainWindow(wx.Frame):
         """
         Заполнить действиями меню Файл
         """
-        imagesDir = getImagesDir()
         toolbar = self.toolbars[guidefines.TOOLBAR_GENERAL]
         menu = self.menuController[guidefines.MENU_FILE]
         actionController = self._application.actionController
@@ -310,7 +308,7 @@ class MainWindow(wx.Frame):
         actionController.appendToolbarButton(
             NewAction.stringId,
             toolbar,
-            os.path.join(imagesDir, u"new.png"),
+            getBuiltinImagePath("new.png"),
             True)
 
         # Открыть...
@@ -321,7 +319,7 @@ class MainWindow(wx.Frame):
         actionController.appendToolbarButton(
             OpenAction.stringId,
             toolbar,
-            os.path.join(imagesDir, u"open.png"),
+            getBuiltinImagePath("open.png"),
             True)
 
         # Открыть только для чтения
@@ -363,7 +361,6 @@ class MainWindow(wx.Frame):
         actionController = self._application.actionController
         menu = self.menuController[guidefines.MENU_TREE]
         toolbar = self.toolbars[guidefines.TOOLBAR_GENERAL]
-        imagesDir = getImagesDir()
 
         actionController.appendMenuItem(
             HistoryBackAction.stringId,
@@ -372,7 +369,7 @@ class MainWindow(wx.Frame):
         actionController.appendToolbarButton(
             HistoryBackAction.stringId,
             toolbar,
-            os.path.join(imagesDir, u"back.png"),
+            getBuiltinImagePath("back.png"),
             True)
 
         actionController.enableTools(HistoryBackAction.stringId, False)
@@ -382,7 +379,7 @@ class MainWindow(wx.Frame):
         actionController.appendToolbarButton(
             HistoryForwardAction.stringId,
             toolbar,
-            os.path.join(imagesDir, u"forward.png"),
+            getBuiltinImagePath("forward.png"),
             True)
 
         actionController.enableTools(HistoryForwardAction.stringId, False)
@@ -423,7 +420,6 @@ class MainWindow(wx.Frame):
                                         menu)
 
     def _createToolsMenu(self):
-        imagesDir = getImagesDir()
         toolbar = self.toolbars[guidefines.TOOLBAR_GENERAL]
         menu = self.menuController[guidefines.MENU_TOOLS]
         actionController = self._application.actionController
@@ -440,7 +436,7 @@ class MainWindow(wx.Frame):
         actionController.appendToolbarButton(
             GlobalSearchAction.stringId,
             toolbar,
-            os.path.join(imagesDir, u"global_search.png"),
+            getBuiltinImagePath("global_search.png"),
             True)
 
         actionController.appendMenuItem(AttachFilesAction.stringId, menu)
@@ -448,7 +444,7 @@ class MainWindow(wx.Frame):
         actionController.appendToolbarButton(
             AttachFilesAction.stringId,
             toolbar,
-            os.path.join(imagesDir, u"attach.png"),
+            getBuiltinImagePath("attach.png"),
             True)
 
         menu.AppendSeparator()
@@ -608,8 +604,7 @@ class MainWindow(wx.Frame):
         Установки иконки главного окна
         """
         icon = wx.Icon()
-        icon.CopyFromBitmap(wx.Bitmap(os.path.join(getImagesDir(),
-                                                   "outwiker.ico"),
+        icon.CopyFromBitmap(wx.Bitmap(getBuiltinImagePath("outwiker.ico"),
                                       wx.BITMAP_TYPE_ANY))
 
         self.SetIcon(icon)

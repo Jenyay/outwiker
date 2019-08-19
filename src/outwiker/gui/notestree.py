@@ -8,7 +8,7 @@ import wx
 
 from outwiker.core.commands import (MessageBox, attachFiles, showError,
                                     renamePage, movePage)
-import outwiker.core.system
+from outwiker.core.system import getBuiltinImagePath
 import outwiker.gui.pagedialog
 from outwiker.actions.addsiblingpage import AddSiblingPageAction
 from outwiker.actions.addchildpage import AddChildPageAction
@@ -43,8 +43,7 @@ class NotesTree(wx.Panel):
         self.__set_properties()
         self.__do_layout()
 
-        self.defaultIcon = os.path.join(outwiker.core.system.getImagesDir(),
-                                        "page.png")
+        self.defaultIcon = getBuiltinImagePath("page.png")
         self.iconHeight = ICON_HEIGHT
 
         self.dragItem = None
@@ -571,13 +570,12 @@ class NotesTree(wx.Panel):
         """
         Add the buttons to notes tree panel.
         """
-        imagesDir = outwiker.core.system.getImagesDir()
         actionController = self._application.actionController
 
         actionController.appendToolbarButton(
             GoToParentAction.stringId,
             self.toolbar,
-            os.path.join(imagesDir, "go_to_parent.png"),
+            getBuiltinImagePath("go_to_parent.png"),
             False)
 
         self.toolbar.AddSeparator()
@@ -585,13 +583,13 @@ class NotesTree(wx.Panel):
         actionController.appendToolbarButton(
             MovePageDownAction.stringId,
             self.toolbar,
-            os.path.join(imagesDir, "move_down.png"),
+            getBuiltinImagePath("move_down.png"),
             False)
 
         actionController.appendToolbarButton(
             MovePageUpAction.stringId,
             self.toolbar,
-            os.path.join(imagesDir, "move_up.png"),
+            getBuiltinImagePath("move_up.png"),
             False)
 
         self.toolbar.AddSeparator()
@@ -599,19 +597,19 @@ class NotesTree(wx.Panel):
         actionController.appendToolbarButton(
             AddSiblingPageAction.stringId,
             self.toolbar,
-            os.path.join(imagesDir, "node-insert-next.png"),
+            getBuiltinImagePath("node-insert-next.png"),
             False)
 
         actionController.appendToolbarButton(
             AddChildPageAction.stringId,
             self.toolbar,
-            os.path.join(imagesDir, "node-insert-child.png"),
+            getBuiltinImagePath("node-insert-child.png"),
             False)
 
         actionController.appendToolbarButton(
             RemovePageAction.stringId,
             self.toolbar,
-            os.path.join(imagesDir, "node-delete.png"),
+            getBuiltinImagePath("node-delete.png"),
             False)
 
         self.toolbar.AddSeparator()
@@ -619,7 +617,7 @@ class NotesTree(wx.Panel):
         actionController.appendToolbarButton(
             EditPagePropertiesAction.stringId,
             self.toolbar,
-            os.path.join(imagesDir, "edit.png"),
+            getBuiltinImagePath("edit.png"),
             False)
 
         self.toolbar.Realize()

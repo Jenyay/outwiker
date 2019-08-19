@@ -7,7 +7,7 @@ import wx
 import wx.lib.newevent
 
 import outwiker.gui.controls.ultimatelistctrl as ULC
-from outwiker.core.system import getImagesDir
+from outwiker.core.system import getBuiltinImagePath
 from outwiker.gui.imagelistcache import ImageListCache
 from .pagelist_columns import BaseColumn
 
@@ -25,7 +25,7 @@ class PageList(wx.Panel):
         super().__init__(parent)
         self._columns = []                     # type: List[BaseColumn]
         self._pages = []
-        self._defaultIcon = os.path.join(getImagesDir(), "page.png")
+        self._defaultIcon = getBuiltinImagePath("page.png")
         self._imageList = ImageListCache(self._defaultIcon)
 
         self._propagationLevel = 15

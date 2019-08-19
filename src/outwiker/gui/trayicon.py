@@ -8,7 +8,7 @@ import wx.adv
 
 import outwiker.core.commands
 from outwiker.actions.exit import ExitAction
-from outwiker.core.system import getImagesDir
+from outwiker.core.system import getBuiltinImagePath
 from outwiker.gui.guiconfig import TrayConfig
 
 
@@ -23,7 +23,7 @@ def getTrayIconController(application, parentWnd):
 
     return TrayIconController(application,
                               parentWnd,
-                              os.path.join(getImagesDir(), fname))
+                              getBuiltinImagePath(fname))
 
 
 class TrayIconController(wx.EvtHandler):

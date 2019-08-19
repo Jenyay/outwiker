@@ -31,7 +31,7 @@ from outwiker.actions.polyactionsid import (SPELL_ON_OFF_ID,
                                             CLIPBOARD_COPY_WORD,
                                             CLIPBOARD_CUT_WORD,
                                             )
-from outwiker.core.system import getImagesDir
+from outwiker.core.system import getBuiltinImagePath
 from outwiker.core.commands import pageExists, copyTextToClipboard, showError
 from outwiker.core.defines import REGISTRY_PAGE_CURSOR_POSITION
 from .basepagepanel import BasePagePanel
@@ -97,7 +97,6 @@ class BaseTextPanel(BasePagePanel):
         self._menuSeparators = []
 
         self.searchMenuIndex = 2
-        self.imagesDir = getImagesDir()
 
         self._spellOnOffEvent, self.EVT_SPELL_ON_OFF = wx.lib.newevent.NewEvent()
 
@@ -339,7 +338,7 @@ class BaseTextPanel(BasePagePanel):
         self._application.actionController.appendToolbarButton(
             SearchAction.stringId,
             toolbar,
-            os.path.join(self.imagesDir, "local_search.png"),
+            getBuiltinImagePath("local_search.png"),
             fullUpdate=False)
 
         # Начать поиск и замену на странице
@@ -350,7 +349,7 @@ class BaseTextPanel(BasePagePanel):
         self._application.actionController.appendToolbarButton(
             SearchAndReplaceAction.stringId,
             toolbar,
-            os.path.join(self.imagesDir, "local_replace.png"),
+            getBuiltinImagePath("local_replace.png"),
             fullUpdate=False)
 
         # Продолжить поиск вперед на странице
@@ -374,7 +373,7 @@ class BaseTextPanel(BasePagePanel):
         self._application.actionController.appendToolbarCheckButton(
             SPELL_ON_OFF_ID,
             generalToolbar,
-            os.path.join(self.imagesDir, "spellcheck.png"),
+            getBuiltinImagePath("spellcheck.png"),
             fullUpdate=False
         )
 

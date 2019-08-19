@@ -10,6 +10,7 @@ import shutil
 import sys
 import subprocess
 import logging
+from typing import List
 
 import wx
 
@@ -250,6 +251,13 @@ def getConfigPath(dirname=DEFAULT_CONFIG_DIR, fname=DEFAULT_CONFIG_NAME):
 
 def getImagesDir():
     return op.join(getCurrentDir(), IMAGES_FOLDER_NAME)
+
+
+def getBuiltinImagePath(*relative_image_name: List[str]) -> str:
+    '''
+    Return absolute path to image file from "images" directory
+    '''
+    return os.path.abspath(os.path.join(getImagesDir(), *relative_image_name))
 
 
 def getTemplatesDir():

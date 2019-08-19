@@ -4,14 +4,12 @@ import os.path
 
 import wx
 
-from outwiker.core.system import getImagesDir
+from outwiker.core.system import getBuiltinImagePath
 from outwiker.gui.controls.hyperlink import HyperLinkCtrl
 
 
 class AboutDialog(wx.Dialog):
     def __init__(self, currversion, *args, **kwds):
-        self.imagesDir = getImagesDir()
-
         wx.Dialog.__init__(self, *args, **kwds)
         self.titleLabel = wx.StaticText(self, -1, _("OutWiker"))
         self.versionTitleLabel = wx.StaticText(self, -1, _("Version:"))
@@ -21,7 +19,7 @@ class AboutDialog(wx.Dialog):
         self.logo = wx.StaticBitmap(
             self.aboutPane,
             -1,
-            wx.Bitmap(os.path.join(self.imagesDir, "outwiker_64x64.png"), wx.BITMAP_TYPE_ANY)
+            wx.Bitmap(getBuiltinImagePath("outwiker_64x64.png"), wx.BITMAP_TYPE_ANY)
         )
 
         self.description = wx.StaticText(

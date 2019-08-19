@@ -8,7 +8,7 @@ import wx
 from wx.lib.newevent import NewEvent
 
 from outwiker.core.defines import ICON_DEFAULT
-from outwiker.core.system import getImagesDir
+from outwiker.core.system import getBuiltinImagePath
 from outwiker.core.iconcontroller import IconController
 
 IconSelectedEvent, EVT_ICON_SELECTED = NewEvent()
@@ -25,7 +25,7 @@ class IconButton(object):
         self._width = width
         self._height = height
 
-        self._invalidFileName = os.path.join(getImagesDir(), u'cross.png')
+        self._invalidFileName = getBuiltinImagePath('cross.png')
 
         self._normalBackground = wx.Colour(255, 255, 255)
         self._selectedBackground = wx.Colour(160, 190, 255)
@@ -192,7 +192,7 @@ class IconListCtrl(wx.ScrolledWindow):
         self.buttons = []
         self._iconFileNames = []
 
-        self.defaultIcon = os.path.join(getImagesDir(), "page.png")
+        self.defaultIcon = getBuiltinImagePath("page.png")
 
         self.Bind(wx.EVT_SIZE, self.__onSize)
 

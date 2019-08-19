@@ -6,7 +6,7 @@ import os.path
 
 import wx
 
-from outwiker.core.system import getIconsDirList, getImagesDir
+from outwiker.core.system import getIconsDirList, getBuiltinImagePath
 from outwiker.core.iconscollection import IconsCollection
 from outwiker.core.recenticonslist import RecentIconsList
 from outwiker.core.defines import ICON_WIDTH, ICON_HEIGHT, ICON_DEFAULT
@@ -79,8 +79,8 @@ class IconsController(BasePageDialogController):
         self._iconsPanel = iconsPanel
         self._groupsMaxWidth = 200
         self._page = None
-        self._default_group_cover = os.path.join(getImagesDir(),
-                                                 u'icons_cover_default.png')
+        self._default_group_cover = getBuiltinImagePath(
+            'icons_cover_default.png')
         self._default_icon_filename = os.path.abspath(
             os.path.join(getIconsDirList()[0], ICON_DEFAULT))
 
@@ -139,8 +139,8 @@ class IconsController(BasePageDialogController):
         return eventParam.groupsList
 
     def _addRecentIconsGroup(self, group_info_list):
-        recent_title = _(u'Recent')
-        recent_cover = os.path.join(getImagesDir(), u'recent.png')
+        recent_title = _('Recent')
+        recent_cover = getBuiltinImagePath('recent.png')
         recent_icons = self._recentIconsList.getRecentIcons()
         group_info_list.insert(0, IconsGroupInfo(
             recent_icons,

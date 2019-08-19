@@ -5,7 +5,7 @@ import os.path
 import wx
 from wx.lib.newevent import NewEvent
 
-from outwiker.core.system import getImagesDir
+from outwiker.core.system import getBuiltinImagePath
 from outwiker.core.tagscommands import getTagsString, parseTagsList
 from outwiker.gui.tagscloud import TagsCloud
 from outwiker.gui.taglabel import EVT_TAG_LEFT_CLICK
@@ -16,12 +16,12 @@ TagsListChangedEvent, EVT_TAGS_LIST_CHANGED = NewEvent()
 
 class TagsSelector (wx.Panel):
     def __init__(self, parent):
-        super(TagsSelector, self).__init__(parent)
+        super().__init__(parent)
 
         self.__tagsWidth = 350
         self.__tagsHeight = 150
 
-        self.__tagBitmap = wx.Bitmap(os.path.join(getImagesDir(), "tag.png"),
+        self.__tagBitmap = wx.Bitmap(getBuiltinImagePath("tag.png"),
                                      wx.BITMAP_TYPE_PNG)
 
         self.label_tags = wx.StaticText(self, -1, _(u"Tags (comma separated)"))
