@@ -10,6 +10,7 @@
 eggs
 parts
 sdist
+dist
 develop-eggs
 .installed.cfg
 
