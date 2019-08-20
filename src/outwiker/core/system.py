@@ -10,6 +10,7 @@ import shutil
 import sys
 import subprocess
 import logging
+from pathlib import Path
 
 import wx
 
@@ -202,7 +203,8 @@ def getOS():
 
 
 def getCurrentDir():
-    return op.dirname(sys.argv[0])
+    current_dir = str(Path(__file__).parents[2].resolve())
+    return current_dir
 
 
 def getConfigPath(dirname=DEFAULT_CONFIG_DIR, fname=DEFAULT_CONFIG_NAME):

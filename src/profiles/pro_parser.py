@@ -7,7 +7,7 @@ from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
 from outwiker.pages.wiki.parser.wikiparser import Parser
 from outwiker.pages.wiki.wikipage import WikiPageFactory
-from test.utils import removeWiki
+from tests.utils import removeWiki
 
 
 class ParseSample (object):

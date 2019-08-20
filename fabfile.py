@@ -214,9 +214,8 @@ def test(*args):
     '''
     command = getPython() if args else 'coverage run {}'.format(COVERAGE_PARAMS)
 
-    with lcd('src'):
-        local('{command} runtests.py {args}'.format(
-            command=command, args=' '.join(args)))
+    local('{command} runtests.py {args}'.format(
+        command=command, args=' '.join(args)))
 
     if len(args) == 0:
         test_build()

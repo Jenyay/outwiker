@@ -71,6 +71,9 @@ def loadCustomStyles(dir_list):
     extension = '.css'
 
     for folder in dir_list:
+        if not os.path.exists(folder):
+            continue
+
         for fname in os.listdir(folder):
             if fname.endswith(extension):
                 name = fname[:-len(extension)]
