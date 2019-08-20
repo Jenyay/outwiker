@@ -13,7 +13,7 @@ setup(
     package_dir={'': 'src'},
     packages=find_packages(
         'src',
-        exclude=["test.*", "test", "profiles"]),
+        exclude=["profiles"]),
     classifiers=[
         'Development Status :: 4 - Beta',
         'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)',
