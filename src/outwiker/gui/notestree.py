@@ -83,8 +83,7 @@ class NotesTree(wx.Panel):
         Получить элемент дерева по странице.
         Если для страницы не создан элемент дерева, возвращается None
         """
-        if page in self._pageCache:
-            return self._pageCache[page]
+        return self._pageCache.get(page)
 
     def getPageByItemId(self, item_id: wx.TreeItemId) -> 'outwiker.core.tree.WikiPage':
         return self.treeCtrl.GetItemData(item_id)

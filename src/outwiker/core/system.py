@@ -10,7 +10,6 @@ import shutil
 import sys
 import subprocess
 import logging
-from typing import List
 
 import wx
 
@@ -253,7 +252,7 @@ def getImagesDir():
     return op.join(getCurrentDir(), IMAGES_FOLDER_NAME)
 
 
-def getBuiltinImagePath(*relative_image_name: List[str]) -> str:
+def getBuiltinImagePath(*relative_image_name: str) -> str:
     '''
     Return absolute path to image file from "images" directory
     '''

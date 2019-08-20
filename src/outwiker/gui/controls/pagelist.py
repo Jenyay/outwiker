@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import os
 from typing import List
 
 import wx
@@ -24,7 +23,7 @@ class PageList(wx.Panel):
     def __init__(self, parent: wx.Window):
         super().__init__(parent)
         self._columns = []                     # type: List[BaseColumn]
-        self._pages = []
+        self._pages = []                       # type: List['outwiker.core.tree.WikiPage']
         self._defaultIcon = getBuiltinImagePath("page.png")
         self._imageList = ImageListCache(self._defaultIcon)
 
