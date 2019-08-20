@@ -16,7 +16,7 @@ class TestPageTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.initApplication()
         self.wikiroot = self.createWiki()
 
-        self.dirlist = ["plugins/testplugins/testpage"]
+        self.dirlist = ["testdata/plugins/testpage"]
 
         self.loader = PluginsLoader(self.application)
         self.loader.load(self.dirlist)
