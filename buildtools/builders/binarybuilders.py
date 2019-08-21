@@ -52,7 +52,6 @@ class BaseBinaryBuilder(object, metaclass=ABCMeta):
         return [
             'importlib',
             'urllib',
-            'outwiker.gui.htmlrenderfactory',
             'outwiker.gui.controls.popupbutton',
             'outwiker.utilites.actionsguicontroller',
             'outwiker.utilites.text',
