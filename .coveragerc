@@ -1,18 +1,18 @@
 [paths]
 source =
-    .
-    ../plugins
+    src
+    plugins
 
 [report]
 omit =
     outwiker/libs/*
-    ../test/*
-    ../plugins/datagraph/datagraph/libs/*
-    ../plugins/diagrammer/diagrammer/libs/*
-    ../plugins/snippets/snippets/libs/*
-    ../plugins/testlatexpage/testlatexpage/libs/*
-    ../plugins/updatenotifier/updatenotifier/libs/*
-    ../plugins/webpage/webpage/libs/*
+    tests/*
+    plugins/datagraph/datagraph/libs/*
+    plugins/diagrammer/diagrammer/libs/*
+    plugins/snippets/snippets/libs/*
+    plugins/testlatexpage/testlatexpage/libs/*
+    plugins/updatenotifier/updatenotifier/libs/*
+    plugins/webpage/webpage/libs/*
     */.local/*
 precision = 2
 skip_covered = True
@@ -20,5 +20,5 @@ show_missing = True
 sort = Cover
 
 [html]
-directory = ../build/htmlcov
+directory = build/htmlcov
 title = OutWiker coverage report

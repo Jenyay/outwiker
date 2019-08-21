@@ -630,9 +630,8 @@ def coverage():
     '''
     Create test coverage statistics
     '''
-    with lcd('src'):
-        local('coverage report {} -i'.format(COVERAGE_PARAMS))
-        local('coverage html {} -i'.format(COVERAGE_PARAMS))
+    local('coverage report {} -i'.format(COVERAGE_PARAMS))
+    local('coverage html {} -i'.format(COVERAGE_PARAMS))
 
 
 @task
