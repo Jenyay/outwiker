@@ -24,7 +24,6 @@ install:
     - sh: pipenv update --dev
     - sh: pipenv install -e .
 build_script:
-    # - cmd: py -m pipenv run fab test:"test/actions -s"
     - cmd: py -m pipenv run fab win
     # - sh: pipenv run fab linux_binary
     # - sh: pipenv run fab linux_appimage

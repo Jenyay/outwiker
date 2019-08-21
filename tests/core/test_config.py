@@ -136,9 +136,9 @@ class ConfigTest(unittest.TestCase):
 
     def testInvalidConfigFile(self):
         invalid_fname = "outwiker_invalid.ini"
-        src_invalid_full_path = os.path.join("testdata",
-                                             "samplefiles",
-                                             invalid_fname)
+        src_invalid_full_path = os.path.abspath(os.path.join("testdata",
+                                                             "samplefiles",
+                                                             invalid_fname))
 
         shutil.copy(src_invalid_full_path, self.tempdir)
 
@@ -250,8 +250,8 @@ class ConfigOptionsTest(unittest.TestCase):
         opt = DateTimeOption(self.config, "Test", "datetimeval", None)
         self.assertEqual(opt.value,
                          datetime.datetime.strptime(
-                              strdatetime,
-                              DateTimeOption.formatDate))
+                             strdatetime,
+                             DateTimeOption.formatDate))
 
     def testDateTimeOpt2(self):
         opt = DateTimeOption(self.config,
