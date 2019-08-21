@@ -135,7 +135,7 @@ class FileIconsTestWindows(TestCase, BaseOutWikerGUIMixin):
 
     def testExe_win(self):
         fi = WindowsFileIcons()
-        fname = "..\\test\\samplefiles\\example.exe"
+        fname = "testdata\\samplefiles\\example.exe"
         index = fi.getFileImage(fname)
         self.assertEqual(fi.dictSize, 1)
         self.assertEqual(fi.imageListCount, 3)
@@ -148,7 +148,7 @@ class FileIconsTestWindows(TestCase, BaseOutWikerGUIMixin):
 
     def testExe_invalid_win(self):
         fi = WindowsFileIcons()
-        fname = "..\\test\\samplefiles\\invalid.exe"
+        fname = "testdata\\samplefiles\\invalid.exe"
         index = fi.getFileImage(fname)
         self.assertEqual(fi.dictSize, 0)
         self.assertEqual(fi.imageListCount, 2)
@@ -156,7 +156,7 @@ class FileIconsTestWindows(TestCase, BaseOutWikerGUIMixin):
 
     def testExe_invalid2_win(self):
         fi = WindowsFileIcons()
-        fname = "..\\test\\samplefiles\\invalid_none.exe"
+        fname = "testdata\\samplefiles\\invalid_none.exe"
         index = fi.getFileImage(fname)
         self.assertEqual(fi.dictSize, 0)
         self.assertEqual(fi.imageListCount, 2)
@@ -201,7 +201,7 @@ class FileIconsTestWindows(TestCase, BaseOutWikerGUIMixin):
     def test_clear_after_exe_win(self):
         fi = WindowsFileIcons()
         fi.clear()
-        index = fi.getFileImage("..\\test\\samplefiles\\example.exe")
+        index = fi.getFileImage("testdata\\samplefiles\\example.exe")
 
         self.assertEqual(fi.dictSize, 1)
         self.assertEqual(fi.imageListCount, 3)

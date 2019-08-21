@@ -215,7 +215,6 @@ class StylesTest (unittest.TestCase, BaseOutWikerMixin):
         page = self.wikiroot["Викистраница 1"]
 
         fname = os.path.join(page.path, style._styleFname)
-        print(fname)
         with open(fname, "w") as fp:
             fp.write("""<HTML>
 <HEAD>
