@@ -32,17 +32,13 @@ _build
 *.pyc
 *.bak
 *.~ml
-*.ini
 *.py~
 *.deb
 doxydoc
 profiles/*.profile
-test/*.profile
 htmlcov
-src/tests.log
 src/plugins/*
 .ropeproject
-tests_win
 *.sublime-*
 .idea/
 Thumbs.db
