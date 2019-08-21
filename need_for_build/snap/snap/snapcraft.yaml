@@ -58,9 +58,9 @@ parts:
             - webkitgtk
         python-packages:
             - https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-16.04/wxPython-4.0.6-cp35-cp35m-linux_x86_64.whl
-            - Pillow==6.0.0
+            - Pillow==6.1.0
             - hunspell==0.5.5
-            - idna==2.7
+            - idna==2.8
         override-build: |
             snapcraftctl build
             cp -r $SNAPCRAFT_PART_SRC/usr $SNAPCRAFT_PART_INSTALL

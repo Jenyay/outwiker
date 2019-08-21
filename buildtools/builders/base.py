@@ -73,23 +73,15 @@ class BuilderBase(object, metaclass=abc.ABCMeta):
         shutil.copytree(u'src',
                         self.temp_sources_dir,
                         ignore=shutil.ignore_patterns('__pycache__',
-                                                      '.pytest_cache'))
+                                                      '.pytest_cache',
+                                                      'OutWiker.egg-info'))
 
     def _clear_sources(self):
         '''
         Remove tests and dev scripts from sources
         '''
         root = self.temp_sources_dir
-        shutil.rmtree(os.path.join(root, 'test'))
         shutil.rmtree(os.path.join(root, 'profiles'))
-
-        try:
-            os.remove(os.path.join(root, '.coverage'))
-        except IOError:
-            pass
-
-        os.remove(os.path.join(root, 'runtests.py'))
-        os.remove(os.path.join(root, '__init__.py'))
 
     def _copy_versions_file(self):
         src_versions_name = (u'versions_stable.xml'
