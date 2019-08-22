@@ -10,13 +10,6 @@ import pkgutil
 import collections
 
 import outwiker
-# import outwiker.core
-# import outwiker.gui
-# import outwiker.pages
-# import outwiker.actions
-# import outwiker.utilites
-# import outwiker.libs
-
 import outwiker.core.packageversion as pv
 
 from outwiker.core.defines import PLUGIN_VERSION_FILE_NAME
