@@ -9,12 +9,13 @@ import importlib
 import pkgutil
 import collections
 
-import outwiker.core
-import outwiker.gui
-import outwiker.pages
-import outwiker.actions
-import outwiker.utilites
-import outwiker.libs
+import outwiker
+# import outwiker.core
+# import outwiker.gui
+# import outwiker.pages
+# import outwiker.actions
+# import outwiker.utilites
+# import outwiker.libs
 
 import outwiker.core.packageversion as pv
 
@@ -220,7 +221,7 @@ class PluginsLoader(object):
         if not api_required_version:
             api_required_version = [(0, 0)]
 
-        return pv.checkVersionAny(outwiker.core.__version__,
+        return pv.checkVersionAny(outwiker.__api_version__,
                                   api_required_version)
 
     def __importPackage(self, packagePath):

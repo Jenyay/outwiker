@@ -10,7 +10,7 @@ import html
 
 import wx
 
-import outwiker.core
+import outwiker
 from outwiker.gui.longprocessrunner import LongProcessRunner
 from outwiker.core.commands import getCurrentVersion, MessageBox, setStatusText
 from outwiker.core.version import Version
@@ -397,7 +397,7 @@ class UpdateController(object):
                 return False
 
             api_required_version = appInfo.requirements.api_version
-            if pv.checkVersionAny(outwiker.core.__version__,
+            if pv.checkVersionAny(outwiker.__api_version__,
                                   api_required_version) != 0:
                 MessageBox(_(u"The plugin required newer version of OutWiker. Please update OutWiker"),
                            u"UpdateNotifier")
