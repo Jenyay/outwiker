@@ -2,7 +2,7 @@
 
 import re
 
-from outwiker.libs.pyparsing import Regex
+from pyparsing import Regex
 
 from outwiker.core.thumbexception import ThumbException
 from outwiker.core.defines import PAGE_ATTACH_DIR

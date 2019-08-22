@@ -1,6 +1,6 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
-from outwiker.libs.pyparsing import QuotedString
+from pyparsing import QuotedString
 
 from outwiker.pages.wiki.parser.tokenblock import TextBlockToken
 

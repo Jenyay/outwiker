@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.libs.pyparsing import Literal
+from pyparsing import Literal
 
 
 class LineBreakFactory (object):

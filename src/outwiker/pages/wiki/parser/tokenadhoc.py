@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.libs.pyparsing import Regex
+from pyparsing import Regex
 
 from .tokenfonts import SubscriptToken, SuperscriptToken, BoldToken, ItalicToken, BoldItalicToken
 from .utils import escapeTextForRE

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.libs.pyparsing import Regex
+from pyparsing import Regex
 
 
 class HorLineFactory (object):

@@ -2,7 +2,8 @@
 
 import re
 
-from outwiker.libs.pyparsing import QuotedString, Regex
+from pyparsing import QuotedString, Regex
+
 from .tokenblock import TextBlockToken
 
 

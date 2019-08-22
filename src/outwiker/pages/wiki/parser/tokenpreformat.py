@@ -2,7 +2,7 @@
 
 import html
 
-from outwiker.libs.pyparsing import QuotedString
+from pyparsing import QuotedString
 
 
 class PreFormatFactory(object):

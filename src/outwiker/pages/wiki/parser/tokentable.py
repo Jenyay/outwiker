@@ -2,7 +2,7 @@
 
 import re
 
-from outwiker.libs.pyparsing import Regex, OneOrMore, Optional, LineEnd, LineStart, Literal
+from pyparsing import Regex, OneOrMore, Optional, LineEnd, LineStart, Literal
 
 
 class TableFactory (object):

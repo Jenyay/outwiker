@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.libs.pyparsing import NoMatch
+from pyparsing import NoMatch
 
 
 def noConvert(s, l, t):

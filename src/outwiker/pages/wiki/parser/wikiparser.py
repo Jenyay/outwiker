@@ -2,6 +2,8 @@
 
 import traceback
 
+from pyparsing import NoMatch
+
 from .tokenfonts import FontsFactory
 from .tokennoformat import NoFormatFactory
 from .tokenpreformat import PreFormatFactory
@@ -25,7 +27,6 @@ from .tokenwikistyle import WikiStyleInlineFactory, WikiStyleBlockFactory
 from .tokencomment import CommentFactory
 
 from ..thumbnails import Thumbnails
-from outwiker.libs.pyparsing import NoMatch
 
 
 class Parser(object):

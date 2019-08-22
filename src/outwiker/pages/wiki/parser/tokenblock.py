@@ -2,7 +2,7 @@
 
 from abc import ABCMeta, abstractmethod
 
-from outwiker.libs.pyparsing import nestedExpr, originalTextFor
+from pyparsing import nestedExpr, originalTextFor
 
 
 class TextBlockToken (object):

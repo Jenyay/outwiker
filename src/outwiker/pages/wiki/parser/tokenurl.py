@@ -2,7 +2,7 @@
 
 import re
 
-from outwiker.libs.pyparsing import Regex
+from pyparsing import Regex
 
 
 class UrlFactory (object):

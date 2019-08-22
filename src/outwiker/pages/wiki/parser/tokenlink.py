@@ -2,7 +2,7 @@
 
 import html
 
-from outwiker.libs.pyparsing import QuotedString
+from pyparsing import QuotedString
 
 from .tokenattach import AttachToken
 from outwiker.core.defines import PAGE_ATTACH_DIR

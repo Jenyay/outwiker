@@ -2,7 +2,11 @@
 
 from abc import ABCMeta, abstractmethod, abstractproperty
 import re
-from typing import List, Tuple
+from typing import List, Tuple, Dict
+
+from pyparsing import (Regex, Forward, Literal,
+                       LineStart, LineEnd, NoMatch,
+                       SkipTo)
 
 from outwiker.core.defines import (STYLES_BLOCK_FOLDER_NAME,
                                    STYLES_INLINE_FOLDER_NAME
@@ -13,10 +17,6 @@ from ..defines import (CONFIG_STYLES_SECTION,
                        )
 from outwiker.core.standardcolors import standardColorNames
 from outwiker.core.system import getSpecialDirList
-from outwiker.libs.pyparsing import (Regex, Forward, Literal,
-                                     LineStart, LineEnd, NoMatch,
-                                     SkipTo)
-
 from .tokennoformat import NoFormatFactory
 from ..wikistyleutils import (loadCustomStyles,
                               loadCustomStylesFromConfig,
@@ -101,7 +101,8 @@ class WikiStyleBase(object, metaclass=ABCMeta):
         no_format = NoFormatFactory.make(self.parser)
 
         token = Forward()
-        inside = SkipTo(end, failOn=forbidden, ignore=no_format | token).leaveWhitespace()
+        inside = SkipTo(end, failOn=forbidden,
+                        ignore=no_format | token).leaveWhitespace()
         token << begin + inside + end
 
         token = token.setParseAction(self.conversionParseAction)(self.name)
@@ -112,7 +113,8 @@ class WikiStyleBase(object, metaclass=ABCMeta):
         params_list = self._parseParams(t['params'])
 
         styles_info = self._style_generator.getStyle(params_list)
-        classes = styles_info.unknown_classes + list(styles_info.custom_classes.keys())
+        classes = styles_info.unknown_classes + \
+            list(styles_info.custom_classes.keys())
 
         for class_name, css in styles_info.custom_classes.items():
             if class_name not in self._custom_styles_on_page:
@@ -125,7 +127,8 @@ class WikiStyleBase(object, metaclass=ABCMeta):
                                          self._custom_styles_on_page)
 
         classes_str = ' class="' + ' '.join(classes) + '"' if classes else ''
-        style_str = ' style="' + styles_info.user_css + '"' if styles_info.user_css else ''
+        style_str = ' style="' + styles_info.user_css + \
+            '"' if styles_info.user_css else ''
 
         content = self._prepareContent(t[1])
         inside = self.parser.parseWikiMarkup(content)

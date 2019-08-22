@@ -5,7 +5,8 @@ import os
 import os.path
 import shutil
 
-from outwiker.libs.pyparsing import QuotedString
+from pyparsing import QuotedString
+
 from outwiker.pages.wiki.thumbnails import Thumbnails
 from outwiker.pages.wiki.parser.wikiparser import Parser
 

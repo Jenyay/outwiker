@@ -29,7 +29,7 @@
 		<changelog>
 			<version number="2.5.4">
 				<requirements>
-					<api>2.862</api>
+					<api>2.868</api>
 				</requirements>
 
                 <download os="all">https://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.5.4.zip</download>
@@ -170,7 +170,7 @@
 		<changelog>
 			<version number="2.5.4">
 				<requirements>
-					<api>2.862</api>
+					<api>2.868</api>
 				</requirements>
 
                 <download os="all">https://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.5.4.zip</download>
