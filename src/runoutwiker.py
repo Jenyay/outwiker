@@ -5,6 +5,7 @@ import logging
 import os
 import sys
 
+import outwiker
 from outwiker.core.application import Application
 from outwiker.core.defines import APP_DATA_DEBUG
 from outwiker.core.system import getOS, getConfigPath
@@ -18,6 +19,8 @@ logger = logging.getLogger('outwiker')
 
 
 def print_info():
+    logger.debug('Current OutWiker API version: {}.{}'.format(
+        outwiker.__api_version__[0], outwiker.__api_version__[1]))
     logger.debug(u'Current working directory: {}'.format(os.getcwd()))
     for n, dirname in enumerate(getSpecialDirList(u'')):
         logger.debug(u'Special directory [{}]: {}'.format(n, dirname))
@@ -30,8 +33,8 @@ if __name__ == "__main__":
     application = Application
     application.init(config_path)
 
-    outwiker = OutWikerApplication(application)
-    locale = initLocale(outwiker.application.config)
+    outwiker_app = OutWikerApplication(application)
+    locale = initLocale(outwiker_app.application.config)
 
     try:
         starter = Starter(application)
@@ -39,7 +42,7 @@ if __name__ == "__main__":
         sys.exit(1)
 
     application.sharedData[APP_DATA_DEBUG] = starter.isDebugMode
-    outwiker.initLogger(starter.isDebugMode)
+    outwiker_app.initLogger(starter.isDebugMode)
     print_info()
 
     try:
@@ -49,14 +52,14 @@ if __name__ == "__main__":
 
     logger.debug('Run GUI mode')
 
-    outwiker.initMainWindow()
+    outwiker_app.initMainWindow()
 
     if starter.pluginsEnabled:
-        outwiker.loadPlugins()
+        outwiker_app.loadPlugins()
 
-    outwiker.showMainWindow(starter.allowMinimizingMainWindow)
-    outwiker.bindActivateApp()
+    outwiker_app.showMainWindow(starter.allowMinimizingMainWindow)
+    outwiker_app.bindActivateApp()
     starter.processGUI()
-    outwiker.MainLoop()
+    outwiker_app.MainLoop()
 
     logger.debug('Exit')
