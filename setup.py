@@ -44,6 +44,7 @@ setup(
         'wxPython==4.0.6',
         'Pillow>=6.1.0',
         'idna>=2.8',
+        'pyparsing>=2.4.2',
         'pyenchant>=2.0.0;platform_system=="Windows"',
         'comtypes>=1.1.7;platform_system=="Windows"',
         'hunspell>=0.5.5;platform_system=="Linux"',
