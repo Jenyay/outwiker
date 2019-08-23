@@ -1,8 +1,8 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import re
 
-from ..libs.pyparsing import Regex
+from pyparsing import Regex
 
 
 class TableFactory (object):
