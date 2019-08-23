@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from functools import wraps
 import sys
@@ -7,7 +7,7 @@ import os.path
 import shutil
 
 from fabric.api import local
-from .libs.colorama import Fore
+from colorama import Fore
 
 
 def addToSysPath(path):

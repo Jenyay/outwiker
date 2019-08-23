@@ -21,4 +21,5 @@ pympler = "==0.6"
 pytest = "==5.1.0"
 coverage = "==4.5.3"
 jinja2 = "==2.10.1"
+colorama = "==0.4.1"
 outwiker = {editable = true,path = "."}

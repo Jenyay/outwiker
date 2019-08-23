@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import os.path
-import urllib.request, urllib.error, urllib.parse
+import urllib.request
+import urllib.error
+import urllib.parse
 import sys
 
 from fabric.api import cd, put
@@ -9,7 +11,7 @@ from fabric.api import cd, put
 from .versions import (getOutwikerVersion,
                        readAppInfo,
                        downloadAppInfo)
-from .libs.colorama import Fore
+from colorama import Fore
 from .buildfacts import BuildFacts
 
 
@@ -17,6 +19,7 @@ class BinaryUploader(object):
     '''
     Class to upload binary files to server.
     '''
+
     def __init__(self,
                  win_tpl_files, linux_tpl_files,
                  windows_result_path,
@@ -36,9 +39,11 @@ class BinaryUploader(object):
                                                build=version[1])
                                   for fname in linux_tpl_files]
 
-        upload_files_win = [os.path.join(windows_result_path, item) for item in files_for_upload_win]
+        upload_files_win = [os.path.join(
+            windows_result_path, item) for item in files_for_upload_win]
 
-        upload_files_linux = [os.path.join(self.facts.build_dir_linux, item) for item in files_for_upload_linux]
+        upload_files_linux = [os.path.join(
+            self.facts.build_dir_linux, item) for item in files_for_upload_linux]
 
         self.upload_files = (upload_files_win +
                              upload_files_linux +
@@ -54,7 +59,8 @@ class BinaryUploader(object):
         newOutWikerAppInfo = readAppInfo(self.versions_file)
         print('Download {}'.format(newOutWikerAppInfo.updatesUrl))
         try:
-            prevOutWikerAppInfo = downloadAppInfo(newOutWikerAppInfo.updatesUrl)
+            prevOutWikerAppInfo = downloadAppInfo(
+                newOutWikerAppInfo.updatesUrl)
 
             if newOutWikerAppInfo.currentVersion < prevOutWikerAppInfo.currentVersion:
                 print(Fore.RED + 'Error. New version < Prev version')

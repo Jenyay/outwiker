@@ -13,7 +13,7 @@ import urllib.parse
 import shutil
 
 from fabric.api import local, lcd, settings, task, cd, put, hosts
-from buildtools.libs.colorama import Fore
+from colorama import Fore
 from buildtools.buildfacts import BuildFacts
 
 from buildtools.utilites import (getPython,

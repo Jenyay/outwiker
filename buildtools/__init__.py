@@ -1,6 +1,6 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
-from buildtools.libs.colorama import init
+from colorama import init
 
 from .utilites import addToSysPath
 
