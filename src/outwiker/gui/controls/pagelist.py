@@ -10,6 +10,9 @@ from outwiker.core.system import getBuiltinImagePath
 from outwiker.gui.imagelistcache import ImageListCache
 from .pagelist_columns import BaseColumn
 
+# For type hints
+import outwiker.core.tree
+
 # Событие, возникающее при клике по элементу, описывающий страницу
 PageClickEvent, EVT_PAGE_CLICK = wx.lib.newevent.NewEvent()
 
@@ -23,7 +26,7 @@ class PageList(wx.Panel):
     def __init__(self, parent: wx.Window):
         super().__init__(parent)
         self._columns = []                     # type: List[BaseColumn]
-        self._pages = []                       # type: List['outwiker.core.tree.WikiPage']
+        self._pages = []                       # type: List[outwiker.core.tree.WikiPage]
         self._defaultIcon = getBuiltinImagePath("page.png")
         self._imageList = ImageListCache(self._defaultIcon)
 

@@ -18,6 +18,10 @@ from .wikipreferences import WikiPrefGeneralPanel
 from .wikicolorizercontroller import WikiColorizerController
 from .listautocomplete import listComplete_wiki
 
+# For type hints
+import outwiker.core.tree
+import outwiker.core.events
+
 
 class WikiPageController(object):
     """GUI controller for wiki page"""
@@ -105,8 +109,8 @@ class WikiPageController(object):
 
     @pagetype(WikiWikiPage)
     def __onTextEditorKeyDown(self,
-                              page: 'outwiker.core.tree.WikiPage',
-                              params: 'outwiker.core.events.TextEditorKeyDownParams') -> None:
+                              page: outwiker.core.tree.WikiPage,
+                              params: outwiker.core.events.TextEditorKeyDownParams) -> None:
         if params.keyCode == wx.WXK_RETURN and not params.hasModifiers():
             result = listComplete_wiki(params.editor)
             if result:

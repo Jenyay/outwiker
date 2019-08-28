@@ -58,9 +58,9 @@ class ColumnsFactory(object):
 
         for item in item_params:
             name, width, visible = item.split(':')
-            width = int(width)
-            visible = (visible.lower() == 'true')
-            column = self.createColumn(name, width, visible)
+            width_int = int(width)
+            visible_bool = (visible.lower() == 'true')
+            column = self.createColumn(name, width_int, visible_bool)
             columns.append(column)
 
         return columns
@@ -110,7 +110,7 @@ class BaseColumn(metaclass=ABCMeta):
     def sort_type(self):
         return self._sort_type
 
-    def set_sort_type(self, value, listCtrl: 'UltimateListCtrl'):
+    def set_sort_type(self, value, listCtrl: ULC.UltimateListCtrl):
         self._sort_type = value
 
         assert self._column is not None
@@ -128,7 +128,7 @@ class BaseColumn(metaclass=ABCMeta):
         listCtrl.SetColumn(self._column_index, self._column)
 
     def insertColumn(self,
-                     listCtrl: 'UltimateListCtrl',
+                     listCtrl: ULC.UltimateListCtrl,
                      position: int):
         '''
         Add column
