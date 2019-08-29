@@ -48,8 +48,6 @@ class SiteContentBuilder(BuilderBase):
         parser = XmlVersionParser([source.lang])
         appinfo = parser.parse(xml_content)
 
-        # template_content = readTextFile(source.template_file)
-        # template = Template(template_content)
         template_env = Environment(loader=FileSystemLoader(self._templates_path))
         template = template_env.get_template(source.template_file)
 
