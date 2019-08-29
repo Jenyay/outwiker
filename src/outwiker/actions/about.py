@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import outwiker
 from outwiker.gui.baseaction import BaseAction
-from outwiker.core.commands import getCurrentVersion
 from outwiker.gui.dialogs.about import AboutDialog
 
 
@@ -25,7 +25,7 @@ class AboutAction (BaseAction):
     def run(self, params):
         assert self._application.mainWindow is not None
 
-        version = getCurrentVersion()
+        version = outwiker.__version__
         dlg = AboutDialog(version, self._application.mainWindow)
         dlg.ShowModal()
         dlg.Destroy()

@@ -3,9 +3,9 @@
 import logging
 import sys
 
+import outwiker
 from outwiker.core.commands import openWiki, findPage
 from outwiker.core.commandline import CommandLine, CommandLineException
-from outwiker.core.commands import getCurrentVersion
 from outwiker.gui.guiconfig import GeneralGuiConfig
 
 
@@ -80,7 +80,7 @@ class Starter(object):
 
         # Вывод информации о версии
         if self._commandLine.version:
-            print(r"""OutWiker {ver}""".format(ver=str(getCurrentVersion())))
+            print(r"""OutWiker {ver}""".format(ver=outwiker.__version__))
             raise StarterExit
 
     def __openRecentWiki(self):

@@ -2,7 +2,7 @@
 
 import argparse
 
-from outwiker.core.commands import getCurrentVersion
+import outwiker
 
 
 class CommandLineException(Exception):
@@ -23,7 +23,7 @@ class CommandLine(object):
     Класс для хранения разобранных параметров командной строки
     """
     def __init__(self):
-        self._description = r"""OutWiker {ver}. Crossplatform program to keep your notes in a tree.""".format(ver=str(getCurrentVersion()))
+        self._description = r"""OutWiker {ver}. Crossplatform program to keep your notes in a tree.""".format(ver=outwiker.__version__)
 
         self._parser = self._createParser()
         self._namespace = None

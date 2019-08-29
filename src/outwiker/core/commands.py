@@ -16,12 +16,10 @@ import wx
 import outwiker.core.exceptions
 from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
-from outwiker.core.defines import VERSION_FILE_NAME, VERSIONS_LANG
 from outwiker.core.events import PreWikiOpenParams, PostWikiOpenParams
 from outwiker.core.pagetitletester import PageTitleError, PageTitleWarning
-from outwiker.core.system import getOS, getCurrentDir
+from outwiker.core.system import getOS
 from outwiker.core.tree import WikiDocument
-from outwiker.core.xmlversionparser import XmlVersionParser
 from outwiker.gui.dialogs.overwritedialog import OverwriteDialog
 from outwiker.gui.longprocessrunner import LongProcessRunner
 from outwiker.gui.polyaction import PolyAction
@@ -29,7 +27,6 @@ from outwiker.gui.dateformatdialog import DateFormatDialog
 from outwiker.gui.guiconfig import GeneralGuiConfig
 from outwiker.gui.tester import Tester
 from outwiker.gui.testeddialog import TestedFileDialog
-from outwiker.utilites.textfile import readTextFile
 
 
 logger = logging.getLogger('outwiker.core.commands')
@@ -410,18 +407,6 @@ def setStatusText(text, index=0):
     index - номер ячейки статусбара
     """
     Application.mainWindow.statusbar.SetStatusText(text, index)
-
-
-def getCurrentVersion():
-    path = os.path.join(getCurrentDir(), VERSION_FILE_NAME)
-
-    try:
-        text = readTextFile(path)
-        versionInfo = XmlVersionParser([_(VERSIONS_LANG), u'en']).parse(text)
-    except EnvironmentError:
-        return None
-
-    return versionInfo.currentVersion
 
 
 @testreadonly
