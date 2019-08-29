@@ -409,7 +409,7 @@ def test_versions_changes_lang_default_ru():
                     </changes>
 
                     <changes lang="ru">
-                        <change>Испрвлена ошибка</change>
+                        <change>Исправлена ошибка</change>
                         <change>Исправлена другая ошибка</change>
                     </changes>
                 </version>
@@ -423,5 +423,135 @@ def test_versions_changes_lang_default_ru():
     assert result.versions[0].changes[''][0].description == 'Fix bug'
     assert result.versions[0].changes[''][1].description == 'Fix other bug'
 
-    assert result.versions[0].changes['ru'][0].description == 'Испрвлена ошибка'
+    assert result.versions[0].changes['ru'][0].description == 'Исправлена ошибка'
     assert result.versions[0].changes['ru'][1].description == 'Исправлена другая ошибка'
+
+def test_versions_download_empty():
+    text = '''<?xml version="1.1" encoding="UTF-8" ?>
+        <info>
+            <versions>
+                <version number="1.0">
+                    <download></download>
+                </version>
+            </versions>
+        </info>'''
+    result = XmlVersionParser().parse(text)
+
+    assert result.versions[0].downloads == []
+
+def test_versions_download_url():
+    text = '''<?xml version="1.1" encoding="UTF-8" ?>
+        <info>
+            <versions>
+                <version number="1.0">
+                    <download href="http://example.com/application.zip"></download>
+                </version>
+            </versions>
+        </info>'''
+    result = XmlVersionParser().parse(text)
+
+    assert len(result.versions[0].downloads) == 1
+    assert result.versions[0].downloads[0].href == 'http://example.com/application.zip'
+    assert not result.versions[0].downloads[0].requirements.os_list
+    assert not result.versions[0].downloads[0].requirements.api_list
+
+def test_versions_download_url_several():
+    text = '''<?xml version="1.1" encoding="UTF-8" ?>
+        <info>
+            <versions>
+                <version number="1.0">
+                    <download href="http://example.com/application.zip"></download>
+                    <download href="http://example.com/application_2.zip"></download>
+                </version>
+            </versions>
+        </info>'''
+    result = XmlVersionParser().parse(text)
+
+    assert len(result.versions[0].downloads) == 2
+    assert result.versions[0].downloads[0].href == 'http://example.com/application.zip'
+    assert not result.versions[0].downloads[0].requirements.os_list
+    assert not result.versions[0].downloads[0].requirements.api_list
+
+    assert result.versions[0].downloads[1].href == 'http://example.com/application_2.zip'
+    assert not result.versions[0].downloads[0].requirements.os_list
+    assert not result.versions[0].downloads[0].requirements.api_list
+
+def test_versions_download_requirements():
+    text = '''<?xml version="1.1" encoding="UTF-8" ?>
+        <info>
+            <versions>
+                <version number="1.0">
+                    <download href="http://example.com/application.zip">
+                        <requirements>
+                        </requirements>
+                    </download>
+                </version>
+            </versions>
+        </info>'''
+    result = XmlVersionParser().parse(text)
+
+    assert not result.versions[0].downloads[0].requirements.os_list
+    assert not result.versions[0].downloads[0].requirements.api_list
+
+def test_versions_download_requirements_os():
+    text = '''<?xml version="1.1" encoding="UTF-8" ?>
+        <info>
+            <versions>
+                <version number="1.0">
+                    <download href="http://example.com/application.zip">
+                        <requirements>
+                            <os>Windows</os>
+                            <os>Linux</os>
+                        </requirements>
+                    </download>
+                </version>
+            </versions>
+        </info>'''
+    result = XmlVersionParser().parse(text)
+
+    assert 'Windows' in result.versions[0].downloads[0].requirements.os_list
+    assert 'Linux' in result.versions[0].downloads[0].requirements.os_list
+    assert not result.versions[0].downloads[0].requirements.api_list
+
+def test_versions_download_requirements_api():
+    text = '''<?xml version="1.1" encoding="UTF-8" ?>
+        <info>
+            <versions>
+                <version number="1.0">
+                    <download href="http://example.com/application.zip">
+                        <requirements>
+                            <api>3.666</api>
+                            <api>3.667</api>
+                        </requirements>
+                    </download>
+                </version>
+            </versions>
+        </info>'''
+    result = XmlVersionParser().parse(text)
+
+    assert not result.versions[0].downloads[0].requirements.os_list
+    assert '3.666' in result.versions[0].downloads[0].requirements.api_list
+    assert '3.667' in result.versions[0].downloads[0].requirements.api_list
+
+def test_versions_download_requirements_os_api():
+    text = '''<?xml version="1.1" encoding="UTF-8" ?>
+        <info>
+            <versions>
+                <version number="1.0">
+                    <download href="http://example.com/application.zip">
+                        <requirements>
+                            <os>Windows</os>
+                            <os>Linux</os>
+                            <api>3.666</api>
+                            <api>3.667</api>
+                        </requirements>
+                    </download>
+                </version>
+            </versions>
+        </info>'''
+    result = XmlVersionParser().parse(text)
+
+    assert 'Windows' in result.versions[0].downloads[0].requirements.os_list
+    assert 'Linux' in result.versions[0].downloads[0].requirements.os_list
+    assert '3.666' in result.versions[0].downloads[0].requirements.api_list
+    assert '3.667' in result.versions[0].downloads[0].requirements.api_list
