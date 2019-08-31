@@ -128,8 +128,6 @@ from wx.lib.stattext import GenStaticText as StaticText
 # Import the useful webbrowser module for platform-independent results
 import webbrowser
 
-# Set no delay time to open the web page
-webbrowser.PROCESS_CREATION_DELAY = 0
 
 # To show a popup that copies the hyperlinks on the clipboard
 wxHYPERLINKS_POPUP_COPY = 1000

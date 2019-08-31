@@ -128,7 +128,7 @@ class FileRecognizerBase(Recognizer):
     def _recognize(self, href: str) -> Union[str, None]:
         return self._recognizeFile(href, self._basepath)
 
-    def _recognizeFile(self, href: str, basepath: str) -> Union[str, None]:
+    def _recognizeFile(self, href: str, basepath_str: str) -> Union[str, None]:
         try:
             href_path_abs = Path(href)
             # Check absolute path
@@ -136,7 +136,7 @@ class FileRecognizerBase(Recognizer):
                 return str(href_path_abs.resolve())
 
             # Check relative path
-            basepath = Path(basepath)
+            basepath = Path(basepath_str)
             if basepath.is_file():
                 basepath = basepath.parent
 
@@ -145,6 +145,8 @@ class FileRecognizerBase(Recognizer):
                 return str(href_path_relative.resolve())
         except OSError:
             return None
+
+        return None
 
 
 class FileRecognizerIE(FileRecognizerBase):

@@ -1,81 +1,118 @@
 # -*- coding: utf-8 -*-
 
-import outwiker.actions as actions
 import outwiker.actions.polyactionsid as polyactions
 from outwiker.gui.hotkey import HotKey
 
+import outwiker.actions.open
+import outwiker.actions.new
+import outwiker.actions.openreadonly
+import outwiker.actions.close
+import outwiker.actions.save
+import outwiker.actions.exit
+import outwiker.actions.showhideattaches
+import outwiker.actions.showhidetree
+import outwiker.actions.showhidetags
+import outwiker.actions.search
+import outwiker.actions.addsiblingpage
+import outwiker.actions.addchildpage
+import outwiker.actions.movepageup
+import outwiker.actions.movepagedown
+import outwiker.actions.renamepage
+import outwiker.actions.removepage
+import outwiker.actions.sortchildalpha
+import outwiker.actions.sortsiblingsalpha
+import outwiker.actions.tabs
+import outwiker.actions.globalsearch
+import outwiker.actions.attachfiles
+import outwiker.actions.openattachfolder
+import outwiker.actions.clipboard
+import outwiker.actions.tags
+import outwiker.actions.history
+import outwiker.actions.moving
+import outwiker.actions.printaction
+import outwiker.actions.fullscreen
+import outwiker.actions.preferences
+import outwiker.actions.editpageprop
+import outwiker.actions.addbookmark
+import outwiker.actions.reloadwiki
+import outwiker.actions.openhelp
+import outwiker.actions.about
+import outwiker.actions.applystyle
+import outwiker.actions.openpluginsfolder
+import outwiker.actions.switchto
+
 
 actionsList = [
-    (actions.open.OpenAction, HotKey("O", ctrl=True)),
-    (actions.new.NewAction, HotKey("N", ctrl=True)),
-    (actions.openreadonly.OpenReadOnlyAction, None),
-    (actions.close.CloseAction, HotKey("W", ctrl=True, shift=True)),
-    (actions.save.SaveAction, HotKey("S", ctrl=True)),
-    (actions.exit.ExitAction, HotKey("F4", alt=True)),
+    (outwiker.actions.open.OpenAction, HotKey("O", ctrl=True)),
+    (outwiker.actions.new.NewAction, HotKey("N", ctrl=True)),
+    (outwiker.actions.openreadonly.OpenReadOnlyAction, None),
+    (outwiker.actions.close.CloseAction, HotKey("W", ctrl=True, shift=True)),
+    (outwiker.actions.save.SaveAction, HotKey("S", ctrl=True)),
+    (outwiker.actions.exit.ExitAction, HotKey("F4", alt=True)),
 
-    (actions.showhideattaches.ShowHideAttachesAction, None),
-    (actions.showhidetree.ShowHideTreeAction, None),
-    (actions.showhidetags.ShowHideTagsAction, None),
+    (outwiker.actions.showhideattaches.ShowHideAttachesAction, None),
+    (outwiker.actions.showhidetree.ShowHideTreeAction, None),
+    (outwiker.actions.showhidetags.ShowHideTagsAction, None),
 
-    (actions.search.SearchAction, HotKey("F", ctrl=True)),
-    (actions.search.SearchNextAction, HotKey("F3")),
-    (actions.search.SearchPrevAction, HotKey("F3", shift=True)),
-    (actions.search.SearchAndReplaceAction, HotKey("F3", ctrl=True)),
+    (outwiker.actions.search.SearchAction, HotKey("F", ctrl=True)),
+    (outwiker.actions.search.SearchNextAction, HotKey("F3")),
+    (outwiker.actions.search.SearchPrevAction, HotKey("F3", shift=True)),
+    (outwiker.actions.search.SearchAndReplaceAction, HotKey("F3", ctrl=True)),
 
-    (actions.addsiblingpage.AddSiblingPageAction,
+    (outwiker.actions.addsiblingpage.AddSiblingPageAction,
      HotKey("Y", ctrl=True, shift=True)),
-    (actions.addchildpage.AddChildPageAction, HotKey("P", ctrl=True, shift=True)),
-    (actions.movepageup.MovePageUpAction, HotKey("Up", ctrl=True, shift=True)),
-    (actions.movepagedown.MovePageDownAction,
+    (outwiker.actions.addchildpage.AddChildPageAction, HotKey("P", ctrl=True, shift=True)),
+    (outwiker.actions.movepageup.MovePageUpAction, HotKey("Up", ctrl=True, shift=True)),
+    (outwiker.actions.movepagedown.MovePageDownAction,
      HotKey("Down", ctrl=True, shift=True)),
 
-    (actions.renamepage.RenamePageAction, HotKey("F2")),
-    (actions.removepage.RemovePageAction, HotKey("F8", ctrl=True, shift=True)),
+    (outwiker.actions.renamepage.RenamePageAction, HotKey("F2")),
+    (outwiker.actions.removepage.RemovePageAction, HotKey("F8", ctrl=True, shift=True)),
 
-    (actions.sortchildalpha.SortChildAlphabeticalAction, None),
-    (actions.sortsiblingsalpha.SortSiblingsAlphabeticalAction, None),
+    (outwiker.actions.sortchildalpha.SortChildAlphabeticalAction, None),
+    (outwiker.actions.sortsiblingsalpha.SortSiblingsAlphabeticalAction, None),
 
-    (actions.tabs.AddTabAction, HotKey("T", ctrl=True)),
-    (actions.tabs.CloseTabAction, HotKey("W", ctrl=True)),
-    (actions.tabs.PreviousTabAction, HotKey("PageUp", ctrl=True, shift=True)),
-    (actions.tabs.NextTabAction, HotKey("PageDown", ctrl=True, shift=True)),
+    (outwiker.actions.tabs.AddTabAction, HotKey("T", ctrl=True)),
+    (outwiker.actions.tabs.CloseTabAction, HotKey("W", ctrl=True)),
+    (outwiker.actions.tabs.PreviousTabAction, HotKey("PageUp", ctrl=True, shift=True)),
+    (outwiker.actions.tabs.NextTabAction, HotKey("PageDown", ctrl=True, shift=True)),
 
-    (actions.globalsearch.GlobalSearchAction, HotKey("F", ctrl=True, shift=True)),
-    (actions.attachfiles.AttachFilesAction, HotKey("A", ctrl=True, shift=True)),
-    (actions.openattachfolder.OpenAttachFolderAction, None),
+    (outwiker.actions.globalsearch.GlobalSearchAction, HotKey("F", ctrl=True, shift=True)),
+    (outwiker.actions.attachfiles.AttachFilesAction, HotKey("A", ctrl=True, shift=True)),
+    (outwiker.actions.openattachfolder.OpenAttachFolderAction, None),
 
-    (actions.clipboard.CopyPageTitleAction, None),
-    (actions.clipboard.CopyPagePathAction, None),
-    (actions.clipboard.CopyAttachPathAction, None),
-    (actions.clipboard.CopyPageLinkAction, None),
+    (outwiker.actions.clipboard.CopyPageTitleAction, None),
+    (outwiker.actions.clipboard.CopyPagePathAction, None),
+    (outwiker.actions.clipboard.CopyAttachPathAction, None),
+    (outwiker.actions.clipboard.CopyPageLinkAction, None),
 
-    (actions.tags.AddTagsToBranchAction, None),
-    (actions.tags.RemoveTagsFromBranchAction, None),
-    (actions.tags.RenameTagAction, None),
+    (outwiker.actions.tags.AddTagsToBranchAction, None),
+    (outwiker.actions.tags.RemoveTagsFromBranchAction, None),
+    (outwiker.actions.tags.RenameTagAction, None),
 
-    (actions.history.HistoryBackAction, HotKey("Left", ctrl=True, alt=True)),
-    (actions.history.HistoryForwardAction, HotKey("Right", ctrl=True, alt=True)),
+    (outwiker.actions.history.HistoryBackAction, HotKey("Left", ctrl=True, alt=True)),
+    (outwiker.actions.history.HistoryForwardAction, HotKey("Right", ctrl=True, alt=True)),
 
-    (actions.moving.GoToParentAction, None),
-    (actions.moving.GoToFirstChildAction, None),
-    (actions.moving.GoToNextSiblingAction, HotKey("Down", ctrl=True)),
-    (actions.moving.GoToPrevSiblingAction, HotKey("Up", ctrl=True)),
+    (outwiker.actions.moving.GoToParentAction, None),
+    (outwiker.actions.moving.GoToFirstChildAction, None),
+    (outwiker.actions.moving.GoToNextSiblingAction, HotKey("Down", ctrl=True)),
+    (outwiker.actions.moving.GoToPrevSiblingAction, HotKey("Up", ctrl=True)),
 
-    (actions.printaction.PrintAction, HotKey("P", ctrl=True)),
-    (actions.fullscreen.FullScreenAction, HotKey("F11")),
-    (actions.preferences.PreferencesAction, HotKey("F8", ctrl=True)),
-    (actions.editpageprop.EditPagePropertiesAction, HotKey("E", ctrl=True)),
-    (actions.addbookmark.AddBookmarkAction, HotKey("D", ctrl=True)),
-    (actions.reloadwiki.ReloadWikiAction, None),
-    (actions.openhelp.OpenHelpAction, HotKey("F1")),
-    (actions.about.AboutAction, HotKey("F1", ctrl=True)),
-    (actions.applystyle.SetStyleToBranchAction, None),
-    (actions.openpluginsfolder.OpenPluginsFolderAction, None),
+    (outwiker.actions.printaction.PrintAction, HotKey("P", ctrl=True)),
+    (outwiker.actions.fullscreen.FullScreenAction, HotKey("F11")),
+    (outwiker.actions.preferences.PreferencesAction, HotKey("F8", ctrl=True)),
+    (outwiker.actions.editpageprop.EditPagePropertiesAction, HotKey("E", ctrl=True)),
+    (outwiker.actions.addbookmark.AddBookmarkAction, HotKey("D", ctrl=True)),
+    (outwiker.actions.reloadwiki.ReloadWikiAction, None),
+    (outwiker.actions.openhelp.OpenHelpAction, HotKey("F1")),
+    (outwiker.actions.about.AboutAction, HotKey("F1", ctrl=True)),
+    (outwiker.actions.applystyle.SetStyleToBranchAction, None),
+    (outwiker.actions.openpluginsfolder.OpenPluginsFolderAction, None),
 
-    (actions.switchto.SwitchToMainPanelAction, None),
-    (actions.switchto.SwitchToTreeAction, None),
-    (actions.switchto.SwitchToAttachmentsAction, None),
-    (actions.switchto.SwitchToTagsCloudAction, None),
+    (outwiker.actions.switchto.SwitchToMainPanelAction, None),
+    (outwiker.actions.switchto.SwitchToTreeAction, None),
+    (outwiker.actions.switchto.SwitchToAttachmentsAction, None),
+    (outwiker.actions.switchto.SwitchToTagsCloudAction, None),
 ]
 
 

@@ -178,7 +178,7 @@ def findPage(application, page_id):
         return application.pageUidDepot[page_id]
 
 
-def openWiki(path: str, readonly: bool=False) -> Optional[WikiDocument]:
+def openWiki(path: str, readonly: bool = False) -> Optional[WikiDocument]:
     def threadFunc(path, readonly):
         try:
             return WikiDocument.load(path, readonly)
@@ -188,14 +188,14 @@ def openWiki(path: str, readonly: bool=False) -> Optional[WikiDocument]:
     logger.debug('Opening notes tree from: {}'.format(path))
     if not os.path.exists(path):
         __canNotLoadWikiMessage(path)
-        return
+        return None
 
     preWikiOpenParams = PreWikiOpenParams(path, readonly)
     Application.onPreWikiOpen(Application.selectedPage,
                               preWikiOpenParams)
     if preWikiOpenParams.abortOpen:
         logger.debug('Opening notes tree aborted')
-        return
+        return None
 
     # The path may be changed in event handlers
     path = preWikiOpenParams.path
