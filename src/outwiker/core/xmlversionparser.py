@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
+from datetime import datetime
 from xml.etree import ElementTree
-from typing import List, Tuple, Optional, Dict, TypeVar, Generic, Any
+from typing import List, Optional, Dict, TypeVar, Generic, Any
 
 
 T = TypeVar('T')
@@ -98,7 +99,13 @@ class XmlVersionParser:
             assert number is not None
 
             status = tag_version.get(self.ATTRIBUTE_VERSION_STATUS, '')
-            date = tag_version.get(self.ATTRIBUTE_VERSION_DATE, '')
+            date_str = tag_version.get(self.ATTRIBUTE_VERSION_DATE, '')
+
+            try:
+                date = datetime.strptime(date_str, '%d.%m.%Y')
+            except ValueError:
+                date = None
+
             version_info = XmlVersionInfo(number, status, date)
 
             self._setChangeLog(tag_version, version_info.changes)
@@ -219,9 +226,9 @@ class XmlAuthorInfo:
     """
 
     def __init__(self,
-                 name: str = u"",
-                 email: str = u"",
-                 website: str = u""):
+                 name: str = '',
+                 email: str = '',
+                 website: str = ''):
         self.name = name
         self.email = email
         self.website = website
@@ -234,7 +241,7 @@ class XmlRequirements:
 
     def __init__(self,
                  os_list: List[str],
-                 api_list: List[Tuple[int, int]]):
+                 api_list: List[str]):
         """
         os_list - list of the supported OS
         api_list - list of the tuples with supported API versions.
@@ -260,11 +267,10 @@ class XmlVersionInfo:
     def __init__(self,
                  number: str,
                  status: str = '',
-                 date: str = ''):
+                 date: Optional[datetime] = None):
         self.number = number                # type: str
         self.status = status                # type: str
-        self.date = date                    # type: str
-
+        self.date = date                    # type: Optional[datetime]
         self.downloads = []                 # type: List[XmlDownload]
 
         # Key - language, value - list of XmlChangeItem

@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from datetime import datetime
+
 from outwiker.core.xmlversionparser import XmlVersionParser, XmlAppInfo
 
 
@@ -304,12 +306,12 @@ def test_versions_attributes():
     assert len(result.versions) == 2
     assert result.versions[0].number == '1.0'
     assert result.versions[0].status == 'dev'
-    assert result.versions[0].date == '29.08.2019'
+    assert result.versions[0].date == datetime(2019, 8, 29)
     assert result.versions[0].changes.is_empty()
 
     assert result.versions[1].number == '1.1'
     assert result.versions[1].status == 'beta'
-    assert result.versions[1].date == '30.08.2019'
+    assert result.versions[1].date == datetime(2019, 8, 30)
     assert result.versions[1].changes.is_empty()
 
 def test_versions_no_number():
@@ -325,7 +327,7 @@ def test_versions_no_number():
     assert len(result.versions) == 1
     assert result.versions[0].number == '1.0'
     assert result.versions[0].status == 'dev'
-    assert result.versions[0].date == '29.08.2019'
+    assert result.versions[0].date == datetime(2019, 8, 29)
     assert result.versions[0].changes.is_empty()
 
 def test_versions_changes_empty():
