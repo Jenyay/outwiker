@@ -532,8 +532,8 @@ def test_fromString_lang_ru():
     assert appinfo.author.website == 'http://example.com/ru'
 
     assert appinfo.versions[0].version == Version(1, 0, status=StatusSet.BETA)
-    assert appinfo.versions[0].changes[0].description  == 'Исправлена ошибка'
-    assert appinfo.versions[0].changes[1].description  == 'Исправлена другая ошибка'
+    assert appinfo.versions[0].changes[0].description == 'Исправлена ошибка'
+    assert appinfo.versions[0].changes[1].description == 'Исправлена другая ошибка'
     assert appinfo.versions[0].downloads[0].href == 'http://example.com/application_v1_01.zip'
     assert appinfo.versions[0].downloads[1].href == 'http://example.com/application_v1_02.zip'
     assert appinfo.versions[0].downloads[0].requirements.os_list == [
@@ -545,8 +545,8 @@ def test_fromString_lang_ru():
         Version(3, 888)]
 
     assert appinfo.versions[1].version == Version(2, 0)
-    assert appinfo.versions[1].changes[0].description  == 'Исправлена ошибка - 2'
-    assert appinfo.versions[1].changes[1].description  == 'Исправлена другая ошибка - 2'
+    assert appinfo.versions[1].changes[0].description == 'Исправлена ошибка - 2'
+    assert appinfo.versions[1].changes[1].description == 'Исправлена другая ошибка - 2'
     assert appinfo.versions[1].downloads[0].href == 'http://example.com/application_v2_01.zip'
     assert appinfo.versions[1].downloads[1].href == 'http://example.com/application_v2_02.zip'
     assert appinfo.versions[1].downloads[0].requirements.os_list == [
@@ -556,3 +556,93 @@ def test_fromString_lang_ru():
         Version(3, 999), Version(3, 1111)]
     assert appinfo.versions[1].downloads[1].requirements.api_list == [
         Version(3, 2222)]
+
+
+def test_fromString_lang_ru_RU():
+    appinfo = AppInfoFactory.fromString(xmlexample, language='ru_RU')
+
+    assert appinfo.app_info_url == 'http://example.com/updates.xml'
+    assert appinfo.app_name == 'Имя приложения'
+    assert appinfo.website == 'http://jenyay.net/ru/'
+    assert appinfo.description == 'Описание'
+    assert appinfo.author.name == 'Джон'
+    assert appinfo.author.email == 'john_ru@example.com'
+    assert appinfo.author.website == 'http://example.com/ru'
+
+    assert appinfo.versions[0].version == Version(1, 0, status=StatusSet.BETA)
+    assert appinfo.versions[0].changes[0].description == 'Исправлена ошибка'
+    assert appinfo.versions[0].changes[1].description == 'Исправлена другая ошибка'
+    assert appinfo.versions[0].downloads[0].href == 'http://example.com/application_v1_01.zip'
+    assert appinfo.versions[0].downloads[1].href == 'http://example.com/application_v1_02.zip'
+    assert appinfo.versions[0].downloads[0].requirements.os_list == [
+        'Windows', 'Linux']
+    assert appinfo.versions[0].downloads[1].requirements.os_list == ['Windows']
+    assert appinfo.versions[0].downloads[0].requirements.api_list == [
+        Version(3, 666), Version(3, 777)]
+    assert appinfo.versions[0].downloads[1].requirements.api_list == [
+        Version(3, 888)]
+
+    assert appinfo.versions[1].version == Version(2, 0)
+    assert appinfo.versions[1].changes[0].description == 'Исправлена ошибка - 2'
+    assert appinfo.versions[1].changes[1].description == 'Исправлена другая ошибка - 2'
+    assert appinfo.versions[1].downloads[0].href == 'http://example.com/application_v2_01.zip'
+    assert appinfo.versions[1].downloads[1].href == 'http://example.com/application_v2_02.zip'
+    assert appinfo.versions[1].downloads[0].requirements.os_list == [
+        'Windows', 'Linux']
+    assert appinfo.versions[1].downloads[1].requirements.os_list == ['Windows']
+    assert appinfo.versions[1].downloads[0].requirements.api_list == [
+        Version(3, 999), Version(3, 1111)]
+    assert appinfo.versions[1].downloads[1].requirements.api_list == [
+        Version(3, 2222)]
+
+
+def test_fromString_lang_default():
+    appinfo = AppInfoFactory.fromString(xmlexample, language='jp')
+
+    assert appinfo.app_info_url == 'http://example.com/updates.xml'
+    assert appinfo.app_name == 'Application name'
+    assert appinfo.website == 'http://jenyay.net/en/'
+    assert appinfo.description == 'Description'
+    assert appinfo.author.name == 'John'
+    assert appinfo.author.email == 'john@example.com'
+    assert appinfo.author.website == 'http://example.com'
+
+    assert appinfo.versions[0].version == Version(1, 0, status=StatusSet.BETA)
+    assert appinfo.versions[0].changes[0].description == 'Fix bug'
+    assert appinfo.versions[0].changes[1].description == 'Fix other bug'
+    assert appinfo.versions[0].downloads[0].href == 'http://example.com/application_v1_01.zip'
+    assert appinfo.versions[0].downloads[1].href == 'http://example.com/application_v1_02.zip'
+    assert appinfo.versions[0].downloads[0].requirements.os_list == [
+        'Windows', 'Linux']
+    assert appinfo.versions[0].downloads[1].requirements.os_list == ['Windows']
+    assert appinfo.versions[0].downloads[0].requirements.api_list == [
+        Version(3, 666), Version(3, 777)]
+    assert appinfo.versions[0].downloads[1].requirements.api_list == [
+        Version(3, 888)]
+
+    assert appinfo.versions[1].version == Version(2, 0)
+    assert appinfo.versions[1].changes[0].description == 'Fix bug - 2'
+    assert appinfo.versions[1].changes[1].description == 'Fix other bug - 2'
+    assert appinfo.versions[1].downloads[0].href == 'http://example.com/application_v2_01.zip'
+    assert appinfo.versions[1].downloads[1].href == 'http://example.com/application_v2_02.zip'
+    assert appinfo.versions[1].downloads[0].requirements.os_list == [
+        'Windows', 'Linux']
+    assert appinfo.versions[1].downloads[1].requirements.os_list == ['Windows']
+    assert appinfo.versions[1].downloads[0].requirements.api_list == [
+        Version(3, 999), Version(3, 1111)]
+    assert appinfo.versions[1].downloads[1].requirements.api_list == [
+        Version(3, 2222)]
+
+
+def test_fromString_empty():
+    appInfo = AppInfoFactory.fromString('', language='ru')
+
+    assert appInfo.app_name == ''
+    assert appInfo.app_info_url == ''
+    assert appInfo.website == ''
+    assert appInfo.description == ''
+    assert appInfo.versions == []
+    assert appInfo.author is not None
+    assert appInfo.author.name == ''
+    assert appInfo.author.email == ''
+    assert appInfo.author.website == ''
