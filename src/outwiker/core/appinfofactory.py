@@ -2,9 +2,10 @@
 
 from typing import List
 
-from .xmlversionparser import XmlAppInfo, XmlDownload, DataForLanguage, T
+from .xmlversionparser import (XmlVersionParser, XmlAppInfo, XmlDownload,
+                               DataForLanguage, T)
 from .appinfo import (AppInfo, AuthorInfo, VersionInfo, DownloadInfo,
-        Requirements)
+                      Requirements)
 from .version import Version
 
 
@@ -15,22 +16,9 @@ class AppInfoFactory:
     DEFAULT_LANGUAGE = ''
 
     @classmethod
-    def extractDataForLanguage(cls,
-                               data: DataForLanguage[T],
-                               language: str,
-                               default: T) -> T:
-        # lang_list example: ['ru_RU', 'ru', '']
-        lang_list = [language]
-        underscore_pos = language.find('_')
-        if underscore_pos != -1:
-            lang_list.append(language[: underscore_pos])
-        lang_list.append(cls.DEFAULT_LANGUAGE)
-
-        for current_lang in lang_list:
-            if current_lang in data:
-                return data[current_lang]
-
-        return default
+    def fromString(cls, text: str, language: str) -> AppInfo:
+        xmlAppInfo = XmlVersionParser().parse(text)         # type: XmlAppInfo
+        return cls.fromXmlAppInfo(xmlAppInfo, language)
 
     @classmethod
     def fromXmlAppInfo(cls,
@@ -59,16 +47,36 @@ class AppInfoFactory:
         return result
 
     @classmethod
+    def extractDataForLanguage(cls,
+                               data: DataForLanguage[T],
+                               language: str,
+                               default: T) -> T:
+        # lang_list example: ['ru_RU', 'ru', '']
+        lang_list = [language]
+        underscore_pos = language.find('_')
+        if underscore_pos != -1:
+            lang_list.append(language[: underscore_pos])
+        lang_list.append(cls.DEFAULT_LANGUAGE)
+
+        for current_lang in lang_list:
+            if current_lang in data:
+                return data[current_lang]
+
+        return default
+
+    @classmethod
     def _getVersions(cls, xmlAppInfo: XmlAppInfo, language: str):
         versions = []
         for xmlversion in xmlAppInfo.versions:
             try:
-                version = Version.parse('{} {}'.format(xmlversion.number, xmlversion.status))
+                version = Version.parse('{} {}'.format(
+                    xmlversion.number, xmlversion.status))
             except ValueError:
                 continue
 
             date = xmlversion.date
-            changes = cls.extractDataForLanguage(xmlversion.changes, language, [])[:]
+            changes = cls.extractDataForLanguage(
+                xmlversion.changes, language, [])[:]
             downloads = cls._getDownloads(xmlversion.downloads)
 
             versions.append(VersionInfo(version, date, downloads, changes))
@@ -105,6 +113,8 @@ class AppInfoFactory:
     @classmethod
     def _getAuthor(cls, xmlAppInfo: XmlAppInfo, language: str):
         author_default = AuthorInfo()
-        author_src = cls.extractDataForLanguage(xmlAppInfo.author, language, author_default)
-        author = AuthorInfo(author_src.name, author_src.email, author_src.website)
+        author_src = cls.extractDataForLanguage(
+            xmlAppInfo.author, language, author_default)
+        author = AuthorInfo(
+            author_src.name, author_src.email, author_src.website)
         return author

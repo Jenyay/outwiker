@@ -6,6 +6,91 @@ from outwiker.core.xmlversionparser import (
 from outwiker.core.appinfofactory import AppInfoFactory
 from outwiker.core.version import Version, StatusSet
 
+xmlexample = '''<?xml version="1.1" encoding="UTF-8" ?>
+<info>
+    <updates>http://example.com/updates.xml</updates>
+
+    <name>Application name</name>
+    <name lang="ru">Имя приложения</name>
+
+    <website>http://jenyay.net/en/</website>
+    <website lang="ru">http://jenyay.net/ru/</website>
+
+    <description>Description</description>
+    <description lang="ru">Описание</description>
+
+    <author>
+        <name>John</name>
+        <email>john@example.com</email>
+        <website>http://example.com</website>
+    </author>
+
+    <author lang='ru'>
+        <name>Джон</name>
+        <email>john_ru@example.com</email>
+        <website>http://example.com/ru</website>
+    </author>
+
+    <versions>
+        <version number="1.0" status="beta">
+            <changes>
+                <change>Fix bug</change>
+                <change>Fix other bug</change>
+            </changes>
+
+            <changes lang="ru">
+                <change>Исправлена ошибка</change>
+                <change>Исправлена другая ошибка</change>
+            </changes>
+
+            <download href="http://example.com/application_v1_01.zip">
+                <requirements>
+                    <os>Windows</os>
+                    <os>Linux</os>
+                    <api>3.666</api>
+                    <api>3.777</api>
+                </requirements>
+            </download>
+
+            <download href="http://example.com/application_v1_02.zip">
+                <requirements>
+                    <os>Windows</os>
+                    <api>3.888</api>
+                </requirements>
+            </download>
+        </version>
+
+        <version number="2.0">
+            <changes>
+                <change>Fix bug - 2</change>
+                <change>Fix other bug - 2</change>
+            </changes>
+
+            <changes lang="ru">
+                <change>Исправлена ошибка - 2</change>
+                <change>Исправлена другая ошибка - 2</change>
+            </changes>
+
+            <download href="http://example.com/application_v2_01.zip">
+                <requirements>
+                    <os>Windows</os>
+                    <os>Linux</os>
+                    <api>3.999</api>
+                    <api>3.1111</api>
+                </requirements>
+            </download>
+
+            <download href="http://example.com/application_v2_02.zip">
+                <requirements>
+                    <os>Windows</os>
+                    <api>3.2222</api>
+                </requirements>
+            </download>
+        </version>
+    </versions>
+</info>
+'''
+
 
 def test_extractDataForLanguage_empty():
     data = DataForLanguage()
@@ -414,7 +499,8 @@ def test_fromXmlAppInfo_versions_downloads_requirements_single():
     appInfo = AppInfoFactory.fromXmlAppInfo(xmlAppInfo, language)
 
     assert appInfo.versions[0].downloads[0].requirements.os_list == ['Windows']
-    assert appInfo.versions[0].downloads[0].requirements.api_list == [Version(3, 868)]
+    assert appInfo.versions[0].downloads[0].requirements.api_list == [
+        Version(3, 868)]
 
 
 def test_fromXmlAppInfo_versions_downloads_requirements_several():
@@ -428,5 +514,45 @@ def test_fromXmlAppInfo_versions_downloads_requirements_several():
     language = 'en'
     appInfo = AppInfoFactory.fromXmlAppInfo(xmlAppInfo, language)
 
-    assert appInfo.versions[0].downloads[0].requirements.os_list == ['Windows', 'Linux']
-    assert appInfo.versions[0].downloads[0].requirements.api_list == [Version(3, 868), Version(2, 800)]
+    assert appInfo.versions[0].downloads[0].requirements.os_list == [
+        'Windows', 'Linux']
+    assert appInfo.versions[0].downloads[0].requirements.api_list == [
+        Version(3, 868), Version(2, 800)]
+
+
+def test_fromString_lang_ru():
+    appinfo = AppInfoFactory.fromString(xmlexample, language='ru')
+
+    assert appinfo.app_info_url == 'http://example.com/updates.xml'
+    assert appinfo.app_name == 'Имя приложения'
+    assert appinfo.website == 'http://jenyay.net/ru/'
+    assert appinfo.description == 'Описание'
+    assert appinfo.author.name == 'Джон'
+    assert appinfo.author.email == 'john_ru@example.com'
+    assert appinfo.author.website == 'http://example.com/ru'
+
+    assert appinfo.versions[0].version == Version(1, 0, status=StatusSet.BETA)
+    assert appinfo.versions[0].changes[0].description  == 'Исправлена ошибка'
+    assert appinfo.versions[0].changes[1].description  == 'Исправлена другая ошибка'
+    assert appinfo.versions[0].downloads[0].href == 'http://example.com/application_v1_01.zip'
+    assert appinfo.versions[0].downloads[1].href == 'http://example.com/application_v1_02.zip'
+    assert appinfo.versions[0].downloads[0].requirements.os_list == [
+        'Windows', 'Linux']
+    assert appinfo.versions[0].downloads[1].requirements.os_list == ['Windows']
+    assert appinfo.versions[0].downloads[0].requirements.api_list == [
+        Version(3, 666), Version(3, 777)]
+    assert appinfo.versions[0].downloads[1].requirements.api_list == [
+        Version(3, 888)]
+
+    assert appinfo.versions[1].version == Version(2, 0)
+    assert appinfo.versions[1].changes[0].description  == 'Исправлена ошибка - 2'
+    assert appinfo.versions[1].changes[1].description  == 'Исправлена другая ошибка - 2'
+    assert appinfo.versions[1].downloads[0].href == 'http://example.com/application_v2_01.zip'
+    assert appinfo.versions[1].downloads[1].href == 'http://example.com/application_v2_02.zip'
+    assert appinfo.versions[1].downloads[0].requirements.os_list == [
+        'Windows', 'Linux']
+    assert appinfo.versions[1].downloads[1].requirements.os_list == ['Windows']
+    assert appinfo.versions[1].downloads[0].requirements.api_list == [
+        Version(3, 999), Version(3, 1111)]
+    assert appinfo.versions[1].downloads[1].requirements.api_list == [
+        Version(3, 2222)]
