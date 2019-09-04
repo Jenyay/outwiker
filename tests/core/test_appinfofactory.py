@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from outwiker.core.xmlversionparser import (
-    XmlAppInfo, XmlAuthorInfo, XmlVersionInfo, XmlChangeItem, DataForLanguage)
+    XmlAppInfo, XmlAuthorInfo, XmlVersionInfo, XmlChangeItem, XmlDownload,
+    XmlRequirements, DataForLanguage)
 from outwiker.core.appinfofactory import AppInfoFactory
 from outwiker.core.version import Version, StatusSet
 
@@ -383,3 +384,49 @@ def test_fromXmlAppInfo_versions_changes_change_list():
     assert len(appInfo.versions[0].changes) == 2
     assert appInfo.versions[0].changes[0].description == 'Change 1'
     assert appInfo.versions[0].changes[1].description == 'Change 2'
+
+
+def test_fromXmlAppInfo_versions_downloads_href():
+    xmlAppInfo = XmlAppInfo()
+    version = XmlVersionInfo(number='1.0', status='dev', date=None)
+    download = XmlDownload('https://example.com/download.zip')
+    version.downloads.append(download)
+    xmlAppInfo.versions.append(version)
+
+    language = 'en'
+    appInfo = AppInfoFactory.fromXmlAppInfo(xmlAppInfo, language)
+
+    assert len(appInfo.versions[0].downloads) == 1
+    assert appInfo.versions[0].downloads[0].href == 'https://example.com/download.zip'
+    assert appInfo.versions[0].downloads[0].requirements.os_list == []
+    assert appInfo.versions[0].downloads[0].requirements.api_list == []
+
+
+def test_fromXmlAppInfo_versions_downloads_requirements_single():
+    xmlAppInfo = XmlAppInfo()
+    version = XmlVersionInfo(number='1.0', status='dev', date=None)
+    requirements = XmlRequirements(['Windows'], ['3.868'])
+    download = XmlDownload('https://example.com/download.zip', requirements)
+    version.downloads.append(download)
+    xmlAppInfo.versions.append(version)
+
+    language = 'en'
+    appInfo = AppInfoFactory.fromXmlAppInfo(xmlAppInfo, language)
+
+    assert appInfo.versions[0].downloads[0].requirements.os_list == ['Windows']
+    assert appInfo.versions[0].downloads[0].requirements.api_list == [Version(3, 868)]
+
+
+def test_fromXmlAppInfo_versions_downloads_requirements_several():
+    xmlAppInfo = XmlAppInfo()
+    version = XmlVersionInfo(number='1.0', status='dev', date=None)
+    requirements = XmlRequirements(['Windows', 'Linux'], ['3.868', '2.800'])
+    download = XmlDownload('https://example.com/download.zip', requirements)
+    version.downloads.append(download)
+    xmlAppInfo.versions.append(version)
+
+    language = 'en'
+    appInfo = AppInfoFactory.fromXmlAppInfo(xmlAppInfo, language)
+
+    assert appInfo.versions[0].downloads[0].requirements.os_list == ['Windows', 'Linux']
+    assert appInfo.versions[0].downloads[0].requirements.api_list == [Version(3, 868), Version(2, 800)]

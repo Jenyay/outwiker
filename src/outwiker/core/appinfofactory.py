@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 
-from .xmlversionparser import XmlAppInfo, DataForLanguage, T
-from .appinfo import AppInfo, AuthorInfo, VersionInfo
+from typing import List
+
+from .xmlversionparser import XmlAppInfo, XmlDownload, DataForLanguage, T
+from .appinfo import (AppInfo, AuthorInfo, VersionInfo, DownloadInfo,
+        Requirements)
 from .version import Version
 
 
@@ -66,11 +69,38 @@ class AppInfoFactory:
 
             date = xmlversion.date
             changes = cls.extractDataForLanguage(xmlversion.changes, language, [])[:]
-            downloads = []
+            downloads = cls._getDownloads(xmlversion.downloads)
 
             versions.append(VersionInfo(version, date, downloads, changes))
 
         return versions
+
+    @classmethod
+    def _getDownloads(cls, xmldownloads: List[XmlDownload]) -> List[DownloadInfo]:
+        downloads = []
+
+        for xmldownload in xmldownloads:
+            requirements = cls._getRequirements(xmldownload)
+            download = DownloadInfo(xmldownload.href, requirements)
+            downloads.append(download)
+
+        return downloads
+
+    @classmethod
+    def _getRequirements(cls, xmldownload: XmlDownload) -> Requirements:
+        if xmldownload.requirements is None:
+            return Requirements([], [])
+
+        os_list = xmldownload.requirements.os_list[:]
+        api_list = []
+        for api_version_str in xmldownload.requirements.api_list:
+            try:
+                version = Version.parse(api_version_str)
+                api_list.append(version)
+            except ValueError:
+                continue
+
+        return Requirements(os_list, api_list)
 
     @classmethod
     def _getAuthor(cls, xmlAppInfo: XmlAppInfo, language: str):
