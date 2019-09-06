@@ -1,14 +1,32 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <info>
-	<name>OutWiker</name>
-	<updates>https://jenyay.net/uploads/Soft/Outwiker/versions.xml</updates>
+	<updates>https://jenyay.net/uploads/Outwiker/Unstable/versions.xml</updates>
 
-	<data lang="en">
-		<website>https://jenyay.net/Outwiker/English</website>
+    <name>OutWiker</name>
+    <name lang="ru">OutWiker</name>
 
-		<changelog>
-			<version number="2.0.0.822" status="stable" date="June, 2017">
-				<change>The program now uses wxPython 3.0 library.</change>
+    <website>https://jenyay.net/Outwiker/UnstableEn</website>
+    <website lang="ru">https://jenyay.net/Outwiker/Unstable</website>
+
+    <description>A cross-platform software for keeping your notes in a tree.</description>
+    <description lang="ru">Кроссплатформенное приложение для хранения заметок в виде дерева.</description>
+
+    <author>
+        <name>Eugene Ilin (aka Jenyay)</name>
+        <email>jenyay.ilin@gmail.com</email>
+        <website>http://jenyay.net</website>
+    </author>
+
+    <author lang='ru'>
+        <name>Евгений Ильин (aka Jenyay)</name>
+        <email>jenyay.ilin@gmail.com</email>
+        <website>http://jenyay.net</website>
+    </author>
+
+    <versions>
+        <version number="2.0.0.822" status="stable" date="01.06.2017">
+            <changes>
+                <change>The program now uses wxPython 3.0 library.</change>
 				<change>The editor adds the ability to duplicate the current line with hot key or menu item.</change>
 				<change>The editor adds the ability to delete the current line with hot key or menu item.</change>
 				<change>The editor adds the ability to move lines up / down with hot keys or menu items.</change>
@@ -27,31 +45,10 @@
 				<change>Changed GUI to set hot keys.</change>
 				<change>Restored availability the icon in the system tray on Linux.</change>
 				<change>Removed Italian localization.</change>
-			</version>
+            </changes>
 
-			<version number="1.9.0.790" status="stable" date="April 09, 2016">
-				<change>Added spell checker.</change>
-				<change>Created the groups for the icons.</change>
-				<change>Now users can add custom icons.</change>
-				<change>The choice of colors for the tag cloud.</change>
-				<change>The choise the action when you make left or middle mouse click on the tag.</change>
-				<change>The choise the action when you make double mouse click on the attached file.</change>
-				<change>Added the new wiki commands for the table creation: (:table:), (:row:), (:cell:), (:hcell:).</change>
-				<change>Improved search het keys for the actions.</change>
-				<change>Added new icons.</change>
-				<change>Added new page styles.</change>
-				<change>Now in the link inserting dialog you can select an attached file to create link to it.</change>
-				<change>Added help.</change>
-			</version>
-		</changelog>
-	</data>
-
-	<data lang="ru">
-		<website>https://jenyay.net/Soft/Outwiker</website>
-
-		<changelog>
-			<version number="2.0.0.822" status="stable" date="Июнь 2017">
-				<change>Удалена итальянская локализация.</change>
+            <changes lang="ru">
+                <change>Удалена итальянская локализация.</change>
 				<change>Переход на библиотеку wxPython 3.0.</change>
 				<change>В редактор добавлена возможность дублировать текущую строку с помощью горячей клавиши или меню.</change>
 				<change>В редактор добавлена возможность удалять текущую строку с помощью горячей клавиши или меню.</change>
@@ -70,10 +67,27 @@
 				<change>Переделан интерфейс для установки горячих клавиш.</change>
 				<change>Добавлена настройка для изменения цвета фона поля редактора.</change>
 				<change>Добавлена настройка для изменения цвета фона выделенного текста.</change>
-			</version>
+            </changes>
+        </version>
 
-			<version number="1.9.0.790" status="stable" date="09.04.2016">
-				<change>Добавлена проверка орфографии.</change>
+        <version number="1.9.0.790" status="stable" date="09.04.2016">
+            <changes>
+                <change>Added spell checker.</change>
+				<change>Created the groups for the icons.</change>
+				<change>Now users can add custom icons.</change>
+				<change>The choice of colors for the tag cloud.</change>
+				<change>The choise the action when you make left or middle mouse click on the tag.</change>
+				<change>The choise the action when you make double mouse click on the attached file.</change>
+				<change>Added the new wiki commands for the table creation: (:table:), (:row:), (:cell:), (:hcell:).</change>
+				<change>Improved search het keys for the actions.</change>
+				<change>Added new icons.</change>
+				<change>Added new page styles.</change>
+				<change>Now in the link inserting dialog you can select an attached file to create link to it.</change>
+				<change>Added help.</change>
+            </changes>
+
+            <changes lang="ru">
+                <change>Добавлена проверка орфографии.</change>
 				<change>Иконки для заметок разделены на группы.</change>
 				<change>Теперь пользователи могут дополнять стандартный набор иконок своими файлами.</change>
 				<change>Возможность выбора цветов для облака тегов.</change>
@@ -85,7 +99,7 @@
 				<change>Добавлены новые стили страниц.</change>
 				<change>Теперь в диалоге вставки ссылок можно выбирать один из прикрепленных файлов, чтобы сделать ссылку на него.</change>
 				<change>Дополнена справка.</change>
-			</version>
-		</changelog>
-	</data>
+            </changes>
+        </version>
+	</versions>
 </info>
