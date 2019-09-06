@@ -5,7 +5,7 @@ OUTWIKER_MUST_BE_UPGRADED = 1
 PLUGIN_MUST_BE_UPGRADED = 2
 
 
-def checkVersion(package_version, required_version):
+def _checkSingleVersion(package_version, required_version):
     if package_version[0] > required_version[0]:
         return PLUGIN_MUST_BE_UPGRADED
 
@@ -18,16 +18,16 @@ def checkVersion(package_version, required_version):
     return VERSION_OK
 
 
-def checkVersionAny(packageversion, requiredlist):
+def checkVersion(package_version, requiredlist):
     '''
-    packageversion - current package version.
+    package_version - current package version.
     requiredlist - list of the supported versions.
     '''
     if requiredlist is None or len(requiredlist) == 0:
         return VERSION_OK
 
     for required in requiredlist:
-        result = checkVersion(packageversion, required)
+        result = _checkSingleVersion(package_version, required)
         if result == VERSION_OK:
             return result
 

@@ -14,7 +14,8 @@ import outwiker.core.packageversion as pv
 
 from outwiker.core.defines import PLUGIN_VERSION_FILE_NAME
 from outwiker.core.pluginbase import Plugin, InvalidPlugin
-from outwiker.core.xmlversionparser import XmlVersionParser
+from outwiker.core.appinfofactory import AppInfoFactory
+from outwiker.core.appinfo import AppInfo
 from outwiker.gui.guiconfig import PluginsConfig
 from outwiker.utilites.textfile import readTextFile
 
@@ -203,7 +204,8 @@ class PluginsLoader(object):
             return None
 
         xml_content = readTextFile(plugin_fname)
-        appinfo = XmlVersionParser().parse(xml_content)
+        language = ''
+        appinfo = AppInfoFactory.fromString(xml_content, language)
         return appinfo
 
     def __checkPackageVersions(self, appinfo):
@@ -214,8 +216,7 @@ class PluginsLoader(object):
         if not api_required_version:
             api_required_version = [(0, 0)]
 
-        return pv.checkVersionAny(outwiker.__api_version__,
-                                  api_required_version)
+        return pv.checkVersion(outwiker.__api_version__, appinfo)
 
     def __importPackage(self, packagePath):
         """
@@ -403,7 +404,7 @@ class PluginsLoader(object):
     # Other
     # Seems the method should be move to outwiker.core.pluginbase
     #######
-    def getInfo(self, pluginname, langlist=["en"]):
+    def getInfo(self, pluginname: str, langlist=["en"]) -> AppInfo:
         """
         Retrieve a AppInfo for plugin_name
 
@@ -424,4 +425,5 @@ class PluginsLoader(object):
 
         xml_content = pkgutil.get_data(module, PLUGIN_VERSION_FILE_NAME)
         if xml_content:
-            return XmlVersionParser(langlist).parse(xml_content)
+            language = ''
+            return AppInfoFactory.fromString(xml_content, language)
