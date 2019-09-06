@@ -13,7 +13,8 @@ class AppInfo:
                  website: str = '',
                  description: str = '',
                  author: 'Optional[AuthorInfo]' = None,
-                 versions: 'Optional[List[VersionInfo]]' = None):
+                 versions: 'Optional[List[VersionInfo]]' = None,
+                 requirements: 'Optional[Requirements]' = None):
         self.app_name = app_name
         self.app_info_url = app_info_url
         self.website = website
@@ -21,6 +22,8 @@ class AppInfo:
 
         self.author = author if author is not None else AuthorInfo()
         self.versions = versions if versions is not None else []
+        self.requirements = (
+            requirements if requirements is not None else Requirements([], []))
 
 
 class AuthorInfo:

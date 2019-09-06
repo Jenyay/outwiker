@@ -2,7 +2,7 @@
 
 from datetime import datetime
 from xml.etree import ElementTree
-from typing import List, Optional, Dict, TypeVar, Generic, Any
+from typing import List, Optional, TypeVar, Generic, Any
 
 
 T = TypeVar('T')
@@ -30,8 +30,8 @@ class XmlVersionParser:
     TAG_VERSION_CHANGES = 'changes'
     TAG_CHANGES_CHANGE = 'change'
     TAG_VERSION_DOWNLOAD = 'download[@href]'
-    TAG_DOWNLOAD_REQUIREMENTS = 'requirements'
     ATTRIBUTE_DOWNLOAD_HREF = 'href'
+    TAG_REQUIREMENTS = 'requirements'
     TAG_REQUIREMENTS_API = 'api'
     TAG_REQUIREMENTS_OS = 'os'
 
@@ -49,8 +49,14 @@ class XmlVersionParser:
         self._setDescription(root, appinfo)
         self._setAuthor(root, appinfo)
         self._setVersions(root, appinfo)
+        self._setRequirements(root, appinfo)
 
         return appinfo
+
+    def _setRequirements(self, root: ElementTree.Element, appinfo: 'XmlAppInfo'):
+        requirements = self._getRequirements(root)
+        appinfo.requirements.os_list = requirements.os_list[:]
+        appinfo.requirements.api_list = requirements.api_list[:]
 
     def _setTextForLanguage(self,
                             root: ElementTree.Element,
@@ -141,7 +147,7 @@ class XmlVersionParser:
         os_list = []
         api_list = []
 
-        tag_requirements = tag_download.find(self.TAG_DOWNLOAD_REQUIREMENTS)
+        tag_requirements = tag_download.find(self.TAG_REQUIREMENTS)
         if tag_requirements is not None:
             os_list = self._getTextList(
                 tag_requirements, self.TAG_REQUIREMENTS_OS)
@@ -216,6 +222,8 @@ class XmlAppInfo:
         # Key - language, value - author information
         # type: DataForLanguage[XmlAuthorInfo]
         self.author = DataForLanguage()
+
+        self.requirements = XmlRequirements([], [])
 
         self.versions = []                      # type: List[XmlVersionInfo]
 

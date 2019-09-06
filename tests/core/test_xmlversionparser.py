@@ -10,6 +10,8 @@ def _assert_XmlAppInfo_empty(appinfo):
     assert appinfo.author.is_empty()
     assert appinfo.app_name.is_empty()
     assert appinfo.versions == []
+    assert appinfo.requirements.os_list == []
+    assert appinfo.requirements.api_list == []
     assert appinfo.description.is_empty()
     assert appinfo.website.is_empty()
 
@@ -557,3 +559,20 @@ def test_versions_download_requirements_os_api():
     assert 'Linux' in result.versions[0].downloads[0].requirements.os_list
     assert '3.666' in result.versions[0].downloads[0].requirements.api_list
     assert '3.667' in result.versions[0].downloads[0].requirements.api_list
+
+def test_requirements_os_api():
+    text = '''<?xml version="1.1" encoding="UTF-8" ?>
+        <info>
+            <requirements>
+                <os>Windows</os>
+                <os>Linux</os>
+                <api>3.666</api>
+                <api>3.667</api>
+            </requirements>
+        </info>'''
+    result = XmlVersionParser().parse(text)
+
+    assert 'Windows' in result.requirements.os_list
+    assert 'Linux' in result.requirements.os_list
+    assert '3.666' in result.requirements.api_list
+    assert '3.667' in result.requirements.api_list
