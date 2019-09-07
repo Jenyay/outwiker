@@ -212,11 +212,9 @@ class PluginsLoader(object):
         if appinfo is None:
             return pv.PLUGIN_MUST_BE_UPGRADED
 
-        api_required_version = appinfo.requirements.api_version
-        if not api_required_version:
-            api_required_version = [(0, 0)]
+        api_required_versions = appinfo.requirements.api_list
 
-        return pv.checkVersion(outwiker.__api_version__, appinfo)
+        return pv.checkVersion(outwiker.__api_version__, api_required_versions)
 
     def __importPackage(self, packagePath):
         """
@@ -263,14 +261,15 @@ class PluginsLoader(object):
 
         versions_result = self.__checkPackageVersions(appinfo)
 
-        pluginname = (appinfo.appname
+        pluginname = (appinfo.app_name
                       if (appinfo is not None and
-                          appinfo.appname is not None)
+                          appinfo.app_name is not None)
                       else packageName)
 
-        pluginversion = (appinfo.currentVersionStr
-                         if appinfo is not None
-                         else None)
+        current_version = appinfo.currentVersion if appinfo is not None else None
+        pluginversion = (str(current_version)
+                         if current_version is not None
+                         else '')
 
         if versions_result == pv.PLUGIN_MUST_BE_UPGRADED:
             error = _(u'Plug-in "{}" is outdated. Please, update the plug-in.').format(pluginname)
