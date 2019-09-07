@@ -3,7 +3,7 @@
 from typing import List
 
 from .xmlversionparser import (XmlVersionParser, XmlAppInfo, XmlDownload,
-                               DataForLanguage, T)
+                               XmlRequirements, DataForLanguage, T)
 from .appinfo import (AppInfo, AuthorInfo, VersionInfo, DownloadInfo,
                       Requirements)
 from .version import Version
@@ -36,13 +36,15 @@ class AppInfoFactory:
 
         author = cls._getAuthor(xmlAppInfo, language)
         versions = cls._getVersions(xmlAppInfo, language)
+        requirements = cls._getRequirements(xmlAppInfo.requirements)
 
         result = AppInfo(app_info_url=app_info_url,
                          app_name=app_name,
                          website=website,
                          description=description,
                          author=author,
-                         versions=versions
+                         versions=versions,
+                         requirements=requirements
                          )
         return result
 
@@ -88,20 +90,20 @@ class AppInfoFactory:
         downloads = []
 
         for xmldownload in xmldownloads:
-            requirements = cls._getRequirements(xmldownload)
+            requirements = cls._getRequirements(xmldownload.requirements)
             download = DownloadInfo(xmldownload.href, requirements)
             downloads.append(download)
 
         return downloads
 
     @classmethod
-    def _getRequirements(cls, xmldownload: XmlDownload) -> Requirements:
-        if xmldownload.requirements is None:
+    def _getRequirements(cls, requirements: XmlRequirements) -> Requirements:
+        if requirements is None:
             return Requirements([], [])
 
-        os_list = xmldownload.requirements.os_list[:]
+        os_list = requirements.os_list[:]
         api_list = []
-        for api_version_str in xmldownload.requirements.api_list:
+        for api_version_str in requirements.api_list:
             try:
                 version = Version.parse(api_version_str)
                 api_list.append(version)

@@ -31,6 +31,13 @@ xmlexample = '''<?xml version="1.1" encoding="UTF-8" ?>
         <website>http://example.com/ru</website>
     </author>
 
+    <requirements>
+        <os>Windows</os>
+        <os>Linux</os>
+        <api>2.222</api>
+        <api>3.333</api>
+    </requirements>
+
     <versions>
         <version number="1.0" status="beta">
             <changes>
@@ -145,6 +152,8 @@ def test_fromXmlAppInfo_empty():
     assert appInfo.author.name == ''
     assert appInfo.author.email == ''
     assert appInfo.author.website == ''
+    assert appInfo.requirements.os_list == []
+    assert appInfo.requirements.api_list == []
 
 
 def test_fromXmlAppInfo_app_info_url():
@@ -520,6 +529,30 @@ def test_fromXmlAppInfo_versions_downloads_requirements_several():
         Version(3, 868), Version(2, 800)]
 
 
+def test_fromXmlAppInfo_requirements_single():
+    xmlAppInfo = XmlAppInfo()
+    xmlAppInfo.requirements.os_list = ['Windows']
+    xmlAppInfo.requirements.api_list = ['3.868']
+
+    language = 'en'
+    appInfo = AppInfoFactory.fromXmlAppInfo(xmlAppInfo, language)
+
+    assert appInfo.requirements.os_list == ['Windows']
+    assert appInfo.requirements.api_list == [Version(3, 868)]
+
+
+def test_fromXmlAppInfo_requirements_several():
+    xmlAppInfo = XmlAppInfo()
+    xmlAppInfo.requirements.os_list = ['Windows', 'Linux']
+    xmlAppInfo.requirements.api_list = ['3.868', '2.800']
+
+    language = 'en'
+    appInfo = AppInfoFactory.fromXmlAppInfo(xmlAppInfo, language)
+
+    assert appInfo.requirements.os_list == ['Windows', 'Linux']
+    assert appInfo.requirements.api_list == [Version(3, 868), Version(2, 800)]
+
+
 def test_fromString_lang_ru():
     appinfo = AppInfoFactory.fromString(xmlexample, language='ru')
 
@@ -530,6 +563,9 @@ def test_fromString_lang_ru():
     assert appinfo.author.name == 'Джон'
     assert appinfo.author.email == 'john_ru@example.com'
     assert appinfo.author.website == 'http://example.com/ru'
+
+    assert appinfo.requirements.os_list == ['Windows', 'Linux']
+    assert appinfo.requirements.api_list == [Version(2, 222), Version(3, 333)]
 
     assert appinfo.versions[0].version == Version(1, 0, status=StatusSet.BETA)
     assert appinfo.versions[0].changes[0].description == 'Исправлена ошибка'
@@ -569,6 +605,9 @@ def test_fromString_lang_ru_RU():
     assert appinfo.author.email == 'john_ru@example.com'
     assert appinfo.author.website == 'http://example.com/ru'
 
+    assert appinfo.requirements.os_list == ['Windows', 'Linux']
+    assert appinfo.requirements.api_list == [Version(2, 222), Version(3, 333)]
+
     assert appinfo.versions[0].version == Version(1, 0, status=StatusSet.BETA)
     assert appinfo.versions[0].changes[0].description == 'Исправлена ошибка'
     assert appinfo.versions[0].changes[1].description == 'Исправлена другая ошибка'
@@ -606,6 +645,9 @@ def test_fromString_lang_default():
     assert appinfo.author.name == 'John'
     assert appinfo.author.email == 'john@example.com'
     assert appinfo.author.website == 'http://example.com'
+
+    assert appinfo.requirements.os_list == ['Windows', 'Linux']
+    assert appinfo.requirements.api_list == [Version(2, 222), Version(3, 333)]
 
     assert appinfo.versions[0].version == Version(1, 0, status=StatusSet.BETA)
     assert appinfo.versions[0].changes[0].description == 'Fix bug'
