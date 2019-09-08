@@ -26,10 +26,15 @@ class AppInfo:
             requirements if requirements is not None else Requirements([], []))
 
     @property
-    def currentVersion(self) -> Optional[Version]:
+    def currentVersionInfo(self) -> Optional[Version]:
         version_info = max(
             self.versions,
             key=lambda versioninfo: versioninfo.version, default=None)
+        return version_info
+
+    @property
+    def currentVersion(self) -> Optional[Version]:
+        version_info = self.currentVersionInfo
         return version_info.version if version_info is not None else None
 
 
