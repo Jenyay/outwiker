@@ -3,7 +3,9 @@
 import os
 from typing import List
 
+import outwiker
 from outwiker.core.appinfo import AppInfo
+from outwiker.core.version import Version
 from outwiker.core.appinfofactory import AppInfoFactory
 from outwiker.utilites.textfile import readTextFile
 from outwiker.utilites.downloader import Downloader
@@ -37,7 +39,7 @@ def getOutwikerVersion():
     Return a tuple: (version number, build number)
     """
     # The file with the version number
-    version = getOutwikerAppInfo().currentVersion
+    version = Version.parse(outwiker.__version__)
     version_major = u'.'.join([str(item) for item in version[:-1]])
     version_build = str(version[-1])
 
