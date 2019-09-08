@@ -38,7 +38,7 @@ class BookmarksGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertTrue(items[1].IsSeparator())
 
     def _getItemText(self, item):
-        return item.GetText().replace("_", "").replace("&", "")
+        return item.GetItemLabel().replace("_", "").replace("&", "")
 
     def testAddBookmarks1(self):
         self.application.wikiroot = self.wikiroot

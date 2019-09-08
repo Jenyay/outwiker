@@ -28,7 +28,7 @@ def removeDir(path):
 def getImageSize(fname):
     """
     Получить размер картинки.
-    Возвращает кортеж(ширина, высота)
+    Возвращает кортеж (ширина, высота)
     """
     image = wx.Image(fname)
     width = image.GetWidth()

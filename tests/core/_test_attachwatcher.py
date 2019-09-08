@@ -297,6 +297,9 @@ class AttachWatcherTest(BaseWxTestCase):
         self._application.wikiroot = self.wikiroot
         self._application.selectedPage = self.page_01
 
+        print('-----')
+        print(self._wxapp)
+        print(wx.GetApp())
         watcher = AttachWatcher(self._application, self._period_ms)
         watcher.initialize()
 

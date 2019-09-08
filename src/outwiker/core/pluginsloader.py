@@ -266,10 +266,10 @@ class PluginsLoader(object):
                           appinfo.app_name is not None)
                       else packageName)
 
-        current_version = appinfo.currentVersion if appinfo is not None else None
-        pluginversion = (str(current_version)
-                         if current_version is not None
-                         else '')
+        package_version = appinfo.currentVersion if appinfo is not None else None
+        pluginversion = (str(package_version)
+                         if package_version is not None
+                         else None)
 
         if versions_result == pv.PLUGIN_MUST_BE_UPGRADED:
             error = _(u'Plug-in "{}" is outdated. Please, update the plug-in.').format(pluginname)
@@ -310,9 +310,9 @@ class PluginsLoader(object):
             self._print(u"**********\n")
 
             self.__invalidPlugins.append(
-                InvalidPlugin(appinfo.appname,
+                InvalidPlugin(appinfo.app_name,
                               error,
-                              appinfo.currentVersionStr))
+                              str(package_version)))
         else:
             logger.debug(u'Successfully loaded plug-in: {}'.format(
                 packageName))

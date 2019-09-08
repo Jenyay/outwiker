@@ -1,21 +1,12 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <info>
 	<name>TestEmpty</name>
-    <requirements>
-        <api>2.835</api>
-    </requirements>
+	<requirements>
+		<api>3.868</api>
+	</requirements>
 
-	<data lang="en">
-		<changelog>
-			<version number="0.5">
-			</version>
-		</changelog>
-	</data>
-
-	<data lang="ru">
-		<changelog>
-			<version number="0.5">
-			</version>
-		</changelog>
-	</data>
+	<versions>
+		<version number="0.5">
+		</version>
+	</versions>
 </info>

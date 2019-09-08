@@ -41,7 +41,7 @@ class ToolBarsControllerTest(unittest.TestCase, BaseOutWikerMixin):
         menu_item = self.controller.getMenuItem(toolbar_id)
 
         self.assertIsNotNone(menu_item)
-        self.assertEqual(menu_item.GetText(), toolbar_title)
+        self.assertEqual(menu_item.GetItemLabel(), toolbar_title)
         self.assertTrue(menu_item.IsChecked())
         self.assertTrue(self.toolbar_container[toolbar_id].IsShown())
 

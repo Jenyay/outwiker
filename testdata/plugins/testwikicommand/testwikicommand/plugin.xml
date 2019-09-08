@@ -2,14 +2,9 @@
 <info>
 	<name>TestWikiCommand</name>
     <requirements>
-        <api>2.835</api>
+        <api>3.868</api>
     </requirements>
 
-	<data lang="en">
-		<description>Test plug-in.</description>
-	</data>
-
-	<data lang="ru">
-		<description>Тестовый плагин.</description>
-	</data>
+	<description>Test plug-in.</description>
+	<description lang="ru">Тестовый плагин.</description>
 </info>
