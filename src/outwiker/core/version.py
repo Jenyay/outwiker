@@ -79,18 +79,22 @@ class Version(object):
                        else StatusSet.RELEASE)
 
     def __eq__(self, other):
+        if not isinstance(other, Version):
+            return False
         return self.status == other.status and self.version == other.version
 
     def __nq__(self, other):
         return not self.__eq__(other)
 
     def __lt__(self, other):
+        assert isinstance(other, Version)
         return self.version < other.version or (self.version == other.version and self.status < other.status)
 
     def __le__(self, other):
         return self.__lt__(other) or self.__eq__(other)
 
     def __gt__(self, other):
+        assert isinstance(other, Version)
         return self.version > other.version or(self.version == other.version and self.status > other.status)
 
     def __ge__(self, other):

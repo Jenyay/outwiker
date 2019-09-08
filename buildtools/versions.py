@@ -3,7 +3,8 @@
 import os
 from typing import List
 
-from outwiker.core.xmlversionparser import XmlVersionParser
+from outwiker.core.appinfo import AppInfo
+from outwiker.core.appinfofactory import AppInfoFactory
 from outwiker.utilites.textfile import readTextFile
 from outwiker.utilites.downloader import Downloader
 from buildtools.defines import (
@@ -15,16 +16,15 @@ from buildtools.defines import (
 )
 
 
-def readAppInfo(fname: str) -> 'outwiker.core.appinfo.AppInfo':
+def readAppInfo(fname: str) -> AppInfo:
     text = readTextFile(fname)
-    return XmlVersionParser([u'en']).parse(text)
+    return AppInfoFactory.fromString(text, '')
 
 
 def downloadAppInfo(url):
     downloader = Downloader(DOWNLOAD_TIMEOUT)
-    version_parser = XmlVersionParser(['en'])
     xml_content = downloader.download(url)
-    appinfo = version_parser.parse(xml_content)
+    appinfo = AppInfoFactory.fromString(xml_content, '')
     return appinfo
 
 
