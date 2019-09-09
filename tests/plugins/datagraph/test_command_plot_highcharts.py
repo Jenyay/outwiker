@@ -1228,7 +1228,7 @@ x.max = 0.2
 
     def testColSep_01(self):
         text = '''(:plot
-curve.data.colsep=",\s*"
+curve.data.colsep=",\\s*"
 :)
 1, 10, 20, 30, 40
 2, 11, 22, 31, 41
