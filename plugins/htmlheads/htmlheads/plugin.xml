@@ -2,9 +2,25 @@
 <info>
 	<name>HtmlHeads</name>
 	<updates>https://jenyay.net/uploads/Outwiker/HtmlHeads/plugin.xml</updates>
+	<website>https://jenyay.net/Outwiker/HtmlHeadsEn</website>
+	<website lang="ru">https://jenyay.net/Outwiker/HtmlHeads</website>
+	<description>Add meta tags and the &lt;title&gt; tag in the wiki pages.</description>
+	<description lang="ru">Добавление метатегов и тега &lt;title&gt; на викистраницы.</description>
+
+	<author>
+		<name>Eugene Ilin (aka Jenyay)</name>
+		<email>jenyay.ilin@gmail.com</email>
+		<website>https://jenyay.net</website>
+	</author>
+
+	<author lang="ru">
+		<name>Евгений Ильин (aka Jenyay)</name>
+		<email>jenyay.ilin@gmail.com</email>
+		<website>https://jenyay.net</website>
+	</author>
+
     <requirements>
-        <os>Windows, Linux</os>
-        <api>2.835</api>
+        <api>3.868</api>
 
 		<!-- For backward compatibility with OutWiker 2.0 -->
 		<packages>
@@ -17,141 +33,174 @@
 		</packages>
     </requirements>
 
-	<data lang="en">
-		<website>https://jenyay.net/Outwiker/HtmlHeadsEn</website>
-		<description>Add meta tags and the &lt;title&gt; tag in the wiki pages.</description>
+	<versions>
+		<version number="1.4">
+			<download href="https://jenyay.net/uploads/Outwiker/HtmlHeads/htmlheads-1.4.zip">
+				<requirements>
+					<api>3.868</api>
+				</requirements>
+			</download>
+			<changes>
+				<change>Migrate to new API.</change>
+			</changes>
 
-		<author>
-			<name>Eugene Ilin (aka Jenyay)</name>
-			<email>jenyay.ilin@gmail.com</email>
-			<site>https://jenyay.net</site>
-		</author>
+			<changes lang="ru">
+				<change>Переход на новый API.</change>
+			</changes>
+		</version>
 
-		<changelog>
-			<version number="1.3" date="August 26, 2018">
+		<version number="1.3" date="26.08.2018">
+			<download href="https://jenyay.net/uploads/Outwiker/HtmlHeads/htmlheads-1.3.zip">
 				<requirements>
 					<api>2.835</api>
 				</requirements>
-
-                <download os="all">https://jenyay.net/uploads/Outwiker/HtmlHeads/htmlheads-1.3.zip</download>
+			</download>
+			<changes>
 				<change>Add German localization.</change>
-			</version>
+			</changes>
 
-			<version number="1.2.1" date="May 26, 2018">
-                <download os="all">https://jenyay.net/uploads/Outwiker/HtmlHeads/htmlheads-1.2.1.zip</download>
+			<changes lang="ru">
+				<change>Добавлена немецкая локализация.</change>
+			</changes>
+		</version>
+
+		<version number="1.2.1" date="26.05.2018">
+			<download href="https://jenyay.net/uploads/Outwiker/HtmlHeads/htmlheads-1.2.1.zip">
+				<requirements>
+					<api>2.835</api>
+				</requirements>
+			</download>
+			<changes>
 				<change>Updated Ukrainian localization.</change>
-			</version>
+			</changes>
 
-			<version number="1.2" date="March 20, 2018">
-                <download os="all">https://jenyay.net/uploads/Outwiker/HtmlHeads/htmlheads-1.2.zip</download>
+			<changes lang="ru">
+				<change>Обновлена украинская локализация.</change>
+			</changes>
+		</version>
+
+		<version number="1.2" date="20.03.2018">
+			<download href="https://jenyay.net/uploads/Outwiker/HtmlHeads/htmlheads-1.2.zip">
+				<requirements>
+					<api>2.835</api>
+				</requirements>
+			</download>
+			<changes>
 				<change>Added new command to insert custom CSS style.</change>
-			</version>
+			</changes>
 
-			<version number="1.1" date="February 15, 2018">
-                <download os="all">https://jenyay.net/uploads/Outwiker/HtmlHeads/htmlheads-1.1.zip</download>
-				<change>Add OutWiker 2.1 support. Migrate to Python 3.6.</change>
-			</version>
+			<changes lang="ru">
+				<change>Добавлена команда для вставки пользовательских CSS-стилей.</change>
+			</changes>
+		</version>
 
-			<version number="1.0.5" date="October 17, 2016">
-                <download os="all">https://jenyay.net/uploads/Outwiker/HtmlHeads/htmlheads-1.0.5.zip</download>
+		<version number="1.1" date="15.02.2018">
+			<download href="https://jenyay.net/uploads/Outwiker/HtmlHeads/htmlheads-1.1.zip">
+				<requirements>
+					<api>2.835</api>
+				</requirements>
+			</download>
+			<changes>
+				<change>Add OutWiker 2.1 support. Migrate to Python 3.</change>
+			</changes>
+
+			<changes lang="ru">
+				<change>Добавлена поддержка OutWiker 2.1. Переход на Python 3.</change>
+			</changes>
+		</version>
+
+		<version number="1.0.5" date="17.10.2016">
+			<download href="https://jenyay.net/uploads/Outwiker/HtmlHeads/htmlheads-1.0.5.zip">
+				<requirements>
+					<api>2.0</api>
+				</requirements>
+			</download>
+			<changes>
 				<change>Added OutWiker 2.0 supporting.</change>
-			</version>
+			</changes>
 
-			<version number="1.0.4" date="August 20, 2016">
-                <download os="all">https://jenyay.net/uploads/Outwiker/HtmlHeads/htmlheads-1.0.4.zip</download>
+			<changes lang="ru">
+				<change>Добавлена поддержка OutWiker 2.0.</change>
+			</changes>
+		</version>
+
+		<version number="1.0.4" date="20.08.2016">
+			<download href="https://jenyay.net/uploads/Outwiker/HtmlHeads/htmlheads-1.0.4.zip">
+				<requirements>
+					<api>2.0</api>
+				</requirements>
+			</download>
+			<changes>
 				<change>Added the Swedish translation.</change>
-			</version>
+			</changes>
 
-			<version number="1.0.3" date="January 20, 2015">
-                <download os="all">https://jenyay.net/uploads/Outwiker/HtmlHeads/htmlheads-1.0.3.zip</download>
+			<changes lang="ru">
+				<change>Добавлена поддержка шведского языка.</change>
+			</changes>
+		</version>
+
+		<version number="1.0.3" date="20.01.2015">
+			<download href="https://jenyay.net/uploads/Outwiker/HtmlHeads/htmlheads-1.0.3.zip">
+				<requirements>
+					<api>2.0</api>
+				</requirements>
+			</download>
+			<changes>
 				<change>Bug fixes.</change>
 				<change>Cleanup code.</change>
-			</version>
+			</changes>
 
-			<version number="1.0.2" date="September 11, 2014">
-                <download os="all">https://jenyay.net/uploads/Outwiker/HtmlHeads/htmlheads-1.0.2.zip</download>
-				<change>Added Italian localization.</change>
-				<change>Bug fixes.</change>
-			</version>
-
-			<version number="1.0.1" date="July 13, 2014">
-                <download os="all">https://jenyay.net/uploads/Outwiker/HtmlHeads/htmlheads-1.0.1.zip</download>
-				<change>Fixed output error when trying to use a plug-in with unsupported versions OutWiker.</change>
-			</version>
-
-			<version number="1.0" date="June 30, 2014">
-                <download os="all">https://jenyay.net/uploads/Outwiker/HtmlHeads/htmlheads-1.0.zip</download>
-				<change>The first version.</change>
-			</version>
-		</changelog>
-	</data>
-
-	<data lang="ru">
-		<website>https://jenyay.net/Outwiker/HtmlHeads</website>
-		<description>Добавление метатегов и тега &lt;title&gt; на викистраницы.</description>
-
-		<author>
-			<name>Евгений Ильин (aka Jenyay)</name>
-			<email>jenyay.ilin@gmail.com</email>
-			<site>https://jenyay.net</site>
-		</author>
-
-		<changelog>
-			<version number="1.3" date="26.08.2018">
-				<requirements>
-					<api>2.835</api>
-				</requirements>
-
-                <download os="all">https://jenyay.net/uploads/Outwiker/HtmlHeads/htmlheads-1.3.zip</download>
-				<change>Добавлена немецкая локализация.</change>
-			</version>
-
-			<version number="1.2.1" date="26.05.2018">
-                <download os="all">https://jenyay.net/uploads/Outwiker/HtmlHeads/htmlheads-1.2.1.zip</download>
-				<change>Обновлена украинская локализация.</change>
-			</version>
-
-			<version number="1.2" date="20.03.2018">
-                <download os="all">https://jenyay.net/uploads/Outwiker/HtmlHeads/htmlheads-1.2.zip</download>
-				<change>Добавлена команда для вставки пользовательских CSS-стилей.</change>
-			</version>
-
-			<version number="1.1" date="15.02.2018">
-                <download os="all">https://jenyay.net/uploads/Outwiker/HtmlHeads/htmlheads-1.1.zip</download>
-				<change>Добавлена поддержка OutWiker 2.1. Переход на Python 3.6.</change>
-			</version>
-
-			<version number="1.0.5" date="17.10.2016">
-                <download os="all">https://jenyay.net/uploads/Outwiker/HtmlHeads/htmlheads-1.0.5.zip</download>
-				<change>Добавлена поддержка OutWiker 2.0.</change>
-			</version>
-
-			<version number="1.0.4" date="20.08.2016">
-                <download os="all">https://jenyay.net/uploads/Outwiker/HtmlHeads/htmlheads-1.0.4.zip</download>
-				<change>Добавлена поддержка шведского языка.</change>
-			</version>
-
-			<version number="1.0.3" date="20.01.2015">
-                <download os="all">https://jenyay.net/uploads/Outwiker/HtmlHeads/htmlheads-1.0.3.zip</download>
+			<changes lang="ru">
 				<change>Исправление ошибок.</change>
 				<change>Подчистка кода.</change>
-			</version>
+			</changes>
+		</version>
 
-			<version number="1.0.2" date="11.09.2014">
-                <download os="all">https://jenyay.net/uploads/Outwiker/HtmlHeads/htmlheads-1.0.2.zip</download>
+		<version number="1.0.2" date="11.09.2014">
+			<download href="https://jenyay.net/uploads/Outwiker/HtmlHeads/htmlheads-1.0.2.zip">
+				<requirements>
+					<api>2.0</api>
+				</requirements>
+			</download>
+			<changes>
+				<change>Added Italian localization.</change>
+				<change>Bug fixes.</change>
+			</changes>
+
+			<changes lang="ru">
 				<change>Добавлена итальянская локализация</change>
 				<change>Исправление ошибок.</change>
-			</version>
+			</changes>
+		</version>
 
-			<version number="1.0.1" date="13.07.2014">
-                <download os="all">https://jenyay.net/uploads/Outwiker/HtmlHeads/htmlheads-1.0.1.zip</download>
+		<version number="1.0.1" date="13.07.2014">
+			<download href="https://jenyay.net/uploads/Outwiker/HtmlHeads/htmlheads-1.0.1.zip">
+				<requirements>
+					<api>2.0</api>
+				</requirements>
+			</download>
+			<changes>
+				<change>Fixed output error when trying to use a plug-in with unsupported versions OutWiker.</change>
+			</changes>
+
+			<changes lang="ru">
 				<change>Исправлен вывод ошибок при попытке использования плагина в неподдерживаемых версиях OutWiker.</change>
-			</version>
+			</changes>
+		</version>
 
-			<version number="1.0" date="30.06.2014">
-                <download os="all">https://jenyay.net/uploads/Outwiker/HtmlHeads/htmlheads-1.0.zip</download>
+		<version number="1.0" date="30.06.2014">
+			<download href="https://jenyay.net/uploads/Outwiker/HtmlHeads/htmlheads-1.0.zip">
+				<requirements>
+					<api>2.0</api>
+				</requirements>
+			</download>
+			<changes>
+				<change>The first version.</change>
+			</changes>
+
+			<changes lang="ru">
 				<change>Первая версия.</change>
-			</version>
-		</changelog>
-	</data>
+			</changes>
+		</version>
+	</versions>
 </info>
