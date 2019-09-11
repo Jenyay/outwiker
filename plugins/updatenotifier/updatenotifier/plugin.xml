@@ -34,18 +34,18 @@
 	</author>
 
 	<versions>
-		<version number="2.3.3">
-			<download href="https://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-2.3.3.zip">
+		<version number="2.4">
+			<download href="https://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-2.4.zip">
 				<requirements>
-					<api>2.868</api>
+					<api>3.868</api>
 				</requirements>
 			</download>
 			<changes>
-				<change>Fix compatibility with OutWiker 3.0.0.868.</change>
+				<change>Migrate to new API.</change>
 			</changes>
 
 			<changes lang="ru">
-				<change>Испрвалена совместимость с OutWiker 3.0.0.868.</change>
+				<change>Переход на новый API.</change>
 			</changes>
 		</version>
 
