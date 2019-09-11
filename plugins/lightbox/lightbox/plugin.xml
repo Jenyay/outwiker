@@ -2,9 +2,25 @@
 <info>
 	<name>Lightbox</name>
 	<updates>https://jenyay.net/uploads/Outwiker/Lightbox/plugin.xml</updates>
+
+	<website>https://jenyay.net/Outwiker/LightboxEn</website>
+	<website lang="ru">https://jenyay.net/Outwiker/Lightbox</website>
+	<description>Open links to images in the preview window, not an external program.</description>
+	<description lang="ru">Открытие ссылок на изображения в окне просмотра, а не во внешней программе.</description>
+
+	<author>
+		<name>Eugene Ilin (aka Jenyay)</name>
+		<email>jenyay.ilin@gmail.com</email>
+		<website>https://jenyay.net</website>
+	</author>
+
+	<author lang="ru">
+		<name>Евгений Ильин (aka Jenyay)</name>
+		<email>jenyay.ilin@gmail.com</email>
+		<website>https://jenyay.net</website>
+	</author>
     <requirements>
-        <os>Windows, Linux</os>
-        <api>2.835</api>
+        <api>3.868</api>
 
 		<!-- For backward compatibility with OutWiker 2.0 -->
 		<packages>
@@ -17,127 +33,213 @@
 		</packages>
     </requirements>
 
-	<data lang="en">
-		<website>https://jenyay.net/Outwiker/LightboxEn</website>
-		<description>Open links to images in the preview window, not an external program.</description>
+	<versions>
+		<version number="1.3" date="August 26, 2018">
+			<requirements>
+				<api>2.835</api>
+			</requirements>
 
-		<author>
-			<name>Eugene Ilin (aka Jenyay)</name>
-			<email>jenyay.ilin@gmail.com</email>
-			<site>https://jenyay.net</site>
-		</author>
+			<download href="https://jenyay.net/uploads/Outwiker/Lightbox/lightbox-1.3.zip">
+			</download>
+			<changes>
+			</changes>
 
-		<changelog>
-			<version number="1.3" date="August 26, 2018">
-				<requirements>
-					<api>2.835</api>
-				</requirements>
+			<changes lang="ru">
+			</changes>
+			<change>Add German localization.</change>
+		</version>
 
-                <download os="all">https://jenyay.net/uploads/Outwiker/Lightbox/lightbox-1.3.zip</download>
-				<change>Add German localization.</change>
-			</version>
+		<version number="1.2.1" date="May 26, 2018">
+			<download href="https://jenyay.net/uploads/Outwiker/Lightbox/lightbox-1.2.1.zip">
+			</download>
+			<changes>
+			</changes>
 
-			<version number="1.2.1" date="May 26, 2018">
-                <download os="all">https://jenyay.net/uploads/Outwiker/Lightbox/lightbox-1.2.1.zip</download>
-				<change>Updated Ukrainian localization.</change>
-			</version>
+			<changes lang="ru">
+			</changes>
+			<change>Updated Ukrainian localization.</change>
+		</version>
 
-			<version number="1.2" date="February 15, 2018">
-                <download os="all">https://jenyay.net/uploads/Outwiker/Lightbox/lightbox-1.2.zip</download>
-				<change>Add OutWiker 2.1 support. Migrate to Python 3.6.</change>
-			</version>
+		<version number="1.2" date="February 15, 2018">
+			<download href="https://jenyay.net/uploads/Outwiker/Lightbox/lightbox-1.2.zip">
+			</download>
+			<changes>
+			</changes>
 
-			<version number="1.1.4" date="October 17, 2016">
-                <download os="all">https://jenyay.net/uploads/Outwiker/Lightbox/lightbox-1.1.4.zip</download>
-				<change>Added OutWiker 2.0 supporting.</change>
-			</version>
+			<changes lang="ru">
+			</changes>
+			<change>Add OutWiker 2.1 support. Migrate to Python 3.6.</change>
+		</version>
 
-			<version number="1.1.3" date="August 20, 2016">
-                <download os="all">https://jenyay.net/uploads/Outwiker/Lightbox/lightbox-1.1.3.zip</download>
-				<change>Added the Swedish translation.</change>
-			</version>
+		<version number="1.1.4" date="October 17, 2016">
+			<download href="https://jenyay.net/uploads/Outwiker/Lightbox/lightbox-1.1.4.zip">
+			</download>
+			<changes>
+			</changes>
 
-			<version number="1.1.2" date="January 20, 2015">
-                <download os="all">https://jenyay.net/uploads/Outwiker/Lightbox/lightbox-1.1.2.zip</download>
-				<change>Minor interface improvements.</change>
-				<change>Bug fixes.</change>
-				<change>Code cleanup.</change>
-			</version>
+			<changes lang="ru">
+			</changes>
+			<change>Added OutWiker 2.0 supporting.</change>
+		</version>
 
-			<version number="1.1.1" date="November 17, 2012">
-                <download os="all">https://jenyay.net/uploads/Outwiker/Lightbox/lightbox-1.1.1.zip</download>
-			</version>
+		<version number="1.1.3" date="August 20, 2016">
+			<download href="https://jenyay.net/uploads/Outwiker/Lightbox/lightbox-1.1.3.zip">
+			</download>
+			<changes>
+			</changes>
 
-			<version number="1.1" date="August 08, 2012">
-                <download os="all">https://jenyay.net/uploads/Outwiker/Lightbox/lightbox-1.1.zip</download>
-			</version>
+			<changes lang="ru">
+			</changes>
+			<change>Added the Swedish translation.</change>
+		</version>
 
-			<version number="1.0" date="June 06, 2012">
-                <download os="all">https://jenyay.net/uploads/Outwiker/Lightbox/lightbox.zip</download>
-				<change>Первая версия</change>
-			</version>
-		</changelog>
-	</data>
+		<version number="1.1.2" date="January 20, 2015">
+			<download href="https://jenyay.net/uploads/Outwiker/Lightbox/lightbox-1.1.2.zip">
+			</download>
+			<changes>
+			</changes>
 
-	<data lang="ru">
-		<website>https://jenyay.net/Outwiker/LightboxEn</website>
-		<description>Открытие ссылок на изображения в окне просмотра, а не во внешней программе.</description>
+			<changes lang="ru">
+			</changes>
+			<change>Minor interface improvements.</change>
+			<change>Bug fixes.</change>
+			<change>Code cleanup.</change>
+		</version>
 
-		<author>
-			<name>Евгений Ильин (aka Jenyay)</name>
-			<email>jenyay.ilin@gmail.com</email>
-			<site>https://jenyay.net</site>
-		</author>
+		<version number="1.1.1" date="November 17, 2012">
+			<download href="https://jenyay.net/uploads/Outwiker/Lightbox/lightbox-1.1.1.zip">
+			</download>
+			<changes>
+			</changes>
 
-		<changelog>
-			<version number="1.3" date="26.08.2018">
-				<requirements>
-					<api>2.835</api>
-				</requirements>
+			<changes lang="ru">
+			</changes>
+		</version>
 
-                <download os="all">https://jenyay.net/uploads/Outwiker/Lightbox/lightbox-1.3.zip</download>
-				<change>Добавлена немецкая локализация.</change>
-			</version>
+		<version number="1.1" date="August 08, 2012">
+			<download href="https://jenyay.net/uploads/Outwiker/Lightbox/lightbox-1.1.zip">
+			</download>
+			<changes>
+			</changes>
 
-			<version number="1.2.1" date="26.05.2018">
-                <download os="all">https://jenyay.net/uploads/Outwiker/Lightbox/lightbox-1.2.1.zip</download>
-				<change>Обновлена украинская локализация.</change>
-			</version>
+			<changes lang="ru">
+			</changes>
+		</version>
 
-			<version number="1.2" date="15.02.2018">
-                <download os="all">https://jenyay.net/uploads/Outwiker/Lightbox/lightbox-1.2.zip</download>
-				<change>Добавлена поддержка OutWiker 2.1. Переход на Python 3.6.</change>
-			</version>
+		<version number="1.0" date="June 06, 2012">
+			<download href="https://jenyay.net/uploads/Outwiker/Lightbox/lightbox.zip">
+			</download>
+			<changes>
+			</changes>
 
-			<version number="1.1.4" date="17.10.2016">
-                <download os="all">https://jenyay.net/uploads/Outwiker/Lightbox/lightbox-1.1.4.zip</download>
-				<change>Добавлена поддержка OutWiker 2.0.</change>
-			</version>
+			<changes lang="ru">
+			</changes>
+			<change>Первая версия</change>
+		</version>
+	</versions>
 
-			<version number="1.1.3" date="20.08.2016">
-                <download os="all">https://jenyay.net/uploads/Outwiker/Lightbox/lightbox-1.1.3.zip</download>
-				<change>Добавлена поддержка шведского языка.</change>
-			</version>
+	<versions>
+		<version number="1.3" date="26.08.2018">
+			<requirements>
+				<api>2.835</api>
+			</requirements>
 
-			<version number="1.1.2" date="20.01.2015">
-                <download os="all">https://jenyay.net/uploads/Outwiker/Lightbox/lightbox-1.1.2.zip</download>
-				<change>Подчистка кода.</change>
-				<change>Небольшие улучшения в интерфейсе.</change>
-				<change>Исправление ошибок.</change>
-			</version>
+			<download href="https://jenyay.net/uploads/Outwiker/Lightbox/lightbox-1.3.zip">
+			</download>
+			<changes>
+			</changes>
 
-			<version number="1.1.1" date="17.11.2012">
-                <download os="all">https://jenyay.net/uploads/Outwiker/Lightbox/lightbox-1.1.1.zip</download>
-			</version>
+			<changes lang="ru">
+			</changes>
+			<change>Добавлена немецкая локализация.</change>
+		</version>
 
-			<version number="1.1" date="08.08.2012">
-                <download os="all">https://jenyay.net/uploads/Outwiker/Lightbox/lightbox-1.1.zip</download>
-			</version>
+		<version number="1.2.1" date="26.05.2018">
+			<download href="https://jenyay.net/uploads/Outwiker/Lightbox/lightbox-1.2.1.zip">
+			</download>
+			<changes>
+			</changes>
 
-			<version number="1.0" date="24.06.2012">
-                <download os="all">https://jenyay.net/uploads/Outwiker/Lightbox/lightbox.zip</download>
-				<change>Первая версия</change>
-			</version>
-		</changelog>
-	</data>
+			<changes lang="ru">
+			</changes>
+			<change>Обновлена украинская локализация.</change>
+		</version>
+
+		<version number="1.2" date="15.02.2018">
+			<download href="https://jenyay.net/uploads/Outwiker/Lightbox/lightbox-1.2.zip">
+			</download>
+			<changes>
+			</changes>
+
+			<changes lang="ru">
+			</changes>
+			<change>Добавлена поддержка OutWiker 2.1. Переход на Python 3.6.</change>
+		</version>
+
+		<version number="1.1.4" date="17.10.2016">
+			<download href="https://jenyay.net/uploads/Outwiker/Lightbox/lightbox-1.1.4.zip">
+			</download>
+			<changes>
+			</changes>
+
+			<changes lang="ru">
+			</changes>
+			<change>Добавлена поддержка OutWiker 2.0.</change>
+		</version>
+
+		<version number="1.1.3" date="20.08.2016">
+			<download href="https://jenyay.net/uploads/Outwiker/Lightbox/lightbox-1.1.3.zip">
+			</download>
+			<changes>
+			</changes>
+
+			<changes lang="ru">
+			</changes>
+			<change>Добавлена поддержка шведского языка.</change>
+		</version>
+
+		<version number="1.1.2" date="20.01.2015">
+			<download href="https://jenyay.net/uploads/Outwiker/Lightbox/lightbox-1.1.2.zip">
+			</download>
+			<changes>
+			</changes>
+
+			<changes lang="ru">
+			</changes>
+			<change>Подчистка кода.</change>
+			<change>Небольшие улучшения в интерфейсе.</change>
+			<change>Исправление ошибок.</change>
+		</version>
+
+		<version number="1.1.1" date="17.11.2012">
+			<download href="https://jenyay.net/uploads/Outwiker/Lightbox/lightbox-1.1.1.zip">
+			</download>
+			<changes>
+			</changes>
+
+			<changes lang="ru">
+			</changes>
+		</version>
+
+		<version number="1.1" date="08.08.2012">
+			<download href="https://jenyay.net/uploads/Outwiker/Lightbox/lightbox-1.1.zip">
+			</download>
+			<changes>
+			</changes>
+
+			<changes lang="ru">
+			</changes>
+		</version>
+
+		<version number="1.0" date="24.06.2012">
+			<download href="https://jenyay.net/uploads/Outwiker/Lightbox/lightbox.zip">
+			</download>
+			<changes>
+			</changes>
+
+			<changes lang="ru">
+			</changes>
+			<change>Первая версия</change>
+		</version>
+	</versions>
 </info>

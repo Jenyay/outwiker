@@ -1,12 +1,17 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <info>
 	<name>PLUGINNAME</name>
-    <updates>https://example.com/pluginname/plugin.xml</updates>
-    <requirements>
-        <os>Windows, Linux</os>
-        <api>2.835</api>
+	<updates>https://example.com/pluginname/plugin.xml</updates>
+	<description>Description.</description>
+	<description lang="ru">Описание.</description>
+	<website>https://example.com/pluginnameEn</website>
+	<website lang="ru">https://example.com/pluginnameRu</website>
 
-		<!-- For backward compatibility with OutWiker 2.0 -->
+	<requirements>
+		<os>Windows, Linux</os>
+		<api>3.868</api>
+
+			<!-- For backward compatibility with OutWiker 2.0 -->
 		<packages>
 			<core>3.0</core>
 			<actions>3.0</actions>
@@ -15,49 +20,34 @@
 			<utilites>3.0</utilites>
 			<libs>3.0</libs>
 		</packages>
-    </requirements>
+	</requirements>
 
-	<data lang="en">
-		<website>https://example.com/pluginnameEn</website>
-		<description>Description.</description>
+	<author>
+		<name>Author name</name>
+		<email>example@example.com</email>
+		<website>https://example.com</website>
+	</author>
 
-		<author>
-			<name>Author name</name>
-			<email>example@example.com</email>
-			<site>https://example.com</site>
-		</author>
+	<author lang="ru">
+		<name>Author name</name>
+		<email>example@example.com</email>
+		<website>https://example.com</website>
+	</author>
 
-		<changelog>
-			<version number="1.0">
+	<versions>
+		<version number="1.0">
+			<download href="https://example.com/pluginname/pluginname-1.0.zip">
 				<requirements>
 					<api>2.835</api>
 				</requirements>
-
-                <download os="all">https://example.com/pluginname/pluginname-1.0.zip</download>
+			</download>
+			<changes>
 				<change>The first version.</change>
-			</version>
-		</changelog>
-	</data>
+			</changes>
 
-	<data lang="ru">
-		<website>https://example.com/pluginnameRu</website>
-		<description>Описание.</description>
-
-		<author>
-			<name>Author name</name>
-			<email>example@example.com</email>
-			<site>https://example.com</site>
-		</author>
-
-		<changelog>
-			<version number="1.0">
-				<requirements>
-					<api>2.835</api>
-				</requirements>
-
-                <download os="all">https://example.com/pluginname/pluginname-1.0.zip</download>
+			<changes lang="ru">
 				<change>Первая версия.</change>
-			</version>
-		</changelog>
-	</data>
+			</changes>
+		</version>
+	</versions>
 </info>
