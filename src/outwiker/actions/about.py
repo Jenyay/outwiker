@@ -25,7 +25,7 @@ class AboutAction (BaseAction):
     def run(self, params):
         assert self._application.mainWindow is not None
 
-        version = outwiker.__version__
+        version = outwiker.getVersionStr()
         dlg = AboutDialog(version, self._application.mainWindow)
         dlg.ShowModal()
         dlg.Destroy()

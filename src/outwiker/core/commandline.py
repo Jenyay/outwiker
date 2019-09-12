@@ -14,6 +14,7 @@ class _SilentParser(argparse.ArgumentParser):
     Создаем производный класс от ArgumentParser, чтобы отключить
     автоматический показ справки в случае ошибок в параметрах
     """
+
     def error(self, message):
         raise CommandLineException
 
@@ -22,8 +23,10 @@ class CommandLine(object):
     """
     Класс для хранения разобранных параметров командной строки
     """
+
     def __init__(self):
-        self._description = r"""OutWiker {ver}. Crossplatform program to keep your notes in a tree.""".format(ver=outwiker.__version__)
+        self._description = 'OutWiker {ver}. Crossplatform program to keep your notes in a tree.'.format(
+            ver=outwiker.getVersionStr())
 
         self._parser = self._createParser()
         self._namespace = None

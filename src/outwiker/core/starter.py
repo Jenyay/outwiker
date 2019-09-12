@@ -80,7 +80,7 @@ class Starter(object):
 
         # Вывод информации о версии
         if self._commandLine.version:
-            print(r"""OutWiker {ver}""".format(ver=outwiker.__version__))
+            print(r"""OutWiker {ver}""".format(ver=outwiker.getVersionStr()))
             raise StarterExit
 
     def __openRecentWiki(self):
