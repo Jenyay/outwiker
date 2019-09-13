@@ -33,6 +33,7 @@
 		</packages>
 	</requirements>
 
+	<version number="1.6"/>
 
 	<versions>
 		<version number="1.6">

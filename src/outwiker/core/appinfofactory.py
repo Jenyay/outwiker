@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from typing import List
+from typing import List, Optional
 
 from .xmlversionparser import (XmlVersionParser, XmlAppInfo, XmlDownload,
                                XmlRequirements, DataForLanguage, T)
@@ -35,6 +35,7 @@ class AppInfoFactory:
             xmlAppInfo.description, language, '')
 
         author = cls._getAuthor(xmlAppInfo, language)
+        version = cls._getVersion(xmlAppInfo)
         versions = cls._getVersions(xmlAppInfo, language)
         requirements = cls._getRequirements(xmlAppInfo.requirements)
 
@@ -44,7 +45,8 @@ class AppInfoFactory:
                          description=description,
                          author=author,
                          versions=versions,
-                         requirements=requirements
+                         requirements=requirements,
+                         version=version
                          )
         return result
 
@@ -65,6 +67,14 @@ class AppInfoFactory:
                 return data[current_lang]
 
         return default
+
+    @classmethod
+    def _getVersion(cls, xmlAppInfo: XmlAppInfo) -> Optional[Version]:
+        if xmlAppInfo.version is None:
+            return None
+
+        return Version.parse(xmlAppInfo.version.number +
+                             ' ' + xmlAppInfo.version.status)
 
     @classmethod
     def _getVersions(cls, xmlAppInfo: XmlAppInfo, language: str):

@@ -14,7 +14,8 @@ class AppInfo:
                  description: str = '',
                  author: 'Optional[AuthorInfo]' = None,
                  versions: 'Optional[List[VersionInfo]]' = None,
-                 requirements: 'Optional[Requirements]' = None):
+                 requirements: 'Optional[Requirements]' = None,
+                 version: 'Optional[Version]' = None):
         self.app_name = app_name
         self.app_info_url = app_info_url
         self.website = website
@@ -24,18 +25,7 @@ class AppInfo:
         self.versions = versions if versions is not None else []
         self.requirements = (
             requirements if requirements is not None else Requirements([], []))
-
-    @property
-    def currentVersionInfo(self) -> Optional[Version]:
-        version_info = max(
-            self.versions,
-            key=lambda versioninfo: versioninfo.version, default=None)
-        return version_info
-
-    @property
-    def currentVersion(self) -> Optional[Version]:
-        version_info = self.currentVersionInfo
-        return version_info.version if version_info is not None else None
+        self.version = version
 
 
 class AuthorInfo:

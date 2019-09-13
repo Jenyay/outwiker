@@ -35,6 +35,8 @@
 		</packages>
 	</requirements>
 
+	<version number="1.4"/>
+
 	<versions>
 		<version number="1.4">
 			<download href="https://jenyay.net/uploads/Outwiker/PageTypeColor/pagetypecolor-1.4.zip">

@@ -34,6 +34,8 @@
 		<website>https://example.com</website>
 	</author>
 
+	<version number="1.0"/>
+
 	<versions>
 		<version number="1.0">
 			<download href="https://example.com/pluginname/pluginname-1.0.zip">

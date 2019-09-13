@@ -1,10 +1,27 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <info>
 	<name>DebugEventsPlugin</name>
-    <updates>https://jenyay.net/uploads/Outwiker/DebugEvents/plugin.xml</updates>
-    <requirements>
-        <os>Windows, Linux</os>
-        <api>2.835</api>
+	<updates>https://jenyay.net/uploads/Outwiker/DebugEvents/plugin.xml</updates>
+	<website>https://jenyay.net/Outwiker/DebugEventsEn</website>
+	<website lang="ru">https://jenyay.net/Outwiker/DebugEvents</website>
+	<description>Plug-in to watch for the OutWiker events.</description>
+	<description lang="ru">Плагин для отслеживания событий OutWiker.</description>
+
+	<author>
+		<name>Eugene Ilin</name>
+		<email>jenyay.ilin@gmail.com</email>
+		<website>https://jenyay.net</website>
+	</author>
+
+	<author lang="ru">
+		<name>Евгений Ильин</name>
+		<email>jenyay.ilin@gmail.com</email>
+		<website>https://jenyay.net</website>
+	</author>
+
+	<requirements>
+		<os>Windows, Linux</os>
+		<api>3.868</api>
 
 		<!-- For backward compatibility with OutWiker 2.0 -->
 		<packages>
@@ -15,59 +32,54 @@
 			<utilites>3.0</utilites>
 			<libs>3.0</libs>
 		</packages>
-    </requirements>
+	</requirements>
 
-	<data lang="en">
-		<website>https://jenyay.net/Outwiker/DebugEventsEn</website>
-		<description>Plug-in to watch for the OutWiker events.</description>
+	<version number="1.2"/>
 
-		<author>
-			<name>Eugene Ilin</name>
-			<email>jenyay.ilin@gmail.com</email>
-			<site>https://jenyay.net</site>
-		</author>
+	<versions>
+		<version number="1.2">
+			<download href="https://jenyay.net/uploads/Outwiker/DebugEvents/debugevents-1.2.zip">
+				<requirements>
+					<api>3.868</api>
+				</requirements>
+			</download>
+			<changes>
+				<change>Migrate to new API.</change>
+			</changes>
 
-		<changelog>
-			<version number="1.1" date="February 15, 2018">
+			<changes lang="ru">
+				<change>Переход на новый API.</change>
+			</changes>
+		</version>
+
+		<version number="1.1" date="15.02.2018">
+			<download href="https://jenyay.net/uploads/Outwiker/DebugEvents/debugevents-1.1.zip">
 				<requirements>
 					<api>2.835</api>
 				</requirements>
+			</download>
+			<changes>
+				<change>Add OutWiker 2.1 support. Migrate to Python 3.</change>
+			</changes>
 
-                <download os="all">https://jenyay.net/uploads/Outwiker/DebugEvents/debugevents-1.1.zip</download>
-				<change>Add OutWiker 2.1 support. Migrate to Python 3.6.</change>
-			</version>
+			<changes lang="ru">
+				<change>Добавлена поддержка OutWiker 2.1. Переход на Python 3.</change>
+			</changes>
+		</version>
 
-			<version number="1.0">
-                <download os="all">https://jenyay.net/uploads/Outwiker/DebugEvents/debugevents-1.0.zip</download>
+		<version number="1.0">
+			<download href="https://jenyay.net/uploads/Outwiker/DebugEvents/debugevents-1.0.zip">
+				<requirements>
+					<api>2.0</api>
+				</requirements>
+			</download>
+			<changes>
 				<change>The first version.</change>
-			</version>
-		</changelog>
-	</data>
+			</changes>
 
-	<data lang="ru">
-		<website>https://jenyay.net/Outwiker/DebugEvents</website>
-		<description>Плагин для отслеживания событий OutWiker.</description>
-
-		<author>
-			<name>Евгений Ильин</name>
-			<email>jenyay.ilin@gmail.com</email>
-			<site>https://jenyay.net</site>
-		</author>
-
-		<changelog>
-			<version number="1.1" date="15.02.2018">
-				<requirements>
-					<api>2.835</api>
-				</requirements>
-
-                <download os="all">https://jenyay.net/uploads/Outwiker/DebugEvents/debugevents-1.1.zip</download>
-				<change>Добавлена поддержка OutWiker 2.1. Переход на Python 3.6.</change>
-			</version>
-
-			<version number="1.0">
-                <download os="all">https://jenyay.net/uploads/Outwiker/DebugEvents/debugevents-1.0.zip</download>
+			<changes lang="ru">
 				<change>Первая версия.</change>
-			</version>
-		</changelog>
-	</data>
+			</changes>
+		</version>
+	</versions>
 </info>

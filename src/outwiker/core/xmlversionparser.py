@@ -2,7 +2,7 @@
 
 from datetime import datetime
 from xml.etree import ElementTree
-from typing import List, Optional, TypeVar, Generic, Any
+from typing import List, Optional, TypeVar, Generic, Any, Dict
 
 
 T = TypeVar('T')
@@ -22,6 +22,7 @@ class XmlVersionParser:
     TAG_AUTHOR_NAME = 'name'
     TAG_AUTHOR_EMAIL = 'email'
     TAG_AUTHOR_WEBSITE = 'website'
+    TAG_VERSION = 'version'
     TAG_VERSIONS = 'versions'
     TAG_VERSIONS_VERSION = 'version[@number]'
     ATTRIBUTE_VERSION_NUMBER = 'number'
@@ -48,7 +49,8 @@ class XmlVersionParser:
         self._setWebsite(root, appinfo)
         self._setDescription(root, appinfo)
         self._setAuthor(root, appinfo)
-        self._setVersions(root, appinfo)
+        self._setChangelogVersions(root, appinfo)
+        self._setVersion(root, appinfo)
         self._setRequirements(root, appinfo)
 
         return appinfo
@@ -95,7 +97,18 @@ class XmlVersionParser:
 
             appinfo.author.set_for_language(language, author_info)
 
-    def _setVersions(self, root: ElementTree.Element, appinfo: 'XmlAppInfo'):
+    def _setVersion(self, root: ElementTree.Element, appinfo: 'XmlAppInfo'):
+        tag_version = root.find(self.TAG_VERSION)
+        if tag_version is None:
+            return
+
+        number = tag_version.get(self.ATTRIBUTE_VERSION_NUMBER)
+        status = tag_version.get(self.ATTRIBUTE_VERSION_STATUS, '')
+
+        if number is not None:
+            appinfo.version = XmlVersionInfo(number, status)
+
+    def _setChangelogVersions(self, root: ElementTree.Element, appinfo: 'XmlAppInfo'):
         tag_versions = root.find(self.TAG_VERSIONS)
         if tag_versions is None:
             return
@@ -112,7 +125,7 @@ class XmlVersionParser:
             except ValueError:
                 date = None
 
-            version_info = XmlVersionInfo(number, status, date)
+            version_info = XmlChangelogVersionInfo(number, status, date)
 
             self._setChangeLog(tag_version, version_info.changes)
             self._addDownloads(tag_version, version_info.downloads)
@@ -225,7 +238,9 @@ class XmlAppInfo:
 
         self.requirements = XmlRequirements([], [])
 
-        self.versions = []                      # type: List[XmlVersionInfo]
+        self.version = None                     # type: Optional[XmlVersionInfo]
+
+        self.versions = []                      # type: List[XmlChangelogVersionInfo]
 
 
 class XmlAuthorInfo:
@@ -271,7 +286,7 @@ class XmlDownload:
         self.requirements = requirements
 
 
-class XmlVersionInfo:
+class XmlChangelogVersionInfo:
     def __init__(self,
                  number: str,
                  status: str = '',
@@ -284,3 +299,9 @@ class XmlVersionInfo:
         # Key - language, value - list of XmlChangeItem
         # type: DataForLanguage[List[XmlChangeItem]]
         self.changes = DataForLanguage()
+
+
+class XmlVersionInfo:
+    def __init__(self, number: str, status: str = ''):
+        self.number = number                # type: str
+        self.status = status                # type: str

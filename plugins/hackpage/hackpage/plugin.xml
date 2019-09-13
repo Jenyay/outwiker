@@ -34,6 +34,8 @@
 		</packages>
 	</requirements>
 
+	<version number="1.4"/>
+
 	<versions>
 		<version number="1.4">
 			<download href="https://jenyay.net/uploads/Outwiker/HackPage/hackpage-1.4.zip">

@@ -5,6 +5,8 @@
 		<api>3.868</api>
 	</requirements>
 
+	<version number="0.5"/>
+
 	<versions>
 		<version number="0.5">
 		</version>

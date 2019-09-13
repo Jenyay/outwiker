@@ -33,6 +33,8 @@
 		</packages>
 	</requirements>
 
+	<version number="1.3"/>
+
 	<versions>
 		<version number="1.3">
 			<download href="https://jenyay.net/uploads/Outwiker/Sessions/sessions-1.3.zip">

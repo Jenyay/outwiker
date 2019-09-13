@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from outwiker.core.xmlversionparser import (
-    XmlAppInfo, XmlAuthorInfo, XmlVersionInfo, XmlChangeItem, XmlDownload,
-    XmlRequirements, DataForLanguage)
+    XmlAppInfo, XmlAuthorInfo, XmlChangelogVersionInfo, XmlChangeItem, XmlDownload,
+    XmlRequirements, XmlVersionInfo, DataForLanguage)
 from outwiker.core.appinfofactory import AppInfoFactory
 from outwiker.core.version import Version, StatusSet
 
@@ -37,6 +37,7 @@ xmlexample = '''<?xml version="1.1" encoding="UTF-8" ?>
         <api>2.222</api>
         <api>3.333</api>
     </requirements>
+    <version number="2.0" status="dev"/>
 
     <versions>
         <version number="1.0" status="beta">
@@ -147,13 +148,14 @@ def test_fromXmlAppInfo_empty():
     assert appInfo.app_info_url == ''
     assert appInfo.website == ''
     assert appInfo.description == ''
-    assert appInfo.versions == []
     assert appInfo.author is not None
     assert appInfo.author.name == ''
     assert appInfo.author.email == ''
     assert appInfo.author.website == ''
     assert appInfo.requirements.os_list == []
     assert appInfo.requirements.api_list == []
+    assert appInfo.version is None
+    assert appInfo.versions == []
 
 
 def test_fromXmlAppInfo_app_info_url():
@@ -163,6 +165,15 @@ def test_fromXmlAppInfo_app_info_url():
     appInfo = AppInfoFactory.fromXmlAppInfo(xmlAppInfo, language)
 
     assert appInfo.app_info_url == xmlAppInfo.app_info_url
+
+
+def test_fromXmlAppInfo_app_info_version():
+    xmlAppInfo = XmlAppInfo()
+    xmlAppInfo.version = XmlVersionInfo('1.0.1', status='beta')
+    language = ''
+    appInfo = AppInfoFactory.fromXmlAppInfo(xmlAppInfo, language)
+
+    assert appInfo.version == Version(1, 0, 1, status=StatusSet.BETA)
 
 
 def test_fromXmlAppInfo_app_name():
@@ -347,8 +358,8 @@ def test_fromXmlAppInfo_author_language_alternative():
 
 def test_fromXmlAppInfo_versions_simple():
     xmlAppInfo = XmlAppInfo()
-    version_1 = XmlVersionInfo(number='1.0', status='dev', date=None)
-    version_2 = XmlVersionInfo(number='2.0', status='beta', date=None)
+    version_1 = XmlChangelogVersionInfo(number='1.0', status='dev', date=None)
+    version_2 = XmlChangelogVersionInfo(number='2.0', status='beta', date=None)
 
     xmlAppInfo.versions.append(version_1)
     xmlAppInfo.versions.append(version_2)
@@ -369,8 +380,8 @@ def test_fromXmlAppInfo_versions_simple():
 
 def test_fromXmlAppInfo_versions_invalid_number():
     xmlAppInfo = XmlAppInfo()
-    version_1 = XmlVersionInfo(number='xxx')
-    version_2 = XmlVersionInfo(number='1.0', status='dev', date=None)
+    version_1 = XmlChangelogVersionInfo(number='xxx')
+    version_2 = XmlChangelogVersionInfo(number='1.0', status='dev', date=None)
 
     xmlAppInfo.versions.append(version_1)
     xmlAppInfo.versions.append(version_2)
@@ -387,8 +398,8 @@ def test_fromXmlAppInfo_versions_invalid_number():
 
 def test_fromXmlAppInfo_versions_invalid_status():
     xmlAppInfo = XmlAppInfo()
-    version_1 = XmlVersionInfo(number='1.0', status='dev', date=None)
-    version_2 = XmlVersionInfo(number='2.0', status='xxx')
+    version_1 = XmlChangelogVersionInfo(number='1.0', status='dev', date=None)
+    version_2 = XmlChangelogVersionInfo(number='2.0', status='xxx')
 
     xmlAppInfo.versions.append(version_1)
     xmlAppInfo.versions.append(version_2)
@@ -409,7 +420,7 @@ def test_fromXmlAppInfo_versions_invalid_status():
 
 def test_fromXmlAppInfo_versions_changes():
     xmlAppInfo = XmlAppInfo()
-    version = XmlVersionInfo(number='1.0', status='dev', date=None)
+    version = XmlChangelogVersionInfo(number='1.0', status='dev', date=None)
 
     changes_en = [XmlChangeItem('Change 1'), XmlChangeItem('Change 2')]
     version.changes.set_for_language('en', changes_en)
@@ -426,7 +437,7 @@ def test_fromXmlAppInfo_versions_changes():
 
 def test_fromXmlAppInfo_versions_changes_language_default():
     xmlAppInfo = XmlAppInfo()
-    version = XmlVersionInfo(number='1.0', status='dev', date=None)
+    version = XmlChangelogVersionInfo(number='1.0', status='dev', date=None)
 
     changes_default = [XmlChangeItem('Change 1'), XmlChangeItem('Change 2')]
     changes_en = [XmlChangeItem('Change 1 En'), XmlChangeItem('Change 2 En')]
@@ -445,7 +456,7 @@ def test_fromXmlAppInfo_versions_changes_language_default():
 
 def test_fromXmlAppInfo_versions_changes_language_alternative():
     xmlAppInfo = XmlAppInfo()
-    version = XmlVersionInfo(number='1.0', status='dev', date=None)
+    version = XmlChangelogVersionInfo(number='1.0', status='dev', date=None)
 
     changes_ru = [XmlChangeItem('Изменение 1'), XmlChangeItem('Изменение 2')]
     changes_en = [XmlChangeItem('Change 1'), XmlChangeItem('Change 2')]
@@ -464,7 +475,7 @@ def test_fromXmlAppInfo_versions_changes_language_alternative():
 
 def test_fromXmlAppInfo_versions_changes_change_list():
     xmlAppInfo = XmlAppInfo()
-    version = XmlVersionInfo(number='1.0', status='dev', date=None)
+    version = XmlChangelogVersionInfo(number='1.0', status='dev', date=None)
 
     changes_en = [XmlChangeItem('Change 1'), XmlChangeItem('Change 2')]
     version.changes.set_for_language('en', changes_en)
@@ -482,7 +493,7 @@ def test_fromXmlAppInfo_versions_changes_change_list():
 
 def test_fromXmlAppInfo_versions_downloads_href():
     xmlAppInfo = XmlAppInfo()
-    version = XmlVersionInfo(number='1.0', status='dev', date=None)
+    version = XmlChangelogVersionInfo(number='1.0', status='dev', date=None)
     download = XmlDownload('https://example.com/download.zip')
     version.downloads.append(download)
     xmlAppInfo.versions.append(version)
@@ -498,7 +509,7 @@ def test_fromXmlAppInfo_versions_downloads_href():
 
 def test_fromXmlAppInfo_versions_downloads_requirements_single():
     xmlAppInfo = XmlAppInfo()
-    version = XmlVersionInfo(number='1.0', status='dev', date=None)
+    version = XmlChangelogVersionInfo(number='1.0', status='dev', date=None)
     requirements = XmlRequirements(['Windows'], ['3.868'])
     download = XmlDownload('https://example.com/download.zip', requirements)
     version.downloads.append(download)
@@ -514,7 +525,7 @@ def test_fromXmlAppInfo_versions_downloads_requirements_single():
 
 def test_fromXmlAppInfo_versions_downloads_requirements_several():
     xmlAppInfo = XmlAppInfo()
-    version = XmlVersionInfo(number='1.0', status='dev', date=None)
+    version = XmlChangelogVersionInfo(number='1.0', status='dev', date=None)
     requirements = XmlRequirements(['Windows', 'Linux'], ['3.868', '2.800'])
     download = XmlDownload('https://example.com/download.zip', requirements)
     version.downloads.append(download)
@@ -563,6 +574,7 @@ def test_fromString_lang_ru():
     assert appinfo.author.name == 'Джон'
     assert appinfo.author.email == 'john_ru@example.com'
     assert appinfo.author.website == 'http://example.com/ru'
+    assert appinfo.version == Version(2, 0, status=StatusSet.DEV)
 
     assert appinfo.requirements.os_list == ['Windows', 'Linux']
     assert appinfo.requirements.api_list == [Version(2, 222), Version(3, 333)]
@@ -604,6 +616,7 @@ def test_fromString_lang_ru_RU():
     assert appinfo.author.name == 'Джон'
     assert appinfo.author.email == 'john_ru@example.com'
     assert appinfo.author.website == 'http://example.com/ru'
+    assert appinfo.version == Version(2, 0, status=StatusSet.DEV)
 
     assert appinfo.requirements.os_list == ['Windows', 'Linux']
     assert appinfo.requirements.api_list == [Version(2, 222), Version(3, 333)]
@@ -645,6 +658,7 @@ def test_fromString_lang_default():
     assert appinfo.author.name == 'John'
     assert appinfo.author.email == 'john@example.com'
     assert appinfo.author.website == 'http://example.com'
+    assert appinfo.version == Version(2, 0, status=StatusSet.DEV)
 
     assert appinfo.requirements.os_list == ['Windows', 'Linux']
     assert appinfo.requirements.api_list == [Version(2, 222), Version(3, 333)]
@@ -683,6 +697,7 @@ def test_fromString_empty():
     assert appInfo.app_info_url == ''
     assert appInfo.website == ''
     assert appInfo.description == ''
+    assert appInfo.version is None
     assert appInfo.versions == []
     assert appInfo.author is not None
     assert appInfo.author.name == ''

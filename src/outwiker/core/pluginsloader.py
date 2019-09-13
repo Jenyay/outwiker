@@ -266,7 +266,7 @@ class PluginsLoader(object):
                           appinfo.app_name is not None)
                       else packageName)
 
-        package_version = appinfo.currentVersion if appinfo is not None else None
+        package_version = appinfo.version if appinfo is not None else None
         pluginversion = (str(package_version)
                          if package_version is not None
                          else None)

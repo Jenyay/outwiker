@@ -19,11 +19,11 @@
 		<website>https://github.com/AenBleidd</website>
 	</author>
 
-    <requirements>
-        <os>Windows, Linux</os>
-        <api>3.868</api>
+	<requirements>
+		<os>Windows, Linux</os>
+		<api>3.868</api>
 
-		<!-- For backward compatibility with OutWiker 2.0 -->
+			<!-- For backward compatibility with OutWiker 2.0 -->
 		<packages>
 			<core>3.0</core>
 			<actions>3.0</actions>
@@ -32,7 +32,9 @@
 			<utilites>3.0</utilites>
 			<libs>3.0</libs>
 		</packages>
-    </requirements>
+	</requirements>
+
+	<version number="0.0.0.8"/>
 
 	<versions>
 		<version number="0.0.0.8">

@@ -33,6 +33,8 @@
 		<website>https://jenyay.net</website>
 	</author>
 
+	<version number="2.4"/>
+
 	<versions>
 		<version number="2.4">
 			<download href="https://jenyay.net/uploads/Outwiker/UpdateNotifier/updatenotifier-2.4.zip">

@@ -33,6 +33,8 @@
 		<website>https://jenyay.net</website>
 	</author>
 
+	<version number="1.3"/>
+
 	<versions>
 		<version number="1.3">
 			<download href="https://jenyay.net/uploads/Outwiker/Contents/tableofcontents-1.3.zip">

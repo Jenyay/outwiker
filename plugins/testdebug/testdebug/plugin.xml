@@ -21,6 +21,8 @@
 		</packages>
 	</requirements>
 
+	<version number="0.5"/>
+
 	<versions>
 		<version number="0.5">
 			<download href="http://jenyay.net/uploads/Outwiker/DebugPlugin/debugplugin-0.5.zip">

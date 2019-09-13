@@ -9,6 +9,7 @@ def _assert_XmlAppInfo_empty(appinfo):
     assert appinfo.app_info_url == ""
     assert appinfo.author.is_empty()
     assert appinfo.app_name.is_empty()
+    assert appinfo.version is None
     assert appinfo.versions == []
     assert appinfo.requirements.os_list == []
     assert appinfo.requirements.api_list == []
@@ -576,3 +577,13 @@ def test_requirements_os_api():
     assert 'Linux' in result.requirements.os_list
     assert '3.666' in result.requirements.api_list
     assert '3.667' in result.requirements.api_list
+
+def test_version():
+    text = '''<?xml version="1.1" encoding="UTF-8" ?>
+        <info>
+            <version number="1.0" status="dev"/>
+        </info>'''
+    result = XmlVersionParser().parse(text)
+
+    assert result.version.number == '1.0'
+    assert result.version.status == 'dev'

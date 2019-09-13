@@ -34,6 +34,8 @@
 		</packages>
     </requirements>
 
+	<version number="1.6"/>
+
 	<versions>
 		<version number="1.6">
 			<download href="https://jenyay.net/uploads/Outwiker/Export2HtmlPlugin/export2html-1.6.zip">
