@@ -34,7 +34,7 @@ class AppInfoFactory:
         description = cls.extractDataForLanguage(
             xmlAppInfo.description, language, '')
 
-        author = cls._getAuthor(xmlAppInfo, language)
+        authors = cls._getAuthors(xmlAppInfo, language)
         version = cls._getVersion(xmlAppInfo)
         versions = cls._getVersions(xmlAppInfo, language)
         requirements = cls._getRequirements(xmlAppInfo.requirements)
@@ -43,7 +43,7 @@ class AppInfoFactory:
                          app_name=app_name,
                          website=website,
                          description=description,
-                         author=author,
+                         authors=authors,
                          versions=versions,
                          requirements=requirements,
                          version=version
@@ -123,10 +123,7 @@ class AppInfoFactory:
         return Requirements(os_list, api_list)
 
     @classmethod
-    def _getAuthor(cls, xmlAppInfo: XmlAppInfo, language: str):
-        author_default = AuthorInfo()
-        author_src = cls.extractDataForLanguage(
-            xmlAppInfo.author, language, author_default)
-        author = AuthorInfo(
-            author_src.name, author_src.email, author_src.website)
-        return author
+    def _getAuthors(cls, xmlAppInfo: XmlAppInfo, language: str) -> List[AuthorInfo]:
+        return [AuthorInfo(author.name, author.email, author.website)
+                for author in cls.extractDataForLanguage(xmlAppInfo.authors,
+                                                         language, [])]

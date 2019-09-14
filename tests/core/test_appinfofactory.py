@@ -31,6 +31,18 @@ xmlexample = '''<?xml version="1.1" encoding="UTF-8" ?>
         <website>http://example.com/ru</website>
     </author>
 
+    <author>
+        <name>Andrey</name>
+        <email>andrey@example.com</email>
+        <website>http://example.com/andrey</website>
+    </author>
+
+    <author lang='ru'>
+        <name>Андрей</name>
+        <email>andrey_ru@example.com</email>
+        <website>http://example.com/andrey/ru</website>
+    </author>
+
     <requirements>
         <os>Windows</os>
         <os>Linux</os>
@@ -148,10 +160,7 @@ def test_fromXmlAppInfo_empty():
     assert appInfo.app_info_url == ''
     assert appInfo.website == ''
     assert appInfo.description == ''
-    assert appInfo.author is not None
-    assert appInfo.author.name == ''
-    assert appInfo.author.email == ''
-    assert appInfo.author.website == ''
+    assert appInfo.authors == []
     assert appInfo.requirements.os_list == []
     assert appInfo.requirements.api_list == []
     assert appInfo.version is None
@@ -302,58 +311,58 @@ def test_fromXmlAppInfo_description_default():
     assert appInfo.description == 'bla-bla-bla'
 
 
-def test_fromXmlAppInfo_author():
+def test_fromXmlAppInfo_authors():
     xmlAppInfo = XmlAppInfo()
     author_en = XmlAuthorInfo(
         name='John', email='john@example.com', website='http://example.com')
-    xmlAppInfo.author.set_for_language('en', author_en)
+    xmlAppInfo.authors.set_for_language('en', [author_en])
 
     language = 'en'
     appInfo = AppInfoFactory.fromXmlAppInfo(xmlAppInfo, language)
 
-    assert appInfo.author.name == 'John'
-    assert appInfo.author.email == 'john@example.com'
-    assert appInfo.author.website == 'http://example.com'
+    assert appInfo.authors[0].name == 'John'
+    assert appInfo.authors[0].email == 'john@example.com'
+    assert appInfo.authors[0].website == 'http://example.com'
 
 
-def test_fromXmlAppInfo_author_default():
+def test_fromXmlAppInfo_authors_default():
     xmlAppInfo = XmlAppInfo()
 
     author_default = XmlAuthorInfo(
         name='John',
         email='john@example.com',
         website='http://example.com')
-    xmlAppInfo.author.set_for_language('', author_default)
+    xmlAppInfo.authors.set_for_language('', [author_default])
 
     author_ru = XmlAuthorInfo(
         name='Джон',
         email='john_ru@example.com',
         website='http://example.com/ru')
-    xmlAppInfo.author.set_for_language('ru', author_ru)
+    xmlAppInfo.authors.set_for_language('ru', [author_ru])
 
     language = 'jp'
     appInfo = AppInfoFactory.fromXmlAppInfo(xmlAppInfo, language)
 
-    assert appInfo.author.name == 'John'
-    assert appInfo.author.email == 'john@example.com'
-    assert appInfo.author.website == 'http://example.com'
+    assert appInfo.authors[0].name == 'John'
+    assert appInfo.authors[0].email == 'john@example.com'
+    assert appInfo.authors[0].website == 'http://example.com'
 
 
-def test_fromXmlAppInfo_author_language_alternative():
+def test_fromXmlAppInfo_authors_language_alternative():
     xmlAppInfo = XmlAppInfo()
 
     author_en = XmlAuthorInfo(
         name='John',
         email='john@example.com',
         website='http://example.com')
-    xmlAppInfo.author.set_for_language('en', author_en)
+    xmlAppInfo.authors.set_for_language('en', [author_en])
 
     language = 'en_US'
     appInfo = AppInfoFactory.fromXmlAppInfo(xmlAppInfo, language)
 
-    assert appInfo.author.name == 'John'
-    assert appInfo.author.email == 'john@example.com'
-    assert appInfo.author.website == 'http://example.com'
+    assert appInfo.authors[0].name == 'John'
+    assert appInfo.authors[0].email == 'john@example.com'
+    assert appInfo.authors[0].website == 'http://example.com'
 
 
 def test_fromXmlAppInfo_versions_simple():
@@ -571,9 +580,15 @@ def test_fromString_lang_ru():
     assert appinfo.app_name == 'Имя приложения'
     assert appinfo.website == 'http://jenyay.net/ru/'
     assert appinfo.description == 'Описание'
-    assert appinfo.author.name == 'Джон'
-    assert appinfo.author.email == 'john_ru@example.com'
-    assert appinfo.author.website == 'http://example.com/ru'
+
+    assert appinfo.authors[0].name == 'Джон'
+    assert appinfo.authors[0].email == 'john_ru@example.com'
+    assert appinfo.authors[0].website == 'http://example.com/ru'
+
+    assert appinfo.authors[1].name == 'Андрей'
+    assert appinfo.authors[1].email == 'andrey_ru@example.com'
+    assert appinfo.authors[1].website == 'http://example.com/andrey/ru'
+
     assert appinfo.version == Version(2, 0, status=StatusSet.DEV)
 
     assert appinfo.requirements.os_list == ['Windows', 'Linux']
@@ -613,9 +628,15 @@ def test_fromString_lang_ru_RU():
     assert appinfo.app_name == 'Имя приложения'
     assert appinfo.website == 'http://jenyay.net/ru/'
     assert appinfo.description == 'Описание'
-    assert appinfo.author.name == 'Джон'
-    assert appinfo.author.email == 'john_ru@example.com'
-    assert appinfo.author.website == 'http://example.com/ru'
+
+    assert appinfo.authors[0].name == 'Джон'
+    assert appinfo.authors[0].email == 'john_ru@example.com'
+    assert appinfo.authors[0].website == 'http://example.com/ru'
+
+    assert appinfo.authors[1].name == 'Андрей'
+    assert appinfo.authors[1].email == 'andrey_ru@example.com'
+    assert appinfo.authors[1].website == 'http://example.com/andrey/ru'
+
     assert appinfo.version == Version(2, 0, status=StatusSet.DEV)
 
     assert appinfo.requirements.os_list == ['Windows', 'Linux']
@@ -655,9 +676,15 @@ def test_fromString_lang_default():
     assert appinfo.app_name == 'Application name'
     assert appinfo.website == 'http://jenyay.net/en/'
     assert appinfo.description == 'Description'
-    assert appinfo.author.name == 'John'
-    assert appinfo.author.email == 'john@example.com'
-    assert appinfo.author.website == 'http://example.com'
+
+    assert appinfo.authors[0].name == 'John'
+    assert appinfo.authors[0].email == 'john@example.com'
+    assert appinfo.authors[0].website == 'http://example.com'
+
+    assert appinfo.authors[1].name == 'Andrey'
+    assert appinfo.authors[1].email == 'andrey@example.com'
+    assert appinfo.authors[1].website == 'http://example.com/andrey'
+
     assert appinfo.version == Version(2, 0, status=StatusSet.DEV)
 
     assert appinfo.requirements.os_list == ['Windows', 'Linux']
@@ -699,7 +726,4 @@ def test_fromString_empty():
     assert appInfo.description == ''
     assert appInfo.version is None
     assert appInfo.versions == []
-    assert appInfo.author is not None
-    assert appInfo.author.name == ''
-    assert appInfo.author.email == ''
-    assert appInfo.author.website == ''
+    assert appInfo.authors == []

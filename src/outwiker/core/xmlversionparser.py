@@ -95,7 +95,10 @@ class XmlVersionParser:
             website = self._getTextValue(tag, self.TAG_AUTHOR_WEBSITE)
             author_info = XmlAuthorInfo(name, email, website)
 
-            appinfo.author.set_for_language(language, author_info)
+            if language not in appinfo.authors:
+                appinfo.authors.set_for_language(language, [])
+
+            appinfo.authors[language].append(author_info)
 
     def _setVersion(self, root: ElementTree.Element, appinfo: 'XmlAppInfo'):
         tag_version = root.find(self.TAG_VERSION)
@@ -232,9 +235,9 @@ class XmlAppInfo:
         # Key - language, value - description
         self.description = DataForLanguage()    # type: DataForLanguage[str]
 
-        # Key - language, value - author information
-        # type: DataForLanguage[XmlAuthorInfo]
-        self.author = DataForLanguage()
+        # Key - language, value - list of authors information
+        # type: DataForLanguage[List[XmlAuthorInfo]]
+        self.authors = DataForLanguage()
 
         self.requirements = XmlRequirements([], [])
 

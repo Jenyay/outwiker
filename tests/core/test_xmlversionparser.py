@@ -7,7 +7,7 @@ from outwiker.core.xmlversionparser import XmlVersionParser, XmlAppInfo
 
 def _assert_XmlAppInfo_empty(appinfo):
     assert appinfo.app_info_url == ""
-    assert appinfo.author.is_empty()
+    assert appinfo.authors.is_empty()
     assert appinfo.app_name.is_empty()
     assert appinfo.version is None
     assert appinfo.versions == []
@@ -206,31 +206,31 @@ def test_app_info_url():
     assert result.app_info_url == 'http://example.com/updates.xml'
 
 
-def test_author_empty():
+def test_authors_empty():
     text = '''<?xml version="1.1" encoding="UTF-8" ?>
         <info>
             <author></author>
         </info>'''
     result = XmlVersionParser().parse(text)
 
-    assert result.author[''].name == ''
-    assert result.author[''].email == ''
-    assert result.author[''].website == ''
+    assert result.authors[''][0].name == ''
+    assert result.authors[''][0].email == ''
+    assert result.authors[''][0].website == ''
 
 
-def test_author_empty_en():
+def test_authors_empty_en():
     text = '''<?xml version="1.1" encoding="UTF-8" ?>
         <info>
             <author lang='en'></author>
         </info>'''
     result = XmlVersionParser().parse(text)
 
-    assert result.author['en'].name == ''
-    assert result.author['en'].email == ''
-    assert result.author['en'].website == ''
+    assert result.authors['en'][0].name == ''
+    assert result.authors['en'][0].email == ''
+    assert result.authors['en'][0].website == ''
 
 
-def test_author_empty_en_no_lang():
+def test_authors_empty_en_no_lang():
     text = '''<?xml version="1.1" encoding="UTF-8" ?>
         <info>
             <author></author>
@@ -238,16 +238,16 @@ def test_author_empty_en_no_lang():
         </info>'''
     result = XmlVersionParser().parse(text)
 
-    assert result.author[''].name == ''
-    assert result.author[''].email == ''
-    assert result.author[''].website == ''
+    assert result.authors[''][0].name == ''
+    assert result.authors[''][0].email == ''
+    assert result.authors[''][0].website == ''
 
-    assert result.author['en'].name == ''
-    assert result.author['en'].email == ''
-    assert result.author['en'].website == ''
+    assert result.authors['en'][0].name == ''
+    assert result.authors['en'][0].email == ''
+    assert result.authors['en'][0].website == ''
 
 
-def test_author_empty_ru_no_lang_full():
+def test_authors_empty_ru_no_lang_full():
     text = '''<?xml version="1.1" encoding="UTF-8" ?>
         <info>
             <author>
@@ -264,17 +264,66 @@ def test_author_empty_ru_no_lang_full():
         </info>'''
     result = XmlVersionParser().parse(text)
 
-    assert '' in result.author.get_languages()
-    assert 'ru' in result.author.get_languages()
-    assert len(result.author.get_languages()) == 2
+    assert '' in result.authors.get_languages()
+    assert 'ru' in result.authors.get_languages()
+    assert len(result.authors.get_languages()) == 2
 
-    assert result.author[''].name == 'John'
-    assert result.author[''].email == 'john@example.com'
-    assert result.author[''].website == 'http://example.com'
+    assert result.authors[''][0].name == 'John'
+    assert result.authors[''][0].email == 'john@example.com'
+    assert result.authors[''][0].website == 'http://example.com'
 
-    assert result.author['ru'].name == 'Джон'
-    assert result.author['ru'].email == 'john_ru@example.com'
-    assert result.author['ru'].website == 'http://example.com/ru'
+    assert result.authors['ru'][0].name == 'Джон'
+    assert result.authors['ru'][0].email == 'john_ru@example.com'
+    assert result.authors['ru'][0].website == 'http://example.com/ru'
+
+def test_authors_several():
+    text = '''<?xml version="1.1" encoding="UTF-8" ?>
+        <info>
+            <author>
+                <name>John</name>
+                <email>john@example.com</email>
+                <website>http://example.com/john/en</website>
+            </author>
+
+            <author lang='ru'>
+                <name>Джон</name>
+                <email>john_ru@example.com</email>
+                <website>http://example.com/john/ru</website>
+            </author>
+
+            <author>
+                <name>Andrey</name>
+                <email>andrey@example.com</email>
+                <website>http://example.com/andrey/en</website>
+            </author>
+
+            <author lang='ru'>
+                <name>Андрей</name>
+                <email>andrey_ru@example.com</email>
+                <website>http://example.com/andrey/ru</website>
+            </author>
+        </info>'''
+    result = XmlVersionParser().parse(text)
+
+    assert '' in result.authors.get_languages()
+    assert 'ru' in result.authors.get_languages()
+    assert len(result.authors.get_languages()) == 2
+
+    assert result.authors[''][0].name == 'John'
+    assert result.authors[''][0].email == 'john@example.com'
+    assert result.authors[''][0].website == 'http://example.com/john/en'
+
+    assert result.authors['ru'][0].name == 'Джон'
+    assert result.authors['ru'][0].email == 'john_ru@example.com'
+    assert result.authors['ru'][0].website == 'http://example.com/john/ru'
+
+    assert result.authors[''][1].name == 'Andrey'
+    assert result.authors[''][1].email == 'andrey@example.com'
+    assert result.authors[''][1].website == 'http://example.com/andrey/en'
+
+    assert result.authors['ru'][1].name == 'Андрей'
+    assert result.authors['ru'][1].email == 'andrey_ru@example.com'
+    assert result.authors['ru'][1].website == 'http://example.com/andrey/ru'
 
 def test_versions_list_empty():
     text = '''<?xml version="1.1" encoding="UTF-8" ?>
