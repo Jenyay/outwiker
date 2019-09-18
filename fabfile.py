@@ -62,7 +62,7 @@ from buildtools.builders import (BuilderWindows,
                                  )
 
 from outwiker.utilites.textfile import readTextFile
-from outwiker.core.xmlversionparser import XmlVersionParser
+from outwiker.core.xmlappinfoparser import XmlAppInfoParser
 
 try:
     from buildtools.serverinfo import (DEPLOY_SERVER_NAME,
@@ -383,7 +383,7 @@ def upload_plugin(*args):
                                          PLUGIN_VERSIONS_FILENAME)
 
         xml_content_local = readTextFile(path_to_xml_local)
-        appinfo_local = XmlVersionParser().parse(xml_content_local)
+        appinfo_local = XmlAppInfoParser().parse(xml_content_local)
 
         url = appinfo_local.updatesUrl
         try:

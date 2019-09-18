@@ -13,7 +13,6 @@ class AppInfo:
                  website: str = '',
                  description: str = '',
                  authors: 'Optional[List[AuthorInfo]]' = None,
-                 versions: 'Optional[List[VersionInfo]]' = None,
                  requirements: 'Optional[Requirements]' = None,
                  version: 'Optional[Version]' = None):
         self.app_name = app_name
@@ -22,7 +21,6 @@ class AppInfo:
         self.description = description
 
         self.authors = authors if authors is not None else []
-        self.versions = versions if versions is not None else []
         self.requirements = (
             requirements if requirements is not None else Requirements([], []))
         self.version = version
@@ -81,3 +79,8 @@ class VersionInfo:
         self.date = date
         self.downloads = downloads
         self.changes = changes
+
+
+class ChangeLog:
+    def __init__(self, versions: List[VersionInfo]):
+        self.versions = versions
