@@ -3,29 +3,11 @@
 from typing import List, Optional
 
 from .xmlappinfoparser import (XmlAppInfoParser, XmlAppInfo, XmlDownload,
-                               XmlRequirements, DataForLanguage, XmlChangeLog,
-                               XmlChangelogParser, T)
+                               XmlRequirements, XmlChangeLog,
+                               XmlChangelogParser)
 from .appinfo import (AppInfo, AuthorInfo, VersionInfo, DownloadInfo,
                       Requirements, ChangeLog)
 from .version import Version
-
-
-def extractDataForLanguage(data: DataForLanguage[T],
-                           language: str,
-                           default: T) -> T:
-    DEFAULT_LANGUAGE = ''
-    # lang_list example: ['ru_RU', 'ru', '']
-    lang_list = [language]
-    underscore_pos = language.find('_')
-    if underscore_pos != -1:
-        lang_list.append(language[: underscore_pos])
-    lang_list.append(DEFAULT_LANGUAGE)
-
-    for current_lang in lang_list:
-        if current_lang in data:
-            return data[current_lang]
-
-    return default
 
 
 class AppInfoFactory:
@@ -44,13 +26,11 @@ class AppInfoFactory:
                        language: str) -> AppInfo:
         app_info_url = xmlAppInfo.app_info_url
 
-        app_name = extractDataForLanguage(
-            xmlAppInfo.app_name, language, '')
+        app_name = xmlAppInfo.app_name.get(language, '')
 
-        website = extractDataForLanguage(xmlAppInfo.website, language, '')
+        website = xmlAppInfo.website.get(language, '')
 
-        description = extractDataForLanguage(
-            xmlAppInfo.description, language, '')
+        description = xmlAppInfo.description.get(language, '')
 
         authors = cls._getAuthors(xmlAppInfo, language)
         version = cls._getVersion(xmlAppInfo)
@@ -78,8 +58,7 @@ class AppInfoFactory:
     @classmethod
     def _getAuthors(cls, xmlAppInfo: XmlAppInfo, language: str) -> List[AuthorInfo]:
         return [AuthorInfo(author.name, author.email, author.website)
-                for author in extractDataForLanguage(xmlAppInfo.authors,
-                                                     language, [])]
+                for author in xmlAppInfo.authors.get(language, [])]
 
 
 class ChangeLogFactory:
@@ -108,8 +87,7 @@ class ChangeLogFactory:
                 continue
 
             date = xmlversion.date
-            changes = extractDataForLanguage(
-                xmlversion.changes, language, [])[:]
+            changes = xmlversion.changes.get(language, [])[:]
             downloads = cls._getDownloads(xmlversion.downloads)
 
             versions.append(VersionInfo(version, date, downloads, changes))

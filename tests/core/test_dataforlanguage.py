@@ -2,7 +2,7 @@
 
 import pytest
 
-from outwiker.core.xmlversionparser import DataForLanguage
+from outwiker.core.dataforlanguage import DataForLanguage
 
 
 def test_init():
@@ -44,7 +44,7 @@ def test_set_get_several():
     assert data_for_language.get('ru', None) == data_ru
 
 
-def test_get_imvalid():
+def test_get_invalid():
     test_data = 'hello'
     data_for_language = DataForLanguage()
 
@@ -69,3 +69,29 @@ def test_test_languages():
 
     assert 'en' in data_for_language
     assert 'ru' in data_for_language
+
+
+def test_extract_data_for_language_02():
+    data = DataForLanguage()
+    data.set_for_language('en', 'John')
+    assert data.get('en_US', '') == 'John'
+
+
+def test_extract_data_for_language_03():
+    data = DataForLanguage()
+    data.set_for_language('en', 'John')
+    data.set_for_language('en_US', 'John Smith')
+    assert data.get('en_US', '') == 'John Smith'
+
+
+def test_extract_data_for_language_04():
+    data = DataForLanguage()
+    data.set_for_language('', 'John')
+    data.set_for_language('en_US', 'John Smith')
+    assert data.get('ru', '') == 'John'
+
+
+def test_extract_data_for_language_05():
+    data = DataForLanguage()
+    data.set_for_language('en_US', 'John Smith')
+    assert data.get('ru', '') == ''

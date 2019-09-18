@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from outwiker.core.xmlappinfoparser import (
-    XmlAppInfo, XmlAuthorInfo, XmlVersionInfo, DataForLanguage)
-from outwiker.core.appinfofactory import (AppInfoFactory,
-                                          extractDataForLanguage)
+    XmlAppInfo, XmlAuthorInfo, XmlVersionInfo)
+from outwiker.core.appinfofactory import AppInfoFactory
 from outwiker.core.version import Version, StatusSet
+
 
 xmlexample = '''<?xml version="1.1" encoding="UTF-8" ?>
 <info>
@@ -53,43 +53,6 @@ xmlexample = '''<?xml version="1.1" encoding="UTF-8" ?>
 </info>
 '''
 
-
-def test_extractDataForLanguage_empty():
-    data = DataForLanguage()
-    assert extractDataForLanguage(
-        data, '', 'default') == 'default'
-
-
-def test_extractDataForLanguage_01():
-    data = DataForLanguage()
-    data.set_for_language('en', 'John')
-    assert extractDataForLanguage(data, 'en', '') == 'John'
-
-
-def test_extractDataForLanguage_02():
-    data = DataForLanguage()
-    data.set_for_language('en', 'John')
-    assert extractDataForLanguage(data, 'en_US', '') == 'John'
-
-
-def test_extractDataForLanguage_03():
-    data = DataForLanguage()
-    data.set_for_language('en', 'John')
-    data.set_for_language('en_US', 'John Smith')
-    assert extractDataForLanguage(data, 'en_US', '') == 'John Smith'
-
-
-def test_extractDataForLanguage_04():
-    data = DataForLanguage()
-    data.set_for_language('', 'John')
-    data.set_for_language('en_US', 'John Smith')
-    assert extractDataForLanguage(data, 'ru', '') == 'John'
-
-
-def test_extractDataForLanguage_05():
-    data = DataForLanguage()
-    data.set_for_language('en_US', 'John Smith')
-    assert extractDataForLanguage(data, 'ru', '') == ''
 
 
 def test_fromXmlAppInfo_empty():

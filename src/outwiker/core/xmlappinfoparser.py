@@ -2,10 +2,9 @@
 
 from datetime import datetime
 from xml.etree import ElementTree
-from typing import List, Optional, TypeVar, Generic, Any, Dict
+from typing import List, Optional
 
-
-T = TypeVar('T')
+from .dataforlanguage import DataForLanguage
 
 
 def _getTextValue(root: ElementTree.Element, tag_name: str) -> str:
@@ -126,30 +125,6 @@ class XmlAppInfoParser:
 
         if number is not None:
             appinfo.version = XmlVersionInfo(number, status)
-
-
-class DataForLanguage(Generic[T]):
-    def __init__(self):
-        # Key - language, value - data
-        self._data = {}             # type: Dict[str, T]
-
-    def set_for_language(self, language: str, data: T) -> None:
-        self._data[language] = data
-
-    def __getitem__(self, language: str) -> T:
-        return self._data[language]
-
-    def __contains__(self, language: str) -> bool:
-        return language in self._data
-
-    def get(self, language: str, default: Any = None) -> Any:
-        return self._data.get(language, default)
-
-    def get_languages(self) -> List[str]:
-        return list(self._data.keys())
-
-    def is_empty(self) -> bool:
-        return len(self._data) == 0
 
 
 class XmlAppInfo:
