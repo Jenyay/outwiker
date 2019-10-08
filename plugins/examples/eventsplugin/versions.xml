@@ -1,0 +1,45 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+<info>
+	<name>ExampleEventsPlugin</name>
+    <updates>http://example.com/pluginname/plugin.xml</updates>
+    <requirements>
+        <os>Windows, Linux</os>
+        <api>2.835</api>
+    </requirements>
+
+	<data lang="en">
+		<website>http://example.com/pluginnameEn</website>
+		<description>Description.</description>
+
+		<author>
+			<name>Author name</name>
+			<email>example@example.com</email>
+			<site>http://example.com</site>
+		</author>
+
+		<changelog>
+			<version number="0.1" date="August 20, 2017">
+                <download os="all">http://example.com/eventsplugin-0.1.zip</download>
+				<change>The first version.</change>
+			</version>
+		</changelog>
+	</data>
+
+	<data lang="ru">
+		<website>http://example.com/pluginnameRu</website>
+		<description>Описание.</description>
+
+		<author>
+			<name>Имя автора</name>
+			<email>example@example.com</email>
+			<site>http://example.com</site>
+		</author>
+
+		<changelog>
+			<version number="0.1" date="20.08.2017">
+                <download os="all">http://example.com/eventsplugin-0.1.zip</download>
+				<change>Первая версия.</change>
+			</version>
+		</changelog>
+	</data>
+</info>

@@ -1,0 +1,47 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+<versions>
+	<version number="1.2">
+		<download href="https://jenyay.net/uploads/Outwiker/DebugEvents/debugevents-1.2.zip">
+			<requirements>
+				<api>3.868</api>
+			</requirements>
+		</download>
+		<changes>
+			<change>Migrate to new API.</change>
+		</changes>
+
+		<changes lang="ru">
+			<change>Переход на новый API.</change>
+		</changes>
+	</version>
+
+	<version number="1.1" date="15.02.2018">
+		<download href="https://jenyay.net/uploads/Outwiker/DebugEvents/debugevents-1.1.zip">
+			<requirements>
+				<api>2.835</api>
+			</requirements>
+		</download>
+		<changes>
+			<change>Add OutWiker 2.1 support. Migrate to Python 3.</change>
+		</changes>
+
+		<changes lang="ru">
+			<change>Добавлена поддержка OutWiker 2.1. Переход на Python 3.</change>
+		</changes>
+	</version>
+
+	<version number="1.0">
+		<download href="https://jenyay.net/uploads/Outwiker/DebugEvents/debugevents-1.0.zip">
+			<requirements>
+				<api>2.0</api>
+			</requirements>
+		</download>
+		<changes>
+			<change>The first version.</change>
+		</changes>
+
+		<changes lang="ru">
+			<change>Первая версия.</change>
+		</changes>
+	</version>
+</versions>

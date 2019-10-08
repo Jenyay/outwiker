@@ -1,0 +1,108 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+<versions>
+	<version number="0.0.0.8">
+		<download href="https://jenyay.net/uploads/Outwiker/AutoRenamer/autorenamer-0.0.0.8.zip">
+			<requirements>
+				<api>3.868</api>
+			</requirements>
+		</download>
+
+		<changes>
+			<change>Migrate to new API.</change>
+		</changes>
+
+		<changes lang="ru">
+			<change>Переход на новую версию API.</change>
+		</changes>
+	</version>
+
+	<version number="0.0.0.7" date="26.08.2018">
+		<download href="https://jenyay.net/uploads/Outwiker/AutoRenamer/autorenamer-0.0.0.7.zip">
+			<requirements>
+				<api>2.835</api>
+			</requirements>
+		</download>
+
+		<changes>
+			<change>Add German localization.</change>
+		</changes>
+
+		<changes lang="ru">
+			<change>Добавлена немецкая локализация.</change>
+		</changes>
+	</version>
+
+	<version number="0.0.0.6" date="26.05.2018">
+		<download href="https://jenyay.net/uploads/Outwiker/AutoRenamer/autorenamer-0.0.0.6.zip">
+			<requirements>
+				<api>2.835</api>
+			</requirements>
+		</download>
+
+		<changes lang="ru">
+			<change>Исправление ошибок.</change>
+		</changes>
+
+		<changes>
+			<change>Bug fixes.</change>
+		</changes>
+	</version>
+
+	<version number="0.0.0.5" date="15.02.2018">
+		<download href="https://jenyay.net/uploads/Outwiker/AutoRenamer/autorenamer-0.0.0.5.zip">
+			<requirements>
+				<api>2.835</api>
+			</requirements>
+		</download>
+		<changes lang="ru">
+			<change>Добавлена поддержка OutWiker 2.1. Переход на Python 3.</change>
+		</changes>
+		<changes>
+			<change>Add OutWiker 2.1 support. Migrate to Python 3.</change>
+		</changes>
+	</version>
+
+	<version number="0.0.0.4" date="17.10.2016">
+		<download href="https://jenyay.net/uploads/Outwiker/AutoRenamer/autorenamer-0.0.0.4.zip">
+			<requirements>
+				<api>1</api>
+			</requirements>
+		</download>
+		<changes lang="ru">
+			<change>Добавлена поддержка OutWiker 2.0.</change>
+		</changes>
+		<changes>
+			<change>Added OutWiker 2.0 support.</change>
+		</changes>
+	</version>
+
+	<version number="0.0.0.3" date="20.08.2016">
+		<download href="https://jenyay.net/uploads/Outwiker/AutoRenamer/autorenamer-0.0.0.3.zip">
+			<requirements>
+				<api>1</api>
+			</requirements>
+		</download>
+		<changes lang="ru">
+			<change>Добавлена поддержка шведского языка.</change>
+			<change>Исправление ошибок.</change>
+		</changes>
+		<changes>
+			<change>Added the Swedish translation.</change>
+			<change>Bug fixes.</change>
+		</changes>
+	</version>
+
+	<version number="0.0.0.2" date="26.04.2015">
+		<download href="https://jenyay.net/uploads/Outwiker/AutoRenamer/autorenamer.zip">
+			<requirements>
+				<api>1</api>
+			</requirements>
+		</download>
+		<changes lang="ru">
+			<change>Первая публичная версия.</change>
+		</changes>
+		<changes>
+			<change>The first public version.</change>
+		</changes>
+	</version>
+</versions>

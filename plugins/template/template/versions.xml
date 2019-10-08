@@ -1,0 +1,17 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+<versions>
+	<version number="1.0">
+		<download href="https://example.com/pluginname/pluginname-1.0.zip">
+			<requirements>
+				<api>2.835</api>
+			</requirements>
+		</download>
+		<changes>
+			<change>The first version.</change>
+		</changes>
+
+		<changes lang="ru">
+			<change>Первая версия.</change>
+		</changes>
+	</version>
+</versions>

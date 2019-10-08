@@ -196,14 +196,24 @@ def test_app_info_empty():
     assert result.app_info_url == ''
 
 
-def test_app_info_url():
+def test_app_updates_url():
     text = '''<?xml version="1.1" encoding="UTF-8" ?>
 <info>
-    <updates>http://example.com/updates.xml</updates>
+    <updates_url>http://example.com/updates.xml</updates_url>
 </info>'''
     result = XmlAppInfoParser().parse(text)
 
-    assert result.app_info_url == 'http://example.com/updates.xml'
+    assert result.app_updates_url == 'http://example.com/updates.xml'
+
+
+def test_app_info_url():
+    text = '''<?xml version="1.1" encoding="UTF-8" ?>
+<info>
+    <info_url>http://example.com/info.xml</info_url>
+</info>'''
+    result = XmlAppInfoParser().parse(text)
+
+    assert result.app_info_url == 'http://example.com/info.xml'
 
 
 def test_authors_empty():

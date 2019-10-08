@@ -10,6 +10,7 @@ class AppInfo:
     def __init__(self,
                  app_name: str = '',
                  app_info_url: str = '',
+                 app_updates_url: str = '',
                  website: str = '',
                  description: str = '',
                  authors: 'Optional[List[AuthorInfo]]' = None,
@@ -17,6 +18,7 @@ class AppInfo:
                  version: 'Optional[Version]' = None):
         self.app_name = app_name
         self.app_info_url = app_info_url
+        self.app_updates_url = app_updates_url
         self.website = website
         self.description = description
 

@@ -1,7 +1,8 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <info>
 	<name>TestDebug</name>
-	<updates>http://jenyay.net/uploads/Outwiker/DebugPlugin/plugin.xml</updates>
+	<updates_url>http://jenyay.net/uploads/Outwiker/DebugPlugin/versions.xml</updates_url>
+	<info_url>http://jenyay.net/uploads/Outwiker/DebugPlugin/plugin.xml</info_url>
 	<description>Test plug-in.</description>
 	<website>http://jenyay.net/Outwiker/DebugPluginEn</website>
 	<description lang="ru">Тестовый плагин.</description>
@@ -9,33 +10,7 @@
 
 	<requirements>
 		<api>3.868</api>
-
-			<!-- For backward compatibility with OutWiker 2.0 -->
-		<packages>
-			<core>3.0</core>
-			<actions>3.0</actions>
-			<gui>3.0</gui>
-			<pages>3.0</pages>
-			<utilites>3.0</utilites>
-			<libs>3.0</libs>
-		</packages>
 	</requirements>
 
 	<version number="0.5"/>
-
-	<versions>
-		<version number="0.5">
-			<download href="http://jenyay.net/uploads/Outwiker/DebugPlugin/debugplugin-0.5.zip">
-			</download>
-			<changes>
-				<change>The first change.</change>
-				<change>The second change.</change>
-			</changes>
-
-			<changes lang="ru">
-				<change>Первое изменение.</change>
-				<change>Второе изменение.</change>
-			</changes>
-		</version>
-	</versions>
 </info>

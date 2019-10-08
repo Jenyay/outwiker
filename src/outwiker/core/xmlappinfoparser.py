@@ -43,7 +43,8 @@ class XmlAppInfoParser:
     TAG_APP_NAME = 'name'
     TAG_WEBSITE = 'website'
     TAG_DESCRIPTION = 'description'
-    TAG_APP_INFO_URL = 'updates'
+    TAG_APP_INFO_URL = 'info_url'
+    TAG_APP_UPDATES_URL = 'updates_url'
     TAG_AUTHOR = 'author'
     TAG_AUTHOR_NAME = 'name'
     TAG_AUTHOR_EMAIL = 'email'
@@ -61,6 +62,7 @@ class XmlAppInfoParser:
             return appinfo
 
         self._setAppInfoUrl(root, appinfo)
+        self._setAppUpdatesUrl(root, appinfo)
         self._setAppName(root, appinfo)
         self._setWebsite(root, appinfo)
         self._setDescription(root, appinfo)
@@ -101,6 +103,10 @@ class XmlAppInfoParser:
         url = _getTextValue(root, self.TAG_APP_INFO_URL)
         appinfo.app_info_url = url
 
+    def _setAppUpdatesUrl(self, root: ElementTree.Element, appinfo: 'XmlAppInfo'):
+        url = _getTextValue(root, self.TAG_APP_UPDATES_URL)
+        appinfo.app_updates_url = url
+
     def _setAuthor(self, root: ElementTree.Element, appinfo: 'XmlAppInfo'):
         for tag in root.findall(self.TAG_AUTHOR):
             language = tag.get(self.ATTRIBUTE_LANGUAGE, '')
@@ -130,6 +136,7 @@ class XmlAppInfoParser:
 class XmlAppInfo:
     def __init__(self):
         self.app_info_url = ''                  # type: str
+        self.app_updates_url = ''                  # type: str
 
         # Key - language, value - apllication name
         self.app_name = DataForLanguage()       # type: DataForLanguage[str]
