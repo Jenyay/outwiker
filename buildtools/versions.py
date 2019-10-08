@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 
 import os
-from typing import List
+from typing import List, Tuple
 
 import outwiker
 from outwiker.core.appinfo import AppInfo
-from outwiker.core.version import Version
 from outwiker.core.appinfofactory import AppInfoFactory
 from outwiker.utilites.textfile import readTextFile
 from outwiker.utilites.downloader import Downloader
@@ -34,19 +33,17 @@ def getOutwikerAppInfo():
     return readAppInfo(u'src/versions.xml')
 
 
-def getOutwikerVersion():
+def getOutwikerVersion() -> Tuple[str, str]:
     """
     Return a tuple: (version number, build number)
     """
-    # The file with the version number
-    version = Version.parse(outwiker.__version__)
-    version_major = u'.'.join([str(item) for item in version[:-1]])
-    version_build = str(version[-1])
+    version_major = u'.'.join([str(item) for item in outwiker.__version__])
+    version_build = str(outwiker.__version__[-1])
 
     return (version_major, version_build)
 
 
-def getOutwikerVersionStr():
+def getOutwikerVersionStr() -> str:
     '''
     Return version as "x.x.x.xxx" string
     '''

@@ -313,14 +313,14 @@ def site_versions():
         print(u'{:.<20}'.format(name), end=u'')
         try:
             appinfo = downloadAppInfo(url)
-            if appinfo.currentVersion == localAppInfo.currentVersion:
+            if appinfo.version == localAppInfo.version:
                 font = Fore.GREEN
             else:
                 font = Fore.RED
 
             print(u'{siteversion:.<20}{devversion}'.format(
-                siteversion=str(appinfo.currentVersion),
-                devversion=font + str(localAppInfo.currentVersion)
+                siteversion=str(appinfo.version),
+                devversion=font + str(localAppInfo.version)
                 ))
         except (urllib.error.URLError, urllib.error.HTTPError) as e:
             print(Fore.RED + u'Error')

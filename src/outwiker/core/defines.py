@@ -33,7 +33,6 @@ PAGE_RESULT_HTML = u'__content.html'
 # This string will be translated to 'en' or 'ru'
 VERSIONS_LANG = u'versions_lang'
 
-VERSION_FILE_NAME = u'versions.xml'
 PLUGIN_VERSION_FILE_NAME = u'plugin.xml'
 
 # Keys for Application.sharedData
