@@ -4,7 +4,7 @@ import urllib.error
 import logging
 from functools import lru_cache
 
-from outwiker.core.xmlversionparser import XmlVersionParser
+from outwiker.core.appinfofactory import AppInfoFactory
 from outwiker.core.system import getOS
 
 from .i18n import get_
@@ -70,12 +70,12 @@ class VersionList(object):
             return None
 
         try:
-            appinfo = XmlVersionParser([_(u'__updateLang'), u'en']).parse(text)
+            appinfo = AppInfoFactory.fromString('', text)
         except ValueError:
             logger.warning(u'Invalid format of {}'.format(url))
             return None
 
-        if not appinfo.appname.strip():
+        if not appinfo.app_name.strip():
             return None
 
         return appinfo

@@ -136,7 +136,7 @@ class XmlAppInfoParser:
 class XmlAppInfo:
     def __init__(self):
         self.app_info_url = ''                  # type: str
-        self.app_updates_url = ''                  # type: str
+        self.app_updates_url = ''               # type: str
 
         # Key - language, value - apllication name
         self.app_name = DataForLanguage()       # type: DataForLanguage[str]

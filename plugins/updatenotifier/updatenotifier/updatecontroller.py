@@ -12,7 +12,7 @@ import wx
 
 import outwiker
 from outwiker.gui.longprocessrunner import LongProcessRunner
-from outwiker.core.commands import getCurrentVersion, MessageBox, setStatusText
+from outwiker.core.commands import MessageBox, setStatusText
 from outwiker.core.version import Version
 from outwiker.core.system import getPluginsDirList
 import outwiker.core.packageversion as pv
@@ -109,7 +109,7 @@ class UpdateController(object):
 
     def createHTMLContent(
             self, appInfoDict, updatedAppInfo, installerInfoDict):
-        currentVersion = getCurrentVersion()
+        currentVersion = self._getCurrentVersionStr()
         currentVersionsDict = self._getCurrentVersionsDict()
 
         appInfoDict = self.filterUpdatedApps(currentVersionsDict, appInfoDict)
@@ -198,7 +198,7 @@ class UpdateController(object):
                 logger.warning(u"Invalid format {}".format(name))
                 continue
 
-            result[name] = appInfo.updatesUrl
+            result[name] = appInfo.app_info_url
 
         return result
 
@@ -221,16 +221,19 @@ class UpdateController(object):
         Return dictionary with apps versions. Key - plugin name or special id,
         value - string with version.
         '''
-        currentVersion = getCurrentVersion()
+        currentVersion = self._getCurrentVersionStr()
 
         currentVersionsDict = {plugin: self.get_plugin(plugin).version
                                for plugin
                                in self._application.plugins.loadedPlugins}
 
-        currentVersionsDict[self._OUTWIKER_STABLE_KEY] = str(currentVersion)
-        currentVersionsDict[self._OUTWIKER_UNSTABLE_KEY] = str(currentVersion)
+        currentVersionsDict[self._OUTWIKER_STABLE_KEY] = currentVersion
+        currentVersionsDict[self._OUTWIKER_UNSTABLE_KEY] = currentVersion
 
         return currentVersionsDict
+
+    def _getCurrentVersionStr(self):
+        return '.'.join([str(item) for item in outwiker.__version__])
 
     def _showUpdates(self, appInfoDict, updatedAppInfo, installerInfoDict):
         '''
