@@ -4,7 +4,9 @@ import abc
 import os
 import shutil
 
-from buildtools.defines import OUTWIKER_VERSIONS_FILENAME, PLUGINS_LIST
+from buildtools.defines import (OUTWIKER_VERSIONS_FILENAME,
+                                OUTWIKER_INFO_FILENAME,
+                                PLUGINS_LIST)
 from buildtools.buildfacts import BuildFacts
 from buildtools.utilites import print_info
 
@@ -46,7 +48,7 @@ class BuilderBase(object, metaclass=abc.ABCMeta):
             os.makedirs(self.build_dir)
 
         self._copy_sources_to_temp()
-        self._copy_versions_file()
+        self._copy_xml_files()
 
         print_info(u'Build to {}'.format(self.build_dir))
         self._build()
@@ -83,18 +85,22 @@ class BuilderBase(object, metaclass=abc.ABCMeta):
         root = self.temp_sources_dir
         shutil.rmtree(os.path.join(root, 'profiles'))
 
-    def _copy_versions_file(self):
-        src_versions_name = (u'versions_stable.xml'
-                             if self.is_stable
-                             else OUTWIKER_VERSIONS_FILENAME)
-
+    def _copy_xml_files(self):
         shutil.copy(
-            os.path.join(u'src', src_versions_name),
+            os.path.join(u'src', OUTWIKER_VERSIONS_FILENAME),
             self.facts.versions_file)
 
         shutil.copy(
-            os.path.join(u'src', src_versions_name),
+            os.path.join(u'src', OUTWIKER_VERSIONS_FILENAME),
             os.path.join(self.temp_sources_dir, OUTWIKER_VERSIONS_FILENAME))
+
+        shutil.copy(
+            os.path.join(u'src', OUTWIKER_INFO_FILENAME),
+            self.facts.info_file)
+
+        shutil.copy(
+            os.path.join(u'src', OUTWIKER_INFO_FILENAME),
+            os.path.join(self.temp_sources_dir, OUTWIKER_INFO_FILENAME))
 
     def _create_plugins_dir(self):
         """
