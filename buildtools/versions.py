@@ -11,6 +11,7 @@ from outwiker.utilites.downloader import Downloader
 from buildtools.defines import (
     DOWNLOAD_TIMEOUT,
     OUTWIKER_INFO_FILENAME,
+    PLUGIN_INFO_FILENAME,
     PLUGIN_VERSIONS_FILENAME,
     PLUGINS_LIST,
     PLUGINS_DIR,
@@ -37,7 +38,7 @@ def getOutwikerVersion() -> Tuple[str, str]:
     """
     Return a tuple: (version number, build number)
     """
-    version_major = u'.'.join([str(item) for item in outwiker.__version__])
+    version_major = u'.'.join([str(item) for item in outwiker.__version__[:-1]])
     version_build = str(outwiker.__version__[-1])
 
     return (version_major, version_build)
@@ -61,7 +62,7 @@ def getLocalAppInfoList() -> List['outwiker.core.appinfo.AppInfo']:
 
     # Fill url_list with plugins.xml paths
     for plugin in PLUGINS_LIST:
-        path = getPluginVersionsPath(plugin)
+        path = getPluginInfoPath(plugin)
         app_list.append(readAppInfo(path))
     return app_list
 
@@ -71,3 +72,10 @@ def getPluginVersionsPath(plugin):
                         plugin,
                         plugin,
                         PLUGIN_VERSIONS_FILENAME)
+
+
+def getPluginInfoPath(plugin):
+    return os.path.join(PLUGINS_DIR,
+                        plugin,
+                        plugin,
+                        PLUGIN_INFO_FILENAME)

@@ -13,6 +13,7 @@ from buildtools.defines import (PLUGINS_DIR,
                                 PLUGINS_LIST)
 from buildtools.versions import (readAppInfo,
                                  getPluginVersionsPath,
+                                 getPluginInfoPath,
                                  downloadAppInfo)
 
 
@@ -42,11 +43,12 @@ class BuilderPlugins(BuilderBase):
 
         for plugin in self._plugins_list:
             # Path to plugin.xml for current plugin
+            xmlinfo_path = getPluginInfoPath(plugin)
             xmlplugin_path = getPluginVersionsPath(plugin)
 
-            localAppInfo = readAppInfo(xmlplugin_path)
+            localAppInfo = readAppInfo(xmlinfo_path)
             assert localAppInfo is not None
-            assert localAppInfo.currentVersion is not None
+            assert localAppInfo.version is not None
 
             skip_plugin = False
 
@@ -55,14 +57,14 @@ class BuilderPlugins(BuilderBase):
                 url = localAppInfo.updatesUrl
                 try:
                     siteappinfo = downloadAppInfo(url)
-                    if localAppInfo.currentVersion == siteappinfo.currentVersion:
+                    if localAppInfo.version == siteappinfo.version:
                         skip_plugin = True
                 except (urllib.error.URLError, urllib.error.HTTPError):
                     pass
 
             # Archive a single plug-in
             if not skip_plugin:
-                version = str(localAppInfo.currentVersion)
+                version = str(localAppInfo.version)
                 archive_name = u'{}-{}.zip'.format(plugin, version)
 
                 # Subpath to current plug-in archive
@@ -72,6 +74,7 @@ class BuilderPlugins(BuilderBase):
                 archive_path = self._getSubpath(plugin, archive_name)
                 os.mkdir(plugin_dir_path)
                 shutil.copy(xmlplugin_path, plugin_dir_path)
+                shutil.copy(xmlinfo_path, plugin_dir_path)
 
                 # Archive a single plug-in
                 with lcd("plugins/{}".format(plugin)):
