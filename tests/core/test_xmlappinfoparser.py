@@ -580,8 +580,8 @@ def test_versions_download_requirements_api():
     result = XmlChangelogParser.parse(text)
 
     assert not result.versions[0].downloads[0].requirements.os_list
-    assert '3.666' in result.versions[0].downloads[0].requirements.api_list
-    assert '3.667' in result.versions[0].downloads[0].requirements.api_list
+    assert (3, 666) in result.versions[0].downloads[0].requirements.api_list
+    assert (3, 667) in result.versions[0].downloads[0].requirements.api_list
 
 
 def test_versions_download_requirements_os_api():
@@ -602,8 +602,8 @@ def test_versions_download_requirements_os_api():
 
     assert 'Windows' in result.versions[0].downloads[0].requirements.os_list
     assert 'Linux' in result.versions[0].downloads[0].requirements.os_list
-    assert '3.666' in result.versions[0].downloads[0].requirements.api_list
-    assert '3.667' in result.versions[0].downloads[0].requirements.api_list
+    assert (3, 666) in result.versions[0].downloads[0].requirements.api_list
+    assert (3, 667) in result.versions[0].downloads[0].requirements.api_list
 
 
 def test_requirements_os_api():
@@ -620,8 +620,8 @@ def test_requirements_os_api():
 
     assert 'Windows' in result.requirements.os_list
     assert 'Linux' in result.requirements.os_list
-    assert '3.666' in result.requirements.api_list
-    assert '3.667' in result.requirements.api_list
+    assert (3, 666) in result.requirements.api_list
+    assert (3, 667) in result.requirements.api_list
 
 
 def test_version():

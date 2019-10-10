@@ -2,7 +2,7 @@
 
 from datetime import datetime
 from xml.etree import ElementTree
-from typing import List, Optional
+from typing import List, Optional, Iterable
 
 from .dataforlanguage import DataForLanguage
 
@@ -176,10 +176,10 @@ class XmlRequirements:
     Plug-in's requirements
     """
 
-    def __init__(self, os_list: List[str], api_list: List[str]):
+    def __init__(self, os_list: List[str], api_list: List[Iterable[int]]):
         """
         os_list - list of the supported OS
-        api_list - list of the tuples with supported API versions.
+        api_list - list of the list of the int with supported API versions.
         """
         self.os_list = os_list[:]
         self.api_list = api_list[:]
@@ -196,11 +196,24 @@ class XmlRequirementsFactory:
         api_list = []
 
         tag_requirements = tag_parent.find(cls.TAG_REQUIREMENTS)
+
         if tag_requirements is not None:
             os_list = _getTextList(tag_requirements, cls.TAG_REQUIREMENTS_OS)
-            api_list = _getTextList(tag_requirements, cls.TAG_REQUIREMENTS_API)
+            api_list_str = _getTextList(tag_requirements, cls.TAG_REQUIREMENTS_API)
+            api_list = []
+            for version_str in api_list_str:
+                version = cls._parseVersion(version_str)
+                if version:
+                    api_list.append(version)
 
         return XmlRequirements(os_list, api_list)
+
+    @classmethod
+    def _parseVersion(cls, version_str: str) -> Optional[Iterable[int]]:
+        try:
+            return tuple((int(item) for item in version_str.split('.')))
+        except ValueError:
+            return None
 
 
 class XmlVersionInfo:

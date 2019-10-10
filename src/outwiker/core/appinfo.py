@@ -52,7 +52,7 @@ class Requirements:
                  api_list: List[Version]):
         """
         os_list - list of the supported OS
-        api_list - list of the tuples with supported API versions.
+        api_list - list of Version instances with supported API versions.
         """
         self.os_list = os_list[:]
         self.api_list = api_list[:]

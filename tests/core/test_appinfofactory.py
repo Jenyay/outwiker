@@ -272,25 +272,25 @@ def test_fromXmlAppInfo_authors_language_alternative():
 def test_fromXmlAppInfo_requirements_single():
     xmlAppInfo = XmlAppInfo()
     xmlAppInfo.requirements.os_list = ['Windows']
-    xmlAppInfo.requirements.api_list = ['3.868']
+    xmlAppInfo.requirements.api_list = [(3, 868)]
 
     language = 'en'
     appInfo = AppInfoFactory.fromXmlAppInfo(xmlAppInfo, language)
 
     assert appInfo.requirements.os_list == ['Windows']
-    assert appInfo.requirements.api_list == [Version(3, 868)]
+    assert appInfo.requirements.api_list == [(3, 868)]
 
 
 def test_fromXmlAppInfo_requirements_several():
     xmlAppInfo = XmlAppInfo()
     xmlAppInfo.requirements.os_list = ['Windows', 'Linux']
-    xmlAppInfo.requirements.api_list = ['3.868', '2.800']
+    xmlAppInfo.requirements.api_list = [(3, 868), (2, 800)]
 
     language = 'en'
     appInfo = AppInfoFactory.fromXmlAppInfo(xmlAppInfo, language)
 
     assert appInfo.requirements.os_list == ['Windows', 'Linux']
-    assert appInfo.requirements.api_list == [Version(3, 868), Version(2, 800)]
+    assert appInfo.requirements.api_list == [(3, 868), (2, 800)]
 
 
 def test_fromString_lang_ru():
@@ -313,7 +313,7 @@ def test_fromString_lang_ru():
     assert appinfo.version == Version(2, 0, status=StatusSet.DEV)
 
     assert appinfo.requirements.os_list == ['Windows', 'Linux']
-    assert appinfo.requirements.api_list == [Version(2, 222), Version(3, 333)]
+    assert appinfo.requirements.api_list == [(2, 222), (3, 333)]
 
 
 def test_fromString_lang_ru_RU():
@@ -336,7 +336,7 @@ def test_fromString_lang_ru_RU():
     assert appinfo.version == Version(2, 0, status=StatusSet.DEV)
 
     assert appinfo.requirements.os_list == ['Windows', 'Linux']
-    assert appinfo.requirements.api_list == [Version(2, 222), Version(3, 333)]
+    assert appinfo.requirements.api_list == [(2, 222), (3, 333)]
 
 
 def test_fromString_lang_default():
@@ -359,7 +359,7 @@ def test_fromString_lang_default():
     assert appinfo.version == Version(2, 0, status=StatusSet.DEV)
 
     assert appinfo.requirements.os_list == ['Windows', 'Linux']
-    assert appinfo.requirements.api_list == [Version(2, 222), Version(3, 333)]
+    assert appinfo.requirements.api_list == [(2, 222), (3, 333)]
 
 
 def test_fromString_empty():

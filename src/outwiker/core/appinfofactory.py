@@ -116,12 +116,5 @@ class RequirementsFactory:
             return Requirements([], [])
 
         os_list = requirements.os_list[:]
-        api_list = []
-        for api_version_str in requirements.api_list:
-            try:
-                version = Version.parse(api_version_str)
-                api_list.append(version)
-            except ValueError:
-                continue
-
+        api_list = requirements.api_list[:]
         return Requirements(os_list, api_list)

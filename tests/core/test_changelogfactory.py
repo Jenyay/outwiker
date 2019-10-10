@@ -222,7 +222,7 @@ def test_fromXmlChangeLog_versions_downloads_href():
 def test_fromXmlChangeLog_versions_downloads_requirements_single():
     xmlChangeLog = XmlChangeLog()
     version = XmlChangeLogVersionInfo(number='1.0', status='dev', date=None)
-    requirements = XmlRequirements(['Windows'], ['3.868'])
+    requirements = XmlRequirements(['Windows'], [(3, 868)])
     download = XmlDownload('https://example.com/download.zip', requirements)
     version.downloads.append(download)
     xmlChangeLog.versions.append(version)
@@ -232,14 +232,13 @@ def test_fromXmlChangeLog_versions_downloads_requirements_single():
 
     assert changelog.versions[0].downloads[0].requirements.os_list == [
         'Windows']
-    assert changelog.versions[0].downloads[0].requirements.api_list == [
-        Version(3, 868)]
+    assert changelog.versions[0].downloads[0].requirements.api_list == [(3, 868)]
 
 
 def test_fromXmlChangeLog_versions_downloads_requirements_several():
     xmlChangeLog = XmlChangeLog()
     version = XmlChangeLogVersionInfo(number='1.0', status='dev', date=None)
-    requirements = XmlRequirements(['Windows', 'Linux'], ['3.868', '2.800'])
+    requirements = XmlRequirements(['Windows', 'Linux'], [(3, 868), (2, 800)])
     download = XmlDownload('https://example.com/download.zip', requirements)
     version.downloads.append(download)
     xmlChangeLog.versions.append(version)
@@ -250,7 +249,7 @@ def test_fromXmlChangeLog_versions_downloads_requirements_several():
     assert changelog.versions[0].downloads[0].requirements.os_list == [
         'Windows', 'Linux']
     assert changelog.versions[0].downloads[0].requirements.api_list == [
-        Version(3, 868), Version(2, 800)]
+        (3, 868), (2, 800)]
 
 
 def test_fromString_lang_ru():
@@ -267,9 +266,9 @@ def test_fromString_lang_ru():
     assert changeLog.versions[0].downloads[1].requirements.os_list == [
         'Windows']
     assert changeLog.versions[0].downloads[0].requirements.api_list == [
-        Version(3, 666), Version(3, 777)]
+        (3, 666), (3, 777)]
     assert changeLog.versions[0].downloads[1].requirements.api_list == [
-        Version(3, 888)]
+        (3, 888)]
 
     assert changeLog.versions[1].version == Version(2, 0)
     assert changeLog.versions[1].changes[0].description == 'Исправлена ошибка - 2'
@@ -281,9 +280,9 @@ def test_fromString_lang_ru():
     assert changeLog.versions[1].downloads[1].requirements.os_list == [
         'Windows']
     assert changeLog.versions[1].downloads[0].requirements.api_list == [
-        Version(3, 999), Version(3, 1111)]
+        (3, 999), (3, 1111)]
     assert changeLog.versions[1].downloads[1].requirements.api_list == [
-        Version(3, 2222)]
+        (3, 2222)]
 
 
 def test_fromString_lang_ru_RU():
@@ -300,9 +299,9 @@ def test_fromString_lang_ru_RU():
     assert changeLog.versions[0].downloads[1].requirements.os_list == [
         'Windows']
     assert changeLog.versions[0].downloads[0].requirements.api_list == [
-        Version(3, 666), Version(3, 777)]
+        (3, 666), (3, 777)]
     assert changeLog.versions[0].downloads[1].requirements.api_list == [
-        Version(3, 888)]
+        (3, 888)]
 
     assert changeLog.versions[1].version == Version(2, 0)
     assert changeLog.versions[1].changes[0].description == 'Исправлена ошибка - 2'
@@ -314,9 +313,9 @@ def test_fromString_lang_ru_RU():
     assert changeLog.versions[1].downloads[1].requirements.os_list == [
         'Windows']
     assert changeLog.versions[1].downloads[0].requirements.api_list == [
-        Version(3, 999), Version(3, 1111)]
+        (3, 999), (3, 1111)]
     assert changeLog.versions[1].downloads[1].requirements.api_list == [
-        Version(3, 2222)]
+        (3, 2222)]
 
 
 def test_fromString_lang_default():
@@ -333,9 +332,9 @@ def test_fromString_lang_default():
     assert changeLog.versions[0].downloads[1].requirements.os_list == [
         'Windows']
     assert changeLog.versions[0].downloads[0].requirements.api_list == [
-        Version(3, 666), Version(3, 777)]
+        (3, 666), (3, 777)]
     assert changeLog.versions[0].downloads[1].requirements.api_list == [
-        Version(3, 888)]
+        (3, 888)]
 
     assert changeLog.versions[1].version == Version(2, 0)
     assert changeLog.versions[1].changes[0].description == 'Fix bug - 2'
@@ -347,9 +346,9 @@ def test_fromString_lang_default():
     assert changeLog.versions[1].downloads[1].requirements.os_list == [
         'Windows']
     assert changeLog.versions[1].downloads[0].requirements.api_list == [
-        Version(3, 999), Version(3, 1111)]
+        (3, 999), (3, 1111)]
     assert changeLog.versions[1].downloads[1].requirements.api_list == [
-        Version(3, 2222)]
+        (3, 2222)]
 
 
 def test_fromString_empty():
