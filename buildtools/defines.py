@@ -30,7 +30,7 @@ PLUGINS_LIST = [
     "tableofcontents",
     "texequation",
     "thumbgallery",
-    "updatenotifier",
+    # "updatenotifier",
     "webpage",
 ]
 

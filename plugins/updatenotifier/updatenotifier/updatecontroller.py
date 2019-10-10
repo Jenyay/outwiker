@@ -171,7 +171,7 @@ class UpdateController(object):
             except ValueError:
                 continue
 
-            latestVersion = latestAppInfo.currentVersion
+            latestVersion = latestAppInfo.version
             if (latestVersion is not None and
                     latestVersion > currentPluginVersion):
                 updatedPlugins[app_name] = latestAppInfo
@@ -309,20 +309,21 @@ class UpdateController(object):
         Download plugins.json from URL and deserialize it to dict.
 
         :return:
-        dictionary {<plagin name>: {
-                                 'name':<pluginname>
-                                 'url':<url to plugin.xml file>
+        dictionary {<plugin name>: {
+                                 "name": <pluginname>,
+                                 "versions_url": <url to versions.xml file>,
+                                 "info_url": <url to plugin.xml file>
                                  }
                     }
         """
-        json_url = r"https://jenyay.net/uploads/Outwiker/Plugins/plugins.json"
+        json_url = r"https://jenyay.net/uploads/Outwiker/Plugins/plugins-2.json"
         pluginsRepo = NormalLoader().load(json_url)
 
         if pluginsRepo:
             # read data/plugins.json
             self._installerPlugins = json.loads(pluginsRepo)
 
-            updateUrls = {x['name']: x['url']
+            updateUrls = {x['name']: x['info_url']
                           for x in self._installerPlugins.values()}
         else:
             updateUrls = {}

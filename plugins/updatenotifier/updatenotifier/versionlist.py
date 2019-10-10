@@ -70,7 +70,7 @@ class VersionList(object):
             return None
 
         try:
-            appinfo = AppInfoFactory.fromString('', text)
+            appinfo = AppInfoFactory.fromString(text, '')
         except ValueError:
             logger.warning(u'Invalid format of {}'.format(url))
             return None
