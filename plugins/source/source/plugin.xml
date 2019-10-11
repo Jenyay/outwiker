@@ -1,9 +1,9 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <info>
 	<name>Source</name>
-    <requirements>
-        <api>3.868</api>
-    </requirements>
+	<requirements>
+		<api>3.868</api>
+	</requirements>
 
 	<website>https://jenyay.net/Outwiker/SourcePluginEn</website>
 	<website lang="ru">https://jenyay.net/Outwiker/SourcePlugin</website>

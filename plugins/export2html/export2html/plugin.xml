@@ -18,9 +18,9 @@
 		<website>https://jenyay.net</website>
 	</author>
 
-    <requirements>
-        <api>3.868</api>
-    </requirements>
+	<requirements>
+		<api>3.868</api>
+	</requirements>
 
 	<version number="1.6"/>
 </info>
