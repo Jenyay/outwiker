@@ -1,8 +1,6 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <info>
 	<name>PLUGINNAME</name>
-	<updates_url>https://example.com/pluginname/versions.xml</updates_url>
-	<info_url>https://example.com/pluginname/plugin.xml</info_url>
 	<description>Description.</description>
 	<description lang="ru">Описание.</description>
 	<website>https://example.com/pluginnameEn</website>

@@ -1,8 +1,6 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <info>
 	<name>Source</name>
-	<updates_url>https://jenyay.net/uploads/Outwiker/SourcePlugin/versions.xml</updates_url>
-	<info_url>https://jenyay.net/uploads/Outwiker/SourcePlugin/plugin.xml</info_url>
     <requirements>
         <api>3.868</api>
     </requirements>

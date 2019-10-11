@@ -25,8 +25,13 @@ def readAppInfo(fname: str) -> AppInfo:
 
 def downloadAppInfo(url):
     downloader = Downloader(DOWNLOAD_TIMEOUT)
-    xml_content = downloader.download(url)
-    appinfo = AppInfoFactory.fromString(xml_content, '')
+
+    try:
+        xml_content = downloader.download(url)
+        appinfo = AppInfoFactory.fromString(xml_content, '')
+    except ValueError:
+        appinfo = AppInfoFactory.fromString('', '')
+
     return appinfo
 
 

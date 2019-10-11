@@ -7,7 +7,6 @@ from outwiker.core.xmlappinfoparser import (XmlAppInfoParser, XmlAppInfo,
 
 
 def _assert_XmlAppInfo_empty(appinfo):
-    assert appinfo.app_info_url == ""
     assert appinfo.authors.is_empty()
     assert appinfo.app_name.is_empty()
     assert appinfo.version is None
@@ -184,36 +183,6 @@ def test_description_en_ru():
     assert len(result.description.get_languages()) == 2
     assert result.description['en'] == 'Description'
     assert result.description['ru'] == 'Описание'
-
-
-def test_app_info_empty():
-    text = '''<?xml version="1.1" encoding="UTF-8" ?>
-<info>
-    <updates></updates>
-</info>'''
-    result = XmlAppInfoParser().parse(text)
-
-    assert result.app_info_url == ''
-
-
-def test_app_updates_url():
-    text = '''<?xml version="1.1" encoding="UTF-8" ?>
-<info>
-    <updates_url>http://example.com/updates.xml</updates_url>
-</info>'''
-    result = XmlAppInfoParser().parse(text)
-
-    assert result.app_updates_url == 'http://example.com/updates.xml'
-
-
-def test_app_info_url():
-    text = '''<?xml version="1.1" encoding="UTF-8" ?>
-<info>
-    <info_url>http://example.com/info.xml</info_url>
-</info>'''
-    result = XmlAppInfoParser().parse(text)
-
-    assert result.app_info_url == 'http://example.com/info.xml'
 
 
 def test_authors_empty():

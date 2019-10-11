@@ -8,9 +8,6 @@ from outwiker.core.version import Version, StatusSet
 
 xmlexample = '''<?xml version="1.1" encoding="UTF-8" ?>
 <info>
-    <updates_url>http://example.com/updates.xml</updates_url>
-    <info_url>http://example.com/info.xml</info_url>
-
     <name>Application name</name>
     <name lang="ru">Имя приложения</name>
 
@@ -62,22 +59,12 @@ def test_fromXmlAppInfo_empty():
     appInfo = AppInfoFactory.fromXmlAppInfo(xmlAppInfo, language)
 
     assert appInfo.app_name == ''
-    assert appInfo.app_info_url == ''
     assert appInfo.website == ''
     assert appInfo.description == ''
     assert appInfo.authors == []
     assert appInfo.requirements.os_list == []
     assert appInfo.requirements.api_list == []
     assert appInfo.version is None
-
-
-def test_fromXmlAppInfo_app_info_url():
-    xmlAppInfo = XmlAppInfo()
-    xmlAppInfo.app_info_url = 'https://example.com'
-    language = ''
-    appInfo = AppInfoFactory.fromXmlAppInfo(xmlAppInfo, language)
-
-    assert appInfo.app_info_url == xmlAppInfo.app_info_url
 
 
 def test_fromXmlAppInfo_app_info_version():
@@ -296,8 +283,6 @@ def test_fromXmlAppInfo_requirements_several():
 def test_fromString_lang_ru():
     appinfo = AppInfoFactory.fromString(xmlexample, language='ru')
 
-    assert appinfo.app_info_url == 'http://example.com/info.xml'
-    assert appinfo.app_updates_url == 'http://example.com/updates.xml'
     assert appinfo.app_name == 'Имя приложения'
     assert appinfo.website == 'http://jenyay.net/ru/'
     assert appinfo.description == 'Описание'
@@ -319,8 +304,6 @@ def test_fromString_lang_ru():
 def test_fromString_lang_ru_RU():
     appinfo = AppInfoFactory.fromString(xmlexample, language='ru_RU')
 
-    assert appinfo.app_info_url == 'http://example.com/info.xml'
-    assert appinfo.app_updates_url == 'http://example.com/updates.xml'
     assert appinfo.app_name == 'Имя приложения'
     assert appinfo.website == 'http://jenyay.net/ru/'
     assert appinfo.description == 'Описание'
@@ -342,8 +325,6 @@ def test_fromString_lang_ru_RU():
 def test_fromString_lang_default():
     appinfo = AppInfoFactory.fromString(xmlexample, language='jp')
 
-    assert appinfo.app_info_url == 'http://example.com/info.xml'
-    assert appinfo.app_updates_url == 'http://example.com/updates.xml'
     assert appinfo.app_name == 'Application name'
     assert appinfo.website == 'http://jenyay.net/en/'
     assert appinfo.description == 'Description'
@@ -366,7 +347,6 @@ def test_fromString_empty():
     appInfo = AppInfoFactory.fromString('', language='ru')
 
     assert appInfo.app_name == ''
-    assert appInfo.app_info_url == ''
     assert appInfo.website == ''
     assert appInfo.description == ''
     assert appInfo.version is None

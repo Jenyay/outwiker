@@ -24,9 +24,6 @@ class AppInfoFactory:
     def fromXmlAppInfo(cls,
                        xmlAppInfo: XmlAppInfo,
                        language: str) -> AppInfo:
-        app_info_url = xmlAppInfo.app_info_url
-        app_updates_url = xmlAppInfo.app_updates_url
-
         app_name = xmlAppInfo.app_name.get(language, '')
 
         website = xmlAppInfo.website.get(language, '')
@@ -38,9 +35,7 @@ class AppInfoFactory:
         requirements = RequirementsFactory.fromXmlRequirements(
             xmlAppInfo.requirements)
 
-        result = AppInfo(app_info_url=app_info_url,
-                         app_updates_url=app_updates_url,
-                         app_name=app_name,
+        result = AppInfo(app_name=app_name,
                          website=website,
                          description=description,
                          authors=authors,

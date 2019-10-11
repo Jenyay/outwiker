@@ -1,8 +1,6 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <info>
 	<name>TestDebug</name>
-	<updates_url>http://jenyay.net/uploads/Outwiker/DebugPlugin/versions.xml</updates_url>
-	<info_url>http://jenyay.net/uploads/Outwiker/DebugPlugin/plugin.xml</info_url>
 	<description>Test plug-in.</description>
 	<website>http://jenyay.net/Outwiker/DebugPluginEn</website>
 	<description lang="ru">Тестовый плагин.</description>

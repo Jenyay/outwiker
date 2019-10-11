@@ -1,8 +1,6 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <info>
 	<name>Lightbox</name>
-	<updates_url>https://jenyay.net/uploads/Outwiker/Lightbox/versions.xml</updates_url>
-	<info_url>https://jenyay.net/uploads/Outwiker/Lightbox/plugin.xml</info_url>
 
 	<website>https://jenyay.net/Outwiker/LightboxEn</website>
 	<website lang="ru">https://jenyay.net/Outwiker/Lightbox</website>

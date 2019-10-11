@@ -1,8 +1,6 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <info>
 	<name>PageTypeColor</name>
-	<updates_url>https://jenyay.net/uploads/Outwiker/PageTypeColor/versions.xml</updates_url>
-	<info_url>https://jenyay.net/uploads/Outwiker/PageTypeColor/plugin.xml</info_url>
 
 	<description>Changing the page title field color when changing the page type.</description>
 	<description lang="ru">Изменение цвета поля ввода заголовка страницы при ее создании в зависимости от ее типа.</description>

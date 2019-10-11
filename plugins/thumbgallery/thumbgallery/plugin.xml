@@ -1,8 +1,6 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <info>
 	<name>ThumbGallery</name>
-	<updates_url>https://jenyay.net/uploads/Outwiker/ThumbGallery/versions.xml</updates_url>
-	<info_url>https://jenyay.net/uploads/Outwiker/ThumbGallery/plugin.xml</info_url>
 	<description>Creating a gallery of the attached pictures.</description>
 	<website>https://jenyay.net/Outwiker/ThumbGalleryEn</website>
 	<website lang="ru">https://jenyay.net/Outwiker/ThumbGallery</website>

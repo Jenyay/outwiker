@@ -1,8 +1,6 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <info>
 	<name>WebPage</name>
-	<updates_url>https://jenyay.net/uploads/Outwiker/WebPage/versions.xml</updates_url>
-	<info_url>https://jenyay.net/uploads/Outwiker/WebPage/plugin.xml</info_url>
 	<description>Download pages from Internet.</description>
 	<description lang="ru">Скачивание страниц из интернета.</description>
 	<website>https://jenyay.net/Outwiker/WebPageEn</website>
