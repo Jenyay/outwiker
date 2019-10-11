@@ -29,7 +29,9 @@ class DiagramRender(object):
         except (ImportError, ValueError):
             return
 
-        if rootmodule is None or rootmodule.__file__ is None:
+        if (rootmodule is None or
+                not hasattr(rootmodule, '__file__')
+                or rootmodule.__file__ is None):
             return
 
         try:

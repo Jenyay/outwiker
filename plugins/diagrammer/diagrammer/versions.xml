@@ -8,10 +8,12 @@
 		</download>
 		<changes>
 			<change>Migrate to new API.</change>
+			<change>Fix error.</change>
 		</changes>
 
 		<changes lang="ru">
 			<change>Переход на новый API.</change>
+			<change>Исправление ошибок.</change>
 		</changes>
 	</version>
 
