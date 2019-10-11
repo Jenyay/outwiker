@@ -9,12 +9,13 @@ from buildtools.builders.base import BuilderBase
 from buildtools.utilites import print_error
 
 from outwiker.utilites.textfile import readTextFile, writeTextFile
-from outwiker.core.appinfofactory import AppInfoFactory
+from outwiker.core.appinfofactory import AppInfoFactory, ChangeLogFactory
 
 
 class SiteContentSource(object):
-    def __init__(self, xml_file, lang, template_file):
-        self.xml_file = xml_file
+    def __init__(self, info_xml_file, versions_xml_file, lang, template_file):
+        self.info_xml_file = info_xml_file
+        self.versions_xml_file = versions_xml_file
         self.lang = lang
         self.template_file = template_file
 
@@ -42,18 +43,27 @@ class SiteContentBuilder(BuilderBase):
                 source.template_file))
             return
 
-        if not os.path.exists(source.xml_file):
-            print_error('XML file not found: {}'.format(source.xml_file))
+        if not os.path.exists(source.info_xml_file):
+            print_error('XML file not found: {}'.format(source.info_xml_file))
             return
 
-        xml_content = readTextFile(source.xml_file)
-        appinfo = AppInfoFactory.fromString(xml_content, source.lang)
+        if not os.path.exists(source.versions_xml_file):
+            print_error('XML file not found: {}'.format(
+                source.versions_xml_file))
+            return
+
+        info_xml_content = readTextFile(source.info_xml_file)
+        app_info = AppInfoFactory.fromString(info_xml_content, source.lang)
+
+        versions_xml_content = readTextFile(source.versions_xml_file)
+        versions_info = ChangeLogFactory.fromString(versions_xml_content,
+                                                    source.lang)
 
         template_env = Environment(
             loader=FileSystemLoader(self._templates_path))
         template = template_env.get_template(source.template_file)
 
-        current_version = appinfo.currentVersionInfo
+        current_version = versions_info.latestVersion
         if current_version is not None:
             version_full_str = str(current_version.version)
             version_main = '.'.join([str(n)
@@ -65,10 +75,10 @@ class SiteContentBuilder(BuilderBase):
                         if current_version.date is not None
                         else '')
         else:
-            print_error('Invalid version for {}'.format(appinfo.app_name))
+            print_error('Invalid version for {}'.format(app_info.app_name))
             return
 
-        versions_list = appinfo.versions
+        versions_list = versions_info.versions
 
         result = template.render(
             version_full=version_full_str,

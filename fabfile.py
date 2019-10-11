@@ -726,33 +726,37 @@ def site_content(is_stable=False):
     # List of SiteContentSource
     apps = []
     apps.append(SiteContentSource(
+        os.path.join('src', 'outwiker.xml'),
         os.path.join('src', 'versions.xml'),
         'ru',
         'outwiker_unstable.ru.txt'))
 
     apps.append(SiteContentSource(
+        os.path.join('src', 'outwiker.xml'),
         os.path.join('src', 'versions.xml'),
         'en',
         'outwiker_unstable.en.txt'))
 
-    apps.append(SiteContentSource(
-        os.path.join('src', 'versions_stable.xml'),
-        'ru',
-        'outwiker_stable.ru.txt'))
-
-    apps.append(SiteContentSource(
-        os.path.join('src', 'versions_stable.xml'),
-        'en',
-        'outwiker_stable.en.txt'))
+    # apps.append(SiteContentSource(
+    #     os.path.join('src', 'versions_stable.xml'),
+    #     'ru',
+    #     'outwiker_stable.ru.txt'))
+    #
+    # apps.append(SiteContentSource(
+    #     os.path.join('src', 'versions_stable.xml'),
+    #     'en',
+    #     'outwiker_stable.en.txt'))
 
     for plugin in PLUGINS_LIST:
         item_ru = SiteContentSource(
             os.path.join('plugins', plugin, plugin, 'plugin.xml'),
+            os.path.join('plugins', plugin, plugin, 'versions.xml'),
             'ru',
             '{}.ru.txt'.format(plugin))
 
         item_en = SiteContentSource(
             os.path.join('plugins', plugin, plugin, 'plugin.xml'),
+            os.path.join('plugins', plugin, plugin, 'versions.xml'),
             'en',
             '{}.en.txt'.format(plugin))
 
