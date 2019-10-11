@@ -12,7 +12,6 @@ from .base import BuilderBase
 from buildtools.defines import (PLUGINS_DIR,
                                 PLUGINS_LIST)
 from buildtools.versions import (readAppInfo,
-                                 getPluginVersionsPath,
                                  getPluginInfoPath,
                                  downloadAppInfo)
 
@@ -44,7 +43,6 @@ class BuilderPlugins(BuilderBase):
         for plugin in self._plugins_list:
             # Path to plugin.xml for current plugin
             xmlinfo_path = getPluginInfoPath(plugin)
-            xmlplugin_path = getPluginVersionsPath(plugin)
 
             localAppInfo = readAppInfo(xmlinfo_path)
             assert localAppInfo is not None
@@ -73,7 +71,6 @@ class BuilderPlugins(BuilderBase):
                 # Path to future archive
                 archive_path = self._getSubpath(plugin, archive_name)
                 os.mkdir(plugin_dir_path)
-                shutil.copy(xmlplugin_path, plugin_dir_path)
                 shutil.copy(xmlinfo_path, plugin_dir_path)
 
                 # Archive a single plug-in

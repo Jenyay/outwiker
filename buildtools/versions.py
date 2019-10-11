@@ -75,7 +75,6 @@ def getLocalAppInfoList() -> List['outwiker.core.appinfo.AppInfo']:
 def getPluginVersionsPath(plugin):
     return os.path.join(PLUGINS_DIR,
                         plugin,
-                        plugin,
                         PLUGIN_VERSIONS_FILENAME)
 
 
