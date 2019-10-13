@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.core.xmlappinfoparser import (
-    XmlChangeLogVersionInfo, XmlChangeItem, XmlDownload,
-    XmlRequirements, XmlChangeLog)
-from outwiker.core.appinfofactory import ChangeLogFactory
+from outwiker.core.xmlchangelog import (
+    XmlChangeLogVersionInfo, XmlChangeItem, XmlDownload, XmlChangeLog)
+from outwiker.core.version_xmlrequirements import XmlRequirements
+from outwiker.core.changelogfactory import ChangeLogFactory
 from outwiker.core.version import Version, StatusSet
 
 xmlexample = '''<?xml version="1.1" encoding="UTF-8" ?>

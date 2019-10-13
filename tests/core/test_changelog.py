@@ -1,5 +1,5 @@
 from outwiker.core.version import Version
-from outwiker.core.appinfo import ChangeLog, VersionInfo
+from outwiker.core.changelog import ChangeLog, VersionInfo
 
 
 def test_changelog_latestVersion_empty():

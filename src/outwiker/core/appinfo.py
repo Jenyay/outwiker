@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from datetime import datetime
 from typing import List, Optional
 
-from outwiker.core.version import Version
+from .version import Version
+from .version_requirements import Requirements
 
 
 class AppInfo:
@@ -36,59 +36,3 @@ class AuthorInfo:
         self.name = name
         self.email = email
         self.website = website
-
-
-class Requirements:
-    """
-    Plug-in's requirements
-    """
-
-    def __init__(self,
-                 os_list: List[str],
-                 api_list: List[Version]):
-        """
-        os_list - list of the supported OS
-        api_list - list of Version instances with supported API versions.
-        """
-        self.os_list = os_list[:]
-        self.api_list = api_list[:]
-
-
-class ChangeItem:
-    def __init__(self, description: str):
-        self.description = description
-
-
-class DownloadInfo:
-    def __init__(self,
-                 href: str,
-                 requirements: Optional[Requirements] = None):
-        self.href = href
-        self.requirements = requirements
-
-
-class VersionInfo:
-    def __init__(self,
-                 version: Version,
-                 date: Optional[datetime],
-                 downloads: 'List[DownloadInfo]',
-                 changes: 'List[ChangeItem]'):
-        self.version = version
-        self.date = date
-        self.downloads = downloads
-        self.changes = changes
-
-
-class ChangeLog:
-    def __init__(self, versions: List[VersionInfo]):
-        self.versions = versions
-
-    @property
-    def latestVersion(self) -> Optional[VersionInfo]:
-        '''
-        Return self.versions item with biggest version number
-        '''
-        if len(self.versions) == 0:
-            return None
-
-        return max(self.versions, key=lambda x: x.version)

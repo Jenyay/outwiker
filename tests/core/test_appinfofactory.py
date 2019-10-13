@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from outwiker.core.xmlappinfoparser import (
+from outwiker.core.xmlappinfo import (
     XmlAppInfo, XmlAuthorInfo, XmlVersionInfo)
 from outwiker.core.appinfofactory import AppInfoFactory
 from outwiker.core.version import Version, StatusSet

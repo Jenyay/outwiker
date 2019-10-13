@@ -9,7 +9,8 @@ from buildtools.builders.base import BuilderBase
 from buildtools.utilites import print_error
 
 from outwiker.utilites.textfile import readTextFile, writeTextFile
-from outwiker.core.appinfofactory import AppInfoFactory, ChangeLogFactory
+from outwiker.core.appinfofactory import AppInfoFactory
+from outwiker.core.changelogfactory import ChangeLogFactory
 
 
 class SiteContentSource(object):

@@ -2,8 +2,9 @@
 
 from datetime import datetime
 
-from outwiker.core.xmlappinfoparser import (XmlAppInfoParser, XmlAppInfo,
-                                            XmlChangelogParser)
+from outwiker.core.xmlappinfoparser import XmlAppInfoParser
+from outwiker.core.xmlchangelogparser import XmlChangelogParser
+from outwiker.core.xmlappinfo import XmlAppInfo
 
 
 def _assert_XmlAppInfo_empty(appinfo):
