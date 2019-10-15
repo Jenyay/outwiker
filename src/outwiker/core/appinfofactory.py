@@ -24,10 +24,16 @@ class AppInfoFactory:
                        xmlAppInfo: XmlAppInfo,
                        language: str) -> AppInfo:
         app_name = xmlAppInfo.app_name.get(language, '')
+        if app_name is None:
+            app_name = ''
 
         website = xmlAppInfo.website.get(language, '')
+        if website is None:
+            website = ''
 
         description = xmlAppInfo.description.get(language, '')
+        if description is None:
+            description = ''
 
         authors = cls._getAuthors(xmlAppInfo, language)
         version = cls._getVersion(xmlAppInfo)
