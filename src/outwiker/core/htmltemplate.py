@@ -10,7 +10,7 @@ from outwiker.core.application import Application
 class MyTemplate (Template):
     """
     Класс работы с шаблонами. Единственное, для чего сделан такой класс
-    - избавитсья от замены $$ на $
+    - избавиться от замены $$ на $
     Реализация регулярного выражения частично взята
     из http://stackoverflow.com/a/12769116
     """

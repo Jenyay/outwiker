@@ -8,11 +8,12 @@ import logging
 import importlib
 import pkgutil
 import collections
+from typing import Optional
 
 import outwiker
 import outwiker.core.packageversion as pv
 
-from outwiker.core.defines import PLUGIN_VERSION_FILE_NAME
+from outwiker.core.defines import PLUGIN_INFO_FILE_NAME
 from outwiker.core.pluginbase import Plugin, InvalidPlugin
 from outwiker.core.appinfofactory import AppInfoFactory
 from outwiker.core.appinfo import AppInfo
@@ -247,12 +248,12 @@ class PluginsLoader(object):
 
         # Checking information from plugin.xml file
         plugin_fname = join(packagePath,
-                            PLUGIN_VERSION_FILE_NAME)
+                            PLUGIN_INFO_FILE_NAME)
         try:
             appinfo = self.__loadPluginInfo(plugin_fname)
         except EnvironmentError:
             error = _(u'Plug-in "{}". Can\'t read "{}" file').format(
-                packageName, PLUGIN_VERSION_FILE_NAME)
+                packageName, PLUGIN_INFO_FILE_NAME)
 
             self._print(error)
             self.__invalidPlugins.append(InvalidPlugin(packageName,
@@ -403,7 +404,7 @@ class PluginsLoader(object):
     # Other
     # Seems the method should be move to outwiker.core.pluginbase
     #######
-    def getInfo(self, pluginname: str, langlist=["en"]) -> AppInfo:
+    def getInfo(self, pluginname: str, langlist=["en"]) -> Optional[AppInfo]:
         """
         Retrieve a AppInfo for plugin_name
 
@@ -422,7 +423,9 @@ class PluginsLoader(object):
         else:
             module = ''
 
-        xml_content = pkgutil.get_data(module, PLUGIN_VERSION_FILE_NAME)
+        xml_content = pkgutil.get_data(module, PLUGIN_INFO_FILE_NAME)
         if xml_content:
             language = ''
-            return AppInfoFactory.fromString(xml_content, language)
+            return AppInfoFactory.fromString(xml_content.decode(), language)
+
+        return None

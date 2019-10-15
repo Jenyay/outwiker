@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from typing import Dict
+
 import wx
 
 from .controls.safeimagelist import SafeImageList

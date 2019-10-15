@@ -5,31 +5,30 @@ from typing import Tuple
 import wx
 
 
-class PopupMixin:
-    def getBestPosition(self, mainWindow) -> Tuple[int, int]:
-        """
-        Рассчитывает координаты окна таким образом, чтобы оно было около
-        курсора, но не вылезало за пределы окна
-        """
-        mousePosition = wx.GetMousePosition()
+def _getBestPosition(popupWindow, mainWindow) -> Tuple[int, int]:
+    """
+    Рассчитывает координаты окна таким образом, чтобы оно было около
+    курсора, но не вылезало за пределы окна
+    """
+    mousePosition = wx.GetMousePosition()
 
-        width, height = self.GetSize()
-        parent_window_rect = mainWindow.GetScreenRect()
+    width, height = popupWindow.GetSize()
+    parent_window_rect = mainWindow.GetScreenRect()
 
-        if mousePosition.x < parent_window_rect.x + parent_window_rect.width / 2:
-            popup_x = mousePosition.x
-        else:
-            popup_x = mousePosition.x - width
+    if mousePosition.x < parent_window_rect.x + parent_window_rect.width / 2:
+        popup_x = mousePosition.x
+    else:
+        popup_x = mousePosition.x - width
 
-        if mousePosition.y < parent_window_rect.y + parent_window_rect.height / 2:
-            popup_y = mousePosition.y
-        else:
-            popup_y = mousePosition.y - height
+    if mousePosition.y < parent_window_rect.y + parent_window_rect.height / 2:
+        popup_y = mousePosition.y
+    else:
+        popup_y = mousePosition.y - height
 
-        return (popup_x, popup_y)
+    return (popup_x, popup_y)
 
 
-class PopupWindow(PopupMixin, wx.PopupTransientWindow):
+class PopupWindow(wx.PopupTransientWindow):
     '''
     Popup window with accurate position
     '''
@@ -43,11 +42,11 @@ class PopupWindow(PopupMixin, wx.PopupTransientWindow):
     def Popup(self, mainWindow):
         self.Dismiss()
         self.Layout()
-        self.SetPosition(self.getBestPosition(mainWindow))
+        self.SetPosition(_getBestPosition(self, mainWindow))
         super().Popup()
 
 
-class ResizablePopupWindow(PopupMixin, wx.MiniFrame):
+class ResizablePopupWindow(wx.MiniFrame):
     '''
     Popup window with accurate position
     '''
@@ -83,6 +82,6 @@ class ResizablePopupWindow(PopupMixin, wx.MiniFrame):
         pass
 
     def Popup(self, mainWindow):
-        self.SetPosition(self.getBestPosition(mainWindow))
+        self.SetPosition(_getBestPosition(self, mainWindow))
         self.Show()
         self.Raise()

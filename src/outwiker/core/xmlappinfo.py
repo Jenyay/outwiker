@@ -16,13 +16,11 @@ class XmlAppInfo:
         self.description = DataForLanguage()    # type: DataForLanguage[str]
 
         # Key - language, value - list of authors information
-        # type: DataForLanguage[List[XmlAuthorInfo]]
-        self.authors = DataForLanguage()
+        self.authors = DataForLanguage()        # type: DataForLanguage[List[XmlAuthorInfo]]
 
         self.requirements = XmlRequirements([], [])
 
-        # type: Optional[XmlVersionInfo]
-        self.version = None
+        self.version = None                     # type: Optional[XmlVersionInfo]
 
 
 class XmlAuthorInfo:

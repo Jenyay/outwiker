@@ -4,7 +4,6 @@ from xml.etree import ElementTree
 from .version_xmlrequirements import XmlRequirements
 
 
-
 class XmlRequirementsFactory:
     TAG_REQUIREMENTS = 'requirements'
     TAG_REQUIREMENTS_API = 'api'
@@ -12,8 +11,8 @@ class XmlRequirementsFactory:
 
     @classmethod
     def fromXml(cls, tag_parent: ElementTree.Element) -> 'XmlRequirements':
-        os_list = []
-        api_list = []
+        os_list = []            # type: List[str]
+        api_list = []           # type: List[Iterable[int]]
 
         tag_requirements = tag_parent.find(cls.TAG_REQUIREMENTS)
 

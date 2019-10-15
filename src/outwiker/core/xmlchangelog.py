@@ -34,5 +34,4 @@ class XmlChangeLogVersionInfo:
         self.downloads = []                 # type: List[XmlDownload]
 
         # Key - language, value - list of XmlChangeItem
-        # type: DataForLanguage[List[XmlChangeItem]]
-        self.changes = DataForLanguage()
+        self.changes = DataForLanguage()    # type: DataForLanguage[List[XmlChangeItem]]

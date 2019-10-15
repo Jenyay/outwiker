@@ -33,7 +33,7 @@ PAGE_RESULT_HTML = u'__content.html'
 # This string will be translated to 'en' or 'ru'
 VERSIONS_LANG = u'versions_lang'
 
-PLUGIN_VERSION_FILE_NAME = u'plugin.xml'
+PLUGIN_INFO_FILE_NAME = u'plugin.xml'
 
 # Keys for Application.sharedData
 # Anchor for transition during the opening other page

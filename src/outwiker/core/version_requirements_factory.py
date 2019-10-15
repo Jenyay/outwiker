@@ -1,10 +1,12 @@
+from typing import Optional
+
 from .version_xmlrequirements import XmlRequirements
 from .version_requirements import Requirements
 
 
 class RequirementsFactory:
     @classmethod
-    def fromXmlRequirements(cls, requirements: XmlRequirements) -> Requirements:
+    def fromXmlRequirements(cls, requirements: Optional[XmlRequirements]) -> Requirements:
         if requirements is None:
             return Requirements([], [])
 

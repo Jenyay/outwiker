@@ -1,6 +1,6 @@
 from datetime import datetime
 from xml.etree import ElementTree
-from typing import List
+from typing import List, Optional
 
 from .dataforlanguage import DataForLanguage
 from .xmlchangelog import (XmlChangeLog, XmlChangeItem,
@@ -41,7 +41,7 @@ class XmlChangelogParser:
             date_str = tag_version.get(cls.ATTRIBUTE_VERSION_DATE, '')
 
             try:
-                date = datetime.strptime(date_str, '%d.%m.%Y')
+                date = datetime.strptime(date_str, '%d.%m.%Y')      # type: Optional[datetime]
             except ValueError:
                 date = None
 

@@ -1,6 +1,4 @@
-from typing import List
-
-from .version import Version
+from typing import List, Iterable
 
 
 class Requirements:
@@ -10,7 +8,7 @@ class Requirements:
 
     def __init__(self,
                  os_list: List[str],
-                 api_list: List[Version]):
+                 api_list: List[Iterable[int]]):
         """
         os_list - list of the supported OS
         api_list - list of Version instances with supported API versions.

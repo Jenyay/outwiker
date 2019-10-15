@@ -3,8 +3,8 @@
 from typing import List
 
 from .xmlchangelogparser import XmlChangelogParser
-from .xmlchangelog import XmlDownload, XmlChangeLog
-from .changelog import VersionInfo, DownloadInfo, ChangeLog
+from .xmlchangelog import XmlDownload, XmlChangeLog, XmlChangeItem
+from .changelog import VersionInfo, DownloadInfo, ChangeLog, ChangeItem
 from .version import Version
 from .version_requirements_factory import RequirementsFactory
 
@@ -35,12 +35,17 @@ class ChangeLogFactory:
                 continue
 
             date = xmlversion.date
-            changes = xmlversion.changes.get(language, [])[:]
+            changes_xml = xmlversion.changes.get(language, [])[:]
+            changes = cls._getChanges(changes_xml)
             downloads = cls._getDownloads(xmlversion.downloads)
 
             versions.append(VersionInfo(version, date, downloads, changes))
 
         return versions
+
+    @classmethod
+    def _getChanges(cls, changes_xml: List[XmlChangeItem]) -> List[ChangeItem]:
+        return [ChangeItem(change.description) for change in changes_xml]
 
     @classmethod
     def _getDownloads(cls, xmldownloads: List[XmlDownload]) -> List[DownloadInfo]:

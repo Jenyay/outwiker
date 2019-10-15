@@ -26,7 +26,7 @@ class DataForLanguage(Generic[T]):
     def is_empty(self) -> bool:
         return len(self._data) == 0
 
-    def get(self, language: str, default: Optional[T] = None) -> T:
+    def get(self, language: str, default: Optional[T] = None) -> Optional[T]:
         DEFAULT_LANGUAGE = ''
         # lang_list example: ['ru_RU', 'ru', '']
         lang_list = [language]
