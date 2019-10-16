@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-18 19:00+0300\n"
-"PO-Revision-Date: 2019-08-18 19:02+0300\n"
+"POT-Creation-Date: 2019-10-16 20:22+0300\n"
+"PO-Revision-Date: 2019-10-16 20:24+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru\n"
@@ -19,7 +19,23 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: actions/changepagefolder.py:24 guicontroller.py:98
+#: actions/changepagechangedate.py:23 guicontroller.py:106
+msgid "Change date and time of change of the page..."
+msgstr "Изменить дату и время редактирования страницы..."
+
+#: actions/changepagechangedate.py:27
+msgid "HackPage plugin. Change date and time of change of the page"
+msgstr "Плагин HackPage. Изменить дату и время редактирования страницы"
+
+#: actions/changepagecreationdate.py:23 guicontroller.py:104
+msgid "Change page creation date and time..."
+msgstr "Изменить дату и время создания страницы..."
+
+#: actions/changepagecreationdate.py:27
+msgid "HackPage plugin. Change page creation date and time"
+msgstr "Плагин HackPage. Изменить дату и время создания страницы"
+
+#: actions/changepagefolder.py:24 guicontroller.py:102
 msgid "Change page folder..."
 msgstr "Изменить папку страницы..."
 
@@ -35,7 +51,7 @@ msgstr "Изменить идентификатор страницы..."
 msgid "HackPage plugin. Change Page Identifier"
 msgstr "Плагин HackPage. Изменить идентификатор страницы"
 
-#: actions/setalias.py:24 guicontroller.py:96
+#: actions/setalias.py:24 guicontroller.py:100
 msgid "Set page alias..."
 msgstr "Установить псевдоним страницы..."
 
@@ -43,25 +59,17 @@ msgstr "Установить псевдоним страницы..."
 msgid "HackPage plugin. Set page alias"
 msgstr "Плагин HackPage. Установить псевдоним страницы."
 
-#: gui/datetimedialog.py:40
+#: gui/datetimedialog.py:47
 msgid "Date"
 msgstr "Дата"
 
-#: gui/datetimedialog.py:45
+#: gui/datetimedialog.py:52
 msgid "Time"
 msgstr "Время"
 
-#: guicontroller.py:94
+#: guicontroller.py:98
 msgid "Change page identifier..."
 msgstr "Изменить идентификатор страницы..."
-
-#: guicontroller.py:100
-msgid "Edit page creation date and time..."
-msgstr "Редактировать дату и время создания страницы"
-
-#: guicontroller.py:102
-msgid "Edit date and time of change of the page..."
-msgstr "Редактировать дату и время изменения страницы..."
 
 #: plugin.py:28
 msgid "The HackPage plugin allow to edit hidden page properties"
@@ -95,11 +103,11 @@ msgstr "Изменить папку страницы"
 msgid "Enter the page folder name"
 msgstr "Введите имя папки страницы"
 
-#: utils.py:110
+#: utils.py:113
 msgid "Page creation date and time"
 msgstr "Дата и время создания страницы"
 
-#: utils.py:123
+#: utils.py:129
 msgid "Date and time of change of the page"
 msgstr "Дата и время изменения страницы"
 

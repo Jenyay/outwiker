@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: HackPage\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-18 19:00+0300\n"
+"POT-Creation-Date: 2019-10-16 20:22+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Eugene Ilin <jenyay.ilin@gmail.com>\n"
@@ -20,7 +20,23 @@ msgstr ""
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: actions/changepagefolder.py:24 guicontroller.py:98
+#: actions/changepagechangedate.py:23 guicontroller.py:106
+msgid "Change date and time of change of the page..."
+msgstr ""
+
+#: actions/changepagechangedate.py:27
+msgid "HackPage plugin. Change date and time of change of the page"
+msgstr ""
+
+#: actions/changepagecreationdate.py:23 guicontroller.py:104
+msgid "Change page creation date and time..."
+msgstr ""
+
+#: actions/changepagecreationdate.py:27
+msgid "HackPage plugin. Change page creation date and time"
+msgstr ""
+
+#: actions/changepagefolder.py:24 guicontroller.py:102
 msgid "Change page folder..."
 msgstr ""
 
@@ -36,7 +52,7 @@ msgstr ""
 msgid "HackPage plugin. Change Page Identifier"
 msgstr ""
 
-#: actions/setalias.py:24 guicontroller.py:96
+#: actions/setalias.py:24 guicontroller.py:100
 msgid "Set page alias..."
 msgstr ""
 
@@ -44,24 +60,16 @@ msgstr ""
 msgid "HackPage plugin. Set page alias"
 msgstr ""
 
-#: gui/datetimedialog.py:40
+#: gui/datetimedialog.py:47
 msgid "Date"
 msgstr ""
 
-#: gui/datetimedialog.py:45
+#: gui/datetimedialog.py:52
 msgid "Time"
 msgstr ""
 
-#: guicontroller.py:94
+#: guicontroller.py:98
 msgid "Change page identifier..."
-msgstr ""
-
-#: guicontroller.py:100
-msgid "Edit page creation date and time..."
-msgstr ""
-
-#: guicontroller.py:102
-msgid "Edit date and time of change of the page..."
 msgstr ""
 
 #: plugin.py:28
@@ -96,11 +104,11 @@ msgstr ""
 msgid "Enter the page folder name"
 msgstr ""
 
-#: utils.py:110
+#: utils.py:113
 msgid "Page creation date and time"
 msgstr ""
 
-#: utils.py:123
+#: utils.py:129
 msgid "Date and time of change of the page"
 msgstr ""
 

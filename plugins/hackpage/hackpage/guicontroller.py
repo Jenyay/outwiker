@@ -8,6 +8,8 @@ from hackpage.i18n import get_
 from hackpage.actions.changeuid import ChangeUIDAction
 from hackpage.actions.setalias import SetAliasAction
 from hackpage.actions.changepagefolder import ChangePageFolderAction
+from hackpage.actions.changepagecreationdate import ChangePageCreationDateAction
+from hackpage.actions.changepagechangedate import ChangePageChangeDateAction
 from hackpage.utils import (changeUidWithDialog,
                             setAliasWithDialog,
                             setPageFolderWithDialog,
@@ -26,7 +28,9 @@ class GuiController(object):
         # All actions list
         self._actions = [ChangeUIDAction,
                          SetAliasAction,
-                         ChangePageFolderAction]
+                         ChangePageFolderAction,
+                         ChangePageCreationDateAction,
+                         ChangePageChangeDateAction]
 
         global _
         _ = get_()
@@ -91,17 +95,17 @@ class GuiController(object):
 
         self._popupSubmenu = wx.Menu()
         self._popupSubmenu.Append(self.CHANGE_PAGE_UID,
-                                  _(u"Change page identifier..."))
+                                  _("Change page identifier..."))
         self._popupSubmenu.Append(self.SET_PAGE_ALIAS_UID,
-                                  _(u"Set page alias..."))
+                                  _("Set page alias..."))
         self._popupSubmenu.Append(self.SET_PAGE_FOLDER_UID,
-                                  _(u"Change page folder..."))
+                                  _("Change page folder..."))
         self._popupSubmenu.Append(self.SET_PAGE_CREATION_DATE_UID,
-                                  _(u"Edit page creation date and time..."))
+                                  _("Change page creation date and time..."))
         self._popupSubmenu.Append(self.SET_PAGE_CHANGE_DATE_UID,
-                                  _(u"Edit date and time of change of the page..."))
+                                  _("Change date and time of change of the page..."))
 
-        menu.AppendSubMenu(self._popupSubmenu, u"HackPage")
+        menu.AppendSubMenu(self._popupSubmenu, "HackPage")
 
         self._application.mainWindow.Bind(
             wx.EVT_MENU,

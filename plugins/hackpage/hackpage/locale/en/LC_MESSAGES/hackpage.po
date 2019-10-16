@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hackpage\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-18 19:00+0300\n"
-"PO-Revision-Date: 2019-08-18 19:00+0300\n"
+"POT-Creation-Date: 2019-10-16 20:22+0300\n"
+"PO-Revision-Date: 2019-10-16 20:22+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -19,7 +19,27 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-#: actions/changepagefolder.py:24 guicontroller.py:98
+#: actions/changepagechangedate.py:23 guicontroller.py:106
+#| msgid "Edit date and time of change of the page..."
+msgid "Change date and time of change of the page..."
+msgstr "Change date and time of change of the page..."
+
+#: actions/changepagechangedate.py:27
+#| msgid "Edit date and time of change of the page..."
+msgid "HackPage plugin. Change date and time of change of the page"
+msgstr "HackPage plugin. Change date and time of change of the page"
+
+#: actions/changepagecreationdate.py:23 guicontroller.py:104
+#| msgid "Edit page creation date and time..."
+msgid "Change page creation date and time..."
+msgstr "Change page creation date and time..."
+
+#: actions/changepagecreationdate.py:27
+#| msgid "HackPage plugin. Change Page Identifier"
+msgid "HackPage plugin. Change page creation date and time"
+msgstr "HackPage plugin. Change page creation date and time"
+
+#: actions/changepagefolder.py:24 guicontroller.py:102
 msgid "Change page folder..."
 msgstr "Change page folder..."
 
@@ -35,7 +55,7 @@ msgstr "Change Page Identifier..."
 msgid "HackPage plugin. Change Page Identifier"
 msgstr "HackPage plugin. Change Page Identifier"
 
-#: actions/setalias.py:24 guicontroller.py:96
+#: actions/setalias.py:24 guicontroller.py:100
 msgid "Set page alias..."
 msgstr "Set page alias..."
 
@@ -43,25 +63,17 @@ msgstr "Set page alias..."
 msgid "HackPage plugin. Set page alias"
 msgstr "HackPage plugin. Set page alias"
 
-#: gui/datetimedialog.py:40
+#: gui/datetimedialog.py:47
 msgid "Date"
 msgstr "Date"
 
-#: gui/datetimedialog.py:45
+#: gui/datetimedialog.py:52
 msgid "Time"
 msgstr "Time"
 
-#: guicontroller.py:94
+#: guicontroller.py:98
 msgid "Change page identifier..."
 msgstr "Change page identifier..."
-
-#: guicontroller.py:100
-msgid "Edit page creation date and time..."
-msgstr "Edit page creation date and time..."
-
-#: guicontroller.py:102
-msgid "Edit date and time of change of the page..."
-msgstr "Edit date and time of change of the page..."
 
 #: plugin.py:28
 msgid "The HackPage plugin allow to edit hidden page properties"
@@ -95,11 +107,11 @@ msgstr "Set page folder"
 msgid "Enter the page folder name"
 msgstr "Enter the page folder name"
 
-#: utils.py:110
+#: utils.py:113
 msgid "Page creation date and time"
 msgstr "Page creation date and time"
 
-#: utils.py:123
+#: utils.py:129
 msgid "Date and time of change of the page"
 msgstr "Date and time of change of the page"
 
