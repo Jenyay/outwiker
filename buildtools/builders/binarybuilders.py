@@ -115,8 +115,6 @@ class BasePyInstallerBuilder(BaseBinaryBuilder, metaclass=ABCMeta):
                   u'--windowed',
                   u'--distpath "{}"'.format(self._dist_dir),
                   u'--workpath "{}"'.format(self._workpath),
-                  u'--add-data versions.xml' + os.pathsep + u'.',
-                  u'--add-data outwiker.xml' + os.pathsep + u'.',
                   u'--add-binary help' + os.pathsep + u'help',
                   u'--add-binary iconset' + os.pathsep + u'iconset',
                   u'--add-binary images' + os.pathsep + u'images',
