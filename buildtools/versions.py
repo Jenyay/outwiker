@@ -10,7 +10,6 @@ from outwiker.utilites.textfile import readTextFile
 from outwiker.utilites.downloader import Downloader
 from buildtools.defines import (
     DOWNLOAD_TIMEOUT,
-    OUTWIKER_INFO_FILENAME,
     PLUGIN_INFO_FILENAME,
     PLUGIN_VERSIONS_FILENAME,
     PLUGINS_LIST,
@@ -61,9 +60,7 @@ def getLocalAppInfoList() -> List['outwiker.core.appinfo.AppInfo']:
     """
     Return AppInfo list for OutWiker and plug-ins.
     """
-    app_list = [
-         readAppInfo(os.path.join(u'src', OUTWIKER_INFO_FILENAME)),
-    ]
+    app_list = []
 
     # Fill url_list with plugins.xml paths
     for plugin in PLUGINS_LIST:

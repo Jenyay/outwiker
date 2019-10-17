@@ -9,7 +9,7 @@ Attach:Outwiker/Unstable/outwiker_100_white.png
 
 There are program versions [[OutWiker -> Outwiker/English]] which are make from the current branch of development (trunk). These versions can have problems, but you can try new possibilities before they will appear in the stable version.
 
-Current version: '''{{ version_full }}''' ({{ date }})
+Current version: '''{{ version_full }}''' {% if date %}({{ date.strftime('%B %d, %Y') }}){% endif %}
 
 
 !! Download

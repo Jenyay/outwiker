@@ -32,10 +32,6 @@ class BuildFacts(object):
         self.versions_file = os.path.join(self.version_dir,
                                           defines.OUTWIKER_VERSIONS_FILENAME)
 
-        # build/x.x.x.xxx/outwiker.xml
-        self.info_file = os.path.join(self.version_dir,
-                                      defines.OUTWIKER_INFO_FILENAME)
-
         # build/tmp/
         self.temp_dir = os.path.join(self.root_dir, u'tmp')
 
