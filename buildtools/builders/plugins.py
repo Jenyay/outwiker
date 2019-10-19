@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os
-import shutil
+# import shutil
 import urllib.request
 import urllib.error
 import urllib.parse
@@ -71,15 +71,15 @@ class BuilderPlugins(BuilderBase):
                 # Path to future archive
                 archive_path = self._getSubpath(plugin, archive_name)
                 os.mkdir(plugin_dir_path)
-                shutil.copy(xmlinfo_path, plugin_dir_path)
+                # shutil.copy(xmlinfo_path, plugin_dir_path)
 
                 # Archive a single plug-in
                 with lcd("plugins/{}".format(plugin)):
-                    local('7z a -r -aoa -xr!*.pyc -xr!.ropeproject -x!doc "{}" ./*'.format(archive_path))
+                    local('7z a -r -aoa -xr!*.pyc -xr!.ropeproject -x!doc -x!versions.xml "{}" ./*'.format(archive_path))
 
             # Add a plug-in to full archive
             with lcd("plugins/{}".format(plugin)):
-                local('7z a -r -aoa -xr!*.pyc -xr!.ropeproject -w../ "{}" ./*'.format(full_archive_path))
+                local('7z a -r -aoa -xr!*.pyc -xr!.ropeproject -x!versions.xml -w../ "{}" ./*'.format(full_archive_path))
 
     def _getSubpath(self, *args):
         """
