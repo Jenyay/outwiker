@@ -2,11 +2,15 @@
 <versions>
 	<version number="3.0.0.868" status="dev" date="19.10.2019">
 		<changes>
-			<change></change>
+			<change>New plug-in's manifest file format.</change>
+			<change>Add a new preferences fot new page title.</change>
+			<change>Small GUI improvements.</change>
 		</changes>
 
 		<changes lang="ru">
-			<change></change>
+			<change>Новый формат файла манифеста плагинов.</change>
+			<change>Добавлена настройка для шаблона имени новых страниц.</change>
+			<change>Небольшие улучшения в интерфейсе.</change>
 		</changes>
 	</version>
 
