@@ -9,7 +9,7 @@ Attach:Soft/Outwiker/us.png [[English version -> Outwiker/SpoilerEn]]
 
 [[Spoiler 1.4.4 -> Attach:spoiler-1.4.4.zip]] ('''Требуемая версия OutWiker: 1.6 - 2.1.0.834''')
 
-[[Spoiler {{ version_full }} -> Attach:spoiler-{{ version_full }}.zip]] ('''Требуемая версия OutWiker: 2.1.0.836 и выше''')
+[[Spoiler {{ version_full }} -> Attach:spoiler-{{ version_full }}.zip]] ('''Требуемая версия OutWiker: 3.0.0.868 и выше''')
 
 <!--#version stable {{ version_full }} -->
 

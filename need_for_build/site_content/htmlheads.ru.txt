@@ -9,7 +9,7 @@ Attach:Soft/Outwiker/us.png [[English version -> Outwiker/HtmlHeadsEn]]
 
 [[HtmlHeads 1.0.5 -> Attach:htmlheads-1.0.5.zip]] ('''Требуемая версия OutWiker: 1.8 - 2.1.0.834''')
 
-[[HtmlHeads {{ version_full }} -> Attach:htmlheads-{{ version_full }}.zip]] ('''Требуемая версия OutWiker: 2.1.0.836 и выше''')
+[[HtmlHeads {{ version_full }} -> Attach:htmlheads-{{ version_full }}.zip]] ('''Требуемая версия OutWiker: 3.0.0.868 и выше''')
 
 <!--#version stable {{ version_full }}-->
 

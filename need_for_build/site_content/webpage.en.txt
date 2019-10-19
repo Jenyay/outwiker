@@ -13,7 +13,7 @@ main_window_en.png
 
 [[WebPage 1.2.2 -> Attach:Outwiker/WebPage/webpage-1.2.2.zip]] ('''Required OutWiker version: 2.0 - 2.1.0.834''')
 
-[[WebPage {{ version_full }} -> Attach:Outwiker/WebPage/webpage-{{ version_full }}.zip]] ('''Required OutWiker version: 2.1.0.836 and above''')
+[[WebPage {{ version_full }} -> Attach:Outwiker/WebPage/webpage-{{ version_full }}.zip]] ('''Required OutWiker version: 3.0.0.868 and above''')
 
 <!--#version stable {{ version_full }} -->
 

@@ -9,7 +9,7 @@ Attach:us.png [[English version -> Outwiker/Export2HtmlPluginEn]]
 
 [[Export2Html 1.3.5 -> Attach:export2html-1.3.5.zip]] ('''Требуемая версия OutWiker: 1.7 - 2.1.0.834''')
 
-[[Export2Html {{ version_full }} -> Attach:export2html-{{ version_full }}.zip]] ('''Требуемая версия OutWiker: 2.1.0.836 и выше''')
+[[Export2Html {{ version_full }} -> Attach:export2html-{{ version_full }}.zip]] ('''Требуемая версия OutWiker: 3.0.0.868 и выше''')
 
 <!--#version stable {{ version_full }}-->
 

@@ -8,7 +8,7 @@ HtmlHeads plugin will be useful if you are using OutWiker for creating HTML-page
 
 [[HtmlHeads 1.0.5 -> Attach:Outwiker/HtmlHeads/htmlheads-1.0.5.zip]] ('''Required OutWiker version: 1.8 - 2.1.0.834''')
 
-[[HtmlHeads {{ version_full }} -> Attach:Outwiker/HtmlHeads/htmlheads-{{ version_full }}.zip]] ('''Required OutWiker version: 2.1.0.836 and above''')
+[[HtmlHeads {{ version_full }} -> Attach:Outwiker/HtmlHeads/htmlheads-{{ version_full }}.zip]] ('''Required OutWiker version: 3.0.0.868 and above''')
 
 <!--#version stable {{ version_full }} -->
 (:DonateOWEn:)

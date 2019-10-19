@@ -10,7 +10,7 @@ Attach:Soft/Outwiker/us.png [[English version -> Outwiker/DataGraphEn]]
 
 [[DataGraph 1.0.9 -> Attach:datagraph-1.0.9.zip]] ('''Требуемая версия OutWiker: 1.8 - 2.1.0.834''')
 
-[[DataGraph {{ version_full }} -> Attach:datagraph-{{ version_full }}.zip]] ('''Требуемая версия OutWiker: 2.1.0.836 и выше''')
+[[DataGraph {{ version_full }} -> Attach:datagraph-{{ version_full }}.zip]] ('''Требуемая версия OutWiker: 3.0.0.868 и выше''')
 
 <!--#version stable {{ version_full }} -->
 

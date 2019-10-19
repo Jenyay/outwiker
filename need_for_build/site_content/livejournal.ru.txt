@@ -9,7 +9,7 @@ Attach:Soft/Outwiker/us.png [[English version -> Outwiker/LivejournalPluginEn]]
 
 [[Livejournal 1.3.4 -> Attach:livejournal-1.3.4.zip]] ('''Требуемая версия OutWiker: 1.7 - 2.1.0.834''')
 
-[[Livejournal {{ version_full }} -> Attach:livejournal-{{ version_full }}.zip]] ('''Требуемая версия OutWiker: 2.1.0.836 и выше''')
+[[Livejournal {{ version_full }} -> Attach:livejournal-{{ version_full }}.zip]] ('''Требуемая версия OutWiker: 3.0.0.868 и выше''')
 
 <!--#version stable {{ version_full }} -->
 

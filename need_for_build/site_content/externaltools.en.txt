@@ -15,7 +15,7 @@ Below this functions will be descriped.
 [[#download]]
 [[ExternalTools 1.4 -> Attach:Outwiker/ExternalTools/externaltools-1.4.zip]] ('''Required OutWiker version: 1.8 - 2.1.0.834''')
 
-[[ExternalTools {{ version_full }} -> Attach:Outwiker/ExternalTools/externaltools-{{ version_full }}.zip]] ('''Required OutWiker version: 2.1.0.836 and above''')
+[[ExternalTools {{ version_full }} -> Attach:Outwiker/ExternalTools/externaltools-{{ version_full }}.zip]] ('''Required OutWiker version: 3.0.0.868 and above''')
 
 <!--#version stable {{ version_full }} -->
 (:DonateOWEn:)
@@ -23,7 +23,7 @@ Below this functions will be descriped.
 [[#using]]
 !!! Using
 
-!!!! Открытие страниц во внешних редакторах
+!!!! Open a page with external editor
 
 After installing the plugin you need to go out the window settings (menu "Edit - Preferences") and then in the section "External Tools [extension]" to add the programs you want to use in the future.
 
@@ -33,7 +33,7 @@ After that, the context menu that appears when you right-click on the article no
 
 %center% (:thumb externaltools_1.png px=250:) (:thumb externaltools_1.png px=250:)
 
-!!!! Использование команды [=(:exec:)=]
+!!!! Using an [=(:exec:)=] command
 
 For OutWiker 1.9 and above ExternalTools adds the [=(:exec:)=] command for creation link or button for execute external applications from wiki page.
 

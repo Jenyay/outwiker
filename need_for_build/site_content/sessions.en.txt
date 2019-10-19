@@ -8,7 +8,7 @@ With Sessions plugin you can save the current program status (open tree notes, o
 
 [[Sessions 1.0.4 -> Attach:Outwiker/Sessions/sessions-1.0.4.zip]] ('''Required OutWiker version: 1.8 - 2.1.0.834''')
 
-[[Sessions {{ version_full }} -> Attach:Outwiker/Sessions/sessions-{{ version_full }}.zip]] ('''Required OutWiker version: 2.1.0.836 and above''')
+[[Sessions {{ version_full }} -> Attach:Outwiker/Sessions/sessions-{{ version_full }}.zip]] ('''Required OutWiker version: 3.0.0.868 and above''')
 
 <!--#version stable {{ version_full }} -->
 

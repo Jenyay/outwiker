@@ -8,7 +8,7 @@ Plugin adds wiki-command [= (:counter:) =], allowing the automatic numbering any
 
 [[Counter 1.0.6 -> Attach:Outwiker/Counter/counter-1.0.6.zip]] ('''Required OutWiker version: 1.8 - 2.1.0.834''')
 
-[[Counter {{ version_full }} -> Attach:Outwiker/Counter/counter-{{ version_full }}.zip]] ('''Required OutWiker version: 2.1.0.836 and above''')
+[[Counter {{ version_full }} -> Attach:Outwiker/Counter/counter-{{ version_full }}.zip]] ('''Required OutWiker version: 3.0.0.868 and above''')
 
 <!--#version stable {{ version_full }} -->
 

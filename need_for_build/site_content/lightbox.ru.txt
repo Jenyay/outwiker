@@ -11,7 +11,7 @@ Attach:Soft/Outwiker/us.png [[English version -> Outwiker/LightboxEn]]
 
 [[Lightbox 1.1.4 -> Attach:lightbox-1.1.4.zip]] ('''Требуемая версия OutWiker: 1.7 - 2.1.0.834''')
 
-[[Lightbox {{ version_full }} -> Attach:lightbox-{{ version_full }}.zip]] ('''Требуемая версия OutWiker: 2.1.0.836 и выше''')
+[[Lightbox {{ version_full }} -> Attach:lightbox-{{ version_full }}.zip]] ('''Требуемая версия OutWiker: 3.0.0.868 и выше''')
 
 <!--#version stable {{ version_full }} -->
 

@@ -9,7 +9,7 @@ Attach:Soft/Outwiker/us.png [[English version -> Outwiker/DiagrammerEn]]
 
 [[Diagrammer 1.0.5 -> Attach:diagrammer-1.0.5.zip]] ('''Требуемая версия OutWiker: 1.8 - 2.1.0.834''')
 
-[[Diagrammer {{ version_full }} -> Attach:diagrammer-{{ version_full }}.zip]] ('''Требуемая версия OutWiker: 2.1.0.836 и выше''')
+[[Diagrammer {{ version_full }} -> Attach:diagrammer-{{ version_full }}.zip]] ('''Требуемая версия OutWiker: 3.0.0.868 и выше''')
 
 <!--#version stable {{ version_full }} -->
 

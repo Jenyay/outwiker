@@ -9,7 +9,7 @@ Attach:Soft/Outwiker/us.png [[English version -> Outwiker/ThumbGalleryEn]]
 
 [[ThumbGallery 1.1.5 -> Attach:thumbgallery-1.1.5.zip]] ('''Требуемая версия OutWiker: 1.6 - 2.1.0.834''')
 
-[[ThumbGallery {{ version_full }} -> Attach:thumbgallery-{{ version_full }}.zip]] ('''Требуемая версия OutWiker: 2.1.0.836 и выше''')
+[[ThumbGallery {{ version_full }} -> Attach:thumbgallery-{{ version_full }}.zip]] ('''Требуемая версия OutWiker: 3.0.0.868 и выше''')
 
 <!--#version stable {{ version_full }} -->
 

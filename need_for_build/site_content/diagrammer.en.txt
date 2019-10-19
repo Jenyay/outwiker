@@ -8,7 +8,7 @@ Plugin Diagrammer add a wiki command [=(:diagram:)...(:diagramend:)=] for creati
 
 [[Diagrammer 1.0.5 -> Attach:Outwiker/Diagrammer/diagrammer-1.0.5.zip]] ('''Required OutWiker version: 1.8 - 2.1.0.834''')
 
-[[Diagrammer {{ version_full }} -> Attach:Outwiker/Diagrammer/diagrammer-{{ version_full }}.zip]] ('''Required OutWiker version: 2.1.0.836 and above''')
+[[Diagrammer {{ version_full }} -> Attach:Outwiker/Diagrammer/diagrammer-{{ version_full }}.zip]] ('''Required OutWiker version: 3.0.0.868 and above''')
 
 <!--#version stable {{ version_full }} -->
 (:DonateOWEn:)

@@ -8,7 +8,7 @@ TableOfContents plugin search the headings on the page and build table of conten
 
 [[TableOfContents 1.0.4 -> Attach:Outwiker/Contents/tableofcontents-1.0.4.zip]] ('''Required OutWiker version: 1.8 - 2.1.0.834''')
 
-[[TableOfContents {{ version_full }} -> Attach:Outwiker/Contents/tableofcontents-{{ version_full }}.zip]] ('''Required OutWiker version: 2.1.0.836 and above''')
+[[TableOfContents {{ version_full }} -> Attach:Outwiker/Contents/tableofcontents-{{ version_full }}.zip]] ('''Required OutWiker version: 3.0.0.868 and above''')
 
 <!--#version stable {{ version_full }} -->
 

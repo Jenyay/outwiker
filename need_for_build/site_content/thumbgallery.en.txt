@@ -9,7 +9,7 @@ ThumbGallery plugin designed to create galleries of the attached files on wiki p
 
 [[ThumbGallery 1.1.5 -> Attach:Outwiker/ThumbGallery/thumbgallery-1.1.5.zip]] ('''Required OutWiker version: 1.6 - 2.1.0.834''')
 
-[[ThumbGallery {{ version_full }} -> Attach:Outwiker/ThumbGallery/thumbgallery-{{ version_full }}.zip]] ('''Required OutWiker version: 2.1.0.836 and above''')
+[[ThumbGallery {{ version_full }} -> Attach:Outwiker/ThumbGallery/thumbgallery-{{ version_full }}.zip]] ('''Required OutWiker version: 3.0.0.868 and above''')
 
 <!--#version stable {{ version_full }} -->
 

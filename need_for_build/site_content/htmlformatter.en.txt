@@ -6,7 +6,7 @@ Attach:Soft/Outwiker/ru.png [[Русская версия -> Outwiker/HtmlFormat
 
 [[HtmlFormatter 1.1.2 -> Attach:Outwiker/HtmlFormatter/htmlformatter-1.1.2.zip]] ('''Required OutWiker version: 1.9 - 2.1.0.834''')
 
-[[HtmlFormatter {{ version_full }} -> Attach:Outwiker/HtmlFormatter/htmlformatter-{{ version_full }}.zip]] ('''Required OutWiker version: 2.1.0.836 and above''')
+[[HtmlFormatter {{ version_full }} -> Attach:Outwiker/HtmlFormatter/htmlformatter-{{ version_full }}.zip]] ('''Required OutWiker version: 3.0.0.868 and above''')
 
 <!--#version stable {{ version_full }} -->
 (:DonateOWEn:)

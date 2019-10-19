@@ -10,7 +10,7 @@ This plugin append wiki commands [=(:ljuser:)=] and [=(:ljcomm:)=] for insert li
 
 [[Livejournal 1.3.4 -> Attach:Outwiker/LivejournalPlugin/livejournal-1.3.4.zip]] ('''Required OutWiker version: 1.7 - 2.1.0.834''')
 
-[[Livejournal {{ version_full }} -> Attach:Outwiker/LivejournalPlugin/livejournal-{{ version_full }}.zip]] ('''Required OutWiker version: 2.1.0.836 and above''')
+[[Livejournal {{ version_full }} -> Attach:Outwiker/LivejournalPlugin/livejournal-{{ version_full }}.zip]] ('''Required OutWiker version: 3.0.0.868 and above''')
 
 <!--#version stable {{ version_full }} -->
 (:DonateOWEn:)

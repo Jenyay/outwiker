@@ -9,7 +9,7 @@ Plug-in append the [=(:plot:)=] command when allow to plot the charts on wiki pa
 
 [[DataGraph 1.0.9 -> Attach:Outwiker/DataGraph/datagraph-1.0.9.zip]] ('''Required OutWiker version: 1.8 - 2.1.0.834''')
 
-[[DataGraph {{ version_full }} -> Attach:Outwiker/DataGraph/datagraph-{{ version_full }}.zip]] ('''Required OutWiker version: 2.1.0.836 and above''')
+[[DataGraph {{ version_full }} -> Attach:Outwiker/DataGraph/datagraph-{{ version_full }}.zip]] ('''Required OutWiker version: 3.0.0.868 and above''')
 
 <!--#version stable {{ version_full }} -->
 (:DonateOWEn:)

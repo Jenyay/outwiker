@@ -10,7 +10,7 @@ Lightbox plugin adds the command [=(:lightbox:)=]. If this command to insert a w
 
 [[Lightbox 1.1.4 -> Attach:Outwiker/Lightbox/lightbox-1.1.4.zip]] ('''Required OutWiker version: 1.7 - 2.1.0.834''')
 
-[[Lightbox {{ version_full }} -> Attach:Outwiker/Lightbox/lightbox-{{ version_full }}.zip]] ('''Required OutWiker version: 2.1.0.836 and above''')
+[[Lightbox {{ version_full }} -> Attach:Outwiker/Lightbox/lightbox-{{ version_full }}.zip]] ('''Required OutWiker version: 3.0.0.868 and above''')
 
 <!--#version stable {{ version_full }} -->
 (:DonateOWEn:)

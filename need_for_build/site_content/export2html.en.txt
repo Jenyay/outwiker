@@ -8,7 +8,7 @@ Plug-in insert menu item ''{+File - Export - Export page to HTML+}'' and ''{+Exp
 
 [[Export2Html 1.3.5 -> Attach:Outwiker/Export2HtmlPlugin/export2html-1.3.5.zip]] ('''Required OutWiker version: 1.7 - 2.1.0.834''')
 
-[[Export2Html {{ version_full }} -> Attach:Outwiker/Export2HtmlPlugin/export2html-{{ version_full }}.zip]] ('''Required OutWiker version: 2.1.0.836 and above''')
+[[Export2Html {{ version_full }} -> Attach:Outwiker/Export2HtmlPlugin/export2html-{{ version_full }}.zip]] ('''Required OutWiker version: 3.0.0.868 and above''')
 
 <!--#version stable {{ version_full }} -->
 (:DonateOWEn:)

@@ -9,7 +9,7 @@ This plugin adds wiki command [= (:spoiler:) =], which makes the text that appea
 
 [[Spoiler 1.4.4 -> Attach:Outwiker/Spoiler/spoiler-1.4.4.zip]] ('''Required OutWiker version: 1.6 - 2.1.0.834''')
 
-[[Spoiler {{ version_full }} -> Attach:Outwiker/Spoiler/spoiler-{{ version_full }}.zip]] ('''Required OutWiker version: 2.1.0.836 and above''')
+[[Spoiler {{ version_full }} -> Attach:Outwiker/Spoiler/spoiler-{{ version_full }}.zip]] ('''Required OutWiker version: 3.0.0.868 and above''')
 
 <!--#version stable {{ version_full }} -->
 

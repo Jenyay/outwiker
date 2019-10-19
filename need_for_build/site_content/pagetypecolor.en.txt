@@ -20,7 +20,7 @@ Advice. Set white color in preferences for the most used page type, in that case
 [[#download]] 
 [[PageTypeColor 1.1.1 -> Attach:pagetypecolor-1.1.1.zip]] ('''Требуемая версия OutWiker: 1.9 - 2.1.0.834''')
 
-[[PageTypeColor {{ version_full }} -> Attach:pagetypecolor-{{ version_full }}.zip]] ('''Требуемая версия OutWiker: 2.1.0.836 и выше''')
+[[PageTypeColor {{ version_full }} -> Attach:pagetypecolor-{{ version_full }}.zip]] ('''Требуемая версия OutWiker: 3.0.0.868 и выше''')
 
 <!--#version stable {{ version_full }} -->
 

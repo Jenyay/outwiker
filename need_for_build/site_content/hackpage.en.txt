@@ -8,7 +8,7 @@ The HackPage plug-in designed to change the hidden parameters of the notes, whic
 
 [[HackPage 1.1 -> Attach:Outwiker/HackPage/hackpage-1.1.zip]] ('''Required OutWiker version: 2.0 - 2.1.0.834''')
 
-[[HackPage {{ version_full }} -> Attach:Outwiker/HackPage/hackpage-{{ version_full }}.zip]] ('''Required OutWiker version: 2.1.0.836 and above''')
+[[HackPage {{ version_full }} -> Attach:Outwiker/HackPage/hackpage-{{ version_full }}.zip]] ('''Required OutWiker version: 3.0.0.868 and above''')
 
 <!--#version stable {{ version_full }} -->
 

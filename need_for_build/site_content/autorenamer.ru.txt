@@ -12,7 +12,7 @@ Attach:Soft/Outwiker/us.png [[English version -> Outwiker/AutoRenamerEn]]
 
 [[AutoRenamer 0.0.0.4 -> Attach:autorenamer-0.0.0.4.zip]] ('''Требуемая версия OutWiker: 1.8.1 - 2.1.0.834''')
 
-[[AutoRenamer {{ version_full }} -> Attach:autorenamer-{{ version_full }}.zip]] ('''Требуемая версия OutWiker: 2.1.0.836 и выше''')
+[[AutoRenamer {{ version_full }} -> Attach:autorenamer-{{ version_full }}.zip]] ('''Требуемая версия OutWiker: 3.0.0.868 и выше''')
 
 <!--#version stable {{ version_full }} -->
 

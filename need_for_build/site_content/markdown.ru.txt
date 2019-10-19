@@ -10,7 +10,7 @@ Attach:Soft/Outwiker/us.png [[English version -> Outwiker/MarkdownEn]]
 
 [[Markdown 1.3.2 -> Attach:markdown-1.3.2.zip]] ('''Требуемая версия OutWiker: 2.0 - 2.1.0.834''')
 
-[[Markdown {{ version_full }} -> Attach:markdown-{{ version_full }}.zip]] ('''Требуемая версия OutWiker: 2.1.0.836 и выше''')
+[[Markdown {{ version_full }} -> Attach:markdown-{{ version_full }}.zip]] ('''Требуемая версия OutWiker: 3.0.0.868 и выше''')
 
 <!--#version stable {{ version_full }} -->
 
