@@ -5,6 +5,8 @@ import logging
 import os
 import sys
 
+import wx
+
 import outwiker
 from outwiker.core.application import Application
 from outwiker.core.defines import APP_DATA_DEBUG
@@ -19,6 +21,8 @@ logger = logging.getLogger('outwiker')
 
 
 def print_info():
+    logger.debug('Python version: {}'.format(sys.version))
+    logger.debug('wxPython version: {}'.format(wx.__version__))
     logger.debug('Current OutWiker API version: {}.{}'.format(
         outwiker.__api_version__[0], outwiker.__api_version__[1]))
     logger.debug(u'Current working directory: {}'.format(os.getcwd()))
