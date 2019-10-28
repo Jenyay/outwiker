@@ -19,7 +19,7 @@ install:
     - cmd: py -m pipenv run python -m comtypes.client._generate shdocvw.dll
     - cmd: py -m pipenv run python -c "import wx.lib.iewin"
     - sh: python -m pip install pipenv
-    - sh: pipenv run pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-16.04 wxPython==4.0.6
+    - sh: pipenv run pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-16.04 wxPython==4.0.7
     - sh: pipenv update --dev
 build_script:
     - cmd: py -m pipenv run fab win
