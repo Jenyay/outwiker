@@ -18,7 +18,7 @@ addons:
             - build-essential
             - libjpeg-dev
             - libtiff-dev
-            - libsdl1.2-dev
+            - libsdl2-dev
             - libnotify-dev
             - freeglut3
             - ibus-gtk3
