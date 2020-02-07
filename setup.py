@@ -42,9 +42,9 @@ setup(
     python_requires='>=3.5',
     install_requires=[
         'wxPython==4.0.7.post2',
-        'Pillow>=6.1.0',
+        'Pillow>=7.0.0',
         'idna>=2.8',
-        'pyparsing>=2.4.2',
+        'pyparsing>=2.4.6',
         'pyenchant>=2.0.0;platform_system=="Windows"',
         'comtypes>=1.1.7;platform_system=="Windows"',
         'hunspell>=0.5.5;platform_system=="Linux"',
