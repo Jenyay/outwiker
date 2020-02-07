@@ -41,7 +41,7 @@ setup(
     ],
     python_requires='>=3.5',
     install_requires=[
-        'wxPython==4.0.7',
+        'wxPython==4.0.7.post2',
         'Pillow>=6.1.0',
         'idna>=2.8',
         'pyparsing>=2.4.2',
