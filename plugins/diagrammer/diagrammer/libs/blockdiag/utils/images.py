@@ -14,13 +14,15 @@
 #  limitations under the License.
 
 from __future__ import division
+
 import io
 import os
 import re
-from PIL import Image
 from tempfile import NamedTemporaryFile
+
+from PIL import Image
+
 from blockdiag.utils import urlutil
-from blockdiag.utils.compat import u
 from blockdiag.utils.logging import warning
 
 urlopen_cache = {}
@@ -28,7 +30,7 @@ urlopen_cache = {}
 
 def urlopen(url, *args, **kwargs):
     """ auto caching urlopen() (using tempfile) """
-    from blockdiag.utils.compat import urlopen as orig_urlopen
+    from urllib.request import urlopen as orig_urlopen
 
     if url not in urlopen_cache:
         with NamedTemporaryFile(delete=False) as tmpfile:
@@ -77,7 +79,7 @@ def color_to_rgb(color):
 def wand_open(url, stream):
     try:
         import wand.image
-    except:
+    except Exception:
         warning("unknown image type: %s", url)
         raise IOError
 
@@ -115,8 +117,8 @@ def open(url, mode='Pillow'):
         try:
             # wrap BytesIO for rewind stream
             stream = io.BytesIO(urlopen(url).read())
-        except:
-            warning(u("Could not retrieve: %s"), url)
+        except Exception:
+            warning("Could not retrieve: %s", url)
             raise IOError
 
     image = pillow_open(url, stream)
@@ -129,8 +131,8 @@ def open(url, mode='Pillow'):
             image.save(png_image, 'PNG')
             if hasattr(stream, 'close'):  # close() is implemented on Pillow
                 stream.close()
-        except:
-            warning(u("Could not convert image: %s"), url)
+        except Exception:
+            warning("Could not convert image: %s", url)
             raise IOError
 
         png_image.seek(0)
@@ -142,7 +144,7 @@ def cleanup():
         path = urlopen_cache.pop(url)
         try:
             os.remove(path)
-        except:
+        except Exception:
             pass
 
 

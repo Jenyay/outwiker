@@ -14,6 +14,7 @@
 #  limitations under the License.
 
 import pkg_resources
+
 from blockdiag.utils.logging import warning
 
 drawers = {}

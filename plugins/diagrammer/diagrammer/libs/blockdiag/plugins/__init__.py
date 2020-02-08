@@ -14,6 +14,7 @@
 #  limitations under the License.
 
 from pkg_resources import iter_entry_points
+
 from blockdiag.utils.logging import warning
 
 loaded_plugins = []

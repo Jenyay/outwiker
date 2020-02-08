@@ -13,17 +13,18 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-import re
 import math
-from reportlab.pdfgen import canvas
+import re
+
+from reportlab.lib.utils import ImageReader
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
-from reportlab.lib.utils import ImageReader
+from reportlab.pdfgen import canvas
+
 from blockdiag.imagedraw import base
 from blockdiag.imagedraw.utils import memoize
-from blockdiag.utils import images, Box, Size
+from blockdiag.utils import Box, Size, images
 from blockdiag.utils.fontmap import parse_fontpath
-from blockdiag.utils.compat import string_types
 
 
 class PDFImageDraw(base.ImageDraw):
@@ -85,13 +86,13 @@ class PDFImageDraw(base.ImageDraw):
             self.canvas.setDash([4 * thick, 4 * thick])
         elif style == 'none':
             self.canvas.setDash([0, 65535 * thick])
-        elif re.search('^\d+(,\d+)*$', style or ""):
+        elif re.search(r'^\d+(,\d+)*$', style or ""):
             self.canvas.setDash([int(n) * thick for n in style.split(',')])
         else:
             self.canvas.setDash()
 
     def set_stroke_color(self, color="black"):
-        if isinstance(color, string_types):
+        if isinstance(color, str):
             self.canvas.setStrokeColor(color)
         elif color:
             rgb = (color[0] / 256.0, color[1] / 256.0, color[2] / 256.0)
@@ -100,7 +101,7 @@ class PDFImageDraw(base.ImageDraw):
             self.set_stroke_color()
 
     def set_fill_color(self, color="white"):
-        if isinstance(color, string_types):
+        if isinstance(color, str):
             if color != 'none':
                 self.canvas.setFillColor(color)
         elif color:

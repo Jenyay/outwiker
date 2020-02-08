@@ -13,10 +13,10 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
+from blockdiag.imagedraw.simplesvg import pathdata
 from blockdiag.noderenderer import install_renderer
 from blockdiag.noderenderer.base import NodeShape
 from blockdiag.utils import XY, Box
-from blockdiag.imagedraw.simplesvg import pathdata
 
 
 class Terminator(NodeShape):

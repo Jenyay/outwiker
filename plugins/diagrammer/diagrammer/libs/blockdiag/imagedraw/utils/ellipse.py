@@ -14,6 +14,7 @@
 #  limitations under the License.
 
 import math
+
 from blockdiag.utils import XY
 
 DIVISION = 1000.0

@@ -14,8 +14,8 @@
 #  limitations under the License.
 
 import re
-from blockdiag.utils import Box, Size, XY
-from blockdiag.utils.compat import u, string_types
+
+from blockdiag.utils import XY, Box, Size
 
 
 def splitlabel(string):
@@ -23,9 +23,9 @@ def splitlabel(string):
        Every line will be stripped.
        If text includes characters "\n", treat as line separator.
     """
-    string = re.sub('^\s*', '', string)
-    string = re.sub('\s*$', '', string)
-    string = re.sub('\xa5', '\\\\', string)
+    string = re.sub(r'^\s*', '', string)
+    string = re.sub(r'\s*$', '', string)
+    string = re.sub(r'\xa5', '\\\\', string)
     string = re.sub('(\\\\){2}', '\x00', string)
     string = re.sub('\\\\n', '\n', string)
     for line in string.splitlines():
@@ -35,7 +35,7 @@ def splitlabel(string):
 def splittext(metrics, text, bound, measure='width'):
     folded = []
     if text == '':
-        folded.append(u(' '))
+        folded.append(' ')
 
     for i in range(len(text), 0, -1):
         textsize = metrics.textsize(text[0:i])
@@ -86,7 +86,7 @@ class VerticalTextFolder(object):
         self._result = self._lines()
 
     def textsize(self, text, scaled=False):
-        if isinstance(text, string_types):
+        if isinstance(text, str):
             size = [self.drawer.textlinesize(c, self.font) for c in text]
             width = max(s.width for s in size)
             height = (sum(s.height for s in size) +
@@ -208,7 +208,7 @@ class HorizontalTextFolder(object):
         self._result = self._lines()
 
     def textsize(self, text, scaled=False):
-        if isinstance(text, string_types):
+        if isinstance(text, str):
             textsize = self.drawer.textlinesize(text, self.font)
         else:
             if text:

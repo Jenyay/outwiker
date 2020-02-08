@@ -15,7 +15,7 @@
 
 from blockdiag.noderenderer import install_renderer
 from blockdiag.noderenderer.base import NodeShape
-from blockdiag.utils import Box, XY
+from blockdiag.utils import XY, Box
 
 
 class MiniDiamond(NodeShape):

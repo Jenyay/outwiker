@@ -15,6 +15,7 @@
 
 import re
 import sys
+
 import blockdiag
 import blockdiag.builder
 import blockdiag.drawer

@@ -14,6 +14,7 @@
 #  limitations under the License.
 
 import re
+
 from blockdiag import plugins
 
 

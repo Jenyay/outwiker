@@ -14,6 +14,7 @@
 #  limitations under the License.
 
 from collections import defaultdict
+
 from blockdiag import imagedraw, noderenderer
 from blockdiag.metrics import AutoScaler, DiagramMetrics
 

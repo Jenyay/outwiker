@@ -14,7 +14,8 @@
 #  limitations under the License.
 
 import functools
-from blockdiag.utils import Box, XY
+
+from blockdiag.utils import XY, Box
 
 
 class LazyReceiver(object):

@@ -13,13 +13,13 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
+import copy
 import os
 import re
-import copy
-from blockdiag.utils import images, unquote, urlutil, uuid, XY
-from blockdiag.utils.compat import u
-from blockdiag.utils.logging import warning
+
 from blockdiag import noderenderer, plugins
+from blockdiag.utils import XY, images, unquote, urlutil, uuid
+from blockdiag.utils.logging import warning
 
 
 class Base(object):
@@ -88,7 +88,7 @@ class Base(object):
             self.set_attribute(attr)
 
     def set_style(self, value):
-        if re.search('^(?:none|solid|dotted|dashed|\d+(,\d+)*)$', value, re.I):
+        if re.search(r'^(?:none|solid|dotted|dashed|\d+(,\d+)*)$', value, re.I):
             self.style = value.lower()
         else:
             class_name = self.__class__.__name__
@@ -229,7 +229,7 @@ class DiagramNode(Element):
         for name in self.desctable:
             value = getattr(self, name)
             if value is None:
-                attrs.append(u(""))
+                attrs.append("")
             else:
                 attrs.append(value)
 
@@ -607,7 +607,7 @@ class Diagram(NodeGroup):
         self._DiagramNode.set_default_color(color)
 
     def set_default_node_style(self, value):
-        if re.search('^(?:none|solid|dotted|dashed|\d+(,\d+)*)$', value, re.I):
+        if re.search(r'^(?:none|solid|dotted|dashed|\d+(,\d+)*)$', value, re.I):
             self._DiagramNode.set_default_style(value)
         else:
             msg = "unknown node style: %s" % value

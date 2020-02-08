@@ -14,16 +14,15 @@
 #  limitations under the License.
 
 import sys
-from blockdiag.utils.compat import u
 
 
 def warning(msg, *args):
-    sys.stderr.write(u("WARNING: "))
+    sys.stderr.write("WARNING: ")
     sys.stderr.write(msg % args)
-    sys.stderr.write(u("\n"))
+    sys.stderr.write("\n")
 
 
 def error(msg, *args):
-    sys.stderr.write(u("ERROR: "))
+    sys.stderr.write("ERROR: ")
     sys.stderr.write(msg % args)
-    sys.stderr.write(u("\n"))
+    sys.stderr.write("\n")

@@ -14,26 +14,20 @@
 #  limitations under the License.
 
 from __future__ import division
-import re
+
 import math
-from itertools import tee
-try:
-    from future_builtins import zip
-except ImportError:
-    pass
+import re
 from functools import partial, wraps
-from PIL import Image, ImageDraw, ImageFont, ImageFilter
+from itertools import tee
+
+from PIL import Image, ImageDraw, ImageFilter, ImageFont
+
 from blockdiag.imagedraw import base
 from blockdiag.imagedraw.utils import memoize
 from blockdiag.imagedraw.utils.ellipse import dots as ellipse_dots
-from blockdiag.utils import images, Box, Size, XY
-from blockdiag.utils.fontmap import parse_fontpath, FontMap
+from blockdiag.utils import XY, Box, Size, images
+from blockdiag.utils.fontmap import FontMap, parse_fontpath
 from blockdiag.utils.myitertools import istep, stepslice
-
-
-# apply monkey patch to pillow
-from blockdiag.imagedraw.utils import pillow
-pillow.apply_patch()
 
 
 def point_pairs(xylist):
@@ -57,7 +51,7 @@ def dashize_line(line, length):
         if pt1[1] > pt2[1]:
             pt2, pt1 = line
 
-        r = stepslice(range(pt1[1], pt2[1]), length)
+        r = stepslice(range(round(pt1[1]), round(pt2[1])), length)
         for y1, y2 in istep(n for n in r):
             yield [(pt1[0], y1), (pt1[0], y2)]
 
@@ -65,7 +59,7 @@ def dashize_line(line, length):
         if pt1[0] > pt2[0]:
             pt2, pt1 = line
 
-        r = stepslice(range(pt1[0], pt2[0]), length)
+        r = stepslice(range(round(pt1[0]), round(pt2[0])), length)
         for x1, x2 in istep(n for n in r):
             yield [(x1, pt1[1]), (x2, pt1[1])]
     else:  # diagonal
@@ -97,7 +91,7 @@ def style2cycle(style, thick):
         length = [4 * thick, 4 * thick]
     elif style == 'none':
         length = [0, 65535 * thick]
-    elif re.search('^\d+(,\d+)*$', style or ""):
+    elif re.search(r'^\d+(,\d+)*$', style or ""):
         length = [int(n) * thick for n in style.split(',')]
     else:
         length = None
@@ -213,7 +207,7 @@ class ImageDrawExBase(base.ImageDraw):
         if kwargs.get('fill') == 'none':
             pass
         elif (style in ('dotted', 'dashed', 'none') or
-              re.search('^\d+(,\d+)*$', style or "")):
+              re.search(r'^\d+(,\d+)*$', style or "")):
             self.dashed_line(xy, **kwargs)
         else:
             if 'style' in kwargs:
@@ -335,7 +329,18 @@ class ImageDrawExBase(base.ImageDraw):
             text.textarea(textbox, string, font, **kwargs)
 
             filler = Image.new('RGB', box.size, kwargs.get('fill'))
-            self.paste(filler, box.topleft, text._image.rotate(angle))
+
+            mask = text._image.rotate(angle, expand=True)
+            if mask.size != filler.size:
+                # Image.rotate(expand=True) of Pillow earlier than
+                # 3.3.0 (including 2.x) returns image object with
+                # unexpected size: for example, rotating 10x20 by 270
+                # causes not 20x10 but 21x11.
+                # Therefore, crop rotated image in order to make it
+                # match against size of "filler".
+                mask = mask.crop((0, 0, box.width, box.height))
+
+            self.paste(filler, box.topleft, mask)
             return
 
         lines = self.textfolder(box, string, font, **kwargs)
@@ -355,6 +360,10 @@ class ImageDrawExBase(base.ImageDraw):
             self.textarea(box, string, _font, **kwargs)
 
     def image(self, box, url):
+        if not box.width or not box.height:
+            # resizing image into "0 width and/or height" is meaningless
+            return
+
         try:
             image = images.open(url, mode='pillow')
 
@@ -380,9 +389,9 @@ class ImageDrawExBase(base.ImageDraw):
                 image = image.convert('RGBA')
 
             if image.mode == 'RGBA':
-                self.paste(image, (x, y), mask=image)
+                self.paste(image, (round(x), round(y)), mask=image)
             else:
-                self.paste(image, (x, y))
+                self.paste(image, (round(x), round(y)))
         except IOError:
             pass
 

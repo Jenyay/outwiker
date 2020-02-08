@@ -20,8 +20,6 @@ except ImportError:
     from random import random
     uuid = random
 
-from blockdiag.utils.compat import u
-
 
 def generate():
-    return u(str(uuid()))
+    return str(uuid())

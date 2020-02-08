@@ -36,13 +36,12 @@ At the moment, the parser builds only a parse tree, not an abstract syntax tree
 '''
 
 import io
-from re import MULTILINE, DOTALL
 from collections import namedtuple
-from funcparserlib.lexer import make_tokenizer, Token, LexerError
-from funcparserlib.parser import (some, a, maybe, many, finished, skip,
-                                  forward_decl)
-from blockdiag.utils.compat import u
+from re import DOTALL, MULTILINE
 
+from funcparserlib.lexer import LexerError, Token, make_tokenizer
+from funcparserlib.parser import (a, finished, forward_decl, many, maybe, skip,
+                                  some)
 
 ENCODING = 'utf-8'
 
@@ -67,8 +66,8 @@ def tokenize(string):
         ('Comment', (r'(//|#).*',)),                                          # NOQA
         ('NL',      (r'[\r\n]+',)),                                           # NOQA
         ('Space',   (r'[ \t\r\n]+',)),                                        # NOQA
-        ('Name',    (u('[A-Za-z_0-9\u0080-\uffff]') +                         # NOQA
-                     u('[A-Za-z_\\-.0-9\u0080-\uffff]*'),)),                  # NOQA
+        ('Name',    ('[A-Za-z_0-9\u0080-\uffff]' +                            # NOQA
+                     '[A-Za-z_\\-.0-9\u0080-\uffff]*',)),                     # NOQA
         ('Op',      (r'[{};,=\[\]]|(<->)|(<-)|(--)|(->)|(>-<)|(-<)|(>-)',)),  # NOQA
         ('Number',  (r'-?(\.[0-9]+)|([0-9]+(\.[0-9]*)?)',)),                  # NOQA
         ('String',  (r'(?P<quote>"|\').*?(?<!\\)(?P=quote)', DOTALL)),        # NOQA

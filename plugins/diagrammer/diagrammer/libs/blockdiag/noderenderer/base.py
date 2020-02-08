@@ -14,7 +14,8 @@
 #  limitations under the License.
 
 from __future__ import division
-from blockdiag.utils import images, Box, XY
+
+from blockdiag.utils import XY, Box, images
 
 
 class NodeShape(object):

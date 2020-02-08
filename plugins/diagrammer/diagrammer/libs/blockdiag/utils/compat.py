@@ -13,33 +13,6 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-import sys
-import codecs
-
-if sys.version_info[0] == 2:
-    string_types = (str, unicode)  # NOQA: pyflakes complains to unicode in py3
-    from urllib import urlopen  # NOQA: exporting for common interface
-else:
-    string_types = (str,)
-    from urllib.request import urlopen  # NOQA: exporting for common interface
-
-
-def u(string):
-    if sys.version_info[0] == 2:
-        return unicode(string, "unicode_escape")  # NOQA: pyflakes complains to unicode in py3
-    else:
-        return string
-
-
-# replace codecs.getreader
-if sys.version_info[0] == 3:
-    getreader = codecs.getreader
-
-    def py3_getreader(encoding):
-        return lambda stream, *args: getreader(encoding)(stream.buffer, *args)
-
-    codecs.getreader = py3_getreader
-
 
 def cmp_to_key(mycmp):
     """Convert a cmp= function into a key= function"""

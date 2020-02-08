@@ -14,10 +14,11 @@
 #  limitations under the License.
 
 from __future__ import division
+
+from blockdiag.imagedraw.simplesvg import pathdata
 from blockdiag.noderenderer import install_renderer
 from blockdiag.noderenderer.base import NodeShape
 from blockdiag.utils import Box
-from blockdiag.imagedraw.simplesvg import pathdata
 
 
 class Cloud(NodeShape):

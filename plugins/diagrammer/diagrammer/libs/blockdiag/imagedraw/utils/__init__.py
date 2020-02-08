@@ -16,14 +16,14 @@
 import math
 import unicodedata
 from functools import wraps
+
 from blockdiag.utils import Size
-from blockdiag.utils.compat import u
 
 
 def is_zenkaku(char):
     """Detect given character is Japanese ZENKAKU character"""
     char_width = unicodedata.east_asian_width(char)
-    return char_width in u("WFA")
+    return char_width in "WFA"
 
 
 def zenkaku_len(string):

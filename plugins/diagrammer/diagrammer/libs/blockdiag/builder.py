@@ -14,9 +14,9 @@
 #  limitations under the License.
 
 from blockdiag import parser
-from blockdiag.elements import Diagram, DiagramNode, NodeGroup, DiagramEdge
+from blockdiag.elements import Diagram, DiagramEdge, DiagramNode, NodeGroup
 from blockdiag.plugins import fire_node_event
-from blockdiag.utils import unquote, XY
+from blockdiag.utils import XY, unquote
 from blockdiag.utils.compat import cmp_to_key
 
 

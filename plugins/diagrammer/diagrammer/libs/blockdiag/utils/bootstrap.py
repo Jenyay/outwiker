@@ -13,18 +13,18 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
+import codecs
 import os
 import re
 import sys
 import traceback
-from optparse import OptionParser, SUPPRESS_HELP
-from blockdiag import imagedraw
-from blockdiag import plugins
+from optparse import SUPPRESS_HELP, OptionParser
+
+from blockdiag import imagedraw, plugins
 from blockdiag.utils import images
-from blockdiag.utils.compat import codecs
 from blockdiag.utils.config import ConfigParser
-from blockdiag.utils.fontmap import parse_fontpath, FontMap
-from blockdiag.utils.logging import warning, error
+from blockdiag.utils.fontmap import FontMap, parse_fontpath
+from blockdiag.utils.logging import error, warning
 
 
 class Application(object):
@@ -54,7 +54,7 @@ class Application(object):
             return self.build_diagram(parsed)
         except SystemExit as e:
             return e
-        except UnicodeEncodeError as e:
+        except UnicodeEncodeError:
             error("UnicodeEncodeError caught (check your font settings)")
             return -1
         except Exception as e:
@@ -78,8 +78,9 @@ class Application(object):
 
     def parse_diagram(self):
         if self.options.input == '-':
-            stream = codecs.getreader('utf-8-sig')(sys.stdin)
-            self.code = stream.read()
+            self.code = sys.stdin.read()
+            if self.code.startswith('\ufeff'):  # strip BOM
+                self.code = self.code[1:]
         else:
             fp = codecs.open(self.options.input, 'r', 'utf-8-sig')
             self.code = fp.read()
@@ -90,7 +91,7 @@ class Application(object):
         ScreenNodeBuilder = self.module.builder.ScreenNodeBuilder
         try:
             diagram = ScreenNodeBuilder.build(tree, self.options)
-        except:
+        except Exception:
             diagram = ScreenNodeBuilder.build(tree)  # old interface
 
         DiagramDraw = self.module.drawer.DiagramDraw
@@ -179,12 +180,12 @@ class Options(object):
         self.options.type = self.options.type.upper()
         try:
             imagedraw.create(self.options.type, None, debug=self.options.debug)
-        except:
+        except Exception:
             msg = "unknown format: %s" % self.options.type
             raise RuntimeError(msg)
 
         if self.options.size:
-            matched = re.match('^(\d+)x(\d+)$', self.options.size)
+            matched = re.match(r'^(\d+)x(\d+)$', self.options.size)
             if matched:
                 self.options.size = [int(n) for n in matched.groups()]
             else:

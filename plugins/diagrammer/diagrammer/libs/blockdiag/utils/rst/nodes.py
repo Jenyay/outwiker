@@ -15,10 +15,12 @@
 
 import os
 from hashlib import sha1
+
 from docutils import nodes
-import blockdiag.parser
+
 import blockdiag.builder
 import blockdiag.drawer
+import blockdiag.parser
 
 
 class blockdiag(nodes.General, nodes.Element):
@@ -28,7 +30,7 @@ class blockdiag(nodes.General, nodes.Element):
     def to_diagram(self):
         try:
             tree = self.processor.parser.parse_string(self['code'])
-        except:
+        except Exception:
             code = '%s { %s }' % (self.name, self['code'])
             tree = self.processor.parser.parse_string(code)
             self['code'] = code  # replace if succeeded

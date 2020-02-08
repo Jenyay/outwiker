@@ -14,8 +14,8 @@
 #  limitations under the License.
 
 from __future__ import division
+
 import pkg_resources
-from blockdiag.noderenderer.base import NodeShape  # NOQA: backward compatibility
 
 renderers = {}
 searchpath = []

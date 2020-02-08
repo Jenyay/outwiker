@@ -14,11 +14,13 @@
 #  limitations under the License.
 
 from __future__ import division
+
 import copy
 from collections import defaultdict
+
 from blockdiag import noderenderer
 from blockdiag.elements import DiagramNode
-from blockdiag.utils import Box, Size, XY
+from blockdiag.utils import XY, Box, Size
 from blockdiag.utils.fontmap import FontInfo, FontMap
 
 cellsize = 8

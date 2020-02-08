@@ -13,8 +13,7 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-from itertools import cycle
-from itertools import islice
+from itertools import cycle, islice
 
 
 def istep(seq, step=2):

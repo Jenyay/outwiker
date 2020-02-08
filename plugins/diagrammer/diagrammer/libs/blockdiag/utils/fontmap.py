@@ -13,10 +13,11 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-import re
-import os
 import copy
+import os
+import re
 from collections import namedtuple
+
 from blockdiag.utils.config import ConfigParser
 from blockdiag.utils.logging import warning
 
@@ -25,7 +26,7 @@ def parse_fontpath(path):
     if path is None:
         return (None, None)
 
-    match = re.search('^(.*):(\d)$', path)
+    match = re.search(r'^(.*):(\d)$', path)
     if match:
         return (match.group(1), int(match.group(2)))
     else:
@@ -118,7 +119,7 @@ class FontMap(object):
         config = ConfigParser()
 
         if hasattr(conffile, 'read'):
-            config.readfp(conffile)
+            config.read_file(conffile)
         elif os.path.isfile(conffile):
             config.read(conffile)
         else:

@@ -14,12 +14,11 @@
 #  limitations under the License.
 
 import re
-from blockdiag.utils.compat import u, string_types
 from io import StringIO
 
 
 def _escape(s):
-    if not isinstance(s, string_types):
+    if not isinstance(s, str):
         s = str(s)
     return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
@@ -54,26 +53,26 @@ class base(object):
         clsname = self.__class__.__name__
         indent = '  ' * level
 
-        io.write(u('%s<%s') % (indent, clsname))
+        io.write('%s<%s' % (indent, clsname))
         for key in sorted(self.attributes):
             value = self.attributes[key]
             if value is not None:
-                io.write(u(' %s=%s') % (_escape(key), _quote(value)))
+                io.write(' %s=%s' % (_escape(key), _quote(value)))
 
         if self.elements == []:
             if self.text is not None:
-                io.write(u(">%s</%s>\n") % (_escape(self.text), clsname))
+                io.write(">%s</%s>\n" % (_escape(self.text), clsname))
             else:
-                io.write(u(" />\n"))
+                io.write(" />\n")
         elif self.elements:
             if self.text is not None:
-                io.write(u(">%s\n") % (_escape(self.text),))
+                io.write(">%s\n" % (_escape(self.text),))
             else:
-                io.write(u(">\n"))
+                io.write(">\n")
 
             for e in self.elements:
                 e.to_xml(io, level + 1)
-            io.write(u('%s</%s>\n') % (indent, clsname))
+            io.write('%s</%s>\n' % (indent, clsname))
 
 
 class element(base):
@@ -103,9 +102,8 @@ class svg(base):
 
         if not self.nodoctype:
             url = "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd"
-            io.write(u("<?xml version='1.0' encoding='UTF-8'?>\n"))
-            io.write(u('<!DOCTYPE svg PUBLIC ') +
-                     u('"-//W3C//DTD SVG 1.0//EN" "%s">\n') % url)
+            io.write("<?xml version='1.0' encoding='UTF-8'?>\n")
+            io.write('<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "%s">\n' % url)
 
         super(svg, self).to_xml(io)
 
