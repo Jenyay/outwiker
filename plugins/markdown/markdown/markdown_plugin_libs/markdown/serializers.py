@@ -6,7 +6,7 @@
 # Copyright (c) 1999-2007 by Fredrik Lundh.  All rights reserved.
 #
 # fredrik@pythonware.com
-# http://www.pythonware.com
+# https://www.pythonware.com/
 #
 # --------------------------------------------------------------------
 # The ElementTree toolkit is
@@ -37,17 +37,9 @@
 # --------------------------------------------------------------------
 
 
-from __future__ import absolute_import
-from __future__ import unicode_literals
 from xml.etree.ElementTree import ProcessingInstruction
-from . import util
+from xml.etree.ElementTree import Comment, ElementTree, QName
 import re
-ElementTree = util.etree.ElementTree
-QName = util.etree.QName
-if hasattr(util.etree, 'test_comment'):  # pragma: no cover
-    Comment = util.etree.test_comment
-else:  # pragma: no cover
-    Comment = util.etree.Comment
 
 __all__ = ['to_html_string', 'to_xhtml_string']
 
@@ -63,7 +55,7 @@ except NameError:  # pragma: no cover
 
 def _raise_serialization_error(text):  # pragma: no cover
     raise TypeError(
-        "cannot serialize %r (type %s)" % (text, type(text).__name__)
+        "cannot serialize {!r} (type {})".format(text, type(text).__name__)
         )
 
 
@@ -158,7 +150,7 @@ def _serialize_html(write, elem, format):
                     # handle boolean attributes
                     write(" %s" % v)
                 else:
-                    write(' %s="%s"' % (k, v))
+                    write(' {}="{}"'.format(k, v))
         if namespace_uri:
             write(' xmlns="%s"' % (_escape_attrib(namespace_uri)))
         if format == "xhtml" and tag.lower() in HTML_EMPTY:

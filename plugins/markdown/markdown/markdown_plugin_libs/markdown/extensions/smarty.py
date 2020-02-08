@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 '''
 Smarty extension for Python-Markdown
 ====================================
@@ -13,11 +12,11 @@ Author: 2013, Dmitry Shachnev <mitya57@gmail.com>
 
 All changes Copyright 2013-2014 The Python Markdown Project
 
-License: [BSD](http://www.opensource.org/licenses/bsd-license.php)
+License: [BSD](https://opensource.org/licenses/bsd-license.php)
 
 SmartyPants license:
 
-   Copyright (c) 2003 John Gruber <http://daringfireball.net/>
+   Copyright (c) 2003 John Gruber <https://daringfireball.net/>
    All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
@@ -81,7 +80,6 @@ smartypants.py license:
 '''
 
 
-from __future__ import unicode_literals
 from . import Extension
 from ..inlinepatterns import HtmlInlineProcessor, HTML_RE
 from ..treeprocessors import InlineProcessor
@@ -182,7 +180,7 @@ class SmartyExtension(Extension):
             'smart_ellipses': [True, 'Educate ellipses'],
             'substitutions': [{}, 'Overwrite default substitutions'],
         }
-        super(SmartyExtension, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.substitutions = dict(substitutions)
         self.substitutions.update(self.getConfig('substitutions', default={}))
 

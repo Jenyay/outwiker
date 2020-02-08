@@ -5,7 +5,7 @@
 
     Lexers for modeling languages.
 
-    :copyright: Copyright 2006-2017 by the Pygments team, see AUTHORS.
+    :copyright: Copyright 2006-2019 by the Pygments team, see AUTHORS.
     :license: BSD, see LICENSE for details.
 """
 
@@ -62,8 +62,8 @@ class ModelicaLexer(RegexLexer):
              r'transpose|vector|zeros)\b', Name.Builtin),
             (r'(algorithm|annotation|break|connect|constant|constrainedby|der|'
              r'discrete|each|else|elseif|elsewhen|encapsulated|enumeration|'
-             r'equation|exit|expandable|extends|external|final|flow|for|if|'
-             r'import|impure|in|initial|inner|input|loop|nondiscrete|outer|'
+             r'equation|exit|expandable|extends|external|firstTick|final|flow|for|if|'
+             r'import|impure|in|initial|inner|input|interval|loop|nondiscrete|outer|'
              r'output|parameter|partial|protected|public|pure|redeclare|'
              r'replaceable|return|stream|then|when|while)\b',
              Keyword.Reserved),
@@ -326,8 +326,10 @@ class StanLexer(RegexLexer):
             (r'(%s)\b' % r'|'.join(_stan_builtins.TYPES), Keyword.Type),
              # < should be punctuation, but elsewhere I can't tell if it is in
              # a range constraint
-            (r'(<)(\s*)(upper|lower)(\s*)(=)', bygroups(Operator, Whitespace, Keyword, Whitespace, Punctuation)),
-            (r'(,)(\s*)(upper)(\s*)(=)', bygroups(Punctuation, Whitespace, Keyword, Whitespace, Punctuation)),
+            (r'(<)(\s*)(upper|lower)(\s*)(=)',
+             bygroups(Operator, Whitespace, Keyword, Whitespace, Punctuation)),
+            (r'(,)(\s*)(upper)(\s*)(=)',
+             bygroups(Punctuation, Whitespace, Keyword, Whitespace, Punctuation)),
             # Punctuation
             (r"[;,\[\]()]", Punctuation),
             # Builtin

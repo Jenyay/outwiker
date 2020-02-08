@@ -5,7 +5,7 @@
 
     Lexers for Objective-C family languages.
 
-    :copyright: Copyright 2006-2017 by the Pygments team, see AUTHORS.
+    :copyright: Copyright 2006-2019 by the Pygments team, see AUTHORS.
     :license: BSD, see LICENSE for details.
 """
 
@@ -66,7 +66,7 @@ def objective(baselexer):
                     'copy', 'retain', 'assign', 'unsafe_unretained', 'atomic', 'nonatomic',
                     'readonly', 'readwrite', 'setter', 'getter', 'typeof', 'in',
                     'out', 'inout', 'release', 'class', '@dynamic', '@optional',
-                    '@required', '@autoreleasepool'), suffix=r'\b'),
+                    '@required', '@autoreleasepool', '@import'), suffix=r'\b'),
                  Keyword),
                 (words(('id', 'instancetype', 'Class', 'IMP', 'SEL', 'BOOL',
                         'IBOutlet', 'IBAction', 'unichar'), suffix=r'\b'),

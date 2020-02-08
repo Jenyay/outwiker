@@ -5,7 +5,7 @@
 
     Lexers for various template engines' markup.
 
-    :copyright: Copyright 2006-2017 by the Pygments team, see AUTHORS.
+    :copyright: Copyright 2006-2019 by the Pygments team, see AUTHORS.
     :license: BSD, see LICENSE for details.
 """
 
@@ -226,7 +226,7 @@ class VelocityLexer(RegexLexer):
              'directiveparams'),
             (r'(#\{?)(' + identifier + r')(\}|\b)',
              bygroups(Comment.Preproc, Name.Function, Comment.Preproc)),
-            (r'\$\{?', Punctuation, 'variable')
+            (r'\$!?\{?', Punctuation, 'variable')
         ],
         'variable': [
             (identifier, Name.Variable),
@@ -249,7 +249,7 @@ class VelocityLexer(RegexLexer):
             (r'\]', Operator, '#pop')
         ],
         'funcparams': [
-            (r'\$\{?', Punctuation, 'variable'),
+            (r'\$!?\{?', Punctuation, 'variable'),
             (r'\s+', Text),
             (r'[,:]', Punctuation),
             (r'"(\\\\|\\"|[^"])*"', String.Double),
@@ -274,7 +274,7 @@ class VelocityLexer(RegexLexer):
             rv += 0.15
         if re.search(r'#\{?foreach\}?\(.+?\).*?#\{?end\}?', text):
             rv += 0.15
-        if re.search(r'\$\{?[a-zA-Z_]\w*(\([^)]*\))?'
+        if re.search(r'\$!?\{?[a-zA-Z_]\w*(\([^)]*\))?'
                      r'(\.\w+(\([^)]*\))?)*\}?', text):
             rv += 0.01
         return rv
@@ -1802,27 +1802,26 @@ class HandlebarsLexer(RegexLexer):
         'root': [
             (r'[^{]+', Other),
 
+				# Comment start {{!  }} or {{!-- 
             (r'\{\{!.*\}\}', Comment),
 
+				# HTML Escaping open {{{expression
             (r'(\{\{\{)(\s*)', bygroups(Comment.Special, Text), 'tag'),
+
+				# {{blockOpen {{#blockOpen {{/blockClose with optional tilde ~
+            (r'(\{\{)([#~/]+)([^\s}]*)', bygroups(Comment.Preproc, Number.Attribute,Number.Attribute), 'tag'),
             (r'(\{\{)(\s*)', bygroups(Comment.Preproc, Text), 'tag'),
         ],
 
         'tag': [
             (r'\s+', Text),
+				# HTML Escaping close }}}
             (r'\}\}\}', Comment.Special, '#pop'),
-            (r'\}\}', Comment.Preproc, '#pop'),
-
-            # Handlebars
-            (r'([#/]*)(each|if|unless|else|with|log|in(line)?)', bygroups(Keyword,
-             Keyword)),
-            (r'#\*inline', Keyword),
-
-            # General {{#block}}
-            (r'([#/])([\w-]+)', bygroups(Name.Function, Name.Function)),
+				# blockClose}}, includes optional tilde ~
+            (r'(~?)(\}\})', bygroups(Number, Comment.Preproc), '#pop'),
 
             # {{opt=something}}
-            (r'([\w-]+)(=)', bygroups(Name.Attribute, Operator)),
+            (r'([^\s}]+)(=)', bygroups(Name.Attribute, Operator)),
 
             # Partials {{> ...}}
             (r'(>)(\s*)(@partial-block)', bygroups(Keyword, Text, Keyword)),
@@ -1845,7 +1844,7 @@ class HandlebarsLexer(RegexLexer):
             include('generic'),
         ],
         'variable': [
-            (r'[a-zA-Z][\w-]*', Name.Variable),
+            (r'[()/@a-zA-Z][\w-]*', Name.Variable),
             (r'\.[\w-]+', Name.Variable),
             (r'(this\/|\.\/|(\.\.\/)+)[\w-]+', Name.Variable),
         ],

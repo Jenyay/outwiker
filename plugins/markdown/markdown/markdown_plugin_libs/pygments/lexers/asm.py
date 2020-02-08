@@ -5,7 +5,7 @@
 
     Lexers for assembly languages.
 
-    :copyright: Copyright 2006-2017 by the Pygments team, see AUTHORS.
+    :copyright: Copyright 2006-2019 by the Pygments team, see AUTHORS.
     :license: BSD, see LICENSE for details.
 """
 
@@ -37,6 +37,7 @@ class GasLexer(RegexLexer):
     char = r'[\w$.@-]'
     identifier = r'(?:[a-zA-Z$_]' + char + r'*|\.' + char + '+)'
     number = r'(?:0[xX][a-zA-Z0-9]+|\d+)'
+    register = '%' + identifier
 
     tokens = {
         'root': [
@@ -52,6 +53,7 @@ class GasLexer(RegexLexer):
             (string, String),
             ('@' + identifier, Name.Attribute),
             (number, Number.Integer),
+            (register, Name.Variable),
             (r'[\r\n]+', Text, '#pop'),
             (r'[;#].*?\n', Comment, '#pop'),
 
@@ -72,7 +74,7 @@ class GasLexer(RegexLexer):
             (identifier, Name.Constant),
             (number, Number.Integer),
             # Registers
-            ('%' + identifier, Name.Variable),
+            (register, Name.Variable),
             # Numeric constants
             ('$'+number, Number.Integer),
             (r"$'(.|\\')'", String.Char),
@@ -455,6 +457,10 @@ class NasmLexer(RegexLexer):
     filenames = ['*.asm', '*.ASM']
     mimetypes = ['text/x-nasm']
 
+    # Tasm uses the same file endings, but TASM is not as common as NASM, so
+    # we prioritize NASM higher by default
+    priority = 1.0
+
     identifier = r'[a-z$._?][\w$.?#@~]*'
     hexn = r'(?:0x[0-9a-f]+|$0[0-9a-f]*|[0-9]+[0-9a-f]*h)'
     octn = r'[0-7]+q'
@@ -468,9 +474,11 @@ class NasmLexer(RegexLexer):
                 r'mm[0-7]|cr[0-4]|dr[0-367]|tr[3-7]')
     wordop = r'seg|wrt|strict'
     type = r'byte|[dq]?word'
-    directives = (r'BITS|USE16|USE32|SECTION|SEGMENT|ABSOLUTE|EXTERN|GLOBAL|'
+    # Directives must be followed by whitespace, otherwise CPU will match
+    # cpuid for instance.
+    directives = (r'(?:BITS|USE16|USE32|SECTION|SEGMENT|ABSOLUTE|EXTERN|GLOBAL|'
                   r'ORG|ALIGN|STRUC|ENDSTRUC|COMMON|CPU|GROUP|UPPERCASE|IMPORT|'
-                  r'EXPORT|LIBRARY|MODULE')
+                  r'EXPORT|LIBRARY|MODULE)\s+')
 
     flags = re.IGNORECASE | re.MULTILINE
     tokens = {
@@ -517,6 +525,11 @@ class NasmLexer(RegexLexer):
             (type, Keyword.Type)
         ],
     }
+
+    def analyse_text(text):
+        # Probably TASM
+        if re.match(r'PROC', text, re.IGNORECASE):
+            return False
 
 
 class NasmObjdumpLexer(ObjdumpLexer):
@@ -611,6 +624,11 @@ class TasmLexer(RegexLexer):
             (type, Keyword.Type)
         ],
     }
+
+    def analyse_text(text):
+        # See above
+        if re.match(r'PROC', text, re.I):
+            return True
 
 
 class Ca65Lexer(RegexLexer):

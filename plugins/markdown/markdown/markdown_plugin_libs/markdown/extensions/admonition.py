@@ -9,19 +9,17 @@ Adds rST-style admonitions. Inspired by [rST][] feature with the same name.
 See <https://Python-Markdown.github.io/extensions/admonition>
 for documentation.
 
-Original code Copyright [Tiago Serafim](http://www.tiagoserafim.com/).
+Original code Copyright [Tiago Serafim](https://www.tiagoserafim.com/).
 
 All changes Copyright The Python Markdown Project
 
-License: [BSD](http://www.opensource.org/licenses/bsd-license.php)
+License: [BSD](https://opensource.org/licenses/bsd-license.php)
 
 """
 
-from __future__ import absolute_import
-from __future__ import unicode_literals
 from . import Extension
 from ..blockprocessors import BlockProcessor
-from ..util import etree
+import xml.etree.ElementTree as etree
 import re
 
 
@@ -61,7 +59,7 @@ class AdmonitionProcessor(BlockProcessor):
         if m:
             klass, title = self.get_class_and_title(m)
             div = etree.SubElement(parent, 'div')
-            div.set('class', '%s %s' % (self.CLASSNAME, klass))
+            div.set('class', '{} {}'.format(self.CLASSNAME, klass))
             if title:
                 p = etree.SubElement(div, 'p')
                 p.text = title

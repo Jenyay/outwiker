@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Python Markdown
 
@@ -20,8 +19,7 @@ Copyright 2004 Manfred Stienstra (the original version)
 License: BSD (see LICENSE.md for details).
 """
 
-from __future__ import unicode_literals
-from __future__ import absolute_import
+import xml.etree.ElementTree as etree
 from . import util
 
 
@@ -88,9 +86,9 @@ class BlockParser:
 
         """
         # Create a ElementTree from the lines
-        self.root = util.etree.Element(self.md.doc_tag)
+        self.root = etree.Element(self.md.doc_tag)
         self.parseChunk(self.root, '\n'.join(lines))
-        return util.etree.ElementTree(self.root)
+        return etree.ElementTree(self.root)
 
     def parseChunk(self, parent, text):
         """ Parse a chunk of markdown text and attach to given etree node.

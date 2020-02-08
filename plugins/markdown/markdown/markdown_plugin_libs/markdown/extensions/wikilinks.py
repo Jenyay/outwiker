@@ -11,22 +11,20 @@ Original code Copyright [Waylan Limberg](http://achinghead.com/).
 
 All changes Copyright The Python Markdown Project
 
-License: [BSD](http://www.opensource.org/licenses/bsd-license.php)
+License: [BSD](https://opensource.org/licenses/bsd-license.php)
 
 '''
 
-from __future__ import absolute_import
-from __future__ import unicode_literals
 from . import Extension
 from ..inlinepatterns import InlineProcessor
-from ..util import etree
+import xml.etree.ElementTree as etree
 import re
 
 
 def build_url(label, base, end):
     """ Build a url from the label, a base, and an end. """
     clean_label = re.sub(r'([ ]+_)|(_[ ]+)|([ ]+)', '_', label)
-    return '%s%s%s' % (base, clean_label, end)
+    return '{}{}{}'.format(base, clean_label, end)
 
 
 class WikiLinkExtension(Extension):
@@ -39,7 +37,7 @@ class WikiLinkExtension(Extension):
             'build_url': [build_url, 'Callable formats URL from label.'],
         }
 
-        super(WikiLinkExtension, self).__init__(**kwargs)
+        super().__init__(**kwargs)
 
     def extendMarkdown(self, md):
         self.md = md
@@ -53,7 +51,7 @@ class WikiLinkExtension(Extension):
 
 class WikiLinksInlineProcessor(InlineProcessor):
     def __init__(self, pattern, config):
-        super(WikiLinksInlineProcessor, self).__init__(pattern)
+        super().__init__(pattern)
         self.config = config
 
     def handleMatch(self, m, data):

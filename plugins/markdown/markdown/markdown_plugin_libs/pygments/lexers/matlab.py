@@ -5,7 +5,7 @@
 
     Lexers for Matlab and related languages.
 
-    :copyright: Copyright 2006-2017 by the Pygments team, see AUTHORS.
+    :copyright: Copyright 2006-2019 by the Pygments team, see AUTHORS.
     :license: BSD, see LICENSE for details.
 """
 
@@ -72,6 +72,8 @@ class MatlabLexer(RegexLexer):
              "hilb", "invhilb", "magic", "pascal", "rosser", "toeplitz", "vander",
              "wilkinson")
 
+    _operators = r'-|==|~=|<=|>=|<|>|&&|&|~|\|\|?|\.\*|\*|\+|\.\^|\.\\|\.\/|\/|\\'
+
     tokens = {
         'root': [
             # line starting with '!' is sent as a system command.  not sure what
@@ -79,14 +81,17 @@ class MatlabLexer(RegexLexer):
             (r'^!.*', String.Other),
             (r'%\{\s*\n', Comment.Multiline, 'blockcomment'),
             (r'%.*$', Comment),
-            (r'^\s*function', Keyword, 'deffunc'),
+            (r'^\s*function\b', Keyword, 'deffunc'),
 
             # from 'iskeyword' on version 7.11 (R2010):
-            (words((
-                'break', 'case', 'catch', 'classdef', 'continue', 'else', 'elseif',
-                'end', 'enumerated', 'events', 'for', 'function', 'global', 'if',
-                'methods', 'otherwise', 'parfor', 'persistent', 'properties',
-                'return', 'spmd', 'switch', 'try', 'while'), suffix=r'\b'),
+            # Check that there is no preceding dot, as keywords are valid field
+            # names.
+            (words(('break', 'case', 'catch', 'classdef', 'continue', 'else',
+                    'elseif', 'end', 'enumerated', 'events', 'for', 'function',
+                    'global', 'if', 'methods', 'otherwise', 'parfor',
+                    'persistent', 'properties', 'return', 'spmd', 'switch',
+                    'try', 'while'),
+                   prefix=r'(?<!\.)', suffix=r'\b'),
              Keyword),
 
             ("(" + "|".join(elfun + specfun + elmat) + r')\b',  Name.Builtin),
@@ -94,10 +99,22 @@ class MatlabLexer(RegexLexer):
             # line continuation with following comment:
             (r'\.\.\..*$', Comment),
 
+            # command form:
+            # "How MATLAB Recognizes Command Syntax" specifies that an operator
+            # is recognized if it is either surrounded by spaces or by no
+            # spaces on both sides; only the former case matters for us.  (This
+            # allows distinguishing `cd ./foo` from `cd ./ foo`.)
+            (r'(?:^|(?<=;))\s*\w+\s+(?!=|\(|(%s)\s+)' % _operators, Name,
+             'commandargs'),
+
             # operators:
-            (r'-|==|~=|<|>|<=|>=|&&|&|~|\|\|?', Operator),
-            # operators requiring escape for re:
-            (r'\.\*|\*|\+|\.\^|\.\\|\.\/|\/|\\', Operator),
+            (_operators, Operator),
+
+            # numbers (must come before punctuation to handle `.5`; cannot use
+            # `\b` due to e.g. `5. + .5`).
+            (r'(?<!\w)((\d+\.\d*)|(\d*\.\d+))([eEf][+-]?\d+)?(?!\w)', Number.Float),
+            (r'\b\d+[eEf][+-]?[0-9]+\b', Number.Float),
+            (r'\b\d+\b', Number.Integer),
 
             # punctuation:
             (r'\[|\]|\(|\)|\{|\}|:|@|\.|,', Punctuation),
@@ -107,16 +124,11 @@ class MatlabLexer(RegexLexer):
             # (not great, but handles common cases...)
             (r'(?<=[\w)\].])\'+', Operator),
 
-            (r'(\d+\.\d*|\d*\.\d+)([eEf][+-]?[0-9]+)?', Number.Float),
-            (r'\d+[eEf][+-]?[0-9]+', Number.Float),
-            (r'\d+', Number.Integer),
+            (r'"(""|[^"])*"', String),
 
             (r'(?<![\w)\].])\'', String, 'string'),
             (r'[a-zA-Z_]\w*', Name),
             (r'.', Text),
-        ],
-        'string': [
-            (r'[^\']*\'', String, '#pop')
         ],
         'blockcomment': [
             (r'^\s*%\}', Comment.Multiline, '#pop'),
@@ -131,12 +143,28 @@ class MatlabLexer(RegexLexer):
             # function with no args
             (r'(\s*)([a-zA-Z_]\w*)', bygroups(Text, Name.Function), '#pop'),
         ],
+        'string': [
+            (r"[^']*'", String, '#pop'),
+        ],
+        'commandargs': [
+            ("'[^']*'", String),
+            ("[^';\n]+", String),
+            (";?\n?", Punctuation, '#pop'),
+        ]
     }
 
     def analyse_text(text):
-        if re.match(r'^\s*%', text, re.M):  # comment
+        # function declaration.
+        first_non_comment = next((line for line in text.splitlines()
+                                  if not re.match(r'^\s*%', text)), '').strip()
+        if (first_non_comment.startswith('function')
+                and '{' not in first_non_comment):
+            return 1.
+        # comment
+        elif re.match(r'^\s*%', text, re.M):
             return 0.2
-        elif re.match(r'^!\w+', text, re.M):  # system cmd
+        # system cmd
+        elif re.match(r'^!\w+', text, re.M):
             return 0.2
 
 
@@ -536,7 +564,7 @@ class OctaveLexer(RegexLexer):
         'root': [
             # We should look into multiline comments
             (r'[%#].*$', Comment),
-            (r'^\s*function', Keyword, 'deffunc'),
+            (r'^\s*function\b', Keyword, 'deffunc'),
 
             # from 'iskeyword' on hg changeset 8cc154f45e37
             (words((
@@ -609,7 +637,7 @@ class ScilabLexer(RegexLexer):
     tokens = {
         'root': [
             (r'//.*?$', Comment.Single),
-            (r'^\s*function', Keyword, 'deffunc'),
+            (r'^\s*function\b', Keyword, 'deffunc'),
 
             (words((
                 '__FILE__', '__LINE__', 'break', 'case', 'catch', 'classdef', 'continue', 'do', 'else',

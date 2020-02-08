@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Python Markdown
 
@@ -61,10 +60,10 @@ So, we apply the expressions in the following order:
 * finally we apply strong and emphasis
 """
 
-from __future__ import absolute_import
-from __future__ import unicode_literals
 from . import util
+from collections import namedtuple
 import re
+import xml.etree.ElementTree as etree
 try:  # pragma: no cover
     from html import entities
 except ImportError:  # pragma: no cover
@@ -91,12 +90,8 @@ def build_inlinepatterns(md, **kwargs):
     inlinePatterns.register(HtmlInlineProcessor(HTML_RE, md), 'html', 90)
     inlinePatterns.register(HtmlInlineProcessor(ENTITY_RE, md), 'entity', 80)
     inlinePatterns.register(SimpleTextInlineProcessor(NOT_STRONG_RE), 'not_strong', 70)
-    inlinePatterns.register(DoubleTagInlineProcessor(EM_STRONG_RE, 'strong,em'), 'em_strong', 60)
-    inlinePatterns.register(DoubleTagInlineProcessor(STRONG_EM_RE, 'em,strong'), 'strong_em', 50)
-    inlinePatterns.register(SimpleTagInlineProcessor(STRONG_RE, 'strong'), 'strong', 40)
-    inlinePatterns.register(SimpleTagInlineProcessor(EMPHASIS_RE, 'em'), 'emphasis', 30)
-    inlinePatterns.register(SimpleTagInlineProcessor(SMART_STRONG_RE, 'strong'), 'strong2', 20)
-    inlinePatterns.register(SimpleTagInlineProcessor(SMART_EMPHASIS_RE, 'em'), 'emphasis2', 10)
+    inlinePatterns.register(AsteriskProcessor(r'\*'), 'em_strong', 60)
+    inlinePatterns.register(UnderscoreProcessor(r'_'), 'em_strong2', 50)
     return inlinePatterns
 
 
@@ -125,11 +120,23 @@ SMART_STRONG_RE = r'(?<!\w)(_{2})(?!_)(.+?)(?<!_)\1(?!\w)'
 # _smart_emphasis_
 SMART_EMPHASIS_RE = r'(?<!\w)(_)(?!_)(.+?)(?<!_)\1(?!\w)'
 
+# __strong _em__
+SMART_STRONG_EM_RE = r'(?<!\w)(\_)\1(?!\1)(.+?)(?<!\w)\1(?!\1)(.+?)\1{3}(?!\w)'
+
 # ***strongem*** or ***em*strong**
-EM_STRONG_RE = r'(\*|_)\1{2}(.+?)\1(.*?)\1{2}'
+EM_STRONG_RE = r'(\*)\1{2}(.+?)\1(.*?)\1{2}'
+
+# ___strongem___ or ___em_strong__
+EM_STRONG2_RE = r'(_)\1{2}(.+?)\1(.*?)\1{2}'
 
 # ***strong**em*
-STRONG_EM_RE = r'(\*|_)\1{2}(.+?)\1{2}(.*?)\1'
+STRONG_EM_RE = r'(\*)\1{2}(.+?)\1{2}(.*?)\1'
+
+# ___strong__em_
+STRONG_EM2_RE = r'(_)\1{2}(.+?)\1{2}(.*?)\1'
+
+# __strong_em___
+STRONG_EM3_RE = r'(\*)\1(?!\1)(.+?)\1(?!\1)(.+?)\1{3}'
 
 # [text](url) or [text](<url>) or [text](url "title")
 LINK_RE = NOIMG + r'\['
@@ -153,7 +160,7 @@ AUTOLINK_RE = r'<((?:[Ff]|[Hh][Tt])[Tt][Pp][Ss]?://[^<>]*)>'
 AUTOMAIL_RE = r'<([^<> !]*@[^@<> ]*)>'
 
 # <...>
-HTML_RE = r'(\<([a-zA-Z/][^\>]*?|\!--.*?--)\>)'
+HTML_RE = r'(<([a-zA-Z/][^<>]*|!--(?:(?!<!--|-->).)*--)>)'
 
 # "&#38;" (decimal) or "&#x26;" (hex) or "&amp;" (named)
 ENTITY_RE = r'(&(?:\#[0-9]+|\#x[0-9a-fA-F]+|[a-zA-Z0-9]+);)'
@@ -171,13 +178,17 @@ def dequote(string):
         return string
 
 
+class EmStrongItem(namedtuple('EmStrongItem', ['pattern', 'builder', 'tags'])):
+    """Emphasis/strong pattern item."""
+
+
 """
 The pattern classes
 -----------------------------------------------------------------------------
 """
 
 
-class Pattern(object):  # pragma: no cover
+class Pattern:  # pragma: no cover
     """Base class that inline patterns subclass. """
 
     ANCESTOR_EXCLUDES = tuple()
@@ -234,7 +245,7 @@ class Pattern(object):  # pragma: no cover
             id = m.group(1)
             if id in stash:
                 value = stash.get(id)
-                if isinstance(value, util.string_type):
+                if isinstance(value, str):
                     return value
                 else:
                     # An etree Element - return text content only
@@ -308,7 +319,7 @@ class EscapeInlineProcessor(InlineProcessor):
     def handleMatch(self, m, data):
         char = m.group(1)
         if char in self.md.ESCAPED_CHARS:
-            return '%s%s%s' % (util.STX, ord(char), util.ETX), m.start(0), m.end(0)
+            return '{}{}{}'.format(util.STX, ord(char), util.ETX), m.start(0), m.end(0)
         else:
             return None, m.start(0), m.end(0)
 
@@ -324,7 +335,7 @@ class SimpleTagPattern(Pattern):  # pragma: no cover
         self.tag = tag
 
     def handleMatch(self, m):
-        el = util.etree.Element(self.tag)
+        el = etree.Element(self.tag)
         el.text = m.group(3)
         return el
 
@@ -339,8 +350,8 @@ class SimpleTagInlineProcessor(InlineProcessor):
         InlineProcessor.__init__(self, pattern)
         self.tag = tag
 
-    def handleMatch(self, m, data):
-        el = util.etree.Element(self.tag)
+    def handleMatch(self, m, data):  # pragma: no cover
+        el = etree.Element(self.tag)
         el.text = m.group(2)
         return el, m.start(0), m.end(0)
 
@@ -348,25 +359,25 @@ class SimpleTagInlineProcessor(InlineProcessor):
 class SubstituteTagPattern(SimpleTagPattern):  # pragma: no cover
     """ Return an element of type `tag` with no children. """
     def handleMatch(self, m):
-        return util.etree.Element(self.tag)
+        return etree.Element(self.tag)
 
 
 class SubstituteTagInlineProcessor(SimpleTagInlineProcessor):
     """ Return an element of type `tag` with no children. """
     def handleMatch(self, m, data):
-        return util.etree.Element(self.tag), m.start(0), m.end(0)
+        return etree.Element(self.tag), m.start(0), m.end(0)
 
 
 class BacktickInlineProcessor(InlineProcessor):
     """ Return a `<code>` element containing the matching text. """
     def __init__(self, pattern):
         InlineProcessor.__init__(self, pattern)
-        self.ESCAPED_BSLASH = '%s%s%s' % (util.STX, ord('\\'), util.ETX)
+        self.ESCAPED_BSLASH = '{}{}{}'.format(util.STX, ord('\\'), util.ETX)
         self.tag = 'code'
 
     def handleMatch(self, m, data):
         if m.group(3):
-            el = util.etree.Element(self.tag)
+            el = etree.Element(self.tag)
             el.text = util.AtomicString(util.code_escape(m.group(3).strip()))
             return el, m.start(0), m.end(0)
         else:
@@ -381,8 +392,8 @@ class DoubleTagPattern(SimpleTagPattern):  # pragma: no cover
     """
     def handleMatch(self, m):
         tag1, tag2 = self.tag.split(",")
-        el1 = util.etree.Element(tag1)
-        el2 = util.etree.SubElement(el1, tag2)
+        el1 = etree.Element(tag1)
+        el2 = etree.SubElement(el1, tag2)
         el2.text = m.group(3)
         if len(m.groups()) == 5:
             el2.tail = m.group(4)
@@ -395,10 +406,10 @@ class DoubleTagInlineProcessor(SimpleTagInlineProcessor):
     Useful for strong emphasis etc.
 
     """
-    def handleMatch(self, m, data):
+    def handleMatch(self, m, data):  # pragma: no cover
         tag1, tag2 = self.tag.split(",")
-        el1 = util.etree.Element(tag1)
-        el2 = util.etree.SubElement(el1, tag2)
+        el1 = etree.Element(tag1)
+        el2 = etree.SubElement(el1, tag2)
         el2.text = m.group(2)
         if len(m.groups()) == 3:
             el2.tail = m.group(3)
@@ -431,6 +442,154 @@ class HtmlInlineProcessor(InlineProcessor):
         return util.INLINE_PLACEHOLDER_RE.sub(get_stash, text)
 
 
+class AsteriskProcessor(InlineProcessor):
+    """Emphasis processor for handling strong and em matches inside asterisks."""
+
+    PATTERNS = [
+        EmStrongItem(re.compile(EM_STRONG_RE, re.DOTALL | re.UNICODE), 'double', 'strong,em'),
+        EmStrongItem(re.compile(STRONG_EM_RE, re.DOTALL | re.UNICODE), 'double', 'em,strong'),
+        EmStrongItem(re.compile(STRONG_EM3_RE, re.DOTALL | re.UNICODE), 'double2', 'strong,em'),
+        EmStrongItem(re.compile(STRONG_RE, re.DOTALL | re.UNICODE), 'single', 'strong'),
+        EmStrongItem(re.compile(EMPHASIS_RE, re.DOTALL | re.UNICODE), 'single', 'em')
+    ]
+
+    def build_single(self, m, tag, idx):
+        """Return single tag."""
+        el1 = etree.Element(tag)
+        text = m.group(2)
+        self.parse_sub_patterns(text, el1, None, idx)
+        return el1
+
+    def build_double(self, m, tags, idx):
+        """Return double tag."""
+
+        tag1, tag2 = tags.split(",")
+        el1 = etree.Element(tag1)
+        el2 = etree.Element(tag2)
+        text = m.group(2)
+        self.parse_sub_patterns(text, el2, None, idx)
+        el1.append(el2)
+        if len(m.groups()) == 3:
+            text = m.group(3)
+            self.parse_sub_patterns(text, el1, el2, idx)
+        return el1
+
+    def build_double2(self, m, tags, idx):
+        """Return double tags (variant 2): `<strong>text <em>text</em></strong>`."""
+
+        tag1, tag2 = tags.split(",")
+        el1 = etree.Element(tag1)
+        el2 = etree.Element(tag2)
+        text = m.group(2)
+        self.parse_sub_patterns(text, el1, None, idx)
+        text = m.group(3)
+        el1.append(el2)
+        self.parse_sub_patterns(text, el2, None, idx)
+        return el1
+
+    def parse_sub_patterns(self, data, parent, last, idx):
+        """
+        Parses sub patterns.
+
+        `data` (`str`):
+            text to evaluate.
+
+        `parent` (`etree.Element`):
+            Parent to attach text and sub elements to.
+
+        `last` (`etree.Element`):
+            Last appended child to parent. Can also be None if parent has no children.
+
+        `idx` (`int`):
+            Current pattern index that was used to evaluate the parent.
+
+        """
+
+        offset = 0
+        pos = 0
+
+        length = len(data)
+        while pos < length:
+            # Find the start of potential emphasis or strong tokens
+            if self.compiled_re.match(data, pos):
+                matched = False
+                # See if the we can match an emphasis/strong pattern
+                for index, item in enumerate(self.PATTERNS):
+                    # Only evaluate patterns that are after what was used on the parent
+                    if index <= idx:
+                        continue
+                    m = item.pattern.match(data, pos)
+                    if m:
+                        # Append child nodes to parent
+                        # Text nodes should be appended to the last
+                        # child if present, and if not, it should
+                        # be added as the parent's text node.
+                        text = data[offset:m.start(0)]
+                        if text:
+                            if last is not None:
+                                last.tail = text
+                            else:
+                                parent.text = text
+                        el = self.build_element(m, item.builder, item.tags, index)
+                        parent.append(el)
+                        last = el
+                        # Move our position past the matched hunk
+                        offset = pos = m.end(0)
+                        matched = True
+                if not matched:
+                    # We matched nothing, move on to the next character
+                    pos += 1
+            else:
+                # Increment position as no potential emphasis start was found.
+                pos += 1
+
+        # Append any leftover text as a text node.
+        text = data[offset:]
+        if text:
+            if last is not None:
+                last.tail = text
+            else:
+                parent.text = text
+
+    def build_element(self, m, builder, tags, index):
+        """Element builder."""
+
+        if builder == 'double2':
+            return self.build_double2(m, tags, index)
+        elif builder == 'double':
+            return self.build_double(m, tags, index)
+        else:
+            return self.build_single(m, tags, index)
+
+    def handleMatch(self, m, data):
+        """Parse patterns."""
+
+        el = None
+        start = None
+        end = None
+
+        for index, item in enumerate(self.PATTERNS):
+            m1 = item.pattern.match(data, m.start(0))
+            if m1:
+                start = m1.start(0)
+                end = m1.end(0)
+                el = self.build_element(m1, item.builder, item.tags, index)
+                break
+        return el, start, end
+
+
+class UnderscoreProcessor(AsteriskProcessor):
+    """Emphasis processor for handling strong and em matches inside underscores."""
+
+    PATTERNS = [
+        EmStrongItem(re.compile(EM_STRONG2_RE, re.DOTALL | re.UNICODE), 'double', 'strong,em'),
+        EmStrongItem(re.compile(STRONG_EM2_RE, re.DOTALL | re.UNICODE), 'double', 'em,strong'),
+        EmStrongItem(re.compile(SMART_STRONG_EM_RE, re.DOTALL | re.UNICODE), 'double2', 'strong,em'),
+        EmStrongItem(re.compile(SMART_STRONG_RE, re.DOTALL | re.UNICODE), 'single', 'strong'),
+        EmStrongItem(re.compile(SMART_EMPHASIS_RE, re.DOTALL | re.UNICODE), 'single', 'em')
+    ]
+
+
 class LinkInlineProcessor(InlineProcessor):
     """ Return a link element from the given match. """
     RE_LINK = re.compile(r'''\(\s*(?:(<[^<>]*>)\s*(?:('[^']*'|"[^"]*")\s*)?\))?''', re.DOTALL | re.UNICODE)
@@ -446,7 +605,7 @@ class LinkInlineProcessor(InlineProcessor):
         if not handled:
             return None, None, None
 
-        el = util.etree.Element("a")
+        el = etree.Element("a")
         el.text = text
 
         el.set("href", href)
@@ -493,7 +652,7 @@ class LinkInlineProcessor(InlineProcessor):
             # Track last character
             last = ''
 
-            for pos in util.iterrange(index, len(data)):
+            for pos in range(index, len(data)):
                 c = data[pos]
                 if c == '(':
                     # Count nested (
@@ -579,7 +738,7 @@ class LinkInlineProcessor(InlineProcessor):
         """
         bracket_count = 1
         text = []
-        for pos in util.iterrange(index, len(data)):
+        for pos in range(index, len(data)):
             c = data[pos]
             if c == ']':
                 bracket_count -= 1
@@ -604,7 +763,7 @@ class ImageInlineProcessor(LinkInlineProcessor):
         if not handled:
             return None, None, None
 
-        el = util.etree.Element("img")
+        el = etree.Element("img")
 
         el.set("src", src)
 
@@ -656,7 +815,7 @@ class ReferenceInlineProcessor(LinkInlineProcessor):
         return id, end, True
 
     def makeTag(self, href, title, text):
-        el = util.etree.Element('a')
+        el = etree.Element('a')
 
         el.set('href', href)
         if title:
@@ -677,7 +836,7 @@ class ShortReferenceInlineProcessor(ReferenceInlineProcessor):
 class ImageReferenceInlineProcessor(ReferenceInlineProcessor):
     """ Match to a stored reference and return img element. """
     def makeTag(self, href, title, text):
-        el = util.etree.Element("img")
+        el = etree.Element("img")
         el.set("src", href)
         if title:
             el.set("title", title)
@@ -688,7 +847,7 @@ class ImageReferenceInlineProcessor(ReferenceInlineProcessor):
 class AutolinkInlineProcessor(InlineProcessor):
     """ Return a link Element given an autolink (`<http://example/com>`). """
     def handleMatch(self, m, data):
-        el = util.etree.Element("a")
+        el = etree.Element("a")
         el.set('href', self.unescape(m.group(1)))
         el.text = util.AtomicString(m.group(1))
         return el, m.start(0), m.end(0)
@@ -699,7 +858,7 @@ class AutomailInlineProcessor(InlineProcessor):
     Return a mailto link Element given an automail link (`<foo@example.com>`).
     """
     def handleMatch(self, m, data):
-        el = util.etree.Element('a')
+        el = etree.Element('a')
         email = self.unescape(m.group(1))
         if email.startswith("mailto:"):
             email = email[len("mailto:"):]
@@ -708,7 +867,7 @@ class AutomailInlineProcessor(InlineProcessor):
             """Return entity definition by code, or the code if not defined."""
             entity = entities.codepoint2name.get(code)
             if entity:
-                return "%s%s;" % (util.AMP_SUBSTITUTE, entity)
+                return "{}{};".format(util.AMP_SUBSTITUTE, entity)
             else:
                 return "%s#%d;" % (util.AMP_SUBSTITUTE, code)
 

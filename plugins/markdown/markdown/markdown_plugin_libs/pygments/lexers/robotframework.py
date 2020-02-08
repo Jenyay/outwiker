@@ -5,7 +5,7 @@
 
     Lexer for Robot Framework.
 
-    :copyright: Copyright 2006-2017 by the Pygments team, see AUTHORS.
+    :copyright: Copyright 2006-2019 by the Pygments team, see AUTHORS.
     :license: BSD, see LICENSE for details.
 """
 
@@ -64,7 +64,7 @@ class RobotFrameworkLexer(Lexer):
     """
     name = 'RobotFramework'
     aliases = ['robotframework']
-    filenames = ['*.txt', '*.robot']
+    filenames = ['*.robot']
     mimetypes = ['text/x-robotframework']
 
     def __init__(self, **options):

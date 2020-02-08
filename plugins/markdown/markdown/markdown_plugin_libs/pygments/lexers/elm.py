@@ -5,7 +5,7 @@
 
     Lexer for the Elm programming language.
 
-    :copyright: Copyright 2006-2017 by the Pygments team, see AUTHORS.
+    :copyright: Copyright 2006-2019 by the Pygments team, see AUTHORS.
     :license: BSD, see LICENSE for details.
 """
 
@@ -77,7 +77,7 @@ class ElmLexer(RegexLexer):
             (words((builtinOps), prefix=r'\(', suffix=r'\)'), Name.Function),
 
             # Infix Operators
-            (words((builtinOps)), Name.Function),
+            (words(builtinOps), Name.Function),
 
             # Numbers
             include('numbers'),
