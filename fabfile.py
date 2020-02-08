@@ -307,7 +307,7 @@ def site_versions():
                                      u'Dev. version'))
     print(u'-' * 60)
     for localAppInfo in app_list:
-        url = localAppInfo.app_info_url
+        url = localAppInfo.website
         name = localAppInfo.app_name
 
         print(u'{:.<20}'.format(name), end=u'')
