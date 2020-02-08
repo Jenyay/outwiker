@@ -5,7 +5,7 @@
 
     Command line interface.
 
-    :copyright: Copyright 2006-2017 by the Pygments team, see AUTHORS.
+    :copyright: Copyright 2006-2019 by the Pygments team, see AUTHORS.
     :license: BSD, see LICENSE for details.
 """
 
@@ -233,7 +233,7 @@ def main_inner(popts, args, usage):
         return 0
 
     if opts.pop('-V', None) is not None:
-        print('Pygments version %s, (c) 2006-2017 by Georg Brandl.' % __version__)
+        print('Pygments version %s, (c) 2006-2019 by Georg Brandl.' % __version__)
         return 0
 
     # handle ``pygmentize -L``
@@ -554,7 +554,7 @@ def main(args=sys.argv):
                   file=sys.stderr)
             print('Please report the whole traceback to the issue tracker at',
                   file=sys.stderr)
-            print('<https://bitbucket.org/birkenfeld/pygments-main/issues>.',
+            print('<https://github.com/pygments/pygments/issues>.',
                   file=sys.stderr)
             print('*' * 65, file=sys.stderr)
             print(file=sys.stderr)

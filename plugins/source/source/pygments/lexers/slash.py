@@ -6,15 +6,13 @@
     Lexer for the `Slash <https://github.com/arturadib/Slash-A>`_ programming
     language.
 
-    :copyright: Copyright 2012 by GitHub, Inc
+    :copyright: Copyright 2006-2019 by the Pygments team, see AUTHORS.
     :license: BSD, see LICENSE for details.
 """
 
-import re
-
 from pygments.lexer import ExtendedRegexLexer, bygroups, DelegatingLexer
 from pygments.token import Name, Number, String, Comment, Punctuation, \
-     Other, Keyword, Operator, Whitespace
+    Other, Keyword, Operator, Whitespace
 
 __all__ = ['SlashLexer']
 
@@ -28,7 +26,7 @@ class SlashLanguageLexer(ExtendedRegexLexer):
     def right_angle_bracket(lexer, match, ctx):
         if len(ctx.stack) > 1 and ctx.stack[-2] == "string":
             ctx.stack.pop()
-        yield match.start(), String.Interpol, "}"
+        yield match.start(), String.Interpol, u"}"
         ctx.pos = match.end()
         pass
 

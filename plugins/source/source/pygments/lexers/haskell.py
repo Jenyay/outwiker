@@ -5,7 +5,7 @@
 
     Lexers for Haskell and related languages.
 
-    :copyright: Copyright 2006-2017 by the Pygments team, see AUTHORS.
+    :copyright: Copyright 2006-2019 by the Pygments team, see AUTHORS.
     :license: BSD, see LICENSE for details.
 """
 
@@ -73,7 +73,8 @@ class HaskellLexer(RegexLexer):
             (r'[:!#$%&*+.\\/<=>?@^|~-]+', Operator),  # Other operators
             #  Numbers
             (r'0[xX]_*[\da-fA-F](_*[\da-fA-F])*_*[pP][+-]?\d(_*\d)*', Number.Float),
-            (r'0[xX]_*[\da-fA-F](_*[\da-fA-F])*\.[\da-fA-F](_*[\da-fA-F])*(_*[pP][+-]?\d(_*\d)*)?', Number.Float),
+            (r'0[xX]_*[\da-fA-F](_*[\da-fA-F])*\.[\da-fA-F](_*[\da-fA-F])*'
+             r'(_*[pP][+-]?\d(_*\d)*)?', Number.Float),
             (r'\d(_*\d)*_*[eE][+-]?\d(_*\d)*', Number.Float),
             (r'\d(_*\d)*\.\d(_*\d)*(_*[eE][+-]?\d(_*\d)*)?', Number.Float),
             (r'0[bB]_*[01](_*[01])*', Number.Bin),
@@ -324,10 +325,10 @@ class AgdaLexer(RegexLexer):
             #  Identifiers
             (r'\b(%s)(?!\')\b' % '|'.join(reserved), Keyword.Reserved),
             (r'(import|module)(\s+)', bygroups(Keyword.Reserved, Text), 'module'),
-            (r'\b(Set|Prop)\b', Keyword.Type),
+            (u'\\b(Set|Prop)[\u2080-\u2089]*\\b', Keyword.Type),
             #  Special Symbols
             (r'(\(|\)|\{|\})', Operator),
-            (u'(\\.{1,3}|\\||\u039B|\u2200|\u2192|:|=|->)', Operator.Word),
+            (u'(\\.{1,3}|\\||\u03BB|\u2200|\u2192|:|=|->)', Operator.Word),
             #  Numbers
             (r'\d+[eE][+-]?\d+', Number.Float),
             (r'\d+\.\d+([eE][+-]?\d+)?', Number.Float),
@@ -443,8 +444,8 @@ class CryptolLexer(RegexLexer):
             (r'[A-Z]\w*', Keyword.Type),
             (r'(_[\w\']+|[a-z][\w\']*)', Name.Function),
             # TODO: these don't match the comments in docs, remove.
-            #(r'--(?![!#$%&*+./<=>?@^|_~:\\]).*?$', Comment.Single),
-            #(r'{-', Comment.Multiline, 'comment'),
+            # (r'--(?![!#$%&*+./<=>?@^|_~:\\]).*?$', Comment.Single),
+            # (r'{-', Comment.Multiline, 'comment'),
             (r',', Punctuation),
             (r'[:!#$%&*+.\\/<=>?@^|~-]+', Operator),
             # (HACK, but it makes sense to push two instances, believe me)
@@ -480,10 +481,10 @@ class CryptolLexer(RegexLexer):
         ],
     }
 
-    EXTRA_KEYWORDS = set(('join', 'split', 'reverse', 'transpose', 'width',
-                          'length', 'tail', '<<', '>>', '<<<', '>>>', 'const',
-                          'reg', 'par', 'seq', 'ASSERT', 'undefined', 'error',
-                          'trace'))
+    EXTRA_KEYWORDS = {'join', 'split', 'reverse', 'transpose', 'width',
+                      'length', 'tail', '<<', '>>', '<<<', '>>>', 'const',
+                      'reg', 'par', 'seq', 'ASSERT', 'undefined', 'error',
+                      'trace'}
 
     def get_tokens_unprocessed(self, text):
         stack = ['root']

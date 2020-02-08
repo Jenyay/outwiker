@@ -5,7 +5,7 @@
 
     Formatter for Pixmap output.
 
-    :copyright: Copyright 2006-2017 by the Pygments team, see AUTHORS.
+    :copyright: Copyright 2006-2019 by the Pygments team, see AUTHORS.
     :license: BSD, see LICENSE for details.
 """
 
@@ -46,9 +46,9 @@ STYLES = {
 }
 
 # A sane default for modern systems
-DEFAULT_FONT_NAME_NIX = 'Bitstream Vera Sans Mono'
+DEFAULT_FONT_NAME_NIX = 'DejaVu Sans Mono'
 DEFAULT_FONT_NAME_WIN = 'Courier New'
-DEFAULT_FONT_NAME_MAC = 'Courier New'
+DEFAULT_FONT_NAME_MAC = 'Menlo'
 
 
 class PilNotAvailable(ImportError):
@@ -125,8 +125,8 @@ class FontManager(object):
         for font_dir in (os.path.join(os.getenv("HOME"), 'Library/Fonts/'),
                          '/Library/Fonts/', '/System/Library/Fonts/'):
             font_map.update(
-                ((os.path.splitext(f)[0].lower(), os.path.join(font_dir, f))
-                    for f in os.listdir(font_dir) if f.lower().endswith('ttf')))
+                (os.path.splitext(f)[0].lower(), os.path.join(font_dir, f))
+                for f in os.listdir(font_dir) if f.lower().endswith('ttf'))
 
         for name in STYLES['NORMAL']:
             path = self._get_mac_font_path(font_map, self.font_name, name)
@@ -237,7 +237,8 @@ class ImageFormatter(Formatter):
         bold and italic fonts will be generated.  This really should be a
         monospace font to look sane.
 
-        Default: "Bitstream Vera Sans Mono" on Windows, Courier New on \\*nix
+        Default: "Courier New" on Windows, "Menlo" on Mac OS, and
+                 "DejaVu Sans Mono" on \\*nix
 
     `font_size`
         The font size in points to be used.
@@ -521,7 +522,8 @@ class ImageFormatter(Formatter):
         rectw = self.image_pad + self.line_number_width - self.line_number_pad
         draw.rectangle([(0, 0), (rectw, recth)],
                        fill=self.line_number_bg)
-        draw.line([(rectw, 0), (rectw, recth)], fill=self.line_number_fg)
+        if self.line_number_separator:
+            draw.line([(rectw, 0), (rectw, recth)], fill=self.line_number_fg)
         del draw
 
     def format(self, tokensource, outfile):

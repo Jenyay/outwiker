@@ -5,7 +5,7 @@
 
     Format colored console output.
 
-    :copyright: Copyright 2006-2017 by the Pygments team, see AUTHORS.
+    :copyright: Copyright 2006-2019 by the Pygments team, see AUTHORS.
     :license: BSD, see LICENSE for details.
 """
 
@@ -30,7 +30,7 @@ light_colors = ["brightblack", "brightred", "brightgreen", "brightyellow", "brig
 x = 30
 for d, l in zip(dark_colors, light_colors):
     codes[d] = esc + "%im" % x
-    codes[l] = esc + "%i;01m" % x
+    codes[l] = esc + "%im" % (60 + x)
     x += 1
 
 del d, l, x

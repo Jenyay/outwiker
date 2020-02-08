@@ -41,6 +41,11 @@ def escape_html(text, table=_escape_html_table):
     """Escape &, <, > as well as single and double quotes for HTML."""
     return text.translate(table)
 
+def webify(color):
+    if color.startswith('calc') or color.startswith('var'):
+        return color
+    else:
+        return '#' + color
 
 def _get_ttype_class(ttype):
     fname = STANDARD_TYPES.get(ttype)
@@ -430,7 +435,7 @@ class HtmlFormatter(Formatter):
         self.linenostep = abs(get_int_opt(options, 'linenostep', 1))
         self.linenospecial = abs(get_int_opt(options, 'linenospecial', 0))
         self.nobackground = get_bool_opt(options, 'nobackground', False)
-        self.lineseparator = options.get('lineseparator', '\n')
+        self.lineseparator = options.get('lineseparator', u'\n')
         self.lineanchors = options.get('lineanchors', '')
         self.linespans = options.get('linespans', '')
         self.anchorlinenos = options.get('anchorlinenos', False)
@@ -467,7 +472,7 @@ class HtmlFormatter(Formatter):
             name = self._get_css_class(ttype)
             style = ''
             if ndef['color']:
-                style += 'color: #%s; ' % ndef['color']
+                style += 'color: %s; ' % webify(ndef['color'])
             if ndef['bold']:
                 style += 'font-weight: bold; '
             if ndef['italic']:
@@ -475,9 +480,9 @@ class HtmlFormatter(Formatter):
             if ndef['underline']:
                 style += 'text-decoration: underline; '
             if ndef['bgcolor']:
-                style += 'background-color: #%s; ' % ndef['bgcolor']
+                style += 'background-color: %s; ' % webify(ndef['bgcolor'])
             if ndef['border']:
-                style += 'border: 1px solid #%s; ' % ndef['border']
+                style += 'border: 1px solid %s; ' % webify(ndef['border'])
             if style:
                 t2c[ttype] = name
                 # save len(ttype) to enable ordering the styles by

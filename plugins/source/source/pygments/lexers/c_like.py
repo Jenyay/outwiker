@@ -5,7 +5,7 @@
 
     Lexers for other C-like languages.
 
-    :copyright: Copyright 2006-2017 by the Pygments team, see AUTHORS.
+    :copyright: Copyright 2006-2019 by the Pygments team, see AUTHORS.
     :license: BSD, see LICENSE for details.
 """
 
@@ -291,23 +291,23 @@ class CudaLexer(CLexer):
     aliases = ['cuda', 'cu']
     mimetypes = ['text/x-cuda']
 
-    function_qualifiers = set(('__device__', '__global__', '__host__',
-                               '__noinline__', '__forceinline__'))
-    variable_qualifiers = set(('__device__', '__constant__', '__shared__',
-                               '__restrict__'))
-    vector_types = set(('char1', 'uchar1', 'char2', 'uchar2', 'char3', 'uchar3',
-                        'char4', 'uchar4', 'short1', 'ushort1', 'short2', 'ushort2',
-                        'short3', 'ushort3', 'short4', 'ushort4', 'int1', 'uint1',
-                        'int2', 'uint2', 'int3', 'uint3', 'int4', 'uint4', 'long1',
-                        'ulong1', 'long2', 'ulong2', 'long3', 'ulong3', 'long4',
-                        'ulong4', 'longlong1', 'ulonglong1', 'longlong2',
-                        'ulonglong2', 'float1', 'float2', 'float3', 'float4',
-                        'double1', 'double2', 'dim3'))
-    variables = set(('gridDim', 'blockIdx', 'blockDim', 'threadIdx', 'warpSize'))
-    functions = set(('__threadfence_block', '__threadfence', '__threadfence_system',
-                     '__syncthreads', '__syncthreads_count', '__syncthreads_and',
-                     '__syncthreads_or'))
-    execution_confs = set(('<<<', '>>>'))
+    function_qualifiers = {'__device__', '__global__', '__host__',
+                           '__noinline__', '__forceinline__'}
+    variable_qualifiers = {'__device__', '__constant__', '__shared__',
+                           '__restrict__'}
+    vector_types = {'char1', 'uchar1', 'char2', 'uchar2', 'char3', 'uchar3',
+                    'char4', 'uchar4', 'short1', 'ushort1', 'short2', 'ushort2',
+                    'short3', 'ushort3', 'short4', 'ushort4', 'int1', 'uint1',
+                    'int2', 'uint2', 'int3', 'uint3', 'int4', 'uint4', 'long1',
+                    'ulong1', 'long2', 'ulong2', 'long3', 'ulong3', 'long4',
+                    'ulong4', 'longlong1', 'ulonglong1', 'longlong2',
+                    'ulonglong2', 'float1', 'float2', 'float3', 'float4',
+                    'double1', 'double2', 'dim3'}
+    variables = {'gridDim', 'blockIdx', 'blockDim', 'threadIdx', 'warpSize'}
+    functions = {'__threadfence_block', '__threadfence', '__threadfence_system',
+                 '__syncthreads', '__syncthreads_count', '__syncthreads_and',
+                 '__syncthreads_or'}
+    execution_confs = {'<<<', '>>>'}
 
     def get_tokens_unprocessed(self, text):
         for index, token, value in CLexer.get_tokens_unprocessed(self, text):
@@ -352,7 +352,7 @@ class SwigLexer(CppLexer):
     }
 
     # This is a far from complete set of SWIG directives
-    swig_directives = set((
+    swig_directives = {
         # Most common directives
         '%apply', '%define', '%director', '%enddef', '%exception', '%extend',
         '%feature', '%fragment', '%ignore', '%immutable', '%import', '%include',
@@ -371,7 +371,7 @@ class SwigLexer(CppLexer):
         '%pythoncallback', '%pythoncode', '%pythondynamic', '%pythonmaybecall',
         '%pythonnondynamic', '%pythonprepend', '%refobject', '%shadow', '%sizeof',
         '%trackobjects', '%types', '%unrefobject', '%varargs', '%warn',
-        '%warnfilter'))
+        '%warnfilter'}
 
     def analyse_text(text):
         rv = 0
@@ -412,6 +412,7 @@ class MqlLexer(CppLexer):
         ],
     }
 
+
 class ArduinoLexer(CppLexer):
     """
     For `Arduino(tm) <https://arduino.cc/>`_ source.
@@ -428,13 +429,13 @@ class ArduinoLexer(CppLexer):
     mimetypes = ['text/x-arduino']
 
     # Language sketch main structure functions
-    structure = set(('setup', 'loop'))
+    structure = {'setup', 'loop'}
 
     # Language operators
-    operators = set(('not', 'or', 'and', 'xor'))
+    operators = {'not', 'or', 'and', 'xor'}
 
     # Language 'variables'
-    variables = set((
+    variables = {
         'DIGITAL_MESSAGE', 'FIRMATA_STRING', 'ANALOG_MESSAGE', 'REPORT_DIGITAL',
         'REPORT_ANALOG', 'INPUT_PULLUP', 'SET_PIN_MODE', 'INTERNAL2V56', 'SYSTEM_RESET',
         'LED_BUILTIN', 'INTERNAL1V1', 'SYSEX_START', 'INTERNAL', 'EXTERNAL', 'HIGH',
@@ -451,10 +452,10 @@ class ArduinoLexer(CppLexer):
         'signed', 'inline', 'delete', '_Bool', 'complex', '_Complex', '_Imaginary',
         'atomic_bool', 'atomic_char', 'atomic_schar', 'atomic_uchar', 'atomic_short',
         'atomic_ushort', 'atomic_int', 'atomic_uint', 'atomic_long', 'atomic_ulong',
-        'atomic_llong', 'atomic_ullong', 'PROGMEM'))
+        'atomic_llong', 'atomic_ullong', 'PROGMEM'}
 
     # Language shipped functions and class ( )
-    functions = set((
+    functions = {
         'KeyboardController', 'MouseController', 'SoftwareSerial', 'EthernetServer',
         'EthernetClient', 'LiquidCrystal', 'RobotControl', 'GSMVoiceCall',
         'EthernetUDP', 'EsploraTFT', 'HttpClient', 'RobotMotor', 'WiFiClient',
@@ -514,16 +515,15 @@ class ArduinoLexer(CppLexer):
         'peek', 'beep', 'rect', 'line', 'open', 'seek', 'fill', 'size', 'turn', 'stop',
         'home', 'find', 'step', 'tone', 'sqrt', 'RSSI', 'SSID', 'end', 'bit', 'tan',
         'cos', 'sin', 'pow', 'map', 'abs', 'max', 'min', 'get', 'run', 'put',
-        'isAlphaNumeric', 'isAlpha', 'isAscii', 'isWhitespace', 'isControl', 'isDigit', 
-        'isGraph', 'isLowerCase', 'isPrintable', 'isPunct', 'isSpace', 'isUpperCase', 
-        'isHexadecimalDigit'))    
+        'isAlphaNumeric', 'isAlpha', 'isAscii', 'isWhitespace', 'isControl', 'isDigit',
+        'isGraph', 'isLowerCase', 'isPrintable', 'isPunct', 'isSpace', 'isUpperCase',
+        'isHexadecimalDigit'}
 
     # do not highlight
-    suppress_highlight = set((
-        'namespace', 'template', 'mutable', 'using', 'asm', 'typeid', 
-        'typename', 'this', 'alignof', 'constexpr', 'decltype', 'noexcept', 
-        'static_assert', 'thread_local', 'restrict'))
-
+    suppress_highlight = {
+        'namespace', 'template', 'mutable', 'using', 'asm', 'typeid',
+        'typename', 'this', 'alignof', 'constexpr', 'decltype', 'noexcept',
+        'static_assert', 'thread_local', 'restrict'}
 
     def get_tokens_unprocessed(self, text):
         for index, token, value in CppLexer.get_tokens_unprocessed(self, text):
@@ -540,9 +540,12 @@ class ArduinoLexer(CppLexer):
             else:
                 yield index, token, value
 
+
 class CharmciLexer(CppLexer):
     """
     For `Charm++ <https://charm.cs.illinois.edu>`_ interface files (.ci).
+
+    .. versionadded:: 2.4
     """
 
     name = 'Charmci'
@@ -554,8 +557,15 @@ class CharmciLexer(CppLexer):
     tokens = {
         'statements': [
             (r'(module)(\s+)', bygroups(Keyword, Text), 'classname'),
-            (words(('mainmodule','mainchare','chare','array','group','nodegroup','message','conditional')), Keyword),
-            (words(('entry','aggregate','threaded','sync','exclusive','nokeep','notrace','immediate','expedited','inline','local','python','accel','readwrite','writeonly','accelblock','memcritical','packed','varsize','initproc','initnode','initcall','stacksize','createhere','createhome','reductiontarget','iget','nocopy','mutable','migratable','readonly')), Keyword),
+            (words(('mainmodule', 'mainchare', 'chare', 'array', 'group',
+                    'nodegroup', 'message', 'conditional')), Keyword),
+            (words(('entry', 'aggregate', 'threaded', 'sync', 'exclusive',
+                    'nokeep', 'notrace', 'immediate', 'expedited', 'inline',
+                    'local', 'python', 'accel', 'readwrite', 'writeonly',
+                    'accelblock', 'memcritical', 'packed', 'varsize',
+                    'initproc', 'initnode', 'initcall', 'stacksize',
+                    'createhere', 'createhome', 'reductiontarget', 'iget',
+                    'nocopy', 'mutable', 'migratable', 'readonly')), Keyword),
             inherit,
         ],
     }

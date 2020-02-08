@@ -97,7 +97,7 @@ def hello (count):
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         innerString1 = ".highlight-default .go { color: #888888 } /* Generic.Output */"
-        innerString2 = '          <span class="k">print</span> <span class="s2">&quot;Hello world!!!&quot;</span>'
+        innerString2 = '          <span class="nb">print</span> <span class="s2">&quot;Hello world!!!&quot;</span>'
         innerString3 = '<span class="kn">import</span> <span class="nn">os</span>'
 
         self.assertTrue(innerString1 in result)
@@ -124,7 +124,7 @@ def hello (count):
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         innerString1 = ".highlight-default .go { color: #888888 } /* Generic.Output */"
-        innerString2 = '       <span class="k">print</span> <span class="s2">&quot;Hello world!!!&quot;</span>'
+        innerString2 = '       <span class="nb">print</span> <span class="s2">&quot;Hello world!!!&quot;</span>'
         innerString3 = '<span class="kn">import</span> <span class="nn">os</span>'
 
         self.assertTrue(innerString1 in result)
@@ -152,7 +152,7 @@ def hello (count):
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         innerString1 = ".highlight-default .go { color: #888888 } /* Generic.Output */"
-        innerString2 = '       <span class="k">print</span> <span class="s2">&quot;Hello world!!!&quot;</span>'
+        innerString2 = '       <span class="nb">print</span> <span class="s2">&quot;Hello world!!!&quot;</span>'
         innerString3 = '<span class="kn">import</span> <span class="nn">os</span>'
 
         self.assertTrue(innerString1 in result)
@@ -278,7 +278,7 @@ def hello (count):
         innerString1 = ".highlight-default .go { color: #888888 } /* Generic.Output */"
         innerString2 = '        print &quot;Hello world!!!&quot;'
         innerString3 = 'def hello (count):'
-        innerString4 = '       <span class="k">print</span> <span class="s2">&quot;Hello world!!!&quot;</span>'
+        innerString4 = '       <span class="nb">print</span> <span class="s2">&quot;Hello world!!!&quot;</span>'
         innerString5 = '<span class="kn">import</span> <span class="nn">os</span>'
 
         self.assertTrue(innerString1 in result)

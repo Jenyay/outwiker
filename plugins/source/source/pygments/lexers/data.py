@@ -5,7 +5,7 @@
 
     Lexers for data file format.
 
-    :copyright: Copyright 2006-2017 by the Pygments team, see AUTHORS.
+    :copyright: Copyright 2006-2019 by the Pygments team, see AUTHORS.
     :license: BSD, see LICENSE for details.
 """
 
@@ -233,7 +233,7 @@ class YamlLexer(ExtendedRegexLexer):
             # whitespaces separating tokens
             (r'[ ]+', Text),
             # key with colon
-            (r'''([^,:?\[\]{}"'\n]+)(:)(?=[ ]|$)''',
+            (r'''([^#,:?\[\]{}"'\n]+)(:)(?=[ ]|$)''',
              bygroups(Name.Tag, set_indent(Punctuation, implicit=True))),
             # tags, anchors and aliases,
             include('descriptors'),
