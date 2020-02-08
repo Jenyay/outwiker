@@ -9,8 +9,8 @@ class Timer (object):
 
 
     def start (self):
-        self._start = time.clock()
+        self._start = time.perf_counter()
 
 
     def getTimeInterval (self):
-        return time.clock() - self._start
+        return time.perf_counter() - self._start
