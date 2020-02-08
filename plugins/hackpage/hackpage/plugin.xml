@@ -2,8 +2,8 @@
 <info>
 	<name>HackPage</name>
 
-	<website>https://jenyay.net/uploads/Outwiker/HackPageEn</website>
-	<website lang="ru">https://jenyay.net/uploads/Outwiker/HackPage</website>
+	<website>https://jenyay.net/Outwiker/HackPageEn</website>
+	<website lang="ru">https://jenyay.net/Outwiker/HackPage</website>
 	<description>Plugin allow to edit hidden page properties.</description>
 	<description lang="ru">Плагин для редактирования скрытых свойств страниц.</description>
 
