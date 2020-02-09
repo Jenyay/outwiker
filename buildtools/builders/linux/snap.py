@@ -47,7 +47,8 @@ class BuilderSnap(BuilderBase):
     def _build_snap(self):
         print_info('Build snap')
         with lcd(self.facts.temp_dir):
-            local('snapcraft cleanbuild')
+            local('sudo snapcraft')
+            # local('snapcraft cleanbuild')
         # local('docker run --rm -v "$PWD":/build -w /build snapcore/snapcraft bash -c "apt update && snapcraft"')
 
     def _build_man(self, usr_share):
