@@ -406,7 +406,7 @@ class IconListCtrl(wx.ScrolledWindow):
         else:
             self.__selectSingleButton(currentButton)
             dy = self.GetScrollPixelsPerUnit()[1]
-            self.Scroll(0, currentButton.y / dy)
+            self.Scroll(0, currentButton.y // dy)
 
         self._sendIconSelectedEvent()
 

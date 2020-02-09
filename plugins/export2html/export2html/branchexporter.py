@@ -23,7 +23,7 @@ class BranchExporter (object):
         self.__nameGenerator = nameGenerator
 
         self.__a_tag_regex = re.compile (
-            """
+            r"""
             (<\s*a\s+
             (.*?)
             href\s*=['"](.*?)['"]

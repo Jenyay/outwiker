@@ -174,7 +174,7 @@ class TagsCloud(wx.ScrolledWindow):
         currentLine = []
 
         currentx = self.__margin
-        currenty = self.__margin + self.__stepy / 2
+        currenty = self.__margin + self.__stepy // 2
 
         linesCount = 1
 
@@ -196,7 +196,7 @@ class TagsCloud(wx.ScrolledWindow):
                 currentLine = []
                 linesCount += 1
 
-            label.Move(currentx, currenty - label.GetSize()[1] / 2)
+            label.Move(currentx, currenty - label.GetSize()[1] // 2)
             label.Refresh()
 
             currentLine.append(label)
@@ -206,7 +206,7 @@ class TagsCloud(wx.ScrolledWindow):
             commonheight = (currenty +
                             self.__getMaxHeight(currentLine)[0] +
                             self.__space)
-            lineheight = int(commonheight / linesCount)
+            lineheight = commonheight // linesCount
 
             self.SetScrollbars(0,
                                lineheight,

@@ -47,7 +47,7 @@ class HtmlExporter (BaseExporter):
         """
         __attachDir = "__attach"
 
-        tag_regex = """<\s*({tag})\s+
+        tag_regex = r"""<\s*({tag})\s+
             (.*?)
             ({attrib})\s*=['"]{attach}(.*?)['"]
             (.*?)

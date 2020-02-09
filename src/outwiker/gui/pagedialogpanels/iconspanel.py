@@ -256,8 +256,8 @@ class IconsController(BasePageDialogController):
             logging.error(_(u'Invalid icon file: {}').format(fname))
             return None
 
-        posx = (neww - image.Width) / 2
-        posy = (newh - image.Height) / 2
+        posx = (neww - image.Width) // 2
+        posy = (newh - image.Height) // 2
         image.Resize((neww, newh), (posx, posy), 255, 255, 255)
 
         return wx.Bitmap(image)

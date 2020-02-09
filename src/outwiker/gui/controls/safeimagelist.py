@@ -45,8 +45,8 @@ class SafeImageList (wx.ImageList):
 
         size_new = image_new.GetSize()
         result_image = bitmap_new.ConvertToImage()
-        paste_x = (self._width - size_new[0]) / 2
-        paste_y = (self._height - size_new[1]) / 2
+        paste_x = (self._width - size_new[0]) // 2
+        paste_y = (self._height - size_new[1]) // 2
         result_image.Paste(image_new, paste_x, paste_y)
 
         return result_image.ConvertToBitmap()

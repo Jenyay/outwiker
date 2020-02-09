@@ -465,7 +465,7 @@ class TextEditorBase(wx.Panel):
         maxlines = self.textCtrl.LinesOnScreen()
         line = self.GetCurrentLine()
         if line >= maxlines:
-            delta = min(10, maxlines / 3)
+            delta = min(10, maxlines // 3)
             line -= delta
             if line < 0:
                 line = 0
