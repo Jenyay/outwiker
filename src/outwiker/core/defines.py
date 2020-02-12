@@ -69,6 +69,10 @@ CONFIG_TOOLBARS_VISIBLE_SUFFIX = '_visible'
 REGISTRY_SECTION_PAGES = '__pages'
 REGISTRY_PAGE_CURSOR_POSITION = 'cursorposition'
 
+NEW_PAGE_ORDER_BEGIN = 0
+NEW_PAGE_ORDER_END = 1
+NEW_PAGE_ORDER_ALPHABETICALLY = 2
+
 
 # To translate this words with xgettext
 if __name__ == u'__main__':

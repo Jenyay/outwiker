@@ -7,8 +7,8 @@ from .basepagedialog import BasePageDialog
 from outwiker.core.application import Application
 from outwiker.core.commands import (pageExists,
                                     showError,
-                                    getAlternativeTitle,
                                     renamePage)
+from outwiker.core.tree_commands import createPage
 
 
 @outwiker.core.commands.testreadonly
@@ -49,14 +49,11 @@ def createPageWithDialog(parentwnd, parentpage):
         if dlg.ShowModal() == wx.ID_OK:
             factory = dlg.selectedFactory
             alias = dlg.pageTitle
-            siblings = [child_page.title for child_page in parentpage.children]
-            title = getAlternativeTitle(alias, siblings)
+            tags = []
 
             try:
-                page = factory.create(parentpage, title, [])
-                if title != alias:
-                    page.alias = alias
-            except EnvironmentError:
+                page = createPage(factory, alias, parentpage, tags)
+            except OSError:
                 showError(Application.mainWindow, _(u"Can't create page"))
                 return None
 
