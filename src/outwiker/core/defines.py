@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
+'''
+Various names and constants
+'''
 
 import os.path
 
 
-'''
-Various names and constants
-'''
 # Page icon size
 ICON_WIDTH = 16
 ICON_HEIGHT = 16

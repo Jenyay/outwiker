@@ -26,7 +26,7 @@ def createPage(factory: PageFactory,
 def getAlternativeTitle(title: str,
                         siblings: List[str],
                         substitution: str = '_',
-                        format: str = '{title} ({number})') -> str:
+                        template: str = '{title} ({number})') -> str:
     '''
     The function proposes the page title based on the user title.
     The function replace forbidden characters on the substitution symbol.
@@ -34,7 +34,7 @@ def getAlternativeTitle(title: str,
     title - original title for the page (with forbidden characters).
     siblings - list of the page titles on the same level.
     substitution - forbidden characters will be replaced to this string.
-    format - format string for unique title.
+    template - format string for unique title.
 
     Return title for the new page.
     '''
@@ -58,7 +58,7 @@ def getAlternativeTitle(title: str,
     n = 1
     while (len(result.strip()) == 0 or
            result.lower() in siblings_lower):
-        result = format.format(title=newtitle, number=n).strip()
+        result = template.format(title=newtitle, number=n).strip()
         n += 1
 
     result = result.strip()

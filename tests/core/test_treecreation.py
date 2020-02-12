@@ -1,5 +1,3 @@
-# -*- coding: UTF-8 -*-
-
 """
 Тесты, связанные с созданием вики
 """
@@ -26,6 +24,7 @@ class TextPageCreationTest(unittest.TestCase):
     """
     Класс тестов, связанных с созданием страниц вики
     """
+
     def setUp(self):
         # Здесь будет создаваться вики
         self.path = mkdtemp(prefix='Абырвалг абыр')
@@ -51,7 +50,8 @@ class TextPageCreationTest(unittest.TestCase):
 
         self.wikiroot["Страница 1"].tags = ["метка 1"]
         self.wikiroot["Страница 2/Страница 3"].tags = ["метка 2", "метка 3"]
-        self.wikiroot["Страница 2/Страница 3/Страница 4"].tags = ["метка 1", "метка 2", "метка 4"]
+        self.wikiroot["Страница 2/Страница 3/Страница 4"].tags = ["метка 1",
+                                                                  "метка 2", "метка 4"]
 
         self.wikiroot["Страница 2/Страница 3/Страница 4"].icon = "testdata/images/feed.gif"
 
@@ -146,13 +146,15 @@ class TextPageCreationTest(unittest.TestCase):
 
     def testAttach2(self):
         # Получить путь до прикрепленных файлов, не создавая ее
-        path = Attachment(self.wikiroot["Страница 2"]).getAttachPath(create=False)
+        path = Attachment(
+            self.wikiroot["Страница 2"]).getAttachPath(create=False)
         # Вложенных файлов еще нет, поэтому нет и папки
         self.assertFalse(os.path.exists(path))
 
     def testAttach3(self):
         # Получить путь до прикрепленных файлов, создав ее
-        path = Attachment(self.wikiroot["Страница 2"]).getAttachPath(create=True)
+        path = Attachment(
+            self.wikiroot["Страница 2"]).getAttachPath(create=True)
         # Вложенных файлов еще нет, поэтому нет и папки
         self.assertTrue(os.path.exists(path))
 
