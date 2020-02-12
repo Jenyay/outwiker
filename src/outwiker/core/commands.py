@@ -6,7 +6,6 @@
 
 from datetime import datetime
 import os.path
-import re
 import shutil
 import logging
 from typing import List, Optional
@@ -20,6 +19,7 @@ from outwiker.core.events import PreWikiOpenParams, PostWikiOpenParams
 from outwiker.core.pagetitletester import PageTitleError, PageTitleWarning
 from outwiker.core.system import getOS
 from outwiker.core.tree import WikiDocument
+from outwiker.core.tree_commands import getAlternativeTitle
 from outwiker.gui.dialogs.overwritedialog import OverwriteDialog
 from outwiker.gui.longprocessrunner import LongProcessRunner
 from outwiker.gui.polyaction import PolyAction
@@ -73,7 +73,8 @@ def testreadonly(func):
         try:
             return func(*args, **kwargs)
         except outwiker.core.exceptions.ReadonlyException:
-            showError(Application.mainWindow, _(u"Page is opened as read-only"))
+            showError(Application.mainWindow, _(
+                u"Page is opened as read-only"))
 
     return readOnlyWrap
 
@@ -104,7 +105,8 @@ def attachFiles(parent: wx.Window,
                 continue
 
             if os.path.basename(fname).lower() in oldAttaches:
-                text = _(u"File '%s' exists already") % (os.path.basename(fname))
+                text = _(u"File '%s' exists already") % (
+                    os.path.basename(fname))
                 result = overwriteDialog.ShowDialog(text)
 
                 if result == overwriteDialog.ID_SKIP:
@@ -130,7 +132,8 @@ def removePage(page: 'outwiker.core.tree.WikiPage'):
         raise outwiker.core.exceptions.ReadonlyException
 
     if page.parent is None:
-        showError(Application.mainWindow, _(u"You can't remove the root element"))
+        showError(Application.mainWindow, _(
+            u"You can't remove the root element"))
         return
 
     if (MessageBox(_(u'Remove page "{}" and all subpages?\nAll attached files will also be deleted.').format(page.title),
@@ -302,7 +305,8 @@ This is the first page. You can use a text formatting: '''bold''', ''italic'', {
             Application.wikiroot.selectedPage = firstPage
         except (IOError, OSError) as e:
             # TODO: проверить под Windows
-            showError(Application.mainWindow, _(u"Can't create wiki\n") + e.filename)
+            showError(Application.mainWindow, _(
+                u"Can't create wiki\n") + e.filename)
 
     dlg.Destroy()
 
@@ -394,10 +398,12 @@ def movePage(page, newParent):
         page.moveTo(newParent)
     except outwiker.core.exceptions.DuplicateTitle:
         # Невозможно переместить из-за дублирования имен
-        showError(Application.mainWindow, _(u"Can't move page when page with that title already exists"))
+        showError(Application.mainWindow, _(
+            u"Can't move page when page with that title already exists"))
     except outwiker.core.exceptions.TreeException:
         # Невозможно переместить по другой причине
-        showError(Application.mainWindow, _(u"Can't move page: {}".format(page.display_title)))
+        showError(Application.mainWindow, _(
+            u"Can't move page: {}".format(page.display_title)))
 
 
 def setStatusText(text, index=0):
@@ -412,7 +418,8 @@ def setStatusText(text, index=0):
 @testreadonly
 def renamePage(page, newtitle):
     if page.parent is None:
-        showError(Application.mainWindow, _(u"You can't rename the root element"))
+        showError(Application.mainWindow, _(
+            u"You can't rename the root element"))
         return
 
     newtitle = newtitle.strip()
@@ -578,7 +585,8 @@ def registerActions(application):
     from outwiker.gui.actionslist import actionsList, polyactionsList
 
     # Register the normal actions
-    [actionController.register(item[0](application), item[1]) for item in actionsList]
+    [actionController.register(item[0](application), item[1])
+     for item in actionsList]
 
     # Register the polyactions
     [actionController.register(PolyAction(application,
