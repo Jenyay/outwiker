@@ -53,29 +53,26 @@ class TableCommand (Command):
         # None / td / th
         self.lastCellTag = None
 
-
     @property
-    def suffix (self):
+    def suffix(self):
         return self._suffix
 
-
     @property
-    def name (self):
+    def name(self):
         return u'table' + self.suffix
 
-
-    def execute (self, params, content):
+    def execute(self, params, content):
         start = (u'<table>' if not params.strip()
-                 else u'<table {}>'.format (params.strip()))
+                 else u'<table {}>'.format(params.strip()))
         end = u'</table>'
 
-        rowCommand = RowCommand (self.parser, self)
-        cellCommand = CellCommand (self.parser, self)
-        hcellCommand = HCellCommand (self.parser, self)
+        rowCommand = RowCommand(self.parser, self)
+        cellCommand = CellCommand(self.parser, self)
+        hcellCommand = HCellCommand(self.parser, self)
 
-        self.parser.addCommand (rowCommand)
-        self.parser.addCommand (cellCommand)
-        self.parser.addCommand (hcellCommand)
+        self.parser.addCommand(rowCommand)
+        self.parser.addCommand(cellCommand)
+        self.parser.addCommand(hcellCommand)
 
         try:
             body = self.parser.parseWikiMarkup(content)
@@ -86,18 +83,18 @@ class TableCommand (Command):
             if not self.firstRow:
                 body += u'</tr>'
         finally:
-            self.parser.removeCommand (rowCommand.name)
-            self.parser.removeCommand (cellCommand.name)
-            self.parser.removeCommand (hcellCommand.name)
+            self.parser.removeCommand(rowCommand.name)
+            self.parser.removeCommand(cellCommand.name)
+            self.parser.removeCommand(hcellCommand.name)
 
         result = start + body + end
 
-        result = result.replace (u'\n</tr>', u'</tr>')
-        result = result.replace (u'\n<tr', u'<tr')
-        result = result.replace (u'\n</td>', u'</td>')
-        result = result.replace (u'\n<td', u'<td')
-        result = result.replace (u'\n</th>', u'</th>')
-        result = result.replace (u'\n<th', u'<th')
+        result = result.replace(u'\n</tr>', u'</tr>')
+        result = result.replace(u'\n<tr', u'<tr')
+        result = result.replace(u'\n</td>', u'</td>')
+        result = result.replace(u'\n<td', u'<td')
+        result = result.replace(u'\n</th>', u'</th>')
+        result = result.replace(u'\n<th', u'<th')
 
         self.firstRow = True
         self.lastCellTag = None
@@ -105,10 +102,9 @@ class TableCommand (Command):
         return result
 
 
-
 class RowCommand (Command):
-    def __init__ (self, parser, table):
-        super (RowCommand, self).__init__ (parser)
+    def __init__(self, parser, table):
+        super(RowCommand, self).__init__(parser)
         self._table = table
 
     @property
@@ -136,8 +132,8 @@ class RowCommand (Command):
 
 
 class BaseCellCommand (Command):
-    def __init__ (self, parser, table):
-        super (BaseCellCommand, self).__init__ (parser)
+    def __init__(self, parser, table):
+        super(BaseCellCommand, self).__init__(parser)
         self._table = table
 
     @abstractmethod

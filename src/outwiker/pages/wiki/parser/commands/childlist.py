@@ -5,15 +5,17 @@ from outwiker.pages.wiki.parser.command import Command
 
 class SimpleView (object):
     """
-    Класс для простого представления списка дочерних страниц - каждая страница на отдельной строке
+    Класс для простого представления списка дочерних страниц - каждая страница
+    на отдельной строке
     """
     @staticmethod
-    def make (children, parser, params):
+    def make(children, parser, params):
         """
         children - список упорядоченных дочерних страниц
         """
         template = u'<a href="{link}">{title}</a>\n'
-        result = u"".join ([template.format (link=page.title, title=page.title) for page in children])
+        result = u"".join(
+            [template.format(link=page.title, title=page.title) for page in children])
 
         # Выкинем последний перевод строки
         return result[: -1]
@@ -32,40 +34,35 @@ class ChildListCommand (Command):
         sort=creation - сортировка по дате создания
         sort=descendcreation - сортировка по дате создания в обратном порядке
     """
-    def __init__ (self, parser):
-        Command.__init__ (self, parser)
+
+    def __init__(self, parser):
+        Command.__init__(self, parser)
 
     @property
-    def name (self):
+    def name(self):
         return u"childlist"
 
-
-    def execute (self, params, content):
-        params_dict = Command.parseParams (params)
+    def execute(self, params, content):
+        params_dict = Command.parseParams(params)
 
         children = self.parser.page.children
-        self._sortChildren (children, params_dict)
+        self._sortChildren(children, params_dict)
 
-        return SimpleView.make (children, self.parser, params)
+        return SimpleView.make(children, self.parser, params)
 
-
-    def _sortByNameKey (self, page):
+    def _sortByNameKey(self, page):
         return page.title.lower()
 
-
-    def _sortByEditDate (self, page):
+    def _sortByEditDate(self, page):
         return page.datetime
 
-
-    def _sortByCreationDate (self, page):
+    def _sortByCreationDate(self, page):
         return page.creationdatetime
 
-
-    def _sortByOrder (self, page):
+    def _sortByOrder(self, page):
         return page.order
 
-
-    def _sortChildren (self, children, params_dict):
+    def _sortChildren(self, children, params_dict):
         """
         Отсортировать дочерние страницы, если нужно
         """
@@ -89,4 +86,4 @@ class ChildListCommand (Command):
 
         if sort in sortdict:
             func, reverse = sortdict[sort]
-            children.sort (key = func, reverse = reverse)
+            children.sort(key=func, reverse=reverse)

@@ -15,38 +15,38 @@ class CommandDateBase (Command, metaclass=ABCMeta):
         format - формат представления даты. Если этот параметр не задан, используется формат из настроек программы
     """
 
-    def __init__ (self, parser):
+    def __init__(self, parser):
         """
         parser - экземпляр парсера
         """
-        super (CommandDateBase, self).__init__ (parser)
+        super(CommandDateBase, self).__init__(parser)
 
         self.FORMAT_PARAM = u"format"
 
-
     @abstractmethod
-    def _getDate (self):
+    def _getDate(self):
         """
         Метод должен возвращать дату (datetime), которую нужно вставить на страницу
         """
         pass
 
-
-    def execute (self, params, content):
+    def execute(self, params, content):
         """
         Запустить команду на выполнение.
         Метод возвращает текст, который будет вставлен на место команды в вики-нотации
         """
-        paramsDict = self.parseParams (params)
+        paramsDict = self.parseParams(params)
 
         if self.FORMAT_PARAM in paramsDict:
             formatStr = paramsDict[self.FORMAT_PARAM]
         else:
-            formatStr = GeneralGuiConfig (Application.config).dateTimeFormat.value
+            formatStr = GeneralGuiConfig(
+                Application.config).dateTimeFormat.value
 
         date = self._getDate()
         # Avoidance for bug in Python: https://bugs.python.org/issue8305
-        result = date.strftime(formatStr.encode('unicode-escape').decode()).encode().decode('unicode-escape')
+        result = date.strftime(formatStr.encode(
+            'unicode-escape').decode()).encode().decode('unicode-escape')
 
         return result
 
@@ -58,14 +58,13 @@ class CommandDateCreation (CommandDateBase):
         format - формат представления даты. Если этот параметр не задан, используется формат из настроек программы
     """
     @property
-    def name (self):
+    def name(self):
         """
         Возвращает имя команды, которую обрабатывает класс
         """
         return u"crdate"
 
-
-    def _getDate (self):
+    def _getDate(self):
         return self.parser.page.creationdatetime
 
 
@@ -76,12 +75,11 @@ class CommandDateEdition (CommandDateBase):
         format - формат представления даты. Если этот параметр не задан, используется формат из настроек программы
     """
     @property
-    def name (self):
+    def name(self):
         """
         Возвращает имя команды, которую обрабатывает класс
         """
         return u"eddate"
 
-
-    def _getDate (self):
+    def _getDate(self):
         return self.parser.page.datetime
