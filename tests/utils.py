@@ -9,8 +9,11 @@ import os
 import shutil
 import time
 import gc
+from tempfile import mkdtemp
 
 import wx
+
+from outwiker.core.tree import WikiDocument
 
 
 def removeDir(path):
@@ -59,3 +62,16 @@ def print_memory(count=30):
     sum1 = summary.summarize(my_types)
     # sum1 = summary.summarize(all_objects)
     summary.print_(sum1, limit=count)
+
+
+def create_temp_notes_tree():
+    '''
+    Create empty notes tree in the temp directory
+    '''
+    path = mkdtemp(prefix='Абырвалг абыр')
+    wikiroot = WikiDocument.create(path)
+    return wikiroot
+
+
+def remove_notes_tree(wikiroot):
+    removeDir(wikiroot.path)
