@@ -403,7 +403,7 @@ class SearchPageTest(unittest.TestCase):
                             strategy=AllTagsSearchStrategy)
 
         wiki = WikiDocument.load(self.path)
-        page = wiki['# Search' + " 2"]
+        page = wiki['_ Search' + " (1)"]
 
         self.assertNotEqual(page, None)
         self.assertEqual(page.phrase, "декабрь")
@@ -415,9 +415,9 @@ class SearchPageTest(unittest.TestCase):
     def testManySearchPages3(self):
         factory = TextPageFactory()
         factory.create(self.wikiroot, '# Search', [])
-        factory.create(self.wikiroot, '# Search' + " 2", [])
-        factory.create(self.wikiroot, '# Search' + " 3", [])
-        factory.create(self.wikiroot, '# Search' + " 4", [])
+        factory.create(self.wikiroot, '# Search', [])
+        factory.create(self.wikiroot, '# Search', [])
+        factory.create(self.wikiroot, '# Search', [])
 
         GlobalSearch.create(self.wikiroot,
                             phrase="декабрь",
@@ -425,7 +425,7 @@ class SearchPageTest(unittest.TestCase):
                             strategy=AllTagsSearchStrategy)
 
         wiki = WikiDocument.load(self.path)
-        page = wiki['# Search' + " 5"]
+        page = wiki['_ Search' + " (4)"]
 
         self.assertNotEqual(page, None)
         self.assertEqual(page.phrase, "декабрь")

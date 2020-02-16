@@ -8,7 +8,6 @@ from outwiker.core.application import Application
 from outwiker.core.commands import (pageExists,
                                     showError,
                                     renamePage)
-from outwiker.core.tree_commands import createPage
 
 
 @outwiker.core.commands.testreadonly
@@ -52,7 +51,7 @@ def createPageWithDialog(parentwnd, parentpage):
             tags = []
 
             try:
-                page = createPage(factory, alias, parentpage, tags)
+                page = factory.create(parentpage, alias, tags)
             except OSError:
                 showError(Application.mainWindow, _(u"Can't create page"))
                 return None

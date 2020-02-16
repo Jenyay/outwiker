@@ -11,7 +11,6 @@ from tempfile import mkdtemp
 from outwiker.core.tree import WikiDocument
 from outwiker.core.attachment import Attachment
 from outwiker.core.application import Application
-from outwiker.core.exceptions import DuplicateTitle
 from outwiker.core.defines import PAGE_OPT_FILE
 from outwiker.pages.text.textpage import TextPageFactory, TextWikiPage
 from outwiker.pages.html.htmlpage import HtmlPageFactory, HtmlWikiPage
@@ -254,19 +253,6 @@ class TextPageCreationTest(unittest.TestCase):
                           [])
 
         self.assertEqual(len(self.wikiroot.children), children)
-
-    def testInvalidPageName2(self):
-        self.assertRaises(DuplicateTitle,
-                          TextPageFactory().create,
-                          self.wikiroot,
-                          "страНица 1",
-                          [])
-
-        self.assertRaises(DuplicateTitle,
-                          TextPageFactory().create,
-                          self.wikiroot["Страница 1"],
-                          "страНица 5",
-                          [])
 
     def testPageCreate(self):
         wiki = WikiDocument.load(self.path)

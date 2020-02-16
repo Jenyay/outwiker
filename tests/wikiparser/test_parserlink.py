@@ -43,8 +43,8 @@ class ParserLinkTest(unittest.TestCase):
 
         factory = WikiPageFactory()
         factory.create(self.wikiroot, "Страница 2", [])
-        factory.create(self.wikiroot["Страница 2"], "#Страница3", [])
-        factory.create(self.wikiroot["Страница 2"], "# Страница 4", [])
+        factory.create(self.wikiroot["Страница 2"], "Страница3", [])
+        factory.create(self.wikiroot["Страница 2"], "Страница 4", [])
         self.testPage = self.wikiroot["Страница 2"]
 
         files = ["accept.png", "add.png", "anchor.png", "filename.tmp",
@@ -215,24 +215,6 @@ class ParserLinkTest(unittest.TestCase):
                 link, link)
 
             self.assertEqual(self.parser.toHtml(text), result)
-
-    def testPageLinkSharp1(self):
-        """
-        Проверка ссылок на страницы с #
-        """
-        text = "бла-бла-бла \n[[#Страница3]] бла-бла-бла\nбла-бла-бла"
-        result = 'бла-бла-бла \n<a href="#Страница3">#Страница3</a> бла-бла-бла\nбла-бла-бла'
-
-        self.assertEqual(self.parser.toHtml(text), result)
-
-    def testPageLinkSharp2(self):
-        """
-        Проверка ссылок на страницы с #
-        """
-        text = "бла-бла-бла \n[[# Страница 4]] бла-бла-бла\nбла-бла-бла"
-        result = 'бла-бла-бла \n<a href="# Страница 4"># Страница 4</a> бла-бла-бла\nбла-бла-бла'
-
-        self.assertEqual(self.parser.toHtml(text), result)
 
     def testAnchor1(self):
         """

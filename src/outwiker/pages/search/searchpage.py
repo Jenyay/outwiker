@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import os.path
 
 from outwiker.core.tree import WikiPage
 from outwiker.core.search import AllTagsSearchStrategy, AnyTagSearchStrategy
@@ -150,32 +149,28 @@ class SearchPageFactory (PageFactory):
         return SearchPanel(parent, application)
 
 
-class GlobalSearch (object):
+class GlobalSearch:
     @staticmethod
     def create(root, phrase=u"", tags=[], strategy=AllTagsSearchStrategy):
         """
         Создать страницу с поиском. Если страница существует,
         то сделать ее активной
         """
-        searchTitle = _(u"# Search")
-        title = searchTitle
-        number = 1
+        searchAlias = _("# Search")
         page = None
 
-        while page is None:
-            page = root[title]
-            if page is None:
-                page = SearchPageFactory().create(root, title, [])
-                page.icon = getBuiltinImagePath("global_search.png")
-            elif page.getTypeString() != SearchWikiPage.getTypeString():
-                number += 1
-                title = u"%s %d" % (searchTitle, number)
-                page = None
+        for child_page in root.children:
+            if child_page.getTypeString() == SearchWikiPage.getTypeString():
+                page = child_page
+                break
+
+        if page is None:
+            page = SearchPageFactory().create(root, searchAlias, [])
+            page.icon = getBuiltinImagePath("global_search.png")
 
         page.phrase = phrase
         page.searchTags = [tag for tag in tags]
         page.strategy = strategy
-
         page.root.selectedPage = page
 
         return page

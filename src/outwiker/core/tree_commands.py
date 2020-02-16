@@ -1,25 +1,6 @@
 import re
 from typing import List
 
-from outwiker.core.factory import PageFactory
-from outwiker.core.tree import WikiPage
-
-
-def createPage(factory: PageFactory,
-               alias: str,
-               parent_page: WikiPage,
-               tags: List[str]) -> WikiPage:
-    '''
-    Create page with alisas and order correction
-    '''
-    siblings = [child_page.title for child_page in parent_page.children]
-    title = getAlternativeTitle(alias, siblings)
-    page = factory.create(parent_page, title, tags)
-    if title != alias:
-        page.alias = alias
-
-    return page
-
 
 def getAlternativeTitle(title: str,
                         siblings: List[str],
