@@ -153,7 +153,7 @@ class RootWikiPage(object):
         """
         return parent[title] is None
 
-    def _changeChildOrder(self, page, neworder):
+    def changeChildOrder(self, page, neworder):
         """
         Изменить порядок дочерних элементов
         Дочернюю страницу page переместить на уровень neworder
@@ -183,7 +183,7 @@ class RootWikiPage(object):
 
     def isChild(self, page):
         """
-        Проверить, является ли page дочерней(вложенной) страницей для self
+        Проверить, является ли page дочерней (вложенной) страницей для self
         """
         currentpage = page
         while currentpage is not None:
@@ -492,7 +492,7 @@ class WikiPage(RootWikiPage):
         if realorder >= len(self.parent.children):
             realorder = len(self.parent.children) - 1
 
-        self.parent._changeChildOrder(self, realorder)
+        self.parent.changeChildOrder(self, realorder)
         self.root.onPageOrderChange(self)
 
     @property

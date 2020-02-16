@@ -1,8 +1,6 @@
 import re
 from typing import List
 
-# from .defines import (NEW_PAGE_ORDER_BEGIN,
-#                       NEW_PAGE_ORDER_END, NEW_PAGE_ORDER_ALPHABETICALLY)
 from outwiker.core.factory import PageFactory
 from outwiker.core.tree import WikiPage
 

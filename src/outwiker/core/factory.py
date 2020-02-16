@@ -22,22 +22,19 @@ class PageFactory(metaclass=ABCMeta):
         """
         Метод возвращает тип создаваемой страницы(не экземпляр страницы)
         """
-        pass
 
     @abstractproperty
     def title(self):
         """
         Название страницы, показываемое пользователю
         """
-        pass
 
     @abstractmethod
-    def getPageView(self, parent):
+    def getPageView(self, parent, application):
         """
         Метод возвращает контрол,
         который будет отображать и редактировать страницу
         """
-        pass
 
     @staticmethod
     def _createPage(pageType, parent, title, tags):
