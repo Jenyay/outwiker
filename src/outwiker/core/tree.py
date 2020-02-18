@@ -6,8 +6,7 @@ import os.path
 import configparser
 import shutil
 import datetime
-from functools import cmp_to_key
-from functools import reduce
+from functools import cmp_to_key, reduce
 
 from .config import PageConfig
 from .bookmarks import Bookmarks
@@ -158,22 +157,33 @@ class RootWikiPage(object):
         Изменить порядок дочерних элементов
         Дочернюю страницу page переместить на уровень neworder
         """
+        if self.readonly:
+            raise ReadonlyException
+
+        realorder = neworder
+
+        if realorder < 0:
+            realorder = 0
+
+        if realorder >= len(self.children):
+            realorder = len(self.children) - 1
+
         oldorder = self._children.index(page)
-        if oldorder != neworder:
+        if oldorder != realorder:
             self.removeFromChildren(page)
-            self._children.insert(neworder, page)
+            self._children.insert(realorder, page)
             self.saveChildrenParams()
+            self.root.onPageOrderChange(page)
 
     def saveChildrenParams(self):
         for child in self._children:
             child.save()
 
-    def addToChildren(self, page):
+    def addToChildren(self, page, order):
         """
         Добавить страницу к дочерним страницам
         """
-        self._children.append(page)
-        self._children.sort(key=cmp_to_key(sortOrderFunction))
+        self._children.insert(order, page)
 
     def removeFromChildren(self, page):
         """
@@ -244,7 +254,6 @@ class RootWikiPage(object):
         Update page content if needed.
         The method can raise EnvironmentError.
         '''
-        pass
 
     def loadChildren(self):
         """
@@ -479,21 +488,12 @@ class WikiPage(RootWikiPage):
     @order.setter
     def order(self, neworder):
         """
-        Изменить положение страницы(порядок)
+        Изменить положение страницы (порядок)
         """
         if self.readonly:
             raise ReadonlyException
 
-        realorder = neworder
-
-        if realorder < 0:
-            realorder = 0
-
-        if realorder >= len(self.parent.children):
-            realorder = len(self.parent.children) - 1
-
-        self.parent.changeChildOrder(self, realorder)
-        self.root.onPageOrderChange(self)
+        self.parent.changeChildOrder(self, neworder)
 
     @property
     def alias(self):
@@ -617,7 +617,7 @@ class WikiPage(RootWikiPage):
 
         self._parent = newparent
         oldparent.removeFromChildren(self)
-        newparent.addToChildren(self)
+        newparent.addToChildren(self, len(newparent.children))
 
         newsubpath = self.subpath
         WikiPage._renamePaths(self, newpath)

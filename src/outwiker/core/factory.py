@@ -2,9 +2,47 @@
 
 from abc import ABCMeta, abstractmethod, abstractproperty
 import os.path
+from typing import List, Callable
 
 from .exceptions import ReadonlyException
 from .tree_commands import getAlternativeTitle
+from .tree import RootWikiPage, WikiPage
+
+
+# Functions to calculate new page order
+
+def orderCalculatorTop(_parent: RootWikiPage,
+                       _alias: str,
+                       _tags: List[str]) -> int:
+    '''
+    Add a page to top of the siblings
+    '''
+    return 0
+
+
+def orderCalculatorBottom(parent: RootWikiPage,
+                          _alias: str,
+                          _tags: List[str]) -> int:
+    '''
+    Add a page to bottom of the siblings
+    '''
+    return len(parent.children)
+
+
+def orderCalculatorAlphabetically(parent: RootWikiPage,
+                                  alias: str,
+                                  _tags: List[str]) -> int:
+    '''
+    Sort a page alias alphabetically
+    '''
+    order = len(parent.children)
+    alias_lower = alias.lower()
+    for n, page in enumerate(parent.children):
+        if alias_lower < page.display_title.lower():
+            order = n
+            break
+
+    return order
 
 
 class PageFactory(metaclass=ABCMeta):
@@ -12,7 +50,12 @@ class PageFactory(metaclass=ABCMeta):
     Класс для создания страниц
     """
 
-    def create(self, parent, alias, tags):
+    def create(self,
+               parent: RootWikiPage,
+               alias: str,
+               tags: List[str],
+               order_calculator: Callable[[RootWikiPage, str, List[str]], int] = orderCalculatorBottom
+               ) -> WikiPage:
         """
         Создать страницу. Вызывать этот метод вместо конструктора
         """
@@ -25,7 +68,8 @@ class PageFactory(metaclass=ABCMeta):
 
         pageType = self.getPageType()
         page = pageType(path, title, parent)
-        parent.addToChildren(page)
+        order = order_calculator(parent, alias, tags)
+        parent.addToChildren(page, order)
 
         try:
             page.initAfterCreating(tags)
