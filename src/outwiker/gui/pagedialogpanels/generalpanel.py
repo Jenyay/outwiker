@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime
+from typing import List, Callable
 
 import wx
 
+import outwiker.core.factory as ocf
 from outwiker.core.tagslist import TagsList
+from outwiker.core.tree import RootWikiPage
 from outwiker.core.events import (PageDialogPageTypeChangedParams,
                                   PageDialogPageTitleChangedParams,
                                   PageDialogPageTagsChangedParams,
@@ -18,46 +21,67 @@ class GeneralPanel(wx.Panel):
     """
     Класс панели, расположенной на вкладке "Общее"
     """
+
     def __init__(self, parent):
-        super(GeneralPanel, self).__init__(parent)
+        super().__init__(parent)
+
         self.__createGeneralControls()
         self.__layout()
 
     def __layout(self):
-        titleSizer = wx.FlexGridSizer(cols=2, vgap=0, hgap=0)
-        titleSizer.Add(self.titleLabel, 1,
-                       wx.ALL | wx.ALIGN_CENTER_VERTICAL, 4)
-        titleSizer.Add(self.titleTextCtrl, 1, wx.ALL | wx.EXPAND, 4)
+        # Page alias
+        titleSizer = wx.FlexGridSizer(cols=2)
         titleSizer.AddGrowableCol(1)
+        titleSizer.Add(self.titleLabel,
+                       flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=4)
+        titleSizer.Add(self.titleTextCtrl, flag=wx.ALL | wx.EXPAND, border=4)
 
-        typeSizer = wx.FlexGridSizer(1, 2, 0, 0)
-        typeSizer.Add(self.typeLabel, 1, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 4)
-        typeSizer.Add(self.typeCombo, 1, wx.ALL | wx.EXPAND, 4)
+        # Page type
+        typeSizer = wx.FlexGridSizer(cols=2)
         typeSizer.AddGrowableCol(1)
+        typeSizer.Add(self.typeLabel, flag=wx.ALL |
+                      wx.ALIGN_CENTER_VERTICAL, border=4)
+        typeSizer.Add(self.typeCombo, flag=wx.ALL | wx.EXPAND, border=4)
 
-        generalSizer = wx.FlexGridSizer(3, 1, 0, 0)
-        generalSizer.AddGrowableRow(2)
+        # Page order
+        self.orderSizer = wx.FlexGridSizer(cols=2)
+        self.orderSizer.AddGrowableCol(1)
+        self.orderSizer.Add(
+            self.orderLabel, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=4)
+        self.orderSizer.Add(
+            self.orderCombo, flag=wx.ALL | wx.EXPAND, border=4)
+
+        generalSizer = wx.FlexGridSizer(cols=1)
+        generalSizer.AddGrowableRow(3)
         generalSizer.AddGrowableCol(0)
-        generalSizer.Add(titleSizer, 1, wx.EXPAND, 0)
-        generalSizer.Add(typeSizer, 1, wx.EXPAND, 0)
-        generalSizer.Add(self.tagsSelector, 1, wx.EXPAND, 0)
+        generalSizer.Add(titleSizer, flag=wx.EXPAND)
+        generalSizer.Add(typeSizer, flag=wx.EXPAND)
+        generalSizer.Add(self.orderSizer, flag=wx.EXPAND)
+        generalSizer.Add(self.tagsSelector, flag=wx.EXPAND)
 
         self.SetSizer(generalSizer)
         self.Layout()
 
     def __createGeneralControls(self):
-        self.titleLabel = wx.StaticText(self, -1, _(u"Title"))
-
+        # Page alias
+        self.titleLabel = wx.StaticText(self, label=_(u"Title"))
         self.titleTextCtrl = wx.TextCtrl(self, value="")
         self.titleTextCtrl.SetMinSize((350, -1))
 
+        # Page type
+        self.typeLabel = wx.StaticText(self, label=_(u"Page type"))
         self.typeCombo = wx.ComboBox(self,
-                                     -1,
                                      choices=[],
                                      style=wx.CB_DROPDOWN | wx.CB_READONLY)
 
+        # Page order
+        self.orderLabel = wx.StaticText(self, label=_('New page position'))
+        self.orderCombo = wx.ComboBox(self,
+                                      choices=[],
+                                      style=wx.CB_DROPDOWN | wx.CB_READONLY)
+
+        # Tags
         self.tagsSelector = TagsSelector(self)
-        self.typeLabel = wx.StaticText(self, -1, _(u"Page type"))
 
     @property
     def pageTitle(self):
@@ -70,9 +94,15 @@ class GeneralPanel(wx.Panel):
 
 class GeneralController(BasePageDialogController):
     def __init__(self, generalPanel, application, dialog):
-        super(GeneralController, self).__init__(application)
+        super().__init__(application)
         self._dialog = dialog
         self._generalPanel = generalPanel
+
+        self._orderCalculators = [
+            (ocf.orderCalculatorTop, _('Top of the list')),
+            (ocf.orderCalculatorBottom, _('End of the list')),
+            (ocf.orderCalculatorAlphabetically, _('Alphabetically')),
+        ]
 
         self._setTagsList()
 
@@ -92,11 +122,11 @@ class GeneralController(BasePageDialogController):
         )
 
     @property
-    def pageTitle(self):
+    def pageTitle(self) -> str:
         return self._generalPanel.titleTextCtrl.GetValue().strip()
 
     @pageTitle.setter
-    def pageTitle(self, value):
+    def pageTitle(self, value: str):
         self._generalPanel.titleTextCtrl.SetValue(value)
 
     @property
@@ -105,12 +135,17 @@ class GeneralController(BasePageDialogController):
         return self._generalPanel.typeCombo.GetClientData(index)
 
     @property
-    def tags(self):
+    def tags(self) -> List[str]:
         return self._generalPanel.tagsSelector.tags
 
     @tags.setter
-    def tags(self, value):
+    def tags(self, value: List[str]):
         self._generalPanel.tagsSelector.tags = value
+
+    @property
+    def orderCalculator(self) -> Callable[[RootWikiPage, str, List[str]], int]:
+        index = self._generalPanel.orderCombo.GetSelection()
+        return self._orderCalculators[index][0]
 
     def setPageProperties(self, page):
         """
@@ -120,7 +155,8 @@ class GeneralController(BasePageDialogController):
         return True
 
     def saveParams(self):
-        PageDialogConfig(self._application.config).recentCreatedPageType.value = self.selectedFactory.getTypeString()
+        PageDialogConfig(
+            self._application.config).recentCreatedPageType.value = self.selectedFactory.getTypeString()
 
     def initBeforeCreation(self, parentPage):
         """
@@ -128,16 +164,21 @@ class GeneralController(BasePageDialogController):
         parentPage - the parent page for new page
         """
         self._fillComboType(None)
+        self._fillComboOrderCalculators()
+
         if parentPage.parent is not None:
             self.tags = parentPage.tags
 
         # Опция для хранения типа страницы, которая была создана последней
-        lastCreatedPageType = PageDialogConfig(self._application.config).recentCreatedPageType.value
+        lastCreatedPageType = PageDialogConfig(
+            self._application.config).recentCreatedPageType.value
         self._setComboPageType(lastCreatedPageType)
 
         title = self._getDefaultTitle()
         self._generalPanel.titleTextCtrl.SetValue(title)
         self._generalPanel.titleTextCtrl.SelectAll()
+        self._generalPanel.orderSizer.ShowItems(True)
+        self._generalPanel.Layout()
 
         self.__onPageTypeChanged(None)
 
@@ -162,12 +203,14 @@ class GeneralController(BasePageDialogController):
         # Установить тип страницы
         self._setComboPageType(currentPage.getTypeString())
         self._generalPanel.typeCombo.Disable()
+        self._generalPanel.orderSizer.ShowItems(False)
+        self._generalPanel.Layout()
         self.__onPageTypeChanged(None)
 
-    def validateBeforeCreation(self, parentPage):
+    def validateBeforeCreation(self, _parentPage):
         return True
 
-    def validateBeforeEditing(self, page):
+    def validateBeforeEditing(self, _page):
         return True
 
     def clear(self):
@@ -206,6 +249,11 @@ class GeneralController(BasePageDialogController):
 
         if not self._generalPanel.typeCombo.IsEmpty():
             self._generalPanel.typeCombo.SetSelection(0)
+
+    def _fillComboOrderCalculators(self):
+        orderTitles = [item[1] for item in self._orderCalculators]
+        self._generalPanel.orderCombo.SetItems(orderTitles)
+        self._generalPanel.orderCombo.SetSelection(1)
 
     def _setTagsList(self):
         assert self._application.wikiroot is not None

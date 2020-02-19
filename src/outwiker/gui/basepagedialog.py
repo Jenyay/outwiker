@@ -2,14 +2,14 @@
 
 import wx
 
+from outwiker.core.events import (PageDialogInitParams,
+                                  PageDialogDestroyParams)
 from outwiker.gui.guiconfig import PageDialogConfig
 from outwiker.gui.pagedialogpanels.generalpanel import (GeneralPanel,
                                                         GeneralController)
 from outwiker.gui.pagedialogpanels.iconspanel import (IconsPanel,
                                                       IconsController)
 from outwiker.gui.testeddialog import TestedDialog
-from outwiker.core.events import (PageDialogInitParams,
-                                  PageDialogDestroyParams)
 
 
 class BasePageDialog (TestedDialog):
@@ -31,7 +31,7 @@ class BasePageDialog (TestedDialog):
         self._notebook = wx.Notebook(self, -1)
         self._createPanels()
 
-        self.__do_layout()
+        self._do_layout()
 
         self._application.onPageDialogInit(self._application.selectedPage,
                                            PageDialogInitParams(self))
@@ -142,7 +142,7 @@ class BasePageDialog (TestedDialog):
                                                 self)
         self.addController(self._iconsController)
 
-    def __do_layout(self):
+    def _do_layout(self):
         mainSizer = wx.FlexGridSizer(cols=1)
         mainSizer.AddGrowableCol(0)
         mainSizer.AddGrowableRow(0)
@@ -169,6 +169,10 @@ class BasePageDialog (TestedDialog):
     @property
     def pageTitle(self):
         return self._generalController.pageTitle
+
+    @property
+    def orderCalculator(self):
+        return self._generalController.orderCalculator
 
     def setPageProperties(self, page):
         for controller in self._controllers:

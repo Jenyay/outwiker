@@ -48,10 +48,12 @@ def createPageWithDialog(parentwnd, parentpage):
         if dlg.ShowModal() == wx.ID_OK:
             factory = dlg.selectedFactory
             alias = dlg.pageTitle
+            order_calculator = dlg.orderCalculator
             tags = []
 
             try:
-                page = factory.create(parentpage, alias, tags)
+                page = factory.create(
+                    parentpage, alias, tags, order_calculator)
             except OSError:
                 showError(Application.mainWindow, _(u"Can't create page"))
                 return None
