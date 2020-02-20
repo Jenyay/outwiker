@@ -21,7 +21,7 @@ def getAlternativeTitle(title: str,
     siblings_lower = [sibling.lower().strip() for sibling in siblings]
 
     # 1. Replace forbidden characters
-    regexp = re.compile(r'[><|?*:"\\/#%]')
+    regexp = re.compile(r'[><|?*:"\\/#%\s]')
     newtitle = regexp.sub(substitution, newtitle)
 
     # 2. Replace double underline in the begin title
