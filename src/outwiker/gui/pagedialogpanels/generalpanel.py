@@ -11,7 +11,8 @@ from outwiker.core.tree import RootWikiPage
 from outwiker.core.events import (PageDialogPageTypeChangedParams,
                                   PageDialogPageTitleChangedParams,
                                   PageDialogPageTagsChangedParams,
-                                  PageDialogPageFactoriesNeededParams)
+                                  PageDialogPageFactoriesNeededParams,
+                                  PageDialogNewPageOrderChangedParams)
 from outwiker.gui.tagsselector import TagsSelector, EVT_TAGS_LIST_CHANGED
 from outwiker.gui.guiconfig import PageDialogConfig, GeneralGuiConfig
 from .basecontroller import BasePageDialogController
@@ -114,6 +115,11 @@ class GeneralController(BasePageDialogController):
         self._generalPanel.titleTextCtrl.Bind(
             wx.EVT_TEXT,
             handler=self.__onPageTitleChanged
+        )
+
+        self._generalPanel.orderCombo.Bind(
+            wx.EVT_COMBOBOX,
+            handler=self.__onPageOrderChanged
         )
 
         self._generalPanel.tagsSelector.Bind(
@@ -224,12 +230,16 @@ class GeneralController(BasePageDialogController):
             handler=self.__onPageTitleChanged
         )
 
+        self._generalPanel.orderCombo.Unbind(
+            wx.EVT_COMBOBOX,
+            handler=self.__onPageOrderChanged
+        )
+
         self._generalPanel.tagsSelector.Unbind(
             EVT_TAGS_LIST_CHANGED,
             handler=self.__onTagsListChanged
         )
         self._dialog = None
-        self._iconsPanel = None
 
     def _fillComboType(self, currentPage):
         """
@@ -285,6 +295,15 @@ class GeneralController(BasePageDialogController):
             self.pageTitle)
 
         self._application.onPageDialogPageTitleChanged(
+            self._application.selectedPage,
+            eventParams)
+
+    def __onPageOrderChanged(self, event):
+        eventParams = PageDialogNewPageOrderChangedParams(
+            self._dialog,
+            self.orderCalculator)
+
+        self._application.onPageDialogNewPageOrderChanged(
             self._application.selectedPage,
             eventParams)
 

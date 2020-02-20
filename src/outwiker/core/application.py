@@ -229,9 +229,15 @@ class ApplicationParams(object):
 
         # Event occurs after page type changing
         # Parameters:
-        #     page - current(selected) page
+        #     page - current (selected) page
         #     params - instance of the PageDialogPageTitleChangedParams class
         self.onPageDialogPageTitleChanged = Event()
+
+        # Event occurs after new page order changing
+        # Parameters:
+        #     page - current (selected) page
+        #     params - instance of the PageDialogNewPageOrderChangedParams class
+        self.onPageDialogNewPageOrderChanged = Event()
 
         # Event occurs after page style changing
         # Parameters:
@@ -247,7 +253,7 @@ class ApplicationParams(object):
 
         # Event occurs after page tag list changing
         # Parameters:
-        #     page - current(selected) page
+        #     page - current (selected) page
         #     params - instance of the PageDialogPageTagsChangedParams class
         self.onPageDialogPageTagsChanged = Event()
 
