@@ -1,7 +1,7 @@
 version: 3.0.0.xxx.{build}
 image:
     - Visual Studio 2019
-    - Ubuntu1804
+    - Ubuntu1604
 environment:
     # PY_PYTHON: 3.8-32
     # PYTHON: C:\Python38
@@ -22,7 +22,7 @@ install:
     - cmd: python -m pipenv run python -m comtypes.client._generate shdocvw.dll
     - cmd: python -m pipenv run python -c "import wx.lib.iewin"
     - sh: python -m pip install pipenv
-    - sh: pipenv run pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-18.04 wxPython==4.0.7.post2
+    - sh: pipenv run pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-16.04 wxPython==4.0.7.post2
     - sh: pipenv update --dev
 build_script:
     - cmd: python -m pipenv run fab win
