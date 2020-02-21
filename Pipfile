@@ -16,7 +16,7 @@ pyparsing = "==2.4.6"
 
 [dev-packages]
 Fabric3 = "==1.14.post1"
-PyInstaller = "==3.5"
+PyInstaller = "==3.6"
 pympler = "==0.6"
 pytest = "==5.3.5"
 coverage = "==5.0.3"
