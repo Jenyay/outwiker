@@ -3,34 +3,36 @@ image:
     - Visual Studio 2019
     - Ubuntu1804
 environment:
-    PY_PYTHON: 3.8-32
-    PYTHON: C:\Python38
+    # PY_PYTHON: 3.8-32
+    # PYTHON: C:\Python38
+    PY_DIR: C:\Python38
     PYTHONIOENCODING: utf_8
     PIPENV_IGNORE_VIRTUALENVS: 1
 stack: Python 3.7.0
 init:
-    - cmd: py -m pip install pipenv
+    - cmd: set PATH=%PY_DIR%;%PY_DIR%\Scripts;%PATH%
+    - cmd: python -m pip install pipenv
     - sh: sudo apt-get -y update
     - sh: sudo apt-get -y install python3-pip python3-dev debhelper devscripts debhelper devscripts p7zip-full libssl-dev dpkg-dev build-essential libjpeg-dev libtiff-dev libsdl2-dev libnotify-dev freeglut3 ibus-gtk3 xvfb libhunspell-dev
     - sh: sudo apt-get -y install libwebkit2gtk-4.0
 install:
     - cmd: cinst innosetup
-    - cmd: py -m pipenv update --dev
-    - cmd: py -m pipenv run python -m pip list
-    - cmd: py -m pipenv run python -m comtypes.client._generate shdocvw.dll
-    - cmd: py -m pipenv run python -c "import wx.lib.iewin"
+    - cmd: python -m pipenv update --dev
+    - cmd: python -m pipenv run python -m pip list
+    - cmd: python -m pipenv run python -m comtypes.client._generate shdocvw.dll
+    - cmd: python -m pipenv run python -c "import wx.lib.iewin"
     - sh: python -m pip install pipenv
     - sh: pipenv run pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-18.04 wxPython==4.0.7.post2
     - sh: pipenv update --dev
 build_script:
-    - cmd: py -m pipenv run fab win
+    - cmd: python -m pipenv run fab win
     # - sh: pipenv run fab linux_binary
     # - sh: pipenv run fab linux_appimage
     # - sh: pipenv run fab deb_binary
     # - sh: pipenv run fab plugins
 test_script:
-    - cmd: py -m pipenv run fab test
-    - cmd: py -m pipenv run fab coverage
+    - cmd: python -m pipenv run fab test
+    - cmd: python -m pipenv run fab coverage
     - sh: xvfb-run pipenv run fab test
 artifacts:
     - path: build/*/versions.xml
