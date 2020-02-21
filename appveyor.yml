@@ -4,6 +4,7 @@ image:
     - Ubuntu1804
 environment:
     PY_PYTHON: 3.8-32
+    PYTHON: C:\Python38
     PYTHONIOENCODING: utf_8
     PIPENV_IGNORE_VIRTUALENVS: 1
 stack: Python 3.8.0
