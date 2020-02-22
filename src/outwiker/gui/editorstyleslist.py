@@ -59,10 +59,10 @@ class EditorStylesList (wx.Panel):
         self._underline.Bind(
             wx.EVT_CHECKBOX, self._onStyleChanged, self._underline)
 
-    def _onStyleSelect(self, event):
+    def _onStyleSelect(self, _event):
         self._updateSelection()
 
-    def _onStyleChanged(self, event):
+    def _onStyleChanged(self, _event):
         index = self._stylesList.GetSelection()
 
         if index >= 0:

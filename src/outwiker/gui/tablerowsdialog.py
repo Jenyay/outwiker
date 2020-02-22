@@ -1,14 +1,15 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import wx
 
 from outwiker.gui.testeddialog import TestedDialog
 
 
-class TableRowsDialog (TestedDialog):
+class TableRowsDialog(TestedDialog):
     def __init__(self, parent):
         super(TableRowsDialog, self).__init__(parent)
         self._SPIN_SIZE = 150
+        self._headerCells = None    # type: wx.CheckBox
         self._createGui()
 
         self.SetTitle(_(u'Insert rows'))

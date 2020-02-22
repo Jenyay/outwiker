@@ -43,7 +43,6 @@ class TrayIconController(wx.EvtHandler):
         self._trayIcon.removeTrayIcon()
         self._unbind()
         self._trayIcon.Destroy()
-        self._mainWindow = None
         self._application = None
         self._trayIcon = None
 
@@ -97,7 +96,7 @@ class TrayIconController(wx.EvtHandler):
         else:
             self._trayIcon.removeTrayIcon()
 
-    def __onPreferencesDialogClose(self, prefDialog):
+    def __onPreferencesDialogClose(self, _prefDialog):
         self.updateTrayIcon()
 
     def __onIconize(self, event):
@@ -106,10 +105,10 @@ class TrayIconController(wx.EvtHandler):
             self.mainWnd.Hide()
         self.updateTrayIcon()
 
-    def __OnTaskBarUpdate(self, page):
+    def __OnTaskBarUpdate(self, _page):
         self.updateTrayIcon()
 
-    def __OnTrayLeftClick(self, event):
+    def __OnTrayLeftClick(self, _event):
         if self.mainWnd.IsIconized():
             self.restoreWindow()
         else:

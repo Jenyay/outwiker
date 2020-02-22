@@ -9,14 +9,12 @@ class BaseAction (object, metaclass=ABCMeta):
         """
         Надпись, отображаемая в меню и на всплывающих подсказках на кнопках
         """
-        pass
 
     @abstractproperty
     def description(self):
         """
         Короткое описание, показываемое в настройках горячих клавиш
         """
-        pass
 
     @abstractmethod
     def run(self, params):
@@ -26,4 +24,3 @@ class BaseAction (object, metaclass=ABCMeta):
         Для обычной кнопки всегда равно None, для зажимаемой кнопки указывает,
         кнопка нажата или отжата
         """
-        pass

@@ -11,6 +11,7 @@ class EditorFilesDropTarget(wx.FileDropTarget):
     """
     Base class to drag files to the editors
     """
+
     def __init__(self, application, editor):
         wx.FileDropTarget.__init__(self)
         self._application = application
@@ -21,7 +22,7 @@ class EditorFilesDropTarget(wx.FileDropTarget):
         self._editor.SetDropTarget(None)
         self._editor = None
 
-    def OnDropFiles(self, x, y, files):
+    def OnDropFiles(self, _x, _y, files):
         assert self._application.selectedPage is not None
 
         if len(files) == 1 and '\n' in files[0]:

@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import os
-
 import wx
 
 from outwiker.gui.testeddialog import TestedDialog

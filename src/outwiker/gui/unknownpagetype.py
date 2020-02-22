@@ -35,7 +35,7 @@ class UnknownPageTypePanel(BasePagePanel):
                           flag=wx.ALIGN_CENTER_VERTICAL | wx.ALL,
                           border=4)
         pageTypeSizer.Add(self._pageTypeTextCtrl,
-                          flag=wx.ALIGN_LEFT| wx.ALL,
+                          flag=wx.ALIGN_LEFT | wx.ALL,
                           border=4)
 
         # Content

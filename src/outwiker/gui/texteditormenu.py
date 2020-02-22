@@ -4,9 +4,9 @@ import wx
 import wx.stc
 
 
-class TextEditorMenu (wx.Menu):
+class TextEditorMenu(wx.Menu):
     def __init__(self):
-        super(type(self), self).__init__()
+        super().__init__()
 
         self.Append(wx.ID_UNDO, _(u'Undo'))
         self.Append(wx.ID_REDO, _(u'Redo'))
@@ -32,7 +32,7 @@ class TextEditorMenu (wx.Menu):
         suggestMenuItems = []
         if suggestList:
             self._spellMenu.AppendSeparator()
-            for n, suggest in enumerate(suggestList):
+            for suggest in suggestList:
                 menuItem = self._spellMenu.Append(wx.ID_ANY, suggest)
                 suggestMenuItems.append(menuItem)
 

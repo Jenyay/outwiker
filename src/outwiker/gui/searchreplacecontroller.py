@@ -20,7 +20,7 @@ class SearchReplaceController (object):
         self.setSearchPhrase(SearchReplaceController._recentSearch)
         self.panel.Bind(wx.EVT_CLOSE, self.__onClose)
 
-    def __onClose(self, event):
+    def __onClose(self, _event):
         self.editor.SetFocus()
         self.panel.Hide()
         self.panel.GetParent().Layout()
