@@ -22,13 +22,13 @@ class AutosaveTimer(wx.EvtHandler):
         self.__timer = wx.Timer(self)
         self.__setTimer()
 
-    def __onPreferencesDialogCreate(self, dialog):
+    def __onPreferencesDialogCreate(self, _dialog):
         """
         На время показа диалога с настройками отключим таймер
         """
         self.__timer.Stop()
 
-    def __onPreferencesDialogClose(self, dialog):
+    def __onPreferencesDialogClose(self, _dialog):
         self.__setTimer()
 
     def __setTimer(self):
@@ -37,7 +37,7 @@ class AutosaveTimer(wx.EvtHandler):
         if interval > 0:
             self.__timer.Start(interval * 1000)
 
-    def __onTick(self, event):
+    def __onTick(self, _event):
         """
         Этот метод вызывается, когда срабатывает таймер
         """

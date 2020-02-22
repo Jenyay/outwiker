@@ -30,13 +30,13 @@ class BookmarksController(object):
 
         if self._application.wikiroot is not None:
             for n in range(len(self._application.wikiroot.bookmarks)):
-                id = wx.Window.NewControlId()
+                control_id = wx.Window.NewControlId()
                 page = self._application.wikiroot.bookmarks[n]
                 if page is None:
                     continue
 
                 subpath = page.subpath
-                self._bookmarksId[id] = subpath
+                self._bookmarksId[control_id] = subpath
 
                 # Найдем родителя
                 parentPage = page.parent
@@ -46,10 +46,10 @@ class BookmarksController(object):
                 else:
                     label = page.display_title
 
-                menu_bookmarks.Append(id, label, "", wx.ITEM_NORMAL)
+                menu_bookmarks.Append(control_id, label, "", wx.ITEM_NORMAL)
                 self.mainWndController.mainWindow.Bind(wx.EVT_MENU,
                                                        self.__onSelectBookmark,
-                                                       id=id)
+                                                       id=control_id)
 
     def __onSelectBookmark(self, event):
         subpath = self._bookmarksId[event.Id]

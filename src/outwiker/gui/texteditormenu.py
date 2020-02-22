@@ -7,6 +7,7 @@ import wx.stc
 class TextEditorMenu(wx.Menu):
     def __init__(self):
         super().__init__()
+        self._spellMenu = None
 
         self.Append(wx.ID_UNDO, _(u'Undo'))
         self.Append(wx.ID_REDO, _(u'Redo'))

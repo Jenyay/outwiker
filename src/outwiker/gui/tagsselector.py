@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import os.path
-
 import wx
 from wx.lib.newevent import NewEvent
 
@@ -90,5 +88,5 @@ class TagsSelector (wx.Panel):
         newevent.ResumePropagation(propagationLevel)
         wx.PostEvent(self, newevent)
 
-    def __onTagsChanged(self, event):
+    def __onTagsChanged(self, _event):
         self._sendTagsListChangedEvent()

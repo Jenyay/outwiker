@@ -52,7 +52,7 @@ class HtmlTextEditor(TextEditor):
             audio embed source track video
             """
 
-        attributes = """abbr accept-charset accept accesskey action align 
+        attributes = """abbr accept-charset accept accesskey action align
             alink alt archive axis background bgcolor border
             cellpadding cellspacing char charoff charset checked cite
             class classid clear codebase codetype color cols colspan
