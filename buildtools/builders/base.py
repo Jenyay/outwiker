@@ -79,8 +79,6 @@ class BuilderBase(object, metaclass=abc.ABCMeta):
         '''
         Remove tests and dev scripts from sources
         '''
-        root = self.temp_sources_dir
-        shutil.rmtree(os.path.join(root, 'profiles'))
 
     def _create_plugins_dir(self):
         """
