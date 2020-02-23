@@ -1,4 +1,4 @@
-__version__ = (3, 0, 0, 870)
+__version__ = (3, 0, 0, 871)
 __status__ = 'dev'
 __api_version__ = (3, 870)
 
