@@ -52,10 +52,12 @@ class GeneralGuiConfig(object):
     DEBUG_DEFAULT = False
 
     RECENT_TEXT_COLORS_PARAM = 'RecentTextColors'
-    RECENT_TEXT_COLORS_DEFAULT = '#000000;#FFFFFF;#ff0000;#00ff00;#0000ff;#8a2be2;#7fff00;#d2691e;#6495ed;#dc143c;#00ffff;#a9a9a9;#ff8c00;#ff1493;#ffd700;#adff2f;#ffff00'.split(';')
+    RECENT_TEXT_COLORS_DEFAULT = '#000000;#FFFFFF;#ff0000;#00ff00;#0000ff;#8a2be2;#7fff00;#d2691e;#6495ed;#dc143c;#00ffff;#a9a9a9;#ff8c00;#ff1493;#ffd700;#adff2f;#ffff00'.split(
+        ';')
 
     RECENT_BACKGROUND_COLORS_PARAM = 'RecentBackgroundColors'
-    RECENT_BACKGROUND_COLORS_DEFAULT = '#000000;#FFFFFF;#ff0000;#00ff00;#0000ff;#8a2be2;#7fff00;#d2691e;#6495ed;#dc143c;#00ffff;#a9a9a9;#ff8c00;#ff1493;#ffd700;#adff2f;#ffff00'.split(';')
+    RECENT_BACKGROUND_COLORS_DEFAULT = '#000000;#FFFFFF;#ff0000;#00ff00;#0000ff;#8a2be2;#7fff00;#d2691e;#6495ed;#dc143c;#00ffff;#a9a9a9;#ff8c00;#ff1493;#ffd700;#adff2f;#ffff00'.split(
+        ';')
 
     # Toaster delay in milliseconds
     TOASTER_DELAY_PARAM = 'ToasterDelay'
@@ -107,9 +109,9 @@ class GeneralGuiConfig(object):
                                            self.DATETIME_FORMAT_DEFAULT)
 
         self.pageTitleTemplate = StringOption(self.config,
-                                           self.GENERAL_SECTION,
-                                           self.PAGE_TITLE_TEMPLATE_PARAM,
-                                           self.PAGE_TITLE_TEMPLATE_DEFAULT)
+                                              self.GENERAL_SECTION,
+                                              self.PAGE_TITLE_TEMPLATE_PARAM,
+                                              self.PAGE_TITLE_TEMPLATE_DEFAULT)
 
         # Последний используемый формат для представления даты и времени
         # модификиции страниц
@@ -813,18 +815,21 @@ class TagsCloudConfig(object):
 
 
 class PageDialogConfig(object):
-    WIDTH_SECTION = u'PageDialogWidth'
+    WIDTH_SECTION = 'PageDialogWidth'
     WIDTH_DEFAULT = 500
 
-    HEIGHT_SECTION = u'PageDialogHeight'
+    HEIGHT_SECTION = 'PageDialogHeight'
     HEIGHT_DEFAULT = 350
 
     # Последний используемый стиль
-    RECENT_STYLE_SECTION = u'RecentStyle'
-    RECENT_STYLE_DEFAULT = u''
+    RECENT_STYLE_SECTION = 'RecentStyle'
+    RECENT_STYLE_DEFAULT = ''
 
-    RECENT_CREATED_PAGE_TYPE_PARAM = u'RecentCreatedPageType'
-    RECENT_CREATED_PAGE_TYPE_DEFAULT = u'wiki'
+    RECENT_CREATED_PAGE_TYPE_PARAM = 'RecentCreatedPageType'
+    RECENT_CREATED_PAGE_TYPE_DEFAULT = 'wiki'
+
+    RECENT_NEW_PAGE_ORDER_CALCULATOR_PARAM = 'PageOrderCalculator'
+    RECENT_NEW_PAGE_ORDER_CALCULATOR_DEFAULT = 1
 
     def __init__(self, config):
         self.config = config
@@ -850,6 +855,12 @@ class PageDialogConfig(object):
             self.RECENT_CREATED_PAGE_TYPE_PARAM,
             self.RECENT_CREATED_PAGE_TYPE_DEFAULT
         )
+
+        self.newPageOrderCalculator = IntegerOption(
+            self.config,
+            GeneralGuiConfig.GENERAL_SECTION,
+            self.RECENT_NEW_PAGE_ORDER_CALCULATOR_PARAM,
+            self.RECENT_NEW_PAGE_ORDER_CALCULATOR_DEFAULT)
 
 
 class PrefDialogConfig(object):

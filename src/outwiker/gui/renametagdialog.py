@@ -69,7 +69,7 @@ class RenameTagDialog(wx.Dialog):
     def newTagName(self):
         return self.__newTagName.GetValue().strip()
 
-    def __onOk(self, event):
+    def __onOk(self, _event):
         from outwiker.core.commands import MessageBox
 
         if self.oldTagName is None:

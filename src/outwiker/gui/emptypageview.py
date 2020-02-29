@@ -88,15 +88,15 @@ class ClosedTreePanel(BasePagePanel):
         else:
             self._recentlySizer.ShowItems(False)
 
-    def _onCreateNotes(self, event):
+    def _onCreateNotes(self, _event):
         actionController = self._application.actionController
         actionController.getAction(NewAction.stringId).run(None)
 
-    def _onOpenNotes(self, event):
+    def _onOpenNotes(self, _event):
         actionController = self._application.actionController
         actionController.getAction(OpenAction.stringId).run(None)
 
-    def _onOpenSelectedNotesTree(self, event):
+    def _onOpenSelectedNotesTree(self, _event):
         openWiki(self._recentlyListBox.GetStringSelection())
 
     def UpdateView(self, page):

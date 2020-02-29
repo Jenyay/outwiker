@@ -46,16 +46,16 @@ class StatusBarController(object):
         self._statusbar.SetStatusWidths([-1, datetime_width])
         self.updateStatusBar()
 
-    def _onTreeUpdate(self, sender):
+    def _onTreeUpdate(self, _sender):
         self.updatePageDateTime()
 
-    def _onPageUpdate(self, page, **kwargs):
+    def _onPageUpdate(self, _page, **_kwargs):
         self.updatePageDateTime()
 
-    def _onWikiOpen(self, wikiroot):
+    def _onWikiOpen(self, _wikiroot):
         self.updatePageDateTime()
 
-    def _onPageSelect(self, newpage):
+    def _onPageSelect(self, _newpage):
         self.updatePageDateTime()
 
     def updatePageDateTime(self):
@@ -72,7 +72,7 @@ class StatusBarController(object):
 
         setStatusText(text, statusbar_item)
 
-    def _onPreferencesDialogClose(self, prefDialog):
+    def _onPreferencesDialogClose(self, _prefDialog):
         """
         Обработчик события изменения настроек главного окна
         """

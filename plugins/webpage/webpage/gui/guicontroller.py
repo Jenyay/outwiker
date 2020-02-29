@@ -166,9 +166,6 @@ class GuiController (object):
             actionController.removeMenuItem(SwitchCodeResultAction.stringId)
             actionController.removeMenuItem(DisableScriptsAction.stringId)
 
-            if TOOLBAR_WEBPAGE in self._application.mainWindow.toolbars:
-                self._application.mainWindow.toolbars.updatePanesInfo()
-
             self._removePolyActionTools()
             if TOOLBAR_WEBPAGE in self._application.mainWindow.toolbars:
                 actionController.removeToolbarButton(

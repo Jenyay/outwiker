@@ -215,13 +215,13 @@ class TextEditor(TextEditorBase):
     def runSpellChecking(self, stylelist, fullText, start, end):
         errors = self._spellChecker.findErrors(fullText[start: end])
 
-        for word, err_start, err_end in errors:
+        for _word, err_start, err_end in errors:
             self._helper.setSpellError(stylelist,
                                        fullText,
                                        err_start + start,
                                        err_end + start)
 
-    def _onStyleNeeded(self, event):
+    def _onStyleNeeded(self, _event):
         if (not self._styleSet and
                 datetime.now() - self._lastEdit >= self._DELAY):
             page = Application.selectedPage
@@ -310,11 +310,11 @@ class TextEditor(TextEditorBase):
     def getCachedStyleBytes(self):
         return self.__stylebytes
 
-    def __onAddWordToDict(self, event):
+    def __onAddWordToDict(self, _event):
         if self._spellErrorText is not None:
             self.__addWordToDict(self._spellErrorText)
 
-    def __onAddWordLowerToDict(self, event):
+    def __onAddWordLowerToDict(self, _event):
         if self._spellErrorText is not None:
             self.__addWordToDict(self._spellErrorText.lower())
 
@@ -392,7 +392,7 @@ class TextEditor(TextEditorBase):
 
         self._checkCaretMoving()
 
-    def _onKeyUp(self, event):
+    def _onKeyUp(self, _event):
         self._checkCaretMoving()
 
     def _checkCaretMoving(self):

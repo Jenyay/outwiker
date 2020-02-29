@@ -70,6 +70,7 @@ class BaseBinaryBuilder(object, metaclass=ABCMeta):
             'json',
             'asyncio',
             'html.parser',
+            'pkg_resources.py2_warn',
         ]
 
     def get_additional_files(self):

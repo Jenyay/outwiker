@@ -64,7 +64,7 @@ class ToolBarsController(object):
                             reverse=True)
         index = 0
 
-        for n, item in enumerate(menu_items):
+        for item in menu_items:
             if order >= item.order:
                 break
 
@@ -140,8 +140,3 @@ class ToolBarsController(object):
 
     def __contains__(self, toolbarname):
         return toolbarname in self._toolbars
-
-    # TODO: Deprecated.
-    # There is for backward compatibility with the WebPage plugin.
-    def updatePanesInfo(self):
-        pass

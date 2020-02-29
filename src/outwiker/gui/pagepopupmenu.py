@@ -68,15 +68,15 @@ class PagePopupMenu (object):
                        self.__onPropertiesPopup,
                        id=self.ID_PROPERTIES_POPUP)
 
-    def __onAddChild(self, event):
+    def __onAddChild(self, _event):
         assert self.popupPage is not None
         createChildPage(self.parent, self.popupPage)
 
-    def __onAddSibling(self, event):
+    def __onAddSibling(self, _event):
         assert self.popupPage is not None
         createSiblingPage(self.parent, self.popupPage)
 
-    def __onPropertiesPopup(self, event):
+    def __onPropertiesPopup(self, _event):
         assert self.popupPage is not None
         if self.popupPage.parent is not None:
             outwiker.gui.pagedialog.editPage(self.parent, self.popupPage)
@@ -108,7 +108,7 @@ class PagePopupMenu (object):
 
         return popupMenu
 
-    def __onRemove(self, event):
+    def __onRemove(self, _event):
         """
         Удалить страницу
         """
@@ -116,40 +116,40 @@ class PagePopupMenu (object):
         if self.popupPage is not None:
             outwiker.core.commands.removePage(self.popupPage)
 
-    def __onRename(self, event):
+    def __onRename(self, _event):
         """
         Переименовать страницу
         """
         assert self.popupPage is not None
         self._application.mainWindow.treePanel.beginRename(self.popupPage)
 
-    def __onCopyLink(self, event):
+    def __onCopyLink(self, _event):
         """
         Копировать ссылку на страницу в буфер обмена
         """
         assert self.popupPage is not None
         outwiker.core.commands.copyLinkToClipboard(self.popupPage)
 
-    def __onOpenAttachFolder(self, event):
+    def __onOpenAttachFolder(self, _event):
         assert self.popupPage is not None
         self._application.actionController.getAction(
             OpenAttachFolderAction.stringId).run(None)
 
-    def __onCopyTitle(self, event):
+    def __onCopyTitle(self, _event):
         """
         Копировать заголовок страницы в буфер обмена
         """
         assert self.popupPage is not None
         outwiker.core.commands.copyTitleToClipboard(self.popupPage)
 
-    def __onCopyPath(self, event):
+    def __onCopyPath(self, _event):
         """
         Копировать путь до страницы в буфер обмена
         """
         assert self.popupPage is not None
         outwiker.core.commands.copyPathToClipboard(self.popupPage)
 
-    def __onCopyAttachPath(self, event):
+    def __onCopyAttachPath(self, _event):
         """
         Копировать путь до прикрепленных файлов в буфер обмена
         """

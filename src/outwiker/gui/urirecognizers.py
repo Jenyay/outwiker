@@ -80,7 +80,7 @@ class URLRecognizer(Recognizer):
 
 # Anchor recognizers
 
-class AnchorRecognizerBase(Recognizer):
+class AnchorRecognizerBase(Recognizer, metaclass=ABCMeta):
     def _recognizeAnchor(self, href: str, basepath: str) -> Union[str, None]:
         anchor = None
         if (href.startswith(basepath) and

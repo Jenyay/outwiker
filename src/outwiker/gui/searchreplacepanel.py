@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import os.path
-
 import wx
 from outwiker.core.system import getBuiltinImagePath
 
@@ -13,6 +11,7 @@ class SearchReplacePanel (wx.Panel):
             style=wx.TAB_TRAVERSAL | wx.RAISED_BORDER)
 
         self._controller = None
+        self._mainSizer = None
 
         self._createGui()
         self._bindEvents()
@@ -137,23 +136,23 @@ class SearchReplacePanel (wx.Panel):
         self.SetSizer(self._mainSizer)
         self.Layout()
 
-    def __onNextSearch(self, event):
+    def __onNextSearch(self, _event):
         if self._controller is not None:
             self._controller.nextSearch()
 
-    def __onPrevSearch(self, event):
+    def __onPrevSearch(self, _event):
         if self._controller is not None:
             self._controller.prevSearch()
 
-    def __onReplace(self, event):
+    def __onReplace(self, _event):
         if self._controller is not None:
             self._controller.replace()
 
-    def __onReplaceAll(self, event):
+    def __onReplaceAll(self, _event):
         if self._controller is not None:
             self._controller.replaceAll()
 
-    def __onSearchTextChange(self, event):
+    def __onSearchTextChange(self, _event):
         if self._controller is not None:
             self._controller.enterSearchPhrase()
 
@@ -165,7 +164,7 @@ class SearchReplacePanel (wx.Panel):
 
         event.Skip()
 
-    def __onEnterPress(self, event):
+    def __onEnterPress(self, _event):
         if self._controller is None:
             return
 
@@ -174,5 +173,5 @@ class SearchReplacePanel (wx.Panel):
         else:
             self._controller.nextSearch()
 
-    def __onCloseClick(self, event):
+    def __onCloseClick(self, _event):
         self.Close()

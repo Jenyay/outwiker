@@ -99,7 +99,7 @@ class AttachPanel(wx.Panel):
         self._application.onAttachListChanged -= self.__onAttachListChanged
         self._application.onWikiOpen -= self.__onWikiOpen
 
-    def __onClose(self, event):
+    def __onClose(self, _event):
         self._dropTarget.destroy()
         self.__unbindAppEvents()
         self.__unbindGuiEvents()
@@ -108,8 +108,8 @@ class AttachPanel(wx.Panel):
         self.__fileIcons.clear()
         self.Destroy()
 
-    def __createToolBar(self, parent, id):
-        toolbar = wx.ToolBar(parent, id, style=wx.TB_DOCKABLE)
+    def __createToolBar(self, parent, toolbar_id):
+        toolbar = wx.ToolBar(parent, toolbar_id, style=wx.TB_DOCKABLE)
         self.ID_ATTACH = toolbar.AddTool(
             wx.ID_ANY,
             _(u"Attach Files…"),
@@ -185,10 +185,10 @@ class AttachPanel(wx.Panel):
         attachSizer_copy.Fit(self)
         self.SetAutoLayout(True)
 
-    def __onWikiOpen(self, wiki):
+    def __onWikiOpen(self, _wiki):
         self.updateAttachments()
 
-    def __onPageSelect(self, page):
+    def __onPageSelect(self, _page):
         self.updateAttachments()
 
     def __sortFilesList(self, files_list):
@@ -242,11 +242,11 @@ class AttachPanel(wx.Panel):
 
         return files
 
-    def __onAttach(self, event):
+    def __onAttach(self, _event):
         self._application.actionController.getAction(
             AttachFilesAction.stringId).run(None)
 
-    def __onRemove(self, event):
+    def __onRemove(self, _event):
         if self._application.selectedPage is not None:
             files = self.__getSelectedFiles()
 
@@ -297,24 +297,24 @@ class AttachPanel(wx.Panel):
                     text = _(u"Can't execute file '%s'") % file
                     showError(self._application.mainWindow, text)
 
-    def __onPaste(self, event):
+    def __onPaste(self, _event):
         self.__pasteLink()
 
-    def __onOpenFolder(self, event):
+    def __onOpenFolder(self, _event):
         self._application.actionController.getAction(
             OpenAttachFolderAction.stringId).run(None)
 
-    def __onExecute(self, event):
+    def __onExecute(self, _event):
         self.__executeFile()
 
-    def __onDoubleClick(self, event):
+    def __onDoubleClick(self, _event):
         config = AttachConfig(self._application.config)
         if config.doubleClickAction.value == AttachConfig.ACTION_INSERT_LINK:
             self.__pasteLink()
         elif config.doubleClickAction.value == AttachConfig.ACTION_OPEN:
             self.__executeFile()
 
-    def __onBeginDrag(self, event):
+    def __onBeginDrag(self, _event):
         selectedFiles = self.__getSelectedFiles()
         if not selectedFiles:
             return
@@ -329,7 +329,7 @@ class AttachPanel(wx.Panel):
         dragSource = wx.DropSource(data, self)
         dragSource.DoDragDrop()
 
-    def __onAttachListChanged(self, page, params):
+    def __onAttachListChanged(self, page, _params):
         if page is not None and page == self._application.selectedPage:
             self.updateAttachments()
 

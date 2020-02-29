@@ -2,7 +2,7 @@ dist: xenial
 language: python
 cache: pip
 python:
-    - "3.5"
+    - "3.8"
 addons:
     apt:
         packages:

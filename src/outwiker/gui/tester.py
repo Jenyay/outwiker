@@ -81,10 +81,10 @@ class DialogTester(object):
 
         return result
 
-    def _returnResult(self, dialog, result):
+    def _returnResult(self, _dialog, result):
         return result
 
-    def _error(self, dialog):
+    def _error(self, _dialog):
         assert False
 
 

@@ -185,9 +185,9 @@ def locale_plugin(pluginname=None):
     '''
     Create or update the localization file for pluginname plug-in
     '''
-    plugins = [pluginname] if pluginname else PLUGINS_LIST
+    plugins_list = [pluginname] if pluginname else PLUGINS_LIST
 
-    for name in plugins:
+    for name in plugins_list:
         print_info(name)
         with lcd(os.path.join("plugins", name, name)):
             local(r'find . -iname "*.py" | xargs xgettext -o locale/{}.pot'.format(name))

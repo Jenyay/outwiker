@@ -161,6 +161,15 @@ class PageDialogPageTitleChangedParams(object):
         self.pageTitle = pageTitle
 
 
+class PageDialogNewPageOrderChangedParams(object):
+    """
+    Set of parameters for the onPageDialogNewPageOrderChanged event
+    """
+    def __init__(self, dialog, orderCalculator):
+        self.dialog = dialog
+        self.orderCalculator = orderCalculator
+
+
 class PageDialogPageStyleChangedParams(object):
     """
     Set of parameters for the onPageDialogPageStyleChanged event

@@ -87,26 +87,22 @@ class BasePagePanel(ScrolledPanel):
         """
         Вызов печати страницы
         """
-        pass
 
     def UpdateView(self, page):
         """
         Обновление страницы
         """
-        pass
 
     def Save(self):
         """
         Сохранить страницу
         """
-        pass
 
     def Clear(self):
         """
         Убрать за собой.
         Удалить добавленные элементы интерфейса и отписаться от событий
         """
-        pass
 
     def checkForExternalEditAndSave(self):
         """

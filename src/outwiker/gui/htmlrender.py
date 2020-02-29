@@ -29,7 +29,6 @@ class HtmlRenderBase(wx.Panel):
         """
         Загрузить страницу из файла
         """
-        pass
 
     def SetPage(self, htmltext, basepath):
         """
@@ -38,7 +37,6 @@ class HtmlRenderBase(wx.Panel):
         basepath - путь до папки, относительно которой будут искаться
             локальные ресурсы (картинки)
         """
-        pass
 
     def Sleep(self):
         pass
@@ -50,7 +48,6 @@ class HtmlRenderBase(wx.Panel):
         '''
         Must return instance of HTML render engine
         '''
-        pass
 
     @property
     def render(self):

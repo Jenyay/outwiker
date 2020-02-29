@@ -41,7 +41,7 @@ class TagsCloud(wx.ScrolledWindow):
         super().SetBackgroundColour(colour)
         self.updateTagLabels()
 
-    def __onSize(self, event):
+    def __onSize(self, _event):
         newSize = self.GetSize()
         if self._oldSize != newSize:
             self.__moveLabels()
@@ -102,13 +102,15 @@ class TagsCloud(wx.ScrolledWindow):
         """
         Убрать все выделения с меток
         """
-        [label.mark(False) for label in self.__labels.values()]
+        for label in self.__labels.values():
+            label.mark(False)
 
     def isMarked(self, tag):
         return self.__labels[tag].isMarked
 
     def clear(self):
-        [label.Destroy() for label in self.__labels.values()]
+        for label in self.__labels.values():
+            label.Destroy()
 
         self.__labels = {}
         self.__tags = []

@@ -11,7 +11,8 @@ from outwiker.core.tree import RootWikiPage
 from outwiker.core.events import (PageDialogPageTypeChangedParams,
                                   PageDialogPageTitleChangedParams,
                                   PageDialogPageTagsChangedParams,
-                                  PageDialogPageFactoriesNeededParams)
+                                  PageDialogPageFactoriesNeededParams,
+                                  PageDialogNewPageOrderChangedParams)
 from outwiker.gui.tagsselector import TagsSelector, EVT_TAGS_LIST_CHANGED
 from outwiker.gui.guiconfig import PageDialogConfig, GeneralGuiConfig
 from .basecontroller import BasePageDialogController
@@ -97,6 +98,7 @@ class GeneralController(BasePageDialogController):
         super().__init__(application)
         self._dialog = dialog
         self._generalPanel = generalPanel
+        self._config = PageDialogConfig(self._application.config)
 
         self._orderCalculators = [
             (ocf.orderCalculatorTop, _('Top of the list')),
@@ -114,6 +116,11 @@ class GeneralController(BasePageDialogController):
         self._generalPanel.titleTextCtrl.Bind(
             wx.EVT_TEXT,
             handler=self.__onPageTitleChanged
+        )
+
+        self._generalPanel.orderCombo.Bind(
+            wx.EVT_COMBOBOX,
+            handler=self.__onPageOrderChanged
         )
 
         self._generalPanel.tagsSelector.Bind(
@@ -155,8 +162,8 @@ class GeneralController(BasePageDialogController):
         return True
 
     def saveParams(self):
-        PageDialogConfig(
-            self._application.config).recentCreatedPageType.value = self.selectedFactory.getTypeString()
+        self._config.recentCreatedPageType.value = self.selectedFactory.getTypeString()
+        self._config.newPageOrderCalculator.value = self._generalPanel.orderCombo.GetSelection()
 
     def initBeforeCreation(self, parentPage):
         """
@@ -170,8 +177,7 @@ class GeneralController(BasePageDialogController):
             self.tags = parentPage.tags
 
         # Опция для хранения типа страницы, которая была создана последней
-        lastCreatedPageType = PageDialogConfig(
-            self._application.config).recentCreatedPageType.value
+        lastCreatedPageType = self._config.recentCreatedPageType.value
         self._setComboPageType(lastCreatedPageType)
 
         title = self._getDefaultTitle()
@@ -224,12 +230,16 @@ class GeneralController(BasePageDialogController):
             handler=self.__onPageTitleChanged
         )
 
+        self._generalPanel.orderCombo.Unbind(
+            wx.EVT_COMBOBOX,
+            handler=self.__onPageOrderChanged
+        )
+
         self._generalPanel.tagsSelector.Unbind(
             EVT_TAGS_LIST_CHANGED,
             handler=self.__onTagsListChanged
         )
         self._dialog = None
-        self._iconsPanel = None
 
     def _fillComboType(self, currentPage):
         """
@@ -253,7 +263,12 @@ class GeneralController(BasePageDialogController):
     def _fillComboOrderCalculators(self):
         orderTitles = [item[1] for item in self._orderCalculators]
         self._generalPanel.orderCombo.SetItems(orderTitles)
-        self._generalPanel.orderCombo.SetSelection(1)
+        order = self._config.newPageOrderCalculator.value
+
+        if order >= 0 and order < len(self._orderCalculators):
+            self._generalPanel.orderCombo.SetSelection(order)
+        else:
+            self._generalPanel.orderCombo.SetSelection(1)
 
     def _setTagsList(self):
         assert self._application.wikiroot is not None
@@ -285,6 +300,15 @@ class GeneralController(BasePageDialogController):
             self.pageTitle)
 
         self._application.onPageDialogPageTitleChanged(
+            self._application.selectedPage,
+            eventParams)
+
+    def __onPageOrderChanged(self, event):
+        eventParams = PageDialogNewPageOrderChangedParams(
+            self._dialog,
+            self.orderCalculator)
+
+        self._application.onPageDialogNewPageOrderChanged(
             self._application.selectedPage,
             eventParams)
 

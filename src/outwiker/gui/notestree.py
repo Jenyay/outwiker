@@ -47,6 +47,7 @@ class NotesTree(wx.Panel):
         self.iconHeight = ICON_HEIGHT
 
         self.dragItem = None
+        self.popupPage = None
 
         # Картинки для дерева
         self._iconsCache = ImageListCache(self.defaultIcon)
@@ -191,7 +192,7 @@ class NotesTree(wx.Panel):
         page = self.treeCtrl.GetItemData(item)
         self._application.mainWindow.tabsController.openInTab(page, True)
 
-    def __onClose(self, event):
+    def __onClose(self, _event):
         self._dropTarget.destroy()
         self.__UnBindApplicationEvents()
         self.treeCtrl.DeleteAllItems()
@@ -313,7 +314,7 @@ class NotesTree(wx.Panel):
         event.Veto()
         renamePage(page, label)
 
-    def __onStartTreeUpdate(self, root):
+    def __onStartTreeUpdate(self, _root):
         self.__unbindUpdateEvents()
 
     def __unbindUpdateEvents(self):
@@ -323,7 +324,7 @@ class NotesTree(wx.Panel):
         self._application.onPageOrderChange -= self.__onPageOrderChange
         self.Unbind(wx.EVT_TREE_SEL_CHANGED, handler=self.__onSelChanged)
 
-    def __onEndTreeUpdate(self, root):
+    def __onEndTreeUpdate(self, _root):
         self.__bindUpdateEvents()
         self.__treeUpdate(self._application.wikiroot)
 
@@ -376,7 +377,7 @@ class NotesTree(wx.Panel):
         finally:
             self.__externalPageSelect = False
 
-    def __onSelChanged(self, event):
+    def __onSelChanged(self, _event):
         ctrlstate = wx.GetKeyState(wx.WXK_CONTROL)
         shiftstate = wx.GetKeyState(wx.WXK_SHIFT)
 
