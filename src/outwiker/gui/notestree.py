@@ -127,7 +127,7 @@ class NotesTree(wx.Panel):
 
         if change & PAGE_UPDATE_TITLE:
             item = self._pageCache[page]
-            self.treeCtrl.SetItemText(item, page.display_title)
+            self.treeCtrl.SetItemText(item, page.title)
 
     def __loadIcon(self, page):
         """
@@ -509,7 +509,7 @@ class NotesTree(wx.Panel):
 
         item = self.treeCtrl.InsertItem(parentItem,
                                         child.order,
-                                        child.display_title,
+                                        child.title,
                                         data=child)
 
         self.treeCtrl.SetItemImage(item, self.__loadIcon(child))
@@ -662,7 +662,7 @@ class NotesTreeDropFilesTarget(BaseDropFilesTarget):
                               in correctedFiles]
 
                 text = _("Attach files to the note '{title}'?\n\n{files}").format(
-                    title=page.display_title,
+                    title=page.title,
                     files='\n'.join(file_names)
                 )
 
