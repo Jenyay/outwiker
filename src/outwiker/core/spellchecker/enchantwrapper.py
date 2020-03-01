@@ -62,15 +62,15 @@ class EnchantWrapper (object):
     def addCustomDict(self, customDictPath):
         try:
             self._createCustomDictLang(self._folders[-1])
-        except IOError as err:
+        except IOError:
             logger.error("Can't create custom dictionary")
 
         key = (ENCHANT_CUSTOM_DICT_LANG, customDictPath)
 
         if key not in self._dictCache:
             broker = Broker()
-            broker.set_param('enchant.myspell.dictionary.path',
-                             self._folders[-1])
+            # broker.set_param('enchant.myspell.dictionary.path',
+            #                  self._folders[-1])
 
             try:
                 currentDict = DictWithPWL(ENCHANT_CUSTOM_DICT_LANG,
@@ -91,10 +91,12 @@ class EnchantWrapper (object):
         key = (lang, path)
         if key not in self._dictCache:
             broker = Broker()
-            broker.set_param('enchant.myspell.dictionary.path', path)
-            broker.set_ordering('*', 'myspell')
+            # broker.set_param('enchant.myspell.dictionary.path', path)
+            broker.set_ordering('*', 'hunspell')
             currentDict = Dict(lang, broker)
             self._dictCache[key] = currentDict
+            print(broker.describe())
+            print(broker.list_languages())
         else:
             currentDict = self._dictCache[key]
 

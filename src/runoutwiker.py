@@ -10,7 +10,7 @@ import wx
 import outwiker
 from outwiker.core.application import Application
 from outwiker.core.defines import APP_DATA_DEBUG
-from outwiker.core.system import getOS, getConfigPath
+from outwiker.core.system import getOS, getConfigPath, getSpellDirList
 from outwiker.core.i18n import initLocale
 from outwiker.core.starter import Starter, StarterExit
 from outwiker.core.system import getSpecialDirList
@@ -32,6 +32,9 @@ def print_info():
 
 if __name__ == "__main__":
     getOS().migrateConfig()
+
+    DICPATH = ':'.join(getSpellDirList())
+    os.environ['DICPATH'] = DICPATH
 
     config_path = getConfigPath()
     application = Application

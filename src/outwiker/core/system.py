@@ -191,8 +191,10 @@ class Unix(System):
         """
         Return wrapper for "real" spell checker (hunspell, enchant, etc)
         """
-        from .spellchecker.hunspellwrapper import HunspellWrapper
-        return HunspellWrapper(langlist, folders)
+        # from .spellchecker.hunspellwrapper import HunspellWrapper
+        # return HunspellWrapper(langlist, folders)
+        from .spellchecker.enchantwrapper import EnchantWrapper
+        return EnchantWrapper(langlist, folders)
 
 
 def getOS():
