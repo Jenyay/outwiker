@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from abc import ABCMeta, abstractmethod
 import re
+from abc import ABCMeta, abstractmethod
 from io import StringIO
 
 
 class HtmlImprover(object, metaclass=ABCMeta):
-    """
-    Class make HTML code more readable and append line breaks.
-    """
+    """Class make HTML code more readable and append line breaks."""
 
     def __init__(self):
         specialTags = [u'pre', u'script']
@@ -21,7 +19,7 @@ class HtmlImprover(object, metaclass=ABCMeta):
                             for name in specialTags]
 
     def run(self, text):
-        result = text.replace("\r\n", "\n")
+        result = text.replace('\r\n', '\n')
         result = self._replaceEndlines(result)
 
         return result.strip()
@@ -96,40 +94,34 @@ class HtmlImprover(object, metaclass=ABCMeta):
 
     @abstractmethod
     def _appendLineBreaks(self, text):
-        """
-        Replace line breaks to <br> tags
-        """
-        pass
+        """Replace line breaks to <br> tags."""
 
 
 class BrHtmlImprover(HtmlImprover):
-    """
-    Class replaces \\n to <br>
-    """
-    def _appendLineBreaks(self, text):
-        """
-        Replace line breaks to <br/> tags
-        """
-        result = text
-        result = result.replace("\n", "<br/>")
+    r"""Class replaces \n to <br>."""
 
-        opentags = r"[uod]l|hr|h\d|tr|td"
-        closetags = r"li|d[td]|t[rdh]|caption|thead|tfoot|tbody|colgroup|col|h\d"
+    def _appendLineBreaks(self, text):
+        """Replace line breaks to <br/> tags."""
+        result = text
+        result = result.replace('\n', '<br/>')
+
+        opentags = r'[uod]l|hr|h\d|tr|td'
+        closetags = r'li|d[td]|t[rdh]|caption|thead|tfoot|tbody|colgroup|col|h\d'
 
         # Remove <br> tag before some block elements
-        remove_br_before = r"<br\s*/?>[\s\n]*(?=<(?:" + opentags + r")[ >])"
-        result = re.sub(remove_br_before, "", result, flags=re.I)
+        remove_br_before = r'<br\s*/?>[\s\n]*(?=<(?:' + opentags + r')[ >])'
+        result = re.sub(remove_br_before, '', result, flags=re.I)
 
         # Remove <br> tag after some block elements
-        remove_br_after = r"(<(?:" + opentags + r")[ >]|</(?:" + closetags + r")>)[\s\n]*<br\s*/?>"
-        result = re.sub(remove_br_after, r"\1", result, flags=re.I)
+        remove_br_after = r'(<(?:' + opentags + r')[ >]|</(?:' + closetags + r')>)[\s\n]*<br\s*/?>'
+        result = re.sub(remove_br_after, r'\1', result, flags=re.I)
 
         # Append line breaks before some elements(to improve readability)
-        append_eol_before = r"\n*(<li>|<h\d>|</?[uo]l>|<hr\s*/?>|<p>|</?table.*?>|</?tr.*?>|<td.*?>)"
-        result = re.sub(append_eol_before, "\n\\1", result, flags=re.I)
+        append_eol_before = r'\n*(<li>|<h\d>|</?[uo]l>|<hr\s*/?>|<p>|</?table.*?>|</?tr.*?>|<td.*?>)'
+        result = re.sub(append_eol_before, '\n\\1', result, flags=re.I)
 
         # Append line breaks after some elements(to improve readability)
-        append_eol_after = r"(<hr\s*/?>|<br\s*/?>|</\s*h\d>|</\s*p>|</\s*ul>)\n*"
-        result = re.sub(append_eol_after, "\\1\n", result, flags=re.I)
+        append_eol_after = r'(<hr\s*/?>|<br\s*/?>|</\s*h\d>|</\s*p>|</\s*ul>)\n*'
+        result = re.sub(append_eol_after, '\\1\n', result, flags=re.I)
 
         return result

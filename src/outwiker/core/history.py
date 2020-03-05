@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-Классы для работы с историей открытия страниц
-"""
+"""Классы для работы с историей открытия страниц."""
 
 
 class HistoryEmptyException(Exception):
@@ -9,13 +7,11 @@ class HistoryEmptyException(Exception):
     Вызывается при попытке вернуться назад, если история возврата пустая
     (и аналогично с историей вперед)
     """
-    pass
 
 
 class History(object):
-    """
-    Класс для работы с историей открытия страниц на вкладке
-    """
+    """Класс для работы с историей открытия страниц на вкладке."""
+
     def __init__(self):
         # Список страниц для возврата(для перехода "назад")
         self._back = []
@@ -35,9 +31,7 @@ class History(object):
         return len(self._forward)
 
     def goto(self, newCurrentPage):
-        """
-        Произошел переход на новую страницу
-        """
+        """Произошел переход на новую страницу."""
         if (self._currentPage is None and
                 len(self._back) == 0 and
                 len(self._forward) == 0):

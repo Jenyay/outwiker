@@ -38,9 +38,7 @@ class ChangeLog:
 
     @property
     def latestVersion(self) -> Optional[VersionInfo]:
-        '''
-        Return self.versions item with biggest version number
-        '''
+        """Return self.versions item with biggest version number."""
         if len(self.versions) == 0:
             return None
 

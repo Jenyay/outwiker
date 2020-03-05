@@ -3,8 +3,8 @@
 import re
 from string import Template
 
-from outwiker.gui.guiconfig import HtmlRenderConfig
 from outwiker.core.application import Application
+from outwiker.gui.guiconfig import HtmlRenderConfig
 
 
 class MyTemplate (Template):
@@ -14,6 +14,7 @@ class MyTemplate (Template):
     Реализация регулярного выражения частично взята
     из http://stackoverflow.com/a/12769116
     """
+
     pattern = r"""
       %(delim)s(?:
       (?P<escaped>^$) |          # Отключим замену $$
@@ -25,9 +26,8 @@ class MyTemplate (Template):
 
 
 class HtmlTemplate(object):
-    """
-    Класс для генерации HTML-страницы на основе шаблона
-    """
+    """Класс для генерации HTML-страницы на основе шаблона."""
+
     def __init__(self, template):
         """
         template - текст шаблона
@@ -45,9 +45,9 @@ class HtmlTemplate(object):
         self.template = MyTemplate(template)
 
     def substitute(self, content, **kwargs):
-        '''
+        """
         In outwiker.core 1.5 'userhead' parameter will be replaced to **kwargs
-        '''
+        """
         if 'userhead' not in kwargs:
             kwargs['userhead'] = u''
         if 'title' not in kwargs:

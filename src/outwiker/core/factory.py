@@ -1,40 +1,34 @@
 # -*- coding: utf-8 -*-
 
-from abc import ABCMeta, abstractmethod, abstractproperty
 import os.path
-from typing import List, Callable
+from abc import ABCMeta, abstractmethod, abstractproperty
+from typing import Callable, List
 
 from .exceptions import ReadonlyException
-from .tree_commands import getAlternativeTitle
 from .tree import RootWikiPage, WikiPage
-
+from .tree_commands import getAlternativeTitle
 
 # Functions to calculate new page order
+
 
 def orderCalculatorTop(_parent: RootWikiPage,
                        _alias: str,
                        _tags: List[str]) -> int:
-    '''
-    Add a page to top of the siblings
-    '''
+    """Add a page to top of the siblings."""
     return 0
 
 
 def orderCalculatorBottom(parent: RootWikiPage,
                           _alias: str,
                           _tags: List[str]) -> int:
-    '''
-    Add a page to bottom of the siblings
-    '''
+    """Add a page to bottom of the siblings."""
     return len(parent.children)
 
 
 def orderCalculatorAlphabetically(parent: RootWikiPage,
                                   alias: str,
                                   _tags: List[str]) -> int:
-    '''
-    Sort a page alias alphabetically
-    '''
+    """Sort a page alias alphabetically."""
     order = len(parent.children)
     alias_lower = alias.lower()
     for n, page in enumerate(parent.children):
@@ -96,8 +90,7 @@ class PageFactory(metaclass=ABCMeta):
 
     @abstractmethod
     def getPageView(self, parent, application):
-        """
-        Метод возвращает контрол,
+        """Метод возвращает контрол,
         который будет отображать и редактировать страницу
         """
 

@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from typing import Dict, Generic, TypeVar, List, Optional
-
+from typing import Dict, Generic, List, Optional, TypeVar
 
 T = TypeVar('T')
 

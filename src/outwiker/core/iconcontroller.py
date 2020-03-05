@@ -6,18 +6,18 @@ import os.path
 import shutil
 from typing import Union
 
-from outwiker.core.defines import (ICONS_STD_PREFIX,
-                                   PAGE_ICON_NAME,
-                                   ICONS_EXTENSIONS)
+from outwiker.core.defines import (ICONS_EXTENSIONS,
+                                   ICONS_STD_PREFIX,
+                                   PAGE_ICON_NAME)
 from outwiker.core.events import PAGE_UPDATE_ICON
 from outwiker.core.exceptions import ReadonlyException
 
 
 class IconController(object):
     def __init__(self, builtin_icons_path):
-        '''
+        """
         builtin_icons_path -- path to built-in icons folder.
-        '''
+        """
         self._builtin_icons_path = builtin_icons_path
 
     def _is_subdir(self, fname, directory):
@@ -32,10 +32,10 @@ class IconController(object):
         return not relative.startswith(os.pardir + os.sep)
 
     def is_builtin_icon(self, fname):
-        '''
+        """
         Return True if fname is standard (built-in) icon file name,
         return False if fname is user's icon file name.
-        '''
+        """
         if not fname:
             raise ValueError
 
@@ -71,7 +71,7 @@ class IconController(object):
         page.params.iconOption.value = u''
 
     def set_icon(self, page, icon_fname: Union[str, None]) -> Union[str, None]:
-        '''
+        """
         Set icon (icon_fname - icon file name) for a page.
         If icon_fname is built-in icon then link to icon will be added to page
         params, else file will be copied to page folder.
@@ -79,7 +79,7 @@ class IconController(object):
         Raises exceptions: ValueError, IOError
 
         Added in outwiker.core 1.5
-        '''
+        """
         if page.readonly:
             raise ReadonlyException
 
@@ -126,12 +126,12 @@ class IconController(object):
         page.params.iconOption.value = rel_icon_path
 
     def get_icon(self, page) -> Union[str, None]:
-        '''
+        """
         Return path to a page icon or None if icon is not installed.
         The existence of a built-in icons is not checked.
 
         Added in outwiker.core 1.5
-        '''
+        """
         assert page is not None
 
         # Find __icon.* file
@@ -151,10 +151,10 @@ class IconController(object):
 
     @staticmethod
     def display_name(file_name):
-        '''
+        """
         Return string to show icon name for user.
         Raise ValueError if file_name is None or empty string.
-        '''
+        """
         if not file_name:
             raise ValueError
 

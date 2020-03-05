@@ -2,11 +2,11 @@
 
 from typing import List
 
-from .xmlchangelogparser import XmlChangelogParser
-from .xmlchangelog import XmlDownload, XmlChangeLog, XmlChangeItem
-from .changelog import VersionInfo, DownloadInfo, ChangeLog, ChangeItem
+from .changelog import ChangeItem, ChangeLog, DownloadInfo, VersionInfo
 from .version import Version
 from .version_requirements_factory import RequirementsFactory
+from .xmlchangelog import XmlChangeItem, XmlChangeLog, XmlDownload
+from .xmlchangelogparser import XmlChangelogParser
 
 
 class ChangeLogFactory:
