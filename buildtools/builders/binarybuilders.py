@@ -180,8 +180,8 @@ class PyInstallerBuilderWindows(BasePyInstallerBuilder):
             u'include',
         ]
 
-        to_remove += [fname.name for fname
-                      in Path(self._dist_dir, 'outwiker').glob('api-ms-win*.dll')]
+        # to_remove += [fname.name for fname
+        #               in Path(self._dist_dir, 'outwiker').glob('api-ms-win*.dll')]
 
         return to_remove
 
