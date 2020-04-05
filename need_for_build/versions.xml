@@ -1,5 +1,15 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <versions>
+	<version number="3.0.0.871" status="dev">
+		<changes>
+			<change>Update the German localization.</change>
+		</changes>
+
+		<changes lang="ru">
+			<change>Обновление немецкой локализации.</change>
+		</changes>
+	</version>
+
 	<version number="3.0.0.870" status="dev" date="23.02.2020">
 		<changes>
 			<change>Add the ability to select notes position in the notes list.</change>
