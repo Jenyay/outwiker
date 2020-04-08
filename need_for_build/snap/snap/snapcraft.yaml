@@ -69,6 +69,25 @@ parts:
             - libsdl-gfx1.2-5
             - libgstreamer1.0-0
             - libslang2
+        stage:
+            - -usr/lib/x86_64-linux-gnu/glib-2.0/gio-querymodules
+            - -usr/lib/x86_64-linux-gnu/glib-2.0/glib-compile-schemas
+            - -usr/lib/x86_64-linux-gnu/libgio-2.0.so.0.5600.4
+            - -usr/lib/x86_64-linux-gnu/libglib-2.0.so.0.5600.4
+            - -usr/lib/x86_64-linux-gnu/libgmodule-2.0.so.0.5600.4
+            - -usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.5600.4
+            - -usr/lib/x86_64-linux-gnu/libgthread-2.0.so.0.5600.4
+            - -usr/lib/x86_64-linux-gnu/libibus-1.0.so.5.0.517
+            - -usr/lib/x86_64-linux-gnu/libicudata.so.60.2
+            - -usr/lib/x86_64-linux-gnu/libicui18n.so.60.2
+            - -usr/lib/x86_64-linux-gnu/libicuio.so.60.2
+            - -usr/lib/x86_64-linux-gnu/libicutest.so.60.2
+            - -usr/lib/x86_64-linux-gnu/libicutu.so.60.2
+            - -usr/lib/x86_64-linux-gnu/libicuuc.so.60.2
+            - -usr/lib/x86_64-linux-gnu/gtk-3.0/3.0.0/immodules/im-ibus.so
+            - -usr/lib/x86_64-linux-gnu/libsqlite3.so.0.8.6
+            - -usr/lib/x86_64-linux-gnu/libxml2.so.2.9.4
+            - -usr/share/doc/*
         after:
             - desktop-gtk3
             - snapcraft-preload
@@ -76,8 +95,8 @@ parts:
             # - https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-18.04/wxPython-4.0.7.post2-cp36-cp36m-linux_x86_64.whl
             - wxpython==4.0.7.post2
             - Pillow==7.0.0
-            - hunspell==0.5.5
-            - idna==2.8
+            - cyhunspell==1.3.4
+            - idna==2.9
             - pyparsing==2.4.6
         override-build: |
             snapcraftctl build

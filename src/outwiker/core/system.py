@@ -15,6 +15,8 @@ from pathlib import Path
 import wx
 
 from .pagetitletester import WindowsPageTitleTester, LinuxPageTitleTester
+from .spellchecker.cyhunspellwrapper import CyHunspellWrapper
+
 from outwiker.gui.fileicons import WindowsFileIcons, UnixFileIcons
 from outwiker.core.defines import (ICONS_FOLDER_NAME,
                                    IMAGES_FOLDER_NAME,
@@ -120,9 +122,6 @@ class Windows(System):
         """
         Return wrapper for "real" spell checker (hunspell, enchant, etc)
         """
-        # from .spellchecker.enchantwrapper import EnchantWrapper
-        # return EnchantWrapper(langlist, folders)
-        from .spellchecker.cyhunspellwrapper import CyHunspellWrapper
         return CyHunspellWrapper(langlist, folders)
 
 
@@ -193,8 +192,7 @@ class Unix(System):
         """
         Return wrapper for "real" spell checker (hunspell, enchant, etc)
         """
-        from .spellchecker.hunspellwrapper import HunspellWrapper
-        return HunspellWrapper(langlist, folders)
+        return CyHunspellWrapper(langlist, folders)
 
 
 def getOS():
