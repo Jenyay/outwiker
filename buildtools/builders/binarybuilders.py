@@ -71,6 +71,10 @@ class BaseBinaryBuilder(object, metaclass=ABCMeta):
             'asyncio',
             'html.parser',
             'pkg_resources.py2_warn',
+            'hunspell',
+            'hunspell.platform',
+            'cacheman',
+            'cacheman.cachewrap',
         ]
 
     def get_additional_files(self):
@@ -173,15 +177,12 @@ class PyInstallerBuilderWindows(BasePyInstallerBuilder):
             u'win32wnet.pyd',
             u'iconv.dll',
             u'_winxptheme.pyd',
-            u'enchant/iconv.dll',
-            u'enchant/share',
-            u'enchant/lib/enchant/README.txt',
             u'mfc140u.dll',
             u'include',
         ]
 
-        # to_remove += [fname.name for fname
-        #               in Path(self._dist_dir, 'outwiker').glob('api-ms-win*.dll')]
+        to_remove += [fname.name for fname
+                      in Path(self._dist_dir, 'outwiker').glob('api-ms-win*.dll')]
 
         return to_remove
 
