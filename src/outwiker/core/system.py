@@ -120,8 +120,10 @@ class Windows(System):
         """
         Return wrapper for "real" spell checker (hunspell, enchant, etc)
         """
-        from .spellchecker.enchantwrapper import EnchantWrapper
-        return EnchantWrapper(langlist, folders)
+        # from .spellchecker.enchantwrapper import EnchantWrapper
+        # return EnchantWrapper(langlist, folders)
+        from .spellchecker.cyhunspellwrapper import CyHunspellWrapper
+        return CyHunspellWrapper(langlist, folders)
 
 
 class Unix(System):

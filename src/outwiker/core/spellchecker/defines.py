@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 
 ENCHANT_CUSTOM_DICT_LANG = u'xx_XX'
