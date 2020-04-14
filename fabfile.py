@@ -11,6 +11,7 @@ import urllib.request
 import urllib.error
 import urllib.parse
 import shutil
+from typing import List
 
 from fabric.api import local, lcd, settings, task, cd, put, hosts
 from colorama import Fore
@@ -478,10 +479,70 @@ def build(is_stable=False):
         win(is_stable)
 
 
-@hosts(DEPLOY_SERVER_NAME)
 @task
+def deploy(apply=False):
+    '''
+    Deploy unstable version.
+
+    apply -- True if deploy to server and False if print commands only
+    '''
+    if apply:
+        print(Fore.GREEN + 'Run deploy...')
+    else:
+        print(Fore.GREEN + 'Print commands only')
+
+    update_sources_master(apply)
+    add_sources_tag(apply, is_stable=False)
+
+
+@task
+def add_sources_tag(apply=False, is_stable=False):
+    '''
+    Add the tag to git repository and push
+    '''
+    version_str = getOutwikerVersionStr()
+    if is_stable:
+        tagname = u'release_{}'.format(version_str)
+    else:
+        tagname = u'unstable_{}'.format(version_str)
+
+    commands = [
+        'git checkout master',
+        'git tag {}'.format(tagname),
+        'git push --tags',
+    ]
+    _run_commands(commands)
+
+
+def _run_commands(commands: List[str], apply=False):
+    for command in commands:
+        if apply:
+            local(command)
+        else:
+            print(command)
+
+
+@task
+def update_sources_master(apply=False):
+    '''
+    Update the git repository
+
+    apply -- True if deploy to server and False if print commands only
+    '''
+    commands = [
+        'git checkout dev',
+        'git pull',
+        'git checkout master',
+        'git pull',
+        'git merge dev',
+        'git push'
+    ]
+    _run_commands(commands)
+
+
+@hosts(DEPLOY_SERVER_NAME)
 @linux_only
-def deploy(is_stable=False):
+def deploy_old(is_stable=False):
     '''
     Upload to site
     '''
@@ -501,13 +562,13 @@ def deploy(is_stable=False):
 
     upload_binary(is_stable)
 
-    version_str = getOutwikerVersionStr()
-    if is_stable:
-        tagname = u'release_{}'.format(version_str)
-    else:
-        tagname = u'unstable_{}'.format(version_str)
-
-    _add_git_tag(tagname)
+    # version_str = getOutwikerVersionStr()
+    # if is_stable:
+    #     tagname = u'release_{}'.format(version_str)
+    # else:
+    #     tagname = u'unstable_{}'.format(version_str)
+    #
+    # _add_git_tag(tagname)
 
 
 @task
