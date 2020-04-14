@@ -65,28 +65,15 @@ from buildtools.builders import (BuilderWindows,
 from outwiker.utilites.textfile import readTextFile
 from outwiker.core.xmlappinfoparser import XmlAppInfoParser
 
-try:
-    from buildtools.serverinfo import (DEPLOY_SERVER_NAME,
-                                       DEPLOY_UNSTABLE_PATH,
-                                       DEPLOY_STABLE_PATH,
-                                       DEPLOY_HOME_PATH,
-                                       DEPLOY_SITE,
-                                       DEPLOY_PLUGINS_PACK_PATH,
-                                       PATH_TO_WINDOWS_DISTRIBS,
-                                       )
-except ImportError:
-    shutil.copyfile(u'buildtools/serverinfo.py.example',
-                    u'buildtools/serverinfo.py')
-    from buildtools.serverinfo import (DEPLOY_SERVER_NAME,
-                                       DEPLOY_UNSTABLE_PATH,
-                                       DEPLOY_STABLE_PATH,
-                                       DEPLOY_HOME_PATH,
-                                       DEPLOY_SITE,
-                                       DEPLOY_PLUGINS_PACK_PATH,
-                                       PATH_TO_WINDOWS_DISTRIBS,
-                                       )
-
 from buildtools.uploaders import BinaryUploader
+
+DEPLOY_SERVER_NAME = os.environ.get('OUTWIKER_DEPLOY_SERVER_NAME', '')
+DEPLOY_UNSTABLE_PATH = os.environ.get('OUTWIKER_DEPLOY_UNSTABLE_PATH', '')
+DEPLOY_STABLE_PATH = os.environ.get('OUTWIKER_DEPLOY_STABLE_PATH', '')
+DEPLOY_HOME_PATH = os.environ.get('OUTWIKER_DEPLOY_HOME_PATH', '')
+DEPLOY_SITE = os.environ.get('OUTWIKER_DEPLOY_SITE', '')
+DEPLOY_PLUGINS_PACK_PATH = os.environ.get('OUTWIKER_DEPLOY_PLUGINS_PACK_PATH', '')
+PATH_TO_WINDOWS_DISTRIBS = os.environ.get('OUTWIKER_PATH_TO_WINDOWS_DISTRIBS', '')
 
 
 @task
