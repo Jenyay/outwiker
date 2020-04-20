@@ -148,11 +148,11 @@
 			</requirements>
 		</download>
 		<changes>
-			<change>Bug fixes</change>
+			<change>Bug fixes.</change>
 		</changes>
 
 		<changes lang="ru">
-			<change>Исправление ошибок</change>
+			<change>Исправление ошибок.</change>
 		</changes>
 	</version>
 
@@ -193,11 +193,11 @@
 			</requirements>
 		</download>
 		<changes>
-			<change>The first version</change>
+			<change>The first version.</change>
 		</changes>
 
 		<changes lang="ru">
-			<change>Первая версия</change>
+			<change>Первая версия.</change>
 		</changes>
 	</version>
 </versions>

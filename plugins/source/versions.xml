@@ -326,7 +326,7 @@
 		</changes>
 
 		<changes lang="ru">
-			<change>При использовании OutWiker 1.8 можно задавать горячую клавишу для вставки команды (:source:)</change>
+			<change>При использовании OutWiker 1.8 можно задавать горячую клавишу для вставки команды (:source:).</change>
 		</changes>
 	</version>
 

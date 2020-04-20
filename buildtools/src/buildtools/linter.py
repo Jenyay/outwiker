@@ -66,6 +66,7 @@ class LinterForOutWiker(Linter):
             check_release_date,
             check_even_versions,
             check_changelog_list,
+            check_changelog_content,
         ]
 
 
@@ -80,6 +81,7 @@ class LinterForPlugin(Linter):
             check_release_date,
             check_download_plugin_url,
             check_changelog_list,
+            check_changelog_content,
         ]
 
 
@@ -195,5 +197,31 @@ def check_changelog_list(versions_xml: str) -> List[LinterReport]:
             reports.append(
                 LinterReport(LinterStatus.ERROR,
                              'Changelog for English and Russian versions are not equal for version {}'.format(version.number)))
+
+    return reports
+
+
+def check_changelog_content(versions_xml: str) -> List[LinterReport]:
+    '''
+    Every item in change log list must ends with dot
+    '''
+    reports = []
+
+    changelog = XmlChangelogParser.parse(versions_xml)
+    for version in changelog.versions:
+        changes_ru = version.changes.get('ru')
+        changes_en = version.changes.get('')
+
+        for item in changes_ru:
+            if not item.description.endswith('.'):
+                reports.append(
+                    LinterReport(LinterStatus.ERROR,
+                                 'Add the dot to change item for Russian changelog for version {}'.format(version.number)))
+
+        for item in changes_en:
+            if not item.description.endswith('.'):
+                reports.append(
+                    LinterReport(LinterStatus.ERROR,
+                                 'Add the dot to change item for English changelog for version {}'.format(version.number)))
 
     return reports
