@@ -1,5 +1,6 @@
 from buildtools.linter import (LinterStatus, check_release_date,
-                               check_versions_list, check_even_versions)
+                               check_versions_list, check_even_versions,
+                               check_download_plugin_url)
 
 
 def test_check_release_date_ok():
@@ -143,6 +144,56 @@ def test_check_even_version_error():
 '''
 
     report = check_even_versions(text)
+
+    assert len(report) == 1
+    assert report[0].status == LinterStatus.ERROR
+
+
+def test_check_download_plugin_url_ok():
+    text = '''<?xml version="1.1" encoding="UTF-8" ?>
+<versions>
+    <version number="1.6.1" date="23.02.2020">
+        <download href="https://jenyay.net/uploads/Outwiker/WebPage/webpage-1.6.1.zip">
+            <requirements>
+                <api>3.868</api>
+            </requirements>
+        </download>
+        <changes>
+            <change>bla-bla-bla.</change>
+        </changes>
+
+        <changes lang="ru">
+            <change>Бла-бла-бла.</change>
+        </changes>
+    </version>
+</versions>
+'''
+
+    report = check_download_plugin_url(text)
+    assert len(report) == 0
+
+
+def test_check_download_plugin_url_error():
+    text = '''<?xml version="1.1" encoding="UTF-8" ?>
+<versions>
+    <version number="1.6.1" date="23.02.2020">
+        <download href="https://jenyay.net/uploads/Outwiker/WebPage/webpage-1.6.zip">
+            <requirements>
+                <api>3.868</api>
+            </requirements>
+        </download>
+        <changes>
+            <change>bla-bla-bla.</change>
+        </changes>
+
+        <changes lang="ru">
+            <change>Бла-бла-бла.</change>
+        </changes>
+    </version>
+</versions>
+'''
+
+    report = check_download_plugin_url(text)
 
     assert len(report) == 1
     assert report[0].status == LinterStatus.ERROR

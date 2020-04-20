@@ -77,6 +77,7 @@ class LinterForPlugin(Linter):
         return [
             check_versions_list,
             check_release_date,
+            check_download_plugin_url,
         ]
 
 
@@ -121,11 +122,45 @@ def check_even_versions(versions_xml: str) -> List[LinterReport]:
             build = int(version.number.split('.')[3])
         except (ValueError, IndexError):
             reports.append(
-                LinterReport(LinterStatus.ERROR, 'Invalid version format: {}'.format(version.number)))
+                LinterReport(LinterStatus.ERROR,
+                             'Invalid version format: {}'.format(version.number)))
             continue
 
         if build % 2 != 0:
             reports.append(
-                LinterReport(LinterStatus.ERROR, 'Build number for version {} is odd (dev version)'.format(version.number)))
+                LinterReport(LinterStatus.ERROR,
+                             'Build number for version {} is odd (dev version)'.format(version.number)))
+
+    return reports
+
+
+def check_download_plugin_url(versions_xml: str) -> List[LinterReport]:
+    '''
+    Check version number in URL for download
+    '''
+    reports = []
+
+    archive_extension = '.zip'
+
+    changelog = XmlChangelogParser.parse(versions_xml)
+    for version in changelog.versions:
+        if not version.downloads:
+            reports.append(
+                LinterReport(LinterStatus.ERROR,
+                             'Empty download list for version {}'.format(version.number)))
+            continue
+
+        for download in version.downloads:
+            if not download.href.endswith(archive_extension):
+                reports.append(
+                    LinterReport(LinterStatus.ERROR,
+                                 'Invalid archive format for version {}: {}'.format(version.number, download.href)))
+                continue
+
+            if not download.href[:-len(archive_extension)].endswith(version.number):
+                reports.append(
+                    LinterReport(LinterStatus.ERROR,
+                                 'Invalid file name for version {}: {}'.format(version.number, download.href)))
+                continue
 
     return reports

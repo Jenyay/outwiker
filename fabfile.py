@@ -207,7 +207,6 @@ def test(*args):
     '''
     command = getPython() if args else 'coverage run {}'.format(COVERAGE_PARAMS)
 
-    local('pip install -e .')
     local('{command} runtests.py {args}'.format(
         command=command, args=' '.join(args)))
 
