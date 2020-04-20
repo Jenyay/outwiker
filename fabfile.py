@@ -16,7 +16,7 @@ from typing import List
 from fabric.api import local, lcd, settings, task, cd, put, hosts
 from colorama import Fore
 from buildtools.buildfacts import BuildFacts
-from buildtools.linter import LinterForOutWiker, LinterResult
+from buildtools.linter import LinterForOutWiker, LinterStatus, LinterReport
 
 from buildtools.utilites import (getPython,
                                  execute,
@@ -480,7 +480,7 @@ def deploy(apply=False):
     apply -- True if deploy to server and False if print commands only
     '''
     linter_result = check_errors()
-    if linter_result != LinterResult.OK:
+    if linter_result != LinterStatus.OK:
         return
 
     if apply:
@@ -826,9 +826,30 @@ def snap_restart():
 
 @task
 def check_errors():
+    print_info('Start OutWiker information checking...')
     changelog_outwiker_fname = os.path.join(NEED_FOR_BUILD_DIR,
                                             OUTWIKER_VERSIONS_FILENAME)
     versions_outwiker = readTextFile(changelog_outwiker_fname)
     linter = LinterForOutWiker()
-    result_outwiker = linter.check_all(versions_outwiker)
-    return result_outwiker
+    status_outwiker, reports_outwiker = linter.check_all(versions_outwiker)
+
+    for report in reports_outwiker:
+        _print_linter_report(report)
+
+    if status_outwiker == LinterStatus.OK:
+        print_info('OutWiker information is OK')
+    else:
+        print_error('Outwiker information problems found')
+
+    return status_outwiker
+
+
+def _print_linter_report(report: LinterReport):
+    if report.status == LinterStatus.OK:
+        print_info('    ' + report.message)
+    elif report.status == LinterStatus.WARNING:
+        print_warning('    ' + report.message)
+    elif report.status == LinterStatus.ERROR:
+        print_error('    ' + report.message)
+    else:
+        raise AssertionError

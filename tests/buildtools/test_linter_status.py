@@ -1,10 +1,10 @@
-from buildtools.linter import LinterResult
+from buildtools.linter import LinterStatus
 
 
-def test_result():
-    ok = LinterResult.OK
-    warn = LinterResult.WARNING
-    error = LinterResult.ERROR
+def test_status():
+    ok = LinterStatus.OK
+    warn = LinterStatus.WARNING
+    error = LinterStatus.ERROR
 
     assert (ok & ok) == ok
     assert (ok & warn) == warn

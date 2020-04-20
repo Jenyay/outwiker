@@ -1,7 +1,7 @@
-from buildtools.linter import LinterResult, LinterForOutWiker
+from buildtools.linter import LinterStatus, LinterForOutWiker
 
 
-def test_check_versison_number_ok():
+def test_check_release_date_ok():
     text = '''<?xml version="1.1" encoding="UTF-8" ?>
 <versions>
     <version number="3.0.0.872" status="dev" date="20.04.2020">
@@ -17,10 +17,12 @@ def test_check_versison_number_ok():
 '''
 
     linter = LinterForOutWiker()
-    assert linter.check_release_date(text) == (LinterResult.OK, '')
+    report = linter.check_release_date(text)
+
+    assert len(report) == 0
 
 
-def test_check_check_release_date_error():
+def test_check_release_date_error():
     text = '''<?xml version="1.1" encoding="UTF-8" ?>
 <versions>
     <version number="3.0.0.872" status="dev">
@@ -36,10 +38,13 @@ def test_check_check_release_date_error():
 '''
 
     linter = LinterForOutWiker()
-    assert linter.check_release_date(text)[0] == LinterResult.ERROR
+    report = linter.check_release_date(text)
+
+    assert len(report) == 1
+    assert report[0].status == LinterStatus.ERROR
 
 
-def test_check_check_release_date_error_several():
+def test_check_release_date_error_several():
     text = '''<?xml version="1.1" encoding="UTF-8" ?>
 <versions>
     <version number="3.0.0.872" status="dev">
@@ -52,7 +57,7 @@ def test_check_check_release_date_error_several():
         </changes>
     </version>
 
-    <version number="3.0.0.870" status="dev" date="23.02.2020">
+    <version number="3.0.0.870" status="dev">
         <changes>
             <change>bla-bla-bla.</change>
         </changes>
@@ -65,10 +70,14 @@ def test_check_check_release_date_error_several():
 '''
 
     linter = LinterForOutWiker()
-    assert linter.check_release_date(text)[0] == LinterResult.ERROR
+    report = linter.check_release_date(text)
+
+    assert len(report) == 2
+    assert report[0].status == LinterStatus.ERROR
+    assert report[1].status == LinterStatus.ERROR
 
 
-def test_check_versisos_list_ok():
+def test_check_versions_list_ok():
     text = '''<?xml version="1.1" encoding="UTF-8" ?>
 <versions>
     <version number="3.0.0.872" status="dev" date="20.04.2020">
@@ -84,17 +93,22 @@ def test_check_versisos_list_ok():
 '''
 
     linter = LinterForOutWiker()
-    assert linter.check_versions_list(text) == (LinterResult.OK, '')
+    report = linter.check_versions_list(text)
+
+    assert len(report) == 0
 
 
-def test_check_versisos_list_error():
+def test_check_versions_list_error():
     text = '''<?xml version="1.1" encoding="UTF-8" ?>
 <versions>
 </versions>
 '''
 
     linter = LinterForOutWiker()
-    assert linter.check_versions_list(text)[0] == LinterResult.ERROR
+    report = linter.check_versions_list(text)
+
+    assert len(report) == 1
+    assert report[0].status == LinterStatus.ERROR
 
 
 def test_check_even_version_ok():
@@ -113,7 +127,9 @@ def test_check_even_version_ok():
 '''
 
     linter = LinterForOutWiker()
-    assert linter.check_even_versions(text) == (LinterResult.OK, '')
+    report = linter.check_even_versions(text)
+
+    assert len(report) == 0
 
 
 def test_check_even_version_error():
@@ -132,4 +148,7 @@ def test_check_even_version_error():
 '''
 
     linter = LinterForOutWiker()
-    assert linter.check_even_versions(text)[0] == LinterResult.ERROR
+    report = linter.check_even_versions(text)
+
+    assert len(report) == 1
+    assert report[0].status == LinterStatus.ERROR
