@@ -153,7 +153,7 @@
 	</version>
 
 	<version number="1.2.2" date="20.01.2015">
-		<download href="https://jenyay.net/uploads/Outwiker/ExternalTools/externaltools-1.2.1.zip">
+		<download href="https://jenyay.net/uploads/Outwiker/ExternalTools/externaltools-1.2.2.zip">
 			<requirements>
 				<api>1.0</api>
 			</requirements>
@@ -185,7 +185,7 @@
 	</version>
 
 	<version number="1.0" date="30.07.2012">
-		<download href="https://jenyay.net/uploads/Outwiker/ExternalTools/externaltools.zip">
+		<download href="https://jenyay.net/uploads/Outwiker/ExternalTools/externaltools-1.0.zip">
 			<requirements>
 				<api>1.0</api>
 			</requirements>
