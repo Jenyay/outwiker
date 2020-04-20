@@ -197,3 +197,37 @@ def test_check_download_plugin_url_error():
 
     assert len(report) == 1
     assert report[0].status == LinterStatus.ERROR
+
+
+def test_check_download_plugin_url_error_several():
+    text = '''<?xml version="1.1" encoding="UTF-8" ?>
+<versions>
+    <version number="1.6.1" date="23.02.2020">
+        <download href="https://jenyay.net/uploads/Outwiker/WebPage/webpage-1.6.zip">
+            <requirements>
+                <api>3.868</api>
+            </requirements>
+        </download>
+
+        <download href="https://jenyay.net/uploads/Outwiker/WebPage/webpage-1.5.zip">
+            <requirements>
+                <api>3.868</api>
+            </requirements>
+        </download>
+
+        <changes>
+            <change>bla-bla-bla.</change>
+        </changes>
+
+        <changes lang="ru">
+            <change>Бла-бла-бла.</change>
+        </changes>
+    </version>
+</versions>
+'''
+
+    report = check_download_plugin_url(text)
+
+    assert len(report) == 2
+    assert report[0].status == LinterStatus.ERROR
+    assert report[1].status == LinterStatus.ERROR
