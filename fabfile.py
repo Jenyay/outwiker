@@ -16,6 +16,7 @@ from typing import List
 from fabric.api import local, lcd, settings, task, cd, put, hosts
 from colorama import Fore
 from buildtools.buildfacts import BuildFacts
+from buildtools.linter import LinterForOutWiker, LinterResult
 
 from buildtools.utilites import (getPython,
                                  execute,
@@ -45,6 +46,7 @@ from buildtools.defines import (
     LANGUAGES,
     SITE_CONTENT_BUILD_DIR,
     SITE_CONTENT_DIR,
+    OUTWIKER_VERSIONS_FILENAME,
 )
 from buildtools.versions import (getOutwikerVersion,
                                  getOutwikerVersionStr,
@@ -72,8 +74,10 @@ DEPLOY_UNSTABLE_PATH = os.environ.get('OUTWIKER_DEPLOY_UNSTABLE_PATH', '')
 DEPLOY_STABLE_PATH = os.environ.get('OUTWIKER_DEPLOY_STABLE_PATH', '')
 DEPLOY_HOME_PATH = os.environ.get('OUTWIKER_DEPLOY_HOME_PATH', '')
 DEPLOY_SITE = os.environ.get('OUTWIKER_DEPLOY_SITE', '')
-DEPLOY_PLUGINS_PACK_PATH = os.environ.get('OUTWIKER_DEPLOY_PLUGINS_PACK_PATH', '')
-PATH_TO_WINDOWS_DISTRIBS = os.environ.get('OUTWIKER_PATH_TO_WINDOWS_DISTRIBS', '')
+DEPLOY_PLUGINS_PACK_PATH = os.environ.get(
+    'OUTWIKER_DEPLOY_PLUGINS_PACK_PATH', '')
+PATH_TO_WINDOWS_DISTRIBS = os.environ.get(
+    'OUTWIKER_PATH_TO_WINDOWS_DISTRIBS', '')
 
 
 @task
@@ -309,7 +313,7 @@ def site_versions():
             print(u'{siteversion:.<20}{devversion}'.format(
                 siteversion=str(appinfo.version),
                 devversion=font + str(localAppInfo.version)
-                ))
+            ))
         except (urllib.error.URLError, urllib.error.HTTPError) as e:
             print(Fore.RED + u'Error')
             print(str(e))
@@ -388,10 +392,12 @@ def upload_plugin(*args):
             print_warning(u'Warning: Uploaded the same version')
         print_info(u'Uploading...')
 
-        path_to_upload = os.path.dirname(appinfo_local.updatesUrl.replace(DEPLOY_SITE + u'/', DEPLOY_HOME_PATH))
+        path_to_upload = os.path.dirname(
+            appinfo_local.updatesUrl.replace(DEPLOY_SITE + u'/', DEPLOY_HOME_PATH))
         version_local = str(appinfo_local.currentVersion)
         archive_name = u'{}-{}.zip'.format(pluginname, version_local)
-        path_to_archive_local = os.path.join(path_to_plugin_local, archive_name)
+        path_to_archive_local = os.path.join(
+            path_to_plugin_local, archive_name)
 
         with cd(path_to_upload):
             put(path_to_archive_local, archive_name)
@@ -473,6 +479,10 @@ def deploy(apply=False):
 
     apply -- True if deploy to server and False if print commands only
     '''
+    linter_result = check_errors()
+    if linter_result != LinterResult.OK:
+        return
+
     if apply:
         print(Fore.GREEN + 'Run deploy...')
     else:
@@ -721,7 +731,8 @@ def docker_build_wx(ubuntu_version: str, wx_version: str):
         os.mkdir(build_dir)
 
     # Create Docker image
-    docker_image = 'wxpython/ubuntu_{ubuntu_version}_webkit1'.format(ubuntu_version=ubuntu_version)
+    docker_image = 'wxpython/ubuntu_{ubuntu_version}_webkit1'.format(
+        ubuntu_version=ubuntu_version)
 
     dockerfile_path = os.path.join(
         NEED_FOR_BUILD_DIR,
@@ -730,7 +741,8 @@ def docker_build_wx(ubuntu_version: str, wx_version: str):
     )
 
     with lcd(dockerfile_path):
-        local('docker build -t {docker_image} .'.format(docker_image=docker_image))
+        local(
+            'docker build -t {docker_image} .'.format(docker_image=docker_image))
 
     # Build wxPython
     command = 'docker run -v "{path}:/home/user/build" --rm --user $(id -u):$(id -g) -i -t -e "WX_VERSION={wx_version}" {docker_image}'.format(
@@ -810,3 +822,13 @@ def snap_restart():
     '''
     local('sudo systemctl stop snap.lxd.daemon.unix.socket')
     local('sudo systemctl restart snap.lxd.daemon')
+
+
+@task
+def check_errors():
+    changelog_outwiker_fname = os.path.join(NEED_FOR_BUILD_DIR,
+                                            OUTWIKER_VERSIONS_FILENAME)
+    versions_outwiker = readTextFile(changelog_outwiker_fname)
+    linter = LinterForOutWiker()
+    result_outwiker = linter.check_all(versions_outwiker)
+    return result_outwiker
