@@ -47,7 +47,7 @@
 		</changes>
 	</version>
 
-	<version number="2.5.2">
+	<version number="2.5.2" date="01.04.2019">
 		<download href="https://jenyay.net/uploads/Outwiker/TexEquation/texequation-2.5.2.zip">
 			<requirements>
 				<api>2.858</api>

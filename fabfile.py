@@ -16,7 +16,8 @@ from typing import List
 from fabric.api import local, lcd, settings, task, cd, put, hosts
 from colorama import Fore
 from buildtools.buildfacts import BuildFacts
-from buildtools.linter import LinterForOutWiker, LinterStatus, LinterReport
+from buildtools.linter import (LinterForOutWiker, LinterForPlugin,
+                               LinterStatus, LinterReport)
 
 from buildtools.utilites import (getPython,
                                  execute,
@@ -826,6 +827,37 @@ def snap_restart():
 
 @task
 def check_errors():
+    status_outwiker = _check_outwiker_errors()
+    status_plugins = _check_plugins_errors()
+
+    return status_outwiker & status_plugins
+
+
+def _check_plugins_errors():
+    print_info('Start plug-ins information checking...')
+    linter = LinterForPlugin()
+
+    sum_status = LinterStatus.OK
+
+    for plugin in PLUGINS_LIST:
+        print_info('  ' + plugin)
+        changelog_fname = os.path.join(PLUGINS_DIR, plugin, PLUGIN_VERSIONS_FILENAME)
+        changelog = readTextFile(changelog_fname)
+        status, reports = linter.check_all(changelog)
+        sum_status = sum_status & status
+
+        for report in reports:
+            _print_linter_report(report)
+
+    if sum_status == LinterStatus.OK:
+        print_info('Plug-ins information is OK')
+    else:
+        print_error('Plug-ins information problems found')
+
+    return sum_status
+
+
+def _check_outwiker_errors():
     print_info('Start OutWiker information checking...')
     changelog_outwiker_fname = os.path.join(NEED_FOR_BUILD_DIR,
                                             OUTWIKER_VERSIONS_FILENAME)

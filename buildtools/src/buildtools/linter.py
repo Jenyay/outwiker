@@ -1,6 +1,7 @@
 '''
 Tools to check errors in OutWiker information
 '''
+from abc import ABCMeta, abstractmethod
 from enum import IntEnum
 from typing import Tuple, List
 
@@ -20,31 +21,26 @@ class LinterReport:
     '''
     Status + Message
     '''
+
     def __init__(self, status: LinterStatus, message: str):
         self.status = status
         self.message = message
 
 
-class Linter:
+class Linter(metaclass=ABCMeta):
+    @abstractmethod
+    def get_checkers(self):
+        pass
+
     def get_sum_status(self, reports: List[LinterReport]) -> LinterStatus:
         sum_status = LinterStatus.OK
         for report in reports:
             sum_status = sum_status & report.status
 
-        return (sum_status, reports)
-
-
-class LinterForOutWiker(Linter):
-    '''
-    Errors checker for OutWiker information
-    '''
+        return sum_status
 
     def check_all(self, versions_xml: str) -> Tuple[LinterStatus, List[LinterReport]]:
-        checkers = [
-            self.check_versions_list,
-            self.check_release_date,
-            self.check_even_versions,
-        ]
+        checkers = self.get_checkers()
 
         sum_report = []
 
@@ -58,50 +54,78 @@ class LinterForOutWiker(Linter):
 
         return (sum_status, sum_report)
 
-    def check_release_date(self, versions_xml: str) -> List[LinterReport]:
-        '''
-        Check that the date is set
-        '''
-        reports = []
 
-        changelog = XmlChangelogParser.parse(versions_xml)
-        for version in changelog.versions:
-            if version.date is None:
-                reports.append(LinterReport(LinterStatus.ERROR,
-                                            'No release date for OutWiker'))
+class LinterForOutWiker(Linter):
+    '''
+    Errors checker for OutWiker information
+    '''
 
-        return reports
+    def get_checkers(self):
+        return [
+            check_versions_list,
+            check_release_date,
+            check_even_versions,
+        ]
 
-    def check_versions_list(self, versions_xml: str) -> List[LinterReport]:
-        '''
-        Check that the versions is not empty
-        '''
-        reports = []
 
-        changelog = XmlChangelogParser.parse(versions_xml)
-        if not changelog.versions:
+class LinterForPlugin(Linter):
+    '''
+    Errors checker for Plug-in information
+    '''
+
+    def get_checkers(self):
+        return [
+            check_versions_list,
+            check_release_date,
+        ]
+
+
+def check_release_date(versions_xml: str) -> List[LinterReport]:
+    '''
+    Check that the date is set
+    '''
+    reports = []
+
+    changelog = XmlChangelogParser.parse(versions_xml)
+    for version in changelog.versions:
+        if version.date is None:
             reports.append(LinterReport(LinterStatus.ERROR,
-                                        'No versions list for OutWiker'))
+                                        'No release date for OutWiker'))
 
-        return reports
+    return reports
 
-    def check_even_versions(self, versions_xml: str) -> List[LinterReport]:
-        '''
-        Check that the date is set
-        '''
-        reports = []
 
-        changelog = XmlChangelogParser.parse(versions_xml)
-        for version in changelog.versions:
-            try:
-                build = int(version.number.split('.')[3])
-            except (ValueError, IndexError):
-                reports.append(
-                    LinterReport(LinterStatus.ERROR, 'Invalid version format: {}'.format(version.number)))
-                continue
+def check_versions_list(versions_xml: str) -> List[LinterReport]:
+    '''
+    Check that the versions is not empty
+    '''
+    reports = []
 
-            if build % 2 != 0:
-                reports.append(
-                    LinterReport(LinterStatus.ERROR, 'Build number for version {} is odd (dev version)'.format(version.number)))
+    changelog = XmlChangelogParser.parse(versions_xml)
+    if not changelog.versions:
+        reports.append(LinterReport(LinterStatus.ERROR,
+                                    'No versions list for OutWiker'))
 
-        return reports
+    return reports
+
+
+def check_even_versions(versions_xml: str) -> List[LinterReport]:
+    '''
+    Check that the date is set
+    '''
+    reports = []
+
+    changelog = XmlChangelogParser.parse(versions_xml)
+    for version in changelog.versions:
+        try:
+            build = int(version.number.split('.')[3])
+        except (ValueError, IndexError):
+            reports.append(
+                LinterReport(LinterStatus.ERROR, 'Invalid version format: {}'.format(version.number)))
+            continue
+
+        if build % 2 != 0:
+            reports.append(
+                LinterReport(LinterStatus.ERROR, 'Build number for version {} is odd (dev version)'.format(version.number)))
+
+    return reports

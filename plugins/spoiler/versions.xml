@@ -124,19 +124,4 @@
 			</requirements>
 		</download>
 	</version>
-
-	<version number="1.0">
-		<download href="https://jenyay.net/uploads/Outwiker/Spoiler/spoiler.zip">
-			<requirements>
-				<api>1.0</api>
-			</requirements>
-		</download>
-		<changes>
-			<change>The first version</change>
-		</changes>
-
-		<changes lang="ru">
-			<change>Первая версия</change>
-		</changes>
-	</version>
 </versions>

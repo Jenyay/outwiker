@@ -183,34 +183,4 @@
 			<change>Добавлена украинская локализация.</change>
 		</changes>
 	</version>
-
-	<version number="1.1">
-		<download href="https://jenyay.net/uploads/Outwiker/Export2HtmlPlugin/export2html.zip">
-			<requirements>
-				<api>2.0</api>
-			</requirements>
-		</download>
-		<changes>
-			<change>When you export a __index.html file created for easy viewing received result.</change>
-		</changes>
-
-		<changes lang="ru">
-			<change>Теперь при экспорте создается файл __index.html для удобного просмотра полученных HTML-файлов.</change>
-		</changes>
-	</version>
-
-	<version number="1.0">
-		<download href="https://jenyay.net/uploads/Outwiker/Export2HtmlPlugin/export2html.zip">
-			<requirements>
-				<api>2.0</api>
-			</requirements>
-		</download>
-		<changes>
-			<change>The first version.</change>
-		</changes>
-
-		<changes lang="ru">
-			<change>Первая версия</change>
-		</changes>
-	</version>
 </versions>

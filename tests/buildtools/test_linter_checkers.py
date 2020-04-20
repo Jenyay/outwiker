@@ -1,4 +1,5 @@
-from buildtools.linter import LinterStatus, LinterForOutWiker
+from buildtools.linter import (LinterStatus, check_release_date,
+                               check_versions_list, check_even_versions)
 
 
 def test_check_release_date_ok():
@@ -16,8 +17,7 @@ def test_check_release_date_ok():
 </versions>
 '''
 
-    linter = LinterForOutWiker()
-    report = linter.check_release_date(text)
+    report = check_release_date(text)
 
     assert len(report) == 0
 
@@ -37,8 +37,7 @@ def test_check_release_date_error():
 </versions>
 '''
 
-    linter = LinterForOutWiker()
-    report = linter.check_release_date(text)
+    report = check_release_date(text)
 
     assert len(report) == 1
     assert report[0].status == LinterStatus.ERROR
@@ -69,8 +68,7 @@ def test_check_release_date_error_several():
 </versions>
 '''
 
-    linter = LinterForOutWiker()
-    report = linter.check_release_date(text)
+    report = check_release_date(text)
 
     assert len(report) == 2
     assert report[0].status == LinterStatus.ERROR
@@ -92,8 +90,7 @@ def test_check_versions_list_ok():
 </versions>
 '''
 
-    linter = LinterForOutWiker()
-    report = linter.check_versions_list(text)
+    report = check_versions_list(text)
 
     assert len(report) == 0
 
@@ -104,8 +101,7 @@ def test_check_versions_list_error():
 </versions>
 '''
 
-    linter = LinterForOutWiker()
-    report = linter.check_versions_list(text)
+    report = check_versions_list(text)
 
     assert len(report) == 1
     assert report[0].status == LinterStatus.ERROR
@@ -126,8 +122,7 @@ def test_check_even_version_ok():
 </versions>
 '''
 
-    linter = LinterForOutWiker()
-    report = linter.check_even_versions(text)
+    report = check_even_versions(text)
 
     assert len(report) == 0
 
@@ -147,8 +142,7 @@ def test_check_even_version_error():
 </versions>
 '''
 
-    linter = LinterForOutWiker()
-    report = linter.check_even_versions(text)
+    report = check_even_versions(text)
 
     assert len(report) == 1
     assert report[0].status == LinterStatus.ERROR
