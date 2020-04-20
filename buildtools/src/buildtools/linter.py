@@ -65,6 +65,7 @@ class LinterForOutWiker(Linter):
             check_versions_list,
             check_release_date,
             check_even_versions,
+            check_changelog_list,
         ]
 
 
@@ -78,6 +79,7 @@ class LinterForPlugin(Linter):
             check_versions_list,
             check_release_date,
             check_download_plugin_url,
+            check_changelog_list,
         ]
 
 
@@ -162,5 +164,36 @@ def check_download_plugin_url(versions_xml: str) -> List[LinterReport]:
                     LinterReport(LinterStatus.ERROR,
                                  'Invalid file name for version {}: {}'.format(version.number, download.href)))
                 continue
+
+    return reports
+
+
+def check_changelog_list(versions_xml: str) -> List[LinterReport]:
+    '''
+    Compare chages for Russian and English languages
+    '''
+    reports = []
+
+    changelog = XmlChangelogParser.parse(versions_xml)
+    for version in changelog.versions:
+        changes_ru = version.changes.get('ru')
+        changes_en = version.changes.get('')
+
+        if not changes_ru:
+            reports.append(
+                LinterReport(LinterStatus.ERROR,
+                             'Empty Russian changelog for version {}'.format(version.number)))
+            continue
+
+        if not changes_en:
+            reports.append(
+                LinterReport(LinterStatus.ERROR,
+                             'Empty English changelog for version {}'.format(version.number)))
+            continue
+
+        if len(changes_ru) != len(changes_en):
+            reports.append(
+                LinterReport(LinterStatus.ERROR,
+                             'Changelog for English and Russian versions are not equal for version {}'.format(version.number)))
 
     return reports

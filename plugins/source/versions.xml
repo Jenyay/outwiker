@@ -211,12 +211,14 @@
 			<change>Bug fixes.</change>
 			<change>Updated Pygments library.</change>
 			<change>Added new styles.</change>
-			<change>Added new languages supporting.</change>
+			<change>Added new programming languages supporting.</change>
 		</changes>
 
 		<changes lang="ru">
 			<change>Исправление ошибок.</change>
-			<change>Обновление библиотеки Pygments, что увеличило число поддерживаемых языков и добавило несколько новых стилей оформления.</change>
+			<change>Обновление библиотеки Pygments.</change>
+			<change>Добавлены новые стили.</change>
+			<change>Добавлена поддержка новых языков программирования.</change>
 		</changes>
 	</version>
 
@@ -305,11 +307,12 @@
 		<download href="https://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.11.1.zip">
 		</download>
 		<changes>
+			<change>Fix highlight for 1C language.</change>
 		</changes>
 
 		<changes lang="ru">
+			<change>Исправлена работа раскраски кода на языке 1С.</change>
 		</changes>
-		<change>Исправлена работа раскраски кода на языке 1С.</change>
 	</version>
 
 	<version number="1.11" date="09.01.2014">

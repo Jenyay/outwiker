@@ -108,20 +108,4 @@
 			<change>Исправление ошибок.</change>
 		</changes>
 	</version>
-
-	<version number="1.4.1" date="17.11.2012">
-		<download href="https://jenyay.net/uploads/Outwiker/Spoiler/spoiler-1.4.1.zip">
-			<requirements>
-				<api>1.0</api>
-			</requirements>
-		</download>
-	</version>
-
-	<version number="1.4" date="30.05.2012">
-		<download href="https://jenyay.net/uploads/Outwiker/Spoiler/spoiler-1.4.zip">
-			<requirements>
-				<api>1.0</api>
-			</requirements>
-		</download>
-	</version>
 </versions>

@@ -77,14 +77,6 @@
 		</changes>
 	</version>
 
-	<version number="1.0.4" date="14.10.2015">
-		<download href="https://jenyay.net/uploads/Outwiker/Counter/counter-1.0.4.zip">
-			<requirements>
-				<api>1.0</api>
-			</requirements>
-		</download>
-	</version>
-
 	<version number="1.0.3" date="20.01.2015">
 		<download href="https://jenyay.net/uploads/Outwiker/Counter/counter-1.0.3.zip">
 			<requirements>

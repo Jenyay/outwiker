@@ -109,32 +109,6 @@
 		</changes>
 	</version>
 
-	<version number="1.1.1" date="17.11.2012">
-		<download href="https://jenyay.net/uploads/Outwiker/Lightbox/lightbox-1.1.1.zip">
-			<requirements>
-				<api>1.0</api>
-			</requirements>
-		</download>
-		<changes>
-		</changes>
-
-		<changes lang="ru">
-		</changes>
-	</version>
-
-	<version number="1.1" date="08.08.2012">
-		<download href="https://jenyay.net/uploads/Outwiker/Lightbox/lightbox-1.1.zip">
-			<requirements>
-				<api>1.0</api>
-			</requirements>
-		</download>
-		<changes>
-		</changes>
-
-		<changes lang="ru">
-		</changes>
-	</version>
-
 	<version number="1.0" date="24.06.2012">
 		<download href="https://jenyay.net/uploads/Outwiker/Lightbox/lightbox-1.0.zip">
 			<requirements>
