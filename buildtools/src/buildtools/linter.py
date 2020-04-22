@@ -67,6 +67,7 @@ class LinterForOutWiker(Linter):
             check_even_versions,
             check_changelog_list,
             check_changelog_content,
+            check_version_numbers,
         ]
 
 
@@ -82,6 +83,7 @@ class LinterForPlugin(Linter):
             check_download_plugin_url,
             check_changelog_list,
             check_changelog_content,
+            check_version_numbers,
         ]
 
 
@@ -223,5 +225,24 @@ def check_changelog_content(versions_xml: str) -> List[LinterReport]:
                 reports.append(
                     LinterReport(LinterStatus.ERROR,
                                  'Add the dot to change item for English changelog for version {}'.format(version.number)))
+
+    return reports
+
+
+def check_version_numbers(versions_xml: str) -> List[LinterReport]:
+    '''
+    Check version numbers for uniqueness.
+    '''
+    reports = []
+    versions = set()
+
+    changelog = XmlChangelogParser.parse(versions_xml)
+    for version in changelog.versions:
+        if version.number in versions:
+            reports.append(
+                LinterReport(LinterStatus.ERROR,
+                             'Not a unique version: {}'.format(version.number)))
+
+        versions.add(version.number)
 
     return reports
