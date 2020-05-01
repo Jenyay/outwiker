@@ -53,6 +53,7 @@ from buildtools.versions import (getOutwikerVersion,
                                  getOutwikerVersionStr,
                                  downloadAppInfo,
                                  getLocalAppInfoList,
+                                 getPluginChangelogPath,
                                  )
 from buildtools.builders import (BuilderWindows,
                                  BuilderSources,
@@ -67,6 +68,7 @@ from buildtools.builders import (BuilderWindows,
 
 from outwiker.utilites.textfile import readTextFile
 from outwiker.core.xmlappinfoparser import XmlAppInfoParser
+from outwiker.core.changelogfactory import ChangeLogFactory
 
 from buildtools.uploaders import BinaryUploader
 
@@ -371,38 +373,24 @@ def upload_plugin(*args):
         if not os.path.exists(path_to_plugin_local):
             continue
 
-        path_to_xml_local = os.path.join(path_to_plugin_local,
-                                         PLUGIN_VERSIONS_FILENAME)
+        path_to_xml_changelog = getPluginChangelogPath(pluginname)
+        changelog_xml_content = readTextFile(path_to_xml_changelog)
+        changelog = ChangeLogFactory.fromString(changelog_xml_content, '')
+        latest_version = changelog.latestVersion
+        assert latest_version is not None
 
-        xml_content_local = readTextFile(path_to_xml_local)
-        appinfo_local = XmlAppInfoParser().parse(xml_content_local)
+        print_info('Uploading...')
 
-        url = appinfo_local.updatesUrl
-        try:
-            appinfo_remote = downloadAppInfo(url)
-        except Exception:
-            appinfo_remote = None
+        for download in latest_version.downloads:
+            upload_url = download.href.replace('https://jenyay.net/', DEPLOY_HOME_PATH)
+            path_to_upload = os.path.dirname(upload_url)
+            archive_name = os.path.basename(upload_url)
 
-        if (appinfo_remote is not None and
-                appinfo_local.currentVersion < appinfo_remote.currentVersion):
-            print_error(u'Error. New version < Prev version')
-            sys.exit(1)
-        elif (appinfo_remote is not None and
-                appinfo_local.currentVersion == appinfo_remote.currentVersion):
-            print_warning(u'Warning: Uploaded the same version')
-        print_info(u'Uploading...')
+            path_to_archive_local = os.path.join(
+                path_to_plugin_local, archive_name)
 
-        path_to_upload = os.path.dirname(
-            appinfo_local.updatesUrl.replace(DEPLOY_SITE + u'/', DEPLOY_HOME_PATH))
-        version_local = str(appinfo_local.currentVersion)
-        archive_name = u'{}-{}.zip'.format(pluginname, version_local)
-        path_to_archive_local = os.path.join(
-            path_to_plugin_local, archive_name)
-
-        with cd(path_to_upload):
-            put(path_to_archive_local, archive_name)
-            put(path_to_xml_local, PLUGIN_VERSIONS_FILENAME)
-    site_versions()
+            with cd(path_to_upload):
+                put(path_to_archive_local, archive_name)
 
 
 @hosts(DEPLOY_SERVER_NAME)
@@ -492,6 +480,7 @@ def deploy(apply=False):
     add_sources_tag(apply, is_stable=False)
     plugins()
     upload_plugin()
+    upload_plugins_pack()
 
 
 @task
