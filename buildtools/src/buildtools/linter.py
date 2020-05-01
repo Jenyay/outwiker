@@ -68,6 +68,7 @@ class LinterForOutWiker(Linter):
             check_changelog_list,
             check_changelog_content,
             check_version_numbers,
+            check_https_protocol,
         ]
 
 
@@ -84,6 +85,7 @@ class LinterForPlugin(Linter):
             check_changelog_list,
             check_changelog_content,
             check_version_numbers,
+            check_https_protocol,
         ]
 
 
@@ -244,5 +246,22 @@ def check_version_numbers(versions_xml: str) -> List[LinterReport]:
                              'Not a unique version: {}'.format(version.number)))
 
         versions.add(version.number)
+
+    return reports
+
+
+def check_https_protocol(versions_xml: str) -> List[LinterReport]:
+    '''
+    Check version numbers for uniqueness.
+    '''
+    reports = []
+
+    changelog = XmlChangelogParser.parse(versions_xml)
+    for version in changelog.versions:
+        for download in version.downloads:
+            if not download.href.startswith('https://'):
+                reports.append(
+                    LinterReport(LinterStatus.ERROR,
+                                 'Invalid HREF protocol: {}'.format(download.href)))
 
     return reports
