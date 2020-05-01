@@ -490,6 +490,8 @@ def deploy(apply=False):
 
     update_sources_master(apply)
     add_sources_tag(apply, is_stable=False)
+    plugins()
+    upload_plugin()
 
 
 @task

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os
-# import shutil
+import shutil
 import urllib.request
 import urllib.error
 import urllib.parse
@@ -13,6 +13,7 @@ from buildtools.defines import (PLUGINS_DIR,
                                 PLUGINS_LIST)
 from buildtools.versions import (readAppInfo,
                                  getPluginInfoPath,
+                                 getPluginChangelogPath,
                                  downloadAppInfo)
 
 
@@ -20,13 +21,15 @@ class BuilderPlugins(BuilderBase):
     """
     Create archives with plug-ins
     """
+
     def __init__(self,
                  updatedOnly=False,
                  build_dir=PLUGINS_DIR,
-                 plugins_list=PLUGINS_LIST):
+                 plugins_list=None):
         super(BuilderPlugins, self).__init__(build_dir)
         self._all_plugins_fname = u'outwiker-plugins-all.zip'
-        self._plugins_list = plugins_list
+        self._plugins_list = (plugins_list if plugins_list is not None
+                              else PLUGINS_LIST)
         self._updatedOnly = updatedOnly
 
     def get_plugins_pack_path(self):
@@ -41,8 +44,9 @@ class BuilderPlugins(BuilderBase):
         full_archive_path = self.get_plugins_pack_path()
 
         for plugin in self._plugins_list:
-            # Path to plugin.xml for current plugin
+            # Path to versions.xml for current plugin
             xmlinfo_path = getPluginInfoPath(plugin)
+            changelog_path = getPluginChangelogPath(plugin)
 
             localAppInfo = readAppInfo(xmlinfo_path)
             assert localAppInfo is not None
@@ -71,15 +75,18 @@ class BuilderPlugins(BuilderBase):
                 # Path to future archive
                 archive_path = self._getSubpath(plugin, archive_name)
                 os.mkdir(plugin_dir_path)
-                # shutil.copy(xmlinfo_path, plugin_dir_path)
+                shutil.copy(xmlinfo_path, plugin_dir_path)
+                shutil.copy(changelog_path, plugin_dir_path)
 
                 # Archive a single plug-in
                 with lcd("plugins/{}".format(plugin)):
-                    local('7z a -r -aoa -xr!*.pyc -xr!.ropeproject -x!doc -x!versions.xml "{}" ./*'.format(archive_path))
+                    local(
+                        '7z a -r -aoa -xr!*.pyc -xr!.ropeproject -x!doc -x!versions.xml "{}" ./*'.format(archive_path))
 
             # Add a plug-in to full archive
             with lcd("plugins/{}".format(plugin)):
-                local('7z a -r -aoa -xr!*.pyc -xr!.ropeproject -x!versions.xml -w../ "{}" ./*'.format(full_archive_path))
+                local(
+                    '7z a -r -aoa -xr!*.pyc -xr!.ropeproject -x!versions.xml -w../ "{}" ./*'.format(full_archive_path))
 
     def _getSubpath(self, *args):
         """
