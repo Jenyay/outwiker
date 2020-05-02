@@ -65,6 +65,7 @@ from buildtools.builders import (BuilderWindows,
                                  SiteContentBuilder,
                                  SiteContentSource,
                                  )
+from buildtools.deploy.pluginsuploader import PluginsUploader
 
 from outwiker.utilites.textfile import readTextFile
 from outwiker.core.xmlappinfoparser import XmlAppInfoParser
@@ -355,42 +356,19 @@ def _create_tree(level, maxlevel, nsiblings, parent):
 
 @hosts(DEPLOY_SERVER_NAME)
 @task
-def upload_plugin(*args):
+def upload_plugins(*plugins):
     '''
     Upload plugin to site
     '''
-    if len(args) == 0:
-        args = PLUGINS_LIST
+    if len(plugins) == 0:
+        plugins = PLUGINS_LIST
 
     version_str = getOutwikerVersionStr()
+    build_plugins_dir = os.path.join(BUILD_DIR, version_str, PLUGINS_DIR)
+    uploader = PluginsUploader(build_plugins_dir, DEPLOY_HOME_PATH)
 
-    for pluginname in args:
-        path_to_plugin_local = os.path.join(BUILD_DIR,
-                                            version_str,
-                                            PLUGINS_DIR,
-                                            pluginname)
-
-        if not os.path.exists(path_to_plugin_local):
-            continue
-
-        path_to_xml_changelog = getPluginChangelogPath(pluginname)
-        changelog_xml_content = readTextFile(path_to_xml_changelog)
-        changelog = ChangeLogFactory.fromString(changelog_xml_content, '')
-        latest_version = changelog.latestVersion
-        assert latest_version is not None
-
-        print_info('Uploading...')
-
-        for download in latest_version.downloads:
-            upload_url = download.href.replace('https://jenyay.net/', DEPLOY_HOME_PATH)
-            path_to_upload = os.path.dirname(upload_url)
-            archive_name = os.path.basename(upload_url)
-
-            path_to_archive_local = os.path.join(
-                path_to_plugin_local, archive_name)
-
-            with cd(path_to_upload):
-                put(path_to_archive_local, archive_name)
+    print_info('Uploading plug-ins to {}...'.format(DEPLOY_SERVER_NAME))
+    uploader.upload(plugins)
 
 
 @hosts(DEPLOY_SERVER_NAME)
@@ -479,7 +457,7 @@ def deploy(apply=False):
     update_sources_master(apply)
     add_sources_tag(apply, is_stable=False)
     plugins()
-    upload_plugin()
+    upload_plugins()
     upload_plugins_pack()
 
 
@@ -526,37 +504,6 @@ def update_sources_master(apply=False):
         'git push'
     ]
     _run_commands(commands)
-
-
-@hosts(DEPLOY_SERVER_NAME)
-@linux_only
-def deploy_old(is_stable=False):
-    '''
-    Upload to site
-    '''
-    if is_stable:
-        deploy(False)
-    else:
-        # To upload only once
-        upload_plugin()
-        upload_plugins_pack()
-
-    # ppa_path = PPA_STABLE_PATH if is_stable else PPA_UNSTABLE_PATH
-    #
-    # deb_path = BuilderDebSourcesIncluded(DEB_SOURCE_BUILD_DIR,
-    #                                      UBUNTU_RELEASE_NAMES,
-    #                                      tobool(is_stable)).getResultPath()
-    # _ppa_upload(ppa_path, deb_path)
-
-    upload_binary(is_stable)
-
-    # version_str = getOutwikerVersionStr()
-    # if is_stable:
-    #     tagname = u'release_{}'.format(version_str)
-    # else:
-    #     tagname = u'unstable_{}'.format(version_str)
-    #
-    # _add_git_tag(tagname)
 
 
 @task
