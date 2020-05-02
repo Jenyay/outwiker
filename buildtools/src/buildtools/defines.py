@@ -74,17 +74,9 @@ FILES_FOR_UPLOAD_STABLE_WIN = [
 ]
 
 FILES_FOR_UPLOAD_UNSTABLE_LINUX = [
-    'outwiker_linux_amd64.zip',
-    'outwiker_linux_amd64.7z',
-    'outwiker-{version}+{build}_amd64.deb',
-    'Outwiker-x86_64.AppImage',
 ]
 
 FILES_FOR_UPLOAD_STABLE_LINUX = [
-    'outwiker_linux_{version}_amd64.zip',
-    'outwiker_linux_{version}_amd64.7z',
-    'outwiker-{version}+{build}_amd64.deb',
-    'Outwiker-x86_64.AppImage',
 ]
 
 PPA_DEV_PATH = 'ppa:outwiker-team/dev'

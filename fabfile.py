@@ -35,14 +35,9 @@ from buildtools.defines import (
     PLUGINS_DIR,
     PLUGINS_LIST,
     PLUGIN_VERSIONS_FILENAME,
-    FILES_FOR_UPLOAD_UNSTABLE_WIN,
-    FILES_FOR_UPLOAD_STABLE_WIN,
-    FILES_FOR_UPLOAD_UNSTABLE_LINUX,
-    FILES_FOR_UPLOAD_STABLE_LINUX,
     NEED_FOR_BUILD_DIR,
     VM_BUILD_PARAMS,
     LINUX_BUILD_DIR,
-    WINDOWS_BUILD_DIR,
     COVERAGE_PARAMS,
     LANGUAGES,
     SITE_CONTENT_BUILD_DIR,
@@ -53,7 +48,6 @@ from buildtools.versions import (getOutwikerVersion,
                                  getOutwikerVersionStr,
                                  downloadAppInfo,
                                  getLocalAppInfoList,
-                                 getPluginChangelogPath,
                                  )
 from buildtools.builders import (BuilderWindows,
                                  BuilderSources,
@@ -66,12 +60,10 @@ from buildtools.builders import (BuilderWindows,
                                  SiteContentSource,
                                  )
 from buildtools.deploy.pluginsuploader import PluginsUploader
+from buildtools.deploy.distribsuploader import DistribsUploader
 
 from outwiker.utilites.textfile import readTextFile
-from outwiker.core.xmlappinfoparser import XmlAppInfoParser
-from outwiker.core.changelogfactory import ChangeLogFactory
 
-from buildtools.uploaders import BinaryUploader
 
 DEPLOY_SERVER_NAME = os.environ.get('OUTWIKER_DEPLOY_SERVER_NAME', '')
 DEPLOY_UNSTABLE_PATH = os.environ.get('OUTWIKER_DEPLOY_UNSTABLE_PATH', '')
@@ -356,48 +348,43 @@ def _create_tree(level, maxlevel, nsiblings, parent):
 
 @hosts(DEPLOY_SERVER_NAME)
 @task
-def upload_plugins(*plugins):
+def upload_plugins(*plugins_list):
     '''
     Upload plugin to site
     '''
-    if len(plugins) == 0:
-        plugins = PLUGINS_LIST
+    if len(plugins_list) == 0:
+        plugins_list = PLUGINS_LIST
 
     version_str = getOutwikerVersionStr()
     build_plugins_dir = os.path.join(BUILD_DIR, version_str, PLUGINS_DIR)
     uploader = PluginsUploader(build_plugins_dir, DEPLOY_HOME_PATH)
 
     print_info('Uploading plug-ins to {}...'.format(DEPLOY_SERVER_NAME))
-    uploader.upload(plugins)
+    uploader.upload(plugins_list)
 
 
 @hosts(DEPLOY_SERVER_NAME)
 @task
-def upload_binary(is_stable=False):
+def upload_distribs(is_stable=False):
     '''
     Upload binary version to site
     '''
     facts = BuildFacts()
+    version = getOutwikerVersion()
 
     if is_stable:
-        win_tpl_files = FILES_FOR_UPLOAD_STABLE_WIN
-        linux_tpl_files = FILES_FOR_UPLOAD_STABLE_LINUX
         deploy_path = DEPLOY_STABLE_PATH
     else:
-        win_tpl_files = FILES_FOR_UPLOAD_UNSTABLE_WIN
-        linux_tpl_files = FILES_FOR_UPLOAD_UNSTABLE_LINUX
         deploy_path = DEPLOY_UNSTABLE_PATH
 
-    versions_file = facts.versions_file
-    windows_result_path = os.path.join(PATH_TO_WINDOWS_DISTRIBS,
-                                       facts.version,
-                                       WINDOWS_BUILD_DIR)
+    windows_binary_path = os.path.join(PATH_TO_WINDOWS_DISTRIBS,
+                                       facts.version)
 
-    binary_uploader = BinaryUploader(win_tpl_files,
-                                     linux_tpl_files,
-                                     windows_result_path,
-                                     versions_file,
-                                     deploy_path)
+    binary_uploader = DistribsUploader(version,
+                                       is_stable,
+                                       windows_binary_path,
+                                       deploy_path)
+    print_info('Uploading distribs to {}...'.format(DEPLOY_SERVER_NAME))
     binary_uploader.deploy()
 
 
@@ -439,7 +426,7 @@ def build(is_stable=False):
 
 
 @task
-def deploy(apply=False):
+def deploy(apply=False, is_stable=False):
     '''
     Deploy unstable version.
 
@@ -455,10 +442,11 @@ def deploy(apply=False):
         print(Fore.GREEN + 'Print commands only')
 
     update_sources_master(apply)
-    add_sources_tag(apply, is_stable=False)
+    add_sources_tag(apply, is_stable)
     plugins()
     upload_plugins()
     upload_plugins_pack()
+    upload_distribs(is_stable)
 
 
 @task
@@ -477,7 +465,7 @@ def add_sources_tag(apply=False, is_stable=False):
         'git tag {}'.format(tagname),
         'git push --tags',
     ]
-    _run_commands(commands)
+    _run_commands(commands, apply)
 
 
 def _run_commands(commands: List[str], apply=False):
@@ -503,7 +491,7 @@ def update_sources_master(apply=False):
         'git merge dev',
         'git push'
     ]
-    _run_commands(commands)
+    _run_commands(commands, apply)
 
 
 @task
@@ -778,7 +766,8 @@ def _check_plugins_errors():
 
     for plugin in PLUGINS_LIST:
         print_info('  ' + plugin)
-        changelog_fname = os.path.join(PLUGINS_DIR, plugin, PLUGIN_VERSIONS_FILENAME)
+        changelog_fname = os.path.join(
+            PLUGINS_DIR, plugin, PLUGIN_VERSIONS_FILENAME)
         changelog = readTextFile(changelog_fname)
         status, reports = linter.check_all(changelog)
         sum_status = sum_status & status
