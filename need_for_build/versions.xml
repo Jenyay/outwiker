@@ -1,6 +1,6 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <versions>
-	<version number="3.0.0.871" status="dev">
+	<version number="3.0.0.872" status="dev" date="03.05.2020">
 		<changes>
 			<change>Update the German localization.</change>
 		</changes>
