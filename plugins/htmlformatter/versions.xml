@@ -90,19 +90,6 @@
 		</changes>
 	</version>
 
-	<version number="1.1" date="14.10.2015">
-		<download href="https://jenyay.net/uploads/Outwiker/HtmlFormatter/htmlformatter-1.1.zip">
-			<requirements>
-				<api>1.0</api>
-			</requirements>
-		</download>
-		<changes>
-		</changes>
-
-		<changes lang="ru">
-		</changes>
-	</version>
-
 	<version number="1.0" date="26.03.2015">
 		<download href="https://jenyay.net/uploads/Outwiker/HtmlFormatter/htmlformatter-1.0.zip">
 			<requirements>
@@ -114,7 +101,7 @@
 		</changes>
 
 		<changes lang="ru">
-			<change>Первая версия</change>
+			<change>Первая версия.</change>
 		</changes>
 	</version>
 </versions>

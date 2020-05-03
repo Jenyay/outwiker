@@ -30,7 +30,7 @@
 		</changes>
 	</version>
 
-	<version number="1.5.1">
+	<version number="1.5.1" date="01.09.2019">
 		<download href="https://jenyay.net/uploads/Outwiker/WebPage/webpage-1.5.1.zip">
 			<requirements>
 				<api>2.866</api>

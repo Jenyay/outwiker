@@ -117,7 +117,7 @@
 		</changes>
 
 		<changes lang="ru">
-			<change>Добавлена итальянская локализация</change>
+			<change>Добавлена итальянская локализация.</change>
 			<change>Исправление ошибок.</change>
 		</changes>
 	</version>
@@ -133,7 +133,7 @@
 		</changes>
 
 		<changes lang="ru">
-			<change>Первая версия</change>
+			<change>Первая версия.</change>
 		</changes>
 	</version>
 </versions>

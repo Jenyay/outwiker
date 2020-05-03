@@ -148,11 +148,11 @@
 			</requirements>
 		</download>
 		<changes>
-			<change>Bug fixes</change>
+			<change>Bug fixes.</change>
 		</changes>
 
 		<changes lang="ru">
-			<change>Исправление ошибок</change>
+			<change>Исправление ошибок.</change>
 		</changes>
 	</version>
 
@@ -187,17 +187,17 @@
 	</version>
 
 	<version number="1.0" date="30.05.2012">
-		<download href="https://jenyay.net/uploads/Outwiker/LivejournalPlugin/livejournal.zip">
+		<download href="https://jenyay.net/uploads/Outwiker/LivejournalPlugin/livejournal-1.0.zip">
 			<requirements>
 				<api>1.0</api>
 			</requirements>
 		</download>
 		<changes>
-			<change>The first version</change>
+			<change>The first version.</change>
 		</changes>
 
 		<changes lang="ru">
-			<change>Первая версия</change>
+			<change>Первая версия.</change>
 		</changes>
 	</version>
 </versions>

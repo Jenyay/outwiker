@@ -16,6 +16,8 @@ from typing import List
 from fabric.api import local, lcd, settings, task, cd, put, hosts
 from colorama import Fore
 from buildtools.buildfacts import BuildFacts
+from buildtools.linter import (LinterForOutWiker, LinterForPlugin,
+                               LinterStatus, LinterReport)
 
 from buildtools.utilites import (getPython,
                                  execute,
@@ -33,18 +35,14 @@ from buildtools.defines import (
     PLUGINS_DIR,
     PLUGINS_LIST,
     PLUGIN_VERSIONS_FILENAME,
-    FILES_FOR_UPLOAD_UNSTABLE_WIN,
-    FILES_FOR_UPLOAD_STABLE_WIN,
-    FILES_FOR_UPLOAD_UNSTABLE_LINUX,
-    FILES_FOR_UPLOAD_STABLE_LINUX,
     NEED_FOR_BUILD_DIR,
     VM_BUILD_PARAMS,
     LINUX_BUILD_DIR,
-    WINDOWS_BUILD_DIR,
     COVERAGE_PARAMS,
     LANGUAGES,
     SITE_CONTENT_BUILD_DIR,
     SITE_CONTENT_DIR,
+    OUTWIKER_VERSIONS_FILENAME,
 )
 from buildtools.versions import (getOutwikerVersion,
                                  getOutwikerVersionStr,
@@ -61,19 +59,21 @@ from buildtools.builders import (BuilderWindows,
                                  SiteContentBuilder,
                                  SiteContentSource,
                                  )
+from buildtools.deploy.pluginsuploader import PluginsUploader
+from buildtools.deploy.distribsuploader import DistribsUploader
 
 from outwiker.utilites.textfile import readTextFile
-from outwiker.core.xmlappinfoparser import XmlAppInfoParser
 
-from buildtools.uploaders import BinaryUploader
 
 DEPLOY_SERVER_NAME = os.environ.get('OUTWIKER_DEPLOY_SERVER_NAME', '')
 DEPLOY_UNSTABLE_PATH = os.environ.get('OUTWIKER_DEPLOY_UNSTABLE_PATH', '')
 DEPLOY_STABLE_PATH = os.environ.get('OUTWIKER_DEPLOY_STABLE_PATH', '')
 DEPLOY_HOME_PATH = os.environ.get('OUTWIKER_DEPLOY_HOME_PATH', '')
 DEPLOY_SITE = os.environ.get('OUTWIKER_DEPLOY_SITE', '')
-DEPLOY_PLUGINS_PACK_PATH = os.environ.get('OUTWIKER_DEPLOY_PLUGINS_PACK_PATH', '')
-PATH_TO_WINDOWS_DISTRIBS = os.environ.get('OUTWIKER_PATH_TO_WINDOWS_DISTRIBS', '')
+DEPLOY_PLUGINS_PACK_PATH = os.environ.get(
+    'OUTWIKER_DEPLOY_PLUGINS_PACK_PATH', '')
+PATH_TO_WINDOWS_DISTRIBS = os.environ.get(
+    'OUTWIKER_PATH_TO_WINDOWS_DISTRIBS', '')
 
 
 @task
@@ -202,7 +202,6 @@ def test(*args):
     '''
     command = getPython() if args else 'coverage run {}'.format(COVERAGE_PARAMS)
 
-    local('pip install -e .')
     local('{command} runtests.py {args}'.format(
         command=command, args=' '.join(args)))
 
@@ -309,7 +308,7 @@ def site_versions():
             print(u'{siteversion:.<20}{devversion}'.format(
                 siteversion=str(appinfo.version),
                 devversion=font + str(localAppInfo.version)
-                ))
+            ))
         except (urllib.error.URLError, urllib.error.HTTPError) as e:
             print(Fore.RED + u'Error')
             print(str(e))
@@ -349,83 +348,43 @@ def _create_tree(level, maxlevel, nsiblings, parent):
 
 @hosts(DEPLOY_SERVER_NAME)
 @task
-def upload_plugin(*args):
+def upload_plugins(*plugins_list):
     '''
     Upload plugin to site
     '''
-    if len(args) == 0:
-        args = PLUGINS_LIST
+    if len(plugins_list) == 0:
+        plugins_list = PLUGINS_LIST
 
     version_str = getOutwikerVersionStr()
+    build_plugins_dir = os.path.join(BUILD_DIR, version_str, PLUGINS_DIR)
+    uploader = PluginsUploader(build_plugins_dir, DEPLOY_HOME_PATH)
 
-    for pluginname in args:
-        path_to_plugin_local = os.path.join(BUILD_DIR,
-                                            version_str,
-                                            PLUGINS_DIR,
-                                            pluginname)
-
-        if not os.path.exists(path_to_plugin_local):
-            continue
-
-        path_to_xml_local = os.path.join(path_to_plugin_local,
-                                         PLUGIN_VERSIONS_FILENAME)
-
-        xml_content_local = readTextFile(path_to_xml_local)
-        appinfo_local = XmlAppInfoParser().parse(xml_content_local)
-
-        url = appinfo_local.updatesUrl
-        try:
-            appinfo_remote = downloadAppInfo(url)
-        except Exception:
-            appinfo_remote = None
-
-        if (appinfo_remote is not None and
-                appinfo_local.currentVersion < appinfo_remote.currentVersion):
-            print_error(u'Error. New version < Prev version')
-            sys.exit(1)
-        elif (appinfo_remote is not None and
-                appinfo_local.currentVersion == appinfo_remote.currentVersion):
-            print_warning(u'Warning: Uploaded the same version')
-        print_info(u'Uploading...')
-
-        path_to_upload = os.path.dirname(appinfo_local.updatesUrl.replace(DEPLOY_SITE + u'/', DEPLOY_HOME_PATH))
-        version_local = str(appinfo_local.currentVersion)
-        archive_name = u'{}-{}.zip'.format(pluginname, version_local)
-        path_to_archive_local = os.path.join(path_to_plugin_local, archive_name)
-
-        with cd(path_to_upload):
-            put(path_to_archive_local, archive_name)
-            put(path_to_xml_local, PLUGIN_VERSIONS_FILENAME)
-    site_versions()
+    print_info('Uploading plug-ins to {}...'.format(DEPLOY_SERVER_NAME))
+    uploader.upload(plugins_list)
 
 
 @hosts(DEPLOY_SERVER_NAME)
 @task
-def upload_binary(is_stable=False):
+def upload_distribs(is_stable=False):
     '''
     Upload binary version to site
     '''
     facts = BuildFacts()
+    version = getOutwikerVersion()
 
     if is_stable:
-        win_tpl_files = FILES_FOR_UPLOAD_STABLE_WIN
-        linux_tpl_files = FILES_FOR_UPLOAD_STABLE_LINUX
         deploy_path = DEPLOY_STABLE_PATH
     else:
-        win_tpl_files = FILES_FOR_UPLOAD_UNSTABLE_WIN
-        linux_tpl_files = FILES_FOR_UPLOAD_UNSTABLE_LINUX
         deploy_path = DEPLOY_UNSTABLE_PATH
 
-    versions_file = facts.versions_file
-    windows_result_path = os.path.join(PATH_TO_WINDOWS_DISTRIBS,
-                                       facts.version,
-                                       WINDOWS_BUILD_DIR)
+    windows_binary_path = os.path.join(PATH_TO_WINDOWS_DISTRIBS,
+                                       facts.version)
 
-    binary_uploader = BinaryUploader(win_tpl_files,
-                                     linux_tpl_files,
-                                     windows_result_path,
-                                     versions_file,
-                                     deploy_path)
+    binary_uploader = DistribsUploader(version,
+                                       is_stable,
+                                       windows_binary_path,
+                                       deploy_path)
+    print_info('Uploading distribs to {}...'.format(DEPLOY_SERVER_NAME))
     binary_uploader.deploy()
 
 
@@ -467,19 +426,27 @@ def build(is_stable=False):
 
 
 @task
-def deploy(apply=False):
+def deploy(apply=False, is_stable=False):
     '''
     Deploy unstable version.
 
     apply -- True if deploy to server and False if print commands only
     '''
+    linter_result = check_errors()
+    if linter_result != LinterStatus.OK:
+        return
+
     if apply:
         print(Fore.GREEN + 'Run deploy...')
     else:
         print(Fore.GREEN + 'Print commands only')
 
     update_sources_master(apply)
-    add_sources_tag(apply, is_stable=False)
+    add_sources_tag(apply, is_stable)
+    plugins()
+    upload_plugins()
+    upload_plugins_pack()
+    upload_distribs(is_stable)
 
 
 @task
@@ -498,7 +465,7 @@ def add_sources_tag(apply=False, is_stable=False):
         'git tag {}'.format(tagname),
         'git push --tags',
     ]
-    _run_commands(commands)
+    _run_commands(commands, apply)
 
 
 def _run_commands(commands: List[str], apply=False):
@@ -524,38 +491,7 @@ def update_sources_master(apply=False):
         'git merge dev',
         'git push'
     ]
-    _run_commands(commands)
-
-
-@hosts(DEPLOY_SERVER_NAME)
-@linux_only
-def deploy_old(is_stable=False):
-    '''
-    Upload to site
-    '''
-    if is_stable:
-        deploy(False)
-    else:
-        # To upload only once
-        upload_plugin()
-        upload_plugins_pack()
-
-    # ppa_path = PPA_STABLE_PATH if is_stable else PPA_UNSTABLE_PATH
-    #
-    # deb_path = BuilderDebSourcesIncluded(DEB_SOURCE_BUILD_DIR,
-    #                                      UBUNTU_RELEASE_NAMES,
-    #                                      tobool(is_stable)).getResultPath()
-    # _ppa_upload(ppa_path, deb_path)
-
-    upload_binary(is_stable)
-
-    # version_str = getOutwikerVersionStr()
-    # if is_stable:
-    #     tagname = u'release_{}'.format(version_str)
-    # else:
-    #     tagname = u'unstable_{}'.format(version_str)
-    #
-    # _add_git_tag(tagname)
+    _run_commands(commands, apply)
 
 
 @task
@@ -721,7 +657,8 @@ def docker_build_wx(ubuntu_version: str, wx_version: str):
         os.mkdir(build_dir)
 
     # Create Docker image
-    docker_image = 'wxpython/ubuntu_{ubuntu_version}_webkit1'.format(ubuntu_version=ubuntu_version)
+    docker_image = 'wxpython/ubuntu_{ubuntu_version}_webkit1'.format(
+        ubuntu_version=ubuntu_version)
 
     dockerfile_path = os.path.join(
         NEED_FOR_BUILD_DIR,
@@ -730,7 +667,8 @@ def docker_build_wx(ubuntu_version: str, wx_version: str):
     )
 
     with lcd(dockerfile_path):
-        local('docker build -t {docker_image} .'.format(docker_image=docker_image))
+        local(
+            'docker build -t {docker_image} .'.format(docker_image=docker_image))
 
     # Build wxPython
     command = 'docker run -v "{path}:/home/user/build" --rm --user $(id -u):$(id -g) -i -t -e "WX_VERSION={wx_version}" {docker_image}'.format(
@@ -810,3 +748,66 @@ def snap_restart():
     '''
     local('sudo systemctl stop snap.lxd.daemon.unix.socket')
     local('sudo systemctl restart snap.lxd.daemon')
+
+
+@task
+def check_errors():
+    status_outwiker = _check_outwiker_errors()
+    status_plugins = _check_plugins_errors()
+
+    return status_outwiker & status_plugins
+
+
+def _check_plugins_errors():
+    print_info('Start plug-ins information checking...')
+    linter = LinterForPlugin()
+
+    sum_status = LinterStatus.OK
+
+    for plugin in PLUGINS_LIST:
+        print_info('  ' + plugin)
+        changelog_fname = os.path.join(
+            PLUGINS_DIR, plugin, PLUGIN_VERSIONS_FILENAME)
+        changelog = readTextFile(changelog_fname)
+        status, reports = linter.check_all(changelog)
+        sum_status = sum_status & status
+
+        for report in reports:
+            _print_linter_report(report)
+
+    if sum_status == LinterStatus.OK:
+        print_info('Plug-ins information is OK')
+    else:
+        print_error('Plug-ins information problems found')
+
+    return sum_status
+
+
+def _check_outwiker_errors():
+    print_info('Start OutWiker information checking...')
+    changelog_outwiker_fname = os.path.join(NEED_FOR_BUILD_DIR,
+                                            OUTWIKER_VERSIONS_FILENAME)
+    versions_outwiker = readTextFile(changelog_outwiker_fname)
+    linter = LinterForOutWiker()
+    status_outwiker, reports_outwiker = linter.check_all(versions_outwiker)
+
+    for report in reports_outwiker:
+        _print_linter_report(report)
+
+    if status_outwiker == LinterStatus.OK:
+        print_info('OutWiker information is OK')
+    else:
+        print_error('Outwiker information problems found')
+
+    return status_outwiker
+
+
+def _print_linter_report(report: LinterReport):
+    if report.status == LinterStatus.OK:
+        print_info('    ' + report.message)
+    elif report.status == LinterStatus.WARNING:
+        print_warning('    ' + report.message)
+    elif report.status == LinterStatus.ERROR:
+        print_error('    ' + report.message)
+    else:
+        raise AssertionError

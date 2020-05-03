@@ -14,6 +14,7 @@ from buildtools.defines import (
     PLUGIN_VERSIONS_FILENAME,
     PLUGINS_LIST,
     PLUGINS_DIR,
+    OUTWIKER_VERSIONS_FILENAME,
 )
 
 
@@ -42,7 +43,8 @@ def getOutwikerVersion() -> Tuple[str, str]:
     """
     Return a tuple: (version number, build number)
     """
-    version_major = u'.'.join([str(item) for item in outwiker.__version__[:-1]])
+    version_major = u'.'.join([str(item)
+                               for item in outwiker.__version__[:-1]])
     version_build = str(outwiker.__version__[-1])
 
     return (version_major, version_build)
@@ -80,3 +82,9 @@ def getPluginInfoPath(plugin):
                         plugin,
                         plugin,
                         PLUGIN_INFO_FILENAME)
+
+
+def getPluginChangelogPath(plugin):
+    return os.path.join(PLUGINS_DIR,
+                        plugin,
+                        OUTWIKER_VERSIONS_FILENAME)

@@ -1,7 +1,7 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <versions>
 	<version number="1.19" date="23.02.2020">
-		<download href=">https://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.19.zip">
+		<download href="https://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.19.zip">
 			<requirements>
 				<api>3.868</api>
 			</requirements>
@@ -16,7 +16,7 @@
 	</version>
 
 	<version number="1.18" date="19.10.2019">
-		<download href=">https://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.18.zip">
+		<download href="https://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.18.zip">
 			<requirements>
 				<api>3.868</api>
 			</requirements>
@@ -31,7 +31,7 @@
 	</version>
 
 	<version number="1.17.2" date="26.05.2019">
-		<download href=">https://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.17.2.zip">
+		<download href="https://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.17.2.zip">
 			<requirements>
 				<api>2.835</api>
 			</requirements>
@@ -211,12 +211,14 @@
 			<change>Bug fixes.</change>
 			<change>Updated Pygments library.</change>
 			<change>Added new styles.</change>
-			<change>Added new languages supporting.</change>
+			<change>Added new programming languages supporting.</change>
 		</changes>
 
 		<changes lang="ru">
 			<change>Исправление ошибок.</change>
-			<change>Обновление библиотеки Pygments, что увеличило число поддерживаемых языков и добавило несколько новых стилей оформления.</change>
+			<change>Обновление библиотеки Pygments.</change>
+			<change>Добавлены новые стили.</change>
+			<change>Добавлена поддержка новых языков программирования.</change>
 		</changes>
 	</version>
 
@@ -305,11 +307,12 @@
 		<download href="https://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.11.1.zip">
 		</download>
 		<changes>
+			<change>Fix highlight for 1C language.</change>
 		</changes>
 
 		<changes lang="ru">
+			<change>Исправлена работа раскраски кода на языке 1С.</change>
 		</changes>
-		<change>Исправлена работа раскраски кода на языке 1С.</change>
 	</version>
 
 	<version number="1.11" date="09.01.2014">
@@ -323,7 +326,7 @@
 		</changes>
 
 		<changes lang="ru">
-			<change>При использовании OutWiker 1.8 можно задавать горячую клавишу для вставки команды (:source:)</change>
+			<change>При использовании OutWiker 1.8 можно задавать горячую клавишу для вставки команды (:source:).</change>
 		</changes>
 	</version>
 

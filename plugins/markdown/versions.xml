@@ -116,11 +116,11 @@
 			</requirements>
 		</download>
 		<changes>
-			<change>Added new features support from Outwiker 2.1.0.828</change>
+			<change>Added new features support from Outwiker 2.1.0.828.</change>
 		</changes>
 
 		<changes lang="ru">
-			<change>Добавлена поддержка новых возможностей из Outwiker 2.1.0.828</change>
+			<change>Добавлена поддержка новых возможностей из Outwiker 2.1.0.828.</change>
 		</changes>
 	</version>
 
