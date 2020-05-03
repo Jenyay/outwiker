@@ -87,6 +87,8 @@ parts:
             - -usr/lib/x86_64-linux-gnu/gtk-3.0/3.0.0/immodules/im-ibus.so
             - -usr/lib/x86_64-linux-gnu/libsqlite3.so.0.8.6
             - -usr/lib/x86_64-linux-gnu/libxml2.so.2.9.4
+            - -usr/lib/x86_64-linux-gnu/libcups.so.2
+            - -usr/lib/x86_64-linux-gnu/libjson-glib-1.0.so.0.400.2
             - -usr/share/doc/*
         after:
             - desktop-gtk3
