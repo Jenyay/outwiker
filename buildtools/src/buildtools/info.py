@@ -1,19 +1,20 @@
 import datetime
-import os
 
 from colorama import Fore
 
 from outwiker.utilites.textfile import readTextFile
 from outwiker.core.changelogfactory import ChangeLogFactory
 
-from .defines import PLUGINS_LIST, PLUGINS_DIR, PLUGIN_VERSIONS_FILENAME
+from .defines import PLUGINS_LIST
+from .buildfacts import BuildFacts
 
 
 def show_plugins_info():
+    facts = BuildFacts()
+
     print('{:<20}{:<20}{}'.format('Plugin', 'Version', 'Release date'))
     for plugin in PLUGINS_LIST:
-        changelog_path = os.path.join(
-            PLUGINS_DIR, plugin, PLUGIN_VERSIONS_FILENAME)
+        changelog_path = facts.getPluginChangelogPath(plugin)
         changelog_txt = readTextFile(changelog_path)
         changelog = ChangeLogFactory.fromString(changelog_txt, '')
         latest_version = changelog.latestVersion

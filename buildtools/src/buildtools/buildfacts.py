@@ -61,3 +61,10 @@ class BuildFacts(object):
         Return path inside tmp folder
         '''
         return os.path.join(self.temp_dir, *args)
+
+    def getPluginDir(self, plugin_name):
+        return os.path.join(self.src_plugins_dir, plugin_name)
+
+    def getPluginChangelogPath(self, plugin_name):
+        plugin_dir = self.getPluginDir(plugin_name)
+        return os.path.join(plugin_dir, defines.PLUGIN_VERSIONS_FILENAME)

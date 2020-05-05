@@ -674,7 +674,7 @@ def snap_publish():
 
 
 @task
-def site_content(is_stable=False):
+def site_content():
     path_to_templates = os.path.join(NEED_FOR_BUILD_DIR,
                                      SITE_CONTENT_DIR)
     # List of SiteContentSource
