@@ -7,16 +7,13 @@ import os
 import os.path
 import glob
 import sys
-import urllib.request
-import urllib.error
-import urllib.parse
 import shutil
 from typing import List
-import datetime
 
 from fabric.api import local, lcd, settings, task, cd, put, hosts
 from colorama import Fore
 from buildtools.buildfacts import BuildFacts
+from buildtools.info import show_plugins_info
 from buildtools.linter import (LinterForOutWiker, LinterForPlugin,
                                LinterStatus, LinterReport)
 
@@ -284,29 +281,7 @@ def clear():
 
 @task
 def plugins_info():
-    print('{:<20}{:<20}{}'.format('Plugin', 'Version', 'Release date'))
-    for plugin in PLUGINS_LIST:
-        changelog_path = os.path.join(
-            PLUGINS_DIR, plugin, PLUGIN_VERSIONS_FILENAME)
-        changelog_txt = readTextFile(changelog_path)
-        changelog = ChangeLogFactory.fromString(changelog_txt, '')
-        latest_version = changelog.latestVersion
-
-        date_str = (latest_version.date.strftime('%d.%m.%Y')
-                    if latest_version.date else '-')
-
-        color = ''
-        if latest_version.date is None:
-            color = Fore.RED
-        elif latest_version.date.date() == datetime.date.today():
-            color = Fore.GREEN
-
-        print('{color}{name:.<20}{version:.<20}{date:^10}'.format(
-            color=color,
-            name=plugin,
-            version=str(latest_version.version),
-            date=date_str
-        ))
+    show_plugins_info()
 
 
 @task
