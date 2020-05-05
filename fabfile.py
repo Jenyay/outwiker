@@ -12,6 +12,7 @@ import urllib.error
 import urllib.parse
 import shutil
 from typing import List
+import datetime
 
 from fabric.api import local, lcd, settings, task, cd, put, hosts
 from colorama import Fore
@@ -63,6 +64,7 @@ from buildtools.deploy.pluginsuploader import PluginsUploader
 from buildtools.deploy.distribsuploader import DistribsUploader
 
 from outwiker.utilites.textfile import readTextFile
+from outwiker.core.changelogfactory import ChangeLogFactory
 
 
 DEPLOY_SERVER_NAME = os.environ.get('OUTWIKER_DEPLOY_SERVER_NAME', '')
@@ -281,39 +283,30 @@ def clear():
 
 
 @task
-def site_versions():
-    '''
-    Compare current OutWiker and plugins versions with versions on the site
-    '''
-    app_list = getLocalAppInfoList()
+def plugins_info():
+    print('{:<20}{:<20}{}'.format('Plugin', 'Version', 'Release date'))
+    for plugin in PLUGINS_LIST:
+        changelog_path = os.path.join(
+            PLUGINS_DIR, plugin, PLUGIN_VERSIONS_FILENAME)
+        changelog_txt = readTextFile(changelog_path)
+        changelog = ChangeLogFactory.fromString(changelog_txt, '')
+        latest_version = changelog.latestVersion
 
-    # Downloading versions info
-    print(u'Downloading version info files...\n')
-    print(u'{: <20}{: <20}{}'.format(u'Title',
-                                     u'Deployed version',
-                                     u'Dev. version'))
-    print(u'-' * 60)
-    for localAppInfo in app_list:
-        url = localAppInfo.website
-        name = localAppInfo.app_name
+        date_str = (latest_version.date.strftime('%d.%m.%Y')
+                    if latest_version.date else '-')
 
-        print(u'{:.<20}'.format(name), end=u'')
-        try:
-            appinfo = downloadAppInfo(url)
-            if appinfo.version == localAppInfo.version:
-                font = Fore.GREEN
-            else:
-                font = Fore.RED
+        color = ''
+        if latest_version.date is None:
+            color = Fore.RED
+        elif latest_version.date.date() == datetime.date.today():
+            color = Fore.GREEN
 
-            print(u'{siteversion:.<20}{devversion}'.format(
-                siteversion=str(appinfo.version),
-                devversion=font + str(localAppInfo.version)
-            ))
-        except (urllib.error.URLError, urllib.error.HTTPError) as e:
-            print(Fore.RED + u'Error')
-            print(str(e))
-            print(url)
-            print('')
+        print('{color}{name:.<20}{version:.<20}{date:^10}'.format(
+            color=color,
+            name=plugin,
+            version=str(latest_version.version),
+            date=date_str
+        ))
 
 
 @task
