@@ -1,6 +1,6 @@
 Hot keys can be set in the dialogue "Settings" called from the menu "Edit - Preferences ...". Default hotkeys are listed in the following table.
 
-||border=1
+||border=1 style="border-collapse: collapse; border: 1px solid black;"
 || '''Shortcut''' || '''Action''' ||
 ||Ctrl+N ||Create new wiki ||
 ||Ctrl+O ||Open wiki ||

@@ -2,7 +2,7 @@ The following table shows examples of links to webpages and to another notes of 
  
 !!! Links
 
-|| border=1
+|| border=1 style="border-collapse: collapse; border: 1px solid black;"
 || '''Syntax''' || '''Result''' || '''Comment''' ||
 ||[=http://example.com=]||http://example.com||Link to webpage||
 ||[=[[http://example.com]]=]||[[http://example.com]]||Link to webpage||
@@ -32,7 +32,7 @@ The following table shows examples of links to webpages and to another notes of 
 
 !!! Anchors
 
-|| border=1
+|| border=1 style="border-collapse: collapse; border: 1px solid black;"
 || '''Syntax''' || '''Result''' || '''Comment''' ||
 ||[=[[#anchor]]=]||Add anchor "#anchor" [[#anchor]]||HTML code: &lt;A NAME=&quot;#anchor&quot;&gt;&lt;/A&gt;||
 

@@ -19,6 +19,6 @@ The command [= (:attachlist:) =] can be used with the ''sort'' switch, which spe
 
 There are five files attached to the current note. The following table shows the output of the command [= (:attachlist:) =] with various values ​​of the ''sort'' switch:
 
-||width=850 border=1 
+||width=850 border=1 style="border-collapse: collapse; border: 1px solid black;"
 || '''Command''' || [=(:attachlist:)=] || [=(:attachlist sort=ext:)=] || [=(:attachlist sort=descendext:)=] || [=(:attachlist sort=size:)=] ||
 || '''Result''' || (:attachlist:) || (:attachlist sort=ext:) || (:attachlist sort=descendext:) || (:attachlist sort=size:) ||

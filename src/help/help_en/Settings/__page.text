@@ -33,7 +33,7 @@ All the preferences described below can be changed in the "Preferences" dialogue
 
 !!! [[#general]] Interface - General
 
-%center%%thumb width=550%Attach:outwiker_opt_general.png%%
+%center%%thumb width=550%Attach:outwiker_opt_general.png%% 
 
 The first few check-boxes are responsible for behaviour of the program icon in the system tray.
 
@@ -93,7 +93,7 @@ Also, it is possible to change actions resulted of left and middle-click of tags
 
 Here one can select action resulted of double-click on file name on the "Attachments" panel.
 
-%center%Attach:attach_panel.png
+%center%%thumb width=700%Attach:attach_panel.png%%
 
 The choice is to be made between the following actions:
 

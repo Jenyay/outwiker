@@ -3,11 +3,11 @@ Note's style is implemented as the ''__style.html'' file (mandatory) and the ''_
 ''__style.html'' file is an HTML file encoded in UTF-8. The file is not supposed to be created or edited by user, rather by special macro which adds formatting tags as well as some additional parameters (see below) to the note content. Here is how the default style looks like:
 
 [@
-<HTML>
-<HEAD>
-	<META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>
+<html>
+<head>
+	<meta http-equiv='content-type' content='text/html; charset=utf-8'/>
 
-	<STYLE type="text/css">
+	<style type="text/css">
 		body, div, p, table {
 			font-size:${fontsize}pt;
 			font-family:$fontfamily;
@@ -15,14 +15,14 @@ Note's style is implemented as the ''__style.html'' file (mandatory) and the ''_
 
 		img{border:none}
 		$userstyle
-	</STYLE>
+	</style>
 	$userhead
-</HEAD>
+</head>
 
-<BODY>
-<P>$content</P>
-</BODY>
-</HTML>
+<body>
+<p>$content</p>
+</body>
+</html>
 @]
 
 '' __style.html'' file contains references to macros that begin with "$" character followed by the macro name (it can be enclosed by braces), for example, $content or ${content}. The braces are used in case the macro name is not separated by space character from alphanumeric characters to follow. Currently, OutWiker's styles support the following macros:
