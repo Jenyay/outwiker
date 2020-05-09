@@ -33,7 +33,7 @@ OutWiker хранит все настройки в файле ''outwiker.ini'', 
 
 !!! [[#general]] Интерфейс - Общее
 
-%center%%thumb width=550%Attach:outwiker_opt_general.png%%
+%center%%thumb width=550%Attach:outwiker_opt_general.png%% 
 
 Первые несколько флажков предназначены для установки поведения иконки программы в трее (области рядом с часами под Windows).
 
@@ -64,7 +64,7 @@ OutWiker хранит все настройки в файле ''outwiker.ini'', 
 
 !!! [[#view]] Интерфейс - Просмотр
 
-%center%%thumb width=550%Attach:outwiker_opt_preview.png%%
+%center%%thumb width=550%Attach:outwiker_opt_preview.png%% 
 
 Данный раздел отвечает за общий внешний вид [[HTML-страницы -> page://__7bd312fb-c3e4-4d9d-9267-cc394dbb9f20]] и [[викистраниц -> page://__19866d72-8d95-4e2c-8df1-6df0bd8f06c0]] в режиме просмотра. Здесь можно задать размер и начертание шрифта (группа параметров '''Шрифт'''), который будет использоваться на странице по умолчанию, а также добавить CSS-стили, которые будут вставлены во все страницы указанных типов типа.
 
@@ -73,22 +73,22 @@ OutWiker хранит все настройки в файле ''outwiker.ini'', 
 
 !!! [[#tags]] Интерфейс - Облако меток
 
-%center%%thumb width=550%Attach:outwiker_opt_tags.png%%
+%center%%thumb width=550%Attach:outwiker_opt_tags.png%% 
 
 В данном разделе настроек можно изменить цвета, используемые на панели "Метки":
 
-%center%Attach:tags_cloud.png
+%center%Attach:tags_cloud.png 
 
 Также можно изменить поведение программы при нажатии левой и средней кнопками мыши на имени метки в данной панели. При нажатии на имя метки может осуществляться поиск страниц, помеченных соответствующей меткой, или осуществляться добавление / удаление метки для выбранной в данный момент страницы.
 
 
 !!! [[#attach]] Интерфейс - Прикрепленные файлы
 
-%center%%thumb width=550%Attach:outwiker_opt_attach.png%%
+%center%%thumb width=550%Attach:outwiker_opt_attach.png%% 
 
 В данном разделе можно выбрать, что будет происходить при двойном клике левой кнопки мыши на имени файла на панели "Прикрепленные файлы":
 
-%center%Attach:attach_panel.png
+%center%%thumb width=550%Attach:attach_panel.png%%
 
 Возможные варианты для данного действия:
 
@@ -98,7 +98,7 @@ OutWiker хранит все настройки в файле ''outwiker.ini'', 
 
 !!! [[#hotkeys]] Интерфейс - Горячие клавиши
 
-%center%%thumb width=550%Attach:outwiker_opt_keys.png%% 
+%center%%thumb width=550%Attach:outwiker_opt_keys.png%%
 
 В данном разделе можно поменять или установить горячие клавиши для вызова функций программы. В верхней части окна располагается список всех возможных действий, для которых можно установить горячие клавиши. Ниже располагаются элементы управления для установки горячей клавиши и более подробное описание действия.
 
@@ -107,7 +107,7 @@ OutWiker хранит все настройки в файле ''outwiker.ini'', 
 
 !!! [[#print]] Интерфейс - Печать текста
 
-%center%%thumb width=550%Attach:outwiker_opt_print_text.png%%
+%center%%thumb width=550%Attach:outwiker_opt_print_text.png%% 
 
 Данный раздел позволяет настроить параметры печати [[текстовых заметок -> page://__4e96bc6e-333b-49d2-bcbd-a63a5f28655f]], а также [[HTML-страниц -> page://__7bd312fb-c3e4-4d9d-9267-cc394dbb9f20]] в режиме ''HTML'' и [[викистраниц -> page://__19866d72-8d95-4e2c-8df1-6df0bd8f06c0]] в режимах ''Вики'' и ''HTML''.
 
@@ -135,7 +135,7 @@ OutWiker хранит все настройки в файле ''outwiker.ini'', 
 
 !!! [[#spell]] Редактор - Проверка орфографии
 
-%center%%thumb width=550%Attach:outwiker_opt_editor_spell.png%%
+%center%%thumb width=550%Attach:outwiker_opt_editor_spell.png%% 
 
 В данном разделе можно выбрать, какие словари будут использоваться для проверки орфографии при вводе текста. 
 

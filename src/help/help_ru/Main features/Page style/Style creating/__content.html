@@ -3,6 +3,7 @@
 <head>
 	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
 	<meta http-equiv='content-type' content='text/html; charset=utf-8'/>
+	<title>Создание стилей</title>
 
 	<style type='text/css'>
 		body, div, p, table {
@@ -17,36 +18,34 @@
 </head>
 
 <body>
-Стиль оформления представляет собой директорию, в которой обязательно должен быть файл <i>__style.html</i> и не обязательная поддиректория <i>__style</i>.<br>
-<br>
-Содержимое <i>__style.html</i> - это обычный HTML-файл в кодировке UTF-8, внутрь которого с помощью специальных макросов подставляется содержимое страницы и некоторые дополнительные параметры, о которых написано ниже. Для примера, так выглядит стиль по умолчанию:<br>
-<br>
+Стиль оформления представляет собой директорию, в которой обязательно должен быть файл <i>__style.html</i> и не обязательная поддиректория <i>__style</i>.<br/>
+<br/>
+Содержимое <i>__style.html</i> - это обычный HTML-файл в кодировке UTF-8, внутрь которого с помощью специальных макросов подставляется содержимое страницы и некоторые дополнительные параметры, о которых написано ниже. Для примера, так выглядит стиль по умолчанию:<br/>
 
 <pre>
-&lt;HTML&gt;
-&lt;HEAD&gt;
-	&lt;META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;meta http-equiv='content-type' content='text/html; charset=utf-8'/&gt;
 
-	&lt;STYLE type=&quot;text/css&quot;&gt;
-		body, div, p, table {
-			font-size:${fontsize}pt;
-			font-family:$fontfamily;
-		}
+    &lt;style type="text/css"&gt;
+        body, div, p, table {
+            font-size:${fontsize}pt;
+            font-family:$fontfamily;
+        }
 
-		img{border:none}
-		$userstyle
-	&lt;/STYLE&gt;
-	$userhead
-&lt;/HEAD&gt;
+        img{border:none}
+        $userstyle
+    &lt;/style&gt;
+    $userhead
+&lt;/head&gt;
 
-&lt;BODY&gt;
+&lt;body&gt;
 &lt;P&gt;$content&lt;/P&gt;
-&lt;/BODY&gt;
-&lt;/HTML&gt;
+&lt;/body&gt;
+&lt;/html&gt;
 </pre>
-<br>
-<br>
-В файле <i>__style.html</i> содержатся специальные макросы подстановки, которые начинаются с символа "$", за которым идет имя макроса, возможно окруженное фигурными скобками, например: $content или ${content}. Второй случай нужен, если сразу за макросом должен располагаться какой-то текст впритык к нему (без пробелов). На данный момент стили поддерживают следующие макросы подстановки:<br>
+<br/>
+В файле <i>__style.html</i> содержатся специальные макросы подстановки, которые начинаются с символа "$", за которым идет имя макроса, возможно окруженное фигурными скобками, например: $content или ${content}. Второй случай нужен, если сразу за макросом должен располагаться какой-то текст впритык к нему (без пробелов). На данный момент стили поддерживают следующие макросы подстановки:<br/>
 <ul>
 <li>$content - заменяется содержимым страницы.</li>
 <li>$fontsize - размер шрифта, установленного в настройках. Измеряется в пунктах (pt).</li>

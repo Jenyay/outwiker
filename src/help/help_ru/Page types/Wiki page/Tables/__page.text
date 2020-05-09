@@ -56,7 +56,7 @@
 
 !!!!! Примеры использования
 
-(:table2 width=100% border=1:)
+(:table2 width=100% border=1 style="border-collapse: collapse; border: 1px solid black;":)
 (:row2:)
 (:hcell2:) Комментарий
 (:hcell2:) Викинотация
@@ -138,7 +138,7 @@
 
 Например:
 
-(:table3 border="1" width=100%:)
+(:table3 border="1" width=100% style="border-collapse: collapse; border: 1px solid black;":)
 (:row3:)
 (:hcell3:)Викинотация
 (:hcell3:)Результат

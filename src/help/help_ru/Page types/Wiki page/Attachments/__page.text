@@ -36,7 +36,7 @@
 
 !!! Прикрепленные файлы других типов
 
-|| border=1
+|| border=1 style="border-collapse: collapse; border: 1px solid black;"
 || '''Синтаксис''' || '''Результат''' || '''Комментарий''' ||
 
 || [=Attach:file.txt=] || Attach:file.txt || Ссылка на прикрепленный файл ||
