@@ -5,33 +5,33 @@ OutWiker is designed to present lists of notes in tree. view Such programs are c
 
 OutWiker's main feature that makes it different from other similar programs is storing the collection (the tree) of notes on disk as set of nested directories whose hierarchy is in one-to-one correspondence with the the note tree structure. This approach makes it possible to edit any individual note with third party software. At the moment OutWiker supports notes of three different types, namely, plain text, HTML and wiki. Plug-ins can be used to work with other note types.
 
-Program webpage: <a href="http://jenyay.net/Soft/Outwiker">http://jenyay.net/Soft/Outwiker</a>
+Program webpage: <a href="https://jenyay.net/Soft/Outwiker">https://jenyay.net/Soft/Outwiker</a>
 
 <h2>Contact</h2>
 Author: Eugeniy Ilin (aka Jenyay)
 
-My site - <a href="http://jenyay.net/">http://jenyay.net</a>
-Twitter - <a href="http://twitter.com/jenyay">@jenyay</a>
+My site - <a href="https://jenyay.net/">https://jenyay.net</a>
+Telegram - <a href="https://ttttt.me/jenyay">@jenyay</a>
 e-mail: <a href="mailto:jenyay.ilin@gmail.com">jenyay.ilin@gmail.com</a>
 
 
 <h2><a name="anchor"></a>Acknoledgements</h2>
 
-The program uses free icons sets downloaded from the following sites <a class='urllink' href='http://www.famfamfam.com/lab/icons/silk/'>famfamfam.com</a>, <a class='urllink' href='http://p.yusukekamiyamane.com/'>yusukekamiyamane.com</a> and <a href="http://www.fatcow.com/free-icons">fatcow.com</a>. Many thanks to the authors of those icon sets. 
+The program uses free icons sets downloaded from the following sites <a href='http://www.famfamfam.com/lab/icons/silk/'>famfamfam.com</a>, <a href='https://p.yusukekamiyamane.com/'>yusukekamiyamane.com</a> and <a href="https://www.fatcow.com/free-icons">fatcow.com</a>. Many thanks to the authors of those icon sets. 
 
 <ul>
-<li>Thanks to Nabrodov Alexey (<a href="http://averr.in/">http://averr.in/</a>) for the program logo.</li>
+<li>Thanks to Nabrodov Alexey (<a href="https://averr.in/">https://averr.in/</a>) for the program logo.</li>
 <li>Thanks to Gorbunov Anatoly for the new program logo.</li>
-<li>Thanks to Cheshkov Iliya (<a href="http://ilyuxaif.livejournal.com">http://ilyuxaif.livejournal.com</a>) for corrections of help in English.</li>
+<li>Thanks to Cheshkov Iliya (<a href="https://ilyuxaif.livejournal.com">https://ilyuxaif.livejournal.com</a>) for corrections of help in English.</li>
 <li>Thanks to Yury aka Cuprum (<a href="http://cuprum.name/">http://cuprum.name/</a>) for the icons of browsers and operating systems.</li>
-<li>Thanks to <span class='ljuser ljuser-name_linda_kaioh' lj:user='linda_kaioh' style='white-space:nowrap'><a href='http://linda-kaioh.livejournal.com/profile'><img src='http://l-stat.livejournal.com/img/userinfo.gif?v=3' alt='[info]' width='17' height='17' style='vertical-align: bottom; border: 0; padding-right: 1px;'/></a><a href='http://linda-kaioh.livejournal.com/'><b>linda_kaioh</b></a></span> for the program testing.</li>
-<li>Thanks to Vitaliy Yakovchuk, Dmytro Vasylchenko, Vadym Derckach and <a href="https://plus.google.com/b/113404982971748285098/+SergeiGarmash/posts">Sergei Garmash</a> for the Ukrainian translation.</li>
-<li>Thanks to Matteo Migliaccio (<a href="https://plus.google.com/+MatteoMigliaccio/posts">https://plus.google.com/+MatteoMigliaccio/posts</a>) for the italian translation.</li>
+<li>Thanks to <span style='white-space:nowrap'><a href='https://linda-kaioh.livejournal.com/profile'><img src='https://l-stat.livejournal.com/img/userinfo.gif?v=3' alt='[info]' width='17' height='17' style='vertical-align: bottom; border: 0; padding-right: 1px;'/></a><a href='https://linda-kaioh.livejournal.com/'><b>linda_kaioh</b></a></span> for the program testing.</li>
+<li>Thanks to Vitaliy Yakovchuk, Dmytro Vasylchenko, Vadym Derckach and Sergei Garmash for the Ukrainian translation.</li>
+<li>Thanks to Matteo Migliaccio for the italian translation.</li>
 <li>Thanks to tehTen with Jabber 1010@xmpp.ru for "greyness" style.</li>
-<li>Thanks to Alex (<a href="http://jenyay.net/forum/user/8/">http://jenyay.net/forum/user/8/</a>) for "AVC" style.</li>
+<li>Thanks to Alex for "AVC" style.</li>
 <li>Thanks to Gabrielle Ramires (gabrielleramires.iv@gmail.com) for "gabrielle" and "gabrielle_light" styles.</li>
 <li>Thanks to Unreal666 for error detection.</li>
-<li>Thanks to <a href="https://plus.google.com/+VadimSuharnikov/posts">Vadim Suharnikov</a> for sending patches.</li>
+<li>Thanks to Vadim Suharnikov for sending patches.</li>
 <li>Thanks to Roman Sobolev for "solarized_light" and "solarized_dark" styles.</li>
 <li>Thanks to Åke Engelbrektson for Swedish translation.</li>
 <li>Thanks to S. N. for English help correction.</li>

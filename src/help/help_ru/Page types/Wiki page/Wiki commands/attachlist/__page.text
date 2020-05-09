@@ -19,6 +19,6 @@
 
 У данной страницы имеется пять вложенных файлов, следующая таблица показывает результат работы команды [=(:attachlist:)=] с различными значениями параметра ''sort'':
 
-||width=850 border=1 
+||width=850 border=1  style="border-collapse: collapse; border: 1px solid black;"
 || '''Команда''' || [=(:attachlist:)=] || [=(:attachlist sort=ext:)=] || [=(:attachlist sort=descendext:)=] || [=(:attachlist sort=size:)=] ||
 || '''Результат''' || (:attachlist:) || (:attachlist sort=ext:) || (:attachlist sort=descendext:) || (:attachlist sort=size:) ||

@@ -7,8 +7,8 @@ expand = False
 [General]
 type = html
 order = 0
-tags = пользователям
-datetime = 2014-06-15 21:23:39.170719
+tags = html, пользователям
+datetime = 2020-05-09 16:39:06.659534
 linewrap = True
 cursorposition = 794
 uid = __7bd312fb-c3e4-4d9d-9267-cc394dbb9f20

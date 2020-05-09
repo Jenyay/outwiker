@@ -7,8 +7,8 @@ expand = False
 [General]
 type = wiki
 order = 3
-tags = пользователям
-datetime = 2017-03-05 12:48:49.320000
+tags = пользователям, поиск
+datetime = 2020-05-09 16:40:14.192049
 cursorposition = 285
 uid = __40f2a2ad-7ece-4892-9eb0-3d2902f76dc9
 alias = Страница поиска

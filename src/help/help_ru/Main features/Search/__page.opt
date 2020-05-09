@@ -6,10 +6,11 @@ expand = True
 
 [General]
 type = wiki
-tags = пользователям
-datetime = 2017-04-02 19:11:15.510657
+tags = пользователям, поиск
+datetime = 2020-05-09 16:39:42.434222
 cursorposition = 138
 alias = Поиск
+order = 0
 
 [Misc]
 pageindex = 1

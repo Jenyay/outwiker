@@ -3,9 +3,9 @@ expand = False
 
 [General]
 type = html
-order = 0
-tags = пользователям
-datetime = 2014-06-15 21:13:23.389796
+order = 1
+tags = пользователям, вложения
+datetime = 2020-05-09 16:39:56.314101
 linewrap = True
 cursorposition = 496
 alias = Прикрепленные файлы

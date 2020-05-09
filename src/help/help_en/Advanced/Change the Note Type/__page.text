@@ -13,4 +13,6 @@ At the moment OutWiker supports the following note types:
 * wiki - [[/Page Types/Wiki Page]];
 * search - [[/Page Types/Search Page]].
 
-<font color='#ff0000'>'''Use the described procedure with caution for the syntax as well as structure of ''__page.opt'' and ''__page.text'' files depend on the note type.'''</font>
+%warn%
+'''Use the described procedure with caution for the syntax as well as structure of ''__page.opt'' and ''__page.text'' files depend on the note type.'''
+%%

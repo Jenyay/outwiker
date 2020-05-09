@@ -7,3 +7,7 @@ datetime = 2018-07-21 20:35:04.217523
 uid = textstyles
 alias = Стили оформления
 
+[wiki]
+custom_styles_block = {"border": "div.border {\n\tpadding: 1em;\n\tmargin: 1em;\n\tborder: 1px solid #000;\n}\n"}
+custom_styles_inline = {"notice": "span.notice {\n\tdisplay: inline-block;\n\tcolor: #333;\n\tbackground-color: #e3f7fc;\n\tborder-radius: 1px;\n\tpadding: 0px 2px 0px 2px;\n\tmargin: 2px;\n\tborder:1px solid #8ed9f6;\n}\n"}
+

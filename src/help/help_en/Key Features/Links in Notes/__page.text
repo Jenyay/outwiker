@@ -7,13 +7,13 @@ Link of any type can be inserted either with &lt;a href="..."&gt; tag (html note
 
 !!! Link by unique identifier
 
-Ability to refer to pages via identifier was introduced in version 1.8. This type of links is considered to be prefable one. Identifier for any given note stays the same in case of note's title change or moving the note within the tree. So the links by identifier remain working, unless the target note is deleted.
+OutWiker can create links to other page. This type of links is considered to be preferable one. Identifier for any given note stays the same in case of note's title change or moving the note within the tree. So the links by identifier remain working, unless the target note is deleted.
 
 To copy link to note in the clipboard, go to "Tools -> Copy page link" or right-click the note's tab and select the "Copy page link" item of the pop-up menu.
 
 For example, the link address for this note is as follows: page://__a9b6359a-ec35-4113-a097-ae12c7cc7ec2.
 
-Any link by indentifier must begin with prefix "page://" followed by the identifier itself. Such links can be used in html-type notes in exactly the same way as any links with standard html prefixes (http://, ftp:// and so on).
+Any link by identifier must begin with prefix "page://" followed by the identifier itself. Such links can be used in HTML notes in exactly the same way as any links with standard HTML prefixes (http(s)://, ftp:// and so on).
 
 Examples:
 
@@ -43,10 +43,3 @@ Examples:
 Renaming or moving of the target note from a branch of the tree to another one results in invalidating the link. In this case link should be edited manually.
 
 Due to the problems described above, using links by name are not encouraged in general case. One should consider using links by identifier in stead. Links by name are considered to be obsolete, albeit working, functionality.
-
-
-!!! Relative links
-
-Relative links are a specific case of links by name. Their syntax is as follows: [[../../Page Types/Html Page -> ../../Page Types/Html Page]].
-
-If the a link starts with dot ([[.]]) it redirects to some child note for the current note.

@@ -1,15 +1,15 @@
 * The list of notes is stored in tree of directories on disk.
 * Plug-ins are supported.
 * Any number of files can be attached to note.
-* Notes can be of different types.
-* Attached images can be shown in HTML-notes.
+* Notes can be of different types (wiki pages, HTML pages and text pages).
+* Attached images can be shown in HTML and wiki notes.
 * HTML syntax highlighting.
 * Note tags are supported.
-* Bookmarks are supported.
+* Bookmarks to notes are supported.
 * Any tree branch can be opened as separate wiki.
 * Individual icons for notes are supported.
 * The software is cross-platform (Windows and Linux).
-* The software is portable.
+* The software may be portable.
 * The software is open-source.
 * Links between notes are supported.
 * Global search in the tree of notes and search by tags.

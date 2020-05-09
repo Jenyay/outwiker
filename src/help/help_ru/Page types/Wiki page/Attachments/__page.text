@@ -1,9 +1,9 @@
 !!! Картинки 
 
-|| border=1
+|| border=1 style="border-collapse: collapse; border: 1px solid black;"
 || '''Синтаксис''' || '''Результат''' || '''Комментарий''' ||
 
-|| [=http://jenyay.net/small_image.jpg=] || http://jenyay.net/small_image.jpg || Вставить картинку из интернета ||
+|| [=https://jenyay.net/uploads/Soft/Outwiker/small_image.jpg=] || https://jenyay.net/uploads/Soft/Outwiker/small_image.jpg || Вставить картинку из интернета ||
 
 || [=Attach:small_image.jpg=] || Attach:small_image.jpg || Вставить прикрепленную картинку ||
 

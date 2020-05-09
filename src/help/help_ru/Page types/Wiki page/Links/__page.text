@@ -2,7 +2,7 @@
  
 !!! Ссылки
 
-|| border=1
+|| border=1 style="border-collapse: collapse; border: 1px solid black;"
 || '''Синтаксис''' || '''Результат''' || '''Комментарий''' ||
 ||[=http://example.com=]||http://example.com||Ссылка на адрес в интернете||
 ||[=[[http://example.com]]=]||[[http://example.com]]||Ссылка на адрес в интернете||
@@ -32,7 +32,7 @@
 
 !!! Якоря
 
-|| border=1
+|| border=1 style="border-collapse: collapse; border: 1px solid black;"
 || '''Синтаксис''' || '''Результат''' || '''Комментарий''' ||
 
 ||[=[[#anchor]]=]||Добавить якорь с именем #anchor [[#anchor]]||Результирующий HTML-код: &lt;A NAME=&quot;#anchor&quot;&gt;&lt;/A&gt;||

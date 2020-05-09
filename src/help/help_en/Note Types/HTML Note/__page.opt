@@ -7,9 +7,9 @@ expand = False
 [General]
 type = html
 order = 0
-tags = for users
+tags = for users, html
 linewrap = True
-datetime = 2017-08-30 21:33:26.927000
+datetime = 2020-05-09 16:38:27.979619
 cursorposition = 549
 uid = __0cc8f2c6-754c-4aa8-b118-561b930e9955
 
