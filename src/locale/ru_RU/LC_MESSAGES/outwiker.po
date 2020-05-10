@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-10 11:34+0300\n"
+"POT-Creation-Date: 2020-05-10 11:50+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -374,7 +374,7 @@ msgstr "Начать поиск и замену по странице"
 
 #: outwiker/actions/showhideattaches.py:17 outwiker/actions/switchto.py:63
 #: outwiker/gui/mainpanes/attachmainpane.py:19
-#: outwiker/gui/preferences/prefcontroller.py:154
+#: outwiker/gui/preferences/prefcontroller.py:156
 msgid "Attachments"
 msgstr "Прикрепленные файлы"
 
@@ -979,7 +979,7 @@ msgid "Insert the current date"
 msgstr "Вставить текущую дату"
 
 #: outwiker/gui/actionslist.py:192
-#: outwiker/gui/preferences/prefcontroller.py:173
+#: outwiker/gui/preferences/prefcontroller.py:176
 msgid "Spell checking"
 msgstr "Проверка орфографии"
 
@@ -1202,8 +1202,8 @@ msgid "Can't execute file '%s'"
 msgstr "Ошибка запуска файла '%s'"
 
 #: outwiker/gui/basepagedialog.py:131 outwiker/gui/mainwindow.py:202
-#: outwiker/gui/preferences/prefcontroller.py:148
-#: outwiker/gui/preferences/prefcontroller.py:172
+#: outwiker/gui/preferences/prefcontroller.py:150
+#: outwiker/gui/preferences/prefcontroller.py:175
 #: outwiker/pages/wiki/wikipagecontroller.py:84
 msgid "General"
 msgstr "Общие"
@@ -1514,7 +1514,7 @@ msgid "Toolbars"
 msgstr "Панели инструментов"
 
 #: outwiker/gui/mainwindow.py:208
-#: outwiker/gui/preferences/prefcontroller.py:182
+#: outwiker/gui/preferences/prefcontroller.py:185
 msgid "Plugins"
 msgstr "Плагины"
 
@@ -1641,7 +1641,7 @@ msgid "Double click on an attached file"
 msgstr "Двойной клик на прикрепленном файле"
 
 #: outwiker/gui/preferences/colorspanel.py:34
-#: outwiker/gui/preferences/prefcontroller.py:149
+#: outwiker/gui/preferences/prefcontroller.py:151
 msgid "Main window"
 msgstr "Главное окно"
 
@@ -1654,7 +1654,7 @@ msgid "Main panels text color"
 msgstr "Цвет текста основных панелей"
 
 #: outwiker/gui/preferences/colorspanel.py:45
-#: outwiker/gui/preferences/prefcontroller.py:153
+#: outwiker/gui/preferences/prefcontroller.py:155
 msgid "Tags cloud"
 msgstr "Облако меток"
 
@@ -1733,7 +1733,7 @@ msgid "Recent used"
 msgstr "Последний используемый"
 
 #: outwiker/gui/preferences/generalpanel.py:40
-#: outwiker/gui/preferences/prefcontroller.py:152
+#: outwiker/gui/preferences/prefcontroller.py:154
 #: outwiker/pages/html/basehtmlpanel.py:184
 msgid "Preview"
 msgstr "Просмотр"
@@ -1961,43 +1961,43 @@ msgstr "Описание"
 msgid "Site"
 msgstr "Сайт"
 
-#: outwiker/gui/preferences/prefcontroller.py:150
+#: outwiker/gui/preferences/prefcontroller.py:152
 msgid "Colors"
 msgstr "Цвета"
 
-#: outwiker/gui/preferences/prefcontroller.py:151
+#: outwiker/gui/preferences/prefcontroller.py:153
 msgid "Tray icon"
 msgstr "Значок в панели задач"
 
-#: outwiker/gui/preferences/prefcontroller.py:155
+#: outwiker/gui/preferences/prefcontroller.py:157
 msgid "Hotkeys"
 msgstr "Сочетания клавиш"
 
-#: outwiker/gui/preferences/prefcontroller.py:156
-msgid "Text printout"
-msgstr "Печать текста"
-
-#: outwiker/gui/preferences/prefcontroller.py:159
+#: outwiker/gui/preferences/prefcontroller.py:160
 msgid "Interface"
 msgstr "Интерфейс"
 
-#: outwiker/gui/preferences/prefcontroller.py:174
-msgid "HTML Editor"
+#: outwiker/gui/preferences/prefcontroller.py:177
+msgid "HTML editor"
 msgstr "HTML-редактор"
 
-#: outwiker/gui/preferences/prefcontroller.py:175
-msgid "Wiki Editor"
+#: outwiker/gui/preferences/prefcontroller.py:178
+msgid "Wiki editor"
 msgstr "Викиредактор"
 
-#: outwiker/gui/preferences/prefcontroller.py:178
+#: outwiker/gui/preferences/prefcontroller.py:181
 msgid "Editor"
 msgstr "Редактор"
 
-#: outwiker/gui/preferences/prefcontroller.py:186
+#: outwiker/gui/preferences/prefcontroller.py:190
+msgid "Text printout"
+msgstr "Печать текста"
+
+#: outwiker/gui/preferences/prefcontroller.py:194
 msgid "User's iconset"
 msgstr "Значки пользователя"
 
-#: outwiker/gui/preferences/prefcontroller.py:191
+#: outwiker/gui/preferences/prefcontroller.py:199
 msgid "Preferences"
 msgstr "Параметры"
 

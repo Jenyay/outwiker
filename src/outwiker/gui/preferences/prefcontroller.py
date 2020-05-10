@@ -174,8 +174,8 @@ class PrefController(object):
         editorPanesList = [
             PreferencePanelInfo(editorPage, _("General")),
             PreferencePanelInfo(spellPage, _("Spell checking")),
-            PreferencePanelInfo(htmlEditorPage, _("HTML Editor")),
-            PreferencePanelInfo(wikiEditorPage, _("Wiki Editor")),
+            PreferencePanelInfo(htmlEditorPage, _("HTML editor")),
+            PreferencePanelInfo(wikiEditorPage, _("Wiki editor")),
         ]
 
         self._dialog.appendPreferenceGroup(_("Editor"), editorPanesList)
