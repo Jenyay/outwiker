@@ -1,3 +1,5 @@
+(:childlist:)
+
 !!! [[#ini]] Settings File Location
 
 OutWiker keeps all settings in the ''outwiker.ini'' file. Its location depends on the operating system and running mode (portable or normal).
