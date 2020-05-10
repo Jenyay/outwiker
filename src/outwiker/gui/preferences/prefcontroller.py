@@ -56,6 +56,7 @@ class PrefController(object):
         self.__createEditorGroup()
         self.__createIconsetPage()
         self.__createPluginsPage()
+        self.__createTextPrintoutPage()
 
         self._dialog.Bind(wx.EVT_BUTTON, self.__onOk, id=wx.ID_OK)
         self._dialog.Bind(wx.EVT_BUTTON, self.__onCancel, id=wx.ID_CANCEL)
@@ -135,28 +136,28 @@ class PrefController(object):
         Создать страницы с подгруппой "Interface"
         """
         generalPage = GeneralPanel(self._dialog.treeBook, self._application)
-        mainWindowPage = MainWindowPanel(self._dialog.treeBook, self._application)
+        mainWindowPage = MainWindowPanel(
+            self._dialog.treeBook, self._application)
         colorsPage = ColorsPanel(self._dialog.treeBook, self._application)
         trayPage = TrayPanel(self._dialog.treeBook, self._application)
-        htmlRenderPage = HtmlRenderPanel(self._dialog.treeBook, self._application)
-        textPrintPage = TextPrintPanel(self._dialog.treeBook, self._application)
+        htmlRenderPage = HtmlRenderPanel(
+            self._dialog.treeBook, self._application)
         hotkeysPage = HotKeysPanel(self._dialog.treeBook, self._application)
         tagsPage = TagsPanel(self._dialog.treeBook, self._application)
         attachPage = AttachPanel(self._dialog.treeBook, self._application)
 
         interfacePanelsList = [
-            PreferencePanelInfo(generalPage, _(u"General")),
-            PreferencePanelInfo(mainWindowPage, _(u"Main window")),
-            PreferencePanelInfo(colorsPage, _(u"Colors")),
-            PreferencePanelInfo(trayPage, _(u"Tray icon")),
-            PreferencePanelInfo(htmlRenderPage, _(u"Preview")),
-            PreferencePanelInfo(tagsPage, _(u"Tags cloud")),
-            PreferencePanelInfo(attachPage, _(u"Attachments")),
-            PreferencePanelInfo(hotkeysPage, _(u"Hotkeys")),
-            PreferencePanelInfo(textPrintPage, _(u"Text printout")),
+            PreferencePanelInfo(generalPage, _("General")),
+            PreferencePanelInfo(mainWindowPage, _("Main window")),
+            PreferencePanelInfo(colorsPage, _("Colors")),
+            PreferencePanelInfo(trayPage, _("Tray icon")),
+            PreferencePanelInfo(htmlRenderPage, _("Preview")),
+            PreferencePanelInfo(tagsPage, _("Tags cloud")),
+            PreferencePanelInfo(attachPage, _("Attachments")),
+            PreferencePanelInfo(hotkeysPage, _("Hotkeys")),
         ]
 
-        self._dialog.appendPreferenceGroup(_(u"Interface"),
+        self._dialog.appendPreferenceGroup(_("Interface"),
                                            interfacePanelsList)
 
     def __createEditorGroup(self):
@@ -165,25 +166,32 @@ class PrefController(object):
         """
         editorPage = EditorPanel(self._dialog.treeBook, self._application)
         spellPage = SpellPanel(self._dialog.treeBook, self._application)
-        htmlEditorPage = HtmlEditorPanel(self._dialog.treeBook, self._application)
-        wikiEditorPage = WikiEditorPanel(self._dialog.treeBook, self._application)
+        htmlEditorPage = HtmlEditorPanel(
+            self._dialog.treeBook, self._application)
+        wikiEditorPage = WikiEditorPanel(
+            self._dialog.treeBook, self._application)
 
         editorPanesList = [
-            PreferencePanelInfo(editorPage, _(u"General")),
-            PreferencePanelInfo(spellPage, _(u"Spell checking")),
-            PreferencePanelInfo(htmlEditorPage, _(u"HTML Editor")),
-            PreferencePanelInfo(wikiEditorPage, _(u"Wiki Editor")),
+            PreferencePanelInfo(editorPage, _("General")),
+            PreferencePanelInfo(spellPage, _("Spell checking")),
+            PreferencePanelInfo(htmlEditorPage, _("HTML Editor")),
+            PreferencePanelInfo(wikiEditorPage, _("Wiki Editor")),
         ]
 
-        self._dialog.appendPreferenceGroup(_(u"Editor"), editorPanesList)
+        self._dialog.appendPreferenceGroup(_("Editor"), editorPanesList)
 
     def __createPluginsPage(self):
         pluginsPage = PluginsPanel(self._dialog.treeBook, self._application)
-        self._dialog.treeBook.AddPage(pluginsPage, _(u"Plugins"))
+        self._dialog.treeBook.AddPage(pluginsPage, _("Plugins"))
+
+    def __createTextPrintoutPage(self):
+        textPrintPage = TextPrintPanel(
+            self._dialog.treeBook, self._application)
+        self._dialog.treeBook.AddPage(textPrintPage, _("Text printout"))
 
     def __createIconsetPage(self):
         iconsetPage = IconsetPanel(self._dialog.treeBook)
-        self._dialog.treeBook.AddPage(iconsetPage, _(u"User's iconset"))
+        self._dialog.treeBook.AddPage(iconsetPage, _("User's iconset"))
 
     def __setDialogPreperties(self):
         config = PrefDialogConfig(self._application.config)
