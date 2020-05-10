@@ -13,9 +13,10 @@ class SimpleView (object):
         """
         children - список упорядоченных дочерних страниц
         """
-        template = u'<a href="{link}">{title}</a>\n'
-        result = u"".join(
-            [template.format(link=page.title, title=page.title) for page in children])
+        template = '<a href="{link}">{text}</a>\n'
+        result = ''.join(
+            [template.format(link=page.title, text=page.display_title)
+                for page in children])
 
         # Выкинем последний перевод строки
         return result[: -1]
@@ -51,7 +52,7 @@ class ChildListCommand (Command):
         return SimpleView.make(children, self.parser, params)
 
     def _sortByNameKey(self, page):
-        return page.title.lower()
+        return page.display_title.lower()
 
     def _sortByEditDate(self, page):
         return page.datetime
