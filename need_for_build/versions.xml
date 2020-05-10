@@ -2,11 +2,13 @@
 <versions>
 	<version number="3.0.0.873" status="dev">
 		<changes>
-			<change></change>
+			<change>Update help.</change>
+			<change>The (:childlist:) wiki command take into account an alias of a page.</change>
 		</changes>
 
 		<changes lang="ru">
-			<change></change>
+			<change>Обновление справки.</change>
+			<change>Викикоманда (:childlist:) теперь учитывает псевдонимы страниц.</change>
 		</changes>
 	</version>
 
