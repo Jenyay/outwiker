@@ -9,8 +9,9 @@ expand = True
 lastviewedpage = О программе и контакты
 
 [General]
-selectedtab = 0
+selectedtab = 1
 
 [Tabs]
-tab_0 = About and contacts
+tab_0 = 
+tab_1 = Preferences/Wiki page
 

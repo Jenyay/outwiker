@@ -7,8 +7,8 @@ expand = False
 [General]
 type = wiki
 order = 1
-tags = wiki, пользователям, вложения
-datetime = 2020-05-09 19:33:58.586557
+tags = wiki, вложения
+datetime = 2020-05-10 10:55:52.810895
 cursorposition = 613
 uid = __81525846-01d4-443e-a631-cfd4010abf64
 alias = Прикрепленные файлы и картинки

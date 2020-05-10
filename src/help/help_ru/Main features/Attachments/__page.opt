@@ -4,8 +4,8 @@ expand = False
 [General]
 type = html
 order = 1
-tags = пользователям, вложения
-datetime = 2020-05-09 18:53:12.719686
+tags = вложения
+datetime = 2020-05-10 10:55:52.775149
 linewrap = True
 cursorposition = 496
 alias = Прикрепленные файлы

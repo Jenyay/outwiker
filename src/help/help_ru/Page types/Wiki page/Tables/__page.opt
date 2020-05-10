@@ -7,8 +7,8 @@ expand = False
 [General]
 type = wiki
 order = 4
-tags = пользователям, wiki
-datetime = 2020-05-09 19:34:59.241413
+tags = wiki
+datetime = 2020-05-10 10:55:52.813390
 cursorposition = 2888
 alias = Таблицы
 

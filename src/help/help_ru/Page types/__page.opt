@@ -7,8 +7,8 @@ expand = True
 [General]
 type = wiki
 order = 4
-tags = пользователям
-datetime = 2014-06-14 15:29:57.171578
+tags = 
+datetime = 2020-05-10 10:55:52.785170
 cursorposition = 439
 alias = Типы страниц
 

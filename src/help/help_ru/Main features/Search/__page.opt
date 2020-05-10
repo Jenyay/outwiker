@@ -6,8 +6,8 @@ expand = True
 
 [General]
 type = wiki
-tags = пользователям, поиск
-datetime = 2020-05-09 18:52:10.118664
+tags = поиск
+datetime = 2020-05-10 10:55:52.772962
 cursorposition = 138
 alias = Поиск
 order = 0
