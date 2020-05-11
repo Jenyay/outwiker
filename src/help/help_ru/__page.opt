@@ -14,4 +14,5 @@ selectedtab = 1
 [Tabs]
 tab_0 = 
 tab_1 = Preferences
+tab_2 = Preferences/Wiki page
 
