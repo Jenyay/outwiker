@@ -8,10 +8,10 @@ expand = True
 type = wiki
 order = 1
 tags = wiki
-datetime = 2020-05-10 10:55:52.808313
+datetime = 2020-05-14 23:12:03.354831
 cursorposition = 0
 uid = __19866d72-8d95-4e2c-8df1-6df0bd8f06c0
-alias = Wiki-страница
+alias = Викистраница
 
 [Misc]
 pageindex = 1
