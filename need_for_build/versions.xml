@@ -3,11 +3,13 @@
 	<version number="3.0.0.873" status="dev">
 		<changes>
 			<change>Update help.</change>
+			<change>Add the ability to link to page by alias.</change>
 			<change>The (:childlist:) wiki command take into account an alias of a page.</change>
 		</changes>
 
 		<changes lang="ru">
 			<change>Обновление справки.</change>
+			<change>Добавлена возможность ссылаться на страницы по ее псевдониму.</change>
 			<change>Викикоманда (:childlist:) теперь учитывает псевдонимы страниц.</change>
 		</changes>
 	</version>
