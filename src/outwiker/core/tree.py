@@ -123,8 +123,10 @@ class RootWikiPage(object):
                 page = page.parent
                 found = (page is not None)
             else:
+                title_lower = title.lower()
                 for child in page.children:
-                    if child.title.lower() == title.lower():
+                    if (child.title.lower() == title_lower or
+                            child.display_title.lower() == title_lower):
                         page = child
                         found = True
 
@@ -468,7 +470,8 @@ class WikiPage(RootWikiPage):
         path -- путь до страницы
         """
         if not RootWikiPage.testDublicate(parent, title):
-            logger.error(u'Duplicate page title in the parent page. Title: {}. Parent: {}'.format(title, parent.subpath))
+            logger.error(u'Duplicate page title in the parent page. Title: {}. Parent: {}'.format(
+                title, parent.subpath))
             raise DuplicateTitle
 
         RootWikiPage.__init__(self, path, readonly)
@@ -702,7 +705,8 @@ class WikiPage(RootWikiPage):
         params = RootWikiPage._readParams(path, readonly)
 
         # Получим тип страницы по параметрам
-        pageType = FactorySelector.getFactory(params.typeOption.value).getPageType()
+        pageType = FactorySelector.getFactory(
+            params.typeOption.value).getPageType()
 
         page = pageType(path, title, parent, readonly)
         page._tags = WikiPage.getTags(params)
