@@ -6,7 +6,7 @@ expand = True
 
 [General]
 type = wiki
-order = 8
+order = 7
 tags = advanced
 datetime = 2017-08-31 19:10:12.852000
 cursorposition = 77

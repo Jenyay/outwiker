@@ -1,16 +1,16 @@
 * The list of notes is stored in tree of directories on disk.
 * Plug-ins are supported.
-* Any number of files can be attached to note.
-* Notes can be of different types (wiki pages, HTML pages and text pages).
+* Any number of files can be [[attached -> page://__d4682a4f-8dd4-442a-8eb8-2915ec66c6b2]] to note.
+* Notes can be of different types ([[wiki pages -> page://__dd8b23a1-6787-42bb-9b58-c78a656688e2]], [[HTML pages -> page://__0cc8f2c6-754c-4aa8-b118-561b930e9955]] and [[text pages -> page://__b32aa743-384d-493f-aad4-4c4cbf945fbb]]).
 * Attached images can be shown in HTML and wiki notes.
 * HTML syntax highlighting.
-* Note tags are supported.
+* Note [[tags -> page://__4d6b3355-f050-4579-8ca7-82061915c4f0]] are supported.
+* Batch processing (adding, deleting, renaming) of [[tags -> page://__4d6b3355-f050-4579-8ca7-82061915c4f0]].
 * Bookmarks to notes are supported.
+* Global search in the tree of notes and search by tags.
 * Any tree branch can be opened as separate wiki.
 * Individual icons for notes are supported.
 * The software is cross-platform (Windows and Linux).
 * The software may be portable.
 * The software is open-source.
 * Links between notes are supported.
-* Global search in the tree of notes and search by tags.
-* Batch processing (adding, deleting, renaming) of tags.

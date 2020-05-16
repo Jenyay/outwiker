@@ -11,7 +11,7 @@ OutWiker can create links to other page. This type of links is considered to be 
 
 To copy link to note in the clipboard, go to "Tools -> Copy page link" or right-click the note's tab and select the "Copy page link" item of the pop-up menu.
 
-For example, the link address for this note is as follows: page://__a9b6359a-ec35-4113-a097-ae12c7cc7ec2.
+For example, the link address for this note is as follows: page://__d0ed44d4-0772-4f04-80ca-98fc55530667
 
 Any link by identifier must begin with prefix "page://" followed by the identifier itself. Such links can be used in HTML notes in exactly the same way as any links with standard HTML prefixes (http(s)://, ftp:// and so on).
 
@@ -31,14 +31,14 @@ The links by name may begin with "/", in this case OutWiker starts looking for t
 
 Examples:
 
-* <a href="/Page Types/Wiki page/Wiki Commands">/Page Types/Wiki page/Wiki Commands</a> (HTML)
-* <a href="Page Types/Wiki page/Wiki Commands">Page Types/Wiki page/Wiki Commands</a> (HTML)
-* <a href="Nested Page">Nested Page</a> (HTML)
+* [=<a href="/Note Types/Wiki Note/Wiki Commands">/Note Types/Wiki Note/Wiki Commands</a>=] (HTML, work in Windows only)
+* [=<a href="Note Types/Wiki Note/Wiki Commands">Note Types/Wiki Note/Wiki Commands</a>=] (HTML)
+* [=<a href="Nested Note">Nested Note</a>=] (HTML)
 
 
-* [[/Page Types/Wiki page/Wiki Commands]] (wiki)
-* [[Page Types/Wiki page/Wiki Commands]] (wiki)
-* [[Nested Notes]] (wiki)
+* [[/Note Types/Wiki Note/Wiki Commands]] (wiki, work in Windows only)
+* [[Note Types/Wiki Note/Wiki Commands]] (wiki)
+* [[Nested Note]] (wiki)
 
 Renaming or moving of the target note from a branch of the tree to another one results in invalidating the link. In this case link should be edited manually.
 

@@ -15,19 +15,26 @@ The following table shows examples of links to webpages and to another notes of 
 
 ||[=[[Link to the current note -> page://__97bae762-abb7-489e-a1f4-1b0c9f6916d1]]=]||[[Link to the current note  -> page://__97bae762-abb7-489e-a1f4-1b0c9f6916d1]]||Link to note by identifier with comment (variant 2) ||
 
-||[=[[/Page Types/Wiki Page/Links]]=]||[[/Page Types/Wiki Page/Links]]||Link to note by name ||
+||[=[[Note Types/Wiki Note/Links]]=]||[[Note Types/Wiki Note/Links]]||Link to note by name ||
 
-||[=[[/Page Types/Wiki Page/Links | Links]]=]||[[/Page Types/Wiki Page/Links | Links]]||Link to note by name with comment||
+||[=[[/Note Types/Wiki Note/Links]]=]||[[/Note Types/Wiki Note/Links]]||Link to note by name[[<<]](work in Windows only) ||
 
-||[=[[Links -> /Page Types/Wiki Page/Links]]=]||[[Links -> /Page Types/Wiki Page/Links]] ||Link to note by name with comment ||
+||[=[[Note Types/Wiki Note/Links | Links]]=]||[[Note Types/Wiki Note/Links | Links]]||Link to note by name with comment ||
 
-||[=[[../../HTML Page]]=] ||[[../../HTML Page]] ||Link to note by relative path ||
+||[=[[/Note Types/Wiki Note/Links | Links]]=]||[[/Note Types/Wiki Note/Links | Links]]||Link to note by name with comment[[<<]](work in Windows only) ||
 
-||[=[[../../HTML Page | HTML Page]]=] ||[[../../HTML Page | HTML Page]] ||Link to note by relative path with comment ||
+||[=[[Links -> Note Types/Wiki Note/Links]]=]||[[Links -> Note Types/Wiki Note/Links]] ||Link to note by name with comment ||
 
-||[=[[HTML Page -> ../../HTML Page]]=] ||[[HTML Page -> ../../HTML Page]] ||Link to note by relative path with comment ||
+||[=[[Links -> /Note Types/Wiki Note/Links]]=]||[[Links -> /Note Types/Wiki Note/Links]] ||Link to note by name with comment[[<<]](work in Windows only) ||
+
+||[=[[../../HTML Page]]=] ||[[../../HTML Page]] ||Link to note by relative path[[<<]](work in Windows only) ||
+
+||[=[[../../HTML Page | HTML Page]]=] ||[[../../HTML Page | HTML Page]] ||Link to note by relative path with comment[[<<]](work in Windows only) ||
+
+||[=[[HTML Page -> ../../HTML Page]]=] ||[[HTML Page -> ../../HTML Page]] ||Link to note by relative path with comment[[<<]](work in Windows only) ||
 
 ||[=http://jenyay.net/utils/small_image.jpg=]||http://jenyay.net/uploads/Outwiker/Unstable/outwiker_100_white.png ||Image from webpage ||
+
 
 
 !!! Anchors
