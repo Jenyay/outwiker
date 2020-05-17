@@ -689,6 +689,16 @@ def site_content():
         'en',
         'outwiker_unstable.en.txt'))
 
+    apps.append(SiteContentSource(
+        os.path.join(NEED_FOR_BUILD_DIR, 'versions_stable.xml'),
+        'ru',
+        'outwiker_stable.ru.txt'))
+
+    apps.append(SiteContentSource(
+        os.path.join(NEED_FOR_BUILD_DIR, 'versions_stable.xml'),
+        'en',
+        'outwiker_stable.en.txt'))
+
     for plugin in PLUGINS_LIST:
         item_ru = SiteContentSource(
             os.path.join('plugins', plugin, 'versions.xml'),
