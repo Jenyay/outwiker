@@ -22,7 +22,7 @@ Attach:us.png [[English version -> Outwiker/English]]
 [[#description]]
 !! Описание
 
-Текущая версия OutWiker - '''{{ version_full }}'''
+Текущая версия OutWiker: '''{{ version_full }}'''
 
 OutWiker - это бесплатная кроссплатформенная программа для хранения заметок в виде дерева. Такие программы называют outliner-ами, персональными вики-системами или древовидными редакторами. Основное отличие OutWiker от других подобных программ заключается в том, что OutWiker хранит дерево заметок в виде обычных директорий на диске, а не в одном файле. Также к заметкам может быть прикреплено любое количество файлов. Про остальные особенности программы вы можете прочитать в разделе [[#features | Основные возможности]].
 
@@ -63,16 +63,13 @@ sudo snap connect outwiker:removable-media
 [[#screenshots]]
 !! Скриншоты
 
-(:thumbgallery width=300 cols=3:)
-outwiker_2.0.0_01_ru.png
-outwiker_2.0.0_02_ru.png
-outwiker_2.0.0_03_ru.png
-outwiker_2.0.0_04_ru.png
-outwiker_2.0.0_05_ru.png
-outwiker_2.0.0_06_ru.png
-outwiker_2.0.0_07_ru.png
-outwiker_2.0.0_markdown_code_ru.png
-outwiker_2.0.0_markdown_view_ru.png
+(:thumbgallery width=400 cols=2:)
+outwiker_3.0_ru_01.png
+outwiker_3.0_ru_02.png
+outwiker_3.0_ru_03.png
+outwiker_3.0_ru_04.png
+outwiker_3.0_ru_05.png
+outwiker_3.0_ru_06.png
 (:thumbgalleryend:)
 
 [[#features]]

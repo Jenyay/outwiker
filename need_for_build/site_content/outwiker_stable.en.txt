@@ -31,7 +31,7 @@ OutWiker distributed with source code under the  [[GPL 3 -> http://www.gnu.org/l
 [[#download]]
 !! Downloads
 
-Current version - '''{{ version_full }}'''
+Current version: '''{{ version_full }}'''
 
 '''OutWiker for Windows'''
 [[Attach:Soft/Outwiker/outwiker_{{ version_full }}_win.exe | outwiker_{{ version_full }}_win.exe]] (installer, 23 МБ).
@@ -60,14 +60,13 @@ For others Linux distributions see [[Sources -> #source]]
 [[#screenshots]]
 !! Screenshots
 
-(:thumbgallery width=300 cols=3:)
-outwiker_2.0.0_01_en.png
-outwiker_2.0.0_02_en.png
-outwiker_2.0.0_03_en.png
-outwiker_2.0.0_04_en.png
-outwiker_2.0.0_05_en.png
-outwiker_2.0.0_06_en.png
-outwiker_2.0.0_07_en.png
+(:thumbgallery width=400 cols=2:)
+outwiker_3.0_en_01.png
+outwiker_3.0_en_02.png
+outwiker_3.0_en_03.png
+outwiker_3.0_en_04.png
+outwiker_3.0_en_05.png
+outwiker_3.0_en_06.png
 (:thumbgalleryend:)
 
 
