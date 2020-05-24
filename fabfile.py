@@ -614,7 +614,6 @@ def docker_build(*args):
 
 
 @task
-@linux_only
 def docker_build_wx(ubuntu_version: str, wx_version: str):
     '''
     Build a wxPython library from sources
@@ -625,7 +624,7 @@ def docker_build_wx(ubuntu_version: str, wx_version: str):
         os.mkdir(build_dir)
 
     # Create Docker image
-    docker_image = 'wxpython/ubuntu_{ubuntu_version}_webkit1'.format(
+    docker_image = 'wxpython/ubuntu_{ubuntu_version}_webkit2'.format(
         ubuntu_version=ubuntu_version)
 
     dockerfile_path = os.path.join(
