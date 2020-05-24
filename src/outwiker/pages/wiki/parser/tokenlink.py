@@ -6,6 +6,7 @@ from pyparsing import QuotedString
 
 from .tokenattach import AttachToken
 from outwiker.core.defines import PAGE_ATTACH_DIR
+from outwiker.utilites.urls import is_url
 
 
 class LinkFactory(object):
@@ -64,17 +65,27 @@ class LinkToken(object):
 
     def __prepareUrl(self, url):
         """
-        Подготовить адрес для ссылки. Если ссылка - прикрепленный файл, то создать путь до него
+        Подготовить адрес для ссылки.
+        Если ссылка - прикрепленный файл, то создать путь до него
         """
         if url.strip().startswith(AttachToken.attachString):
-            return url.strip().replace(AttachToken.attachString, PAGE_ATTACH_DIR + "/", 1)
+            return url.strip().replace(AttachToken.attachString,
+                                       PAGE_ATTACH_DIR + "/", 1)
 
         return url
 
     def __getUrlTag(self, url, comment):
-        return self.__generateHtmlTag(url.strip(), self.parser.parseLinkMarkup(comment.strip()))
+        return self.__generateHtmlTag(
+                url.strip(),
+                self.parser.parseLinkMarkup(comment.strip()))
 
     def __generateHtmlTag(self, url, comment):
+        if (not is_url(url) and
+                not url.startswith(AttachToken.attachString) and
+                not url.startswith(PAGE_ATTACH_DIR + '/') and
+                not url.startswith('#')):
+            url = 'page://' + url
+
         return '<a href="{url}">{comment}</a>'.format(url=url, comment=comment)
 
     def __convertEmptyLink(self, text):
@@ -85,7 +96,8 @@ class LinkToken(object):
 
         if textStrip.startswith(AttachToken.attachString):
             # Ссылка на прикрепление
-            url = textStrip.replace(AttachToken.attachString, PAGE_ATTACH_DIR + "/", 1)
+            url = textStrip.replace(
+                AttachToken.attachString, PAGE_ATTACH_DIR + "/", 1)
             comment = textStrip.replace(AttachToken.attachString, "")
             return '<a href="{url}">{comment}</a>'.format(url=url, comment=comment)
         elif (textStrip.startswith("#") and
