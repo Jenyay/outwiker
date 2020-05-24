@@ -668,7 +668,7 @@ def snap_publish():
 
     for snap_file in snap_files:
         print_info('Publish snap: {fname}'.format(fname=snap_file))
-        local('snapcraft push "{fname}"'.format(fname=snap_file))
+        local('snapcraft upload  "{fname}" --release edge'.format(fname=snap_file))
         local('snapcraft sign-build "{fname}"'.format(fname=snap_file))
 
 
