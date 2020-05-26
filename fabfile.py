@@ -409,12 +409,11 @@ def deploy(apply=False, is_stable=False):
     else:
         print(Fore.GREEN + 'Print commands only')
 
-    update_sources_master(apply)
-    add_sources_tag(apply, is_stable)
     plugins()
     upload_plugins()
     upload_plugins_pack()
     upload_distribs(is_stable)
+    snap_publish()
 
 
 @task
@@ -445,7 +444,7 @@ def _run_commands(commands: List[str], apply=False):
 
 
 @task
-def update_sources_master(apply=False):
+def update_sources_master(apply=False, is_stable=False):
     '''
     Update the git repository
 
@@ -460,6 +459,7 @@ def update_sources_master(apply=False):
         'git push'
     ]
     _run_commands(commands, apply)
+    add_sources_tag(apply, is_stable)
 
 
 @task
