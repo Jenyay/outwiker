@@ -168,7 +168,7 @@ class HtmlRenderWebKitForPage(HtmlRenderWebKitBase, HTMLRenderForPageMixin):
         try:
             html = readTextFile(fname)
         except IOError:
-            text = _(u"Can't read file %s") % (fname)
+            text = _("Can't read file %s") % (fname)
             self.canOpenUrl += 1
             self.SetPage(text, os.path.dirname(fname))
 
@@ -258,7 +258,7 @@ class HtmlRenderWebKitForPage(HtmlRenderWebKitBase, HTMLRenderForPageMixin):
             try:
                 outwiker.core.system.getOS().startFile(filename)
             except OSError:
-                text = _(u"Can't execute file '%s'") % filename
+                text = _("Can't execute file '%s'") % filename
                 outwiker.core.commands.showError(Application.mainWindow, text)
         elif anchor is not None:
             return False
@@ -289,7 +289,7 @@ class HtmlRenderWebKitGeneral(HtmlRenderWebKitBase):
         if not basepath.endswith('/'):
             basepath += '/'
 
-        self.SetPage(html, basepath, anchor)
+        self.SetPage(html, basepath, anchor=None)
 
     def _identifyUri(self, href):
         """
