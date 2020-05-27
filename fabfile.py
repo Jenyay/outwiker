@@ -659,17 +659,24 @@ def snap(is_stable=0):
 
 @task(alias='linux_snap_publish')
 @linux_only
-def snap_publish():
+def snap_publish(*channels):
     '''
     Publish created snap package
+    channels - comma separated list of channels the snap would be released:
+        edge, beta, candidate, release
     '''
     builder = BuilderSnap(False)
     snap_files = builder.get_snap_files()
 
     for snap_file in snap_files:
         print_info('Publish snap: {fname}'.format(fname=snap_file))
-        local('snapcraft upload  "{fname}" --release edge'.format(fname=snap_file))
-        local('snapcraft sign-build "{fname}"'.format(fname=snap_file))
+        if channels:
+            channels_str = ','.join(channels)
+            command = 'snapcraft upload  "{fname}" --release {channels}'.format(fname=snap_file, channels=channels_str)
+        else:
+            command = 'snapcraft upload  "{fname}"'.format(fname=snap_file)
+
+        local(command)
 
 
 @task
