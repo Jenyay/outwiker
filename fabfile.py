@@ -413,7 +413,12 @@ def deploy(apply=False, is_stable=False):
     upload_plugins()
     upload_plugins_pack()
     upload_distribs(is_stable)
-    snap_publish()
+
+    snap_channels = ['edge', 'beta']
+    if is_stable:
+        snap_channels += ['release']
+
+    snap_publish(*snap_channels)
 
 
 @task
@@ -648,12 +653,11 @@ def docker_build_wx(ubuntu_version: str, wx_version: str):
 
 @task(alias='linux_snap')
 @linux_only
-def snap(is_stable=0):
+def snap(*params):
     '''
     Build clean snap package
     '''
-    is_stable = tobool(is_stable)
-    builder = BuilderSnap(is_stable)
+    builder = BuilderSnap(*params)
     builder.build()
 
 

@@ -17,8 +17,10 @@ class BuilderSnap(BuilderBase):
     A class to build snap package
     """
 
-    def __init__(self, is_stable):
-        super().__init__(SNAP_BUILD_DIR, is_stable)
+    def __init__(self, *snap_params):
+        super().__init__(SNAP_BUILD_DIR)
+        self._snap_params = snap_params
+        print(snap_params)
 
     def _build(self):
         self._clear_sources()
@@ -47,8 +49,9 @@ class BuilderSnap(BuilderBase):
     def _build_snap(self):
         print_info('Build snap')
         with lcd(self.facts.temp_dir):
-            local('sudo snapcraft --debug --use-lxd')
-            # local('snapcraft cleanbuild')
+            snap_params = ' '.join(self._snap_params)
+            local('sudo snapcraft snap {params}'.format(params=snap_params))
+
         # local('docker run --rm -v "$PWD":/build -w /build snapcore/snapcraft bash -c "apt update && snapcraft"')
 
     def _build_man(self, usr_share):
