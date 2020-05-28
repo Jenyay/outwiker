@@ -1,9 +1,9 @@
-Заголовок страницы, который отображается в дереве заметок, не всегда совпадает с именем папки, которая содержит файлы этой страницы. Например, файловые системы имеют ограничение на то, какие символы можно использовать в именах файлов и папок, например, в Windows запрещены такие символы как *, ?, :, /, \ и др. Но эти символы иногда хотелось бы использовать в именах страниц. Чтобы обойти это ограничение, у страницы может быть установлен псевдоним, и при его наличии именно он будет отображаться в дереве заметок. 
+A page title for users can be different from a directory name with files of page. So file systems have a restriction on possible characters for files and directories. For example you can't use in Windows follow characters: *, ?, :, /, \ and some others. But this characters can be in page title with an alias. OutWiker shows page alias in the notes tree if page alias set.
 
-Псевдоним устанавливается автоматически при создании страницы с запрещенными символами, а также, если создается страница с именем, которое уже существует на том же уровне вложенности. В этом случае имя папки будет скорректировано таким образом, чтобы удовлетворить требованиям файловой системы, но для пользователя заметка будет отображаться с тем именем, которое он ввел.
+When user creates a page with forbidden characters or duplicate page title of the same level an alias will be set automatically. A page folder will be corrected to satisfy file system requirements. But user will see entered title.
 
-Псевдоним задается в файле настроек заметки __page.opt в разделе [General] с помощью параметра alias.
+An alias set in a page settings file (__page.opt) in section [General] with an "alias" parameter.
 
-В основном интерфейсе OutWiker не предусмотрена возможность непосредственно влиять на этот параметр, поскольку пользователям обычно не так важно, совпадает имя папки заметки с именем заметки или нет. Однако, если такая возможность вам требуется, можно воспользоваться плагином [[HackPage -> https://jenyay.net/Outwiker/HackPage]], который дает возможность устанавливать и изменять псевдонимы страниц.
+In a main OutWiker user interface is no way to directly change this parameter. Usually users do not need this. The plugin [[HackPage -> https://jenyay.net/Outwiker/HackPageEn]] allows to add and change page alias.
 
-При задании [[ссылок -> page://wiki_links]] на другие страницы можно использовать как псевдонимы страниц, так и имена папок, соответствующие страницам, однако рекомендуется создавать ссылки с использованием идентификаторов.
+You can use alias (or directory names) to create [[links -> page://wiki_links]] to other page, but it is recommended that you create links using identifiers.
