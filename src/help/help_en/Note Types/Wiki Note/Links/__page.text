@@ -9,11 +9,11 @@ The following table shows examples of links to webpages and to another notes of 
 ||[=[[Link sample -> http://example.com]]=]||[[Link sample -> http://example.com]]||Link to webpage with comment||
 ||[=[[http://example.com | Link sample]]=]||[[http://example.com | Link sample]]||Link to webpage with comment||
 
-||[=[[page://__97bae762-abb7-489e-a1f4-1b0c9f6916d1]]=]||[[page://__97bae762-abb7-489e-a1f4-1b0c9f6916d1]]||Link to note by identifier ||
+||[=[[page://__d630dac7-3254-47aa-acca-7aa186ff76b0]]=]||[[page://__d630dac7-3254-47aa-acca-7aa186ff76b0]]||Link to note by identifier ||
 
-||[=[[page://__97bae762-abb7-489e-a1f4-1b0c9f6916d1 | Link to the current note]]=]||[[page://__97bae762-abb7-489e-a1f4-1b0c9f6916d1 | Link to the current note]]||Link to note by identifier with comment (variant 1) ||
+||[=[[page://__d630dac7-3254-47aa-acca-7aa186ff76b0 | Link to other note]]=]||[[page://__d630dac7-3254-47aa-acca-7aa186ff76b0 | Link to other note]]||Link to note by identifier with comment (variant 1) ||
 
-||[=[[Link to the current note -> page://__97bae762-abb7-489e-a1f4-1b0c9f6916d1]]=]||[[Link to the current note  -> page://__97bae762-abb7-489e-a1f4-1b0c9f6916d1]]||Link to note by identifier with comment (variant 2) ||
+||[=[[Link to the current note -> page://__d630dac7-3254-47aa-acca-7aa186ff76b0]]=]||[[Link to the current note  -> page://__d630dac7-3254-47aa-acca-7aa186ff76b0]]||Link to note by identifier with comment (variant 2) ||
 
 ||[=[[Note Types/Wiki Note/Links]]=]||[[Note Types/Wiki Note/Links]]||Link to note by name ||
 
