@@ -43,11 +43,11 @@ setup(
     install_requires=[
         'wxPython==4.0.7.post2',
         'Pillow>=7.0.0',
-        'idna>=2.8',
+        'idna>=2.9',
         'pyparsing>=2.4.6',
-        'pyenchant>=2.0.0;platform_system=="Windows"',
+        'psutil==5.6.6',
+        'cyhunspell>=1.3.4',
         'comtypes>=1.1.7;platform_system=="Windows"',
-        'hunspell>=0.5.5;platform_system=="Linux"',
     ],
     project_urls={
         'Documentation': 'https://outwiker.readthedocs.io/',
