@@ -20,7 +20,6 @@ class BuilderSnap(BuilderBase):
     def __init__(self, *snap_params):
         super().__init__(SNAP_BUILD_DIR)
         self._snap_params = snap_params
-        print(snap_params)
 
     def _build(self):
         self._clear_sources()
