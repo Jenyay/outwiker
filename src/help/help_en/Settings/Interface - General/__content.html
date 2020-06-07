@@ -8,7 +8,7 @@
 	<style type='text/css'>
 		body, div, p, table {
 			font-size:10pt;
-			font-family:Verdana;
+			font-family:Sans;
 		}
 
 		img{border:none}
@@ -22,24 +22,25 @@
 <br/>
 <div align="center"><img src="__attach/outwiker_opt_general.png"/> </div><br/>
 <br/>
-Если установлен флажок <b>Спрашивать подтверждение перед выходом</b>, то программа перед тем как завершить свою работу спросит у вас, действительно ли вы хотите выйти из программы. Поскольку все данные OutWiker сохраняет достаточно часто, а такие подтверждения в других программах нужны в первую очередь для того, чтобы не потерять введенные данные, то особого смысла от наличия этой настройки нет, возможно, в будущем она будет убрана.<br/>
+The <b>Ask before exit</b> check-box selection forces OutWiker to ask for confirmation of closing. This setting is considered to be redundant, as OutWiker stores note content before exiting the program anyway in order to prevent any loss of content.<br/>
 <br/>
-Поле ввода <b>Период автосохранения</b> позволяет задать, как часто будет сохраняться открытая в данный момент заметка. Эта величина задается в секундах, если она равна 0, то автосохранение по таймеру будет отключено. Кроме как по таймеру, заметки сохраняются и при других событиях: при выходе из программы, при переключении между заметками, при переключении между вкладками "Вики", "Просмотр" и "HTML" и др.<br/>
+The <b>Autosave interval</b> input field allows you to set interval of time in seconds between two consecutive auto-saves of the current note content. If its value is set to 0, autosaving is disabled. Apart from timer, the following events trigger auto-saving: exiting the program, switching between notes, switching between "Wiki", "Preview" and "HTML" tabs.<br/>
 <br/>
-Поле ввода <b>Размер истории последних используемых значков</b> позволяет задать, сколько значков OutWiker будет сохранять в список последних используемых значков в диалоге создания и редактирования свойств страницы.<br/>
+The <b>Length of recently used icons history</b> input field allows you to set a number of icons for saving in the list of recently used icons in the dialog for creation page and edit page properties.<br/>
 <br/>
-Поле ввода <b>Размер истории открытых файлов</b> позволяет задать, насколько длинным должен быть список последних открытых вики в меню <b>Файл</b>.<br/>
+The <b>Length of recently opened files history</b> input field allows you to set the length of the latest opened files list located in the <b>File</b> menu.<br/>
 <br/>
-Если установлен флажок <b>При запуске открывать последний открытый файл</b>, то после перезапуска программы вам не придется заново искать и открывать список заметок, который был открыт в прошлый раз - он будет открыт автоматически.<br/>
+If the <b>Automatically open the recent file</b> check-box is selected, then the most recent file is opened automatically, when OutWiker's is launched.<br/>
 <br/>
-Поле ввода <b>Формат даты и времени</b> позволяет задать формат, в котором будут отображаться даты создания и редактирования страниц в различных частях программы, например, справа в статусной панели. OutWiker использует формат даты и времени, <a href="https://docs.python.org/2/library/datetime.html#strftime-and-strptime-behavior">применяемый в языке Python</a>, но запоминать его не нужно, поскольку справа от поля ввода есть кнопка, при нажатии на которую будет открыто меню, содержащее все возможные элементы данного формата.<br/>
+The <b>Date and time format</b> input field determines how the creation and modification dates throughout the program interface looks like, for example, the date and time in the rightmost part of the status bar. OutWiker uses date format from <a href="https://docs.python.org/2/library/datetime.html#strftime-and-strptime-behavior">Python language</a>. Clicking the button to the right of the input field expands the list of all possible placeholders.<br/>
 <br/>
-Поле ввода <b>Шаблон заголовка новой страницы</b> позволяет задать имя страницы по умолчанию при ее создании. Это удобно, если вы часто создаете страницы, заголовки которых содержат текущую дату или время. В этом поле ввода можно использовать те же элементы подстановки, что и для поля ввода <b>Формат даты и времени</b> (см. выше).<br/>
+The <b>New page title template</b> input field allows you to set default page title when creating. This is useful if you often create pages whose headings contain the current date or time. You can use the same substitution elements in this input field as for the input field <b> Date and time format</b> (see above).<br/>
 <br/>
-Поле ввода <b>Задержка окна сообщений в секундах</b> позволяет задать время в течение которого отображается информационное окно, появляющееся в правом нижнем углу окна программы в случае возникновения каких-либо ошибок или для уведомления пользователя о каком-либо событии, произошедшем в программе.<br/>
 <br/>
-Некоторые типы страниц (вики-, HTML-страницы) могут отображаться в двух режимах - в режиме просмотра и в режиме редактирования текста заметки. С помощью выпадающего списка <b>Режим открытия страниц по умолчанию</b> можно выбрать, в каком из этих режимах будет открываться страница при ее выборе в дереве заметок. С помощью данного параметра можно сделать так, чтобы выбираемая страница изначально всегда открывалась в режиме просмотра или режиме редактирования, а также можно установить, что страница будет открываться в том режиме, в котором она была открыта при последнем посещении этой страницы.<br/>
+The <b>Toaster delay in seconds</b> input field allows you to set the time during which the information window is displayed that appears in the lower right corner of the program window in case of any errors or to notify the user about any event that occurred in the program.<br/>
 <br/>
-С помощью переключателя <b>Язык</b> можно выбрать один из поддерживаемых языков интерфейса. Если выбран пункт "Авто", то язык будет выбираться автоматически в зависимости от настроек операционной системы. Если вы хотите помочь перевести интерфейс программы на какой-нибудь еще язык, то это можно сделать с помощью веб-сервиса <a href="https://crowdin.com/project/outwiker">crowdin.com</a>.
+Some note types (wiki and HTML pages) can be opened in two modes - "Preview" and "Edit". The <b>Default opening page mode</b> combo-box allows you to set any of them as default for all notes. The third option "Recent used" can be used to force OutWiker to remember the opening mode for each note.<br/>
+<br/>
+The <b>Language</b> field sets the interface language. If the "Auto" item is selected, the language will match the current operating system language. Currently, the choice of languages is rather limited. Any help with localization of OutWiker interface is very welcome. In order to do that the <a href="https://crowdin.com/project/outwiker">crowdin.com</a> web service can be used.
 </body>
 </html>

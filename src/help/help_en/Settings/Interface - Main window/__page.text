@@ -2,4 +2,10 @@
 
 %center%Attach:outwiker_opt_mainwindow.png
 
-Поле ввода '''Формат заголовка главного окна''' позволяет установить, как должен выглядеть заголовок главного окна программы. В данном поле можно использовать макросы подстановки '''{page}''' и '''{file}''', которые будут заменены на заголовок текущей страницы и дерева заметок в целом соответственно.
+The '''Main window title format''' input field determines how the title of the main window should look like. The following macros can be used:
+
+* '''{page}''' substitutes title of the current note;
+* '''{file}''' substitutes the note's tree name;
+* '''{subpath}''' substitutes path to the current note relative to the tree root.
+
+The '''Show status panel''' check box allow you show or hide the panel located at the bottom of the main program window.

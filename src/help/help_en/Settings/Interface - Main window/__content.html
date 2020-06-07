@@ -8,7 +8,7 @@
 	<style type='text/css'>
 		body, div, p, table {
 			font-size:10pt;
-			font-family:Verdana;
+			font-family:Sans;
 		}
 
 		img{border:none}
@@ -22,6 +22,12 @@
 <br/>
 <div align="center"><img src="__attach/outwiker_opt_mainwindow.png"/></div><br/>
 <br/>
-Поле ввода <b>Формат заголовка главного окна</b> позволяет установить, как должен выглядеть заголовок главного окна программы. В данном поле можно использовать макросы подстановки <b>{page}</b> и <b>{file}</b>, которые будут заменены на заголовок текущей страницы и дерева заметок в целом соответственно.
+The <b>Main window title format</b> input field determines how the title of the main window should look like. The following macros can be used:<br/>
+<ul>
+<li><b>{page}</b> substitutes title of the current note;</li>
+<li><b>{file}</b> substitutes the note's tree name;</li>
+<li><b>{subpath}</b> substitutes path to the current note relative to the tree root.</li>
+</ul>
+The <b>Show status panel</b> check box allow you show or hide the panel located at the bottom of the main program window.
 </body>
 </html>
