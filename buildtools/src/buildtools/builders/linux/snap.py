@@ -49,7 +49,8 @@ class BuilderSnap(BuilderBase):
         print_info('Build snap')
         with lcd(self.facts.temp_dir):
             snap_params = ' '.join(self._snap_params)
-            local('sudo snapcraft snap {params}'.format(params=snap_params))
+            local('snapcraft snap {params}'.format(params=snap_params))
+            # local('sudo snapcraft snap {params}'.format(params=snap_params))
 
         # local('docker run --rm -v "$PWD":/build -w /build snapcore/snapcraft bash -c "apt update && snapcraft"')
 
