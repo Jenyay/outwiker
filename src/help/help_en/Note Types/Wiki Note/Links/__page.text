@@ -17,15 +17,15 @@ The following table shows examples of links to webpages and to another notes of 
 
 ||[=[[Note Types/Wiki Note/Links]]=]||[[Note Types/Wiki Note/Links]]||Link to note by name ||
 
-||[=[[/Note Types/Wiki Note/Links]]=]||[[/Note Types/Wiki Note/Links]]||Link to note by name[[<<]](work in Windows only) ||
+||[=[[/Note Types/Wiki Note/Links/subpage]]=]||[[/Note Types/Wiki Note/Links/subpage]]||Link to note by name ||
 
-||[=[[Note Types/Wiki Note/Links | Links]]=]||[[Note Types/Wiki Note/Links | Links]]||Link to note by name with comment ||
+||[=[[Note Types/Wiki Note/Links/subpage | Other page]]=]||[[Note Types/Wiki Note/Links/subpage | Other page]]||Link to note by name with comment ||
 
-||[=[[/Note Types/Wiki Note/Links | Links]]=]||[[/Note Types/Wiki Note/Links | Links]]||Link to note by name with comment[[<<]](work in Windows only) ||
+||[=[[/Note Types/Wiki Note/Links/subpage | Other page]]=]||[[/Note Types/Wiki Note/Links/subpage | Other page]]||Link to note by name with comment ||
 
-||[=[[Link -> Note Types/Wiki Note/Links]]=]||[[Link -> Note Types/Wiki Note/Links]] ||Link to note by name with comment ||
+||[=[[Other page -> Note Types/Wiki Note/Links/subpage]]=]||[[Other page -> Note Types/Wiki Note/Links/subpage]] ||Link to note by name with comment ||
 
-||[=[[Link -> /Note Types/Wiki Note/Links]]=]||[[Link -> /Note Types/Wiki Note/Links]] ||Link to note by name with comment[[<<]](work in Windows only) ||
+||[=[[Other page -> /Note Types/Wiki Note/Links/subpage]]=]||[[Other page -> /Note Types/Wiki Note/Links/subpage]] ||Link to note by name with comment ||
 
 ||[=[[../../HTML Page]]=] ||[[../../HTML Page]] ||Link to note by relative path[[<<]](work in Windows only) ||
 

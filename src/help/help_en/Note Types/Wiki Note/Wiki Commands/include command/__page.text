@@ -86,12 +86,12 @@ If the switch is included
 it parses content as wiki-text:
 (:include Attach:wiki.txt wikiparse :)
 
-If the command [= (: include:) =] is invoked with both switches "htmlescape" and "wikiparse", then OutWiker processes HTML escape characters first, and than parses the wiki notation.
+If the command [= (:include:) =] is invoked with both switches "htmlescape" and "wikiparse", then OutWiker processes HTML escape characters first, and than parses the wiki notation.
 
-It is also possible to use the tag <pre> to render listing of source code from the attached file nicely. The syntax is as follows:
+It is also possible to use the tag &lt;pre&gt; to render listing of source code from the attached file nicely. The syntax is as follows:
 
 [@
-<PRE>
+<pre>
 (:include Attach:filename htmlescape:)
-</PRE>
+</pre>
 @]

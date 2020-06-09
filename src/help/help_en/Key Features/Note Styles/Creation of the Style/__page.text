@@ -27,10 +27,10 @@ Note's style is implemented as the ''__style.html'' file (mandatory) and the ''_
 
 '' __style.html'' file contains references to macros that begin with "$" character followed by the macro name (it can be enclosed by braces), for example, $content or ${content}. The braces are used in case the macro name is not separated by space character from alphanumeric characters to follow. Currently, OutWiker's styles support the following macros:
 
-* $content - substitutes the content of the note.
-* $fontsize - substitutes font size in points (pt) specified in the settings.
-* $fontfamily - substitutes font name specified in the settings.
-* $userstyle - substitutes additional styles that can be created in the process of wiki notes parsing.
-* $userhead - substitutes additional tags inside the &lt;head&gt; ... &lt;/ head&gt; tag, which can be created in the process of wiki notes parsing.
+* '''$content''' - substitutes the content of the note.
+* '''$fontsize''' - substitutes font size in points (pt) specified in the settings.
+* '''$fontfamily''' - substitutes font name specified in the settings.
+* '''$userstyle''' - substitutes additional styles that can be created in the process of wiki notes parsing.
+* '''$userhead''' - substitutes additional tags inside the &lt;head&gt; ... &lt;/ head&gt; tag, which can be created in the process of wiki notes parsing.
 
 ''__style'' directory is not mandatory. It can store images and files with CSS styles, if any. However, storing CSS styles in this directory is not encouraged, preferable solution is to incorporate them in the file ''__style.html''. This is primarily due to the caching of styles when running under Linux. If several styles include CSS files of same name, then switching between those CSS may cause delays in rendering. There is no such problem if CSS is included directly into HTML code.
