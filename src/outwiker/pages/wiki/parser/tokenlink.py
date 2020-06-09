@@ -83,7 +83,8 @@ class LinkToken(object):
         if (not is_url(url) and
                 not url.startswith(AttachToken.attachString) and
                 not url.startswith(PAGE_ATTACH_DIR + '/') and
-                not url.startswith('#')):
+                not url.startswith('#') and
+                not url.startswith('mailto:')):
             url = 'page://' + url
 
         return '<a href="{url}">{comment}</a>'.format(url=url, comment=comment)

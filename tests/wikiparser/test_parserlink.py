@@ -557,3 +557,21 @@ class ParserLinkTest(unittest.TestCase):
         result = 'бла-бла-бла \n<a href="http://jenyay.net/|blablabla">Бла-бла-бла</a> бла-бла-бла\nбла-бла-бла'
 
         self.assertEqual(self.parser.toHtml(text), result)
+
+    def testMailto_01(self):
+        text = "[[mailto:example@example.com | example@example.com]]"
+        result = '<a href="mailto:example@example.com">example@example.com</a>'
+
+        self.assertEqual(self.parser.toHtml(text), result)
+
+    def testMailto_02(self):
+        text = "[[example@example.com -> mailto:example@example.com]]"
+        result = '<a href="mailto:example@example.com">example@example.com</a>'
+
+        self.assertEqual(self.parser.toHtml(text), result)
+
+    def testMailto_03(self):
+        text = "[[mailto:example@example.com]]"
+        result = '<a href="mailto:example@example.com">mailto:example@example.com</a>'
+
+        self.assertEqual(self.parser.toHtml(text), result)
