@@ -23,7 +23,6 @@ class BuilderSnap(BuilderBase):
 
     def _build(self):
         self._clear_sources()
-        os.remove(os.path.join(self.temp_sources_dir, 'linux_runtime_hook.py'))
         self._copy_info_files()
         self._create_dirs_tree()
         self._build_snap()
