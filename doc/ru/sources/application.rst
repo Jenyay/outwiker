@@ -212,7 +212,7 @@ Application. Экземпляр класса ApplicationParams
             * `page` - текущая страница. Экземпляр класса :class:`outwiker.core.tree.WikiPage` или производного от него.
             * `params` - экземпляр класса :class:`outwiker.core.events.LinkClickParams`.
 
-    .. py:attribute:: onPageDialogInit
+    .. py:attribute:: onEditorPopupMenu
 
         **Событие.** Экземпляр класса :class:`outwiker.core.event.Events`. Вызывается, когда пользователь щелкает правой кнопкой мыши в текстовом редакторе, но до отображения всплывающего меню. Это событие можно использовать для изменения контекстного меню редактора. Обработчик должен принимать параметры:
             * `page` - текущая страница. Экземпляр класса :class:`outwiker.core.tree.WikiPage` или производного от него.
