@@ -93,20 +93,14 @@ class PrefController(object):
         """
         Сохранить настройки для всех страниц
         """
-        treeBook = self._dialog.treeBook
-
-        for pageIndex in range(treeBook.GetPageCount()):
-            page = treeBook.GetPage(pageIndex)
+        for page in self._dialog.pages:
             page.Save()
 
     def _cancelAll(self):
         """
-        Отповестить все панели о том, что пользователь нажал кнопку Cancel
+        Оповестить все панели о том, что пользователь нажал кнопку Cancel
         """
-        treeBook = self._dialog.treeBook
-
-        for pageIndex in range(treeBook.GetPageCount()):
-            page = treeBook.GetPage(pageIndex)
+        for page in self._dialog.pages:
             page.Cancel()
 
     def _saveDialogPreperties(self):
