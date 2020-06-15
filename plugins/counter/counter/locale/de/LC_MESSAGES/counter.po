@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-23 12:51+0300\n"
-"PO-Revision-Date: 2018-08-23 12:56+0300\n"
+"POT-Creation-Date: 2020-06-15 17:16+0300\n"
+"PO-Revision-Date: 2020-06-15 17:17+0300\n"
 "Last-Translator: Jenyay <jenyay.ilin@gmail.com>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -11,10 +11,18 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.3\n"
 "X-Crowdin-Project: outwiker\n"
 "X-Crowdin-Language: de\n"
 "X-Crowdin-File: counter.pot\n"
+
+#: actions.py:22
+msgid "Counter (:counter ...:)"
+msgstr "Zähler (:counter...:)"
+
+#: actions.py:26
+msgid "Counter plugin. Insert (:counter... :) command"
+msgstr "Plugin Counter. Befehl (:counter:) einfügen"
 
 #: insertdialog.py:172
 msgid "Advanced"
@@ -58,10 +66,10 @@ msgstr ""
 
 #: plugin.py:32
 msgid ""
-"<b>Usage:</b>:\n"
+"<b>Usage:</b>\n"
 "(:counter parameters... :)"
 msgstr ""
-"<b>Ausnutzung:</b>:\n"
+"<b>Ausnutzung:</b>\n"
 "(:counter Parameter... :)"
 
 #: plugin.py:35
@@ -102,14 +110,6 @@ msgstr ""
 #: plugin.py:55
 msgid "https://jenyay.net/Outwiker/CounterEn"
 msgstr "https://jenyay.net/Outwiker/CounterEn"
-
-#: actions.py:22
-msgid "Counter (:counter ...:)"
-msgstr "Zähler (:counter...:)"
-
-#: actions.py:26
-msgid "Counter plugin. Insert (:counter... :) command"
-msgstr "Plugin Counter. Befehl (:counter:) einfügen"
 
 #~ msgid "http://jenyay.net/Outwiker/CounterEn"
 #~ msgstr "http://jenyay.net/Outwiker/Counter"

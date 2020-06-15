@@ -2,15 +2,23 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-23 12:51+0300\n"
-"PO-Revision-Date: 2018-08-23 12:57+0300\n"
+"POT-Creation-Date: 2020-06-15 17:16+0300\n"
+"PO-Revision-Date: 2020-06-15 17:18+0300\n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.3\n"
+
+#: actions.py:22
+msgid "Counter (:counter ...:)"
+msgstr "Лічильник (:counter ...:)"
+
+#: actions.py:26
+msgid "Counter plugin. Insert (:counter... :) command"
+msgstr "Додаток Counter. Вставити команду (:counter... :)"
 
 #: insertdialog.py:172
 msgid "Advanced"
@@ -54,10 +62,10 @@ msgstr ""
 
 #: plugin.py:32
 msgid ""
-"<b>Usage:</b>:\n"
+"<b>Usage:</b>\n"
 "(:counter parameters... :)"
 msgstr ""
-"<b>Використання:</b>:\n"
+"<b>Використання:</b>\n"
 "(:counter параметри... :)"
 
 #: plugin.py:35
@@ -98,14 +106,6 @@ msgstr ""
 #: plugin.py:55
 msgid "https://jenyay.net/Outwiker/CounterEn"
 msgstr "https://jenyay.net/Outwiker/Counter"
-
-#: actions.py:22
-msgid "Counter (:counter ...:)"
-msgstr "Лічильник (:counter ...:)"
-
-#: actions.py:26
-msgid "Counter plugin. Insert (:counter... :) command"
-msgstr "Додаток Counter. Вставити команду (:counter... :)"
 
 #~ msgid "http://jenyay.net/Outwiker/CounterEn"
 #~ msgstr "http://jenyay.net/Outwiker/Counter"
