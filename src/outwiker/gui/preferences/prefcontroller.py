@@ -36,85 +36,60 @@ class PrefController(object):
 
     def initialize(self):
         self._application.onPreferencesDialogCreate.bind(
-            self.__onPrefDialogCreateFirst,
+            self._onPrefDialogCreateFirst,
             EVENT_PRIORITY_MAX_CORE
         )
 
         self._application.onPreferencesDialogCreate.bind(
-            self.__onPrefDialogCreateLast,
+            self._onPrefDialogCreateLast,
             EVENT_PRIORITY_MIN_CORE
         )
 
     def clear(self):
-        self._application.onPreferencesDialogCreate -= self.__onPrefDialogCreateFirst
-        self._application.onPreferencesDialogCreate -= self.__onPrefDialogCreateLast
+        self._application.onPreferencesDialogCreate -= self._onPrefDialogCreateFirst
+        self._application.onPreferencesDialogCreate -= self._onPrefDialogCreateLast
         self._dialog = None
 
-    def __onPrefDialogCreateFirst(self, dialog):
+    def _onPrefDialogCreateFirst(self, dialog):
         self._dialog = dialog
-        self.__createInterfaceGroup()
-        self.__createEditorGroup()
-        self.__createIconsetPage()
-        self.__createPluginsPage()
-        self.__createTextPrintoutPage()
+        self._createInterfaceGroup()
+        self._createEditorGroup()
+        self._createIconsetPage()
+        self._createPluginsPage()
+        self._createTextPrintoutPage()
 
-        self._dialog.Bind(wx.EVT_BUTTON, self.__onOk, id=wx.ID_OK)
-        self._dialog.Bind(wx.EVT_BUTTON, self.__onCancel, id=wx.ID_CANCEL)
-        self._dialog.Bind(wx.EVT_BUTTON, self.__onHelp, id=wx.ID_HELP)
+        self._dialog.Bind(wx.EVT_BUTTON, self._onOk, id=wx.ID_OK)
+        self._dialog.Bind(wx.EVT_BUTTON, self._onCancel, id=wx.ID_CANCEL)
+        self._dialog.Bind(wx.EVT_BUTTON, self._onHelp, id=wx.ID_HELP)
 
-    def __onPrefDialogCreateLast(self, dialog):
-        self.__expandAllPages()
+    def _onPrefDialogCreateLast(self, dialog):
+        self._expandAllPages()
         self._dialog.treeBook.SetSelection(0)
 
-        self.__loadAllOptions()
-        self.__setDialogPreperties()
+        self._loadAllOptions()
+        self._setDialogPreperties()
 
-    def __unbindFromDialog(self):
-        self._dialog.Unbind(wx.EVT_BUTTON,
-                            handler=self.__onOk,
-                            id=wx.ID_OK)
+    def _onCancel(self, event):
+        self._cancelAll()
+        self._dialog.EndModal(wx.ID_CANCEL)
 
-        self._dialog.Unbind(wx.EVT_BUTTON,
-                            handler=self.__onCancel,
-                            id=wx.ID_CANCEL)
-
-        self._dialog.Unbind(wx.EVT_BUTTON,
-                            handler=self.__onHelp,
-                            id=wx.ID_HELP)
-
-    def __onCancel(self, event):
-        self._application.onPreferencesDialogClose(self)
-        self.__Destroy()
-
-    def __onOk(self, event):
+    def _onOk(self, event):
         try:
-            self.__saveAll()
+            self._saveAll()
         except PreferencesException:
             pass
 
-        self.__saveDialogPreperties()
+        self._saveDialogPreperties()
         self._application.onPreferencesDialogClose(self._dialog)
-        self.__Destroy()
-
-    def __Destroy(self):
-        """
-        Destroy Preference Dialog
-
-        :return:
-            None
-        """
-        self.__unbindFromDialog()
         self._dialog.EndModal(wx.ID_OK)
-        self._dialog.treeBook.Destroy()
-        self._dialog.Destroy()
 
-    def __onHelp(self, event):
+    def _onHelp(self, event):
         controller = self._application.actionController
         action = controller.getAction(OpenHelpAction.stringId)
         params = OpenHelpParams(u'page://settings')
         action.run(params)
 
-    def __saveAll(self):
+    def _saveAll(self):
         """
         Сохранить настройки для всех страниц
         """
@@ -124,14 +99,24 @@ class PrefController(object):
             page = treeBook.GetPage(pageIndex)
             page.Save()
 
-    def __saveDialogPreperties(self):
+    def _cancelAll(self):
+        """
+        Отповестить все панели о том, что пользователь нажал кнопку Cancel
+        """
+        treeBook = self._dialog.treeBook
+
+        for pageIndex in range(treeBook.GetPageCount()):
+            page = treeBook.GetPage(pageIndex)
+            page.Cancel()
+
+    def _saveDialogPreperties(self):
         config = PrefDialogConfig(self._application.config)
         clientSize = self._dialog.GetClientSize()
 
         config.width.value = clientSize[0]
         config.height.value = clientSize[1]
 
-    def __createInterfaceGroup(self):
+    def _createInterfaceGroup(self):
         """
         Создать страницы с подгруппой "Interface"
         """
@@ -160,7 +145,7 @@ class PrefController(object):
         self._dialog.appendPreferenceGroup(_("Interface"),
                                            interfacePanelsList)
 
-    def __createEditorGroup(self):
+    def _createEditorGroup(self):
         """
         Создать страницы с подгруппой "Редактор"
         """
@@ -180,20 +165,20 @@ class PrefController(object):
 
         self._dialog.appendPreferenceGroup(_("Editor"), editorPanesList)
 
-    def __createPluginsPage(self):
+    def _createPluginsPage(self):
         pluginsPage = PluginsPanel(self._dialog.treeBook, self._application)
         self._dialog.treeBook.AddPage(pluginsPage, _("Plugins"))
 
-    def __createTextPrintoutPage(self):
+    def _createTextPrintoutPage(self):
         textPrintPage = TextPrintPanel(
             self._dialog.treeBook, self._application)
         self._dialog.treeBook.AddPage(textPrintPage, _("Text printout"))
 
-    def __createIconsetPage(self):
+    def _createIconsetPage(self):
         iconsetPage = IconsetPanel(self._dialog.treeBook)
         self._dialog.treeBook.AddPage(iconsetPage, _("User's iconset"))
 
-    def __setDialogPreperties(self):
+    def _setDialogPreperties(self):
         config = PrefDialogConfig(self._application.config)
 
         self._dialog.SetTitle(_("Preferences"))
@@ -203,9 +188,9 @@ class PrefController(object):
         fitWidth, fitHeight = self._dialog.GetSize()
         self._dialog.SetMinSize((fitWidth, fitHeight))
         self._dialog.SetClientSize((config.width.value, config.height.value))
-        self.__centerDialog()
+        self._centerDialog()
 
-    def __centerDialog(self):
+    def _centerDialog(self):
         """
         Расположить окно по центру родителя
         """
@@ -219,7 +204,7 @@ class PrefController(object):
 
         self._dialog.SetPosition((posX, posY))
 
-    def __loadAllOptions(self):
+    def _loadAllOptions(self):
         """
         Загрузить настройки для всех страниц
         """
@@ -227,7 +212,7 @@ class PrefController(object):
             page = self._dialog.treeBook.GetPage(pageIndex)
             page.LoadState()
 
-    def __expandAllPages(self):
+    def _expandAllPages(self):
         """
         Развернуть все узлы в дереве настроек
         """
