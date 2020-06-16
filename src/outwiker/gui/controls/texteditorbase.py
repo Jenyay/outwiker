@@ -1,13 +1,11 @@
 # -*- coding: utf-8 -*-
 
-import codecs
 import html
 
 import wx
 import wx.lib.newevent
 from wx.stc import StyledTextCtrl, STC_CP_UTF8
 
-import outwiker.core.system
 from outwiker.core.textprinter import TextPrinter
 from outwiker.gui.searchreplacecontroller import SearchReplaceController
 from outwiker.gui.searchreplacepanel import SearchReplacePanel

@@ -6,7 +6,7 @@ name = "pypi"
 [requires]
 
 [packages]
-wxPython = "==4.0.7.post2"
+wxPython = "==4.1.0"
 Pillow = "==7.0.0"
 cyhunspell = "==1.3.4"
 idna = "==2.9"

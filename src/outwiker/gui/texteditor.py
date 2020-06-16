@@ -264,13 +264,12 @@ class TextEditor(TextEditorBase):
             stylebytesstr = "".join([chr(byte) for byte in self.__stylebytes])
 
             if event.stylebytes is not None:
-                self.textCtrl.StartStyling(startByte,
-                                           int(0xff ^ wx.stc.STC_INDICS_MASK))
+                self.textCtrl.StartStyling(startByte)
                 self.textCtrl.SetStyleBytes(lenBytes,
                                             stylebytesstr[startByte:endByte].encode())
 
             if event.indicatorsbytes is not None:
-                self.textCtrl.StartStyling(startByte, wx.stc.STC_INDICS_MASK)
+                self.textCtrl.StartStyling(startByte)
                 self.textCtrl.SetStyleBytes(lenBytes,
                                             stylebytesstr[startByte:endByte].encode())
 
