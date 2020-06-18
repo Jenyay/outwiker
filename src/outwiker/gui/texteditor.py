@@ -29,6 +29,7 @@ class TextEditor(TextEditorBase):
 
     def __init__(self, parent):
         super().__init__(parent)
+        self.SPELL_ERROR_INDICATOR = wx.stc.STC_INDIC_SQUIGGLE
 
         self._config = EditorConfig(Application.config)
 
@@ -215,11 +216,16 @@ class TextEditor(TextEditorBase):
     def runSpellChecking(self, stylelist, fullText, start, end):
         errors = self._spellChecker.findErrors(fullText[start: end])
 
+        self.textCtrl.SetIndicatorCurrent(self.SPELL_ERROR_INDICATOR)
+        global_start_bytes = self._helper.calcBytePos(fullText, start)
+        global_length = self._helper.calcByteLen(fullText[start: end])
+        self.textCtrl.IndicatorClearRange(global_start_bytes, global_length)
+
         for _word, err_start, err_end in errors:
-            self._helper.setSpellError(stylelist,
-                                       fullText,
-                                       err_start + start,
-                                       err_end + start)
+            startbytes = self._helper.calcBytePos(fullText, err_start + start)
+            endbytes = self._helper.calcBytePos(fullText, err_end + start)
+
+            self.textCtrl.IndicatorFillRange(startbytes, endbytes - startbytes)
 
     def _onStyleNeeded(self, _event):
         if (not self._styleSet and
@@ -255,20 +261,9 @@ class TextEditor(TextEditorBase):
             if event.stylebytes is not None:
                 self.__stylebytes = event.stylebytes
 
-            if event.indicatorsbytes is not None:
-                self.__stylebytes = [item1 | item2
-                                     for item1, item2
-                                     in zip(self.__stylebytes,
-                                            event.indicatorsbytes)]
-
             stylebytesstr = "".join([chr(byte) for byte in self.__stylebytes])
 
             if event.stylebytes is not None:
-                self.textCtrl.StartStyling(startByte)
-                self.textCtrl.SetStyleBytes(lenBytes,
-                                            stylebytesstr[startByte:endByte].encode())
-
-            if event.indicatorsbytes is not None:
                 self.textCtrl.StartStyling(startByte)
                 self.textCtrl.SetStyleBytes(lenBytes,
                                             stylebytesstr[startByte:endByte].encode())
@@ -280,7 +275,8 @@ class TextEditor(TextEditorBase):
         spellDirList = outwiker.core.system.getSpellDirList()
 
         spellChecker = SpellChecker(langlist, spellDirList)
-        spellChecker.addCustomDict(os.path.join(spellDirList[-1], CUSTOM_DICT_FILE_NAME))
+        spellChecker.addCustomDict(os.path.join(
+            spellDirList[-1], CUSTOM_DICT_FILE_NAME))
 
         return spellChecker
 
@@ -323,34 +319,14 @@ class TextEditor(TextEditorBase):
         self._styleSet = False
 
     def _appendSpellMenuItems(self, menu, pos_byte):
-        stylebytes = self.getCachedStyleBytes()
-        if stylebytes is None:
-            return
-
-        stylebytes_len = len(stylebytes)
-
-        if (stylebytes is None or
-                pos_byte >= stylebytes_len or
-                stylebytes[pos_byte] & self._helper.SPELL_ERROR_INDICATOR_MASK == 0):
-            return
-
-        endSpellError = startSpellError = pos_byte
-
-        while (startSpellError >= 0 and
-               stylebytes[startSpellError] & self._helper.SPELL_ERROR_INDICATOR_MASK != 0):
-            startSpellError -= 1
-
-        while (endSpellError < stylebytes_len and
-               stylebytes[endSpellError] & self._helper.SPELL_ERROR_INDICATOR_MASK != 0):
-            endSpellError += 1
-
-        self._spellStartByteError = startSpellError + 1
-        self._spellEndByteError = endSpellError
+        self._spellStartByteError = self.textCtrl.IndicatorStart(self.SPELL_ERROR_INDICATOR, pos_byte)
+        self._spellEndByteError = self.textCtrl.IndicatorEnd(self.SPELL_ERROR_INDICATOR, pos_byte)
         self._spellErrorText = self.textCtrl.GetTextRange(
             self._spellStartByteError,
             self._spellEndByteError)
 
-        self._spellSuggestList = self._spellChecker.getSuggest(self._spellErrorText)[:self._spellMaxSuggest]
+        self._spellSuggestList = self._spellChecker.getSuggest(self._spellErrorText)[
+            :self._spellMaxSuggest]
 
         menu.AppendSeparator()
         self._suggestMenuItems = menu.AppendSpellSubmenu(self._spellErrorText,
