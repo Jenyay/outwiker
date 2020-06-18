@@ -111,7 +111,7 @@ class SearchPanel(BasePagePanel):
 
         sortSizer.Add(self.sortStrategy,
                       1,
-                      wx.ALIGN_CENTER_VERTICAL | wx.ALL | wx. EXPAND,
+                      wx.ALL | wx. EXPAND,
                       border=2)
 
         mainSizer.Add(sortSizer, 1, wx.EXPAND, 0)

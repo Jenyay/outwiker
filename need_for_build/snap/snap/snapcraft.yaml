@@ -77,10 +77,10 @@ parts:
             - libgstreamer1.0-0
             - libslang2
         python-packages:
-            # - https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-18.04/wxPython-4.0.7.post2-cp36-cp36m-linux_x86_64.whl
+            - https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-18.04/wxPython-4.1.0-cp36-cp36m-linux_x86_64.whl
             # - wxpython==4.0.7.post2
             # - https://github.com/Jenyay/Phoenix/releases/download/fix_build/wxPython-4.0.7.post2.tar.gz
-            - https://jenyay.net/uploads/Outwiker/Dev/wxPython-4.0.7.post2-cp36-cp36m-linux_x86_64.whl
+            # - https://jenyay.net/uploads/Outwiker/Dev/wxPython-4.0.7.post2-cp36-cp36m-linux_x86_64.whl
             - Pillow==7.0.0
             - cyhunspell==1.3.4
             - idna==2.9

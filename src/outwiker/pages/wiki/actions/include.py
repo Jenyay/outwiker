@@ -187,7 +187,7 @@ class IncludeDialog (TestedDialog):
         mainSizer.AddStretchSpacer()
         mainSizer.Add(
             self._buttonsSizer,
-            flag=wx.EXPAND | wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT,
+            flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT,
             border=2)
 
         self.SetSizer(mainSizer)

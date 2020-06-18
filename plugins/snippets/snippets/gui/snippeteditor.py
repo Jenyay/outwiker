@@ -56,6 +56,6 @@ class SnippetEditor(TextEditorBase):
             bytepos_start = self._helper.calcBytePos(fulltext, start)
             bytepos_end = self._helper.calcBytePos(fulltext, end)
 
-            self.textCtrl.StartStyling(bytepos_start, 0xff)
+            self.textCtrl.StartStyling(bytepos_start)
             textlength = bytepos_end - bytepos_start
             self.textCtrl.SetStyling(textlength, style)

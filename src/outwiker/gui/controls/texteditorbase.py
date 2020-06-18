@@ -551,7 +551,7 @@ class TextEditorBase(wx.Panel):
         self.textCtrl.SelectAll()
 
     def __onModified(self, event):
-        text = event.GetText()
+        text = event.GetString()
         if text != text.encode('utf-8', errors='replace').decode('utf-8'):
             self._needFixTextEncoding = True
 
