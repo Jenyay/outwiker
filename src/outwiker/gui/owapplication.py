@@ -2,11 +2,11 @@
 
 import os
 import os.path
+import locale
 import logging
 from gettext import NullTranslations
 
 import wx
-import wx.html
 
 from outwiker.core.commands import registerActions
 from outwiker.core.logredirector import LogRedirector
@@ -22,6 +22,7 @@ class OutWikerApplication(wx.App):
     """
     def __init__(self, application):
         super().__init__()
+        locale.setlocale(locale.LC_ALL, '')
         self.logFileName = u"outwiker.log"
         self._application = application
 
