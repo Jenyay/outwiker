@@ -79,8 +79,10 @@ class ActionsGUIController(object):
                 self._application.actionController.appendToolbarButton(
                     action_info.action.stringId,
                     mainWindow.toolbars[action_info.button_info.toolbar_id],
-                    action_info.button_info.image_fname)
+                    action_info.button_info.image_fname,
+                    False)
 
+        self._application.actionController.updateToolbars()
         self._enableTools()
 
     def _createToolBars(self):

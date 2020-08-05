@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import os.path
 import wx
 
 from outwiker.actions.addbookmark import AddBookmarkAction
