@@ -31,7 +31,7 @@ build_script:
     # - sh: pipenv run fab deb_binary
     # - sh: pipenv run fab plugins
 test_script:
-    - cmd: python -m pipenv run fab test:"tests/core/test_htmltemplate.py tests/core/test_i18n.py tests/core/test_iconscollection.py tests/core/test_pagedatetime.py"
+    - cmd: python -m pipenv run fab test:"tests/core/test_appinfofactory.py tests/core/test_attachment.py tests/core/test_bookmarks.py tests/core/test_changelog.py tests/core/test_changelogfactory.py tests/core/test_commandline.py tests/core/test_config.py tests/core/test_htmltemplate.py tests/core/test_i18n.py tests/core/test_iconscollection.py tests/core/test_pagedatetime.py"
       # - cmd: python -m pipenv run fab test
       # - cmd: python -m pipenv run fab coverage
     - sh: xvfb-run pipenv run fab test
