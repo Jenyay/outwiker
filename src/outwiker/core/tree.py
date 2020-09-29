@@ -237,6 +237,7 @@ class RootWikiPage(object):
         date = self.params.creationDatetimeOption.value
         if date is None:
             date = self.datetime
+            print(date)
             self.creationdatetime = date
 
         return date
