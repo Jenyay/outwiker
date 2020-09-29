@@ -282,6 +282,7 @@ class DateTimeOption(BaseOption):
 
     def _loadValue(self):
         strdate = self.config.get(self.section, self.param)
+        print(strdate)
         return datetime.datetime.strptime(strdate, self.formatDate)
 
     def _prepareToWrite(self, value):
