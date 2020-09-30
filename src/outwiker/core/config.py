@@ -30,6 +30,7 @@ class Config(object):
         try:
             self._config.read(self.fname, encoding='utf8')
         except (UnicodeDecodeError, IOError, configparser.Error):
+            print('Invalid config file')
             backup_fname = self.fname + ".bak"
             logger.error('Invalid config file: {src}. The file will be copied to {backup} and cleaned.'.format(
                 src=fname,
@@ -94,7 +95,7 @@ class Config(object):
 
         with open(self.fname, "w", encoding='utf8') as fp:
             self._config.write(fp)
-            fp.flush()
+            print('Config.save()')
 
         return True
 
