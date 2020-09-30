@@ -220,12 +220,17 @@ class RootWikiPage(object):
             # изменения файла с контентом, при этом запишем эту дату в
             # файл настроек
             contentpath = os.path.join(self.path, RootWikiPage.contentFile)
+            print('_getDateTime (1)')
             if os.path.exists(contentpath):
                 time = os.path.getmtime(contentpath)
+                print('_getDateTime (2): {}'.format(time))
+
                 date = datetime.datetime.fromtimestamp(time)
+                print('_getDateTime (3): {}'.format(date))
+
                 self.datetime = date
 
-        print('_getDateTime: {}'.format(date))
+        print('_getDateTime (4): {}'.format(date))
         return date
 
     @datetime.setter
