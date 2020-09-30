@@ -225,6 +225,7 @@ class RootWikiPage(object):
                 date = datetime.datetime.fromtimestamp(time)
                 self.datetime = date
 
+        print('_getDateTime: {}'.format(date))
         return date
 
     @datetime.setter
