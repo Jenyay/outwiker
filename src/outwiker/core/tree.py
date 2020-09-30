@@ -59,8 +59,11 @@ class RootWikiPage(object):
     @staticmethod
     def _readParams(path, readonly=False):
         fname = os.path.join(path, PAGE_OPT_FILE)
-        text = readTextFile(fname)
-        print('_readParams:\n{}'.format(text))
+        if os.path.exists(fname):
+            text = readTextFile(fname)
+            print('_readParams:\n{}'.format(text))
+        else:
+            print('_readParams: not exists')
         return PageConfig(fname, readonly)
 
     @property
