@@ -205,14 +205,6 @@ class RootWikiPage(object):
 
         return False
 
-    @property
-    def datetime(self):
-        """
-        Получить дату и время изменения страницы в виде экземпляра
-        класса datetime.datetime
-        """
-        return self._datetime
-
     def _getDateTime(self):
         date = self.params.datetimeOption.value
         if date is None:
@@ -233,6 +225,14 @@ class RootWikiPage(object):
         print('_getDateTime (4): {}'.format(date))
         return date
 
+    @property
+    def datetime(self):
+        """
+        Получить дату и время изменения страницы в виде экземпляра
+        класса datetime.datetime
+        """
+        return self._datetime
+
     @datetime.setter
     def datetime(self, date):
         self.params.datetimeOption.value = date
@@ -243,13 +243,14 @@ class RootWikiPage(object):
         date = self.params.creationDatetimeOption.value
         if date is None:
             date = self.datetime
-            print(date)
+            print('creationdatetime: {}, {}'.format(date, self.datetime))
             self.creationdatetime = date
 
         return date
 
     @creationdatetime.setter
     def creationdatetime(self, date):
+        print('creationdatetime: {}'.format(date))
         self.params.creationDatetimeOption.value = date
 
     def updateDateTime(self):

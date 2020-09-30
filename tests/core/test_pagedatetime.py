@@ -112,6 +112,7 @@ class PageDateTimeTest(unittest.TestCase):
         date = page.datetime
 
         newwiki = WikiDocument.load(self.path, True)
+        print('testCreateDateReadonly: {}, {}'.format(page.datetime, newwiki["Страница 1"].datetime))
         self.assertEqual(newwiki["Страница 1"].creationdatetime, date)
         self.assertEqual(
             newwiki["Страница 1"].params.creationDatetimeOption.value,
