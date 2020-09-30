@@ -94,6 +94,7 @@ class Config(object):
 
         with open(self.fname, "w", encoding='utf8') as fp:
             self._config.write(fp)
+            fp.flush()
 
         return True
 
