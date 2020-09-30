@@ -744,6 +744,7 @@ class WikiPage(RootWikiPage):
         """
         Сохранить настройки
         """
+        print('_saveOptions')
         # Тип
         self._params.typeOption.value = self.getTypeString()
 
