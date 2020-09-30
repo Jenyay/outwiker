@@ -262,10 +262,15 @@ class PageDateTimeTest(unittest.TestCase):
         newdate = datetime.datetime(2012, 8, 24)
         newcontent = "Бла-бла-бла"
 
+        print('testAttachment (1)')
         TextPageFactory().create(self.wikiroot, "Страница 1", [])
+        print('testAttachment (2)')
         self.wikiroot["Страница 1"].content = newcontent
+        print('testAttachment (3)')
         self.wikiroot["Страница 1"].datetime = newdate
+        print('testAttachment (4)')
         self.assertEqual(self.wikiroot["Страница 1"].datetime, newdate)
+        print('testAttachment (5)')
 
         # Прикрепили файл - должна измениться дата страницы
         Attachment(self.wikiroot["Страница 1"]).attach(
@@ -276,7 +281,10 @@ class PageDateTimeTest(unittest.TestCase):
         self.assertLess(delta, self._maxDelta)
 
         self.wikiroot["Страница 1"].datetime = newdate
+        print('testAttachment (6)')
 
         # Удалили файл - должна измениться дата страницы
         Attachment(self.wikiroot["Страница 1"]).removeAttach(["first.jpg"])
+        print('testAttachment (7)')
         delta = datetime.datetime.now() - self.wikiroot["Страница 1"].datetime
+        self.assertLess(delta, self._maxDelta)
