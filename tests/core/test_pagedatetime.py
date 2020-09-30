@@ -118,12 +118,12 @@ class PageDateTimeTest(unittest.TestCase):
         print('testCreateDateReadonly (4)')
         print(type(newwiki["Страница 1"]))
 
-        print('testCreateDateReadonly: {}, {}'.format(page.datetime, newwiki["Страница 1"].datetime))
+        print('testCreateDateReadonly (5): {}, {}'.format(page.datetime, newwiki["Страница 1"].datetime))
         self.assertEqual(newwiki["Страница 1"].creationdatetime, date)
         self.assertEqual(
             newwiki["Страница 1"].params.creationDatetimeOption.value,
             None)
-        print('testCreateDateReadonly (5)')
+        print('testCreateDateReadonly (6)')
 
     def testSetDate(self):
         TextPageFactory().create(self.wikiroot, "Страница 1", [])
