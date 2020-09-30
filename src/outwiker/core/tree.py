@@ -58,7 +58,10 @@ class RootWikiPage(object):
 
     @staticmethod
     def _readParams(path, readonly=False):
-        return PageConfig(os.path.join(path, PAGE_OPT_FILE), readonly)
+        fname = os.path.join(path, PAGE_OPT_FILE)
+        text = readTextFile(fname)
+        print('_readParams:\n{}'.format(text))
+        return PageConfig(fname, readonly)
 
     @property
     def params(self):
