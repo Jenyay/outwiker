@@ -262,7 +262,7 @@ class RootWikiPage(object):
 
     @creationdatetime.setter
     def creationdatetime(self, date):
-        print('creationdatetime: {}'.format(date))
+        print('creationdatetime.setter: {}'.format(date))
         self.params.creationDatetimeOption.value = date
 
     def updateDateTime(self):
