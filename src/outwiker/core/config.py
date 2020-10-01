@@ -197,7 +197,7 @@ class BaseOption(object, metaclass=ABCMeta):
         except Exception as e:
             self.error = e
             val = self.defaultValue
-            print('BaseOption._loadParam: {}'.format(e))
+            print('BaseOption._loadParam [{}]/{}: {}'.format(self.section, self.param, e))
 
         return val
 
