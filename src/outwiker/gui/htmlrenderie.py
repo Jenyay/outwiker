@@ -64,7 +64,6 @@ class HtmlRenderIEBase(HtmlRenderBase):
             path += anchor
 
         self.canOpenUrl += 1
-        print(path)
         self.render.SetPage(htmltext, path)
 
     def Sleep(self):
@@ -166,7 +165,6 @@ class HtmlRenderIEForPage(HtmlRenderIEBase, HTMLRenderForPageMixin):
         self._currentPage = value
 
     def LoadPage(self, fname):
-        print(fname)
         self.render.Stop()
 
         # try:

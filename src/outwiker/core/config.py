@@ -30,7 +30,6 @@ class Config(object):
         try:
             self._config.read(self.fname, encoding='utf8')
         except (UnicodeDecodeError, IOError, configparser.Error):
-            print('Invalid config file')
             backup_fname = self.fname + ".bak"
             logger.error('Invalid config file: {src}. The file will be copied to {backup} and cleaned.'.format(
                 src=fname,
@@ -95,7 +94,6 @@ class Config(object):
 
         with open(self.fname, "w", encoding='utf8') as fp:
             self._config.write(fp)
-            print('Config.save()')
 
         return True
 
@@ -197,7 +195,6 @@ class BaseOption(object, metaclass=ABCMeta):
         except Exception as e:
             self.error = e
             val = self.defaultValue
-            print('BaseOption._loadParam [{}]/{}: {}'.format(self.section, self.param, e))
 
         return val
 
@@ -285,9 +282,7 @@ class DateTimeOption(BaseOption):
 
     def _loadValue(self):
         strdate = self.config.get(self.section, self.param)
-        print('DateTimeOption._loadValue (1): {}'.format(strdate))
         result = datetime.datetime.strptime(strdate, self.formatDate)
-        print('DateTimeOption._loadValue (2): {}'.format(result))
         return result
 
     def _prepareToWrite(self, value):

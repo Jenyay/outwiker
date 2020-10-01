@@ -61,9 +61,7 @@ class RootWikiPage(object):
         fname = os.path.join(path, PAGE_OPT_FILE)
         if os.path.exists(fname):
             text = readTextFile(fname)
-            print('_readParams:\n{}'.format(text))
-        else:
-            print('_readParams: not exists')
+
         return PageConfig(fname, readonly)
 
     @property
@@ -218,23 +216,16 @@ class RootWikiPage(object):
             # изменения файла с контентом, при этом запишем эту дату в
             # файл настроек
             contentpath = os.path.join(self.path, RootWikiPage.contentFile)
-            configpath = os.path.join(self.path, PAGE_OPT_FILE)
-            print('_getDateTime (1)')
+            # configpath = os.path.join(self.path, PAGE_OPT_FILE)
             if os.path.exists(contentpath):
                 time = os.path.getmtime(contentpath)
-                print('_getDateTime (2): {}'.format(time))
-
                 date = datetime.datetime.fromtimestamp(time)
-                print('_getDateTime (3): {}'.format(date))
-
                 self.datetime = date
             # elif os.path.exists(configpath):
-                # print('_getDateTime (4)')
                 # time = os.path.getmtime(configpath)
                 # date = datetime.datetime.fromtimestamp(time)
                 # self.datetime = date
 
-        print('_getDateTime (5): {}'.format(date))
         return date
 
     @property
@@ -255,14 +246,12 @@ class RootWikiPage(object):
         date = self.params.creationDatetimeOption.value
         if date is None:
             date = self.datetime
-            print('creationdatetime: {}, {}'.format(date, self.datetime))
             self.creationdatetime = date
 
         return date
 
     @creationdatetime.setter
     def creationdatetime(self, date):
-        print('creationdatetime.setter: {}'.format(date))
         self.params.creationDatetimeOption.value = date
 
     def updateDateTime(self):
@@ -750,7 +739,6 @@ class WikiPage(RootWikiPage):
         """
         Сохранить настройки
         """
-        print('_saveOptions')
         # Тип
         self._params.typeOption.value = self.getTypeString()
 
@@ -820,26 +808,17 @@ class WikiPage(RootWikiPage):
         if self.readonly:
             raise ReadonlyException
 
-        print('content.setter (1): text = {}'.format(text))
-        print('content.setter (2): self.content = {}'.format(self.content))
-
         text = text.replace('\r\n', '\n')
 
         params = events.PreContentWritingParams(text)
         self.root.onPreContentWriting(self, params)
         text = params.content
 
-        print('content.setter (3): text = {}'.format(text))
-
         if text != self.content or text == u"":
             path = os.path.join(self.path, RootWikiPage.contentFile)
-            print('content.setter (4)')
             writeTextFile(path, text)
-            print('content.setter (5)')
             self.updateDateTime()
-            print('content.setter (6)')
             self.root.onPageUpdate(self, change=events.PAGE_UPDATE_CONTENT)
-            print('content.setter (7)')
 
     @property
     def textContent(self):
