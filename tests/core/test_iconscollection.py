@@ -12,7 +12,7 @@ from tests.basetestcases import BaseWxTestCase
 class IconsCollectionTest(BaseWxTestCase):
     def setUp(self):
         super().setUp()
-        print(locale.getlocale())
+        print('locale: {}'.format(locale.getlocale()))
         self.tempDir1 = 'testdata/testIcons1'
         self.imagesDir = 'testdata/images'
 

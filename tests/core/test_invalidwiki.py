@@ -19,7 +19,7 @@ from tests.utils import removeDir
 
 class InvalidWikiTest(unittest.TestCase):
     def setUp(self):
-        print(locale.getlocale())
+        print('locale: {}'.format(locale.getlocale()))
         self.defaultdate = datetime.datetime(2020, 1, 1)
         self.path = "testdata/invalidwiki"
 

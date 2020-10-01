@@ -18,7 +18,7 @@ from tests.utils import removeDir
 class PageDateTimeTest(unittest.TestCase):
     def setUp(self):
         #locale.setlocale(locale.LC_ALL, '')
-        print(locale.getlocale())
+        print('locale: {}'.format(locale.getlocale()))
         # Здесь будет создаваться вики
         self.path = mkdtemp(prefix='Абырвалг абыр')
 

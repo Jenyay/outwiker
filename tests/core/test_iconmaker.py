@@ -16,7 +16,7 @@ class IconMakerTest(unittest.TestCase):
     """Tests for IconMaker class"""
     def setUp(self):
         self._tempDir = mkdtemp()
-        print(locale.getlocale())
+        print('locale: {}'.format(locale.getlocale()))
 
     def tearDown(self):
         removeDir(self._tempDir)
