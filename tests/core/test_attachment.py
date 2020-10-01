@@ -3,6 +3,7 @@
 import unittest
 import os.path
 from tempfile import mkdtemp
+import locale
 
 from outwiker.core.attachment import Attachment
 from outwiker.core.tree import WikiDocument
@@ -14,6 +15,7 @@ from tests.utils import removeDir
 
 class AttachmentTest(unittest.TestCase):
     def setUp(self):
+        print('locale: {}'.format(locale.getlocale()))
         # Количество срабатываний особытий при обновлении страницы
         self.pageUpdateCount = 0
         self.pageUpdateSender = None
