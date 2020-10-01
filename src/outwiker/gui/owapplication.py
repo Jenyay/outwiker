@@ -27,6 +27,12 @@ class OutWikerApplication(wx.App):
         self._application = application
 
         self.use_fake_html_render = False
+        
+    def InitLocale(self):
+        self.ResetLocale()
+        lang, enc = locale.getdefaultlocale()
+        self._initial_locale = wx.Locale(lang, lang[:2], lang)
+        locale.setlocale(locale.LC_ALL, lang)
 
     def OnInit(self):
         self.Bind(wx.EVT_QUERY_END_SESSION, self._onEndSession)
