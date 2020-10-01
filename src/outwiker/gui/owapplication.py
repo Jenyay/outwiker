@@ -23,16 +23,11 @@ class OutWikerApplication(wx.App):
     def __init__(self, application):
         super().__init__()
         locale.setlocale(locale.LC_ALL, '')
+        self.InitLocale()
         self.logFileName = u"outwiker.log"
         self._application = application
 
         self.use_fake_html_render = False
-        
-    def InitLocale(self):
-        self.ResetLocale()
-        lang, enc = locale.getdefaultlocale()
-        self._initial_locale = wx.Locale(lang, lang[:2], lang)
-        locale.setlocale(locale.LC_ALL, lang)
 
     def OnInit(self):
         self.Bind(wx.EVT_QUERY_END_SESSION, self._onEndSession)
