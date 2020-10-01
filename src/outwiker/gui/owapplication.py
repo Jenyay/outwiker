@@ -23,7 +23,6 @@ class OutWikerApplication(wx.App):
     def __init__(self, application):
         super().__init__()
         locale.setlocale(locale.LC_ALL, '')
-        self.InitLocale()
         self.logFileName = u"outwiker.log"
         self._application = application
 

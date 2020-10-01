@@ -9,6 +9,7 @@ import os.path
 import shutil
 import unittest
 from tempfile import mkdtemp
+import locale
 
 from outwiker.core.attachment import Attachment
 from outwiker.core.tree import WikiDocument
@@ -18,6 +19,7 @@ from tests.utils import removeDir
 
 class InvalidWikiTest(unittest.TestCase):
     def setUp(self):
+        print(locale.getlocale())
         self.defaultdate = datetime.datetime(2020, 1, 1)
         self.path = "testdata/invalidwiki"
 

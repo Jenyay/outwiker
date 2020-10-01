@@ -3,6 +3,7 @@
 from tempfile import mkdtemp
 import unittest
 from os.path import join, exists
+import locale
 
 from PIL import Image
 
@@ -15,7 +16,7 @@ class IconMakerTest(unittest.TestCase):
     """Tests for IconMaker class"""
     def setUp(self):
         self._tempDir = mkdtemp()
-
+        print(locale.getlocale())
 
     def tearDown(self):
         removeDir(self._tempDir)
