@@ -197,6 +197,7 @@ class BaseOption(object, metaclass=ABCMeta):
         except Exception as e:
             self.error = e
             val = self.defaultValue
+            print('BaseOption._loadParam: {}'.format(e))
 
         return val
 
@@ -284,8 +285,9 @@ class DateTimeOption(BaseOption):
 
     def _loadValue(self):
         strdate = self.config.get(self.section, self.param)
+        print('DateTimeOption._loadValue (1): {}'.format(strdate))
         result = datetime.datetime.strptime(strdate, self.formatDate)
-        print('DateTimeOption._loadValue: {}, {}'.format(strdate, result))
+        print('DateTimeOption._loadValue (2): {}'.format(result))
         return result
 
     def _prepareToWrite(self, value):
