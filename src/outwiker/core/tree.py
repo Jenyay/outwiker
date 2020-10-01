@@ -820,8 +820,8 @@ class WikiPage(RootWikiPage):
         if self.readonly:
             raise ReadonlyException
 
-        print('content.setter (1): {}'.format(text))
-        print('content.setter (2): {}'.format(self.content))
+        print('content.setter (1): text = {}'.format(text))
+        print('content.setter (2): self.content = {}'.format(self.content))
 
         text = text.replace('\r\n', '\n')
 
@@ -829,11 +829,10 @@ class WikiPage(RootWikiPage):
         self.root.onPreContentWriting(self, params)
         text = params.content
 
-        print('content.setter (3): {}'.format(text))
+        print('content.setter (3): text = {}'.format(text))
 
         if text != self.content or text == u"":
             path = os.path.join(self.path, RootWikiPage.contentFile)
-
             print('content.setter (4)')
             writeTextFile(path, text)
             print('content.setter (5)')

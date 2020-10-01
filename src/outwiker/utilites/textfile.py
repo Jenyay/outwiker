@@ -16,3 +16,4 @@ def writeTextFile(fname, text):
     """
     with open(fname, "w", encoding="utf-8", errors='surrogatepass') as fp:
         fp.write(text)
+        fp.flush()
