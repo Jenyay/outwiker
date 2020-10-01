@@ -5,6 +5,7 @@ import unittest
 import os
 from tempfile import mkdtemp, NamedTemporaryFile
 from gettext import NullTranslations
+import locale
 
 import wx
 
@@ -43,6 +44,7 @@ class BaseWxTestCase(unittest.TestCase):
 
     def setUp(self):
         self._wxapp = wx.App()
+        locale.setlocale(locale.LC_ALL, '')
         self.mainWindow = None
 
     def tearDown(self):
