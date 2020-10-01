@@ -228,11 +228,11 @@ class RootWikiPage(object):
                 print('_getDateTime (3): {}'.format(date))
 
                 self.datetime = date
-            elif os.path.exists(configpath):
-                print('_getDateTime (4)')
-                time = os.path.getmtime(configpath)
-                date = datetime.datetime.fromtimestamp(time)
-                self.datetime = date
+            # elif os.path.exists(configpath):
+                # print('_getDateTime (4)')
+                # time = os.path.getmtime(configpath)
+                # date = datetime.datetime.fromtimestamp(time)
+                # self.datetime = date
 
         print('_getDateTime (5): {}'.format(date))
         return date
