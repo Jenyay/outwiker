@@ -58,13 +58,11 @@ class HtmlRenderIEBase(HtmlRenderBase):
 
     def SetPage(self, htmltext, basepath, anchor=None):
         self._basepath = basepath
-        # path = self._pathToURL(basepath)
         path = basepath
         if anchor:
             path += anchor
 
         self.canOpenUrl += 1
-        print(path)
         self.render.SetPage(htmltext, path)
 
     def Sleep(self):
@@ -166,21 +164,8 @@ class HtmlRenderIEForPage(HtmlRenderIEBase, HTMLRenderForPageMixin):
         self._currentPage = value
 
     def LoadPage(self, fname):
-        print(fname)
         self.render.Stop()
-
-        # try:
-        #     html = readTextFile(fname)
-        # except IOError:
-        #     text = _("Can't read file %s") % (fname)
-        #     self.canOpenUrl += 1
-        #     self.SetPage(text, os.path.dirname(fname))
-
-        # basepath = os.path.dirname(fname)
         self._basepath = os.path.dirname(fname)
-
-        # if not basepath.endswith('/'):
-        #     basepath += '/'
 
         # Add anchor for references
         anchor = None
@@ -188,7 +173,6 @@ class HtmlRenderIEForPage(HtmlRenderIEBase, HTMLRenderForPageMixin):
             anchor = Application.sharedData[APP_DATA_KEY_ANCHOR]
             del Application.sharedData[APP_DATA_KEY_ANCHOR]
 
-        # self.SetPage(html, basepath, anchor)
         self.canOpenUrl += 1
         self.render.LoadURL(fname)
 
