@@ -13,7 +13,7 @@ from outwiker.core.events import (PreprocessingParams,
 from outwiker.core.htmltemplate import HtmlTemplate
 from outwiker.core.style import Style
 from outwiker.gui.guiconfig import HtmlRenderConfig
-from outwiker.gui.simplespellcontroller import SimpleSpellController
+# from outwiker.gui.simplespellcontroller import SimpleSpellController
 from outwiker.utilites.textfile import writeTextFile, readTextFile
 
 from .htmlpage import HtmlWikiPage, HtmlPageFactory
@@ -26,9 +26,9 @@ class HtmlPageController(object):
         self._application = application
         self._appearancePanel = None
         self._appearanceController = None
-        self._spellController = SimpleSpellController(
-            self._application,
-            HtmlWikiPage.getTypeString())
+        # self._spellController = SimpleSpellController(
+            # self._application,
+            # HtmlWikiPage.getTypeString())
 
     def initialize(self):
         self._application.onPageDialogPageTypeChanged += self.__onPageDialogPageTypeChanged
@@ -46,7 +46,7 @@ class HtmlPageController(object):
         self._application.onPageDialogPageFactoriesNeeded -= self.__onPageDialogPageFactoriesNeeded
         self._application.onPageUpdateNeeded -= self.__onPageUpdateNeeded
 
-        self._spellController.clear()
+        # self._spellController.clear()
 
     def _addTab(self, dialog):
         if self._appearancePanel is None:
@@ -76,12 +76,12 @@ class HtmlPageController(object):
     @pagetype(HtmlWikiPage)
     def __onPageViewCreate(self, page):
         assert page is not None
-        self._spellController.initialize(page)
+        # self._spellController.initialize(page)
 
     @pagetype(HtmlWikiPage)
     def __onPageViewDestroy(self, page):
         assert page is not None
-        self._spellController.clear()
+        # self._spellController.clear()
 
     def __onPageDialogPageFactoriesNeeded(self, page, params):
         params.addPageFactory(HtmlPageFactory())

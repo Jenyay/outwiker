@@ -19,7 +19,7 @@ class ColorizerController(BaseTextStylingController):
                 args=(params.text,
                       params.editor,
                       params.editor.colorizeSyntax,
-                      params.editor.enableSpellChecking,
+                      # params.editor.enableSpellChecking,
                       runEvent)
             )
         else:
@@ -29,11 +29,11 @@ class ColorizerController(BaseTextStylingController):
                             text,
                             editor,
                             colorizeSyntax,
-                            enableSpellChecking,
+                            # enableSpellChecking,
                             runEvent):
         colorizer = MarkdownColorizer(editor,
                                       colorizeSyntax,
-                                      enableSpellChecking,
+                                      # enableSpellChecking,
                                       runEvent)
         stylebytes = colorizer.colorize(text)
 

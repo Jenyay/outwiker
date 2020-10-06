@@ -8,7 +8,7 @@ from outwiker.core.factoryselector import FactorySelector
 from outwiker.utilites.textfile import writeTextFile
 
 from .webnotepage import WebPageFactory, WebNotePage
-from .spellcontroller import WebPageSpellController
+# from .spellcontroller import WebPageSpellController
 from .i18n import get_
 from .gui.guicontroller import GuiController
 
@@ -33,7 +33,7 @@ class Controller(object):
         self._application = application
         self._guiController = GuiController(self._application)
 
-        self._spellController = WebPageSpellController(self._application)
+        # self._spellController = WebPageSpellController(self._application)
         self._actions = [
            (CreateChildWebPageAction, None),
            (CreateSiblingWebPageAction, None),
@@ -77,9 +77,9 @@ class Controller(object):
             self._guiController.destroy()
             self._unregisterActions()
 
-        if (self._application.selectedPage is not None and
-                self._application.selectedPage.getTypeString() == WebNotePage.getTypeString()):
-            self._spellController.clear()
+        # if (self._application.selectedPage is not None and
+                # self._application.selectedPage.getTypeString() == WebNotePage.getTypeString()):
+            # self._spellController.clear()
 
         FactorySelector.removeFactory(WebPageFactory().getTypeString())
 
@@ -113,13 +113,13 @@ class Controller(object):
 
     def _onPageViewCreate(self, page):
         assert page is not None
-        if page.getTypeString() == WebNotePage.getTypeString():
-            self._spellController.initialize(page)
+        # if page.getTypeString() == WebNotePage.getTypeString():
+            # self._spellController.initialize(page)
 
     def _onPageViewDestroy(self, page):
         assert page is not None
-        if page.getTypeString() == WebNotePage.getTypeString():
-            self._spellController.clear()
+        # if page.getTypeString() == WebNotePage.getTypeString():
+            # self._spellController.clear()
 
     def _onPageUpdateNeeded(self, page, params):
         if (page is not None and
