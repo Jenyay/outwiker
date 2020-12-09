@@ -4,13 +4,12 @@ import html
 
 import wx
 import wx.lib.newevent
-from wx.stc import StyledTextCtrl, STC_CP_UTF8
+from wx.stc import StyledTextCtrl
 
 from outwiker.core.textprinter import TextPrinter
 from outwiker.gui.searchreplacecontroller import SearchReplaceController
 from outwiker.gui.searchreplacepanel import SearchReplacePanel
 from outwiker.gui.texteditorhelper import TextEditorHelper
-from outwiker.core.commands import getClipboardText
 
 
 class TextEditorBase(wx.Panel):
@@ -75,8 +74,10 @@ class TextEditorBase(wx.Panel):
 
         # Clear Cmd keys for Ubuntu
         for key in list(range(ord('A'), ord('Z') + 1)) + list(range(ord('0'), ord('9') + 1)):
-            self.textCtrl.CmdKeyClear(key, wx.stc.STC_SCMOD_ALT | wx.stc.STC_SCMOD_CTRL)
-            self.textCtrl.CmdKeyClear(key, wx.stc.STC_SCMOD_SHIFT | wx.stc.STC_SCMOD_ALT | wx.stc.STC_SCMOD_CTRL)
+            self.textCtrl.CmdKeyClear(
+                key, wx.stc.STC_SCMOD_ALT | wx.stc.STC_SCMOD_CTRL)
+            self.textCtrl.CmdKeyClear(
+                key, wx.stc.STC_SCMOD_SHIFT | wx.stc.STC_SCMOD_ALT | wx.stc.STC_SCMOD_CTRL)
 
         self.textCtrl.CmdKeyClear(wx.stc.STC_KEY_UP, wx.stc.STC_SCMOD_CTRL)
         self.textCtrl.CmdKeyClear(wx.stc.STC_KEY_DOWN, wx.stc.STC_SCMOD_CTRL)
@@ -84,43 +85,73 @@ class TextEditorBase(wx.Panel):
         # Code from Wikidpad sources
         # Default mapping based on Scintilla's "KeyMap.cxx" file
         defaultHotKeys = (
-            (wx.stc.STC_KEY_DOWN,        wx.stc.STC_SCMOD_NORM,     wx.stc.STC_CMD_LINEDOWN),
-            (wx.stc.STC_KEY_UP,          wx.stc.STC_SCMOD_NORM,     wx.stc.STC_CMD_LINEUP),
+            (wx.stc.STC_KEY_DOWN,        wx.stc.STC_SCMOD_NORM,
+             wx.stc.STC_CMD_LINEDOWN),
+            (wx.stc.STC_KEY_UP,          wx.stc.STC_SCMOD_NORM,
+             wx.stc.STC_CMD_LINEUP),
             # (wx.stc.STC_KEY_DOWN,        wx.stc.STC_SCMOD_CTRL,     wx.stc.STC_CMD_LINESCROLLDOWN),
             # (wx.stc.STC_KEY_UP,          wx.stc.STC_SCMOD_CTRL,     wx.stc.STC_CMD_LINESCROLLUP),
-            (wx.stc.STC_KEY_UP,          wx.stc.STC_SCMOD_SHIFT,    wx.stc.STC_CMD_LINEUPEXTEND),
-            (wx.stc.STC_KEY_DOWN,        wx.stc.STC_SCMOD_SHIFT,    wx.stc.STC_CMD_LINEDOWNEXTEND),
+            (wx.stc.STC_KEY_UP,          wx.stc.STC_SCMOD_SHIFT,
+             wx.stc.STC_CMD_LINEUPEXTEND),
+            (wx.stc.STC_KEY_DOWN,        wx.stc.STC_SCMOD_SHIFT,
+             wx.stc.STC_CMD_LINEDOWNEXTEND),
 
-            (ord('['),            wx.stc.STC_SCMOD_CTRL,            wx.stc.STC_CMD_PARAUP),
-            (ord('['),            wx.stc.STC_SCMOD_SHIFT | wx.stc.STC_SCMOD_CTRL,    wx.stc.STC_CMD_PARAUPEXTEND),
-            (ord(']'),            wx.stc.STC_SCMOD_CTRL,        wx.stc.STC_CMD_PARADOWN),
-            (ord(']'),            wx.stc.STC_SCMOD_SHIFT | wx.stc.STC_SCMOD_CTRL,    wx.stc.STC_CMD_PARADOWNEXTEND),
-            (wx.stc.STC_KEY_LEFT,        wx.stc.STC_SCMOD_NORM,    wx.stc.STC_CMD_CHARLEFT),
-            (wx.stc.STC_KEY_LEFT,        wx.stc.STC_SCMOD_SHIFT,    wx.stc.STC_CMD_CHARLEFTEXTEND),
+            (ord('['),            wx.stc.STC_SCMOD_CTRL,
+             wx.stc.STC_CMD_PARAUP),
+            (ord('['),            wx.stc.STC_SCMOD_SHIFT |
+             wx.stc.STC_SCMOD_CTRL,    wx.stc.STC_CMD_PARAUPEXTEND),
+            (ord(']'),            wx.stc.STC_SCMOD_CTRL,
+             wx.stc.STC_CMD_PARADOWN),
+            (ord(']'),            wx.stc.STC_SCMOD_SHIFT |
+             wx.stc.STC_SCMOD_CTRL,    wx.stc.STC_CMD_PARADOWNEXTEND),
+            (wx.stc.STC_KEY_LEFT,        wx.stc.STC_SCMOD_NORM,
+             wx.stc.STC_CMD_CHARLEFT),
+            (wx.stc.STC_KEY_LEFT,        wx.stc.STC_SCMOD_SHIFT,
+             wx.stc.STC_CMD_CHARLEFTEXTEND),
             # (wx.stc.STC_KEY_LEFT,        wx.stc.STC_SCMOD_CTRL,    wx.stc.STC_CMD_WORDLEFT),
             # (wx.stc.STC_KEY_LEFT,        wx.stc.STC_SCMOD_SHIFT | wx.stc.STC_SCMOD_CTRL,    wx.stc.STC_CMD_WORDLEFTEXTEND),
-            (wx.stc.STC_KEY_RIGHT,        wx.stc.STC_SCMOD_NORM,    wx.stc.STC_CMD_CHARRIGHT),
-            (wx.stc.STC_KEY_RIGHT,        wx.stc.STC_SCMOD_SHIFT,    wx.stc.STC_CMD_CHARRIGHTEXTEND),
+            (wx.stc.STC_KEY_RIGHT,        wx.stc.STC_SCMOD_NORM,
+             wx.stc.STC_CMD_CHARRIGHT),
+            (wx.stc.STC_KEY_RIGHT,        wx.stc.STC_SCMOD_SHIFT,
+             wx.stc.STC_CMD_CHARRIGHTEXTEND),
             # (wx.stc.STC_KEY_RIGHT,        wx.stc.STC_SCMOD_CTRL,    wx.stc.STC_CMD_WORDRIGHT),
             # (wx.stc.STC_KEY_RIGHT,        wx.stc.STC_SCMOD_SHIFT | wx.stc.STC_SCMOD_CTRL,    wx.stc.STC_CMD_WORDRIGHTEXTEND),
-            (ord('/'),        wx.stc.STC_SCMOD_CTRL,        wx.stc.STC_CMD_WORDPARTLEFT),
-            (ord('/'),        wx.stc.STC_SCMOD_SHIFT | wx.stc.STC_SCMOD_CTRL,    wx.stc.STC_CMD_WORDPARTLEFTEXTEND),
-            (ord('\\'),        wx.stc.STC_SCMOD_CTRL,        wx.stc.STC_CMD_WORDPARTRIGHT),
-            (ord('\\'),        wx.stc.STC_SCMOD_SHIFT | wx.stc.STC_SCMOD_CTRL,    wx.stc.STC_CMD_WORDPARTRIGHTEXTEND),
-            (wx.stc.STC_KEY_HOME,        wx.stc.STC_SCMOD_NORM,    wx.stc.STC_CMD_VCHOME),
-            (wx.stc.STC_KEY_HOME,         wx.stc.STC_SCMOD_SHIFT,     wx.stc.STC_CMD_VCHOMEEXTEND),
-            (wx.stc.STC_KEY_HOME,         wx.stc.STC_SCMOD_CTRL,     wx.stc.STC_CMD_DOCUMENTSTART),
-            (wx.stc.STC_KEY_HOME,         wx.stc.STC_SCMOD_SHIFT | wx.stc.STC_SCMOD_CTRL,     wx.stc.STC_CMD_DOCUMENTSTARTEXTEND),
-            (wx.stc.STC_KEY_HOME,         wx.stc.STC_SCMOD_ALT,     wx.stc.STC_CMD_HOMEDISPLAY),
-            (wx.stc.STC_KEY_END,         wx.stc.STC_SCMOD_NORM,    wx.stc.STC_CMD_LINEEND),
-            (wx.stc.STC_KEY_END,         wx.stc.STC_SCMOD_SHIFT,     wx.stc.STC_CMD_LINEENDEXTEND),
-            (wx.stc.STC_KEY_END,         wx.stc.STC_SCMOD_CTRL,     wx.stc.STC_CMD_DOCUMENTEND),
-            (wx.stc.STC_KEY_END,         wx.stc.STC_SCMOD_SHIFT | wx.stc.STC_SCMOD_CTRL,     wx.stc.STC_CMD_DOCUMENTENDEXTEND),
-            (wx.stc.STC_KEY_END,         wx.stc.STC_SCMOD_ALT,     wx.stc.STC_CMD_LINEENDDISPLAY),
-            (wx.stc.STC_KEY_PRIOR,        wx.stc.STC_SCMOD_NORM,    wx.stc.STC_CMD_PAGEUP),
-            (wx.stc.STC_KEY_PRIOR,        wx.stc.STC_SCMOD_SHIFT,     wx.stc.STC_CMD_PAGEUPEXTEND),
-            (wx.stc.STC_KEY_NEXT,         wx.stc.STC_SCMOD_NORM,     wx.stc.STC_CMD_PAGEDOWN),
-            (wx.stc.STC_KEY_NEXT,         wx.stc.STC_SCMOD_SHIFT,     wx.stc.STC_CMD_PAGEDOWNEXTEND),
+            (ord('/'),        wx.stc.STC_SCMOD_CTRL,
+             wx.stc.STC_CMD_WORDPARTLEFT),
+            (ord('/'),        wx.stc.STC_SCMOD_SHIFT |
+             wx.stc.STC_SCMOD_CTRL,    wx.stc.STC_CMD_WORDPARTLEFTEXTEND),
+            (ord('\\'),        wx.stc.STC_SCMOD_CTRL,
+             wx.stc.STC_CMD_WORDPARTRIGHT),
+            (ord('\\'),        wx.stc.STC_SCMOD_SHIFT |
+             wx.stc.STC_SCMOD_CTRL,    wx.stc.STC_CMD_WORDPARTRIGHTEXTEND),
+            (wx.stc.STC_KEY_HOME,        wx.stc.STC_SCMOD_NORM,
+             wx.stc.STC_CMD_VCHOME),
+            (wx.stc.STC_KEY_HOME,         wx.stc.STC_SCMOD_SHIFT,
+             wx.stc.STC_CMD_VCHOMEEXTEND),
+            (wx.stc.STC_KEY_HOME,         wx.stc.STC_SCMOD_CTRL,
+             wx.stc.STC_CMD_DOCUMENTSTART),
+            (wx.stc.STC_KEY_HOME,         wx.stc.STC_SCMOD_SHIFT |
+             wx.stc.STC_SCMOD_CTRL,     wx.stc.STC_CMD_DOCUMENTSTARTEXTEND),
+            (wx.stc.STC_KEY_HOME,         wx.stc.STC_SCMOD_ALT,
+             wx.stc.STC_CMD_HOMEDISPLAY),
+            (wx.stc.STC_KEY_END,         wx.stc.STC_SCMOD_NORM,
+             wx.stc.STC_CMD_LINEEND),
+            (wx.stc.STC_KEY_END,         wx.stc.STC_SCMOD_SHIFT,
+             wx.stc.STC_CMD_LINEENDEXTEND),
+            (wx.stc.STC_KEY_END,         wx.stc.STC_SCMOD_CTRL,
+             wx.stc.STC_CMD_DOCUMENTEND),
+            (wx.stc.STC_KEY_END,         wx.stc.STC_SCMOD_SHIFT |
+             wx.stc.STC_SCMOD_CTRL,     wx.stc.STC_CMD_DOCUMENTENDEXTEND),
+            (wx.stc.STC_KEY_END,         wx.stc.STC_SCMOD_ALT,
+             wx.stc.STC_CMD_LINEENDDISPLAY),
+            (wx.stc.STC_KEY_PRIOR,
+             wx.stc.STC_SCMOD_NORM,    wx.stc.STC_CMD_PAGEUP),
+            (wx.stc.STC_KEY_PRIOR,        wx.stc.STC_SCMOD_SHIFT,
+             wx.stc.STC_CMD_PAGEUPEXTEND),
+            (wx.stc.STC_KEY_NEXT,         wx.stc.STC_SCMOD_NORM,
+             wx.stc.STC_CMD_PAGEDOWN),
+            (wx.stc.STC_KEY_NEXT,         wx.stc.STC_SCMOD_SHIFT,
+             wx.stc.STC_CMD_PAGEDOWNEXTEND),
             (wx.stc.STC_KEY_DELETE,     wx.stc.STC_SCMOD_NORM,    wx.stc.STC_CMD_CLEAR),
             (wx.stc.STC_KEY_INSERT,         wx.stc.STC_SCMOD_NORM,    wx.stc.STC_CMD_EDITTOGGLEOVERTYPE),
             (wx.stc.STC_KEY_ESCAPE,      wx.stc.STC_SCMOD_NORM,    wx.stc.STC_CMD_CANCEL),

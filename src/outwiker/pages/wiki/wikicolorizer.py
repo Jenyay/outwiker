@@ -1,6 +1,7 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
-from .parser.tokenfonts import FontsFactory, BoldToken, ItalicToken, BoldItalicToken, UnderlineToken
+from .parser.tokenfonts import (FontsFactory, BoldToken, ItalicToken,
+                                BoldItalicToken, UnderlineToken)
 from .parser.tokenheading import HeadingFactory
 from .parser.tokencommand import CommandFactory
 from .parser.tokenlink import LinkFactory
@@ -15,11 +16,9 @@ from outwiker.gui.texteditorhelper import TextEditorHelper
 
 
 class WikiColorizer (object):
-    # def __init__(self, editor, colorizeSyntax, enableSpellChecking, runEvent):
     def __init__(self, editor, colorizeSyntax, runEvent):
         self._editor = editor
         self._helper = TextEditorHelper()
-        # self._enableSpellChecking = enableSpellChecking
         self._runEvent = runEvent
 
         self.text = TextFactory.make(None)
@@ -102,10 +101,7 @@ class WikiColorizer (object):
                     tokenname == "noformat" or
                     tokenname == "preformat"):
                 # if self._enableSpellChecking:
-                    # self._editor.runSpellChecking(stylelist,
-                                                  # fullText,
-                                                  # pos_start,
-                                                  # pos_end)
+                # self._editor.runSpellChecking(fullText, pos_start, pos_end)
                 continue
 
             if tokenname == "linebreak":
@@ -167,10 +163,9 @@ class WikiColorizer (object):
                                       bytepos_start,
                                       bytepos_end)
                 # if self._enableSpellChecking:
-                    # self._editor.runSpellChecking(stylelist,
-                                                  # fullText,
-                                                  # pos_start,
-                                                  # pos_end)
+                # self._editor.runSpellChecking(fullText,
+                # pos_start,
+                # pos_end)
 
             elif tokenname == "command":
                 self._helper.setStyle(stylelist,
@@ -184,10 +179,9 @@ class WikiColorizer (object):
                                       bytepos_start,
                                       bytepos_end)
                 # if self._enableSpellChecking:
-                    # self._editor.runSpellChecking(stylelist,
-                                                  # fullText,
-                                                  # pos_start,
-                                                  # pos_end)
+                # self._editor.runSpellChecking(fullText,
+                # pos_start,
+                # pos_end)
 
             elif tokenname == "link":
                 self._helper.addStyle(stylelist,
@@ -195,10 +189,9 @@ class WikiColorizer (object):
                                       bytepos_start,
                                       bytepos_end)
                 # self._linkSpellChecking(fullText,
-                                        # text,
-                                        # stylelist,
-                                        # pos_start,
-                                        # pos_end)
+                # text,
+                # pos_start,
+                # pos_end)
 
             elif tokenname == "url":
                 self._helper.addStyle(stylelist,
@@ -206,7 +199,7 @@ class WikiColorizer (object):
                                       bytepos_start,
                                       bytepos_end)
 
-    # def _linkSpellChecking(self, fullText, text, stylelist, pos_start, pos_end):
+    # def _linkSpellChecking(self, fullText, text, pos_start, pos_end):
         # separator1 = u'->'
         # separator2 = u'|'
 
@@ -214,17 +207,15 @@ class WikiColorizer (object):
         # sep1_pos = link.find(separator1)
         # if sep1_pos != -1:
             # if self._enableSpellChecking:
-                # self._editor.runSpellChecking(stylelist,
-                                              # fullText,
-                                              # pos_start,
-                                              # pos_start + sep1_pos)
+                # self._editor.runSpellChecking(fullText,
+                # pos_start,
+                # pos_start + sep1_pos)
             # return
 
         # sep2_pos = link.find(separator2)
         # if sep2_pos != -1:
             # if self._enableSpellChecking:
-                # self._editor.runSpellChecking(stylelist,
-                                              # fullText,
-                                              # pos_start + sep2_pos +
-                                              # len(separator2),
-                                              # pos_end)
+                # self._editor.runSpellChecking(fullText,
+                # pos_start + sep2_pos +
+                # len(separator2),
+                # pos_end)

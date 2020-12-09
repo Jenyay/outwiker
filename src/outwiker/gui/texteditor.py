@@ -74,7 +74,7 @@ class TextEditor(TextEditorBase):
         self._bindStandardMenuItems()
 
         self.textCtrl.Bind(wx.EVT_CONTEXT_MENU, self.__onContextMenu)
-        self.textCtrl.Bind(wx.EVT_IDLE, self._onStyleNeeded)
+        self.textCtrl.Bind(wx.EVT_IDLE, self._onIdle)
         self.textCtrl.Bind(wx.EVT_LEFT_DOWN, self._onMouseLeftDown)
         self.textCtrl.Bind(wx.EVT_LEFT_UP, self._onMouseLeftUp)
         self.textCtrl.Bind(wx.EVT_KEY_UP, self._onKeyUp)
@@ -213,22 +213,22 @@ class TextEditor(TextEditorBase):
 
         return width
 
-    def runSpellChecking(self, stylelist, fullText, start, end):
+    def runSpellChecking(self, fullText, start, end):
         pass
         # errors = self._spellChecker.findErrors(fullText[start: end])
 
-        # self.textCtrl.SetIndicatorCurrent(self.SPELL_ERROR_INDICATOR)
         # global_start_bytes = self._helper.calcBytePos(fullText, start)
         # global_length = self._helper.calcByteLen(fullText[start: end])
+        # self.textCtrl.SetIndicatorCurrent(self.SPELL_ERROR_INDICATOR)
         # self.textCtrl.IndicatorClearRange(global_start_bytes, global_length)
 
         # for _word, err_start, err_end in errors:
-            # startbytes = self._helper.calcBytePos(fullText, err_start + start)
-            # endbytes = self._helper.calcBytePos(fullText, err_end + start)
+        #     startbytes = self._helper.calcBytePos(fullText, err_start + start)
+        #     endbytes = self._helper.calcBytePos(fullText, err_end + start)
 
-            # self.textCtrl.IndicatorFillRange(startbytes, endbytes - startbytes)
+        #     self.textCtrl.IndicatorFillRange(startbytes, endbytes - startbytes)
 
-    def _onStyleNeeded(self, _event):
+    def _onIdle(self, _event):
         if (not self._styleSet and
                 datetime.now() - self._lastEdit >= self._DELAY):
             page = Application.selectedPage
@@ -324,32 +324,32 @@ class TextEditor(TextEditorBase):
         # self._spellStartByteError = self.textCtrl.IndicatorStart(self.SPELL_ERROR_INDICATOR, pos_byte)
         # self._spellEndByteError = self.textCtrl.IndicatorEnd(self.SPELL_ERROR_INDICATOR, pos_byte)
         # self._spellErrorText = self.textCtrl.GetTextRange(
-            # self._spellStartByteError,
-            # self._spellEndByteError)
+        # self._spellStartByteError,
+        # self._spellEndByteError)
 
         # self._spellSuggestList = self._spellChecker.getSuggest(self._spellErrorText)[
-            # :self._spellMaxSuggest]
+        # :self._spellMaxSuggest]
 
         # menu.AppendSeparator()
         # self._suggestMenuItems = menu.AppendSpellSubmenu(self._spellErrorText,
-                                                         # self._spellSuggestList)
+        # self._spellSuggestList)
 
         # for menuItem in self._suggestMenuItems:
-            # self.textCtrl.Bind(wx.EVT_MENU, self.__onSpellSuggest, menuItem)
+        # self.textCtrl.Bind(wx.EVT_MENU, self.__onSpellSuggest, menuItem)
 
         # self.textCtrl.Bind(wx.EVT_MENU,
-                           # self.__onAddWordToDict,
-                           # id=menu.ID_ADD_WORD)
+        # self.__onAddWordToDict,
+        # id=menu.ID_ADD_WORD)
 
         # self.textCtrl.Bind(wx.EVT_MENU,
-                           # self.__onAddWordLowerToDict,
-                           # id=menu.ID_ADD_WORD_LOWER)
+        # self.__onAddWordLowerToDict,
+        # id=menu.ID_ADD_WORD_LOWER)
 
     # def __onSpellSuggest(self, event):
         # word = event.GetEventObject().GetLabelText(event.GetId())
 
         # self.textCtrl.SetSelection(self._spellStartByteError,
-                                   # self._spellEndByteError)
+        # self._spellEndByteError)
         # self.textCtrl.ReplaceSelection(word)
 
     def onKeyDown(self, event: wx.KeyEvent):
