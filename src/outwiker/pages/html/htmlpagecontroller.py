@@ -1,6 +1,6 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
-from outwiker.gui.pagedialogpanels.appearancepanel import(
+from outwiker.gui.pagedialogpanels.appearancepanel import (
     AppearancePanel,
     AppearanceController)
 

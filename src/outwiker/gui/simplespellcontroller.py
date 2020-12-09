@@ -23,15 +23,16 @@ class SimpleSpellController(BaseTextStylingController):
     def _colorizeThreadFunc(self, text, editor, enableSpellChecking):
         helper = TextEditorHelper()
         textlength = helper.calcByteLen(text)
-        stylebytes = [0] * textlength
+        # stylebytes = [0] * textlength
 
+        editor.clearSpellChecking()
         if enableSpellChecking:
             for start, end in self._splitText(text):
                 if not self._runColorizingEvent.is_set():
                     return
-                editor.runSpellChecking(stylebytes, text, start, end)
+                editor.runSpellChecking(text, start, end)
 
-        self.updateStyles(editor, text, None, stylebytes, 0, len(text))
+        # self.updateStyles(editor, text, None, stylebytes, 0, len(text))
 
     def _splitText(self, text):
         """

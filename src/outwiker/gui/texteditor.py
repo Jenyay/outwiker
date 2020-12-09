@@ -213,7 +213,7 @@ class TextEditor(TextEditorBase):
 
         return width
 
-    def runSpellChecking(self, stylelist, fullText, start, end):
+    def runSpellChecking(self, fullText, start, end):
         errors = self._spellChecker.findErrors(fullText[start: end])
 
         self.textCtrl.SetIndicatorCurrent(self.SPELL_ERROR_INDICATOR)
@@ -226,6 +226,11 @@ class TextEditor(TextEditorBase):
             endbytes = self._helper.calcBytePos(fullText, err_end + start)
 
             self.textCtrl.IndicatorFillRange(startbytes, endbytes - startbytes)
+
+    def clearSpellChecking(self):
+        text = self._getTextForParse()
+        len_bytes = self._helper.calcByteLen(text)
+        self.textCtrl.IndicatorClearRange(0, len_bytes)
 
     def _onStyleNeeded(self, _event):
         if (not self._styleSet and
@@ -319,8 +324,10 @@ class TextEditor(TextEditorBase):
         self._styleSet = False
 
     def _appendSpellMenuItems(self, menu, pos_byte):
-        self._spellStartByteError = self.textCtrl.IndicatorStart(self.SPELL_ERROR_INDICATOR, pos_byte)
-        self._spellEndByteError = self.textCtrl.IndicatorEnd(self.SPELL_ERROR_INDICATOR, pos_byte)
+        self._spellStartByteError = self.textCtrl.IndicatorStart(
+            self.SPELL_ERROR_INDICATOR, pos_byte)
+        self._spellEndByteError = self.textCtrl.IndicatorEnd(
+            self.SPELL_ERROR_INDICATOR, pos_byte)
         self._spellErrorText = self.textCtrl.GetTextRange(
             self._spellStartByteError,
             self._spellEndByteError)

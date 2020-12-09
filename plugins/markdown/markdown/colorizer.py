@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from markdownparser.tokens.tokenfonts import (FontsFactory,
                                               BoldToken,
@@ -52,6 +52,7 @@ class MarkdownColorizer(object):
             self.insideBlockParser = self.text
 
     def colorize(self, fullText):
+        self._editor.clearSpellChecking()
         textlength = self._helper.calcByteLen(fullText)
         stylelist = [0] * textlength
         self._colorizeText(fullText,
@@ -79,8 +80,7 @@ class MarkdownColorizer(object):
                     tokenname == "noformat" or
                     tokenname == "preformat"):
                 if self._enableSpellChecking:
-                    self._editor.runSpellChecking(stylelist,
-                                                  fullText,
+                    self._editor.runSpellChecking(fullText,
                                                   pos_start,
                                                   pos_end)
                 continue
@@ -129,8 +129,7 @@ class MarkdownColorizer(object):
                                       bytepos_start,
                                       bytepos_end)
                 if self._enableSpellChecking:
-                    self._editor.runSpellChecking(stylelist,
-                                                  fullText,
+                    self._editor.runSpellChecking(fullText,
                                                   pos_start,
                                                   pos_end)
 
@@ -159,22 +158,19 @@ class MarkdownColorizer(object):
                                       bytepos_start,
                                       bytepos_end)
                 if self._enableSpellChecking:
-                    self._editor.runSpellChecking(stylelist,
-                                                  fullText,
+                    self._editor.runSpellChecking(fullText,
                                                   pos_start,
                                                   pos_end)
 
     def _linkSpellChecking(self, fullText, text, stylelist,
                            pos_start, pos_end, token):
-        self._editor.runSpellChecking(stylelist,
-                                      fullText,
+        self._editor.runSpellChecking(fullText,
                                       pos_start + 1,
                                       pos_start + 1 + len(token[0][0]))
         link = token[0][1]
         space_pos = link.find(u' ')
         if space_pos != -1:
             self._editor.runSpellChecking(
-                stylelist,
                 fullText,
                 pos_start + 1 + len(token[0][0]) + 2 + space_pos,
                 pos_start + 1 + len(token[0][0]) + 2 + space_pos +
