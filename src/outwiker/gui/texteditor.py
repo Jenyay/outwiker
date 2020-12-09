@@ -214,8 +214,13 @@ class TextEditor(TextEditorBase):
         return width
 
     def runSpellChecking(self, fullText, start, end):
+        wx.CallAfter(self._runSpellCheckingInMainThread,
+                     fullText, start, end)
+
+    def _runSpellCheckingInMainThread(self, fullText, start, end):
         errors = self._spellChecker.findErrors(fullText[start: end])
 
+        self.textCtrl.Freeze()
         self.textCtrl.SetIndicatorCurrent(self.SPELL_ERROR_INDICATOR)
         global_start_bytes = self._helper.calcBytePos(fullText, start)
         global_length = self._helper.calcByteLen(fullText[start: end])
@@ -226,6 +231,8 @@ class TextEditor(TextEditorBase):
             endbytes = self._helper.calcBytePos(fullText, err_end + start)
 
             self.textCtrl.IndicatorFillRange(startbytes, endbytes - startbytes)
+
+        self.textCtrl.Thaw()
 
     def clearSpellChecking(self):
         text = self._getTextForParse()
