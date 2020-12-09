@@ -34,8 +34,8 @@ apps:
         extensions:
             - gnome-3-28
         desktop: usr/share/applications/outwiker.desktop
-        environment:
-            LD_LIBRARY_PATH: $SNAP/usr/lib/x86_64-linux-gnu/webkit2gtk-4.0/:$SNAP/usr/lib/x86_64-linux-gnu/pulseaudio:$LD_LIBRARY_PATH
+        # environment:
+        #     LD_LIBRARY_PATH: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/webkit2gtk-4.0/:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/pulseaudio:$LD_LIBRARY_PATH
 
 parts:
     outwiker:
@@ -72,7 +72,7 @@ parts:
             - libsm6
             - libpulse0
             - libhunspell-1.6-0
-            - libwebkit2gtk-4.0-37
+            # - libwebkit2gtk-4.0-37
             - libsdl-gfx1.2-5
             - libgstreamer1.0-0
             - libslang2
