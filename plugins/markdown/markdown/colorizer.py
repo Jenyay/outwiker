@@ -51,12 +51,11 @@ class MarkdownColorizer(object):
             self.colorParser = self.text
             self.insideBlockParser = self.text
 
-    def colorize(self, fullText):
+    def colorize(self, text):
         self._editor.clearSpellChecking()
-        textlength = self._helper.calcByteLen(fullText)
+        textlength = self._helper.calcByteLen(text)
         stylelist = [0] * textlength
-        self._colorizeText(fullText,
-                           fullText,
+        self._colorizeText(text,
                            0,
                            textlength,
                            self.colorParser,
@@ -64,7 +63,7 @@ class MarkdownColorizer(object):
 
         return stylelist
 
-    def _colorizeText(self, fullText, text, start, end, parser, stylelist):
+    def _colorizeText(self, text, start, end, parser, stylelist):
         tokens = parser.scanString(text[start: end])
 
         for token in tokens:
@@ -80,8 +79,7 @@ class MarkdownColorizer(object):
                     tokenname == "noformat" or
                     tokenname == "preformat"):
                 if self._enableSpellChecking:
-                    self._editor.runSpellChecking(fullText,
-                                                  pos_start,
+                    self._editor.runSpellChecking(pos_start,
                                                   pos_end)
                 continue
 
@@ -95,8 +93,7 @@ class MarkdownColorizer(object):
                                       self._editor.STYLE_BOLD_ID,
                                       bytepos_start,
                                       bytepos_end)
-                self._colorizeText(fullText,
-                                   text,
+                self._colorizeText(text,
                                    pos_start + len(BoldToken.start_1),
                                    pos_end - len(BoldToken.end_1),
                                    self.insideBlockParser, stylelist)
@@ -106,8 +103,7 @@ class MarkdownColorizer(object):
                                       self._editor.STYLE_ITALIC_ID,
                                       bytepos_start,
                                       bytepos_end)
-                self._colorizeText(fullText,
-                                   text,
+                self._colorizeText(text,
                                    pos_start + len(ItalicToken.start_1),
                                    pos_end - len(ItalicToken.end_1),
                                    self.insideBlockParser, stylelist)
@@ -117,8 +113,7 @@ class MarkdownColorizer(object):
                                       self._editor.STYLE_BOLD_ITALIC_ID,
                                       bytepos_start,
                                       bytepos_end)
-                self._colorizeText(fullText,
-                                   text,
+                self._colorizeText(text,
                                    pos_start + len(BoldItalicToken.start),
                                    pos_end - len(BoldItalicToken.end),
                                    self.insideBlockParser, stylelist)
@@ -129,8 +124,7 @@ class MarkdownColorizer(object):
                                       bytepos_start,
                                       bytepos_end)
                 if self._enableSpellChecking:
-                    self._editor.runSpellChecking(fullText,
-                                                  pos_start,
+                    self._editor.runSpellChecking(pos_start,
                                                   pos_end)
 
             elif tokenname == "link":
@@ -139,8 +133,7 @@ class MarkdownColorizer(object):
                                       bytepos_start,
                                       bytepos_end)
                 if self._enableSpellChecking:
-                    self._linkSpellChecking(fullText,
-                                            text,
+                    self._linkSpellChecking(text,
                                             stylelist,
                                             pos_start,
                                             pos_end,
@@ -158,20 +151,17 @@ class MarkdownColorizer(object):
                                       bytepos_start,
                                       bytepos_end)
                 if self._enableSpellChecking:
-                    self._editor.runSpellChecking(fullText,
-                                                  pos_start,
+                    self._editor.runSpellChecking(pos_start,
                                                   pos_end)
 
-    def _linkSpellChecking(self, fullText, text, stylelist,
+    def _linkSpellChecking(self, text, stylelist,
                            pos_start, pos_end, token):
-        self._editor.runSpellChecking(fullText,
-                                      pos_start + 1,
+        self._editor.runSpellChecking(pos_start + 1,
                                       pos_start + 1 + len(token[0][0]))
         link = token[0][1]
         space_pos = link.find(u' ')
         if space_pos != -1:
             self._editor.runSpellChecking(
-                fullText,
                 pos_start + 1 + len(token[0][0]) + 2 + space_pos,
                 pos_start + 1 + len(token[0][0]) + 2 + space_pos +
                 len(token[0][1]))
