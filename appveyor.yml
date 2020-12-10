@@ -19,8 +19,8 @@ install:
     - cmd: cinst innosetup
     - cmd: python -m pipenv --python %PY_PYTHON% update --dev
     - cmd: python -m pipenv --python %PY_PYTHON% run python -m pip list
-    - cmd: python -m pipenv --python %PY_PYTHON% run python -m comtypes.client._generate shdocvw.dll
-    - cmd: python -m pipenv --python %PY_PYTHON% run python -c "import wx.lib.iewin"
+    # - cmd: python -m pipenv --python %PY_PYTHON% run python -m comtypes.client._generate shdocvw.dll
+    # - cmd: python -m pipenv --python %PY_PYTHON% run python -c "import wx.lib.iewin"
     - sh: python -m pip install pipenv
     - sh: pipenv run pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-18.04 wxPython==4.1.1
     - sh: pipenv update --dev
