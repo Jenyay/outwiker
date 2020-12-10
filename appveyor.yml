@@ -5,10 +5,9 @@ image:
 environment:
     PY_PYTHON: 3.8-32
     PY_DIR: C:\Python38
-    # PYTHON: C:\Python38
     PYTHONIOENCODING: utf_8
     PIPENV_IGNORE_VIRTUALENVS: 1
-# stack: Python 3.8
+stack: Python 3.8
 init:
     - cmd: set PATH=%PY_DIR%;%PY_DIR%\Scripts;%PATH%
     - cmd: python -m pip install pipenv
@@ -32,7 +31,6 @@ build_script:
     # - sh: pipenv run fab plugins
 test_script:
     - cmd: python -m pipenv run fab test
-      # - cmd: python -m pipenv run fab test
       # - cmd: python -m pipenv run fab coverage
     - sh: xvfb-run pipenv run fab test
 artifacts:
