@@ -4,7 +4,6 @@ verify_ssl = true
 name = "pypi"
 
 [requires]
-python_version = "3.8"
 
 [packages]
 wxPython = "==4.1.1"
