@@ -3,6 +3,7 @@
 import math
 from datetime import datetime, timedelta
 import os.path
+from typing import List
 
 import wx
 import wx.lib.newevent
@@ -212,50 +213,57 @@ class TextEditor(TextEditorBase):
 
         return width
 
-    def markSpellErrors(self, spellStatusFlags):
+    def markSpellErrors(self, spellStatusFlags: List[bool]):
+        """
+        spellStatusFlags - list for every byte (!) to set or clear spell errors
+indicators. True for no spell error, False for spell error.
+        """
         if not spellStatusFlags:
             return
 
         self.textCtrl.SetIndicatorCurrent(self.SPELL_ERROR_INDICATOR)
-        start_pos = 0
-        flag = spellStatusFlags[start_pos]
+        start_pos_bytes = 0
+        flag = spellStatusFlags[start_pos_bytes]
         while True:
             try:
-                end_pos = spellStatusFlags.index(not flag, start_pos)
-                self._setClearSpellError(flag, start_pos, end_pos)
+                end_pos_bytes = spellStatusFlags.index(not flag,
+                                                       start_pos_bytes)
+                self._setClearSpellError(flag, start_pos_bytes, end_pos_bytes)
                 flag = not flag
-                start_pos = end_pos
+                start_pos_bytes = end_pos_bytes
             except ValueError:
-                end_pos = len(spellStatusFlags)
-                self._setClearSpellError(flag, start_pos, end_pos)
+                end_pos_bytes = len(spellStatusFlags)
+                self._setClearSpellError(flag, start_pos_bytes, end_pos_bytes)
                 break
 
-    def _setClearSpellError(self, spellStatus, start, end):
+    def _setClearSpellError(self, spellStatus, start_pos_bytes, end_pos_bytes):
         if spellStatus:
-            self.textCtrl.IndicatorClearRange(start, end - start)
+            self.textCtrl.IndicatorClearRange(start_pos_bytes,
+                                              end_pos_bytes - start_pos_bytes)
         else:
-            self.textCtrl.IndicatorFillRange(start, end - start)
+            self.textCtrl.IndicatorFillRange(start_pos_bytes,
+                                             end_pos_bytes - start_pos_bytes)
 
-    def runSpellChecking(self, start, end):
-        fullText = self._getTextForParse()
-        errors = self.getSpellChecker().findErrors(fullText[start: end])
-        wx.CallAfter(self._runSpellCheckingInMainThread,
-                     fullText, errors, start, end)
+    # def runSpellChecking(self, start, end):
+    #     fullText = self._getTextForParse()
+    #     errors = self.getSpellChecker().findErrors(fullText[start: end])
+    #     wx.CallAfter(self._runSpellCheckingInMainThread,
+    #                  fullText, errors, start, end)
 
-    def _runSpellCheckingInMainThread(self, fullText, errors, start, end):
-        self.textCtrl.Freeze()
-        self.textCtrl.SetIndicatorCurrent(self.SPELL_ERROR_INDICATOR)
-        global_start_bytes = self._helper.calcBytePos(fullText, start)
-        global_length = self._helper.calcByteLen(fullText[start: end])
-        self.textCtrl.IndicatorClearRange(global_start_bytes, global_length)
+    # def _runSpellCheckingInMainThread(self, fullText, errors, start, end):
+    #     self.textCtrl.Freeze()
+    #     self.textCtrl.SetIndicatorCurrent(self.SPELL_ERROR_INDICATOR)
+    #     global_start_bytes = self._helper.calcBytePos(fullText, start)
+    #     global_length = self._helper.calcByteLen(fullText[start: end])
+    #     self.textCtrl.IndicatorClearRange(global_start_bytes, global_length)
 
-        for _word, err_start, err_end in errors:
-            startbytes = self._helper.calcBytePos(fullText, err_start + start)
-            endbytes = self._helper.calcBytePos(fullText, err_end + start)
+    #     for _word, err_start, err_end in errors:
+    #         startbytes = self._helper.calcBytePos(fullText, err_start + start)
+    #         endbytes = self._helper.calcBytePos(fullText, err_end + start)
 
-            self.textCtrl.IndicatorFillRange(startbytes, endbytes - startbytes)
+    #         self.textCtrl.IndicatorFillRange(startbytes, endbytes - startbytes)
 
-        self.textCtrl.Thaw()
+    #     self.textCtrl.Thaw()
 
     def clearSpellChecking(self):
         text = self._getTextForParse()
