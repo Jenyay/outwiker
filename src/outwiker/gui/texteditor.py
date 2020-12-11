@@ -213,6 +213,30 @@ class TextEditor(TextEditorBase):
 
         return width
 
+    def markSpellErrors(self, spellErrorsFlags):
+        if not spellErrorsFlags:
+            return
+
+        self.textCtrl.SetIndicatorCurrent(self.SPELL_ERROR_INDICATOR)
+        start_pos = 0
+        flag = spellErrorsFlags[start_pos]
+        while True:
+            try:
+                end_pos = spellErrorsFlags.index(not flag, start_pos)
+                self._setClearSpellError(flag, start_pos, end_pos)
+                flag = not flag
+                start_pos = end_pos
+            except ValueError:
+                end_pos = len(spellErrorsFlags)
+                self._setClearSpellError(flag, start_pos, end_pos)
+                break
+
+    def _setClearSpellError(self, isError, start, end):
+        if isError:
+            self.textCtrl.IndicatorFillRange(start, end - start)
+        else:
+            self.textCtrl.IndicatorClearRange(start, end - start)
+
     def runSpellChecking(self, start, end):
         fullText = self._getTextForParse()
         errors = self._spellChecker.findErrors(fullText[start: end])
@@ -283,14 +307,17 @@ class TextEditor(TextEditorBase):
             self._styleSet = True
 
     def getSpellChecker(self):
-        langlist = self._getDictsFromConfig()
-        spellDirList = outwiker.core.system.getSpellDirList()
+        if self._spellChecker is None:
+            langlist = self._getDictsFromConfig()
+            spellDirList = outwiker.core.system.getSpellDirList()
 
-        spellChecker = SpellChecker(langlist, spellDirList)
-        spellChecker.addCustomDict(os.path.join(
-            spellDirList[-1], CUSTOM_DICT_FILE_NAME))
+            spellChecker = SpellChecker(langlist, spellDirList)
+            spellChecker.addCustomDict(os.path.join(
+                spellDirList[-1], CUSTOM_DICT_FILE_NAME))
 
-        return spellChecker
+            return spellChecker
+        else:
+            return self._spellChecker
 
     def _getDictsFromConfig(self):
         dictsStr = self._config.spellCheckerDicts.value
