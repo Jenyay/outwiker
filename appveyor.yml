@@ -3,8 +3,7 @@ image:
     - Visual Studio 2019
     - Ubuntu1804
 environment:
-    # PY_PYTHON: 3.8-32
-    # PYTHON: C:\Python38
+    PY_PYTHON: 3.8-32
     PY_DIR: C:\Python38
     PYTHONIOENCODING: utf_8
     PIPENV_IGNORE_VIRTUALENVS: 1
@@ -17,7 +16,7 @@ init:
     - sh: sudo apt-get -y install libwebkit2gtk-4.0
 install:
     - cmd: cinst innosetup
-    - cmd: python -m pipenv update --dev
+    - cmd: python -m pipenv --python %PY_PYTHON% update --dev
     - cmd: python -m pipenv run python -m pip list
     - cmd: python -m pipenv run python -m comtypes.client._generate shdocvw.dll
     - cmd: python -m pipenv run python -c "import wx.lib.iewin"
@@ -32,7 +31,6 @@ build_script:
     # - sh: pipenv run fab plugins
 test_script:
     - cmd: python -m pipenv run fab test
-      # - cmd: python -m pipenv run fab test
       # - cmd: python -m pipenv run fab coverage
     - sh: xvfb-run pipenv run fab test
 artifacts:
