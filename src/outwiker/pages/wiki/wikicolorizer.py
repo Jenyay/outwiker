@@ -82,24 +82,24 @@ class WikiColorizer (object):
     def colorize(self, fullText):
         textlength = self._helper.calcByteLen(fullText)
         stylelist = [0] * textlength
-        spellErrorsFlags = [False] * textlength
+        spellStatusFlags = [True] * textlength
         self._colorizeText(fullText, 0, textlength,
-                           self.colorParser, stylelist, spellErrorsFlags)
-        wx.CallAfter(self._editor.markSpellErrors, spellErrorsFlags)
+                           self.colorParser, stylelist, spellStatusFlags)
+        wx.CallAfter(self._editor.markSpellErrors, spellStatusFlags)
         return stylelist
 
-    def _checkSpell(self, text, start, end, spellErrorsFlags):
+    def _checkSpell(self, text, start, end, spellStatusFlags):
         spellChecker = self._editor.getSpellChecker()
         errors = spellChecker.findErrors(text[start: end])
 
         for _word, err_start, err_end in errors:
             startbytes = self._helper.calcBytePos(text, err_start + start)
             endbytes = self._helper.calcBytePos(text, err_end + start)
-            spellErrorsFlags[startbytes:
-                             endbytes + 1] = [True] * (endbytes - startbytes)
+            spellStatusFlags[startbytes:
+                             endbytes] = [False] * (endbytes - startbytes)
 
     def _colorizeText(self, text, start, end, parser,
-                      stylelist, spellErrorsFlags):
+                      stylelist, spellStatusFlags):
         tokens = parser.scanString(text[start: end])
 
         for token in tokens:
@@ -116,7 +116,7 @@ class WikiColorizer (object):
                     tokenname == "preformat"):
                 if self._enableSpellChecking:
                     self._checkSpell(text, pos_start, pos_end,
-                                     spellErrorsFlags)
+                                     spellStatusFlags)
                 continue
 
             if tokenname == "linebreak":
@@ -136,7 +136,7 @@ class WikiColorizer (object):
                                    pos_start + len(BoldToken.start),
                                    pos_end - len(BoldToken.end),
                                    self.insideBlockParser,
-                                   stylelist, spellErrorsFlags)
+                                   stylelist, spellStatusFlags)
 
             elif tokenname == "italic":
                 self._helper.addStyle(stylelist,
@@ -147,7 +147,7 @@ class WikiColorizer (object):
                                    pos_start + len(ItalicToken.start),
                                    pos_end - len(ItalicToken.end),
                                    self.insideBlockParser,
-                                   stylelist, spellErrorsFlags)
+                                   stylelist, spellStatusFlags)
 
             elif tokenname == "bold_italic":
                 self._helper.addStyle(stylelist,
@@ -158,7 +158,7 @@ class WikiColorizer (object):
                                    pos_start + len(BoldItalicToken.start),
                                    pos_end - len(BoldItalicToken.end),
                                    self.insideBlockParser,
-                                   stylelist, spellErrorsFlags)
+                                   stylelist, spellStatusFlags)
 
             elif tokenname == "underline":
                 self._helper.addStyle(stylelist,
@@ -169,7 +169,7 @@ class WikiColorizer (object):
                                    pos_start + len(UnderlineToken.start),
                                    pos_end - len(UnderlineToken.end),
                                    self.insideBlockParser,
-                                   stylelist, spellErrorsFlags)
+                                   stylelist, spellStatusFlags)
 
             elif tokenname == "heading":
                 self._helper.setStyle(stylelist,
@@ -178,7 +178,7 @@ class WikiColorizer (object):
                                       bytepos_end)
                 if self._enableSpellChecking:
                     self._checkSpell(text, pos_start, pos_end,
-                                     spellErrorsFlags)
+                                     spellStatusFlags)
 
             elif tokenname == "command":
                 self._helper.setStyle(stylelist,
@@ -193,7 +193,7 @@ class WikiColorizer (object):
                                       bytepos_end)
                 if self._enableSpellChecking:
                     self._checkSpell(text, pos_start, pos_end,
-                                     spellErrorsFlags)
+                                     spellStatusFlags)
 
             elif tokenname == "link":
                 self._helper.addStyle(stylelist,
@@ -204,7 +204,7 @@ class WikiColorizer (object):
                                         pos_start,
                                         pos_end,
                                         stylelist,
-                                        spellErrorsFlags)
+                                        spellStatusFlags)
 
             elif tokenname == "url":
                 self._helper.addStyle(stylelist,
@@ -213,7 +213,7 @@ class WikiColorizer (object):
                                       bytepos_end)
 
     def _linkSpellChecking(self, text, pos_start, pos_end,
-                           stylelist, spellErrorsFlags,):
+                           stylelist, spellStatusFlags,):
         separator1 = u'->'
         separator2 = u'|'
 
@@ -222,11 +222,11 @@ class WikiColorizer (object):
         if sep1_pos != -1:
             if self._enableSpellChecking:
                 self._checkSpell(text, pos_start, pos_start + sep1_pos,
-                                 spellErrorsFlags)
+                                 spellStatusFlags)
             return
 
         sep2_pos = link.find(separator2)
         if sep2_pos != -1:
             if self._enableSpellChecking:
                 self._checkSpell(text, pos_start + sep2_pos + len(separator2),
-                                 pos_end, spellErrorsFlags)
+                                 pos_end, spellStatusFlags)

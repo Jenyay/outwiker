@@ -212,29 +212,29 @@ class TextEditor(TextEditorBase):
 
         return width
 
-    def markSpellErrors(self, spellErrorsFlags):
-        if not spellErrorsFlags:
+    def markSpellErrors(self, spellStatusFlags):
+        if not spellStatusFlags:
             return
 
         self.textCtrl.SetIndicatorCurrent(self.SPELL_ERROR_INDICATOR)
         start_pos = 0
-        flag = spellErrorsFlags[start_pos]
+        flag = spellStatusFlags[start_pos]
         while True:
             try:
-                end_pos = spellErrorsFlags.index(not flag, start_pos)
+                end_pos = spellStatusFlags.index(not flag, start_pos)
                 self._setClearSpellError(flag, start_pos, end_pos)
                 flag = not flag
                 start_pos = end_pos
             except ValueError:
-                end_pos = len(spellErrorsFlags)
+                end_pos = len(spellStatusFlags)
                 self._setClearSpellError(flag, start_pos, end_pos)
                 break
 
-    def _setClearSpellError(self, isError, start, end):
-        if isError:
-            self.textCtrl.IndicatorFillRange(start, end - start)
-        else:
+    def _setClearSpellError(self, spellStatus, start, end):
+        if spellStatus:
             self.textCtrl.IndicatorClearRange(start, end - start)
+        else:
+            self.textCtrl.IndicatorFillRange(start, end - start)
 
     def runSpellChecking(self, start, end):
         fullText = self._getTextForParse()
