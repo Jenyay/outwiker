@@ -244,27 +244,6 @@ indicators. True for no spell error, False for spell error.
             self.textCtrl.IndicatorFillRange(start_pos_bytes,
                                              end_pos_bytes - start_pos_bytes)
 
-    # def runSpellChecking(self, start, end):
-    #     fullText = self._getTextForParse()
-    #     errors = self.getSpellChecker().findErrors(fullText[start: end])
-    #     wx.CallAfter(self._runSpellCheckingInMainThread,
-    #                  fullText, errors, start, end)
-
-    # def _runSpellCheckingInMainThread(self, fullText, errors, start, end):
-    #     self.textCtrl.Freeze()
-    #     self.textCtrl.SetIndicatorCurrent(self.SPELL_ERROR_INDICATOR)
-    #     global_start_bytes = self._helper.calcBytePos(fullText, start)
-    #     global_length = self._helper.calcByteLen(fullText[start: end])
-    #     self.textCtrl.IndicatorClearRange(global_start_bytes, global_length)
-
-    #     for _word, err_start, err_end in errors:
-    #         startbytes = self._helper.calcBytePos(fullText, err_start + start)
-    #         endbytes = self._helper.calcBytePos(fullText, err_end + start)
-
-    #         self.textCtrl.IndicatorFillRange(startbytes, endbytes - startbytes)
-
-    #     self.textCtrl.Thaw()
-
     def clearSpellChecking(self):
         text = self._getTextForParse()
         len_bytes = self._helper.calcByteLen(text)

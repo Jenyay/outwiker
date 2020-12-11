@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import wx
+
 from markdownparser.tokens.tokenfonts import (FontsFactory,
                                               BoldToken,
                                               ItalicToken,
@@ -52,18 +54,30 @@ class MarkdownColorizer(object):
             self.insideBlockParser = self.text
 
     def colorize(self, text):
-        self._editor.clearSpellChecking()
         textlength = self._helper.calcByteLen(text)
         stylelist = [0] * textlength
+        spellStatusFlags = [True] * textlength
         self._colorizeText(text,
                            0,
                            textlength,
                            self.colorParser,
-                           stylelist)
-
+                           stylelist,
+                           spellStatusFlags)
+        wx.CallAfter(self._editor.markSpellErrors, spellStatusFlags)
         return stylelist
 
-    def _colorizeText(self, text, start, end, parser, stylelist):
+    def _checkSpell(self, text, start, end, spellStatusFlags):
+        spellChecker = self._editor.getSpellChecker()
+        errors = spellChecker.findErrors(text[start: end])
+
+        for _word, err_start, err_end in errors:
+            startbytes = self._helper.calcBytePos(text, err_start + start)
+            endbytes = self._helper.calcBytePos(text, err_end + start)
+            spellStatusFlags[startbytes:
+                             endbytes] = [False] * (endbytes - startbytes)
+
+    def _colorizeText(self, text, start, end, parser,
+                      stylelist, spellStatusFlags):
         tokens = parser.scanString(text[start: end])
 
         for token in tokens:
@@ -79,8 +93,8 @@ class MarkdownColorizer(object):
                     tokenname == "noformat" or
                     tokenname == "preformat"):
                 if self._enableSpellChecking:
-                    self._editor.runSpellChecking(pos_start,
-                                                  pos_end)
+                    self._checkSpell(text, pos_start, pos_end,
+                                     spellStatusFlags)
                 continue
 
             # Нас интересует позиция в байтах, а не в символах
@@ -96,7 +110,8 @@ class MarkdownColorizer(object):
                 self._colorizeText(text,
                                    pos_start + len(BoldToken.start_1),
                                    pos_end - len(BoldToken.end_1),
-                                   self.insideBlockParser, stylelist)
+                                   self.insideBlockParser,
+                                   stylelist, spellStatusFlags)
 
             elif tokenname == "italic":
                 self._helper.addStyle(stylelist,
@@ -106,7 +121,8 @@ class MarkdownColorizer(object):
                 self._colorizeText(text,
                                    pos_start + len(ItalicToken.start_1),
                                    pos_end - len(ItalicToken.end_1),
-                                   self.insideBlockParser, stylelist)
+                                   self.insideBlockParser, stylelist,
+                                   spellStatusFlags)
 
             elif tokenname == "bold_italic":
                 self._helper.addStyle(stylelist,
@@ -116,7 +132,8 @@ class MarkdownColorizer(object):
                 self._colorizeText(text,
                                    pos_start + len(BoldItalicToken.start),
                                    pos_end - len(BoldItalicToken.end),
-                                   self.insideBlockParser, stylelist)
+                                   self.insideBlockParser,
+                                   stylelist, spellStatusFlags)
 
             elif tokenname == "heading":
                 self._helper.setStyle(stylelist,
@@ -124,8 +141,8 @@ class MarkdownColorizer(object):
                                       bytepos_start,
                                       bytepos_end)
                 if self._enableSpellChecking:
-                    self._editor.runSpellChecking(pos_start,
-                                                  pos_end)
+                    self._checkSpell(text, pos_start, pos_end,
+                                     spellStatusFlags)
 
             elif tokenname == "link":
                 self._helper.addStyle(stylelist,
@@ -135,6 +152,7 @@ class MarkdownColorizer(object):
                 if self._enableSpellChecking:
                     self._linkSpellChecking(text,
                                             stylelist,
+                                            spellStatusFlags,
                                             pos_start,
                                             pos_end,
                                             token)
@@ -151,17 +169,20 @@ class MarkdownColorizer(object):
                                       bytepos_start,
                                       bytepos_end)
                 if self._enableSpellChecking:
-                    self._editor.runSpellChecking(pos_start,
-                                                  pos_end)
+                    self._checkSpell(text, pos_start, pos_end,
+                                     spellStatusFlags)
 
-    def _linkSpellChecking(self, text, stylelist,
+    def _linkSpellChecking(self, text, stylelist, spellStatusFlags,
                            pos_start, pos_end, token):
-        self._editor.runSpellChecking(pos_start + 1,
-                                      pos_start + 1 + len(token[0][0]))
+        self._checkSpell(text,
+                         pos_start + 1,
+                         pos_start + 1 + len(token[0][0]),
+                         spellStatusFlags)
         link = token[0][1]
         space_pos = link.find(u' ')
         if space_pos != -1:
-            self._editor.runSpellChecking(
-                pos_start + 1 + len(token[0][0]) + 2 + space_pos,
-                pos_start + 1 + len(token[0][0]) + 2 + space_pos +
-                len(token[0][1]))
+            self._checkSpell(text,
+                             pos_start + 1 + len(token[0][0]) + 2 + space_pos,
+                             pos_start + 1 + len(token[0][0]) + 2 + space_pos +
+                             len(token[0][1]),
+                             spellStatusFlags)

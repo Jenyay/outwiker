@@ -41,6 +41,5 @@ class ColorizerController(BaseTextStylingController):
             self.updateStyles(editor,
                               text,
                               stylebytes,
-                              stylebytes,
                               0,
                               len(text))

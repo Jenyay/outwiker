@@ -69,12 +69,10 @@ class BaseTextStylingController(object, metaclass=ABCMeta):
                      editor,
                      text,
                      stylebytes,
-                     indicatorsbytes,
                      start,
                      end):
         event = ApplyStyleEvent(text=text,
                                 stylebytes=stylebytes,
-                                indicatorsbytes=indicatorsbytes,
                                 start=start,
                                 end=end)
         wx.PostEvent(editor, event)
