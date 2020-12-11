@@ -109,7 +109,6 @@ class TextEditor(TextEditorBase):
         Установить стили и настройки по умолчанию в контрол StyledTextCtrl
         """
         self._setDefaultSettings()
-        self._spellChecker = self.getSpellChecker()
 
         size = self._config.fontSize.value
         faceName = self._config.fontName.value
@@ -142,7 +141,7 @@ class TextEditor(TextEditorBase):
         self.textCtrl.SetTabWidth(self._config.tabWidth.value)
 
         self.enableSpellChecking = self._config.spellEnabled.value
-        self._spellChecker.skipWordsWithNumbers = self.config.spellSkipDigits.value
+        self.getSpellChecker().skipWordsWithNumbers = self.config.spellSkipDigits.value
 
         self.textCtrl.IndicatorSetStyle(self.SPELL_ERROR_INDICATOR,
                                         wx.stc.STC_INDIC_SQUIGGLE)
@@ -239,7 +238,7 @@ class TextEditor(TextEditorBase):
 
     def runSpellChecking(self, start, end):
         fullText = self._getTextForParse()
-        errors = self._spellChecker.findErrors(fullText[start: end])
+        errors = self.getSpellChecker().findErrors(fullText[start: end])
         wx.CallAfter(self._runSpellCheckingInMainThread,
                      fullText, errors, start, end)
 
@@ -315,9 +314,9 @@ class TextEditor(TextEditorBase):
             spellChecker.addCustomDict(os.path.join(
                 spellDirList[-1], CUSTOM_DICT_FILE_NAME))
 
-            return spellChecker
-        else:
-            return self._spellChecker
+            self._spellChecker = spellChecker
+
+        return self._spellChecker
 
     def _getDictsFromConfig(self):
         dictsStr = self._config.spellCheckerDicts.value
@@ -353,7 +352,7 @@ class TextEditor(TextEditorBase):
             self.__addWordToDict(self._spellErrorText.lower())
 
     def __addWordToDict(self, word):
-        self._spellChecker.addToCustomDict(0, word)
+        self.getSpellChecker().addToCustomDict(0, word)
         self._spellErrorText = None
         self._styleSet = False
 
@@ -366,7 +365,8 @@ class TextEditor(TextEditorBase):
             self._spellStartByteError,
             self._spellEndByteError)
 
-        self._spellSuggestList = self._spellChecker.getSuggest(self._spellErrorText)[
+        spellChecker = self.getSpellChecker()
+        self._spellSuggestList = spellChecker.getSuggest(self._spellErrorText)[
             :self._spellMaxSuggest]
 
         menu.AppendSeparator()

@@ -22,7 +22,6 @@ class WikiColorizer (object):
         self._helper = TextEditorHelper()
         self._enableSpellChecking = enableSpellChecking
         self._runEvent = runEvent
-        self._spellChecker = self._editor.getSpellChecker()
 
         self.text = TextFactory.make(None)
         self.bold = FontsFactory.makeBold(
@@ -90,7 +89,8 @@ class WikiColorizer (object):
         return stylelist
 
     def _checkSpell(self, text, start, end, spellErrorsFlags):
-        errors = self._spellChecker.findErrors(text[start: end])
+        spellChecker = self._editor.getSpellChecker()
+        errors = spellChecker.findErrors(text[start: end])
 
         for _word, err_start, err_end in errors:
             startbytes = self._helper.calcBytePos(text, err_start + start)
