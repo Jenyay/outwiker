@@ -215,24 +215,27 @@ class TextEditor(TextEditorBase):
 
     def markSpellErrors(self, spellStatusFlags: List[bool]):
         """
-        spellStatusFlags - list for every byte (!) to set or clear spell errors
-indicators. True for no spell error, False for spell error.
+        spellStatusFlags - list for every character (!) to set or clear
+ spell errors indicators. True for no spell error, False for spell error.
         """
         if not spellStatusFlags:
             return
 
+        text = self._getTextForParse()
         self.textCtrl.SetIndicatorCurrent(self.SPELL_ERROR_INDICATOR)
-        start_pos_bytes = 0
-        flag = spellStatusFlags[start_pos_bytes]
+        start_pos = 0
+        flag = spellStatusFlags[start_pos]
         while True:
+            start_pos_bytes = self._helper.calcBytePos(text, start_pos)
             try:
-                end_pos_bytes = spellStatusFlags.index(not flag,
-                                                       start_pos_bytes)
+                end_pos = spellStatusFlags.index(not flag, start_pos)
+                end_pos_bytes = self._helper.calcBytePos(text, end_pos)
+
                 self._setClearSpellError(flag, start_pos_bytes, end_pos_bytes)
                 flag = not flag
-                start_pos_bytes = end_pos_bytes
+                start_pos = end_pos
             except ValueError:
-                end_pos_bytes = len(spellStatusFlags)
+                end_pos_bytes = self._helper.calcByteLen(text)
                 self._setClearSpellError(flag, start_pos_bytes, end_pos_bytes)
                 break
 

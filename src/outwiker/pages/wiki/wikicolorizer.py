@@ -82,7 +82,7 @@ class WikiColorizer (object):
     def colorize(self, fullText):
         textlength = self._helper.calcByteLen(fullText)
         stylelist = [0] * textlength
-        spellStatusFlags = [True] * textlength
+        spellStatusFlags = [True] * len(fullText)
         self._colorizeText(fullText, 0, textlength,
                            self.colorParser, stylelist, spellStatusFlags)
         wx.CallAfter(self._editor.markSpellErrors, spellStatusFlags)
@@ -93,10 +93,8 @@ class WikiColorizer (object):
         errors = spellChecker.findErrors(text[start: end])
 
         for _word, err_start, err_end in errors:
-            startbytes = self._helper.calcBytePos(text, err_start + start)
-            endbytes = self._helper.calcBytePos(text, err_end + start)
-            spellStatusFlags[startbytes:
-                             endbytes] = [False] * (endbytes - startbytes)
+            spellStatusFlags[err_start + start:
+                             err_end + start] = [False] * (err_end - err_start)
 
     def _colorizeText(self, text, start, end, parser,
                       stylelist, spellStatusFlags):
@@ -213,7 +211,7 @@ class WikiColorizer (object):
                                       bytepos_end)
 
     def _linkSpellChecking(self, text, pos_start, pos_end,
-                           stylelist, spellStatusFlags,):
+                           stylelist, spellStatusFlags):
         separator1 = u'->'
         separator2 = u'|'
 

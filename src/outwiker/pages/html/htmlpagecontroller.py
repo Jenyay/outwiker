@@ -123,8 +123,7 @@ class HtmlPageController(object):
         else:
             text = content
 
-        result = tpl.substitute(content=text,
-                                title=page.display_title)
+        result = tpl.substitute(content=text, title=page.display_title)
 
         result = self._changeContentByEvent(page,
                                             PostprocessingParams(result),

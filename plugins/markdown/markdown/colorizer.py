@@ -56,7 +56,7 @@ class MarkdownColorizer(object):
     def colorize(self, text):
         textlength = self._helper.calcByteLen(text)
         stylelist = [0] * textlength
-        spellStatusFlags = [True] * textlength
+        spellStatusFlags = [True] * len(text)
         self._colorizeText(text,
                            0,
                            textlength,
@@ -71,10 +71,8 @@ class MarkdownColorizer(object):
         errors = spellChecker.findErrors(text[start: end])
 
         for _word, err_start, err_end in errors:
-            startbytes = self._helper.calcBytePos(text, err_start + start)
-            endbytes = self._helper.calcBytePos(text, err_end + start)
-            spellStatusFlags[startbytes:
-                             endbytes] = [False] * (endbytes - startbytes)
+            spellStatusFlags[err_start + start:
+                             err_end + start] = [False] * (err_end - err_start)
 
     def _colorizeText(self, text, start, end, parser,
                       stylelist, spellStatusFlags):
