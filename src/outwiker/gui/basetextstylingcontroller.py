@@ -68,13 +68,8 @@ class BaseTextStylingController(object, metaclass=ABCMeta):
     def updateStyles(self,
                      editor,
                      text,
-                     stylebytes,
-                     start,
-                     end):
-        event = ApplyStyleEvent(text=text,
-                                stylebytes=stylebytes,
-                                start=start,
-                                end=end)
+                     styleBytes):
+        event = ApplyStyleEvent(text=text, styleBytes=styleBytes)
         wx.PostEvent(editor, event)
 
     def _stopEventHandler(self, *args, **kwargs):

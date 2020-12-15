@@ -50,7 +50,7 @@ class TextEditor(TextEditorBase):
         self._oldStartSelection = None
         self._oldEndSelection = None
 
-        # Уже были установлены стили текста(раскраска)
+        # Уже были установлены стили текста (раскраска)
         self._styleSet = False
 
         self.__stylebytes = None
@@ -263,35 +263,25 @@ class TextEditor(TextEditorBase):
             Application.onEditorStyleNeeded(page, params)
             self._styleSet = True
 
-    def _onApplyStyle(self, event):
+    def _onApplyStyle(self, event: ApplyStyleEvent):
         '''
-            Call back function for EVT_APPLY_STYLE
-
-            Args:
-                event: the object of wx.stc.StyledTextEvent
-            Returns:
-                None
-            Raises:
-                None
+        Call back function for EVT_APPLY_STYLE
         '''
 
         if event.text == self._getTextForParse():
-            startByte = self._helper.calcBytePos(event.text, event.start)
-            endByte = self._helper.calcBytePos(event.text, event.end)
-            lenBytes = endByte - startByte
+            lenBytes = len(event.styleBytes)
 
             textlength = self._helper.calcByteLen(event.text)
             self.__stylebytes = [0] * textlength
 
-            if event.stylebytes is not None:
-                self.__stylebytes = event.stylebytes
+            if event.styleBytes is not None:
+                self.__stylebytes = event.styleBytes
 
-            stylebytesstr = "".join([chr(byte) for byte in self.__stylebytes])
+            stylebytesstr = ''.join([chr(byte) for byte in self.__stylebytes])
 
-            if event.stylebytes is not None:
-                self.textCtrl.StartStyling(startByte)
-                self.textCtrl.SetStyleBytes(lenBytes,
-                                            stylebytesstr[startByte:endByte].encode())
+            if event.styleBytes is not None:
+                self.textCtrl.StartStyling(0)
+                self.textCtrl.SetStyleBytes(lenBytes, stylebytesstr.encode())
 
             self._styleSet = True
 

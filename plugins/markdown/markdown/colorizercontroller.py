@@ -40,6 +40,4 @@ class ColorizerController(BaseTextStylingController):
         if self._runColorizingEvent.is_set():
             self.updateStyles(editor,
                               text,
-                              stylebytes,
-                              0,
-                              len(text))
+                              stylebytes)

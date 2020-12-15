@@ -14,6 +14,7 @@ from .parser.tokentext import TextFactory
 from .parser.tokencomment import CommentFactory
 
 from outwiker.gui.texteditorhelper import TextEditorHelper
+from outwiker.gui.stylinginfo import StylingInfo
 
 
 class WikiColorizer (object):
@@ -85,8 +86,7 @@ class WikiColorizer (object):
         spellStatusFlags = [True] * len(fullText)
         self._colorizeText(fullText, 0, textlength,
                            self.colorParser, stylelist, spellStatusFlags)
-        wx.CallAfter(self._editor.markSpellErrors, spellStatusFlags)
-        return stylelist
+        return StylingInfo(stylelist, spellStatusFlags)
 
     def _checkSpell(self, text, start, end, spellStatusFlags):
         spellChecker = self._editor.getSpellChecker()
