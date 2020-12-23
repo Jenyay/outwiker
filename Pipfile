@@ -12,16 +12,16 @@ cyhunspell = "==2.0.1"
 idna = "==2.10"
 comtypes = {version = "==1.1.7",sys_platform = "== 'win32'"}
 pyparsing = "==2.4.7"
-psutil = "==5.6.6"
+psutil = "==5.8.0"
 
 [dev-packages]
 Fabric3 = "==1.14.post1"
-PyInstaller = "==4.0"
-pympler = "==0.8"
-pytest = "==6.1.0"
-coverage = "==5.3"
+PyInstaller = "==4.1"
+pympler = "==0.9"
+pytest = "==6.2.1"
+coverage = "==5.3.1"
 jinja2 = "==2.11.2"
-colorama = "==0.4.3"
+colorama = "==0.4.4"
 sphinx = ">=3.2"
 outwiker = {editable = true,path = "."}
 buildtools = {editable = true,path = "buildtools"}
