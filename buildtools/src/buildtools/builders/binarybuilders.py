@@ -71,7 +71,6 @@ class BaseBinaryBuilder(object, metaclass=ABCMeta):
             'asyncio',
             'html.parser',
             'pkg_resources',
-            'pkg_resources.py2_warn',
             'hunspell',
             'hunspell.platform',
             'cacheman',
