@@ -34,8 +34,8 @@ class DefListProcessor(BlockProcessor):
 
         raw_block = blocks.pop(0)
         m = self.RE.search(raw_block)
-        terms = [l.strip() for l in
-                 raw_block[:m.start()].split('\n') if l.strip()]
+        terms = [term.strip() for term in
+                 raw_block[:m.start()].split('\n') if term.strip()]
         block = raw_block[m.end():]
         no_indent = self.NO_INDENT_RE.match(block)
         if no_indent:
@@ -87,11 +87,13 @@ class DefListProcessor(BlockProcessor):
 class DefListIndentProcessor(ListIndentProcessor):
     """ Process indented children of definition list items. """
 
-    ITEM_TYPES = ['dd']
-    LIST_TYPES = ['dl']
+    # Defintion lists need to be aware of all list types
+    ITEM_TYPES = ['dd', 'li']
+    LIST_TYPES = ['dl', 'ol', 'ul']
 
     def create_item(self, parent, block):
-        """ Create a new dd and parse the block with it as the parent. """
+        """ Create a new dd or li (depending on parent) and parse the block with it as the parent. """
+
         dd = etree.SubElement(parent, 'dd')
         self.parser.parseBlocks(dd, [block])
 
