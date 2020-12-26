@@ -12,6 +12,7 @@ class ActionInfo(object):
     Класс для внутреннего использования в ActionController
     Хранит информацию о добавленных действиях
     """
+
     def __init__(self, action, hotkey):
         """
         action - действие
@@ -29,6 +30,7 @@ class ActionController(object):
     Класс для управления Actions - добавление / удаление пунктов меню
     и кнопок на панели инструментов
     """
+
     def __init__(self, mainWindow, config):
         self._mainWindow = mainWindow
         self._config = config
@@ -174,7 +176,6 @@ class ActionController(object):
             if actionInfo.toolbar is not None:
                 toolid = actionInfo.toolItemId
                 toolbar = actionInfo.toolbar
-
                 if issubclass(type(toolbar), ToolBar2):
                     toolbar.DeleteTool(toolid)
                 elif issubclass(type(toolbar), wx.ToolBar):

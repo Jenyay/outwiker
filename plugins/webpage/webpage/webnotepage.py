@@ -1,6 +1,6 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
-"""WebPage page class."""
+"""WebPage page class"""
 
 import os.path
 import shutil
@@ -104,6 +104,7 @@ class WebNotePage(WikiPage):
 
 class WebPageFactory(PageFactory):
     """Factory for WebNotePage creation."""
+
     def getPageType(self):
         """Return type of the page."""
         return WebNotePage

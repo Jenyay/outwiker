@@ -32,6 +32,7 @@ from .defines import TOOLBAR_WEBPAGE
 
 class GuiController (object):
     """Controller for creation and destroying GUI."""
+
     def __init__(self, application):
         self._application = application
 
@@ -174,7 +175,8 @@ class GuiController (object):
                 actionController.removeToolbarButton(
                     DisableScriptsAction.stringId)
 
-                self._application.mainWindow.toolbars.destroyToolBar(TOOLBAR_WEBPAGE)
+                self._application.mainWindow.toolbars.destroyToolBar(
+                    TOOLBAR_WEBPAGE)
 
             self._menu.DestroyItem(self._headingMenuItem)
             self._menu.DestroyItem(self._fontMenuItem)
@@ -189,17 +191,17 @@ class GuiController (object):
         actionController = self._application.actionController
 
         # Удалим элементы меню полиморфных действий
-        map(lambda strid: actionController.removeMenuItem(strid),
-            polyActions)
+        for strid in polyActions:
+            actionController.removeMenuItem(strid)
 
         # Удалим кнопки с панелей инструментов
         if TOOLBAR_WEBPAGE in self._application.mainWindow.toolbars:
-            map(lambda strid: actionController.removeToolbarButton(strid),
-                polyActions)
+            for strid in polyActions:
+                actionController.removeToolbarButton(strid)
 
         # Обнулим функции действия в полиморфных действиях
-        map(lambda strid: actionController.getAction(strid).setFunc(None),
-            polyActions)
+        for strid in polyActions:
+            actionController.getAction(strid).setFunc(None)
 
     def _createMenu(self):
         if self._application.mainWindow is not None and self._menu is None:
@@ -783,23 +785,23 @@ class GuiController (object):
                                                    self._application.config)
             if controller.showDialog() == wx.ID_OK:
                 result = controller.getResult()
-                editor.replaceText (result)
+                editor.replaceText(result)
 
     def turnText(self, left, right):
         """
         Обернуть выделенный текст строками left и right.
         Метод предназначен в первую очередь для упрощения доступа к одноименному методу из codeEditor
         """
-        self._application.mainWindow.pagePanel.pageView.codeEditor.turnText(left, right)
-
+        self._application.mainWindow.pagePanel.pageView.codeEditor.turnText(
+            left, right)
 
     def replaceText(self, text):
         """
         Заменить выделенный текст строкой text
         Метод предназначен в первую очередь для упрощения доступа к одноименному методу из codeEditor
         """
-        self._application.mainWindow.pagePanel.pageView.codeEditor.replaceText(text)
-
+        self._application.mainWindow.pagePanel.pageView.codeEditor.replaceText(
+            text)
 
     def escapeHtml(self):
         """
