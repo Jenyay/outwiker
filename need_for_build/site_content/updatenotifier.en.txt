@@ -8,8 +8,6 @@ Attach:ru.png [[Русская версия -> Outwiker/UpdateNotifier]]
 
 [[UpdateNotifier {{ version_full }} -> Attach:Outwiker/UpdateNotifier/updatenotifier-{{ version_full }}.zip]] ('''Required OutWiker version: 2.1.0.836 and above''')
 
-<!--#version stable {{ version_full }} -->
-
 (:DonateOWEn:)
 
 !!! Using

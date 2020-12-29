@@ -10,8 +10,6 @@ With Sessions plugin you can save the current program status (open tree notes, o
 
 [[Sessions {{ version_full }} -> Attach:Outwiker/Sessions/sessions-{{ version_full }}.zip]] ('''Required OutWiker version: 3.0.0.868 and above''')
 
-<!--#version stable {{ version_full }} -->
-
 (:DonateOWEn:)
 
 

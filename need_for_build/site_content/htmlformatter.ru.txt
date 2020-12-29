@@ -9,8 +9,6 @@ Attach:Soft/Outwiker/us.png [[English version -> Outwiker/HtmlFormatterEn]]
 
 [[HtmlFormatter {{ version_full }} -> Attach:htmlformatter-{{ version_full }}.zip]] ('''Требуемая версия OutWiker: 3.0.0.868 и выше''')
 
-<!--#version stable {{ version_full }}-->
-
 (:DonateOW:)
 
 !!! [[#description]] Описание

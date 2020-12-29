@@ -11,8 +11,6 @@ Attach:Soft/Outwiker/us.png [[English version -> Outwiker/LivejournalPluginEn]]
 
 [[Livejournal {{ version_full }} -> Attach:livejournal-{{ version_full }}.zip]] ('''Требуемая версия OutWiker: 3.0.0.868 и выше''')
 
-<!--#version stable {{ version_full }} -->
-
 (:DonateOW:)
 
 Команда [=(:ljuser:)=] предназначена для вставки ссылки на пользователя сайта http://livejournal.com (Живой Журнал, ЖЖ) таким образом, чтобы внешне эта ссылка выглядела так же, как это принято в самом ЖЖ. 

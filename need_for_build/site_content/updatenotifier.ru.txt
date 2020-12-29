@@ -9,8 +9,6 @@ Attach:us.png [[English version -> Outwiker/UpdateNotifierEn]]
 
 [[UpdateNotifier {{ version_full }} -> Attach:updatenotifier-{{ version_full }}.zip]] ('''Требуемая версия OutWiker: 2.1.0.836 и выше''')
 
-<!--#version stable {{ version_full }} -->
-
 (:DonateOW:)
 
 !!! Использование
