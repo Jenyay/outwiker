@@ -20,7 +20,7 @@
 			<change>Change the storage format for certain properties of the notes tree pages.</change>
 			<change>Change the way of storing standard icons in notes.</change>
 			<change>Change plug-ins format.</change>
-			<change>Migrate to Python 3.x and wxPython 4.0.</change>
+			<change>Migrate to Python 3.x and wxPython 4.1.</change>
 		</changes>
 
 		<changes lang="ru">
@@ -42,7 +42,7 @@
 			<change>Изменение формата хранения некоторых настроек страниц в дереве заметок.</change>
 			<change>Изменен способ хранения стандартных значков в заметках.</change>
 			<change>Изменен формат плагинов.</change>
-			<change>Переход на Python 3.x и wxPython 4.0.</change>
+			<change>Переход на Python 3.x и wxPython 4.1.</change>
 		</changes>
 	</version>
 </versions>
