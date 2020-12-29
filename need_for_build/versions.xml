@@ -1,5 +1,15 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <versions>
+	<version number="3.0.0.877" status="dev">
+		<changes>
+			<change></change>
+		</changes>
+
+		<changes lang="ru">
+			<change></change>
+		</changes>
+	</version>
+
 	<version number="3.0.0.876" status="dev" date="29.12.2020">
 		<changes>
 			<change>Migrate to wxPython 4.1.1.</change>
