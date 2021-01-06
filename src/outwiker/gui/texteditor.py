@@ -84,7 +84,7 @@ class TextEditor(TextEditorBase):
 
         # При перехвате этого сообщения в других классах,
         # нужно вызывать event.Skip(), чтобы это сообщение дошло сюда
-        self.textCtrl.Bind(wx.stc.EVT_STC_CHANGE, self.__onChange)
+        self.textCtrl.Bind(wx.stc.EVT_STC_MODIFIED, self.__onModified)
 
     @property
     def config(self):
@@ -99,10 +99,10 @@ class TextEditor(TextEditorBase):
         self._enableSpellChecking = value
         self._styleSet = False
 
-    def __onChange(self, event):
+    def __onModified(self, event):
         self._styleSet = False
         self._lastEdit = datetime.now()
-        self.__setMarginWidth(self.textCtrl)
+        self._updateMarginWidth()
         event.Skip()
 
     def setDefaultSettings(self):
@@ -138,7 +138,7 @@ class TextEditor(TextEditorBase):
 
         self._setHotKeys()
 
-        self.__setMarginWidth(self.textCtrl)
+        self._updateMarginWidth()
         self.textCtrl.SetTabWidth(self._config.tabWidth.value)
 
         self.enableSpellChecking = self._config.spellEnabled.value
@@ -184,34 +184,6 @@ class TextEditor(TextEditorBase):
             self.textCtrl.CmdKeyAssign(wx.stc.STC_KEY_END,
                                        wx.stc.STC_SCMOD_ALT,
                                        wx.stc.STC_CMD_LINEENDDISPLAY)
-
-    def __setMarginWidth(self, editor):
-        """
-        Установить размер левой области, где пишутся номера строк в
-        зависимости от шрифта
-        """
-        if self.__showlinenumbers:
-            editor.SetMarginWidth(0, self.__getMarginWidth())
-            editor.SetMarginWidth(1, 5)
-        else:
-            editor.SetMarginWidth(0, 0)
-            editor.SetMarginWidth(1, 8)
-
-    def __getMarginWidth(self):
-        """
-        Расчет размера серой области с номером строк
-        """
-        fontSize = self._config.fontSize.value
-        linescount = len(self.GetText().split("\n"))
-
-        if linescount == 0:
-            width = 10
-        else:
-            # Количество десятичных цифр в числе строк
-            digits = int(math.log10(linescount) + 1)
-            width = int(1.2 * fontSize * digits)
-
-        return width
 
     def markSpellErrors(self, spellStatusFlags: List[bool]):
         """
@@ -412,3 +384,31 @@ class TextEditor(TextEditorBase):
     def _onMouseLeftUp(self, event):
         self._checkCaretMoving()
         event.Skip()
+
+    def _updateMarginWidth(self):
+        """
+        Установить размер левой области, где пишутся номера строк в
+        зависимости от шрифта
+        """
+        if self.__showlinenumbers:
+            self.textCtrl.SetMarginWidth(0, self.__getMarginWidth())
+            self.textCtrl.SetMarginWidth(1, 5)
+        else:
+            self.textCtrl.SetMarginWidth(0, 0)
+            self.textCtrl.SetMarginWidth(1, 0)
+
+    def __getMarginWidth(self):
+        """
+        Расчет размера серой области с номером строк
+        """
+        linescount = self.textCtrl.GetLineCount()
+
+        if linescount == 0:
+            width = 10
+        else:
+            # Количество десятичных цифр в числе строк
+            digits = int(math.log10(linescount) + 1)
+            text = '_' + '9' * digits
+            width = self.textCtrl.TextWidth(wx.stc.STC_STYLE_LINENUMBER, text)
+
+        return width
