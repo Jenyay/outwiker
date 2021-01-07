@@ -24,20 +24,20 @@ def getAlternativeTitle(title: str,
     regexp = re.compile(r'[><|?*:"\\/#%]')
     newtitle = regexp.sub(substitution, newtitle)
 
-    # 2. Replace dots at the end of title
+    # 2. Check for special names
+    if re.match(r'^\.+$', newtitle):
+        newtitle = ''
+
+    # 3. Replace dots at the end of the title
     dots_regexp = re.compile(r'(?P<dots>\.+)$')
     dots_match = dots_regexp.search(newtitle)
     if dots_match is not None:
         dots_count = len(dots_match.group('dots'))
         newtitle = newtitle[:-dots_count] + '_' * dots_count
 
-    # 3. Replace double underline in the begin title
+    # 4. Replace double underline in the begin title
     if newtitle.startswith('__'):
         newtitle = '--' + newtitle[2:]
-
-    # 4. Check for special names
-    if re.match(r'^\.+$', newtitle):
-        newtitle = ''
 
     # 5. Make unique title
     result = newtitle
