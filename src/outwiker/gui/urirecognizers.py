@@ -16,6 +16,7 @@ class Recognizer(metaclass=ABCMeta):
     '''
     Base class for all recognizers
     '''
+
     def __init__(self, basepath: str):
         '''
         basepath - path to directory with current HTML file for HTML render.

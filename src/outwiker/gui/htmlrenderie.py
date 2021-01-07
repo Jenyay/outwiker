@@ -33,6 +33,8 @@ class HtmlRenderIEBase(HtmlRenderBase):
     def __init__(self, parent):
         super().__init__(parent)
         self._basepath = None
+        self.canOpenUrl = set()
+        self._navigate_id = 1
 
         self.Awake()
         self.Bind(wx.EVT_CLOSE, handler=self._onClose)
@@ -62,7 +64,7 @@ class HtmlRenderIEBase(HtmlRenderBase):
         if anchor:
             path += anchor
 
-        self.canOpenUrl += 1
+        self.canOpenUrl.add(path)
         self.render.SetPage(htmltext, path)
 
     def Sleep(self):
@@ -73,7 +75,7 @@ class HtmlRenderIEBase(HtmlRenderBase):
         self.Unbind(wx.EVT_MENU, handler=self._onCopyFromHtml, id=wx.ID_CUT)
 
     def Awake(self):
-        self.canOpenUrl = 0
+        self.canOpenUrl = set()
         self._navigate_id = 1
 
         import wx.html2 as webview
@@ -127,7 +129,7 @@ class HtmlRenderIEBase(HtmlRenderBase):
             return
 
         # Link clicked
-        if self.canOpenUrl == 0:
+        if href not in self.canOpenUrl:
             logger.debug(
                 '_onNavigating ({nav_id}). Link clicked.'.format(nav_id=nav_id))
             processed = self._onLinkClicked(href)
@@ -138,12 +140,10 @@ class HtmlRenderIEBase(HtmlRenderBase):
             else:
                 logger.debug('_onNavigating ({nav_id}) end. Allow href processing. href={href}'.format(
                     nav_id=nav_id, href=href))
-            return
-
-        self.canOpenUrl -= 1
-
-        logger.debug('_onNavigating ({nav_id}) end. canOpenUrl={canOpenUrl}'.format(
-            nav_id=nav_id, canOpenUrl=self.canOpenUrl))
+        else:
+            self.canOpenUrl.remove(href)
+            logger.debug('_onNavigating ({nav_id}) end. canOpenUrl={canOpenUrl}'.format(
+                nav_id=nav_id, canOpenUrl=self.canOpenUrl))
 
 
 class HtmlRenderIEForPage(HtmlRenderIEBase, HTMLRenderForPageMixin):
@@ -165,7 +165,7 @@ class HtmlRenderIEForPage(HtmlRenderIEBase, HTMLRenderForPageMixin):
 
     def LoadPage(self, fname):
         self.render.Stop()
-        self._basepath = os.path.dirname(fname)
+        self._basepath = fname
 
         # Add anchor for references
         anchor = None
@@ -173,7 +173,7 @@ class HtmlRenderIEForPage(HtmlRenderIEBase, HTMLRenderForPageMixin):
             anchor = Application.sharedData[APP_DATA_KEY_ANCHOR]
             del Application.sharedData[APP_DATA_KEY_ANCHOR]
 
-        self.canOpenUrl += 1
+        self.canOpenUrl.add(fname)
         self.render.LoadURL(fname)
 
     def _identifyUri(self, href):
@@ -272,7 +272,7 @@ class HtmlRenderIEGeneral(HtmlRenderIEBase):
             html = readTextFile(fname)
         except IOError:
             text = _(u"Can't read file %s") % (fname)
-            self.canOpenUrl += 1
+            self.canOpenUrl.add(fname)
             self.SetPage(text, os.path.dirname(fname))
 
         basepath = os.path.dirname(fname)
