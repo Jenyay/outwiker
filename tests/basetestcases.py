@@ -5,7 +5,6 @@ import unittest
 import os
 from tempfile import mkdtemp, NamedTemporaryFile
 from gettext import NullTranslations
-import locale
 
 import wx
 
@@ -44,7 +43,6 @@ class BaseWxTestCase(unittest.TestCase):
 
     def setUp(self):
         self._wxapp = wx.App()
-        locale.setlocale(locale.LC_ALL, '')
         self.mainWindow = None
 
     def tearDown(self):
@@ -62,7 +60,8 @@ class BaseWxTestCase(unittest.TestCase):
 
 class WikiTestMixin(object):
     def createWiki(self):
-        wikipath = mkdtemp(prefix='OutWiker_Абырвалг абырвалг_' + str(self.__class__.__name__))
+        wikipath = mkdtemp(
+            prefix='OutWiker_Абырвалг абырвалг_' + str(self.__class__.__name__))
         return WikiDocument.create(wikipath)
 
     def destroyWiki(self, wikiroot):
@@ -196,7 +195,8 @@ class PluginLoadingMixin(BaseOutWikerGUIMixin, metaclass=ABCMeta):
         self.application.selectedPage = self.wikiroot["Викистраница"]
         self.loader.disable(self.getPluginName())
 
-        action = self.application.actionController.getAction(SwitchCodeResultAction.stringId)
+        action = self.application.actionController.getAction(
+            SwitchCodeResultAction.stringId)
         action.run(None)
         self.loader.clear()
 
@@ -205,7 +205,8 @@ class PluginLoadingMixin(BaseOutWikerGUIMixin, metaclass=ABCMeta):
         self.application.selectedPage = self.wikiroot["HTML"]
         self.loader.disable(self.getPluginName())
 
-        action = self.application.actionController.getAction(SwitchCodeResultAction.stringId)
+        action = self.application.actionController.getAction(
+            SwitchCodeResultAction.stringId)
         action.run(None)
         self.loader.clear()
 
@@ -214,7 +215,8 @@ class PluginLoadingMixin(BaseOutWikerGUIMixin, metaclass=ABCMeta):
         self.application.selectedPage = self.wikiroot["Викистраница"]
         self.loader.clear()
 
-        action = self.application.actionController.getAction(SwitchCodeResultAction.stringId)
+        action = self.application.actionController.getAction(
+            SwitchCodeResultAction.stringId)
         action.run(None)
 
     def testDestroy_10(self):
@@ -222,5 +224,6 @@ class PluginLoadingMixin(BaseOutWikerGUIMixin, metaclass=ABCMeta):
         self.application.selectedPage = self.wikiroot["HTML"]
         self.loader.clear()
 
-        action = self.application.actionController.getAction(SwitchCodeResultAction.stringId)
+        action = self.application.actionController.getAction(
+            SwitchCodeResultAction.stringId)
         action.run(None)

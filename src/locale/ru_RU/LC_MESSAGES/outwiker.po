@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-10 11:50+0300\n"
+"POT-Creation-Date: 2021-01-09 17:20+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 2.4.2\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: ../../..\n"
 
@@ -374,7 +374,7 @@ msgstr "Начать поиск и замену по странице"
 
 #: outwiker/actions/showhideattaches.py:17 outwiker/actions/switchto.py:63
 #: outwiker/gui/mainpanes/attachmainpane.py:19
-#: outwiker/gui/preferences/prefcontroller.py:156
+#: outwiker/gui/preferences/prefcontroller.py:135
 msgid "Attachments"
 msgstr "Прикрепленные файлы"
 
@@ -716,7 +716,11 @@ msgstr "погода"
 msgid "Line Breaks (<br/>)"
 msgstr "Разрывы строк (<br/>)"
 
-#: outwiker/core/pagetitletester.py:50
+#: outwiker/core/i18n.py:122
+msgid "LANGUAGE_DEFAULT"
+msgstr "LANGUAGE_RUSSIAN"
+
+#: outwiker/core/pagetitletester.py:51
 #, python-format
 msgid ""
 "The page title contains the expression \"%xx\". Links on this page may be "
@@ -725,23 +729,23 @@ msgstr ""
 "Заголовок страницы содержит выражение \"%xx\". Ссылки на эту страницу могут "
 "не работать."
 
-#: outwiker/core/pagetitletester.py:57
+#: outwiker/core/pagetitletester.py:58
 msgid "The page title is empty"
 msgstr "Заголовок страницы пустой"
 
-#: outwiker/core/pagetitletester.py:60
+#: outwiker/core/pagetitletester.py:61
 msgid "Invalid the page title"
 msgstr "Ошибка заголовка страницы"
 
-#: outwiker/core/pagetitletester.py:63
+#: outwiker/core/pagetitletester.py:64
 msgid "The page title can not begin with __"
 msgstr "Заголовок страницы не может начинаться с __"
 
-#: outwiker/core/pagetitletester.py:68 outwiker/core/pagetitletester.py:107
+#: outwiker/core/pagetitletester.py:69 outwiker/core/pagetitletester.py:108
 msgid "The page title contains invalid characters"
 msgstr "Заголовок страницы содержит запрещённые символы"
 
-#: outwiker/core/pagetitletester.py:124
+#: outwiker/core/pagetitletester.py:125
 msgid ""
 "The page title contains invalid characters for Microsoft Windows operating "
 "system"
@@ -979,7 +983,7 @@ msgid "Insert the current date"
 msgstr "Вставить текущую дату"
 
 #: outwiker/gui/actionslist.py:192
-#: outwiker/gui/preferences/prefcontroller.py:176
+#: outwiker/gui/preferences/prefcontroller.py:155
 msgid "Spell checking"
 msgstr "Проверка орфографии"
 
@@ -1195,15 +1199,15 @@ msgid "You did not select a file to execute"
 msgstr "Вы не выбрали файл(ы) для запуска"
 
 #: outwiker/gui/attachpanel.py:297 outwiker/gui/htmlrender.py:63
-#: outwiker/gui/htmlrenderie.py:250 outwiker/gui/htmlrenderie.py:308
+#: outwiker/gui/htmlrenderie.py:255 outwiker/gui/htmlrenderie.py:337
 #: outwiker/gui/htmlrenderwebkit.py:261 outwiker/gui/htmlrenderwebkit.py:343
 #, python-format
 msgid "Can't execute file '%s'"
 msgstr "Ошибка запуска файла '%s'"
 
 #: outwiker/gui/basepagedialog.py:131 outwiker/gui/mainwindow.py:202
-#: outwiker/gui/preferences/prefcontroller.py:150
-#: outwiker/gui/preferences/prefcontroller.py:175
+#: outwiker/gui/preferences/prefcontroller.py:129
+#: outwiker/gui/preferences/prefcontroller.py:154
 #: outwiker/pages/wiki/wikipagecontroller.py:84
 msgid "General"
 msgstr "Общие"
@@ -1328,15 +1332,15 @@ msgstr "Родитель"
 msgid "Modify date"
 msgstr "Дата изменения"
 
-#: outwiker/gui/currentpagepanel.py:99
+#: outwiker/gui/currentpagepanel.py:98
 msgid "Can't open page. Page folder not exists"
 msgstr "Невозможно открыть страницу. Папка со страницей отсутствует"
 
-#: outwiker/gui/currentpagepanel.py:109
+#: outwiker/gui/currentpagepanel.py:108
 msgid "Add to Bookmarks"
 msgstr "Добавить в закладки"
 
-#: outwiker/gui/currentpagepanel.py:116
+#: outwiker/gui/currentpagepanel.py:115
 msgid "Remove from Bookmarks"
 msgstr "Удалить из закладок"
 
@@ -1354,70 +1358,70 @@ msgstr ""
 "Папка со страницей не существует. \n"
 "Вики будет перезагружена."
 
-#: outwiker/gui/dialogs/about.py:14
+#: outwiker/gui/dialogs/about.py:15
 msgid "OutWiker"
 msgstr "OutWiker"
 
-#: outwiker/gui/dialogs/about.py:15
+#: outwiker/gui/dialogs/about.py:16
 msgid "Version:"
 msgstr "Версия:"
 
-#: outwiker/gui/dialogs/about.py:28
+#: outwiker/gui/dialogs/about.py:30
 msgid "OutWiker is personal wiki system and tree notes outliner."
 msgstr ""
 "OutWiker - это персональная викисистема и древовидный редактор заметок."
 
-#: outwiker/gui/dialogs/about.py:31
+#: outwiker/gui/dialogs/about.py:33
 msgid "License: GPL 3"
 msgstr "Лицензия: GPL 3"
 
-#: outwiker/gui/dialogs/about.py:36
+#: outwiker/gui/dialogs/about.py:38
 msgid "OutWiker's page:"
 msgstr "Страница программы:"
 
-#: outwiker/gui/dialogs/about.py:42 outwiker/gui/dialogs/about.py:43
+#: outwiker/gui/dialogs/about.py:44 outwiker/gui/dialogs/about.py:45
 msgid "https://jenyay.net/Outwiker/English"
 msgstr "https://jenyay.net/Soft/Outwiker"
 
-#: outwiker/gui/dialogs/about.py:52
+#: outwiker/gui/dialogs/about.py:54
 msgid "mailto:jenyay.ilin@gmail.com"
 msgstr "mailto:jenyay.ilin@gmail.com"
 
-#: outwiker/gui/dialogs/about.py:58
+#: outwiker/gui/dialogs/about.py:60
 msgid "Facebook page"
 msgstr "Страница на Facebook"
 
-#: outwiker/gui/dialogs/about.py:59
+#: outwiker/gui/dialogs/about.py:61
 msgid "https://www.facebook.com/outwiker"
 msgstr "https://www.facebook.com/outwiker"
 
-#: outwiker/gui/dialogs/about.py:65
+#: outwiker/gui/dialogs/about.py:67
 msgid "Twitter"
 msgstr "Twitter"
 
-#: outwiker/gui/dialogs/about.py:66
+#: outwiker/gui/dialogs/about.py:68
 msgid "https://twitter.com/OutWiker"
 msgstr "https://twitter.com/OutWiker"
 
-#: outwiker/gui/dialogs/about.py:72
+#: outwiker/gui/dialogs/about.py:74
 msgid "Vkontakte group"
 msgstr "Группа Вконтакте"
 
-#: outwiker/gui/dialogs/about.py:73
+#: outwiker/gui/dialogs/about.py:75
 msgid "https://vk.com/outwiker"
 msgstr "https://vk.com/outwiker"
 
-#: outwiker/gui/dialogs/about.py:85 outwiker/gui/dialogs/about.py:143
+#: outwiker/gui/dialogs/about.py:87 outwiker/gui/dialogs/about.py:109
 msgid "About"
 msgstr "О программе"
 
-#: outwiker/gui/dialogs/about.py:121
-msgid "Author: Ilin Eugeniy (aka Jenyay)"
-msgstr "Автор: Евгений Ильин (aka Jenyay)"
-
-#: outwiker/gui/dialogs/about.py:144
+#: outwiker/gui/dialogs/about.py:110
 msgid "Contacts"
 msgstr "Контакты"
+
+#: outwiker/gui/dialogs/about.py:130
+msgid "Author: Ilin Eugeniy (aka Jenyay)"
+msgstr "Автор: Евгений Ильин (aka Jenyay)"
 
 #: outwiker/gui/dialogs/overwritedialog.py:13
 msgid "Overwrite file?"
@@ -1455,7 +1459,8 @@ msgstr "Последние используемые деревья замето�
 msgid "Open"
 msgstr "Открыть"
 
-#: outwiker/gui/htmlrenderwebkit.py:171 outwiker/gui/htmlrenderwebkit.py:283
+#: outwiker/gui/htmlrenderie.py:277 outwiker/gui/htmlrenderwebkit.py:171
+#: outwiker/gui/htmlrenderwebkit.py:283
 #, python-format
 msgid "Can't read file %s"
 msgstr "Ошибка чтения файла %s"
@@ -1514,7 +1519,7 @@ msgid "Toolbars"
 msgstr "Панели инструментов"
 
 #: outwiker/gui/mainwindow.py:208
-#: outwiker/gui/preferences/prefcontroller.py:185
+#: outwiker/gui/preferences/prefcontroller.py:164
 msgid "Plugins"
 msgstr "Плагины"
 
@@ -1641,7 +1646,7 @@ msgid "Double click on an attached file"
 msgstr "Двойной клик на прикрепленном файле"
 
 #: outwiker/gui/preferences/colorspanel.py:34
-#: outwiker/gui/preferences/prefcontroller.py:151
+#: outwiker/gui/preferences/prefcontroller.py:130
 msgid "Main window"
 msgstr "Главное окно"
 
@@ -1654,7 +1659,7 @@ msgid "Main panels text color"
 msgstr "Цвет текста основных панелей"
 
 #: outwiker/gui/preferences/colorspanel.py:45
-#: outwiker/gui/preferences/prefcontroller.py:155
+#: outwiker/gui/preferences/prefcontroller.py:134
 msgid "Tags cloud"
 msgstr "Облако меток"
 
@@ -1733,7 +1738,7 @@ msgid "Recent used"
 msgstr "Последний используемый"
 
 #: outwiker/gui/preferences/generalpanel.py:40
-#: outwiker/gui/preferences/prefcontroller.py:154
+#: outwiker/gui/preferences/prefcontroller.py:133
 #: outwiker/pages/html/basehtmlpanel.py:184
 msgid "Preview"
 msgstr "Просмотр"
@@ -1941,63 +1946,63 @@ msgstr "Относительный путь до текущей страницы
 msgid "Main window title format"
 msgstr "Формат заголовка главного окна"
 
-#: outwiker/gui/preferences/pluginspanel.py:37
+#: outwiker/gui/preferences/pluginspanel.py:38
 msgid "Download more plugins"
 msgstr "Скачать другие плагины"
 
-#: outwiker/gui/preferences/pluginspanel.py:38
+#: outwiker/gui/preferences/pluginspanel.py:39
 msgid "https://jenyay.net/Outwiker/PluginsEn"
 msgstr "https://jenyay.net/Outwiker/Plugins"
 
-#: outwiker/gui/preferences/pluginspanel.py:120
+#: outwiker/gui/preferences/pluginspanel.py:121
 msgid "Version"
 msgstr "Версия"
 
-#: outwiker/gui/preferences/pluginspanel.py:124
+#: outwiker/gui/preferences/pluginspanel.py:125
 msgid "Description"
 msgstr "Описание"
 
-#: outwiker/gui/preferences/pluginspanel.py:129
+#: outwiker/gui/preferences/pluginspanel.py:130
 msgid "Site"
 msgstr "Сайт"
 
-#: outwiker/gui/preferences/prefcontroller.py:152
+#: outwiker/gui/preferences/prefcontroller.py:131
 msgid "Colors"
 msgstr "Цвета"
 
-#: outwiker/gui/preferences/prefcontroller.py:153
+#: outwiker/gui/preferences/prefcontroller.py:132
 msgid "Tray icon"
 msgstr "Значок в панели задач"
 
-#: outwiker/gui/preferences/prefcontroller.py:157
+#: outwiker/gui/preferences/prefcontroller.py:136
 msgid "Hotkeys"
 msgstr "Сочетания клавиш"
 
-#: outwiker/gui/preferences/prefcontroller.py:160
+#: outwiker/gui/preferences/prefcontroller.py:139
 msgid "Interface"
 msgstr "Интерфейс"
 
-#: outwiker/gui/preferences/prefcontroller.py:177
+#: outwiker/gui/preferences/prefcontroller.py:156
 msgid "HTML editor"
 msgstr "HTML-редактор"
 
-#: outwiker/gui/preferences/prefcontroller.py:178
+#: outwiker/gui/preferences/prefcontroller.py:157
 msgid "Wiki editor"
 msgstr "Викиредактор"
 
-#: outwiker/gui/preferences/prefcontroller.py:181
+#: outwiker/gui/preferences/prefcontroller.py:160
 msgid "Editor"
 msgstr "Редактор"
 
-#: outwiker/gui/preferences/prefcontroller.py:190
+#: outwiker/gui/preferences/prefcontroller.py:169
 msgid "Text printout"
 msgstr "Печать текста"
 
-#: outwiker/gui/preferences/prefcontroller.py:194
+#: outwiker/gui/preferences/prefcontroller.py:173
 msgid "User's iconset"
 msgstr "Значки пользователя"
 
-#: outwiker/gui/preferences/prefcontroller.py:199
+#: outwiker/gui/preferences/prefcontroller.py:178
 msgid "Preferences"
 msgstr "Параметры"
 
@@ -2208,7 +2213,7 @@ msgstr "Загрузка страницы. Пожалуйста, подожди�
 msgid "Page loading error: {}"
 msgstr "Ошибка загрузки страницы: {}"
 
-#: outwiker/pages/html/htmlpage.py:93
+#: outwiker/pages/html/htmlpage.py:94
 msgid "HTML Page"
 msgstr "HTML-страница"
 

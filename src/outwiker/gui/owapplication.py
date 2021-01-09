@@ -2,7 +2,6 @@
 
 import os
 import os.path
-import locale
 import logging
 from gettext import NullTranslations
 
@@ -20,11 +19,9 @@ class OutWikerApplication(wx.App):
     """
     OutWiker application class
     """
+
     def __init__(self, application):
         super().__init__()
-        # Fix a problem with Python 3.8 and wxPython 4.1
-        locale.setlocale(locale.LC_ALL, '')
-
         self.logFileName = u"outwiker.log"
         self._application = application
 
@@ -36,9 +33,6 @@ class OutWikerApplication(wx.App):
         return True
 
     def initMainWindow(self):
-        # Fix a problem with Python 3.8 and wxPython 4.1
-        locale.setlocale(locale.LC_ALL, '')
-
         self.mainWnd = MainWindow(self._application)
         self.SetTopWindow(self.mainWnd)
 
