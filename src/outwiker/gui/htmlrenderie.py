@@ -174,6 +174,9 @@ class HtmlRenderIEForPage(HtmlRenderIEBase, HTMLRenderForPageMixin):
             del Application.sharedData[APP_DATA_KEY_ANCHOR]
 
         self.canOpenUrl.add(fname)
+        if anchor is not None:
+            fname += anchor
+
         self.render.LoadURL(fname)
 
     def _identifyUri(self, href):
