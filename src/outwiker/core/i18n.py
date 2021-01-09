@@ -110,17 +110,25 @@ def initLocale(config):
 
     config - instance of the outwiker.core.config.Config class
     """
+    logger = logging.getLogger('outwiker.gui.i18n')
     language = getLanguageFromConfig(config)
     try:
         init_i18n(language)
     except IOError:
-        logging.warning("Can't load language: {}".format(language))
+        logger.warning("Can't load language: {}".format(language))
 
     locale = None
+
+    # Add OutWiker's locale directory to path to find standard wxPython locales
+    # Needed for binary build
+    langdir = os.path.join(getCurrentDir(), 'locale')
+    wx.Locale.AddCatalogLookupPathPrefix(langdir)
+
     if wx.GetApp() is not None:
         try:
-            language_wx = getattr(wx, _('LANGUAGE_DEFAULT'))
-            locale = wx.Locale(language_wx)
+            wx_lang_name = _('LANGUAGE_DEFAULT')
+            wx_language = getattr(wx, wx_lang_name)
+            locale = wx.Locale(wx_language)
         except AttributeError:
             locale = wx.Locale(wx.LANGUAGE_DEFAULT)
 

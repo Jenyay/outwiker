@@ -6,6 +6,7 @@ import os.path
 from pathlib import Path
 import shutil
 
+import wx
 from fabric.api import lcd, local
 
 from buildtools.utilites import remove, print_info
@@ -78,7 +79,11 @@ class BaseBinaryBuilder(object, metaclass=ABCMeta):
         ]
 
     def get_additional_files(self):
-        return []
+        # Add the standard wxPython locales
+        wx_locales_path = os.path.join(os.path.dirname(wx.__file__), 'locale')
+        languages = ['ru', 'de', 'sv', 'uk']
+        return [(os.path.join(wx_locales_path, lang, 'LC_MESSAGES', 'wxstd.mo'),
+                 os.path.join('locale', lang, 'LC_MESSAGES')) for lang in languages]
 
     def _copy_additional_files(self):
         root_dir = os.path.join(self._dist_dir, u'outwiker')
