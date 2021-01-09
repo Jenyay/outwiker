@@ -128,7 +128,8 @@ def initLocale(config):
         try:
             wx_lang_name = _('LANGUAGE_DEFAULT')
             wx_language = getattr(wx, wx_lang_name)
-            locale = wx.Locale(wx_language)
+            if wx.Locale.IsAvailable(wx_language):
+                locale = wx.Locale(wx_language)
         except AttributeError:
             locale = wx.Locale(wx.LANGUAGE_DEFAULT)
 
