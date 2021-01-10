@@ -32,7 +32,7 @@ apps:
             - upower-observe
             - mount-observe
         extensions:
-            - gnome-3-28
+            - gnome-3-34
         desktop: usr/share/applications/outwiker.desktop
         # environment:
         #     LD_LIBRARY_PATH: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/webkit2gtk-4.0/:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/pulseaudio:$LD_LIBRARY_PATH
