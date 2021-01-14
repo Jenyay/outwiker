@@ -18,7 +18,7 @@ AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
-DefaultDirName={commonpf}\{#MyAppName}
+DefaultDirName={code:GetDirName}
 DefaultGroupName={#MyAppName}
 AllowNoIcons=yes
 OutputBaseFilename=$resultname
@@ -26,6 +26,8 @@ OutputDir=.
 Compression=lzma
 SolidCompression=yes
 LicenseFile=LICENSE.txt
+PrivilegesRequired=lowest
+PrivilegesRequiredOverridesAllowed=commandline dialog
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
@@ -105,3 +107,11 @@ Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\{#MyAppName}"; Fil
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
 
+[Code]
+function GetDirName(Param: string): string;
+begin
+  if IsAdminInstallMode then
+    Result := ExpandConstant('{commonpf}\Outwiker')
+  else
+    Result := ExpandConstant('{localappdata}\Outwiker');
+end;
