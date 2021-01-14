@@ -44,8 +44,6 @@ from buildtools.defines import (
 )
 from buildtools.versions import (getOutwikerVersion,
                                  getOutwikerVersionStr,
-                                 downloadAppInfo,
-                                 getLocalAppInfoList,
                                  )
 from buildtools.builders import (BuilderWindows,
                                  BuilderSources,
@@ -61,7 +59,6 @@ from buildtools.deploy.pluginsuploader import PluginsUploader
 from buildtools.deploy.distribsuploader import DistribsUploader
 
 from outwiker.utilites.textfile import readTextFile
-from outwiker.core.changelogfactory import ChangeLogFactory
 
 
 DEPLOY_SERVER_NAME = os.environ.get('OUTWIKER_DEPLOY_SERVER_NAME', '')

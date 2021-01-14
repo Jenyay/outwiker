@@ -3,9 +3,6 @@
 import os
 
 
-# Supported Ubuntu releases
-UBUNTU_RELEASE_NAMES = ["xenial"]
-
 # List of the supported plugins
 PLUGINS_LIST = [
     "autorenamer",
@@ -30,11 +27,10 @@ PLUGINS_LIST = [
     "tableofcontents",
     "texequation",
     "thumbgallery",
-    # "updatenotifier",
     "webpage",
 ]
 
-LANGUAGES = ['en', 'de', 'it_IT', 'ru_R', 'sv', 'uk_UA']
+LANGUAGES = ['en', 'de', 'ru', 'sv', 'uk']
 
 BUILD_DIR = 'build'
 BUILD_LIB_DIR = 'libs'
