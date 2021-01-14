@@ -113,7 +113,7 @@ def sources_clear():
 
 @task
 @windows_only
-def win(is_stable=False, skipinstaller=False, skiparchives=False):
+def win(is_stable=False, skiparchives=False, skipinstaller=False):
     '''
     Build OutWiker for Windows
     '''
@@ -676,7 +676,8 @@ def snap_publish(*channels):
         print_info('Publish snap: {fname}'.format(fname=snap_file))
         if channels:
             channels_str = ','.join(channels)
-            command = 'snapcraft upload  "{fname}" --release {channels}'.format(fname=snap_file, channels=channels_str)
+            command = 'snapcraft upload  "{fname}" --release {channels}'.format(
+                fname=snap_file, channels=channels_str)
         else:
             command = 'snapcraft upload  "{fname}"'.format(fname=snap_file)
 

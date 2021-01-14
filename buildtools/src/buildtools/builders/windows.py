@@ -33,20 +33,20 @@ class BuilderWindows(BuilderBase):
         self._create_archives = create_archives
 
         self._resultBaseName = (
-            u'outwiker_{version}_win'.format(
+            'outwiker_{version}_win'.format(
                 version=self.facts.version_items[0])
             if self.is_stable
-            else u'outwiker_win_unstable'
+            else 'outwiker_win_unstable'
         )
 
-        self._resultWithPluginsBaseName = self._resultBaseName + u'_all_plugins'
+        self._resultWithPluginsBaseName = self._resultBaseName + '_all_plugins'
         self._plugins_list = PLUGINS_LIST
 
         self._executable_dir = os.path.join(self.facts.temp_dir,
                                             WINDOWS_EXECUTABLE_DIR)
 
         # Path to copy plugins
-        self._dest_plugins_dir = os.path.join(self._executable_dir, u'plugins')
+        self._dest_plugins_dir = os.path.join(self._executable_dir, 'plugins')
 
     def clear(self):
         super(BuilderWindows, self).clear()
@@ -54,15 +54,15 @@ class BuilderWindows(BuilderBase):
             os.path.join(self.facts.version_dir,
                          OUTWIKER_VERSIONS_FILENAME),
             os.path.join(self.build_dir,
-                         self._resultBaseName + u'.7z'),
+                         self._resultBaseName + '.7z'),
             os.path.join(self.build_dir,
-                         self._resultBaseName + u'.exe'),
+                         self._resultBaseName + '.exe'),
             os.path.join(self.build_dir,
-                         self._resultBaseName + u'.zip'),
+                         self._resultBaseName + '.zip'),
             os.path.join(self.build_dir,
-                         self._resultWithPluginsBaseName + u'.7z'),
+                         self._resultWithPluginsBaseName + '.7z'),
             os.path.join(self.build_dir,
-                         self._resultWithPluginsBaseName + u'.zip'),
+                         self._resultWithPluginsBaseName + '.zip'),
             os.path.join(self.build_dir,
                          WINDOWS_INSTALLER_FILENAME),
         ]
@@ -83,7 +83,7 @@ class BuilderWindows(BuilderBase):
         """
         Build with PyInstaller
         """
-        print_info(u'Create binary files...')
+        print_info('Create binary files...')
         src_dir = self.temp_sources_dir
         dest_dir = self._executable_dir
         temp_dir = self.facts.temp_dir
@@ -107,17 +107,17 @@ class BuilderWindows(BuilderBase):
         if not self._create_installer:
             return
 
-        print_info(u'Create installer...')
+        print_info('Create installer...')
         if self.is_stable:
-            installerName = u'outwiker_{}_win'.format(
+            installerName = 'outwiker_{}_win'.format(
                 self.facts.version_items[0])
         else:
-            installerName = u'outwiker_win_unstable'.format(self.facts.version)
+            installerName = 'outwiker_win_unstable'
 
         installer_path = os.path.join(self.facts.temp_dir, installerName)
 
         installer_template = readTextFile(os.path.join(
-            NEED_FOR_BUILD_DIR, u'windows', u'outwiker_setup.iss.tpl'))
+            NEED_FOR_BUILD_DIR, 'windows', 'outwiker_setup.iss.tpl'))
 
         installer_text = Template(installer_template).safe_substitute(
             version=self.facts.version,
@@ -125,21 +125,21 @@ class BuilderWindows(BuilderBase):
         )
 
         installer_script_path = os.path.join(self.facts.temp_dir,
-                                             u'outwiker_setup.iss')
+                                             'outwiker_setup.iss')
 
         writeTextFile(installer_script_path, installer_text)
 
         with lcd(self.facts.temp_dir):
             local("iscc outwiker_setup.iss")
 
-        shutil.move(installer_path + u'.exe', self.build_dir)
+        shutil.move(installer_path + '.exe', self.build_dir)
 
     def _copy_plugins(self):
         """
         Copy plugins to build folder
         """
-        print_info(u'Copy plugins...')
-        src_pluginsdir = u"plugins"
+        print_info('Copy plugins...')
+        src_pluginsdir = 'plugins'
         for plugin in self._plugins_list:
             shutil.copytree(
                 os.path.join(src_pluginsdir, plugin, plugin),
@@ -147,54 +147,54 @@ class BuilderWindows(BuilderBase):
             )
 
     def _copy_necessary_files(self):
-        print_info(u'Copy necessary files...')
-        shutil.copy(u'copyright.txt', self.facts.temp_dir)
-        shutil.copy(u'LICENSE.txt', self.facts.temp_dir)
+        print_info('Copy necessary files...')
+        shutil.copy('copyright.txt', self.facts.temp_dir)
+        shutil.copy('LICENSE.txt', self.facts.temp_dir)
 
     def _create_archives_without_plugins(self):
         if not self._create_archives:
             return
 
-        print_info(u'Create archives without plugins...')
+        print_info('Create archives without plugins...')
         with lcd(self._executable_dir):
             path_zip = os.path.abspath(
                 os.path.join(
                     self.build_dir,
-                    self._resultBaseName + u'.zip')
+                    self._resultBaseName + '.zip')
             )
 
             path_7z = os.path.abspath(
                 os.path.join(
                     self.build_dir,
-                    self._resultBaseName + u'.7z')
+                    self._resultBaseName + '.7z')
             )
 
-            local(u'7z a "{}" .\* .\plugins -r -aoa'.format(path_zip))
-            local(u'7z a "{}" .\* .\plugins -r -aoa'.format(path_7z))
+            local(r'7z a "{}" .\* .\plugins -r -aoa'.format(path_zip))
+            local(r'7z a "{}" .\* .\plugins -r -aoa'.format(path_7z))
 
     def _create_archives_with_plugins(self):
         if not self._create_archives:
             return
 
-        print_info(u'Create archives with plugins...')
+        print_info('Create archives with plugins...')
         with lcd(self._executable_dir):
             path_zip = os.path.abspath(
                 os.path.join(
                     self.build_dir,
-                    self._resultWithPluginsBaseName + u'.zip')
+                    self._resultWithPluginsBaseName + '.zip')
             )
 
             path_7z = os.path.abspath(
                 os.path.join(
                     self.build_dir,
-                    self._resultWithPluginsBaseName + u'.7z')
+                    self._resultWithPluginsBaseName + '.7z')
             )
 
             local(
-                u'7z a "{}" .\* .\plugins -r -aoa -xr!*.pyc -xr!.ropeproject'.format(path_zip))
+                r'7z a "{}" .\* .\plugins -r -aoa -xr!*.pyc -xr!.ropeproject'.format(path_zip))
             local(
-                u'7z a "{}" .\* .\plugins -r -aoa -xr!*.pyc -xr!.ropeproject'.format(path_7z))
+                r'7z a "{}" .\* .\plugins -r -aoa -xr!*.pyc -xr!.ropeproject'.format(path_7z))
 
     def _move_executable_dir(self):
-        print_info(u'Move result directory to {}...'.format(self.build_dir))
+        print_info('Move result directory to {}...'.format(self.build_dir))
         shutil.move(self._executable_dir, self.build_dir)
