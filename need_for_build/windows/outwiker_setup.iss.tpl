@@ -18,7 +18,7 @@ AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
-DefaultDirName={pf}\{#MyAppName}
+DefaultDirName={commonpf}\{#MyAppName}
 DefaultGroupName={#MyAppName}
 AllowNoIcons=yes
 OutputBaseFilename=$resultname
@@ -34,16 +34,66 @@ Name: "ukrainian"; MessagesFile: "compiler:Languages\Ukrainian.isl"
 Name: "german"; MessagesFile: "compiler:Languages\German.isl"
 Name: "italian"; MessagesFile: "compiler:Languages\Italian.isl"
 
+[Components]
+Name: "main"; Description: "Main Files"; Types: full custom compact; Flags: fixed
+Name: "plugins"; Description: "Plug-ins"; Types: full custom
+Name: "plugins\autorenamer"; Description: "Autorenamer"; Types: full custom
+Name: "plugins\counter"; Description: "Counter"; Types: full custom
+Name: "plugins\datagraph"; Description: "Datagraph"; Types: full custom
+Name: "plugins\diagrammer"; Description: "Diagrammer"; Types: full custom
+Name: "plugins\export2html"; Description: "Export2HTML"; Types: full custom
+Name: "plugins\externaltools"; Description: "ExternalTools"; Types: full custom
+Name: "plugins\hackpage"; Description: "HackPage"; Types: full custom
+Name: "plugins\htmlformatter"; Description: "HTMLFormatter"; Types: full custom
+Name: "plugins\htmlheads"; Description: "HTMLHeads"; Types: full custom
+Name: "plugins\lightbox"; Description: "Lightbox"; Types: full custom
+Name: "plugins\livejournal"; Description: "Livejournal"; Types: full custom
+Name: "plugins\markdown"; Description: "Markdown"; Types: full custom
+Name: "plugins\pagetypecolor"; Description: "PageTypeColor"; Types: full custom
+Name: "plugins\readingmode"; Description: "ReadingMode"; Types: full custom
+Name: "plugins\sessions"; Description: "Sessions"; Types: full custom
+Name: "plugins\snippets"; Description: "Snippets"; Types: full custom
+Name: "plugins\source"; Description: "Source"; Types: full custom
+Name: "plugins\spoiler"; Description: "Spoiler"; Types: full custom
+Name: "plugins\statistics"; Description: "Statistics"; Types: full custom
+Name: "plugins\tableofcontents"; Description: "TableOfContents"; Types: full custom
+Name: "plugins\texequation"; Description: "TeXEquation"; Types: full custom
+Name: "plugins\thumbgallery"; Description: "ThumbGallery"; Types: full custom
+Name: "plugins\webpage"; Description: "WebPage"; Types: full custom
+
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked; OnlyBelowVersion: 0,6.1
 
 [Files]
-Source: "outwiker_exe\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "outwiker_exe\*"; Excludes: "\plugins\*";  DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: main
+Source: "outwiker_exe\plugins\autorenamer\*"; DestDir: "{app}\plugins\autorenamer\"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: plugins\autorenamer
+Source: "outwiker_exe\plugins\counter\*"; DestDir: "{app}\plugins\counter\"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: plugins\counter
+Source: "outwiker_exe\plugins\datagraph\*"; DestDir: "{app}\plugins\datagraph\"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: plugins\datagraph
+Source: "outwiker_exe\plugins\diagrammer\*"; DestDir: "{app}\plugins\diagrammer\"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: plugins\diagrammer
+Source: "outwiker_exe\plugins\export2html\*"; DestDir: "{app}\plugins\export2html\"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: plugins\export2html
+Source: "outwiker_exe\plugins\externaltools\*"; DestDir: "{app}\plugins\externaltools\"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: plugins\externaltools
+Source: "outwiker_exe\plugins\hackpage\*"; DestDir: "{app}\plugins\hackpage\"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: plugins\hackpage
+Source: "outwiker_exe\plugins\htmlformatter\*"; DestDir: "{app}\plugins\htmlformatter\"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: plugins\htmlformatter
+Source: "outwiker_exe\plugins\htmlheads\*"; DestDir: "{app}\plugins\htmlheads\"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: plugins\htmlheads
+Source: "outwiker_exe\plugins\lightbox\*"; DestDir: "{app}\plugins\lightbox\"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: plugins\lightbox
+Source: "outwiker_exe\plugins\livejournal\*"; DestDir: "{app}\plugins\livejournal\"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: plugins\livejournal
+Source: "outwiker_exe\plugins\markdown\*"; DestDir: "{app}\plugins\markdown\"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: plugins\markdown
+Source: "outwiker_exe\plugins\pagetypecolor\*"; DestDir: "{app}\plugins\pagetypecolor\"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: plugins\pagetypecolor
+Source: "outwiker_exe\plugins\readingmode\*"; DestDir: "{app}\plugins\readingmode\"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: plugins\readingmode
+Source: "outwiker_exe\plugins\sessions\*"; DestDir: "{app}\plugins\sessions\"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: plugins\sessions
+Source: "outwiker_exe\plugins\snippets\*"; DestDir: "{app}\plugins\snippets\"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: plugins\snippets
+Source: "outwiker_exe\plugins\source\*"; DestDir: "{app}\plugins\source\"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: plugins\source
+Source: "outwiker_exe\plugins\spoiler\*"; DestDir: "{app}\plugins\spoiler\"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: plugins\spoiler
+Source: "outwiker_exe\plugins\statistics\*"; DestDir: "{app}\plugins\statistics\"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: plugins\statistics
+Source: "outwiker_exe\plugins\tableofcontents\*"; DestDir: "{app}\plugins\tableofcontents\"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: plugins\tableofcontents
+Source: "outwiker_exe\plugins\texequation\*"; DestDir: "{app}\plugins\texequation\"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: plugins\texequation
+Source: "outwiker_exe\plugins\thumbgallery\*"; DestDir: "{app}\plugins\thumbgallery\"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: plugins\thumbgallery
+Source: "outwiker_exe\plugins\webpage\*"; DestDir: "{app}\plugins\webpage\"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: plugins\webpage
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Dirs]
-Name: "{app}\plugins"
+Name: "{app}\plugins\"
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"

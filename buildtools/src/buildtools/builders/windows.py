@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os
 import shutil
@@ -23,6 +23,7 @@ class BuilderWindows(BuilderBase):
     """
     Build for Windows
     """
+
     def __init__(self,
                  is_stable=False,
                  create_archives=True,
@@ -32,7 +33,8 @@ class BuilderWindows(BuilderBase):
         self._create_archives = create_archives
 
         self._resultBaseName = (
-            u'outwiker_{version}_win'.format(version=self.facts.version_items[0])
+            u'outwiker_{version}_win'.format(
+                version=self.facts.version_items[0])
             if self.is_stable
             else u'outwiker_win_unstable'
         )
@@ -72,8 +74,8 @@ class BuilderWindows(BuilderBase):
         self._create_binary()
         self._clear_dest_plugins_dir()
         self._create_archives_without_plugins()
-        self._build_installer()
         self._copy_plugins()
+        self._build_installer()
         self._create_archives_with_plugins()
         self._move_executable_dir()
 
@@ -107,13 +109,15 @@ class BuilderWindows(BuilderBase):
 
         print_info(u'Create installer...')
         if self.is_stable:
-            installerName = u'outwiker_{}_win'.format(self.facts.version_items[0])
+            installerName = u'outwiker_{}_win'.format(
+                self.facts.version_items[0])
         else:
             installerName = u'outwiker_win_unstable'.format(self.facts.version)
 
         installer_path = os.path.join(self.facts.temp_dir, installerName)
 
-        installer_template = readTextFile(os.path.join(NEED_FOR_BUILD_DIR, u'windows', u'outwiker_setup.iss.tpl'))
+        installer_template = readTextFile(os.path.join(
+            NEED_FOR_BUILD_DIR, u'windows', u'outwiker_setup.iss.tpl'))
 
         installer_text = Template(installer_template).safe_substitute(
             version=self.facts.version,
@@ -186,8 +190,10 @@ class BuilderWindows(BuilderBase):
                     self._resultWithPluginsBaseName + u'.7z')
             )
 
-            local(u'7z a "{}" .\* .\plugins -r -aoa -xr!*.pyc -xr!.ropeproject'.format(path_zip))
-            local(u'7z a "{}" .\* .\plugins -r -aoa -xr!*.pyc -xr!.ropeproject'.format(path_7z))
+            local(
+                u'7z a "{}" .\* .\plugins -r -aoa -xr!*.pyc -xr!.ropeproject'.format(path_zip))
+            local(
+                u'7z a "{}" .\* .\plugins -r -aoa -xr!*.pyc -xr!.ropeproject'.format(path_7z))
 
     def _move_executable_dir(self):
         print_info(u'Move result directory to {}...'.format(self.build_dir))
