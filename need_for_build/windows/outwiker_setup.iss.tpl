@@ -66,6 +66,7 @@ Name: "plugins\webpage"; Description: "WebPage"; Types: full custom
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked; OnlyBelowVersion: 0,6.1
+Name: "portable"; Description: "Install a portable version"; GroupDescription: "Installation mode"; Flags: unchecked; Check: not IsAdminInstallMode
 
 [Files]
 Source: "outwiker_exe\*"; Excludes: "\plugins\*";  DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: main
@@ -114,4 +115,17 @@ begin
     Result := ExpandConstant('{commonpf}\Outwiker')
   else
     Result := ExpandConstant('{localappdata}\Outwiker');
+end;
+
+procedure CurInstallProgressChanged(CurProgress, MaxProgress: Integer);
+var
+  IniFileName: string;
+begin
+  if (CurProgress = MaxProgress) and WizardIsTaskSelected('portable') then begin
+    // Create the outwiker.ini file for portable install mode
+    IniFileName := GetDirName('') + '\outwiker.ini';
+	if not FileExists(IniFileName) then begin
+      SaveStringToFile(IniFileName, '', True);
+	end;
+  end;
 end;
