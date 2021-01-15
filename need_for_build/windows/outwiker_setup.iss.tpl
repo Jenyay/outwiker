@@ -150,3 +150,47 @@ begin
 	end;
   end;
 end;
+
+function GetUninstallerCommand(): String;
+var
+  UnInstPath: String;
+  UnInstPathWOW6432: String;
+  UnInstallString: String;
+  UnInstallKey: String;
+begin
+  UnInstPath := ExpandConstant('Software\Microsoft\Windows\CurrentVersion\Uninstall\{#emit SetupSetting("AppId")}_is1');
+  UnInstPathWOW6432 := ExpandConstant('Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\{#emit SetupSetting("AppId")}_is1');
+  UnInstallKey := 'UninstallString';
+	
+  UnInstallString := '';
+
+  if IsAdminInstallMode then begin
+    RegQueryStringValue(HKLM, UnInstPath, UnInstallKey, UnInstallString);
+  end
+  else begin
+    RegQueryStringValue(HKCU, UnInstPath, UnInstallKey, UnInstallString);
+  end;
+  
+  UnInstallString := RemoveQuotes(UnInstallString);
+  Result := UnInstallString;
+end;
+
+function InitializeSetup(): Boolean;
+var
+  UninstallerCommand: string;
+  ResultCode: Integer;
+begin
+  UninstallerCommand := GetUninstallerCommand();
+  if UninstallerCommand <> '' then begin
+    if WizardSilent then begin
+      Exec(UninstallerCommand, '/SILENT /SUPPRESSMSGBOXES', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+	end
+	else begin
+	  Exec(UninstallerCommand, '', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+	end;
+	Result := (ResultCode = 0);
+  end
+  else begin
+    Result := True;
+  end;
+end;
