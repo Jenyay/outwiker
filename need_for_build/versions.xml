@@ -1,6 +1,6 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <versions>
-	<version number="3.0.0.879" status="dev">
+	<version number="3.0.0.880" status="dev" date="18.01.2021">
 		<changes>
 			<change>Add the plugins to installer for Windows.</change>
 			<change>Add the ability to install without administrator privileges with installer for Windows.</change>
