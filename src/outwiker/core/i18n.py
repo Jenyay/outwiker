@@ -123,6 +123,7 @@ def initLocale(config):
     wx.Locale.AddCatalogLookupPathPrefix(langdir)
 
     if wx.GetApp() is not None:
+        # Needed to fix problem with English locale in Windows
         locale = wx.Locale(wx.LANGUAGE_DEFAULT)
         try:
             wx_lang_name = _('LANGUAGE_DEFAULT')
