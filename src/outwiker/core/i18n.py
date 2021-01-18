@@ -123,6 +123,7 @@ def initLocale(config):
     wx.Locale.AddCatalogLookupPathPrefix(langdir)
 
     if wx.GetApp() is not None:
+        locale = wx.Locale(wx.LANGUAGE_DEFAULT)
         try:
             wx_lang_name = _('LANGUAGE_DEFAULT')
             print('wxPython language: {}'.format(wx_lang_name))
@@ -132,6 +133,6 @@ def initLocale(config):
             else:
                 print('Language {} is not available'.format(wx_lang_name))
         except AttributeError:
-            locale = wx.Locale(wx.LANGUAGE_DEFAULT)
+            print('Unknown language: {}'.format(wx_lang_name))
 
     return locale
