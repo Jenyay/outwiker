@@ -1,12 +1,36 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <versions>
-	<version number="3.0.0.877" status="dev">
+	<version number="3.0.0.881" status="dev">
 		<changes>
 			<change></change>
 		</changes>
 
 		<changes lang="ru">
 			<change></change>
+		</changes>
+	</version>
+	
+	<version number="3.0.0.880" status="dev" date="18.01.2021">
+		<changes>
+			<change>Add the plugins to installer for Windows.</change>
+			<change>Add the ability to install without administrator privileges with installer for Windows.</change>
+			<change>Add the ability to install in the portable mode with installer for Windows.</change>
+		</changes>
+
+		<changes lang="ru">
+			<change>В инсталятор под Windows добавлены плагины.</change>
+			<change>В инсталятор под Windows добавлена возможность установки без прав администратора.</change>
+			<change>В инсталятор добавлена возможность установки в портабельном режиме под Windows.</change>
+		</changes>
+	</version>
+
+	<version number="3.0.0.878" status="dev" date="13.01.2020">
+		<changes>
+			<change>Bug fixes.</change>
+		</changes>
+
+		<changes lang="ru">
+			<change>Исправление ошибок.</change>
 		</changes>
 	</version>
 

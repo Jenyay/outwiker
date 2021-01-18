@@ -93,28 +93,34 @@ def attachFiles(parent: wx.Window,
         raise outwiker.core.exceptions.ReadonlyException
 
     oldAttachesFull = Attachment(page).attachmentFull
-    oldAttaches = [os.path.basename(fname).lower()
-                   for fname in oldAttachesFull]
+    oldAttaches = {os.path.basename(fname).lower(): fname
+                   for fname in oldAttachesFull}
 
     # Список файлов, которые будут добавлены
     newAttaches = []
 
     with OverwriteDialog(parent) as overwriteDialog:
-        for fname in files:
-            if fname in oldAttachesFull:
+        for fname_new in files:
+            # Overwrite yourself checking
+            if fname_new in oldAttachesFull:
                 continue
 
-            if os.path.basename(fname).lower() in oldAttaches:
+            fname_new_lower = os.path.basename(fname_new).lower()
+            if fname_new_lower in oldAttaches.keys():
                 text = _(u"File '%s' exists already") % (
-                    os.path.basename(fname))
-                result = overwriteDialog.ShowDialog(text)
+                    os.path.basename(fname_new))
+                old_file_stat = os.stat(oldAttaches[fname_new_lower])
+                new_file_stat = os.stat(fname_new)
+                result = overwriteDialog.ShowDialog(text,
+                                                    old_file_stat,
+                                                    new_file_stat)
 
                 if result == overwriteDialog.ID_SKIP:
                     continue
                 elif result == wx.ID_CANCEL:
                     break
 
-            newAttaches.append(fname)
+            newAttaches.append(fname_new)
 
         try:
             Attachment(page).attach(newAttaches)
