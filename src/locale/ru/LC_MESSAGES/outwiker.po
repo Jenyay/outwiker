@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-09 17:20+0300\n"
+"POT-Creation-Date: 2021-01-18 17:01+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -509,12 +509,12 @@ msgstr "Переименование меток"
 msgid "Page is opened as read-only"
 msgstr "Страница открыта только для чтения"
 
-#: outwiker/core/commands.py:108
+#: outwiker/core/commands.py:110
 #, python-format
 msgid "File '%s' exists already"
 msgstr "Файл '%s' уже существует"
 
-#: outwiker/core/commands.py:122
+#: outwiker/core/commands.py:128
 #, python-brace-format
 msgid ""
 "Error copying files\n"
@@ -523,11 +523,11 @@ msgstr ""
 "Ошибка копирования файлов\n"
 "{0}"
 
-#: outwiker/core/commands.py:136
+#: outwiker/core/commands.py:142
 msgid "You can't remove the root element"
 msgstr "Нельзя удалить корневой элемент"
 
-#: outwiker/core/commands.py:139
+#: outwiker/core/commands.py:145
 msgid ""
 "Remove page \"{}\" and all subpages?\n"
 "All attached files will also be deleted."
@@ -535,27 +535,27 @@ msgstr ""
 "Удалить страницу \"{}\" и все дочерние страницы?\n"
 "Все прикрепленные файлы тоже будут удалены."
 
-#: outwiker/core/commands.py:140
+#: outwiker/core/commands.py:146
 msgid "Remove page?"
 msgstr "Удалить страницу?"
 
-#: outwiker/core/commands.py:145
+#: outwiker/core/commands.py:151
 msgid "Can't remove page"
 msgstr "Невозможно удалить страницу"
 
-#: outwiker/core/commands.py:214
+#: outwiker/core/commands.py:220
 msgid "Loading"
 msgstr "Загрузка"
 
-#: outwiker/core/commands.py:215
+#: outwiker/core/commands.py:221
 msgid "Opening notes tree..."
 msgstr "Открытие дерева заметок..."
 
-#: outwiker/core/commands.py:270
+#: outwiker/core/commands.py:276
 msgid "Can't load notes tree:\n"
 msgstr "Ошибка загрузки дерева заметок:\n"
 
-#: outwiker/core/commands.py:278
+#: outwiker/core/commands.py:284
 #, python-format
 msgid ""
 "Can't load wiki '%s'\n"
@@ -568,15 +568,15 @@ msgstr ""
 "Очистить этот файл и перезагрузить вики?\n"
 "При этом закладки будут потеряны"
 
-#: outwiker/core/commands.py:279
+#: outwiker/core/commands.py:285
 msgid "__page.opt error"
 msgstr "Ошибка файла __page.opt"
 
-#: outwiker/core/commands.py:290
+#: outwiker/core/commands.py:296
 msgid "First Wiki Page"
 msgstr "Первая викистраница"
 
-#: outwiker/core/commands.py:291
+#: outwiker/core/commands.py:297
 msgid ""
 "!! First Wiki Page\n"
 "\n"
@@ -589,45 +589,45 @@ msgstr ""
 "например: '''полужирный шрифт''', ''курсив'', {+подчеркнутый текст+}, "
 "[[https://jenyay.net | ссылки]] и другое."
 
-#: outwiker/core/commands.py:300
+#: outwiker/core/commands.py:306
 msgid "test"
 msgstr "проверка"
 
-#: outwiker/core/commands.py:309
+#: outwiker/core/commands.py:315
 msgid "Can't create wiki\n"
 msgstr "Невозможно создать вики\n"
 
-#: outwiker/core/commands.py:316 outwiker/core/commands.py:330
+#: outwiker/core/commands.py:322 outwiker/core/commands.py:336
 msgid "Can't open clipboard"
 msgstr "Невозможно открыть буфер обмена"
 
-#: outwiker/core/commands.py:322
+#: outwiker/core/commands.py:328
 msgid "Can't copy text to clipboard"
 msgstr "Ошибка копирования текста в буфер обмена"
 
-#: outwiker/core/commands.py:402
+#: outwiker/core/commands.py:408
 msgid "Can't move page when page with that title already exists"
 msgstr ""
 "Невозможно переместить страницу, так как страница с таким именем уже "
 "существует"
 
-#: outwiker/core/commands.py:406
+#: outwiker/core/commands.py:412
 msgid "Can't move page: {}"
 msgstr "Невозможно переместить страницу: {}"
 
-#: outwiker/core/commands.py:422 outwiker/gui/notestree.py:295
+#: outwiker/core/commands.py:428 outwiker/gui/notestree.py:295
 msgid "You can't rename the root element"
 msgstr "Нельзя переименовать корневой элемент"
 
-#: outwiker/core/commands.py:440
+#: outwiker/core/commands.py:446
 msgid "Can't rename page \"{}\" to \"{}\""
 msgstr "Невозможно переименовать страницу \"{}\" в \"{}\""
 
-#: outwiker/core/commands.py:459
+#: outwiker/core/commands.py:465
 msgid "Invalid page title"
 msgstr "Неправильный заголовок страницы"
 
-#: outwiker/core/commands.py:464
+#: outwiker/core/commands.py:470
 #, python-brace-format
 msgid ""
 "{0}\n"
@@ -636,15 +636,15 @@ msgstr ""
 "{0}\n"
 "Продолжить?"
 
-#: outwiker/core/commands.py:467
+#: outwiker/core/commands.py:473
 msgid "The page title"
 msgstr "Заголовок страницы"
 
-#: outwiker/core/commands.py:519
+#: outwiker/core/commands.py:525
 msgid "Enter format of the date"
 msgstr "Введите формат даты"
 
-#: outwiker/core/commands.py:520 outwiker/pages/wiki/actions/dates.py:25
+#: outwiker/core/commands.py:526 outwiker/pages/wiki/actions/dates.py:25
 msgid "Date format"
 msgstr "Формат даты"
 
@@ -716,7 +716,7 @@ msgstr "погода"
 msgid "Line Breaks (<br/>)"
 msgstr "Разрывы строк (<br/>)"
 
-#: outwiker/core/i18n.py:122
+#: outwiker/core/i18n.py:127
 msgid "LANGUAGE_DEFAULT"
 msgstr "LANGUAGE_RUSSIAN"
 
@@ -1216,7 +1216,7 @@ msgstr "Общие"
 msgid "Icon"
 msgstr "Значок"
 
-#: outwiker/gui/basetextpanel.py:204 outwiker/gui/dialogs/overwritedialog.py:15
+#: outwiker/gui/basetextpanel.py:204 outwiker/gui/dialogs/overwritedialog.py:97
 msgid "Overwrite"
 msgstr "Перезаписать"
 
@@ -1224,7 +1224,8 @@ msgstr "Перезаписать"
 msgid "Load"
 msgstr "Загрузить"
 
-#: outwiker/gui/basetextpanel.py:204 outwiker/gui/dialogs/overwritedialog.py:19
+#: outwiker/gui/basetextpanel.py:204
+#: outwiker/gui/dialogs/overwritedialog.py:101
 msgid "Cancel"
 msgstr "Отмена"
 
@@ -1423,25 +1424,51 @@ msgstr "Контакты"
 msgid "Author: Ilin Eugeniy (aka Jenyay)"
 msgstr "Автор: Евгений Ильин (aka Jenyay)"
 
-#: outwiker/gui/dialogs/overwritedialog.py:13
+#: outwiker/gui/dialogs/overwritedialog.py:22
+msgid "Overwrite Files"
+msgstr "Перезапись файлов"
+
+#: outwiker/gui/dialogs/overwritedialog.py:42
 msgid "Overwrite file?"
 msgstr "Перезаписать файл?"
 
-#: outwiker/gui/dialogs/overwritedialog.py:16
+#: outwiker/gui/dialogs/overwritedialog.py:81
+msgid "New file"
+msgstr "Новый файл"
+
+#: outwiker/gui/dialogs/overwritedialog.py:89
+msgid "Exiting file"
+msgstr "Существующий файл"
+
+#: outwiker/gui/dialogs/overwritedialog.py:98
 msgid "Overwrite all"
 msgstr "Перезаписать все"
 
-#: outwiker/gui/dialogs/overwritedialog.py:17
+#: outwiker/gui/dialogs/overwritedialog.py:99
 msgid "Skip"
 msgstr "Пропустить"
 
-#: outwiker/gui/dialogs/overwritedialog.py:18
+#: outwiker/gui/dialogs/overwritedialog.py:100
 msgid "Skip all"
 msgstr "Пропустить все"
 
-#: outwiker/gui/dialogs/overwritedialog.py:40
-msgid "Overwrite Files"
-msgstr "Перезапись файлов"
+#: outwiker/gui/dialogs/overwritedialog.py:113
+msgid "New file size: {size:_d} bites"
+msgstr "Размер нового файла (в байтах): {size:_d}"
+
+#: outwiker/gui/dialogs/overwritedialog.py:117
+#, python-format
+msgid "New file date: {date:%c}"
+msgstr "Дата изменения нового файла: {date:%c}"
+
+#: outwiker/gui/dialogs/overwritedialog.py:123
+msgid "Exiting file size: {size:_d} bites"
+msgstr "Размер существующего файла (в байтах): {size:_d}"
+
+#: outwiker/gui/dialogs/overwritedialog.py:127
+#, python-format
+msgid "Exiting file date: {date:%c}"
+msgstr "Дата изменения существующего файла: {date:%c}"
 
 #: outwiker/gui/emptypageview.py:24
 msgid "Create new notes tree..."
