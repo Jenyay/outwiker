@@ -5,8 +5,8 @@ from outwiker.gui.baseaction import BaseAction
 from outwiker.gui.dialogs.about import AboutDialog
 
 
-class AboutAction (BaseAction):
-    """Открыть диалог "О программе"."""
+class AboutAction(BaseAction):
+    '''Open the About dialog'''
 
     stringId = 'About'
 
@@ -25,6 +25,5 @@ class AboutAction (BaseAction):
         assert self._application.mainWindow is not None
 
         version = outwiker.getVersionStr()
-        dlg = AboutDialog(version, self._application.mainWindow)
-        dlg.ShowModal()
-        dlg.Destroy()
+        with AboutDialog(version, self._application.mainWindow) as dlg:
+            dlg.ShowModal()

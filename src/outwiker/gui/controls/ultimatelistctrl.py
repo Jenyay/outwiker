@@ -91,23 +91,23 @@ Usage example::
 
     class MyFrame(wx.Frame):
 
-        def __init__(self):
+        def __init__(self, parent):
 
             wx.Frame.__init__(self, parent, -1, "UltimateListCtrl Demo")
 
-            list = ULC.UltimateListCtrl(self, wx.ID_ANY, agwStyle=wx.LC_REPORT | wx.LC_VRULES | wx.LC_HRULES | wx.LC_SINGLE_SEL)
+            list = ULC.UltimateListCtrl(self, wx.ID_ANY, agwStyle=ULC.ULC_REPORT | ULC.ULC_VRULES | ULC.ULC_HRULES | ULC.ULC_SINGLE_SEL | ULC.ULC_HAS_VARIABLE_ROW_HEIGHT)
 
             list.InsertColumn(0, "Column 1")
             list.InsertColumn(1, "Column 2")
 
-            index = list.InsertStringItem(sys.maxint, "Item 1")
+            index = list.InsertStringItem(sys.maxsize, "Item 1")
             list.SetStringItem(index, 1, "Sub-item 1")
 
-            index = list.InsertStringItem(sys.maxint, "Item 2")
+            index = list.InsertStringItem(sys.maxsize, "Item 2")
             list.SetStringItem(index, 1, "Sub-item 2")
 
             choice = wx.Choice(list, -1, choices=["one", "two"])
-            index = list.InsertStringItem(sys.maxint, "A widget")
+            index = list.InsertStringItem(sys.maxsize, "A widget")
 
             list.SetItemWindow(index, 1, choice, expand=True)
 
@@ -116,16 +116,16 @@ Usage example::
             self.SetSizer(sizer)
 
 
-    # our normal wxApp-derived class, as usual
+# our normal wxApp-derived class, as usual
 
-    app = wx.App(0)
+    if __name__ == "__main__":
+        app = wx.App(0)
 
-    frame = MyFrame(None)
-    app.SetTopWindow(frame)
-    frame.Show()
+        frame = MyFrame(None)
+        app.SetTopWindow(frame)
+        frame.Show()
 
-    app.MainLoop()
-
+        app.MainLoop()
 
 
 Window Styles
@@ -347,11 +347,6 @@ ULC_STATE_DROPHILITED =   wx.LIST_STATE_DROPHILITED      # MSW only
 ULC_STATE_FOCUSED     =   wx.LIST_STATE_FOCUSED
 ULC_STATE_SELECTED    =   wx.LIST_STATE_SELECTED
 ULC_STATE_CUT         =   wx.LIST_STATE_CUT              # MSW only
-ULC_STATE_DISABLED    =   wx.LIST_STATE_DISABLED         # OS2 only
-ULC_STATE_FILTERED    =   wx.LIST_STATE_FILTERED         # OS2 only
-ULC_STATE_INUSE       =   wx.LIST_STATE_INUSE            # OS2 only
-ULC_STATE_PICKED      =   wx.LIST_STATE_PICKED           # OS2 only
-ULC_STATE_SOURCE      =   wx.LIST_STATE_SOURCE           # OS2 only
 
 # Hit test flags, used in HitTest
 ULC_HITTEST_ABOVE           = wx.LIST_HITTEST_ABOVE            # Above the client area.
@@ -359,7 +354,6 @@ ULC_HITTEST_BELOW           = wx.LIST_HITTEST_BELOW            # Below the clien
 ULC_HITTEST_NOWHERE         = wx.LIST_HITTEST_NOWHERE          # In the client area but below the last item.
 ULC_HITTEST_ONITEMICON      = wx.LIST_HITTEST_ONITEMICON       # On the bitmap associated with an item.
 ULC_HITTEST_ONITEMLABEL     = wx.LIST_HITTEST_ONITEMLABEL      # On the label (string) associated with an item.
-ULC_HITTEST_ONITEMRIGHT     = wx.LIST_HITTEST_ONITEMRIGHT      # In the area to the right of an item.
 ULC_HITTEST_ONITEMSTATEICON = wx.LIST_HITTEST_ONITEMSTATEICON  # On the state icon for a tree view item that is in a user-defined state.
 ULC_HITTEST_TOLEFT          = wx.LIST_HITTEST_TOLEFT           # To the left of the client area.
 ULC_HITTEST_TORIGHT         = wx.LIST_HITTEST_TORIGHT          # To the right of the client area.
@@ -1799,7 +1793,7 @@ class UltimateListItem(wx.Object):
     def HasAttributes(self):
         """ Returns ``True`` if the item has attributes associated with it. """
 
-        return self._attr != None
+        return self._attr is not None
 
 
     def GetTextColour(self):
@@ -2644,7 +2638,7 @@ class UltimateListItemData(object):
         :param `colour`: an instance of :class:`wx.Colour`.
         """
 
-        if colour == wx.NullColour or colour == None:
+        if colour == wx.NullColour or colour is None:
             if self._hasColour:
                 self._hasColour = False
                 del self._colour
@@ -5199,7 +5193,7 @@ class UltimateListHeaderWindow(wx.Control):
             # inside the column rect
             header_rect = wx.Rect(x-1, HEADER_OFFSET_Y-1, cw-1, ch)
 
-            if self._headerCustomRenderer != None:
+            if self._headerCustomRenderer is not None:
                self._headerCustomRenderer.DrawHeaderButton(dc, header_rect, flags)
 
                # The custom renderer will specify the color to draw the header text and buttons
@@ -5294,7 +5288,7 @@ class UltimateListHeaderWindow(wx.Control):
         # leave an unpainted area when columns are removed (and it looks better)
         if x < w:
             header_rect = wx.Rect(x, HEADER_OFFSET_Y, w - x, h)
-            if self._headerCustomRenderer != None:
+            if self._headerCustomRenderer is not None:
                 # Why does the custom renderer need this adjustment??
                 header_rect.x = header_rect.x - 1
                 header_rect.y = header_rect.y - 1
@@ -6473,7 +6467,7 @@ class UltimateListMainWindow(wx.ScrolledWindow):
 
         resizeCol = self._resizeColumn
 
-        if self._resizeColMinWidth == None:
+        if self._resizeColMinWidth is None:
             self._resizeColMinWidth = self.GetColumnWidth(resizeCol)
 
         # We're showing the vertical scrollbar -> allow for scrollbar width
@@ -6785,7 +6779,6 @@ class UltimateListMainWindow(wx.ScrolledWindow):
          ``ULC_HITTEST_ONITEM``              0x2a0 Anywhere on the item (text, icon, checkbox image)
          ``ULC_HITTEST_ONITEMICON``           0x20 On the bitmap associated with an item
          ``ULC_HITTEST_ONITEMLABEL``          0x80 On the label (string) associated with an item
-         ``ULC_HITTEST_ONITEMRIGHT``         0x100 In the area to the right of an item
          ``ULC_HITTEST_ONITEMSTATEICON``     0x200 On the state icon for a list view item that is in a user-defined state
          ``ULC_HITTEST_TOLEFT``              0x400 To the left of the client area
          ``ULC_HITTEST_TORIGHT``             0x800 To the right of the client area
@@ -10361,8 +10354,8 @@ class UltimateListMainWindow(wx.ScrolledWindow):
         in the :class:`UltimateListCtrl`. The function should return a negative, zero or positive
         value if the first line is less than, equal to or greater than the second one.
 
-        :param `line1`: an instance of :class:`UltimateListLineData`;
-        :param `line2`: another instance of :class:`UltimateListLineData`.
+        :param `line1`: an instance of :class:`UltimateListItem`;
+        :param `line2`: another instance of :class:`UltimateListItem`.
 
         :note: The base class version compares lines by their index.
         """
@@ -10378,7 +10371,7 @@ class UltimateListMainWindow(wx.ScrolledWindow):
         if self.__func:
             return self.__func(item1, item2)
         else:
-            return (data1 > data2) - (data1 < data2)
+            return cmp(data1, data2)
 
 
     def SortItems(self, func):

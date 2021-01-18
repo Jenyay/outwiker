@@ -11,8 +11,6 @@ Attach:Soft/Outwiker/us.png [[English version -> Outwiker/SessionsEn]]
 
 [[Sessions {{ version_full }}-> Attach:sessions-{{ version_full }}.zip]] ('''Требуемая версия OutWiker: 3.0.0.868 и выше''')
 
-<!--#version stable {{ version_full }} -->
-
 (:DonateOW:)
 
 

@@ -15,9 +15,7 @@ main_window_ru.png
 
 [[WebPage 1.2.2 -> Attach:webpage-1.2.2.zip]] ('''Требуемая версия OutWiker: 2.0 - 2.1.0.834''')
 
-[[WebPage {{ version_full }} -> Attach:webpage-{{ version_full }}.zip]] ('''Требуемая версия OutWiker: 3.0.0.868 и выше''')
-
-<!--#version stable {{ version_full }} -->
+[[WebPage {{ version_full }} -> Attach:webpage-{{ version_full }}.zip]] ('''Требуемая версия OutWiker: 3.0.0.876 и выше''')
 
 (:DonateOW:)
 

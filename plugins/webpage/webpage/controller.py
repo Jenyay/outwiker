@@ -12,8 +12,8 @@ from .spellcontroller import WebPageSpellController
 from .i18n import get_
 from .gui.guicontroller import GuiController
 
-from .actions.downloadaction import(CreateChildWebPageAction,
-                                    CreateSiblingWebPageAction)
+from .actions.downloadaction import (CreateChildWebPageAction,
+                                     CreateSiblingWebPageAction)
 from .actions.opensourceurl import OpenSourceURLAction
 from .actions.showpageinfo import ShowPageInfoAction
 from .actions.disablescripts import DisableScriptsAction
@@ -35,12 +35,12 @@ class Controller(object):
 
         self._spellController = WebPageSpellController(self._application)
         self._actions = [
-           (CreateChildWebPageAction, None),
-           (CreateSiblingWebPageAction, None),
-           (OpenSourceURLAction, None),
-           (ShowPageInfoAction, None),
-           (DisableScriptsAction, None),
-           (CopySourceURLToClipboardAction, None),
+            (CreateChildWebPageAction, None),
+            (CreateSiblingWebPageAction, None),
+            (OpenSourceURLAction, None),
+            (ShowPageInfoAction, None),
+            (DisableScriptsAction, None),
+            (CopySourceURLToClipboardAction, None),
         ]
 
         self._htmlProcessors = [

@@ -1,128 +1,72 @@
 Version History
 ===============
 
-Current developing version
---------------------------
+3.0.0
+~~~~~~~~~~~~~~~
 
-2.0.0.816 RC (April 25, 2017)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+* Now you can use any symbols in the notes title.
+* New toolbars.
+* New design for popup window when clicking on the tag.
+* New interface to select notes icons.
+* New GUI displayed if the notes tree is not currently open.
+* New GUI when selecting the root of the notes tree.
+* New GUI to show a page with unknown type.
+* Add the ability to select notes position in the notes list.
+* Add watching for attached files for selected page.
+* Other interface improvements.
+* Add German localization.
+* New commands for wiki pages to change text color and apply custom styles.
+* Add comments to wiki notation.
+* Added a new $title variable for the page style files .
+* Add a new page style "rifle_green_and_red".
+* Change the storage format for certain properties of the notes tree pages.
+* Change the way of storing standard icons in notes.
+* Change plug-ins format.
+* Migrate to Python 3.x and wxPython 4.0.
 
-* Removed Italian localization.
-
-2.0.0.814 beta (April 03, 2017)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-* Added the "subpath" parameter to main window title.
-* Some GUI improvements.
-* Bug fixes.
-
-2.0.0.812 beta (March 18, 2017)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-* Hot keys GUI improvements.
-* Update help.
-* Add Ubuntu 17.04 Zesty Zapus supporting.
-
-2.0.0.810 beta (February 24, 2017)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-* Splitted the long toolbars.
-* Bug fixes.
-
-2.0.0.808 beta (January 26, 2017)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-* Added the ability to add alias to page.
-* Changed GUI to set hot keys.
-* Added options to change editor margin color.
-* Added options to change background color of the selected text.
-
-2.0.0.806 beta (November 14, 2016)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-* Added the menu items to move cursor in text.
-* Added the menu items to copy / cut the current line to clipboard.
-* Bug fixes.
-
-
-2.0.0.804 dev (October 20, 2016)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-* Fixed deb package for Ubuntu 16.10.
-
-2.0.0.802 dev
-~~~~~~~~~~~~~
-
-* Internal changes.
-
-2.0.0.800 dev (August 20, 2016)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-* Added the Swedish translation.
-* Added the "--page, -p" command line parameter to select page when starting.
-* Added the "--normal" command line parameter to disable minimizing when starting.
-* Added the "--debug" command line parameter to run in the debug mode.
-* Bug fixes.
-
-2.0.0.798 dev (July 27, 2016)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-* Restored availability the icon in the system tray on Linux.
-* The editor adds the ability to join lines with the hot key or menu item.
-* The editor adds the ability to remove word to beginning / ending with the hot key or menu item.
-* The editor adds the ability to decreade nesting level of the list items with the hot key or menu item.
-* Changed tabs style.
-
-2.0.0.796 dev (July 02, 2016)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-* The editor adds the ability to duplicate the current line with hot key or menu item.
-* The editor adds the ability to delete the current line with hot key or menu item.
-* The editor adds the ability to move lines up / down with hot keys or menu items.
-* Improved heading inserting in wiki pages.
-* Build system refactoring.
-* Bug fixes.
-
-
-2.0.0.794 (May 30, 2016)
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-* Fixed errors related with migration to wxPython 3.0.
-
-2.0.0.792 (May 10, 2016)
-~~~~~~~~~~~~~~~~~~~~~~~~
+2.0 (June 2017)
+~~~~~~~~~~~~~~~
 
 * The program now uses wxPython 3.0 library.
+* Duplicating the current line via menu or hot key was implemented.
+* Deleting the current line via menu or hot key.
+* The editor can move lines up/down via menu or hot keys.
+* The editor can join lines via menu or hot key.
+* The editor can remove the whole word to beginning/end via menu or hot key.
+* The editor can decrease nesting level of the list items via menu or hot key.
+* Menu items to move cursor in text.
+* Menu items to copy / cut the current line to clipboard.
+* The "--page, -p" command line parameter to select page when starting.
+* The "--normal" command line parameter to disable minimizing when starting.
+* The "--debug" command line parameter to run in the debug mode.
+* The Swedish translation was added.
+* Restored availability the icon in the system tray on Linux.
+* Added the ability to add alias to page.
+* Changed GUI to set hot keys.
+* New setting to change editor margin color was implemented.
+* New setting to change background color of the selected text was implemented.
 
 
-Previous versions
------------------
+1.9.0  (April 2016)
+~~~~~~~~~~~~~~~~~~~
 
-1.9.0.790 (April 09, 2016)
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-* Added spell checker.
-* Created the groups for the icons.
-* Now users can add custom icons.
-* The choice of colors for the tag cloud.
-* The choise the action when you make left or middle mouse click on the tag.
-* The choise the action when you make double mouse click on the attached file.
-* Added the new wiki commands for the table creation: [=(:table:), (:row:), (:cell:), (:hcell:)=].
-* Improved search het keys for the actions.
-* Added new icons.
-* Added new page styles.
-* Now in the link inserting dialog you can select an attached file to create link to it.
-* Added help.
-
-
-1.8.1.752 (October 20, 2014)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+* Icons for notes are separated into groups.
+* Now users can complement a standard set of icons for new files.
+* Added new icons
+* Now in the dialog insert links, you can choose one of the attachments to make reference to it.
 * Bug fixes
 
 
-1.8.0.750 (October 11, 2014)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+1.8.1.752 (October 2014)
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+* Bug fixes.
+
+
+
+1.8.0.750 (November 2014)
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 * Added the ability to customize keyboard shortcuts.
 * Added the ability to refer to a page using unique identifiers.
@@ -156,4 +100,238 @@ Previous versions
 * Added new icons for pages.
 * Many accelerations.
 * Bug fixes and improvments.
+
+
+1.7.0.684 (December 2012)
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* Added the ability to open the notes in separate tabs.
+* The toolbar is divided into several floating toolbars.
+* Saved and displayed date of the last changes in the page.
+* Greatly accelerated parsing and coloring of wiki syntax (bacceleration from 2 to 10 times).
+* Added interface to insert some elements of wiki syntax.
+* Added ability to larger and smaller font on wiki pages.
+* Added ability to force rebuilding HTML-code on the wiki notation.
+* Fixes in page templates.
+* The distribution for Linux adds vector and large icons.
+* Changes in the appearance of the search page.
+* Created the installler for Windows.
+* Fixed a bug where thumbnails were not created to wiki pages if extensions image files was recorded in capital letters.
+* Fixed a bug that did not keep the size of internal windows (tree notes, attachments, etc.)
+* Fixed other bugs.
+* Many small fixes and improvements in the interface
+
+1.6.0.650 (May 2012)
+~~~~~~~~~~~~~~~~~~~~
+
+* Redesigned properties dialog page.
+* Wiki commands for decoration options for users and community livejournal.com removed from the program into a [[plugin -> http://jenyay.net/Outwiker/LivejournalPlugin]].
+* Added the wiki syntax coloring in the editor.
+* Added ability to change the style pages.
+* Now to align text to the wiki pages other than [=%center%=] and [=%right%=] you can use [=%left%=] and [=%justify%=].
+* Many small improvements.
+
+1.5.0.627 (February 2012)
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* Tag cloud added to the main window.
+* Added ability to select tags from the cloud of the existing tags.
+* New features for the batch add / remove tags.
+* Added ability to rename a tags.
+* Minor changes in the interface.
+
+1.4.0.601 (December 2011)
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* Added plugins support.
+* Added timer autosave.
+* Added check for changing the text notes, third-party programs.
+* For HTML-pages added button for enable/disable automatic line break.
+* Linux version is now installed in /usr, but not in /opt. Now the program can be invoked from the console with the command ''outwiker''.
+* Improved handling of wiki syntax for lists.
+* Now search through the pages looking for search phrase in the filename of the attachment and title names.
+* Bug fixes and minor interface improvements.
+* The program is now being tested only under Python 2.7.
+
+
+1.3.2.496 (September 2011)
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* New interface for selecting icons.
+* Added new icon from [[http://www.famfamfam.com/lab/icons/silk | famfamfam.com]] and [[http://p.yusukekamiyamane.com/ | yusukekamiyamane.com]] sets.
+* New program icon (thanks Alexey Nabrodov).
+* In the same page now working anchor.
+* New item to add wiki notation anchors.
+* Significantly reduced blinking and update the interface.
+* Help in English (thanks Ilya Cheshkova for correcting my clumsy translation by Google Translate:)).
+* Added keyboard shortcuts for the &lt;PRE&gt; tag on HTML page and for [=[@...@]=] on wiki page.
+* Added hot keys and buttons for [=[[<<]]=] on wiki page.
+* Added buttons for tags and &lt;code&gt; &lt;blockquote&gt; on HTML page.
+* Added the "Update" button on attachment panel.
+* Clicking on the icon in the tray, minimized window is unwrapped and deployed now being phased out.
+* Fixed: for Windows not working links to pages that are in its path "#" symbol.
+* Fixed a bug with corrupted file in the root __page.opt wiki.
+* Other bug fixes and translation program.
+* Code refactoring.
+
+
+1.3.1.393 (July 2011)
+~~~~~~~~~~~~~~~~~~~~~
+
+* On Windows, fixed the error due to which the links do not work on the search page.
+* On Linux, fixed the error, because of which did not open the page, if the path to them was the '#'.
+
+1.3.0.384 (June 2011)
+~~~~~~~~~~~~~~~~~~~~~
+
+* Now, as HTML-rendering engine is used Internet Explorer for Windows version, WebKit for Linux version.
+* Added ability to print notes and their source code.
+* Added a new wiki tag [={-...-}=] for the strikethrough text.
+* Added a button to strikethrough text on a HTML-page.
+* Ability to set the font size when browsing through your notes.
+* Ability to install additional CSS styles for notes.
+* Changing the shortcut key for switching between code and viewing on the F4.
+* Added menu items to the wiki commands [=(:...:)=].
+* Pages that are open in "read only", are italics.
+* On Windows, the program should now work without install MS Visual C + + 2008 Redistributable Package.
+* If you run Windows programs using the exe then error will be output to a file outwiker.log, which will be created in the same folder where the file settings outwiker.ini.
+* Fixed error when trying to open wikis, if for some of the notes is not writable.
+* Fixed a bug which caused the Windows did not work rendering of formulas, if the OutWiker was installed in a directory containing spaces.
+
+1.2.0.322 (April 2011)
+~~~~~~~~~~~~~~~~~~~~~~
+
+* For wiki added the ability to enter formulas in the TeX notation (used mimeTex).
+* Link to image in [= [[Attach: xxx.png]] =] or [= [[http://.../xxx.png]] =] on the wiki pages only inserts a link to an image and not the picture itself.
+* Added a wiki command [= (: childlist:) =] to insert a list of child notes.
+* Added a wiki command [= (: attachlist:) =] to insert a list of attached files
+* Added a wiki command [= (: include:) =] for the contents of attached files.
+* Added a wiki commands to insert links to users Livejournal.com (command [= (: ljuser :)=]) on LiveJournal Community (command [= (: ljcomm :)=]).
+* The menu function is added to convert special characters HTML (<,>, etc.) in their HTML representation.
+* Inside the operator [= [@ ... @] =] When parsing the wiki notation symbols "<" replaced by "&lt;", and ">" - on "&gt;".
+* Added ability to specify a template for a blank wiki page (see Configuration).
+* From the wiki notation removed the \\\, as it completely replaces the command [=[[<<]]=] (line break).
+* The tree now shows the root note.
+* Sort pages alphabetically was accelerated.
+* Improved recognition of the links in a wiki page.
+* Improved caching of a wiki page.
+* In the title (!!, !!!!, Etc.) can now be used and some other elements of the wiki notation (bold, italics, etc, formulas and wiki commands [=(:. ..:)=]).
+* Fixed bugs related to deleting and moving the notes that you can not delete / move due to blockage of their directories.
+* Fixed an error that occurred when trying to save the page, the directory is removed by hand during the program.
+* Fixed a crash program under Linux if you rename a page containing images that are downloaded from internet.
+* Other minor fixes and refactoring.
+
+
+1.1.0.218 (February 2011)
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* Rebuild the interface of the main window. Now it is possible to move and to close the panel with wood notes and attachments.
+* Added ability to change the order of notes in the tree (shortcut Ctrl + Shift + Up / Ctrl + Shift + Down).
+* Added ability to sort the entries forced the alphabetally.
+* Added full screen mode.
+* Auto-save notes when you switch to another application.
+* Added ability to drag files from the windows of investment in other programs.
+* New option: Always show icon in system tray.
+* New option: the size of tabs in the editor.
+* Now when you create a page, type of page is selected by default pages created last time.
+* Now when you create a page directory __attach are not created. It is created when the first necessity.
+* Reduced blinking of the main window for different actions.
+* Bug fixes.
+* Minor fixes in the interface.
+
+
+1.0.0.108 release (December 2010)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* Added preferences window.
+* Added support for multiple languages (now program has English and Russian interface).
+* Added ability to minimize to tray.
+* Added ability to automatically open the last time opened wiki at startup.
+* Added ability to disable the question before exiting the program.
+* Added ability to set the font for the editor.
+* Added ability to turn line numbering in the editor window.
+* New option: default size for thumbnails of images on wiki pages.
+* Added tab to view the HTML code for a wiki page.
+* Blank pages are opened by default on the tab for editing.
+* If the page is blank, then tab to view a list of attached files (this feature can be disabled)
+* New option: main window title. By default, there contain the name of the wiki and open the current page.
+* New window "About", added tab "Donate".
+* Fixed a bug related to storing the settings in the profile with Russian letters.
+* Improved detection of Internet addresses in a wiki notation.
+* Double click on the note in the tree to open a dialog with the properties of the page.
+* Wiki files, which was opened in "read only" do not added to the list of recently opened files.
+* Various minor bug fixes and interface improvements.
+
+
+1.0 beta 3 (October 2010)
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* Added a open mode "read only". Help now opens in this mode.
+* The ability to store settings in your profile folder, not in the folder with the program (non-portable mode).
+* Fixed blinking while switching windows pages.
+* Source moved from github to launchpad.net (https://launchpad.net/outwiker). Now, instead git using Bazaar.
+* Fix a few bugs in the wiki parser.
+
+
+1.0 beta 2 (August 2010)
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+* Added ability to move pages in the tree.
+* Added ability to rename pages without to call the page properties dialog.
+* Added context menu for the tree notes.
+* The relative path to pages for links are now case-insensitive.
+* Changing the shortcut key to switch between the code and view (it was F2, became F5).
+* If the attached file with a name that already exists among the attached files, the dialog is shown with the question "What should I do?"
+* Folder with thumbnails of images __thumb now is not shown in the attachments.
+* Now, tree notes, saves its state (expanded or closed site).
+* Added a status panel that shows the link text when the mouse cursor on it.
+* The program now uses absolute paths to folders, so when you run out of source working directory need not be a folder with the source.
+* Fixed bugs.
+
+
+1.0 beta 1 (July 2010)
+~~~~~~~~~~~~~~~~~~~~~~
+
+* A new type of page - the page in a wiki notation.
+* Added information about the program.
+* Added menu item to copy to the clipboard the link to the page.
+* Added ability to open wiki, passing the path to the command line.
+* Added hot key and menu item to switch between the code and view.
+* The toolbar buttons are added to align the text to HTML (center, left justified, etc.)
+* The menu item to copy the title page to the clipboard.
+* Before you restart the wiki is now the program asks whether you want to save the current page.
+* Added menu item Edit (Undo / Redo / Cut / Copy / Paste).
+* Fixed copying to clipboard from the view HTML.
+* Minor fixes and improvements.
+
+
+1.0 alpha 3 (June 2010)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* Added ability to search by page.
+* The buttons for the main tags page HTML.
+* Added ability to create links to attached files.
+* Added a button to clear checkboxes from all tags in the global search.
+* Added new icons for the pages.
+* Added ability to attach files to the page by dragging and dropping them into the program.
+* Improved output lists in HTML-pages.
+* Fixed some bugs.
+
+
+1.0 alpha 2 (May 2010)
+~~~~~~~~~~~~~~~~~~~~~~
+
+* Ability to delete and rename pages.
+* The global search for text and tags.
+* Added a new page type - search page.
+* Added ability to run attached files.
+* Added ability to create links between pages.
+* Pages in the tree are now always sorted alphabetically.
+* Fixed some bugs.
+* Minor interface changes.
+
+1.0 alpha 1 (May 2010)
+~~~~~~~~~~~~~~~~~~~~~~
+
+* First public version.
 

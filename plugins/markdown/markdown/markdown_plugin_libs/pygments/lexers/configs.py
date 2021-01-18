@@ -5,7 +5,7 @@
 
     Lexers for configuration file formats.
 
-    :copyright: Copyright 2006-2019 by the Pygments team, see AUTHORS.
+    :copyright: Copyright 2006-2020 by the Pygments team, see AUTHORS.
     :license: BSD, see LICENSE for details.
 """
 
@@ -13,7 +13,7 @@ import re
 
 from pygments.lexer import RegexLexer, default, words, bygroups, include, using
 from pygments.token import Text, Comment, Operator, Keyword, Name, String, \
-    Number, Punctuation, Whitespace, Literal
+    Number, Punctuation, Whitespace, Literal, Generic
 from pygments.lexers.shell import BashLexer
 from pygments.lexers.data import JsonLexer
 
@@ -21,7 +21,8 @@ __all__ = ['IniLexer', 'RegeditLexer', 'PropertiesLexer', 'KconfigLexer',
            'Cfengine3Lexer', 'ApacheConfLexer', 'SquidConfLexer',
            'NginxConfLexer', 'LighttpdConfLexer', 'DockerLexer',
            'TerraformLexer', 'TermcapLexer', 'TerminfoLexer',
-           'PkgConfigLexer', 'PacmanConfLexer', 'AugeasLexer', 'TOMLLexer']
+           'PkgConfigLexer', 'PacmanConfLexer', 'AugeasLexer', 'TOMLLexer',
+           'SingularityLexer']
 
 
 class IniLexer(RegexLexer):
@@ -155,7 +156,7 @@ class KconfigLexer(RegexLexer):
     name = 'Kconfig'
     aliases = ['kconfig', 'menuconfig', 'linux-config', 'kernel-config']
     # Adjust this if new kconfig file names appear in your environment
-    filenames = ['Kconfig', '*Config.in*', 'external.in*',
+    filenames = ['Kconfig*', '*Config.in*', 'external.in*',
                  'standard-modules.in']
     mimetypes = ['text/x-kconfig']
     # No re.MULTILINE, indentation-aware help text needs line-by-line handling
@@ -303,8 +304,7 @@ class ApacheConfLexer(RegexLexer):
             (r'#(.*\\\n)+.*$|(#.*?)$', Comment),
             (r'(<[^\s>]+)(?:(\s+)(.*))?(>)',
              bygroups(Name.Tag, Text, String, Name.Tag)),
-            (r'([a-z]\w*)(\s+)',
-             bygroups(Name.Builtin, Text), 'value'),
+            (r'[a-z]\w*', Name.Builtin, 'value'),
             (r'\.+', Text),
         ],
         'value': [
@@ -314,12 +314,12 @@ class ApacheConfLexer(RegexLexer):
             (r'[^\S\n]+', Text),
             (r'\d+\.\d+\.\d+\.\d+(?:/\d+)?', Number),
             (r'\d+', Number),
-            (r'/([a-z0-9][\w./-]+)', String.Other),
+            (r'/([*a-z0-9][*\w./-]+)', String.Other),
             (r'(on|off|none|any|all|double|email|dns|min|minimal|'
              r'os|productonly|full|emerg|alert|crit|error|warn|'
              r'notice|info|debug|registry|script|inetd|standalone|'
              r'user|group)\b', Keyword),
-            (r'"([^"\\]*(?:\\(.|[\n])[^"\\]*)*)"', String.Double),
+            (r'"([^"\\]*(?:\\(.|\n)[^"\\]*)*)"', String.Double),
             (r'[^\s"\\]+', Text)
         ],
     }
@@ -900,7 +900,7 @@ class TOMLLexer(RegexLexer):
 
     name = 'TOML'
     aliases = ['toml']
-    filenames = ['*.toml']
+    filenames = ['*.toml', 'Pipfile', 'poetry.lock']
 
     tokens = {
         'root': [
@@ -938,3 +938,47 @@ class TOMLLexer(RegexLexer):
 
         ]
     }
+
+
+class SingularityLexer(RegexLexer):
+    """
+    Lexer for `Singularity definition files
+    <https://www.sylabs.io/guides/3.0/user-guide/definition_files.html>`_.
+
+    .. versionadded:: 2.6
+    """
+
+    name = 'Singularity'
+    aliases = ['singularity']
+    filenames = ['*.def', 'Singularity']
+    flags = re.IGNORECASE | re.MULTILINE | re.DOTALL
+
+    _headers = r'^(\s*)(bootstrap|from|osversion|mirrorurl|include|registry|namespace|includecmd)(:)'
+    _section = r'^%(?:pre|post|setup|environment|help|labels|test|runscript|files|startscript)\b'
+    _appsect = r'^%app(?:install|help|run|labels|env|test|files)\b'
+
+    tokens = {
+        'root': [
+            (_section, Generic.Heading, 'script'),
+            (_appsect, Generic.Heading, 'script'),
+            (_headers, bygroups(Text, Keyword, Text)),
+            (r'\s*#.*?\n', Comment),
+            (r'\b(([0-9]+\.?[0-9]*)|(\.[0-9]+))\b', Number),
+            (r'(?!^\s*%).', Text),
+        ],
+        'script': [
+            (r'(.+?(?=^\s*%))|(.*)', using(BashLexer), '#pop'),
+        ],
+    }
+
+    def analyse_text(text):
+        """This is a quite simple script file, but there are a few keywords
+        which seem unique to this language."""
+        result = 0
+        if re.search(r'\b(?:osversion|includecmd|mirrorurl)\b', text, re.IGNORECASE):
+            result += 0.5
+
+        if re.search(SingularityLexer._section[1:], text):
+            result += 0.49
+
+        return result

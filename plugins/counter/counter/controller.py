@@ -24,6 +24,7 @@ class Controller(object):
     """
     Класс отвечает за основную работу интерфейса плагина
     """
+
     def __init__(self, plugin, application):
         """
         plugin - Владелец контроллера(экземпляр класса PluginSource)
@@ -75,14 +76,14 @@ class Controller(object):
 
     def __onWikiParserPrepare(self, parser):
         """
-        Вызывается до разбора викитекста. Добавление команды(:counter:)
+        Вызывается до разбора викитекста. Добавление команды (:counter:)
         """
         parser.addCommand(CommandCounter(parser))
 
     @testreadonly
     def insertCommand(self):
         """
-        Вставка команды(:counter:) в редактор
+        Вставка команды (:counter:) в редактор
         """
         if self._application.selectedPage.readonly:
             raise outwiker.core.exceptions.ReadonlyException

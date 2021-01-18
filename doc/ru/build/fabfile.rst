@@ -153,9 +153,6 @@ win_clear
     Удалить созданную бинарную сборку под Linux.
 
 
-Подробнее о сборке OutWiker под Linux см. раздел :ref:`ru_build_linux`.
-
-
 .. _ru_fabfile_plugins:
 
 Команды, связанные с плагинами

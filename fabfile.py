@@ -7,15 +7,13 @@ import os
 import os.path
 import glob
 import sys
-import urllib.request
-import urllib.error
-import urllib.parse
 import shutil
 from typing import List
 
 from fabric.api import local, lcd, settings, task, cd, put, hosts
 from colorama import Fore
 from buildtools.buildfacts import BuildFacts
+from buildtools.info import show_plugins_info
 from buildtools.linter import (LinterForOutWiker, LinterForPlugin,
                                LinterStatus, LinterReport)
 
@@ -46,8 +44,6 @@ from buildtools.defines import (
 )
 from buildtools.versions import (getOutwikerVersion,
                                  getOutwikerVersionStr,
-                                 downloadAppInfo,
-                                 getLocalAppInfoList,
                                  )
 from buildtools.builders import (BuilderWindows,
                                  BuilderSources,
@@ -114,7 +110,7 @@ def sources_clear():
 
 @task
 @windows_only
-def win(is_stable=False, skipinstaller=False, skiparchives=False):
+def win(is_stable=False, skiparchives=False, skipinstaller=False):
     '''
     Build OutWiker for Windows
     '''
@@ -281,39 +277,8 @@ def clear():
 
 
 @task
-def site_versions():
-    '''
-    Compare current OutWiker and plugins versions with versions on the site
-    '''
-    app_list = getLocalAppInfoList()
-
-    # Downloading versions info
-    print(u'Downloading version info files...\n')
-    print(u'{: <20}{: <20}{}'.format(u'Title',
-                                     u'Deployed version',
-                                     u'Dev. version'))
-    print(u'-' * 60)
-    for localAppInfo in app_list:
-        url = localAppInfo.website
-        name = localAppInfo.app_name
-
-        print(u'{:.<20}'.format(name), end=u'')
-        try:
-            appinfo = downloadAppInfo(url)
-            if appinfo.version == localAppInfo.version:
-                font = Fore.GREEN
-            else:
-                font = Fore.RED
-
-            print(u'{siteversion:.<20}{devversion}'.format(
-                siteversion=str(appinfo.version),
-                devversion=font + str(localAppInfo.version)
-            ))
-        except (urllib.error.URLError, urllib.error.HTTPError) as e:
-            print(Fore.RED + u'Error')
-            print(str(e))
-            print(url)
-            print('')
+def plugins_info():
+    show_plugins_info()
 
 
 @task
@@ -441,12 +406,16 @@ def deploy(apply=False, is_stable=False):
     else:
         print(Fore.GREEN + 'Print commands only')
 
-    update_sources_master(apply)
-    add_sources_tag(apply, is_stable)
     plugins()
     upload_plugins()
     upload_plugins_pack()
     upload_distribs(is_stable)
+
+    snap_channels = ['edge', 'beta']
+    if is_stable:
+        snap_channels += ['release']
+
+    snap_publish(*snap_channels)
 
 
 @task
@@ -477,7 +446,7 @@ def _run_commands(commands: List[str], apply=False):
 
 
 @task
-def update_sources_master(apply=False):
+def update_sources_master(apply=False, is_stable=False):
     '''
     Update the git repository
 
@@ -492,6 +461,7 @@ def update_sources_master(apply=False):
         'git push'
     ]
     _run_commands(commands, apply)
+    add_sources_tag(apply, is_stable)
 
 
 @task
@@ -646,7 +616,6 @@ def docker_build(*args):
 
 
 @task
-@linux_only
 def docker_build_wx(ubuntu_version: str, wx_version: str):
     '''
     Build a wxPython library from sources
@@ -657,7 +626,7 @@ def docker_build_wx(ubuntu_version: str, wx_version: str):
         os.mkdir(build_dir)
 
     # Create Docker image
-    docker_image = 'wxpython/ubuntu_{ubuntu_version}_webkit1'.format(
+    docker_image = 'wxpython/ubuntu_{ubuntu_version}_webkit2'.format(
         ubuntu_version=ubuntu_version)
 
     dockerfile_path = os.path.join(
@@ -681,32 +650,39 @@ def docker_build_wx(ubuntu_version: str, wx_version: str):
 
 @task(alias='linux_snap')
 @linux_only
-def snap(is_stable=0):
+def snap(*params):
     '''
     Build clean snap package
     '''
-    is_stable = tobool(is_stable)
-    builder = BuilderSnap(is_stable)
+    builder = BuilderSnap(*params)
     builder.build()
 
 
 @task(alias='linux_snap_publish')
 @linux_only
-def snap_publish():
+def snap_publish(*channels):
     '''
     Publish created snap package
+    channels - comma separated list of channels the snap would be released:
+        edge, beta, candidate, release
     '''
     builder = BuilderSnap(False)
     snap_files = builder.get_snap_files()
 
     for snap_file in snap_files:
         print_info('Publish snap: {fname}'.format(fname=snap_file))
-        local('snapcraft push "{fname}"'.format(fname=snap_file))
-        local('snapcraft sign-build "{fname}"'.format(fname=snap_file))
+        if channels:
+            channels_str = ','.join(channels)
+            command = 'snapcraft upload  "{fname}" --release {channels}'.format(
+                fname=snap_file, channels=channels_str)
+        else:
+            command = 'snapcraft upload  "{fname}"'.format(fname=snap_file)
+
+        local(command)
 
 
 @task
-def site_content(is_stable=False):
+def site_content():
     path_to_templates = os.path.join(NEED_FOR_BUILD_DIR,
                                      SITE_CONTENT_DIR)
     # List of SiteContentSource
@@ -720,6 +696,16 @@ def site_content(is_stable=False):
         os.path.join(NEED_FOR_BUILD_DIR, 'versions.xml'),
         'en',
         'outwiker_unstable.en.txt'))
+
+    apps.append(SiteContentSource(
+        os.path.join(NEED_FOR_BUILD_DIR, 'versions_stable.xml'),
+        'ru',
+        'outwiker_stable.ru.txt'))
+
+    apps.append(SiteContentSource(
+        os.path.join(NEED_FOR_BUILD_DIR, 'versions_stable.xml'),
+        'en',
+        'outwiker_stable.en.txt'))
 
     for plugin in PLUGINS_LIST:
         item_ru = SiteContentSource(

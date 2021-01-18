@@ -12,7 +12,6 @@ Lightbox plugin adds the command [=(:lightbox:)=]. If this command to insert a w
 
 [[Lightbox {{ version_full }} -> Attach:Outwiker/Lightbox/lightbox-{{ version_full }}.zip]] ('''Required OutWiker version: 3.0.0.868 and above''')
 
-<!--#version stable {{ version_full }} -->
 (:DonateOWEn:)
 
 The [=(: lightbox :) =] command does not use any additional parameters.

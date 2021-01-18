@@ -104,12 +104,12 @@ class AttachListDialog (TestedDialog):
         mainSizer.Add(self._sortLabel, 0, flag=wx.ALL |
                       wx.ALIGN_CENTER_VERTICAL, border=2)
         mainSizer.Add(self._sortComboBox, 0, flag=wx.EXPAND |
-                      wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
-        mainSizer.Add(self._descendCheckBox, 0, flag=wx.EXPAND |
-                      wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
+                      wx.ALL, border=2)
+        mainSizer.Add(self._descendCheckBox, 0, flag=wx.ALL |
+                      wx.ALIGN_CENTER_VERTICAL, border=2)
         mainSizer.AddStretchSpacer()
         mainSizer.AddStretchSpacer()
-        mainSizer.Add(self._buttonsSizer, 0, flag=wx.EXPAND | wx.ALL |
+        mainSizer.Add(self._buttonsSizer, 0, flag=wx.ALL |
                       wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT, border=2)
 
         self.SetSizer(mainSizer)

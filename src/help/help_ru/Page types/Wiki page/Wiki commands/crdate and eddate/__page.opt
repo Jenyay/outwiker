@@ -1,9 +1,9 @@
 [General]
 type = wiki
-tags = wiki, команды, пользователям
+tags = wiki, команды
 order = 3
 creationdatetime = 2014-08-21 12:26:47.811979
-datetime = 2014-08-21 12:51:40.878481
+datetime = 2020-05-10 10:55:52.822853
 cursorposition = 236
 alias = Команды crdate и eddate
 

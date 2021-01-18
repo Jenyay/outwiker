@@ -6,16 +6,27 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: counter\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-23 13:06+0300\n"
+"POT-Creation-Date: 2020-06-15 17:16+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language-Team: jenyay <jenyay.ilin@gmail.com>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.3\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: actions.py:22
+msgid "Counter (:counter ...:)"
+msgstr ""
+
+#: actions.py:26
+msgid "Counter plugin. Insert (:counter... :) command"
+msgstr ""
 
 #: insertdialog.py:172
 msgid "Advanced"
@@ -57,7 +68,7 @@ msgstr ""
 
 #: plugin.py:32
 msgid ""
-"<b>Usage:</b>:\n"
+"<b>Usage:</b>\n"
 "(:counter parameters... :)"
 msgstr ""
 
@@ -82,12 +93,4 @@ msgstr ""
 
 #: plugin.py:55
 msgid "https://jenyay.net/Outwiker/CounterEn"
-msgstr ""
-
-#: actions.py:22
-msgid "Counter (:counter ...:)"
-msgstr ""
-
-#: actions.py:26
-msgid "Counter plugin. Insert (:counter... :) command"
 msgstr ""

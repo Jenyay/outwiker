@@ -3,11 +3,12 @@
 <head>
 	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
 	<meta http-equiv='content-type' content='text/html; charset=utf-8'/>
+	<title>attachlist command</title>
 
 	<style type='text/css'>
 		body, div, p, table {
 			font-size:10pt;
-			font-family:Verdana;
+			font-family:Sans;
 		}
 
 		img{border:none}
@@ -17,44 +18,58 @@
 </head>
 
 <body>
-
-<h2>Purpose and syntax  (:attachlist:)  command</h2>
-<br>
- (: attachlist:)  command is designed to be inserted into a wiki page list of attachments:<br>
-<br>
-(:attachlist [params...]:)<br>
-<br>
-Additionally, the command  (: attachlist:)  can be used <i>sort</i> parameter, which specifies the sort order of files. <i>Sort</i> parameter can be the following:<br>
+<h2>The  (:attachlist:)  command</h2>
+<br/>
+The  (:attachlist:)  command is a placeholder, which is to be replaced with list of attachments of the note wnen parsing.<br/>
+<br/>
+(:attachlist [params...]:)<br/>
+<br/>
+The command  (:attachlist:)  can be used with the <i>sort</i> switch, which specifies the sorting order. The <i>Sort</i> switch can take the following values:<br/>
 <ul>
-<li><i>name</i> - attached files will be sorted by name (this is equivalent to command  (: attachlist:)  without parameters);</li>
-<li><i>descendname</i> - the attached files will be sorted by name in descending order;</li>
-<li><i>ext</i> - the attached files will be sorted by extension;</li>
-<li><i>descendext</i> - the attached files will be sorted by extension in descending order;</li>
-<li><i>size</i> - the attached files will be sorted by size;</li>
-<li><i>descendsize</i> - the attached files will be sorted by size in descending order;</li>
-<li><i>date</i> - the attached files will be sorted by their date of last modification;</li>
-<li><i>descenddate</i> - the attached files will be sorted by their date of last modification in descending order;</li>
+<li><i>name</i> - attached files are sorted by name in ascending order (this is equivalent to command  (: attachlist:)  without switches);</li>
+<li><i>descendname</i> - attached files are sorted by name in descending order;</li>
+<li><i>ext</i> - attached files are sorted by extension in ascending order;</li>
+<li><i>descendext</i> - attached files are sorted by extension in descending order;</li>
+<li><i>size</i> - attached files are sorted by size in ascending order;</li>
+<li><i>descendsize</i> - attached files are sorted by size in descending order;</li>
+<li><i>date</i> - attached files are sorted by their date of last modification in ascending order;</li>
+<li><i>descenddate</i> - attached files are sorted by their date of last modification in descending order;</li>
 </ul>
 <h2>Examples</h2>
-<br>
-At current page there are five attached files, the following table shows the output of the command  (:attachlist:)  with different values ​​of the parameter <i>sort</i>:<br>
-<br>
-<table width=850 border=1><tr><td align="center"><b>Command</b></td><td align="center">(:attachlist:)</td><td align="center">(:attachlist sort=ext:)</td><td align="center">(:attachlist sort=descendext:)</td><td align="center">(:attachlist sort=size:)</td></tr><tr><td align="center"><b>Result</b></td><td align="center"><a href="__attach/anchor.png">anchor.png</a><br>
-<a href="__attach/first.jpg">first.jpg</a><br>
-<a href="__attach/image.gif">image.gif</a><br>
-<a href="__attach/image.jpg">image.jpg</a><br>
-<a href="__attach/image.png">image.png</a></td><td align="center"><a href="__attach/image.gif">image.gif</a><br>
-<a href="__attach/first.jpg">first.jpg</a><br>
-<a href="__attach/image.jpg">image.jpg</a><br>
-<a href="__attach/anchor.png">anchor.png</a><br>
-<a href="__attach/image.png">image.png</a></td><td align="center"><a href="__attach/image.png">image.png</a><br>
-<a href="__attach/anchor.png">anchor.png</a><br>
-<a href="__attach/image.jpg">image.jpg</a><br>
-<a href="__attach/first.jpg">first.jpg</a><br>
-<a href="__attach/image.gif">image.gif</a></td><td align="center"><a href="__attach/anchor.png">anchor.png</a><br>
-<a href="__attach/first.jpg">first.jpg</a><br>
-<a href="__attach/image.jpg">image.jpg</a><br>
-<a href="__attach/image.gif">image.gif</a><br>
-<a href="__attach/image.png">image.png</a></td></tr></table>
+<br/>
+There are five files attached to the current note. The following table shows the output of the command  (:attachlist:)  with various values ​​of the <i>sort</i> switch:<br/>
+<br/>
+<table width=850 border=1 style="border-collapse: collapse; border: 1px solid black;">
+<tr>
+<td align="center"><b>Command</b></td>
+<td align="center">(:attachlist:)</td>
+<td align="center">(:attachlist sort=ext:)</td>
+<td align="center">(:attachlist sort=descendext:)</td>
+<td align="center">(:attachlist sort=size:)</td>
+</tr>
+<tr>
+<td align="center"><b>Result</b></td>
+<td align="center"><a href="__attach/anchor.png">anchor.png</a><br/>
+<a href="__attach/first.jpg">first.jpg</a><br/>
+<a href="__attach/image.gif">image.gif</a><br/>
+<a href="__attach/image.jpg">image.jpg</a><br/>
+<a href="__attach/image.png">image.png</a></td>
+<td align="center"><a href="__attach/image.gif">image.gif</a><br/>
+<a href="__attach/first.jpg">first.jpg</a><br/>
+<a href="__attach/image.jpg">image.jpg</a><br/>
+<a href="__attach/anchor.png">anchor.png</a><br/>
+<a href="__attach/image.png">image.png</a></td>
+<td align="center"><a href="__attach/image.png">image.png</a><br/>
+<a href="__attach/anchor.png">anchor.png</a><br/>
+<a href="__attach/image.jpg">image.jpg</a><br/>
+<a href="__attach/first.jpg">first.jpg</a><br/>
+<a href="__attach/image.gif">image.gif</a></td>
+<td align="center"><a href="__attach/anchor.png">anchor.png</a><br/>
+<a href="__attach/first.jpg">first.jpg</a><br/>
+<a href="__attach/image.jpg">image.jpg</a><br/>
+<a href="__attach/image.gif">image.gif</a><br/>
+<a href="__attach/image.png">image.png</a></td>
+</tr>
+</table>
 </body>
 </html>

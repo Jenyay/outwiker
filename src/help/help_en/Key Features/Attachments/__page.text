@@ -2,15 +2,18 @@ Working with attachments is one of the main features of the OutWiker. All files 
 
 <i>for example:</i>
 
-<img src="__attach/cat.jpg">
+<div align="center"><img src="__attach/cat.jpg"></div>
 
-There is the special button bar (located on the "Attachments" pane) to work with attachments. Its buttons are as follows:
+There is the special button bar (located on the "Attachments" pane) to work with attachments. 
+
+<div align="center"><img src="__attach/screenshot.png"></div>
+
+Its buttons are as follows:
 
 <ul>
-<li>"Refresh" — To refresh the list of attached files. Refreshing is needed in case the files were attached/removed from the "__attach" subdirectory via a file manager, rather than via OutWiker GUI</li>
 <li>"Attach Files..." — To attach new files.</li>
 <li>"Remove Files..." — To remove selected files.</li>
 <li>"Paste" — To insert relative pathname of the selected file into the note's body, e.g., selecting the file "cat.jpg" attached to this note and clicking the "Paste" button results in inserting "__attach/cat.jpg".</li>
 <li>"Execute" — To execute the selected file.
 <li>"Open attachments folder" — To open folder with attached files in the default file manager.</li>
-</ul>
+</ul> 

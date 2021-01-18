@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import wx
-import wx.lib.agw.flatnotebook as fnb
+import outwiker.gui.controls.flatnotebook as fnb
 
 from outwiker.core.application import Application
 from outwiker.core.history import History

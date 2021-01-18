@@ -4,6 +4,8 @@ import re
 
 from pyparsing import Regex
 
+from outwiker.utilites.urls import is_url
+
 
 class UrlFactory (object):
     @staticmethod
@@ -26,18 +28,10 @@ class UrlToken (object):
         """
         Преобразовать ссылку на интернет-адрес
         """
-        if (not t[0].startswith("http://") and
-                not t[0].startswith("ftp://") and
-                not t[0].startswith("news://") and
-                not t[0].startswith("gopher://") and
-                not t[0].startswith("telnet://") and
-                not t[0].startswith("nttp://") and
-                not t[0].startswith("file://") and
-                not t[0].startswith("https://") and
-                not t[0].startswith("page://")):
+        if not is_url(t[0]):
             return self.__getUrlTag("http://" + t[0], t[0])
 
         return self.__getUrlTag(t[0], t[0])
 
     def __getUrlTag(self, url, comment):
-        return '<a href="%s">%s</a>' % (url, comment)
+        return '<a href="{url}">{comment}</a>'.format(url=url, comment=comment)

@@ -26,7 +26,7 @@ class LogRedirector(object):
 
     def write(self, message):
         self._terminal.write(message)
-        with open(self._fname, "a") as fp:
+        with open(self._fname, "a", encoding='utf8') as fp:
             if self._firstWrite:
                 fp.write(u'\n\n{} - START\n'.format(self._runTime))
                 self._firstWrite = False

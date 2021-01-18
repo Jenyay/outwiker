@@ -13,7 +13,7 @@ class HotKeysPanel(BasePrefPanel):
     """
 
     def __init__(self, parent, application):
-        super(type(self), self).__init__(parent)
+        super().__init__(parent)
 
         self._application = application
         # Новые горячие клавиши
@@ -37,8 +37,10 @@ class HotKeysPanel(BasePrefPanel):
         oldActionStrId = self.__findConflict(newhotkey)
 
         if oldActionStrId is not None:
-            newAction = self._application.actionController.getTitle(newActionStrId)
-            oldAction = self._application.actionController.getTitle(oldActionStrId)
+            newAction = self._application.actionController.getTitle(
+                newActionStrId)
+            oldAction = self._application.actionController.getTitle(
+                oldActionStrId)
 
             text = _(u'{hotkey} hotkey assigned for "{old}".\nAssign this hotkey for "{new}"?').format(
                 hotkey=newhotkey,
@@ -69,7 +71,6 @@ class HotKeysPanel(BasePrefPanel):
     def __createGui(self):
         mainSizer = wx.FlexGridSizer(cols=1)
         mainSizer.AddGrowableRow(0)
-        # mainSizer.AddGrowableRow(3)
         mainSizer.AddGrowableCol(0)
 
         # Список с именами actions
@@ -99,7 +100,7 @@ class HotKeysPanel(BasePrefPanel):
         hotkeyLabel = wx.StaticText(
             self,
             -1,
-            _(u'Hot key.\nPress the Backspace key to clear'))
+            _('Hotkey.\nPress the Backspace key to clear'))
 
         # Горячая клавиша
         self.__hotkeyCtrl = HotkeyCtrl(self)
@@ -165,7 +166,8 @@ class HotKeysPanel(BasePrefPanel):
 
         strid = event.GetClientData()
         if strid is not None:
-            self.__descriptionText.Value = self._application.actionController.getAction(strid).description
+            self.__descriptionText.Value = self._application.actionController.getAction(
+                strid).description
             self.__hotkeyCtrl.Enable()
             self.__hotkeyCtrl.SetValue(self.__hotkeys[strid])
 

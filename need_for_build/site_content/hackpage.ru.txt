@@ -12,8 +12,6 @@ Attach:Soft/Outwiker/us.png [[English version -> Outwiker/HackPageEn]]
 
 [[HackPage {{ version_full }} -> Attach:hackpage-{{ version_full }}.zip]] ('''Требуемая версия OutWiker: 3.0.0.868 и выше''')
 
-<!--#version stable {{ version_full }} -->
-
 (:DonateOW:)
 
 

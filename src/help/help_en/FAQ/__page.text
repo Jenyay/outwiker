@@ -2,7 +2,7 @@
 
 !!!! OutWiker does not run on Windows. What should I do?
 
-Try to install [[http://www.microsoft.com/downloads/details.aspx?familyid=9b2da534-3e03-4391-8a4d-074b9f2bc1bf&displaylang=en | MS Visual C++ 2008 Redistributable Package]]. If it does not help, please, send message to the author at [[http://jenyay.net/Soft/Outwiker | program page]] or to e-mail [[mailto:jenyay.ilin@gmail.com | jenyay.ilin@gmail.com]] with a full text of error.
+Try to install [[https://www.microsoft.com/en-us/download/details.aspx?id=48145 | MS Visual C++ Redistributable Package]]. If it does not help, please, send message to the author at [[https://jenyay.net/Outwiker/English | OutWiker program page]] or to e-mail [[mailto:jenyay.ilin@gmail.com | jenyay.ilin@gmail.com]] with a full text of error.
 
 
 !!!! Would not it be better, if OutWiker kept notes in one file?

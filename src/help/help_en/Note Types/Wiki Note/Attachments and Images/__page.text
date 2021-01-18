@@ -1,9 +1,9 @@
 !!! Attaching images
 
-|| border=1
+|| border=1 style="border-collapse: collapse; border: 1px solid black;"
 || '''Syntax''' || '''Result''' || '''Comment''' ||
 
-|| [=http://jenyay.net/small_image.jpg=] || http://jenyay.net/small_image.jpg || Insert image from webpage ||
+|| [=https://jenyay.net/uploads/Soft/Outwiker/small_image.jpg=] || https://jenyay.net/uploads/Soft/Outwiker/small_image.jpg || Insert image from webpage ||
 
 || [=Attach:small_image.jpg=] || Attach:small_image.jpg || Insert image from attached file ||
 

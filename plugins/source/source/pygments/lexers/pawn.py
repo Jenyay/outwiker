@@ -5,7 +5,7 @@
 
     Lexers for the Pawn languages.
 
-    :copyright: Copyright 2006-2019 by the Pygments team, see AUTHORS.
+    :copyright: Copyright 2006-2020 by the Pygments team, see AUTHORS.
     :license: BSD, see LICENSE for details.
 """
 
@@ -197,3 +197,9 @@ class PawnLexer(RegexLexer):
             (r'.*?\n', Comment),
         ]
     }
+
+    def analyse_text(text):
+        """This is basically C. There is a keyword which doesn't exist in C
+        though and is nearly unique to this language."""
+        if 'tagof' in text:
+            return 0.01

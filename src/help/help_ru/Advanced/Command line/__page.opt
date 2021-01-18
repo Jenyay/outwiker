@@ -9,7 +9,7 @@ type = wiki
 tags = продвинутым пользователям
 datetime = 2019-01-18 19:57:24.425741
 cursorposition = 427
-order = 1
+order = 0
 uid = __1640eea0-1bb0-453b-ba4c-07f1c298ce76
 alias = Параметры командной строки
 

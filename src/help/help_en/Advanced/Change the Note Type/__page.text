@@ -8,9 +8,11 @@ In order to manualy change the note type do the following:
 # Launch OutWiker (if OutWiker's window has already been opened, go to "Tools / Reload Wiki" to refresh the tree of notes).
 
 At the moment OutWiker supports the following note types:
-* text - [[/Page Types/Text Page]];
-* html - [[/Page Types/HTML Page]]; 
-* wiki - [[/Page Types/Wiki Page]];
-* search - [[/Page Types/Search Page]].
+* text - [[Text Page -> page://__b32aa743-384d-493f-aad4-4c4cbf945fbb]];
+* html - [[HTML Page -> page://__0cc8f2c6-754c-4aa8-b118-561b930e9955]]; 
+* wiki - [[Wiki Page -> page://__dd8b23a1-6787-42bb-9b58-c78a656688e2]];
+* search - [[Search Page -> page://__80ff0cd2-f4f3-42d8-9b38-4a73cf42a9d0]].
 
-<font color='#ff0000'>'''Use the described procedure with caution for the syntax as well as structure of ''__page.opt'' and ''__page.text'' files depend on the note type.'''</font>
+%warn%
+'''Use the described procedure with caution for the syntax as well as structure of ''__page.opt'' and ''__page.text'' files depend on the note type.'''
+%%

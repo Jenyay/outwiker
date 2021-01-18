@@ -6,6 +6,7 @@ import os.path
 from pathlib import Path
 import shutil
 
+import wx
 from fabric.api import lcd, local
 
 from buildtools.utilites import remove, print_info
@@ -70,7 +71,7 @@ class BaseBinaryBuilder(object, metaclass=ABCMeta):
             'json',
             'asyncio',
             'html.parser',
-            'pkg_resources.py2_warn',
+            'pkg_resources',
             'hunspell',
             'hunspell.platform',
             'cacheman',
@@ -78,7 +79,11 @@ class BaseBinaryBuilder(object, metaclass=ABCMeta):
         ]
 
     def get_additional_files(self):
-        return []
+        # Add the standard wxPython locales
+        wx_locales_path = os.path.join(os.path.dirname(wx.__file__), 'locale')
+        languages = ['ru', 'de', 'sv', 'uk']
+        return [(os.path.join(wx_locales_path, lang, 'LC_MESSAGES', 'wxstd.mo'),
+                 os.path.join('locale', lang, 'LC_MESSAGES')) for lang in languages]
 
     def _copy_additional_files(self):
         root_dir = os.path.join(self._dist_dir, u'outwiker')
@@ -227,12 +232,7 @@ class PyInstallerBuilderLinuxBase(BasePyInstallerBuilder):
             'libgpg-error.so.0',
             'libX11-xcb.so.1',
             'libfreetype.so.6',
-
             'libfreetype-550560cb.so',
-            # 'libgbm.so.1',
-            # 'libglapi.so.0',
-
-            # 'libxcb.so.1',
         ]
 
     def build(self):
@@ -252,9 +252,6 @@ class PyInstallerBuilderLinuxBase(BasePyInstallerBuilder):
     def get_includes(self):
         result = super().get_includes()
         result.append('hunspell')
-        # result.append('gi')
-        # result.append('gi.repository.Gtk')
-        # result.append('gi.repository.GdkPixbuf')
         return result
 
     def append_so_files(self, files, modules_dir, dir_dest):
@@ -264,28 +261,3 @@ class PyInstallerBuilderLinuxBase(BasePyInstallerBuilder):
 
 class PyInstallerBuilderLinuxSimple(PyInstallerBuilderLinuxBase):
     pass
-
-    # def get_additional_files(self):
-    #     files = []
-    #     self._append_pixbuf_files(files)
-    #     self._append_immodules_files(files)
-    #     return files
-    #
-    # def _append_immodules_files(self, files):
-    #     dir_dest = u'lib/immodules'
-    #     modules_dir = u'/usr/lib/x86_64-linux-gnu/gtk-3.0/3.0.0/immodules/'
-    #
-    #     files.append(('need_for_build/linux/immodules.cache', dir_dest))
-    #     self.append_so_files(files, modules_dir, dir_dest)
-    #
-    # def _append_pixbuf_files(self, files):
-    #     dir_dest = u'lib/gdk-pixbuf'
-    #     modules_dir = u'/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders'
-    #
-    #     files.append(('need_for_build/linux/loaders.cache', dir_dest))
-    #     self.append_so_files(files, modules_dir, dir_dest)
-    #
-    # def get_params(self):
-    #     params = super().get_params()
-    #     params.append(u'--runtime-hook=linux_runtime_hook.py')
-    #     return params

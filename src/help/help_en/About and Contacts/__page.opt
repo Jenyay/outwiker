@@ -2,10 +2,10 @@
 expand = True
 
 [General]
-type = html
+type = wiki
 order = 1
 tags = 
-datetime = 2018-08-17 17:51:46.854737
+datetime = 2020-06-09 10:48:14.204200
 linewrap = True
 cursorposition = 1647
 uid = __d0ed44d4-0772-4f04-80ca-98fc55530667

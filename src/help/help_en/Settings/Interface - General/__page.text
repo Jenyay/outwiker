@@ -1,0 +1,24 @@
+!!! Interface - General
+
+%center%Attach:outwiker_opt_general.png 
+
+The '''Ask before exit''' check-box selection forces OutWiker to ask for confirmation of closing. This setting is considered to be redundant, as OutWiker stores note content before exiting the program anyway in order to prevent any loss of content.
+
+The '''Autosave interval''' input field allows you to set interval of time in seconds between two consecutive auto-saves of the current note content. If its value is set to 0, autosaving is disabled. Apart from timer, the following events trigger auto-saving: exiting the program, switching between notes, switching between "Wiki", "Preview" and "HTML" tabs.
+
+The '''Length of recently used icons history''' input field allows you to set a number of icons for saving in the list of recently used icons in the dialog for creation page and edit page properties.
+
+The '''Length of recently opened files history''' input field allows you to set the length of the latest opened files list located in the '''File''' menu.
+
+If the '''Automatically open the recent file''' check-box is selected, then the most recent file is opened automatically, when OutWiker's is launched.
+
+The '''Date and time format''' input field determines how the creation and modification dates throughout the program interface looks like, for example, the date and time in the rightmost part of the status bar. OutWiker uses date format from [[Python language -> https://docs.python.org/2/library/datetime.html#strftime-and-strptime-behavior]]. Clicking the button to the right of the input field expands the list of all possible placeholders.
+
+The '''New page title template''' input field allows you to set default page title when creating. This is useful if you often create pages whose headings contain the current date or time. You can use the same substitution elements in this input field as for the input field ''' Date and time format''' (see above).
+
+
+The '''Toaster delay in seconds''' input field allows you to set the time during which the information window is displayed that appears in the lower right corner of the program window in case of any errors or to notify the user about any event that occurred in the program.
+
+Some note types (wiki and HTML pages) can be opened in two modes - "Preview" and "Edit". The '''Default opening page mode''' combo-box allows you to set any of them as default for all notes. The third option "Recent used" can be used to force OutWiker to remember the opening mode for each note.
+
+The '''Language''' field sets the interface language. If the "Auto" item is selected, the language will match the current operating system language. Currently, the choice of languages is rather limited. Any help with localization of OutWiker interface is very welcome. In order to do that the [[crowdin.com -> https://crowdin.com/project/outwiker]] web service can be used.

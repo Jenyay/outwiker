@@ -5,7 +5,7 @@
 
     Lexers for .net languages.
 
-    :copyright: Copyright 2006-2019 by the Pygments team, see AUTHORS.
+    :copyright: Copyright 2006-2020 by the Pygments team, see AUTHORS.
     :license: BSD, see LICENSE for details.
 """
 import re
@@ -14,7 +14,7 @@ from pygments.lexer import RegexLexer, DelegatingLexer, bygroups, include, \
     using, this, default, words
 from pygments.token import Punctuation, \
     Text, Comment, Operator, Keyword, Name, String, Number, Literal, Other
-from pygments.util import get_choice_opt, iteritems
+from pygments.util import get_choice_opt
 from pygments import unistring as uni
 
 from pygments.lexers.html import XmlLexer
@@ -71,7 +71,7 @@ class CSharpLexer(RegexLexer):
     tokens = {}
     token_variants = True
 
-    for levelname, cs_ident in iteritems(levels):
+    for levelname, cs_ident in levels.items():
         tokens[levelname] = {
             'root': [
                 # method names
@@ -184,7 +184,7 @@ class NemerleLexer(RegexLexer):
     tokens = {}
     token_variants = True
 
-    for levelname, cs_ident in iteritems(levels):
+    for levelname, cs_ident in levels.items():
         tokens[levelname] = {
             'root': [
                 # method names
@@ -294,6 +294,16 @@ class NemerleLexer(RegexLexer):
             self._tokens = self._all_tokens[level]
 
         RegexLexer.__init__(self, **options)
+
+    def analyse_text(text):
+        """Nemerle is quite similar to Python, but @if is relatively uncommon
+        elsewhere."""
+        result = 0
+
+        if '@if' in text:
+            result += 0.1
+
+        return result
 
 
 class BooLexer(RegexLexer):
@@ -507,8 +517,7 @@ class CSharpAspxLexer(DelegatingLexer):
     mimetypes = []
 
     def __init__(self, **options):
-        super(CSharpAspxLexer, self).__init__(CSharpLexer, GenericAspxLexer,
-                                              **options)
+        super().__init__(CSharpLexer, GenericAspxLexer, **options)
 
     def analyse_text(text):
         if re.search(r'Page\s*Language="C#"', text, re.I) is not None:
@@ -528,8 +537,7 @@ class VbNetAspxLexer(DelegatingLexer):
     mimetypes = []
 
     def __init__(self, **options):
-        super(VbNetAspxLexer, self).__init__(VbNetLexer, GenericAspxLexer,
-                                             **options)
+        super().__init__(VbNetLexer, GenericAspxLexer, **options)
 
     def analyse_text(text):
         if re.search(r'Page\s*Language="Vb"', text, re.I) is not None:
@@ -686,3 +694,14 @@ class FSharpLexer(RegexLexer):
             (r'"', String),
         ],
     }
+
+    def analyse_text(text):
+        """F# doesn't have that many unique features -- |> and <| are weak
+        indicators."""
+        result = 0
+        if '|>' in text:
+            result += 0.05
+        if '<|' in text:
+            result += 0.05
+
+        return result

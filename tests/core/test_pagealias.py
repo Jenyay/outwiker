@@ -177,3 +177,36 @@ class PageAliasTest(unittest.TestCase):
         self.assertIsNone(self.page.alias)
         self.assertEqual(self.page.title, 'Новый заголовок')
         self.assertEqual(self.page.display_title, 'Новый заголовок')
+
+    def test_alias_find_page_01(self):
+        subpage = TextPageFactory().create(self.page, 'subpage', [])
+        subpage.alias = 'Подстраница'
+
+        self.assertIsNotNone(self.page['Подстраница'])
+
+    def test_alias_find_page_02(self):
+        subpage_1 = TextPageFactory().create(self.page, 'subpage_1', [])
+        subpage_1.alias = 'Подстраница 1'
+
+        subpage_2 = TextPageFactory().create(subpage_1, 'subpage_2', [])
+        subpage_2.alias = 'Подстраница 2'
+
+        self.assertIsNotNone(self.page['Подстраница 1/Подстраница 2'])
+
+    def test_alias_find_page_03(self):
+        subpage_1 = TextPageFactory().create(self.page, 'subpage_1', [])
+        subpage_1.alias = 'Подстраница 1'
+
+        subpage_2 = TextPageFactory().create(subpage_1, 'subpage_2', [])
+        subpage_2.alias = 'Подстраница 2'
+
+        self.assertIsNotNone(self.page['subpage_1/Подстраница 2'])
+
+    def test_alias_find_page_04(self):
+        subpage_1 = TextPageFactory().create(self.page, 'subpage_1', [])
+        subpage_1.alias = 'Подстраница 1'
+
+        subpage_2 = TextPageFactory().create(subpage_1, 'subpage_2', [])
+        subpage_2.alias = 'Подстраница 2'
+
+        self.assertIsNotNone(self.page['Подстраница 1/subpage_2'])

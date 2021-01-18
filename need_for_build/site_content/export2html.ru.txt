@@ -11,8 +11,6 @@ Attach:us.png [[English version -> Outwiker/Export2HtmlPluginEn]]
 
 [[Export2Html {{ version_full }} -> Attach:export2html-{{ version_full }}.zip]] ('''Требуемая версия OutWiker: 3.0.0.868 и выше''')
 
-<!--#version stable {{ version_full }}-->
-
 (:DonateOW:)
 
 Сохраняемые плагином имена файлов могут быть длинные (включать в себя имена родительских заметок) или короткими (соответствующими заголовкам заметок). На следующих картинках показано исходное дерево заметок и файлы, полученные после экспорта.

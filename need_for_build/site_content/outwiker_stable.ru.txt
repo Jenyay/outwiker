@@ -1,14 +1,11 @@
 (:title OutWiker - Программа для хранения заметок:)
 (:keywords древовидный редактор, программа, хранение заметок, outliner, софт, вики, wiki, редактор :)
 (:description Outwiker. Программа для хранения заметок в виде дерева :)
+(:linebreaks:)
 
 %center%(:ad:)
 
 Attach:us.png [[English version -> Outwiker/English]]
-
->>rframe<<
-%center%[[Attach:Soft/Outwiker/twitter.png -> https://twitter.com/#!/OutWiker]] [[Attach:Soft/Outwiker/livejournal.png -> http://ru-outwiker.livejournal.com/]] [[Attach:Soft/Outwiker/gogle_plus_48.png -> https://plus.google.com/113404982971748285098]] [[Attach:Soft/Outwiker/facebook.png -> http://www.facebook.com/outwiker]] [[Attach:Soft/Outwiker/vk.png -> http://vk.com/outwiker]] 
->><<
 
 * [[#description | Описание]]
 * [[#download | Скачать программу]]
@@ -25,12 +22,11 @@ Attach:us.png [[English version -> Outwiker/English]]
 [[#description]]
 !! Описание
 
-Текущая версия OutWiker - '''{{ version_full }}'''
-<!--#version stable {{ version_main }} -->
+Текущая версия OutWiker: '''{{ version_full }}'''
 
 OutWiker - это бесплатная кроссплатформенная программа для хранения заметок в виде дерева. Такие программы называют outliner-ами, персональными вики-системами или древовидными редакторами. Основное отличие OutWiker от других подобных программ заключается в том, что OutWiker хранит дерево заметок в виде обычных директорий на диске, а не в одном файле. Также к заметкам может быть прикреплено любое количество файлов. Про остальные особенности программы вы можете прочитать в разделе [[#features | Основные возможности]].
 
-OutWiker может содержать страницы разного типа, в данный момент поддерживаются четыре типа страниц: страница с поддержкой вики-нотации, обычный текст, HTML-страницы и страница поиска по дереву, но в будущем количество типов страниц будет увеличиваться. Некоторые подробности о программе OutWiker вы можете узнать, прочитав записи с тегом [[http://jenyay.net/blog/tag/outwiker/ | outwiker]] в [[http://jenyay.net/blog/ | блоге]].
+OutWiker может содержать страницы разного типа: HTML-страницы, страницы с использованием викинотации (самый функциональный тип страниц), простые текстовые страницы, а также с помощью плагина [[Markdown -> Outwiker/Markdown]] можно добавить еще один тип страниц - страниц в формате Markdown.
 
 Особая благодарность разработчикам сайтов [[http://www.famfamfam.com/lab/icons/silk/ | famfamfam.com]], [[http://p.yusukekamiyamane.com/ | yusukekamiyamane.com]] и [[http://www.fatcow.com/free-icons | fatcow.com]] за бесплатные иконки, которые используются в OutWiker'е.
 
@@ -44,22 +40,22 @@ OutWiker может содержать страницы разного типа,
 
 (:DonateOW:)
 
-[[#windows]]'''Версия для Windows'''[[<<]]
-[[Attach:outwiker_{{ version_main }}_win.exe | outwiker_{{ version_main }}_win.exe]] (инсталлятор, 20 МБ).[[<<]]
-[[Attach:outwiker_{{ version_main }}_win.7z | outwiker_{{ version_main }}_win.7z]] (архив 7z, 20 МБ).[[<<]]
-[[Attach:outwiker_{{ version_main }}_win.zip | outwiker_{{ version_main }}_win.zip]] (архив zip, 26 МБ).[[<<]]
+[[#windows]]'''Версия для Windows'''
+[[Attach:outwiker_{{ version_full }}_win.exe | outwiker_{{ version_full }}_win.exe]] (инсталлятор, 23 МБ).
+[[Attach:outwiker_{{ version_full }}_win.7z | outwiker_{{ version_full }}_win.7z]] (архив 7z, 22 МБ).
+[[Attach:outwiker_{{ version_full }}_win.zip | outwiker_{{ version_full }}_win.zip]] (архив zip, 28 МБ).
 
-'''Версия под Windows со всеми плагинами'''[[<<]]
-[[Attach:outwiker_{{ version_main }}_win_all_plugins.zip | outwiker_{{ version_main }}_win_all_plugins.zip]] (архив zip, 33 МБ).[[<<]]
-[[Attach:outwiker_{{ version_main }}_win_all_plugins.7z | outwiker_{{ version_main }}_win_all_plugins.7z]] (архив 7z, 25 МБ).[[<<]]
+'''Версия под Windows со всеми плагинами'''
+[[Attach:outwiker_{{ version_full }}_win_all_plugins.zip | outwiker_{{ version_full }}_win_all_plugins.zip]] (архив zip, 37 МБ).
+[[Attach:outwiker_{{ version_full }}_win_all_plugins.7z | outwiker_{{ version_full }}_win_all_plugins.7z]] (архив 7z, 27 МБ).
 
 [[#linux]]
-[[#ubuntu]]Для пользователей Linux на основе '''Ubuntu''', имеется [[PPA-репозиторий -> https://launchpad.net/~outwiker-team/+archive/ubuntu/ppa]]. Для установки OutWiker из репозитория нужно выполнить следующие команды:
+[[#ubuntu]]Для пользователей Linux создан snap-пакет, который можно установить, выполнив следующие команды:
 
 (:source lang="bash":)
-sudo apt-add-repository ppa:outwiker-team/ppa
-sudo apt-get update
-sudo apt-get install outwiker
+sudo snap install outwiker
+sudo snap connect outwiker:cups-control
+sudo snap connect outwiker:removable-media
 (:sourceend:)
 
 Для запуска из исходников см. раздел [[исходники программ -> #source]].
@@ -67,16 +63,13 @@ sudo apt-get install outwiker
 [[#screenshots]]
 !! Скриншоты
 
-(:thumbgallery width=300 cols=3:)
-outwiker_2.0.0_01_ru.png
-outwiker_2.0.0_02_ru.png
-outwiker_2.0.0_03_ru.png
-outwiker_2.0.0_04_ru.png
-outwiker_2.0.0_05_ru.png
-outwiker_2.0.0_06_ru.png
-outwiker_2.0.0_07_ru.png
-outwiker_2.0.0_markdown_code_ru.png
-outwiker_2.0.0_markdown_view_ru.png
+(:thumbgallery width=400 cols=2:)
+outwiker_3.0_ru_01.png
+outwiker_3.0_ru_02.png
+outwiker_3.0_ru_03.png
+outwiker_3.0_ru_04.png
+outwiker_3.0_ru_05.png
+outwiker_3.0_ru_06.png
 (:thumbgalleryend:)
 
 [[#features]]
@@ -108,7 +101,7 @@ outwiker_2.0.0_markdown_view_ru.png
 
 '''Как сделать так, чтобы программа хранила настройки в папке с запускаемым файлом?'''
 
-Скопируйте файл ''outwiker.ini'' из папки ''.outwiker'' внутри папки профиля пользователя (под Windows 7 / 8.x / 10 - {+C:\Users\USERNAME\AppData\Roaming\outwiker\+}, под Linux - {+/home/USERNAME/.config/outwiker/+}) в папку с программой.
+Скопируйте файл ''outwiker.ini'' из папки ''.outwiker'' внутри папки профиля пользователя (под Windows 7 / 10 - {+C:\Users\USERNAME\AppData\Roaming\outwiker\+}, под Linux - {+/home/USERNAME/.config/outwiker/+}) в папку с программой.
 
 '''Как устанавливать плагины'''
 
@@ -116,7 +109,7 @@ outwiker_2.0.0_markdown_view_ru.png
 
 Если вы не используете портабельный режим, то проще всего добраться до папки с плагинами, выбрав пункт меню "Справка - Открыть папку с плагинами".
 
-Под Windows 7 / 8.x / 10 это будет:
+Под Windows 7 / 10 это будет:
 
 (:source lang="text":)
 C:\Users\USERNAME\AppData\Roaming\outwiker\plugins
@@ -146,24 +139,25 @@ git clone https://github.com/Jenyay/outwiker.git
 Если вы хотите получить исходники последней стабильной версии, то для этого надо переключиться на ветку stable:
 
 >>frame<<
-git clone https://github.com/Jenyay/outwiker.git[[<<]]
-cd outwiker[[<<]]
+git clone https://github.com/Jenyay/outwiker.git
+cd outwiker
 git checkout stable
+>><<
+
+Для запуска OutWiker из исходников выплните следующие команды:
+
+>>frame<<
+python -m pip install --user pipenv
+pipenv shell
+pipenv update -d
+fab run
 >><<
 
 Более подробно про запуск OutWiker из исходников читайте в [[http://outwiker.readthedocs.io/ru/latest/ru/build/start.html | документации]].
 
 
-[[#history]]
-!! История версий
-
-!!! {{ versions_list[0].version }} ({{ versions_list[0].date_str }})
-{% for change in versions_list[0].changes %}
-* {{ change }}{% endfor %}
-
+{% include 'changelog.ru.txt' %}
 
 [[История предыдущих версий -> Outwiker/VersionHistory]]
 
-
-[[http://jenyay.net/forum/ | '''Обсудить на форуме''']]
 (:rater:)

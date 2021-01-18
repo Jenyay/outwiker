@@ -31,6 +31,5 @@ setup(
     python_requires='>=3.5',
     install_requires=[
         'colorama>=0.4',
-        'outwiker>=3.0',
     ],
 )

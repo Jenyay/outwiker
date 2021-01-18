@@ -6,10 +6,11 @@ expand = False
 
 [General]
 type = wiki
-order = 6
+order = 4
 tags = for users
-datetime = 2017-08-30 22:00:36.827000
+datetime = 2020-06-09 11:21:04.150302
 cursorposition = 1600
+alias = Hotkeys
 
 [Misc]
 pageindex = 0

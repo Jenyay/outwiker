@@ -53,7 +53,7 @@ sudo snap connect outwiker:removable-media
 * Change the storage format for certain properties of the notes tree pages.
 * Change the way of storing standard icons in notes.
 * Add German localization.
-* Migrate to Python 3.x and wxPython 4.0.
+* Migrate to Python 3.x and wxPython 4.1.
 * Created binary assembly for Linux.
 * Add the snap package for Linux.
 

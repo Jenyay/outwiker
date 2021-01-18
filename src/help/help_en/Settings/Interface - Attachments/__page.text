@@ -1,0 +1,12 @@
+!!! Interface - Attachments
+
+%center%Attach:outwiker_opt_attach.png
+
+Here one can select action resulted of double-click on file name on the "Attachments" panel.
+
+%center%%thumb width=700%Attach:attach_panel.png%%
+
+The choice is to be made between the following actions:
+
+* To open the clicked file in application associated with this type of files.
+* To insert link to the clicked file in note text.

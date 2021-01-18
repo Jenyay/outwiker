@@ -1,0 +1,13 @@
+!!! Interface - Tags cloud
+
+%center%Attach:outwiker_opt_tags.png
+
+This section controls allow colors of tags on the "Tags" pane to be changed.
+
+%center%Attach:tags_cloud.png 
+
+The first two parameters allow you to change the behavior when you click the left and middle mouse buttons on the tag name in this panel. When you click on a tag name, you can search for pages marked with the corresponding tag, or add / remove tags for the currently selected page.
+
+Also in this window you can configure the list of window titles that pops up when you click on a tag in the Tags panel:
+
+%center%%thumb width=700%Attach:popup.png%%

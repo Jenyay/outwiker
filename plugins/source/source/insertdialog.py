@@ -153,7 +153,7 @@ class InsertDialog (wx.Dialog):
         mainSizer.Add(
             self.lineNumCheckBox,
             proportion=1,
-            flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND,
+            flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_LEFT,
             border=4
         )
 
@@ -210,7 +210,7 @@ class InsertDialog (wx.Dialog):
         tabSizer.Add(
             tabWidthLabel,
             proportion=1,
-            flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+            flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_LEFT,
             border=2
         )
 
@@ -224,7 +224,7 @@ class InsertDialog (wx.Dialog):
         mainSizer.Add(
             tabSizer,
             proportion=1,
-            flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT | wx.EXPAND,
+            flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND,
             border=2
         )
 
@@ -244,7 +244,7 @@ class InsertDialog (wx.Dialog):
         styleSizer.Add(
             styleLabel,
             proportion=1,
-            flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+            flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_LEFT,
             border=2
         )
 
@@ -273,12 +273,12 @@ class InsertDialog (wx.Dialog):
         mainSizer.Add(
             self.fileCheckBox,
             proportion=1,
-            flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT | wx.EXPAND,
+            flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT,
             border=2
         )
 
         fileSizer = wx.FlexGridSizer(cols=4)
-        fileSizer.AddGrowableCol(2)
+        fileSizer.AddGrowableCol(1)
 
         # Список для выбора прикрепленных файлов
         self.attachmentLabel = wx.StaticText(parent, -1, _(u"Attached file"))
@@ -288,14 +288,14 @@ class InsertDialog (wx.Dialog):
 
         self.attachmentComboBox.SetMinSize((self._fieldsWidth, -1))
 
-        fileSizer.Add((self._indent, 0))
-
         fileSizer.Add(
             self.attachmentLabel,
             proportion=1,
             flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
             border=2
         )
+
+        fileSizer.Add((self._indent, 0))
 
         # Кнопка для прикрепления нового файла
         attachImage = wx.Bitmap(getImagePath("attach.png"))
@@ -318,20 +318,18 @@ class InsertDialog (wx.Dialog):
 
         # Выбор кодировки файла
         self.encodingLabel = wx.StaticText(parent, -1, _(u"File encoding"))
-        self.encodingComboBox = wx.ComboBox(parent,
-                                            style=wx.CB_DROPDOWN)
+        self.encodingComboBox = wx.ComboBox(parent, style=wx.CB_DROPDOWN)
 
         self.encodingComboBox.SetMinSize((self._fieldsWidth, -1))
-
-        fileSizer.Add((self._indent, 0))
 
         fileSizer.Add(
             self.encodingLabel,
             proportion=1,
-            flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+            flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_LEFT,
             border=2
         )
 
+        fileSizer.Add((self._indent, 0))
         fileSizer.Add((self._indent, 0))
 
         fileSizer.Add(
@@ -344,6 +342,6 @@ class InsertDialog (wx.Dialog):
         mainSizer.Add(
             fileSizer,
             proportion=1,
-            flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT | wx.EXPAND,
+            flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND,
             border=2
         )

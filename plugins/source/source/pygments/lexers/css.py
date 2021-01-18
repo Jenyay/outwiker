@@ -5,7 +5,7 @@
 
     Lexers for CSS and related stylesheet formats.
 
-    :copyright: Copyright 2006-2019 by the Pygments team, see AUTHORS.
+    :copyright: Copyright 2006-2020 by the Pygments team, see AUTHORS.
     :license: BSD, see LICENSE for details.
 """
 
@@ -16,7 +16,6 @@ from pygments.lexer import ExtendedRegexLexer, RegexLexer, include, bygroups, \
     default, words, inherit
 from pygments.token import Text, Comment, Operator, Keyword, Name, String, \
     Number, Punctuation
-from pygments.util import iteritems
 
 __all__ = ['CssLexer', 'SassLexer', 'ScssLexer', 'LessCssLexer']
 
@@ -359,7 +358,7 @@ class CssLexer(RegexLexer):
             (r'/\*(?:.|\n)*?\*/', Comment),
             include('numeric-values'),
             (r'[*+/-]', Operator),
-            (r'[,]', Punctuation),
+            (r',', Punctuation),
             (r'"(\\\\|\\"|[^"])*"', String.Double),
             (r"'(\\\\|\\'|[^'])*'", String.Single),
             (r'[a-zA-Z_-]\w*', Name),
@@ -397,7 +396,7 @@ common_sass_tokens = {
             'behind', 'below', 'bidi-override', 'blink', 'block', 'bold', 'bolder', 'both',
             'capitalize', 'center-left', 'center-right', 'center', 'circle',
             'cjk-ideographic', 'close-quote', 'collapse', 'condensed', 'continuous',
-            'crop', 'crosshair', 'cross', 'cursive', 'dashed', 'decimal-leading-zero',
+            'crosshair', 'cross', 'cursive', 'dashed', 'decimal-leading-zero',
             'decimal', 'default', 'digits', 'disc', 'dotted', 'double', 'e-resize', 'embed',
             'extra-condensed', 'extra-expanded', 'expanded', 'fantasy', 'far-left',
             'far-right', 'faster', 'fast', 'fixed', 'georgian', 'groove', 'hebrew', 'help',
@@ -612,7 +611,7 @@ class SassLexer(ExtendedRegexLexer):
             (r"\*/", Comment, '#pop'),
         ],
     }
-    for group, common in iteritems(common_sass_tokens):
+    for group, common in common_sass_tokens.items():
         tokens[group] = copy.copy(common)
     tokens['value'].append((r'\n', Text, 'root'))
     tokens['selector'].append((r'\n', Text, 'root'))
@@ -662,7 +661,7 @@ class ScssLexer(RegexLexer):
             (r"\*/", Comment, '#pop'),
         ],
     }
-    for group, common in iteritems(common_sass_tokens):
+    for group, common in common_sass_tokens.items():
         tokens[group] = copy.copy(common)
     tokens['value'].extend([(r'\n', Text), (r'[;{}]', Punctuation, '#pop')])
     tokens['selector'].extend([(r'\n', Text), (r'[;{}]', Punctuation, '#pop')])

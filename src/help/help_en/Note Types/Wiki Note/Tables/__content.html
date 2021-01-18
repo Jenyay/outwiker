@@ -3,57 +3,22 @@
 <head>
 	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
 	<meta http-equiv='content-type' content='text/html; charset=utf-8'/>
+	<title>Tables</title>
 
 	<style type='text/css'>
 		body, div, p, table {
-			font-size:12pt;
-			font-family:Calibri;
+			font-size:10pt;
+			font-family:Sans;
 		}
 
 		img{border:none}
-		body,p
-{
-background-color: #282828 !important;
-color: #C0C0C0 !important;
-font: 12pt/1.6 Calibri !important;
-text-align: justify !important;
-}
-h1 {
-font: 16pt Cambria !important;
-color: #365F91 !important;
-font-weight: bold !important;
-}
-h2 {
-font: 14pt Cambria !important;
-color: #008080 !important;
-font-weight: bold !important;
-}
-h3 {
-font: 11pt Cambria !important;
-color: #4F81BD !important;
-font-weight: bold !important;
-}
-h4 {
-font: 11pt Cambria !important;
-color: #008000 !important;
-font-weight: bold !important;
-}
-h5 {
-font: 11pt Cambria !important;
-color: #9966CC !important;
-font-weight: bold !important;
-}
-h6 {
-font: 11pt Cambria !important;
-color: #808080 !important;
-font-weight: bold !important;
-}
+		
 	</style>
 	
 </head>
 
 <body>
-There are two ways to create a table on wiki page: simple wiki notation and the (:table:)...(:tableend:) command. The former method is effective ans convenient for creating small and compact tables. (:table:) command is more general and powerful method best suited for large and complex tables. Both methods are described below.<br/>
+There are two ways to create a table on wiki page: simple wiki notation and the (:table:)...(:tableend:) command. The former method is effective and convenient for creating small and compact tables. (:table:) command is more general and powerful method best suited for large and complex tables. Both methods are described below.<br/>
 <br/>
 <h2>Simple table creation</h2>
 <br/>
@@ -90,7 +55,6 @@ Result:<br/>
 Creation of a table with (:table:) command is similar to creation of tables in HTML code. The syntax is as follows:<br/>
 <br/>
 <br/>
-<br/>
 (:table parameters:)<br/>
 (:row parameters:)<br/>
 (:hcell parameters:) Header cell text<br/>
@@ -107,13 +71,13 @@ The (:table:) command accepts the same parameters as &lt;table&gt; tag from HTML
 <br/>
 OutWiker converts the (:table paraameters:)...(:tableend:) command into HTML code (&lt;table parameters&gt;...&lt;/table&gt;) to render notes in the "Preview" mode.<br/>
 <br/>
-The (:row:) command is used to denote beginning a new table row. This command is an equivalent of  &lt;tr&gt; HTML tag, the same parameters as for the tag are allowed.<br/>
+The (:row:) command is used to denote beginning of a new table row. This command is an equivalent of the &lt;tr&gt; HTML tag, the same parameters as for the tag are allowed.<br/>
 <br/>
-The (:cell:) command is is used to denote beginning a new table cell. The (:hcell:) command is used to denote beginning a new heading cell. The (:cell:) command is an equivalent of &lt;td&gt; HTML tag. The (:hcell:) command is an equivalent of &lt;th&gt HTML tag.<br/>
+The (:cell:) command is used to denote beginning of a new table cell. The (:hcell:) command is used to denote beginning of a new heading cell. The (:cell:) command is an equivalent of the &lt;td&gt; HTML tag. The (:hcell:) command is an equivalent of &lt;th&gt HTML tag.<br/>
 <br/>
 <h4>Examples</h4>
 <br/>
-<table width=100% border=1>
+<table width=100% border=1 style="border-collapse: collapse; border: 1px solid black;">
 <tr><th> Comment</th><th> Wiki notation</th><th> Result<br/>
 </th>
 </tr>
@@ -195,16 +159,13 @@ to join cells horizontally and vertically</td>
 <br/>
 <h3>Nested tables</h3>
 <br/>
-Due to the nature of the wiki parser (part OutWiker program that convert wiki notation to HTML code) to a table be arranged in the cell the other table not enough single (:table:) command (In this case wiki parser will not know where ends the table top level, and where ends the nested table). Therefor for explicit indication to begin and end of the command it was created (:table:) commands with numbers, i.e. (:table1:), (:table2:), (:table3:), (:table4:) end (:table5:). They is used alike (:table:) command, but is designed for nested tables. <br/>
+The wiki parser (OutWiker's internal module that converts wiki notation into HTML code) allows table to be placed within a cell of another table. However, that requires using a bit more sophisticated syntax, than it does in the case of single (:table:) command. This complicating is unavoidable, otherwise the parser has no way to differentiate between the ends of the main table and that of the nested table. To circumvent this problem the tables should be numbered, i. e. (:table1:), (:table2:), (:table3:), (:table4:), (:table5:) to designate the beginning of a nested table and  (:table1:), (:table2end:), (:table3end:), (:table4end:) and (:table5end:) to designate its end. <br/>
 <br/>
-Note that these commands is closed with (:table1:), (:table2end:), (:table3end:), (:table4end:) and (:table5end:) expression respectively.<br/>
-<br/>
-Inside (:tableN:) command must used numbered commands (:rowN:) and (:cellN:) / (:hcellN:) for creation table rows and cell respectively. This feature adds to the visibility of what the table which row or cell belongs.<br/>
-<br/>
+Commands for rows, cells and header cells of nested table must also contain the same number at the end, i. e. (:rowN:), (:cellN:), (:hcellN:) (necessity of using numbers for rows and cells can be put into question, however, their presence makes it much easier to understand which table given row or cell belongs to). Apart from the numbers, these modified commands do not differ from the standard (:table:) command.<br/>
 <br/>
 For example:<br/>
 <br/>
-<table border="1" width=100%>
+<table border="1" width=100% style="border-collapse: collapse; border: 1px solid black;">
 <tr><th>Wiki notation</th><th>Result<br/>
 </th>
 </tr>
@@ -259,6 +220,6 @@ For example:<br/>
 </tr>
 </table><br/>
 <br/>
-The numbering of the tables does not necessarily indicate the level of nesting. For example on this help page for decor the recent example outer table is created with (:table3:) command and nested tables - with (:table:) and (:table2:)
+Please, note that in general case the numbers of the tables have nothing to do with the level of nesting. Their solely purpose is to provide the parser with means to differentiate between the tables (and their rows and cells). To illustate this idea, the main table of the example above is deliberately created with (:table3:) command and (:table:) and (:table2:) commands are used for two nested tables.
 </body>
 </html>

@@ -1,9 +1,0 @@
-%center%%thumb width=450%Attach:search_big.png%%
-
-Searching is implemented as a special note (or several pages) that can be placed anywhere in the note tree. Such non-standard implementation is especially convenient, if one need to look for same character combinations (words, phrases) regularly. It is possible to create separate page for each search combination, so it is easy to have all search combinations at the ready. Search note can be created in the same way as notes of other types, but there is an easier way to create it (see below).
-
-It is possible to search in the content of the notes or to search by tag. If the main search field left empty, OutWiker executes search by tags; it is possible to search either by any tag of the listed ones or by all of them using corresponding radio-buttons.
-
-If no tags are selected and the search field left empty, all pages of the tree are returned.
-
-A more convenient way to create search note is to go "Tools / Global search..." that results in automatic creation of the search note titled "# Search". In case of note with such title exists, OutWiker opens it.

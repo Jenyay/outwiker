@@ -3,35 +3,45 @@
 <head>
 	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
 	<meta http-equiv='content-type' content='text/html; charset=utf-8'/>
+	<title>Изменение типа страниц</title>
 
 	<style type='text/css'>
 		body, div, p, table {
 			font-size:10pt;
-			font-family:Verdana;
+			font-family:Sans;
 		}
 
 		img{border:none}
 		
 	</style>
-	
+	<style>div.warn {
+	color: #333;
+	background-color: #fff8c4;
+	border-radius: 10px;
+	padding: 10px 10px 10px 10px;
+	margin: 10px;
+	border:1px solid #f2c779;
+}
+</style>
+
 </head>
 
 <body>
 <h2>Как поменять тип страницы</h2>
-<p>Если Вы хотите изменить тип страницы, то с данный момент это невозможно сделать через GUI, но так как все страницы хранятся в виде директорий и файлов, то тип страниц можно поменять вручную. Для этого необходимо:</p>
+<br/>
+Если Вы хотите изменить тип страницы, то с данный момент это невозможно сделать через GUI, но так как все страницы хранятся в виде директорий и файлов, то тип страниц можно поменять вручную. Для этого необходимо:<br/>
 <ol>
 <li>Открыть директорию страницы, тип которой нужно поменять</li>
 <li>Открыть в текстовом редакторе файл <i>__page.opt</i></li>
 <li>В разделе <i>[General]</i> поменять значение <i>type</i> на нужный тип</li>
 <li>При необходимости перезагрузить дерево заметок с помощью кнопки <i>Reload wiki</i></li>
-</ol>
-В данный момент поддерживаются следующие типы страниц:</p>
+</ol>В данный момент поддерживаются следующие типы страниц:<br/>
 <ul>
 <li>text - <a href="page://__4e96bc6e-333b-49d2-bcbd-a63a5f28655f">Текстовая страница</a></li>
 <li>html - <a href="page://__7bd312fb-c3e4-4d9d-9267-cc394dbb9f20">HTML-страница</a>,</li>
 <li>wiki - <a href="page://__19866d72-8d95-4e2c-8df1-6df0bd8f06c0">Wiki-страница</a></li>
 <li>search - <a href="page://__40f2a2ad-7ece-4892-9eb0-3d2902f76dc9">Страница поиска</a></li>
 </ul>
-<font color="#ff0000"><b>Изменять тип страниц надо осторожно, потому что для разных типов файлы <i>__page.opt</i> и <i>__page.text</i> могут использоваться по-разному.</b></font></p>
+<div class="warn"><b>Изменять тип страниц надо осторожно, потому что для разных типов файлы <i>__page.opt</i> и <i>__page.text</i> могут использоваться по-разному.</b></div>
 </body>
 </html>

@@ -15,9 +15,7 @@ Attach:Soft/Outwiker/us.png [[English version -> Outwiker/ExternalToolsEn]]
 [[#download]]
 [[ExternalTools 1.4 -> Attach:externaltools-1.4.zip]] ('''Требуемая версия OutWiker: 1.8 - 2.1.0.834''')
 
-[[ExternalTools {{ version_full }} -> Attach:externaltools-{{ version_full }}.zip]] ('''Требуемая версия OutWiker: 3.0.0.868 и выше''')
-
-<!--#version stable {{ version_full }} -->
+[[ExternalTools {{ version_full }} -> Attach:externaltools-{{ version_full }}.zip]] ('''Требуемая версия OutWiker: 3.0.0.876 и выше''')
 
 (:DonateOW:)
 

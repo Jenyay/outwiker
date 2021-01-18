@@ -10,9 +10,7 @@ Plug-in to insert templated text
 
 [[Snippets 1.1.1 -> Attach:Outwiker/Snippets/snippets-1.1.1.zip]] ('''Required OutWiker version: 2.0 - 2.1.0.834''')
 
-[[Snippets {{ version_full }} -> Attach:Outwiker/Snippets/snippets-{{ version_full }}.zip]] ('''Required OutWiker version: 3.0.0.868 and above''')
-
-<!--#version stable {{ version_full }} -->
+[[Snippets {{ version_full }} -> Attach:Outwiker/Snippets/snippets-{{ version_full }}.zip]] ('''Required OutWiker version: 3.0.0.876 and above''')
 
 (:DonateOWEn:)
 

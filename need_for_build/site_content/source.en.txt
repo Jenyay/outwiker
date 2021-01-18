@@ -9,9 +9,7 @@ Plug-in append command [=(:source:)=] in wiki parser.
 
 [[Source 1.14.5 -> Attach:Outwiker/SourcePlugin/source-1.14.5.zip]] ('''Required OutWiker version: 1.8.1 - 2.1.0.834''')
 
-[[Source {{ version_full }} -> Attach:Outwiker/SourcePlugin/source-{{ version_full }}.zip]] ('''Required OutWiker version: 3.0.0.868 and above''')
-
-<!--#version stable {{ version_full }} -->
+[[Source {{ version_full }} -> Attach:Outwiker/SourcePlugin/source-{{ version_full }}.zip]] ('''Required OutWiker version: 3.0.0.876 and above''')
 
 (:DonateOWEn:)
 
