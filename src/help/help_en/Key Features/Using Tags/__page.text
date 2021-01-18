@@ -4,7 +4,7 @@ Tags can be used to find specific note(s). Any number of tags can be associated 
 
 There are several ways to add tags to notes. Sometimes it is convenient to add tags when creating a note. There is special field "Tags" on the "Create page" dialogue. A few new tags can be entered this way, tags should be separated with commas.
 
-%center% %thumb%Attach:pageproperties.png%%
+%center% %thumb width=450%Attach:pageproperties.png%% 
 
 To make it easier to enter existing tags, one can use the tag cloud located below the "Tags" field. When one clicks on the tag, it is appears in the input field. The menu "Tree/Page Properties..." can be used to add tags to the existing pages (it calls the dialogue "Edit page properties...").
 
@@ -18,7 +18,7 @@ Tags associated with greater number of notes (more popular tags) appear in large
 
 Left-clicking on a tag results in popping up a list of pages which the tag is associated with.
 
-%center% Attach:popup.png 
+%center% %thumb width=550%Attach:popup.png%%
 
 
 !!! Batch operations with tags
@@ -30,7 +30,7 @@ OutWiker supports adding and remove tags for all notes belonging to a branch of 
 1. Select the root note for the branch (it works for entire tree as well if the tree root note is selected).
 2. Go to "Tools - Add Tags to Branch...". The following dialogue pops up:
 
-%center% %thumb width=300%Attach:addtag.png%%
+%center% %thumb width=300%Attach:addtag.png%% 
 
 3. Select the tags to be added to the notes (separated by commas). One can either select existing tags or enter new ones.
 4. Click "OK".

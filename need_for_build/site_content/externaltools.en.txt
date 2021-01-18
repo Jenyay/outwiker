@@ -15,9 +15,8 @@ Below this functions will be descriped.
 [[#download]]
 [[ExternalTools 1.4 -> Attach:Outwiker/ExternalTools/externaltools-1.4.zip]] ('''Required OutWiker version: 1.8 - 2.1.0.834''')
 
-[[ExternalTools {{ version_full }} -> Attach:Outwiker/ExternalTools/externaltools-{{ version_full }}.zip]] ('''Required OutWiker version: 3.0.0.868 and above''')
+[[ExternalTools {{ version_full }} -> Attach:Outwiker/ExternalTools/externaltools-{{ version_full }}.zip]] ('''Required OutWiker version: 3.0.0.876 and above''')
 
-<!--#version stable {{ version_full }} -->
 (:DonateOWEn:)
 
 [[#using]]

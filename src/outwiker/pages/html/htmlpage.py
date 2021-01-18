@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 """
 Необходимые классы для создания страниц с HTML
 """
@@ -26,6 +26,7 @@ class HtmlWikiPage (WikiPage):
     """
     Класс HTML-страниц
     """
+
     def __init__(self, path, title, parent, readonly=False):
         WikiPage.__init__(self, path, title, parent, readonly)
 

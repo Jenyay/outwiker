@@ -1,6 +1,6 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
-from outwiker.gui.pagedialogpanels.appearancepanel import(
+from outwiker.gui.pagedialogpanels.appearancepanel import (
     AppearancePanel,
     AppearanceController)
 
@@ -123,8 +123,7 @@ class HtmlPageController(object):
         else:
             text = content
 
-        result = tpl.substitute(content=text,
-                                title=page.display_title)
+        result = tpl.substitute(content=text, title=page.display_title)
 
         result = self._changeContentByEvent(page,
                                             PostprocessingParams(result),

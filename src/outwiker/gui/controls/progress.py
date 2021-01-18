@@ -35,7 +35,7 @@ class ProgressWindow(wx.Frame):
                   flag=wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_CENTER | wx.ALL,
                   border=10)
         sizer.Add(self._textLabel,
-                  flag=wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_CENTER | wx.EXPAND | wx.ALL,
+                  flag=wx.EXPAND | wx.ALL,
                   border=20)
 
         self.SetSizer(sizer)

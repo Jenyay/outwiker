@@ -1,5 +1,20 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <versions>
+	<version number="1.6.2" date="29.12.2020">
+		<download href="https://jenyay.net/uploads/Outwiker/WebPage/webpage-1.6.2.zip">
+			<requirements>
+				<api>3.876</api>
+			</requirements>
+		</download>
+		<changes>
+			<change>Fix errors.</change>
+		</changes>
+
+		<changes lang="ru">
+			<change>Исправление ошибок.</change>
+		</changes>
+	</version>
+
 	<version number="1.6.1" date="23.02.2020">
 		<download href="https://jenyay.net/uploads/Outwiker/WebPage/webpage-1.6.1.zip">
 			<requirements>
@@ -30,7 +45,7 @@
 		</changes>
 	</version>
 
-	<version number="1.5.1">
+	<version number="1.5.1" date="01.09.2019">
 		<download href="https://jenyay.net/uploads/Outwiker/WebPage/webpage-1.5.1.zip">
 			<requirements>
 				<api>2.866</api>

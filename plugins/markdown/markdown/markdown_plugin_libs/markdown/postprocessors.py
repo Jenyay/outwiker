@@ -69,11 +69,10 @@ class RawHtmlPostprocessor(Postprocessor):
         """ Iterate over html stash and restore html. """
         replacements = OrderedDict()
         for i in range(self.md.htmlStash.html_counter):
-            html = self.md.htmlStash.rawHtmlBlocks[i]
+            html = self.stash_to_string(self.md.htmlStash.rawHtmlBlocks[i])
             if self.isblocklevel(html):
-                replacements["<p>%s</p>" %
-                             (self.md.htmlStash.get_placeholder(i))] = \
-                    html + "\n"
+                replacements["<p>{}</p>".format(
+                    self.md.htmlStash.get_placeholder(i))] = html
             replacements[self.md.htmlStash.get_placeholder(i)] = html
 
         if replacements:
@@ -95,6 +94,10 @@ class RawHtmlPostprocessor(Postprocessor):
                 return True
             return self.md.is_block_level(m.group(1))
         return False
+
+    def stash_to_string(self, text):
+        """ Convert a stashed object to a string. """
+        return str(text)
 
 
 class AndSubstitutePostprocessor(Postprocessor):

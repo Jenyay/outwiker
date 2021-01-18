@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import threading
 
@@ -40,7 +40,4 @@ class ColorizerController(BaseTextStylingController):
         if self._runColorizingEvent.is_set():
             self.updateStyles(editor,
                               text,
-                              stylebytes,
-                              stylebytes,
-                              0,
-                              len(text))
+                              stylebytes)

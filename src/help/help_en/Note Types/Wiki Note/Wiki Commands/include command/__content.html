@@ -3,51 +3,16 @@
 <head>
 	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
 	<meta http-equiv='content-type' content='text/html; charset=utf-8'/>
+	<title>include command</title>
 
 	<style type='text/css'>
 		body, div, p, table {
-			font-size:11pt;
-			font-family:Calibri;
+			font-size:10pt;
+			font-family:Sans;
 		}
 
 		img{border:none}
-		body,p
-{
-background-color: #282828 !important;
-color: #C0C0C0 !important;
-font: 12pt/1.6 Calibri !important;
-text-align: justify !important;
-}
-h1 {
-font: 16pt Cambria !important;
-color: #365F91 !important;
-font-weight: bold !important;
-}
-h2 {
-font: 14pt Cambria !important;
-color: #008080 !important;
-font-weight: bold !important;
-}
-h3 {
-font: 11pt Cambria !important;
-color: #4F81BD !important;
-font-weight: bold !important;
-}
-h4 {
-font: 11pt Cambria !important;
-color: #008000 !important;
-font-weight: bold !important;
-}
-h5 {
-font: 11pt Cambria !important;
-color: #9966CC !important;
-font-weight: bold !important;
-}
-h6 {
-font: 11pt Cambria !important;
-color: #808080 !important;
-font-weight: bold !important;
-}
+		
 	</style>
 	
 </head>
@@ -140,16 +105,15 @@ If the switch is included<br/>
 <br/>
 it parses content as wiki-text:<br/>
 <b>Этот текст содержит вики-нотацию</b><br/>
-<hr>
-If the command  (: include:)  are invoked with both switches "htmlescape" and "wikiparse", then OutWiker first processes HTML escape characters, and secondly parses the wiki notation.<br/>
 <br/>
-It is also possible to use the tag 
-<pre> to render listing of source code from the attached file nicely. The syntax is as follows:
+If the command  (:include:)  is invoked with both switches "htmlescape" and "wikiparse", then OutWiker processes HTML escape characters first, and than parses the wiki notation.<br/>
+<br/>
+It is also possible to use the tag &lt;pre&gt; to render listing of source code from the attached file nicely. The syntax is as follows:<br/>
 
 <pre>
-&lt;PRE&gt;
+&lt;pre&gt;
 (:include Attach:filename htmlescape:)
-&lt;/PRE&gt;
+&lt;/pre&gt;
 </pre>
 </body>
 </html>

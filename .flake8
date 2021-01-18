@@ -1,0 +1,4 @@
+[flake8]
+accept-encodings = utf-8
+
+[isort]

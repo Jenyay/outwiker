@@ -2,7 +2,8 @@
 
 import threading
 
-from outwiker.gui.texteditorhelper import TextEditorHelper
+import wx
+
 from outwiker.gui.basetextstylingcontroller import BaseTextStylingController
 
 
@@ -21,17 +22,25 @@ class SimpleSpellController(BaseTextStylingController):
         )
 
     def _colorizeThreadFunc(self, text, editor, enableSpellChecking):
-        helper = TextEditorHelper()
-        textlength = helper.calcByteLen(text)
-        stylebytes = [0] * textlength
+        if not enableSpellChecking:
+            return
 
-        if enableSpellChecking:
-            for start, end in self._splitText(text):
-                if not self._runColorizingEvent.is_set():
-                    return
-                editor.runSpellChecking(stylebytes, text, start, end)
+        spellStatusFlags = [True] * len(text)
 
-        self.updateStyles(editor, text, None, stylebytes, 0, len(text))
+        for start, end in self._splitText(text):
+            if not self._runColorizingEvent.is_set():
+                return
+            self._checkSpell(editor, text, start, end, spellStatusFlags)
+
+        wx.CallAfter(editor.markSpellErrors, spellStatusFlags)
+
+    def _checkSpell(self, editor, text, start, end, spellStatusFlags):
+        spellChecker = editor.getSpellChecker()
+        errors = spellChecker.findErrors(text[start: end])
+
+        for _word, err_start, err_end in errors:
+            spellStatusFlags[err_start + start:
+                             err_end + start] = [False] * (err_end - err_start)
 
     def _splitText(self, text):
         """
@@ -42,7 +51,7 @@ class SimpleSpellController(BaseTextStylingController):
         length = len(text)
 
         while position < length:
-            newposition = text.rfind(u' ', position, position + portion)
+            newposition = text.rfind(' ', position, position + portion)
             if newposition != -1:
                 yield (position, newposition)
                 position = newposition + 1

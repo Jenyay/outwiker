@@ -1,33 +1,8 @@
 [Search]
 strategy = 1
-tags = 
+tags = for users
 phrase = 
 sort = 0
-
-[SearchResults]
-page_10 = Page Types/Wiki Page/Attachments and Pictures
-page_11 = Page Types/Wiki Page/Lists
-page_12 = Page Types/Wiki Page/Links
-page_13 = Page Types/Wiki Page/Tables
-page_14 = Page Types/Wiki Page/Text Formating
-page_15 = Page Types/Wiki Page/Equations
-page_16 = Page Types/Wiki Page/Wiki Commands
-page_17 = Page Types/Wiki Page/Wiki Commands/attachlist command
-page_18 = Page Types/Wiki Page/Wiki Commands/childlist command
-page_19 = Page Types/Wiki Page/Wiki Commands/include command
-page_8 = Page Types/Wiki Page
-page_9 = Page Types/Wiki Page/Headings
-page_2 = Key Features/Links on Pages
-page_3 = Key Features/Search
-page_0 = Key Features
-page_1 = Key Features/Attachments
-page_6 = Page Types/Search Page
-page_7 = Page Types/Text Page
-page_4 = Page Types
-page_5 = Page Types/HTML Page
-page_21 = FAQ
-page_20 = Page Types/Wiki Page/Wiki Commands/ljuser and ljcomm commands
-page_22 = Shortcuts
 
 [Tree]
 expand = False
@@ -36,5 +11,35 @@ expand = False
 type = search
 order = 0
 tags = 
-datetime = 2015-07-02 08:29:57.941714
+datetime = 2020-05-09 20:26:41.546034
+
+[SearchResults]
+page_0 = Key Features
+page_1 = Key Features/Search
+page_2 = Key Features/Attachments
+page_3 = Key Features/Using Tags
+page_4 = Key Features/Links in Notes
+page_5 = Key Features/Note Styles
+page_6 = Note Types
+page_7 = Note Types/HTML Note
+page_8 = Note Types/Wiki Note
+page_9 = Note Types/Wiki Note/Headings
+page_10 = Note Types/Wiki Note/Attachments and Images
+page_11 = Note Types/Wiki Note/Lists
+page_12 = Note Types/Wiki Note/Links
+page_13 = Note Types/Wiki Note/Tables
+page_14 = Note Types/Wiki Note/Text Formating
+page_15 = Note Types/Wiki Note/Text styles
+page_16 = Note Types/Wiki Note/Text styles/Built-in styles
+page_17 = Note Types/Wiki Note/Text styles/Custom styles
+page_18 = Note Types/Wiki Note/Wiki Commands
+page_19 = Note Types/Wiki Note/Wiki Commands/attachlist command
+page_20 = Note Types/Wiki Note/Wiki Commands/childlist command
+page_21 = Note Types/Wiki Note/Wiki Commands/include command
+page_22 = Note Types/Wiki Note/Wiki Commands/crdate and eddate commands
+page_23 = Note Types/Text Note
+page_24 = Note Types/Search Note
+page_25 = FAQ
+page_26 = Shortcuts
+page_27 = Settings
 

@@ -5,7 +5,7 @@
 
     Lexers for ActionScript and MXML.
 
-    :copyright: Copyright 2006-2019 by the Pygments team, see AUTHORS.
+    :copyright: Copyright 2006-2020 by the Pygments team, see AUTHORS.
     :license: BSD, see LICENSE for details.
 """
 
@@ -110,6 +110,11 @@ class ActionScriptLexer(RegexLexer):
         ]
     }
 
+    def analyse_text(text):
+        """This is only used to disambiguate between ActionScript and
+        ActionScript3. We return 0 here; the ActionScript3 lexer will match
+        AS3 variable definitions and that will hopefully suffice."""
+        return 0
 
 class ActionScript3Lexer(RegexLexer):
     """

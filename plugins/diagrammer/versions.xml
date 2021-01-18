@@ -129,11 +129,11 @@
 			</requirements>
 		</download>
 		<changes>
-			<change>Updated the <a href="https://blockdiag.com/en/">blockdiag</a> library.</change>
+			<change>Updated the blockdiag library.</change>
 		</changes>
 
 		<changes lang="ru">
-			<change>Обновление используемой библиотеки <a href="https://blockdiag.com/en/">blockdiag</a>.</change>
+			<change>Обновление используемой библиотеки blockdiag.</change>
 		</changes>
 	</version>
 

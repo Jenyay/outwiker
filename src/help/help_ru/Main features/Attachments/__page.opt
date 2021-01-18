@@ -3,12 +3,13 @@ expand = False
 
 [General]
 type = html
-order = 0
-tags = пользователям
-datetime = 2014-06-15 21:13:23.389796
+order = 1
+tags = вложения
+datetime = 2020-05-10 10:55:52.775149
 linewrap = True
 cursorposition = 496
 alias = Прикрепленные файлы
+uid = __a60513aa-0c70-4ec9-aee8-4f9193224494
 
 [Misc]
 pageindex = 1

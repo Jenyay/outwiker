@@ -57,7 +57,7 @@ The [=(:cell:)=] command is used to denote beginning of a new table cell. The [=
 
 !!!!! Examples
 
-(:table2 width=100% border=1:)
+(:table2 width=100% border=1 style="border-collapse: collapse; border: 1px solid black;":)
 (:row2:)
 (:hcell2:) Comment
 (:hcell2:) Wiki notation
@@ -139,7 +139,7 @@ Commands for rows, cells and header cells of nested table must also contain the 
 
 For example:
 
-(:table3 border="1" width=100%:)
+(:table3 border="1" width=100% style="border-collapse: collapse; border: 1px solid black;":)
 (:row3:)
 (:hcell3:)Wiki notation
 (:hcell3:)Result

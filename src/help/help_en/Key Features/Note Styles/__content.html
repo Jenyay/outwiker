@@ -3,68 +3,34 @@
 <head>
 	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
 	<meta http-equiv='content-type' content='text/html; charset=utf-8'/>
+	<title>Note Styles</title>
 
 	<style type='text/css'>
 		body, div, p, table {
-			font-size:12pt;
-			font-family:Calibri;
+			font-size:10pt;
+			font-family:Sans;
 		}
 
 		img{border:none}
-		body,p
-{
-background-color: #282828 !important;
-color: #C0C0C0 !important;
-font: 12pt/1.6 Calibri !important;
-text-align: justify !important;
-}
-h1 {
-font: 16pt Cambria !important;
-color: #365F91 !important;
-font-weight: bold !important;
-}
-h2 {
-font: 14pt Cambria !important;
-color: #008080 !important;
-font-weight: bold !important;
-}
-h3 {
-font: 11pt Cambria !important;
-color: #4F81BD !important;
-font-weight: bold !important;
-}
-h4 {
-font: 11pt Cambria !important;
-color: #008000 !important;
-font-weight: bold !important;
-}
-h5 {
-font: 11pt Cambria !important;
-color: #9966CC !important;
-font-weight: bold !important;
-}
-h6 {
-font: 11pt Cambria !important;
-color: #808080 !important;
-font-weight: bold !important;
-}
+		
 	</style>
 	
 </head>
 
 <body>
-OutWiker allows to set pre-defined styles that change look of wiki-type and HTML-type notes. In order to set a style for specific note right-click its name in the tree, select "Page prperties..."; switch to the "Appearance" and select the style.<br/>
+OutWiker allows to set pre-defined styles that can be used to change look of wiki-type and HTML-type notes. In order to set a style for specific note, right-click its name in the tree, select "Page properties..."; switch to the "Appearance" tab and select the style.<br/>
 <br/>
-<div align="center"><img src="__attach/styles_01.png"/></div><br/>
+<div align="center"><img src="__attach/styles_01.png"/> </div><br/>
 <br/>
-Styles for the pages can be stored in the following directories:<br/>
-<ul>
-<li>In the directory <i>styles</i> near the executable file.</li>
-<li>In the directory <i>styles</i> in the directory <i>.outwiker</i>, which, in turn, is located in the user's home directory (under Linux it <i>~/.outwiker/styles</i>).</li>
-</ul>
-When you install the style pages are copied to the directory the file <i>__style.html</i> and sub-directory <i>__style</i>, if it exists in the selected style. Thus, solving the problem, if one computer has a certain style, but on the other - no. At the same time, this approach allows us to individually adjust the styles for each page. When setting the default style file <i>__style.html</i> and <i>__style</i> subdirectory are deleted.<br/>
+Styles for specific notes are stored in the subdirectory <i>styles</i> of the note's directory.<br/>
 <br/>
-Below is a screenshot of the same page with different styles.<br/>
+The repository of pre-defined styles can be found in the subdirectory <i>styles</i> of the directory <i>outwiker</i> located in the user's config directory (under Linux it is <i>~/.config/outwiker/styles</i>).<br/>
+<br/>
+When style is set for a note in OutWiker, the <i>__style.html</i> file and the <i>__style</i> subdirectory (if exists) are automatically copied from the style repository to the note's directory. This approach guarantees the note looks the same even if, for example, it has been copied and opened in Outwiker installed on another computer, which might have no such style in the repository. Apart from that it makes it possible to change style for any specific note without affecting look of other notes.<br/>
+<br/>
+When a pre-defined style is replaced with default style, the <i>__style.html</i> file and the <i>__style</i> subdirectory are automatically deleted.<br/>
+<br/>
+Here is a screenshot of page with different styles applied.<br/>
 <br/>
 <table border=0 width=100%>
 <tr>

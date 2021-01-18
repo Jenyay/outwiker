@@ -2,7 +2,6 @@
 
 from typing import List
 
-
 VERSION_OK = 0
 OUTWIKER_MUST_BE_UPGRADED = 1
 PLUGIN_MUST_BE_UPGRADED = 2
@@ -24,10 +23,10 @@ def checkSingleVersion(current_api_version: List[int],
 
 def checkVersion(current_api_version: List[int],
                  requiredlist: List[List[int]]) -> int:
-    '''
+    """
     current_api_version - current package version.
     requiredlist - list of the supported versions.
-    '''
+    """
     if requiredlist is None or len(requiredlist) == 0:
         return VERSION_OK
 

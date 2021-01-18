@@ -26,7 +26,13 @@ from functools import wraps
 import warnings
 import xml.etree.ElementTree
 from .pep562 import Pep562
+from itertools import count
 
+try:
+    from importlib import metadata
+except ImportError:
+    # <PY38 use backport
+    import importlib_metadata as metadata
 
 PY37 = (3, 7) <= sys.version_info
 
@@ -52,11 +58,12 @@ BLOCK_LEVEL_ELEMENTS = [
     # See https://w3c.github.io/html/grouping-content.html#the-p-element
     'address', 'article', 'aside', 'blockquote', 'details', 'div', 'dl',
     'fieldset', 'figcaption', 'figure', 'footer', 'form', 'h1', 'h2', 'h3',
-    'h4', 'h5', 'h6', 'header', 'hr', 'main', 'menu', 'nav', 'ol', 'p', 'pre',
-    'section', 'table', 'ul',
+    'h4', 'h5', 'h6', 'header', 'hgroup', 'hr', 'main', 'menu', 'nav', 'ol',
+    'p', 'pre', 'section', 'table', 'ul',
     # Other elements which Markdown should not be mucking up the contents of.
-    'canvas', 'dd', 'dt', 'group', 'iframe', 'li', 'math', 'noscript', 'output',
-    'progress', 'script', 'style', 'tbody', 'td', 'th', 'thead', 'tr', 'video'
+    'canvas', 'colgroup', 'dd', 'body', 'dt', 'group', 'iframe', 'li', 'legend',
+    'math', 'map', 'noscript', 'output', 'object', 'option', 'progress', 'script',
+    'style', 'tbody', 'td', 'textarea', 'tfoot', 'th', 'thead', 'tr', 'video'
 ]
 
 # Placeholders
@@ -76,6 +83,8 @@ Constants you probably do not need to change
 -----------------------------------------------------------------------------
 """
 
+# Only load extension entry_points once.
+INSTALLED_EXTENSIONS = metadata.entry_points().get('markdown.extensions', ())
 RTL_BIDI_RANGES = (
     ('\u0590', '\u07FF'),
     # Hebrew (0590-05FF), Arabic (0600-06FF),
@@ -147,6 +156,23 @@ def code_escape(text):
     if ">" in text:
         text = text.replace(">", "&gt;")
     return text
+
+
+def _get_stack_depth(size=2):
+    """Get stack size for caller's frame.
+    See https://stackoverflow.com/a/47956089/866026
+    """
+    frame = sys._getframe(size)
+
+    for size in count(size):
+        frame = frame.f_back
+        if not frame:
+            return size
+
+
+def nearing_recursion_limit():
+    """Return true if current stack depth is withing 100 of maximum limit."""
+    return sys.getrecursionlimit() - _get_stack_depth() < 100
 
 
 """
@@ -392,7 +418,7 @@ class Registry:
                 stacklevel=2,
             )
         else:
-            raise TypeError
+            raise KeyError('Cannot delete key {}, not registered.'.format(key))
 
     def add(self, key, value, location):
         """ Register a key by location. """

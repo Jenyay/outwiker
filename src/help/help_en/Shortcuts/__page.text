@@ -1,7 +1,7 @@
-Hot keys can be set in the dialogue "Settings" called from the menu "Edit - Preferences ...". Default hotkeys are listed in the following table.
+Default hotkeys are listed in the following table. You can change shortcuts in the [[settings -> page://settings_interface_hotkeys]].
 
-||border=1
-|| '''Shortcut''' || '''Action''' ||
+||border=1 style="border-collapse: collapse; border: 1px solid black;"
+|| '''Hotkey''' || '''Action''' ||
 ||Ctrl+N ||Create new wiki ||
 ||Ctrl+O ||Open wiki ||
 ||Ctrl+S ||Save wiki ||

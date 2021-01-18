@@ -30,6 +30,9 @@ import outwiker.core.tree_commands as tc
     ('Проверка:', [], 'Проверка_'),
     ('Проверка ><|?*:"\\/#%', [], 'Проверка ___________'),
     ('Проверка ><|?*:"\\/#% test', [], 'Проверка ___________ test'),
+    ('Проверка.', [], 'Проверка_'),
+    ('Проверка...', [], 'Проверка___'),
+    ('Проверка...', ['Проверка___'], 'Проверка___ (1)'),
 ])
 def test_getAlternativeTitle(title, siblings, expected):
     newtitle = tc.getAlternativeTitle(title, siblings)

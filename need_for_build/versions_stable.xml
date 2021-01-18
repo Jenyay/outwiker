@@ -1,0 +1,48 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+<versions>
+	<version number="3.0">
+		<changes>
+			<change>Now you can use any symbols in the notes title.</change>
+			<change>New toolbars.</change>
+			<change>New design for popup window when clicking on the tag.</change>
+			<change>New interface to select notes icons.</change>
+			<change>New GUI displayed if the notes tree is not currently open.</change>
+			<change>New GUI when selecting the root of the notes tree.</change>
+			<change>New GUI to show a page with unknown type.</change>
+			<change>Add the ability to select notes position in the notes list.</change>
+			<change>Add watching for attached files for selected page.</change>
+			<change>Other interface improvements.</change>
+			<change>Add German localization.</change>
+			<change>New commands for wiki pages to change text color and apply custom styles.</change>
+			<change>Add comments to wiki notation.</change>
+			<change>Added a new $title variable for the page style files .</change>
+			<change>Add a new page style "rifle_green_and_red".</change>
+			<change>Change the storage format for certain properties of the notes tree pages.</change>
+			<change>Change the way of storing standard icons in notes.</change>
+			<change>Change plug-ins format.</change>
+			<change>Migrate to Python 3.x and wxPython 4.1.</change>
+		</changes>
+
+		<changes lang="ru">
+			<change>Теперь в именах заметок можно использовать любые символы.</change>
+			<change>Переделаны панели инструментов.</change>
+			<change>Новый интерфейс выбора значков заметок.</change>
+			<change>Новый интерфейс всплывающего окна при клике на тег.</change>
+			<change>Новый интерфейс при выборе корня дерева заметок.</change>
+			<change>Новый интерфейс для отображения страниц неизвестного типа.</change>
+			<change>Добавлена возможность выбора положения новой заметки в списке заметок.</change>
+			<change>Добавлена настройка для шаблона имени новых страниц.</change>
+			<change>Другие улучшения в интерфейсе.</change>
+			<change>Новые викикоманды для раскраски текста и применения пользовательских стилей.</change>
+			<change>Добавлена возможность вставки комментариев в викинотации.</change>
+			<change>Добавлено слежение за прикрепленными файлами для текущей страницы.</change>
+			<change>В файлы стилей страниц добавлена новая переменная $title.</change>
+			<change>Добавлен новый стиль страниц "rifle_green_and_red".</change>
+			<change>Добавлена немецкая локализация.</change>
+			<change>Изменение формата хранения некоторых настроек страниц в дереве заметок.</change>
+			<change>Изменен способ хранения стандартных значков в заметках.</change>
+			<change>Изменен формат плагинов.</change>
+			<change>Переход на Python 3.x и wxPython 4.1.</change>
+		</changes>
+	</version>
+</versions>

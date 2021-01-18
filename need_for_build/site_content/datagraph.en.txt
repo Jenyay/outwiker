@@ -11,7 +11,6 @@ Plug-in append the [=(:plot:)=] command when allow to plot the charts on wiki pa
 
 [[DataGraph {{ version_full }} -> Attach:Outwiker/DataGraph/datagraph-{{ version_full }}.zip]] ('''Required OutWiker version: 3.0.0.868 and above''')
 
-<!--#version stable {{ version_full }} -->
 (:DonateOWEn:)
 
 %center%(:thumbgallery cols=2 px=350 align=center:)

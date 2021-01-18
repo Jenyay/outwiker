@@ -1,0 +1,7 @@
+!!! Editor - HTML editor
+
+%center%Attach:outwiker_opt_editor_html.png
+
+This section contains settings for HTML code highlighting on an [[HTML page -> page://__0cc8f2c6-754c-4aa8-b118-561b930e9955]] and on the ''HTML'' tab for a [[wiki page -> page://__dd8b23a1-6787-42bb-9b58-c78a656688e2]]. Here one can change font colors and font attributes for HTML tags, their attributes, numbers, comments, strings in HTML format as well as invalid HTML elements.
+
+The font face and size can be changed in [[Editor - General -> page://settings_editor_general]] section.

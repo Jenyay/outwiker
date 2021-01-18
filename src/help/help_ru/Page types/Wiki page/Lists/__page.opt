@@ -7,8 +7,8 @@ expand = False
 [General]
 type = wiki
 order = 2
-tags = пользователям, wiki
-datetime = 2016-03-29 09:36:33.512545
+tags = wiki
+datetime = 2020-05-14 23:18:51.478270
 cursorposition = 0
 alias = Списки
 

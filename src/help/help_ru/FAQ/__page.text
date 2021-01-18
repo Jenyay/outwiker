@@ -1,6 +1,6 @@
 !!!! У меня OutWiker не запускается под Windows. Что делать?
 
-Попробуйте установить [[http://www.microsoft.com/downloads/details.aspx?familyid=9b2da534-3e03-4391-8a4d-074b9f2bc1bf&displaylang=en | MS Visual C++ 2008 Redistributable Package]]. Если установка библиотеки не помогла, напишите об этом автору на [[http://jenyay.net/Soft/Outwiker | странице программы]]  или на почту [[mailto:jenyay.ilin@gmail.com | jenyay.ilin@gmail.com]] с полным текстом ошибки.
+Попробуйте установить [[https://www.microsoft.com/en-us/download/details.aspx?id=48145 | MS Visual C++ Redistributable Package]]. Если установка библиотеки не помогла, напишите об этом автору на [[https://jenyay.net/Soft/Outwiker | странице программы]]  или на почту [[mailto:jenyay.ilin@gmail.com | jenyay.ilin@gmail.com]] с полным текстом ошибки.
 
 
 !!!! Может быть лучше сделать, чтобы программа хранила заметки в одном файле?
@@ -14,4 +14,4 @@
 
 !!!! Как устанавливать плагины
 
-Для установки плагинов необходимо распаковать скачанный архив в папку ''plugins'' рядом с запускаемым файлом (это нужно, если вы используете OutWiker под Windows в портабельном режиме) или в папку ''.outwiker\plugins'' в директории пользователя (под Windows XP - ''C:\Documents and Settings\USERNAME\.outwiker\plugins'', под Linux - ''~/.outwiker/plugins''). Обратите внимание, что каждый плагин - это папка с файлами, именно эту папку и нужно копировать в ''plugins''. В окне настроек Правка - Параметры... - Расширения вы можете отключать плагины без удаления их из папки ''plugins''.
+Для установки плагинов необходимо распаковать скачанный архив в папку ''plugins'' рядом с запускаемым файлом (это нужно, если вы используете OutWiker под Windows в портабельном режиме) или в папку ''outwiker\plugins'' в директории пользователя (под Windows 7/10 - ''C:\Documents and Settings\USERNAME\.outwiker\plugins'', под Linux - ''~/.config/outwiker/plugins''). Обратите внимание, что каждый плагин - это папка с файлами, именно эту папку и нужно копировать в ''plugins''. В окне настроек "Правка - Параметры... - Расширения" вы можете отключать плагины без удаления их из папки ''plugins''.

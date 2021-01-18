@@ -1,31 +1,33 @@
-<HTML>
-<HEAD>
-	<META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
+	<meta http-equiv='content-type' content='text/html; charset=utf-8'/>
+	<title>Creation of the Style</title>
 
-	<STYLE type="text/css">
+	<style type='text/css'>
 		body, div, p, table {
 			font-size:10pt;
-			font-family:Verdana;
+			font-family:Sans;
 		}
 
 		img{border:none}
-		li strike {color: RGB(200, 200, 200); }
-	</STYLE>
+		
+	</style>
 	
-</HEAD>
+</head>
 
-<BODY>
-<P>Style is the directory where the must be <I>__style.html</I> file and <I>__style</I> subdirectory (do not necessarily).</P>
+<body>
+Note's style is implemented as the <i>__style.html</i> file (mandatory) and the <i>__style</i> subdirectory (optional); both located in the note's directory.<br/>
+<br/>
+<i>__style.html</i> file is an HTML file encoded in UTF-8. The file is not supposed to be created or edited by user, rather by special macro which adds formatting tags as well as some additional parameters (see below) to the note content. Here is how the default style looks like:<br/>
 
-<P><I>__style.html</I> file is HTML file in UTF-8 encoding, into which a special macro substitutes the contents page and some additional parameters that are written below. For example, default style:</P>
+<pre>
+&lt;html&gt;
+&lt;head&gt;
+	&lt;meta http-equiv='content-type' content='text/html; charset=utf-8'/&gt;
 
-<P>
-<PRE>
-&lt;HTML&gt;
-&lt;HEAD&gt;
-	&lt;META HTTP-EQUIV='CONTENT-TYPE' CONTENT='TEXT/HTML; CHARSET=UTF-8'/&gt;
-
-	&lt;STYLE type=&quot;text/css&quot;&gt;
+	&lt;style type="text/css"&gt;
 		body, div, p, table {
 			font-size:${fontsize}pt;
 			font-family:$fontfamily;
@@ -33,25 +35,24 @@
 
 		img{border:none}
 		$userstyle
-	&lt;/STYLE&gt;
+	&lt;/style&gt;
 	$userhead
-&lt;/HEAD&gt;
+&lt;/head&gt;
 
-&lt;BODY&gt;
-&lt;P&gt;$content&lt;/P&gt;
-&lt;/BODY&gt;
-&lt;/HTML&gt;
-</PRE></P>
-
-<P><I> __style.html</I> file contains a substitution macros that begin with "$" character followed by a macro name, perhaps surrounded by curly braces, for example: $content or ${content}. The second case is needed, if immediately after the macro must be placed some text right next to it (without spaces). Currently supports the following styles of macro substitution:</P>
-
-<P>
-<UL>
-<LI>$content - replaced by the contents page.</LI>
-<LI>$fontsize - font size specified in the settings. Measured in points (pt).</LI>
-<LI>$fontfamily - font name specified in the settings.</LI>
-<LI>$userstyle - additional styles that can be created in the process of parsing wiki pages.</LI>
-<LI>$userhead - additional tags inside the tag &lt;head&gt; ... &lt;/ head&gt;, which can be created in the process of parsing wiki pages.</LI>
-</UL><I>__style</I> вirectory is not mandatory. It can be placed images and files with styles CSS. However, to keep the CSS styles in this directory is not desirable, it is best to place them directly in the file <I>__style.html</I>. This is primarily due to the caching of style when running under Linux. If multiple styles are CSS files with the same name, then when you switch between these styles, CSS files with the same name when rendering HTML can be updated immediately.</P>
-</BODY>
-</HTML>
+&lt;body&gt;
+&lt;p&gt;$content&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+<br/>
+<i> __style.html</i> file contains references to macros that begin with "$" character followed by the macro name (it can be enclosed by braces), for example, $content or ${content}. The braces are used in case the macro name is not separated by space character from alphanumeric characters to follow. Currently, OutWiker's styles support the following macros:<br/>
+<ul>
+<li><b>$content</b> - substitutes the content of the note.</li>
+<li><b>$fontsize</b> - substitutes font size in points (pt) specified in the settings.</li>
+<li><b>$fontfamily</b> - substitutes font name specified in the settings.</li>
+<li><b>$userstyle</b> - substitutes additional styles that can be created in the process of wiki notes parsing.</li>
+<li><b>$userhead</b> - substitutes additional tags inside the &lt;head&gt; ... &lt;/ head&gt; tag, which can be created in the process of wiki notes parsing.</li>
+</ul>
+<i>__style</i> directory is not mandatory. It can store images and files with CSS styles, if any. However, storing CSS styles in this directory is not encouraged, preferable solution is to incorporate them in the file <i>__style.html</i>. This is primarily due to the caching of styles when running under Linux. If several styles include CSS files of same name, then switching between those CSS may cause delays in rendering. There is no such problem if CSS is included directly into HTML code.<br/>
+</body>
+</html>

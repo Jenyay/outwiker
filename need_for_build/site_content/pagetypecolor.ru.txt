@@ -24,8 +24,6 @@ Attach:Soft/Outwiker/us.png [[English version -> Outwiker/PageTypeColorEn]]
 
 [[PageTypeColor {{ version_full }} -> Attach:pagetypecolor-{{ version_full }}.zip]] ('''Требуемая версия OutWiker: 3.0.0.868 и выше''')
 
-<!--#version stable {{ version_full }} -->
-
 {% include 'changelog.ru.txt' %}
 
 %center%(:ad:)

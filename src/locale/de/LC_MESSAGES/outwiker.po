@@ -2,48 +2,48 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-18 20:31+0300\n"
-"PO-Revision-Date: 2019-10-19 11:29+0300\n"
-"Last-Translator: Jenyay\n"
+"POT-Creation-Date: 2021-01-09 17:20+0300\n"
+"PO-Revision-Date: 2021-01-09 17:22+0300\n"
+"Last-Translator: \n"
 "Language-Team: German\n"
+"Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 2.4.2\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Crowdin-Project: outwiker\n"
 "X-Crowdin-Language: de\n"
 "X-Crowdin-File: outwiker.pot\n"
-"Language: de_DE\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: outwiker/actions/about.py:19
+#: outwiker/actions/about.py:18
 msgid "About…"
 msgstr "Über…"
 
-#: outwiker/actions/about.py:23
+#: outwiker/actions/about.py:22
 msgid "Open \"About\" dialog"
 msgstr "\"Über\" Dialogfeld öffnen"
 
-#: outwiker/actions/addbookmark.py:17 outwiker/actions/addbookmark.py:21
+#: outwiker/actions/addbookmark.py:16 outwiker/actions/addbookmark.py:20
 msgid "Add/Remove Bookmark"
 msgstr "Lesezeichen hinzufügen/entfernen"
 
-#: outwiker/actions/addchildpage.py:18
+#: outwiker/actions/addchildpage.py:17
 msgid "Add Child Page…"
 msgstr "Unterseite hinzufügen…"
 
-#: outwiker/actions/addchildpage.py:22
+#: outwiker/actions/addchildpage.py:21
 msgid "Add child page"
 msgstr "Unterseite hinzufügen"
 
-#: outwiker/actions/addsiblingpage.py:18
+#: outwiker/actions/addsiblingpage.py:17
 msgid "Add Sibling Page…"
 msgstr "Neue Seite auf gleicher Ebene erstellen…"
 
-#: outwiker/actions/addsiblingpage.py:22
+#: outwiker/actions/addsiblingpage.py:21
 msgid "Add sibling page"
 msgstr "Neue Seite auf gleicher Ebene erstellen"
 
@@ -72,8 +72,8 @@ msgstr "Stil"
 msgid "Default"
 msgstr "Standard"
 
-#: outwiker/actions/attachfiles.py:21 outwiker/gui/attachpanel.py:117
-#: outwiker/gui/attachpanel.py:122
+#: outwiker/actions/attachfiles.py:21 outwiker/gui/attachpanel.py:115
+#: outwiker/gui/attachpanel.py:120
 msgid "Attach Files…"
 msgstr "Dateien anhängen…"
 
@@ -125,7 +125,7 @@ msgstr "Notizen-Baum schließen"
 msgid "Page Properties…"
 msgstr "Seiteneigenschaften…"
 
-#: outwiker/actions/editpageprop.py:22 outwiker/gui/pagedialog.py:123
+#: outwiker/actions/editpageprop.py:22 outwiker/gui/pagedialog.py:121
 msgid "Edit page properties"
 msgstr "Seiteneigenschaften bearbeiten"
 
@@ -141,7 +141,7 @@ msgstr "Schließen OutWiker"
 msgid "Really exit?"
 msgstr "Wirklich verlassen?"
 
-#: outwiker/actions/exit.py:40 outwiker/gui/trayicon.py:141
+#: outwiker/actions/exit.py:40 outwiker/gui/trayicon.py:140
 msgid "Exit"
 msgstr "Verlassen"
 
@@ -161,7 +161,7 @@ msgstr "Globale Suche…"
 msgid "Create or open page for global search"
 msgstr "Erstelle oder öffne Seite für globale Suche"
 
-#: outwiker/actions/globalsearch.py:35 outwiker/gui/pagedialog.py:60
+#: outwiker/actions/globalsearch.py:35 outwiker/gui/pagedialog.py:58
 msgid "Can't create page"
 msgstr "Seite kann nicht erstellt werden"
 
@@ -243,8 +243,8 @@ msgstr "Öffnen…"
 msgid "Open tree notes"
 msgstr "Notizenbaum öffnen"
 
-#: outwiker/actions/openattachfolder.py:20 outwiker/gui/attachpanel.py:163
-#: outwiker/gui/attachpanel.py:168 outwiker/gui/pagepopupmenu.py:101
+#: outwiker/actions/openattachfolder.py:20 outwiker/gui/attachpanel.py:161
+#: outwiker/gui/attachpanel.py:166 outwiker/gui/pagepopupmenu.py:101
 msgid "Open Attachments Folder"
 msgstr "Ordner mit Anhang öffnen"
 
@@ -257,7 +257,7 @@ msgstr "Ordner mit Anhang öffnet"
 msgid "Can't open folder '{}'"
 msgstr "Ordner '{}' kann nicht geöffnet werden"
 
-#: outwiker/actions/openhelp.py:25 outwiker/gui/mainwindow.py:187
+#: outwiker/actions/openhelp.py:25 outwiker/gui/mainwindow.py:186
 msgid "Help"
 msgstr "Hilfe"
 
@@ -341,8 +341,8 @@ msgstr "Speichern"
 msgid "Save current note"
 msgstr "Aktuelle Notiz speichern"
 
-#: outwiker/actions/search.py:29 outwiker/gui/basetextpanel.py:333
-#: outwiker/gui/preferences/hotkeyspanel.py:83
+#: outwiker/actions/search.py:29 outwiker/gui/basetextpanel.py:327
+#: outwiker/gui/preferences/hotkeyspanel.py:84
 #: outwiker/pages/search/searchpanel.py:274
 msgid "Search"
 msgstr "Suche"
@@ -377,7 +377,7 @@ msgstr "Starten suchen und ersetzen auf Seite"
 
 #: outwiker/actions/showhideattaches.py:17 outwiker/actions/switchto.py:63
 #: outwiker/gui/mainpanes/attachmainpane.py:19
-#: outwiker/gui/preferences/prefcontroller.py:154
+#: outwiker/gui/preferences/prefcontroller.py:135
 msgid "Attachments"
 msgstr "Anlagen"
 
@@ -508,16 +508,16 @@ msgstr "Tag umbenennen…"
 msgid "Rename tag"
 msgstr "Tag umbenennen"
 
-#: outwiker/core/commands.py:79 outwiker/gui/tagspanelcontroller.py:78
+#: outwiker/core/commands.py:77 outwiker/gui/tagspanelcontroller.py:78
 msgid "Page is opened as read-only"
 msgstr "Seite wird als schreibgeschützt geöffnet"
 
-#: outwiker/core/commands.py:110
+#: outwiker/core/commands.py:108
 #, python-format
 msgid "File '%s' exists already"
 msgstr "Datei '%s' ist bereits vorhanden"
 
-#: outwiker/core/commands.py:123
+#: outwiker/core/commands.py:122
 #, python-brace-format
 msgid ""
 "Error copying files\n"
@@ -583,49 +583,54 @@ msgstr "Erste Wiki-Seite"
 msgid ""
 "!! First Wiki Page\n"
 "\n"
-"This is the first page. You can use a text formatting: '''bold''', ''italic'', {+underlined text+}, [[https://jenyay.net | link]] and others."
+"This is the first page. You can use a text formatting: '''bold''', "
+"''italic'', {+underlined text+}, [[https://jenyay.net | link]] and others."
 msgstr ""
 "!! Erste Wiki Seite\n"
 "\n"
-"Das ist die erste Seite. Du kannst Textformatierungen: '''bold''', ''italic'', {+unterstrichener Text+}, [[https://jenyay.net | link]] und andere."
+"Das ist die erste Seite. Du kannst Textformatierungen: '''bold''', "
+"''italic'', {+unterstrichener Text+}, [[https://jenyay.net | link]] und "
+"andere."
 
 #: outwiker/core/commands.py:300
 msgid "test"
 msgstr "Test"
 
-#: outwiker/core/commands.py:308
+#: outwiker/core/commands.py:309
 msgid "Can't create wiki\n"
 msgstr "Wiki kann nicht erstellt werden\n"
 
-#: outwiker/core/commands.py:315 outwiker/core/commands.py:329
+#: outwiker/core/commands.py:316 outwiker/core/commands.py:330
 msgid "Can't open clipboard"
 msgstr "Zwischenablage kann nicht geöffnet werden"
 
-#: outwiker/core/commands.py:321
+#: outwiker/core/commands.py:322
 msgid "Can't copy text to clipboard"
 msgstr "Text kann nicht in die Zwischenablage kopiert werden"
 
-#: outwiker/core/commands.py:400
+#: outwiker/core/commands.py:402
 msgid "Can't move page when page with that title already exists"
-msgstr "Seite kann nicht verschoben werden, wenn die Seite mit dem Titel bereits vorhanden ist"
+msgstr ""
+"Seite kann nicht verschoben werden, wenn die Seite mit dem Titel bereits "
+"vorhanden ist"
 
-#: outwiker/core/commands.py:403
+#: outwiker/core/commands.py:406
 msgid "Can't move page: {}"
 msgstr "Seite kann nicht verschoben werden: {}"
 
-#: outwiker/core/commands.py:430 outwiker/gui/notestree.py:296
+#: outwiker/core/commands.py:422 outwiker/gui/notestree.py:295
 msgid "You can't rename the root element"
 msgstr "Das Root-Element kann nicht umbenannt werden"
 
-#: outwiker/core/commands.py:448
+#: outwiker/core/commands.py:440
 msgid "Can't rename page \"{}\" to \"{}\""
 msgstr "Seite \"{}\" kann nicht zu \"{}\" umbenannt werden"
 
-#: outwiker/core/commands.py:467
+#: outwiker/core/commands.py:459
 msgid "Invalid page title"
 msgstr "Ungültige Seitentitel"
 
-#: outwiker/core/commands.py:472
+#: outwiker/core/commands.py:464
 #, python-brace-format
 msgid ""
 "{0}\n"
@@ -634,79 +639,79 @@ msgstr ""
 "{0}\n"
 "Weiter?"
 
-#: outwiker/core/commands.py:475
+#: outwiker/core/commands.py:467
 msgid "The page title"
 msgstr "Titel der Seite"
 
-#: outwiker/core/commands.py:527
+#: outwiker/core/commands.py:519
 msgid "Enter format of the date"
 msgstr "Geben Sie Format für das Datum"
 
-#: outwiker/core/commands.py:528 outwiker/pages/wiki/actions/dates.py:25
+#: outwiker/core/commands.py:520 outwiker/pages/wiki/actions/dates.py:25
 msgid "Date format"
 msgstr "Datumsformat"
 
-#: outwiker/core/defines.py:76
+#: outwiker/core/defines.py:75
 msgid "versions_lang"
 msgstr "de"
 
-#: outwiker/core/defines.py:79
+#: outwiker/core/defines.py:78
 msgid "awards"
 msgstr "Auszeichnungen"
 
-#: outwiker/core/defines.py:80
+#: outwiker/core/defines.py:79
 msgid "battery"
 msgstr "Akku"
 
-#: outwiker/core/defines.py:81
+#: outwiker/core/defines.py:80
 msgid "books"
 msgstr "Bücher"
 
-#: outwiker/core/defines.py:82
+#: outwiker/core/defines.py:81
 msgid "computer"
 msgstr "Computer"
 
-#: outwiker/core/defines.py:83
+#: outwiker/core/defines.py:82
 msgid "emotions"
 msgstr "Emotionen"
 
-#: outwiker/core/defines.py:84
+#: outwiker/core/defines.py:83
 msgid "flags"
 msgstr "Flaggen"
 
-#: outwiker/core/defines.py:85
+#: outwiker/core/defines.py:84
 msgid "folders"
 msgstr "Ordner"
 
-#: outwiker/core/defines.py:86
+#: outwiker/core/defines.py:85
 msgid "food"
 msgstr "Essen"
 
-#: outwiker/core/defines.py:87
+#: outwiker/core/defines.py:86
 msgid "internet"
 msgstr "Internet"
 
-#: outwiker/core/defines.py:88
+#: outwiker/core/defines.py:87
 msgid "money"
 msgstr "Geld"
 
-#: outwiker/core/defines.py:89
+#: outwiker/core/defines.py:88
 msgid "people"
 msgstr "Menschen"
 
-#: outwiker/core/defines.py:90
+#: outwiker/core/defines.py:89
 msgid "signs"
 msgstr "Zeichen"
 
-#: outwiker/core/defines.py:91
+#: outwiker/core/defines.py:90
 msgid "software"
 msgstr "Software"
 
-#: outwiker/core/defines.py:92
+#: outwiker/core/defines.py:91
 msgid "tags"
 msgstr "Tags"
 
-#: outwiker/core/defines.py:93
+#: outwiker/core/defines.py:92
 msgid "weather"
 msgstr "Wetter"
 
@@ -714,42 +719,58 @@ msgstr "Wetter"
 msgid "Line Breaks (<br/>)"
 msgstr "Zeilenumbruch (<br/>)"
 
-#: outwiker/core/pagetitletester.py:54
-#, python-format
-msgid "The page title contains the expression \"%xx\". Links on this page may be invalid."
-msgstr "Titel der Seite enthält den Ausdruck \"%xx\". Links auf dieser Seite können ungültig sein."
+#: outwiker/core/i18n.py:122
+msgid "LANGUAGE_DEFAULT"
+msgstr "LANGUAGE_GERMAN"
 
-#: outwiker/core/pagetitletester.py:63
+#: outwiker/core/pagetitletester.py:51
+#, python-format
+msgid ""
+"The page title contains the expression \"%xx\". Links on this page may be "
+"invalid."
+msgstr ""
+"Titel der Seite enthält den Ausdruck \"%xx\". Links auf dieser Seite können "
+"ungültig sein."
+
+#: outwiker/core/pagetitletester.py:58
 msgid "The page title is empty"
 msgstr "Titel der Seite ist leer"
 
-#: outwiker/core/pagetitletester.py:66
+#: outwiker/core/pagetitletester.py:61
 msgid "Invalid the page title"
 msgstr "Ungültige Titel der Seite"
 
-#: outwiker/core/pagetitletester.py:69
+#: outwiker/core/pagetitletester.py:64
 msgid "The page title can not begin with __"
 msgstr "Titel der Seite kann nicht beginnen mit __"
 
-#: outwiker/core/pagetitletester.py:74 outwiker/core/pagetitletester.py:115
+#: outwiker/core/pagetitletester.py:69 outwiker/core/pagetitletester.py:108
 msgid "The page title contains invalid characters"
 msgstr "Titel der Seite enthält ungültige Zeichen"
 
-#: outwiker/core/pagetitletester.py:134
-msgid "The page title contains invalid characters for Microsoft Windows operating system"
-msgstr "Titel der Seite enthält ungültige Zeichen für Microsoft Windows-Betriebssystem"
+#: outwiker/core/pagetitletester.py:125
+msgid ""
+"The page title contains invalid characters for Microsoft Windows operating "
+"system"
+msgstr ""
+"Titel der Seite enthält ungültige Zeichen für Microsoft Windows-"
+"Betriebssystem"
 
-#: outwiker/core/pluginsloader.py:261
+#: outwiker/core/pluginsloader.py:255
 msgid "Plug-in \"{}\". Can't read \"{}\" file"
 msgstr "Plugin \"{}\". Fehler beim Lesen von Datei \"{}\""
 
-#: outwiker/core/pluginsloader.py:281
+#: outwiker/core/pluginsloader.py:276
 msgid "Plug-in \"{}\" is outdated. Please, update the plug-in."
 msgstr "Plugin \"{}\" ist veraltet. Bitte aktualisieren Sie das Plugin."
 
-#: outwiker/core/pluginsloader.py:292
-msgid "Plug-in \"{}\" is designed for a newer version OutWiker. Please, install a new OutWiker version."
-msgstr "Plugin \"{}\" ist für eine neuere Version von OutWiker entwickelt. Bitte installieren Sie eine neuere Version von OutWiker."
+#: outwiker/core/pluginsloader.py:287
+msgid ""
+"Plug-in \"{}\" is designed for a newer version OutWiker. Please, install a "
+"new OutWiker version."
+msgstr ""
+"Plugin \"{}\" ist für eine neuere Version von OutWiker entwickelt. Bitte "
+"installieren Sie eine neuere Version von OutWiker."
 
 #: outwiker/core/textprinter.py:97
 msgid "Printing error"
@@ -758,407 +779,419 @@ msgstr "Druckerfehler"
 #: outwiker/core/textprinter.py:98
 #: outwiker/gui/controls/toastercontroller.py:49
 #: outwiker/gui/pagedialogpanels/appearancepanel.py:72
-#: outwiker/gui/pagedialogpanels/iconspanel.py:173
-#: outwiker/gui/preferences/iconsetpanel.py:215
-#: outwiker/gui/preferences/iconsetpanel.py:271
-#: outwiker/gui/preferences/iconsetpanel.py:277
-#: outwiker/gui/preferences/iconsetpanel.py:283
-#: outwiker/gui/preferences/iconsetpanel.py:323
+#: outwiker/gui/pagedialogpanels/iconspanel.py:181
+#: outwiker/gui/preferences/iconsetpanel.py:212
+#: outwiker/gui/preferences/iconsetpanel.py:268
+#: outwiker/gui/preferences/iconsetpanel.py:274
+#: outwiker/gui/preferences/iconsetpanel.py:280
+#: outwiker/gui/preferences/iconsetpanel.py:320
 #: outwiker/gui/renametagdialog.py:77 outwiker/gui/renametagdialog.py:82
 #: outwiker/pages/html/basehtmlpanel.py:305
 msgid "Error"
 msgstr "Fehler"
 
-#: outwiker/gui/actionslist.py:81 outwiker/gui/editorstyleslist.py:26
+#: outwiker/gui/actionslist.py:120 outwiker/gui/editorstyleslist.py:26
 msgid "Bold"
 msgstr "Fett"
 
-#: outwiker/gui/actionslist.py:82 outwiker/gui/editorstyleslist.py:27
+#: outwiker/gui/actionslist.py:121 outwiker/gui/actionslist.py:122
+#: outwiker/gui/editorstyleslist.py:27
 msgid "Italic"
 msgstr "Kursiv"
 
-#: outwiker/gui/actionslist.py:83
+#: outwiker/gui/actionslist.py:123 outwiker/gui/actionslist.py:124
 msgid "Bold italic"
 msgstr "Fett Kursiv"
 
-#: outwiker/gui/actionslist.py:84 outwiker/gui/editorstyleslist.py:28
+#: outwiker/gui/actionslist.py:125 outwiker/gui/actionslist.py:126
+#: outwiker/gui/editorstyleslist.py:28
 msgid "Underline"
 msgstr "Unterstreichung"
 
-#: outwiker/gui/actionslist.py:85
+#: outwiker/gui/actionslist.py:127 outwiker/gui/actionslist.py:128
 msgid "Strikethrough"
 msgstr "Durchgestrichen"
 
-#: outwiker/gui/actionslist.py:86
+#: outwiker/gui/actionslist.py:129 outwiker/gui/actionslist.py:130
 msgid "Subscript"
 msgstr "Tiefgestellt"
 
-#: outwiker/gui/actionslist.py:87
+#: outwiker/gui/actionslist.py:131 outwiker/gui/actionslist.py:132
 msgid "Superscript"
 msgstr "Hochgestellt"
 
-#: outwiker/gui/actionslist.py:88
+#: outwiker/gui/actionslist.py:133 outwiker/gui/actionslist.py:134
 msgid "Preformatted text"
 msgstr "Vorformatierter text"
 
-#: outwiker/gui/actionslist.py:89
+#: outwiker/gui/actionslist.py:135
 msgid "Insert code"
 msgstr "Fügen Sie code"
 
-#: outwiker/gui/actionslist.py:89
+#: outwiker/gui/actionslist.py:136
 msgid "Insert code(monospaced font)"
 msgstr "Fügen Sie Code (Festbreitenschriftart)"
 
-#: outwiker/gui/actionslist.py:91
+#: outwiker/gui/actionslist.py:138 outwiker/gui/actionslist.py:139
 msgid "Align text left"
 msgstr "Text linksbündig"
 
-#: outwiker/gui/actionslist.py:92
+#: outwiker/gui/actionslist.py:140
 msgid "Align text center"
 msgstr "Text zentrumbündig"
 
-#: outwiker/gui/actionslist.py:92
+#: outwiker/gui/actionslist.py:141
 msgid "Center"
 msgstr "Text zentriert"
 
-#: outwiker/gui/actionslist.py:93
+#: outwiker/gui/actionslist.py:142 outwiker/gui/actionslist.py:143
 msgid "Align text right"
 msgstr "Text rechtsbündig"
 
-#: outwiker/gui/actionslist.py:94
+#: outwiker/gui/actionslist.py:144 outwiker/gui/actionslist.py:145
 msgid "Justify"
 msgstr "Die Angleichung nach der Breite"
 
-#: outwiker/gui/actionslist.py:96
+#: outwiker/gui/actionslist.py:147 outwiker/gui/actionslist.py:148
 msgid "First-level heading"
 msgstr "Überschrift der ersten Ebene"
 
-#: outwiker/gui/actionslist.py:97
+#: outwiker/gui/actionslist.py:149 outwiker/gui/actionslist.py:150
 msgid "Second-level heading"
 msgstr "Überschrift der zweiten Ebene"
 
-#: outwiker/gui/actionslist.py:98
+#: outwiker/gui/actionslist.py:151 outwiker/gui/actionslist.py:152
 msgid "Subtitle three"
 msgstr "Untertitel drei"
 
-#: outwiker/gui/actionslist.py:99
+#: outwiker/gui/actionslist.py:153 outwiker/gui/actionslist.py:154
 msgid "Subtitle four"
 msgstr "Untertitel vier"
 
-#: outwiker/gui/actionslist.py:100
+#: outwiker/gui/actionslist.py:155 outwiker/gui/actionslist.py:156
 msgid "Subtitle five"
 msgstr "Untertitel fünf"
 
-#: outwiker/gui/actionslist.py:101
+#: outwiker/gui/actionslist.py:157 outwiker/gui/actionslist.py:158
 msgid "Subtitle six"
 msgstr "Untertitel sechs"
 
-#: outwiker/gui/actionslist.py:103
+#: outwiker/gui/actionslist.py:160
 msgid "Anchor"
 msgstr "Anker"
 
-#: outwiker/gui/actionslist.py:104
+#: outwiker/gui/actionslist.py:161 outwiker/gui/actionslist.py:162
 msgid "Horizontal rule"
 msgstr "Horizontale Linie"
 
-#: outwiker/gui/actionslist.py:105 outwiker/gui/dialogs/linkdialog.py:20
+#: outwiker/gui/actionslist.py:163 outwiker/gui/dialogs/linkdialog.py:20
 #: outwiker/gui/dialogs/linkdialog.py:34
 #: outwiker/gui/preferences/wikieditorpanel.py:33
 msgid "Link"
 msgstr "Link"
 
-#: outwiker/gui/actionslist.py:105
+#: outwiker/gui/actionslist.py:164
 msgid "Insert Link"
 msgstr "Link einfügen"
 
-#: outwiker/gui/actionslist.py:106
+#: outwiker/gui/actionslist.py:165
 msgid "Quote"
 msgstr "Zitat"
 
-#: outwiker/gui/actionslist.py:106
+#: outwiker/gui/actionslist.py:166
 msgid "Insert a quote block"
 msgstr "Einen Zitat-Block einfügen"
 
-#: outwiker/gui/actionslist.py:107
+#: outwiker/gui/actionslist.py:167
 msgid "Image"
 msgstr "Bild"
 
-#: outwiker/gui/actionslist.py:107
+#: outwiker/gui/actionslist.py:168
 msgid "Insert image"
 msgstr "Bild einfügen"
 
-#: outwiker/gui/actionslist.py:108
+#: outwiker/gui/actionslist.py:169
 msgid "Mark"
 msgstr "Markieren"
 
-#: outwiker/gui/actionslist.py:108
+#: outwiker/gui/actionslist.py:169
 msgid "Mark text"
 msgstr "Text markieren"
 
-#: outwiker/gui/actionslist.py:110
+#: outwiker/gui/actionslist.py:171
 msgid "Bullets list"
 msgstr "Ohne Nummer Liste"
 
-#: outwiker/gui/actionslist.py:110
+#: outwiker/gui/actionslist.py:172
 msgid "Insert a bullets list"
 msgstr "Ohne Nummer Liste einfügen"
 
-#: outwiker/gui/actionslist.py:111
+#: outwiker/gui/actionslist.py:173
 msgid "Numbers list"
 msgstr "Nummer Liste"
 
-#: outwiker/gui/actionslist.py:111
+#: outwiker/gui/actionslist.py:174
 msgid "Insert a numbers list"
 msgstr "Nummer Liste einfügen"
 
-#: outwiker/gui/actionslist.py:113
+#: outwiker/gui/actionslist.py:176
 msgid "Decrease nesting level"
 msgstr "Niveau des Anhang zu verringern"
 
-#: outwiker/gui/actionslist.py:113
+#: outwiker/gui/actionslist.py:177
 msgid "Decrease the nesting level of the selected list items"
 msgstr "Niveau des Anhang der ausgewählte Zeilen der Liste zu verringern"
 
-#: outwiker/gui/actionslist.py:114
+#: outwiker/gui/actionslist.py:178
 msgid "Line break"
 msgstr "Zeilenumbruch"
 
-#: outwiker/gui/actionslist.py:114
+#: outwiker/gui/actionslist.py:179
 msgid "Insert a line break"
 msgstr "Einfügen eines Zeilenumbruchs"
 
-#: outwiker/gui/actionslist.py:115
+#: outwiker/gui/actionslist.py:180 outwiker/gui/actionslist.py:181
 msgid "Convert HTML Symbols"
 msgstr "Symbole umwandeln in HTML"
 
-#: outwiker/gui/actionslist.py:117 outwiker/pages/html/htmlpageview.py:40
+#: outwiker/gui/actionslist.py:183 outwiker/pages/html/htmlpageview.py:40
 #: outwiker/pages/wiki/wikipageview.py:66
 msgid "Table"
 msgstr "Tabelle"
 
-#: outwiker/gui/actionslist.py:117
+#: outwiker/gui/actionslist.py:184
 msgid "Insert a table"
 msgstr "Tabelle einfügen"
 
-#: outwiker/gui/actionslist.py:118
+#: outwiker/gui/actionslist.py:185
 msgid "Table rows"
 msgstr "Tabellenzeile"
 
-#: outwiker/gui/actionslist.py:118
+#: outwiker/gui/actionslist.py:186
 msgid "Insert table rows"
 msgstr "Tabellen Zeile einfügen"
 
-#: outwiker/gui/actionslist.py:119
+#: outwiker/gui/actionslist.py:187
 msgid "Table cell"
 msgstr "Tabellenzelle"
 
-#: outwiker/gui/actionslist.py:119
+#: outwiker/gui/actionslist.py:188
 msgid "Insert a table cell"
 msgstr "Tabellenzelle einfügen"
 
-#: outwiker/gui/actionslist.py:121
+#: outwiker/gui/actionslist.py:190
 msgid "Current date"
 msgstr "Tagesdatum"
 
-#: outwiker/gui/actionslist.py:121
+#: outwiker/gui/actionslist.py:191
 msgid "Insert the current date"
 msgstr "Aktuelles Datum einfügen"
 
-#: outwiker/gui/actionslist.py:122
-#: outwiker/gui/preferences/prefcontroller.py:173
+#: outwiker/gui/actionslist.py:192
+#: outwiker/gui/preferences/prefcontroller.py:155
 msgid "Spell checking"
 msgstr "Rechtschreibprüfung"
 
-#: outwiker/gui/actionslist.py:122
+#: outwiker/gui/actionslist.py:193
 msgid "Enable / disable spell checking"
 msgstr "Rechtschreibprüfung aktivieren / deaktivieren"
 
-#: outwiker/gui/actionslist.py:124
+#: outwiker/gui/actionslist.py:195
 msgid "Duplicate line"
 msgstr "Doppelte Zeile"
 
-#: outwiker/gui/actionslist.py:124
+#: outwiker/gui/actionslist.py:196
 msgid "Duplicate current line"
 msgstr "Dupliziere aktuelle Zeile"
 
-#: outwiker/gui/actionslist.py:125
+#: outwiker/gui/actionslist.py:197
 msgid "Move selected lines up"
 msgstr "Ausgewählte Zeilen nach oben versetzen"
 
-#: outwiker/gui/actionslist.py:125
+#: outwiker/gui/actionslist.py:198
 msgid "Move the selected lines up one line"
 msgstr "Ausgewählte Zeilen auf eine Zeile nach oben verschieben"
 
-#: outwiker/gui/actionslist.py:126
+#: outwiker/gui/actionslist.py:199
 msgid "Move selected lines down"
 msgstr "Ausgewählte Zeilen nach unten versetzen"
 
-#: outwiker/gui/actionslist.py:126
+#: outwiker/gui/actionslist.py:200
 msgid "Move the selected lines down one line"
 msgstr "Ausgewählte Zeilen auf eine Zeile nach unten verschieben"
 
-#: outwiker/gui/actionslist.py:127
+#: outwiker/gui/actionslist.py:201
 msgid "Delete line"
 msgstr "Zeile löschen"
 
-#: outwiker/gui/actionslist.py:127
+#: outwiker/gui/actionslist.py:202
 msgid "Delete the current line"
 msgstr "Lösche die aktuelle Zeile"
 
-#: outwiker/gui/actionslist.py:128
+#: outwiker/gui/actionslist.py:203
 msgid "Join lines"
 msgstr "Zeile einfügen"
 
-#: outwiker/gui/actionslist.py:130
+#: outwiker/gui/actionslist.py:205
 msgid "Delete word to the left"
 msgstr "Linkes Wort löschen"
 
-#: outwiker/gui/actionslist.py:130
+#: outwiker/gui/actionslist.py:206
 msgid "Delete text to beginning of the word"
 msgstr "Bis Wortanfang löschen"
 
-#: outwiker/gui/actionslist.py:131
+#: outwiker/gui/actionslist.py:207
 msgid "Delete word to the right"
 msgstr "Rechtes Wort löschen"
 
-#: outwiker/gui/actionslist.py:131
+#: outwiker/gui/actionslist.py:208
 msgid "Delete text to ending of the word"
 msgstr "Bis Wortende löschen"
 
-#: outwiker/gui/actionslist.py:132
+#: outwiker/gui/actionslist.py:209
 msgid "Delete to start of the line"
 msgstr "Bis Zeilenbeginn löschen"
 
-#: outwiker/gui/actionslist.py:132
+#: outwiker/gui/actionslist.py:210
 msgid "Delete text back from the current position to the start of the line"
 msgstr "Ab aktueller Position bis Zeilenanfang löschen"
 
-#: outwiker/gui/actionslist.py:133
+#: outwiker/gui/actionslist.py:211
 msgid "Delete to end of the line"
 msgstr "Bis Zeilenende löschen"
 
-#: outwiker/gui/actionslist.py:133
+#: outwiker/gui/actionslist.py:212
 msgid "Delete text forwards from the current position to the end of the line"
 msgstr "Ab aktueller Position bis Zeilenende löschen"
 
-#: outwiker/gui/actionslist.py:135
+#: outwiker/gui/actionslist.py:214
 msgid "Go to previous word"
 msgstr "Zur vorherigen Wort"
 
-#: outwiker/gui/actionslist.py:135
+#: outwiker/gui/actionslist.py:215
 msgid "Move cursor to previous word"
 msgstr "Cursor zum vorherigen Wort verschieben"
 
-#: outwiker/gui/actionslist.py:136
+#: outwiker/gui/actionslist.py:216
 msgid "Go to next word"
 msgstr "Zur nächsten Wort"
 
-#: outwiker/gui/actionslist.py:136
+#: outwiker/gui/actionslist.py:217
 msgid "Move cursor to next word"
 msgstr "Cursor zum nächsten Wort verschieben"
 
-#: outwiker/gui/actionslist.py:137
+#: outwiker/gui/actionslist.py:218
 msgid "Go to previous word and select"
 msgstr "Zur vorherigen Wort und auswählen"
 
-#: outwiker/gui/actionslist.py:137
+#: outwiker/gui/actionslist.py:219
 msgid "Move cursor to previous word and select text"
 msgstr "Cursor zum vorherigen Wort verschieben und Text markieren"
 
-#: outwiker/gui/actionslist.py:138
+#: outwiker/gui/actionslist.py:220
 msgid "Go to next word and select"
 msgstr "Zur nächste Wort und auswählen"
 
-#: outwiker/gui/actionslist.py:138
+#: outwiker/gui/actionslist.py:221
 msgid "Move cursor to next word and select text"
 msgstr "Cursor zum nächsten Wort verschieben und Text markieren"
 
-#: outwiker/gui/actionslist.py:139
+#: outwiker/gui/actionslist.py:222
 msgid "Go to start of the word"
 msgstr "Zum Anfang des Wortes"
 
-#: outwiker/gui/actionslist.py:139
+#: outwiker/gui/actionslist.py:223
 msgid "Move cursor to start of the current word"
 msgstr "Cursor zum Anfang einer aktuellen Wort verschieben"
 
-#: outwiker/gui/actionslist.py:140
+#: outwiker/gui/actionslist.py:224
 msgid "Go to end of the word"
 msgstr "Zum Ende des Wortes"
 
-#: outwiker/gui/actionslist.py:140
+#: outwiker/gui/actionslist.py:225
 msgid "Move cursor to end of the current word"
 msgstr "Cursor zum Ende einer aktuellen Wort verschieben"
 
-#: outwiker/gui/actionslist.py:142
+#: outwiker/gui/actionslist.py:227
 msgid "Copy line"
 msgstr "Zeile kopieren"
 
-#: outwiker/gui/actionslist.py:142
+#: outwiker/gui/actionslist.py:228
 msgid "Copy the current line to clipboard"
 msgstr "Zeile in der Zwischenablage kopieren"
 
-#: outwiker/gui/actionslist.py:143
+#: outwiker/gui/actionslist.py:229
 msgid "Cut line"
 msgstr "Zeile ausschneiden"
 
-#: outwiker/gui/actionslist.py:143
+#: outwiker/gui/actionslist.py:230
 msgid "Cut the current line to clipboard"
 msgstr "Zeile in der Zwischenablage ausschneiden"
 
-#: outwiker/gui/actionslist.py:144
+#: outwiker/gui/actionslist.py:231
 msgid "Copy word"
 msgstr "Wort kopieren"
 
-#: outwiker/gui/actionslist.py:144
+#: outwiker/gui/actionslist.py:232
 msgid "Copy the current word to clipboard"
 msgstr "Aktuelle Wort in der Zwischenablage kopieren"
 
-#: outwiker/gui/actionslist.py:145
+#: outwiker/gui/actionslist.py:233
 msgid "Cut word"
 msgstr "Wort ausschneiden"
 
-#: outwiker/gui/actionslist.py:145
+#: outwiker/gui/actionslist.py:234
 msgid "Cut the current word to clipboard"
 msgstr "Aktuelle Wort in der Zwischenablage ausschneiden"
 
-#: outwiker/gui/actionslist.py:146
+#: outwiker/gui/actionslist.py:235
 msgid "Text color..."
 msgstr "Textfarbe..."
 
-#: outwiker/gui/actionslist.py:146
+#: outwiker/gui/actionslist.py:236
 msgid "Set text color"
 msgstr "Textfarbe setzten"
 
-#: outwiker/gui/actionslist.py:147
+#: outwiker/gui/actionslist.py:237
 msgid "Text background color..."
 msgstr "Texthintergrundfarbe..."
 
-#: outwiker/gui/actionslist.py:147
+#: outwiker/gui/actionslist.py:238
 msgid "Set text background color"
 msgstr "Wählen Sie die Texthintergrundfarbe"
 
-#: outwiker/gui/attachpanel.py:128 outwiker/gui/attachpanel.py:133
+#: outwiker/gui/actionslist.py:239 outwiker/gui/dialogs/linkdialog.py:46
+#: outwiker/gui/preferences/htmleditorpanel.py:53
+#: outwiker/gui/preferences/wikieditorpanel.py:36
+msgid "Comment"
+msgstr "Kommentar"
+
+#: outwiker/gui/actionslist.py:239
+msgid "Mark text as comment"
+msgstr "Markiere Text als Kommentar"
+
+#: outwiker/gui/attachpanel.py:126 outwiker/gui/attachpanel.py:131
 msgid "Remove Files…"
 msgstr "Dateien entfernen…"
 
-#: outwiker/gui/attachpanel.py:141 outwiker/gui/attachpanel.py:146
-#: outwiker/gui/mainwindow.py:285 outwiker/gui/texteditormenu.py:16
+#: outwiker/gui/attachpanel.py:139 outwiker/gui/attachpanel.py:144
+#: outwiker/gui/mainwindow.py:284 outwiker/gui/texteditormenu.py:17
 msgid "Paste"
 msgstr "Einfügen"
 
-#: outwiker/gui/attachpanel.py:152 outwiker/gui/attachpanel.py:157
+#: outwiker/gui/attachpanel.py:150 outwiker/gui/attachpanel.py:155
 msgid "Execute"
 msgstr "Ausführen"
 
-#: outwiker/gui/attachpanel.py:256
+#: outwiker/gui/attachpanel.py:255
 msgid "You did not select a file to remove"
 msgstr "Du hast keine Datei zum entfernen markiert"
 
-#: outwiker/gui/attachpanel.py:259
+#: outwiker/gui/attachpanel.py:258
 msgid "Remove selected files?"
 msgstr "Ausgewählte Dateien entfernen?"
 
-#: outwiker/gui/attachpanel.py:260
+#: outwiker/gui/attachpanel.py:259
 msgid "Remove files?"
 msgstr "Dateien entfernen?"
 
@@ -1170,54 +1203,55 @@ msgstr "Du hast keine Datei zum einfügen markiert"
 msgid "You did not select a file to execute"
 msgstr "Du hast keine Datei zum ausführen markiert"
 
-#: outwiker/gui/attachpanel.py:296 outwiker/gui/htmlrender.py:59
-#: outwiker/gui/htmlrenderie.py:213 outwiker/gui/htmlrenderwebkit.py:259
+#: outwiker/gui/attachpanel.py:297 outwiker/gui/htmlrender.py:63
+#: outwiker/gui/htmlrenderie.py:255 outwiker/gui/htmlrenderie.py:337
+#: outwiker/gui/htmlrenderwebkit.py:261 outwiker/gui/htmlrenderwebkit.py:343
 #, python-format
 msgid "Can't execute file '%s'"
 msgstr "Datei '%s' kann nicht ausgeführt werden"
 
-#: outwiker/gui/basepagedialog.py:130 outwiker/gui/mainwindow.py:203
-#: outwiker/gui/preferences/prefcontroller.py:148
-#: outwiker/gui/preferences/prefcontroller.py:172
-#: outwiker/pages/wiki/wikipagecontroller.py:80
+#: outwiker/gui/basepagedialog.py:131 outwiker/gui/mainwindow.py:202
+#: outwiker/gui/preferences/prefcontroller.py:129
+#: outwiker/gui/preferences/prefcontroller.py:154
+#: outwiker/pages/wiki/wikipagecontroller.py:84
 msgid "General"
 msgstr "Allgemeine"
 
-#: outwiker/gui/basepagedialog.py:133
+#: outwiker/gui/basepagedialog.py:134
 msgid "Icon"
 msgstr "Symbol"
 
-#: outwiker/gui/basetextpanel.py:210 outwiker/gui/dialogs/overwritedialog.py:15
+#: outwiker/gui/basetextpanel.py:204 outwiker/gui/dialogs/overwritedialog.py:15
 msgid "Overwrite"
 msgstr "Überschreiben"
 
-#: outwiker/gui/basetextpanel.py:210
+#: outwiker/gui/basetextpanel.py:204
 msgid "Load"
 msgstr "Laden"
 
-#: outwiker/gui/basetextpanel.py:210 outwiker/gui/dialogs/overwritedialog.py:19
+#: outwiker/gui/basetextpanel.py:204 outwiker/gui/dialogs/overwritedialog.py:19
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: outwiker/gui/basetextpanel.py:212
+#: outwiker/gui/basetextpanel.py:207
 #, python-format
 msgid "Page \"%s\" is changed by the external program"
 msgstr "Seite \"%s\" wird durch das externe Programm geändert"
 
-#: outwiker/gui/basetextpanel.py:215
+#: outwiker/gui/basetextpanel.py:210
 msgid "Owerwrite?"
 msgstr "Überschreiben?"
 
-#: outwiker/gui/basetextpanel.py:254 outwiker/gui/tabscontroller.py:243
+#: outwiker/gui/basetextpanel.py:249 outwiker/gui/tabscontroller.py:243
 #, python-format
 msgid "Can't save file %s"
 msgstr "Datei %s kann nicht gespeichert werden"
 
-#: outwiker/gui/basetextpanel.py:470
+#: outwiker/gui/basetextpanel.py:476
 msgid "Word"
 msgstr "Wort"
 
-#: outwiker/gui/basetextpanel.py:549
+#: outwiker/gui/basetextpanel.py:564
 msgid "Lines"
 msgstr "Zeilen"
 
@@ -1290,7 +1324,7 @@ msgid "A literal '%' character"
 msgstr "Zeichen '%'"
 
 #: outwiker/gui/controls/pagelist_columns.py:196
-#: outwiker/gui/pagedialogpanels/generalpanel.py:47
+#: outwiker/gui/pagedialogpanels/generalpanel.py:68
 #: outwiker/pages/search/sortstrategies.py:64
 msgid "Title"
 msgstr "Titel"
@@ -1303,31 +1337,35 @@ msgstr "Übergeordnet"
 msgid "Modify date"
 msgstr "Änderungsdatum"
 
-#: outwiker/gui/currentpagepanel.py:102
+#: outwiker/gui/currentpagepanel.py:98
 msgid "Can't open page. Page folder not exists"
 msgstr "Seite kann nicht geöffnet werden, Seiten ordner existiert nicht"
 
-#: outwiker/gui/currentpagepanel.py:112
+#: outwiker/gui/currentpagepanel.py:108
 msgid "Add to Bookmarks"
 msgstr "Zu Lesezeichen hinzufügen"
 
-#: outwiker/gui/currentpagepanel.py:119
+#: outwiker/gui/currentpagepanel.py:115
 msgid "Remove from Bookmarks"
 msgstr "Aus Lesezeichen entfernen"
 
-#: outwiker/gui/currentpagepanel.py:263
+#: outwiker/gui/currentpagepanel.py:260
 msgid "Can't save page. Wiki folder not exists. Wiki will be closed."
-msgstr "Seite kann nicht gespeichert werden. Wiki Ordner existiert nicht. Wiki wird geschlossen."
+msgstr ""
+"Seite kann nicht gespeichert werden. Wiki Ordner existiert nicht. Wiki wird "
+"geschlossen."
 
-#: outwiker/gui/currentpagepanel.py:273
+#: outwiker/gui/currentpagepanel.py:270
 msgid "Can't save page. Page folder not exists. Wiki will be reloaded."
-msgstr "Seite kann nicht gespeichert werden. Seiten Ordner existiert nciht. Wiki wird neu geladen."
+msgstr ""
+"Seite kann nicht gespeichert werden. Seiten Ordner existiert nciht. Wiki "
+"wird neu geladen."
 
-#: outwiker/gui/dialogs/about.py:16
+#: outwiker/gui/dialogs/about.py:15
 msgid "OutWiker"
 msgstr "OutWiker"
 
-#: outwiker/gui/dialogs/about.py:17
+#: outwiker/gui/dialogs/about.py:16
 msgid "Version:"
 msgstr "Version:"
 
@@ -1375,22 +1413,17 @@ msgstr "Vkontakte-Gruppe"
 msgid "https://vk.com/outwiker"
 msgstr "https://vk.com/outwiker"
 
-#: outwiker/gui/dialogs/about.py:87 outwiker/gui/dialogs/about.py:145
+#: outwiker/gui/dialogs/about.py:87 outwiker/gui/dialogs/about.py:109
 msgid "About"
 msgstr "Über OutWiker"
 
-#: outwiker/gui/dialogs/about.py:123
-msgid "Author: Ilin Eugeniy (aka Jenyay)"
-msgstr "Autor: Ilin Eugeniy (aka Jenyay)"
-
-#: outwiker/gui/dialogs/about.py:146
+#: outwiker/gui/dialogs/about.py:110
 msgid "Contacts"
 msgstr "Kontakte"
 
-#: outwiker/gui/dialogs/linkdialog.py:46
-#: outwiker/gui/preferences/htmleditorpanel.py:53
-msgid "Comment"
-msgstr "Kommentar"
+#: outwiker/gui/dialogs/about.py:130
+msgid "Author: Ilin Eugeniy (aka Jenyay)"
+msgstr "Autor: Ilin Eugeniy (aka Jenyay)"
 
 #: outwiker/gui/dialogs/overwritedialog.py:13
 msgid "Overwrite file?"
@@ -1428,13 +1461,14 @@ msgstr "Zuletzt benutzter Notizenbaum:"
 msgid "Open"
 msgstr "Öffne"
 
-#: outwiker/gui/htmlrenderwebkit.py:57
+#: outwiker/gui/htmlrenderie.py:277 outwiker/gui/htmlrenderwebkit.py:171
+#: outwiker/gui/htmlrenderwebkit.py:283
 #, python-format
 msgid "Can't read file %s"
 msgstr "Datei %s kann nicht gelesen werden"
 
 #: outwiker/gui/iconlistctrl.py:53
-#: outwiker/gui/pagedialogpanels/iconspanel.py:249
+#: outwiker/gui/pagedialogpanels/iconspanel.py:256
 msgid "Invalid icon file: {}"
 msgstr "Ungültige Symboldatei: {}"
 
@@ -1454,64 +1488,64 @@ msgstr "Notiz"
 msgid "Notes"
 msgstr "Notizen"
 
-#: outwiker/gui/mainwindow.py:168
+#: outwiker/gui/mainwindow.py:167
 msgid "File"
 msgstr "Datei"
 
-#: outwiker/gui/mainwindow.py:171 outwiker/gui/preferences/generalpanel.py:42
+#: outwiker/gui/mainwindow.py:170 outwiker/gui/preferences/generalpanel.py:41
 msgid "Edit"
 msgstr "Bearbeiten"
 
-#: outwiker/gui/mainwindow.py:174
+#: outwiker/gui/mainwindow.py:173
 msgid "Tree"
 msgstr "Baum"
 
-#: outwiker/gui/mainwindow.py:177
+#: outwiker/gui/mainwindow.py:176
 msgid "Tools"
 msgstr "Werkzeuge"
 
-#: outwiker/gui/mainwindow.py:180 outwiker/gui/rootpagepanel.py:167
+#: outwiker/gui/mainwindow.py:179 outwiker/gui/rootpagepanel.py:167
 msgid "Bookmarks"
 msgstr "Lesezeichen"
 
-#: outwiker/gui/mainwindow.py:182
+#: outwiker/gui/mainwindow.py:181
 msgid "View"
 msgstr "Ansicht"
 
-#: outwiker/gui/mainwindow.py:184
+#: outwiker/gui/mainwindow.py:183
 msgid "Go to"
 msgstr "Zu überzugehen"
 
-#: outwiker/gui/mainwindow.py:192
+#: outwiker/gui/mainwindow.py:191
 msgid "Toolbars"
 msgstr "Funktionsleisten"
 
-#: outwiker/gui/mainwindow.py:209
-#: outwiker/gui/preferences/prefcontroller.py:182
+#: outwiker/gui/mainwindow.py:208
+#: outwiker/gui/preferences/prefcontroller.py:164
 msgid "Plugins"
 msgstr "Plugins"
 
-#: outwiker/gui/mainwindow.py:263 outwiker/gui/texteditormenu.py:11
+#: outwiker/gui/mainwindow.py:262 outwiker/gui/texteditormenu.py:12
 msgid "Undo"
 msgstr "Rückgängig"
 
-#: outwiker/gui/mainwindow.py:268 outwiker/gui/texteditormenu.py:12
+#: outwiker/gui/mainwindow.py:267 outwiker/gui/texteditormenu.py:13
 msgid "Redo"
 msgstr "Wiederherstellen"
 
-#: outwiker/gui/mainwindow.py:275 outwiker/gui/texteditormenu.py:14
+#: outwiker/gui/mainwindow.py:274 outwiker/gui/texteditormenu.py:15
 msgid "Cut"
 msgstr "Ausschneiden"
 
-#: outwiker/gui/mainwindow.py:280 outwiker/gui/texteditormenu.py:15
+#: outwiker/gui/mainwindow.py:279 outwiker/gui/texteditormenu.py:16
 msgid "Copy"
 msgstr "Kopieren"
 
-#: outwiker/gui/mainwindow.py:292 outwiker/gui/texteditormenu.py:18
+#: outwiker/gui/mainwindow.py:291 outwiker/gui/texteditormenu.py:19
 msgid "Select All"
 msgstr "Alles markieren"
 
-#: outwiker/gui/mainwindow.py:604
+#: outwiker/gui/mainwindow.py:600
 #, python-format
 msgid ""
 "Can't save config\n"
@@ -1531,7 +1565,7 @@ msgstr ""
 " Konfiguration kann nicht gespeichert werden.\n"
 "%s"
 
-#: outwiker/gui/notestree.py:666
+#: outwiker/gui/notestree.py:664
 #, python-brace-format
 msgid ""
 "Attach files to the note '{title}'?\n"
@@ -1542,16 +1576,16 @@ msgstr ""
 "\n"
 "{files}"
 
-#: outwiker/gui/notestree.py:672
+#: outwiker/gui/notestree.py:670
 msgid "Attach files to the note?"
 msgstr "Dateien zur Notiz anhängen?"
 
-#: outwiker/gui/pagedialog.py:26
+#: outwiker/gui/pagedialog.py:25
 #, python-format
 msgid "Page \"%s\" not found"
 msgstr "Seite \"%s\" nicht gefunden"
 
-#: outwiker/gui/pagedialog.py:103
+#: outwiker/gui/pagedialog.py:101
 msgid "Create Page"
 msgstr "Seite erstellen"
 
@@ -1567,21 +1601,37 @@ msgstr "Seiten Stil kann nicht gesetzt werden\n"
 msgid "Do not change"
 msgstr "Nicht ändern"
 
-#: outwiker/gui/pagedialogpanels/generalpanel.py:58
+#: outwiker/gui/pagedialogpanels/generalpanel.py:73
 #: outwiker/gui/unknownpagetype.py:28
 msgid "Page type"
 msgstr "Seitentyp"
 
-#: outwiker/gui/pagedialogpanels/iconspanel.py:113
-#: outwiker/gui/preferences/iconsetpanel.py:160
+#: outwiker/gui/pagedialogpanels/generalpanel.py:79
+msgid "New page position"
+msgstr "Position neue Seite"
+
+#: outwiker/gui/pagedialogpanels/generalpanel.py:104
+msgid "Top of the list"
+msgstr "Anfang der Liste"
+
+#: outwiker/gui/pagedialogpanels/generalpanel.py:105
+msgid "End of the list"
+msgstr "Ende der Liste"
+
+#: outwiker/gui/pagedialogpanels/generalpanel.py:106
+msgid "Alphabetically"
+msgstr "Alphabetisch"
+
+#: outwiker/gui/pagedialogpanels/iconspanel.py:117
+#: outwiker/gui/preferences/iconsetpanel.py:157
 msgid "Not in groups"
 msgstr "Nicht in Gruppen"
 
-#: outwiker/gui/pagedialogpanels/iconspanel.py:138
+#: outwiker/gui/pagedialogpanels/iconspanel.py:142
 msgid "Recent"
 msgstr "Letzte"
 
-#: outwiker/gui/pagedialogpanels/iconspanel.py:172
+#: outwiker/gui/pagedialogpanels/iconspanel.py:180
 msgid "Can't set page icon\n"
 msgstr "Seiten Symbol kann nicht gesetzt werden\n"
 
@@ -1598,7 +1648,7 @@ msgid "Double click on an attached file"
 msgstr "Doppelklick auf Anhang"
 
 #: outwiker/gui/preferences/colorspanel.py:34
-#: outwiker/gui/preferences/prefcontroller.py:149
+#: outwiker/gui/preferences/prefcontroller.py:130
 msgid "Main window"
 msgstr "Hauptfenster"
 
@@ -1611,7 +1661,7 @@ msgid "Main panels text color"
 msgstr "Hauptbereiche Textfarbe"
 
 #: outwiker/gui/preferences/colorspanel.py:45
-#: outwiker/gui/preferences/prefcontroller.py:153
+#: outwiker/gui/preferences/prefcontroller.py:134
 msgid "Tags cloud"
 msgstr "Tag Wolke"
 
@@ -1639,9 +1689,9 @@ msgstr "Markiere Tag Hintergrundfarbe"
 #: outwiker/gui/preferences/htmlrenderpanel.py:26
 #: outwiker/gui/preferences/textprintpanel.py:29
 #: outwiker/pages/html/htmlpageview.py:38
-#: outwiker/pages/html/htmlpageview.py:206
+#: outwiker/pages/html/htmlpageview.py:207
 #: outwiker/pages/wiki/wikipageview.py:64
-#: outwiker/pages/wiki/wikipageview.py:153
+#: outwiker/pages/wiki/wikipageview.py:154
 msgid "Font"
 msgstr "Schriftart"
 
@@ -1685,12 +1735,12 @@ msgstr "Hintergrundfarbe des ausgewählten Text"
 msgid "Page margin background color"
 msgstr "Hintergrundfarbe des Feld der Seite"
 
-#: outwiker/gui/preferences/generalpanel.py:40
+#: outwiker/gui/preferences/generalpanel.py:39
 msgid "Recent used"
 msgstr "Kürzlich benutzt"
 
-#: outwiker/gui/preferences/generalpanel.py:41
-#: outwiker/gui/preferences/prefcontroller.py:152
+#: outwiker/gui/preferences/generalpanel.py:40
+#: outwiker/gui/preferences/prefcontroller.py:133
 #: outwiker/pages/html/basehtmlpanel.py:184
 msgid "Preview"
 msgstr "Vorschau"
@@ -1703,39 +1753,43 @@ msgstr "Automatisches Speichern in Sekunden(0 - deaktiviert)"
 msgid "Toaster delay in seconds"
 msgstr "Verzögerung des Meldefensters in Sekunden"
 
-#: outwiker/gui/preferences/generalpanel.py:130
+#: outwiker/gui/preferences/generalpanel.py:135
 msgid "Date and time format"
 msgstr "Datum- und Uhrzeitformat"
 
-#: outwiker/gui/preferences/generalpanel.py:155
+#: outwiker/gui/preferences/generalpanel.py:137
+msgid "New page title template"
+msgstr "Vorlage für neue Seite"
+
+#: outwiker/gui/preferences/generalpanel.py:173
 msgid "Ask before exit"
 msgstr "Fragen vor dem Schließen"
 
-#: outwiker/gui/preferences/generalpanel.py:165
+#: outwiker/gui/preferences/generalpanel.py:183
 msgid "Length of recently used icons history"
 msgstr "Länge der zuletzt verwendeten Symbol Verlauf"
 
-#: outwiker/gui/preferences/generalpanel.py:179
+#: outwiker/gui/preferences/generalpanel.py:197
 msgid "Length of recently opened files history"
 msgstr "Länge der zuletzt geöffneten Dateien Verlauf"
 
-#: outwiker/gui/preferences/generalpanel.py:192
+#: outwiker/gui/preferences/generalpanel.py:210
 msgid "Automatically open the recent file"
 msgstr "Aktuelle Datei automatisch öffnen"
 
-#: outwiker/gui/preferences/generalpanel.py:228
+#: outwiker/gui/preferences/generalpanel.py:246
 msgid "Language(restart required)"
 msgstr "Sprache (Neustart erforderlich)"
 
-#: outwiker/gui/preferences/generalpanel.py:245
+#: outwiker/gui/preferences/generalpanel.py:263
 msgid "Default opening page mode"
 msgstr "Standard Regime der Eröffnung der Seiten"
 
-#: outwiker/gui/preferences/generalpanel.py:361
+#: outwiker/gui/preferences/generalpanel.py:385
 msgid "Auto"
 msgstr "Automatisch"
 
-#: outwiker/gui/preferences/hotkeyspanel.py:43
+#: outwiker/gui/preferences/hotkeyspanel.py:45
 #, python-brace-format
 msgid ""
 "{hotkey} hotkey assigned for \"{old}\".\n"
@@ -1744,13 +1798,13 @@ msgstr ""
 "Tastenkombination {hotkey} ernenne für \"{old}\".\n"
 "Diese Tastenkombination ernennen für \"{new}\"?"
 
-#: outwiker/gui/preferences/hotkeyspanel.py:49
+#: outwiker/gui/preferences/hotkeyspanel.py:51
 msgid "Hotkeys conflict"
 msgstr "Tastenkombinationen in Konflikt geraten"
 
-#: outwiker/gui/preferences/hotkeyspanel.py:102
+#: outwiker/gui/preferences/hotkeyspanel.py:103
 msgid ""
-"Hot key.\n"
+"Hotkey.\n"
 "Press the Backspace key to clear"
 msgstr ""
 "Tastenkombination.\n"
@@ -1788,89 +1842,89 @@ msgstr "Paragraf teilen"
 msgid "Additional styles (CSS):"
 msgstr "Erweiterte Stile (CSS):"
 
-#: outwiker/gui/preferences/iconsetpanel.py:69
+#: outwiker/gui/preferences/iconsetpanel.py:66
 msgid "Add new group"
 msgstr "Neue Gruppe hinzufügen"
 
-#: outwiker/gui/preferences/iconsetpanel.py:77
+#: outwiker/gui/preferences/iconsetpanel.py:74
 msgid "Remove group"
 msgstr "Gruppe entfernen"
 
-#: outwiker/gui/preferences/iconsetpanel.py:85
+#: outwiker/gui/preferences/iconsetpanel.py:82
 msgid "Rename group"
 msgstr "Gruppe umbenennen"
 
-#: outwiker/gui/preferences/iconsetpanel.py:112
+#: outwiker/gui/preferences/iconsetpanel.py:109
 msgid "Add icons"
 msgstr "Symbole hinzufügen"
 
-#: outwiker/gui/preferences/iconsetpanel.py:120
+#: outwiker/gui/preferences/iconsetpanel.py:117
 msgid "Remove selected icons"
 msgstr "Ausgewählte Symbole entfernen"
 
-#: outwiker/gui/preferences/iconsetpanel.py:128
+#: outwiker/gui/preferences/iconsetpanel.py:125
 msgid "Set icon as group cover"
 msgstr "Symbol wie Umschlag der Gruppe aufstellen"
 
-#: outwiker/gui/preferences/iconsetpanel.py:214
+#: outwiker/gui/preferences/iconsetpanel.py:211
 msgid "Can't create directory for icons group"
 msgstr "Verzeichnis für Symbole-Gruppe kann nicht erstellt werden"
 
-#: outwiker/gui/preferences/iconsetpanel.py:243
+#: outwiker/gui/preferences/iconsetpanel.py:240
 msgid "New group{}"
 msgstr "Neue Gruppe{}"
 
-#: outwiker/gui/preferences/iconsetpanel.py:270
+#: outwiker/gui/preferences/iconsetpanel.py:267
 msgid "Can't rename directory for icons group"
 msgstr "Verzeichnis für Symbole-Gruppe kann nicht umbenannt werden"
 
-#: outwiker/gui/preferences/iconsetpanel.py:276
+#: outwiker/gui/preferences/iconsetpanel.py:273
 msgid "Group with name \"{}\" exists already"
 msgstr "Gruppe mit Namen \"{}\" ist bereits vorhanden"
 
-#: outwiker/gui/preferences/iconsetpanel.py:282
+#: outwiker/gui/preferences/iconsetpanel.py:279
 msgid "Invalid group name \"{}\""
 msgstr "Ungültige Gruppennamen \"{}\""
 
-#: outwiker/gui/preferences/iconsetpanel.py:315
+#: outwiker/gui/preferences/iconsetpanel.py:312
 msgid "Remove group \"{}\" and all icons inside it?"
 msgstr "Entfernen der Gruppe \"{}\" mit allen Symbolen?"
 
-#: outwiker/gui/preferences/iconsetpanel.py:316
+#: outwiker/gui/preferences/iconsetpanel.py:313
 msgid "Remove group?"
 msgstr "Gruppe entfernen?"
 
-#: outwiker/gui/preferences/iconsetpanel.py:322
+#: outwiker/gui/preferences/iconsetpanel.py:319
 msgid "Can't remove group directory"
 msgstr "Gruppenverzeichnis kann nicht entfernt werden"
 
-#: outwiker/gui/preferences/iconsetpanel.py:330
+#: outwiker/gui/preferences/iconsetpanel.py:327
 msgid "All image files"
 msgstr "Alle Bilddateien"
 
-#: outwiker/gui/preferences/iconsetpanel.py:331
+#: outwiker/gui/preferences/iconsetpanel.py:328
 msgid "All files"
 msgstr "Alle Dateien"
 
-#: outwiker/gui/preferences/iconsetpanel.py:336
+#: outwiker/gui/preferences/iconsetpanel.py:333
 msgid "Select images"
 msgstr "Wählen Sie Bilder"
 
-#: outwiker/gui/preferences/iconsetpanel.py:352
-#: outwiker/gui/preferences/iconsetpanel.py:376
+#: outwiker/gui/preferences/iconsetpanel.py:349
+#: outwiker/gui/preferences/iconsetpanel.py:373
 msgid "You have not selected any icons"
 msgstr "Sie haben keine Symbole ausgewählt"
 
-#: outwiker/gui/preferences/iconsetpanel.py:353
-#: outwiker/gui/preferences/iconsetpanel.py:377
+#: outwiker/gui/preferences/iconsetpanel.py:350
+#: outwiker/gui/preferences/iconsetpanel.py:374
 msgid "Select icons"
 msgstr "Symbole wählen"
 
-#: outwiker/gui/preferences/iconsetpanel.py:358
+#: outwiker/gui/preferences/iconsetpanel.py:355
 msgid "Remove selected icons?"
 msgstr "Ausgewählte Symbole entfernen?"
 
-#: outwiker/gui/preferences/iconsetpanel.py:359
+#: outwiker/gui/preferences/iconsetpanel.py:356
 msgid "Remove icons"
 msgstr "Symbole entfernen"
 
@@ -1894,63 +1948,63 @@ msgstr "Relative Pfad zur aktuellen Seite"
 msgid "Main window title format"
 msgstr "Hauptfenster Titelformat"
 
-#: outwiker/gui/preferences/pluginspanel.py:37
+#: outwiker/gui/preferences/pluginspanel.py:38
 msgid "Download more plugins"
 msgstr "Weitere Plugins herunterladen"
 
-#: outwiker/gui/preferences/pluginspanel.py:38
+#: outwiker/gui/preferences/pluginspanel.py:39
 msgid "https://jenyay.net/Outwiker/PluginsEn"
 msgstr "https://jenyay.net/Outwiker/PluginsEn"
 
-#: outwiker/gui/preferences/pluginspanel.py:120
+#: outwiker/gui/preferences/pluginspanel.py:121
 msgid "Version"
 msgstr "Version"
 
-#: outwiker/gui/preferences/pluginspanel.py:124
+#: outwiker/gui/preferences/pluginspanel.py:125
 msgid "Description"
 msgstr "Beschreibung"
 
-#: outwiker/gui/preferences/pluginspanel.py:129
+#: outwiker/gui/preferences/pluginspanel.py:130
 msgid "Site"
 msgstr "Website"
 
-#: outwiker/gui/preferences/prefcontroller.py:150
+#: outwiker/gui/preferences/prefcontroller.py:131
 msgid "Colors"
 msgstr "Farben"
 
-#: outwiker/gui/preferences/prefcontroller.py:151
+#: outwiker/gui/preferences/prefcontroller.py:132
 msgid "Tray icon"
 msgstr "Tray Icon"
 
-#: outwiker/gui/preferences/prefcontroller.py:155
+#: outwiker/gui/preferences/prefcontroller.py:136
 msgid "Hotkeys"
 msgstr "Tastenkombinationen"
 
-#: outwiker/gui/preferences/prefcontroller.py:156
-msgid "Text printout"
-msgstr "Textdruck"
-
-#: outwiker/gui/preferences/prefcontroller.py:159
+#: outwiker/gui/preferences/prefcontroller.py:139
 msgid "Interface"
 msgstr "Schnittstelle"
 
-#: outwiker/gui/preferences/prefcontroller.py:174
-msgid "HTML Editor"
+#: outwiker/gui/preferences/prefcontroller.py:156
+msgid "HTML editor"
 msgstr "HTML-Editor"
 
-#: outwiker/gui/preferences/prefcontroller.py:175
-msgid "Wiki Editor"
+#: outwiker/gui/preferences/prefcontroller.py:157
+msgid "Wiki editor"
 msgstr "Wiki-Editor"
 
-#: outwiker/gui/preferences/prefcontroller.py:178
+#: outwiker/gui/preferences/prefcontroller.py:160
 msgid "Editor"
 msgstr "Editor"
 
-#: outwiker/gui/preferences/prefcontroller.py:186
+#: outwiker/gui/preferences/prefcontroller.py:169
+msgid "Text printout"
+msgstr "Textdruck"
+
+#: outwiker/gui/preferences/prefcontroller.py:173
 msgid "User's iconset"
 msgstr "Symbole des Benutzers"
 
-#: outwiker/gui/preferences/prefcontroller.py:191
+#: outwiker/gui/preferences/prefcontroller.py:178
 msgid "Preferences"
 msgstr "Einstellungen"
 
@@ -2012,9 +2066,9 @@ msgstr "Bei Fensterschluss zusammenrollen"
 
 #: outwiker/gui/preferences/wikieditorpanel.py:34
 #: outwiker/pages/html/htmlpageview.py:37
-#: outwiker/pages/html/htmlpageview.py:205
+#: outwiker/pages/html/htmlpageview.py:206
 #: outwiker/pages/wiki/wikipageview.py:63
-#: outwiker/pages/wiki/wikipageview.py:152
+#: outwiker/pages/wiki/wikipageview.py:153
 msgid "Heading"
 msgstr "Überschrift"
 
@@ -2046,27 +2100,27 @@ msgstr "Pfad zur aktuellen Notizen-Struktur"
 msgid "Not found"
 msgstr "Nicht gefunden"
 
-#: outwiker/gui/searchreplacepanel.py:78
+#: outwiker/gui/searchreplacepanel.py:77
 msgid "Find what: "
 msgstr "Suchen nach: "
 
-#: outwiker/gui/searchreplacepanel.py:81
+#: outwiker/gui/searchreplacepanel.py:80
 msgid "Next"
 msgstr "Nächste"
 
-#: outwiker/gui/searchreplacepanel.py:84
+#: outwiker/gui/searchreplacepanel.py:83
 msgid "Prev"
 msgstr "Vorherige"
 
-#: outwiker/gui/searchreplacepanel.py:91
+#: outwiker/gui/searchreplacepanel.py:90
 msgid "Replace with: "
 msgstr "Ersetzen durch: "
 
-#: outwiker/gui/searchreplacepanel.py:94
+#: outwiker/gui/searchreplacepanel.py:93
 msgid "Replace"
 msgstr "Ersetzen"
 
-#: outwiker/gui/searchreplacepanel.py:97
+#: outwiker/gui/searchreplacepanel.py:96
 msgid "Replace All"
 msgstr "Alle ersetzen"
 
@@ -2074,15 +2128,15 @@ msgstr "Alle ersetzen"
 msgid "Insert table"
 msgstr "Tabelle einfügen"
 
-#: outwiker/gui/tabledialog.py:74 outwiker/gui/tablerowsdialog.py:73
+#: outwiker/gui/tabledialog.py:74 outwiker/gui/tablerowsdialog.py:74
 msgid "Columns count"
 msgstr "Anzahl Spalten"
 
-#: outwiker/gui/tabledialog.py:78 outwiker/gui/tablerowsdialog.py:77
+#: outwiker/gui/tabledialog.py:78 outwiker/gui/tablerowsdialog.py:78
 msgid "Rows count"
 msgstr "Anzahl Zeilen"
 
-#: outwiker/gui/tabledialog.py:95 outwiker/gui/tablerowsdialog.py:94
+#: outwiker/gui/tabledialog.py:95 outwiker/gui/tablerowsdialog.py:95
 msgid "Advanced"
 msgstr "Erweitert"
 
@@ -2090,27 +2144,27 @@ msgstr "Erweitert"
 msgid "Border width"
 msgstr "Rahmenbreite"
 
-#: outwiker/gui/tabledialog.py:112 outwiker/gui/tablerowsdialog.py:102
+#: outwiker/gui/tabledialog.py:112 outwiker/gui/tablerowsdialog.py:103
 msgid "Header cells for first row"
 msgstr "Kopfzeile für erste Zeile"
 
-#: outwiker/gui/tablerowsdialog.py:14
+#: outwiker/gui/tablerowsdialog.py:15
 msgid "Insert rows"
 msgstr "Zeile einfügen"
 
-#: outwiker/gui/tagsselector.py:27
+#: outwiker/gui/tagsselector.py:25
 msgid "Tags (comma separated)"
 msgstr "Tags(Kommasepariert)"
 
-#: outwiker/gui/texteditormenu.py:26 outwiker/gui/texteditormenu.py:30
+#: outwiker/gui/texteditormenu.py:27 outwiker/gui/texteditormenu.py:31
 msgid "Add \"{}\" to dictionary"
 msgstr "Füge \"{}\" zum Wörterbuch hinzu"
 
-#: outwiker/gui/texteditormenu.py:39
+#: outwiker/gui/texteditormenu.py:40
 msgid "Spell"
 msgstr "Orthografie"
 
-#: outwiker/gui/trayicon.py:140
+#: outwiker/gui/trayicon.py:139
 msgid "Restore"
 msgstr "Wiederherstellen"
 
@@ -2120,7 +2174,8 @@ msgid ""
 "It is possible that an additional plugin is required to display this page."
 msgstr ""
 "Unbekannter Bereichstyp.\n"
-" Es ist möglich, dass ein zusätzliches Plugin erforderlich, um diesen Bereich anzuzeigen."
+" Es ist möglich, dass ein zusätzliches Plugin erforderlich, um diesen "
+"Bereich anzuzeigen."
 
 #: outwiker/gui/unknownpagetype.py:42
 msgid "Page content:"
@@ -2161,12 +2216,12 @@ msgstr "Auslastung von Seite. Bitte warten…"
 msgid "Page loading error: {}"
 msgstr "Fehler beim Auslastung von Seite: {}"
 
-#: outwiker/pages/html/htmlpage.py:93
+#: outwiker/pages/html/htmlpage.py:94
 msgid "HTML Page"
 msgstr "HTML-Seite"
 
 #: outwiker/pages/html/htmlpagecontroller.py:54
-#: outwiker/pages/wiki/wikipagecontroller.py:56
+#: outwiker/pages/wiki/wikipagecontroller.py:60
 msgid "Appearance"
 msgstr "Ansicht"
 
@@ -2175,23 +2230,23 @@ msgstr "Ansicht"
 msgid "Align"
 msgstr "Ausrichtung"
 
-#: outwiker/pages/html/htmlpageview.py:207
-#: outwiker/pages/wiki/wikipageview.py:154
+#: outwiker/pages/html/htmlpageview.py:208
+#: outwiker/pages/wiki/wikipageview.py:155
 msgid "Alignment"
 msgstr "Ausrichtung"
 
-#: outwiker/pages/html/htmlpageview.py:208
-#: outwiker/pages/wiki/wikipageview.py:156
+#: outwiker/pages/html/htmlpageview.py:209
+#: outwiker/pages/wiki/wikipageview.py:157
 msgid "Formatting"
 msgstr "Formatierung"
 
-#: outwiker/pages/html/htmlpageview.py:209
-#: outwiker/pages/wiki/wikipageview.py:161
+#: outwiker/pages/html/htmlpageview.py:210
+#: outwiker/pages/wiki/wikipageview.py:162
 msgid "Lists"
 msgstr "Listen"
 
-#: outwiker/pages/html/htmlpageview.py:210
-#: outwiker/pages/wiki/wikipageview.py:160
+#: outwiker/pages/html/htmlpageview.py:211
+#: outwiker/pages/wiki/wikipageview.py:161
 msgid "Tables"
 msgstr "Tabellen"
 
@@ -2200,16 +2255,16 @@ msgstr "Tabellen"
 msgid "Last modified date: {0}"
 msgstr "Datum der letzten Änderung {0}"
 
-#: outwiker/pages/search/htmlreport.py:83
+#: outwiker/pages/search/htmlreport.py:82
 #: outwiker/pages/search/searchpanel.py:40
 msgid "Tags: "
 msgstr "Tags: "
 
-#: outwiker/pages/search/searchpage.py:144
+#: outwiker/pages/search/searchpage.py:143
 msgid "Search Page"
 msgstr "Suchseite"
 
-#: outwiker/pages/search/searchpage.py:160
+#: outwiker/pages/search/searchpage.py:159
 msgid "# Search"
 msgstr "# Suche"
 
@@ -2349,8 +2404,11 @@ msgid "Edition date (:eddate:)"
 msgstr "Editierungsdatum (:eddate:)"
 
 #: outwiker/pages/wiki/actions/dates.py:69
-msgid "Insert command (:eddate:) for show date of last modification of the page"
-msgstr "Befehl (:eddate:) für die Vorführung Datum der letzten Änderung der Seite einfügen"
+msgid ""
+"Insert command (:eddate:) for show date of last modification of the page"
+msgstr ""
+"Befehl (:eddate:) für die Vorführung Datum der letzten Änderung der Seite "
+"einfügen"
 
 #: outwiker/pages/wiki/actions/fontsizebig.py:14
 #: outwiker/pages/wiki/actions/fontsizebig.py:18
@@ -2479,19 +2537,19 @@ msgstr "Schriftgröße"
 msgid "None"
 msgstr "Keine"
 
-#: outwiker/pages/wiki/gui/styledialog.py:136
+#: outwiker/pages/wiki/gui/styledialog.py:137
 msgid "Style name"
 msgstr "Stil Name"
 
-#: outwiker/pages/wiki/gui/styledialog.py:154
+#: outwiker/pages/wiki/gui/styledialog.py:155
 msgid "Text color"
 msgstr "Schriftfarbe"
 
-#: outwiker/pages/wiki/gui/styledialog.py:170
+#: outwiker/pages/wiki/gui/styledialog.py:171
 msgid "Text background"
 msgstr "Texthintergrund"
 
-#: outwiker/pages/wiki/gui/styledialog.py:186
+#: outwiker/pages/wiki/gui/styledialog.py:187
 msgid "Custom CSS"
 msgstr "Benutzerdefinierte CSS"
 
@@ -2538,7 +2596,7 @@ msgid "0 - default size"
 msgstr "0 - Standard Grösse"
 
 #: outwiker/pages/wiki/wikipage.py:74
-#: outwiker/pages/wiki/wikipagecontroller.py:82
+#: outwiker/pages/wiki/wikipagecontroller.py:86
 msgid "Wiki Page"
 msgstr "Wiki-Seite"
 
@@ -2548,15 +2606,15 @@ msgstr "Wiki-Seite"
 msgid "Wiki"
 msgstr "Wiki"
 
-#: outwiker/pages/wiki/wikipageview.py:163
+#: outwiker/pages/wiki/wikipageview.py:164
 msgid "Commands"
 msgstr "Befehle"
 
-#: outwiker/pages/wiki/wikipageview.py:795
+#: outwiker/pages/wiki/wikipageview.py:806
 msgid "Select text color"
 msgstr "Wählen Sie die Farbe des Textes"
 
-#: outwiker/pages/wiki/wikipageview.py:818
+#: outwiker/pages/wiki/wikipageview.py:829
 msgid "Select text background color"
 msgstr "Wählen Sie die Texthintergrundfarbe"
 

@@ -21,10 +21,11 @@ logger = logging.getLogger('outwiker')
 
 
 def print_info():
-    logger.debug('Python version: {}'.format(sys.version))
-    logger.debug('wxPython version: {}'.format(wx.__version__))
+    logger.debug('OutWiker version: {}'.format(outwiker.getVersionStr()))
     logger.debug('Current OutWiker API version: {}.{}'.format(
         outwiker.__api_version__[0], outwiker.__api_version__[1]))
+    logger.debug('Python version: {}'.format(sys.version))
+    logger.debug('wxPython version: {}'.format(wx.__version__))
     logger.debug(u'Current working directory: {}'.format(os.getcwd()))
     for n, dirname in enumerate(getSpecialDirList(u'')):
         logger.debug(u'Special directory [{}]: {}'.format(n, dirname))

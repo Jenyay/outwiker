@@ -4,10 +4,28 @@
 Текущая разрабатываемая версия
 ------------------------------
 
-2.1.0.824 dev (21.07.2017)
+3.0.0
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Созданы бинарные сборки для Linux.
+* Now you can use any symbols in the notes title.
+* New toolbars.
+* New design for popup window when clicking on the tag.
+* New interface to select notes icons.
+* New GUI displayed if the notes tree is not currently open.
+* New GUI when selecting the root of the notes tree.
+* New GUI to show a page with unknown type.
+* Add the ability to select notes position in the notes list.
+* Add watching for attached files for selected page.
+* Other interface improvements.
+* Add German localization.
+* New commands for wiki pages to change text color and apply custom styles.
+* Add comments to wiki notation.
+* Added a new $title variable for the page style files .
+* Add a new page style "rifle_green_and_red".
+* Change the storage format for certain properties of the notes tree pages.
+* Change the way of storing standard icons in notes.
+* Change plug-ins format.
+* Migrate to Python 3.x and wxPython 4.0.
 
 
 Предыдущие версии

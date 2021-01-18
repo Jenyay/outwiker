@@ -1,5 +1,20 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <versions>
+	<version number="1.7.1" date="29.12.2020">
+		<download href="https://jenyay.net/uploads/Outwiker/ExternalTools/externaltools-1.7.1.zip">
+			<requirements>
+				<api>3.868</api>
+			</requirements>
+		</download>
+		<changes>
+			<change>Fix errors.</change>
+		</changes>
+
+		<changes lang="ru">
+			<change>Исправление ошибок.</change>
+		</changes>
+	</version>
+
 	<version number="1.7" date="19.10.2019">
 		<download href="https://jenyay.net/uploads/Outwiker/ExternalTools/externaltools-1.7.zip">
 			<requirements>
@@ -153,7 +168,7 @@
 	</version>
 
 	<version number="1.2.2" date="20.01.2015">
-		<download href="https://jenyay.net/uploads/Outwiker/ExternalTools/externaltools-1.2.1.zip">
+		<download href="https://jenyay.net/uploads/Outwiker/ExternalTools/externaltools-1.2.2.zip">
 			<requirements>
 				<api>1.0</api>
 			</requirements>
@@ -185,7 +200,7 @@
 	</version>
 
 	<version number="1.0" date="30.07.2012">
-		<download href="https://jenyay.net/uploads/Outwiker/ExternalTools/externaltools.zip">
+		<download href="https://jenyay.net/uploads/Outwiker/ExternalTools/externaltools-1.0.zip">
 			<requirements>
 				<api>1.0</api>
 			</requirements>
@@ -195,7 +210,7 @@
 		</changes>
 
 		<changes lang="ru">
-			<change>Первая версия</change>
+			<change>Первая версия.</change>
 		</changes>
 	</version>
 </versions>

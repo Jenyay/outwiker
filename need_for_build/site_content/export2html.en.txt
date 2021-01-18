@@ -10,7 +10,6 @@ Plug-in insert menu item ''{+File - Export - Export page to HTML+}'' and ''{+Exp
 
 [[Export2Html {{ version_full }} -> Attach:Outwiker/Export2HtmlPlugin/export2html-{{ version_full }}.zip]] ('''Required OutWiker version: 3.0.0.868 and above''')
 
-<!--#version stable {{ version_full }} -->
 (:DonateOWEn:)
 
 Saved file names can be long (include names of parents' notes) or short (relevant headings notes). The following pictures show the original tree notes and files that are received after the export.

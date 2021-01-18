@@ -36,14 +36,23 @@
 Библиотеки
 ----------
 
-`Pilow <https://pypi.python.org/pypi/Pillow>`_ (4.0.0)
-    Используется для работы с изображениями (создание миниатюр).
+`wxPython <https://www.wxpython.org/>`_
+    Используется для создания интерфейса программы.
 
-`pyenchant <https://pypi.python.org/pypi/pyenchant>`_ (1.6.8)
+`PyParsing <https://pypi.org/project/pyparsing/>`_
+    Используется для преобразования викинотации в HTML.
+
+`CyHunspell <https://pypi.org/project/CyHunspell/>`_
     Используется для проверки орфографии.
 
-`comtypes <https://pypi.python.org/pypi/comtypes>`_ (1.1.3.post2)
+`Pilow <https://pypi.python.org/pypi/Pillow>`_
+    Используется для работы с изображениями (создание миниатюр).
+
+`comtypes <https://pypi.python.org/pypi/comtypes>`_
     Используется для создания COM-объекта Internet Explorer в операционной системе Microsoft Windows. Под другими операционными системами не требуется.
 
-`PyInstaller <http://www.pyinstaller.org/>`_ (3.2.1)
+`PyInstaller <http://www.pyinstaller.org/>`_
     Используется для сборки запускаемого файла под Windows.
+
+`idna <https://pypi.org/project/idna/>`_
+    Используется для преобразования национальных доменов в ссылках.

@@ -3,6 +3,7 @@
 import math
 from datetime import datetime, timedelta
 import os.path
+from typing import List
 
 import wx
 import wx.lib.newevent
@@ -29,6 +30,7 @@ class TextEditor(TextEditorBase):
 
     def __init__(self, parent):
         super().__init__(parent)
+        self.SPELL_ERROR_INDICATOR = wx.stc.STC_INDIC_SQUIGGLE
 
         self._config = EditorConfig(Application.config)
 
@@ -48,7 +50,7 @@ class TextEditor(TextEditorBase):
         self._oldStartSelection = None
         self._oldEndSelection = None
 
-        # Уже были установлены стили текста(раскраска)
+        # Уже были установлены стили текста (раскраска)
         self._styleSet = False
 
         self.__stylebytes = None
@@ -82,7 +84,7 @@ class TextEditor(TextEditorBase):
 
         # При перехвате этого сообщения в других классах,
         # нужно вызывать event.Skip(), чтобы это сообщение дошло сюда
-        self.textCtrl.Bind(wx.stc.EVT_STC_CHANGE, self.__onChange)
+        self.textCtrl.Bind(wx.stc.EVT_STC_MODIFIED, self.__onModified)
 
     @property
     def config(self):
@@ -97,10 +99,10 @@ class TextEditor(TextEditorBase):
         self._enableSpellChecking = value
         self._styleSet = False
 
-    def __onChange(self, event):
+    def __onModified(self, event):
         self._styleSet = False
         self._lastEdit = datetime.now()
-        self.__setMarginWidth(self.textCtrl)
+        self._updateMarginWidth()
         event.Skip()
 
     def setDefaultSettings(self):
@@ -108,7 +110,6 @@ class TextEditor(TextEditorBase):
         Установить стили и настройки по умолчанию в контрол StyledTextCtrl
         """
         self._setDefaultSettings()
-        self._spellChecker = self.getSpellChecker()
 
         size = self._config.fontSize.value
         faceName = self._config.fontName.value
@@ -137,11 +138,11 @@ class TextEditor(TextEditorBase):
 
         self._setHotKeys()
 
-        self.__setMarginWidth(self.textCtrl)
+        self._updateMarginWidth()
         self.textCtrl.SetTabWidth(self._config.tabWidth.value)
 
         self.enableSpellChecking = self._config.spellEnabled.value
-        self._spellChecker.skipWordsWithNumbers = self.config.spellSkipDigits.value
+        self.getSpellChecker().skipWordsWithNumbers = self.config.spellSkipDigits.value
 
         self.textCtrl.IndicatorSetStyle(self.SPELL_ERROR_INDICATOR,
                                         wx.stc.STC_INDIC_SQUIGGLE)
@@ -184,42 +185,44 @@ class TextEditor(TextEditorBase):
                                        wx.stc.STC_SCMOD_ALT,
                                        wx.stc.STC_CMD_LINEENDDISPLAY)
 
-    def __setMarginWidth(self, editor):
+    def markSpellErrors(self, spellStatusFlags: List[bool]):
         """
-        Установить размер левой области, где пишутся номера строк в
-        зависимости от шрифта
+        spellStatusFlags - list for every character (!) to set or clear
+ spell errors indicators. True for no spell error, False for spell error.
         """
-        if self.__showlinenumbers:
-            editor.SetMarginWidth(0, self.__getMarginWidth())
-            editor.SetMarginWidth(1, 5)
+        if not spellStatusFlags:
+            return
+
+        text = self._getTextForParse()
+        self.textCtrl.SetIndicatorCurrent(self.SPELL_ERROR_INDICATOR)
+        start_pos = 0
+        flag = spellStatusFlags[start_pos]
+        while True:
+            start_pos_bytes = self._helper.calcBytePos(text, start_pos)
+            try:
+                end_pos = spellStatusFlags.index(not flag, start_pos)
+                end_pos_bytes = self._helper.calcBytePos(text, end_pos)
+
+                self._setClearSpellError(flag, start_pos_bytes, end_pos_bytes)
+                flag = not flag
+                start_pos = end_pos
+            except ValueError:
+                end_pos_bytes = self._helper.calcByteLen(text)
+                self._setClearSpellError(flag, start_pos_bytes, end_pos_bytes)
+                break
+
+    def _setClearSpellError(self, spellStatus, start_pos_bytes, end_pos_bytes):
+        if spellStatus:
+            self.textCtrl.IndicatorClearRange(start_pos_bytes,
+                                              end_pos_bytes - start_pos_bytes)
         else:
-            editor.SetMarginWidth(0, 0)
-            editor.SetMarginWidth(1, 8)
+            self.textCtrl.IndicatorFillRange(start_pos_bytes,
+                                             end_pos_bytes - start_pos_bytes)
 
-    def __getMarginWidth(self):
-        """
-        Расчет размера серой области с номером строк
-        """
-        fontSize = self._config.fontSize.value
-        linescount = len(self.GetText().split("\n"))
-
-        if linescount == 0:
-            width = 10
-        else:
-            # Количество десятичных цифр в числе строк
-            digits = int(math.log10(linescount) + 1)
-            width = int(1.2 * fontSize * digits)
-
-        return width
-
-    def runSpellChecking(self, stylelist, fullText, start, end):
-        errors = self._spellChecker.findErrors(fullText[start: end])
-
-        for _word, err_start, err_end in errors:
-            self._helper.setSpellError(stylelist,
-                                       fullText,
-                                       err_start + start,
-                                       err_end + start)
+    def clearSpellChecking(self):
+        text = self._getTextForParse()
+        len_bytes = self._helper.calcByteLen(text)
+        self.textCtrl.IndicatorClearRange(0, len_bytes)
 
     def _onStyleNeeded(self, _event):
         if (not self._styleSet and
@@ -232,58 +235,40 @@ class TextEditor(TextEditorBase):
             Application.onEditorStyleNeeded(page, params)
             self._styleSet = True
 
-    def _onApplyStyle(self, event):
+    def _onApplyStyle(self, event: ApplyStyleEvent):
         '''
-            Call back function for EVT_APPLY_STYLE
-
-            Args:
-                event: the object of wx.stc.StyledTextEvent
-            Returns:
-                None
-            Raises:
-                None
+        Call back function for EVT_APPLY_STYLE
         '''
 
         if event.text == self._getTextForParse():
-            startByte = self._helper.calcBytePos(event.text, event.start)
-            endByte = self._helper.calcBytePos(event.text, event.end)
-            lenBytes = endByte - startByte
+            lenBytes = len(event.styleBytes)
 
             textlength = self._helper.calcByteLen(event.text)
             self.__stylebytes = [0] * textlength
 
-            if event.stylebytes is not None:
-                self.__stylebytes = event.stylebytes
+            if event.styleBytes is not None:
+                self.__stylebytes = event.styleBytes
 
-            if event.indicatorsbytes is not None:
-                self.__stylebytes = [item1 | item2
-                                     for item1, item2
-                                     in zip(self.__stylebytes,
-                                            event.indicatorsbytes)]
+            stylebytesstr = ''.join([chr(byte) for byte in self.__stylebytes])
 
-            stylebytesstr = "".join([chr(byte) for byte in self.__stylebytes])
-
-            if event.stylebytes is not None:
-                self.textCtrl.StartStyling(startByte,
-                                           int(0xff ^ wx.stc.STC_INDICS_MASK))
-                self.textCtrl.SetStyleBytes(lenBytes,
-                                            stylebytesstr[startByte:endByte].encode())
-
-            if event.indicatorsbytes is not None:
-                self.textCtrl.StartStyling(startByte, wx.stc.STC_INDICS_MASK)
-                self.textCtrl.SetStyleBytes(lenBytes,
-                                            stylebytesstr[startByte:endByte].encode())
+            if event.styleBytes is not None:
+                self.textCtrl.StartStyling(0)
+                self.textCtrl.SetStyleBytes(lenBytes, stylebytesstr.encode())
 
             self._styleSet = True
 
     def getSpellChecker(self):
-        langlist = self._getDictsFromConfig()
-        spellDirList = outwiker.core.system.getSpellDirList()
+        if self._spellChecker is None:
+            langlist = self._getDictsFromConfig()
+            spellDirList = outwiker.core.system.getSpellDirList()
 
-        spellChecker = SpellChecker(langlist, spellDirList)
-        spellChecker.addCustomDict(os.path.join(spellDirList[-1], CUSTOM_DICT_FILE_NAME))
+            spellChecker = SpellChecker(langlist, spellDirList)
+            spellChecker.addCustomDict(os.path.join(
+                spellDirList[-1], CUSTOM_DICT_FILE_NAME))
 
-        return spellChecker
+            self._spellChecker = spellChecker
+
+        return self._spellChecker
 
     def _getDictsFromConfig(self):
         dictsStr = self._config.spellCheckerDicts.value
@@ -319,39 +304,22 @@ class TextEditor(TextEditorBase):
             self.__addWordToDict(self._spellErrorText.lower())
 
     def __addWordToDict(self, word):
-        self._spellChecker.addToCustomDict(0, word)
+        self.getSpellChecker().addToCustomDict(0, word)
         self._spellErrorText = None
         self._styleSet = False
 
     def _appendSpellMenuItems(self, menu, pos_byte):
-        stylebytes = self.getCachedStyleBytes()
-        if stylebytes is None:
-            return
-
-        stylebytes_len = len(stylebytes)
-
-        if (stylebytes is None or
-                pos_byte >= stylebytes_len or
-                stylebytes[pos_byte] & self._helper.SPELL_ERROR_INDICATOR_MASK == 0):
-            return
-
-        endSpellError = startSpellError = pos_byte
-
-        while (startSpellError >= 0 and
-               stylebytes[startSpellError] & self._helper.SPELL_ERROR_INDICATOR_MASK != 0):
-            startSpellError -= 1
-
-        while (endSpellError < stylebytes_len and
-               stylebytes[endSpellError] & self._helper.SPELL_ERROR_INDICATOR_MASK != 0):
-            endSpellError += 1
-
-        self._spellStartByteError = startSpellError + 1
-        self._spellEndByteError = endSpellError
+        self._spellStartByteError = self.textCtrl.IndicatorStart(
+            self.SPELL_ERROR_INDICATOR, pos_byte)
+        self._spellEndByteError = self.textCtrl.IndicatorEnd(
+            self.SPELL_ERROR_INDICATOR, pos_byte)
         self._spellErrorText = self.textCtrl.GetTextRange(
             self._spellStartByteError,
             self._spellEndByteError)
 
-        self._spellSuggestList = self._spellChecker.getSuggest(self._spellErrorText)[:self._spellMaxSuggest]
+        spellChecker = self.getSpellChecker()
+        self._spellSuggestList = spellChecker.getSuggest(self._spellErrorText)[
+            :self._spellMaxSuggest]
 
         menu.AppendSeparator()
         self._suggestMenuItems = menu.AppendSpellSubmenu(self._spellErrorText,
@@ -416,3 +384,31 @@ class TextEditor(TextEditorBase):
     def _onMouseLeftUp(self, event):
         self._checkCaretMoving()
         event.Skip()
+
+    def _updateMarginWidth(self):
+        """
+        Установить размер левой области, где пишутся номера строк в
+        зависимости от шрифта
+        """
+        if self.__showlinenumbers:
+            self.textCtrl.SetMarginWidth(0, self.__getMarginWidth())
+            self.textCtrl.SetMarginWidth(1, 5)
+        else:
+            self.textCtrl.SetMarginWidth(0, 0)
+            self.textCtrl.SetMarginWidth(1, 0)
+
+    def __getMarginWidth(self):
+        """
+        Расчет размера серой области с номером строк
+        """
+        linescount = self.textCtrl.GetLineCount()
+
+        if linescount == 0:
+            width = 10
+        else:
+            # Количество десятичных цифр в числе строк
+            digits = int(math.log10(linescount) + 1)
+            text = '_' + '9' * digits
+            width = self.textCtrl.TextWidth(wx.stc.STC_STYLE_LINENUMBER, text)
+
+        return width

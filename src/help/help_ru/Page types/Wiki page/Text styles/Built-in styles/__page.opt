@@ -1,9 +1,13 @@
 [General]
 type = wiki
-tags = стили, пользователям, wiki
+tags = wiki, стили
 order = 0
 creationdatetime = 2018-07-03 09:25:21.153861
-datetime = 2018-07-29 21:09:49.699028
+datetime = 2020-05-10 10:55:52.816474
 uid = builtinstyles
 alias = Встроенные стили и цвета
+
+[wiki]
+custom_styles_inline = {"notice": "span.notice {\n\tdisplay: inline-block;\n\tcolor: #333;\n\tbackground-color: #e3f7fc;\n\tborder-radius: 1px;\n\tpadding: 0px 2px 0px 2px;\n\tmargin: 2px;\n\tborder:1px solid #8ed9f6;\n}\n", "success": "span.success {\n\tdisplay: inline-block;\n\tcolor: #333;\n\tbackground-color: #e9ffd9;\n\tborder-radius: 1px;\n\tpadding: 0px 2px 0px 2px;\n\tmargin: 2px;\n\tborder:1px solid #a6ca8a;\n}\n", "warn": "span.warn {\n\tdisplay: inline-block;\n\tcolor: #333;\n\tbackground-color: #fff8c4;\n\tborder-radius: 1px;\n\tpadding: 0px 2px 0px 2px;\n\tmargin: 2px;\n\tborder:1px solid #f2c779;\n}\n", "error": "span.error {\n\tdisplay: inline-block;\n\tcolor: #333;\n\tbackground-color: #ffecec;\n\tborder-radius: 1px;\n\tpadding: 0px 2px 0px 2px;\n\tmargin: 2px;\n\tborder:1px solid #f5aca6;\n}\n"}
+custom_styles_block = {"border": "div.border {\n\tpadding: 1em;\n\tmargin: 1em;\n\tborder: 1px solid #000;\n}\n", "frame": "div.frame {\n\tbackground-color: #ddd;\n\tpadding: 1em;\n\tmargin: 1em;\n\tborder: 1px solid #000;\n}\n", "notice": "div.notice {\n\tcolor: #333;\n\tbackground-color: #e3f7fc;\n\tborder-radius: 10px;\n\tpadding: 10px 10px 10px 10px;\n\tmargin: 10px;\n\tborder:1px solid #8ed9f6;\n}\n", "success": "div.success {\n\tcolor: #333;\n\tbackground-color: #e9ffd9;\n\tborder-radius: 10px;\n\tpadding: 10px 10px 10px 10px;\n\tmargin: 10px;\n\tborder:1px solid #a6ca8a;\n}\n", "warn": "div.warn {\n\tcolor: #333;\n\tbackground-color: #fff8c4;\n\tborder-radius: 10px;\n\tpadding: 10px 10px 10px 10px;\n\tmargin: 10px;\n\tborder:1px solid #f2c779;\n}\n", "error": "div.error {\n\tcolor: #333;\n\tbackground-color: #ffecec;\n\tborder-radius: 10px;\n\tpadding: 10px 10px 10px 10px;\n\tmargin: 10px;\n\tborder:1px solid #f5aca6;\n}\n"}
 

@@ -14,9 +14,7 @@ Attach:Soft/Outwiker/us.png [[English version -> Outwiker/TexEquationEn]]
 (:DonateOW:)
 [[TeXEquation 2.1 -> Attach:texequation-2.1.zip]] ('''Требуемая версия OutWiker: 2.0 - 2.1.0.834''')
 
-[[TeXEquation {{ version_full }} -> Attach:texequation-{{ version_full }}.zip]] ('''Требуемая версия OutWiker: 3.0.0.868 и выше''')
-
-<!--#version stable {{ version_full }} -->
+[[TeXEquation {{ version_full }} -> Attach:texequation-{{ version_full }}.zip]] ('''Требуемая версия OutWiker: 3.0.0.876 и выше''')
 
 %center% (:thumb texequation_result.png px=500:) (:thumb texequation_wiki.png px=500:)
 

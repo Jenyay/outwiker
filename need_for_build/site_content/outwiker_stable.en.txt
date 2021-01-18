@@ -1,6 +1,7 @@
 (:title OutWiker - the tree notes organizer:)
 (:keywords outliner, tree notes, outwiker, wiki, html editor :)
 (:description Outwiker. The Program for Storing Notes in a Tree :)
+(:linebreaks:)
 
 Attach:ru.png [[Soft/Outwiker | Русская версия]]
 
@@ -20,7 +21,7 @@ Attach:ru.png [[Soft/Outwiker | Русская версия]]
 
 OutWiker is designed to store notes in a tree. Such programs are called "outliner", personal wiki, or tree-like editors.  OutWiker's main difference from the other similar programs is keeping the tree of notes in the form of directories on disk, and encouraging changing the base by external sources and programs. 
 
-Also any number of files can be attached to the page. OutWiker can contain pages of different types, currently supports three types of pages: plain text, HTML pages and wiki pages, but the number of types of pages will increase in future.
+Also any number of files can be attached to the page. OutWiker can contain pages of different types, currently supports three types of pages: plain text, HTML pages and wiki pages. You can add Markdown page support with [[Markdown -> Outwiker/Markdown]] plug-in. 
 
 The program uses some sets of free icons taken from sites [[http://www.famfamfam.com/lab/icons/silk/ | famfamfam.com]], [[http://p.yusukekamiyamane.com/ | yusukekamiyamane.com]] and [[fatcow.com -> http://fatcow.com]]. Many thanks to the authors of those sites. 
 
@@ -30,44 +31,42 @@ OutWiker distributed with source code under the  [[GPL 3 -> http://www.gnu.org/l
 [[#download]]
 !! Downloads
 
-Current version - ''{{ version_full }}'''
-<!--#version stable {{ version_main }}-->
+Current version: '''{{ version_full }}'''
 
-'''OutWiker for Windows'''[[<<]]
-[[Attach:Soft/Outwiker/outwiker_{{ version_main }}_win.exe | outwiker_{{ version_main }}_win.exe]] (installer, 20 МБ).[[<<]]
-[[Attach:Soft/Outwiker/outwiker_{{ version_main }}_win.7z | outwiker_{{ version_main }}_win.7z]] (7z archive, 20 МБ).[[<<]]
-[[Attach:Soft/Outwiker/outwiker_{{ version_main }}_win.zip | outwiker_{{ version_main }}_win.zip]] (zip archive, 26 МБ).[[<<]]
+'''OutWiker for Windows'''
+[[Attach:Soft/Outwiker/outwiker_{{ version_full }}_win.exe | outwiker_{{ version_full }}_win.exe]] (installer, 23 МБ).
+[[Attach:Soft/Outwiker/outwiker_{{ version_full }}_win.7z | outwiker_{{ version_full }}_win.7z]] (7z archive, 22 МБ).
+[[Attach:Soft/Outwiker/outwiker_{{ version_full }}_win.zip | outwiker_{{ version_full }}_win.zip]] (zip archive, 28 МБ).
 
-'''OutWiker for Windows with all plug-ins'''[[<<]]
-[[Attach:Soft/Outwiker/outwiker_{{ version_main }}_win_all_plugins.zip | outwiker_{{ version_main }}_win_all_plugins.zip]] (archive 7z, 33 МБ).[[<<]]
-[[Attach:Soft/Outwiker/outwiker_{{ version_main }}_win_all_plugins.7z | outwiker_{{ version_main }}_win_all_plugins.7z]] (archive 7z, 25 МБ).[[<<]]
+'''OutWiker for Windows with all plug-ins'''
+[[Attach:Soft/Outwiker/outwiker_{{ version_full }}_win_all_plugins.zip | outwiker_{{ version_full }}_win_all_plugins.zip]] (archive 7z, 37 МБ).
+[[Attach:Soft/Outwiker/outwiker_{{ version_full }}_win_all_plugins.7z | outwiker_{{ version_full }}_win_all_plugins.7z]] (archive 7z, 27 МБ).
 
 (:DonateOWEn:)
 
-For '''Linux''' users created PPA-repository. To install OutWiker from the repository, perform the following commands:
+'''Linux''' users can install OutWiker from snap package with follow commands:
 
 (:source lang="bash":)
-sudo apt-add-repository ppa:outwiker-team/ppa
-sudo apt-get update
-sudo apt-get install outwiker
+sudo snap install outwiker
+sudo snap connect outwiker:cups-control
+sudo snap connect outwiker:removable-media
 (:sourceend:)
 
 For others Linux distributions see [[Sources -> #source]]
 
-[[Plugins -> Outwiker/PluginsEn]][[<<]]
+[[Plugins -> Outwiker/PluginsEn]]
 [[Unstable version -> Outwiker/UnstableEn]]
 
 [[#screenshots]]
 !! Screenshots
 
-(:thumbgallery width=300 cols=3:)
-outwiker_2.0.0_01_en.png
-outwiker_2.0.0_02_en.png
-outwiker_2.0.0_03_en.png
-outwiker_2.0.0_04_en.png
-outwiker_2.0.0_05_en.png
-outwiker_2.0.0_06_en.png
-outwiker_2.0.0_07_en.png
+(:thumbgallery width=400 cols=2:)
+outwiker_3.0_en_01.png
+outwiker_3.0_en_02.png
+outwiker_3.0_en_03.png
+outwiker_3.0_en_04.png
+outwiker_3.0_en_05.png
+outwiker_3.0_en_06.png
 (:thumbgalleryend:)
 
 
@@ -110,7 +109,7 @@ If you use OutWiker in the portable mode then to install the plug-ins need to un
 
 If you use OutWiker in the usual mode then select "Help - Open Plugins Folder" menu item. After that will be open folder for plugins.
 
-In MS Windows 7 / 8.x / 10 it would be:
+In MS Windows 7 / 10 it would be:
 
 (:source lang="text":)
 C:\Users\USERNAME\AppData\Roaming\outwiker\plugins
@@ -139,29 +138,22 @@ git clone https://github.com/Jenyay/outwiker.git
 To get the source code version of the program, which is in development, run:
 
 >>frame<<
-git clone https://github.com/Jenyay/outwiker.git[[<<]]
-cd outwiker[[<<]]
+git clone https://github.com/Jenyay/outwiker.git
+cd outwiker
 git checkout stable
 >><<
 
-To run the command (in the directory src):
+To run the command:
 
 >>frame<<
-python runoutwiker.py
+python -m pip install --user pipenv
+pipenv shell
+pipenv update -d
+fab run
 >><<
 
-[[#history]]
-!! Version History
-
-!!! {{ versions_list[0].version }} ({{ versions_list[0].date_str }})
-{% for change in versions_list[0].changes %}
-* {{ change }}{% endfor %}
-
+{% include 'changelog.en.txt' %}
 
 [[History of the previous versions -> Outwiker/VersionHistoryEn]]
 
 %center%(:ad:)
-
-[[#allcomments]]
-(:include Site.FoxCommentBoxEn:)
-

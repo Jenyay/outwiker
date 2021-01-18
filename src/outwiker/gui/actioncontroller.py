@@ -12,6 +12,7 @@ class ActionInfo(object):
     Класс для внутреннего использования в ActionController
     Хранит информацию о добавленных действиях
     """
+
     def __init__(self, action, hotkey):
         """
         action - действие
@@ -29,6 +30,7 @@ class ActionController(object):
     Класс для управления Actions - добавление / удаление пунктов меню
     и кнопок на панели инструментов
     """
+
     def __init__(self, mainWindow, config):
         self._mainWindow = mainWindow
         self._config = config
@@ -172,9 +174,8 @@ class ActionController(object):
             actionInfo = self._actionsInfo[strid]
 
             if actionInfo.toolbar is not None:
-                toolid = self._actionsInfo[strid].toolItemId
-                toolbar = self._actionsInfo[strid].toolbar
-
+                toolid = actionInfo.toolItemId
+                toolbar = actionInfo.toolbar
                 if issubclass(type(toolbar), ToolBar2):
                     toolbar.DeleteTool(toolid)
                 elif issubclass(type(toolbar), wx.ToolBar):
@@ -196,7 +197,7 @@ class ActionController(object):
                 actionInfo.menuItem.Menu.DestroyItem(actionInfo.menuItem)
                 actionInfo.menuItem = None
 
-    def appendToolbarButton(self, strid, toolbar, image, fullUpdate=False):
+    def appendToolbarButton(self, strid, toolbar, image, fullUpdate=True):
         """
         Добавить кнопку на панель инструментов.
         Действие уже должно быть зарегистрировано с помощью метода register
@@ -231,9 +232,19 @@ class ActionController(object):
         self._mainWindow.Bind(wx.EVT_TOOL,
                               handler=self._onToolItemHandler,
                               id=toolbarItemId)
+        if fullUpdate:
+            toolbar.Realize()
+
+    def updateToolbars(self):
+        toolbars = set([action_info.toolbar
+                        for action_info in self._actionsInfo.values()
+                        if action_info.toolbar is not None])
+
+        for toolbar in toolbars:
+            toolbar.Realize()
 
     def appendToolbarCheckButton(self, strid, toolbar, image,
-                                 fullUpdate=False):
+                                 fullUpdate=True):
         """
         Добавить кнопку на панель инструментов.
         Действие уже должно быть зарегистрировано с помощью метода register
@@ -268,6 +279,8 @@ class ActionController(object):
         self._mainWindow.Bind(wx.EVT_TOOL,
                               handler=self._onCheckToolItemHandler,
                               id=toolbarItemId)
+        if fullUpdate:
+            toolbar.Realize()
 
     def check(self, strid, checked):
         """

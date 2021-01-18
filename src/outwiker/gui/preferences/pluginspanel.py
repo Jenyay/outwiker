@@ -20,6 +20,7 @@ class PluginsPanel(BasePrefPanel):
     def __init__(self, parent, application):
         super(PluginsPanel, self).__init__(parent)
         self._application = application
+        self.pluginsInfo = None
 
         self.__htmlMinWidth = 150
 
@@ -34,8 +35,8 @@ class PluginsPanel(BasePrefPanel):
         self.__downloadLink = wx.adv.HyperlinkCtrl(
             self,
             -1,
-            _(u"Download more plugins"),
-            _(u"https://jenyay.net/Outwiker/PluginsEn"))
+            _('Download more plugins'),
+            _('https://jenyay.net/Outwiker/PluginsEn'))
 
         self.pluginsInfo = getOS().getHtmlRender(self)
 

@@ -12,7 +12,6 @@ This plugin append wiki commands [=(:ljuser:)=] and [=(:ljcomm:)=] for insert li
 
 [[Livejournal {{ version_full }} -> Attach:Outwiker/LivejournalPlugin/livejournal-{{ version_full }}.zip]] ('''Required OutWiker version: 3.0.0.868 and above''')
 
-<!--#version stable {{ version_full }} -->
 (:DonateOWEn:)
 
 The [=(:ljuser:)=] command is intended for an insert of the link to the user of a site http://livejournal.com so that outwardly this reference looked the same as it is accepted in livejournal.com. 

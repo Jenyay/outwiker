@@ -6,6 +6,8 @@ Classes to recognize href URI for HtmlRenders
 from abc import ABCMeta, abstractmethod
 from pathlib import Path
 from typing import Union
+from urllib.parse import unquote
+import os
 
 import idna
 
@@ -14,6 +16,7 @@ class Recognizer(metaclass=ABCMeta):
     '''
     Base class for all recognizers
     '''
+
     def __init__(self, basepath: str):
         '''
         basepath - path to directory with current HTML file for HTML render.
@@ -211,6 +214,9 @@ class PageRecognizerWebKit(PageRecognizerBase):
         if currentPage is None:
             return None
 
+        if os.path.abspath(currentPage.path) == os.path.abspath(href):
+            return currentPage
+
         if href.startswith(self._basepath):
             href = href[len(self._basepath):]
             if href.startswith('/'):
@@ -257,6 +263,11 @@ class PageRecognizerIE(PageRecognizerBase):
         if anchor is not None and currentPage[anchor.replace("\\", "/")] is not None:
             return currentPage[anchor.replace("\\", "/")]
 
+        if href.startswith('/'):
+            href = href[1:]
+
+        href = unquote(href)
+
         if len(href) > 1 and href[1] == ":":
             if href.startswith(currentPage.path.replace("\\", "/")):
                 href = href[len(currentPage.path) + 1:]
@@ -267,7 +278,6 @@ class PageRecognizerIE(PageRecognizerBase):
 
             if len(href) > 1 and href.endswith("/"):
                 href = href[:-1]
-
 
         if href.startswith("about:"):
             href = self._removeAboutBlank(href).replace("\\", "/")

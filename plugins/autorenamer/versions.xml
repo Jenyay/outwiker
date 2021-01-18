@@ -1,5 +1,21 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <versions>
+	<version number="0.0.0.9" date="29.12.2020">
+		<download href="https://jenyay.net/uploads/Outwiker/AutoRenamer/autorenamer-0.0.0.9.zip">
+			<requirements>
+				<api>3.868</api>
+			</requirements>
+		</download>
+
+		<changes>
+			<change>Fix errors.</change>
+		</changes>
+
+		<changes lang="ru">
+			<change>Исправление ошибок.</change>
+		</changes>
+	</version>
+
 	<version number="0.0.0.8" date="19.10.2019">
 		<download href="https://jenyay.net/uploads/Outwiker/AutoRenamer/autorenamer-0.0.0.8.zip">
 			<requirements>
@@ -93,7 +109,7 @@
 	</version>
 
 	<version number="0.0.0.2" date="26.04.2015">
-		<download href="https://jenyay.net/uploads/Outwiker/AutoRenamer/autorenamer.zip">
+		<download href="https://jenyay.net/uploads/Outwiker/AutoRenamer/autorenamer-0.0.0.2.zip">
 			<requirements>
 				<api>1</api>
 			</requirements>

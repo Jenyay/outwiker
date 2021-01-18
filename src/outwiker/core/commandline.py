@@ -10,19 +10,15 @@ class CommandLineException(Exception):
 
 
 class _SilentParser(argparse.ArgumentParser):
-    """
-    Создаем производный класс от ArgumentParser, чтобы отключить
-    автоматический показ справки в случае ошибок в параметрах
-    """
+    """Создаем производный класс от ArgumentParser, чтобы отключить
+автоматический показ справки в случае ошибок в параметрах."""
 
     def error(self, message):
         raise CommandLineException
 
 
 class CommandLine(object):
-    """
-    Класс для хранения разобранных параметров командной строки
-    """
+    """Класс для хранения разобранных параметров командной строки"""
 
     def __init__(self):
         self._description = 'OutWiker {ver}. Crossplatform program to keep your notes in a tree.'.format(
@@ -43,54 +39,54 @@ class CommandLine(object):
     def _createParser(self):
         parser = _SilentParser(prog='outwiker',
                                description=self._description,
-                               epilog="(c) Eugeniy Ilin (aka Jenyay), 2010-2019. Released under the GNU GPL 3.",
+                               epilog='(c) Eugeniy Ilin (aka Jenyay), 2010-2019. Released under the GNU GPL 3.',
                                add_help=False)
 
         parser.add_argument('wikipath',
                             nargs='?',
-                            metavar=u"path",
-                            help=u"Path to notes tree")
+                            metavar='path',
+                            help='Path to notes tree')
 
         parser.add_argument('--page', '-p',
-                            help=u"Subpath or UID of a page")
+                            help='Subpath or UID of a page')
 
         parser.add_argument('--help', '-h',
                             action='store_const',
                             const=True,
                             default=False,
-                            help=u"Help")
+                            help='Help')
 
         parser.add_argument('--version', '-v',
                             action='store_const',
                             const=True,
                             default=False,
-                            help=u"Version info")
+                            help='Version info')
 
         parser.add_argument('--readonly', '-r',
                             action='store_const',
                             const=True,
                             default=False,
-                            help=u"Open wiki as read only")
+                            help='Open wiki as read only')
 
         parser.add_argument('--normal',
                             action='store_const',
                             const=True,
                             default=False,
-                            help=u"Don't minimize window when starting",
-                            dest=u'disableMinimizing')
+                            help="Don't minimize window when starting",
+                            dest='disableMinimizing')
 
         parser.add_argument('--debug',
                             action='store_const',
                             const=True,
                             default=False,
-                            help=u"Enable debug mode",
+                            help='Enable debug mode',
                             dest='debug')
 
         parser.add_argument('--disable-plugins',
                             action='store_const',
                             const=True,
                             default=False,
-                            help=u"Disable all plug-ins",
+                            help='Disable all plug-ins',
                             dest='disablePlugins')
 
         return parser
@@ -142,7 +138,7 @@ class CommandLine(object):
         return self._namespace.disablePlugins
 
     def format_help(self):
-        """
-        Возвращает строку справки
-        """
+        """Help string.
+
+        Returns the help string."""
         return self._parser.format_help()

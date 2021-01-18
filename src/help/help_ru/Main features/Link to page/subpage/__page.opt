@@ -3,9 +3,11 @@ expand = False
 
 [General]
 type = html
-tags = пользователям
-datetime = 2012-04-27 23:04:51.000000
+tags = 
+datetime = 2020-05-10 10:55:52.781130
 linewrap = True
 cursorposition = 0
 uid = __10b622cd-7ea7-4267-97e9-697fcf869486
+order = 0
+alias = Дочерняя страница
 
