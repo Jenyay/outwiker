@@ -2,11 +2,11 @@
 <versions>
 	<version number="3.0.0.883" status="dev">
 		<changes>
-			<change></change>
+			<change>Update the German localization.</change>
 		</changes>
 
 		<changes lang="ru">
-			<change></change>
+			<change>Обновление немецкой локализации.</change>
 		</changes>
 	</version>
 
