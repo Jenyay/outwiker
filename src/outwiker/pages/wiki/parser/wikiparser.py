@@ -25,6 +25,7 @@ from .tokentext import TextFactory
 from .tokenquote import QuoteFactory
 from .tokenwikistyle import WikiStyleInlineFactory, WikiStyleBlockFactory
 from .tokencomment import CommentFactory
+from .tokenmultilineblock import MultilineBlockFactory
 
 from ..thumbnails import Thumbnails
 
@@ -81,6 +82,7 @@ class Parser(object):
         self.wikistyle_inline = WikiStyleInlineFactory.make(self)
         self.wikistyle_block = WikiStyleBlockFactory.make(self)
         self.comment = CommentFactory.make(self)
+        self.multiline_block = MultilineBlockFactory.make(self)
 
         # Common wiki tokens
         self.wikiTokens = [
@@ -116,6 +118,7 @@ class Parser(object):
             self.wikistyle_block,
             self.wikistyle_inline,
             self.command,
+            self.multiline_block,
         ]
 
         # Tokens for using inside links
@@ -139,6 +142,7 @@ class Parser(object):
             self.lineJoin,
             self.noformat,
             self.wikistyle_inline,
+            self.multiline_block,
         ]
 
         # Tokens for using inside headings
@@ -168,6 +172,7 @@ class Parser(object):
             self.align,
             self.wikistyle_inline,
             self.command,
+            self.multiline_block,
         ]
 
         # Tokens for using inside text
@@ -198,6 +203,7 @@ class Parser(object):
             self.wikistyle_block,
             self.wikistyle_inline,
             self.command,
+            self.multiline_block,
         ]
 
         # Tokens for using inside list items (bullets and numeric)
@@ -206,6 +212,7 @@ class Parser(object):
             self.urlImage,
             self.url,
             self.text,
+            self.multiline_block,
             self.lineBreak,
             self.lineJoin,
             self.link,

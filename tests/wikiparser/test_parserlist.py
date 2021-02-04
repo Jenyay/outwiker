@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import unittest
 from tempfile import mkdtemp
@@ -47,11 +47,33 @@ class ParserListTest (unittest.TestCase):
         text = "бла-бла-бла \n\n*'''Строка 1'''\n* ''Строка 2''\n* Строка 3\nбла-бла-бла"
         result = 'бла-бла-бла \n\n<ul><li><b>Строка 1</b></li><li><i>Строка 2</i></li><li>Строка 3</li></ul>бла-бла-бла'
 
-        self.assertEqual(
-            self.parser.toHtml(text),
-            result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+        self.assertEqual(self.parser.toHtml(text), result)
+
+    def testUnorderList3_no_spaces(self):
+        text = "бла-бла-бла \n\n*[{Строка 1}]\n*[{Строка 2}]\n*[{Строка 3}]\nбла-бла-бла"
+        result = 'бла-бла-бла \n\n<ul><li>Строка 1</li><li>Строка 2</li><li>Строка 3</li></ul>бла-бла-бла'
+
+        self.assertEqual(self.parser.toHtml(text), result)
+
+    def testUnorderList3_spaces(self):
+        text = "бла-бла-бла \n\n* [{Строка 1}]\n* [{Строка 2}]\n* [{Строка 3}]\nбла-бла-бла"
+        result = 'бла-бла-бла \n\n<ul><li>Строка 1</li><li>Строка 2</li><li>Строка 3</li></ul>бла-бла-бла'
+
+        self.assertEqual(self.parser.toHtml(text), result)
+
+    def testUnorderList4(self):
+        text = '''бла-бла-бла
+
+* [{Строка 1}]
+* [{Строка 2}]
+* Строка 3
+бла-бла-бла'''
+
+        result = '''бла-бла-бла
+
+<ul><li>Строка 1</li><li>Строка 2</li><li>Строка 3</li></ul>бла-бла-бла'''
+
+        self.assertEqual(self.parser.toHtml(text), result)
 
     def testUnorderListStrike(self):
         text = "бла-бла-бла \n\n*{-Строка 1-}\n* {-Строка 2-}\n* Строка 3\nбла-бла-бла"
