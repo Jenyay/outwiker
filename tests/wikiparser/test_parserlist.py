@@ -49,24 +49,12 @@ class ParserListTest (unittest.TestCase):
 
         self.assertEqual(self.parser.toHtml(text), result)
 
-    def testUnorderList3_no_spaces(self):
-        text = "бла-бла-бла \n\n*[{Строка 1}]\n*[{Строка 2}]\n*[{Строка 3}]\nбла-бла-бла"
-        result = 'бла-бла-бла \n\n<ul><li>Строка 1</li><li>Строка 2</li><li>Строка 3</li></ul>бла-бла-бла'
-
-        self.assertEqual(self.parser.toHtml(text), result)
-
-    def testUnorderList3_spaces(self):
-        text = "бла-бла-бла \n\n* [{Строка 1}]\n* [{Строка 2}]\n* [{Строка 3}]\nбла-бла-бла"
-        result = 'бла-бла-бла \n\n<ul><li>Строка 1</li><li>Строка 2</li><li>Строка 3</li></ul>бла-бла-бла'
-
-        self.assertEqual(self.parser.toHtml(text), result)
-
-    def testUnorderList4(self):
+    def testUnorderList_multiline_no_spaces(self):
         text = '''бла-бла-бла
 
-* [{Строка 1}]
-* [{Строка 2}]
-* Строка 3
+*[{Строка 1}]
+*[{Строка 2}]
+*[{Строка 3}]
 бла-бла-бла'''
 
         result = '''бла-бла-бла
@@ -75,9 +63,126 @@ class ParserListTest (unittest.TestCase):
 
         self.assertEqual(self.parser.toHtml(text), result)
 
+    def testUnorderList_multiline_spaces(self):
+        text = '''бла-бла-бла
+* [{Строка 1}]
+* [{Строка 2}]
+* [{Строка 3}]
+бла-бла-бла'''
+
+        result = '''бла-бла-бла
+<ul><li>Строка 1</li><li>Строка 2</li><li>Строка 3</li></ul>бла-бла-бла'''
+
+        self.assertEqual(self.parser.toHtml(text), result)
+
+    def testUnorderMultilineList4(self):
+        text = '''бла-бла-бла
+
+* [{Строка 1
+
+
+тест
+}]
+* [{блабла
+
+
+''Строка 2''}]
+* Строка 3
+бла-бла-бла'''
+
+        result = '''бла-бла-бла
+
+<ul><li>Строка 1
+
+
+тест</li><li>блабла
+
+
+<i>Строка 2</i></li><li>Строка 3</li></ul>бла-бла-бла'''
+
+        self.assertEqual(self.parser.toHtml(text), result)
+
+    def testUnorderList_multiline_format_01(self):
+        text = '''бла-бла-бла
+* [{''Строка 1''}]
+* [{[[https://jenyay.net]]
+
+{-Строка 2-}
+}]
+* [{Строка 3}]
+бла-бла-бла'''
+
+        result = '''бла-бла-бла
+<ul><li><i>Строка 1</i></li><li><a href="https://jenyay.net">https://jenyay.net</a>
+
+<strike>Строка 2</strike></li><li>Строка 3</li></ul>бла-бла-бла'''
+
+        self.assertEqual(self.parser.toHtml(text), result)
+
+    def testOrderList_multiline_spaces(self):
+        text = '''бла-бла-бла
+# [{Строка 1}]
+# [{Строка 2}]
+# [{Строка 3}]
+бла-бла-бла'''
+
+        result = '''бла-бла-бла
+<ol><li>Строка 1</li><li>Строка 2</li><li>Строка 3</li></ol>бла-бла-бла'''
+
+        self.assertEqual(self.parser.toHtml(text), result)
+
+    def testOrderMultilineList4(self):
+        text = '''бла-бла-бла
+
+# [{Строка 1
+
+
+тест
+}]
+# [{блабла
+
+
+''Строка 2''}]
+# Строка 3
+бла-бла-бла'''
+
+        result = '''бла-бла-бла
+
+<ol><li>Строка 1
+
+
+тест</li><li>блабла
+
+
+<i>Строка 2</i></li><li>Строка 3</li></ol>бла-бла-бла'''
+
+        self.assertEqual(self.parser.toHtml(text), result)
+
+    def testOrderList_multiline_format_01(self):
+        text = '''бла-бла-бла
+# [{''Строка 1''}]
+# [{[[https://jenyay.net]]
+
+{-Строка 2-}
+}]
+# [{Строка 3}]
+бла-бла-бла'''
+
+        result = '''бла-бла-бла
+<ol><li><i>Строка 1</i></li><li><a href="https://jenyay.net">https://jenyay.net</a>
+
+<strike>Строка 2</strike></li><li>Строка 3</li></ol>бла-бла-бла'''
+
+        self.assertEqual(self.parser.toHtml(text), result)
+
     def testUnorderListStrike(self):
-        text = "бла-бла-бла \n\n*{-Строка 1-}\n* {-Строка 2-}\n* Строка 3\nбла-бла-бла"
-        result = 'бла-бла-бла \n\n<ul><li><strike>Строка 1</strike></li><li><strike>Строка 2</strike></li><li>Строка 3</li></ul>бла-бла-бла'
+        text = '''бла-бла-бла
+*{-Строка 1-}
+* {-Строка 2-}
+* Строка 3
+бла-бла-бла'''
+        result = '''бла-бла-бла
+<ul><li><strike>Строка 1</strike></li><li><strike>Строка 2</strike></li><li>Строка 3</li></ul>бла-бла-бла'''
 
         self.assertEqual(
             self.parser.toHtml(text),
