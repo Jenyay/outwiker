@@ -135,11 +135,11 @@ class BasePyInstallerBuilder(BaseBinaryBuilder, metaclass=ABCMeta):
                   u'--add-binary plugins' + os.pathsep + u'plugins',
                   ]
 
-        params += [u' --hiddenimport {}'.format(package)
+        params += [u'--hiddenimport {}'.format(package)
                    for package
                    in self.get_includes()]
 
-        params += [u' --exclude-module {}'.format(package)
+        params += [u'--exclude-module {}'.format(package)
                    for package
                    in self.get_excludes()]
 
