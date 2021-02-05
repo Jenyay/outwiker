@@ -2,10 +2,12 @@
 <versions>
 	<version number="3.0.0.883" status="dev">
 		<changes>
+			<change>Add the wiki tags for a multiline block.</change>
 			<change>Update the German localization.</change>
 		</changes>
 
 		<changes lang="ru">
+			<change>В викинотацию добавлены теги для обозначения многострочного блока.</change>
 			<change>Обновление немецкой локализации.</change>
 		</changes>
 	</version>
