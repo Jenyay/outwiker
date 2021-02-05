@@ -2,9 +2,8 @@
 
 from pyparsing import QuotedString
 
-from .tokenblock import SimpleNestedBlock
-from .tokenlinebreak import LineBreakToken
-from outwiker.pages.wiki.parser.utils import noConvert
+# from .tokenblock import SimpleNestedBlock
+# from .tokenlinebreak import LineBreakToken
 
 
 class MultilineBlockFactory(object):
@@ -25,7 +24,7 @@ class MultilineBlockFactory(object):
 #     ignore = LineBreakToken().getToken()
 
 
-class MultilineBlockToken(object):
+class MultilineBlockToken:
     start = "[{"
     end = "}]"
 
@@ -39,4 +38,4 @@ class MultilineBlockToken(object):
                             convertWhitespaceEscapes=False).setParseAction(self.__convertMultilineBlock)("block")
 
     def __convertMultilineBlock(self, s, l, t):
-        return t[0]
+        return self.parser.parseTextLevelMarkup(t[0])
