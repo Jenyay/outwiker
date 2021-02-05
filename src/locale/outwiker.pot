@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OutWiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-18 17:01+0300\n"
+"POT-Creation-Date: 2021-02-05 15:24+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Eugene Ilin <jenyay.ilin@gmail.com>\n"
@@ -703,7 +703,7 @@ msgstr ""
 msgid "Line Breaks (<br/>)"
 msgstr ""
 
-#: outwiker/core/i18n.py:127
+#: outwiker/core/i18n.py:129
 msgid "LANGUAGE_DEFAULT"
 msgstr ""
 
@@ -933,7 +933,7 @@ msgid "Convert HTML Symbols"
 msgstr ""
 
 #: outwiker/gui/actionslist.py:183 outwiker/pages/html/htmlpageview.py:40
-#: outwiker/pages/wiki/wikipageview.py:66
+#: outwiker/pages/wiki/wikipageview.py:67
 msgid "Table"
 msgstr ""
 
@@ -1683,8 +1683,8 @@ msgstr ""
 #: outwiker/gui/preferences/textprintpanel.py:29
 #: outwiker/pages/html/htmlpageview.py:38
 #: outwiker/pages/html/htmlpageview.py:207
-#: outwiker/pages/wiki/wikipageview.py:64
-#: outwiker/pages/wiki/wikipageview.py:154
+#: outwiker/pages/wiki/wikipageview.py:65
+#: outwiker/pages/wiki/wikipageview.py:156
 msgid "Font"
 msgstr ""
 
@@ -2054,8 +2054,8 @@ msgstr ""
 #: outwiker/gui/preferences/wikieditorpanel.py:34
 #: outwiker/pages/html/htmlpageview.py:37
 #: outwiker/pages/html/htmlpageview.py:206
-#: outwiker/pages/wiki/wikipageview.py:63
-#: outwiker/pages/wiki/wikipageview.py:153
+#: outwiker/pages/wiki/wikipageview.py:64
+#: outwiker/pages/wiki/wikipageview.py:155
 msgid "Heading"
 msgstr ""
 
@@ -2210,27 +2210,27 @@ msgid "Appearance"
 msgstr ""
 
 #: outwiker/pages/html/htmlpageview.py:39
-#: outwiker/pages/wiki/wikipageview.py:65
+#: outwiker/pages/wiki/wikipageview.py:66
 msgid "Align"
 msgstr ""
 
 #: outwiker/pages/html/htmlpageview.py:208
-#: outwiker/pages/wiki/wikipageview.py:155
+#: outwiker/pages/wiki/wikipageview.py:157
 msgid "Alignment"
 msgstr ""
 
 #: outwiker/pages/html/htmlpageview.py:209
-#: outwiker/pages/wiki/wikipageview.py:157
+#: outwiker/pages/wiki/wikipageview.py:159
 msgid "Formatting"
 msgstr ""
 
 #: outwiker/pages/html/htmlpageview.py:210
-#: outwiker/pages/wiki/wikipageview.py:162
+#: outwiker/pages/wiki/wikipageview.py:164
 msgid "Lists"
 msgstr ""
 
 #: outwiker/pages/html/htmlpageview.py:211
-#: outwiker/pages/wiki/wikipageview.py:161
+#: outwiker/pages/wiki/wikipageview.py:163
 msgid "Tables"
 msgstr ""
 
@@ -2429,6 +2429,14 @@ msgstr ""
 msgid "Parse wiki notation"
 msgstr ""
 
+#: outwiker/pages/wiki/actions/multilineblock.py:18
+msgid "Multiline block [{…}]"
+msgstr ""
+
+#: outwiker/pages/wiki/actions/multilineblock.py:22
+msgid "Insert a multiline block"
+msgstr ""
+
 #: outwiker/pages/wiki/actions/nonparsed.py:17
 msgid "Non-parsed [=…=]"
 msgstr ""
@@ -2570,26 +2578,26 @@ msgstr ""
 msgid "0 - default size"
 msgstr ""
 
-#: outwiker/pages/wiki/wikipage.py:74
+#: outwiker/pages/wiki/wikipage.py:78
 #: outwiker/pages/wiki/wikipagecontroller.py:86
 msgid "Wiki Page"
 msgstr ""
 
-#: outwiker/pages/wiki/wikipageview.py:49
-#: outwiker/pages/wiki/wikipageview.py:52
-#: outwiker/pages/wiki/wikipageview.py:62
+#: outwiker/pages/wiki/wikipageview.py:50
+#: outwiker/pages/wiki/wikipageview.py:53
+#: outwiker/pages/wiki/wikipageview.py:63
 msgid "Wiki"
 msgstr ""
 
-#: outwiker/pages/wiki/wikipageview.py:164
+#: outwiker/pages/wiki/wikipageview.py:166
 msgid "Commands"
 msgstr ""
 
-#: outwiker/pages/wiki/wikipageview.py:806
+#: outwiker/pages/wiki/wikipageview.py:813
 msgid "Select text color"
 msgstr ""
 
-#: outwiker/pages/wiki/wikipageview.py:829
+#: outwiker/pages/wiki/wikipageview.py:836
 msgid "Select text background color"
 msgstr ""
 

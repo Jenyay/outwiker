@@ -31,6 +31,7 @@ from .actions.childlist import WikiChildListAction
 from .actions.include import WikiIncludeAction
 from .actions.dates import WikiDateCreationAction, WikiDateEditionAction
 from .actions.wikistyle import WikiStyleOnlyAction, WikiStyleAdvancedAction
+from .actions.multilineblock import MultilineBlockAction
 
 
 class WikiPageView(BaseWikiPageView):
@@ -135,6 +136,7 @@ class WikiPageView(BaseWikiPageView):
             WikiDateEditionAction,
             WikiStyleOnlyAction,
             WikiStyleAdvancedAction,
+            MultilineBlockAction,
         ]
 
     def _createWikiTools(self):
@@ -306,7 +308,8 @@ class WikiPageView(BaseWikiPageView):
             fullUpdate=False)
 
         # Text color
-        actionController.getAction(TEXT_COLOR_STR_ID).setFunc(self._setTextColor)
+        actionController.getAction(
+            TEXT_COLOR_STR_ID).setFunc(self._setTextColor)
         actionController.appendMenuItem(TEXT_COLOR_STR_ID, menu)
         actionController.appendToolbarButton(
             TEXT_COLOR_STR_ID,
@@ -315,7 +318,8 @@ class WikiPageView(BaseWikiPageView):
             fullUpdate=False)
 
         # Text background color
-        actionController.getAction(TEXT_BACKGROUND_COLOR_STR_ID).setFunc(self._setTextBackgroundColor)
+        actionController.getAction(TEXT_BACKGROUND_COLOR_STR_ID).setFunc(
+            self._setTextBackgroundColor)
         actionController.appendMenuItem(TEXT_BACKGROUND_COLOR_STR_ID, menu)
         actionController.appendToolbarButton(
             TEXT_BACKGROUND_COLOR_STR_ID,
@@ -542,6 +546,9 @@ class WikiPageView(BaseWikiPageView):
             toolbar,
             os.path.join(self.imagesDir, "code.png"),
             fullUpdate=False)
+
+        # Multiline block
+        actionController.appendMenuItem(MultilineBlockAction.stringId, menu)
 
     def __addOtherTools(self):
         """
