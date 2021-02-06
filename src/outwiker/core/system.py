@@ -126,7 +126,7 @@ class Windows(System):
 
     @property
     def windowIconFile(self) -> str:
-        return getBuiltinImagePath("outwiker_16x16.png")
+        return getBuiltinImagePath("outwiker_small.ico")
 
 
 class Unix(System):
