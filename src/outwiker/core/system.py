@@ -124,6 +124,10 @@ class Windows(System):
         """
         return CyHunspellWrapper(langlist, folders)
 
+    @property
+    def windowIconFile(self) -> str:
+        return getBuiltinImagePath("outwiker_16x16.png")
+
 
 class Unix(System):
     @property
@@ -193,6 +197,10 @@ class Unix(System):
         Return wrapper for "real" spell checker (hunspell, enchant, etc)
         """
         return CyHunspellWrapper(langlist, folders)
+
+    @property
+    def windowIconFile(self) -> str:
+        return getBuiltinImagePath("outwiker.ico")
 
 
 def getOS():
