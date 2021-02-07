@@ -1,6 +1,6 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <versions>
-	<version number="3.0.0.883" status="dev">
+	<version number="3.0.0.884" status="dev" date="07.02.2021">
 		<changes>
 			<change>Add the wiki tags for a multiline block.</change>
 			<change>Update the German localization.</change>
