@@ -82,7 +82,7 @@ class BaseLinkDialogController(object, metaclass=ABCMeta):
             prefix = 'page://'
             uid = self._dlg.link[len(prefix):]
             page = PageUidDepot(self._page.root)[uid]
-            if page is not None:
+            if page is not None and not self._selectedString:
                 self._dlg.comment = page.display_title
 
     def _findLink(self):
