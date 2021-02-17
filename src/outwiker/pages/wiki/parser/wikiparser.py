@@ -2,8 +2,7 @@
 
 import traceback
 
-from pyparsing import NoMatch
-
+from .markup import Markup
 from .tokenfonts import FontsFactory
 from .tokennoformat import NoFormatFactory
 from .tokenpreformat import PreFormatFactory
@@ -36,7 +35,7 @@ class Parser(object):
         self.config = config
         self.error_template = u"<b>{error}</b>"
 
-        # Dictionary with nonstandard parameters(for plugins for example)
+        # Dictionary with nonstandard parameters (for plugins for example)
         self.customProps = {}
 
         # Массив строк, которые надо добавить в заголовок страницы
@@ -45,7 +44,7 @@ class Parser(object):
         self.__footers = []
 
         # Команды, которые обрабатывает парсер.
-        # Формат команд:(:name params... :) content...(:nameend:)
+        # Формат команд: (:name params... :) content...(:nameend:)
         # Ключ - имя команды, значение - экземпляр класса команды
         self.commands = {}
 
@@ -252,7 +251,7 @@ class Parser(object):
         Свойство возвращает строку из добавленных заголовочных элементов
         (то, что должно быть внутри тега <head>...</head>)
         """
-        return u"".join(self.__headers)
+        return ''.join(self.__headers)
 
     def appendToHead(self, header):
         """
@@ -354,13 +353,3 @@ class Parser(object):
     def removeCommand(self, commandName):
         if commandName in self.commands:
             del self.commands[commandName]
-
-
-class Markup(object):
-    def __init__(self, tokens_list):
-        self._markup = NoMatch()
-        for token in tokens_list:
-            self._markup |= token
-
-    def transformString(self, text):
-        return self._markup.transformString(text)
