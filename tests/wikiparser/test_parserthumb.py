@@ -409,6 +409,7 @@ class ParserThumbTest (BaseOutWikerMixin, TestCase):
 
     def testThumbGifDefaultThumb(self):
         self.__wikiconfig.thumbSizeOptions.value = 333
+        newparser = ParserFactory().make(self.testPage, self.application.config)
 
         text = 'бла-бла-бла \nкхм % thumb % Attach:image.gif %% бла-бла-бла\nбла-бла-бла'
         path = os.path.join("__attach", "__thumb", "th_maxsize_333_image.png")
@@ -416,13 +417,10 @@ class ParserThumbTest (BaseOutWikerMixin, TestCase):
         result = 'бла-бла-бла \nкхм <a href="__attach/image.gif"><img src="{path}"/></a> бла-бла-бла\nбла-бла-бла'.format(
             path=path.replace("\\", "/"))
 
-        self.assertEqual(
-            self.parser.toHtml(text),
-            result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+        self.assertEqual(newparser.toHtml(text),
+                         result,
+                         newparser.toHtml(text).encode(self.encoding))
 
-        path = os.path.join(
-            self.attach_page2.getAttachPath(),
-            "__thumb/th_maxsize_333_image.png")
-        self.assertTrue(os.path.exists(path), path.encode(self.encoding))
+        path = os.path.join(self.attach_page2.getAttachPath(),
+                            "__thumb/th_maxsize_333_image.png")
+        self.assertTrue(os.path.exists(path))

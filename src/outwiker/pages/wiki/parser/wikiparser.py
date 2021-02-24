@@ -27,13 +27,17 @@ from .tokencomment import CommentFactory
 from .tokenmultilineblock import MultilineBlockFactory
 
 from ..thumbnails import Thumbnails
+from ..wikiconfig import WikiConfig
 
 
 class Parser(object):
     def __init__(self, page, config):
         self.page = page
-        self.config = config
+        # self.config = config
         self.error_template = u"<b>{error}</b>"
+
+        config = WikiConfig(config)
+        thumb_size = config.thumbSizeOptions.value
 
         # Dictionary with nonstandard parameters (for plugins for example)
         self.customProps = {}
@@ -61,7 +65,7 @@ class Parser(object):
         self.small = FontsFactory.makeSmall(self)
         self.big = FontsFactory.makeBig(self)
         self.headings = HeadingFactory.make(self)
-        self.thumb = ThumbnailFactory.make(self)
+        self.thumb = ThumbnailFactory.make(page, thumb_size)
         self.noformat = NoFormatFactory.make(self)
         self.preformat = PreFormatFactory.make(self)
         self.horline = HorLineFactory.make(self)

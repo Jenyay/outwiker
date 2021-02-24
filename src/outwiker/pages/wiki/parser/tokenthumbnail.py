@@ -7,27 +7,27 @@ from pyparsing import Regex
 from outwiker.core.thumbexception import ThumbException
 from outwiker.core.defines import PAGE_ATTACH_DIR
 from .pagethumbmaker import PageThumbmaker
-from ..wikiconfig import WikiConfig
 
 
-class ThumbnailFactory (object):
+class ThumbnailFactory:
     """
     Класс для создания токена ThumbnailToken
     """
     @staticmethod
-    def make(parser):
-        return ThumbnailToken(parser).getToken()
+    def make(page, thumb_size):
+        return ThumbnailToken(page, thumb_size).getToken()
 
 
-class ThumbnailToken (object):
+class ThumbnailToken:
     """
     Класс, содержащий все необходимое для разбора и создания превьюшек
     картинок на вики-странице
     """
 
-    def __init__(self, parser):
-        self.parser = parser
-        self.thumbmaker = PageThumbmaker()
+    def __init__(self, page, thumb_size):
+        self._page = page
+        self._thumb_size = thumb_size
+        self._thumbmaker = PageThumbmaker()
 
     def getToken(self):
         result = Regex(r"""%\s*?
@@ -48,27 +48,30 @@ class ThumbnailToken (object):
     def __convertThumb(self, s, l, t):
         if t["width"] is not None:
             size = int(t["width"])
-            func = self.thumbmaker.createThumbByWidth
+            func = self._thumbmaker.createThumbByWidth
 
         elif t["height"] is not None:
             size = int(t["height"])
-            func = self.thumbmaker.createThumbByHeight
+            func = self._thumbmaker.createThumbByHeight
 
         elif t["maxsize"] is not None:
             size = int(t["maxsize"])
-            func = self.thumbmaker.createThumbByMaxSize
+            func = self._thumbmaker.createThumbByMaxSize
 
         else:
-            config = WikiConfig(self.parser.config)
-            size = config.thumbSizeOptions.value
-            func = self.thumbmaker.createThumbByMaxSize
+            size = self._thumb_size
+            func = self._thumbmaker.createThumbByMaxSize
 
         fname = t["fname"]
 
         try:
-            thumb = func(self.parser.page, fname, size)
+            thumb = func(self._page, fname, size)
 
         except (ThumbException, IOError):
-            return _(u"<b>Can't create thumbnail for \"{}\"</b>").format(fname)
+            return _("<b>Can't create thumbnail for \"{}\"</b>").format(fname)
 
-        return u'<a href="%s/%s"><img src="%s"/></a>' % (PAGE_ATTACH_DIR, fname, thumb.replace("\\", "/"))
+        return '<a href="%s/%s"><img src="%s"/></a>' % (
+            PAGE_ATTACH_DIR,
+            fname,
+            thumb.replace("\\", "/")
+        )

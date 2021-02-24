@@ -2,17 +2,16 @@
 
 import os.path
 
+from outwiker.core.attachment import Attachment
 from outwiker.core.thumbmakerpil import ThumbmakerPil
 from ..thumbnails import Thumbnails
-from outwiker.core.attachment import Attachment
 
 
-class PageThumbmaker (object):
+class PageThumbmaker:
     def __init__(self):
         # Имя файла превьюшки: th_width_200_fname
         # Имя файла превьюшки: th_height_100_fname
         self.thumbsTemplate = "th_%s_%d_%s"
-
         self.thumbmaker = ThumbmakerPil()
 
     def __createThumb(self, page, fname, size, file_prefix, func):

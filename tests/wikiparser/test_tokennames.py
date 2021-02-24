@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os
 import unittest
@@ -389,7 +389,7 @@ class TokenNamesTest(unittest.TestCase):
         self._checkToken(testtoken, text, validname)
 
     def testThumbnail(self):
-        testtoken = ThumbnailFactory.make(FakeParser()).setParseAction(
+        testtoken = ThumbnailFactory.make(None, 100).setParseAction(
             lambda s, l, t: None)
         text = "%thumb%Attach:fname.png%%"
         validname = "thumbnail"
