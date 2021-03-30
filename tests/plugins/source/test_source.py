@@ -431,16 +431,16 @@ def hello (count):
         generator = HtmlGenerator(self.testPage)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
-        innerString1 = """ 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11"""
+        innerString1 = """<span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>"""
 
         self.assertTrue(innerString1 in result)
