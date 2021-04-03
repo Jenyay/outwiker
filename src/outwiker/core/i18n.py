@@ -34,7 +34,6 @@ def getDefaultLanguage():
 def init_i18n(language):
     langdir = os.path.join(getCurrentDir(), u'locale')
     lang = loadLanguage(language, langdir, u"outwiker")
-    assert lang is not None
     lang.install()
     return lang
 
@@ -50,13 +49,9 @@ def loadLanguage(language, langdir, domain):
                     if language == AUTO_LANGUAGE
                     else language)
 
-    try:
-        lang = gettext.translation(domain,
-                                   langdir,
-                                   languages=[reallanguage, 'en'])
-    except IOError:
-        return None
-
+    lang = gettext.translation(domain,
+                               langdir,
+                               languages=[reallanguage, 'en'])
     return lang
 
 

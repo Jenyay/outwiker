@@ -211,7 +211,12 @@ def getOS():
 
 
 def getCurrentDir():
-    current_dir = str(Path(__file__).parents[2].resolve())
+    if __file__.endswith('.pyc'):
+        # For compiled with cx_freeze package
+        current_dir = str(Path(__file__).parents[3].resolve())
+    else:
+        # For sources executing
+        current_dir = str(Path(__file__).parents[2].resolve())
     return current_dir
 
 

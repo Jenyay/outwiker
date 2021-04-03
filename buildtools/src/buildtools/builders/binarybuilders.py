@@ -27,7 +27,7 @@ class BaseBinaryBuilder(object, metaclass=ABCMeta):
     def get_excludes(self):
         """Return modules list to exclude from build. """
         return [
-            'Tkinter',
+            'tkinter',
             'PyQt4',
             'PyQt5',
             'unittest',
@@ -40,6 +40,8 @@ class BaseBinaryBuilder(object, metaclass=ABCMeta):
             'bz2',
             'cffi',
             'bsddb',
+            'pytest',
+            'Sphynx',
             'PIL.SunImagePlugin',
             'PIL.IptcImagePlugin',
             'PIL.McIdasImagePlugin',
@@ -97,11 +99,10 @@ class BaseBinaryBuilder(object, metaclass=ABCMeta):
 
 
 class BasePyInstallerBuilder(BaseBinaryBuilder, metaclass=ABCMeta):
-    """Class for binary assimbling creation with PyParsing. """
+    """Class for binary assembling creation with PyInstaller. """
 
     def __init__(self, src_dir, dest_dir, temp_dir):
-        super(BasePyInstallerBuilder, self).__init__(
-            src_dir, dest_dir, temp_dir)
+        super().__init__(src_dir, dest_dir, temp_dir)
 
         # The path where the folder with the assembly will be created
         # (before copying to self.dest_dir)
@@ -170,6 +171,90 @@ class BasePyInstallerBuilder(BaseBinaryBuilder, metaclass=ABCMeta):
 
     def get_files_by_mask(self, directory, mask):
         return [str(fname.resolve()) for fname in Path(directory).glob(mask)]
+
+
+class BaseCxFreezeBuilder(BaseBinaryBuilder, metaclass=ABCMeta):
+    """Class for binary assembling creation with cx_freeze. """
+
+    def __init__(self, src_dir, dest_dir, temp_dir):
+        super().__init__(src_dir, dest_dir, temp_dir)
+
+        # The path where the folder with the assembly will be created
+        # (before copying to self.dest_dir)
+        # build/tmp/build
+        self._dist_dir = os.path.join(temp_dir, u'build')
+
+        # The path with the intermediate files (build info)
+        # build/tmp/build_tmp
+        self._workpath = os.path.join(temp_dir, u'build_tmp')
+
+    def get_remove_list(self):
+        """Return list of the files or dirs to remove after build."""
+        return []
+
+    def get_params(self):
+        include_files = ['help', 'iconset', 'images', 'locale', 'spell',
+                         'styles', 'textstyles', 'plugins']
+        params = ['-OO',
+                  '-c',
+                  '-s',
+                  '--base-name Win32GUI',
+                  '--target-dir {}'.format(self._dist_dir),
+                  '--target-name outwiker',
+                  # '--packages {}'.format(','.join(self.get_includes())),
+                  '--includes {}'.format(','.join(self.get_includes())),
+                  '--excludes {}'.format(','.join(self.get_excludes())),
+                  '--include-files {}'.format(','.join(include_files)),
+                  '--icon images/outwiker.ico',
+                  ]
+
+        return params
+
+    def build(self):
+        params = self.get_params()
+        command = u'cxfreeze runoutwiker.py ' + u' '.join(params)
+        with lcd(self._src_dir):
+            local(command)
+
+        self._remove_files()
+        self._copy_additional_files()
+
+        print_info(
+            u'Copy files to dest path: {} -> {}'.format(self._dist_dir,
+                                                        self._dest_dir))
+
+        shutil.copytree(self._dist_dir, self._dest_dir)
+
+    def _remove_files(self):
+        toRemove = [os.path.join(self._dist_dir, u'outwiker', fname)
+                    for fname in self.get_remove_list()]
+
+        for fname in toRemove:
+            print_info(u'Remove: {}'.format(fname))
+            remove(fname)
+
+    def get_files_by_mask(self, directory, mask):
+        return [str(fname.resolve()) for fname in Path(directory).glob(mask)]
+
+
+class CxFreezeBuilderWindows(BaseCxFreezeBuilder):
+    def get_remove_list(self):
+        """Return list of the files or dirs to remove after build."""
+        to_remove = [
+            u'_win32sysloader.pyd',
+            u'win32com.shell.shell.pyd',
+            u'win32trace.pyd',
+            u'win32wnet.pyd',
+            u'iconv.dll',
+            u'_winxptheme.pyd',
+            u'mfc140u.dll',
+            u'include',
+        ]
+
+        to_remove += [fname.name for fname
+                      in Path(self._dist_dir, 'outwiker').glob('api-ms-win*.dll')]
+
+        return to_remove
 
 
 class PyInstallerBuilderWindows(BasePyInstallerBuilder):

@@ -9,7 +9,7 @@ from buildtools.buildfacts import BuildFacts
 from buildtools.utilites import print_info
 
 
-class BuilderBase(object, metaclass=abc.ABCMeta):
+class BuilderBase(metaclass=abc.ABCMeta):
     """
     Base class for all builders.
     """
