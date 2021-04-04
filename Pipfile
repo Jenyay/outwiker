@@ -7,7 +7,7 @@ name = "pypi"
 
 [packages]
 wxPython = "==4.1.1"
-Pillow = "==8.1.0"
+Pillow = "==8.1.2"
 cyhunspell = "==2.0.2"
 idna = "==3.1"
 pyparsing = "==2.4.7"
@@ -15,12 +15,12 @@ psutil = "==5.8.0"
 
 [dev-packages]
 Fabric3 = "==1.14.post1"
-PyInstaller = "==4.2"
+cx-freeze = "==6.5.3"
 pympler = "==0.9"
 pytest = "==6.2.2"
-coverage = "==5.4"
+coverage = "==5.5"
 jinja2 = "==2.11.3"
 colorama = "==0.4.4"
-sphinx = ">=3.4"
+sphinx = ">=3.5"
 outwiker = {editable = true,path = "."}
 buildtools = {editable = true,path = "buildtools"}

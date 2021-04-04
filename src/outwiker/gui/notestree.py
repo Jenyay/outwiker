@@ -50,6 +50,7 @@ class NotesTree(wx.Panel):
         self.popupPage = None
 
         # Картинки для дерева
+        # raise Exception(self.defaultIcon)
         self._iconsCache = ImageListCache(self.defaultIcon)
         self.treeCtrl.AssignImageList(self._iconsCache.getImageList())
 
@@ -643,6 +644,7 @@ class NotesTreeDropFilesTarget(BaseDropFilesTarget):
     """
     Class to drop files to notes in the notes tree panel.
     """
+
     def __init__(self, application,
                  targetWindow: wx.TreeCtrl,
                  notesTree: NotesTree):
@@ -669,7 +671,8 @@ class NotesTreeDropFilesTarget(BaseDropFilesTarget):
                 if MessageBox(text,
                               _("Attach files to the note?"),
                               wx.YES_NO | wx.ICON_QUESTION) == wx.YES:
-                    attachFiles(self._application.mainWindow, page, correctedFiles)
+                    attachFiles(self._application.mainWindow,
+                                page, correctedFiles)
                 return True
 
         return False
