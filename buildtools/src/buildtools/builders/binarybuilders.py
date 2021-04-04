@@ -80,6 +80,10 @@ class BaseBinaryBuilder(object, metaclass=ABCMeta):
             'cacheman.cachewrap',
         ]
 
+    def get_includes_dirs(self):
+        return ['help', 'iconset', 'images', 'locale', 'spell',
+                'styles', 'textstyles', 'plugins']
+
     def get_additional_files(self):
         # Add the standard wxPython locales
         wx_locales_path = os.path.join(os.path.dirname(wx.__file__), 'locale')
@@ -184,27 +188,21 @@ class BaseCxFreezeBuilder(BaseBinaryBuilder, metaclass=ABCMeta):
         # build/tmp/build
         self._dist_dir = os.path.join(temp_dir, u'build')
 
-        # The path with the intermediate files (build info)
-        # build/tmp/build_tmp
-        self._workpath = os.path.join(temp_dir, u'build_tmp')
-
     def get_remove_list(self):
         """Return list of the files or dirs to remove after build."""
         return []
 
     def get_params(self):
-        include_files = ['help', 'iconset', 'images', 'locale', 'spell',
-                         'styles', 'textstyles', 'plugins']
         params = ['-OO',
                   '-c',
                   '-s',
                   '--base-name Win32GUI',
-                  '--target-dir {}'.format(self._dist_dir),
+                  '--target-dir "{}"'.format(self._dist_dir),
                   '--target-name outwiker',
-                  # '--packages {}'.format(','.join(self.get_includes())),
                   '--includes {}'.format(','.join(self.get_includes())),
                   '--excludes {}'.format(','.join(self.get_excludes())),
-                  '--include-files {}'.format(','.join(include_files)),
+                  '--include-files {}'.format(
+                      ','.join(self.get_includes_dirs())),
                   '--icon images/outwiker.ico',
                   ]
 
