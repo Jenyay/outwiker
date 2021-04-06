@@ -191,9 +191,9 @@ class BuilderWindows(BuilderBase):
             )
 
             local(
-                r'7z a "{}" .\* .\plugins -r -aoa -xr!*.pyc -xr!.ropeproject'.format(path_zip))
+                r'7z a "{}" .\* .\plugins -r -aoa -xr!__pycache__ -xr!.ropeproject'.format(path_zip))
             local(
-                r'7z a "{}" .\* .\plugins -r -aoa -xr!*.pyc -xr!.ropeproject'.format(path_7z))
+                r'7z a "{}" .\* .\plugins -r -aoa -xr!__pycache__ -xr!.ropeproject'.format(path_7z))
 
     def _move_executable_dir(self):
         print_info('Move result directory to {}...'.format(self.build_dir))
