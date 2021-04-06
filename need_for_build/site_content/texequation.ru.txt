@@ -29,6 +29,8 @@ Attach:Soft/Outwiker/us.png [[English version -> Outwiker/TexEquationEn]]
 
 {% include 'changelog.ru.txt' %}
 
-%center%(:ad:)
-
 (:rater:)
+
+(:ad:)
+
+(:include Site.FoxCommentBox:)

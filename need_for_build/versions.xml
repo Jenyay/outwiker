@@ -1,12 +1,12 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <versions>
-	<version number="3.0.0.885" status="dev">
+	<version number="3.0.0.886" status="dev" date="07.04.2021">
 		<changes>
-			<change></change>
+			<change>Fix build for Windows.</change>
 		</changes>
 
 		<changes lang="ru">
-			<change></change>
+			<change>Исправлена сборка под Windows.</change>
 		</changes>
 	</version>
 

@@ -90,7 +90,8 @@ Attach:us.png [[English version -> Outwiker/SourcePluginEn]]
 
 {% include 'changelog.ru.txt' %}
 
-[[http://jenyay.net/forum/topic/9/plagin-source/ | '''Обсуждение на форуме''']]
-
 (:rater:)
-%center%(:ad:)
+
+(:ad:)
+
+(:include Site.FoxCommentBox:)
