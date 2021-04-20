@@ -11,6 +11,7 @@
 			<change>New GUI to show a page with unknown type.</change>
 			<change>Add the ability to select notes position in the notes list.</change>
 			<change>Add watching for attached files for selected page.</change>
+			<change>Improved overwrite attached files dialog.</change>
 			<change>Other interface improvements.</change>
 			<change>Add German localization.</change>
 			<change>New commands for wiki pages to change text color and apply custom styles.</change>
@@ -19,6 +20,7 @@
 			<change>Add a new page style "rifle_green_and_red".</change>
 			<change>Change the storage format for certain properties of the notes tree pages.</change>
 			<change>Change the way of storing standard icons in notes.</change>
+			<change>New application installer.</change>
 			<change>Change plug-ins format.</change>
 			<change>Migrate to Python 3.x and wxPython 4.1.</change>
 		</changes>
@@ -32,6 +34,7 @@
 			<change>Новый интерфейс для отображения страниц неизвестного типа.</change>
 			<change>Добавлена возможность выбора положения новой заметки в списке заметок.</change>
 			<change>Добавлена настройка для шаблона имени новых страниц.</change>
+			<change>Улучшен диалог с вопросом о перезаписи прикрепленных файлов.</change>
 			<change>Другие улучшения в интерфейсе.</change>
 			<change>Новые викикоманды для раскраски текста и применения пользовательских стилей.</change>
 			<change>Добавлена возможность вставки комментариев в викинотации.</change>
@@ -41,6 +44,7 @@
 			<change>Добавлена немецкая локализация.</change>
 			<change>Изменение формата хранения некоторых настроек страниц в дереве заметок.</change>
 			<change>Изменен способ хранения стандартных значков в заметках.</change>
+			<change>Переделан инсталлятор программы.</change>
 			<change>Изменен формат плагинов.</change>
 			<change>Переход на Python 3.x и wxPython 4.1.</change>
 		</changes>
