@@ -1,6 +1,6 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <versions>
-	<version number="3.0">
+	<version number="3.0.0">
 		<changes>
 			<change>Now you can use any symbols in the notes title.</change>
 			<change>New toolbars.</change>

@@ -680,6 +680,9 @@ def snap_publish(*channels):
 
         local(command)
 
+        command_sign = 'snapcraft sign-build "{fname}"'.format(fname=snap_file)
+        local(command_sign)
+
 
 @task
 def site_content():
