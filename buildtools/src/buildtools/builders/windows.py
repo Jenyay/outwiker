@@ -49,10 +49,8 @@ class BuilderWindows(BuilderBase):
         self._dest_plugins_dir = os.path.join(self._executable_dir, 'plugins')
 
     def clear(self):
-        super(BuilderWindows, self).clear()
         toRemove = [
-            os.path.join(self.facts.version_dir,
-                         OUTWIKER_VERSIONS_FILENAME),
+            os.path.join(self.build_dir, WINDOWS_EXECUTABLE_DIR),
             os.path.join(self.build_dir,
                          self._resultBaseName + '.7z'),
             os.path.join(self.build_dir,
@@ -63,10 +61,9 @@ class BuilderWindows(BuilderBase):
                          self._resultWithPluginsBaseName + '.7z'),
             os.path.join(self.build_dir,
                          self._resultWithPluginsBaseName + '.zip'),
-            os.path.join(self.build_dir,
-                         WINDOWS_INSTALLER_FILENAME),
         ]
-        list(map(self._remove, toRemove))
+        for fname in toRemove:
+            self._remove(fname)
 
     def _build(self):
         self._copy_necessary_files()
