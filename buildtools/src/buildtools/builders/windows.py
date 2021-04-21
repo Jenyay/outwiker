@@ -10,8 +10,6 @@ from .base import BuilderBase
 from .binarybuilders import CxFreezeBuilderWindows
 from buildtools.defines import (WINDOWS_BUILD_DIR,
                                 PLUGINS_LIST,
-                                OUTWIKER_VERSIONS_FILENAME,
-                                WINDOWS_INSTALLER_FILENAME,
                                 NEED_FOR_BUILD_DIR,
                                 WINDOWS_EXECUTABLE_DIR)
 from buildtools.utilites import print_info
