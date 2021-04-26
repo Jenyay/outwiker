@@ -77,6 +77,7 @@ def plugins(updatedonly=False):
     '''
     Create an archive with plugins (7z required)
     '''
+    updatedonly = tobool(updatedonly)
     builder = BuilderPlugins(updatedOnly=updatedonly)
     builder.build()
 
@@ -95,6 +96,7 @@ def sources(is_stable=False):
     '''
     Create the sources archives
     '''
+    is_stable = tobool(is_stable)
     builder = BuilderSources(is_stable=tobool(is_stable))
     builder.build()
 
@@ -244,8 +246,9 @@ def deb_binary(is_stable=False):
     '''
     Create binary deb package
     '''
+    is_stable = tobool(is_stable)
     builder = BuilderDebBinaryFactory.get_default(DEB_BINARY_BUILD_DIR,
-                                                  tobool(is_stable))
+                                                  is_stable)
     builder.build()
     print_info('Deb created: {}'.format(builder.get_deb_files()))
 
@@ -334,6 +337,8 @@ def upload_distribs(is_stable=False):
     '''
     Upload binary version to site
     '''
+    is_stable = tobool(is_stable)
+
     facts = BuildFacts()
     version = getOutwikerVersion()
 
@@ -366,17 +371,13 @@ def upload_plugins_pack():
         put(pack_path, basename)
 
 
-def _add_git_tag(tagname):
-    local(u'git checkout master')
-    local(u'git tag {}'.format(tagname))
-    local(u'git push --tags')
-
-
 @task
 def build(is_stable=False):
     '''
     Create artifacts for current version.
     '''
+    is_stable = tobool(is_stable)
+
     if is_stable:
         build(False)
 
@@ -393,10 +394,12 @@ def build(is_stable=False):
 @task
 def deploy(apply=False, is_stable=False):
     '''
-    Deploy unstable version.
-
     apply -- True if deploy to server and False if print commands only
+    is_stable -- False for unstable version and True for stable version
     '''
+    apply = tobool(apply)
+    is_stable = tobool(is_stable)
+
     linter_result = check_errors()
     if linter_result != LinterStatus.OK:
         return
@@ -423,12 +426,25 @@ def add_sources_tag(apply=False, is_stable=False):
     '''
     Add the tag to git repository and push
     '''
+    apply = tobool(apply)
+    is_stable = tobool(is_stable)
+
+    _add_sources_tag(apply, False)
+    if is_stable:
+        _add_sources_tag(apply, True)
+
+
+def _add_sources_tag(apply=False, is_stable=False):
     version_str = getOutwikerVersionStr()
     if is_stable:
-        tagname = u'release_{}'.format(version_str)
+        tagname = u'stable_{}'.format(version_str)
     else:
         tagname = u'unstable_{}'.format(version_str)
 
+    _add_git_tag(tagname, apply)
+
+
+def _add_git_tag(tagname, apply):
     commands = [
         'git checkout master',
         'git tag {}'.format(tagname),
@@ -452,6 +468,9 @@ def update_sources_master(apply=False, is_stable=False):
 
     apply -- True if deploy to server and False if print commands only
     '''
+    apply = tobool(apply)
+    is_stable = tobool(is_stable)
+
     commands = [
         'git checkout dev',
         'git pull',
@@ -460,6 +479,14 @@ def update_sources_master(apply=False, is_stable=False):
         'git merge dev',
         'git push'
     ]
+    if is_stable:
+        commands += [
+            'git switch stable',
+            'git pull',
+            'git merge master',
+            'git push',
+            'git switch master'
+        ]
     _run_commands(commands, apply)
     add_sources_tag(apply, is_stable)
 
