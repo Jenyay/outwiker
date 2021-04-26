@@ -462,7 +462,7 @@ def _run_commands(commands: List[str], apply=False):
 
 
 @task
-def update_sources_master(apply=False, is_stable=False):
+def update_sources_branches(apply=False, is_stable=False):
     '''
     Update the git repository
 
