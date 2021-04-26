@@ -8,6 +8,7 @@ class SafeImageList (wx.ImageList):
     ImageList which can accept any bitmap size.
     Added in OutWiker 2.0.0.795
     """
+
     def __init__(self, width, height):
         super(SafeImageList, self).__init__(width, height)
         self._width = width
@@ -16,7 +17,7 @@ class SafeImageList (wx.ImageList):
     def Add(self, bitmap):
         size_src = bitmap.GetSize()
         if size_src[0] == self._width and size_src[1] == self._height:
-            return super(SafeImageList, self).Add(bitmap)
+            return super().Add(bitmap)
 
         bitmap_corrected = self._correctSize(bitmap)
         return super(SafeImageList, self).Add(bitmap_corrected)

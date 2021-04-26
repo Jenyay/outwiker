@@ -7,11 +7,9 @@ from string import Template
 from fabric.api import local, lcd
 
 from .base import BuilderBase
-from .binarybuilders import PyInstallerBuilderWindows
+from .binarybuilders import CxFreezeBuilderWindows
 from buildtools.defines import (WINDOWS_BUILD_DIR,
                                 PLUGINS_LIST,
-                                OUTWIKER_VERSIONS_FILENAME,
-                                WINDOWS_INSTALLER_FILENAME,
                                 NEED_FOR_BUILD_DIR,
                                 WINDOWS_EXECUTABLE_DIR)
 from buildtools.utilites import print_info
@@ -28,7 +26,7 @@ class BuilderWindows(BuilderBase):
                  is_stable=False,
                  create_archives=True,
                  create_installer=True):
-        super(BuilderWindows, self).__init__(WINDOWS_BUILD_DIR, is_stable)
+        super().__init__(WINDOWS_BUILD_DIR, is_stable)
         self._create_installer = create_installer
         self._create_archives = create_archives
 
@@ -49,10 +47,8 @@ class BuilderWindows(BuilderBase):
         self._dest_plugins_dir = os.path.join(self._executable_dir, 'plugins')
 
     def clear(self):
-        super(BuilderWindows, self).clear()
         toRemove = [
-            os.path.join(self.facts.version_dir,
-                         OUTWIKER_VERSIONS_FILENAME),
+            os.path.join(self.build_dir, WINDOWS_EXECUTABLE_DIR),
             os.path.join(self.build_dir,
                          self._resultBaseName + '.7z'),
             os.path.join(self.build_dir,
@@ -63,10 +59,9 @@ class BuilderWindows(BuilderBase):
                          self._resultWithPluginsBaseName + '.7z'),
             os.path.join(self.build_dir,
                          self._resultWithPluginsBaseName + '.zip'),
-            os.path.join(self.build_dir,
-                         WINDOWS_INSTALLER_FILENAME),
         ]
-        list(map(self._remove, toRemove))
+        for fname in toRemove:
+            self._remove(fname)
 
     def _build(self):
         self._copy_necessary_files()
@@ -88,7 +83,7 @@ class BuilderWindows(BuilderBase):
         dest_dir = self._executable_dir
         temp_dir = self.facts.temp_dir
 
-        builder = PyInstallerBuilderWindows(src_dir, dest_dir, temp_dir)
+        builder = CxFreezeBuilderWindows(src_dir, dest_dir, temp_dir)
         builder.build()
 
     def _create_plugins_dir(self):
@@ -191,9 +186,9 @@ class BuilderWindows(BuilderBase):
             )
 
             local(
-                r'7z a "{}" .\* .\plugins -r -aoa -xr!*.pyc -xr!.ropeproject'.format(path_zip))
+                r'7z a "{}" .\* .\plugins -r -aoa -xr!__pycache__ -xr!.ropeproject'.format(path_zip))
             local(
-                r'7z a "{}" .\* .\plugins -r -aoa -xr!*.pyc -xr!.ropeproject'.format(path_7z))
+                r'7z a "{}" .\* .\plugins -r -aoa -xr!__pycache__ -xr!.ropeproject'.format(path_7z))
 
     def _move_executable_dir(self):
         print_info('Move result directory to {}...'.format(self.build_dir))

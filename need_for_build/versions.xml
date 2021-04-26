@@ -1,12 +1,46 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <versions>
-	<version number="3.0.0.881" status="dev">
+	<version number="3.0.0.888">
 		<changes>
-			<change></change>
+			<change>Release</change>
 		</changes>
 
 		<changes lang="ru">
-			<change></change>
+			<change>Релизная версия</change>
+		</changes>
+	</version>
+
+	<version number="3.0.0.886" status="dev" date="07.04.2021">
+		<changes>
+			<change>Fix build for Windows.</change>
+		</changes>
+
+		<changes lang="ru">
+			<change>Исправлена сборка под Windows.</change>
+		</changes>
+	</version>
+
+	<version number="3.0.0.884" status="dev" date="07.02.2021">
+		<changes>
+			<change>Add the wiki tags for a multiline block.</change>
+			<change>Update the German localization.</change>
+		</changes>
+
+		<changes lang="ru">
+			<change>В викинотацию добавлены теги для обозначения многострочного блока.</change>
+			<change>Обновление немецкой локализации.</change>
+		</changes>
+	</version>
+
+	<version number="3.0.0.882" status="dev" date="23.01.2021">
+		<changes>
+			<change>In the dialog asking about overwriting attached files, information about files (size and date) is now displayed.</change>
+			<change>Bug fixes.</change>
+		</changes>
+
+		<changes lang="ru">
+		  <change>В диалоге с вопросом о перезаписи прикрепленных файлов теперь показывается информация о файлах (размер и дата).</change>
+		  <change>Исправление ошибок.</change>
 		</changes>
 	</version>
 	

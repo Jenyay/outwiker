@@ -2,8 +2,7 @@
 
 import traceback
 
-from pyparsing import NoMatch
-
+from .markup import Markup
 from .tokenfonts import FontsFactory
 from .tokennoformat import NoFormatFactory
 from .tokenpreformat import PreFormatFactory
@@ -25,6 +24,7 @@ from .tokentext import TextFactory
 from .tokenquote import QuoteFactory
 from .tokenwikistyle import WikiStyleInlineFactory, WikiStyleBlockFactory
 from .tokencomment import CommentFactory
+from .tokenmultilineblock import MultilineBlockFactory
 
 from ..thumbnails import Thumbnails
 
@@ -35,7 +35,7 @@ class Parser(object):
         self.config = config
         self.error_template = u"<b>{error}</b>"
 
-        # Dictionary with nonstandard parameters(for plugins for example)
+        # Dictionary with nonstandard parameters (for plugins for example)
         self.customProps = {}
 
         # Массив строк, которые надо добавить в заголовок страницы
@@ -44,7 +44,7 @@ class Parser(object):
         self.__footers = []
 
         # Команды, которые обрабатывает парсер.
-        # Формат команд:(:name params... :) content...(:nameend:)
+        # Формат команд: (:name params... :) content...(:nameend:)
         # Ключ - имя команды, значение - экземпляр класса команды
         self.commands = {}
 
@@ -81,6 +81,7 @@ class Parser(object):
         self.wikistyle_inline = WikiStyleInlineFactory.make(self)
         self.wikistyle_block = WikiStyleBlockFactory.make(self)
         self.comment = CommentFactory.make(self)
+        self.multiline_block = MultilineBlockFactory.make(self)
 
         # Common wiki tokens
         self.wikiTokens = [
@@ -116,6 +117,7 @@ class Parser(object):
             self.wikistyle_block,
             self.wikistyle_inline,
             self.command,
+            self.multiline_block,
         ]
 
         # Tokens for using inside links
@@ -139,6 +141,7 @@ class Parser(object):
             self.lineJoin,
             self.noformat,
             self.wikistyle_inline,
+            self.multiline_block,
         ]
 
         # Tokens for using inside headings
@@ -168,6 +171,7 @@ class Parser(object):
             self.align,
             self.wikistyle_inline,
             self.command,
+            self.multiline_block,
         ]
 
         # Tokens for using inside text
@@ -198,6 +202,7 @@ class Parser(object):
             self.wikistyle_block,
             self.wikistyle_inline,
             self.command,
+            self.multiline_block,
         ]
 
         # Tokens for using inside list items (bullets and numeric)
@@ -206,6 +211,7 @@ class Parser(object):
             self.urlImage,
             self.url,
             self.text,
+            self.multiline_block,
             self.lineBreak,
             self.lineJoin,
             self.link,
@@ -245,7 +251,7 @@ class Parser(object):
         Свойство возвращает строку из добавленных заголовочных элементов
         (то, что должно быть внутри тега <head>...</head>)
         """
-        return u"".join(self.__headers)
+        return ''.join(self.__headers)
 
     def appendToHead(self, header):
         """
@@ -347,13 +353,3 @@ class Parser(object):
     def removeCommand(self, commandName):
         if commandName in self.commands:
             del self.commands[commandName]
-
-
-class Markup(object):
-    def __init__(self, tokens_list):
-        self._markup = NoMatch()
-        for token in tokens_list:
-            self._markup |= token
-
-    def transformString(self, text):
-        return self._markup.transformString(text)

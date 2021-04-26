@@ -11,6 +11,7 @@ from outwiker.pages.html.htmllinkdialogcontroller import HtmlLinkDialogControlle
 from outwiker.pages.wiki.wikiconfig import WikiConfig
 from outwiker.pages.wiki.wikilinkdialogcontroller import WikiLinkDialogController
 from outwiker.pages.wiki.wikipage import WikiPageFactory
+from outwiker.core.pageuiddepot import PageUidDepot
 from tests.basetestcases import BaseOutWikerGUIMixin
 
 
@@ -408,6 +409,47 @@ class LinkDialogControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(controller.comment, clipboardText)
         self.assertEqual(controller.linkResult, '[[page://_asdfasdfasdf]]')
 
+    def testClipboardExitedPageLink_wiki(self):
+        page_uid = PageUidDepot().createUid(self._testpage)
+        parent = LinkDialog(self.mainWindow)
+        Tester.dialogTester.appendOk()
+        selectedString = ''
+        clipboardText = 'page://{uid}'.format(uid=page_uid)
+        copyTextToClipboard(clipboardText)
+
+        controller = WikiLinkDialogController(self.application,
+                                              self._testpage,
+                                              parent,
+                                              selectedString)
+        controller.showDialog()
+
+        self.assertEqual(controller.link, clipboardText)
+        self.assertEqual(controller.comment, self._testpage.display_title)
+        self.assertEqual(controller.linkResult,
+                         '[[{title} -> page://{uid}]]'.format(title=self._testpage.display_title,
+                                                              uid=page_uid))
+
+    def testClipboardExitedPageAliasLink_wiki(self):
+        self._testpage.alias = 'A page with an alias'
+        page_uid = PageUidDepot().createUid(self._testpage)
+        parent = LinkDialog(self.mainWindow)
+        Tester.dialogTester.appendOk()
+        selectedString = ''
+        clipboardText = 'page://{uid}'.format(uid=page_uid)
+        copyTextToClipboard(clipboardText)
+
+        controller = WikiLinkDialogController(self.application,
+                                              self._testpage,
+                                              parent,
+                                              selectedString)
+        controller.showDialog()
+
+        self.assertEqual(controller.link, clipboardText)
+        self.assertEqual(controller.comment, self._testpage.display_title)
+        self.assertEqual(controller.linkResult,
+                         '[[{title} -> page://{uid}]]'.format(title=self._testpage.display_title,
+                                                              uid=page_uid))
+
     def testClipboardPageLink_html(self):
         parent = LinkDialog(self.mainWindow)
         Tester.dialogTester.appendOk()
@@ -425,6 +467,47 @@ class LinkDialogControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(
             controller.linkResult,
             '<a href="page://_asdfasdfasdf">page://_asdfasdfasdf</a>')
+
+    def testClipboardExitedPageLink_html(self):
+        page_uid = PageUidDepot().createUid(self._testpage)
+        parent = LinkDialog(self.mainWindow)
+        Tester.dialogTester.appendOk()
+        selectedString = ''
+        clipboardText = 'page://{uid}'.format(uid=page_uid)
+        copyTextToClipboard(clipboardText)
+
+        controller = HtmlLinkDialogController(self._testpage,
+                                              parent,
+                                              selectedString)
+        controller.showDialog()
+
+        self.assertEqual(controller.link, clipboardText)
+        self.assertEqual(controller.comment, self._testpage.display_title)
+        self.assertEqual(
+            controller.linkResult,
+            '<a href="page://{uid}">{title}</a>'.format(uid=page_uid,
+                                                        title=self._testpage.display_title))
+
+    def testClipboardExitedWithAliasPageLink_html(self):
+        self._testpage.alias = 'Tha page with an alias'
+        page_uid = PageUidDepot().createUid(self._testpage)
+        parent = LinkDialog(self.mainWindow)
+        Tester.dialogTester.appendOk()
+        selectedString = ''
+        clipboardText = 'page://{uid}'.format(uid=page_uid)
+        copyTextToClipboard(clipboardText)
+
+        controller = HtmlLinkDialogController(self._testpage,
+                                              parent,
+                                              selectedString)
+        controller.showDialog()
+
+        self.assertEqual(controller.link, clipboardText)
+        self.assertEqual(controller.comment, self._testpage.display_title)
+        self.assertEqual(
+            controller.linkResult,
+            '<a href="page://{uid}">{title}</a>'.format(uid=page_uid,
+                                                        title=self._testpage.display_title))
 
     def testClipboardAnchor_wiki(self):
         parent = LinkDialog(self.mainWindow)
