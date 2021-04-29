@@ -9,7 +9,7 @@ name = "pypi"
 wxPython = "==4.1.1"
 Pillow = "==8.1.2"
 cyhunspell = "==2.0.2"
-idna = "==3.1"
+idna = ">=2.10"
 pyparsing = "==2.4.7"
 psutil = "==5.8.0"
 
