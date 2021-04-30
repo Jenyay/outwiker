@@ -25,6 +25,7 @@ class ActionsGUIController(object):
     """
     Class to create buttons at toolbar and menu items for actions
     """
+
     def __init__(self, application, pageTypeString):
         self._application = application
         self._pageTypeString = pageTypeString
@@ -39,7 +40,8 @@ class ActionsGUIController(object):
         new_menus - list of the tuples (menu_id, title, parent_menu_id)
         '''
         self._actionsInfoList = action_gui_info_list[:]
-        self._new_toolbars = new_toolbars[:] if new_toolbars is not None else []
+        self._new_toolbars = (new_toolbars[:] if new_toolbars is not None
+                              else [])
         self._new_menus = new_menus[:] if new_menus is not None else []
 
         self._application.onPageViewCreate += self._onPageViewCreate
@@ -79,8 +81,10 @@ class ActionsGUIController(object):
                 self._application.actionController.appendToolbarButton(
                     action_info.action.stringId,
                     mainWindow.toolbars[action_info.button_info.toolbar_id],
-                    action_info.button_info.image_fname)
+                    action_info.button_info.image_fname,
+                    False)
 
+        self._application.actionController.updateToolbars()
         self._enableTools()
 
     def _createToolBars(self):
@@ -116,7 +120,8 @@ class ActionsGUIController(object):
                 actionController.removeMenuItem(action_info.action.stringId)
 
             if action_info.button_info is not None:
-                actionController.removeToolbarButton(action_info.action.stringId)
+                actionController.removeToolbarButton(
+                    action_info.action.stringId)
 
         self._destroyToolBars()
         self._destroyMenus()

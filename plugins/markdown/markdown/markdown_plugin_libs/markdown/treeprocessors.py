@@ -126,7 +126,8 @@ class InlineProcessor(Treeprocessor):
         """
         if not isinstance(data, util.AtomicString):
             startIndex = 0
-            while patternIndex < len(self.inlinePatterns):
+            count = len(self.inlinePatterns)
+            while patternIndex < count:
                 data, matched, startIndex = self.__applyPattern(
                     self.inlinePatterns[patternIndex], data, patternIndex, startIndex
                 )
@@ -369,8 +370,8 @@ class InlineProcessor(Treeprocessor):
                     lst = self.__processPlaceholders(
                         self.__handleInline(text), child
                     )
-                    for l in lst:
-                        self.parent_map[l[0]] = child
+                    for item in lst:
+                        self.parent_map[item[0]] = child
                     stack += lst
                     insertQueue.append((child, lst))
                     self.ancestors.pop()

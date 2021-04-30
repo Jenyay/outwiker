@@ -25,15 +25,21 @@ class LogRedirector(object):
         logging.getLogger("PIL").setLevel(logging.WARNING)
 
     def write(self, message):
-        self._terminal.write(message)
-        with open(self._fname, "a") as fp:
+        if self._terminal is not None:
+            self._terminal.write(message)
+
+        with open(self._fname, "a", encoding='utf8') as fp:
             if self._firstWrite:
                 fp.write(u'\n\n{} - START\n'.format(self._runTime))
                 self._firstWrite = False
             fp.write(message)
 
     def flush(self):
-        self._terminal.flush()
+        if self._terminal is not None:
+            self._terminal.flush()
 
     def fileno(self):
-        return self._terminal.fileno()
+        if self._terminal is not None:
+            return self._terminal.fileno()
+
+        return None

@@ -1,16 +1,94 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <versions>
-	<version number="3.0.0.873" status="dev">
+	<version number="3.0.0.888">
+		<changes>
+			<change>Release</change>
+		</changes>
+
+		<changes lang="ru">
+			<change>Релизная версия</change>
+		</changes>
+	</version>
+
+	<version number="3.0.0.886" status="dev" date="07.04.2021">
+		<changes>
+			<change>Fix build for Windows.</change>
+		</changes>
+
+		<changes lang="ru">
+			<change>Исправлена сборка под Windows.</change>
+		</changes>
+	</version>
+
+	<version number="3.0.0.884" status="dev" date="07.02.2021">
+		<changes>
+			<change>Add the wiki tags for a multiline block.</change>
+			<change>Update the German localization.</change>
+		</changes>
+
+		<changes lang="ru">
+			<change>В викинотацию добавлены теги для обозначения многострочного блока.</change>
+			<change>Обновление немецкой локализации.</change>
+		</changes>
+	</version>
+
+	<version number="3.0.0.882" status="dev" date="23.01.2021">
+		<changes>
+			<change>In the dialog asking about overwriting attached files, information about files (size and date) is now displayed.</change>
+			<change>Bug fixes.</change>
+		</changes>
+
+		<changes lang="ru">
+		  <change>В диалоге с вопросом о перезаписи прикрепленных файлов теперь показывается информация о файлах (размер и дата).</change>
+		  <change>Исправление ошибок.</change>
+		</changes>
+	</version>
+	
+	<version number="3.0.0.880" status="dev" date="18.01.2021">
+		<changes>
+			<change>Add the plugins to installer for Windows.</change>
+			<change>Add the ability to install without administrator privileges with installer for Windows.</change>
+			<change>Add the ability to install in the portable mode with installer for Windows.</change>
+		</changes>
+
+		<changes lang="ru">
+			<change>В инсталятор под Windows добавлены плагины.</change>
+			<change>В инсталятор под Windows добавлена возможность установки без прав администратора.</change>
+			<change>В инсталятор добавлена возможность установки в портабельном режиме под Windows.</change>
+		</changes>
+	</version>
+
+	<version number="3.0.0.878" status="dev" date="13.01.2020">
+		<changes>
+			<change>Bug fixes.</change>
+		</changes>
+
+		<changes lang="ru">
+			<change>Исправление ошибок.</change>
+		</changes>
+	</version>
+
+	<version number="3.0.0.876" status="dev" date="29.12.2020">
+		<changes>
+			<change>Migrate to wxPython 4.1.1.</change>
+		</changes>
+
+		<changes lang="ru">
+			<change>Переход на wxPython 4.1.1.</change>
+		</changes>
+	</version>
+
+	<version number="3.0.0.874" status="dev" date="04.06.2020">
 		<changes>
 			<change>Update help.</change>
 			<change>Add the ability to link to page by alias.</change>
-			<change>The (:childlist:) wiki command take into account an alias of a page.</change>
+			<change>The childlist wiki command take into account an alias of a page.</change>
 		</changes>
 
 		<changes lang="ru">
 			<change>Обновление справки.</change>
 			<change>Добавлена возможность ссылаться на страницы по ее псевдониму.</change>
-			<change>Викикоманда (:childlist:) теперь учитывает псевдонимы страниц.</change>
+			<change>Викикоманда childlist теперь учитывает псевдонимы страниц.</change>
 		</changes>
 	</version>
 

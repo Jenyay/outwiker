@@ -17,6 +17,9 @@ class BasePrefPanel(ScrolledPanel):
     def Save(self):
         pass
 
+    def Cancel(self):
+        pass
+
     def _addLabelAndControlToSizer(self, sizer: wx.Sizer, label: wx.StaticText, control: wx.Control):
         sizer.Add(label, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
         sizer.Add(control, 0, wx.ALL | wx.ALIGN_RIGHT, border=2)

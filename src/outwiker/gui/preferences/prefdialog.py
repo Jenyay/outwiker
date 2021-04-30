@@ -29,6 +29,16 @@ class PrefDialog(TestedDialog):
         """
         return self.__treeBook
 
+    @property
+    def pages(self):
+        count = self.__treeBook.GetPageCount()
+        for n in range(count):
+            yield self.__treeBook.GetPage(n)
+
+    @property
+    def currentPage(self):
+        return self.__treeBook.GetCurrentPage()
+
     def appendPreferenceGroup(self, groupname, prefPanelsInfoList):
         """
         Добавить группу настроек

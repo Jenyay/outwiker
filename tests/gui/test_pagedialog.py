@@ -104,7 +104,8 @@ class CreatePageWithDialogTest(BasePageDialogTest):
         self.assertIsNone(self.wikiroot['Новая страница'].alias)
 
     def test_invalid_chars_01(self):
-        Tester.dialogTester.append(self._set_title_func, 'Страница1 / Страница2')
+        Tester.dialogTester.append(
+            self._set_title_func, 'Страница1 / Страница2')
         Tester.dialogTester.appendError()
         createPageWithDialog(self.application.mainWindow, self.wikiroot)
 
@@ -146,8 +147,8 @@ class CreatePageWithDialogTest(BasePageDialogTest):
         createPageWithDialog(self.application.mainWindow, self.wikiroot)
 
         self.assertEqual(len(self.wikiroot), 1)
-        self.assertIsNotNone(self.wikiroot['.._.'])
-        self.assertEqual(self.wikiroot['.._.'].alias, '../.')
+        self.assertIsNotNone(self.wikiroot['..__'])
+        self.assertEqual(self.wikiroot['..__'].alias, '../.')
 
     def test_double_underline(self):
         Tester.dialogTester.append(self._set_title_func, '__attach')
@@ -210,7 +211,8 @@ class RenamePageWithDialogTest(BasePageDialogTest):
 
     def test_special_chars(self):
         page = WikiPageFactory().create(self.wikiroot, 'Викистраница', [])
-        Tester.dialogTester.append(self._set_title_func, 'Тест ><|?*:"\\/#% проверка')
+        Tester.dialogTester.append(
+            self._set_title_func, 'Тест ><|?*:"\\/#% проверка')
         Tester.dialogTester.appendError()
 
         editPage(self.application.mainWindow, page)

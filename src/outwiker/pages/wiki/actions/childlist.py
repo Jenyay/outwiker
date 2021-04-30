@@ -120,7 +120,7 @@ class ChildListDialog (TestedDialog):
                       wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
         mainSizer.AddStretchSpacer()
         mainSizer.AddStretchSpacer()
-        mainSizer.Add(self._buttonsSizer, 0, flag=wx.EXPAND | wx.ALL |
+        mainSizer.Add(self._buttonsSizer, 0, flag=wx.ALL |
                       wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT, border=2)
 
         self.SetSizer(mainSizer)

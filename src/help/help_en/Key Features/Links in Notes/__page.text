@@ -31,12 +31,11 @@ The links by name may begin with "/", in this case OutWiker starts looking for t
 
 Examples:
 
-* [=<a href="/Note Types/Wiki Note/Wiki Commands">/Note Types/Wiki Note/Wiki Commands</a>=] (HTML, work in Windows only)
-* [=<a href="Note Types/Wiki Note/Wiki Commands">Note Types/Wiki Note/Wiki Commands</a>=] (HTML)
-* [=<a href="Nested Note">Nested Note</a>=] (HTML)
+* [=<a href="page://Note Types/Wiki Note/Wiki Commands">/Note Types/Wiki Note/Wiki Commands</a>=] (HTML)
+* [=<a href="page://Nested Note">Nested Note</a>=] (HTML)
 
 
-* [[/Note Types/Wiki Note/Wiki Commands]] (wiki, work in Windows only)
+* [[/Note Types/Wiki Note/Wiki Commands]] (wiki)
 * [[Note Types/Wiki Note/Wiki Commands]] (wiki)
 * [[Nested Note]] (wiki)
 

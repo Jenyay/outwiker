@@ -9,10 +9,6 @@ Attach:Soft/Outwiker/us.png [[Outwiker/UnstableEn | English version]]
 Attach:outwiker_100_white.png
 >><<
 
->>rframe<<
-%center%[[Attach:Soft/Outwiker/twitter.png -> https://twitter.com/#!/OutWiker]] [[Attach:Soft/Outwiker/livejournal.png -> http://ru-outwiker.livejournal.com/]] [[Attach:Soft/Outwiker/gogle_plus_48.png -> https://plus.google.com/113404982971748285098]] [[Attach:Soft/Outwiker/facebook.png -> http://www.facebook.com/outwiker]] [[Attach:Soft/Outwiker/vk.png -> http://vk.com/outwiker]] 
->><<
-
 Здесь находятся версии программы [[OutWiker -> Soft/Outwiker]], которые собраны из текущей ветки разработки. Эти версии могут иметь глюки, но зато вы можете попробовать новые возможности до того, как они появятся в стабильной версии.
 
 Текущая версия: '''{{ version_full }}''' {% if date %}({{ date.strftime('%d.%m.%Y') }}){% endif %}
@@ -59,7 +55,7 @@ sudo snap connect outwiker:removable-media
 * Изменение формата хранения некоторых настроек страниц в дереве заметок.
 * Изменен способ хранения стандартных значков в заметках.
 * Добавлена немецкая локализация.
-* Переход на Python 3.x и wxPython 4.0.
+* Переход на Python 3.x и wxPython 4.1.
 * Созданы бинарные сборки для Linux.
 * Создан snap-пакет.
 

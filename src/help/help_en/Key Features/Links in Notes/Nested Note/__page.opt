@@ -2,11 +2,11 @@
 expand = False
 
 [General]
-type = html
+type = wiki
 order = 0
 tags = 
 linewrap = True
-datetime = 2017-08-08 13:42:28.925000
+datetime = 2020-06-09 11:05:23.890980
 cursorposition = 33
 uid = __7eeecc1f-cffb-4fbd-9d7a-d5f79adda92d
 

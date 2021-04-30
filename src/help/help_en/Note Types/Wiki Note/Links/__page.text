@@ -9,23 +9,23 @@ The following table shows examples of links to webpages and to another notes of 
 ||[=[[Link sample -> http://example.com]]=]||[[Link sample -> http://example.com]]||Link to webpage with comment||
 ||[=[[http://example.com | Link sample]]=]||[[http://example.com | Link sample]]||Link to webpage with comment||
 
-||[=[[page://__97bae762-abb7-489e-a1f4-1b0c9f6916d1]]=]||[[page://__97bae762-abb7-489e-a1f4-1b0c9f6916d1]]||Link to note by identifier ||
+||[=[[page://__d630dac7-3254-47aa-acca-7aa186ff76b0]]=]||[[page://__d630dac7-3254-47aa-acca-7aa186ff76b0]]||Link to note by identifier ||
 
-||[=[[page://__97bae762-abb7-489e-a1f4-1b0c9f6916d1 | Link to the current note]]=]||[[page://__97bae762-abb7-489e-a1f4-1b0c9f6916d1 | Link to the current note]]||Link to note by identifier with comment (variant 1) ||
+||[=[[page://__d630dac7-3254-47aa-acca-7aa186ff76b0 | Link to other note]]=]||[[page://__d630dac7-3254-47aa-acca-7aa186ff76b0 | Link to other note]]||Link to note by identifier with comment (variant 1) ||
 
-||[=[[Link to the current note -> page://__97bae762-abb7-489e-a1f4-1b0c9f6916d1]]=]||[[Link to the current note  -> page://__97bae762-abb7-489e-a1f4-1b0c9f6916d1]]||Link to note by identifier with comment (variant 2) ||
+||[=[[Link to the current note -> page://__d630dac7-3254-47aa-acca-7aa186ff76b0]]=]||[[Link to the current note  -> page://__d630dac7-3254-47aa-acca-7aa186ff76b0]]||Link to note by identifier with comment (variant 2) ||
 
 ||[=[[Note Types/Wiki Note/Links]]=]||[[Note Types/Wiki Note/Links]]||Link to note by name ||
 
-||[=[[/Note Types/Wiki Note/Links]]=]||[[/Note Types/Wiki Note/Links]]||Link to note by name[[<<]](work in Windows only) ||
+||[=[[/Note Types/Wiki Note/Links/subpage]]=]||[[/Note Types/Wiki Note/Links/subpage]]||Link to note by name ||
 
-||[=[[Note Types/Wiki Note/Links | Links]]=]||[[Note Types/Wiki Note/Links | Links]]||Link to note by name with comment ||
+||[=[[Note Types/Wiki Note/Links/subpage | Other page]]=]||[[Note Types/Wiki Note/Links/subpage | Other page]]||Link to note by name with comment ||
 
-||[=[[/Note Types/Wiki Note/Links | Links]]=]||[[/Note Types/Wiki Note/Links | Links]]||Link to note by name with comment[[<<]](work in Windows only) ||
+||[=[[/Note Types/Wiki Note/Links/subpage | Other page]]=]||[[/Note Types/Wiki Note/Links/subpage | Other page]]||Link to note by name with comment ||
 
-||[=[[Links -> Note Types/Wiki Note/Links]]=]||[[Links -> Note Types/Wiki Note/Links]] ||Link to note by name with comment ||
+||[=[[Other page -> Note Types/Wiki Note/Links/subpage]]=]||[[Other page -> Note Types/Wiki Note/Links/subpage]] ||Link to note by name with comment ||
 
-||[=[[Links -> /Note Types/Wiki Note/Links]]=]||[[Links -> /Note Types/Wiki Note/Links]] ||Link to note by name with comment[[<<]](work in Windows only) ||
+||[=[[Other page -> /Note Types/Wiki Note/Links/subpage]]=]||[[Other page -> /Note Types/Wiki Note/Links/subpage]] ||Link to note by name with comment ||
 
 ||[=[[../../HTML Page]]=] ||[[../../HTML Page]] ||Link to note by relative path[[<<]](work in Windows only) ||
 
@@ -33,7 +33,7 @@ The following table shows examples of links to webpages and to another notes of 
 
 ||[=[[HTML Page -> ../../HTML Page]]=] ||[[HTML Page -> ../../HTML Page]] ||Link to note by relative path with comment[[<<]](work in Windows only) ||
 
-||[=http://jenyay.net/utils/small_image.jpg=]||http://jenyay.net/uploads/Outwiker/Unstable/outwiker_100_white.png ||Image from webpage ||
+||[=https://jenyay.net/uploads/Outwiker/Dev/outwiker_100_white.png=]||https://jenyay.net/uploads/Outwiker/Dev/outwiker_100_white.png ||Image from webpage ||
 
 
 
@@ -41,7 +41,7 @@ The following table shows examples of links to webpages and to another notes of 
 
 || border=1 style="border-collapse: collapse; border: 1px solid black;"
 || '''Syntax''' || '''Result''' || '''Comment''' ||
-||[=[[#anchor]]=]||Add anchor "#anchor" [[#anchor]]||HTML code: &lt;A NAME=&quot;#anchor&quot;&gt;&lt;/A&gt;||
+||[=[[#anchor]]=]||Add anchor "#anchor"||HTML code: &lt;A NAME=&quot;#anchor&quot;&gt;&lt;/A&gt;||
 
 ||[=[[#anchor | Link to anchor]]=]||[[#anchor | Link to anchor]]||Link to anchor "#anchor"||
 
@@ -52,3 +52,61 @@ The following table shows examples of links to webpages and to another notes of 
 ||[=[[page://__d0ed44d4-0772-4f04-80ca-98fc55530667/#anchor | Link to anchor in another note]]=]||[[page://__d0ed44d4-0772-4f04-80ca-98fc55530667/#anchor | Link to anchor in another note]] ||Link to anchor "#anchor" in another note||
 
 ||[=[[ Link to anchor in another note -> page://__d0ed44d4-0772-4f04-80ca-98fc55530667/#anchor]]=]||[[link to anchor in another note -> page://__d0ed44d4-0772-4f04-80ca-98fc55530667/#anchor]] ||Link to anchor "#anchor" in another note||
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[[#anchor]]This is an anchor

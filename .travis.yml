@@ -1,8 +1,8 @@
-dist: xenial
+dist: bionic
 language: python
 cache: pip
 python:
-    - "3.7"
+    - "3.8"
 addons:
     apt:
         packages:
@@ -18,18 +18,18 @@ addons:
             - build-essential
             - libjpeg-dev
             - libtiff-dev
+            - libpng-dev
             - libsdl2-dev
             - libnotify-dev
             - freeglut3
             - ibus-gtk3
             - xvfb
             - libhunspell-dev
-            - gstreamer1.0-pulseaudio
-            - gstreamer0.10-alsa
+            - libgstreamer1.0-0
             - libwebkit2gtk-4.0
 install:
     - python -m pip install pipenv
-    - pipenv run pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-16.04 wxPython==4.0.7.post2
+    - pipenv run pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-18.04 wxPython==4.1.1
     - pipenv update --dev
 script:
     - xvfb-run pipenv run fab test

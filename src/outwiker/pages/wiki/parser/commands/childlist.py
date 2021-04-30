@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from outwiker.pages.wiki.parser.command import Command
 
@@ -13,7 +13,7 @@ class SimpleView (object):
         """
         children - список упорядоченных дочерних страниц
         """
-        template = '<a href="{link}">{text}</a>\n'
+        template = '<a href="page://{link}">{text}</a>\n'
         result = ''.join(
             [template.format(link=page.title, text=page.display_title)
                 for page in children])

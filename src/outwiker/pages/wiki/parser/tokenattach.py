@@ -61,7 +61,8 @@ class AttachToken (object, metaclass=ABCMeta):
     @abstractmethod
     def filterFile(self, fname):
         """
-        Должен возвращать True, если файл подходит для токена и False в противном случае
+        Должен возвращать True, если файл подходит для токена
+        и False в противном случае
         """
 
 

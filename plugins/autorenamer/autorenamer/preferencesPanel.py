@@ -30,7 +30,8 @@ class PreferencesPanel(wx.Panel):
 
         self.autoAddFirstLineCheckBox = wx.CheckBox(
             self,
-            label=_(u"Automatically set first line of the page be the name of this page on page create")
+            label=_(
+                u"Automatically set first line of the page be the name of this page on page create")
         )
         mainSizer.Add(self.autoAddFirstLineCheckBox,
                       flag=wx.ALIGN_CENTER_VERTICAL | wx.ALL,
@@ -44,3 +45,6 @@ class PreferencesPanel(wx.Panel):
 
     def Save(self):
         self.__controller.save()
+
+    def Cancel(self):
+        pass

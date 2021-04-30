@@ -39,11 +39,11 @@ class ExecDialog(TestedDialog):
 
         mainSizer.Add(
             self._titleTextBox,
-            flag=wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND | wx.ALL,
+            flag=wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL | wx.ALL,
             border=2
         )
 
-        # Format(link or button)
+        # Format (link or button)
         formatLabel = wx.StaticText(self, -1, _(u'Format'))
 
         self._formatCombo = wx.ComboBox(
@@ -63,7 +63,7 @@ class ExecDialog(TestedDialog):
 
         mainSizer.Add(
             self._formatCombo,
-            flag=wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND | wx.ALL,
+            flag=wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL | wx.ALL,
             border=2
         )
 
@@ -72,7 +72,7 @@ class ExecDialog(TestedDialog):
         mainSizer.Add(okCancel,
                       1,
                       wx.ALIGN_RIGHT | wx.ALIGN_BOTTOM | wx.ALL,
-                      border=2)
+                      border=4)
 
         self.SetSizer(mainSizer)
         self.Fit()

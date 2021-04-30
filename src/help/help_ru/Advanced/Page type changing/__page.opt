@@ -11,7 +11,7 @@ type = wiki
 tags = продвинутым пользователям
 datetime = 2020-05-09 18:22:34.007390
 cursorposition = 874
-order = 2
+order = 1
 alias = Изменение типа страниц
 
 [Misc]

@@ -2,7 +2,7 @@
 
 import os.path
 
-import wx.lib.agw.flatnotebook as fnb
+import outwiker.gui.controls.flatnotebook as fnb
 
 from outwiker.core.config import StringListSection, IntegerOption
 from outwiker.core.tree import RootWikiPage

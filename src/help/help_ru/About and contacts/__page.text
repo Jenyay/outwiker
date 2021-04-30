@@ -1,46 +1,53 @@
-<h1>OutWiker</h1>
-<h3>Версия 3.0</h3>
-Программа OutWiker предназначена для хранения заметок в виде дерева. Такие программы называют outliner'ами, персональными вики или древовидными редакторами. Я долго подбирал для себя подобную программу из имеющихся, но в итоге решил сделать свой outliner в том виде, как он мне представляется наиболее удобным для использования.
+!! OutWiker
+!!! Версия 3.0
+Программа OutWiker предназначена для хранения заметок в виде дерева. Такие программы называют outliner'ами, персональными вики или древовидными редакторами. 
 
 Основное отличие OutWiker от других подобных программ заключается в том, что OutWiker не только хранит дерево заметок в виде обычных директорий на диске, но и поощряет изменение такой базы внешними средствами. Также к страницам может быть прикреплено любое количество файлов.
 
-Кроме того, OutWiker может содержать страницы разного типа, в данный момент поддерживаются три типа страниц: обычный текст, HTML-страницы и викистраницы. Кроме того, плагины могут добавлять новые типы страниц. Некоторые подробности о программе OutWiker вы можете узнать, прочитав записи с тегом <a href='https://jenyay.net/blog/tag/outwiker/'>outwiker</a> в <a href='https://jenyay.net/blog/'>блоге</a>.
+Кроме того, OutWiker может содержать страницы разного типа, в данный момент поддерживаются три типа страниц: [[page://__4e96bc6e-333b-49d2-bcbd-a63a5f28655f | обычный текст]], [[page://__7bd312fb-c3e4-4d9d-9267-cc394dbb9f20 | HTML-страницы]] и [[page://__19866d72-8d95-4e2c-8df1-6df0bd8f06c0 | викистраницы]]. Кроме того, плагины могут добавлять новые типы страниц (например, в формате Markdown). Некоторые подробности о программе OutWiker вы можете узнать, прочитав записи с тегом [[https://jenyay.net/blog/tag/outwiker/ | outwiker]] в [[https://jenyay.net/blog/ | блоге]].
 
-Страница программы - <a href="https://jenyay.net/Soft/Outwiker">https://jenyay.net/Soft/Outwiker</a>
+Страница программы - https://jenyay.net/Soft/Outwiker
 
-<h2>Контакты</h2>
+!!! OutWiker с социальных сетях
+
+* [[OutWiker ВКонтакте -> https://vk.com/outwiker]]
+* [[Канал в Telegram -> https://t.me/outwiker]]
+* [[Страница в Facebook -> https://www.facebook.com/outwiker]]
+* [[OutWiker в Twitter -> https://twitter.com/OutWiker]]
+
+!!! Контакты
 Автор: Евгений Ильин (aka Jenyay)
 
-Мой сайт - <a href="https://jenyay.net/">https://jenyay.net</a>
-Telegram - <a href="https://ttttt.me/jenyay">@jenyay</a>
-e-mail: <a href="mailto:jenyay.ilin@gmail.com">jenyay.ilin@gmail.com</a>
+* Мой сайт - https://jenyay.net
+* Telegram - [[https://ttttt.me/jenyay | @jenyay]]
+* e-mail: [[mailto:jenyay.ilin@gmail.com | jenyay.ilin@gmail.com]]
 
-<h2><a name="anchor"></a>Благодарности и копирайтные формальности</h2>
-Программа использует бесплатные иконки, взятые с сайтов <a href='http://www.famfamfam.com/lab/icons/silk/'>famfamfam.com</a>, <a href='https://p.yusukekamiyamane.com/'>yusukekamiyamane.com</a> и <a href="https://www.fatcow.com/free-icons">fatcow.com</a>, за что спасибо авторам этих сайтов. Иконки действительно очень выручают :)
+!!! [[#anchor]]Благодарности и копирайтные формальности
+Программа использует бесплатные иконки, взятые с сайтов [[http://www.famfamfam.com/lab/icons/silk/ | famfamfam.com]], [[https://p.yusukekamiyamane.com/ | yusukekamiyamane.com]] и [[https://www.fatcow.com/free-icons | fatcow.com]], за что спасибо авторам этих сайтов. Иконки действительно очень выручают :)
 
 Особые благодарности:
 
-<ul>
-<li>Набродову Алексею (<a href="https://averr.in/">https://averr.in/</a>) за иконку для программы.</li>
-<li>Горбунову Анатолию за новую иконку для программы.</li>
-<li> <span style='white-space:nowrap'><a href='https://ilyuxaif.livejournal.com/profile'><img src='https://l-stat.livejournal.com/img/userinfo.gif?v=3' alt='[info]' width='17' height='17' style='vertical-align: bottom; border: 0; padding-right: 1px;'/></a><a href="https://ilyuxaif.livejournal.com"><b>Чешкову Илье</b></a> за исправление английского перевода справки.</li>
-<li>Юрию aka Cuprum (<a href="http://cuprum.name/">http://cuprum.name/</a>) за иконки браузеров и операционных систем для набора иконок, а также за стиль "dark".</li>
-<li><span style='white-space:nowrap'><a href='https://linda-kaioh.livejournal.com/profile'><img src='https://l-stat.livejournal.com/img/userinfo.gif?v=3' alt='[info]' width='17' height='17' style='vertical-align: bottom; border: 0; padding-right: 1px;'/></a><a href='https://linda-kaioh.livejournal.com/'><b>linda_kaioh</b></a></span> за тестирование программы и за стиль "green".</li>
-<li>Виталию Яковчуку, Дмитрию Васильченко, Вадиму Деркачу и Сергею Гармашу за украинскую локализацию программы.</li>
-<li>Matteo Migliaccio ﻿за итальянскую локализацию программы.</li>
-<li>Пользователю tehTen с Jabber'ом 1010@xmpp.ru за стиль "greyness".</li>
-<li>Пользователю Alex за стиль "AVC".</li>
-<li>Пользователю Gabrielle Ramires (gabrielleramires.iv@gmail.com) за стили "gabrielle" и "gabrielle_light".</li>
-<li>Пользователю Unreal666 за обнаружение ошибок.</li>
-<li>Вадиму Сухарникову за присланные исправления.</li>
-<li>Роману Соболеву за стили "solarized_light" и "solarized_dark".</li>
-<li>Åke Engelbrektson за шведскую локализацию программы.</li>
-<li>С. Н. за исправление англоязычной справки.</li>
-<li>Владимиру Тубольцеву (<a href="https://github.com/twobolts">https://github.com/twobolts</a>) за перевод программы на Python 3.x и wxPython 4.0.</li>
-<li>bl00dy1837 за немецкую локализацию программы.</li>
-<li>И другим пользователям, которые помогали в развитии OutWiker.</li>
-</ul>
+
+* Набродову Алексею (https://averr.in/) за иконку для программы.
+* Горбунову Анатолию за новую иконку для программы.
+* Чешкову Илье ((:ljuser ilyuxaif:)) за исправление английского перевода справки.
+* Юрию aka Cuprum (http://cuprum.name/) за иконки браузеров и операционных систем для набора иконок, а также за стиль "dark".
+* (:ljuser linda_kaioh:) за тестирование программы и за стиль "green".
+* Виталию Яковчуку, Дмитрию Васильченко, Вадиму Деркачу и Сергею Гармашу за украинскую локализацию программы.
+* Matteo Migliaccio ﻿за итальянскую локализацию программы.
+* Пользователю tehTen с Jabber'ом 1010@xmpp.ru за стиль "greyness".
+* Пользователю Alex за стиль "AVC".
+* Пользователю Gabrielle Ramires за стили "gabrielle" и "gabrielle_light".
+* Пользователю Unreal666 за обнаружение ошибок.
+* Вадиму Сухарникову за присланные исправления.
+* Роману Соболеву за стили "solarized_light" и "solarized_dark".
+* Åke Engelbrektson за шведскую локализацию программы.
+* С. Н. за исправление англоязычной справки.
+* Владимиру Тубольцеву (https://github.com/twobolts) за перевод программы на Python 3.x и wxPython 4.0.
+* bl00dy1837 за немецкую локализацию программы.
+* И другим пользователям, которые помогали в развитии OutWiker.
+
 
 В программе используется словарь русского языка, созданный Александром Лебедевым (swan@scon155.phys.msu.su).
 
-В программе используется словарь украинского языка, созданный авторами: Владимир Яковчук, Олег Подгурный, Дмитрием Ковалевым, Максимом Поляковым, Андреем Рысиным, Валентином Соломко, Владимиром М. Лисивкой, Евгением Мещеряковым.
+В программе используется словарь украинского языка, созданный авторами: Владимир Яковчук, Олег Подгурный, Дмитрием Ковалевым, Максимом Поляковым, Андреем Рысиным, Валентином Соломко, Владимиром М. Лисивкой, Евгением Мещеряковым, Дмитрием Ковалёвым.

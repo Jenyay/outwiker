@@ -7,6 +7,7 @@ from abc import ABCMeta, abstractmethod
 from pathlib import Path
 from typing import Union
 from urllib.parse import unquote
+import os
 
 import idna
 
@@ -15,6 +16,7 @@ class Recognizer(metaclass=ABCMeta):
     '''
     Base class for all recognizers
     '''
+
     def __init__(self, basepath: str):
         '''
         basepath - path to directory with current HTML file for HTML render.
@@ -211,6 +213,9 @@ class PageRecognizerWebKit(PageRecognizerBase):
 
         if currentPage is None:
             return None
+
+        if os.path.abspath(currentPage.path) == os.path.abspath(href):
+            return currentPage
 
         if href.startswith(self._basepath):
             href = href[len(self._basepath):]

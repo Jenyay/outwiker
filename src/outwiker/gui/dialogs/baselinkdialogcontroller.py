@@ -7,6 +7,7 @@ import wx
 
 from outwiker.core.commands import getClipboardText
 from outwiker.core.attachment import Attachment
+from outwiker.core.pageuiddepot import PageUidDepot
 
 
 class BaseLinkDialogController(object, metaclass=ABCMeta):
@@ -16,7 +17,7 @@ class BaseLinkDialogController(object, metaclass=ABCMeta):
 
     def __init__(self, page, dialog, selectedString):
         """
-        page - текущая страница, для будет показываться диалог
+        page - текущая страница, для которой будет показываться диалог
         dialog - экземпляр класса LinkDialog
         selectedString - строка, выделенная в редакторе
         """
@@ -77,6 +78,13 @@ class BaseLinkDialogController(object, metaclass=ABCMeta):
         if not self._dlg.link:
             self._dlg.link = self._findLink()
 
+        if self._isPageLink(self._dlg.link):
+            prefix = 'page://'
+            uid = self._dlg.link[len(prefix):]
+            page = PageUidDepot(self._page.root)[uid]
+            if page is not None and not self._selectedString:
+                self._dlg.comment = page.display_title
+
     def _findLink(self):
         """
         Попытаться найти ссылку или в выделенном тексте, или в буфере обмена
@@ -98,3 +106,7 @@ class BaseLinkDialogController(object, metaclass=ABCMeta):
                 lowerString.startswith(u'page://') or
                 text.startswith(u'#') or
                 text.strip() in self._dlg.linkText.GetItems())
+
+    def _isPageLink(self, text):
+        lowerString = text.lower()
+        return lowerString.startswith(u'page://')

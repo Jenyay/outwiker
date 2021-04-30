@@ -1,16 +1,17 @@
 # -*- coding: utf-8 -*-
 
-import os.path
-
 import wx
 
 from outwiker.core.system import getBuiltinImagePath
 from outwiker.gui.controls.hyperlink import HyperLinkCtrl
+from outwiker.gui.testeddialog import TestedDialog
 
 
-class AboutDialog(wx.Dialog):
-    def __init__(self, currversion, *args, **kwds):
-        wx.Dialog.__init__(self, *args, **kwds)
+class AboutDialog(TestedDialog):
+    def __init__(self, currversion, parent):
+        style = wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER
+        super().__init__(parent, style=style)
+
         self.titleLabel = wx.StaticText(self, -1, _("OutWiker"))
         self.versionTitleLabel = wx.StaticText(self, -1, _("Version:"))
         self.versionLabel = wx.StaticText(self, -1, "")
@@ -19,7 +20,8 @@ class AboutDialog(wx.Dialog):
         self.logo = wx.StaticBitmap(
             self.aboutPane,
             -1,
-            wx.Bitmap(getBuiltinImagePath("outwiker_64x64.png"), wx.BITMAP_TYPE_ANY)
+            wx.Bitmap(getBuiltinImagePath("outwiker_64x64.png"),
+                      wx.BITMAP_TYPE_ANY)
         )
 
         self.description = wx.StaticText(
@@ -96,49 +98,13 @@ class AboutDialog(wx.Dialog):
         self.okButton.SetDefault()
 
     def __do_layout(self):
-        main_sizer = wx.FlexGridSizer(rows=4, cols=0, vgap=0, hgap=0)
-        grid_sizer_2 = wx.FlexGridSizer(cols=2)
-        grid_sizer_3 = wx.FlexGridSizer(cols=1)
-        sizeSizer = wx.FlexGridSizer(cols=2)
-        grid_sizer_1 = wx.FlexGridSizer(cols=2)
+        main_sizer = wx.FlexGridSizer(cols=1)
+        main_sizer.AddGrowableRow(2)
+        main_sizer.AddGrowableCol(0)
 
-        main_sizer.Add(
-            self.titleLabel,
-            0,
-            wx.ALL | wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL,
-            2)
-
-        grid_sizer_1.Add(self.versionTitleLabel, 0, wx.ALL | wx.ALIGN_RIGHT, 2)
-        grid_sizer_1.Add(self.versionLabel, 0, wx.ALL, 2)
-        grid_sizer_1.AddGrowableRow(0)
-        grid_sizer_1.AddGrowableCol(0)
-        grid_sizer_1.AddGrowableCol(1)
-        main_sizer.Add(grid_sizer_1, 1, wx.EXPAND, 0)
-        grid_sizer_2.Add(self.logo, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 2)
-        grid_sizer_3.Add(self.description, 0, wx.ALL |
-                         wx.EXPAND | wx.ALIGN_CENTER_VERTICAL, border=4)
-        author = wx.StaticText(
-            self.aboutPane, -1, _("Author: Ilin Eugeniy (aka Jenyay)"))
-        grid_sizer_3.Add(author, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
-        grid_sizer_3.Add(self.license, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
-        sizeSizer.Add(self.siteLabel, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
-        sizeSizer.Add(self.outwikerUrl, 1, wx.ALL |
-                      wx.EXPAND | wx.ALIGN_RIGHT, 2)
-        sizeSizer.AddGrowableCol(1)
-        grid_sizer_3.Add(sizeSizer, 1, wx.EXPAND, 0)
-        grid_sizer_3.AddGrowableCol(0)
-        grid_sizer_2.Add(grid_sizer_3, 1, wx.EXPAND, 0)
-        self.aboutPane.SetSizer(grid_sizer_2)
-        grid_sizer_2.AddGrowableRow(0)
-        grid_sizer_2.AddGrowableCol(1)
-
-        grid_sizer_4 = wx.FlexGridSizer(cols=1)
-        grid_sizer_4.AddGrowableCol(0)
-        grid_sizer_4.Add(self.email, 1, wx.ALL | wx.ALIGN_CENTER, 2)
-        grid_sizer_4.Add(self.facebook, 1, wx.ALL | wx.ALIGN_CENTER, 2)
-        grid_sizer_4.Add(self.twitter, 1, wx.ALL | wx.ALIGN_CENTER, 2)
-        grid_sizer_4.Add(self.vkontakte, 1, wx.ALL | wx.ALIGN_CENTER, 2)
-        self.contactsPane.SetSizer(grid_sizer_4)
+        self._create_title(main_sizer)
+        self._create_about_tab()
+        self._create_contacts_tab()
 
         self.notebook.AddPage(self.aboutPane, _("About"))
         self.notebook.AddPage(self.contactsPane, _("Contacts"))
@@ -146,7 +112,70 @@ class AboutDialog(wx.Dialog):
         main_sizer.Add(self.okButton, 0, wx.ALL |
                        wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL, 4)
         self.SetSizer(main_sizer)
-        main_sizer.AddGrowableRow(2)
-        main_sizer.AddGrowableCol(0)
         self.Layout()
         self.Centre()
+
+    def _create_about_tab(self):
+        about_tab_sizer = wx.FlexGridSizer(cols=2)
+        about_tab_right_column = wx.FlexGridSizer(cols=1)
+        home_page_sizer = wx.FlexGridSizer(cols=2)
+
+        about_tab_sizer.Add(self.logo,
+                            flag=wx.ALL | wx.ALIGN_CENTER_HORIZONTAL,
+                            border=8)
+        about_tab_right_column.Add(self.description,
+                                   flag=wx.ALL | wx.EXPAND | wx.ALIGN_CENTER_VERTICAL,
+                                   border=4)
+        author = wx.StaticText(
+            self.aboutPane, -1, _("Author: Ilin Eugeniy (aka Jenyay)"))
+        about_tab_right_column.Add(author,
+                                   flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+                                   border=2)
+        about_tab_right_column.Add(self.license,
+                                   flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+                                   border=2)
+        home_page_sizer.Add(self.siteLabel,
+                            flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+                            border=2)
+        home_page_sizer.Add(self.outwikerUrl,
+                            flag=wx.ALL | wx.ALIGN_LEFT,
+                            border=2)
+        home_page_sizer.AddGrowableCol(1)
+        about_tab_right_column.Add(home_page_sizer, flag=wx.EXPAND, border=0)
+        about_tab_right_column.AddGrowableCol(0)
+        about_tab_sizer.Add(about_tab_right_column, flag=wx.EXPAND, border=0)
+        about_tab_sizer.AddGrowableRow(0)
+        about_tab_sizer.AddGrowableCol(1)
+        self.aboutPane.SetSizer(about_tab_sizer)
+
+    def _create_title(self, main_sizer):
+        main_sizer.Add(
+            self.titleLabel,
+            flag=wx.ALL | wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL,
+            border=2)
+        title_sizer = wx.FlexGridSizer(cols=2)
+        title_sizer.Add(self.versionTitleLabel,
+                        flag=wx.ALL | wx.ALIGN_RIGHT,
+                        border=2)
+        title_sizer.Add(self.versionLabel, flag=wx.ALL, border=2)
+        title_sizer.AddGrowableRow(0)
+        title_sizer.AddGrowableCol(0)
+        title_sizer.AddGrowableCol(1)
+        main_sizer.Add(title_sizer, flag=wx.EXPAND, border=0)
+
+    def _create_contacts_tab(self):
+        contacts_tab_sizer = wx.FlexGridSizer(cols=1)
+        contacts_tab_sizer.AddGrowableCol(0)
+        contacts_tab_sizer.Add(self.email,
+                               flag=wx.ALL | wx.ALIGN_CENTER,
+                               border=2)
+        contacts_tab_sizer.Add(self.facebook,
+                               flag=wx.ALL | wx.ALIGN_CENTER,
+                               border=2)
+        contacts_tab_sizer.Add(self.twitter,
+                               flag=wx.ALL | wx.ALIGN_CENTER,
+                               border=2)
+        contacts_tab_sizer.Add(self.vkontakte,
+                               flag=wx.ALL | wx.ALIGN_CENTER,
+                               border=2)
+        self.contactsPane.SetSizer(contacts_tab_sizer)

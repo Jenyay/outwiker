@@ -38,8 +38,8 @@ class WebPageView(BaseHtmlPanel):
         actionController = self._application.actionController
 
         # Активируем / дизактивируем полиморфные действия
-        map(lambda strid: actionController.enableTools(strid, enabled),
-            polyActions)
+        for strid in polyActions:
+            actionController.enableTools(strid, enabled)
 
     def updateHtml(self):
         self._updateHtmlWindow()

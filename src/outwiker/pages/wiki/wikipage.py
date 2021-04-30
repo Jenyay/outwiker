@@ -22,22 +22,24 @@ from .actions.childlist import WikiChildListAction
 from .actions.include import WikiIncludeAction
 from .actions.dates import WikiDateCreationAction, WikiDateEditionAction
 from .actions.wikistyle import WikiStyleOnlyAction, WikiStyleAdvancedAction
+from .actions.multilineblock import MultilineBlockAction
 
 
 wiki_actions = [
-   (WikiFontSizeBigAction, HotKey(".", ctrl=True)),
-   (WikiFontSizeSmallAction, HotKey(",", ctrl=True)),
-   (WikiNonParsedAction, None),
-   (WikiThumbAction, HotKey("M", ctrl=True)),
-   (WikiOpenHtmlCodeAction, HotKey("F4", shift=True)),
-   (WikiUpdateHtmlAction, HotKey("F4", ctrl=True)),
-   (WikiAttachListAction, None),
-   (WikiChildListAction, None),
-   (WikiIncludeAction, None),
-   (WikiDateCreationAction, None),
-   (WikiDateEditionAction, None),
-   (WikiStyleOnlyAction, None),
-   (WikiStyleAdvancedAction, None),
+    (WikiFontSizeBigAction, HotKey(".", ctrl=True)),
+    (WikiFontSizeSmallAction, HotKey(",", ctrl=True)),
+    (WikiNonParsedAction, None),
+    (WikiThumbAction, HotKey("M", ctrl=True)),
+    (WikiOpenHtmlCodeAction, HotKey("F4", shift=True)),
+    (WikiUpdateHtmlAction, HotKey("F4", ctrl=True)),
+    (WikiAttachListAction, None),
+    (WikiChildListAction, None),
+    (WikiIncludeAction, None),
+    (WikiDateCreationAction, None),
+    (WikiDateEditionAction, None),
+    (WikiStyleOnlyAction, None),
+    (WikiStyleAdvancedAction, None),
+    (MultilineBlockAction, None),
 ]
 
 
@@ -45,6 +47,7 @@ class WikiWikiPage(WikiPage):
     """
     Класс wiki-страниц
     """
+
     def __init__(self, path, title, parent, readonly=False):
         WikiPage.__init__(self, path, title, parent, readonly)
 
@@ -63,6 +66,7 @@ class WikiPageFactory(PageFactory):
     """
     Фабрика для создания викистраниц и их представлений
     """
+
     def getPageType(self):
         return WikiWikiPage
 
@@ -89,4 +93,5 @@ class WikiPageFactory(PageFactory):
 
     @staticmethod
     def removeActions(application):
-        [application.actionController.removeAction(actionTuple[0].stringId) for actionTuple in wiki_actions]
+        [application.actionController.removeAction(
+            actionTuple[0].stringId) for actionTuple in wiki_actions]

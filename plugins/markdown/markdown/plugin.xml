@@ -20,8 +20,8 @@
 	</author>
 
 	<requirements>
-		<api>3.868</api>
+		<api>3.876</api>
 	</requirements>
 
-	<version number="1.7.1"/>
+	<version number="1.7.3"/>
 </info>

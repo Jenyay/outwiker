@@ -1,6 +1,8 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import threading
+
+import wx
 
 from outwiker.gui.basetextstylingcontroller import BaseTextStylingController
 
@@ -35,12 +37,11 @@ class WikiColorizerController(BaseTextStylingController):
                                   colorizeSyntax,
                                   enableSpellChecking,
                                   runEvent)
-        stylebytes = colorizer.colorize(text)
+        stylingInfo = colorizer.colorize(text)
 
         if self._runColorizingEvent.is_set():
             self.updateStyles(editor,
                               text,
-                              stylebytes,
-                              stylebytes,
-                              0,
-                              len(text))
+                              stylingInfo.styleBytes)
+
+        wx.CallAfter(editor.markSpellErrors, stylingInfo.spellStatusFlags)

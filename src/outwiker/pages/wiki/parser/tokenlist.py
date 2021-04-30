@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from pyparsing import Regex, OneOrMore
+from pyparsing import Regex, OneOrMore, LineStart, Combine, Literal, Word, Keyword, LineEnd
 
 from outwiker.pages.wiki.parser.utils import noConvert
+from outwiker.pages.wiki.parser.tokenmultilineblock import MultilineBlockFactory
 import re
 
 
@@ -16,6 +17,7 @@ class ListParams(object):
     """
     Параметры списков в парсере
     """
+
     def __init__(self, symbol, startTag, endTag):
         self.symbol = symbol
         self.startTag = startTag
@@ -37,6 +39,8 @@ class ListToken(object):
 
         self.parser = parser
         self._maxDepthLevel = 500
+        self._blockToken = MultilineBlockFactory.make(
+            self.parser).setParseAction(noConvert)
 
     def __addDeeperLevel(self, depth, item, currItem):
         """
@@ -98,7 +102,8 @@ class ListToken(object):
 
             elif level > currLevel:
                 # Более глубокий уровень
-                result += self.__addDeeperLevel(level - currLevel, item, currItem)
+                result += self.__addDeeperLevel(level -
+                                                currLevel, item, currItem)
                 result += self.__getListItemTag(item, level)
 
             elif level < currLevel:
@@ -124,15 +129,12 @@ class ListToken(object):
         return result
 
     def getToken(self):
-        regex = "^(?P<level>["
+        text = Regex(r"(?:\\\n|.)*?$", re.MULTILINE)
+        line_break = Regex(r'\n{0,2}', re.MULTILINE)
 
-        for param in self.allListsParams:
-            regex += param.symbol
-
-        regex += r"]+) *(?P<item>(?:\\\n|.)*?)$\n{0,2}"
-
-        item = Regex(regex, re.MULTILINE).setParseAction(noConvert).leaveWhitespace()
-
+        item = Combine(Regex(r'^(?:(?:\*+)|(?:#+))\s*', re.MULTILINE) +
+                       (self._blockToken | text) +
+                       line_break).leaveWhitespace()
         fullList = OneOrMore(item).setParseAction(self.__convertList)("list")
 
         return fullList

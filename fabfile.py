@@ -44,8 +44,6 @@ from buildtools.defines import (
 )
 from buildtools.versions import (getOutwikerVersion,
                                  getOutwikerVersionStr,
-                                 downloadAppInfo,
-                                 getLocalAppInfoList,
                                  )
 from buildtools.builders import (BuilderWindows,
                                  BuilderSources,
@@ -61,7 +59,6 @@ from buildtools.deploy.pluginsuploader import PluginsUploader
 from buildtools.deploy.distribsuploader import DistribsUploader
 
 from outwiker.utilites.textfile import readTextFile
-from outwiker.core.changelogfactory import ChangeLogFactory
 
 
 DEPLOY_SERVER_NAME = os.environ.get('OUTWIKER_DEPLOY_SERVER_NAME', '')
@@ -80,6 +77,7 @@ def plugins(updatedonly=False):
     '''
     Create an archive with plugins (7z required)
     '''
+    updatedonly = tobool(updatedonly)
     builder = BuilderPlugins(updatedOnly=updatedonly)
     builder.build()
 
@@ -98,6 +96,7 @@ def sources(is_stable=False):
     '''
     Create the sources archives
     '''
+    is_stable = tobool(is_stable)
     builder = BuilderSources(is_stable=tobool(is_stable))
     builder.build()
 
@@ -113,7 +112,7 @@ def sources_clear():
 
 @task
 @windows_only
-def win(is_stable=False, skipinstaller=False, skiparchives=False):
+def win(is_stable=False, skiparchives=False, skipinstaller=False):
     '''
     Build OutWiker for Windows
     '''
@@ -247,8 +246,9 @@ def deb_binary(is_stable=False):
     '''
     Create binary deb package
     '''
+    is_stable = tobool(is_stable)
     builder = BuilderDebBinaryFactory.get_default(DEB_BINARY_BUILD_DIR,
-                                                  tobool(is_stable))
+                                                  is_stable)
     builder.build()
     print_info('Deb created: {}'.format(builder.get_deb_files()))
 
@@ -337,6 +337,8 @@ def upload_distribs(is_stable=False):
     '''
     Upload binary version to site
     '''
+    is_stable = tobool(is_stable)
+
     facts = BuildFacts()
     version = getOutwikerVersion()
 
@@ -369,17 +371,13 @@ def upload_plugins_pack():
         put(pack_path, basename)
 
 
-def _add_git_tag(tagname):
-    local(u'git checkout master')
-    local(u'git tag {}'.format(tagname))
-    local(u'git push --tags')
-
-
 @task
 def build(is_stable=False):
     '''
     Create artifacts for current version.
     '''
+    is_stable = tobool(is_stable)
+
     if is_stable:
         build(False)
 
@@ -396,10 +394,12 @@ def build(is_stable=False):
 @task
 def deploy(apply=False, is_stable=False):
     '''
-    Deploy unstable version.
-
     apply -- True if deploy to server and False if print commands only
+    is_stable -- False for unstable version and True for stable version
     '''
+    apply = tobool(apply)
+    is_stable = tobool(is_stable)
+
     linter_result = check_errors()
     if linter_result != LinterStatus.OK:
         return
@@ -409,12 +409,16 @@ def deploy(apply=False, is_stable=False):
     else:
         print(Fore.GREEN + 'Print commands only')
 
-    update_sources_master(apply)
-    add_sources_tag(apply, is_stable)
     plugins()
     upload_plugins()
     upload_plugins_pack()
     upload_distribs(is_stable)
+
+    snap_channels = ['edge', 'beta']
+    if is_stable:
+        snap_channels += ['release']
+
+    snap_publish(*snap_channels)
 
 
 @task
@@ -422,12 +426,25 @@ def add_sources_tag(apply=False, is_stable=False):
     '''
     Add the tag to git repository and push
     '''
+    apply = tobool(apply)
+    is_stable = tobool(is_stable)
+
+    _add_sources_tag(apply, False)
+    if is_stable:
+        _add_sources_tag(apply, True)
+
+
+def _add_sources_tag(apply=False, is_stable=False):
     version_str = getOutwikerVersionStr()
     if is_stable:
-        tagname = u'release_{}'.format(version_str)
+        tagname = u'stable_{}'.format(version_str)
     else:
         tagname = u'unstable_{}'.format(version_str)
 
+    _add_git_tag(tagname, apply)
+
+
+def _add_git_tag(tagname, apply):
     commands = [
         'git checkout master',
         'git tag {}'.format(tagname),
@@ -445,12 +462,15 @@ def _run_commands(commands: List[str], apply=False):
 
 
 @task
-def update_sources_master(apply=False):
+def update_sources_branches(apply=False, is_stable=False):
     '''
     Update the git repository
 
     apply -- True if deploy to server and False if print commands only
     '''
+    apply = tobool(apply)
+    is_stable = tobool(is_stable)
+
     commands = [
         'git checkout dev',
         'git pull',
@@ -459,7 +479,16 @@ def update_sources_master(apply=False):
         'git merge dev',
         'git push'
     ]
+    if is_stable:
+        commands += [
+            'git switch stable',
+            'git pull',
+            'git merge master',
+            'git push',
+            'git switch master'
+        ]
     _run_commands(commands, apply)
+    add_sources_tag(apply, is_stable)
 
 
 @task
@@ -614,7 +643,6 @@ def docker_build(*args):
 
 
 @task
-@linux_only
 def docker_build_wx(ubuntu_version: str, wx_version: str):
     '''
     Build a wxPython library from sources
@@ -625,7 +653,7 @@ def docker_build_wx(ubuntu_version: str, wx_version: str):
         os.mkdir(build_dir)
 
     # Create Docker image
-    docker_image = 'wxpython/ubuntu_{ubuntu_version}_webkit1'.format(
+    docker_image = 'wxpython/ubuntu_{ubuntu_version}_webkit2'.format(
         ubuntu_version=ubuntu_version)
 
     dockerfile_path = os.path.join(
@@ -649,28 +677,38 @@ def docker_build_wx(ubuntu_version: str, wx_version: str):
 
 @task(alias='linux_snap')
 @linux_only
-def snap(is_stable=0):
+def snap(*params):
     '''
     Build clean snap package
     '''
-    is_stable = tobool(is_stable)
-    builder = BuilderSnap(is_stable)
+    builder = BuilderSnap(*params)
     builder.build()
 
 
 @task(alias='linux_snap_publish')
 @linux_only
-def snap_publish():
+def snap_publish(*channels):
     '''
     Publish created snap package
+    channels - comma separated list of channels the snap would be released:
+        edge, beta, candidate, release
     '''
     builder = BuilderSnap(False)
     snap_files = builder.get_snap_files()
 
     for snap_file in snap_files:
         print_info('Publish snap: {fname}'.format(fname=snap_file))
-        local('snapcraft push "{fname}"'.format(fname=snap_file))
-        local('snapcraft sign-build "{fname}"'.format(fname=snap_file))
+        if channels:
+            channels_str = ','.join(channels)
+            command = 'snapcraft upload  "{fname}" --release {channels}'.format(
+                fname=snap_file, channels=channels_str)
+        else:
+            command = 'snapcraft upload  "{fname}"'.format(fname=snap_file)
+
+        local(command)
+
+        command_sign = 'snapcraft sign-build "{fname}"'.format(fname=snap_file)
+        local(command_sign)
 
 
 @task

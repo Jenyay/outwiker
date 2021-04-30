@@ -47,7 +47,8 @@ class PageTitleTester(object, metaclass=ABCMeta):
         # Проверка, содержит ли имя выражение виде %xx, где x - 16-ричное число
         regex = "%[0-9a-fA-F]{2}"
         if re.search(regex, title, flags=re.IGNORECASE) is not None:
-            raise PageTitleWarning(_(u'The page title contains the expression "%xx". Links on this page may be invalid.'))
+            raise PageTitleWarning(
+                _(u'The page title contains the expression "%xx". Links on this page may be invalid.'))
 
     def _testCommonErrors(self, title):
         """Проверка на ошибки, общие для всех систем."""

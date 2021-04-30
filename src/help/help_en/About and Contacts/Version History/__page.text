@@ -1,4 +1,4 @@
-!!! [=3.0 (June 2020)=]
+!!! [=3.0 (July 2020)=]
 
 * Now you can use any symbols in the notes title.
 * New toolbars.
@@ -226,7 +226,7 @@
 !!! [=1.0.0.108 release (December 2010)=]
 
 * Added preferences window.
-* Added support for multiple languages ​​(now program has English and Russian interface).
+* Added support for multiple languages (now program has English and Russian interface).
 * Added ability to minimize to tray.
 * Added ability to automatically open the last time opened wiki at startup.
 * Added ability to disable the question before exiting the program.

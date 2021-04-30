@@ -10,8 +10,6 @@ The plugin append menu items '''Tools -> Page Statistic''' and '''Tools -> Tree 
 
 [[Statistics {{ version_full }} -> Attach:Outwiker/Statistics/statistics-{{ version_full }}.zip]] ('''Required OutWiker version: 3.0.0.868 and above''')
 
-<!--#version stable {{ version_full }} -->
-
 (:DonateOWEn:)
 
 !!! Screenshots

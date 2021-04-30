@@ -1,3 +1,7 @@
 !!! Interface - Preview
 
 %center%Attach:outwiker_opt_preview.png
+
+Controls of this section are responsible for the general look of [[HTML pages -> page://__0cc8f2c6-754c-4aa8-b118-561b930e9955]] and [[wiki pages -> page://__dd8b23a1-6787-42bb-9b58-c78a656688e2]] in preview mode. Here one can set the default font face and size (the '''Font''' button) as well as add custom CSS styles which will be used when rendering all notes of the corresponding type.
+
+The '''Additional styles (CSS)''' input field allows you to add new CSS code which will be added to each page (if the page type supports this option). This option is intended for advanced users of the program who know the CSS language and want to customize the appearance of the pages for themselves, without creating their own [[page styles -> page://styles]].

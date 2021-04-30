@@ -9,9 +9,7 @@ Attach:us.png [[English version -> Outwiker/SourcePluginEn]]
 
 [[Source 1.14.5 -> Attach:source-1.14.5.zip]] ('''Требуемая версия OutWiker: 1.8.1 - 2.1.0.834''')
 
-[[Source {{ version_full }} -> Attach:source-{{ version_full }}.zip]] ('''Требуемая версия OutWiker: 3.0.0.868 и выше''')
-
-<!--#version stable {{ version_full }} -->
+[[Source {{ version_full }} -> Attach:source-{{ version_full }}.zip]] ('''Требуемая версия OutWiker: 3.0.0.876 и выше''')
 
 (:DonateOW:)
 
@@ -92,7 +90,8 @@ Attach:us.png [[English version -> Outwiker/SourcePluginEn]]
 
 {% include 'changelog.ru.txt' %}
 
-[[http://jenyay.net/forum/topic/9/plagin-source/ | '''Обсуждение на форуме''']]
-
 (:rater:)
-%center%(:ad:)
+
+(:ad:)
+
+(:include Site.FoxCommentBox:)

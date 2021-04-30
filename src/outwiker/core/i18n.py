@@ -4,7 +4,6 @@ import os
 import os.path
 import gettext
 import locale
-import logging
 
 import wx
 
@@ -110,14 +109,31 @@ def initLocale(config):
 
     config - instance of the outwiker.core.config.Config class
     """
-    locale = None
     language = getLanguageFromConfig(config)
     try:
         init_i18n(language)
     except IOError:
-        logging.warning(u"Can't load language: {}".format(language))
+        print("Can't load language: {}".format(language))
+
+    locale = None
+
+    # Add OutWiker's locale directory to path to find standard wxPython locales
+    # Needed for binary build
+    langdir = os.path.join(getCurrentDir(), 'locale')
+    wx.Locale.AddCatalogLookupPathPrefix(langdir)
 
     if wx.GetApp() is not None:
+        # Needed to fix problem with English locale in Windows
         locale = wx.Locale(wx.LANGUAGE_DEFAULT)
+        try:
+            wx_lang_name = _('LANGUAGE_DEFAULT')
+            print('wxPython language: {}'.format(wx_lang_name))
+            wx_language = getattr(wx, wx_lang_name)
+            if wx.Locale.IsAvailable(wx_language):
+                locale = wx.Locale(wx_language)
+            else:
+                print('Language {} is not available'.format(wx_lang_name))
+        except AttributeError:
+            print('Unknown language: {}'.format(wx_lang_name))
 
     return locale

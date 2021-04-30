@@ -18,7 +18,6 @@ The following images show OutWiker main window in normal mode and in reading mod
 
 [[ReadingMode {{ version_full }}-> Attach:Outwiker/ReadingMode/readingmode-{{ version_full }}.zip]] ('''Required OutWiker version: 3.0.0.868 and above''')
 
-<!--#version stable {{ version_full }} -->
 (:DonateOWEn:)
 
 !!! [[#using]]Using

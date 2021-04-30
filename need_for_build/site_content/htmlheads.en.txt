@@ -10,7 +10,6 @@ HtmlHeads plugin will be useful if you are using OutWiker for creating HTML-page
 
 [[HtmlHeads {{ version_full }} -> Attach:Outwiker/HtmlHeads/htmlheads-{{ version_full }}.zip]] ('''Required OutWiker version: 3.0.0.868 and above''')
 
-<!--#version stable {{ version_full }} -->
 (:DonateOWEn:)
 
 !!! [[#using]] Using

@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import os.path
 import logging
 
 import wx
@@ -604,7 +603,7 @@ class MainWindow(wx.Frame):
         Установки иконки главного окна
         """
         icon = wx.Icon()
-        icon.CopyFromBitmap(wx.Bitmap(getBuiltinImagePath("outwiker.ico"),
+        icon.CopyFromBitmap(wx.Bitmap(getOS().windowIconFile,
                                       wx.BITMAP_TYPE_ANY))
 
         self.SetIcon(icon)

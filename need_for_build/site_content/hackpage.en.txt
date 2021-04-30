@@ -10,8 +10,6 @@ The HackPage plug-in designed to change the hidden parameters of the notes, whic
 
 [[HackPage {{ version_full }} -> Attach:Outwiker/HackPage/hackpage-{{ version_full }}.zip]] ('''Required OutWiker version: 3.0.0.868 and above''')
 
-<!--#version stable {{ version_full }} -->
-
 (:DonateOWEn:) 
 
 

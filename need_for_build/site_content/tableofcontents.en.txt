@@ -10,8 +10,6 @@ TableOfContents plugin search the headings on the page and build table of conten
 
 [[TableOfContents {{ version_full }} -> Attach:Outwiker/Contents/tableofcontents-{{ version_full }}.zip]] ('''Required OutWiker version: 3.0.0.868 and above''')
 
-<!--#version stable {{ version_full }} -->
-
 (:DonateOWEn:)
 
 

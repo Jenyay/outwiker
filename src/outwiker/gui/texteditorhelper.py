@@ -3,12 +3,12 @@
 import codecs
 from typing import Tuple
 
-import wx.stc
+#import wx.stc
 
 
 class TextEditorHelper (object):
-    def __init__(self):
-        self.SPELL_ERROR_INDICATOR_MASK = wx.stc.STC_INDIC0_MASK
+    # def __init__(self):
+    #     self.SPELL_ERROR_INDICATOR_MASK = wx.stc.STC_INDIC0_MASK
 
     def calcByteLen(self, text):
         """Посчитать длину строки в байтах, а не в символах"""
@@ -37,15 +37,15 @@ class TextEditorHelper (object):
         """
         stylelist[bytepos_start: bytepos_end] = [styleid] * (bytepos_end - bytepos_start)
 
-    def setSpellError(self, stylelist, fullText, startpos, endpos):
-        """
-        Mark positions as error
-        startpos, endpos - positions in characters
-        """
-        startbytes = self.calcBytePos(fullText, startpos)
-        endbytes = self.calcBytePos(fullText, endpos)
-
-        self.addStyle(stylelist,
-                      self.SPELL_ERROR_INDICATOR_MASK,
-                      startbytes,
-                      endbytes)
+    # def setSpellError(self, stylelist, fullText, startpos, endpos):
+    #     """
+    #     Mark positions as error
+    #     startpos, endpos - positions in characters
+    #     """
+    #     startbytes = self.calcBytePos(fullText, startpos)
+    #     endbytes = self.calcBytePos(fullText, endpos)
+    #
+    #     self.addStyle(stylelist,
+    #                   self.SPELL_ERROR_INDICATOR_MASK,
+    #                   startbytes,
+    #                   endbytes)

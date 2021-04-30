@@ -11,8 +11,6 @@ This plugin adds wiki command [= (:spoiler:) =], which makes the text that appea
 
 [[Spoiler {{ version_full }} -> Attach:Outwiker/Spoiler/spoiler-{{ version_full }}.zip]] ('''Required OutWiker version: 3.0.0.868 and above''')
 
-<!--#version stable {{ version_full }} -->
-
 (:DonateOWEn:)
 
 !!! Using
