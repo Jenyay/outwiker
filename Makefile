@@ -2,7 +2,7 @@ OUTWIKER_DIR=$(DESTDIR)/usr/share/outwiker
 SRC_DIR=src
 NFB_LINUX_DIR=need_for_build/linux/
 PLUGINS_DIR=plugins
-PLUGINS=autorenamer counter datagraph diagrammer export2html externaltools hackpage htmlformatter htmlheads lightbox livejournal markdown pagetypecolor readingmode sessions snippets source spoiler statistics tableofcontents texequation thumbgallery updatenotifier webpage
+PLUGINS=autorenamer counter datagraph diagrammer export2html externaltools hackpage htmlformatter htmlheads lightbox livejournal markdown pagetypecolor readingmode sessions snippets source spoiler statistics tableofcontents texequation thumbgallery webpage
 
 all:
 
