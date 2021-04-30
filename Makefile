@@ -30,7 +30,6 @@ install:
 	cp -r $(SRC_DIR)/textstyles $(OUTWIKER_DIR)
 	mkdir -p $(OUTWIKER_DIR)/plugins
 	cp $(SRC_DIR)/runoutwiker.py $(OUTWIKER_DIR)
-	cp $(SRC_DIR)/versions.xml $(OUTWIKER_DIR)
 	cp "copyright.txt" $(OUTWIKER_DIR)
 	cp "README" $(OUTWIKER_DIR)
 	cp $(NFB_LINUX_DIR)/outwiker $(DESTDIR)/usr/bin/
