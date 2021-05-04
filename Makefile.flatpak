@@ -28,6 +28,7 @@ install:
 	$(MAKE_DIR) $(OUTWIKER_DIR)
 	$(MAKE_DIR) $(INSTALL_PATH)/bin/
 	$(MAKE_DIR) $(INSTALL_PATH)/share/applications
+	$(MAKE_DIR) $(INSTALL_PATH)/share/metainfo
 	$(MAKE_DIR) $(INSTALL_PATH)/share/icons/hicolor/16x16/apps
 	$(MAKE_DIR) $(INSTALL_PATH)/share/icons/hicolor/22x22/apps
 	$(MAKE_DIR) $(INSTALL_PATH)/share/icons/hicolor/24x24/apps
@@ -60,6 +61,7 @@ install:
 	$(INSTALL) "images/outwiker_256.png" $(INSTALL_PATH)/share/icons/hicolor/256x256/apps/net.jenyay.Outwiker.png
 	$(INSTALL) "images/outwiker.svg" $(INSTALL_PATH)/share/icons/hicolor/scalable/apps/net.jenyay.Outwiker.svg
 	$(INSTALL) $(NFB_LINUX_DIR)/outwiker.desktop $(INSTALL_PATH)/share/applications/net.jenyay.Outwiker.desktop
+	$(INSTALL) $(NFB_LINUX_DIR)/net.jenyay.Outwiker.appdata.xml $(INSTALL_PATH)/share/metainfo/net.jenyay.Outwiker.appdata.xml
 # $(INSTALL_DIR) $(NFB_LINUX_DIR)/man $(INSTALL_PATH)/share
 # cd $(INSTALL_PATH)/share/man/man1; gzip -f outwiker.1
 # cd $(INSTALL_PATH)/share/man/ru/man1; gzip -f outwiker.1

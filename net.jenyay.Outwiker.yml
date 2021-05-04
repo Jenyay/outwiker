@@ -17,9 +17,8 @@ modules:
     buildsystem: simple
     no-autogen: true
     sources:
-      - type: git
-        url: https://github.com/Jenyay/outwiker
-        commit: 780623f9c02eb6d4b0514b2dbe9ec8be60f5cb6c
+      - type: dir
+        path: .
     build-options:
       build-args:
         - --share=network
