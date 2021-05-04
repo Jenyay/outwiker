@@ -52,3 +52,4 @@ Pipfile.lock
 .pytest_cache
 __cache.tmp
 .mypy_cache
+.flatpak-builder
