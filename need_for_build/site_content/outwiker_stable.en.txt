@@ -46,10 +46,17 @@ Current version: '''{{ version_full }}'''
 
 '''Linux''' users can install OutWiker from snap package with follow commands:
 
-(:source lang="bash":)
+(:source lang="text":)
 sudo snap install outwiker
 sudo snap connect outwiker:cups-control
 sudo snap connect outwiker:removable-media
+(:sourceend:)
+
+To install OutWiker from flatpak package run follow commands:
+
+(:source lang=text:)
+flatpak install flathub net.jenyay.Outwiker
+flatpak run net.jenyay.Outwiker
 (:sourceend:)
 
 For others Linux distributions see [[Sources -> #source]]
@@ -115,10 +122,16 @@ In MS Windows 7 / 10 it would be:
 C:\Users\USERNAME\AppData\Roaming\outwiker\plugins
 (:sourceend:)
 
-In Ubuntu Linux:
+In Linux for OutWiker installed from snap:
 
 (:source lang="text":)
-/home/USERNAME/.config/outwiker/plugins
+~/snap/outwiker/current/.config/outwiker/plugins
+(:sourceend:)
+
+In Linux for OutWiker installed from flatpak:
+
+(:source lang="text":)
+~/.var/app/net.jenyay.Outwiker/config/outwiker/plugins
 (:sourceend:)
 
 Take note what each plugin is a folder with the files. This plugin folder need to copy in the folder with plugins. In the preferences dialog (Edit - Preferences - Plugins) can disable plugins without remove their files from ''plugins'' folder.
@@ -132,13 +145,13 @@ Source code of OutWiker is free.
 To get a stable version of the source code, run:
 
 >>frame<<
-git clone https://github.com/Jenyay/outwiker.git
+git clone https://github.com/Jenyay/outwiker
 >><<
 
 To get the source code version of the program, which is in development, run:
 
 >>frame<<
-git clone https://github.com/Jenyay/outwiker.git
+git clone https://github.com/Jenyay/outwiker
 cd outwiker
 git checkout stable
 >><<

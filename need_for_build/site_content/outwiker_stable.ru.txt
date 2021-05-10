@@ -16,7 +16,6 @@ Attach:us.png [[English version -> Outwiker/English]]
 * [[#faq | Часто задаваемые вопросы (ЧаВо)]]
 * [[#source | Исходники программы]]
 * [[#history| История версий]]
-* [[http://jenyay.net/forum/ | Обсудить на форуме]]
 
 
 [[#description]]
@@ -52,13 +51,18 @@ OutWiker может содержать страницы разного типа:
 [[#linux]]
 [[#ubuntu]]Для пользователей Linux создан snap-пакет, который можно установить, выполнив следующие команды:
 
-(:source lang="bash":)
+(:source lang="text":)
 sudo snap install outwiker
 sudo snap connect outwiker:cups-control
 sudo snap connect outwiker:removable-media
 (:sourceend:)
 
-Для запуска из исходников см. раздел [[исходники программ -> #source]].
+Для установки и запуска OutWiker из flatpak:
+
+(:source lang=text:)
+flatpak install flathub net.jenyay.Outwiker
+flatpak run net.jenyay.Outwiker
+(:sourceend:)
 
 [[#screenshots]]
 !! Скриншоты
@@ -101,7 +105,7 @@ outwiker_3.0_ru_06.png
 
 '''Как сделать так, чтобы программа хранила настройки в папке с запускаемым файлом?'''
 
-Скопируйте файл ''outwiker.ini'' из папки ''.outwiker'' внутри папки профиля пользователя (под Windows 7 / 10 - {+C:\Users\USERNAME\AppData\Roaming\outwiker\+}, под Linux - {+/home/USERNAME/.config/outwiker/+}) в папку с программой.
+Скопируйте файл ''outwiker.ini'' из папки ''.outwiker'' внутри папки профиля пользователя (под Windows 7 / 10 - {+C:\Users\USERNAME\AppData\Roaming\outwiker\+} в папку с программой.
 
 '''Как устанавливать плагины'''
 
@@ -115,11 +119,18 @@ outwiker_3.0_ru_06.png
 C:\Users\USERNAME\AppData\Roaming\outwiker\plugins
 (:sourceend:)
 
-Под Ubuntu Linux, если у вас не установлена переменная окружения ''$XDG_CONFIG_HOME'', папка с плагинами может иметь такой путь:
+Под Linux папка с плагинами будет располагаться по следующему пути (в случае установки OutWiker из snap):
 
 (:source lang="text":)
-/home/USERNAME/.config/outwiker/plugins
+~/snap/outwiker/current/.config/outwiker/plugins
 (:sourceend:)
+
+или (в случае установки OutWiker из flatpak):
+
+(:source lang="text":)
+~/.var/app/net.jenyay.Outwiker/config/outwiker/plugins
+(:sourceend:)
+
 
 Обратите внимание, что каждый плагин - это папка с файлами, именно эту папку и нужно копировать в ''plugins''. В окне настроек (Правка - Параметры... - Расширения) вы можете отключать плагины без удаления их из папки ''plugins''.
 
@@ -133,13 +144,13 @@ C:\Users\USERNAME\AppData\Roaming\outwiker\plugins
 Чтобы получить последнюю версию исходников, выполните команду
 
 >>frame<<
-git clone https://github.com/Jenyay/outwiker.git
+git clone https://github.com/Jenyay/outwiker
 >><<
 
 Если вы хотите получить исходники последней стабильной версии, то для этого надо переключиться на ветку stable:
 
 >>frame<<
-git clone https://github.com/Jenyay/outwiker.git
+git clone https://github.com/Jenyay/outwiker
 cd outwiker
 git checkout stable
 >><<
@@ -152,8 +163,6 @@ pipenv shell
 pipenv update -d
 fab run
 >><<
-
-Более подробно про запуск OutWiker из исходников читайте в [[http://outwiker.readthedocs.io/ru/latest/ru/build/start.html | документации]].
 
 
 {% include 'changelog.ru.txt' %}

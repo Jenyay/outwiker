@@ -33,6 +33,14 @@ sudo snap connect outwiker:cups-control
 sudo snap connect outwiker:removable-media
 (:sourceend:)
 
+
+To install from flatpak run the commands:
+
+(:source lang=text:)
+flatpak install flathub net.jenyay.Outwiker
+flatpak run net.jenyay.Outwiker
+(:sourceend:)
+
 %center%%thumb width=500%Attach:outwiker_3.0.0_03_en.png%%
 
 
