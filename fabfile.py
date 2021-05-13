@@ -416,7 +416,7 @@ def deploy(apply=False, is_stable=False):
 
     snap_channels = ['edge', 'beta']
     if is_stable:
-        snap_channels += ['release']
+        snap_channels += ['stable']
 
     snap_publish(*snap_channels)
 

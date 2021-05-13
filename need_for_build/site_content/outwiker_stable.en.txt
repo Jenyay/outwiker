@@ -34,13 +34,13 @@ OutWiker distributed with source code under the  [[GPL 3 -> http://www.gnu.org/l
 Current version: '''{{ version_full }}'''
 
 '''OutWiker for Windows'''
-[[Attach:Soft/Outwiker/outwiker_{{ version_full }}_win.exe | outwiker_{{ version_full }}_win.exe]] (installer, 23 МБ).
-[[Attach:Soft/Outwiker/outwiker_{{ version_full }}_win.7z | outwiker_{{ version_full }}_win.7z]] (7z archive, 22 МБ).
-[[Attach:Soft/Outwiker/outwiker_{{ version_full }}_win.zip | outwiker_{{ version_full }}_win.zip]] (zip archive, 28 МБ).
+[[Attach:Soft/Outwiker/outwiker_{{ version_full }}_win.exe | outwiker_{{ version_full }}_win.exe]] (installer, 35 МБ).
+[[Attach:Soft/Outwiker/outwiker_{{ version_full }}_win.7z | outwiker_{{ version_full }}_win.7z]] (7z archive, 23 МБ).
+[[Attach:Soft/Outwiker/outwiker_{{ version_full }}_win.zip | outwiker_{{ version_full }}_win.zip]] (zip archive, 43 МБ).
 
 '''OutWiker for Windows with all plug-ins'''
-[[Attach:Soft/Outwiker/outwiker_{{ version_full }}_win_all_plugins.zip | outwiker_{{ version_full }}_win_all_plugins.zip]] (archive 7z, 37 МБ).
-[[Attach:Soft/Outwiker/outwiker_{{ version_full }}_win_all_plugins.7z | outwiker_{{ version_full }}_win_all_plugins.7z]] (archive 7z, 27 МБ).
+[[Attach:Soft/Outwiker/outwiker_{{ version_full }}_win_all_plugins.zip | outwiker_{{ version_full }}_win_all_plugins.zip]] (archive 7z, 53 МБ).
+[[Attach:Soft/Outwiker/outwiker_{{ version_full }}_win_all_plugins.7z | outwiker_{{ version_full }}_win_all_plugins.7z]] (archive 7z, 31 МБ).
 
 (:DonateOWEn:)
 

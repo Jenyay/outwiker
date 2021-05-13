@@ -40,13 +40,13 @@ OutWiker может содержать страницы разного типа:
 (:DonateOW:)
 
 [[#windows]]'''Версия для Windows'''
-[[Attach:outwiker_{{ version_full }}_win.exe | outwiker_{{ version_full }}_win.exe]] (инсталлятор, 23 МБ).
-[[Attach:outwiker_{{ version_full }}_win.7z | outwiker_{{ version_full }}_win.7z]] (архив 7z, 22 МБ).
-[[Attach:outwiker_{{ version_full }}_win.zip | outwiker_{{ version_full }}_win.zip]] (архив zip, 28 МБ).
+[[Attach:outwiker_{{ version_full }}_win.exe | outwiker_{{ version_full }}_win.exe]] (инсталлятор, 35 МБ).
+[[Attach:outwiker_{{ version_full }}_win.7z | outwiker_{{ version_full }}_win.7z]] (архив 7z, 25 МБ).
+[[Attach:outwiker_{{ version_full }}_win.zip | outwiker_{{ version_full }}_win.zip]] (архив zip, 43 МБ).
 
 '''Версия под Windows со всеми плагинами'''
-[[Attach:outwiker_{{ version_full }}_win_all_plugins.zip | outwiker_{{ version_full }}_win_all_plugins.zip]] (архив zip, 37 МБ).
-[[Attach:outwiker_{{ version_full }}_win_all_plugins.7z | outwiker_{{ version_full }}_win_all_plugins.7z]] (архив 7z, 27 МБ).
+[[Attach:outwiker_{{ version_full }}_win_all_plugins.zip | outwiker_{{ version_full }}_win_all_plugins.zip]] (архив zip, 53 МБ).
+[[Attach:outwiker_{{ version_full }}_win_all_plugins.7z | outwiker_{{ version_full }}_win_all_plugins.7z]] (архив 7z, 31 МБ).
 
 [[#linux]]
 [[#ubuntu]]Для пользователей Linux создан snap-пакет, который можно установить, выполнив следующие команды:
