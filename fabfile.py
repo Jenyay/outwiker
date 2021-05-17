@@ -34,12 +34,7 @@ from buildtools.defines import (
     PLUGINS_LIST,
     PLUGIN_VERSIONS_FILENAME,
     NEED_FOR_BUILD_DIR,
-    VM_BUILD_PARAMS,
-    LINUX_BUILD_DIR,
     COVERAGE_PARAMS,
-    LANGUAGES,
-    SITE_CONTENT_BUILD_DIR,
-    SITE_CONTENT_DIR,
     OUTWIKER_VERSIONS_FILENAME,
 )
 from buildtools.versions import (getOutwikerVersion,
@@ -52,8 +47,6 @@ from buildtools.builders import (BuilderWindows,
                                  BuilderDebBinaryFactory,
                                  BuilderAppImage,
                                  BuilderSnap,
-                                 SiteContentBuilder,
-                                 SiteContentSource,
                                  )
 from buildtools.deploy.pluginsuploader import PluginsUploader
 from buildtools.deploy.distribsuploader import DistribsUploader
@@ -153,35 +146,6 @@ def linux_clear():
     '''
     builder = BuilderLinuxBinary()
     builder.clear()
-
-
-@task
-@linux_only
-def locale():
-    '''
-    Update the localization file (outwiker.pot)
-    '''
-    with lcd("src"):
-        local(r'find . -iname "*.py" | xargs xgettext -o locale/outwiker.pot')
-
-
-@task(alias='plugin_locale')
-@linux_only
-def locale_plugin(pluginname=None):
-    '''
-    Create or update the localization file for pluginname plug-in
-    '''
-    plugins_list = [pluginname] if pluginname else PLUGINS_LIST
-
-    for name in plugins_list:
-        print_info(name)
-        with lcd(os.path.join("plugins", name, name)):
-            local(r'find . -iname "*.py" | xargs xgettext -o locale/{}.pot'.format(name))
-
-            for lang in LANGUAGES:
-                if os.path.exists(os.path.join('plugins', name, name, 'locale', lang)):
-                    local(r'msgmerge -U -N --backup=none locale/{lang}/LC_MESSAGES/{pluginname}.po locale/{pluginname}.pot'.format(
-                        pluginname=name, lang=lang))
 
 
 @task
@@ -504,97 +468,6 @@ def doc():
         local('make html')
 
 
-@task
-@linux_only
-def prepare_virtual():
-    '''
-    Prepare virtual machine
-    '''
-    with lcd(os.path.join(NEED_FOR_BUILD_DIR, u'virtual')):
-        local(u'ansible-playbook virtual_prepare.yml -k --ask-sudo-pass')
-
-
-@task
-@linux_only
-def vm_run():
-    '''
-    Run virtual machines for build
-    '''
-    for host_param in VM_BUILD_PARAMS.values():
-        with lcd(host_param[u'vagrant_path']):
-            local(u'vagrant up')
-
-
-@task
-@linux_only
-def vm_update():
-    '''
-    Update the virtual machines
-    '''
-    for host_param in VM_BUILD_PARAMS.values():
-        with lcd(host_param[u'vagrant_path']):
-            local(u'vagrant box update')
-
-
-@task(alias='vm_halt')
-@linux_only
-def vm_stop():
-    '''
-    Stop virtual machines for build
-    '''
-    for host_param in VM_BUILD_PARAMS.values():
-        with lcd(host_param[u'vagrant_path']):
-            local(u'vagrant halt')
-
-
-@task
-@linux_only
-def vm_remove_keys():
-    '''
-    Remove local SSH keys for remote virtual machines
-    '''
-    for host_param in VM_BUILD_PARAMS.values():
-        host = host_param[u'host']
-        local(u'ssh-keygen -f ~/.ssh/known_hosts -R {}'.format(host))
-
-
-@task
-@linux_only
-def vm_prepare():
-    '''
-    Prepare virtual machines for build
-    '''
-    vm_run()
-    with lcd(u'need_for_build/virtual/build_machines'):
-        local(u'ANSIBLE_STDOUT_CALLBACK=debug ansible-playbook prepare_build_machines.yml')
-
-
-@task
-@linux_only
-def vm_linux_binary(is_stable=0):
-    '''
-    Create 64-bit assembly on virtual machines
-    '''
-    vm_run()
-    version_str = getOutwikerVersionStr()
-    version = getOutwikerVersion()
-
-    path_to_result = os.path.abspath(
-        os.path.join(BUILD_DIR, version_str, LINUX_BUILD_DIR)
-    )
-
-    if not os.path.exists(path_to_result):
-        os.makedirs(path_to_result)
-
-    with lcd(u'need_for_build/virtual/build_machines'):
-        local(u'ANSIBLE_STDOUT_CALLBACK=debug ansible-playbook build_linux_binaries.yml --extra-vars "version={version} build={build} save_to={save_to} is_stable={is_stable}"'.format(
-            version=version[0],
-            build=version[1],
-            save_to=path_to_result,
-            is_stable=is_stable)
-        )
-
-
 @task(alias='linux_appimage')
 @linux_only
 def appimage(is_stable=0):
@@ -709,52 +582,6 @@ def snap_publish(*channels):
 
         command_sign = 'snapcraft sign-build "{fname}"'.format(fname=snap_file)
         local(command_sign)
-
-
-@task
-def site_content():
-    path_to_templates = os.path.join(NEED_FOR_BUILD_DIR,
-                                     SITE_CONTENT_DIR)
-    # List of SiteContentSource
-    apps = []
-    apps.append(SiteContentSource(
-        os.path.join(NEED_FOR_BUILD_DIR, 'versions.xml'),
-        'ru',
-        'outwiker_unstable.ru.txt'))
-
-    apps.append(SiteContentSource(
-        os.path.join(NEED_FOR_BUILD_DIR, 'versions.xml'),
-        'en',
-        'outwiker_unstable.en.txt'))
-
-    apps.append(SiteContentSource(
-        os.path.join(NEED_FOR_BUILD_DIR, 'versions_stable.xml'),
-        'ru',
-        'outwiker_stable.ru.txt'))
-
-    apps.append(SiteContentSource(
-        os.path.join(NEED_FOR_BUILD_DIR, 'versions_stable.xml'),
-        'en',
-        'outwiker_stable.en.txt'))
-
-    for plugin in PLUGINS_LIST:
-        item_ru = SiteContentSource(
-            os.path.join('plugins', plugin, 'versions.xml'),
-            'ru',
-            '{}.ru.txt'.format(plugin))
-
-        item_en = SiteContentSource(
-            os.path.join('plugins', plugin, 'versions.xml'),
-            'en',
-            '{}.en.txt'.format(plugin))
-
-        apps.append(item_ru)
-        apps.append(item_en)
-
-    builder = SiteContentBuilder(SITE_CONTENT_BUILD_DIR,
-                                 apps,
-                                 path_to_templates)
-    builder.build()
 
 
 @task

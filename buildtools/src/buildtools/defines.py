@@ -42,7 +42,6 @@ DEB_BINARY_BUILD_DIR = 'linux'
 DEB_SOURCE_BUILD_DIR = 'linux/deb_source'
 APPIMAGE_BUILD_DIR = 'linux'
 SNAP_BUILD_DIR = 'linux'
-SITE_CONTENT_BUILD_DIR = 'site_content'
 
 SOURCES_DIR = 'sources'
 PLUGINS_DIR = 'plugins'
@@ -50,7 +49,6 @@ PLUGIN_VERSIONS_FILENAME = 'versions.xml'
 PLUGIN_INFO_FILENAME = 'plugin.xml'
 OUTWIKER_VERSIONS_FILENAME = 'versions.xml'
 NEED_FOR_BUILD_DIR = 'need_for_build'
-SITE_CONTENT_DIR = 'site_content'
 COVERAGE_PARAMS = '--rcfile=.coveragerc'
 
 FILES_FOR_UPLOAD_UNSTABLE_WIN = [
@@ -93,23 +91,3 @@ try:
     DEB_MAINTAINER_EMAIL = os.environ['DEBEMAIL']
 except KeyError:
     DEB_MAINTAINER_EMAIL = 'jenyay.ilin@gmail.com'
-
-
-VM_BUILD_PARAMS = {
-    # 'zesty64': {
-    #     'vagrant_path': 'need_for_build/virtual/build_machines/zesty64',
-    #     'host': '192.168.101.64',
-    # },
-    'xenial64': {
-        'vagrant_path': 'need_for_build/virtual/build_machines/xenial64',
-        'host': '192.168.101.65',
-    },
-    # 'artful64': {
-    #     'vagrant_path': 'need_for_build/virtual/build_machines/artful64',
-    #     'host': '192.168.101.66',
-    # },
-    # 'trusty64': {
-    #     'vagrant_path': 'need_for_build/virtual/build_machines/trusty64',
-    #     'host': '192.168.101.67',
-    # },
-}
