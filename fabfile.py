@@ -48,7 +48,6 @@ from buildtools.builders import (BuilderWindows,
                                  BuilderAppImage,
                                  BuilderSnap,
                                  )
-from buildtools.deploy.pluginsuploader import PluginsUploader
 from buildtools.deploy.distribsuploader import DistribsUploader
 
 from outwiker.utilites.textfile import readTextFile
@@ -276,23 +275,6 @@ def _create_tree(level, maxlevel, nsiblings, parent):
             newpage.content = u'Абырвалг'
             newpage.icon = u'images/outwiker_16.png'
             _create_tree(level + 1, maxlevel, nsiblings, newpage)
-
-
-@hosts(DEPLOY_SERVER_NAME)
-@task
-def upload_plugins(*plugins_list):
-    '''
-    Upload plugin to site
-    '''
-    if len(plugins_list) == 0:
-        plugins_list = PLUGINS_LIST
-
-    version_str = getOutwikerVersionStr()
-    build_plugins_dir = os.path.join(BUILD_DIR, version_str, PLUGINS_DIR)
-    uploader = PluginsUploader(build_plugins_dir, DEPLOY_HOME_PATH)
-
-    print_info('Uploading plug-ins to {}...'.format(DEPLOY_SERVER_NAME))
-    uploader.upload(plugins_list)
 
 
 @hosts(DEPLOY_SERVER_NAME)
