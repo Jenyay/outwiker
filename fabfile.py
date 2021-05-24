@@ -10,7 +10,7 @@ import sys
 import shutil
 from typing import List
 
-from fabric.api import local, lcd, settings, task, cd, put, hosts
+from fabric.api import local, lcd, settings, task
 from colorama import Fore
 from buildtools.info import show_plugins_info
 from buildtools.linter import (LinterForOutWiker, LinterForPlugin,
@@ -265,19 +265,6 @@ def _create_tree(level, maxlevel, nsiblings, parent):
             newpage.content = u'Абырвалг'
             newpage.icon = u'images/outwiker_16.png'
             _create_tree(level + 1, maxlevel, nsiblings, newpage)
-
-
-@hosts(DEPLOY_SERVER_NAME)
-@task
-def upload_plugins_pack():
-    '''
-    Upload archive with all plugins to site
-    '''
-    pluginsBuilder = BuilderPlugins()
-    pack_path = pluginsBuilder.get_plugins_pack_path()
-    with cd(DEPLOY_PLUGINS_PACK_PATH):
-        basename = os.path.basename(pack_path)
-        put(pack_path, basename)
 
 
 @task
