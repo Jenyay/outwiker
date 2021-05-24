@@ -517,15 +517,6 @@ def snap_publish(*channels):
 
 
 @task
-def snap_restart():
-    '''
-    Restart snap daemons
-    '''
-    local('sudo systemctl stop snap.lxd.daemon.unix.socket')
-    local('sudo systemctl restart snap.lxd.daemon')
-
-
-@task
 def check_errors():
     status_outwiker = _check_outwiker_errors()
     status_plugins = _check_plugins_errors()
