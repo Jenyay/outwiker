@@ -12,7 +12,6 @@ from typing import List
 
 from fabric.api import local, lcd, settings, task, cd, put, hosts
 from colorama import Fore
-from buildtools.buildfacts import BuildFacts
 from buildtools.info import show_plugins_info
 from buildtools.linter import (LinterForOutWiker, LinterForPlugin,
                                LinterStatus, LinterReport)
@@ -37,9 +36,7 @@ from buildtools.defines import (
     COVERAGE_PARAMS,
     OUTWIKER_VERSIONS_FILENAME,
 )
-from buildtools.versions import (getOutwikerVersion,
-                                 getOutwikerVersionStr,
-                                 )
+from buildtools.versions import getOutwikerVersionStr
 from buildtools.builders import (BuilderWindows,
                                  BuilderSources,
                                  BuilderPlugins,
@@ -48,20 +45,13 @@ from buildtools.builders import (BuilderWindows,
                                  BuilderAppImage,
                                  BuilderSnap,
                                  )
-from buildtools.deploy.distribsuploader import DistribsUploader
 
 from outwiker.utilites.textfile import readTextFile
 
 
 DEPLOY_SERVER_NAME = os.environ.get('OUTWIKER_DEPLOY_SERVER_NAME', '')
-DEPLOY_UNSTABLE_PATH = os.environ.get('OUTWIKER_DEPLOY_UNSTABLE_PATH', '')
-DEPLOY_STABLE_PATH = os.environ.get('OUTWIKER_DEPLOY_STABLE_PATH', '')
-DEPLOY_HOME_PATH = os.environ.get('OUTWIKER_DEPLOY_HOME_PATH', '')
-DEPLOY_SITE = os.environ.get('OUTWIKER_DEPLOY_SITE', '')
 DEPLOY_PLUGINS_PACK_PATH = os.environ.get(
     'OUTWIKER_DEPLOY_PLUGINS_PACK_PATH', '')
-PATH_TO_WINDOWS_DISTRIBS = os.environ.get(
-    'OUTWIKER_PATH_TO_WINDOWS_DISTRIBS', '')
 
 
 @task
@@ -275,33 +265,6 @@ def _create_tree(level, maxlevel, nsiblings, parent):
             newpage.content = u'Абырвалг'
             newpage.icon = u'images/outwiker_16.png'
             _create_tree(level + 1, maxlevel, nsiblings, newpage)
-
-
-@hosts(DEPLOY_SERVER_NAME)
-@task
-def upload_distribs(is_stable=False):
-    '''
-    Upload binary version to site
-    '''
-    is_stable = tobool(is_stable)
-
-    facts = BuildFacts()
-    version = getOutwikerVersion()
-
-    if is_stable:
-        deploy_path = DEPLOY_STABLE_PATH
-    else:
-        deploy_path = DEPLOY_UNSTABLE_PATH
-
-    windows_binary_path = os.path.join(PATH_TO_WINDOWS_DISTRIBS,
-                                       facts.version)
-
-    binary_uploader = DistribsUploader(version,
-                                       is_stable,
-                                       windows_binary_path,
-                                       deploy_path)
-    print_info('Uploading distribs to {}...'.format(DEPLOY_SERVER_NAME))
-    binary_uploader.deploy()
 
 
 @hosts(DEPLOY_SERVER_NAME)
