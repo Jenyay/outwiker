@@ -11,7 +11,6 @@ import shutil
 from typing import List
 
 from fabric.api import local, lcd, settings, task
-from colorama import Fore
 from buildtools.info import show_plugins_info
 
 from buildtools.utilites import (getPython,
@@ -272,36 +271,6 @@ def build(is_stable=False):
 
     if sys.platform.startswith('win32'):
         win(is_stable)
-
-
-@task
-def deploy(apply=False, is_stable=False):
-    '''
-    apply -- True if deploy to server and False if print commands only
-    is_stable -- False for unstable version and True for stable version
-    '''
-    apply = tobool(apply)
-    is_stable = tobool(is_stable)
-
-    linter_result = check_errors()
-    if linter_result != LinterStatus.OK:
-        return
-
-    if apply:
-        print(Fore.GREEN + 'Run deploy...')
-    else:
-        print(Fore.GREEN + 'Print commands only')
-
-    plugins()
-    upload_plugins()
-    upload_plugins_pack()
-    upload_distribs(is_stable)
-
-    snap_channels = ['edge', 'beta']
-    if is_stable:
-        snap_channels += ['stable']
-
-    snap_publish(*snap_channels)
 
 
 @task
