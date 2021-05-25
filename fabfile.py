@@ -1,14 +1,12 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-
 import builtins
 import os
 import os.path
 import glob
 import sys
 import shutil
-from typing import List
 
 from fabric.api import local, lcd, settings, task
 from buildtools.info import show_plugins_info
@@ -27,7 +25,6 @@ from buildtools.defines import (
     NEED_FOR_BUILD_DIR,
     COVERAGE_PARAMS,
 )
-from buildtools.versions import getOutwikerVersionStr
 from buildtools.builders import (BuilderWindows,
                                  BuilderSources,
                                  BuilderPlugins,
@@ -36,11 +33,6 @@ from buildtools.builders import (BuilderWindows,
                                  BuilderAppImage,
                                  BuilderSnap,
                                  )
-
-
-DEPLOY_SERVER_NAME = os.environ.get('OUTWIKER_DEPLOY_SERVER_NAME', '')
-DEPLOY_PLUGINS_PACK_PATH = os.environ.get(
-    'OUTWIKER_DEPLOY_PLUGINS_PACK_PATH', '')
 
 
 @task
@@ -271,76 +263,6 @@ def build(is_stable=False):
 
     if sys.platform.startswith('win32'):
         win(is_stable)
-
-
-@task
-def add_sources_tag(apply=False, is_stable=False):
-    '''
-    Add the tag to git repository and push
-    '''
-    apply = tobool(apply)
-    is_stable = tobool(is_stable)
-
-    _add_sources_tag(apply, False)
-    if is_stable:
-        _add_sources_tag(apply, True)
-
-
-def _add_sources_tag(apply=False, is_stable=False):
-    version_str = getOutwikerVersionStr()
-    if is_stable:
-        tagname = u'stable_{}'.format(version_str)
-    else:
-        tagname = u'unstable_{}'.format(version_str)
-
-    _add_git_tag(tagname, apply)
-
-
-def _add_git_tag(tagname, apply):
-    commands = [
-        'git checkout master',
-        'git tag {}'.format(tagname),
-        'git push --tags',
-    ]
-    _run_commands(commands, apply)
-
-
-def _run_commands(commands: List[str], apply=False):
-    for command in commands:
-        if apply:
-            local(command)
-        else:
-            print(command)
-
-
-@task
-def update_sources_branches(apply=False, is_stable=False):
-    '''
-    Update the git repository
-
-    apply -- True if deploy to server and False if print commands only
-    '''
-    apply = tobool(apply)
-    is_stable = tobool(is_stable)
-
-    commands = [
-        'git checkout dev',
-        'git pull',
-        'git checkout master',
-        'git pull',
-        'git merge dev',
-        'git push'
-    ]
-    if is_stable:
-        commands += [
-            'git switch stable',
-            'git pull',
-            'git merge master',
-            'git push',
-            'git switch master'
-        ]
-    _run_commands(commands, apply)
-    add_sources_tag(apply, is_stable)
 
 
 @task
