@@ -18,13 +18,7 @@ from buildtools.utilites import (getPython,
                                  windows_only,
                                  linux_only
                                  )
-from buildtools.defines import (
-    BUILD_DIR,
-    BUILD_LIB_DIR,
-    DEB_BINARY_BUILD_DIR,
-    NEED_FOR_BUILD_DIR,
-    COVERAGE_PARAMS,
-)
+from buildtools.defines import DEB_BINARY_BUILD_DIR, COVERAGE_PARAMS
 from buildtools.builders import (BuilderWindows,
                                  BuilderSources,
                                  BuilderPlugins,
@@ -321,39 +315,6 @@ def docker_build(*args):
     command = 'docker run -v "{path}:/home/user/project" --user $(id -u):$(id -g) -i -t outwiker/build_linux {tasks}'.format(
         path=current_dir,
         tasks=tasks_str
-    )
-    local(command)
-
-
-@task
-def docker_build_wx(ubuntu_version: str, wx_version: str):
-    '''
-    Build a wxPython library from sources
-    '''
-    # Create dest dir
-    build_dir = os.path.abspath(os.path.join(BUILD_DIR, BUILD_LIB_DIR))
-    if not os.path.exists(build_dir):
-        os.mkdir(build_dir)
-
-    # Create Docker image
-    docker_image = 'wxpython/ubuntu_{ubuntu_version}_webkit2'.format(
-        ubuntu_version=ubuntu_version)
-
-    dockerfile_path = os.path.join(
-        NEED_FOR_BUILD_DIR,
-        'build_wxpython',
-        'ubuntu_{ubuntu_version}'.format(ubuntu_version=ubuntu_version)
-    )
-
-    with lcd(dockerfile_path):
-        local(
-            'docker build -t {docker_image} .'.format(docker_image=docker_image))
-
-    # Build wxPython
-    command = 'docker run -v "{path}:/home/user/build" --rm --user $(id -u):$(id -g) -i -t -e "WX_VERSION={wx_version}" {docker_image}'.format(
-        path=build_dir,
-        docker_image=docker_image,
-        wx_version=wx_version
     )
     local(command)
 
