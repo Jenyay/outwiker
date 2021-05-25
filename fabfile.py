@@ -9,7 +9,6 @@ import sys
 import shutil
 
 from fabric.api import local, lcd, settings, task
-from buildtools.info import show_plugins_info
 
 from buildtools.utilites import (getPython,
                                  execute,
@@ -205,11 +204,6 @@ def clear():
         deb_binary_clear()
     elif sys.platform.startswith('win32'):
         win_clear()
-
-
-@task
-def plugins_info():
-    show_plugins_info()
 
 
 @task

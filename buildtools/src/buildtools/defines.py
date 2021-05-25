@@ -51,28 +51,6 @@ OUTWIKER_VERSIONS_FILENAME = 'versions.xml'
 NEED_FOR_BUILD_DIR = 'need_for_build'
 COVERAGE_PARAMS = '--rcfile=.coveragerc'
 
-FILES_FOR_UPLOAD_UNSTABLE_WIN = [
-    'outwiker_win_unstable.exe',
-    'outwiker_win_unstable.zip',
-    'outwiker_win_unstable.7z',
-    'outwiker_win_unstable_all_plugins.zip',
-    'outwiker_win_unstable_all_plugins.7z',
-]
-
-FILES_FOR_UPLOAD_STABLE_WIN = [
-    'outwiker_{version}_win.exe',
-    'outwiker_{version}_win.zip',
-    'outwiker_{version}_win.7z',
-    'outwiker_{version}_win_all_plugins.zip',
-    'outwiker_{version}_win_all_plugins.7z',
-]
-
-FILES_FOR_UPLOAD_UNSTABLE_LINUX = [
-]
-
-FILES_FOR_UPLOAD_STABLE_LINUX = [
-]
-
 PPA_DEV_PATH = 'ppa:outwiker-team/dev'
 PPA_UNSTABLE_PATH = 'ppa:outwiker-team/unstable'
 PPA_STABLE_PATH = 'ppa:outwiker-team/ppa'
