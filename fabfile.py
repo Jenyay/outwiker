@@ -13,15 +13,11 @@ from typing import List
 from fabric.api import local, lcd, settings, task
 from colorama import Fore
 from buildtools.info import show_plugins_info
-from buildtools.linter import (LinterForOutWiker, LinterForPlugin,
-                               LinterStatus, LinterReport)
 
 from buildtools.utilites import (getPython,
                                  execute,
                                  tobool,
                                  print_info,
-                                 print_warning,
-                                 print_error,
                                  windows_only,
                                  linux_only
                                  )
@@ -29,12 +25,8 @@ from buildtools.defines import (
     BUILD_DIR,
     BUILD_LIB_DIR,
     DEB_BINARY_BUILD_DIR,
-    PLUGINS_DIR,
-    PLUGINS_LIST,
-    PLUGIN_VERSIONS_FILENAME,
     NEED_FOR_BUILD_DIR,
     COVERAGE_PARAMS,
-    OUTWIKER_VERSIONS_FILENAME,
 )
 from buildtools.versions import getOutwikerVersionStr
 from buildtools.builders import (BuilderWindows,
@@ -45,8 +37,6 @@ from buildtools.builders import (BuilderWindows,
                                  BuilderAppImage,
                                  BuilderSnap,
                                  )
-
-from outwiker.utilites.textfile import readTextFile
 
 
 DEPLOY_SERVER_NAME = os.environ.get('OUTWIKER_DEPLOY_SERVER_NAME', '')
@@ -514,66 +504,3 @@ def snap_publish(*channels):
 
         command_sign = 'snapcraft sign-build "{fname}"'.format(fname=snap_file)
         local(command_sign)
-
-
-@task
-def check_errors():
-    status_outwiker = _check_outwiker_errors()
-    status_plugins = _check_plugins_errors()
-
-    return status_outwiker & status_plugins
-
-
-def _check_plugins_errors():
-    print_info('Start plug-ins information checking...')
-    linter = LinterForPlugin()
-
-    sum_status = LinterStatus.OK
-
-    for plugin in PLUGINS_LIST:
-        print_info('  ' + plugin)
-        changelog_fname = os.path.join(
-            PLUGINS_DIR, plugin, PLUGIN_VERSIONS_FILENAME)
-        changelog = readTextFile(changelog_fname)
-        status, reports = linter.check_all(changelog)
-        sum_status = sum_status & status
-
-        for report in reports:
-            _print_linter_report(report)
-
-    if sum_status == LinterStatus.OK:
-        print_info('Plug-ins information is OK')
-    else:
-        print_error('Plug-ins information problems found')
-
-    return sum_status
-
-
-def _check_outwiker_errors():
-    print_info('Start OutWiker information checking...')
-    changelog_outwiker_fname = os.path.join(NEED_FOR_BUILD_DIR,
-                                            OUTWIKER_VERSIONS_FILENAME)
-    versions_outwiker = readTextFile(changelog_outwiker_fname)
-    linter = LinterForOutWiker()
-    status_outwiker, reports_outwiker = linter.check_all(versions_outwiker)
-
-    for report in reports_outwiker:
-        _print_linter_report(report)
-
-    if status_outwiker == LinterStatus.OK:
-        print_info('OutWiker information is OK')
-    else:
-        print_error('Outwiker information problems found')
-
-    return status_outwiker
-
-
-def _print_linter_report(report: LinterReport):
-    if report.status == LinterStatus.OK:
-        print_info('    ' + report.message)
-    elif report.status == LinterStatus.WARNING:
-        print_warning('    ' + report.message)
-    elif report.status == LinterStatus.ERROR:
-        print_error('    ' + report.message)
-    else:
-        raise AssertionError
