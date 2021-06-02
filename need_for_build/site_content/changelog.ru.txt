@@ -1,7 +1,0 @@
-[[#history]]
-!! История изменений
-{% for version in versions_list %}
-{% if version.date %}!!! {{ version.version }} ({{ version.date.strftime('%d.%m.%Y') }}){% else %}!!! {{ version.version }}{% endif %}
-{% for change in version.changes %}
-* {{ change.description }}{% endfor %}
-{% endfor %}

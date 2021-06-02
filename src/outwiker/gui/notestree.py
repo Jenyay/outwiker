@@ -18,9 +18,8 @@ from outwiker.actions.removepage import RemovePageAction
 from outwiker.actions.editpageprop import EditPagePropertiesAction
 from outwiker.actions.moving import GoToParentAction
 from outwiker.core.events import PAGE_UPDATE_ICON, PAGE_UPDATE_TITLE
-from outwiker.core.defines import ICON_HEIGHT
+from outwiker.gui.controls.notestreectrl import NotesTreeCtrl
 from .pagepopupmenu import PagePopupMenu
-from .imagelistcache import ImageListCache
 from .dropfiles import BaseDropFilesTarget
 
 
@@ -28,43 +27,28 @@ class NotesTree(wx.Panel):
     def __init__(self, parent, application):
         super().__init__(parent, style=wx.TAB_TRAVERSAL)
         self._application = application
-        # Переключатель, устанавливается в True,
+        # Переключатель устанавливается в True,
         # если "внезапно" изменяется текущая страница
-        self.__externalPageSelect = False
+        self._externalPageSelect = False
 
         self.toolbar = wx.ToolBar(
             parent=self,
             style=wx.TB_HORIZONTAL | wx.TB_FLAT | wx.TB_DOCKABLE)
 
-        treeStyle = (wx.TR_HAS_BUTTONS | wx.TR_EDIT_LABELS | wx.SUNKEN_BORDER)
+        self.treeCtrl = NotesTreeCtrl(self)
 
-        self.treeCtrl = wx.TreeCtrl(self, style=treeStyle)
-
-        self.__set_properties()
+        self.SetSize((256, 260))
         self.__do_layout()
-
-        self.defaultIcon = getBuiltinImagePath("page.png")
-        self.iconHeight = ICON_HEIGHT
 
         self.dragItem = None
         self.popupPage = None
-
-        # Картинки для дерева
-        # raise Exception(self.defaultIcon)
-        self._iconsCache = ImageListCache(self.defaultIcon)
-        self.treeCtrl.AssignImageList(self._iconsCache.getImageList())
-
-        # Кеш для страниц, чтобы было проще искать элемент дерева по странице
-        # Словарь. Ключ - страница, значение - элемент дерева wx.TreeItemId
-        self._pageCache = {}
-
         self.popupMenu = None
 
         # Секция настроек куда сохраняем развернутость страницы
-        self.pageOptionsSection = u"Tree"
+        self.pageOptionsSection = 'Tree'
 
         # Имя опции для сохранения развернутости страницы
-        self.pageOptionExpand = "Expand"
+        self.pageOptionExpand = 'Expand'
 
         self.__BindApplicationEvents()
         self.__BindGuiEvents()
@@ -79,13 +63,6 @@ class NotesTree(wx.Panel):
     def SetForegroundColour(self, colour):
         super().SetForegroundColour(colour)
         self.treeCtrl.SetForegroundColour(colour)
-
-    def getTreeItem(self, page: 'outwiker.core.tree.WikiPage') -> Optional[wx.TreeItemId]:
-        """
-        Получить элемент дерева по странице.
-        Если для страницы не создан элемент дерева, возвращается None
-        """
-        return self._pageCache.get(page)
 
     def getPageByItemId(self, item_id: wx.TreeItemId) -> 'outwiker.core.tree.WikiPage':
         return self.treeCtrl.GetItemData(item_id)
@@ -119,43 +96,16 @@ class NotesTree(wx.Panel):
         self._application.onEndTreeUpdate -= self.__onEndTreeUpdate
 
     def __onWikiOpen(self, root):
-        self.__treeUpdate(root)
+        self.treeCtrl.treeUpdate(root)
 
     def __onPageUpdate(self, page, **kwargs):
         change = kwargs['change']
         if change & PAGE_UPDATE_ICON:
-            self.__updateIcon(page)
+            self.treeCtrl.updateIcon(page)
 
         if change & PAGE_UPDATE_TITLE:
-            item = self._pageCache[page]
+            item = self.treeCtrl.getTreeItem(page)
             self.treeCtrl.SetItemText(item, page.display_title)
-
-    def __loadIcon(self, page):
-        """
-        Добавляет иконку страницы в ImageList и возвращает ее идентификатор.
-        Если иконки нет, то возвращает идентификатор иконки по умолчанию
-        """
-        icon = page.icon
-
-        if not icon:
-            return self._iconsCache.getDefaultImageId()
-
-        icon = os.path.abspath(icon)
-        imageId = self._iconsCache.add(icon)
-
-        if imageId is None:
-            imageId = self._iconsCache.getDefaultImageId()
-
-        return imageId
-
-    def __updateIcon(self, page):
-        if page not in self._pageCache:
-            # Если нет этой страницы в дереве, то не важно,
-            # изменилась иконка или нет
-            return
-
-        icon_id = self.__loadIcon(page)
-        self.treeCtrl.SetItemImage(self._pageCache[page], icon_id)
 
     def __BindGuiEvents(self):
         """
@@ -197,7 +147,6 @@ class NotesTree(wx.Panel):
         self._dropTarget.destroy()
         self.__UnBindApplicationEvents()
         self.treeCtrl.DeleteAllItems()
-        self._iconsCache.clear()
         self._removeButtons()
         self.toolbar.ClearTools()
         self.Destroy()
@@ -206,17 +155,10 @@ class NotesTree(wx.Panel):
         """
         Обработка создания страницы
         """
-        if newpage.parent in self._pageCache:
-            self.__insertChild(newpage)
-
-            assert newpage in self._pageCache
-            item = self._pageCache[newpage]
-            assert item.IsOk()
-
-            self.expand(newpage)
+        self.treeCtrl.createPage(newpage)
 
     def __onPageRemove(self, page):
-        self.__removePageItem(page)
+        self.treeCtrl.removePageItem(page)
 
     def __onTreeItemActivated(self, event):
         item = event.GetItem()
@@ -233,7 +175,7 @@ class NotesTree(wx.Panel):
         self.__saveItemState(item)
 
         for child in page.children:
-            self.__appendChildren(child)
+            self.treeCtrl.appendChildren(child)
 
     def __saveItemState(self, itemid):
         assert itemid.IsOk()
@@ -246,33 +188,6 @@ class NotesTree(wx.Panel):
 
         page_registry = page.root.registry.get_page_registry(page)
         page_registry.set(self.pageOptionExpand, expanded)
-
-    def __getItemExpandState(self, page):
-        """
-        Проверить, раскрыт ли элемент в дереве для страницы page
-        """
-        if page is None:
-            return True
-
-        if page.parent is None:
-            return True
-
-        return self.treeCtrl.IsExpanded(self._pageCache[page])
-
-    def __getPageExpandState(self, page):
-        """
-        Проверить состояние "раскрытости" страницы
-        """
-        if page is None:
-            return True
-
-        if page.parent is None:
-            return True
-
-        page_registry = page.root.registry.get_page_registry(page)
-        expanded = page_registry.getbool(self.pageOptionExpand, default=False)
-
-        return expanded
 
     def __onPopupMenu(self, event):
         self.popupPage = None
@@ -293,10 +208,10 @@ class NotesTree(wx.Panel):
 
         if pageToRename is None or pageToRename.parent is None:
             mainWindow = self._application.mainWindow
-            showError(mainWindow, _(u"You can't rename the root element"))
+            showError(mainWindow, _("You can't rename the root element"))
             return
 
-        selectedItem = self._pageCache[pageToRename]
+        selectedItem = self.treeCtrl.getTreeItem(pageToRename)
         if not selectedItem.IsOk():
             return
 
@@ -327,7 +242,7 @@ class NotesTree(wx.Panel):
 
     def __onEndTreeUpdate(self, _root):
         self.__bindUpdateEvents()
-        self.__treeUpdate(self._application.wikiroot)
+        self.treeCtrl.treeUpdate(self._application.wikiroot)
 
     def __bindUpdateEvents(self):
         self._application.onTreeUpdate += self.__onTreeUpdate
@@ -356,12 +271,12 @@ class NotesTree(wx.Panel):
                 # Moving page to itself is ignored
                 if newParent != draggedPage:
                     movePage(draggedPage, newParent)
-                    self.expand(newParent)
+                    self.treeCtrl.expand(newParent)
 
         self.dragItem = None
 
     def __onTreeUpdate(self, sender):
-        self.__treeUpdate(sender.root)
+        self.treeCtrl.treeUpdate(sender.root)
 
     def __onPageSelect(self, page):
         """
@@ -369,20 +284,20 @@ class NotesTree(wx.Panel):
         """
         # Пометим, что изменение страницы произошло снаружи,
         # а не из-за клика по дереву
-        self.__externalPageSelect = True
+        self._externalPageSelect = True
 
         try:
             currpage = self.selectedPage
             if currpage != page:
                 self.selectedPage = page
         finally:
-            self.__externalPageSelect = False
+            self._externalPageSelect = False
 
     def __onSelChanged(self, _event):
         ctrlstate = wx.GetKeyState(wx.WXK_CONTROL)
         shiftstate = wx.GetKeyState(wx.WXK_SHIFT)
 
-        if(ctrlstate or shiftstate) and not self.__externalPageSelect:
+        if(ctrlstate or shiftstate) and not self._externalPageSelect:
             self._application.mainWindow.tabsController.openInTab(
                 self.selectedPage,
                 True)
@@ -397,46 +312,11 @@ class NotesTree(wx.Panel):
 
     @property
     def selectedPage(self):
-        page = None
-
-        item = self.treeCtrl.GetSelection()
-        if item.IsOk():
-            page = self.treeCtrl.GetItemData(item)
-
-            # Проверка того, что выбрали не корневой элемент
-            if page.parent is None:
-                page = None
-
-        return page
+        return self.treeCtrl.selectedPage
 
     @selectedPage.setter
     def selectedPage(self, newSelPage):
-        if newSelPage is None:
-            item = self.treeCtrl.GetRootItem()
-        else:
-            self.__expandToPage(newSelPage)
-            item = self.getTreeItem(newSelPage)
-
-        if item is not None:
-            self.treeCtrl.SelectItem(item)
-
-    def __expandToPage(self, page):
-        """
-        Развернуть ветви до того уровня, чтобы появился элемент для page
-        """
-        # Список родительских страниц, которые нужно добавить в дерево
-        pages = []
-        currentPage = page.parent
-        while currentPage is not None:
-            pages.append(currentPage)
-            currentPage = currentPage.parent
-
-        pages.reverse()
-        for page in pages:
-            self.expand(page)
-
-    def __set_properties(self):
-        self.SetSize((256, 260))
+        self.treeCtrl.selectedPage = newSelPage
 
     def __do_layout(self):
         mainSizer = wx.FlexGridSizer(cols=1)
@@ -446,126 +326,6 @@ class NotesTree(wx.Panel):
         mainSizer.Add(self.treeCtrl, 1, wx.EXPAND, 0)
         self.SetSizer(mainSizer)
         self.Layout()
-
-    def expand(self, page):
-        item = self.getTreeItem(page)
-        if item is not None:
-            self.treeCtrl.Expand(item)
-
-    def __treeUpdate(self, rootPage):
-        """
-        Обновить дерево
-        """
-        self.treeCtrl.DeleteAllItems()
-        self._iconsCache.clear()
-
-        # Ключ - страница, значение - экземпляр класса TreeItemId
-        self._pageCache = {}
-
-        if rootPage is not None:
-            rootname = os.path.basename(rootPage.path)
-            rootItem = self.treeCtrl.AddRoot(
-                rootname,
-                data=rootPage,
-                image=self._iconsCache.getDefaultImageId())
-
-            self._pageCache[rootPage] = rootItem
-            self.__mountItem(rootItem, rootPage)
-            self.__appendChildren(rootPage)
-
-            self.selectedPage = rootPage.selectedPage
-            self.expand(rootPage)
-
-    def __appendChildren(self, parentPage):
-        """
-        Добавить детей в дерево
-        parentPage - родительская страница, куда добавляем дочерние страницы
-        """
-        grandParentExpanded = self.__getItemExpandState(parentPage.parent)
-
-        if grandParentExpanded:
-            for child in parentPage.children:
-                if child not in self._pageCache:
-                    self.__insertChild(child)
-
-        if self.__getPageExpandState(parentPage):
-            self.expand(parentPage)
-
-    def __mountItem(self, treeitem, page):
-        """
-        Оформить элемент дерева в зависимости от настроек страницы
-        (например, пометить только для чтения)
-        """
-        if page.readonly:
-            font = wx.SystemSettings.GetFont(wx.SYS_DEFAULT_GUI_FONT)
-            font.SetStyle(wx.FONTSTYLE_ITALIC)
-            self.treeCtrl.SetItemFont(treeitem, font)
-
-    def __insertChild(self, child):
-        """
-        Вставить одну дочерниюю страницу(child) в ветвь
-        """
-        parentItem = self.getTreeItem(child.parent)
-        assert parentItem is not None
-
-        item = self.treeCtrl.InsertItem(parentItem,
-                                        child.order,
-                                        child.display_title,
-                                        data=child)
-
-        self.treeCtrl.SetItemImage(item, self.__loadIcon(child))
-
-        self._pageCache[child] = item
-        self.__mountItem(item, child)
-        self.__appendChildren(child)
-
-        return item
-
-    def __removePageItem(self, page):
-        """
-        Удалить элемент, соответствующий странице и все его дочерние страницы
-        """
-        for child in page.children:
-            self.__removePageItem(child)
-
-        item = self.getTreeItem(page)
-        if item is not None:
-            del self._pageCache[page]
-            self.treeCtrl.Delete(item)
-
-    def __updatePage(self, page):
-        """
-        Обновить страницу(удалить из списка и добавить снова)
-        """
-        # Отпишемся от обновлений страниц, чтобы не изменять выбранную страницу
-        self.__unbindUpdateEvents()
-        self.treeCtrl.Freeze()
-
-        try:
-            self.__removePageItem(page)
-
-            item = self.__insertChild(page)
-
-            if page.root.selectedPage == page:
-                # Если обновляем выбранную страницу
-                self.treeCtrl.SelectItem(item)
-
-            self.__scrollToCurrentPage()
-        finally:
-            self.treeCtrl.Thaw()
-            self.__bindUpdateEvents()
-
-    def __scrollToCurrentPage(self):
-        """
-        Если текущая страница вылезла за пределы видимости, то прокрутить к ней
-        """
-        selectedPage = self._application.selectedPage
-        if selectedPage is None:
-            return
-
-        item = self.getTreeItem(selectedPage)
-        if not self.treeCtrl.IsVisible(item):
-            self.treeCtrl.ScrollTo(item)
 
     def addButtons(self):
         """
@@ -638,6 +398,50 @@ class NotesTree(wx.Panel):
         ]
         for action in actions:
             actionController.removeToolbarButton(action.stringId)
+
+    def getTreeItem(self, page: 'outwiker.core.tree.WikiPage') -> Optional[wx.TreeItemId]:
+        """
+        Получить элемент дерева по странице.
+        Если для страницы не создан элемент дерева, возвращается None
+        """
+        return self.treeCtrl.getTreeItem(page)
+
+    def __scrollToCurrentPage(self):
+        """
+        Если текущая страница вылезла за пределы видимости, то прокрутить к ней
+        """
+        selectedPage = self._application.selectedPage
+        if selectedPage is None:
+            return
+
+        item = self.treeCtrl.getTreeItem(selectedPage)
+        if not self.treeCtrl.IsVisible(item):
+            self.treeCtrl.ScrollTo(item)
+
+    def __updatePage(self, page):
+        """
+        Обновить страницу (удалить из списка и добавить снова)
+        """
+        # Отпишемся от обновлений страниц, чтобы не изменять выбранную страницу
+        self.__unbindUpdateEvents()
+        self.Freeze()
+
+        try:
+            self.treeCtrl.removePageItem(page)
+
+            item = self.treeCtrl.insertChild(page)
+
+            if page.root.selectedPage == page:
+                # Если обновляем выбранную страницу
+                self.treeCtrl.SelectItem(item)
+
+            self.__scrollToCurrentPage()
+        finally:
+            self.Thaw()
+            self.__bindUpdateEvents()
+
+    def expand(self, page):
+        self.treeCtrl.expand(page)
 
 
 class NotesTreeDropFilesTarget(BaseDropFilesTarget):

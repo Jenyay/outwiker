@@ -309,10 +309,14 @@ class TextEditor(TextEditorBase):
         self._styleSet = False
 
     def _appendSpellMenuItems(self, menu, pos_byte):
+        if not self.textCtrl.IndicatorValueAt(self.SPELL_ERROR_INDICATOR, pos_byte):
+            return
+
         self._spellStartByteError = self.textCtrl.IndicatorStart(
             self.SPELL_ERROR_INDICATOR, pos_byte)
         self._spellEndByteError = self.textCtrl.IndicatorEnd(
             self.SPELL_ERROR_INDICATOR, pos_byte)
+
         self._spellErrorText = self.textCtrl.GetTextRange(
             self._spellStartByteError,
             self._spellEndByteError)

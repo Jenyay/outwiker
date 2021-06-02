@@ -1,12 +1,22 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <versions>
-	<version number="3.0.0.888">
+	<version number="3.0.1.889" status="dev">
 		<changes>
-			<change>Release</change>
+			<change>Fix desktop icon creation in installer for Windows.</change>
 		</changes>
 
 		<changes lang="ru">
-			<change>Релизная версия</change>
+			<change>Исправлена ошибка создания иконки на рабочем столе в инсталяторе под Windows.</change>
+		</changes>
+	</version>
+
+    <version number="3.0.0.888" date="13.05.2021">
+		<changes>
+			<change>Release.</change>
+		</changes>
+
+		<changes lang="ru">
+			<change>Релизная версия.</change>
 		</changes>
 	</version>
 
