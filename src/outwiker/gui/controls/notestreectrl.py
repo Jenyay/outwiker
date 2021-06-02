@@ -68,7 +68,7 @@ class NotesTreeCtrl(wx.TreeCtrl):
         if grandParentExpanded:
             for child in parentPage.children:
                 if child not in self._pageCache:
-                    self.__insertChild(child)
+                    self.insertChild(child)
 
         if self.__getPageExpandState(parentPage):
             self.expand(parentPage)
@@ -83,7 +83,7 @@ class NotesTreeCtrl(wx.TreeCtrl):
             font.SetStyle(wx.FONTSTYLE_ITALIC)
             self.SetItemFont(treeitem, font)
 
-    def __insertChild(self, childPage):
+    def insertChild(self, childPage):
         """
         Вставить одну дочерниюю страницу (childPage) в ветвь
         """
@@ -114,40 +114,6 @@ class NotesTreeCtrl(wx.TreeCtrl):
         if item is not None:
             del self._pageCache[page]
             self.Delete(item)
-
-    def __updatePage(self, page):
-        """
-        Обновить страницу(удалить из списка и добавить снова)
-        """
-        # Отпишемся от обновлений страниц, чтобы не изменять выбранную страницу
-        self.__unbindUpdateEvents()
-        self.Freeze()
-
-        try:
-            self.removePageItem(page)
-
-            item = self.__insertChild(page)
-
-            if page.root.selectedPage == page:
-                # Если обновляем выбранную страницу
-                self.SelectItem(item)
-
-            self.__scrollToCurrentPage()
-        finally:
-            self.Thaw()
-            self.__bindUpdateEvents()
-
-    def __scrollToCurrentPage(self):
-        """
-        Если текущая страница вылезла за пределы видимости, то прокрутить к ней
-        """
-        selectedPage = self._application.selectedPage
-        if selectedPage is None:
-            return
-
-        item = self.getTreeItem(selectedPage)
-        if not self.IsVisible(item):
-            self.ScrollTo(item)
 
     def __loadIcon(self, page):
         """
@@ -232,7 +198,7 @@ class NotesTreeCtrl(wx.TreeCtrl):
 
     def createPage(self, newpage):
         if newpage.parent in self._pageCache:
-            self.__insertChild(newpage)
+            self.insertChild(newpage)
 
             assert newpage in self._pageCache
             item = self._pageCache[newpage]
