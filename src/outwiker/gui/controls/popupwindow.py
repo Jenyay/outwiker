@@ -32,6 +32,7 @@ class PopupWindow(wx.PopupTransientWindow):
     '''
     Popup window with accurate position
     '''
+
     def __init__(self, parent):
         super().__init__(parent)
         self.createGUI()
@@ -50,6 +51,7 @@ class ResizablePopupWindow(wx.MiniFrame):
     '''
     Popup window with accurate position
     '''
+
     def __init__(self, parent):
         super().__init__(
             parent,

@@ -5,9 +5,7 @@ import wx
 import outwiker.core.commands
 from .basepagedialog import BasePageDialog
 from outwiker.core.application import Application
-from outwiker.core.commands import (pageExists,
-                                    showError,
-                                    renamePage)
+from outwiker.core.commands import pageExists, showError, renamePage
 
 
 @outwiker.core.commands.testreadonly

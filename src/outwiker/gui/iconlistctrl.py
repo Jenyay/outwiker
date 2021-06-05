@@ -14,7 +14,7 @@ from outwiker.core.iconcontroller import IconController
 IconSelectedEvent, EVT_ICON_SELECTED = NewEvent()
 
 
-class IconButton(object):
+class IconButton:
     """
     Button with single icons
     """
@@ -292,7 +292,7 @@ class IconListCtrl(wx.ScrolledWindow):
         if button is None:
             return
 
-        if not self.multiselect or(not ctrl and not shift):
+        if not self.multiselect or (not ctrl and not shift):
             self.__selectSingleButton(button)
         elif ctrl:
             self.__toggleSelectionButton(button)
@@ -406,7 +406,8 @@ class IconListCtrl(wx.ScrolledWindow):
         else:
             self.__selectSingleButton(currentButton)
             dy = self.GetScrollPixelsPerUnit()[1]
-            self.Scroll(0, currentButton.y // dy)
+            if dy != 0:
+                self.Scroll(0, currentButton.y // dy)
 
         self._sendIconSelectedEvent()
 
