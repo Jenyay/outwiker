@@ -12,6 +12,7 @@ from outwiker.core.system import getBuiltinImagePath
 from outwiker.core.iconcontroller import IconController
 
 IconSelectedEvent, EVT_ICON_SELECTED = NewEvent()
+IconDoubleClickEvent, EVT_ICON_DOUBLE_CLICK = NewEvent()
 
 
 class IconButton:
@@ -50,7 +51,7 @@ class IconButton:
         wx.Log.EnableLogging(True)
 
         if not image.IsOk():
-            logging.error(_(u'Invalid icon file: {}').format(fname))
+            logging.error(_('Invalid icon file: {}').format(fname))
             image = wx.Bitmap(self._invalidFileName)
 
         return image
@@ -158,6 +159,7 @@ class IconListCtrl(wx.ScrolledWindow):
     def __init__(self, parent, multiselect=False, theme=None):
         wx.ScrolledWindow.__init__(self, parent, style=wx.BORDER_THEME)
         self._theme = theme
+        self._propagationLevel = 20
 
         self._backgroundColor = wx.Colour(255, 255, 255)
         if self._theme is not None:
@@ -168,6 +170,8 @@ class IconListCtrl(wx.ScrolledWindow):
         self._canvas.SetBackgroundColour(self._backgroundColor)
         self._canvas.Bind(wx.EVT_PAINT, handler=self.__onPaint)
         self._canvas.Bind(wx.EVT_LEFT_DOWN, handler=self.__onCanvasClick)
+        self._canvas.Bind(wx.EVT_LEFT_DCLICK,
+                          handler=self.__onCanvasDoubleClick)
         self._canvas.Bind(wx.EVT_MOTION, handler=self.__onMouseMove)
 
         self.Bind(wx.EVT_SCROLLWIN, handler=self.__onScroll)
@@ -282,7 +286,7 @@ class IconListCtrl(wx.ScrolledWindow):
                     y <= button.y + button.height):
                 return button
 
-    def __onCanvasClick(self, event):
+    def __onSelectIcon(self, event):
         ctrl = wx.GetKeyState(wx.WXK_CONTROL)
         shift = wx.GetKeyState(wx.WXK_SHIFT)
 
@@ -301,7 +305,14 @@ class IconListCtrl(wx.ScrolledWindow):
 
         self._refreshCanvas()
         self.SetFocus()
+
+    def __onCanvasClick(self, event):
+        self.__onSelectIcon(event)
         self._sendIconSelectedEvent()
+
+    def __onCanvasDoubleClick(self, event):
+        self.__onSelectIcon(event)
+        self._sendDoubleClickEvent()
 
     def __onScroll(self, event):
         self._refreshCanvas()
@@ -412,7 +423,11 @@ class IconListCtrl(wx.ScrolledWindow):
         self._sendIconSelectedEvent()
 
     def _sendIconSelectedEvent(self):
-        propagationLevel = 10
         newevent = IconSelectedEvent(icons=self.getSelection())
-        newevent.ResumePropagation(propagationLevel)
+        newevent.ResumePropagation(self._propagationLevel)
+        wx.PostEvent(self, newevent)
+
+    def _sendDoubleClickEvent(self):
+        newevent = IconDoubleClickEvent(icons=self.getSelection())
+        newevent.ResumePropagation(self._propagationLevel)
         wx.PostEvent(self, newevent)

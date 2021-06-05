@@ -28,7 +28,7 @@ from outwiker.core.commands import MessageBox
 from outwiker.core.events import (PageDialogPageIconChangedParams,
                                   IconsGroupsListInitParams)
 from outwiker.gui.controls.switchthemed import EVT_SWITCH
-from outwiker.gui.iconlistctrl import EVT_ICON_SELECTED
+from outwiker.gui.iconlistctrl import EVT_ICON_SELECTED, EVT_ICON_DOUBLE_CLICK
 
 
 class IconsGroupInfo:
@@ -107,6 +107,7 @@ class GeneralPanel(wx.Panel):
         # Page icon
         self.iconBtn = wx.BitmapButton(self)
         self.iconBtn.SetMinSize((40, -1))
+        self.iconBtn.SetToolTip(_('Page icon'))
         self.iconsPopup = IconsListPopup(self)
         self.iconsPopup.SetMinSize((self._POPUP_WIDTH, self._POPUP_HEIGHT))
 
@@ -127,6 +128,9 @@ class GeneralPanel(wx.Panel):
 
     def popupIconsList(self):
         self.iconsPopup.Popup(self)
+
+    def closeIconsList(self):
+        self.iconsPopup.Hide()
 
     @property
     def pageTitle(self):
@@ -405,6 +409,8 @@ class IconsController(BasePageDialogController):
 
         self._iconsPanel.iconsList.Bind(EVT_ICON_SELECTED,
                                         handler=self._onIconSelected)
+        self._iconsPanel.iconsList.Bind(EVT_ICON_DOUBLE_CLICK,
+                                        handler=self._onIconDoubleClick)
         self._iconsPanel.groupCtrl.Bind(EVT_SWITCH,
                                         handler=self._onGroupSelect)
 
@@ -514,6 +520,8 @@ class IconsController(BasePageDialogController):
     def clear(self):
         self._iconsPanel.iconsList.Unbind(EVT_ICON_SELECTED,
                                           handler=self._onIconSelected)
+        self._iconsPanel.iconsList.Unbind(EVT_ICON_DOUBLE_CLICK,
+                                          handler=self._onIconDoubleClick)
         self._dialog = None
         self._iconsPanel = None
 
@@ -530,6 +538,10 @@ class IconsController(BasePageDialogController):
         self._application.onPageDialogPageIconChanged(
             self._application.selectedPage,
             eventParams)
+
+    def _onIconDoubleClick(self, event):
+        self._onIconSelected(event)
+        self._generalPanel.closeIconsList()
 
     def _localize(self, groupname):
         name = _(groupname)
