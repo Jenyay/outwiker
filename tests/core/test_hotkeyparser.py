@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import unittest
 
@@ -84,12 +84,7 @@ class HotKeyParserTest(unittest.TestCase):
         self.assertTrue(hotkey.alt)
 
     def testParse6(self):
-        hotkey = HotKeyParser.fromString("")
-
-        self.assertEqual(hotkey.key, "")
-        self.assertFalse(hotkey.ctrl)
-        self.assertFalse(hotkey.shift)
-        self.assertFalse(hotkey.alt)
+        self.assertRaises(ValueError, HotKeyParser.fromString, "")
 
     def testParse7(self):
         hotkey = HotKeyParser.fromString("+")
@@ -148,12 +143,7 @@ class HotKeyParserTest(unittest.TestCase):
         self.assertFalse(hotkey.alt)
 
     def testParse14(self):
-        hotkey = HotKeyParser.fromString("    ")
-
-        self.assertEqual(hotkey.key, "")
-        self.assertFalse(hotkey.ctrl)
-        self.assertFalse(hotkey.shift)
-        self.assertFalse(hotkey.alt)
+        self.assertRaises(ValueError, HotKeyParser.fromString, "    ")
 
     def testParse15(self):
         hotkey = HotKeyParser.fromString("Ctrl+F1")
