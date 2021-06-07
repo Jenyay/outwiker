@@ -34,7 +34,7 @@ class PopupWindow(wx.PopupTransientWindow):
     '''
 
     def __init__(self, parent):
-        super().__init__(parent)
+        super().__init__(parent, flags=wx.PU_CONTAINS_CONTROLS)
         self.createGUI()
 
     def createGUI(self):

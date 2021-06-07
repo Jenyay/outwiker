@@ -109,7 +109,7 @@ class GeneralPanel(wx.Panel):
         self.iconBtn.SetMinSize((40, -1))
         self.iconBtn.SetToolTip(_('Page icon'))
         self.iconsPopup = IconsListPopup(self)
-        self.iconsPopup.SetMinSize((self._POPUP_WIDTH, self._POPUP_HEIGHT))
+        self.iconsPopup.SetSize((self._POPUP_WIDTH, self._POPUP_HEIGHT))
 
         # Page type
         self.typeLabel = wx.StaticText(self, label=_('Page type'))
