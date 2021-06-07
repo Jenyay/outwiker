@@ -46,8 +46,7 @@ class HotKeyParser (object):
         shift = elements["shift"] is not None
         alt = elements["alt"] is not None
 
-        if (len(key) == 0 and
-                (ctrl or shift or alt)):
+        if len(key) == 0:
             raise ValueError("Invalid hot key string")
 
         if (u" " in key or
