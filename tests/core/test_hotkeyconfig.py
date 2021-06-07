@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import unittest
 import os
@@ -18,11 +18,9 @@ class HotKeyConfigTest(unittest.TestCase):
         if os.path.exists(self.path):
             os.remove(self.path)
 
-
     def tearDown(self):
         if os.path.exists(self.path):
             os.remove(self.path)
-
 
     def testHotKeyOptionEmptyConfig(self):
         config = Config(self.path)
@@ -32,7 +30,6 @@ class HotKeyConfigTest(unittest.TestCase):
 
         option = HotKeyOption(config, section, paramName, hotKeyDefault)
         self.assertEqual(option.value, hotKeyDefault)
-
 
     def testReadOption1(self):
         with open(self.path, "w") as fp:
@@ -51,7 +48,6 @@ MyHotKey=Ctrl+T""")
         self.assertTrue(result.ctrl)
         self.assertFalse(result.alt)
         self.assertFalse(result.shift)
-
 
     def testReadOption2(self):
         with open(self.path, "w") as fp:
@@ -73,7 +69,6 @@ MyHotKey = Ctrl + F11
         self.assertFalse(result.alt)
         self.assertFalse(result.shift)
 
-
     def testReadOption3(self):
         with open(self.path, "w") as fp:
             fp.write("""[TestHotKey]
@@ -87,7 +82,6 @@ MyHotKey=Ctrl+""")
         result = option.value
 
         self.assertEqual(result, None)
-
 
     def testReadOption4(self):
         with open(self.path, "w") as fp:
@@ -104,6 +98,33 @@ MyHotKey=Ctrl+DEL""")
 
         self.assertEqual(result, hotKeyDefault)
 
+    def testReadOption_None_01(self):
+        with open(self.path, "w") as fp:
+            fp.write("""[TestHotKey]
+MyHotKey=""")
+
+        config = Config(self.path)
+        section = "TestHotKey"
+        paramName = "MyHotKey"
+
+        option = HotKeyOption(config, section, paramName, None)
+        result = option.value
+
+        self.assertEqual(result, None)
+
+    def testReadOption_None_02(self):
+        with open(self.path, "w") as fp:
+            fp.write("""[TestHotKey]
+MyHotKey= """)
+
+        config = Config(self.path)
+        section = "TestHotKey"
+        paramName = "MyHotKey"
+
+        option = HotKeyOption(config, section, paramName, None)
+        result = option.value
+
+        self.assertEqual(result, None)
 
     def testHotKeyWrite1(self):
         config = Config(self.path)
@@ -119,7 +140,6 @@ MyHotKey=Ctrl+DEL""")
 
         self.assertTrue("[TestHotKey]" in resultFile)
         self.assertTrue("myhotkey = Ctrl+F11" in resultFile)
-
 
     def testHotKeyWrite2(self):
         config = Config(self.path)

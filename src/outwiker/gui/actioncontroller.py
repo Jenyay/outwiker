@@ -366,7 +366,7 @@ class ActionController(object):
         if hotkey is None:
             return title
 
-        return u"{0}\t{1}".format(title, HotKeyParser.toString(hotkey))
+        return '{0}\t{1}'.format(title, HotKeyParser.toString(hotkey))
 
     def _getToolbarItemTitle(self, strid):
         hotkey = self.getHotKey(strid)
@@ -375,4 +375,4 @@ class ActionController(object):
         if hotkey is None:
             return title
 
-        return u"{0} ({1})".format(title, HotKeyParser.toString(hotkey))
+        return '{0} ({1})'.format(title, HotKeyParser.toString(hotkey))
