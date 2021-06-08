@@ -81,7 +81,7 @@ parts:
             # - wxpython==4.0.7.post2
             # - https://github.com/Jenyay/Phoenix/releases/download/fix_build/wxPython-4.0.7.post2.tar.gz
             # - https://jenyay.net/uploads/Outwiker/Dev/wxPython-4.0.7.post2-cp36-cp36m-linux_x86_64.whl
-            - Pillow==7.2.0
+            - Pillow==8.2.0
             - cyhunspell==2.0.1
             - idna==2.10
             - pyparsing==2.4.7
