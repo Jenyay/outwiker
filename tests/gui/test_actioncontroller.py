@@ -56,12 +56,15 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def setUp(self):
         self.initApplication()
 
-        self.actionController = ActionController(self.mainWindow, self.application.config)
-        self.application.config.remove_section(self.actionController.configSection)
+        self.actionController = ActionController(
+            self.mainWindow, self.application.config)
+        self.application.config.remove_section(
+            self.actionController.configSection)
         self.fileMenu = self.mainWindow.menuController[MENU_FILE]
 
     def tearDown(self):
-        self.application.config.remove_section(self.actionController.configSection)
+        self.application.config.remove_section(
+            self.actionController.configSection)
         self.destroyApplication()
 
     def testRegisterAction(self):
@@ -624,7 +627,8 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(self.actionController.getHotKey(action.stringId).key,
                          "F11")
         self.assertFalse(self.actionController.getHotKey(action.stringId).ctrl)
-        self.assertFalse(self.actionController.getHotKey(action.stringId).shift)
+        self.assertFalse(
+            self.actionController.getHotKey(action.stringId).shift)
         self.assertFalse(self.actionController.getHotKey(action.stringId).alt)
 
     def testHotKeySaveConfig1(self):
@@ -634,13 +638,15 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.actionController.register(action, hotkey)
         self.actionController.saveHotKeys()
 
-        otherActionController = ActionController(self.mainWindow, self.application.config)
+        otherActionController = ActionController(self.mainWindow,
+                                                 self.application.config)
         otherActionController.register(action)
 
         self.assertEqual(otherActionController.getHotKey(action.stringId).key,
                          "F11")
         self.assertTrue(otherActionController.getHotKey(action.stringId).ctrl)
-        self.assertFalse(otherActionController.getHotKey(action.stringId).shift)
+        self.assertFalse(
+            otherActionController.getHotKey(action.stringId).shift)
         self.assertFalse(otherActionController.getHotKey(action.stringId).alt)
 
     def testHotKeySaveConfig2(self):
@@ -650,7 +656,8 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.actionController.register(action, hotkey)
         self.actionController.saveHotKeys()
 
-        otherActionController = ActionController(self.mainWindow, self.application.config)
+        otherActionController = ActionController(self.mainWindow,
+                                                 self.application.config)
         otherActionController.register(action, HotKey("F1", shift=True))
 
         self.assertEqual(otherActionController.getHotKey(action.stringId).key,
@@ -665,14 +672,11 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.actionController.register(action)
         self.actionController.saveHotKeys()
 
-        otherActionController = ActionController(self.mainWindow, self.application.config)
+        otherActionController = ActionController(self.mainWindow,
+                                                 self.application.config)
         otherActionController.register(action)
 
-        self.assertEqual(otherActionController.getHotKey(action.stringId).key,
-                         "")
-        self.assertFalse(otherActionController.getHotKey(action.stringId).ctrl)
-        self.assertFalse(otherActionController.getHotKey(action.stringId).shift)
-        self.assertFalse(otherActionController.getHotKey(action.stringId).alt)
+        self.assertIsNone(otherActionController.getHotKey(action.stringId))
 
     def testSetHotKey(self):
         action = ExampleAction()
@@ -757,7 +761,8 @@ class ActionControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(self._getToolItemLabel(toolbar, action.stringId),
                          "{} ({})".format(action.title, "F11"))
 
-        otherActionController = ActionController(self.mainWindow, self.application.config)
+        otherActionController = ActionController(self.mainWindow,
+                                                 self.application.config)
         otherActionController.register(action, None)
 
         self.assertEqual(otherActionController.getHotKey(action.stringId),
