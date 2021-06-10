@@ -2,6 +2,7 @@
 
 import wx
 
+from outwiker.gui.hotkey import HotKey
 from outwiker.gui.hotkeyparser import HotKeyParser
 from outwiker.gui.hotkeyoption import HotKeyOption
 from outwiker.gui.controls.toolbar2 import ToolBar2
@@ -13,16 +14,18 @@ class ActionInfo(object):
     Хранит информацию о добавленных действиях
     """
 
-    def __init__(self, action, hotkey):
+    def __init__(self, action, hotkey: HotKey):
         """
         action - действие
-        menuItem - пункт меню, связанный с действием
         """
         self.action = action
         self.hotkey = hotkey
         self.menuItem = None
         self.toolbar = None
         self.toolItemId = None
+
+        # Used for hotkey binding
+        self.hotkeyId = None
 
 
 class ActionController(object):
@@ -67,7 +70,7 @@ class ActionController(object):
         """
         return self._actionsInfo[strid]
 
-    def register(self, action, hotkey=None):
+    def register(self, action, hotkey: HotKey = None):
         """
         Добавить действие в словарь.
         При этом никаких элементов интерфейса не создается
@@ -84,7 +87,7 @@ class ActionController(object):
                                 self._getHotKeyForAction(action, hotkey))
         self._actionsInfo[action.stringId] = actionInfo
 
-    def _getHotKeyForAction(self, action, defaultHotKey):
+    def _getHotKeyForAction(self, action, defaultHotKey: HotKey) -> HotKey:
         """
         Получить горячую клавишу.
         Горячая клавиша берется из конфига, или defaultHotKey
@@ -155,6 +158,37 @@ class ActionController(object):
                               handler=self._onCheckMenuItemHandler,
                               id=menuItem.GetId())
 
+    def appendHotkey(self, strid):
+        """
+        Create hotkey binding for action
+        """
+        hotkeyId = wx.NewIdRef()
+        self._actionsInfo[strid].hotkeyId = hotkeyId
+        self._mainWindow.Bind(wx.EVT_MENU,
+                              handler=self._onHotKeyItemHandler,
+                              id=hotkeyId)
+        self._updateHotkeys()
+
+    def removeHotkey(self, strid):
+        actionInfo = self._actionsInfo.get(strid)
+        if actionInfo is not None and actionInfo.hotkeyId is not None:
+            self._mainWindow.Unbind(wx.EVT_MENU,
+                                    handler=self._onHotKeyItemHandler,
+                                    id=actionInfo.hotkeyId)
+            actionInfo.hotkeyId = None
+            self._updateHotkeys()
+
+    def _updateHotkeys(self):
+        entries = []
+        for actionInfo in self._actionsInfo.values():
+            if actionInfo.hotkeyId is not None:
+                entry = wx.AcceleratorEntry(cmd=actionInfo.hotkeyId)
+                entry.FromString(str(actionInfo.hotkey))
+                entries.append(entry)
+
+        accelTable = wx.AcceleratorTable(entries)
+        self._mainWindow.SetAcceleratorTable(accelTable)
+
     def removeAction(self, strid):
         """
         Удалить действие из интерфейса.
@@ -162,6 +196,7 @@ class ActionController(object):
         """
         self.removeToolbarButton(strid)
         self.removeMenuItem(strid)
+        self.removeHotkey(strid)
 
         del self._actionsInfo[strid]
 
@@ -301,6 +336,12 @@ class ActionController(object):
                     actionInfo.toolItemId == toolItemId):
                 return actionInfo
 
+    def _getActionInfoByHotkeyId(self, itemId):
+        for actionInfo in self._actionsInfo.values():
+            if (actionInfo.hotkeyId is not None and
+                    actionInfo.hotkeyId == itemId):
+                return actionInfo
+
     def _onCheckMenuItemHandler(self, event):
         actionInfo = self._getActionInfoByMenuItemId(event.GetId())
         assert actionInfo is not None
@@ -313,6 +354,11 @@ class ActionController(object):
 
     def _onMenuItemHandler(self, event):
         actionInfo = self._getActionInfoByMenuItemId(event.GetId())
+        assert actionInfo is not None
+        actionInfo.action.run(None)
+
+    def _onHotKeyItemHandler(self, event):
+        actionInfo = self._getActionInfoByHotkeyId(event.GetId())
         assert actionInfo is not None
         actionInfo.action.run(None)
 

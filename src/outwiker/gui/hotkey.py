@@ -5,7 +5,11 @@ class HotKey (object):
     """
     Класс для описания горячей клавиши
     """
-    def __init__(self, key, ctrl=False, alt=False, shift=False):
+
+    def __init__(self, key: str,
+                 ctrl: bool = False,
+                 alt: bool = False,
+                 shift: bool = False):
         self._key = key
         self._ctrl = ctrl
         self._alt = alt
@@ -44,12 +48,12 @@ class HotKey (object):
         return not self.__eq__(other)
 
     def __str__(self):
-        result = u''
+        result = ''
         if self._ctrl:
             result += 'Ctrl+'
         if self._alt:
-            result += u'Alt+'
+            result += 'Alt+'
         if self._shift:
-            result += u'Shift+'
+            result += 'Shift+'
         result += self._key
         return result

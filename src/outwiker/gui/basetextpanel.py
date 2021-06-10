@@ -201,13 +201,13 @@ class BaseTextPanel(BasePagePanel):
             1 - перезагрузить
             2 - ничего не делать
         """
-        buttons = [_(u"Overwrite"), _("Load"), _("Cancel")]
+        buttons = [_("Overwrite"), _("Load"), _("Cancel")]
 
         message = _(
-            u'Page "%s" is changed by the external program') % self.page.title
+            'Page "%s" is changed by the external program') % self.page.title
         self.externalEditDialog = ButtonsDialog(self,
                                                 message,
-                                                _(u"Owerwrite?"),
+                                                _("Owerwrite?"),
                                                 buttons,
                                                 default=0,
                                                 cancel=2)
@@ -246,7 +246,7 @@ class BaseTextPanel(BasePagePanel):
         except IOError as e:
             # TODO: Проверить под Windows
             showError(self._application.mainWindow,
-                      _(u"Can't save file %s") % (str(e.filename)))
+                      _("Can't save file %s") % (str(e.filename)))
 
     def _getAttachString(self, fnames):
         """
@@ -440,40 +440,28 @@ class BaseTextPanel(BasePagePanel):
         self._application.actionController.getAction(GOTO_PREV_WORD).setFunc(
             lambda params: self.GetEditor().WordLeft())
 
-        self._application.actionController.appendMenuItem(
-            GOTO_PREV_WORD,
-            self.wordMenu
-        )
+        self._application.actionController.appendHotkey(GOTO_PREV_WORD)
 
         # Go to next word
         self._application.actionController.getAction(GOTO_NEXT_WORD).setFunc(
             lambda params: self.GetEditor().WordRight())
 
-        self._application.actionController.appendMenuItem(
-            GOTO_NEXT_WORD,
-            self.wordMenu
-        )
+        self._application.actionController.appendHotkey(GOTO_NEXT_WORD)
 
         # Go to previous word and select
         self._application.actionController.getAction(GOTO_PREV_WORD_SELECT).setFunc(
             lambda params: self.GetEditor().WordLeftExtend())
 
-        self._application.actionController.appendMenuItem(
-            GOTO_PREV_WORD_SELECT,
-            self.wordMenu
-        )
+        self._application.actionController.appendHotkey(GOTO_PREV_WORD_SELECT)
 
         # Go to next word and select
         self._application.actionController.getAction(GOTO_NEXT_WORD_SELECT).setFunc(
             lambda params: self.GetEditor().WordRightExtend())
 
-        self._application.actionController.appendMenuItem(
-            GOTO_NEXT_WORD_SELECT,
-            self.wordMenu
-        )
+        self._application.actionController.appendHotkey(GOTO_NEXT_WORD_SELECT)
 
         editMenu = self._application.mainWindow.menuController[MENU_EDIT]
-        self.wordMenuItem = editMenu.AppendSubMenu(self.wordMenu, _(u'Word'))
+        self.wordMenuItem = editMenu.AppendSubMenu(self.wordMenu, _('Word'))
 
     def _addLinesTools(self):
         self.linesMenu = wx.Menu()
