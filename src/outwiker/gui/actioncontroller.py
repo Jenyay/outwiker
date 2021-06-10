@@ -162,12 +162,13 @@ class ActionController(object):
         """
         Create hotkey binding for action
         """
-        hotkeyId = wx.NewIdRef()
-        self._actionsInfo[strid].hotkeyId = hotkeyId
-        self._mainWindow.Bind(wx.EVT_MENU,
-                              handler=self._onHotKeyItemHandler,
-                              id=hotkeyId)
-        self._updateHotkeys()
+        if self._actionsInfo[strid].hotkey is not None:
+            hotkeyId = wx.NewIdRef()
+            self._actionsInfo[strid].hotkeyId = hotkeyId
+            self._mainWindow.Bind(wx.EVT_MENU,
+                                  handler=self._onHotKeyItemHandler,
+                                  id=hotkeyId)
+            self._updateHotkeys()
 
     def removeHotkey(self, strid):
         actionInfo = self._actionsInfo.get(strid)
@@ -182,9 +183,11 @@ class ActionController(object):
         entries = []
         for actionInfo in self._actionsInfo.values():
             if actionInfo.hotkeyId is not None:
+                assert actionInfo.hotkey is not None
                 entry = wx.AcceleratorEntry(cmd=actionInfo.hotkeyId)
                 entry.FromString(str(actionInfo.hotkey))
-                entries.append(entry)
+                if entry.IsOk():
+                    entries.append(entry)
 
         accelTable = wx.AcceleratorTable(entries)
         self._mainWindow.SetAcceleratorTable(accelTable)
