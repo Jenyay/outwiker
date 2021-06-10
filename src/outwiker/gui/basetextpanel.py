@@ -76,10 +76,6 @@ class BaseTextPanel(BasePagePanel):
         self.searchMenu = None
 
         # Added in outwiker.gui 1.2
-        self.wordMenu = None
-        self.wordMenuItem = None
-
-        # Added in outwiker.gui 1.2
         self.linesMenu = None
         self.linesMenuItem = None
 
@@ -302,15 +298,12 @@ class BaseTextPanel(BasePagePanel):
 
         mainMenu.Remove(self.searchMenuIndex)
         editMenu = self._application.mainWindow.menuController[MENU_EDIT]
-        editMenu.Remove(self.wordMenuItem)
         editMenu.Remove(self.linesMenuItem)
 
         for item in self._menuSeparators:
             item[0].Remove(item[1])
 
         self.searchMenu = None
-        self.wordMenuItem = None
-        self.wordMenu = None
         self.linesMenuItem = None
         self.linesMenu = None
         self._menuSeparators = []
@@ -378,63 +371,41 @@ class BaseTextPanel(BasePagePanel):
         self._application.actionController.check(SPELL_ON_OFF_ID, enableSpell)
 
     def _addWordTools(self):
-        self.wordMenu = wx.Menu()
-
         # Copy word to clipboard
         self._application.actionController.getAction(
             CLIPBOARD_COPY_WORD).setFunc(self._copyCurrentWordToClipboard)
 
-        self._application.actionController.appendMenuItem(
-            CLIPBOARD_COPY_WORD,
-            self.wordMenu
-        )
+        self._application.actionController.appendHotkey(CLIPBOARD_COPY_WORD)
 
         # Cut word to clipboard
         self._application.actionController.getAction(
             CLIPBOARD_CUT_WORD).setFunc(self._cutCurrentWordToClipboard)
 
-        self._application.actionController.appendMenuItem(
-            CLIPBOARD_CUT_WORD,
-            self.wordMenu
-        )
+        self._application.actionController.appendHotkey(CLIPBOARD_CUT_WORD)
 
         # Delete word left
         self._application.actionController.getAction(DELETE_WORD_LEFT).setFunc(
             lambda params: self.GetEditor().DelWordLeft())
 
-        self._application.actionController.appendMenuItem(
-            DELETE_WORD_LEFT,
-            self.wordMenu
-        )
+        self._application.actionController.appendHotkey(DELETE_WORD_LEFT)
 
         # Delete word right
         self._application.actionController.getAction(DELETE_WORD_RIGHT).setFunc(
             lambda params: self.GetEditor().DelWordRight())
 
-        self._application.actionController.appendMenuItem(
-            DELETE_WORD_RIGHT,
-            self.wordMenu
-        )
-
-        self.wordMenu.AppendSeparator()
+        self._application.actionController.appendHotkey(DELETE_WORD_RIGHT)
 
         # Go to start of the current word
         self._application.actionController.getAction(GOTO_WORD_START).setFunc(
             lambda params: self.GetEditor().GotoWordStart())
 
-        self._application.actionController.appendMenuItem(
-            GOTO_WORD_START,
-            self.wordMenu
-        )
+        self._application.actionController.appendHotkey(GOTO_WORD_START)
 
         # Go to end of the current word
         self._application.actionController.getAction(GOTO_WORD_END).setFunc(
             lambda params: self.GetEditor().GotoWordEnd())
 
-        self._application.actionController.appendMenuItem(
-            GOTO_WORD_END,
-            self.wordMenu
-        )
+        self._application.actionController.appendHotkey(GOTO_WORD_END)
 
         # Go to previous word
         self._application.actionController.getAction(GOTO_PREV_WORD).setFunc(
@@ -459,9 +430,6 @@ class BaseTextPanel(BasePagePanel):
             lambda params: self.GetEditor().WordRightExtend())
 
         self._application.actionController.appendHotkey(GOTO_NEXT_WORD_SELECT)
-
-        editMenu = self._application.mainWindow.menuController[MENU_EDIT]
-        self.wordMenuItem = editMenu.AppendSubMenu(self.wordMenu, _('Word'))
 
     def _addLinesTools(self):
         self.linesMenu = wx.Menu()
