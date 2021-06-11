@@ -1,11 +1,16 @@
 # -*- coding: utf-8 -*-
 
+import logging
+
 import wx
 
 from outwiker.gui.hotkey import HotKey
 from outwiker.gui.hotkeyparser import HotKeyParser
 from outwiker.gui.hotkeyoption import HotKeyOption
 from outwiker.gui.controls.toolbar2 import ToolBar2
+
+
+logger = logging.getLogger('outwiker.gui.actioncontroller')
 
 
 class ActionInfo(object):
@@ -162,9 +167,13 @@ class ActionController(object):
         """
         Create hotkey binding for action
         """
-        if self._actionsInfo[strid].hotkey is not None:
+        actionInfo = self._actionsInfo[strid]
+        if actionInfo.hotkey is not None:
             hotkeyId = wx.NewIdRef()
-            self._actionsInfo[strid].hotkeyId = hotkeyId
+            actionInfo.hotkeyId = hotkeyId
+            logger.debug('Register hotkey for action "%s": "%s"',
+                         actionInfo.action.title,
+                         str(actionInfo.hotkey))
             self._mainWindow.Bind(wx.EVT_MENU,
                                   handler=self._onHotKeyItemHandler,
                                   id=hotkeyId)
@@ -173,6 +182,9 @@ class ActionController(object):
     def removeHotkey(self, strid):
         actionInfo = self._actionsInfo.get(strid)
         if actionInfo is not None and actionInfo.hotkeyId is not None:
+            logger.debug('Remove hotkey for action "%s": "%s"',
+                         actionInfo.action.title,
+                         str(actionInfo.hotkey))
             self._mainWindow.Unbind(wx.EVT_MENU,
                                     handler=self._onHotKeyItemHandler,
                                     id=actionInfo.hotkeyId)
