@@ -197,11 +197,13 @@ class ActionController(object):
         Удалить действие из интерфейса.
         strid - строковый идентификатор удаляемого действия
         """
+        self.removeGui(strid)
+        del self._actionsInfo[strid]
+
+    def removeGui(self, strid):
         self.removeToolbarButton(strid)
         self.removeMenuItem(strid)
         self.removeHotkey(strid)
-
-        del self._actionsInfo[strid]
 
     def removeToolbarButton(self, strid):
         """

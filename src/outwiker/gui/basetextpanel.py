@@ -279,20 +279,12 @@ class BaseTextPanel(BasePagePanel):
 
         actionController = self._application.actionController
         for item in self._baseTextPolyactions:
-            actionController.removeMenuItem(item)
+            actionController.removeGui(item)
 
-        actionController.removeMenuItem(SearchAction.stringId)
-        actionController.removeMenuItem(SearchAndReplaceAction.stringId)
-        actionController.removeMenuItem(SearchNextAction.stringId)
-        actionController.removeMenuItem(SearchPrevAction.stringId)
-
-        if TOOLBAR_GENERAL in self.mainWindow.toolbars:
-            actionController.removeToolbarButton(SearchAction.stringId)
-            actionController.removeToolbarButton(
-                SearchAndReplaceAction.stringId)
-            actionController.removeToolbarButton(SearchNextAction.stringId)
-            actionController.removeToolbarButton(SearchPrevAction.stringId)
-            actionController.removeToolbarButton(SPELL_ON_OFF_ID)
+        actionController.removeGui(SearchAction.stringId)
+        actionController.removeGui(SearchAndReplaceAction.stringId)
+        actionController.removeGui(SearchNextAction.stringId)
+        actionController.removeGui(SearchPrevAction.stringId)
 
         self._removeAllTools()
 
