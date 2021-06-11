@@ -10,15 +10,17 @@ from outwiker.actions.search import (SearchAction,
                                      SearchNextAction,
                                      SearchPrevAction,
                                      SearchAndReplaceAction)
-from outwiker.core.commands import MessageBox, setStatusText
-from outwiker.core.system import getImagesDir
+import outwiker.actions.polyactionsid as polyactions
 from outwiker.core.attachment import Attachment
-from outwiker.core.defines import REGISTRY_PAGE_CURSOR_POSITION
+from outwiker.core.commands import MessageBox, setStatusText
+from outwiker.core.defines import (PAGE_MODE_TEXT,
+                                   PAGE_MODE_PREVIEW,
+                                   REGISTRY_PAGE_CURSOR_POSITION)
 from outwiker.core.events import PageUpdateNeededParams, PageModeChangeParams
-from outwiker.utilites.textfile import readTextFile
+from outwiker.core.system import getImagesDir
 from outwiker.gui.basetextpanel import BaseTextPanel
 from outwiker.gui.guiconfig import GeneralGuiConfig
-from outwiker.core.defines import PAGE_MODE_TEXT, PAGE_MODE_PREVIEW
+from outwiker.utilites.textfile import readTextFile
 
 
 logger = logging.getLogger('outwiker.pages.basehtmlpanel')
@@ -35,13 +37,13 @@ class BaseHtmlPanel(BaseTextPanel):
 
         # Предыдущее содержимое результирующего HTML, чтобы не переписывать
         # его каждый раз
-        self._oldHtmlResult = u""
+        self._oldHtmlResult = ""
 
         # Страница, для которой уже есть сгенерированный HTML
         self._oldPage = None
 
         # Где хранить параметы текущей страницы страницы (код, просмотр и т.д.)
-        self.tabParamName = u"PageIndex"
+        self.tabParamName = "PageIndex"
 
         self._statusbar_item = 0
 
@@ -60,6 +62,29 @@ class BaseHtmlPanel(BaseTextPanel):
                   self.notebook)
         self.Bind(self.EVT_SPELL_ON_OFF, handler=self._onSpellOnOff)
         self._application.onPageUpdate += self._onPageUpdate
+        self._bindHotkeys()
+
+    def _bindHotkeys(self):
+        actionController = self._application.actionController
+
+        actionController.getAction(polyactions.SWITCH_TO_CODE_TAB_ID).setFunc(
+            lambda param: self.SetPageMode(PAGE_MODE_TEXT))
+        actionController.appendHotkey(polyactions.SWITCH_TO_CODE_TAB_ID)
+
+        actionController.getAction(polyactions.SWITCH_TO_PREVIEW_TAB_ID).setFunc(
+            lambda param: self.SetPageMode(PAGE_MODE_PREVIEW))
+        actionController.appendHotkey(polyactions.SWITCH_TO_PREVIEW_TAB_ID)
+
+    def _unbindHotkeys(self):
+        actionController = self._application.actionController
+
+        actionController.getAction(
+            polyactions.SWITCH_TO_CODE_TAB_ID).setFunc(None)
+        actionController.removeHotkey(polyactions.SWITCH_TO_CODE_TAB_ID)
+
+        actionController.getAction(
+            polyactions.SWITCH_TO_PREVIEW_TAB_ID).setFunc(None)
+        actionController.removeHotkey(polyactions.SWITCH_TO_PREVIEW_TAB_ID)
 
     def GetPageMode(self):
         '''
@@ -91,6 +116,7 @@ class BaseHtmlPanel(BaseTextPanel):
 
         self.GetParent().freeHtmlRender()
         self.htmlWindow = None
+        self._unbindHotkeys()
         super().Clear()
 
     def SetCursorPosition(self, position):
