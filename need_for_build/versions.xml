@@ -2,11 +2,15 @@
 <versions>
 	<version number="3.0.1.889" status="dev">
 		<changes>
+			<change>Improve GUI for page icon selection.</change>
 			<change>Fix desktop icon creation in installer for Windows.</change>
+			<change>Other bug fixes.</change>
 		</changes>
 
 		<changes lang="ru">
+			<change>Улучшен интерфейс выбора значка страницы.</change>
 			<change>Исправлена ошибка создания иконки на рабочем столе в инсталяторе под Windows.</change>
+			<change>Исправления других ошибок.</change>
 		</changes>
 	</version>
 
