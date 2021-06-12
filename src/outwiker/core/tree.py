@@ -152,7 +152,10 @@ class RootWikiPage(object):
         Проверить заголовок страницы на то, что в родителе нет
         страницы с таким заголовком
         """
-        return parent[title] is None
+        for page in parent.children:
+            if page.title.lower() == title.lower():
+                return False
+        return True
 
     def changeChildOrder(self, page, neworder):
         """

@@ -191,7 +191,7 @@ def openWiki(path: str, readonly: bool = False) -> Optional[WikiDocument]:
     def threadFunc(path, readonly):
         try:
             return WikiDocument.load(path, readonly)
-        except BaseException as e:
+        except Exception as e:
             return e
 
     logger.debug('Opening notes tree from: {}'.format(path))
