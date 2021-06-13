@@ -42,13 +42,13 @@ class HotKeysPanel(BasePrefPanel):
             oldAction = self._application.actionController.getTitle(
                 oldActionStrId)
 
-            text = _(u'{hotkey} hotkey assigned for "{old}".\nAssign this hotkey for "{new}"?').format(
+            text = _('{hotkey} hotkey assigned for "{old}".\nAssign this hotkey for "{new}"?').format(
                 hotkey=newhotkey,
                 old=oldAction,
                 new=newAction)
 
             if (MessageBox(text,
-                           _(u'Hotkeys conflict'),
+                           _('Hotkeys conflict'),
                            wx.ICON_QUESTION | wx.YES | wx.NO) == wx.YES):
                 self.__hotkeys[oldActionStrId] = None
             else:
@@ -81,7 +81,7 @@ class HotKeysPanel(BasePrefPanel):
         filterSizer = wx.FlexGridSizer(cols=2)
         filterSizer.AddGrowableCol(1)
 
-        filterLabel = wx.StaticText(self, label=_(u'Search'))
+        filterLabel = wx.StaticText(self, label=_('Search'))
         self.__filterText = wx.TextCtrl(self)
 
         filterSizer.Add(filterLabel,
@@ -162,7 +162,7 @@ class HotKeysPanel(BasePrefPanel):
         self.__fillActionsList()
 
     def __onActionSelect(self, event):
-        self.__descriptionText.Value = u""
+        self.__descriptionText.Value = ''
 
         strid = event.GetClientData()
         if strid is not None:
@@ -201,8 +201,5 @@ class HotKeysPanel(BasePrefPanel):
                 filterText in action.description.lower())
 
     def Save(self):
-        actionController = self._application.actionController
-
-        for strid, hotkey in self.__hotkeys.items():
-            if actionController.getHotKey(strid) != hotkey:
-                actionController.setHotKey(strid, hotkey, True)
+        newHotkeys = list(self.__hotkeys.items())
+        self._application.actionController.changeHotkeys(newHotkeys)

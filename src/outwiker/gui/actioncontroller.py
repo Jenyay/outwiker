@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import logging
+from typing import List, Tuple, Optional
 
 import wx
 
@@ -31,6 +32,7 @@ class ActionInfo(object):
 
         # Used for hotkey binding
         self.hotkeyId = None
+        self.isHotkeyActive = False
 
 
 class ActionController(object):
@@ -91,6 +93,8 @@ class ActionController(object):
         actionInfo = ActionInfo(action,
                                 self._getHotKeyForAction(action, hotkey))
         self._actionsInfo[action.stringId] = actionInfo
+        logging.debug('Action registered: "%s" (%s)',
+                      action.title, str(hotkey))
 
     def _getHotKeyForAction(self, action, defaultHotKey: HotKey) -> HotKey:
         """
@@ -101,42 +105,6 @@ class ActionController(object):
                             self.configSection,
                             action.stringId,
                             defaultHotKey).value
-
-    def saveHotKeys(self):
-        """
-        Сохранить все горячие клавиши в конфиг
-        """
-        for actionInfo in self._actionsInfo.values():
-            option = HotKeyOption(self._config,
-                                  self.configSection,
-                                  actionInfo.action.stringId,
-                                  None)
-            option.value = actionInfo.hotkey
-
-    def setHotKey(self, strid, hotkey, updateTools=True):
-        """
-        Установить новую горячую клавишу
-
-        strid - идентификатор действия
-        hotkey - новая горячая клавиша
-        updateTools - нужно ли сразу же обновить пункт меню и кнопку на панели.
-        В некоторых случаях желательно отложить эти изменения до следующего
-        запуска программы
-        """
-        actionInfo = self._actionsInfo[strid]
-
-        actionInfo.hotkey = hotkey
-        if updateTools:
-            if actionInfo.menuItem is not None:
-                actionInfo.menuItem.SetItemLabel(self._getMenuItemTitle(strid))
-
-            if (actionInfo.toolbar is not None and
-                    actionInfo.toolItemId is not None):
-                title = self._getToolbarItemTitle(strid)
-                actionInfo.toolbar.SetToolShortHelp(actionInfo.toolItemId,
-                                                    title)
-
-        self.saveHotKeys()
 
     def appendMenuItem(self, strid, menu):
         """
@@ -163,35 +131,85 @@ class ActionController(object):
                               handler=self._onCheckMenuItemHandler,
                               id=menuItem.GetId())
 
-    def appendHotkey(self, strid):
+    def saveHotKeys(self):
         """
-        Create hotkey binding for action
+        Сохранить все горячие клавиши в конфиг
         """
-        actionInfo = self._actionsInfo[strid]
+        for actionInfo in self._actionsInfo.values():
+            option = HotKeyOption(self._config,
+                                  self.configSection,
+                                  actionInfo.action.stringId,
+                                  None)
+            option.value = actionInfo.hotkey
+
+    def changeHotkeys(self, newHotkeys: List[Tuple[str, HotKey]]):
+        '''
+        newHotkeys - list of tuples with two elements: action id and hotkey for the strid
+        '''
+        for strid, hotkey in newHotkeys:
+            actionInfo = self._actionsInfo[strid]
+            if actionInfo.hotkey == hotkey:
+                continue
+
+            actionInfo.hotkey = hotkey
+
+            if actionInfo.isHotkeyActive:
+                actionInfo.hotkey = hotkey
+                self._unbindHotkey(actionInfo)
+                self._bindHotkey(actionInfo)
+
+            if actionInfo.menuItem is not None:
+                actionInfo.menuItem.SetItemLabel(self._getMenuItemTitle(strid))
+
+            if (actionInfo.toolbar is not None and
+                    actionInfo.toolItemId is not None):
+                title = self._getToolbarItemTitle(strid)
+                actionInfo.toolbar.SetToolShortHelp(actionInfo.toolItemId,
+                                                    title)
+
+        self._updateAcceleratorTable()
+        self.saveHotKeys()
+
+    def _bindHotkey(self, actionInfo: ActionInfo):
         if actionInfo.hotkey is not None:
             hotkeyId = wx.NewIdRef()
             actionInfo.hotkeyId = hotkeyId
-            logger.debug('Register hotkey for action "%s": "%s"',
+            logger.debug('Bind hotkey for action "%s": "%s"',
                          actionInfo.action.title,
                          str(actionInfo.hotkey))
             self._mainWindow.Bind(wx.EVT_MENU,
                                   handler=self._onHotKeyItemHandler,
                                   id=hotkeyId)
-            self._updateHotkeys()
 
-    def removeHotkey(self, strid):
-        actionInfo = self._actionsInfo.get(strid)
-        if actionInfo is not None and actionInfo.hotkeyId is not None:
-            logger.debug('Remove hotkey for action "%s": "%s"',
+    def _unbindHotkey(self, actionInfo: ActionInfo):
+        if actionInfo.hotkeyId is not None:
+            logger.debug('Unbind hotkey for action "%s": "%s"',
                          actionInfo.action.title,
                          str(actionInfo.hotkey))
             self._mainWindow.Unbind(wx.EVT_MENU,
                                     handler=self._onHotKeyItemHandler,
                                     id=actionInfo.hotkeyId)
             actionInfo.hotkeyId = None
-            self._updateHotkeys()
 
-    def _updateHotkeys(self):
+    def appendHotkey(self, strid: str):
+        """
+        Create hotkey binding for action
+        """
+        actionInfo = self._actionsInfo[strid]
+        actionInfo.isHotkeyActive = True
+        if actionInfo.hotkey is not None:
+            self._bindHotkey(actionInfo)
+            self._updateAcceleratorTable()
+
+    def removeHotkey(self, strid):
+        actionInfo = self._actionsInfo.get(strid)
+        if actionInfo is not None:
+            actionInfo.isHotkeyActive = False
+            if actionInfo.hotkeyId is not None:
+                self._unbindHotkey(actionInfo)
+                self._updateAcceleratorTable()
+
+    def _updateAcceleratorTable(self):
         entries = []
         for actionInfo in self._actionsInfo.values():
             if actionInfo.hotkeyId is not None:
@@ -341,19 +359,19 @@ class ActionController(object):
         """
         self._onCheck(self._actionsInfo[strid].action, checked)
 
-    def _getActionInfoByMenuItemId(self, menuItemId):
+    def _getActionInfoByMenuItemId(self, menuItemId) -> Optional[ActionInfo]:
         for actionInfo in self._actionsInfo.values():
             if (actionInfo.menuItem is not None and
                     actionInfo.menuItem.GetId() == menuItemId):
                 return actionInfo
 
-    def _getActionInfoByToolItemId(self, toolItemId):
+    def _getActionInfoByToolItemId(self, toolItemId) -> Optional[ActionInfo]:
         for actionInfo in self._actionsInfo.values():
             if (actionInfo.toolItemId is not None and
                     actionInfo.toolItemId == toolItemId):
                 return actionInfo
 
-    def _getActionInfoByHotkeyId(self, itemId):
+    def _getActionInfoByHotkeyId(self, itemId) -> Optional[ActionInfo]:
         for actionInfo in self._actionsInfo.values():
             if (actionInfo.hotkeyId is not None and
                     actionInfo.hotkeyId == itemId):
@@ -372,16 +390,21 @@ class ActionController(object):
     def _onMenuItemHandler(self, event):
         actionInfo = self._getActionInfoByMenuItemId(event.GetId())
         assert actionInfo is not None
+        logger.debug('Run action with menu item: %s', actionInfo.action.title)
         actionInfo.action.run(None)
 
     def _onHotKeyItemHandler(self, event):
         actionInfo = self._getActionInfoByHotkeyId(event.GetId())
         assert actionInfo is not None
+
+        logger.debug('Run action with hotkey: %s', actionInfo.action.title)
         actionInfo.action.run(None)
 
     def _onToolItemHandler(self, event):
         actionInfo = self._getActionInfoByToolItemId(event.GetId())
         assert actionInfo is not None
+        logger.debug('Run action with tool button: %s',
+                     actionInfo.action.title)
         actionInfo.action.run(None)
 
     def _onCheck(self, action, checked):
