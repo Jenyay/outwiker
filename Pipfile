@@ -15,7 +15,7 @@ psutil = "==5.8.0"
 
 [dev-packages]
 Fabric3 = "==1.14.post1"
-cx-freeze = "==6.6"
+cx-freeze = "==6.5.3"
 pympler = "==0.9"
 pytest = ">=6.2"
 coverage = "==5.5"
