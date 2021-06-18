@@ -61,24 +61,31 @@ actionsList = [
 
     (outwiker.actions.addsiblingpage.AddSiblingPageAction,
      HotKey("Y", ctrl=True, shift=True)),
-    (outwiker.actions.addchildpage.AddChildPageAction, HotKey("P", ctrl=True, shift=True)),
-    (outwiker.actions.movepageup.MovePageUpAction, HotKey("Up", ctrl=True, shift=True)),
+    (outwiker.actions.addchildpage.AddChildPageAction,
+     HotKey("P", ctrl=True, shift=True)),
+    (outwiker.actions.movepageup.MovePageUpAction,
+     HotKey("Up", ctrl=True, shift=True)),
     (outwiker.actions.movepagedown.MovePageDownAction,
      HotKey("Down", ctrl=True, shift=True)),
 
     (outwiker.actions.renamepage.RenamePageAction, HotKey("F2")),
-    (outwiker.actions.removepage.RemovePageAction, HotKey("F8", ctrl=True, shift=True)),
+    (outwiker.actions.removepage.RemovePageAction,
+     HotKey("F8", ctrl=True, shift=True)),
 
     (outwiker.actions.sortchildalpha.SortChildAlphabeticalAction, None),
     (outwiker.actions.sortsiblingsalpha.SortSiblingsAlphabeticalAction, None),
 
     (outwiker.actions.tabs.AddTabAction, HotKey("T", ctrl=True)),
     (outwiker.actions.tabs.CloseTabAction, HotKey("W", ctrl=True)),
-    (outwiker.actions.tabs.PreviousTabAction, HotKey("PageUp", ctrl=True, shift=True)),
-    (outwiker.actions.tabs.NextTabAction, HotKey("PageDown", ctrl=True, shift=True)),
+    (outwiker.actions.tabs.PreviousTabAction,
+     HotKey("PageUp", ctrl=True, shift=True)),
+    (outwiker.actions.tabs.NextTabAction, HotKey(
+        "PageDown", ctrl=True, shift=True)),
 
-    (outwiker.actions.globalsearch.GlobalSearchAction, HotKey("F", ctrl=True, shift=True)),
-    (outwiker.actions.attachfiles.AttachFilesAction, HotKey("A", ctrl=True, shift=True)),
+    (outwiker.actions.globalsearch.GlobalSearchAction,
+     HotKey("F", ctrl=True, shift=True)),
+    (outwiker.actions.attachfiles.AttachFilesAction,
+     HotKey("A", ctrl=True, shift=True)),
     (outwiker.actions.openattachfolder.OpenAttachFolderAction, None),
 
     (outwiker.actions.clipboard.CopyPageTitleAction, None),
@@ -90,8 +97,10 @@ actionsList = [
     (outwiker.actions.tags.RemoveTagsFromBranchAction, None),
     (outwiker.actions.tags.RenameTagAction, None),
 
-    (outwiker.actions.history.HistoryBackAction, HotKey("Left", ctrl=True, alt=True)),
-    (outwiker.actions.history.HistoryForwardAction, HotKey("Right", ctrl=True, alt=True)),
+    (outwiker.actions.history.HistoryBackAction,
+     HotKey("Left", ctrl=True, alt=True)),
+    (outwiker.actions.history.HistoryForwardAction,
+     HotKey("Right", ctrl=True, alt=True)),
 
     (outwiker.actions.moving.GoToParentAction, None),
     (outwiker.actions.moving.GoToFirstChildAction, None),
@@ -237,4 +246,8 @@ polyactionsList = [
     (polyactions.TEXT_BACKGROUND_COLOR_STR_ID, _(u"Text background color..."),
      _(u"Set text background color"), HotKey("N", ctrl=True, shift=True)),
     (polyactions.COMMENT_STR_ID, _(u"Comment"), _(u"Mark text as comment"), None),
+    (polyactions.SWITCH_TO_CODE_TAB_ID, _("Switch to code tab"),
+     _("Switch to code tab for some page types"), None),
+    (polyactions.SWITCH_TO_PREVIEW_TAB_ID, _("Switch to preview tab"),
+     _("Switch to preview tab for some page types"), None),
 ]

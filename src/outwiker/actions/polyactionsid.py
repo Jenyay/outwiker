@@ -167,3 +167,9 @@ TEXT_BACKGROUND_COLOR_STR_ID = "TextBackgroundColor"
 
 # Comment
 COMMENT_STR_ID = "Comment"
+
+# Switch to code tab
+SWITCH_TO_CODE_TAB_ID = "SwitchToCodeTab"
+
+# Switch to preview tab
+SWITCH_TO_PREVIEW_TAB_ID = "SwitchToPreviewTab"
