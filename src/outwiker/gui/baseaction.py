@@ -3,7 +3,7 @@
 from abc import ABCMeta, abstractmethod, abstractproperty
 
 
-class BaseAction (object, metaclass=ABCMeta):
+class BaseAction (metaclass=ABCMeta):
     @abstractproperty
     def title(self):
         """

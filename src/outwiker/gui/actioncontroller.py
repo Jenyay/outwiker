@@ -34,6 +34,9 @@ class ActionInfo(object):
         self.hotkeyId = None
         self.isHotkeyActive = False
 
+        # Window, which is assigned to a hotkey
+        self.window = None
+
 
 class ActionController(object):
     """
@@ -41,7 +44,7 @@ class ActionController(object):
     и кнопок на панели инструментов
     """
 
-    def __init__(self, mainWindow, config):
+    def __init__(self, mainWindow: wx.Window, config):
         self._mainWindow = mainWindow
         self._config = config
 
@@ -167,7 +170,7 @@ class ActionController(object):
                 actionInfo.toolbar.SetToolShortHelp(actionInfo.toolItemId,
                                                     title)
 
-        self._updateAcceleratorTable()
+        self._updateAcceleratorTables()
         self.saveHotKeys()
 
     def _bindHotkey(self, actionInfo: ActionInfo):
@@ -177,50 +180,59 @@ class ActionController(object):
             logger.debug('Bind hotkey for action "%s": "%s"',
                          actionInfo.action.title,
                          str(actionInfo.hotkey))
-            self._mainWindow.Bind(wx.EVT_MENU,
-                                  handler=self._onHotKeyItemHandler,
-                                  id=hotkeyId)
+            actionInfo.window.Bind(wx.EVT_MENU,
+                                   handler=self._onHotKeyItemHandler,
+                                   id=hotkeyId)
 
     def _unbindHotkey(self, actionInfo: ActionInfo):
         if actionInfo.hotkeyId is not None:
             logger.debug('Unbind hotkey for action "%s": "%s"',
                          actionInfo.action.title,
                          str(actionInfo.hotkey))
-            self._mainWindow.Unbind(wx.EVT_MENU,
-                                    handler=self._onHotKeyItemHandler,
-                                    id=actionInfo.hotkeyId)
+            actionInfo.window.Unbind(wx.EVT_MENU,
+                                     handler=self._onHotKeyItemHandler,
+                                     id=actionInfo.hotkeyId)
             actionInfo.hotkeyId = None
 
-    def appendHotkey(self, strid: str):
+    def appendHotkey(self, strid: str, window: wx.Window = None):
         """
         Create hotkey binding for action
         """
         actionInfo = self._actionsInfo[strid]
         actionInfo.isHotkeyActive = True
+        actionInfo.window = window if window is not None else self._mainWindow
         if actionInfo.hotkey is not None:
             self._bindHotkey(actionInfo)
-            self._updateAcceleratorTable()
+            self._updateAcceleratorTables()
 
     def removeHotkey(self, strid):
         actionInfo = self._actionsInfo.get(strid)
         if actionInfo is not None:
-            actionInfo.isHotkeyActive = False
             if actionInfo.hotkeyId is not None:
                 self._unbindHotkey(actionInfo)
-                self._updateAcceleratorTable()
+                self._updateAcceleratorTables()
 
-    def _updateAcceleratorTable(self):
-        entries = []
+            actionInfo.isHotkeyActive = False
+            actionInfo.window = None
+
+    def _updateAcceleratorTables(self):
+        # Key - window, value - list of the wx.AcceleratorEntry instances
+        entries = {}
+
         for actionInfo in self._actionsInfo.values():
             if actionInfo.hotkeyId is not None:
                 assert actionInfo.hotkey is not None
                 entry = wx.AcceleratorEntry(cmd=actionInfo.hotkeyId)
                 entry.FromString(str(actionInfo.hotkey))
                 if entry.IsOk():
-                    entries.append(entry)
+                    if actionInfo.window not in entries:
+                        entries[actionInfo.window] = []
 
-        accelTable = wx.AcceleratorTable(entries)
-        self._mainWindow.SetAcceleratorTable(accelTable)
+                    entries[actionInfo.window].append(entry)
+
+        for window in entries.keys():
+            accelTable = wx.AcceleratorTable(entries[window])
+            window.SetAcceleratorTable(accelTable)
 
     def removeAction(self, strid):
         """
