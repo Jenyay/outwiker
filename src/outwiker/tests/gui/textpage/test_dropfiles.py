@@ -5,13 +5,14 @@ import unittest
 
 from outwiker.core.attachment import Attachment
 from outwiker.pages.text.textpage import TextPageFactory
-from tests.basetestcases import BaseOutWikerGUIMixin
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
 class TextEditorDropTargetTest(unittest.TestCase, BaseOutWikerGUIMixin):
     """
     Test for drop files to the HTML editor
     """
+
     def setUp(self):
         self.initApplication()
         self.wikiroot = self.createWiki()
@@ -63,7 +64,8 @@ class TextEditorDropTargetTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def test_drop_several_attach(self):
         attach = Attachment(self.testpage)
-        attach.attach(['testdata/images/icon.png', 'testdata/images/first.png'])
+        attach.attach(['testdata/images/icon.png',
+                      'testdata/images/first.png'])
 
         files = sorted(attach.attachmentFull)
         self.dropTarget.OnDropFiles(0, 0, files)

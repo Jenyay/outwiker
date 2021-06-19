@@ -9,7 +9,7 @@ from outwiker.core.attachment import Attachment
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
 from outwiker.pages.wiki.htmlgenerator import HtmlGenerator
-from tests.basetestcases import BaseOutWikerGUIMixin
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
 class SourceStyleTest (unittest.TestCase, BaseOutWikerGUIMixin):

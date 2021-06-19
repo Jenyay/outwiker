@@ -3,7 +3,7 @@
 import unittest
 
 from outwiker.pages.text.textpage import TextPageFactory
-from tests.basetestcases import BaseOutWikerGUIMixin
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
 class TextEditorTest(unittest.TestCase, BaseOutWikerGUIMixin):

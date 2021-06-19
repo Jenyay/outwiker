@@ -4,7 +4,7 @@ from unittest import TestCase
 
 from outwiker.pages.wiki.linkcreator import LinkCreator
 from outwiker.pages.wiki.wikiconfig import WikiConfig
-from tests.basetestcases import BaseOutWikerMixin
+from outwiker.tests.basetestcases import BaseOutWikerMixin
 
 
 class WikiLinkCreatorTest(BaseOutWikerMixin, TestCase):

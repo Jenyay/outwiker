@@ -2,12 +2,12 @@
 
 import unittest
 
-from outwiker.core.pluginsloader import PluginsLoader
-from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
-from outwiker.pages.wiki.wikipage import WikiPageFactory
-from tests.utils import removeDir
+from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.style import Style
+from outwiker.core.tree import WikiDocument
+from outwiker.pages.wiki.wikipage import WikiPageFactory
+from outwiker.tests.utils import removeDir
 
 
 class MarkdownTest(unittest.TestCase):

@@ -5,8 +5,8 @@ import unittest
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.tree import WikiDocument
 from outwiker.core.factoryselector import FactorySelector
-from tests.basetestcases import BaseOutWikerGUIMixin
 from outwiker.gui.unknownpagetype import UnknownPageTypeFactory
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
 class TestPageTest(unittest.TestCase, BaseOutWikerGUIMixin):

@@ -9,14 +9,12 @@ from outwiker.core.tree import WikiDocument
 from outwiker.core.attachment import Attachment
 from outwiker.core.style import Style
 from outwiker.gui.guiconfig import HtmlRenderConfig
-
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.emptycontent import EmptyContent
 from outwiker.pages.wiki.wikiconfig import WikiConfig
 from outwiker.pages.wiki.wikihashcalculator import WikiHashCalculator
-
-from tests.utils import removeDir
-from tests.basetestcases import BaseOutWikerMixin
+from outwiker.tests.utils import removeDir
+from outwiker.tests.basetestcases import BaseOutWikerMixin
 
 
 class WikiHashTest (BaseOutWikerMixin, TestCase):

@@ -9,16 +9,13 @@ from outwiker.core.tree import WikiDocument
 from outwiker.core.attachment import Attachment
 from outwiker.core.style import Style
 from outwiker.core.defines import PAGE_RESULT_HTML
-
 from outwiker.gui.guiconfig import HtmlRenderConfig
-
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.htmlcache import HtmlCache
 from outwiker.pages.wiki.emptycontent import EmptyContent
 from outwiker.pages.wiki.wikiconfig import WikiConfig
-
-from tests.utils import removeDir
-from tests.basetestcases import BaseOutWikerMixin
+from outwiker.tests.utils import removeDir
+from outwiker.tests.basetestcases import BaseOutWikerMixin
 
 
 class WikiHtmlCacheTest (BaseOutWikerMixin, TestCase):

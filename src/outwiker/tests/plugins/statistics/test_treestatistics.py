@@ -8,7 +8,7 @@ from outwiker.core.attachment import Attachment
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.search.searchpage import SearchPageFactory
-from tests.basetestcases import BaseOutWikerGUIMixin
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
 class TreeStatisticsTest (unittest.TestCase, BaseOutWikerGUIMixin):
@@ -318,7 +318,8 @@ class TreeStatisticsTest (unittest.TestCase, BaseOutWikerGUIMixin):
         self.wikiroot["Страница 1"].datetime = datetime.datetime(2013, 4, 23)
         self.wikiroot["Страница 1/Страница 2"].datetime = datetime.datetime(
             2013, 4, 20)
-        self.wikiroot["Страница 1/Страница 2/Страница 3"].datetime = datetime.datetime(2013, 4, 30)
+        self.wikiroot["Страница 1/Страница 2/Страница 3"].datetime = datetime.datetime(
+            2013, 4, 30)
         self.wikiroot["Страница 4"].datetime = datetime.datetime(2010, 1, 1)
         self.wikiroot["Страница 4/Страница 5"].datetime = datetime.datetime(
             2009, 1, 1)

@@ -6,7 +6,7 @@ from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.application import Application
 from outwiker.core.events import LinkClickParams
 from outwiker.gui.tester import Tester
-from tests.basetestcases import BaseOutWikerGUIMixin
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
 class CommandExecControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):

@@ -7,9 +7,9 @@ import unittest
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.tree import WikiDocument
 from outwiker.core.factoryselector import FactorySelector
-from tests.basetestcases import BaseOutWikerGUIMixin
-from tests.utils import removeDir
 from outwiker.gui.unknownpagetype import UnknownPageTypeFactory
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
+from outwiker.tests.utils import removeDir
 
 
 class WebPageTest (unittest.TestCase, BaseOutWikerGUIMixin):
@@ -19,7 +19,8 @@ class WebPageTest (unittest.TestCase, BaseOutWikerGUIMixin):
         self.initApplication()
 
         self.dirlist = ["plugins/webpage"]
-        self.path = mkdtemp(prefix='OutWiker_Абырвалг абырвалг_' + str(self.__class__.__name__))
+        self.path = mkdtemp(
+            prefix='OutWiker_Абырвалг абырвалг_' + str(self.__class__.__name__))
 
         self.loader = PluginsLoader(self.application)
         self.loader.load(self.dirlist)

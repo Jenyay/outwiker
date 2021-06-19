@@ -7,7 +7,7 @@ from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.attachment import Attachment
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
-from tests.basetestcases import BaseOutWikerGUIMixin
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
 class ThumbListPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):

@@ -7,9 +7,9 @@ import os
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
+from outwiker.tests.utils import removeDir
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 from outwiker.utilites.textfile import writeTextFile
-from tests.utils import removeDir
-from tests.basetestcases import BaseOutWikerGUIMixin
 
 
 class SnippetsWikiCommandTest(unittest.TestCase, BaseOutWikerGUIMixin):

@@ -6,8 +6,8 @@ import unittest
 
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.application import Application
-from tests.utils import removeDir
-from tests.basetestcases import BaseOutWikerGUIMixin
+from outwiker.tests.utils import removeDir
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
 class SnippetsLoaderTest(unittest.TestCase, BaseOutWikerGUIMixin):

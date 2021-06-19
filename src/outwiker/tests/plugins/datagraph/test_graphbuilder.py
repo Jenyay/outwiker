@@ -9,7 +9,7 @@ from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
 from outwiker.core.tree import WikiDocument
 from outwiker.pages.wiki.wikipage import WikiPageFactory
-from tests.utils import removeDir
+from outwiker.tests.utils import removeDir
 
 
 class GraphBuilderTest(unittest.TestCase):
@@ -236,7 +236,8 @@ class GraphBuilderTest(unittest.TestCase):
         self.assertIsNotNone(curveData.getSource())
 
         data = list(curveData.getRowsIterator())
-        self.assertEqual(data, [['123', '111'], ['456', '222'], ['789', '333']])
+        self.assertEqual(
+            data, [['123', '111'], ['456', '222'], ['789', '333']])
 
     def testCurveAttachData_01(self):
         from datagraph.graphbuilder import GraphBuilder
@@ -331,7 +332,8 @@ class GraphBuilderTest(unittest.TestCase):
         self.assertIsNotNone(curveData.getSource())
 
         data = list(curveData.getRowsIterator())
-        self.assertEqual(data, [['123', '111'], ['456', '222'], ['789', '333']])
+        self.assertEqual(
+            data, [['123', '111'], ['456', '222'], ['789', '333']])
 
     def testCurveAttach_invalid_01(self):
         from datagraph.graphbuilder import GraphBuilder

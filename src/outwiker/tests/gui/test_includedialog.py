@@ -8,13 +8,14 @@ from outwiker.pages.wiki.actions.include import (IncludeDialog,
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.core.attachment import Attachment
 from outwiker.gui.tester import Tester
-from tests.basetestcases import BaseOutWikerGUIMixin
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
 class IncludeDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
     """
     Тесты диалога для вставки команды (:include:)
     """
+
     def setUp(self):
         self.initApplication()
         self.wikiroot = self.createWiki()
@@ -25,8 +26,10 @@ class IncludeDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.testedPage = self.wikiroot["Викистраница"]
 
         filesPath = "testdata/samplefiles/"
-        self.files = ["accept.png", "add.png", "anchor.png", "файл с пробелами.tmp", "dir"]
-        self.fullFilesPath = [os.path.join(filesPath, fname) for fname in self.files]
+        self.files = ["accept.png", "add.png",
+                      "anchor.png", "файл с пробелами.tmp", "dir"]
+        self.fullFilesPath = [os.path.join(
+            filesPath, fname) for fname in self.files]
 
         Attachment(self.testedPage).attach(self.fullFilesPath)
         Tester.dialogTester.clear()
@@ -119,7 +122,8 @@ class IncludeDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = controller.getDialogResult()
 
-        self.assertEqual(result, '(:include Attach:accept.png encoding="utf-16":)')
+        self.assertEqual(
+            result, '(:include Attach:accept.png encoding="utf-16":)')
 
     def test_encoding_02(self):
         controller = IncludeDialogController(self._dialog, self.testedPage)
@@ -132,7 +136,8 @@ class IncludeDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = controller.getDialogResult()
 
-        self.assertEqual(result, '(:include Attach:accept.png encoding="mac_cyrillic":)')
+        self.assertEqual(
+            result, '(:include Attach:accept.png encoding="mac_cyrillic":)')
 
     def test_encoding_04(self):
         controller = IncludeDialogController(self._dialog, self.testedPage)

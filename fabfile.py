@@ -130,17 +130,6 @@ def test(*args):
     local('{command} runtests.py {args}'.format(
         command=command, args=' '.join(args)))
 
-    if len(args) == 0:
-        test_build()
-
-
-@task
-def test_build(*args):
-    '''
-    Run the build unit tests
-    '''
-    _runTests(u'.', u'test_build_', '', *args)
-
 
 def _runTests(testdir, prefix, section=u'', *args):
     files = [fname[len(testdir) + 1:]

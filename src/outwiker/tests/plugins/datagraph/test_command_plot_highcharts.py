@@ -12,7 +12,7 @@ from outwiker.core.style import Style
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
 from outwiker.pages.wiki.htmlgenerator import HtmlGenerator
-from tests.utils import removeDir
+from outwiker.tests.utils import removeDir
 
 
 class CommandPlotHighchartsTest(unittest.TestCase):
@@ -44,7 +44,9 @@ class CommandPlotHighchartsTest(unittest.TestCase):
 
         attachpath = Attachment(self.page).getAttachPath()
 
-        self.assertIn('<div id="graph-0" style="width:700px; height:300px;"></div>', result)
+        self.assertIn(
+            '<div id="graph-0" style="width:700px; height:300px;"></div>',
+            result)
         self.assertIn('excanvas.min.js">', result)
         self.assertIn('jquery.min.js">', result)
         self.assertIn('highcharts.js">', result)
@@ -78,7 +80,9 @@ excanvas.min.js
 
         attachpath = Attachment(self.page).getAttachPath()
 
-        self.assertIn('<div id="graph-0" style="width:700px; height:300px;"></div>', result)
+        self.assertIn(
+            '<div id="graph-0" style="width:700px; height:300px;"></div>',
+            result)
 
         self.assertNotIn('excanvas.min.js">', result)
         self.assertIn('jquery.min.js">', result)
@@ -114,7 +118,9 @@ jquery.min.js
 
         attachpath = Attachment(self.page).getAttachPath()
 
-        self.assertIn('<div id="graph-0" style="width:700px; height:300px;"></div>', result)
+        self.assertIn(
+            '<div id="graph-0" style="width:700px; height:300px;"></div>',
+            result)
 
         self.assertIn('excanvas.min.js">', result)
         self.assertNotIn('jquery.min.js">', result)
@@ -150,7 +156,8 @@ highcharts.js
 
         attachpath = Attachment(self.page).getAttachPath()
 
-        self.assertIn('<div id="graph-0" style="width:700px; height:300px;"></div>', result)
+        self.assertIn('<div id="graph-0" style="width:700px; height:300px;"></div>',
+                      result)
 
         self.assertIn('excanvas.min.js">', result)
         self.assertIn('jquery.min.js">', result)
@@ -188,7 +195,8 @@ highcharts.js
 
         attachpath = Attachment(self.page).getAttachPath()
 
-        self.assertIn('<div id="graph-0" style="width:700px; height:300px;"></div>', result)
+        self.assertIn('<div id="graph-0" style="width:700px; height:300px;"></div>',
+                      result)
 
         self.assertNotIn('excanvas.min.js">', result)
         self.assertNotIn('jquery.min.js">', result)

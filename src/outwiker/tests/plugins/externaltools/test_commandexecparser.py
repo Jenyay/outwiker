@@ -11,8 +11,7 @@ from outwiker.core.application import Application
 from outwiker.core.defines import PAGE_RESULT_HTML
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
-
-from tests.utils import removeDir
+from outwiker.tests.utils import removeDir
 
 
 class CommandExecParserTest (unittest.TestCase):

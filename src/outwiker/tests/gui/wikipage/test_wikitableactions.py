@@ -2,13 +2,13 @@
 
 import unittest
 
+from outwiker.gui.guiconfig import GeneralGuiConfig
 from outwiker.gui.tester import Tester
 from outwiker.pages.wiki.wikipage import WikiPageFactory
-from outwiker.gui.guiconfig import GeneralGuiConfig
 from outwiker.actions.polyactionsid import (TABLE_STR_ID,
                                             TABLE_ROW_STR_ID,
                                             TABLE_CELL_STR_ID)
-from tests.basetestcases import BaseOutWikerGUIMixin
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
 class WikiTableActionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
@@ -275,7 +275,8 @@ class WikiTableActionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def testInsertCell_01(self):
         editor = self._getCodeEditor()
-        self.application.actionController.getAction(TABLE_CELL_STR_ID).run(None)
+        self.application.actionController.getAction(
+            TABLE_CELL_STR_ID).run(None)
 
         validResult = '''(:cell:)'''
 
@@ -290,7 +291,8 @@ class WikiTableActionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         editor.SetText(initTextPart1 + initTextPart2)
         editor.SetSelection(len(initTextPart1), len(initTextPart1))
 
-        self.application.actionController.getAction(TABLE_CELL_STR_ID).run(None)
+        self.application.actionController.getAction(
+            TABLE_CELL_STR_ID).run(None)
 
         validResult = '''(:table:)
 (:cell:)
@@ -307,7 +309,8 @@ class WikiTableActionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         editor.SetText(initTextPart1 + initTextPart2)
         editor.SetSelection(len(initTextPart1), len(initTextPart1))
 
-        self.application.actionController.getAction(TABLE_CELL_STR_ID).run(None)
+        self.application.actionController.getAction(
+            TABLE_CELL_STR_ID).run(None)
 
         validResult = '''(:table:)(:table2:)
 (:cell2:)

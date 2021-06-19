@@ -5,7 +5,7 @@ import unittest
 import wx
 
 from outwiker.gui.menucontroller import MenuController, ROOT_MENU_ID
-from tests.basetestcases import BaseOutWikerGUIMixin
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
 class MenuControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):

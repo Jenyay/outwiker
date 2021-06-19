@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import unittest
 from tempfile import mkdtemp
@@ -8,7 +8,7 @@ from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
-from tests.utils import removeDir
+from outwiker.tests.utils import removeDir
 
 
 class CommandExecTest (unittest.TestCase):

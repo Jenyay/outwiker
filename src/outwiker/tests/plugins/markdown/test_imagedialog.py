@@ -2,9 +2,9 @@
 
 import unittest
 
-from outwiker.gui.tester import Tester
 from outwiker.core.pluginsloader import PluginsLoader
-from tests.basetestcases import BaseOutWikerGUIMixin
+from outwiker.gui.tester import Tester
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
 class MarkdownImageDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):

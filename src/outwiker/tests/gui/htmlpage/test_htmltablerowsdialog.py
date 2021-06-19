@@ -3,11 +3,11 @@
 import unittest
 
 from outwiker.gui.tester import Tester
-from outwiker.pages.html.htmlpage import HtmlPageFactory
-from outwiker.gui.tablerowsdialog import TableRowsDialog
-from outwiker.pages.html.tabledialogcontroller import TableRowsDialogController
 from outwiker.gui.guiconfig import GeneralGuiConfig
-from tests.basetestcases import BaseOutWikerGUIMixin
+from outwiker.gui.tablerowsdialog import TableRowsDialog
+from outwiker.pages.html.htmlpage import HtmlPageFactory
+from outwiker.pages.html.tabledialogcontroller import TableRowsDialogController
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
 class HtmlTableRowsDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):

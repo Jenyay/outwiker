@@ -4,18 +4,19 @@ import os
 import unittest
 from tempfile import mkdtemp
 
+from outwiker.core.tree import WikiDocument
+from outwiker.core.attachment import Attachment
 from outwiker.pages.wiki.thumbdialogcontroller import ThumbDialogController
 from outwiker.pages.wiki.thumbdialog import ThumbDialog
 from outwiker.pages.wiki.wikipage import WikiPageFactory
-from outwiker.core.tree import WikiDocument
-from outwiker.core.attachment import Attachment
-from ..utils import removeDir
+from outwiker.tests.utils import removeDir
 
 
 class FakeThumbDialog(object):
     """
     Фальшивый диалог для вставки превьюшки
     """
+
     def __init__(self, parent, filesList, selectedFile,
                  thumbSize, fileName, scaleType):
         self.parent = parent

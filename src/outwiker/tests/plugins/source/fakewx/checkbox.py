@@ -1,20 +1,17 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from .control import Control
 
 
 class CheckBox (Control):
-    def __init__ (self):
+    def __init__(self):
         self.Value = False
 
-
-    def IsChecked (self):
+    def IsChecked(self):
         return self.Value
 
-
-    def SetValue (self, state):
+    def SetValue(self, state):
         self.Value = state
 
-
-    def GetValue (self):
+    def GetValue(self):
         return self.Value

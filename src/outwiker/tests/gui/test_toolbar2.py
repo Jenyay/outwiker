@@ -2,8 +2,8 @@
 
 import wx
 
-from tests.basetestcases import BaseWxTestCase
 from outwiker.gui.controls.toolbar2 import ToolBar2Container
+from outwiker.tests.basetestcases import BaseWxTestCase
 
 
 class TestToolbar2(BaseWxTestCase):

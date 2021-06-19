@@ -6,7 +6,7 @@ import unittest
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.attachment import Attachment
 from outwiker.pages.wiki.wikipage import WikiPageFactory
-from tests.basetestcases import BaseOutWikerGUIMixin
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 from .sourcefakedialog import FakeInsertDialog
 
 

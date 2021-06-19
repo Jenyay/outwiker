@@ -6,7 +6,7 @@ import wx
 
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.pages.wiki.wikipage import WikiPageFactory
-from tests.basetestcases import BaseOutWikerGUIMixin
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
 class SnippetsVarDialogControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):

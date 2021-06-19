@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from .control import Control
 
@@ -7,14 +7,13 @@ class ComboBox (Control):
     """
     Заглушка вместо ComboBox
     """
-    def __init__ (self):
+
+    def __init__(self):
         self.Clear()
 
-
-    def Clear (self):
+    def Clear(self):
         self._items = []
         self.Selection = None
-
 
     def AppendItems(self, strings):
         self._items += strings
@@ -22,24 +21,19 @@ class ComboBox (Control):
         if self.Selection is None:
             self.Selection = 0
 
-
-    def GetItems (self):
+    def GetItems(self):
         return self._items
 
-
-    def GetCount (self):
-        return len (self._items)
-
+    def GetCount(self):
+        return len(self._items)
 
     def SetSelection(self, n):
-        assert n < len (self._items)
+        assert n < len(self._items)
         self.Selection = n
-
 
     def GetSelection(self):
         return self.Selection
 
-
-    def GetValue (self):
+    def GetValue(self):
         if self.Selection is not None:
             return self._items[self.Selection]

@@ -6,7 +6,7 @@ import wx
 
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.gui.tester import Tester
-from tests.basetestcases import BaseOutWikerGUIMixin
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
 class ExecDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):

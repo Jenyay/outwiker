@@ -7,16 +7,19 @@ import wx.aui
 from outwiker.actions.showhideattaches import ShowHideAttachesAction
 from outwiker.actions.showhidetree import ShowHideTreeAction
 from outwiker.actions.showhidetags import ShowHideTagsAction
-from tests.basetestcases import BaseOutWikerGUIMixin
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
 class MainPanesTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def setUp(self):
         self.initApplication()
 
-        self.attachAction = self.application.actionController.getAction(ShowHideAttachesAction.stringId)
-        self.treeAction = self.application.actionController.getAction(ShowHideTreeAction.stringId)
-        self.tagsAction = self.application.actionController.getAction(ShowHideTagsAction.stringId)
+        self.attachAction = self.application.actionController.getAction(
+            ShowHideAttachesAction.stringId)
+        self.treeAction = self.application.actionController.getAction(
+            ShowHideTreeAction.stringId)
+        self.tagsAction = self.application.actionController.getAction(
+            ShowHideTagsAction.stringId)
 
     def tearDown(self):
         self.destroyApplication()
@@ -42,7 +45,8 @@ class MainPanesTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self._testClose(self.tagsAction, self.mainWindow.tagsCloudPanel)
 
     def _testClose(self, action, panel):
-        actionInfo = self.application.actionController.getActionInfo(action.stringId)
+        actionInfo = self.application.actionController.getActionInfo(
+            action.stringId)
 
         self.assertTrue(actionInfo.menuItem.IsChecked())
 

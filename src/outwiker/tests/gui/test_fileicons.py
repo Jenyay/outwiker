@@ -4,13 +4,14 @@ import os
 from unittest import skipIf, TestCase
 
 from outwiker.gui.fileicons import UnixFileIcons, WindowsFileIcons
-from tests.basetestcases import BaseOutWikerGUIMixin
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
 class FileIconsTestUnix(TestCase, BaseOutWikerGUIMixin):
     """
     Тесты классов для отображения иконок прикрепленных файлов
     """
+
     def setUp(self):
         self.initApplication()
 

@@ -7,7 +7,7 @@ from outwiker.actions.showhideattaches import ShowHideAttachesAction
 from outwiker.actions.showhidetags import ShowHideTagsAction
 from outwiker.actions.fullscreen import FullScreenAction
 from outwiker.core.system import getOS
-from tests.basetestcases import BaseOutWikerGUIMixin
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
 class FullScreenTest(unittest.TestCase, BaseOutWikerGUIMixin):
@@ -15,7 +15,8 @@ class FullScreenTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.initApplication()
 
     def testFullScreenStart(self):
-        fullScreenActionInfo = self.application.actionController.getActionInfo(FullScreenAction.stringId)
+        fullScreenActionInfo = self.application.actionController.getActionInfo(
+            FullScreenAction.stringId)
 
         if getOS().name == 'windows':
             self.assertFalse(self.mainWindow.IsFullScreen())
@@ -29,9 +30,12 @@ class FullScreenTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.destroyApplication()
 
     def testFullScreen(self):
-        showHideTreeActionInfo = self.application.actionController.getActionInfo(ShowHideTreeAction.stringId)
-        showHideAttachesActionInfo = self.application.actionController.getActionInfo(ShowHideAttachesAction.stringId)
-        showHideTagsActionInfo = self.application.actionController.getActionInfo(ShowHideTagsAction.stringId)
+        showHideTreeActionInfo = self.application.actionController.getActionInfo(
+            ShowHideTreeAction.stringId)
+        showHideAttachesActionInfo = self.application.actionController.getActionInfo(
+            ShowHideAttachesAction.stringId)
+        showHideTagsActionInfo = self.application.actionController.getActionInfo(
+            ShowHideTagsAction.stringId)
 
         self.application.actionController.check(FullScreenAction.stringId, True)
 

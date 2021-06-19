@@ -5,7 +5,7 @@ import unittest
 import wx
 
 from outwiker.gui.controls.safeimagelist import SafeImageList
-from tests.basetestcases import BaseOutWikerGUIMixin
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
 class SafeImageListTest(unittest.TestCase, BaseOutWikerGUIMixin):

@@ -3,11 +3,11 @@
 import unittest
 
 from outwiker.gui.tester import Tester
-from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.gui.tabledialog import TableDialog
-from outwiker.pages.wiki.tabledialogcontroller import TableDialogController
 from outwiker.gui.guiconfig import GeneralGuiConfig
-from tests.basetestcases import BaseOutWikerGUIMixin
+from outwiker.pages.wiki.wikipage import WikiPageFactory
+from outwiker.pages.wiki.tabledialogcontroller import TableDialogController
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
 class WikiTableDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):

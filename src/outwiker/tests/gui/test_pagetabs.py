@@ -8,13 +8,14 @@ from outwiker.core.defines import PAGE_MODE_TEXT, PAGE_MODE_PREVIEW
 from outwiker.gui.guiconfig import GeneralGuiConfig
 from outwiker.pages.html.htmlpage import HtmlPageFactory
 from outwiker.pages.wiki.wikipage import WikiPageFactory
-from tests.basetestcases import BaseOutWikerGUIMixin
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
 class PageTabsTest(unittest.TestCase, BaseOutWikerGUIMixin):
     """
     Tests for the view tabs (Wiki / Preview)
     """
+
     def setUp(self):
         self.initApplication()
         self.wikiroot = self.createWiki()

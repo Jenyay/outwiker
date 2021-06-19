@@ -4,7 +4,7 @@ import os
 import unittest
 
 from outwiker.pages.text.textpage import TextPageFactory
-from tests.basetestcases import BaseOutWikerGUIMixin
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
 class TreeTest(unittest.TestCase, BaseOutWikerGUIMixin):
@@ -28,10 +28,13 @@ class TreeTest(unittest.TestCase, BaseOutWikerGUIMixin):
         factory.create(self.wikiroot, "Страница 1", [])
         factory.create(self.wikiroot, "Страница 2", [])
         factory.create(self.wikiroot["Страница 2"], "Страница 3", [])
-        factory.create(self.wikiroot["Страница 2/Страница 3"], "Страница 4", [])
-        factory.create(self.wikiroot["Страница 2/Страница 3/Страница 4"], "Страница 6", [])
+        factory.create(
+            self.wikiroot["Страница 2/Страница 3"], "Страница 4", [])
+        factory.create(
+            self.wikiroot["Страница 2/Страница 3/Страница 4"], "Страница 6", [])
         factory.create(self.wikiroot["Страница 1"], "Страница 5", [])
-        factory.create(self.wikiroot["Страница 1/Страница 5"], "Страница 7", [])
+        factory.create(
+            self.wikiroot["Страница 1/Страница 5"], "Страница 7", [])
 
         self.application.wikiroot = self.wikiroot
         tree = self.mainWindow.treePanel.panel

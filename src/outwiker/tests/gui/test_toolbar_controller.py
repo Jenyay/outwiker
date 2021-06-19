@@ -6,7 +6,7 @@ import wx
 
 from outwiker.gui.controls.toolbar2 import ToolBar2Container
 from outwiker.gui.toolbarscontroller import ToolBarsController
-from tests.basetestcases import BaseOutWikerMixin
+from outwiker.tests.basetestcases import BaseOutWikerMixin
 
 
 class ToolBarsControllerTest(unittest.TestCase, BaseOutWikerMixin):

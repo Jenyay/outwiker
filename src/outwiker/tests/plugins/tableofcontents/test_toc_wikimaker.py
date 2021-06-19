@@ -4,7 +4,7 @@ import unittest
 
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.pages.wiki.wikiconfig import WikiConfig
-from tests.basetestcases import BaseOutWikerGUIMixin
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
 class TOC_WikiMakerTest (unittest.TestCase, BaseOutWikerGUIMixin):

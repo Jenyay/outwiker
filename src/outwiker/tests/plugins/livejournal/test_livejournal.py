@@ -9,7 +9,7 @@ from outwiker.core.style import Style
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.htmlgenerator import HtmlGenerator
 from outwiker.gui.tester import Tester
-from tests.basetestcases import BaseOutWikerGUIMixin
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
 class LivejournalPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
@@ -110,7 +110,8 @@ class LivejournalPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         valid_result = "(:ljuser jenyay:)"
 
         self.assertEqual(controller.result, valid_result)
-        self.assertEqual(LJConfig(self.application.config).users.value, ["jenyay"])
+        self.assertEqual(
+            LJConfig(self.application.config).users.value, ["jenyay"])
 
     def testUserDialog_03(self):
         from livejournal.ljconfig import LJConfig

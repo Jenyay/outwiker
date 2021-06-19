@@ -7,7 +7,7 @@ import unittest
 from outwiker.core.attachment import Attachment
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.pages.wiki.wikipage import WikiPageFactory
-from tests.basetestcases import BaseOutWikerGUIMixin
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
 class SnippetParserTest(unittest.TestCase, BaseOutWikerGUIMixin):

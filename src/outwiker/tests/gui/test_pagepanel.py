@@ -4,20 +4,15 @@ import unittest
 
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.pages.text.textpanel import TextPanel
-
 from outwiker.pages.html.htmlpage import HtmlPageFactory
 from outwiker.pages.html.htmlpageview import HtmlPageView
-
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.wikipageview import WikiPageView
-
 from outwiker.pages.search.searchpage import SearchPageFactory
 from outwiker.pages.search.searchpanel import SearchPanel
-
 from outwiker.gui.emptypageview import ClosedTreePanel
 from outwiker.gui.rootpagepanel import RootPagePanel
-
-from tests.basetestcases import BaseOutWikerGUIMixin
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
 class PagePanelTest(unittest.TestCase, BaseOutWikerGUIMixin):

@@ -10,7 +10,7 @@ from outwiker.core.style import Style
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.parserfactory import ParserFactory
 from outwiker.pages.wiki.htmlgenerator import HtmlGenerator
-from tests.utils import removeDir
+from outwiker.tests.utils import removeDir
 
 
 class HtmlHeadsTest(unittest.TestCase):

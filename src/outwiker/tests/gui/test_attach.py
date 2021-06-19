@@ -7,14 +7,15 @@ import unittest
 from outwiker.core.attachment import Attachment
 from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
-from tests.utils import removeDir
-from tests.basetestcases import BaseOutWikerGUIMixin
+from outwiker.tests.utils import removeDir
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
 class AttachPanelTest(unittest.TestCase, BaseOutWikerGUIMixin):
     """
     Тесты окна со списком прикрепленных файлов
     """
+
     def setUp(self):
         self.initApplication()
         self.wikiroot = self.createWiki()
@@ -27,8 +28,10 @@ class AttachPanelTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.page = self.wikiroot["Страница 2/Страница 3"]
 
         filesPath = "testdata/samplefiles/"
-        self.files = ["accept.png", "add.png", "anchor.png", "файл с пробелами.tmp", "dir"]
-        self.fullFilesPath = [os.path.join(filesPath, fname) for fname in self.files]
+        self.files = ["accept.png", "add.png",
+                      "anchor.png", "файл с пробелами.tmp", "dir"]
+        self.fullFilesPath = [os.path.join(
+            filesPath, fname) for fname in self.files]
 
     def tearDown(self):
         self.destroyApplication()
@@ -38,7 +41,8 @@ class AttachPanelTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertNotEqual(None, self.mainWindow.attachPanel.panel)
         self.assertNotEqual(None, self.mainWindow.attachPanel.panel.attachList)
         self.assertNotEqual(None, self.mainWindow.attachPanel.panel.toolBar)
-        self.assertEqual(0, self.mainWindow.attachPanel.panel.attachList.GetItemCount())
+        self.assertEqual(
+            0, self.mainWindow.attachPanel.panel.attachList.GetItemCount())
 
     def testAttach1(self):
         attach = Attachment(self.page)

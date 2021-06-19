@@ -5,11 +5,12 @@ import unittest
 from outwiker.core.application import Application
 from outwiker.core.pluginsloader import PluginsLoader
 
-from tests.actions.test_editor_polyactions import BaseEditorPolyactionsFixture
+from outwiker.tests.actions.test_editor_polyactions import BaseEditorPolyactionsFixture
 
 
 class MarkdownPolyactionsTest(BaseEditorPolyactionsFixture, unittest.TestCase):
     """Test polyactions for Markdown pages"""
+
     def setUp(self):
         super().setUp()
 

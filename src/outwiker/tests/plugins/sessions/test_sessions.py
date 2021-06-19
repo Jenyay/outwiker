@@ -7,12 +7,13 @@ import unittest
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
-from tests.utils import removeDir
-from tests.basetestcases import BaseOutWikerGUIMixin
+from outwiker.tests.utils import removeDir
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
 class SessionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
     """Тесты плагина Sessions"""
+
     def setUp(self):
         self.initApplication()
         self.wikiroot = self.createWiki()

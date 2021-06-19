@@ -6,13 +6,14 @@ import unittest
 from outwiker.core.commands import renamePage
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.gui.tester import Tester
-from tests.basetestcases import BaseOutWikerGUIMixin
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
 class RenamePageGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
     """
     Тесты переименования страниц
     """
+
     def setUp(self):
         self.initApplication()
         self.wikiroot = self.createWiki()

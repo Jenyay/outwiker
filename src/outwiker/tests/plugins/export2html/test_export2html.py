@@ -9,8 +9,8 @@ from outwiker.core.application import Application
 from outwiker.utilites.textfile import readTextFile
 from outwiker.core.defines import PAGE_RESULT_HTML
 
-from tests.utils import removeDir
-from tests.basetestcases import BaseOutWikerGUIMixin
+from outwiker.tests.utils import removeDir
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
 class Export2HtmlTest(unittest.TestCase, BaseOutWikerGUIMixin):

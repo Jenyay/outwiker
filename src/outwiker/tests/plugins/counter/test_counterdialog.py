@@ -7,13 +7,14 @@ import wx
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.gui.tester import Tester
-from tests.basetestcases import BaseOutWikerGUIMixin
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
 class CounterDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
     """
     Тесты диалога для плагина Counter
     """
+
     def setUp(self):
         self.initApplication()
         self.wikiroot = self.createWiki()
@@ -391,7 +392,8 @@ class CounterDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         from counter.insertdialogcontroller import InsertDialogController
 
-        InsertDialogController(self._dlg, self.application.config, self.testPage)
+        InsertDialogController(
+            self._dlg, self.application.config, self.testPage)
 
         self.assertEqual(self._dlg.countersList, ["", "Счетчик"])
 
@@ -400,7 +402,8 @@ class CounterDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         from counter.insertdialogcontroller import InsertDialogController
 
-        InsertDialogController(self._dlg, self.application.config, self.testPage)
+        InsertDialogController(
+            self._dlg, self.application.config, self.testPage)
 
         self.assertEqual(self._dlg.countersList, ["", "Абырвалг", "Счетчик"])
 

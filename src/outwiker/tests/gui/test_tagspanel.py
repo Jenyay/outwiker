@@ -3,12 +3,12 @@
 import unittest
 from tempfile import mkdtemp
 
-from tests.utils import removeDir
-from outwiker.core.tree import WikiDocument
 from outwiker.core.application import ApplicationParams
-from outwiker.pages.text.textpage import TextPageFactory
-from outwiker.gui.tagspanelcontroller import TagsPanelController
 from outwiker.core.tagslist import TagsList
+from outwiker.core.tree import WikiDocument
+from outwiker.gui.tagspanelcontroller import TagsPanelController
+from outwiker.pages.text.textpage import TextPageFactory
+from outwiker.tests.utils import removeDir
 
 
 class TagsPanelTest(unittest.TestCase):
@@ -21,8 +21,10 @@ class TagsPanelTest(unittest.TestCase):
         factory.create(self.wikiroot, "Страница 1", ["тег 1"])
         factory.create(self.wikiroot, "Страница 2", ["тег 1", "тег 2"])
         factory.create(self.wikiroot["Страница 2"], "Страница 3", ["тег 3"])
-        factory.create(self.wikiroot["Страница 2/Страница 3"], "Страница 4", [])
-        factory.create(self.wikiroot["Страница 1"], "Страница 5", ["тег 4", "тег 1"])
+        factory.create(
+            self.wikiroot["Страница 2/Страница 3"], "Страница 4", [])
+        factory.create(self.wikiroot["Страница 1"],
+                       "Страница 5", ["тег 4", "тег 1"])
 
     def tearDown(self):
         removeDir(self.path)

@@ -4,7 +4,7 @@ import unittest
 
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.pages.wiki.wikipage import WikiPageFactory
-from tests.basetestcases import BaseOutWikerGUIMixin
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
 class TexEquationToolsWindowTest(unittest.TestCase, BaseOutWikerGUIMixin):

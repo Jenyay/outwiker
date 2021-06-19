@@ -5,14 +5,14 @@ import unittest
 from outwiker.core.attachment import Attachment
 from outwiker.core.commands import copyTextToClipboard
 from outwiker.core.defines import PAGE_ATTACH_DIR
+from outwiker.core.pageuiddepot import PageUidDepot
 from outwiker.gui.dialogs.linkdialog import LinkDialog
 from outwiker.gui.tester import Tester
 from outwiker.pages.html.htmllinkdialogcontroller import HtmlLinkDialogController
 from outwiker.pages.wiki.wikiconfig import WikiConfig
 from outwiker.pages.wiki.wikilinkdialogcontroller import WikiLinkDialogController
 from outwiker.pages.wiki.wikipage import WikiPageFactory
-from outwiker.core.pageuiddepot import PageUidDepot
-from tests.basetestcases import BaseOutWikerGUIMixin
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
 class LinkDialogControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):

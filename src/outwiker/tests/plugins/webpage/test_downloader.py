@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os
 import os.path
@@ -11,7 +11,7 @@ import unittest
 from outwiker.core.application import Application
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.utilites.textfile import readTextFile
-from tests.utils import removeDir
+from outwiker.tests.utils import removeDir
 
 
 class DownloaderTest(unittest.TestCase):
@@ -337,8 +337,10 @@ class DownloaderTest(unittest.TestCase):
 
         downloader.start(self._path2url(exampleHtmlPath), controller)
 
-        fname_1 = os.path.join(self._tempDir, self._staticDirName, 'favicon_1.png')
-        fname_2 = os.path.join(self._tempDir, self._staticDirName, 'favicon_2.png')
+        fname_1 = os.path.join(
+            self._tempDir, self._staticDirName, 'favicon_1.png')
+        fname_2 = os.path.join(
+            self._tempDir, self._staticDirName, 'favicon_2.png')
 
         self.assertTrue(os.path.exists(downloadDir))
         self.assertTrue(os.path.exists(fname_1))
@@ -366,7 +368,8 @@ class DownloaderTest(unittest.TestCase):
 
         downloader.start(self._path2url(exampleHtmlPath), controller)
 
-        fname = os.path.join(self._tempDir, self._staticDirName, 'style.php.css')
+        fname = os.path.join(
+            self._tempDir, self._staticDirName, 'style.php.css')
 
         self.assertTrue(os.path.exists(downloadDir))
         self.assertTrue(os.path.exists(fname))

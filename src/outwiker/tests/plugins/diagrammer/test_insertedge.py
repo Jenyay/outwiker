@@ -5,7 +5,7 @@ import unittest
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.application import Application
 from outwiker.gui.tester import Tester
-from tests.basetestcases import BaseOutWikerGUIMixin
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
 class InsertEdgeTest(unittest.TestCase, BaseOutWikerGUIMixin):
@@ -31,7 +31,8 @@ class InsertEdgeTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def testArrows_01(self):
         import diagrammer.gui.insertedgedialog
 
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerNone(self._dlg)
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerNone(
+            self._dlg)
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = "А"
@@ -44,7 +45,8 @@ class InsertEdgeTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def testArrows_02(self):
         import diagrammer.gui.insertedgedialog
 
-        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerLeft(self._dlg)
+        controller = diagrammer.gui.insertedgedialog.InsertEdgeControllerLeft(
+            self._dlg)
 
         Tester.dialogTester.appendOk()
         self._dlg.firstName = "А"

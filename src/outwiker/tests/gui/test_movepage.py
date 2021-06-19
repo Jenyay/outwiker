@@ -4,13 +4,14 @@ import unittest
 
 from outwiker.core.commands import movePage
 from outwiker.pages.text.textpage import TextPageFactory
-from tests.basetestcases import BaseOutWikerGUIMixin
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
 class MovePageGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
     """
     Тесты перемещения страниц
     """
+
     def setUp(self):
         self.initApplication()
         self.wikiroot = self.createWiki()

@@ -5,8 +5,8 @@ import os
 import unittest
 
 from outwiker.core.pluginsloader import PluginsLoader
-from tests.basetestcases import BaseOutWikerGUIMixin
-from tests.utils import removeDir
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
+from outwiker.tests.utils import removeDir
 
 
 class SnippetsUtilsTest(unittest.TestCase, BaseOutWikerGUIMixin):
@@ -241,5 +241,6 @@ class SnippetsUtilsTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.assertEqual(result, os.path.join(dirname_2, 'subdir_1'))
         self.assertTrue(os.path.exists(result))
-        self.assertTrue(os.path.exists(os.path.join(dirname_2, 'subdir_1', 'snippet')))
+        self.assertTrue(os.path.exists(
+            os.path.join(dirname_2, 'subdir_1', 'snippet')))
         self.assertFalse(os.path.exists(fname))

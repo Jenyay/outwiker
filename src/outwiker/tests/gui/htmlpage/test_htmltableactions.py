@@ -3,12 +3,12 @@
 import unittest
 
 from outwiker.gui.tester import Tester
-from outwiker.pages.html.htmlpage import HtmlPageFactory
 from outwiker.gui.guiconfig import GeneralGuiConfig
+from outwiker.pages.html.htmlpage import HtmlPageFactory
 from outwiker.actions.polyactionsid import (TABLE_STR_ID,
                                             TABLE_ROW_STR_ID,
                                             TABLE_CELL_STR_ID)
-from tests.basetestcases import BaseOutWikerGUIMixin
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
 class HtmlTableActionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
@@ -54,7 +54,8 @@ class HtmlTableActionsTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def testInsertCell_01(self):
         editor = self._getCodeEditor()
-        self.application.actionController.getAction(TABLE_CELL_STR_ID).run(None)
+        self.application.actionController.getAction(
+            TABLE_CELL_STR_ID).run(None)
 
         validResult = '''<td></td>'''
 

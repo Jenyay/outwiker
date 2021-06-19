@@ -8,13 +8,14 @@ from outwiker.actions.removepage import RemovePageAction
 from outwiker.core.commands import removePage
 from outwiker.gui.tester import Tester
 from outwiker.pages.text.textpage import TextPageFactory
-from tests.basetestcases import BaseOutWikerGUIMixin
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
 class RemovePageGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
     """
     Тесты удаления страниц через интерфейс
     """
+
     def setUp(self):
         self.initApplication()
         self.wikiroot = self.createWiki()
@@ -113,7 +114,8 @@ class RemovePageGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.application.wikiroot = self.wikiroot
         self.application.selectedPage = None
 
-        self.application.actionController.getAction(RemovePageAction.stringId).run(None)
+        self.application.actionController.getAction(
+            RemovePageAction.stringId).run(None)
 
         self.assertNotEqual(self.wikiroot["Страница 1"], None)
         self.assertNotEqual(self.wikiroot["Страница 2"], None)
@@ -124,7 +126,8 @@ class RemovePageGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.application.wikiroot = self.wikiroot
         self.application.selectedPage = self.wikiroot["Страница 1"]
 
-        self.application.actionController.getAction(RemovePageAction.stringId).run(None)
+        self.application.actionController.getAction(
+            RemovePageAction.stringId).run(None)
 
         self.assertEqual(self.wikiroot["Страница 1"], None)
         self.assertNotEqual(self.wikiroot["Страница 2"], None)

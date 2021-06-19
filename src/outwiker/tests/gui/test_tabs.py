@@ -6,7 +6,7 @@ import unittest
 from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.actions.history import HistoryBackAction, HistoryForwardAction
-from tests.basetestcases import BaseOutWikerGUIMixin
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
 class TabsTest(unittest.TestCase, BaseOutWikerGUIMixin):
@@ -18,7 +18,8 @@ class TabsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         factory.create(self.wikiroot, "Страница 1", [])
         factory.create(self.wikiroot, "Страница 2", [])
         factory.create(self.wikiroot["Страница 2"], "Страница 3", [])
-        factory.create(self.wikiroot["Страница 2/Страница 3"], "Страница 4", [])
+        factory.create(
+            self.wikiroot["Страница 2/Страница 3"], "Страница 4", [])
         factory.create(self.wikiroot["Страница 1"], "Страница 5", [])
 
         self._tabsController = self.application.mainWindow.tabsController
@@ -62,7 +63,8 @@ class TabsTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(self._tabsController.getPage(0), None)
 
         # Так как нет выбранной страницы, то заголовок вкладки содержит имя папки с вики
-        self.assertEqual(self._tabsController.getTabTitle(0), basename(self.wikiroot.path))
+        self.assertEqual(self._tabsController.getTabTitle(0),
+                         basename(self.wikiroot.path))
 
     def testSelection(self):
         self.application.wikiroot = self.wikiroot

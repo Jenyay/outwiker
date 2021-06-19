@@ -7,8 +7,8 @@ import wx
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.gui.tester import Tester
-from tests.utils import removeDir
-from tests.basetestcases import BaseOutWikerGUIMixin
+from outwiker.tests.utils import removeDir
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
 class HackPage_ChangeTitleTest(unittest.TestCase, BaseOutWikerGUIMixin):

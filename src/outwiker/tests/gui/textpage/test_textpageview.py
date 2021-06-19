@@ -3,17 +3,17 @@
 import unittest
 
 from outwiker.core.tree import WikiDocument
-
+from outwiker.gui.rootpagepanel import RootPagePanel
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.pages.text.textpanel import TextPanel
-from tests.basetestcases import BaseOutWikerGUIMixin
-from outwiker.gui.rootpagepanel import RootPagePanel
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
 class TextPageViewTest(unittest.TestCase, BaseOutWikerGUIMixin):
     """
     Тесты вида текстовых страниц
     """
+
     def setUp(self):
         self.initApplication()
         self.wikiroot = self.createWiki()

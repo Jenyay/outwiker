@@ -5,7 +5,7 @@ import unittest
 
 from outwiker.gui.guiconfig import MainWindowConfig
 from outwiker.pages.text.textpage import TextPageFactory
-from tests.basetestcases import BaseOutWikerGUIMixin
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
 class MainWndTest(unittest.TestCase, BaseOutWikerGUIMixin):
@@ -17,7 +17,8 @@ class MainWndTest(unittest.TestCase, BaseOutWikerGUIMixin):
         factory.create(self.wikiroot, "Страница 1", [])
         factory.create(self.wikiroot, "Страница 2", [])
         factory.create(self.wikiroot["Страница 2"], "Страница 3", [])
-        factory.create(self.wikiroot["Страница 2/Страница 3"], "Страница 4", [])
+        factory.create(
+            self.wikiroot["Страница 2/Страница 3"], "Страница 4", [])
         factory.create(self.wikiroot["Страница 1"], "Страница 5", [])
 
     def tearDown(self):
@@ -40,13 +41,16 @@ class MainWndTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(self.mainWindow.GetTitle(), "OutWiker")
 
         self.application.wikiroot = self.wikiroot
-        self.assertEqual(self.mainWindow.GetTitle(), "OutWiker -  - {}".format(basename(self.wikiroot.path)))
+        self.assertEqual(self.mainWindow.GetTitle(
+        ), "OutWiker -  - {}".format(basename(self.wikiroot.path)))
 
         self.wikiroot.selectedPage = self.wikiroot["Страница 1"]
-        self.assertEqual(self.mainWindow.GetTitle(), "OutWiker - Страница 1 - {}".format(basename(self.wikiroot.path)))
+        self.assertEqual(self.mainWindow.GetTitle(),
+                         "OutWiker - Страница 1 - {}".format(basename(self.wikiroot.path)))
 
         self.wikiroot.selectedPage = self.wikiroot["Страница 2/Страница 3"]
-        self.assertEqual(self.mainWindow.GetTitle(), "OutWiker - Страница 3 - {}".format(basename(self.wikiroot.path)))
+        self.assertEqual(self.mainWindow.GetTitle(
+        ), "OutWiker - Страница 3 - {}".format(basename(self.wikiroot.path)))
 
     def testTitle_02(self):
         conf = MainWindowConfig(self.application.config)
@@ -55,10 +59,13 @@ class MainWndTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(self.mainWindow.GetTitle(), "OutWiker")
 
         self.application.wikiroot = self.wikiroot
-        self.assertEqual(self.mainWindow.GetTitle(), "{} -  - OutWiker".format(basename(self.wikiroot.path)))
+        self.assertEqual(self.mainWindow.GetTitle(),
+                         "{} -  - OutWiker".format(basename(self.wikiroot.path)))
 
         self.wikiroot.selectedPage = self.wikiroot["Страница 1"]
-        self.assertEqual(self.mainWindow.GetTitle(), "{} - Страница 1 - OutWiker".format(basename(self.wikiroot.path)))
+        self.assertEqual(self.mainWindow.GetTitle(),
+                         "{} - Страница 1 - OutWiker".format(basename(self.wikiroot.path)))
 
         self.wikiroot.selectedPage = self.wikiroot["Страница 2/Страница 3"]
-        self.assertEqual(self.mainWindow.GetTitle(), "{} - Страница 3 - OutWiker".format(basename(self.wikiroot.path)))
+        self.assertEqual(self.mainWindow.GetTitle(),
+                         "{} - Страница 3 - OutWiker".format(basename(self.wikiroot.path)))

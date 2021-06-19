@@ -4,7 +4,7 @@ import unittest
 
 from outwiker.gui.controls.hotkeyctrl import HotkeyCtrl
 from outwiker.gui.hotkey import HotKey
-from tests.basetestcases import BaseOutWikerGUIMixin
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
 class HotkeyCtrlTest(unittest.TestCase, BaseOutWikerGUIMixin):

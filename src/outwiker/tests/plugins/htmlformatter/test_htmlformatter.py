@@ -4,7 +4,7 @@ import unittest
 
 from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.htmlimproverfactory import HtmlImproverFactory
-from tests.basetestcases import BaseOutWikerMixin
+from outwiker.tests.basetestcases import BaseOutWikerMixin
 
 
 class HtmlFormatterTest (unittest.TestCase, BaseOutWikerMixin):

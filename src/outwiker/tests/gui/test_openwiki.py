@@ -8,16 +8,17 @@ import wx
 
 from outwiker.core.tree import WikiDocument
 from outwiker.core.commands import openWikiWithDialog, openWiki, findPage
-from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.gui.tester import Tester
-from tests.utils import removeDir
-from tests.basetestcases import BaseOutWikerGUIMixin
+from outwiker.pages.text.textpage import TextPageFactory
+from outwiker.tests.utils import removeDir
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
 class OpenWikiGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
     """
     Тесты открытия вики через интерфейс
     """
+
     def setUp(self):
         self.initApplication()
         self.wikiroot = self.createWiki()
@@ -173,7 +174,8 @@ class OpenWikiGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def test_findPage_06(self):
         self.application.wikiroot = self.wikiroot
-        uid = self.application.pageUidDepot.createUid(self.wikiroot['/Страница 2/Страница 3'])
+        uid = self.application.pageUidDepot.createUid(
+            self.wikiroot['/Страница 2/Страница 3'])
 
         page = findPage(self.application, uid)
         self.assertIsNotNone(page)
@@ -181,7 +183,8 @@ class OpenWikiGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def test_findPage_07(self):
         self.application.wikiroot = self.wikiroot
-        uid = self.application.pageUidDepot.createUid(self.wikiroot['/Страница 2/Страница 3'])
+        uid = self.application.pageUidDepot.createUid(
+            self.wikiroot['/Страница 2/Страница 3'])
         uid = 'page://' + uid
 
         page = findPage(self.application, uid)

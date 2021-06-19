@@ -7,8 +7,7 @@ import wx
 from outwiker.gui.tester import Tester
 from outwiker.gui.pagedialog import createPageWithDialog, editPage
 from outwiker.pages.wiki.wikipage import WikiPageFactory
-
-from tests.basetestcases import BaseOutWikerGUIMixin
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
 class BasePageDialogTest(unittest.TestCase, BaseOutWikerGUIMixin):

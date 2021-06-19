@@ -4,7 +4,7 @@ import unittest
 
 from outwiker.core.config import StringOption
 from outwiker.core.pluginsloader import PluginsLoader
-from tests.basetestcases import BaseOutWikerGUIMixin
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
 class PageTypeColor_ColorsListTest(unittest.TestCase, BaseOutWikerGUIMixin):

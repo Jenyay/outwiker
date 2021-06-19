@@ -5,7 +5,7 @@ import unittest
 
 import outwiker.gui.urirecognizers as ur
 from outwiker.pages.text.textpage import TextPageFactory
-from tests.basetestcases import BaseOutWikerMixin
+from outwiker.tests.basetestcases import BaseOutWikerMixin
 
 
 def test_recognize_url_http():

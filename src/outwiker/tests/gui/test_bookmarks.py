@@ -5,7 +5,7 @@ import unittest
 from outwiker.actions.addbookmark import AddBookmarkAction
 from outwiker.gui.defines import MENU_BOOKMARKS
 from outwiker.pages.text.textpage import TextPageFactory
-from tests.basetestcases import BaseOutWikerGUIMixin
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
 class BookmarksGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
@@ -90,7 +90,8 @@ class BookmarksGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.wikiroot.bookmarks.add(self.wikiroot["Страница 1"])
         self.wikiroot.bookmarks.add(self.wikiroot["Страница 2/Страница 3"])
-        self.wikiroot.bookmarks.add(self.wikiroot["Страница 2/Страница 3/Страница 4"])
+        self.wikiroot.bookmarks.add(
+            self.wikiroot["Страница 2/Страница 3/Страница 4"])
 
         self.assertEqual(bookmarksMenu.GetMenuItemCount(), 5)
 
@@ -99,8 +100,10 @@ class BookmarksGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertTrue(items[1].IsSeparator())
 
         self.assertEqual(self._getItemText(items[2]), "Страница 1")
-        self.assertEqual(self._getItemText(items[3]), "Страница 3 [Страница 2]")
-        self.assertEqual(self._getItemText(items[4]), "Страница 4 [Страница 2/Страница 3]")
+        self.assertEqual(self._getItemText(
+            items[3]), "Страница 3 [Страница 2]")
+        self.assertEqual(self._getItemText(
+            items[4]), "Страница 4 [Страница 2/Страница 3]")
 
     def testLoading(self):
         self.wikiroot.bookmarks.add(self.wikiroot["Страница 1"])

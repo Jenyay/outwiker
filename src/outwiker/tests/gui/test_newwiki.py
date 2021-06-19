@@ -6,14 +6,15 @@ import wx
 
 from outwiker.core.commands import createNewWiki
 from outwiker.gui.tester import Tester
-from tests.utils import removeDir
-from tests.basetestcases import BaseOutWikerGUIMixin
+from outwiker.tests.utils import removeDir
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
 class NewWikiGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
     """
     Тесты создания вики через интерфейс
     """
+
     def setUp(self):
         self.initApplication()
         self.wikiroot = self.createWiki()
@@ -34,5 +35,7 @@ class NewWikiGuiTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(Tester.dialogTester.count, 0)
         self.assertIsNotNone(self.application.wikiroot)
         self.assertEqual(len(self.application.wikiroot.children), 1)
-        self.assertNotEqual(len(self.application.wikiroot.children[0].content), 1)
-        self.assertEqual(self.application.wikiroot.children[0].getTypeString(), "wiki")
+        self.assertNotEqual(
+            len(self.application.wikiroot.children[0].content), 1)
+        self.assertEqual(
+            self.application.wikiroot.children[0].getTypeString(), "wiki")

@@ -7,7 +7,7 @@ from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.thumbnails import Thumbnails
 from outwiker.pages.wiki.parserfactory import ParserFactory
-from tests.basetestcases import BaseOutWikerGUIMixin
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
 class TexEquationTest(unittest.TestCase, BaseOutWikerGUIMixin):
@@ -95,7 +95,8 @@ class TexEquationTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def test_inline_03(self):
         eqn = "y = f(x)"
-        text = "Это строчная формула. {{$ {eqn} $}} Она не разрывает строку.".format(eqn=eqn)
+        text = "Это строчная формула. {{$ {eqn} $}} Она не разрывает строку.".format(
+            eqn=eqn)
 
         result = self.parser.toHtml(text)
 

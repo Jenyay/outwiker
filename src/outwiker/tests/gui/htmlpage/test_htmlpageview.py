@@ -8,17 +8,18 @@ import wx
 from outwiker.core.defines import PAGE_RESULT_HTML
 from outwiker.core.tree import WikiDocument
 from outwiker.core.defines import PAGE_MODE_TEXT, PAGE_MODE_PREVIEW
-from outwiker.utilites.textfile import readTextFile
+from outwiker.gui.rootpagepanel import RootPagePanel
 from outwiker.pages.html.htmlpage import HtmlPageFactory
 from outwiker.pages.html.htmlpageview import HtmlPageView
-from tests.basetestcases import BaseOutWikerGUIMixin
-from outwiker.gui.rootpagepanel import RootPagePanel
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
+from outwiker.utilites.textfile import readTextFile
 
 
 class HtmlPageViewTest(unittest.TestCase, BaseOutWikerGUIMixin):
     """
     Тесты вида HTML-страниц
     """
+
     def setUp(self):
         self.initApplication()
         self.wikiroot = self.createWiki()

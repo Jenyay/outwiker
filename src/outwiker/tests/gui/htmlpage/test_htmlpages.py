@@ -5,25 +5,26 @@ from tempfile import mkdtemp
 
 from outwiker.core.tree import WikiDocument
 from outwiker.pages.html.htmlpage import HtmlPageFactory
-from tests.utils import removeDir
+from outwiker.tests.utils import removeDir
 
 
 class HtmlPagesTest(unittest.TestCase):
     """
     Тесты HTML-страниц
     """
+
     def setUp(self):
         # Здесь будет создаваться вики
-        self.path = mkdtemp (prefix='Абырвалг абыр')
+        self.path = mkdtemp(prefix='Абырвалг абыр')
 
         self.__eventcount = 0
         self.__eventSender = None
 
-        self.wikiroot = WikiDocument.create (self.path)
+        self.wikiroot = WikiDocument.create(self.path)
 
         factory = HtmlPageFactory()
-        factory.create (self.wikiroot, "Страница 1", [])
-        factory.create (self.wikiroot, "Страница 2", [])
+        factory.create(self.wikiroot, "Страница 1", [])
+        factory.create(self.wikiroot, "Страница 2", [])
 
         self.wikiroot.onPageUpdate += self.__onPageUpdate
 

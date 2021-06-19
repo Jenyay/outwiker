@@ -8,18 +8,19 @@ from outwiker.core.defines import (PAGE_MODE_TEXT,
                                    PAGE_MODE_PREVIEW,
                                    PAGE_MODE_HTML)
 from outwiker.core.tree import WikiDocument
+from outwiker.gui.rootpagepanel import RootPagePanel
 from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.pages.wiki.wikipageview import WikiPageView
 from outwiker.pages.wiki.wikiconfig import WikiConfig
 from outwiker.pages.wiki.listautocomplete import listComplete_wiki
-from tests.basetestcases import BaseOutWikerGUIMixin
-from outwiker.gui.rootpagepanel import RootPagePanel
+from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
 class WikiPageViewTest(unittest.TestCase, BaseOutWikerGUIMixin):
     """
     Тесты вида викистраниц
     """
+
     def setUp(self):
         self.initApplication()
         self.wikiroot = self.createWiki()
@@ -107,13 +108,15 @@ class WikiPageViewTest(unittest.TestCase, BaseOutWikerGUIMixin):
             self.application.mainWindow.pagePanel.pageView.GetPageMode(),
             PAGE_MODE_TEXT)
 
-        self.application.mainWindow.pagePanel.pageView.SetPageMode(PAGE_MODE_PREVIEW)
+        self.application.mainWindow.pagePanel.pageView.SetPageMode(
+            PAGE_MODE_PREVIEW)
 
         self.assertEqual(
             self.application.mainWindow.pagePanel.pageView.GetPageMode(),
             PAGE_MODE_PREVIEW)
 
-        self.application.mainWindow.pagePanel.pageView.SetPageMode(PAGE_MODE_TEXT)
+        self.application.mainWindow.pagePanel.pageView.SetPageMode(
+            PAGE_MODE_TEXT)
 
         self.assertEqual(
             self.application.mainWindow.pagePanel.pageView.GetPageMode(),

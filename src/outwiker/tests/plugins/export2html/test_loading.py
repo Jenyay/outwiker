@@ -2,7 +2,7 @@
 
 import unittest
 
-from tests.basetestcases import PluginLoadingMixin
+from outwiker.tests.basetestcases import PluginLoadingMixin
 
 
 class Export2HtmlLoadingTest(PluginLoadingMixin, unittest.TestCase):
