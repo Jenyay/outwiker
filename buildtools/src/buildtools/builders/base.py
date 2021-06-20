@@ -68,12 +68,14 @@ class BuilderBase(metaclass=abc.ABCMeta):
                 shutil.rmtree(path)
 
     def _copy_sources_to_temp(self):
-        print_info(u'Copy sources to {}...'.format(self.temp_sources_dir))
-        shutil.copytree(u'src',
+        print_info('Copy sources to {}...'.format(self.temp_sources_dir))
+        shutil.copytree('src',
                         self.temp_sources_dir,
                         ignore=shutil.ignore_patterns('__pycache__',
                                                       '.pytest_cache',
-                                                      'OutWiker.egg-info'))
+                                                      'OutWiker.egg-info',
+                                                      'outwiker.egg-info',
+                                                      'tests'))
 
     def _clear_sources(self):
         '''
