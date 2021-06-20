@@ -6,11 +6,12 @@ from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.tree import WikiDocument
 from outwiker.core.application import Application
 from outwiker.pages.wiki.wikipage import WikiPageFactory
-from tests.utils import removeDir
+from outwiker.tests.utils import removeDir
 
 
 class PluginNameTest(unittest.TestCase):
     """Тесты плагина PluginName"""
+
     def setUp(self):
         self.__createWiki()
 
