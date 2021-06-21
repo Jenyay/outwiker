@@ -1,5 +1,20 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <versions>
+	<version number="1.4.1">
+		<download href="https://jenyay.net/uploads/Outwiker/HackPage/hackpage-1.4.1.zip">
+			<requirements>
+				<api>3.868</api>
+			</requirements>
+		</download>
+		<changes>
+			<change>Clear the code.</change>
+		</changes>
+
+		<changes lang="ru">
+			<change>Расчистка кода.</change>
+		</changes>
+	</version>
+
 	<version number="1.4" date="19.10.2019">
 		<download href="https://jenyay.net/uploads/Outwiker/HackPage/hackpage-1.4.zip">
 			<requirements>
