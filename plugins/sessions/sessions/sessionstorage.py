@@ -1,9 +1,9 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from outwiker.core.config import IntegerOption, StringOption, BooleanOption
 
 
-class SessionInfo (object):
+class SessionInfo:
     """
     Информация о текущей сессии
     """
@@ -20,7 +20,7 @@ class SessionInfo (object):
         self.readonly = readonly
 
 
-class SessionStorage (object):
+class SessionStorage:
     # Раздел секции в файле настроек, где хранятся сессии
     SECTION_NAME = u"Plugin_Sessions"
 
@@ -76,7 +76,7 @@ class SessionStorage (object):
         name = StringOption(self._config,
                             self.SECTION_NAME,
                             self.SESSION_NAME.format(nSession),
-                            u"").value
+                            '').value
         if len(name) == 0:
             return
 
@@ -84,7 +84,7 @@ class SessionStorage (object):
         path = StringOption(self._config,
                             self.SECTION_NAME,
                             self.SESSION_PATH.format(nSession),
-                            u"").value
+                            '').value
 
         if len(path) == 0:
             return
@@ -114,10 +114,9 @@ class SessionStorage (object):
             link = StringOption(self._config,
                                 self.SECTION_NAME,
                                 self.SESSION_TAB.format(nSession, nPage),
-                                u"").value
+                                '').value
 
-            if len(link) != 0:
-                links.append(link)
+            links.append(link if len(link) != 0 else None)
 
         sessions[name] = SessionInfo(path, links, currentTab, readonly)
 
