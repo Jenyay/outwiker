@@ -13,11 +13,10 @@ from .renamer import Renamer
 from .i18n import get_
 
 
-class AutoRenamer(object):
+class AutoRenamer:
     def __init__(self, plugin, application):
         self._application = application
         self._plugin = plugin
-        self.ID_ADDAUTORENAMETAG = wx.NewId()
         self._menu = None
 
     def initialize(self):
@@ -41,14 +40,14 @@ class AutoRenamer(object):
 
     def __onPreferencesDialogCreate(self, dialog):
         prefPanel = PreferencesPanel(dialog.treeBook, self._application.config)
-        panelName = _(u"AutoRenamer [Plugin]")
+        panelName = _("AutoRenamer [Plugin]")
         panelList = [PreferencePanelInfo(prefPanel, panelName)]
         dialog.appendPreferenceGroup(panelName, panelList)
 
     def __onPageViewCreate(self, page):
         assert self._application.mainWindow is not None
 
-        if page.getTypeString() == u"wiki":
+        if page.getTypeString() == "wiki":
             self.addMenuItem()
             self._application.onPageModeChange += self._onTabChanged
             self.enableMenu()
@@ -56,7 +55,7 @@ class AutoRenamer(object):
     def __onPageViewDestroy(self, page):
         assert self._application.mainWindow is not None
 
-        if page.getTypeString() == u"wiki":
+        if page.getTypeString() == "wiki":
             self.removeMenuItem()
             self._application.onPageModeChange -= self._onTabChanged
 
@@ -75,15 +74,21 @@ class AutoRenamer(object):
             enabled)
 
     def addMenuItem(self):
-        self._application.actionController.register(AddAutoRenameTagAction(self._application), None)
+        self._application.actionController.register(
+            AddAutoRenameTagAction(self._application), None)
         if self._application.mainWindow is not None:
             self._menu = wx.Menu()
-            self._submenuItem = self._application.mainWindow.pagePanel.pageView.toolsMenu.AppendSubMenu(self._menu, _(u"AutoRenamer"))
-            self._application.actionController.appendMenuItem(AddAutoRenameTagAction.stringId, self._menu)
+            self._submenuItem = self._application.mainWindow.pagePanel.pageView.toolsMenu.AppendSubMenu(
+                self._menu, _("AutoRenamer"))
+            self._application.actionController.appendMenuItem(
+                AddAutoRenameTagAction.stringId, self._menu)
 
     def removeMenuItem(self):
         if self._application.mainWindow is not None:
-            self._application.actionController.removeMenuItem(AddAutoRenameTagAction.stringId)
-            self._application.mainWindow.pagePanel.pageView.toolsMenu.DestroyItem(self._submenuItem)
+            self._application.actionController.removeMenuItem(
+                AddAutoRenameTagAction.stringId)
+            self._application.mainWindow.pagePanel.pageView.toolsMenu.DestroyItem(
+                self._submenuItem)
             self._submenuItem = None
-            self._application.actionController.removeAction(AddAutoRenameTagAction.stringId)
+            self._application.actionController.removeAction(
+                AddAutoRenameTagAction.stringId)
