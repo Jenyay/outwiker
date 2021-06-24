@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os
 import os.path
@@ -11,64 +11,65 @@ from outwiker.utilites.textfile import writeTextFile
 from .exceptions import FileAlreadyExists, FolderNotExists
 
 
-class BaseExporter (object):
+class BaseExporter:
     """
     Базовый класс для экспорта разных типов страниц
     """
     __meta__ = ABCMeta
 
-    def __init__ (self, page):
+    def __init__(self, page):
         self._page = page
 
         from .i18n import _
         global _
 
     @property
-    def page (self):
+    def page(self):
         return self._page
 
     @abstractmethod
-    def export (self, outdir, exportname, imagesonly, alwaisOverwrite):
+    def export(self, outdir, exportname, imagesonly, alwaisOverwrite):
         pass
 
-    def _exportContent (self,
-                        page,
-                        content,
-                        exportname,
-                        outdir,
-                        imagesonly,
-                        alwaisOverwrite):
+    def _exportContent(self,
+                       page,
+                       content,
+                       exportname,
+                       outdir,
+                       imagesonly,
+                       alwaisOverwrite):
         """
         Экспортировать обработанное содержимое и вложения
         """
-        exportfile = os.path.join (outdir, exportname + ".html")
-        exportdir = os.path.join (outdir, exportname)
+        exportfile = os.path.join(outdir, exportname + ".html")
+        exportdir = os.path.join(outdir, exportname)
 
-        if not alwaisOverwrite and os.path.exists (exportfile):
-            raise FileAlreadyExists (_(u"File {0} already exists").format (exportfile))
+        if not alwaisOverwrite and os.path.exists(exportfile):
+            raise FileAlreadyExists(
+                _("File {0} already exists").format(exportfile))
 
-        if not os.path.exists (outdir):
-            raise FolderNotExists (_(u"Folder {0} not exists").format (outdir))
+        if not os.path.exists(outdir):
+            raise FolderNotExists(_("Folder {0} not exists").format(outdir))
 
         writeTextFile(exportfile, content)
 
-        self.__exportAttaches (page, exportdir, imagesonly, alwaisOverwrite)
-        self.__exportIcon (page, exportdir, alwaisOverwrite)
+        self.__exportAttaches(page, exportdir, imagesonly, alwaisOverwrite)
+        self.__exportIcon(page, exportdir, alwaisOverwrite)
 
-    def __exportAttaches (self, page, exportdir, imagesonly, alwaisOverwrite):
+    def __exportAttaches(self, page, exportdir, imagesonly, alwaisOverwrite):
         """
         Экспортировать вложения
         """
-        if not os.path.exists (exportdir):
-            os.mkdir (exportdir)
+        if not os.path.exists(exportdir):
+            os.mkdir(exportdir)
 
-        attach = Attachment (page)
+        attach = Attachment(page)
 
         for fname in attach.attachmentFull:
-            if not imagesonly or self.__isImage (fname):
-                newpath = os.path.join (exportdir, os.path.basename (fname))
-                self.__checkForExists (newpath, alwaisOverwrite)
-                self.__copy (fname, newpath)
+            if not imagesonly or self.__isImage(fname):
+                newpath = os.path.join(exportdir, os.path.basename(fname))
+                self.__checkForExists(newpath, alwaisOverwrite)
+                self.__copy(fname, newpath)
 
     def __exportIcon (self, page, exportdir, alwaisOverwrite):
         assert os.path.exists (exportdir)
@@ -105,7 +106,7 @@ class BaseExporter (object):
         """
         if os.path.exists (path):
             if not alwaisOverwrite:
-                raise FileAlreadyExists (_(u"File {0} already exists").format (path))
+                raise FileAlreadyExists (_("File {0} already exists").format (path))
             else:
                 self.__delete (path)
 
@@ -117,7 +118,7 @@ class BaseExporter (object):
                 isimage = True
                 break
 
-        if os.path.basename (fname).lower() == u"__thumb":
+        if os.path.basename (fname).lower() == "__thumb":
             isimage = True
 
         return isimage

@@ -1,38 +1,37 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os.path
 
 from outwiker.core.tree import WikiDocument
 
 
-class LongNameGenerator (object):
+class LongNameGenerator:
     """
     Класс для создания имени экспортируемых страниц. Имена включают в себя заголовки родительских страниц
     """
-    def __init__ (self, rootpage):
+
+    def __init__(self, rootpage):
         """
         rootpage - корневая страница для экспортируемой ветки
         """
         self._root = rootpage
 
-
-    def getName (self, page):
+    def getName(self, page):
         """
         Получить имя файла и директории для экспортируемой страницы page
         """
-        return self.__getExportName (self._root, page)
+        return self.__getExportName(self._root, page)
 
-
-    def __getExportName (self, root, page):
+    def __getExportName(self, root, page):
         if root.getTypeString() == WikiDocument.getTypeString():
-            exportname = os.path.basename (root.path) + "_" + page.subpath.replace ("/", "_")
+            exportname = os.path.basename(
+                root.path) + "_" + page.subpath.replace("/", "_")
         else:
             if page == root:
                 exportname = page.title
             else:
                 exportname = self.__getSubpathExportName(root, page)
         return exportname
-
 
     def __getSubpathExportName(self, root, page):
         assert page.subpath.startswith (root.subpath)

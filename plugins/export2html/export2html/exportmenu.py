@@ -1,13 +1,14 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import wx
 
 
-class ExportMenuFactory (object):
+class ExportMenuFactory:
     """
     Класс для поиска или создания пункта меню "Экспорт"
     """
-    def __init__ (self, mainMenuBar):
+
+    def __init__(self, mainMenuBar):
         self.__mainMenuBar = mainMenuBar
 
         # Порядковый номер подменю главного меню, куда добавляется пункт "Экспорт"
@@ -21,37 +22,33 @@ class ExportMenuFactory (object):
         from .i18n import _
         global _
 
-
-    def __getFileMenu (self):
+    def __getFileMenu(self):
         return self.__mainMenuBar.GetMenu(self.__fileMenuIndex)
 
-
-    def getExportMenu (self):
+    def getExportMenu(self):
         """
         Найти меню "Экспорт". Если не найдено, создать
         """
-        exportId = self.__findExportId ()
+        exportId = self.__findExportId()
 
         if exportId != -1:
-            return self.__getFileMenu().FindItemById (exportId).GetSubMenu()
+            return self.__getFileMenu().FindItemById(exportId).GetSubMenu()
         else:
             return self.createExportMenu()
 
-
-    def deleteExportMenu (self):
+    def deleteExportMenu(self):
         """
         Удалить меню "Экспорт"
         """
         filemenu = self.__getFileMenu()
 
         if filemenu is None:
-            print (_(u"File menu not found"))
+            print(_("File menu not found"))
             return
 
-        filemenu.Delete (self.__findExportId())
+        filemenu.Delete(self.__findExportId())
 
-
-    def __findExportId (self):
+    def __findExportId(self):
         """
         Получить идентификатор пункта "Экспорт".
         Возвращает -1, если идентификатор не найден
@@ -60,11 +57,10 @@ class ExportMenuFactory (object):
         if filemenu is None:
             return -1
 
-        exportId = filemenu.FindItem (_(u"Export"))
+        exportId = filemenu.FindItem(_("Export"))
         return exportId
 
-
-    def createExportMenu (self):
+    def createExportMenu(self):
         """
         Создать пункт для подменю "Экспорт"
         menu - меню, в котором должно быть создано подменю
@@ -72,13 +68,13 @@ class ExportMenuFactory (object):
         menu = self.__getFileMenu()
 
         if menu is None:
-            print (_(u"File menu not found"))
+            print(_("File menu not found"))
             return
 
         exportmenu = wx.Menu()
         menu.Insert(pos=self.__exportMenuPosition,
                          id=self.EXPORT_ID,
-                         text=_(u"Export"),
+                         text=_("Export"),
                          submenu=exportmenu,
-                         help=u"")
+                         help="")
         return exportmenu

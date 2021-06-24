@@ -5,12 +5,12 @@ from .htmlexporter import HtmlExporter
 from .textexporter import TextExporter
 
 
-class ExporterFactory (object):
+class ExporterFactory:
     """
     Класс для экспорта страниц в HTML
     """
     @staticmethod
-    def getExporter (page):
+    def getExporter(page):
         exporter = None
 
         from .i18n import _
@@ -23,7 +23,7 @@ class ExporterFactory (object):
         elif page.getTypeString() == "text":
             exporter = TextExporter(page)
         else:
-            raise InvalidPageFormat (_(u"This page type not support export to HTML"))
+            raise InvalidPageFormat (_("This page type not support export to HTML"))
 
         assert exporter is not None
         return exporter

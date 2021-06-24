@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import wx
 
@@ -15,61 +15,56 @@ class ExportBranchDialog (ExportDialog):
     """
     Класс диалога для экспорта ветки страниц
     """
-    def __init__ (self, application, rootpage):
-        ExportDialog.__init__ (self, application.mainWindow, application.config)
+
+    def __init__(self, application, rootpage):
+        ExportDialog.__init__(self, application.mainWindow, application.config)
         self.__rootpage = rootpage
         self.__application = application
 
         from .i18n import _
         global _
 
-        self.__addNameFormatCheckBox ()
+        self.__addNameFormatCheckBox()
         self.Fit()
         self.Layout()
 
         self.longNames = self._config.longNames
 
-
     @property
-    def longNames (self):
+    def longNames(self):
         """
         Создавать файлы с длинными именами (включать заголовки родителей)
         """
         return self.__longNameFormatCheckBox.GetValue()
 
-
     @longNames.setter
-    def longNames (self, value):
-        self.__longNameFormatCheckBox.SetValue (value)
+    def longNames(self, value):
+        self.__longNameFormatCheckBox.SetValue(value)
 
-
-    def __addNameFormatCheckBox (self):
+    def __addNameFormatCheckBox(self):
         """
         Добавить чекбокс "Создавать файлы с длинными именами (включать заголовки родителей)"
         """
-        self.__longNameFormatCheckBox = wx.CheckBox (self,
-                                                     -1,
-                                                     _(u"Use long file names (include parent name)"))
+        self.__longNameFormatCheckBox = wx.CheckBox(self,
+                                                    -1,
+                                                    _("Use long file names (include parent name)"))
 
-        self._mainSizer.Insert (4,
-                                self.__longNameFormatCheckBox,
-                                flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                                border=2)
+        self._mainSizer.Insert(4,
+                               self.__longNameFormatCheckBox,
+                               flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
+                               border=2)
 
-
-    def __getNameGenerator (self):
+    def __getNameGenerator(self):
         """
         Возвращает генератор имен для создаваемых страниц (длинные имена или короткие)
         """
-        return LongNameGenerator (self.__rootpage) if self.longNames else TitleNameGenerator (self.path)
+        return LongNameGenerator(self.__rootpage) if self.longNames else TitleNameGenerator(self.path)
 
-
-    def _threadExport (self, exporter, path, imagesOnly, overwrite):
+    def _threadExport(self, exporter, path, imagesOnly, overwrite):
         """
         Экспорт, выполняемый в отдельном потоке
         """
         return exporter.export (path, imagesOnly, overwrite)
-
 
     def _onOk (self):
         self._config.longNames = self.longNames
@@ -81,8 +76,8 @@ class ExportBranchDialog (ExportDialog):
 
         runner = LongProcessRunner (self._threadExport,
                                     self,
-                                    _(u"Export to HTML"),
-                                    _(u"Please wait..."))
+                                    _("Export to HTML"),
+                                    _("Please wait..."))
 
         result = runner.run (exporter,
                              self.path,

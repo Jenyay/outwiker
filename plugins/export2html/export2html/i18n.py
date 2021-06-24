@@ -1,5 +1,5 @@
-# global _
 _ = None
+
 
 def set_(lang):
     global _

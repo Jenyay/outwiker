@@ -1,9 +1,9 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 
-class Export2HtmlException (BaseException):
-    def __init__ (self, message):
-        BaseException.__init__ (self, message)
+class Export2HtmlException (Exception):
+    def __init__(self, message):
+        BaseException.__init__(self, message)
 
 
 class HtmlNotFoundError (Export2HtmlException):
