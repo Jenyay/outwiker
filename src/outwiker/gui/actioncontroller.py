@@ -157,7 +157,6 @@ class ActionController(object):
             actionInfo.hotkey = hotkey
 
             if actionInfo.isHotkeyActive:
-                actionInfo.hotkey = hotkey
                 self._unbindHotkey(actionInfo)
                 self._bindHotkey(actionInfo)
 

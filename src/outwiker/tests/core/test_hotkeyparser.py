@@ -84,7 +84,7 @@ class HotKeyParserTest(unittest.TestCase):
         self.assertTrue(hotkey.alt)
 
     def testParse6(self):
-        self.assertRaises(ValueError, HotKeyParser.fromString, "")
+        self.assertIsNone(HotKeyParser.fromString(""))
 
     def testParse7(self):
         hotkey = HotKeyParser.fromString("+")
@@ -143,7 +143,7 @@ class HotKeyParserTest(unittest.TestCase):
         self.assertFalse(hotkey.alt)
 
     def testParse14(self):
-        self.assertRaises(ValueError, HotKeyParser.fromString, "    ")
+        self.assertIsNone(HotKeyParser.fromString("    "))
 
     def testParse15(self):
         hotkey = HotKeyParser.fromString("Ctrl+F1")
@@ -154,17 +154,13 @@ class HotKeyParserTest(unittest.TestCase):
         self.assertFalse(hotkey.alt)
 
     def testParseInvalid_01(self):
-        self.assertRaises(ValueError, HotKeyParser.fromString, "Ctrl+")
+        self.assertIsNone(HotKeyParser.fromString("Ctrl+"))
 
     def testParseInvalid_02(self):
-        self.assertRaises(ValueError, HotKeyParser.fromString, "Ctrl+Shift+")
+        self.assertIsNone(HotKeyParser.fromString("Ctrl+Shift+"))
 
     def testParseInvalid_03(self):
-        self.assertRaises(ValueError,
-                          HotKeyParser.fromString,
-                          "Ctrl+Shift+Alt+")
+        self.assertIsNone(HotKeyParser.fromString("Ctrl+Shift+Alt+"))
 
     def testParseInvalid_04(self):
-        self.assertRaises(ValueError,
-                          HotKeyParser.fromString,
-                          "asdfasd Абырвалг")
+        self.assertIsNone(HotKeyParser.fromString("asdfasd Абырвалг"))

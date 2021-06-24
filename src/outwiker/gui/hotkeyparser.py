@@ -5,7 +5,7 @@ import re
 from outwiker.gui.hotkey import HotKey
 
 
-class HotKeyParser (object):
+class HotKeyParser:
     """
     Класс для создания экземпляра класса HotKey из строки
     и создания строки по HotKey
@@ -47,10 +47,10 @@ class HotKeyParser (object):
         alt = elements["alt"] is not None
 
         if len(key) == 0:
-            raise ValueError("Invalid hot key string")
+            return None
 
         if (u" " in key or
                 u"\t" in key):
-            raise ValueError("Invalid hot key string")
+            return None
 
         return HotKey(key, ctrl=ctrl, shift=shift, alt=alt)

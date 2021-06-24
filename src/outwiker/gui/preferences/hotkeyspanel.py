@@ -178,7 +178,7 @@ class HotKeysPanel(BasePrefPanel):
         actionController = self._application.actionController
         strIdList = actionController.getActionsStrId()
 
-        # Список кортежей(заголовок, strid)
+        # Список кортежей (заголовок, strid)
         # Отбросим те actions, что не удовлетворяют фильтру
         titleStridList = [
             (actionController.getTitle(strid), strid)
