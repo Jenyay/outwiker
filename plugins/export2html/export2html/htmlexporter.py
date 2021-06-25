@@ -19,8 +19,7 @@ class HtmlExporter (BaseExporter):
         from .i18n import _
         global _
 
-
-    def export (self, outdir, exportname, imagesonly, alwaysOverwrite):
+    def export(self, outdir, exportname, imagesonly, alwaysOverwrite):
         """
         Экспорт HTML-страниц
         """

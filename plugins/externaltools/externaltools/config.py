@@ -10,7 +10,7 @@ from outwiker.core.config import IntegerOption, BooleanOption
 from .toolsinfo import ToolsInfo
 
 
-class ExternalToolsConfig(object):
+class ExternalToolsConfig:
     def __init__(self, config):
         self._sectionName = "ExternalTools"
         self._toolsItemTemplate = "tools{index}"
@@ -21,16 +21,16 @@ class ExternalToolsConfig(object):
         DEFAULT_DIALOG_WIDTH = -1
         DEFAULT_DIALOG_HEIGHT = -1
 
-        DIALOG_WIDTH_OPTION = u"DialogWidth"
-        DIALOG_HEIGHT_OPTION = u"DialogHeight"
+        DIALOG_WIDTH_OPTION = "DialogWidth"
+        DIALOG_HEIGHT_OPTION = "DialogHeight"
 
         # Recent selected format
         DEFAULT_FORMAT = 0
-        DIALOG_SELECTED_FORMAT_OPTION = u'ExecFormat'
+        DIALOG_SELECTED_FORMAT_OPTION = 'ExecFormat'
 
         # Show warning
         DEFAULT_WARNING = True
-        WARNING_OPTION = u'ShowExecWarning'
+        WARNING_OPTION = 'ShowExecWarning'
 
         self._dialogWidth = IntegerOption(self._config,
                                           self._sectionName,
@@ -95,7 +95,8 @@ class ExternalToolsConfig(object):
         toolsItems = []
 
         while True:
-            paramname = self._toolsItemTemplate.format(index=len(toolsItems) + 1)
+            paramname = self._toolsItemTemplate.format(
+                index=len(toolsItems) + 1)
             try:
                 toolsPath = self._config.get(self._sectionName, paramname)
             except configparser.Error:

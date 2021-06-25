@@ -18,6 +18,7 @@ class ToolsListPanel(ScrolledPanel):
     """
     Окно со списком всех добавленных инструментов
     """
+
     def __init__(self, parent):
         super(ToolsListPanel, self).__init__(parent)
 
@@ -80,6 +81,7 @@ class ToolsItemCtrl(wx.Panel):
     """
     Контрол для выбора одного инструмента
     """
+
     def __init__(self, parent, toolItem):
         """
         parent - родительское окно
@@ -89,9 +91,6 @@ class ToolsItemCtrl(wx.Panel):
             parent,
             style=wx.BORDER_NONE | wx.TAB_TRAVERSAL)
 
-        self._BROWSE_ID = wx.NewId()
-        self._REMOVE_ID = wx.NewId()
-
         self._toolItem = toolItem
 
         if self._toolItem is None:
@@ -100,16 +99,12 @@ class ToolsItemCtrl(wx.Panel):
             self._pathTextCtrl = wx.TextCtrl(self, -1, toolItem.command)
 
         browseBitmap = wx.Bitmap(self.__getImagePath("browse.png"))
-        self._browseButton = wx.BitmapButton(self,
-                                             self._BROWSE_ID,
-                                             browseBitmap)
-        self._browseButton.SetToolTip(_(u"Open file dialog..."))
+        self._browseButton = wx.BitmapButton(self, bitmap=browseBitmap)
+        self._browseButton.SetToolTip(_("Open file dialog..."))
 
         removeBitmap = wx.Bitmap(self.__getImagePath("cross.png"))
-        self._removeButton = wx.BitmapButton(self,
-                                             self._REMOVE_ID,
-                                             removeBitmap)
-        self._removeButton.SetToolTip(_(u"Remove tool"))
+        self._removeButton = wx.BitmapButton(self, bitmap=removeBitmap)
+        self._removeButton.SetToolTip(_("Remove tool"))
 
         self._browseButton.Bind(wx.EVT_BUTTON, self.__onBrowse)
         self._removeButton.Bind(wx.EVT_BUTTON, self.__onRemove)
@@ -118,9 +113,9 @@ class ToolsItemCtrl(wx.Panel):
 
     def __onBrowse(self, event):
         if os.name == "nt":
-            wildcard = _(u"Executables (*.exe)|*.exe|All Files|*.*")
+            wildcard = _("Executables (*.exe)|*.exe|All Files|*.*")
         else:
-            wildcard = _(u"All Files|*")
+            wildcard = _("All Files|*")
 
         dlg = wx.FileDialog(self,
                             wildcard=wildcard,

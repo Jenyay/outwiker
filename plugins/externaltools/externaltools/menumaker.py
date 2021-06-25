@@ -5,10 +5,11 @@ import wx
 from .i18n import get_
 
 
-class MenuMaker(object):
+class MenuMaker:
     """
     Класс добавляет пункты в контекстное меню
     """
+
     def __init__(self, controller, menu, parent):
         """
         menu - контекстное меню
@@ -70,9 +71,7 @@ class MenuMaker(object):
         function - обработчик события выбора пункта меню
         """
         for toolItem in tools:
-            menuId = wx.NewId()
-
-            menu.Append(menuId, toolItem.title)
+            menuId = menu.Append(wx.ID_ANY, toolItem.title).GetId()
             self._parent.Bind(wx.EVT_MENU, id=menuId, handler=function)
             self._menuId[menuId] = toolItem
 
