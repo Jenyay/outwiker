@@ -7,6 +7,8 @@ import os.path
 import glob
 import sys
 import shutil
+import re
+from typing import List, Tuple
 
 from fabric.api import local, lcd, settings, task
 
@@ -26,6 +28,7 @@ from buildtools.builders import (BuilderWindows,
                                  BuilderAppImage,
                                  BuilderSnap,
                                  )
+from buildtools.versionstools import display_version, InitUpdater
 
 
 @task
@@ -310,3 +313,24 @@ def snap(*params):
     '''
     builder = BuilderSnap(*params)
     builder.build()
+
+
+def _parse_version(version_str: str) -> Tuple[List[int], str]:
+    regexp = re.compile(r'(?P<numbers>(\d+)(\.\d+)*)(?P<status>\s+.*)?')
+    match = regexp.match(version_str)
+    numbers = [int(number) for number in match.group('numbers').split('.')]
+    status = match.group('status')
+    if status is None:
+        status = ''
+    return (numbers, status)
+
+
+@task(alias='update_version')
+def set_version():
+    display_version()
+    version_str = input(
+        'Enter new OutWiker version in the format: "x.x.x.xxx [status]": ')
+    version, status = _parse_version(version_str)
+
+    init_updater = InitUpdater()
+    init_updater.set_version(version, status)
