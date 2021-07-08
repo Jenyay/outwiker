@@ -3,8 +3,10 @@
 import re
 from typing import List, TextIO
 
+from .baseupdater import BaseUpdater
 
-class InitUpdater:
+
+class InitUpdater(BaseUpdater):
     """Add / edit __init__.py file to version update"""
 
     def __init__(self):
@@ -33,3 +35,8 @@ Returns a new content for the file."""
             new_lines.append(line.rstrip())
 
         return '\n'.join(new_lines)
+
+    def add_version(self, input_text: TextIO,
+                    version: List[int],
+                    status: str = '') -> str:
+        return self.set_version(input_text, version, status)

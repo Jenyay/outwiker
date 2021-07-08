@@ -317,7 +317,7 @@ def snap(*params):
 
 
 def _parse_version(version_str: str) -> Tuple[List[int], str]:
-    regexp = re.compile(r'(?P<numbers>(\d+)(\.\d+)*)\s*(?P<status>\s+.*)?')
+    regexp = re.compile(r'(?P<numbers>(\d+)(\.\d+)*)(?P<status>\s+.*)?')
     match = regexp.match(version_str)
     numbers = [int(number) for number in match.group('numbers').split('.')]
     status = match.group('status')
@@ -328,7 +328,6 @@ def _parse_version(version_str: str) -> Tuple[List[int], str]:
 
 @task(alias='update_version')
 def set_version():
-
     display_version()
     version_str = input(
         'Enter new OutWiker version in the format: "x.x.x.xxx [status]": ')
@@ -336,10 +335,12 @@ def set_version():
 
     init_path = Path('src', 'outwiker', '__init__.py')
     init_updater = InitUpdater()
+    _set_version_for_file(init_path, init_updater, version, status)
 
-    with open(init_path) as fp_init_in:
-        init_content_new = init_updater.set_version(
-            fp_init_in, version, status)
 
-    with open(init_path, 'w') as fp_init_out:
-        fp_init_out.write(init_content_new)
+def _set_version_for_file(path: str, updater, version: List[int], status: str):
+    with open(path) as fp_in:
+        content_new = updater.set_version(fp_in, version, status)
+
+    with open(path, 'w') as fp_out:
+        fp_out.write(content_new)
