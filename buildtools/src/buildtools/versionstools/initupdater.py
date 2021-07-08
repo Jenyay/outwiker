@@ -40,3 +40,6 @@ Returns a new content for the file."""
                     version: List[int],
                     status: str = '') -> str:
         return self.set_version(input_text, version, status)
+
+    def set_release_date(self, input_text: TextIO, date_str: str) -> str:
+        pass

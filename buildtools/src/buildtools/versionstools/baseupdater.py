@@ -16,3 +16,7 @@ class BaseUpdater(metaclass=ABCMeta):
                     version: List[int],
                     status: str = '') -> str:
         pass
+
+    @abstractmethod
+    def set_release_date(self, input_text: TextIO, date_str: str) -> str:
+        pass
