@@ -327,12 +327,7 @@ def set_version(version_str: str = ''):
             'Enter new OutWiker version in the format: "x.x.x.xxx [status]": ')
 
     version, status = _parse_version(version_str)
-    update_info = [
-        (Path('src', 'outwiker', '__init__.py'), InitUpdater()),
-        (Path('need_for_build', 'versions.xml'), VersionsXmlUpdater()),
-    ]
-
-    for fname, updater in update_info:
+    for fname, updater in _get_version_updaters():
         _update_version_for_file(fname, updater.set_version, version, status)
 
 
@@ -345,12 +340,7 @@ def add_new_version(version_str: str = ''):
             'Enter new OutWiker version in the format: "x.x.x.xxx [status]": ')
 
     version, status = _parse_version(version_str)
-    update_info = [
-        (Path('src', 'outwiker', '__init__.py'), InitUpdater()),
-        (Path('need_for_build', 'versions.xml'), VersionsXmlUpdater()),
-    ]
-
-    for fname, updater in update_info:
+    for fname, updater in _get_version_updaters():
         _update_version_for_file(fname, updater.add_version, version, status)
 
 
@@ -361,13 +351,15 @@ def set_release_date(date: str = ''):
         display_version()
         date = input('Enter OutWiker release date: ')
 
-    update_info = [
+    for fname, updater in _get_version_updaters():
+        _set_release_date_for_file(fname, updater, date)
+
+
+def _get_version_updaters():
+    return [
         (Path('src', 'outwiker', '__init__.py'), InitUpdater()),
         (Path('need_for_build', 'versions.xml'), VersionsXmlUpdater()),
     ]
-
-    for fname, updater in update_info:
-        _set_release_date_for_file(fname, updater, date)
 
 
 def _parse_version(version_str: str) -> Tuple[List[int], str]:
