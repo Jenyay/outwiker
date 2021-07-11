@@ -123,3 +123,19 @@ def test_set_version_06():
     new_content = updater.set_version(text_src, version, status)
 
     assert new_content == text_expected
+
+
+def test_set_release_date():
+    text_src = '''
+__version__ = (3, 1, 0, 891)
+__status__ = ''
+__api_version__ = (3, 890)'''
+
+    date_str = '11.07.2021'
+
+    text_expected = text_src
+
+    updater = InitUpdater()
+    new_content = updater.set_release_date(io.StringIO(text_src), date_str)
+
+    assert new_content == text_expected

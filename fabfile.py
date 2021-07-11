@@ -319,11 +319,13 @@ def snap(*params):
 
 
 @task(alias='update_version')
-def set_version():
+def set_version(version_str: str = ''):
     """Set new OutWiker version for all files with versions"""
-    display_version()
-    version_str = input(
-        'Enter new OutWiker version in the format: "x.x.x.xxx [status]": ')
+    if not version_str.strip():
+        display_version()
+        version_str = input(
+            'Enter new OutWiker version in the format: "x.x.x.xxx [status]": ')
+
     version, status = _parse_version(version_str)
     update_info = [
         (Path('src', 'outwiker', '__init__.py'), InitUpdater()),
@@ -335,11 +337,13 @@ def set_version():
 
 
 @task(alias='add_version')
-def add_new_version():
+def add_new_version(version_str: str = ''):
     """Append new version information to all files with versions"""
-    display_version()
-    version_str = input(
-        'Enter new OutWiker version in the format: "x.x.x.xxx [status]": ')
+    if not version_str.strip():
+        display_version()
+        version_str = input(
+            'Enter new OutWiker version in the format: "x.x.x.xxx [status]": ')
+
     version, status = _parse_version(version_str)
     update_info = [
         (Path('src', 'outwiker', '__init__.py'), InitUpdater()),
@@ -348,6 +352,22 @@ def add_new_version():
 
     for fname, updater in update_info:
         _update_version_for_file(fname, updater.add_version, version, status)
+
+
+@task(alias='set_date')
+def set_release_date(date: str = ''):
+    """Set release date for current version"""
+    if not date.strip():
+        display_version()
+        date = input('Enter OutWiker release date: ')
+
+    update_info = [
+        (Path('src', 'outwiker', '__init__.py'), InitUpdater()),
+        (Path('need_for_build', 'versions.xml'), VersionsXmlUpdater()),
+    ]
+
+    for fname, updater in update_info:
+        _set_release_date_for_file(fname, updater, date)
 
 
 def _parse_version(version_str: str) -> Tuple[List[int], str]:
@@ -366,6 +386,14 @@ def _update_version_for_file(path: str,
                              status: str):
     with open(path) as fp_in:
         content_new = updater_func(fp_in, version, status)
+
+    with open(path, 'w') as fp_out:
+        fp_out.write(content_new)
+
+
+def _set_release_date_for_file(path: str, updater, date_str: str):
+    with open(path) as fp_in:
+        content_new = updater.set_release_date(fp_in, date_str)
 
     with open(path, 'w') as fp_out:
         fp_out.write(content_new)

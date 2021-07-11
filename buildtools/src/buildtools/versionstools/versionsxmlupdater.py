@@ -21,23 +21,26 @@ class VersionsXmlUpdater(BaseUpdater):
     </version>
 
 """
-        self.status_tag_attrib_name = 'status'
+        self._status_tag_attrib_name = 'status'
+        self._version_number_tag_attrib_name = 'number'
+        self._date_tag_attrib_name = 'date'
+        self._version_tag_name = 'version'
 
     def set_version(self, input_text: TextIO,
                     version: List[int],
                     status: str = '') -> str:
         tree = ET.parse(input_text)
         root = tree.getroot()
-        version_tag = root.find('version')
+        version_tag = root.find(self._version_tag_name)
 
         version_str = '.'.join([str(item) for item in version])
-        version_tag.set('number', version_str)
+        version_tag.set(self._version_number_tag_attrib_name, version_str)
 
         if status:
-            version_tag.set(self.status_tag_attrib_name, status)
+            version_tag.set(self._status_tag_attrib_name, status)
         else:
-            if self.status_tag_attrib_name in version_tag.attrib:
-                del version_tag.attrib[self.status_tag_attrib_name]
+            if self._status_tag_attrib_name in version_tag.attrib:
+                del version_tag.attrib[self._status_tag_attrib_name]
 
         return ET.tostring(root,
                            encoding='UTF-8',
@@ -54,4 +57,11 @@ class VersionsXmlUpdater(BaseUpdater):
         return input_text.read().replace(self._versions_tag, new_version_tag)
 
     def set_release_date(self, input_text: TextIO, date_str: str) -> str:
-        assert False
+        tree = ET.parse(input_text)
+        root = tree.getroot()
+        version_tag = root.find(self._version_tag_name)
+        version_tag.set(self._date_tag_attrib_name, date_str)
+
+        return ET.tostring(root,
+                           encoding='UTF-8',
+                           xml_declaration=True).decode()
