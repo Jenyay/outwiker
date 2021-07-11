@@ -325,7 +325,13 @@ def set_version():
     version_str = input(
         'Enter new OutWiker version in the format: "x.x.x.xxx [status]": ')
     version, status = _parse_version(version_str)
-    _set_version_for_init_py(version, status)
+    update_info = [
+        (Path('src', 'outwiker', '__init__.py'), InitUpdater()),
+        (Path('need_for_build', 'versions.xml'), VersionsXmlUpdater()),
+    ]
+
+    for fname, updater in update_info:
+        _update_version_for_file(fname, updater.set_version, version, status)
 
 
 @task(alias='add_version')
@@ -335,8 +341,13 @@ def add_new_version():
     version_str = input(
         'Enter new OutWiker version in the format: "x.x.x.xxx [status]": ')
     version, status = _parse_version(version_str)
-    _set_version_for_init_py(version, status)
-    _add_version_for_versions_xml(version, status)
+    update_info = [
+        (Path('src', 'outwiker', '__init__.py'), InitUpdater()),
+        (Path('need_for_build', 'versions.xml'), VersionsXmlUpdater()),
+    ]
+
+    for fname, updater in update_info:
+        _update_version_for_file(fname, updater.add_version, version, status)
 
 
 def _parse_version(version_str: str) -> Tuple[List[int], str]:
@@ -349,18 +360,6 @@ def _parse_version(version_str: str) -> Tuple[List[int], str]:
     return (numbers, status.strip())
 
 
-def _set_version_for_init_py(version: List[int], status: str):
-    fname = Path('src', 'outwiker', '__init__.py')
-    updater = InitUpdater()
-    _set_version_for_file(fname, updater, version, status)
-
-
-def _add_version_for_versions_xml(version: List[int], status: str):
-    fname = Path('need_for_build', 'versions.xml')
-    updater = VersionsXmlUpdater()
-    _add_version_for_file(fname, updater, version, status)
-
-
 def _update_version_for_file(path: str,
                              updater_func: Callable[[TextIO, List[int], str], str],
                              version: List[int],
@@ -370,11 +369,3 @@ def _update_version_for_file(path: str,
 
     with open(path, 'w') as fp_out:
         fp_out.write(content_new)
-
-
-def _set_version_for_file(path: str, updater, version: List[int], status: str):
-    _update_version_for_file(path, updater.set_version, version, status)
-
-
-def _add_version_for_file(path: str, updater, version: List[int], status: str):
-    _update_version_for_file(path, updater.add_version, version, status)
