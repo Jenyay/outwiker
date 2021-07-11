@@ -1,6 +1,6 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <versions>
-	<version number="1.21" date="07.04.2021">
+	<version number="1.21" date="2021-04-07">
 		<download href="https://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.21.zip">
 			<requirements>
 				<api>3.868</api>
@@ -15,7 +15,7 @@
 		</changes>
 	</version>
 
-	<version number="1.20" date="29.12.2020">
+	<version number="1.20" date="2020-12-29">
 		<download href="https://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.20.zip">
 			<requirements>
 				<api>3.868</api>
@@ -30,7 +30,7 @@
 		</changes>
 	</version>
 
-	<version number="1.19" date="23.02.2020">
+	<version number="1.19" date="2020-02-23">
 		<download href="https://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.19.zip">
 			<requirements>
 				<api>3.868</api>
@@ -45,7 +45,7 @@
 		</changes>
 	</version>
 
-	<version number="1.18" date="19.10.2019">
+	<version number="1.18" date="2019-10-19">
 		<download href="https://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.18.zip">
 			<requirements>
 				<api>3.868</api>
@@ -60,7 +60,7 @@
 		</changes>
 	</version>
 
-	<version number="1.17.2" date="26.05.2019">
+	<version number="1.17.2" date="2019-05-26">
 		<download href="https://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.17.2.zip">
 			<requirements>
 				<api>2.835</api>
@@ -75,7 +75,7 @@
 		</changes>
 	</version>
 
-	<version number="1.17.1" date="22.03.2019">
+	<version number="1.17.1" date="2019-03-22">
 		<download href="https://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.17.1.zip">
 			<requirements>
 				<api>2.835</api>
@@ -92,7 +92,7 @@
 		</changes>
 	</version>
 
-	<version number="1.17" date="24.11.2018">
+	<version number="1.17" date="2018-11-24">
 		<download href="https://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.17.zip">
 			<requirements>
 				<api>2.835</api>
@@ -109,7 +109,7 @@
 		</changes>
 	</version>
 
-	<version number="1.16" date="26.08.2018">
+	<version number="1.16" date="2018-08-26">
 		<download href="https://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.16.zip">
 			<requirements>
 				<api>2.835</api>
@@ -124,7 +124,7 @@
 		</changes>
 	</version>
 
-	<version number="1.15.1" date="26.05.2018">
+	<version number="1.15.1" date="2018-05-26">
 		<download href="https://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.15.1.zip">
 			<requirements>
 				<api>2.835</api>
@@ -139,7 +139,7 @@
 		</changes>
 	</version>
 
-	<version number="1.15" date="15.02.2018">
+	<version number="1.15" date="2018-02-15">
 		<download href="https://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.15.zip">
 			<requirements>
 				<api>2.835</api>
@@ -154,7 +154,7 @@
 		</changes>
 	</version>
 
-	<version number="1.14.5" date="28.05.2017">
+	<version number="1.14.5" date="2017-05-28">
 		<download href="https://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.14.5.zip">
 			<requirements>
 				<api>2.0</api>
@@ -169,7 +169,7 @@
 		</changes>
 	</version>
 
-	<version number="1.14.4" date="18.03.2017">
+	<version number="1.14.4" date="2017-03-18">
 		<download href="https://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.14.4.zip">
 			<requirements>
 				<api>2.0</api>
@@ -184,7 +184,7 @@
 		</changes>
 	</version>
 
-	<version number="1.14.3" date="17.10.2016">
+	<version number="1.14.3" date="2016-10-17">
 		<download href="https://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.14.3.zip">
 			<requirements>
 				<api>2.0</api>
@@ -199,7 +199,7 @@
 		</changes>
 	</version>
 
-	<version number="1.14.2" date="20.08.2016">
+	<version number="1.14.2" date="2016-08-20">
 		<download href="https://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.14.2.zip">
 			<requirements>
 				<api>2.0</api>
@@ -216,7 +216,7 @@
 		</changes>
 	</version>
 
-	<version number="1.14.1" date="29.05.2016">
+	<version number="1.14.1" date="2016-05-29">
 		<download href="https://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.14.1.zip">
 			<requirements>
 				<api>2.0</api>
@@ -231,7 +231,7 @@
 		</changes>
 	</version>
 
-	<version number="1.14" date="11.02.2016">
+	<version number="1.14" date="2016-02-11">
 		<download href="https://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.14.zip">
 			<requirements>
 				<api>2.0</api>
@@ -252,7 +252,7 @@
 		</changes>
 	</version>
 
-	<version number="1.13" date="03.06.2015">
+	<version number="1.13" date="2015-06-03">
 		<download href="https://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.13.zip">
 			<requirements>
 				<api>1.0</api>
@@ -267,7 +267,7 @@
 		</changes>
 	</version>
 
-	<version number="1.12" date="09.02.2015">
+	<version number="1.12" date="2015-02-09">
 		<download href="https://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.12.zip">
 			<requirements>
 				<api>1.0</api>
@@ -286,7 +286,7 @@
 		</changes>
 	</version>
 
-	<version number="1.11.5" date="20.01.2015">
+	<version number="1.11.5" date="2015-01-20">
 		<download href="https://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.11.5.zip">
 			<requirements>
 				<api>1.0</api>
@@ -303,7 +303,7 @@
 		</changes>
 	</version>
 
-	<version number="1.11.3" date="11.09.2014">
+	<version number="1.11.3" date="2014-09-11">
 		<download href="https://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.11.3.zip">
 			<requirements>
 				<api>1.0</api>
@@ -318,7 +318,7 @@
 		</changes>
 	</version>
 
-	<version number="1.11.2" date="13.07.2014">
+	<version number="1.11.2" date="2014-07-13">
 		<download href="https://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.11.2.zip">
 			<requirements>
 				<api>1.0</api>
@@ -333,7 +333,7 @@
 		</changes>
 	</version>
 
-	<version number="1.11.1" date="17.03.2014">
+	<version number="1.11.1" date="2014-03-17">
 		<download href="https://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.11.1.zip">
 		</download>
 		<changes>
@@ -345,7 +345,7 @@
 		</changes>
 	</version>
 
-	<version number="1.11" date="09.01.2014">
+	<version number="1.11" date="2014-01-09">
 		<download href="https://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.11.zip">
 			<requirements>
 				<api>1.0</api>
@@ -360,7 +360,7 @@
 		</changes>
 	</version>
 
-	<version number="1.10" date="12.08.2013">
+	<version number="1.10" date="2013-08-12">
 		<download href="https://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.10.zip">
 			<requirements>
 				<api>1.0</api>
@@ -379,7 +379,7 @@
 		</changes>
 	</version>
 
-	<version number="1.9" date="18.02.2013">
+	<version number="1.9" date="2013-02-18">
 		<download href="https://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.9.zip">
 			<requirements>
 				<api>1.0</api>
@@ -396,7 +396,7 @@
 		</changes>
 	</version>
 
-	<version number="1.8" date="19.01.2013">
+	<version number="1.8" date="2013-01-19">
 		<download href="https://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.8.zip">
 			<requirements>
 				<api>1.0</api>
@@ -413,7 +413,7 @@
 		</changes>
 	</version>
 
-	<version number="1.7" date="04.01.2013">
+	<version number="1.7" date="2013-01-04">
 		<download href="https://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.7.zip">
 			<requirements>
 				<api>1.0</api>
@@ -428,7 +428,7 @@
 		</changes>
 	</version>
 
-	<version number="1.6" date="01.08.2012">
+	<version number="1.6" date="2012-08-01">
 		<download href="https://jenyay.net/uploads/Outwiker/SourcePlugin/source-1.6.zip">
 			<requirements>
 				<api>1.0</api>

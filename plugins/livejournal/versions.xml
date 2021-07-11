@@ -1,6 +1,6 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <versions>
-	<version number="1.6" date="19.10.2019">
+	<version number="1.6" date="2019-10-19">
 		<download href="https://jenyay.net/uploads/Outwiker/LivejournalPlugin/livejournal-1.6.zip">
 			<requirements>
 				<api>3.868</api>
@@ -15,7 +15,7 @@
 		</changes>
 	</version>
 
-	<version number="1.5" date="26.08.2018">
+	<version number="1.5" date="2018-08-26">
 		<download href="https://jenyay.net/uploads/Outwiker/LivejournalPlugin/livejournal-1.5.zip">
 			<requirements>
 				<api>2.835</api>
@@ -30,7 +30,7 @@
 		</changes>
 	</version>
 
-	<version number="1.4.1" date="26.05.2018">
+	<version number="1.4.1" date="2018-05-26">
 		<download href="https://jenyay.net/uploads/Outwiker/LivejournalPlugin/livejournal-1.4.1.zip">
 			<requirements>
 				<api>2.835</api>
@@ -45,7 +45,7 @@
 		</changes>
 	</version>
 
-	<version number="1.4" date="15.02.2018">
+	<version number="1.4" date="2018-02-15">
 		<download href="https://jenyay.net/uploads/Outwiker/LivejournalPlugin/livejournal-1.4.zip">
 			<requirements>
 				<api>2.0</api>
@@ -60,7 +60,7 @@
 		</changes>
 	</version>
 
-	<version number="1.3.4" date="17.10.2016">
+	<version number="1.3.4" date="2016-10-17">
 		<download href="https://jenyay.net/uploads/Outwiker/LivejournalPlugin/livejournal-1.3.4.zip">
 			<requirements>
 				<api>2.0</api>
@@ -75,7 +75,7 @@
 		</changes>
 	</version>
 
-	<version number="1.3.3" date="20.08.2016">
+	<version number="1.3.3" date="2016-08-20">
 		<download href="https://jenyay.net/uploads/Outwiker/LivejournalPlugin/livejournal-1.3.3.zip">
 			<requirements>
 				<api>1.0</api>
@@ -90,7 +90,7 @@
 		</changes>
 	</version>
 
-	<version number="1.3.2" date="20.01.2015">
+	<version number="1.3.2" date="2015-01-20">
 		<download href="https://jenyay.net/uploads/Outwiker/LivejournalPlugin/livejournal-1.3.2.zip">
 			<requirements>
 				<api>1.0</api>
@@ -109,7 +109,7 @@
 		</changes>
 	</version>
 
-	<version number="1.3.1" date="11.09.2014">
+	<version number="1.3.1" date="2014-09-11">
 		<download href="https://jenyay.net/uploads/Outwiker/LivejournalPlugin/livejournal-1.3.1.zip">
 			<requirements>
 				<api>1.0</api>
@@ -124,7 +124,7 @@
 		</changes>
 	</version>
 
-	<version number="1.3" date="25.08.2014">
+	<version number="1.3" date="2014-08-25">
 		<download href="https://jenyay.net/uploads/Outwiker/LivejournalPlugin/livejournal-1.3.zip">
 			<requirements>
 				<api>1.0</api>
@@ -141,7 +141,7 @@
 		</changes>
 	</version>
 
-	<version number="1.2.1" date="17.11.2012">
+	<version number="1.2.1" date="2012-11-17">
 		<download href="https://jenyay.net/uploads/Outwiker/LivejournalPlugin/livejournal-1.2.1.zip">
 			<requirements>
 				<api>1.0</api>
@@ -156,7 +156,7 @@
 		</changes>
 	</version>
 
-	<version number="1.2" date="17.11.2012">
+	<version number="1.2" date="2012-11-17">
 		<download href="https://jenyay.net/uploads/Outwiker/LivejournalPlugin/livejournal-1.2.zip">
 			<requirements>
 				<api>1.0</api>
@@ -171,7 +171,7 @@
 		</changes>
 	</version>
 
-	<version number="1.1" date="30.05.2012">
+	<version number="1.1" date="2012-05-30">
 		<download href="https://jenyay.net/uploads/Outwiker/LivejournalPlugin/livejournal-1.1.zip">
 			<requirements>
 				<api>1.0</api>
@@ -186,7 +186,7 @@
 		</changes>
 	</version>
 
-	<version number="1.0" date="30.05.2012">
+	<version number="1.0" date="2012-05-30">
 		<download href="https://jenyay.net/uploads/Outwiker/LivejournalPlugin/livejournal-1.0.zip">
 			<requirements>
 				<api>1.0</api>
