@@ -8,7 +8,7 @@ import glob
 import sys
 import shutil
 import re
-from typing import List, Tuple
+from typing import List, Tuple, Callable, TextIO
 from pathlib import Path
 
 from fabric.api import local, lcd, settings, task
@@ -29,7 +29,9 @@ from buildtools.builders import (BuilderWindows,
                                  BuilderAppImage,
                                  BuilderSnap,
                                  )
-from buildtools.versionstools import display_version, InitUpdater
+from buildtools.versionstools import (display_version,
+                                      InitUpdater,
+                                      VersionsXmlUpdater)
 
 
 @task
@@ -316,6 +318,27 @@ def snap(*params):
     builder.build()
 
 
+@task(alias='update_version')
+def set_version():
+    """Set new OutWiker version for all files with versions"""
+    display_version()
+    version_str = input(
+        'Enter new OutWiker version in the format: "x.x.x.xxx [status]": ')
+    version, status = _parse_version(version_str)
+    _set_version_for_init_py(version, status)
+
+
+@task(alias='add_version')
+def add_new_version():
+    """Append new version information to all files with versions"""
+    display_version()
+    version_str = input(
+        'Enter new OutWiker version in the format: "x.x.x.xxx [status]": ')
+    version, status = _parse_version(version_str)
+    _set_version_for_init_py(version, status)
+    _add_version_for_versions_xml(version, status)
+
+
 def _parse_version(version_str: str) -> Tuple[List[int], str]:
     regexp = re.compile(r'(?P<numbers>(\d+)(\.\d+)*)(?P<status>\s+.*)?')
     match = regexp.match(version_str)
@@ -326,21 +349,32 @@ def _parse_version(version_str: str) -> Tuple[List[int], str]:
     return (numbers, status.strip())
 
 
-@task(alias='update_version')
-def set_version():
-    display_version()
-    version_str = input(
-        'Enter new OutWiker version in the format: "x.x.x.xxx [status]": ')
-    version, status = _parse_version(version_str)
-
-    init_path = Path('src', 'outwiker', '__init__.py')
-    init_updater = InitUpdater()
-    _set_version_for_file(init_path, init_updater, version, status)
+def _set_version_for_init_py(version: List[int], status: str):
+    fname = Path('src', 'outwiker', '__init__.py')
+    updater = InitUpdater()
+    _set_version_for_file(fname, updater, version, status)
 
 
-def _set_version_for_file(path: str, updater, version: List[int], status: str):
+def _add_version_for_versions_xml(version: List[int], status: str):
+    fname = Path('need_for_build', 'versions.xml')
+    updater = VersionsXmlUpdater()
+    _add_version_for_file(fname, updater, version, status)
+
+
+def _update_version_for_file(path: str,
+                             updater_func: Callable[[TextIO, List[int], str], str],
+                             version: List[int],
+                             status: str):
     with open(path) as fp_in:
-        content_new = updater.set_version(fp_in, version, status)
+        content_new = updater_func(fp_in, version, status)
 
     with open(path, 'w') as fp_out:
         fp_out.write(content_new)
+
+
+def _set_version_for_file(path: str, updater, version: List[int], status: str):
+    _update_version_for_file(path, updater.set_version, version, status)
+
+
+def _add_version_for_file(path: str, updater, version: List[int], status: str):
+    _update_version_for_file(path, updater.add_version, version, status)
