@@ -1,4 +1,4 @@
-<?xml version="1.1" encoding="UTF-8" ?>
+<?xml version='1.0' encoding='UTF-8'?>
 <versions>
     <version number="3.1.0.891" status="dev">
         <changes>
@@ -8,7 +8,7 @@
         </changes>
     </version>
 
-  <version number="3.1.0.890" status="beta" date="04.07.2021">
+    <version number="3.1.0.890" status="beta" date="04.07.2021">
         <changes>
             <change>Improve GUI for page icon selection.</change>
             <change>Fix desktop icon creation in installer for Windows.</change>

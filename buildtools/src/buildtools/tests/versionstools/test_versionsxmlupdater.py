@@ -6,7 +6,7 @@ from buildtools.versionstools import VersionsXmlUpdater
 
 
 def test_set_version_01():
-    text_src = io.StringIO('''<?xml version="1.1" encoding="UTF-8" ?>
+    text_src = io.StringIO('''<?xml version="1.0" encoding="UTF-8"?>
 <versions>
     <version number="3.1.0.891" status="dev">
         <changes>
@@ -20,7 +20,7 @@ def test_set_version_01():
     version = [1, 2, 3, 4]
     status = ''
 
-    text_expected = '''<?xml version="1.1" encoding="UTF-8" ?>
+    text_expected = '''<?xml version='1.0' encoding='UTF-8'?>
 <versions>
     <version number="1.2.3.4">
         <changes>
@@ -38,7 +38,7 @@ def test_set_version_01():
 
 
 def test_set_version_02():
-    text_src = io.StringIO('''<?xml version="1.1" encoding="UTF-8" ?>
+    text_src = io.StringIO('''<?xml version='1.0' encoding='UTF-8'?>
 <versions>
     <version number="3.1.0.891" status="dev">
         <changes>
@@ -46,13 +46,13 @@ def test_set_version_02():
 
         <changes lang="ru">
         </changes>
-        </version>
+    </version>
 </versions>''')
 
     version = [1, 2, 3, 4]
     status = 'beta'
 
-    text_expected = '''<?xml version="1.1" encoding="UTF-8" ?>
+    text_expected = '''<?xml version='1.0' encoding='UTF-8'?>
 <versions>
     <version number="1.2.3.4" status="beta">
         <changes>
@@ -70,7 +70,7 @@ def test_set_version_02():
 
 
 def test_set_version_03():
-    text_src = io.StringIO('''<?xml version="1.1" encoding="UTF-8" ?>
+    text_src = io.StringIO('''<?xml version='1.0' encoding='UTF-8'?>
 <versions>
     <version number="3.1.0.891">
         <changes>
@@ -84,7 +84,7 @@ def test_set_version_03():
     version = [1, 2, 3, 4]
     status = 'beta'
 
-    text_expected = '''<?xml version="1.1" encoding="UTF-8" ?>
+    text_expected = '''<?xml version='1.0' encoding='UTF-8'?>
 <versions>
     <version number="1.2.3.4" status="beta">
         <changes>
@@ -102,7 +102,7 @@ def test_set_version_03():
 
 
 def test_set_version_04():
-    text_src = io.StringIO('''<?xml version="1.1" encoding="UTF-8" ?>
+    text_src = io.StringIO('''<?xml version='1.0' encoding='UTF-8'?>
 <versions>
     <version number="3.1.0.891" status="dev">
         <changes>
@@ -124,7 +124,7 @@ def test_set_version_04():
     version = [1, 2, 3, 4]
     status = 'beta'
 
-    text_expected = '''<?xml version="1.1" encoding="UTF-8" ?>
+    text_expected = '''<?xml version='1.0' encoding='UTF-8'?>
 <versions>
     <version number="1.2.3.4" status="beta">
         <changes>
@@ -150,7 +150,7 @@ def test_set_version_04():
 
 
 def test_add_version_01():
-    text_src = io.StringIO('''<?xml version="1.1" encoding="UTF-8" ?>
+    text_src = io.StringIO('''<?xml version='1.0' encoding='UTF-8'?>
 <versions>
     <version number="3.1.0.891" status="dev">
         <changes>
@@ -164,7 +164,7 @@ def test_add_version_01():
     version = [1, 2, 3, 4]
     status = ''
 
-    text_expected = '''<?xml version="1.1" encoding="UTF-8" ?>
+    text_expected = '''<?xml version='1.0' encoding='UTF-8'?>
 <versions>
     <version number="1.2.3.4">
         <changes>
@@ -190,7 +190,7 @@ def test_add_version_01():
 
 
 def test_add_version_02():
-    text_src = io.StringIO('''<?xml version="1.1" encoding="UTF-8" ?>
+    text_src = io.StringIO('''<?xml version='1.0' encoding='UTF-8'?>
 <versions>
     <version number="3.1.0.891" status="dev">
         <changes>
@@ -204,7 +204,7 @@ def test_add_version_02():
     version = [1, 2, 3, 4]
     status = 'beta'
 
-    text_expected = '''<?xml version="1.1" encoding="UTF-8" ?>
+    text_expected = '''<?xml version='1.0' encoding='UTF-8'?>
 <versions>
     <version number="1.2.3.4" status="beta">
         <changes>
@@ -230,7 +230,7 @@ def test_add_version_02():
 
 
 def test_set_release_date_01():
-    text_src = io.StringIO('''<?xml version="1.1" encoding="UTF-8" ?>
+    text_src = io.StringIO('''<?xml version='1.0' encoding='UTF-8'?>
 <versions>
     <version number="3.1.0.891" status="dev">
         <changes>
@@ -243,7 +243,7 @@ def test_set_release_date_01():
 
     date_str = '08.07.2021'
 
-    text_expected = '''<?xml version="1.1" encoding="UTF-8" ?>
+    text_expected = '''<?xml version='1.0' encoding='UTF-8'?>
 <versions>
     <version number="3.1.0.891" status="dev" date="08.07.2021">
         <changes>
@@ -261,7 +261,7 @@ def test_set_release_date_01():
 
 
 def test_set_release_date_02():
-    text_src = io.StringIO('''<?xml version="1.1" encoding="UTF-8" ?>
+    text_src = io.StringIO('''<?xml version='1.0' encoding='UTF-8'?>
 <versions>
     <version number="3.1.0.891" status="dev" date="01.01.2021">
         <changes>
@@ -274,7 +274,7 @@ def test_set_release_date_02():
 
     date_str = '08.07.2021'
 
-    text_expected = '''<?xml version="1.1" encoding="UTF-8" ?>
+    text_expected = '''<?xml version='1.0' encoding='UTF-8'?>
 <versions>
     <version number="3.1.0.891" status="dev" date="08.07.2021">
         <changes>
