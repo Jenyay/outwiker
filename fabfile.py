@@ -349,7 +349,7 @@ def set_release_date(date: str = ''):
     """Set release date for current version"""
     if not date.strip():
         display_version()
-        date = input('Enter OutWiker release date: ')
+        date = input('Enter OutWiker release date in the format: YYYY-MM-DD: ')
 
     for fname, updater in _get_version_updaters():
         _set_release_date_for_file(fname, updater, date)
