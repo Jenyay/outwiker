@@ -31,7 +31,8 @@ from buildtools.builders import (BuilderWindows,
                                  )
 from buildtools.versionstools import (display_version,
                                       InitUpdater,
-                                      VersionsXmlUpdater)
+                                      VersionsXmlUpdater,
+                                      AppDataXmlUpdater)
 
 
 @task
@@ -359,6 +360,8 @@ def _get_version_updaters():
     return [
         (Path('src', 'outwiker', '__init__.py'), InitUpdater()),
         (Path('need_for_build', 'versions.xml'), VersionsXmlUpdater()),
+        (Path('need_for_build', 'linux',
+         'net.jenyay.Outwiker.appdata.xml'), AppDataXmlUpdater()),
     ]
 
 
