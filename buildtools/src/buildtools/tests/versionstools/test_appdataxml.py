@@ -26,7 +26,6 @@ def test_set_version_01():
     updater = AppDataXmlUpdater()
     new_content = updater.set_version(StringIO(text_src), version, status)
 
-    print(new_content)
     assert new_content == text_expected
 
 
@@ -74,7 +73,7 @@ def test_add_version_01():
 </component>'''
 
     updater = AppDataXmlUpdater()
-    new_content = updater.set_version(StringIO(text_src), version, status)
+    new_content = updater.add_version(StringIO(text_src), version, status)
 
     assert new_content == text_expected
 
