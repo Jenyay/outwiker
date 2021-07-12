@@ -20,10 +20,10 @@ class AppDataXmlUpdater(BaseUpdater):
                     status: str = '') -> str:
         tree = ET.parse(input_text)
         root = tree.getroot()
-        version_tag = root.find('releases').find('release')
+        release_tag = root.find('releases').find('release')
 
         version_str = '.'.join([str(item) for item in version])
-        version_tag.set('version', version_str)
+        release_tag.set('version', version_str)
 
         return ET.tostring(root,
                            encoding='UTF-8',
@@ -37,4 +37,12 @@ class AppDataXmlUpdater(BaseUpdater):
         return input_text.read().replace(self._releases_tag, new_release_tag)
 
     def set_release_date(self, input_text: TextIO, date_str: str) -> str:
-        assert False
+        tree = ET.parse(input_text)
+        root = tree.getroot()
+        release_tag = root.find('releases').find('release')
+
+        release_tag.set('date', date_str)
+
+        return ET.tostring(root,
+                           encoding='UTF-8',
+                           xml_declaration=True).decode()
