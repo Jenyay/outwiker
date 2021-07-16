@@ -34,7 +34,9 @@ class HotKeysPanel(BasePrefPanel):
             return
 
         newhotkey = event.hotkey
-        oldActionStrId = self.__findConflict(newhotkey)
+        oldActionStrId = self.__findConflict(
+            newhotkey,
+            self._application.actionController.getArea(newActionStrId))
 
         if oldActionStrId is not None:
             newAction = self._application.actionController.getTitle(
@@ -131,7 +133,7 @@ class HotKeysPanel(BasePrefPanel):
 
         self.SetSizer(mainSizer)
 
-    def __findConflict(self, hotkey):
+    def __findConflict(self, hotkey, area: str):
         if hotkey is None or hotkey.isEmpty():
             return None
 
@@ -140,7 +142,8 @@ class HotKeysPanel(BasePrefPanel):
         for strid, hotkeyCurrent in self.__hotkeys.items():
             if stridCurrent == strid or hotkey is None:
                 continue
-            if hotkey == hotkeyCurrent:
+            if (hotkey == hotkeyCurrent and
+                    self._application.actionController.getArea(strid) == area):
                 return strid
 
         return None
@@ -154,9 +157,15 @@ class HotKeysPanel(BasePrefPanel):
         Заполнить словарь __hotkeys текущими значениями
         """
         actionController = self._application.actionController
-        strIdList = actionController.getActionsStrId()
+        strIdList = self.__getActionsStrId()
         for strid in strIdList:
             self.__hotkeys[strid] = actionController.getHotKey(strid)
+
+    def __getActionsStrId(self):
+        actionController = self._application.actionController
+        return [strid
+                for strid in actionController.getActionsStrId()
+                if not actionController.isHidden(strid)]
 
     def __onFilterEdit(self, event):
         self.__fillActionsList()
@@ -176,7 +185,7 @@ class HotKeysPanel(BasePrefPanel):
         Заполнить список actions зарегистрированными действиями
         """
         actionController = self._application.actionController
-        strIdList = actionController.getActionsStrId()
+        strIdList = self.__getActionsStrId()
 
         # Список кортежей (заголовок, strid)
         # Отбросим те actions, что не удовлетворяют фильтру

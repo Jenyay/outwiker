@@ -20,12 +20,18 @@ class ActionInfo(object):
     Хранит информацию о добавленных действиях
     """
 
-    def __init__(self, action, hotkey: HotKey):
+    def __init__(self,
+                 action,
+                 hotkey: Optional[HotKey],
+                 area: Optional[str],
+                 hidden: bool = False):
         """
         action - действие
         """
         self.action = action
         self.hotkey = hotkey
+        self.area = area
+        self.hidden = hidden
         self.menuItem = None
         self.toolbar = None
         self.toolItemId = None
@@ -38,7 +44,7 @@ class ActionInfo(object):
         self.window = None
 
 
-class ActionController(object):
+class ActionController:
     """
     Класс для управления Actions - добавление / удаление пунктов меню
     и кнопок на панели инструментов
@@ -80,7 +86,11 @@ class ActionController(object):
         """
         return self._actionsInfo[strid]
 
-    def register(self, action, hotkey: HotKey = None):
+    def register(self,
+                 action,
+                 hotkey: HotKey = None,
+                 area: str = None,
+                 hidden: bool = False):
         """
         Добавить действие в словарь.
         При этом никаких элементов интерфейса не создается
@@ -93,8 +103,12 @@ class ActionController(object):
         # Не должно быть одинаковых идентификаторов действий
         assert action.stringId not in self._actionsInfo
 
-        actionInfo = ActionInfo(action,
-                                self._getHotKeyForAction(action, hotkey))
+        actionInfo = ActionInfo(
+            action,
+            hotkey=self._getHotKeyForAction(action, hotkey),
+            area=area,
+            hidden=hidden
+        )
         self._actionsInfo[action.stringId] = actionInfo
         logging.debug('Action registered: "%s" (%s)',
                       action.title, str(hotkey))
@@ -455,6 +469,12 @@ class ActionController(object):
         Возвращает заголовок действия по его strid
         """
         return self._actionsInfo[strid].action.title
+
+    def getArea(self, strid):
+        return self._actionsInfo[strid].area
+
+    def isHidden(self, strid):
+        return self._actionsInfo[strid].hidden
 
     def _getMenuItemTitle(self, strid):
         hotkey = self.getHotKey(strid)
