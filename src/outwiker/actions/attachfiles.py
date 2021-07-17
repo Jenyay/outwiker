@@ -11,18 +11,18 @@ class AttachFilesAction (BaseAction):
     """
     Вызвать диалог для выбора файлов, которые нужно прикрепить к странице
     """
-    stringId = u"AttachFiles"
+    stringId = "AttachFiles"
 
     def __init__(self, application):
         self._application = application
 
     @property
     def title(self):
-        return _(u"Attach Files…")
+        return _("Attach Files…")
 
     @property
     def description(self):
-        return _(u"Attach files to current page")
+        return _("Attach files to current page")
 
     def run(self, params):
         assert self._application.mainWindow is not None
@@ -52,3 +52,15 @@ class AttachFilesAction (BaseAction):
             attachFiles(parent, page, files)
 
         dlg.Destroy()
+
+
+class AttachFilesActionForAttachPanel(AttachFilesAction):
+    stringId = "AttachFilesForAttachPanel"
+
+    @property
+    def title(self):
+        return _("Attach Files (for the attach panel)…")
+
+    @property
+    def description(self):
+        return _("Attach files to current page (for the attach panel)")
