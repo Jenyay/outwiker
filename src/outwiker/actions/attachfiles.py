@@ -59,7 +59,7 @@ class AttachFilesActionForAttachPanel(AttachFilesAction):
 
     @property
     def title(self):
-        return _("Attach Files (for the attach panel)…")
+        return _("Attach Files…")
 
     @property
     def description(self):

@@ -53,7 +53,7 @@ import outwiker.actions.switchto as switchto
 from outwiker.actions.reloadwiki import ReloadWikiAction
 from outwiker.actions.openhelp import OpenHelpAction
 from outwiker.actions.about import AboutAction
-from outwiker.actions.openattachfolder import OpenAttachFolderAction
+from outwiker.actions.attachopenfolder import OpenAttachFolderAction
 from outwiker.actions.history import HistoryBackAction, HistoryForwardAction
 from outwiker.actions.applystyle import SetStyleToBranchAction
 from outwiker.actions.openpluginsfolder import OpenPluginsFolderAction

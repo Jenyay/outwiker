@@ -2,44 +2,43 @@
 
 import outwiker.actions.polyactionsid as polyactions
 from outwiker.gui.hotkey import HotKey
-
-import outwiker.actions.open
-import outwiker.actions.new
-import outwiker.actions.openreadonly
-import outwiker.actions.close
-import outwiker.actions.save
-import outwiker.actions.exit
-import outwiker.actions.showhideattaches
-import outwiker.actions.showhidetree
-import outwiker.actions.showhidetags
-import outwiker.actions.search
-import outwiker.actions.addsiblingpage
+import outwiker.actions.about
+import outwiker.actions.addbookmark
 import outwiker.actions.addchildpage
-import outwiker.actions.movepageup
+import outwiker.actions.addsiblingpage
+import outwiker.actions.applystyle
+import outwiker.actions.attachfiles
+import outwiker.actions.attachopenfolder
+import outwiker.actions.clipboard
+import outwiker.actions.close
+import outwiker.actions.editpageprop
+import outwiker.actions.exit
+import outwiker.actions.fullscreen
+import outwiker.actions.globalsearch
+import outwiker.actions.history
 import outwiker.actions.movepagedown
-import outwiker.actions.renamepage
+import outwiker.actions.movepageup
+import outwiker.actions.moving
+import outwiker.actions.new
+import outwiker.actions.open
+import outwiker.actions.openhelp
+import outwiker.actions.openpluginsfolder
+import outwiker.actions.openreadonly
+import outwiker.actions.preferences
+import outwiker.actions.printaction
+import outwiker.actions.reloadwiki
 import outwiker.actions.removepage
+import outwiker.actions.renamepage
+import outwiker.actions.save
+import outwiker.actions.search
+import outwiker.actions.showhideattaches
+import outwiker.actions.showhidetags
+import outwiker.actions.showhidetree
 import outwiker.actions.sortchildalpha
 import outwiker.actions.sortsiblingsalpha
-import outwiker.actions.tabs
-import outwiker.actions.globalsearch
-import outwiker.actions.attachfiles
-import outwiker.actions.openattachfolder
-import outwiker.actions.clipboard
-import outwiker.actions.tags
-import outwiker.actions.history
-import outwiker.actions.moving
-import outwiker.actions.printaction
-import outwiker.actions.fullscreen
-import outwiker.actions.preferences
-import outwiker.actions.editpageprop
-import outwiker.actions.addbookmark
-import outwiker.actions.reloadwiki
-import outwiker.actions.openhelp
-import outwiker.actions.about
-import outwiker.actions.applystyle
-import outwiker.actions.openpluginsfolder
 import outwiker.actions.switchto
+import outwiker.actions.tabs
+import outwiker.actions.tags
 
 
 actionsList = [
@@ -86,7 +85,7 @@ actionsList = [
      HotKey("F", ctrl=True, shift=True)),
     (outwiker.actions.attachfiles.AttachFilesAction,
      HotKey("A", ctrl=True, shift=True)),
-    (outwiker.actions.openattachfolder.OpenAttachFolderAction, None),
+    (outwiker.actions.attachopenfolder.OpenAttachFolderAction, None),
 
     (outwiker.actions.clipboard.CopyPageTitleAction, None),
     (outwiker.actions.clipboard.CopyPagePathAction, None),

@@ -38,7 +38,7 @@ from outwiker.actions.moving import (GoToParentAction,
                                      GoToFirstChildAction,
                                      GoToNextSiblingAction,
                                      GoToPrevSiblingAction)
-from outwiker.actions.openattachfolder import OpenAttachFolderAction
+from outwiker.actions.attachopenfolder import OpenAttachFolderAction
 from outwiker.actions.applystyle import SetStyleToBranchAction
 
 

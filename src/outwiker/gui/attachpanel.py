@@ -6,9 +6,9 @@ from typing import List
 import wx
 
 from outwiker.actions.attachfiles import AttachFilesActionForAttachPanel
+from outwiker.actions.attachopenfolder import OpenAttachFolderAction
 from outwiker.actions.attachpastelink import AttachPasteLinkActionForAttachPanel
-from outwiker.actions.openattachfolder import OpenAttachFolderAction
-from outwiker.actions.removeattaches import RemoveAttachesActionForAttachPanel
+from outwiker.actions.attachremove import RemoveAttachesActionForAttachPanel
 from outwiker.core.attachment import Attachment
 from outwiker.core.commands import MessageBox, attachFiles, showError
 from outwiker.core.system import getBuiltinImagePath, getOS
