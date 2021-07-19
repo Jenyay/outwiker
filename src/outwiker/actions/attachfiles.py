@@ -2,9 +2,9 @@
 
 import wx
 
-from outwiker.gui.baseaction import BaseAction
-from outwiker.core.commands import testreadonly, attachFiles
+from outwiker.core.commands import attachFiles, testreadonly
 from outwiker.core.exceptions import ReadonlyException
+from outwiker.gui.baseaction import BaseAction
 
 
 class AttachFilesAction (BaseAction):

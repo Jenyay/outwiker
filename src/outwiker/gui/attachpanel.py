@@ -5,15 +5,17 @@ from typing import List
 
 import wx
 
-from outwiker.core.commands import MessageBox, attachFiles, showError
-from outwiker.core.system import getOS, getBuiltinImagePath
-from outwiker.core.attachment import Attachment
 from outwiker.actions.attachfiles import AttachFilesActionForAttachPanel
+from outwiker.actions.attachpastelink import AttachPasteLinkActionForAttachPanel
 from outwiker.actions.openattachfolder import OpenAttachFolderAction
 from outwiker.actions.removeattaches import RemoveAttachesActionForAttachPanel
+from outwiker.core.attachment import Attachment
+from outwiker.core.commands import MessageBox, attachFiles, showError
+from outwiker.core.system import getBuiltinImagePath, getOS
 from outwiker.gui.hotkey import HotKey
-from .guiconfig import AttachConfig
+
 from .dropfiles import BaseDropFilesTarget
+from .guiconfig import AttachConfig
 
 
 class AttachPanel(wx.Panel):
@@ -21,7 +23,6 @@ class AttachPanel(wx.Panel):
         super().__init__(parent)
         self._application = application
         self.ACTIONS_AREA = 'attach_panel'
-        self.ID_PASTE = None
         self.ID_EXECUTE = None
         self.ID_OPEN_FOLDER = None
 
@@ -31,6 +32,8 @@ class AttachPanel(wx.Panel):
                 HotKey("Delete"), True),
             (AttachFilesActionForAttachPanel(self._application),
                 None, True),
+            (AttachPasteLinkActionForAttachPanel(self._application),
+                HotKey("Enter", ctrl=True), True)
         ]
 
         self.__registerActions()
@@ -77,7 +80,6 @@ class AttachPanel(wx.Panel):
         self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.__onDoubleClick,
                   self.__attachList)
 
-        self.Bind(wx.EVT_MENU, self.__onPaste, id=self.ID_PASTE)
         self.Bind(wx.EVT_MENU, self.__onExecute, id=self.ID_EXECUTE)
         self.Bind(wx.EVT_MENU, self.__onOpenFolder, id=self.ID_OPEN_FOLDER)
         self.Bind(wx.EVT_CLOSE, self.__onClose)
@@ -91,7 +93,6 @@ class AttachPanel(wx.Panel):
                     handler=self.__onDoubleClick,
                     source=self.__attachList)
 
-        self.Unbind(wx.EVT_MENU, handler=self.__onPaste, id=self.ID_PASTE)
         self.Unbind(wx.EVT_MENU, handler=self.__onExecute, id=self.ID_EXECUTE)
 
         self.Unbind(wx.EVT_MENU, handler=self.__onOpenFolder,
@@ -154,16 +155,15 @@ class AttachPanel(wx.Panel):
 
         toolbar.AddSeparator()
 
-        self.ID_PASTE = toolbar.AddTool(
-            wx.ID_ANY,
-            _("Paste"),
-            wx.Bitmap(getBuiltinImagePath("paste.png"),
-                      wx.BITMAP_TYPE_ANY),
-            wx.NullBitmap,
-            wx.ITEM_NORMAL,
-            _("Paste"),
-            ""
-        ).GetId()
+        actionController.appendToolbarButton(
+                AttachPasteLinkActionForAttachPanel.stringId,
+                toolbar,
+                getBuiltinImagePath("paste.png")
+                )
+
+        actionController.appendHotkey(
+                AttachPasteLinkActionForAttachPanel.stringId,
+                self)
 
         self.ID_EXECUTE = toolbar.AddTool(
             wx.ID_ANY,
@@ -290,7 +290,7 @@ class AttachPanel(wx.Panel):
         files = self.getSelectedFiles()
         if len(files) == 0:
             showError(self._application.mainWindow,
-                      _("You did not select a file to paste"))
+                    _("You did not select a file to paste"))
             return
 
         self._application.onAttachmentPaste(files)

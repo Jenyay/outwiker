@@ -2,9 +2,9 @@
 
 import wx
 
-from outwiker.gui.baseaction import BaseAction
 from outwiker.core.attachment import Attachment
 from outwiker.core.commands import MessageBox, showError
+from outwiker.gui.baseaction import BaseAction
 
 
 class RemoveAttachesActionForAttachPanel(BaseAction):
