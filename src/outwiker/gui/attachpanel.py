@@ -22,18 +22,24 @@ class AttachPanel(wx.Panel):
     def __init__(self, parent, application):
         super().__init__(parent)
         self._application = application
-        self.ACTIONS_AREA = 'attach_panel'
+        self.ATTACH_ACTIONS_AREA = 'attach_panel'
         self.ID_EXECUTE = None
         self.ID_OPEN_FOLDER = None
 
         # List of tuples: (action, hotkey, hidden)
         self._actions = [
-            (RemoveAttachesActionForAttachPanel(self._application),
-                HotKey("Delete"), True),
-            (AttachFilesActionForAttachPanel(self._application),
-                None, True),
-            (AttachPasteLinkActionForAttachPanel(self._application),
-                HotKey("Enter", ctrl=True), True)
+            (RemoveAttachesActionForAttachPanel,
+                HotKey("Delete"),
+                self.ATTACH_ACTIONS_AREA,
+                True),
+            (AttachFilesActionForAttachPanel,
+                None,
+                self.ATTACH_ACTIONS_AREA,
+                True),
+            (AttachPasteLinkActionForAttachPanel,
+                HotKey("Enter", ctrl=True),
+                self.ATTACH_ACTIONS_AREA,
+                True)
         ]
 
         self.__registerActions()
@@ -57,11 +63,11 @@ class AttachPanel(wx.Panel):
     def __registerActions(self):
         actionController = self._application.actionController
 
-        for action, hotkey, hidden in self._actions:
+        for action, hotkey, area, hidden in self._actions:
             actionController.register(
-                action,
+                action(self._application),
                 hotkey=hotkey,
-                area=self.ACTIONS_AREA,
+                area=area,
                 hidden=hidden
             )
 
