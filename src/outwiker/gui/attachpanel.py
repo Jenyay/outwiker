@@ -12,7 +12,6 @@ from outwiker.actions.attachremove import RemoveAttachesActionForAttachPanel
 from outwiker.core.attachment import Attachment
 from outwiker.core.commands import MessageBox, attachFiles, showError
 from outwiker.core.system import getBuiltinImagePath, getOS
-from outwiker.gui.hotkey import HotKey
 
 from .dropfiles import BaseDropFilesTarget
 from .guiconfig import AttachConfig
@@ -22,27 +21,8 @@ class AttachPanel(wx.Panel):
     def __init__(self, parent, application):
         super().__init__(parent)
         self._application = application
-        self.ATTACH_ACTIONS_AREA = 'attach_panel'
         self.ID_EXECUTE = None
         self.ID_OPEN_FOLDER = None
-
-        # List of tuples: (action, hotkey, hidden)
-        self._actions = [
-            (RemoveAttachesActionForAttachPanel,
-                HotKey("Delete"),
-                self.ATTACH_ACTIONS_AREA,
-                True),
-            (AttachFilesActionForAttachPanel,
-                None,
-                self.ATTACH_ACTIONS_AREA,
-                True),
-            (AttachPasteLinkActionForAttachPanel,
-                HotKey("Enter", ctrl=True),
-                self.ATTACH_ACTIONS_AREA,
-                True)
-        ]
-
-        self.__registerActions()
 
         self.__toolbar = self.__createToolBar(self)
         self.__attachList = wx.ListCtrl(self,
@@ -59,17 +39,6 @@ class AttachPanel(wx.Panel):
 
         self.__bindGuiEvents()
         self.__bindAppEvents()
-
-    def __registerActions(self):
-        actionController = self._application.actionController
-
-        for action, hotkey, area, hidden in self._actions:
-            actionController.register(
-                action(self._application),
-                hotkey=hotkey,
-                area=area,
-                hidden=hidden
-            )
 
     def SetBackgroundColour(self, colour):
         super().SetBackgroundColour(colour)

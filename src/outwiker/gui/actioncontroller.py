@@ -14,7 +14,7 @@ from outwiker.gui.controls.toolbar2 import ToolBar2
 logger = logging.getLogger('outwiker.gui.actioncontroller')
 
 
-class ActionInfo(object):
+class ActionInfoInternal(object):
     """
     Класс для внутреннего использования в ActionController
     Хранит информацию о добавленных действиях
@@ -56,7 +56,7 @@ class ActionController:
 
         # Словарь для хранения информации о действиях
         # Ключ - строковый идентификатор действия,
-        # значение - экземпляр класса ActionInfo
+        # значение - экземпляр класса ActionInfoInternal
         self._actionsInfo = {}
 
         self._configSection = "HotKeys"
@@ -103,7 +103,7 @@ class ActionController:
         # Не должно быть одинаковых идентификаторов действий
         assert action.stringId not in self._actionsInfo
 
-        actionInfo = ActionInfo(
+        actionInfo = ActionInfoInternal(
             action,
             hotkey=self._getHotKeyForAction(action, hotkey),
             area=area,
@@ -186,7 +186,7 @@ class ActionController:
         self._updateAcceleratorTables()
         self.saveHotKeys()
 
-    def _bindHotkey(self, actionInfo: ActionInfo):
+    def _bindHotkey(self, actionInfo: ActionInfoInternal):
         if actionInfo.hotkey is not None:
             hotkeyId = wx.NewIdRef()
             actionInfo.hotkeyId = hotkeyId
@@ -197,7 +197,7 @@ class ActionController:
                                    handler=self._onHotKeyItemHandler,
                                    id=hotkeyId)
 
-    def _unbindHotkey(self, actionInfo: ActionInfo):
+    def _unbindHotkey(self, actionInfo: ActionInfoInternal):
         if actionInfo.hotkeyId is not None:
             logger.debug('Unbind hotkey for action "%s": "%s"',
                          actionInfo.action.title,
@@ -384,19 +384,19 @@ class ActionController:
         """
         self._onCheck(self._actionsInfo[strid].action, checked)
 
-    def _getActionInfoByMenuItemId(self, menuItemId) -> Optional[ActionInfo]:
+    def _getActionInfoByMenuItemId(self, menuItemId) -> Optional[ActionInfoInternal]:
         for actionInfo in self._actionsInfo.values():
             if (actionInfo.menuItem is not None and
                     actionInfo.menuItem.GetId() == menuItemId):
                 return actionInfo
 
-    def _getActionInfoByToolItemId(self, toolItemId) -> Optional[ActionInfo]:
+    def _getActionInfoByToolItemId(self, toolItemId) -> Optional[ActionInfoInternal]:
         for actionInfo in self._actionsInfo.values():
             if (actionInfo.toolItemId is not None and
                     actionInfo.toolItemId == toolItemId):
                 return actionInfo
 
-    def _getActionInfoByHotkeyId(self, itemId) -> Optional[ActionInfo]:
+    def _getActionInfoByHotkeyId(self, itemId) -> Optional[ActionInfoInternal]:
         for actionInfo in self._actionsInfo.values():
             if (actionInfo.hotkeyId is not None and
                     actionInfo.hotkeyId == itemId):

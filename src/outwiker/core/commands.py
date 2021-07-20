@@ -4,10 +4,10 @@
 Команды для интерфейса
 """
 
-from datetime import datetime
+import logging
 import os.path
 import shutil
-import logging
+from datetime import datetime
 from typing import List, Optional
 
 import wx
@@ -15,18 +15,18 @@ import wx
 import outwiker.core.exceptions
 from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
-from outwiker.core.events import PreWikiOpenParams, PostWikiOpenParams
+from outwiker.core.events import PostWikiOpenParams, PreWikiOpenParams
 from outwiker.core.pagetitletester import PageTitleError, PageTitleWarning
 from outwiker.core.system import getOS
 from outwiker.core.tree import WikiDocument
 from outwiker.core.tree_commands import getAlternativeTitle
+from outwiker.gui.dateformatdialog import DateFormatDialog
 from outwiker.gui.dialogs.overwritedialog import OverwriteDialog
+from outwiker.gui.guiconfig import GeneralGuiConfig
 from outwiker.gui.longprocessrunner import LongProcessRunner
 from outwiker.gui.polyaction import PolyAction
-from outwiker.gui.dateformatdialog import DateFormatDialog
-from outwiker.gui.guiconfig import GeneralGuiConfig
-from outwiker.gui.tester import Tester
 from outwiker.gui.testeddialog import TestedFileDialog
+from outwiker.gui.tester import Tester
 
 
 logger = logging.getLogger('outwiker.core.commands')
@@ -591,7 +591,10 @@ def registerActions(application):
     from outwiker.gui.actionslist import actionsList, polyactionsList
 
     # Register the normal actions
-    [actionController.register(item[0](application), item[1])
+    [actionController.register(item.action_type(application),
+                               item.hotkey,
+                               item.area,
+                               item.hidden)
      for item in actionsList]
 
     # Register the polyactions

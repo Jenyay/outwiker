@@ -17,7 +17,7 @@ class AttachPasteLinkActionForAttachPanel(BaseAction):
 
     @property
     def title(self):
-        return _("Paste attach link")
+        return _("Paste link to attached files")
 
     @property
     def description(self):
