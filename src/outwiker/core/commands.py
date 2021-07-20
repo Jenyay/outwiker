@@ -24,7 +24,6 @@ from outwiker.gui.dateformatdialog import DateFormatDialog
 from outwiker.gui.dialogs.overwritedialog import OverwriteDialog
 from outwiker.gui.guiconfig import GeneralGuiConfig
 from outwiker.gui.longprocessrunner import LongProcessRunner
-from outwiker.gui.polyaction import PolyAction
 from outwiker.gui.testeddialog import TestedFileDialog
 from outwiker.gui.tester import Tester
 
@@ -574,32 +573,3 @@ def dictToStr(paramsDict):
 
     items.sort()
     return u', '.join(items)
-
-
-def registerActions(application):
-    """
-    Зарегистрировать действия
-    """
-    # Действия, связанные с разными типами страниц
-    from outwiker.pages.html.htmlpage import HtmlPageFactory
-    HtmlPageFactory.registerActions(application)
-
-    from outwiker.pages.wiki.wikipage import WikiPageFactory
-    WikiPageFactory.registerActions(application)
-
-    actionController = application.actionController
-    from outwiker.gui.actionslist import actionsList, polyactionsList
-
-    # Register the normal actions
-    [actionController.register(item.action_type(application),
-                               item.hotkey,
-                               item.area,
-                               item.hidden)
-     for item in actionsList]
-
-    # Register the polyactions
-    [actionController.register(PolyAction(application,
-                                          item[0],
-                                          item[1],
-                                          item[2]),
-                               item[3]) for item in polyactionsList]

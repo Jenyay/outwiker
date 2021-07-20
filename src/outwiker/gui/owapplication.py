@@ -1,19 +1,19 @@
 # -*- coding: utf-8 -*-
 
+import locale
+import logging
 import os
 import os.path
-import logging
 from gettext import NullTranslations
-import locale
 
 import wx
 
-from outwiker.core.commands import registerActions
 from outwiker.core.logredirector import LogRedirector
 from outwiker.core.system import getPluginsDirList
 from outwiker.gui.actioncontroller import ActionController
 from outwiker.gui.guiconfig import TrayConfig
 from outwiker.gui.mainwindow import MainWindow
+from outwiker.gui.polyaction import PolyAction
 
 
 class OutWikerApplication(wx.App):
@@ -47,7 +47,7 @@ class OutWikerApplication(wx.App):
         self._application.actionController = ActionController(
             self.mainWnd, self._application.config)
 
-        registerActions(self._application)
+        self._registerActions(self._application)
         self.mainWnd.createGui()
 
     def destroyMainWindow(self):
@@ -103,3 +103,31 @@ class OutWikerApplication(wx.App):
     @property
     def application(self):
         return self._application
+
+    def _registerActions(self, application):
+        """
+        Зарегистрировать действия
+        """
+        # Действия, связанные с разными типами страниц
+        from outwiker.pages.html.htmlpage import HtmlPageFactory
+        HtmlPageFactory.registerActions(application)
+
+        from outwiker.pages.wiki.wikipage import WikiPageFactory
+        WikiPageFactory.registerActions(application)
+
+        actionController = application.actionController
+        from outwiker.gui.actionslist import actionsList, polyactionsList
+
+        # Register the normal actions
+        [actionController.register(item.action_type(application),
+                                   item.hotkey,
+                                   item.area,
+                                   item.hidden)
+         for item in actionsList]
+
+        # Register the polyactions
+        [actionController.register(PolyAction(application,
+                                              item[0],
+                                              item[1],
+                                              item[2]),
+                                   item[3]) for item in polyactionsList]
