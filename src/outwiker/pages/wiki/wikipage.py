@@ -9,37 +9,38 @@ from outwiker.core.defines import PAGE_RESULT_HTML
 from outwiker.core.factory import PageFactory
 from outwiker.core.tree import WikiPage
 from outwiker.gui.hotkey import HotKey
-from .wikipageview import WikiPageView
+from outwiker.gui.actioninfo import ActionInfo
 
-from .actions.fontsizebig import WikiFontSizeBigAction
-from .actions.fontsizesmall import WikiFontSizeSmallAction
-from .actions.nonparsed import WikiNonParsedAction
-from .actions.thumb import WikiThumbAction
-from .actions.openhtmlcode import WikiOpenHtmlCodeAction
-from .actions.updatehtml import WikiUpdateHtmlAction
 from .actions.attachlist import WikiAttachListAction
 from .actions.childlist import WikiChildListAction
-from .actions.include import WikiIncludeAction
 from .actions.dates import WikiDateCreationAction, WikiDateEditionAction
-from .actions.wikistyle import WikiStyleOnlyAction, WikiStyleAdvancedAction
+from .actions.fontsizebig import WikiFontSizeBigAction
+from .actions.fontsizesmall import WikiFontSizeSmallAction
+from .actions.include import WikiIncludeAction
 from .actions.multilineblock import MultilineBlockAction
+from .actions.nonparsed import WikiNonParsedAction
+from .actions.openhtmlcode import WikiOpenHtmlCodeAction
+from .actions.thumb import WikiThumbAction
+from .actions.updatehtml import WikiUpdateHtmlAction
+from .actions.wikistyle import WikiStyleAdvancedAction, WikiStyleOnlyAction
+from .wikipageview import WikiPageView
 
 
 wiki_actions = [
-    (WikiFontSizeBigAction, HotKey(".", ctrl=True)),
-    (WikiFontSizeSmallAction, HotKey(",", ctrl=True)),
-    (WikiNonParsedAction, None),
-    (WikiThumbAction, HotKey("M", ctrl=True)),
-    (WikiOpenHtmlCodeAction, HotKey("F4", shift=True)),
-    (WikiUpdateHtmlAction, HotKey("F4", ctrl=True)),
-    (WikiAttachListAction, None),
-    (WikiChildListAction, None),
-    (WikiIncludeAction, None),
-    (WikiDateCreationAction, None),
-    (WikiDateEditionAction, None),
-    (WikiStyleOnlyAction, None),
-    (WikiStyleAdvancedAction, None),
-    (MultilineBlockAction, None),
+    ActionInfo(WikiFontSizeBigAction, HotKey(".", ctrl=True)),
+    ActionInfo(WikiFontSizeSmallAction, HotKey(",", ctrl=True)),
+    ActionInfo(WikiNonParsedAction, None),
+    ActionInfo(WikiThumbAction, HotKey("M", ctrl=True)),
+    ActionInfo(WikiOpenHtmlCodeAction, HotKey("F4", shift=True)),
+    ActionInfo(WikiUpdateHtmlAction, HotKey("F4", ctrl=True)),
+    ActionInfo(WikiAttachListAction, None),
+    ActionInfo(WikiChildListAction, None),
+    ActionInfo(WikiIncludeAction, None),
+    ActionInfo(WikiDateCreationAction, None),
+    ActionInfo(WikiDateEditionAction, None),
+    ActionInfo(WikiStyleOnlyAction, None),
+    ActionInfo(WikiStyleAdvancedAction, None),
+    ActionInfo(MultilineBlockAction, None),
 ]
 
 
@@ -53,7 +54,7 @@ class WikiWikiPage(WikiPage):
 
     @staticmethod
     def getTypeString():
-        return u"wiki"
+        return "wiki"
 
     def getHtmlPath(self):
         """
@@ -75,7 +76,7 @@ class WikiPageFactory(PageFactory):
         """
         Название страницы, показываемое пользователю
         """
-        return _(u"Wiki Page")
+        return _("Wiki Page")
 
     def getPageView(self, parent, application):
         """
@@ -88,10 +89,10 @@ class WikiPageFactory(PageFactory):
         """
         Зарегистрировать все действия, связанные с викистраницей
         """
-        [application.actionController.register(actionTuple[0](application),
-                                               actionTuple[1]) for actionTuple in wiki_actions]
+        [application.actionController.register(actionTuple.action_type(application), actionTuple.hotkey)
+         for actionTuple in wiki_actions]
 
     @staticmethod
     def removeActions(application):
-        [application.actionController.removeAction(
-            actionTuple[0].stringId) for actionTuple in wiki_actions]
+        [application.actionController.removeAction(actionTuple.action_type.stringId)
+         for actionTuple in wiki_actions]

@@ -10,6 +10,7 @@ from outwiker.core.defines import PAGE_RESULT_HTML
 from outwiker.core.events import PAGE_UPDATE_CONTENT
 from outwiker.core.factory import PageFactory
 from outwiker.core.tree import WikiPage
+from outwiker.gui.actioninfo import ActionInfo
 from outwiker.gui.hotkey import HotKey
 from outwiker.pages.html.htmlpageview import HtmlPageView
 
@@ -17,8 +18,8 @@ from .actions.autolinewrap import HtmlAutoLineWrap
 from .actions.switchcoderesult import SwitchCodeResultAction
 
 html_actions = [
-    (HtmlAutoLineWrap, None),
-    (SwitchCodeResultAction, HotKey("F4")),
+    ActionInfo(HtmlAutoLineWrap, None),
+    ActionInfo(SwitchCodeResultAction, HotKey("F4")),
 ]
 
 
@@ -30,8 +31,8 @@ class HtmlWikiPage (WikiPage):
     def __init__(self, path, title, parent, readonly=False):
         WikiPage.__init__(self, path, title, parent, readonly)
 
-        self.__autoLineWrapSection = u"General"
-        self.__autoLineWrapParam = u"LineWrap"
+        self.__autoLineWrapSection = "General"
+        self.__autoLineWrapParam = "LineWrap"
 
     @property
     def autoLineWrap(self):
@@ -56,7 +57,7 @@ class HtmlWikiPage (WikiPage):
 
     @staticmethod
     def getTypeString():
-        return u"html"
+        return "html"
 
     def getHtmlPath(self):
         """
@@ -74,14 +75,13 @@ class HtmlPageFactory (PageFactory):
         """
         Зарегистрировать все действия, связанные с HTML-страницей
         """
-        [application.actionController.register(
-            actionTuple[0](application), actionTuple[1])
-            for actionTuple in html_actions]
+        [application.actionController.register(actionTuple.action_type(application), actionTuple.hotkey)
+         for actionTuple in html_actions]
 
     @staticmethod
     def removeActions(application):
-        [application.actionController.removeAction(
-            actionTuple[0].stringId) for actionTuple in html_actions]
+        [application.actionController.removeAction(actionTuple.action_type.stringId)
+         for actionTuple in html_actions]
 
     def getPageType(self):
         return HtmlWikiPage

@@ -1,29 +1,27 @@
 # -*- coding: utf-8 -*-
 
-from abc import ABCMeta, abstractmethod
-import unittest
-import os
-from tempfile import mkdtemp, NamedTemporaryFile
-from gettext import NullTranslations
 import locale
+import os
+import unittest
+from abc import ABCMeta, abstractmethod
+from gettext import NullTranslations
+from tempfile import NamedTemporaryFile, mkdtemp
 
 import wx
 
 from outwiker.core.application import Application
 from outwiker.core.i18n import I18nConfig
+from outwiker.core.pluginsloader import PluginsLoader
 from outwiker.core.tree import WikiDocument
 from outwiker.gui.guiconfig import GeneralGuiConfig
-from outwiker.gui.tester import Tester
 from outwiker.gui.owapplication import OutWikerApplication
-from .utils import removeDir
-
-from outwiker.core.pluginsloader import PluginsLoader
-from outwiker.pages.wiki.wikipage import WikiPageFactory
-from outwiker.pages.html.htmlpage import HtmlPageFactory
-from outwiker.pages.text.textpage import TextPageFactory
-from outwiker.pages.search.searchpage import SearchPageFactory
-
+from outwiker.gui.tester import Tester
 from outwiker.pages.html.actions.switchcoderesult import SwitchCodeResultAction
+from outwiker.pages.html.htmlpage import HtmlPageFactory
+from outwiker.pages.search.searchpage import SearchPageFactory
+from outwiker.pages.text.textpage import TextPageFactory
+from outwiker.pages.wiki.wikipage import WikiPageFactory
+from .utils import removeDir
 
 
 NullTranslations().install()

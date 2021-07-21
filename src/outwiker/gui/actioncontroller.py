@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 
 import logging
-from typing import List, Tuple, Optional
+from typing import List, Optional, Tuple
 
 import wx
 
-from outwiker.gui.hotkey import HotKey
-from outwiker.gui.hotkeyparser import HotKeyParser
-from outwiker.gui.hotkeyoption import HotKeyOption
 from outwiker.gui.controls.toolbar2 import ToolBar2
+from outwiker.gui.hotkey import HotKey
+from outwiker.gui.hotkeyoption import HotKeyOption
+from outwiker.gui.hotkeyparser import HotKeyParser
 
 
 logger = logging.getLogger('outwiker.gui.actioncontroller')

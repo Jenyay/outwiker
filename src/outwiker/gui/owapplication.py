@@ -127,7 +127,7 @@ class OutWikerApplication(wx.App):
 
         # Register the polyactions
         [actionController.register(PolyAction(application,
-                                              item[0],
-                                              item[1],
-                                              item[2]),
-                                   item[3]) for item in polyactionsList]
+                                              item.stringId,
+                                              item.title,
+                                              item.description),
+                                   item.hotkey) for item in polyactionsList]
