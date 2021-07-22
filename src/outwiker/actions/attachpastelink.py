@@ -7,8 +7,6 @@ from outwiker.gui.baseaction import BaseAction
 class AttachPasteLinkActionForAttachPanel(BaseAction):
     """
     Insert link to selected files to editor.
-
-    Hidden action.
     """
     stringId = "AttachPasteLink"
 

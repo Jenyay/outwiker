@@ -5,6 +5,7 @@ from typing import List
 
 import wx
 
+from outwiker.actions.attachexecute import AttachExecuteFilesAction
 from outwiker.actions.attachfiles import AttachFilesActionForAttachPanel
 from outwiker.actions.attachopenfolder import OpenAttachFolderAction
 from outwiker.actions.attachpastelink import AttachPasteLinkActionForAttachPanel
@@ -21,15 +22,14 @@ class AttachPanel(wx.Panel):
     def __init__(self, parent, application):
         super().__init__(parent)
         self._application = application
-        self.ID_EXECUTE = None
         self.ID_OPEN_FOLDER = None
 
-        self.__toolbar = self.__createToolBar(self)
         self.__attachList = wx.ListCtrl(self,
                                         wx.ID_ANY,
                                         style=wx.LC_LIST | wx.SUNKEN_BORDER)
 
-        self.__set_properties()
+        self.__toolbar = self.__createGui(self)
+        self.__attachList.SetMinSize((-1, 100))
         self.__do_layout()
 
         self.__fileIcons = getOS().fileIcons
@@ -55,7 +55,6 @@ class AttachPanel(wx.Panel):
         self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.__onDoubleClick,
                   self.__attachList)
 
-        self.Bind(wx.EVT_MENU, self.__onExecute, id=self.ID_EXECUTE)
         self.Bind(wx.EVT_MENU, self.__onOpenFolder, id=self.ID_OPEN_FOLDER)
         self.Bind(wx.EVT_CLOSE, self.__onClose)
 
@@ -67,8 +66,6 @@ class AttachPanel(wx.Panel):
         self.Unbind(wx.EVT_LIST_ITEM_ACTIVATED,
                     handler=self.__onDoubleClick,
                     source=self.__attachList)
-
-        self.Unbind(wx.EVT_MENU, handler=self.__onExecute, id=self.ID_EXECUTE)
 
         self.Unbind(wx.EVT_MENU, handler=self.__onOpenFolder,
                     id=self.ID_OPEN_FOLDER)
@@ -108,7 +105,7 @@ class AttachPanel(wx.Panel):
         self.__fileIcons.clear()
         self.Destroy()
 
-    def __createToolBar(self, parent):
+    def __createGui(self, parent):
         toolbar = wx.ToolBar(parent, wx.ID_ANY, style=wx.TB_DOCKABLE)
         actionController = self._application.actionController
 
@@ -131,25 +128,24 @@ class AttachPanel(wx.Panel):
         toolbar.AddSeparator()
 
         actionController.appendToolbarButton(
-                AttachPasteLinkActionForAttachPanel.stringId,
-                toolbar,
-                getBuiltinImagePath("paste.png")
-                )
+            AttachPasteLinkActionForAttachPanel.stringId,
+            toolbar,
+            getBuiltinImagePath("paste.png")
+        )
 
         actionController.appendHotkey(
-                AttachPasteLinkActionForAttachPanel.stringId,
-                self)
+            AttachPasteLinkActionForAttachPanel.stringId,
+            self)
 
-        self.ID_EXECUTE = toolbar.AddTool(
-            wx.ID_ANY,
-            _("Execute"),
-            wx.Bitmap(getBuiltinImagePath("execute.png"),
-                      wx.BITMAP_TYPE_ANY),
-            wx.NullBitmap,
-            wx.ITEM_NORMAL,
-            _("Execute"),
-            ""
-        ).GetId()
+        actionController.appendToolbarButton(
+            AttachExecuteFilesAction.stringId,
+            toolbar,
+            getBuiltinImagePath("execute.png")
+        )
+
+        actionController.appendHotkey(
+            AttachExecuteFilesAction.stringId,
+            self)
 
         self.ID_OPEN_FOLDER = toolbar.AddTool(
             wx.ID_ANY,
@@ -164,9 +160,6 @@ class AttachPanel(wx.Panel):
 
         toolbar.Realize()
         return toolbar
-
-    def __set_properties(self):
-        self.__attachList.SetMinSize((-1, 100))
 
     def __do_layout(self):
         attachSizer_copy = wx.FlexGridSizer(2, 1, 0, 0)
@@ -257,53 +250,20 @@ class AttachPanel(wx.Panel):
 
                 self.updateAttachments()
 
-    def __pasteLink(self):
-        """
-        Сгенерировать сообщение о том, что пользователь хочет вставить
-        ссылку на приаттаченные файлы
-        """
-        files = self.getSelectedFiles()
-        if len(files) == 0:
-            showError(self._application.mainWindow,
-                    _("You did not select a file to paste"))
-            return
-
-        self._application.onAttachmentPaste(files)
-
-    def __executeFile(self):
-        if self._application.selectedPage is not None:
-            files = self.getSelectedFiles()
-
-            if len(files) == 0:
-                showError(self._application.mainWindow,
-                          _("You did not select a file to execute"))
-                return
-
-            for file in files:
-                fullpath = os.path.join(Attachment(
-                    self._application.selectedPage).getAttachPath(), file)
-                try:
-                    getOS().startFile(fullpath)
-                except OSError:
-                    text = _("Can't execute file '%s'") % file
-                    showError(self._application.mainWindow, text)
-
-    def __onPaste(self, _event):
-        self.__pasteLink()
-
     def __onOpenFolder(self, _event):
         self._application.actionController.getAction(
             OpenAttachFolderAction.stringId).run(None)
 
-    def __onExecute(self, _event):
-        self.__executeFile()
-
     def __onDoubleClick(self, _event):
         config = AttachConfig(self._application.config)
+        actionController = self._application.actionController
+
         if config.doubleClickAction.value == AttachConfig.ACTION_INSERT_LINK:
-            self.__pasteLink()
+            actionController.getAction(
+                AttachPasteLinkActionForAttachPanel.stringId).run(None)
         elif config.doubleClickAction.value == AttachConfig.ACTION_OPEN:
-            self.__executeFile()
+            actionController.getAction(
+                AttachExecuteFilesAction.stringId).run(None)
 
     def __onBeginDrag(self, _event):
         selectedFiles = self.getSelectedFiles()

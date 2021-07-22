@@ -39,6 +39,7 @@ import outwiker.actions.switchto
 import outwiker.actions.tabs
 import outwiker.actions.tags
 from outwiker.gui.actioninfo import ActionInfo, PolyactionInfo
+from outwiker.actions.attachexecute import AttachExecuteFilesAction
 from outwiker.actions.attachfiles import AttachFilesActionForAttachPanel
 from outwiker.actions.attachpastelink import AttachPasteLinkActionForAttachPanel
 from outwiker.actions.attachremove import RemoveAttachesActionForAttachPanel
@@ -150,6 +151,10 @@ actionsList = [
                hidden=True),
     ActionInfo(AttachPasteLinkActionForAttachPanel,
                HotKey("Enter", ctrl=True),
+               area=ATTACH_ACTIONS_AREA,
+               hidden=False),
+    ActionInfo(AttachExecuteFilesAction,
+               None,
                area=ATTACH_ACTIONS_AREA,
                hidden=False),
 ]
