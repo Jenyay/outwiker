@@ -6,7 +6,6 @@ import outwiker.actions.addchildpage
 import outwiker.actions.addsiblingpage
 import outwiker.actions.applystyle
 import outwiker.actions.attachfiles
-import outwiker.actions.attachopenfolder
 import outwiker.actions.clipboard
 import outwiker.actions.close
 import outwiker.actions.editpageprop
@@ -41,6 +40,8 @@ import outwiker.actions.tags
 from outwiker.gui.actioninfo import ActionInfo, PolyactionInfo
 from outwiker.actions.attachexecute import AttachExecuteFilesAction
 from outwiker.actions.attachfiles import AttachFilesActionForAttachPanel
+from outwiker.actions.attachopenfolder import (OpenAttachFolderAction,
+                                               OpenAttachFolderActionForAttachPanel)
 from outwiker.actions.attachpastelink import AttachPasteLinkActionForAttachPanel
 from outwiker.actions.attachremove import RemoveAttachesActionForAttachPanel
 from outwiker.gui.hotkey import HotKey
@@ -98,7 +99,6 @@ actionsList = [
                HotKey("F", ctrl=True, shift=True)),
     ActionInfo(outwiker.actions.attachfiles.AttachFilesAction,
                HotKey("A", ctrl=True, shift=True)),
-    ActionInfo(outwiker.actions.attachopenfolder.OpenAttachFolderAction, None),
 
     ActionInfo(outwiker.actions.clipboard.CopyPageTitleAction, None),
     ActionInfo(outwiker.actions.clipboard.CopyPagePathAction, None),
@@ -141,6 +141,7 @@ actionsList = [
     ActionInfo(outwiker.actions.switchto.SwitchToAttachmentsAction, None),
     ActionInfo(outwiker.actions.switchto.SwitchToTagsCloudAction, None),
 
+    ActionInfo(OpenAttachFolderAction, None),
     ActionInfo(RemoveAttachesActionForAttachPanel,
                hotkey=HotKey("Delete"),
                area=ATTACH_ACTIONS_AREA,
@@ -157,6 +158,10 @@ actionsList = [
                None,
                area=ATTACH_ACTIONS_AREA,
                hidden=False),
+    ActionInfo(OpenAttachFolderActionForAttachPanel,
+               None,
+               area=ATTACH_ACTIONS_AREA,
+               hidden=True),
 ]
 
 

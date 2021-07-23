@@ -7,7 +7,8 @@ import wx
 
 from outwiker.actions.attachexecute import AttachExecuteFilesAction
 from outwiker.actions.attachfiles import AttachFilesActionForAttachPanel
-from outwiker.actions.attachopenfolder import OpenAttachFolderAction
+from outwiker.actions.attachopenfolder import (OpenAttachFolderAction,
+                                               OpenAttachFolderActionForAttachPanel)
 from outwiker.actions.attachpastelink import AttachPasteLinkActionForAttachPanel
 from outwiker.actions.attachremove import RemoveAttachesActionForAttachPanel
 from outwiker.core.attachment import Attachment
@@ -22,7 +23,6 @@ class AttachPanel(wx.Panel):
     def __init__(self, parent, application):
         super().__init__(parent)
         self._application = application
-        self.ID_OPEN_FOLDER = None
 
         self.__attachList = wx.ListCtrl(self,
                                         wx.ID_ANY,
@@ -55,7 +55,7 @@ class AttachPanel(wx.Panel):
         self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.__onDoubleClick,
                   self.__attachList)
 
-        self.Bind(wx.EVT_MENU, self.__onOpenFolder, id=self.ID_OPEN_FOLDER)
+
         self.Bind(wx.EVT_CLOSE, self.__onClose)
 
     def __unbindGuiEvents(self):
@@ -66,9 +66,6 @@ class AttachPanel(wx.Panel):
         self.Unbind(wx.EVT_LIST_ITEM_ACTIVATED,
                     handler=self.__onDoubleClick,
                     source=self.__attachList)
-
-        self.Unbind(wx.EVT_MENU, handler=self.__onOpenFolder,
-                    id=self.ID_OPEN_FOLDER)
 
         self.Unbind(wx.EVT_CLOSE, handler=self.__onClose)
 
@@ -109,12 +106,14 @@ class AttachPanel(wx.Panel):
         toolbar = wx.ToolBar(parent, wx.ID_ANY, style=wx.TB_DOCKABLE)
         actionController = self._application.actionController
 
+        # Attach files
         actionController.appendToolbarButton(
             AttachFilesActionForAttachPanel.stringId,
             toolbar,
             getBuiltinImagePath("attach.png")
         )
 
+        # Delete files
         actionController.appendToolbarButton(
             RemoveAttachesActionForAttachPanel.stringId,
             toolbar,
@@ -127,6 +126,7 @@ class AttachPanel(wx.Panel):
 
         toolbar.AddSeparator()
 
+        # Paste link to files
         actionController.appendToolbarButton(
             AttachPasteLinkActionForAttachPanel.stringId,
             toolbar,
@@ -137,6 +137,7 @@ class AttachPanel(wx.Panel):
             AttachPasteLinkActionForAttachPanel.stringId,
             self)
 
+        # Execute files
         actionController.appendToolbarButton(
             AttachExecuteFilesAction.stringId,
             toolbar,
@@ -147,16 +148,12 @@ class AttachPanel(wx.Panel):
             AttachExecuteFilesAction.stringId,
             self)
 
-        self.ID_OPEN_FOLDER = toolbar.AddTool(
-            wx.ID_ANY,
-            _("Open Attachments Folder"),
-            wx.Bitmap(getBuiltinImagePath("folder.png"),
-                      wx.BITMAP_TYPE_ANY),
-            wx.NullBitmap,
-            wx.ITEM_NORMAL,
-            _("Open Attachments Folder"),
-            ""
-        ).GetId()
+        # Open attach folder
+        actionController.appendToolbarButton(
+            OpenAttachFolderActionForAttachPanel.stringId,
+            toolbar,
+            getBuiltinImagePath("folder.png")
+        )
 
         toolbar.Realize()
         return toolbar
@@ -249,10 +246,6 @@ class AttachPanel(wx.Panel):
                     showError(self._application.mainWindow, str(e))
 
                 self.updateAttachments()
-
-    def __onOpenFolder(self, _event):
-        self._application.actionController.getAction(
-            OpenAttachFolderAction.stringId).run(None)
 
     def __onDoubleClick(self, _event):
         config = AttachConfig(self._application.config)

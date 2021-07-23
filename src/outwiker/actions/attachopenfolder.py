@@ -10,18 +10,18 @@ class OpenAttachFolderAction (BaseAction):
     """
     Открыть папку с прикрепленными файлами в системном файловом менеджере
     """
-    stringId = u"OpenAttachFolder"
+    stringId = "OpenAttachFolder"
 
     def __init__(self, application):
         self._application = application
 
     @property
     def title(self):
-        return _(u"Open Attachments Folder")
+        return _("Open Attachments Folder")
 
     @property
     def description(self):
-        return _(u"Open folder with attached files")
+        return _("Open folder with attached files")
 
     def run(self, params):
         if self._application.selectedPage is not None:
@@ -30,5 +30,9 @@ class OpenAttachFolderAction (BaseAction):
             try:
                 getOS().startFile(folder)
             except OSError:
-                text = _(u"Can't open folder '{}'".format(folder))
+                text = _("Can't open folder '{}'".format(folder))
                 showError(self._application.mainWindow, text)
+
+
+class OpenAttachFolderActionForAttachPanel(OpenAttachFolderAction):
+    stringId = "OpenAttachFolderForAttachPanel"
