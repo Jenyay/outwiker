@@ -72,7 +72,7 @@ class HotKeysPanel(BasePrefPanel):
 
     def __createGui(self):
         mainSizer = wx.FlexGridSizer(cols=1)
-        mainSizer.AddGrowableRow(0)
+        mainSizer.AddGrowableRow(1)
         mainSizer.AddGrowableCol(0)
 
         # Список с именами actions
@@ -125,10 +125,10 @@ class HotKeysPanel(BasePrefPanel):
         self.__descriptionText.SetMinSize((-1, 75))
         self.__descriptionText.Disable()
 
+        mainSizer.Add(filterSizer, flag=wx.EXPAND | wx.ALL, border=2)
         mainSizer.Add(self.__actionsList, flag=wx.EXPAND | wx.ALL, border=2)
         mainSizer.Add(self.__descriptionText,
                       flag=wx.EXPAND | wx.ALL, border=2)
-        mainSizer.Add(filterSizer, flag=wx.EXPAND | wx.ALL, border=2)
         mainSizer.Add(hotkeySizer, flag=wx.EXPAND | wx.ALL, border=2)
 
         self.SetSizer(mainSizer)

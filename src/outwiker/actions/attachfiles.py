@@ -56,11 +56,3 @@ class AttachFilesAction (BaseAction):
 
 class AttachFilesActionForAttachPanel(AttachFilesAction):
     stringId = "AttachFilesForAttachPanel"
-
-    @property
-    def title(self):
-        return _("Attach Files…")
-
-    @property
-    def description(self):
-        return _("Attach files to current page (for the attach panel)")
