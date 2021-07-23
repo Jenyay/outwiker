@@ -55,7 +55,6 @@ class AttachPanel(wx.Panel):
         self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.__onDoubleClick,
                   self.__attachList)
 
-
         self.Bind(wx.EVT_CLOSE, self.__onClose)
 
     def __unbindGuiEvents(self):

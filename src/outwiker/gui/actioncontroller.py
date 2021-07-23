@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import logging
-from typing import List, Optional, Tuple
+from typing import List, Optional, Tuple, Dict
 
 import wx
 
@@ -57,7 +57,7 @@ class ActionController:
         # Словарь для хранения информации о действиях
         # Ключ - строковый идентификатор действия,
         # значение - экземпляр класса ActionInfoInternal
-        self._actionsInfo = {}
+        self._actionsInfo = {}          # type: Dict[str, ActionInfoInternal]
 
         self._configSection = "HotKeys"
 
@@ -113,7 +113,7 @@ class ActionController:
         logging.debug('Action registered: "%s" (%s)',
                       action.title, str(hotkey))
 
-    def _getHotKeyForAction(self, action, defaultHotKey: HotKey) -> HotKey:
+    def _getHotKeyForAction(self, action, defaultHotKey: Optional[HotKey]) -> HotKey:
         """
         Получить горячую клавишу.
         Горячая клавиша берется из конфига, или defaultHotKey
@@ -188,6 +188,7 @@ class ActionController:
 
     def _bindHotkey(self, actionInfo: ActionInfoInternal):
         if actionInfo.hotkey is not None:
+            assert actionInfo.window is not None
             hotkeyId = wx.NewIdRef()
             actionInfo.hotkeyId = hotkeyId
             logger.debug('Bind hotkey for action "%s": "%s"',
@@ -390,17 +391,23 @@ class ActionController:
                     actionInfo.menuItem.GetId() == menuItemId):
                 return actionInfo
 
+        return None
+
     def _getActionInfoByToolItemId(self, toolItemId) -> Optional[ActionInfoInternal]:
         for actionInfo in self._actionsInfo.values():
             if (actionInfo.toolItemId is not None and
                     actionInfo.toolItemId == toolItemId):
                 return actionInfo
 
+        return None
+
     def _getActionInfoByHotkeyId(self, itemId) -> Optional[ActionInfoInternal]:
         for actionInfo in self._actionsInfo.values():
             if (actionInfo.hotkeyId is not None and
                     actionInfo.hotkeyId == itemId):
                 return actionInfo
+
+        return None
 
     def _onCheckMenuItemHandler(self, event):
         actionInfo = self._getActionInfoByMenuItemId(event.GetId())
