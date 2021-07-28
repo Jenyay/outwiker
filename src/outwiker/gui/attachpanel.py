@@ -11,6 +11,7 @@ from outwiker.actions.attachopenfolder import (OpenAttachFolderAction,
                                                OpenAttachFolderActionForAttachPanel)
 from outwiker.actions.attachpastelink import AttachPasteLinkActionForAttachPanel
 from outwiker.actions.attachremove import RemoveAttachesActionForAttachPanel
+from outwiker.actions.attachselectall import AttachSelectAllAction
 from outwiker.core.attachment import Attachment
 from outwiker.core.commands import MessageBox, attachFiles, showError
 from outwiker.core.system import getBuiltinImagePath, getOS
@@ -121,6 +122,17 @@ class AttachPanel(wx.Panel):
 
         actionController.appendHotkey(
             RemoveAttachesActionForAttachPanel.stringId,
+            self)
+
+        # Select all files
+        actionController.appendToolbarButton(
+            AttachSelectAllAction.stringId,
+            toolbar,
+            getBuiltinImagePath("select_all.png")
+        )
+
+        actionController.appendHotkey(
+            AttachSelectAllAction.stringId,
             self)
 
         toolbar.AddSeparator()
@@ -283,6 +295,12 @@ class AttachPanel(wx.Panel):
                 self.__attachList.GetFocusedItem() == -1):
             self.__attachList.Focus(0)
             self.__attachList.Select(0)
+
+    def selectAllAttachments(self):
+        for index in range(self.__attachList.GetItemCount()):
+            self.__attachList.SetItemState(index,
+                                           wx.LIST_STATE_SELECTED,
+                                           wx.LIST_STATE_SELECTED)
 
 
 class DropAttachFilesTarget(BaseDropFilesTarget):

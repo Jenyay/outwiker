@@ -10,7 +10,7 @@ from outwiker.gui.baseaction import BaseAction
 
 class AttachExecuteFilesAction(BaseAction):
     """
-    Insert link to selected files to editor.
+    Execute selected files action
     """
     stringId = "AttachExecuteFiles"
 
