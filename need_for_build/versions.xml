@@ -1,5 +1,13 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <versions>
+    <version number="3.1.0.893" status="dev">
+        <changes>
+        </changes>
+
+        <changes lang="ru">
+        </changes>
+    </version>
+
     <version number="3.1.0.892" status="beta" date="2021-07-27">
         <changes>
 			<change>Improve hotkeys for attachments panel.</change>
