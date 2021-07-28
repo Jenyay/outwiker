@@ -2,9 +2,11 @@
 <versions>
     <version number="3.1.0.893" status="dev">
         <changes>
+			<change>Add action "Select all" for attachments panel.</change>
         </changes>
 
         <changes lang="ru">
+			<change>Добавлена кнопка "Выбрать всё" на панель прикрепленных файлов.</change>
         </changes>
     </version>
 
