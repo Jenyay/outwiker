@@ -1,10 +1,5 @@
 # -*- coding=utf-8 -*-
 
-import os.path
-
-from outwiker.core.attachment import Attachment
-from outwiker.core.commands import showError
-from outwiker.core.system import getOS
 from outwiker.gui.baseaction import BaseAction
 
 
