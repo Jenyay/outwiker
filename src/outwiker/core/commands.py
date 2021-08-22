@@ -72,10 +72,52 @@ def testreadonly(func):
         try:
             return func(*args, **kwargs)
         except outwiker.core.exceptions.ReadonlyException:
-            showError(Application.mainWindow, _(
-                u"Page is opened as read-only"))
+            showError(Application.mainWindow,
+                      _("Page is opened as read-only"))
 
     return readOnlyWrap
+
+
+@testreadonly
+def renameAttach(parent: wx.Window,
+                 page: 'outwiker.core.tree.WikiPage',
+                 fname_src: str,
+                 fname_dest: str):
+    """
+    Rename attached file. Show overwrite dialog if necessary
+    parent - parent for dialog window
+    page - page to attach
+    fname_src - source file name (relative path)
+    fname_dest - new file name (relative path)
+    """
+    if page.readonly:
+        raise outwiker.core.exceptions.ReadonlyException
+
+    attachRoot = Attachment(page).getAttachPath()
+    fname_src_full = os.path.join(attachRoot, fname_src)
+    fname_dest_full = os.path.join(attachRoot, fname_dest)
+
+    if fname_src_full == fname_dest_full:
+        return
+
+    if os.path.exists(fname_dest_full):
+        with OverwriteDialog(parent) as overwriteDialog:
+            text = _("File '{}' exists already").format(os.path.basename(fname_dest))
+            src_file_stat = os.stat(fname_src_full)
+            dest_file_stat = os.stat(fname_dest_full)
+            result = overwriteDialog.ShowDialog(text,
+                                                src_file_stat,
+                                                dest_file_stat)
+
+            if result == overwriteDialog.ID_SKIP or result == wx.ID_CANCEL:
+                return
+
+    try:
+        os.replace(fname_src_full, fname_dest_full)
+    except (IOError, shutil.Error) as e:
+        text = _('Error renaming file\n{} -> {}\n{}').format(fname_src, fname_dest, str(e))
+        logger.error(text)
+        showError(Application.mainWindow, text)
 
 
 @testreadonly
@@ -106,8 +148,7 @@ def attachFiles(parent: wx.Window,
 
             fname_new_lower = os.path.basename(fname_new).lower()
             if fname_new_lower in oldAttaches.keys():
-                text = _(u"File '%s' exists already") % (
-                    os.path.basename(fname_new))
+                text = _("File '{}' exists already").format(os.path.basename(fname_new))
                 old_file_stat = os.stat(oldAttaches[fname_new_lower])
                 new_file_stat = os.stat(fname_new)
                 result = overwriteDialog.ShowDialog(text,
@@ -124,7 +165,7 @@ def attachFiles(parent: wx.Window,
         try:
             Attachment(page).attach(newAttaches)
         except (IOError, shutil.Error) as e:
-            text = _(u'Error copying files\n{0}').format(str(e))
+            text = _('Error copying files\n{0}').format(str(e))
             logger.error(text)
             showError(Application.mainWindow, text)
 

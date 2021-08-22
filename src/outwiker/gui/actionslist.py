@@ -44,6 +44,7 @@ from outwiker.actions.attachopenfolder import (OpenAttachFolderAction,
                                                OpenAttachFolderActionForAttachPanel)
 from outwiker.actions.attachpastelink import AttachPasteLinkActionForAttachPanel
 from outwiker.actions.attachremove import RemoveAttachesActionForAttachPanel
+from outwiker.actions.attachrename import RenameAttachActionForAttachPanel
 from outwiker.actions.attachselectall import AttachSelectAllAction
 from outwiker.gui.hotkey import HotKey
 
@@ -165,6 +166,10 @@ actionsList = [
                hidden=True),
     ActionInfo(AttachSelectAllAction,
                HotKey('A', ctrl=True),
+               area=ATTACH_ACTIONS_AREA,
+               hidden=False),
+    ActionInfo(RenameAttachActionForAttachPanel,
+               HotKey('F2'),
                area=ATTACH_ACTIONS_AREA,
                hidden=False),
 ]
