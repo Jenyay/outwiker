@@ -35,6 +35,14 @@ class AttachPanel(wx.Panel):
         # Store old file name before renaming
         self._oldAttachName = None
 
+        # Actions with hot keys for attach panel
+        self._localHotKeys = [
+                RemoveAttachesActionForAttachPanel,
+                AttachSelectAllAction,
+                AttachPasteLinkActionForAttachPanel,
+                AttachExecuteFilesAction,
+                RenameAttachActionForAttachPanel]
+
         self.__attachList = wx.ListCtrl(self,
                                         wx.ID_ANY,
                                         style=wx.LC_LIST | wx.SUNKEN_BORDER)
@@ -114,9 +122,20 @@ class AttachPanel(wx.Panel):
         self.__fileIcons.clear()
         self.Destroy()
 
+    def _enableHotkeys(self):
+        actionController = self._application.actionController
+        for action in self._localHotKeys:
+            actionController.appendHotkey(action.stringId, self)
+
+    def _disableHotkeys(self):
+        actionController = self._application.actionController
+        for action in self._localHotKeys:
+            actionController.removeHotkey(action.stringId)
+
     def _createGui(self, parent):
         toolbar = wx.ToolBar(parent, wx.ID_ANY, style=wx.TB_DOCKABLE)
         actionController = self._application.actionController
+        self._enableHotkeys()
 
         # Attach files
         actionController.appendToolbarButton(
@@ -132,20 +151,12 @@ class AttachPanel(wx.Panel):
             getBuiltinImagePath("delete.png")
         )
 
-        actionController.appendHotkey(
-            RemoveAttachesActionForAttachPanel.stringId,
-            self)
-
         # Select all files
         actionController.appendToolbarButton(
             AttachSelectAllAction.stringId,
             toolbar,
             getBuiltinImagePath("select_all.png")
         )
-
-        actionController.appendHotkey(
-            AttachSelectAllAction.stringId,
-            self)
 
         toolbar.AddSeparator()
 
@@ -156,10 +167,6 @@ class AttachPanel(wx.Panel):
             getBuiltinImagePath("paste.png")
         )
 
-        actionController.appendHotkey(
-            AttachPasteLinkActionForAttachPanel.stringId,
-            self)
-
         # Execute files
         actionController.appendToolbarButton(
             AttachExecuteFilesAction.stringId,
@@ -167,21 +174,12 @@ class AttachPanel(wx.Panel):
             getBuiltinImagePath("execute.png")
         )
 
-        actionController.appendHotkey(
-            AttachExecuteFilesAction.stringId,
-            self)
-
         # Open attach folder
         actionController.appendToolbarButton(
             OpenAttachFolderActionForAttachPanel.stringId,
             toolbar,
             getBuiltinImagePath("folder.png")
         )
-
-        # Rename attachments
-        actionController.appendHotkey(
-            RenameAttachActionForAttachPanel.stringId,
-            self)
 
         toolbar.Realize()
         return toolbar
@@ -330,9 +328,11 @@ class AttachPanel(wx.Panel):
         self._oldAttachName = os.path.join(
             self._currentSubdirectory,
             self.__attachList.GetItemText(selectedItem))
+        self._disableHotkeys()
         self.__attachList.EditLabel(selectedItem)
 
     def _onEndLabelEdit(self, event):
+        self._enableHotkeys()
         event.Veto()
 
         if event.IsEditCancelled():

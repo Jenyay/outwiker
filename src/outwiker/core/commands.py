@@ -103,8 +103,11 @@ def renameAttach(parent: wx.Window,
     if os.path.exists(fname_dest_full):
         with OverwriteDialog(parent) as overwriteDialog:
             text = _("File '{}' exists already").format(os.path.basename(fname_dest))
-            src_file_stat = os.stat(fname_src_full)
-            dest_file_stat = os.stat(fname_dest_full)
+            try:
+                src_file_stat = os.stat(fname_src_full)
+                dest_file_stat = os.stat(fname_dest_full)
+            except FileNotFoundError:
+                return
             result = overwriteDialog.ShowDialog(text,
                                                 src_file_stat,
                                                 dest_file_stat)
