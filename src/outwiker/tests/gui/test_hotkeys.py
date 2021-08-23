@@ -15,7 +15,8 @@ class HotKeysTest(TestCase, BaseOutWikerGUIMixin):
         for other_item in actions:
             if (other_item != item and
                     item.hotkey is not None and
-                    other_item.hotkey == item.hotkey):
+                    other_item.hotkey == item.hotkey and
+                    other_item.area == item.area):
                 return other_item
 
     def tearDown(self):
@@ -34,9 +35,9 @@ class HotKeysTest(TestCase, BaseOutWikerGUIMixin):
                 duplicate = self._find_duplicate(actions_list, action_info)
                 if duplicate is not None:
                     print(('Hot keys duplicate: {} <---> {} ---> {:<15}'.format(
-                        action_info.action_type,
-                        duplicate.action_type,
-                        action_info.hotkey)))
+                        str(action_info),
+                        str(duplicate),
+                        str(action_info.hotkey))))
                     duplicates.append(duplicate)
 
         self.assertEqual(len(duplicates), 0, 'Hot keys have duplicates')
