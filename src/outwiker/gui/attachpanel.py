@@ -37,11 +37,11 @@ class AttachPanel(wx.Panel):
 
         # Actions with hot keys for attach panel
         self._localHotKeys = [
-                RemoveAttachesActionForAttachPanel,
-                AttachSelectAllAction,
-                AttachPasteLinkActionForAttachPanel,
-                AttachExecuteFilesAction,
-                RenameAttachActionForAttachPanel]
+            RemoveAttachesActionForAttachPanel,
+            AttachSelectAllAction,
+            AttachPasteLinkActionForAttachPanel,
+            AttachExecuteFilesAction,
+            RenameAttachActionForAttachPanel]
 
         self.__attachList = wx.ListCtrl(self,
                                         wx.ID_ANY,
@@ -205,7 +205,7 @@ class AttachPanel(wx.Panel):
         self.updateAttachments()
 
     def _sortFilesList(self, files_list):
-        result = sorted(files_list, key=str.lower, reverse=True)
+        result = sorted(files_list, key=str.lower)
         result.sort(key=Attachment.sortByType)
         return result
 
@@ -214,30 +214,38 @@ class AttachPanel(wx.Panel):
         Обновить список прикрепленных файлов
         """
         self.__attachList.Freeze()
-        self.__attachList.ClearAll()
         if self._application.selectedPage is not None:
-            files = Attachment(self._application.selectedPage).attachmentFull
+            files = [fname for fname in Attachment(self._application.selectedPage).attachmentFull
+                     if (not os.path.basename(fname).startswith("__")
+                         or not os.path.isdir(fname))]
+
             files = self._sortFilesList(files)
 
-            for fname in files:
-                if (not os.path.basename(fname).startswith("__") or
-                        not os.path.isdir(fname)):
-                    # Отключим уведомления об ошибках во всплывающих окнах
-                    # иначе они появляются при попытке прочитать
-                    # испорченные иконки
-                    # На результат работы это не сказывается,
-                    # все-равно бракованные иконки отлавливаются.
-                    wx.Log.EnableLogging(False)
+            # Отключим уведомления об ошибках во всплывающих окнах
+            # иначе они появляются при попытке прочитать
+            # испорченные иконки
+            # На результат работы это не сказывается,
+            # все равно бракованные иконки отлавливаются.
+            wx.Log.EnableLogging(False)
 
-                    imageIndex = self.__fileIcons.getFileImage(fname)
+            for index, fname in enumerate(files):
+                fname_base = os.path.basename(fname)
 
-                    # Вернем всплывающие окна с ошибками
-                    wx.Log.EnableLogging(True)
+                imageIndex = self.__fileIcons.getFileImage(fname)
 
-                    self.__attachList.InsertItem(
-                        0,
-                        os.path.basename(fname),
-                        imageIndex)
+                if index >= self.__attachList.GetItemCount():
+                    self.__attachList.InsertItem(index, fname_base, imageIndex)
+                elif fname_base != self.__attachList.GetItemText(index):
+                    self.__attachList.SetItemText(index, fname_base)
+                    self.__attachList.SetItemImage(index, imageIndex)
+
+            # Вернем всплывающие окна с ошибками
+            wx.Log.EnableLogging(True)
+
+            for n in range(self.__attachList.GetItemCount() - len(files)):
+                self.__attachList.DeleteItem(self.__attachList.GetItemCount() - 1)
+        else:
+            self.__attachList.DeleteAllItems()
 
         self.__attachList.Thaw()
 
