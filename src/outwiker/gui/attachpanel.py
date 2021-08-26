@@ -45,7 +45,7 @@ class AttachPanel(wx.Panel):
 
         self.__attachList = wx.ListCtrl(self,
                                         wx.ID_ANY,
-                                        style=wx.LC_LIST | wx.SUNKEN_BORDER)
+                                        style=wx.LC_LIST | wx.LC_EDIT_LABELS | wx.SUNKEN_BORDER)
 
         self.__toolbar = self._createGui(self)
         self.__attachList.SetMinSize((-1, 100))
@@ -76,6 +76,7 @@ class AttachPanel(wx.Panel):
 
         self.Bind(wx.EVT_CLOSE, self._onClose)
 
+        self.Bind(wx.EVT_LIST_BEGIN_LABEL_EDIT, self._onBeginLabelEdit)
         self.Bind(wx.EVT_LIST_END_LABEL_EDIT, self._onEndLabelEdit)
 
     def _unbindGuiEvents(self):
@@ -85,6 +86,14 @@ class AttachPanel(wx.Panel):
 
         self.Unbind(wx.EVT_LIST_ITEM_ACTIVATED,
                     handler=self._onDoubleClick,
+                    source=self.__attachList)
+
+        self.Unbind(wx.EVT_LIST_BEGIN_LABEL_EDIT,
+                    handler=self._onBeginLabelEdit,
+                    source=self.__attachList)
+
+        self.Unbind(wx.EVT_LIST_END_LABEL_EDIT,
+                    handler=self._onEndLabelEdit,
                     source=self.__attachList)
 
         self.Unbind(wx.EVT_CLOSE, handler=self._onClose)
@@ -325,11 +334,13 @@ class AttachPanel(wx.Panel):
         if selectedItem == -1:
             return
 
+        self.__attachList.EditLabel(selectedItem)
+
+    def _onBeginLabelEdit(self, event):
         self._oldAttachName = os.path.join(
             self._currentSubdirectory,
-            self.__attachList.GetItemText(selectedItem))
+            event.GetItem().GetText())
         self._disableHotkeys()
-        self.__attachList.EditLabel(selectedItem)
 
     def _onEndLabelEdit(self, event):
         self._enableHotkeys()
