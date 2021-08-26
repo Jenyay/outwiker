@@ -45,7 +45,7 @@ class AttachPanel(wx.Panel):
 
         self.__attachList = wx.ListCtrl(self,
                                         wx.ID_ANY,
-                                        style=wx.LC_LIST | wx.SUNKEN_BORDER)
+                                        style=wx.LC_LIST | wx.SUNKEN_BORDER | wx.LC_EDIT_LABELS)
 
         self.__toolbar = self._createGui(self)
         self.__attachList.SetMinSize((-1, 100))
@@ -248,6 +248,7 @@ class AttachPanel(wx.Panel):
             self.__attachList.DeleteAllItems()
 
         self.__attachList.Thaw()
+        self.__attachList.Update()
 
     def getSelectedFiles(self):
         files = []
