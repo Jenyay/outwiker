@@ -82,13 +82,15 @@ def testreadonly(func):
 def renameAttach(parent: wx.Window,
                  page: 'outwiker.core.tree.WikiPage',
                  fname_src: str,
-                 fname_dest: str):
+                 fname_dest: str) -> bool:
     """
     Rename attached file. Show overwrite dialog if necessary
     parent - parent for dialog window
     page - page to attach
     fname_src - source file name (relative path)
     fname_dest - new file name (relative path)
+
+    Returns True if file renamed
     """
     if page.readonly:
         raise outwiker.core.exceptions.ReadonlyException
@@ -98,7 +100,7 @@ def renameAttach(parent: wx.Window,
     fname_dest_full = os.path.join(attachRoot, fname_dest)
 
     if fname_src_full == fname_dest_full:
-        return
+        return False
 
     if os.path.exists(fname_dest_full):
         with OverwriteDialog(parent) as overwriteDialog:
@@ -111,13 +113,13 @@ def renameAttach(parent: wx.Window,
                 src_file_stat = os.stat(fname_src_full)
                 dest_file_stat = os.stat(fname_dest_full)
             except FileNotFoundError:
-                return
+                return False
             result = overwriteDialog.ShowDialog(text,
                                                 src_file_stat,
                                                 dest_file_stat)
 
             if result == overwriteDialog.ID_SKIP or result == wx.ID_CANCEL:
-                return
+                return False
 
     try:
         os.replace(fname_src_full, fname_dest_full)
@@ -125,6 +127,9 @@ def renameAttach(parent: wx.Window,
         text = _('Error renaming file\n{} -> {}\n{}').format(fname_src, fname_dest, str(e))
         logger.error(text)
         showError(Application.mainWindow, text)
+        return False
+
+    return True
 
 
 @testreadonly

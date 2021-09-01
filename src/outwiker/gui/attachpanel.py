@@ -35,13 +35,16 @@ class AttachPanel(wx.Panel):
         # Store old file name before renaming
         self._oldAttachName = None
 
+        # Current selected file name (store for updating)
+        self._selectedFileName = None
+
         # Actions with hot keys for attach panel
         self._localHotKeys = [
-                RemoveAttachesActionForAttachPanel,
-                AttachSelectAllAction,
-                AttachPasteLinkActionForAttachPanel,
-                AttachExecuteFilesAction,
-                RenameAttachActionForAttachPanel]
+            RemoveAttachesActionForAttachPanel,
+            AttachSelectAllAction,
+            AttachPasteLinkActionForAttachPanel,
+            AttachExecuteFilesAction,
+            RenameAttachActionForAttachPanel]
 
         self.__attachList = wx.ListCtrl(self,
                                         wx.ID_ANY,
@@ -69,15 +72,26 @@ class AttachPanel(wx.Panel):
 
     def _bindGuiEvents(self):
         self.Bind(wx.EVT_LIST_BEGIN_DRAG,
-                  self._onBeginDrag, self.__attachList)
+                  self._onBeginDrag,
+                  self.__attachList)
 
-        self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self._onDoubleClick,
+        self.Bind(wx.EVT_LIST_ITEM_ACTIVATED,
+                  self._onDoubleClick,
                   self.__attachList)
 
         self.Bind(wx.EVT_CLOSE, self._onClose)
 
-        self.Bind(wx.EVT_LIST_BEGIN_LABEL_EDIT, self._onBeginLabelEdit)
-        self.Bind(wx.EVT_LIST_END_LABEL_EDIT, self._onEndLabelEdit)
+        self.Bind(wx.EVT_LIST_BEGIN_LABEL_EDIT,
+                  self._onBeginLabelEdit,
+                  self.__attachList)
+
+        self.Bind(wx.EVT_LIST_END_LABEL_EDIT,
+                  self._onEndLabelEdit,
+                  self.__attachList)
+
+        self.Bind(wx.EVT_LIST_ITEM_SELECTED,
+                  self._onItemSelected,
+                  self.__attachList)
 
     def _unbindGuiEvents(self):
         self.Unbind(wx.EVT_LIST_BEGIN_DRAG,
@@ -94,6 +108,10 @@ class AttachPanel(wx.Panel):
 
         self.Unbind(wx.EVT_LIST_END_LABEL_EDIT,
                     handler=self._onEndLabelEdit,
+                    source=self.__attachList)
+
+        self.Unbind(wx.EVT_LIST_ITEM_SELECTED,
+                    handler=self._onItemSelected,
                     source=self.__attachList)
 
         self.Unbind(wx.EVT_CLOSE, handler=self._onClose)
@@ -206,10 +224,12 @@ class AttachPanel(wx.Panel):
         self.SetAutoLayout(True)
 
     def _onWikiOpen(self, _wiki):
+        self._selectedFileName = None
         self._currentSubdirectory = '.'
         self.updateAttachments()
 
     def _onPageSelect(self, _page):
+        self._selectedFileName = None
         self._currentSubdirectory = '.'
         self.updateAttachments()
 
@@ -248,7 +268,22 @@ class AttachPanel(wx.Panel):
                         os.path.basename(fname),
                         imageIndex)
 
+            self._selectFile(self._selectedFileName)
+
         self.__attachList.Thaw()
+
+    def _selectFile(self, fname):
+        if fname is None:
+            return
+
+        if self.__attachList.GetItemCount() == 0:
+            self._selectedFileName = None
+            return
+
+        for n in range(self.__attachList.GetItemCount()):
+            if self.__attachList.GetItemText(n) == fname:
+                self.__attachList.Select(n)
+                self._selectedFileName = fname
 
     def getSelectedFiles(self):
         files = []
@@ -361,10 +396,16 @@ class AttachPanel(wx.Panel):
             self._oldAttachName = None
             return
 
-        renameAttach(self._application.mainWindow,
-                     self._application.wikiroot.selectedPage,
-                     self._oldAttachName, newName)
+        rename = renameAttach(self._application.mainWindow,
+                              self._application.wikiroot.selectedPage,
+                              self._oldAttachName, newName)
         self._oldAttachName = None
+        if rename:
+            self._selectedFileName = event.GetLabel().strip()
+            self._selectFile(self._selectedFileName)
+
+    def _onItemSelected(self, event):
+        self._selectedFileName = event.GetLabel().strip()
 
 
 class DropAttachFilesTarget(BaseDropFilesTarget):
