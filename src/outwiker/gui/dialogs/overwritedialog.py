@@ -35,6 +35,18 @@ class OverwriteDialog(TestedDialog):
         self.SetEscapeId(wx.ID_CANCEL)
         self.Center(wx.BOTH)
 
+    def setVisibleOverwriteAllButton(self, visible: bool):
+        self.overwriteAll.Show(visible)
+        self.Layout()
+
+    def setVisibleSkipButton(self, visible: bool):
+        self.skip.Show(visible)
+        self.Layout()
+
+    def setVisibleSkipAllButton(self, visible: bool):
+        self.skipAll.Show(visible)
+        self.Layout()
+
     def _createControls(self):
         self._createButtons()
         self._createFileInfoPanels()

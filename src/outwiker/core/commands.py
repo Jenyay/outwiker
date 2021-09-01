@@ -102,6 +102,10 @@ def renameAttach(parent: wx.Window,
 
     if os.path.exists(fname_dest_full):
         with OverwriteDialog(parent) as overwriteDialog:
+            overwriteDialog.setVisibleOverwriteAllButton(False)
+            overwriteDialog.setVisibleSkipButton(False)
+            overwriteDialog.setVisibleSkipAllButton(False)
+
             text = _("File '{}' exists already").format(os.path.basename(fname_dest))
             try:
                 src_file_stat = os.stat(fname_src_full)
