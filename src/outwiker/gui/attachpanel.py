@@ -178,6 +178,13 @@ class AttachPanel(wx.Panel):
             getBuiltinImagePath("delete.png")
         )
 
+        # Rename file
+        actionController.appendToolbarButton(
+            RenameAttachActionForAttachPanel.stringId,
+            toolbar,
+            getBuiltinImagePath("attach_rename.png")
+        )
+
         # Select all files
         actionController.appendToolbarButton(
             AttachSelectAllAction.stringId,
