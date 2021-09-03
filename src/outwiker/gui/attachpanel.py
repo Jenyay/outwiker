@@ -297,11 +297,16 @@ class AttachPanel(wx.Panel):
 
         item = self.__attachList.GetNextItem(-1, state=wx.LIST_STATE_SELECTED)
 
+        prefix_list = ['./', '.\\']
         while item != -1:
             fname = os.path.join(self._currentSubdirectory,
                                  self.__attachList.GetItemText(item))
-            files.append(fname)
+            # Remove prefixes
+            for prefix in prefix_list:
+                if fname.startswith(prefix):
+                    fname = fname[len(prefix):]
 
+            files.append(fname)
             item = self.__attachList.GetNextItem(item,
                                                  state=wx.LIST_STATE_SELECTED)
 
