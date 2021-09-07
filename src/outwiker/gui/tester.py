@@ -3,7 +3,7 @@
 import wx
 
 
-class DialogTester(object):
+class DialogTester:
     """
     Класс, используемый для тестирования GUI (диалогов)
     """
@@ -52,7 +52,7 @@ class DialogTester(object):
     def appendNo(self):
         """
         Метод добавляет в _dialogActions функцию,
-        которая только возвращает wx.YES
+        которая только возвращает wx.NO
         """
         self.append(self._returnResult, wx.NO)
 
@@ -88,7 +88,7 @@ class DialogTester(object):
         assert False
 
 
-class TesterInterface(object):
+class TesterInterface:
     def __init__(self):
         self.dialogTester = DialogTester()
 

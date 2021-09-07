@@ -146,7 +146,7 @@ class OverwriteDialog(TestedDialog):
                    old_file_stat: stat_result,
                    new_file_stat: stat_result):
         """
-        Показать диалог, если нужно спросить, что делать с файлов.
+        Показать диалог, если нужно спросить, что делать с файлом.
         Этот метод вызывается вместо Show/ShowModal.
         text - текст для сообщения в диалоге
         """
