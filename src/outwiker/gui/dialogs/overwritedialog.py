@@ -11,13 +11,13 @@ from outwiker.gui.testeddialog import TestedDialog
 
 
 class OverwriteDialog(TestedDialog):
+    ID_OVERWRITE = 1
+    ID_SKIP = 2
+
     def __init__(self, parent):
         super().__init__(parent)
         self._createControls()
         self._do_layout()
-
-        self.ID_OVERWRITE = 1
-        self.ID_SKIP = 2
 
         self.SetTitle(_("Overwrite Files"))
         self.overwrite.SetFocus()
