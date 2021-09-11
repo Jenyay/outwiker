@@ -393,7 +393,7 @@ class AttachPanel(wx.Panel):
         self._enableHotkeys()
         event.Veto()
 
-        if event.IsEditCancelled():
+        if event.IsEditCancelled() or self._oldAttachName is None:
             self._oldAttachName = None
             return
 
@@ -417,7 +417,7 @@ class AttachPanel(wx.Panel):
             self._selectFile(self._selectedFileName)
 
     def _onItemSelected(self, event):
-        self._selectedFileName = event.GetLabel().strip()
+        self._selectedFileName = event.GetItem().GetText()
 
 
 class DropAttachFilesTarget(BaseDropFilesTarget):
