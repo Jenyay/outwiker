@@ -6,7 +6,7 @@ import os
 import os.path
 import shutil
 
-from fabric.api import local
+from invoke import Context
 from colorama import Fore
 
 
@@ -26,13 +26,9 @@ def addToSysPath(path):
 
 def getPython():
     if os.name == 'posix':
-        return u'python3'
+        return 'python3'
     else:
-        return u'python'
-
-
-def execute(command):
-    local(command)
+        return 'python'
 
 
 def getCurrentUbuntuDistribName():
@@ -40,19 +36,19 @@ def getCurrentUbuntuDistribName():
         for line in fp:
             line = line.strip()
             if line.startswith(u'DISTRIB_CODENAME'):
-                codename = line.split(u'=')[1].strip()
+                codename = line.split('=')[1].strip()
                 return codename
 
 
 def getPathToPlugin(plugin_name):
-    return os.path.join(u'plugins', plugin_name, plugin_name)
+    return os.path.join('plugins', plugin_name, plugin_name)
 
 
 def tobool(value):
     if isinstance(value, bool):
         return value
 
-    true_list = [u'1', '1', u'true', 'true']
+    true_list = ['1', 'true']
 
     if isinstance(value, str):
         return value.lower() in true_list

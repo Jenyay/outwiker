@@ -4,6 +4,8 @@ import abc
 import os
 import shutil
 
+from invoke import Context
+
 from buildtools.defines import PLUGINS_LIST
 from buildtools.buildfacts import BuildFacts
 from buildtools.utilites import print_info
@@ -14,7 +16,8 @@ class BuilderBase(metaclass=abc.ABCMeta):
     Base class for all builders.
     """
 
-    def __init__(self, subdir_name, is_stable=False):
+    def __init__(self, c: Context, subdir_name, is_stable=False):
+        self.context = c
         self.is_stable = is_stable
 
         self.facts = BuildFacts()

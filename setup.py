@@ -42,10 +42,10 @@ setup(
     python_requires='>=3.6',
     install_requires=[
         'wxPython==4.1.1',
-        'Pillow>=8.1',
+        'Pillow>=9.0',
         'idna>=2.10',
         'pyparsing==2.4.7',
-        'psutil>=5.8.0',
+        'psutil>=5.9.0',
         'cyhunspell>=2.0.2',
         'comtypes>=1.1.7;platform_system=="Windows"',
     ],

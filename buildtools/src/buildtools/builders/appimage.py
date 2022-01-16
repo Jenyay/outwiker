@@ -4,7 +4,7 @@ import glob
 import os
 import shutil
 
-from fabric.api import local, lcd
+from invoke import Context
 
 from .base import BuilderBase
 from .binarybuilders import PyInstallerBuilderLinuxSimple
@@ -18,15 +18,15 @@ class BuilderAppImage(BuilderBase):
     '''
     Class to create AppImage package for Linux.
     '''
-    def __init__(self, is_stable=False):
-        super(BuilderAppImage, self).__init__(APPIMAGE_BUILD_DIR, is_stable)
-        self._appdir_name = u'Outwiker.AppDir'
-        self._appimage_result_name = u'Outwiker-x86_64.AppImage'
+    def __init__(self, c: Context, is_stable: bool = False):
+        super().__init__(c, APPIMAGE_BUILD_DIR, is_stable)
+        self._appdir_name = 'Outwiker.AppDir'
+        self._appimage_result_name = 'Outwiker-x86_64.AppImage'
 
-        self._temp_dir = os.path.join(self.facts.temp_dir, u'AppImage')
+        self._temp_dir = os.path.join(self.facts.temp_dir, 'AppImage')
         self._app_dir = os.path.join(self._temp_dir, self._appdir_name)
-        self._opt_dir = os.path.join(self._app_dir, u'opt')
-        self._binary_dir = os.path.join(self._opt_dir, u'outwiker')
+        self._opt_dir = os.path.join(self._app_dir, 'opt')
+        self._binary_dir = os.path.join(self._opt_dir, 'outwiker')
         self._plugins_dir = os.path.join(self._binary_dir, PLUGINS_DIR)
         self._result_full_path = os.path.join(self.build_dir,
                                               self._appimage_result_name)
@@ -61,14 +61,14 @@ class BuilderAppImage(BuilderBase):
         linuxBuilder.build()
 
     def _download_appimagetool(self):
-        with lcd(self._temp_dir):
-            local(u'wget "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage"')
-            local(u'chmod a+x appimagetool-x86_64.AppImage')
+        with self.context.cd(self._temp_dir):
+            self.context.run(u'wget "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage"')
+            self.context.run(u'chmod a+x appimagetool-x86_64.AppImage')
 
     def _build_appimage(self):
-        with lcd(self._temp_dir):
-            local('./appimagetool-*.AppImage --appimage-extract')
-            local(u'ARCH=x86_64 squashfs-root/AppRun {}'.format(self._appdir_name))
+        with self.context.cd(self._temp_dir):
+            self.context.run('./appimagetool-*.AppImage --appimage-extract')
+            self.context.run(u'ARCH=x86_64 squashfs-root/AppRun {}'.format(self._appdir_name))
 
     def _copy_result(self):
         src = os.path.join(self._temp_dir, self._appimage_result_name)
