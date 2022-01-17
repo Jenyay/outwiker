@@ -65,6 +65,10 @@ class BuilderWindows(BuilderBase):
             self._remove(fname)
 
     def _build(self):
+        print_info('Is stable: {}'.format(self.is_stable))
+        print_info('Create installer: {}'.format(self._create_installer))
+        print_info('Create archives: {}'.format(self._create_archives))
+
         self._copy_necessary_files()
         self._create_plugins_dir()
         self._create_binary()

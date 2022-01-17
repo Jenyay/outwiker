@@ -79,9 +79,9 @@ def win(c, is_stable=False, skiparchives=False, skipinstaller=False):
     Build OutWiker for Windows
     '''
     builder = BuilderWindows(c,
-                             is_stable=tobool(is_stable),
-                             create_archives=not tobool(skiparchives),
-                             create_installer=not tobool(skipinstaller)
+                             is_stable=is_stable,
+                             create_archives=not skiparchives,
+                             create_installer=not skipinstaller
                              )
     builder.build()
 
