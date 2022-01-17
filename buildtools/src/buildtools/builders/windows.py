@@ -84,7 +84,7 @@ class BuilderWindows(BuilderBase):
         dest_dir = self._executable_dir
         temp_dir = self.facts.temp_dir
 
-        builder = CxFreezeBuilderWindows(src_dir, dest_dir, temp_dir)
+        builder = CxFreezeBuilderWindows(self.context, src_dir, dest_dir, temp_dir)
         builder.build()
 
     def _create_plugins_dir(self):

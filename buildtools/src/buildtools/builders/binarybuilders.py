@@ -181,8 +181,8 @@ class BasePyInstallerBuilder(BaseBinaryBuilder, metaclass=ABCMeta):
 class BaseCxFreezeBuilder(BaseBinaryBuilder, metaclass=ABCMeta):
     """Class for binary assembling creation with cx_freeze. """
 
-    def __init__(self, src_dir, dest_dir, temp_dir):
-        super().__init__(src_dir, dest_dir, temp_dir)
+    def __init__(self, c: Context, src_dir, dest_dir, temp_dir):
+        super().__init__(c, src_dir, dest_dir, temp_dir)
 
         # The path where the folder with the assembly will be created
         # (before copying to self.dest_dir)
