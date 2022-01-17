@@ -41,7 +41,7 @@ def plugins(c, updatedonly=False):
     Create an archive with plugins (7z required)
     '''
     updatedonly = tobool(updatedonly)
-    builder = BuilderPlugins(updatedOnly=updatedonly)
+    builder = BuilderPlugins(c, updatedOnly=updatedonly)
     builder.build()
 
 
@@ -50,7 +50,7 @@ def plugins_clear(c):
     '''
     Remove an archive with plugins (7z required)
     '''
-    builder = BuilderPlugins()
+    builder = BuilderPlugins(c)
     builder.clear()
 
 
@@ -60,7 +60,7 @@ def sources(c, is_stable=False):
     Create the sources archives
     '''
     is_stable = tobool(is_stable)
-    builder = BuilderSources(is_stable=tobool(is_stable))
+    builder = BuilderSources(c, is_stable=tobool(is_stable))
     builder.build()
 
 
@@ -69,7 +69,7 @@ def sources_clear(c):
     '''
     Remove the sources archives.
     '''
-    builder = BuilderSources()
+    builder = BuilderSources(c)
     builder.clear()
 
 
@@ -78,7 +78,8 @@ def win(c, is_stable=False, skiparchives=False, skipinstaller=False):
     '''
     Build OutWiker for Windows
     '''
-    builder = BuilderWindows(is_stable=tobool(is_stable),
+    builder = BuilderWindows(c,
+                             is_stable=tobool(is_stable),
                              create_archives=not tobool(skiparchives),
                              create_installer=not tobool(skipinstaller)
                              )
@@ -90,7 +91,7 @@ def win_clear(c):
     '''
     Remove assemblies under Windows
     '''
-    builder = BuilderWindows()
+    builder = BuilderWindows(c)
     builder.clear()
 
 
@@ -99,7 +100,8 @@ def linux_binary(c, is_stable=False, skiparchives=False):
     '''
     Assemble binary builds for Linux
     '''
-    builder = BuilderLinuxBinary(is_stable=tobool(is_stable),
+    builder = BuilderLinuxBinary(c,
+                                 is_stable=tobool(is_stable),
                                  create_archive=not tobool(skiparchives)
                                  )
     builder.build()
@@ -110,7 +112,7 @@ def linux_clear(c):
     '''
     Remove binary builds for Linux
     '''
-    builder = BuilderLinuxBinary()
+    builder = BuilderLinuxBinary(c)
     builder.clear()
 
 
@@ -123,15 +125,18 @@ def run(c, args=''):
         c.run('{} runoutwiker.py {}'.format(getPython(), args))
 
 
-@task
-def test(c, *args):
+@task(iterable=['params'])
+def test(c, params=None):
     '''
     Run the unit tests
     '''
-    command = getPython() if args else 'coverage run {}'.format(COVERAGE_PARAMS)
+    if params is None:
+        params = []
+
+    command = getPython() if params else 'coverage run {}'.format(COVERAGE_PARAMS)
 
     c.run('{command} runtests.py {args}'.format(
-          command=command, args=' '.join(args)))
+          command=command, args=' '.join(params)))
 
 
 def _runTests(c, testdir, prefix, section='', *args):
@@ -261,7 +266,7 @@ def appimage(c, is_stable=False):
     '''
     Build AppImage package
     '''
-    builder = BuilderAppImage(is_stable=tobool(is_stable))
+    builder = BuilderAppImage(c, is_stable=tobool(is_stable))
     builder.build()
     print_info('AppImage created: {}'.format(builder.get_appimage_files()))
 
@@ -305,7 +310,7 @@ def snap(c, *params):
     '''
     Build clean snap package
     '''
-    builder = BuilderSnap(*params)
+    builder = BuilderSnap(c, *params)
     builder.build()
 
 
