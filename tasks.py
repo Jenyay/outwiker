@@ -305,12 +305,12 @@ def docker_build(c, *args):
     c.run(command)
 
 
-@task
-def snap(c, *params):
+@task(iterable=['params'])
+def snap(c, params):
     '''
     Build clean snap package
     '''
-    builder = BuilderSnap(c, *params)
+    builder = BuilderSnap(c, params)
     builder.build()
 
 

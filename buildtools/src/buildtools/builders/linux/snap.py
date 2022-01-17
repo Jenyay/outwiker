@@ -17,7 +17,7 @@ class BuilderSnap(BuilderBase):
     A class to build snap package
     """
 
-    def __init__(self, c: Context, *snap_params):
+    def __init__(self, c: Context, snap_params):
         super().__init__(c, SNAP_BUILD_DIR)
         self._snap_params = snap_params
 
