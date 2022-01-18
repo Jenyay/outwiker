@@ -1,6 +1,6 @@
 [submodule "depends/cacheman"]
 	path = depends/cacheman
-	url = https://github.com/Jenyay/py_cache_manager
+	url = git@github.com:Jenyay/py_cache_manager.git
 [submodule "depends/cyhunspell"]
 	path = depends/cyhunspell
-	url = https://github.com/Jenyay/cython_hunspell
+	url = git@github.com:Jenyay/cython_hunspell.git
