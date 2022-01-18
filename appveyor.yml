@@ -18,11 +18,11 @@ init:
     - sh: sudo apt-get -y install libwebkit2gtk-4.0
 install:
     - cmd: cinst innosetup
-    - cmd: python -m pipenv --python %PY_PYTHON% update --dev
+    - cmd: python -m pipenv --python %PY_PYTHON% update --dev -v
     - cmd: python -m pipenv run python -m pip list
     - sh: python -m pip install pipenv
     - sh: pipenv run pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-18.04 wxPython==4.1.1
-    - sh: pipenv update --dev
+    - sh: pipenv update --dev -v
 build_script:
     - cmd: python -m pipenv run inv win
     - cmd: python -m pipenv run inv win --is-stable
