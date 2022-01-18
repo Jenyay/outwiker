@@ -1,3 +1,6 @@
 [submodule "depends\\cacheman"]
 	path = depends\\cacheman
 	url = https://github.com/MSeal/py_cache_manager
+[submodule "depends\\cyhunspell"]
+	path = depends\\cyhunspell
+	url = https://github.com/MSeal/cython_hunspell
