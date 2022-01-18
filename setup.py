@@ -46,7 +46,6 @@ setup(
         'idna>=2.10',
         'pyparsing==2.4.7',
         'psutil>=5.9.0',
-        'cyhunspell>=2.0.2',
         'comtypes>=1.1.7;platform_system=="Windows"',
     ],
     project_urls={
