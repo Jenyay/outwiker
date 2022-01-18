@@ -1,0 +1,3 @@
+[submodule "depends\\cacheman"]
+	path = depends\\cacheman
+	url = https://github.com/MSeal/py_cache_manager
