@@ -22,7 +22,7 @@ class BuilderBase(metaclass=abc.ABCMeta):
 
         self.facts = BuildFacts()
         self.build_dir = os.path.join(self.facts.version_dir, subdir_name)
-        self.temp_sources_dir = os.path.join(self.facts.temp_dir, u'src')
+        self.temp_sources_dir = os.path.join(self.facts.temp_dir, 'src')
 
     @abc.abstractmethod
     def _build(self):
@@ -39,7 +39,7 @@ class BuilderBase(metaclass=abc.ABCMeta):
 
     def build(self):
         self._createRootDir()
-        print_info(u'Clearing...')
+        print_info('Clearing...')
         self.clear()
 
         self._remove(self.facts.temp_dir)
@@ -50,7 +50,7 @@ class BuilderBase(metaclass=abc.ABCMeta):
 
         self._copy_sources_to_temp()
 
-        print_info(u'Build to {}'.format(self.build_dir))
+        print_info('Build to {}'.format(self.build_dir))
         self._build()
         self._postBuild()
         return self._getBuildReturnValue()

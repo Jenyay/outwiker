@@ -11,11 +11,9 @@ import re
 from typing import List, Tuple, Callable, TextIO
 from pathlib import Path
 
-# from fabric.api import local, lcd, settings, task
 from invoke import task
 
 from buildtools.utilites import (getPython,
-                                 tobool,
                                  print_info,
                                  windows_only,
                                  linux_only
@@ -36,12 +34,11 @@ from buildtools.versionstools import (display_version,
 
 
 @task
-def plugins(c, updatedonly=False):
+def plugins(c):
     '''
     Create an archive with plugins (7z required)
     '''
-    updatedonly = tobool(updatedonly)
-    builder = BuilderPlugins(c, updatedOnly=updatedonly)
+    builder = BuilderPlugins(c)
     builder.build()
 
 
@@ -59,8 +56,7 @@ def sources(c, is_stable=False):
     '''
     Create the sources archives
     '''
-    is_stable = tobool(is_stable)
-    builder = BuilderSources(c, is_stable=tobool(is_stable))
+    builder = BuilderSources(c, is_stable=is_stable)
     builder.build()
 
 
@@ -101,8 +97,8 @@ def linux_binary(c, is_stable=False, skiparchives=False):
     Assemble binary builds for Linux
     '''
     builder = BuilderLinuxBinary(c,
-                                 is_stable=tobool(is_stable),
-                                 create_archive=not tobool(skiparchives)
+                                 is_stable,
+                                 create_archive=not skiparchives
                                  )
     builder.build()
 
@@ -142,7 +138,7 @@ def test(c, params=None):
 def _runTests(c, testdir, prefix, section='', *args):
     files = [fname[len(testdir) + 1:]
              for fname
-             in glob.glob(u'{path}/{prefix}*.py'.format(path=testdir,
+             in glob.glob('{path}/{prefix}*.py'.format(path=testdir,
                                                         prefix=prefix))]
     files.sort()
 
@@ -152,7 +148,7 @@ def _runTests(c, testdir, prefix, section='', *args):
                 python=getPython(),
                 prefix=prefix,
                 section=section,
-                params=u' '.join(args))
+                params=' '.join(args))
             )
         else:
             # with settings(warn_only=True):
@@ -160,7 +156,7 @@ def _runTests(c, testdir, prefix, section='', *args):
                 c.run('{python} {fname} {params}'.format(
                     python=getPython(),
                     fname=fname,
-                    params=u' '.join(args))
+                    params=' '.join(args))
                 )
 
 
@@ -169,7 +165,6 @@ def deb_binary(c, is_stable=False):
     '''
     Create binary deb package
     '''
-    is_stable = tobool(is_stable)
     builder = BuilderDebBinaryFactory.get_default(DEB_BINARY_BUILD_DIR,
                                                   is_stable)
     builder.build()
@@ -222,12 +217,12 @@ def _create_tree(level, maxlevel, nsiblings, parent):
 
     if level <= maxlevel:
         for n in range(nsiblings):
-            pagename = u'page_{:03g}_{:03g}'.format(level, n)
-            print(u'Create page {}'.format(pagename))
+            pagename = 'page_{:03g}_{:03g}'.format(level, n)
+            print('Create page {}'.format(pagename))
 
             newpage = WikiPageFactory().create(parent, pagename, [])
-            newpage.content = u'Абырвалг'
-            newpage.icon = u'images/outwiker_16.png'
+            newpage.content = 'Абырвалг'
+            newpage.icon = 'images/outwiker_16.png'
             _create_tree(level + 1, maxlevel, nsiblings, newpage)
 
 
@@ -236,16 +231,14 @@ def build(c, is_stable=False):
     '''
     Create artifacts for current version.
     '''
-    is_stable = tobool(is_stable)
-
     if is_stable:
         build(False)
 
-    sources(is_stable)
-    plugins(True)
+    sources(c, is_stable)
+    plugins(c)
 
     if sys.platform.startswith('win32'):
-        win(is_stable)
+        win(c, is_stable)
 
 
 @task
@@ -253,7 +246,7 @@ def doc(c):
     '''
     Build documentation
     '''
-    doc_path = u'doc/_build'
+    doc_path = 'doc/_build'
     if os.path.exists(doc_path):
         shutil.rmtree(doc_path)
 
@@ -266,7 +259,7 @@ def appimage(c, is_stable=False):
     '''
     Build AppImage package
     '''
-    builder = BuilderAppImage(c, is_stable=tobool(is_stable))
+    builder = BuilderAppImage(c, is_stable)
     builder.build()
     print_info('AppImage created: {}'.format(builder.get_appimage_files()))
 

@@ -44,18 +44,6 @@ def getPathToPlugin(plugin_name):
     return os.path.join('plugins', plugin_name, plugin_name)
 
 
-def tobool(value):
-    if isinstance(value, bool):
-        return value
-
-    true_list = ['1', 'true']
-
-    if isinstance(value, str):
-        return value.lower() in true_list
-
-    return bool(value)
-
-
 def remove(path):
     """
     Remove the fname file if it exists.
