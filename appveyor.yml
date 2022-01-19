@@ -31,9 +31,9 @@ build_script:
     - cmd: python -m pipenv run inv win
     - cmd: python -m pipenv run inv win --is-stable
 test_script:
-    - cmd: python -m pipenv run inv test
+    - cmd: python -m pipenv run inv test -p src/outwiker/tests
       # - cmd: python -m pipenv run inv coverage
-    - sh: xvfb-run pipenv run inv test
+    - sh: xvfb-run pipenv run inv test -p src/outwiker/tests
 artifacts:
     - path: build/*/versions.xml
       name: versions.xml
