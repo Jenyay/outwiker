@@ -23,5 +23,5 @@ coverage = "==6.2"
 jinja2 = "==3.0.3"
 colorama = "==0.4.4"
 sphinx = ">=4.0"
-outwiker = {editable = true,path = "."}
-buildtools = {editable = true,path = "buildtools"}
+buildtools = {editable = true, path = "./buildtools"}
+outwiker = {editable = true, path = "."}
