@@ -11,11 +11,9 @@ import re
 from typing import List, Tuple, Callable, TextIO
 from pathlib import Path
 
-from fabric.api import local, lcd, settings, task
+from invoke import task
 
 from buildtools.utilites import (getPython,
-                                 execute,
-                                 tobool,
                                  print_info,
                                  windows_only,
                                  linux_only
@@ -36,140 +34,137 @@ from buildtools.versionstools import (display_version,
 
 
 @task
-def plugins(updatedonly=False):
+def plugins(c):
     '''
     Create an archive with plugins (7z required)
     '''
-    updatedonly = tobool(updatedonly)
-    builder = BuilderPlugins(updatedOnly=updatedonly)
+    builder = BuilderPlugins(c)
     builder.build()
 
 
 @task
-def plugins_clear():
+def plugins_clear(c):
     '''
     Remove an archive with plugins (7z required)
     '''
-    builder = BuilderPlugins()
+    builder = BuilderPlugins(c)
     builder.clear()
 
 
 @task
-def sources(is_stable=False):
+def sources(c, is_stable=False):
     '''
     Create the sources archives
     '''
-    is_stable = tobool(is_stable)
-    builder = BuilderSources(is_stable=tobool(is_stable))
+    builder = BuilderSources(c, is_stable=is_stable)
     builder.build()
 
 
 @task
-def sources_clear():
+def sources_clear(c):
     '''
     Remove the sources archives.
     '''
-    builder = BuilderSources()
+    builder = BuilderSources(c)
     builder.clear()
 
 
 @task
-@windows_only
-def win(is_stable=False, skiparchives=False, skipinstaller=False):
+def win(c, is_stable=False, skiparchives=False, skipinstaller=False):
     '''
     Build OutWiker for Windows
     '''
-    builder = BuilderWindows(is_stable=tobool(is_stable),
-                             create_archives=not tobool(skiparchives),
-                             create_installer=not tobool(skipinstaller)
+    builder = BuilderWindows(c,
+                             is_stable=is_stable,
+                             create_archives=not skiparchives,
+                             create_installer=not skipinstaller
                              )
     builder.build()
 
 
 @task
-@windows_only
-def win_clear():
+def win_clear(c):
     '''
     Remove assemblies under Windows
     '''
-    builder = BuilderWindows()
+    builder = BuilderWindows(c)
     builder.clear()
 
 
 @task
-@linux_only
-def linux_binary(is_stable=False, skiparchives=False):
+def linux_binary(c, is_stable=False, skiparchives=False):
     '''
     Assemble binary builds for Linux
     '''
-    builder = BuilderLinuxBinary(is_stable=tobool(is_stable),
-                                 create_archive=not tobool(skiparchives)
+    builder = BuilderLinuxBinary(c,
+                                 is_stable,
+                                 create_archive=not skiparchives
                                  )
     builder.build()
 
 
 @task
-@linux_only
-def linux_clear():
+def linux_clear(c):
     '''
     Remove binary builds for Linux
     '''
-    builder = BuilderLinuxBinary()
+    builder = BuilderLinuxBinary(c)
     builder.clear()
 
 
 @task
-def run(args=u''):
+def run(c, args=''):
     '''
     Run OutWiker from sources
     '''
-    with lcd("src"):
-        execute(u'{} runoutwiker.py {}'.format(getPython(), args))
+    with c.cd("src"):
+        c.run('{} runoutwiker.py {}'.format(getPython(), args))
 
 
-@task
-def test(*args):
+@task(iterable=['params'])
+def test(c, params=None):
     '''
     Run the unit tests
     '''
-    command = getPython() if args else 'coverage run {}'.format(COVERAGE_PARAMS)
+    if params is None:
+        params = []
 
-    local('{command} runtests.py {args}'.format(
-        command=command, args=' '.join(args)))
+    command = getPython() if params else 'coverage run {}'.format(COVERAGE_PARAMS)
+
+    c.run('{command} runtests.py {args}'.format(
+          command=command, args=' '.join(params)))
 
 
-def _runTests(testdir, prefix, section=u'', *args):
+def _runTests(c, testdir, prefix, section='', *args):
     files = [fname[len(testdir) + 1:]
              for fname
-             in glob.glob(u'{path}/{prefix}*.py'.format(path=testdir,
+             in glob.glob('{path}/{prefix}*.py'.format(path=testdir,
                                                         prefix=prefix))]
     files.sort()
 
-    with lcd(testdir):
+    with c.cd(testdir):
         if section:
-            execute("{python} {prefix}{section}.py {params}".format(
+            c.run('{python} {prefix}{section}.py {params}'.format(
                 python=getPython(),
                 prefix=prefix,
                 section=section,
-                params=u' '.join(args))
+                params=' '.join(args))
             )
         else:
-            with settings(warn_only=True):
-                for fname in files:
-                    execute("{python} {fname} {params}".format(
-                        python=getPython(),
-                        fname=fname,
-                        params=u' '.join(args))
-                    )
+            # with settings(warn_only=True):
+            for fname in files:
+                c.run('{python} {fname} {params}'.format(
+                    python=getPython(),
+                    fname=fname,
+                    params=' '.join(args))
+                )
 
 
 @task
-@linux_only
-def deb_binary(is_stable=False):
+def deb_binary(c, is_stable=False):
     '''
     Create binary deb package
     '''
-    is_stable = tobool(is_stable)
     builder = BuilderDebBinaryFactory.get_default(DEB_BINARY_BUILD_DIR,
                                                   is_stable)
     builder.build()
@@ -177,8 +172,7 @@ def deb_binary(is_stable=False):
 
 
 @task
-@linux_only
-def deb_binary_clear():
+def deb_binary_clear(c):
     '''
     Remove binary deb package
     '''
@@ -187,7 +181,7 @@ def deb_binary_clear():
 
 
 @task
-def clear():
+def clear(c):
     '''
     Remove artifacts after all assemblies
     '''
@@ -203,7 +197,7 @@ def clear():
 
 
 @task
-def create_tree(maxlevel, nsiblings, path):
+def create_tree(c, maxlevel, nsiblings, path):
     '''
     Create wiki tree for the tests
     '''
@@ -223,78 +217,73 @@ def _create_tree(level, maxlevel, nsiblings, parent):
 
     if level <= maxlevel:
         for n in range(nsiblings):
-            pagename = u'page_{:03g}_{:03g}'.format(level, n)
-            print(u'Create page {}'.format(pagename))
+            pagename = 'page_{:03g}_{:03g}'.format(level, n)
+            print('Create page {}'.format(pagename))
 
             newpage = WikiPageFactory().create(parent, pagename, [])
-            newpage.content = u'Абырвалг'
-            newpage.icon = u'images/outwiker_16.png'
+            newpage.content = 'Абырвалг'
+            newpage.icon = 'images/outwiker_16.png'
             _create_tree(level + 1, maxlevel, nsiblings, newpage)
 
 
 @task
-def build(is_stable=False):
+def build(c, is_stable=False):
     '''
     Create artifacts for current version.
     '''
-    is_stable = tobool(is_stable)
-
     if is_stable:
         build(False)
 
-    sources(is_stable)
-    plugins(True)
+    sources(c, is_stable)
+    plugins(c)
 
     if sys.platform.startswith('win32'):
-        win(is_stable)
+        win(c, is_stable)
 
 
 @task
-def doc():
+def doc(c):
     '''
     Build documentation
     '''
-    doc_path = u'doc/_build'
+    doc_path = 'doc/_build'
     if os.path.exists(doc_path):
         shutil.rmtree(doc_path)
 
-    with lcd('doc'):
-        local('make html')
+    with c.cd('doc'):
+        c.run('make html')
 
 
-@task(alias='linux_appimage')
-@linux_only
-def appimage(is_stable=0):
+@task
+def appimage(c, is_stable=False):
     '''
     Build AppImage package
     '''
-    builder = BuilderAppImage(is_stable=tobool(is_stable))
+    builder = BuilderAppImage(c, is_stable)
     builder.build()
     print_info('AppImage created: {}'.format(builder.get_appimage_files()))
 
 
 @task
-def coverage():
+def coverage(c):
     '''
     Create test coverage statistics
     '''
-    local('coverage report {} -i'.format(COVERAGE_PARAMS))
-    local('coverage html {} -i'.format(COVERAGE_PARAMS))
+    c.run('coverage report {} -i'.format(COVERAGE_PARAMS))
+    c.run('coverage html {} -i'.format(COVERAGE_PARAMS))
 
 
 @task
-@linux_only
-def docker_build_create():
+def docker_build_create(c):
     '''
     Create a Docker image to build process
     '''
-    with lcd('need_for_build/build_docker'):
-        local('docker build -t outwiker/build_linux .')
+    with c.cd('need_for_build/build_docker'):
+        c.run('docker build -t outwiker/build_linux .')
 
 
 @task
-@linux_only
-def docker_build(*args):
+def docker_build(c, *args):
     '''
     Run the build process inside the Docker container
     '''
@@ -306,21 +295,20 @@ def docker_build(*args):
         path=current_dir,
         tasks=tasks_str
     )
-    local(command)
+    c.run(command)
 
 
-@task(alias='linux_snap')
-@linux_only
-def snap(*params):
+@task(iterable=['params'])
+def snap(c, params):
     '''
     Build clean snap package
     '''
-    builder = BuilderSnap(*params)
+    builder = BuilderSnap(c, params)
     builder.build()
 
 
-@task(alias='update_version')
-def set_version(version_str: str = ''):
+@task
+def set_version(c, version_str=''):
     """Set new OutWiker version for all files with versions"""
     if not version_str.strip():
         display_version()
@@ -332,8 +320,8 @@ def set_version(version_str: str = ''):
         _update_version_for_file(fname, updater.set_version, version, status)
 
 
-@task(alias='add_version')
-def add_new_version(version_str: str = ''):
+@task
+def add_new_version(c, version_str=''):
     """Append new version information to all files with versions"""
     if not version_str.strip():
         display_version()
@@ -345,8 +333,8 @@ def add_new_version(version_str: str = ''):
         _update_version_for_file(fname, updater.add_version, version, status)
 
 
-@task(alias='set_date')
-def set_release_date(date: str = ''):
+@task
+def set_release_date(c, date=''):
     """Set release date for current version"""
     if not date.strip():
         display_version()

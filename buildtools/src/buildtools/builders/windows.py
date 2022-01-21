@@ -4,7 +4,7 @@ import os
 import shutil
 from string import Template
 
-from fabric.api import local, lcd
+from invoke import Context
 
 from .base import BuilderBase
 from .binarybuilders import CxFreezeBuilderWindows
@@ -23,10 +23,11 @@ class BuilderWindows(BuilderBase):
     """
 
     def __init__(self,
-                 is_stable=False,
-                 create_archives=True,
-                 create_installer=True):
-        super().__init__(WINDOWS_BUILD_DIR, is_stable)
+                 c: Context,
+                 is_stable: bool = False,
+                 create_archives: bool = True,
+                 create_installer: bool = True):
+        super().__init__(c, WINDOWS_BUILD_DIR, is_stable)
         self._create_installer = create_installer
         self._create_archives = create_archives
 
@@ -64,6 +65,10 @@ class BuilderWindows(BuilderBase):
             self._remove(fname)
 
     def _build(self):
+        print_info('Is stable: {}'.format(self.is_stable))
+        print_info('Create installer: {}'.format(self._create_installer))
+        print_info('Create archives: {}'.format(self._create_archives))
+
         self._copy_necessary_files()
         self._create_plugins_dir()
         self._create_binary()
@@ -83,7 +88,7 @@ class BuilderWindows(BuilderBase):
         dest_dir = self._executable_dir
         temp_dir = self.facts.temp_dir
 
-        builder = CxFreezeBuilderWindows(src_dir, dest_dir, temp_dir)
+        builder = CxFreezeBuilderWindows(self.context, src_dir, dest_dir, temp_dir)
         builder.build()
 
     def _create_plugins_dir(self):
@@ -124,8 +129,8 @@ class BuilderWindows(BuilderBase):
 
         writeTextFile(installer_script_path, installer_text)
 
-        with lcd(self.facts.temp_dir):
-            local("iscc outwiker_setup.iss")
+        with self.context.cd(self.facts.temp_dir):
+            self.context.run("iscc outwiker_setup.iss")
 
         shutil.move(installer_path + '.exe', self.build_dir)
 
@@ -151,7 +156,7 @@ class BuilderWindows(BuilderBase):
             return
 
         print_info('Create archives without plugins...')
-        with lcd(self._executable_dir):
+        with self.context.cd(self._executable_dir):
             path_zip = os.path.abspath(
                 os.path.join(
                     self.build_dir,
@@ -164,15 +169,15 @@ class BuilderWindows(BuilderBase):
                     self._resultBaseName + '.7z')
             )
 
-            local(r'7z a "{}" .\* .\plugins -r -aoa'.format(path_zip))
-            local(r'7z a "{}" .\* .\plugins -r -aoa'.format(path_7z))
+            self.context.run(r'7z a "{}" .\* .\plugins -r -aoa'.format(path_zip))
+            self.context.run(r'7z a "{}" .\* .\plugins -r -aoa'.format(path_7z))
 
     def _create_archives_with_plugins(self):
         if not self._create_archives:
             return
 
         print_info('Create archives with plugins...')
-        with lcd(self._executable_dir):
+        with self.context.cd(self._executable_dir):
             path_zip = os.path.abspath(
                 os.path.join(
                     self.build_dir,
@@ -185,9 +190,9 @@ class BuilderWindows(BuilderBase):
                     self._resultWithPluginsBaseName + '.7z')
             )
 
-            local(
+            self.context.run(
                 r'7z a "{}" .\* .\plugins -r -aoa -xr!__pycache__ -xr!.ropeproject'.format(path_zip))
-            local(
+            self.context.run(
                 r'7z a "{}" .\* .\plugins -r -aoa -xr!__pycache__ -xr!.ropeproject'.format(path_7z))
 
     def _move_executable_dir(self):

@@ -7,15 +7,16 @@ from pathlib import Path
 import shutil
 
 import wx
-from fabric.api import lcd, local
 
+from invoke import Context
 from buildtools.utilites import remove, print_info
 
 
-class BaseBinaryBuilder(object, metaclass=ABCMeta):
+class BaseBinaryBuilder(metaclass=ABCMeta):
     """Base class for any binary builders"""
 
-    def __init__(self, src_dir, dest_dir, temp_dir):
+    def __init__(self, c: Context, src_dir: str, dest_dir: str, temp_dir: str):
+        self.context = c
         self._src_dir = src_dir
         self._dest_dir = dest_dir
         self._temp_dir = temp_dir
@@ -98,7 +99,7 @@ class BaseBinaryBuilder(object, metaclass=ABCMeta):
             dest_dir = os.path.join(root_dir, subpath)
             if not os.path.exists(dest_dir):
                 os.makedirs(dest_dir)
-            print_info(u'Copy: {} -> {}'.format(fname, dest_dir))
+            print_info('Copy: {} -> {}'.format(fname, dest_dir))
             shutil.copy(fname, dest_dir)
 
 
@@ -153,8 +154,8 @@ class BasePyInstallerBuilder(BaseBinaryBuilder, metaclass=ABCMeta):
     def build(self):
         params = self.get_params()
         command = u'pyinstaller runoutwiker.py ' + u' '.join(params)
-        with lcd(self._src_dir):
-            local(command)
+        with self.context.cd(self._src_dir):
+            self.context.run(command)
 
         self._remove_files()
         self._copy_additional_files()
@@ -180,8 +181,8 @@ class BasePyInstallerBuilder(BaseBinaryBuilder, metaclass=ABCMeta):
 class BaseCxFreezeBuilder(BaseBinaryBuilder, metaclass=ABCMeta):
     """Class for binary assembling creation with cx_freeze. """
 
-    def __init__(self, src_dir, dest_dir, temp_dir):
-        super().__init__(src_dir, dest_dir, temp_dir)
+    def __init__(self, c: Context, src_dir, dest_dir, temp_dir):
+        super().__init__(c, src_dir, dest_dir, temp_dir)
 
         # The path where the folder with the assembly will be created
         # (before copying to self.dest_dir)
@@ -211,8 +212,8 @@ class BaseCxFreezeBuilder(BaseBinaryBuilder, metaclass=ABCMeta):
     def build(self):
         params = self.get_params()
         command = u'cxfreeze runoutwiker.py ' + u' '.join(params)
-        with lcd(self._src_dir):
-            local(command)
+        with self.context.cd(self._src_dir):
+            self.context.run(command)
 
         self._remove_files()
         self._copy_additional_files()
@@ -330,7 +331,7 @@ class PyInstallerBuilderLinuxBase(BasePyInstallerBuilder):
         for fname in files_for_strip:
             print_info(u'Strip {}'.format(fname))
             if os.path.exists(str(fname)):
-                local(u'strip -s -o "{fname}" "{fname}"'.format(fname=fname))
+                self.context.run('strip -s -o "{fname}" "{fname}"'.format(fname=fname))
 
     def get_includes(self):
         result = super().get_includes()

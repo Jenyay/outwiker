@@ -5,7 +5,7 @@ import glob
 import os
 import shutil
 
-from fabric.api import local, lcd, settings
+from invoke import Context
 
 from ..base import BuilderBase
 from ..binarybuilders import PyInstallerBuilderLinuxBase
@@ -37,14 +37,11 @@ class BuilderDebBinaryFactory(object):
 class BuilderDebBinaryBase(BuilderBase, metaclass=ABCMeta):
     def __init__(self, dir_name=DEB_BINARY_BUILD_DIR, is_stable=False):
         super().__init__(dir_name, is_stable)
-        distrib_info = get_linux_distrib_info()
         version = getOutwikerVersion()
         architecture = self._getDebArchitecture()
         self.debName = "outwiker-{version}+{build}_{architecture}".format(
             version=version[0],
             build=version[1],
-            distrib=distrib_info['DISTRIB_ID'],
-            codename=distrib_info['DISTRIB_CODENAME'],
             architecture=architecture)
 
         # tmp/outwiker-x.x.x+xxx_.../
@@ -54,7 +51,7 @@ class BuilderDebBinaryBase(BuilderBase, metaclass=ABCMeta):
                                        PLUGINS_DIR)
 
         self._files_to_remove = [
-            u'LICENSE.txt',
+            'LICENSE.txt',
         ]
 
     def _getExecutableDir(self):
@@ -77,15 +74,15 @@ class BuilderDebBinaryBase(BuilderBase, metaclass=ABCMeta):
         self._remove(os.path.join(self.build_dir, self.debFileName))
 
     def _getDEBIANPath(self):
-        return self.facts.getTempSubpath(self.debName, u'DEBIAN')
+        return self.facts.getTempSubpath(self.debName, 'DEBIAN')
 
     def _copyDebianFiles(self):
         '''
         Copy files to tmp/outwiker-x.x.x+xxx_architecture/DEBIAN
         '''
         debian_src_dir = os.path.join(NEED_FOR_BUILD_DIR,
-                                      u'debian_debbinary',
-                                      u'debian')
+                                      'debian_debbinary',
+                                      'debian')
 
         debian_dest_dir = self._getDEBIANPath()
         shutil.copytree(debian_src_dir, debian_dest_dir)
@@ -110,21 +107,21 @@ class BuilderDebBinaryBase(BuilderBase, metaclass=ABCMeta):
         os.remove(template_file)
 
     def _getDebArchitecture(self):
-        result = local(u'dpkg --print-architecture', capture=True)
+        result = self.context.run('dpkg --print-architecture', capture=True)
         result = u''.join(result)
         return result.strip()
 
     def _buildDeb(self):
-        with lcd(self.facts.temp_dir):
-            local(u'fakeroot dpkg-deb --build {}'.format(self.debName))
+        with self.context.cd(self.facts.temp_dir):
+            self.context.run('fakeroot dpkg-deb --build {}'.format(self.debName))
 
         shutil.move(self.facts.getTempSubpath(self.debFileName),
                     os.path.join(self.build_dir, self.debFileName))
 
     def _checkLintian(self):
-        with settings(warn_only=True):
-            with lcd(self.build_dir):
-                local(u'lintian --no-tag-display-limit {}.deb'.format(self.debName))
+        # with settings(warn_only=True):
+        with self.context.cd(self.build_dir):
+            self.context.run('lintian --no-tag-display-limit {}.deb'.format(self.debName))
 
     def _setPermissions(self):
         for par, dirs, files in os.walk(self.debPath):
@@ -204,9 +201,9 @@ class BuilderDebBinaryBase(BuilderBase, metaclass=ABCMeta):
             pass
 
         # Archive the changelog to usr/share/doc/outwiker
-        with lcd(doc_dir):
-            local(u'gzip --best -n -c changelog > changelog.gz')
-            local(u'rm changelog')
+        with self.context.cd(doc_dir):
+            self.context.run(u'gzip --best -n -c changelog > changelog.gz')
+            self.context.run(u'rm changelog')
 
     def _build(self):
         self._create_plugins_dir()
@@ -236,4 +233,4 @@ class BuilderDebBinaryOpt(BuilderDebBinaryBase):
     Class to create deb package from which will be installed to /opt/ folder
     '''
     def _getExecutableDirShort(self):
-        return u'opt/outwiker'
+        return 'opt/outwiker'
