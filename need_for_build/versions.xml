@@ -1,22 +1,24 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <versions>
-    <version number="3.1.0.893" status="dev">
+    <version number="3.1.0.894" date="2021-01-23">
         <changes>
-			<change>Add action "Select all" for attachments panel.</change>
+            <change>Add action "Select all" for attachments panel.</change>
+            <change>Add the ability for renaming of attachments.</change>
         </changes>
 
         <changes lang="ru">
-			<change>Добавлена кнопка "Выбрать всё" на панель прикрепленных файлов.</change>
+            <change>Добавлена кнопка "Выбрать всё" на панель прикрепленных файлов.</change>
+            <change>Добавлена возможность переименования прикрепленных файлов.</change>
         </changes>
     </version>
 
     <version number="3.1.0.892" status="beta" date="2021-07-27">
         <changes>
-			<change>Improve hotkeys for attachments panel.</change>
+            <change>Improve hotkeys for attachments panel.</change>
         </changes>
 
         <changes lang="ru">
-			<change>Улучшение работы с горячими клавишами на панели с прикрепленными файлами.</change>
+            <change>Улучшение работы с горячими клавишами на панели с прикрепленными файлами.</change>
         </changes>
     </version>
 
