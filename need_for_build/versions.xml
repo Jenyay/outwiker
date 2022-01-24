@@ -8,7 +8,7 @@
         </changes>
     </version>
 
-    <version number="3.1.0.894" date="2021-01-23">
+    <version number="3.1.0.894" date="2022-01-23">
         <changes>
             <change>Add action "Select all" for attachments panel.</change>
             <change>Add the ability for renaming of attachments.</change>
