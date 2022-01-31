@@ -5,7 +5,7 @@ from abc import ABCMeta, abstractmethod
 from pyparsing import nestedExpr, originalTextFor
 
 
-class TextBlockToken (object):
+class TextBlockToken:
     """
     Класс, содержащий метод для оборачивания текста в теги текстового уровня
     """
@@ -18,9 +18,9 @@ class TextBlockToken (object):
         closing - закрывающийся тег(и)
         """
         def conversionParseAction(s, l, t):
-            return u"".join([
+            return ''.join([
                 opening,
-                self.parser.parseTextLevelMarkup(u''.join(t)),
+                self.parser.parseTextLevelMarkup(''.join(t)),
                 closing,
             ])
         return conversionParseAction

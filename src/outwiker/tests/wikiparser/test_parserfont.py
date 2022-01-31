@@ -50,21 +50,33 @@ class ParserFontTest (unittest.TestCase):
 
         self.assertEqual(self.parser.toHtml(text), result)
 
+    def testBold_04(self):
+        text = "bla-bla-bla '''Полужирный''' bla-bla-bla"
+        result = "bla-bla-bla <b>Полужирный</b> bla-bla-bla"
+
+        self.assertEqual(self.parser.toHtml(text), result)
+
     def testItalic_01(self):
         text = "''Курсив''"
         result = "<i>Курсив</i>"
 
         self.assertEqual(self.parser.toHtml(text), result)
 
-    def testItalic_03(self):
+    def testItalic_02(self):
         text = "''Курсив\n''"
         result = "<i>Курсив\n</i>"
 
         self.assertEqual(self.parser.toHtml(text), result)
 
-    def testItalic_02(self):
+    def testItalic_03(self):
         text = "''\\t''"
         result = "<i>\\t</i>"
+
+        self.assertEqual(self.parser.toHtml(text), result)
+
+    def testItalic_04(self):
+        text = "bla-bla-bla ''Курсив'' bla-bla-bla"
+        result = "bla-bla-bla <i>Курсив</i> bla-bla-bla"
 
         self.assertEqual(self.parser.toHtml(text), result)
 

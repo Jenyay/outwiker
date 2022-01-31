@@ -11,7 +11,7 @@ Pillow = "==9.0.0"
 cacheman = {version = "==2.1.0.post1", path = "depends/cacheman"}
 cyhunspell = {version = "==2.0.2.post1", path = "depends/cyhunspell"}
 idna = ">=2.10"
-pyparsing = "==2.4.7"
+pyparsing = "==3.0.7"
 psutil = "==5.9.0"
 
 [dev-packages]

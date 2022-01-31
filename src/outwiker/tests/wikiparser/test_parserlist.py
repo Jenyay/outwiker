@@ -341,9 +341,7 @@ class ParserListTest (unittest.TestCase):
 
         self.assertEqual(
             self.parser.toHtml(text),
-            result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            result)
 
     def testSpaces1(self):
         text = "бла-бла-бла \n\n*Строка 1\n* Строка 2\n* Строка 3\n\nбла-бла-бла"
