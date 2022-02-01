@@ -16,7 +16,7 @@ psutil = "==5.9.0"
 
 [dev-packages]
 invoke = "==1.6.0"
-cx-freeze = "==6.5.3"
+cx-freeze = "==6.10"
 pympler = "==0.9"
 pytest = ">=6.2"
 coverage = "==6.2"
