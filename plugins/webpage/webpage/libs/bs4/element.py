@@ -43,6 +43,35 @@ def _alias(attr):
     return alias
 
 
+# These encodings are recognized by Python (so PageElement.encode
+# could theoretically support them) but XML and HTML don't recognize
+# them (so they should not show up in an XML or HTML document as that
+# document's encoding).
+#
+# If an XML document is encoded in one of these encodings, no encoding
+# will be mentioned in the XML declaration. If an HTML document is
+# encoded in one of these encodings, and the HTML document has a
+# <meta> tag that mentions an encoding, the encoding will be given as
+# the empty string.
+#
+# Source:
+# https://docs.python.org/3/library/codecs.html#python-specific-encodings
+PYTHON_SPECIFIC_ENCODINGS = set([
+    "idna",
+    "mbcs",
+    "oem",
+    "palmos",
+    "punycode",
+    "raw_unicode_escape",
+    "undefined",
+    "unicode_escape",
+    "raw-unicode-escape",
+    "unicode-escape",
+    "string-escape",
+    "string_escape",
+])
+    
+
 class NamespacedAttribute(str):
     """A namespaced string (e.g. 'xml:lang') that remembers the namespace
     ('xml') and the name ('lang') that were used to create it.
@@ -54,9 +83,9 @@ class NamespacedAttribute(str):
             # per https://www.w3.org/TR/xml-names/#defaulting
             name = None
 
-        if name is None:
+        if not name:
             obj = str.__new__(cls, prefix)
-        elif prefix is None:
+        elif not prefix:
             # Not really namespaced.
             obj = str.__new__(cls, name)
         else:
@@ -85,6 +114,8 @@ class CharsetMetaAttributeValue(AttributeValueWithCharsetSubstitution):
         """When an HTML document is being encoded to a given encoding, the
         value of a meta tag's 'charset' is the name of the encoding.
         """
+        if encoding in PYTHON_SPECIFIC_ENCODINGS:
+            return ''
         return encoding
 
 
@@ -110,6 +141,8 @@ class ContentMetaAttributeValue(AttributeValueWithCharsetSubstitution):
         return obj
 
     def encode(self, encoding):
+        if encoding in PYTHON_SPECIFIC_ENCODINGS:
+            return ''
         def rewrite(match):
             return match.group(1) + encoding
         return self.CHARSET_RE.sub(rewrite, self.original_value)
@@ -222,25 +255,67 @@ class PageElement(object):
     nextSibling = _alias("next_sibling")  # BS3
     previousSibling = _alias("previous_sibling")  # BS3
 
-    def replace_with(self, replace_with):
-        """Replace this PageElement with another one, keeping the rest of the
-        tree the same.
+    default = object()
+    def _all_strings(self, strip=False, types=default):
+        """Yield all strings of certain classes, possibly stripping them.
         
-        :param replace_with: A PageElement.
+        This is implemented differently in Tag and NavigableString.
+        """
+        raise NotImplementedError()
+   
+    @property
+    def stripped_strings(self):
+        """Yield all strings in this PageElement, stripping them first.
+
+        :yield: A sequence of stripped strings.
+        """
+        for string in self._all_strings(True):
+            yield string
+
+    def get_text(self, separator="", strip=False,
+                 types=default):
+        """Get all child strings of this PageElement, concatenated using the
+        given separator.
+
+        :param separator: Strings will be concatenated using this separator.
+
+        :param strip: If True, strings will be stripped before being
+            concatenated.
+
+        :param types: A tuple of NavigableString subclasses. Any
+            strings of a subclass not found in this list will be
+            ignored. Although there are exceptions, the default
+            behavior in most cases is to consider only NavigableString
+            and CData objects. That means no comments, processing
+            instructions, etc.
+
+        :return: A string.
+        """
+        return separator.join([s for s in self._all_strings(
+                    strip, types=types)])
+    getText = get_text
+    text = property(get_text)
+    
+    def replace_with(self, *args):
+        """Replace this PageElement with one or more PageElements, keeping the 
+        rest of the tree the same.
+        
+        :param args: One or more PageElements.
         :return: `self`, no longer part of the tree.
         """
         if self.parent is None:
             raise ValueError(
                 "Cannot replace one element with another when the "
                 "element to be replaced is not part of a tree.")
-        if replace_with is self:
+        if len(args) == 1 and args[0] is self:
             return
-        if replace_with is self.parent:
+        if any(x is self.parent for x in args):
             raise ValueError("Cannot replace a Tag with its parent.")
         old_parent = self.parent
         my_index = self.parent.index(self)
-        self.extract()
-        old_parent.insert(my_index, replace_with)
+        self.extract(_self_index=my_index)
+        for idx, replace_with in enumerate(args, start=my_index):
+            old_parent.insert(idx, replace_with)
         return self
     replaceWith = replace_with  # BS3
 
@@ -255,7 +330,7 @@ class PageElement(object):
                 "Cannot replace an element with its contents when that"
                 "element is not part of a tree.")
         my_index = self.parent.index(self)
-        self.extract()
+        self.extract(_self_index=my_index)
         for child in reversed(self.contents[:]):
             my_parent.insert(my_index, child)
         return self
@@ -273,13 +348,19 @@ class PageElement(object):
         wrap_inside.append(me)
         return wrap_inside
 
-    def extract(self):
+    def extract(self, _self_index=None):
         """Destructively rips this element out of the tree.
+
+        :param _self_index: The location of this element in its parent's
+           .contents, if known. Passing this in allows for a performance
+           optimization.
 
         :return: `self`, no longer part of the tree.
         """
         if self.parent is not None:
-            del self.parent.contents[self.parent.index(self)]
+            if _self_index is None:
+                _self_index = self.parent.index(self)
+            del self.parent.contents[_self_index]
 
         #Find the two elements that would be next to each other if
         #this element (and any children) hadn't been parsed. Connect
@@ -418,6 +499,11 @@ class PageElement(object):
 
         :param tags: A list of PageElements.
         """
+        if isinstance(tags, Tag):
+            # Calling self.append() on another tag's contents will change
+            # the list we're iterating over. Make a list that won't
+            # change.
+            tags = list(tags.contents)
         for tag in tags:
             self.append(tag)
 
@@ -481,7 +567,7 @@ class PageElement(object):
         :param text: A filter for a NavigableString with specific text.
         :kwargs: A dictionary of filters on attribute values.
         :return: A PageElement.
-        :rtype: bs4.element.PageElement
+        :rtype: bs4.element.Tag | bs4.element.NavigableString
         """
         return self._find_one(self.find_all_next, name, attrs, text, **kwargs)
     findNext = find_next  # BS3
@@ -517,7 +603,7 @@ class PageElement(object):
         :param text: A filter for a NavigableString with specific text.
         :kwargs: A dictionary of filters on attribute values.
         :return: A PageElement.
-        :rtype: bs4.element.PageElement
+        :rtype: bs4.element.Tag | bs4.element.NavigableString
         """
         return self._find_one(self.find_next_siblings, name, attrs, text,
                              **kwargs)
@@ -556,7 +642,7 @@ class PageElement(object):
         :param text: A filter for a NavigableString with specific text.
         :kwargs: A dictionary of filters on attribute values.
         :return: A PageElement.
-        :rtype: bs4.element.PageElement
+        :rtype: bs4.element.Tag | bs4.element.NavigableString
         """
         return self._find_one(
             self.find_all_previous, name, attrs, text, **kwargs)
@@ -595,7 +681,7 @@ class PageElement(object):
         :param text: A filter for a NavigableString with specific text.
         :kwargs: A dictionary of filters on attribute values.
         :return: A PageElement.
-        :rtype: bs4.element.PageElement
+        :rtype: bs4.element.Tag | bs4.element.NavigableString
         """
         return self._find_one(self.find_previous_siblings, name, attrs, text,
                              **kwargs)
@@ -634,7 +720,7 @@ class PageElement(object):
         :kwargs: A dictionary of filters on attribute values.
 
         :return: A PageElement.
-        :rtype: bs4.element.PageElement
+        :rtype: bs4.element.Tag | bs4.element.NavigableString
         """
         # NOTE: We can't use _find_one because findParents takes a different
         # set of arguments.
@@ -657,7 +743,7 @@ class PageElement(object):
         :kwargs: A dictionary of filters on attribute values.
 
         :return: A PageElement.
-        :rtype: bs4.element.PageElement
+        :rtype: bs4.element.Tag | bs4.element.NavigableString
         """
         return self._find_all(name, attrs, None, limit, self.parents,
                              **kwargs)
@@ -669,7 +755,7 @@ class PageElement(object):
         """The PageElement, if any, that was parsed just after this one.
 
         :return: A PageElement.
-        :rtype: bs4.element.PageElement
+        :rtype: bs4.element.Tag | bs4.element.NavigableString
         """
         return self.next_element
 
@@ -678,7 +764,7 @@ class PageElement(object):
         """The PageElement, if any, that was parsed just before this one.
 
         :return: A PageElement.
-        :rtype: bs4.element.PageElement
+        :rtype: bs4.element.Tag | bs4.element.NavigableString
         """
         return self.previous_element
 
@@ -802,6 +888,14 @@ class PageElement(object):
             yield i
             i = i.parent
 
+    @property
+    def decomposed(self):
+        """Check whether a PageElement has been decomposed.
+
+        :rtype: bool
+        """
+        return getattr(self, '_decomposed', False) or False
+            
     # Old non-property versions of the generators, for backwards
     # compatibility with BS3.
     def nextGenerator(self):
@@ -893,7 +987,49 @@ class NavigableString(str, PageElement):
         """Prevent NavigableString.name from ever being set."""
         raise AttributeError("A NavigableString cannot be given a name.")
 
-    
+    def _all_strings(self, strip=False, types=PageElement.default):
+        """Yield all strings of certain classes, possibly stripping them.
+
+        This makes it easy for NavigableString to implement methods
+        like get_text() as conveniences, creating a consistent
+        text-extraction API across all PageElements.
+
+        :param strip: If True, all strings will be stripped before being
+            yielded.
+
+        :param types: A tuple of NavigableString subclasses. If this
+            NavigableString isn't one of those subclasses, the
+            sequence will be empty. By default, the subclasses
+            considered are NavigableString and CData objects. That
+            means no comments, processing instructions, etc.
+
+        :yield: A sequence that either contains this string, or is empty.
+
+        """
+        if types is self.default:
+            # This is kept in Tag because it's full of subclasses of
+            # this class, which aren't defined until later in the file.
+            types = Tag.DEFAULT_INTERESTING_STRING_TYPES
+
+        # Do nothing if the caller is looking for specific types of
+        # string, and we're of a different type.
+        my_type = type(self)
+        if types is not None:
+            if isinstance(types, type):
+                # Looking for a single type.
+                if my_type is not types:
+                    return
+            elif my_type not in types:
+                # Looking for one of a list of types.
+                return
+
+        value = self
+        if strip:
+            value = value.strip()
+        if len(value) > 0:
+            yield value
+    strings = property(_all_strings)
+
 class PreformattedString(NavigableString):
     """A NavigableString not subject to the normal formatting rules.
 
@@ -978,6 +1114,33 @@ class Doctype(PreformattedString):
     SUFFIX = '>\n'
 
 
+class Stylesheet(NavigableString):
+    """A NavigableString representing an stylesheet (probably
+    CSS).
+
+    Used to distinguish embedded stylesheets from textual content.
+    """
+    pass
+
+    
+class Script(NavigableString):
+    """A NavigableString representing an executable script (probably
+    Javascript).
+
+    Used to distinguish executable code from textual content.
+    """
+    pass
+
+
+class TemplateString(NavigableString):
+    """A NavigableString representing a string found inside an HTML
+    template embedded in a larger document.
+
+    Used to distinguish such strings from the main body of the document.
+    """
+    pass
+
+
 class Tag(PageElement):
     """Represents an HTML or XML tag that is part of a parse tree, along
     with its attributes and contents.
@@ -990,7 +1153,8 @@ class Tag(PageElement):
                  prefix=None, attrs=None, parent=None, previous=None,
                  is_xml=None, sourceline=None, sourcepos=None,
                  can_be_empty_element=None, cdata_list_attributes=None,
-                 preserve_whitespace_tags=None
+                 preserve_whitespace_tags=None,
+                 interesting_string_types=None,
     ):
         """Basic constructor.
 
@@ -1016,6 +1180,13 @@ class Tag(PageElement):
             be treated as CDATA if they ever show up on this tag.
         :param preserve_whitespace_tags: A list of tag names whose contents
             should have their whitespace preserved.
+        :param interesting_string_types: This is a NavigableString
+            subclass or a tuple of them. When iterating over this
+            Tag's strings in methods like Tag.strings or Tag.get_text,
+            these are the types of strings that are interesting enough
+            to be considered. The default is to consider
+            NavigableString and CData the only interesting string
+            subtypes.
         """
         if parser is None:
             self.parser_class = None
@@ -1061,6 +1232,7 @@ class Tag(PageElement):
             self.can_be_empty_element = can_be_empty_element
             self.cdata_list_attributes = cdata_list_attributes
             self.preserve_whitespace_tags = preserve_whitespace_tags
+            self.interesting_string_types = interesting_string_types
         else:
             # Set up any substitutions for this tag, such as the charset in a META tag.
             builder.set_up_substitutions(self)
@@ -1081,6 +1253,13 @@ class Tag(PageElement):
             # Keep track of the names that might cause this tag to be treated as a
             # whitespace-preserved tag.
             self.preserve_whitespace_tags = builder.preserve_whitespace_tags
+
+            if self.name in builder.string_containers:
+                # This sort of tag uses a special string container
+                # subclass for most of its strings. When we ask the
+                self.interesting_string_types = builder.string_containers[self.name]
+            else:
+                self.interesting_string_types = self.DEFAULT_INTERESTING_STRING_TYPES
             
     parserClass = _alias("parser_class")  # BS3
 
@@ -1147,79 +1326,65 @@ class Tag(PageElement):
         self.clear()
         self.append(string.__class__(string))
 
-    def _all_strings(self, strip=False, types=(NavigableString, CData)):
+    DEFAULT_INTERESTING_STRING_TYPES = (NavigableString, CData)
+    def _all_strings(self, strip=False, types=PageElement.default):
         """Yield all strings of certain classes, possibly stripping them.
 
         :param strip: If True, all strings will be stripped before being
             yielded.
 
-        :types: A tuple of NavigableString subclasses. Any strings of
+        :param types: A tuple of NavigableString subclasses. Any strings of
             a subclass not found in this list will be ignored. By
-            default, this means only NavigableString and CData objects
-            will be considered. So no comments, processing instructions,
-            etc.
+            default, the subclasses considered are the ones found in
+            self.interesting_string_types. If that's not specified,
+            only NavigableString and CData objects will be
+            considered. That means no comments, processing
+            instructions, etc.
 
         :yield: A sequence of strings.
+
         """
+        if types is self.default:
+            types = self.interesting_string_types
+
         for descendant in self.descendants:
-            if (
-                (types is None and not isinstance(descendant, NavigableString))
-                or
-                (types is not None and type(descendant) not in types)):
+            if (types is None and not isinstance(descendant, NavigableString)):
+                continue
+            descendant_type = type(descendant)
+            if isinstance(types, type):
+                if descendant_type is not types:
+                    # We're not interested in strings of this type.
+                    continue
+            elif types is not None and descendant_type not in types:
+                # We're not interested in strings of this type.
                 continue
             if strip:
                 descendant = descendant.strip()
                 if len(descendant) == 0:
                     continue
             yield descendant
-
     strings = property(_all_strings)
-
-    @property
-    def stripped_strings(self):
-        """Yield all strings in the document, stripping them first.
-
-        :yield: A sequence of stripped strings.
-        """
-        for string in self._all_strings(True):
-            yield string
-
-    def get_text(self, separator="", strip=False,
-                 types=(NavigableString, CData)):
-        """Get all child strings, concatenated using the given separator.
-
-        :param separator: Strings will be concatenated using this separator.
-
-        :param strip: If True, strings will be stripped before being
-            concatenated.
-
-        :types: A tuple of NavigableString subclasses. Any strings of
-            a subclass not found in this list will be ignored. By
-            default, this means only NavigableString and CData objects
-            will be considered. So no comments, processing instructions,
-            etc.
-
-        :return: A string.
-        """
-        return separator.join([s for s in self._all_strings(
-                    strip, types=types)])
-    getText = get_text
-    text = property(get_text)
 
     def decompose(self):
         """Recursively destroys this PageElement and its children.
 
         This element will be removed from the tree and wiped out; so
         will everything beneath it.
+
+        The behavior of a decomposed PageElement is undefined and you
+        should never use one for anything, but if you need to _check_
+        whether an element has been decomposed, you can use the
+        `decomposed` property.
         """
         self.extract()
         i = self
         while i is not None:
-            next = i.next_element
+            n = i.next_element
             i.__dict__.clear()
             i.contents = []
-            i = next
-
+            i._decomposed = True
+            i = n
+           
     def clear(self, decompose=False):
         """Wipe out all children of this PageElement by calling extract()
            on them.
@@ -1352,7 +1517,7 @@ class Tag(PageElement):
 
     def __getattr__(self, tag):
         """Calling tag.subtag is the same as calling tag.find(name="subtag")"""
-        #print "Getattr %s.%s" % (self.__class__, tag)
+        #print("Getattr %s.%s" % (self.__class__, tag))
         if len(tag) > 3 and tag.endswith('Tag'):
             # BS3: soup.aTag -> "soup.find("a")
             tag_name = tag[:-3]
@@ -1670,14 +1835,14 @@ class Tag(PageElement):
         :param limit: Stop looking after finding this many results.
         :kwargs: A dictionary of filters on attribute values.
         :return: A PageElement.
-        :rtype: bs4.element.PageElement
+        :rtype: bs4.element.Tag | bs4.element.NavigableString
         """
         r = None
         l = self.find_all(name, attrs, recursive, text, 1, **kwargs)
         if l:
             r = l[0]
         return r
-    findChild = find
+    findChild = find #BS2
 
     def find_all(self, name=None, attrs={}, recursive=True, text=None,
                  limit=None, **kwargs):
@@ -1743,8 +1908,8 @@ class Tag(PageElement):
         :param kwargs: Keyword arguments to be passed into SoupSieve's 
            soupsieve.select() method.
 
-        :return: A PageElement.
-        :rtype: bs4.element.PageElement
+        :return: A Tag.
+        :rtype: bs4.element.Tag
         """
         value = self.select(selector, namespaces, 1, **kwargs)
         if value:
@@ -1768,7 +1933,7 @@ class Tag(PageElement):
         :param kwargs: Keyword arguments to be passed into SoupSieve's 
            soupsieve.select() method.
 
-        :return: A ResultSet of PageElements.
+        :return: A ResultSet of Tags.
         :rtype: bs4.element.ResultSet
         """
         if namespaces is None:
@@ -1910,6 +2075,14 @@ class SoupStrainer(object):
         if isinstance(markup_name, Tag):
             markup = markup_name
             markup_attrs = markup
+
+        if isinstance(self.name, str):
+            # Optimization for a very common case where the user is
+            # searching for a tag with one specific name, and we're
+            # looking at a tag with a different name.
+            if markup and not markup.prefix and self.name != markup.name:
+                 return False
+            
         call_function_with_tag_data = (
             isinstance(self.name, Callable)
             and not isinstance(markup_name, Tag))
@@ -1955,7 +2128,7 @@ class SoupStrainer(object):
 
         :param markup: A PageElement or a list of them.
         """
-        # print 'looking for %s in %s' % (self, markup)
+        # print('looking for %s in %s' % (self, markup))
         found = None
         # If given a list of items, scan it for a text element that
         # matches.
@@ -1981,7 +2154,7 @@ class SoupStrainer(object):
         return found
 
     def _matches(self, markup, match_against, already_tried=None):
-        # print u"Matching %s against %s" % (markup, match_against)
+        # print(u"Matching %s against %s" % (markup, match_against))
         result = False
         if isinstance(markup, list) or isinstance(markup, tuple):
             # This should only happen when searching a multi-valued attribute
