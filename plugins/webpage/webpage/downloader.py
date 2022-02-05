@@ -130,10 +130,11 @@ class Downloader(BaseDownloader):
         return self._success
 
     def _downloadImageSrc(self, controller, startUrl, image_node):
-        if image_node.has_attr(u'src'):
+        if image_node.has_attr('src'):
             try:
                 controller.processImg(startUrl, image_node['src'], image_node)
             except BaseException as e:
+                logger.debug(str(e))
                 controller.log(str(e))
 
     def _downloadImageSrcSet(self, controller, startUrl, image_node):
@@ -158,7 +159,7 @@ class Downloader(BaseDownloader):
             image_node['srcset'] = srcset_processed
 
     def _downloadImages(self, soup, controller, startUrl):
-        images = soup.find_all(u'img')
+        images = soup.find_all('img')
         for image_node in images:
             self._downloadImageSrc(controller, startUrl, image_node)
             self._downloadImageSrcSet(controller, startUrl, image_node)
