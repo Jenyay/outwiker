@@ -88,7 +88,7 @@ class Downloader(BaseDownloader):
         html = obj.read()
 
         self._soup = BeautifulSoup(html, "html5lib")
-        self._contentSrc = self._soup.prettify()
+        self._contentSrc = self._soup.decode(formatter=None)
 
         if self._soup.title is not None:
             self._pageTitle = self._soup.title.string
@@ -104,7 +104,7 @@ class Downloader(BaseDownloader):
 
         self._improveResult(self._soup, baseUrl)
 
-        self._contentResult = str(self._soup)
+        self._contentResult = self._soup.decode(formatter=None)
         self._success = True
 
     def _getBaseUrl(self, soup, url):

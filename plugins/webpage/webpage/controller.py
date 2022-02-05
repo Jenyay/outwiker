@@ -138,6 +138,6 @@ class Controller(object):
         soup = BeautifulSoup(page.content, "html.parser")
         params = PrepareHtmlEventParams(self._application.selectedPage, soup)
         self._application.getEvent(onPrepareHtmlEventString)(params)
-        html = params.soup.prettify()
+        html = params.soup.decode()
 
         return html
