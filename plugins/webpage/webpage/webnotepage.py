@@ -16,7 +16,7 @@ from outwiker.core.tree import WikiPage
 from .gui.webpageview import WebPageView
 
 # Directory for images, scripts, css etc.
-STATIC_DIR_NAME = u'__download'
+STATIC_DIR_NAME = '__download'
 
 
 class WebNotePage(WikiPage):
@@ -33,15 +33,15 @@ class WebNotePage(WikiPage):
         """
         super(WebNotePage, self).__init__(path, title, parent, readonly)
 
-        self.PARAMS_SECTION = u'WebPage'
+        self.PARAMS_SECTION = 'WebPage'
 
-        self.SOURCE_PARAM = u'source'
+        self.SOURCE_PARAM = 'source'
         self.SOURCE_DEFAULT = None
 
-        self.LOG_PARAM = u'log'
-        self.LOG_DEFAULT = u''
+        self.LOG_PARAM = 'log'
+        self.LOG_DEFAULT = ''
 
-        self.DISABLE_SCRIPTS_PARAM = u'disable_scripts'
+        self.DISABLE_SCRIPTS_PARAM = 'disable_scripts'
         self.DISABLE_SCRIPTS_DEFAULT = True
 
     @staticmethod
@@ -126,7 +126,7 @@ class WebPageFactory(PageFactory):
                       content,
                       url,
                       tmpStaticDir,
-                      logContent=u''):
+                      logContent=''):
         """
         Create WebNotePage instance.
 
@@ -159,18 +159,18 @@ class WebPageFactory(PageFactory):
         return page
 
     def _getTitle(self, parentPage, title):
-        defaultTitle = _(u'Web page')
+        defaultTitle = _('Web page')
 
         if title is None or len(title.strip()) == 0:
             title = defaultTitle
         else:
             title = WindowsPageTitleTester().replaceDangerousSymbols(title,
-                                                                     u'_')
+                                                                     '_')
 
         index = 1
         newTitle = title
         while parentPage[newTitle] is not None:
-            newTitle = u'{title}({index})'.format(title=title,
+            newTitle = '{title}({index})'.format(title=title,
                                                   index=index)
             index += 1
 

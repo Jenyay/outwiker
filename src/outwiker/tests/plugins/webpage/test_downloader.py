@@ -323,7 +323,7 @@ class DownloaderTest(unittest.TestCase):
             template.format(path=self._staticDirName + '/рисунок.png'),
             downloader.contentResult)
 
-    def testDownloading_favicon(self):
+    def testDownloading_favicon_01(self):
         from webpage.downloader import Downloader, DownloadController
 
         template = 'href="{path}"'
@@ -332,7 +332,7 @@ class DownloaderTest(unittest.TestCase):
         controller = DownloadController(self._tempDir, self._staticDirName)
         downloader = Downloader()
 
-        examplePath = 'testdata/webpage/example_favicon/'
+        examplePath = 'testdata/webpage/example_favicon_01/'
         exampleHtmlPath = os.path.join(examplePath, 'example.html')
 
         downloader.start(self._path2url(exampleHtmlPath), controller)
@@ -353,6 +353,51 @@ class DownloaderTest(unittest.TestCase):
         self.assertIn(
             template.format(path=self._staticDirName + '/favicon_2.png'),
             downloader.contentResult)
+
+        self.assertEqual(controller.favicon,
+                         os.path.join(self._tempDir, self._staticDirName) + '/favicon_1.png')
+
+    def testDownloading_favicon_02(self):
+        from webpage.downloader import Downloader, DownloadController
+
+        downloadDir = os.path.join(self._tempDir, self._staticDirName)
+
+        controller = DownloadController(self._tempDir, self._staticDirName)
+        downloader = Downloader()
+
+        examplePath = 'testdata/webpage/example_favicon_02/'
+        exampleHtmlPath = os.path.join(examplePath, 'example.html')
+
+        downloader.start(self._path2url(exampleHtmlPath), controller)
+
+        favicon_fname = os.path.join(
+            self._tempDir, self._staticDirName, 'favicon.png')
+
+        self.assertTrue(os.path.exists(downloadDir))
+        self.assertEqual(controller.favicon,
+                         os.path.join(self._tempDir, self._staticDirName) + '/favicon.png')
+        self.assertTrue(os.path.exists(favicon_fname))
+
+    def testDownloading_favicon_03(self):
+        from webpage.downloader import Downloader, DownloadController
+
+        downloadDir = os.path.join(self._tempDir, self._staticDirName)
+
+        controller = DownloadController(self._tempDir, self._staticDirName)
+        downloader = Downloader()
+
+        examplePath = 'testdata/webpage/example_favicon_03/'
+        exampleHtmlPath = os.path.join(examplePath, 'example.html')
+
+        downloader.start(self._path2url(exampleHtmlPath), controller)
+
+        favicon_fname = os.path.join(
+            self._tempDir, self._staticDirName, 'favicon.ico')
+
+        self.assertTrue(os.path.exists(downloadDir))
+        self.assertEqual(controller.favicon,
+                         os.path.join(self._tempDir, self._staticDirName) + '/favicon.ico')
+        self.assertTrue(os.path.exists(favicon_fname))
 
     def testDownloading_css_rename(self):
         from webpage.downloader import Downloader, DownloadController

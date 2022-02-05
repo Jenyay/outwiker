@@ -45,7 +45,7 @@ class DownloadDialog(TestedDialog):
         self._addOkCancel(mainSizer)
 
         self.SetSizer(mainSizer)
-        self.SetTitle(_(u'Download web page'))
+        self.SetTitle(_('Download web page'))
         self.SetMinSize((500, 350))
         self.Fit()
 
@@ -53,9 +53,9 @@ class DownloadDialog(TestedDialog):
         urlSizer = wx.FlexGridSizer(cols=3)
         urlSizer.AddGrowableCol(1)
 
-        urlLabel = wx.StaticText(self, label=_(u'URL or local file'))
+        urlLabel = wx.StaticText(self, label=_('URL or local file'))
         self.urlText = wx.TextCtrl(self)
-        self.selectFileButton = wx.Button(self, label=_(u'...'))
+        self.selectFileButton = wx.Button(self, label=_('...'))
         self.selectFileButton.SetMinSize((30, -1))
 
         urlSizer.Add(urlLabel, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=4)
@@ -148,7 +148,7 @@ class DownloadDialogController(object):
         return result
 
     def addToLog(self, text):
-        logString = u'[{index:03g}] {text}'.format(index=self._logIndex,
+        logString = '[{index:03g}] {text}'.format(index=self._logIndex,
                                                    text=text)
         self._logIndex += 1
 
@@ -159,7 +159,7 @@ class DownloadDialogController(object):
 
     def resetLog(self):
         self._logIndex = 1
-        self._dialog.logText.Value = u''
+        self._dialog.logText.Value = ''
 
     def _loadState(self):
         tagslist = TagsList(self._application.wikiroot)
@@ -191,22 +191,22 @@ class DownloadDialogController(object):
         url = self._dialog.url
 
         if len(url) == 0:
-            MessageBox(_(u'Enter link for downloading'),
+            MessageBox(_('Enter link for downloading'),
                        _(u"Error"),
                        wx.ICON_ERROR | wx.OK)
             self._dialog.urlText.SetFocus()
             return
 
         if os.path.isfile(url):
-            url = url.replace(u'\\', u'/')
-            if not url.startswith(u'/'):
-                url = u'/' + url
+            url = url.replace('\\', '/')
+            if not url.startswith('/'):
+                url = '/' + url
 
-            url = u'file://' + url
+            url = 'file://' + url
 
         if self._thread is None:
             self._removeDownloadDir()
-            self._downloadDir = mkdtemp(prefix=u'webpage_tmp_')
+            self._downloadDir = mkdtemp(prefix='webpage_tmp_')
 
             self._runEvent.set()
             self._thread = DownloadThread(self._dialog,
@@ -304,19 +304,19 @@ class DownloadThread(Thread):
 
         downloader = Downloader(self._timeout)
 
-        self._log(_(u'Start downloading\n'))
+        self._log(_('Start downloading\n'))
 
         try:
             downloader.start(self._url, controller)
         except urllib.error.URLError as error:
-            self._error(_(u'Download error: {}\n').format(
+            self._error(_('Download error: {}\n').format(
                 str(error.reason))
             )
         except(IOError, ValueError) as e:
-            self._error(_(u'Invalid URL or file format\n'))
+            self._error(_('Invalid URL or file format\n'))
             self._error(str(e))
         else:
-            self._log(_(u'Finish downloading\n'))
+            self._log(_('Finish downloading\n'))
 
             content = downloader.contentResult
             staticPath = os.path.join(self._downloadDir, STATIC_DIR_NAME)

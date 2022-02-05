@@ -113,16 +113,16 @@ class Downloader(BaseDownloader):
 
     def _getBaseUrl(self, soup, url):
         result = url
-        for basetag in soup.find_all(u'base'):
-            if basetag.has_attr(u'href'):
-                result = basetag[u'href']
+        for basetag in soup.find_all('base'):
+            if basetag.has_attr('href'):
+                result = basetag['href']
         return result
 
     def _improveResult(self, soup, url):
         self._removeBaseTag(soup)
 
     def _removeBaseTag(self, soup):
-        for basetag in soup.find_all(u'base'):
+        for basetag in soup.find_all('base'):
             basetag.extract()
 
     @property
@@ -138,7 +138,7 @@ class Downloader(BaseDownloader):
                 controller.log(str(e))
 
     def _downloadImageSrcSet(self, controller, startUrl, image_node):
-        if image_node.has_attr(u'srcset'):
+        if image_node.has_attr('srcset'):
             srcset = image_node['srcset']
             srcset_items_processed = []
 
@@ -165,11 +165,11 @@ class Downloader(BaseDownloader):
             self._downloadImageSrcSet(controller, startUrl, image_node)
 
     def _downloadCSS(self, soup, controller, startUrl):
-        links = soup.find_all(u'link')
+        links = soup.find_all('link')
         for link in links:
             if (link.has_attr('rel') and
                     link.has_attr('href') and
-                    link['rel'][0].lower() == u'stylesheet'):
+                    link['rel'][0].lower() == 'stylesheet'):
                 try:
                     controller.processCSS(startUrl, link['href'], link)
                 except BaseException as e:
@@ -271,7 +271,7 @@ class DownloadController(BaseDownloadController):
         self._rootDownloadDir = rootDownloadDir
         self._staticDir = staticDir
         self._fullStaticDir = os.path.join(rootDownloadDir,
-                                           staticDir).replace(u'\\', u'/')
+                                           staticDir).replace('\\', '/')
 
         # Create a directory for downloaded files
         if not os.path.exists(self._fullStaticDir):
@@ -282,7 +282,7 @@ class DownloadController(BaseDownloadController):
         self._staticFiles = {}
 
     def processImg(self, startUrl, url, node):
-        if not(url.startswith(u'data:') or url.startswith('mhtml:')):
+        if not(url.startswith('data:') or url.startswith('mhtml:')):
             relative_path = self._process(startUrl, url, node)
 
             if relative_path is not None and node is not None and node.name == 'img':
@@ -291,7 +291,7 @@ class DownloadController(BaseDownloadController):
             return relative_path
 
     def processCSS(self, startUrl, url, node):
-        self.log(_(u'Processing CSS: {}\n').format(url))
+        self.log(_('Processing CSS: {}\n').format(url))
         relative_path = self._process(
             startUrl, url, node, self._processFuncCSS,
             self._processFuncCSSFileName)
@@ -330,14 +330,14 @@ class DownloadController(BaseDownloadController):
         text = self.toUnicode(text)
         regexp_url = re.compile(r'''url\((?P<url>.*?)\)''',
                                 re.X | re.U | re.I)
-        repace_tpl_url = u'url("{url}")'
+        repace_tpl_url = 'url("{url}")'
 
         regexp_import = re.compile(r'''@import\s+
                                    (?P<quote>['"])
                                    (?P<url>.*?)
                                    (?P=quote)''',
                                    re.X | re.U | re.I)
-        replace_tmpl_import = u'@import "{url}"'
+        replace_tmpl_import = '@import "{url}"'
 
         text = self._processCSSContent(startUrl,
                                        url,
@@ -358,20 +358,20 @@ class DownloadController(BaseDownloadController):
         for match in regexp.finditer(text):
             url_found = match.group('url')
             url_found = url_found.strip()
-            url_found = url_found.replace(u'"', u'')
-            url_found = url_found.replace(u"'", u'')
+            url_found = url_found.replace('"', '')
+            url_found = url_found.replace("'", '')
 
-            if (url_found.startswith(u'data:') or
-                    url_found.startswith(u'mhtml:')):
+            if (url_found.startswith('data:') or
+                    url_found.startswith('mhtml:')):
                 continue
-            elif url_found.startswith(u'/') or u'://' in url_found:
+            elif url_found.startswith('/') or '://' in url_found:
                 relativeurl = url_found
             else:
                 relativeurl = os.path.join(os.path.dirname(url), url_found)
-                relativeurl = relativeurl.replace(u'\\', u'/')
+                relativeurl = relativeurl.replace('\\', '/')
 
             processFunc = (self._processFuncCSS
-                           if url_found.endswith(u'.css')
+                           if url_found.endswith('.css')
                            else None)
 
             relativeDownloadPath = self._process(startUrl,
@@ -380,8 +380,8 @@ class DownloadController(BaseDownloadController):
                                                  processFunc)
             if relativeDownloadPath is not None:
                 replace = replace_tpl.format(
-                    url=relativeDownloadPath.replace(self._staticDir + u'/',
-                                                     u'',
+                    url=relativeDownloadPath.replace(self._staticDir + '/',
+                                                     '',
                                                      1)
                 )
 
@@ -401,7 +401,11 @@ class DownloadController(BaseDownloadController):
         if '://' in url:
             return url
 
-        return urllib.parse.urljoin(startUrl, url)
+        if startUrl.startswith('file:/') and url.startswith('/'):
+            url = url[1:]
+
+        result = urllib.parse.urljoin(startUrl, url)
+        return result
 
     def _process(self,
                  startUrl: str,
@@ -449,7 +453,7 @@ class DownloadController(BaseDownloadController):
             return self._staticFiles[url]
 
         path = urllib.parse.urlparse(url).path
-        if path.endswith(u'/'):
+        if path.endswith('/'):
             path = path[:-1]
 
         slashpos = path.rfind('/')
@@ -460,7 +464,7 @@ class DownloadController(BaseDownloadController):
 
         fname = urllib.parse.unquote(fname)
 
-        relativeDownloadPath = u'{}/{}'.format(self._staticDir, fname)
+        relativeDownloadPath = '{}/{}'.format(self._staticDir, fname)
         result = relativeDownloadPath
 
         fullDownloadPath = os.path.join(self._rootDownloadDir,
@@ -468,11 +472,11 @@ class DownloadController(BaseDownloadController):
 
         number = 1
         while os.path.exists(fullDownloadPath):
-            dotpos = relativeDownloadPath.rfind(u'.')
+            dotpos = relativeDownloadPath.rfind('.')
             if dotpos == -1:
-                newRelativePath = u'{}_{}'.format(relativeDownloadPath, number)
+                newRelativePath = '{}_{}'.format(relativeDownloadPath, number)
             else:
-                newRelativePath = u'{}_{}{}'.format(
+                newRelativePath = '{}_{}{}'.format(
                     relativeDownloadPath[:dotpos],
                     number,
                     relativeDownloadPath[dotpos:]
