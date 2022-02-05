@@ -30,7 +30,7 @@ from ..misc import polyActions
 from .defines import TOOLBAR_WEBPAGE
 
 
-class GuiController (object):
+class GuiController:
     """Controller for creation and destroying GUI."""
 
     def __init__(self, application):

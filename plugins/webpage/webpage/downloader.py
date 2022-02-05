@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from abc import ABCMeta, abstractmethod
+import logging
 import os
 import os.path
 import re
@@ -9,13 +10,16 @@ import urllib.request
 import urllib.error
 import urllib.parse
 import gzip
-from typing import Callable
+from typing import Callable, Optional
 
 import wx
 
 from .events import UpdateLogEvent
 
 from .i18n import get_
+
+
+logger = logging.getLogger('webpage')
 
 
 class BaseDownloader(object):
@@ -171,7 +175,7 @@ class Downloader(BaseDownloader):
                     controller.log(str(e))
 
     def _downloadScripts(self, soup, controller, startUrl):
-        scripts = soup.find_all(u'script')
+        scripts = soup.find_all('script')
         for script in scripts:
             if script.has_attr('src'):
                 try:
@@ -180,11 +184,11 @@ class Downloader(BaseDownloader):
                     controller.log(str(e))
 
     def _downloadFavicon(self, soup, controller, startUrl):
-        links = soup.find_all(u'link')
+        links = soup.find_all('link')
         for link in links:
             if (link.has_attr('rel') and
                     link.has_attr('href') and
-                    u'icon' in link['rel']):
+                    'icon' in link['rel']):
                 try:
                     controller.processFavicon(startUrl, link['href'], link)
                 except BaseException as e:
@@ -192,9 +196,17 @@ class Downloader(BaseDownloader):
 
         if controller.favicon is None:
             try:
-                controller.processFavicon(startUrl, u'/favicon.ico', None)
-            except BaseException as e:
+                controller.processFavicon(startUrl, '/favicon.png', None)
+            except Exception as e:
                 controller.log(str(e))
+
+        if controller.favicon is None:
+            try:
+                controller.processFavicon(startUrl, '/favicon.ico', None)
+            except Exception as e:
+                controller.log(str(e))
+
+        logger.debug('Favicon: {}'.format(controller.favicon))
 
     @property
     def contentSrc(self):
@@ -269,10 +281,10 @@ class DownloadController(BaseDownloadController):
         self._staticFiles = {}
 
     def processImg(self, startUrl, url, node):
-        if not(url.startswith(u'data:') or url.startswith(u'mhtml:')):
+        if not(url.startswith(u'data:') or url.startswith('mhtml:')):
             relative_path = self._process(startUrl, url, node)
 
-            if node is not None and node.name == 'img':
+            if relative_path is not None and node is not None and node.name == 'img':
                 node['src'] = relative_path
 
             return relative_path
@@ -283,7 +295,7 @@ class DownloadController(BaseDownloadController):
             startUrl, url, node, self._processFuncCSS,
             self._processFuncCSSFileName)
 
-        if node is not None and node.name == 'link':
+        if relative_path is not None and node is not None and node.name == 'link':
             node['href'] = relative_path
 
         return relative_path
@@ -291,7 +303,7 @@ class DownloadController(BaseDownloadController):
     def processScript(self, startUrl, url, node):
         relative_path = self._process(startUrl, url, node)
 
-        if node is not None and node.name == 'script':
+        if relative_path is not None and node is not None and node.name == 'script':
             node['src'] = relative_path
 
         return relative_path
@@ -303,13 +315,15 @@ class DownloadController(BaseDownloadController):
         node - link node instance if this tag exists or None otherwise.
         """
         relativeDownloadPath = self._process(startUrl, url, node)
-        fullDownloadPath = os.path.join(self._rootDownloadDir,
-                                        relativeDownloadPath)
-        if os.path.exists(fullDownloadPath):
-            if self.favicon is None:
-                self.favicon = fullDownloadPath
+        if relativeDownloadPath is not None:
+            fullDownloadPath = os.path.join(self._rootDownloadDir,
+                                            relativeDownloadPath)
+            if os.path.exists(fullDownloadPath):
+                if self.favicon is None:
+                    self.favicon = fullDownloadPath
 
-            node['href'] = relativeDownloadPath
+                if node is not None:
+                    node['href'] = relativeDownloadPath
 
     def _processFuncCSS(self, startUrl, url, node, text):
         text = self.toUnicode(text)
@@ -363,11 +377,12 @@ class DownloadController(BaseDownloadController):
                                                  relativeurl,
                                                  None,
                                                  processFunc)
-            replace = replace_tpl.format(
-                url=relativeDownloadPath.replace(self._staticDir + u'/',
-                                                 u'',
-                                                 1)
-            )
+            if relativeDownloadPath is not None:
+                replace = replace_tpl.format(
+                    url=relativeDownloadPath.replace(self._staticDir + u'/',
+                                                     u'',
+                                                     1)
+                )
 
             result = result[:match.start() + delta] + replace + \
                 result[match.end() + delta:]
@@ -382,7 +397,7 @@ class DownloadController(BaseDownloadController):
         return relativeDownloadPath
 
     def urljoin(self, startUrl, url):
-        if u'://' in url:
+        if '://' in url:
             return url
 
         return urllib.parse.urljoin(startUrl, url)
@@ -392,7 +407,7 @@ class DownloadController(BaseDownloadController):
                  url: str,
                  node: 'bs4.element.Tag',
                  processDataFunc: Callable[[str, str, 'bs4.element.Tag', bytes], str] = None,
-                 processFileName: Callable[[str, str, 'bs4.element.Tag', str], str] = None) -> str:
+                 processFileName: Callable[[str, str, 'bs4.element.Tag', str], str] = None) -> Optional[str]:
         fullUrl = self.urljoin(startUrl, url)
 
         relativeDownloadPath = self._getRelativeDownloadPath(fullUrl)
@@ -420,6 +435,7 @@ class DownloadController(BaseDownloadController):
                     fp.write(data)
             except(urllib.error.URLError, IOError):
                 self.log(_("Can't download {}\n").format(fullUrl))
+                return None
 
         return relativeDownloadPath
 
@@ -500,5 +516,6 @@ class WebPageDownloadController(DownloadController):
             return super().processFavicon(startUrl, url, node)
 
     def log(self, text):
+        logger.debug(text)
         event = UpdateLogEvent(text=text)
         wx.PostEvent(self._dialog, event)

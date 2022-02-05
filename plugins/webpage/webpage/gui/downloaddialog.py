@@ -239,12 +239,12 @@ class DownloadDialogController(object):
     def _onDownloadFinish(self, event):
         self._thread = None
         if not self._runEvent.is_set():
-            self.addToLog(_(u"Page creation is canceled."))
+            self.addToLog(_("Page creation is canceled."))
             self._removeDownloadDir()
             return
 
         parentPage = self._parentPage
-        title = event.title if event.title is not None else _(u'Web page')
+        title = event.title if event.title is not None else _('Web page')
         favicon = event.favicon
         tags = self._dialog.tags
         content = event.content
@@ -253,15 +253,15 @@ class DownloadDialogController(object):
         logContent = self._dialog.logText.Value
 
         titleDlg = wx.TextEntryDialog(self._dialog,
-                                      _(u'Enter a title for the page'),
-                                      _(u'Page title'),
+                                      _('Enter a title for the page'),
+                                      _('Page title'),
                                       title)
         titleDlg.SetMinSize((450, 150))
 
         if titleDlg.ShowModal() == wx.ID_OK:
             title = titleDlg.GetValue()
         else:
-            self.addToLog(_(u"Page creation is canceled."))
+            self.addToLog(_("Page creation is canceled."))
             self._removeDownloadDir()
             return
 
@@ -277,7 +277,7 @@ class DownloadDialogController(object):
             self._dialog.EndModal(wx.ID_OK)
             self._application.selectedPage = page
         except EnvironmentError:
-            self.addToLog(_(u"Can't create the page. Perhaps the title of the page is too long."))
+            self.addToLog(_("Can't create the page. Perhaps the title of the page is too long."))
         finally:
             self._removeDownloadDir()
 
@@ -333,16 +333,19 @@ class DownloadThread(Thread):
 
     def _prepareFavicon(self, favicon_src):
         if favicon_src is not None:
-            ico_ext = u'.ico'
-            iconname = favicon_src[::-1].replace(u'.', u'_16.'[::-1], 1)[::-1]
+            ico_ext = '.ico'
+            png_ext = '.png'
+            iconname = favicon_src[::-1].replace('.', '_16.'[::-1], 1)[::-1]
             if iconname.endswith(ico_ext):
-                iconname = iconname[:-len(ico_ext)] + u'.png'
+                iconname = iconname[:-len(ico_ext)] + '.png'
                 iconmaker = IconMaker()
                 try:
                     iconmaker.create(favicon_src, iconname)
                     return iconname
                 except IOError:
                     pass
+            elif favicon_src.endswith(png_ext):
+                return favicon_src
 
     def _log(self, text):
         event = webpage.events.UpdateLogEvent(text=text)
