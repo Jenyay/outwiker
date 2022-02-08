@@ -316,7 +316,7 @@ class EditSnippetsDialog(wx.Frame):
 
     @property
     def currentSnippet(self):
-        return self.snippetEditor.GetText()
+        return self.snippetEditor.GetText().replace('\r\n', '\n')
 
     def setError(self, text):
         self.errorsTextCtrl.SetValue(text)
@@ -704,7 +704,7 @@ class EditSnippetsDialogController(object):
         if os.path.isdir(path):
             return
         try:
-            writeTextFile(path, self._dialog.snippetEditor.GetText())
+            writeTextFile(path, self._dialog.currentSnippet)
         except EnvironmentError:
             MessageBox(
                 _(u"Can't save snippet\n{}").format(path),
