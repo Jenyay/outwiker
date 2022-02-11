@@ -58,7 +58,7 @@ class SourceEncodingPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
         self.assertTrue(
-            '<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>' in result)
+            '<span class="k">using</span><span class="w"> </span><span class="nn">System.Collections.Generic</span><span class="p">;</span><span class="w"></span' in result)
         self.assertTrue('Ошибка соединения с сервером' in result)
 
     def testHighlightFileEncoding2(self):

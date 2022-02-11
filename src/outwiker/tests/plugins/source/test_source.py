@@ -96,7 +96,7 @@ def hello (count):
         generator = HtmlGenerator(self.testPage)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
-        innerString1 = ".highlight-default .go { color: #888888 } /* Generic.Output */"
+        innerString1 = ".highlight-default .go { color: #717171 } /* Generic.Output */"
         innerString2 = '          <span class="nb">print</span> <span class="s2">&quot;Hello world!!!&quot;</span>'
         innerString3 = '<span class="kn">import</span> <span class="nn">os</span>'
 
@@ -123,7 +123,7 @@ def hello (count):
         generator = HtmlGenerator(self.testPage)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
-        innerString1 = ".highlight-default .go { color: #888888 } /* Generic.Output */"
+        innerString1 = ".highlight-default .go { color: #717171 } /* Generic.Output */"
         innerString2 = '       <span class="nb">print</span> <span class="s2">&quot;Hello world!!!&quot;</span>'
         innerString3 = '<span class="kn">import</span> <span class="nn">os</span>'
 
@@ -151,7 +151,7 @@ def hello (count):
         generator = HtmlGenerator(self.testPage)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
-        innerString1 = ".highlight-default .go { color: #888888 } /* Generic.Output */"
+        innerString1 = ".highlight-default .go { color: #717171 } /* Generic.Output */"
         innerString2 = '       <span class="nb">print</span> <span class="s2">&quot;Hello world!!!&quot;</span>'
         innerString3 = '<span class="kn">import</span> <span class="nn">os</span>'
 
@@ -178,7 +178,7 @@ def hello (count):
         generator = HtmlGenerator(self.testPage)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
-        innerString1 = ".highlight-default .go { color: #888888 } /* Generic.Output */"
+        innerString1 = ".highlight-default .go { color: #717171 } /* Generic.Output */"
         innerString2 = '        print &quot;Hello world!!!&quot;'
         innerString3 = 'def hello (count):'
 
@@ -206,7 +206,7 @@ def hello (count):
         generator = HtmlGenerator(self.testPage)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
-        innerString1 = ".highlight-default .go { color: #888888 } /* Generic.Output */"
+        innerString1 = ".highlight-default .go { color: #717171 } /* Generic.Output */"
         innerString2 = '        print &quot;Hello world!!!&quot;'
         innerString3 = 'def hello (count):'
 
@@ -234,7 +234,7 @@ def hello (count):
         generator = HtmlGenerator(self.testPage)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
-        innerString1 = ".highlight-default .go { color: #888888 } /* Generic.Output */"
+        innerString1 = ".highlight-default .go { color: #717171 } /* Generic.Output */"
         innerString2 = '        print &quot;Hello world!!!&quot;'
         innerString3 = 'def hello (count):'
 
@@ -275,7 +275,7 @@ def hello (count):
         generator = HtmlGenerator(self.testPage)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
-        innerString1 = ".highlight-default .go { color: #888888 } /* Generic.Output */"
+        innerString1 = ".highlight-default .go { color: #717171 } /* Generic.Output */"
         innerString2 = '        print &quot;Hello world!!!&quot;'
         innerString3 = 'def hello (count):'
         innerString4 = '       <span class="nb">print</span> <span class="s2">&quot;Hello world!!!&quot;</span>'
@@ -313,7 +313,7 @@ def hello (count):
         generator = HtmlGenerator(self.testPage)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
-        innerString1 = ".highlight-default .go { color: #888888 } /* Generic.Output */"
+        innerString1 = ".highlight-default .go { color: #717171 } /* Generic.Output */"
         innerString2 = '          for i in range (10)'
         innerString3 = 'def hello (count):'
 
@@ -342,7 +342,7 @@ def hello (count):
         generator = HtmlGenerator(self.testPage)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
-        innerString1 = ".highlight-default .go { color: #888888 } /* Generic.Output */"
+        innerString1 = ".highlight-default .go { color: #717171 } /* Generic.Output */"
         innerString2 = '          for i in range (10)'
         innerString3 = 'def hello (count):'
 
@@ -371,7 +371,7 @@ def hello (count):
         generator = HtmlGenerator(self.testPage)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
-        innerString1 = ".highlight-default .go { color: #888888 } /* Generic.Output */"
+        innerString1 = ".highlight-default .go { color: #717171 } /* Generic.Output */"
         innerString2 = '    for i in range (10)'
         innerString3 = 'def hello (count):'
 
@@ -400,7 +400,7 @@ def hello (count):
         generator = HtmlGenerator(self.testPage)
         result = generator.makeHtml(Style().getPageStyle(self.testPage))
 
-        innerString1 = ".highlight-default .go { color: #888888 } /* Generic.Output */"
+        innerString1 = ".highlight-default .go { color: #717171 } /* Generic.Output */"
         innerString2 = '    for i in range (10)'
         innerString3 = 'def hello (count):'
 
