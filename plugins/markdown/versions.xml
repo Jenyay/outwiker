@@ -1,5 +1,20 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <versions>
+	<version number="1.7.4">
+		<download href="https://jenyay.net/uploads/Outwiker/Markdown/markdown-1.7.4.zip">
+			<requirements>
+				<api>3.868</api>
+			</requirements>
+		</download>
+		<changes>
+			<change>Update libraries.</change>
+		</changes>
+
+		<changes lang="ru">
+			<change>Обновление библиотек.</change>
+		</changes>
+	</version>
+
 	<version number="1.7.3" date="2021-04-07">
 		<download href="https://jenyay.net/uploads/Outwiker/Markdown/markdown-1.7.3.zip">
 			<requirements>
