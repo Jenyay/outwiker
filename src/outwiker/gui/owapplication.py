@@ -4,6 +4,7 @@ import locale
 import logging
 import os
 import os.path
+import sys
 from gettext import NullTranslations
 
 import wx
@@ -23,13 +24,16 @@ class OutWikerApplication(wx.App):
 
     def __init__(self, application):
         super().__init__()
-        # Fix a problem with Python 3.8 and wxPython 4.1
-        locale.setlocale(locale.LC_ALL, '')
 
         self.logFileName = u"outwiker.log"
         self._application = application
 
         self.use_fake_html_render = False
+
+    def InitLocale(self):
+        # Fix a locale problem with Python 3.8 and wxPython 4.1
+        if sys.platform.startswith('win'):
+            locale.setlocale(locale.LC_ALL, 'C')
 
     def OnInit(self):
         self.Bind(wx.EVT_QUERY_END_SESSION, self._onEndSession)
@@ -37,9 +41,6 @@ class OutWikerApplication(wx.App):
         return True
 
     def initMainWindow(self):
-        # Fix a problem with Python 3.8 and wxPython 4.1
-        locale.setlocale(locale.LC_ALL, '')
-
         self.mainWnd = MainWindow(self._application)
         self.SetTopWindow(self.mainWnd)
 
