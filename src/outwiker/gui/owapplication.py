@@ -24,13 +24,14 @@ class OutWikerApplication(wx.App):
 
     def __init__(self, application):
         super().__init__()
+        self._initLocale()
 
         self.logFileName = u"outwiker.log"
         self._application = application
 
         self.use_fake_html_render = False
 
-    def InitLocale(self):
+    def _initLocale(self):
         # Fix a locale problem with Python 3.8 and wxPython 4.1
         if sys.platform.startswith('win'):
             locale.setlocale(locale.LC_ALL, 'C')
@@ -41,6 +42,7 @@ class OutWikerApplication(wx.App):
         return True
 
     def initMainWindow(self):
+        self._initLocale()
         self.mainWnd = MainWindow(self._application)
         self.SetTopWindow(self.mainWnd)
 

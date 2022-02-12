@@ -27,7 +27,7 @@ def print_info():
     logger.debug('Python version: {}'.format(sys.version))
     logger.debug('wxPython version: {}'.format(wx.__version__))
     logger.debug('Current working directory: {}'.format(os.getcwd()))
-    for n, dirname in enumerate(getSpecialDirList(u'')):
+    for n, dirname in enumerate(getSpecialDirList('')):
         logger.debug('Special directory [{}]: {}'.format(n, dirname))
 
 
