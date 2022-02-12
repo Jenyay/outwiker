@@ -9,6 +9,7 @@ from gettext import NullTranslations
 
 import wx
 
+from outwiker.core.i18n import initLocale
 from outwiker.core.logredirector import LogRedirector
 from outwiker.core.system import getPluginsDirList
 from outwiker.gui.actioncontroller import ActionController
@@ -24,17 +25,22 @@ class OutWikerApplication(wx.App):
 
     def __init__(self, application):
         super().__init__()
-        self._initLocale()
 
         self.logFileName = u"outwiker.log"
         self._application = application
-
         self.use_fake_html_render = False
+
+        self._locale = initLocale(self._application.config)
+        self._initLocale()
 
     def _initLocale(self):
         # Fix a locale problem with Python 3.8 and wxPython 4.1
         if sys.platform.startswith('win'):
-            locale.setlocale(locale.LC_ALL, 'C')
+            # Very dirty hack
+            if locale.localeconv()['decimal_point'] != '.':
+                locale.setlocale(locale.LC_ALL, '')
+            else:
+                locale.setlocale(locale.LC_ALL, 'C')
 
     def OnInit(self):
         self.Bind(wx.EVT_QUERY_END_SESSION, self._onEndSession)

@@ -11,7 +11,7 @@ import outwiker
 from outwiker.core.application import Application
 from outwiker.core.defines import APP_DATA_DEBUG
 from outwiker.core.system import getOS, getConfigPath
-from outwiker.core.i18n import initLocale
+# from outwiker.core.i18n import initLocale
 from outwiker.core.starter import Starter, StarterExit
 from outwiker.core.system import getSpecialDirList
 from outwiker.gui.owapplication import OutWikerApplication
@@ -39,7 +39,7 @@ if __name__ == "__main__":
     application.init(config_path)
 
     outwiker_app = OutWikerApplication(application)
-    locale = initLocale(outwiker_app.application.config)
+    # locale = initLocale(outwiker_app.application.config)
 
     try:
         starter = Starter(application)
