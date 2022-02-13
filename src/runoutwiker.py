@@ -28,7 +28,6 @@ def print_info():
     logger.debug('wxPython version: {}'.format(wx.__version__))
     logger.debug('Current locale: {}'.format(locale.setlocale(locale.LC_ALL, None)))
     logger.debug('Decimal point: "{}"'.format(locale.localeconv()['decimal_point']))
-    logger.debug('Decimal point (wxLocale): "{}"'.format(wx.Locale.GetInfo(wx.LOCALE_DECIMAL_POINT)))
     logger.debug('Current working directory: {}'.format(os.getcwd()))
     for n, dirname in enumerate(getSpecialDirList('')):
         logger.debug('Special directory [{}]: {}'.format(n, dirname))
