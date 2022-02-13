@@ -76,6 +76,7 @@ class BuilderBase(metaclass=abc.ABCMeta):
                         self.temp_sources_dir,
                         ignore=shutil.ignore_patterns('__pycache__',
                                                       '.pytest_cache',
+                                                      '.mypy_cache',
                                                       'OutWiker.egg-info',
                                                       'outwiker.egg-info',
                                                       'tests'))
@@ -89,7 +90,7 @@ class BuilderBase(metaclass=abc.ABCMeta):
         """
         Create empty 'plugins' dir if it not exists
         """
-        pluginsdir = os.path.join(self.temp_sources_dir, u"plugins")
+        pluginsdir = os.path.join(self.temp_sources_dir, 'plugins')
 
         # Create the plugins folder(it is not appened to the git repository)
         if not os.path.exists(pluginsdir):
@@ -110,4 +111,5 @@ class BuilderBase(metaclass=abc.ABCMeta):
                                    plugin_name)
             shutil.copytree(src_dir,
                             os.path.join(plugins_dir, plugin_name),
-                            ignore=shutil.ignore_patterns('__pycache__'))
+                            ignore=shutil.ignore_patterns('__pycache__',
+                                                          '.mypy_cache'))
