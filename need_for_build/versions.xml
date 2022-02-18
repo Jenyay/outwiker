@@ -1,10 +1,14 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <versions>
-    <version number="3.1.0.895" status="beta">
+    <version number="3.1.0.896" status="beta" date="2022-02-19">
         <changes>
+            <change>Fix errors.</change>
+            <change>Update libraries.</change>
         </changes>
 
         <changes lang="ru">
+            <change>Исправление ошибок.</change>
+            <change>Обновление используемых библиотек.</change>
         </changes>
     </version>
 
