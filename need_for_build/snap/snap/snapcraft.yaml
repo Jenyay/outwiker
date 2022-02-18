@@ -84,7 +84,7 @@ parts:
             - Pillow==8.2.0
             - cyhunspell==2.0.1
             - idna==2.10
-            - pyparsing==2.4.7
+            - pyparsing==3.0.7
         override-build: |
             snapcraftctl build
             cp -r $SNAPCRAFT_PART_SRC/usr $SNAPCRAFT_PART_INSTALL
