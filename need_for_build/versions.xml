@@ -1,5 +1,13 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <versions>
+    <version number="3.1.0.897" status="beta">
+        <changes>
+        </changes>
+
+        <changes lang="ru">
+        </changes>
+    </version>
+
     <version number="3.1.0.896" status="beta" date="2022-02-19">
         <changes>
             <change>Fix errors.</change>
