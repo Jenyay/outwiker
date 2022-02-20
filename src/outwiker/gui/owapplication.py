@@ -36,9 +36,9 @@ class OutWikerApplication(wx.App):
     def _initLocale(self):
         # Fix a locale problem with Python 3.8 and wxPython 4.1
         # Overwrite InitLocale from the wx.App class
+        locale.setlocale(locale.LC_ALL, '')
         if sys.platform.startswith('win'):
             # Very dirty hack
-            locale.setlocale(locale.LC_ALL, '')
             try:
                 wx.Locale.GetInfo(wx.LOCALE_DECIMAL_POINT)
             except Exception:
