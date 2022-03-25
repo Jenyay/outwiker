@@ -34,10 +34,10 @@
     </screenshot>
   </screenshots>
   <releases>
-    <release version="3.1.0.897" />
-	  <release version="3.1.0.896" date="2022-02-19" />
-	  <release version="3.1.0.894" date="2021-01-23" />
-	  <release version="3.1.0.892" date="2021-07-27" />
+	<release version="3.1.0.897" date="2022-03-25" />
+	<release version="3.1.0.896" date="2022-02-19" />
+	<release version="3.1.0.894" date="2021-01-23" />
+	<release version="3.1.0.892" date="2021-07-27" />
   </releases>
   <content_rating type="oars-1.0">
     <content_attribute id="violence-cartoon">none</content_attribute>
