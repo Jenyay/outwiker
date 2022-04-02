@@ -29,7 +29,7 @@
 
 Если программа работает в портабельном режиме (см. раздел :ref:`ru_faq_portable`), то папка профиля программы - это папка с запускаемым файлом (под Windows это файл :file:`outwiker.exe`). Однако по умолчанию папка профиля программы находится внутри папки профиля пользователя операционной системы.
 
-Под Windows 7/8.x/10 это папка :file:`C:\\Users\\USERNAME\\AppData\\Roaming\\outwiker`, где "USERNAME" - имя пользователя в операционной системе.
+Под Windows 7/8.x/10/11 это папка :file:`C:\\Users\\USERNAME\\AppData\\Roaming\\outwiker`, где "USERNAME" - имя пользователя в операционной системе.
 
 Под Linux расположение папки настроек зависит от настроек операционной системы, но скорее всего это будет папка :file:`~/.config/outwiker`, где "~" обозначает домашнюю папку пользователя.
 
@@ -70,15 +70,6 @@
 Сборка программы
 ----------------
 
-.. _ru_faq_64_bit:
-
-Не могу собрать OutWiker под Windows с использованием 64-битной версии Python 2.7
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-В данный момент OutWiker собирается с использованием 32-битной версии Python 2.7. Запуск программы под Python 2.7 x64 не гарантируется.
-
-Как минимум для 64-битной версии Python 2.7 нет официальных сборок библиотеки pyenchant_, поэтому ее придется компилировать из исходником самостоятельно. Возможно, будут другие проблемы с запуском под 64-битной версией Python.
-
 .. _ru_faq_ubuntu_depends:
 
 Какие пакеты требуются для запуска OutWiker из исходников под Ubuntu?
@@ -86,31 +77,29 @@
 
 Требуемые пакеты зависят от номера версии Ubuntu.
 
-Для запуска под Ubuntu 16.04 требуются следующие пакеты:
+Для запуска из исходников под Ubuntu требуются следующие пакеты:
 
-* python2.7
-* python-wxgtk3.0
-* python-wxversion
-* libwxgtk-webview3.0-0v5
-* python-pil
-* python-enchant
-* python-appindicator
-* python-gtk2
+* python3-pip
+* python3-dev
+* debhelper
+* devscripts
+* debhelper
+* devscripts
+* p7zip-full
+* libssl-dev
+* dpkg-dev
+* build-essential
+* libjpeg-dev
+* libtiff-dev
+* libpng-dev
+* libsdl2-dev
+* libnotify-dev
+* freeglut3
 * ibus-gtk3
-
-  
-Для запуска под Ubuntu 16.10 и выше требуются следующие пакеты:
-
-* python2.7
-* python-wxgtk3.0
-* python-wxversion
-* libwxgtk-webview3.0-0v5
-* python-pil
-* python-enchant
-* python-appindicator
-* python-gtk2
-* python-wxgtk-webview3.0
-* ibus-gtk3, 
+* xvfb
+* libhunspell-dev
+* libgstreamer1.0-0
+* libwebkit2gtk-4.0
 
 
 .. _ru_faq_problems:
