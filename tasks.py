@@ -122,12 +122,12 @@ def run(c, args=''):
 
 
 @task(iterable=['params'])
-def test(c, params=None):
+def test(c, params):
     '''
     Run the unit tests
     '''
-    if params is None:
-        params = []
+    if not params:
+        params = ['buildtools/src/buildtools/tests', 'src/outwiker/tests']
 
     command = getPython() if params else 'coverage run {}'.format(COVERAGE_PARAMS)
 
