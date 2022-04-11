@@ -1,6 +1,6 @@
 version: 3.0.0.xxx.{build}
 image:
-    - Python 3.8.0 x86
+    - Visual Studio 2019
     - Ubuntu1804
 environment:
     PY_PYTHON: 3.8-32
