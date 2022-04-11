@@ -20,8 +20,8 @@ install:
     - git submodule init
     - git submodule update
     - cmd: cinst innosetup
-    - cmd: py -%PY_PYTHON% -m pipenv run python -m pip install --upgrade pip
-    - cmd: py -%PY_PYTHON% -m pipenv --python %PY_PYTHON% update --dev -v
+    - cmd: py -%PY_PYTHON% -m pipenv --python %PY_PYTHON% run python -m pip install --upgrade pip
+    - cmd: py -%PY_PYTHON% -m pipenv update --dev -v
     - cmd: py -%PY_PYTHON% -m pipenv run python -m pip install -e ./buildtools
     - cmd: py -%PY_PYTHON% -m pipenv run python -m pip list
     - sh: python -m pip install pipenv
