@@ -22,8 +22,8 @@ class I18nConfig(object):
         self.config = config
 
         self.languageOption = StringOption(self.config,
-                                           u"General",
-                                           u"language",
+                                           "General",
+                                           "language",
                                            AUTO_LANGUAGE)
 
 
@@ -32,8 +32,8 @@ def getDefaultLanguage():
 
 
 def init_i18n(language):
-    langdir = os.path.join(getCurrentDir(), u'locale')
-    lang = loadLanguage(language, langdir, u"outwiker")
+    langdir = os.path.join(getCurrentDir(), 'locale')
+    lang = loadLanguage(language, langdir, 'outwiker')
     assert lang is not None
     lang.install()
     return lang
@@ -127,12 +127,9 @@ def initLocale(config):
         locale = wx.Locale(wx.LANGUAGE_DEFAULT)
         try:
             wx_lang_name = _('LANGUAGE_DEFAULT')
-            print('wxPython language: {}'.format(wx_lang_name))
             wx_language = getattr(wx, wx_lang_name)
             if wx.Locale.IsAvailable(wx_language):
                 locale = wx.Locale(wx_language)
-            else:
-                print('Language {} is not available'.format(wx_lang_name))
         except AttributeError:
             print('Unknown language: {}'.format(wx_lang_name))
 
