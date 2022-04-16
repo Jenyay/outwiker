@@ -12,20 +12,20 @@ from outwiker.core.defines import PAGE_ATTACH_DIR
 from .utils import concatenate
 
 
-class AttachFactory (object):
+class AttachFactory:
     @staticmethod
     def make(parser):
         return AttachAllToken(parser).getToken()
 
 
-class AttachImagesFactory (object):
+class AttachImagesFactory:
     @staticmethod
     def make(parser):
         return AttachImagesToken(parser).getToken()
 
 
-class AttachToken (object, metaclass=ABCMeta):
-    attachString = u"Attach:"
+class AttachToken(metaclass=ABCMeta):
+    attachString = 'Attach:'
 
     def __init__(self, parser):
         self.parser = parser
@@ -47,7 +47,7 @@ class AttachToken (object, metaclass=ABCMeta):
                 attachesAll.append(attach)
 
         finalToken = Literal(self.attachString) + concatenate(attachesAll)
-        finalToken = finalToken.setParseAction(self.convertToLink)("attach")
+        finalToken = finalToken.setParseAction(self.convertToLink)('attach')
         return finalToken
 
     def convertToLink(self, s, l, t):
@@ -66,11 +66,11 @@ class AttachToken (object, metaclass=ABCMeta):
         """
 
 
-class AttachAllToken (AttachToken):
+class AttachAllToken(AttachToken):
     def filterFile(self, fname):
         return True
 
 
-class AttachImagesToken (AttachToken):
+class AttachImagesToken(AttachToken):
     def filterFile(self, fname):
         return isImage(fname)
