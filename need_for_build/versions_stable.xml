@@ -1,6 +1,6 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <versions>
-    <version number="3.1.0.900" date="16.04.2022">
+    <version number="3.1.0.900" date="2022-04-16">
         <changes>
             <change>Improve dialog for creation notes and edit notes properties.</change>
             <change>Improve work with hotkeys.</change>
