@@ -367,10 +367,10 @@ def _update_version_for_file(path: str,
                              updater_func: Callable[[TextIO, List[int], str], str],
                              version: List[int],
                              status: str):
-    with open(path) as fp_in:
+    with open(path, encoding="utf-8") as fp_in:
         content_new = updater_func(fp_in, version, status)
 
-    with open(path, 'w') as fp_out:
+    with open(path, 'w', encoding="utf-8") as fp_out:
         fp_out.write(content_new)
 
 
