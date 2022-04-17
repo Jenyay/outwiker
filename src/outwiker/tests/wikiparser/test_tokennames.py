@@ -395,20 +395,65 @@ class TokenNamesTest(unittest.TestCase):
 
         self._checkToken(testtoken, text, validname)
 
-    def testAttachment(self):
+    def testAttachmentSimple(self):
         self.__createWiki()
         testtoken = AttachFactory.make(self.parser).setParseAction(
             lambda s, l, t: None)
-        text = "бла-бла-бла Attach:файл с пробелами.tmp ыфваыфвафв"
+        text = "бла-бла-бла Attach:xxx.tmp ыфваыфвафв"
         validname = "attach"
 
         self._checkToken(testtoken, text, validname)
 
-    def testImageAttachment(self):
+    def testAttachmentSingleQuotes(self):
+        self.__createWiki()
+        testtoken = AttachFactory.make(self.parser).setParseAction(
+            lambda s, l, t: None)
+        text = "бла-бла-бла Attach:'xxx.tmp' ыфваыфвафв"
+        validname = "attach"
+
+        self._checkToken(testtoken, text, validname)
+
+    def testAttachmentDoubleQuotes(self):
+        self.__createWiki()
+        testtoken = AttachFactory.make(self.parser).setParseAction(
+            lambda s, l, t: None)
+        text = 'бла-бла-бла Attach:"xxx.tmp" ыфваыфвафв'
+        validname = "attach"
+
+        self._checkToken(testtoken, text, validname)
+
+    def testAttachmentWithSpace(self):
+        self.__createWiki()
+        testtoken = AttachFactory.make(self.parser).setParseAction(
+            lambda s, l, t: None)
+        text = "бла-бла-бла Attach:'файл с пробелами.tmp' ыфваыфвафв"
+        validname = "attach"
+
+        self._checkToken(testtoken, text, validname)
+
+    def testImageAttachmentSimple(self):
         self.__createWiki()
         testtoken = AttachImagesFactory.make(self.parser).setParseAction(
             lambda s, l, t: None)
         text = "бла-бла-бла Attach:image.jpg ыфваыфвафв"
+        validname = "attach"
+
+        self._checkToken(testtoken, text, validname)
+
+    def testImageAttachmentSingleQuotes(self):
+        self.__createWiki()
+        testtoken = AttachImagesFactory.make(self.parser).setParseAction(
+            lambda s, l, t: None)
+        text = "бла-бла-бла Attach:'image.jpg' ыфваыфвафв"
+        validname = "attach"
+
+        self._checkToken(testtoken, text, validname)
+
+    def testImageAttachmentDoubleQuotes(self):
+        self.__createWiki()
+        testtoken = AttachImagesFactory.make(self.parser).setParseAction(
+            lambda s, l, t: None)
+        text = 'бла-бла-бла Attach:"image.jpg" ыфваыфвафв'
         validname = "attach"
 
         self._checkToken(testtoken, text, validname)

@@ -85,6 +85,7 @@ class Parser(object):
 
         # Common wiki tokens
         self.wikiTokens = [
+            self.attachImages,
             self.attaches,
             self.urlImage,
             self.url,

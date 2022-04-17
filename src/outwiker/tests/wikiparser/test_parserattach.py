@@ -52,126 +52,181 @@ class ParserAttachTest(unittest.TestCase):
     def tearDown(self):
         removeDir(self.path)
 
-    def test_attach_01(self):
+    def test_attach_simple(self):
         fname = "filename.tmp"
-        text = "бла-бла-бла \nAttach:%s бла-бла-бла\nбла-бла-бла" % (fname)
-        result = 'бла-бла-бла \n<a href="__attach/%s">%s</a> бла-бла-бла\nбла-бла-бла' % (
+        text = "бла-бла-бла \nAttach:{} бла-бла-бла\nбла-бла-бла".format(fname)
+        result = 'бла-бла-бла \n<a href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             fname, fname)
 
         self.assertEqual(self.parser.toHtml(text), result)
 
-    def test_attach_png(self):
+    def test_attach_simple_single_quotes(self):
+        fname = "filename.tmp"
+        text = "бла-бла-бла \nAttach:'{}' бла-бла-бла\nбла-бла-бла".format(fname)
+        result = 'бла-бла-бла \n<a href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+            fname, fname)
+
+        self.assertEqual(self.parser.toHtml(text), result)
+
+    def test_attach_simple_double_quotes(self):
+        fname = "filename.tmp"
+        text = 'бла-бла-бла \nAttach:"{}" бла-бла-бла\nбла-бла-бла'.format(fname)
+        result = 'бла-бла-бла \n<a href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+            fname, fname)
+
+        self.assertEqual(self.parser.toHtml(text), result)
+
+    def test_attach_png_simple(self):
         fname = "accept.png"
-        text = "бла-бла-бла \nAttach:%s бла-бла-бла\nбла-бла-бла" % (fname)
-        result = 'бла-бла-бла \n<img src="__attach/%s"/> бла-бла-бла\nбла-бла-бла' % (
+        text = "бла-бла-бла \nAttach:{} бла-бла-бла\nбла-бла-бла".format(fname)
+        result = 'бла-бла-бла \n<img src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
+            fname)
+
+        self.assertEqual(self.parser.toHtml(text), result)
+
+    def test_attach_png_single_quotes(self):
+        fname = "accept.png"
+        text = "бла-бла-бла \nAttach:'{}' бла-бла-бла\nбла-бла-бла".format(fname)
+        result = 'бла-бла-бла \n<img src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
+            fname)
+
+        self.assertEqual(self.parser.toHtml(text), result)
+
+    def test_attach_png_double_quotes(self):
+        fname = "accept.png"
+        text = 'бла-бла-бла \nAttach:"{}" бла-бла-бла\nбла-бла-бла'.format(fname)
+        result = 'бла-бла-бла \n<img src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
             fname)
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def test_attach_webp(self):
         fname = "image.webp"
-        text = "бла-бла-бла \nAttach:%s бла-бла-бла\nбла-бла-бла" % (fname)
-        result = 'бла-бла-бла \n<img src="__attach/%s"/> бла-бла-бла\nбла-бла-бла' % (
+        text = "бла-бла-бла \nAttach:{} бла-бла-бла\nбла-бла-бла".format(fname)
+        result = 'бла-бла-бла \n<img src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
             fname)
 
         self.assertEqual(self.parser.toHtml(text), result)
 
-    def test_attach_03(self):
+    def test_attach_in_link_simple(self):
         fname = "filename.tmp"
-        text = "бла-бла-бла \n[[Attach:%s]] бла-бла-бла\nбла-бла-бла" % (fname)
-        result = 'бла-бла-бла \n<a href="__attach/%s">%s</a> бла-бла-бла\nбла-бла-бла' % (
+        text = "бла-бла-бла \n[[Attach:{}]] бла-бла-бла\nбла-бла-бла".format(
+            fname)
+        result = 'бла-бла-бла \n<a href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+            fname, fname)
+
+        self.assertEqual(self.parser.toHtml(text), result)
+
+    def test_attach_in_link_single_quotes(self):
+        fname = "filename.tmp"
+        text = "бла-бла-бла \n[[Attach:'{}']] бла-бла-бла\nбла-бла-бла".format(
+            fname)
+        result = 'бла-бла-бла \n<a href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+            fname, fname)
+
+        self.assertEqual(self.parser.toHtml(text), result)
+
+    def test_attach_in_link_double_quotes(self):
+        fname = "filename.tmp"
+        text = 'бла-бла-бла \n[[Attach:"{}"]] бла-бла-бла\nбла-бла-бла'.format(
+            fname)
+        result = 'бла-бла-бла \n<a href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             fname, fname)
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def test_attach_04(self):
         fname = "файл с пробелами.tmp"
-        text = "бла-бла-бла \nAttach:%s бла-бла-бла\nбла-бла-бла" % (fname)
-        result = 'бла-бла-бла \n<a href="__attach/%s">%s</a> бла-бла-бла\nбла-бла-бла' % (
+        text = "бла-бла-бла \nAttach:'{}' бла-бла-бла\nбла-бла-бла".format(
+            fname)
+        result = 'бла-бла-бла \n<a href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             fname, fname)
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def test_attach_05(self):
         fname = "файл с пробелами.tmp"
-        text = "бла-бла-бла \n[[Attach:%s]] бла-бла-бла\nбла-бла-бла" % (fname)
-        result = 'бла-бла-бла \n<a href="__attach/%s">%s</a> бла-бла-бла\nбла-бла-бла' % (
+        text = "бла-бла-бла \n[[Attach:{}]] бла-бла-бла\nбла-бла-бла".format(
+            fname)
+        result = 'бла-бла-бла \n<a href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             fname, fname)
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def test_attach_png_spaces(self):
         fname = "картинка с пробелами.png"
-        text = "бла-бла-бла \nAttach:%s бла-бла-бла\nбла-бла-бла" % (fname)
-        result = 'бла-бла-бла \n<img src="__attach/%s"/> бла-бла-бла\nбла-бла-бла' % (
+        text = "бла-бла-бла \nAttach:'{}' бла-бла-бла\nбла-бла-бла".format(
+            fname)
+        result = 'бла-бла-бла \n<img src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
             fname)
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def test_attach_07(self):
         fname = "accept.png"
-        text = "бла-бла-бла \n[[Attach:%s]] бла-бла-бла\nбла-бла-бла" % (fname)
-        result = 'бла-бла-бла \n<a href="__attach/%s">%s</a> бла-бла-бла\nбла-бла-бла' % (
+        text = "бла-бла-бла \n[[Attach:{}]] бла-бла-бла\nбла-бла-бла".format(
+            fname)
+        result = 'бла-бла-бла \n<a href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             fname, fname)
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def test_attach_08(self):
         fname = "accept.png"
-        text = "бла-бла-бла \n[[Attach:%s | Комментарий]] бла-бла-бла\nбла-бла-бла" % (
+        text = "бла-бла-бла \n[[Attach:{} | Комментарий]] бла-бла-бла\nбла-бла-бла".format(
             fname)
-        result = 'бла-бла-бла \n<a href="__attach/%s">Комментарий</a> бла-бла-бла\nбла-бла-бла' % (
+        result = 'бла-бла-бла \n<a href="__attach/{}">Комментарий</a> бла-бла-бла\nбла-бла-бла'.format(
             fname)
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def test_attach_09(self):
         fname = "файл с пробелами.tmp"
-        text = "бла-бла-бла \n[[Attach:%s | Комментарий]] бла-бла-бла\nбла-бла-бла" % (
+        text = "бла-бла-бла \n[[Attach:{} | Комментарий]] бла-бла-бла\nбла-бла-бла".format(
             fname)
-        result = 'бла-бла-бла \n<a href="__attach/%s">Комментарий</a> бла-бла-бла\nбла-бла-бла' % (
+        result = 'бла-бла-бла \n<a href="__attach/{}">Комментарий</a> бла-бла-бла\nбла-бла-бла'.format(
             fname)
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def test_attach_10(self):
         fname = "accept.png"
-        text = "бла-бла-бла \n[[Комментарий -> Attach:%s]] бла-бла-бла\nбла-бла-бла" % (
+        text = "бла-бла-бла \n[[Комментарий -> Attach:{}]] бла-бла-бла\nбла-бла-бла".format(
             fname)
-        result = 'бла-бла-бла \n<a href="__attach/%s">Комментарий</a> бла-бла-бла\nбла-бла-бла' % (
+        result = 'бла-бла-бла \n<a href="__attach/{}">Комментарий</a> бла-бла-бла\nбла-бла-бла'.format(
             fname)
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def test_attach_11(self):
         fname = "файл с пробелами.tmp"
-        text = "бла-бла-бла \n[[Комментарий -> Attach:%s]] бла-бла-бла\nбла-бла-бла" % (
+        text = "бла-бла-бла \n[[Комментарий -> Attach:{}]] бла-бла-бла\nбла-бла-бла".format(
             fname)
-        result = 'бла-бла-бла \n<a href="__attach/%s">Комментарий</a> бла-бла-бла\nбла-бла-бла' % (
+        result = 'бла-бла-бла \n<a href="__attach/{}">Комментарий</a> бла-бла-бла\nбла-бла-бла'.format(
             fname)
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def test_attach_jpg(self):
         fname = "image_01.JPG"
-        text = "бла-бла-бла \nAttach:%s бла-бла-бла\nбла-бла-бла" % (fname)
-        result = 'бла-бла-бла \n<img src="__attach/%s"/> бла-бла-бла\nбла-бла-бла' % (
+        text = "бла-бла-бла \nAttach:{} бла-бла-бла\nбла-бла-бла".format(fname)
+        result = 'бла-бла-бла \n<img src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
             fname)
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def test_attach_13(self):
         fname = "dir.xxx"
-        text = "бла-бла-бла \nAttach:%s бла-бла-бла\nбла-бла-бла" % (fname)
-        result = 'бла-бла-бла \n<a href="__attach/%s">%s</a> бла-бла-бла\nбла-бла-бла' % (
+        text = "бла-бла-бла \nAttach:{} бла-бла-бла\nбла-бла-бла".format(fname)
+        result = 'бла-бла-бла \n<a href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             fname, fname)
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def test_attach_14(self):
         fname = "dir"
-        text = "бла-бла-бла \nAttach:%s бла-бла-бла\nбла-бла-бла" % (fname)
-        result = 'бла-бла-бла \n<a href="__attach/%s">%s</a> бла-бла-бла\nбла-бла-бла' % (
+        text = "бла-бла-бла \nAttach:{} бла-бла-бла\nбла-бла-бла".format(fname)
+        result = 'бла-бла-бла \n<a href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             fname, fname)
 
         self.assertEqual(self.parser.toHtml(text), result)

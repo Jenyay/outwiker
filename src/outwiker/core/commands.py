@@ -15,6 +15,7 @@ import wx
 import outwiker.core.exceptions
 from outwiker.core.application import Application
 from outwiker.core.attachment import Attachment
+from outwiker.core.defines import IMAGES_EXTENSIONS
 from outwiker.core.events import PostWikiOpenParams, PreWikiOpenParams
 from outwiker.core.pagetitletester import PageTitleError, PageTitleWarning
 from outwiker.core.system import getOS
@@ -588,13 +589,11 @@ def isImage(fname):
     If fname is image then the function return True. Otherwise - False.
     """
     fnameLower = fname.lower()
+    for extension in IMAGES_EXTENSIONS:
+        if fnameLower.endswith('.' + extension):
+            return True
 
-    return (fnameLower.endswith(".png") or
-            fnameLower.endswith(".jpg") or
-            fnameLower.endswith(".jpeg") or
-            fnameLower.endswith(".bmp") or
-            fnameLower.endswith(".gif") or
-            fnameLower.endswith(".webp"))
+    return False
 
 
 def dictToStr(paramsDict):
