@@ -41,17 +41,17 @@ class AttachToken(metaclass=ABCMeta):
 
         # File name with spaces (double quotes)
         token1 = Literal(self.attachString + '"') + fname_with_space_token + Literal('"')
-        token1 = token1.setParseAction(self.convertToLink)
+        token1 = token1.setParseAction(self._convertToLink)
 
         # File name with spaces (single quotes)
         token2 = Literal(self.attachString + "'") + fname_with_space_token + Literal("'")
-        token2 = token2.setParseAction(self.convertToLink)
+        token2 = token2.setParseAction(self._convertToLink)
 
         # File name without spaces
         token3 = Literal(self.attachString) + fname_without_space_token
-        token3 = token3.setParseAction(self.convertToLink)
+        token3 = token3.setParseAction(self._convertToLink)
 
-        finalToken = concatenate([token1, token2, token3])('attach')
+        finalToken = concatenate([token1, token2, token3])(self._getTokenName())
         return finalToken
 
     @abstractmethod
@@ -62,24 +62,14 @@ class AttachToken(metaclass=ABCMeta):
     def _getRegexWithSpaces(self):
         pass
 
-        # attachesAll = []
-
-        # attaches = Attachment(self.parser.page).attachmentFull
-        # attaches.sort(key=len, reverse=True)
-
-        # for attach in attaches:
-        #     fname = os.path.basename(attach)
-        #     if self.filterFile(fname):
-        #         attach = Literal(fname)
-        #         attachesAll.append(attach)
-
-        # finalToken = Literal(self.attachString) + concatenate(attachesAll)
-        # finalToken = finalToken.setParseAction(self.convertToLink)('attach')
-        # return finalToken
+    @abstractmethod
+    def _convertToLink(self, s, l, t):
+        pass
 
     @abstractmethod
-    def convertToLink(self, s, l, t):
+    def _getTokenName(self):
         pass
+
 
 
 class AttachAllToken(AttachToken):
@@ -89,9 +79,12 @@ class AttachAllToken(AttachToken):
     def _getRegexWithSpaces(self):
         return Regex(r'[\w\s.=,#@^&$%;()`~/\-]+', re.I)
 
-    def convertToLink(self, s, l, t):
+    def _convertToLink(self, s, l, t):
         fname = t[1]
         return '<a href="%s/%s">%s</a>' % (PAGE_ATTACH_DIR, fname, fname)
+
+    def _getTokenName(self):
+        return 'attach'
 
 
 class AttachImagesToken(AttachToken):
@@ -109,6 +102,9 @@ class AttachImagesToken(AttachToken):
         regexp_str = r'[\w\s.=,#@^&$%;()`~/\-]+?' + '(?:{})'.format(ext_list)
         return Regex(regexp_str, re.I)
 
-    def convertToLink(self, s, l, t):
+    def _convertToLink(self, s, l, t):
         fname = t[1]
         return '<img src="%s/%s"/>' % (PAGE_ATTACH_DIR, fname)
+
+    def _getTokenName(self):
+        return 'attachImage'

@@ -35,11 +35,9 @@ class ParserAttachTest(unittest.TestCase):
         WikiPageFactory().create(self.wikiroot, "Страница 2", [])
         self.testPage = self.wikiroot["Страница 2"]
 
-        files = ["accept.png", "add.png", "anchor.png", "filename.tmp",
+        files = ["accept.png", "filename.tmp",
                  "файл с пробелами.tmp", "картинка с пробелами.png",
-                 "image.jpg", "image.jpeg", "image.png", "image.tif",
-                 "image.tiff", "image.gif", "image.webp",
-                 "image_01.JPG", "dir", "dir.xxx", "dir.png"]
+                 "image.webp", "image_01.JPG", "dir"]
 
         fullFilesPath = [os.path.join(self.filesPath, fname)
                          for fname in files]

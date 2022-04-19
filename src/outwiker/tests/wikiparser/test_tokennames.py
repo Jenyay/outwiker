@@ -436,7 +436,7 @@ class TokenNamesTest(unittest.TestCase):
         testtoken = AttachImagesFactory.make(self.parser).setParseAction(
             lambda s, l, t: None)
         text = "бла-бла-бла Attach:image.jpg ыфваыфвафв"
-        validname = "attach"
+        validname = "attachImage"
 
         self._checkToken(testtoken, text, validname)
 
@@ -445,7 +445,7 @@ class TokenNamesTest(unittest.TestCase):
         testtoken = AttachImagesFactory.make(self.parser).setParseAction(
             lambda s, l, t: None)
         text = "бла-бла-бла Attach:'image.jpg' ыфваыфвафв"
-        validname = "attach"
+        validname = "attachImage"
 
         self._checkToken(testtoken, text, validname)
 
@@ -454,6 +454,6 @@ class TokenNamesTest(unittest.TestCase):
         testtoken = AttachImagesFactory.make(self.parser).setParseAction(
             lambda s, l, t: None)
         text = 'бла-бла-бла Attach:"image.jpg" ыфваыфвафв'
-        validname = "attach"
+        validname = "attachImage"
 
         self._checkToken(testtoken, text, validname)
