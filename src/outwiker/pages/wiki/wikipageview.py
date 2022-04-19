@@ -74,7 +74,10 @@ class WikiPageView(BaseWikiPageView):
 
         Перегрузка метода из BaseTextPanel
         """
-        return ' '.join(["Attach:" + fname for fname in fnames])
+        fname_quotes = ['"{}"'.format(fname) if ' ' in fname else fname
+                for fname in fnames]
+
+        return ' '.join(['Attach:{}'.format(fname) for fname in fname_quotes])
 
     @property
     def commandsMenu(self):
