@@ -74,14 +74,14 @@ class AttachToken(metaclass=ABCMeta):
 
 class AttachAllToken(AttachToken):
     def _getRegex(self):
-        return Regex(r'[\w.=,#@^&$%;()`~/\-]+', re.I)
+        return Regex(r'[\w.=,#@^&$%;()`~/\\-]+', re.I)
 
     def _getRegexWithSpaces(self):
-        return Regex(r'[\w\s.=,#@^&$%;()`~/\-]+', re.I)
+        return Regex(r'[\w\s.=,#@^&$%;()`~/\\-]+', re.I)
 
     def _convertToLink(self, s, l, t):
         fname = t[1]
-        return '<a href="%s/%s">%s</a>' % (PAGE_ATTACH_DIR, fname, fname)
+        return '<a href="%s/%s">%s</a>' % (PAGE_ATTACH_DIR, fname.replace('\\', '/'), fname)
 
     def _getTokenName(self):
         return 'attach'
@@ -94,17 +94,17 @@ class AttachImagesToken(AttachToken):
 
     def _getRegex(self):
         ext_list = self._getImagesExtensions()
-        regexp_str = r'[\w.=,#@^&$%;()`~/\-]+?' + '(?:{})'.format(ext_list)
+        regexp_str = r'[\w.=,#@^&$%;()`~/\\-]+?' + '(?:{})'.format(ext_list)
         return Regex(regexp_str, re.I)
 
     def _getRegexWithSpaces(self):
         ext_list = self._getImagesExtensions()
-        regexp_str = r'[\w\s.=,#@^&$%;()`~/\-]+?' + '(?:{})'.format(ext_list)
+        regexp_str = r'[\w\s.=,#@^&$%;()`~/\\-]+?' + '(?:{})'.format(ext_list)
         return Regex(regexp_str, re.I)
 
     def _convertToLink(self, s, l, t):
         fname = t[1]
-        return '<img src="%s/%s"/>' % (PAGE_ATTACH_DIR, fname)
+        return '<img src="%s/%s"/>' % (PAGE_ATTACH_DIR, fname.replace('\\', '/'))
 
     def _getTokenName(self):
         return 'attachImage'

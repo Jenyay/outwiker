@@ -221,10 +221,144 @@ class ParserAttachTest(unittest.TestCase):
 
         self.assertEqual(self.parser.toHtml(text), result)
 
-    def test_attach_14(self):
+    def test_attach_folder(self):
         fname = "dir"
         text = "бла-бла-бла \nAttach:{} бла-бла-бла\nбла-бла-бла".format(fname)
         result = 'бла-бла-бла \n<a href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             fname, fname)
+
+        self.assertEqual(self.parser.toHtml(text), result)
+
+    def test_attach_file_in_folder_forward_slash(self):
+        fname = "dir/subdir/subdir2/application.py"
+        text = "бла-бла-бла \nAttach:{} бла-бла-бла\nбла-бла-бла".format(fname)
+        result = 'бла-бла-бла \n<a href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+            fname, fname)
+
+        self.assertEqual(self.parser.toHtml(text), result)
+
+    def test_attach_file_in_folder_forward_slash_single_quotes(self):
+        fname = "dir/subdir/subdir2/application.py"
+        text = "бла-бла-бла \nAttach:'{}' бла-бла-бла\nбла-бла-бла".format(fname)
+        result = 'бла-бла-бла \n<a href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+            fname, fname)
+
+        self.assertEqual(self.parser.toHtml(text), result)
+
+    def test_attach_file_in_folder_forward_slash_duoble_quotes(self):
+        fname = "dir/subdir/subdir2/application.py"
+        text = 'бла-бла-бла \nAttach:"{}" бла-бла-бла\nбла-бла-бла'.format(fname)
+        result = 'бла-бла-бла \n<a href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+            fname, fname)
+
+        self.assertEqual(self.parser.toHtml(text), result)
+
+    def test_attach_file_in_folder_backslash(self):
+        fname = "dir\\subdir\\subdir2\\application.py"
+        fname_result = fname.replace('\\', '/')
+
+        text = "бла-бла-бла \nAttach:{} бла-бла-бла\nбла-бла-бла".format(fname)
+        result = 'бла-бла-бла \n<a href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+            fname_result, fname)
+
+        self.assertEqual(self.parser.toHtml(text), result)
+
+    def test_attach_file_in_folder_backslash_single_quotes(self):
+        fname = "dir\\subdir\\subdir2\\application.py"
+        fname_result = fname.replace('\\', '/')
+
+        text = "бла-бла-бла \nAttach:'{}' бла-бла-бла\nбла-бла-бла".format(fname)
+        result = 'бла-бла-бла \n<a href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+            fname_result, fname)
+
+        self.assertEqual(self.parser.toHtml(text), result)
+
+    def test_attach_file_in_folder_backslash_duoble_quotes(self):
+        fname = "dir\\subdir\\subdir2\\application.py"
+        fname_result = fname.replace('\\', '/')
+
+        text = 'бла-бла-бла \nAttach:"{}" бла-бла-бла\nбла-бла-бла'.format(fname)
+        result = 'бла-бла-бла \n<a href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+            fname_result, fname)
+
+        self.assertEqual(self.parser.toHtml(text), result)
+
+    def test_attach_image_subfolder_forward_slash(self):
+        fname = "dir/subdir/subdir2/image.png"
+        text = "бла-бла-бла \nAttach:{} бла-бла-бла\nбла-бла-бла".format(fname)
+        result = 'бла-бла-бла \n<img src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
+            fname)
+
+        self.assertEqual(self.parser.toHtml(text), result)
+
+    def test_attach_image_subfolder_forward_slash_single_quotes(self):
+        fname = "dir/subdir/subdir2/image.png"
+        text = "бла-бла-бла \nAttach:'{}' бла-бла-бла\nбла-бла-бла".format(fname)
+        result = 'бла-бла-бла \n<img src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
+            fname)
+
+        self.assertEqual(self.parser.toHtml(text), result)
+
+    def test_attach_image_subfolder_forward_slash_double_quotes(self):
+        fname = "dir/subdir/subdir2/image.png"
+        text = 'бла-бла-бла \nAttach:"{}" бла-бла-бла\nбла-бла-бла'.format(fname)
+        result = 'бла-бла-бла \n<img src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
+            fname)
+
+        self.assertEqual(self.parser.toHtml(text), result)
+
+    def test_attach_image_subfolder_backslash(self):
+        fname = "dir\\subdir\\subdir2\\image.png"
+        text = "бла-бла-бла \nAttach:{} бла-бла-бла\nбла-бла-бла".format(fname)
+        result = 'бла-бла-бла \n<img src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
+                fname.replace('\\', '/'))
+
+        self.assertEqual(self.parser.toHtml(text), result)
+
+    def test_attach_image_subfolder_backslash_single_quotes(self):
+        fname = "dir\\subdir\\subdir2\\image.png"
+        text = "бла-бла-бла \nAttach:'{}' бла-бла-бла\nбла-бла-бла".format(fname)
+        result = 'бла-бла-бла \n<img src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
+            fname.replace('\\', '/'))
+
+        self.assertEqual(self.parser.toHtml(text), result)
+
+    def test_attach_image_subfolder_backslash_double_quotes(self):
+        fname = "dir\\subdir\\subdir2\\image.png"
+        text = 'бла-бла-бла \nAttach:"{}" бла-бла-бла\nбла-бла-бла'.format(fname)
+        result = 'бла-бла-бла \n<img src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
+            fname.replace('\\', '/'))
+
+        self.assertEqual(self.parser.toHtml(text), result)
+
+    def test_attach_file_with_spaces_in_folder_forward_slash_single_quotes(self):
+        fname = "dir/subdir/subdir2/файл с пробелами.tmp"
+        text = "бла-бла-бла \nAttach:'{}' бла-бла-бла\nбла-бла-бла".format(fname)
+        result = 'бла-бла-бла \n<a href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+            fname, fname)
+
+        self.assertEqual(self.parser.toHtml(text), result)
+
+    def test_attach_file_with_spaces_in_folder_forward_slash_double_quotes(self):
+        fname = "dir/subdir/subdir2/файл с пробелами.tmp"
+        text = 'бла-бла-бла \nAttach:"{}" бла-бла-бла\nбла-бла-бла'.format(fname)
+        result = 'бла-бла-бла \n<a href="__attach/{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+            fname, fname)
+
+        self.assertEqual(self.parser.toHtml(text), result)
+
+    def test_attach_image_with_spaces_subfolder_forward_slash_single_quotes(self):
+        fname = "dir/subdir/subdir2/картинка с пробелами.png"
+        text = "бла-бла-бла \nAttach:'{}' бла-бла-бла\nбла-бла-бла".format(fname)
+        result = 'бла-бла-бла \n<img src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
+            fname)
+
+        self.assertEqual(self.parser.toHtml(text), result)
+
+    def test_attach_image_with_spaces_subfolder_forward_slash_double_quotes(self):
+        fname = "dir/subdir/subdir2/картинка с пробелами.png"
+        text = 'бла-бла-бла \nAttach:"{}" бла-бла-бла\nбла-бла-бла'.format(fname)
+        result = 'бла-бла-бла \n<img src="__attach/{}"/> бла-бла-бла\nбла-бла-бла'.format(
+            fname)
 
         self.assertEqual(self.parser.toHtml(text), result)
