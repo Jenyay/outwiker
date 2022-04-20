@@ -757,3 +757,102 @@ class ParserLinkTest(unittest.TestCase):
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, expected)
+
+    def testLinkAttachImageSimple(self):
+        filename = 'accept.png'
+        text = "бла-бла-бла \n[[Attach:{filename}]] бла-бла-бла\nбла-бла-бла".format(
+            filename=filename)
+        attach_path = '{}/{}'.format(PAGE_ATTACH_DIR, filename)
+        expected = 'бла-бла-бла \n<a href="{attach_path}">{filename}</a> бла-бла-бла\nбла-бла-бла'.format(
+            attach_path=attach_path, filename=filename)
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
+
+    def testLinkAttachImageSimpleDoublleQuotes(self):
+        filename = 'accept.png'
+        text = 'бла-бла-бла \n[[Attach:"{filename}"]] бла-бла-бла\nбла-бла-бла'.format(
+            filename=filename)
+        attach_path = '{}/{}'.format(PAGE_ATTACH_DIR, filename)
+        expected = 'бла-бла-бла \n<a href="{attach_path}">{filename}</a> бла-бла-бла\nбла-бла-бла'.format(
+            attach_path=attach_path, filename=filename)
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
+
+    def testLinkAttachImageSimpleSingleQuotes(self):
+        filename = 'accept.png'
+        text = "бла-бла-бла \n[[Attach:'{filename}']] бла-бла-бла\nбла-бла-бла".format(
+            filename=filename)
+        attach_path = '{}/{}'.format(PAGE_ATTACH_DIR, filename)
+        expected = 'бла-бла-бла \n<a href="{attach_path}">{filename}</a> бла-бла-бла\nбла-бла-бла'.format(
+            attach_path=attach_path, filename=filename)
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
+
+    def testLinkAttachImageArrow(self):
+        filename = 'accept.png'
+        text = "бла-бла-бла \n[[Attach:{filename} -> Attach:{filename}]] бла-бла-бла\nбла-бла-бла".format(
+            filename=filename)
+        attach_path = '{}/{}'.format(PAGE_ATTACH_DIR, filename)
+        expected = 'бла-бла-бла \n<a href="{attach_path}"><img src="{attach_path}"/></a> бла-бла-бла\nбла-бла-бла'.format(
+            attach_path=attach_path)
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
+
+    def testLinkAttachImageArrowSingleQuotes(self):
+        filename = 'accept.png'
+        text = "бла-бла-бла \n[[Attach:'{filename}' -> Attach:'{filename}']] бла-бла-бла\nбла-бла-бла".format(
+            filename=filename)
+        attach_path = '{}/{}'.format(PAGE_ATTACH_DIR, filename)
+        expected = 'бла-бла-бла \n<a href="{attach_path}"><img src="{attach_path}"/></a> бла-бла-бла\nбла-бла-бла'.format(
+            attach_path=attach_path)
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
+
+    def testLinkAttachImageArrowDoubleQuotes(self):
+        filename = 'accept.png'
+        text = 'бла-бла-бла \n[[Attach:"{filename}" -> Attach:"{filename}"]] бла-бла-бла\nбла-бла-бла'.format(
+            filename=filename)
+        attach_path = '{}/{}'.format(PAGE_ATTACH_DIR, filename)
+        expected = 'бла-бла-бла \n<a href="{attach_path}"><img src="{attach_path}"/></a> бла-бла-бла\nбла-бла-бла'.format(
+            attach_path=attach_path)
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
+
+    def testLinkAttachImagePipe(self):
+        filename = 'accept.png'
+        text = "бла-бла-бла \n[[Attach:{filename} | Attach:{filename}]] бла-бла-бла\nбла-бла-бла".format(
+            filename=filename)
+        attach_path = '{}/{}'.format(PAGE_ATTACH_DIR, filename)
+        expected = 'бла-бла-бла \n<a href="{attach_path}"><img src="{attach_path}"/></a> бла-бла-бла\nбла-бла-бла'.format(
+            attach_path=attach_path)
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
+
+    def testLinkAttachImagePipeSingleQuotes(self):
+        filename = 'accept.png'
+        text = "бла-бла-бла \n[[Attach:'{filename}' | Attach:'{filename}']] бла-бла-бла\nбла-бла-бла".format(
+            filename=filename)
+        attach_path = '{}/{}'.format(PAGE_ATTACH_DIR, filename)
+        expected = 'бла-бла-бла \n<a href="{attach_path}"><img src="{attach_path}"/></a> бла-бла-бла\nбла-бла-бла'.format(
+            attach_path=attach_path)
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
+
+    def testLinkAttachImagePipeDoubleQuotes(self):
+        filename = 'accept.png'
+        text = 'бла-бла-бла \n[[Attach:"{filename}" | Attach:"{filename}"]] бла-бла-бла\nбла-бла-бла'.format(
+            filename=filename)
+        attach_path = '{}/{}'.format(PAGE_ATTACH_DIR, filename)
+        expected = 'бла-бла-бла \n<a href="{attach_path}"><img src="{attach_path}"/></a> бла-бла-бла\nбла-бла-бла'.format(
+            attach_path=attach_path)
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
