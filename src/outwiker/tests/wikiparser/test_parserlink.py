@@ -5,18 +5,17 @@ import html
 import unittest
 from tempfile import mkdtemp
 
-from outwiker.core.tree import WikiDocument
-from outwiker.core.attachment import Attachment
 from outwiker.core.application import Application
-from outwiker.pages.wiki.wikipage import WikiPageFactory
+from outwiker.core.attachment import Attachment
+from outwiker.core.defines import PAGE_ATTACH_DIR
+from outwiker.core.tree import WikiDocument
 from outwiker.pages.wiki.parserfactory import ParserFactory
+from outwiker.pages.wiki.wikipage import WikiPageFactory
 from outwiker.tests.utils import removeDir
 
 
 class ParserLinkTest(unittest.TestCase):
     def setUp(self):
-        self.encoding = "866"
-
         self.filesPath = "testdata/samplefiles/"
 
         self.url1 = "http://example.com"
@@ -46,10 +45,9 @@ class ParserLinkTest(unittest.TestCase):
         factory.create(self.wikiroot["Страница 2"], "Страница 4", [])
         self.testPage = self.wikiroot["Страница 2"]
 
-        files = ["accept.png", "add.png", "anchor.png", "filename.tmp",
+        files = ["accept.png", "filename.tmp",
                  "файл с пробелами.tmp", "картинка с пробелами.png",
-                 "image.jpg", "image.jpeg", "image.png", "image.tif", "image.tiff", "image.gif",
-                 "image_01.JPG", "dir", "dir.xxx", "dir.png"]
+                 "dir"]
 
         fullFilesPath = [
             os.path.join(
@@ -63,29 +61,32 @@ class ParserLinkTest(unittest.TestCase):
         removeDir(self.path)
 
     def testUrl1(self):
-        text = "бла-бла-бла \n%s бла-бла-бла\nбла-бла-бла" % (self.url1)
-        result = 'бла-бла-бла \n<a href="%s">%s</a> бла-бла-бла\nбла-бла-бла' % (
+        text = "бла-бла-бла \n{} бла-бла-бла\nбла-бла-бла".format(self.url1)
+        result = 'бла-бла-бла \n<a href="{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             self.url1, self.url1)
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testUrl2(self):
-        text = "бла-бла-бла \ntest %s бла-бла-бла\nбла-бла-бла" % (self.url2)
-        result = 'бла-бла-бла \ntest <a href="%s">%s</a> бла-бла-бла\nбла-бла-бла' % (
+        text = "бла-бла-бла \ntest {} бла-бла-бла\nбла-бла-бла".format(
+            self.url2)
+        result = 'бла-бла-бла \ntest <a href="{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, self.url2)
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testLink1(self):
-        text = "бла-бла-бла \n[[%s]] бла-бла-бла\nбла-бла-бла" % (self.url1)
-        result = 'бла-бла-бла \n<a href="%s">%s</a> бла-бла-бла\nбла-бла-бла' % (
+        text = "бла-бла-бла \n[[{}]] бла-бла-бла\nбла-бла-бла".format(
+            self.url1)
+        result = 'бла-бла-бла \n<a href="{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             self.url1, self.url1)
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testLink2(self):
-        text = "бла-бла-бла \n[[%s]] бла-бла-бла\nбла-бла-бла" % (self.url2)
-        result = 'бла-бла-бла \n<a href="%s">%s</a> бла-бла-бла\nбла-бла-бла' % (
+        text = "бла-бла-бла \n[[{}]] бла-бла-бла\nбла-бла-бла".format(
+            self.url2)
+        result = 'бла-бла-бла \n<a href="{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, html.escape(self.url2))
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -93,8 +94,8 @@ class ParserLinkTest(unittest.TestCase):
     def testLink3(self):
         url = "http://jenyay.net/social/feed.png"
 
-        text = "бла-бла-бла \n[[%s]] бла-бла-бла\nбла-бла-бла" % (url)
-        result = 'бла-бла-бла \n<a href="%s">%s</a> бла-бла-бла\nбла-бла-бла' % (
+        text = "бла-бла-бла \n[[{}]] бла-бла-бла\nбла-бла-бла".format(url)
+        result = 'бла-бла-бла \n<a href="{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             url, url)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -131,86 +132,86 @@ class ParserLinkTest(unittest.TestCase):
 
     def testCommentLink1(self):
         comment = "Ссылко"
-        text = "бла-бла-бла \n[[%s | %s]] бла-бла-бла\nбла-бла-бла" % (
+        text = "бла-бла-бла \n[[{} | {}]] бла-бла-бла\nбла-бла-бла".format(
             self.url2, comment)
-        result = 'бла-бла-бла \n<a href="%s">%s</a> бла-бла-бла\nбла-бла-бла' % (
+        result = 'бла-бла-бла \n<a href="{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testCommentLink2(self):
         comment = "Ссылко"
-        text = "бла-бла-бла \n[[%s -> %s]] бла-бла-бла\nбла-бла-бла" % (
+        text = "бла-бла-бла \n[[{} -> {}]] бла-бла-бла\nбла-бла-бла".format(
             comment, self.url2)
-        result = 'бла-бла-бла \n<a href="%s">%s</a> бла-бла-бла\nбла-бла-бла' % (
+        result = 'бла-бла-бла \n<a href="{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testCommentLink3(self):
         comment = "Ссылко с '''полужирным''' текстом"
-        text = "бла-бла-бла \n[[%s | %s]] бла-бла-бла\nбла-бла-бла" % (
+        text = "бла-бла-бла \n[[{} | {}]] бла-бла-бла\nбла-бла-бла".format(
             self.url2, comment)
-        result = 'бла-бла-бла \n<a href="%s">%s</a> бла-бла-бла\nбла-бла-бла' % (
+        result = 'бла-бла-бла \n<a href="{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, "Ссылко с <b>полужирным</b> текстом")
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testCommentLink4(self):
         comment = "Ссылко с '''полужирным''' текстом"
-        text = "бла-бла-бла \n[[%s -> %s]] бла-бла-бла\nбла-бла-бла" % (
+        text = "бла-бла-бла \n[[{} -> {}]] бла-бла-бла\nбла-бла-бла".format(
             comment, self.url2)
-        result = 'бла-бла-бла \n<a href="%s">%s</a> бла-бла-бла\nбла-бла-бла' % (
+        result = 'бла-бла-бла \n<a href="{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, "Ссылко с <b>полужирным</b> текстом")
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testCommentLink5(self):
-        text = "бла-бла-бла \n[[%s -> %s]] бла-бла-бла\nбла-бла-бла" % (
+        text = "бла-бла-бла \n[[{} -> {}]] бла-бла-бла\nбла-бла-бла".format(
             self.url1, self.url1)
-        result = 'бла-бла-бла \n<a href="%s">%s</a> бла-бла-бла\nбла-бла-бла' % (
+        result = 'бла-бла-бла \n<a href="{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             self.url1, self.url1)
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testCommentLink6(self):
-        text = "бла-бла-бла \n[[Комментарий с <, > и & -> %s]] бла-бла-бла\nбла-бла-бла" % (
+        text = "бла-бла-бла \n[[Комментарий с <, > и & -> {}]] бла-бла-бла\nбла-бла-бла".format(
             self.url1)
-        result = 'бла-бла-бла \n<a href="%s">Комментарий с &lt;, &gt; и &amp;</a> бла-бла-бла\nбла-бла-бла' % (
+        result = 'бла-бла-бла \n<a href="{}">Комментарий с &lt;, &gt; и &amp;</a> бла-бла-бла\nбла-бла-бла'.format(
             self.url1)
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testCommentLink7(self):
-        text = "бла-бла-бла \n[[%s | Комментарий с <, > и &]] бла-бла-бла\nбла-бла-бла" % (
+        text = "бла-бла-бла \n[[{} | Комментарий с <, > и &]] бла-бла-бла\nбла-бла-бла".format(
             self.url1)
-        result = 'бла-бла-бла \n<a href="%s">Комментарий с &lt;, &gt; и &amp;</a> бла-бла-бла\nбла-бла-бла' % (
+        result = 'бла-бла-бла \n<a href="{}">Комментарий с &lt;, &gt; и &amp;</a> бла-бла-бла\nбла-бла-бла'.format(
             self.url1)
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testStrikeLink1(self):
         comment = "Ссылко"
-        text = "бла-бла-бла \n[[{-%s-} -> %s]] бла-бла-бла\nбла-бла-бла" % (
+        text = "бла-бла-бла \n[[{{-{}-}} -> {}]] бла-бла-бла\nбла-бла-бла".format(
             comment, self.url2)
-        result = 'бла-бла-бла \n<a href="%s"><strike>%s</strike></a> бла-бла-бла\nбла-бла-бла' % (
+        result = 'бла-бла-бла \n<a href="{}"><strike>{}</strike></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testStrikeLink2(self):
         comment = "Ссылко"
-        text = "бла-бла-бла \n[[%s | {-%s-}]] бла-бла-бла\nбла-бла-бла" % (
+        text = "бла-бла-бла \n[[{} | {{-{}-}}]] бла-бла-бла\nбла-бла-бла".format(
             self.url2, comment)
-        result = 'бла-бла-бла \n<a href="%s"><strike>%s</strike></a> бла-бла-бла\nбла-бла-бла' % (
+        result = 'бла-бла-бла \n<a href="{}"><strike>{}</strike></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testPageLinks(self):
         for link in self.pagelinks:
-            text = "бла-бла-бла \n[[%s]] бла-бла-бла\nбла-бла-бла" % (link)
-            result = 'бла-бла-бла \n<a href="page://%s">%s</a> бла-бла-бла\nбла-бла-бла' % (
+            text = "бла-бла-бла \n[[{}]] бла-бла-бла\nбла-бла-бла".format(link)
+            result = 'бла-бла-бла \n<a href="page://{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
                 link, link)
 
             self.assertEqual(self.parser.toHtml(text), result)
@@ -235,18 +236,18 @@ class ParserLinkTest(unittest.TestCase):
 
     def testNoFormatLinks1(self):
         for link in self.pagelinks:
-            text = "бла-бла-бла \n[[%s | [='''ля-ля-ля'''=] ]] бла-бла-бла\nбла-бла-бла" % (
+            text = "бла-бла-бла \n[[{} | [='''ля-ля-ля'''=] ]] бла-бла-бла\nбла-бла-бла".format(
                 link)
-            result = "бла-бла-бла \n<a href=\"page://%s\">'''ля-ля-ля'''</a> бла-бла-бла\nбла-бла-бла" % (
+            result = "бла-бла-бла \n<a href=\"page://{}\">'''ля-ля-ля'''</a> бла-бла-бла\nбла-бла-бла".format(
                 link)
 
             self.assertEqual(self.parser.toHtml(text), result)
 
     def testNoFormatLinks2(self):
         for link in self.pagelinks:
-            text = "бла-бла-бла \n[[[='''ля-ля-ля'''=] -> %s]] бла-бла-бла\nбла-бла-бла" % (
+            text = "бла-бла-бла \n[[[='''ля-ля-ля'''=] -> {}]] бла-бла-бла\nбла-бла-бла".format(
                 link)
-            result = "бла-бла-бла \n<a href=\"page://%s\">'''ля-ля-ля'''</a> бла-бла-бла\nбла-бла-бла" % (
+            result = "бла-бла-бла \n<a href=\"page://{}\">'''ля-ля-ля'''</a> бла-бла-бла\nбла-бла-бла".format(
                 link)
 
             self.assertEqual(self.parser.toHtml(text), result)
@@ -256,9 +257,9 @@ class ParserLinkTest(unittest.TestCase):
             link = self.pagelinks[n]
             comment = self.pageComments[n]
 
-            text = "бла-бла-бла \n[[%s | %s]] бла-бла-бла\nбла-бла-бла" % (
+            text = "бла-бла-бла \n[[{} | {}]] бла-бла-бла\nбла-бла-бла".format(
                 link, comment)
-            result = 'бла-бла-бла \n<a href="page://%s">%s</a> бла-бла-бла\nбла-бла-бла' % (
+            result = 'бла-бла-бла \n<a href="page://{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
                 link, comment)
 
             self.assertEqual(self.parser.toHtml(text), result)
@@ -268,267 +269,312 @@ class ParserLinkTest(unittest.TestCase):
             link = self.pagelinks[n]
             comment = self.pageComments[n]
 
-            text = "бла-бла-бла \n[[%s -> %s]] бла-бла-бла\nбла-бла-бла" % (
+            text = "бла-бла-бла \n[[{} -> {}]] бла-бла-бла\nбла-бла-бла".format(
                 comment, link)
-            result = 'бла-бла-бла \n<a href="page://%s">%s</a> бла-бла-бла\nбла-бла-бла' % (
+            result = 'бла-бла-бла \n<a href="page://{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
                 link, comment)
 
             self.assertEqual(self.parser.toHtml(text), result)
 
     def testLinkSubscript1(self):
         comment = "Ссылко"
-        text = "бла-бла-бла \n[[%s | '_%s_']] бла-бла-бла\nбла-бла-бла" % (
+        text = "бла-бла-бла \n[[{} | '_{}_']] бла-бла-бла\nбла-бла-бла".format(
             self.url2, comment)
-        result = 'бла-бла-бла \n<a href="%s"><sub>%s</sub></a> бла-бла-бла\nбла-бла-бла' % (
+        result = 'бла-бла-бла \n<a href="{}"><sub>{}</sub></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testLinkSubscript2(self):
         comment = "Ссылко"
-        text = "бла-бла-бла \n[['_%s_' -> %s]] бла-бла-бла\nбла-бла-бла" % (
+        text = "бла-бла-бла \n[['_{}_' -> {}]] бла-бла-бла\nбла-бла-бла".format(
             comment, self.url2)
-        result = 'бла-бла-бла \n<a href="%s"><sub>%s</sub></a> бла-бла-бла\nбла-бла-бла' % (
+        result = 'бла-бла-бла \n<a href="{}"><sub>{}</sub></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testLinkSuperscript1(self):
         comment = "Ссылко"
-        text = "бла-бла-бла \n[[%s | '^%s^']] бла-бла-бла\nбла-бла-бла" % (
+        text = "бла-бла-бла \n[[{} | '^{}^']] бла-бла-бла\nбла-бла-бла".format(
             self.url2, comment)
-        result = 'бла-бла-бла \n<a href="%s"><sup>%s</sup></a> бла-бла-бла\nбла-бла-бла' % (
+        result = 'бла-бла-бла \n<a href="{}"><sup>{}</sup></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testLinkSuperscript2(self):
         comment = "Ссылко"
-        text = "бла-бла-бла \n[['^%s^' -> %s]] бла-бла-бла\nбла-бла-бла" % (
+        text = "бла-бла-бла \n[['^{}^' -> {}]] бла-бла-бла\nбла-бла-бла".format(
             comment, self.url2)
-        result = 'бла-бла-бла \n<a href="%s"><sup>%s</sup></a> бла-бла-бла\nбла-бла-бла' % (
+        result = 'бла-бла-бла \n<a href="{}"><sup>{}</sup></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testLinkBoldItalic1(self):
         comment = "Ссылко"
-        text = "бла-бла-бла \n[[%s | ''''%s'''']] бла-бла-бла\nбла-бла-бла" % (
+        text = "бла-бла-бла \n[[{} | ''''{}'''']] бла-бла-бла\nбла-бла-бла".format(
             self.url2, comment)
-        result = 'бла-бла-бла \n<a href="%s"><b><i>%s</i></b></a> бла-бла-бла\nбла-бла-бла' % (
+        result = 'бла-бла-бла \n<a href="{}"><b><i>{}</i></b></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testLinkBoldItalic2(self):
         comment = "Ссылко"
-        text = "бла-бла-бла \n[[''''%s'''' -> %s]] бла-бла-бла\nбла-бла-бла" % (
+        text = "бла-бла-бла \n[[''''{}'''' -> {}]] бла-бла-бла\nбла-бла-бла".format(
             comment, self.url2)
-        result = 'бла-бла-бла \n<a href="%s"><b><i>%s</i></b></a> бла-бла-бла\nбла-бла-бла' % (
+        result = 'бла-бла-бла \n<a href="{}"><b><i>{}</i></b></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testLinkBold1(self):
         comment = "Ссылко"
-        text = "бла-бла-бла \n[[%s | '''%s''']] бла-бла-бла\nбла-бла-бла" % (
+        text = "бла-бла-бла \n[[{} | '''{}''']] бла-бла-бла\nбла-бла-бла".format(
             self.url2, comment)
-        result = 'бла-бла-бла \n<a href="%s"><b>%s</b></a> бла-бла-бла\nбла-бла-бла' % (
+        result = 'бла-бла-бла \n<a href="{}"><b>{}</b></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testLinkBold2(self):
         comment = "Ссылко"
-        text = "бла-бла-бла \n[['''%s''' -> %s]] бла-бла-бла\nбла-бла-бла" % (
+        text = "бла-бла-бла \n[['''{}''' -> {}]] бла-бла-бла\nбла-бла-бла".format(
             comment, self.url2)
-        result = 'бла-бла-бла \n<a href="%s"><b>%s</b></a> бла-бла-бла\nбла-бла-бла' % (
+        result = 'бла-бла-бла \n<a href="{}"><b>{}</b></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testLinkItalic1(self):
         comment = "Ссылко"
-        text = "бла-бла-бла \n[[%s | ''%s'']] бла-бла-бла\nбла-бла-бла" % (
+        text = "бла-бла-бла \n[[{} | ''{}'']] бла-бла-бла\nбла-бла-бла".format(
             self.url2, comment)
-        result = 'бла-бла-бла \n<a href="%s"><i>%s</i></a> бла-бла-бла\nбла-бла-бла' % (
+        result = 'бла-бла-бла \n<a href="{}"><i>{}</i></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testLinkItalic2(self):
         comment = "Ссылко"
-        text = "бла-бла-бла \n[[''%s'' -> %s]] бла-бла-бла\nбла-бла-бла" % (
+        text = "бла-бла-бла \n[[''{}'' -> {}]] бла-бла-бла\nбла-бла-бла".format(
             comment, self.url2)
-        result = 'бла-бла-бла \n<a href="%s"><i>%s</i></a> бла-бла-бла\nбла-бла-бла' % (
+        result = 'бла-бла-бла \n<a href="{}"><i>{}</i></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testUrlImage1(self):
-        text = "бла-бла-бла \n[[%s]] бла-бла-бла\nбла-бла-бла" % (
+        text = "бла-бла-бла \n[[{}]] бла-бла-бла\nбла-бла-бла".format(
             self.urlimage)
-        result = 'бла-бла-бла \n<a href="%s">%s</a> бла-бла-бла\nбла-бла-бла' % (
+        result = 'бла-бла-бла \n<a href="{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             self.urlimage, self.urlimage)
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testUrlImage2(self):
         comment = "Ссылко"
-        text = "бла-бла-бла \n[[%s -> %s]] бла-бла-бла\nбла-бла-бла" % (
+        text = "бла-бла-бла \n[[{} -> {}]] бла-бла-бла\nбла-бла-бла".format(
             comment, self.urlimage)
-        result = 'бла-бла-бла \n<a href="%s">%s</a> бла-бла-бла\nбла-бла-бла' % (
+        result = 'бла-бла-бла \n<a href="{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             self.urlimage, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testUrlImage3(self):
-        text = "бла-бла-бла \n[[%s -> %s]] бла-бла-бла\nбла-бла-бла" % (
+        text = "бла-бла-бла \n[[{} -> {}]] бла-бла-бла\nбла-бла-бла".format(
             self.urlimage, self.url2)
-        result = 'бла-бла-бла \n<a href="%s"><img src="%s"/></a> бла-бла-бла\nбла-бла-бла' % (
+        result = 'бла-бла-бла \n<a href="{}"><img src="{}"/></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, self.urlimage)
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testUrlImage4(self):
-        text = "бла-бла-бла \n[[%s | %s]] бла-бла-бла\nбла-бла-бла" % (
+        text = "бла-бла-бла \n[[{} | {}]] бла-бла-бла\nбла-бла-бла".format(
             self.url2, self.urlimage)
-        result = 'бла-бла-бла \n<a href="%s"><img src="%s"/></a> бла-бла-бла\nбла-бла-бла' % (
+        result = 'бла-бла-бла \n<a href="{}"><img src="{}"/></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, self.urlimage)
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testLinkUnderline1(self):
         comment = "Ссылко"
-        text = "бла-бла-бла \n[[%s | {+%s+}]] бла-бла-бла\nбла-бла-бла" % (
+        text = "бла-бла-бла \n[[{} | {{+{}+}}]] бла-бла-бла\nбла-бла-бла".format(
             self.url2, comment)
-        result = 'бла-бла-бла \n<a href="%s"><u>%s</u></a> бла-бла-бла\nбла-бла-бла' % (
+        result = 'бла-бла-бла \n<a href="{}"><u>{}</u></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testLinkUnderline2(self):
         comment = "Ссылко"
-        text = "бла-бла-бла \n[[{+%s+} -> %s]] бла-бла-бла\nбла-бла-бла" % (
+        text = "бла-бла-бла \n[[{{+{}+}} -> {}]] бла-бла-бла\nбла-бла-бла".format(
             comment, self.url2)
-        result = 'бла-бла-бла \n<a href="%s"><u>%s</u></a> бла-бла-бла\nбла-бла-бла' % (
+        result = 'бла-бла-бла \n<a href="{}"><u>{}</u></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testAdHoc1(self):
         comment = "Ссылко"
-        text = "бла-бла-бла \n[[%s | ''''_%s_'''']] бла-бла-бла\nбла-бла-бла" % (
+        text = "бла-бла-бла \n[[{} | ''''_{}_'''']] бла-бла-бла\nбла-бла-бла".format(
             self.url2, comment)
-        result = 'бла-бла-бла \n<a href="%s"><b><sub>%s</sub></b></a> бла-бла-бла\nбла-бла-бла' % (
+        result = 'бла-бла-бла \n<a href="{}"><b><sub>{}</sub></b></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testAdHoc2(self):
         comment = "Ссылко"
-        text = "бла-бла-бла \n[[ ''''_%s_'''' -> %s]] бла-бла-бла\nбла-бла-бла" % (
+        text = "бла-бла-бла \n[[ ''''_{}_'''' -> {}]] бла-бла-бла\nбла-бла-бла".format(
             comment, self.url2)
-        result = 'бла-бла-бла \n<a href="%s"><b><sub>%s</sub></b></a> бла-бла-бла\nбла-бла-бла' % (
+        result = 'бла-бла-бла \n<a href="{}"><b><sub>{}</sub></b></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testAdHoc3(self):
         comment = "Ссылко"
-        text = "бла-бла-бла \n[[%s | ''''^%s^'''']] бла-бла-бла\nбла-бла-бла" % (
+        text = "бла-бла-бла \n[[{} | ''''^{}^'''']] бла-бла-бла\nбла-бла-бла".format(
             self.url2, comment)
-        result = 'бла-бла-бла \n<a href="%s"><b><sup>%s</sup></b></a> бла-бла-бла\nбла-бла-бла' % (
+        result = 'бла-бла-бла \n<a href="{}"><b><sup>{}</sup></b></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testAdHoc4(self):
         comment = "Ссылко"
-        text = "бла-бла-бла \n[[ ''''^%s^'''' -> %s]] бла-бла-бла\nбла-бла-бла" % (
+        text = "бла-бла-бла \n[[ ''''^{}^'''' -> {}]] бла-бла-бла\nбла-бла-бла".format(
             comment, self.url2)
-        result = 'бла-бла-бла \n<a href="%s"><b><sup>%s</sup></b></a> бла-бла-бла\nбла-бла-бла' % (
+        result = 'бла-бла-бла \n<a href="{}"><b><sup>{}</sup></b></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testAdHoc5(self):
         comment = "Ссылко"
-        text = "бла-бла-бла \n[[%s | '''_%s_''']] бла-бла-бла\nбла-бла-бла" % (
+        text = "бла-бла-бла \n[[{} | '''_{}_''']] бла-бла-бла\nбла-бла-бла".format(
             self.url2, comment)
-        result = 'бла-бла-бла \n<a href="%s"><i><sub>%s</sub></i></a> бла-бла-бла\nбла-бла-бла' % (
+        result = 'бла-бла-бла \n<a href="{}"><i><sub>{}</sub></i></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testAdHoc6(self):
         comment = "Ссылко"
-        text = "бла-бла-бла \n[[ '''_%s_''' -> %s]] бла-бла-бла\nбла-бла-бла" % (
+        text = "бла-бла-бла \n[[ '''_{}_''' -> {}]] бла-бла-бла\nбла-бла-бла".format(
             comment, self.url2)
-        result = 'бла-бла-бла \n<a href="%s"><i><sub>%s</sub></i></a> бла-бла-бла\nбла-бла-бла' % (
+        result = 'бла-бла-бла \n<a href="{}"><i><sub>{}</sub></i></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testAdHoc7(self):
         comment = "Ссылко"
-        text = "бла-бла-бла \n[[%s | '''^%s^''']] бла-бла-бла\nбла-бла-бла" % (
+        text = "бла-бла-бла \n[[{} | '''^{}^''']] бла-бла-бла\nбла-бла-бла".format(
             self.url2, comment)
-        result = 'бла-бла-бла \n<a href="%s"><i><sup>%s</sup></i></a> бла-бла-бла\nбла-бла-бла' % (
+        result = 'бла-бла-бла \n<a href="{}"><i><sup>{}</sup></i></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testAdHoc8(self):
         comment = "Ссылко"
-        text = "бла-бла-бла \n[[ '''^%s^''' -> %s]] бла-бла-бла\nбла-бла-бла" % (
+        text = "бла-бла-бла \n[[ '''^{}^''' -> {}]] бла-бла-бла\nбла-бла-бла".format(
             comment, self.url2)
-        result = 'бла-бла-бла \n<a href="%s"><i><sup>%s</sup></i></a> бла-бла-бла\nбла-бла-бла' % (
+        result = 'бла-бла-бла \n<a href="{}"><i><sup>{}</sup></i></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testAdHoc9(self):
         comment = "Ссылко"
-        text = "бла-бла-бла \n[[%s | ''''%s'''']] бла-бла-бла\nбла-бла-бла" % (
+        text = "бла-бла-бла \n[[{} | ''''{}'''']] бла-бла-бла\nбла-бла-бла".format(
             self.url2, comment)
-        result = 'бла-бла-бла \n<a href="%s"><b><i>%s</i></b></a> бла-бла-бла\nбла-бла-бла' % (
+        result = 'бла-бла-бла \n<a href="{}"><b><i>{}</i></b></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testAdHoc10(self):
         comment = "Ссылко"
-        text = "бла-бла-бла \n[[ ''''%s'''' -> %s]] бла-бла-бла\nбла-бла-бла" % (
+        text = "бла-бла-бла \n[[ ''''{}'''' -> {}]] бла-бла-бла\nбла-бла-бла".format(
             comment, self.url2)
-        result = 'бла-бла-бла \n<a href="%s"><b><i>%s</i></b></a> бла-бла-бла\nбла-бла-бла' % (
+        result = 'бла-бла-бла \n<a href="{}"><b><i>{}</i></b></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testAdHoc11(self):
         comment = "Ссылко"
-        text = "бла-бла-бла \n[[%s | ''''%s'''']] бла-бла-бла\nбла-бла-бла" % (
+        text = "бла-бла-бла \n[[{} | ''''{}'''']] бла-бла-бла\nбла-бла-бла".format(
             self.url2, comment)
-        result = 'бла-бла-бла \n<a href="%s"><b><i>%s</i></b></a> бла-бла-бла\nбла-бла-бла' % (
+        result = 'бла-бла-бла \n<a href="{}"><b><i>{}</i></b></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
 
     def testAdHoc12(self):
         comment = "Ссылко"
-        text = "бла-бла-бла \n[[ ''''%s'''' -> %s]] бла-бла-бла\nбла-бла-бла" % (
+        text = "бла-бла-бла \n[[ ''''{}'''' -> {}]] бла-бла-бла\nбла-бла-бла".format(
             comment, self.url2)
-        result = 'бла-бла-бла \n<a href="%s"><b><i>%s</i></b></a> бла-бла-бла\nбла-бла-бла' % (
+        result = 'бла-бла-бла \n<a href="{}"><b><i>{}</i></b></a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
 
-    def testFileAttach(self):
+    def testCommentFileAttachArrow(self):
         comment = "Attach:filename.tmp"
-        text = "бла-бла-бла \n[[%s -> %s]] бла-бла-бла\nбла-бла-бла" % (
+        text = "бла-бла-бла \n[[{} -> {}]] бла-бла-бла\nбла-бла-бла".format(
             comment, self.url2)
-        result = 'бла-бла-бла \n<a href="%s">%s</a> бла-бла-бла\nбла-бла-бла' % (
+        result = 'бла-бла-бла \n<a href="{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+            self.url2, comment)
+
+        self.assertEqual(self.parser.toHtml(text), result)
+
+    def testCommentFileAttachArrowSingleQuotes(self):
+        comment = "Attach:'filename.tmp'"
+        text = "бла-бла-бла \n[[{} -> {}]] бла-бла-бла\nбла-бла-бла".format(
+            comment, self.url2)
+        result = 'бла-бла-бла \n<a href="{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+            self.url2, comment)
+
+        self.assertEqual(self.parser.toHtml(text), result)
+
+    def testCommentFileAttachArrowDoubleQuotes(self):
+        comment = 'Attach:"filename.tmp"'
+        text = "бла-бла-бла \n[[{} -> {}]] бла-бла-бла\nбла-бла-бла".format(
+            comment, self.url2)
+        result = 'бла-бла-бла \n<a href="{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+            self.url2, comment)
+
+        self.assertEqual(self.parser.toHtml(text), result)
+
+    def testCommentFileAttachPipe(self):
+        comment = "Attach:filename.tmp"
+        text = "бла-бла-бла \n[[{} | {}]] бла-бла-бла\nбла-бла-бла".format(
+            self.url2, comment)
+        result = 'бла-бла-бла \n<a href="{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+            self.url2, comment)
+
+        self.assertEqual(self.parser.toHtml(text), result)
+
+    def testCommentFileAttachPipeSingleQuotes(self):
+        comment = "Attach:'filename.tmp'"
+        text = "бла-бла-бла \n[[{} | {}]] бла-бла-бла\nбла-бла-бла".format(
+            self.url2, comment)
+        result = 'бла-бла-бла \n<a href="{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
+            self.url2, comment)
+
+        self.assertEqual(self.parser.toHtml(text), result)
+
+    def testCommentFileAttachPipeDoubleQuotes(self):
+        comment = '"Attach:"filename.tmp"'
+        text = "бла-бла-бла \n[[{} | {}]] бла-бла-бла\nбла-бла-бла".format(
+            self.url2, comment)
+        result = 'бла-бла-бла \n<a href="{}">{}</a> бла-бла-бла\nбла-бла-бла'.format(
             self.url2, comment)
 
         self.assertEqual(self.parser.toHtml(text), result)
@@ -574,3 +620,140 @@ class ParserLinkTest(unittest.TestCase):
         result = '<a href="mailto:example@example.com">mailto:example@example.com</a>'
 
         self.assertEqual(self.parser.toHtml(text), result)
+
+    def testLinkAttachSimple(self):
+        filename = 'filename.tmp'
+        text = '[[Attach:{}]]'.format(filename)
+        expected = '<a href="{dir}/{filename}">{filename}</a>'.format(
+            dir=PAGE_ATTACH_DIR, filename=filename)
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
+
+    def testLinkAttachSimpleDoubleQuotes(self):
+        filename = 'filename.tmp'
+        text = '[[Attach:"{}"]]'.format(filename)
+        expected = '<a href="{dir}/{filename}">{filename}</a>'.format(
+            dir=PAGE_ATTACH_DIR, filename=filename)
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
+
+    def testLinkAttachSimpleSingleQuotes(self):
+        filename = 'filename.tmp'
+        text = "[[Attach:'{}']]".format(filename)
+        expected = '<a href="{dir}/{filename}">{filename}</a>'.format(
+            dir=PAGE_ATTACH_DIR, filename=filename)
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
+
+    def testLinkAttachCommentArrow(self):
+        filename = 'filename.tmp'
+        comment = "bla bla bla"
+        text = '[[{comment} -> Attach:{filename}]]'.format(
+            comment=comment, filename=filename)
+        expected = '<a href="{dir}/{filename}">{comment}</a>'.format(
+            dir=PAGE_ATTACH_DIR, filename=filename, comment=comment)
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
+
+    def testLinkAttachCommentArrowDoubleQoutes(self):
+        filename = 'filename.tmp'
+        comment = "bla bla bla"
+        text = '[[{comment} -> Attach:"{filename}"]]'.format(
+            comment=comment, filename=filename)
+        expected = '<a href="{dir}/{filename}">{comment}</a>'.format(
+            dir=PAGE_ATTACH_DIR, filename=filename, comment=comment)
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
+
+    def testLinkAttachCommentArrowSingleQoutes(self):
+        filename = 'filename.tmp'
+        comment = "bla bla bla"
+        text = "[[{comment} -> Attach:'{filename}']]".format(
+            comment=comment, filename=filename)
+        expected = '<a href="{dir}/{filename}">{comment}</a>'.format(
+            dir=PAGE_ATTACH_DIR, filename=filename, comment=comment)
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
+
+    def testLinkAttachWithSpacesCommentArrowSingleQoutes(self):
+        filename = 'файл с пробелами.tmp'
+        comment = "bla bla bla"
+        text = "[[{comment} -> Attach:'{filename}']]".format(
+            comment=comment, filename=filename)
+        expected = '<a href="{dir}/{filename}">{comment}</a>'.format(
+            dir=PAGE_ATTACH_DIR, filename=filename, comment=comment)
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
+
+    def testLinkAttachWithSpacesCommentArrowDoubleQoutes(self):
+        filename = 'файл с пробелами.tmp'
+        comment = "bla bla bla"
+        text = '[[{comment} -> Attach:"{filename}"]]'.format(
+            comment=comment, filename=filename)
+        expected = '<a href="{dir}/{filename}">{comment}</a>'.format(
+            dir=PAGE_ATTACH_DIR, filename=filename, comment=comment)
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
+
+    def testLinkAttachCommentPipe(self):
+        filename = 'filename.tmp'
+        comment = "bla bla bla"
+        text = '[[Attach:{filename} | {comment}]]'.format(
+            comment=comment, filename=filename)
+        expected = '<a href="{dir}/{filename}">{comment}</a>'.format(
+            dir=PAGE_ATTACH_DIR, filename=filename, comment=comment)
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
+
+    def testLinkAttachCommentPipeDoubleQuotes(self):
+        filename = 'filename.tmp'
+        comment = "bla bla bla"
+        text = '[[Attach:"{filename}" | {comment}]]'.format(
+            comment=comment, filename=filename)
+        expected = '<a href="{dir}/{filename}">{comment}</a>'.format(
+            dir=PAGE_ATTACH_DIR, filename=filename, comment=comment)
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
+
+    def testLinkAttachCommentPipeSingleQuotes(self):
+        filename = 'filename.tmp'
+        comment = "bla bla bla"
+        text = "[[Attach:'{filename}' | {comment}]]".format(
+            comment=comment, filename=filename)
+        expected = '<a href="{dir}/{filename}">{comment}</a>'.format(
+            dir=PAGE_ATTACH_DIR, filename=filename, comment=comment)
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
+
+    def testLinkAttachWithSpacesCommentPipeSingleQuotes(self):
+        filename = 'файл с пробелами.tmp'
+        comment = "bla bla bla"
+        text = "[[Attach:'{filename}' | {comment}]]".format(
+            comment=comment, filename=filename)
+        expected = '<a href="{dir}/{filename}">{comment}</a>'.format(
+            dir=PAGE_ATTACH_DIR, filename=filename, comment=comment)
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
+
+    def testLinkAttachWithSpacesCommentPipeDoubleQuotes(self):
+        filename = 'файл с пробелами.tmp'
+        comment = "bla bla bla"
+        text = '[[Attach:"{filename}" | {comment}]]'.format(
+            comment=comment, filename=filename)
+        expected = '<a href="{dir}/{filename}">{comment}</a>'.format(
+            dir=PAGE_ATTACH_DIR, filename=filename, comment=comment)
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, expected)
