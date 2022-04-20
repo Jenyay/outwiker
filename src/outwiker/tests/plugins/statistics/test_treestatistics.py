@@ -480,7 +480,7 @@ class TreeStatisticsTest (unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(pagesList[4][1], 0)
 
         self.assertEqual(pagesList[0][0], self.wikiroot["Страница 5"])
-        self.assertAlmostEqual(pagesList[0][1], 11771, delta=300)
+        self.assertAlmostEqual(pagesList[0][1], 13071, delta=300)
 
         self.assertEqual(pagesList[1][0], self.wikiroot["Страница 4"])
         self.assertEqual(pagesList[1][1], 2037)

@@ -397,7 +397,7 @@ class PageStatisticsTest (unittest.TestCase, BaseOutWikerGUIMixin):
 
         pageStat = PageStat(testPage)
 
-        self.assertEqual(pageStat.attachmentsCount, 6)
+        self.assertEqual(pageStat.attachmentsCount, 9)
 
     def testAttachmentsCountSearch1(self):
         from statistics.pagestat import PageStat
@@ -408,7 +408,7 @@ class PageStatisticsTest (unittest.TestCase, BaseOutWikerGUIMixin):
 
         pageStat = PageStat(testPage)
 
-        self.assertEqual(pageStat.attachmentsCount, 6)
+        self.assertEqual(pageStat.attachmentsCount, 9)
 
     def testAttachmentsSizeWiki1(self):
         from statistics.pagestat import PageStat
@@ -451,7 +451,7 @@ class PageStatisticsTest (unittest.TestCase, BaseOutWikerGUIMixin):
 
         pageStat = PageStat(testPage)
 
-        self.assertAlmostEqual(pageStat.attachmentsSize, 11771, delta=300)
+        self.assertAlmostEqual(pageStat.attachmentsSize, 13071, delta=300)
 
     def testAttachmentsSizeSearch1(self):
         from statistics.pagestat import PageStat
@@ -462,4 +462,4 @@ class PageStatisticsTest (unittest.TestCase, BaseOutWikerGUIMixin):
 
         pageStat = PageStat(testPage)
 
-        self.assertAlmostEqual(pageStat.attachmentsSize, 11771, delta=300)
+        self.assertAlmostEqual(pageStat.attachmentsSize, 13071, delta=300)
