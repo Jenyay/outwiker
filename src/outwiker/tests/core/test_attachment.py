@@ -35,7 +35,6 @@ class AttachmentTest(unittest.TestCase):
         self.fullFilesPath = [os.path.join(filesPath, fname)
                               for fname in self.files]
 
-        self.prev_kwargs = None
         Application.wikiroot = self.wikiroot
 
     def tearDown(self):
@@ -128,7 +127,6 @@ class AttachmentTest(unittest.TestCase):
 
     def testAttachFull3(self):
         attach = Attachment(self.page)
-
         attach.attach(self.fullFilesPath)
 
         attach2 = Attachment(self.page)
@@ -140,6 +138,29 @@ class AttachmentTest(unittest.TestCase):
 
         for path in self.fullFilesPath:
             self.assertTrue(os.path.basename(path) in attachBasenames, path)
+
+    def testAttachSubfolder1(self):
+        attach = Attachment(self.page)
+        attach.attach(self.fullFilesPath)
+
+        attachBasenames = [os.path.basename(path)
+                           for path in attach.getAttachFull('dir')]
+
+        expected_files = ['subdir', 'attach.png', 'dir.xxx']
+        for fname in expected_files:
+            self.assertTrue(fname in attachBasenames)
+
+    def testAttachSubfolder2(self):
+        attach = Attachment(self.page)
+        attach.attach(self.fullFilesPath)
+
+        attachBasenames = [os.path.basename(path)
+                           for path in attach.getAttachFull('dir/subdir/subdir2/')]
+
+        expected_files = ['image.png', 'картинка с пробелами.png',
+                          'application.py', 'файл с пробелами.tmp']
+        for fname in expected_files:
+            self.assertTrue(fname in attachBasenames)
 
     def testAttachBasename(self):
         attach = Attachment(self.page)

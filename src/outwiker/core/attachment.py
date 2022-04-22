@@ -38,9 +38,16 @@ class Attachment(object):
         Возвращает список прикрепленных файлов.
         Пути до файлов полные
         """
+        return self.getAttachFull()
+
+    def getAttachFull(self, dirname="."):
+        """
+        Возвращает список прикрепленных файлов.
+        Пути до файлов полные
+        """
         path = self.getAttachPath()
         return [os.path.join(path, fname)
-                for fname in self.getAttachRelative()]
+                for fname in self.getAttachRelative(dirname)]
 
     def getAttachRelative(self, dirname="."):
         """
