@@ -46,7 +46,7 @@ class Attachment(object):
         Пути до файлов полные
         """
         path = self.getAttachPath()
-        return [os.path.join(path, fname)
+        return [os.path.join(path, dirname, fname)
                 for fname in self.getAttachRelative(dirname)]
 
     def getAttachRelative(self, dirname="."):

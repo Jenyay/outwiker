@@ -70,6 +70,36 @@ class AttachPanel(wx.Panel):
         super().SetForegroundColour(colour)
         self.__attachList.SetForegroundColour(colour)
 
+    def GoToDirectory(self, dirname='.'):
+        """
+        Change current directory relative __attach directory
+        """
+        if dirname == '.':
+            self._currentSubdirectory = dirname
+        # elif dirname == '..':
+        #     self._currentSubdirectory = os.path.dirname(self._currentSubdirectory)
+        #     if len(self._currentSubdirectory) == 0:
+        #         self._currentSubdirectory = '.'
+        elif self._application.selectedPage is None:
+            logger.warn('selectedPage is None')
+            self._currentSubdirectory = '.'
+        else:
+            attach = Attachment(self._application.selectedPage)
+            full_dir = os.path.join(
+                attach.getAttachPath(create=False), dirname)
+            if os.path.exists(full_dir) and os.path.isdir(full_dir):
+                self._currentSubdirectory = dirname
+            else:
+                logger.warn(
+                    'Invalid attachments directory: {}'.format(full_dir))
+                self._currentSubdirectory = '.'
+
+        self.updateAttachments()
+
+    def _isSubdirectory(self, root_dirname, sub_dirname):
+        full_dir = os.path.join(root_dirname, sub_dirname)
+        return os.path.exists(full_dir) and os.path.isdir(full_dir)
+
     def _bindGuiEvents(self):
         self.Bind(wx.EVT_LIST_BEGIN_DRAG,
                   self._onBeginDrag,
@@ -252,7 +282,8 @@ class AttachPanel(wx.Panel):
         self.__attachList.Freeze()
         self.__attachList.ClearAll()
         if self._application.selectedPage is not None:
-            files = Attachment(self._application.selectedPage).attachmentFull
+            files = Attachment(self._application.selectedPage).getAttachFull(
+                self._currentSubdirectory)
             files = self._sortFilesList(files)
 
             for fname in files:
@@ -274,6 +305,12 @@ class AttachPanel(wx.Panel):
                         0,
                         os.path.basename(fname),
                         imageIndex)
+
+            if self._currentSubdirectory != '.':
+                self.__attachList.InsertItem(
+                    0,
+                    '..',
+                    self.__fileIcons.GO_TO_PARENT_ICON)
 
             self._selectFile(self._selectedFileName)
 
@@ -332,11 +369,18 @@ class AttachPanel(wx.Panel):
 
                 self.updateAttachments()
 
-    def _onDoubleClick(self, _event):
+    def _onDoubleClick(self, event):
         config = AttachConfig(self._application.config)
         actionController = self._application.actionController
 
-        if config.doubleClickAction.value == AttachConfig.ACTION_INSERT_LINK:
+        attach_dir = Attachment(
+            self._application.selectedPage).getAttachPath(create=False)
+        selected_item = event.GetText()
+        subdir = os.path.normpath(os.path.join(self._currentSubdirectory,
+                                               selected_item))
+        if self._isSubdirectory(attach_dir, subdir):
+            self.GoToDirectory(subdir)
+        elif config.doubleClickAction.value == AttachConfig.ACTION_INSERT_LINK:
             actionController.getAction(
                 AttachPasteLinkActionForAttachPanel.stringId).run(None)
         elif config.doubleClickAction.value == AttachConfig.ACTION_OPEN:
@@ -381,9 +425,16 @@ class AttachPanel(wx.Panel):
         if selectedItem == -1:
             return
 
+        if self.__attachList.GetItemText(selectedItem) == '..':
+            return
+
         self.__attachList.EditLabel(selectedItem)
 
     def _onBeginLabelEdit(self, event):
+        if event.GetText() == '..':
+            event.Veto()
+            return
+
         self._oldAttachName = os.path.join(
             self._currentSubdirectory,
             event.GetItem().GetText())
