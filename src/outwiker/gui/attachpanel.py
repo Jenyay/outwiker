@@ -62,6 +62,10 @@ class AttachPanel(wx.Panel):
         self._bindGuiEvents()
         self._bindAppEvents()
 
+    @property
+    def currentSubdirectory(self):
+        return self._currentSubdirectory
+
     def SetBackgroundColour(self, colour):
         super().SetBackgroundColour(colour)
         self.__attachList.SetBackgroundColour(colour)
@@ -466,6 +470,7 @@ class AttachPanel(wx.Panel):
         if rename:
             self._selectedFileName = event.GetLabel().strip()
             self._selectFile(self._selectedFileName)
+            self.updateAttachments()
 
     def _onItemSelected(self, event):
         self._selectedFileName = event.GetItem().GetText()
@@ -484,7 +489,8 @@ class DropAttachFilesTarget(BaseDropFilesTarget):
                 self._application.wikiroot.selectedPage is not None):
             attachFiles(self._application.mainWindow,
                         self._application.wikiroot.selectedPage,
-                        correctedFiles)
+                        correctedFiles,
+                        self._targetWindow.currentSubdirectory)
             return True
 
         return False

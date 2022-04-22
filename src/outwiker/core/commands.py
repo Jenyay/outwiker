@@ -136,17 +136,19 @@ def renameAttach(parent: wx.Window,
 @testreadonly
 def attachFiles(parent: wx.Window,
                 page: 'outwiker.core.tree.WikiPage',
-                files: List[str]):
+                files: List[str],
+                subdir: str = '.'):
     """
     Attach files to page. Show overwrite dialog if necessary
     parent - parent for dialog window
     page - page to attach
     files - list of the files to attach
+    subdir - subdirectory relative __attach directory
     """
     if page.readonly:
         raise outwiker.core.exceptions.ReadonlyException
 
-    oldAttachesFull = Attachment(page).attachmentFull
+    oldAttachesFull = Attachment(page).getAttachFull(subdir)
     oldAttaches = {os.path.basename(fname).lower(): fname
                    for fname in oldAttachesFull}
 
@@ -176,7 +178,7 @@ def attachFiles(parent: wx.Window,
             newAttaches.append(fname_new)
 
         try:
-            Attachment(page).attach(newAttaches)
+            Attachment(page).attach(newAttaches, subdir)
         except (IOError, shutil.Error) as e:
             text = _('Error copying files\n{0}').format(str(e))
             logger.error(text)

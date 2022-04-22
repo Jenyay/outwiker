@@ -40,20 +40,20 @@ class Attachment(object):
         """
         return self.getAttachFull()
 
-    def getAttachFull(self, dirname="."):
+    def getAttachFull(self, subdir="."):
         """
         Возвращает список прикрепленных файлов.
         Пути до файлов полные
         """
         path = self.getAttachPath()
-        return [os.path.join(path, dirname, fname)
-                for fname in self.getAttachRelative(dirname)]
+        return [os.path.normpath(os.path.join(path, subdir, fname))
+                for fname in self.getAttachRelative(subdir)]
 
-    def getAttachRelative(self, dirname="."):
+    def getAttachRelative(self, subdir="."):
         """
         Возвращает список прикрепленных файлов
-        (только имена файлов без путей относительно директории dirname).
-        dirname - поддиректория в PAGE_ATTACH_DIR,
+        (только имена файлов без путей относительно директории subdir).
+        subdir - поддиректория в PAGE_ATTACH_DIR,
         где хотим получить список файлов
         """
         path = self.getAttachPath()
@@ -61,19 +61,23 @@ class Attachment(object):
         if not os.path.exists(path):
             return []
 
-        fullpath = os.path.join(path, dirname)
+        fullpath = os.path.join(path, subdir)
 
         return os.listdir(fullpath)
 
-    def attach(self, files):
+    def attach(self, files, subdir='.'):
         """
         Прикрепить файлы к странице
         files -- список файлов (или папок), которые надо прикрепить
+        subdir -- вложенная директория в папку __attach
         """
         if self.page.readonly:
             raise ReadonlyException
 
-        attachPath = self.getAttachPath(True)
+        attachPath = os.path.join(self.getAttachPath(True), subdir)
+
+        if not os.path.exists(attachPath) or not os.path.isdir(attachPath):
+            return
 
         for name in files:
             if os.path.isdir(name):
