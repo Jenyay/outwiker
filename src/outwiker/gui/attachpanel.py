@@ -28,6 +28,7 @@ class AttachPanel(wx.Panel):
     def __init__(self, parent, application):
         super().__init__(parent)
         self._application = application
+        self.GO_TO_PARENT_ITEM_NAME = '..'
 
         # For future using
         self._currentSubdirectory = '.'
@@ -80,10 +81,6 @@ class AttachPanel(wx.Panel):
         """
         if dirname == '.':
             self._currentSubdirectory = dirname
-        # elif dirname == '..':
-        #     self._currentSubdirectory = os.path.dirname(self._currentSubdirectory)
-        #     if len(self._currentSubdirectory) == 0:
-        #         self._currentSubdirectory = '.'
         elif self._application.selectedPage is None:
             logger.warn('selectedPage is None')
             self._currentSubdirectory = '.'
@@ -313,7 +310,7 @@ class AttachPanel(wx.Panel):
             if self._currentSubdirectory != '.':
                 self.__attachList.InsertItem(
                     0,
-                    '..',
+                    self.GO_TO_PARENT_ITEM_NAME,
                     self.__fileIcons.GO_TO_PARENT_ICON)
 
             self._selectFile(self._selectedFileName)
@@ -335,19 +332,22 @@ class AttachPanel(wx.Panel):
 
     def getSelectedFiles(self):
         files = []
-
         item = self.__attachList.GetNextItem(-1, state=wx.LIST_STATE_SELECTED)
 
         prefix_list = ['./', '.\\']
         while item != -1:
-            fname = os.path.join(self._currentSubdirectory,
-                                 self.__attachList.GetItemText(item))
-            # Remove prefixes
-            for prefix in prefix_list:
-                if fname.startswith(prefix):
-                    fname = fname[len(prefix):]
+            item_text = self.__attachList.GetItemText(item)
 
-            files.append(fname)
+            if item_text != self.GO_TO_PARENT_ITEM_NAME:
+                fname = os.path.join(self._currentSubdirectory, item_text)
+
+                # Remove prefixes
+                for prefix in prefix_list:
+                    if fname.startswith(prefix):
+                        fname = fname[len(prefix):]
+
+                files.append(fname)
+
             item = self.__attachList.GetNextItem(item,
                                                  state=wx.LIST_STATE_SELECTED)
 
@@ -398,7 +398,7 @@ class AttachPanel(wx.Panel):
 
         data = wx.FileDataObject()
         attach_path = Attachment(
-            self._application.selectedPage).getAttachPath()
+            self._application.selectedPage).getAttachPath(self._currentSubdirectory)
 
         for fname in self.getSelectedFiles():
             data.AddFile(os.path.join(attach_path, fname))
@@ -420,22 +420,23 @@ class AttachPanel(wx.Panel):
 
     def selectAllAttachments(self):
         for index in range(self.__attachList.GetItemCount()):
-            self.__attachList.SetItemState(index,
-                                           wx.LIST_STATE_SELECTED,
-                                           wx.LIST_STATE_SELECTED)
+            if self.__attachList.GetItemText(index) != self.GO_TO_PARENT_ITEM_NAME:
+                self.__attachList.SetItemState(index,
+                                               wx.LIST_STATE_SELECTED,
+                                               wx.LIST_STATE_SELECTED)
 
     def beginRenaming(self):
         selectedItem = self.__attachList.GetFirstSelected()
         if selectedItem == -1:
             return
 
-        if self.__attachList.GetItemText(selectedItem) == '..':
+        if self.__attachList.GetItemText(selectedItem) == self.GO_TO_PARENT_ITEM_NAME:
             return
 
         self.__attachList.EditLabel(selectedItem)
 
     def _onBeginLabelEdit(self, event):
-        if event.GetText() == '..':
+        if event.GetText() == self.GO_TO_PARENT_ITEM_NAME:
             event.Veto()
             return
 
