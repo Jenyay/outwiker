@@ -26,7 +26,7 @@ from outwiker.utilites.textfile import readTextFile, writeTextFile
 logger = logging.getLogger('core')
 
 
-class RootWikiPage(object):
+class RootWikiPage:
     """
     Класс для корня вики
     """
@@ -349,6 +349,12 @@ class WikiDocument(RootWikiPage):
         #     params - instance if the AttachListChangedParams class
         self.onAttachListChanged = Event()
 
+        # Event occurs after opening subdirectory in attachments
+        # Parameters:
+        #     page - current (selected) page
+        #     params - instance of the AttachSubdirChangedParams class
+        self.onAttachSubdirChanged = Event()
+
         # Event occurs after page content reading. The content can be changed
         # by event handlers
         # Parameters:
@@ -457,14 +463,14 @@ class WikiPage(RootWikiPage):
     """
     Страница в дереве.
     """
-    paramTags = u"tags"
-    paramType = u"type"
+    paramTags = "tags"
+    paramType = "type"
 
     iconController = IconController(getIconsDirList()[0])
 
     @staticmethod
     def getTypeString():
-        return u"base"
+        return "base"
 
     def __init__(self, path, title, parent, readonly=False):
         """
@@ -473,16 +479,33 @@ class WikiPage(RootWikiPage):
         path -- путь до страницы
         """
         if not RootWikiPage.testDublicate(parent, title):
-            logger.error(u'Duplicate page title in the parent page. Title: {}. Parent: {}'.format(
+            logger.error('Duplicate page title in the parent page. Title: {}. Parent: {}'.format(
                 title, parent.subpath))
             raise DuplicateTitle
 
         RootWikiPage.__init__(self, path, readonly)
+        self._DEFAULT_ATTACH_SUBDIR = '.'
+        self._attach_subdir = self._DEFAULT_ATTACH_SUBDIR
         self._title = title
         self._parent = parent
         self._alias = self.params.aliasOption.value
         if len(self._alias) == 0:
             self._alias = None
+
+    @property
+    def currentAttachSubdir(self):
+        return self._attach_subdir
+
+    @currentAttachSubdir.setter
+    def currentAttachSubdir(self, value):
+        if not value:
+            value = self._DEFAULT_ATTACH_SUBDIR
+
+        self._attach_subdir = value
+        self.root.onAttachSubdirChanged(self, events.AttachSubdirChangedParams())
+
+    def isCurrentAttachSubdirRoot(self):
+        return self._attach_subdir == self._DEFAULT_ATTACH_SUBDIR
 
     @property
     def order(self):

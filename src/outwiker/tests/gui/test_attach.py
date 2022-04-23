@@ -184,7 +184,7 @@ class AttachPanelTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.application.wikiroot = self.wikiroot
         self.application.wikiroot.selectedPage = self.page
         attach_panel = self.mainWindow.attachPanel.panel
-        attach_panel.GoToDirectory('dir')
+        self.page.currentAttachSubdir = 'dir'
 
         self.assertEqual(attach_panel.attachList.GetItemCount(), 4)
 
@@ -195,7 +195,7 @@ class AttachPanelTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.application.wikiroot = self.wikiroot
         self.application.wikiroot.selectedPage = self.page
         attach_panel = self.mainWindow.attachPanel.panel
-        attach_panel.GoToDirectory('dir/subdir/subdir2/')
+        self.page.currentAttachSubdir = 'dir/subdir/subdir2/'
 
         self.assertEqual(attach_panel.attachList.GetItemCount(), 5)
 
@@ -206,7 +206,7 @@ class AttachPanelTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.application.wikiroot = self.wikiroot
         self.application.wikiroot.selectedPage = self.page
         attach_panel = self.mainWindow.attachPanel.panel
-        attach_panel.GoToDirectory('.')
+        self.page.currentAttachSubdir = None
 
         self.assertEqual(attach_panel.attachList.GetItemCount(),
                          len(self.fullFilesPath))
@@ -219,10 +219,10 @@ class AttachPanelTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.application.wikiroot.selectedPage = self.page
         attach_panel = self.mainWindow.attachPanel.panel
 
-        attach_panel.GoToDirectory('dir/subdir/subdir2/')
+        self.page.currentAttachSubdir = 'dir/subdir/subdir2/'
         self.assertEqual(attach_panel.attachList.GetItemCount(), 5)
 
-        attach_panel.GoToDirectory('.')
+        self.page.currentAttachSubdir = None
         self.assertEqual(attach_panel.attachList.GetItemCount(),
                          len(self.fullFilesPath))
 
@@ -234,7 +234,7 @@ class AttachPanelTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.application.wikiroot = self.wikiroot
         self.application.wikiroot.selectedPage = self.page
         attach_panel = self.mainWindow.attachPanel.panel
-        attach_panel.GoToDirectory(subdir)
+        self.page.currentAttachSubdir = subdir
 
         self.assertEqual(attach_panel.attachList.GetItemCount(), 5)
 

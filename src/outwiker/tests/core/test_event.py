@@ -258,6 +258,7 @@ class EventsTest(unittest.TestCase):
         self.pageCreateCount = 0
         self.treeUpdateCount = 0
         self.pageSelectCount = 0
+        self.pageAttachChangeSubdirCount = 0
 
         self.prev_kwargs = None
 
@@ -265,32 +266,40 @@ class EventsTest(unittest.TestCase):
 
     def tearDown(self):
         Application.wikiroot = None
+        Application.onAttachSubdirChanged -= self.pageAttachChangeSubdir
+        Application.onTreeUpdate -= self._onTreeUpdate
+        Application.onPageCreate -= self._onPageCreate
+        Application.onPageSelect -= self._onPageSelect
+        Application.onPageUpdate -= self._onPageUpdate
         removeDir(self.path)
 
-    def pageUpdate(self, sender, **kwargs):
+    def _onPageUpdate(self, sender, **kwargs):
         self.isPageUpdate = True
         self.pageUpdateSender = sender
         self.pageUpdateCount += 1
         self.prev_kwargs = kwargs
 
-    def pageCreate(self, sender):
+    def _onPageCreate(self, sender):
         self.isPageCreate = True
         self.pageCreateSender = sender
         self.pageCreateCount += 1
 
-    def treeUpdate(self, sender):
+    def _onTreeUpdate(self, sender):
         self.isTreeUpdate = True
         self.treeUpdateSender = sender
         self.treeUpdateCount += 1
 
-    def pageSelect(self, sender):
+    def _onPageSelect(self, sender):
         self.isPageSelect = True
         self.pageSelectSender = sender
         self.pageSelectCount += 1
 
+    def pageAttachChangeSubdir(self, sender, params):
+        self.pageAttachChangeSubdirCount += 1
+
     def testLoad_01(self):
         path = "testdata/samplewiki"
-        Application.onTreeUpdate += self.treeUpdate
+        Application.onTreeUpdate += self._onTreeUpdate
 
         self.assertFalse(self.isTreeUpdate)
         WikiDocument.load(path)
@@ -299,11 +308,11 @@ class EventsTest(unittest.TestCase):
         self.assertEqual(self.treeUpdateSender, None)
         self.assertEqual(self.treeUpdateCount, 0)
 
-        Application.onTreeUpdate -= self.treeUpdate
+        Application.onTreeUpdate -= self._onTreeUpdate
 
     def testCreateEvent(self):
-        Application.onTreeUpdate += self.treeUpdate
-        Application.onPageCreate += self.pageCreate
+        Application.onTreeUpdate += self._onTreeUpdate
+        Application.onPageCreate += self._onPageCreate
 
         removeDir(self.path)
 
@@ -347,12 +356,12 @@ class EventsTest(unittest.TestCase):
         self.assertEqual(self.pageCreateSender,
                          rootwiki["Страница 2/Страница 3"])
 
-        Application.onTreeUpdate -= self.treeUpdate
-        Application.onPageCreate -= self.pageCreate
+        Application.onTreeUpdate -= self._onTreeUpdate
+        Application.onPageCreate -= self._onPageCreate
 
     def testCreateNoEvent(self):
-        Application.onTreeUpdate += self.treeUpdate
-        Application.onPageCreate += self.pageCreate
+        Application.onTreeUpdate += self._onTreeUpdate
+        Application.onPageCreate += self._onPageCreate
 
         removeDir(self.path)
 
@@ -379,7 +388,7 @@ class EventsTest(unittest.TestCase):
         """
         Тест на срабатывание событий при обновлении контента
         """
-        Application.onPageUpdate += self.pageUpdate
+        Application.onPageUpdate += self._onPageUpdate
 
         removeDir(self.path)
 
@@ -400,14 +409,14 @@ class EventsTest(unittest.TestCase):
         self.assertEqual(self.pageUpdateSender, rootwiki["Страница 1"])
         self.assertEqual(self.prev_kwargs["change"], PAGE_UPDATE_CONTENT)
 
-        Application.onPageUpdate -= self.pageUpdate
+        Application.onPageUpdate -= self._onPageUpdate
         Application.wikiroot = None
 
     def testUpdateContentNoEvent(self):
         """
         Тест на НЕсрабатывание событий при обновлении контента
         """
-        Application.onPageUpdate += self.pageUpdate
+        Application.onPageUpdate += self._onPageUpdate
 
         removeDir(self.path)
 
@@ -425,13 +434,13 @@ class EventsTest(unittest.TestCase):
         self.assertFalse(self.isPageUpdate)
         self.assertEqual(self.pageUpdateSender, None)
 
-        Application.onPageUpdate -= self.pageUpdate
+        Application.onPageUpdate -= self._onPageUpdate
 
     def testUpdateTagsEvent(self):
         """
-        Тест на срабатывание событий при обновлении меток(тегов)
+        Тест на срабатывание событий при обновлении меток (тегов)
         """
-        Application.onPageUpdate += self.pageUpdate
+        Application.onPageUpdate += self._onPageUpdate
 
         removeDir(self.path)
 
@@ -452,13 +461,13 @@ class EventsTest(unittest.TestCase):
         self.assertEqual(self.pageUpdateSender, rootwiki["Страница 1"])
         self.assertEqual(self.prev_kwargs["change"], PAGE_UPDATE_TAGS)
 
-        Application.onPageUpdate -= self.pageUpdate
+        Application.onPageUpdate -= self._onPageUpdate
 
     def testUpdateTagsNoEvent(self):
         """
-        Тест на срабатывание событий при обновлении меток(тегов)
+        Тест на срабатывание событий при обновлении меток (тегов)
         """
-        Application.onPageUpdate += self.pageUpdate
+        Application.onPageUpdate += self._onPageUpdate
 
         removeDir(self.path)
 
@@ -476,14 +485,14 @@ class EventsTest(unittest.TestCase):
         self.assertFalse(self.isPageUpdate)
         self.assertEqual(self.pageUpdateSender, None)
 
-        Application.onPageUpdate -= self.pageUpdate
+        Application.onPageUpdate -= self._onPageUpdate
 
     def testUpdateIcon(self):
         """
         Тест на срабатывание событий при обновлении иконки
         """
-        Application.onPageUpdate += self.pageUpdate
-        Application.onTreeUpdate += self.treeUpdate
+        Application.onPageUpdate += self._onPageUpdate
+        Application.onTreeUpdate += self._onTreeUpdate
 
         removeDir(self.path)
 
@@ -506,8 +515,8 @@ class EventsTest(unittest.TestCase):
 
         self.assertFalse(self.isTreeUpdate)
 
-        Application.onPageUpdate -= self.pageUpdate
-        Application.onTreeUpdate -= self.treeUpdate
+        Application.onPageUpdate -= self._onPageUpdate
+        Application.onTreeUpdate -= self._onTreeUpdate
 
     def testUpdateIconNoEvent(self):
         """
@@ -516,8 +525,8 @@ class EventsTest(unittest.TestCase):
         """
         Application.wikiroot = None
 
-        Application.onPageUpdate += self.pageUpdate
-        Application.onTreeUpdate += self.treeUpdate
+        Application.onPageUpdate += self._onPageUpdate
+        Application.onTreeUpdate += self._onTreeUpdate
 
         removeDir(self.path)
 
@@ -539,11 +548,11 @@ class EventsTest(unittest.TestCase):
 
         self.assertFalse(self.isTreeUpdate)
 
-        Application.onPageUpdate -= self.pageUpdate
-        Application.onTreeUpdate -= self.treeUpdate
+        Application.onPageUpdate -= self._onPageUpdate
+        Application.onTreeUpdate -= self._onTreeUpdate
 
     def testPageSelectCreate(self):
-        Application.onPageSelect += self.pageSelect
+        Application.onPageSelect += self._onPageSelect
 
         removeDir(self.path)
 
@@ -572,10 +581,10 @@ class EventsTest(unittest.TestCase):
                          rootwiki["Страница 2/Страница 3"])
         self.assertEqual(self.pageSelectCount, 2)
 
-        Application.onPageSelect -= self.pageSelect
+        Application.onPageSelect -= self._onPageSelect
 
     def testPageSelectCreateNoEvent(self):
-        Application.onPageSelect += self.pageSelect
+        Application.onPageSelect += self._onPageSelect
 
         removeDir(self.path)
 
@@ -594,7 +603,7 @@ class EventsTest(unittest.TestCase):
         self.assertEqual(self.isPageSelect, True)
 
     def testPageSelectLoad(self):
-        Application.onPageSelect += self.pageSelect
+        Application.onPageSelect += self._onPageSelect
 
         removeDir(self.path)
 
@@ -624,4 +633,18 @@ class EventsTest(unittest.TestCase):
                          document["Страница 2/Страница 3"])
         self.assertEqual(self.pageSelectCount, 2)
 
-        Application.onPageSelect -= self.pageSelect
+        Application.onPageSelect -= self._onPageSelect
+
+    def testChangeAttachSubdir(self):
+        Application.onAttachSubdirChanged += self.pageAttachChangeSubdir
+        removeDir(self.path)
+
+        rootwiki = WikiDocument.create(self.path)
+        page = TextPageFactory().create(rootwiki, "Страница 1", [])
+        Application.wikiroot = rootwiki
+
+        page.currentAttachSubdir = 'xxx'
+
+        self.assertEqual(self.pageAttachChangeSubdirCount, 1)
+
+        Application.onAttachSubdirChanged -= self.pageAttachChangeSubdir

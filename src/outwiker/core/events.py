@@ -20,7 +20,7 @@ PAGE_UPDATE_STYLE = 8
 PAGE_UPDATE_TITLE = 16
 
 
-class LinkClickParams(object):
+class LinkClickParams:
     """
     Set of parameters for the onLinkClick event
     """
@@ -58,7 +58,7 @@ class LinkClickParams(object):
         self.process = False
 
 
-class HoverLinkParams(object):
+class HoverLinkParams:
     """
     Set of parameters for the onHoverLink event
     """
@@ -72,7 +72,7 @@ class HoverLinkParams(object):
         self.text = text
 
 
-class PreprocessingParams(object):
+class PreprocessingParams:
     """
     Set of parameters for the onPreprocessing event
     """
@@ -85,7 +85,7 @@ class PreprocessingParams(object):
         self.result = result
 
 
-class PostprocessingParams(object):
+class PostprocessingParams:
     """
     Set of parameters for the onPostprocessing event
     """
@@ -98,7 +98,7 @@ class PostprocessingParams(object):
         self.result = result
 
 
-class PreHtmlImprovingParams(object):
+class PreHtmlImprovingParams:
     """
     Set of parameters for the onPreHtmlImproving event
     """
@@ -110,7 +110,7 @@ class PreHtmlImprovingParams(object):
         self.result = result
 
 
-class EditorPopupMenuParams(object):
+class EditorPopupMenuParams:
     """
     Set of parameters for the onEditorPopupMenu event
     """
@@ -127,7 +127,7 @@ class EditorPopupMenuParams(object):
         self.pos_byte = pos_byte
 
 
-class PageDialogInitParams(object):
+class PageDialogInitParams:
     """
     Set of parameters for the onPageDialogInit event
     """
@@ -135,7 +135,7 @@ class PageDialogInitParams(object):
         self.dialog = dialog
 
 
-class PageDialogDestroyParams(object):
+class PageDialogDestroyParams:
     """
     Set of parameters for the onPageDialogDestroy event
     """
@@ -143,7 +143,7 @@ class PageDialogDestroyParams(object):
         self.dialog = dialog
 
 
-class PageDialogPageTypeChangedParams(object):
+class PageDialogPageTypeChangedParams:
     """
     Set of parameters for the onPageDialogPageTypeChanged event
     """
@@ -152,7 +152,7 @@ class PageDialogPageTypeChangedParams(object):
         self.pageType = pageType
 
 
-class PageDialogPageTitleChangedParams(object):
+class PageDialogPageTitleChangedParams:
     """
     Set of parameters for the onPageDialogPageTitleChanged event
     """
@@ -161,7 +161,7 @@ class PageDialogPageTitleChangedParams(object):
         self.pageTitle = pageTitle
 
 
-class PageDialogNewPageOrderChangedParams(object):
+class PageDialogNewPageOrderChangedParams:
     """
     Set of parameters for the onPageDialogNewPageOrderChanged event
     """
@@ -170,7 +170,7 @@ class PageDialogNewPageOrderChangedParams(object):
         self.orderCalculator = orderCalculator
 
 
-class PageDialogPageStyleChangedParams(object):
+class PageDialogPageStyleChangedParams:
     """
     Set of parameters for the onPageDialogPageStyleChanged event
     """
@@ -179,7 +179,7 @@ class PageDialogPageStyleChangedParams(object):
         self.pageStyle = pageStyle
 
 
-class PageDialogPageIconChangedParams(object):
+class PageDialogPageIconChangedParams:
     """
     Set of parameters for the onPageDialogPageIconChanged event
     """
@@ -188,7 +188,7 @@ class PageDialogPageIconChangedParams(object):
         self.pageIcon = pageIcon
 
 
-class PageDialogPageTagsChangedParams(object):
+class PageDialogPageTagsChangedParams:
     """
     Set of parameters for the onPageDialogPageTagsChanged event
     """
@@ -197,7 +197,7 @@ class PageDialogPageTagsChangedParams(object):
         self.pageTags = pageTags
 
 
-class PageDialogPageFactoriesNeededParams(object):
+class PageDialogPageFactoriesNeededParams:
     def __init__(self, dialog, pageForEdit):
         """
         Set of parameters for the onPageDialogPageFactoriesNeeded event
@@ -214,7 +214,7 @@ class PageDialogPageFactoriesNeededParams(object):
         return self._pageFactories[:]
 
 
-class EditorStyleNeededParams(object):
+class EditorStyleNeededParams:
     """
     Set of parameters for the onEditorStyleNeeded event
     """
@@ -224,7 +224,7 @@ class EditorStyleNeededParams(object):
         self.enableSpellChecking = enableSpellChecking
 
 
-class PageUpdateNeededParams(object):
+class PageUpdateNeededParams:
     """
     Set of parameters for the onPageUpdateNeededParams event
     """
@@ -232,7 +232,7 @@ class PageUpdateNeededParams(object):
         self.allowCache = allowCache
 
 
-class PreWikiOpenParams(object):
+class PreWikiOpenParams:
     """
     Set of parameters for the onPreWikiOpen event
     """
@@ -242,7 +242,7 @@ class PreWikiOpenParams(object):
         self.abortOpen = False
 
 
-class PostWikiOpenParams(object):
+class PostWikiOpenParams:
     """
     Set of parameters for the onPostWikiOpen event
     """
@@ -252,7 +252,7 @@ class PostWikiOpenParams(object):
         self.success = success
 
 
-class PostWikiCloseParams(object):
+class PostWikiCloseParams:
     """
     Set of parameters for the onPostWikiClose event
     """
@@ -260,7 +260,7 @@ class PostWikiCloseParams(object):
         self.path = path
 
 
-class IconsGroupsListInitParams(object):
+class IconsGroupsListInitParams:
     """
     Set of parameters for the onIconsGroupsListInit event
     """
@@ -271,7 +271,7 @@ class IconsGroupsListInitParams(object):
         self.groupsList = groupsList
 
 
-class PageModeChangeParams(object):
+class PageModeChangeParams:
     """
     Set of parameters for theon PageModeChange event
     """
@@ -283,7 +283,7 @@ class PageModeChangeParams(object):
         self.pagemode = pagemode
 
 
-class AttachListChangedParams(object):
+class AttachListChangedParams:
     """
     Parameters set for the onAttachListChanged event
     """
@@ -291,7 +291,15 @@ class AttachListChangedParams(object):
         pass
 
 
-class TextEditorKeyDownParams(object):
+class AttachSubdirChangedParams:
+    """
+    Parameters set for the onAttachSubdirChanged event
+    """
+    def __init__(self):
+        pass
+
+
+class TextEditorKeyDownParams:
     '''
     Parameters set for onTextEditorKeyDown event
     '''
@@ -323,7 +331,7 @@ class TextEditorKeyDownParams(object):
         return self.ctrl or self.shift or self.alt or self.cmd or self.meta
 
 
-class PreWikiCloseParams(object):
+class PreWikiCloseParams:
     '''
     Parameters set for onPreWikiClose event
     '''
@@ -332,7 +340,7 @@ class PreWikiCloseParams(object):
         self.abortClose = False
 
 
-class PostContentReadingParams(object):
+class PostContentReadingParams:
     '''
     Parameters set for onPostContentReading event
     '''
@@ -340,7 +348,7 @@ class PostContentReadingParams(object):
         self.content = content
 
 
-class PreContentWritingParams(object):
+class PreContentWritingParams:
     '''
     Parameters set for onPreContentWriting event
     '''
@@ -348,7 +356,7 @@ class PreContentWritingParams(object):
         self.content = content
 
 
-class TextEditorCaretMoveParams(object):
+class TextEditorCaretMoveParams:
     '''
     Parameters for onTextEditorCaretMove event
     '''

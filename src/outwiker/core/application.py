@@ -314,6 +314,12 @@ class ApplicationParams(object):
         #     params - instance of the AttachListChangedParams class
         self.onAttachListChanged = Event()
 
+        # Event occurs after opening subdirectory in attachments
+        # Parameters:
+        #     page - current (selected) page
+        #     params - instance of the AttachSubdirChangedParams class
+        self.onAttachSubdirChanged = Event()
+
         # Event occurs after key pressing in the notes text editor
         # Parameters:
         #     page - current (selected) page
@@ -434,6 +440,7 @@ class ApplicationParams(object):
         wiki.onPageCreate += self.onPageCreate
         wiki.onPageRemove += self.onPageRemove
         wiki.onAttachListChanged += self.onAttachListChanged
+        wiki.onAttachSubdirChanged += self.onAttachSubdirChanged
         wiki.bookmarks.onBookmarksChanged += self.onBookmarksChanged
         wiki.onPostContentReading += self.onPostContentReading
         wiki.onPreContentWriting += self.onPreContentWriting
@@ -452,6 +459,7 @@ class ApplicationParams(object):
         wiki.onPageCreate -= self.onPageCreate
         wiki.onPageRemove -= self.onPageRemove
         wiki.onAttachListChanged -= self.onAttachListChanged
+        wiki.onAttachSubdirChanged -= self.onAttachSubdirChanged
         wiki.bookmarks.onBookmarksChanged -= self.onBookmarksChanged
         wiki.onPostContentReading -= self.onPostContentReading
         wiki.onPreContentWriting -= self.onPreContentWriting
