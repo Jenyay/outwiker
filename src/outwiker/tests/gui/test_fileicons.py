@@ -27,25 +27,25 @@ class FileIconsTestUnix(TestCase, BaseOutWikerGUIMixin):
         fi = UnixFileIcons()
         index = fi.getFileImage("/file.bmp")
         self.assertEqual(fi.dictSize, 1)
-        self.assertEqual(fi.imageListCount, 3)
-        self.assertEqual(index, 2)
-
-        index = fi.getFileImage("/file.gif")
-        self.assertEqual(fi.dictSize, 2)
         self.assertEqual(fi.imageListCount, 4)
         self.assertEqual(index, 3)
 
+        index = fi.getFileImage("/file.gif")
+        self.assertEqual(fi.dictSize, 2)
+        self.assertEqual(fi.imageListCount, 5)
+        self.assertEqual(index, 4)
+
         index = fi.getFileImage("/other_file.bmp")
         self.assertEqual(fi.dictSize, 2)
-        self.assertEqual(fi.imageListCount, 4)
-        self.assertEqual(index, 2)
+        self.assertEqual(fi.imageListCount, 5)
+        self.assertEqual(index, 3)
 
     def test_invalid_icon_unix(self):
         fi = UnixFileIcons()
         fname = "c:\\file.abyrvalg"
         index = fi.getFileImage(fname)
         self.assertEqual(fi.dictSize, 0)
-        self.assertEqual(fi.imageListCount, 2)
+        self.assertEqual(fi.imageListCount, 3)
         self.assertEqual(index, 0)
 
     def test_folder_unix(self):
@@ -53,15 +53,15 @@ class FileIconsTestUnix(TestCase, BaseOutWikerGUIMixin):
         fname = "testdata/samplefiles"
         index = fi.getFileImage(fname)
         self.assertEqual(fi.dictSize, 0)
-        self.assertEqual(fi.imageListCount, 2)
+        self.assertEqual(fi.imageListCount, 3)
         self.assertEqual(index, 1)
 
     def test_clear_unix(self):
         fi = UnixFileIcons()
         index = fi.getFileImage("c:\\file.bmp")
         self.assertEqual(fi.dictSize, 1)
-        self.assertEqual(fi.imageListCount, 3)
-        self.assertEqual(index, 2)
+        self.assertEqual(fi.imageListCount, 4)
+        self.assertEqual(index, 3)
 
         fi.clear()
         self.assertEqual(fi.dictSize, 0)
@@ -73,8 +73,8 @@ class FileIconsTestUnix(TestCase, BaseOutWikerGUIMixin):
         index = fi.getFileImage("c:\\file.bmp")
 
         self.assertEqual(fi.dictSize, 1)
-        self.assertEqual(fi.imageListCount, 3)
-        self.assertEqual(index, 2)
+        self.assertEqual(fi.imageListCount, 4)
+        self.assertEqual(index, 3)
 
     def test_clear_after_invalid_unix(self):
         fi = UnixFileIcons()
@@ -82,7 +82,7 @@ class FileIconsTestUnix(TestCase, BaseOutWikerGUIMixin):
         index = fi.getFileImage("c:\\file.abyrvalg")
 
         self.assertEqual(fi.dictSize, 0)
-        self.assertEqual(fi.imageListCount, 2)
+        self.assertEqual(fi.imageListCount, 3)
         self.assertEqual(index, 0)
 
 
@@ -100,7 +100,7 @@ class FileIconsTestWindows(TestCase, BaseOutWikerGUIMixin):
         index = fi.getFileImage("testdata/samplefiles")
 
         self.assertEqual(fi.dictSize, 0)
-        self.assertEqual(fi.imageListCount, 2)
+        self.assertEqual(fi.imageListCount, 3)
         self.assertEqual(index, 1)
 
     def test_clear_after_folder_unix(self):
@@ -109,7 +109,7 @@ class FileIconsTestWindows(TestCase, BaseOutWikerGUIMixin):
         index = fi.getFileImage("testdata/samplefiles")
 
         self.assertEqual(fi.dictSize, 0)
-        self.assertEqual(fi.imageListCount, 2)
+        self.assertEqual(fi.imageListCount, 3)
         self.assertEqual(index, 1)
 
     def testInit_win(self):
@@ -121,38 +121,38 @@ class FileIconsTestWindows(TestCase, BaseOutWikerGUIMixin):
         fi = WindowsFileIcons()
         index = fi.getFileImage("c:\\file.bmp")
         self.assertEqual(fi.dictSize, 1)
-        self.assertEqual(fi.imageListCount, 3)
-        self.assertEqual(index, 2)
-
-        index = fi.getFileImage("c:\\file.gif")
-        self.assertEqual(fi.dictSize, 2)
         self.assertEqual(fi.imageListCount, 4)
         self.assertEqual(index, 3)
 
+        index = fi.getFileImage("c:\\file.gif")
+        self.assertEqual(fi.dictSize, 2)
+        self.assertEqual(fi.imageListCount, 5)
+        self.assertEqual(index, 4)
+
         index = fi.getFileImage("c:\\other_file.bmp")
         self.assertEqual(fi.dictSize, 2)
-        self.assertEqual(fi.imageListCount, 4)
-        self.assertEqual(index, 2)
+        self.assertEqual(fi.imageListCount, 5)
+        self.assertEqual(index, 3)
 
     def testExe_win(self):
         fi = WindowsFileIcons()
         fname = "testdata\\samplefiles\\example.exe"
         index = fi.getFileImage(fname)
         self.assertEqual(fi.dictSize, 1)
-        self.assertEqual(fi.imageListCount, 3)
-        self.assertEqual(index, 2)
+        self.assertEqual(fi.imageListCount, 4)
+        self.assertEqual(index, 3)
 
         index = fi.getFileImage(fname)
         self.assertEqual(fi.dictSize, 1)
-        self.assertEqual(fi.imageListCount, 3)
-        self.assertEqual(index, 2)
+        self.assertEqual(fi.imageListCount, 4)
+        self.assertEqual(index, 3)
 
     def testExe_invalid_win(self):
         fi = WindowsFileIcons()
         fname = "testdata\\samplefiles\\invalid.exe"
         index = fi.getFileImage(fname)
         self.assertEqual(fi.dictSize, 0)
-        self.assertEqual(fi.imageListCount, 2)
+        self.assertEqual(fi.imageListCount, 3)
         self.assertEqual(index, 0)
 
     def testExe_invalid2_win(self):
@@ -160,7 +160,7 @@ class FileIconsTestWindows(TestCase, BaseOutWikerGUIMixin):
         fname = "testdata\\samplefiles\\invalid_none.exe"
         index = fi.getFileImage(fname)
         self.assertEqual(fi.dictSize, 0)
-        self.assertEqual(fi.imageListCount, 2)
+        self.assertEqual(fi.imageListCount, 3)
         self.assertEqual(index, 0)
 
     def test_invalid_icon_win(self):
@@ -168,7 +168,7 @@ class FileIconsTestWindows(TestCase, BaseOutWikerGUIMixin):
         fname = "c:\\file.abyrvalg"
         index = fi.getFileImage(fname)
         self.assertEqual(fi.dictSize, 0)
-        self.assertEqual(fi.imageListCount, 2)
+        self.assertEqual(fi.imageListCount, 3)
         self.assertEqual(index, 0)
 
     def test_folder_win(self):
@@ -176,15 +176,15 @@ class FileIconsTestWindows(TestCase, BaseOutWikerGUIMixin):
         fname = "testdata/samplefiles"
         index = fi.getFileImage(fname)
         self.assertEqual(fi.dictSize, 0)
-        self.assertEqual(fi.imageListCount, 2)
+        self.assertEqual(fi.imageListCount, 3)
         self.assertEqual(index, 1)
 
     def test_clear_win(self):
         fi = WindowsFileIcons()
         index = fi.getFileImage("c:\\file.bmp")
         self.assertEqual(fi.dictSize, 1)
-        self.assertEqual(fi.imageListCount, 3)
-        self.assertEqual(index, 2)
+        self.assertEqual(fi.imageListCount, 4)
+        self.assertEqual(index, 3)
 
         fi.clear()
         self.assertEqual(fi.dictSize, 0)
@@ -196,8 +196,8 @@ class FileIconsTestWindows(TestCase, BaseOutWikerGUIMixin):
         index = fi.getFileImage("c:\\file.bmp")
 
         self.assertEqual(fi.dictSize, 1)
-        self.assertEqual(fi.imageListCount, 3)
-        self.assertEqual(index, 2)
+        self.assertEqual(fi.imageListCount, 4)
+        self.assertEqual(index, 3)
 
     def test_clear_after_exe_win(self):
         fi = WindowsFileIcons()
@@ -205,8 +205,8 @@ class FileIconsTestWindows(TestCase, BaseOutWikerGUIMixin):
         index = fi.getFileImage("testdata\\samplefiles\\example.exe")
 
         self.assertEqual(fi.dictSize, 1)
-        self.assertEqual(fi.imageListCount, 3)
-        self.assertEqual(index, 2)
+        self.assertEqual(fi.imageListCount, 4)
+        self.assertEqual(index, 3)
 
     def test_clear_after_invalid_win(self):
         fi = WindowsFileIcons()
@@ -214,5 +214,5 @@ class FileIconsTestWindows(TestCase, BaseOutWikerGUIMixin):
         index = fi.getFileImage("c:\\file.abyrvalg")
 
         self.assertEqual(fi.dictSize, 0)
-        self.assertEqual(fi.imageListCount, 2)
+        self.assertEqual(fi.imageListCount, 3)
         self.assertEqual(index, 0)
