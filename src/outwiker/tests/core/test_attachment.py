@@ -26,13 +26,13 @@ class AttachmentTest(unittest.TestCase):
         TextPageFactory().create(self.wikiroot, "Страница 1", [])
         self.page = self.wikiroot["Страница 1"]
 
-        filesPath = "testdata/samplefiles/"
+        self.filesPath = "testdata/samplefiles/"
         self.files = ["accept.png",
                       "add.png",
                       "anchor.png",
                       "файл с пробелами.tmp",
                       "dir"]
-        self.fullFilesPath = [os.path.join(filesPath, fname)
+        self.fullFilesPath = [os.path.join(self.filesPath, fname)
                               for fname in self.files]
 
         Application.wikiroot = self.wikiroot
@@ -70,7 +70,6 @@ class AttachmentTest(unittest.TestCase):
 
         # Получить путь до прикрепленных файлов, создав ее
         path = attach.getAttachPath(create=True)
-        # Вложенных файлов еще нет, поэтому нет и папки
         self.assertTrue(os.path.exists(path))
 
     def testEvent(self):
@@ -494,3 +493,24 @@ class AttachmentTest(unittest.TestCase):
         attach.attach(self.fullFilesPath)
 
         self.assertRaises(OSError, attach.getAttachRelative, "invaliddir")
+
+    def testAttachSubdir(self):
+        subdir = 'dir/subdir/subdir2/'
+        attach = Attachment(self.page)
+        attach.attach(self.fullFilesPath)
+
+        self.assertEqual(len(attach.getAttachFull(subdir)), 4)
+
+        new_file = os.path.join(self.filesPath, 'dir.png')
+        attach.attach([new_file], subdir)
+
+        self.assertEqual(len(attach.getAttachFull(subdir)), 5)
+
+    def testAttachInvalidSubdir(self):
+        subdir = 'invalid'
+        attach = Attachment(self.page)
+        attach.attach(self.fullFilesPath)
+
+        new_file = os.path.join(self.filesPath, 'dir.png')
+
+        self.assertRaises(IOError, attach.attach, [new_file], subdir)

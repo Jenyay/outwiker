@@ -77,7 +77,7 @@ class Attachment(object):
         attachPath = os.path.join(self.getAttachPath(True), subdir)
 
         if not os.path.exists(attachPath) or not os.path.isdir(attachPath):
-            return
+            raise IOError
 
         for name in files:
             if os.path.isdir(name):
