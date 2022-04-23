@@ -345,8 +345,6 @@ class AttachPanel(wx.Panel):
                 except IOError as e:
                     showError(self._application.mainWindow, str(e))
 
-                self.updateAttachments()
-
     def _onDoubleClick(self, event):
         config = AttachConfig(self._application.config)
         actionController = self._application.actionController
@@ -450,7 +448,6 @@ class AttachPanel(wx.Panel):
         if rename:
             self._selectedFileName = event.GetLabel().strip()
             self._selectFile(self._selectedFileName)
-            self.updateAttachments()
 
     def _onItemSelected(self, event):
         self._selectedFileName = event.GetItem().GetText()

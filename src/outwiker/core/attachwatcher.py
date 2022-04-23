@@ -6,7 +6,7 @@ from outwiker.core.attachment import Attachment
 from outwiker.core.events import AttachListChangedParams
 
 
-class AttachWatcher(object):
+class AttachWatcher:
     def __init__(self, application, period_ms):
         self._application = application
         self._period = period_ms
@@ -33,7 +33,7 @@ class AttachWatcher(object):
     def _onAttachListChanged(self, page, params):
         if page == self._watchedPage:
             attach = Attachment(self._watchedPage)
-            self._oldFilesList = attach.getAttachRelative()
+            self._oldFilesList = attach.getAttachRelative(page.currentAttachSubdir)
 
     def _onPostWikiClose(self, params):
         self._stop_watch()
@@ -67,7 +67,7 @@ class AttachWatcher(object):
             return
 
         attach = Attachment(page)
-        current_list = attach.getAttachRelative()
+        current_list = attach.getAttachRelative(page.currentAttachSubdir)
         if set(self._oldFilesList) != set(current_list):
             eventParam = AttachListChangedParams()
             self._application.onAttachListChanged(self._watchedPage,
