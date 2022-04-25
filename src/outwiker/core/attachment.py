@@ -13,6 +13,7 @@ class Attachment(object):
     """
     Класс для работы с прикрепленными файлами
     """
+
     def __init__(self, page):
         """
         page - страница, для которой интересуют прикрепленные файлы
@@ -115,6 +116,44 @@ class Attachment(object):
         self.page.updateDateTime()
         self.page.root.onAttachListChanged(self.page,
                                            AttachListChangedParams())
+
+    def fixCurrentSubdir(self):
+        """
+        Fix invalid attachment current subdir for the page.
+        Returns absolute path to attachment fixed directory
+        or None if __attach is not created.
+        """
+        root = os.path.abspath(self.getAttachPath(create=False))
+
+        # Check if root attach directory exists
+        if not self._dirExists(root):
+            if self.page.currentAttachSubdir != '.':
+                self.page.currentAttachSubdir = None
+            return None
+
+        current_subdir = self.page.currentAttachSubdir
+        current_path = os.path.join(root, current_subdir)
+
+        # Check if current attach subdir exists
+        if self._dirExists(current_path):
+            return current_path
+
+        # Find first existed parent directory
+        while current_subdir != '':
+            if self._dirExists(os.path.join(root, current_subdir)):
+                break
+            current_subdir = os.path.dirname(current_subdir)
+
+        # Walk to parent?
+        if current_subdir == '':
+            current_subdir = None
+
+        # Current page must be fixed
+        self.page.currentAttachSubdir = current_subdir
+        return os.path.join(root, self.page.currentAttachSubdir)
+
+    def _dirExists(self, path):
+        return os.path.exists(path) and os.path.isdir(path)
 
     @staticmethod
     def sortByName(fname):

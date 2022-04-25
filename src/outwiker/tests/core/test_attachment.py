@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import unittest
+import os
 import os.path
 from tempfile import mkdtemp
 
@@ -514,3 +515,111 @@ class AttachmentTest(unittest.TestCase):
         new_file = os.path.join(self.filesPath, 'dir.png')
 
         self.assertRaises(IOError, attach.attach, [new_file], subdir)
+
+    def testFixSubdirRootNotExists(self):
+        attach = Attachment(self.page)
+        expected = None
+
+        result = attach.fixCurrentSubdir()
+        current_path = os.path.join(attach.getAttachPath(create=False),
+                                    self.page.currentAttachSubdir)
+
+        self.assertEqual(result, expected)
+        self.assertFalse(os.path.exists(current_path))
+        self.assertEqual(self.page.currentAttachSubdir, '')
+
+    def testFixSubdirRootNotExistsSubdir(self):
+        subdir = 'invalid'
+        self.page.currentAttachSubdir = subdir
+
+        attach = Attachment(self.page)
+        expected = None
+
+        result = attach.fixCurrentSubdir()
+        current_path = os.path.join(attach.getAttachPath(create=False),
+                                    self.page.currentAttachSubdir)
+
+        self.assertEqual(result, expected)
+        self.assertFalse(os.path.exists(current_path))
+        self.assertEqual(self.page.currentAttachSubdir, '')
+
+    def testFixSubdir_01(self):
+        subdir = 'invalid'
+        self.page.currentAttachSubdir = subdir
+
+        attach = Attachment(self.page)
+        expected = attach.getAttachPath(create=True)
+
+        result = attach.fixCurrentSubdir()
+        current_path = os.path.join(attach.getAttachPath(create=False),
+                                    self.page.currentAttachSubdir)
+
+        self.assertTrue(os.path.samefile(result, expected))
+        self.assertTrue(os.path.exists(current_path))
+        self.assertEqual(self.page.currentAttachSubdir, '')
+
+    def testFixSubSubdir_1(self):
+        subdir = 'sub1/sub2'
+        self.page.currentAttachSubdir = subdir
+
+        attach = Attachment(self.page)
+        expected = attach.getAttachPath(create=True)
+
+        result = attach.fixCurrentSubdir()
+        current_path = os.path.join(attach.getAttachPath(create=False),
+                                    self.page.currentAttachSubdir)
+
+        self.assertTrue(os.path.samefile(result, expected))
+        self.assertTrue(os.path.exists(current_path))
+        self.assertEqual(self.page.currentAttachSubdir, '')
+
+    def testFixSubSubdir_2(self):
+        subdir = 'sub1/sub2'
+        self.page.currentAttachSubdir = subdir
+
+        attach = Attachment(self.page)
+        root = attach.getAttachPath(create=True)
+
+        expected = os.path.join(root, 'sub1')
+        os.mkdir(expected)
+
+        result = attach.fixCurrentSubdir()
+        current_path = os.path.join(attach.getAttachPath(create=False), 'sub1')
+
+        self.assertTrue(os.path.samefile(result, expected))
+        self.assertTrue(os.path.exists(current_path))
+        self.assertEqual(self.page.currentAttachSubdir, 'sub1')
+
+    def testFixSubSubdir_3_Ok(self):
+        subdir = 'sub1/sub2'
+        self.page.currentAttachSubdir = subdir
+
+        attach = Attachment(self.page)
+        root = attach.getAttachPath(create=True)
+
+        expected = os.path.join(root, subdir)
+        os.makedirs(expected)
+
+        result = attach.fixCurrentSubdir()
+        current_path = os.path.join(attach.getAttachPath(create=False), subdir)
+
+        self.assertTrue(os.path.samefile(result, expected))
+        self.assertTrue(os.path.exists(current_path))
+        self.assertEqual(self.page.currentAttachSubdir, subdir)
+
+    def testFixSubSubdir_4(self):
+        subdir = 'sub1/sub2/sub3'
+        self.page.currentAttachSubdir = subdir
+
+        attach = Attachment(self.page)
+        root = attach.getAttachPath(create=True)
+
+        expected = os.path.join(root, 'sub1/sub2')
+        os.makedirs(expected)
+
+        result = attach.fixCurrentSubdir()
+        current_path = os.path.join(attach.getAttachPath(create=False), 'sub1/sub2')
+
+        self.assertTrue(os.path.samefile(result, expected))
+        self.assertTrue(os.path.exists(current_path))
+        self.assertEqual(self.page.currentAttachSubdir, 'sub1/sub2')

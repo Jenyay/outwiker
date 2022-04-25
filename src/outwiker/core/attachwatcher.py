@@ -67,6 +67,7 @@ class AttachWatcher:
             return
 
         attach = Attachment(page)
+        attach.fixCurrentSubdir()
         current_list = attach.getAttachRelative(page.currentAttachSubdir)
         if set(self._oldFilesList) != set(current_list):
             eventParam = AttachListChangedParams()

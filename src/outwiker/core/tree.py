@@ -484,7 +484,7 @@ class WikiPage(RootWikiPage):
             raise DuplicateTitle
 
         RootWikiPage.__init__(self, path, readonly)
-        self._DEFAULT_ATTACH_SUBDIR = '.'
+        self._DEFAULT_ATTACH_SUBDIR = ''
         self._attach_subdir = self._DEFAULT_ATTACH_SUBDIR
         self._title = title
         self._parent = parent
