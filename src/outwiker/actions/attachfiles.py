@@ -7,7 +7,7 @@ from outwiker.core.exceptions import ReadonlyException
 from outwiker.gui.baseaction import BaseAction
 
 
-class AttachFilesAction (BaseAction):
+class AttachFilesAction(BaseAction):
     """
     Вызвать диалог для выбора файлов, которые нужно прикрепить к странице
     """
@@ -46,10 +46,14 @@ class AttachFilesAction (BaseAction):
             parent,
             style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST | wx.FD_MULTIPLE)
 
+        subdir = (page.currentAttachSubdir
+                  if self._application.selectedPage == page
+                  else None)
+
         if dlg.ShowModal() == wx.ID_OK:
             files = dlg.GetPaths()
             files.sort()
-            attachFiles(parent, page, files)
+            attachFiles(parent, page, files, subdir)
 
         dlg.Destroy()
 
