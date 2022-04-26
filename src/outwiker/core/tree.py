@@ -498,7 +498,7 @@ class WikiPage(RootWikiPage):
 
     @currentAttachSubdir.setter
     def currentAttachSubdir(self, value):
-        if not value:
+        if not value or value == '.':
             value = self._DEFAULT_ATTACH_SUBDIR
 
         self._attach_subdir = value
