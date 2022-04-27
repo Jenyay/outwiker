@@ -411,12 +411,16 @@ def copyPathToClipboard(page):
 
 
 # TODO: Сделать тест
-def copyAttachPathToClipboard(page):
+def copyAttachPathToClipboard(page, is_current_page=False):
     """
     Копировать путь до папки с прикрепленными файлами в буфер обмена
     """
     assert page is not None
-    copyTextToClipboard(Attachment(page).getAttachPath(create=True))
+    path = Attachment(page).getAttachPath(create=True)
+    if is_current_page:
+        path = os.path.join(path, page.currentAttachSubdir)
+
+    copyTextToClipboard(path)
 
 
 @testreadonly

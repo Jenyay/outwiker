@@ -154,4 +154,5 @@ class PagePopupMenu (object):
         Копировать путь до прикрепленных файлов в буфер обмена
         """
         assert self.popupPage is not None
-        outwiker.core.commands.copyAttachPathToClipboard(self.popupPage)
+        outwiker.core.commands.copyAttachPathToClipboard(self.popupPage,
+                self.popupPage is self._application.selectedPage)
