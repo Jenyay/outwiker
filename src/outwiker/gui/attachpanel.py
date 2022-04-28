@@ -216,7 +216,7 @@ class AttachPanel(wx.Panel):
         actionController.appendToolbarButton(
             OpenAttachFolderActionForAttachPanel.stringId,
             toolbar,
-            getBuiltinImagePath("folder.png")
+            getBuiltinImagePath("folder_open.png")
         )
 
         toolbar.Realize()
