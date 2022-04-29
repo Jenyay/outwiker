@@ -9,7 +9,7 @@ from .exceptions import ReadonlyException
 from .events import AttachListChangedParams
 
 
-class Attachment(object):
+class Attachment:
     """
     Класс для работы с прикрепленными файлами
     """
