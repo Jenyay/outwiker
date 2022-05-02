@@ -6,9 +6,7 @@ import unittest
 
 from outwiker.core.attachment import Attachment
 from outwiker.core.commands import attachFiles
-from outwiker.core.tree import WikiDocument
 from outwiker.gui.tester import Tester, getButtonId
-from outwiker.gui.dialogs.overwritedialog import OverwriteDialog
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 from outwiker.utilites.textfile import readTextFile
@@ -122,6 +120,7 @@ class AttachCommandTests(unittest.TestCase, BaseOutWikerGUIMixin):
 
         text = readTextFile(attach_fname)
         self.assertTrue('version 2' in text)
+        self.assertEqual(Tester.dialogTester.count, 0)
 
     def testOverwriteDialogOverwriteSubdir(self):
         Tester.dialogTester.append(getButtonId, 'overwrite')
@@ -146,6 +145,7 @@ class AttachCommandTests(unittest.TestCase, BaseOutWikerGUIMixin):
 
         text = readTextFile(attach_fname)
         self.assertTrue('version 2' in text)
+        self.assertEqual(Tester.dialogTester.count, 0)
 
     def testOverwriteDialogOverwriteSkip(self):
         Tester.dialogTester.append(getButtonId, 'skip')
@@ -161,3 +161,78 @@ class AttachCommandTests(unittest.TestCase, BaseOutWikerGUIMixin):
 
         text = readTextFile(attach_fname)
         self.assertTrue('version 1' in text)
+        self.assertEqual(Tester.dialogTester.count, 0)
+
+    def testOverwriteDialogOverwriteMany(self):
+        count = 5
+
+        files_full_path_1 = self._getFilesPath(['for_overwrite/version_1/file_1.txt'])
+        files_full_path_2 = self._getFilesPath(['for_overwrite/version_2/file_1.txt'] * count)
+
+        for n in range(count):
+            Tester.dialogTester.append(getButtonId, 'overwrite')
+
+        attachFiles(self.mainWindow, self.page, files_full_path_1)
+        attachFiles(self.mainWindow, self.page, files_full_path_2)
+
+        attach = Attachment(self.page)
+        attach_fname = Path(attach.getAttachPath(), 'file_1.txt')
+
+        text = readTextFile(attach_fname)
+        self.assertTrue('version 2' in text)
+        self.assertEqual(Tester.dialogTester.count, 0)
+
+    def testOverwriteDialogOverwriteAll(self):
+        count = 5
+
+        files_full_path_1 = self._getFilesPath(['for_overwrite/version_1/file_1.txt'])
+        files_full_path_2 = self._getFilesPath(['for_overwrite/version_2/file_1.txt'] * count)
+
+        Tester.dialogTester.append(getButtonId, 'overwriteAll')
+
+        attachFiles(self.mainWindow, self.page, files_full_path_1)
+        attachFiles(self.mainWindow, self.page, files_full_path_2)
+
+        attach = Attachment(self.page)
+        attach_fname = Path(attach.getAttachPath(), 'file_1.txt')
+
+        text = readTextFile(attach_fname)
+        self.assertTrue('version 2' in text)
+        self.assertEqual(Tester.dialogTester.count, 0)
+
+    def testOverwriteDialogSkipMany(self):
+        count = 5
+
+        files_full_path_1 = self._getFilesPath(['for_overwrite/version_1/file_1.txt'])
+        files_full_path_2 = self._getFilesPath(['for_overwrite/version_2/file_1.txt'] * count)
+
+        for n in range(count):
+            Tester.dialogTester.append(getButtonId, 'skip')
+
+        attachFiles(self.mainWindow, self.page, files_full_path_1)
+        attachFiles(self.mainWindow, self.page, files_full_path_2)
+
+        attach = Attachment(self.page)
+        attach_fname = Path(attach.getAttachPath(), 'file_1.txt')
+
+        text = readTextFile(attach_fname)
+        self.assertTrue('version 1' in text)
+        self.assertEqual(Tester.dialogTester.count, 0)
+
+    def testOverwriteDialogSkipAll(self):
+        count = 5
+
+        files_full_path_1 = self._getFilesPath(['for_overwrite/version_1/file_1.txt'])
+        files_full_path_2 = self._getFilesPath(['for_overwrite/version_2/file_1.txt'] * count)
+
+        Tester.dialogTester.append(getButtonId, 'skipAll')
+
+        attachFiles(self.mainWindow, self.page, files_full_path_1)
+        attachFiles(self.mainWindow, self.page, files_full_path_2)
+
+        attach = Attachment(self.page)
+        attach_fname = Path(attach.getAttachPath(), 'file_1.txt')
+
+        text = readTextFile(attach_fname)
+        self.assertTrue('version 1' in text)
+        self.assertEqual(Tester.dialogTester.count, 0)
