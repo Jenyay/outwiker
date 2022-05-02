@@ -32,6 +32,14 @@ class AttachCommandTests(unittest.TestCase, BaseOutWikerGUIMixin):
     def _getFilesPath(self, files) -> List[str]:
         return [self.files_path / fname for fname in files]
 
+    def _createAttachSubdir(self, page, subdir):
+        attach = Attachment(self.page)
+        attach_dir = Path(attach.getAttachPath(create=True))
+
+        # Create subdirectory
+        subdir_full = attach_dir / subdir
+        subdir_full.mkdir()
+
     def testAttachSimple(self):
         files = ['image.png', 'add.png']
         files_full_path = self._getFilesPath(files)
@@ -232,6 +240,44 @@ class AttachCommandTests(unittest.TestCase, BaseOutWikerGUIMixin):
 
         attach = Attachment(self.page)
         attach_fname = Path(attach.getAttachPath(), 'file_1.txt')
+
+        text = readTextFile(attach_fname)
+        self.assertTrue('version 1' in text)
+        self.assertEqual(Tester.dialogTester.count, 0)
+
+    def testOverwriteDialogOverwriteInSubdir(self):
+        Tester.dialogTester.append(getButtonId, 'overwrite')
+        subdir = 'subdir'
+
+        self._createAttachSubdir(self.page, subdir)
+
+        files_full_path_1 = self._getFilesPath(['for_overwrite/version_1/file_1.txt'])
+        files_full_path_2 = self._getFilesPath(['for_overwrite/version_2/file_1.txt'])
+
+        attachFiles(self.mainWindow, self.page, files_full_path_1, subdir)
+        attachFiles(self.mainWindow, self.page, files_full_path_2, subdir)
+
+        attach = Attachment(self.page)
+        attach_fname = Path(attach.getAttachPath(), subdir, 'file_1.txt')
+
+        text = readTextFile(attach_fname)
+        self.assertTrue('version 2' in text)
+        self.assertEqual(Tester.dialogTester.count, 0)
+
+    def testOverwriteDialogSkipInSubdir(self):
+        Tester.dialogTester.append(getButtonId, 'skip')
+        subdir = 'subdir'
+
+        self._createAttachSubdir(self.page, subdir)
+
+        files_full_path_1 = self._getFilesPath(['for_overwrite/version_1/file_1.txt'])
+        files_full_path_2 = self._getFilesPath(['for_overwrite/version_2/file_1.txt'])
+
+        attachFiles(self.mainWindow, self.page, files_full_path_1, subdir)
+        attachFiles(self.mainWindow, self.page, files_full_path_2, subdir)
+
+        attach = Attachment(self.page)
+        attach_fname = Path(attach.getAttachPath(), subdir, 'file_1.txt')
 
         text = readTextFile(attach_fname)
         self.assertTrue('version 1' in text)
