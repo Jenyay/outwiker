@@ -5,10 +5,12 @@
 """
 
 import logging
+import os
 import os.path
 import shutil
 from datetime import datetime
-from typing import List, Optional
+from pathlib import Path
+from typing import List, Optional, Union, Iterable
 
 import wx
 
@@ -148,24 +150,63 @@ def attachFiles(parent: wx.Window,
     if page.readonly:
         raise outwiker.core.exceptions.ReadonlyException
 
-    oldAttachesFull = Attachment(page).getAttachFull(subdir)
-    oldAttaches = {os.path.basename(fname).lower(): fname
-                   for fname in oldAttachesFull}
+    if not files:
+        return
 
-    # Список файлов, которые будут добавлены
-    newAttaches = []
+    def _expandFiles(files: Iterable[Union[str, Path]]) -> Iterable[Path]:
+        """
+        Returns list of all files (not directories) in subdirectories including
+        """
+        result = []
+        for fname in files:
+            item = Path(fname)
+            if not item.exists():
+                text = _('File not exists\n{0}').format(item)
+                logger.error(text)
+                showError(Application.mainWindow, text)
+                return []
 
+            if item.is_file():
+                result.append(item)
+            elif item.is_dir():
+                files_inside = item.iterdir()
+                result += _expandFiles(files_inside)
+
+        return result
+
+    def _getRelativeSubdirs(root: Path, expanded_files: Iterable[Union[str, Path]]) -> List[Path]:
+        result = []
+        for fname in expanded_files:
+            path = Path(fname)
+            parent = path.relative_to(root).parent
+            if str(parent) != '.' and str(parent) != '/':
+                result.append(parent)
+
+        # Remove duplicates and sort directories alphabetically
+        return sorted({item for item in result})
+
+    attach = Attachment(page)
+    attach_root = attach.getAttachPath(create=True)
+
+    source_root_dir = Path(files[0]).parent
+    expanded_files = _expandFiles(files)
+    relative_source_files = [fname.relative_to(source_root_dir)
+                             for fname in expanded_files]
+
+    new_relative_attaches = []
     with OverwriteDialog(parent) as overwriteDialog:
-        for fname_new in files:
-            # Overwrite yourself checking
-            if fname_new in oldAttachesFull:
+        for fname_new in relative_source_files:
+            old_path = Path(attach_root, subdir, fname_new)
+            source_path = Path(source_root_dir, fname_new)
+
+            if old_path == source_path:
                 continue
 
-            fname_new_lower = os.path.basename(fname_new).lower()
-            if fname_new_lower in oldAttaches.keys():
-                text = _("File '{}' exists already").format(os.path.basename(fname_new))
-                old_file_stat = os.stat(oldAttaches[fname_new_lower])
-                new_file_stat = os.stat(fname_new)
+            if old_path.exists():
+                text = _("File '{}' exists already").format(fname_new)
+                old_file_stat = old_path.stat()
+                new_file_stat = source_path.stat()
+
                 result = overwriteDialog.ShowDialog(text,
                                                     old_file_stat,
                                                     new_file_stat)
@@ -175,14 +216,29 @@ def attachFiles(parent: wx.Window,
                 elif result == wx.ID_CANCEL:
                     break
 
-            newAttaches.append(fname_new)
+            new_relative_attaches.append(fname_new)
 
+    new_relative_subdirs = _getRelativeSubdirs(source_root_dir, expanded_files)
+
+    for current_subdir in new_relative_subdirs:
         try:
-            Attachment(page).attach(newAttaches, subdir)
+            Path(attach_root, subdir, current_subdir).mkdir(parents=True, exist_ok=True)
+        except IOError:
+            text = _("Can't create directory: {}").format(current_subdir)
+            logger.error(text)
+            showError(Application.mainWindow, text)
+            return
+
+    for fname_relative in new_relative_attaches:
+        source_full = Path(source_root_dir, fname_relative)
+        attach_subdir = Path(attach_root, subdir, fname_relative.parent)
+        try:
+            Attachment(page).attach([source_full], attach_subdir)
         except (IOError, shutil.Error) as e:
             text = _('Error copying files\n{0}').format(str(e))
             logger.error(text)
             showError(Application.mainWindow, text)
+            return
 
 
 @testreadonly

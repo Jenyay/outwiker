@@ -3,6 +3,8 @@
 import os
 import os.path
 import shutil
+from pathlib import Path
+from typing import Union
 
 from .defines import PAGE_ATTACH_DIR
 from .exceptions import ReadonlyException
@@ -49,6 +51,12 @@ class Attachment:
         path = self.getAttachPath()
         return [os.path.normpath(os.path.join(path, subdir, fname))
                 for fname in self.getAttachRelative(subdir)]
+
+    def createSubdir(self, subdir: Union[str, Path]) -> Path:
+        root = self.getAttachPath(create=True)
+        subdir_path = Path(root, subdir)
+        subdir_path.mkdir(parents=True, exist_ok=True)
+        return subdir_path
 
     def getAttachRelative(self, subdir="."):
         """

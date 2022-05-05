@@ -33,12 +33,7 @@ class AttachCommandTests(unittest.TestCase, BaseOutWikerGUIMixin):
         return [self.files_path / fname for fname in files]
 
     def _createAttachSubdir(self, page, subdir):
-        attach = Attachment(self.page)
-        attach_dir = Path(attach.getAttachPath(create=True))
-
-        # Create subdirectory
-        subdir_full = attach_dir / subdir
-        subdir_full.mkdir()
+        return Attachment(self.page).createSubdir(subdir)
 
     def testAttachSimple(self):
         files = ['image.png', 'add.png']
@@ -47,6 +42,30 @@ class AttachCommandTests(unittest.TestCase, BaseOutWikerGUIMixin):
 
         attach = Attachment(self.page)
         self.assertEqual(len(files), len(attach.getAttachFull()))
+
+    def testAttachSelf(self):
+        files = ['image.png', 'add.png']
+        files_full_path = self._getFilesPath(files)
+        attachFiles(self.mainWindow, self.page, files_full_path)
+
+        attach = Attachment(self.page)
+        attachFiles(self.mainWindow, self.page, attach.getAttachFull())
+
+        self.assertEqual(len(files), len(attach.getAttachFull()))
+
+    def testAttachSelfInSubdir(self):
+        fname = 'image.png'
+        subdir = 'subdir'
+        self._createAttachSubdir(self.page, subdir)
+
+        file_full_path = self._getFilesPath([fname])
+        attachFiles(self.mainWindow, self.page, file_full_path, subdir)
+
+        attach = Attachment(self.page)
+        file_new_path = Path(attach.getAttachPath(subdir), fname)
+        attachFiles(self.mainWindow, self.page, [file_new_path])
+
+        self.assertEqual(len(attach.getAttachFull(subdir)), 1)
 
     def testAddAttaches(self):
         files_full_path_1 = self._getFilesPath(['image.png', 'add.png'])
@@ -82,14 +101,8 @@ class AttachCommandTests(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(len(files), len(attach.getAttachFull()))
 
     def testAttachSubDir(self):
-        # Create __attach directory
-        attach = Attachment(self.page)
-        attach_dir = Path(attach.getAttachPath(create=True))
-
-        # Create subdirectory
         subdir = 'dir'
-        subdir_full = attach_dir / subdir
-        subdir_full.mkdir()
+        subdir_full = self._createAttachSubdir(self.page, subdir)
 
         files_full_path = self._getFilesPath(['image.png', 'add.png'])
         attachFiles(self.mainWindow, self.page, files_full_path, subdir)
@@ -98,14 +111,12 @@ class AttachCommandTests(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertTrue((subdir_full / 'add.png').exists())
 
     def testAttachDirToSubDir(self):
+        subdir = 'dir'
+
         # Create __attach directory
         attach = Attachment(self.page)
         attach_dir = Path(attach.getAttachPath(create=True))
-
-        # Create subdirectory
-        subdir = 'dir'
-        subdir_full = attach_dir / subdir
-        subdir_full.mkdir()
+        self._createAttachSubdir(self.page, subdir)
 
         files_full_path = self._getFilesPath([Path('dir', 'subdir')])
         attachFiles(self.mainWindow, self.page, files_full_path, subdir)
@@ -131,16 +142,9 @@ class AttachCommandTests(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(Tester.dialogTester.count, 0)
 
     def testOverwriteDialogOverwriteSubdir(self):
-        Tester.dialogTester.append(getButtonId, 'overwrite')
-
-        # Create __attach directory
-        attach = Attachment(self.page)
-        attach_dir = Path(attach.getAttachPath(create=True))
-
-        # Create subdirectory
         subdir = 'dir'
-        subdir_full = attach_dir / subdir
-        subdir_full.mkdir()
+        Tester.dialogTester.append(getButtonId, 'overwrite')
+        self._createAttachSubdir(self.page, subdir)
 
         files_full_path_1 = self._getFilesPath(['for_overwrite/version_1/file_1.txt'])
         files_full_path_2 = self._getFilesPath(['for_overwrite/version_2/file_1.txt'])
@@ -282,3 +286,22 @@ class AttachCommandTests(unittest.TestCase, BaseOutWikerGUIMixin):
         text = readTextFile(attach_fname)
         self.assertTrue('version 1' in text)
         self.assertEqual(Tester.dialogTester.count, 0)
+
+    def testWriteToExistingSubdir(self):
+        subdir = 'subdir2'
+        files_full_path = self._getFilesPath(['for_overwrite/version_1/subdir1/subdir2'])
+
+        self._createAttachSubdir(self.page, subdir)
+
+        attachFiles(self.mainWindow, self.page, files_full_path)
+
+        attach = Attachment(self.page)
+        self.assertEqual(len(attach.getAttachFull(subdir)), 2)
+
+    @unittest.skip('Not realized')
+    def testOverwriteDialogCancel(self):
+        pass
+
+    @unittest.skip('Not realized')
+    def testOverwriteDialogCancelMiddle(self):
+        pass
