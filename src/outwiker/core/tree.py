@@ -7,6 +7,7 @@ import configparser
 import shutil
 import datetime
 from functools import cmp_to_key, reduce
+from typing import Optional, Union
 
 from .config import PageConfig
 from .bookmarks import Bookmarks
@@ -69,7 +70,7 @@ class RootWikiPage:
         return self._path
 
     @property
-    def parent(self):
+    def parent(self) -> Optional[Union['RootWikiPage', 'WikiPage']]:
         return self._parent
 
     @property
@@ -99,7 +100,7 @@ class RootWikiPage:
     def __len__(self):
         return len(self._children)
 
-    def __getitem__(self, path):
+    def __getitem__(self, path: str) -> Optional[Union['RootWikiPage', 'WikiPage']]:
         """
         Получить нужную страницу по относительному пути в дереве
         """
@@ -115,11 +116,11 @@ class RootWikiPage:
 
         # Разделим путь по составным частям
         titles = path.split("/")
-        page = self
+        page: Optional[Union['RootWikiPage', 'WikiPage']] = self
 
         for title in titles:
             found = False
-            if title == u"..":
+            if title == "..":
                 page = page.parent
                 found = (page is not None)
             else:
@@ -493,11 +494,11 @@ class WikiPage(RootWikiPage):
             self._alias = None
 
     @property
-    def currentAttachSubdir(self):
+    def currentAttachSubdir(self) -> str:
         return self._attach_subdir
 
     @currentAttachSubdir.setter
-    def currentAttachSubdir(self, value):
+    def currentAttachSubdir(self, value: str):
         if not value or value == '.':
             value = self._DEFAULT_ATTACH_SUBDIR
 

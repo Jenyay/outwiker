@@ -3,6 +3,7 @@
 import unittest
 import os
 import os.path
+from pathlib import Path
 from tempfile import mkdtemp
 
 from outwiker.core.attachment import Attachment
@@ -623,3 +624,39 @@ class AttachmentTest(unittest.TestCase):
         self.assertTrue(os.path.samefile(result, expected))
         self.assertTrue(os.path.exists(current_path))
         self.assertEqual(self.page.currentAttachSubdir, 'sub1/sub2')
+
+    def testCreateSubdirSimple(self):
+        subdir = 'subdir'
+        attach = Attachment(self.page)
+
+        result = attach.createSubdir(subdir)
+        path_expected = Path(attach.getAttachPath(create=False), subdir)
+
+        self.assertEqual(result, path_expected)
+        self.assertTrue(path_expected.exists())
+        self.assertTrue(path_expected.is_dir())
+
+    def testCreateNestedDir(self):
+        subdir = Path('subdir1', 'subdir2')
+        attach = Attachment(self.page)
+
+        result = attach.createSubdir(subdir)
+        path_expected = Path(attach.getAttachPath(create=False), subdir)
+
+        self.assertEqual(result, path_expected)
+        self.assertTrue(path_expected.exists())
+        self.assertTrue(path_expected.is_dir())
+
+    def testCreateSubdir(self):
+        subdir1 = 'subdir1'
+        subdir2 = Path(subdir1, 'subdir2')
+
+        attach = Attachment(self.page)
+
+        attach.createSubdir(subdir1)
+        result = attach.createSubdir(subdir2)
+        path_expected = Path(attach.getAttachPath(create=False), subdir2)
+
+        self.assertEqual(result, path_expected)
+        self.assertTrue(path_expected.exists())
+        self.assertTrue(path_expected.is_dir())
