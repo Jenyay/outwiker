@@ -214,7 +214,7 @@ def attachFiles(parent: wx.Window,
                 if result == overwriteDialog.ID_SKIP:
                     continue
                 elif result == wx.ID_CANCEL:
-                    break
+                    return
 
             new_relative_attaches.append(fname_new)
 
