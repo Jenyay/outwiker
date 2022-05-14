@@ -53,6 +53,9 @@ class Attachment:
                 for fname in self.getAttachRelative(subdir)]
 
     def createSubdir(self, subdir: Union[str, Path]) -> Path:
+        if self.page.readonly:
+            raise ReadonlyException
+
         root = self.getAttachPath(create=True)
         subdir_path = Path(root, subdir)
         subdir_path.mkdir(parents=True, exist_ok=True)

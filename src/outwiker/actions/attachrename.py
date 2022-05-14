@@ -1,5 +1,6 @@
 # -*- coding=utf-8 -*-
 
+from outwiker.core.events import BeginAttachRenamingParams
 from outwiker.gui.baseaction import BaseAction
 
 
@@ -21,6 +22,5 @@ class RenameAttachActionForAttachPanel(BaseAction):
         return _("Rename selected attached file. Action for attachments panel")
 
     def run(self, params):
-        if self._application.selectedPage is not None:
-            attachPanel = self._application.mainWindow.attachPanel.panel
-            attachPanel.beginRenaming()
+        self._application.onBeginAttachRenaming(
+            self._application.selectedPage, BeginAttachRenamingParams())

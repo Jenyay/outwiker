@@ -45,6 +45,9 @@ class BaseFileIcons(object, metaclass=ABCMeta):
 
     @property
     def imageList(self):
+        if self.imageListCount == 0:
+            self.initialize()
+
         return self._imageList
 
     def clear(self):

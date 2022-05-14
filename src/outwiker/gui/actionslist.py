@@ -46,6 +46,8 @@ from outwiker.actions.attachpastelink import AttachPasteLinkActionForAttachPanel
 from outwiker.actions.attachremove import RemoveAttachesActionForAttachPanel
 from outwiker.actions.attachrename import RenameAttachActionForAttachPanel
 from outwiker.actions.attachselectall import AttachSelectAllAction
+from outwiker.actions.attachcreatesubdir import (AttachCreateSubdirAction,
+                                                 AttachCreateSubdirActionForAttachPanel)
 from outwiker.gui.hotkey import HotKey
 
 
@@ -170,6 +172,14 @@ actionsList = [
                hidden=False),
     ActionInfo(RenameAttachActionForAttachPanel,
                HotKey('F2'),
+               area=ATTACH_ACTIONS_AREA,
+               hidden=False),
+    ActionInfo(AttachCreateSubdirAction,
+               HotKey('Ctrl+F7'),
+               area=None,
+               hidden=False),
+    ActionInfo(AttachCreateSubdirActionForAttachPanel,
+               HotKey('F7'),
                area=ATTACH_ACTIONS_AREA,
                hidden=False),
 ]

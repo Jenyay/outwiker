@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import os.path
-from tempfile import mkdtemp
 import unittest
+from tempfile import mkdtemp
 
 from outwiker.core.attachment import Attachment
 from outwiker.core.tree import WikiDocument
@@ -22,10 +22,7 @@ class AttachPanelTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         factory = TextPageFactory()
         factory.create(self.wikiroot, "Страница 1", [])
-        factory.create(self.wikiroot, "Страница 2", [])
-        factory.create(self.wikiroot["Страница 2"], "Страница 3", [])
-
-        self.page = self.wikiroot["Страница 2/Страница 3"]
+        self.page = factory.create(self.wikiroot, "Страница 2", [])
 
         self.filesPath = "testdata/samplefiles/"
         self.files = ["accept.png", "add.png",
@@ -242,3 +239,16 @@ class AttachPanelTest(unittest.TestCase, BaseOutWikerGUIMixin):
         attach.attach([new_file], subdir)
 
         self.assertEqual(attach_panel.attachList.GetItemCount(), 6)
+
+    def testCreateSubdir(self):
+        subdir = 'subdir'
+        attach = Attachment(self.page)
+        attach_panel = self.mainWindow.attachPanel.panel
+
+        self.application.wikiroot = self.wikiroot
+        self.application.wikiroot.selectedPage = self.page
+
+        attach.createSubdir(subdir)
+        self.page.currentAttachSubdir = subdir
+
+        self.assertEqual(attach_panel.attachList.GetItemCount(), 1)

@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 
+from dataclasses import dataclass
+from typing import Optional
+
 from outwiker.gui.defines import ID_MOUSE_LEFT
 
 # Constants for the onPageUpdate event
@@ -368,3 +371,13 @@ class TextEditorCaretMoveParams:
         self.editor = editor
         self.startSelection = startSelection
         self.endSelection = endSelection
+
+
+@dataclass(frozen=True)
+class BeginAttachRenamingParams:
+    """
+    Parameters for onBeginAttachRenaming
+    """
+    # Name of renamed attached file or directory.
+    # Rename selected item if renamed_item is None.
+    renamed_item: Optional[str] = None

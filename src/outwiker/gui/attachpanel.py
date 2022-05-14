@@ -6,6 +6,7 @@ from typing import List
 
 import wx
 
+from outwiker.actions.attachcreatesubdir import AttachCreateSubdirActionForAttachPanel
 from outwiker.actions.attachexecute import AttachExecuteFilesAction
 from outwiker.actions.attachfiles import AttachFilesActionForAttachPanel
 from outwiker.actions.attachopenfolder import OpenAttachFolderActionForAttachPanel
@@ -16,6 +17,7 @@ from outwiker.actions.attachselectall import AttachSelectAllAction
 from outwiker.actions.clipboard import CopyAttachPathAction
 from outwiker.core.attachment import Attachment
 from outwiker.core.commands import MessageBox, attachFiles, renameAttach, showError
+from outwiker.core.events import BeginAttachRenamingParams
 from outwiker.core.system import getBuiltinImagePath, getOS
 
 from .dropfiles import BaseDropFilesTarget
@@ -32,10 +34,8 @@ class AttachPanel(wx.Panel):
         self.GO_TO_PARENT_ITEM_NAME = '..'
 
         # Store old file name before renaming
-        self._oldAttachName = None
-
-        # Current selected file name (store for updating)
-        self._selectedFileName = None
+        self._oldEditedAttachName = None
+        self._oldEditedAttachItemIndex = None
 
         # Actions with hot keys for attach panel
         self._localHotKeys = [
@@ -43,7 +43,8 @@ class AttachPanel(wx.Panel):
             AttachSelectAllAction,
             AttachPasteLinkActionForAttachPanel,
             AttachExecuteFilesAction,
-            RenameAttachActionForAttachPanel]
+            RenameAttachActionForAttachPanel,
+            AttachCreateSubdirActionForAttachPanel]
 
         self.__attachList = wx.ListCtrl(self,
                                         wx.ID_ANY,
@@ -92,10 +93,6 @@ class AttachPanel(wx.Panel):
                   self._onEndLabelEdit,
                   self.__attachList)
 
-        self.Bind(wx.EVT_LIST_ITEM_SELECTED,
-                  self._onItemSelected,
-                  self.__attachList)
-
     def _unbindGuiEvents(self):
         self.Unbind(wx.EVT_LIST_BEGIN_DRAG,
                     handler=self._onBeginDrag,
@@ -113,10 +110,6 @@ class AttachPanel(wx.Panel):
                     handler=self._onEndLabelEdit,
                     source=self.__attachList)
 
-        self.Unbind(wx.EVT_LIST_ITEM_SELECTED,
-                    handler=self._onItemSelected,
-                    source=self.__attachList)
-
         self.Unbind(wx.EVT_CLOSE, handler=self._onClose)
 
     @property
@@ -132,12 +125,14 @@ class AttachPanel(wx.Panel):
         self._application.onAttachListChanged += self._onAttachListChanged
         self._application.onAttachSubdirChanged += self._onAttachSubdirChanged
         self._application.onWikiOpen += self._onWikiOpen
+        self._application.onBeginAttachRenaming += self._onBeginAttachRenaming
 
     def _unbindAppEvents(self):
         self._application.onPageSelect -= self._onPageSelect
         self._application.onAttachListChanged -= self._onAttachListChanged
         self._application.onAttachSubdirChanged -= self._onAttachSubdirChanged
         self._application.onWikiOpen -= self._onWikiOpen
+        self._application.onBeginAttachRenaming -= self._onBeginAttachRenaming
 
     def _onClose(self, _event):
         actionController = self._application.actionController
@@ -174,6 +169,13 @@ class AttachPanel(wx.Panel):
             AttachFilesActionForAttachPanel.stringId,
             toolbar,
             getBuiltinImagePath("attach.png")
+        )
+
+        # Create subdir
+        actionController.appendToolbarButton(
+            AttachCreateSubdirActionForAttachPanel.stringId,
+            toolbar,
+            getBuiltinImagePath("folder_add.png")
         )
 
         # Delete files
@@ -243,11 +245,9 @@ class AttachPanel(wx.Panel):
         self.SetAutoLayout(True)
 
     def _onWikiOpen(self, _wiki):
-        self._selectedFileName = None
         self.updateAttachments()
 
     def _onPageSelect(self, _page):
-        self._selectedFileName = None
         self.updateAttachments()
 
     def _sortFilesList(self, files_list):
@@ -260,8 +260,16 @@ class AttachPanel(wx.Panel):
         Обновить список прикрепленных файлов
         """
         self.__attachList.Freeze()
-        self.__attachList.ClearAll()
         page = self._application.selectedPage
+
+        # Store selected items
+        selected_items = []
+        selectedItem = self.__attachList.GetFirstSelected()
+        while selectedItem != -1:
+            selected_items.append(self.__attachList.GetItemText(selectedItem))
+            selectedItem = self.__attachList.GetNextSelected(selectedItem)
+
+        self.__attachList.ClearAll()
         if page is not None:
             files = Attachment(self._application.selectedPage).getAttachFull(
                 page.currentAttachSubdir)
@@ -293,7 +301,11 @@ class AttachPanel(wx.Panel):
                     self.GO_TO_PARENT_ITEM_NAME,
                     self.__fileIcons.GO_TO_PARENT_ICON)
 
-            self._selectFile(self._selectedFileName)
+            # Restore selected items
+            for item_name in selected_items:
+                index = self.__attachList.FindItem(-1, item_name)
+                if index != -1:
+                    self.__attachList.Select(index)
 
         self.__attachList.Thaw()
 
@@ -302,13 +314,13 @@ class AttachPanel(wx.Panel):
             return
 
         if self.__attachList.GetItemCount() == 0:
-            self._selectedFileName = None
             return
 
         for n in range(self.__attachList.GetItemCount()):
             if self.__attachList.GetItemText(n) == fname:
                 self.__attachList.Select(n)
-                self._selectedFileName = fname
+            else:
+                self.__attachList.Select(n, 0)
 
     def getSelectedFiles(self):
         page = self._application.selectedPage
@@ -395,6 +407,15 @@ class AttachPanel(wx.Panel):
         if page is not None and page == self._application.selectedPage:
             self.updateAttachments()
 
+    def _onBeginAttachRenaming(self, page, params: BeginAttachRenamingParams):
+        self.updateAttachments()
+        if self._application.selectedPage is not None:
+            if params.renamed_item:
+                self._selectFile(params.renamed_item)
+
+            if not self._application.testMode:
+                self._beginRenaming()
+
     def SetFocus(self):
         self.__attachList.SetFocus()
 
@@ -410,7 +431,7 @@ class AttachPanel(wx.Panel):
                                                wx.LIST_STATE_SELECTED,
                                                wx.LIST_STATE_SELECTED)
 
-    def beginRenaming(self):
+    def _beginRenaming(self):
         selectedItem = self.__attachList.GetFirstSelected()
         if selectedItem == -1:
             return
@@ -425,17 +446,22 @@ class AttachPanel(wx.Panel):
             event.Veto()
             return
 
-        self._oldAttachName = os.path.join(
+        self._oldEditedAttachName = os.path.join(
             self._application.selectedPage.currentAttachSubdir,
             event.GetItem().GetText())
+        self._oldEditedAttachItemIndex = event.GetIndex()
+
         self._disableHotkeys()
 
     def _onEndLabelEdit(self, event):
         self._enableHotkeys()
         event.Veto()
 
-        if event.IsEditCancelled() or self._oldAttachName is None:
-            self._oldAttachName = None
+        if (event.IsEditCancelled()
+                or self._oldEditedAttachName is None
+                or self._oldEditedAttachItemIndex != event.GetIndex()):
+            self._oldEditedAttachName = None
+            self._oldEditedAttachItemIndex = None
             return
 
         # New attachment name
@@ -443,22 +469,19 @@ class AttachPanel(wx.Panel):
                                event.GetLabel().strip())
 
         logger.debug('Renaming attachment: %s -> %s',
-                     self._oldAttachName, newName)
+                     self._oldEditedAttachName, newName)
 
-        if newName == self._oldAttachName:
-            self._oldAttachName = None
+        if newName == self._oldEditedAttachName:
+            self._oldEditedAttachName = None
+            self._oldEditedAttachItemIndex = None
             return
 
         rename = renameAttach(self._application.mainWindow,
                               self._application.wikiroot.selectedPage,
-                              self._oldAttachName, newName)
-        self._oldAttachName = None
+                              self._oldEditedAttachName, newName)
+        self._oldEditedAttachName = None
         if rename:
-            self._selectedFileName = event.GetLabel().strip()
-            self._selectFile(self._selectedFileName)
-
-    def _onItemSelected(self, event):
-        self._selectedFileName = event.GetItem().GetText()
+            self._selectFile(event.GetLabel().strip())
 
 
 class DropAttachFilesTarget(BaseDropFilesTarget):

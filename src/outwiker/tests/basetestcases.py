@@ -74,6 +74,7 @@ class BaseOutWikerMixin(WikiTestMixin):
         self.application = Application
         self.application.clear()
         self.application.init(self._config_path)
+        self.application.testMode = True
         self._setLanguage(lang)
 
     def _setLanguage(self, lang):

@@ -12,7 +12,7 @@ from outwiker.core.pageuiddepot import PageUidDepot
 logger = logging.getLogger('outwiker.core.application')
 
 
-class ApplicationParams(object):
+class ApplicationParams:
     def __init__(self):
         # Opened wiki
         self.__wikiroot = None
@@ -26,6 +26,9 @@ class ApplicationParams(object):
         self.actionController = None
         self.plugins = PluginsLoader(self)
         self.pageUidDepot = PageUidDepot()
+
+        # Set to True for unit tests
+        self.testMode = False
 
         # Values for shared purpose
         self.sharedData = {}
@@ -345,6 +348,12 @@ class ApplicationParams(object):
         #     page - current (selected) page
         #     params - instance of the PreContentWritingParams class
         self.onPreContentWriting = Event()
+
+        # Need for attachment renaming.
+        # Parameters:
+        #     page - current (selected) page
+        #     params - instance of the BeginAttachRenamingParams class
+        self.onBeginAttachRenaming = Event()
 
     def init(self, fullConfigPath):
         """
