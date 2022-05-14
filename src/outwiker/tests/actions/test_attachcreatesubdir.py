@@ -6,6 +6,7 @@ from pathlib import Path
 import wx
 
 from outwiker.core.attachment import Attachment
+from outwiker.core.exceptions import ReadonlyException
 from outwiker.actions.attachcreatesubdir import AttachCreateSubdirAction
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
@@ -99,3 +100,8 @@ class AttachCreateSubdirTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.assertTrue(new_subdir.exists())
         self.assertTrue(new_subdir.is_dir())
+
+    def testReadonly(self):
+        self.page.readonly = True
+        action = self._getAction()
+        action.run(None)

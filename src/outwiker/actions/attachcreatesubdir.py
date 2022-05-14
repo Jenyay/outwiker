@@ -1,10 +1,15 @@
 # -*- coding=utf-8 -*-
 
+import logging
 from pathlib import Path
 
 from outwiker.core.attachment import Attachment
+from outwiker.core.commands import showError, testreadonly
 from outwiker.core.events import BeginAttachRenamingParams
 from outwiker.gui.baseaction import BaseAction
+
+
+logger = logging.getLogger('outwiker.actions.AttachCreateSubdirAction')
 
 
 class AttachCreateSubdirAction(BaseAction):
@@ -25,6 +30,7 @@ class AttachCreateSubdirAction(BaseAction):
     def description(self):
         return _('Create a new folder in the current attached folder')
 
+    @testreadonly
     def run(self, params):
         page = self._application.selectedPage
         if page is not None:
@@ -42,7 +48,9 @@ class AttachCreateSubdirAction(BaseAction):
                 attach.createSubdir(Path(page.currentAttachSubdir, dirname))
                 self._application.onBeginAttachRenaming(page, BeginAttachRenamingParams(str(dirname)))
             except IOError as e:
-                pass
+                message = _("Can't create folder {} for attachments").format(dirname)
+                showError(self._application.mainWindow, message)
+                logger.error("Can't create attachments subdir %s for the page '%s'. Error: %s", dirname, page.subpath, str(e))
 
 
 class AttachCreateSubdirActionForAttachPanel(AttachCreateSubdirAction):

@@ -7,6 +7,7 @@ from pathlib import Path
 from tempfile import mkdtemp
 
 from outwiker.core.attachment import Attachment
+from outwiker.core.exceptions import ReadonlyException
 from outwiker.core.tree import WikiDocument
 from outwiker.pages.text.textpage import TextPageFactory
 from outwiker.core.application import Application
@@ -660,3 +661,10 @@ class AttachmentTest(unittest.TestCase):
         self.assertEqual(result, path_expected)
         self.assertTrue(path_expected.exists())
         self.assertTrue(path_expected.is_dir())
+
+    def testCreateSubdirReadonly(self):
+        subdir = 'subdir'
+        self.page.readonly = True
+        attach = Attachment(self.page)
+
+        self.assertRaises(ReadonlyException, attach.createSubdir, subdir)
