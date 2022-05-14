@@ -24,6 +24,7 @@ from . import defines as guidefines
 
 from .toolbarscontroller import ToolBarsController
 
+from outwiker.actions.attachcreatesubdir import AttachCreateSubdirAction
 from outwiker.actions.new import NewAction
 from outwiker.actions.open import OpenAction
 from outwiker.actions.openreadonly import OpenReadOnlyAction
@@ -444,6 +445,8 @@ class MainWindow(wx.Frame):
             toolbar,
             getBuiltinImagePath("attach.png"),
             True)
+
+        actionController.appendMenuItem(AttachCreateSubdirAction.stringId, menu)
 
         menu.AppendSeparator()
 
