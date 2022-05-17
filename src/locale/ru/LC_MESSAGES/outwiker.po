@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-14 22:29+0300\n"
+"POT-Creation-Date: 2022-05-17 16:12+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -183,38 +183,59 @@ msgid "Select all attached files. Action for attachments panel"
 msgstr ""
 "Выбрать все прикрепленные файлы. Действие для панели прикрепленных файлов"
 
-#: outwiker/actions/clipboard.py:21 outwiker/gui/pagepopupmenu.py:97
+#: outwiker/actions/clipboard.py:22 outwiker/gui/pagepopupmenu.py:97
 msgid "Copy Page Title"
 msgstr "Копировать заголовок страницы"
 
-#: outwiker/actions/clipboard.py:25
+#: outwiker/actions/clipboard.py:26
 msgid "Copy current page title to clipboard"
 msgstr "Копировать заголовок текущей страницы в буфер обмена"
 
-#: outwiker/actions/clipboard.py:43 outwiker/gui/pagepopupmenu.py:98
+#: outwiker/actions/clipboard.py:31 outwiker/actions/clipboard.py:56
+#: outwiker/actions/clipboard.py:81 outwiker/actions/clipboard.py:106
+msgid "Copied to clipboard"
+msgstr "Скопировано в буфер обмена"
+
+#: outwiker/actions/clipboard.py:32
+msgid "Page title has been copied to the clipboard"
+msgstr "Заголовок страницы скопирован в буфер обмена"
+
+#: outwiker/actions/clipboard.py:47 outwiker/gui/pagepopupmenu.py:98
 msgid "Copy Page Path"
 msgstr "Копировать путь до страницы"
 
-#: outwiker/actions/clipboard.py:47
+#: outwiker/actions/clipboard.py:51
 msgid "Copy path to current page to clipboard"
 msgstr "Копировать путь до текущей страницы в буфер обмена"
 
-#: outwiker/actions/clipboard.py:65 outwiker/gui/pagepopupmenu.py:99
+#: outwiker/actions/clipboard.py:57
+msgid "Path to the page has been copied to the clipboard"
+msgstr "Путь до страницы скопирован в буфер обмена"
+
+#: outwiker/actions/clipboard.py:72 outwiker/gui/pagepopupmenu.py:99
 msgid "Copy Attachments Path"
 msgstr "Копировать путь до прикрепленных файлов"
 
-#: outwiker/actions/clipboard.py:69
+#: outwiker/actions/clipboard.py:76
 msgid "Copy path to attachments for current page to clipboard"
 msgstr ""
 "Копировать путь до прикрепленных файлов текущей страницы в буфер обмена"
 
-#: outwiker/actions/clipboard.py:87 outwiker/gui/pagepopupmenu.py:100
+#: outwiker/actions/clipboard.py:82
+msgid "Path to the page attachments has been copied to the clipboard"
+msgstr "Путь до прикрепленных файлов страницы скопирован в буфер обмена"
+
+#: outwiker/actions/clipboard.py:97 outwiker/gui/pagepopupmenu.py:100
 msgid "Copy Page Link"
 msgstr "Копировать ссылку на страницу"
 
-#: outwiker/actions/clipboard.py:91
+#: outwiker/actions/clipboard.py:101
 msgid "Copy link to current page to clipboard"
 msgstr "Копировать ссылку на текущую страницу в буфер обмена"
+
+#: outwiker/actions/clipboard.py:107
+msgid "Link to the page has been copied to the clipboard"
+msgstr "Ссылка на страницу скопирована в буфер обмена"
 
 #: outwiker/actions/close.py:18
 msgid "Close"
@@ -711,37 +732,37 @@ msgstr "проверка"
 msgid "Can't create wiki\n"
 msgstr "Невозможно создать вики\n"
 
-#: outwiker/core/commands.py:433 outwiker/core/commands.py:447
+#: outwiker/core/commands.py:433 outwiker/core/commands.py:450
 msgid "Can't open clipboard"
 msgstr "Невозможно открыть буфер обмена"
 
-#: outwiker/core/commands.py:439
+#: outwiker/core/commands.py:440
 msgid "Can't copy text to clipboard"
 msgstr "Ошибка копирования текста в буфер обмена"
 
-#: outwiker/core/commands.py:523
+#: outwiker/core/commands.py:528
 msgid "Can't move page when page with that title already exists"
 msgstr ""
 "Невозможно переместить страницу, так как страница с таким именем уже "
 "существует"
 
-#: outwiker/core/commands.py:527
+#: outwiker/core/commands.py:532
 msgid "Can't move page: {}"
 msgstr "Невозможно переместить страницу: {}"
 
-#: outwiker/core/commands.py:543 outwiker/gui/notestree.py:211
+#: outwiker/core/commands.py:548 outwiker/gui/notestree.py:211
 msgid "You can't rename the root element"
 msgstr "Нельзя переименовать корневой элемент"
 
-#: outwiker/core/commands.py:561
+#: outwiker/core/commands.py:566
 msgid "Can't rename page \"{}\" to \"{}\""
 msgstr "Невозможно переименовать страницу \"{}\" в \"{}\""
 
-#: outwiker/core/commands.py:580
+#: outwiker/core/commands.py:585
 msgid "Invalid page title"
 msgstr "Неправильный заголовок страницы"
 
-#: outwiker/core/commands.py:585
+#: outwiker/core/commands.py:590
 #, python-brace-format
 msgid ""
 "{0}\n"
@@ -750,15 +771,15 @@ msgstr ""
 "{0}\n"
 "Продолжить?"
 
-#: outwiker/core/commands.py:588
+#: outwiker/core/commands.py:593
 msgid "The page title"
 msgstr "Заголовок страницы"
 
-#: outwiker/core/commands.py:640
+#: outwiker/core/commands.py:645
 msgid "Enter format of the date"
 msgstr "Введите формат даты"
 
-#: outwiker/core/commands.py:641 outwiker/pages/wiki/actions/dates.py:25
+#: outwiker/core/commands.py:646 outwiker/pages/wiki/actions/dates.py:25
 msgid "Date format"
 msgstr "Формат даты"
 
