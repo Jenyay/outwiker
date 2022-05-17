@@ -4,7 +4,8 @@ from outwiker.gui.baseaction import BaseAction
 from outwiker.core.commands import (copyTitleToClipboard,
                                     copyLinkToClipboard,
                                     copyPathToClipboard,
-                                    copyAttachPathToClipboard)
+                                    copyAttachPathToClipboard,
+                                    showInfo)
 
 
 class CopyPageTitleAction(BaseAction):
@@ -26,7 +27,10 @@ class CopyPageTitleAction(BaseAction):
 
     def run(self, params):
         assert self._application.selectedPage is not None
-        copyTitleToClipboard(self._application.selectedPage)
+        if copyTitleToClipboard(self._application.selectedPage):
+            title = _('Copied to clipboard')
+            text = _('Page title has been copied to the clipboard')
+            showInfo(self._application.mainWindow, title, text)
 
 
 class CopyPagePathAction(BaseAction):
@@ -48,7 +52,10 @@ class CopyPagePathAction(BaseAction):
 
     def run(self, params):
         assert self._application.selectedPage is not None
-        copyPathToClipboard(self._application.selectedPage)
+        if copyPathToClipboard(self._application.selectedPage):
+            title = _('Copied to clipboard')
+            text = _('Path to the page has been copied to the clipboard')
+            showInfo(self._application.mainWindow, title, text)
 
 
 class CopyAttachPathAction(BaseAction):
@@ -70,7 +77,10 @@ class CopyAttachPathAction(BaseAction):
 
     def run(self, params):
         assert self._application.selectedPage is not None
-        copyAttachPathToClipboard(self._application.selectedPage, True)
+        if copyAttachPathToClipboard(self._application.selectedPage, True):
+            title = _('Copied to clipboard')
+            text = _('Path to the page attachments has been copied to the clipboard')
+            showInfo(self._application.mainWindow, title, text)
 
 
 class CopyPageLinkAction(BaseAction):
@@ -92,4 +102,7 @@ class CopyPageLinkAction(BaseAction):
 
     def run(self, params):
         assert self._application.selectedPage is not None
-        copyLinkToClipboard(self._application.selectedPage)
+        if copyLinkToClipboard(self._application.selectedPage):
+            title = _('Copied to clipboard')
+            text = _('Link to the page has been copied to the clipboard')
+            showInfo(self._application.mainWindow, title, text)

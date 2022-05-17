@@ -63,7 +63,7 @@ def showInfo(mainWindow: "outwiker.gui.mainwindow.MainWindow",
     '''
     Show info message with Toaster
     '''
-    mainWindow.toaster.showInfo(message)
+    mainWindow.toaster.showInfo(title, message)
 
 
 def testreadonly(func):
@@ -384,7 +384,7 @@ def __canNotLoadWikiMessage(path):
     Вывести сообщение о том, что невоможно открыть вики
     """
     logger.warning("Can't load notes tree: {}".format(path))
-    text = _(u"Can't load notes tree:\n") + path
+    text = _("Can't load notes tree:\n") + path
     showError(Application.mainWindow, text)
 
 
@@ -392,8 +392,8 @@ def __wantClearWikiOptions(path):
     """
     Сообщение о том, хочет ли пользователь сбросить файл __page.opt
     """
-    return MessageBox(_(u"Can't load wiki '%s'\nFile __page.opt is invalid.\nClear this file and load wiki?\nBookmarks will be lost") % path,
-                      _(u"__page.opt error"),
+    return MessageBox(_("Can't load wiki '%s'\nFile __page.opt is invalid.\nClear this file and load wiki?\nBookmarks will be lost") % path,
+                      _("__page.opt error"),
                       wx.ICON_ERROR | wx.YES_NO)
 
 
@@ -404,8 +404,8 @@ def createNewWiki(parentwnd):
     """
     dlg = TestedFileDialog(parentwnd, style=wx.FD_SAVE)
 
-    newPageTitle = _(u"First Wiki Page")
-    newPageContent = _(u"""!! First Wiki Page
+    newPageTitle = _("First Wiki Page")
+    newPageContent = _("""!! First Wiki Page
 
 This is the first page. You can use a text formatting: '''bold''', ''italic'', {+underlined text+}, [[https://jenyay.net | link]] and others.""")
 
@@ -414,7 +414,7 @@ This is the first page. You can use a text formatting: '''bold''', ''italic'', {
             from outwiker.pages.wiki.wikipage import WikiPageFactory
 
             newwiki = WikiDocument.create(dlg.GetPath())
-            WikiPageFactory().create(newwiki, newPageTitle, [_(u"test")])
+            WikiPageFactory().create(newwiki, newPageTitle, [_("test")])
             firstPage = newwiki[newPageTitle]
             firstPage.content = newPageContent
 
@@ -423,28 +423,31 @@ This is the first page. You can use a text formatting: '''bold''', ''italic'', {
         except (IOError, OSError) as e:
             # TODO: проверить под Windows
             showError(Application.mainWindow, _(
-                u"Can't create wiki\n") + e.filename)
+                "Can't create wiki\n") + e.filename)
 
     dlg.Destroy()
 
 
-def copyTextToClipboard(text):
+def copyTextToClipboard(text: str) -> bool:
     if not wx.TheClipboard.Open():
-        showError(Application.mainWindow, _(u"Can't open clipboard"))
-        return
+        showError(Application.mainWindow, _("Can't open clipboard"))
+        return False
 
     data = wx.TextDataObject(text)
 
+    result = True
     if not wx.TheClipboard.SetData(data):
-        showError(Application.mainWindow, _(u"Can't copy text to clipboard"))
+        showError(Application.mainWindow, _("Can't copy text to clipboard"))
+        result = False
 
     wx.TheClipboard.Flush()
     wx.TheClipboard.Close()
+    return result
 
 
 def getClipboardText():
     if not wx.TheClipboard.Open():
-        showError(Application.mainWindow, _(u"Can't open clipboard"))
+        showError(Application.mainWindow, _("Can't open clipboard"))
         return
 
     data = wx.TextDataObject()
@@ -458,16 +461,16 @@ def getClipboardText():
     return data.GetText()
 
 
-def copyPathToClipboard(page):
+def copyPathToClipboard(page) -> bool:
     """
     Копировать путь до страницы в буфер обмена
     """
     assert page is not None
-    copyTextToClipboard(page.path)
+    return copyTextToClipboard(page.path)
 
 
 # TODO: Сделать тест
-def copyAttachPathToClipboard(page, is_current_page=False):
+def copyAttachPathToClipboard(page, is_current_page: bool = False) -> bool:
     """
     Копировать путь до папки с прикрепленными файлами в буфер обмена
     """
@@ -476,7 +479,7 @@ def copyAttachPathToClipboard(page, is_current_page=False):
     if is_current_page:
         path = os.path.join(path, page.currentAttachSubdir)
 
-    copyTextToClipboard(path)
+    return copyTextToClipboard(path)
 
 
 @testreadonly
@@ -485,10 +488,10 @@ def generateLink(application, page):
     Создать ссылку на страницу по UID
     """
     uid = application.pageUidDepot.createUid(page)
-    return u"page://{}".format(uid)
+    return "page://{}".format(uid)
 
 
-def copyLinkToClipboard(page):
+def copyLinkToClipboard(page) -> bool:
     """
     Копировать ссылку на страницу в буфер обмена
     """
@@ -496,7 +499,9 @@ def copyLinkToClipboard(page):
 
     link = generateLink(Application, page)
     if link is not None:
-        copyTextToClipboard(link)
+        return copyTextToClipboard(link)
+
+    return False
 
 
 def copyTitleToClipboard(page):
@@ -504,7 +509,7 @@ def copyTitleToClipboard(page):
     Копировать заголовок страницы в буфер обмена
     """
     assert page is not None
-    copyTextToClipboard(page.display_title)
+    return copyTextToClipboard(page.display_title)
 
 
 @testreadonly
