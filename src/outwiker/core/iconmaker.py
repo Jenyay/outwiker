@@ -5,8 +5,9 @@ from PIL import Image
 from outwiker.core.defines import ICON_WIDTH, ICON_HEIGHT
 
 
-class IconMaker(object):
+class IconMaker:
     """ Class for creation icons by images. """
+
     def create(self, fname_in, fname_out):
         """ Create icon by file fname_in. Result will have saved as fname_out.
         """
@@ -20,7 +21,7 @@ class IconMaker(object):
         if scale > 1:
             img_src = img_src.resize((int(width_src / scale),
                                       int(height_src / scale)),
-                                     Image.ANTIALIAS)
+                                     Image.Resampling.LANCZOS)
 
         # Paste source image to result image
         dx = int((ICON_WIDTH - img_src.size[0]) / 2.0)
