@@ -17,5 +17,8 @@ class ThumbmakerPil(ThumbmakerBase):
     def _loadImage(self, fname):
         return Image.open(fname)
 
+    def _closeImage(self, image):
+        image.close()
+
     def _getSize(self, image):
         return image.size
