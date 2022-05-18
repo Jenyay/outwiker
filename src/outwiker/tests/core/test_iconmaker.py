@@ -29,8 +29,8 @@ class IconMakerTest(unittest.TestCase):
 
         self.assertTrue(exists(fname_out))
 
-        img = Image.open(fname_out)
-        self.assertEqual(img.size, (ICON_WIDTH, ICON_HEIGHT))
+        with Image.open(fname_out) as img:
+            self.assertEqual(img.size, (ICON_WIDTH, ICON_HEIGHT))
 
     def test_overwrite(self):
         fname_in = 'testdata/images/icon.png'
@@ -40,10 +40,9 @@ class IconMakerTest(unittest.TestCase):
         iconmaker.create(fname_in, fname_out)
         iconmaker.create(fname_in, fname_out)
 
-        img = Image.open(fname_out)
-
-        self.assertTrue(exists(fname_out))
-        self.assertEqual(img.size, (ICON_WIDTH, ICON_HEIGHT))
+        with Image.open(fname_out) as img:
+            self.assertTrue(exists(fname_out))
+            self.assertEqual(img.size, (ICON_WIDTH, ICON_HEIGHT))
 
     def test_resize(self):
         fnames_in = [
@@ -66,7 +65,6 @@ class IconMakerTest(unittest.TestCase):
 
         for fname in fnames_in:
             iconmaker.create(fname, fname_out)
-            img = Image.open(fname_out)
-
-            self.assertTrue(exists(fname_out), fname)
-            self.assertEqual(img.size, (ICON_WIDTH, ICON_HEIGHT), fname)
+            with Image.open(fname_out) as img:
+                self.assertTrue(exists(fname_out), fname)
+                self.assertEqual(img.size, (ICON_WIDTH, ICON_HEIGHT), fname)

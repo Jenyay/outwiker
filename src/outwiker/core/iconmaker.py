@@ -13,7 +13,7 @@ class IconMaker:
         """
         img_new = Image.new('RGBA', (ICON_WIDTH, ICON_HEIGHT))
         with Image.open(fname_in) as img_src:
-            # Resize source imaga, if it is required
+            # Resize source image if it is required
             width_src, height_src = img_src.size
             scale = max(float(width_src) / float(ICON_WIDTH), float(height_src) /
                         float(ICON_HEIGHT))
