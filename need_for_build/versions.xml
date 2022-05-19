@@ -2,9 +2,15 @@
 <versions>
     <version number="3.2.0.901" status="dev">
         <changes>
+            <change>Added the ability to create folders in attached files.</change>
+            <change>Added the ability to navigate to subfolders in the attachments panel.</change>
+            <change>Added the ability to insert links to files in attached subfolders.</change>
         </changes>
 
         <changes lang="ru">
+            <change>Добавлена возможность создания папок в прикрепленных файлах.</change>
+            <change>Добавлена возможность перехода во вложенные папки на панели прикрепленных файлов.</change>
+            <change>Добавлена возможность вставки ссылок на файлы во вложенных прикрепленных папках.</change>
         </changes>
     </version>
 
