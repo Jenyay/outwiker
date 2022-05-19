@@ -277,6 +277,7 @@ class AttachPanel(wx.Panel):
 
             for fname in files:
                 if (not os.path.basename(fname).startswith("__") or
+                        not page.isCurrentAttachSubdirRoot() or
                         not os.path.isdir(fname)):
                     # Отключим уведомления об ошибках во всплывающих окнах
                     # иначе они появляются при попытке прочитать

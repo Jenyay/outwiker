@@ -252,3 +252,26 @@ class AttachPanelTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.page.currentAttachSubdir = subdir
 
         self.assertEqual(attach_panel.attachList.GetItemCount(), 1)
+
+    def testHiddenDir(self):
+        subdir = '__subdir'
+        attach = Attachment(self.page)
+        attach_panel = self.mainWindow.attachPanel.panel
+
+        self.application.wikiroot = self.wikiroot
+        self.application.wikiroot.selectedPage = self.page
+
+        attach.createSubdir(subdir)
+        self.assertEqual(attach_panel.attachList.GetItemCount(), 0)
+
+    def testSubdirWith__(self):
+        subdir = 'subdir/__subdir'
+        attach = Attachment(self.page)
+        attach_panel = self.mainWindow.attachPanel.panel
+
+        self.application.wikiroot = self.wikiroot
+        self.application.wikiroot.selectedPage = self.page
+
+        attach.createSubdir(subdir)
+        self.page.currentAttachSubdir = 'subdir'
+        self.assertEqual(attach_panel.attachList.GetItemCount(), 2)
