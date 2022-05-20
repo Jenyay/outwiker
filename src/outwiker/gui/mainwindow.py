@@ -299,7 +299,7 @@ class MainWindow(wx.Frame):
         menu = self.menuController[guidefines.MENU_FILE]
         actionController = self._application.actionController
 
-        # Создать...
+        # Create new...
         actionController.appendMenuItem(
             NewAction.stringId,
             menu)
@@ -310,7 +310,7 @@ class MainWindow(wx.Frame):
             getBuiltinImagePath("new.png"),
             True)
 
-        # Открыть...
+        # Opem...
         actionController.appendMenuItem(
             OpenAction.stringId,
             menu)
@@ -321,7 +321,7 @@ class MainWindow(wx.Frame):
             getBuiltinImagePath("open.png"),
             True)
 
-        # Открыть только для чтения
+        # Open read only
         actionController.appendMenuItem(
             OpenReadOnlyAction.stringId,
             menu)
@@ -329,24 +329,26 @@ class MainWindow(wx.Frame):
         menu.AppendSeparator()
         toolbar.AddSeparator()
 
-        # Закрыть
+        # Close
         actionController.appendMenuItem(
             CloseAction.stringId,
             menu)
 
-        # Сохранить
+        # Save
         actionController.appendMenuItem(
             SaveAction.stringId,
             menu)
 
+        actionController.appendMenuItem(ReloadWikiAction.stringId, menu)
+
         menu.AppendSeparator()
 
-        # Печать
+        # Print
         actionController.appendMenuItem(
             PrintAction.stringId,
             menu)
 
-        # Выход
+        # Exit
         actionController.appendMenuItem(
             ExitAction.stringId,
             menu)
@@ -484,7 +486,6 @@ class MainWindow(wx.Frame):
 
         menu.AppendSeparator()
 
-        actionController.appendMenuItem(ReloadWikiAction.stringId, menu)
         actionController.appendMenuItem(SetStyleToBranchAction.stringId, menu)
 
     def _createHelpMenu(self):
