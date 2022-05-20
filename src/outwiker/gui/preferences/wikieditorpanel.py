@@ -34,7 +34,7 @@ class WikiEditorPanel(BasePrefPanel):
         self._stylesList.addStyle(_("Heading"), self._config.heading.value)
         self._stylesList.addStyle(_("Command"), self._config.command.value)
         self._stylesList.addStyle(_("Comment"), self._config.comment.value)
-        self._stylesList.addStyle(_("Attachment"), self._config.attachment.value)
+        self._stylesList.addStyle(_("Attachments"), self._config.attachment.value)
 
     def Save(self):
         self._config.link.value = self._stylesList.getStyle(0)
