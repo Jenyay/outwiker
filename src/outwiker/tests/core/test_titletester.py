@@ -136,10 +136,3 @@ class PageTitleTesterTest (unittest.TestCase):
 
         result = tester.replaceDangerousSymbols(title, '_')
         self.assertEqual(result, 'Абырвалг____Абырвалг')
-
-    def testReplace_02(self):
-        title = 'Абырвалг%aa%12%1a%a1Абырвалг'
-        tester = WindowsPageTitleTester()
-
-        result = tester.replaceDangerousSymbols(title, '_')
-        self.assertEqual(result, 'Абырвалг____Абырвалг')
