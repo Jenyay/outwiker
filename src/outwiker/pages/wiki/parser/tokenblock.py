@@ -26,7 +26,7 @@ class TextBlockToken:
         return conversionParseAction
 
 
-class NestedBlockBase(object, metaclass=ABCMeta):
+class NestedBlockBase(metaclass=ABCMeta):
     '''
     Base class for tokens of the nested blocks.
     '''
@@ -78,7 +78,7 @@ class SimpleNestedBlock(NestedBlockBase):
 
             inner_text = text[len(self.start):-len(self.end)]
 
-            return u"".join([
+            return ''.join([
                 opening,
                 self.parser.parseWikiMarkup(inner_text),
                 closing,
