@@ -1,44 +1,66 @@
 # -*- coding: utf-8 -*-
 
+import logging
 import os.path
 from typing import List
 
 import wx
 
-from outwiker.core.commands import MessageBox, attachFiles, showError
-from outwiker.core.system import getOS, getBuiltinImagePath
+from outwiker.actions.attachcreatesubdir import AttachCreateSubdirActionForAttachPanel
+from outwiker.actions.attachexecute import AttachExecuteFilesAction
+from outwiker.actions.attachfiles import AttachFilesActionForAttachPanel
+from outwiker.actions.attachopenfolder import OpenAttachFolderActionForAttachPanel
+from outwiker.actions.attachpastelink import AttachPasteLinkActionForAttachPanel
+from outwiker.actions.attachremove import RemoveAttachesActionForAttachPanel
+from outwiker.actions.attachrename import RenameAttachActionForAttachPanel
+from outwiker.actions.attachselectall import AttachSelectAllAction
+from outwiker.actions.clipboard import CopyAttachPathAction
 from outwiker.core.attachment import Attachment
-from outwiker.actions.attachfiles import AttachFilesAction
-from outwiker.actions.openattachfolder import OpenAttachFolderAction
-from .guiconfig import AttachConfig
+from outwiker.core.commands import MessageBox, attachFiles, renameAttach, showError
+from outwiker.core.events import BeginAttachRenamingParams
+from outwiker.core.system import getBuiltinImagePath, getOS
+
 from .dropfiles import BaseDropFilesTarget
+from .guiconfig import AttachConfig
+
+
+logger = logging.getLogger('outwiker.gui.attachpanel')
 
 
 class AttachPanel(wx.Panel):
     def __init__(self, parent, application):
         super().__init__(parent)
         self._application = application
-        self.ID_ATTACH = None
-        self.ID_REMOVE = None
-        self.ID_PASTE = None
-        self.ID_EXECUTE = None
-        self.ID_OPEN_FOLDER = None
+        self.GO_TO_PARENT_ITEM_NAME = '..'
 
-        self.__toolbar = self.__createToolBar(self, -1)
+        # Store old file name before renaming
+        self._oldEditedAttachName = None
+        self._oldEditedAttachItemIndex = None
+
+        # Actions with hot keys for attach panel
+        self._localHotKeys = [
+            RemoveAttachesActionForAttachPanel,
+            AttachSelectAllAction,
+            AttachPasteLinkActionForAttachPanel,
+            AttachExecuteFilesAction,
+            RenameAttachActionForAttachPanel,
+            AttachCreateSubdirActionForAttachPanel]
+
         self.__attachList = wx.ListCtrl(self,
-                                        -1,
-                                        style=wx.LC_LIST | wx.SUNKEN_BORDER)
+                                        wx.ID_ANY,
+                                        style=wx.LC_LIST | wx.LC_EDIT_LABELS | wx.SUNKEN_BORDER)
 
-        self.__set_properties()
-        self.__do_layout()
+        self.__toolbar = self._createGui(self)
+        self.__attachList.SetMinSize((-1, 100))
+        self._do_layout()
 
         self.__fileIcons = getOS().fileIcons
         self.__attachList.SetImageList(self.__fileIcons.imageList,
                                        wx.IMAGE_LIST_SMALL)
         self._dropTarget = DropAttachFilesTarget(self._application, self)
 
-        self.__bindGuiEvents()
-        self.__bindAppEvents()
+        self._bindGuiEvents()
+        self._bindAppEvents()
 
     def SetBackgroundColour(self, colour):
         super().SetBackgroundColour(colour)
@@ -48,38 +70,47 @@ class AttachPanel(wx.Panel):
         super().SetForegroundColour(colour)
         self.__attachList.SetForegroundColour(colour)
 
-    def __bindGuiEvents(self):
-        self.Bind(wx.EVT_LIST_BEGIN_DRAG,
-                  self.__onBeginDrag, self.__attachList)
+    def _isSubdirectory(self, root_dirname, sub_dirname):
+        full_dir = os.path.join(root_dirname, sub_dirname)
+        return os.path.exists(full_dir) and os.path.isdir(full_dir)
 
-        self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.__onDoubleClick,
+    def _bindGuiEvents(self):
+        self.Bind(wx.EVT_LIST_BEGIN_DRAG,
+                  self._onBeginDrag,
                   self.__attachList)
 
-        self.Bind(wx.EVT_MENU, self.__onAttach, id=self.ID_ATTACH)
-        self.Bind(wx.EVT_MENU, self.__onRemove, id=self.ID_REMOVE)
-        self.Bind(wx.EVT_MENU, self.__onPaste, id=self.ID_PASTE)
-        self.Bind(wx.EVT_MENU, self.__onExecute, id=self.ID_EXECUTE)
-        self.Bind(wx.EVT_MENU, self.__onOpenFolder, id=self.ID_OPEN_FOLDER)
-        self.Bind(wx.EVT_CLOSE, self.__onClose)
+        self.Bind(wx.EVT_LIST_ITEM_ACTIVATED,
+                  self._onDoubleClick,
+                  self.__attachList)
 
-    def __unbindGuiEvents(self):
+        self.Bind(wx.EVT_CLOSE, self._onClose)
+
+        self.Bind(wx.EVT_LIST_BEGIN_LABEL_EDIT,
+                  self._onBeginLabelEdit,
+                  self.__attachList)
+
+        self.Bind(wx.EVT_LIST_END_LABEL_EDIT,
+                  self._onEndLabelEdit,
+                  self.__attachList)
+
+    def _unbindGuiEvents(self):
         self.Unbind(wx.EVT_LIST_BEGIN_DRAG,
-                    handler=self.__onBeginDrag,
+                    handler=self._onBeginDrag,
                     source=self.__attachList)
 
         self.Unbind(wx.EVT_LIST_ITEM_ACTIVATED,
-                    handler=self.__onDoubleClick,
+                    handler=self._onDoubleClick,
                     source=self.__attachList)
 
-        self.Unbind(wx.EVT_MENU, handler=self.__onAttach, id=self.ID_ATTACH)
-        self.Unbind(wx.EVT_MENU, handler=self.__onRemove, id=self.ID_REMOVE)
-        self.Unbind(wx.EVT_MENU, handler=self.__onPaste, id=self.ID_PASTE)
-        self.Unbind(wx.EVT_MENU, handler=self.__onExecute, id=self.ID_EXECUTE)
+        self.Unbind(wx.EVT_LIST_BEGIN_LABEL_EDIT,
+                    handler=self._onBeginLabelEdit,
+                    source=self.__attachList)
 
-        self.Unbind(wx.EVT_MENU, handler=self.__onOpenFolder,
-                    id=self.ID_OPEN_FOLDER)
+        self.Unbind(wx.EVT_LIST_END_LABEL_EDIT,
+                    handler=self._onEndLabelEdit,
+                    source=self.__attachList)
 
-        self.Unbind(wx.EVT_CLOSE, handler=self.__onClose)
+        self.Unbind(wx.EVT_CLOSE, handler=self._onClose)
 
     @property
     def attachList(self):
@@ -89,91 +120,119 @@ class AttachPanel(wx.Panel):
     def toolBar(self):
         return self.__toolbar
 
-    def __bindAppEvents(self):
-        self._application.onPageSelect += self.__onPageSelect
-        self._application.onAttachListChanged += self.__onAttachListChanged
-        self._application.onWikiOpen += self.__onWikiOpen
+    def _bindAppEvents(self):
+        self._application.onPageSelect += self._onPageSelect
+        self._application.onAttachListChanged += self._onAttachListChanged
+        self._application.onAttachSubdirChanged += self._onAttachSubdirChanged
+        self._application.onWikiOpen += self._onWikiOpen
+        self._application.onBeginAttachRenaming += self._onBeginAttachRenaming
 
-    def __unbindAppEvents(self):
-        self._application.onPageSelect -= self.__onPageSelect
-        self._application.onAttachListChanged -= self.__onAttachListChanged
-        self._application.onWikiOpen -= self.__onWikiOpen
+    def _unbindAppEvents(self):
+        self._application.onPageSelect -= self._onPageSelect
+        self._application.onAttachListChanged -= self._onAttachListChanged
+        self._application.onAttachSubdirChanged -= self._onAttachSubdirChanged
+        self._application.onWikiOpen -= self._onWikiOpen
+        self._application.onBeginAttachRenaming -= self._onBeginAttachRenaming
 
-    def __onClose(self, _event):
+    def _onClose(self, _event):
+        actionController = self._application.actionController
+
+        for action, hotkey, hidden in self._actions:
+            actionController.removeHotkey(action.stringId)
+            actionController.removeToolbarButton(action.stringId)
+
         self._dropTarget.destroy()
-        self.__unbindAppEvents()
-        self.__unbindGuiEvents()
+        self._unbindAppEvents()
+        self._unbindGuiEvents()
         self.toolBar.ClearTools()
         self.attachList.ClearAll()
         self.__fileIcons.clear()
         self.Destroy()
 
-    def __createToolBar(self, parent, toolbar_id):
-        toolbar = wx.ToolBar(parent, toolbar_id, style=wx.TB_DOCKABLE)
-        self.ID_ATTACH = toolbar.AddTool(
-            wx.ID_ANY,
-            _(u"Attach Files…"),
-            wx.Bitmap(getBuiltinImagePath("attach.png"),
-                      wx.BITMAP_TYPE_ANY),
-            wx.NullBitmap,
-            wx.ITEM_NORMAL,
-            _(u"Attach Files…"),
-            ""
-        ).GetId()
+    def _enableHotkeys(self):
+        actionController = self._application.actionController
+        for action in self._localHotKeys:
+            actionController.appendHotkey(action.stringId, self)
 
-        self.ID_REMOVE = toolbar.AddTool(
-            wx.ID_ANY,
-            _(u"Remove Files…"),
-            wx.Bitmap(getBuiltinImagePath("delete.png"),
-                      wx.BITMAP_TYPE_ANY),
-            wx.NullBitmap,
-            wx.ITEM_NORMAL,
-            _(u"Remove Files…"),
-            ""
-        ).GetId()
+    def _disableHotkeys(self):
+        actionController = self._application.actionController
+        for action in self._localHotKeys:
+            actionController.removeHotkey(action.stringId)
+
+    def _createGui(self, parent):
+        toolbar = wx.ToolBar(parent, wx.ID_ANY, style=wx.TB_DOCKABLE)
+        actionController = self._application.actionController
+        self._enableHotkeys()
+
+        # Attach files
+        actionController.appendToolbarButton(
+            AttachFilesActionForAttachPanel.stringId,
+            toolbar,
+            getBuiltinImagePath("attach.png")
+        )
+
+        # Create subdir
+        actionController.appendToolbarButton(
+            AttachCreateSubdirActionForAttachPanel.stringId,
+            toolbar,
+            getBuiltinImagePath("folder_add.png")
+        )
+
+        # Delete files
+        actionController.appendToolbarButton(
+            RemoveAttachesActionForAttachPanel.stringId,
+            toolbar,
+            getBuiltinImagePath("delete.png")
+        )
+
+        # Rename file
+        actionController.appendToolbarButton(
+            RenameAttachActionForAttachPanel.stringId,
+            toolbar,
+            getBuiltinImagePath("attach_rename.png")
+        )
+
+        # Select all files
+        actionController.appendToolbarButton(
+            AttachSelectAllAction.stringId,
+            toolbar,
+            getBuiltinImagePath("select_all.png")
+        )
 
         toolbar.AddSeparator()
 
-        self.ID_PASTE = toolbar.AddTool(
-            wx.ID_ANY,
-            _(u"Paste"),
-            wx.Bitmap(getBuiltinImagePath("paste.png"),
-                      wx.BITMAP_TYPE_ANY),
-            wx.NullBitmap,
-            wx.ITEM_NORMAL,
-            _(u"Paste"),
-            ""
-        ).GetId()
+        # Paste link to files
+        actionController.appendToolbarButton(
+            AttachPasteLinkActionForAttachPanel.stringId,
+            toolbar,
+            getBuiltinImagePath("paste.png")
+        )
 
-        self.ID_EXECUTE = toolbar.AddTool(
-            wx.ID_ANY,
-            _(u"Execute"),
-            wx.Bitmap(getBuiltinImagePath("execute.png"),
-                      wx.BITMAP_TYPE_ANY),
-            wx.NullBitmap,
-            wx.ITEM_NORMAL,
-            _(u"Execute"),
-            ""
-        ).GetId()
+        # Execute files
+        actionController.appendToolbarButton(
+            AttachExecuteFilesAction.stringId,
+            toolbar,
+            getBuiltinImagePath("execute.png")
+        )
 
-        self.ID_OPEN_FOLDER = toolbar.AddTool(
-            wx.ID_ANY,
-            _(u"Open Attachments Folder"),
-            wx.Bitmap(getBuiltinImagePath("folder.png"),
-                      wx.BITMAP_TYPE_ANY),
-            wx.NullBitmap,
-            wx.ITEM_NORMAL,
-            _(u"Open Attachments Folder"),
-            ""
-        ).GetId()
+        # Open attach folder
+        actionController.appendToolbarButton(
+            OpenAttachFolderActionForAttachPanel.stringId,
+            toolbar,
+            getBuiltinImagePath("folder_open.png")
+        )
+
+        # Copy path to clipboard
+        actionController.appendToolbarButton(
+            CopyAttachPathAction.stringId,
+            toolbar,
+            getBuiltinImagePath("folder_clipboard.png")
+        )
 
         toolbar.Realize()
         return toolbar
 
-    def __set_properties(self):
-        self.__attachList.SetMinSize((-1, 100))
-
-    def __do_layout(self):
+    def _do_layout(self):
         attachSizer_copy = wx.FlexGridSizer(2, 1, 0, 0)
         attachSizer_copy.Add(self.__toolbar, 1, wx.EXPAND, 0)
         attachSizer_copy.Add(self.__attachList, 1, wx.ALL | wx.EXPAND, 2)
@@ -185,13 +244,13 @@ class AttachPanel(wx.Panel):
         attachSizer_copy.Fit(self)
         self.SetAutoLayout(True)
 
-    def __onWikiOpen(self, _wiki):
+    def _onWikiOpen(self, _wiki):
         self.updateAttachments()
 
-    def __onPageSelect(self, _page):
+    def _onPageSelect(self, _page):
         self.updateAttachments()
 
-    def __sortFilesList(self, files_list):
+    def _sortFilesList(self, files_list):
         result = sorted(files_list, key=str.lower, reverse=True)
         result.sort(key=Attachment.sortByType)
         return result
@@ -201,13 +260,24 @@ class AttachPanel(wx.Panel):
         Обновить список прикрепленных файлов
         """
         self.__attachList.Freeze()
+        page = self._application.selectedPage
+
+        # Store selected items
+        selected_items = []
+        selectedItem = self.__attachList.GetFirstSelected()
+        while selectedItem != -1:
+            selected_items.append(self.__attachList.GetItemText(selectedItem))
+            selectedItem = self.__attachList.GetNextSelected(selectedItem)
+
         self.__attachList.ClearAll()
-        if self._application.selectedPage is not None:
-            files = Attachment(self._application.selectedPage).attachmentFull
-            files = self.__sortFilesList(files)
+        if page is not None:
+            files = Attachment(self._application.selectedPage).getAttachFull(
+                page.currentAttachSubdir)
+            files = self._sortFilesList(files)
 
             for fname in files:
                 if (not os.path.basename(fname).startswith("__") or
+                        not page.isCurrentAttachSubdirRoot() or
                         not os.path.isdir(fname)):
                     # Отключим уведомления об ошибках во всплывающих окнах
                     # иначе они появляются при попытке прочитать
@@ -226,37 +296,69 @@ class AttachPanel(wx.Panel):
                         os.path.basename(fname),
                         imageIndex)
 
+            if not page.isCurrentAttachSubdirRoot():
+                self.__attachList.InsertItem(
+                    0,
+                    self.GO_TO_PARENT_ITEM_NAME,
+                    self.__fileIcons.GO_TO_PARENT_ICON)
+
+            # Restore selected items
+            for item_name in selected_items:
+                index = self.__attachList.FindItem(-1, item_name)
+                if index != -1:
+                    self.__attachList.Select(index)
+
         self.__attachList.Thaw()
 
-    def __getSelectedFiles(self):
-        files = []
+    def _selectFile(self, fname):
+        if fname is None:
+            return
 
+        if self.__attachList.GetItemCount() == 0:
+            return
+
+        for n in range(self.__attachList.GetItemCount()):
+            if self.__attachList.GetItemText(n) == fname:
+                self.__attachList.Select(n)
+            else:
+                self.__attachList.Select(n, 0)
+
+    def getSelectedFiles(self):
+        page = self._application.selectedPage
+
+        files = []
         item = self.__attachList.GetNextItem(-1, state=wx.LIST_STATE_SELECTED)
 
+        prefix_list = ['./', '.\\']
         while item != -1:
-            fname = self.__attachList.GetItemText(item)
-            files.append(fname)
+            item_text = self.__attachList.GetItemText(item)
+
+            if item_text != self.GO_TO_PARENT_ITEM_NAME:
+                fname = os.path.join(page.currentAttachSubdir, item_text)
+
+                # Remove prefixes
+                for prefix in prefix_list:
+                    if fname.startswith(prefix):
+                        fname = fname[len(prefix):]
+
+                files.append(fname)
 
             item = self.__attachList.GetNextItem(item,
                                                  state=wx.LIST_STATE_SELECTED)
 
         return files
 
-    def __onAttach(self, _event):
-        self._application.actionController.getAction(
-            AttachFilesAction.stringId).run(None)
-
-    def __onRemove(self, _event):
+    def _onRemove(self, _event):
         if self._application.selectedPage is not None:
-            files = self.__getSelectedFiles()
+            files = self.getSelectedFiles()
 
             if len(files) == 0:
                 showError(self._application.mainWindow,
-                          _(u"You did not select a file to remove"))
+                          _("You did not select any file to remove"))
                 return
 
-            if MessageBox(_(u"Remove selected files?"),
-                          _(u"Remove files?"),
+            if MessageBox(_("Remove selected files?"),
+                          _("Remove files?"),
                           wx.YES_NO | wx.ICON_QUESTION) == wx.YES:
                 try:
                     Attachment(
@@ -264,74 +366,56 @@ class AttachPanel(wx.Panel):
                 except IOError as e:
                     showError(self._application.mainWindow, str(e))
 
-                self.updateAttachments()
-
-    def __pasteLink(self):
-        """
-        Сгенерировать сообщение о том, что пользователь хочет вставить
-        ссылку на приаттаченные файлы
-        """
-        files = self.__getSelectedFiles()
-        if len(files) == 0:
-            showError(self._application.mainWindow,
-                      _(u"You did not select a file to paste"))
-            return
-
-        self._application.onAttachmentPaste(files)
-
-    def __executeFile(self):
-        if self._application.selectedPage is not None:
-            files = self.__getSelectedFiles()
-
-            if len(files) == 0:
-                showError(self._application.mainWindow,
-                          _(u"You did not select a file to execute"))
-                return
-
-            for file in files:
-                fullpath = os.path.join(Attachment(
-                    self._application.selectedPage).getAttachPath(), file)
-                try:
-                    getOS().startFile(fullpath)
-                except OSError:
-                    text = _(u"Can't execute file '%s'") % file
-                    showError(self._application.mainWindow, text)
-
-    def __onPaste(self, _event):
-        self.__pasteLink()
-
-    def __onOpenFolder(self, _event):
-        self._application.actionController.getAction(
-            OpenAttachFolderAction.stringId).run(None)
-
-    def __onExecute(self, _event):
-        self.__executeFile()
-
-    def __onDoubleClick(self, _event):
+    def _onDoubleClick(self, event):
         config = AttachConfig(self._application.config)
-        if config.doubleClickAction.value == AttachConfig.ACTION_INSERT_LINK:
-            self.__pasteLink()
-        elif config.doubleClickAction.value == AttachConfig.ACTION_OPEN:
-            self.__executeFile()
+        actionController = self._application.actionController
+        page = self._application.selectedPage
 
-    def __onBeginDrag(self, _event):
-        selectedFiles = self.__getSelectedFiles()
+        attach_dir = Attachment(
+            self._application.selectedPage).getAttachPath(create=False)
+        selected_item = event.GetText()
+        subdir = os.path.normpath(os.path.join(page.currentAttachSubdir,
+                                               selected_item))
+        if self._isSubdirectory(attach_dir, subdir):
+            self._application.selectedPage.currentAttachSubdir = subdir
+        elif config.doubleClickAction.value == AttachConfig.ACTION_INSERT_LINK:
+            actionController.getAction(
+                AttachPasteLinkActionForAttachPanel.stringId).run(None)
+        elif config.doubleClickAction.value == AttachConfig.ACTION_OPEN:
+            actionController.getAction(
+                AttachExecuteFilesAction.stringId).run(None)
+
+    def _onBeginDrag(self, _event):
+        selectedFiles = self.getSelectedFiles()
         if not selectedFiles:
             return
 
+        page = self._application.selectedPage
         data = wx.FileDataObject()
-        attach_path = Attachment(
-            self._application.selectedPage).getAttachPath()
+        attach_path = Attachment(page).getAttachPath(page.currentAttachSubdir)
 
-        for fname in self.__getSelectedFiles():
+        for fname in self.getSelectedFiles():
             data.AddFile(os.path.join(attach_path, fname))
 
         dragSource = wx.DropSource(data, self)
         dragSource.DoDragDrop()
 
-    def __onAttachListChanged(self, page, _params):
+    def _onAttachListChanged(self, page, _params):
         if page is not None and page == self._application.selectedPage:
             self.updateAttachments()
+
+    def _onAttachSubdirChanged(self, page, _params):
+        if page is not None and page == self._application.selectedPage:
+            self.updateAttachments()
+
+    def _onBeginAttachRenaming(self, page, params: BeginAttachRenamingParams):
+        self.updateAttachments()
+        if self._application.selectedPage is not None:
+            if params.renamed_item:
+                self._selectFile(params.renamed_item)
+
+            if not self._application.testMode:
+                self._beginRenaming()
 
     def SetFocus(self):
         self.__attachList.SetFocus()
@@ -340,6 +424,65 @@ class AttachPanel(wx.Panel):
                 self.__attachList.GetFocusedItem() == -1):
             self.__attachList.Focus(0)
             self.__attachList.Select(0)
+
+    def selectAllAttachments(self):
+        for index in range(self.__attachList.GetItemCount()):
+            if self.__attachList.GetItemText(index) != self.GO_TO_PARENT_ITEM_NAME:
+                self.__attachList.SetItemState(index,
+                                               wx.LIST_STATE_SELECTED,
+                                               wx.LIST_STATE_SELECTED)
+
+    def _beginRenaming(self):
+        selectedItem = self.__attachList.GetFirstSelected()
+        if selectedItem == -1:
+            return
+
+        if self.__attachList.GetItemText(selectedItem) == self.GO_TO_PARENT_ITEM_NAME:
+            return
+
+        self.__attachList.EditLabel(selectedItem)
+
+    def _onBeginLabelEdit(self, event):
+        if event.GetText() == self.GO_TO_PARENT_ITEM_NAME:
+            event.Veto()
+            return
+
+        self._oldEditedAttachName = os.path.join(
+            self._application.selectedPage.currentAttachSubdir,
+            event.GetItem().GetText())
+        self._oldEditedAttachItemIndex = event.GetIndex()
+
+        self._disableHotkeys()
+
+    def _onEndLabelEdit(self, event):
+        self._enableHotkeys()
+        event.Veto()
+
+        if (event.IsEditCancelled()
+                or self._oldEditedAttachName is None
+                or self._oldEditedAttachItemIndex != event.GetIndex()):
+            self._oldEditedAttachName = None
+            self._oldEditedAttachItemIndex = None
+            return
+
+        # New attachment name
+        newName = os.path.join(self._application.selectedPage.currentAttachSubdir,
+                               event.GetLabel().strip())
+
+        logger.debug('Renaming attachment: %s -> %s',
+                     self._oldEditedAttachName, newName)
+
+        if newName == self._oldEditedAttachName:
+            self._oldEditedAttachName = None
+            self._oldEditedAttachItemIndex = None
+            return
+
+        rename = renameAttach(self._application.mainWindow,
+                              self._application.wikiroot.selectedPage,
+                              self._oldEditedAttachName, newName)
+        self._oldEditedAttachName = None
+        if rename:
+            self._selectFile(event.GetLabel().strip())
 
 
 class DropAttachFilesTarget(BaseDropFilesTarget):
@@ -355,7 +498,8 @@ class DropAttachFilesTarget(BaseDropFilesTarget):
                 self._application.wikiroot.selectedPage is not None):
             attachFiles(self._application.mainWindow,
                         self._application.wikiroot.selectedPage,
-                        correctedFiles)
+                        correctedFiles,
+                        self._application.wikiroot.selectedPage.currentAttachSubdir)
             return True
 
         return False

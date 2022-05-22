@@ -34,7 +34,7 @@ apps:
             - upower-observe
             - mount-observe
         extensions:
-            - gnome-3-38
+            - gnome-3-34
         desktop: usr/share/applications/outwiker.desktop
         environment:
             LD_LIBRARY_PATH: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/webkit2gtk-4.0/:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/pulseaudio:$SNAP/lib/python3.8/site-packages/hunspell:$LD_LIBRARY_PATH
@@ -81,12 +81,12 @@ parts:
             - libslang2
             # - libegl1
         python-packages:
-            - wheel==0.36.2
-            - https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-20.04/wxPython-4.1.1-cp38-cp38-linux_x86_64.whl
-            - Pillow==8.1.2
-            - cyhunspell==2.0.2
-            - idna==3.1
-            - pyparsing==2.4.7
+          - wheel==0.36.2
+          - https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-20.04/wxPython-4.1.1-cp38-cp38-linux_x86_64.whl
+          - Pillow==9.1.1
+          - cyhunspell==2.0.2
+          - idna==3.1
+          - pyparsing==3.0.7
         override-build: |
             snapcraftctl build
             cp -r $SNAPCRAFT_PART_SRC/usr $SNAPCRAFT_PART_INSTALL

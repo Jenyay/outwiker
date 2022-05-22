@@ -9,7 +9,7 @@ from outwiker.actions.addsiblingpage import AddSiblingPageAction
 from outwiker.actions.removepage import RemovePageAction
 from outwiker.actions.renamepage import RenamePageAction
 from outwiker.actions.editpageprop import EditPagePropertiesAction
-from outwiker.actions.openattachfolder import OpenAttachFolderAction
+from outwiker.actions.attachopenfolder import OpenAttachFolderAction
 from outwiker.gui.pagedialog import createSiblingPage, createChildPage
 
 
@@ -154,4 +154,5 @@ class PagePopupMenu (object):
         Копировать путь до прикрепленных файлов в буфер обмена
         """
         assert self.popupPage is not None
-        outwiker.core.commands.copyAttachPathToClipboard(self.popupPage)
+        outwiker.core.commands.copyAttachPathToClipboard(self.popupPage,
+                self.popupPage is self._application.selectedPage)

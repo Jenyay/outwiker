@@ -11,50 +11,48 @@ from .exceptions import InvalidPageFormat
 from .exporterfactory import ExporterFactory
 
 
-class Controller(object):
+class Controller:
     """
     Класс контроллера для интерфейса плагина
     """
+
     def __init__(self, owner, application):
         self.__application = application
         self.__owner = owner
-
         self.__exportMenu = None
 
-        self.EXPORT_SINGLE = wx.NewId()
-        self.EXPORT_BRANCH = wx.NewId()
-
     def __addExportItems(self, menu):
-        self.__exportSingleItem = menu.Append(
-            id=self.EXPORT_SINGLE,
-            item=_(u"Export Page To HTML..."))
+        self._exportSingleMenuItem = self.__exportSingleItem = menu.Append(
+            id=wx.ID_ANY,
+            item=_("Export Page To HTML..."))
 
-        self.__exportBranchItem = menu.Append(
-            id=self.EXPORT_BRANCH,
-            item=_(u"Export Branch To HTML..."))
+        self._exportBranchMenuItem = self.__exportBranchItem = menu.Append(
+            id=wx.ID_ANY,
+            item=_("Export Branch To HTML..."))
 
         self.__application.mainWindow.Bind(wx.EVT_MENU,
                                            self.__onSingleExport,
-                                           id=self.EXPORT_SINGLE)
+                                           self._exportSingleMenuItem)
 
         self.__application.mainWindow.Bind(wx.EVT_MENU,
                                            self.__onBranchExport,
-                                           id=self.EXPORT_BRANCH)
+                                           self._exportBranchMenuItem)
 
     def __onSingleExport(self, event):
         assert self.__application.mainWindow is not None
 
         if self.__application.selectedPage is None:
-            MessageBox(_(u"Please, select page"),
-                       _(u"Error"),
+            MessageBox(_("Please, select page"),
+                       _("Error"),
                        wx.OK | wx.ICON_ERROR)
             return
 
         try:
-            exporter = ExporterFactory.getExporter(self.__application.selectedPage)
+            exporter = ExporterFactory.getExporter(
+                self.__application.selectedPage)
         except InvalidPageFormat:
-            MessageBox(_(u"This page type not support export to HTML"),
-                       _(u"Error"),
+            MessageBox(_("This page type not support export to HTML"),
+                       _("Error"),
                        wx.OK | wx.ICON_ERROR)
             return
 
@@ -69,8 +67,8 @@ class Controller(object):
         assert self.__application.mainWindow is not None
 
         if self.__application.wikiroot is None:
-            MessageBox(_(u"Wiki is not open"),
-                       _(u"Error"),
+            MessageBox(_("Wiki is not open"),
+                       _("Error"),
                        wx.OK | wx.ICON_ERROR)
             return
 
@@ -114,11 +112,9 @@ class Controller(object):
             return
 
         self.__application.mainWindow.Unbind(wx.EVT_MENU,
-                                             id=self.EXPORT_SINGLE,
                                              handler=self.__onSingleExport)
 
         self.__application.mainWindow.Unbind(wx.EVT_MENU,
-                                             id=self.EXPORT_BRANCH,
                                              handler=self.__onBranchExport)
 
         self.__exportMenu.Delete(self.__exportSingleItem)

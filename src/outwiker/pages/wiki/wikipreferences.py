@@ -17,31 +17,31 @@ class WikiPrefGeneralPanel(BasePrefPanel):
         self.config = WikiConfig(Application.config)
 
     def __createGui(self):
-        # Показывать ли результирующий HTML?
-        self.htmlCodeCheckbox = wx.CheckBox(self, -1, _(u"Show HTML Code Tab"))
+        # Show generated HTML code?
+        self.htmlCodeCheckbox = wx.CheckBox(self, -1, _("Show HTML Code Tab"))
 
         # Highlight the wiki notation?
         self.colorizeWiki = wx.CheckBox(
-            self, -1, _(u"Highlight the Wiki Notation"))
+            self, -1, _("Highlight the Wiki Notation"))
 
-        # Размер миниатюр
-        self.thumbSizeLabel = wx.StaticText(self, -1, _(u"Thumbnail Size"))
+        # Thumbnails default size
+        self.thumbSizeLabel = wx.StaticText(self, -1, _("Thumbnail Size"))
         self.thumbSize = wx.SpinCtrl(self, -1, "250", min=1, max=10000)
 
-        # Шаблон для пустых страниц
+        # Template for the empty page
         self.emptyTplLabel = wx.StaticText(
-            self, -1, _(u"Template for empty page"))
+            self, -1, _("Template for empty page"))
         self.emptyTplTextCtrl = wx.TextCtrl(self, -1, "",
                                             style=wx.TE_MULTILINE | wx.HSCROLL | wx.TE_WORDWRAP)
 
         # Стиль ссылок по умолчанию (при создании через диалог)
         self.linkStyleLabel = wx.StaticText(
-            self, label=_(u"Default link style"))
+            self, label=_("Default link style"))
         self.linkStyleCombo = wx.ComboBox(
             self, -1, style=wx.CB_DROPDOWN | wx.CB_READONLY)
         self.linkStyleCombo.AppendItems([
-            _(u"[[comment -> link]]"),
-            _(u"[[link | comment]]")
+            _("[[comment -> link]]"),
+            _("[[link | comment]]")
         ])
         self.linkStyleCombo.SetSelection(0)
 

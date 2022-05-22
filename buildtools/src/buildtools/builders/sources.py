@@ -1,8 +1,8 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os
 
-from fabric.api import local, lcd
+from invoke import Context
 
 from .base import BuilderBase
 from buildtools.defines import SOURCES_DIR
@@ -13,8 +13,8 @@ class BuilderSources(BuilderBase):
     """
     Create archives with sources
     """
-    def __init__(self, build_dir=SOURCES_DIR, is_stable=False):
-        super(BuilderSources, self).__init__(build_dir, is_stable)
+    def __init__(self, c: Context, build_dir: str = SOURCES_DIR, is_stable: bool = False):
+        super().__init__(c, build_dir, is_stable)
 
         self._full_archive_name = u"outwiker-src-full-{}".format(
             self.facts.version
@@ -42,10 +42,10 @@ class BuilderSources(BuilderBase):
 
     def _build(self):
         print_info(u'Create full sources archive...')
-        local('git archive --prefix={}/ -o "{}" HEAD'.format(
+        self.context.run('git archive --prefix={}/ -o "{}" HEAD'.format(
             self._full_archive_name,
             self._full_archive_path))
 
         print_info(u'Create minimal sources archive...')
-        with lcd(self.temp_sources_dir):
-            local(u'7z a -r -aoa -xr!__pycache__ -xr!*.pyc -xr!.ropeproject -xr!tests.py -xr!profile.py -xr!setup_tests.py -xr!tests_*.py -xr!setup.py -xr!test -xr!profiles "{}" ./*'.format(self._min_archive_path))
+        with self.context.cd(self.temp_sources_dir):
+            self.context.run(u'7z a -r -aoa -xr!__pycache__ -xr!*.pyc -xr!.ropeproject -xr!tests.py -xr!profile.py -xr!setup_tests.py -xr!tests_*.py -xr!setup.py -xr!test -xr!profiles "{}" ./*'.format(self._min_archive_path))

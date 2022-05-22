@@ -18,7 +18,7 @@ class LinkFactory(object):
 class LinkToken(object):
     linkStart = "[["
     linkEnd = "]]"
-    attachString = u"Attach:"
+    attachString = "Attach:"
 
     def __init__(self, parser):
         self.parser = parser
@@ -68,16 +68,29 @@ class LinkToken(object):
         Подготовить адрес для ссылки.
         Если ссылка - прикрепленный файл, то создать путь до него
         """
+        # Prepare URL to attached file
         if url.strip().startswith(AttachToken.attachString):
-            return url.strip().replace(AttachToken.attachString,
-                                       PAGE_ATTACH_DIR + "/", 1)
+            url = url.strip()
+
+            # Extract path to attached file
+            url = url[len(AttachToken.attachString):]
+            url = self.__removeQuotes(url)
+
+            return '{}/{}'.format(PAGE_ATTACH_DIR, url)
 
         return url
 
+    def __removeQuotes(self, text):
+        if ((text.startswith("'") and text.endswith("'")) or
+                ((text.startswith('"') and text.endswith('"')))):
+            text = text[1:-1]
+
+        return text
+
     def __getUrlTag(self, url, comment):
         return self.__generateHtmlTag(
-                url.strip(),
-                self.parser.parseLinkMarkup(comment.strip()))
+            url.strip(),
+            self.parser.parseLinkMarkup(comment.strip()))
 
     def __generateHtmlTag(self, url, comment):
         if (not is_url(url) and
@@ -97,9 +110,11 @@ class LinkToken(object):
 
         if textStrip.startswith(AttachToken.attachString):
             # Ссылка на прикрепление
-            url = textStrip.replace(
-                AttachToken.attachString, PAGE_ATTACH_DIR + "/", 1)
-            comment = textStrip.replace(AttachToken.attachString, "")
+            attach_name = self.__removeQuotes(
+                    textStrip[len(AttachToken.attachString):])
+
+            url = '{}/{}'.format(PAGE_ATTACH_DIR, attach_name)
+            comment = attach_name
             return '<a href="{url}">{comment}</a>'.format(url=url, comment=comment)
         elif (textStrip.startswith("#") and
                 self.parser.page is not None and

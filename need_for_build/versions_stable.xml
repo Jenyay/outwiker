@@ -1,52 +1,32 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <versions>
-	<version number="3.0.0" date="13.05.2021">
-		<changes>
-			<change>Now you can use any symbols in the notes title.</change>
-			<change>New toolbars.</change>
-			<change>New design for popup window when clicking on the tag.</change>
-			<change>New interface to select notes icons.</change>
-			<change>New GUI displayed if the notes tree is not currently open.</change>
-			<change>New GUI when selecting the root of the notes tree.</change>
-			<change>New GUI to show a page with unknown type.</change>
-			<change>Add the ability to select notes position in the notes list.</change>
-			<change>Add watching for attached files for selected page.</change>
-			<change>Improved overwrite attached files dialog.</change>
-			<change>Other interface improvements.</change>
-			<change>Add German localization.</change>
-			<change>New commands for wiki pages to change text color and apply custom styles.</change>
-			<change>Add comments to wiki notation.</change>
-			<change>Added a new $title variable for the page style files .</change>
-			<change>Add a new page style "rifle_green_and_red".</change>
-			<change>Change the storage format for certain properties of the notes tree pages.</change>
-			<change>Change the way of storing standard icons in notes.</change>
-			<change>New application installer.</change>
-			<change>Change plug-ins format.</change>
-			<change>Migrate to Python 3.x and wxPython 4.1.</change>
-		</changes>
+    <version number="3.2.0" date="">
+        <changes>
+            <change>Added the ability to create folders in attached files.</change>
+            <change>Added the ability to navigate to subfolders in the attachments panel.</change>
+            <change>Added the ability to insert links to files in attached subfolders.</change>
+            <change>Implemented highlighting links to attached files on wiki pages.</change>
+        </changes>
 
-		<changes lang="ru">
-			<change>Теперь в именах заметок можно использовать любые символы.</change>
-			<change>Переделаны панели инструментов.</change>
-			<change>Новый интерфейс выбора значков заметок.</change>
-			<change>Новый интерфейс всплывающего окна при клике на тег.</change>
-			<change>Новый интерфейс при выборе корня дерева заметок.</change>
-			<change>Новый интерфейс для отображения страниц неизвестного типа.</change>
-			<change>Добавлена возможность выбора положения новой заметки в списке заметок.</change>
-			<change>Добавлена настройка для шаблона имени новых страниц.</change>
-			<change>Улучшен диалог с вопросом о перезаписи прикрепленных файлов.</change>
-			<change>Другие улучшения в интерфейсе.</change>
-			<change>Новые викикоманды для раскраски текста и применения пользовательских стилей.</change>
-			<change>Добавлена возможность вставки комментариев в викинотации.</change>
-			<change>Добавлено слежение за прикрепленными файлами для текущей страницы.</change>
-			<change>В файлы стилей страниц добавлена новая переменная $title.</change>
-			<change>Добавлен новый стиль страниц "rifle_green_and_red".</change>
-			<change>Добавлена немецкая локализация.</change>
-			<change>Изменение формата хранения некоторых настроек страниц в дереве заметок.</change>
-			<change>Изменен способ хранения стандартных значков в заметках.</change>
-			<change>Переделан инсталлятор программы.</change>
-			<change>Изменен формат плагинов.</change>
-			<change>Переход на Python 3.x и wxPython 4.1.</change>
-		</changes>
-	</version>
+        <changes lang="ru">
+            <change>Добавлена возможность создания папок в прикрепленных файлах.</change>
+            <change>Добавлена возможность перехода во вложенные папки на панели прикрепленных файлов.</change>
+            <change>Добавлена возможность вставки ссылок на файлы во вложенных прикрепленных папках.</change>
+            <change>Реализована подсветка ссылок на прикрепленные файлы на викистраницах.</change>
+        </changes>
+    </version>
+
+    <version number="3.1.0.900" date="2022-04-16">
+        <changes>
+            <change>Improve dialog for creation notes and edit notes properties.</change>
+            <change>Improve work with hotkeys.</change>
+            <change>Improve attachments panel GUI.</change>
+        </changes>
+
+        <changes lang="ru">
+            <change>Упрощение диалога создания / редактирования свойств страницы.</change>
+            <change>Улучшена работа с горячими клавишами.</change>
+            <change>Улучшения в интерфейсе панели с прикрепленными файлами.</change>
+        </changes>
+    </version>
 </versions>

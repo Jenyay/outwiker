@@ -14,7 +14,8 @@ class Formatter(EntitySubstitution):
 
     For HTML documents:
      * 'html' - HTML entity substitution for generic HTML documents. (default)
-     * 'html5' - HTML entity substitution for HTML5 documents.
+     * 'html5' - HTML entity substitution for HTML5 documents, as
+                 well as some optimizations in the way tags are rendered.
      * 'minimal' - Only make the substitutions necessary to guarantee
                    valid HTML.
      * None - Do not perform any substitution. This will be faster
@@ -48,6 +49,7 @@ class Formatter(EntitySubstitution):
     def __init__(
             self, language=None, entity_substitution=None,
             void_element_close_prefix='/', cdata_containing_tags=None,
+            empty_attributes_are_booleans=False,
     ):
         """Constructor.
 
@@ -64,6 +66,9 @@ class Formatter(EntitySubstitution):
            as containing CDATA in this dialect. For example, in HTML,
            <script> and <style> tags are defined as containing CDATA,
            and their contents should not be formatted.
+        :param blank_attributes_are_booleans: Render attributes whose value
+            is the empty string as HTML-style boolean attributes.
+            (Attributes whose value is None are always rendered this way.)
         """
         self.language = language
         self.entity_substitution = entity_substitution
@@ -71,7 +76,8 @@ class Formatter(EntitySubstitution):
         self.cdata_containing_tags = self._default(
             language, cdata_containing_tags, 'cdata_containing_tags'
         )
-            
+        self.empty_attributes_are_booleans=empty_attributes_are_booleans
+        
     def substitute(self, ns):
         """Process a string that needs to undergo entity substitution.
         This may be a string encountered in an attribute value or as
@@ -107,9 +113,17 @@ class Formatter(EntitySubstitution):
         By default, attributes are sorted alphabetically. This makes
         behavior consistent between Python 2 and Python 3, and preserves
         backwards compatibility with older versions of Beautiful Soup.
-        """
-        return sorted(tag.attrs.items())
 
+        If `empty_boolean_attributes` is True, then attributes whose
+        values are set to the empty string will be treated as boolean
+        attributes.
+        """
+        if tag.attrs is None:
+            return []
+        return sorted(
+            (k, (None if self.empty_attributes_are_booleans and v == '' else v))
+            for k, v in list(tag.attrs.items())
+        )
    
 class HTMLFormatter(Formatter):
     """A generic Formatter for HTML."""
@@ -131,7 +145,8 @@ HTMLFormatter.REGISTRY['html'] = HTMLFormatter(
 )
 HTMLFormatter.REGISTRY["html5"] = HTMLFormatter(
     entity_substitution=EntitySubstitution.substitute_html,
-    void_element_close_prefix = None
+    void_element_close_prefix=None,
+    empty_attributes_are_booleans=True,
 )
 HTMLFormatter.REGISTRY["minimal"] = HTMLFormatter(
     entity_substitution=EntitySubstitution.substitute_xml

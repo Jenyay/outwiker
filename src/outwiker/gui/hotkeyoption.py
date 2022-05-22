@@ -9,8 +9,11 @@ class HotKeyOption (BaseOption):
         """
         Получить значение. В производных классах этот метод переопределяется
         """
-        return HotKeyParser.fromString(self.config.get(self.section,
-                                                       self.param))
+        if self.config.has_option(self.section, self.param):
+            return HotKeyParser.fromString(self.config.get(self.section,
+                                                           self.param))
+        else:
+            raise ValueError('Use default hotkey')
 
     def _prepareToWrite(self, val) -> str:
-        return u"" if val is None else HotKeyParser.toString(val)
+        return '' if val is None else HotKeyParser.toString(val)

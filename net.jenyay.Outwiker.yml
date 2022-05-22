@@ -24,7 +24,7 @@ modules:
         - --share=network
     build-commands:
       # - "pip3 install --prefix=${FLATPAK_DEST} -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-18.04 wxPython==4.1.1"
-      - "pip3 install --prefix=${FLATPAK_DEST} wxPython==4.1.1 Pillow==8.1.2 cyhunspell==2.0.2 idna>=2.10 pyparsing==2.4.7 psutil==5.8.0"
+      - "pip3 install --prefix=${FLATPAK_DEST} wxPython==4.1.1 Pillow==8.2.0 cyhunspell==2.0.2 idna>=2.10 pyparsing==2.4.7 psutil==5.8.0"
       - make -f Makefile.flatpak install
   # - name: libjpeg
   #   buildsystem: autotools

@@ -23,7 +23,7 @@ class TestedDialog(wx.Dialog):
         return super(TestedDialog, self).ShowModal()
 
 
-class TestedStandardDialogMixin(object):
+class TestedStandardDialogMixin:
     def __init__(self, *args, **kwargs):
         self._testedValue = None
         super().__init__(*args, **kwargs)

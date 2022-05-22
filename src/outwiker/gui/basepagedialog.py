@@ -7,8 +7,8 @@ from outwiker.core.events import (PageDialogInitParams,
 from outwiker.gui.guiconfig import PageDialogConfig
 from outwiker.gui.pagedialogpanels.generalpanel import (GeneralPanel,
                                                         GeneralController)
-from outwiker.gui.pagedialogpanels.iconspanel import (IconsPanel,
-                                                      IconsController)
+# from outwiker.gui.pagedialogpanels.iconspanel import (IconsPanel,
+#                                                       IconsController)
 from outwiker.gui.testeddialog import TestedDialog
 
 
@@ -116,9 +116,9 @@ class BasePageDialog (TestedDialog):
     def generalPanel(self):
         return self._generalPanel
 
-    @property
-    def iconsPanel(self):
-        return self._iconsPanel
+    # @property
+    # def iconsPanel(self):
+    #     return self._iconsPanel
 
     @property
     def appearancePanel(self):
@@ -128,20 +128,20 @@ class BasePageDialog (TestedDialog):
         parent = self.getPanelsParent()
 
         self._generalPanel = GeneralPanel(parent)
-        self.addPanel(self._generalPanel, _(u'General'))
+        self.addPanel(self._generalPanel, _('General'))
 
-        self._iconsPanel = IconsPanel(parent)
-        self.addPanel(self._iconsPanel, _(u'Icon'))
+        # self._iconsPanel = IconsPanel(parent)
+        # self.addPanel(self._iconsPanel, _(u'Icon'))
 
         self._generalController = GeneralController(self._generalPanel,
                                                     self._application,
                                                     self)
         self.addController(self._generalController)
 
-        self._iconsController = IconsController(self._iconsPanel,
-                                                self._application,
-                                                self)
-        self.addController(self._iconsController)
+        # self._iconsController = IconsController(self._iconsPanel,
+        #                                         self._application,
+        #                                         self)
+        # self.addController(self._iconsController)
 
     def _do_layout(self):
         mainSizer = wx.FlexGridSizer(cols=1)

@@ -46,7 +46,8 @@ APP_DATA_DISABLE_MINIMIZING = u'__disableMinimizing'
 APP_DATA_DISABLE_PLUGINS = '__disablePlugins'
 
 ICONS_STD_PREFIX = u'__std_'
-ICONS_EXTENSIONS = [u'png', u'jpg', u'jpeg', u'gif', u'bmp', u'ico']
+ICONS_EXTENSIONS = ['png', 'jpg', 'jpeg', 'gif', 'bmp', 'ico']
+IMAGES_EXTENSIONS = ['png', 'jpg', 'jpeg', 'gif', 'bmp', 'webp']
 ICON_DEFAULT = ICONS_STD_PREFIX + u'_default.png'
 RECENT_ICONS_SECTION = u'RecentIcons'
 RECENT_ICONS_PARAM_NAME = u'icon'

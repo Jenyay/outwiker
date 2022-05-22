@@ -54,25 +54,18 @@ class AboutDialog(TestedDialog):
             URL=_(u"mailto:jenyay.ilin@gmail.com")
         )
 
-        self.facebook = HyperLinkCtrl(
-            self.contactsPane,
-            -1,
-            label=_(u"Facebook page"),
-            URL=_(u"https://www.facebook.com/outwiker")
-        )
-
         self.twitter = HyperLinkCtrl(
             self.contactsPane,
             -1,
-            label=_(u"Twitter"),
-            URL=_(u"https://twitter.com/OutWiker")
+            label=_("Twitter"),
+            URL=_("https://twitter.com/OutWiker")
         )
 
         self.vkontakte = HyperLinkCtrl(
             self.contactsPane,
             -1,
-            label=_(u"Vkontakte group"),
-            URL=_(u"https://vk.com/outwiker")
+            label=_("Vkontakte group"),
+            URL=_("https://vk.com/outwiker")
         )
 
         self.okButton = wx.Button(self, wx.ID_OK, "")
@@ -167,9 +160,6 @@ class AboutDialog(TestedDialog):
         contacts_tab_sizer = wx.FlexGridSizer(cols=1)
         contacts_tab_sizer.AddGrowableCol(0)
         contacts_tab_sizer.Add(self.email,
-                               flag=wx.ALL | wx.ALIGN_CENTER,
-                               border=2)
-        contacts_tab_sizer.Add(self.facebook,
                                flag=wx.ALL | wx.ALIGN_CENTER,
                                border=2)
         contacts_tab_sizer.Add(self.twitter,

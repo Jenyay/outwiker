@@ -5,7 +5,7 @@ import re
 from typing import List, Tuple, Dict
 
 from pyparsing import (Regex, Forward, Literal,
-                       LineStart, LineEnd, NoMatch,
+                       LineStart, LineEnd, NoMatch, AtLineStart,
                        SkipTo)
 
 from outwiker.core.defines import (STYLES_BLOCK_FOLDER_NAME,
@@ -220,13 +220,13 @@ class WikiStyleBlock(WikiStyleBase):
         return 'style_block'
 
     def _getBeginToken(self):
-        return (LineStart()
-                + Regex(r'%(?P<params>[a-zA-Z_#][\w\s."\'_=:;#(),-]+?)\s*%[ \t]*')
+        return (AtLineStart(
+                Regex(r'%(?P<params>[a-zA-Z_#][\w\s."\'_=:;#(),-]+?)\s*%[ \t]*')
                 + LineEnd().suppress()
-                )
+                ))
 
     def _getEndToken(self):
-        return LineStart() + Regex(r'%%[ \t]*') + LineEnd()
+        return AtLineStart(Regex(r'%%[ \t]*') + LineEnd())
 
     def _getTag(self):
         return 'div'

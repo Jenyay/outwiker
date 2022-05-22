@@ -21,18 +21,15 @@ class ThumbDialog(wx.Dialog):
         self._page = page
         self._config = ThumbConfig(application.config)
 
-        self.SetTitle(_(u"Gallery"))
+        self.SetTitle(_("Gallery"))
 
         self.Center(wx.BOTH)
-
-        self.ALL_BUTTON = wx.NewId()
-        self.CLEAR_BUTTON = wx.NewId()
 
         # Контролы для выбора количества столбцов
         self.columnsLabel = wx.StaticText(
             self,
             -1,
-            _(u"Columns count (0 - without table)"))
+            _("Columns count (0 - without table)"))
         self.columns = wx.SpinCtrl(self,
                                    min=0,
                                    max=self._config.COLUMNS_COUNT_MAX)
@@ -42,7 +39,7 @@ class ThumbDialog(wx.Dialog):
         self.thumbSizeLabel = wx.StaticText(
             self,
             -1,
-            _(u"Thumbnails size (0 - default size)"))
+            _("Thumbnails size (0 - default size)"))
         self.thumbSizeCtrl = wx.SpinCtrl(self,
                                          min=0,
                                          max=self._config.THUMB_SIZE_MAX)
@@ -51,15 +48,11 @@ class ThumbDialog(wx.Dialog):
         # Контролы для выбора прикрепленных файлов
         self.attachFiles = wx.CheckListBox(self)
         self.attachFiles.SetMinSize((-1, 100))
-        self.allFilesButton = wx.Button(self,
-                                        self.ALL_BUTTON,
-                                        _(u"All Images"))
-        self.clearFilesButton = wx.Button(self,
-                                          self.CLEAR_BUTTON,
-                                          _(u"Clear"))
+        self.allFilesButton = wx.Button(self, wx.ID_ANY, _("All Images"))
+        self.clearFilesButton = wx.Button(self, wx.ID_ANY, _("Clear"))
 
-        self.Bind(wx.EVT_BUTTON, self._onAll, id=self.ALL_BUTTON)
-        self.Bind(wx.EVT_BUTTON, self._onClear, id=self.CLEAR_BUTTON)
+        self.Bind(wx.EVT_BUTTON, self._onAll, self.allFilesButton)
+        self.Bind(wx.EVT_BUTTON, self._onClear, self.clearFilesButton)
         self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
 
         self._fillAttaches()
@@ -74,7 +67,6 @@ class ThumbDialog(wx.Dialog):
         self.LoadState()
 
     def _onAll(self, event):
-        # self.attachFiles.SetChecked(list(range(self.attachFiles.GetCount())))
         self.attachFiles.SetCheckedItems(range(self.attachFiles.GetCount()))
 
     def _onClear(self, event):

@@ -34,7 +34,9 @@ class HotKeysPanel(BasePrefPanel):
             return
 
         newhotkey = event.hotkey
-        oldActionStrId = self.__findConflict(newhotkey)
+        oldActionStrId = self.__findConflict(
+            newhotkey,
+            self._application.actionController.getArea(newActionStrId))
 
         if oldActionStrId is not None:
             newAction = self._application.actionController.getTitle(
@@ -42,13 +44,13 @@ class HotKeysPanel(BasePrefPanel):
             oldAction = self._application.actionController.getTitle(
                 oldActionStrId)
 
-            text = _(u'{hotkey} hotkey assigned for "{old}".\nAssign this hotkey for "{new}"?').format(
+            text = _('{hotkey} hotkey assigned for "{old}".\nAssign this hotkey for "{new}"?').format(
                 hotkey=newhotkey,
                 old=oldAction,
                 new=newAction)
 
             if (MessageBox(text,
-                           _(u'Hotkeys conflict'),
+                           _('Hotkeys conflict'),
                            wx.ICON_QUESTION | wx.YES | wx.NO) == wx.YES):
                 self.__hotkeys[oldActionStrId] = None
             else:
@@ -70,7 +72,7 @@ class HotKeysPanel(BasePrefPanel):
 
     def __createGui(self):
         mainSizer = wx.FlexGridSizer(cols=1)
-        mainSizer.AddGrowableRow(0)
+        mainSizer.AddGrowableRow(1)
         mainSizer.AddGrowableCol(0)
 
         # Список с именами actions
@@ -81,7 +83,7 @@ class HotKeysPanel(BasePrefPanel):
         filterSizer = wx.FlexGridSizer(cols=2)
         filterSizer.AddGrowableCol(1)
 
-        filterLabel = wx.StaticText(self, label=_(u'Search'))
+        filterLabel = wx.StaticText(self, label=_('Search'))
         self.__filterText = wx.TextCtrl(self)
 
         filterSizer.Add(filterLabel,
@@ -123,15 +125,15 @@ class HotKeysPanel(BasePrefPanel):
         self.__descriptionText.SetMinSize((-1, 75))
         self.__descriptionText.Disable()
 
+        mainSizer.Add(filterSizer, flag=wx.EXPAND | wx.ALL, border=2)
         mainSizer.Add(self.__actionsList, flag=wx.EXPAND | wx.ALL, border=2)
         mainSizer.Add(self.__descriptionText,
                       flag=wx.EXPAND | wx.ALL, border=2)
-        mainSizer.Add(filterSizer, flag=wx.EXPAND | wx.ALL, border=2)
         mainSizer.Add(hotkeySizer, flag=wx.EXPAND | wx.ALL, border=2)
 
         self.SetSizer(mainSizer)
 
-    def __findConflict(self, hotkey):
+    def __findConflict(self, hotkey, area: str):
         if hotkey is None or hotkey.isEmpty():
             return None
 
@@ -140,7 +142,8 @@ class HotKeysPanel(BasePrefPanel):
         for strid, hotkeyCurrent in self.__hotkeys.items():
             if stridCurrent == strid or hotkey is None:
                 continue
-            if hotkey == hotkeyCurrent:
+            if (hotkey == hotkeyCurrent and
+                    self._application.actionController.getArea(strid) == area):
                 return strid
 
         return None
@@ -154,15 +157,21 @@ class HotKeysPanel(BasePrefPanel):
         Заполнить словарь __hotkeys текущими значениями
         """
         actionController = self._application.actionController
-        strIdList = actionController.getActionsStrId()
+        strIdList = self.__getActionsStrId()
         for strid in strIdList:
             self.__hotkeys[strid] = actionController.getHotKey(strid)
+
+    def __getActionsStrId(self):
+        actionController = self._application.actionController
+        return [strid
+                for strid in actionController.getActionsStrId()
+                if not actionController.isHidden(strid)]
 
     def __onFilterEdit(self, event):
         self.__fillActionsList()
 
     def __onActionSelect(self, event):
-        self.__descriptionText.Value = u""
+        self.__descriptionText.Value = ''
 
         strid = event.GetClientData()
         if strid is not None:
@@ -176,9 +185,9 @@ class HotKeysPanel(BasePrefPanel):
         Заполнить список actions зарегистрированными действиями
         """
         actionController = self._application.actionController
-        strIdList = actionController.getActionsStrId()
+        strIdList = self.__getActionsStrId()
 
-        # Список кортежей(заголовок, strid)
+        # Список кортежей (заголовок, strid)
         # Отбросим те actions, что не удовлетворяют фильтру
         titleStridList = [
             (actionController.getTitle(strid), strid)
@@ -201,8 +210,5 @@ class HotKeysPanel(BasePrefPanel):
                 filterText in action.description.lower())
 
     def Save(self):
-        actionController = self._application.actionController
-
-        for strid, hotkey in self.__hotkeys.items():
-            if actionController.getHotKey(strid) != hotkey:
-                actionController.setHotKey(strid, hotkey, True)
+        newHotkeys = list(self.__hotkeys.items())
+        self._application.actionController.changeHotkeys(newHotkeys)

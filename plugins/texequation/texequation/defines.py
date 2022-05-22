@@ -1,4 +1,4 @@
 # -*- coding: utf-8 -*-
 
-KATEX_DIR_NAME = u'katex-0.13.1'
+KATEX_DIR_NAME = 'katex-0.15.2'
 TOOLS_PANE_NAME = 'TeXEquation'

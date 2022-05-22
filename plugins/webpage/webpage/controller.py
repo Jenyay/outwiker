@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import logging
 import os
 import os.path
 import sys
@@ -25,7 +26,9 @@ from .htmlprocessors.disablescripts import disableScripts
 from .htmlprocessors.maxieversion import maxIEVersion
 
 
-class Controller(object):
+logger = logging.getLogger('webpage')
+
+class Controller:
     """General plugin controller."""
 
     def __init__(self, plugin, application):
@@ -101,9 +104,10 @@ class Controller(object):
 
     def _correctSysPath(self):
         cmd_folder = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                                  u'libs')
+                                  'libs')
 
         if cmd_folder not in sys.path:
+            logger.debug('Add path to sys.path: {}'.format(cmd_folder))
             sys.path.insert(0, cmd_folder)
 
     def _onPageDialogPageFactoriesNeeded(self, page, params):
@@ -138,6 +142,6 @@ class Controller(object):
         soup = BeautifulSoup(page.content, "html.parser")
         params = PrepareHtmlEventParams(self._application.selectedPage, soup)
         self._application.getEvent(onPrepareHtmlEventString)(params)
-        html = params.soup.prettify()
+        html = params.soup.decode()
 
         return html

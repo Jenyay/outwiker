@@ -5,7 +5,7 @@ Classes to recognize href URI for HtmlRenders
 
 from abc import ABCMeta, abstractmethod
 from pathlib import Path
-from typing import Union
+from typing import Optional
 from urllib.parse import unquote
 import os
 
@@ -35,7 +35,7 @@ class Recognizer(metaclass=ABCMeta):
 
         return basepath
 
-    def recognize(self, href: Union[str, None]) -> Union[str, None]:
+    def recognize(self, href: Optional[str]) -> Optional[str]:
         if href is None:
             return None
 
@@ -59,7 +59,7 @@ class Recognizer(metaclass=ABCMeta):
         return href
 
     @abstractmethod
-    def _recognize(self, href: str) -> str:
+    def _recognize(self, href: str) -> Optional[str]:
         pass
 
 
@@ -72,7 +72,7 @@ class URLRecognizer(Recognizer):
     def _prepareHref(self, href: str) -> str:
         return href
 
-    def _recognize(self, href: str) -> str:
+    def _recognize(self, href: str) -> Optional[str]:
         isUrl = (href.lower().startswith("http:") or
                  href.lower().startswith("https:") or
                  href.lower().startswith("ftp:") or
@@ -84,7 +84,7 @@ class URLRecognizer(Recognizer):
 # Anchor recognizers
 
 class AnchorRecognizerBase(Recognizer, metaclass=ABCMeta):
-    def _recognizeAnchor(self, href: str, basepath: str) -> Union[str, None]:
+    def _recognizeAnchor(self, href: str, basepath: str) -> Optional[str]:
         anchor = None
         if (href.startswith(basepath) and
                 len(href) > len(basepath) and
@@ -104,7 +104,7 @@ class AnchorRecognizerIE(AnchorRecognizerBase):
     For Internet Explorer engine.
     '''
 
-    def _recognize(self, href: str) -> str:
+    def _recognize(self, href: str) -> Optional[str]:
         if href.startswith('/'):
             href = href[1:]
 
@@ -117,7 +117,7 @@ class AnchorRecognizerWebKit(AnchorRecognizerBase):
     For WebKit engine.
     '''
 
-    def _recognize(self, href: str) -> Union[str, None]:
+    def _recognize(self, href: str) -> Optional[str]:
         basepath = self._basepath
         if not basepath.endswith('/'):
             basepath += '/'
@@ -128,10 +128,10 @@ class AnchorRecognizerWebKit(AnchorRecognizerBase):
 # File recognizers
 
 class FileRecognizerBase(Recognizer):
-    def _recognize(self, href: str) -> Union[str, None]:
+    def _recognize(self, href: str) -> Optional[str]:
         return self._recognizeFile(href, self._basepath)
 
-    def _recognizeFile(self, href: str, basepath_str: str) -> Union[str, None]:
+    def _recognizeFile(self, href: str, basepath_str: str) -> Optional[str]:
         try:
             href_path_abs = Path(href)
             # Check absolute path

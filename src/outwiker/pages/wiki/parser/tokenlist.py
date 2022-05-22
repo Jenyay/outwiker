@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from pyparsing import Regex, OneOrMore, LineStart, Combine, Literal, Word, Keyword, LineEnd
+from pyparsing import Regex, OneOrMore, Combine
 
 from outwiker.pages.wiki.parser.utils import noConvert
 from outwiker.pages.wiki.parser.tokenmultilineblock import MultilineBlockFactory
@@ -135,7 +135,7 @@ class ListToken(object):
         item = Combine(Regex(r'^(?:(?:\*+)|(?:#+))\s*', re.MULTILINE) +
                        (self._blockToken | text) +
                        line_break).leaveWhitespace()
-        fullList = OneOrMore(item).setParseAction(self.__convertList)("list")
+        fullList = OneOrMore(item).setParseAction(self.__convertList).ignoreWhitespace(False)("list")
 
         return fullList
 

@@ -1,35 +1,42 @@
 История версий
 ==============
 
-Текущая разрабатываемая версия
-------------------------------
+3.1.0 (май 2022)
+~~~~~~~~~~~~~~~~
 
-3.0.0
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-* Now you can use any symbols in the notes title.
-* New toolbars.
-* New design for popup window when clicking on the tag.
-* New interface to select notes icons.
-* New GUI displayed if the notes tree is not currently open.
-* New GUI when selecting the root of the notes tree.
-* New GUI to show a page with unknown type.
-* Add the ability to select notes position in the notes list.
-* Add watching for attached files for selected page.
-* Other interface improvements.
-* Add German localization.
-* New commands for wiki pages to change text color and apply custom styles.
-* Add comments to wiki notation.
-* Added a new $title variable for the page style files .
-* Add a new page style "rifle_green_and_red".
-* Change the storage format for certain properties of the notes tree pages.
-* Change the way of storing standard icons in notes.
-* Change plug-ins format.
-* Migrate to Python 3.x and wxPython 4.0.
+* Упрощение диалога создания / редактирования свойств страницы.
+* Улучшена работа с горячими клавишами.
+* Улучшения в интерфейсе панели с прикрепленными файлами.
 
 
 Предыдущие версии
 -----------------
+
+3.0.0 (май 2021)
+~~~~~~~~~~~~~~~~
+
+* Теперь в именах заметок можно использовать любые символы.
+* Переделаны панели инструментов.
+* Новый интерфейс выбора значков заметок.
+* Новый интерфейс всплывающего окна при клике на тег.
+* Новый интерфейс при выборе корня дерева заметок.
+* Новый интерфейс для отображения страниц неизвестного типа.
+* Добавлена возможность выбора положения новой заметки в списке заметок.
+* Добавлена настройка для шаблона имени новых страниц.
+* Улучшен диалог с вопросом о перезаписи прикрепленных файлов.
+* Другие улучшения в интерфейсе.
+* Новые викикоманды для раскраски текста и применения пользовательских стилей.
+* Добавлена возможность вставки комментариев в викинотации.
+* Добавлено слежение за прикрепленными файлами для текущей страницы.
+* В файлы стилей страниц добавлена новая переменная $title.
+* Добавлен новый стиль страниц "rifle_green_and_red".
+* Добавлена немецкая локализация.
+* Изменение формата хранения некоторых настроек страниц в дереве заметок.
+* Изменен способ хранения стандартных значков в заметках.
+* Переделан инсталлятор программы.
+* Изменен формат плагинов.
+* Переход на Python 3.x и wxPython 4.1.
+
 
 2.0.0 (июнь 2017)
 ~~~~~~~~~~~~~~~~~

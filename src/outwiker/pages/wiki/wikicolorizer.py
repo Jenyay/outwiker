@@ -12,12 +12,13 @@ from .parser.tokennoformat import NoFormatFactory
 from .parser.tokenpreformat import PreFormatFactory
 from .parser.tokentext import TextFactory
 from .parser.tokencomment import CommentFactory
+from .parser.tokenattach import AttachFactory
 
 from outwiker.gui.texteditorhelper import TextEditorHelper
 from outwiker.gui.stylinginfo import StylingInfo
 
 
-class WikiColorizer (object):
+class WikiColorizer:
     def __init__(self, editor, colorizeSyntax, enableSpellChecking, runEvent):
         self._editor = editor
         self._helper = TextEditorHelper()
@@ -47,10 +48,13 @@ class WikiColorizer (object):
             None).setParseAction(lambda s, l, t: None)
         self.comment = CommentFactory.make(
             None).setParseAction(lambda s, l, t: None)
+        self.attachment = AttachFactory.make(
+            None).setParseAction(lambda s, l, t: None)
 
         if colorizeSyntax:
             self.colorParser = (
                 self.url |
+                self.attachment |
                 self.text |
                 self.linebreak |
                 self.link |
@@ -66,6 +70,7 @@ class WikiColorizer (object):
 
             self.insideBlockParser = (
                 self.url |
+                self.attachment |
                 self.text |
                 self.linebreak |
                 self.link |
@@ -192,6 +197,12 @@ class WikiColorizer (object):
                 if self._enableSpellChecking:
                     self._checkSpell(text, pos_start, pos_end,
                                      spellStatusFlags)
+
+            elif tokenname == "attach":
+                self._helper.setStyle(stylelist,
+                                      self._editor.STYLE_ATTACHMENT_ID,
+                                      bytepos_start,
+                                      bytepos_end)
 
             elif tokenname == "link":
                 self._helper.addStyle(stylelist,

@@ -180,9 +180,19 @@ class LXMLTreeBuilderForXML(TreeBuilder):
             yield (markup.encode("utf8"), "utf8",
                    document_declared_encoding, False)
 
-        try_encodings = [user_specified_encoding, document_declared_encoding]
+        # This was provided by the end-user; treat it as a known
+        # definite encoding per the algorithm laid out in the HTML5
+        # spec.  (See the EncodingDetector class for details.)
+        known_definite_encodings = [user_specified_encoding]
+
+        # This was found in the document; treat it as a slightly lower-priority
+        # user encoding.
+        user_encodings = [document_declared_encoding]
         detector = EncodingDetector(
-            markup, try_encodings, is_html, exclude_encodings)
+            markup, known_definite_encodings=known_definite_encodings,
+            user_encodings=user_encodings, is_html=is_html,
+            exclude_encodings=exclude_encodings
+        )
         for encoding in detector.encodings:
             yield (detector.markup, encoding, document_declared_encoding, False)
 

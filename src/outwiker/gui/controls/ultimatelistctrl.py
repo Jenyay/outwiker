@@ -4544,7 +4544,7 @@ class UltimateListLineData(object):
                 # We got a checkbox-type item
                 ix, iy = self._owner.GetCheckboxImageSize()
                 checked = item.IsChecked()
-                self._owner.DrawCheckbox(dc, xOld, y + (height-iy+1)/2, item.GetKind(), checked, enabled)
+                self._owner.DrawCheckbox(dc, xOld, y + (height-iy+1)//2, item.GetKind(), checked, enabled)
                 xOld += ix
                 width -= ix
 
@@ -4555,7 +4555,7 @@ class UltimateListLineData(object):
                 for img in images:
 
                     ix, iy = self._owner.GetImageSize([img])
-                    self._owner.DrawImage(img, dc, xOld, y + (height-iy)/2, enabled)
+                    self._owner.DrawImage(img, dc, xOld, y + (height-iy)//2, enabled)
 
                     xOld += ix
                     width -= ix

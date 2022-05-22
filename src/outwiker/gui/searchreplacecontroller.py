@@ -4,7 +4,7 @@ import wx
 
 
 class SearchReplaceController (object):
-    _recentSearch = u""
+    _recentSearch = ''
 
     def __init__(self, searchPanel, editor):
         """

@@ -1,19 +1,21 @@
 # -*- coding: utf-8 -*-
 
+import locale
+import logging
 import os
 import os.path
-import logging
+import sys
 from gettext import NullTranslations
-import locale
 
 import wx
 
-from outwiker.core.commands import registerActions
+from outwiker.core.i18n import initLocale
 from outwiker.core.logredirector import LogRedirector
 from outwiker.core.system import getPluginsDirList
 from outwiker.gui.actioncontroller import ActionController
 from outwiker.gui.guiconfig import TrayConfig
 from outwiker.gui.mainwindow import MainWindow
+from outwiker.gui.polyaction import PolyAction
 
 
 class OutWikerApplication(wx.App):
@@ -23,13 +25,24 @@ class OutWikerApplication(wx.App):
 
     def __init__(self, application):
         super().__init__()
-        # Fix a problem with Python 3.8 and wxPython 4.1
-        locale.setlocale(locale.LC_ALL, '')
 
-        self.logFileName = u"outwiker.log"
+        self.logFileName = 'outwiker.log'
         self._application = application
-
         self.use_fake_html_render = False
+
+        self._locale = initLocale(self._application.config)
+        self._initLocale()
+
+    def _initLocale(self):
+        # Fix a locale problem with Python 3.8 and wxPython 4.1
+        # Overwrite InitLocale from the wx.App class
+        locale.setlocale(locale.LC_ALL, '')
+        if sys.platform.startswith('win'):
+            # Very dirty hack
+            try:
+                wx.Locale.GetInfo(wx.LOCALE_DECIMAL_POINT)
+            except Exception:
+                locale.setlocale(locale.LC_ALL, 'C')
 
     def OnInit(self):
         self.Bind(wx.EVT_QUERY_END_SESSION, self._onEndSession)
@@ -37,9 +50,7 @@ class OutWikerApplication(wx.App):
         return True
 
     def initMainWindow(self):
-        # Fix a problem with Python 3.8 and wxPython 4.1
-        locale.setlocale(locale.LC_ALL, '')
-
+        self._initLocale()
         self.mainWnd = MainWindow(self._application)
         self.SetTopWindow(self.mainWnd)
 
@@ -47,7 +58,7 @@ class OutWikerApplication(wx.App):
         self._application.actionController = ActionController(
             self.mainWnd, self._application.config)
 
-        registerActions(self._application)
+        self._registerActions(self._application)
         self.mainWnd.createGui()
 
     def destroyMainWindow(self):
@@ -103,3 +114,31 @@ class OutWikerApplication(wx.App):
     @property
     def application(self):
         return self._application
+
+    def _registerActions(self, application):
+        """
+        Зарегистрировать действия
+        """
+        # Действия, связанные с разными типами страниц
+        from outwiker.pages.html.htmlpage import HtmlPageFactory
+        HtmlPageFactory.registerActions(application)
+
+        from outwiker.pages.wiki.wikipage import WikiPageFactory
+        WikiPageFactory.registerActions(application)
+
+        actionController = application.actionController
+        from outwiker.gui.actionslist import actionsList, polyactionsList
+
+        # Register the normal actions
+        [actionController.register(item.action_type(application),
+                                   item.hotkey,
+                                   item.area,
+                                   item.hidden)
+         for item in actionsList]
+
+        # Register the polyactions
+        [actionController.register(PolyAction(application,
+                                              item.stringId,
+                                              item.title,
+                                              item.description),
+                                   item.hotkey) for item in polyactionsList]

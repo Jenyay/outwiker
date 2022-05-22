@@ -145,7 +145,6 @@ class BaseWikiPageView (BaseHtmlPanel):
         self._application.onPageModeChange -= self.onTabChanged
 
         for toolbar_info in self._toolbars:
-            # self.mainWindow.toolbars.updatePanesInfo()
             self.mainWindow.toolbars.destroyToolBar(toolbar_info[0])
 
         super().Clear()
@@ -282,7 +281,8 @@ class BaseWikiPageView (BaseHtmlPanel):
         assert index != wx.NOT_FOUND
 
         mainMenu.Remove(index)
-        self._application.mainWindow.menuController.removeMenu(self._getMenuId())
+        self._application.mainWindow.menuController.removeMenu(
+            self._getMenuId())
 
     def removeGui(self):
         super(BaseWikiPageView, self).removeGui()

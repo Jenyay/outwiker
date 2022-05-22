@@ -14,6 +14,7 @@ class BaseFileIcons(object, metaclass=ABCMeta):
     def __init__(self):
         self.DEFAULT_FILE_ICON = 0
         self.FOLDER_ICON = 1
+        self.GO_TO_PARENT_ICON = 2
 
         self._imageList = wx.ImageList(16, 16)
 
@@ -29,6 +30,9 @@ class BaseFileIcons(object, metaclass=ABCMeta):
         self._imageList.Add(
             wx.Bitmap(getBuiltinImagePath("folder.png"), wx.BITMAP_TYPE_ANY))
 
+        self._imageList.Add(
+            wx.Bitmap(getBuiltinImagePath("arrow_go_to_parent.png"), wx.BITMAP_TYPE_ANY))
+
     def getFileImage(self, filepath):
         if self.imageListCount == 0:
             self.initialize()
@@ -41,6 +45,9 @@ class BaseFileIcons(object, metaclass=ABCMeta):
 
     @property
     def imageList(self):
+        if self.imageListCount == 0:
+            self.initialize()
+
         return self._imageList
 
     def clear(self):

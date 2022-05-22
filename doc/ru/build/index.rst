@@ -8,7 +8,7 @@
    sources_get
    sources_struct
    tools
-   fabfile
+   invoke
    build
    virtual
    test

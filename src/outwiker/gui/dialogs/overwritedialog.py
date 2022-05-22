@@ -11,13 +11,13 @@ from outwiker.gui.testeddialog import TestedDialog
 
 
 class OverwriteDialog(TestedDialog):
+    ID_OVERWRITE = 1
+    ID_SKIP = 2
+
     def __init__(self, parent):
         super().__init__(parent)
         self._createControls()
         self._do_layout()
-
-        self.ID_OVERWRITE = 1
-        self.ID_SKIP = 2
 
         self.SetTitle(_("Overwrite Files"))
         self.overwrite.SetFocus()
@@ -34,6 +34,18 @@ class OverwriteDialog(TestedDialog):
 
         self.SetEscapeId(wx.ID_CANCEL)
         self.Center(wx.BOTH)
+
+    def setVisibleOverwriteAllButton(self, visible: bool):
+        self.overwriteAll.Show(visible)
+        self.Layout()
+
+    def setVisibleSkipButton(self, visible: bool):
+        self.skip.Show(visible)
+        self.Layout()
+
+    def setVisibleSkipAllButton(self, visible: bool):
+        self.skipAll.Show(visible)
+        self.Layout()
 
     def _createControls(self):
         self._createButtons()
@@ -134,7 +146,7 @@ class OverwriteDialog(TestedDialog):
                    old_file_stat: stat_result,
                    new_file_stat: stat_result):
         """
-        Показать диалог, если нужно спросить, что делать с файлов.
+        Показать диалог, если нужно спросить, что делать с файлом.
         Этот метод вызывается вместо Show/ShowModal.
         text - текст для сообщения в диалоге
         """

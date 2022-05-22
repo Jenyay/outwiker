@@ -3,9 +3,9 @@
 Необходимые классы для создания страниц с текстом
 """
 
+from outwiker.core.factory import PageFactory
 from outwiker.core.tree import WikiPage
 from outwiker.pages.text.textpanel import TextPanel
-from outwiker.core.factory import PageFactory
 
 
 class TextWikiPage (WikiPage):
@@ -18,7 +18,7 @@ class TextWikiPage (WikiPage):
 
     @staticmethod
     def getTypeString():
-        return u"text"
+        return "text"
 
 
 class TextPageFactory (PageFactory):
@@ -34,7 +34,7 @@ class TextPageFactory (PageFactory):
         """
         Название страницы, показываемое пользователю
         """
-        return _(u"Text Page")
+        return _("Text Page")
 
     def getPageView(self, parent, application):
         """

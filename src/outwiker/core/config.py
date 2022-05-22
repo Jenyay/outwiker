@@ -13,7 +13,7 @@ from outwiker.gui.stcstyle import StcStyle
 logger = logging.getLogger('outwiker.core.config')
 
 
-class Config(object):
+class Config:
     """
     Shell for configparser class
     """
@@ -47,6 +47,7 @@ class Config(object):
         self.getint = self._config.getint
         self.getfloat = self._config.getfloat
         self.has_section = self._config.has_section
+        self.has_option = self._config.has_option
 
     def _backup(self, fname, backup_fname):
         shutil.copyfile(self.fname, backup_fname)
@@ -127,7 +128,7 @@ class Config(object):
         return True if val.strip().lower() == "true" else False
 
 
-class BaseOption(object, metaclass=ABCMeta):
+class BaseOption(metaclass=ABCMeta):
     """
     Базовый класс для работы с отдельными записями конфига
     """
@@ -222,6 +223,7 @@ class BooleanOption(BaseOption):
     Булевская настройка.
     Элемент управления - wx.CheckBox
     """
+
     def _loadValue(self):
         """
         Получить значение. В производных классах этот метод переопределяется
@@ -233,6 +235,7 @@ class JSONOption(BaseOption):
     """
     Options to store object in JSON format
     """
+
     def _loadValue(self):
         return json.loads(self.config.get(self.section, self.param))
 

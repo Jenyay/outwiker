@@ -2,7 +2,7 @@
 
 import os.path
 import logging
-from typing import List
+from typing import List, Tuple
 
 import hunspell
 
@@ -27,12 +27,12 @@ class CyHunspellWrapper (object):
         logger.debug('Initialize HunspellWrapper spell checker')
 
         # Key - language (en_US, ru_RU etc),
-        # value - onstance of the HunSpell class
+        # value - instance of the HunSpell class
         self._checkers = {}
 
         # Index - number of the dictionary,
         # value - tuple: (key for self._checkers, path to .dic file)
-        self._customDicts = []
+        self._customDicts : List[Tuple[str, str]] = []
 
         dictsFinder = DictsFinder(folders)
 
@@ -70,7 +70,7 @@ class CyHunspellWrapper (object):
         dic_file = customDictPath
         aff_file = customDictPath[:-4] + '.aff'
 
-        key = (dic_name, customDictPath)
+        key = '{}:{}'.format(dic_name, customDictPath)
         if key in self._checkers:
             logger.debug('Dictionary already added: {}'.format(customDictPath))
             return

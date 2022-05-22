@@ -6,7 +6,7 @@ from .controller import Controller
 from .i18n import set_
 
 
-class PluginExport2Html (Plugin):
+class PluginExport2Html(Plugin):
     def __init__(self, application):
         """
         application - экземпляр класса core.application.ApplicationParams
@@ -24,11 +24,11 @@ class PluginExport2Html (Plugin):
 
     @property
     def name(self):
-        return u"Export2Html"
+        return "Export2Html"
 
     @property
     def description(self):
-        return _(u"Export pages to HTML")
+        return _("Export pages to HTML")
 
     def initialize(self):
         set_(self.gettext)
@@ -48,4 +48,4 @@ class PluginExport2Html (Plugin):
 
     @property
     def url(self):
-        return _(u"https://jenyay.net/Outwiker/Export2HtmlPluginEn")
+        return _("https://jenyay.net/Outwiker/Export2HtmlPluginEn")

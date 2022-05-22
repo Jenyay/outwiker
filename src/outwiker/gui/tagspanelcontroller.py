@@ -13,7 +13,7 @@ from outwiker.gui.guiconfig import TagsConfig
 from outwiker.core.commands import showError
 
 
-class TagsPanelController (object):
+class TagsPanelController:
     def __init__(self, tagsPanel, application):
         self.__tagsPanel = tagsPanel
         self.__application = application

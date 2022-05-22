@@ -28,15 +28,15 @@ class PluginWebPage (Plugin):
     ###################################################
     @property
     def name(self):
-        return u"WebPage"
+        return "WebPage"
 
     @property
     def description(self):
-        return _(u"Plug-in for downloading HTML pages from web")
+        return _("Plug-in for downloading HTML pages from web")
 
     @property
     def url(self):
-        return _(u"https://jenyay.net/Outwiker/WebPageEn")
+        return _("https://jenyay.net/Outwiker/WebPageEn")
 
     def initialize(self):
         set_(self.gettext)

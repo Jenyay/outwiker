@@ -41,6 +41,7 @@ class PageListForTagsCloud(PageList):
     '''
     Page list to use in the PageListPopup
     '''
+
     def __init__(self,
                  parent: wx.Window,
                  popupWindow: ResizablePopupWindow):

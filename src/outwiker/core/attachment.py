@@ -3,16 +3,19 @@
 import os
 import os.path
 import shutil
+from pathlib import Path
+from typing import Union
 
 from .defines import PAGE_ATTACH_DIR
 from .exceptions import ReadonlyException
 from .events import AttachListChangedParams
 
 
-class Attachment(object):
+class Attachment:
     """
     Класс для работы с прикрепленными файлами
     """
+
     def __init__(self, page):
         """
         page - страница, для которой интересуют прикрепленные файлы
@@ -38,15 +41,31 @@ class Attachment(object):
         Возвращает список прикрепленных файлов.
         Пути до файлов полные
         """
-        path = self.getAttachPath()
-        return [os.path.join(path, fname)
-                for fname in self.getAttachRelative()]
+        return self.getAttachFull()
 
-    def getAttachRelative(self, dirname="."):
+    def getAttachFull(self, subdir="."):
+        """
+        Возвращает список прикрепленных файлов.
+        Пути до файлов полные
+        """
+        path = self.getAttachPath()
+        return [os.path.normpath(os.path.join(path, subdir, fname))
+                for fname in self.getAttachRelative(subdir)]
+
+    def createSubdir(self, subdir: Union[str, Path]) -> Path:
+        if self.page.readonly:
+            raise ReadonlyException
+
+        root = self.getAttachPath(create=True)
+        subdir_path = Path(root, subdir)
+        subdir_path.mkdir(parents=True, exist_ok=True)
+        return subdir_path
+
+    def getAttachRelative(self, subdir="."):
         """
         Возвращает список прикрепленных файлов
-        (только имена файлов без путей относительно директории dirname).
-        dirname - поддиректория в PAGE_ATTACH_DIR,
+        (только имена файлов без путей относительно директории subdir).
+        subdir - поддиректория в PAGE_ATTACH_DIR,
         где хотим получить список файлов
         """
         path = self.getAttachPath()
@@ -54,19 +73,23 @@ class Attachment(object):
         if not os.path.exists(path):
             return []
 
-        fullpath = os.path.join(path, dirname)
+        fullpath = os.path.join(path, subdir)
 
         return os.listdir(fullpath)
 
-    def attach(self, files):
+    def attach(self, files, subdir='.'):
         """
         Прикрепить файлы к странице
         files -- список файлов (или папок), которые надо прикрепить
+        subdir -- вложенная директория в папку __attach
         """
         if self.page.readonly:
             raise ReadonlyException
 
-        attachPath = self.getAttachPath(True)
+        attachPath = os.path.join(self.getAttachPath(True), subdir)
+
+        if not os.path.exists(attachPath) or not os.path.isdir(attachPath):
+            raise IOError
 
         for name in files:
             if os.path.isdir(name):
@@ -104,6 +127,44 @@ class Attachment(object):
         self.page.updateDateTime()
         self.page.root.onAttachListChanged(self.page,
                                            AttachListChangedParams())
+
+    def fixCurrentSubdir(self):
+        """
+        Fix invalid attachment current subdir for the page.
+        Returns absolute path to attachment fixed directory
+        or None if __attach is not created.
+        """
+        root = os.path.abspath(self.getAttachPath(create=False))
+
+        # Check if root attach directory exists
+        if not self._dirExists(root):
+            if self.page.currentAttachSubdir != '.':
+                self.page.currentAttachSubdir = None
+            return None
+
+        current_subdir = self.page.currentAttachSubdir
+        current_path = os.path.join(root, current_subdir)
+
+        # Check if current attach subdir exists
+        if self._dirExists(current_path):
+            return current_path
+
+        # Find first existed parent directory
+        while current_subdir != '':
+            if self._dirExists(os.path.join(root, current_subdir)):
+                break
+            current_subdir = os.path.dirname(current_subdir)
+
+        # Walk to parent?
+        if current_subdir == '':
+            current_subdir = None
+
+        # Current page must be fixed
+        self.page.currentAttachSubdir = current_subdir
+        return os.path.join(root, self.page.currentAttachSubdir)
+
+    def _dirExists(self, path):
+        return os.path.exists(path) and os.path.isdir(path)
 
     @staticmethod
     def sortByName(fname):

@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os.path
 import re
@@ -10,13 +10,13 @@ from .exporterfactory import ExporterFactory
 from .indexgenerator import IndexGenerator
 
 
-class BranchExporter (object):
-    def __init__ (self, startpage, nameGenerator, application):
+class BranchExporter:
+    def __init__(self, startpage, nameGenerator, application):
         self.__startpage = startpage
         self.__application = application
 
-        self.__indexfname = u"__index.html"
-        self.__contentfname = u"__content.html"
+        self.__indexfname = "__index.html"
+        self.__contentfname = "__content.html"
 
         # Список ошибок, возникших при экспорте
         self.__log = []
@@ -54,7 +54,7 @@ class BranchExporter (object):
         try:
             self.__createIndex (outdir, alwaysOverwrite)
         except IOError as e:
-            str (e)
+            self.log.append(str(e))
 
         return self.log
 
@@ -73,14 +73,14 @@ class BranchExporter (object):
         Скорректировать ссылки на страницы
         """
         for page in list(self.__renames.keys()):
-            fullname = os.path.join (outdir, self.__renames[page] + u".html")
+            fullname = os.path.join (outdir, self.__renames[page] + ".html")
 
             try:
                 text = readTextFile(fullname)
                 newtext = self.__replacePageLinksInText (text, page, outdir)
                 writeTextFile(fullname, newtext)
             except BaseException as error:
-                self.__log.append (u"{0}: {1}".format (page.title, str(error)))
+                self.__log.append ("{0}: {1}".format (page.title, str(error)))
 
     def __replacePageLinksInText (self, text, page, outdir):
         matches = self.__a_tag_regex.findall (text)
@@ -136,14 +136,16 @@ class BranchExporter (object):
 
     def __getPageByProtocol (self, href):
         """
-        Если href - протокол вида page://..., то возвращает страницу, на которую ведет ссылка (если она существует), в противном случае возвращает None.
+        Если href - протокол вида page://..., то возвращает страницу,
+ на которую ведет ссылка (если она существует),
+ в противном случае возвращает None.
         """
         # Т.к. поддержка этого протокола появилась только в версии 1.8.0,
         # то нужно проверить, есть ли в self.__application член pageUidDepot
         if "pageUidDepot" not in self.__application.__dict__:
             return (None, None)
 
-        protocol = u"page://"
+        protocol = "page://"
 
         if not href.startswith (protocol):
             return (None, None)
@@ -201,7 +203,7 @@ class BranchExporter (object):
 
                 exporter.export (outdir, exportname, imagesonly, alwaysOverwrite)
             except BaseException as error:
-                self.__log.append (u"{0}: {1}".format (page.title, str(error)))
+                self.__log.append ("{0}: {1}".format (page.title, str(error)))
 
         for child in page.children:
             self.__export (

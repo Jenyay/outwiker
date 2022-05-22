@@ -1,424 +1,490 @@
-<?xml version="1.1" encoding="UTF-8" ?>
+<?xml version='1.0' encoding='UTF-8'?>
 <versions>
-	<version number="3.0.1.889" status="dev">
-		<changes>
-			<change>Fix desktop icon creation in installer for Windows.</change>
-		</changes>
-
-		<changes lang="ru">
-			<change>Исправлена ошибка создания иконки на рабочем столе в инсталяторе под Windows.</change>
-		</changes>
-	</version>
-
-    <version number="3.0.0.888" date="13.05.2021">
-		<changes>
-			<change>Release.</change>
-		</changes>
-
-		<changes lang="ru">
-			<change>Релизная версия.</change>
-		</changes>
-	</version>
-
-	<version number="3.0.0.886" status="dev" date="07.04.2021">
-		<changes>
-			<change>Fix build for Windows.</change>
-		</changes>
-
-		<changes lang="ru">
-			<change>Исправлена сборка под Windows.</change>
-		</changes>
-	</version>
-
-	<version number="3.0.0.884" status="dev" date="07.02.2021">
-		<changes>
-			<change>Add the wiki tags for a multiline block.</change>
-			<change>Update the German localization.</change>
-		</changes>
-
-		<changes lang="ru">
-			<change>В викинотацию добавлены теги для обозначения многострочного блока.</change>
-			<change>Обновление немецкой локализации.</change>
-		</changes>
-	</version>
-
-	<version number="3.0.0.882" status="dev" date="23.01.2021">
-		<changes>
-			<change>In the dialog asking about overwriting attached files, information about files (size and date) is now displayed.</change>
-			<change>Bug fixes.</change>
-		</changes>
-
-		<changes lang="ru">
-		  <change>В диалоге с вопросом о перезаписи прикрепленных файлов теперь показывается информация о файлах (размер и дата).</change>
-		  <change>Исправление ошибок.</change>
-		</changes>
-	</version>
-	
-	<version number="3.0.0.880" status="dev" date="18.01.2021">
-		<changes>
-			<change>Add the plugins to installer for Windows.</change>
-			<change>Add the ability to install without administrator privileges with installer for Windows.</change>
-			<change>Add the ability to install in the portable mode with installer for Windows.</change>
-		</changes>
-
-		<changes lang="ru">
-			<change>В инсталятор под Windows добавлены плагины.</change>
-			<change>В инсталятор под Windows добавлена возможность установки без прав администратора.</change>
-			<change>В инсталятор добавлена возможность установки в портабельном режиме под Windows.</change>
-		</changes>
-	</version>
-
-	<version number="3.0.0.878" status="dev" date="13.01.2020">
-		<changes>
-			<change>Bug fixes.</change>
-		</changes>
-
-		<changes lang="ru">
-			<change>Исправление ошибок.</change>
-		</changes>
-	</version>
-
-	<version number="3.0.0.876" status="dev" date="29.12.2020">
-		<changes>
-			<change>Migrate to wxPython 4.1.1.</change>
-		</changes>
-
-		<changes lang="ru">
-			<change>Переход на wxPython 4.1.1.</change>
-		</changes>
-	</version>
-
-	<version number="3.0.0.874" status="dev" date="04.06.2020">
-		<changes>
-			<change>Update help.</change>
-			<change>Add the ability to link to page by alias.</change>
-			<change>The childlist wiki command take into account an alias of a page.</change>
-		</changes>
-
-		<changes lang="ru">
-			<change>Обновление справки.</change>
-			<change>Добавлена возможность ссылаться на страницы по ее псевдониму.</change>
-			<change>Викикоманда childlist теперь учитывает псевдонимы страниц.</change>
-		</changes>
-	</version>
-
-	<version number="3.0.0.872" status="dev" date="03.05.2020">
-		<changes>
-			<change>Update the German localization.</change>
-		</changes>
-
-		<changes lang="ru">
-			<change>Обновление немецкой локализации.</change>
-		</changes>
-	</version>
-
-	<version number="3.0.0.870" status="dev" date="23.02.2020">
-		<changes>
-			<change>Add the ability to select notes position in the notes list.</change>
-			<change>Update used libraries.</change>
-		</changes>
-
-		<changes lang="ru">
-			<change>Добавлена возможность выбора положения новой заметки в списке заметок.</change>
-			<change>Обновление используемых библиотек.</change>
-		</changes>
-	</version>
-
-	<version number="3.0.0.868" status="dev" date="19.10.2019">
-		<changes>
-			<change>New plug-in's manifest file format.</change>
-			<change>Add a new preferences fot new page title.</change>
-			<change>Small GUI improvements.</change>
-		</changes>
-
-		<changes lang="ru">
-			<change>Новый формат файла манифеста плагинов.</change>
-			<change>Добавлена настройка для шаблона имени новых страниц.</change>
-			<change>Небольшие улучшения в интерфейсе.</change>
-		</changes>
-	</version>
-
-	<version number="3.0.0.866" status="dev" date="13.08.2019">
-		<changes>
-			<change>Add comments to wiki notation.</change>
-			<change>Fix errors.</change>
-		</changes>
-
-		<changes lang="ru">
-			<change>Добавлена возможность вставки комментариев в викинотации.</change>
-			<change>Исправление ошибок.</change>
-		</changes>
-	</version>
-
-	<version number="3.0.0.864" status="dev" date="12.06.2019">
-		<changes>
-			<change>Fix errors.</change>
-		</changes>
-
-		<changes lang="ru">
-			<change>Исправление ошибок.</change>
-		</changes>
-	</version>
-
-	<version number="3.0.0.862" status="dev" date="26.05.2019">
-		<changes>
-			<change>New GUI displayed if the notes tree is not currently open.</change>
-			<change>New GUI when selecting the root of the notes tree.</change>
-			<change>New GUI to show a page with unknown type.</change>
-			<change>Changing the appearance of a window reporting a lengthy operation (for example, opening a notes tree).</change>
-			<change>Update German localization.</change>
-			<change>Other GUI improvements.</change>
-			<change>Fix errors.</change>
-			<change>Update used libraries.</change>
-		</changes>
-
-		<changes lang="ru">
-			<change>Новый интерфейс, отображаемый, если в данный момент не открыто дерево заметок.</change>
-			<change>Новый интерфейс при выборе корня дерева заметок.</change>
-			<change>Новый интерфейс для отображения страниц неизвестного типа.</change>
-			<change>Изменение внешнего вида окна, сообщающего о длительной операции (например, открытия дерева заметок).</change>
-			<change>Обновление немецкой локализации.</change>
-			<change>Другие небольшие изменения в интерфейсе.</change>
-			<change>Исправление ошибок.</change>
-			<change>Обновление используемых библиотек.</change>
-		</changes>
-	</version>
-
-	<version number="3.0.0.860" status="dev" date="22.03.2019">
-		<changes>
-			<change>Fix errors.</change>
-			<change>Update localizations.</change>
-		</changes>
-
-		<changes lang="ru">
-			<change>Исправление ошибок.</change>
-			<change>Обновление локализаций.</change>
-		</changes>
-	</version>
-
-	<version number="3.0.0.858" status="dev" date="24.01.2019">
-		<changes>
-			<change>Add list autocomplete for wiki pages.</change>
-			<change>Add "--disable-plugins" command line parameter.</change>
-			<change>New events for API.</change>
-			<change>Fix errors.</change>
-		</changes>
-
-		<changes lang="ru">
-			<change>Добавлено автодополнение списков для викистраниц.</change>
-			<change>Добавлен параметр командной строки "--disable-plugins".</change>
-			<change>Новые события в API.</change>
-			<change>Исправление ошибок.</change>
-		</changes>
-	</version>
-
-	<version number="3.0.0.856" status="dev" date="26.12.2018">
-		<changes>
-			<change>Improve GUI.</change>
-			<change>Fix errors.</change>
-		</changes>
-
-		<changes lang="ru">
-			<change>Улучшения в интерфейсе.</change>
-			<change>Исправление ошибок.</change>
-		</changes>
-	</version>
-
-	<version number="3.0.0.854" status="dev" date="24.11.2018">
-		<changes>
-			<change>Improve GUI.</change>
-			<change>Fix errors.</change>
-		</changes>
-
-		<changes lang="ru">
-			<change>Улучшения в интерфейсе.</change>
-			<change>Исправление ошибок.</change>
-		</changes>
-	</version>
-
-	<version number="3.0.0.852" status="dev" date="24.11.2018">
-		<changes>
-			<change>Create snap package.</change>
-			<change>Fix errors.</change>
-		</changes>
-
-		<changes lang="ru">
-			<change>Создан snap-пакет.</change>
-			<change>Исправление ошибок.</change>
-		</changes>
-	</version>
-
-	<version number="3.0.0.850" status="dev" date="04.10.2018">
-		<changes>
-			<change>Now you can use any symbols in the notes.</change>
-			<change>New design for popup window when clicking on the tag.</change>
-			<change>Add a new wiki style "code".</change>
-			<change>Return back to wxPython 4.0.1.</change>
-			<change>Fix errors.</change>
-		</changes>
-
-		<changes lang="ru">
-			<change>Теперь в заметках можно использовать любые символы.</change>
-			<change>Новый интерфейс всплывающего окна при клике на тег.</change>
-			<change>Добавлен новый викистиль "code".</change>
-			<change>Возврат на wxPython 4.0.1.</change>
-			<change>Исправление ошибок.</change>
-		</changes>
-	</version>
-
-	<version number="3.0.0.848" status="dev" date="26.08.2018">
-		<changes>
-			<change>Add German localization.</change>
-			<change>Improve wiki styles interface.</change>
-			<change>Fix errors.</change>
-		</changes>
-
-		<changes lang="ru">
-			<change>Добавлена немецкая локализация.</change>
-			<change>Улучшения в интерфейсе работы с викистилями.</change>
-			<change>Исправление ошибок.</change>
-		</changes>
-	</version>
-
-	<version number="3.0.0.846" status="dev" date="31.07.2018">
-		<changes>
-			<change>Add new wiki commands for styles.</change>
-			<change>Migrate to wxPython 4.0.3.</change>
-		</changes>
-
-		<changes lang="ru">
-			<change>Добавлены новые команды для викистилей.</change>
-			<change>Миграция на wxPython 4.0.3.</change>
-		</changes>
-	</version>
-
-	<version number="2.1.0.844" status="dev" date="16.06.2018">
-		<changes>
-			<change>Change the storage format for certain properties of the notes tree pages.</change>
-			<change>Fix errors.</change>
-		</changes>
-
-		<changes lang="ru">
-			<change>Изменение формата хранения некоторых настроек страниц в дереве заметок.</change>
-			<change>Исправление ошибок.</change>
-		</changes>
-	</version>
-
-	<version number="2.1.0.842" status="dev" date="26.05.2018">
-		<changes>
-			<change>Accelerated plug-ins loading.</change>
-			<change>GUI fixes.</change>
-		</changes>
-
-		<changes lang="ru">
-			<change>Ускорена загрузка плагинов.</change>
-			<change>Исправления в интерфейсе.</change>
-		</changes>
-	</version>
-
-	<version number="2.1.0.840" status="dev" date="22.04.2018">
-		<changes>
-			<change>New toolbars.</change>
-		</changes>
-
-		<changes lang="ru">
-			<change>Новые панели инструментов.</change>
-		</changes>
-	</version>
-
-	<version number="2.1.0.838" status="dev" date="20.03.2018">
-		<changes>
-			<change>Add a new page style "rifle_green_and_red".</change>
-			<change>Fixed errors.</change>
-		</changes>
-
-		<changes lang="ru">
-			<change>Добавлен новый стиль страниц "rifle_green_and_red".</change>
-			<change>Исправление ошибок.</change>
-		</changes>
-	</version>
-
-	<version number="2.1.0.836" status="dev" date="15.02.2018">
-		<changes>
-			<change>Migrate to Python 3.x and wxPython 4.0.0.</change>
-			<change>Add watching for attached files for selected page.</change>
-		</changes>
-
-		<changes lang="ru">
-			<change>Переход на Python 3.x и wxPython 4.0.0.</change>
-			<change>Добавлено слежение за прикрепленными файлами для текущей страницы.</change>
-		</changes>
-	</version>
-
-	<version number="2.1.0.834" status="dev" date="17.12.2017">
-		<changes>
-			<change>32-bit binary builds for Linux are no longer created.</change>
-			<change>Created AppImage packages for Linux.</change>
-			<change>Fixed errors.</change>
-		</changes>
-
-		<changes lang="ru">
-			<change>Больше не создаются 32-битные бинарные сборки под Linux.</change>
-			<change>Теперь создаются пакеты AppImage для Linux.</change>
-			<change>Исправление ошибок.</change>
-		</changes>
-	</version>
-
-	<version number="2.1.0.832" status="dev" date="20.11.2017">
-		<changes>
-			<change>Added options to select length of history of recently used icons.</change>
-			<change>Fixed errors.</change>
-		</changes>
-
-		<changes lang="ru">
-			<change>Добавлена настройка для выбора размера истории последних используемых значков страницы.</change>
-			<change>Исправление ошибок.</change>
-		</changes>
-	</version>
-
-	<version number="2.1.0.830" status="dev" date="23.10.2017">
-		<changes>
-			<change>The way of storing standard icons in notes is changed.</change>
-			<change>New interface to select notes icons.</change>
-		</changes>
-
-		<changes lang="ru">
-			<change>Изменен способ хранения стандартных значков в заметках.</change>
-			<change>Новый интерфейс выбора значков заметок.</change>
-		</changes>
-	</version>
-
-	<version number="2.1.0.828" status="dev" date="24.09.2017">
-		<changes>
-			<change>To the page style files added a new variable with name $title.</change>
-			<change>Added support for Ubuntu 17.10.</change>
-			<change>Bug fixes.</change>
-		</changes>
-
-		<changes lang="ru">
-			<change>В файлы стилей страниц добавлена новая переменная $title.</change>
-			<change>Добавлена поддержка Ubuntu 17.10.</change>
-			<change>Исправление ошибок.</change>
-		</changes>
-	</version>
-
-	<version number="2.1.0.826" status="dev" date="22.08.2017">
-		<changes>
-			<change>Created the binary deb package for Linux.</change>
-		</changes>
-
-		<changes lang="ru">
-			<change>Созданы бинарные deb-пакеты под Linux.</change>
-		</changes>
-	</version>
-
-	<version number="2.1.0.824" status="dev" date="21.07.2017">
-		<changes>
-			<change>Created binary assembly for Linux.</change>
-		</changes>
-
-		<changes lang="ru">
-			<change>Созданы бинарные сборки для Linux.</change>
-		</changes>
-	</version>
+    <version number="3.2.0.902" status="beta" date="2022-05-22">
+        <changes>
+            <change>Added the ability to create folders in attached files.</change>
+            <change>Added the ability to navigate to subfolders in the attachments panel.</change>
+            <change>Added the ability to insert links to files in attached subfolders.</change>
+            <change>Implemented highlighting links to attached files on wiki pages.</change>
+        </changes>
+
+        <changes lang="ru">
+            <change>Добавлена возможность создания папок в прикрепленных файлах.</change>
+            <change>Добавлена возможность перехода во вложенные папки на панели прикрепленных файлов.</change>
+            <change>Добавлена возможность вставки ссылок на файлы во вложенных прикрепленных папках.</change>
+            <change>Реализована подсветка ссылок на прикрепленные файлы на викистраницах.</change>
+        </changes>
+    </version>
+
+    <version number="3.1.0.900" date="2022-04-16">
+        <changes>
+            <change>Fix errors.</change>
+            <change>Update documentation.</change>
+        </changes>
+
+        <changes lang="ru">
+            <change>Исправление ошибок.</change>
+            <change>Обновление документации.</change>
+        </changes>
+    </version>
+
+    <version number="3.1.0.896" status="beta" date="2022-02-19">
+        <changes>
+            <change>Fix errors.</change>
+            <change>Update libraries.</change>
+        </changes>
+
+        <changes lang="ru">
+            <change>Исправление ошибок.</change>
+            <change>Обновление используемых библиотек.</change>
+        </changes>
+    </version>
+
+    <version number="3.1.0.894" status="beta" date="2022-01-23">
+        <changes>
+            <change>Add action "Select all" for attachments panel.</change>
+            <change>Add the ability for renaming of attachments.</change>
+        </changes>
+
+        <changes lang="ru">
+            <change>Добавлена кнопка "Выбрать всё" на панель прикрепленных файлов.</change>
+            <change>Добавлена возможность переименования прикрепленных файлов.</change>
+        </changes>
+    </version>
+
+    <version number="3.1.0.892" status="beta" date="2021-07-27">
+        <changes>
+            <change>Improve hotkeys for attachments panel.</change>
+        </changes>
+
+        <changes lang="ru">
+            <change>Улучшение работы с горячими клавишами на панели с прикрепленными файлами.</change>
+        </changes>
+    </version>
+
+    <version number="3.1.0.890" status="beta" date="2021-07-04">
+        <changes>
+            <change>Improve GUI for page icon selection.</change>
+            <change>Fix desktop icon creation in installer for Windows.</change>
+            <change>Other bug fixes.</change>
+        </changes>
+
+        <changes lang="ru">
+            <change>Улучшен интерфейс выбора значка страницы.</change>
+            <change>Исправлена ошибка создания иконки на рабочем столе в инсталяторе под Windows.</change>
+            <change>Исправления других ошибок.</change>
+        </changes>
+    </version>
+
+    <version number="3.0.0.888" date="2021-05-13">
+        <changes>
+            <change>Release.</change>
+        </changes>
+
+        <changes lang="ru">
+            <change>Релизная версия.</change>
+        </changes>
+    </version>
+
+    <version number="3.0.0.886" status="dev" date="2021-04-07">
+        <changes>
+            <change>Fix build for Windows.</change>
+        </changes>
+
+        <changes lang="ru">
+            <change>Исправлена сборка под Windows.</change>
+        </changes>
+    </version>
+
+    <version number="3.0.0.884" status="dev" date="2021-02-07">
+        <changes>
+            <change>Add the wiki tags for a multiline block.</change>
+            <change>Update the German localization.</change>
+        </changes>
+
+        <changes lang="ru">
+            <change>В викинотацию добавлены теги для обозначения многострочного блока.</change>
+            <change>Обновление немецкой локализации.</change>
+        </changes>
+    </version>
+
+    <version number="3.0.0.882" status="dev" date="2021-01-23">
+        <changes>
+            <change>In the dialog asking about overwriting attached files, information about files (size and date) is now displayed.</change>
+            <change>Bug fixes.</change>
+        </changes>
+
+        <changes lang="ru">
+          <change>В диалоге с вопросом о перезаписи прикрепленных файлов теперь показывается информация о файлах (размер и дата).</change>
+          <change>Исправление ошибок.</change>
+        </changes>
+    </version>
+    
+    <version number="3.0.0.880" status="dev" date="2021-01-18">
+        <changes>
+            <change>Add the plugins to installer for Windows.</change>
+            <change>Add the ability to install without administrator privileges with installer for Windows.</change>
+            <change>Add the ability to install in the portable mode with installer for Windows.</change>
+        </changes>
+
+        <changes lang="ru">
+            <change>В инсталятор под Windows добавлены плагины.</change>
+            <change>В инсталятор под Windows добавлена возможность установки без прав администратора.</change>
+            <change>В инсталятор добавлена возможность установки в портабельном режиме под Windows.</change>
+        </changes>
+    </version>
+
+    <version number="3.0.0.878" status="dev" date="2020-01-13">
+        <changes>
+            <change>Bug fixes.</change>
+        </changes>
+
+        <changes lang="ru">
+            <change>Исправление ошибок.</change>
+        </changes>
+    </version>
+
+    <version number="3.0.0.876" status="dev" date="2020-12-29">
+        <changes>
+            <change>Migrate to wxPython 4.1.1.</change>
+        </changes>
+
+        <changes lang="ru">
+            <change>Переход на wxPython 4.1.1.</change>
+        </changes>
+    </version>
+
+    <version number="3.0.0.874" status="dev" date="2020-06-04">
+        <changes>
+            <change>Update help.</change>
+            <change>Add the ability to link to page by alias.</change>
+            <change>The childlist wiki command take into account an alias of a page.</change>
+        </changes>
+
+        <changes lang="ru">
+            <change>Обновление справки.</change>
+            <change>Добавлена возможность ссылаться на страницы по ее псевдониму.</change>
+            <change>Викикоманда childlist теперь учитывает псевдонимы страниц.</change>
+        </changes>
+    </version>
+
+    <version number="3.0.0.872" status="dev" date="2020-05-03">
+        <changes>
+            <change>Update the German localization.</change>
+        </changes>
+
+        <changes lang="ru">
+            <change>Обновление немецкой локализации.</change>
+        </changes>
+    </version>
+
+    <version number="3.0.0.870" status="dev" date="2020-02-23">
+        <changes>
+            <change>Add the ability to select notes position in the notes list.</change>
+            <change>Update used libraries.</change>
+        </changes>
+
+        <changes lang="ru">
+            <change>Добавлена возможность выбора положения новой заметки в списке заметок.</change>
+            <change>Обновление используемых библиотек.</change>
+        </changes>
+    </version>
+
+    <version number="3.0.0.868" status="dev" date="2019-10-19">
+        <changes>
+            <change>New plug-in's manifest file format.</change>
+            <change>Add a new preferences fot new page title.</change>
+            <change>Small GUI improvements.</change>
+        </changes>
+
+        <changes lang="ru">
+            <change>Новый формат файла манифеста плагинов.</change>
+            <change>Добавлена настройка для шаблона имени новых страниц.</change>
+            <change>Небольшие улучшения в интерфейсе.</change>
+        </changes>
+    </version>
+
+    <version number="3.0.0.866" status="dev" date="2019-08-13">
+        <changes>
+            <change>Add comments to wiki notation.</change>
+            <change>Fix errors.</change>
+        </changes>
+
+        <changes lang="ru">
+            <change>Добавлена возможность вставки комментариев в викинотации.</change>
+            <change>Исправление ошибок.</change>
+        </changes>
+    </version>
+
+    <version number="3.0.0.864" status="dev" date="2019-06-12">
+        <changes>
+            <change>Fix errors.</change>
+        </changes>
+
+        <changes lang="ru">
+            <change>Исправление ошибок.</change>
+        </changes>
+    </version>
+
+    <version number="3.0.0.862" status="dev" date="2019-05-26">
+        <changes>
+            <change>New GUI displayed if the notes tree is not currently open.</change>
+            <change>New GUI when selecting the root of the notes tree.</change>
+            <change>New GUI to show a page with unknown type.</change>
+            <change>Changing the appearance of a window reporting a lengthy operation (for example, opening a notes tree).</change>
+            <change>Update German localization.</change>
+            <change>Other GUI improvements.</change>
+            <change>Fix errors.</change>
+            <change>Update used libraries.</change>
+        </changes>
+
+        <changes lang="ru">
+            <change>Новый интерфейс, отображаемый, если в данный момент не открыто дерево заметок.</change>
+            <change>Новый интерфейс при выборе корня дерева заметок.</change>
+            <change>Новый интерфейс для отображения страниц неизвестного типа.</change>
+            <change>Изменение внешнего вида окна, сообщающего о длительной операции (например, открытия дерева заметок).</change>
+            <change>Обновление немецкой локализации.</change>
+            <change>Другие небольшие изменения в интерфейсе.</change>
+            <change>Исправление ошибок.</change>
+            <change>Обновление используемых библиотек.</change>
+        </changes>
+    </version>
+
+    <version number="3.0.0.860" status="dev" date="2019-03-22">
+        <changes>
+            <change>Fix errors.</change>
+            <change>Update localizations.</change>
+        </changes>
+
+        <changes lang="ru">
+            <change>Исправление ошибок.</change>
+            <change>Обновление локализаций.</change>
+        </changes>
+    </version>
+
+    <version number="3.0.0.858" status="dev" date="2019-01-24">
+        <changes>
+            <change>Add list autocomplete for wiki pages.</change>
+            <change>Add "--disable-plugins" command line parameter.</change>
+            <change>New events for API.</change>
+            <change>Fix errors.</change>
+        </changes>
+
+        <changes lang="ru">
+            <change>Добавлено автодополнение списков для викистраниц.</change>
+            <change>Добавлен параметр командной строки "--disable-plugins".</change>
+            <change>Новые события в API.</change>
+            <change>Исправление ошибок.</change>
+        </changes>
+    </version>
+
+    <version number="3.0.0.856" status="dev" date="2018-12-26">
+        <changes>
+            <change>Improve GUI.</change>
+            <change>Fix errors.</change>
+        </changes>
+
+        <changes lang="ru">
+            <change>Улучшения в интерфейсе.</change>
+            <change>Исправление ошибок.</change>
+        </changes>
+    </version>
+
+    <version number="3.0.0.854" status="dev" date="2018-11-24">
+        <changes>
+            <change>Improve GUI.</change>
+            <change>Fix errors.</change>
+        </changes>
+
+        <changes lang="ru">
+            <change>Улучшения в интерфейсе.</change>
+            <change>Исправление ошибок.</change>
+        </changes>
+    </version>
+
+    <version number="3.0.0.852" status="dev" date="2018-11-24">
+        <changes>
+            <change>Create snap package.</change>
+            <change>Fix errors.</change>
+        </changes>
+
+        <changes lang="ru">
+            <change>Создан snap-пакет.</change>
+            <change>Исправление ошибок.</change>
+        </changes>
+    </version>
+
+    <version number="3.0.0.850" status="dev" date="2018-10-04">
+        <changes>
+            <change>Now you can use any symbols in the notes.</change>
+            <change>New design for popup window when clicking on the tag.</change>
+            <change>Add a new wiki style "code".</change>
+            <change>Return back to wxPython 4.0.1.</change>
+            <change>Fix errors.</change>
+        </changes>
+
+        <changes lang="ru">
+            <change>Теперь в заметках можно использовать любые символы.</change>
+            <change>Новый интерфейс всплывающего окна при клике на тег.</change>
+            <change>Добавлен новый викистиль "code".</change>
+            <change>Возврат на wxPython 4.0.1.</change>
+            <change>Исправление ошибок.</change>
+        </changes>
+    </version>
+
+    <version number="3.0.0.848" status="dev" date="2018-08-26">
+        <changes>
+            <change>Add German localization.</change>
+            <change>Improve wiki styles interface.</change>
+            <change>Fix errors.</change>
+        </changes>
+
+        <changes lang="ru">
+            <change>Добавлена немецкая локализация.</change>
+            <change>Улучшения в интерфейсе работы с викистилями.</change>
+            <change>Исправление ошибок.</change>
+        </changes>
+    </version>
+
+    <version number="3.0.0.846" status="dev" date="2018-07-31">
+        <changes>
+            <change>Add new wiki commands for styles.</change>
+            <change>Migrate to wxPython 4.0.3.</change>
+        </changes>
+
+        <changes lang="ru">
+            <change>Добавлены новые команды для викистилей.</change>
+            <change>Миграция на wxPython 4.0.3.</change>
+        </changes>
+    </version>
+
+    <version number="2.1.0.844" status="dev" date="2018-06-16">
+        <changes>
+            <change>Change the storage format for certain properties of the notes tree pages.</change>
+            <change>Fix errors.</change>
+        </changes>
+
+        <changes lang="ru">
+            <change>Изменение формата хранения некоторых настроек страниц в дереве заметок.</change>
+            <change>Исправление ошибок.</change>
+        </changes>
+    </version>
+
+    <version number="2.1.0.842" status="dev" date="2018-05-26">
+        <changes>
+            <change>Accelerated plug-ins loading.</change>
+            <change>GUI fixes.</change>
+        </changes>
+
+        <changes lang="ru">
+            <change>Ускорена загрузка плагинов.</change>
+            <change>Исправления в интерфейсе.</change>
+        </changes>
+    </version>
+
+    <version number="2.1.0.840" status="dev" date="2018-04-22">
+        <changes>
+            <change>New toolbars.</change>
+        </changes>
+
+        <changes lang="ru">
+            <change>Новые панели инструментов.</change>
+        </changes>
+    </version>
+
+    <version number="2.1.0.838" status="dev" date="2018-03-20">
+        <changes>
+            <change>Add a new page style "rifle_green_and_red".</change>
+            <change>Fixed errors.</change>
+        </changes>
+
+        <changes lang="ru">
+            <change>Добавлен новый стиль страниц "rifle_green_and_red".</change>
+            <change>Исправление ошибок.</change>
+        </changes>
+    </version>
+
+    <version number="2.1.0.836" status="dev" date="2018-02-15">
+        <changes>
+            <change>Migrate to Python 3.x and wxPython 4.0.0.</change>
+            <change>Add watching for attached files for selected page.</change>
+        </changes>
+
+        <changes lang="ru">
+            <change>Переход на Python 3.x и wxPython 4.0.0.</change>
+            <change>Добавлено слежение за прикрепленными файлами для текущей страницы.</change>
+        </changes>
+    </version>
+
+    <version number="2.1.0.834" status="dev" date="2017-12-17">
+        <changes>
+            <change>32-bit binary builds for Linux are no longer created.</change>
+            <change>Created AppImage packages for Linux.</change>
+            <change>Fixed errors.</change>
+        </changes>
+
+        <changes lang="ru">
+            <change>Больше не создаются 32-битные бинарные сборки под Linux.</change>
+            <change>Теперь создаются пакеты AppImage для Linux.</change>
+            <change>Исправление ошибок.</change>
+        </changes>
+    </version>
+
+    <version number="2.1.0.832" status="dev" date="2017-11-20">
+        <changes>
+            <change>Added options to select length of history of recently used icons.</change>
+            <change>Fixed errors.</change>
+        </changes>
+
+        <changes lang="ru">
+            <change>Добавлена настройка для выбора размера истории последних используемых значков страницы.</change>
+            <change>Исправление ошибок.</change>
+        </changes>
+    </version>
+
+    <version number="2.1.0.830" status="dev" date="2017-10-23">
+        <changes>
+            <change>The way of storing standard icons in notes is changed.</change>
+            <change>New interface to select notes icons.</change>
+        </changes>
+
+        <changes lang="ru">
+            <change>Изменен способ хранения стандартных значков в заметках.</change>
+            <change>Новый интерфейс выбора значков заметок.</change>
+        </changes>
+    </version>
+
+    <version number="2.1.0.828" status="dev" date="2017-09-24">
+        <changes>
+            <change>To the page style files added a new variable with name $title.</change>
+            <change>Added support for Ubuntu 17.10.</change>
+            <change>Bug fixes.</change>
+        </changes>
+
+        <changes lang="ru">
+            <change>В файлы стилей страниц добавлена новая переменная $title.</change>
+            <change>Добавлена поддержка Ubuntu 17.10.</change>
+            <change>Исправление ошибок.</change>
+        </changes>
+    </version>
+
+    <version number="2.1.0.826" status="dev" date="2017-08-22">
+        <changes>
+            <change>Created the binary deb package for Linux.</change>
+        </changes>
+
+        <changes lang="ru">
+            <change>Созданы бинарные deb-пакеты под Linux.</change>
+        </changes>
+    </version>
+
+    <version number="2.1.0.824" status="dev" date="2017-07-21">
+        <changes>
+            <change>Created binary assembly for Linux.</change>
+        </changes>
+
+        <changes lang="ru">
+            <change>Созданы бинарные сборки для Linux.</change>
+        </changes>
+    </version>
 </versions>

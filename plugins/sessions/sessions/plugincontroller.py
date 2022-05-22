@@ -1,10 +1,10 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from .i18n import get_
 from .guicreator import GuiCreator
 
 
-class PluginController (object):
+class PluginController:
     """
     Класс отвечает за основную работу интерфейса плагина
     """

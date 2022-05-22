@@ -24,6 +24,7 @@ from . import defines as guidefines
 
 from .toolbarscontroller import ToolBarsController
 
+from outwiker.actions.attachcreatesubdir import AttachCreateSubdirAction
 from outwiker.actions.new import NewAction
 from outwiker.actions.open import OpenAction
 from outwiker.actions.openreadonly import OpenReadOnlyAction
@@ -53,7 +54,7 @@ import outwiker.actions.switchto as switchto
 from outwiker.actions.reloadwiki import ReloadWikiAction
 from outwiker.actions.openhelp import OpenHelpAction
 from outwiker.actions.about import AboutAction
-from outwiker.actions.openattachfolder import OpenAttachFolderAction
+from outwiker.actions.attachopenfolder import OpenAttachFolderAction
 from outwiker.actions.history import HistoryBackAction, HistoryForwardAction
 from outwiker.actions.applystyle import SetStyleToBranchAction
 from outwiker.actions.openpluginsfolder import OpenPluginsFolderAction
@@ -77,6 +78,7 @@ logger = logging.getLogger('outwiker.gui.mainwindow')
 class MainWindow(wx.Frame):
     def __init__(self, application):
         super().__init__(None)
+        logger.debug(u'MainWindow initializing begin')
         self._application = application
 
         # Variables to accurate watch for main window state
@@ -84,75 +86,11 @@ class MainWindow(wx.Frame):
         self._realPosition = None
         self._realMaximized = False
 
-        logger.debug(u'MainWindow initializing begin')
-
         self.mainWindowConfig = MainWindowConfig(self._application.config)
 
         # Флаг, обозначающий, что в цикле обработки стандартных сообщений
         # (например, копирования в буфер обмена) сообщение вернулось обратно
         self.__stdEventLoop = False
-
-        logger.debug(u'MainWindow. Setup icon')
-        self._setIcon()
-        self.SetTitle(u"OutWiker")
-        self._createMenu()
-        self._createStatusBar()
-
-        if self.mainWindowConfig.maximized.value:
-            self.Maximize()
-
-        self._mainSizer = wx.FlexGridSizer(cols=1)
-        self._mainSizer.AddGrowableCol(0)
-        self._mainSizer.AddGrowableRow(1)
-        self._toolbarContainer = ToolBar2Container(self)
-        self._mainContentPanel = wx.Panel(self)
-
-        self._mainSizer.Add(self._toolbarContainer, flag=wx.EXPAND)
-        self._mainSizer.Add(self._mainContentPanel, flag=wx.EXPAND)
-        self.SetSizer(self._mainSizer)
-
-        logger.debug(u'MainWindow. Create the AuiManager')
-
-        self.auiManager = wx.aui.AuiManager(
-            self._mainContentPanel,
-            flags=wx.aui.AUI_MGR_DEFAULT |
-            wx.aui.AUI_MGR_LIVE_RESIZE |
-            wx.aui.AUI_MGR_ALLOW_FLOATING)
-
-        self._createAuiPanes()
-        self._createToolbars()
-
-        logger.debug(u'MainWindow. Create the MainWndController')
-        self.controller = MainWndController(self, self._application)
-        self.controller.loadMainWindowParams()
-
-        logger.debug(u'MainWindow. Create the MainPanesController')
-        self.__panesController = MainPanesController(self._application, self)
-
-        self._bindGuiEvents()
-
-        logger.debug(u'MainWindow. Create the TabsController')
-        self.tabsController = TabsController(self.pagePanel.panel.tabsCtrl,
-                                             self._application)
-
-        self.attachWatcher = AttachWatcher(self._application,
-                                           guidefines.ATTACH_CHECK_PERIOD)
-
-        self._coreControllers = [
-            WikiPageController(self._application),
-            HtmlPageController(self._application),
-            TextPageController(self._application),
-            SearchPageController(self._application),
-            PrefController(self._application),
-            self.attachWatcher,
-        ]
-
-        logger.debug(u'MainWindow. Initialize the core controllers')
-        self._initCoreControllers()
-
-        logger.debug(u'MainWindow. Create the tray icon')
-        self.taskBarIconController = getTrayIconController(self._application,
-                                                           self)
 
         logger.debug(u'MainWindow initializing end')
 
@@ -221,6 +159,68 @@ class MainWindow(wx.Frame):
         Создать пункты меню, кнопки на панелях инструментов и т.п.
         """
         logger.debug(u'MainWindow createGui started')
+        logger.debug(u'MainWindow. Setup icon')
+        self._setIcon()
+        self.SetTitle(u"OutWiker")
+        self._createMenu()
+        self._createStatusBar()
+
+        if self.mainWindowConfig.maximized.value:
+            self.Maximize()
+
+        self._mainSizer = wx.FlexGridSizer(cols=1)
+        self._mainSizer.AddGrowableCol(0)
+        self._mainSizer.AddGrowableRow(1)
+        self._toolbarContainer = ToolBar2Container(self)
+        self._mainContentPanel = wx.Panel(self)
+
+        self._mainSizer.Add(self._toolbarContainer, flag=wx.EXPAND)
+        self._mainSizer.Add(self._mainContentPanel, flag=wx.EXPAND)
+        self.SetSizer(self._mainSizer)
+
+        logger.debug(u'MainWindow. Create the AuiManager')
+
+        self.auiManager = wx.aui.AuiManager(
+            self._mainContentPanel,
+            flags=wx.aui.AUI_MGR_DEFAULT |
+            wx.aui.AUI_MGR_LIVE_RESIZE |
+            wx.aui.AUI_MGR_ALLOW_FLOATING)
+
+        self._createAuiPanes()
+        self._createToolbars()
+
+        logger.debug(u'MainWindow. Create the MainWndController')
+        self.controller = MainWndController(self, self._application)
+        self.controller.loadMainWindowParams()
+
+        logger.debug(u'MainWindow. Create the MainPanesController')
+        self.__panesController = MainPanesController(self._application, self)
+
+        self._bindGuiEvents()
+
+        logger.debug(u'MainWindow. Create the TabsController')
+        self.tabsController = TabsController(self.pagePanel.panel.tabsCtrl,
+                                             self._application)
+
+        self.attachWatcher = AttachWatcher(self._application,
+                                           guidefines.ATTACH_CHECK_PERIOD)
+
+        self._coreControllers = [
+            WikiPageController(self._application),
+            HtmlPageController(self._application),
+            TextPageController(self._application),
+            SearchPageController(self._application),
+            PrefController(self._application),
+            self.attachWatcher,
+        ]
+
+        logger.debug(u'MainWindow. Initialize the core controllers')
+        self._initCoreControllers()
+
+        logger.debug(u'MainWindow. Create the tray icon')
+        self.taskBarIconController = getTrayIconController(self._application,
+                                                           self)
+
         self.__panesController.loadPanesSize()
         self._addActionsGui()
         self.controller.enableGui()
@@ -299,7 +299,7 @@ class MainWindow(wx.Frame):
         menu = self.menuController[guidefines.MENU_FILE]
         actionController = self._application.actionController
 
-        # Создать...
+        # Create new...
         actionController.appendMenuItem(
             NewAction.stringId,
             menu)
@@ -310,7 +310,7 @@ class MainWindow(wx.Frame):
             getBuiltinImagePath("new.png"),
             True)
 
-        # Открыть...
+        # Opem...
         actionController.appendMenuItem(
             OpenAction.stringId,
             menu)
@@ -321,7 +321,7 @@ class MainWindow(wx.Frame):
             getBuiltinImagePath("open.png"),
             True)
 
-        # Открыть только для чтения
+        # Open read only
         actionController.appendMenuItem(
             OpenReadOnlyAction.stringId,
             menu)
@@ -329,24 +329,26 @@ class MainWindow(wx.Frame):
         menu.AppendSeparator()
         toolbar.AddSeparator()
 
-        # Закрыть
+        # Close
         actionController.appendMenuItem(
             CloseAction.stringId,
             menu)
 
-        # Сохранить
+        # Save
         actionController.appendMenuItem(
             SaveAction.stringId,
             menu)
 
+        actionController.appendMenuItem(ReloadWikiAction.stringId, menu)
+
         menu.AppendSeparator()
 
-        # Печать
+        # Print
         actionController.appendMenuItem(
             PrintAction.stringId,
             menu)
 
-        # Выход
+        # Exit
         actionController.appendMenuItem(
             ExitAction.stringId,
             menu)
@@ -446,6 +448,8 @@ class MainWindow(wx.Frame):
             getBuiltinImagePath("attach.png"),
             True)
 
+        actionController.appendMenuItem(AttachCreateSubdirAction.stringId, menu)
+
         menu.AppendSeparator()
 
         actionController.appendMenuItem(
@@ -482,7 +486,6 @@ class MainWindow(wx.Frame):
 
         menu.AppendSeparator()
 
-        actionController.appendMenuItem(ReloadWikiAction.stringId, menu)
         actionController.appendMenuItem(SetStyleToBranchAction.stringId, menu)
 
     def _createHelpMenu(self):

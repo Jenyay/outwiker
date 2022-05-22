@@ -4,7 +4,7 @@ import glob
 import os
 import shutil
 
-from fabric.api import local, lcd
+from invoke import Context
 
 from ..base import BuilderBase
 from buildtools.defines import SNAP_BUILD_DIR, PLUGINS_DIR
@@ -17,8 +17,8 @@ class BuilderSnap(BuilderBase):
     A class to build snap package
     """
 
-    def __init__(self, *snap_params):
-        super().__init__(SNAP_BUILD_DIR)
+    def __init__(self, c: Context, snap_params):
+        super().__init__(c, SNAP_BUILD_DIR)
         self._snap_params = snap_params
 
     def _build(self):
@@ -46,12 +46,12 @@ class BuilderSnap(BuilderBase):
 
     def _build_snap(self):
         print_info('Build snap')
-        with lcd(self.facts.temp_dir):
+        with self.context.cd(self.facts.temp_dir):
             snap_params = ' '.join(self._snap_params)
-            local('snapcraft snap {params}'.format(params=snap_params))
-            # local('sudo snapcraft snap {params}'.format(params=snap_params))
+            self.context.run('snapcraft snap {params}'.format(params=snap_params))
+            # self.context.run('sudo snapcraft snap {params}'.format(params=snap_params))
 
-        # local('docker run --rm -v "$PWD":/build -w /build snapcore/snapcraft bash -c "apt update && snapcraft"')
+        # self.context.run('docker run --rm -v "$PWD":/build -w /build snapcore/snapcraft bash -c "apt update && snapcraft"')
 
     def _build_man(self, usr_share):
         '''
@@ -60,11 +60,11 @@ class BuilderSnap(BuilderBase):
         man_path = os.path.join(usr_share, 'man')
         shutil.copytree(os.path.join(self.facts.nfb_linux, 'man'), man_path)
 
-        with lcd(os.path.join(man_path, 'man1')):
-            local('gzip outwiker.1')
+        with self.context.cd(os.path.join(man_path, 'man1')):
+            self.context.run('gzip outwiker.1')
 
-        with lcd(os.path.join(man_path, 'ru', 'man1')):
-            local('gzip outwiker.1')
+        with self.context.cd(os.path.join(man_path, 'ru', 'man1')):
+            self.context.run('gzip outwiker.1')
 
     def _create_dirs_tree(self):
         root = self.facts.temp_dir

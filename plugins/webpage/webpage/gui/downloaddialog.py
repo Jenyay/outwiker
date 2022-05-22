@@ -45,7 +45,7 @@ class DownloadDialog(TestedDialog):
         self._addOkCancel(mainSizer)
 
         self.SetSizer(mainSizer)
-        self.SetTitle(_(u'Download web page'))
+        self.SetTitle(_('Download web page'))
         self.SetMinSize((500, 350))
         self.Fit()
 
@@ -53,9 +53,9 @@ class DownloadDialog(TestedDialog):
         urlSizer = wx.FlexGridSizer(cols=3)
         urlSizer.AddGrowableCol(1)
 
-        urlLabel = wx.StaticText(self, label=_(u'URL or local file'))
+        urlLabel = wx.StaticText(self, label=_('URL or local file'))
         self.urlText = wx.TextCtrl(self)
-        self.selectFileButton = wx.Button(self, label=_(u'...'))
+        self.selectFileButton = wx.Button(self, label=_('...'))
         self.selectFileButton.SetMinSize((30, -1))
 
         urlSizer.Add(urlLabel, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=4)
@@ -148,7 +148,7 @@ class DownloadDialogController(object):
         return result
 
     def addToLog(self, text):
-        logString = u'[{index:03g}] {text}'.format(index=self._logIndex,
+        logString = '[{index:03g}] {text}'.format(index=self._logIndex,
                                                    text=text)
         self._logIndex += 1
 
@@ -159,7 +159,7 @@ class DownloadDialogController(object):
 
     def resetLog(self):
         self._logIndex = 1
-        self._dialog.logText.Value = u''
+        self._dialog.logText.Value = ''
 
     def _loadState(self):
         tagslist = TagsList(self._application.wikiroot)
@@ -191,22 +191,22 @@ class DownloadDialogController(object):
         url = self._dialog.url
 
         if len(url) == 0:
-            MessageBox(_(u'Enter link for downloading'),
+            MessageBox(_('Enter link for downloading'),
                        _(u"Error"),
                        wx.ICON_ERROR | wx.OK)
             self._dialog.urlText.SetFocus()
             return
 
         if os.path.isfile(url):
-            url = url.replace(u'\\', u'/')
-            if not url.startswith(u'/'):
-                url = u'/' + url
+            url = url.replace('\\', '/')
+            if not url.startswith('/'):
+                url = '/' + url
 
-            url = u'file://' + url
+            url = 'file://' + url
 
         if self._thread is None:
             self._removeDownloadDir()
-            self._downloadDir = mkdtemp(prefix=u'webpage_tmp_')
+            self._downloadDir = mkdtemp(prefix='webpage_tmp_')
 
             self._runEvent.set()
             self._thread = DownloadThread(self._dialog,
@@ -239,12 +239,12 @@ class DownloadDialogController(object):
     def _onDownloadFinish(self, event):
         self._thread = None
         if not self._runEvent.is_set():
-            self.addToLog(_(u"Page creation is canceled."))
+            self.addToLog(_("Page creation is canceled."))
             self._removeDownloadDir()
             return
 
         parentPage = self._parentPage
-        title = event.title if event.title is not None else _(u'Web page')
+        title = event.title if event.title is not None else _('Web page')
         favicon = event.favicon
         tags = self._dialog.tags
         content = event.content
@@ -253,15 +253,15 @@ class DownloadDialogController(object):
         logContent = self._dialog.logText.Value
 
         titleDlg = wx.TextEntryDialog(self._dialog,
-                                      _(u'Enter a title for the page'),
-                                      _(u'Page title'),
+                                      _('Enter a title for the page'),
+                                      _('Page title'),
                                       title)
         titleDlg.SetMinSize((450, 150))
 
         if titleDlg.ShowModal() == wx.ID_OK:
             title = titleDlg.GetValue()
         else:
-            self.addToLog(_(u"Page creation is canceled."))
+            self.addToLog(_("Page creation is canceled."))
             self._removeDownloadDir()
             return
 
@@ -277,7 +277,7 @@ class DownloadDialogController(object):
             self._dialog.EndModal(wx.ID_OK)
             self._application.selectedPage = page
         except EnvironmentError:
-            self.addToLog(_(u"Can't create the page. Perhaps the title of the page is too long."))
+            self.addToLog(_("Can't create the page. Perhaps the title of the page is too long."))
         finally:
             self._removeDownloadDir()
 
@@ -304,19 +304,19 @@ class DownloadThread(Thread):
 
         downloader = Downloader(self._timeout)
 
-        self._log(_(u'Start downloading\n'))
+        self._log(_('Start downloading\n'))
 
         try:
             downloader.start(self._url, controller)
         except urllib.error.URLError as error:
-            self._error(_(u'Download error: {}\n').format(
+            self._error(_('Download error: {}\n').format(
                 str(error.reason))
             )
         except(IOError, ValueError) as e:
-            self._error(_(u'Invalid URL or file format\n'))
+            self._error(_('Invalid URL or file format\n'))
             self._error(str(e))
         else:
-            self._log(_(u'Finish downloading\n'))
+            self._log(_('Finish downloading\n'))
 
             content = downloader.contentResult
             staticPath = os.path.join(self._downloadDir, STATIC_DIR_NAME)
@@ -333,16 +333,19 @@ class DownloadThread(Thread):
 
     def _prepareFavicon(self, favicon_src):
         if favicon_src is not None:
-            ico_ext = u'.ico'
-            iconname = favicon_src[::-1].replace(u'.', u'_16.'[::-1], 1)[::-1]
+            ico_ext = '.ico'
+            png_ext = '.png'
+            iconname = favicon_src[::-1].replace('.', '_16.'[::-1], 1)[::-1]
             if iconname.endswith(ico_ext):
-                iconname = iconname[:-len(ico_ext)] + u'.png'
+                iconname = iconname[:-len(ico_ext)] + '.png'
                 iconmaker = IconMaker()
                 try:
                     iconmaker.create(favicon_src, iconname)
                     return iconname
                 except IOError:
                     pass
+            elif favicon_src.endswith(png_ext):
+                return favicon_src
 
     def _log(self, text):
         event = webpage.events.UpdateLogEvent(text=text)

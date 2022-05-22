@@ -13,6 +13,9 @@ class ThumbmakerWx(ThumbmakerBase):
     def _loadImage(self, fname):
         return wx.Image(fname)
 
+    def _closeImage(self, image):
+        pass
+
     def _getSize(self, image):
         return(image.GetWidth(), image.GetHeight())
 

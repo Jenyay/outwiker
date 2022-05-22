@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 
+import logging
+import os
+import os.path
 from datetime import datetime
 from typing import List, Callable
 
@@ -16,6 +19,35 @@ from outwiker.core.events import (PageDialogPageTypeChangedParams,
 from outwiker.gui.tagsselector import TagsSelector, EVT_TAGS_LIST_CHANGED
 from outwiker.gui.guiconfig import PageDialogConfig, GeneralGuiConfig
 from .basecontroller import BasePageDialogController
+from .iconslistpopup import IconsListPopup
+from outwiker.core.system import getIconsDirList, getBuiltinImagePath
+from outwiker.core.iconscollection import IconsCollection
+from outwiker.core.recenticonslist import RecentIconsList
+from outwiker.core.defines import ICON_WIDTH, ICON_HEIGHT, ICON_DEFAULT
+from outwiker.core.commands import MessageBox
+from outwiker.core.events import (PageDialogPageIconChangedParams,
+                                  IconsGroupsListInitParams)
+from outwiker.gui.controls.switchthemed import EVT_SWITCH
+from outwiker.gui.iconlistctrl import EVT_ICON_SELECTED, EVT_ICON_DOUBLE_CLICK
+
+
+class IconsGroupInfo:
+    # Icons group types
+    TYPE_BUILTIN = 0
+    TYPE_CUSTOM = 1
+    TYPE_OTHER = 2
+
+    def __init__(self,
+                 iconslist,
+                 title,
+                 cover,
+                 group_type,
+                 sort_key=None):
+        self.iconslist = iconslist
+        self.title = title
+        self.cover = cover
+        self.group_type = group_type
+        self.sort_key = sort_key
 
 
 class GeneralPanel(wx.Panel):
@@ -25,17 +57,20 @@ class GeneralPanel(wx.Panel):
 
     def __init__(self, parent):
         super().__init__(parent)
+        self._POPUP_WIDTH = 500
+        self._POPUP_HEIGHT = 350
 
         self.__createGeneralControls()
         self.__layout()
 
     def __layout(self):
-        # Page alias
-        titleSizer = wx.FlexGridSizer(cols=2)
+        # Page title
+        titleSizer = wx.FlexGridSizer(cols=3)
         titleSizer.AddGrowableCol(1)
         titleSizer.Add(self.titleLabel,
                        flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=4)
         titleSizer.Add(self.titleTextCtrl, flag=wx.ALL | wx.EXPAND, border=4)
+        titleSizer.Add(self.iconBtn, flag=wx.ALL | wx.ALIGN_RIGHT, border=4)
 
         # Page type
         typeSizer = wx.FlexGridSizer(cols=2)
@@ -64,13 +99,20 @@ class GeneralPanel(wx.Panel):
         self.Layout()
 
     def __createGeneralControls(self):
-        # Page alias
-        self.titleLabel = wx.StaticText(self, label=_(u"Title"))
-        self.titleTextCtrl = wx.TextCtrl(self, value="")
+        # Page title
+        self.titleLabel = wx.StaticText(self, label=_('Title'))
+        self.titleTextCtrl = wx.TextCtrl(self, value='')
         self.titleTextCtrl.SetMinSize((350, -1))
 
+        # Page icon
+        self.iconBtn = wx.BitmapButton(self)
+        self.iconBtn.SetMinSize((40, -1))
+        self.iconBtn.SetToolTip(_('Page icon'))
+        self.iconsPopup = IconsListPopup(self)
+        self.iconsPopup.SetSize((self._POPUP_WIDTH, self._POPUP_HEIGHT))
+
         # Page type
-        self.typeLabel = wx.StaticText(self, label=_(u"Page type"))
+        self.typeLabel = wx.StaticText(self, label=_('Page type'))
         self.typeCombo = wx.ComboBox(self,
                                      choices=[],
                                      style=wx.CB_DROPDOWN | wx.CB_READONLY)
@@ -84,6 +126,12 @@ class GeneralPanel(wx.Panel):
         # Tags
         self.tagsSelector = TagsSelector(self)
 
+    def popupIconsList(self):
+        self.iconsPopup.Popup(self)
+
+    def closeIconsList(self):
+        self.iconsPopup.Hide()
+
     @property
     def pageTitle(self):
         return self.titleTextCtrl.GetValue()
@@ -92,6 +140,10 @@ class GeneralPanel(wx.Panel):
     def pageTitle(self, value):
         self.titleTextCtrl.SetValue(value)
 
+    def setPageIcon(self, iconFileName):
+        bitmap = wx.Bitmap(iconFileName)
+        self.iconBtn.SetBitmapLabel(bitmap)
+
 
 class GeneralController(BasePageDialogController):
     def __init__(self, generalPanel, application, dialog):
@@ -99,6 +151,9 @@ class GeneralController(BasePageDialogController):
         self._dialog = dialog
         self._generalPanel = generalPanel
         self._config = PageDialogConfig(self._application.config)
+        self._iconsController = IconsController(
+            self._generalPanel.iconsPopup.iconsPanel,
+            self._generalPanel, application, self._dialog)
 
         self._orderCalculators = [
             (ocf.orderCalculatorTop, _('Top of the list')),
@@ -127,6 +182,12 @@ class GeneralController(BasePageDialogController):
             EVT_TAGS_LIST_CHANGED,
             handler=self.__onTagsListChanged
         )
+
+        self._generalPanel.iconBtn.Bind(wx.EVT_BUTTON,
+                                        handler=self.__onIconButtonClick)
+
+    def __onIconButtonClick(self, event):
+        self._generalPanel.popupIconsList()
 
     @property
     def pageTitle(self) -> str:
@@ -159,7 +220,7 @@ class GeneralController(BasePageDialogController):
         Return True if success and False otherwise
         """
         page.tags = self.tags
-        return True
+        return self._iconsController.setPageProperties(page)
 
     def saveParams(self):
         self._config.recentCreatedPageType.value = self.selectedFactory.getTypeString()
@@ -170,6 +231,7 @@ class GeneralController(BasePageDialogController):
         Initialize the panel before new page creation
         parentPage - the parent page for new page
         """
+        self._iconsController.initBeforeCreation(parentPage)
         self._fillComboType(None)
         self._fillComboOrderCalculators()
 
@@ -199,6 +261,7 @@ class GeneralController(BasePageDialogController):
         Initialize the panel before new page editing.
         page - page for editing
         """
+        self._iconsController.initBeforeEditing(currentPage)
         self._fillComboType(currentPage)
         self._generalPanel.titleTextCtrl.SetSelection(-1, -1)
 
@@ -320,3 +383,222 @@ class GeneralController(BasePageDialogController):
         self._application.onPageDialogPageTagsChanged(
             self._application.selectedPage,
             eventParams)
+
+
+class IconsController(BasePageDialogController):
+    def __init__(self, iconsPanel, generalPanel, application, dialog):
+        super().__init__(application)
+        self._dialog = dialog
+        self._iconsPanel = iconsPanel
+        self._generalPanel = generalPanel
+        self._groupsMaxWidth = 200
+        self._page = None
+        self._default_group_cover = getBuiltinImagePath(
+            'icons_cover_default.png')
+        self._default_icon_filename = os.path.abspath(
+            os.path.join(getIconsDirList()[0], ICON_DEFAULT))
+
+        guiconfig = GeneralGuiConfig(application.config)
+
+        self._recentIconsList = RecentIconsList(
+            guiconfig.iconsHistoryLength.value,
+            application.config,
+            getIconsDirList()[0])
+
+        self._recentIconsList.load()
+
+        self._iconsPanel.iconsList.Bind(EVT_ICON_SELECTED,
+                                        handler=self._onIconSelected)
+        self._iconsPanel.iconsList.Bind(EVT_ICON_DOUBLE_CLICK,
+                                        handler=self._onIconDoubleClick)
+        self._iconsPanel.groupCtrl.Bind(EVT_SWITCH,
+                                        handler=self._onGroupSelect)
+
+        self._selectedIcon = self._default_icon_filename
+        self._groupsInfo = self._getGroupsInfo()
+
+        self._appendGroups()
+        group_index = 0 if len(self._recentIconsList) else 1
+        self._iconsPanel.groupCtrl.SetSelection(group_index)
+
+    def _getGroupsInfo(self):
+        result = []
+
+        for n, path in enumerate(getIconsDirList()):
+            # First None is root directory
+            collection = IconsCollection(path)
+            for groupname in [None] + sorted(collection.getGroups(), key=self._localize):
+                # Get group name
+                if groupname is None:
+                    title = _(u'Not in groups')
+                else:
+                    title = self._localize(groupname)
+
+                iconslist = collection.getIcons(groupname)
+                cover = collection.getCover(groupname)
+                if cover is None:
+                    cover = self._default_group_cover
+
+                group_type = (IconsGroupInfo.TYPE_BUILTIN if n == 0
+                              else IconsGroupInfo.TYPE_CUSTOM)
+
+                result.append(IconsGroupInfo(iconslist,
+                                             title,
+                                             cover,
+                                             group_type=group_type,
+                                             sort_key=os.path.basename))
+
+        self._addRecentIconsGroup(result)
+        eventParam = IconsGroupsListInitParams(result)
+        self._application.onIconsGroupsListInit(self._page, eventParam)
+
+        return eventParam.groupsList
+
+    def _addRecentIconsGroup(self, group_info_list):
+        recent_title = _('Recent')
+        recent_cover = getBuiltinImagePath('recent.png')
+        recent_icons = self._recentIconsList.getRecentIcons()
+        group_info_list.insert(0, IconsGroupInfo(
+            recent_icons,
+            recent_title,
+            recent_cover,
+            group_type=IconsGroupInfo.TYPE_OTHER,
+            sort_key=None)
+        )
+
+    @property
+    def icon(self):
+        return (self._selectedIcon
+                if self._selectedIcon != self._default_icon_filename
+                else None)
+
+    def setPageProperties(self, page):
+        """
+        Return True if success and False otherwise
+        """
+        icon_filename = (os.path.abspath(self.icon)
+                         if self.icon is not None
+                         else None)
+
+        if ((page.icon is not None and icon_filename == os.path.abspath(page.icon)) or
+                (page.icon is None and icon_filename is None)):
+            # Icon was not changed
+            return True
+
+        if icon_filename is not None:
+            self._recentIconsList.add(icon_filename)
+
+        # If icon_filename not exists, page may be renamed. Don't will to change icon
+        if icon_filename is None or os.path.exists(icon_filename):
+            try:
+                page.icon = icon_filename
+            except EnvironmentError as e:
+                MessageBox(_(u"Can't set page icon\n") + str(e),
+                           _(u"Error"),
+                           wx.ICON_ERROR | wx.OK)
+                return False
+
+        return True
+
+    def initBeforeEditing(self, currentPage):
+        """
+        Initialize the panel before new page editing.
+        page - page for editing
+        """
+        self._page = currentPage
+
+        if currentPage.icon is not None:
+            self._selectedIcon = os.path.abspath(currentPage.icon)
+            for n, group_info in enumerate(self._groupsInfo[1:]):
+                if self._selectedIcon in group_info.iconslist:
+                    self._iconsPanel.groupCtrl.SetSelection(n + 1)
+                    break
+
+    def _addCurrentIcon(self):
+        self._iconsPanel.iconsList.setCurrentIcon(self._selectedIcon)
+
+    def clear(self):
+        self._iconsPanel.iconsList.Unbind(EVT_ICON_SELECTED,
+                                          handler=self._onIconSelected)
+        self._iconsPanel.iconsList.Unbind(EVT_ICON_DOUBLE_CLICK,
+                                          handler=self._onIconDoubleClick)
+        self._dialog = None
+        self._iconsPanel = None
+
+    def _onIconSelected(self, event):
+        assert len(event.icons) == 1
+
+        self._selectedIcon = event.icons[0]
+        self._generalPanel.setPageIcon(self._selectedIcon)
+
+        eventParams = PageDialogPageIconChangedParams(
+            self._dialog,
+            self._selectedIcon)
+
+        self._application.onPageDialogPageIconChanged(
+            self._application.selectedPage,
+            eventParams)
+
+    def _onIconDoubleClick(self, event):
+        self._onIconSelected(event)
+        self._generalPanel.closeIconsList()
+
+    def _localize(self, groupname):
+        name = _(groupname)
+        return name.capitalize()
+
+    def _appendGroups(self):
+        for index, groupInfo in enumerate(self._groupsInfo):
+            bitmap = self._getCoverBitmap(groupInfo.cover)
+            if (index != 0 and
+                    groupInfo.group_type != self._groupsInfo[index - 1].group_type):
+                self._iconsPanel.groupCtrl.AppendSeparator()
+            self._iconsPanel.groupCtrl.Append(groupInfo.title, bitmap)
+
+        minw, minh = self._iconsPanel.groupCtrl.GetMinSize()
+        if minw > self._groupsMaxWidth:
+            minw = self._groupsMaxWidth
+
+        self._iconsPanel.groupCtrl.SetMinSize((minw, minh))
+
+    def _getCoverBitmap(self, fname):
+        """
+        Return bitmap for combobox item
+        """
+        if fname is None:
+            return None
+
+        neww = ICON_WIDTH
+        newh = ICON_HEIGHT
+
+        wx.Log.EnableLogging(False)
+        image = wx.Image(fname)
+        wx.Log.EnableLogging(True)
+
+        if not image.IsOk():
+            logging.error(_(u'Invalid icon file: {}').format(fname))
+            return None
+
+        posx = (neww - image.Width) // 2
+        posy = (newh - image.Height) // 2
+        image.Resize((neww, newh), (posx, posy), 255, 255, 255)
+
+        return wx.Bitmap(image)
+
+    def _getCurrentIcons(self):
+        index = self._iconsPanel.groupCtrl.GetSelection()
+        groupInfo = self._groupsInfo[index]
+
+        icons = groupInfo.iconslist
+        if groupInfo.sort_key is not None:
+            icons.sort(key=groupInfo.sort_key)
+
+        return icons
+
+    def _onGroupSelect(self, event):
+        self._updateCurrentGroup()
+
+    def _updateCurrentGroup(self):
+        icons = self._getCurrentIcons()
+        self._iconsPanel.iconsList.setIconsList(icons)
+        self._addCurrentIcon()

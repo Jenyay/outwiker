@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os.path
 import re
@@ -12,14 +12,14 @@ class HtmlExporter (BaseExporter):
     """
     Класс для экспорта HTML- и викистраниц
     """
-    def __init__ (self, page):
-        BaseExporter.__init__ (self, page)
+
+    def __init__(self, page):
+        BaseExporter.__init__(self, page)
 
         from .i18n import _
         global _
 
-
-    def export (self, outdir, exportname, imagesonly, alwaysOverwrite):
+    def export(self, outdir, exportname, imagesonly, alwaysOverwrite):
         """
         Экспорт HTML-страниц
         """
