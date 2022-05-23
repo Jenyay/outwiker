@@ -6,10 +6,11 @@ from outwiker.core.defines import PAGE_ATTACH_DIR
 from .basethumbgenerator import BaseThumbGenerator
 
 
-class ThumbTableGenerator (BaseThumbGenerator):
+class ThumbTableGenerator(BaseThumbGenerator):
     """
     Создание списка превьюшек в виде таблицы
     """
+
     def __init__(self, items, thumbsize, parser, cols):
         """
         items - список кортежей, описывающие прикрепленные файлов,
@@ -70,10 +71,13 @@ class ThumbTableGenerator (BaseThumbGenerator):
         """
         Возвращает оформленный элемент таблицы
         """
-        image = u"""<A HREF="{attachdir}/{imagename}"><IMG SRC="{thumbpath}"/></A>""".format(
+        image = (
+            """<a href="{attachdir}/{imagename}"><img src="{thumbpath}"/></a>""".format(
                 attachdir=PAGE_ATTACH_DIR,
                 imagename=item[0],
-                thumbpath=self._getThumbnail(self._parser.page, item[0]))
+                thumbpath=self._getThumbnail(self._parser.page, item[0]),
+            )
+        )
 
         return self._singleThumbTemplate.format(thumbimage=image, comment=item[1])
 
@@ -84,10 +88,9 @@ class ThumbTableGenerator (BaseThumbGenerator):
         itemsText = [self._generateItemText(item) for item in self._items]
 
         # Разрежем список на несколько списков, длиной self._cols
-        splitItems = [itemsText[i: i + self._cols]
-                      for i in range(0, len(itemsText), self._cols)]
+        splitItems = [
+            itemsText[i : i + self._cols] for i in range(0, len(itemsText), self._cols)
+        ]
 
-        rows = [self._rowTemplate.format(row=u"".join(row))
-                for
-                row in splitItems]
+        rows = [self._rowTemplate.format(row=u"".join(row)) for row in splitItems]
         return u"".join(rows)

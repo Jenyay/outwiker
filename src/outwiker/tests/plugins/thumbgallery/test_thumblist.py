@@ -55,7 +55,7 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = self.parser.toHtml(text)
 
-        self.assertTrue('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue('<a href="__attach/first.jpg">' in result)
         self.assertTrue("__thumb" in result)
         self.assertTrue("_first.jpg" in result)
 
@@ -75,11 +75,11 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = self.parser.toHtml(text)
 
-        self.assertTrue('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue('<a href="__attach/first.jpg">' in result)
         self.assertTrue("__thumb" in result)
         self.assertTrue("_first.jpg" in result)
 
-        self.assertTrue('<A HREF="__attach/image_01.JPG">' in result)
+        self.assertTrue('<a href="__attach/image_01.JPG">' in result)
         self.assertTrue("_image_01.JPG" in result)
 
         self.assertFalse("html.txt" in result)
@@ -96,11 +96,11 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = self.parser.toHtml(text)
 
-        self.assertTrue('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue('<a href="__attach/first.jpg">' in result)
         self.assertTrue("__thumb" in result)
         self.assertTrue("_first.jpg" in result)
 
-        self.assertTrue('<A HREF="__attach/image_01.JPG">' in result)
+        self.assertTrue('<a href="__attach/image_01.JPG">' in result)
         self.assertTrue("_image_01.JPG" in result)
 
         self.assertFalse("html.txt" in result)
@@ -118,11 +118,11 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = self.parser.toHtml(text)
 
-        self.assertFalse('<A HREF="__attach/first.jpg">' in result)
+        self.assertFalse('<a href="__attach/first.jpg">' in result)
         self.assertFalse("__thumb" in result)
         self.assertFalse("_first.jpg" in result)
 
-        self.assertFalse('<A HREF="__attach/image_01.JPG">' in result)
+        self.assertFalse('<a href="__attach/image_01.JPG">' in result)
         self.assertFalse("_image_01.JPG" in result)
 
         self.assertFalse("html.txt" in result)
@@ -140,11 +140,11 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = self.parser.toHtml(text)
 
-        self.assertFalse('<A HREF="__attach/first.jpg">' in result)
+        self.assertFalse('<a href="__attach/first.jpg">' in result)
         self.assertFalse("__thumb" in result)
         self.assertFalse("_first.jpg" in result)
 
-        self.assertFalse('<A HREF="__attach/image_01.JPG">' in result)
+        self.assertFalse('<a href="__attach/image_01.JPG">' in result)
         self.assertFalse("_image_01.JPG" in result)
 
         self.assertFalse("html.txt" in result)
@@ -170,14 +170,14 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = self.parser.toHtml(text)
 
-        self.assertTrue('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue('<a href="__attach/first.jpg">' in result)
         self.assertTrue("_first.jpg" in result)
         self.assertTrue("__thumb" in result)
 
-        self.assertTrue('<A HREF="__attach/particle_01.PNG">' in result)
+        self.assertTrue('<a href="__attach/particle_01.PNG">' in result)
         self.assertTrue("_particle_01.PNG" in result)
 
-        self.assertFalse('<A HREF="__attach/image_01.JPG">' in result)
+        self.assertFalse('<a href="__attach/image_01.JPG">' in result)
         self.assertFalse("_image_01.JPG" in result)
 
         self.assertFalse("html.txt" in result)
@@ -203,14 +203,14 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = self.parser.toHtml(text)
 
-        self.assertTrue('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue('<a href="__attach/first.jpg">' in result)
         self.assertTrue("_first.jpg" in result)
         self.assertTrue("__thumb" in result)
 
-        self.assertTrue('<A HREF="__attach/particle_01.PNG">' in result)
+        self.assertTrue('<a href="__attach/particle_01.PNG">' in result)
         self.assertTrue("_particle_01.PNG" in result)
 
-        self.assertFalse('<A HREF="__attach/image_01.JPG">' in result)
+        self.assertFalse('<a href="__attach/image_01.JPG">' in result)
         self.assertFalse("_image_01.JPG" in result)
 
         self.assertFalse("html.txt" in result)
@@ -236,14 +236,14 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = self.parser.toHtml(text)
 
-        self.assertTrue('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue('<a href="__attach/first.jpg">' in result)
         self.assertTrue("_first.jpg" in result)
         self.assertTrue("__thumb" in result)
 
-        self.assertTrue('<A HREF="__attach/particle_01.PNG">' in result)
+        self.assertTrue('<a href="__attach/particle_01.PNG">' in result)
         self.assertTrue("_particle_01.PNG" in result)
 
-        self.assertFalse('<A HREF="__attach/image_01.JPG">' in result)
+        self.assertFalse('<a href="__attach/image_01.JPG">' in result)
         self.assertFalse("_image_01.JPG" in result)
 
         self.assertFalse("html.txt" in result)
@@ -274,14 +274,14 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = self.parser.toHtml(text)
 
-        self.assertTrue('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue('<a href="__attach/first.jpg">' in result)
         self.assertTrue("_first.jpg" in result)
         self.assertTrue("__thumb" in result)
 
-        self.assertTrue('<A HREF="__attach/particle_01.PNG">' in result)
+        self.assertTrue('<a href="__attach/particle_01.PNG">' in result)
         self.assertTrue("_particle_01.PNG" in result)
 
-        self.assertFalse('<A HREF="__attach/image_01.JPG">' in result)
+        self.assertFalse('<a href="__attach/image_01.JPG">' in result)
         self.assertFalse("_image_01.JPG" in result)
 
         self.assertFalse("html.txt" in result)
@@ -312,14 +312,14 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = self.parser.toHtml(text)
 
-        self.assertTrue('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue('<a href="__attach/first.jpg">' in result)
         self.assertTrue("_first.jpg" in result)
         self.assertTrue("__thumb" in result)
 
-        self.assertTrue('<A HREF="__attach/particle_01.PNG">' in result)
+        self.assertTrue('<a href="__attach/particle_01.PNG">' in result)
         self.assertTrue("_particle_01.PNG" in result)
 
-        self.assertFalse('<A HREF="__attach/image_01.JPG">' in result)
+        self.assertFalse('<a href="__attach/image_01.JPG">' in result)
         self.assertFalse("_image_01.JPG" in result)
 
         self.assertFalse("html.txt" in result)
@@ -345,14 +345,14 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = self.parser.toHtml(text)
 
-        self.assertTrue('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue('<a href="__attach/first.jpg">' in result)
         self.assertTrue("_first.jpg" in result)
         self.assertTrue("__thumb" in result)
 
-        self.assertTrue('<A HREF="__attach/particle_01.PNG">' in result)
+        self.assertTrue('<a href="__attach/particle_01.PNG">' in result)
         self.assertTrue("_particle_01.PNG" in result)
 
-        self.assertFalse('<A HREF="__attach/image_01.JPG">' in result)
+        self.assertFalse('<a href="__attach/image_01.JPG">' in result)
         self.assertFalse("_image_01.JPG" in result)
 
         self.assertFalse("html.txt" in result)
@@ -378,14 +378,14 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = self.parser.toHtml(text)
 
-        self.assertTrue('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue('<a href="__attach/first.jpg">' in result)
         self.assertTrue("_first.jpg" in result)
         self.assertTrue("__thumb" in result)
 
-        self.assertTrue('<A HREF="__attach/particle_01.PNG">' in result)
+        self.assertTrue('<a href="__attach/particle_01.PNG">' in result)
         self.assertTrue("_particle_01.PNG" in result)
 
-        self.assertFalse('<A HREF="__attach/image_01.JPG">' in result)
+        self.assertFalse('<a href="__attach/image_01.JPG">' in result)
         self.assertFalse("_image_01.JPG" in result)
 
         self.assertFalse("html.txt" in result)
@@ -411,14 +411,14 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = self.parser.toHtml(text)
 
-        self.assertTrue('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue('<a href="__attach/first.jpg">' in result)
         self.assertTrue("_first.jpg" in result)
         self.assertTrue("__thumb" in result)
 
-        self.assertTrue('<A HREF="__attach/particle_01.PNG">' in result)
+        self.assertTrue('<a href="__attach/particle_01.PNG">' in result)
         self.assertTrue("_particle_01.PNG" in result)
 
-        self.assertFalse('<A HREF="__attach/image_01.JPG">' in result)
+        self.assertFalse('<a href="__attach/image_01.JPG">' in result)
         self.assertFalse("_image_01.JPG" in result)
 
         self.assertFalse("html.txt" in result)
@@ -444,14 +444,14 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = self.parser.toHtml(text)
 
-        self.assertTrue('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue('<a href="__attach/first.jpg">' in result)
         self.assertTrue("_first.jpg" in result)
         self.assertTrue("__thumb" in result)
 
-        self.assertTrue('<A HREF="__attach/particle_01.PNG">' in result)
+        self.assertTrue('<a href="__attach/particle_01.PNG">' in result)
         self.assertTrue("_particle_01.PNG" in result)
 
-        self.assertFalse('<A HREF="__attach/image_01.JPG">' in result)
+        self.assertFalse('<a href="__attach/image_01.JPG">' in result)
         self.assertFalse("_image_01.JPG" in result)
 
         self.assertFalse("html.txt" in result)
@@ -483,14 +483,14 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = self.parser.toHtml(text)
 
-        self.assertTrue('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue('<a href="__attach/first.jpg">' in result)
         self.assertTrue("_first.jpg" in result)
         self.assertTrue("__thumb" in result)
 
         self.assertTrue("картинка с пробелами.png" in result)
         self.assertTrue("_картинка с пробелами.png" in result)
 
-        self.assertFalse('<A HREF="__attach/image_01.JPG">' in result)
+        self.assertFalse('<a href="__attach/image_01.JPG">' in result)
         self.assertFalse("_image_01.JPG" in result)
 
         self.assertFalse("html.txt" in result)
@@ -522,14 +522,14 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = self.parser.toHtml(text)
 
-        self.assertTrue('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue('<a href="__attach/first.jpg">' in result)
         self.assertTrue("_first.jpg" in result)
         self.assertTrue("__thumb" in result)
 
         self.assertTrue("картинка с пробелами.png" in result)
         self.assertTrue("_картинка с пробелами.png" in result)
 
-        self.assertFalse('<A HREF="__attach/image_01.JPG">' in result)
+        self.assertFalse('<a href="__attach/image_01.JPG">' in result)
         self.assertFalse("_image_01.JPG" in result)
 
         self.assertFalse("html.txt" in result)
@@ -561,17 +561,17 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = self.parser.toHtml(text)
 
-        self.assertTrue('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue('<a href="__attach/first.jpg">' in result)
         self.assertTrue("maxsize_100_first.jpg" in result)
         self.assertTrue("__thumb" in result)
 
-        self.assertTrue('<A HREF="__attach/particle_01.PNG">' in result)
+        self.assertTrue('<a href="__attach/particle_01.PNG">' in result)
         self.assertTrue("maxsize_100_particle_01.PNG" in result)
 
         self.assertTrue("картинка с пробелами.png" in result)
         self.assertTrue("maxsize_100_картинка с пробелами.png" in result)
 
-        self.assertFalse('<A HREF="__attach/image_01.JPG">' in result)
+        self.assertFalse('<a href="__attach/image_01.JPG">' in result)
         self.assertFalse("maxsize_100_image_01.JPG" in result)
 
         self.assertFalse("html.txt" in result)
@@ -602,14 +602,14 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = self.parser.toHtml(text)
 
-        self.assertTrue('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue('<a href="__attach/first.jpg">' in result)
         self.assertTrue("maxsize_100_first.jpg" in result)
         self.assertTrue("__thumb" in result)
 
-        self.assertTrue('<A HREF="__attach/particle_01.PNG">' in result)
+        self.assertTrue('<a href="__attach/particle_01.PNG">' in result)
         self.assertTrue("maxsize_100_particle_01.PNG" in result)
 
-        self.assertFalse('<A HREF="__attach/image_01.JPG">' in result)
+        self.assertFalse('<a href="__attach/image_01.JPG">' in result)
         self.assertFalse("maxsize_100_image_01.JPG" in result)
 
         self.assertFalse("html.txt" in result)
@@ -640,14 +640,14 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = self.parser.toHtml(text)
 
-        self.assertTrue('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue('<a href="__attach/first.jpg">' in result)
         self.assertTrue("maxsize_100_first.jpg" in result)
         self.assertTrue("__thumb" in result)
 
-        self.assertTrue('<A HREF="__attach/particle_01.PNG">' in result)
+        self.assertTrue('<a href="__attach/particle_01.PNG">' in result)
         self.assertTrue("maxsize_100_particle_01.PNG" in result)
 
-        self.assertFalse('<A HREF="__attach/image_01.JPG">' in result)
+        self.assertFalse('<a href="__attach/image_01.JPG">' in result)
         self.assertFalse("maxsize_100_image_01.JPG" in result)
 
         self.assertFalse("html.txt" in result)
@@ -678,14 +678,14 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = self.parser.toHtml(text)
 
-        self.assertTrue('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue('<a href="__attach/first.jpg">' in result)
         self.assertTrue("maxsize_100_first.jpg" in result)
         self.assertTrue("__thumb" in result)
 
-        self.assertTrue('<A HREF="__attach/particle_01.PNG">' in result)
+        self.assertTrue('<a href="__attach/particle_01.PNG">' in result)
         self.assertTrue("maxsize_100_particle_01.PNG" in result)
 
-        self.assertFalse('<A HREF="__attach/image_01.JPG">' in result)
+        self.assertFalse('<a href="__attach/image_01.JPG">' in result)
         self.assertFalse("maxsize_100_image_01.JPG" in result)
 
         self.assertFalse("html.txt" in result)
@@ -716,14 +716,14 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = self.parser.toHtml(text)
 
-        self.assertTrue('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue('<a href="__attach/first.jpg">' in result)
         self.assertTrue("maxsize_100_first.jpg" in result)
         self.assertTrue("__thumb" in result)
 
-        self.assertTrue('<A HREF="__attach/particle_01.PNG">' in result)
+        self.assertTrue('<a href="__attach/particle_01.PNG">' in result)
         self.assertTrue("maxsize_100_particle_01.PNG" in result)
 
-        self.assertFalse('<A HREF="__attach/image_01.JPG">' in result)
+        self.assertFalse('<a href="__attach/image_01.JPG">' in result)
         self.assertFalse("maxsize_100_image_01.JPG" in result)
 
         self.assertFalse("html.txt" in result)
@@ -749,11 +749,11 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = self.parser.toHtml(text)
 
-        self.assertTrue('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue('<a href="__attach/first.jpg">' in result)
         self.assertTrue("__thumb" in result)
 
-        self.assertTrue('<A HREF="__attach/particle_01.PNG">' in result)
-        self.assertFalse('<A HREF="__attach/image_01.JPG">' in result)
+        self.assertTrue('<a href="__attach/particle_01.PNG">' in result)
+        self.assertFalse('<a href="__attach/image_01.JPG">' in result)
 
         self.assertFalse("html.txt" in result)
         self.assertTrue("<table" not in result)
@@ -778,11 +778,11 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = self.parser.toHtml(text)
 
-        self.assertTrue('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue('<a href="__attach/first.jpg">' in result)
         self.assertTrue("__thumb" in result)
 
-        self.assertTrue('<A HREF="__attach/particle_01.PNG">' in result)
-        self.assertFalse('<A HREF="__attach/image_01.JPG">' in result)
+        self.assertTrue('<a href="__attach/particle_01.PNG">' in result)
+        self.assertFalse('<a href="__attach/image_01.JPG">' in result)
 
         self.assertFalse("html.txt" in result)
         self.assertTrue("<table" not in result)
@@ -807,11 +807,11 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = self.parser.toHtml(text)
 
-        self.assertTrue('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue('<a href="__attach/first.jpg">' in result)
         self.assertTrue("__thumb" in result)
 
-        self.assertTrue('<A HREF="__attach/particle_01.PNG">' in result)
-        self.assertFalse('<A HREF="__attach/image_01.JPG">' in result)
+        self.assertTrue('<a href="__attach/particle_01.PNG">' in result)
+        self.assertFalse('<a href="__attach/image_01.JPG">' in result)
 
         self.assertFalse("html.txt" in result)
         self.assertTrue("<table" not in result)
@@ -833,11 +833,11 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = self.parser.toHtml(text)
 
-        self.assertTrue('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue('<a href="__attach/first.jpg">' in result)
         self.assertTrue("__thumb" in result)
 
-        self.assertTrue('<A HREF="__attach/particle_01.PNG">' in result)
-        self.assertTrue('<A HREF="__attach/image_01.JPG">' in result)
+        self.assertTrue('<a href="__attach/particle_01.PNG">' in result)
+        self.assertTrue('<a href="__attach/image_01.JPG">' in result)
 
         self.assertFalse("html.txt" in result)
 
@@ -863,11 +863,11 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = self.parser.toHtml(text)
 
-        self.assertTrue('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue('<a href="__attach/first.jpg">' in result)
         self.assertTrue("__thumb" in result)
 
-        self.assertTrue('<A HREF="__attach/particle_01.PNG">' in result)
-        self.assertTrue('<A HREF="__attach/image_01.JPG">' in result)
+        self.assertTrue('<a href="__attach/particle_01.PNG">' in result)
+        self.assertTrue('<a href="__attach/image_01.JPG">' in result)
 
         self.assertFalse("html.txt" in result)
 
@@ -887,11 +887,11 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = self.parser.toHtml(text)
 
-        self.assertTrue('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue('<a href="__attach/first.jpg">' in result)
         self.assertTrue("__thumb" in result)
         self.assertTrue("_first.jpg" in result)
 
-        self.assertTrue('<A HREF="__attach/image_01.JPG">' in result)
+        self.assertTrue('<a href="__attach/image_01.JPG">' in result)
         self.assertTrue("_image_01.JPG" in result)
 
         self.assertFalse("html.txt" in result)
@@ -908,11 +908,11 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = self.parser.toHtml(text)
 
-        self.assertTrue('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue('<a href="__attach/first.jpg">' in result)
         self.assertTrue("__thumb" in result)
         self.assertTrue("_first.jpg" in result)
 
-        self.assertTrue('<A HREF="__attach/image_01.JPG">' in result)
+        self.assertTrue('<a href="__attach/image_01.JPG">' in result)
         self.assertTrue("_image_01.JPG" in result)
 
         self.assertFalse("html.txt" in result)
@@ -929,11 +929,11 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         result = self.parser.toHtml(text)
 
-        self.assertTrue('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue('<a href="__attach/first.jpg">' in result)
         self.assertTrue("__thumb" in result)
         self.assertTrue("_first.jpg" in result)
 
-        self.assertTrue('<A HREF="__attach/image_01.JPG">' in result)
+        self.assertTrue('<a href="__attach/image_01.JPG">' in result)
         self.assertTrue("_image_01.JPG" in result)
 
         self.assertFalse("html.txt" in result)
@@ -951,11 +951,11 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         result = self.parser.toHtml(text)
         self.assertTrue("бла-бла-бла" in result)
 
-        self.assertTrue('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue('<a href="__attach/first.jpg">' in result)
         self.assertTrue("__thumb" in result)
         self.assertTrue("_first.jpg" in result)
 
-        self.assertTrue('<A HREF="__attach/image_01.JPG">' in result)
+        self.assertTrue('<a href="__attach/image_01.JPG">' in result)
         self.assertTrue("_image_01.JPG" in result)
 
     def testInvalidThumbSizeTable(self):
@@ -970,9 +970,9 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         result = self.parser.toHtml(text)
         self.assertTrue("бла-бла-бла" in result)
 
-        self.assertTrue('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue('<a href="__attach/first.jpg">' in result)
         self.assertTrue("__thumb" in result)
         self.assertTrue("_first.jpg" in result)
 
-        self.assertTrue('<A HREF="__attach/image_01.JPG">' in result)
+        self.assertTrue('<a href="__attach/image_01.JPG">' in result)
         self.assertTrue("_image_01.JPG" in result)
