@@ -976,3 +976,171 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         self.assertTrue('<a href="__attach/image_01.JPG">' in result)
         self.assertTrue("_image_01.JPG" in result)
+
+    def testSubdir_forwardslash(self):
+        subdir = 'subdir'
+
+        text = """Бла-бла-бла
+        (:thumblist:)
+            subdir/first.jpg
+            subdir/particle_01.PNG
+        (:thumblistend:)
+        бла-бла-бла"""
+
+        files = [
+            "first.jpg",
+            "particle_01.PNG",
+        ]
+        fullpath = [os.path.join(self.filesPath, fname) for fname in files]
+        attach = Attachment(self.testPage)
+        attach.createSubdir(subdir)
+        attach.attach(fullpath, subdir)
+
+        result = self.parser.toHtml(text)
+
+        self.assertTrue('<a href="__attach/subdir/first.jpg">' in result, result)
+        self.assertTrue("_first.jpg" in result)
+        self.assertTrue("__thumb" in result)
+
+        self.assertTrue('<a href="__attach/subdir/particle_01.PNG">' in result)
+        self.assertTrue("_particle_01.PNG" in result)
+
+    def testSubdir_backslash(self):
+        subdir = 'subdir'
+
+        text = """Бла-бла-бла
+        (:thumblist:)
+            subdir\\first.jpg
+            subdir\\particle_01.PNG
+        (:thumblistend:)
+        бла-бла-бла"""
+
+        files = [
+            "first.jpg",
+            "particle_01.PNG",
+        ]
+        fullpath = [os.path.join(self.filesPath, fname) for fname in files]
+        attach = Attachment(self.testPage)
+        attach.createSubdir(subdir)
+        attach.attach(fullpath, subdir)
+
+        result = self.parser.toHtml(text)
+
+        self.assertTrue('<a href="__attach/subdir/first.jpg">' in result, result)
+        self.assertTrue("_first.jpg" in result)
+        self.assertTrue("__thumb" in result)
+
+        self.assertTrue('<a href="__attach/subdir/particle_01.PNG">' in result)
+        self.assertTrue("_particle_01.PNG" in result)
+
+    def testSubdir_attach_backslash_single_quotes(self):
+        subdir = 'subdir'
+
+        text = """Бла-бла-бла
+        (:thumblist:)
+            Attach:'subdir\\first.jpg'
+            Attach:'subdir\\particle_01.PNG'
+        (:thumblistend:)
+        бла-бла-бла"""
+
+        files = [
+            "first.jpg",
+            "particle_01.PNG",
+        ]
+        fullpath = [os.path.join(self.filesPath, fname) for fname in files]
+        attach = Attachment(self.testPage)
+        attach.createSubdir(subdir)
+        attach.attach(fullpath, subdir)
+
+        result = self.parser.toHtml(text)
+
+        self.assertTrue('<a href="__attach/subdir/first.jpg">' in result, result)
+        self.assertTrue("_first.jpg" in result)
+        self.assertTrue("__thumb" in result)
+
+        self.assertTrue('<a href="__attach/subdir/particle_01.PNG">' in result)
+        self.assertTrue("_particle_01.PNG" in result)
+
+    def testSubdir_attach_backslash_double_quotes(self):
+        subdir = 'subdir'
+
+        text = """Бла-бла-бла
+        (:thumblist:)
+            Attach:"subdir\\first.jpg"
+            Attach:"subdir\\particle_01.PNG"
+        (:thumblistend:)
+        бла-бла-бла"""
+
+        files = [
+            "first.jpg",
+            "particle_01.PNG",
+        ]
+        fullpath = [os.path.join(self.filesPath, fname) for fname in files]
+        attach = Attachment(self.testPage)
+        attach.createSubdir(subdir)
+        attach.attach(fullpath, subdir)
+
+        result = self.parser.toHtml(text)
+
+        self.assertTrue('<a href="__attach/subdir/first.jpg">' in result, result)
+        self.assertTrue("_first.jpg" in result)
+        self.assertTrue("__thumb" in result)
+
+        self.assertTrue('<a href="__attach/subdir/particle_01.PNG">' in result)
+        self.assertTrue("_particle_01.PNG" in result)
+
+    def testSubdir_attach_forwardslash_single_quotes(self):
+        subdir = 'subdir'
+
+        text = """Бла-бла-бла
+        (:thumblist:)
+            Attach:'subdir/first.jpg'
+            Attach:'subdir/particle_01.PNG'
+        (:thumblistend:)
+        бла-бла-бла"""
+
+        files = [
+            "first.jpg",
+            "particle_01.PNG",
+        ]
+        fullpath = [os.path.join(self.filesPath, fname) for fname in files]
+        attach = Attachment(self.testPage)
+        attach.createSubdir(subdir)
+        attach.attach(fullpath, subdir)
+
+        result = self.parser.toHtml(text)
+
+        self.assertTrue('<a href="__attach/subdir/first.jpg">' in result, result)
+        self.assertTrue("_first.jpg" in result)
+        self.assertTrue("__thumb" in result)
+
+        self.assertTrue('<a href="__attach/subdir/particle_01.PNG">' in result)
+        self.assertTrue("_particle_01.PNG" in result)
+
+    def testSubdir_attach_forwardslash_double_quotes(self):
+        subdir = 'subdir'
+
+        text = """Бла-бла-бла
+        (:thumblist:)
+            Attach:"subdir/first.jpg"
+            Attach:"subdir/particle_01.PNG"
+        (:thumblistend:)
+        бла-бла-бла"""
+
+        files = [
+            "first.jpg",
+            "particle_01.PNG",
+        ]
+        fullpath = [os.path.join(self.filesPath, fname) for fname in files]
+        attach = Attachment(self.testPage)
+        attach.createSubdir(subdir)
+        attach.attach(fullpath, subdir)
+
+        result = self.parser.toHtml(text)
+
+        self.assertTrue('<a href="__attach/subdir/first.jpg">' in result, result)
+        self.assertTrue("_first.jpg" in result)
+        self.assertTrue("__thumb" in result)
+
+        self.assertTrue('<a href="__attach/subdir/particle_01.PNG">' in result)
+        self.assertTrue("_particle_01.PNG" in result)

@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from pathlib import Path
+
 from outwiker.pages.wiki.parser.command import Command
 from outwiker.core.attachment import Attachment
 from outwiker.pages.wiki.wikiconfig import WikiConfig
@@ -30,7 +32,7 @@ class ThumbListCommand(Command):
         """
         Возвращает имя команды, которую обрабатывает класс
         """
-        return u"thumblist"
+        return "thumblist"
 
     def execute(self, params, content):
         """
@@ -55,18 +57,19 @@ class ThumbListCommand(Command):
 
     def _parseContent(self, content):
         attach = Attachment(self.parser.page)
+        root_dir = attach.getAttachPath(create=False)
 
         filesList = self._getLinesItems(content)
         allFiles = attach.getAttachRelative()
         allFiles.sort()
 
         if len(content) == 0:
-            files = [(fname, u"") for fname in allFiles if isImage(fname)]
+            files = [(fname, "") for fname in allFiles if isImage(fname)]
         else:
             files = [
                 lineitem
                 for lineitem in filesList
-                if isImage(lineitem[0]) and lineitem[0] in allFiles
+                if isImage(lineitem[0]) and Path(root_dir, lineitem[0]).exists()
             ]
 
         return files

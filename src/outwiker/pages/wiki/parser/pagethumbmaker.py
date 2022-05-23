@@ -30,7 +30,7 @@ class PageThumbmaker (object):
         path_src = os.path.join(Attachment(page).getAttachPath(), fname)
 
         # Имя файла для превьюшки
-        fname_res = self.thumbsTemplate % (file_prefix, size, fname)
+        fname_res = self.thumbsTemplate % (file_prefix, size, fname.replace('\\', '_').replace('/', '_'))
 
         # wx не умеет сохранять в GIF, поэтому преобразуем в PNG
         if fname_res.lower().endswith(".gif"):

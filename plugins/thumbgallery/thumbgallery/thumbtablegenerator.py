@@ -74,7 +74,7 @@ class ThumbTableGenerator(BaseThumbGenerator):
         image = (
             """<a href="{attachdir}/{imagename}"><img src="{thumbpath}"/></a>""".format(
                 attachdir=PAGE_ATTACH_DIR,
-                imagename=item[0],
+                imagename=item[0].replace('\\', '/'),
                 thumbpath=self._getThumbnail(self._parser.page, item[0]),
             )
         )
@@ -92,5 +92,5 @@ class ThumbTableGenerator(BaseThumbGenerator):
             itemsText[i : i + self._cols] for i in range(0, len(itemsText), self._cols)
         ]
 
-        rows = [self._rowTemplate.format(row=u"".join(row)) for row in splitItems]
-        return u"".join(rows)
+        rows = [self._rowTemplate.format(row="".join(row)) for row in splitItems]
+        return "".join(rows)
