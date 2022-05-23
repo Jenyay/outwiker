@@ -35,6 +35,7 @@ class WikiEditorPanel(BasePrefPanel):
         self._stylesList.addStyle(_("Command"), self._config.command.value)
         self._stylesList.addStyle(_("Comment"), self._config.comment.value)
         self._stylesList.addStyle(_("Attachments"), self._config.attachment.value)
+        self._stylesList.addStyle(_("Thumbnail"), self._config.thumbnail.value)
 
     def Save(self):
         self._config.link.value = self._stylesList.getStyle(0)
@@ -42,3 +43,4 @@ class WikiEditorPanel(BasePrefPanel):
         self._config.command.value = self._stylesList.getStyle(2)
         self._config.comment.value = self._stylesList.getStyle(3)
         self._config.attachment.value = self._stylesList.getStyle(4)
+        self._config.thumbnail.value = self._stylesList.getStyle(5)

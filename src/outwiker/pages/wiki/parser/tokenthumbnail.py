@@ -10,7 +10,7 @@ from .pagethumbmaker import PageThumbmaker
 from ..wikiconfig import WikiConfig
 
 
-class ThumbnailFactory (object):
+class ThumbnailFactory:
     """
     Класс для создания токена ThumbnailToken
     """
@@ -19,7 +19,7 @@ class ThumbnailFactory (object):
         return ThumbnailToken(parser).getToken()
 
 
-class ThumbnailToken (object):
+class ThumbnailToken:
     """
     Класс, содержащий все необходимое для разбора и создания превьюшек
     картинок на вики-странице
@@ -69,6 +69,6 @@ class ThumbnailToken (object):
             thumb = func(self.parser.page, fname, size)
 
         except (ThumbException, IOError):
-            return _(u"<b>Can't create thumbnail for \"{}\"</b>").format(fname)
+            return _("<b>Can't create thumbnail for \"{}\"</b>").format(fname)
 
-        return u'<a href="%s/%s"><img src="%s"/></a>' % (PAGE_ATTACH_DIR, fname, thumb.replace("\\", "/"))
+        return '<a href="{}/{}"><img src="{}"/></a>'.format(PAGE_ATTACH_DIR, fname, thumb.replace("\\", "/"))

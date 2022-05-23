@@ -13,6 +13,7 @@ from .parser.tokenpreformat import PreFormatFactory
 from .parser.tokentext import TextFactory
 from .parser.tokencomment import CommentFactory
 from .parser.tokenattach import AttachFactory
+from .parser.tokenthumbnail import ThumbnailFactory
 
 from outwiker.gui.texteditorhelper import TextEditorHelper
 from outwiker.gui.stylinginfo import StylingInfo
@@ -50,10 +51,13 @@ class WikiColorizer:
             None).setParseAction(lambda s, l, t: None)
         self.attachment = AttachFactory.make(
             None).setParseAction(lambda s, l, t: None)
+        self.thumbnail = ThumbnailFactory.make(
+            None).setParseAction(lambda s, l, t: None)
 
         if colorizeSyntax:
             self.colorParser = (
                 self.url |
+                self.thumbnail |
                 self.attachment |
                 self.text |
                 self.linebreak |
@@ -70,6 +74,7 @@ class WikiColorizer:
 
             self.insideBlockParser = (
                 self.url |
+                self.thumbnail |
                 self.attachment |
                 self.text |
                 self.linebreak |
@@ -201,6 +206,12 @@ class WikiColorizer:
             elif tokenname == "attach":
                 self._helper.setStyle(stylelist,
                                       self._editor.STYLE_ATTACHMENT_ID,
+                                      bytepos_start,
+                                      bytepos_end)
+
+            elif tokenname == "thumbnail":
+                self._helper.setStyle(stylelist,
+                                      self._editor.STYLE_THUMBNAIL_ID,
                                       bytepos_start,
                                       bytepos_end)
 
