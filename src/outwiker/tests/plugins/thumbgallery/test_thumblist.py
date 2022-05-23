@@ -10,13 +10,11 @@ from outwiker.pages.wiki.parserfactory import ParserFactory
 from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
-class ThumbListPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
+class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def setUp(self):
         self.initApplication()
         self.wikiroot = self.createWiki()
-        self.testPage = WikiPageFactory().create(self.wikiroot,
-                                                 "Страница 1",
-                                                 [])
+        self.testPage = WikiPageFactory().create(self.wikiroot, "Страница 1", [])
 
         self.maxDiff = None
         self.filesPath = "testdata/samplefiles/"
@@ -62,11 +60,8 @@ class ThumbListPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertTrue("_first.jpg" in result)
 
         self.assertTrue(
-            os.path.exists(
-                os.path.join(
-                    self.testPage.path,
-                    "__attach",
-                    "__thumb")))
+            os.path.exists(os.path.join(self.testPage.path, "__attach", "__thumb"))
+        )
         self.assertTrue("<table" not in result)
 
     def testAttachThumbListFull2(self):
@@ -168,7 +163,8 @@ class ThumbListPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
             "image_01.JPG",
             "particle_01.PNG",
             "image.png",
-            "html.txt"]
+            "html.txt",
+        ]
         fullpath = [os.path.join(self.filesPath, fname) for fname in files]
         Attachment(self.testPage).attach(fullpath)
 
@@ -200,7 +196,8 @@ class ThumbListPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
             "image_01.JPG",
             "particle_01.PNG",
             "image.png",
-            "html.txt"]
+            "html.txt",
+        ]
         fullpath = [os.path.join(self.filesPath, fname) for fname in files]
         Attachment(self.testPage).attach(fullpath)
 
@@ -232,7 +229,8 @@ class ThumbListPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
             "image_01.JPG",
             "particle_01.PNG",
             "image.png",
-            "html.txt"]
+            "html.txt",
+        ]
         fullpath = [os.path.join(self.filesPath, fname) for fname in files]
         Attachment(self.testPage).attach(fullpath)
 
@@ -269,7 +267,8 @@ class ThumbListPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
             "image_01.JPG",
             "particle_01.PNG",
             "image.png",
-            "html.txt"]
+            "html.txt",
+        ]
         fullpath = [os.path.join(self.filesPath, fname) for fname in files]
         Attachment(self.testPage).attach(fullpath)
 
@@ -306,7 +305,140 @@ class ThumbListPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
             "image_01.JPG",
             "particle_01.PNG",
             "image.png",
-            "html.txt"]
+            "html.txt",
+        ]
+        fullpath = [os.path.join(self.filesPath, fname) for fname in files]
+        Attachment(self.testPage).attach(fullpath)
+
+        result = self.parser.toHtml(text)
+
+        self.assertTrue('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue("_first.jpg" in result)
+        self.assertTrue("__thumb" in result)
+
+        self.assertTrue('<A HREF="__attach/particle_01.PNG">' in result)
+        self.assertTrue("_particle_01.PNG" in result)
+
+        self.assertFalse('<A HREF="__attach/image_01.JPG">' in result)
+        self.assertFalse("_image_01.JPG" in result)
+
+        self.assertFalse("html.txt" in result)
+        self.assertTrue("<table" not in result)
+
+    def testAttachList4_singlequotes(self):
+        text = """Бла-бла-бла
+        (:thumblist:)
+            Attach:'first.jpg'
+            Attach:'particle_01.PNG'
+        (:thumblistend:)
+        бла-бла-бла"""
+
+        files = [
+            "first.jpg",
+            "image_01.JPG",
+            "particle_01.PNG",
+            "image.png",
+            "html.txt",
+        ]
+        fullpath = [os.path.join(self.filesPath, fname) for fname in files]
+        Attachment(self.testPage).attach(fullpath)
+
+        result = self.parser.toHtml(text)
+
+        self.assertTrue('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue("_first.jpg" in result)
+        self.assertTrue("__thumb" in result)
+
+        self.assertTrue('<A HREF="__attach/particle_01.PNG">' in result)
+        self.assertTrue("_particle_01.PNG" in result)
+
+        self.assertFalse('<A HREF="__attach/image_01.JPG">' in result)
+        self.assertFalse("_image_01.JPG" in result)
+
+        self.assertFalse("html.txt" in result)
+        self.assertTrue("<table" not in result)
+
+    def testAttachGallery4_singlequotes(self):
+        text = """Бла-бла-бла
+        (:thumbgallery:)
+            Attach:'first.jpg'
+            Attach:'particle_01.PNG'
+        (:thumbgalleryend:)
+        бла-бла-бла"""
+
+        files = [
+            "first.jpg",
+            "image_01.JPG",
+            "particle_01.PNG",
+            "image.png",
+            "html.txt",
+        ]
+        fullpath = [os.path.join(self.filesPath, fname) for fname in files]
+        Attachment(self.testPage).attach(fullpath)
+
+        result = self.parser.toHtml(text)
+
+        self.assertTrue('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue("_first.jpg" in result)
+        self.assertTrue("__thumb" in result)
+
+        self.assertTrue('<A HREF="__attach/particle_01.PNG">' in result)
+        self.assertTrue("_particle_01.PNG" in result)
+
+        self.assertFalse('<A HREF="__attach/image_01.JPG">' in result)
+        self.assertFalse("_image_01.JPG" in result)
+
+        self.assertFalse("html.txt" in result)
+        self.assertTrue("<table" not in result)
+
+    def testAttachList5_doublequotes(self):
+        text = """Бла-бла-бла
+        (:thumblist:)
+            Attach:"first.jpg"
+            Attach:"particle_01.PNG"
+        (:thumblistend:)
+        бла-бла-бла"""
+
+        files = [
+            "first.jpg",
+            "image_01.JPG",
+            "particle_01.PNG",
+            "image.png",
+            "html.txt",
+        ]
+        fullpath = [os.path.join(self.filesPath, fname) for fname in files]
+        Attachment(self.testPage).attach(fullpath)
+
+        result = self.parser.toHtml(text)
+
+        self.assertTrue('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue("_first.jpg" in result)
+        self.assertTrue("__thumb" in result)
+
+        self.assertTrue('<A HREF="__attach/particle_01.PNG">' in result)
+        self.assertTrue("_particle_01.PNG" in result)
+
+        self.assertFalse('<A HREF="__attach/image_01.JPG">' in result)
+        self.assertFalse("_image_01.JPG" in result)
+
+        self.assertFalse("html.txt" in result)
+        self.assertTrue("<table" not in result)
+
+    def testAttachGallery5_doublequotes(self):
+        text = """Бла-бла-бла
+        (:thumbgallery:)
+            Attach:"first.jpg"
+            Attach:"particle_01.PNG"
+        (:thumbgalleryend:)
+        бла-бла-бла"""
+
+        files = [
+            "first.jpg",
+            "image_01.JPG",
+            "particle_01.PNG",
+            "image.png",
+            "html.txt",
+        ]
         fullpath = [os.path.join(self.filesPath, fname) for fname in files]
         Attachment(self.testPage).attach(fullpath)
 
@@ -344,7 +476,8 @@ class ThumbListPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
             "particle_01.PNG",
             "image.png",
             "html.txt",
-            "картинка с пробелами.png"]
+            "картинка с пробелами.png",
+        ]
         fullpath = [os.path.join(self.filesPath, fname) for fname in files]
         Attachment(self.testPage).attach(fullpath)
 
@@ -382,7 +515,8 @@ class ThumbListPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
             "particle_01.PNG",
             "image.png",
             "html.txt",
-            "картинка с пробелами.png"]
+            "картинка с пробелами.png",
+        ]
         fullpath = [os.path.join(self.filesPath, fname) for fname in files]
         Attachment(self.testPage).attach(fullpath)
 
@@ -420,7 +554,8 @@ class ThumbListPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
             "particle_01.PNG",
             "image.png",
             "html.txt",
-            "картинка с пробелами.png"]
+            "картинка с пробелами.png",
+        ]
         fullpath = [os.path.join(self.filesPath, fname) for fname in files]
         Attachment(self.testPage).attach(fullpath)
 
@@ -460,7 +595,8 @@ class ThumbListPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
             "image_01.JPG",
             "particle_01.PNG",
             "image.png",
-            "html.txt"]
+            "html.txt",
+        ]
         fullpath = [os.path.join(self.filesPath, fname) for fname in files]
         Attachment(self.testPage).attach(fullpath)
 
@@ -497,7 +633,8 @@ class ThumbListPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
             "image_01.JPG",
             "particle_01.PNG",
             "image.png",
-            "html.txt"]
+            "html.txt",
+        ]
         fullpath = [os.path.join(self.filesPath, fname) for fname in files]
         Attachment(self.testPage).attach(fullpath)
 
@@ -534,7 +671,8 @@ class ThumbListPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
             "image_01.JPG",
             "particle_01.PNG",
             "image.png",
-            "html.txt"]
+            "html.txt",
+        ]
         fullpath = [os.path.join(self.filesPath, fname) for fname in files]
         Attachment(self.testPage).attach(fullpath)
 
@@ -571,7 +709,8 @@ class ThumbListPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
             "image_01.JPG",
             "particle_01.PNG",
             "image.png",
-            "html.txt"]
+            "html.txt",
+        ]
         fullpath = [os.path.join(self.filesPath, fname) for fname in files]
         Attachment(self.testPage).attach(fullpath)
 
@@ -603,7 +742,66 @@ class ThumbListPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
             "image_01.JPG",
             "particle_01.PNG",
             "image.png",
-            "html.txt"]
+            "html.txt",
+        ]
+        fullpath = [os.path.join(self.filesPath, fname) for fname in files]
+        Attachment(self.testPage).attach(fullpath)
+
+        result = self.parser.toHtml(text)
+
+        self.assertTrue('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue("__thumb" in result)
+
+        self.assertTrue('<A HREF="__attach/particle_01.PNG">' in result)
+        self.assertFalse('<A HREF="__attach/image_01.JPG">' in result)
+
+        self.assertFalse("html.txt" in result)
+        self.assertTrue("<table" not in result)
+
+    def testAttachListComments3_single_quotes(self):
+        text = """Бла-бла-бла
+        (:thumblist:)
+            Attach:'first.jpg'    | Первый
+            Attach:'particle_01.PNG'|Комментарий к картинке
+        (:thumblistend:)
+        бла-бла-бла"""
+
+        files = [
+            "first.jpg",
+            "image_01.JPG",
+            "particle_01.PNG",
+            "image.png",
+            "html.txt",
+        ]
+        fullpath = [os.path.join(self.filesPath, fname) for fname in files]
+        Attachment(self.testPage).attach(fullpath)
+
+        result = self.parser.toHtml(text)
+
+        self.assertTrue('<A HREF="__attach/first.jpg">' in result)
+        self.assertTrue("__thumb" in result)
+
+        self.assertTrue('<A HREF="__attach/particle_01.PNG">' in result)
+        self.assertFalse('<A HREF="__attach/image_01.JPG">' in result)
+
+        self.assertFalse("html.txt" in result)
+        self.assertTrue("<table" not in result)
+
+    def testAttachListComments3_double_quotes(self):
+        text = """Бла-бла-бла
+        (:thumblist:)
+            Attach:"first.jpg"    | Первый
+            Attach:"particle_01.PNG"|Комментарий к картинке
+        (:thumblistend:)
+        бла-бла-бла"""
+
+        files = [
+            "first.jpg",
+            "image_01.JPG",
+            "particle_01.PNG",
+            "image.png",
+            "html.txt",
+        ]
         fullpath = [os.path.join(self.filesPath, fname) for fname in files]
         Attachment(self.testPage).attach(fullpath)
 
@@ -628,7 +826,8 @@ class ThumbListPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
             "image_01.JPG",
             "particle_01.PNG",
             "image.png",
-            "html.txt"]
+            "html.txt",
+        ]
         fullpath = [os.path.join(self.filesPath, fname) for fname in files]
         Attachment(self.testPage).attach(fullpath)
 
@@ -657,7 +856,8 @@ class ThumbListPluginTest (unittest.TestCase, BaseOutWikerGUIMixin):
             "image_01.JPG",
             "particle_01.PNG",
             "image.png",
-            "html.txt"]
+            "html.txt",
+        ]
         fullpath = [os.path.join(self.filesPath, fname) for fname in files]
         Attachment(self.testPage).attach(fullpath)
 

@@ -1,5 +1,20 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <versions>
+  <version number="1.5">
+		<download href="https://jenyay.net/uploads/Outwiker/ThumbGallery/thumbgallery-1.5.zip">
+			<requirements>
+				<api>3.868</api>
+			</requirements>
+		</download>
+		<changes>
+			<change>Added the supporting subdirectories in attachments.</change>
+		</changes>
+
+		<changes lang="ru">
+			<change>Добавлена поддержка вложенных папок в прикрепленных файлах.</change>
+		</changes>
+	</version>
+
   <version number="1.4.1" date="2021-07-04">
 		<download href="https://jenyay.net/uploads/Outwiker/ThumbGallery/thumbgallery-1.4.1.zip">
 			<requirements>

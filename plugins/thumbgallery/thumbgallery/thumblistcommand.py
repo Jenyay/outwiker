@@ -18,6 +18,7 @@ class ThumbListCommand(Command):
     Список файлов
     (:thumblistend:)
     """
+
     def __init__(self, parser):
         """
         parser - экземпляр парсера
@@ -46,10 +47,9 @@ class ThumbListCommand(Command):
         if columnsCount == 0:
             generator = ThumbStreamGenerator(lineItems, thumbsize, self.parser)
         else:
-            generator = ThumbTableGenerator(lineItems,
-                                            thumbsize,
-                                            self.parser,
-                                            columnsCount)
+            generator = ThumbTableGenerator(
+                lineItems, thumbsize, self.parser, columnsCount
+            )
 
         return generator.generate()
 
@@ -63,9 +63,11 @@ class ThumbListCommand(Command):
         if len(content) == 0:
             files = [(fname, u"") for fname in allFiles if isImage(fname)]
         else:
-            files = [lineitem for lineitem
-                     in filesList
-                     if isImage(lineitem[0]) and lineitem[0] in allFiles]
+            files = [
+                lineitem
+                for lineitem in filesList
+                if isImage(lineitem[0]) and lineitem[0] in allFiles
+            ]
 
         return files
 
@@ -75,18 +77,22 @@ class ThumbListCommand(Command):
         перечисленных в теле команды.
         Возвращает список кортежей: (имя файла, комментарий)
         """
+
         def _removeAttach(line):
             """
-            Удалить фразу "Attach:" в начале строки
+            Remove "Attach:" notation
             """
-            attachPhrase = u"attach:"
-            return (line[len(attachPhrase):]
-                    if line.lower().startswith(attachPhrase)
-                    else line)
+            attachPhrase = "attach:"
+            if line.lower().startswith(attachPhrase):
+                line = line[len(attachPhrase) :]
 
-        lines = [self._splitLine(_removeAttach(fname.strip()))
-                 for fname in content.split(u"\n")
-                 if len(fname.strip()) != 0]
+            return line
+
+        lines = [
+            self._splitLine(_removeAttach(fname.strip()))
+            for fname in content.split("\n")
+            if len(fname.strip()) != 0
+        ]
 
         return lines
 
@@ -97,10 +103,19 @@ class ThumbListCommand(Command):
         """
         splitItems = line.rsplit("|", 1)
         if len(splitItems) > 1:
-            result = (splitItems[0].strip(), splitItems[1].strip())
+            fname = splitItems[0].strip()
+            comment = splitItems[1].strip()
         else:
-            result = (line, u"")
+            fname = line
+            comment = ""
 
+        if fname.startswith('"') and fname.endswith('"'):
+            fname = fname[1:-1]
+
+        if fname.startswith("'") and fname.endswith("'"):
+            fname = fname[1:-1]
+
+        result = (fname, comment)
         return result
 
     def _getColumnsCount(self, paramsDict):
