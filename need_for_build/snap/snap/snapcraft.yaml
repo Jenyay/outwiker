@@ -96,9 +96,7 @@ parts:
             #snapcraftctl build
             wget -O $SNAPCRAFT_PART_INSTALL/usr/bin/get-pip.py https://bootstrap.pypa.io/get-pip.py
             python3.9 $SNAPCRAFT_PART_INSTALL/usr/bin/get-pip.py
-            #python3.9 -m venv $SNAPCRAFT_PART_INSTALL/usr/share/venv
-            #. $SNAPCRAFT_PART_INSTALL/usr/share/venv/bin/activate
-            python3.9 -m pip install https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-18.04/wxPython-4.1.1-cp39-cp39-linux_x86_64.whl Pillow==8.2.0 cyhunspell==2.0.2 idna==2.10 pyparsing==3.0.9
+            python3.9 -m pip install https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-18.04/wxPython-4.1.1-cp39-cp39-linux_x86_64.whl Pillow==9.1.1 cyhunspell==2.0.2 idna==2.10 pyparsing==3.0.9
             cp -r $SNAPCRAFT_PART_SRC/usr $SNAPCRAFT_PART_INSTALL
             chmod +x $SNAPCRAFT_PART_INSTALL/usr/bin/outwiker
 
