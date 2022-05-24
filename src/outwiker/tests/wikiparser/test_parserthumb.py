@@ -14,19 +14,12 @@ from outwiker.tests.utils import removeDir
 from outwiker.tests.basetestcases import BaseOutWikerMixin
 
 
-class ParserThumbTest (BaseOutWikerMixin, TestCase):
+class ParserThumbTest(BaseOutWikerMixin, TestCase):
     def setUp(self):
         self.initApplication()
         self.encoding = "utf8"
 
         self.filesPath = "testdata/samplefiles/"
-
-        self.pagelinks = [
-            "Страница 1",
-            "/Страница 1",
-            "/Страница 2/Страница 3"]
-        self.pageComments = ["Страницо 1", "Страницо 1", "Страницо 3"]
-
         self.__createWiki()
 
         factory = ParserFactory()
@@ -40,24 +33,19 @@ class ParserThumbTest (BaseOutWikerMixin, TestCase):
         self.path = mkdtemp(prefix='Абырвалг абыр')
 
         self.wikiroot = WikiDocument.create(self.path)
-        WikiPageFactory().create(self.wikiroot, "Страница 2", [])
-        self.testPage = self.wikiroot["Страница 2"]
+        self.testPage = WikiPageFactory().create(self.wikiroot, "Страница 2", [])
 
-        files = ["accept.png", "add.png", "anchor.png", "filename.tmp",
-                 "файл с пробелами.tmp", "картинка с пробелами.png",
+        files = ["accept.png", "add.png", "anchor.png",
+                 "картинка с пробелами.png",
                  "image.jpg", "image.jpeg", "image.png", "image.tif",
                  "image.tiff", "image.gif", "image_01.JPG", "dir", "dir.xxx",
                  "dir.png", "particle_01.PNG"]
 
-        fullFilesPath = [
-            os.path.join(
-                self.filesPath,
-                fname) for fname in files]
+        fullFilesPath = [os.path.join(self.filesPath, fname)
+                         for fname in files]
 
-        self.attach_page2 = Attachment(self.wikiroot["Страница 2"])
-
-        # Прикрепим к двум страницам файлы
-        Attachment(self.testPage).attach(fullFilesPath)
+        self.__attach = Attachment(self.testPage)
+        self.__attach.attach(fullFilesPath)
 
     def tearDown(self):
         self.destroyApplication()
@@ -74,11 +62,10 @@ class ParserThumbTest (BaseOutWikerMixin, TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding))
 
         path = os.path.join(
-            self.attach_page2.getAttachPath(),
+            self.__attach.getAttachPath(),
             "__thumb/th_width_100_image.jpg")
         self.assertTrue(os.path.exists(path), path.encode(self.encoding))
 
@@ -92,11 +79,10 @@ class ParserThumbTest (BaseOutWikerMixin, TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding))
 
         path = os.path.join(
-            self.attach_page2.getAttachPath(),
+            self.__attach.getAttachPath(),
             "__thumb/th_width_100_image.jpg")
         self.assertTrue(os.path.exists(path), path.encode(self.encoding))
 
@@ -110,11 +96,10 @@ class ParserThumbTest (BaseOutWikerMixin, TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding))
 
         path = os.path.join(
-            self.attach_page2.getAttachPath(),
+            self.__attach.getAttachPath(),
             "__thumb/th_width_100_image.jpeg")
         self.assertTrue(os.path.exists(path), path.encode(self.encoding))
 
@@ -128,11 +113,10 @@ class ParserThumbTest (BaseOutWikerMixin, TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding))
 
         path = os.path.join(
-            self.attach_page2.getAttachPath(),
+            self.__attach.getAttachPath(),
             "__thumb/th_width_100_image.png")
         self.assertTrue(os.path.exists(path), path.encode(self.encoding))
 
@@ -146,11 +130,10 @@ class ParserThumbTest (BaseOutWikerMixin, TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding))
 
         path = os.path.join(
-            self.attach_page2.getAttachPath(),
+            self.__attach.getAttachPath(),
             "__thumb/th_width_100_image.png")
         self.assertTrue(os.path.exists(path), path.encode(self.encoding))
 
@@ -164,11 +147,10 @@ class ParserThumbTest (BaseOutWikerMixin, TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding))
 
         path = os.path.join(
-            self.attach_page2.getAttachPath(),
+            self.__attach.getAttachPath(),
             "__thumb/th_height_100_image.jpg")
         self.assertTrue(os.path.exists(path), path.encode(self.encoding))
 
@@ -182,11 +164,10 @@ class ParserThumbTest (BaseOutWikerMixin, TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding))
 
         path = os.path.join(
-            self.attach_page2.getAttachPath(),
+            self.__attach.getAttachPath(),
             "__thumb/th_height_100_image.jpg")
         self.assertTrue(os.path.exists(path), path.encode(self.encoding))
 
@@ -200,11 +181,10 @@ class ParserThumbTest (BaseOutWikerMixin, TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding))
 
         path = os.path.join(
-            self.attach_page2.getAttachPath(),
+            self.__attach.getAttachPath(),
             "__thumb/th_height_100_image.jpeg")
         self.assertTrue(os.path.exists(path), path.encode(self.encoding))
 
@@ -217,11 +197,10 @@ class ParserThumbTest (BaseOutWikerMixin, TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding))
 
         path = os.path.join(
-            self.attach_page2.getAttachPath(),
+            self.__attach.getAttachPath(),
             "__thumb/th_height_100_image.png")
         self.assertTrue(os.path.exists(path), path.encode(self.encoding))
 
@@ -235,11 +214,10 @@ class ParserThumbTest (BaseOutWikerMixin, TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding))
 
         path = os.path.join(
-            self.attach_page2.getAttachPath(),
+            self.__attach.getAttachPath(),
             "__thumb/th_height_100_image.png")
         self.assertTrue(os.path.exists(path), path.encode(self.encoding))
 
@@ -253,11 +231,10 @@ class ParserThumbTest (BaseOutWikerMixin, TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding))
 
         path = os.path.join(
-            self.attach_page2.getAttachPath(),
+            self.__attach.getAttachPath(),
             "__thumb/th_maxsize_250_image.jpg")
         self.assertTrue(os.path.exists(path), path.encode(self.encoding))
 
@@ -270,11 +247,10 @@ class ParserThumbTest (BaseOutWikerMixin, TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding))
 
         path = os.path.join(
-            self.attach_page2.getAttachPath(),
+            self.__attach.getAttachPath(),
             "__thumb/th_maxsize_250_image.jpeg")
         self.assertTrue(os.path.exists(path), path.encode(self.encoding))
 
@@ -287,11 +263,10 @@ class ParserThumbTest (BaseOutWikerMixin, TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding))
 
         path = os.path.join(
-            self.attach_page2.getAttachPath(),
+            self.__attach.getAttachPath(),
             "__thumb/th_maxsize_250_image.png")
         self.assertTrue(os.path.exists(path), path.encode(self.encoding))
 
@@ -309,10 +284,9 @@ class ParserThumbTest (BaseOutWikerMixin, TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding))
 
-        path = os.path.join(self.attach_page2.getAttachPath(),
+        path = os.path.join(self.__attach.getAttachPath(),
                             "__thumb/th_maxsize_250_particle_01.PNG")
 
         self.assertTrue(os.path.exists(path), path.encode(self.encoding))
@@ -327,11 +301,10 @@ class ParserThumbTest (BaseOutWikerMixin, TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding))
 
         path = os.path.join(
-            self.attach_page2.getAttachPath(),
+            self.__attach.getAttachPath(),
             "__thumb/th_maxsize_250_image.png")
         self.assertTrue(os.path.exists(path), path.encode(self.encoding))
 
@@ -345,11 +318,10 @@ class ParserThumbTest (BaseOutWikerMixin, TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding))
 
         path = os.path.join(
-            self.attach_page2.getAttachPath(),
+            self.__attach.getAttachPath(),
             "__thumb/th_maxsize_300_image.jpg")
         self.assertTrue(os.path.exists(path), path.encode(self.encoding))
 
@@ -363,11 +335,10 @@ class ParserThumbTest (BaseOutWikerMixin, TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding))
 
         path = os.path.join(
-            self.attach_page2.getAttachPath(),
+            self.__attach.getAttachPath(),
             "__thumb/th_maxsize_300_image.jpg")
         self.assertTrue(os.path.exists(path), path.encode(self.encoding))
 
@@ -381,11 +352,10 @@ class ParserThumbTest (BaseOutWikerMixin, TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding))
 
         path = os.path.join(
-            self.attach_page2.getAttachPath(),
+            self.__attach.getAttachPath(),
             "__thumb/th_maxsize_300_image.png")
         self.assertTrue(os.path.exists(path), path.encode(self.encoding))
 
@@ -399,11 +369,10 @@ class ParserThumbTest (BaseOutWikerMixin, TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding))
 
         path = os.path.join(
-            self.attach_page2.getAttachPath(),
+            self.__attach.getAttachPath(),
             "__thumb/th_maxsize_300_image.png")
         self.assertTrue(os.path.exists(path), path.encode(self.encoding))
 
@@ -419,10 +388,9 @@ class ParserThumbTest (BaseOutWikerMixin, TestCase):
         self.assertEqual(
             self.parser.toHtml(text),
             result,
-            self.parser.toHtml(text).encode(
-                self.encoding))
+            self.parser.toHtml(text).encode(self.encoding))
 
         path = os.path.join(
-            self.attach_page2.getAttachPath(),
+            self.__attach.getAttachPath(),
             "__thumb/th_maxsize_333_image.png")
         self.assertTrue(os.path.exists(path), path.encode(self.encoding))

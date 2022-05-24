@@ -16,20 +16,8 @@ from outwiker.core.attachment import Attachment
 
 class ThumbnailsTest(unittest.TestCase):
     def setUp(self):
-        self.encoding = "utf8"
-
         self.filesPath = "testdata/samplefiles/"
-
-        self.url1 = "http://example.com"
-        self.url2 = "https://jenyay.net/Photo/Nature?action=imgtpl&G=1&upname=tsaritsyno_01.jpg"
-
-        self.pagelinks = ["Страница 1",
-                          "/Страница 1",
-                          "/Страница 2/Страница 3"]
-        self.pageComments = ["Страницо 1", "Страницо 1", "Страницо 3"]
-
         self.__createWiki()
-
         self.parser = ParserFactory().make(self.testPage, Application.config)
 
     def __createWiki(self):

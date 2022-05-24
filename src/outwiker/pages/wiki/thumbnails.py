@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 import os
 import os.path
@@ -8,11 +8,11 @@ from outwiker.core.attachment import Attachment
 from outwiker.core.defines import PAGE_ATTACH_DIR
 
 
-class Thumbnails (object):
+class Thumbnails:
     """
     Класс для работы с директорией с вложенными файлами
     """
-    thumbDir = u"__thumb"
+    thumbDir = "__thumb"
 
     def __init__(self, page):
         self.page = page
