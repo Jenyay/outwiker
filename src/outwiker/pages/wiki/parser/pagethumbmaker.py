@@ -7,12 +7,11 @@ from ..thumbnails import Thumbnails
 from outwiker.core.attachment import Attachment
 
 
-class PageThumbmaker (object):
+class PageThumbmaker:
     def __init__(self):
         # Имя файла превьюшки: th_width_200_fname
         # Имя файла превьюшки: th_height_100_fname
         self.thumbsTemplate = "th_%s_%d_%s"
-
         self.thumbmaker = ThumbmakerPil()
 
     def __createThumb(self, page, fname, size, file_prefix, func):
@@ -29,21 +28,26 @@ class PageThumbmaker (object):
 
         path_src = os.path.join(Attachment(page).getAttachPath(), fname)
 
+        fname_subdir = os.path.dirname(fname)
+        fname_base = os.path.basename(fname)
+        subdir_full = os.path.join(path_thumbdir, fname_subdir)
+
         # Имя файла для превьюшки
-        fname_res = self.thumbsTemplate % (file_prefix, size, fname.replace('\\', '_').replace('/', '_'))
+        fname_res = self.thumbsTemplate % (file_prefix, size, fname_base)
 
         # wx не умеет сохранять в GIF, поэтому преобразуем в PNG
         if fname_res.lower().endswith(".gif"):
             fname_res = fname_res.replace(".gif", ".png")
 
-        path_res = os.path.join(path_thumbdir, fname_res)
+        path_res = os.path.join(subdir_full, fname_res)
 
         # Путь, относительный к корню страницы
-        relative_path = os.path.join(
-            Thumbnails.getRelativeThumbDir(), fname_res)
+        relative_path = os.path.join(Thumbnails.getRelativeThumbDir(), fname_subdir, fname_res)
 
         if os.path.exists(path_res):
             return relative_path
+
+        os.makedirs(subdir_full, exist_ok=True)
 
         # Возможно исключение ThumbException
         func(path_src, size, path_res)
@@ -59,7 +63,7 @@ class PageThumbmaker (object):
 
         Возвращает путь относительно корня страницы
         """
-        return self.__createThumb(page, fname, width, u"width", self.thumbmaker.thumbByWidth)
+        return self.__createThumb(page, fname, width, "width", self.thumbmaker.thumbByWidth)
 
     def createThumbByHeight(self, page, fname, height):
         """
@@ -70,7 +74,7 @@ class PageThumbmaker (object):
 
         Возвращает путь относительно корня страницы
         """
-        return self.__createThumb(page, fname, height, u"height", self.thumbmaker.thumbByHeight)
+        return self.__createThumb(page, fname, height, "height", self.thumbmaker.thumbByHeight)
 
     def createThumbByMaxSize(self, page, fname, maxsize):
         """
@@ -81,4 +85,4 @@ class PageThumbmaker (object):
 
         Возвращает путь относительно корня страницы
         """
-        return self.__createThumb(page, fname, maxsize, u"maxsize", self.thumbmaker.thumbByMaxSize)
+        return self.__createThumb(page, fname, maxsize, "maxsize", self.thumbmaker.thumbByMaxSize)

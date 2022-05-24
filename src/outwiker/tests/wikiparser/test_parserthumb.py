@@ -52,6 +52,54 @@ class ParserThumbTest(BaseOutWikerMixin, TestCase):
         self.__wikiconfig.thumbSizeOptions.value = WikiConfig.THUMB_SIZE_DEFAULT
         removeDir(self.path)
 
+    def testThumbSimple(self):
+        text = '% width = 100 px % Attach:image.jpg %%'
+        path = os.path.join("__attach", "__thumb", "th_width_100_image.jpg")
+
+        result_excepted = '<a href="__attach/image.jpg"><img src="{path}"/></a>'.format(
+            path=path.replace("\\", "/"))
+
+        result = self.parser.toHtml(text)
+
+        self.assertEqual(result, result_excepted, result)
+
+        path = os.path.join(self.__attach.getAttachPath(),
+                            "__thumb/th_width_100_image.jpg")
+
+        self.assertTrue(os.path.exists(path), path)
+
+    def testThumbSubdirDoubleQuotes(self):
+        text = '% width = 100 px % Attach:"dir/attach.png" %%'
+        path = os.path.join("__attach", "__thumb", "dir" ,"th_width_100_attach.png")
+
+        result_excepted = '<a href="__attach/dir/attach.png"><img src="{path}"/></a>'.format(
+            path=path.replace("\\", "/"))
+
+        result = self.parser.toHtml(text)
+
+        self.assertEqual(result, result_excepted, result)
+
+        path = os.path.join(self.__attach.getAttachPath(),
+                            "__thumb/dir/th_width_100_attach.png")
+
+        self.assertTrue(os.path.exists(path), path)
+
+    def testThumbSubdirSingleQuotes(self):
+        text = "% width = 100 px % Attach:'dir/attach.png' %%"
+        path = os.path.join("__attach", "__thumb", "dir" ,"th_width_100_attach.png")
+
+        result_excepted = '<a href="__attach/dir/attach.png"><img src="{path}"/></a>'.format(
+            path=path.replace("\\", "/"))
+
+        result = self.parser.toHtml(text)
+
+        self.assertEqual(result, result_excepted, result)
+
+        path = os.path.join(self.__attach.getAttachPath(),
+                            "__thumb/dir/th_width_100_attach.png")
+
+        self.assertTrue(os.path.exists(path), path)
+
     def testThumbWidthJpg(self):
         text = 'бла-бла-бла \nкхм % width = 100 px % Attach:image.jpg %% бла-бла-бла\nбла-бла-бла'
         path = os.path.join("__attach", "__thumb", "th_width_100_image.jpg")

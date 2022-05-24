@@ -40,7 +40,7 @@ class ThumbnailToken:
                             |thumb\s*?
                         )\s*?
                         %\s*?
-                        Attach:(?P<fname>.*?\.(?:jpe?g|bmp|gif|tiff?|png|webp))\s*?%%""",
+                        Attach:["']?(?P<fname>.*?\.(?:jpe?g|bmp|gif|tiff?|png|webp))["']?\s*?%%""",
                        re.IGNORECASE | re.VERBOSE)
         result = result.setParseAction(self.__convertThumb)("thumbnail")
         return result
@@ -67,7 +67,6 @@ class ThumbnailToken:
 
         try:
             thumb = func(self.parser.page, fname, size)
-
         except (ThumbException, IOError):
             return _("<b>Can't create thumbnail for \"{}\"</b>").format(fname)
 
