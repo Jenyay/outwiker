@@ -6,7 +6,7 @@ from outwiker.core.attachment import Attachment
 from outwiker.core.system import getOS
 
 
-class OpenAttachFolderAction (BaseAction):
+class OpenAttachFolderAction(BaseAction):
     """
     Открыть папку с прикрепленными файлами в системном файловом менеджере
     """
@@ -23,10 +23,15 @@ class OpenAttachFolderAction (BaseAction):
     def description(self):
         return _("Open folder with attached files")
 
-    def run(self, params):
-        if self._application.selectedPage is not None:
-            folder = Attachment(
-                self._application.selectedPage).getAttachPath(create=True)
+    def run(self, page=None):
+        if page is None:
+            page = self._application.selectedPage
+
+        if page is None:
+            return
+
+        if page is not None:
+            folder = Attachment(page).getAttachPath(create=True)
             try:
                 getOS().startFile(folder)
             except OSError:

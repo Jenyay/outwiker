@@ -6,6 +6,10 @@ import outwiker.gui.pagedialog
 import outwiker.core.commands
 from outwiker.actions.addchildpage import AddChildPageAction
 from outwiker.actions.addsiblingpage import AddSiblingPageAction
+from outwiker.actions.clipboard import (CopyPageTitleAction,
+                                        CopyPagePathAction,
+                                        CopyAttachPathAction,
+                                        CopyPageLinkAction)
 from outwiker.actions.removepage import RemovePageAction
 from outwiker.actions.renamepage import RenamePageAction
 from outwiker.actions.editpageprop import EditPagePropertiesAction
@@ -13,7 +17,7 @@ from outwiker.actions.attachopenfolder import OpenAttachFolderAction
 from outwiker.gui.pagedialog import createSiblingPage, createChildPage
 
 
-class PagePopupMenu (object):
+class PagePopupMenu:
     def __init__(self, parent, popupPage, application):
         self.ID_ADD_CHILD = None
         self.ID_ADD_SIBLING = None
@@ -87,22 +91,32 @@ class PagePopupMenu (object):
 
         popupMenu = wx.Menu()
 
-        self.ID_ADD_CHILD = popupMenu.Append(wx.ID_ANY, actionController.getTitle(AddChildPageAction.stringId)).GetId()
-        self.ID_ADD_SIBLING = popupMenu.Append(wx.ID_ANY, actionController.getTitle(AddSiblingPageAction.stringId)).GetId()
-        self.ID_REMOVE = popupMenu.Append(wx.ID_ANY, actionController.getTitle(RemovePageAction.stringId)).GetId()
-        self.ID_RENAME = popupMenu.Append(wx.ID_ANY, actionController.getTitle(RenamePageAction.stringId)).GetId()
+        self.ID_ADD_CHILD = popupMenu.Append(
+            wx.ID_ANY, actionController.getTitle(AddChildPageAction.stringId)).GetId()
+        self.ID_ADD_SIBLING = popupMenu.Append(
+            wx.ID_ANY, actionController.getTitle(AddSiblingPageAction.stringId)).GetId()
+        self.ID_REMOVE = popupMenu.Append(
+            wx.ID_ANY, actionController.getTitle(RemovePageAction.stringId)).GetId()
+        self.ID_RENAME = popupMenu.Append(
+            wx.ID_ANY, actionController.getTitle(RenamePageAction.stringId)).GetId()
 
         popupMenu.AppendSeparator()
 
-        self.ID_COPY_TITLE = popupMenu.Append(wx.ID_ANY, _(u"Copy Page Title")).GetId()
-        self.ID_COPY_PATH = popupMenu.Append(wx.ID_ANY, _(u"Copy Page Path")).GetId()
-        self.ID_COPY_ATTACH_PATH = popupMenu.Append(wx.ID_ANY, _(u"Copy Attachments Path")).GetId()
-        self.ID_COPY_LINK = popupMenu.Append(wx.ID_ANY, _(u"Copy Page Link")).GetId()
-        self.ID_OPEN_ATTACH_FOLDER = popupMenu.Append(wx.ID_ANY, _(u"Open Attachments Folder")).GetId()
+        self.ID_COPY_TITLE = popupMenu.Append(
+            wx.ID_ANY, _("Copy Page Title")).GetId()
+        self.ID_COPY_PATH = popupMenu.Append(
+            wx.ID_ANY, _("Copy Page Path")).GetId()
+        self.ID_COPY_ATTACH_PATH = popupMenu.Append(
+            wx.ID_ANY, _("Copy Attachments Path")).GetId()
+        self.ID_COPY_LINK = popupMenu.Append(
+            wx.ID_ANY, _("Copy Page Link")).GetId()
+        self.ID_OPEN_ATTACH_FOLDER = popupMenu.Append(
+            wx.ID_ANY, _("Open Attachments Folder")).GetId()
 
         popupMenu.AppendSeparator()
 
-        self.ID_PROPERTIES_POPUP = popupMenu.Append(wx.ID_ANY, actionController.getTitle(EditPagePropertiesAction.stringId)).GetId()
+        self.ID_PROPERTIES_POPUP = popupMenu.Append(
+            wx.ID_ANY, actionController.getTitle(EditPagePropertiesAction.stringId)).GetId()
 
         self.__bindPopupMenuEvents(popupMenu)
 
@@ -128,31 +142,34 @@ class PagePopupMenu (object):
         Копировать ссылку на страницу в буфер обмена
         """
         assert self.popupPage is not None
-        outwiker.core.commands.copyLinkToClipboard(self.popupPage)
+        self._application.actionController.getAction(
+            CopyPageLinkAction.stringId).run(page=self.popupPage)
 
     def __onOpenAttachFolder(self, _event):
         assert self.popupPage is not None
         self._application.actionController.getAction(
-            OpenAttachFolderAction.stringId).run(None)
+            OpenAttachFolderAction.stringId).run(self.popupPage)
 
     def __onCopyTitle(self, _event):
         """
         Копировать заголовок страницы в буфер обмена
         """
         assert self.popupPage is not None
-        outwiker.core.commands.copyTitleToClipboard(self.popupPage)
+        self._application.actionController.getAction(
+            CopyPageTitleAction.stringId).run(page=self.popupPage)
 
     def __onCopyPath(self, _event):
         """
         Копировать путь до страницы в буфер обмена
         """
         assert self.popupPage is not None
-        outwiker.core.commands.copyPathToClipboard(self.popupPage)
+        self._application.actionController.getAction(
+            CopyPagePathAction.stringId).run(page=self.popupPage)
 
     def __onCopyAttachPath(self, _event):
         """
         Копировать путь до прикрепленных файлов в буфер обмена
         """
         assert self.popupPage is not None
-        outwiker.core.commands.copyAttachPathToClipboard(self.popupPage,
-                self.popupPage is self._application.selectedPage)
+        self._application.actionController.getAction(
+            CopyAttachPathAction.stringId).run(page=self.popupPage)

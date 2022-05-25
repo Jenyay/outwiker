@@ -25,9 +25,14 @@ class CopyPageTitleAction(BaseAction):
     def description(self):
         return _("Copy current page title to clipboard")
 
-    def run(self, params):
-        assert self._application.selectedPage is not None
-        if copyTitleToClipboard(self._application.selectedPage):
+    def run(self, page=None):
+        if page is None:
+            page = self._application.selectedPage
+
+        if page is None:
+            return
+
+        if copyTitleToClipboard(page):
             title = _('Copied to clipboard')
             text = _('Page title has been copied to the clipboard')
             showInfo(self._application.mainWindow, title, text)
@@ -50,9 +55,14 @@ class CopyPagePathAction(BaseAction):
     def description(self):
         return _("Copy path to current page to clipboard")
 
-    def run(self, params):
-        assert self._application.selectedPage is not None
-        if copyPathToClipboard(self._application.selectedPage):
+    def run(self, page=None):
+        if page is None:
+            page = self._application.selectedPage
+
+        if page is None:
+            return
+
+        if copyPathToClipboard(page):
             title = _('Copied to clipboard')
             text = _('Path to the page has been copied to the clipboard')
             showInfo(self._application.mainWindow, title, text)
@@ -75,9 +85,16 @@ class CopyAttachPathAction(BaseAction):
     def description(self):
         return _("Copy path to attachments for current page to clipboard")
 
-    def run(self, params):
-        assert self._application.selectedPage is not None
-        if copyAttachPathToClipboard(self._application.selectedPage, True):
+    def run(self, page=None):
+        if page is None:
+            page = self._application.selectedPage
+
+        if page is None:
+            return
+
+        is_current_page = page is self._application.selectedPage
+
+        if copyAttachPathToClipboard(page, is_current_page):
             title = _('Copied to clipboard')
             text = _('Path to the page attachments has been copied to the clipboard')
             showInfo(self._application.mainWindow, title, text)
@@ -100,9 +117,14 @@ class CopyPageLinkAction(BaseAction):
     def description(self):
         return _("Copy link to current page to clipboard")
 
-    def run(self, params):
-        assert self._application.selectedPage is not None
-        if copyLinkToClipboard(self._application.selectedPage):
+    def run(self, page=None):
+        if page is None:
+            page = self._application.selectedPage
+
+        if page is None:
+            return
+
+        if copyLinkToClipboard(page):
             title = _('Copied to clipboard')
             text = _('Link to the page has been copied to the clipboard')
             showInfo(self._application.mainWindow, title, text)
