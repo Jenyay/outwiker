@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OutWiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-17 16:12+0300\n"
+"POT-Creation-Date: 2022-05-27 13:10+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Eugene Ilin <jenyay.ilin@gmail.com>\n"
@@ -122,7 +122,7 @@ msgstr ""
 msgid "Attach files to current page"
 msgstr ""
 
-#: outwiker/actions/attachopenfolder.py:20 outwiker/gui/pagepopupmenu.py:101
+#: outwiker/actions/attachopenfolder.py:20 outwiker/gui/pagepopupmenu.py:114
 msgid "Open Attachments Folder"
 msgstr ""
 
@@ -130,7 +130,7 @@ msgstr ""
 msgid "Open folder with attached files"
 msgstr ""
 
-#: outwiker/actions/attachopenfolder.py:33
+#: outwiker/actions/attachopenfolder.py:38
 #: outwiker/actions/openpluginsfolder.py:32
 msgid "Can't open folder '{}'"
 msgstr ""
@@ -155,15 +155,15 @@ msgstr ""
 msgid "Remove attached files. Action for attach panel"
 msgstr ""
 
-#: outwiker/actions/attachremove.py:37 outwiker/gui/attachpanel.py:356
+#: outwiker/actions/attachremove.py:37 outwiker/gui/attachpanel.py:357
 msgid "You did not select any file to remove"
 msgstr ""
 
-#: outwiker/actions/attachremove.py:40 outwiker/gui/attachpanel.py:359
+#: outwiker/actions/attachremove.py:40 outwiker/gui/attachpanel.py:360
 msgid "Remove selected files?"
 msgstr ""
 
-#: outwiker/actions/attachremove.py:41 outwiker/gui/attachpanel.py:360
+#: outwiker/actions/attachremove.py:41 outwiker/gui/attachpanel.py:361
 msgid "Remove files?"
 msgstr ""
 
@@ -183,7 +183,7 @@ msgstr ""
 msgid "Select all attached files. Action for attachments panel"
 msgstr ""
 
-#: outwiker/actions/clipboard.py:22 outwiker/gui/pagepopupmenu.py:97
+#: outwiker/actions/clipboard.py:22 outwiker/gui/pagepopupmenu.py:106
 msgid "Copy Page Title"
 msgstr ""
 
@@ -191,48 +191,48 @@ msgstr ""
 msgid "Copy current page title to clipboard"
 msgstr ""
 
-#: outwiker/actions/clipboard.py:31 outwiker/actions/clipboard.py:56
-#: outwiker/actions/clipboard.py:81 outwiker/actions/clipboard.py:106
+#: outwiker/actions/clipboard.py:36 outwiker/actions/clipboard.py:66
+#: outwiker/actions/clipboard.py:98 outwiker/actions/clipboard.py:128
 msgid "Copied to clipboard"
 msgstr ""
 
-#: outwiker/actions/clipboard.py:32
+#: outwiker/actions/clipboard.py:37
 msgid "Page title has been copied to the clipboard"
 msgstr ""
 
-#: outwiker/actions/clipboard.py:47 outwiker/gui/pagepopupmenu.py:98
+#: outwiker/actions/clipboard.py:52 outwiker/gui/pagepopupmenu.py:108
 msgid "Copy Page Path"
 msgstr ""
 
-#: outwiker/actions/clipboard.py:51
+#: outwiker/actions/clipboard.py:56
 msgid "Copy path to current page to clipboard"
 msgstr ""
 
-#: outwiker/actions/clipboard.py:57
+#: outwiker/actions/clipboard.py:67
 msgid "Path to the page has been copied to the clipboard"
 msgstr ""
 
-#: outwiker/actions/clipboard.py:72 outwiker/gui/pagepopupmenu.py:99
+#: outwiker/actions/clipboard.py:82 outwiker/gui/pagepopupmenu.py:110
 msgid "Copy Attachments Path"
 msgstr ""
 
-#: outwiker/actions/clipboard.py:76
+#: outwiker/actions/clipboard.py:86
 msgid "Copy path to attachments for current page to clipboard"
 msgstr ""
 
-#: outwiker/actions/clipboard.py:82
+#: outwiker/actions/clipboard.py:99
 msgid "Path to the page attachments has been copied to the clipboard"
 msgstr ""
 
-#: outwiker/actions/clipboard.py:97 outwiker/gui/pagepopupmenu.py:100
+#: outwiker/actions/clipboard.py:114 outwiker/gui/pagepopupmenu.py:112
 msgid "Copy Page Link"
 msgstr ""
 
-#: outwiker/actions/clipboard.py:101
+#: outwiker/actions/clipboard.py:118
 msgid "Copy link to current page to clipboard"
 msgstr ""
 
-#: outwiker/actions/clipboard.py:107
+#: outwiker/actions/clipboard.py:129
 msgid "Link to the page has been copied to the clipboard"
 msgstr ""
 
@@ -487,6 +487,7 @@ msgstr ""
 #: outwiker/actions/showhideattaches.py:17 outwiker/actions/switchto.py:63
 #: outwiker/gui/mainpanes/attachmainpane.py:40
 #: outwiker/gui/preferences/prefcontroller.py:135
+#: outwiker/gui/preferences/wikieditorpanel.py:37
 msgid "Attachments"
 msgstr ""
 
@@ -619,10 +620,6 @@ msgstr ""
 
 #: outwiker/core/commands.py:79 outwiker/gui/tagspanelcontroller.py:78
 msgid "Page is opened as read-only"
-msgstr ""
-
-#: outwiker/core/commands.py:114 outwiker/core/commands.py:206
-msgid "File '{}' exists already"
 msgstr ""
 
 #: outwiker/core/commands.py:130
@@ -1298,7 +1295,7 @@ msgid "General"
 msgstr ""
 
 #: outwiker/gui/basetextpanel.py:200
-#: outwiker/gui/dialogs/overwritedialog.py:109
+#: outwiker/gui/dialogs/overwritedialog.py:121
 msgid "Overwrite"
 msgstr ""
 
@@ -1307,7 +1304,7 @@ msgid "Load"
 msgstr ""
 
 #: outwiker/gui/basetextpanel.py:200
-#: outwiker/gui/dialogs/overwritedialog.py:113
+#: outwiker/gui/dialogs/overwritedialog.py:125
 msgid "Cancel"
 msgstr ""
 
@@ -1488,49 +1485,32 @@ msgid "Author: Ilin Eugeniy (aka Jenyay)"
 msgstr ""
 
 #: outwiker/gui/dialogs/overwritedialog.py:22
-msgid "Overwrite Files"
+msgid "File already exists"
 msgstr ""
 
-#: outwiker/gui/dialogs/overwritedialog.py:54
-msgid "Overwrite file?"
-msgstr ""
-
-#: outwiker/gui/dialogs/overwritedialog.py:93
+#: outwiker/gui/dialogs/overwritedialog.py:105
 msgid "New file"
 msgstr ""
 
-#: outwiker/gui/dialogs/overwritedialog.py:101
+#: outwiker/gui/dialogs/overwritedialog.py:113
 msgid "Exiting file"
 msgstr ""
 
-#: outwiker/gui/dialogs/overwritedialog.py:110
+#: outwiker/gui/dialogs/overwritedialog.py:122
 msgid "Overwrite all"
 msgstr ""
 
-#: outwiker/gui/dialogs/overwritedialog.py:111
+#: outwiker/gui/dialogs/overwritedialog.py:123
 msgid "Skip"
 msgstr ""
 
-#: outwiker/gui/dialogs/overwritedialog.py:112
+#: outwiker/gui/dialogs/overwritedialog.py:124
 msgid "Skip all"
 msgstr ""
 
-#: outwiker/gui/dialogs/overwritedialog.py:125
-msgid "New file size: {size:_d} bites"
-msgstr ""
-
-#: outwiker/gui/dialogs/overwritedialog.py:129
-#, python-format
-msgid "New file date: {date:%c}"
-msgstr ""
-
-#: outwiker/gui/dialogs/overwritedialog.py:135
-msgid "Exiting file size: {size:_d} bites"
-msgstr ""
-
-#: outwiker/gui/dialogs/overwritedialog.py:139
-#, python-format
-msgid "Exiting file date: {date:%c}"
+#: outwiker/gui/dialogs/overwritedialog.py:137
+#: outwiker/gui/dialogs/overwritedialog.py:147
+msgid "{size:_d} bytes"
 msgstr ""
 
 #: outwiker/gui/emptypageview.py:24
@@ -1637,7 +1617,7 @@ msgstr ""
 msgid "Select All"
 msgstr ""
 
-#: outwiker/gui/mainwindow.py:601
+#: outwiker/gui/mainwindow.py:602
 #, python-format
 msgid ""
 "Can't save config\n"
@@ -2158,6 +2138,11 @@ msgstr ""
 msgid "Command"
 msgstr ""
 
+#: outwiker/gui/preferences/wikieditorpanel.py:38
+#: outwiker/pages/wiki/actions/thumb.py:20
+msgid "Thumbnail"
+msgstr ""
+
 #: outwiker/gui/renametagdialog.py:34 outwiker/gui/renametagdialog.py:76
 msgid "Select tag for rename"
 msgstr ""
@@ -2548,10 +2533,6 @@ msgstr ""
 msgid "Open HTML code for wiki page"
 msgstr ""
 
-#: outwiker/pages/wiki/actions/thumb.py:20
-msgid "Thumbnail"
-msgstr ""
-
 #: outwiker/pages/wiki/actions/thumb.py:24
 msgid "Insert thumbnail"
 msgstr ""
@@ -2641,7 +2622,7 @@ msgstr ""
 msgid "<b>Encoding error in file %s</b>"
 msgstr ""
 
-#: outwiker/pages/wiki/parser/tokenthumbnail.py:72
+#: outwiker/pages/wiki/parser/tokenthumbnail.py:71
 msgid "<b>Can't create thumbnail for \"{}\"</b>"
 msgstr ""
 

@@ -111,7 +111,7 @@ def renameAttach(parent: wx.Window,
             overwriteDialog.setVisibleSkipButton(False)
             overwriteDialog.setVisibleSkipAllButton(False)
 
-            text = _("File '{}' exists already").format(os.path.basename(fname_dest))
+            text = os.path.basename(fname_dest)
             try:
                 src_file_stat = os.stat(fname_src_full)
                 dest_file_stat = os.stat(fname_dest_full)
@@ -203,7 +203,7 @@ def attachFiles(parent: wx.Window,
                 continue
 
             if old_path.exists():
-                text = _("File '{}' exists already").format(fname_new)
+                text = str(fname_new)
                 old_file_stat = old_path.stat()
                 new_file_stat = source_path.stat()
 
