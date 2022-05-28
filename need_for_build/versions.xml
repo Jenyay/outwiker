@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <versions>
-    <version number="3.2.0.903" status="dev">
+    <version number="3.2.0.904" status="beta" date="2022-05-28">
         <changes>
-            <change>Added the support of nested subfolders for the [=%thumb%=] wiki command</change>
+            <change>Added the support of nested subfolders for the [=%thumb%=] wiki command.</change>
             <change>Implemented highlighting the [=%thumb%=] wiki command on wiki pages.</change>
             <change>Changed design of the dialog about overwriting of attached files.</change>
             <change>Small GUI fixes.</change>
