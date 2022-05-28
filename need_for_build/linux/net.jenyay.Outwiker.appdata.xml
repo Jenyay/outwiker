@@ -23,7 +23,7 @@
     <screenshot type="default">
       <image>https://jenyay.net/uploads/Soft/Outwiker/outwiker_3.0_en_03.png</image>
     </screenshot>
-	<screenshot type="default">
+    <screenshot type="default">
       <image>https://jenyay.net/uploads/Soft/Outwiker/outwiker_3.0_en_04.png</image>
     </screenshot>
     <screenshot type="default">
@@ -34,12 +34,13 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="3.2.0.905" date="2022-05-28" />
     <release version="3.2.0.904" date="2022-05-28" />
     <release version="3.2.0.902" date="2022-05-22" />
-	<release version="3.1.0.900" date="2022-04-16" />
-	<release version="3.1.0.896" date="2022-02-19" />
-	<release version="3.1.0.894" date="2021-01-23" />
-	<release version="3.1.0.892" date="2021-07-27" />
+    <release version="3.1.0.900" date="2022-04-16" />
+    <release version="3.1.0.896" date="2022-02-19" />
+    <release version="3.1.0.894" date="2021-01-23" />
+    <release version="3.1.0.892" date="2021-07-27" />
   </releases>
   <content_rating type="oars-1.0">
     <content_attribute id="violence-cartoon">none</content_attribute>
