@@ -52,6 +52,7 @@ class PluginThumbGallery(Plugin):
         """
         path = _(u"locale/description.html")
         fullpath = os.path.join(self.pluginPath, path)
+        print(fullpath)
 
         try:
             with open(fullpath, encoding='utf8') as fp:

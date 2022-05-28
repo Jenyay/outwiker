@@ -7,7 +7,7 @@ class ThumbGalleryCommand(ThumbListCommand):
     """
     Команда (:thumbgallery:) полностью повторяет команду (:thumblist:) и
     создана для совместимости с командой (:thumbgallery:) из плагина
-    thumblist для omWiki - http://www.pmwiki.org/wiki/Cookbook/ThumbList
+    thumblist для pmWiki - http://www.pmwiki.org/wiki/Cookbook/ThumbList
     """
 
     @property
