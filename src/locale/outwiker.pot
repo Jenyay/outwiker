@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OutWiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-27 13:10+0300\n"
+"POT-Creation-Date: 2022-06-03 22:16+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Eugene Ilin <jenyay.ilin@gmail.com>\n"
@@ -155,15 +155,15 @@ msgstr ""
 msgid "Remove attached files. Action for attach panel"
 msgstr ""
 
-#: outwiker/actions/attachremove.py:37 outwiker/gui/attachpanel.py:357
+#: outwiker/actions/attachremove.py:37 outwiker/gui/attachpanel.py:363
 msgid "You did not select any file to remove"
 msgstr ""
 
-#: outwiker/actions/attachremove.py:40 outwiker/gui/attachpanel.py:360
+#: outwiker/actions/attachremove.py:40 outwiker/gui/attachpanel.py:366
 msgid "Remove selected files?"
 msgstr ""
 
-#: outwiker/actions/attachremove.py:41 outwiker/gui/attachpanel.py:361
+#: outwiker/actions/attachremove.py:41 outwiker/gui/attachpanel.py:367
 msgid "Remove files?"
 msgstr ""
 
@@ -1713,6 +1713,10 @@ msgstr ""
 
 #: outwiker/gui/preferences/attachpanel.py:37
 msgid "Double clicking or pressing Enter on an attached file"
+msgstr ""
+
+#: outwiker/gui/preferences/attachpanel.py:46
+msgid "Show hidden folders"
 msgstr ""
 
 #: outwiker/gui/preferences/colorspanel.py:34

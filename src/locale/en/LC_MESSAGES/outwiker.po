@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-27 13:10+0300\n"
+"POT-Creation-Date: 2022-06-03 22:16+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -152,15 +152,15 @@ msgstr "Remove attached files"
 msgid "Remove attached files. Action for attach panel"
 msgstr "Remove attached files. Action for attach panel"
 
-#: outwiker/actions/attachremove.py:37 outwiker/gui/attachpanel.py:357
+#: outwiker/actions/attachremove.py:37 outwiker/gui/attachpanel.py:363
 msgid "You did not select any file to remove"
 msgstr "You did not select any file to remove"
 
-#: outwiker/actions/attachremove.py:40 outwiker/gui/attachpanel.py:360
+#: outwiker/actions/attachremove.py:40 outwiker/gui/attachpanel.py:366
 msgid "Remove selected files?"
 msgstr "Remove selected files?"
 
-#: outwiker/actions/attachremove.py:41 outwiker/gui/attachpanel.py:361
+#: outwiker/actions/attachremove.py:41 outwiker/gui/attachpanel.py:367
 msgid "Remove files?"
 msgstr "Remove files?"
 
@@ -1507,7 +1507,6 @@ msgid "Author: Ilin Eugeniy (aka Jenyay)"
 msgstr "Author: Ilin Eugeniy (aka Jenyay)"
 
 #: outwiker/gui/dialogs/overwritedialog.py:22
-#| msgid "A page with some title already exists"
 msgid "File already exists"
 msgstr "File already exists"
 
@@ -1533,7 +1532,6 @@ msgstr "Skip all"
 
 #: outwiker/gui/dialogs/overwritedialog.py:137
 #: outwiker/gui/dialogs/overwritedialog.py:147
-#| msgid "New file size: {size:_d} bites"
 msgid "{size:_d} bytes"
 msgstr "{size:_d} bytes"
 
@@ -1746,6 +1744,10 @@ msgstr "Execute file"
 #: outwiker/gui/preferences/attachpanel.py:37
 msgid "Double clicking or pressing Enter on an attached file"
 msgstr "Double clicking or pressing Enter on an attached file"
+
+#: outwiker/gui/preferences/attachpanel.py:46
+msgid "Show hidden folders"
+msgstr "Show hidden folders"
 
 #: outwiker/gui/preferences/colorspanel.py:34
 #: outwiker/gui/preferences/prefcontroller.py:130

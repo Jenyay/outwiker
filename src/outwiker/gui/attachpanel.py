@@ -31,6 +31,7 @@ class AttachPanel(wx.Panel):
     def __init__(self, parent, application):
         super().__init__(parent)
         self._application = application
+        self._config = AttachConfig(self._application.config)
         self.GO_TO_PARENT_ITEM_NAME = '..'
 
         # Store old file name before renaming
@@ -126,6 +127,7 @@ class AttachPanel(wx.Panel):
         self._application.onAttachSubdirChanged += self._onAttachSubdirChanged
         self._application.onWikiOpen += self._onWikiOpen
         self._application.onBeginAttachRenaming += self._onBeginAttachRenaming
+        self._application.onPreferencesDialogClose += self._onPreferencesDialogClose
 
     def _unbindAppEvents(self):
         self._application.onPageSelect -= self._onPageSelect
@@ -133,6 +135,7 @@ class AttachPanel(wx.Panel):
         self._application.onAttachSubdirChanged -= self._onAttachSubdirChanged
         self._application.onWikiOpen -= self._onWikiOpen
         self._application.onBeginAttachRenaming -= self._onBeginAttachRenaming
+        self._application.onPreferencesDialogClose -= self._onPreferencesDialogClose
 
     def _onClose(self, _event):
         actionController = self._application.actionController
@@ -259,6 +262,8 @@ class AttachPanel(wx.Panel):
         """
         Обновить список прикрепленных файлов
         """
+        showHiddenDirs = self._config.showHiddenDirs.value
+
         self.__attachList.Freeze()
         page = self._application.selectedPage
 
@@ -276,7 +281,8 @@ class AttachPanel(wx.Panel):
             files = self._sortFilesList(files)
 
             for fname in files:
-                if (not os.path.basename(fname).startswith("__") or
+                if (showHiddenDirs or
+                        not os.path.basename(fname).startswith("__") or
                         not page.isCurrentAttachSubdirRoot() or
                         not os.path.isdir(fname)):
                     # Отключим уведомления об ошибках во всплывающих окнах
@@ -483,6 +489,9 @@ class AttachPanel(wx.Panel):
         self._oldEditedAttachName = None
         if rename:
             self._selectFile(event.GetLabel().strip())
+
+    def _onPreferencesDialogClose(self, dialog):
+        self.updateAttachments()
 
 
 class DropAttachFilesTarget(BaseDropFilesTarget):

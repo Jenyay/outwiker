@@ -733,24 +733,27 @@ class TreeConfig(object):
                                  TreeConfig.PANE_OPTIONS_DEFAULT)
 
 
-class AttachConfig(object):
+class AttachConfig:
     '''
     Класс для хранения настроек панели с вложенными файлами
     '''
-    WIDTH_SECTION = u'AttachesWidth'
+    WIDTH_SECTION = 'AttachesWidth'
     WIDTH_DEFAULT = 250
 
-    HEIGHT_SECTION = u'AttachesHeight'
+    HEIGHT_SECTION = 'AttachesHeight'
     HEIGHT_DEFAULT = 150
 
-    PANE_OPTIONS_SECTION = u'AttachesPane'
-    PANE_OPTIONS_DEFAULT = u''
+    PANE_OPTIONS_SECTION = 'AttachesPane'
+    PANE_OPTIONS_DEFAULT = ''
 
     ACTION_INSERT_LINK = 0
     ACTION_OPEN = 1
 
-    DOUBLE_CLICK_ACTION_PARAM = u'AttachDoubleClickAction'
+    DOUBLE_CLICK_ACTION_PARAM = 'AttachDoubleClickAction'
     DOUBLE_CLICK_ACTION_DEFAULT = ACTION_OPEN
+
+    SHOW_HIDDEN_DIRS_PARAM = 'ShowHiddenDirs'
+    SHOW_HIDDEN_DIRS_DEFAULT = False
 
     def __init__(self, config):
         self.config = config
@@ -779,6 +782,11 @@ class AttachConfig(object):
             self.DOUBLE_CLICK_ACTION_PARAM,
             self.DOUBLE_CLICK_ACTION_DEFAULT
         )
+
+        self.showHiddenDirs = BooleanOption(self.config,
+                                            MainWindowConfig.MAIN_WINDOW_SECTION,
+                                            self.SHOW_HIDDEN_DIRS_PARAM,
+                                            self.SHOW_HIDDEN_DIRS_DEFAULT)
 
 
 class TagsCloudConfig(object):

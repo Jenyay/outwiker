@@ -39,7 +39,7 @@ class EnabledPlugins(collections.UserDict):
         super(EnabledPlugins, self).__delitem__(key)
 
 
-class PluginsLoader(object):
+class PluginsLoader:
     """
     Load and keep plugins.
     for loading all plugins packages from folder 'foo'

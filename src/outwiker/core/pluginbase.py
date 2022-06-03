@@ -8,7 +8,7 @@ import logging
 from outwiker.core.i18n import getLanguageFromConfig, loadLanguage
 
 
-class Plugin (object, metaclass=ABCMeta):
+class Plugin(metaclass=ABCMeta):
     """
     Base class for plugins.
     The class defines minimal plugin's interface.
@@ -24,7 +24,7 @@ class Plugin (object, metaclass=ABCMeta):
         )
 
         # Load plugin's information
-        self._version = u'0.0'
+        self._version = '0.0'
 
         self.logger = logging.getLogger(self.name)
 
@@ -112,6 +112,7 @@ class InvalidPlugin(object):
     """
     Class with the information about plugin with errors
     """
+
     def __init__(self, name, description, version=u'', url=None):
         self.name = name
         self.description = description

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-27 13:10+0300\n"
+"POT-Creation-Date: 2022-06-03 22:16+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -152,15 +152,15 @@ msgstr "Удалить выбранные файлы"
 msgid "Remove attached files. Action for attach panel"
 msgstr "Удалить прикрепленные файлы. Действие для панели прикрепленных файлов"
 
-#: outwiker/actions/attachremove.py:37 outwiker/gui/attachpanel.py:357
+#: outwiker/actions/attachremove.py:37 outwiker/gui/attachpanel.py:363
 msgid "You did not select any file to remove"
 msgstr "Вы не выбрали файл(ы) для удаления"
 
-#: outwiker/actions/attachremove.py:40 outwiker/gui/attachpanel.py:360
+#: outwiker/actions/attachremove.py:40 outwiker/gui/attachpanel.py:366
 msgid "Remove selected files?"
 msgstr "Удалить выбранные файлы?"
 
-#: outwiker/actions/attachremove.py:41 outwiker/gui/attachpanel.py:361
+#: outwiker/actions/attachremove.py:41 outwiker/gui/attachpanel.py:367
 msgid "Remove files?"
 msgstr "Удалить файлы?"
 
@@ -1756,6 +1756,10 @@ msgstr "Запустить файл"
 #: outwiker/gui/preferences/attachpanel.py:37
 msgid "Double clicking or pressing Enter on an attached file"
 msgstr "Двойной клик или нажатие клавиши Enter на прикрепленном файле"
+
+#: outwiker/gui/preferences/attachpanel.py:46
+msgid "Show hidden folders"
+msgstr "Показывать скрытые папки"
 
 #: outwiker/gui/preferences/colorspanel.py:34
 #: outwiker/gui/preferences/prefcontroller.py:130
