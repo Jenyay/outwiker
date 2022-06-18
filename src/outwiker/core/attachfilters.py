@@ -8,7 +8,7 @@ from outwiker.core.commands import isImage
 
 
 def getImagesOnlyFilter() -> Callable[[Path], bool]:
-    return lambda path: isImage(path)
+    return lambda path: not path.is_dir() and isImage(path)
 
 
 def getDirOnlyFilter() -> Callable[[Path], bool]:
@@ -21,7 +21,7 @@ def getHiddenFilter(page) -> Callable[[Path], bool]:
     '''
     attach = Attachment(page)
     root_dir = attach.getAttachPath(create=False)
-    return lambda path: str(path.relative_to(root_dir)).startswith('__')
+    return lambda path: path.is_dir() and str(path.relative_to(root_dir)).startswith('__')
 
 
 def andFilter(*filter_list: Callable[[Path], bool]) -> Callable[[Path], bool]:
