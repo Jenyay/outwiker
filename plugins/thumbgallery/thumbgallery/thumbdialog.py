@@ -8,7 +8,10 @@ import wx
 
 from outwiker.core.attachfilters import (getImagesOnlyFilter,
                                          getHiddenFilter,
-                                         andFilter)
+                                         getDirOnlyFilter,
+                                         andFilter,
+                                         orFilter,
+                                         notFilter)
 from outwiker.core.attachment import Attachment
 from outwiker.gui.preferences.configelements import IntegerElement
 from outwiker.gui.controls.filestreectrl import FilesTreeCtrl
@@ -55,8 +58,9 @@ class ThumbDialog(wx.Dialog):
         # Контролы для выбора прикрепленных файлов
         self.attachFiles = FilesTreeCtrl(self, check_boxes=True)
 
-        files_filter = andFilter(getImagesOnlyFilter(),
-                                 getHiddenFilter(self._page))
+        files_filter = andFilter(orFilter(getImagesOnlyFilter(),
+                                          getDirOnlyFilter()),
+                                 notFilter(getHiddenFilter(self._page)))
         self.attachFiles.SetFilterFunc(files_filter)
 
         self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
