@@ -4,7 +4,7 @@ from pathlib import Path
 from typing import List, Union, Callable, Optional
 
 import wx
-from wx.lib.agw.customtreectrl import CustomTreeCtrl, GenericTreeItem
+from wx.lib.agw.customtreectrl import CustomTreeCtrl, GenericTreeItem, TR_AUTO_CHECK_CHILD, TR_AUTO_CHECK_PARENT
 
 from outwiker.core.attachment import Attachment
 from outwiker.core.commands import isImage
@@ -20,7 +20,12 @@ class FilesTreeCtrl(wx.Panel):
 
         self._fileIcons = getOS().fileIcons
 
-        self._tree_ctrl = CustomTreeCtrl(self, agwStyle=wx.TR_HAS_BUTTONS | wx.TR_LINES_AT_ROOT | wx.TR_HAS_VARIABLE_ROW_HEIGHT)
+        agwStyle = (wx.TR_HAS_BUTTONS |
+                    wx.TR_LINES_AT_ROOT |
+                    wx.TR_HAS_VARIABLE_ROW_HEIGHT |
+                    TR_AUTO_CHECK_CHILD |
+                    TR_AUTO_CHECK_PARENT)
+        self._tree_ctrl = CustomTreeCtrl(self, agwStyle=agwStyle)
         self._tree_ctrl.SetImageList(self._fileIcons.imageList)
         self._layout()
 
@@ -49,10 +54,10 @@ class FilesTreeCtrl(wx.Panel):
         self.Clear()
         if self._root_dir is not None and self._root_dir.exists():
             root_item = self._tree_ctrl.AddRoot(
-                    _('Attachments'),
-                    ct_type=self._getItemType(),
-                    image=self._fileIcons.FOLDER_ICON,
-                    data=self._root_dir)
+                _('Attachments'),
+                ct_type=self._getItemType(),
+                image=self._fileIcons.FOLDER_ICON,
+                data=self._root_dir)
             self._addChildren(root_item, self._root_dir)
             self._tree_ctrl.ExpandAll()
 
@@ -69,7 +74,8 @@ class FilesTreeCtrl(wx.Panel):
                     checked_list.append(item.GetData())
 
                 self._getCheckedChildren(item, checked_list)
-                item, cookie = self._tree_ctrl.GetNextChild(parent_item, cookie)
+                item, cookie = self._tree_ctrl.GetNextChild(
+                    parent_item, cookie)
 
     def _addChildren(self, parent_item: GenericTreeItem, parent_dir: Path):
         children_files = list(parent_dir.iterdir())
@@ -77,24 +83,25 @@ class FilesTreeCtrl(wx.Panel):
         children_files = list(filter(self._filter, children_files))
 
         children_files.sort(key=lambda path: str.lower(str(path)))
-        children_files.sort(key=lambda path: Attachment.sortByType(str(path)), reverse=True)
+        children_files.sort(
+            key=lambda path: Attachment.sortByType(str(path)), reverse=True)
 
         for child in children_files:
             if child.is_dir():
                 dir_item = self._tree_ctrl.AppendItem(
-                        parent_item,
-                        str(child.name),
-                        self._getItemType(),
-                        image=self._fileIcons.FOLDER_ICON,
-                        data=child)
+                    parent_item,
+                    str(child.name),
+                    self._getItemType(),
+                    image=self._fileIcons.FOLDER_ICON,
+                    data=child)
                 self._addChildren(dir_item, child)
             else:
                 self._tree_ctrl.AppendItem(
-                        parent_item,
-                        str(child.name),
-                        self._getItemType(),
-                        image=self._fileIcons.getFileImage(str(child)),
-                        data=child)
+                    parent_item,
+                    str(child.name),
+                    self._getItemType(),
+                    image=self._fileIcons.getFileImage(str(child)),
+                    data=child)
 
 
 def imagesOnlyFilter(path: Path) -> bool:
