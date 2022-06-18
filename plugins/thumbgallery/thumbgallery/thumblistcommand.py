@@ -59,7 +59,8 @@ class ThumbListCommand(Command):
         attach = Attachment(self.parser.page)
         root_dir = attach.getAttachPath(create=False)
 
-        filesList = self._getLinesItems(content)
+        filesList = [(item[0].replace('\\', '/'), item[1])
+                     for item in self._getLinesItems(content)]
         allFiles = attach.getAttachRelative()
         allFiles.sort()
 
