@@ -7,7 +7,6 @@ import wx
 from wx.lib.agw.customtreectrl import CustomTreeCtrl, GenericTreeItem, TR_AUTO_CHECK_CHILD, TR_AUTO_CHECK_PARENT
 
 from outwiker.core.attachment import Attachment
-from outwiker.core.commands import isImage
 from outwiker.core.system import getOS
 
 
@@ -16,7 +15,7 @@ class FilesTreeCtrl(wx.Panel):
         super().__init__(parent)
         self._check_boxes = check_boxes
         self._root_dir: Optional[Path] = None
-        self._filter_func: Optional[Callable[[str], bool]] = None
+        self._filter_func: Optional[Callable[[Path], bool]] = None
 
         self._fileIcons = getOS().fileIcons
 
@@ -42,7 +41,7 @@ class FilesTreeCtrl(wx.Panel):
     def Clear(self):
         self._tree_ctrl.DeleteAllItems()
 
-    def SetFilterFunc(self, filter: Optional[Callable[[str], bool]] = None):
+    def SetFilterFunc(self, filter: Optional[Callable[[Path], bool]] = None):
         self._filter = filter
         self.Update()
 
@@ -102,7 +101,3 @@ class FilesTreeCtrl(wx.Panel):
                     self._getItemType(),
                     image=self._fileIcons.getFileImage(str(child)),
                     data=child)
-
-
-def imagesOnlyFilter(path: Path) -> bool:
-    return path.is_dir() or isImage(path)

@@ -6,9 +6,12 @@ from typing import List
 
 import wx
 
+from outwiker.core.attachfilters import (getImagesOnlyFilter,
+                                         getHiddenFilter,
+                                         andFilter)
 from outwiker.core.attachment import Attachment
 from outwiker.gui.preferences.configelements import IntegerElement
-from outwiker.gui.controls.filestreectrl import FilesTreeCtrl, imagesOnlyFilter
+from outwiker.gui.controls.filestreectrl import FilesTreeCtrl
 
 from .thumbconfig import ThumbConfig
 from .i18n import get_
@@ -51,7 +54,10 @@ class ThumbDialog(wx.Dialog):
 
         # Контролы для выбора прикрепленных файлов
         self.attachFiles = FilesTreeCtrl(self, check_boxes=True)
-        self.attachFiles.SetFilterFunc(imagesOnlyFilter)
+
+        files_filter = andFilter(getImagesOnlyFilter(),
+                                 getHiddenFilter(self._page))
+        self.attachFiles.SetFilterFunc(files_filter)
 
         self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
 
