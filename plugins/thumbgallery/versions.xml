@@ -1,5 +1,20 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <versions>
+  <version number="1.6">
+		<download href="https://jenyay.net/uploads/Outwiker/ThumbGallery/thumbgallery-1.6.zip">
+			<requirements>
+				<api>3.906</api>
+			</requirements>
+		</download>
+		<changes>
+			<change></change>
+		</changes>
+
+		<changes lang="ru">
+			<change></change>
+		</changes>
+	</version>
+
   <version number="1.5" date="2022-05-28">
 		<download href="https://jenyay.net/uploads/Outwiker/ThumbGallery/thumbgallery-1.5.zip">
 			<requirements>

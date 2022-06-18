@@ -651,11 +651,11 @@ def insertCurrentDate(parent, editor):
             config.recentDateTimeFormat.value = dlg.Value
 
 
-def isImage(fname):
+def isImage(fname: Union[Path, str]) -> bool:
     """
     If fname is image then the function return True. Otherwise - False.
     """
-    fnameLower = fname.lower()
+    fnameLower = str(fname).lower()
     for extension in IMAGES_EXTENSIONS:
         if fnameLower.endswith('.' + extension):
             return True

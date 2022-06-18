@@ -1,12 +1,16 @@
 # -*- coding: utf-8 -*-
 
+from os import path
+from pathlib import Path
+from typing import List
+
 import wx
 
 from outwiker.core.attachment import Attachment
 from outwiker.gui.preferences.configelements import IntegerElement
+from outwiker.gui.controls.filestreectrl import FilesTreeCtrl, imagesOnlyFilter
 
 from .thumbconfig import ThumbConfig
-from .utilites import isImage
 from .i18n import get_
 
 
@@ -46,54 +50,31 @@ class ThumbDialog(wx.Dialog):
         self.thumbSizeCtrl.SetMinSize((150, -1))
 
         # Контролы для выбора прикрепленных файлов
-        self.attachFiles = wx.CheckListBox(self)
-        self.attachFiles.SetMinSize((-1, 100))
-        self.allFilesButton = wx.Button(self, wx.ID_ANY, _("All Images"))
-        self.clearFilesButton = wx.Button(self, wx.ID_ANY, _("Clear"))
+        self.attachFiles = FilesTreeCtrl(self, check_boxes=True)
+        self.attachFiles.SetFilterFunc(imagesOnlyFilter)
 
-        self.Bind(wx.EVT_BUTTON, self._onAll, self.allFilesButton)
-        self.Bind(wx.EVT_BUTTON, self._onClear, self.clearFilesButton)
         self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
 
         self._fillAttaches()
         self.columns.SetFocus()
 
-        # Используем золотое сечение
         dlgWidth = 500
-        dlgHeight = int(500 / 1.61803399)
+        dlgHeight = 450
         self.SetMinSize((dlgWidth, dlgHeight))
 
         self._layout()
         self.LoadState()
 
-    def _onAll(self, event):
-        self.attachFiles.SetCheckedItems(range(self.attachFiles.GetCount()))
-
-    def _onClear(self, event):
-        self.attachFiles.SetChecked([])
-
     def _fillAttaches(self):
         attach = Attachment(self._page)
-        allFiles = attach.getAttachRelative()
-        imagesFiles = [fname for fname in allFiles if isImage(fname)]
-
-        imagesFiles.sort(key=str.lower)
-
-        self.attachFiles.Clear()
-        self.attachFiles.AppendItems(imagesFiles)
+        root_dir = attach.getAttachPath(create=False)
+        if path.exists(root_dir):
+            self.attachFiles.SetRootDir(root_dir)
 
     def _getAttachSizer(self):
         buttonsSizer = wx.FlexGridSizer(1, 2, 0, 0)
         buttonsSizer.AddGrowableCol(0)
         buttonsSizer.AddGrowableCol(1)
-
-        buttonsSizer.Add(self.allFilesButton,
-                         flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.BOTTOM,
-                         border=2)
-
-        buttonsSizer.Add(self.clearFilesButton,
-                         flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.BOTTOM,
-                         border=2)
 
         attachSizer = wx.FlexGridSizer(cols=1)
         attachSizer.AddGrowableCol(0)
@@ -152,11 +133,11 @@ class ThumbDialog(wx.Dialog):
 
         self.mainSizer = wx.FlexGridSizer(0, 1, 0, 0)
         self.mainSizer.AddGrowableCol(0)
-        self.mainSizer.AddGrowableRow(2)
+        self.mainSizer.AddGrowableRow(0)
 
+        self.mainSizer.Add(attachSizer, flag=wx.EXPAND | wx.ALL, border=2)
         self.mainSizer.Add(columnsSizer, flag=wx.EXPAND | wx.ALL, border=2)
         self.mainSizer.Add(thumbSizer, flag=wx.EXPAND | wx.ALL, border=2)
-        self.mainSizer.Add(attachSizer, flag=wx.EXPAND | wx.ALL, border=2)
 
         self._createOkCancelButtons(self.mainSizer)
         self.SetSizer(self.mainSizer)
@@ -171,32 +152,27 @@ class ThumbDialog(wx.Dialog):
                   border=2)
 
     @property
-    def columnsCount(self):
+    def columnsCount(self) -> int:
         """
         Количество столбцов. 0 - не использовать таблицу
         """
         return self.columns.GetValue()
 
     @property
-    def thumbSize(self):
+    def thumbSize(self) -> int:
         """
         Размер превьюшек в галерее
         """
         return self.thumbSizeCtrl.GetValue()
 
     @property
-    def selectedFiles(self):
+    def selectedFiles(self) -> List[Path]:
         """
         Список выбранных файлов
         """
-        return self.attachFiles.GetCheckedStrings()
-
-    @property
-    def isAllFiles(self):
-        """
-        Вовзращает True, если выбраны все файлы и False в противном случае
-        """
-        return len(self.selectedFiles) == self.attachFiles.GetCount()
+        return [fname
+                for fname in self.attachFiles.GetChecked()
+                if not fname.is_dir()]
 
     def LoadState(self):
         self.columnsCountConfigElement = IntegerElement(

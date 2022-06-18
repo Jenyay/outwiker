@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
 
+from pathlib import Path
+from typing import List
+
 import wx
 
+from outwiker.core.attachment import Attachment
 from outwiker.gui.baseaction import BaseAction
 
 from .thumbdialog import ThumbDialog
@@ -35,14 +39,11 @@ class ThumbAction (BaseAction):
             dlgResult = dlg.ShowModal()
 
             if dlgResult == wx.ID_OK:
-                if dlg.isAllFiles:
-                    self._insertFullGallery(dlg.columnsCount, dlg.thumbSize)
-                else:
-                    self._insertSelectedGallery(dlg.columnsCount,
-                                                dlg.thumbSize,
-                                                dlg.selectedFiles)
+                self._insertSelectedGallery(dlg.columnsCount,
+                                            dlg.thumbSize,
+                                            dlg.selectedFiles)
 
-    def _insertSelectedGallery(self, columns, thumbsize, files):
+    def _insertSelectedGallery(self, columns: int, thumbsize: int, files: List[Path]):
         """
         Вставить в редактор шаблон для галереи,
             оформленной в виде таблицы с заданным количеством столбцов.
@@ -50,12 +51,19 @@ class ThumbAction (BaseAction):
         thumbsize - размер превьюшек(0 - размер по умолчанию)
         files - список файлов для галереи
         """
+        page = self._application.selectedPage
+        attach = Attachment(page)
+        attach_root = attach.getAttachPath(create=False)
+
         params = self._getGalleryParams(columns, thumbsize)
 
-        attachFiles = ["    Attach:" + fname for fname in files]
-        filesString = u"\n".join(attachFiles)
+        attachFiles = ['    Attach:"{}"'.format(fname.relative_to(attach_root)).replace('\\', '/')
+                       for fname in files]
 
-        command = u'(:thumbgallery{params}:)\n{files}\n(:thumbgalleryend:)'.format(params=params, files=filesString)
+        filesString = "\n".join(attachFiles)
+
+        command = '(:thumbgallery{params}:)\n{files}\n(:thumbgalleryend:)'.format(
+            params=params, files=filesString)
 
         pageView = self._getPageView()
         pageView.codeEditor.replaceText(command)
