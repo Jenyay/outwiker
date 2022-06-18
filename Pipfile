@@ -16,12 +16,12 @@ psutil = "==5.9.0"
 
 [dev-packages]
 invoke = "==1.7.1"
-cx-freeze = "==6.10"
+cx-freeze = "==6.11.0"
 pympler = "==1.0.1"
 pytest = ">=7.1"
-coverage = ">=6.3"
+coverage = ">=6.4"
 jinja2 = ">=3.1"
-colorama = "==0.4.4"
-sphinx = ">=4.5"
+colorama = "==0.4.5"
+sphinx = ">=5.0"
 buildtools = {editable = true, path = "./buildtools"}
 outwiker = {editable = true, path = "."}
