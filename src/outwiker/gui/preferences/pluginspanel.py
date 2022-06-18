@@ -5,8 +5,8 @@ import logging
 import wx
 import wx.adv
 
-from outwiker.gui.guiconfig import PluginsConfig
 from outwiker.core.system import getCurrentDir, getOS
+from outwiker.gui.guiconfig import PluginsConfig
 from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
 
 logger = logging.getLogger('pluginspanel')
@@ -164,8 +164,10 @@ class PluginsController(object):
         """
         Добавить отключенные плагины в список
         """
-        self.__owner.pluginsList.Append(list(self.__owner._application.plugins.disabledPlugins))
-        self.__pluginsItems.update(self.__owner._application.plugins.disabledPlugins)
+        self.__owner.pluginsList.Append(
+            list(self.__owner._application.plugins.disabledPlugins))
+        self.__pluginsItems.update(
+            self.__owner._application.plugins.disabledPlugins)
 
     def __appendInvalidPlugins(self):
         invalid_plugins = self.__owner._application.plugins.invalidPlugins

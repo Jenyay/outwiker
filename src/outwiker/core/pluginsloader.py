@@ -14,13 +14,25 @@ import outwiker
 import outwiker.core.packageversion as pv
 
 from outwiker.core.defines import PLUGIN_INFO_FILE_NAME
-from outwiker.core.pluginbase import Plugin, InvalidPlugin
+from outwiker.core.pluginbase import Plugin
 from outwiker.core.appinfofactory import AppInfoFactory
 from outwiker.core.appinfo import AppInfo
 from outwiker.gui.guiconfig import PluginsConfig
 from outwiker.utilites.textfile import readTextFile
 
 logger = logging.getLogger('outwiker.core.pluginsloader')
+
+
+class InvalidPlugin:
+    """
+    Class with the information about plugin with errors
+    """
+
+    def __init__(self, name, description, version=u'', url=None):
+        self.name = name
+        self.description = description
+        self.version = version if version is not None else u''
+        self.url = url
 
 
 class EnabledPlugins(collections.UserDict):

@@ -51,16 +51,3 @@ class PluginWebPage (Plugin):
         всех событий
         """
         self.__controller.destroy()
-
-    #############################################
-
-    def _initlocale(self, domain):
-        langdir = os.path.join(os.path.dirname(__file__), "locale")
-        global _
-
-        try:
-            _ = self._init_i18n(domain, langdir)
-        except BaseException as e:
-            print(e)
-
-        set_(_)
