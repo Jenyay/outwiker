@@ -137,26 +137,26 @@ def test_not_filter():
     true_filter = lambda path: True
     false_filter = lambda path: False
 
-    assert not notFilter(true_filter)(Path['xxx'])
-    assert notFilter(false_filter)(Path['xxx'])
+    assert not notFilter(true_filter)(Path('xxx'))
+    assert notFilter(false_filter)(Path('xxx'))
 
 
 def test_and_filter():
     true_filter = lambda path: True
     false_filter = lambda path: False
 
-    assert andFilter(true_filter, true_filter)(Path['xxx'])
-    assert not andFilter(false_filter, true_filter)(Path['xxx'])
-    assert not andFilter(true_filter, false_filter)(Path['xxx'])
-    assert not andFilter(false_filter, false_filter)(Path['xxx'])
+    assert andFilter(true_filter, true_filter)(Path('xxx'))
+    assert not andFilter(false_filter, true_filter)(Path('xxx'))
+    assert not andFilter(true_filter, false_filter)(Path('xxx'))
+    assert not andFilter(false_filter, false_filter)(Path('xxx'))
 
 
 def test_or_filter():
     true_filter = lambda path: True
     false_filter = lambda path: False
 
-    assert orFilter(true_filter, true_filter)(Path['xxx'])
-    assert orFilter(false_filter, true_filter)(Path['xxx'])
-    assert orFilter(true_filter, false_filter)(Path['xxx'])
-    assert not orFilter(false_filter, false_filter)(Path['xxx'])
+    assert orFilter(true_filter, true_filter)(Path('xxx'))
+    assert orFilter(false_filter, true_filter)(Path('xxx'))
+    assert orFilter(true_filter, false_filter)(Path('xxx'))
+    assert not orFilter(false_filter, false_filter)(Path('xxx'))
 
