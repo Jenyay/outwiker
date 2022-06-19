@@ -4,7 +4,7 @@ import os
 import os.path
 import shutil
 from pathlib import Path
-from typing import Union
+from typing import Union, List
 
 from .defines import PAGE_ATTACH_DIR
 from .exceptions import ReadonlyException
@@ -280,3 +280,24 @@ class Attachment:
         если ее еще не существует?
         """
         return os.path.join(self.getAttachPath(create), fname)
+
+    def query(self, mask: str) -> List[str]:
+        mask = mask.replace('\\', '/').strip()
+        if len(mask) == 0:
+            return []
+
+        if mask.find('..') != -1:
+            return []
+
+        if mask.startswith('/'):
+            return []
+
+
+        root_dir = Path(self.getAttachPath(create=False))
+        if not root_dir.exists():
+            return []
+
+        glob_result = root_dir.glob(mask)
+
+        return [str(fname.relative_to(root_dir)).replace('\\', '/')
+                for fname in glob_result]
