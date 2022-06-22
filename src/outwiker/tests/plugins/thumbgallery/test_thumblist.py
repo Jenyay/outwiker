@@ -1247,3 +1247,281 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertTrue("_particle_01.PNG" in result)
 
         self.assertTrue(Path(attach.getAttachPath(), '__thumb', subdir).exists())
+
+    def test_mask_all_root_single_star(self):
+        files = [
+            "first.jpg",
+            "particle_01.PNG",
+            "filename.tmp",
+        ]
+
+        fullpath = [Path(self.filesPath, fname) for fname in files]
+        attach = Attachment(self.testPage)
+        attach.attach(fullpath)
+        text = """
+        (:thumblist:)
+            *
+        (:thumblistend:)
+        """
+
+        result = self.parser.toHtml(text)
+
+        self.assertTrue('<a href="__attach/first.jpg">' in result, result)
+        self.assertTrue("_first.jpg" in result)
+        self.assertTrue("__thumb" in result)
+
+        self.assertTrue('<a href="__attach/particle_01.PNG">' in result)
+        self.assertTrue("_particle_01.PNG" in result)
+
+        self.assertTrue("filename.tmp" not in result)
+
+        self.assertTrue(Path(attach.getAttachPath(), '__thumb').exists())
+
+    def test_mask_all_root_single_star_attach(self):
+        files = [
+            "first.jpg",
+            "particle_01.PNG",
+            "filename.tmp",
+        ]
+
+        fullpath = [Path(self.filesPath, fname) for fname in files]
+        attach = Attachment(self.testPage)
+        attach.attach(fullpath)
+        text = """
+        (:thumblist:)
+            Attach:*
+        (:thumblistend:)
+        """
+
+        result = self.parser.toHtml(text)
+
+        self.assertTrue('<a href="__attach/first.jpg">' in result, result)
+        self.assertTrue("_first.jpg" in result)
+        self.assertTrue("__thumb" in result)
+
+        self.assertTrue('<a href="__attach/particle_01.PNG">' in result)
+        self.assertTrue("_particle_01.PNG" in result)
+
+        self.assertTrue("filename.tmp" not in result)
+
+        self.assertTrue(Path(attach.getAttachPath(), '__thumb').exists())
+
+    def test_mask_all_root_single_star_attach_single_quotes(self):
+        files = [
+            "first.jpg",
+            "particle_01.PNG",
+            "filename.tmp",
+        ]
+
+        fullpath = [Path(self.filesPath, fname) for fname in files]
+        attach = Attachment(self.testPage)
+        attach.attach(fullpath)
+        text = """
+        (:thumblist:)
+            Attach:'*'
+        (:thumblistend:)
+        """
+
+        result = self.parser.toHtml(text)
+
+        self.assertTrue('<a href="__attach/first.jpg">' in result, result)
+        self.assertTrue("_first.jpg" in result)
+        self.assertTrue("__thumb" in result)
+
+        self.assertTrue('<a href="__attach/particle_01.PNG">' in result)
+        self.assertTrue("_particle_01.PNG" in result)
+
+        self.assertTrue("filename.tmp" not in result)
+
+        self.assertTrue(Path(attach.getAttachPath(), '__thumb').exists())
+
+    def test_mask_all_root_single_star_attach_double_quotes(self):
+        files = [
+            "first.jpg",
+            "particle_01.PNG",
+            "filename.tmp",
+        ]
+
+        fullpath = [Path(self.filesPath, fname) for fname in files]
+        attach = Attachment(self.testPage)
+        attach.attach(fullpath)
+        text = """
+        (:thumblist:)
+            Attach:"*"
+        (:thumblistend:)
+        """
+
+        result = self.parser.toHtml(text)
+
+        self.assertTrue('<a href="__attach/first.jpg">' in result, result)
+        self.assertTrue("_first.jpg" in result)
+        self.assertTrue("__thumb" in result)
+
+        self.assertTrue('<a href="__attach/particle_01.PNG">' in result)
+        self.assertTrue("_particle_01.PNG" in result)
+
+        self.assertTrue("filename.tmp" not in result)
+
+        self.assertTrue(Path(attach.getAttachPath(), '__thumb').exists())
+
+    def test_mask_all_root_double_star(self):
+        files = [
+            "first.jpg",
+            "particle_01.PNG",
+            "filename.tmp",
+        ]
+
+        fullpath = [Path(self.filesPath, fname) for fname in files]
+        attach = Attachment(self.testPage)
+        attach.attach(fullpath)
+        text = """
+        (:thumblist:)
+            *.*
+        (:thumblistend:)
+        """
+
+        result = self.parser.toHtml(text)
+
+        self.assertTrue('<a href="__attach/first.jpg">' in result, result)
+        self.assertTrue("_first.jpg" in result)
+        self.assertTrue("__thumb" in result)
+
+        self.assertTrue('<a href="__attach/particle_01.PNG">' in result)
+        self.assertTrue("_particle_01.PNG" in result)
+
+        self.assertTrue("filename.tmp" not in result)
+
+        self.assertTrue(Path(attach.getAttachPath(), '__thumb').exists())
+
+    def test_mask_all_root_double_star_attach(self):
+        files = [
+            "first.jpg",
+            "particle_01.PNG",
+            "filename.tmp",
+        ]
+
+        fullpath = [Path(self.filesPath, fname) for fname in files]
+        attach = Attachment(self.testPage)
+        attach.attach(fullpath)
+        text = """
+        (:thumblist:)
+            Attach:*.*
+        (:thumblistend:)
+        """
+
+        result = self.parser.toHtml(text)
+
+        self.assertTrue('<a href="__attach/first.jpg">' in result, result)
+        self.assertTrue("_first.jpg" in result)
+        self.assertTrue("__thumb" in result)
+
+        self.assertTrue('<a href="__attach/particle_01.PNG">' in result)
+        self.assertTrue("_particle_01.PNG" in result)
+
+        self.assertTrue("filename.tmp" not in result)
+
+        self.assertTrue(Path(attach.getAttachPath(), '__thumb').exists())
+
+    def test_mask_root(self):
+        files = [
+            "image.png",
+            "image_1.png",
+            "image_2.png",
+            "image.jpg",
+        ]
+
+        fullpath = [Path(self.filesPath, fname) for fname in files]
+        attach = Attachment(self.testPage)
+        attach.attach(fullpath)
+        text = """
+        (:thumblist:)
+            *.png
+        (:thumblistend:)
+        """
+
+        result = self.parser.toHtml(text)
+
+        self.assertTrue('<a href="__attach/image.png">' in result, result)
+        self.assertTrue('<a href="__attach/image_1.png">' in result, result)
+        self.assertTrue('<a href="__attach/image_2.png">' in result, result)
+        self.assertTrue('<a href="__attach/image.jpg">' not in result, result)
+
+        self.assertTrue(Path(attach.getAttachPath(), '__thumb').exists())
+
+    def test_mask_root_attach(self):
+        files = [
+            "image.png",
+            "image_1.png",
+            "image_2.png",
+            "image.jpg",
+        ]
+
+        fullpath = [Path(self.filesPath, fname) for fname in files]
+        attach = Attachment(self.testPage)
+        attach.attach(fullpath)
+        text = """
+        (:thumblist:)
+            Attach:*.png
+        (:thumblistend:)
+        """
+
+        result = self.parser.toHtml(text)
+
+        self.assertTrue('<a href="__attach/image.png">' in result, result)
+        self.assertTrue('<a href="__attach/image_1.png">' in result, result)
+        self.assertTrue('<a href="__attach/image_2.png">' in result, result)
+        self.assertTrue('<a href="__attach/image.jpg">' not in result, result)
+
+        self.assertTrue(Path(attach.getAttachPath(), '__thumb').exists())
+
+    def test_mask_root_attach_single_quotes(self):
+        files = [
+            "image.png",
+            "image_1.png",
+            "image_2.png",
+            "image.jpg",
+        ]
+
+        fullpath = [Path(self.filesPath, fname) for fname in files]
+        attach = Attachment(self.testPage)
+        attach.attach(fullpath)
+        text = """
+        (:thumblist:)
+            Attach:'*.png'
+        (:thumblistend:)
+        """
+
+        result = self.parser.toHtml(text)
+
+        self.assertTrue('<a href="__attach/image.png">' in result, result)
+        self.assertTrue('<a href="__attach/image_1.png">' in result, result)
+        self.assertTrue('<a href="__attach/image_2.png">' in result, result)
+        self.assertTrue('<a href="__attach/image.jpg">' not in result, result)
+
+        self.assertTrue(Path(attach.getAttachPath(), '__thumb').exists())
+
+    def test_mask_root_attach_double_quotes(self):
+        files = [
+            "image.png",
+            "image_1.png",
+            "image_2.png",
+            "image.jpg",
+        ]
+
+        fullpath = [Path(self.filesPath, fname) for fname in files]
+        attach = Attachment(self.testPage)
+        attach.attach(fullpath)
+        text = """
+        (:thumblist:)
+            Attach:"*.png"
+        (:thumblistend:)
+        """
+
+        result = self.parser.toHtml(text)
+
+        self.assertTrue('<a href="__attach/image.png">' in result, result)
+        self.assertTrue('<a href="__attach/image_1.png">' in result, result)
+        self.assertTrue('<a href="__attach/image_2.png">' in result, result)
+        self.assertTrue('<a href="__attach/image.jpg">' not in result, result)
+
+        self.assertTrue(Path(attach.getAttachPath(), '__thumb').exists())
