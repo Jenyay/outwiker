@@ -135,10 +135,14 @@ class ThumbListCommand(Command):
             return []
 
         glob_result = root_dir.glob(mask)
-        glob_filter = [str(fname.relative_to(root_dir))
-                       for fname in glob_result
-                       if (not str(fname).startswith('__') and
-                           isImage(fname))]
+        glob_images_relative = [fname.relative_to(root_dir)
+                                for fname in glob_result
+                                if isImage(fname)]
+
+        glob_filter = [str(fname)
+                       for fname in glob_images_relative
+                       if (not str(fname).startswith('__') or
+                           str(fname) == fname.name)]
 
         return glob_filter
 

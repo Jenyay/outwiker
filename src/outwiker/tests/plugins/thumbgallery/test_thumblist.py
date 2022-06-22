@@ -1525,3 +1525,231 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertTrue('<a href="__attach/image.jpg">' not in result, result)
 
         self.assertTrue(Path(attach.getAttachPath(), '__thumb').exists())
+
+    def test_mask_subdir(self):
+        subdir = 'subdir'
+        files = [
+            "image.png",
+            "image_1.png",
+            "image_2.png",
+            "image.jpg",
+        ]
+
+        fullpath = [Path(self.filesPath, fname) for fname in files]
+        attach = Attachment(self.testPage)
+        attach.createSubdir(subdir)
+        attach.attach(fullpath, subdir=subdir)
+        text = """
+        (:thumblist:)
+            subdir/*.png
+        (:thumblistend:)
+        """
+
+        result = self.parser.toHtml(text)
+
+        self.assertTrue('<a href="__attach/subdir/image.png">' in result, result)
+        self.assertTrue('<a href="__attach/subdir/image_1.png">' in result, result)
+        self.assertTrue('<a href="__attach/subdir/image_2.png">' in result, result)
+        self.assertTrue('<a href="__attach/subdir/image.jpg">' not in result, result)
+
+        self.assertTrue(Path(attach.getAttachPath(), '__thumb').exists())
+
+    def test_mask_subdir_attach(self):
+        subdir = 'subdir'
+        files = [
+            "image.png",
+            "image_1.png",
+            "image_2.png",
+            "image.jpg",
+        ]
+
+        fullpath = [Path(self.filesPath, fname) for fname in files]
+        attach = Attachment(self.testPage)
+        attach.createSubdir(subdir)
+        attach.attach(fullpath, subdir=subdir)
+        text = """
+        (:thumblist:)
+            Attach:"subdir/*.png"
+        (:thumblistend:)
+        """
+
+        result = self.parser.toHtml(text)
+
+        self.assertTrue('<a href="__attach/subdir/image.png">' in result, result)
+        self.assertTrue('<a href="__attach/subdir/image_1.png">' in result, result)
+        self.assertTrue('<a href="__attach/subdir/image_2.png">' in result, result)
+        self.assertTrue('<a href="__attach/subdir/image.jpg">' not in result, result)
+
+        self.assertTrue(Path(attach.getAttachPath(), '__thumb').exists())
+
+    def test_mask_subdir_all(self):
+        subdir = 'subdir'
+        files = [
+            "image.png",
+            "image_1.png",
+            "image_2.png",
+            "image.jpg",
+        ]
+
+        fullpath = [Path(self.filesPath, fname) for fname in files]
+        attach = Attachment(self.testPage)
+        attach.createSubdir(subdir)
+        attach.attach(fullpath, subdir=subdir)
+        text = """
+        (:thumblist:)
+            subdir/*
+        (:thumblistend:)
+        """
+
+        result = self.parser.toHtml(text)
+
+        self.assertTrue('<a href="__attach/subdir/image.png">' in result, result)
+        self.assertTrue('<a href="__attach/subdir/image_1.png">' in result, result)
+        self.assertTrue('<a href="__attach/subdir/image_2.png">' in result, result)
+        self.assertTrue('<a href="__attach/subdir/image.jpg">' in result, result)
+
+        self.assertTrue(Path(attach.getAttachPath(), '__thumb').exists())
+
+    def test_mask_subdir_all_attach(self):
+        subdir = 'subdir'
+        files = [
+            "image.png",
+            "image_1.png",
+            "image_2.png",
+            "image.jpg",
+        ]
+
+        fullpath = [Path(self.filesPath, fname) for fname in files]
+        attach = Attachment(self.testPage)
+        attach.createSubdir(subdir)
+        attach.attach(fullpath, subdir=subdir)
+        text = """
+        (:thumblist:)
+            Attach:"subdir/*"
+        (:thumblistend:)
+        """
+
+        result = self.parser.toHtml(text)
+
+        self.assertTrue('<a href="__attach/subdir/image.png">' in result, result)
+        self.assertTrue('<a href="__attach/subdir/image_1.png">' in result, result)
+        self.assertTrue('<a href="__attach/subdir/image_2.png">' in result, result)
+        self.assertTrue('<a href="__attach/subdir/image.jpg">' in result, result)
+
+        self.assertTrue(Path(attach.getAttachPath(), '__thumb').exists())
+
+    def test_mask_subsubdir(self):
+        subdir = 'subdir1/subdir2/'
+        files = [
+            "image.png",
+            "image_1.png",
+            "image_2.png",
+            "image.jpg",
+        ]
+
+        fullpath = [Path(self.filesPath, fname) for fname in files]
+        attach = Attachment(self.testPage)
+        attach.createSubdir(subdir)
+        attach.attach(fullpath, subdir=subdir)
+        text = """
+        (:thumblist:)
+            **/*.png
+        (:thumblistend:)
+        """
+
+        result = self.parser.toHtml(text)
+
+        self.assertTrue('<a href="__attach/subdir1/subdir2/image.png">' in result, result)
+        self.assertTrue('<a href="__attach/subdir1/subdir2/image_1.png">' in result, result)
+        self.assertTrue('<a href="__attach/subdir1/subdir2/image_2.png">' in result, result)
+        self.assertTrue('<a href="__attach/subdir1/subdir2/image.jpg">' not in result, result)
+
+        self.assertTrue(Path(attach.getAttachPath(), '__thumb').exists())
+
+    def test_mask_subsubdir_attach(self):
+        subdir = 'subdir1/subdir2/'
+        files = [
+            "image.png",
+            "image_1.png",
+            "image_2.png",
+            "image.jpg",
+        ]
+
+        fullpath = [Path(self.filesPath, fname) for fname in files]
+        attach = Attachment(self.testPage)
+        attach.createSubdir(subdir)
+        attach.attach(fullpath, subdir=subdir)
+        text = """
+        (:thumblist:)
+            Attach:"**/*.png"
+        (:thumblistend:)
+        """
+
+        result = self.parser.toHtml(text)
+
+        self.assertTrue('<a href="__attach/subdir1/subdir2/image.png">' in result, result)
+        self.assertTrue('<a href="__attach/subdir1/subdir2/image_1.png">' in result, result)
+        self.assertTrue('<a href="__attach/subdir1/subdir2/image_2.png">' in result, result)
+        self.assertTrue('<a href="__attach/subdir1/subdir2/image.jpg">' not in result, result)
+
+        self.assertTrue(Path(attach.getAttachPath(), '__thumb').exists())
+
+    def test_mask_subsubdir_skip_hidden_dirs(self):
+        subdir = 'subdir1/subdir2/'
+        subdir_hidden = '__hidden'
+
+        files = [
+            "image.png",
+            "image_1.png",
+            "image_2.png",
+            "image.jpg",
+        ]
+        fullpath = [Path(self.filesPath, fname) for fname in files]
+
+        files_hidden = ["add.png"]
+        fullpath_hidden = [Path(self.filesPath, fname) for fname in files_hidden]
+
+        attach = Attachment(self.testPage)
+        attach.createSubdir(subdir)
+        attach.createSubdir(subdir_hidden)
+
+        attach.attach(fullpath, subdir=subdir)
+        attach.attach(fullpath_hidden, subdir=subdir_hidden)
+
+        text = """
+        (:thumblist:)
+            **/*
+        (:thumblistend:)
+        """
+
+        result = self.parser.toHtml(text)
+
+        self.assertTrue('<a href="__attach/subdir1/subdir2/image.png">' in result, result)
+        self.assertTrue('<a href="__attach/subdir1/subdir2/image_1.png">' in result, result)
+        self.assertTrue('<a href="__attach/subdir1/subdir2/image_2.png">' in result, result)
+        self.assertTrue('<a href="__attach/subdir1/subdir2/image.jpg">' in result, result)
+        self.assertTrue('<a href="__attach/__hidden/add.png">' not in result, result)
+
+        self.assertTrue(Path(attach.getAttachPath(), '__thumb').exists())
+        self.assertTrue(Path(attach.getAttachPath(), '__hidden').exists())
+        self.assertTrue(Path(attach.getAttachPath(), subdir_hidden, files_hidden[0]).exists())
+
+    def test_not_hidden_files(self):
+        files = [
+            "__image.png",
+        ]
+
+        fullpath = [Path(self.filesPath, fname) for fname in files]
+        attach = Attachment(self.testPage)
+        attach.attach(fullpath)
+        text = """
+        (:thumblist:)
+            *
+        (:thumblistend:)
+        """
+
+        result = self.parser.toHtml(text)
+
+        self.assertTrue('<a href="__attach/__image.png">' in result, result)
+
+        self.assertTrue(Path(attach.getAttachPath(), '__thumb').exists())
