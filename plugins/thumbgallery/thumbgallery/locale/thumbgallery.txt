@@ -39,22 +39,114 @@ or
 <u>Creating a gallery of the selected files as a table design</u>
 
 (:thumbgallery cols=3 px=150:)
-&nbsp;&nbsp;&nbsp;Attach:DSC_0567.jpg
-&nbsp;&nbsp;&nbsp;Attach:DSC_0604.jpg
-&nbsp;&nbsp;&nbsp;Attach:klyazma_2011_07.jpg
-&nbsp;&nbsp;&nbsp;Attach:smoke.jpg
-&nbsp;&nbsp;&nbsp;Attach:sunset_1.jpg
-&nbsp;&nbsp;&nbsp;Attach:sev_beach2.jpg
+&nbsp;&nbsp;&nbsp;Attach:"filename_1.jpg"
+&nbsp;&nbsp;&nbsp;Attach:"filename_2.jpg"
+&nbsp;&nbsp;&nbsp;Attach:"filename_3.jpg"
+(:thumbgalleryend:)
+
+or
+
+(:thumbgallery cols=3 px=150:)
+&nbsp;&nbsp;&nbsp;filename_1.jpg
+&nbsp;&nbsp;&nbsp;filename_2.jpg
+&nbsp;&nbsp;&nbsp;filename_3.jpg
 (:thumbgalleryend:)
 
 
 <u>Creating a gallery of the selected files with comments</u>
 
 (:thumbgallery cols=3 px=150:)
-&nbsp;&nbsp;&nbsp;DSC_0567.jpg
-&nbsp;&nbsp;&nbsp;DSC_0604.jpg
-&nbsp;&nbsp;&nbsp;klyazma_2011_07.jpg | Klyazma river
-&nbsp;&nbsp;&nbsp;smoke.jpg | Smoky summer in Moscow
-&nbsp;&nbsp;&nbsp;sunset_1.jpg
-&nbsp;&nbsp;&nbsp;sev_beach2.jpg | Black Sea. Sevastopol
+&nbsp;&nbsp;&nbsp;Attach:"filename_1.jpg"
+&nbsp;&nbsp;&nbsp;Attach:"filename_2.jpg"
+&nbsp;&nbsp;&nbsp;Attach:"filename_3.jpg" | Comment for filename_3
+&nbsp;&nbsp;&nbsp;Attach:"filename_4.jpg" | Comment for filename_4
 (:thumbgalleryend:)
+
+or
+
+(:thumbgallery cols=3 px=150:)
+&nbsp;&nbsp;&nbsp;filename_1.jpg
+&nbsp;&nbsp;&nbsp;filename_2.jpg
+&nbsp;&nbsp;&nbsp;filename_3.jpg | Comment for filename_3
+&nbsp;&nbsp;&nbsp;filename_4.jpg | Comment for filename_4
+(:thumbgalleryend:)
+
+
+<u>Select files in nested folders</u>
+
+(:thumbgallery cols=3 px=150:)
+&nbsp;&nbsp;&nbsp;Attach:"folder/subfolder/filename_1.jpg"
+&nbsp;&nbsp;&nbsp;Attach:"folder/subfolder/filename_2.jpg"
+&nbsp;&nbsp;&nbsp;Attach:"folder/subfolder/filename_3.jpg" | Comment for filename_3
+&nbsp;&nbsp;&nbsp;Attach:"folder/subfolder/filename_4.jpg" | Comment for filename_4
+(:thumbgalleryend:)
+
+or
+
+(:thumbgallery cols=3 px=150:)
+&nbsp;&nbsp;&nbsp;folder/subfolder/filename_1.jpg
+&nbsp;&nbsp;&nbsp;folder/subfolder/filename_2.jpg
+&nbsp;&nbsp;&nbsp;folder/subfolder/filename_3.jpg | Comment for filename_3
+&nbsp;&nbsp;&nbsp;folder/subfolder/filename_4.jpg | Comment for filename_4
+(:thumbgalleryend:)
+
+
+<u>Select files by mask</u>
+
+Select all images files in __attach folder
+
+(:thumbgallery cols=3 px=150:)
+    *
+(:thumbgalleryend:)
+
+or
+
+(:thumbgallery cols=3 px=150:)
+    *.*
+(:thumbgalleryend:)
+
+or
+
+(:thumbgallery cols=3 px=150:)
+    Attach:"*"
+(:thumbgalleryend:)
+
+
+Select images by mask files in __attach folder
+
+(:thumbgallery cols=3 px=150:)
+    *.png
+(:thumbgalleryend:)
+
+or
+
+(:thumbgallery cols=3 px=150:)
+    Attach:"*.png"
+(:thumbgalleryend:)
+
+
+Select images by mask files in __attach folder and all subfolders
+
+(:thumbgallery cols=3 px=150:)
+    **/*.png
+(:thumbgalleryend:)
+
+or
+
+(:thumbgallery cols=3 px=150:)
+    Attach:"**/*.png"
+(:thumbgalleryend:)
+
+
+Select images by mask files in single folder
+
+(:thumbgallery cols=3 px=150:)
+    folder_name/*.jpg
+(:thumbgalleryend:)
+
+or
+
+(:thumbgallery cols=3 px=150:)
+    Attach:"folder name/*.jpg"
+(:thumbgalleryend:)
+
