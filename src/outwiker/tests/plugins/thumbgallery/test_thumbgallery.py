@@ -11,7 +11,7 @@ from outwiker.pages.wiki.parserfactory import ParserFactory
 from outwiker.tests.basetestcases import BaseOutWikerGUIMixin
 
 
-class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
+class ThumbgalleryPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def setUp(self):
         self.initApplication()
         self.wikiroot = self.createWiki()
@@ -37,9 +37,9 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(len(self.loader), 1)
 
     def testContentParseEmpty(self):
-        text = """Бла-бла-бла (:thumblist:) бла-бла-бла"""
+        text = """Бла-бла-бла (:thumbgallery:) бла-бла-бла"""
 
-        validResult = """Бла-бла-бла <div class="thumblist"></div> бла-бла-бла"""
+        validResult = """Бла-бла-бла <div class="thumbgallery"></div> бла-бла-бла"""
 
         result = self.parser.toHtml(text)
         self.assertEqual(validResult, result)
@@ -47,7 +47,7 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def testAttachFull1(self):
         text = """Бла-бла-бла
-        (:thumblist:)
+        (:thumbgallery:)
         бла-бла-бла"""
 
         files = ["first.jpg"]
@@ -65,9 +65,9 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         )
         self.assertTrue("<table" not in result)
 
-    def testAttachThumbListFull2(self):
+    def testAttachthumbgalleryFull2(self):
         text = """Бла-бла-бла
-        (:thumblist:)
+        (:thumbgallery:)
         бла-бла-бла"""
 
         files = ["first.jpg", "image_01.JPG", "html.txt"]
@@ -109,8 +109,8 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def testAttachEmpty1(self):
         text = """Бла-бла-бла
-        (:thumblist:)
-        (:thumblistend:)
+        (:thumbgallery:)
+        (:thumbgalleryend:)
         бла-бла-бла"""
 
         files = ["first.jpg", "image_01.JPG", "html.txt"]
@@ -153,10 +153,10 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def testAttachList1(self):
         text = """Бла-бла-бла
-        (:thumblist:)
+        (:thumbgallery:)
             first.jpg
             particle_01.PNG
-        (:thumblistend:)
+        (:thumbgalleryend:)
         бла-бла-бла"""
 
         files = [
@@ -186,10 +186,10 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def testAttachList2(self):
         text = """Бла-бла-бла
-        (:thumblist:)
+        (:thumbgallery:)
             Attach:first.jpg
             Attach:particle_01.PNG
-        (:thumblistend:)
+        (:thumbgalleryend:)
         бла-бла-бла"""
 
         files = [
@@ -252,7 +252,7 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def testAttachList3(self):
         text = """Бла-бла-бла
-        (:thumblist:)
+        (:thumbgallery:)
 
             Attach:first.jpg
 
@@ -260,7 +260,7 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
             Attach:particle_01.PNG
 
 
-        (:thumblistend:)
+        (:thumbgalleryend:)
         бла-бла-бла"""
 
         files = [
@@ -328,10 +328,10 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def testAttachList4_singlequotes(self):
         text = """Бла-бла-бла
-        (:thumblist:)
+        (:thumbgallery:)
             Attach:'first.jpg'
             Attach:'particle_01.PNG'
-        (:thumblistend:)
+        (:thumbgalleryend:)
         бла-бла-бла"""
 
         files = [
@@ -394,10 +394,10 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def testAttachList5_doublequotes(self):
         text = """Бла-бла-бла
-        (:thumblist:)
+        (:thumbgallery:)
             Attach:"first.jpg"
             Attach:"particle_01.PNG"
-        (:thumblistend:)
+        (:thumbgalleryend:)
         бла-бла-бла"""
 
         files = [
@@ -618,7 +618,7 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def testAttachListSize1(self):
         text = """Бла-бла-бла
-        (:thumblist maxsize=100:)
+        (:thumbgallery maxsize=100:)
 
             Attach:first.jpg
 
@@ -626,7 +626,7 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
             Attach:particle_01.PNG
 
 
-        (:thumblistend:)
+        (:thumbgalleryend:)
         бла-бла-бла"""
 
         files = [
@@ -656,7 +656,7 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def testAttachListSize2(self):
         text = """Бла-бла-бла
-        (:thumblist px=100:)
+        (:thumbgallery px=100:)
 
             Attach:first.jpg
 
@@ -664,7 +664,7 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
             Attach:particle_01.PNG
 
 
-        (:thumblistend:)
+        (:thumbgalleryend:)
         бла-бла-бла"""
 
         files = [
@@ -694,7 +694,7 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def testAttachListComments1(self):
         text = """Бла-бла-бла
-        (:thumblist px=100:)
+        (:thumbgallery px=100:)
 
             Attach:first.jpg    | Первый
 
@@ -702,7 +702,7 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
             Attach:particle_01.PNG|Комментарий к картинке
 
 
-        (:thumblistend:)
+        (:thumbgalleryend:)
         бла-бла-бла"""
 
         files = [
@@ -732,10 +732,10 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def testAttachListComments2(self):
         text = """Бла-бла-бла
-        (:thumblist:)
+        (:thumbgallery:)
             Attach:first.jpg    | Первый
             Attach:particle_01.PNG|Комментарий к картинке
-        (:thumblistend:)
+        (:thumbgalleryend:)
         бла-бла-бла"""
 
         files = [
@@ -761,10 +761,10 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def testAttachListComments3_single_quotes(self):
         text = """Бла-бла-бла
-        (:thumblist:)
+        (:thumbgallery:)
             Attach:'first.jpg'    | Первый
             Attach:'particle_01.PNG'|Комментарий к картинке
-        (:thumblistend:)
+        (:thumbgalleryend:)
         бла-бла-бла"""
 
         files = [
@@ -790,10 +790,10 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def testAttachListComments3_double_quotes(self):
         text = """Бла-бла-бла
-        (:thumblist:)
+        (:thumbgallery:)
             Attach:"first.jpg"    | Первый
             Attach:"particle_01.PNG"|Комментарий к картинке
-        (:thumblistend:)
+        (:thumbgalleryend:)
         бла-бла-бла"""
 
         files = [
@@ -819,7 +819,7 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def testTable1(self):
         text = """Бла-бла-бла
-        (:thumblist cols=2:)
+        (:thumbgallery cols=2:)
         бла-бла-бла"""
 
         files = [
@@ -849,7 +849,7 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def testTable2(self):
         text = """Бла-бла-бла
-        (:thumblist cols=1:)
+        (:thumbgallery cols=1:)
         бла-бла-бла"""
 
         files = [
@@ -879,7 +879,7 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def testInvalidCols1(self):
         text = """Бла-бла-бла
-        (:thumblist cols:)
+        (:thumbgallery cols:)
         бла-бла-бла"""
 
         files = ["first.jpg", "image_01.JPG", "html.txt"]
@@ -900,7 +900,7 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def testInvalidCols2(self):
         text = """Бла-бла-бла
-        (:thumblist cols=:)
+        (:thumbgallery cols=:)
         бла-бла-бла"""
 
         files = ["first.jpg", "image_01.JPG", "html.txt"]
@@ -921,7 +921,7 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def testInvalidCols3(self):
         text = """Бла-бла-бла
-        (:thumblist cols=abyrvalg:)
+        (:thumbgallery cols=abyrvalg:)
         бла-бла-бла"""
 
         files = ["first.jpg", "image_01.JPG", "html.txt"]
@@ -942,7 +942,7 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def testInvalidThumbSizeStream(self):
         text = """Абырвалг
-        (:thumblist px=abyrvalg:)
+        (:thumbgallery px=abyrvalg:)
         бла-бла-бла"""
 
         files = ["first.jpg", "image_01.JPG", "html.txt"]
@@ -961,7 +961,7 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def testInvalidThumbSizeTable(self):
         text = """Абырвалг
-        (:thumblist px=abyrvalg сщды=3:)
+        (:thumbgallery px=abyrvalg сщды=3:)
         бла-бла-бла"""
 
         files = ["first.jpg", "image_01.JPG", "html.txt"]
@@ -982,10 +982,10 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         subdir = 'subdir'
 
         text = """Бла-бла-бла
-        (:thumblist:)
+        (:thumbgallery:)
             subdir/first.jpg
             subdir/particle_01.PNG
-        (:thumblistend:)
+        (:thumbgalleryend:)
         бла-бла-бла"""
 
         files = [
@@ -1012,10 +1012,10 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         subdir = 'subdir'
 
         text = """Бла-бла-бла
-        (:thumblist:)
+        (:thumbgallery:)
             subdir/first.jpg | Comment
             subdir/particle_01.PNG | Comment
-        (:thumblistend:)
+        (:thumbgalleryend:)
         бла-бла-бла"""
 
         files = [
@@ -1042,10 +1042,10 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         subdir = 'subdir'
 
         text = """Бла-бла-бла
-        (:thumblist:)
+        (:thumbgallery:)
             subdir\\first.jpg
             subdir\\particle_01.PNG
-        (:thumblistend:)
+        (:thumbgalleryend:)
         бла-бла-бла"""
 
         files = [
@@ -1072,10 +1072,10 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         subdir = 'subdir'
 
         text = """Бла-бла-бла
-        (:thumblist:)
+        (:thumbgallery:)
             Attach:'subdir\\first.jpg'
             Attach:'subdir\\particle_01.PNG'
-        (:thumblistend:)
+        (:thumbgalleryend:)
         бла-бла-бла"""
 
         files = [
@@ -1102,10 +1102,10 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         subdir = 'subdir'
 
         text = """Бла-бла-бла
-        (:thumblist:)
+        (:thumbgallery:)
             Attach:"subdir\\first.jpg"
             Attach:"subdir\\particle_01.PNG"
-        (:thumblistend:)
+        (:thumbgalleryend:)
         бла-бла-бла"""
 
         files = [
@@ -1132,10 +1132,10 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         subdir = 'subdir'
 
         text = """Бла-бла-бла
-        (:thumblist:)
+        (:thumbgallery:)
             Attach:'subdir/first.jpg' | Comment
             Attach:'subdir/particle_01.PNG' | Comment
-        (:thumblistend:)
+        (:thumbgalleryend:)
         бла-бла-бла"""
 
         files = [
@@ -1162,10 +1162,10 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         subdir = 'subdir'
 
         text = """Бла-бла-бла
-        (:thumblist:)
+        (:thumbgallery:)
             Attach:'subdir/first.jpg'
             Attach:'subdir/particle_01.PNG'
-        (:thumblistend:)
+        (:thumbgalleryend:)
         бла-бла-бла"""
 
         files = [
@@ -1192,10 +1192,10 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         subdir = 'subdir'
 
         text = """Бла-бла-бла
-        (:thumblist:)
+        (:thumbgallery:)
             Attach:"subdir/first.jpg"
             Attach:"subdir/particle_01.PNG"
-        (:thumblistend:)
+        (:thumbgalleryend:)
         бла-бла-бла"""
 
         files = [
@@ -1222,10 +1222,10 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         subdir = 'subdir'
 
         text = """Бла-бла-бла
-        (:thumblist:)
+        (:thumbgallery:)
             Attach:"subdir/first.jpg" | Comment
             Attach:"subdir/particle_01.PNG" | Comment
-        (:thumblistend:)
+        (:thumbgalleryend:)
         бла-бла-бла"""
 
         files = [
@@ -1259,9 +1259,9 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         attach = Attachment(self.testPage)
         attach.attach(fullpath)
         text = """
-        (:thumblist:)
+        (:thumbgallery:)
             *
-        (:thumblistend:)
+        (:thumbgalleryend:)
         """
 
         result = self.parser.toHtml(text)
@@ -1288,9 +1288,9 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         attach = Attachment(self.testPage)
         attach.attach(fullpath)
         text = """
-        (:thumblist:)
+        (:thumbgallery:)
             Attach:*
-        (:thumblistend:)
+        (:thumbgalleryend:)
         """
 
         result = self.parser.toHtml(text)
@@ -1317,9 +1317,9 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         attach = Attachment(self.testPage)
         attach.attach(fullpath)
         text = """
-        (:thumblist:)
+        (:thumbgallery:)
             Attach:'*'
-        (:thumblistend:)
+        (:thumbgalleryend:)
         """
 
         result = self.parser.toHtml(text)
@@ -1346,9 +1346,9 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         attach = Attachment(self.testPage)
         attach.attach(fullpath)
         text = """
-        (:thumblist:)
+        (:thumbgallery:)
             Attach:"*"
-        (:thumblistend:)
+        (:thumbgalleryend:)
         """
 
         result = self.parser.toHtml(text)
@@ -1375,9 +1375,9 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         attach = Attachment(self.testPage)
         attach.attach(fullpath)
         text = """
-        (:thumblist:)
+        (:thumbgallery:)
             *.*
-        (:thumblistend:)
+        (:thumbgalleryend:)
         """
 
         result = self.parser.toHtml(text)
@@ -1404,9 +1404,9 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         attach = Attachment(self.testPage)
         attach.attach(fullpath)
         text = """
-        (:thumblist:)
+        (:thumbgallery:)
             Attach:*.*
-        (:thumblistend:)
+        (:thumbgalleryend:)
         """
 
         result = self.parser.toHtml(text)
@@ -1434,9 +1434,9 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         attach = Attachment(self.testPage)
         attach.attach(fullpath)
         text = """
-        (:thumblist:)
+        (:thumbgallery:)
             *.png
-        (:thumblistend:)
+        (:thumbgalleryend:)
         """
 
         result = self.parser.toHtml(text)
@@ -1460,9 +1460,9 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         attach = Attachment(self.testPage)
         attach.attach(fullpath)
         text = """
-        (:thumblist:)
+        (:thumbgallery:)
             Attach:*.png
-        (:thumblistend:)
+        (:thumbgalleryend:)
         """
 
         result = self.parser.toHtml(text)
@@ -1486,9 +1486,9 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         attach = Attachment(self.testPage)
         attach.attach(fullpath)
         text = """
-        (:thumblist:)
+        (:thumbgallery:)
             Attach:'*.png'
-        (:thumblistend:)
+        (:thumbgalleryend:)
         """
 
         result = self.parser.toHtml(text)
@@ -1512,9 +1512,9 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         attach = Attachment(self.testPage)
         attach.attach(fullpath)
         text = """
-        (:thumblist:)
+        (:thumbgallery:)
             Attach:"*.png"
-        (:thumblistend:)
+        (:thumbgalleryend:)
         """
 
         result = self.parser.toHtml(text)
@@ -1540,9 +1540,9 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         attach.createSubdir(subdir)
         attach.attach(fullpath, subdir=subdir)
         text = """
-        (:thumblist:)
+        (:thumbgallery:)
             subdir/*.png
-        (:thumblistend:)
+        (:thumbgalleryend:)
         """
 
         result = self.parser.toHtml(text)
@@ -1568,9 +1568,9 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         attach.createSubdir(subdir)
         attach.attach(fullpath, subdir=subdir)
         text = """
-        (:thumblist:)
+        (:thumbgallery:)
             Attach:"subdir/*.png"
-        (:thumblistend:)
+        (:thumbgalleryend:)
         """
 
         result = self.parser.toHtml(text)
@@ -1596,9 +1596,9 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         attach.createSubdir(subdir)
         attach.attach(fullpath, subdir=subdir)
         text = """
-        (:thumblist:)
+        (:thumbgallery:)
             subdir/*
-        (:thumblistend:)
+        (:thumbgalleryend:)
         """
 
         result = self.parser.toHtml(text)
@@ -1624,9 +1624,9 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         attach.createSubdir(subdir)
         attach.attach(fullpath, subdir=subdir)
         text = """
-        (:thumblist:)
+        (:thumbgallery:)
             Attach:"subdir/*"
-        (:thumblistend:)
+        (:thumbgalleryend:)
         """
 
         result = self.parser.toHtml(text)
@@ -1652,9 +1652,9 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         attach.createSubdir(subdir)
         attach.attach(fullpath, subdir=subdir)
         text = """
-        (:thumblist:)
+        (:thumbgallery:)
             **/*.png
-        (:thumblistend:)
+        (:thumbgalleryend:)
         """
 
         result = self.parser.toHtml(text)
@@ -1680,9 +1680,9 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         attach.createSubdir(subdir)
         attach.attach(fullpath, subdir=subdir)
         text = """
-        (:thumblist:)
+        (:thumbgallery:)
             Attach:"**/*.png"
-        (:thumblistend:)
+        (:thumbgalleryend:)
         """
 
         result = self.parser.toHtml(text)
@@ -1717,9 +1717,9 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         attach.attach(fullpath_hidden, subdir=subdir_hidden)
 
         text = """
-        (:thumblist:)
+        (:thumbgallery:)
             **/*
-        (:thumblistend:)
+        (:thumbgalleryend:)
         """
 
         result = self.parser.toHtml(text)
@@ -1743,13 +1743,47 @@ class ThumbListPluginTest(unittest.TestCase, BaseOutWikerGUIMixin):
         attach = Attachment(self.testPage)
         attach.attach(fullpath)
         text = """
-        (:thumblist:)
+        (:thumbgallery:)
             *
-        (:thumblistend:)
+        (:thumbgalleryend:)
         """
 
         result = self.parser.toHtml(text)
 
         self.assertTrue('<a href="__attach/__image.png">' in result, result)
+
+        self.assertTrue(Path(attach.getAttachPath(), '__thumb').exists())
+
+    def test_mask_with_comments(self):
+        subdir = 'subdir'
+        files = [
+            "image.png",
+            "image_1.png",
+            "image_2.png",
+            "image.jpg",
+        ]
+
+        fullpath = [Path(self.filesPath, fname) for fname in files]
+        attach = Attachment(self.testPage)
+        attach.createSubdir(subdir)
+        attach.attach(fullpath, subdir=subdir)
+        text = """
+        (:thumbgallery cols=3:)
+            Attach:"subdir/image_*.png" | Comment 1
+            Attach:"subdir/*.jpg" | Comment 2
+            Attach:"subdir/image.png" | Comment 3
+        (:thumbgalleryend:)
+        """
+
+        result = self.parser.toHtml(text)
+
+        self.assertTrue('<a href="__attach/subdir/image.png">' in result, result)
+        self.assertTrue('<a href="__attach/subdir/image_1.png">' in result, result)
+        self.assertTrue('<a href="__attach/subdir/image_2.png">' in result, result)
+        self.assertTrue('<a href="__attach/subdir/image.jpg">' in result, result)
+
+        self.assertEqual(result.count('<div class="thumbgallery-table-comment">Comment 1</div>'), 2, result)
+        self.assertEqual(result.count('<div class="thumbgallery-table-comment">Comment 2</div>'), 1)
+        self.assertEqual(result.count('<div class="thumbgallery-table-comment">Comment 3</div>'), 1)
 
         self.assertTrue(Path(attach.getAttachPath(), '__thumb').exists())

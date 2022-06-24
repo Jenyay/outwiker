@@ -23,29 +23,29 @@ class ThumbStreamGenerator(BaseThumbGenerator):
         super().__init__(items, thumbsize, parser)
 
         # Обертка для галереи в целом
-        self._fullTemplate = '<div class="thumblist">{content}</div>'
+        self._fullTemplate = '<div class="thumbgallery">{content}</div>'
 
         # Обертка для одной картинки
-        self._singleThumbTemplate = '<div class="thumblist-thumb"><div class="thumblist-image"><a href="{attachdir}/{imagename}"><img src="{thumbpath}"/></a></div></div>'
+        self._singleThumbTemplate = '<div class="thumbgallery-thumb"><div class="thumbgallery-image"><a href="{attachdir}/{imagename}"><img src="{thumbpath}"/></a></div></div>'
 
-        self._style = """<!-- Begin Thumblist styles -->
+        self._style = """<!-- Begin thumbgallery styles -->
 <style>
-    div.thumblist {
+    div.thumbgallery {
         }
 
-    div.thumblist-thumb {
+    div.thumbgallery-thumb {
         display: inline;
         }
 
-    div.thumblist-image {
+    div.thumbgallery-image {
         display: inline;
         }
 
-    div.thumblist-image img{
+    div.thumbgallery-image img{
 		padding: 0.3em 0.3em 0.5em 0.5em;
         }
 </style>
-<!-- End Thumblist styles -->"""
+<!-- End thumbgallery styles -->"""
 
     def generate(self):
         """

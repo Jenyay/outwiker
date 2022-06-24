@@ -24,37 +24,37 @@ class ThumbTableGenerator(BaseThumbGenerator):
         self._cols = cols
 
         # Обертка для галереи в целом
-        self._fullTemplate = u'<table class="thumblist-table">{content}</table>'
+        self._fullTemplate = u'<table class="thumbgallery-table">{content}</table>'
 
-        self._rowTemplate = u'<tr class="thumblist-row">{row}</tr>'
+        self._rowTemplate = u'<tr class="thumbgallery-row">{row}</tr>'
 
-        self._singleThumbTemplate = u'<td class="thumblist-td"><div class="thumblist-table-item"><div class="thumblist-table-image">{thumbimage}</div><div class="thumblist-table-comment">{comment}</div></div></td>'
+        self._singleThumbTemplate = u'<td class="thumbgallery-td"><div class="thumbgallery-table-item"><div class="thumbgallery-table-image">{thumbimage}</div><div class="thumbgallery-table-comment">{comment}</div></div></td>'
 
-        self._style = """<!-- Begin Thumblist styles -->
+        self._style = """<!-- Begin thumbgallery styles -->
 <style>
-    table.thumblist-table {
+    table.thumbgallery-table {
         border: 1px solid #DDD;
         }
 
-    div.thumblist-table-item{
+    div.thumbgallery-table-item{
 		padding: 1em;
 	}
 
-	td.thumblist-td {
+	td.thumbgallery-td {
         border: 1px solid #DDD;
 		text-align: center;
 	}
 
-    div.thumblist-table-image{
+    div.thumbgallery-table-image{
 		text-align: center;
 	}
 
-	div.thumblist-table-comment{
+	div.thumbgallery-table-comment{
 		text-align: center;
 		height: 100%;
 	}
 </style>
-<!-- End Thumblist styles -->"""
+<!-- End thumbgallery styles -->"""
 
     def generate(self):
         """
