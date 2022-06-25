@@ -1,17 +1,19 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 <versions>
-  <version number="1.6">
+  <version number="1.6" date="2022-06-26">
 		<download href="https://jenyay.net/uploads/Outwiker/ThumbGallery/thumbgallery-1.6.zip">
 			<requirements>
 				<api>3.906</api>
 			</requirements>
 		</download>
 		<changes>
-			<change></change>
+			<change>Added the ability to select files by mask.</change>
+			<change>Added the ability to select attachments in nested folders with the dialog.</change>
 		</changes>
 
 		<changes lang="ru">
-			<change></change>
+			<change>Добавлена возможность выбора файлов по маске.</change>
+			<change>Добавлена возможность выбора файлов во вложенных папках в диалоге.</change>
 		</changes>
 	</version>
 
