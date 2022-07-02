@@ -4,7 +4,9 @@ from pathlib import Path
 from typing import List, Union, Callable, Optional
 
 import wx
-from wx.lib.agw.customtreectrl import CustomTreeCtrl, GenericTreeItem, TR_AUTO_CHECK_CHILD, TR_AUTO_CHECK_PARENT
+from wx.lib.agw.customtreectrl import (CustomTreeCtrl, GenericTreeItem,
+                                       TR_AUTO_CHECK_CHILD,
+                                       TR_AUTO_CHECK_PARENT)
 
 from outwiker.core.attachment import Attachment
 from outwiker.core.system import getOS
@@ -12,7 +14,7 @@ from outwiker.core.system import getOS
 
 class FilesTreeCtrl(wx.Panel):
     def __init__(self, parent, id=wx.ID_ANY, check_boxes=False):
-        super().__init__(parent)
+        super().__init__(parent, id=id)
         self._check_boxes = check_boxes
         self._root_dir: Optional[Path] = None
         self._filter_func: Optional[Callable[[Path], bool]] = None
@@ -42,7 +44,7 @@ class FilesTreeCtrl(wx.Panel):
         self._tree_ctrl.DeleteAllItems()
 
     def SetFilterFunc(self, filter: Optional[Callable[[Path], bool]] = None):
-        self._filter = filter
+        self._filter_func = filter
         self.Update()
 
     def SetRootDir(self, root_dir: Union[Path, str]):
@@ -79,7 +81,7 @@ class FilesTreeCtrl(wx.Panel):
     def _addChildren(self, parent_item: GenericTreeItem, parent_dir: Path):
         children_files = list(parent_dir.iterdir())
 
-        children_files = list(filter(self._filter, children_files))
+        children_files = list(filter(self._filter_func, children_files))
 
         children_files.sort(key=lambda path: str.lower(str(path)))
         children_files.sort(

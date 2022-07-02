@@ -1,9 +1,13 @@
 # -*- coding: utf-8 -*-
 
+from pathlib import Path
+from typing import Union
+
 import wx
 
 from outwiker.gui.baseaction import BaseAction
 from outwiker.gui.testeddialog import TestedDialog
+from outwiker.gui.controls.filestreecombobox import FilesTreeComboBox
 from outwiker.core.attachment import Attachment
 from outwiker.core.commands import showError
 
@@ -12,18 +16,18 @@ class WikiIncludeAction(BaseAction):
     """
     Вставка команды для вставки содержимого прикрепленного файла
     """
-    stringId = u"WikiInclude"
+    stringId = "WikiInclude"
 
     def __init__(self, application):
         self._application = application
 
     @property
     def title(self):
-        return _(u"Include (:include ...:)")
+        return _("Include (:include ...:)")
 
     @property
     def description(self):
-        return _(u"Insert (:include:) command")
+        return _("Insert (:include:) command")
 
     def run(self, params):
         assert self._application.mainWindow is not None
@@ -31,7 +35,7 @@ class WikiIncludeAction(BaseAction):
 
         if len(Attachment(self._application.selectedPage).attachmentFull) == 0:
             showError(self._application.mainWindow,
-                      _(u"Current page does not have any attachments"))
+                      _("Current page does not have any attachments"))
             return
 
         with IncludeDialog(self._application.mainWindow) as dlg:
@@ -53,13 +57,13 @@ class IncludeDialogController (object):
         self._selectedPage = selectedPage
 
         encodings = [
-            u"utf-8",
-            u"utf-16",
-            u"windows-1251",
-            u"koi8_r",
-            u"koi8_u",
-            u"cp866",
-            u"mac_cyrillic",
+            "utf-8",
+            "utf-16",
+            "windows-1251",
+            "koi8_r",
+            "koi8_u",
+            "cp866",
+            "mac_cyrillic",
         ]
 
         self._dialog.encodingsList = encodings
@@ -71,10 +75,8 @@ class IncludeDialogController (object):
             return self._getCommand()
 
     def _fillAttaches(self):
-        attachList = Attachment(self._selectedPage).getAttachRelative()
-        attachList.sort(key=str.lower)
-
-        self._dialog.attachmentList = attachList
+        attach = Attachment(self._selectedPage)
+        self._dialog.setRootDir(attach.getAttachPath(create=False))
 
     def _getCommand(self):
         params = []
@@ -91,14 +93,14 @@ class IncludeDialogController (object):
         if self._dialog.parseWiki:
             params.append("wikiparse")
 
-        return u"(:include {}:)".format(u" ".join(params))
+        return "(:include {}:)".format(u" ".join(params))
 
 
-class IncludeDialog (TestedDialog):
+class IncludeDialog(TestedDialog):
     def __init__(self, parent):
-        super(IncludeDialog, self).__init__(parent)
+        super().__init__(parent)
 
-        self.SetTitle(_(u"Insert (:include:) command"))
+        self.SetTitle(_("Insert (:include:) command"))
 
         self.__createGui()
         self.__layout()
@@ -137,21 +139,20 @@ class IncludeDialog (TestedDialog):
 
     def __createGui(self):
         # Выбор прикрепленного файла
-        self._attachLabel = wx.StaticText(self, label=_(u"Select attachment"))
-        self._attachComboBox = wx.ComboBox(
-            self, style=wx.CB_DROPDOWN | wx.CB_READONLY)
+        self._attachLabel = wx.StaticText(self, label=_("Select attachment"))
+        self._attachComboBox = FilesTreeComboBox(self)
 
         # Кодировка
-        self._encodingLabel = wx.StaticText(self, label=_(u"Encoding"))
+        self._encodingLabel = wx.StaticText(self, label=_("Encoding"))
         self._encodingComboBox = wx.ComboBox(self, style=wx.CB_DROPDOWN)
 
         # Преобразовывать символы HTML?
         self._escapeHtmlCheckBox = wx.CheckBox(
-            self, label=_(u"Convert symbols <, > and && to HTML"))
+            self, label=_("Convert symbols <, > and && to HTML"))
 
         # Делать разбор викинотации?
         self._wikiParseCheckBox = wx.CheckBox(
-            self, label=_(u"Parse wiki notation"))
+            self, label=_("Parse wiki notation"))
 
         self._buttonsSizer = self.CreateButtonSizer(wx.OK | wx.CANCEL)
 
@@ -202,14 +203,5 @@ class IncludeDialog (TestedDialog):
         self._encodingComboBox.Clear()
         self._encodingComboBox.AppendItems(encodings)
 
-    @property
-    def attachmentList(self):
-        return self._attachComboBox.GetStrings()
-
-    @attachmentList.setter
-    def attachmentList(self, attachList):
-        self._attachComboBox.Clear()
-        self._attachComboBox.AppendItems(attachList)
-
-        if self._attachComboBox.GetCount() > 0:
-            self._attachComboBox.SetSelection(0)
+    def setRootDir(self, root_dir: Union[str, Path]):
+        self._attachComboBox.SetRootDir(root_dir)
