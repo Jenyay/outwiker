@@ -5,15 +5,18 @@ from typing import Callable, Optional, Union
 
 import wx
 
-from .filestreectrl import FilesTreeCtrl
+from .filestreectrl import FilesTreeCtrl, EVT_FILES_TREE_SEL_CHANGED
 
 
 class FilesTreeComboBox(wx.Panel):
     def __init__(self, parent, id=wx.ID_ANY):
         super().__init__(parent, id=id)
+
         self._combo_popup = FilesTreeComboPopup()
+
         self._combo_ctrl = wx.ComboCtrl(self)
         self._combo_ctrl.SetPopupControl(self._combo_popup)
+
         self._layout()
 
     def _layout(self):
@@ -32,11 +35,19 @@ class FilesTreeComboBox(wx.Panel):
     def SetRootDir(self, root_dir: Union[Path, str]):
         self._combo_popup.SetRootDir(root_dir)
 
+    def GetValue(self):
+        tree_ctrl = self._combo_popup.GetControl()
+        if tree_ctrl is not None:
+            return tree_ctrl.GetSelectionRelative()
+
 
 class FilesTreeComboPopup(wx.ComboPopup):
     def __init__(self):
         super().__init__()
         self._tree_ctrl = None
+
+    def _onFileSelected(self, event):
+        self.Dismiss()
 
     def Clear(self):
         self._tree_ctrl.Clear()
@@ -51,6 +62,8 @@ class FilesTreeComboPopup(wx.ComboPopup):
     # ComboPopup base class.
     def Create(self, parent):
         self._tree_ctrl = FilesTreeCtrl(parent)
+        self._tree_ctrl.Bind(EVT_FILES_TREE_SEL_CHANGED,
+                             handler=self._onFileSelected)
         return True
 
     def Init(self):
@@ -63,4 +76,4 @@ class FilesTreeComboPopup(wx.ComboPopup):
         pass
 
     def GetStringValue(self):
-        return ''
+        return self._tree_ctrl.GetSelectionRelative()

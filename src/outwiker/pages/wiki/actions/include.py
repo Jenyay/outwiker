@@ -81,7 +81,7 @@ class IncludeDialogController (object):
     def _getCommand(self):
         params = []
 
-        params.append("Attach:" + self._dialog.selectedAttachment)
+        params.append('Attach:"{}"'.format(self._dialog.selectedAttachment))
 
         if self._dialog.selectedEncoding != "utf-8":
             params.append("encoding=" + '"' +

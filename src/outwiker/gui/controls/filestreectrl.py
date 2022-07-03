@@ -12,6 +12,9 @@ from outwiker.core.attachment import Attachment
 from outwiker.core.system import getOS
 
 
+FilesTreeSelChangedEvent, EVT_FILES_TREE_SEL_CHANGED = wx.lib.newevent.NewEvent()
+
+
 class FilesTreeCtrl(wx.Panel):
     def __init__(self, parent, id=wx.ID_ANY, check_boxes=False):
         super().__init__(parent, id=id)
@@ -28,6 +31,8 @@ class FilesTreeCtrl(wx.Panel):
                     TR_AUTO_CHECK_PARENT)
         self._tree_ctrl = CustomTreeCtrl(self, agwStyle=agwStyle)
         self._tree_ctrl.SetImageList(self._fileIcons.imageList)
+        self._tree_ctrl.Bind(wx.EVT_TREE_SEL_CHANGED,
+                             handler=self._onSelChanged)
         self._layout()
 
     def _layout(self):
@@ -36,6 +41,13 @@ class FilesTreeCtrl(wx.Panel):
         main_sizer.AddGrowableRow(0)
         main_sizer.Add(self._tree_ctrl, flag=wx.EXPAND | wx.ALL)
         self.SetSizer(main_sizer)
+
+    def _onSelChanged(self, event):
+        full_path = self.GetSelectionFull()
+        relative_path = self.GetSelectionRelative()
+        new_event = FilesTreeSelChangedEvent(full_path=full_path,
+                                             relative_path=relative_path)
+        wx.PostEvent(self, new_event)
 
     def _getItemType(self):
         return int(self._check_boxes)
@@ -66,6 +78,27 @@ class FilesTreeCtrl(wx.Panel):
         checked_list = []
         self._getCheckedChildren(self._tree_ctrl.GetRootItem(), checked_list)
         return checked_list
+
+    def GetSelectionRelative(self):
+        selectedItem = self._tree_ctrl.GetSelection()
+        full_path = None
+        relative_path = None
+
+        if selectedItem is not None:
+            full_path = selectedItem.GetData()
+            if self._root_dir is not None:
+                relative_path = str(full_path.relative_to(self._root_dir))
+
+        return relative_path
+
+    def GetSelectionFull(self):
+        selectedItem = self._tree_ctrl.GetSelection()
+        full_path = None
+
+        if selectedItem is not None:
+            full_path = str(selectedItem.GetData())
+
+        return full_path
 
     def _getCheckedChildren(self, parent_item: GenericTreeItem, checked_list: List):
         if parent_item is not None:
