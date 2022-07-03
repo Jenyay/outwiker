@@ -22,6 +22,9 @@ class FilesTreeCtrl(wx.Panel):
         self._root_dir: Optional[Path] = None
         self._filter_func: Optional[Callable[[Path], bool]] = None
 
+        self._items_relative = {}
+        self._items_full = {}
+
         self._fileIcons = getOS().fileIcons
 
         agwStyle = (wx.TR_HAS_BUTTONS |
@@ -54,6 +57,8 @@ class FilesTreeCtrl(wx.Panel):
 
     def Clear(self):
         self._tree_ctrl.DeleteAllItems()
+        self._items_relative = {}
+        self._items_full = {}
 
     def SetFilterFunc(self, filter: Optional[Callable[[Path], bool]] = None):
         self._filter_func = filter
@@ -100,6 +105,22 @@ class FilesTreeCtrl(wx.Panel):
 
         return full_path
 
+    def SetSelectionRelative(self, path_relative: Union[str, Path]):
+        path_relative = str(path_relative).replace('\\', '/')
+        item = self._items_relative.get(path_relative)
+        if item is not None:
+            self._tree_ctrl.SelectItem(item)
+
+        return item is not None
+
+    def SetSelectionFull(self, path_full: Union[str, Path]):
+        path_full = str(path_full).replace('\\', '/')
+        item = self._items_full.get(path_full)
+        if item is not None:
+            self._tree_ctrl.SelectItem(item)
+
+        return item is not None
+
     def _getCheckedChildren(self, parent_item: GenericTreeItem, checked_list: List):
         if parent_item is not None:
             item, cookie = self._tree_ctrl.GetFirstChild(parent_item)
@@ -121,18 +142,25 @@ class FilesTreeCtrl(wx.Panel):
             key=lambda path: Attachment.sortByType(str(path)), reverse=True)
 
         for child in children_files:
+            child_full = str(child)
+            child_relative = str(child.relative_to(self._root_dir)).replace('\\', '/')
+
             if child.is_dir():
-                dir_item = self._tree_ctrl.AppendItem(
+                item = self._tree_ctrl.AppendItem(
                     parent_item,
                     str(child.name),
                     self._getItemType(),
                     image=self._fileIcons.FOLDER_ICON,
                     data=child)
-                self._addChildren(dir_item, child)
+
+                self._addChildren(item, child)
             else:
-                self._tree_ctrl.AppendItem(
+                item = self._tree_ctrl.AppendItem(
                     parent_item,
                     str(child.name),
                     self._getItemType(),
                     image=self._fileIcons.getFileImage(str(child)),
                     data=child)
+
+            self._items_full[child_full] = item
+            self._items_relative[child_relative] = item

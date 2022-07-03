@@ -45,9 +45,13 @@ class FilesTreeComboPopup(wx.ComboPopup):
     def __init__(self):
         super().__init__()
         self._tree_ctrl = None
+        self._skip_dismiss = False
 
     def _onFileSelected(self, event):
-        self.Dismiss()
+        if not self._skip_dismiss:
+            self.Dismiss()
+
+        self._skip_dismiss = False
 
     def Clear(self):
         self._tree_ctrl.Clear()
@@ -66,14 +70,11 @@ class FilesTreeComboPopup(wx.ComboPopup):
                              handler=self._onFileSelected)
         return True
 
-    def Init(self):
-        pass
-
     def GetControl(self):
         return self._tree_ctrl
 
-    def SetStringValue(self, val):
-        pass
+    def SetStringValue(self, path_relative):
+        self._skip_dismiss = self._tree_ctrl.SetSelectionRelative(path_relative)
 
     def GetStringValue(self):
         return self._tree_ctrl.GetSelectionRelative()
