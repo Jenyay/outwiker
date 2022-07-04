@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import os.path
 import re
 from abc import ABCMeta, abstractmethod
 
@@ -11,6 +10,7 @@ from outwiker.core.commands import isImage
 from outwiker.core.defines import PAGE_ATTACH_DIR, IMAGES_EXTENSIONS
 
 from .utils import concatenate
+from .attachregex import attach_regex_no_spaces, attach_regex_with_spaces
 
 
 class AttachFactory:
@@ -74,10 +74,10 @@ class AttachToken(metaclass=ABCMeta):
 
 class AttachAllToken(AttachToken):
     def _getRegex(self):
-        return Regex(r'[\w.=,#@^&$%;()`~/\\-]+', re.I)
+        return Regex(attach_regex_no_spaces, re.I)
 
     def _getRegexWithSpaces(self):
-        return Regex(r'[\w\s.=,#@^&$%;()`~/\\-]+', re.I)
+        return Regex(attach_regex_with_spaces, re.I)
 
     def _convertToLink(self, s, l, t):
         fname = t[1]
