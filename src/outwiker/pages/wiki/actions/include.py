@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 
 from pathlib import Path
-from typing import Union
+from typing import Callable, Optional, Union
 
 import wx
 
 from outwiker.gui.baseaction import BaseAction
 from outwiker.gui.testeddialog import TestedDialog
 from outwiker.gui.controls.filestreecombobox import FilesTreeComboBox
+from outwiker.core.attachfilters import getHiddenFilter, notFilter
 from outwiker.core.attachment import Attachment
 from outwiker.core.commands import showError
 
@@ -68,6 +69,8 @@ class IncludeDialogController (object):
 
         self._dialog.encodingsList = encodings
         self._dialog.selectedEncoding = 0
+        filter = notFilter(getHiddenFilter(selectedPage))
+        self._dialog.SetFilterFunc(filter)
         self._fillAttaches()
 
     def getDialogResult(self):
@@ -205,3 +208,6 @@ class IncludeDialog(TestedDialog):
 
     def setRootDir(self, root_dir: Union[str, Path]):
         self._attachComboBox.SetRootDir(root_dir)
+
+    def SetFilterFunc(self, filter: Optional[Callable[[Path], bool]] = None):
+        self._attachComboBox.SetFilterFunc(filter)
