@@ -106,8 +106,8 @@ class IncludeDialog(TestedDialog):
 
         self.SetTitle(_("Insert (:include:) command"))
 
-        self.__createGui()
-        self.__layout()
+        self._createGui()
+        self._layout()
 
     @property
     def selectedAttachment(self):
@@ -141,7 +141,7 @@ class IncludeDialog(TestedDialog):
     def parseWiki(self, value):
         self._wikiParseCheckBox.SetValue(value)
 
-    def __createGui(self):
+    def _createGui(self):
         # Выбор прикрепленного файла
         self._attachLabel = wx.StaticText(self, label=_("Select attachment"))
         self._attachComboBox = FilesTreeComboBox(self)
@@ -160,42 +160,47 @@ class IncludeDialog(TestedDialog):
 
         self._buttonsSizer = self.CreateButtonSizer(wx.OK | wx.CANCEL)
 
-    def __layout(self):
-        mainSizer = wx.FlexGridSizer(cols=2)
-        mainSizer.AddGrowableCol(1)
-        mainSizer.AddGrowableRow(4)
+    def _layout(self):
+        main_sizer = wx.FlexGridSizer(cols=1)
+        main_sizer.AddGrowableCol(0)
+        main_sizer.AddGrowableRow(2)
 
-        mainSizer.Add(self._attachLabel,
+        main_sizer.Add(self._attachLabel,
                       flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
                       border=2)
-        mainSizer.Add(self._attachComboBox,
+        main_sizer.Add(self._attachComboBox,
                       flag=wx.EXPAND | wx.ALL | wx.ALIGN_CENTER_VERTICAL,
                       border=2)
 
-        mainSizer.Add(self._encodingLabel,
+        second_sizer = wx.FlexGridSizer(cols=2)
+        second_sizer.AddGrowableCol(1)
+        second_sizer.AddGrowableRow(3)
+
+        second_sizer.Add(self._encodingLabel,
                       flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
                       border=2)
-        mainSizer.Add(self._encodingComboBox,
+        second_sizer.Add(self._encodingComboBox,
                       flag=wx.EXPAND | wx.ALL | wx.ALIGN_CENTER_VERTICAL,
                       border=2)
 
-        mainSizer.Add(self._escapeHtmlCheckBox,
+        second_sizer.Add(self._escapeHtmlCheckBox,
                       flag=wx.EXPAND | wx.ALL | wx.ALIGN_CENTER_VERTICAL,
                       border=2)
-        mainSizer.AddStretchSpacer()
+        second_sizer.AddStretchSpacer()
 
-        mainSizer.Add(self._wikiParseCheckBox,
+        second_sizer.Add(self._wikiParseCheckBox,
                       flag=wx.EXPAND | wx.ALL | wx.ALIGN_CENTER_VERTICAL,
                       border=2)
-        mainSizer.AddStretchSpacer()
+        second_sizer.AddStretchSpacer()
 
-        mainSizer.AddStretchSpacer()
-        mainSizer.Add(
+        second_sizer.AddStretchSpacer()
+        second_sizer.Add(
             self._buttonsSizer,
             flag=wx.ALL | wx.ALIGN_BOTTOM | wx.ALIGN_RIGHT,
             border=2)
 
-        self.SetSizer(mainSizer)
+        main_sizer.Add(second_sizer, flag=wx.EXPAND | wx.ALL, border=2)
+        self.SetSizer(main_sizer)
         self.Fit()
 
     @property

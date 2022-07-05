@@ -14,7 +14,7 @@ from outwiker.pages.wiki.parser.attachregex import (attach_regex_no_spaces,
 class IncludeCommand(Command):
     """
     Команда для вставки в текст страницы текста прикрепленного файла
-    Синтаксис:(:include Attach:"fname" [params...] :)
+    Синтаксис: (:include Attach:"fname" [params...] :)
     params - необязательные параметры:
         encoding="xxx" - указывает кодировку прикрепленного файла
         htmlescape - заменить символы <, > и т.п. на их HTML-аналоги
