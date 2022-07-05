@@ -101,7 +101,8 @@ class IncludeDialogController (object):
 
 class IncludeDialog(TestedDialog):
     def __init__(self, parent):
-        super().__init__(parent)
+        super().__init__(parent,
+                         style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
 
         self.SetTitle(_("Insert (:include:) command"))
 
@@ -161,8 +162,8 @@ class IncludeDialog(TestedDialog):
 
     def __layout(self):
         mainSizer = wx.FlexGridSizer(cols=2)
-        mainSizer.AddGrowableCol(0)
         mainSizer.AddGrowableCol(1)
+        mainSizer.AddGrowableRow(4)
 
         mainSizer.Add(self._attachLabel,
                       flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
@@ -191,7 +192,7 @@ class IncludeDialog(TestedDialog):
         mainSizer.AddStretchSpacer()
         mainSizer.Add(
             self._buttonsSizer,
-            flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT,
+            flag=wx.ALL | wx.ALIGN_BOTTOM | wx.ALIGN_RIGHT,
             border=2)
 
         self.SetSizer(mainSizer)
