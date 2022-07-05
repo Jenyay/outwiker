@@ -105,17 +105,25 @@ class FilesTreeCtrl(wx.Panel):
 
         return full_path
 
-    def SetSelectionRelative(self, path_relative: Union[str, Path]):
+    def SetSelectionRelative(self, path_relative: Union[str, Path]) -> bool:
         path_relative = str(path_relative).replace('\\', '/')
         item = self._items_relative.get(path_relative)
+
+        if item == self._tree_ctrl.GetSelection():
+            return False
+
         if item is not None:
             self._tree_ctrl.SelectItem(item)
 
         return item is not None
 
-    def SetSelectionFull(self, path_full: Union[str, Path]):
+    def SetSelectionFull(self, path_full: Union[str, Path]) -> bool:
         path_full = str(path_full).replace('\\', '/')
         item = self._items_full.get(path_full)
+
+        if item == self._tree_ctrl.GetSelection():
+            return False
+
         if item is not None:
             self._tree_ctrl.SelectItem(item)
 
