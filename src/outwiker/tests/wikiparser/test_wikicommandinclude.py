@@ -238,7 +238,7 @@ class WikiIncludeCommandTest(BaseOutWikerMixin, unittest.TestCase):
     def test_invalid_file_1(self):
         text = """бла-бла-бла(:include Attach:text_utf8_1.txt :)"""
 
-        result_right = """бла-бла-бла<b>Can't open file 'text_utf8_1.txt'</b>"""
+        result_right = """бла-бла-бла<div class="ow-wiki ow-error ow-wiki-include">Can't open file 'text_utf8_1.txt'</div>"""
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, result_right, result)
@@ -246,7 +246,7 @@ class WikiIncludeCommandTest(BaseOutWikerMixin, unittest.TestCase):
     def test_invalid_file_2(self):
         text = """бла-бла-бла(:include Attach:image.gif :)"""
 
-        result_right = """бла-бла-бла""" + "<b>Encoding error in file 'image.gif'</b>"
+        result_right = """бла-бла-бла""" + """<div class="ow-wiki ow-error ow-wiki-include">Encoding error in file 'image.gif'</div>"""
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, result_right, result)
@@ -254,7 +254,7 @@ class WikiIncludeCommandTest(BaseOutWikerMixin, unittest.TestCase):
     def test_invalid_file_with_encoding(self):
         text = """бла-бла-бла(:include Attach:image.gif encoding=base64 :)"""
 
-        result_right = """бла-бла-бла""" + "<b>Encoding error in file 'image.gif'</b>"
+        result_right = """бла-бла-бла""" + """<div class="ow-wiki ow-error ow-wiki-include">Encoding error in file 'image.gif'</div>"""
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, result_right, result)

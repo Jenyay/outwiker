@@ -29,6 +29,7 @@ class IncludeCommand(Command):
         super().__init__(parser)
         self._attach_regex_no_spaces = re.compile('Attach:(?P<fname>{})'.format(attach_regex_no_spaces))
         self._attach_regex_with_spaces = re.compile('Attach:([\'"])(?P<fname>{})\\1'.format(attach_regex_with_spaces))
+        self._error_format = '<div class="ow-wiki ow-error ow-wiki-include">{message}</div>'
 
     @property
     def name(self):
@@ -58,9 +59,11 @@ class IncludeCommand(Command):
                 # Почему-то в конце всегда оказывается перевод строки
                 text = fp.read().rstrip()
         except IOError:
-            return _("<b>Can't open file '{}'</b>".format(fname))
+            error_message = "Can't open file '{}'".format(fname)
+            return _(self._error_format.format(message=error_message))
         except Exception:
-            return _("<b>Encoding error in file '{}'</b>".format(fname))
+            error_message = "Encoding error in file '{}'".format(fname)
+            return _(self._error_format.format(message=error_message))
 
         return self._postprocessText(text, params_dict)
 
