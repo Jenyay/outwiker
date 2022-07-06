@@ -147,6 +147,10 @@ class IncludeDialog(TestedDialog):
     def _createGui(self):
         # Выбор прикрепленного файла
         self._attachLabel = wx.StaticText(self, label=_("Select attachment"))
+        font = self._attachLabel.GetFont()
+        font.SetWeight(wx.FONTWEIGHT_BOLD)
+        self._attachLabel.SetFont(font)
+
         self._attachComboBox = FilesTreeComboBox(self)
 
         # Кодировка
@@ -171,7 +175,7 @@ class IncludeDialog(TestedDialog):
     def _layout(self):
         main_sizer = wx.FlexGridSizer(cols=1)
         main_sizer.AddGrowableCol(0)
-        main_sizer.AddGrowableRow(2)
+        main_sizer.AddGrowableRow(5)
 
         main_sizer.Add(self._attachLabel,
                       flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
@@ -182,32 +186,30 @@ class IncludeDialog(TestedDialog):
 
         second_sizer = wx.FlexGridSizer(cols=2)
         second_sizer.AddGrowableCol(1)
-        second_sizer.AddGrowableRow(3)
+        second_sizer.AddGrowableRow(0)
 
         second_sizer.Add(self._encodingLabel,
                       flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
                       border=2)
         second_sizer.Add(self._encodingComboBox,
+                      flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT,
+                      border=2)
+
+        main_sizer.Add(second_sizer, flag=wx.EXPAND | wx.ALL, border=2)
+
+        main_sizer.Add(self._escapeHtmlCheckBox,
                       flag=wx.EXPAND | wx.ALL | wx.ALIGN_CENTER_VERTICAL,
                       border=2)
 
-        second_sizer.Add(self._escapeHtmlCheckBox,
+        main_sizer.Add(self._wikiParseCheckBox,
                       flag=wx.EXPAND | wx.ALL | wx.ALIGN_CENTER_VERTICAL,
                       border=2)
-        second_sizer.AddStretchSpacer()
 
-        second_sizer.Add(self._wikiParseCheckBox,
-                      flag=wx.EXPAND | wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                      border=2)
-        second_sizer.AddStretchSpacer()
-
-        second_sizer.AddStretchSpacer()
-        second_sizer.Add(
+        main_sizer.Add(
             self._buttonsSizer,
             flag=wx.ALL | wx.ALIGN_BOTTOM | wx.ALIGN_RIGHT,
             border=2)
 
-        main_sizer.Add(second_sizer, flag=wx.EXPAND | wx.ALL, border=2)
         self.SetSizer(main_sizer)
         self.Fit()
 
