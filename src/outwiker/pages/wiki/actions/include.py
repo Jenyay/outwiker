@@ -8,6 +8,8 @@ import wx
 from outwiker.gui.baseaction import BaseAction
 from outwiker.gui.testeddialog import TestedDialog
 from outwiker.gui.controls.filestreecombobox import FilesTreeComboBox
+from outwiker.gui.guiconfig import GuiConfig
+from outwiker.gui.windowssizesaver import WindowSizeSaver
 from outwiker.core.attachfilters import getHiddenFilter, notFilter
 from outwiker.core.attachment import Attachment
 from outwiker.core.commands import showError
@@ -21,6 +23,8 @@ class WikiIncludeAction(BaseAction):
 
     def __init__(self, application):
         self._application = application
+        self._size_saver = WindowSizeSaver('wiki_include_dialog',
+                                           self._application.config)
 
     @property
     def title(self):
@@ -40,16 +44,16 @@ class WikiIncludeAction(BaseAction):
             return
 
         with IncludeDialog(self._application.mainWindow) as dlg:
-            controller = IncludeDialogController(
-                dlg, self._application.selectedPage)
+            self._size_saver.restoreSize(dlg)
+            controller = IncludeDialogController(dlg, self._application.selectedPage)
 
             text = controller.getDialogResult()
             if text is not None:
-                self._application.mainWindow.pagePanel.pageView.codeEditor.replaceText(
-                    text)
+                self._application.mainWindow.pagePanel.pageView.codeEditor.replaceText(text)
 
+            self._size_saver.saveSize(dlg)
 
-class IncludeDialogController (object):
+class IncludeDialogController:
     def __init__(self, dialog, selectedPage):
         assert selectedPage is not None
         assert dialog is not None
@@ -96,14 +100,13 @@ class IncludeDialogController (object):
         if self._dialog.parseWiki:
             params.append("wikiparse")
 
-        return "(:include {}:)".format(u" ".join(params))
+        return "(:include {}:)".format(" ".join(params))
 
 
 class IncludeDialog(TestedDialog):
     def __init__(self, parent):
         super().__init__(parent,
                          style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
-
         self.SetTitle(_("Insert (:include:) command"))
 
         self._createGui()
@@ -159,6 +162,11 @@ class IncludeDialog(TestedDialog):
             self, label=_("Parse wiki notation"))
 
         self._buttonsSizer = self.CreateButtonSizer(wx.OK | wx.CANCEL)
+
+        self.Bind(wx.EVT_CLOSE, handler=self._onClose)
+
+    def _onClose(self, event):
+        self.EndModal(wx.ID_CANCEL)
 
     def _layout(self):
         main_sizer = wx.FlexGridSizer(cols=1)

@@ -24,8 +24,11 @@ class GuiConfig:
 
     def saveWindowSize(self, prefix: str, width: int, height: int):
         width_option, height_option = self._get_options(prefix, 0, 0)
-        width_option.value = width
-        height_option.value = height
+        if width > 0:
+            width_option.value = width
+
+        if height > 0:
+            height_option.value = height
 
     def loadWindowSize(self,
                        prefix: str,
