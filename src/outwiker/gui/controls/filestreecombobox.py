@@ -35,10 +35,11 @@ class FilesTreeComboBox(wx.Panel):
     def SetRootDir(self, root_dir: Union[Path, str]):
         self._combo_popup.SetRootDir(root_dir)
 
+    def GetRootDir(self) -> Union[Path, str]:
+        return self._combo_popup.GetRootDir()
+
     def GetValue(self):
-        tree_ctrl = self._combo_popup.GetControl()
-        if tree_ctrl is not None:
-            return tree_ctrl.GetSelectionRelative()
+        return self._combo_ctrl.GetValue()
 
 
 class FilesTreeComboPopup(wx.ComboPopup):
@@ -61,6 +62,9 @@ class FilesTreeComboPopup(wx.ComboPopup):
 
     def SetRootDir(self, root_dir: Union[Path, str]):
         self._tree_ctrl.SetRootDir(root_dir)
+
+    def GetRootDir(self) -> Union[Path, str]:
+        return self._tree_ctrl.GetRootDir()
 
     # The following methods are those that are overridable from the
     # ComboPopup base class.

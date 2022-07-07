@@ -68,6 +68,9 @@ class FilesTreeCtrl(wx.Panel):
         self._root_dir = Path(root_dir)
         self.Update()
 
+    def GetRootDir(self) -> Union[Path, str]:
+        return self._root_dir
+
     def Update(self):
         self.Clear()
         if self._root_dir is not None and self._root_dir.exists():
