@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.1\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: ../../..\n"
 
@@ -2552,7 +2552,7 @@ msgstr "К текущей странице не прикреплено ни од
 
 #: outwiker/pages/wiki/actions/include.py:140
 msgid "Select attachment"
-msgstr "Выберете прикрепленный файл"
+msgstr "Выберите прикрепленный файл"
 
 #: outwiker/pages/wiki/actions/include.py:145
 msgid "Encoding"

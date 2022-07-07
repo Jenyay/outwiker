@@ -179,7 +179,7 @@ class IncludeDialog(TestedDialog):
 
         main_sizer.Add(self._attachLabel,
                       flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                      border=2)
+                      border=4)
         main_sizer.Add(self._attachComboBox,
                       flag=wx.EXPAND | wx.ALL | wx.ALIGN_CENTER_VERTICAL,
                       border=2)
