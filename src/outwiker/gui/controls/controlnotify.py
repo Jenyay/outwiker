@@ -11,4 +11,5 @@ class ControlNotify:
     def ShowError(self, title, text):
         tooltip = RichToolTip(title, text)
         tooltip.SetIcon(wx.ICON_ERROR)
+        tooltip.SetBackgroundColour("#F6D1C8", "#F6D1C8")
         tooltip.ShowFor(self._control)
