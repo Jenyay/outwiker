@@ -6,7 +6,9 @@ import re
 from pathlib import Path
 
 from outwiker.core.attachment import Attachment
-from outwiker.gui.cssclasses import CSS_ERROR
+from outwiker.core.commands import isImage
+from outwiker.core.defines import PAGE_ATTACH_DIR
+from outwiker.gui.cssclasses import CSS_ERROR, CSS_IMAGE
 from outwiker.pages.wiki.cssclasses import CSS_WIKI, CSS_WIKI_INCLUDE
 from outwiker.pages.wiki.parser.command import Command
 from outwiker.pages.wiki.parser.attachregex import (attach_regex_no_spaces,
@@ -32,7 +34,9 @@ class IncludeCommand(Command):
         self._attach_regex_no_spaces = re.compile('Attach:(?P<fname>{})'.format(attach_regex_no_spaces))
         self._attach_regex_with_spaces = re.compile('Attach:([\'"])(?P<fname>{})\\1'.format(attach_regex_with_spaces))
         self._include_classes = '{} {} {}'.format(CSS_WIKI, CSS_ERROR, CSS_WIKI_INCLUDE)
+        self._image_classes = '{} {} {}'.format(CSS_WIKI, CSS_IMAGE, CSS_WIKI_INCLUDE)
         self._error_format = '<div class="{classes}">{message}</div>'
+        self._image_template = '<img class="{classes}" src="{fname}" />'
 
     @property
     def name(self):
@@ -47,10 +51,21 @@ class IncludeCommand(Command):
         Метод возвращает текст, который будет вставлен на место команды
             в вики-нотации
         """
-        (fname, params_tail) = self._getAttach(params)
-        if fname is None:
+        (fname_relative, params_tail) = self._getAttach(params)
+        if fname_relative is None:
             return ''
 
+        if isImage(fname_relative):
+            return self._execute_image(fname_relative)
+        else:
+            return self._execute_not_image(fname_relative, params_tail)
+
+    def _execute_image(self, fname_relative):
+        fname = str(Path(PAGE_ATTACH_DIR, fname_relative)).replace('\\', '/')
+        return self._image_template.format(classes=self._image_classes,
+                                           fname=fname)
+
+    def _execute_not_image(self, fname, params_tail):
         attach = Attachment(self.parser.page)
         fname_full_path = Path(attach.getAttachPath(create=False), fname)
 

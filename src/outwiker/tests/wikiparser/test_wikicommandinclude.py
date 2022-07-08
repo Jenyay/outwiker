@@ -2,6 +2,7 @@
 
 import os
 import unittest
+from pathlib import Path
 from tempfile import mkdtemp
 
 from outwiker.core.tree import WikiDocument
@@ -33,8 +34,9 @@ class WikiIncludeCommandTest(BaseOutWikerMixin, unittest.TestCase):
         self.testPage = WikiPageFactory().create(self.wikiroot, "Страница 1", [])
 
         files = ["text_utf8.txt", "text utf8.txt", "text_utf8.txt2",
-                 "image.gif", "текст_utf8.txt", "text_1251.txt", "html.txt",
-                 "html_1251.txt", "wiki.txt"]
+                 "filename.tmp", "текст_utf8.txt", "text_1251.txt", "html.txt",
+                 "html_1251.txt", "wiki.txt", 'image.png', 'image.jpg',
+                 'image.jpeg', 'image.gif']
 
         fullFilesPath = [os.path.join(self.filesPath, fname)
                          for fname in files]
@@ -244,17 +246,17 @@ class WikiIncludeCommandTest(BaseOutWikerMixin, unittest.TestCase):
         self.assertEqual(result, result_right, result)
 
     def test_invalid_file_2(self):
-        text = """бла-бла-бла(:include Attach:image.gif :)"""
+        text = """бла-бла-бла(:include Attach:filename.tmp :)"""
 
-        result_right = """бла-бла-бла""" + """<div class="ow-wiki ow-error ow-wiki-include">Encoding error in file 'image.gif'</div>"""
+        result_right = """бла-бла-бла""" + """<div class="ow-wiki ow-error ow-wiki-include">Encoding error in file 'filename.tmp'</div>"""
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, result_right, result)
 
     def test_invalid_file_with_encoding(self):
-        text = """бла-бла-бла(:include Attach:image.gif encoding=base64 :)"""
+        text = """бла-бла-бла(:include Attach:filename.tmp encoding=base64 :)"""
 
-        result_right = """бла-бла-бла""" + """<div class="ow-wiki ow-error ow-wiki-include">Encoding error in file 'image.gif'</div>"""
+        result_right = """бла-бла-бла""" + """<div class="ow-wiki ow-error ow-wiki-include">Encoding error in file 'filename.tmp'</div>"""
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, result_right, result)
@@ -320,6 +322,82 @@ class WikiIncludeCommandTest(BaseOutWikerMixin, unittest.TestCase):
         attach = Attachment(self.testPage)
         attach.createSubdir(subdir)
         attach.attach(attach_full_paths, subdir)
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, result_right, result)
+
+    def test_images_no_quotes_png(self):
+        text = """бла-бла-бла (:include Attach:image.png:)"""
+
+        result_right = """бла-бла-бла <img class="ow-wiki ow-image ow-wiki-include" src="__attach/image.png" />"""
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, result_right, result)
+
+    def test_images_no_quotes_jpg(self):
+        text = """бла-бла-бла (:include Attach:image.jpg:)"""
+
+        result_right = """бла-бла-бла <img class="ow-wiki ow-image ow-wiki-include" src="__attach/image.jpg" />"""
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, result_right, result)
+
+    def test_images_no_quotes_jpeg(self):
+        text = """бла-бла-бла (:include Attach:image.jpeg:)"""
+
+        result_right = """бла-бла-бла <img class="ow-wiki ow-image ow-wiki-include" src="__attach/image.jpeg" />"""
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, result_right, result)
+
+    def test_images_no_quotes_gif(self):
+        text = """бла-бла-бла (:include Attach:image.gif:)"""
+
+        result_right = """бла-бла-бла <img class="ow-wiki ow-image ow-wiki-include" src="__attach/image.gif" />"""
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, result_right, result)
+
+    def test_images_single_quotes_png(self):
+        text = """бла-бла-бла (:include Attach:'image.png':)"""
+
+        result_right = """бла-бла-бла <img class="ow-wiki ow-image ow-wiki-include" src="__attach/image.png" />"""
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, result_right, result)
+
+    def test_images_double_quotes_png(self):
+        text = """бла-бла-бла (:include Attach:"image.png":)"""
+
+        result_right = """бла-бла-бла <img class="ow-wiki ow-image ow-wiki-include" src="__attach/image.png" />"""
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, result_right, result)
+
+    def test_images_subdir_forward_slash(self):
+        subdir = 'subdir'
+        fname = Path(self.filesPath, 'image.png')
+        attach = Attachment(self.testPage)
+        attach.createSubdir(subdir)
+        attach.attach([fname], subdir=subdir)
+
+        text = """бла-бла-бла (:include Attach:"subdir/image.png":)"""
+
+        result_right = """бла-бла-бла <img class="ow-wiki ow-image ow-wiki-include" src="__attach/subdir/image.png" />"""
+
+        result = self.parser.toHtml(text)
+        self.assertEqual(result, result_right, result)
+
+    def test_images_subdir_back_slash(self):
+        subdir = 'subdir'
+        fname = Path(self.filesPath, 'image.png')
+        attach = Attachment(self.testPage)
+        attach.createSubdir(subdir)
+        attach.attach([fname], subdir=subdir)
+
+        text = """бла-бла-бла (:include Attach:"subdir\\image.png":)"""
+
+        result_right = """бла-бла-бла <img class="ow-wiki ow-image ow-wiki-include" src="__attach/subdir/image.png" />"""
 
         result = self.parser.toHtml(text)
         self.assertEqual(result, result_right, result)
