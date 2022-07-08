@@ -251,7 +251,9 @@ class IncludeFileValidator(wx.Validator):
         root_dir = self.GetWindow().GetRootDir()
         path_relative = self.GetWindow().GetValue()
 
-        if root_dir is None or path_relative is None or path_relative == '.':
+        if (path_relative is None or
+                len(path_relative.strip()) == 0 or
+                path_relative == '.'):
             message = _('File not selected')
             notify.ShowError(title, message)
             return False
