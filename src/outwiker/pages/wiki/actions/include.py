@@ -114,35 +114,35 @@ class IncludeDialog(TestedDialog):
         self._layout()
 
     @property
-    def selectedAttachment(self):
+    def selectedAttachment(self) -> str:
         return self._attachComboBox.GetValue()
 
     @selectedAttachment.setter
-    def selectedAttachment(self, value):
-        self._attachComboBox.SetSelection(value)
+    def selectedAttachment(self, value: str):
+        self._attachComboBox.SetValue(value)
 
     @property
-    def selectedEncoding(self):
+    def selectedEncoding(self) -> str:
         return self._encodingComboBox.GetValue()
 
     @selectedEncoding.setter
-    def selectedEncoding(self, value):
+    def selectedEncoding(self, value: int):
         self._encodingComboBox.SetSelection(value)
 
     @property
-    def escapeHtml(self):
+    def escapeHtml(self) -> bool:
         return self._escapeHtmlCheckBox.IsChecked()
 
     @escapeHtml.setter
-    def escapeHtml(self, value):
+    def escapeHtml(self, value: bool):
         self._escapeHtmlCheckBox.SetValue(value)
 
     @property
-    def parseWiki(self):
+    def parseWiki(self) -> bool:
         return self._wikiParseCheckBox.IsChecked()
 
     @parseWiki.setter
-    def parseWiki(self, value):
+    def parseWiki(self, value: bool):
         self._wikiParseCheckBox.SetValue(value)
 
     def _createGui(self):

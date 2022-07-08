@@ -41,6 +41,9 @@ class FilesTreeComboBox(wx.Panel):
     def GetValue(self):
         return self._combo_ctrl.GetValue()
 
+    def SetValue(self, path_relative: str):
+        return self._combo_ctrl.SetValue(path_relative)
+
 
 class FilesTreeComboPopup(wx.ComboPopup):
     def __init__(self):
