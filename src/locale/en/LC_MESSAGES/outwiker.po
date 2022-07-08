@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-03 22:16+0300\n"
+"POT-Creation-Date: 2022-07-08 16:00+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.1\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: ../../..\n"
 
@@ -482,6 +482,7 @@ msgid "Begin search and replace on page"
 msgstr "Begin search and replace on page"
 
 #: outwiker/actions/showhideattaches.py:17 outwiker/actions/switchto.py:63
+#: outwiker/gui/controls/filestreectrl.py:78
 #: outwiker/gui/mainpanes/attachmainpane.py:40
 #: outwiker/gui/preferences/prefcontroller.py:135
 #: outwiker/gui/preferences/wikieditorpanel.py:37
@@ -878,15 +879,15 @@ msgstr ""
 "The page title contains invalid characters for Microsoft Windows operating "
 "system"
 
-#: outwiker/core/pluginsloader.py:255
+#: outwiker/core/pluginsloader.py:267
 msgid "Plug-in \"{}\". Can't read \"{}\" file"
 msgstr "Plug-in \"{}\". Can't read \"{}\" file"
 
-#: outwiker/core/pluginsloader.py:276
+#: outwiker/core/pluginsloader.py:288
 msgid "Plug-in \"{}\" is outdated. Please, update the plug-in."
 msgstr "Plug-in \"{}\" is outdated. Please, update the plug-in."
 
-#: outwiker/core/pluginsloader.py:287
+#: outwiker/core/pluginsloader.py:299
 msgid ""
 "Plug-in \"{}\" is designed for a newer version OutWiker. Please, install a "
 "new OutWiker version."
@@ -2525,34 +2526,55 @@ msgstr "Big font"
 msgid "Small font"
 msgstr "Small font"
 
-#: outwiker/pages/wiki/actions/include.py:22
+#: outwiker/pages/wiki/actions/include.py:32
 msgid "Include (:include ...:)"
 msgstr "Include (:include ...:)"
 
-#: outwiker/pages/wiki/actions/include.py:26
-#: outwiker/pages/wiki/actions/include.py:101
+#: outwiker/pages/wiki/actions/include.py:36
+#: outwiker/pages/wiki/actions/include.py:111
 msgid "Insert (:include:) command"
 msgstr "Insert (:include:) command"
 
-#: outwiker/pages/wiki/actions/include.py:34
+#: outwiker/pages/wiki/actions/include.py:44
 msgid "Current page does not have any attachments"
 msgstr "Current page does not have any attachments"
 
-#: outwiker/pages/wiki/actions/include.py:140
+#: outwiker/pages/wiki/actions/include.py:150
 msgid "Select attachment"
 msgstr "Select attachment"
 
-#: outwiker/pages/wiki/actions/include.py:145
+#: outwiker/pages/wiki/actions/include.py:159
 msgid "Encoding"
 msgstr "Encoding"
 
-#: outwiker/pages/wiki/actions/include.py:150
+#: outwiker/pages/wiki/actions/include.py:164
 msgid "Convert symbols <, > and && to HTML"
 msgstr "Convert symbols <, > and && to HTML"
 
-#: outwiker/pages/wiki/actions/include.py:154
+#: outwiker/pages/wiki/actions/include.py:168
 msgid "Parse wiki notation"
 msgstr "Parse wiki notation"
+
+#: outwiker/pages/wiki/actions/include.py:249
+#| msgid "Select style"
+msgid "Select file"
+msgstr "Select file"
+
+#: outwiker/pages/wiki/actions/include.py:257
+#| msgid "Files is not selected"
+msgid "File not selected"
+msgstr "File not selected"
+
+#: outwiker/pages/wiki/actions/include.py:264
+#| msgid ""
+#| "File not exists\n"
+#| "{0}"
+msgid "Selected file not exists"
+msgstr "Selected file not exists"
+
+#: outwiker/pages/wiki/actions/include.py:269
+msgid "Select a file, not a folder"
+msgstr "Select a file, not a folder"
 
 #: outwiker/pages/wiki/actions/multilineblock.py:18
 msgid "Multiline block [{…}]"
@@ -2662,16 +2684,6 @@ msgstr "Text background"
 msgid "Custom CSS"
 msgstr "Custom CSS"
 
-#: outwiker/pages/wiki/parser/commands/include.py:52
-#, python-format
-msgid "<b>Can't open file %s</b>"
-msgstr "<b>Can't open file %s</b>"
-
-#: outwiker/pages/wiki/parser/commands/include.py:54
-#, python-format
-msgid "<b>Encoding error in file %s</b>"
-msgstr "<b>Encoding error in file %s</b>"
-
 #: outwiker/pages/wiki/parser/tokenthumbnail.py:71
 msgid "<b>Can't create thumbnail for \"{}\"</b>"
 msgstr "<b>Can't create thumbnail for \"{}\"</b>"
@@ -2754,6 +2766,14 @@ msgstr "[[comment -> link]]"
 #: outwiker/pages/wiki/wikipreferences.py:44
 msgid "[[link | comment]]"
 msgstr "[[link | comment]]"
+
+#, python-format
+#~ msgid "<b>Can't open file %s</b>"
+#~ msgstr "<b>Can't open file %s</b>"
+
+#, python-format
+#~ msgid "<b>Encoding error in file %s</b>"
+#~ msgstr "<b>Encoding error in file %s</b>"
 
 #~ msgid "File '{}' exists already"
 #~ msgstr "File '{}' exists already"
@@ -3745,9 +3765,6 @@ msgstr "[[link | comment]]"
 
 #~ msgid "Preformat [=…=]"
 #~ msgstr "Preformat [=…=]"
-
-#~ msgid "Files is not selected"
-#~ msgstr "Files is not selected"
 
 #~ msgid "Attach Files..."
 #~ msgstr "Attach Files..."

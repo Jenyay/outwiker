@@ -11,8 +11,10 @@ from outwiker.core.defines import PAGE_ATTACH_DIR
 from outwiker.gui.cssclasses import CSS_ERROR, CSS_IMAGE
 from outwiker.pages.wiki.cssclasses import CSS_WIKI, CSS_WIKI_INCLUDE
 from outwiker.pages.wiki.parser.command import Command
-from outwiker.pages.wiki.parser.attachregex import (attach_regex_no_spaces,
-                                                    attach_regex_with_spaces)
+from outwiker.pages.wiki.parser.attachregex import (
+    attach_regex_no_spaces,
+    attach_regex_with_spaces,
+)
 
 
 class IncludeCommand(Command):
@@ -26,15 +28,20 @@ class IncludeCommand(Command):
         wikiparse - содержимое прикрепленного файла предварительно нужно
             пропустить через википарсер
     """
+
     def __init__(self, parser):
         """
         parser - экземпляр парсера
         """
         super().__init__(parser)
-        self._attach_regex_no_spaces = re.compile('Attach:(?P<fname>{})'.format(attach_regex_no_spaces))
-        self._attach_regex_with_spaces = re.compile('Attach:([\'"])(?P<fname>{})\\1'.format(attach_regex_with_spaces))
-        self._include_classes = '{} {} {}'.format(CSS_WIKI, CSS_ERROR, CSS_WIKI_INCLUDE)
-        self._image_classes = '{} {} {}'.format(CSS_WIKI, CSS_IMAGE, CSS_WIKI_INCLUDE)
+        self._attach_regex_no_spaces = re.compile(
+            "Attach:(?P<fname>{})".format(attach_regex_no_spaces)
+        )
+        self._attach_regex_with_spaces = re.compile(
+            "Attach:(['\"])(?P<fname>{})\\1".format(attach_regex_with_spaces)
+        )
+        self._include_classes = "{} {} {}".format(CSS_WIKI, CSS_ERROR, CSS_WIKI_INCLUDE)
+        self._image_classes = "{} {} {}".format(CSS_WIKI, CSS_IMAGE, CSS_WIKI_INCLUDE)
         self._error_format = '<div class="{classes}">{message}</div>'
         self._image_template = '<img class="{classes}" src="{fname}" />'
 
@@ -53,7 +60,7 @@ class IncludeCommand(Command):
         """
         (fname_relative, params_tail) = self._getAttach(params)
         if fname_relative is None:
-            return ''
+            return ""
 
         if isImage(fname_relative):
             return self._execute_image(fname_relative)
@@ -61,9 +68,8 @@ class IncludeCommand(Command):
             return self._execute_not_image(fname_relative, params_tail)
 
     def _execute_image(self, fname_relative):
-        fname = str(Path(PAGE_ATTACH_DIR, fname_relative)).replace('\\', '/')
-        return self._image_template.format(classes=self._image_classes,
-                                           fname=fname)
+        fname = str(Path(PAGE_ATTACH_DIR, fname_relative)).replace("\\", "/")
+        return self._image_template.format(classes=self._image_classes, fname=fname)
 
     def _execute_not_image(self, fname, params_tail):
         attach = Attachment(self.parser.page)
@@ -78,10 +84,18 @@ class IncludeCommand(Command):
                 text = fp.read().rstrip()
         except IOError:
             error_message = "Can't open file '{}'".format(fname)
-            return _(self._error_format.format(message=error_message, classes=self._include_classes))
+            return _(
+                self._error_format.format(
+                    message=error_message, classes=self._include_classes
+                )
+            )
         except Exception:
             error_message = "Encoding error in file '{}'".format(fname)
-            return _(self._error_format.format(message=error_message, classes=self._include_classes))
+            return _(
+                self._error_format.format(
+                    message=error_message, classes=self._include_classes
+                )
+            )
 
         return self._postprocessText(text, params_dict)
 
@@ -118,6 +132,6 @@ class IncludeCommand(Command):
         if match is None:
             return (None, params_str)
 
-        fname = match.group('fname').replace('\\', '/')
-        tail = params_str[match.end():]
+        fname = match.group("fname").replace("\\", "/")
+        tail = params_str[match.end() :]
         return (fname, tail)

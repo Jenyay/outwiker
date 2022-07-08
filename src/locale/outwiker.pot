@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OutWiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-03 22:16+0300\n"
+"POT-Creation-Date: 2022-07-08 16:00+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Eugene Ilin <jenyay.ilin@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.1\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -485,6 +485,7 @@ msgid "Begin search and replace on page"
 msgstr ""
 
 #: outwiker/actions/showhideattaches.py:17 outwiker/actions/switchto.py:63
+#: outwiker/gui/controls/filestreectrl.py:78
 #: outwiker/gui/mainpanes/attachmainpane.py:40
 #: outwiker/gui/preferences/prefcontroller.py:135
 #: outwiker/gui/preferences/wikieditorpanel.py:37
@@ -858,15 +859,15 @@ msgid ""
 "system"
 msgstr ""
 
-#: outwiker/core/pluginsloader.py:255
+#: outwiker/core/pluginsloader.py:267
 msgid "Plug-in \"{}\". Can't read \"{}\" file"
 msgstr ""
 
-#: outwiker/core/pluginsloader.py:276
+#: outwiker/core/pluginsloader.py:288
 msgid "Plug-in \"{}\" is outdated. Please, update the plug-in."
 msgstr ""
 
-#: outwiker/core/pluginsloader.py:287
+#: outwiker/core/pluginsloader.py:299
 msgid ""
 "Plug-in \"{}\" is designed for a newer version OutWiker. Please, install a "
 "new OutWiker version."
@@ -2484,33 +2485,49 @@ msgstr ""
 msgid "Small font"
 msgstr ""
 
-#: outwiker/pages/wiki/actions/include.py:22
+#: outwiker/pages/wiki/actions/include.py:32
 msgid "Include (:include ...:)"
 msgstr ""
 
-#: outwiker/pages/wiki/actions/include.py:26
-#: outwiker/pages/wiki/actions/include.py:101
+#: outwiker/pages/wiki/actions/include.py:36
+#: outwiker/pages/wiki/actions/include.py:111
 msgid "Insert (:include:) command"
 msgstr ""
 
-#: outwiker/pages/wiki/actions/include.py:34
+#: outwiker/pages/wiki/actions/include.py:44
 msgid "Current page does not have any attachments"
 msgstr ""
 
-#: outwiker/pages/wiki/actions/include.py:140
+#: outwiker/pages/wiki/actions/include.py:150
 msgid "Select attachment"
 msgstr ""
 
-#: outwiker/pages/wiki/actions/include.py:145
+#: outwiker/pages/wiki/actions/include.py:159
 msgid "Encoding"
 msgstr ""
 
-#: outwiker/pages/wiki/actions/include.py:150
+#: outwiker/pages/wiki/actions/include.py:164
 msgid "Convert symbols <, > and && to HTML"
 msgstr ""
 
-#: outwiker/pages/wiki/actions/include.py:154
+#: outwiker/pages/wiki/actions/include.py:168
 msgid "Parse wiki notation"
+msgstr ""
+
+#: outwiker/pages/wiki/actions/include.py:249
+msgid "Select file"
+msgstr ""
+
+#: outwiker/pages/wiki/actions/include.py:257
+msgid "File not selected"
+msgstr ""
+
+#: outwiker/pages/wiki/actions/include.py:264
+msgid "Selected file not exists"
+msgstr ""
+
+#: outwiker/pages/wiki/actions/include.py:269
+msgid "Select a file, not a folder"
 msgstr ""
 
 #: outwiker/pages/wiki/actions/multilineblock.py:18
@@ -2614,16 +2631,6 @@ msgstr ""
 
 #: outwiker/pages/wiki/gui/styledialog.py:187
 msgid "Custom CSS"
-msgstr ""
-
-#: outwiker/pages/wiki/parser/commands/include.py:52
-#, python-format
-msgid "<b>Can't open file %s</b>"
-msgstr ""
-
-#: outwiker/pages/wiki/parser/commands/include.py:54
-#, python-format
-msgid "<b>Encoding error in file %s</b>"
 msgstr ""
 
 #: outwiker/pages/wiki/parser/tokenthumbnail.py:71

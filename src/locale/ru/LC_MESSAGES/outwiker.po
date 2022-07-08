@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-03 22:16+0300\n"
+"POT-Creation-Date: 2022-07-08 16:00+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -486,6 +486,7 @@ msgid "Begin search and replace on page"
 msgstr "Начать поиск и замену по странице"
 
 #: outwiker/actions/showhideattaches.py:17 outwiker/actions/switchto.py:63
+#: outwiker/gui/controls/filestreectrl.py:78
 #: outwiker/gui/mainpanes/attachmainpane.py:40
 #: outwiker/gui/preferences/prefcontroller.py:135
 #: outwiker/gui/preferences/wikieditorpanel.py:37
@@ -883,15 +884,15 @@ msgid ""
 "system"
 msgstr "Заголовок страницы содержит запрещённые в Microsoft Windows символы"
 
-#: outwiker/core/pluginsloader.py:255
+#: outwiker/core/pluginsloader.py:267
 msgid "Plug-in \"{}\". Can't read \"{}\" file"
 msgstr "Плагин \"{}\". Ошибка чтения файла \"{}\""
 
-#: outwiker/core/pluginsloader.py:276
+#: outwiker/core/pluginsloader.py:288
 msgid "Plug-in \"{}\" is outdated. Please, update the plug-in."
 msgstr "Плагин \"{}\" устарел. Пожалуйста, обновите плагин."
 
-#: outwiker/core/pluginsloader.py:287
+#: outwiker/core/pluginsloader.py:299
 msgid ""
 "Plug-in \"{}\" is designed for a newer version OutWiker. Please, install a "
 "new OutWiker version."
@@ -2537,34 +2538,50 @@ msgstr "Крупный шрифт"
 msgid "Small font"
 msgstr "Мелкий шрифт"
 
-#: outwiker/pages/wiki/actions/include.py:22
+#: outwiker/pages/wiki/actions/include.py:32
 msgid "Include (:include ...:)"
 msgstr "Включение (:include ...:)"
 
-#: outwiker/pages/wiki/actions/include.py:26
-#: outwiker/pages/wiki/actions/include.py:101
+#: outwiker/pages/wiki/actions/include.py:36
+#: outwiker/pages/wiki/actions/include.py:111
 msgid "Insert (:include:) command"
 msgstr "Вставить команду (:include:)"
 
-#: outwiker/pages/wiki/actions/include.py:34
+#: outwiker/pages/wiki/actions/include.py:44
 msgid "Current page does not have any attachments"
 msgstr "К текущей странице не прикреплено ни одного файла"
 
-#: outwiker/pages/wiki/actions/include.py:140
+#: outwiker/pages/wiki/actions/include.py:150
 msgid "Select attachment"
 msgstr "Выберите прикрепленный файл"
 
-#: outwiker/pages/wiki/actions/include.py:145
+#: outwiker/pages/wiki/actions/include.py:159
 msgid "Encoding"
 msgstr "Кодировка"
 
-#: outwiker/pages/wiki/actions/include.py:150
+#: outwiker/pages/wiki/actions/include.py:164
 msgid "Convert symbols <, > and && to HTML"
 msgstr "Преобразовывать символы <, > и && в HTML-представление"
 
-#: outwiker/pages/wiki/actions/include.py:154
+#: outwiker/pages/wiki/actions/include.py:168
 msgid "Parse wiki notation"
 msgstr "Включить разбор викинотации"
+
+#: outwiker/pages/wiki/actions/include.py:249
+msgid "Select file"
+msgstr "Выберите файл"
+
+#: outwiker/pages/wiki/actions/include.py:257
+msgid "File not selected"
+msgstr "Файл не выбран"
+
+#: outwiker/pages/wiki/actions/include.py:264
+msgid "Selected file not exists"
+msgstr "Выбранный файл не существует"
+
+#: outwiker/pages/wiki/actions/include.py:269
+msgid "Select a file, not a folder"
+msgstr "Выберите файл, а не папку"
 
 #: outwiker/pages/wiki/actions/multilineblock.py:18
 msgid "Multiline block [{…}]"
@@ -2674,16 +2691,6 @@ msgstr "Фон текста"
 msgid "Custom CSS"
 msgstr "Дополнительные стили CSS"
 
-#: outwiker/pages/wiki/parser/commands/include.py:52
-#, python-format
-msgid "<b>Can't open file %s</b>"
-msgstr "<b>Ошибка открытия файла %s</b>"
-
-#: outwiker/pages/wiki/parser/commands/include.py:54
-#, python-format
-msgid "<b>Encoding error in file %s</b>"
-msgstr "<b>Ошибка кодировки файла %s</b>"
-
 #: outwiker/pages/wiki/parser/tokenthumbnail.py:71
 msgid "<b>Can't create thumbnail for \"{}\"</b>"
 msgstr "<b>Ошибка создания миниатюры для \"{}\"</b>"
@@ -2766,6 +2773,14 @@ msgstr "[[комментарий -> ссылка]]"
 #: outwiker/pages/wiki/wikipreferences.py:44
 msgid "[[link | comment]]"
 msgstr "[[ссылка | комментарий]]"
+
+#, python-format
+#~ msgid "<b>Can't open file %s</b>"
+#~ msgstr "<b>Ошибка открытия файла %s</b>"
+
+#, python-format
+#~ msgid "<b>Encoding error in file %s</b>"
+#~ msgstr "<b>Ошибка кодировки файла %s</b>"
 
 #~ msgid "File '{}' exists already"
 #~ msgstr "Файл '{}' уже существует"
