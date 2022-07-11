@@ -1,7 +1,17 @@
 # -*- coding: utf-8 -*-
 
+from pathlib import Path
+
 import wx
 
+from outwiker.core.attachment import Attachment
+from outwiker.core.attachfilters import (getHiddenFilter,
+                                         getImagesOnlyFilter,
+                                         andFilter,
+                                         orFilter,
+                                         getDirOnlyFilter,
+                                         notFilter)
+from outwiker.gui.controls.filestreecombobox import FilesTreeComboBox
 from outwiker.gui.testeddialog import TestedDialog
 
 
@@ -10,11 +20,11 @@ class ThumbDialog(TestedDialog):
     HEIGHT = 1
     MAX_SIZE = 2
 
-    def __init__(self, parent, filesList, selectedFile):
+    def __init__(self, parent, page, selected_file):
         """
         parent - родительское окно
-        filesList - список файлов, отображаемых в диалоге
-        selectedFile - файл выбранный по умолчанию. Если selectedFile == None,
+        page - current page
+        selected_file - файл выбранный по умолчанию. Если selectedFile == None,
             никакой файл по умолчанию не выбирается
         """
         super().__init__(
@@ -22,11 +32,15 @@ class ThumbDialog(TestedDialog):
             style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER,
             title=_("Thumbnails"),
         )
+        self._selected_file = selected_file
 
-        self.__filesList = filesList
-        self.__selectedFile = selectedFile
+        attach = Attachment(page)
+        self._root_dir = Path(attach.getAttachPath(create=False))
+        self._filter = andFilter(orFilter(getImagesOnlyFilter(),
+                                          getDirOnlyFilter()),
+                                 notFilter(getHiddenFilter(page)))
 
-        self.__createGui()
+        self._createGui()
         self.filesListCombo.SetFocus()
         self.Center(wx.BOTH)
 
@@ -42,25 +56,30 @@ class ThumbDialog(TestedDialog):
     def size(self):
         return self.sizeCtrl.GetValue()
 
-    def __createGui(self):
-        # Controls for file name selection
-        filenameLabel = wx.StaticText(self, label=_("Select attached image"))
-        font = filenameLabel.GetFont()
+    def _createGui(self):
+        # "Select attached image" label
+        self.filenameLabel = wx.StaticText(self, label=_("Select attached image"))
+        font = self.filenameLabel.GetFont()
         font.SetWeight(wx.FONTWEIGHT_BOLD)
-        filenameLabel.SetFont(font)
+        self.filenameLabel.SetFont(font)
 
-        self.filesListCombo = wx.ComboBox(
-            self, choices=self.__filesList, style=wx.CB_READONLY
-        )
-        self.filesListCombo.SetSelection(0)
-        self.filesListCombo.SetMinSize((250, -1))
+        # Files combobox
+        self.filesListCombo = FilesTreeComboBox(self)
+        self.filesListCombo.SetFilterFunc(self._filter)
+        if self._root_dir.exists():
+            self.filesListCombo.SetRootDir(self._root_dir)
+        # self.filesListCombo = wx.ComboBox(
+        #     self, choices=self._filesList, style=wx.CB_READONLY
+        # )
+        # self.filesListCombo.SetSelection(0)
+        # self.filesListCombo.SetMinSize((250, -1))
 
-        if self.__selectedFile:
-            assert self.__selectedFile in self.__filesList
-            self.filesListCombo.SetStringSelection(self.__selectedFile)
+        # if self._selectedFile:
+        #     assert self._selectedFile in self._filesList
+        #     self.filesListCombo.SetStringSelection(self._selectedFile)
 
         # Controls for thumbnail size selection
-        scaleLabel = wx.StaticText(self, label=_("Thumbnail size"))
+        self.scaleLabel = wx.StaticText(self, label=_("Thumbnail size"))
 
         scaleItems = [_("Width"), _("Height"), _("Max size")]
         self.scaleCombo = wx.ComboBox(self, choices=scaleItems, style=wx.CB_READONLY)
@@ -69,23 +88,25 @@ class ThumbDialog(TestedDialog):
 
         self.sizeCtrl = wx.SpinCtrl(self, min=0, max=10000, initial=0)
         self.sizeCtrl.SetMinSize((100, -1))
-        sizeLabel = wx.StaticText(self, label=_("0 - default size"))
+        self.sizeLabel = wx.StaticText(self, label=_("0 - default size"))
 
-        okCancel = self.CreateButtonSizer(wx.OK | wx.CANCEL)
+        self.okCancel = self.CreateButtonSizer(wx.OK | wx.CANCEL)
+        self._layout()
 
+    def _layout(self):
         # Layout controls
         mainSizer = wx.FlexGridSizer(cols=1)
         mainSizer.AddGrowableCol(0)
         mainSizer.AddGrowableRow(5)
 
-        mainSizer.Add(filenameLabel, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=4)
+        mainSizer.Add(self.filenameLabel, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=4)
         mainSizer.Add(
             self.filesListCombo,
             flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND,
             border=4,
         )
 
-        mainSizer.Add(scaleLabel, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=4)
+        mainSizer.Add(self.scaleLabel, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=4)
 
         # Scale controls
         scaleSizer = wx.FlexGridSizer(cols=2)
@@ -100,10 +121,10 @@ class ThumbDialog(TestedDialog):
         scaleSizer.Add(self.sizeCtrl, flag=wx.ALL | wx.EXPAND, border=4)
         mainSizer.Add(scaleSizer, flag=wx.ALL | wx.EXPAND, border=2)
 
-        mainSizer.Add(sizeLabel, flag=wx.ALL | wx.ALIGN_RIGHT, border=4)
+        mainSizer.Add(self.sizeLabel, flag=wx.ALL | wx.ALIGN_RIGHT, border=4)
 
         mainSizer.Add(
-            okCancel, flag=wx.ALL | wx.ALIGN_RIGHT | wx.ALIGN_BOTTOM, border=4
+            self.okCancel, flag=wx.ALL | wx.ALIGN_RIGHT | wx.ALIGN_BOTTOM, border=4
         )
 
         self.SetSizer(mainSizer)

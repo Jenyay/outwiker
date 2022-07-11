@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 
+from pathlib import Path
+
 from outwiker.core.attachment import Attachment
 from outwiker.core.commands import isImage
 
 from .thumbdialog import ThumbDialog
 
 
-class ThumbDialogController (object):
+class ThumbDialogController:
     def __init__(self, parent, page, selectedText):
         """
         parent - родительское окно
@@ -20,32 +22,34 @@ class ThumbDialogController (object):
         self._selectedText = selectedText.strip()
 
         # Строка, полученная из параметров, выбанных в диалоге
-        self.result = u""
+        self.result = ""
 
     def showDialog(self):
-        filesList = list(
-            filter(isImage, Attachment(self._page).getAttachRelative()))
-        filesList.sort(key=lambda a: a.lower())
+        # filesList = list(
+        #     filter(isImage, Attachment(self._page).getAttachRelative()))
+        # filesList.sort(key=lambda a: a.lower())
 
-        if (self._selectedText.startswith(u"Attach:") and
-                self._selectedText[len(u"Attach:"):] in filesList):
-            selectedFile = self._selectedText[len(u"Attach:"):]
-        else:
-            selectedFile = u""
+        # if (self._selectedText.startswith("Attach:") and
+        #         self._selectedText[len("Attach:"):] in filesList):
+        #     selectedFile = self._selectedText[len("Attach:"):]
+        # else:
+        #     selectedFile = ""
 
-        dlg = self._createDialog(self._parent, filesList, selectedFile)
-        resultDlg = dlg.ShowModal()
+        resultDlg = None
+        selectedFile = ""
 
-        self.result = self.__generateText(dlg)
+        if self._page is not None:
+            attach = Attachment(self._page)
+            root_dir = Path(attach.getAttachPath(create=False))
 
-        dlg.Destroy()
+            if root_dir.exists():
+                with ThumbDialog(self._parent, self._page, selectedFile) as dlg:
+                    resultDlg = dlg.ShowModal()
+                    self.result = self._generateText(dlg)
 
         return resultDlg
 
-    def _createDialog(self, parent, filesList, selectedFile):
-        return ThumbDialog(parent, filesList, selectedFile)
-
-    def __generateText(self, dlg):
+    def _generateText(self, dlg):
         size = dlg.size
         fname = dlg.fileName
         scaleType = dlg.scaleType
