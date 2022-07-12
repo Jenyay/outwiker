@@ -5,12 +5,7 @@ from pathlib import Path
 import wx
 
 from outwiker.core.attachment import Attachment
-from outwiker.core.attachfilters import (getHiddenFilter,
-                                         getImagesOnlyFilter,
-                                         andFilter,
-                                         orFilter,
-                                         getDirOnlyFilter,
-                                         notFilter)
+from outwiker.core.attachfilters import getNotHiddenImageRecursiveFilter
 from outwiker.gui.controls.filestreecombobox import FilesTreeComboBox
 from outwiker.gui.testeddialog import TestedDialog
 
@@ -36,9 +31,7 @@ class ThumbDialog(TestedDialog):
 
         attach = Attachment(page)
         self._root_dir = Path(attach.getAttachPath(create=False))
-        self._filter = andFilter(orFilter(getImagesOnlyFilter(),
-                                          getDirOnlyFilter()),
-                                 notFilter(getHiddenFilter(page)))
+        self._filter = getNotHiddenImageRecursiveFilter(page)
 
         self._createGui()
         self.filesListCombo.SetFocus()
@@ -58,7 +51,8 @@ class ThumbDialog(TestedDialog):
 
     def _createGui(self):
         # "Select attached image" label
-        self.filenameLabel = wx.StaticText(self, label=_("Select attached image"))
+        self.filenameLabel = wx.StaticText(self,
+                                           label=_("Select attached image"))
         font = self.filenameLabel.GetFont()
         font.SetWeight(wx.FONTWEIGHT_BOLD)
         self.filenameLabel.SetFont(font)
@@ -68,21 +62,17 @@ class ThumbDialog(TestedDialog):
         self.filesListCombo.SetFilterFunc(self._filter)
         if self._root_dir.exists():
             self.filesListCombo.SetRootDir(self._root_dir)
-        # self.filesListCombo = wx.ComboBox(
-        #     self, choices=self._filesList, style=wx.CB_READONLY
-        # )
-        # self.filesListCombo.SetSelection(0)
-        # self.filesListCombo.SetMinSize((250, -1))
 
-        # if self._selectedFile:
-        #     assert self._selectedFile in self._filesList
-        #     self.filesListCombo.SetStringSelection(self._selectedFile)
+            if self._selected_file:
+                self.filesListCombo.SetValue(self._selected_file)
 
         # Controls for thumbnail size selection
         self.scaleLabel = wx.StaticText(self, label=_("Thumbnail size"))
 
         scaleItems = [_("Width"), _("Height"), _("Max size")]
-        self.scaleCombo = wx.ComboBox(self, choices=scaleItems, style=wx.CB_READONLY)
+        self.scaleCombo = wx.ComboBox(self,
+                                      choices=scaleItems,
+                                      style=wx.CB_READONLY)
         self.scaleCombo.SetSelection(0)
         self.scaleCombo.SetMinSize((250, -1))
 

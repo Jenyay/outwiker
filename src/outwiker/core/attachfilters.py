@@ -52,3 +52,12 @@ def orFilter(*filter_list: Callable[[Path], bool]) -> Callable[[Path], bool]:
 
 def notFilter(filter_func: Callable[[Path], bool]) -> Callable[[Path], bool]:
     return lambda path: not filter_func(path)
+
+
+def getImageRecursiveFilter() -> Callable[[Path], bool]:
+    return orFilter(getImagesOnlyFilter(), getDirOnlyFilter())
+
+
+def getNotHiddenImageRecursiveFilter(page):
+    return andFilter(getImageRecursiveFilter(),
+                     notFilter(getHiddenFilter(page)))

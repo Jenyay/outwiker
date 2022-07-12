@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from pathlib import Path
+from typing import Optional
 
 from outwiker.core.attachment import Attachment
 from outwiker.core.commands import isImage
@@ -24,32 +25,43 @@ class ThumbDialogController:
         # Строка, полученная из параметров, выбанных в диалоге
         self.result = ""
 
+    def _get_selected_file(self, selected_text: str) -> Optional[str]:
+        prefix = "Attach:"
+        selected_file = None
+
+        if (selected_text.startswith(prefix)):
+            selected_file = selected_text[len(prefix):]
+            if (selected_file.startswith('"') and selected_file.endswith('"') or
+                    selected_file.startswith("'") and selected_file.endswith("'")):
+                selected_file = selected_file[1:-1]
+
+            if not isImage(selected_file):
+                return None
+
+            file_path = Path(Attachment(self._page).getAttachPath(create=False),
+                             selected_file)
+
+            if not file_path.exists() or file_path.is_dir():
+                return None
+
+        return selected_file
+
     def showDialog(self):
-        # filesList = list(
-        #     filter(isImage, Attachment(self._page).getAttachRelative()))
-        # filesList.sort(key=lambda a: a.lower())
-
-        # if (self._selectedText.startswith("Attach:") and
-        #         self._selectedText[len("Attach:"):] in filesList):
-        #     selectedFile = self._selectedText[len("Attach:"):]
-        # else:
-        #     selectedFile = ""
-
         resultDlg = None
-        selectedFile = ""
+        selected_file = self._get_selected_file(self._selectedText)
 
         if self._page is not None:
             attach = Attachment(self._page)
             root_dir = Path(attach.getAttachPath(create=False))
 
             if root_dir.exists():
-                with ThumbDialog(self._parent, self._page, selectedFile) as dlg:
+                with ThumbDialog(self._parent, self._page, selected_file) as dlg:
                     resultDlg = dlg.ShowModal()
-                    self.result = self._generateText(dlg)
+                    self.result = self._generate_text(dlg)
 
         return resultDlg
 
-    def _generateText(self, dlg):
+    def _generate_text(self, dlg):
         size = dlg.size
         fname = dlg.fileName
         scaleType = dlg.scaleType
