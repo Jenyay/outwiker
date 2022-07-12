@@ -44,6 +44,12 @@ class FilesTreeComboBox(wx.Panel):
     def SetValue(self, path_relative: str):
         return self._combo_ctrl.SetValue(path_relative)
 
+    def GetFilesListRelative(self):
+        return self._combo_ctrl.GetFilesListRelative()
+
+    def GetFilesListFull(self):
+        return self._combo_ctrl.GetFilesListFull()
+
 
 class FilesTreeComboPopup(wx.ComboPopup):
     def __init__(self):
@@ -68,6 +74,12 @@ class FilesTreeComboPopup(wx.ComboPopup):
 
     def GetRootDir(self) -> Union[Path, str]:
         return self._tree_ctrl.GetRootDir()
+
+    def GetFilesListRelative(self):
+        return self._tree_ctrl.GetFilesListRelative()
+
+    def GetFilesListFull(self):
+        return self._tree_ctrl.GetFilesListFull()
 
     # The following methods are those that are overridable from the
     # ComboPopup base class.

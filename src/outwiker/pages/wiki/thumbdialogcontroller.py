@@ -31,8 +31,8 @@ class ThumbDialogController:
 
         if (selected_text.startswith(prefix)):
             selected_file = selected_text[len(prefix):]
-            if (selected_file.startswith('"') and selected_file.endswith('"') or
-                    selected_file.startswith("'") and selected_file.endswith("'")):
+            if ((selected_file.startswith('"') and selected_file.endswith('"')) or
+                    (selected_file.startswith("'") and selected_file.endswith("'"))):
                 selected_file = selected_file[1:-1]
 
             if not isImage(selected_file):
@@ -57,7 +57,8 @@ class ThumbDialogController:
             if root_dir.exists():
                 with ThumbDialog(self._parent, self._page, selected_file) as dlg:
                     resultDlg = dlg.ShowModal()
-                    self.result = self._generate_text(dlg)
+                    if resultDlg == wx.ID_OK:
+                        self.result = self._generate_text(dlg)
 
         return resultDlg
 

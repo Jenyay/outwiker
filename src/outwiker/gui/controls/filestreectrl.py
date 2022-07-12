@@ -38,6 +38,12 @@ class FilesTreeCtrl(wx.Panel):
                              handler=self._onSelChanged)
         self._layout()
 
+    def GetFilesListRelative(self):
+        return list(self._items_relative.keys())
+
+    def GetFilesListFull(self):
+        return list(self._items_full.keys())
+
     def _layout(self):
         main_sizer = wx.FlexGridSizer(cols=1)
         main_sizer.AddGrowableCol(0)
