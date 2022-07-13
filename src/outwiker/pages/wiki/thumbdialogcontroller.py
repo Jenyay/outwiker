@@ -7,12 +7,13 @@ import wx
 
 from outwiker.core.attachment import Attachment
 from outwiker.core.commands import isImage, showError
+from outwiker.gui.windowssizesaver import WindowSizeSaver
 
 from .thumbdialog import ThumbDialog
 
 
 class ThumbDialogController:
-    def __init__(self, parent, page, selectedText):
+    def __init__(self, application, parent, page, selectedText):
         """
         parent - родительское окно
         page - текущая страница (не может быть равна None)
@@ -32,6 +33,9 @@ class ThumbDialogController:
 
         # Строка, полученная из параметров, выбанных в диалоге
         self.result = ""
+
+        self._size_saver = WindowSizeSaver('wiki_thumb_dialog',
+                                           application.config)
 
     @property
     def filesList(self):
@@ -69,6 +73,7 @@ class ThumbDialogController:
         if self._page is not None:
             if Attachment(self._page).getAttachRelative():
                 with ThumbDialog(self._parent, self._page) as dlg:
+                    self._size_saver.restoreSize(dlg)
                     dlg.SetSelectedFile(selected_file)
                     resultDlg = dlg.ShowModal()
 
@@ -77,6 +82,8 @@ class ThumbDialogController:
 
                     if resultDlg == wx.ID_OK:
                         self.result = self._generate_text(dlg)
+
+                    self._size_saver.saveSize(dlg)
             else:
                 showError(self._parent,
                           _("Current page does not have any attachments"))

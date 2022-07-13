@@ -56,7 +56,7 @@ class ThumbDialogControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
     def testEmpty(self):
         controller = ThumbDialogController(
-            self.application.mainWindow, self.testPage, ""
+            self.application, self.application.mainWindow, self.testPage, ""
         )
         controller.showDialog()
 
@@ -66,7 +66,7 @@ class ThumbDialogControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         Tester.dialogTester.appendCancel()
         Attachment(self.testPage).attach(self.fullFilesPath)
         controller = ThumbDialogController(
-            self.application.mainWindow, self.testPage, ""
+            self.application, self.application.mainWindow, self.testPage, ""
         )
         controller.showDialog()
 
@@ -83,7 +83,7 @@ class ThumbDialogControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         Attachment(self.testPage).attach(self.fullFilesPath)
         controller = ThumbDialogController(
-            self.application.mainWindow, self.testPage, selected_text
+            self.application, self.application.mainWindow, self.testPage, selected_text
         )
         controller.showDialog()
 
@@ -96,7 +96,7 @@ class ThumbDialogControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         Attachment(self.testPage).attach(self.fullFilesPath)
         controller = ThumbDialogController(
-            self.application.mainWindow, self.testPage, selected_text
+            self.application, self.application.mainWindow, self.testPage, selected_text
         )
         controller.showDialog()
 
@@ -109,7 +109,7 @@ class ThumbDialogControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         Attachment(self.testPage).attach(self.fullFilesPath)
         controller = ThumbDialogController(
-            self.application.mainWindow, self.testPage, selected_text
+            self.application, self.application.mainWindow, self.testPage, selected_text
         )
         controller.showDialog()
 
@@ -127,7 +127,7 @@ class ThumbDialogControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         attach.attach(self.fullFilesPath, subdir)
 
         controller = ThumbDialogController(
-            self.application.mainWindow, self.testPage, selected_text
+            self.application, self.application.mainWindow, self.testPage, selected_text
         )
         controller.showDialog()
 
@@ -145,7 +145,7 @@ class ThumbDialogControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         attach.attach(self.fullFilesPath, subdir)
 
         controller = ThumbDialogController(
-            self.application.mainWindow, self.testPage, selected_text
+            self.application, self.application.mainWindow, self.testPage, selected_text
         )
         controller.showDialog()
 
@@ -163,7 +163,7 @@ class ThumbDialogControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         attach.attach(self.fullFilesPath, subdir)
 
         controller = ThumbDialogController(
-            self.application.mainWindow, self.testPage, selected_text
+            self.application, self.application.mainWindow, self.testPage, selected_text
         )
         controller.showDialog()
 
@@ -181,7 +181,7 @@ class ThumbDialogControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         attach.attach(self.fullFilesPath, subdir)
 
         controller = ThumbDialogController(
-            self.application.mainWindow, self.testPage, selected_text
+            self.application, self.application.mainWindow, self.testPage, selected_text
         )
         controller.showDialog()
 
@@ -194,7 +194,7 @@ class ThumbDialogControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         Attachment(self.testPage).attach(self.fullFilesPath)
         controller = ThumbDialogController(
-            self.application.mainWindow, self.testPage, selected_text
+            self.application, self.application.mainWindow, self.testPage, selected_text
         )
         controller.showDialog()
 
@@ -207,7 +207,7 @@ class ThumbDialogControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         Attachment(self.testPage).attach(self.fullFilesPath)
         controller = ThumbDialogController(
-            self.application.mainWindow, self.testPage, selected_text
+            self.application, self.application.mainWindow, self.testPage, selected_text
         )
         controller.showDialog()
 
@@ -220,7 +220,7 @@ class ThumbDialogControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         Attachment(self.testPage).attach(self.fullFilesPath)
         controller = ThumbDialogController(
-            self.application.mainWindow, self.testPage, selected_text
+            self.application, self.application.mainWindow, self.testPage, selected_text
         )
         controller.showDialog()
 
@@ -234,7 +234,7 @@ class ThumbDialogControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         Attachment(self.testPage).attach(self.fullFilesPath)
         controller = ThumbDialogController(
-            self.application.mainWindow, self.testPage, selected_text
+            self.application, self.application.mainWindow, self.testPage, selected_text
         )
         controller.showDialog()
 
@@ -249,7 +249,7 @@ class ThumbDialogControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         Attachment(self.testPage).attach(self.fullFilesPath)
         controller = ThumbDialogController(
-            self.application.mainWindow, self.testPage, selected_text
+            self.application, self.application.mainWindow, self.testPage, selected_text
         )
         controller.showDialog()
 
@@ -264,7 +264,7 @@ class ThumbDialogControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         Attachment(self.testPage).attach(self.fullFilesPath)
         controller = ThumbDialogController(
-            self.application.mainWindow, self.testPage, selected_text
+            self.application, self.application.mainWindow, self.testPage, selected_text
         )
         controller.showDialog()
 
@@ -279,7 +279,7 @@ class ThumbDialogControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
 
         Attachment(self.testPage).attach(self.fullFilesPath)
         controller = ThumbDialogController(
-            self.application.mainWindow, self.testPage, selected_text
+            self.application, self.application.mainWindow, self.testPage, selected_text
         )
         controller.showDialog()
 

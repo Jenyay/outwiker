@@ -27,7 +27,8 @@ class WikiThumbAction(BaseAction):
     def run(self, params):
         codeEditor = self._application.mainWindow.pagePanel.pageView.codeEditor
 
-        dlgController = ThumbDialogController(self._application.mainWindow,
+        dlgController = ThumbDialogController(self._application,
+                                              self._application.mainWindow,
                                               self._application.selectedPage,
                                               codeEditor.GetSelectedText())
 
