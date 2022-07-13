@@ -2,6 +2,7 @@
 
 import os
 import unittest
+from pathlib import Path
 from tempfile import mkdtemp
 
 from outwiker.core.tree import WikiDocument
@@ -75,7 +76,7 @@ class ThumbDialogControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertTrue("image.jpeg" in controller.filesList)
         self.assertFalse("файл с пробелами.tmp" in controller.filesList)
 
-    def testSelectedAttach1(self):
+    def testSelectedAttachNoQuotes(self):
         selected_text = "Attach:accept.png"
 
         Tester.dialogTester.appendOk()
@@ -87,6 +88,104 @@ class ThumbDialogControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         controller.showDialog()
 
         self.assertEqual(controller.selectedFile, "accept.png")
+
+    def testSelectedAttachSingleQuotes(self):
+        selected_text = "Attach:'accept.png'"
+
+        Tester.dialogTester.appendOk()
+
+        Attachment(self.testPage).attach(self.fullFilesPath)
+        controller = ThumbDialogController(
+            self.application.mainWindow, self.testPage, selected_text
+        )
+        controller.showDialog()
+
+        self.assertEqual(controller.selectedFile, "accept.png")
+
+    def testSelectedAttachDoubleQuotes(self):
+        selected_text = 'Attach:"accept.png"'
+
+        Tester.dialogTester.appendOk()
+
+        Attachment(self.testPage).attach(self.fullFilesPath)
+        controller = ThumbDialogController(
+            self.application.mainWindow, self.testPage, selected_text
+        )
+        controller.showDialog()
+
+        self.assertEqual(controller.selectedFile, "accept.png")
+
+    def testSelectedAttachSubdirForwardSlashesSingleQuotes(self):
+        subdir = Path('subdir 1', 'subdir 2')
+        relative_path = 'subdir 1/subdir 2/accept.png'
+        selected_text = "Attach:'{}'".format(relative_path)
+
+        Tester.dialogTester.appendOk()
+
+        attach = Attachment(self.testPage)
+        attach.createSubdir(subdir)
+        attach.attach(self.fullFilesPath, subdir)
+
+        controller = ThumbDialogController(
+            self.application.mainWindow, self.testPage, selected_text
+        )
+        controller.showDialog()
+
+        self.assertEqual(controller.selectedFile, relative_path)
+
+    def testSelectedAttachSubdirBackSlashesSingleQuotes(self):
+        subdir = Path('subdir 1', 'subdir 2')
+        relative_path = 'subdir 1\\subdir 2\\accept.png'
+        selected_text = "Attach:'{}'".format(relative_path)
+
+        Tester.dialogTester.appendOk()
+
+        attach = Attachment(self.testPage)
+        attach.createSubdir(subdir)
+        attach.attach(self.fullFilesPath, subdir)
+
+        controller = ThumbDialogController(
+            self.application.mainWindow, self.testPage, selected_text
+        )
+        controller.showDialog()
+
+        self.assertEqual(controller.selectedFile, relative_path)
+
+    def testSelectedAttachSubdirForwardSlashesDoubleQuotes(self):
+        subdir = Path('subdir 1', 'subdir 2')
+        relative_path = 'subdir 1/subdir 2/accept.png'
+        selected_text = 'Attach:"{}"'.format(relative_path)
+
+        Tester.dialogTester.appendOk()
+
+        attach = Attachment(self.testPage)
+        attach.createSubdir(subdir)
+        attach.attach(self.fullFilesPath, subdir)
+
+        controller = ThumbDialogController(
+            self.application.mainWindow, self.testPage, selected_text
+        )
+        controller.showDialog()
+
+        self.assertEqual(controller.selectedFile, relative_path)
+
+    def testSelectedAttachSubdirBackSlashesDoubleQuotes(self):
+        subdir = Path('subdir 1', 'subdir 2')
+        relative_path = 'subdir 1\\subdir 2\\accept.png'
+        selected_text = 'Attach:"{}"'.format(relative_path)
+
+        Tester.dialogTester.appendOk()
+
+        attach = Attachment(self.testPage)
+        attach.createSubdir(subdir)
+        attach.attach(self.fullFilesPath, subdir)
+
+        controller = ThumbDialogController(
+            self.application.mainWindow, self.testPage, selected_text
+        )
+        controller.showDialog()
+
+        self.assertEqual(controller.selectedFile, relative_path)
 
     def testSelectedAttach2(self):
         selected_text = "бла-бла-бла"
