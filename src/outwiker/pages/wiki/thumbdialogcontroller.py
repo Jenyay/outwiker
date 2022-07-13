@@ -3,8 +3,10 @@
 from pathlib import Path
 from typing import Optional
 
+import wx
+
 from outwiker.core.attachment import Attachment
-from outwiker.core.commands import isImage
+from outwiker.core.commands import isImage, showError
 
 from .thumbdialog import ThumbDialog
 
@@ -22,8 +24,22 @@ class ThumbDialogController:
         self._page = page
         self._selectedText = selectedText.strip()
 
+        # Files list (relative paths) from ThumbDialog. Used for testing
+        self._files_list = []
+
+        # Selected in the dialog file (relative path)
+        self._selected_file = None
+
         # Строка, полученная из параметров, выбанных в диалоге
         self.result = ""
+
+    @property
+    def filesList(self):
+        return self._files_list
+
+    @property
+    def selectedFile(self):
+        return self._selected_file
 
     def _get_selected_file(self, selected_text: str) -> Optional[str]:
         prefix = "Attach:"
@@ -51,38 +67,43 @@ class ThumbDialogController:
         selected_file = self._get_selected_file(self._selectedText)
 
         if self._page is not None:
-            attach = Attachment(self._page)
-            root_dir = Path(attach.getAttachPath(create=False))
-
-            if root_dir.exists():
-                with ThumbDialog(self._parent, self._page, selected_file) as dlg:
+            if Attachment(self._page).getAttachRelative():
+                with ThumbDialog(self._parent, self._page) as dlg:
+                    dlg.SetSelectedFile(selected_file)
                     resultDlg = dlg.ShowModal()
+
+                    self._files_list = dlg.GetFilesListRelative()
+                    self._selected_file = dlg.fileName
+
                     if resultDlg == wx.ID_OK:
                         self.result = self._generate_text(dlg)
+            else:
+                showError(self._parent,
+                          _("Current page does not have any attachments"))
 
         return resultDlg
 
     def _generate_text(self, dlg):
-        size = dlg.size
+        size = dlg.scale
         fname = dlg.fileName
         scaleType = dlg.scaleType
 
         if size == 0:
-            scaleText = u""
+            scaleText = ""
         elif scaleType == ThumbDialog.WIDTH:
-            scaleText = u" width={size}".format(size=size)
+            scaleText = " width={size}".format(size=size)
         elif scaleType == ThumbDialog.HEIGHT:
-            scaleText = u" height={size}".format(size=size)
+            scaleText = " height={size}".format(size=size)
         elif scaleType == ThumbDialog.MAX_SIZE:
-            scaleText = u" maxsize={size}".format(size=size)
+            scaleText = " maxsize={size}".format(size=size)
         else:
             raise NotImplementedError
 
         if len(fname) > 0:
-            fileText = u"Attach:{fname}".format(fname=fname)
+            fileText = "Attach:{fname}".format(fname=fname)
         else:
-            fileText = u""
+            fileText = ""
 
-        result = u"%thumb{scale}%{fname}%%".format(
+        result = "%thumb{scale}%{fname}%%".format(
             scale=scaleText, fname=fileText)
         return result

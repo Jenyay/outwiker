@@ -15,19 +15,16 @@ class ThumbDialog(TestedDialog):
     HEIGHT = 1
     MAX_SIZE = 2
 
-    def __init__(self, parent, page, selected_file):
+    def __init__(self, parent, page):
         """
         parent - родительское окно
         page - current page
-        selected_file - файл выбранный по умолчанию. Если selectedFile == None,
-            никакой файл по умолчанию не выбирается
         """
         super().__init__(
             parent,
             style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER,
             title=_("Thumbnails"),
         )
-        self._selected_file = selected_file
 
         attach = Attachment(page)
         self._root_dir = Path(attach.getAttachPath(create=False))
@@ -45,9 +42,24 @@ class ThumbDialog(TestedDialog):
     def scaleType(self):
         return self.scaleCombo.GetSelection()
 
+    @scaleType.setter
+    def scaleType(self, value):
+        self.scaleCombo.SetSelection(value)
+
     @property
-    def size(self):
+    def scale(self):
         return self.sizeCtrl.GetValue()
+
+    @scale.setter
+    def scale(self, value):
+        return self.sizeCtrl.SetValue(value)
+
+    def GetFilesListRelative(self):
+        return self.filesListCombo.GetFilesListRelative()
+
+    def SetSelectedFile(self, fname):
+        if fname:
+            self.filesListCombo.SetValue(fname)
 
     def _createGui(self):
         # "Select attached image" label
@@ -62,9 +74,6 @@ class ThumbDialog(TestedDialog):
         self.filesListCombo.SetFilterFunc(self._filter)
         if self._root_dir.exists():
             self.filesListCombo.SetRootDir(self._root_dir)
-
-            if self._selected_file:
-                self.filesListCombo.SetValue(self._selected_file)
 
         # Controls for thumbnail size selection
         self.scaleLabel = wx.StaticText(self, label=_("Thumbnail size"))
