@@ -37,8 +37,11 @@ class RemoveAttachesActionForAttachPanel(BaseAction):
                           _("You did not select any file to remove"))
                 return
 
-            if MessageBox(_("Remove selected files?"),
-                          _("Remove files?"),
+            files_str = '\n'.join(files)
+            text = _("Remove selected files?") + '\n\n' + files_str
+
+            if MessageBox(text,
+                          _("Removing attachments"),
                           wx.YES_NO | wx.ICON_QUESTION) == wx.YES:
                 try:
                     Attachment(
