@@ -9,6 +9,7 @@ from outwiker.gui.baseaction import BaseAction
 from outwiker.gui.testeddialog import TestedDialog
 from outwiker.gui.controls.controlnotify import ControlNotify
 from outwiker.gui.controls.filestreecombobox import FilesTreeComboBox
+from outwiker.gui.controls.validators.selectedfilevalidator import SelectedFileValidator
 from outwiker.gui.guiconfig import GuiConfig
 from outwiker.gui.windowssizesaver import WindowSizeSaver
 from outwiker.core.attachfilters import getHiddenFilter, notFilter
@@ -153,7 +154,7 @@ class IncludeDialog(TestedDialog):
         self._attachLabel.SetFont(font)
 
         self._attachComboBox = FilesTreeComboBox(self)
-        self._attachComboBox.SetValidator(IncludeFileValidator())
+        self._attachComboBox.SetValidator(SelectedFileValidator())
 
         # Кодировка
         self._encodingLabel = wx.StaticText(self, label=_("Encoding"))
@@ -229,45 +230,3 @@ class IncludeDialog(TestedDialog):
 
     def SetFilterFunc(self, filter: Optional[Callable[[Path], bool]] = None):
         self._attachComboBox.SetFilterFunc(filter)
-
-
-class IncludeFileValidator(wx.Validator):
-    def __init__(self):
-        super().__init__()
-
-    def Clone(self):
-        return IncludeFileValidator()
-
-    def TransferFromWindow(self):
-        return True
-
-    def TransferToWindow(self):
-        return True
-
-    def Validate(self, parent):
-        notify = ControlNotify(self.GetWindow())
-        title = _('Select file')
-
-        root_dir = self.GetWindow().GetRootDir()
-        path_relative = self.GetWindow().GetValue()
-
-        if (path_relative is None or
-                len(path_relative.strip()) == 0 or
-                path_relative == '.'):
-            message = _('File not selected')
-            notify.ShowError(title, message)
-            return False
-
-        full_path = Path(root_dir, path_relative)
-
-        if not full_path.exists():
-            message = _('Selected file not exists')
-            notify.ShowError(title, message)
-            return False
-
-        if full_path.is_dir():
-            message = _('Select a file, not a folder')
-            notify.ShowError(title, message)
-            return False
-
-        return True

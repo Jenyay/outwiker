@@ -63,7 +63,7 @@ class ThumbDialogControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         self.assertEqual(controller.result, "")
 
     def testAttachList(self):
-        Tester.dialogTester.appendOk()
+        Tester.dialogTester.appendCancel()
         Attachment(self.testPage).attach(self.fullFilesPath)
         controller = ThumbDialogController(
             self.application.mainWindow, self.testPage, ""
@@ -190,7 +190,7 @@ class ThumbDialogControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def testSelectedAttach2(self):
         selected_text = "бла-бла-бла"
 
-        Tester.dialogTester.appendOk()
+        Tester.dialogTester.appendCancel()
 
         Attachment(self.testPage).attach(self.fullFilesPath)
         controller = ThumbDialogController(
@@ -203,7 +203,7 @@ class ThumbDialogControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
     def testSelectedAttach3(self):
         selected_text = "Attach:accept-2.png"
 
-        Tester.dialogTester.appendOk()
+        Tester.dialogTester.appendCancel()
 
         Attachment(self.testPage).attach(self.fullFilesPath)
         controller = ThumbDialogController(

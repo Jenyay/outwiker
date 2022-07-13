@@ -7,6 +7,7 @@ import wx
 from outwiker.core.attachment import Attachment
 from outwiker.core.attachfilters import getNotHiddenImageRecursiveFilter
 from outwiker.gui.controls.filestreecombobox import FilesTreeComboBox
+from outwiker.gui.controls.validators.selectedfilevalidator import SelectedFileValidator
 from outwiker.gui.testeddialog import TestedDialog
 
 
@@ -72,6 +73,7 @@ class ThumbDialog(TestedDialog):
         # Files combobox
         self.filesListCombo = FilesTreeComboBox(self)
         self.filesListCombo.SetFilterFunc(self._filter)
+        self.filesListCombo.SetValidator(SelectedFileValidator())
         if self._root_dir.exists():
             self.filesListCombo.SetRootDir(self._root_dir)
 
