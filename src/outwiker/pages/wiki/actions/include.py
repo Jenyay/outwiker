@@ -7,7 +7,6 @@ import wx
 
 from outwiker.gui.baseaction import BaseAction
 from outwiker.gui.testeddialog import TestedDialog
-from outwiker.gui.controls.controlnotify import ControlNotify
 from outwiker.gui.controls.filestreecombobox import FilesTreeComboBox
 from outwiker.gui.controls.validators.selectedfilevalidator import SelectedFileValidator
 from outwiker.gui.guiconfig import GuiConfig
