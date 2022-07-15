@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-08 16:00+0300\n"
+"POT-Creation-Date: 2022-07-15 14:25+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 3.1\n"
+"X-Generator: Poedit 3.1.1\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: ../../..\n"
 
@@ -156,13 +156,13 @@ msgstr "Remove attached files. Action for attach panel"
 msgid "You did not select any file to remove"
 msgstr "You did not select any file to remove"
 
-#: outwiker/actions/attachremove.py:40 outwiker/gui/attachpanel.py:366
+#: outwiker/actions/attachremove.py:41 outwiker/gui/attachpanel.py:366
 msgid "Remove selected files?"
 msgstr "Remove selected files?"
 
-#: outwiker/actions/attachremove.py:41 outwiker/gui/attachpanel.py:367
-msgid "Remove files?"
-msgstr "Remove files?"
+#: outwiker/actions/attachremove.py:44
+msgid "Removing attachments"
+msgstr "Removing attachments"
 
 #: outwiker/actions/attachrename.py:18
 msgid "Rename attachment"
@@ -482,7 +482,7 @@ msgid "Begin search and replace on page"
 msgstr "Begin search and replace on page"
 
 #: outwiker/actions/showhideattaches.py:17 outwiker/actions/switchto.py:63
-#: outwiker/gui/controls/filestreectrl.py:78
+#: outwiker/gui/controls/filestreectrl.py:84
 #: outwiker/gui/mainpanes/attachmainpane.py:40
 #: outwiker/gui/preferences/prefcontroller.py:135
 #: outwiker/gui/preferences/wikieditorpanel.py:37
@@ -774,67 +774,67 @@ msgstr "Enter format of the date"
 msgid "Date format"
 msgstr "Date format"
 
-#: outwiker/core/defines.py:76
+#: outwiker/core/defines.py:78
 msgid "versions_lang"
 msgstr "en"
 
-#: outwiker/core/defines.py:79
+#: outwiker/core/defines.py:81
 msgid "awards"
 msgstr "awards"
 
-#: outwiker/core/defines.py:80
+#: outwiker/core/defines.py:82
 msgid "battery"
 msgstr "battery"
 
-#: outwiker/core/defines.py:81
+#: outwiker/core/defines.py:83
 msgid "books"
 msgstr "books"
 
-#: outwiker/core/defines.py:82
+#: outwiker/core/defines.py:84
 msgid "computer"
 msgstr "computer"
 
-#: outwiker/core/defines.py:83
+#: outwiker/core/defines.py:85
 msgid "emotions"
 msgstr "emotions"
 
-#: outwiker/core/defines.py:84
+#: outwiker/core/defines.py:86
 msgid "flags"
 msgstr "flags"
 
-#: outwiker/core/defines.py:85
+#: outwiker/core/defines.py:87
 msgid "folders"
 msgstr "folders"
 
-#: outwiker/core/defines.py:86
+#: outwiker/core/defines.py:88
 msgid "food"
 msgstr "food"
 
-#: outwiker/core/defines.py:87
+#: outwiker/core/defines.py:89
 msgid "internet"
 msgstr "internet"
 
-#: outwiker/core/defines.py:88
+#: outwiker/core/defines.py:90
 msgid "money"
 msgstr "money"
 
-#: outwiker/core/defines.py:89
+#: outwiker/core/defines.py:91
 msgid "people"
 msgstr "people"
 
-#: outwiker/core/defines.py:90
+#: outwiker/core/defines.py:92
 msgid "signs"
 msgstr "signs"
 
-#: outwiker/core/defines.py:91
+#: outwiker/core/defines.py:93
 msgid "software"
 msgstr "software"
 
-#: outwiker/core/defines.py:92
+#: outwiker/core/defines.py:94
 msgid "tags"
 msgstr "tags"
 
-#: outwiker/core/defines.py:93
+#: outwiker/core/defines.py:95
 msgid "weather"
 msgstr "weather"
 
@@ -1310,6 +1310,10 @@ msgstr "Switch to preview tab"
 msgid "Switch to preview tab for some page types"
 msgstr "Switch to preview tab for some page types"
 
+#: outwiker/gui/attachpanel.py:367
+msgid "Remove files?"
+msgstr "Remove files?"
+
 #: outwiker/gui/basepagedialog.py:131 outwiker/gui/mainwindow.py:139
 #: outwiker/gui/preferences/prefcontroller.py:129
 #: outwiker/gui/preferences/prefcontroller.py:154
@@ -1430,6 +1434,22 @@ msgstr "Parent"
 #: outwiker/gui/controls/pagelist_columns.py:239
 msgid "Modify date"
 msgstr "Modify date"
+
+#: outwiker/gui/controls/validators/selectedfilevalidator.py:28
+msgid "Select file"
+msgstr "Select file"
+
+#: outwiker/gui/controls/validators/selectedfilevalidator.py:36
+msgid "File not selected"
+msgstr "File not selected"
+
+#: outwiker/gui/controls/validators/selectedfilevalidator.py:43
+msgid "Selected file not exists"
+msgstr "Selected file not exists"
+
+#: outwiker/gui/controls/validators/selectedfilevalidator.py:48
+msgid "Select a file, not a folder"
+msgstr "Select a file, not a folder"
 
 #: outwiker/gui/currentpagepanel.py:98
 msgid "Can't open page. Page folder not exists"
@@ -1583,7 +1603,7 @@ msgstr "Notes"
 msgid "File"
 msgstr "File"
 
-#: outwiker/gui/mainwindow.py:107 outwiker/gui/preferences/generalpanel.py:41
+#: outwiker/gui/mainwindow.py:107 outwiker/gui/preferences/generalpanel.py:45
 msgid "Edit"
 msgstr "Edit"
 
@@ -1838,57 +1858,61 @@ msgstr "Background color of the selected text"
 msgid "Page margin background color"
 msgstr "Page margin background color"
 
-#: outwiker/gui/preferences/generalpanel.py:39
+#: outwiker/gui/preferences/generalpanel.py:43
 msgid "Recent used"
 msgstr "Recent used"
 
-#: outwiker/gui/preferences/generalpanel.py:40
+#: outwiker/gui/preferences/generalpanel.py:44
 #: outwiker/gui/preferences/prefcontroller.py:133
 #: outwiker/pages/html/basehtmlpanel.py:210
 msgid "Preview"
 msgstr "Preview"
 
-#: outwiker/gui/preferences/generalpanel.py:78
+#: outwiker/gui/preferences/generalpanel.py:87
 msgid "Autosave interval in seconds(0 - disabled)"
 msgstr "Autosave interval in seconds(0 - disabled)"
 
-#: outwiker/gui/preferences/generalpanel.py:102
+#: outwiker/gui/preferences/generalpanel.py:110
 msgid "Toaster delay in seconds"
 msgstr "Toaster delay in seconds"
 
-#: outwiker/gui/preferences/generalpanel.py:135
+#: outwiker/gui/preferences/generalpanel.py:147
 msgid "Date and time format"
 msgstr "Date and time format"
 
-#: outwiker/gui/preferences/generalpanel.py:137
+#: outwiker/gui/preferences/generalpanel.py:148
 msgid "New page title template"
 msgstr "New page title template"
 
-#: outwiker/gui/preferences/generalpanel.py:173
+#: outwiker/gui/preferences/generalpanel.py:182
 msgid "Ask before exit"
 msgstr "Ask before exit"
 
-#: outwiker/gui/preferences/generalpanel.py:183
+#: outwiker/gui/preferences/generalpanel.py:194
 msgid "Length of recently used icons history"
 msgstr "Length of recently used icons history"
 
-#: outwiker/gui/preferences/generalpanel.py:197
+#: outwiker/gui/preferences/generalpanel.py:209
 msgid "Length of recently opened files history"
 msgstr "Length of recently opened files history"
 
-#: outwiker/gui/preferences/generalpanel.py:210
+#: outwiker/gui/preferences/generalpanel.py:223
 msgid "Automatically open the recent file"
 msgstr "Automatically open the recent file"
 
-#: outwiker/gui/preferences/generalpanel.py:246
+#: outwiker/gui/preferences/generalpanel.py:248
 msgid "Language(restart required)"
 msgstr "Language(restart required)"
 
-#: outwiker/gui/preferences/generalpanel.py:263
+#: outwiker/gui/preferences/generalpanel.py:253
+msgid "Help with translation"
+msgstr "Help with translation"
+
+#: outwiker/gui/preferences/generalpanel.py:277
 msgid "Default opening page mode"
 msgstr "Default opening page mode"
 
-#: outwiker/gui/preferences/generalpanel.py:385
+#: outwiker/gui/preferences/generalpanel.py:366
 msgid "Auto"
 msgstr "Auto"
 
@@ -2180,7 +2204,7 @@ msgid "Command"
 msgstr "Command"
 
 #: outwiker/gui/preferences/wikieditorpanel.py:38
-#: outwiker/pages/wiki/actions/thumb.py:20
+#: outwiker/pages/wiki/actions/thumb.py:21
 msgid "Thumbnail"
 msgstr "Thumbnail"
 
@@ -2536,6 +2560,7 @@ msgid "Insert (:include:) command"
 msgstr "Insert (:include:) command"
 
 #: outwiker/pages/wiki/actions/include.py:44
+#: outwiker/pages/wiki/thumbdialogcontroller.py:89
 msgid "Current page does not have any attachments"
 msgstr "Current page does not have any attachments"
 
@@ -2554,27 +2579,6 @@ msgstr "Convert symbols <, > and && to HTML"
 #: outwiker/pages/wiki/actions/include.py:168
 msgid "Parse wiki notation"
 msgstr "Parse wiki notation"
-
-#: outwiker/pages/wiki/actions/include.py:249
-#| msgid "Select style"
-msgid "Select file"
-msgstr "Select file"
-
-#: outwiker/pages/wiki/actions/include.py:257
-#| msgid "Files is not selected"
-msgid "File not selected"
-msgstr "File not selected"
-
-#: outwiker/pages/wiki/actions/include.py:264
-#| msgid ""
-#| "File not exists\n"
-#| "{0}"
-msgid "Selected file not exists"
-msgstr "Selected file not exists"
-
-#: outwiker/pages/wiki/actions/include.py:269
-msgid "Select a file, not a folder"
-msgstr "Select a file, not a folder"
 
 #: outwiker/pages/wiki/actions/multilineblock.py:18
 msgid "Multiline block [{…}]"
@@ -2600,7 +2604,7 @@ msgstr "Html Code"
 msgid "Open HTML code for wiki page"
 msgstr "Open HTML code for wiki page"
 
-#: outwiker/pages/wiki/actions/thumb.py:24
+#: outwiker/pages/wiki/actions/thumb.py:25
 msgid "Insert thumbnail"
 msgstr "Insert thumbnail"
 
@@ -2688,31 +2692,31 @@ msgstr "Custom CSS"
 msgid "<b>Can't create thumbnail for \"{}\"</b>"
 msgstr "<b>Can't create thumbnail for \"{}\"</b>"
 
-#: outwiker/pages/wiki/thumbdialog.py:20
+#: outwiker/pages/wiki/thumbdialog.py:27
 msgid "Thumbnails"
 msgstr "Thumbnails"
 
-#: outwiker/pages/wiki/thumbdialog.py:43
-msgid "File name"
-msgstr "File name"
+#: outwiker/pages/wiki/thumbdialog.py:68
+msgid "Select attached image"
+msgstr "Select attached image"
 
-#: outwiker/pages/wiki/thumbdialog.py:55
+#: outwiker/pages/wiki/thumbdialog.py:81
 msgid "Thumbnail size"
 msgstr "Thumbnail size"
 
-#: outwiker/pages/wiki/thumbdialog.py:57
+#: outwiker/pages/wiki/thumbdialog.py:83
 msgid "Width"
 msgstr "Width"
 
-#: outwiker/pages/wiki/thumbdialog.py:57
+#: outwiker/pages/wiki/thumbdialog.py:83
 msgid "Height"
 msgstr "Height"
 
-#: outwiker/pages/wiki/thumbdialog.py:57
+#: outwiker/pages/wiki/thumbdialog.py:83
 msgid "Max size"
 msgstr "Max size"
 
-#: outwiker/pages/wiki/thumbdialog.py:66
+#: outwiker/pages/wiki/thumbdialog.py:92
 msgid "0 - default size"
 msgstr "0 - default size"
 
@@ -2766,6 +2770,9 @@ msgstr "[[comment -> link]]"
 #: outwiker/pages/wiki/wikipreferences.py:44
 msgid "[[link | comment]]"
 msgstr "[[link | comment]]"
+
+#~ msgid "File name"
+#~ msgstr "File name"
 
 #, python-format
 #~ msgid "<b>Can't open file %s</b>"

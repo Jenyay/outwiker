@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: outwiker 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-08 16:00+0300\n"
+"POT-Creation-Date: 2022-07-15 14:25+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Eugeniy Ilin <jenyay.ilin@gmail.com>\n"
 "Language-Team: Jenyay <jenyay.ilin@gmail.com>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 3.1\n"
+"X-Generator: Poedit 3.1.1\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: ../../..\n"
 
@@ -156,13 +156,13 @@ msgstr "Удалить прикрепленные файлы. Действие �
 msgid "You did not select any file to remove"
 msgstr "Вы не выбрали файл(ы) для удаления"
 
-#: outwiker/actions/attachremove.py:40 outwiker/gui/attachpanel.py:366
+#: outwiker/actions/attachremove.py:41 outwiker/gui/attachpanel.py:366
 msgid "Remove selected files?"
 msgstr "Удалить выбранные файлы?"
 
-#: outwiker/actions/attachremove.py:41 outwiker/gui/attachpanel.py:367
-msgid "Remove files?"
-msgstr "Удалить файлы?"
+#: outwiker/actions/attachremove.py:44
+msgid "Removing attachments"
+msgstr "Удаление прикрепленных файлов"
 
 #: outwiker/actions/attachrename.py:18
 msgid "Rename attachment"
@@ -486,7 +486,7 @@ msgid "Begin search and replace on page"
 msgstr "Начать поиск и замену по странице"
 
 #: outwiker/actions/showhideattaches.py:17 outwiker/actions/switchto.py:63
-#: outwiker/gui/controls/filestreectrl.py:78
+#: outwiker/gui/controls/filestreectrl.py:84
 #: outwiker/gui/mainpanes/attachmainpane.py:40
 #: outwiker/gui/preferences/prefcontroller.py:135
 #: outwiker/gui/preferences/wikieditorpanel.py:37
@@ -781,67 +781,67 @@ msgstr "Введите формат даты"
 msgid "Date format"
 msgstr "Формат даты"
 
-#: outwiker/core/defines.py:76
+#: outwiker/core/defines.py:78
 msgid "versions_lang"
 msgstr "ru"
 
-#: outwiker/core/defines.py:79
+#: outwiker/core/defines.py:81
 msgid "awards"
 msgstr "награды"
 
-#: outwiker/core/defines.py:80
+#: outwiker/core/defines.py:82
 msgid "battery"
 msgstr "батарейка"
 
-#: outwiker/core/defines.py:81
+#: outwiker/core/defines.py:83
 msgid "books"
 msgstr "книги"
 
-#: outwiker/core/defines.py:82
+#: outwiker/core/defines.py:84
 msgid "computer"
 msgstr "компьютер"
 
-#: outwiker/core/defines.py:83
+#: outwiker/core/defines.py:85
 msgid "emotions"
 msgstr "эмоции"
 
-#: outwiker/core/defines.py:84
+#: outwiker/core/defines.py:86
 msgid "flags"
 msgstr "флаги"
 
-#: outwiker/core/defines.py:85
+#: outwiker/core/defines.py:87
 msgid "folders"
 msgstr "папки"
 
-#: outwiker/core/defines.py:86
+#: outwiker/core/defines.py:88
 msgid "food"
 msgstr "продукты"
 
-#: outwiker/core/defines.py:87
+#: outwiker/core/defines.py:89
 msgid "internet"
 msgstr "интернет"
 
-#: outwiker/core/defines.py:88
+#: outwiker/core/defines.py:90
 msgid "money"
 msgstr "деньги"
 
-#: outwiker/core/defines.py:89
+#: outwiker/core/defines.py:91
 msgid "people"
 msgstr "люди"
 
-#: outwiker/core/defines.py:90
+#: outwiker/core/defines.py:92
 msgid "signs"
 msgstr "знаки"
 
-#: outwiker/core/defines.py:91
+#: outwiker/core/defines.py:93
 msgid "software"
 msgstr "программы"
 
-#: outwiker/core/defines.py:92
+#: outwiker/core/defines.py:94
 msgid "tags"
 msgstr "ярлыки"
 
-#: outwiker/core/defines.py:93
+#: outwiker/core/defines.py:95
 msgid "weather"
 msgstr "погода"
 
@@ -1315,6 +1315,10 @@ msgstr "Переключиться на вкладку просмотра"
 msgid "Switch to preview tab for some page types"
 msgstr "Переключиться на вкладку просмотра для некоторых типов страниц"
 
+#: outwiker/gui/attachpanel.py:367
+msgid "Remove files?"
+msgstr "Удалить файлы?"
+
 #: outwiker/gui/basepagedialog.py:131 outwiker/gui/mainwindow.py:139
 #: outwiker/gui/preferences/prefcontroller.py:129
 #: outwiker/gui/preferences/prefcontroller.py:154
@@ -1435,6 +1439,22 @@ msgstr "Родитель"
 #: outwiker/gui/controls/pagelist_columns.py:239
 msgid "Modify date"
 msgstr "Дата изменения"
+
+#: outwiker/gui/controls/validators/selectedfilevalidator.py:28
+msgid "Select file"
+msgstr "Выберите файл"
+
+#: outwiker/gui/controls/validators/selectedfilevalidator.py:36
+msgid "File not selected"
+msgstr "Файл не выбран"
+
+#: outwiker/gui/controls/validators/selectedfilevalidator.py:43
+msgid "Selected file not exists"
+msgstr "Выбранный файл не существует"
+
+#: outwiker/gui/controls/validators/selectedfilevalidator.py:48
+msgid "Select a file, not a folder"
+msgstr "Выберите файл, а не папку"
 
 #: outwiker/gui/currentpagepanel.py:98
 msgid "Can't open page. Page folder not exists"
@@ -1595,7 +1615,7 @@ msgstr "Заметки"
 msgid "File"
 msgstr "Файл"
 
-#: outwiker/gui/mainwindow.py:107 outwiker/gui/preferences/generalpanel.py:41
+#: outwiker/gui/mainwindow.py:107 outwiker/gui/preferences/generalpanel.py:45
 msgid "Edit"
 msgstr "Правка"
 
@@ -1850,57 +1870,61 @@ msgstr "Цвет фона выделенного текста"
 msgid "Page margin background color"
 msgstr "Цвет фона полей страницы"
 
-#: outwiker/gui/preferences/generalpanel.py:39
+#: outwiker/gui/preferences/generalpanel.py:43
 msgid "Recent used"
 msgstr "Последний используемый"
 
-#: outwiker/gui/preferences/generalpanel.py:40
+#: outwiker/gui/preferences/generalpanel.py:44
 #: outwiker/gui/preferences/prefcontroller.py:133
 #: outwiker/pages/html/basehtmlpanel.py:210
 msgid "Preview"
 msgstr "Просмотр"
 
-#: outwiker/gui/preferences/generalpanel.py:78
+#: outwiker/gui/preferences/generalpanel.py:87
 msgid "Autosave interval in seconds(0 - disabled)"
 msgstr "Период автосохранения (0 - отключено)"
 
-#: outwiker/gui/preferences/generalpanel.py:102
+#: outwiker/gui/preferences/generalpanel.py:110
 msgid "Toaster delay in seconds"
 msgstr "Задержка окна сообщений в секундах"
 
-#: outwiker/gui/preferences/generalpanel.py:135
+#: outwiker/gui/preferences/generalpanel.py:147
 msgid "Date and time format"
 msgstr "Формат даты и времени"
 
-#: outwiker/gui/preferences/generalpanel.py:137
+#: outwiker/gui/preferences/generalpanel.py:148
 msgid "New page title template"
 msgstr "Шаблон заголовка новой страницы"
 
-#: outwiker/gui/preferences/generalpanel.py:173
+#: outwiker/gui/preferences/generalpanel.py:182
 msgid "Ask before exit"
 msgstr "Спрашивать подтверждение перед выходом"
 
-#: outwiker/gui/preferences/generalpanel.py:183
+#: outwiker/gui/preferences/generalpanel.py:194
 msgid "Length of recently used icons history"
 msgstr "Размер истории последних используемых значков"
 
-#: outwiker/gui/preferences/generalpanel.py:197
+#: outwiker/gui/preferences/generalpanel.py:209
 msgid "Length of recently opened files history"
 msgstr "Размер истории последних открытых файлов"
 
-#: outwiker/gui/preferences/generalpanel.py:210
+#: outwiker/gui/preferences/generalpanel.py:223
 msgid "Automatically open the recent file"
 msgstr "При запуске открывать последний открытый файл"
 
-#: outwiker/gui/preferences/generalpanel.py:246
+#: outwiker/gui/preferences/generalpanel.py:248
 msgid "Language(restart required)"
 msgstr "Язык (требуется перезапуск)"
 
-#: outwiker/gui/preferences/generalpanel.py:263
+#: outwiker/gui/preferences/generalpanel.py:253
+msgid "Help with translation"
+msgstr "Помочь с переводом"
+
+#: outwiker/gui/preferences/generalpanel.py:277
 msgid "Default opening page mode"
 msgstr "Режим открытия страниц по умолчанию"
 
-#: outwiker/gui/preferences/generalpanel.py:385
+#: outwiker/gui/preferences/generalpanel.py:366
 msgid "Auto"
 msgstr "Авто"
 
@@ -2192,7 +2216,7 @@ msgid "Command"
 msgstr "Команда"
 
 #: outwiker/gui/preferences/wikieditorpanel.py:38
-#: outwiker/pages/wiki/actions/thumb.py:20
+#: outwiker/pages/wiki/actions/thumb.py:21
 msgid "Thumbnail"
 msgstr "Миниатюра"
 
@@ -2548,6 +2572,7 @@ msgid "Insert (:include:) command"
 msgstr "Вставить команду (:include:)"
 
 #: outwiker/pages/wiki/actions/include.py:44
+#: outwiker/pages/wiki/thumbdialogcontroller.py:89
 msgid "Current page does not have any attachments"
 msgstr "К текущей странице не прикреплено ни одного файла"
 
@@ -2566,22 +2591,6 @@ msgstr "Преобразовывать символы <, > и && в HTML-пре�
 #: outwiker/pages/wiki/actions/include.py:168
 msgid "Parse wiki notation"
 msgstr "Включить разбор викинотации"
-
-#: outwiker/pages/wiki/actions/include.py:249
-msgid "Select file"
-msgstr "Выберите файл"
-
-#: outwiker/pages/wiki/actions/include.py:257
-msgid "File not selected"
-msgstr "Файл не выбран"
-
-#: outwiker/pages/wiki/actions/include.py:264
-msgid "Selected file not exists"
-msgstr "Выбранный файл не существует"
-
-#: outwiker/pages/wiki/actions/include.py:269
-msgid "Select a file, not a folder"
-msgstr "Выберите файл, а не папку"
 
 #: outwiker/pages/wiki/actions/multilineblock.py:18
 msgid "Multiline block [{…}]"
@@ -2607,7 +2616,7 @@ msgstr "Код HTML"
 msgid "Open HTML code for wiki page"
 msgstr "Открыть код HTML для викистраницы"
 
-#: outwiker/pages/wiki/actions/thumb.py:24
+#: outwiker/pages/wiki/actions/thumb.py:25
 msgid "Insert thumbnail"
 msgstr "Вставить миниатюру"
 
@@ -2695,31 +2704,31 @@ msgstr "Дополнительные стили CSS"
 msgid "<b>Can't create thumbnail for \"{}\"</b>"
 msgstr "<b>Ошибка создания миниатюры для \"{}\"</b>"
 
-#: outwiker/pages/wiki/thumbdialog.py:20
+#: outwiker/pages/wiki/thumbdialog.py:27
 msgid "Thumbnails"
 msgstr "Миниатюра"
 
-#: outwiker/pages/wiki/thumbdialog.py:43
-msgid "File name"
-msgstr "Имя файла"
+#: outwiker/pages/wiki/thumbdialog.py:68
+msgid "Select attached image"
+msgstr "Выберите прикрепленную картинку"
 
-#: outwiker/pages/wiki/thumbdialog.py:55
+#: outwiker/pages/wiki/thumbdialog.py:81
 msgid "Thumbnail size"
 msgstr "Размер миниатюры"
 
-#: outwiker/pages/wiki/thumbdialog.py:57
+#: outwiker/pages/wiki/thumbdialog.py:83
 msgid "Width"
 msgstr "Ширина"
 
-#: outwiker/pages/wiki/thumbdialog.py:57
+#: outwiker/pages/wiki/thumbdialog.py:83
 msgid "Height"
 msgstr "Высота"
 
-#: outwiker/pages/wiki/thumbdialog.py:57
+#: outwiker/pages/wiki/thumbdialog.py:83
 msgid "Max size"
 msgstr "Максимальный размер"
 
-#: outwiker/pages/wiki/thumbdialog.py:66
+#: outwiker/pages/wiki/thumbdialog.py:92
 msgid "0 - default size"
 msgstr "0 - размер по умолчанию"
 
@@ -2773,6 +2782,9 @@ msgstr "[[комментарий -> ссылка]]"
 #: outwiker/pages/wiki/wikipreferences.py:44
 msgid "[[link | comment]]"
 msgstr "[[ссылка | комментарий]]"
+
+#~ msgid "File name"
+#~ msgstr "Имя файла"
 
 #, python-format
 #~ msgid "<b>Can't open file %s</b>"
