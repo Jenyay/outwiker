@@ -10,6 +10,7 @@ from outwiker.core.system import getBuiltinImagePath
 from outwiker.gui.guiconfig import GeneralGuiConfig, MainWindowConfig
 from outwiker.gui.controls.datetimeformatctrl import DateTimeFormatCtrl
 from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
+from outwiker.gui.theme import get_theme
 
 
 class GeneralPanel(BasePrefPanel):
@@ -19,6 +20,7 @@ class GeneralPanel(BasePrefPanel):
         self.generalConfig = GeneralGuiConfig(application.config)
         self.mainWindowConfig = MainWindowConfig(application.config)
         self.i18nConfig = outwiker.core.i18n.I18nConfig(application.config)
+        self._theme = get_theme(application)
 
         self.MIN_AUTOSAVE_INTERVAL = 0
         self.MAX_AUTOSAVE_INTERVAL = 3600
@@ -36,30 +38,37 @@ class GeneralPanel(BasePrefPanel):
         self.MAX_TOASTER_DELAY = 600
 
         self.pageTabChoises = [
-            (_(u'Recent used'), GeneralGuiConfig.PAGE_TAB_RECENT),
-            (_(u'Preview'), GeneralGuiConfig.PAGE_TAB_RESULT),
-            (_(u'Edit'), GeneralGuiConfig.PAGE_TAB_CODE),
+            (_("Recent used"), GeneralGuiConfig.PAGE_TAB_RECENT),
+            (_("Preview"), GeneralGuiConfig.PAGE_TAB_RESULT),
+            (_("Edit"), GeneralGuiConfig.PAGE_TAB_CODE),
         ]
 
         # Номер элемента при выборе "Авто" в списке языков
         self.__autoIndex = 0
 
-        self.__createMiscGui()
-        self.__createAutosaveGui(self.generalConfig)
-        self.__createToasterDelayGui(self.generalConfig)
-        self.__createHistoryGui(self.generalConfig)
-        self.__createTemplatesGui(self.generalConfig)
-        # self.__createPageTitleTemplateGui(self.generalConfig)
-        self.__createOpenPageTabGui()
-        self.__createLanguageGui()
-
-        self.__set_properties()
-        self.__do_layout()
-
+        self._createGui()
+        self._set_properties()
         self.LoadState()
         self.SetupScrolling()
 
-    def __set_properties(self):
+    def _createGui(self):
+        main_sizer = wx.FlexGridSizer(cols=1)
+        main_sizer.AddGrowableCol(0)
+
+        self._createMiscGui(main_sizer)
+        self._createAutosaveGui(main_sizer, self.generalConfig)
+        self._addStaticLine(main_sizer)
+        self._createHistoryGui(main_sizer, self.generalConfig)
+        self._addStaticLine(main_sizer)
+        self._createTemplatesGui(main_sizer, self.generalConfig)
+        self._addStaticLine(main_sizer)
+        self._createToasterDelayGui(main_sizer, self.generalConfig)
+        self._createOpenPageTabGui(main_sizer)
+        self._createLanguageGui(main_sizer)
+
+        self.SetSizer(main_sizer)
+
+    def _set_properties(self):
         DEFAULT_WIDTH = 520
         DEFAULT_HEIGHT = 420
 
@@ -68,37 +77,34 @@ class GeneralPanel(BasePrefPanel):
         self.SetScrollRate(0, 0)
         self.askBeforeExitCheckBox.SetValue(1)
 
-    def __createAutosaveGui(self, generalConfig):
+    def _createAutosaveGui(self, main_sizer, generalConfig):
         """
         Создать элементы, связанные с автосохранением
         """
         autosaveLabel = wx.StaticText(
-            self,
-            -1,
-            _("Autosave interval in seconds(0 - disabled)"))
+            self, -1, _("Autosave interval in seconds(0 - disabled)")
+        )
         self.autosaveSpin = wx.SpinCtrl(
             self,
             -1,
             str(generalConfig.AUTOSAVE_INTERVAL_DEFAULT),
             min=self.MIN_AUTOSAVE_INTERVAL,
             max=self.MAX_AUTOSAVE_INTERVAL,
-            style=wx.SP_ARROW_KEYS)
+            style=wx.SP_ARROW_KEYS,
+        )
+        self.autosaveSpin.SetMinSize((self._theme.minWidthForSpinCtrl, -1))
 
-        self.autosaveSizer = wx.FlexGridSizer(1, 2, 0, 0)
-        self.autosaveSizer.Add(autosaveLabel,
-                               0,
-                               wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                               2)
+        autosaveSizer = wx.FlexGridSizer(cols=2)
+        autosaveSizer.AddGrowableRow(0)
+        autosaveSizer.AddGrowableCol(0)
+        autosaveSizer.AddGrowableCol(1)
+        autosaveSizer.Add(autosaveLabel, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
 
-        self.autosaveSizer.Add(self.autosaveSpin,
-                               0,
-                               wx.ALL | wx.ALIGN_RIGHT,
-                               2)
-        self.autosaveSizer.AddGrowableRow(0)
-        self.autosaveSizer.AddGrowableCol(0)
-        self.autosaveSizer.AddGrowableCol(1)
+        autosaveSizer.Add(self.autosaveSpin, 0, wx.ALL | wx.ALIGN_RIGHT, 2)
 
-    def __createToasterDelayGui(self, generalConfig):
+        main_sizer.Add(autosaveSizer, 1, wx.EXPAND, 0)
+
+    def _createToasterDelayGui(self, main_sizer, generalConfig):
         delayLabel = wx.StaticText(self, label=_("Toaster delay in seconds"))
 
         self.toasterDelaySpin = wx.SpinCtrl(
@@ -107,22 +113,26 @@ class GeneralPanel(BasePrefPanel):
             str(generalConfig.TOASTER_DELAY_DEFAULT),
             min=self.MIN_TOASTER_DELAY,
             max=self.MAX_TOASTER_DELAY,
-            style=wx.SP_ARROW_KEYS)
+            style=wx.SP_ARROW_KEYS,
+        )
+        self.toasterDelaySpin.SetMinSize((self._theme.minWidthForSpinCtrl, -1))
 
-        self.toasterDelaySizer = wx.FlexGridSizer(cols=2)
-        self.toasterDelaySizer.AddGrowableRow(0)
-        self.toasterDelaySizer.AddGrowableCol(0)
-        self.toasterDelaySizer.AddGrowableCol(1)
+        toasterDelaySizer = wx.FlexGridSizer(cols=2)
+        toasterDelaySizer.AddGrowableRow(0)
+        toasterDelaySizer.AddGrowableCol(0)
+        toasterDelaySizer.AddGrowableCol(1)
 
-        self.toasterDelaySizer.Add(delayLabel,
-                                   flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                                   border=2)
+        toasterDelaySizer.Add(
+            delayLabel, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2
+        )
 
-        self.toasterDelaySizer.Add(self.toasterDelaySpin,
-                                   flag=wx.ALL | wx.ALIGN_RIGHT,
-                                   border=2)
+        toasterDelaySizer.Add(
+            self.toasterDelaySpin, flag=wx.ALL | wx.ALIGN_RIGHT, border=2
+        )
 
-    def __createTemplatesGui(self, generalConfig):
+        main_sizer.Add(toasterDelaySizer, 1, wx.EXPAND, 0)
+
+    def _createTemplatesGui(self, main_sizer, generalConfig):
         """
         Create GUI for selection date and time format
         and new page title template
@@ -133,54 +143,54 @@ class GeneralPanel(BasePrefPanel):
 
         # Create labels
         dateTimeLabel = wx.StaticText(self, label=_("Date and time format"))
-        pageTitleTemplateLabel = wx.StaticText(
-            self, label=_("New page title template"))
+        pageTitleTemplateLabel = wx.StaticText(self, label=_("New page title template"))
 
-        hintBitmap = wx.Bitmap(getBuiltinImagePath('wand.png'))
+        hintBitmap = wx.Bitmap(getBuiltinImagePath("wand.png"))
 
         # Create main controls
         self.dateTimeFormatCtrl = DateTimeFormatCtrl(
-            self, hintBitmap, initial_date_format)
+            self, hintBitmap, initial_date_format
+        )
 
         self.pageTitleTemplateCtrl = DateTimeFormatCtrl(
-            self, hintBitmap, initial_page_title)
+            self, hintBitmap, initial_page_title
+        )
 
         # Create common sizer
-        self.templateSizer = wx.FlexGridSizer(cols=2)
-        self.templateSizer.AddGrowableCol(1)
+        templateSizer = wx.FlexGridSizer(cols=2)
+        templateSizer.AddGrowableCol(1)
 
-        self.templateSizer.Add(dateTimeLabel,
-                               flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                               border=2)
-        self.templateSizer.Add(self.dateTimeFormatCtrl,
-                               flag=wx.ALL | wx.EXPAND,
-                               border=2)
+        templateSizer.Add(
+            dateTimeLabel, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2
+        )
+        templateSizer.Add(self.dateTimeFormatCtrl, flag=wx.ALL | wx.EXPAND, border=2)
 
-        self.templateSizer.Add(pageTitleTemplateLabel,
-                               flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                               border=2)
-        self.templateSizer.Add(self.pageTitleTemplateCtrl,
-                               flag=wx.ALL | wx.EXPAND,
-                               border=2)
+        templateSizer.Add(
+            pageTitleTemplateLabel, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2
+        )
+        templateSizer.Add(self.pageTitleTemplateCtrl, flag=wx.ALL | wx.EXPAND, border=2)
 
-    def __createMiscGui(self):
+        main_sizer.Add(templateSizer, 1, wx.EXPAND, 0)
+
+    def _createMiscGui(self, main_sizer):
         """
         Создать элементы интерфейса, которые не попали ни в какую другую
             категорию
         """
-        self.askBeforeExitCheckBox = wx.CheckBox(self,
-                                                 -1,
-                                                 _("Ask before exit"))
+        self.askBeforeExitCheckBox = wx.CheckBox(self, -1, _("Ask before exit"))
 
-    def __createHistoryGui(self, generalConfig):
+        main_sizer.Add(
+            self.askBeforeExitCheckBox, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2
+        )
+
+    def _createHistoryGui(self, main_sizer, generalConfig):
         """
         Создать элементы интерфейса, связанные с историей открытых файлов
         """
         # Count of recently used icons
         recent_icons_label = wx.StaticText(
-            self,
-            -1,
-            _("Length of recently used icons history"))
+            self, -1, _("Length of recently used icons history")
+        )
 
         self.iconsHistoryLengthSpin = wx.SpinCtrl(
             self,
@@ -188,13 +198,14 @@ class GeneralPanel(BasePrefPanel):
             str(generalConfig.RECENT_ICONS_COUNT_DEFAULT),
             min=self.MIN_ICON_HISTORY_LENGTH,
             max=self.MAX_ICON_HISTORY_LENGTH,
-            style=wx.SP_ARROW_KEYS)
+            style=wx.SP_ARROW_KEYS,
+        )
+        self.iconsHistoryLengthSpin.SetMinSize((self._theme.minWidthForSpinCtrl, -1))
 
         # Recently opened files
         history_label = wx.StaticText(
-            self,
-            -1,
-            _("Length of recently opened files history"))
+            self, -1, _("Length of recently opened files history")
+        )
 
         self.historySpin = wx.SpinCtrl(
             self,
@@ -202,69 +213,63 @@ class GeneralPanel(BasePrefPanel):
             str(generalConfig.RECENT_WIKI_COUNT_DEFAULT),
             min=self.MIN_HISTORY_LENGTH,
             max=self.MAX_HISTORY_LENGTH,
-            style=wx.SP_ARROW_KEYS)
+            style=wx.SP_ARROW_KEYS,
+        )
+        self.historySpin.SetMinSize((self._theme.minWidthForSpinCtrl, -1))
 
         self.autoopenCheckBox = wx.CheckBox(
-            self,
-            -1,
-            _("Automatically open the recent file"))
+            self, -1, _("Automatically open the recent file")
+        )
 
-        self.historySizer = wx.FlexGridSizer(cols=2)
-        self.historySizer.AddGrowableCol(0)
-        self.historySizer.AddGrowableCol(1)
+        historySizer = wx.FlexGridSizer(cols=2)
+        historySizer.AddGrowableCol(0)
+        historySizer.AddGrowableCol(1)
 
-        self.historySizer.Add(recent_icons_label,
-                              0,
-                              wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                              2)
+        historySizer.Add(recent_icons_label, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
 
-        self.historySizer.Add(self.iconsHistoryLengthSpin,
-                              0,
-                              wx.ALL | wx.ALIGN_RIGHT,
-                              2)
+        historySizer.Add(self.iconsHistoryLengthSpin, 0, wx.ALL | wx.ALIGN_RIGHT, 2)
 
-        self.historySizer.Add(history_label,
-                              0,
-                              wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                              2)
+        historySizer.Add(history_label, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
 
-        self.historySizer.Add(self.historySpin,
-                              0,
-                              wx.ALL | wx.ALIGN_RIGHT,
-                              2)
+        historySizer.Add(self.historySpin, 0, wx.ALL | wx.ALIGN_RIGHT, 2)
 
-    def __createLanguageGui(self):
+        main_sizer.Add(historySizer, 1, wx.EXPAND, 0)
+
+        main_sizer.Add(self.autoopenCheckBox, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
+
+    def _createLanguageGui(self, main_sizer):
         """
         Создать элементы интерфейса, связанные с выбором языка
         """
-        self.languageSizer = wx.FlexGridSizer(cols=2)
-        self.languageSizer.AddGrowableRow(0)
-        self.languageSizer.AddGrowableCol(0)
-        self.languageSizer.AddGrowableCol(1)
+        languageSizer = wx.FlexGridSizer(cols=2)
+        languageSizer.AddGrowableRow(0)
+        languageSizer.AddGrowableCol(0)
+        languageSizer.AddGrowableCol(1)
 
         self.langLabel, self.langCombo = self._createLabelAndComboBox(
-            _("Language(restart required)"),
-            self.languageSizer
+            _("Language(restart required)"), languageSizer
         )
         self.langCombo.SetMinSize((self.LANG_COMBO_WIDTH, -1))
+        main_sizer.Add(languageSizer, 1, wx.EXPAND, 0)
 
-    def __createOpenPageTabGui(self):
+    def _createOpenPageTabGui(self, main_sizer):
         """
         Создать элементы интерфейса для выбора вкладки страницы по умолчанию
             (Код / просмотр / последний используемый)
         """
         # Layout GUI elements
-        self.pageTabSizer = wx.FlexGridSizer(cols=2)
-        self.pageTabSizer.AddGrowableCol(0)
-        self.pageTabSizer.AddGrowableCol(1)
-        self.pageTabSizer.AddGrowableRow(0)
+        pageTabSizer = wx.FlexGridSizer(cols=2)
+        pageTabSizer.AddGrowableCol(0)
+        pageTabSizer.AddGrowableCol(1)
+        pageTabSizer.AddGrowableRow(0)
 
         pageTabLabel, self.pageTabComboBox = self._createLabelAndComboBox(
-            _(u'Default opening page mode'),
-            self.pageTabSizer)
+            _("Default opening page mode"), pageTabSizer
+        )
 
         self.pageTabComboBox.SetMinSize((self.PAGE_TAB_COMBO_WIDTH, -1))
         self.__fillPageTabComboBox()
+        main_sizer.Add(pageTabSizer, 1, wx.EXPAND, 0)
 
     def __fillPageTabComboBox(self):
         # Fill pageTabComboBox
@@ -279,38 +284,9 @@ class GeneralPanel(BasePrefPanel):
 
         self.pageTabComboBox.SetSelection(selectedItem)
 
-    def __addStaticLine(self, main_sizer):
+    def _addStaticLine(self, main_sizer):
         static_line = wx.StaticLine(self, -1)
         main_sizer.Add(static_line, 0, wx.EXPAND, 0)
-
-    def __do_layout(self):
-        main_sizer = wx.FlexGridSizer(cols=1)
-        main_sizer.AddGrowableCol(0)
-
-        main_sizer.Add(self.askBeforeExitCheckBox,
-                       0,
-                       wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                       2)
-
-        main_sizer.Add(self.autosaveSizer, 1, wx.EXPAND, 0)
-
-        self.__addStaticLine(main_sizer)
-        main_sizer.Add(self.historySizer, 1, wx.EXPAND, 0)
-
-        main_sizer.Add(self.autoopenCheckBox,
-                       0,
-                       wx.ALL | wx.ALIGN_CENTER_VERTICAL,
-                       2)
-
-        self.__addStaticLine(main_sizer)
-        main_sizer.Add(self.templateSizer, 1, wx.EXPAND, 0)
-
-        self.__addStaticLine(main_sizer)
-        main_sizer.Add(self.toasterDelaySizer, 1, wx.EXPAND, 0)
-        main_sizer.Add(self.pageTabSizer, 1, wx.EXPAND, 0)
-        main_sizer.Add(self.languageSizer, 1, wx.EXPAND, 0)
-
-        self.SetSizer(main_sizer)
 
     def LoadState(self):
         """
@@ -328,20 +304,19 @@ class GeneralPanel(BasePrefPanel):
             self.generalConfig.historyLength,
             self.historySpin,
             self.MIN_HISTORY_LENGTH,
-            self.MAX_HISTORY_LENGTH
+            self.MAX_HISTORY_LENGTH,
         )
 
         self.iconsHistoryLength = configelements.IntegerElement(
             self.generalConfig.iconsHistoryLength,
             self.iconsHistoryLengthSpin,
             self.MIN_ICON_HISTORY_LENGTH,
-            self.MAX_ICON_HISTORY_LENGTH
+            self.MAX_ICON_HISTORY_LENGTH,
         )
 
         # Открывать последнюю вики при запуске?
         self.autoopen = configelements.BooleanElement(
-            self.generalConfig.autoopen,
-            self.autoopenCheckBox
+            self.generalConfig.autoopen, self.autoopenCheckBox
         )
 
     def __loadGeneralOptions(self):
@@ -350,18 +325,15 @@ class GeneralPanel(BasePrefPanel):
         """
         # Задавать вопрос перед выходом из программы?
         self.askBeforeExit = configelements.BooleanElement(
-            self.generalConfig.askBeforeExit,
-            self.askBeforeExitCheckBox
+            self.generalConfig.askBeforeExit, self.askBeforeExitCheckBox
         )
 
         self.dateTimeFormat = configelements.StringElement(
-            self.generalConfig.dateTimeFormat,
-            self.dateTimeFormatCtrl
+            self.generalConfig.dateTimeFormat, self.dateTimeFormatCtrl
         )
 
         self.pageTitleTemplate = configelements.StringElement(
-            self.generalConfig.pageTitleTemplate,
-            self.pageTitleTemplateCtrl
+            self.generalConfig.pageTitleTemplate, self.pageTitleTemplateCtrl
         )
 
         # Автосохранение
@@ -369,12 +341,11 @@ class GeneralPanel(BasePrefPanel):
             self.generalConfig.autosaveInterval,
             self.autosaveSpin,
             self.MIN_AUTOSAVE_INTERVAL,
-            self.MAX_AUTOSAVE_INTERVAL
+            self.MAX_AUTOSAVE_INTERVAL,
         )
 
         self.__loadLanguages()
-        self.toasterDelaySpin.SetValue(
-            self.generalConfig.toasterDelay.value // 1000)
+        self.toasterDelaySpin.SetValue(self.generalConfig.toasterDelay.value // 1000)
 
     def __loadLanguages(self):
         languages = outwiker.core.i18n.getLanguages()
@@ -382,7 +353,7 @@ class GeneralPanel(BasePrefPanel):
 
         self.langCombo.Clear()
         self.langCombo.AppendItems(languages)
-        self.langCombo.Insert(_(u"Auto"), self.__autoIndex)
+        self.langCombo.Insert(_("Auto"), self.__autoIndex)
 
         currlang = self.i18nConfig.languageOption.value
 

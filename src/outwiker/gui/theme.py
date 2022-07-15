@@ -2,8 +2,10 @@
 
 import wx
 
+from outwiker.core.application import ApplicationParams
 
-class Theme(object):
+
+class Theme:
     def __init__(self):
         self.colorBorder = wx.Colour(0, 0, 0)
         self.colorBorderSelected = wx.Colour(0, 0, 255)
@@ -19,3 +21,8 @@ class Theme(object):
         self.colorInfoForeground = wx.Colour("#E3E3E3")
         self.colorToasterBackground = wx.Colour(255, 255, 255)
         self.roundRadius = 0
+        self.minWidthForSpinCtrl = 100
+
+
+def get_theme(application: ApplicationParams) -> Theme:
+    return Theme()
