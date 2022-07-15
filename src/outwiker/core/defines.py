@@ -74,22 +74,24 @@ URL_TRANSLATE = 'https://crowdin.com/project/outwiker'
 
 
 # To translate this words with xgettext
-if __name__ == u'__main__':
+if __name__ == '__main__':
+    _ = lambda s: s
+
     _('versions_lang')
 
     # Folder names for localizations
-    _(u"awards")
-    _(u"battery")
-    _(u"books")
-    _(u"computer")
-    _(u"emotions")
-    _(u"flags")
-    _(u"folders")
-    _(u"food")
-    _(u"internet")
-    _(u"money")
-    _(u"people")
-    _(u"signs")
-    _(u"software")
-    _(u"tags")
-    _(u"weather")
+    _("awards")
+    _("battery")
+    _("books")
+    _("computer")
+    _("emotions")
+    _("flags")
+    _("folders")
+    _("food")
+    _("internet")
+    _("money")
+    _("people")
+    _("signs")
+    _("software")
+    _("tags")
+    _("weather")
