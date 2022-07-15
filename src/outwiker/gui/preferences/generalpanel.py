@@ -6,9 +6,11 @@ import wx
 
 from . import configelements
 import outwiker.core.i18n
+from outwiker.core.defines import URL_TRANSLATE
 from outwiker.core.system import getBuiltinImagePath
 from outwiker.gui.guiconfig import GeneralGuiConfig, MainWindowConfig
 from outwiker.gui.controls.datetimeformatctrl import DateTimeFormatCtrl
+from outwiker.gui.controls.hyperlink import HyperLinkCtrl
 from outwiker.gui.preferences.baseprefpanel import BasePrefPanel
 from outwiker.gui.theme import get_theme
 
@@ -163,14 +165,14 @@ class GeneralPanel(BasePrefPanel):
         templateSizer.Add(
             dateTimeLabel, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2
         )
-        templateSizer.Add(self.dateTimeFormatCtrl, flag=wx.ALL | wx.EXPAND, border=2)
+        templateSizer.Add(self.dateTimeFormatCtrl, flag=wx.TOP | wx.BOTTOM | wx.EXPAND, border=2)
 
         templateSizer.Add(
             pageTitleTemplateLabel, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2
         )
-        templateSizer.Add(self.pageTitleTemplateCtrl, flag=wx.ALL | wx.EXPAND, border=2)
+        templateSizer.Add(self.pageTitleTemplateCtrl, flag=wx.TOP | wx.BOTTOM | wx.EXPAND, border=2)
 
-        main_sizer.Add(templateSizer, 1, wx.EXPAND, 0)
+        main_sizer.Add(templateSizer, flag=wx.EXPAND)
 
     def _createMiscGui(self, main_sizer):
         """
@@ -188,7 +190,7 @@ class GeneralPanel(BasePrefPanel):
         Создать элементы интерфейса, связанные с историей открытых файлов
         """
         # Count of recently used icons
-        recent_icons_label = wx.StaticText(
+        recentIconsLabel = wx.StaticText(
             self, -1, _("Length of recently used icons history")
         )
 
@@ -225,17 +227,13 @@ class GeneralPanel(BasePrefPanel):
         historySizer.AddGrowableCol(0)
         historySizer.AddGrowableCol(1)
 
-        historySizer.Add(recent_icons_label, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
+        historySizer.Add(recentIconsLabel, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
+        historySizer.Add(self.iconsHistoryLengthSpin, flag=wx.ALL | wx.ALIGN_RIGHT, border=2)
+        historySizer.Add(history_label, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
+        historySizer.Add(self.historySpin, flag=wx.ALL | wx.ALIGN_RIGHT, border=2)
 
-        historySizer.Add(self.iconsHistoryLengthSpin, 0, wx.ALL | wx.ALIGN_RIGHT, 2)
-
-        historySizer.Add(history_label, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
-
-        historySizer.Add(self.historySpin, 0, wx.ALL | wx.ALIGN_RIGHT, 2)
-
-        main_sizer.Add(historySizer, 1, wx.EXPAND, 0)
-
-        main_sizer.Add(self.autoopenCheckBox, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
+        main_sizer.Add(historySizer, flag=wx.EXPAND)
+        main_sizer.Add(self.autoopenCheckBox, flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=2)
 
     def _createLanguageGui(self, main_sizer):
         """
@@ -250,7 +248,19 @@ class GeneralPanel(BasePrefPanel):
             _("Language(restart required)"), languageSizer
         )
         self.langCombo.SetMinSize((self.LANG_COMBO_WIDTH, -1))
-        main_sizer.Add(languageSizer, 1, wx.EXPAND, 0)
+
+        self.helpTranslateHyperLink = HyperLinkCtrl(
+            self, label=_("Help with translation"), URL=URL_TRANSLATE
+        )
+        normal_color, visited_color, rollover_color = self.helpTranslateHyperLink.GetColours()
+        self.helpTranslateHyperLink.SetColours(normal_color, normal_color, normal_color)
+
+        main_sizer.Add(languageSizer, flag=wx.EXPAND)
+        main_sizer.Add(
+            self.helpTranslateHyperLink,
+            flag=wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL | wx.ALL,
+            border=2,
+        )
 
     def _createOpenPageTabGui(self, main_sizer):
         """
@@ -268,10 +278,10 @@ class GeneralPanel(BasePrefPanel):
         )
 
         self.pageTabComboBox.SetMinSize((self.PAGE_TAB_COMBO_WIDTH, -1))
-        self.__fillPageTabComboBox()
+        self._fillPageTabComboBox()
         main_sizer.Add(pageTabSizer, 1, wx.EXPAND, 0)
 
-    def __fillPageTabComboBox(self):
+    def _fillPageTabComboBox(self):
         # Fill pageTabComboBox
         for item in self.pageTabChoises:
             self.pageTabComboBox.Append(item[0])
@@ -292,10 +302,10 @@ class GeneralPanel(BasePrefPanel):
         """
         Загрузить состояние страницы из конфига
         """
-        self.__loadGeneralOptions()
-        self.__loadRecentOptions()
+        self._loadGeneralOptions()
+        self._loadRecentOptions()
 
-    def __loadRecentOptions(self):
+    def _loadRecentOptions(self):
         """
         Опции, связанные с последними открытыми файлами
         """
@@ -319,7 +329,7 @@ class GeneralPanel(BasePrefPanel):
             self.generalConfig.autoopen, self.autoopenCheckBox
         )
 
-    def __loadGeneralOptions(self):
+    def _loadGeneralOptions(self):
         """
         Загрузка общих параметров программы
         """
@@ -344,10 +354,10 @@ class GeneralPanel(BasePrefPanel):
             self.MAX_AUTOSAVE_INTERVAL,
         )
 
-        self.__loadLanguages()
+        self._loadLanguages()
         self.toasterDelaySpin.SetValue(self.generalConfig.toasterDelay.value // 1000)
 
-    def __loadLanguages(self):
+    def _loadLanguages(self):
         languages = outwiker.core.i18n.getLanguages()
         languages.sort()
 
@@ -377,11 +387,11 @@ class GeneralPanel(BasePrefPanel):
         self.autosaveInterval.save()
         self.dateTimeFormat.save()
         self.pageTitleTemplate.save()
-        self.__saveLanguage()
-        self.__savePageTab()
+        self._saveLanguage()
+        self._savePageTab()
         self.generalConfig.toasterDelay.value = self.toasterDelaySpin.GetValue() * 1000
 
-    def __saveLanguage(self):
+    def _saveLanguage(self):
         index = self.langCombo.GetSelection()
         assert index != wx.NOT_FOUND
 
@@ -392,7 +402,7 @@ class GeneralPanel(BasePrefPanel):
 
         self.i18nConfig.languageOption.value = lang
 
-    def __savePageTab(self):
+    def _savePageTab(self):
         selectedItem = self.pageTabComboBox.GetSelection()
         assert selectedItem < len(self.pageTabChoises)
 
