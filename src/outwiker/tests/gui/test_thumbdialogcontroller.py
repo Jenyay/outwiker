@@ -149,7 +149,7 @@ class ThumbDialogControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         )
         controller.showDialog()
 
-        self.assertEqual(controller.selectedFile, relative_path)
+        self.assertEqual(controller.selectedFile, relative_path.replace('\\', '/'))
 
     def testSelectedAttachSubdirForwardSlashesDoubleQuotes(self):
         subdir = Path('subdir 1', 'subdir 2')
@@ -185,7 +185,7 @@ class ThumbDialogControllerTest(unittest.TestCase, BaseOutWikerGUIMixin):
         )
         controller.showDialog()
 
-        self.assertEqual(controller.selectedFile, relative_path)
+        self.assertEqual(controller.selectedFile, relative_path.replace('\\', '/'))
 
     def testSelectedAttach2(self):
         selected_text = "бла-бла-бла"

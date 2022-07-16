@@ -48,6 +48,7 @@ class ThumbDialogController:
     def _get_selected_file(self, selected_text: str) -> Optional[str]:
         prefix = "Attach:"
         selected_file = None
+        selected_text = selected_text.replace('\\', '/')
 
         if (selected_text.startswith(prefix)):
             selected_file = selected_text[len(prefix):]
@@ -68,12 +69,12 @@ class ThumbDialogController:
 
     def showDialog(self):
         resultDlg = None
-        selected_file = self._get_selected_file(self._selectedText)
 
         if self._page is not None:
             if Attachment(self._page).getAttachRelative():
                 with ThumbDialog(self._parent, self._page) as dlg:
                     self._size_saver.restoreSize(dlg)
+                    selected_file = self._get_selected_file(self._selectedText)
                     dlg.SetSelectedFile(selected_file)
                     resultDlg = dlg.ShowModal()
 
@@ -106,6 +107,7 @@ class ThumbDialogController:
         else:
             raise NotImplementedError
 
+        fname = fname.replace('\\', '/')
         if len(fname) > 0:
             fileText = "Attach:{fname}".format(fname=fname)
         else:
