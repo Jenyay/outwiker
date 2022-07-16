@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OutWiker\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-15 14:25+0300\n"
+"POT-Creation-Date: 2022-07-16 17:54+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Eugene Ilin <jenyay.ilin@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.0.1\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -487,7 +487,7 @@ msgstr ""
 #: outwiker/actions/showhideattaches.py:17 outwiker/actions/switchto.py:63
 #: outwiker/gui/controls/filestreectrl.py:84
 #: outwiker/gui/mainpanes/attachmainpane.py:40
-#: outwiker/gui/preferences/prefcontroller.py:135
+#: outwiker/gui/preferences/prefcontroller.py:137
 #: outwiker/gui/preferences/wikieditorpanel.py:37
 msgid "Attachments"
 msgstr ""
@@ -758,67 +758,67 @@ msgstr ""
 msgid "Date format"
 msgstr ""
 
-#: outwiker/core/defines.py:78
+#: outwiker/core/defines.py:89
 msgid "versions_lang"
 msgstr ""
 
-#: outwiker/core/defines.py:81
+#: outwiker/core/defines.py:92
 msgid "awards"
 msgstr ""
 
-#: outwiker/core/defines.py:82
+#: outwiker/core/defines.py:93
 msgid "battery"
 msgstr ""
 
-#: outwiker/core/defines.py:83
+#: outwiker/core/defines.py:94
 msgid "books"
 msgstr ""
 
-#: outwiker/core/defines.py:84
+#: outwiker/core/defines.py:95
 msgid "computer"
 msgstr ""
 
-#: outwiker/core/defines.py:85
+#: outwiker/core/defines.py:96
 msgid "emotions"
 msgstr ""
 
-#: outwiker/core/defines.py:86
+#: outwiker/core/defines.py:97
 msgid "flags"
 msgstr ""
 
-#: outwiker/core/defines.py:87
+#: outwiker/core/defines.py:98
 msgid "folders"
 msgstr ""
 
-#: outwiker/core/defines.py:88
+#: outwiker/core/defines.py:99
 msgid "food"
 msgstr ""
 
-#: outwiker/core/defines.py:89
+#: outwiker/core/defines.py:100
 msgid "internet"
 msgstr ""
 
-#: outwiker/core/defines.py:90
+#: outwiker/core/defines.py:101
 msgid "money"
 msgstr ""
 
-#: outwiker/core/defines.py:91
+#: outwiker/core/defines.py:102
 msgid "people"
 msgstr ""
 
-#: outwiker/core/defines.py:92
+#: outwiker/core/defines.py:103
 msgid "signs"
 msgstr ""
 
-#: outwiker/core/defines.py:93
+#: outwiker/core/defines.py:104
 msgid "software"
 msgstr ""
 
-#: outwiker/core/defines.py:94
+#: outwiker/core/defines.py:105
 msgid "tags"
 msgstr ""
 
-#: outwiker/core/defines.py:95
+#: outwiker/core/defines.py:106
 msgid "weather"
 msgstr ""
 
@@ -1090,7 +1090,7 @@ msgid "Insert the current date"
 msgstr ""
 
 #: outwiker/gui/actionslist.py:331
-#: outwiker/gui/preferences/prefcontroller.py:155
+#: outwiker/gui/preferences/prefcontroller.py:158
 msgid "Spell checking"
 msgstr ""
 
@@ -1293,8 +1293,8 @@ msgid "Remove files?"
 msgstr ""
 
 #: outwiker/gui/basepagedialog.py:131 outwiker/gui/mainwindow.py:139
-#: outwiker/gui/preferences/prefcontroller.py:129
-#: outwiker/gui/preferences/prefcontroller.py:154
+#: outwiker/gui/preferences/prefcontroller.py:131
+#: outwiker/gui/preferences/prefcontroller.py:157
 #: outwiker/pages/wiki/wikipagecontroller.py:84
 msgid "General"
 msgstr ""
@@ -1581,7 +1581,7 @@ msgstr ""
 msgid "File"
 msgstr ""
 
-#: outwiker/gui/mainwindow.py:107 outwiker/gui/preferences/generalpanel.py:45
+#: outwiker/gui/mainwindow.py:107 outwiker/gui/preferences/generalpanel.py:43
 msgid "Edit"
 msgstr ""
 
@@ -1610,7 +1610,7 @@ msgid "Toolbars"
 msgstr ""
 
 #: outwiker/gui/mainwindow.py:145
-#: outwiker/gui/preferences/prefcontroller.py:164
+#: outwiker/gui/preferences/prefcontroller.py:167
 msgid "Plugins"
 msgstr ""
 
@@ -1741,7 +1741,7 @@ msgid "Show hidden folders"
 msgstr ""
 
 #: outwiker/gui/preferences/colorspanel.py:34
-#: outwiker/gui/preferences/prefcontroller.py:130
+#: outwiker/gui/preferences/prefcontroller.py:132
 msgid "Main window"
 msgstr ""
 
@@ -1754,7 +1754,7 @@ msgid "Main panels text color"
 msgstr ""
 
 #: outwiker/gui/preferences/colorspanel.py:45
-#: outwiker/gui/preferences/prefcontroller.py:134
+#: outwiker/gui/preferences/prefcontroller.py:136
 msgid "Tags cloud"
 msgstr ""
 
@@ -1826,30 +1826,30 @@ msgstr ""
 msgid "Page margin background color"
 msgstr ""
 
-#: outwiker/gui/preferences/generalpanel.py:43
+#: outwiker/gui/preferences/formatspanel.py:36
+msgid "Date and time format"
+msgstr ""
+
+#: outwiker/gui/preferences/formatspanel.py:37
+msgid "New page title template"
+msgstr ""
+
+#: outwiker/gui/preferences/generalpanel.py:41
 msgid "Recent used"
 msgstr ""
 
-#: outwiker/gui/preferences/generalpanel.py:44
-#: outwiker/gui/preferences/prefcontroller.py:133
+#: outwiker/gui/preferences/generalpanel.py:42
+#: outwiker/gui/preferences/prefcontroller.py:135
 #: outwiker/pages/html/basehtmlpanel.py:210
 msgid "Preview"
 msgstr ""
 
-#: outwiker/gui/preferences/generalpanel.py:87
+#: outwiker/gui/preferences/generalpanel.py:85
 msgid "Autosave interval in seconds(0 - disabled)"
 msgstr ""
 
-#: outwiker/gui/preferences/generalpanel.py:110
+#: outwiker/gui/preferences/generalpanel.py:107
 msgid "Toaster delay in seconds"
-msgstr ""
-
-#: outwiker/gui/preferences/generalpanel.py:147
-msgid "Date and time format"
-msgstr ""
-
-#: outwiker/gui/preferences/generalpanel.py:148
-msgid "New page title template"
 msgstr ""
 
 #: outwiker/gui/preferences/generalpanel.py:182
@@ -1860,27 +1860,27 @@ msgstr ""
 msgid "Length of recently used icons history"
 msgstr ""
 
-#: outwiker/gui/preferences/generalpanel.py:209
+#: outwiker/gui/preferences/generalpanel.py:208
 msgid "Length of recently opened files history"
 msgstr ""
 
-#: outwiker/gui/preferences/generalpanel.py:223
+#: outwiker/gui/preferences/generalpanel.py:221
 msgid "Automatically open the recent file"
 msgstr ""
 
-#: outwiker/gui/preferences/generalpanel.py:248
+#: outwiker/gui/preferences/generalpanel.py:254
 msgid "Language(restart required)"
 msgstr ""
 
-#: outwiker/gui/preferences/generalpanel.py:253
+#: outwiker/gui/preferences/generalpanel.py:259
 msgid "Help with translation"
 msgstr ""
 
-#: outwiker/gui/preferences/generalpanel.py:277
+#: outwiker/gui/preferences/generalpanel.py:286
 msgid "Default opening page mode"
 msgstr ""
 
-#: outwiker/gui/preferences/generalpanel.py:366
+#: outwiker/gui/preferences/generalpanel.py:375
 msgid "Auto"
 msgstr ""
 
@@ -2039,63 +2039,67 @@ msgstr ""
 msgid "Main window title format"
 msgstr ""
 
-#: outwiker/gui/preferences/pluginspanel.py:38
+#: outwiker/gui/preferences/pluginspanel.py:37
 msgid "Download more plugins"
 msgstr ""
 
-#: outwiker/gui/preferences/pluginspanel.py:39
+#: outwiker/gui/preferences/pluginspanel.py:38
 msgid "https://jenyay.net/Outwiker/PluginsEn"
 msgstr ""
 
-#: outwiker/gui/preferences/pluginspanel.py:121
+#: outwiker/gui/preferences/pluginspanel.py:118
 msgid "Version"
 msgstr ""
 
-#: outwiker/gui/preferences/pluginspanel.py:125
+#: outwiker/gui/preferences/pluginspanel.py:122
 msgid "Description"
 msgstr ""
 
-#: outwiker/gui/preferences/pluginspanel.py:130
+#: outwiker/gui/preferences/pluginspanel.py:129
 msgid "Site"
 msgstr ""
 
-#: outwiker/gui/preferences/prefcontroller.py:131
+#: outwiker/gui/preferences/prefcontroller.py:133
 msgid "Colors"
 msgstr ""
 
-#: outwiker/gui/preferences/prefcontroller.py:132
+#: outwiker/gui/preferences/prefcontroller.py:134
 msgid "Tray icon"
 msgstr ""
 
-#: outwiker/gui/preferences/prefcontroller.py:136
+#: outwiker/gui/preferences/prefcontroller.py:138
 msgid "Hotkeys"
 msgstr ""
 
 #: outwiker/gui/preferences/prefcontroller.py:139
+msgid "Formats"
+msgstr ""
+
+#: outwiker/gui/preferences/prefcontroller.py:142
 msgid "Interface"
 msgstr ""
 
-#: outwiker/gui/preferences/prefcontroller.py:156
+#: outwiker/gui/preferences/prefcontroller.py:159
 msgid "HTML editor"
 msgstr ""
 
-#: outwiker/gui/preferences/prefcontroller.py:157
+#: outwiker/gui/preferences/prefcontroller.py:160
 msgid "Wiki editor"
 msgstr ""
 
-#: outwiker/gui/preferences/prefcontroller.py:160
+#: outwiker/gui/preferences/prefcontroller.py:163
 msgid "Editor"
 msgstr ""
 
-#: outwiker/gui/preferences/prefcontroller.py:169
+#: outwiker/gui/preferences/prefcontroller.py:172
 msgid "Text printout"
 msgstr ""
 
-#: outwiker/gui/preferences/prefcontroller.py:173
+#: outwiker/gui/preferences/prefcontroller.py:176
 msgid "User's iconset"
 msgstr ""
 
-#: outwiker/gui/preferences/prefcontroller.py:178
+#: outwiker/gui/preferences/prefcontroller.py:181
 msgid "Preferences"
 msgstr ""
 
